@@ -859,7 +859,7 @@ definition {
 		AssertConsoleTextNotPresent(value1 = "javax.servlet.ServletException");
 	}
 
-	@description = "LPS-196309 | As an admin, I can assert that if the account the user is associated is deleted, the user will be listed again by using the filter type 'Not Associated Users'."
+	@description = "LPS-196309 | As an admin, I can assert that if the account the user is associated is deleted, the user will be listed again by using the filter type 'Unassociated Users'."
 	@priority = 4
 	test CanFilterByNotAssociatedUsersAfterDeletingTheAssociatedAccount {
 		property portal.acceptance = "false";
@@ -884,8 +884,8 @@ definition {
 			User.openUsersAdmin();
 		}
 
-		task ("When the admin sets the filter to view Not Associated Users") {
-			ManagementBar.setFilterAndOrder(filterBy = "Not Associated Users");
+		task ("When the admin sets the filter to view Unassociated Users") {
+			ManagementBar.setFilterAndOrder(filterBy = "Unassociated Users");
 		}
 
 		task ("Then can assert that only the test user is listed") {
@@ -905,7 +905,7 @@ definition {
 		task ("Then the admin can assert that both users are listed") {
 			User.openUsersAdmin();
 
-			ManagementBar.setFilterAndOrder(filterBy = "Not Associated Users");
+			ManagementBar.setFilterAndOrder(filterBy = "Unassociated Users");
 
 			for (var userName : list "test,user1") {
 				LexiconEntry.viewEntryName(rowEntry = ${userName});
@@ -913,7 +913,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-196309 | As an admin, I can assert that if the user is removed from the organization, will be listed again by using the filter type 'Not Associated Users'."
+	@description = "LPS-196309 | As an admin, I can assert that if the user is removed from the organization, will be listed again by using the filter type 'Unassociated Users'."
 	@priority = 4
 	test CanFilterByNotAssociatedUsersAfterRemovingUserFromOrganization {
 		property portal.acceptance = "false";
@@ -936,8 +936,8 @@ definition {
 			User.openUsersAdmin();
 		}
 
-		task ("And the admin sets the filter to view Not Associated Users") {
-			ManagementBar.setFilterAndOrder(filterBy = "Not Associated Users");
+		task ("And the admin sets the filter to view Unassociated Users") {
+			ManagementBar.setFilterAndOrder(filterBy = "Unassociated Users");
 		}
 
 		task ("Then can assert that only the test user is listed") {
@@ -959,7 +959,7 @@ definition {
 		}
 
 		task ("Then can assert that both users are listed") {
-			ManagementBar.setFilterAndOrder(filterBy = "Not Associated Users");
+			ManagementBar.setFilterAndOrder(filterBy = "Unassociated Users");
 
 			for (var userName : list "test,user1") {
 				LexiconEntry.viewEntryName(rowEntry = ${userName});
@@ -967,7 +967,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-196309 | As an admin, I can filter users that do not belong to an account or organization by using the filter type 'Not Associated Users'."
+	@description = "LPS-196309 | As an admin, I can filter users that do not belong to an account or organization by using the filter type 'Unassociated Users'."
 	@priority = 5
 	test CanFilterUsersByNotAssociatedUsers {
 		property portal.acceptance = "true";
@@ -1014,8 +1014,8 @@ definition {
 			}
 		}
 
-		task ("When the admin sets the filter to view Not Associated Users") {
-			ManagementBar.setFilterAndOrder(filterBy = "Not Associated Users");
+		task ("When the admin sets the filter to view Unassociated Users") {
+			ManagementBar.setFilterAndOrder(filterBy = "Unassociated Users");
 		}
 
 		task ("Then can assert that only the users that are not associated to the account and organization are listed") {

@@ -23,6 +23,12 @@ public interface AttachmentManager {
 			long objectFieldId, ServiceContext serviceContext)
 		throws Exception;
 
+	public FileEntry addFileEntry(
+			long companyId, byte[] fileContent, String fileName,
+			String folderExternalReferenceCode, long groupId,
+			long objectFieldId, ServiceContext serviceContext)
+		throws Exception;
+
 	public String[] getAcceptedFileExtensions(long objectFieldId);
 
 	public DLFolder getDLFolder(

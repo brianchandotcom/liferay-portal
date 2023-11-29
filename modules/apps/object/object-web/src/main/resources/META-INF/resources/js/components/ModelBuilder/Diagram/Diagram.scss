@@ -1,3 +1,15 @@
+.lfr__object-model-builder-control-container {
+	height: 270px;
+	position: relative;
+	transition: all 0.5s ease;
+	width: 230px;
+}
+
+.lfr__object-model-builder-controls {
+	bottom: 170px !important;
+	left: 20px !important;
+}
+
 .lfr-objects__model-builder-diagram {
 	&-area {
 		width: 100%;
@@ -17,27 +29,24 @@
 	z-index: 3 !important;
 }
 
-@mixin responsiveReactFlowControlPosition(
-	$bottom,
-	$leftHidden,
-	$leftNotHidden,
-	$maxWidth
-) {
-	@media (max-width: #{$maxWidth}) {
-		.lfr__object-model-builder-controls {
-			&-sidebars-hidden {
-				bottom: #{$bottom} !important;
-				left: #{$leftHidden} !important;
+@mixin responsiveReactFlowControlPosition($maxHeight, $top) {
+	@media (max-height: #{$maxHeight}) {
+		.lfr__object-model-builder-control-container {
+			&.sidebars-closed {
+				top: #{$top};
 			}
 
-			&-sidebars-not-hidden {
-				bottom: #{$bottom} !important;
-				left: #{$leftNotHidden} !important;
+			&.sidebars-open {
+				margin-left: 300px;
+				top: #{$top};
 			}
 		}
 	}
 }
 
-@include responsiveReactFlowControlPosition(9.5%, 98.8%, 98.5%, 3840px);
-@include responsiveReactFlowControlPosition(15%, 98.2%, 97.5%, 2560px);
-@include responsiveReactFlowControlPosition(21%, 97.8%, 96.5%, 1920px);
+@include responsiveReactFlowControlPosition(2160px, 80%);
+@include responsiveReactFlowControlPosition(1440px, 75%);
+@include responsiveReactFlowControlPosition(1200px, 70%);
+@include responsiveReactFlowControlPosition(1080px, 65%);
+@include responsiveReactFlowControlPosition(900px, 60%);
+@include responsiveReactFlowControlPosition(768px, 55%);

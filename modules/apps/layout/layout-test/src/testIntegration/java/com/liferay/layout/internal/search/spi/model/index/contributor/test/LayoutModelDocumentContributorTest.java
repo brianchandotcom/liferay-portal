@@ -94,6 +94,14 @@ public class LayoutModelDocumentContributorTest {
 		_languageId = LocaleUtil.toLanguageId(_locale);
 
 		_layoutIndexerFixture = new IndexerFixture<>(Layout.class);
+
+		ServiceContextThreadLocal.pushServiceContext(
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		ServiceContextThreadLocal.popServiceContext();
 	}
 
 	@Test

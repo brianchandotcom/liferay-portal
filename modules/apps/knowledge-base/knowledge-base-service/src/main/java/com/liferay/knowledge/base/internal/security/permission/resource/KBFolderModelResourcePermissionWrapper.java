@@ -77,8 +77,14 @@ public class KBFolderModelResourcePermissionWrapper
 
 			kbFolder = _kbFolderLocalService.fetchKBFolder(parentKBFolderId);
 
-			return _kbFolderModelResourcePermission.contains(
-				permissionChecker, kbFolder, actionId);
+			if ((kbFolder != null) &&
+				!_kbFolderModelResourcePermission.contains(
+					permissionChecker, kbFolder, actionId)) {
+
+				return false;
+			}
+
+			return null;
 		}
 
 		private KBFolderDynamicInheritanceModelResourcePermissionLogic(

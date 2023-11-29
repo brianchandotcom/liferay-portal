@@ -7,11 +7,8 @@ package com.liferay.layout.internal.workflow;
 
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.layout.constants.LayoutTypeSettingsConstants;
-import com.liferay.layout.content.LayoutContentProvider;
 import com.liferay.layout.helper.LayoutCopyHelper;
 import com.liferay.layout.internal.configuration.LayoutWorkflowHandlerConfiguration;
-import com.liferay.layout.service.LayoutLocalizationLocalService;
-import com.liferay.layout.util.LayoutServiceContextHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -25,11 +22,9 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -41,9 +36,6 @@ import java.io.Serializable;
 
 import java.util.Locale;
 import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -163,7 +155,7 @@ public class LayoutWorkflowHandler extends BaseWorkflowHandler<Layout> {
 		try {
 			PrincipalThreadLocal.setName(userId);
 
-			layout = _layoutCopyHelper.copyLayoutContent(draftLayout, layout);
+			_layoutCopyHelper.copyLayoutContent(draftLayout, layout);
 		}
 		catch (Exception exception) {
 			throw new PortalException(exception);
@@ -175,23 +167,6 @@ public class LayoutWorkflowHandler extends BaseWorkflowHandler<Layout> {
 		_layoutLocalService.updateStatus(
 			userId, draftLayout.getPlid(), WorkflowConstants.STATUS_APPROVED,
 			serviceContext1);
-
-		try (AutoCloseable autoCloseable =
-				_layoutServiceContextHelper.getServiceContextAutoCloseable(
-					layout)) {
-
-			ServiceContext serviceContext2 =
-				ServiceContextThreadLocal.getServiceContext();
-
-			ThemeDisplay themeDisplay = serviceContext2.getThemeDisplay();
-
-			_updateLayoutContent(
-				themeDisplay.getRequest(), themeDisplay.getResponse(), layout,
-				serviceContext2);
-		}
-		catch (Exception exception) {
-			throw new PortalException(exception);
-		}
 
 		return _layoutLocalService.updateStatus(
 			userId, classPK, status, serviceContext1);
@@ -205,22 +180,6 @@ public class LayoutWorkflowHandler extends BaseWorkflowHandler<Layout> {
 				LayoutWorkflowHandlerConfiguration.class, properties);
 	}
 
-	private void _updateLayoutContent(
-		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse, Layout layout,
-		ServiceContext serviceContext) {
-
-		for (Locale locale :
-				_language.getAvailableLocales(layout.getGroupId())) {
-
-			_layoutLocalizationLocalService.updateLayoutLocalization(
-				_layoutContentProvider.getLayoutContent(
-					httpServletRequest, httpServletResponse, layout, locale),
-				LocaleUtil.toLanguageId(locale), layout.getPlid(),
-				serviceContext);
-		}
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutWorkflowHandler.class);
 
@@ -228,19 +187,10 @@ public class LayoutWorkflowHandler extends BaseWorkflowHandler<Layout> {
 	private Language _language;
 
 	@Reference
-	private LayoutContentProvider _layoutContentProvider;
-
-	@Reference
 	private LayoutCopyHelper _layoutCopyHelper;
 
 	@Reference
-	private LayoutLocalizationLocalService _layoutLocalizationLocalService;
-
-	@Reference
 	private LayoutLocalService _layoutLocalService;
-
-	@Reference
-	private LayoutServiceContextHelper _layoutServiceContextHelper;
 
 	private volatile LayoutWorkflowHandlerConfiguration
 		_layoutWorkflowHandlerConfiguration;

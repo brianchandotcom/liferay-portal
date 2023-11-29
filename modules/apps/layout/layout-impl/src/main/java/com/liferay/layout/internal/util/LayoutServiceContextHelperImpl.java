@@ -667,6 +667,8 @@ public class LayoutServiceContextHelperImpl
 
 			_permissionChecker = PermissionCheckerFactoryUtil.create(_user);
 
+			_setUpHttpServletRequest(_permissionChecker, _user);
+
 			_setCompanyServiceContext();
 		}
 
@@ -678,50 +680,6 @@ public class LayoutServiceContextHelperImpl
 			PrincipalThreadLocal.setName(_originalName, false);
 			ServiceContextThreadLocal.pushServiceContext(
 				_originalServiceContext);
-		}
-
-		private HttpServletRequest _getHttpServletRequest(
-				PermissionChecker permissionChecker, User user)
-			throws PortalException {
-
-			ThemeDisplay themeDisplay = _getThemeDisplay(
-				_company, permissionChecker, user);
-
-			HttpServletRequest companyHttpServletRequest =
-				new HttpServletRequestWrapper(_httpServletRequest) {
-
-					@Override
-					public Object getAttribute(String name) {
-						if (Objects.equals(name, WebKeys.COMPANY_ID)) {
-							return _company.getCompanyId();
-						}
-
-						if (Objects.equals(name, WebKeys.LAYOUT)) {
-							return themeDisplay.getLayout();
-						}
-
-						if (Objects.equals(name, WebKeys.THEME_DISPLAY)) {
-							return themeDisplay;
-						}
-
-						if (Objects.equals(name, WebKeys.USER)) {
-							return user;
-						}
-
-						if (Objects.equals(name, WebKeys.USER_ID)) {
-							return user.getUserId();
-						}
-
-						return super.getAttribute(name);
-					}
-
-				};
-
-			themeDisplay.setRequest(companyHttpServletRequest);
-
-			themeDisplay.setResponse(_httpServletResponse);
-
-			return companyHttpServletRequest;
 		}
 
 		private ThemeDisplay _getThemeDisplay(
@@ -815,6 +773,30 @@ public class LayoutServiceContextHelperImpl
 			serviceContext.setUserId(_user.getUserId());
 
 			ServiceContextThreadLocal.pushServiceContext(serviceContext);
+		}
+
+		private void _setUpHttpServletRequest(
+				PermissionChecker permissionChecker, User user)
+			throws PortalException {
+
+			_httpServletRequest.setAttribute(
+				WebKeys.COMPANY_ID, _company.getCompanyId());
+
+			ThemeDisplay themeDisplay = _getThemeDisplay(
+				_company, permissionChecker, user);
+
+			_httpServletRequest.setAttribute(
+				WebKeys.LAYOUT, themeDisplay.getLayout());
+			_httpServletRequest.setAttribute(
+				WebKeys.THEME_DISPLAY, themeDisplay);
+
+			_httpServletRequest.setAttribute(WebKeys.USER, user);
+			_httpServletRequest.setAttribute(
+				WebKeys.USER_ID, _user.getUserId());
+
+			themeDisplay.setRequest(_httpServletRequest);
+
+			themeDisplay.setResponse(_httpServletResponse);
 		}
 
 		private final Company _company;

@@ -42,7 +42,7 @@
 	</tr>
 	<tr>
 		<td>SELECT_OBJECT_IN_LEFT_SIDEBAR</td>
-		<td>//div[contains(@class,'left-sidebar-current-object-folder-group')]//span[contains(@class,'c-inner') and contains(.,'${key_label}')]</td>
+		<td>//div[@id = '${key_folderLabel}']//span[contains(@class,'c-inner') and contains(.,'${key_objectLabel}')]</td>
 		<td></td>
 	</tr>
 	<tr>

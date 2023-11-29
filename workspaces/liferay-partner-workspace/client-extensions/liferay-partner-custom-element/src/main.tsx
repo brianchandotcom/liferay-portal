@@ -86,11 +86,11 @@ const appRoutes: AppRouteComponent = {
 					return items.filter(
 						(item) =>
 							(item['TYPE'] === OpportunityType.NEW_BUSINESS ||
-							item['TYPE'] ===
-								OpportunityType.NEW_PROJECT_EXISTING_BUSINESS ||
-							(item['TYPE'] ===
-								OpportunityType.EXISTING_BUSINESS &&
-								!item['HAS-RENEWAL'])) &&
+								item['TYPE'] ===
+									OpportunityType.NEW_PROJECT_EXISTING_BUSINESS ||
+								(item['TYPE'] ===
+									OpportunityType.EXISTING_BUSINESS &&
+									!item['HAS-RENEWAL'])) &&
 							item['ACTIVE']
 					);
 				}
@@ -100,12 +100,12 @@ const appRoutes: AppRouteComponent = {
 					return items.filter(
 						(item) =>
 							(item['TYPE'] === OpportunityType.NEW_BUSINESS ||
-							item['TYPE'] ===
-								OpportunityType.NEW_PROJECT_EXISTING_BUSINESS ||
-							(item['TYPE'] ===
-								OpportunityType.EXISTING_BUSINESS &&
-								!item['HAS-RENEWAL'] &&
-								Number(item['GROWTH-ARR']) > 0)) &&
+								item['TYPE'] ===
+									OpportunityType.NEW_PROJECT_EXISTING_BUSINESS ||
+								(item['TYPE'] ===
+									OpportunityType.EXISTING_BUSINESS &&
+									!item['HAS-RENEWAL'] &&
+									Number(item['GROWTH-ARR']) > 0)) &&
 							item['ACTIVE']
 					);
 				}
@@ -123,10 +123,14 @@ const appRoutes: AppRouteComponent = {
 			closedOpportunitiesFilter={Filters.RENEWAL_LISTING.closedWIP}
 			getFilteredItems={(items, opportunitiesFilter) => {
 				if (opportunitiesFilter === Filters.RENEWAL_LISTING.closedWIP) {
-					return items.filter((item) => item['HAS-RENEWAL'] && item['ACTIVE']);
+					return items.filter(
+						(item) => item['HAS-RENEWAL'] && item['ACTIVE']
+					);
 				}
 
-				return items.filter((item) => item['HAS-RENEWAL'] && item['ACTIVE']);
+				return items.filter(
+					(item) => item['HAS-RENEWAL'] && item['ACTIVE']
+				);
 			}}
 			name="Renewal Opportunities"
 			newButtonDeal={false}

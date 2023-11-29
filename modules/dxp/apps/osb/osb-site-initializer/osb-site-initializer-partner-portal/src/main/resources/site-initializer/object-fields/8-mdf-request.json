@@ -363,7 +363,8 @@
 							},
 							{
 								"key": "completed",
-								"objectStateTransitions": []
+								"objectStateTransitions": [
+								]
 							}
 						]
 					}

@@ -548,57 +548,18 @@ definition {
 	@priority = 5
 	test CanAssertTheEndpointObjectInDataSetCreated {
 		task ("Given an object definition 'Student' with name field and Scope: Site created") {
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectAdmin.addObjectViaAPI(
+			DataSetAdmin.setUpObjectForDataSet(
 				labelName = "Student",
 				objectName = "Student",
-				pluralLabelName = "Student");
-
-			Refresh();
-
-			Click(
-				key_termsAndConditionsName = "Student",
-				locator1 = "CommercePaymentTerms#ORDER_DETAILS_TERMS_AND_CONDITIONS_NAME");
-
-			Click(
-				key_sorting = "Company",
-				locator1 = "ObjectCustomViews#EDIT_SORTING");
-
-			Click(
-				key_menuItem = "Site",
-				locator1 = "MenuItem#MENU_ITEM_SPECIFIC");
-
-			Button.clickSave();
-
-			ObjectAdmin.goToFieldsTab();
-
-			Refresh();
-
-			SelectFrameTop();
-
-			Click(locator1 = "Button#PLUS");
-
-			Type(
-				locator1 = "ObjectField#LABEL_INPUT",
-				value1 = "SiteCreated");
-
-			ObjectField.selectType(fieldType = "Precision Decimal");
-
-			Click(
-				key_text = "Save",
-				locator1 = "CP2ActivationKeys#KEY_DEACTIVATION_TERMS");
-
-			ObjectCustomValidation.gotoTab(tabName = "Details");
-
-			Button.clickPublish();
+				pluralLabelName = "Student",
+				scope = "site",
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customObjectField",
+				fieldType = "String");
 		}
 
-		task ("And the Data Set admin page and fill in the fields Name, REST App and REST Schema//Name: Students//REST App: /c/Student//REST Schema: Student") {
-			Navigator.openURL();
-
-			DataSetAdmin.goToDataSetAdminPage();
-
+		task ("And the Data Set admin page and fill in the fields Name, REST App and REST Schema") {
 			DataSetAdmin.createDataSetEntryViaAPI(
 				dataSetName = "Students",
 				restApplication = "/c/Student",
@@ -619,56 +580,19 @@ definition {
 	@priority = 4
 	test CanAssertTheEndpointObjectInDataSetModal {
 		task ("Given an object definition 'Student' with name field and Scope: Site created") {
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectAdmin.addObjectViaAPI(
+			DataSetAdmin.setUpObjectForDataSet(
 				labelName = "Student",
 				objectName = "Student",
-				pluralLabelName = "Student");
-
-			Refresh();
-
-			Click(
-				key_termsAndConditionsName = "Student",
-				locator1 = "CommercePaymentTerms#ORDER_DETAILS_TERMS_AND_CONDITIONS_NAME");
-
-			Click(
-				key_sorting = "Company",
-				locator1 = "ObjectCustomViews#EDIT_SORTING");
-
-			Click(
-				key_menuItem = "Site",
-				locator1 = "MenuItem#MENU_ITEM_SPECIFIC");
-
-			Button.clickSave();
-
-			ObjectAdmin.goToFieldsTab();
-
-			Refresh();
-
-			SelectFrameTop();
-
-			Click(locator1 = "Button#PLUS");
-
-			Type(
-				locator1 = "ObjectField#LABEL_INPUT",
-				value1 = "SiteCreated");
-
-			ObjectField.selectType(fieldType = "Precision Decimal");
-
-			Click(
-				key_text = "Save",
-				locator1 = "CP2ActivationKeys#KEY_DEACTIVATION_TERMS");
-
-			ObjectCustomValidation.gotoTab(tabName = "Details");
-
-			Button.clickPublish();
+				pluralLabelName = "Student",
+				scope = "site",
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customObjectField",
+				fieldType = "String");
 		}
 
-		task ("And the Data Set admin page and fill in the fields Name, REST App and REST Schema//Name: Students//REST App: /c/Student//REST Schema: Student") {
-			Navigator.openURL();
-
-			DataSetAdmin.goToDataSetAdminPage();
+		task ("And the Data Set admin page and fill in the fields Name, REST App and REST Schema") {
+			Refresh();
 
 			LexiconEntry.gotoAdd();
 
@@ -676,7 +600,7 @@ definition {
 				locator1 = "TextInput#NAME",
 				value1 = "Data Set Test");
 
-			DataSetAdmin.selectProvider(key_type = "/c/students");
+			DataSetAdmin.selectProvider(key_type = "/c/student");
 		}
 
 		task ("Then confirm that the option /scopes/{scopeKey} is displayed") {

@@ -10,10 +10,5 @@
 	<bean class="com.liferay.document.library.kernel.store.DLStoreUtil">
 		<property name="store" ref="com.liferay.portlet.documentlibrary.store.DLStoreImpl" />
 	</bean>
-	<bean class="com.liferay.document.library.kernel.util.DLUtil">
-		<property name="DL">
-			<bean class="com.liferay.portlet.documentlibrary.util.DLImpl" destroy-method="destroy" />
-		</property>
-	</bean>
 	<bean class="com.liferay.portlet.documentlibrary.store.DLStoreImpl" id="com.liferay.portlet.documentlibrary.store.DLStoreImpl" />
 </beans>

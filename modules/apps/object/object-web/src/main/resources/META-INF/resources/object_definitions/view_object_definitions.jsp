@@ -24,6 +24,8 @@ ViewObjectDefinitionsDisplayContext viewObjectDefinitionsDisplayContext = (ViewO
 			).put(
 				"importObjectDefinitionURL", viewObjectDefinitionsDisplayContext.getImportObjectDefinitionURL()
 			).put(
+				"importObjectFolderURL", viewObjectDefinitionsDisplayContext.getImportObjectFolderURL()
+			).put(
 				"modelBuilderURL", viewObjectDefinitionsDisplayContext.getModelBuilderURL()
 			).put(
 				"nameMaxLength", ModelHintsConstants.TEXT_MAX_LENGTH

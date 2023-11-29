@@ -222,6 +222,11 @@ boolean nondefaultAssetDisplayPage = selLayout.isTypeAssetDisplay() && !layoutsS
 					</div>
 				</clay:sheet-section>
 			</clay:sheet>
+
+			<liferay-frontend:component
+				module="js/seo/toggleSitemapFields"
+				servletContext="<%= application %>"
+			/>
 		</c:if>
 	</liferay-frontend:edit-form-body>
 

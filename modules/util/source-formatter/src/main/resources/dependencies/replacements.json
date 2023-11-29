@@ -800,5 +800,16 @@
 		"from": "PortletDisplayTemplateManager.ENTRIES",
 		"issueKey": "LPS-202918",
 		"to": "PortletDisplayTemplateConstants.ENTRIES"
+	},
+	{
+		"classNames": [
+			"DLAppLocalService",
+			"DLAppLocalServiceUtil",
+			"DLAppService",
+			"DLAppServiceUtil"
+		],
+		"from": "addFolder(long, long, long, String, String, ServiceContext)",
+		"issueKey": "LPS-202927",
+		"to": "addFolder(null, param#0#, param#1#, param#2#, param#3#, param#4#, param#5#)"
 	}
 ]

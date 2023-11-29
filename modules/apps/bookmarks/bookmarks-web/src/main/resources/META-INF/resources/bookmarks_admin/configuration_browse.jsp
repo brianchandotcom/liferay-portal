@@ -260,49 +260,22 @@ portletDisplay.setURLBackTitle("bookmarks");
 				</c:if>
 
 				<aui:button-row>
-					<aui:button cssClass="c-mr-2" type="submit" />
+					<div class="c-gap-1 d-flex">
+						<clay:button
+							cssClass="c-mr-2"
+							label="save"
+							propsTransformer="js/SaveConfigurationButtonPropsTransformer"
+						/>
 
-					<aui:button href="<%= bookmarksConfigurationDisplayContext.getBackURL() %>" type="cancel" />
+						<clay:link
+							displayType="secondary"
+							href="<%= bookmarksConfigurationDisplayContext.getBackURL() %>"
+							label="cancel"
+							type="button"
+						/>
+					</div>
 				</aui:button-row>
 			</aui:form>
 		</clay:col>
 	</clay:row>
 </clay:container-fluid>
-
-<aui:script>
-	function <portlet:namespace />saveConfiguration() {
-	var Util = Liferay.Util;
-
-	var form = document.getElementById('<portlet:namespace />fm');
-
-	if (form) {
-	var currentFolderColumns = form.querySelector(
-	'#<portlet:namespace />currentFolderColumns'
-	);
-	var folderColumns = form.querySelector(
-	'#<portlet:namespace />folderColumns'
-	);
-
-	if (currentFolderColumns && folderColumns) {
-	folderColumns.value = Util.getSelectedOptionValues(
-	currentFolderColumns
-	);
-	}
-
-	var currentEntryColumns = form.querySelector(
-	'#<portlet:namespace />currentEntryColumns'
-	);
-	var entryColumns = form.querySelector(
-	'#<portlet:namespace />entryColumns'
-	);
-
-	if (currentEntryColumns && entryColumns) {
-	entryColumns.value = Util.getSelectedOptionValues(
-	currentEntryColumns
-	);
-	}
-
-	submitForm(form);
-	}
-	}
-</aui:script>

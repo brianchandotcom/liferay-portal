@@ -6,10 +6,8 @@
 package com.liferay.portal.security.content.security.policy.internal.servlet.taglib;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProvider;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.content.security.policy.internal.configuration.ContentSecurityPolicyConfiguration;
 import com.liferay.portal.security.content.security.policy.internal.configuration.ContentSecurityPolicyConfigurationUtil;
@@ -55,8 +53,7 @@ public class ContentSecurityPolicyTopHeadDynamicInclude
 
 		ContentSecurityPolicyConfiguration contentSecurityPolicyConfiguration =
 			ContentSecurityPolicyConfigurationUtil.
-				getContentSecurityPolicyConfiguration(
-					_configurationProvider, httpServletRequest, _portal);
+				getContentSecurityPolicyConfiguration(httpServletRequest);
 
 		String policy = contentSecurityPolicyConfiguration.policy();
 
@@ -73,13 +70,7 @@ public class ContentSecurityPolicyTopHeadDynamicInclude
 	}
 
 	@Reference
-	private ConfigurationProvider _configurationProvider;
-
-	@Reference
 	private ContentSecurityPolicyNonceProvider
 		_contentSecurityPolicyNonceProvider;
-
-	@Reference
-	private Portal _portal;
 
 }

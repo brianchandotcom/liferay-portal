@@ -55,10 +55,18 @@ public class ContentSecurityPolicyFilter extends BasePortalFilter {
 
 		ContentSecurityPolicyConfiguration contentSecurityPolicyConfiguration =
 			ContentSecurityPolicyConfigurationUtil.
-				getContentSecurityPolicyConfiguration(
+				setContentSecurityPolicyConfiguration(
 					_configurationProvider, httpServletRequest, _portal);
 
-		return contentSecurityPolicyConfiguration.enabled();
+		if (!contentSecurityPolicyConfiguration.enabled() ||
+			Validator.isNull(contentSecurityPolicyConfiguration.policy()) ||
+			_isExcludedURIPath(
+				contentSecurityPolicyConfiguration, httpServletRequest)) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	@Override
@@ -67,34 +75,21 @@ public class ContentSecurityPolicyFilter extends BasePortalFilter {
 			HttpServletResponse httpServletResponse, FilterChain filterChain)
 		throws Exception {
 
-		if (_isExcludedURIPath(httpServletRequest)) {
-			filterChain.doFilter(httpServletRequest, httpServletResponse);
-
-			return;
-		}
-
-		ContentSecurityPolicyConfiguration contentSecurityPolicyConfiguration =
-			ContentSecurityPolicyConfigurationUtil.
-				getContentSecurityPolicyConfiguration(
-					_configurationProvider, httpServletRequest, _portal);
-
-		String policy = contentSecurityPolicyConfiguration.policy();
-
-		if (Validator.isNull(policy)) {
-			filterChain.doFilter(httpServletRequest, httpServletResponse);
-
-			return;
-		}
-
-		String nonce = _contentSecurityPolicyNonceManager.ensureNonce(
+		String nonce = _contentSecurityPolicyNonceManager.setNonce(
 			httpServletRequest);
 
-		policy = StringUtil.replace(policy, "[$NONCE$]", "nonce-" + nonce);
-
-		httpServletResponse.setHeader("Content-Security-Policy", policy);
-
 		try {
-			_contentSecurityPolicyNonceManager.setTLSNonce(nonce);
+			ContentSecurityPolicyConfiguration
+				contentSecurityPolicyConfiguration =
+					ContentSecurityPolicyConfigurationUtil.
+						getContentSecurityPolicyConfiguration(
+							httpServletRequest);
+
+			String policy = contentSecurityPolicyConfiguration.policy();
+
+			policy = StringUtil.replace(policy, "[$NONCE$]", "nonce-" + nonce);
+
+			httpServletResponse.setHeader("Content-Security-Policy", policy);
 
 			PrintWriter printWriter = httpServletResponse.getWriter();
 
@@ -129,11 +124,14 @@ public class ContentSecurityPolicyFilter extends BasePortalFilter {
 			httpServletResponse.setContentLength(content.length());
 		}
 		finally {
-			_contentSecurityPolicyNonceManager.removeTLSNonce();
+			_contentSecurityPolicyNonceManager.cleanUpNonce(httpServletRequest);
 		}
 	}
 
-	private boolean _isExcludedURIPath(HttpServletRequest httpServletRequest) {
+	private boolean _isExcludedURIPath(
+		ContentSecurityPolicyConfiguration contentSecurityPolicyConfiguration,
+		HttpServletRequest httpServletRequest) {
+
 		String requestURI = httpServletRequest.getRequestURI();
 
 		if (Validator.isNull(requestURI)) {
@@ -150,11 +148,6 @@ public class ContentSecurityPolicyFilter extends BasePortalFilter {
 		}
 
 		requestURI = StringUtil.toLowerCase(requestURI);
-
-		ContentSecurityPolicyConfiguration contentSecurityPolicyConfiguration =
-			ContentSecurityPolicyConfigurationUtil.
-				getContentSecurityPolicyConfiguration(
-					_configurationProvider, httpServletRequest, _portal);
 
 		for (String excludedPath :
 				contentSecurityPolicyConfiguration.excludedPaths()) {

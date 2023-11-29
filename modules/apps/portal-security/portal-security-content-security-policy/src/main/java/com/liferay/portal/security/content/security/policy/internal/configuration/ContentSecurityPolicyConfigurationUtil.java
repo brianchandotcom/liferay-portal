@@ -19,16 +19,19 @@ public class ContentSecurityPolicyConfigurationUtil {
 
 	public static ContentSecurityPolicyConfiguration
 		getContentSecurityPolicyConfiguration(
+			HttpServletRequest httpServletRequest) {
+
+		return (ContentSecurityPolicyConfiguration)
+			httpServletRequest.getAttribute(
+				ContentSecurityPolicyConfigurationUtil.class.getName());
+	}
+
+	public static ContentSecurityPolicyConfiguration
+		setContentSecurityPolicyConfiguration(
 			ConfigurationProvider configurationProvider,
 			HttpServletRequest httpServletRequest, Portal portal) {
 
-		ContentSecurityPolicyConfiguration contentSecurityPolicyConfiguration =
-			(ContentSecurityPolicyConfiguration)httpServletRequest.getAttribute(
-				ContentSecurityPolicyConfigurationUtil.class.getName());
-
-		if (contentSecurityPolicyConfiguration != null) {
-			return contentSecurityPolicyConfiguration;
-		}
+		ContentSecurityPolicyConfiguration contentSecurityPolicyConfiguration;
 
 		try {
 			long groupId = portal.getScopeGroupId(httpServletRequest);

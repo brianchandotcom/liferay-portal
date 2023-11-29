@@ -656,7 +656,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		JavaClass javaClass = null;
 
 		try {
-			javaClass = _getJavaClass(javaTerm, fileContent, fileName);
+			javaClass = _getJavaClass(javaTerm, fileName, fileContent);
 
 			if (javaClass == null) {
 				return variableTypeName;
@@ -856,7 +856,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		"run.outside.portal.excludes";
 
 	private JavaClass _getJavaClass(
-			JavaTerm javaTerm, String fileContent, String fileName)
+			JavaTerm javaTerm, String fileName, String fileContent)
 		throws Exception {
 
 		if (javaTerm == null) {

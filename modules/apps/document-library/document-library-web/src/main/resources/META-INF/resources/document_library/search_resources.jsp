@@ -148,16 +148,18 @@ entriesChecker.setRememberCheckBoxStateURLRegex("^(?!.*" + liferayPortletRespons
 											<div class="aspect-ratio card-item-first">
 												<div class="custom-checkbox custom-control">
 													<label>
+														<c:if test="<%= searchContainer.getRowChecker() != null %>">
 
-														<%
-														RowChecker rowChecker = searchContainer.getRowChecker();
+															<%
+															RowChecker rowChecker = searchContainer.getRowChecker();
 
-														rowChecker.setCssClass("custom-control-input");
-														%>
+															rowChecker.setCssClass("custom-control-input");
+															%>
 
-														<%= rowChecker.getRowCheckBox(request, row) %>
+															<%= rowChecker.getRowCheckBox(request, row) %>
 
-														<span class="custom-control-label"></span>
+															<span class="custom-control-label"></span>
+														</c:if>
 
 														<c:choose>
 															<c:when test="<%= dlViewFileVersionDisplayContext.hasCustomThumbnail() %>">

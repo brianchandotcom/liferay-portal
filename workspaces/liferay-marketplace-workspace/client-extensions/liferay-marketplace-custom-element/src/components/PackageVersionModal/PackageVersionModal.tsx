@@ -10,21 +10,34 @@ import ClayModal, {useModal} from '@clayui/modal';
 import {useEffect, useState} from 'react';
 
 import './PackageVersionModal.scss';
+import i18n from '../../i18n';
+import {useAppContext} from '../../manage-app-state/AppManageState';
+import {TYPES} from '../../manage-app-state/actionTypes';
+import {getProductById} from '../../utils/api';
+import {getCustomFieldValue} from '../../utils/customFieldUtil';
 
 interface PackageVersionModal {
-	appERC: string;
+	appProductId: number;
 	currentVersions: string[];
 	handleClose: () => void;
 	handleConfirm: (versions: string[]) => void;
 }
 
-export function PackageVersionModal({appERC, currentVersions, handleClose, handleConfirm}: PackageVersionModal) {
+export function PackageVersionModal({
+	appProductId,
+	currentVersions,
+	handleClose,
+	handleConfirm,
+}: PackageVersionModal) {
+	const [, dispatch] = useAppContext();
 	const {observer, onClose} = useModal({
-		onClose: handleClose
+		onClose: handleClose,
 	});
-	const [checkboxVersions, setCheckboxVersions] = useState<CheckboxVersion[]>([]);
-	const [value, setValue] = useState('');
-	const [versionList, setVersionList] = useState<string[]>(['Liferay DXP 7.4 U1', 'Liferay Portal 7.4 GA1', 'Liferay DXP 7.4 U2', 'Liferay Portal 7.4 GA2', 'Liferay DXP 7.4 U3', 'Liferay Portal 7.4 GA3', 'Liferay DXP 7.4 U4', 'Liferay Portal 7.4 GA4', 'Liferay DXP 7.4 U5', 'Liferay Portal 7.4 GA5', 'Liferay DXP 7.4 U6', 'Liferay Portal 7.4 GA6', 'Liferay DXP 7.4 U7', 'Liferay Portal 7.4 GA7', 'Liferay DXP 7.4 U8', 'Liferay Portal 7.4 GA8', 'Liferay DXP 7.4 U9', 'Liferay Portal 7.4 GA9', 'Liferay DXP 7.4 U10', 'Liferay Portal 7.4 GA10', 'Liferay DXP 7.4 U11']);
+	const [checkboxVersions, setCheckboxVersions] = useState<CheckboxVersion[]>(
+		[]
+	);
+	const [versionSelected, setVersionSelected] = useState('');
+	const [versionList, setVersionList] = useState<any>([]);
 
 	function getSelectedVersions() {
 		return checkboxVersions
@@ -36,18 +49,41 @@ export function PackageVersionModal({appERC, currentVersions, handleClose, handl
 		const versionsChecked = checkboxVersions.map((version) => {
 			if (selectedVersionName === version.versionName) {
 				version.isChecked = !version.isChecked;
-
-				return version;
 			}
 
 			return version;
-		}, []);
+		});
+
+		dispatch({
+			payload: {
+				versionName: selectedVersionName,
+			},
+			type: TYPES.UPLOAD_BUILD_PACKAGE_FILES,
+		});
 
 		setCheckboxVersions(versionsChecked);
 	};
-	
+
+	const getProductVersionList = async () => {
+		const product = await getProductById({
+			productId: appProductId,
+		});
+
+		const versionList = getCustomFieldValue(
+			product.customFields ?? [],
+			'Liferay Version'
+		);
+
+		setVersionList(versionList);
+	};
+
 	useEffect(() => {
-		const mapVersions = versionList.map((version) => {
+		getProductVersionList();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
+	useEffect(() => {
+		const mapVersions = versionList.map((version: string) => {
 			let isChecked = false;
 			if (currentVersions.includes(version)) {
 				isChecked = true;
@@ -65,11 +101,15 @@ export function PackageVersionModal({appERC, currentVersions, handleClose, handl
 			className="package-version-modal-container"
 			observer={observer}
 		>
-			<ClayModal.Header>Select Compatible Versions</ClayModal.Header>
+			<ClayModal.Header>
+				{i18n.translate('select-compatible-versions')}
+			</ClayModal.Header>
 
 			<ClayModal.Body>
 				<p>
-					Select the versions of Liferay that your app is compatible with.
+					{i18n.translate(
+						'select-the-versions-of-liferay-that-your-app-is-compatible-with'
+					)}
 				</p>
 
 				<ClayManagementToolbar>
@@ -80,10 +120,10 @@ export function PackageVersionModal({appERC, currentVersions, handleClose, handl
 									aria-label="Search"
 									className="form-control input-group-inset input-group-inset-after"
 									onChange={(event) =>
-										setValue(event.target.value)
+										setVersionSelected(event.target.value)
 									}
 									type="text"
-									value={value}
+									value={versionSelected}
 								/>
 								<ClayInput.GroupInsetItem after tag="span">
 									<ClayButtonWithIcon
@@ -101,20 +141,25 @@ export function PackageVersionModal({appERC, currentVersions, handleClose, handl
 				<ClayForm className="modal-form">
 					<ClayForm.Group>
 						{versionList
-							.filter((version) =>
-								version.toLowerCase().match(value.toLowerCase())
+							.filter((version: string) =>
+								version
+									.toLowerCase()
+									.match(versionSelected.toLowerCase())
 							)
-							.map((version, index) => (
+							.map((version: string, index: number) => (
 								<ClayCheckbox
 									checked={checkboxVersions[index]?.isChecked}
 									key={index}
 									label={version}
 									name={`version-${index}`}
-									onChange={(event) => handleVersionSelection(event.target.value)}
+									onChange={(event) =>
+										handleVersionSelection(
+											event.target.value
+										)
+									}
 									value={version}
 								/>
-							))
-						}
+							))}
 					</ClayForm.Group>
 				</ClayForm>
 			</ClayModal.Body>
@@ -126,7 +171,7 @@ export function PackageVersionModal({appERC, currentVersions, handleClose, handl
 							displayType="secondary"
 							onClick={() => onClose()}
 						>
-							Cancel
+							{i18n.translate('cancel')}
 						</ClayButton>
 
 						<ClayButton
@@ -135,7 +180,7 @@ export function PackageVersionModal({appERC, currentVersions, handleClose, handl
 								onClose();
 							}}
 						>
-							Confirm
+							{i18n.translate('confirm')}
 						</ClayButton>
 					</ClayButton.Group>
 				}

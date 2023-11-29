@@ -277,6 +277,59 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-194263. If the page has more than one Experience, the page template created is from the Default experience."
+	@priority = 2
+	test CreatePageTemplateFromContentPageWithExperiencesViaPagesAdmin {
+		task ("Given a page creator has a contenge page with experiences") {
+			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
+				groupName = ${randomSiteName},
+				layoutPageTemplateCollectionName = "Page Template Set");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = ${randomSiteName});
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
+			PageEditor.addExperience(
+				experienceName = "New Experience",
+				segmentName = "Anyone");
+
+			PageEditor.editFragmentText(
+				fragmentName = "Heading",
+				id = "element-text",
+				text = "Welcome to Liferay");
+
+			PageEditor.publish();
+		}
+
+		task ("When the page creator navigates to the Pages admin") {
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
+		}
+
+		task ("Then the page creator could convert the content page to content page template based on the Default experience") {
+			PagesAdmin.createPageTemplate(
+				collectionName = "Page Template Set",
+				pageName = "Test Page Name");
+
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = ${siteURLKey});
+
+			Navigator.gotoNavNested(navNested = "Page Template Set");
+
+			PageTemplatesAdmin.viewPageTemplatePresent(pageTemplateName = "Test Page Name - Page Template");
+
+			PageTemplatesAdmin.viewEntryWorkflowStatus(
+				entry = "Test Page Name - Page Template",
+				workflowStatus = "Draft");
+
+			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Test Page Name - Page Template");
+
+			PageEditor.viewFragment(fragmentName = "Heading");
+		}
+	}
+
 	@description = "This is a test for LPS-143321. After clicking on discard draft the page continues to run."
 	@priority = 5
 	test DiscardContentPageDraft {

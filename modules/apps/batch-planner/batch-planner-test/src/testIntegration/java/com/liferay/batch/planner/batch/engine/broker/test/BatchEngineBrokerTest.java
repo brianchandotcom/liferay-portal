@@ -549,7 +549,6 @@ public class BatchEngineBrokerTest {
 		List<String> fieldNames) {
 
 		Assert.assertEquals(fieldNames, actualColumnNames);
-
 		Assert.assertEquals(expectedColumnNames, actualColumnNames);
 	}
 

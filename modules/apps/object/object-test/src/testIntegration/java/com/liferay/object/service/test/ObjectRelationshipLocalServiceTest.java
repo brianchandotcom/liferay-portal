@@ -149,7 +149,11 @@ public class ObjectRelationshipLocalServiceTest {
 				null);
 
 		AssertUtils.assertFailure(
-			DuplicateObjectRelationshipException.class, "Duplicate name able",
+			DuplicateObjectRelationshipException.MustNotDuplicateName.class,
+			String.format(
+				"There is an object relationship with the same name in the " +
+					"object definition \"%s\"",
+				_objectDefinition1.getShortName()),
 			() -> _objectRelationshipLocalService.addObjectRelationship(
 				null, TestPropsValues.getUserId(),
 				_objectDefinition1.getObjectDefinitionId(),

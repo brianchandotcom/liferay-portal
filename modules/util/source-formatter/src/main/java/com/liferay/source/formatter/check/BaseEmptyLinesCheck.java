@@ -102,6 +102,10 @@ public abstract class BaseEmptyLinesCheck extends BaseFileCheck {
 		matcher = _emptyLineBetweenSameSelfClosingTagsPattern.matcher(content);
 
 		while (matcher.find()) {
+			if (StringUtil.equals(matcher.group(2), "link")) {
+				continue;
+			}
+
 			String match = matcher.group();
 
 			String replacement = match.replaceAll("\n\n", "\n");

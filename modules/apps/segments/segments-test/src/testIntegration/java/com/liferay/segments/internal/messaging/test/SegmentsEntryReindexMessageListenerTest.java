@@ -6,18 +6,30 @@
 package com.liferay.segments.internal.messaging.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
+import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -28,16 +40,20 @@ import com.liferay.segments.internal.constants.SegmentsDestinationNames;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsEntryRel;
 import com.liferay.segments.service.SegmentsEntryRelLocalService;
+import com.liferay.segments.service.SegmentsEntryRoleLocalService;
 import com.liferay.segments.test.util.SegmentsTestUtil;
 
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author Michael Bowerman
@@ -52,6 +68,8 @@ public class SegmentsEntryReindexMessageListenerTest {
 
 	@Before
 	public void setUp() throws Exception {
+		_group = GroupTestUtil.addGroup();
+
 		_role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
 		Criteria criteria = new Criteria();
@@ -61,11 +79,84 @@ public class SegmentsEntryReindexMessageListenerTest {
 			Criteria.Conjunction.AND);
 
 		_segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
-			TestPropsValues.getGroupId(),
-			CriteriaSerializer.serialize(criteria), User.class.getName());
+			_group.getGroupId(), CriteriaSerializer.serialize(criteria),
+			User.class.getName());
+
+		_serviceContext = ServiceContextTestUtil.getServiceContext(
+			_group.getGroupId(), TestPropsValues.getUserId());
+
+		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
 
 		_user1 = UserTestUtil.addUser();
 		_user2 = UserTestUtil.addUser();
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		ServiceContextThreadLocal.popServiceContext();
+	}
+
+	@Test
+	public void testAssignRolesBySegmentManually() throws Exception {
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		HashMapDictionary<String, Object> properties =
+			HashMapDictionaryBuilder.<String, Object>put(
+				"roleSegmentationEnabled", true
+			).put(
+				"segmentationEnabled", true
+			).build();
+
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						_group.getCompanyId(),
+						"com.liferay.segments.configuration." +
+							"SegmentsCompanyConfiguration",
+						properties);
+			ConfigurationTemporarySwapper configurationTemporarySwapper =
+				new ConfigurationTemporarySwapper(
+					"com.liferay.segments.configuration.SegmentsConfiguration",
+					properties)) {
+
+			_roleLocalService.addUserRole(
+				_user1.getUserId(), _role.getRoleId());
+
+			_segmentsEntryRoleLocalService.addSegmentsEntryRole(
+				_segmentsEntry.getSegmentsEntryId(), role.getRoleId(),
+				_serviceContext);
+
+			_invokeMessageListener();
+
+			List<SegmentsEntryRel> segmentsEntryRels =
+				_segmentsEntryRelLocalService.getSegmentsEntryRels(
+					_segmentsEntry.getSegmentsEntryId());
+
+			Assert.assertEquals(
+				segmentsEntryRels.toString(), 1, segmentsEntryRels.size());
+
+			SegmentsEntryRel segmentsEntryRel = segmentsEntryRels.get(0);
+
+			Assert.assertEquals(
+				_user1.getUserId(), segmentsEntryRel.getClassPK());
+			Assert.assertEquals(
+				_segmentsEntry.getSegmentsEntryId(),
+				segmentsEntryRel.getSegmentsEntryId());
+
+			_serviceContext.setRequest(new MockHttpServletRequest());
+
+			PermissionChecker permissionChecker =
+				_permissionCheckerFactory.create(_user1);
+
+			Assert.assertTrue(
+				ArrayUtil.contains(
+					permissionChecker.getRoleIds(
+						_user1.getUserId(), _group.getGroupId()),
+					role.getRoleId()));
+		}
+		finally {
+			_roleLocalService.deleteRole(role);
+		}
 	}
 
 	@Test
@@ -153,10 +244,16 @@ public class SegmentsEntryReindexMessageListenerTest {
 		_messageListener.receive(message);
 	}
 
+	@DeleteAfterTestRun
+	private Group _group;
+
 	@Inject(
 		filter = "destination.name=" + SegmentsDestinationNames.SEGMENTS_ENTRY_REINDEX
 	)
 	private MessageListener _messageListener;
+
+	@Inject
+	private PermissionCheckerFactory _permissionCheckerFactory;
 
 	@DeleteAfterTestRun
 	private Role _role;
@@ -175,6 +272,11 @@ public class SegmentsEntryReindexMessageListenerTest {
 
 	@Inject
 	private SegmentsEntryRelLocalService _segmentsEntryRelLocalService;
+
+	@Inject
+	private SegmentsEntryRoleLocalService _segmentsEntryRoleLocalService;
+
+	private ServiceContext _serviceContext;
 
 	@DeleteAfterTestRun
 	private User _user1;

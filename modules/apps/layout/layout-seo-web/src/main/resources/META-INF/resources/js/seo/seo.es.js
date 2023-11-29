@@ -25,15 +25,13 @@ export default function ({namespace}) {
 	);
 
 	canonicalURLEnabledCheck.addEventListener('click', (event) => {
-		const disabled = !event.target.checked;
-
 		canonicalURLAlert.classList.toggle('hide');
 
 		const label = canonicalURLSettings.querySelector('label');
 
 		toggleDisabled(
 			[canonicalURLField, canonicalURLFieldDefaultLocale, label],
-			disabled
+			!event.target.checked
 		);
 
 		if (!canonicalURLField.value && canonicalURLField.placeholder) {
@@ -41,7 +39,7 @@ export default function ({namespace}) {
 		}
 
 		previewSeoFireChange(namespace, {
-			disabled,
+			disabled: !event.target.checked,
 			type: 'url',
 			value: canonicalURLField.value,
 		});

@@ -706,6 +706,10 @@ public class ClientExtensionProjectConfigurator
 
 						}));
 
+				Property<String> archiveVersion = zip.getArchiveVersion();
+
+				archiveVersion.set("");
+
 				zip.from(clientExtensionBuildDir);
 				zip.include("**/*");
 			});

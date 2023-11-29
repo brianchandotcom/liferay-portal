@@ -58,6 +58,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Base64;
@@ -111,6 +112,62 @@ public class ObjectEntryDTOConverter
 	@Override
 	public String getContentType() {
 		return ObjectEntry.class.getSimpleName();
+	}
+
+	@Override
+	public ObjectEntry toDTO(DTOConverterContext dtoConverterContext)
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			(ObjectDefinition)dtoConverterContext.getAttribute(
+				"objectDefinition");
+
+		ObjectEntry objectEntry = ObjectEntry.unsafeToDTO(
+			(String)dtoConverterContext.getAttribute("payload"));
+
+		User user = dtoConverterContext.getUser();
+
+		objectEntry.setActions(dtoConverterContext.getActions());
+
+		if (objectEntry.getStatus() == null) {
+			objectEntry.setStatus(
+				new Status() {
+					{
+						code = WorkflowConstants.STATUS_APPROVED;
+						label = WorkflowConstants.LABEL_APPROVED;
+						label_i18n = _language.get(
+							user.getLocale(), WorkflowConstants.LABEL_APPROVED);
+					}
+				});
+		}
+
+		List<ObjectField> objectFields =
+			_objectFieldLocalService.getObjectFields(
+				objectDefinition.getObjectDefinitionId());
+
+		for (ObjectField objectField : objectFields) {
+			if (!Objects.equals(
+					objectField.getBusinessType(),
+					ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
+
+				continue;
+			}
+
+			Map<String, Object> properties = objectEntry.getProperties();
+
+			Map<String, String> listTypeEntryMap =
+				(Map<String, String>)properties.get(objectField.getName());
+
+			properties.put(
+				objectField.getName(),
+				_getListEntry(
+					dtoConverterContext, listTypeEntryMap.get("key"),
+					objectField.getListTypeDefinitionId()));
+
+			objectEntry.setProperties(properties);
+		}
+
+		return objectEntry;
 	}
 
 	@Override

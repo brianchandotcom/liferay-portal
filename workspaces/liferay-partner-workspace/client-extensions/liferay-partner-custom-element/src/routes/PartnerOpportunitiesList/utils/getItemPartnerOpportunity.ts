@@ -9,7 +9,9 @@ import {customFormatDateOptions} from '../../../common/utils/constants/customFor
 import getDateCustomFormat from '../../../common/utils/getDateCustomFormat';
 import {getIntlNumberFormatString} from '../../../common/utils/getIntlNumberFormat';
 
-export default function getItemPartnerOpportunity(item: OpportunityPartnerRoleDTO) {
+export default function getItemPartnerOpportunity(
+	item: OpportunityPartnerRoleDTO
+) {
 	return {
 		[PartnerOpportunitiesColumnKey.ACTIVE]: item.active
 			? item.active
@@ -22,15 +24,16 @@ export default function getItemPartnerOpportunity(item: OpportunityPartnerRoleDT
 			: '- ',
 		[PartnerOpportunitiesColumnKey.CREATED_DATE]: item.dateCreated
 			? getDateCustomFormat(
-				item.dateCreated,
-				customFormatDateOptions.SHORT_MONTH
-			)
+					item.dateCreated,
+					customFormatDateOptions.SHORT_MONTH
+			  )
 			: '- ',
 		[PartnerOpportunitiesColumnKey.ACCOUNT_NAME]: item.accountName
 			? item.accountName
 			: ' - ',
-		[PartnerOpportunitiesColumnKey.CURRENCY]:
-			item.currency ? item.currency : '- ',
+		[PartnerOpportunitiesColumnKey.CURRENCY]: item.currency
+			? item.currency
+			: '- ',
 		[PartnerOpportunitiesColumnKey.GROWTH_ARR]: item.growthArr
 			? item.growthArr
 			: '- ',
@@ -50,8 +53,8 @@ export default function getItemPartnerOpportunity(item: OpportunityPartnerRoleDT
 			? item.partnerEmail
 			: ' - ',
 		[PartnerOpportunitiesColumnKey.PARTNER_REP_NAME]: `${
-				item.partnerFirstName ? item.partnerFirstName : ''
-			}${item.partnerLastName ? ' ' + item.partnerLastName : ''}`,
+			item.partnerFirstName ? item.partnerFirstName : ''
+		}${item.partnerLastName ? ' ' + item.partnerLastName : ''}`,
 		[PartnerOpportunitiesColumnKey.STAGE]: item.stage ? item.stage : '- ',
 		[PartnerOpportunitiesColumnKey.SUBSCRIPTION_ARR]:
 			item.subscriptionArr && item.currency
@@ -63,6 +66,5 @@ export default function getItemPartnerOpportunity(item: OpportunityPartnerRoleDT
 			? item.subscriptionTerm
 			: ' - ',
 		[PartnerOpportunitiesColumnKey.TYPE]: item.type ? item.type : '- ',
-		
 	};
 }

@@ -354,6 +354,7 @@
 		},
 		{
 			"DBType": "Boolean",
+			"businessType": "Boolean",
 			"externalReferenceCode": "IsConverted",
 			"indexed": true,
 			"indexedAsKeyword": false,

@@ -18,7 +18,8 @@ export async function retry<T>(
 		await new Promise((resolve) => setTimeout(resolve, delay));
 
 		return retry(operation, maxRetryCount - 1, delay * maxRetryCount);
-	} else {
+	}
+	else {
 		throw new Error();
 	}
 }

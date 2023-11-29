@@ -51,9 +51,8 @@
 				</div>
 
 				<div class="col-auto d-flex mx-n2">
-						<div class="text-neutral-8 text-paragraph-xxs">
-							${dateUtil.getDate(curEntry.getPublishDate(), "MMM dd, yyyy", locale)}
-						</div>
+					<div class="text-neutral-8 text-paragraph-xxs">
+						${dateUtil.getDate(curEntry.getPublishDate(), "MMM dd, yyyy", locale)}
 					</div>
 				</div>
 			</div>

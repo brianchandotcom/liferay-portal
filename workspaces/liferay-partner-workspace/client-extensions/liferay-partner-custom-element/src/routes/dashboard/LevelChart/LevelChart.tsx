@@ -29,11 +29,7 @@ const LevelChart = () => {
 			return <ClayLoadingIndicator className="mb-10 mt-10" size="md" />;
 		}
 
-		if (
-			!account ||
-			!partnerLevel ||
-			opportunitiesCount === undefined
-		) {
+		if (!account || !partnerLevel || opportunitiesCount === undefined) {
 			return (
 				<ClayAlert
 					className="mx-auto my-9 text-center w-75"

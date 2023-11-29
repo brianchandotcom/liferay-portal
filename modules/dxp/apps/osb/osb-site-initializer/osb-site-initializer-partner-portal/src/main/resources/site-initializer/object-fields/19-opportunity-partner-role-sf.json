@@ -2,6 +2,7 @@
 	"object-fields": [
 		{
 			"DBType": "Boolean",
+			"businessType": "Boolean",
 			"externalReferenceCode": "Active__c",
 			"indexed": true,
 			"indexedAsKeyword": false,
@@ -79,6 +80,7 @@
 		},
 		{
 			"DBType": "Boolean",
+			"businessType": "Boolean",
 			"externalReferenceCode": "Opp_Has_Renewal_Indicator__c",
 			"indexed": true,
 			"indexedAsKeyword": false,
@@ -260,6 +262,7 @@
 		},
 		{
 			"DBType": "Boolean",
+			"businessType": "Boolean",
 			"externalReferenceCode": "Primary_Seller__c",
 			"indexed": true,
 			"indexedAsKeyword": false,

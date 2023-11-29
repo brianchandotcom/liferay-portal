@@ -40,7 +40,7 @@
 			UnicodeProperties typeSettingsUnicodeProperties = layout.getTypeSettingsProperties();
 			%>
 
-			'<%= HtmlUtil.escapeHREF(typeSettingsUnicodeProperties.getProperty("embeddedLayoutURL")) %>'
+			'<%= HtmlUtil.escapeJS(typeSettingsUnicodeProperties.getProperty("embeddedLayoutURL")) %>'
 		);
 	}
 </aui:script>

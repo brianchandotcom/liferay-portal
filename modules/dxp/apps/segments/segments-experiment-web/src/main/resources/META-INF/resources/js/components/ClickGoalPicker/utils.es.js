@@ -40,7 +40,12 @@ export function getTargetableElements(element, selectedTarget) {
 
 	// Allowed targetable elements with id
 
-	const selector = ['a[id]', 'button[id]', 'input[type=submit][id]'];
+	const selector = [
+		'[id^=analytics-targetable-collection]',
+		'a[id]',
+		'button[id]',
+		'input[type=submit][id]',
+	];
 
 	// Other targetable element already selected
 

@@ -5380,6 +5380,26 @@ components:
                     required:
                         - externalReferenceCode
                     type: object
+                taxonomyVocabularyId:
+                    description:
+                        The vocabulary's ID. This can be used to retrieve more information in the `TaxonomyVocabulary`
+                        API.
+                    format: int64
+                    readOnly: true
+                    type: integer
+                taxonomyVocabularyName:
+                    description:
+                        The vocabulary's name.
+                    readOnly: true
+                    type: string
+                taxonomyVocabularyName_i18n:
+                    additionalProperties:
+                        type: string
+                    # @review
+                    description:
+                        The localized vocabulary's names.
+                    readOnly: true
+                    type: object
             type: object
         URLActionExecutionResult:
             # @review

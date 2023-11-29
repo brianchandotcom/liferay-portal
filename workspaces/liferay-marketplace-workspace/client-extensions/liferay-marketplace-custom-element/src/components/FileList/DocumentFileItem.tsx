@@ -11,19 +11,21 @@ import {UploadedFile} from './FileList';
 import './DocumentFileItem.scss';
 
 interface DocumentFileItemProps {
-	onDelete: (id: string) => void;
+	onDelete: (id: string, versionName?: string) => void;
 	uploadedFile: UploadedFile;
+	versionName?: string;
 }
 
 export function DocumentFileItem({
 	onDelete,
 	uploadedFile,
+	versionName,
 }: DocumentFileItemProps) {
 	return (
 		<div className="document-file-list-item-container">
 			<div className="document-file-list-item-left-content">
 				<div className="document-file-list-item-left-content-icon-container">
-					{uploadedFile.uploaded && !uploadedFile.error ? (
+					{uploadedFile?.uploaded && !uploadedFile?.error ? (
 						<img
 							alt="Folder Icon"
 							className="document-file-list-item-left-content-icon"
@@ -37,10 +39,10 @@ export function DocumentFileItem({
 									width: 50,
 								},
 							}}
-							value={uploadedFile.progress}
+							value={uploadedFile?.progress}
 						>
 							<div style={{fontSize: 10}}>
-								<strong>{uploadedFile.progress}</strong>
+								<strong>{uploadedFile?.progress}</strong>
 							</div>
 						</CircularProgressbarWithChildren>
 					)}
@@ -48,20 +50,20 @@ export function DocumentFileItem({
 
 				<div className="document-file-list-item-left-content-text-container">
 					<span className="document-file-list-item-left-content-text-file-name">
-						{uploadedFile.fileName}
+						{uploadedFile?.fileName}
 					</span>
 
 					<span className="document-file-list-item-left-content-text-file-size">
-						{String(uploadedFile.readableSize)}
+						{String(uploadedFile?.readableSize)}
 					</span>
 				</div>
 			</div>
 
 			<button
 				className="document-file-list-item-button"
-				onClick={() => onDelete(uploadedFile.id)}
+				onClick={() => onDelete(uploadedFile?.id, versionName)}
 			>
-				{uploadedFile.uploaded ? 'Remove' : 'Cancel Upload'}
+				{uploadedFile?.uploaded ? 'Remove' : 'Cancel Upload'}
 			</button>
 		</div>
 	);

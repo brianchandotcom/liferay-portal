@@ -14,15 +14,17 @@ import {UploadedFile} from './FileList';
 import './ImageFileItem.scss';
 
 interface ImageFileItemProps {
-	onDelete: (id: string) => void;
+	onDelete: (id: string, versionName?: string) => void;
 	tooltip?: string;
 	uploadedFile: UploadedFile;
+	versionName?: string;
 }
 
 export function ImageFileItem({
 	onDelete,
 	tooltip,
 	uploadedFile,
+	versionName,
 }: ImageFileItemProps) {
 	return (
 		<div className="image-file-item-container">
@@ -82,7 +84,7 @@ export function ImageFileItem({
 
 					<button
 						className="image-file-item-info-content-button"
-						onClick={() => onDelete(uploadedFile.id)}
+						onClick={() => onDelete(uploadedFile.id, versionName)}
 					>
 						Remove
 					</button>

@@ -153,9 +153,8 @@ public class UpgradeRecorder {
 			else {
 				_log.info(
 					StringBundler.concat(
-						StringUtil.toUpperCase(_type.substring(0, 1)),
-						_type.substring(1), " upgrade finished with result ",
-						_result));
+						StringUtil.upperCaseFirstLetter(_type),
+						" upgrade finished with result ", _result));
 
 				if (!_result.equals("failure") && !_errorMessages.isEmpty()) {
 					_log.info(

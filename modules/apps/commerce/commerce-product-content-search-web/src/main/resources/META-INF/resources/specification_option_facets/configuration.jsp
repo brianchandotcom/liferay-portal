@@ -24,8 +24,8 @@ CPSpecificationOptionFacetsDisplayContext cpSpecificationOptionFacetsDisplayCont
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
 	<liferay-frontend:edit-form-body>
-		<liferay-ui:error key="exceededMaxSpecificationsLimit" message="maximum-specifications-cannot-exceed-100" />
-		<liferay-ui:error key="exceededMaxTermsLimit" message="maximum-terms-cannot-exceed-100" />
+		<liferay-ui:error key="exceededMaxSpecificationsLimit" message='<%= LanguageUtil.format(request, "maximum-specifications-cannot-exceed-x", 100) %>' />
+		<liferay-ui:error key="exceededMaxTermsLimit" message='<%= LanguageUtil.format(request, "maximum-terms-cannot-exceed-x", 100) %>' />
 
 		<liferay-frontend:fieldset
 			collapsible="<%= true %>"

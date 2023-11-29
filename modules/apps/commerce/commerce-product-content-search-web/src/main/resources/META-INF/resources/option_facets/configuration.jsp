@@ -24,8 +24,8 @@ CPOptionsSearchFacetDisplayContext cpOptionsSearchFacetDisplayContext = new CPOp
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
 	<liferay-frontend:edit-form-body>
-		<liferay-ui:error key="exceededMaxOptionsLimit" message="maximum-options-cannot-exceed-100" />
-		<liferay-ui:error key="exceededMaxTermsLimit" message="maximum-terms-cannot-exceed-100" />
+		<liferay-ui:error key="exceededMaxOptionsLimit" message='<%= LanguageUtil.format(request, "maximum-options-cannot-exceed-x", 100) %>' />
+		<liferay-ui:error key="exceededMaxTermsLimit" message='<%= LanguageUtil.format(request, "maximum-terms-cannot-exceed-x", 100) %>' />
 
 		<liferay-frontend:fieldset
 			collapsible="<%= true %>"

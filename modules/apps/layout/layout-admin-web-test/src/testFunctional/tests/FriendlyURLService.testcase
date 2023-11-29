@@ -419,6 +419,37 @@ definition {
 			value1 = "Usted fue redirigido a ${portalURL}/es/web/test-site-name/nueva-pagina-de-prueba");
 	}
 
+	@description = "This case covers LPS-168805. This ensures that localized friendly uRL deleted and added to history."
+	@priority = 3
+	test CanRemoveLocalizedFriendlyURL {
+		PagesAdmin.openToConfigurePublicPage(
+			groupName = "Test Site Name",
+			layoutName = "Test Source Page",
+			siteURLKey = "test-site-name");
+
+		PagesAdmin.addLocalizedFriendlyURL(
+			friendlyURLLocalizedList = "es-ES",
+			localizedFriendlyURLList = "/pagina-de-prueba",
+			localizedNameList = "Pagina de prueba");
+
+		PagesAdmin.deleteFriendlyURL(locale = "es-ES");
+
+		PortletEntry.changeLocale(
+			fieldName = "Friendly URL",
+			locale = "es-ES");
+
+		AssertTextEquals(
+			inputFieldId = "friendlyURL",
+			locator1 = "TextInput#TEXT_INPUT_ID",
+			value1 = "");
+
+		PagesAdmin.gotoFriendlyURLHistory();
+
+		PagesAdmin.viewActiveURL(activeURL = "/test-source-page");
+
+		PagesAdmin.viewOldFriendlyURL(oldFriendlyURL = "/pagina-de-prueba");
+	}
+
 	@description = "This ensures that the old friendlyURL can be removed from the history."
 	@priority = 5
 	test CanRemoveOldFriendlyURL {

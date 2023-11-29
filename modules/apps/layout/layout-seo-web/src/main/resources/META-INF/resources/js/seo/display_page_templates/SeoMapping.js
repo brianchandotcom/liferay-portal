@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {sub} from 'frontend-js-web';
 import {PropTypes} from 'prop-types';
 import React from 'react';
 
 import MappingFields from './components/MappingFields';
-import lang from './utils/lang';
 
 export default function SeoMapping({
 	description,
@@ -22,7 +22,7 @@ export default function SeoMapping({
 			inputs={[
 				{
 					fieldTypes: ['html', 'text'],
-					helpMessage: lang.sub(
+					helpMessage: sub(
 						Liferay.Language.get(
 							'map-a-x-field-it-will-be-used-as-x'
 						),
@@ -36,7 +36,7 @@ export default function SeoMapping({
 				{
 					component: 'textarea',
 					fieldTypes: ['html', 'text'],
-					helpMessage: lang.sub(
+					helpMessage: sub(
 						Liferay.Language.get(
 							'map-a-x-field-it-will-be-used-as-x'
 						),

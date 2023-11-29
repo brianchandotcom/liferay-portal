@@ -3,7 +3,7 @@ import ClayLink from '@clayui/link';
 import EmptyState from 'shared/components/workspaces/EmptyState';
 import getCN from 'classnames';
 import JoinableWorkspacesWrapper from 'shared/components/workspaces/JoinableWorkspacesWrapper';
-import React, {useEffect} from 'react';
+import React from 'react';
 import WorkspaceList from 'shared/components/workspaces/workspace-list';
 import WorkspacesBasePage, {
 	BasePageContext
@@ -67,11 +67,11 @@ const Workspaces = ({
 	const client = useApolloClient();
 	const projectsFiltered = filterProjects(projects);
 
-	useEffect(() => {
-		clearStore();
+	// Clear Redux Store
+	clearStore();
 
-		client.clearStore();
-	}, []);
+	// Clear Apollo GraphQL Store
+	client.clearStore();
 
 	const renderButtons = () => (
 		<div className='mt-4'>

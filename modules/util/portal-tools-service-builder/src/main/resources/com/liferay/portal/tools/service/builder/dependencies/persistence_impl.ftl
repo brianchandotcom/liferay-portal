@@ -819,7 +819,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				</#if>
 			}
 
-			<#if serviceBuilder.isVersionGTE_7_3_0() && entity.hasExternalReferenceCode()>
+			<#if entity.hasExternalReferenceCode()>
 				else {
 					<#if serviceBuilder.isVersionGTE_7_4_0()>
 						${entity.name} erc${entity.name} = fetchByERC_${entity.externalReferenceCode?cap_first[0..0]}(${entity.variableName}.getExternalReferenceCode(), ${entity.variableName}.get${entity.externalReferenceCode?cap_first}Id());

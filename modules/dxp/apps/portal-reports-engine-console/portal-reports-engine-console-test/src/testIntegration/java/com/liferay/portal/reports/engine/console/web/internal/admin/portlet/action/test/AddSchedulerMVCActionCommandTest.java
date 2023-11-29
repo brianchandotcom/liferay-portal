@@ -153,6 +153,8 @@ public class AddSchedulerMVCActionCommandTest {
 		Entry entry = _entryLocalService.getEntry(
 			jsonObject.getLong("entryId"));
 
+		_entryLocalService.unscheduleEntry(entry.getEntryId());
+
 		Assert.assertEquals(
 			_jsonFactory.createJSONArray(
 			).put(

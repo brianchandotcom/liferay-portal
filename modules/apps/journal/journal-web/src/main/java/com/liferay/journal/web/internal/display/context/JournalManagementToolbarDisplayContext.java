@@ -383,14 +383,26 @@ public class JournalManagementToolbarDisplayContext
 		labelItemListWrapper.add(
 			_journalDisplayContext::isNavigationMine,
 			labelItem -> {
-				labelItem.putData(
-					"removeLabelURL",
-					PortletURLBuilder.create(
-						PortletURLUtil.clone(
-							currentURLObj, liferayPortletResponse)
-					).setParameter(
-						"navigationMine", (String)null
-					).buildString());
+				if (FeatureFlagManagerUtil.isEnabled("LPS-196768")) {
+					labelItem.putData(
+						"removeLabelURL",
+						PortletURLBuilder.create(
+							PortletURLUtil.clone(
+								currentURLObj, liferayPortletResponse)
+						).setParameter(
+							"navigationMine", (String)null
+						).buildString());
+				}
+				else {
+					labelItem.putData(
+						"removeLabelURL",
+						PortletURLBuilder.create(
+							PortletURLUtil.clone(
+								currentURLObj, liferayPortletResponse)
+						).setNavigation(
+							(String)null
+						).buildString());
+				}
 
 				labelItem.setCloseable(true);
 
@@ -407,14 +419,26 @@ public class JournalManagementToolbarDisplayContext
 		).add(
 			_journalDisplayContext::isNavigationRecent,
 			labelItem -> {
-				labelItem.putData(
-					"removeLabelURL",
-					PortletURLBuilder.create(
-						PortletURLUtil.clone(
-							currentURLObj, liferayPortletResponse)
-					).setParameter(
-						"navigationRecent", (String)null
-					).buildString());
+				if (FeatureFlagManagerUtil.isEnabled("LPS-196768")) {
+					labelItem.putData(
+						"removeLabelURL",
+						PortletURLBuilder.create(
+							PortletURLUtil.clone(
+								currentURLObj, liferayPortletResponse)
+						).setParameter(
+							"navigationRecent", (String)null
+						).buildString());
+				}
+				else {
+					labelItem.putData(
+						"removeLabelURL",
+						PortletURLBuilder.create(
+							PortletURLUtil.clone(
+								currentURLObj, liferayPortletResponse)
+						).setNavigation(
+							(String)null
+						).buildString());
+				}
 
 				labelItem.setCloseable(true);
 				labelItem.setLabel(

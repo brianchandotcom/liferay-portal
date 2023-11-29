@@ -177,7 +177,7 @@
 </tr>
 <tr>
 	<td>BORDER_BOTTOM_PALETTE_ITEM</td>
-	<td>//label[normalize-space(text())='${key_borderBottom}']/following-sibling::div[1]//li[contains(@class,'palette-item')]//button[contains(@class,'bg-${key_paletteItem}')]</td>
+	<td>//label[normalize-space(text())='${key_borderBottom}']/following-sibling::div[1]//li[contains(@class,'palette-item')]//button[contains(@class,'palette-item')][@*='${key_paletteItem}']</td>
 	<td></td>
 </tr>
 <tr>

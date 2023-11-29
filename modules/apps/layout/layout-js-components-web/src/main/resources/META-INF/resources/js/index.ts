@@ -23,6 +23,11 @@ export {
 export {default as SearchForm} from './components/search_form/SearchForm';
 export {default as SearchResultsMessage} from './components/search_results_message/SearchResultsMessage';
 export {
+	default as TranslationSelector,
+	Language,
+	Translations,
+} from './components/translation_selector/TranslationSelector';
+export {
 	StyleErrorsContextProvider,
 	useHasStyleErrors,
 } from './contexts/StyleErrorsContext';

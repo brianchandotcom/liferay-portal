@@ -548,6 +548,28 @@ definition {
 		Role.viewDefaultCP(roleTitle = "Roles Regrole Name");
 	}
 
+	@description = "This is a test for LPS-202614."
+	@priority = 3
+	test RemoveSegmentsOptionInAdministratorRole {
+		task ("When navigates to administrator role -> Assignees tab") {
+			Role.openRolesAdmin();
+
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Edit",
+				rowEntry = "Administrator");
+
+			Click(
+				key_tabName = "Assignees",
+				locator1 = "ObjectAdmin#ENTRY_RELATIONSHIP_TAB");
+		}
+
+		task ("Then the Segments tab is removed") {
+			AssertElementNotPresent(
+				key_tabName = "Segments",
+				locator1 = "ObjectAdmin#ENTRY_RELATIONSHIP_TAB");
+		}
+	}
+
 	@priority = 4
 	test RolesCanBeOrderedByTitle {
 		Role.openRolesAdmin();

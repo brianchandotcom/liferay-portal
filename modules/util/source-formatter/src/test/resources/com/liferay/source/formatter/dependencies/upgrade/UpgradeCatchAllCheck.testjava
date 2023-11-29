@@ -479,6 +479,13 @@ public class UpgradeCatchAllCheck {
 		defaultFragmentRendererContext.setSegmentsExperienceIds(segmentsExperienceIds);
 	}
 
+	public void method(Map<String, Object> fieldValues) {
+		DefaultFragmentRendererContext defaultFragmentRendererContext = new DefaultFragmentRendererContext(null);
+
+		defaultFragmentRendererContext.setFieldValues(fieldValues);
+		defaultFragmentRendererContext.setFieldValues(new HashMap<String, Object>());
+	}
+
 	public void method(Organization organization) {
 		organization.getStatusId();
 		organization.setStatusId();

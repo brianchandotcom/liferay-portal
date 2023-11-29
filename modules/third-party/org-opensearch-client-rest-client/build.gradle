@@ -95,6 +95,9 @@ unzip {
 
 	doLast {
 		srcTmpDir.eachFileRecurse(FileType.FILES) {
+			if (it.name == "RestClient.java") {
+				return
+			}
 			if (it.name.endsWith(".java")) {
 				File destFile = new File(file("src/main/java"), FileUtil.relativize(it, srcTmpDir))
 

@@ -66,11 +66,17 @@ const applySavedFDSFields = ({
 	return [selectedKeys, fields];
 };
 
-function filterFields(
-	fields: Array<IFieldTreeItem>,
-	query: string,
-	onFilter?: Function
-) {
+function filterFields({
+	fields,
+	onFilter,
+	onMatch,
+	query,
+}: {
+	fields: Array<IFieldTreeItem>;
+	onFilter?: Function;
+	onMatch?: Function;
+	query: string;
+}) {
 	const filteredItems: Array<IFieldTreeItem> = [];
 	const regexp = new RegExp(query, 'i');
 
@@ -78,7 +84,7 @@ function filterFields(
 		const match = field.label ? regexp.test(field.label) : false;
 
 		const filteredChildren = field.children?.length
-			? filterFields(field.children, query, onFilter)
+			? filterFields({fields: field.children, onFilter, onMatch, query})
 			: [];
 
 		if (match || (field.children?.length && filteredChildren.length)) {
@@ -92,6 +98,10 @@ function filterFields(
 				onFilter(field);
 			}
 		}
+
+		if (match && onMatch) {
+			onMatch(field);
+		}
 	});
 
 	return filteredItems;
@@ -103,19 +113,27 @@ function applyFilter({
 }: {fields?: Array<IFieldTreeItem>; query?: string} = {}) {
 	if (!query || !fields) {
 		return {
+			counter: 0,
 			filteredItems: fields ?? [],
 			filteredKeys: [],
 		};
 	}
 
+	let counter = 0;
 	const filteredKeys: Array<React.Key> = [];
-	const filteredItems = filterFields(fields, query, ({id}: IField) => {
-		if (id) {
-			filteredKeys.push(id);
-		}
+	const filteredItems = filterFields({
+		fields,
+		onFilter: ({id}: IField) => {
+			if (id) {
+				filteredKeys.push(id);
+			}
+		},
+		onMatch: () => counter++,
+		query,
 	});
 
 	return {
+		counter,
 		filteredItems,
 		filteredKeys,
 	};
@@ -172,6 +190,7 @@ const AddFieldsModalContent = ({
 	const [fields, setFields] = useState<Array<IField> | null>(initialFields);
 	const [query, setQuery] = useState<string>('');
 	const [expandedKeys, setExpandedKeys] = useState<Array<React.Key>>([]);
+	const [searchCounter, setSearchCounter] = useState<number>(0);
 
 	const saveFDSFields = async () => {
 		setSaveButtonDisabled(true);
@@ -252,13 +271,14 @@ const AddFieldsModalContent = ({
 	const onSearch = (query: string) => {
 		setQuery(query);
 
-		const {filteredItems, filteredKeys} = applyFilter({
+		const {counter, filteredItems, filteredKeys} = applyFilter({
 			fields: initialFields ?? [],
 			query,
 		});
 
 		setFields(filteredItems);
 		setExpandedKeys(filteredKeys);
+		setSearchCounter(counter);
 	};
 
 	return (
@@ -284,14 +304,14 @@ const AddFieldsModalContent = ({
 									<span className="component-text text-truncate-inline">
 										<span className="text-truncate">
 											{sub(
-												fields.length === 1
+												searchCounter === 1
 													? Liferay.Language.get(
 															'x-result-for-x'
 													  )
 													: Liferay.Language.get(
 															'x-results-for-x'
 													  ),
-												fields.length,
+												searchCounter,
 												query
 											)}
 										</span>

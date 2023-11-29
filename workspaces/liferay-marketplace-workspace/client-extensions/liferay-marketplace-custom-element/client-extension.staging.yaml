@@ -1,18 +1,2 @@
-liferay-marketplace-custom-element-create-app:
-    dxp.lxc.liferay.com.virtualInstanceId: solutions.marketplace
-liferay-marketplace-custom-element-create-license:
-    dxp.lxc.liferay.com.virtualInstanceId: solutions.marketplace
-liferay-marketplace-custom-element-customer-gate:
-    dxp.lxc.liferay.com.virtualInstanceId: solutions.marketplace
-liferay-marketplace-custom-element-get-app:
-    dxp.lxc.liferay.com.virtualInstanceId: solutions.marketplace
-liferay-marketplace-custom-element-next-steps:
-    dxp.lxc.liferay.com.virtualInstanceId: solutions.marketplace
-liferay-marketplace-custom-element-published-apps:
-    dxp.lxc.liferay.com.virtualInstanceId: solutions.marketplace
-liferay-marketplace-custom-element-publisher-gate:
-    dxp.lxc.liferay.com.virtualInstanceId: solutions.marketplace
-liferay-marketplace-custom-element-purchased-apps:
-    dxp.lxc.liferay.com.virtualInstanceId: solutions.marketplace
-liferay-marketplace-custom-element-purchased-solutions:
+liferay-marketplace-custom-element:
     dxp.lxc.liferay.com.virtualInstanceId: solutions.marketplace

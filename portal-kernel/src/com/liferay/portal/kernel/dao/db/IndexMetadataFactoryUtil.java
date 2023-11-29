@@ -24,31 +24,8 @@ public class IndexMetadataFactoryUtil {
 			throw new NullPointerException("Column names are missing");
 		}
 
-		StringBundler sb = new StringBundler(4 + (columnNames.length * 2));
-
-		sb.append(tableName);
-		sb.append(StringPool.SPACE);
-		sb.append(StringPool.OPEN_PARENTHESIS);
-
-		for (String columnName : columnNames) {
-			sb.append(columnName);
-			sb.append(StringPool.COMMA_AND_SPACE);
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(StringPool.CLOSE_PARENTHESIS);
-		sb.append(StringPool.SEMICOLON);
-
-		String specification = sb.toString();
-
-		String specificationHash = StringUtil.toHexString(
-			specification.hashCode());
-
-		specificationHash = StringUtil.toUpperCase(specificationHash);
-
 		return new IndexMetadata(
-			_INDEX_NAME_PREFIX.concat(specificationHash), tableName, unique,
+			createIndexName(unique, tableName, columnNames), tableName, unique,
 			columnNames);
 	}
 
@@ -104,6 +81,35 @@ public class IndexMetadataFactoryUtil {
 			createSQL.substring(start, end), StringPool.COMMA_AND_SPACE);
 
 		return new IndexMetadata(indexName, tableName, unique, columnNames);
+	}
+
+	public static String createIndexName(
+		boolean unique, String tableName, String... columnNames) {
+
+		StringBundler sb = new StringBundler(4 + (columnNames.length * 2));
+
+		sb.append(tableName);
+		sb.append(StringPool.SPACE);
+		sb.append(StringPool.OPEN_PARENTHESIS);
+
+		for (String columnName : columnNames) {
+			sb.append(columnName);
+			sb.append(StringPool.COMMA_AND_SPACE);
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		sb.append(StringPool.CLOSE_PARENTHESIS);
+		sb.append(StringPool.SEMICOLON);
+
+		String specification = sb.toString();
+
+		String specificationHash = StringUtil.toHexString(
+			specification.hashCode());
+
+		specificationHash = StringUtil.toUpperCase(specificationHash);
+
+		return _INDEX_NAME_PREFIX.concat(specificationHash);
 	}
 
 	private static final String _INDEX_NAME_PREFIX = "IX_";

@@ -29,12 +29,6 @@
 						<util:constant static-field="com.liferay.portal.kernel.messaging.DestinationConfiguration.DESTINATION_TYPE_SERIAL" />
 					</constructor-arg>
 				</bean>
-				<bean class="com.liferay.portal.kernel.messaging.DestinationConfiguration">
-					<constructor-arg name="destinationName" value="liferay/subscription_clean_up" />
-					<constructor-arg name="destinationType">
-						<util:constant static-field="com.liferay.portal.kernel.messaging.DestinationConfiguration.DESTINATION_TYPE_PARALLEL" />
-					</constructor-arg>
-				</bean>
 			</util:set>
 		</property>
 		<property name="messageListeners">

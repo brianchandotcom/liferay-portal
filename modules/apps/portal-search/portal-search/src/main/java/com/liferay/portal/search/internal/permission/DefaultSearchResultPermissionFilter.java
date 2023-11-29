@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchResultPermissionFilter;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.FacetPostProcessor;
+import com.liferay.portal.kernel.search.facet.RangeFacet;
+import com.liferay.portal.kernel.search.facet.collector.DefaultTermCollector;
+import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
+import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
@@ -38,6 +42,8 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.configuration.DefaultSearchResultPermissionFilterConfiguration;
+import com.liferay.portal.search.internal.facet.FacetImpl;
+import com.liferay.portal.search.internal.facet.SimpleFacetCollector;
 import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.util.PropsValues;
@@ -102,7 +108,7 @@ public class DefaultSearchResultPermissionFilter
 			Hits hits = _getHits(searchContext);
 
 			if (!_isGroupAdmin(searchContext)) {
-				_filterHits(hits, searchContext);
+				_filterHits(null, hits, searchContext);
 			}
 
 			return hits;
@@ -122,7 +128,10 @@ public class DefaultSearchResultPermissionFilter
 		return slidingWindowSearcher.search(start, end, searchContext);
 	}
 
-	private int _filterHits(Hits hits, SearchContext searchContext) {
+	private int _filterHits(
+		SlidingWindowSearcher.FacetCountHelper facetCountHelper, Hits hits,
+		SearchContext searchContext) {
+
 		Map<String, Boolean> companyScopeViewPermissions = new HashMap<>();
 		List<Document> docs = new ArrayList<>();
 		List<Document> excludeDocs = new ArrayList<>();
@@ -151,6 +160,10 @@ public class DefaultSearchResultPermissionFilter
 
 		if (!excludeDocs.isEmpty()) {
 			Map<String, Facet> facets = searchContext.getFacets();
+
+			if (facetCountHelper != null) {
+				facets = facetCountHelper.getFacets();
+			}
 
 			for (Facet facet : facets.values()) {
 				_facetPostProcessor.exclude(excludeDocs, facet);
@@ -344,6 +357,7 @@ public class DefaultSearchResultPermissionFilter
 				_log.debug("Starting sliding window searches");
 			}
 
+			FacetCountHelper facetCountHelper = null;
 			StopWatch hitFilteringStopWatch = new StopWatch();
 			int numberOfDocsCollected = 0;
 			int numberOfTotalDocsNeeded = end;
@@ -426,6 +440,8 @@ public class DefaultSearchResultPermissionFilter
 				Hits hits = _getHits(searchContext);
 
 				if (searchesExecuted == 0) {
+					facetCountHelper = new FacetCountHelper(
+						searchContext.getFacets());
 					originalTotalHits = hits.getLength();
 					recalculatedTotalHits = hits.getLength();
 					startTime = hits.getStart();
@@ -440,7 +456,8 @@ public class DefaultSearchResultPermissionFilter
 					hitFilteringStopWatch.resume();
 				}
 
-				recalculatedTotalHits -= _filterHits(hits, searchContext);
+				recalculatedTotalHits -= _filterHits(
+					facetCountHelper, hits, searchContext);
 
 				hitFilteringStopWatch.suspend();
 
@@ -456,6 +473,8 @@ public class DefaultSearchResultPermissionFilter
 					_updateHits(
 						slidingWindowHelper.getDocumentsAndScoresTuple(), hits,
 						startTime, recalculatedTotalHits);
+
+					_mergeFacets(facetCountHelper, searchContext);
 
 					if (_log.isDebugEnabled()) {
 						slidingWindowStopWatch.stop();
@@ -497,6 +516,17 @@ public class DefaultSearchResultPermissionFilter
 			}
 
 			return slidingWindowHelper.getTotalDocs();
+		}
+
+		private String _getAggregationName(Facet facet) {
+			if (facet instanceof com.liferay.portal.search.facet.Facet) {
+				com.liferay.portal.search.facet.Facet osgiFacet =
+					(com.liferay.portal.search.facet.Facet)facet;
+
+				return osgiFacet.getAggregationName();
+			}
+
+			return facet.getFieldName();
 		}
 
 		private String _getMessage(
@@ -547,6 +577,45 @@ public class DefaultSearchResultPermissionFilter
 			}
 
 			return sb.toString();
+		}
+
+		private void _mergeFacets(
+			FacetCountHelper facetCountHelper, SearchContext searchContext) {
+
+			Map<String, Facet> facets = searchContext.getFacets();
+
+			for (Facet facet : facets.values()) {
+				Facet helperFacet = facetCountHelper.getFacet(
+					_getAggregationName(facet));
+
+				FacetCollector helperFacetCollector =
+					helperFacet.getFacetCollector();
+
+				FacetCollector facetCollector = facet.getFacetCollector();
+
+				List<TermCollector> termCollectors =
+					facetCollector.getTermCollectors();
+
+				List<TermCollector> newTermCollectors = new ArrayList<>();
+
+				for (TermCollector termCollector : termCollectors) {
+					String term = termCollector.getTerm();
+
+					TermCollector helperTermCollector =
+						helperFacetCollector.getTermCollector(term);
+
+					int frequency = helperTermCollector.getFrequency();
+
+					if (frequency >= 0) {
+						newTermCollectors.add(
+							new DefaultTermCollector(term, frequency));
+					}
+				}
+
+				facet.setFacetCollector(
+					new SimpleFacetCollector(
+						facetCollector.getFieldName(), newTermCollectors));
+			}
 		}
 
 		private void _setSearchRequestFromAndSize(SearchContext searchContext) {
@@ -600,6 +669,53 @@ public class DefaultSearchResultPermissionFilter
 			hits.setLength(Math.max(recalculatedTotalHits, documents.size()));
 			hits.setSearchTime(
 				(float)(System.currentTimeMillis() - startTime) / Time.SECOND);
+		}
+
+		private class FacetCountHelper {
+
+			public FacetCountHelper(Map<String, Facet> facets) {
+				for (Facet searchContextFacet : facets.values()) {
+					Facet facet = new FacetImpl(
+						searchContextFacet.getFieldName(), null);
+
+					if (searchContextFacet instanceof RangeFacet) {
+						facet = new RangeFacet(null);
+
+						facet.setFieldName(searchContextFacet.getFieldName());
+					}
+
+					List<TermCollector> termCollectors = new ArrayList<>();
+
+					FacetCollector facetCollector =
+						searchContextFacet.getFacetCollector();
+
+					for (TermCollector termCollector :
+							facetCollector.getTermCollectors()) {
+
+						termCollectors.add(
+							new DefaultTermCollector(
+								termCollector.getTerm(),
+								termCollector.getFrequency()));
+					}
+
+					facet.setFacetCollector(
+						new SimpleFacetCollector(
+							searchContextFacet.getFieldName(), termCollectors));
+
+					_facets.put(_getAggregationName(searchContextFacet), facet);
+				}
+			}
+
+			public Facet getFacet(String fieldName) {
+				return _facets.get(fieldName);
+			}
+
+			public Map<String, Facet> getFacets() {
+				return _facets;
+			}
+
+			private Map<String, Facet> _facets = new HashMap<>();
+
 		}
 
 		private class SlidingWindowHelper {

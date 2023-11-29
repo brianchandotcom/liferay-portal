@@ -76,14 +76,14 @@ public class BatchEngineBundleTrackerTest {
 	}
 
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		_bundle = FrameworkUtil.getBundle(BatchEngineBundleTrackerTest.class);
 
 		_bundleContext = _bundle.getBundleContext();
 	}
 
 	@Test
-	public void testProcessBatchEngineBundle() throws Exception, Throwable {
+	public void testProcessBatchEngineBundle() throws Throwable {
 		_testProcessBatchEngineBundle("batch1", "/batch1/export.json");
 		_testProcessBatchEngineBundle("batch2");
 		_testProcessBatchEngineBundle(

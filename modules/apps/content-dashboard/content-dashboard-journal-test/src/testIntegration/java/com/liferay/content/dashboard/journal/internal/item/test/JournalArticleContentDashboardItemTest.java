@@ -785,7 +785,7 @@ public class JournalArticleContentDashboardItemTest {
 					journalArticle.getResourcePrimKey());
 
 			Assert.assertEquals(
-				latestJournalArticle.getUserId(),
+				latestJournalArticle.getStatusByUserId(),
 				contentDashboardItem.getUserId());
 		}
 		finally {

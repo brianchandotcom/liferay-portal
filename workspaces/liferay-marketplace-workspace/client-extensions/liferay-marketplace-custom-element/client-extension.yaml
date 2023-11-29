@@ -1,129 +1,17 @@
 assemble:
     - from: build/vite
       into: static
-liferay-marketplace-custom-element-create-app:
+liferay-marketplace-custom-element:
     cssURLs:
-        - "**/*.css"
-    friendlyURLMapping: liferay-marketplace-custom-element-create-app
+        - '**/*.css'
+    friendlyURLMapping: liferay-marketplace-custom-element
     htmlElementName: liferay-marketplace-custom-element
     instanceable: false
-    name: Liferay Marketplace Create App
+    name: Liferay Marketplace
     portletCategoryName: category.client-extensions
     properties:
-        route: create-app
+        cloudBaseURL: https://console.liferay.cloud
     type: customElement
     urls:
-        - "*.js"
-    useESM: true
-liferay-marketplace-custom-element-create-license:
-    cssURLs:
-        - "**/*.css"
-    friendlyURLMapping: liferay-marketplace-custom-element-create-license
-    htmlElementName: liferay-marketplace-custom-element
-    instanceable: false
-    name: Liferay Marketplace Create License
-    portletCategoryName: category.client-extensions
-    properties:
-        route: create-license
-    type: customElement
-    urls:
-        - "*.js"
-    useESM: true
-liferay-marketplace-custom-element-customer-gate:
-    cssURLs:
-        - "**/*.css"
-    friendlyURLMapping: liferay-marketplace-custom-element-customer-gate
-    htmlElementName: liferay-marketplace-custom-element
-    instanceable: false
-    name: Liferay Marketplace Customer Gate
-    portletCategoryName: category.client-extensions
-    properties:
-        route: customer-gate
-    type: customElement
-    urls:
-        - "*.js"
-    useESM: true
-liferay-marketplace-custom-element-get-app:
-    cssURLs:
-        - "**/*.css"
-    friendlyURLMapping: liferay-marketplace-custom-element-get-app
-    htmlElementName: liferay-marketplace-custom-element
-    instanceable: false
-    name: Liferay Marketplace Get App
-    portletCategoryName: category.client-extensions
-    properties:
-        route: get-app
-    type: customElement
-    urls:
-        - "*.js"
-    useESM: true
-liferay-marketplace-custom-element-next-steps:
-    cssURLs:
-        - "**/*.css"
-    friendlyURLMapping: liferay-marketplace-custom-element-next-steps
-    htmlElementName: liferay-marketplace-custom-element
-    instanceable: false
-    name: Liferay Marketplace Next Steps
-    portletCategoryName: category.client-extensions
-    properties:
-        route: next-steps
-    type: customElement
-    urls:
-        - "*.js"
-    useESM: true
-liferay-marketplace-custom-element-published-apps:
-    cssURLs:
-        - "**/*.css"
-    friendlyURLMapping: liferay-marketplace-custom-element-published-apps
-    htmlElementName: liferay-marketplace-custom-element
-    instanceable: false
-    name: Liferay Marketplace Published Apps
-    portletCategoryName: category.client-extensions
-    properties:
-        route: published-apps
-    type: customElement
-    urls:
-        - "*.js"
-    useESM: true
-liferay-marketplace-custom-element-publisher-gate:
-    cssURLs:
-        - "**/*.css"
-    friendlyURLMapping: liferay-marketplace-custom-element-publisher-gate
-    htmlElementName: liferay-marketplace-custom-element
-    instanceable: false
-    name: Liferay Marketplace Publisher Gate
-    portletCategoryName: category.client-extensions
-    properties:
-        route: publisher-gate
-    type: customElement
-    urls:
-        - "*.js"
-    useESM: true
-liferay-marketplace-custom-element-purchased-apps:
-    cssURLs:
-        - "**/*.css"
-    friendlyURLMapping: liferay-marketplace-custom-element-purchased-apps
-    htmlElementName: liferay-marketplace-custom-element
-    instanceable: false
-    name: Liferay Marketplace Purchased apps
-    portletCategoryName: category.client-extensions
-    properties:
-        route: purchased-apps
-    type: customElement
-    urls:
-        - "*.js"
-    useESM: true
-liferay-marketplace-custom-element-purchased-solutions:
-    cssURLs:
-        - "**/*.css"
-    friendlyURLMapping: liferay-marketplace-custom-element-purchased-solutions
-    htmlElementName: liferay-marketplace-custom-element
-    instanceable: false
-    name: Liferay Marketplace Purchased Solutions
-    portletCategoryName: category.client-extensions
-    properties:
-        route: purchased-solutions
-    type: customElement
-    urls:
-        - "*.js"
+        - '*.js'
     useESM: true

@@ -71,7 +71,6 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionContext;
@@ -811,8 +810,8 @@ public class LayoutServiceContextHelperImpl
 			ServiceContext serviceContext = new ServiceContext();
 
 			serviceContext.setCompanyId(_company.getCompanyId());
-			serviceContext.setRequest(
-				_getHttpServletRequest(_permissionChecker, _user));
+
+			serviceContext.setRequest(_httpServletRequest);
 			serviceContext.setUserId(_user.getUserId());
 
 			ServiceContextThreadLocal.pushServiceContext(serviceContext);

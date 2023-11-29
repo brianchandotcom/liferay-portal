@@ -258,6 +258,12 @@ export async function submitBase64EncodedFile({
 				else if (result?.includes('image/jpeg')) {
 					result = result?.substring(23);
 				}
+				else if (
+					result?.includes('application/octet-stream') ||
+					result?.includes('application/java-archive')
+				) {
+					result = result?.substring(37);
+				}
 
 				if (result) {
 					const {id} = await submitFile({

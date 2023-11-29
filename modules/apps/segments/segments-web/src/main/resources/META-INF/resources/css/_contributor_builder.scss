@@ -49,15 +49,7 @@
 	}
 
 	.drag-icon {
-		color: $secondary-l1;
-
-		&:active {
-			cursor: grabbing;
-		}
-
-		&:hover {
-			cursor: grab;
-		}
+		cursor: grab;
 	}
 
 	&.editing {

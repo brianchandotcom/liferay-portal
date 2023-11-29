@@ -626,7 +626,8 @@ public class PredicateExpressionVisitorImpl
 
 		EntityField.Type entityType = entityField.getType();
 
-		if (entityType.equals(EntityField.Type.DATE_TIME) &&
+		if ((Objects.equals(entityType, EntityField.Type.DATE) ||
+			 Objects.equals(entityType, EntityField.Type.DATE_TIME)) &&
 			(Objects.equals(DBManagerUtil.getDBType(), DBType.HYPERSONIC) ||
 			 Objects.equals(DBManagerUtil.getDBType(), DBType.ORACLE))) {
 

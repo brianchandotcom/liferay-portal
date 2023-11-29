@@ -9,6 +9,7 @@ export default {
 		'A request will be sent to deactivate the selected activation key. From now on It will be hidden and no longer be visible.',
 	'access-console': 'Access Console',
 	'activation-status': 'Activation Status',
+	'add-packages': 'Add Package(s)',
 	'an-app-build-is-your-compiled-or-non-compiled-code-submitted-on-behalf-of-your-account-to-the-marketplace-once-submitted-it-will-be-reviewed-and-tested-by-our-marketplace-administrators-for-approval-in-the-marketplace':
 		'An App Build is your compiled or non-compiled code submitted on behalf of your account to the Marketplace. Once submitted, it will be reviewed and tested by our Marketplace administrators for approval in the Marketplace.',
 	'app-build': 'App Build',
@@ -22,6 +23,7 @@ export default {
 	'cloud-compatible-?': 'Cloud Compatible?',
 	'cloud-upload': 'Cloud Upload',
 	'compatible-offering': 'Compatible Offering',
+	'confirm': 'Confirm',
 	'confirm-deactivate-keys': 'Confirm & Deactivate Keys',
 	'confirm-deactivation-terms': 'Confirm Deactivation Terms',
 	'create-license-key': 'Create License Key',
@@ -69,16 +71,22 @@ export default {
 	'no-results-found': 'No results found',
 	'only-jar-war-files-are-allowed-max-file-size-is-500mb':
 		'Only JAR, WAR files are allowed. Max file size is 500MB.',
+	'only-zip-files-are-allowed-max-file-size-is-500-mb':
+		'Only ZIP files are allowed. Max file size is 500MB',
 	'please-be-sure-to-specify-liferay-compatibility-through-the-appropriate-properties-or-xml-files-in-your-plugin':
 		'Please be sure to specify Liferay compatibility through the appropriate properties or XML files in your plugin.',
 	'provide-app-build': 'Provide app build',
 	'publish-apps-to-the-liferay-marketplace':
 		'Publish apps to the Liferay Marketplace',
+	'remove-a-version': 'Remove a Version',
 	'request-account': 'Request Account',
 	'select-a-file': 'Select a file',
 	'select-a-local-file-to-upload': 'Select a local file to upload',
+	'select-compatible-versions': 'Select Compatible Versions',
 	'select-the-offering-of-liferay-your-app-is-compatible-with-the-compatibility-selections-will-determine-on-what-platforms-your-app-is-tested':
 		'Select the offering of Liferay your app is compatible with. The compatibility selections will determine on what platforms your app is tested.',
+	'select-the-versions-of-liferay-that-your-app-is-compatible-with':
+		'Select the versions of Liferay that your app is compatible with.',
 	'self-hosted': 'Self-Hosted',
 	'self-managed': 'Self-Managed',
 	'sorry-there-are-no-results-found': 'Sorry, there are no results found',
@@ -113,6 +121,7 @@ export default {
 	'unable-to-download-your-license-file-please-try-again-and-or-contact-support-via-the-manage-menu-on-the-dashboard':
 		'Unable to download your license file.  Please try again and/or contact support via the manage menu on the dashboard.',
 	'upload-liferay-plugin-packages': 'Upload Liferay Plugin Packages',
+	'upload-zip-files': 'Upload ZIP Files',
 	'use-any-build-from-any-available-liferay-experience-cloud-account-requires-lxc-account':
 		'Use any build from any available Liferay Experience Cloud account (requires LXC account) ',
 	'use-any-build-from-your-computer-connecting-with-a-github-provider':

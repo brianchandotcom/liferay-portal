@@ -38,16 +38,42 @@ export declare function getChildGroupIds(criteria: Criteria): string[];
  * Gets the list of operators for a supported type.
  * Used for displaying the operators available for each criteria row.
  */
-export declare function getSupportedOperatorsFromType<
-	Operator extends {
-		name: string;
-	},
-	PropertyKey extends string
->(
-	operators: Operator[],
-	propertyTypes: Record<PropertyKey, PropertyType>,
-	type: PropertyKey
-): Operator[];
+export declare function getSupportedOperatorsFromType(
+	type: PropertyType
+): (
+	| {
+			readonly label: string;
+			readonly name: 'eq';
+	  }
+	| {
+			readonly label: string;
+			readonly name: 'not-eq';
+	  }
+	| {
+			readonly label: string;
+			readonly name: 'gt';
+	  }
+	| {
+			readonly label: string;
+			readonly name: 'ge';
+	  }
+	| {
+			readonly label: string;
+			readonly name: 'lt';
+	  }
+	| {
+			readonly label: string;
+			readonly name: 'le';
+	  }
+	| {
+			readonly label: string;
+			readonly name: 'contains';
+	  }
+	| {
+			readonly label: string;
+			readonly name: 'not-contains';
+	  }
+)[];
 
 /**
  * Inserts an item into a list at the specified index.

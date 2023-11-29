@@ -4,13 +4,17 @@
  */
 
 import React, {ReactNode} from 'react';
-export declare type ScreenReaderAnnouncerContextType = {
+declare type ScreenReaderAnnouncerContextType = {
 	sendMessage: (message: string) => void;
 };
 declare const ScreenReaderAnnouncerContext: React.Context<ScreenReaderAnnouncerContextType>;
-export default function ScreenReaderAnnouncerContextProvider({
+declare function ScreenReaderAnnouncerContextProvider({
 	children,
 }: {
 	children: ReactNode;
 }): JSX.Element;
-export {ScreenReaderAnnouncerContext};
+export {
+	ScreenReaderAnnouncerContext,
+	ScreenReaderAnnouncerContextProvider,
+	ScreenReaderAnnouncerContextType,
+};

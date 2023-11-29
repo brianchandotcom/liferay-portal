@@ -20,6 +20,7 @@ import com.liferay.layout.list.retriever.ListObjectReferenceFactoryRegistry;
 import com.liferay.layout.provider.LayoutStructureProvider;
 import com.liferay.layout.taglib.internal.helper.LayoutClassedModelUsagesHelper;
 import com.liferay.layout.util.LayoutsTree;
+import com.liferay.layout.util.structure.LayoutStructureRulesHelper;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.segments.SegmentsEntryRetriever;
 import com.liferay.segments.context.RequestContextMapper;
@@ -102,6 +103,10 @@ public class ServletContextUtil {
 		return _layoutStructureProviderSnapshot.get();
 	}
 
+	public static LayoutStructureRulesHelper getLayoutStructureRulesHelper() {
+		return _layoutStructureRulesHelperSnapshot.get();
+	}
+
 	public static ListObjectReferenceFactoryRegistry
 		getListObjectReferenceFactoryRegistry() {
 
@@ -168,6 +173,9 @@ public class ServletContextUtil {
 	private static final Snapshot<LayoutStructureProvider>
 		_layoutStructureProviderSnapshot = new Snapshot<>(
 			ServletContextUtil.class, LayoutStructureProvider.class);
+	private static final Snapshot<LayoutStructureRulesHelper>
+		_layoutStructureRulesHelperSnapshot = new Snapshot<>(
+			ServletContextUtil.class, LayoutStructureRulesHelper.class);
 	private static final Snapshot<ListObjectReferenceFactoryRegistry>
 		_listObjectReferenceFactoryRegistrySnapshot = new Snapshot<>(
 			ServletContextUtil.class, ListObjectReferenceFactoryRegistry.class);

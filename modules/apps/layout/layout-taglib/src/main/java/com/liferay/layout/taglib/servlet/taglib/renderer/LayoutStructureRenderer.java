@@ -85,6 +85,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -1124,9 +1125,16 @@ public class LayoutStructureRenderer {
 			List<String> childrenItemIds, InfoForm infoForm)
 		throws Exception {
 
+		Set<String> hiddenItemIds =
+			_renderLayoutStructureDisplayContext.getHiddenItemIds();
+
 		for (String childrenItemId : childrenItemIds) {
 			LayoutStructureItem layoutStructureItem =
 				_layoutStructure.getLayoutStructureItem(childrenItemId);
+
+			if (hiddenItemIds.contains(childrenItemId)) {
+				continue;
+			}
 
 			long start = System.currentTimeMillis();
 

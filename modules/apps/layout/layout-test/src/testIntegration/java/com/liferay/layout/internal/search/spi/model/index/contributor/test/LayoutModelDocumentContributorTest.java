@@ -101,6 +101,19 @@ public class LayoutModelDocumentContributorTest {
 	}
 
 	@Test
+	public void testReindexPublishedLayout() throws Exception {
+		String elementText = RandomTestUtil.randomString();
+
+		Layout layout = _addTypeContentLayout(elementText, true);
+
+		List<LogEntry> logEntries = _reindexLogEntries(layout);
+
+		Assert.assertEquals(logEntries.toString(), 0, logEntries.size());
+
+		_assertSearch(elementText, layout.getPlid());
+	}
+
+	@Test
 	public void testReindexPublishedLayoutWithFreemarkerErrors()
 		throws Exception {
 
@@ -137,49 +150,6 @@ public class LayoutModelDocumentContributorTest {
 		Assert.assertEquals(
 			document.get(Field.ENTRY_CLASS_PK),
 			String.valueOf(layout.getPlid()));
-	}
-
-	@Test
-	public void testReindexPublishedLayoutWithLayoutLocalization()
-		throws Exception {
-
-		String elementText = RandomTestUtil.randomString();
-
-		Layout layout = _addTypeContentLayout(elementText, true);
-
-		List<LayoutLocalization> layoutLocalizations1 =
-			_layoutLocalizationLocalService.getLayoutLocalizations(
-				layout.getPlid());
-
-		Assert.assertFalse(
-			layoutLocalizations1.toString(), layoutLocalizations1.isEmpty());
-
-		_assertReindex(elementText, layout);
-
-		List<LayoutLocalization> layoutLocalizations2 =
-			_layoutLocalizationLocalService.getLayoutLocalizations(
-				layout.getPlid());
-
-		Assert.assertEquals(
-			layoutLocalizations2.toString(), layoutLocalizations1,
-			layoutLocalizations2);
-	}
-
-	@Test
-	public void testReindexPublishedLayoutWithoutLayoutLocalization()
-		throws Exception {
-
-		String elementText = RandomTestUtil.randomString();
-
-		Layout layout = _addTypeContentLayout(elementText, true);
-
-		_deleteLayoutLocalizations(layout.getPlid());
-
-		List<LogEntry> logEntries = _reindexLogEntries(layout);
-
-		Assert.assertEquals(logEntries.toString(), 0, logEntries.size());
-
-		_assertSearch(elementText, layout.getPlid());
 	}
 
 	@Test

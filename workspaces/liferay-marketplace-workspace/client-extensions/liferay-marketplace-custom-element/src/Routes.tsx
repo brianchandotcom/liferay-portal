@@ -26,11 +26,11 @@ const Routes = {
 export type RouteType = keyof typeof Routes;
 
 type AppRoutesProps = {
-	route: RouteType;
+	path: RouteType;
 };
 
-export default function AppRoutes({route}: AppRoutesProps) {
-	const Route = Routes[route];
+export default function AppRoutes({path}: AppRoutesProps) {
+	const Route = Routes[path];
 
 	if (!Route) {
 		return <h1>Page not found</h1>;

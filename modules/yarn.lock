@@ -9687,11 +9687,6 @@ lie@~3.3.0:
   dependencies:
     immediate "~3.0.5"
 
-liferay-ckeditor@4.18.0-liferay.4:
-  version "4.18.0-liferay.4"
-  resolved "https://registry.yarnpkg.com/liferay-ckeditor/-/liferay-ckeditor-4.18.0-liferay.4.tgz#08ddc7c1025f6c036a9de97c3403b9928e6b99dc"
-  integrity sha512-mugcikGLtVbZ1kqxtHjf1z8F4hWPeET4EyCx48ePIUc01fnOuAEiiNwnaWeBxiMS8K75CvYNbA37jJhCskHXmw==
-
 liferay-ckeditor@4.21.0-liferay.1:
   version "4.21.0-liferay.1"
   resolved "https://registry.yarnpkg.com/liferay-ckeditor/-/liferay-ckeditor-4.21.0-liferay.1.tgz#442c35172d813d2cbfcb80646a31678bf01d0090"

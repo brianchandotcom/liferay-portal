@@ -153,6 +153,82 @@ definition {
 		}
 	}
 
+	@description = "Test for COMMERCE-12909. I want to be able to change the active account while in a pending order's details page"
+	@priority = 5
+	test CanChangeActiveAccountInPendingOrdersPage {
+		property portal.acceptance = "true";
+
+		task ("Given a Minium site") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And 2 business accounts linked to the same buyer user") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "AC1",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+
+			CommerceEntry.addAccountEntryUser(
+				accountName = "AC2",
+				accountType = "Business",
+				createNewAccount = "true",
+				existingUser = "true",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And the buyer creates a pending order with AC1") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			CommerceAcceleratorsInitializer.selectAccountFromAccountSelector(accountName = "AC1");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/pending-orders");
+
+			Button.click(button = "Add Order");
+		}
+
+		task ("When the buyer navigates to the order's details page") {
+			var portalURL = JSONCompany.getPortalURL();
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/pending-orders");
+
+			Button.click(button = "View");
+
+			AssertLocation.assertPartialLocation(value1 = "${portalURL}/web/minium/pending-orders/-/pending-order/");
+		}
+
+		task ("Then the buyer can change the active account in the pending order's details using the account selector") {
+			for (var accountName : list "AC2,AC1") {
+				CommerceAcceleratorsInitializer.selectAccountFromAccountSelector(accountName = ${accountName});
+
+				task ("And always get redirected to the Pending Orders page") {
+					AssertElementPresent(
+						key_orderAuthor = "Buyer User",
+						locator1 = "CommerceAccelerators#ORDERS_ENTRY_VIEW_BUTTON");
+
+					AssertLocation.assertPartialLocation(value1 = "${portalURL}/web/minium/pending-orders?p_p_id=com_liferay_commerce_order_content_web_internal_portlet_CommerceOpenOrderContentPortlet");
+				}
+			}
+		}
+	}
+
 	@description = "COMMERCE-9022. As a Sales Agent, I want to be able to select an account from the list (which is not the selected one), and have the selected account change to the newly selected account"
 	@priority = 3
 	test CanChangeActiveInFlowAccountFromAccountsList {

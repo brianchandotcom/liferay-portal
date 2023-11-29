@@ -31,6 +31,8 @@ public interface CommerceShippingEngine {
 			Locale locale)
 		throws CommerceShippingEngineException;
 
+	public String getKey();
+
 	public String getName(Locale locale);
 
 }

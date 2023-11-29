@@ -47,8 +47,20 @@ public class CommerceShippingEngineRegistryImpl
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, CommerceShippingEngine.class,
-			"commerce.shipping.engine.key");
+			bundleContext, CommerceShippingEngine.class, null,
+			(serviceReference, emitter) -> {
+				CommerceShippingEngine commerceShippingEngine =
+					bundleContext.getService(serviceReference);
+
+				try {
+					if (commerceShippingEngine.getKey() != null) {
+						emitter.emit(commerceShippingEngine.getKey());
+					}
+				}
+				finally {
+					bundleContext.ungetService(serviceReference);
+				}
+			});
 	}
 
 	@Deactivate

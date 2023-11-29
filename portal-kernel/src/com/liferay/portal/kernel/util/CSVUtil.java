@@ -28,10 +28,9 @@ public class CSVUtil {
 		}
 
 		if (s.startsWith(enclosingChar) && s.endsWith(enclosingChar)) {
-			String unquoted = s.substring(1, s.length() - 1);
-
 			return StringUtil.replace(
-				unquoted, enclosingChar + enclosingChar, enclosingChar);
+				s.substring(1, s.length() - 1), enclosingChar + enclosingChar,
+				enclosingChar);
 		}
 
 		return s;
@@ -55,8 +54,8 @@ public class CSVUtil {
 		}
 
 		if ((s.indexOf(CharPool.COMMA) < 0) &&
-			(s.indexOf(CharPool.QUOTE) < 0) &&
 			(s.indexOf(CharPool.NEW_LINE) < 0) &&
+			(s.indexOf(CharPool.QUOTE) < 0) &&
 			(s.indexOf(CharPool.RETURN) < 0)) {
 
 			return s;

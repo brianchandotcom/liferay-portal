@@ -1361,7 +1361,9 @@ public class JournalArticleLocalServiceImpl
 
 		// System event
 
-		if (FeatureFlagManagerUtil.isEnabled("LPS-165481")) {
+		if (FeatureFlagManagerUtil.isEnabled(
+				article.getCompanyId(), "LPS-165481")) {
+
 			if (articleResource != null) {
 				_systemEventLocalService.addSystemEvent(
 					0, article.getGroupId(), article.getModelClassName(),

@@ -106,7 +106,7 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 		tag.setUserId(user.getUserId());
 		tag.setUserName(user.getFullName());
 
-		name = _getName(StringUtil.trim(name));
+		name = _getName(user.getCompanyId(), StringUtil.trim(name));
 
 		validate(name);
 
@@ -142,7 +142,7 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 		List<AssetTag> tags = new ArrayList<>();
 
 		for (String name : names) {
-			name = _getName(StringUtil.trim(name));
+			name = _getName(group.getCompanyId(), StringUtil.trim(name));
 
 			AssetTag tag = fetchTag(group.getGroupId(), name);
 
@@ -270,7 +270,11 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 		List<AssetTag> assetTags = assetTagPersistence.findByG_LikeN(
 			groupId, name);
 
-		if (FeatureFlagManagerUtil.isEnabled("LPS-194362")) {
+		Group group = _groupLocalService.fetchGroup(groupId);
+
+		if (FeatureFlagManagerUtil.isEnabled(
+				group.getCompanyId(), "LPS-194362")) {
+
 			for (AssetTag assetTag : assetTags) {
 				if (StringUtil.equals(assetTag.getName(), name)) {
 					return assetTag;
@@ -724,7 +728,7 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 
 		String oldName = tag.getName();
 
-		name = _getName(StringUtil.trim(name));
+		name = _getName(tag.getCompanyId(), StringUtil.trim(name));
 
 		if (!name.equals(oldName) && hasTag(tag.getGroupId(), name)) {
 			throw new DuplicateTagException(
@@ -867,8 +871,8 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 		}
 	}
 
-	private String _getName(String name) {
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-194362")) {
+	private String _getName(long companyId, String name) {
+		if (!FeatureFlagManagerUtil.isEnabled(companyId, "LPS-194362")) {
 			name = StringUtil.toLowerCase(name);
 		}
 

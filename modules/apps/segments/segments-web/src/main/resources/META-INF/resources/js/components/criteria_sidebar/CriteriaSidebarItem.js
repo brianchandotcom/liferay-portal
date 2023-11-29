@@ -11,7 +11,7 @@ import React from 'react';
 
 import useDragSource from '../../hooks/useDragSource';
 import useKeyboardNavigation from '../../hooks/useKeyboardNavigation';
-import {DragTypes} from '../../utils/drag-types';
+import {DragTypes} from '../../utils/dragTypes';
 import {LIST_ITEM_TYPES} from '../../utils/listItemTypes';
 import {TYPE_ICONS} from '../../utils/typeIcons';
 

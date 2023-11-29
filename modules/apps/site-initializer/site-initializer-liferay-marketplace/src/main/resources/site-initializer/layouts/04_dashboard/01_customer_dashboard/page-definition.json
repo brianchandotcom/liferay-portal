@@ -30,10 +30,8 @@
 								"key": "notification-welcome",
 								"siteKey": "[$GROUP_KEY$]"
 							},
-							"fragmentConfig": {
-							},
-							"fragmentFields": [
-							],
+							"fragmentConfig": {},
+							"fragmentFields": [],
 							"indexed": true
 						},
 						"type": "Fragment"
@@ -42,9 +40,9 @@
 						"definition": {
 							"widgetInstance": {
 								"widgetConfig": {
-									"properties": "cloudBaseURL=https://console.liferay.cloud"
+									"properties": "path=purchased-apps"
 								},
-								"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_[$COMPANY_ID$]_LXC_liferay_marketplace_custom_element_purchased_apps"
+								"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_[$COMPANY_ID$]_LXC_liferay_marketplace_custom_element"
 							}
 						},
 						"type": "Widget"

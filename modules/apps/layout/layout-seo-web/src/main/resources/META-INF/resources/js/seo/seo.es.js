@@ -24,7 +24,7 @@ export default function ({namespace}) {
 		`${namespace}customCanonicalURLSettings`
 	);
 
-	canonicalURLEnabledCheck.addEventListener('click', (event) => {
+	canonicalURLEnabledCheck.addEventListener('change', (event) => {
 		canonicalURLAlert.classList.toggle('hide');
 
 		const label = canonicalURLSettings.querySelector('label');

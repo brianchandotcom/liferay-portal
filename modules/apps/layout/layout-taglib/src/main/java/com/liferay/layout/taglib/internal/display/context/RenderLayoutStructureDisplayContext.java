@@ -40,6 +40,7 @@ import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructureItemUtil;
+import com.liferay.layout.util.structure.LayoutStructureRulesHelper;
 import com.liferay.layout.util.structure.RootLayoutStructureItem;
 import com.liferay.layout.util.structure.RowStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.StyledLayoutStructureItem;
@@ -282,6 +283,13 @@ public class RenderLayoutStructureDisplayContext {
 		return defaultFragmentRendererContext;
 	}
 
+	public Set<String> getDisplayedItemIds() {
+		LayoutStructureRulesHelper.LayoutStructureRulesResult
+			layoutStructureRulesResult = _getLayoutStructureRulesResult();
+
+		return layoutStructureRulesResult.getDisplayedItemIds();
+	}
+
 	public String getEditInfoItemActionURL() {
 		StringBundler sb = new StringBundler(3);
 
@@ -370,6 +378,13 @@ public class RenderLayoutStructureDisplayContext {
 		}
 
 		return successMessageJSONObject.getString("displayPage");
+	}
+
+	public Set<String> getHiddenItemIds() {
+		LayoutStructureRulesHelper.LayoutStructureRulesResult
+			layoutStructureRulesResult = _getLayoutStructureRulesResult();
+
+		return layoutStructureRulesResult.getHiddenItemIds();
 	}
 
 	public InfoForm getInfoForm(
@@ -511,7 +526,7 @@ public class RenderLayoutStructureDisplayContext {
 	public String getStyle(StyledLayoutStructureItem styledLayoutStructureItem)
 		throws Exception {
 
-		StringBundler sb = new StringBundler(8);
+		StringBundler sb = new StringBundler(9);
 
 		JSONObject backgroundImageJSONObject =
 			styledLayoutStructureItem.getBackgroundImageJSONObject();
@@ -932,6 +947,28 @@ public class RenderLayoutStructureDisplayContext {
 		return null;
 	}
 
+	private LayoutStructureRulesHelper.LayoutStructureRulesResult
+		_getLayoutStructureRulesResult() {
+
+		if (_layoutStructureRulesResult != null) {
+			return _layoutStructureRulesResult;
+		}
+
+		LayoutStructureRulesHelper layoutStructureRulesHelper =
+			ServletContextUtil.getLayoutStructureRulesHelper();
+
+		LayoutStructureRulesHelper.LayoutStructureRulesResult
+			layoutStructureRulesResult =
+				layoutStructureRulesHelper.processLayoutStructureRules(
+					_themeDisplay.getScopeGroupId(), _layoutStructure,
+					_themeDisplay.getPermissionChecker(),
+					_getSegmentsEntryIds());
+
+		_layoutStructureRulesResult = layoutStructureRulesResult;
+
+		return _layoutStructureRulesResult;
+	}
+
 	private String _getMainItemId() {
 		if (Validator.isNotNull(_mainItemId)) {
 			return _mainItemId;
@@ -1087,6 +1124,8 @@ public class RenderLayoutStructureDisplayContext {
 
 	private final HttpServletRequest _httpServletRequest;
 	private final LayoutStructure _layoutStructure;
+	private LayoutStructureRulesHelper.LayoutStructureRulesResult
+		_layoutStructureRulesResult;
 	private final String _mainItemId;
 	private final String _mode;
 	private Long _previewClassNameId;

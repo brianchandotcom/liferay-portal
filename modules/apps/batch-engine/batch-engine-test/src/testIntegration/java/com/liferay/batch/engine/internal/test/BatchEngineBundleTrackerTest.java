@@ -84,27 +84,27 @@ public class BatchEngineBundleTrackerTest {
 
 	@Test
 	public void testProcessBatchEngineBundle() throws Exception, Throwable {
-		_testProcessBatchEngineBundle("batch1", 1, "/batch1/export.json");
-		_testProcessBatchEngineBundle("batch2", 0);
+		_testProcessBatchEngineBundle("batch1", "/batch1/export.json");
+		_testProcessBatchEngineBundle("batch2");
 		_testProcessBatchEngineBundle(
-			"batch3", 2, "/batch3/batch1/export.json",
+			"batch3", "/batch3/batch1/export.json",
 			"/batch3/batch2/export.json");
 		_testProcessBatchEngineBundle(
-			"batch4", 3, "/batch4/batch1/export.json",
+			"batch4", "/batch4/batch1/export.json",
 			"/batch4/batch2/export.json", "/batch4/batch2/batch3/export.json");
 		_testProcessBatchEngineBundle(
-			"batch5", 1, "/batch5/data.batch-engine-data.json");
+			"batch5", "/batch5/data.batch-engine-data.json");
 		_testProcessBatchEngineBundle(
-			"batch6", 2, "/batch6/data1.batch-engine-data.json",
+			"batch6", "/batch6/data1.batch-engine-data.json",
 			"/batch6/data2.batch-engine-data.json");
-		_testProcessBatchEngineBundle("batch7", 1, "/batch7/export.json");
+		_testProcessBatchEngineBundle("batch7", "/batch7/export.json");
 		_testProcessBatchEngineBundle(
-			"batch8", 3, "/batch8/data1.batch-engine-data.json",
+			"batch8", "/batch8/data1.batch-engine-data.json",
 			"/batch8/data2.batch-engine-data.json",
 			"/batch8/data3.batch-engine-data.json");
 
 		_testProcessBatchEngineBundle(
-			"batch9", 1, "/batch9/data.batch-engine-data.json");
+			"batch9", "/batch9/data.batch-engine-data.json");
 
 		TransactionInvokerUtil.invoke(
 			_transactionConfig,
@@ -117,7 +117,7 @@ public class BatchEngineBundleTrackerTest {
 			});
 
 		_testProcessBatchEngineBundle(
-			"batch9", 2, "/batch9/data.batch-engine-data.json",
+			"batch9", "/batch9/data.batch-engine-data.json",
 			"/batch9/data.batch-engine-data.json");
 	}
 
@@ -129,7 +129,7 @@ public class BatchEngineBundleTrackerTest {
 	}
 
 	private void _testProcessBatchEngineBundle(
-			String dirName, int expectedCount, String... expectedDataFiles)
+			String dirName, String... expectedDataFiles)
 		throws Exception {
 
 		Class<?> clazz = _batchEngineImportTaskExecutor.getClass();
@@ -183,7 +183,8 @@ public class BatchEngineBundleTrackerTest {
 
 			Thread.sleep(2000);
 
-			Assert.assertEquals(expectedCount, actualCount.getValue());
+			Assert.assertEquals(
+				expectedDataFiles.length, actualCount.getValue());
 
 			Assert.assertTrue(
 				StringBundler.concat(
@@ -206,7 +207,8 @@ public class BatchEngineBundleTrackerTest {
 
 			Thread.sleep(2000);
 
-			Assert.assertEquals(expectedCount, actualCount.getValue());
+			Assert.assertEquals(
+				expectedDataFiles.length, actualCount.getValue());
 		}
 		finally {
 			bundle.uninstall();

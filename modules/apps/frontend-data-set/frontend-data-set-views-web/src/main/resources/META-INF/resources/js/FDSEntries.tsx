@@ -794,7 +794,10 @@ const RenameFDSEntryModalContent = ({
 			<ClayModal.Footer
 				last={
 					<ClayButton.Group spaced>
-						<ClayButton onClick={saveFDSEntryRename}>
+						<ClayButton
+							disabled={!fdsEntryLabel}
+							onClick={saveFDSEntryRename}
+						>
 							{Liferay.Language.get('save')}
 						</ClayButton>
 

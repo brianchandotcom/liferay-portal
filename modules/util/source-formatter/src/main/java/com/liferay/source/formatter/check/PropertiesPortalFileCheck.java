@@ -239,19 +239,19 @@ public class PropertiesPortalFileCheck extends BaseFileCheck {
 					value = line.substring(line.indexOf('=') + 1);
 
 					if (!Objects.isNull(value) && !value.equals("\\")) {
-						List<String> set = propertiesMap.get(key);
+						List<String> list = propertiesMap.get(key);
 
-						if (set == null) {
-							set = new ArrayList<>();
+						if (list == null) {
+							list = new ArrayList<>();
 						}
 
 						if (value.equals("[\\")) {
 							value = StringUtil.removeLast(value, "\\");
 						}
 
-						set.add(value);
+						list.add(value);
 
-						propertiesMap.put(key, set);
+						propertiesMap.put(key, list);
 					}
 				}
 				else {
@@ -265,15 +265,15 @@ public class PropertiesPortalFileCheck extends BaseFileCheck {
 						return content;
 					}
 
-					List<String> set = propertiesMap.get(key);
+					List<String> list = propertiesMap.get(key);
 
-					if (set == null) {
-						set = new ArrayList<>();
+					if (list == null) {
+						list = new ArrayList<>();
 					}
 
-					set.add(value);
+					list.add(value);
 
-					propertiesMap.put(key, set);
+					propertiesMap.put(key, list);
 				}
 			}
 		}

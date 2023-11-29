@@ -1,0 +1,31 @@
+diff --git a/org/opensearch/client/RestClient.java b/org/opensearch/client/RestClient.java
+index 92aed2c8fb179..5dcc30c21a7e7 100644
+--- a/org/opensearch/client/RestClient.java
++++ b/org/opensearch/client/RestClient.java
+@@ -68,6 +68,7 @@ import javax.net.ssl.SSLHandshakeException;
+ import java.io.ByteArrayInputStream;
+ import java.io.ByteArrayOutputStream;
+ import java.io.Closeable;
++import java.io.DataInputStream;
+ import java.io.IOException;
+ import java.io.InputStream;
+ import java.net.ConnectException;
+@@ -1022,7 +1023,11 @@ public class RestClient implements Closeable {
+                 } else {
+                     long size;
+                     try (InputStream is = getContent()) {
+-                        size = is.readAllBytes().length;
++                        is.reset();
++                        byte[] bytes = new byte[is.available()];
++                        DataInputStream dataInputStream = new DataInputStream(is);
++                        dataInputStream.readFully(bytes);
++                        size = is.available();
+                     } catch (IOException ex) {
+                         size = -1L;
+                     }
+@@ -1087,3 +1092,4 @@ public class RestClient implements Closeable {
+         }
+     }
+ }
++/* @generated */
+\ No newline at end of file

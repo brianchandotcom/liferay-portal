@@ -68,6 +68,7 @@ import javax.net.ssl.SSLHandshakeException;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.Closeable;
+import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.ConnectException;
@@ -1022,7 +1023,11 @@ public class RestClient implements Closeable {
                 } else {
                     long size;
                     try (InputStream is = getContent()) {
-                        size = is.readAllBytes().length;
+                        is.reset();
+                        byte[] bytes = new byte[is.available()];
+                        DataInputStream dataInputStream = new DataInputStream(is);
+                        dataInputStream.readFully(bytes);
+                        size = is.available();
                     } catch (IOException ex) {
                         size = -1L;
                     }
@@ -1087,3 +1092,4 @@ public class RestClient implements Closeable {
         }
     }
 }
+/* @generated */

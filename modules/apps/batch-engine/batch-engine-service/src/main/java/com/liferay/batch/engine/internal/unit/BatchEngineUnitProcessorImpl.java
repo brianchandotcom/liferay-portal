@@ -67,8 +67,7 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 	public CompletableFuture<Void> processBatchEngineUnits(
 		Collection<BatchEngineUnit> batchEngineUnits) {
 
-		List<CompletableFuture<Void>> completableFutures = new ArrayList<>();
-		CompletableFuture<Void> previousCompletableFuture = null;
+		List<Runnable> runnables = new ArrayList<>();
 
 		for (BatchEngineUnit batchEngineUnit : batchEngineUnits) {
 			try {
@@ -81,20 +80,16 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 					_featureFlagBatchEngineUnitProcessor.
 						registerBatchEngineUnit(
 							batchEngineUnitMetaInfo.getCompanyId(), featureFlag,
-							() -> _processBatchEngineUnit(
-								batchEngineUnit, null));
+							() -> CompletableFuture.runAsync(
+								_getRunnable(batchEngineUnit)));
 
 					continue;
 				}
 
-				CompletableFuture<Void> completableFuture =
-					_processBatchEngineUnit(
-						batchEngineUnit, previousCompletableFuture);
+				Runnable runnable = _getRunnable(batchEngineUnit);
 
-				if (completableFuture != null) {
-					completableFutures.add(completableFuture);
-
-					previousCompletableFuture = completableFuture;
+				if (runnable != null) {
+					runnables.add(runnable);
 				}
 
 				if (_log.isInfoEnabled()) {
@@ -112,80 +107,26 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 			}
 		}
 
-		return CompletableFuture.allOf(
-			completableFutures.toArray(new CompletableFuture[0]));
+		if (runnables.isEmpty()) {
+			return CompletableFuture.completedFuture(null);
+		}
+
+		CompletableFuture<Void> completableFuture = CompletableFuture.runAsync(
+			runnables.get(0));
+
+		for (int i = 1; i < runnables.size(); i++) {
+			Runnable runnable = runnables.get(i);
+
+			completableFuture = completableFuture.thenAccept(
+				result -> runnable.run());
+		}
+
+		return completableFuture;
 	}
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
-	}
-
-	private CompletableFuture<Void> _execute(
-			BatchEngineUnit batchEngineUnit,
-			BatchEngineUnitConfiguration batchEngineUnitConfiguration,
-			byte[] content, String contentType,
-			CompletableFuture<Void> previousCompletableFuture)
-		throws Exception {
-
-		CompletableFuture<Void> completableFuture = new CompletableFuture<>();
-
-		ServiceTracker<Object, Object> serviceTracker =
-			new ServiceTracker<Object, Object>(
-				_bundleContext,
-				_bundleContext.createFilter(
-					StringBundler.concat(
-						"(|(&(batch.engine.entity.class.name=",
-						batchEngineUnitConfiguration.getClassName(), ")",
-						"(!(batch.engine.task.item.delegate.name=*)))",
-						"(&(batch.engine.entity.class.name=",
-						_getObjectEntryClassName(batchEngineUnitConfiguration),
-						")(batch.engine.task.item.delegate.name=",
-						batchEngineUnitConfiguration.getTaskItemDelegateName(),
-						"))(&(batch.engine.entity.class.name=",
-						batchEngineUnitConfiguration.getClassName(),
-						")(batch.engine.task.item.delegate.name=",
-						batchEngineUnitConfiguration.getTaskItemDelegateName(),
-						")))")),
-				null) {
-
-				@Override
-				public Object addingService(
-					ServiceReference<Object> serviceReference) {
-
-					Object service = _bundleContext.getService(
-						serviceReference);
-
-					try {
-						_execute(
-							batchEngineUnit, batchEngineUnitConfiguration,
-							content, contentType, service, this);
-					}
-					catch (Exception exception) {
-						if (_log.isWarnEnabled()) {
-							_log.warn(exception);
-						}
-					}
-					finally {
-						completableFuture.complete(null);
-					}
-
-					_bundleContext.ungetService(serviceReference);
-
-					return null;
-				}
-
-			};
-
-		if (previousCompletableFuture != null) {
-			previousCompletableFuture.thenAccept(
-				result -> serviceTracker.open());
-		}
-		else {
-			serviceTracker.open();
-		}
-
-		return completableFuture;
 	}
 
 	private void _execute(
@@ -264,6 +205,128 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 		return className;
 	}
 
+	private Runnable _getRunnable(BatchEngineUnit batchEngineUnit)
+		throws Exception {
+
+		BatchEngineUnitConfiguration batchEngineUnitConfiguration = null;
+		byte[] content = null;
+		String contentType = null;
+
+		if (batchEngineUnit.isValid()) {
+			batchEngineUnitConfiguration = _updateBatchEngineUnitConfiguration(
+				batchEngineUnit.getBatchEngineUnitConfiguration());
+
+			UnsyncByteArrayOutputStream compressedUnsyncByteArrayOutputStream =
+				new UnsyncByteArrayOutputStream();
+
+			try (InputStream inputStream = batchEngineUnit.getDataInputStream();
+				ZipOutputStream zipOutputStream = new ZipOutputStream(
+					compressedUnsyncByteArrayOutputStream)) {
+
+				zipOutputStream.putNextEntry(
+					new ZipEntry(batchEngineUnit.getDataFileName()));
+
+				StreamUtil.transfer(inputStream, zipOutputStream, false);
+			}
+
+			content = compressedUnsyncByteArrayOutputStream.toByteArray();
+
+			contentType = _file.getExtension(batchEngineUnit.getDataFileName());
+		}
+
+		if ((batchEngineUnitConfiguration == null) || (content == null) ||
+			Validator.isNull(contentType)) {
+
+			throw new IllegalStateException(
+				StringBundler.concat(
+					"Invalid batch engine file ", batchEngineUnit.getFileName(),
+					" ", batchEngineUnit.getDataFileName()));
+		}
+
+		if (_isProcessed(batchEngineUnit)) {
+			return null;
+		}
+
+		return _getRunnable(
+			batchEngineUnit, batchEngineUnitConfiguration, content,
+			contentType);
+	}
+
+	private Runnable _getRunnable(
+		BatchEngineUnit batchEngineUnit,
+		BatchEngineUnitConfiguration batchEngineUnitConfiguration,
+		byte[] content, String contentType) {
+
+		return () -> {
+			CompletableFuture<Void> completableFuture =
+				new CompletableFuture<>();
+
+			ServiceTracker<Object, Object> serviceTracker = null;
+
+			try {
+				serviceTracker = new ServiceTracker<Object, Object>(
+					_bundleContext,
+					_bundleContext.createFilter(
+						StringBundler.concat(
+							"(|(&(batch.engine.entity.class.name=",
+							batchEngineUnitConfiguration.getClassName(), ")",
+							"(!(batch.engine.task.item.delegate.name=*)))",
+							"(&(batch.engine.entity.class.name=",
+							_getObjectEntryClassName(
+								batchEngineUnitConfiguration),
+							")(batch.engine.task.item.delegate.name=",
+							batchEngineUnitConfiguration.
+								getTaskItemDelegateName(),
+							"))(&(batch.engine.entity.class.name=",
+							batchEngineUnitConfiguration.getClassName(),
+							")(batch.engine.task.item.delegate.name=",
+							batchEngineUnitConfiguration.
+								getTaskItemDelegateName(),
+							")))")),
+					null) {
+
+					@Override
+					public Object addingService(
+						ServiceReference<Object> serviceReference) {
+
+						Object service = _bundleContext.getService(
+							serviceReference);
+
+						try {
+							_execute(
+								batchEngineUnit, batchEngineUnitConfiguration,
+								content, contentType, service, this);
+						}
+						catch (Exception exception) {
+							if (_log.isWarnEnabled()) {
+								_log.warn(exception);
+							}
+						}
+						finally {
+							completableFuture.complete(null);
+						}
+
+						_bundleContext.ungetService(serviceReference);
+
+						return null;
+					}
+
+				};
+
+				if (serviceTracker != null) {
+					serviceTracker.open();
+
+					completableFuture.get();
+				}
+			}
+			catch (Exception exception) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(exception);
+				}
+			}
+		};
+	}
+
 	private boolean _isFeatureFlagDisabled(String featureFlagKey) {
 		if (Validator.isNotNull(featureFlagKey) &&
 			!FeatureFlagManagerUtil.isEnabled(featureFlagKey)) {
@@ -321,55 +384,6 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 		}
 
 		return false;
-	}
-
-	private CompletableFuture<Void> _processBatchEngineUnit(
-			BatchEngineUnit batchEngineUnit,
-			CompletableFuture<Void> previousCompletableFuture)
-		throws Exception {
-
-		BatchEngineUnitConfiguration batchEngineUnitConfiguration = null;
-		byte[] content = null;
-		String contentType = null;
-
-		if (batchEngineUnit.isValid()) {
-			batchEngineUnitConfiguration = _updateBatchEngineUnitConfiguration(
-				batchEngineUnit.getBatchEngineUnitConfiguration());
-
-			UnsyncByteArrayOutputStream compressedUnsyncByteArrayOutputStream =
-				new UnsyncByteArrayOutputStream();
-
-			try (InputStream inputStream = batchEngineUnit.getDataInputStream();
-				ZipOutputStream zipOutputStream = new ZipOutputStream(
-					compressedUnsyncByteArrayOutputStream)) {
-
-				zipOutputStream.putNextEntry(
-					new ZipEntry(batchEngineUnit.getDataFileName()));
-
-				StreamUtil.transfer(inputStream, zipOutputStream, false);
-			}
-
-			content = compressedUnsyncByteArrayOutputStream.toByteArray();
-
-			contentType = _file.getExtension(batchEngineUnit.getDataFileName());
-		}
-
-		if ((batchEngineUnitConfiguration == null) || (content == null) ||
-			Validator.isNull(contentType)) {
-
-			throw new IllegalStateException(
-				StringBundler.concat(
-					"Invalid batch engine file ", batchEngineUnit.getFileName(),
-					" ", batchEngineUnit.getDataFileName()));
-		}
-
-		if (_isProcessed(batchEngineUnit)) {
-			return null;
-		}
-
-		return _execute(
-			batchEngineUnit, batchEngineUnitConfiguration, content, contentType,
-			previousCompletableFuture);
 	}
 
 	private BatchEngineUnitConfiguration _updateBatchEngineUnitConfiguration(

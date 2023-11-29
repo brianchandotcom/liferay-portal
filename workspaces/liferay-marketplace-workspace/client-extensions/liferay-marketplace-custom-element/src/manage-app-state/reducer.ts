@@ -89,10 +89,23 @@ export function appReducer(state: InitialStateProps, action: TAction) {
 
 			return {...state, catalogId};
 		}
-		case TYPES.UPLOAD_BUILD_ZIP_FILES: {
-			const buildZIPFiles = action.payload.files;
+		case TYPES.UPLOAD_BUILD_PACKAGE_FILES: {
+			const {files, isRemoved, versionName} = action.payload;
 
-			return {...state, buildZIPFiles};
+			if (isRemoved) {
+				const newPackage = {...state};
+				delete newPackage.buildAppPackages[versionName];
+
+				return newPackage;
+			}
+
+			return {
+				...state,
+				buildZIPFiles: {
+					...state.buildAppPackages,
+					[versionName]: files,
+				},
+			};
 		}
 		case TYPES.UPDATE_APP_LXC_COMPATIBILITY: {
 			const {id, value} = action.payload;
@@ -217,6 +230,13 @@ export function appReducer(state: InitialStateProps, action: TAction) {
 			const skuVersionId = action.payload.value;
 
 			return {...state, skuVersionId};
+		}
+
+		case TYPES.RESET_APP_PACKAGES: {
+			return {
+				...state,
+				buildZIPFiles: {},
+			};
 		}
 
 		default:

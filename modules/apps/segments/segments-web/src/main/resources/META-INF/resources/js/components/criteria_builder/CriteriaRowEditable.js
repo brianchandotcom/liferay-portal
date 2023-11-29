@@ -15,7 +15,7 @@ import {
 	SUPPORTED_OPERATORS,
 	SUPPORTED_PROPERTY_TYPES,
 } from '../../utils/constants';
-import {DragTypes} from '../../utils/drag-types';
+import {DragTypes} from '../../utils/dragTypes';
 import {TYPE_ICONS} from '../../utils/typeIcons';
 import {createNewGroup, getSupportedOperatorsFromType} from '../../utils/utils';
 import BooleanInput from '../inputs/BooleanInput';

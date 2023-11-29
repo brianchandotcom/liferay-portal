@@ -152,7 +152,7 @@ boolean nondefaultAssetDisplayPage = selLayout.isTypeAssetDisplay() && !layoutsS
 						</div>
 
 						<liferay-frontend:component
-							module="js/seo/seo"
+							module="js/seo/toggleCanonicalURLFields"
 							servletContext="<%= application %>"
 						/>
 					</c:otherwise>

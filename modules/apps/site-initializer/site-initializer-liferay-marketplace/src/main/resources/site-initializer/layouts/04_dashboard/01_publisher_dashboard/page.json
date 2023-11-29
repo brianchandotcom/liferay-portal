@@ -7,7 +7,18 @@
 	"name_i18n": {
 		"en_US": "Publisher"
 	},
-	"private": false,
+	"permissions": [
+		{
+			"actionIds": [],
+			"roleName": "Guest",
+			"scope": 4
+		},
+		{
+			"actionIds": ["VIEW"],
+			"roleName": "User",
+			"scope": 4
+		}
+	],
 	"system": false,
 	"type": "content"
 }

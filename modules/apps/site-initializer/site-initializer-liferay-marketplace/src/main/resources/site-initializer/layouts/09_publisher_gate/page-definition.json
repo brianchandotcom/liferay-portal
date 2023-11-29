@@ -23,8 +23,9 @@
 						"definition": {
 							"widgetInstance": {
 								"widgetConfig": {
+									"properties": "path=publisher-gate"
 								},
-								"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_[$COMPANY_ID$]_LXC_liferay_marketplace_custom_element_publisher_gate"
+								"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_[$COMPANY_ID$]_LXC_liferay_marketplace_custom_element"
 							}
 						},
 						"type": "Widget"

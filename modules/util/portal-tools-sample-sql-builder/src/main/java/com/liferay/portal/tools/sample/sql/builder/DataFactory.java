@@ -804,7 +804,7 @@ public class DataFactory {
 		return newGroupModel(
 			_counter.get(), getClassNameId(AccountEntry.class),
 			accountEntryModel.getAccountEntryId(), accountEntryModel.getName(),
-			GroupConstants.TYPE_SITE_PRIVATE, false);
+			GroupConstants.TYPE_SITE_PRIVATE, StringPool.BLANK, false);
 	}
 
 	public AccountEntryModel newAccountEntryModel(String type, int index) {
@@ -6531,14 +6531,6 @@ public class DataFactory {
 
 		return newGroupModel(
 			groupId, classNameId, classPK, name, 0, StringPool.BLANK, site);
-	}
-
-	protected GroupModel newGroupModel(
-		long groupId, long classNameId, long classPK, String name, int type,
-		boolean site) {
-
-		return newGroupModel(
-			groupId, classNameId, classPK, name, type, StringPool.BLANK, site);
 	}
 
 	protected GroupModel newGroupModel(

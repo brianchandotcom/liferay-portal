@@ -55,14 +55,14 @@ import org.osgi.service.component.annotations.Reference;
 public class ObjectEntryHelper {
 
 	public ObjectEntry addObjectEntry(
-			long companyId, String objectDefinitionERC, ObjectEntry objectEntry,
-			String scopeKey)
+			long companyId, String objectDefinitionExternalReferenceCode,
+			ObjectEntry objectEntry, String scopeKey)
 		throws Exception {
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.
 				getObjectDefinitionByExternalReferenceCode(
-					objectDefinitionERC, companyId);
+					objectDefinitionExternalReferenceCode, companyId);
 
 		return _objectEntryManager.addObjectEntry(
 			_getDefaultDTOConverterContext(objectDefinition), objectDefinition,

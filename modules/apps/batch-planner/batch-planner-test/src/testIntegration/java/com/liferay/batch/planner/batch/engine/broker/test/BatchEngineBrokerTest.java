@@ -749,7 +749,7 @@ public class BatchEngineBrokerTest {
 	}
 
 	private File _createImportFile(
-			DLFileEntry dlFileEntry, String objectDefinitionERC,
+			DLFileEntry dlFileEntry, String objectDefinitionExternalReferenceCode,
 			String objectEntryERC, String templateName)
 		throws Exception {
 
@@ -758,7 +758,7 @@ public class BatchEngineBrokerTest {
 		String template = StreamUtil.toString(_getInputStream(templateName));
 
 		Link link = LinkUtil.toLink(
-			_dlAppService, dlFileEntry, _dlURLHelper, objectDefinitionERC,
+			_dlAppService, dlFileEntry, _dlURLHelper, objectDefinitionExternalReferenceCode,
 			objectEntryERC, _portal);
 
 		template = StringUtil.replace(

@@ -144,7 +144,7 @@ boolean nondefaultAssetDisplayPage = selLayout.isTypeAssetDisplay() && !layoutsS
 
 							<div>
 								<react:component
-									module="js/seo/PreviewSeo.es"
+									module="js/seo/PreviewSeo"
 									props="<%= layoutsSEODisplayContext.getSeoPreviewSeoProperties() %>"
 									servletContext="<%= application %>"
 								/>
@@ -152,7 +152,7 @@ boolean nondefaultAssetDisplayPage = selLayout.isTypeAssetDisplay() && !layoutsS
 						</div>
 
 						<liferay-frontend:component
-							module="js/seo/seo.es"
+							module="js/seo/seo"
 							servletContext="<%= application %>"
 						/>
 					</c:otherwise>

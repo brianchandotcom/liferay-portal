@@ -175,7 +175,7 @@ Layout selLayout = layoutsSEODisplayContext.getSelLayout();
 
 							<div>
 								<react:component
-									module="js/seo/PreviewSeo.es"
+									module="js/seo/PreviewSeo"
 									props="<%= layoutsSEODisplayContext.getOpenGraphPreviewSeoProperties() %>"
 									servletContext="<%= application %>"
 								/>
@@ -190,7 +190,7 @@ Layout selLayout = layoutsSEODisplayContext.getSelLayout();
 									"uploadOpenGraphImageURL", layoutsSEODisplayContext.getItemSelectorURL()
 								).build()
 							%>'
-							module="js/seo/openGraph.es"
+							module="js/seo/openGraph"
 							servletContext="<%= application %>"
 						/>
 					</c:otherwise>

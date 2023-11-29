@@ -5,7 +5,7 @@
 
 import {toggleDisabled} from 'frontend-js-web';
 
-import {previewSeoFireChange} from './PreviewSeoEvents.es';
+import {previewSeoFireChange} from './PreviewSeoEvents';
 
 export default function ({namespace}) {
 	const canonicalURLEnabledCheck = document.getElementById(

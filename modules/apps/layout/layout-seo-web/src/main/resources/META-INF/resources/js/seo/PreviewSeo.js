@@ -8,7 +8,7 @@ import {isObject} from 'frontend-js-web';
 import {PropTypes} from 'prop-types';
 import React, {useCallback, useEffect, useState} from 'react';
 
-import {previewSeoOnChange} from './PreviewSeoEvents.es';
+import {previewSeoOnChange} from './PreviewSeoEvents';
 
 const MAX_LENGTH_DESCIPTION = 160;
 

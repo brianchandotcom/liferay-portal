@@ -5,7 +5,7 @@
 
 import {openSelectionModal, toggleDisabled} from 'frontend-js-web';
 
-import {previewSeoFireChange} from './PreviewSeoEvents.es';
+import {previewSeoFireChange} from './PreviewSeoEvents';
 
 export default function ({namespace, uploadOpenGraphImageURL}) {
 	const openGraphImageButton = document.getElementById(

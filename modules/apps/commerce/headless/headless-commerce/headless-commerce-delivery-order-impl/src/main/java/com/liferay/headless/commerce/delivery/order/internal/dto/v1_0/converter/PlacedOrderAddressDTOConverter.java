@@ -39,8 +39,12 @@ public class PlacedOrderAddressDTOConverter
 		throws Exception {
 
 		CommerceAddress commerceAddress =
-			_commerceAddressService.getCommerceAddress(
+			_commerceAddressService.fetchCommerceAddress(
 				(Long)dtoConverterContext.getId());
+
+		if (commerceAddress == null) {
+			return new PlacedOrderAddress();
+		}
 
 		Country addressCountry = commerceAddress.getCountry();
 

@@ -5,6 +5,8 @@
 
 package com.liferay.document.library.internal.util;
 
+import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
+import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.document.library.kernel.exception.InvalidFolderException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
@@ -21,6 +23,8 @@ import com.liferay.document.library.kernel.util.comparator.RepositoryModelModifi
 import com.liferay.document.library.kernel.util.comparator.RepositoryModelReadCountComparator;
 import com.liferay.document.library.kernel.util.comparator.RepositoryModelSizeComparator;
 import com.liferay.document.library.kernel.util.comparator.RepositoryModelTitleComparator;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -58,6 +62,7 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -810,6 +815,22 @@ public class DLImpl implements DL {
 				serviceContext.getCurrentURL();
 		}
 
+		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+
+		if ((themeDisplay != null) && _hasAssetDisplayPage(serviceContext)) {
+			String friendlyURL =
+				_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
+					new InfoItemReference(
+						FileEntry.class.getName(),
+						new ClassPKInfoItemIdentifier(
+							dlFileVersion.getFileEntryId())),
+					themeDisplay);
+
+			if (Validator.isNotNull(friendlyURL)) {
+				return friendlyURL;
+			}
+		}
+
 		String entryURL = GetterUtil.getString(
 			serviceContext.getAttribute("entryURL"));
 
@@ -818,7 +839,6 @@ public class DLImpl implements DL {
 		}
 
 		HttpServletRequest httpServletRequest = serviceContext.getRequest();
-		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 
 		if ((httpServletRequest == null) || (themeDisplay == null)) {
 			return StringPool.BLANK;
@@ -933,6 +953,18 @@ public class DLImpl implements DL {
 		return true;
 	}
 
+	private boolean _hasAssetDisplayPage(ServiceContext serviceContext) {
+		int displayPageType = ParamUtil.getInteger(
+			serviceContext, "displayPageType",
+			AssetDisplayPageConstants.TYPE_DEFAULT);
+
+		if (displayPageType == AssetDisplayPageConstants.TYPE_NONE) {
+			return false;
+		}
+
+		return true;
+	}
+
 	private String _stripVersionSuffix(String version) {
 		int index = version.indexOf(CharPool.TILDE);
 
@@ -1040,6 +1072,10 @@ public class DLImpl implements DL {
 			_populateGenericNamesMap(genericName);
 		}
 	}
+
+	@Reference
+	private AssetDisplayPageFriendlyURLProvider
+		_assetDisplayPageFriendlyURLProvider;
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;

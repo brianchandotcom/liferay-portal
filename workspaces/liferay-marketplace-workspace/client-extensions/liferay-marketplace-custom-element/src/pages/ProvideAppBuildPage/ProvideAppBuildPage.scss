@@ -4,15 +4,16 @@
 	}
 
 	&-add-package-button {
-		background-color: #FBFCFE;
-		border-color: #E7EFFF;
-		color: #0B5FFF;
+		background-color: #fbfcfe;
+		border-color: #e7efff;
+		color: #0b5fff;
 		margin-top: 1.5rem;
 
-		&:active, &:hover {
-			background-color: #EDF3FE;
-			border-color: #0053F0;
-			color: #0B5FFF;
+		&:active,
+		&:hover {
+			background-color: #edf3fe;
+			border-color: #0053f0;
+			color: #0b5fff;
 		}
 	}
 
@@ -38,10 +39,10 @@
 
 	&-dropzone-container {
 		border-radius: 0.5rem;
-		border: 1px solid #E2E2E4;
+		border: 1px solid #e2e2e4;
 
 		&-header {
-			background-color: #F7F7F8;
+			background-color: #f7f7f8;
 		}
 
 		.dropzone-upload-container {
@@ -50,7 +51,7 @@
 			padding: 1.5rem;
 			width: unset;
 		}
-	
+
 		.file-list-container {
 			margin-bottom: 0;
 

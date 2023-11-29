@@ -55,8 +55,13 @@ interface ProvideAppBuildPageProps {
 }
 
 const acceptFileTypes = {
-	'application/java-archive': ['.jar'],
-	'application/octet-stream': ['.war'],
+	[ProductType.CLOUD]: {
+		'application/java-archive': ['.zip'],
+	},
+	[ProductType.DXP]: {
+		'application/java-archive': ['.jar'],
+		'application/octet-stream': ['.war'],
+	},
 };
 
 export function ProvideAppBuildPage({
@@ -64,14 +69,16 @@ export function ProvideAppBuildPage({
 	onClickContinue,
 }: ProvideAppBuildPageProps) {
 	const [
-		{appBuild, appERC, appId, appProductId, appType, buildZIPFiles},
+		{appBuild, appERC, appId, appProductId, appType, buildAppPackages},
 		dispatch,
 	] = useAppContext();
 	const [selectedCheckboxValue, setSelectedCheckboxValue] = useState<
 		Array<string>
 	>([]);
 	const [selectedVersions, setSelectedVersions] = useState<string[]>([]);
-	const [visibleModal, setVisibleModal] = useState(false);
+	const [visibleSelectVersionModal, setVisibleSelectVersionModal] = useState(
+		false
+	);
 
 	const handleSelectCheckbox = (offeringTypelabel: string) => {
 		setSelectedCheckboxValue((prevValue) =>
@@ -81,12 +88,14 @@ export function ProvideAppBuildPage({
 		);
 	};
 
-	useEffect(() => {
-		setSelectedCheckboxValue([]);
-	}, [appType.value]);
+	const handleResetAppPackages = () => {
+		dispatch({
+			type: TYPES.RESET_APP_PACKAGES,
+		});
+	};
 
-	const handleUpload = (files: File[]) => {
-		const newUploadedFiles: UploadedFile[] = files.map((file) => ({
+	const handleUploadAppPackages = (files: File[], versionName?: string) => {
+		const newUploadedPackage: UploadedFile[] = files.map((file) => ({
 			error: false,
 			file,
 			fileName: file.name,
@@ -95,38 +104,59 @@ export function ProvideAppBuildPage({
 			progress: 0,
 			readableSize: filesize(file.size),
 			uploaded: true,
+			versionName,
 		}));
 
-		if (buildZIPFiles?.length) {
-			dispatch({
-				payload: {
-					files: [...buildZIPFiles, ...newUploadedFiles],
-				},
-				type: TYPES.UPLOAD_BUILD_ZIP_FILES,
-			});
-		}
-		else {
-			dispatch({
-				payload: {
-					files: newUploadedFiles,
-				},
-				type: TYPES.UPLOAD_BUILD_ZIP_FILES,
-			});
-		}
-	};
+		const currentVersionFiles =
+			buildAppPackages[versionName as string] ?? [];
 
-	const handleDelete = (fileId: string) => {
-		const files = buildZIPFiles.filter((file) => file.id !== fileId);
+		const buildPackageFiles = currentVersionFiles.length
+			? [
+					...buildAppPackages[versionName as string],
+					...newUploadedPackage,
+			  ]
+			: newUploadedPackage;
 
 		dispatch({
 			payload: {
-				files,
+				files: buildPackageFiles,
+				versionName,
 			},
-			type: TYPES.UPLOAD_BUILD_ZIP_FILES,
+			type: TYPES.UPLOAD_BUILD_PACKAGE_FILES,
 		});
 	};
 
-	const updateCloudCompatibility = async () => {
+	const handleRemoveAppPackages = (fileId: string, versionName?: string) => {
+		const deletedFiles = buildAppPackages[versionName as string]?.filter(
+			(value) => value.id !== fileId
+		);
+
+		dispatch({
+			payload: {
+				files: deletedFiles,
+				versionName,
+			},
+			type: TYPES.UPLOAD_BUILD_PACKAGE_FILES,
+		});
+	};
+
+	const handleRemovePackageVersion = (removedVersion: string) => {
+		const versions = selectedVersions.filter(
+			(version) => version !== removedVersion
+		);
+
+		dispatch({
+			payload: {
+				isRemoved: true,
+				versionName: removedVersion,
+			},
+			type: TYPES.UPLOAD_BUILD_PACKAGE_FILES,
+		});
+
+		setSelectedVersions(versions);
+	};
+
+	const submitAppBuildCategories = async () => {
 		const vocabulariesResponse = await getVocabularies();
 
 		const categories = await getProductIdCategories({
@@ -241,6 +271,114 @@ export function ProvideAppBuildPage({
 			body,
 		});
 	};
+
+	const submitAppBuildPackages = async () => {
+		for (const versionKey in buildAppPackages) {
+			const appPackagesByVersion = buildAppPackages[versionKey];
+
+			for (const appPackage of appPackagesByVersion) {
+				const buildAppPackageId = await submitBase64EncodedFile({
+					appERC,
+					file: appPackage.file,
+					requestFunction: createAttachment,
+					title: appPackage.fileName,
+				});
+
+				await addExpandoValue({
+					attributeValues: {
+						'App Icon': 'No',
+						'Liferay Version': versionKey,
+					},
+					className:
+						'com.liferay.commerce.product.model.CPAttachmentFileEntry',
+					classPK: buildAppPackageId as number,
+					companyId: Number(getCompanyId()),
+					tableName: 'CUSTOM_FIELDS',
+				});
+			}
+		}
+	};
+
+	const submitAppBuildTypeSpecification = async () => {
+		if (appType.id) {
+			updateProductSpecification({
+				body: {
+					specificationKey: ProductSpecification.TYPE.toLowerCase(),
+					value: {en_US: appType.value},
+				},
+				id: appType.id,
+			});
+		}
+		else {
+			const dataSpecification = await createSpecification({
+				body: {
+					key: ProductSpecification.TYPE.toLowerCase(),
+					title: {
+						en_US: ProductSpecification.TYPE,
+					},
+				},
+			});
+
+			const {id} = await createProductSpecification({
+				appId,
+				body: {
+					productId: appProductId,
+					specificationId: dataSpecification.id,
+					specificationKey: dataSpecification.key,
+					value: {en_US: appType.value},
+				},
+			});
+
+			dispatch({
+				payload: {id, value: appType.value},
+				type: TYPES.UPDATE_APP_LXC_COMPATIBILITY,
+			});
+		}
+	};
+
+	useEffect(() => {
+		setSelectedCheckboxValue([]);
+		handleResetAppPackages();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [appType?.value]);
+
+	const uploadAppPackagesComponent = (versionName: string) => (
+		<>
+			<FileList
+				onDelete={handleRemoveAppPackages}
+				type="document"
+				uploadedFiles={
+					buildAppPackages ? buildAppPackages[versionName] : []
+				}
+				versionName={versionName}
+			/>
+			{!buildAppPackages?.length && (
+				<DropzoneUpload
+					acceptFileTypes={
+						acceptFileTypes[
+							appType.value as keyof typeof acceptFileTypes
+						]
+					}
+					buttonText={i18n.translate('select-a-file')}
+					description={
+						appType.value === ProductType.CLOUD
+							? i18n.translate(
+									'only-zip-files-are-allowed-max-file-size-is-500-mb'
+							  )
+							: i18n.translate(
+									'only-jar-war-files-are-allowed-max-file-size-is-500mb'
+							  )
+					}
+					maxFiles={10}
+					maxSize={500000000}
+					multiple={true}
+					onHandleUpload={handleUploadAppPackages}
+					title={i18n.translate('drag-and-drop-to-upload-or')}
+					versionName={versionName}
+				/>
+			)}
+		</>
+	);
 
 	return (
 		<div className="provide-app-build-page-container">
@@ -382,9 +520,15 @@ export function ProvideAppBuildPage({
 					/>
 
 					<RadioCard
-						description={i18n.translate(
-							'please-be-sure-to-specify-liferay-compatibility-through-the-appropriate-properties-or-xml-files-in-your-plugin'
-						)}
+						description={
+							appType.value === ProductType.CLOUD
+								? i18n.translate(
+										'use-any-local-zip-files-to-upload-max-file-size-is-500-mb'
+								  )
+								: i18n.translate(
+										'please-be-sure-to-specify-liferay-compatibility-through-the-appropriate-properties-or-xml-files-in-your-plugin'
+								  )
+						}
 						icon={uploadIcon}
 						onChange={() => {
 							dispatch({
@@ -393,7 +537,11 @@ export function ProvideAppBuildPage({
 							});
 						}}
 						selected={appBuild === ProductUploadType.ZIP_UPLOAD}
-						title={i18n.translate('via-liferay-plugin-packages')}
+						title={
+							appType.value === ProductType.CLOUD
+								? i18n.translate('via-zip-upload')
+								: i18n.translate('via-liferay-plugin-packages')
+						}
 						tooltip={ReactDOMServer.renderToString(
 							<span>
 								{i18n.translate(
@@ -410,128 +558,93 @@ export function ProvideAppBuildPage({
 			</Section>
 
 			<Section
-				description={i18n.translate('if-the-app-is-compatible-with-different-updates-of-74-please-upload-multiple-packages-for-each-update-or-update-compatibility-range')}
-				label={i18n.translate('upload-liferay-plugin-packages')}
+				description={
+					appType.value === ProductType.CLOUD
+						? i18n.translate('select-a-local-file-to-upload')
+						: i18n.translate(
+								'if-the-app-is-compatible-with-different-updates-of-74-please-upload-multiple-packages-for-each-update-or-update-compatibility-range'
+						  )
+				}
+				label={
+					appType.value === ProductType.CLOUD
+						? i18n.translate('upload-zip-files')
+						: i18n.translate('upload-liferay-plugin-packages')
+				}
 				required
-				tooltip={i18n.translate(
-					'only-jar-war-files-are-allowed-max-file-size-is-500mb.'
-				)}
+				tooltip={
+					appType.value === ProductType.CLOUD
+						? i18n.translate(
+								'you-can-upload-one-or-many-zip-files-max-total-size-is-500-mb'
+						  )
+						: i18n.translate(
+								'only-jar-war-files-are-allowed-max-file-size-is-500mb.'
+						  )
+				}
 				tooltipText={i18n.translate('more-info')}
 			>
-				{selectedVersions?.map((versionName, index) => (
-					<div className="mt-4 provide-app-build-page-dropzone-container" key={`container-${index}`}>
-						<div className="align-center d-flex font-weight-bold justify-content-between p-3 provide-app-build-page-dropzone-container-header">
-							<div>{versionName}</div>
-							<a href="/">Select a File</a>
-						</div>
+				{appType.value === ProductType.CLOUD &&
+					uploadAppPackagesComponent(ProductType.CLOUD)}
 
-						<FileList
-							key={`files-${index}`}
-							onDelete={handleDelete}
-							type="document"
-							uploadedFiles={buildZIPFiles ? buildZIPFiles : []}
-						/>
-		
-						<DropzoneUpload
-							acceptFileTypes={acceptFileTypes}
-							buttonText="Select a file"
-							description={i18n.translate(
-								'only-jar-war-files-are-allowed-max-file-size-is-500mb.'
-							)}
-							key={`dropzone-${index}`}
-							maxFiles={1}
-							maxSize={500000000}
-							multiple={false}
-							onHandleUpload={handleUpload}
-							showDocumentIcon={false}
-							title="Drag and drop to upload or"
-						/>
-					</div>
-				))}
+				{selectedVersions?.map(
+					(versionName: string, index) =>
+						appType.value === ProductType.DXP && (
+							<div
+								className="mt-4 provide-app-build-page-dropzone-container"
+								key={`container-${index}`}
+							>
+								<div className="align-center d-flex font-weight-bold justify-content-between p-3 provide-app-build-page-dropzone-container-header">
+									<div>{versionName}</div>
+									{versionName && (
+										<ClayButton
+											displayType="unstyled"
+											onClick={() =>
+												handleRemovePackageVersion(
+													versionName
+												)
+											}
+										>
+											{i18n.translate('remove-a-version')}
+										</ClayButton>
+									)}
+								</div>
 
-				<ClayButton className="btn-block provide-app-build-page-add-package-button" displayType="secondary" onClick={() => setVisibleModal(true)}>
-					<ClayIcon className="mr-1" symbol="plus" />
-					Add Package(s)
-				</ClayButton>
-				
-				{visibleModal && 
-					<PackageVersionModal 
-						appERC={appERC}
+								{uploadAppPackagesComponent(versionName)}
+							</div>
+						)
+				)}
+
+				{appType.value === ProductType.DXP && (
+					<ClayButton
+						className="btn-block provide-app-build-page-add-package-button"
+						displayType="secondary"
+						onClick={() => setVisibleSelectVersionModal(true)}
+					>
+						<ClayIcon className="mr-1" symbol="plus" />
+						{i18n.translate('add-packages')}
+					</ClayButton>
+				)}
+
+				{visibleSelectVersionModal && (
+					<PackageVersionModal
+						appProductId={appProductId}
 						currentVersions={selectedVersions}
-						handleClose={() => setVisibleModal(false)}
+						handleClose={() => setVisibleSelectVersionModal(false)}
 						handleConfirm={setSelectedVersions}
 					/>
-				}
+				)}
 			</Section>
 
 			<NewAppPageFooterButtons
 				disableContinueButton={
-					!buildZIPFiles?.length || !selectedCheckboxValue.length
+					Object.values(buildAppPackages ?? {})?.some(
+						(versionEntry) => !versionEntry?.length
+					) || !selectedCheckboxValue.length
 				}
 				onClickBack={() => onClickBack()}
-				onClickContinue={() => {
-					const submitAppBuildType = async () => {
-						if (appType.id) {
-							updateProductSpecification({
-								body: {
-									specificationKey: ProductSpecification.TYPE.toLowerCase(),
-									value: {en_US: appType.value},
-								},
-								id: appType.id,
-							});
-						}
-						else {
-							const dataSpecification = await createSpecification(
-								{
-									body: {
-										key: ProductSpecification.TYPE.toLowerCase(),
-										title: {
-											en_US: ProductSpecification.TYPE,
-										},
-									},
-								}
-							);
-
-							const {id} = await createProductSpecification({
-								appId,
-								body: {
-									productId: appProductId,
-									specificationId: dataSpecification.id,
-									specificationKey: dataSpecification.key,
-									value: {en_US: appType.value},
-								},
-							});
-
-							dispatch({
-								payload: {id, value: appType.value},
-								type: TYPES.UPDATE_APP_LXC_COMPATIBILITY,
-							});
-						}
-					};
-
-					updateCloudCompatibility();
-
-					submitAppBuildType();
-
-					buildZIPFiles.forEach(async (buildZIPFile) => {
-						const buildZIPFileId = await submitBase64EncodedFile({
-							appERC,
-							file: buildZIPFile.file,
-							requestFunction: createAttachment,
-							title: buildZIPFile.fileName,
-						});
-
-						addExpandoValue({
-							attributeValues: {
-								'App Icon': 'No',
-							},
-							className:
-								'com.liferay.commerce.product.model.CPAttachmentFileEntry',
-							classPK: buildZIPFileId as number,
-							companyId: Number(getCompanyId()),
-							tableName: 'CUSTOM_FIELDS',
-						});
-					});
+				onClickContinue={async () => {
+					await submitAppBuildCategories();
+					await submitAppBuildPackages();
+					await submitAppBuildTypeSpecification();
 
 					onClickContinue();
 				}}

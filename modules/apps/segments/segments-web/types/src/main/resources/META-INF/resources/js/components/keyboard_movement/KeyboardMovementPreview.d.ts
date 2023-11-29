@@ -3,11 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-export declare const KEY_CODES: {
-	ARROW_DOWN: string;
-	ARROW_UP: string;
-	END: string;
-	ENTER: string;
-	ESCAPE: string;
-	HOME: string;
-};
+/// <reference types="react" />
+
+export default function KeyboardMovementPreview(): JSX.Element | null;

@@ -314,6 +314,11 @@ public class PayPalCommercePaymentIntegration
 			PayPalHttpClient payPalHttpClient = _getPayPalHttpClient(
 				commercePaymentEntry);
 
+			CommerceCurrency commerceCurrency =
+				_commerceCurrencyLocalService.getCommerceCurrency(
+					commercePaymentEntry.getCompanyId(),
+					commercePaymentEntry.getCurrencyCode());
+
 			CapturesRefundRequest capturesRefundRequest =
 				new CapturesRefundRequest(
 					commercePaymentEntry.getTransactionCode()
@@ -323,16 +328,14 @@ public class PayPalCommercePaymentIntegration
 					new RefundRequest() {
 						{
 							amount(
-
-								// TODO Use _toScaledString
-
 								new com.paypal.payments.Money(
 								).currencyCode(
 									commercePaymentEntry.getCurrencyCode()
 								).value(
-									String.valueOf(
-										commercePaymentEntry.getAmount()))
-								);
+									_toScaledString(
+										commerceCurrency,
+										commercePaymentEntry.getAmount())
+								));
 						}
 					}
 				);

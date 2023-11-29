@@ -82,19 +82,19 @@ public class JavaUpgradeModelPermissionsCheck extends BaseJavaTermCheck {
 	}
 
 	private String _formatMethod(
-			JavaTerm javaMethodTerm, String fileContent, String fileName)
+			JavaTerm javaTerm, String fileContent, String fileName)
 		throws Exception {
 
 		boolean hasSetGroupPermissions = false;
 
-		String content = javaMethodTerm.getContent();
+		String content = javaTerm.getContent();
 
 		Matcher setGroupPermissionsMatcher =
 			_setGroupPermissionsPattern.matcher(content);
 
 		if (setGroupPermissionsMatcher.find()) {
 			hasSetGroupPermissions = _isServiceContextMethodCall(
-				javaMethodTerm, fileContent, fileName,
+				javaTerm, fileContent, fileName,
 				setGroupPermissionsMatcher.group(1));
 		}
 
@@ -105,7 +105,7 @@ public class JavaUpgradeModelPermissionsCheck extends BaseJavaTermCheck {
 
 		if (setGuestPermissionsMatcher.find()) {
 			hasSetGuestPermissions = _isServiceContextMethodCall(
-				javaMethodTerm, fileContent, fileName,
+				javaTerm, fileContent, fileName,
 				setGuestPermissionsMatcher.group(1));
 		}
 
@@ -206,12 +206,12 @@ public class JavaUpgradeModelPermissionsCheck extends BaseJavaTermCheck {
 	}
 
 	private boolean _isServiceContextMethodCall(
-			JavaTerm javaMethodTerm, String fileContent, String fileName,
+			JavaTerm javaTerm, String fileContent, String fileName,
 			String variableName)
 		throws Exception {
 
 		String variableTypeName = getVariableTypeName(
-			javaMethodTerm.getContent(), javaMethodTerm, fileContent, fileName,
+			javaTerm.getContent(), javaTerm, fileContent, fileName,
 			variableName);
 
 		if (variableTypeName == null) {

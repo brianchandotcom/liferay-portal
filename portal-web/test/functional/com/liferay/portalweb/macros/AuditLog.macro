@@ -1,6 +1,6 @@
 definition {
 
-	@summary = "Default summary"
+	@summary = "Assert the audit log contains string ${logString}"
 	macro viewLogFileContent(logString = null) {
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 

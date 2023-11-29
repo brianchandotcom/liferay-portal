@@ -1,6 +1,6 @@
 definition {
 
-	@summary = "Default summary"
+	@summary = "Compare the database count with the ${expectedCount}"
 	macro assertDatabaseCount(databaseSubstring = null, databaseFilter = null, expectedCount = null) {
 		Variables.assertDefined(parameterList = "${databaseFilter},${databaseSubstring},${expectedCount}");
 
@@ -15,7 +15,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
+	@summary = "Assert the ${text} in MySQL Statement Result"
 	macro assertTextInMySQLStatementResult(text = null, mysqlStatement = null) {
 		var sqlResults = SQL.executeMySQLStatement(mysqlStatement = ${mysqlStatement});
 
@@ -24,7 +24,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
+	@summary = "Assert the ${text} is not in MySQL Statement Result"
 	macro assertTextNotInMySQLStatementResult(text = null, mysqlStatement = null) {
 		var sqlResults = SQL.executeMySQLStatement(mysqlStatement = ${mysqlStatement});
 
@@ -33,7 +33,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
+	@summary = "Drop index ${indexName} on ${tableName}"
 	macro dropMySQLIndex(indexName = null, tableName = null) {
 		Variables.assertDefined(parameterList = "${indexName},${tableName}");
 
@@ -46,7 +46,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
+	@summary = "Execute ${mysqlStatement}"
 	macro executeMySQLStatement(mysqlStatement = null) {
 		Variables.assertDefined(parameterList = ${mysqlStatement});
 
@@ -63,7 +63,7 @@ definition {
 		return ${output};
 	}
 
-	@summary = "Default summary"
+	@summary = "Assert an index on the MySQL database"
 	macro hasMySQLIndex(indexName = null) {
 		Variables.assertDefined(parameterList = ${indexName});
 

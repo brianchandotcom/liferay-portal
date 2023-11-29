@@ -1,6 +1,6 @@
 definition {
 
-	@summary = "Default summary"
+	@summary = "Add a new Custom Field ${customFieldName}"
 	macro addCP(customBooleanDefaultValue = null, localization = null, baseURL = null, nameLocalization = null, modelResource = null, customInputDataType = null, resourceName = null, customFieldName = null, searchable = null, customFieldType = null, startingValue = null) {
 		var key_resourceName = ${resourceName};
 
@@ -104,7 +104,7 @@ definition {
 			value1 = ${customFieldName});
 	}
 
-	@summary = "Default summary"
+	@summary = "Delete the Custom Field ${customFieldName}"
 	macro deleteCP(resourceName = null, customFieldName = null) {
 		var key_resourceName = ${resourceName};
 
@@ -127,7 +127,7 @@ definition {
 		AssertElementNotPresent(locator1 = "CustomFieldsEditResource#CUSTOM_FIELDS_TABLE_NAME");
 	}
 
-	@summary = "Default summary"
+	@summary = "Edit the Custom Field ${customFieldName}"
 	macro editCP(resourceName = null, customFieldName = null, customFieldType = null, startingValue = null) {
 		var key_resourceName = ${resourceName};
 
@@ -155,21 +155,21 @@ definition {
 		PortletEntry.save();
 	}
 
-	@summary = "Default summary"
+	@summary = "Open the Custom Field admin with ${baseURL}"
 	macro openCustomFieldAdmin(baseURL = null) {
 		Navigator.openWithAppendToBaseURL(
 			baseURL = ${baseURL},
 			urlAppend = "group/control_panel/manage?p_p_id=com_liferay_expando_web_portlet_ExpandoPortlet");
 	}
 
-	@summary = "Default summary"
+	@summary = "Open to the page to add a resource custom field with a ${baseURL} and ${modelResource}"
 	macro openToAddResourceCustomField(baseURL = null, modelResource = null) {
 		Navigator.openWithAppendToBaseURL(
 			baseURL = ${baseURL},
 			urlAppend = "group/control_panel/manage?p_p_id=com_liferay_expando_web_portlet_ExpandoPortlet&_com_liferay_expando_web_portlet_ExpandoPortlet_mvcPath=%2Fedit%2Fselect_field_type.jsp&_com_liferay_expando_web_portlet_ExpandoPortlet_modelResource=${modelResource}");
 	}
 
-	@summary = "Default summary"
+	@summary = "Delete Custom Fields from the ${resourceName} list"
 	macro tearDownCP() {
 		for (var resourceName : list "Blogs Entry,Calendar Event,Document,Documents Folder,Knowledge Base Article,Knowledge Base Folder,Message Boards Category,Message Boards Message,Organization,Page,Role,Site,User,User Group,Web Content Article,Web Content Folder,Wiki Page") {
 			ApplicationsMenu.gotoPortlet(
@@ -192,7 +192,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
+	@summary = "Assert that no Custom Field ${customFieldName} is present"
 	macro viewCPIsNotPresent(resourceName = null, customFieldName = null) {
 		var key_resourceName = ${resourceName};
 
@@ -205,7 +205,7 @@ definition {
 		WaitForElementNotPresent(locator1 = "CustomFieldsEditResource#CUSTOM_FIELDS_TABLE_NAME");
 	}
 
-	@summary = "Default summary"
+	@summary = "Assert that Custom Field ${customFieldName} is present"
 	macro viewCPIsPresent(resourceName = null, customFieldName = null) {
 		var key_resourceName = ${resourceName};
 

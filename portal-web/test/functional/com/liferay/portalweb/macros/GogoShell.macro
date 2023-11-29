@@ -1,6 +1,6 @@
 definition {
 
-	@summary = "Default summary"
+	@summary = "Execute ${commandName} on Gogo Shell"
 	macro executeCommand(commandName = null) {
 		Type(
 			locator1 = "GogoShell#COMMAND_FIELD",
@@ -11,7 +11,7 @@ definition {
 			value1 = "Execute");
 	}
 
-	@summary = "Default summary"
+	@summary = "Execute a Gogo Shell command via telnet"
 	macro executeCommandViaTelnet(expectedOutput = null, command = null) {
 		if (!(isSet(nodePort))) {
 			var nodePort = 8080;
@@ -40,7 +40,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
+	@summary = "Get the ${moduleName} ID"
 	macro getModuleID(moduleName = null) {
 		GogoShell.listModuleStatus(moduleName = ${moduleName});
 
@@ -57,7 +57,7 @@ definition {
 		return ${moduleId};
 	}
 
-	@summary = "Default summary"
+	@summary = "List the ${moduleName} status on Gogo Shell"
 	macro listModuleStatus(moduleName = null) {
 		Type(
 			locator1 = "GogoShell#COMMAND_FIELD",
@@ -68,7 +68,7 @@ definition {
 			value1 = "Execute");
 	}
 
-	@summary = "Default summary"
+	@summary = "Open the Gogo Shell Admin via URL"
 	macro openGogoShellAdmin(baseURL = null) {
 		if (isSet(baseURL)) {
 			Navigator.openWithAppendToBaseURL(
@@ -80,7 +80,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
+	@summary = "Start ${moduleId} via Gogo Shell"
 	macro startModule(moduleId = null) {
 		Type(
 			locator1 = "GogoShell#COMMAND_FIELD",
@@ -91,7 +91,7 @@ definition {
 			value1 = "Execute");
 	}
 
-	@summary = "Default summary"
+	@summary = "Stop ${moduleId} via Gogo Shell"
 	macro stopModule(moduleId = null) {
 		Type(
 			locator1 = "GogoShell#COMMAND_FIELD",
@@ -102,7 +102,7 @@ definition {
 			value1 = "Execute");
 	}
 
-	@summary = "Default summary"
+	@summary = "Assert ${moduleStatus} on Gogo Shell"
 	macro viewModuleStatus(moduleStatus = null, moduleName = null) {
 		GogoShell.listModuleStatus(moduleName = ${moduleName});
 
@@ -111,14 +111,14 @@ definition {
 			value1 = ${moduleStatus});
 	}
 
-	@summary = "Default summary"
+	@summary = "Assert the output is not ${outputContent}"
 	macro viewNoOutput(outputContent = null) {
 		AssertTextNotPresent(
 			locator1 = "GogoShell#OUTPUT_FIELD",
 			value1 = ${outputContent});
 	}
 
-	@summary = "Default summary"
+	@summary = "Assert the ${outputContent}"
 	macro viewOutput(outputContent = null) {
 		AssertTextEquals.assertPartialText(
 			locator1 = "GogoShell#OUTPUT_FIELD",

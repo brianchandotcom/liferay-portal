@@ -1,6 +1,6 @@
 definition {
 
-	@summary = "Default summary"
+	@summary = "Get the ${cacheValue} from ${portalInstanceName}"
 	macro getCache(portalInstanceName = null, cacheValue = null) {
 		if (!(isSet(companyId))) {
 			var companyId = JSONCompany.getCompanyId(portalInstanceName = ${portalInstanceName});
@@ -25,7 +25,7 @@ definition {
 			value1 = ${cacheValue});
 	}
 
-	@summary = "Default summary"
+	@summary = "Put ${cacheValue} on ${portalInstanceName}"
 	macro putCache(portalInstanceName = null, cacheValue = null) {
 		if (!(isSet(companyId))) {
 			var companyId = JSONCompany.getCompanyId(portalInstanceName = ${portalInstanceName});

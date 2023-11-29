@@ -1,6 +1,6 @@
 definition {
 
-	@summary = "Default summary"
+	@summary = "Blacklist a Component or a Bundle by adding the label and symbolic name"
 	macro blacklistModuleAndComponentConfiguration(symbolicName = null, label = null) {
 		if (${label} == "Blacklist Component Names") {
 			var key_text = "ComponentNames";
@@ -19,7 +19,7 @@ definition {
 		SystemSettings.saveConfiguration();
 	}
 
-	@summary = "Default summary"
+	@summary = "Assert the Blacklisted Module status via UI and logs message"
 	macro viewProductMenuBlacklistedModule(consoleText = null, portlet = null, panel = null, category = null) {
 		WaitForConsoleTextPresent(value1 = ${consoleText});
 

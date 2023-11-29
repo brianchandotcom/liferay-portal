@@ -1,6 +1,6 @@
 definition {
 
-	@summary = "Default summary"
+	@summary = "Configure the Administrator User"
 	macro configureAdministratorUserPG(administratorEmail = null, administratorFirstName = null, administratorLastName = null) {
 		Type(
 			locator1 = "TextInput#FIRST_NAME",
@@ -15,7 +15,7 @@ definition {
 			value1 = ${administratorEmail});
 	}
 
-	@summary = "Default summary"
+	@summary = "Configure the Database"
 	macro configureDatabasePG(databaseType = null, databaseName = null, databasePassword = null, jdbcDriverClassName = null, databaseUserName = null) {
 		if (IsElementNotPresent(locator1 = "SetupWizard#DATABASE_CHANGE_USE_CONFIGURED_DATABASE_LINK")) {
 			AssertClick(
@@ -50,14 +50,14 @@ definition {
 			value1 = ${databasePassword});
 	}
 
-	@summary = "Default summary"
+	@summary = "Configure the default language"
 	macro configureDefaultLanguagePG(defaultLanguage = null) {
 		Select(
 			locator1 = "SetupWizard#DEFAULT_LANGUAGE",
 			value1 = ${defaultLanguage});
 	}
 
-	@summary = "Default summary"
+	@summary = "Configure the portal setup wizard with default values"
 	macro configureDefaultPG(base_branch = null, virtualHostsURL = null, newPassword = null) {
 		SetupWizard.viewDefaultPortalNamePG();
 
@@ -99,7 +99,7 @@ definition {
 		User.viewLoggedInPG();
 	}
 
-	@summary = "Default summary"
+	@summary = "Configure the portal setup wizard"
 	macro configurePG(base_branch = null, databaseName = null, addSampleData = null, virtualHostsURL = null, administratorFirstName = null, newPassword = null, administratorLastName = null, jdbcDriverClassName = null, databaseUserName = null, databaseType = null, portalName = null, administratorEmail = null, jdbcURL = null, databasePassword = null) {
 		if (isSet(portalName)) {
 			SetupWizard.configurePortalNamePG(portalName = ${portalName});
@@ -161,14 +161,14 @@ definition {
 		User.viewLoggedInPG();
 	}
 
-	@summary = "Default summary"
+	@summary = "Configure the portal name"
 	macro configurePortalNamePG(portalName = null) {
 		Type(
 			locator1 = "TextInput#PORTAL_NAME",
 			value1 = ${portalName});
 	}
 
-	@summary = "Default summary"
+	@summary = "Configure the Sample Data"
 	macro configureSampleDataPG(addSampleData = null) {
 		if (IsElementNotPresent(locator1 = "SetupWizard#DATABASE_CHANGE_USE_CONFIGURED_DATABASE_LINK")) {
 			AssertClick(
@@ -185,14 +185,14 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
+	@summary = "Finish the configuration"
 	macro finishConfigurationPG() {
 		AssertClick(
 			locator1 = "Button#FINISH_CONFIGURATION",
 			value1 = "Finish Configuration");
 	}
 
-	@summary = "Default summary"
+	@summary = "Assert the configuration was saved"
 	macro viewConfigurationSavedPG(localization = null) {
 		if (isSet(localization) && (${localization} == "ES")) {
 			Alert.viewSuccessMessageText(successMessage = "La configuración fue guardada con éxito.");
@@ -222,7 +222,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
+	@summary = "Assert the configured database in the console"
 	macro viewConfiguredDatabaseInConsole(databaseType = null) {
 		if (${databaseType} == "DB2") {
 			AssertConsoleTextPresent(value1 = "Using dialect com.liferay.portal.dao.orm.hibernate.DB2Dialect for DB2");
@@ -247,7 +247,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
+	@summary = "Assert the default administrator user"
 	macro viewDefaultAdministratorUserPG() {
 		AssertSelectedLabel(
 			locator1 = "SetupWizard#DEFAULT_LANGUAGE",
@@ -266,7 +266,7 @@ definition {
 			value1 = "");
 	}
 
-	@summary = "Default summary"
+	@summary = "Assert the default database"
 	macro viewDefaultDatabasePG() {
 		if (IsElementPresent(locator1 = "SetupWizard#DATABASE_DEFAULT_LABEL")) {
 			AssertTextEquals.assertText(
@@ -312,7 +312,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
+	@summary = "Assert the default portal name"
 	macro viewDefaultPortalNamePG() {
 		var testRunEnvironment = PropsUtil.get("test.run.environment");
 
@@ -328,7 +328,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
+	@summary = "Assert the populated sample data"
 	macro viewPopulatedSampleData() {
 		var testRunEnvironment = PropsUtil.get("test.run.environment");
 
@@ -421,7 +421,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
+	@summary = "Assert the sample data is enabled in the setup wizard properties file"
 	macro viewSampleDataEnabledInPropertiesFile() {
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 

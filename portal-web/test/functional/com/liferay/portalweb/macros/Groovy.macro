@@ -1,6 +1,6 @@
 definition {
 
-	@summary = "Default summary"
+	@summary = "Run a groovy script via Gogo Shell"
 	macro runScriptViaGogoShell(expectedOutput = null, scriptFile = null) {
 		if (!(isSet(nodePort))) {
 			var nodePort = 8080;
@@ -31,7 +31,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
+	@summary = "Run a groovy script via UI"
 	macro runScriptViaUI(scriptFile = null) {
 		if (!(isSet(nodePort))) {
 			var nodePort = 8080;

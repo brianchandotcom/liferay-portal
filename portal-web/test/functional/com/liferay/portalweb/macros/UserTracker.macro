@@ -1,6 +1,6 @@
 definition {
 
-	@summary = "Default summary"
+	@summary = "Assert the accessed URL"
 	macro viewAccessedURL(friendlyURL = null) {
 		var key_friendlyURL = ${friendlyURL};
 

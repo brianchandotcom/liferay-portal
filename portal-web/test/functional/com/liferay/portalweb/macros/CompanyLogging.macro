@@ -1,6 +1,6 @@
 definition {
 
-	@summary = "Default summary"
+	@summary = "Assert ${logContent} for company ${portalInstanceName} contains the unique group ID logging"
 	macro assertCompanyLogContent(logContent = null, portalInstanceName = null) {
 		var groupId = JSONCompany.getCompanyGroupIdByGroupKey(
 			groupKey = "Guest",
@@ -15,7 +15,7 @@ definition {
 			value1 = "for group ${groupId}");
 	}
 
-	@summary = "Default summary"
+	@summary = "Assert the company log is isolated for a given company by asserting unique text contained in other company logs is not present"
 	macro assertCompanyLogIsolated(portalInstanceName = null) {
 		var logContent = CompanyLogging.downloadCompanyLog(portalInstanceName = ${portalInstanceName});
 
@@ -40,14 +40,14 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
+	@summary = "Assert company log ${logName} was not downloaded"
 	macro assertNoLogDownloaded(logName = null) {
 		DownloadTempFile();
 
 		DMDocument.assertNoFileNameFromTempFolder(fileName = ${logName});
 	}
 
-	@summary = "Default summary"
+	@summary = "Download the company log ${logName}"
 	macro downloadCompanyLog(portalInstanceName = null) {
 		var logName = CompanyLogging.getCompanyLogName(portalInstanceName = ${portalInstanceName});
 
@@ -68,7 +68,7 @@ definition {
 		return ${logContent};
 	}
 
-	@summary = "Default summary"
+	@summary = "Get the company log path for company ${portalInstanceName}"
 	macro getCompanyLogDirPath(portalInstanceName = null) {
 		var companyId = JSONCompany.getCompanyId(portalInstanceName = ${portalInstanceName});
 		var homeDir = PropsUtil.get("liferay.home.dir.name");
@@ -87,7 +87,7 @@ definition {
 		return ${filePath};
 	}
 
-	@summary = "Default summary"
+	@summary = "Get the company log name for company ${portalInstanceName}"
 	macro getCompanyLogName(portalInstanceName = null) {
 		var companyLogDirPath = CompanyLogging.getCompanyLogDirPath(portalInstanceName = ${portalInstanceName});
 
@@ -96,7 +96,7 @@ definition {
 		return ${logName};
 	}
 
-	@summary = "Default summary"
+	@summary = "Open the server log admin via URL"
 	macro openServerLogsAdmin(baseURL = null) {
 		Navigator.openWithAppendToBaseURL(
 			baseURL = ${baseURL},

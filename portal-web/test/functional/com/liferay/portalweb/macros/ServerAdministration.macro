@@ -1,6 +1,6 @@
 definition {
 
-	@summary = "Default summary"
+	@summary = "Add ${categoryLevel} to ${categoryName}"
 	macro addCategoryLogLevels(categoryLevel = null, categoryName = null) {
 		Navigator.gotoNavItem(navItem = "Log Levels");
 
@@ -17,7 +17,7 @@ definition {
 		PortletEntry.save();
 	}
 
-	@summary = "Default summary"
+	@summary = "Configure the file upload overall ${maxFileSize}"
 	macro configureFileUploadOverallMaximumFileSize(maxFileSize = null) {
 		Type(
 			locator1 = "ServerAdministrationFileUploads#GENERAL_OVERALL_MAX_FILE_SIZE_FIELD",
@@ -32,7 +32,7 @@ definition {
 			value1 = "Your request completed successfully.");
 	}
 
-	@summary = "Default summary"
+	@summary = "Configure the mail server settings"
 	macro configureMailServerSettings(userPassword = null, needsReply = null, userName = null) {
 		if (IsElementPresent(key_navItem = "Mail", locator1 = "NavBar#NAV_ITEM_LINK")) {
 			Navigator.gotoNavItem(navItem = "Mail");
@@ -97,7 +97,7 @@ definition {
 			value1 = "Your request completed successfully.");
 	}
 
-	@summary = "Default summary"
+	@summary = "Execute a groovy ${script}"
 	macro executeScript(htmlOutput = null, language = null, script = null) {
 		Navigator.gotoNavItem(navItem = "Script");
 
@@ -123,7 +123,7 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	@summary = "Default summary"
+	@summary = "Execute server resource actions"
 	macro executeServerResourcesActions(actionsDescription = null) {
 		Navigator.gotoNavItem(navItem = "Resources");
 
@@ -142,14 +142,14 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	@summary = "Default summary"
+	@summary = "Open the server admin via URL"
 	macro openServerAdmin(baseURL = null) {
 		Navigator.openWithAppendToBaseURL(
 			baseURL = ${baseURL},
 			urlAppend = "group/control_panel/manage?p_p_id=com_liferay_server_admin_web_portlet_ServerAdminPortlet");
 	}
 
-	@summary = "Default summary"
+	@summary = "TearDown DM File Upload settings"
 	macro tearDownDMFileUploadSettings() {
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
@@ -167,7 +167,7 @@ definition {
 			value1 = "Save");
 	}
 
-	@summary = "Default summary"
+	@summary = "TearDown Mail server settings"
 	macro tearDownMailServerSettings() {
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
@@ -221,7 +221,7 @@ definition {
 			value1 = "Your request completed successfully.");
 	}
 
-	@summary = "Default summary"
+	@summary = "View the category log levels for category ${categoryName}"
 	macro viewCategoryLogLevels(categoryName = null) {
 		Navigator.gotoNavItem(navItem = "Log Levels");
 
@@ -237,26 +237,26 @@ definition {
 			value1 = "DEBUG");
 	}
 
-	@summary = "Default summary"
+	@summary = "Assert Error:Forbidden message"
 	macro viewForbiddenErrorMessageAlert() {
 		AssertTextEquals(
 			locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR",
 			value1 = "Error:Forbidden");
 	}
 
-	@summary = "Default summary"
+	@summary = "Assert the Security page is empty"
 	macro viewJSONWSSecurityEmptyPage() {
 		AssertElementPresent(locator1 = "JSONWS#SECURITY_EMPTY_PAGE");
 	}
 
-	@summary = "Default summary"
+	@summary = "Assert the output filter of ${valueName}"
 	macro viewOutputField(valueName = null) {
 		AssertTextEquals.assertPartialText(
 			locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
 			value1 = ${valueName});
 	}
 
-	@summary = "Default summary"
+	@summary = "Click on the property title and assert the property name is present"
 	macro viewProperties(propertyName = null, propertyTitle = null) {
 		Navigator.gotoNavItem(navItem = "Properties");
 

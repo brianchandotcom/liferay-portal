@@ -1,6 +1,6 @@
 definition {
 
-	@summary = "Default summary"
+	@summary = "Add portal properties arguments via environment variables"
 	macro addCompanyProperties(properties = null) {
 		Variables.assertDefined(parameterList = ${properties});
 
@@ -29,7 +29,7 @@ ${propertiesList}''';
 		FileUtil.write(${setenvFile}, ${newFileContent});
 	}
 
-	@summary = "Default summary"
+	@summary = "Add JVM arguments via environment variables"
 	macro addJVMArguments(arguments = null) {
 		Variables.assertDefined(parameterList = ${arguments});
 

@@ -1,6 +1,6 @@
 definition {
 
-	@summary = "Default summary"
+	@summary = "Assert no ${osgiConfigFileName} exist"
 	macro assertOSGiConfigDoesNotExist(osgiConfigFileName = null) {
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 
@@ -11,7 +11,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
+	@summary = "Assert ${text} on ${osgiConfigFileName}"
 	macro assertTextInOSGiConfig(osgiConfigFileName = null, text = null) {
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 
@@ -25,7 +25,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
+	@summary = "Assert no ${text} on ${osgiConfigFileName}"
 	macro assertTextNotInOSGiConfig(osgiConfigFileName = null, text = null) {
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 
@@ -39,7 +39,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
+	@summary = "Copy an OSGI config file"
 	macro copyOSGiConfigFile(osgiConfigFileBaseDir = null, osgiConfigFileName = null) {
 		Variables.assertDefined(parameterList = "${osgiConfigFileBaseDir},${osgiConfigFileName}");
 
@@ -49,7 +49,7 @@ definition {
 		FileUtil.write("${liferayHome}/osgi/configs/${osgiConfigFileName}", ${configs});
 	}
 
-	@summary = "Default summary"
+	@summary = "Delete an OSGI config file"
 	macro deleteOSGiConfigFile(osgiConfigFileName = null) {
 		Variables.assertDefined(parameterList = ${osgiConfigFileName});
 
@@ -58,7 +58,7 @@ definition {
 		FileUtil.delete("${liferayHome}/osgi/configs/${osgiConfigFileName}");
 	}
 
-	@summary = "Default summary"
+	@summary = "Deploy an OSGI config file"
 	macro deployOSGiConfigFile(osgiConfigFileName = null, osgiConfigs = null) {
 		Variables.assertDefined(parameterList = "${osgiConfigs},${osgiConfigFileName}");
 
@@ -74,7 +74,7 @@ ${configList}''';
 		FileUtil.write("${liferayHome}/osgi/configs/${osgiConfigFileName}", ${configList});
 	}
 
-	@summary = "Default summary"
+	@summary = "Edit an OSGI config file located on Temp dir"
 	macro editOSGiConfigFileFromTempFolder(newValue = null, osgiConfigFileName = null, oldValue = null) {
 		var tempDir = PropsUtil.get("output.dir.name");
 
@@ -87,8 +87,7 @@ ${configList}''';
 		FileUtil.replaceStringInFile(${filePath}, ${oldValue}, ${newValue});
 	}
 
-	@description = "Wait for OSGi Configuration to update in the Database"
-	@summary = "Default summary"
+	@summary = "Wait for OSGi Configuration to update in the Database"
 	macro waitForOSGiConfig() {
 
 		// LRQA-78134 Current workaround to wait for OSGi configurations until we get a reliable way of waiting for them to update in the database

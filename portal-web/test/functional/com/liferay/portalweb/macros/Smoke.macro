@@ -3,8 +3,7 @@ definition {
 	var userFirstName = "Test";
 	var userLastName = "Test";
 
-	@summary = "Default summary"
-	@summary-ignore = "true"
+	@summary = "Run a Smoke test to assert the main portal functionalities are working correctly"
 	macro runSmoke(i = null) {
 		task ("Ensure that the super admin can add a Blank Site") {
 			ApplicationsMenu.gotoPortlet(
@@ -151,7 +150,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
+	@summary = "Assert the Welcome Page elements"
 	macro viewWelcomeContentPage() {
 		ContentPages.viewFragmentText(
 			fragmentName = "paragraph",

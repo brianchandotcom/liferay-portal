@@ -1,6 +1,6 @@
 definition {
 
-	@summary = "Default summary"
+	@summary = "Run a smoke test for OSGI"
 	macro Smoke(appName = null, portletName = null) {
 		ApplicationsMenu.gotoPortlet(
 			category = "System",

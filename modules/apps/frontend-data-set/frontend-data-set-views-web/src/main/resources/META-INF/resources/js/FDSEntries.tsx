@@ -258,15 +258,15 @@ const RestEndpointDropdownMenu = ({
 };
 
 const FDSEntryLabelInput = ({
-	handleOnBlur,
 	labelValidationError,
 	namespace,
+	onBlur,
 	onChange,
 	value,
 }: {
-	handleOnBlur: () => void;
 	labelValidationError: boolean;
 	namespace: string;
+	onBlur: () => void;
 	onChange: Function;
 	value: string;
 }) => (
@@ -283,7 +283,7 @@ const FDSEntryLabelInput = ({
 
 		<ClayInput
 			id={`${namespace}fdsEntryLabelInput`}
-			onBlur={handleOnBlur}
+			onBlur={onBlur}
 			onChange={(event) => onChange(event.target.value)}
 			type="text"
 			value={value}
@@ -614,11 +614,11 @@ const AddFDSEntryModalContent = ({
 
 			<ClayModal.Body>
 				<FDSEntryLabelInput
-					handleOnBlur={() => {
-						setLabelValidationError(!fdsEntryLabel);
-					}}
 					labelValidationError={labelValidationError}
 					namespace={namespace}
+					onBlur={() => {
+						setLabelValidationError(!fdsEntryLabel);
+					}}
 					onChange={setFDSEntryLabel}
 					value={fdsEntryLabel}
 				/>
@@ -788,11 +788,11 @@ const RenameFDSEntryModalContent = ({
 
 			<ClayModal.Body>
 				<FDSEntryLabelInput
-					handleOnBlur={() => {
-						setLabelValidationError(!fdsEntryLabel);
-					}}
 					labelValidationError={labelValidationError}
 					namespace={namespace}
+					onBlur={() => {
+						setLabelValidationError(!fdsEntryLabel);
+					}}
 					onChange={setFDSEntryLabel}
 					value={fdsEntryLabel}
 				/>

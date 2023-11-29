@@ -9,7 +9,6 @@ import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.Country;
@@ -466,13 +465,6 @@ public class UserSearchFixture {
 
 		for (String tag : tags) {
 			list.add(unsafeFunction.apply(tag));
-
-			if (FeatureFlagManagerUtil.isEnabled("LPS-194362")) {
-				list.add(tag);
-			}
-			else {
-				list.add(StringUtil.toLowerCase(tag));
-			}
 		}
 
 		Collections.sort(list);

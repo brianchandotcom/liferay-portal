@@ -12,9 +12,9 @@ definition {
 	}
 
 	@summary = "Selects the segment in page filter"
-	macro clickFilterSegment(segmentName = null) {
+	macro clickFilterSegment(segmentName) {
 		Click(
-			key_segmentName = ${segmentName},
+			key_nameList = ${segmentName},
 			locator1 = "ACUtils#PAGE_SEGMENT_FILTER");
 	}
 
@@ -24,16 +24,16 @@ definition {
 	}
 
 	@summary = "Asserts the total of page path"
-	macro viewPagePathTotal(pageTotal = null) {
+	macro viewPagePathTotal(pageTotal) {
 		var key_pageTotal = ${pageTotal};
 
-		AssertElementPresent(
+		AssertTextEquals(
 			locator1 = "ACSites#PAGE_PATH_TOTAL",
 			value1 = ${pageTotal});
 	}
 
 	@summary = "Asserts the dropdown segment filter"
-	macro viewSegmentDropdown(nameList = null) {
+	macro viewSegmentDropdown(nameList) {
 		for (var name : list ${nameList}) {
 			var key_nameList = ${name};
 

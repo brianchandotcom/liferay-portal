@@ -544,14 +544,6 @@ public class BatchEngineBrokerTest {
 		Assert.assertTrue(!jsonNode.isEmpty());
 	}
 
-	private void _assertColumnNames(
-		List<String> actualColumnNames, List<String> expectedColumnNames,
-		List<String> fieldNames) {
-
-		Assert.assertEquals(fieldNames, actualColumnNames);
-		Assert.assertEquals(expectedColumnNames, actualColumnNames);
-	}
-
 	private void _assertEqualsExport(
 		JsonNode expectedJsonNode, List<String> fieldNames, JsonNode jsonNode) {
 
@@ -603,9 +595,10 @@ public class BatchEngineBrokerTest {
 
 		List<CSVRecord> expectedCSVRecords = expectedCSVParser.getRecords();
 
-		_assertColumnNames(
-			_toList(actualCSVRecords.get(0)),
-			_toList(expectedCSVRecords.get(0)), fieldNames);
+		Assert.assertEquals(fieldNames, _toList(actualCSVRecords.get(0)));
+		Assert.assertEquals(
+			_toList(expectedCSVRecords.get(0)),
+			_toList(actualCSVRecords.get(0)));
 
 		List<String> expectedCSVRecordList = _toList(expectedCSVRecords.get(1));
 

@@ -183,6 +183,9 @@ public class UserManagerImpl implements UserManager {
 		catch (AbstractCharonException abstractCharonException) {
 			return ReflectionUtil.throwException(abstractCharonException);
 		}
+		catch (Exception exception) {
+			return ReflectionUtil.throwException(exception);
+		}
 	}
 
 	@Override

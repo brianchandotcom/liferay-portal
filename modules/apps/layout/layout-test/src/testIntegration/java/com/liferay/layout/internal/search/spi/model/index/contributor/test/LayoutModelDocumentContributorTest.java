@@ -133,6 +133,54 @@ public class LayoutModelDocumentContributorTest {
 	}
 
 	@Test
+	public void testReindexPublishedLayoutFragmentEntryLinkWithPortlet()
+		throws Exception {
+
+		ServiceContextThreadLocal.pushServiceContext(
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		String html = "<lfr-widget-web-content>";
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		Assert.assertNotNull(draftLayout);
+
+		FragmentEntryLink fragmentEntryLink = _addFragmentEntryLinkToLayout(
+			"{}", html, draftLayout,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		String portletId = PortletIdCodec.encode(
+			JournalContentPortletKeys.JOURNAL_CONTENT,
+			fragmentEntryLink.getNamespace());
+
+		String content = RandomTestUtil.randomString();
+
+		DDMFormField ddmFormField = _createDDMFormField(
+			DDMFormFieldTypeConstants.TEXT);
+
+		JournalArticle journalArticle = JournalTestUtil.addJournalArticle(
+			_dataDefinitionResourceFactory, ddmFormField,
+			_ddmFormValuesToFieldsConverter, content, _group.getGroupId(),
+			_journalConverter);
+
+		AssetEntry assetEntry = _assetEntryLocalService.getEntry(
+			JournalArticle.class.getName(),
+			journalArticle.getResourcePrimKey());
+
+		_setUpPortletPreferences(
+			assetEntry, journalArticle, draftLayout, portletId);
+
+		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
+
+		_assertPortletPreferences(
+			assetEntry, journalArticle, layout, portletId);
+
+		_assertReindex(content, layout);
+	}
+
+	@Test
 	public void testReindexPublishedLayoutWithFragmentEntryLinkTypePortlet()
 		throws Exception {
 
@@ -220,7 +268,7 @@ public class LayoutModelDocumentContributorTest {
 		_assertReindexDraftLayout(elementText, layout);
 	}
 
-	private void _addFragmentEntryLinkToLayout(
+	private FragmentEntryLink _addFragmentEntryLinkToLayout(
 			String editableValues, String html, Layout layout,
 			ServiceContext serviceContext)
 		throws Exception {
@@ -238,7 +286,7 @@ public class LayoutModelDocumentContributorTest {
 				null, 0, FragmentConstants.TYPE_COMPONENT, null,
 				WorkflowConstants.STATUS_APPROVED, serviceContext);
 
-		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+		return ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
 			editableValues, fragmentEntry.getCss(),
 			fragmentEntry.getConfiguration(),
 			fragmentEntry.getFragmentEntryId(), fragmentEntry.getHtml(),

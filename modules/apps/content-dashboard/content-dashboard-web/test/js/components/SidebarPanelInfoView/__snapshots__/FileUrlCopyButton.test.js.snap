@@ -25,6 +25,7 @@ exports[`FileUrlCopyButton matches the snapshot 1`] = `
           class="input-group-item input-group-append input-group-item-shrink"
         >
           <button
+            aria-label="copy-x"
             class="btn btn-monospaced btn-secondary"
             title="copy"
             type="button"

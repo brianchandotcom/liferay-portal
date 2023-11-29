@@ -63,8 +63,10 @@ public class CommercePaymentEntryLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommercePaymentEntry addCommercePaymentEntry(
-			long userId, long classNameId, long classPK, BigDecimal amount,
-			String currencyCode, String paymentIntegrationKey,
+			long userId, long classNameId, long classPK, long commerceChannelId,
+			BigDecimal amount, String callbackURL, String cancelURL,
+			String currencyCode, String languageId,
+			String paymentIntegrationKey, int paymentIntegrationType,
 			String transactionCode, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -80,9 +82,14 @@ public class CommercePaymentEntryLocalServiceImpl
 
 		commercePaymentEntry.setClassNameId(classNameId);
 		commercePaymentEntry.setClassPK(classPK);
+		commercePaymentEntry.setCommerceChannelId(commerceChannelId);
 		commercePaymentEntry.setAmount(amount);
+		commercePaymentEntry.setCallbackURL(callbackURL);
+		commercePaymentEntry.setCancelURL(cancelURL);
 		commercePaymentEntry.setCurrencyCode(currencyCode);
+		commercePaymentEntry.setLanguageId(languageId);
 		commercePaymentEntry.setPaymentIntegrationKey(paymentIntegrationKey);
+		commercePaymentEntry.setPaymentIntegrationType(paymentIntegrationType);
 		commercePaymentEntry.setPaymentStatus(
 			CommercePaymentEntryConstants.STATUS_PENDING);
 		commercePaymentEntry.setTransactionCode(transactionCode);
@@ -193,21 +200,21 @@ public class CommercePaymentEntryLocalServiceImpl
 			commercePaymentEntries, searchResponse.getTotalHits());
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommercePaymentEntry updateCommercePaymentEntry(
-			long commercePaymentEntryId, int paymentStatus,
-			String transactionCode)
+			long commercePaymentEntryId, String errorMessages,
+			int paymentStatus, String redirectURL, String transactionCode)
 		throws PortalException {
 
 		CommercePaymentEntry commercePaymentEntry =
 			commercePaymentEntryLocalService.getCommercePaymentEntry(
 				commercePaymentEntryId);
 
+		commercePaymentEntry.setErrorMessages(errorMessages);
 		commercePaymentEntry.setPaymentStatus(paymentStatus);
-
-		if (Validator.isNotNull(transactionCode)) {
-			commercePaymentEntry.setTransactionCode(transactionCode);
-		}
+		commercePaymentEntry.setRedirectURL(redirectURL);
+		commercePaymentEntry.setTransactionCode(transactionCode);
 
 		return commercePaymentEntryLocalService.updateCommercePaymentEntry(
 			commercePaymentEntry);

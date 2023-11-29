@@ -6,24 +6,40 @@
 package com.liferay.layout.internal.search.spi.model.index.contributor.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
+import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.LocalizedValue;
+import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverter;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
+import com.liferay.journal.constants.JournalContentPortletKeys;
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.journal.util.JournalConverter;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.portlet.PortletIdCodec;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -46,6 +62,9 @@ import com.liferay.segments.service.SegmentsExperienceLocalService;
 import java.util.List;
 import java.util.Locale;
 
+import javax.portlet.PortletPreferences;
+
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -111,6 +130,46 @@ public class LayoutModelDocumentContributorTest {
 		Assert.assertEquals(logEntries.toString(), 0, logEntries.size());
 
 		_assertSearch(elementText, layout.getPlid());
+	}
+
+	@Test
+	public void testReindexPublishedLayoutWithFragmentEntryLinkTypePortlet()
+		throws Exception {
+
+		ServiceContextThreadLocal.pushServiceContext(
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		Assert.assertNotNull(draftLayout);
+
+		String portletId = _addJournalContentPortletToLayout(draftLayout);
+
+		String content = RandomTestUtil.randomString();
+
+		DDMFormField ddmFormField = _createDDMFormField(
+			DDMFormFieldTypeConstants.TEXT);
+
+		JournalArticle journalArticle = JournalTestUtil.addJournalArticle(
+			_dataDefinitionResourceFactory, ddmFormField,
+			_ddmFormValuesToFieldsConverter, content, _group.getGroupId(),
+			_journalConverter);
+
+		AssetEntry assetEntry = _assetEntryLocalService.getEntry(
+			JournalArticle.class.getName(),
+			journalArticle.getResourcePrimKey());
+
+		_setUpPortletPreferences(
+			assetEntry, journalArticle, draftLayout, portletId);
+
+		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
+
+		_assertPortletPreferences(
+			assetEntry, journalArticle, layout, portletId);
+
+		_assertReindex(content, layout);
 	}
 
 	@Test
@@ -210,6 +269,24 @@ public class LayoutModelDocumentContributorTest {
 		return draftLayout;
 	}
 
+	private String _addJournalContentPortletToLayout(Layout layout)
+		throws Exception {
+
+		JSONObject processAddPortletJSONObject =
+			ContentLayoutTestUtil.addPortletToLayout(
+				layout, JournalContentPortletKeys.JOURNAL_CONTENT);
+
+		JSONObject fragmentEntryLinkJSONObject =
+			processAddPortletJSONObject.getJSONObject("fragmentEntryLink");
+
+		JSONObject editableValuesJSONObject =
+			fragmentEntryLinkJSONObject.getJSONObject("editableValues");
+
+		return PortletIdCodec.encode(
+			editableValuesJSONObject.getString("portletId"),
+			editableValuesJSONObject.getString("instanceId"));
+	}
+
 	private Layout _addTypeContentLayout(String elementText, boolean publish)
 		throws Exception {
 
@@ -227,6 +304,24 @@ public class LayoutModelDocumentContributorTest {
 		}
 
 		return layout;
+	}
+
+	private void _assertPortletPreferences(
+		AssetEntry assetEntry, JournalArticle journalArticle, Layout layout,
+		String portletId) {
+
+		PortletPreferences portletPreferences =
+			_portletPreferencesFactory.getPortletSetup(layout, portletId, null);
+
+		Assert.assertEquals(
+			String.valueOf(journalArticle.getArticleId()),
+			portletPreferences.getValue("articleId", null));
+		Assert.assertEquals(
+			String.valueOf(assetEntry.getEntryId()),
+			portletPreferences.getValue("assetEntryId", null));
+		Assert.assertEquals(
+			String.valueOf(journalArticle.getGroupId()),
+			portletPreferences.getValue("groupId", null));
 	}
 
 	private void _assertReindex(String expectedContent, Layout layout)
@@ -267,6 +362,23 @@ public class LayoutModelDocumentContributorTest {
 			document.get(Field.ENTRY_CLASS_PK), String.valueOf(plid));
 	}
 
+	private DDMFormField _createDDMFormField(String type) {
+		DDMFormField ddmFormField = new DDMFormField("name", type);
+
+		ddmFormField.setDataType("text");
+		ddmFormField.setIndexType("text");
+		ddmFormField.setLocalizable(true);
+
+		LocalizedValue localizedValue = new LocalizedValue(LocaleUtil.US);
+
+		localizedValue.addString(
+			LocaleUtil.US, RandomTestUtil.randomString(10));
+
+		ddmFormField.setLabel(localizedValue);
+
+		return ddmFormField;
+	}
+
 	private List<LogEntry> _reindexLogEntries(Layout layout) throws Exception {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				_CLASS_NAME, LoggerTestUtil.DEBUG)) {
@@ -280,9 +392,40 @@ public class LayoutModelDocumentContributorTest {
 		}
 	}
 
+	private void _setUpPortletPreferences(
+			AssetEntry assetEntry, JournalArticle journalArticle, Layout layout,
+			String portletId)
+		throws Exception {
+
+		PortletPreferences portletPreferences =
+			_portletPreferencesFactory.getPortletSetup(layout, portletId, null);
+
+		portletPreferences.setValue(
+			"articleId", String.valueOf(journalArticle.getArticleId()));
+		portletPreferences.setValue(
+			"groupId", String.valueOf(journalArticle.getGroupId()));
+
+		portletPreferences.setValue(
+			"assetEntryId", String.valueOf(assetEntry.getEntryId()));
+
+		portletPreferences.store();
+
+		_assertPortletPreferences(
+			assetEntry, journalArticle, layout, portletId);
+	}
+
 	private static final String _CLASS_NAME =
 		"com.liferay.layout.internal.search.spi.model.index.contributor." +
 			"LayoutModelDocumentContributor";
+
+	@Inject
+	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Inject
+	private DataDefinitionResource.Factory _dataDefinitionResourceFactory;
+
+	@Inject
+	private DDMFormValuesToFieldsConverter _ddmFormValuesToFieldsConverter;
 
 	@Inject
 	private FragmentCollectionLocalService _fragmentCollectionLocalService;
@@ -292,6 +435,9 @@ public class LayoutModelDocumentContributorTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private JournalConverter _journalConverter;
 
 	private String _languageId;
 	private IndexerFixture<Layout> _layoutIndexerFixture;
@@ -303,6 +449,9 @@ public class LayoutModelDocumentContributorTest {
 
 	@Inject
 	private Portal _portal;
+
+	@Inject
+	private PortletPreferencesFactory _portletPreferencesFactory;
 
 	@Inject
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;

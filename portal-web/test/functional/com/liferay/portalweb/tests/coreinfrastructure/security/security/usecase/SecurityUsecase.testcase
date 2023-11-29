@@ -49,13 +49,13 @@ definition {
 		}
 
 		task ("Then: Verify that 5t and 4x show in the response header") {
-			TestUtils.assertPartialEquals(
-				actual = ${response},
-				expected = "X-Liferay-Request-Group: 5t");
+			var groupId = JSONGroupAPI._getGroupIdByName(
+				groupName = "Test Depot Name",
+				site = "false");
 
 			TestUtils.assertPartialEquals(
 				actual = ${response},
-				expected = "X-Liferay-Request-Group: 4x");
+				expected = "X-Liferay-Request-Group: ${groupId},5t,4x");
 		}
 	}
 
@@ -75,21 +75,13 @@ definition {
 		}
 
 		task ("Then: Verify that 0t, 1x, 4x, and s show in the response header.") {
-			TestUtils.assertPartialEquals(
-				actual = ${response},
-				expected = "X-Liferay-Request-Group: 0t");
+			var groupId = JSONGroupAPI._getGroupIdByName(
+				groupName = "Global",
+				site = "true");
 
 			TestUtils.assertPartialEquals(
 				actual = ${response},
-				expected = "X-Liferay-Request-Group: 1x");
-
-			TestUtils.assertPartialEquals(
-				actual = ${response},
-				expected = "X-Liferay-Request-Group: 4x");
-
-			TestUtils.assertPartialEquals(
-				actual = ${response},
-				expected = "X-Liferay-Request-Group: s");
+				expected = "X-Liferay-Request-Group: ${groupId},0t,1x,4x,s");
 		}
 	}
 
@@ -125,17 +117,13 @@ definition {
 		}
 
 		task ("Then: Verify that 3t, 9x, and s show in the response header") {
-			TestUtils.assertPartialEquals(
-				actual = ${response},
-				expected = "X-Liferay-Request-Group: 3t");
+			var groupId = JSONGroupAPI._getGroupIdByName(
+				groupName = "Organization Name",
+				site = "true");
 
 			TestUtils.assertPartialEquals(
 				actual = ${response},
-				expected = "X-Liferay-Request-Group: 9x");
-
-			TestUtils.assertPartialEquals(
-				actual = ${response},
-				expected = "X-Liferay-Request-Group: s");
+				expected = "X-Liferay-Request-Group: ${groupId},3t,9x,s");
 		}
 	}
 
@@ -173,13 +161,13 @@ definition {
 		}
 
 		task ("Then: Verify that 0t and 8x show in the response header.") {
-			TestUtils.assertPartialEquals(
-				actual = ${response},
-				expected = "X-Liferay-Request-Group: 0t");
+			var groupId = JSONGroupAPI._getGroupIdByName(
+				groupName = "Test Widget Page Template Name",
+				site = "false");
 
 			TestUtils.assertPartialEquals(
 				actual = ${response},
-				expected = "X-Liferay-Request-Group: 8x");
+				expected = "X-Liferay-Request-Group: ${groupId},0t,8x");
 		}
 	}
 
@@ -217,27 +205,21 @@ definition {
 		}
 
 		task ("Then: Verify that 0t, 10x and 6x show in the response header.") {
-			TestUtils.assertPartialEquals(
-				actual = ${profileResponse},
-				expected = "X-Liferay-Request-Group: 0t");
+			var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = "test@liferay.com");
+
+			var groupId = JSONGroupAPI._getGroupIdByGroupKey(
+				groupKey = ${userId},
+				site = "false");
 
 			TestUtils.assertPartialEquals(
 				actual = ${profileResponse},
-				expected = "X-Liferay-Request-Group: 10x");
-
-			TestUtils.assertPartialEquals(
-				actual = ${profileResponse},
-				expected = "X-Liferay-Request-Group: 6x");
+				expected = "X-Liferay-Request-Group: ${groupId},0t,10x,6x");
 		}
 
 		task ("And: Verify that 0t and 5x show in the response header.") {
 			TestUtils.assertPartialEquals(
 				actual = ${dashboardResponse},
-				expected = "X-Liferay-Request-Group: 0t");
-
-			TestUtils.assertPartialEquals(
-				actual = ${dashboardResponse},
-				expected = "X-Liferay-Request-Group: 5x");
+				expected = "X-Liferay-Request-Group: ${groupId},0t,5x");
 		}
 	}
 
@@ -271,17 +253,14 @@ definition {
 		}
 
 		task ("Then: Verify that 2t, 2x, and s show in the response header") {
-			TestUtils.assertPartialEquals(
-				actual = ${response},
-				expected = "X-Liferay-Request-Group: 2t");
+			var groupId = JSONGroupAPI._getGroupIdByName(
+				groupName = "Child Site Name",
+				parentGroupName = "Site Name",
+				site = "true");
 
 			TestUtils.assertPartialEquals(
 				actual = ${response},
-				expected = "X-Liferay-Request-Group: 2x");
-
-			TestUtils.assertPartialEquals(
-				actual = ${response},
-				expected = "X-Liferay-Request-Group: s");
+				expected = "X-Liferay-Request-Group: ${groupId},2t,2x,s");
 		}
 	}
 
@@ -307,13 +286,13 @@ definition {
 		}
 
 		task ("Then: Verify that 0t and 7x show in the response header.") {
-			TestUtils.assertPartialEquals(
-				actual = ${response},
-				expected = "X-Liferay-Request-Group: 0t");
+			var groupId = JSONGroupAPI._getGroupIdByName(
+				groupName = "Site Template Name",
+				site = "false");
 
 			TestUtils.assertPartialEquals(
 				actual = ${response},
-				expected = "X-Liferay-Request-Group: 7x");
+				expected = "X-Liferay-Request-Group: ${groupId},0t,7x");
 		}
 	}
 
@@ -346,27 +325,23 @@ definition {
 		}
 
 		task ("Then: Verify that 1t and 3x show in the response header of staging site page") {
-			TestUtils.assertPartialEquals(
-				actual = ${stagingSiteResponse},
-				expected = "X-Liferay-Request-Group: 1t");
+			var groupId = JSONGroupAPI._getGroupIdByName(
+				groupName = "Site Name (Staging)",
+				site = "false");
 
 			TestUtils.assertPartialEquals(
 				actual = ${stagingSiteResponse},
-				expected = "X-Liferay-Request-Group: 3x");
+				expected = "X-Liferay-Request-Group: ${groupId},1t,3x");
 		}
 
 		task ("And: Verify that 1t, 3x, and s show in the response header of live site page") {
-			TestUtils.assertPartialEquals(
-				actual = ${liveSiteResponse},
-				expected = "X-Liferay-Request-Group: 1t");
+			var groupId = JSONGroupAPI._getGroupIdByName(
+				groupName = "Site Name",
+				site = "true");
 
 			TestUtils.assertPartialEquals(
 				actual = ${liveSiteResponse},
-				expected = "X-Liferay-Request-Group: 3x");
-
-			TestUtils.assertPartialEquals(
-				actual = ${liveSiteResponse},
-				expected = "X-Liferay-Request-Group: s");
+				expected = "X-Liferay-Request-Group: ${groupId},1t,3x,s");
 		}
 	}
 

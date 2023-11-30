@@ -7,17 +7,105 @@ import {Heading} from '@clayui/core';
 import ClayLayout from '@clayui/layout';
 import ClayPanel from '@clayui/panel';
 import {useState} from 'react';
-import {useParams} from 'react-router-dom';
+import {Link, useParams} from 'react-router-dom';
 
 import './JobPage.css';
 import Jethr0Breadcrumbs from '../../components/Jethr0Breadcrumbs/Jethr0Breadcrumbs';
 import Jethr0ButtonsRow from '../../components/Jethr0ButtonsRow/Jethr0ButtonsRow';
 import Jethr0Card from '../../components/Jethr0Card/Jethr0Card';
 import Jethr0NavigationBar from '../../components/Jethr0NavigationBar/Jethr0NavigationBar';
-import JobBuilds from '../../components/JobBuilds/JobBuilds';
+import Jethr0Table from '../../components/Jethr0Table/Jethr0Table';
 import {toLocaleString} from '../../services/DateUtil';
+import {toDurationString} from '../../services/DurationUtil';
 import postSpringBootData from '../../services/postSpringBootData';
 import useSpringBootData from '../../services/useSpringBootData';
+
+function JobBuilds({jobId}) {
+	const [jobBuilds, setJobBuilds] = useState(null);
+
+	useSpringBootData({
+		setData: setJobBuilds,
+		urlPath: '/jobs/builds/' + jobId,
+	});
+
+	if (!jobBuilds) {
+		return <div>Loading...</div>;
+	}
+
+	return (
+		<ClayPanel
+			collapsable
+			defaultExpanded
+			displayTitle="Builds"
+			displayType="secondary"
+			showCollapseIcon={true}
+		>
+			<ClayPanel.Body>
+				<Jethr0Table>
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>Name</th>
+							<th>Create Date</th>
+							<th>State</th>
+							<th>Initial Build</th>
+							<th>Jenkins Duration</th>
+							<th>Jenkins Build</th>
+						</tr>
+					</thead>
+					<tbody>
+						{jobBuilds &&
+							jobBuilds.map((jobBuild) => {
+								return (
+									<tr key={jobBuild.id}>
+										<th className="font-weight-semi-bold">
+											<Link
+												title={jobBuild.id}
+												to={
+													'/jobs/builds/' +
+													jobBuild.id
+												}
+											>
+												{jobBuild.id}
+											</Link>
+										</th>
+										<td>{jobBuild.name}</td>
+										<td>
+											{toLocaleString(
+												jobBuild.dateCreated
+											)}
+										</td>
+										<td>{jobBuild.state.name}</td>
+										<td>
+											{jobBuild.initialBuild.toString()}
+										</td>
+										<td>
+											{toDurationString(
+												jobBuild.latestDuration
+											)}
+										</td>
+										<td>
+											{jobBuild.latestJenkinsBuildURL ? (
+												<a
+													href={
+														jobBuild.latestJenkinsBuildURL
+													}
+												>
+													Latest Jenkins Build
+												</a>
+											) : (
+												<div>-</div>
+											)}
+										</td>
+									</tr>
+								);
+							})}
+					</tbody>
+				</Jethr0Table>
+			</ClayPanel.Body>
+		</ClayPanel>
+	);
+}
 
 function JobInformation({job}) {
 	if (!job) {

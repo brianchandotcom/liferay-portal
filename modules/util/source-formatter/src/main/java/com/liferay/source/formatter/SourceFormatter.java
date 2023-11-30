@@ -1032,8 +1032,7 @@ public class SourceFormatter {
 					ExcludeSyntax.REGEX,
 					"^((?!/frontend-js-node-shims/src/).)*/node_modules/.*"),
 				new ExcludeSyntaxPattern(
-					ExcludeSyntax.REGEX,
-					".*(?<!/gradle-plugins-source-formatter)/build/.*")));
+					ExcludeSyntax.REGEX, "^((?!/src/).)*/build/.*")));
 
 		_portalSource = _containsDir("portal-impl");
 

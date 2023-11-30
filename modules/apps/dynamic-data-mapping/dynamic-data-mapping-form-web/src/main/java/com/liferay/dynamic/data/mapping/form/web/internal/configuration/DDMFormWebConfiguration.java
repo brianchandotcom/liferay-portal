@@ -36,13 +36,6 @@ public interface DDMFormWebConfiguration {
 	public String csvExport();
 
 	@Meta.AD(
-		deflt = "list", name = "default-display-view",
-		optionLabels = {"%list", "%table"},
-		optionValues = {"descriptive", "list"}, required = false
-	)
-	public String defaultDisplayView();
-
-	@Meta.AD(
 		deflt = "5", description = "maximum-repetitions-for-upload-fields-help",
 		name = "maximum-repetitions-for-upload-fields", required = false
 	)

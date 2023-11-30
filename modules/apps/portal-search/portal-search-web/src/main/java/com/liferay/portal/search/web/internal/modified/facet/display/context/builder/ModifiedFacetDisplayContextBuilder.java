@@ -10,6 +10,7 @@ import com.liferay.portal.configuration.module.configuration.ConfigurationProvid
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
@@ -25,6 +26,7 @@ import com.liferay.portal.search.web.internal.facet.display.context.BucketDispla
 import com.liferay.portal.search.web.internal.modified.facet.configuration.ModifiedFacetPortletInstanceConfiguration;
 import com.liferay.portal.search.web.internal.modified.facet.display.context.ModifiedFacetCalendarDisplayContext;
 import com.liferay.portal.search.web.internal.modified.facet.display.context.ModifiedFacetDisplayContext;
+import com.liferay.portal.search.web.internal.util.DateRangeFactoryUtil;
 import com.liferay.portal.search.web.internal.util.comparator.BucketDisplayContextComparatorFactoryUtil;
 
 import java.io.Serializable;
@@ -156,7 +158,7 @@ public class ModifiedFacetDisplayContextBuilder implements Serializable {
 		return 0;
 	}
 
-	protected TermCollector getTermCollector(String key) {
+	protected TermCollector getTermCollector(String range) {
 		if (_facet == null) {
 			return null;
 		}
@@ -167,7 +169,7 @@ public class ModifiedFacetDisplayContextBuilder implements Serializable {
 			return null;
 		}
 
-		return facetCollector.getTermCollector(key);
+		return facetCollector.getTermCollector(range);
 	}
 
 	protected boolean isNothingSelected() {
@@ -188,13 +190,15 @@ public class ModifiedFacetDisplayContextBuilder implements Serializable {
 		return isNothingSelected();
 	}
 
-	private BucketDisplayContext _buildBucketDisplayContext(String label) {
+	private BucketDisplayContext _buildBucketDisplayContext(
+		String label, String range) {
+
 		BucketDisplayContext bucketDisplayContext = new BucketDisplayContext();
 
 		bucketDisplayContext.setBucketText(label);
 		bucketDisplayContext.setFilterValue(_getLabeledRangeURL(label));
 		bucketDisplayContext.setFrequency(
-			getFrequency(getTermCollector(label)));
+			getFrequency(getTermCollector(range)));
 		bucketDisplayContext.setFrequencyVisible(_frequenciesVisible);
 		bucketDisplayContext.setSelected(_selectedRanges.contains(label));
 
@@ -227,7 +231,7 @@ public class ModifiedFacetDisplayContextBuilder implements Serializable {
 				continue;
 			}
 
-			bucketDisplayContexts.add(_buildBucketDisplayContext(label));
+			bucketDisplayContexts.add(_buildBucketDisplayContext(label, range));
 		}
 
 		if (!_order.equals("rangesConfiguration")) {
@@ -298,7 +302,11 @@ public class ModifiedFacetDisplayContextBuilder implements Serializable {
 
 		FacetCollector facetCollector = _facet.getFacetCollector();
 
-		return facetCollector.getTermCollector("custom-range");
+		SearchContext searchContext = _facet.getSearchContext();
+
+		return facetCollector.getTermCollector(
+			DateRangeFactoryUtil.getRangeString(
+				_from, _to, searchContext.getTimeZone()));
 	}
 
 	private String _getCustomRangeURL() {

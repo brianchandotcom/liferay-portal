@@ -200,37 +200,22 @@ if (commerceNotificationTemplate != null) {
 	</aui:form>
 </liferay-frontend:side-panel-content>
 
-<aui:script>
-	Liferay.provide(
-		window,
-		'<portlet:namespace />selectType',
-		() => {
-			const name = document.getElementById('<portlet:namespace />name').value;
-			const description = document.getElementById(
-				'<portlet:namespace />description'
-			).value;
-			const from = document.getElementById('<portlet:namespace />from').value;
-			const fromName = document.getElementById(
-				'<portlet:namespace />fromName'
-			).value;
-			const cc = document.getElementById('<portlet:namespace />cc').value;
-			const bcc = document.getElementById('<portlet:namespace />bcc').value;
-			const type = document.getElementById('<portlet:namespace />type').value;
+<aui:script require="frontend-js-web/index as frontendJsWeb">
+	const {createPortletURL} = frontendJsWeb;
 
-			const portletURL = new Liferay.PortletURL.createURL(
-				'<%= currentURLObj %>'
-			);
+	Liferay.provide(window, '<portlet:namespace />selectType', () => {
+		const portletURL = createPortletURL('<%= currentURLObj %>', {
+			bcc: document.getElementById('<portlet:namespace />bcc').value,
+			cc: document.getElementById('<portlet:namespace />cc').value,
+			description: document.getElementById('<portlet:namespace />description')
+				.value,
+			from: document.getElementById('<portlet:namespace />from').value,
+			fromName: document.getElementById('<portlet:namespace />fromName')
+				.value,
+			name: document.getElementById('<portlet:namespace />name').value,
+			type: document.getElementById('<portlet:namespace />type').value,
+		});
 
-			portletURL.setParameter('name', name);
-			portletURL.setParameter('description', description);
-			portletURL.setParameter('from', from);
-			portletURL.setParameter('fromName', fromName);
-			portletURL.setParameter('cc', cc);
-			portletURL.setParameter('bcc', bcc);
-			portletURL.setParameter('type', type);
-
-			window.location.replace(portletURL.toString());
-		},
-		['liferay-portlet-url']
-	);
+		window.location.replace(portletURL.toString());
+	});
 </aui:script>

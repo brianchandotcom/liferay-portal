@@ -34,7 +34,7 @@ dependencies {
 	implementation group: "com.google.cloud", name: "google-cloud-core-http", version: "2.23.0"
 	implementation group: "com.google.cloud", name: "google-cloud-storage", version: "2.27.0"
 	implementation group: "com.liferay", name: "com.liferay.client.extension.util.spring.boot", version: "latest.release"
-	implementation group: "com.liferay", name: "com.liferay.osb.client.extension.util.zendesk", version: "1.0.0"
+	implementation group: "com.liferay", name: "com.liferay.osb.spring.boot.zendesk.client", version: "1.0.0"
 	implementation group: "com.liferay", name: "com.liferay.petra.string", version: "latest.release"
 	implementation group: "com.liferay", name: "org.apache.commons.logging", version: "1.2.LIFERAY-PATCHED-2"
 	implementation group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "latest.release"

@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.osb.client.extension.util.zendesk.service;
+package com.liferay.osb.spring.boot.zendesk.client.service;
 
-import com.liferay.osb.client.extension.util.zendesk.model.ZendeskOrganization;
-import com.liferay.osb.client.extension.util.zendesk.model.ZendeskTicket;
-import com.liferay.osb.client.extension.util.zendesk.model.ZendeskUser;
+import com.liferay.osb.spring.boot.zendesk.client.model.ZendeskOrganization;
+import com.liferay.osb.spring.boot.zendesk.client.model.ZendeskTicket;
+import com.liferay.osb.spring.boot.zendesk.client.model.ZendeskUser;
 import com.liferay.petra.string.StringPool;
 
 import java.util.Base64;

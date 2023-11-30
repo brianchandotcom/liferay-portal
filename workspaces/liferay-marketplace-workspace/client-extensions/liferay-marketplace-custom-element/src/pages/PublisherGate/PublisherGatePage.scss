@@ -19,6 +19,7 @@
 			border: 1px solid var(--neutral-02, #e2e2e4) !important;
 		}
 	}
+
 	&-button {
 		margin-bottom: 1.5rem;
 
@@ -34,6 +35,7 @@
 			line-height: 24px;
 		}
 	}
+
 	&-container {
 		align-items: center;
 		display: flex;
@@ -66,20 +68,25 @@
 			word-break: normal;
 		}
 	}
+
 	&-divider {
 		margin-bottom: 1.5rem;
 		margin-top: 2rem;
 	}
+
 	&-icon {
 		color: #0b5fff;
 	}
+
 	&-link {
 		font-size: 16px;
 	}
+
 	&-text {
 		margin-bottom: 2rem;
 	}
 }
+
 .header-description {
 	color: #54555f;
 }

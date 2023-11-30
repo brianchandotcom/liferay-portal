@@ -182,6 +182,7 @@ const PublisherGateForm: React.FC<PublisherGateFormProps> = ({
 							</div>
 						</div>
 					</ClayForm.Group>
+
 					<div className="form-group mb-5">
 						<FormInput
 							{...inputProps}
@@ -193,6 +194,7 @@ const PublisherGateForm: React.FC<PublisherGateFormProps> = ({
 							type="email"
 						/>
 					</div>
+
 					<div className="form-group mb-5">
 						<FormInput
 							{...inputProps}
@@ -224,6 +226,7 @@ const PublisherGateForm: React.FC<PublisherGateFormProps> = ({
 						>
 							{i18n.translate('cancel')}
 						</ClayButton>
+
 						<div>
 							<ClayButton
 								className="mr-4"

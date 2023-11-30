@@ -15,7 +15,7 @@ const PublisherGateRouter = () => {
 				<Route element={<PublisherGatePage />} index />
 				<Route
 					element={<PublisherGateSteps />}
-					path="/request-account"
+					path="request-account"
 				/>
 			</Routes>
 		</HashRouter>

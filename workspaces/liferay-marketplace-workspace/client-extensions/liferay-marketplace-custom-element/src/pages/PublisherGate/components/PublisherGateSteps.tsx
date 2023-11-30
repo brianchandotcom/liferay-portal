@@ -36,7 +36,7 @@ const PublisherGateSteps = () => {
 			phoneNumber: '',
 			requestDescription: '',
 		},
-		mode: 'all',
+		mode: 'onBlur',
 		resolver: zodResolver(zodSchema.becomePublisherForm),
 	});
 
@@ -46,7 +46,7 @@ const PublisherGateSteps = () => {
 		delete formData.phone;
 
 		try {
-			await fetcher.post('o/c/requestpublisheraccounts/', formData, {});
+			await fetcher.post('o/c/requestpublisheraccounts/', formData);
 
 			setStep(StepType.REQUESTED);
 		}

@@ -25,7 +25,7 @@ function JobBuilds({jobId}) {
 
 	useSpringBootData({
 		setData: setJobBuilds,
-		urlPath: '/jobs/builds/' + jobId,
+		urlPath: '/builds/' + jobId,
 	});
 
 	if (!jobBuilds) {
@@ -61,10 +61,7 @@ function JobBuilds({jobId}) {
 										<th className="font-weight-semi-bold">
 											<Link
 												title={jobBuild.id}
-												to={
-													'/jobs/builds/' +
-													jobBuild.id
-												}
+												to={'/builds/' + jobBuild.id}
 											>
 												{jobBuild.id}
 											</Link>

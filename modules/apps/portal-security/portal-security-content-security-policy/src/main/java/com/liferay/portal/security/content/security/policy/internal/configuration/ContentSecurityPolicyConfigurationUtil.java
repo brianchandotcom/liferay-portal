@@ -6,8 +6,10 @@
 package com.liferay.portal.security.content.security.policy.internal.configuration;
 
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.util.Portal;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,23 +35,29 @@ public class ContentSecurityPolicyConfigurationUtil {
 
 		ContentSecurityPolicyConfiguration contentSecurityPolicyConfiguration;
 
-		try {
-			long groupId = portal.getScopeGroupId(httpServletRequest);
-
-			if (groupId > 0) {
-				contentSecurityPolicyConfiguration =
-					configurationProvider.getGroupConfiguration(
-						ContentSecurityPolicyConfiguration.class, groupId);
-			}
-			else {
-				contentSecurityPolicyConfiguration =
-					configurationProvider.getCompanyConfiguration(
-						ContentSecurityPolicyConfiguration.class,
-						portal.getCompanyId(httpServletRequest));
-			}
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-134060")) {
+			contentSecurityPolicyConfiguration =
+				_DISABLED_CONTENT_SECURITY_POLICY_CONFIGURATION;
 		}
-		catch (PortalException portalException) {
-			return ReflectionUtil.throwException(portalException);
+		else {
+			try {
+				long groupId = portal.getScopeGroupId(httpServletRequest);
+
+				if (groupId > 0) {
+					contentSecurityPolicyConfiguration =
+						configurationProvider.getGroupConfiguration(
+							ContentSecurityPolicyConfiguration.class, groupId);
+				}
+				else {
+					contentSecurityPolicyConfiguration =
+						configurationProvider.getCompanyConfiguration(
+							ContentSecurityPolicyConfiguration.class,
+							portal.getCompanyId(httpServletRequest));
+				}
+			}
+			catch (PortalException portalException) {
+				return ReflectionUtil.throwException(portalException);
+			}
 		}
 
 		httpServletRequest.setAttribute(
@@ -58,5 +66,28 @@ public class ContentSecurityPolicyConfigurationUtil {
 
 		return contentSecurityPolicyConfiguration;
 	}
+
+	private static final ContentSecurityPolicyConfiguration
+		_DISABLED_CONTENT_SECURITY_POLICY_CONFIGURATION =
+			new ContentSecurityPolicyConfiguration() {
+
+				@Override
+				public boolean enabled() {
+					return false;
+				}
+
+				@Override
+				public String[] excludedPaths() {
+					return _excludedPaths;
+				}
+
+				@Override
+				public String policy() {
+					return StringPool.BLANK;
+				}
+
+				private final String[] _excludedPaths = {};
+
+			};
 
 }

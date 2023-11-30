@@ -173,10 +173,6 @@ definition {
 
 		FormFields.viewCheckboxChecked(fieldName = "changeableDefaultLanguage");
 
-		SystemSettings.viewTextareaValue(
-			fieldName = "defaultDisplayView",
-			fieldValue = "list");
-
 		FormFields.viewCheckboxNotChecked(fieldName = "journalArticleForceAutogenerateId");
 
 		ApplicationsMenu.gotoPortlet(

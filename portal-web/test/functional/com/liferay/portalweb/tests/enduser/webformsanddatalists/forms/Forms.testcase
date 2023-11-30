@@ -1414,17 +1414,7 @@ definition {
 			fieldHelpText = "If checked, the default language of data definitions will be changeable. The default language of data definitions is inherited from the site settings.",
 			fieldName = "changeableDefaultLanguage");
 
-		FormFields.viewSelectLabel(
-			fieldLabel = "Default Display View",
-			fieldName = "defaultDisplayView");
-
-		FormFields.viewSelectValue(fieldName = "defaultDisplayView");
-
 		FormFields.enableCheckbox(fieldName = "changeableDefaultLanguage");
-
-		FormFields.selectSelectOption(
-			fieldName = "defaultDisplayView",
-			selectOption = "List");
 
 		SystemSettings.saveConfiguration();
 
@@ -1436,10 +1426,6 @@ definition {
 			configurationScope = "System Scope");
 
 		FormFields.viewCheckboxChecked(fieldName = "changeableDefaultLanguage");
-
-		FormFields.viewSelectOption(
-			fieldName = "defaultDisplayView",
-			selectOption = "List");
 
 		SystemSettings.resetConfiguration(configurationName = "Dynamic Data Lists");
 

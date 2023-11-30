@@ -21,8 +21,10 @@ import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaClassParser;
 import com.liferay.source.formatter.parser.JavaMethod;
 import com.liferay.source.formatter.parser.JavaTerm;
+import com.liferay.source.formatter.parser.JavaVariable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -170,6 +172,15 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 					0, regex.indexOf(CharPool.OPEN_PARENTHESIS) + 1);
 			}
 		}
+		else if (regex.endsWith(">\\b")) {
+			regex = StringUtil.removeLast(regex, "\\b");
+
+			regex = StringUtil.replaceFirst(
+				regex, CharPool.LESS_THAN, "\\s*<[?\\s\\w]*");
+
+			regex = StringUtil.replace(
+				regex, StringPool.COMMA_AND_SPACE, ",[?\\s\\w]*");
+		}
 		else {
 			regex = regex + "[,;> (]";
 		}
@@ -214,9 +225,19 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 		return content;
 	}
 
+	private String _addOrReplaceMethodParameters(
+		List<String> methodParameterNames, String newMethodCall,
+		List<String> newMethodParameterNames) {
+
+		return _addOrReplaceParameters(
+			StringPool.CLOSE_PARENTHESIS, newMethodCall,
+			newMethodParameterNames, methodParameterNames, "param#");
+	}
+
 	private String _addOrReplaceParameters(
-		String newMethodCall, List<String> parameterNames,
-		List<String> newParameterNames) {
+		String lastCharacter, String newMethodCall,
+		List<String> newParameterNames, List<String> parameterNames,
+		String prefix) {
 
 		StringBundler sb = new StringBundler(2 + newParameterNames.size());
 
@@ -225,8 +246,6 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 		List<String> interpolatedNewParameterNames = new ArrayList<>();
 
 		for (String newParameterName : newParameterNames) {
-			String prefix = "param#";
-
 			if (newParameterName.contains(prefix)) {
 				int index = GetterUtil.getInteger(
 					newParameterName.substring(
@@ -247,9 +266,18 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 			StringUtil.merge(
 				interpolatedNewParameterNames, StringPool.COMMA_AND_SPACE));
 
-		sb.append(StringPool.CLOSE_PARENTHESIS);
+		sb.append(lastCharacter);
 
 		return sb.toString();
+	}
+
+	private String _addOrReplaceTypeParameters(
+		String newMethodCall, List<String> newTypeParameterNames,
+		List<String> typeParameterNames) {
+
+		return _addOrReplaceParameters(
+			StringPool.GREATER_THAN, newMethodCall, newTypeParameterNames,
+			typeParameterNames, "typeParam#");
 	}
 
 	private String _addReplacementDependencies(
@@ -316,17 +344,26 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 		JavaClass javaClass = JavaClassParser.parseJavaClass(fileName, content);
 
 		for (JavaTerm childJavaTerm : javaClass.getChildJavaTerms()) {
-			if (!childJavaTerm.isJavaMethod()) {
+			String javaContent = null;
+
+			if (childJavaTerm.isJavaMethod()) {
+				JavaMethod javaMethod = (JavaMethod)childJavaTerm;
+
+				javaContent = javaMethod.getContent();
+			}
+			else if (childJavaTerm.isJavaVariable()) {
+				JavaVariable javaVariable = (JavaVariable)childJavaTerm;
+
+				javaContent = javaVariable.getContent();
+			}
+
+			if (javaContent == null) {
 				continue;
 			}
 
-			JavaMethod javaMethod = (JavaMethod)childJavaTerm;
-
-			String javaMethodContent = javaMethod.getContent();
-
 			Pattern pattern = _getPattern(jsonObject);
 
-			Matcher matcher = pattern.matcher(javaMethodContent);
+			Matcher matcher = pattern.matcher(javaContent);
 
 			while (matcher.find()) {
 				String methodCall = matcher.group();
@@ -336,7 +373,7 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 
 				if ((classNames.length > 0) &&
 					!_hasValidClassName(
-						classNames, javaMethodContent, content, fileName,
+						classNames, javaContent, content, fileName,
 						methodCall)) {
 
 					continue;
@@ -347,8 +384,12 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 
 				if (from.contains(StringPool.OPEN_PARENTHESIS)) {
 					newContent = _formatMethodCall(
-						fileName, from, javaMethodContent, jsonObject, matcher,
+						fileName, from, javaContent, jsonObject, matcher,
 						newContent, to);
+				}
+				else if (from.contains(StringPool.LESS_THAN)) {
+					newContent = _formatTypeParameters(
+						methodCall, newContent, to);
 				}
 				else {
 					newContent = StringUtil.replaceFirst(
@@ -431,10 +472,36 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 				getVariableName(methodCall), CharPool.PERIOD, newMethodCall);
 		}
 
-		newMethodCall = _addOrReplaceParameters(
-			newMethodCall, parameterNames, JavaSourceUtil.getParameterList(to));
+		newMethodCall = _addOrReplaceMethodParameters(
+			parameterNames, newMethodCall, JavaSourceUtil.getParameterList(to));
 
 		return StringUtil.replaceFirst(newContent, methodCall, newMethodCall);
+	}
+
+	private String _formatTypeParameters(
+		String methodCall, String newContent, String to) {
+
+		String newMethodCall = methodCall.substring(
+			0, methodCall.indexOf(CharPool.LESS_THAN) + 1);
+
+		String newTypeParameterName = to.substring(
+			to.indexOf(CharPool.LESS_THAN) + 1,
+			to.lastIndexOf(CharPool.GREATER_THAN));
+
+		List<String> newTypeParameterNames = Arrays.asList(
+			newTypeParameterName.split(StringPool.COMMA_AND_SPACE));
+
+		String typeParameterName = methodCall.substring(
+			methodCall.indexOf(CharPool.LESS_THAN) + 1,
+			methodCall.lastIndexOf(CharPool.GREATER_THAN));
+
+		List<String> typeParameterNames = Arrays.asList(
+			typeParameterName.split(StringPool.COMMA_AND_SPACE));
+
+		newMethodCall = _addOrReplaceTypeParameters(
+			newMethodCall, newTypeParameterNames, typeParameterNames);
+
+		return StringUtil.replace(newContent, methodCall, newMethodCall);
 	}
 
 	private boolean _hasValidClassName(

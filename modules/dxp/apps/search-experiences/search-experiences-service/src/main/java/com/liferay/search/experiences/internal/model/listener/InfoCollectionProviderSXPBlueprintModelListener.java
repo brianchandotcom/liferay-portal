@@ -67,6 +67,15 @@ public abstract class InfoCollectionProviderSXPBlueprintModelListener
 		}
 	}
 
+	@Override
+	public void onAfterUpdate(
+		SXPBlueprint originalSXPBlueprint, SXPBlueprint newSXPBlueprint) {
+
+		onAfterRemove(originalSXPBlueprint);
+
+		onAfterCreate(newSXPBlueprint);
+	}
+
 	public void start() {
 		_companyLocalService.forEachCompanyId(
 			companyId -> {

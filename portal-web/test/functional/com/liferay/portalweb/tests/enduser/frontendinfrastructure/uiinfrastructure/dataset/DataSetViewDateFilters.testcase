@@ -2,7 +2,6 @@
 definition {
 
 	property custom.properties = "feature.flag.LPS-164563=true${line.separator}feature.flag.LPS-167253=true${line.separator}feature.flag.LPS-188645=true";
-	property portal.acceptance = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.component.names = "Frontend Data Set";
@@ -26,7 +25,7 @@ definition {
 
 	@description = "LPS-181281. Confirms the From and To fields are displayed when creating a new date filter."
 	@ignore = "true"
-	@priority = 5
+	@priority = 3
 	test AssertDateFieldsArePresent {
 		task ("Given the creation of a new data set") {
 			DataSetAdmin.goToDataSetAdminPage();
@@ -84,7 +83,7 @@ definition {
 
 	@description = "LPS-181281. Confirms the Clay datepicker can be opened when creating a new date filter."
 	@ignore = "true"
-	@priority = 5
+	@priority = 3
 	test AssertDateFieldsClayDatePicker {
 		task ("Given the creation of a new data set") {
 			DataSetAdmin.goToDataSetAdminPage();
@@ -332,6 +331,8 @@ definition {
 	@ignore = "true"
 	@priority = 5
 	test CanConfirmChangesInDate {
+		property portal.acceptance = "true";
+
 		task ("Given the creation of a new data set") {
 			DataSetAdmin.goToDataSetAdminPage();
 
@@ -423,6 +424,8 @@ definition {
 	@description = "LPS-190851. Cannot create a date filter when the chosen endpoint does not have a date field"
 	@priority = 5
 	test CannotCreateFilterWithoutDateTypeField {
+		property portal.acceptance = "true";
+
 		task ("Given a new data set entry, view") {
 			DataSetAdmin.createAndConfigureDataSetEntry(
 				dataSetName = "Custom Data Set Entry",
@@ -534,6 +537,8 @@ definition {
 	@ignore = "true"
 	@priority = 5
 	test CanSaveDateFilter {
+		property portal.acceptance = "true";
+		
 		task ("Given the creation of a new data set") {
 			DataSetAdmin.goToDataSetAdminPage();
 

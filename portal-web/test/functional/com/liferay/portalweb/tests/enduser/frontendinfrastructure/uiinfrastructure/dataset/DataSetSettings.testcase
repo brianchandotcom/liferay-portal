@@ -23,6 +23,8 @@ definition {
 	@description = "LPS-188590 Confirm that Cell Renderer is not displayed in Client extension, without enabling FF Data Set"
 	@priority = 5
 	test AssertCellRendererIsNotDisplayed {
+		property portal.acceptance = "true";
+
 		task ("When acess Client Extension Admin Page") {
 			ApplicationsMenuHelper.openApplicationsMenu();
 
@@ -40,6 +42,56 @@ definition {
 
 		task ("Then the option Frontend Data Set Cell Renderer is not present.") {
 			AssertElementNotPresent(
+				key_menuItem = "Frontend Data Set Cell Renderer",
+				locator1 = "CommerceEntry#ANY_MENU_ITEM");
+		}
+	}
+
+	@description = "LPS-188590 Confirm that Cell Renderer is displayed in Client extension, when FF is enabled"
+	@priority = 5
+	test CanAssertDataSetCellRendererIsPresent {
+		property portal.acceptance = "true";
+
+		task ("Given the Instance Settings Admin page") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+		}
+
+		task ("And the user accesses the Feature Flag option") {
+			PortalSettings.gotoConfiguration(
+				configurationCategory = "Feature Flags",
+				configurationName = "Beta",
+				configurationScope = "Virtual Instance Scope");
+		}
+
+		task ("And enabled the Dataset management Feature Flag") {
+			Check.checkToggleSwitch(
+				locator1 = "FeatureFlag#TOGGLE_ROW",
+				title_row = "Data Set Manager",
+				toggle_state = "Disabled");
+		}
+
+		task ("When acess Client Extension Admin Page") {
+			Navigator.openURL();
+
+			ApplicationsMenuHelper.openApplicationsMenu();
+
+			ApplicationsMenu.gotoPanel(panel = "Applications");
+
+			Click(
+				key_category = "Custom Apps",
+				key_portlet = "Client Extensions",
+				locator1 = "ApplicationsMenu#PORTLET");
+		}
+
+		task ("And clicks plus button") {
+			Click(locator1 = "Button#PLUS");
+		}
+
+		task ("Then the option Frontend Data Set Cell Renderer is present.") {
+			AssertElementPresent(
 				key_menuItem = "Frontend Data Set Cell Renderer",
 				locator1 = "CommerceEntry#ANY_MENU_ITEM");
 		}
@@ -87,57 +139,11 @@ definition {
 		}
 	}
 
-	@description = "LPS-188590 Confirm that Cell Renderer is displayed in Client extension, when FF is enabled"
-	@priority = 5
-	test CanAsserTheDataSetCellRendererIsPresent {
-		task ("Given the Instance Settings Admin page") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Instance Settings");
-		}
-
-		task ("And the user accesses the Feature Flag option") {
-			PortalSettings.gotoConfiguration(
-				configurationCategory = "Feature Flags",
-				configurationName = "Beta",
-				configurationScope = "Virtual Instance Scope");
-		}
-
-		task ("And enabled the Dataset management Feature Flag") {
-			Check.checkToggleSwitch(
-				locator1 = "FeatureFlag#TOGGLE_ROW",
-				title_row = "Data Set Manager",
-				toggle_state = "Disabled");
-		}
-
-		task ("When acess Client Extension Admin Page") {
-			Navigator.openURL();
-
-			ApplicationsMenuHelper.openApplicationsMenu();
-
-			ApplicationsMenu.gotoPanel(panel = "Applications");
-
-			Click(
-				key_category = "Custom Apps",
-				key_portlet = "Client Extensions",
-				locator1 = "ApplicationsMenu#PORTLET");
-		}
-
-		task ("And clicks plus button") {
-			Click(locator1 = "Button#PLUS");
-		}
-
-		task ("Then the option Frontend Data Set Cell Renderer is present.") {
-			AssertElementPresent(
-				key_menuItem = "Frontend Data Set Cell Renderer",
-				locator1 = "CommerceEntry#ANY_MENU_ITEM");
-		}
-	}
-
 	@description = "LPS-188590 Confirm that the Data Set Fragment is not displayed on the page, if FF Data Set is not enabled"
 	@priority = 5
-	test CanAssertTheDataSetFragmentIsNotPresent {
+	test CanAssertDataSetFragmentIsNotPresent {
+		property portal.acceptance = "true";
+
 		task ("When the user go to edit the home page") {
 			Click(
 				key_documentName = "Edit",
@@ -158,7 +164,9 @@ definition {
 
 	@description = "LPS-188590 Confirm that the Data Set fragment is displayed on the page, when FF is enabled"
 	@priority = 5
-	test CanAssertTheDataSetFragmentIsPresent {
+	test CanAssertDataSetFragmentIsPresent {
+		property portal.acceptance = "true";
+
 		task ("Given the Instance Settings Admin page") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Configuration",
@@ -202,7 +210,9 @@ definition {
 
 	@description = "LPS-188590 Confirm that the Data Set is present in OBJECTS, when FF is enabled"
 	@priority = 5
-	test CanAssertTheDataSetIsEnabled {
+	test CanAssertDataSetIsEnabled {
+		property portal.acceptance = "true";
+
 		task ("Given the Instance Settings Admin page") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Configuration",
@@ -450,6 +460,8 @@ definition {
 	@description = "LPS-188590 Confirm Data Set is not present if FF is not enabled"
 	@priority = 5
 	test DataSetNotDisplayedInObject {
+		property portal.acceptance = "true";
+
 		task ("When acess Control panel inside Portlet Menu") {
 			ApplicationsMenuHelper.openApplicationsMenu();
 

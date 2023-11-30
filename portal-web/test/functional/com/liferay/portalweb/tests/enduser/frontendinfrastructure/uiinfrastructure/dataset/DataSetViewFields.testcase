@@ -2,7 +2,6 @@
 definition {
 
 	property custom.properties = "feature.flag.LPS-164563=true";
-	property portal.acceptance = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.component.names = "Frontend Data Set";
@@ -214,6 +213,8 @@ definition {
 	@description = "LPS-185226. Confirm that the user can add a field"
 	@priority = 5
 	test CanAddField {
+		property portal.acceptance = "true";
+		
 		task ("And clicks on Add Fields button/And checks id field/And clicks on Save button") {
 			DataSetAdmin.addFields(key_fieldList = "id");
 		}
@@ -865,6 +866,8 @@ definition {
 	@description = "LPS-178736. Confirm that the user can change the Cell Renderer type on Edit"
 	@priority = 5
 	test CanChangeCellRenderer {
+		property portal.acceptance = "true";
+
 		task ("And add an id Field") {
 			DataSetAdmin.addFields(key_fieldList = "id");
 		}
@@ -1074,6 +1077,8 @@ definition {
 	@description = "LPS-178736. Confirm that the user can edit Label field on Edit"
 	@priority = 5
 	test CanEditLabelFieldOnEdit {
+		property portal.acceptance = "true";
+
 		task ("And add an id Field") {
 			DataSetAdmin.addFields(key_fieldList = "id");
 		}
@@ -1108,6 +1113,8 @@ definition {
 	@description = "LPS-185228. Confirm that a field is not added after checking and unchecking it."
 	@priority = 5
 	test CannotAddFieldAfterUncheckingIt {
+		property portal.acceptance = "true";
+
 		task ("And clicks on plus button") {
 			LexiconEntry.gotoAdd();
 		}
@@ -1243,6 +1250,8 @@ definition {
 	@description = "LPS-176051. Confirm that the user can save changes when clicks on Save button"
 	@priority = 5
 	test CanSaveChangesOnSaveButton {
+		property portal.acceptance = "true";
+
 		task ("And add new fields") {
 			DataSetAdmin.addFields(key_fieldList = "id,label");
 		}
@@ -1360,6 +1369,8 @@ definition {
 	@description = "LPS-176051. Confirm that the user can select options of dropdown on Edit"
 	@priority = 5
 	test CanSelectDropdownOptions {
+		property portal.acceptance = "true";
+		
 		task ("And add new fields") {
 			DataSetAdmin.addFields(key_fieldList = "id,label");
 		}
@@ -1466,6 +1477,8 @@ definition {
 	@description = "LPS-179282. Confirm that the user can check and uncheck the fields"
 	@priority = 5
 	test CheckandUncheckFields {
+		property portal.acceptance = "true";
+		
 		task ("And Clicking to Add a new field") {
 			LexiconEntry.gotoAdd();
 		}

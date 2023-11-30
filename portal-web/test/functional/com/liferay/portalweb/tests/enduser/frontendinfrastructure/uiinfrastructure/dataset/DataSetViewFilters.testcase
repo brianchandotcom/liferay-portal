@@ -2,7 +2,6 @@
 definition {
 
 	property custom.properties = "feature.flag.LPS-164563=true${line.separator}feature.flag.LPS-167253=true${line.separator}feature.flag.LPS-188645=true";
-	property portal.acceptance = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.component.names = "Frontend Data Set";
@@ -42,6 +41,8 @@ definition {
 	@ignore = "true"
 	@priority = 5
 	test AssertAllFieldsAreDisplayedInSchema {
+		property portal.acceptance = "true";
+
 		task ("And clicks to add a new filter") {
 			LexiconEntry.gotoAdd();
 		}
@@ -907,6 +908,8 @@ definition {
 	@ignore = "true"
 	@priority = 5
 	test CanAssertTheNameFieldIsChanged {
+		property portal.acceptance = "true";
+
 		task ("And creating a picklist") {
 			Picklist.addPicklistViaAPI(picklistName = "Custom Picklist");
 
@@ -1091,7 +1094,7 @@ definition {
 
 	@description = "LPS-176188. Confirm that the field is not deleted by clicking the Cancel button."
 	@ignore = "true"
-	@priority = 5
+	@priority = 3
 	test CanCancelButtonDeleteFilter {
 		task ("And adds a filter") {
 			DataSetAdmin.createFilters(
@@ -1185,7 +1188,7 @@ definition {
 
 	@description = "LPS-183056. Confirm the cancellation of the edit with the Close button."
 	@ignore = "true"
-	@priority = 2
+	@priority = 3
 	test CanCancelEditOnCloseButton {
 		task ("And creating a picklist") {
 			Picklist.addPicklistViaAPI(picklistName = "Custom Picklist");
@@ -2102,7 +2105,7 @@ definition {
 	}
 
 	@description = "LPS-183621. Confirm that when you select the Single radio button and select more than one item, an error message is displayed."
-	@priority = 5
+	@priority = 4
 	test SelectionTypeWithSelectionSingleFieldAndMultipleItem {
 		task ("And creating a picklist And Add items to the created picklist") {
 			DataSetAdmin.setUpPicklistforDataSet(

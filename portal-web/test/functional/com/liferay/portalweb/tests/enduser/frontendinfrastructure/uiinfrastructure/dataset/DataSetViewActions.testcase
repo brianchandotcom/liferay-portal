@@ -391,10 +391,8 @@ definition {
 	}
 
 	@description = "LPS-191485. Verify if is possible to cancel a Async Item Action"
-	@priority = 5
+	@priority = 3
 	test CanCancelAsyncItemAction {
-		property portal.acceptance = "true";
-
 		task ("When Create a New Action") {
 			LexiconEntry.gotoAdd();
 		}
@@ -628,10 +626,8 @@ definition {
 	}
 
 	@description = "LPS-191485. Verify if is possible to cancel a Headless Item Action"
-	@priority = 5
+	@priority = 3
 	test CanCancelHedlessItemAction {
-		property portal.acceptance = "true";
-
 		task ("When Create a New Action") {
 			LexiconEntry.gotoAdd();
 
@@ -697,6 +693,8 @@ definition {
 	@description = "LPS-192150. Verify if is possible to click on the Action icon in the Data Set fragment and the action works."
 	@priority = 5
 	test CanClickActionIconInFragment {
+		property portal.acceptance = "true";
+
 		task ("Given a new Object entity") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Data Set Object",
@@ -839,6 +837,8 @@ definition {
 	@description = "LPS-192149. Verify if the user can an Action"
 	@priority = 5
 	test CanCreateActionEntry {
+		property portal.acceptance = "true";
+
 		task ("And clicks on Create Item Action button") {
 			LexiconEntry.gotoAdd();
 		}
@@ -1027,6 +1027,8 @@ definition {
 	@description = "LPS-191486. Verify if the user can delete an Action entry"
 	@priority = 5
 	test CanDeleteAction {
+		property portal.acceptance = "true";
+
 		task ("And creates an item action") {
 			DataSetAdmin.addActions(
 				actionName = "delete",
@@ -1476,7 +1478,7 @@ definition {
 	}
 
 	@description = "LPS-191488. Confirm that is not possible to edit the Type field."
-	@priority = 5
+	@priority = 4
 	test CannotEditTypeField {
 		task ("And creates a new item action") {
 			DataSetAdmin.addActions(
@@ -1943,6 +1945,8 @@ definition {
 	@description = "LPS-191488. Confirm that it's possible to save an Action after changing all fields in the Actions tab."
 	@priority = 5
 	test CanSaveAfterChangeAllFields {
+		property portal.acceptance = "true";
+
 		task ("And creates a new item action") {
 			DataSetAdmin.addActions(
 				actionName = "delete",
@@ -2083,7 +2087,7 @@ definition {
 	}
 
 	@description = "LPS-191488. Verify if the user can edit a created Action and see the informations"
-	@priority = 5
+	@priority = 3
 	test CanSeeModalWhenClicksOnEditAction {
 		task ("And creates a new item action") {
 			DataSetAdmin.addActions(
@@ -2187,6 +2191,8 @@ definition {
 	@description = "LPS-192150. Verify if is possible to see the Action icon in the Data Set fragment."
 	@priority = 5
 	test CanViewActionIconInFragment {
+		property portal.acceptance = "true";
+
 		task ("Given a new Object entity") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Data Set Object",
@@ -2534,6 +2540,8 @@ definition {
 	@description = "LPS-192149. Verify if the Label field is mandatory and localized in Action"
 	@priority = 5
 	test MandatoryAndLocalizedLabelField {
+		property portal.acceptance = "true";
+		
 		task ("And clicks on Create Item Action button") {
 			LexiconEntry.gotoAdd();
 		}

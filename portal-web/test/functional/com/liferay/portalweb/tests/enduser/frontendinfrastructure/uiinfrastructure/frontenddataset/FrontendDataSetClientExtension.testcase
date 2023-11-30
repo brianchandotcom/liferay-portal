@@ -2,7 +2,6 @@
 definition {
 
 	property custom.properties = "feature.flag.LPS-164563=true${line.separator}feature.flag.LPS-172904=true${line.separator}feature.flag.LPS-184016=true${line.separator}feature.flag.LPS-188645=true";
-	property portal.acceptance = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.component.names = "Frontend Data Set";

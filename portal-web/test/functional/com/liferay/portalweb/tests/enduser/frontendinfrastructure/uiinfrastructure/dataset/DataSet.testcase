@@ -2,7 +2,6 @@
 definition {
 
 	property custom.properties = "feature.flag.LPS-164563=true";
-	property portal.acceptance = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.component.names = "Frontend Data Set";
@@ -251,6 +250,8 @@ definition {
 	@description = "LPS-181546 Confirm that the new data set information is created and displayed correctly in the page content"
 	@priority = 5
 	test AssertTheValueInFieldsName {
+		property portal.acceptance = "true";
+
 		task ("And create a user creates a new data Set entry") {
 			DataSetAdmin.createDataSetEntryViaAPI(
 				dataSetName = "Blog Posts Posts",
@@ -419,6 +420,8 @@ definition {
 	@description = "LPS-185990 Confirm that when creating a filter and selecting a picklist item, the item's checkbox remains selected when you click elsewhere and return to dropdown items"
 	@priority = 5
 	test CanAssertTheCheckBoxItemIsChecked {
+		property portal.acceptance = "true";
+
 		task ("Given the creation of a new data set") {
 			DataSetAdmin.goToDataSetAdminPage();
 
@@ -547,6 +550,8 @@ definition {
 	@description = "LPS-181546 Confirm that the rest app /scopes/{scopeKey} is displayed in the data set, and the other information"
 	@priority = 5
 	test CanAssertTheEndpointObjectInDataSetCreated {
+		property portal.acceptance = "true";
+
 		task ("Given an object definition 'Student' with name field and Scope: Site created") {
 			DataSetAdmin.setUpObjectForDataSet(
 				fieldBusinessType = "Text",
@@ -871,6 +876,8 @@ definition {
 	@description = "LPS-181546 Confirm that the /v1.0/sites/{siteId}/blog-postings endpoint is displayed correctly when creating the data set"
 	@priority = 5
 	test CanAssertTheRestEndpointIsCorrect {
+		property portal.acceptance = "true";
+
 		task ("When the user creates a new data entry") {
 			DataSetAdmin.createDataSetEntryViaAPI(
 				dataSetName = "Data Set Test",
@@ -1004,6 +1011,8 @@ definition {
 	@description = "LPS-175990. Confirm that the user can create a data set entry"
 	@priority = 5
 	test CanCreateDataSet {
+		property portal.acceptance = "true";
+
 		task ("When Create a DataSet ") {
 			DataSetAdmin.createDataSet(
 				key_name = "Test Data Set",
@@ -1026,6 +1035,8 @@ definition {
 	@description = "LPS-172398. Confirm that the data set can be deleted"
 	@priority = 5
 	test CanDeleteDataSet {
+		property portal.acceptance = "true";
+
 		task ("When the user goes to add data sets") {
 			DataSetAdmin.createDataSet(
 				key_name = "Test Data Set",
@@ -1046,6 +1057,7 @@ definition {
 	@description = "LPS-172882: Display a list of headless resources in new FDS View modal"
 	@priority = 5
 	test CanDisplayHeadlessDeliveryAPIResources {
+		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -1322,6 +1334,8 @@ definition {
 	@description = "LPS-183502. Confirm that the user can sort Data Set entries by Date"
 	@priority = 5
 	test CanSortByDate {
+		property portal.acceptance = "true";
+		
 		task ("Given two datasets entries via API:") {
 			DataSetAdmin.createDataSetEntryViaAPI(
 				dataSetName = "FDSEntry",
@@ -1560,6 +1574,8 @@ definition {
 	@description = "LPS-187312 Confirm the creation of new translations, right after translating the page"
 	@priority = 5
 	test ConfirmThatTheCreatedTranslationWorks {
+		property portal.acceptance = "true";
+
 		task ("Given object created via API") {
 			Navigator.openURL();
 
@@ -1993,7 +2009,7 @@ definition {
 	}
 
 	@description = "LPS-172398. Confirm that the data set was not deleted after clicking CANCEL in the modal"
-	@priority = 5
+	@priority = 3
 	test NotDeleteDataSetAfterCancel {
 		task ("When the user goes to add data sets") {
 			DataSetAdmin.createDataSet(
@@ -2023,7 +2039,7 @@ definition {
 	}
 
 	@description = "LPS-172398. Confirm that the data set was not deleted after clicking clicks on the 'X' button in the modal"
-	@priority = 5
+	@priority = 3
 	test NotDeleteDataSetAfterCloseButton {
 		task ("When The user goes to add a new data set") {
 			DataSetAdmin.createDataSet(
@@ -2059,6 +2075,8 @@ definition {
 	@description = "LPS-194126 Confirm that translated object entries are displayed in the page fragment, and translated when adding pt to the page url"
 	@priority = 5
 	test TheFieldsAreTranslatedOnPage {
+		property portal.acceptance = "true";
+
 		task ("Given an object with name field 'custom Text Entry' and Add a translation to the added field title") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "DataSetObject",
@@ -2292,7 +2310,7 @@ definition {
 	}
 
 	@description = "Needs refactor after LPS-183512 is fixed | LPS-175990. Confirm that the user can create a data set entry with special chatacters"
-	@priority = 5
+	@priority = 3
 	test WithSpecialCharacters {
 		task ("When Create a DataSet") {
 			DataSetAdmin.createDataSet(

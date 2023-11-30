@@ -2,7 +2,6 @@
 definition {
 
 	property custom.properties = "feature.flag.LPS-164563=true${line.separator}feature.flag.LPS-188645=true";
-	property portal.acceptance = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.component.names = "Frontend Data Set";
@@ -441,7 +440,9 @@ definition {
 
 	@description = "LPS-191295. Confirm that after created a filter is displayed in the fragment and it is also possible to apply it. "
 	@priority = 5
-	test CanAppliedFilter {
+	test CanApplyFilter {
+		property portal.acceptance = "true";
+		
 		task ("Given a new Object entity") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Date Object",

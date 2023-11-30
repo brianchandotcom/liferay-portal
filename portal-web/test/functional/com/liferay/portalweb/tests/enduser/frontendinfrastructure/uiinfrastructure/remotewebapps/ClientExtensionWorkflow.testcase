@@ -1,7 +1,6 @@
 @component-name = "portal-frontend-infrastructure"
 definition {
 
-	property portal.acceptance = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.component.names = "Client Extensions";
@@ -100,6 +99,8 @@ definition {
 	@description = "LPS-141280. Verify rejected remote app portlet cannot be added to page"
 	@priority = 5
 	test AdminCanRejectRemotePortlet {
+		property portal.acceptance = "true";
+
 		task ("Given workflow approval process applied to remote apps") {
 			ClientExtensionWorkflow.applyWorkflow();
 		}
@@ -174,6 +175,8 @@ definition {
 	@description = "LPS-141280. Verify remote app entry workflow can be configured at instance level"
 	@priority = 5
 	test CanConfigureWorkflowInstanceLevel {
+		property portal.acceptance = "true";
+		
 		task ("Navigate to workflow configuration") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Workflow",

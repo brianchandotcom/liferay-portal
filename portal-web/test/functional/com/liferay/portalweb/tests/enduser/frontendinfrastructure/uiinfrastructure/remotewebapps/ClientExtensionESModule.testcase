@@ -53,6 +53,8 @@ definition {
 	@description = "LPS-144267. When add a remote app in the html <script> tag with src is rendered as a module type"
 	@priority = 5
 	test CanRenderCustomElementAsModuleType {
+		property environment.acceptance = "true";
+		
 		task ("When Navigate to remote app portlet page") {
 			Navigator.gotoPage(pageName = "My Widget Page");
 

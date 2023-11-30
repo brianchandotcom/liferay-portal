@@ -31,7 +31,6 @@ definition {
 		property database.types = "mysql";
 		property environment.acceptance = "true";
 		property operating.system.types = "alpine,amazonlinux,centos,debian,fedora,orcllinux,osx,redhat,rockylinux,solaris,suse,ubuntu,windows";
-		property portal.acceptance = "true";
 
 		task ("When client extension has portal category 'Client Extensions'") {
 			ClientExtensionGeneral.goToRemoteAppsPortlet();

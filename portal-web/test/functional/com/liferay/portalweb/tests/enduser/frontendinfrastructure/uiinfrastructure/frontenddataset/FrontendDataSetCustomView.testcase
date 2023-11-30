@@ -3,7 +3,6 @@ definition {
 
 	property custom.properties = "upgrade.database.auto.run=false";
 	property osgi.modules.includes = "frontend-data-set-sample-web";
-	property portal.acceptance = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.component.names = "Frontend Data Set";
@@ -49,6 +48,8 @@ definition {
 	@description = "LPS-114812. Allow users to delete their custom views"
 	@priority = 5
 	test CanBeDeleted {
+		property portal.acceptance = "true";
+		
 		task ("Given A custom view is created") {
 			FrontendDataSetCustomView.createNewView(entryName = "New View");
 		}

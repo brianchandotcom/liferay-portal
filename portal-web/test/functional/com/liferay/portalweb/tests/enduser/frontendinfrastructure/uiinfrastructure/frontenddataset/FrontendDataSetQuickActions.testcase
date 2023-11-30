@@ -2,7 +2,6 @@
 definition {
 
 	property osgi.modules.includes = "frontend-data-set-sample-web";
-	property portal.acceptance = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.component.names = "Frontend Data Set";
@@ -56,6 +55,7 @@ definition {
 	@description = "LPS-153220. Assert that clicking quick action is equivalent to clicking the ellipsis dropdown menu."
 	@priority = 5
 	test BehaviorIsEqualToEllipsisDropdownEquivalentAction {
+		property portal.acceptance = "true";
 		var portalURL = PropsUtil.get("portal.url");
 
 		task ("When click on Pencil Icon") {
@@ -84,7 +84,7 @@ definition {
 	}
 
 	@description = "LPS-153220. Assert that hover over mouse off of the table body quick action menu is not visible."
-	@priority = 5
+	@priority = 4
 	test CanDisappearWhenNotHovered {
 		task ("When hover mouse off of the table body") {
 			MouseOver(locator1 = "FrontendDataSet#TABLE_BODY");
@@ -96,7 +96,7 @@ definition {
 	}
 
 	@description = "LPS-153220. When hovering over the first line item and the quick action menu is displayed on the 1st line"
-	@priority = 5
+	@priority = 4
 	test CanDisplayOnHover {
 		task ("Then the quick action menu is displayed on the 1st line") {
 			FrontendDataSetQuickActions.viewQuickActionMenuPresent(title = "Sample1");
@@ -180,6 +180,8 @@ definition {
 	@description = "LPS-153220. Assert that test-pencil is appended to browser URL after clicking."
 	@priority = 5
 	test CanExecuteAnAction {
+		property portal.acceptance = "true";
+		
 		task ("When click on Pencil Icon ") {
 			ClickNoError(
 				key_title = "Sample1",

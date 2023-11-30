@@ -2,7 +2,6 @@
 definition {
 
 	property custom.properties = "feature.flag.LPS-164563=true";
-	property portal.acceptance = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.component.names = "Frontend Data Set";
@@ -117,6 +116,8 @@ definition {
 	@description = "LPS-172396. Confirm that the name field is required for creating a view"
 	@priority = 5
 	test CanAssertNameIsRequired {
+		property portal.acceptance = "true";
+
 		task ("When Clicking add button") {
 			LexiconEntry.gotoAdd();
 		}
@@ -207,6 +208,8 @@ definition {
 	@description = "LPS-176189. Confirm that the data set view deletion is recoverable"
 	@priority = 5
 	test CanCancelDeletionOnCancelButton {
+		property portal.acceptance = "true";
+
 		task ("When Add a new view") {
 			DataSetAdmin.createDataSetView(
 				description = "Description Test",
@@ -319,6 +322,8 @@ definition {
 	@description = "LPS-181572 - Verify if is possible clicks on Data Set Test Name and go to view page"
 	@priority = 5
 	test CanClickOnDataSetNameCreated {
+		property portal.acceptance = "true";
+
 		task ("And go to Dataset admin Page") {
 			Navigator.gotoBack();
 		}
@@ -367,6 +372,8 @@ definition {
 	@description = "LPS-172396. Confirm that the user can create a view"
 	@priority = 5
 	test CanCreateView {
+		property portal.acceptance = "true";
+
 		task ("When Filling the name with 'View Test' And Clicking Save button") {
 			DataSetAdmin.createDataSetView(
 				description = "Test Description",
@@ -399,6 +406,8 @@ definition {
 	@description = "LPS-176189. Confirm that a data set view can be deleted"
 	@priority = 5
 	test CanDeleteView {
+		property portal.acceptance = "true";
+
 		task ("When Add a new view") {
 			DataSetAdmin.createDataSetView(
 				description = "Description Test",
@@ -445,6 +454,8 @@ definition {
 	@description = "LPS-172396. Confirm that the user can edit a view"
 	@priority = 5
 	test CanEditView {
+		property portal.acceptance = "true";
+
 		task ("When go to the View page of the data set created, and click save button") {
 			DataSetAdmin.createDataSetView(
 				description = "Description Test",
@@ -468,6 +479,8 @@ definition {
 	@description = "LPS-181575 - Verify if when users clicks on edit dataset view, they will be sent to the page to edit a dataset view."
 	@priority = 5
 	test CanGoToEditViewPage {
+		property portal.acceptance = "true";
+
 		task ("And a new view") {
 			DataSetAdmin.createDataSetView(
 				description = "Description Test",
@@ -502,6 +515,8 @@ definition {
 	@description = "LPS-181575 - Verify if when the user opens the 3 dots option menu of a Data Set, the “view” action is now called “edit”."
 	@priority = 5
 	test CanGoToViewPage {
+		property portal.acceptance = "true";
+
 		task ("When the user clicks on the data set entry 3 dots option button") {
 			Navigator.gotoBack();
 
@@ -704,6 +719,8 @@ definition {
 	@description = "LPS-178860 Confirm that the user can view the rest information in the Details tab"
 	@priority = 5
 	test CanViewRestInformation {
+		property portal.acceptance = "true";
+		
 		task ("And a new view") {
 			DataSetAdmin.createDataSetView(
 				description = "Test Description",

@@ -67,6 +67,8 @@ definition {
 	@description = "LPS-182184. Verify the JSON field contains the name of the file selected to be imported"
 	@priority = 5
 	test AssertFileNameInJSONField {
+		property portal.acceptance = "true";
+
 		task ("Given the admin page of client extensions") {
 			ClientExtensionGeneral.goToRemoteAppsPortlet();
 
@@ -150,7 +152,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-114812. Verify remote app can be deleted"
+	@description = "LPS-114812. Verify Client Extension can be deleted"
 	@priority = 5
 	@refactordone
 	test CanBeDeleted {
@@ -175,6 +177,7 @@ definition {
 	test CanBeDisplayedWithDBPartitioning {
 		property database.partition.enabled = "true";
 		property database.types = "mysql";
+		property portal.acceptance = "true";
 
 		task ("Given Client Extension admin page") {
 			ClientExtensionGeneral.goToRemoteAppsPortlet();
@@ -365,6 +368,8 @@ definition {
 	@description = "LPS-182184. Verify it's possible to import a client extension."
 	@priority = 5
 	test CanImportClientExtension {
+		property portal.acceptance = "true";
+
 		task ("Given the admin page of client extensions") {
 			ClientExtensionGeneral.goToRemoteAppsPortlet();
 
@@ -544,7 +549,7 @@ definition {
 		}
 	}
 
-	@description = "Verify that remote app of type Custom Element can be created"
+	@description = "Verify that client extension of type Custom Element can be created"
 	@priority = 5
 	test CustomElementCanBeCreated {
 		property app.server.types = "tomcat";
@@ -585,12 +590,11 @@ definition {
 		}
 	}
 
-	@description = "LPS-158083. Remote App using non-root portal context"
+	@description = "LPS-158083. Client Extension using non-root portal context"
 	@priority = 4
 	test CustomElementCanBeCreatedInNonRootContext {
 		property app.server.types = "tomcat";
 		property database.types = "mysql";
-		property portal.acceptance = "true";
 		property portal.context = "liferay";
 		property skip.clean-app-server-deploy-dir = "true";
 		property test.assert.warning.exceptions = "true";
@@ -652,7 +656,7 @@ definition {
 			Refresh();
 		}
 
-		task ("Then remote app src is rendered with non-root context") {
+		task ("Then client extension src is rendered with non-root context") {
 			AssertElementPresent(locator1 = "//script[contains(@src,'/documents/d/guest/index') and contains(@type,'module')]");
 		}
 	}
@@ -660,8 +664,6 @@ definition {
 	@description = "LPS-139377. Verify that remote app of type Custom Element can be deleted"
 	@priority = 4
 	test CustomElementCanBeDeleted {
-		property portal.acceptance = "true";
-
 		task ("Create Vanilla Counter as a Custom Element") {
 			JSONClientExtension.addCustomElementRemoteAppEntry(
 				customElementHtmlName = "vanilla-counter",
@@ -725,8 +727,6 @@ definition {
 	@description = "LPS-139377. Verify that remote app of type Custom Element can be edited"
 	@priority = 4
 	test CustomElementCanBeEdited {
-		property portal.acceptance = "true";
-
 		var remoteAppName = "New Counter";
 
 		task ("Create a Custom Element") {
@@ -771,8 +771,6 @@ definition {
 	@description = "LPS-139377. Verify that remote app of type Custom Element can be instanceable in a Content Page"
 	@priority = 3
 	test CustomElementCanBeInstanceable {
-		property portal.acceptance = "true";
-
 		task ("Add a public page with JSON") {
 			JSONLayout.addPublicLayout(
 				groupName = "Guest",
@@ -832,8 +830,6 @@ definition {
 	@description = "LPS-158832. Verify remote app can be configured one its portlet name has been changed"
 	@priority = 3
 	test CustomElementCanConfigurePortletName {
-		property portal.acceptance = "true";
-
 		task ("Given Create Vanilla Counter as a Custom Element") {
 			JSONClientExtension.addCustomElementRemoteAppEntry(
 				customElementHtmlName = "vanilla-counter",
@@ -892,8 +888,6 @@ definition {
 	@description = "LPS-139377. Verify that remote app of type Custom Element can displayed properties in HTML"
 	@priority = 3
 	test CustomElementCanInjectHTMLProperties {
-		property portal.acceptance = "true";
-
 		task ("When create custom element remote application with property QAuser") {
 			JSONClientExtension.addCustomElementRemoteAppEntry(
 				customElementCssurl = "http://remote-component-test.wincent.com/index.css",
@@ -922,8 +916,6 @@ definition {
 	@description = "LPS-139377. Verify that remote app of type Custom Element can save multiple URLs"
 	@priority = 4
 	test CustomElementCanSaveMultipleURLs {
-		property portal.acceptance = "true";
-
 		task ("Create Vanilla Counter as a Custom Element") {
 			ClientExtensionGeneral.goToRemoteAppsPortlet();
 
@@ -944,7 +936,6 @@ definition {
 	@description = "LPS-159013. ES module custom element portlets render incorrect script node when dragged in the UI"
 	@priority = 4
 	test CustomElementRendersCorrectlyWhenPlacedOnWidgetPage {
-		property portal.acceptance = "true";
 		property testray.component.names = "Client Extensions";
 
 		task ("Given a custom element with "Use ES Modules" option created") {

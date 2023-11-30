@@ -39,8 +39,6 @@ definition {
 	@description = "LPS-158545. The JSON URL can be saved."
 	@priority = 3
 	test CanBeSaved {
-		property portal.acceptance = "true";
-
 		task ("Given Remote Application > Custom Elements create page") {
 			ClientExtensionGeneral.goToRemoteAppsPortlet();
 
@@ -101,8 +99,6 @@ definition {
 	@description = "LPS-152023. The non-deleted field value can be retained."
 	@priority = 3
 	test CanRetainNonDeletedFieldValue {
-		property portal.acceptance = "true";
-
 		task ("Given Custom Element with two valid JS URLs") {
 			ClientExtensionGeneral.goToRemoteAppsPortlet();
 
@@ -157,8 +153,6 @@ definition {
 	@description = "LPS-152023. The JSON URL can be can be repeated."
 	@priority = 3
 	test CSSURLCanBeRepeated {
-		property portal.acceptance = "true";
-
 		task ("Given Remote Application > Custom Elements create page") {
 			ClientExtensionGeneral.goToRemoteAppsPortlet();
 
@@ -202,8 +196,6 @@ definition {
 	@description = "LPS-152023. The JSON URL can be can be repeatably clicked."
 	@priority = 3
 	test JSURLCanBeRepeated {
-		property portal.acceptance = "true";
-
 		task ("Given Remote Application > Custom Elements create page") {
 			ClientExtensionGeneral.goToRemoteAppsPortlet();
 
@@ -247,8 +239,6 @@ definition {
 	@description = "LPS-152023. The JSON URL can be can be repeatably clicked."
 	@priority = 3
 	test JSURLCanBeRepeatedMultipleTimes {
-		property portal.acceptance = "true";
-
 		task ("Given Remote Application > Custom Elements create page") {
 			ClientExtensionGeneral.goToRemoteAppsPortlet();
 

@@ -2,7 +2,6 @@
 definition {
 
 	property custom.properties = "feature.flag.LPS-164563=true";
-	property portal.acceptance = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.component.names = "Frontend Data Set";
@@ -135,6 +134,8 @@ definition {
 	@description = "LPS-183947. Confirm that pagination can be created"
 	@priority = 5
 	test CanCreatePagination {
+		property portal.acceptance = "true";
+		
 		task ("And the user fills in the pagination items field") {
 			DataSetAdmin.changePaginationItems(paginationItems = "10, 20, 30, 40");
 		}

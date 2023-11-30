@@ -219,8 +219,7 @@ public class EndpointHelper {
 	}
 
 	private Map<String, Object> _getResponseEntityMap(
-			ObjectEntry objectEntry, APIApplication.Schema schema)
-		throws Exception {
+		ObjectEntry objectEntry, APIApplication.Schema schema) {
 
 		if (schema == null) {
 			return null;

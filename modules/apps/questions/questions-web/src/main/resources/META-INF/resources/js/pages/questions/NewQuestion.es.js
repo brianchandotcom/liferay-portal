@@ -124,6 +124,8 @@ export default withRouter(
 			}
 
 			setError(error);
+
+			setIsPostButtonDisable(false);
 		};
 
 		const processResponse = (error) =>
@@ -162,8 +164,6 @@ export default withRouter(
 					.then(({error}) => processResponse(error))
 					.catch(processError);
 			}
-
-			setIsPostButtonDisable(false);
 		};
 
 		return (

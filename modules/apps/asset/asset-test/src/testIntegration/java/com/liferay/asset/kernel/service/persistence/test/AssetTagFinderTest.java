@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.asset.service.test;
+package com.liferay.asset.kernel.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetTag;
-import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
+import com.liferay.asset.kernel.service.persistence.AssetTagFinder;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.model.MBMessage;
@@ -28,7 +28,9 @@ import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.TransactionalTestRule;
 
 import java.util.List;
 
@@ -49,7 +51,8 @@ public class AssetTagFinderTest {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(), TransactionalTestRule.INSTANCE);
 
 	@Before
 	public void setUp() throws Exception {
@@ -86,22 +89,20 @@ public class AssetTagFinderTest {
 		long classNameId = PortalUtil.getClassNameId(MBMessage.class);
 		String assetTagName = RandomTestUtil.randomString();
 
-		int initialScopeGroupAssetTagsCount =
-			AssetTagLocalServiceUtil.getTagsSize(
-				_scopeGroup.getGroupId(), classNameId, assetTagName);
-		int initialSiteGroupAssetTagsCount =
-			AssetTagLocalServiceUtil.getTagsSize(
-				_scopeGroup.getParentGroupId(), classNameId, assetTagName);
+		int initialScopeGroupAssetTagsCount = _assetTagFinder.countByG_C_N(
+			_scopeGroup.getGroupId(), classNameId, assetTagName);
+		int initialSiteGroupAssetTagsCount = _assetTagFinder.countByG_C_N(
+			_scopeGroup.getParentGroupId(), classNameId, assetTagName);
 
 		addMBMessage(_scopeGroup.getGroupId(), assetTagName);
 
-		int scopeGroupAssetTagsCount = AssetTagLocalServiceUtil.getTagsSize(
+		int scopeGroupAssetTagsCount = _assetTagFinder.countByG_C_N(
 			_scopeGroup.getGroupId(), classNameId, assetTagName);
 
 		Assert.assertEquals(
 			initialScopeGroupAssetTagsCount + 1, scopeGroupAssetTagsCount);
 
-		int siteGroupAssetTagsCount = AssetTagLocalServiceUtil.getTagsSize(
+		int siteGroupAssetTagsCount = _assetTagFinder.countByG_C_N(
 			_scopeGroup.getParentGroupId(), classNameId, assetTagName);
 
 		Assert.assertEquals(
@@ -112,21 +113,20 @@ public class AssetTagFinderTest {
 	public void testCountByG_C_N2() throws Exception {
 		String assetTagName = RandomTestUtil.randomString();
 
-		int initialScopeGroupAssetTagsCount =
-			AssetTagLocalServiceUtil.getTagsSize(
-				_scopeGroup.getGroupId(), 0, assetTagName);
-		int initialTagsCountSiteGroup = AssetTagLocalServiceUtil.getTagsSize(
+		int initialScopeGroupAssetTagsCount = _assetTagFinder.countByG_C_N(
+			_scopeGroup.getGroupId(), 0, assetTagName);
+		int initialTagsCountSiteGroup = _assetTagFinder.countByG_C_N(
 			_scopeGroup.getParentGroupId(), 0, assetTagName);
 
 		addMBMessage(_scopeGroup.getGroupId(), assetTagName);
 
-		int scopeGroupAssetTagsCount = AssetTagLocalServiceUtil.getTagsSize(
+		int scopeGroupAssetTagsCount = _assetTagFinder.countByG_C_N(
 			_scopeGroup.getGroupId(), 0, assetTagName);
 
 		Assert.assertEquals(
 			initialScopeGroupAssetTagsCount + 1, scopeGroupAssetTagsCount);
 
-		int siteGroupAssetTagsCount = AssetTagLocalServiceUtil.getTagsSize(
+		int siteGroupAssetTagsCount = _assetTagFinder.countByG_C_N(
 			_scopeGroup.getParentGroupId(), 0, assetTagName);
 
 		Assert.assertEquals(initialTagsCountSiteGroup, siteGroupAssetTagsCount);
@@ -137,28 +137,26 @@ public class AssetTagFinderTest {
 		long classNameId = PortalUtil.getClassNameId(MBMessage.class);
 		String assetTagName = RandomTestUtil.randomString();
 
-		List<AssetTag> initialScopeGroupAssetTags =
-			AssetTagLocalServiceUtil.getTags(
-				_scopeGroup.getGroupId(), classNameId, assetTagName,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-		List<AssetTag> initialSiteGroupAssetTags =
-			AssetTagLocalServiceUtil.getTags(
-				_scopeGroup.getParentGroupId(), classNameId, assetTagName,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		List<AssetTag> initialScopeGroupAssetTags = _assetTagFinder.findByG_C_N(
+			_scopeGroup.getGroupId(), classNameId, assetTagName,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+		List<AssetTag> initialSiteGroupAssetTags = _assetTagFinder.findByG_C_N(
+			_scopeGroup.getParentGroupId(), classNameId, assetTagName,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		addMBMessage(_scopeGroup.getGroupId(), assetTagName);
 
-		List<AssetTag> scopeGroupAssetTags = AssetTagLocalServiceUtil.getTags(
+		List<AssetTag> scopeGroupAssetTags = _assetTagFinder.findByG_C_N(
 			_scopeGroup.getGroupId(), classNameId, assetTagName,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		Assert.assertEquals(
 			scopeGroupAssetTags.toString(),
 			initialScopeGroupAssetTags.size() + 1, scopeGroupAssetTags.size());
 
-		List<AssetTag> siteGroupAssetTags = AssetTagLocalServiceUtil.getTags(
+		List<AssetTag> siteGroupAssetTags = _assetTagFinder.findByG_C_N(
 			_scopeGroup.getParentGroupId(), classNameId, assetTagName,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		Assert.assertEquals(
 			siteGroupAssetTags.toString(), initialSiteGroupAssetTags.size(),
@@ -179,6 +177,9 @@ public class AssetTagFinderTest {
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), true,
 			serviceContext);
 	}
+
+	@Inject
+	private AssetTagFinder _assetTagFinder;
 
 	private Group _group;
 	private Group _scopeGroup;

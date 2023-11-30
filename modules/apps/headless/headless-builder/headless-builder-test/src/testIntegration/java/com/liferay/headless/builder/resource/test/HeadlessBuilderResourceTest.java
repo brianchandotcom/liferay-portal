@@ -1118,13 +1118,8 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 
 	@Test
 	public void testGetWithPostEndpoint() throws Exception {
-		int index = 10;
-
-		ObjectDefinition objectDefinition = _addObjectDefinition(
-			index, true, ObjectDefinitionConstants.SCOPE_COMPANY);
-
 		_addAPIApplicationWithGetAndPostEndpoint(
-			objectDefinition.getExternalReferenceCode(), index);
+			_objectDefinition1.getExternalReferenceCode(), 1);
 
 		_publishAPIApplication(_API_APPLICATION_ERC_1);
 

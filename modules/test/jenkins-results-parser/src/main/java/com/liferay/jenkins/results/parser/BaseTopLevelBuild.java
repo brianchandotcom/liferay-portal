@@ -951,8 +951,46 @@ public abstract class BaseTopLevelBuild
 	}
 
 	protected Element[] getBuildFailureElements() {
+		List<Build> failedDownstreamBuilds = getFailedDownstreamBuilds();
+
+		if (failedDownstreamBuilds != null) {
+			StringBuilder sb = new StringBuilder();
+
+			sb.append("\nUnique Failures:");
+
+			for (Build failedDownstreamBuild : failedDownstreamBuilds) {
+				if (failedDownstreamBuild.isUniqueFailure()) {
+					sb.append("\n" + failedDownstreamBuild.getDisplayName());
+
+					for (TestResult testResult :
+							failedDownstreamBuild.
+								getUniqueFailureTestResults()) {
+
+						sb.append("\n\t" + testResult.getDisplayName());
+					}
+				}
+			}
+
+			sb.append("\n\nUpstream Failures:");
+
+			for (Build failedDownstreamBuild : failedDownstreamBuilds) {
+				if (!failedDownstreamBuild.isUniqueFailure()) {
+					sb.append("\n" + failedDownstreamBuild.getDisplayName());
+
+					for (TestResult testResult :
+							failedDownstreamBuild.
+								getUpstreamJobFailureTestResults()) {
+
+						sb.append("\n\t" + testResult.getDisplayName());
+					}
+				}
+			}
+
+			System.out.println(sb.toString());
+		}
+
 		Map<Build, Element> downstreamBuildFailureMessages =
-			getDownstreamBuildMessages(getFailedDownstreamBuilds());
+			getDownstreamBuildMessages(failedDownstreamBuilds);
 
 		List<Element> allCurrentBuildFailureElements = new ArrayList<>();
 		List<Element> upstreamBuildFailureElements = new ArrayList<>();

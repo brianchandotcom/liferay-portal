@@ -231,14 +231,16 @@ public class PropertiesPortalFileCheck extends BaseFileCheck {
 					continue;
 				}
 
-				if (line.indexOf('=') >= 0) {
-					key = line.substring(0, line.indexOf('='));
+				int x = line.indexOf('=');
+
+				if (x != -1) {
+					key = line.substring(0, x);
 
 					if (propertiesMap.containsKey(key)) {
 						return content;
 					}
 
-					value = line.substring(line.indexOf('=') + 1);
+					value = line.substring(x + 1);
 
 					if (!Objects.isNull(value) && !value.equals("\\")) {
 						List<String> list = propertiesMap.get(key);

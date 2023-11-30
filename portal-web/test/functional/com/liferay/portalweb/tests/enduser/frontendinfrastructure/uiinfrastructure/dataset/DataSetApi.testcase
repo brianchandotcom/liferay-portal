@@ -27,7 +27,7 @@ definition {
 	@priority = 5
 	test CanCreateDataSetEntryViaAPI {
 		property portal.acceptance = "true";
-		
+
 		task ("Given creating a Data Set via API") {
 			DataSetAdmin.goToDataSetAdminPage();
 

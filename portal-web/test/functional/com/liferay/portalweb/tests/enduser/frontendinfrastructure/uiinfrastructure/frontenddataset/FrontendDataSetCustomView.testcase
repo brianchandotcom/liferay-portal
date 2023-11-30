@@ -49,7 +49,7 @@ definition {
 	@priority = 5
 	test CanBeDeleted {
 		property portal.acceptance = "true";
-		
+
 		task ("Given A custom view is created") {
 			FrontendDataSetCustomView.createNewView(entryName = "New View");
 		}

@@ -232,7 +232,7 @@ definition {
 	@priority = 5
 	test CannotPublishWhenJSFieldIsEmpty {
 		property portal.acceptance = "true";
-		
+
 		task ("And types “Change Date Format” on Name field") {
 			Type(
 				key_text = "Name",

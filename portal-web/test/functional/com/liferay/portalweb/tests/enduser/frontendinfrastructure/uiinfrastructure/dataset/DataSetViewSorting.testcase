@@ -382,7 +382,7 @@ definition {
 	@priority = 5
 	test CanSaveEditSorting {
 		property portal.acceptance = "true";
-		
+
 		task ("When the user creates a new sorting") {
 			DataSetAdmin.createASort(
 				key_field = "creator",

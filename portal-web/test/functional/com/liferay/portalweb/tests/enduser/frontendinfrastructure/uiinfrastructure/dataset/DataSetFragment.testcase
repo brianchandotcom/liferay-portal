@@ -436,6 +436,7 @@ definition {
 	@priority = 5
 	test CanUseStructuredContentSchema {
 		property portal.acceptance = "true";
+
 		var portalURL = PropsUtil.get("portal.url");
 
 		task ("Given a datasets entries") {
@@ -1044,7 +1045,7 @@ definition {
 	@priority = 5
 	test ViewInfoFields {
 		property portal.acceptance = "true";
-		
+
 		task ("When viewing the configuration menu of the portlet") {
 			PageEditor.addFragment(
 				collectionName = "Content Display",

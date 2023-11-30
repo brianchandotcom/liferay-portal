@@ -188,3 +188,4 @@ export {
 	IInternalRenderer,
 } from './FrontendDataSetContext';
 export {INTERNAL_CELL_RENDERERS as FDS_INTERNAL_CELL_RENDERERS} from './cell_renderers/InternalCellRenderer';
+export {NESTING_DELIMITER, NESTING_ROOT} from './Constants';

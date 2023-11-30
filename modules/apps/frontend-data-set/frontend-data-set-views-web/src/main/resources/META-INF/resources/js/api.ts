@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {NESTING_DELIMITER,NESTING_ROOT} from '@liferay/frontend-data-set-web';
 import {fetch} from 'frontend-js-web';
 
 import {OBJECT_RELATIONSHIP} from './Constants';
@@ -65,12 +66,12 @@ function getValidFields({
 			if (Liferay.FeatureFlags['LPS-186871']) {
 				fields.push({
 					children: getValidFields({
-						contextPath: `${contextPath}${propertyKey}.`,
+						contextPath: `${contextPath}${propertyKey}${NESTING_DELIMITER}`,
 						schemaName: propertyValue.$ref.replace(/^.*\//, ''),
 						schemas,
 					}),
 					label: propertyKey,
-					name: `${contextPath}${propertyKey}`,
+					name: `${contextPath}${propertyKey}${NESTING_ROOT}`,
 					type,
 				});
 			}

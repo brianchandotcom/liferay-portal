@@ -1502,4 +1502,152 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-13000. As an admin verify that is possible to import the roles from a JSON file"
+	@priority = 5
+	test CanImportRolesViaAPI {
+		property portal.acceptance = "true";
+
+		task ("Given the admin already has the JSON file with the role") {
+			var projectDir = PropsUtil.get("project.dir");
+			var fileDir = "modules/apps/commerce/commerce-product-test/src/testFunctional/tests/dependencies";
+
+			var contentJSON = FileUtil.read("${projectDir}/${fileDir}/commerce_test_role.txt");
+		}
+
+		task ("And the admin calls the API for the import") {
+			CommerceJSONAccountsAPI._postImportRoles(contentJSON = ${contentJSON});
+		}
+
+		task ("Then the role is imported") {
+			Role.openRolesAdmin();
+
+			RoleNavigator.gotoRoleType();
+
+			LexiconEntry.gotoEntry(rowEntry = "New Regular Test Role");
+
+			Navigator.gotoNavItem(navItem = "Define Permissions");
+
+			for (var permissionDefinitionValueList : list "Add Account Entry,Add Account Group,Add General Announcements,Add License") {
+				Role.viewPermissionCP(
+					permissionDefinitionValue = "${permissionDefinitionValueList}",
+					permissionNavigationValue = "Portal");
+			}
+		}
+
+		task ("But if the admin removes one permission from the role") {
+			Permissions.removePermissionViaAPI(
+				resourceAction = "ADD_LICENSE",
+				resourceName = "90",
+				roleTitle = "New Regular Test Role");
+
+			Navigator.gotoNavItem(navItem = "Details");
+
+			Navigator.gotoNavItem(navItem = "Define Permissions");
+
+			for (var permissionDefinitionValueList : list "Add Account Entry,Add Account Group,Add General Announcements") {
+				Role.viewPermissionCP(
+					permissionDefinitionValue = "${permissionDefinitionValueList}",
+					permissionNavigationValue = "Portal");
+			}
+
+			Role.viewNoPermissionCP(
+				permissionDefinitionValue = "Add License",
+				permissionNavigationValue = "Portal");
+		}
+
+		task ("And import the same role again") {
+			CommerceJSONAccountsAPI._postImportRoles(contentJSON = ${contentJSON});
+		}
+
+		task ("Then the old role is updated with the missing permission") {
+			Role.openRolesAdmin();
+
+			RoleNavigator.gotoRoleType();
+
+			task ("And there are not present other roles with the same name") {
+				AssertElementPresent(
+					key_rowEntry = "New Regular Test Role",
+					key_index = "1",
+					locator1 = "CommerceEntry#ENTRY_CONTENT_ENTRY_NAME_INDEX");
+
+				AssertElementNotPresent(
+					key_rowEntry = "New Regular Test Role",
+					key_index = "2",
+					locator1 = "CommerceEntry#ENTRY_CONTENT_ENTRY_NAME_INDEX");
+			}
+
+			LexiconEntry.gotoEntry(rowEntry = "New Regular Test Role");
+
+			Navigator.gotoNavItem(navItem = "Define Permissions");
+
+			for (var permissionDefinitionValueList : list "Add Account Entry,Add Account Group,Add General Announcements,Add License") {
+				Role.viewPermissionCP(
+					permissionDefinitionValue = "${permissionDefinitionValueList}",
+					permissionNavigationValue = "Portal");
+			}
+		}		
+	}
+
+	@description = "COMMERCE-13001. As an admin verify that is possible to export the roles"
+	@priority = 5
+	test CanExportRolesViaAPI {
+		property portal.acceptance = "true";
+
+		task ("Given an the admin uses the POST to create an export task for the roles") {
+			var portalURL = PropsUtil.get("portal.url");
+
+			var exportTaskId = CommerceJSONAccountsAPI._getExportTaskId(
+				className = "com.liferay.headless.admin.user.dto.v1_0.Role",
+				contentType = "JSON");
+
+			echo("The exportTaskId is: ${exportTaskId}");
+		}
+
+		task ("When the admin nagivates to the /o/api") {
+			APIExplorer.navigateToOpenAPI(
+				portalURL = "${portalURL}",
+				api = "headless-batch-engine",
+				version = "v1.0");
+		}
+
+		task ("And admin uses the GET with an ID to retrive the export file") {
+			Click(
+				locator1 = "OpenAPI#API_METHOD",
+				service = "ExportTask",
+				method = "getExportTaskContent");
+
+			Type(
+				locator1 = "OpenAPI#HEADER_PARAMETER",
+				name = "",
+				value1 = ${exportTaskId});
+
+			Click(
+				key_text = "Execute",
+				locator1 = "Button#ANY_ENABLED"); 
+
+			var attachment = selenium.getText("//div[contains(@id,'getExportTaskContent')]//td[contains(.,'Response body')]//span[3]");
+			
+			echo("The attachment is: ${attachment}");
+
+			var filename = StringUtil.extractLast(${attachment}, "=");
+
+			echo("The file name is: ${filename}");
+
+			Click(
+				key_entry = "Download file",
+				locator1 = "CommerceNavigation#ANY_ENTRY_NAME");
+		}
+
+		task ("Then the file is downloaded") {
+			var fileStatus = CommerceUtilities.assertDownloadedFile(downloadedFileName = "${filename}");
+
+			if (${fileStatus} == "true") {
+				echo("The file ${filename} is present");	
+			}
+			else  {
+				fail("The file is not present");
+			}
+		}	
+	}
+
 }

@@ -1,6 +1,6 @@
 definition {
 
-	@summary = "Default summary"
+	@summary = "Add a Item or Creation Action in Data Set"
 	macro addActions(messageType = null, icon = null, headlessAction = null, type = null,method = null, url = null, actionName = null,key_actionNameList = null, confirmationMessage = null, actionTab = null, successMessage = null, errorMessage = null, title = null, variant = null) {
 		var key_actionNameList = ${actionName};
 
@@ -557,7 +557,7 @@ definition {
 		Click(locator1 = "DataSet#MODAL_SAVE_BUTTON");
 	}
 
-	@summary = "Default summary"
+	@summary = "Delete a Item or Creation Action in Data Set"
 	macro deleteActionEntry(actionName = null, actionTab = null) {
 		if (isSet(actionTab)) {
 			Button.click(button = ${actionTab});
@@ -685,7 +685,7 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	@summary = "Default summary"
+	@summary = "Edit a Item or Creation Action in Data Set"
 	macro editActions(newMessageType = null, newIcon = null, newHeadlessAction = null, newType = null,newMethod = null, newURL = null, newActionName = null,oldActionName = null, newConfirmationMessage = null, actionTab = null, newSuccessMessage = null, newErrorMessage = null) {
 		if (isSet(actionTab)) {
 			Button.click(button = ${actionTab});

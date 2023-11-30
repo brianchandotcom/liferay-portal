@@ -3,9 +3,7 @@
 		"callbackURL": null,
 		"className": "com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
 		"multiCompany": true,
-		"parameters": {
-			"fileName": "/batch9/data.batch-engine-data.json"
-		},
+		"parameters": null,
 		"userId": 0,
 		"version": "v1.0"
 	},

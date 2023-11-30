@@ -1,8 +1,6 @@
 {
 	"callbackURL": null,
 	"className": "com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
-	"parameters": {
-		"fileName": "/batch2/batch-engine.json"
-	},
+	"parameters": null,
 	"version": "v1.0"
 }

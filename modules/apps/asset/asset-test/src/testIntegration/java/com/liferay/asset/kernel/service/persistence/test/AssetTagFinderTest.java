@@ -86,50 +86,14 @@ public class AssetTagFinderTest {
 
 	@Test
 	public void testCountByG_C_N_WithClassNameId() throws Exception {
-		long classNameId = PortalUtil.getClassNameId(MBMessage.class);
-		String assetTagName = RandomTestUtil.randomString();
-
-		int initialScopeGroupAssetTagsCount = _assetTagFinder.countByG_C_N(
-			_scopeGroup.getGroupId(), classNameId, assetTagName);
-		int initialSiteGroupAssetTagsCount = _assetTagFinder.countByG_C_N(
-			_scopeGroup.getParentGroupId(), classNameId, assetTagName);
-
-		addMBMessage(_scopeGroup.getGroupId(), assetTagName);
-
-		int scopeGroupAssetTagsCount = _assetTagFinder.countByG_C_N(
-			_scopeGroup.getGroupId(), classNameId, assetTagName);
-
-		Assert.assertEquals(
-			initialScopeGroupAssetTagsCount + 1, scopeGroupAssetTagsCount);
-
-		int siteGroupAssetTagsCount = _assetTagFinder.countByG_C_N(
-			_scopeGroup.getParentGroupId(), classNameId, assetTagName);
-
-		Assert.assertEquals(
-			initialSiteGroupAssetTagsCount, siteGroupAssetTagsCount);
+		_testCountByG_C_N(
+			RandomTestUtil.randomString(),
+			PortalUtil.getClassNameId(MBMessage.class));
 	}
 
 	@Test
 	public void testCountByG_C_N_WithoutClassNameId() throws Exception {
-		String assetTagName = RandomTestUtil.randomString();
-
-		int initialScopeGroupAssetTagsCount = _assetTagFinder.countByG_C_N(
-			_scopeGroup.getGroupId(), 0, assetTagName);
-		int initialTagsCountSiteGroup = _assetTagFinder.countByG_C_N(
-			_scopeGroup.getParentGroupId(), 0, assetTagName);
-
-		addMBMessage(_scopeGroup.getGroupId(), assetTagName);
-
-		int scopeGroupAssetTagsCount = _assetTagFinder.countByG_C_N(
-			_scopeGroup.getGroupId(), 0, assetTagName);
-
-		Assert.assertEquals(
-			initialScopeGroupAssetTagsCount + 1, scopeGroupAssetTagsCount);
-
-		int siteGroupAssetTagsCount = _assetTagFinder.countByG_C_N(
-			_scopeGroup.getParentGroupId(), 0, assetTagName);
-
-		Assert.assertEquals(initialTagsCountSiteGroup, siteGroupAssetTagsCount);
+		_testCountByG_C_N(RandomTestUtil.randomString(), 0);
 	}
 
 	@Test
@@ -176,6 +140,29 @@ public class AssetTagFinderTest {
 			groupId, MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), true,
 			serviceContext);
+	}
+
+	private void _testCountByG_C_N(String assetTagName, long classNameId)
+		throws Exception {
+
+		int initialScopeGroupAssetTagsCount = _assetTagFinder.countByG_C_N(
+			_scopeGroup.getGroupId(), classNameId, assetTagName);
+		int initialSiteGroupAssetTagsCount = _assetTagFinder.countByG_C_N(
+			_scopeGroup.getParentGroupId(), classNameId, assetTagName);
+
+		addMBMessage(_scopeGroup.getGroupId(), assetTagName);
+
+		int scopeGroupAssetTagsCount = _assetTagFinder.countByG_C_N(
+			_scopeGroup.getGroupId(), classNameId, assetTagName);
+
+		Assert.assertEquals(
+			initialScopeGroupAssetTagsCount + 1, scopeGroupAssetTagsCount);
+
+		int siteGroupAssetTagsCount = _assetTagFinder.countByG_C_N(
+			_scopeGroup.getParentGroupId(), classNameId, assetTagName);
+
+		Assert.assertEquals(
+			initialSiteGroupAssetTagsCount, siteGroupAssetTagsCount);
 	}
 
 	@Inject

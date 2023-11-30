@@ -91,13 +91,15 @@ public class FacetDiscounterTest {
 	public void testZeroedTermIsRemoved() {
 		SimpleFacet facet = new SimpleFacet(null);
 
-		_populate(facet, _toTerm("public", 1000), _toTerm("secret", 1));
+		_populate(
+			facet, _toTerm("public", 1000), _toTerm("none", 0),
+			_toTerm("secret", 1));
 
 		FacetDiscounter facetDiscounter = new FacetDiscounter(facet);
 
 		_discount(facetDiscounter, "secret");
 
-		_assertFrequencies(facet, "[public=1000]");
+		_assertFrequencies(facet, "[public=1000, none=0, secret=-1]");
 	}
 
 	private void _assertFrequencies(Facet facet, String expected) {

@@ -129,6 +129,10 @@ export function getLocalizedValue(
 		navigatedValue = navigatedValue[resolvedFieldname];
 	}
 
+	if (fieldName !== resolvedFieldname) {
+		valuePath.unshift(rootPropertyName);
+	}
+
 	return {
 		rootPropertyName,
 		value: navigatedValue,

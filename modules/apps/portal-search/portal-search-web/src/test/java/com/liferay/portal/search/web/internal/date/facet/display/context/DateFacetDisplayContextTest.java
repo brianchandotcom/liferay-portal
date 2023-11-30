@@ -11,6 +11,7 @@ import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
@@ -27,6 +28,7 @@ import com.liferay.portal.search.web.internal.BaseFacetDisplayContextTestCase;
 import com.liferay.portal.search.web.internal.date.facet.configuration.DateFacetPortletInstanceConfiguration;
 import com.liferay.portal.search.web.internal.date.facet.display.context.builder.DateFacetDisplayContextBuilder;
 import com.liferay.portal.search.web.internal.facet.display.context.BucketDisplayContext;
+import com.liferay.portal.search.web.internal.util.DateRangeFactoryUtil;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -70,6 +72,12 @@ public class DateFacetDisplayContextTest
 		).when(
 			_facet
 		).getFacetConfiguration();
+
+		Mockito.doReturn(
+			new SearchContext()
+		).when(
+			_facet
+		).getSearchContext();
 	}
 
 	@Test
@@ -106,7 +114,8 @@ public class DateFacetDisplayContextTest
 		String from = "2018-01-01";
 		String to = "2018-01-31";
 
-		TermCollector termCollector = _mockTermCollector("custom-range");
+		TermCollector termCollector = _mockTermCollector(
+			DateRangeFactoryUtil.getRangeString(from, to, TimeZoneUtil.GMT));
 
 		int frequency = RandomTestUtil.randomInt();
 
@@ -299,11 +308,14 @@ public class DateFacetDisplayContextTest
 		testOrderBy(
 			new int[] {1, 3, 3, 4},
 			new String[] {
-				"past-month", "past-hour", "past-week", "past-24-hours"
+				"past-24-hours", "past-month", "past-week", "past-hour"
 			},
 			new int[] {4, 3, 3, 1}, "count:asc",
 			new String[] {
-				"past-24-hours", "past-hour", "past-week", "past-month"
+				"[20180515225959 TO 20180515235959]",
+				"[20180508235959 TO 20180508235959]",
+				"[20180508235959 TO 20180415235959]",
+				"[20180508235959 TO 20180514235959]"
 			});
 	}
 
@@ -311,13 +323,16 @@ public class DateFacetDisplayContextTest
 	@Test
 	public void testOrderByTermFrequencyDescending() throws Exception {
 		testOrderBy(
-			new int[] {4, 3, 3, 1},
+			new int[] {3, 3, 2, 1},
 			new String[] {
-				"past-24-hours", "past-hour", "past-week", "past-month"
+				"past-24-hours", "past-month", "past-week", "past-hour"
 			},
-			new int[] {4, 3, 3, 1}, "count:desc",
+			new int[] {1, 2, 3, 3}, "count:desc",
 			new String[] {
-				"past-24-hours", "past-hour", "past-week", "past-month"
+				"[20180515225959 TO 20180515235959]",
+				"[20180508235959 TO 20180508235959]",
+				"[20180508235959 TO 20180415235959]",
+				"[20180508235959 TO 20180514235959]"
 			});
 	}
 
@@ -384,6 +399,9 @@ public class DateFacetDisplayContextTest
 			"past-week=[20180508235959 TO 20180508235959]",
 			"past-month=[20180508235959 TO 20180415235959]",
 			"past-24-hours=[20180508235959 TO 20180514235959]");
+
+		dateFacetDisplayContextBuilder.setFromParameterValue("2018-01-01");
+		dateFacetDisplayContextBuilder.setToParameterValue("2018-01-31");
 
 		DateFacetDisplayContext dateFacetDisplayContext =
 			dateFacetDisplayContextBuilder.build();

@@ -35,36 +35,39 @@ type PublisherGateSummaryProps = {
 	submit: (form: PublisherForm) => Promise<void>;
 };
 
-enum IconAlignment {
-	CENTER = 'align-items-center',
-	START = 'align-items-start',
-	END = 'align-items-end',
-}
-
-const DisplayCardInfo = ({
+type DisplayCardInfoProps = {
+	className?: string;
+	icon: string;
+	iconAlign?: any;
+	info: any;
+	title: string;
+};
+const DisplayCardInfo: React.FC<DisplayCardInfoProps> = ({
 	className,
 	icon,
-	iconAlign = IconAlignment.CENTER,
 	info,
 	title,
-}: any) => {
-	return (
-		<div className={classNames('d-flex ', className, iconAlign)}>
-			<span className="align-items-center d-flex icon-container justify-content-center mr-4">
-				<ClayIcon
-					className="detailed-card-header-clay-icon"
-					symbol={icon}
-				/>
+}) => (
+	<div
+		className={classNames('d-flex ', className, {
+			'align-items-center': info?.length < 60,
+			'align-items-start': info?.length >= 60,
+		})}
+	>
+		<span className="align-items-center d-flex icon-container justify-content-center mr-4">
+			<ClayIcon
+				className="detailed-card-header-clay-icon"
+				symbol={icon}
+			/>
+		</span>
+		<div className="d-flex flex-column text-wrap">
+			<span className="font-weight-bold">{title}</span>
+			<span className="display-card-description text-secondary">
+				{info}
 			</span>
-			<div className="d-flex flex-column text-wrap">
-				<span className="font-weight-bold">{title}</span>
-				<span className="display-card-description text-secondary">
-					{info}
-				</span>
-			</div>
 		</div>
-	);
-};
+	</div>
+);
 
 const PublisherGateSummary: React.FC<PublisherGateSummaryProps> = ({
 	form,
@@ -116,7 +119,6 @@ const PublisherGateSummary: React.FC<PublisherGateSummaryProps> = ({
 						<span>
 							<DisplayCardInfo
 								icon="document"
-								iconAlign={IconAlignment.START}
 								info={userInfo.requestDescription}
 								title={i18n.translate('description')}
 							/>
@@ -159,6 +161,7 @@ const PublisherGateSummary: React.FC<PublisherGateSummaryProps> = ({
 						>
 							{i18n.translate('cancel')}
 						</ClayButton>
+
 						<div>
 							<ClayButton
 								className="mr-4"

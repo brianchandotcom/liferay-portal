@@ -43,7 +43,7 @@ export function PublisherGatePage() {
 					}}
 					label={i18n.translate('free')}
 					link={{
-						href: '',
+						href: '#',
 						label: i18n.translate('learn-more'),
 					}}
 					title={i18n.translate(
@@ -60,7 +60,7 @@ export function PublisherGatePage() {
 						svg: cash,
 					}}
 					link={{
-						href: '',
+						href: '#',
 						label: i18n.translate('learn-more'),
 					}}
 					title={i18n.translate('monetize-your-apps-and-solutions')}
@@ -81,9 +81,7 @@ export function PublisherGatePage() {
 
 					<ClayButton
 						className="publisher-gate-page-button"
-						onClick={() => {
-							navigate('/request-account');
-						}}
+						onClick={() => navigate('/request-account')}
 					>
 						{i18n.translate('request-account')}
 					</ClayButton>

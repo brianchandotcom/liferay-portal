@@ -207,14 +207,15 @@ public class SXPBlueprintSearchResultTest {
 
 	@Test
 	public void testBoostContentsForTheCurrentLanguage() throws Exception {
+		LocaleThreadLocal.setDefaultLocale(LocaleUtil.GERMANY);
 		_journalArticleBuilder.setTitle(
-			"cola cola en_US"
+			"cola cola de_DE"
 		).setContent(
 			"cola"
 		).build();
 
 		_journalArticleBuilder.setTitle(
-			"fanta cola en_US"
+			"fanta cola de_DE"
 		).build();
 
 		LocaleThreadLocal.setDefaultLocale(LocaleUtil.SPAIN);
@@ -240,13 +241,13 @@ public class SXPBlueprintSearchResultTest {
 		_keywords = "cola";
 
 		_assertSearch(
-			"[coca cola es_ES, pepsi cola es_ES, cola cola en_US, fanta cola " +
-				"en_US]");
+			"[coca cola es_ES, pepsi cola es_ES, cola cola de_DE, fanta cola " +
+				"de_DE]");
 
-		LocaleThreadLocal.setDefaultLocale(LocaleUtil.US);
+		LocaleThreadLocal.setDefaultLocale(LocaleUtil.GERMANY);
 
 		_assertSearch(
-			"[cola cola en_US, fanta cola en_US, coca cola es_ES, pepsi cola " +
+			"[cola cola de_DE, fanta cola de_DE, coca cola es_ES, pepsi cola " +
 				"es_ES]");
 	}
 

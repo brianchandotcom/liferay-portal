@@ -240,15 +240,16 @@ public class PayPalCommercePaymentIntegration
 
 			AuthorizationsCaptureRequest authorizationsCaptureRequest =
 				new AuthorizationsCaptureRequest(
-					commercePaymentEntry.getTransactionCode());
+					commercePaymentEntry.getTransactionCode()
+				).payPalRequestId(
+					String.valueOf(
+						commercePaymentEntry.getCommercePaymentEntryId())
+				);
 
 			authorizationsCaptureRequest.header(
 				PayPalCommercePaymentMethodConstants.
 					PAYPAL_PARTNER_ATTRIBUTION_ID,
 				"Liferay_SP_PPCP_API");
-			authorizationsCaptureRequest.payPalRequestId(
-				String.valueOf(
-					commercePaymentEntry.getCommercePaymentEntryId()));
 			authorizationsCaptureRequest.requestBody(new OrderRequest());
 
 			_debug(authorizationsCaptureRequest);
@@ -386,9 +387,8 @@ public class PayPalCommercePaymentIntegration
 			PayPalHttpClient payPalHttpClient = _getPayPalHttpClient(
 				commercePaymentEntry);
 
-			OrderRequest orderRequest = new OrderRequest();
-
-			orderRequest.applicationContext(
+			OrderRequest orderRequest = new OrderRequest(
+			).applicationContext(
 				new ApplicationContext(
 				).cancelUrl(
 					_getApplicationContextURL(
@@ -404,9 +404,10 @@ public class PayPalCommercePaymentIntegration
 						SHIPPING_PREFERENCE_PROVIDED
 				).userAction(
 					PayPalCommercePaymentMethodConstants.USER_ACTION_PAY_NOW
-				));
-			orderRequest.checkoutPaymentIntent(
-				PayPalCommercePaymentMethodConstants.INTENT_AUTHORIZE);
+				)
+			).checkoutPaymentIntent(
+				PayPalCommercePaymentMethodConstants.INTENT_AUTHORIZE
+			);
 
 			if (StringUtils.equals(
 					commercePaymentEntry.getClassName(),
@@ -530,15 +531,24 @@ public class PayPalCommercePaymentIntegration
 			CommercePaymentEntry commercePaymentEntry)
 		throws PortalException {
 
-		PurchaseUnitRequest purchaseUnitRequest = new PurchaseUnitRequest();
-
 		CommerceOrder commerceOrder =
 			_commerceOrderLocalService.getCommerceOrder(
 				commercePaymentEntry.getClassPK());
 
 		CommerceCurrency commerceCurrency = commerceOrder.getCommerceCurrency();
 
-		purchaseUnitRequest.amountWithBreakdown(
+		Locale locale = LocaleUtil.fromLanguageId(
+			commercePaymentEntry.getLanguageId());
+
+		PayPalGroupServiceConfiguration payPalGroupServiceConfiguration =
+			_getPayPalGroupServiceConfiguration(commerceOrder.getGroupId());
+
+		Payee payee = new Payee();
+
+		payee.merchantId(payPalGroupServiceConfiguration.merchantId());
+
+		return new PurchaseUnitRequest(
+		).amountWithBreakdown(
 			new AmountWithBreakdown(
 			).amountBreakdown(
 				new AmountBreakdown(
@@ -554,15 +564,10 @@ public class PayPalCommercePaymentIntegration
 				commerceCurrency.getCode()
 			).value(
 				_toScaledString(commerceCurrency, commerceOrder.getTotal())
-			));
-
-		purchaseUnitRequest.description(
-			"Payment: " + commercePaymentEntry.getCommercePaymentEntryId());
-
-		Locale locale = LocaleUtil.fromLanguageId(
-			commercePaymentEntry.getLanguageId());
-
-		purchaseUnitRequest.items(
+			)
+		).description(
+			"Payment: " + commercePaymentEntry.getCommercePaymentEntryId()
+		).items(
 			TransformUtil.transform(
 				commerceOrder.getCommerceOrderItems(),
 				commerceOrderItem -> {
@@ -583,23 +588,14 @@ public class PayPalCommercePaymentIntegration
 					).unitAmount(
 						_toMoney(commerceCurrency, unitAmount)
 					);
-				}));
-
-		PayPalGroupServiceConfiguration payPalGroupServiceConfiguration =
-			_getPayPalGroupServiceConfiguration(commerceOrder.getGroupId());
-
-		Payee payee = new Payee();
-
-		payee.merchantId(payPalGroupServiceConfiguration.merchantId());
-
-		purchaseUnitRequest.payee(payee);
-
-		purchaseUnitRequest.referenceId(
-			String.valueOf(commercePaymentEntry.getCommercePaymentEntryId()));
-		purchaseUnitRequest.shippingDetail(
-			_toShippingDetail(commerceOrder.getShippingAddress()));
-
-		return purchaseUnitRequest;
+				})
+		).payee(
+			payee
+		).referenceId(
+			String.valueOf(commercePaymentEntry.getCommercePaymentEntryId())
+		).shippingDetail(
+			_toShippingDetail(commerceOrder.getShippingAddress())
+		);
 	}
 
 	private PurchaseUnitRequest _getDefaultPurchaseUnitRequest(

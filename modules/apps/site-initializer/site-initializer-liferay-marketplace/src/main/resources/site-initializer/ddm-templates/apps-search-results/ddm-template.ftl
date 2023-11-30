@@ -94,7 +94,7 @@
 					</#if>
 
 					<#if product.urls?has_content>
-						<#assign productURL = portalURL?replace("home", "p") + "/" + product.urls.en_US />
+						<#assign productURL = portalURL?replace("home", "p") + "/" + product.urls.en_US + "?" + productId />
 					<#else>
 						<#assign productURL = "" />
 					</#if>

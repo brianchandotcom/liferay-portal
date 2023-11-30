@@ -1,0 +1,90 @@
+[#if themeDisplay?has_content]
+    [#assign scopeGroupId = themeDisplay.getScopeGroupId() /]
+[/#if]
+
+[#assign channelsResponse = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels?accountId=-1&filter=name eq 'Marketplace Channel' and siteGroupId eq '${scopeGroupId}'") /]
+
+[#if channelsResponse?has_content ]
+    [#assign channels = channelsResponse.items /]
+    [#if channels?has_content]
+        [#assign channelId = channels[0].id /]
+    [/#if]
+[/#if]
+
+[#if channelId?has_content]
+    
+    [#assign layoutURL = (themeDisplay.getPortalURL() + themeDisplay.getURLCurrent())!"" /]
+
+    [#assign 
+        productId = layoutURL?substring(layoutURL?index_of("?") + 1) 
+        product = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels/"+ channelId +"/products/"+ productId +"?accountId=-1&nestedFields=productSpecifications")
+        productSpecifications = product.productSpecifications![]
+    /]
+
+    [#assign skusResponse = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels/${channelId}/products/${productId}/skus?accountId=-1") /]
+
+    [#if skusResponse?has_content]
+        [#assign skus = skusResponse.items! /]
+    [/#if]
+
+    [#assign licenseTypeText = ""]
+    [#assign priceText = ""]
+    [#assign price = ""]
+
+	[#list productSpecifications as productSpecification]
+
+		[#if productSpecification.specificationKey == "license-type"]
+			[#if productSpecification.value == "Subscription"]
+				[#assign licenseTypeText = "Annually"]
+			[#elseif productSpecification.value == "Perpetual"]
+				[#assign licenseTypeText = "One-Time"]
+			[/#if]
+		[/#if]
+
+		[#if productSpecification.specificationKey == "price-model"]
+	
+			[#if productSpecification.value == "Free"]
+				[#list skus as skuItem]
+					[#if skuItem.purchasable == true]
+						[#assign priceText = "Free"]
+					
+					[/#if]					
+				[/#list]				
+			[#break]
+			[#elseif productSpecification.value == "Paid"]
+			    [#assign standardPrice = "" /]
+			    [#assign trailText = "" /]
+
+				[#list skus as skuItem]
+				    [#if skuItem.purchasable == true]
+						[#if skuItem.sku == "STANDARD"]
+							[#assign standardPrice = skuItem.price.price?string.currency /]
+						[/#if]
+					[/#if]
+				[/#list]
+
+				[#list skus as skuItem]
+				    [#if skuItem.purchasable == true]
+						[#if skuItem.sku == "TRIAL"]
+							[#assign trailText = "30-day trial or "]
+						[/#if]
+					[/#if]
+				[/#list]
+				
+				[#if standardPrice?has_content ]
+
+					[#assign priceText = "${trailText}${standardPrice}" /]
+				[/#if]
+			[/#if]
+		[/#if]
+	[/#list]
+
+	<div>
+		<p>
+			[#if priceText?has_content && licenseTypeText?has_content || priceText == "Free"]
+				${priceText} ${licenseTypeText}
+			[/#if]
+		</p>
+	</div>
+
+[/#if]

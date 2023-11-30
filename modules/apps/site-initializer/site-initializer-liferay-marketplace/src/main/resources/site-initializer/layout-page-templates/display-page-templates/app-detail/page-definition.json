@@ -244,35 +244,64 @@
 									},
 									{
 										"definition": {
-											"fragment": {
-												"key": "get-app-button",
-												"siteKey": "[$GROUP_KEY$]"
-											},
-											"fragmentConfig": {
-												"product-id": {
-													"href": ""
-												}
-											},
-											"fragmentFields": [
-												{
-													"id": "product-id",
-													"value": {
-														"fragmentLink": {
-														},
-														"text": {
-															"mapping": {
-																"fieldKey": "CPDefinition_cProductId",
-																"itemReference": {
-																	"contextSource": "DisplayPageItem"
+											"indexed": true,
+											"layout": {
+												"align": "End",
+												"contentDisplay": "FlexColumn"
+											}
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "get-app-button",
+														"siteKey": "[$GROUP_KEY$]"
+													},
+													"fragmentConfig": {
+														"product-id": {
+															"href": ""
+														}
+													},
+													"fragmentFields": [
+														{
+															"id": "product-id",
+															"value": {
+																"fragmentLink": {
+																},
+																"text": {
+																	"mapping": {
+																		"fieldKey": "CPDefinition_cProductId",
+																		"itemReference": {
+																			"contextSource": "DisplayPageItem"
+																		}
+																	}
 																}
 															}
 														}
-													}
-												}
-											],
-											"indexed": true
-										},
-										"type": "Fragment"
+													],
+													"indexed": true
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "product-type-price",
+														"siteKey": "[$GROUP_KEY$]"
+													},
+													"fragmentConfig": {
+													},
+													"fragmentFields": [
+													],
+													"fragmentStyle": {
+														"marginTop": "5"
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											}
+										],
+										"type": "Section"
 									}
 								],
 								"type": "Section"

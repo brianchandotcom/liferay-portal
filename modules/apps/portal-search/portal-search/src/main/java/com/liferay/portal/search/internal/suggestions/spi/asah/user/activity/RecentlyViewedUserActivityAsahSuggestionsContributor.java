@@ -50,7 +50,7 @@ public class RecentlyViewedUserActivityAsahSuggestionsContributor
 		return getSuggestionsContributorResults(
 			AsahSuggestionsConstants.INDIVIDUALS,
 			AsahSuggestionsConstants.RECENT_ASSETS, searchContext,
-			"lastVisitDate,visits,assetTitle,firstVisitDate,url,assetId",
+			"visits,lastVisitDate,firstVisitDate,url,assetTitle,assetId",
 			suggestionsContributorConfiguration);
 	}
 

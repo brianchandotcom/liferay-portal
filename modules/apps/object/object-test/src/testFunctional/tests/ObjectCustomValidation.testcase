@@ -13,12 +13,10 @@ definition {
 
 	tearDown {
 		ObjectAdmin.deleteAllCustomObjectsViaAPI();
-
 		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
 		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
-		}
+	}
 	}
 
 	@description = "LPS-144474 - Verify a valid object entry can be added when the validation is set to full validation"
@@ -1884,6 +1882,247 @@ definition {
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject153558");
 
 		ObjectPortlet.viewEntry(entry = "Update Entry");
+	}
+
+	@description = "LPS-186955 - Verify a composite key can be used to validate object entries"
+	@priority = 5
+	test CanUseCompositeKey {
+		property custom.properties = "feature.flag.LPS-173135=true";
+		property portal.acceptance = "true";
+
+		var iterator = 0;
+		var types = "Boolean,Date,Double,Integer,Long,BigDecimal,Clob,String";
+		var entries = "True,10/10/2010,5.1,8,Long,100,Clob,Text";
+		var typeList = ListUtil.newListFromString(${types});
+		var entriesList = ListUtil.newListFromString(${entries});
+
+		task ("Given an unpublished custom definition with every type of field") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 202722",
+				objectName = "CustomObject202722",
+				pluralLabelName = "Custom Objects 202722");
+
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Foo",
+				objectName = "Foo",
+				pluralLabelName = "Foos");
+
+			ObjectAdmin.addObjectRelationshipViaAPI(
+				objectName_1 = "Foo",
+				objectName_2 = "CustomObject202722",
+				relationshipLabel = "Relationship",
+				relationshipName = "relationship",
+				relationshipType = "oneToMany");
+
+			Picklist.addPicklistViaAPI(picklistName = "Picklist");
+
+			for (var items : list "1,2") {
+				Picklist.addPicklistItemViaAPI(
+					itemKey = "picklistItem${items}",
+					itemName = "Pick List Item${items}",
+					picklistName = "Picklist");
+			}
+
+			for (var businessType : list "Boolean,Date,Decimal,Integer,LongInteger,PrecisionDecimal,RichText,Text") {
+				var typeValue = ListUtil.get(${typeList}, ${iterator});
+
+				ObjectAdmin.addObjectFieldViaAPI(
+					fieldBusinessType = ${businessType},
+					fieldLabelName = "Custom Field${iterator}",
+					fieldName = "customField${iterator}",
+					fieldType = ${typeValue},
+					isRequired = "false",
+					objectName = "CustomObject202722");
+
+				var iterator = ${iterator} + 1;
+			}
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Picklist",
+				fieldLabelName = "Custom Field8",
+				fieldName = "customField8",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject202722",
+				picklistName = "Picklist");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "MultiselectPicklist",
+				fieldLabelName = "Custom Field9",
+				fieldName = "customfield9",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject202722",
+				picklistName = "Picklist");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "DateTime",
+				fieldLabelName = "Custom Field10",
+				fieldName = "dateTime",
+				fieldType = "DateTime",
+				isRequired = "false",
+				objectName = "CustomObject202722",
+				timeStorageOption = "convertToUTC");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "FooField",
+				fieldName = "fooField",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "Foo");
+		}
+
+		task ("and Given a validation with a composite key") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 202722");
+
+			ObjectAdmin.goToValidationsTab();
+
+			ObjectCustomValidation.addObjectValidation(
+				validationName = "Composite Key Validation",
+				validationType = "Composite Key");
+
+			ObjectCustomValidation.assertValidationPresent(
+				validationActive = "No",
+				validationName = "Composite Key Validation",
+				validationType = "Composite Key");
+		}
+
+		task ("When the user adds a field in the validation") {
+			ObjectCustomValidation.gotoCustomValidation(validationName = "Composite Key Validation");
+
+			ObjectCustomValidation.gotoTab(tabName = "Unique Composite Key");
+
+			Click(locator1 = "ObjectCustomValidation#ADD_COMPOSITE_KEY_FIELDS");
+		}
+
+		task ("Then only the integer, picklist, relationship, and text are listed") {
+			for (var nonListedFields : list "Custom Field0,Custom Field1,Custom Field2,Custom Field3,Custom Field4,Custom Field5,Custom Field6,Custom Field10") {
+				AssertElementNotPresent(
+					key_columnName = ${nonListedFields},
+					locator1 = "ObjectCustomValidation#COMPOSITE_KEY_FIELD");
+			}
+
+			Button.clickCancel();
+		}
+
+		task ("and Given the validation is configured and the object definition is published") {
+			ObjectCustomValidation.selectCompositeKeyField(fieldList = "Custom Field7, Custom Field8, Relationship");
+
+			PortletEntry.save();
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject202722");
+		}
+
+		task ("and Given an object entry") {
+			for (var values1 : list "1,2") {
+				ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+					fieldName = "FooField",
+					objectName = "Foo",
+					value = "FooEntry${values1}");
+			}
+
+			for (var values2 : list "1,2,3,4,5,6,7,8,9.10") {
+				var entryValue = ListUtil.get(${entriesList}, ${values2});
+
+				ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+					fieldName = "customObjectField${values2}",
+					objectName = "CustomObject202722",
+					value = ${entries});
+			}
+		}
+
+		task ("When the user attempts to add a duplicate object entry") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject202722");
+
+			LexiconEntry.gotoAdd();
+
+			ObjectPortlet.selectRelationshipFieldEntry(
+				entry = "",
+				newEntry = "FooEntry1");
+
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject202722");
+
+			LexiconEntry.gotoAdd();
+
+			WaitForPageLoad();
+
+			Click.clickAtNotVisible(locator1 = "ObjectAdmin#ENTRY_BOOLEAN_CHECKBOX");
+
+			ObjectPortlet.typeCustomField(
+				customField = "Custom Field3",
+				entry = "5.1");
+
+			ObjectPortlet.typeCustomField(
+				customField = "Custom Field4",
+				entry = 1234);
+
+			ObjectPortlet.typeCustomField(
+				customField = "Custom Field5",
+				entry = 1122334455);
+
+			ObjectPortlet.typeCustomField(
+				customField = "Custom Field6",
+				entry = "1.5");
+
+			FormViewBuilder.editClobText(fieldLong = "Text written on long text");
+
+			ObjectPortlet.typeCustomField(
+				customField = "Custom Field8",
+				entry = "Text Entry");
+
+			ObjectAutoGenerated.typeAndSelectTextOnRichText(text = "Text written on rich text");
+
+			Type(
+				locator1 = "ObjectPortlet#VIEW_EMPTY_LABEL_IN_DATE_ENTRY",
+				value1 = "01/01/2023");
+
+			ObjectAdmin.selectDropdownItem(
+				labelName = "Custom Field9",
+				optionName = "Pick List Item1");
+
+			ObjectAdmin.selectDropdownItem(
+				labelName = "Custom Field10",
+				optionName = "Pick List Item1");
+
+			ObjectPortlet.selectRelationshipFieldEntry(
+				entry = "",
+				newEntry = "FooEntry1");
+		}
+
+		task ("Then it's not possible submit the object entry and a error message is seen") {
+			PortletEntry.save();
+
+			Alert.viewErrorMessage(errorMessage = "The field values are already in use. Please choose unique values.");
+		}
+
+		task ("and When the user adds a unique object entry") {
+			ObjectPortlet.selectRelationshipFieldEntry(
+				entry = "",
+				newEntry = "FooEntry2");
+
+			ObjectAdmin.selectDropdownItem(
+				labelName = "Custom Field10",
+				optionName = "Pick List Item2");
+
+			ObjectPortlet.typeCustomField(
+				customField = "Custom Field8",
+				entry = "Unique Text Entry");
+
+			PortletEntry.save();
+		}
+
+		task ("Then the entry is submitted") {
+			Alert.viewSuccessMessage();
+
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject162140");
+
+			for (var asserts : list "FooEntry2,Pick List Item1,Unique Text Entry") {
+				ObjectPortlet.viewEntry(entry = ${asserts});
+			}
+		}
 	}
 
 	@description = "LPS-144474 - Verify that, when managing an Object validation, the user can see Basic Info tab"

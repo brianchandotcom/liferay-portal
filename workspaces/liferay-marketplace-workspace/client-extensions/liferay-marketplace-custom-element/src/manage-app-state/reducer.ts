@@ -89,6 +89,14 @@ export function appReducer(state: InitialStateProps, action: TAction) {
 
 			return {...state, catalogId};
 		}
+
+		case TYPES.UPDATE_BUILD_PACKAGE_FILES: {
+			return {
+				...state,
+				buildAppPackages: action.payload,
+			};
+		}
+
 		case TYPES.UPLOAD_BUILD_PACKAGE_FILES: {
 			const {files, isRemoved, versionName} = action.payload;
 
@@ -107,6 +115,7 @@ export function appReducer(state: InitialStateProps, action: TAction) {
 				},
 			};
 		}
+
 		case TYPES.UPDATE_APP_LXC_COMPATIBILITY: {
 			const {id, value} = action.payload;
 

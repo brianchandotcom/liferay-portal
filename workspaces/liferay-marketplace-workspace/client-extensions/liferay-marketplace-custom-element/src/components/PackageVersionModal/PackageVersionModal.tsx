@@ -20,80 +20,50 @@ interface PackageVersionModal {
 	appProductId: number;
 	currentVersions: string[];
 	handleClose: () => void;
-	handleConfirm: (versions: string[]) => void;
 }
 
 export function PackageVersionModal({
 	appProductId,
 	currentVersions,
 	handleClose,
-	handleConfirm,
 }: PackageVersionModal) {
 	const [, dispatch] = useAppContext();
 	const {observer, onClose} = useModal({
 		onClose: handleClose,
 	});
-	const [checkboxVersions, setCheckboxVersions] = useState<CheckboxVersion[]>(
-		[]
+
+	const [checkboxVersions, setCheckboxVersions] = useState<string[]>(
+		currentVersions
 	);
+
 	const [versionSelected, setVersionSelected] = useState('');
-	const [versionList, setVersionList] = useState<any>([]);
+	const [versions, setVersions] = useState<string[]>([]);
 
-	function getSelectedVersions() {
-		return checkboxVersions
-			.filter((versionCheck) => versionCheck.isChecked)
-			.map((versionCheck) => versionCheck.versionName);
-	}
-
-	const handleVersionSelection = (selectedVersionName: string) => {
-		const versionsChecked = checkboxVersions.map((version) => {
-			if (selectedVersionName === version.versionName) {
-				version.isChecked = !version.isChecked;
-			}
-
-			return version;
-		});
-
+	const handleConfirmation = (selectedVersion: string) => {
 		dispatch({
 			payload: {
-				versionName: selectedVersionName,
+				versionName: selectedVersion,
 			},
 			type: TYPES.UPLOAD_BUILD_PACKAGE_FILES,
 		});
-
-		setCheckboxVersions(versionsChecked);
-	};
-
-	const getProductVersionList = async () => {
-		const product = await getProductById({
-			productId: appProductId,
-		});
-
-		const versionList = getCustomFieldValue(
-			product.customFields ?? [],
-			'Liferay Version'
-		);
-
-		setVersionList(versionList);
 	};
 
 	useEffect(() => {
-		getProductVersionList();
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+		const getProductVersions = async () => {
+			const product = await getProductById({
+				productId: appProductId,
+			});
 
-	useEffect(() => {
-		const mapVersions = versionList.map((version: string) => {
-			let isChecked = false;
-			if (currentVersions.includes(version)) {
-				isChecked = true;
-			}
+			setVersions(
+				getCustomFieldValue(
+					product.customFields ?? [],
+					'Liferay Version'
+				) as any
+			);
+		};
 
-			return {isChecked, versionName: version};
-		});
-
-		setCheckboxVersions(mapVersions);
-	}, [currentVersions, versionList]);
+		getProductVersions();
+	}, [appProductId]);
 
 	return (
 		<ClayModal
@@ -140,21 +110,38 @@ export function PackageVersionModal({
 
 				<ClayForm className="modal-form">
 					<ClayForm.Group>
-						{versionList
+						{versions
 							.filter((version: string) =>
 								version
 									.toLowerCase()
 									.match(versionSelected.toLowerCase())
 							)
-							.map((version: string, index: number) => (
+							.map((version, index) => (
 								<ClayCheckbox
-									checked={checkboxVersions[index]?.isChecked}
+									checked={checkboxVersions.includes(version)}
 									key={index}
 									label={version}
 									name={`version-${index}`}
 									onChange={(event) =>
-										handleVersionSelection(
-											event.target.value
+										setCheckboxVersions(
+											(prevCheckboxVersion) => {
+												if (
+													prevCheckboxVersion.includes(
+														version
+													)
+												) {
+													return prevCheckboxVersion.filter(
+														(prevVersion) =>
+															prevVersion !==
+															version
+													);
+												}
+
+												return [
+													...prevCheckboxVersion,
+													event.target.value,
+												];
+											}
 										)
 									}
 									value={version}
@@ -176,7 +163,9 @@ export function PackageVersionModal({
 
 						<ClayButton
 							onClick={() => {
-								handleConfirm(getSelectedVersions());
+								checkboxVersions.forEach((version) =>
+									handleConfirmation(version)
+								);
 								onClose();
 							}}
 						>

@@ -1,0 +1,75 @@
+[
+    {
+        "actions": {
+            "create-organization-role-user-account-association": {
+                "href": "/headless-batch-engine/v1.0/roles/32785/association/user-account/{userAccountId}/organization/{organizationId}",
+                "method": "POST"
+            },
+            "create-role-user-account-association": {
+                "href": "/headless-batch-engine/v1.0/roles/32785/association/user-account/{userAccountId}",
+                "method": "POST"
+            },
+            "create-site-role-user-account-association": {
+                "href": "/headless-batch-engine/v1.0/roles/32785/association/user-account/{userAccountId}/site/{siteId}",
+                "method": "POST"
+            },
+            "delete-organization-role-user-account-association": {
+                "href": "/headless-batch-engine/v1.0/roles/32785/association/user-account/{userAccountId}/organization/{organizationId}",
+                "method": "DELETE"
+            },
+            "delete-role-user-account-association": {
+                "href": "/headless-batch-engine/v1.0/roles/32785/association/user-account/{userAccountId}",
+                "method": "DELETE"
+            },
+            "delete-site-role-user-account-association": {
+                "href": "/headless-batch-engine/v1.0/roles/32785/association/user-account/{userAccountId}/site/{siteId}",
+                "method": "DELETE"
+            },
+            "get": {
+                "href": "/headless-batch-engine/v1.0/roles/32785",
+                "method": "GET"
+            }
+        },
+        "availableLanguages": [
+            "en-US"
+        ],
+        "creator": {
+            "additionalName": "",
+            "contentType": "UserAccount",
+            "familyName": "Test",
+            "givenName": "Test",
+            "id": 20122,
+            "name": "Test Test",
+            "profileURL": "/web/test"
+        },
+        "dateCreated": "2023-11-30T16:14:53Z",
+        "dateModified": "2023-11-30T16:14:53Z",
+        "description": "New Regular Test Role Description",
+        "description_i18n": {
+            "en-US": "New Regular Test Role Description"
+        },
+        "externalReferenceCode": "New Regular Test Role",
+        "id": 32785,
+        "name": "New Regular Test Role",
+        "name_i18n": {
+            "en-US": "New Regular Test Role"
+        },
+        "rolePermissions": [
+            {
+                "actionIds": [
+                    "ADD_GENERAL_ANNOUNCEMENTS",
+                    "ADD_ACCOUNT_GROUP",
+                    "ADD_ACCOUNT_ENTRY",
+                    "ADD_LICENSE"
+                ],
+                "id": 32785,
+                "label": "90",
+                "primaryKey": "8390671985990941953",
+                "resourceName": "90",
+                "roleId": 32785,
+                "scope": 1
+            }
+        ],
+        "roleType": "regular"
+    }
+]

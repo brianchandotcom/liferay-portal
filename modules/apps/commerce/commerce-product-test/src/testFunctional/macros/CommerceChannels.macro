@@ -133,8 +133,8 @@ definition {
 			locator1 = "IFrame#MODAL_ANY");
 
 		Click(
-			key_siteName = ${displayPageTemplateName},
-			locator1 = "CommerceNavigation#CHOOSE_SITE_BUTTON");
+			key_entryName = ${displayPageTemplateName},
+			locator1 = "ObjectAdmin#VIEW_ENTRY_NAME_ON_PAGE");
 
 		SelectFrame.selectFrameTop();
 

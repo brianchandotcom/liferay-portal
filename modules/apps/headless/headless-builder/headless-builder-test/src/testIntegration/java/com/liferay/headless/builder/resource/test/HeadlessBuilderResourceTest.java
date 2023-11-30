@@ -1122,9 +1122,10 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			10, true, ObjectDefinitionConstants.SCOPE_COMPANY);
 
 		_addAPIApplicationWithGetAndPostEndpoint(
-			_API_APPLICATION_ERC_1, _API_ENDPOINT_ERC_1, _API_ENDPOINT_ERC_2,
-			_BASE_URL_1, 10, objectDefinition.getExternalReferenceCode(),
-			"/testget", "/testpost", APIApplication.Endpoint.Scope.COMPANY);
+			_API_APPLICATION_ERC_1, _BASE_URL_1, _API_ENDPOINT_ERC_1, 10,
+			objectDefinition.getExternalReferenceCode(), "/testget",
+			"/testpost", _API_ENDPOINT_ERC_2,
+			APIApplication.Endpoint.Scope.COMPANY);
 
 		_publishAPIApplication(_API_APPLICATION_ERC_1);
 
@@ -2225,11 +2226,10 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 	}
 
 	private void _addAPIApplicationWithGetAndPostEndpoint(
-			String apiApplicationExternalReferenceCode,
-			String getAPIEndpointExternalReferenceCode,
-			String postAPIEndpointExternalReferenceCode, String baseURL,
-			int index, String objectDefinitionExternalReferenceCode,
-			String pathGet, String pathPost,
+			String apiApplicationExternalReferenceCode, String baseURL,
+			String getAPIEndpointExternalReferenceCode, int index,
+			String objectDefinitionExternalReferenceCode, String pathGet,
+			String pathPost, String postAPIEndpointExternalReferenceCode,
 			APIApplication.Endpoint.Scope scope)
 		throws Exception {
 

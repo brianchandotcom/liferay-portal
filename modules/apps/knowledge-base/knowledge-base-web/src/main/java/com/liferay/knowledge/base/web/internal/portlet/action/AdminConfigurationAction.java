@@ -6,6 +6,7 @@
 package com.liferay.knowledge.base.web.internal.portlet.action;
 
 import com.liferay.knowledge.base.constants.KBPortletKeys;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.portlet.BaseJSPSettingsConfigurationAction;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -33,6 +34,10 @@ public class AdminConfigurationAction
 
 	@Override
 	public String getJspPath(HttpServletRequest httpServletRequest) {
+		if (FeatureFlagManagerUtil.isEnabled("LPS-197692")) {
+			return "/admin/configuration_browse.jsp";
+		}
+
 		return "/admin/configuration.jsp";
 	}
 

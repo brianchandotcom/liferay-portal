@@ -9,12 +9,12 @@ import ClayPanel from '@clayui/panel';
 import {useState} from 'react';
 import {useParams} from 'react-router-dom';
 
-import BuildRuns from '../../components/BuildRuns/BuildRuns';
 import Jethr0Breadcrumbs from '../../components/Jethr0Breadcrumbs/Jethr0Breadcrumbs';
 import Jethr0Card from '../../components/Jethr0Card/Jethr0Card';
 import Jethr0NavigationBar from '../../components/Jethr0NavigationBar/Jethr0NavigationBar';
 import Jethr0Table from '../../components/Jethr0Table/Jethr0Table';
 import {toLocaleString} from '../../services/DateUtil';
+import {toDurationString} from '../../services/DurationUtil';
 import useSpringBootData from '../../services/useSpringBootData';
 
 function BuildInformation({build}) {
@@ -87,6 +87,88 @@ function BuildInformation({build}) {
 				</ClayPanel>
 			)}
 		</>
+	);
+}
+
+function BuildRuns({buildId}) {
+	const [buildRuns, setBuildRuns] = useState(null);
+
+	useSpringBootData({
+		setData: setBuildRuns,
+		urlPath: '/builds/runs/' + buildId,
+	});
+
+	if (!buildRuns) {
+		return <div>Loading...</div>;
+	}
+
+	return (
+		<ClayPanel
+			collapsable
+			defaultExpanded
+			displayTitle="Build Runs"
+			displayType="secondary"
+			showCollapseIcon={true}
+		>
+			<ClayPanel.Body>
+				<Jethr0Table>
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>Create Date</th>
+							<th>State</th>
+							<th>Result</th>
+							<th>Duration</th>
+							<th>Jenkins Build</th>
+						</tr>
+					</thead>
+					<tbody>
+						{buildRuns &&
+							buildRuns.map((buildRun) => {
+								return (
+									<tr key={buildRun.id}>
+										<th
+											className="font-weight-semi-bold"
+											title={buildRun.id}
+										>
+											{buildRun.id}
+										</th>
+										<td>
+											{toLocaleString(
+												buildRun.dateCreated
+											)}
+										</td>
+										<td>{buildRun.state.name}</td>
+										<td>
+											{buildRun.result
+												? buildRun.result.name
+												: '-'}
+										</td>
+										<td>
+											{toDurationString(
+												buildRun.duration
+											)}
+										</td>
+										<td>
+											{buildRun.jenkinsBuildURL ? (
+												<a
+													href={
+														buildRun.jenkinsBuildURL
+													}
+												>
+													Jenkins Build
+												</a>
+											) : (
+												<div>-</div>
+											)}
+										</td>
+									</tr>
+								);
+							})}
+					</tbody>
+				</Jethr0Table>
+			</ClayPanel.Body>
+		</ClayPanel>
 	);
 }
 

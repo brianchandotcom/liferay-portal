@@ -515,15 +515,10 @@ public class ContentLayoutTestUtil {
 			ReflectionTestUtil.invoke(
 				publishLayoutMVCActionCommand, "_publishLayout",
 				new Class<?>[] {
-					ActionRequest.class, ActionResponse.class, Layout.class,
-					Layout.class, ServiceContext.class, long.class
+					Layout.class, Layout.class, ServiceContext.class, long.class
 				},
-				getMockLiferayPortletActionRequest(
-					CompanyLocalServiceUtil.getCompany(layout.getCompanyId()),
-					GroupLocalServiceUtil.getGroup(layout.getGroupId()),
-					layout),
-				new MockLiferayPortletActionResponse(), draftLayout, layout,
-				serviceContext, TestPropsValues.getUserId());
+				draftLayout, layout, serviceContext,
+				TestPropsValues.getUserId());
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();

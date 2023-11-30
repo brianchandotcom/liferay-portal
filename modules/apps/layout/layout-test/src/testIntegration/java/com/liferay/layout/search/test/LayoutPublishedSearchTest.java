@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.servlet.PortletServlet;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
-import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -46,9 +45,6 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
-
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -174,12 +170,10 @@ public class LayoutPublishedSearchTest {
 		ReflectionTestUtil.invoke(
 			_mvcActionCommand, "_publishLayout",
 			new Class<?>[] {
-				ActionRequest.class, ActionResponse.class, Layout.class,
-				Layout.class, ServiceContext.class, long.class
+				Layout.class, Layout.class, ServiceContext.class, long.class
 			},
-			mockLiferayPortletActionRequest,
-			new MockLiferayPortletActionResponse(), layout.fetchDraftLayout(),
-			layout, serviceContext, TestPropsValues.getUserId());
+			layout.fetchDraftLayout(), layout, serviceContext,
+			TestPropsValues.getUserId());
 	}
 
 	private void _setUpLayoutIndexerFixture() {

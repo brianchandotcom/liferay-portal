@@ -2358,7 +2358,7 @@ public class PortalImpl implements Portal {
 	public String getHost(HttpServletRequest httpServletRequest) {
 		httpServletRequest = getOriginalServletRequest(httpServletRequest);
 
-		String host = httpServletRequest.getHeader("Host");
+		String host = httpServletRequest.getServerName();
 
 		if (host != null) {
 			host = StringUtil.toLowerCase(host.trim());

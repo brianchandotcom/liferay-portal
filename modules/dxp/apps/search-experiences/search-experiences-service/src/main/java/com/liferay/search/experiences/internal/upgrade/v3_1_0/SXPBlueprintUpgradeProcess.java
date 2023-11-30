@@ -5,7 +5,6 @@
 
 package com.liferay.search.experiences.internal.upgrade.v3_1_0;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -115,39 +114,14 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 		return elementInstancesJSONArray.toString();
 	}
 
-	private String _getDefaultLocale(String xml) {
-		int start = xml.indexOf("default-locale=\"");
-
-		if (start != -1) {
-			start += "default-locale=\"".length();
-
-			int end = xml.indexOf("\"", start);
-
-			if (end != -1) {
-				return xml.substring(start, end);
-			}
-		}
-
-		return StringPool.BLANK;
-	}
-
 	private String _getDefaultValue(String fieldName, String xml) {
-		if (Validator.isBlank(xml)) {
-			return StringPool.BLANK;
-		}
+		if (!Validator.isBlank(xml)) {
+			int start = xml.indexOf(">", xml.indexOf("<" + fieldName));
 
-		String fallbackXML = StringBundler.concat(
-			"<", fieldName, " language-id=\"", _getDefaultLocale(xml), "\">");
+			int end = xml.indexOf("<", start);
 
-		int start = xml.indexOf(fallbackXML);
-
-		if (start != -1) {
-			start += fallbackXML.length();
-
-			int end = xml.indexOf("</" + fieldName + ">", start);
-
-			if (end != -1) {
-				return xml.substring(start, end);
+			if ((end != -1) && (start != -1)) {
+				return xml.substring(start + 1, end);
 			}
 		}
 

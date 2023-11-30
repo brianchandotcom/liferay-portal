@@ -73,8 +73,8 @@ function filterFields({
 	query,
 }: {
 	fields: Array<IFieldTreeItem>;
-	onFilter?: Function;
-	onMatch?: Function;
+	onFilter?: (field: IFieldTreeItem) => void;
+	onMatch?: (field: IFieldTreeItem) => void;
 	query: string;
 }) {
 	const filteredItems: Array<IFieldTreeItem> = [];
@@ -123,7 +123,7 @@ function applyFilter({
 	const filteredKeys: Array<React.Key> = [];
 	const filteredItems = filterFields({
 		fields,
-		onFilter: ({id}: IField) => {
+		onFilter: ({id}: IFieldTreeItem) => {
 			if (id) {
 				filteredKeys.push(id);
 			}
@@ -187,7 +187,9 @@ const AddFieldsModalContent = ({
 	const [selectedKeys, setSelectedKeys] = useState<Set<React.Key>>(
 		new Set<React.Key>()
 	);
-	const [fields, setFields] = useState<Array<IField> | null>(initialFields);
+	const [fields, setFields] = useState<Array<IFieldTreeItem> | null>(
+		initialFields
+	);
 	const [query, setQuery] = useState<string>('');
 	const [expandedKeys, setExpandedKeys] = useState<Array<React.Key>>([]);
 	const [searchCounter, setSearchCounter] = useState<number>(0);

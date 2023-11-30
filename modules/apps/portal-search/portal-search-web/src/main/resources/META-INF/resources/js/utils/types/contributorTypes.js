@@ -47,7 +47,7 @@ export const CONTRIBUTOR_TYPES_DEFAULT_ATTRIBUTES = {
 	[CONTRIBUTOR_TYPES.ASAH_RECENT_SEARCHES]: {
 		characterThreshold: '0',
 		matchDisplayLanguageId: true,
-		minCounts: '5',
+		minCounts: '0',
 		rangeKey: '0',
 	},
 	[CONTRIBUTOR_TYPES.ASAH_RECENT_PAGES]: {

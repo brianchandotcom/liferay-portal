@@ -8,7 +8,6 @@ package com.liferay.source.formatter.check;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.BNDSettings;
@@ -435,8 +434,10 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 				Arrays.asList("ls-files", "-z", "--full-name"),
 				file.getCanonicalPath(), new String[] {"**/*.java"},
 				line -> {
-					if (ArrayUtil.contains(_SKIP_DIR_NAMES, line)) {
-						return;
+					for (String skipDirName : _SKIP_DIR_NAMES) {
+						if (line.contains(skipDirName)) {
+							return;
+						}
 					}
 
 					fileNames.add(line);
@@ -566,13 +567,9 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 
 			_serviceProxyFactoryUtilClassNames = new ArrayList<>();
 
-			long start = System.currentTimeMillis();
-
 			List<String> utilFileNames = getFileNames(
 				getBaseDirName() + portalKernelLocation, new String[0],
 				new String[] {"**/*Util.java"});
-
-			System.out.println(System.currentTimeMillis() - start);
 
 			for (String fileName : utilFileNames) {
 				String content = FileUtil.read(new File(fileName));
@@ -598,8 +595,8 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 		"serviceReferenceUtilClassNames";
 
 	private static final String[] _SKIP_DIR_NAMES = {
-		".git", ".gradle", ".idea", ".m2", ".settings", "bin", "build",
-		"classes", "node_modules", "node_modules_cache"
+		"/.git/", "/.gradle/", "/.idea/", "/.m2/", "/.settings/", "/bin/",
+		"/build/", "/classes/", "/node_modules/", "/node_modules_cache/"
 	};
 
 	private static final Pattern _referenceMethodContentPattern =

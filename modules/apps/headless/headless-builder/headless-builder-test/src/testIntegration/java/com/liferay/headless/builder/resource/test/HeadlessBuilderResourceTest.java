@@ -1117,7 +1117,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 	}
 
 	@Test
-	public void testGetWithPostEndpointPresent() throws Exception {
+	public void testGetWithPostEndpoint() throws Exception {
 		ObjectDefinition objectDefinition = _addObjectDefinition(
 			10, true, ObjectDefinitionConstants.SCOPE_COMPANY);
 

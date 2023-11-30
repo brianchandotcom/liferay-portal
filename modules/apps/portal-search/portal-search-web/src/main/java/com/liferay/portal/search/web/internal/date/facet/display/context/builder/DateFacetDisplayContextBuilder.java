@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
@@ -27,6 +28,7 @@ import com.liferay.portal.search.web.internal.date.facet.configuration.DateFacet
 import com.liferay.portal.search.web.internal.date.facet.display.context.DateFacetCalendarDisplayContext;
 import com.liferay.portal.search.web.internal.date.facet.display.context.DateFacetDisplayContext;
 import com.liferay.portal.search.web.internal.facet.display.context.BucketDisplayContext;
+import com.liferay.portal.search.web.internal.util.DateRangeFactoryUtil;
 import com.liferay.portal.search.web.internal.util.comparator.BucketDisplayContextComparatorFactoryUtil;
 
 import java.io.Serializable;
@@ -181,7 +183,7 @@ public class DateFacetDisplayContextBuilder implements Serializable {
 		return 0;
 	}
 
-	protected TermCollector getTermCollector(String key) {
+	protected TermCollector getTermCollector(String range) {
 		if (_facet == null) {
 			return null;
 		}
@@ -192,7 +194,7 @@ public class DateFacetDisplayContextBuilder implements Serializable {
 			return null;
 		}
 
-		return facetCollector.getTermCollector(key);
+		return facetCollector.getTermCollector(range);
 	}
 
 	protected boolean isNothingSelected() {
@@ -217,13 +219,15 @@ public class DateFacetDisplayContextBuilder implements Serializable {
 		return isNothingSelected();
 	}
 
-	private BucketDisplayContext _buildBucketDisplayContext(String label) {
+	private BucketDisplayContext _buildBucketDisplayContext(
+		String label, String range) {
+
 		BucketDisplayContext bucketDisplayContext = new BucketDisplayContext();
 
 		bucketDisplayContext.setBucketText(label);
 		bucketDisplayContext.setFilterValue(_getLabeledRangeURL(label));
 		bucketDisplayContext.setFrequency(
-			getFrequency(getTermCollector(label)));
+			getFrequency(getTermCollector(range)));
 		bucketDisplayContext.setFrequencyVisible(_frequenciesVisible);
 		bucketDisplayContext.setSelected(_selectedRanges.contains(label));
 
@@ -244,15 +248,19 @@ public class DateFacetDisplayContextBuilder implements Serializable {
 
 			String label = jsonObject.getString("label");
 
-			if (label.equals("custom-range") ||
-				((_frequencyThreshold > 0) &&
-				 (_frequencyThreshold > getFrequency(
-					 getTermCollector(label))))) {
+			if (label.equals("custom-range")) {
+				continue;
+			}
+
+			String range = jsonObject.getString("range");
+
+			if ((_frequencyThreshold > 0) &&
+				(_frequencyThreshold > getFrequency(getTermCollector(range)))) {
 
 				continue;
 			}
 
-			bucketDisplayContexts.add(_buildBucketDisplayContext(label));
+			bucketDisplayContexts.add(_buildBucketDisplayContext(label, range));
 		}
 
 		if (!_order.equals("rangesConfiguration")) {
@@ -323,7 +331,11 @@ public class DateFacetDisplayContextBuilder implements Serializable {
 
 		FacetCollector facetCollector = _facet.getFacetCollector();
 
-		return facetCollector.getTermCollector("custom-range");
+		SearchContext searchContext = _facet.getSearchContext();
+
+		return facetCollector.getTermCollector(
+			DateRangeFactoryUtil.getRangeString(
+				_from, _to, searchContext.getTimeZone()));
 	}
 
 	private String _getCustomRangeURL() {

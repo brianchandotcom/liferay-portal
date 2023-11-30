@@ -5,7 +5,7 @@
 
 package com.liferay.client.extension.web.internal.upgrade.v3_0_1;
 
-import com.liferay.client.extension.web.internal.util.CETUtil;
+import com.liferay.client.extension.util.CETUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;

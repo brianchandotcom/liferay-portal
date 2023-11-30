@@ -87,6 +87,8 @@ public class SegmentsExperimentUtil {
 			String.valueOf(segmentsExperiment.getSegmentsExperimentId())
 		).put(
 			"status", toStatusJSONObject(locale, segmentsExperiment.getStatus())
+		).put(
+			"type", toTypeJSONObject(locale, segmentsExperiment.getType())
 		);
 	}
 
@@ -183,6 +185,25 @@ public class SegmentsExperimentUtil {
 				segmentsExperimentConstantsStatus.getLabel())
 		).put(
 			"value", segmentsExperimentConstantsStatus.getValue()
+		);
+	}
+
+	public static JSONObject toTypeJSONObject(Locale locale, String type) {
+		SegmentsExperimentConstants.Type segmentsExperimentConstantsType =
+			SegmentsExperimentConstants.Type.parse(type);
+
+		if (segmentsExperimentConstantsType == null) {
+			return null;
+		}
+
+		return JSONUtil.put(
+			"label",
+			LanguageUtil.get(
+				ResourceBundleUtil.getBundle(
+					"content.Language", locale, SegmentsExperimentUtil.class),
+				segmentsExperimentConstantsType.getLabel())
+		).put(
+			"value", segmentsExperimentConstantsType.name()
 		);
 	}
 

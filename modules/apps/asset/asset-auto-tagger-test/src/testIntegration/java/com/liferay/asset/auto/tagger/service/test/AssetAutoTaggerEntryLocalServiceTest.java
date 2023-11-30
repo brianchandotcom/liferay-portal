@@ -8,7 +8,9 @@ package com.liferay.asset.auto.tagger.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.auto.tagger.model.AssetAutoTaggerEntry;
 import com.liferay.asset.auto.tagger.service.AssetAutoTaggerEntryLocalService;
+import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetTag;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.test.util.AssetTestUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -72,8 +74,35 @@ public class AssetAutoTaggerEntryLocalServiceTest {
 			assetTag.getTagId(), assetAutoTaggerEntry.getAssetTagId());
 	}
 
+	@Test
+	public void testAddAssetAutoTaggerEntryWithoutExistingAssetTag()
+		throws PortalException {
+
+		AssetEntry assetEntry = AssetTestUtil.addAssetEntry(
+			_group.getGroupId());
+
+		assetEntry.setUserId(TestPropsValues.getUserId());
+
+		assetEntry = _assetEntryLocalService.updateAssetEntry(assetEntry);
+
+		AssetAutoTaggerEntry assetAutoTaggerEntry =
+			_assetAutoTaggerEntryLocalService.addAssetAutoTaggerEntry(
+				assetEntry, "Tag");
+
+		Assert.assertNotNull(assetAutoTaggerEntry);
+
+		AssetTag assetTag = _assetTagLocalService.fetchAssetTag(
+			assetAutoTaggerEntry.getAssetTagId());
+
+		Assert.assertNotNull(assetTag);
+		Assert.assertEquals("Tag", assetTag.getName());
+	}
+
 	@Inject
 	private AssetAutoTaggerEntryLocalService _assetAutoTaggerEntryLocalService;
+
+	@Inject
+	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Inject
 	private AssetTagLocalService _assetTagLocalService;

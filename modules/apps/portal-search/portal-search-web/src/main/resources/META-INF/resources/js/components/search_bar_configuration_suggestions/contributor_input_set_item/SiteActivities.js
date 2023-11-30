@@ -106,21 +106,14 @@ function SiteActivities({index, onBlur, onInputSetItemChange, touched, value}) {
 	};
 
 	const _handleActivityInputClick = (contributorName) => () => {
-		const attributes = {};
-
-		Object.entries(
-			CONTRIBUTOR_TYPES_DEFAULT_ATTRIBUTES[contributorName]
-		).forEach(([attr, attrValue]) => {
-			attributes[attr] = value.attributes[attr] || attrValue;
-		});
-
 		onInputSetItemChange(index, {
-			attributes,
+			attributes: CONTRIBUTOR_TYPES_DEFAULT_ATTRIBUTES[contributorName],
 			contributorName,
 			displayGroupName:
 				CONTRIBUTOR_TYPES_ASAH_DEFAULT_DISPLAY_GROUP_NAMES[
 					contributorName
 				] || '',
+			size: '3',
 		});
 
 		setShowActivityDropdown(false);

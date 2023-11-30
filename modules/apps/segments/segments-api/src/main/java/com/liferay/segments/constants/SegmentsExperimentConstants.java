@@ -8,6 +8,7 @@ package com.liferay.segments.constants;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.exception.SegmentsExperimentStatusException;
 
@@ -337,6 +338,36 @@ public class SegmentsExperimentConstants {
 		private final boolean _split;
 		private final String _stringValue;
 		private final int _value;
+
+	}
+
+	public enum Type {
+
+		AB("standard"), MAB("optimized");
+
+		public static Type parse(String typeString) {
+			if (Validator.isNull(typeString)) {
+				return null;
+			}
+
+			for (Type type : values()) {
+				if (StringUtil.equalsIgnoreCase(typeString, type.name())) {
+					return type;
+				}
+			}
+
+			return null;
+		}
+
+		public String getLabel() {
+			return _label;
+		}
+
+		private Type(String label) {
+			_label = label;
+		}
+
+		private final String _label;
 
 	}
 

@@ -4202,6 +4202,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 			String json = SiteInitializerUtil.read(
 				resourcePath, _servletContext);
 
+			json = _replace(
+				_replace(json, serviceContext), stringUtilReplaceValues);
+
 			TaxonomyCategory taxonomyCategory = TaxonomyCategory.toDTO(json);
 
 			if (taxonomyCategory == null) {

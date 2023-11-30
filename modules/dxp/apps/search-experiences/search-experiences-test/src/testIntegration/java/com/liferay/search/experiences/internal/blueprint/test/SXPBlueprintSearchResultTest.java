@@ -249,6 +249,8 @@ public class SXPBlueprintSearchResultTest {
 		_assertSearch(
 			"[cola cola de_DE, fanta cola de_DE, coca cola es_ES, pepsi cola " +
 				"es_ES]");
+
+		LocaleThreadLocal.setDefaultLocale(LocaleUtil.US);
 	}
 
 	@Test

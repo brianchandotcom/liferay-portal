@@ -33,27 +33,28 @@ renderResponse.setTitle(editable ? LanguageUtil.get(request, "edit-template") : 
 					<div id="<portlet:namespace />templateSelect"></div>
 
 					<clay:row>
-						<clay:col
-							md="6"
-						>
-							<clay:select
-								id='<%= liferayPortletResponse.getNamespace() + "internalClassNameKey" %>'
-								label="entity-type"
-								name="internalClassNameKey"
-								options="<%= editBatchPlannerPlanDisplayContext.getInternalClassNameKeySelectOptions() %>"
-							/>
-						</clay:col>
-
-						<clay:col
-							md="6"
-						>
-							<clay:select
-								id='<%= liferayPortletResponse.getNamespace() + "externalType" %>'
-								label="export-file-format"
-								name="externalType"
-								options="<%= editBatchPlannerPlanDisplayContext.getExternalTypeSelectOptions() %>"
-							/>
-						</clay:col>
+						<react:component
+							module="js/components/ExportSettings"
+							props='<%=
+								HashMapBuilder.<String, Object>put(
+									"externalTypeId", liferayPortletResponse.getNamespace() + "externalType"
+								).put(
+									"externalTypeInitialOptions", editBatchPlannerPlanDisplayContext.getExternalTypeSelectOptions()
+								).put(
+									"externalTypeLabel", LanguageUtil.get(request, "export-file-format")
+								).put(
+									"externalTypeName", liferayPortletResponse.getNamespace() + "externalType"
+								).put(
+									"internalClassNameKeyId", liferayPortletResponse.getNamespace() + "internalClassNameKey"
+								).put(
+									"internalClassNameKeyInitialOptions", editBatchPlannerPlanDisplayContext.getInternalClassNameKeySelectOptions()
+								).put(
+									"internalClassNameKeyLabel", LanguageUtil.get(request, "entity-type")
+								).put(
+									"internalClassNameKeyName", liferayPortletResponse.getNamespace() + "internalClassNameKey"
+								).build()
+							%>'
+						/>
 					</clay:row>
 
 					<clay:row>

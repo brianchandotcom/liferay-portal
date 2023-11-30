@@ -68,7 +68,7 @@ public class ModifiedFacetedSearcherTest extends BaseFacetedSearcherTestCase {
 
 		Map<String, Integer> frequencies = SearchMapUtil.join(
 			toMap(configRange1, 0), toMap(configRange2, 1),
-			toMap("custom-range", 1));
+			toMap(customRange, 1));
 
 		FacetsAssert.assertFrequencies(
 			facet.getFieldName(), searchContext, hits, frequencies);

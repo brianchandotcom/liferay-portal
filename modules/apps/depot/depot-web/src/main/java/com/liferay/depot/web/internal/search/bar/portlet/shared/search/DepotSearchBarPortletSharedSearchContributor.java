@@ -5,12 +5,9 @@
 
 package com.liferay.depot.web.internal.search.bar.portlet.shared.search;
 
-import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryGroupRelLocalService;
 import com.liferay.depot.service.DepotEntryLocalService;
-import com.liferay.petra.function.transform.TransformUtil;
-import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.depot.web.internal.search.DepotSearchUtil;
 import com.liferay.portal.search.web.constants.SearchBarPortletKeys;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchContributor;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchSettings;
@@ -38,34 +35,9 @@ public class DepotSearchBarPortletSharedSearchContributor
 		_defaultSearchBarPortletSharedSearchContributor.contribute(
 			portletSharedSearchSettings);
 
-		SearchContext searchContext =
-			portletSharedSearchSettings.getSearchContext();
-
-		long[] groupIds = searchContext.getGroupIds();
-
-		if (ArrayUtil.isEmpty(groupIds)) {
-			return;
-		}
-
-		for (long groupId : groupIds) {
-			searchContext.setGroupIds(
-				ArrayUtil.append(
-					searchContext.getGroupIds(),
-					TransformUtil.transformToLongArray(
-						_depotEntryGroupRelLocalService.
-							getSearchableDepotEntryGroupRels(
-								groupId, 0,
-								_depotEntryGroupRelLocalService.
-									getSearchableDepotEntryGroupRelsCount(
-										groupId)),
-						depotEntryGroupRel -> {
-							DepotEntry depotEntry =
-								_depotEntryLocalService.fetchDepotEntry(
-									depotEntryGroupRel.getDepotEntryId());
-
-							return depotEntry.getGroupId();
-						})));
-		}
+		DepotSearchUtil.addAssetLibraryGroupIdsToSearchContext(
+			portletSharedSearchSettings.getSearchContext(),
+			_depotEntryGroupRelLocalService, _depotEntryLocalService);
 	}
 
 	@Reference(

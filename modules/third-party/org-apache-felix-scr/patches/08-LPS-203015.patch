@@ -1,0 +1,101 @@
+diff --git a/org/apache/felix/scr/impl/inject/methods/BindMethod.java b/org/apache/felix/scr/impl/inject/methods/BindMethod.java
+index 70a7b51b3758f..ef5566a5573c1 100755
+--- a/org/apache/felix/scr/impl/inject/methods/BindMethod.java
++++ b/org/apache/felix/scr/impl/inject/methods/BindMethod.java
+@@ -102,8 +102,55 @@ implements org.apache.felix.scr.impl.inject.ReferenceMethod
+                     "doFindMethod: Looking for method " + targetClass.getName() + "." + getMethodName(), null );
+         }
+ 
++		Method method;
++
++		// for further methods we need the class of the service object
++        final Class<?> parameterClass = ClassUtils.getClassFromComponentClassLoader( targetClass, m_referenceClassName, logger );
++        if ( parameterClass != null )
++        {
++
++            if ( logger.isLogEnabled( LogService.LOG_DEBUG ) )
++            {
++                logger.log(
++                        LogService.LOG_DEBUG,
++                        "doFindMethod: No method taking ServiceReference found, checking method taking "
++                                + parameterClass.getName(), null );
++            }
++
++			Class<?> currentClass = targetClass;
++
++			while (true) {
++				// Case 3 - Service object parameter
++				try
++				{
++					method = getServiceObjectMethod( currentClass, parameterClass, acceptPrivate, acceptPackage, logger );
++					if ( method != null )
++					{
++						if ( logger.isLogEnabled( LogService.LOG_DEBUG ) )
++						{
++							logger.log( LogService.LOG_DEBUG, "doFindMethod: Found Method " + method, null );
++						}
++						return new MethodInfo<>(method,
++							Collections.singletonList(ValueUtils.ValueType.ref_serviceType));
++					}
++
++					currentClass = targetClass.getSuperclass();
++
++					if (currentClass == Object.class) {
++						break;
++					}
++				}
++				catch ( SuitableMethodNotAccessibleException ex )
++				{
++					suitableMethodNotAccessible = true;
++
++					break;
++				}
++			}
++		}
++
+         // Case 1 - Service reference parameter
+-        Method method;
++
+         try
+         {
+             method = getServiceReferenceMethod( targetClass, acceptPrivate, acceptPackage, logger );
+@@ -143,7 +190,6 @@ implements org.apache.felix.scr.impl.inject.ReferenceMethod
+         }
+ 
+         // for further methods we need the class of the service object
+-        final Class<?> parameterClass = ClassUtils.getClassFromComponentClassLoader( targetClass, m_referenceClassName, logger );
+         if ( parameterClass != null )
+         {
+ 
+@@ -155,25 +201,6 @@ implements org.apache.felix.scr.impl.inject.ReferenceMethod
+                                 + parameterClass.getName(), null );
+             }
+ 
+-            // Case 3 - Service object parameter
+-            try
+-            {
+-                method = getServiceObjectMethod( targetClass, parameterClass, acceptPrivate, acceptPackage, logger );
+-                if ( method != null )
+-                {
+-                    if ( logger.isLogEnabled( LogService.LOG_DEBUG ) )
+-                    {
+-                        logger.log( LogService.LOG_DEBUG, "doFindMethod: Found Method " + method, null );
+-                    }
+-                    return new MethodInfo<>(method,
+-                        Collections.singletonList(ValueUtils.ValueType.ref_serviceType));
+-                }
+-            }
+-            catch ( SuitableMethodNotAccessibleException ex )
+-            {
+-                suitableMethodNotAccessible = true;
+-            }
+-
+             // Case 4 - Service interface assignment compatible methods
+             try
+             {
+@@ -690,3 +717,4 @@ implements org.apache.felix.scr.impl.inject.ReferenceMethod
+     }
+ 
+ }
++/* @generated */
+\ No newline at end of file

@@ -45,14 +45,15 @@ const AppsTable: React.FC<AppsTableProps> = ({items}) => {
 				{
 					key: 'name',
 					render: (name, {thumbnail}) => (
-						<div className="dashboard-table-row-name-container">
+						<div style={{width: 200}}>
 							<img
 								alt="App Image"
-								className="dashboard-table-row-name-logo"
+								height={36}
 								src={showAppImage(thumbnail)}
+								width={36}
 							/>
 
-							<span className="dashboard-table-row-name-text">
+							<span className="font-weight-semi-bold ml-2">
 								{name}
 							</span>
 						</div>

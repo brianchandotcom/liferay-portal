@@ -67,7 +67,7 @@ public class ObjectFieldUtil {
 			listTypeDefinition =
 				listTypeDefinitionLocalService.addListTypeDefinition(
 					objectField.getListTypeDefinitionExternalReferenceCode(),
-					userId);
+					userId, objectField.getSystem());
 		}
 
 		if (objectField.getObjectFieldSettings() != null) {

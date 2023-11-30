@@ -39,7 +39,7 @@ public class RecentSitesUserActivityAsahSuggestionsContributor
 		return getSuggestionsContributorResults(
 			AsahSuggestionsConstants.INDIVIDUALS,
 			AsahSuggestionsConstants.RECENT_SITES, searchContext,
-			"lastVisitDate,visits,firstVisitDate,groupId",
+			"visits,lastVisitDate,firstVisitDate,groupId",
 			suggestionsContributorConfiguration);
 	}
 

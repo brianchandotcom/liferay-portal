@@ -36,7 +36,6 @@ definition {
 	@priority = 5
 	test AssertCRUDWithClientExtensionAsStorageType {
 		property custom.properties = "feature.flag.LPS-135430=true";
-		property portal.upstream = "quarantine";
 
 		task ("Given Liferay Sample Batch and Liferay Sample Etc Spring Boot are deployed into the current virtual instance") {
 			for (var clientExtension : list "liferay-sample-batch,liferay-sample-etc-spring-boot") {
@@ -113,8 +112,6 @@ definition {
 	@description = "LPS-179377 - Verify an action can be created using an action client extension"
 	@priority = 5
 	test CanTriggerAction {
-		property portal.upstream = "quarantine";
-
 		task ("Given Liferay Sample Batch and Liferay Sample Etc Spring Boot are deployed into the current virtual instance") {
 			for (var clientExtension : list "liferay-sample-batch,liferay-sample-etc-spring-boot") {
 				AntCommands.runCommand("build-test-liferay-sample-workspace.xml", "deploy-workspace-client-extension -Dvirtual.instance.id=${companyWebId} -Dworkspace.client.extension.name=${clientExtension}");

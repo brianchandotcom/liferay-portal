@@ -208,4 +208,71 @@ definition {
 			entryTitle = "Segments Entry");
 	}
 
+	@description = "Segment should support locales in review changes."
+	@priority = 3
+	test CanReviewChangeForSegmentWithLocalization {
+		task ("Create new Publication and new site") {
+			JSONPublications.addPublication(publicationName = "Publication Name");
+
+			JSONPublications.selectPublication(publicationName = "Publication Name");
+
+			HeadlessSite.addSite(siteName = "Site Name");
+		}
+
+		task ("Create new segment in the new site") {
+			Segmentation.openSegmentsAdmin(siteURLKey = "site-name");
+
+			LexiconEntry.gotoAdd();
+
+			Segmentation.addProperties(propertyOption = "Email Address");
+
+			Segmentation.fillTitle(titleField = "New Segment Title");
+
+			Segmentation.changeCriterionInput(criterionInputOption = "Equals");
+
+			Segmentation.fillProperty(propertyField = "liferay");
+
+			Segmentation.changeLocale(locale = "de-DE");
+
+			Segmentation.fillTitle(titleField = "Neue Segment Titel");
+
+			Button.clickSave();
+		}
+
+		task ("Go to review changes and assert the segment with default and localized name") {
+			PublicationsNavigator.gotoReviewChanges();
+
+			PublicationsChanges.viewChanges(
+				changeCategory = "Segments Entry",
+				changeSite = "Site Name",
+				changeTitle = "New Segment Title",
+				changeType = "Added",
+				changeUser = "Test Test");
+
+			PublicationsNavigator.gotoViewChangeDetails(
+				changeCategory = "Segments Entry",
+				changeTitle = "New Segment Title");
+
+			PublicationsChangeDetails.viewChangeDetailsInData(
+				changeType = "Added",
+				columnName = "Name",
+				columnValueInPublication = "New Segment Title",
+				publicationName = "Publication Name");
+
+			Click(
+				key_currentLocale = StringUtil.lowerCase("en-US"),
+				locator1 = "Button#TRANSLATIONS_LOCALIZATION");
+
+			Click(
+				key_locale = "de_DE",
+				locator1 = "Translation#DROPDOWN_MENU_ITEM");
+
+			PublicationsChangeDetails.viewChangeDetailsInData(
+				changeType = "Added",
+				columnName = "Name",
+				columnValueInPublication = "Neue Segment Titel",
+				publicationName = "Publication Name");
+		}
+	}
+
 }

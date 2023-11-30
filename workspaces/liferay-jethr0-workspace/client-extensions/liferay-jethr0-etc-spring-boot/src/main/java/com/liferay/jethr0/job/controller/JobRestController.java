@@ -86,25 +86,7 @@ public class JobRestController {
 		return new ResponseEntity<>(jobJSONObject.toString(), HttpStatus.OK);
 	}
 
-	@GetMapping("/build/{id}")
-	public ResponseEntity<String> jobBuild(
-		@AuthenticationPrincipal Jwt jwt,
-		@PathVariable("id") int buildEntityId) {
-
-		BuildEntity buildEntity = _buildEntityRepository.getById(buildEntityId);
-
-		JSONObject buildJSONObject = buildEntity.getJSONObject();
-
-		JobEntity jobEntity = buildEntity.getJobEntity();
-
-		if (jobEntity != null) {
-			buildJSONObject.put("job", jobEntity.getJSONObject());
-		}
-
-		return new ResponseEntity<>(buildJSONObject.toString(), HttpStatus.OK);
-	}
-
-	@GetMapping("/builds/{id}")
+	@GetMapping("/{id}/builds")
 	public ResponseEntity<String> jobBuilds(
 		@AuthenticationPrincipal Jwt jwt, @PathVariable("id") int jobEntityId) {
 

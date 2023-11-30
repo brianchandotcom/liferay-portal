@@ -8,8 +8,11 @@ package com.liferay.jethr0.bui1d.controller;
 import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
 import com.liferay.jethr0.bui1d.run.BuildRunEntity;
+import com.liferay.jethr0.job.JobEntity;
+import com.liferay.jethr0.job.repository.JobEntityRepository;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,8 +31,26 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class BuildRestController {
 
-	@GetMapping("/runs/{id}")
-	public ResponseEntity<String> jobBuilds(
+	@GetMapping("/{id}")
+	public ResponseEntity<String> build(
+		@AuthenticationPrincipal Jwt jwt,
+		@PathVariable("id") int buildEntityId) {
+
+		BuildEntity buildEntity = _buildEntityRepository.getById(buildEntityId);
+
+		JSONObject buildJSONObject = buildEntity.getJSONObject();
+
+		JobEntity jobEntity = buildEntity.getJobEntity();
+
+		if (jobEntity != null) {
+			buildJSONObject.put("job", jobEntity.getJSONObject());
+		}
+
+		return new ResponseEntity<>(buildJSONObject.toString(), HttpStatus.OK);
+	}
+
+	@GetMapping("/{id}/runs")
+	public ResponseEntity<String> buildRuns(
 		@AuthenticationPrincipal Jwt jwt,
 		@PathVariable("id") int buildEntityId) {
 
@@ -49,5 +70,8 @@ public class BuildRestController {
 
 	@Autowired
 	private BuildEntityRepository _buildEntityRepository;
+
+	@Autowired
+	private JobEntityRepository _jobEntityRepository;
 
 }

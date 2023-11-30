@@ -96,7 +96,7 @@ function BuildPage() {
 
 	useSpringBootData({
 		setData: setBuild,
-		urlPath: '/jobs/build/' + id,
+		urlPath: '/builds/' + id,
 	});
 
 	let buildName = 'Build #' + id;
@@ -139,7 +139,7 @@ function BuildRuns({buildId}) {
 
 	useSpringBootData({
 		setData: setBuildRuns,
-		urlPath: '/builds/runs/' + buildId,
+		urlPath: '/builds/' + buildId + '/runs',
 	});
 
 	if (!buildRuns) {

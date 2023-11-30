@@ -25,7 +25,7 @@ function JobBuilds({jobId}) {
 
 	useSpringBootData({
 		setData: setJobBuilds,
-		urlPath: '/builds/' + jobId,
+		urlPath: '/jobs/' + jobId + '/builds',
 	});
 
 	if (!jobBuilds) {

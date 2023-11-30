@@ -218,8 +218,8 @@ definition {
 			var mBeanAttibutesFile = FileUtil.read("${projectDir}/mbean-attributes-output.txt");
 		}
 
-		task ("Then the status of the upgrade is published as 'no upgrade' in the JVM via mBean") {
-			if (!(contains(${mBeanAttibutesFile}, "Type: no upgrade"))) {
+		task ("Then the status of the upgrade is published as 'major' in the JVM via mBean") {
+			if (!(contains(${mBeanAttibutesFile}, "Type: major"))) {
 				echo(${mBeanAttibutesFile});
 
 				fail("Expected upgrade type not present in the mBean file");

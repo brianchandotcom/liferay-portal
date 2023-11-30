@@ -23,7 +23,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
 
@@ -242,7 +241,7 @@ public class PropertiesPortalFileCheck extends BaseFileCheck {
 
 					value = line.substring(x + 1);
 
-					if (!Objects.isNull(value) && !value.equals("\\")) {
+					if ((value != null) && !value.equals("\\")) {
 						List<String> list = propertiesMap.get(key);
 
 						if (list == null) {

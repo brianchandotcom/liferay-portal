@@ -15,6 +15,8 @@ public class ServerDetector {
 
 	public static final String JBOSS_ID = "jboss";
 
+	public static final String OPENLIBERTY_ID = "openliberty";
+
 	public static final String SYSTEM_PROPERTY_KEY_SERVER_DETECTOR_SERVER_ID =
 		"server.detector.server.id";
 
@@ -38,8 +40,17 @@ public class ServerDetector {
 		return false;
 	}
 
+	public static boolean isOpenLiberty() {
+		if (_serverType == ServerType.OPENLIBERTY) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public static boolean isSupported(String serverType) {
 		if (serverType.equals(ServerDetector.JBOSS_ID) ||
+			serverType.equals(ServerDetector.OPENLIBERTY_ID) ||
 			serverType.equals(ServerDetector.TOMCAT_ID) ||
 			serverType.equals(ServerDetector.WEBLOGIC_ID) ||
 			serverType.equals(ServerDetector.WEBSPHERE_ID) ||
@@ -136,6 +147,10 @@ public class ServerDetector {
 			return ServerType.RESIN;
 		}
 
+		if (_hasSystemProperty("wlp.install.dir")) {
+			return ServerType.OPENLIBERTY;
+		}
+
 		if (_detect("/weblogic/Server.class")) {
 			return ServerType.WEBLOGIC;
 		}
@@ -191,8 +206,9 @@ public class ServerDetector {
 	private enum ServerType {
 
 		GLASSFISH("glassfish"), JBOSS("jboss"), JETTY("jetty"), JONAS("jonas"),
-		OC4J("oc4j"), RESIN("resin"), TOMCAT("tomcat"), UNKNOWN("unknown"),
-		WEBLOGIC("weblogic"), WEBSPHERE("websphere"), WILDFLY("wildfly");
+		OC4J("oc4j"), OPENLIBERTY("openliberty"), RESIN("resin"),
+		TOMCAT("tomcat"), UNKNOWN("unknown"), WEBLOGIC("weblogic"),
+		WEBSPHERE("websphere"), WILDFLY("wildfly");
 
 		public String getLowerCaseName() {
 			return _lowerCaseName;

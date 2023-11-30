@@ -281,6 +281,10 @@ public class PropsUtil {
 		if (ServerDetector.isJBoss()) {
 			defaultLiferayHome = SystemProperties.get("jboss.home.dir") + "/..";
 		}
+		else if (ServerDetector.isOpenLiberty()) {
+			defaultLiferayHome =
+				SystemProperties.get("wlp.install.dir") + "/..";
+		}
 		else if (ServerDetector.isWebLogic()) {
 			defaultLiferayHome =
 				SystemProperties.get("env.DOMAIN_HOME") + "/..";

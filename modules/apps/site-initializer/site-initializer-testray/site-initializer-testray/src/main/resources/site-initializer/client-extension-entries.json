@@ -1,6 +1,5 @@
 [
 	{
-		"clientExtensionEntryKey": "TESTRAY",
 		"cssURLs": [
 			"[$DOCUMENT_URL:/site-initializer/documents/company/remote-app/site-initializer-testray/index.css$]"
 		],
@@ -13,7 +12,6 @@
 			"en_US": "Testray"
 		},
 		"portletCategoryName": "category.client-extensions",
-		"useESM": true,
-		"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_[$CLIENT_EXTENSION_ENTRY_ID:TESTRAY$]"
+		"useESM": true
 	}
 ]

@@ -9,6 +9,11 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.batch.engine.BatchEngineImportTaskExecutor;
 import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
+import com.liferay.batch.engine.unit.BatchEngineUnitConfiguration;
+import com.liferay.batch.engine.unit.BatchEngineUnitMetaInfo;
+import com.liferay.batch.engine.unit.BatchEngineUnitReader;
+import com.liferay.batch.engine.unit.BundleBatchEngineUnit;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
@@ -16,13 +21,17 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.IntegerWrapper;
+import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactory;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 
@@ -30,6 +39,7 @@ import java.net.URL;
 
 import java.util.Arrays;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -98,33 +108,43 @@ public class BatchEngineBundleTrackerTest {
 			"/batch9/data.batch-engine-data.json");
 	}
 
-	private String _getFileName(BatchEngineImportTask batchEngineImportTask) {
-		Map<String, Serializable> parameters =
-			batchEngineImportTask.getParameters();
+	private String _getDataFileName(
+		BatchEngineImportTask batchEngineImportTask) {
 
-		return (String)parameters.get("fileName");
+		return MapUtil.getString(
+			batchEngineImportTask.getParameters(), "dataFileName", null);
 	}
 
 	private void _testProcessBatchEngineBundle(
 			String dirName, String... expectedDataFiles)
 		throws Exception {
 
-		Class<?> clazz = _batchEngineImportTaskExecutor.getClass();
-
-		ComponentDescriptionDTO componentDescriptionDTO =
+		ComponentDescriptionDTO componentDescriptionDTO1 =
 			_serviceComponentRuntime.getComponentDescriptionDTO(
-				FrameworkUtil.getBundle(clazz), clazz.getName());
+				FrameworkUtil.getBundle(
+					_batchEngineImportTaskExecutor.getClass()),
+				ClassUtil.getClassName(_batchEngineImportTaskExecutor));
 
 		Promise<Void> promise = _serviceComponentRuntime.disableComponent(
-			componentDescriptionDTO);
+			componentDescriptionDTO1);
+
+		promise.getValue();
+
+		ComponentDescriptionDTO componentDescriptionDTO2 =
+			_serviceComponentRuntime.getComponentDescriptionDTO(
+				FrameworkUtil.getBundle(_batchEngineUnitReader.getClass()),
+				ClassUtil.getClassName(_batchEngineUnitReader));
+
+		promise = _serviceComponentRuntime.disableComponent(
+			componentDescriptionDTO2);
 
 		promise.getValue();
 
 		IntegerWrapper actualCount = new IntegerWrapper();
 		List<String> processedDataFiles = new CopyOnWriteArrayList<>();
 
-		ServiceRegistration<BatchEngineImportTaskExecutor> serviceRegistration =
-			_bundleContext.registerService(
+		ServiceRegistration<BatchEngineImportTaskExecutor>
+			serviceRegistration1 = _bundleContext.registerService(
 				BatchEngineImportTaskExecutor.class,
 				new BatchEngineImportTaskExecutor() {
 
@@ -132,9 +152,13 @@ public class BatchEngineBundleTrackerTest {
 					public void execute(
 						BatchEngineImportTask batchEngineImportTask) {
 
-						actualCount.increment();
-						processedDataFiles.add(
-							_getFileName(batchEngineImportTask));
+						String dataFileName = _getDataFileName(
+							batchEngineImportTask);
+
+						if (dataFileName != null) {
+							actualCount.increment();
+							processedDataFiles.add(dataFileName);
+						}
 					}
 
 					@Override
@@ -144,12 +168,32 @@ public class BatchEngineBundleTrackerTest {
 							batchEngineTaskItemDelegate,
 						boolean checkPermissions) {
 
-						actualCount.increment();
-						processedDataFiles.add(
-							_getFileName(batchEngineImportTask));
+						String dataFileName = _getDataFileName(
+							batchEngineImportTask);
+
+						if (dataFileName != null) {
+							actualCount.increment();
+							processedDataFiles.add(dataFileName);
+						}
 					}
 
 				},
+				null);
+
+		ServiceRegistration<BatchEngineUnitReader> serviceRegistration2 =
+			_bundleContext.registerService(
+				BatchEngineUnitReader.class,
+				bundle -> TransformUtil.transform(
+					_batchEngineUnitReader.getBatchEngineUnits(bundle),
+					batchEngineUnit -> {
+						if (batchEngineUnit instanceof BundleBatchEngineUnit) {
+							return new BundleBatchEngineUnitWrapper(
+								(BundleBatchEngineUnit)batchEngineUnit,
+								dirName);
+						}
+
+						return batchEngineUnit;
+					}),
 				null);
 
 		Bundle bundle = _bundleContext.installBundle(
@@ -190,10 +234,16 @@ public class BatchEngineBundleTrackerTest {
 		finally {
 			bundle.uninstall();
 
-			serviceRegistration.unregister();
+			serviceRegistration1.unregister();
+			serviceRegistration2.unregister();
 
 			promise = _serviceComponentRuntime.enableComponent(
-				componentDescriptionDTO);
+				componentDescriptionDTO1);
+
+			promise.getValue();
+
+			promise = _serviceComponentRuntime.enableComponent(
+				componentDescriptionDTO2);
 
 			promise.getValue();
 		}
@@ -236,6 +286,9 @@ public class BatchEngineBundleTrackerTest {
 	@Inject
 	private BatchEngineImportTaskExecutor _batchEngineImportTaskExecutor;
 
+	@Inject
+	private BatchEngineUnitReader _batchEngineUnitReader;
+
 	private Bundle _bundle;
 	private BundleContext _bundleContext;
 
@@ -247,5 +300,85 @@ public class BatchEngineBundleTrackerTest {
 
 	@Inject
 	private ZipWriterFactory _zipWriterFactory;
+
+	private class BundleBatchEngineUnitWrapper
+		implements BundleBatchEngineUnit {
+
+		public BundleBatchEngineUnitWrapper(
+			BundleBatchEngineUnit bundleBatchEngineUnit, String dirName) {
+
+			_bundleBatchEngineUnit = bundleBatchEngineUnit;
+			_dirName = dirName;
+		}
+
+		@Override
+		public BatchEngineUnitConfiguration getBatchEngineUnitConfiguration()
+			throws IOException {
+
+			BatchEngineUnitConfiguration batchEngineUnitConfiguration =
+				_bundleBatchEngineUnit.getBatchEngineUnitConfiguration();
+
+			if (!StringUtil.startsWith(
+					_bundleBatchEngineUnit.getFileName(), _dirName)) {
+
+				return batchEngineUnitConfiguration;
+			}
+
+			Map<String, Serializable> parameters =
+				batchEngineUnitConfiguration.getParameters();
+
+			if (parameters == null) {
+				parameters = new HashMap<>();
+			}
+
+			parameters.put(
+				"dataFileName", _bundleBatchEngineUnit.getDataFileName());
+
+			batchEngineUnitConfiguration.setParameters(parameters);
+
+			return batchEngineUnitConfiguration;
+		}
+
+		@Override
+		public BatchEngineUnitMetaInfo getBatchEngineUnitMetaInfo()
+			throws IOException {
+
+			return _bundleBatchEngineUnit.getBatchEngineUnitMetaInfo();
+		}
+
+		@Override
+		public Bundle getBundle() {
+			return _bundleBatchEngineUnit.getBundle();
+		}
+
+		@Override
+		public InputStream getConfigurationInputStream() throws IOException {
+			return _bundleBatchEngineUnit.getConfigurationInputStream();
+		}
+
+		@Override
+		public String getDataFileName() {
+			return _bundleBatchEngineUnit.getDataFileName();
+		}
+
+		@Override
+		public InputStream getDataInputStream() throws IOException {
+			return _bundleBatchEngineUnit.getDataInputStream();
+		}
+
+		@Override
+		public String getFileName() {
+			return _bundleBatchEngineUnit.getFileName();
+		}
+
+		@Override
+		public boolean isValid() {
+			return _bundleBatchEngineUnit.isValid();
+		}
+
+		private final BundleBatchEngineUnit _bundleBatchEngineUnit;
+		private final String _dirName;
+
+	}
 
 }

@@ -72,7 +72,7 @@ function getValidFields({
 					}),
 					label: propertyKey,
 					name: `${contextPath}${propertyKey}${NESTING_ROOT}`,
-					type,
+					type: type ? type : 'object',
 				});
 			}
 

@@ -6980,8 +6980,19 @@ go</echo>
 						<var name="app.server.tomcat.version" value="9.0.80" />
 					</then>
 				</elseif>
+				<elseif>
+					<or>
+						<equals arg1="@{liferay.portal.bundle}" arg2="7.4.13.u102" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="7.4.13.u103" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="7.4.13.u104" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="7.4.13.u105" />
+					</or>
+					<then>
+						<var name="app.server.tomcat.version" value="9.0.82" />
+					</then>
+				</elseif>
 				<else>
-					<var name="app.server.tomcat.version" value="9.0.82" />
+					<var name="app.server.tomcat.version" value="9.0.83" />
 				</else>
 			</if>
 

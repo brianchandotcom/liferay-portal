@@ -255,15 +255,8 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureImport(containsHeaders = null, fileName = null, tempFileName = null, templateName = null, entityType = null, scope = null, importName = null, csvSeparator = null, fieldMappings = null, importStrategy = null, stopImportOnError = null) {
-		if (isSet(tempFileName)) {
-			UploadTempFile.uploadTempFileHiddenNoMouseOver(
-				locator1 = "TextInput#FILE",
-				value1 = ${tempFileName});
-		}
-		else {
-			UploadDependencyFile.uploadFile(fileName = ${fileName});
-		}
+	macro configureImport(containsHeaders = null, fileName = null, templateName = null, entityType = null, scope = null, importName = null, csvSeparator = null, fieldMappings = null, importStrategy = null, stopImportOnError = null) {
+		UploadDependencyFile.uploadFile(fileName = ${fileName});
 
 		if (isSet(importName)) {
 			Type(
@@ -353,17 +346,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro getTempFilePath(fileName = null) {
-		Variables.assertDefined(parameterList = ${fileName});
-
-		var tempFileDirectory = selenium.getOutputDirName();
-
-		var filePath = "${tempFileDirectory}/${fileName}";
-
-		return ${filePath};
-	}
-
-	@summary = "Default summary"
 	macro gotoExport() {
 		Click(locator1 = "Button#PLUS");
 
@@ -378,19 +360,12 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro importFile(containsHeaders = null, fileName = null, tempFileName = null, entityType = null, importName = null, csvSeparator = null, fieldMappings = null, stopImportOnError = null) {
+	macro importFile(containsHeaders = null, fileName = null, entityType = null, importName = null, csvSeparator = null, fieldMappings = null, stopImportOnError = null) {
 		Click(locator1 = "Button#PLUS");
 
 		MenuItem.click(menuItem = "Import File");
 
-		if (isSet(tempFileName)) {
-			UploadTempFile.uploadTempFileHiddenNoMouseOver(
-				locator1 = "TextInput#FILE",
-				value1 = ${tempFileName});
-		}
-		else {
-			UploadDependencyFile.uploadFile(fileName = ${fileName});
-		}
+		UploadDependencyFile.uploadFile(fileName = ${fileName});
 
 		if (isSet(importName)) {
 			Type(
@@ -419,10 +394,14 @@ definition {
 				locator1 = "Checkbox#ANY_CHECKBOX");
 		}
 
-		ImportExport.mapImport(fieldMappings = ${fieldMappings});
+		if (isSet(fieldMappings)) {
+			ImportExport.mapImport(fieldMappings = ${fieldMappings});
+		}
 
-		if (!(isSet(noExport))) {
-			var key_index = 1;
+		if (!(isSet(noImport))) {
+			ScrollWebElementIntoView(
+				key_text = "Next",
+				locator1 = "Button#ANY");
 
 			ImportExport.startImportAndWaitForSuccess();
 
@@ -469,6 +448,23 @@ definition {
 			urlAppend = "group/guest/~/control_panel/manage?p_p_id=com_liferay_batch_planner_web_internal_portlet_BatchPlannerPortlet");
 
 		WaitForVisible(locator1 = "Button#PLUS");
+	}
+
+	@summary = "Default summary"
+	macro replaceAttachmentIdAndHrefInFile(fileName = null, en_US_plural_label = null) {
+		var filePath = TestCase.getDependenciesDirPath(fileName = ${fileName});
+		var response = ObjectDefinitionAPI.getObjectEntries(en_US_plural_label = ${en_US_plural_label});
+
+		var attachmenId = JSONPathUtil.getProperty(
+			property = "$.items..diploma.id",
+			response = ${response});
+		var attachmenHref = JSONPathUtil.getProperty(
+			property = "$.items..diploma.link.href",
+			response = ${response});
+
+		FileUtil.replaceStringInFile(${filePath}, 38589, ${attachmenId});
+
+		FileUtil.replaceStringInFile(${filePath}, "/documents/38586/38588/Document_1.jpg/b3a2213c-225f-fc83-fa10-4ea862e5005f?version=1.0&t=1701061267059", ${attachmenHref});
 	}
 
 	@summary = "Default summary"

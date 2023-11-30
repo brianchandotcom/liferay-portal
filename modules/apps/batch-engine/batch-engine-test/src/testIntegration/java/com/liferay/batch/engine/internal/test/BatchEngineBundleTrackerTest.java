@@ -115,7 +115,7 @@ public class BatchEngineBundleTrackerTest {
 	}
 
 	private void _testProcessBatchEngineBundle(
-			String dirName, String... expectedDataFiles)
+			String dirName, String... expectedDataFileNames)
 		throws Exception {
 
 		ComponentDescriptionDTO componentDescriptionDTO1 =
@@ -139,7 +139,7 @@ public class BatchEngineBundleTrackerTest {
 
 		promise.getValue();
 
-		List<String> processedDataFiles = new CopyOnWriteArrayList<>();
+		List<String> processedDataFileNames = new CopyOnWriteArrayList<>();
 
 		ServiceRegistration<BatchEngineImportTaskExecutor>
 			serviceRegistration1 = _bundleContext.registerService(
@@ -154,7 +154,7 @@ public class BatchEngineBundleTrackerTest {
 							batchEngineImportTask);
 
 						if (dataFileName != null) {
-							processedDataFiles.add(dataFileName);
+							processedDataFileNames.add(dataFileName);
 						}
 					}
 
@@ -169,7 +169,7 @@ public class BatchEngineBundleTrackerTest {
 							batchEngineImportTask);
 
 						if (dataFileName != null) {
-							processedDataFiles.add(dataFileName);
+							processedDataFileNames.add(dataFileName);
 						}
 					}
 
@@ -201,23 +201,23 @@ public class BatchEngineBundleTrackerTest {
 			Thread.sleep(2000);
 
 			Assert.assertEquals(
-				processedDataFiles.toString(), expectedDataFiles.length,
-				processedDataFiles.size());
+				processedDataFileNames.toString(), expectedDataFileNames.length,
+				processedDataFileNames.size());
 
 			Assert.assertTrue(
 				StringBundler.concat(
-					"Expected ", expectedDataFiles.length, " was ",
-					processedDataFiles.size()),
-				expectedDataFiles.length == processedDataFiles.size());
+					"Expected ", expectedDataFileNames.length, " was ",
+					processedDataFileNames.size()),
+				expectedDataFileNames.length == processedDataFileNames.size());
 
-			List<String> expectedDataFilesList = Arrays.asList(
-				expectedDataFiles);
+			List<String> expectedDataFileNamesList = Arrays.asList(
+				expectedDataFileNames);
 
 			Assert.assertTrue(
 				StringBundler.concat(
-					"Expected ", expectedDataFiles, " was ",
-					processedDataFiles),
-				expectedDataFilesList.containsAll(processedDataFiles));
+					"Expected ", expectedDataFileNames, " was ",
+					processedDataFileNames),
+				expectedDataFileNamesList.containsAll(processedDataFileNames));
 
 			bundle.stop();
 
@@ -226,8 +226,8 @@ public class BatchEngineBundleTrackerTest {
 			Thread.sleep(2000);
 
 			Assert.assertEquals(
-				processedDataFiles.toString(), expectedDataFiles.length,
-				processedDataFiles.size());
+				processedDataFileNames.toString(), expectedDataFileNames.length,
+				processedDataFileNames.size());
 		}
 		finally {
 			bundle.uninstall();

@@ -100,4 +100,63 @@ definition {
 			}
 		}
 	}
+
+	@description = "LPS-169223 - Verify the auto increment fields in object entries are read only"
+	@priority = 4
+	test VerifyFieldIsReadOnly {
+		task ("Given an object definition called Hats with an auto increment field and a text field") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Hat",
+				objectName = "Hat",
+				pluralLabelName = "Hats");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Type",
+				fieldName = "type",
+				fieldType = "String",
+				isRequired = "true",
+				objectName = "Hat");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "AutoIncrement",
+				fieldLabelName = "Identification",
+				fieldName = "identification",
+				fieldType = "String",
+				initialValue = 1,
+				isRequired = "false",
+				objectName = "Hat",
+				prefix = "HAT-",
+				suffix = "");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "Hat");
+		}
+
+		task ("When the user adds an object entry") {
+			ObjectAdmin.goToCustomObject(objectName = "Hat");
+
+			LexiconEntry.gotoAdd();
+		}
+
+		task ("Then the auto increment field isn’t present") {
+			AssertElementNotPresent(
+				key_customField = "Identification",
+				locator1 = "ObjectPortlet#ENTRY_FIELD_GENERIC");
+		}
+
+		task ("and When the use views the object entry") {
+			ObjectPortlet.typeCustomField(
+				customField = "Type",
+				entry = "Cap");
+
+			PortletEntry.save();
+		}
+
+		task ("Then the auto increment field is read only and the field value is 1") {
+			AssertElementPresent(
+				key_entry = "HAT-1",
+				locator1 = "ObjectPortlet#ENTRY_READ_ONLY");
+		}
+	}
+
 }

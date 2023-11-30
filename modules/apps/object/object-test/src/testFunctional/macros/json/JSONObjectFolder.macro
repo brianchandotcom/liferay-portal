@@ -33,7 +33,7 @@ definition {
 
 	@summary = "Default summary"
 	macro deleteObjectFolder(folderName = null) {
-		var portalURL = JSONCompany.getDefaultPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 		var userLoginInfo = JSONUtil2.formatJSONSuperAdminUser();
 
 		if (!(isSet(folderId))) {
@@ -51,7 +51,7 @@ definition {
 
 	@summary = "Default summary"
 	macro getAllCustomObjectFolderId() {
-		var portalURL = JSONCompany.getDefaultPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 		var userLoginInfo = JSONUtil2.formatJSONSuperAdminUser();
 
 		var curl = '''
@@ -67,7 +67,7 @@ definition {
 
 	@summary = "Default summary"
 	macro getObjectFolderERC(folderName = null) {
-		var portalURL = JSONCompany.getDefaultPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 		var userLoginInfo = JSONUtil2.formatJSONSuperAdminUser();
 
 		var curl = '''
@@ -83,7 +83,7 @@ definition {
 
 	@summary = "Default summary"
 	macro getObjectFolderId(folderName = null) {
-		var portalURL = JSONCompany.getDefaultPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 		var userLoginInfo = JSONUtil2.formatJSONSuperAdminUser();
 
 		var curl = '''

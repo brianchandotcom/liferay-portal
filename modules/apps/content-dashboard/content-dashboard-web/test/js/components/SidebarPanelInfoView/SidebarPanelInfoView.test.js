@@ -39,7 +39,7 @@ jest.mock('frontend-js-web', () => ({
 	}),
 
 	openToast: jest.fn(),
-	sub: jest.fn(),
+	sub: jest.fn((str) => str),
 }));
 
 const _getSidebarComponent = (props) => {

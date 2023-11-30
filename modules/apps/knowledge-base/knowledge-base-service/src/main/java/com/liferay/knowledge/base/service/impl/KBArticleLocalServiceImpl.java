@@ -516,24 +516,29 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			boolean includeTrashedEntries)
 		throws PortalException {
 
-		List<KBArticle> childKBArticles = new ArrayList<>();
+		for (KBArticle kbArticle :
+				getKBArticles(
+					groupId, parentResourcePrimKey,
+					WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null)) {
 
-		childKBArticles.addAll(
-			getKBArticles(
-				groupId, parentResourcePrimKey, WorkflowConstants.STATUS_ANY,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null));
-
-		childKBArticles.addAll(
-			getKBArticles(
-				groupId, parentResourcePrimKey,
-				WorkflowConstants.STATUS_IN_TRASH, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null));
-
-		for (KBArticle childKBArticle : childKBArticles) {
 			if (includeTrashedEntries ||
-				!_trashHelper.isInTrashExplicitly(childKBArticle)) {
+				!_trashHelper.isInTrashExplicitly(kbArticle)) {
 
-				kbArticleLocalService.deleteKBArticle(childKBArticle);
+				kbArticleLocalService.deleteKBArticle(kbArticle);
+			}
+		}
+
+		for (KBArticle kbArticle :
+				getKBArticles(
+					groupId, parentResourcePrimKey,
+					WorkflowConstants.STATUS_IN_TRASH, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null)) {
+
+			if (includeTrashedEntries ||
+				!_trashHelper.isInTrashExplicitly(kbArticle)) {
+
+				kbArticleLocalService.deleteKBArticle(kbArticle);
 			}
 		}
 	}

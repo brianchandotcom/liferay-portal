@@ -42,7 +42,6 @@ import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContri
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.PortletRequest;
@@ -223,21 +222,21 @@ public class KBArticleIndexer extends BaseIndexer<KBArticle> {
 	}
 
 	private void _reindexKBArticles(KBArticle kbArticle) throws Exception {
-		List<KBArticle> kbArticles = new ArrayList<>();
-
-		kbArticles.addAll(
-			kbArticleLocalService.getKBArticleAndAllDescendantKBArticles(
-				kbArticle.getResourcePrimKey(), WorkflowConstants.STATUS_ANY,
-				null));
-
-		kbArticles.addAll(
-			kbArticleLocalService.getKBArticleAndAllDescendantKBArticles(
-				kbArticle.getResourcePrimKey(),
-				WorkflowConstants.STATUS_IN_TRASH, null));
-
 		Collection<Document> documents = new ArrayList<>();
 
-		for (KBArticle curKBArticle : kbArticles) {
+		for (KBArticle curKBArticle :
+				kbArticleLocalService.getKBArticleAndAllDescendantKBArticles(
+					kbArticle.getResourcePrimKey(),
+					WorkflowConstants.STATUS_ANY, null)) {
+
+			documents.add(getDocument(curKBArticle));
+		}
+
+		for (KBArticle curKBArticle :
+				kbArticleLocalService.getKBArticleAndAllDescendantKBArticles(
+					kbArticle.getResourcePrimKey(),
+					WorkflowConstants.STATUS_IN_TRASH, null)) {
+
 			documents.add(getDocument(curKBArticle));
 		}
 

@@ -5,15 +5,90 @@
 
 import {Heading} from '@clayui/core';
 import ClayLayout from '@clayui/layout';
+import ClayPanel from '@clayui/panel';
 import {useState} from 'react';
 import {useParams} from 'react-router-dom';
 
-import BuildInformation from '../../components/BuildInformation/BuildInformation';
 import BuildRuns from '../../components/BuildRuns/BuildRuns';
 import Jethr0Breadcrumbs from '../../components/Jethr0Breadcrumbs/Jethr0Breadcrumbs';
 import Jethr0Card from '../../components/Jethr0Card/Jethr0Card';
 import Jethr0NavigationBar from '../../components/Jethr0NavigationBar/Jethr0NavigationBar';
+import Jethr0Table from '../../components/Jethr0Table/Jethr0Table';
+import {toLocaleString} from '../../services/DateUtil';
 import useSpringBootData from '../../services/useSpringBootData';
+
+function BuildInformation({build}) {
+	if (!build) {
+		return (
+			<ClayPanel
+				collapsable
+				defaultExpanded
+				displayTitle="Build Information"
+				displayType="secondary"
+			>
+				<ClayPanel.Body>Loading...</ClayPanel.Body>
+			</ClayPanel>
+		);
+	}
+
+	const parameters = JSON.parse(build.parameters);
+
+	return (
+		<>
+			<ClayPanel
+				collapsable
+				defaultExpanded
+				displayTitle="Build Information"
+				displayType="secondary"
+			>
+				<ClayPanel.Body>
+					Build Name: {build.name}
+					<br />
+					Build ID: {build.id}
+					<br />
+					Build State: {build.state.name}
+					<br />
+					Create Date: {toLocaleString(build.dateCreated)}
+					<br />
+					Modified Date: {toLocaleString(build.dateModified)}
+					<br />
+					Jenkins Job Name: {build.jenkinsJobName}
+				</ClayPanel.Body>
+			</ClayPanel>
+			{parameters && (
+				<ClayPanel
+					collapsable
+					displayTitle="Build Parameters"
+					displayType="secondary"
+					showCollapseIcon={true}
+				>
+					<ClayPanel.Body>
+						<Jethr0Table>
+							<thead>
+								<tr>
+									<th>Name</th>
+									<th>Value</th>
+								</tr>
+							</thead>
+							<tbody>
+								{parameters.map((parameter) => {
+									return (
+										<tr key={parameter.name}>
+											<td title={parameter.name}>
+												{parameter.name}
+											</td>
+											<td>{parameter.value}</td>
+										</tr>
+									);
+								})}
+							</tbody>
+						</Jethr0Table>
+					</ClayPanel.Body>
+				</ClayPanel>
+			)}
+		</>
+	);
+}
 
 function JobBuildPage() {
 	const {id} = useParams();

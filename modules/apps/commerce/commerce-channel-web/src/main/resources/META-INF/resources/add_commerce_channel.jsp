@@ -24,8 +24,6 @@ boolean viewOnly = false;
 if (commerceChannel != null) {
 	viewOnly = !commerceChannelDisplayContext.hasPermission(commerceChannelId, ActionKeys.UPDATE);
 }
-
-PortletURL editCommerceChannelRenderURL = commerceChannelDisplayContext.getEditCommerceChannelRenderURL();
 %>
 
 <commerce-ui:modal-content
@@ -71,56 +69,54 @@ PortletURL editCommerceChannelRenderURL = commerceChannelDisplayContext.getEditC
 		</div>
 	</aui:form>
 
-	<aui:script require="commerce-frontend-js/utilities/eventsDefinitions as events, commerce-frontend-js/utilities/forms/index as FormUtils">
-		Liferay.provide(
-			window,
-			'<portlet:namespace />apiSubmit',
-			(form) => {
-				var API_URL = '/o/headless-commerce-admin-channel/v1.0/channels';
+	<aui:script require="commerce-frontend-js/utilities/eventsDefinitions as events, commerce-frontend-js/utilities/forms/index as FormUtils, frontend-js-web/index as frontendJsWeb">
+		const {createPortletURL} = frontendJsWeb;
 
-				window.parent.Liferay.fire(events.IS_LOADING_MODAL, {
-					isLoading: true,
-				});
+		Liferay.provide(window, '<portlet:namespace />apiSubmit', (form) => {
+			const API_URL = '/o/headless-commerce-admin-channel/v1.0/channels';
 
-				FormUtils.apiSubmit(form, API_URL)
-					.then((payload) => {
-						var redirectURL = new Liferay.PortletURL.createURL(
-							'<%= editCommerceChannelRenderURL.toString() %>'
-						);
+			window.parent.Liferay.fire(events.IS_LOADING_MODAL, {
+				isLoading: true,
+			});
 
-						redirectURL.setParameter('commerceChannelId', payload.id);
-						redirectURL.setParameter('p_auth', Liferay.authToken);
+			FormUtils.apiSubmit(form, API_URL)
+				.then((payload) => {
+					const redirectURL = createPortletURL(
+						'<%= commerceChannelDisplayContext.getEditCommerceChannelRenderURL() %>',
+						{
+							commerceChannelId: payload.id,
+							p_auth: Liferay.authToken,
+						}
+					);
 
-						window.parent.Liferay.fire(events.CLOSE_MODAL, {
-							redirectURL: redirectURL.toString(),
-							successNotification: {
-								showSuccessNotification: true,
-								message:
-									'<liferay-ui:message key="your-request-completed-successfully" />',
-							},
-						});
-					})
-					.catch(() => {
-						window.parent.Liferay.fire(events.IS_LOADING_MODAL, {
-							isLoading: false,
-						});
-
-						new Liferay.Notification({
-							closeable: true,
-							delay: {
-								hide: 5000,
-								show: 0,
-							},
-							duration: 500,
+					window.parent.Liferay.fire(events.CLOSE_MODAL, {
+						redirectURL: redirectURL,
+						successNotification: {
+							showSuccessNotification: true,
 							message:
-								'<liferay-ui:message key="an-unexpected-error-occurred" />',
-							render: true,
-							title: '<liferay-ui:message key="danger" />',
-							type: 'danger',
-						});
+								'<liferay-ui:message key="your-request-completed-successfully" />',
+						},
 					});
-			},
-			['liferay-portlet-url']
-		);
+				})
+				.catch(() => {
+					window.parent.Liferay.fire(events.IS_LOADING_MODAL, {
+						isLoading: false,
+					});
+
+					new Liferay.Notification({
+						closeable: true,
+						delay: {
+							hide: 5000,
+							show: 0,
+						},
+						duration: 500,
+						message:
+							'<liferay-ui:message key="an-unexpected-error-occurred" />',
+						render: true,
+						title: '<liferay-ui:message key="danger" />',
+						type: 'danger',
+					});
+				});
+		});
 	</aui:script>
 </commerce-ui:modal-content>

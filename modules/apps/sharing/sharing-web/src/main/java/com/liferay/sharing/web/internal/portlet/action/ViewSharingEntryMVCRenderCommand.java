@@ -13,16 +13,13 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.sharing.interpreter.SharingEntryInterpreter;
-import com.liferay.sharing.interpreter.SharingEntryInterpreterProvider;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.renderer.SharingEntryViewRenderer;
-import com.liferay.sharing.service.SharingEntryLocalService;
 import com.liferay.sharing.web.internal.constants.SharingPortletKeys;
+import com.liferay.sharing.web.internal.display.context.BaseMVCRenderCommand;
 import com.liferay.sharing.web.internal.display.context.ViewSharedAssetsDisplayContext;
-import com.liferay.sharing.web.internal.display.context.ViewSharedAssetsDisplayContextFactory;
 
 import java.io.IOException;
 
@@ -31,7 +28,6 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Sergio González
@@ -44,7 +40,8 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = MVCRenderCommand.class
 )
-public class ViewSharingEntryMVCRenderCommand implements MVCRenderCommand {
+public class ViewSharingEntryMVCRenderCommand
+	extends BaseMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(
@@ -53,9 +50,7 @@ public class ViewSharingEntryMVCRenderCommand implements MVCRenderCommand {
 
 		renderRequest.setAttribute(
 			ViewSharedAssetsDisplayContext.class.getName(),
-			_getViewSharedAssetsDisplayContextFactory.
-				getViewSharedAssetsDisplayContext(
-					renderRequest, renderResponse));
+			getViewSharedAssetsDisplayContext(renderRequest, renderResponse));
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -75,7 +70,7 @@ public class ViewSharingEntryMVCRenderCommand implements MVCRenderCommand {
 			}
 
 			SharingEntryInterpreter sharingEntryInterpreter =
-				_sharingEntryInterpreterProvider.getSharingEntryInterpreter(
+				sharingEntryInterpreterProvider.getSharingEntryInterpreter(
 					sharingEntry);
 
 			if (sharingEntryInterpreter == null) {
@@ -88,8 +83,8 @@ public class ViewSharingEntryMVCRenderCommand implements MVCRenderCommand {
 				sharingEntryInterpreter.getSharingEntryViewRenderer();
 
 			sharingEntryViewRenderer.render(
-				sharingEntry, _portal.getHttpServletRequest(renderRequest),
-				_portal.getHttpServletResponse(renderResponse));
+				sharingEntry, portal.getHttpServletRequest(renderRequest),
+				portal.getHttpServletResponse(renderResponse));
 
 			return MVCRenderConstants.MVC_PATH_VALUE_SKIP_DISPATCH;
 		}
@@ -110,7 +105,7 @@ public class ViewSharingEntryMVCRenderCommand implements MVCRenderCommand {
 		long sharingEntryId = ParamUtil.getLong(
 			renderRequest, "sharingEntryId");
 
-		SharingEntry sharingEntry = _sharingEntryLocalService.fetchSharingEntry(
+		SharingEntry sharingEntry = sharingEntryLocalService.fetchSharingEntry(
 			sharingEntryId);
 
 		if (sharingEntry != null) {
@@ -120,21 +115,8 @@ public class ViewSharingEntryMVCRenderCommand implements MVCRenderCommand {
 		long classNameId = ParamUtil.getLong(renderRequest, "classNameId");
 		long classPK = ParamUtil.getLong(renderRequest, "classPK");
 
-		return _sharingEntryLocalService.getSharingEntry(
+		return sharingEntryLocalService.getSharingEntry(
 			themeDisplay.getUserId(), classNameId, classPK);
 	}
-
-	@Reference
-	private ViewSharedAssetsDisplayContextFactory
-		_getViewSharedAssetsDisplayContextFactory;
-
-	@Reference
-	private Portal _portal;
-
-	@Reference
-	private SharingEntryInterpreterProvider _sharingEntryInterpreterProvider;
-
-	@Reference
-	private SharingEntryLocalService _sharingEntryLocalService;
 
 }

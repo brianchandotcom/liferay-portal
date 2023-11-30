@@ -19,58 +19,56 @@ import com.liferay.sharing.web.internal.servlet.taglib.ui.SharingEntryDropdownIt
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alejandro Tardín
  */
-@Component(service = ViewSharedAssetsDisplayContextFactory.class)
-public class ViewSharedAssetsDisplayContextFactory {
+public abstract class BaseMVCRenderCommand {
 
 	public ViewSharedAssetsDisplayContext getViewSharedAssetsDisplayContext(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		return new ViewSharedAssetsDisplayContext(
-			_groupLocalService, _itemSelector,
-			_portal.getLiferayPortletRequest(renderRequest),
-			_portal.getLiferayPortletResponse(renderResponse),
-			_sharedAssetsFilterItemRegistry, _sharingConfigurationFactory,
-			_sharingDropdownItemFactory,
-			_sharingEntryDropdownItemContributorRegistry,
-			_sharingEntryInterpreterProvider::getSharingEntryInterpreter,
-			_sharingEntryLocalService, _sharingPermission);
+			groupLocalService, itemSelector,
+			portal.getLiferayPortletRequest(renderRequest),
+			portal.getLiferayPortletResponse(renderResponse),
+			sharedAssetsFilterItemRegistry, sharingConfigurationFactory,
+			sharingDropdownItemFactory,
+			sharingEntryDropdownItemContributorRegistry,
+			sharingEntryInterpreterProvider::getSharingEntryInterpreter,
+			sharingEntryLocalService, sharingPermission);
 	}
 
 	@Reference
-	private GroupLocalService _groupLocalService;
+	protected GroupLocalService groupLocalService;
 
 	@Reference
-	private ItemSelector _itemSelector;
+	protected ItemSelector itemSelector;
 
 	@Reference
-	private Portal _portal;
+	protected Portal portal;
 
 	@Reference
-	private SharedAssetsFilterItemRegistry _sharedAssetsFilterItemRegistry;
+	protected SharedAssetsFilterItemRegistry sharedAssetsFilterItemRegistry;
 
 	@Reference
-	private SharingConfigurationFactory _sharingConfigurationFactory;
+	protected SharingConfigurationFactory sharingConfigurationFactory;
 
 	@Reference
-	private SharingDropdownItemFactory _sharingDropdownItemFactory;
+	protected SharingDropdownItemFactory sharingDropdownItemFactory;
 
 	@Reference
-	private SharingEntryDropdownItemContributorRegistry
-		_sharingEntryDropdownItemContributorRegistry;
+	protected SharingEntryDropdownItemContributorRegistry
+		sharingEntryDropdownItemContributorRegistry;
 
 	@Reference
-	private SharingEntryInterpreterProvider _sharingEntryInterpreterProvider;
+	protected SharingEntryInterpreterProvider sharingEntryInterpreterProvider;
 
 	@Reference
-	private SharingEntryLocalService _sharingEntryLocalService;
+	protected SharingEntryLocalService sharingEntryLocalService;
 
 	@Reference
-	private SharingPermission _sharingPermission;
+	protected SharingPermission sharingPermission;
 
 }

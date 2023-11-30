@@ -494,6 +494,38 @@ export function ProvideAppBuildPage({
 				<div className="provide-app-build-page-app-build-radio-container">
 					<RadioCard
 						description={i18n.translate(
+							appType.value === ProductType.CLOUD
+								? 'use-any-local-zip-files-to-upload-max-file-size-is-500-mb'
+								: 'please-be-sure-to-specify-liferay-compatibility-through-the-appropriate-properties-or-xml-files-in-your-plugin'
+						)}
+						icon={uploadIcon}
+						onChange={() =>
+							dispatch({
+								payload: {value: ProductUploadType.ZIP_UPLOAD},
+								type: TYPES.UPDATE_APP_BUILD,
+							})
+						}
+						selected={appBuild === ProductUploadType.ZIP_UPLOAD}
+						title={
+							appType.value === ProductType.CLOUD
+								? i18n.translate('via-zip-upload')
+								: i18n.translate('via-liferay-plugin-packages')
+						}
+						tooltip={ReactDOMServer.renderToString(
+							<span>
+								{i18n.translate(
+									'zip-files-must-be-in-universal-file-format-archive-uffa-the-specially-structured-zip-encoded-archive-used-to-package-client-extension-project-outputs-this-format-must-support-the-following-use-cases-deliver-batch-engine-data-files-compatible-with-all-deployment-targets-deliver-dxp-configuration-resource-compatible-with-all-deployment-targets-deliver-static-resources-compatible-with-all-deployment-targets-deliver-the-infrastructure-metadata-necessary-to-deploy-to-lxc-sm-for-more-information-see'
+								)}
+
+								<a href="https://learn.liferay.com/web/guest/w/dxp/building-applications/client-extensions/working-with-client-extensions#working-with-client-extensions">
+									{i18n.translate('liferay-learn')}
+								</a>
+							</span>
+						)}
+					/>
+
+					<RadioCard
+						description={i18n.translate(
 							'use-any-build-from-any-available-liferay-experience-cloud-account-requires-lxc-account'
 						)}
 						disabled
@@ -529,38 +561,6 @@ export function ProvideAppBuildPage({
 						title={i18n.translate('via-github-repo')}
 						tooltip={i18n.translate(
 							'in-the-future-you-will-be-able-to-submit-your-app-source-code-for-additional-support-and-partnership-opportunities-with-liferay'
-						)}
-					/>
-
-					<RadioCard
-						description={i18n.translate(
-							appType.value === ProductType.CLOUD
-								? 'use-any-local-zip-files-to-upload-max-file-size-is-500-mb'
-								: 'please-be-sure-to-specify-liferay-compatibility-through-the-appropriate-properties-or-xml-files-in-your-plugin'
-						)}
-						icon={uploadIcon}
-						onChange={() =>
-							dispatch({
-								payload: {value: ProductUploadType.ZIP_UPLOAD},
-								type: TYPES.UPDATE_APP_BUILD,
-							})
-						}
-						selected={appBuild === ProductUploadType.ZIP_UPLOAD}
-						title={
-							appType.value === ProductType.CLOUD
-								? i18n.translate('via-zip-upload')
-								: i18n.translate('via-liferay-plugin-packages')
-						}
-						tooltip={ReactDOMServer.renderToString(
-							<span>
-								{i18n.translate(
-									'zip-files-must-be-in-universal-file-format-archive-uffa-the-specially-structured-zip-encoded-archive-used-to-package-client-extension-project-outputs-this-format-must-support-the-following-use-cases-deliver-batch-engine-data-files-compatible-with-all-deployment-targets-deliver-dxp-configuration-resource-compatible-with-all-deployment-targets-deliver-static-resources-compatible-with-all-deployment-targets-deliver-the-infrastructure-metadata-necessary-to-deploy-to-lxc-sm-for-more-information-see'
-								)}
-
-								<a href="https://learn.liferay.com/web/guest/w/dxp/building-applications/client-extensions/working-with-client-extensions#working-with-client-extensions">
-									{i18n.translate('liferay-learn')}
-								</a>
-							</span>
 						)}
 					/>
 				</div>

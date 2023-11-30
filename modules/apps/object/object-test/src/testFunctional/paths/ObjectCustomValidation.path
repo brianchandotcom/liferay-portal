@@ -11,6 +11,11 @@
 
 <tbody>
 	<tr>
+		<td>ADD_COMPOSITE_KEY_FIELDS</td>
+		<td>//button[@class='btn btn-secondary' and contains(text(),'Add Fields')]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>LABEL_ON_ADD_VALIDATION</td>
 		<td>//input[(@name='label') and contains(@class,'form-control')]</td>
 		<td></td>
@@ -53,6 +58,11 @@
 	<tr>
 		<td>LABEL_EDIT_VALIDATION</td>
 		<td>//input[contains(@class,'form-control') and contains(@placeholder,'Add a label')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>COMPOSITE_KEY_FIELD</td>
+		<td>//span[@class="custom-control-label-text" and contains(text(),'${fieldLabel}')]/../..//input[@class='custom-control-input']</td>
 		<td></td>
 	</tr>
 </tbody>

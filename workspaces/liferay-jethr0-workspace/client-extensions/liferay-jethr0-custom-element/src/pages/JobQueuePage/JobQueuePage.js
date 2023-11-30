@@ -11,7 +11,7 @@ import Jethr0Card from '../../components/Jethr0Card/Jethr0Card';
 import Jethr0NavigationBar from '../../components/Jethr0NavigationBar/Jethr0NavigationBar';
 import JobQueue from '../../components/JobQueue/JobQueue';
 
-function Home() {
+function JobQueuePage() {
 	const breadcrumbs = [{active: true, link: '/', name: 'Home'}];
 
 	return (
@@ -28,4 +28,4 @@ function Home() {
 	);
 }
 
-export default Home;
+export default JobQueuePage;

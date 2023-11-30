@@ -77,4 +77,19 @@ definition {
 			value1 = ${scriptValidation});
 	}
 
+	@summary = "Macro to select fields in a composite key validation type"
+	macro selectCompositeKeyField(fieldList = null) {
+		Variables.assertDefined(parameterList = ${fieldList});
+
+		Click(locator1 = "ObjectCustomValidation#ADD_COMPOSITE_KEY_FIELDS");
+
+		for (var fieldLabel : list ${fieldList}) {
+			Click(
+				key_columnName = ${fieldLabel},
+				locator1 = "ObjectCustomValidation#COMPOSITE_KEY_FIELD");
+		}
+
+		Button.clickSave();
+	}
+
 }

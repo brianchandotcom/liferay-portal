@@ -10,35 +10,57 @@ export default {
 	'access-console': 'Access Console',
 	'activation-status': 'Activation Status',
 	'add-packages': 'Add Package(s)',
+	'an-administrator-of-the-marketplace-will-review-your-request-shortly-if-you-have-questions-regarding-your-submission-please-email':
+		'An administrator of the Marketplace will review your request shortly. If you have questions regarding your submission, please email',
 	'an-app-build-is-your-compiled-or-non-compiled-code-submitted-on-behalf-of-your-account-to-the-marketplace-once-submitted-it-will-be-reviewed-and-tested-by-our-marketplace-administrators-for-approval-in-the-marketplace':
 		'An App Build is your compiled or non-compiled code submitted on behalf of your account to the Marketplace. Once submitted, it will be reviewed and tested by our Marketplace administrators for approval in the Marketplace.',
+	'and': 'and',
 	'app-build': 'App Build',
+	'apply-to-your-use-of-this-service-the-name-on-your-liferay-account-will-be-used-in-this-liferay-marketplace-publisher-profile-it-may-appear-where-you-contribute-and-be-changed-at-any-time':
+		'apply to your use of this service. The name on your Liferay account will be used in this Liferay Marketplace Publisher Profile. It may appear where you contribute and be changed at any time',
+	'back': 'Back',
 	'back-to-apps': 'Back to Apps',
 	'back-to-my-apps': 'Back to My Apps',
 	'becoming-a-liferay-marketplace-publisher':
 		'Becoming a Liferay Marketplace publisher',
+	'by-requesting-a-publisher-account-,-you-agree-to-the':
+		'By requesting a Publisher account, you agree to the',
 	'cancel': 'Cancel',
 	'cash': 'Cash',
 	'client-extensions': 'Client Extensions',
 	'cloud-compatible-?': 'Cloud Compatible?',
 	'cloud-upload': 'Cloud Upload',
 	'compatible-offering': 'Compatible Offering',
+	'complete-publisher-account-request': 'Complete Publisher Account Request',
 	'confirm': 'Confirm',
 	'confirm-deactivate-keys': 'Confirm & Deactivate Keys',
 	'confirm-deactivation-terms': 'Confirm Deactivation Terms',
+	'content-policy': 'Content policy',
+	'continue': 'Continue',
 	'create-license-key': 'Create License Key',
 	'create-new-licenses-and-they-will-show-up-here':
 		'Create new licenses and they will show up here.',
 	'deactivate': 'Deactivate',
+	'description': 'Description',
 	'details': 'Details',
 	'download-app': 'Download App',
 	'download-key': 'Download Key',
 	'drag-and-drop-to-upload-or': 'Drag and drop to upload or',
 	'dxp-module-based-apps-are-not-supported-on-liferay-experience-cloud-lxc':
 		'DXP module-based apps are not supported on Liferay Experience Cloud (LXC).',
+	'email': 'Email',
+	'enter-email-address': 'Enter email address',
+	'enter-first-name': 'Enter first name',
+	'enter-last-name': 'Enter last name',
+	'enter-the-name-and-a-brief-description-of-the-app-you-would-like-to-submit':
+		'Enter the name and a brief description of the app you would like to submit',
+	'enter-your-contact-details-in-the-fields-below-in-the-request-description-enter-the-name-and-a-brief-description-of-the-app-you-would-like-to-submit-we-will-be-in-contact-regarding-your-request':
+		'Enter your contact details in the fields below. In the Request Description, enter the name and a brief description of the app you would like to submit. We will be in contact regarding your request.',
 	'environment': 'Environment',
 	'environment-type': 'Environment Type',
 	'expiration-date': 'Expiration Date',
+	'extension-optional': 'Extension (optional)',
+	'first-name': 'First Name',
 	'free': 'Free',
 	'fully-managed': 'Fully-Managed',
 	'go-back-to-marketplace': 'Go Back to Marketplace',
@@ -47,25 +69,31 @@ export default {
 		'I certify that the instances activated with the selected activation keys have been shut down and that there is no Liferay software installed, deployed, used or executed that is activated with the selected activation key.',
 	'if-the-app-is-compatible-with-different-updates-of-74-please-upload-multiple-packages-for-each-update-or-update-compatibility-range':
 		'If the app is compatible with different updates of 7.4, please upload multiple packages for each update or update compatibility range.',
+	'if-you-are-requesting-the-account-on-behalf-of-a-business-,-please-note-the-business-name':
+		'If you are requesting the account on behalf of a business, please note the business name.',
 	'in-the-future-you-will-be-able-to-submit-your-app-directly-from-liferay-experience-cloud-projects':
 		'In the future, you will be able to submit your app directly from Liferay Experience Cloud projects.',
 	'in-the-future-you-will-be-able-to-submit-your-app-source-code-for-additional-support-and-partnership-opportunities-with-liferay':
 		'In the future, you will be able to submit your app source code for additional support and partnership opportunities with Liferay.',
 	'instance-size': 'Instance Size',
+	'intl-code': 'Intl. code',
 	'ip-addresses': 'IP Addresses',
 	'key-activations-available-x-of-x': 'Key activations available: {0} of {1}',
 	'key-deactivation-requested-succesfully':
 		'Key deactivation requested successfully',
 	'key-type': 'Key Type',
+	'last-name': 'Last Name',
 	'learn-more': 'Learn More',
 	'licenses': 'Licenses',
 	'liferay-learn': 'Liferay Learn',
+	'liferay-s': 'Liferay’s',
 	'lorem-ipsum-dolor-sit-amet-consectetur':
 		'Lorem ipsum dolor sit amet consectetur.',
 	'mac-addresses': 'Mac Addresses',
 	'manage': 'Manage',
 	'monetize-your-apps-and-solutions': 'Monetize your apps and solutions',
 	'more-info': 'More Info',
+	'name': 'Name',
 	'no': 'No',
 	'no-licenses-yet': 'No Licenses yet',
 	'no-results-found': 'No results found',
@@ -73,13 +101,24 @@ export default {
 		'Only JAR, WAR files are allowed. Max file size is 500MB.',
 	'only-zip-files-are-allowed-max-file-size-is-500-mb':
 		'Only ZIP files are allowed. Max file size is 500MB',
+	'phone': 'Phone',
+	'phone-number': 'Phone Number',
 	'please-be-sure-to-specify-liferay-compatibility-through-the-appropriate-properties-or-xml-files-in-your-plugin':
 		'Please be sure to specify Liferay compatibility through the appropriate properties or XML files in your plugin.',
+	'privacy-policy': 'Privacy Policy',
 	'provide-app-build': 'Provide app build',
 	'publish-apps-to-the-liferay-marketplace':
 		'Publish apps to the Liferay Marketplace',
+	'publisher-account-request': 'Publisher Account Request.',
 	'remove-a-version': 'Remove a Version',
+	'request-a-marketplace-publisher-account':
+		'Request a Marketplace Publisher Account',
 	'request-account': 'Request Account',
+	'request-description': 'Request Description',
+	'request-details': 'Request details',
+	'return-to-marketplace': 'Return to Marketplace',
+	'review-the-new-publisher-info-and-the-liferay-marketplace-terms-before-proceeding':
+		'Review the new publisher info and the Liferay Marketplace terms before proceeding',
 	'select-a-file': 'Select a file',
 	'select-a-local-file-to-upload': 'Select a local file to upload',
 	'select-compatible-versions': 'Select Compatible Versions',
@@ -92,6 +131,8 @@ export default {
 	'sorry-there-are-no-results-found': 'Sorry, there are no results found',
 	'start-date': 'Start Date',
 	'status': 'Status',
+	'terms-of-service': 'Terms of Service',
+	'thank-you-for-your': 'Thank you for your',
 	'the-app-submission-is-compatible-with-liferay-experience-cloud-and':
 		'The app submission is compatible with Liferay Experience Cloud and ',
 	'the-app-submission-is-integrates-with-liferay-dxp-version-7-4-or-later':

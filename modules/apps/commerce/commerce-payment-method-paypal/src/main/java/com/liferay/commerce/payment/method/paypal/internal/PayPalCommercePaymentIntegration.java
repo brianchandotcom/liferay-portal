@@ -690,19 +690,20 @@ public class PayPalCommercePaymentIntegration
 		PayPalGroupServiceConfiguration payPalGroupServiceConfiguration =
 			_getPayPalGroupServiceConfiguration(commercePaymentEntry);
 
-		PayPalEnvironment payPalEnvironment = new PayPalEnvironment.Sandbox(
-			payPalGroupServiceConfiguration.clientId(),
-			payPalGroupServiceConfiguration.clientSecret());
+		if (Objects.equals(
+				payPalGroupServiceConfiguration.mode(),
+				PayPalCommercePaymentMethodConstants.MODE_LIVE)) {
 
-		String mode = payPalGroupServiceConfiguration.mode();
-
-		if (mode.equals(PayPalCommercePaymentMethodConstants.MODE_LIVE)) {
-			payPalEnvironment = new PayPalEnvironment.Live(
-				payPalGroupServiceConfiguration.clientId(),
-				payPalGroupServiceConfiguration.clientSecret());
+			return new PayPalHttpClient(
+				new PayPalEnvironment.Live(
+					payPalGroupServiceConfiguration.clientId(),
+					payPalGroupServiceConfiguration.clientSecret()));
 		}
 
-		return new PayPalHttpClient(payPalEnvironment);
+		return new PayPalHttpClient(
+			new PayPalEnvironment.Sandbox(
+				payPalGroupServiceConfiguration.clientId(),
+				payPalGroupServiceConfiguration.clientSecret()));
 	}
 
 	private String _getResource(Locale locale, String key) {

@@ -94,7 +94,7 @@ export function RuleBuilderActionSection({
 		<ClayPanel
 			className="page-editor__rule-builder-section"
 			displayTitle={
-				<ClayPanel.Title className="p-3 page-editor__rule-builder-section-title text-3">
+				<ClayPanel.Title className="align-items-center d-flex p-3 page-editor__rule-builder-section-title text-3">
 					<div className="align-items-center d-flex">
 						<ClayIcon
 							className="mr-3 text-purple"

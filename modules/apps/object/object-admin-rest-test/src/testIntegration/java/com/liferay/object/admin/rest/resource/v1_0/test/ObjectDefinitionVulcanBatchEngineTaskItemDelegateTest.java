@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 
@@ -62,10 +61,8 @@ public class ObjectDefinitionVulcanBatchEngineTaskItemDelegateTest {
 			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Before
-	public void setUp() throws Exception {
-		_company = CompanyTestUtil.addCompany();
-
-		PortalInstances.initCompany(_company);
+	public void setUp() throws Throwable {
+		_company = CompanyTestUtil.addCompany(true);
 
 		User user = UserTestUtil.addCompanyAdminUser(_company);
 

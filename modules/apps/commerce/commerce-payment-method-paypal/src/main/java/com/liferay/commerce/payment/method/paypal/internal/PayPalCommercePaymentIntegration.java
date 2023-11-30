@@ -114,8 +114,6 @@ public class PayPalCommercePaymentIntegration
 		commercePaymentEntry.setPaymentStatus(
 			CommercePaymentEntryConstants.STATUS_FAILED);
 
-		String transactionCode = StringPool.BLANK;
-
 		try {
 			PayPalHttpClient payPalHttpClient = _getPayPalHttpClient(
 				commercePaymentEntry);
@@ -160,17 +158,16 @@ public class PayPalCommercePaymentIntegration
 									authorizations.get(0);
 
 								if (authorization != null) {
-									transactionCode = authorization.id();
+									commercePaymentEntry.setPaymentStatus(
+										CommercePaymentEntryConstants.
+											STATUS_AUTHORIZED);
+									commercePaymentEntry.setTransactionCode(
+										authorization.id());
 								}
 							}
 						}
 					}
 				}
-			}
-
-			if (Validator.isNotNull(transactionCode)) {
-				commercePaymentEntry.setPaymentStatus(
-					CommercePaymentEntryConstants.STATUS_AUTHORIZED);
 			}
 
 			commercePaymentEntry.setRedirectURL(null);
@@ -182,8 +179,6 @@ public class PayPalCommercePaymentIntegration
 				_getErrorMessages(
 					new JSONObject(ioException), StringPool.BLANK));
 		}
-
-		commercePaymentEntry.setTransactionCode(transactionCode);
 
 		return commercePaymentEntry;
 	}
@@ -362,8 +357,6 @@ public class PayPalCommercePaymentIntegration
 		commercePaymentEntry.setPaymentStatus(
 			CommercePaymentEntryConstants.STATUS_FAILED);
 
-		String transactionCode = StringPool.BLANK;
-
 		try {
 			PayPalHttpClient payPalHttpClient = _getPayPalHttpClient(
 				commercePaymentEntry);
@@ -427,16 +420,16 @@ public class PayPalCommercePaymentIntegration
 							PayPalCommercePaymentMethodConstants.APPROVE_URL,
 							linkDescription.rel())) {
 
-						commercePaymentEntry.setRedirectURL(
-							linkDescription.href());
 						commercePaymentEntry.setPaymentStatus(
 							CommercePaymentEntryConstants.STATUS_CREATED);
+						commercePaymentEntry.setRedirectURL(
+							linkDescription.href());
 
 						break;
 					}
 				}
 
-				transactionCode = order.id();
+				commercePaymentEntry.setTransactionCode(order.id());
 			}
 		}
 		catch (IOException ioException) {
@@ -445,8 +438,6 @@ public class PayPalCommercePaymentIntegration
 			commercePaymentEntry.setErrorMessages(
 				_getErrorMessages(ioException, StringPool.BLANK));
 		}
-
-		commercePaymentEntry.setTransactionCode(transactionCode);
 
 		return commercePaymentEntry;
 	}

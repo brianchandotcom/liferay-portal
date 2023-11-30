@@ -26,6 +26,7 @@ import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.client.extension.service.ClientExtensionEntryLocalService;
 import com.liferay.client.extension.type.CET;
 import com.liferay.client.extension.type.manager.CETManager;
+import com.liferay.client.extension.util.CETUtil;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
@@ -1477,10 +1478,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 			sb.append(cet.getCompanyId());
 			sb.append("_");
 			sb.append(
-				cet.getExternalReferenceCode(
-				).replaceAll(
-					"\\W", StringPool.UNDERLINE
-				));
+				CETUtil.normalizeExternalReferenceCodeForPortletId(
+					cet.getExternalReferenceCode()));
 
 			stringUtilReplaceValues.put(
 				"CLIENT_EXTENSION_ENTRY_ERC:" + cet.getExternalReferenceCode(),
@@ -1557,11 +1556,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 			sb2.append(serviceContext.getCompanyId());
 			sb2.append("_");
 			sb2.append(
-				jsonObject.getString(
-					"externalReferenceCode"
-				).replaceAll(
-					"\\W", StringPool.UNDERLINE
-				));
+				CETUtil.normalizeExternalReferenceCodeForPortletId(
+					jsonObject.getString("externalReferenceCode")));
 
 			stringUtilReplaceValues.put(
 				"CLIENT_EXTENSION_ENTRY_ERC:" +

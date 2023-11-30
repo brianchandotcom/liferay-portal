@@ -2,7 +2,7 @@
 @summary = "Assert that '${locator1}' does not equal the value '${value1}'"
 definition {
 
-	function assertNotPartialText(locator1, value1) {
+	function assertNotPartialMatch(locator1, value1) {
 		WaitForSPARefresh();
 
 		selenium.waitForVisible(${locator1}, "false");

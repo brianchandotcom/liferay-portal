@@ -323,7 +323,7 @@ definition {
 		}
 
 		task ("Then the page designer cannot see the alert message") {
-			AssertTextNotEquals.assertNotPartialText(
+			AssertTextNotEquals.assertNotPartialMatch(
 				index = 1,
 				locator1 = "Fragment#INPUT_LENGTH_INFO",
 				type = "textarea",

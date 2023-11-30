@@ -201,7 +201,7 @@ definition {
 				locator1 = "SearchTuning#RESULT_RANKINGS_ADD_RESULT_SEARCH_BAR",
 				value1 = "\RETURN");
 
-			AssertTextNotEquals.assertNotPartialText(
+			AssertTextNotEquals.assertNotPartialMatch(
 				locator1 = "SearchTuning#RESULT_RANKINGS_ADD_RESULT_RESULT_TITLE_SPECIFIC_ORDER",
 				resultOrder = 1,
 				value1 = "tree.png");
@@ -353,7 +353,7 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "Journal");
 
-		AssertTextNotEquals.assertNotPartialText(
+		AssertTextNotEquals.assertNotPartialMatch(
 			locator1 = "SearchPage#RESULT_TITLE_SPECIFIC_ORDER",
 			resultOrder = 1,
 			value1 = "Journal 2");

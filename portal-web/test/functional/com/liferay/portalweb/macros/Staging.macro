@@ -468,7 +468,7 @@ definition {
 				value1 = "Cancel");
 		}
 		else if (${includeThumbnailsAndPreviewsDuringStaging} == "false") {
-			AssertTextNotEquals.assertNotPartialText(
+			AssertTextNotEquals.assertNotPartialMatch(
 				locator1 = "Staging#STAGING_CONTENT_INFO",
 				value1 = "Previews and Thumbnails");
 

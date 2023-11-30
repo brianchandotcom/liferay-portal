@@ -293,7 +293,7 @@ definition {
 				locator1 = "CommerceEntry#PRODUCT_CARD_LIST_PRICE",
 				value1 = "$");
 
-			AssertTextNotEquals.assertNotPartialText(
+			AssertTextNotEquals.assertNotPartialMatch(
 				key_productName = "U-Joint",
 				locator1 = "CommerceEntry#PRODUCT_CARD_LIST_PRICE",
 				value1 = "€");
@@ -940,7 +940,7 @@ definition {
 				locator1 = "CommerceEntry#PRODUCT_CARD_LIST_PRICE",
 				value1 = "$");
 
-			AssertTextNotEquals.assertNotPartialText(
+			AssertTextNotEquals.assertNotPartialMatch(
 				key_productName = "U-Joint",
 				locator1 = "CommerceEntry#PRODUCT_CARD_LIST_PRICE",
 				value1 = "€");
@@ -2549,7 +2549,7 @@ definition {
 				locator1 = "CommerceEntry#PRODUCT_CARD_LIST_PRICE",
 				value1 = "€");
 
-			AssertTextNotEquals.assertNotPartialText(
+			AssertTextNotEquals.assertNotPartialMatch(
 				key_productName = "U-Joint",
 				locator1 = "CommerceEntry#PRODUCT_CARD_LIST_PRICE",
 				value1 = "$");
@@ -2570,7 +2570,7 @@ definition {
 				locator1 = "CommerceEntry#PRODUCT_CARD_LIST_PRICE",
 				value1 = "€");
 
-			AssertTextNotEquals.assertNotPartialText(
+			AssertTextNotEquals.assertNotPartialMatch(
 				key_productName = "U-Joint",
 				locator1 = "CommerceEntry#PRODUCT_CARD_LIST_PRICE",
 				value1 = "$");
@@ -2591,7 +2591,7 @@ definition {
 				locator1 = "CommerceEntry#PRODUCT_CARD_LIST_PRICE",
 				value1 = "$");
 
-			AssertTextNotEquals.assertNotPartialText(
+			AssertTextNotEquals.assertNotPartialMatch(
 				key_productName = "U-Joint",
 				locator1 = "CommerceEntry#PRODUCT_CARD_LIST_PRICE",
 				value1 = "€");

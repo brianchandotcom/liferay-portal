@@ -699,7 +699,7 @@ definition {
 			value1 = ${autocompleteText});
 
 		if (isSet(notPresent)) {
-			AssertTextNotEquals.assertNotPartialText(
+			AssertTextNotEquals.assertNotPartialMatch(
 				locator1 = "ACSegments#SEGMENT_AUTOCOMPLETE_DROPDOWN",
 				value1 = ${notPresent});
 		}

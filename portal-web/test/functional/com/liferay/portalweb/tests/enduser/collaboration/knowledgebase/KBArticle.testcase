@@ -771,7 +771,7 @@ definition {
 			kbArticleContent = "Knowledge Base Article Content",
 			kbArticleTitle = "Knowledge Base Article Title");
 
-		AssertTextNotEquals.assertNotPartialText(
+		AssertTextNotEquals.assertNotPartialMatch(
 			locator1 = "KnowledgeBaseArticle#ATTACHMENTS_SAVED_ATTACHMENTS_CONTAINER",
 			value1 = "Document_1.jpg");
 	}

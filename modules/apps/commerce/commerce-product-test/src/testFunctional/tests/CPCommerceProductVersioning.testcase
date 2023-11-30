@@ -318,7 +318,7 @@ definition {
 				locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE",
 				value1 = "$ 120.00");
 
-			AssertTextNotEquals.assertNotPartialText(
+			AssertTextNotEquals.assertNotPartialMatch(
 				key_productName = "Hoses",
 				locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE",
 				value1 = "$ 0.00");

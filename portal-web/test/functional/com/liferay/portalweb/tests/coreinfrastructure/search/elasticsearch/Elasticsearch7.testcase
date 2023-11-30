@@ -937,11 +937,11 @@ definition {
 			locator1 = "SearchAdmin#CONNECTION_ID",
 			value1 = "__REMOTE__");
 
-		AssertTextNotEquals.assertNotPartialText(
+		AssertTextNotEquals.assertNotPartialMatch(
 			locator1 = "SearchAdmin#SEARCH_ENGINE_VENDOR",
 			value1 = "(Sidecar)");
 
-		AssertTextNotEquals.assertNotPartialText(
+		AssertTextNotEquals.assertNotPartialMatch(
 			locator1 = "SearchAdmin#CONNECTION_ID",
 			value1 = "__SIDECAR__");
 

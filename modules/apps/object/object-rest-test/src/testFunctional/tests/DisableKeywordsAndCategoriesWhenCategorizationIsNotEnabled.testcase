@@ -187,12 +187,12 @@ definition {
 		}
 
 		task ("Then the keywords and categories are not present in the Request body") {
-			AssertTextNotEquals.assertNotPartialText(
+			AssertTextNotEquals.assertNotPartialMatch(
 				locator1 = "OpenAPI#REQUEST_BODY",
 				method = "postUniversity",
 				value1 = "\"keywords\":");
 
-			AssertTextNotEquals.assertNotPartialText(
+			AssertTextNotEquals.assertNotPartialMatch(
 				locator1 = "OpenAPI#REQUEST_BODY",
 				method = "postUniversity",
 				value1 = "\"taxonomyCategoryIds\":");

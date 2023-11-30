@@ -147,7 +147,7 @@ definition {
 				fragmentName = "Content Display",
 				text = ${siteId});
 
-			AssertTextNotEquals.assertNotPartialText(
+			AssertTextNotEquals.assertNotPartialMatch(
 				assetType = "journal",
 				index = 1,
 				locator1 = "Fragment#CONTENT_DISPLAY_TEXT",

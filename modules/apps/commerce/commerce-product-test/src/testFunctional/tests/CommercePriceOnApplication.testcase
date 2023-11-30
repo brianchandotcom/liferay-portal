@@ -882,7 +882,7 @@ definition {
 				key_productName = "U-Joint",
 				locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE_ON_APPLICATION");
 
-			AssertTextNotEquals.assertNotPartialText(
+			AssertTextNotEquals.assertNotPartialMatch(
 				key_productName = "U-Joint",
 				locator1 = "CommerceEntry#PRODUCT_CARD_LIST_PRICE",
 				value1 = "$ 20.00");
@@ -947,7 +947,7 @@ definition {
 				key_productName = "U-Joint",
 				locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE_ON_APPLICATION");
 
-			AssertTextNotEquals.assertNotPartialText(
+			AssertTextNotEquals.assertNotPartialMatch(
 				key_productName = "U-Joint",
 				locator1 = "CommerceEntry#PRODUCT_CARD_LIST_PRICE",
 				value1 = "$ 20.00");

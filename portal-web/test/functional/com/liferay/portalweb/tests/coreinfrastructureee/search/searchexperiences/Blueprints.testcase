@@ -5191,7 +5191,7 @@ definition {
 
 			Blueprints.addElement(element = "Limit Search to PDF files");
 
-			AssertTextNotEquals.assertNotPartialText(
+			AssertTextNotEquals.assertNotPartialMatch(
 				key_element = "Limit Search to PDF files",
 				locator1 = "Blueprints#BLUEPRINTS_ADD_ELEMENTS_SIDEBAR_ELEMENT_DESCRIPTION",
 				value1 = "limit-search-to-pdf-files-description");
@@ -5310,7 +5310,7 @@ definition {
 			key_fieldLabel = "Asset Category Name (IDs)",
 			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD_CLEAR_ALL_BUTTON");
 
-		AssertTextNotEquals.assertNotPartialText(
+		AssertTextNotEquals.assertNotPartialMatch(
 			key_element = "Boost Contents in a Category",
 			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT",
 			value1 = "Test Category");
@@ -5978,7 +5978,7 @@ definition {
 
 		Blueprints.gotoElement(element = "Test Element");
 
-		AssertTextNotEquals.assertNotPartialText(
+		AssertTextNotEquals.assertNotPartialMatch(
 			locator1 = "Blueprints#CODE_MIRROR_EDITOR",
 			value1 = "Unsaved Element");
 
@@ -6010,7 +6010,7 @@ definition {
 
 		Blueprints.gotoElement(element = "Test Element");
 
-		AssertTextNotEquals.assertNotPartialText(
+		AssertTextNotEquals.assertNotPartialMatch(
 			locator1 = "Blueprints#CODE_MIRROR_EDITOR",
 			value1 = "Unsaved Element");
 	}

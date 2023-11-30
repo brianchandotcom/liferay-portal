@@ -215,12 +215,12 @@ definition {
 		}
 
 		task ("Then in items of the page I do not see name nor id values") {
-			AssertTextNotEquals.assertNotPartialText(
+			AssertTextNotEquals.assertNotPartialMatch(
 				locator1 = "OpenAPI#RESPONSE_BODY",
 				method = "getManager",
 				value1 = "\"id\": ${staticManagerId}");
 
-			AssertTextNotEquals.assertNotPartialText(
+			AssertTextNotEquals.assertNotPartialMatch(
 				locator1 = "OpenAPI#RESPONSE_BODY",
 				method = "getManager",
 				value1 = "\"name\": \"Jane\"");

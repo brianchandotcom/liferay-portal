@@ -196,7 +196,7 @@ definition {
 		task ("Close warning message") {
 			Segmentation.closeSegmentationDisabledWarning();
 
-			AssertTextNotEquals.assertNotPartialText(
+			AssertTextNotEquals.assertNotPartialMatch(
 				locator1 = "Message#ERROR_3",
 				value1 = "Segmentation is disabled");
 		}

@@ -217,7 +217,7 @@ definition {
 			key_pageName = "Pagina de prueba",
 			locator1 = "Home#PAGE_ACTIVE");
 
-		AssertTextNotEquals.assertNotPartialText(
+		AssertTextNotEquals.assertNotPartialMatch(
 			locator1 = "Message#INFO_2",
 			value1 = "Usted fue redirigido a ${portalURL}/es/web/test-site-name/nueva-pagina-de-prueba");
 	}

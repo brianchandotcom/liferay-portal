@@ -2366,14 +2366,14 @@ definition {
 
 			var fragmentId2 = selenium.getText("//div[@aria-label='Fragment Name']//div[contains(@id,'fragment-')]");
 
-			AssertTextNotEquals.assertNotPartialText(
+			AssertTextNotEquals.assertNotPartialMatch(
 				key_columnNumber = 1,
 				key_position = 1,
 				key_rowNumber = 2,
 				locator1 = "PageEditor#COLLECTION_DISPLAY_COLUMN",
 				value1 = ${fragmentId2});
 
-			AssertTextNotEquals.assertNotPartialText(
+			AssertTextNotEquals.assertNotPartialMatch(
 				key_columnNumber = 1,
 				key_position = 1,
 				key_rowNumber = 3,
@@ -2418,13 +2418,13 @@ definition {
 				locator1 = "PageEditor#COLLECTION_ITEM",
 				value1 = ${fragmentElementId});
 
-			AssertTextNotEquals.assertNotPartialText(
+			AssertTextNotEquals.assertNotPartialMatch(
 				key_colPosition = 1,
 				key_rowPosition = 2,
 				locator1 = "PageEditor#COLLECTION_ITEM",
 				value1 = ${fragmentElementId});
 
-			AssertTextNotEquals.assertNotPartialText(
+			AssertTextNotEquals.assertNotPartialMatch(
 				key_colPosition = 1,
 				key_rowPosition = 3,
 				locator1 = "PageEditor#COLLECTION_ITEM",

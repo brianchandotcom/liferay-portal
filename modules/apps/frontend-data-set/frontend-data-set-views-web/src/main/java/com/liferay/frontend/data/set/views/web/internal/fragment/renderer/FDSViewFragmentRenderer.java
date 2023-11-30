@@ -421,9 +421,7 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 					String.valueOf(properties.get("renderer"))
 				).put(
 					"fieldName",
-					StringUtil.replaceLast(
-						String.valueOf(properties.get("name")), ".*",
-						StringPool.BLANK)
+					String.valueOf(properties.get("name"))
 				).put(
 					"label", _getValue("label", "name", properties)
 				).put(

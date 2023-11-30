@@ -861,7 +861,7 @@ definition {
 
 	@description = "LPS-196309 | As an admin, I can assert that if the account the user is associated is deleted, the user will be listed again by using the filter type 'Unassociated Users'."
 	@priority = 4
-	test CanFilterByNotAssociatedUsersAfterDeletingTheAssociatedAccount {
+	test CanFilterByUnassociatedUsersAfterDeletingTheAssociatedAccount {
 		property portal.acceptance = "false";
 
 		task ("Given an account with an account user") {
@@ -915,7 +915,7 @@ definition {
 
 	@description = "LPS-196309 | As an admin, I can assert that if the user is removed from the organization, will be listed again by using the filter type 'Unassociated Users'."
 	@priority = 4
-	test CanFilterByNotAssociatedUsersAfterRemovingUserFromOrganization {
+	test CanFilterByUnassociatedUsersAfterRemovingUserFromOrganization {
 		property portal.acceptance = "false";
 
 		task ("Given a user and an organization is created and the user is linked to the organization") {
@@ -969,7 +969,7 @@ definition {
 
 	@description = "LPS-196309 | As an admin, I can filter users that do not belong to an account or organization by using the filter type 'Unassociated Users'."
 	@priority = 5
-	test CanFilterUsersByNotAssociatedUsers {
+	test CanFilterUsersByUnassociatedUsers {
 		property portal.acceptance = "true";
 
 		task ("Given an account with an account user") {

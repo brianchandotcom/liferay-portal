@@ -175,7 +175,9 @@ public class JavaUpgradeConnectionCheck extends BaseJavaTermCheck {
 		return false;
 	}
 
-	private List<String> _getUpgradeAbsolutePaths() throws IOException {
+	private synchronized List<String> _getUpgradeAbsolutePaths()
+		throws IOException {
+
 		if (_upgradeAbsolutePaths != null) {
 			return _upgradeAbsolutePaths;
 		}
@@ -210,7 +212,9 @@ public class JavaUpgradeConnectionCheck extends BaseJavaTermCheck {
 		return _upgradeAbsolutePaths;
 	}
 
-	private String _getUpgradeContent(String absolutePath) throws IOException {
+	private synchronized String _getUpgradeContent(String absolutePath)
+		throws IOException {
+
 		if (_upgradeContentsMap.containsKey(absolutePath)) {
 			return _upgradeContentsMap.get(absolutePath);
 		}

@@ -591,7 +591,7 @@
 
 		<if>
 			<not>
-				<equals arg1="${upgrade.status}" arg2="warning" />
+				<equals arg1="${upgrade.status}" arg2="success" />
 			</not>
 			<then>
 				<antcall inheritAll="false" target="check-upgrade-client-gogoshell-connection" />

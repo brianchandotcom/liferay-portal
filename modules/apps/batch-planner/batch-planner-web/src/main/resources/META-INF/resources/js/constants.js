@@ -54,6 +54,9 @@ export const PROCESS_COMPLETED = 'COMPLETED';
 export const PROCESS_FAILED = 'FAILED';
 export const PROCESS_STARTED = 'STARTED';
 
+
+export const OBJECT_DEFINITION =
+	'com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition';
 export const SCHEMA_SELECTED_EVENT = 'ie-schema-selected';
 export const IMPORT_STRATEGY_SELECTED_EVENT = 'ie-import-strategy-selected';
 export const TEMPLATE_CREATED_EVENT = 'ie-template-created';

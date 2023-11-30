@@ -749,8 +749,6 @@ definition {
 			FormPortletConfiguration.selectFormOnAPage(
 				formName = "Select country",
 				pageName = "Form Page");
-
-			Navigator.gotoPage(pageName = "Form Page");
 		}
 
 		task ("When an entry is submitted immediately") {

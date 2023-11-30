@@ -44,10 +44,7 @@ definition {
 		property database.types = "db2,mysql,oracle,postgresql,sqlserver";
 		property portal.version = "6.2.10.21";
 		property skip.start.app.server = "true";
-		property skip.upgrade-legacy-database = "true";
 		property test.assert.warning.exceptions = "false";
-
-		AntCommands.runCommand("modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml", "execute-upgrade-client-skip-gogoshell");
 
 		AssertConsoleTextPresent(value1 = "Detected reserved friendly URL \"/a\" Update the friendly URL for the layout with PLID");
 

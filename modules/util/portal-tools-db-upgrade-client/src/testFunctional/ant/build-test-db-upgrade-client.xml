@@ -684,14 +684,6 @@ upgrade.database.auto.run=false</echo>
 		/>
 	</target>
 
-	<target name="execute-upgrade-client-skip-gogoshell">
-		<prepare-database-upgrade-properties />
-
-		<antcall inheritAll="false" target="run-upgrade-client" />
-
-		<antcall inheritAll="false" target="check-upgrade-client-gogoshell-connection" />
-	</target>
-
 	<target name="run-upgrade-client">
 		<get-database-upgrade-client-paths />
 

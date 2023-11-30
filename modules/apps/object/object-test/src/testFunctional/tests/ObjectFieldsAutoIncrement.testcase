@@ -20,4 +20,84 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 	}
+
+	@description = "LPS-169223 - Verify the user can add and view object entries that contain auto increment fields in page builder"
+	@priority = 4
+	test CanAddObjectEntryViaPageBuilder {
+		task ("Given an object definition called Shirts with an auto increment field and a text field") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Shirt",
+				objectName = "Shirt",
+				pluralLabelName = "Shirts");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Size",
+				fieldName = "size",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "Shirt");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "Shirt");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Shirt");
+
+			ObjectAdmin.goToFieldsTab();
+
+			ObjectAdmin.addObjectFieldViaUI(
+				fieldLabel = "Identification",
+				fieldType = "Auto Increment",
+				initialValue = 24680,
+				prefixValue = "T-Shirt-",
+				suffixValue = "-Brazil");
+		}
+
+		task ("and Given two object entries") {
+			for (var size : list "Small,Large") {
+				ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+					fieldName = "size",
+					objectName = "Shirt",
+					value = ${size});
+			}
+		}
+
+		task ("and Given Shirts is mapped to a page") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "guest");
+
+			PagesAdmin.addPage(
+				pageName = "Shirts Page",
+				sitePageType = "Widget Page");
+
+			PagesAdmin.configurePage(
+				columnName = "1 Column",
+				pageName = "Shirts Page",
+				sitePageType = "Widget Page");
+
+			Navigator.gotoPage(pageName = "Shirts Page");
+
+			Portlet.addPG(
+				pageName = "Shirts Page",
+				portletName = "Shirts");
+		}
+
+		task ("When the user navigates to the page and adds an object entry") {
+			LexiconEntry.gotoAdd();
+
+			ObjectPortlet.typeCustomField(
+				customField = "Size",
+				entry = "Medium");
+
+			PortletEntry.save();
+		}
+
+		task ("Then all three object entries are present and the auto increment values are correct") {
+			Navigator.gotoPage(pageName = "Shirts Page");
+
+			for (var identificationName : list "24680,24681,24682") {
+				ObjectPortlet.viewEntry(entry = "T-Shirt-${identificationName}-Brazil");
+			}
+		}
+	}
 }

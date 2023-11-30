@@ -417,8 +417,21 @@ public class DownstreamBuild extends BaseBuild {
 					"testName", methodName
 				);
 
-				untestedTestResults.add(
-					TestResultFactory.newTestResult(this, caseJSONObject));
+				TestResult testResult = TestResultFactory.newTestResult(
+					this, caseJSONObject);
+
+				TestClassResult testClassResult =
+					testResult.getTestClassResult();
+
+				if (testClassResult != null) {
+					String status = testClassResult.getStatus();
+
+					if (status.equals("SKIPPED")) {
+						continue;
+					}
+				}
+
+				untestedTestResults.add(testResult);
 			}
 		}
 

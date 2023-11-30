@@ -1640,6 +1640,10 @@
 			<category name="Upgrade" />
 			<description name="Replace the parameter Int for BigDecimal of method validate of 'CommerceOrderValidator' interface" />
 		</check>
+		<check name="UpgradeJavaDDMFormValuesSerializerTrackerCheck">
+			<category name="Upgrade" />
+			<description name="Replaces the references of `DDMFormValuesSerializerTracker` class and also its methods usages." />
+		</check>
 		<check name="UpgradeJavaFacetedSearcherCheck">
 			<category name="Upgrade" />
 			<description name="Replaces the references of the `Indexer indexer = FacetedSearcher.getInstance();` declaration and `indexer.search` method call." />

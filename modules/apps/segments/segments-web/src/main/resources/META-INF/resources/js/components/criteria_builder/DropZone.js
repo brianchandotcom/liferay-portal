@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useEffect, useRef} from 'react';
 import {DropTarget as dropTarget} from 'react-dnd';
@@ -13,6 +14,7 @@ import {
 	useMovementTarget,
 } from '../../contexts/KeyboardMovementContext';
 import {DragTypes} from '../../utils/dragTypes';
+import getDropZoneElementClassName from '../../utils/getDropZoneElementClassName';
 
 const {CRITERIA_GROUP, CRITERIA_ROW, PROPERTY} = DragTypes;
 
@@ -129,6 +131,13 @@ function DropZone({
 		movementTarget
 	);
 
+	const dropZoneClassName = getDropZoneElementClassName(
+		propertyKey,
+		groupId,
+		index,
+		before ? POSITIONS.top : POSITIONS.bottom
+	);
+
 	useEffect(() => {
 		if (isTarget) {
 			ref.current?.scrollIntoView?.({
@@ -140,7 +149,13 @@ function DropZone({
 	}, [isTarget]);
 
 	return (
-		<div className="drop-zone-root position-relative" ref={ref}>
+		<div
+			className={classNames(
+				'drop-zone-root position-relative',
+				dropZoneClassName
+			)}
+			ref={ref}
+		>
 			{connectDropTarget(
 				<div className="drop-zone-target">
 					{(canDrop && hover) || isTarget ? (

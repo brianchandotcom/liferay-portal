@@ -8,8 +8,12 @@ import PropTypes from 'prop-types';
 import React, {useEffect, useRef} from 'react';
 import {DropTarget as dropTarget} from 'react-dnd';
 
-import {useMovementTarget} from '../../contexts/KeyboardMovementContext';
+import {
+	POSITIONS,
+	useMovementTarget,
+} from '../../contexts/KeyboardMovementContext';
 import {DragTypes} from '../../utils/dragTypes';
+import getDropZoneElementClassName from '../../utils/getDropZoneElementClassName';
 import EmptyPlaceholder from './EmptyPlaceholder.es';
 
 /**
@@ -39,7 +43,13 @@ function drop(props, monitor) {
 	props.onCriterionAdd(0, criterion);
 }
 
-function EmptyDropZone({canDrop, connectDropTarget, emptyContributors, hover}) {
+function EmptyDropZone({
+	canDrop,
+	connectDropTarget,
+	emptyContributors,
+	hover,
+	propertyKey,
+}) {
 	const movementTarget = useMovementTarget();
 
 	const ref = useRef();
@@ -48,6 +58,13 @@ function EmptyDropZone({canDrop, connectDropTarget, emptyContributors, hover}) {
 
 	const displayEmptyDropZone =
 		canDrop || !emptyContributors || isKeyboardTarget;
+
+	const dropZoneClassName = getDropZoneElementClassName(
+		propertyKey,
+		'root',
+		0,
+		POSITIONS.middle
+	);
 
 	useEffect(() => {
 		if (isKeyboardTarget) {
@@ -62,13 +79,17 @@ function EmptyDropZone({canDrop, connectDropTarget, emptyContributors, hover}) {
 	return connectDropTarget(
 		displayEmptyDropZone ? (
 			<div
-				className={classNames('empty-drop-zone p-6 rounded', {
-					'border-primary': canDrop || hover || isKeyboardTarget,
-					'border-secondary-light': !canDrop,
-					'empty-drop-zone--dashed':
-						!emptyContributors || (canDrop && !hover),
-					'empty-drop-zone--target': hover || isKeyboardTarget,
-				})}
+				className={classNames(
+					'empty-drop-zone p-6 rounded',
+					dropZoneClassName,
+					{
+						'border-primary': canDrop || hover || isKeyboardTarget,
+						'border-secondary-light': !canDrop,
+						'empty-drop-zone--dashed':
+							!emptyContributors || (canDrop && !hover),
+						'empty-drop-zone--target': hover || isKeyboardTarget,
+					}
+				)}
 				ref={ref}
 			/>
 		) : (

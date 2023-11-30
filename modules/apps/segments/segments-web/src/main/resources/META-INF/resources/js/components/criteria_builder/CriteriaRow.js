@@ -18,6 +18,7 @@ import {
 } from '../../contexts/KeyboardMovementContext';
 import {PROPERTY_TYPES, SUPPORTED_OPERATORS} from '../../utils/constants';
 import {DragTypes} from '../../utils/dragTypes';
+import getDropZoneElementClassname from '../../utils/getDropZoneElementClassName';
 import {
 	createNewGroup,
 	getSupportedOperatorsFromType,
@@ -319,16 +320,27 @@ function CriteriaRow({
 		movementTarget?.index === index &&
 		movementTarget.position === POSITIONS.middle;
 
+	const dropZoneClassName = getDropZoneElementClassname(
+		propertyKey,
+		groupId,
+		index,
+		POSITIONS.middle
+	);
+
 	return (
 		<>
 			{connectDropTarget(
 				<div
-					className={classNames('criterion-row-root', {
-						'criterion-row-root-error': error,
-						'criterion-row-root-warning': warning,
-						'dnd-drag': dragging,
-						'dnd-hover': (hover && canDrop) || isKeyboardTarget,
-					})}
+					className={classNames(
+						'criterion-row-root',
+						dropZoneClassName,
+						{
+							'criterion-row-root-error': error,
+							'criterion-row-root-warning': warning,
+							'dnd-drag': dragging,
+							'dnd-hover': (hover && canDrop) || isKeyboardTarget,
+						}
+					)}
 				>
 					{editing ? (
 						<CriteriaRowEditable

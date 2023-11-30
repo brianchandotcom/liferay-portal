@@ -118,7 +118,8 @@ public class RunSegmentsExperimentMVCActionCommand
 			_segmentsExperimentService.runSegmentsExperiment(
 				segmentsExperimentId,
 				ParamUtil.getDouble(actionRequest, "confidenceLevel"),
-				segmentsExperienceIdSplitMap);
+				segmentsExperienceIdSplitMap,
+				ParamUtil.getString(actionRequest, "segmentsExperimentType"));
 
 		return JSONUtil.put(
 			"segmentsExperiment",

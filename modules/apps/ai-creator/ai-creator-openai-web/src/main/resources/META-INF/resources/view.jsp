@@ -20,13 +20,13 @@ AICreatorOpenAIDisplayContext aiCreatorOpenAIDisplayContext = (AICreatorOpenAIDi
 		<c:when test="<%= aiCreatorOpenAIDisplayContext.isGenerations() %>">
 			<react:component
 				module="ai_creator_modal/AICreatorImageModal"
-				props="<%= aiCreatorOpenAIDisplayContext.getProps() %>"
+				props="<%= aiCreatorOpenAIDisplayContext.getGenerationsProps() %>"
 			/>
 		</c:when>
 		<c:otherwise>
 			<react:component
 				module="ai_creator_modal/AICreatorModal"
-				props="<%= aiCreatorOpenAIDisplayContext.getProps() %>"
+				props="<%= aiCreatorOpenAIDisplayContext.getCompletionProps() %>"
 			/>
 		</c:otherwise>
 	</c:choose>

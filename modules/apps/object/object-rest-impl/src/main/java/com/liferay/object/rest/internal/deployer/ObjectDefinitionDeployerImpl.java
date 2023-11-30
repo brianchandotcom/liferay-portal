@@ -73,6 +73,7 @@ import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.extension.ExtensionProviderRegistry;
 import com.liferay.portal.vulcan.graphql.dto.GraphQLDTOContributor;
+import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.resource.OpenAPIResource;
 
 import java.lang.reflect.Method;
@@ -607,32 +608,27 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	private List<ServiceRegistration<?>> _registerExceptionMappers(
 		String jaxRsApplicationName, ObjectDefinition objectDefinition) {
 
-		return Arrays.asList(
-			_registerExceptionMapper(
-				new ObjectAssetCategoryExceptionMapper(), jaxRsApplicationName,
-				objectDefinition),
-			_registerExceptionMapper(
-				new ObjectEntryManagerHttpExceptionMapper(),
-				jaxRsApplicationName, objectDefinition),
-			_registerExceptionMapper(
-				new ObjectEntryStatusExceptionMapper(_language),
-				jaxRsApplicationName, objectDefinition),
-			_registerExceptionMapper(
-				new ObjectEntryValuesExceptionMapper(_language),
-				jaxRsApplicationName, objectDefinition),
-			_registerExceptionMapper(
-				new ObjectRelationshipDeletionTypeExceptionMapper(_language),
-				jaxRsApplicationName, objectDefinition),
-			_registerExceptionMapper(
-				new ObjectValidationRuleEngineExceptionMapper(
-					_jsonFactory, _language),
-				jaxRsApplicationName, objectDefinition),
-			_registerExceptionMapper(
-				new RequiredObjectRelationshipExceptionMapper(_language),
-				jaxRsApplicationName, objectDefinition),
-			_registerExceptionMapper(
-				new UnsupportedOperationExceptionMapper(), jaxRsApplicationName,
-				objectDefinition));
+		List<ServiceRegistration<?>> serviceRegistrations = new ArrayList<>();
+
+		for (BaseExceptionMapper<? extends Exception> exceptionMapper :
+				Arrays.asList(
+					new ObjectAssetCategoryExceptionMapper(),
+					new ObjectEntryManagerHttpExceptionMapper(),
+					new ObjectEntryStatusExceptionMapper(_language),
+					new ObjectEntryValuesExceptionMapper(_language),
+					new ObjectRelationshipDeletionTypeExceptionMapper(
+						_language),
+					new ObjectValidationRuleEngineExceptionMapper(
+						_jsonFactory, _language),
+					new RequiredObjectRelationshipExceptionMapper(_language),
+					new UnsupportedOperationExceptionMapper())) {
+
+			serviceRegistrations.add(
+				_registerExceptionMapper(
+					exceptionMapper, jaxRsApplicationName, objectDefinition));
+		}
+
+		return serviceRegistrations;
 	}
 
 	private boolean _shouldUnregisterApplication(String restContextPath) {

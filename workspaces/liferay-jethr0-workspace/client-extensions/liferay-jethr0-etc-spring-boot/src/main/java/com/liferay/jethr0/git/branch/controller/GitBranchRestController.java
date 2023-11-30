@@ -35,7 +35,7 @@ public class GitBranchRestController {
 	public ResponseEntity<String> gitBranches(
 		@AuthenticationPrincipal Jwt jwt) {
 
-		JSONArray jobsJSONArray = new JSONArray();
+		JSONArray gitBranchesJSONArray = new JSONArray();
 
 		List<GitBranchEntity> gitBranchEntities = new ArrayList<>(
 			_gitBranchEntityRepository.getAll());
@@ -59,18 +59,19 @@ public class GitBranchRestController {
 
 			});
 
-		for (GitBranchEntity jobEntity : gitBranchEntities) {
-			jobsJSONArray.put(jobEntity.getJSONObject());
+		for (GitBranchEntity gitBranchEntity : gitBranchEntities) {
+			gitBranchesJSONArray.put(gitBranchEntity.getJSONObject());
 		}
 
-		return new ResponseEntity<>(jobsJSONArray.toString(), HttpStatus.OK);
+		return new ResponseEntity<>(
+			gitBranchesJSONArray.toString(), HttpStatus.OK);
 	}
 
 	@GetMapping("/upstream")
 	public ResponseEntity<String> upstreamGitBranches(
 		@AuthenticationPrincipal Jwt jwt) {
 
-		JSONArray jobsJSONArray = new JSONArray();
+		JSONArray gitBranchesJSONArray = new JSONArray();
 
 		List<GitBranchEntity> gitBranchEntities = new ArrayList<>(
 			_gitBranchEntityRepository.getAllByType(
@@ -95,11 +96,12 @@ public class GitBranchRestController {
 
 			});
 
-		for (GitBranchEntity jobEntity : gitBranchEntities) {
-			jobsJSONArray.put(jobEntity.getJSONObject());
+		for (GitBranchEntity gitBranchEntity : gitBranchEntities) {
+			gitBranchesJSONArray.put(gitBranchEntity.getJSONObject());
 		}
 
-		return new ResponseEntity<>(jobsJSONArray.toString(), HttpStatus.OK);
+		return new ResponseEntity<>(
+			gitBranchesJSONArray.toString(), HttpStatus.OK);
 	}
 
 	@Autowired

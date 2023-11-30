@@ -181,7 +181,8 @@ public class GitBranchEntityRepository
 	}
 
 	private long _getSenderGitBranchArchiveAge() {
-		return Long.valueOf(_jobArchiveAgeInDays) * 1000 * 60 * 60 * 24;
+		return Long.valueOf(_senderGitBranchArchiveAgeInDays) * 1000 * 60 * 60 *
+			24;
 	}
 
 	private static final Log _log = LogFactory.getLog(
@@ -197,6 +198,6 @@ public class GitBranchEntityRepository
 	private String _gitHubUpstreamBranchURLs;
 
 	@Value("${JETHR0_SENDER_BRANCH_ARCHIVE_AGE_IN_DAYS:1}")
-	private String _jobArchiveAgeInDays;
+	private String _senderGitBranchArchiveAgeInDays;
 
 }

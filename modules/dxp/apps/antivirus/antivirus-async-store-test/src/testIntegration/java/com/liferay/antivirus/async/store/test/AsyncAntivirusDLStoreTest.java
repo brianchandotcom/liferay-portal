@@ -56,6 +56,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import javax.management.DynamicMBean;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -69,6 +71,7 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
 import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 
 /**
@@ -462,11 +465,17 @@ public class AsyncAntivirusDLStoreTest {
 		_withAsyncAntivirusConfiguration(
 			5, "0 0/10 * * * ?", true,
 			() -> {
+				ServiceReference<?>[] references =
+					_bundleContext.getServiceReferences(
+						DynamicMBean.class.toString(),
+						"(component.name=" +
+							"com.liferay.antivirus.async.store.jmx." +
+								"AntivirusAsyncStatisticsManager)");
+
 				AntivirusAsyncStatisticsManagerMBean
 					antivirusAsyncStatisticsManagerMBean =
-						_bundleContext.getService(
-							_bundleContext.getServiceReference(
-								AntivirusAsyncStatisticsManagerMBean.class));
+						(AntivirusAsyncStatisticsManagerMBean)
+							_bundleContext.getService(references[0]);
 
 				Assert.assertNotNull(antivirusAsyncStatisticsManagerMBean);
 

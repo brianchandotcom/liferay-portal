@@ -713,34 +713,24 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 
 		int nestedFieldsDepth = 1;
 
-		JSONArray fdsFieldsJSONArray = JSONUtil.toJSONArray(
-			fdsFieldsSet,
-			(ObjectEntry objectEntry) -> {
-				Map<String, Object> properties = objectEntry.getProperties();
+		for (ObjectEntry fdsField : fdsFieldsSet) {
+			Map<String, Object> properties = fdsField.getProperties();
 
-				return JSONUtil.put(
-					"fieldName", String.valueOf(properties.get("name")));
-			});
+			String[] fieldNameList = StringUtil.split(
+				String.valueOf(properties.get("name")), CharPool.PERIOD);
 
-		for (int i = 0; i < fdsFieldsJSONArray.length(); i++) {
-			JSONObject fdsFieldJSONObject = fdsFieldsJSONArray.getJSONObject(i);
-
-			String[] fieldNameArray = StringUtil.split(
-				fdsFieldJSONObject.getString("fieldName"), CharPool.PERIOD);
-
-			if (fieldNameArray.length > 1) {
-				String[] fieldsName = new String[fieldNameArray.length - 1];
+			if (fieldNameList.length > 1) {
+				String[] fieldsName = new String[fieldNameList.length - 1];
 
 				System.arraycopy(
-					fieldNameArray, 0, fieldsName, 0,
-					fieldNameArray.length - 1);
+					fieldNameList, 0, fieldsName, 0, fieldNameList.length - 1);
 
 				for (String fieldName : fieldsName) {
 					nestedFields = StringUtil.add(nestedFields, fieldName);
 				}
 
-				if (fieldNameArray.length > nestedFieldsDepth) {
-					nestedFieldsDepth = fieldNameArray.length - 1;
+				if (fieldNameList.length > nestedFieldsDepth) {
+					nestedFieldsDepth = fieldNameList.length - 1;
 				}
 			}
 		}

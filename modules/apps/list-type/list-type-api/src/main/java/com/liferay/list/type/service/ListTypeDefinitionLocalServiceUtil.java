@@ -54,11 +54,11 @@ public class ListTypeDefinitionLocalServiceUtil {
 	}
 
 	public static ListTypeDefinition addListTypeDefinition(
-			String externalReferenceCode, long userId)
+			String externalReferenceCode, long userId, boolean system)
 		throws PortalException {
 
 		return getService().addListTypeDefinition(
-			externalReferenceCode, userId);
+			externalReferenceCode, userId, system);
 	}
 
 	public static ListTypeDefinition addListTypeDefinition(

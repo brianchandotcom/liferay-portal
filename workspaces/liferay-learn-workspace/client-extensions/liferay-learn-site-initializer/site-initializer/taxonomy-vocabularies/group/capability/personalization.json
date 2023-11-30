@@ -9,9 +9,9 @@
 	},
 	"taxonomyCategoryProperties": [
 		{
-		  "key": "icon",
-		  "value": "[$DOCUMENT_URL:/site-initializer/documents/group/icon_personalization.svg$]"
+			"key": "icon",
+			"value": "[$DOCUMENT_URL:/site-initializer/documents/group/icon_personalization.svg$]"
 		}
-	  ],
+	],
 	"viewableBy": "Anyone"
 }

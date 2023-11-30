@@ -20,7 +20,6 @@ import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.util.CommerceAccountHelper;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
-import com.liferay.layout.admin.kernel.model.LayoutTypePortletConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -30,7 +29,6 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -38,6 +36,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.site.util.Sitemap;
 import com.liferay.site.util.SitemapURLProvider;
+import com.liferay.site.util.SitemapURLProviderHelper;
 
 import java.io.Serializable;
 
@@ -128,20 +127,14 @@ public class CPDefinitionSitemapURLProvider implements SitemapURLProvider {
 			ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		if (layout.isSystem()) {
+		if (layout.isSystem() ||
+			_sitemapURLProviderHelper.isExcludeLayoutFromSitemap(layout)) {
+
 			return;
 		}
 
 		UnicodeProperties typeSettingsUnicodeProperties =
 			layout.getTypeSettingsProperties();
-
-		if (!GetterUtil.getBoolean(
-				typeSettingsUnicodeProperties.getProperty(
-					LayoutTypePortletConstants.SITEMAP_INCLUDE),
-				true)) {
-
-			return;
-		}
 
 		String currentSiteURL = _portal.getGroupFriendlyURL(
 			layout.getLayoutSet(), themeDisplay, false, false);
@@ -210,5 +203,8 @@ public class CPDefinitionSitemapURLProvider implements SitemapURLProvider {
 
 	@Reference
 	private Sitemap _sitemap;
+
+	@Reference
+	private SitemapURLProviderHelper _sitemapURLProviderHelper;
 
 }

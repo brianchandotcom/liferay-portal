@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.site.util.Sitemap;
 import com.liferay.site.util.SitemapURLProvider;
+import com.liferay.site.util.SitemapURLProviderHelper;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -259,7 +260,9 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 					journalArticle.getDDMStructure());
 			}
 
-			if (articleLayout == null) {
+			if (_sitemapURLProviderHelper.isExcludeLayoutFromSitemap(
+					articleLayout)) {
+
 				continue;
 			}
 
@@ -363,5 +366,8 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 
 	@Reference
 	private Sitemap _sitemap;
+
+	@Reference
+	private SitemapURLProviderHelper _sitemapURLProviderHelper;
 
 }

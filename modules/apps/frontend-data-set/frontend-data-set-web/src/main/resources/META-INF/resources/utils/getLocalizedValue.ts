@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {NESTING_DELIMITER} from '../Constants';
+import {NESTING_DELIMITER, NESTING_ROOT} from '../Constants';
 interface ILocalizedItemDetails {
 	rootPropertyName: string;
 	value: string;
@@ -41,6 +41,10 @@ function resolveField(path: string | Array<string>, item: any) {
 	}
 
 	const itemPath = path.split(NESTING_DELIMITER);
+
+	if (path.includes(NESTING_ROOT)) {
+		itemPath.pop();
+	}
 
 	return {
 		resolvedFieldname: itemPath[itemPath.length - 1],

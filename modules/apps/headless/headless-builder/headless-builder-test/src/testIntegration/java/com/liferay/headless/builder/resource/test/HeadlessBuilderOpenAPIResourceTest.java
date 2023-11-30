@@ -328,7 +328,7 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 
 	@After
 	public void tearDown() throws Exception {
-		assertSuccessfulHttpCode(
+		assertSuccessfulJSONObject(
 			JSONUtil.put(
 				"requestAPISchemaToAPIEndpoints",
 				JSONFactoryUtil.createJSONArray()
@@ -339,7 +339,7 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 			"headless-builder/schemas/by-external-reference-code/" +
 				_API_SCHEMA_ERC,
 			Http.Method.PATCH);
-		assertSuccessfulHttpCode(
+		assertSuccessfulJSONObject(
 			JSONUtil.put(
 				"requestAPISchemaToAPIEndpoints",
 				JSONFactoryUtil.createJSONArray()
@@ -368,7 +368,7 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 			HTTPTestUtil.invokeToHttpCode(
 				null, apiApplicationURL + "/openapi.json", Http.Method.GET));
 
-		assertSuccessfulHttpCode(
+		assertSuccessfulJSONObject(
 			JSONUtil.put(
 				"applicationStatus", "published"
 			).toString(),
@@ -401,7 +401,7 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 	}
 
 	private void _addAPIApplication() throws Exception {
-		assertSuccessfulHttpCode(
+		assertSuccessfulJSONObject(
 			JSONUtil.put(
 				"apiApplicationToAPIEndpoints",
 				JSONUtil.putAll(
@@ -702,21 +702,21 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 				"title", "title"
 			).toString(),
 			"headless-builder/applications", Http.Method.POST);
-		assertSuccessfulHttpCode(
+		assertSuccessfulJSONObject(
 			null,
 			StringBundler.concat(
 				"headless-builder/schemas/by-external-reference-code/",
 				_API_SCHEMA_ERC, "/requestAPISchemaToAPIEndpoints/",
 				_API_ENDPOINT_ERC),
 			Http.Method.PUT);
-		assertSuccessfulHttpCode(
+		assertSuccessfulJSONObject(
 			null,
 			StringBundler.concat(
 				"headless-builder/schemas/by-external-reference-code/",
 				_API_SCHEMA_ERC, "/responseAPISchemaToAPIEndpoints/",
 				_API_ENDPOINT_ERC),
 			Http.Method.PUT);
-		assertSuccessfulHttpCode(
+		assertSuccessfulJSONObject(
 			null,
 			StringBundler.concat(
 				"headless-builder/schemas/by-external-reference-code/",
@@ -724,7 +724,7 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 				"/requestAPISchemaToAPIEndpoints/",
 				_API_SINGLE_ELEMENT_ENDPOINT_ERC),
 			Http.Method.PUT);
-		assertSuccessfulHttpCode(
+		assertSuccessfulJSONObject(
 			null,
 			StringBundler.concat(
 				"headless-builder/schemas/by-external-reference-code/",
@@ -732,7 +732,7 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 				"/responseAPISchemaToAPIEndpoints/",
 				_API_SINGLE_ELEMENT_ENDPOINT_ERC),
 			Http.Method.PUT);
-		assertSuccessfulHttpCode(
+		assertSuccessfulJSONObject(
 			null,
 			StringBundler.concat(
 				"headless-builder/schemas/by-external-reference-code/",
@@ -740,7 +740,7 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 				"/requestAPISchemaToAPIEndpoints/",
 				_API_SINGLE_ELEMENT_SITE_SCOPED_ENDPOINT_ERC),
 			Http.Method.PUT);
-		assertSuccessfulHttpCode(
+		assertSuccessfulJSONObject(
 			null,
 			StringBundler.concat(
 				"headless-builder/schemas/by-external-reference-code/",
@@ -748,14 +748,14 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 				"/responseAPISchemaToAPIEndpoints/",
 				_API_SINGLE_ELEMENT_SITE_SCOPED_ENDPOINT_ERC),
 			Http.Method.PUT);
-		assertSuccessfulHttpCode(
+		assertSuccessfulJSONObject(
 			null,
 			StringBundler.concat(
 				"headless-builder/schemas/by-external-reference-code/",
 				_API_SITE_SCOPED_SCHEMA_ERC, "/requestAPISchemaToAPIEndpoints/",
 				_API_SITE_SCOPED_ENDPOINT_ERC),
 			Http.Method.PUT);
-		assertSuccessfulHttpCode(
+		assertSuccessfulJSONObject(
 			null,
 			StringBundler.concat(
 				"headless-builder/schemas/by-external-reference-code/",

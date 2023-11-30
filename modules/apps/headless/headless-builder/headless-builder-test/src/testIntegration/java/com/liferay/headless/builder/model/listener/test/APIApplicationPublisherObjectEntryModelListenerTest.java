@@ -29,14 +29,14 @@ public class APIApplicationPublisherObjectEntryModelListenerTest
 		String baseURL = StringUtil.toLowerCase(RandomTestUtil.randomString());
 		String externalReferenceCode = RandomTestUtil.randomString();
 
-		assertSuccessfulHttpCode(
+		assertSuccessfulJSONObject(
 			_getAPIApplicationJSONString(
 				"unpublished", baseURL, externalReferenceCode),
 			"headless-builder/applications", Http.Method.POST);
 
 		APIApplicationTestUtil.assertNotDeployedAPIApplication(baseURL);
 
-		assertSuccessfulHttpCode(
+		assertSuccessfulJSONObject(
 			JSONUtil.put(
 				"applicationStatus", "published"
 			).toString(),
@@ -51,7 +51,7 @@ public class APIApplicationPublisherObjectEntryModelListenerTest
 	public void testPublishAPIApplicationOnPost() throws Exception {
 		String baseURL = StringUtil.toLowerCase(RandomTestUtil.randomString());
 
-		assertSuccessfulHttpCode(
+		assertSuccessfulJSONObject(
 			_getAPIApplicationJSONString(
 				"published", baseURL, RandomTestUtil.randomString()),
 			"headless-builder/applications", Http.Method.POST);
@@ -73,7 +73,7 @@ public class APIApplicationPublisherObjectEntryModelListenerTest
 
 		String baseURL2 = StringUtil.toLowerCase(RandomTestUtil.randomString());
 
-		assertSuccessfulHttpCode(
+		assertSuccessfulJSONObject(
 			JSONUtil.put(
 				"applicationStatus", "published"
 			).put(
@@ -102,7 +102,7 @@ public class APIApplicationPublisherObjectEntryModelListenerTest
 
 		String baseURL2 = StringUtil.toLowerCase(RandomTestUtil.randomString());
 
-		assertSuccessfulHttpCode(
+		assertSuccessfulJSONObject(
 			JSONUtil.put(
 				"applicationStatus", "published"
 			).put(
@@ -123,14 +123,14 @@ public class APIApplicationPublisherObjectEntryModelListenerTest
 		String baseURL = StringUtil.toLowerCase(RandomTestUtil.randomString());
 		String externalReferenceCode = RandomTestUtil.randomString();
 
-		assertSuccessfulHttpCode(
+		assertSuccessfulJSONObject(
 			_getAPIApplicationJSONString(
 				"published", baseURL, externalReferenceCode),
 			"headless-builder/applications", Http.Method.POST);
 
 		APIApplicationTestUtil.assertDeployedAPIApplication(baseURL);
 
-		assertSuccessfulHttpCode(
+		assertSuccessfulJSONObject(
 			null,
 			"headless-builder/applications/by-external-reference-code/" +
 				externalReferenceCode,
@@ -144,14 +144,14 @@ public class APIApplicationPublisherObjectEntryModelListenerTest
 		String baseURL = StringUtil.toLowerCase(RandomTestUtil.randomString());
 		String externalReferenceCode = RandomTestUtil.randomString();
 
-		assertSuccessfulHttpCode(
+		assertSuccessfulJSONObject(
 			_getAPIApplicationJSONString(
 				"published", baseURL, externalReferenceCode),
 			"headless-builder/applications", Http.Method.POST);
 
 		APIApplicationTestUtil.assertDeployedAPIApplication(baseURL);
 
-		assertSuccessfulHttpCode(
+		assertSuccessfulJSONObject(
 			JSONUtil.put(
 				"applicationStatus", "unpublished"
 			).toString(),

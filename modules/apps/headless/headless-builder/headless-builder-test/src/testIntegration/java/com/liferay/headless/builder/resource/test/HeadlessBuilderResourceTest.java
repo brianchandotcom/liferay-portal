@@ -193,7 +193,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			APIApplication.Endpoint.Scope.COMPANY);
 		_publishAPIApplication(_API_APPLICATION_ERC_1);
 
-		assertSuccessfulHttpCode(
+		assertSuccessfulJSONObject(
 			null, "c/" + _BASE_URL_1 + _API_APPLICATION_PATH_1,
 			Http.Method.GET);
 
@@ -234,7 +234,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 						"/c/" + _BASE_URL_1
 					));
 
-				assertSuccessfulHttpCode(
+				assertSuccessfulJSONObject(
 					JSONUtil.put(
 						"applicationStatus", "published"
 					).put(
@@ -262,7 +262,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 					).toString(),
 					JSONCompareMode.LENIENT);
 
-				assertSuccessfulHttpCode(
+				assertSuccessfulJSONObject(
 					null,
 					"headless-builder/applications/by-external-reference-code" +
 						"/" + _API_APPLICATION_ERC_1,
@@ -277,7 +277,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			}
 		);
 
-		assertSuccessfulHttpCode(
+		assertSuccessfulJSONObject(
 			null,
 			"headless-builder/applications/by-external-reference-code/" +
 				_API_APPLICATION_ERC_1,
@@ -1019,7 +1019,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			).toString(),
 			"headless-builder/endpoints", Http.Method.POST);
 
-		assertSuccessfulHttpCode(
+		assertSuccessfulJSONObject(
 			null,
 			"c/" + apiApplicationJSONObject.getString("baseURL") +
 				apiEndpointJSONObject.getString("path"),
@@ -1063,7 +1063,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 		_relateObjectEntries(objectEntry1, objectEntry2, objectRelationship1);
 		_relateObjectEntries(objectEntry1, objectEntry3, objectRelationship2);
 
-		assertSuccessfulHttpCode(
+		assertSuccessfulJSONObject(
 			null,
 			StringBundler.concat("c/", _BASE_URL_1, _API_APPLICATION_PATH_1),
 			Http.Method.GET);
@@ -1751,7 +1751,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 
 		String apiSchemaExternalReferenceCode = RandomTestUtil.randomString();
 
-		assertSuccessfulHttpCode(
+		assertSuccessfulJSONObject(
 			JSONUtil.put(
 				"apiApplicationToAPIEndpoints",
 				_createAPIEndpoint(
@@ -1821,7 +1821,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 
 		String apiSchemaExternalReferenceCode = RandomTestUtil.randomString();
 
-		assertSuccessfulHttpCode(
+		assertSuccessfulJSONObject(
 			JSONUtil.put(
 				"apiApplicationToAPIEndpoints",
 				_createAPIEndpoint(
@@ -1885,7 +1885,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 
 		String apiSchemaExternalReferenceCode = RandomTestUtil.randomString();
 
-		assertSuccessfulHttpCode(
+		assertSuccessfulJSONObject(
 			JSONUtil.put(
 				"apiApplicationToAPIEndpoints",
 				_createAPIEndpoint(
@@ -2029,7 +2029,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 
 		String apiSchemaExternalReferenceCode = RandomTestUtil.randomString();
 
-		assertSuccessfulHttpCode(
+		assertSuccessfulJSONObject(
 			JSONUtil.put(
 				"apiApplicationToAPIEndpoints",
 				_createAPIEndpoint(
@@ -2178,7 +2178,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			).toString(),
 			"headless-builder/applications", Http.Method.POST);
 
-		assertSuccessfulHttpCode(
+		assertSuccessfulJSONObject(
 			null,
 			StringBundler.concat(
 				"headless-builder/schemas/by-external-reference-code/",
@@ -2186,7 +2186,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				"/requestAPISchemaToAPIEndpoints/",
 				apiEndpointExternalReferenceCode),
 			Http.Method.PUT);
-		assertSuccessfulHttpCode(
+		assertSuccessfulJSONObject(
 			null,
 			StringBundler.concat(
 				"headless-builder/schemas/by-external-reference-code/",
@@ -2200,7 +2200,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			String apiEndpointExternalReferenceCode, String filterString)
 		throws Exception {
 
-		assertSuccessfulHttpCode(
+		assertSuccessfulJSONObject(
 			JSONUtil.put(
 				"oDataFilter", filterString
 			).put(
@@ -2214,7 +2214,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			String apiEndpointExternalReferenceCode, String sortString)
 		throws Exception {
 
-		assertSuccessfulHttpCode(
+		assertSuccessfulJSONObject(
 			JSONUtil.put(
 				"oDataSort", sortString
 			).put(
@@ -2582,7 +2582,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			String apiApplicationExternalReferenceCode)
 		throws Exception {
 
-		assertSuccessfulHttpCode(
+		assertSuccessfulJSONObject(
 			JSONUtil.put(
 				"applicationStatus", "published"
 			).toString(),
@@ -2596,7 +2596,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			String apiSchemaExternalReferenceCode)
 		throws Exception {
 
-		assertSuccessfulHttpCode(
+		assertSuccessfulJSONObject(
 			null,
 			StringBundler.concat(
 				"headless-builder/schemas/by-external-reference-code/",
@@ -2604,7 +2604,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				"/requestAPISchemaToAPIEndpoints/",
 				apiEndpointExternalReferenceCode),
 			Http.Method.PUT);
-		assertSuccessfulHttpCode(
+		assertSuccessfulJSONObject(
 			null,
 			StringBundler.concat(
 				"headless-builder/schemas/by-external-reference-code/",

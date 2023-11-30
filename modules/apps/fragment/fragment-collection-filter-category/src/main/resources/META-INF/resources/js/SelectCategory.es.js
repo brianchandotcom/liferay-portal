@@ -111,13 +111,23 @@ export default function SelectCategory({
 			footerContent={
 				singleSelection ? null : (
 					<ClayButton
-						onClick={() =>
+						onClick={() => {
+							const targetCollections = assetCategories
+								.filter(({id}) =>
+									selectedCategoryIds.includes(id)
+								)
+								.map(
+									(assetCategories) =>
+										assetCategories.targetCollections
+								);
+
 							setCollectionFilterValue(
 								'category',
 								fragmentEntryLinkId,
-								selectedCategoryIds
-							)
-						}
+								selectedCategoryIds,
+								targetCollections
+							);
+						}}
 						size="sm"
 					>
 						{Liferay.Language.get('apply')}

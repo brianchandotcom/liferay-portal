@@ -9,6 +9,7 @@ import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
+import com.liferay.fragment.constants.FragmentConfigurationFieldDataType;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
@@ -90,6 +91,12 @@ public class FragmentCollectionFilterCategoryDisplayContext {
 			return _props;
 		}
 
+		String targetCollections =
+			(String)
+				_fragmentEntryConfigurationParser.getConfigurationFieldValue(
+					_fragmentEntryLink.getEditableValues(), "targetCollections",
+					FragmentConfigurationFieldDataType.STRING);
+
 		_props = HashMapBuilder.<String, Object>put(
 			"assetCategories",
 			() -> {
@@ -107,6 +114,8 @@ public class FragmentCollectionFilterCategoryDisplayContext {
 						"label",
 						assetCategory.getTitle(
 							_fragmentRendererContext.getLocale())
+					).put(
+						"targetCollections", targetCollections
 					).build());
 			}
 		).put(

@@ -58,8 +58,8 @@ definition {
 			locator1 = "ClaySamplePortlet#SELECTOR_OPTION");
 
 		Type.sendKeys(
-				locator1 = "//body",
-				value1 = "Ctrl");
+			locator1 = "//body",
+			value1 = "Ctrl");
 
 		Click(
 			key_label = "Multiple Select Element",

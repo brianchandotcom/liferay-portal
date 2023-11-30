@@ -5,13 +5,68 @@
 
 import {Heading} from '@clayui/core';
 import ClayLayout from '@clayui/layout';
+import {useState} from 'react';
+import {Link} from 'react-router-dom';
 
 import './JobsPage.css';
 import Jethr0Breadcrumbs from '../../components/Jethr0Breadcrumbs/Jethr0Breadcrumbs';
 import Jethr0ButtonsRow from '../../components/Jethr0ButtonsRow/Jethr0ButtonsRow';
 import Jethr0Card from '../../components/Jethr0Card/Jethr0Card';
 import Jethr0NavigationBar from '../../components/Jethr0NavigationBar/Jethr0NavigationBar';
-import Jobs from '../../components/Jobs/Jobs';
+import Jethr0Table from '../../components/Jethr0Table/Jethr0Table';
+import {toLocaleString} from '../../services/DateUtil';
+import useSpringBootData from '../../services/useSpringBootData';
+
+function Jobs() {
+	const [jobs, setJobs] = useState(null);
+
+	useSpringBootData({
+		setData: setJobs,
+		urlPath: '/jobs',
+	});
+
+	if (!jobs) {
+		return <div>Loading...</div>;
+	}
+
+	return (
+		<Jethr0Table>
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Name</th>
+					<th>Priority</th>
+					<th>Create Date</th>
+					<th>Modified Date</th>
+					<th>Start Date</th>
+					<th>State</th>
+					<th>Type</th>
+				</tr>
+			</thead>
+			<tbody>
+				{jobs &&
+					jobs.map((job) => {
+						return (
+							<tr key={job.id}>
+								<th className="font-weight-semi-bold">
+									<Link title={job.id} to={'/jobs/' + job.id}>
+										{job.id}
+									</Link>
+								</th>
+								<td>{job.name}</td>
+								<td>{job.priority}</td>
+								<td>{toLocaleString(job.dateCreated)}</td>
+								<td>{toLocaleString(job.dateModified)}</td>
+								<td>{toLocaleString(job.startDate)}</td>
+								<td>{job.state.name}</td>
+								<td>{job.type.name}</td>
+							</tr>
+						);
+					})}
+			</tbody>
+		</Jethr0Table>
+	);
+}
 
 function JobsPage() {
 	const breadcrumbs = [

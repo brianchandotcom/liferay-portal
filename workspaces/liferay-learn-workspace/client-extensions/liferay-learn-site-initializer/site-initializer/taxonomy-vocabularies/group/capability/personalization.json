@@ -7,5 +7,11 @@
 	"name_i18n": {
 		"en_US": "Personalization"
 	},
+	"taxonomyCategoryProperties": [
+		{
+		  "key": "icon",
+		  "value": "[$DOCUMENT_URL:/site-initializer/documents/group/icon_personalization.svg$]"
+		}
+	  ],
 	"viewableBy": "Anyone"
 }

@@ -7,5 +7,11 @@
 	"name_i18n": {
 		"en_US": "Cloud"
 	},
+	"taxonomyCategoryProperties": [
+		{
+		  "key": "icon",
+		  "value": "[$DOCUMENT_URL:/site-initializer/documents/group/icon_cloud.svg$]"
+		}
+	  ],
 	"viewableBy": "Anyone"
 }

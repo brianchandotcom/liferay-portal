@@ -51,7 +51,7 @@ public class ListTypeDefinitionLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ListTypeDefinition addListTypeDefinition(
-			String externalReferenceCode, long userId)
+			String externalReferenceCode, long userId, boolean system)
 		throws PortalException {
 
 		ListTypeDefinition listTypeDefinition =
@@ -62,7 +62,7 @@ public class ListTypeDefinitionLocalServiceImpl
 			listTypeDefinition, externalReferenceCode, userId,
 			Collections.singletonMap(
 				LocaleUtil.getDefault(), externalReferenceCode),
-			false);
+			system);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)

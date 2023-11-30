@@ -112,6 +112,33 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 		return content;
 	}
 
+	private static List<String> _getInterpolatedNewParameterNames(
+		List<String> parameterNames, List<String> newParameterNames) {
+
+		List<String> interpolatedNewParameterNames = new ArrayList<>();
+
+		for (String newParameterName : newParameterNames) {
+			String prefix = "param#";
+
+			if (newParameterName.contains(prefix)) {
+				int index = GetterUtil.getInteger(
+					newParameterName.substring(
+						newParameterName.indexOf(CharPool.POUND) + 1,
+						newParameterName.lastIndexOf(CharPool.POUND)));
+
+				interpolatedNewParameterNames.add(
+					StringUtil.replace(
+						newParameterName, prefix + index + CharPool.POUND,
+						parameterNames.get(index)));
+			}
+			else {
+				interpolatedNewParameterNames.add(newParameterName);
+			}
+		}
+
+		return interpolatedNewParameterNames;
+	}
+
 	private static String _getMessage(JSONObject jsonObject) {
 		StringBundler sb = new StringBundler(6);
 
@@ -243,28 +270,11 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 
 		sb.append(newMethodCall);
 
-		List<String> interpolatedNewParameterNames = new ArrayList<>();
-
-		for (String newParameterName : newParameterNames) {
-			if (newParameterName.contains(prefix)) {
-				int index = GetterUtil.getInteger(
-					newParameterName.substring(
-						newParameterName.indexOf(CharPool.POUND) + 1,
-						newParameterName.lastIndexOf(CharPool.POUND)));
-
-				interpolatedNewParameterNames.add(
-					StringUtil.replace(
-						newParameterName, prefix + index + CharPool.POUND,
-						parameterNames.get(index)));
-			}
-			else {
-				interpolatedNewParameterNames.add(newParameterName);
-			}
-		}
-
 		sb.append(
 			StringUtil.merge(
-				interpolatedNewParameterNames, StringPool.COMMA_AND_SPACE));
+				_getInterpolatedNewParameterNames(
+					parameterNames, newParameterNames),
+				StringPool.COMMA_AND_SPACE));
 
 		sb.append(lastCharacter);
 
@@ -417,25 +427,9 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 		List<String> parameterNames = JavaSourceUtil.getParameterList(
 			methodCall);
 
-		List<String> parameterTypes = JavaSourceUtil.getParameterList(from);
-
-		if (parameterNames.size() != parameterTypes.size()) {
-			return newContent;
-		}
-
-		Set<String> keys = jsonObject.keySet();
-
-		if ((fileName.endsWith(".java") &&
-			 !jsonObject.getBoolean("skipParametersValidation") &&
-			 !hasParameterTypes(
-				 javaMethodContent, newContent, fileName,
-				 ArrayUtil.toStringArray(parameterNames),
-				 ArrayUtil.toStringArray(parameterTypes))) ||
-			!keys.contains("to")) {
-
-			addMessage(fileName, _getMessage(jsonObject));
-
-			_newMessage = true;
+		if (!_hasValidMethodCall(
+				fileName, from, javaMethodContent, jsonObject, newContent,
+				parameterNames)) {
 
 			return newContent;
 		}
@@ -544,6 +538,57 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 		}
 
 		return false;
+	}
+
+	private boolean _hasValidMethodCall(
+		String fileName, String from, String javaMethodContent,
+		JSONObject jsonObject, String newContent, List<String> parameterNames) {
+
+		List<String> parameterTypes = JavaSourceUtil.getParameterList(from);
+
+		if (parameterNames.size() != parameterTypes.size()) {
+			return false;
+		}
+
+		if (jsonObject.getBoolean("skipParametersValidation")) {
+			return true;
+		}
+
+		boolean sendMessage = false;
+
+		Set<String> keys = jsonObject.keySet();
+
+		if (!keys.contains("to")) {
+			sendMessage = true;
+		}
+		else if (fileName.endsWith(".java")) {
+			for (int i = 0; i < parameterTypes.size(); i++) {
+				String parameterName = parameterNames.get(i);
+
+				String variableTypeName = getVariableTypeName(
+					javaMethodContent, null, newContent, fileName,
+					parameterName.trim(), true);
+
+				if (variableTypeName == null) {
+					sendMessage = true;
+				}
+				else if (!StringUtil.equals(
+							parameterTypes.get(i), variableTypeName)) {
+
+					return false;
+				}
+			}
+		}
+
+		if (sendMessage) {
+			addMessage(fileName, _getMessage(jsonObject));
+
+			_newMessage = true;
+
+			return false;
+		}
+
+		return true;
 	}
 
 	private static final String _CONSTRUCTOR_REGEX = "(:?[A-Z][a-z]+)+\\(.*\\)";

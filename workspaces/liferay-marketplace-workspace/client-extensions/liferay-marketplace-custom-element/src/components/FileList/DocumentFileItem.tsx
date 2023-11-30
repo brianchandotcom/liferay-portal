@@ -25,7 +25,7 @@ export function DocumentFileItem({
 		<div className="document-file-list-item-container">
 			<div className="document-file-list-item-left-content">
 				<div className="document-file-list-item-left-content-icon-container">
-					{uploadedFile?.uploaded && !uploadedFile?.error ? (
+					{!uploadedFile?.error ? (
 						<img
 							alt="Folder Icon"
 							className="document-file-list-item-left-content-icon"
@@ -63,7 +63,7 @@ export function DocumentFileItem({
 				className="document-file-list-item-button"
 				onClick={() => onDelete(uploadedFile?.id, versionName)}
 			>
-				{uploadedFile?.uploaded ? 'Remove' : 'Cancel Upload'}
+				Remove
 			</button>
 		</div>
 	);

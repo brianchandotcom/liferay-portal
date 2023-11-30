@@ -172,6 +172,8 @@ public class AssetDisplayPagesItemSelectorCustomViewDisplayContext {
 			"plid", layoutPageTemplateEntry.getPlid()
 		).put(
 			"type", "asset-display-page"
+		).put(
+			"uuid", layoutPageTemplateEntry.getUuid()
 		).toString();
 	}
 

@@ -49,6 +49,8 @@ public class AssetDisplayPageItemDescriptor
 			"plid", _layoutPageTemplateEntry.getPlid()
 		).put(
 			"type", "asset-display-page"
+		).put(
+			"uuid", _layoutPageTemplateEntry.getUuid()
 		).toString();
 	}
 

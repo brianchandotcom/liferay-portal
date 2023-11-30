@@ -39,7 +39,7 @@ public class PlaywrightBatchBuildTestrayCaseResult
 	protected TestrayAttachment getPlaywrightReportTestrayAttachment() {
 		return getTestrayAttachment(
 			getBuild(), "Playwright Report",
-			getAxisBuildURLPath() + "/playwright-report/index.html.gz");
+			getAxisBuildURLPath() + "/playwright-report/index.html");
 	}
 
 }

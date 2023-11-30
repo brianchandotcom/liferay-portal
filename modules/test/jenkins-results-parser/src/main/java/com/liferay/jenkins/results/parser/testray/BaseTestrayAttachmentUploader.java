@@ -51,6 +51,12 @@ public abstract class BaseTestrayAttachmentUploader
 		}
 
 		for (File preparedFile : getPreparedFiles()) {
+			String preparedFilePath = preparedFile.toString();
+
+			if (preparedFilePath.contains("playwright-report")) {
+				continue;
+			}
+
 			String preparedFileName = preparedFile.getName();
 
 			if (preparedFileName.endsWith(".html")) {

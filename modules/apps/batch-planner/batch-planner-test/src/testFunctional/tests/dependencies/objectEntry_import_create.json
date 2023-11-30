@@ -1,0 +1,14 @@
+[
+	{
+		"diploma": {
+			"id": 38589,
+			"link": {
+				"href": "/documents/38586/38588/Document_1.jpg/b3a2213c-225f-fc83-fa10-4ea862e5005f?version=1.0&t=1701061267059&download=true&objectDefinitionExternalReferenceCode=student&objectEntryExternalReferenceCode=studentErc",
+				"label": "Document_1.jpg"
+			},
+			"name": "Document_1.jpg"
+		},
+		"name": "John",
+		"r_subjectStudents_c_subjectERC": "Math"
+	}
+]

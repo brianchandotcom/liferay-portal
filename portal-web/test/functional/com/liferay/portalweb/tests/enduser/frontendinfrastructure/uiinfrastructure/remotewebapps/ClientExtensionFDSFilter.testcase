@@ -391,7 +391,7 @@ definition {
 	@priority = 5
 	test CannotLeaveNameFieldEmpty {
 		property environment.acceptance = "true";
-		
+
 		task ("Given Client Extension admin page") {
 			ClientExtensionGeneral.goToRemoteAppsPortlet();
 		}

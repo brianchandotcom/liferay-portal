@@ -279,7 +279,7 @@ definition {
 	@priority = 5
 	test CannotPublishWithJSFieldEmpty {
 		property portal.acceptance = "true";
-		
+
 		task ("And fills Name field") {
 			Type.typeNoMouseOver(
 				key_text = "Name",

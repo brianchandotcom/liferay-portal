@@ -538,7 +538,7 @@ definition {
 	@priority = 5
 	test CanSaveDateFilter {
 		property portal.acceptance = "true";
-		
+
 		task ("Given the creation of a new data set") {
 			DataSetAdmin.goToDataSetAdminPage();
 

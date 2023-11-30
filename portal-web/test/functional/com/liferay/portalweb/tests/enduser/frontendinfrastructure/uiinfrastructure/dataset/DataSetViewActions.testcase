@@ -2541,7 +2541,7 @@ definition {
 	@priority = 5
 	test MandatoryAndLocalizedLabelField {
 		property portal.acceptance = "true";
-		
+
 		task ("And clicks on Create Item Action button") {
 			LexiconEntry.gotoAdd();
 		}

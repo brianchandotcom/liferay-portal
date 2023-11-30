@@ -442,7 +442,7 @@ definition {
 	@priority = 5
 	test CanApplyFilter {
 		property portal.acceptance = "true";
-		
+
 		task ("Given a new Object entity") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Date Object",

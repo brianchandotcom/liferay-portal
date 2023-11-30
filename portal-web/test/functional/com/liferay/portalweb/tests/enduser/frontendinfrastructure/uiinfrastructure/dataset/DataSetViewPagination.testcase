@@ -135,7 +135,7 @@ definition {
 	@priority = 5
 	test CanCreatePagination {
 		property portal.acceptance = "true";
-		
+
 		task ("And the user fills in the pagination items field") {
 			DataSetAdmin.changePaginationItems(paginationItems = "10, 20, 30, 40");
 		}

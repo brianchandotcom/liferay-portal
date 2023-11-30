@@ -56,6 +56,7 @@ definition {
 	@priority = 5
 	test BehaviorIsEqualToEllipsisDropdownEquivalentAction {
 		property portal.acceptance = "true";
+
 		var portalURL = PropsUtil.get("portal.url");
 
 		task ("When click on Pencil Icon") {
@@ -181,7 +182,7 @@ definition {
 	@priority = 5
 	test CanExecuteAnAction {
 		property portal.acceptance = "true";
-		
+
 		task ("When click on Pencil Icon ") {
 			ClickNoError(
 				key_title = "Sample1",

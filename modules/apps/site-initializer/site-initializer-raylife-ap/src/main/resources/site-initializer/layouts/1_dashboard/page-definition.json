@@ -92,7 +92,7 @@
 												"widgetConfig": {
 													"properties": "route=notification-sidebar"
 												},
-												"widgetName": "[$CLIENT_EXTENSION_ENTRY_ID:RAYLIFEAGENTPORTAL$]"
+												"widgetName": "[$CLIENT_EXTENSION_ENTRY_ERC:RAYLIFE-AGENT-PORTAL$]"
 											}
 										},
 										"type": "Widget"
@@ -398,7 +398,7 @@
 																								"widgetConfig": {
 																									"properties": "route=whats-new-modal"
 																								},
-																								"widgetName": "[$CLIENT_EXTENSION_ENTRY_ID:RAYLIFEAGENTPORTAL$]"
+																								"widgetName": "[$CLIENT_EXTENSION_ENTRY_ERC:RAYLIFE-AGENT-PORTAL$]"
 																							}
 																						},
 																						"type": "Widget"
@@ -691,7 +691,7 @@
 																										"widgetConfig": {
 																											"properties": "route=product-performance"
 																										},
-																										"widgetName": "[$CLIENT_EXTENSION_ENTRY_ID:RAYLIFEAGENTPORTAL$]"
+																										"widgetName": "[$CLIENT_EXTENSION_ENTRY_ERC:RAYLIFE-AGENT-PORTAL$]"
 																									}
 																								},
 																								"type": "Widget"
@@ -710,7 +710,7 @@
 																			"widgetInstance": {
 																				"widgetConfig": {
 																				},
-																				"widgetName": "[$CLIENT_EXTENSION_ENTRY_ID:RAYLIFEAGENTPORTAL$]"
+																				"widgetName": "[$CLIENT_EXTENSION_ENTRY_ERC:RAYLIFE-AGENT-PORTAL$]"
 																			}
 																		},
 																		"type": "Widget"
@@ -841,7 +841,7 @@
 																								"widgetConfig": {
 																									"properties": "route=recent-applications"
 																								},
-																								"widgetName": "[$CLIENT_EXTENSION_ENTRY_ID:RAYLIFEAGENTPORTAL$]"
+																								"widgetName": "[$CLIENT_EXTENSION_ENTRY_ERC:RAYLIFE-AGENT-PORTAL$]"
 																							}
 																						},
 																						"type": "Widget"

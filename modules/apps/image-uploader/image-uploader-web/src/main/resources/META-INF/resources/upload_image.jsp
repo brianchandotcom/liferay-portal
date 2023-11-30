@@ -50,7 +50,7 @@ String tempImageFileName = ParamUtil.getString(request, "tempImageFileName");
 				}
 			</c:if>
 
-			Liferay.Util.getWindow().hide();
+			Liferay.Util.getOpener().Liferay.fire('closeModal');
 		</aui:script>
 	</c:when>
 	<c:otherwise>

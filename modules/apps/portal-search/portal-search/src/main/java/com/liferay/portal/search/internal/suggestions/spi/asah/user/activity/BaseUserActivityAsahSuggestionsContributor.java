@@ -195,7 +195,7 @@ public abstract class BaseUserActivityAsahSuggestionsContributor
 
 	private static final int _CHARACTER_THRESHOLD = 0;
 
-	private static final int _MIN_COUNTS = 1;
+	private static final int _MIN_COUNTS = 0;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseUserActivityAsahSuggestionsContributor.class);

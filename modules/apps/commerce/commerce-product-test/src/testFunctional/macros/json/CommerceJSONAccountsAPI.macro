@@ -704,4 +704,56 @@ definition {
 		return ${fieldValue};
 	}
 
+	@summary = "Default summary"
+	macro _postImportRoles(contentJSON = null) {
+		var baseURL = ${baseURL};
+
+		if (!(isSet(baseURL))) {
+			var baseURL = JSONCompany.getPortalURL();
+		}
+
+		var payload = ${contentJSON};
+
+		var curl = '''
+			${baseURL}/o/headless-batch-engine/v1.0/import-task/com.liferay.headless.admin.user.dto.v1_0.Role \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '${payload}'
+		''';
+
+		JSONCurlUtil.post(${curl});
+	}
+
+	@summary = "Default summary"
+    macro _getExportTaskId(className = null, contentType = null) {
+        var response = CommerceJSONAccountsAPI._postExportTask(
+            className = ${className},
+            contentType = ${contentType});
+
+        var exportTaskId = JSONUtil.getWithJSONPath(${response}, "$..id");
+
+        return ${exportTaskId};
+    }
+
+    @summary = "Default summary"
+    macro _postExportTask(className = null, contentType = null) {
+        Variables.assertDefined(parameterList = "${className},${contentType}");
+        var portalURL = JSONCompany.getPortalURL();
+
+        var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
+            groupName = "Guest",
+            site = "true");
+
+        var curl = '''
+            ${portalURL}/o/headless-batch-engine/v1.0/export-task/${className}/${contentType} \
+                -u test@liferay.com:test \
+                -H Content-Type: application/json
+        ''';
+
+        var response = JSONCurlUtil.post(${curl});
+
+        return ${response};
+    }
+
 }

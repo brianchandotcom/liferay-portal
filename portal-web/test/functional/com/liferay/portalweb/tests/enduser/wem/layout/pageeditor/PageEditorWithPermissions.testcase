@@ -1,0 +1,105 @@
+@component-name = "portal-wcm"
+definition {
+
+	property ci.retries.disabled = "true";
+	property custom.properties = "jsonws.web.service.paths.excludes=";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Page Editor";
+
+	setUp {
+		task ("Set up virtual instance") {
+			TestCase.setUpPortalInstance();
+		}
+
+		task ("Sign in") {
+			User.firstLoginPG();
+		}
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = "Test Site Name");
+		}
+
+		task ("Add a new user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Assign the user to site") {
+			JSONUser.addUserToSite(
+				groupName = "Test Site Name",
+				userEmailAddress = "userea@liferay.com");
+		}
+	}
+
+	@description = "This is a test for LPS-195134. There is a Role Level configuration to allow or disallow users to manage the Rule Builder."
+	@priority = 3
+	test AddPageRuleAsUserWithPermission {
+		property custom.properties = "feature.flag.LPS-169837=true${line.separator}jsonws.web.service.paths.excludes=";
+
+		task ("Given a user has the Page Rule Builder permission") {
+			Permissions.definePermissionsViaJSONAPI(
+				resourceNameActionList = "com.liferay.portal.kernel.model.Group,VIEW_SITE_ADMINISTRATION:com.liferay.portal.kernel.model.Layout,LAYOUT_RULE_BUILDER,UPDATE",
+				roleTitle = "Power User");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "Power User",
+				userEmailAddress = "userea@liferay.com");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
+		task ("When the user navigates to the page editor") {
+			User.logoutAndLoginPG(userLoginEmailAddress = "userea@liferay.com");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("Then the user could add a new page rule") {
+			PageEditor.gotoTab(tabName = "Page Rules");
+
+			Button.click(button = "New Rule");
+
+			AssertTextEquals(
+				locator1 = "Modal#HEADER",
+				value1 = "New Rule");
+		}
+
+		task ("Given a user doesn't have the Page Rule Builder permission") {
+			User.logoutAndLoginPG(userLoginEmailAddress = "test@liferay.com");
+
+			Permissions.removePermissionViaAPI(
+				resourceAction = "LAYOUT_RULE_BUILDER",
+				resourceName = "com.liferay.portal.kernel.model.Layout",
+				roleTitle = "Power User");
+		}
+
+		task ("When the user navigates to the page editor") {
+			User.logoutAndLoginPG(userLoginEmailAddress = "userea@liferay.com");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("Then the user cannot add a new page rule") {
+			AssertElementNotPresent(
+				key_tabName = "Page Rules",
+				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TAB_BUTTON");
+		}
+	}
+
+}

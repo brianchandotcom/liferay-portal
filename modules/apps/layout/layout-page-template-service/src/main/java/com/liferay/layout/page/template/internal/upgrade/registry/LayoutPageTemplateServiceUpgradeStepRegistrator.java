@@ -192,8 +192,7 @@ public class LayoutPageTemplateServiceUpgradeStepRegistrator
 			UpgradeProcessFactory.dropColumns(
 				"LayoutPageTemplateStructure", "classNameId"));
 
-		registry.register(
-			"5.2.0", "5.3.0", new LayoutPageTemplateCollectionUpgradeProcess());
+		registry.register("5.2.0", "5.3.0", new DummyUpgradeProcess());
 
 		registry.register("5.3.0", "5.3.1", new DummyUpgradeProcess());
 
@@ -201,6 +200,9 @@ public class LayoutPageTemplateServiceUpgradeStepRegistrator
 			"5.3.1", "5.4.0",
 			new com.liferay.layout.page.template.internal.upgrade.v5_4_0.
 				LayoutPageTemplateStructureRelUpgradeProcess());
+
+		registry.register(
+			"5.4.0", "5.5.0", new LayoutPageTemplateCollectionUpgradeProcess());
 	}
 
 	@Reference

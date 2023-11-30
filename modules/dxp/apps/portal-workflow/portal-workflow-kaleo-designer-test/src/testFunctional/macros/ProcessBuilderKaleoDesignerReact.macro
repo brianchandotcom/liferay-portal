@@ -1214,7 +1214,7 @@ definition {
 						locator1 = "ProcessBuilderKaleoDesignerReact#RECIPIENT_TYPE_NAME_FIELD",
 						value1 = ${notificationsRecipientTypeRoleName});
 
-					Click.mouseOverClick(
+					Click.javaScriptClick(
 						key_optionRoleName = ${notificationsRecipientTypeRoleName},
 						locator1 = "ProcessBuilderKaleoDesignerReact#RECIPIENT_TYPE_NAME_OPTIONS");
 				}

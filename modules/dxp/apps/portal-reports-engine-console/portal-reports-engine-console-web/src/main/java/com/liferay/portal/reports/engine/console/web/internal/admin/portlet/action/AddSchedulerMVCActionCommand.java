@@ -11,7 +11,6 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.scheduler.CronTextUtil;
@@ -100,7 +99,7 @@ public class AddSchedulerMVCActionCommand extends BaseMVCActionCommand {
 				));
 		}
 
-		Entry entry = _entryService.addEntry(
+		_entryService.addEntry(
 			themeDisplay.getScopeGroupId(), definitionId,
 			ParamUtil.getString(actionRequest, "format"), true,
 			startCalendar.getTime(), schedulerEndDate,
@@ -115,10 +114,6 @@ public class AddSchedulerMVCActionCommand extends BaseMVCActionCommand {
 			entryReportParametersJSONArray.toString(),
 			ServiceContextFactory.getInstance(
 				Entry.class.getName(), actionRequest));
-
-		JSONPortletResponseUtil.writeJSON(
-			actionRequest, actionResponse,
-			JSONUtil.put("entryId", entry.getEntryId()));
 	}
 
 	private String _getEntryReportParameterValue(

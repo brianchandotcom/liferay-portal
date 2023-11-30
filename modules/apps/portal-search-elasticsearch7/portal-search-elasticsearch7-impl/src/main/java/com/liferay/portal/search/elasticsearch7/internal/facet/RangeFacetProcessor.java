@@ -54,7 +54,7 @@ public class RangeFacetProcessor
 			abstractRangeBuilder.format(format);
 		}
 
-		_addConfigurationRanges(facetConfiguration, abstractRangeBuilder);
+		_addRanges(facetConfiguration, abstractRangeBuilder);
 
 		if (ListUtil.isEmpty(abstractRangeBuilder.ranges())) {
 			return null;
@@ -67,7 +67,16 @@ public class RangeFacetProcessor
 		return AggregationBuilders.range(name);
 	}
 
-	private void _addConfigurationRanges(
+	private void _addRange(
+		AbstractRangeBuilder abstractRangeBuilder, String range) {
+
+		String[] rangeParts = RangeParserUtil.parserRange(range);
+
+		abstractRangeBuilder.addRange(
+			new RangeAggregator.Range(range, rangeParts[0], rangeParts[1]));
+	}
+
+	private void _addRanges(
 		FacetConfiguration facetConfiguration,
 		AbstractRangeBuilder abstractRangeBuilder) {
 
@@ -82,26 +91,8 @@ public class RangeFacetProcessor
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject rangeJSONObject = jsonArray.getJSONObject(i);
 
-			String label = rangeJSONObject.getString("label");
-
-			if (Validator.isBlank(label)) {
-				label = rangeJSONObject.getString("range");
-			}
-
-			String rangeString = rangeJSONObject.getString("range");
-
-			_addRange(abstractRangeBuilder, label, rangeString);
+			_addRange(abstractRangeBuilder, rangeJSONObject.getString("range"));
 		}
-	}
-
-	private void _addRange(
-		AbstractRangeBuilder abstractRangeBuilder, String key,
-		String rangeString) {
-
-		String[] rangeParts = RangeParserUtil.parserRange(rangeString);
-
-		abstractRangeBuilder.addRange(
-			new RangeAggregator.Range(key, rangeParts[0], rangeParts[1]));
 	}
 
 }

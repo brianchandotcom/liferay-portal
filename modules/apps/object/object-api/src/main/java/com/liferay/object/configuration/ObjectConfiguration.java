@@ -35,7 +35,7 @@ public interface ObjectConfiguration {
 		name = "duration",
 		required = false
 	)
-	public int duration();
+	public long duration();
 
 	@Meta.AD(
 		deflt = "days", description = "time-scale-help",

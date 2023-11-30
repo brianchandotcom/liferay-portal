@@ -2554,7 +2554,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			).put(
 				"externalReferenceCode", apiEndpointExternalReferenceCode
 			).put(
-				"httpMethod", method
+				"httpMethod", StringUtil.toLowerCase(method.name())
 			).put(
 				"name", "name"
 			).put(

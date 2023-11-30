@@ -112,50 +112,48 @@ List<CommerceCurrency> commerceCurrencies = commerceCatalogDisplayContext.getCom
 		</c:if>
 	</aui:form>
 
-	<aui:script require="commerce-frontend-js/utilities/eventsDefinitions as events, commerce-frontend-js/utilities/forms/index as FormUtils">
-		Liferay.provide(
-			window,
-			'<portlet:namespace />apiSubmit',
-			(form) => {
-				var API_URL = '/o/headless-commerce-admin-catalog/v1.0/catalogs';
+	<aui:script require="commerce-frontend-js/utilities/eventsDefinitions as events, commerce-frontend-js/utilities/forms/index as FormUtils, frontend-js-web/index as frontendJsWeb">
+		const {createPortletURL} = frontendJsWeb;
 
-				window.parent.Liferay.fire(events.IS_LOADING_MODAL, {
-					isLoading: true,
-				});
+		Liferay.provide(window, '<portlet:namespace />apiSubmit', (form) => {
+			const API_URL = '/o/headless-commerce-admin-catalog/v1.0/catalogs';
 
-				FormUtils.apiSubmit(form, API_URL)
-					.then((payload) => {
-						var redirectURL = new Liferay.PortletURL.createURL(
-							'<%= editCatalogPortletURL.toString() %>'
-						);
+			window.parent.Liferay.fire(events.IS_LOADING_MODAL, {
+				isLoading: true,
+			});
 
-						redirectURL.setParameter('commerceCatalogId', payload.id);
-						redirectURL.setParameter('p_auth', Liferay.authToken);
+			FormUtils.apiSubmit(form, API_URL)
+				.then((payload) => {
+					const redirectURL = createPortletURL(
+						'<%= editCatalogPortletURL %>',
+						{
+							commerceCatalogId: payload.id,
+							p_auth: Liferay.authToken,
+						}
+					);
 
-						window.parent.Liferay.fire(events.CLOSE_MODAL, {
-							redirectURL: redirectURL.toString(),
-							successNotification: {
-								showSuccessNotification: true,
-								message:
-									'<liferay-ui:message key="your-request-completed-successfully" />',
-							},
-						});
-					})
-					.catch((error) => {
-						window.parent.Liferay.fire(events.IS_LOADING_MODAL, {
-							isLoading: false,
-						});
-
-						window.parent.Liferay.Util.openToast({
+					window.parent.Liferay.fire(events.CLOSE_MODAL, {
+						redirectURL: redirectURL,
+						successNotification: {
+							showSuccessNotification: true,
 							message:
-								error.title ||
-								'<liferay-ui:message key="an-unexpected-error-occurred" />',
-							title: '<liferay-ui:message key="danger" />',
-							type: 'danger',
-						});
+								'<liferay-ui:message key="your-request-completed-successfully" />',
+						},
 					});
-			},
-			['liferay-portlet-url']
-		);
+				})
+				.catch((error) => {
+					window.parent.Liferay.fire(events.IS_LOADING_MODAL, {
+						isLoading: false,
+					});
+
+					window.parent.Liferay.Util.openToast({
+						message:
+							error.title ||
+							'<liferay-ui:message key="an-unexpected-error-occurred" />',
+						title: '<liferay-ui:message key="danger" />',
+						type: 'danger',
+					});
+				});
+		});
 	</aui:script>
 </commerce-ui:modal-content>

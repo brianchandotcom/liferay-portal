@@ -9,8 +9,6 @@
 
 <%
 CommerceDiscountDisplayContext commerceDiscountDisplayContext = (CommerceDiscountDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
-
-PortletURL editDiscountPortletURL = commerceDiscountDisplayContext.getEditCommerceDiscountRenderURL();
 %>
 
 <portlet:actionURL name="/commerce_discount/edit_commerce_discount" var="editCommerceDiscountActionURL" />
@@ -50,58 +48,43 @@ PortletURL editDiscountPortletURL = commerceDiscountDisplayContext.getEditCommer
 		</aui:select>
 	</aui:form>
 
-	<aui:script require="commerce-frontend-js/utilities/eventsDefinitions as events, commerce-frontend-js/utilities/forms/index as FormUtils, commerce-frontend-js/ServiceProvider/index as ServiceProvider">
-		var CommerceDiscountResource = ServiceProvider.default.AdminPricingAPI('v2');
+	<aui:script require="commerce-frontend-js/utilities/eventsDefinitions as events, commerce-frontend-js/utilities/forms/index as FormUtils, commerce-frontend-js/ServiceProvider/index as ServiceProvider, frontend-js-web/index as frontendJsWeb">
+		const {createPortletURL} = frontendJsWeb;
+		const CommerceDiscountResource = ServiceProvider.default.AdminPricingAPI('v2');
 
-		Liferay.provide(
-			window,
-			'<portlet:namespace />apiSubmit',
-			(form) => {
-				var commerceDiscountTarget = form.querySelector(
-					'#commerceDiscountTarget'
-				).value;
+		Liferay.provide(window, '<portlet:namespace />apiSubmit', (form) => {
+			const discountData = {
+				level: '<%= CommerceDiscountConstants.LEVEL_L1 %>',
+				limitationType:
+					'<%= CommerceDiscountConstants.LIMITATION_TYPE_UNLIMITED %>',
+				target: document.getElementById('commerceDiscountTarget').value,
+				title: document.getElementById('title').value,
+				usePercentage: document.getElementById('commerceDiscountType').value,
+			};
 
-				var title = form.querySelector('#title').value;
+			return CommerceDiscountResource.addDiscount(discountData)
+				.then((payload) => {
+					const redirectURL = createPortletURL(
+						'<%= commerceDiscountDisplayContext.getEditCommerceDiscountRenderURL() %>',
+						{
+							commerceDiscountId: payload.id,
+							p_auth: Liferay.authToken,
+							usePercentage: payload.usePercentage,
+						}
+					);
 
-				var commerceDiscountType = form.querySelector('#commerceDiscountType')
-					.value;
-
-				var discountData = {
-					level: '<%= CommerceDiscountConstants.LEVEL_L1 %>',
-					limitationType:
-						'<%= CommerceDiscountConstants.LIMITATION_TYPE_UNLIMITED %>',
-					target: commerceDiscountTarget,
-					title: title,
-					usePercentage: commerceDiscountType,
-				};
-
-				return CommerceDiscountResource.addDiscount(discountData)
-					.then((payload) => {
-						var redirectURL = new Liferay.PortletURL.createURL(
-							'<%= editDiscountPortletURL.toString() %>'
-						);
-
-						redirectURL.setParameter('commerceDiscountId', payload.id);
-						redirectURL.setParameter(
-							'usePercentage',
-							payload.usePercentage
-						);
-						redirectURL.setParameter('p_auth', Liferay.authToken);
-
-						window.parent.Liferay.fire(events.CLOSE_MODAL, {
-							redirectURL: redirectURL.toString(),
-							successNotification: {
-								showSuccessNotification: true,
-								message:
-									'<liferay-ui:message key="your-request-completed-successfully" />',
-							},
-						});
-					})
-					.catch((error) => {
-						return Promise.reject(error);
+					window.parent.Liferay.fire(events.CLOSE_MODAL, {
+						redirectURL: redirectURL,
+						successNotification: {
+							showSuccessNotification: true,
+							message:
+								'<liferay-ui:message key="your-request-completed-successfully" />',
+						},
 					});
-			},
-			['liferay-portlet-url']
-		);
+				})
+				.catch((error) => {
+					return Promise.reject(error);
+				});
+		});
 	</aui:script>
 </commerce-ui:modal-content>

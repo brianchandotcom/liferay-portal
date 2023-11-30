@@ -333,9 +333,8 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 				StringPool.BLANK));
 		sb.append(String.valueOf(properties.get("restEndpoint")));
 
-		String apiURL = _getNestedFields(sb.toString(), fdsFieldsSet);
-
-		return _interpolateURL(apiURL, httpServletRequest);
+		return _interpolateURL(
+			_getNestedFields(sb.toString(), fdsFieldsSet), httpServletRequest);
 	}
 
 	private JSONObject _getCreationMenuJSONObject(
@@ -420,8 +419,7 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 					"contentRenderer",
 					String.valueOf(properties.get("renderer"))
 				).put(
-					"fieldName",
-					String.valueOf(properties.get("name"))
+					"fieldName", String.valueOf(properties.get("name"))
 				).put(
 					"label", _getValue("label", "name", properties)
 				).put(

@@ -241,7 +241,6 @@ public class SXPElementLocalServiceTest {
 		_sxpElementLocalService.updateSXPElement(sxpElement2);
 	}
 
-	@Test
 	private SXPElement _addSXPElement(
 			Map<Locale, String> descriptionMap, String externalReferenceCode,
 			String fallbackDescription, String fallbackTitle,

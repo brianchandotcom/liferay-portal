@@ -104,7 +104,7 @@ CommerceVirtualOrderItemContentDisplayContext commerceVirtualOrderItemContentDis
 										<liferay-ui:icon
 											data="<%= data %>"
 											label="<%= true %>"
-											message='<%= "download - " + commerceVirtualOrderItemFileEntry.getVersion() %>'
+											message='<%= LanguageUtil.format(request, "download-x", commerceVirtualOrderItemFileEntry.getVersion(), false) %>'
 											url="<%= commerceVirtualOrderItemContentDisplayContext.getDownloadURL(commerceVirtualOrderItem, commerceVirtualOrderItemFileEntry.getCommerceVirtualOrderItemFileEntryId()) %>"
 											useDialog="<%= useDialog %>"
 										/>

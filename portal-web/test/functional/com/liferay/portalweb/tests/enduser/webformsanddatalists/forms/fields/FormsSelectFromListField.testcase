@@ -940,9 +940,9 @@ definition {
 				fieldName = ${fieldNameTextField},
 				fieldValue = 10004);
 
-			// Pause for 40 seconds for the entry to be automatically saved. See LPS-185648
+			// Pause for 60 seconds for the entry to be automatically saved. See LPS-185648
 
-			Pause(value1 = 40000);
+			Pause(value1 = 60000);
 
 			Open.openInTheNewTab(value1 = "http://localhost:8080");
 

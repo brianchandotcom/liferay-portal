@@ -23,11 +23,14 @@ import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
@@ -49,6 +52,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -71,9 +75,20 @@ public class OpenAPIResourceTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
+		_originalName = PrincipalThreadLocal.getName();
+
+		PrincipalThreadLocal.setName(TestPropsValues.getUserId());
+
 		_company = CompanyTestUtil.addCompany();
 
 		PortalInstances.initCompany(_company);
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws PortalException {
+		_companyLocalService.deleteCompany(_company);
+
+		PrincipalThreadLocal.setName(_originalName);
 	}
 
 	@Before
@@ -516,6 +531,11 @@ public class OpenAPIResourceTest {
 		"x" + RandomTestUtil.randomString();
 
 	private static Company _company;
+
+	@Inject
+	private static CompanyLocalService _companyLocalService;
+
+	private static String _originalName;
 
 	@Inject
 	private ObjectActionLocalService _objectActionLocalService;

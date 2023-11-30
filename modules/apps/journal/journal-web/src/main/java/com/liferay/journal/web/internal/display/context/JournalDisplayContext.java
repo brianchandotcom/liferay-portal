@@ -950,7 +950,6 @@ public class JournalDisplayContext {
 
 		portletURL.setParameter(
 			"navigationMine", String.valueOf(isNavigationMine()));
-
 		portletURL.setParameter(
 			"navigationRecent", String.valueOf(isNavigationRecent()));
 

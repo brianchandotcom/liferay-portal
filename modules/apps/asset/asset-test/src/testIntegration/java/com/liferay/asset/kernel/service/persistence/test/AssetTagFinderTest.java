@@ -85,7 +85,7 @@ public class AssetTagFinderTest {
 	}
 
 	@Test
-	public void testCountByG_C_N1() throws Exception {
+	public void testCountByG_C_N_WithClassNameId() throws Exception {
 		long classNameId = PortalUtil.getClassNameId(MBMessage.class);
 		String assetTagName = RandomTestUtil.randomString();
 
@@ -110,7 +110,7 @@ public class AssetTagFinderTest {
 	}
 
 	@Test
-	public void testCountByG_C_N2() throws Exception {
+	public void testCountByG_C_N_WithoutClassNameId() throws Exception {
 		String assetTagName = RandomTestUtil.randomString();
 
 		int initialScopeGroupAssetTagsCount = _assetTagFinder.countByG_C_N(

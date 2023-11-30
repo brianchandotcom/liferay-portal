@@ -10,9 +10,11 @@ import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.object.configuration.ObjectConfiguration;
 import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
+import com.liferay.object.exception.ObjectEntryCountException;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
@@ -23,6 +25,7 @@ import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
+import com.liferay.object.service.persistence.ObjectEntryPersistence;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.test.util.TreeTestUtil;
 import com.liferay.object.tree.Edge;
@@ -32,6 +35,7 @@ import com.liferay.object.tree.TreeFactory;
 import com.liferay.object.tree.constants.TreeConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.NoSuchResourceActionException;
+import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
@@ -54,17 +58,25 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PersistenceTestRule;
+import com.liferay.portal.test.rule.TransactionalTestRule;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.io.Serializable;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
+import java.util.Dictionary;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -88,7 +100,10 @@ public class ObjectEntryServiceTest {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
+			new TransactionalTestRule(
+				Propagation.REQUIRED, "com.liferay.object.service"));
 
 	@Before
 	public void setUp() throws Exception {
@@ -640,6 +655,85 @@ public class ObjectEntryServiceTest {
 		_objectEntryLocalService.deleteObjectEntry(objectEntry2);
 	}
 
+	@Test
+	public void testValidateMaximumNumberOfObjectEntries() throws Exception {
+
+		_setUser(_guestUser);
+
+		Dictionary<String, Object> objectConfigurationDictionary = new HashMapDictionary<String, Object>();
+		objectConfigurationDictionary.put("maximumNumberOfGuestUserObjectEntriesPerObjectDefinition", 1);
+		objectConfigurationDictionary.put("duration", 1);
+		objectConfigurationDictionary.put("timeScale", "days");
+		objectConfigurationDictionary.put("maximumFileSizeForGuestUsers", 25);
+
+		ConfigurationTestUtil.saveConfiguration(
+			ObjectConfiguration.class.getName(),
+			objectConfigurationDictionary);
+
+		Role guestRole = _roleLocalService.getRole(
+			TestPropsValues.getCompanyId(), RoleConstants.GUEST);
+
+		_resourcePermissionLocalService.addResourcePermission(
+			TestPropsValues.getCompanyId(), _objectDefinition.getResourceName(),
+			ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(TestPropsValues.getCompanyId()),
+			guestRole.getRoleId(), ObjectActionKeys.ADD_OBJECT_ENTRY);
+
+		Assert.assertNotNull(_objectEntryService.addObjectEntry(
+			0, _objectDefinition.getObjectDefinitionId(),
+			Collections.emptyMap(),
+			ServiceContextTestUtil.getServiceContext(
+				TestPropsValues.getGroupId(), _guestUser.getUserId())));
+
+		AssertUtils.assertFailure(
+			ObjectEntryCountException.class,
+			StringBundler.concat("Unable to exceed ",
+				1, " guest object entries for object definition ",
+				_objectDefinition.getObjectDefinitionId()),
+			() -> _objectEntryService.addObjectEntry(
+				0, _objectDefinition.getObjectDefinitionId(),
+				Collections.emptyMap(),
+				ServiceContextTestUtil.getServiceContext(
+					TestPropsValues.getGroupId(), _guestUser.getUserId())));
+
+		ConfigurationTestUtil.deleteConfiguration(ObjectConfiguration.class.getName());
+
+		objectConfigurationDictionary.put("maximumNumberOfGuestUserObjectEntriesPerObjectDefinition", 2);
+		objectConfigurationDictionary.put("timeScale", "weeks");
+
+		ConfigurationTestUtil.saveConfiguration(ObjectConfiguration.class.getName(), objectConfigurationDictionary);
+
+		LocalDate beginningDate = LocalDate.now().minusDays(7);
+		Date createdDate = Date.from(beginningDate.atStartOfDay(
+			ZoneId.systemDefault()).toInstant());
+
+		ObjectEntry objectEntry = _objectEntryService.addObjectEntry(
+			0, _objectDefinition.getObjectDefinitionId(),
+			Collections.emptyMap(),
+			ServiceContextTestUtil.getServiceContext(
+				TestPropsValues.getGroupId(), _guestUser.getUserId()));
+
+		objectEntry.setCreateDate(createdDate);
+
+		_objectEntryPersistence.update(objectEntry);
+
+		AssertUtils.assertFailure(
+			ObjectEntryCountException.class,
+			StringBundler.concat("Unable to exceed ",
+				2, " guest object entries for object definition ",
+				_objectDefinition.getObjectDefinitionId()),
+			() -> _objectEntryService.addObjectEntry(
+				0, _objectDefinition.getObjectDefinitionId(),
+				Collections.emptyMap(),
+				ServiceContextTestUtil.getServiceContext(
+					TestPropsValues.getGroupId(), _guestUser.getUserId())));
+	}
+
+	@Test
+	public void unitTest() {
+
+	}
+
 	private ObjectEntry _addObjectEntry(User user) throws Exception {
 		return _objectEntryLocalService.addObjectEntry(
 			user.getUserId(), 0, _objectDefinition.getObjectDefinitionId(),
@@ -700,6 +794,9 @@ public class ObjectEntryServiceTest {
 
 	@Inject
 	private ObjectEntryService _objectEntryService;
+
+	@Inject
+	private ObjectEntryPersistence _objectEntryPersistence;
 
 	@Inject
 	private ObjectFieldLocalService _objectFieldLocalService;

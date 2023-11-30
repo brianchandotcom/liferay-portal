@@ -1,0 +1,83 @@
+{
+	"deletedItems": [
+	],
+	"items": {
+		"container1": {
+			"children": [
+				"fragment1"
+			],
+			"config": {
+			},
+			"itemId": "container1",
+			"parentId": "root",
+			"type": "container"
+		},
+		"container2": {
+			"children": [
+			],
+			"config": {
+			},
+			"itemId": "container2",
+			"parentId": "root",
+			"type": "container"
+		},
+		"fragment1": {
+			"children": [
+			],
+			"config": {
+			},
+			"itemId": "fragment1",
+			"parentId": "container1",
+			"type": "fragment"
+		},
+		"root": {
+			"children": [
+				"container1",
+				"container2"
+			],
+			"itemId": "root",
+			"parentId": "",
+			"type": "root"
+		}
+	},
+	"pageRules": [
+		{
+			"actions": [
+				{
+					"action": "fragment",
+					"id": "action1",
+					"itemId": "container2",
+					"type": "show"
+				},
+				{
+					"action": "fragment",
+					"id": "action2",
+					"itemId": "fragment1",
+					"type": "hide"
+				}
+			],
+			"conditionType": "any",
+			"conditions": [
+				{
+					"condition": "role",
+					"id": "condition1",
+					"type": "user",
+					"value": "${ROLE_ID}"
+				},
+				{
+					"condition": "segment",
+					"id": "condition2",
+					"type": "user",
+					"value": "${SEGMENTS_ENTRY_ID}"
+				}
+			],
+			"id": "rule1",
+			"name": "Rule"
+		}
+	],
+	"rootItems": {
+		"dropZone": "",
+		"main": "root"
+	},
+	"version": 1.1
+}

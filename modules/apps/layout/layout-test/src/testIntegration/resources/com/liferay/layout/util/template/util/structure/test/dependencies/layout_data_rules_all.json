@@ -1,0 +1,77 @@
+{
+	"deletedItems": [
+	],
+	"items": {
+		"container1": {
+			"children": [
+				"fragment1"
+			],
+			"itemId": "container1",
+			"parentId": "root",
+			"type": "container"
+		},
+		"container2": {
+			"children": [
+			],
+			"itemId": "container2",
+			"parentId": "root",
+			"type": "container"
+		},
+		"fragment1": {
+			"children": [
+			],
+			"itemId": "fragment1",
+			"parentId": "container1",
+			"type": "fragment"
+		},
+		"root": {
+			"children": [
+				"container1",
+				"container2"
+			],
+			"itemId": "root",
+			"parentId": "",
+			"type": "root"
+		}
+	},
+	"pageRules": [
+		{
+			"actions": [
+				{
+					"action": "fragment",
+					"id": "5aaf253d-50e6-4bf4-a42a-446c987047c3",
+					"itemId": "30f6ca06-105f-baf5-a3a6-943a42deba0b",
+					"type": "show"
+				},
+				{
+					"action": "fragment",
+					"id": "e0e523bf-4380-4624-a242-e5cd796a8090",
+					"itemId": "88e3cd2a-7fc6-6354-0248-386b1b375553",
+					"type": "hide"
+				}
+			],
+			"conditionType": "all",
+			"conditions": [
+				{
+					"condition": "role",
+					"id": "4e0b68af-d41a-4249-8771-0bfdd36a971a",
+					"type": "user",
+					"value": "${ROLE_ID}"
+				},
+				{
+					"condition": "segment",
+					"id": "6da37461-38cf-44ec-99c3-cc6288c12f20",
+					"type": "user",
+					"value": "${SEGMENTS_ENTRY_ID}"
+				}
+			],
+			"id": "06883c1a-7291-681f-83ca-c08d73f3ab1e",
+			"name": "Rule"
+		}
+	],
+	"rootItems": {
+		"dropZone": "",
+		"main": "root"
+	},
+	"version": 1.1
+}

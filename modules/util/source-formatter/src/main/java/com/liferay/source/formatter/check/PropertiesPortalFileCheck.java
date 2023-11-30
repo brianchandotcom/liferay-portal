@@ -14,8 +14,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.processor.PropertiesSourceProcessor;
 
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 
 import java.net.URL;
@@ -217,9 +215,8 @@ public class PropertiesPortalFileCheck extends BaseFileCheck {
 		Map<String, List<String>> propertiesMap = new TreeMap<>(
 			new NaturalOrderStringComparator());
 
-		try (FileReader fileReader = new FileReader(new File(absolutePath));
-			UnsyncBufferedReader unsyncBufferedReader =
-				new UnsyncBufferedReader(fileReader)) {
+		try (UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(new UnsyncStringReader(content))) {
 
 			String key = null;
 			String line = null;

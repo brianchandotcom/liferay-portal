@@ -442,7 +442,8 @@ public class PublicationsDisplayContext {
 				"permissions", "modal-permissions"),
 			new FDSActionDropdownItem(
 				null, "times-circle", "delete",
-				_language.get(_httpServletRequest, "delete"), null, null, null),
+				_language.get(_httpServletRequest, "delete"), null, "delete",
+				null),
 			new FDSActionDropdownItem(
 				PortletURLBuilder.createRenderURL(
 					_renderResponse

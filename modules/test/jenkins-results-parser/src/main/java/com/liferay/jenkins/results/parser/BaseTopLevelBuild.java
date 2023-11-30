@@ -960,13 +960,15 @@ public abstract class BaseTopLevelBuild
 
 			for (Build failedDownstreamBuild : failedDownstreamBuilds) {
 				if (failedDownstreamBuild.isUniqueFailure()) {
-					sb.append("\n" + failedDownstreamBuild.getDisplayName());
+					sb.append("\n");
+					sb.append(failedDownstreamBuild.getDisplayName());
 
 					for (TestResult testResult :
 							failedDownstreamBuild.
 								getUniqueFailureTestResults()) {
 
-						sb.append("\n\t" + testResult.getDisplayName());
+						sb.append("\n\t");
+						sb.append(testResult.getDisplayName());
 					}
 				}
 			}
@@ -975,13 +977,15 @@ public abstract class BaseTopLevelBuild
 
 			for (Build failedDownstreamBuild : failedDownstreamBuilds) {
 				if (!failedDownstreamBuild.isUniqueFailure()) {
-					sb.append("\n" + failedDownstreamBuild.getDisplayName());
+					sb.append("\n");
+					sb.append(failedDownstreamBuild.getDisplayName());
 
 					for (TestResult testResult :
 							failedDownstreamBuild.
 								getUpstreamJobFailureTestResults()) {
 
-						sb.append("\n\t" + testResult.getDisplayName());
+						sb.append("\n\t");
+						sb.append(testResult.getDisplayName());
 					}
 				}
 			}

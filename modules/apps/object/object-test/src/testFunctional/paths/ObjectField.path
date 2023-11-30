@@ -108,8 +108,8 @@
 		<td></td>
 	</tr>
 	<tr>
-		<td>SEARCHABLE_LANGUAGE_OPTION</td>
-		<td>//select[@name="indexedLanguageId"]//option[contains(., '${key_language}')]</td>
+		<td>INPUT_GENERIC_LABEL</td>
+		<td>//label[contains(text(),'${key_labelName}')]/following-sibling::input[contains(@class,'form-control')]</td>
 		<td></td>
 	</tr>
 	<tr>

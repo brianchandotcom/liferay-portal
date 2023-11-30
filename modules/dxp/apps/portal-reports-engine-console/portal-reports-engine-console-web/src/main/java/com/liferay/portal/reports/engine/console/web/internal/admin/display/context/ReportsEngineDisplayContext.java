@@ -32,7 +32,6 @@ import com.liferay.portal.reports.engine.console.constants.ReportsEngineConsoleP
 import com.liferay.portal.reports.engine.console.service.DefinitionServiceUtil;
 import com.liferay.portal.reports.engine.console.service.EntryServiceUtil;
 import com.liferay.portal.reports.engine.console.service.SourceServiceUtil;
-import com.liferay.portal.reports.engine.console.web.internal.admin.configuration.ReportsEngineAdminWebConfiguration;
 import com.liferay.portal.reports.engine.console.web.internal.admin.display.context.helper.ReportsEngineRequestHelper;
 import com.liferay.portal.reports.engine.console.web.internal.admin.search.DefinitionDisplayTerms;
 import com.liferay.portal.reports.engine.console.web.internal.admin.search.DefinitionSearch;
@@ -62,9 +61,6 @@ public class ReportsEngineDisplayContext {
 
 		_httpServletRequest = PortalUtil.getHttpServletRequest(
 			liferayPortletRequest);
-
-		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
-			_httpServletRequest);
 
 		_reportsEngineRequestHelper = new ReportsEngineRequestHelper(
 			_httpServletRequest);
@@ -123,17 +119,9 @@ public class ReportsEngineDisplayContext {
 				_liferayPortletRequest, "displayStyle");
 
 			if (Validator.isNull(_displayStyle)) {
-				ReportsEngineAdminWebConfiguration
-					reportsEngineAdminWebConfiguration =
-						(ReportsEngineAdminWebConfiguration)
-							_liferayPortletRequest.getAttribute(
-								ReportsEngineAdminWebConfiguration.class.
-									getName());
-
 				_displayStyle = portalPreferences.getValue(
 					ReportsEngineConsolePortletKeys.REPORTS_ADMIN,
-					"display-style",
-					reportsEngineAdminWebConfiguration.defaultDisplayView());
+					"display-style", "list");
 			}
 			else if (ArrayUtil.contains(_DISPLAY_VIEWS, _displayStyle)) {
 				portalPreferences.setValue(
@@ -501,7 +489,6 @@ public class ReportsEngineDisplayContext {
 	private String _navigation;
 	private String _orderByCol;
 	private String _orderByType;
-	private final PortalPreferences _portalPreferences;
 	private final ReportsEngineRequestHelper _reportsEngineRequestHelper;
 	private SearchContainer<?> _searchContainer;
 	private final ThemeDisplay _themeDisplay;

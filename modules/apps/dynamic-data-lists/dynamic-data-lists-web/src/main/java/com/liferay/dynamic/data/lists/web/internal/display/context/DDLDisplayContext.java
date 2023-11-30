@@ -224,8 +224,7 @@ public class DDLDisplayContext {
 
 			if (Validator.isNull(_ddlRecordDisplayStyle)) {
 				_ddlRecordDisplayStyle = portalPreferences.getValue(
-					DDLPortletKeys.DYNAMIC_DATA_LISTS, "display-style",
-					_ddlWebConfiguration.defaultDisplayView());
+					DDLPortletKeys.DYNAMIC_DATA_LISTS, "display-style", "list");
 			}
 			else if (ArrayUtil.contains(
 						getDisplayViews(), _ddlRecordDisplayStyle)) {

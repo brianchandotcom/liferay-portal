@@ -105,49 +105,42 @@ boolean hasPermission = commerceDiscountQualifiersDisplayContext.hasPermission(A
 	</c:if>
 </aui:form>
 
-<aui:script>
+<aui:script require="frontend-js-web/index as frontendJsWeb">
+	const {createPortletURL} = frontendJsWeb;
+
 	Liferay.provide(
 		window,
 		'<portlet:namespace />chooseAccountQualifiers',
 		(value) => {
-			var portletURL = new Liferay.PortletURL.createURL(
-				'<%= currentURLObj %>'
-			);
-
-			portletURL.setParameter('accountQualifiers', value);
+			const portletURL = createPortletURL('<%= currentURLObj %>', {
+				accountQualifiers: value,
+			});
 
 			window.location.replace(portletURL.toString());
-		},
-		['liferay-portlet-url']
+		}
 	);
 
 	Liferay.provide(
 		window,
 		'<portlet:namespace />chooseChannelQualifiers',
 		(value) => {
-			var portletURL = new Liferay.PortletURL.createURL(
-				'<%= currentURLObj %>'
-			);
-
-			portletURL.setParameter('channelQualifiers', value);
+			const portletURL = createPortletURL('<%= currentURLObj %>', {
+				channelQualifiers: value,
+			});
 
 			window.location.replace(portletURL.toString());
-		},
-		['liferay-portlet-url']
+		}
 	);
 
 	Liferay.provide(
 		window,
 		'<portlet:namespace />chooseOrderTypeQualifiers',
 		(value) => {
-			var portletURL = new Liferay.PortletURL.createURL(
-				'<%= currentURLObj %>'
-			);
-
-			portletURL.setParameter('orderTypeQualifiers', value);
+			const portletURL = createPortletURL('<%= currentURLObj %>', {
+				orderTypeQualifiers: value,
+			});
 
 			window.location.replace(portletURL.toString());
-		},
-		['liferay-portlet-url']
+		}
 	);
 </aui:script>

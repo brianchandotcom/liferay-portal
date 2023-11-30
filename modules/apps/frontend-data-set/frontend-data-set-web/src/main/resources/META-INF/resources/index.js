@@ -21,4 +21,7 @@ export {default as StatusRenderer} from './cell_renderers/StatusRenderer';
 // Data Set Events API
 
 export {default as FDS_EVENT} from './utils/eventsDefinitions';
-export {NESTED_DELIMITER, NESTED_ROOT} from './Constants';
+
+// Frontend Data Set Constants
+
+export {NESTING_DELIMITER, NESTING_ROOT} from './Constants';

@@ -30,30 +30,7 @@ public class AICreatorOpenAIDisplayContext {
 		_httpServletRequest = httpServletRequest;
 	}
 
-	public Map<String, Object> getProps() {
-		if (isGenerations()) {
-			return HashMapBuilder.<String, Object>put(
-				"getGenerationsURL",
-				() -> {
-					RequestBackedPortletURLFactory
-						requestBackedPortletURLFactory =
-							RequestBackedPortletURLFactoryUtil.create(
-								_httpServletRequest);
-
-					return ResourceURLBuilder.createResourceURL(
-						(ResourceURL)
-							requestBackedPortletURLFactory.createResourceURL(
-								AICreatorOpenAIPortletKeys.AI_CREATOR_OPENAI)
-					).setResourceID(
-						"/ai_creator_openai/get_generations"
-					).buildString();
-				}
-			).put(
-				"learnResources",
-				LearnMessageUtil.getReactDataJSONObject("ai-creator-openai-web")
-			).build();
-		}
-
+	public Map<String, Object> getCompletionProps() {
 		return HashMapBuilder.<String, Object>put(
 			"getCompletionURL",
 			() -> {
@@ -67,6 +44,28 @@ public class AICreatorOpenAIDisplayContext {
 							AICreatorOpenAIPortletKeys.AI_CREATOR_OPENAI)
 				).setResourceID(
 					"/ai_creator_openai/get_completion"
+				).buildString();
+			}
+		).put(
+			"learnResources",
+			LearnMessageUtil.getReactDataJSONObject("ai-creator-openai-web")
+		).build();
+	}
+
+	public Map<String, Object> getGenerationsProps() {
+		return HashMapBuilder.<String, Object>put(
+			"getGenerationsURL",
+			() -> {
+				RequestBackedPortletURLFactory requestBackedPortletURLFactory =
+					RequestBackedPortletURLFactoryUtil.create(
+						_httpServletRequest);
+
+				return ResourceURLBuilder.createResourceURL(
+					(ResourceURL)
+						requestBackedPortletURLFactory.createResourceURL(
+							AICreatorOpenAIPortletKeys.AI_CREATOR_OPENAI)
+				).setResourceID(
+					"/ai_creator_openai/get_generations"
 				).buildString();
 			}
 		).put(

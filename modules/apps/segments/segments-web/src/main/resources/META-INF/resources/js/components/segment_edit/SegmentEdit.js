@@ -31,6 +31,7 @@ import {sub} from '../../utils/utils';
 import ContributorInputs from '../criteria_builder/ContributorInputs.es';
 import ContributorsBuilder from '../criteria_builder/ContributorsBuilder';
 import KeyboardMovementManager from '../keyboard_movement/KeyboardMovementManager';
+import KeyboardMovementPreview from '../keyboard_movement/KeyboardMovementPreview';
 import LocalizedInput from '../title_editor/LocalizedInput';
 
 function SegmentEdit({
@@ -354,10 +355,13 @@ function SegmentEdit({
 	return (
 		<>
 			{movementSource ? (
-				<KeyboardMovementManager
-					contributors={data.contributors}
-					onMove={handleQueryChange}
-				/>
+				<>
+					<KeyboardMovementManager
+						contributors={data.contributors}
+						onMove={handleQueryChange}
+					/>
+					<KeyboardMovementPreview />
+				</>
 			) : null}
 
 			<div

@@ -7,6 +7,8 @@ package com.liferay.object.admin.rest.resource.v1_0.test;
 
 import com.liferay.account.model.AccountEntry;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.list.type.model.ListTypeDefinition;
+import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectField;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectValidationRule;
@@ -256,6 +258,44 @@ public class ObjectDefinitionResourceTest
 
 		assertEquals(postObjectDefinition, randomObjectDefinition);
 		assertValid(postObjectDefinition);
+
+		ObjectDefinition randomModifiableSystemObjectDefinition =
+			_randomModifiableSystemObjectDefinition();
+
+		randomModifiableSystemObjectDefinition.setObjectFields(
+			new ObjectField[] {
+				new ObjectField() {
+					{
+						businessType = BusinessType.PICKLIST;
+						DBType = ObjectField.DBType.create("String");
+						externalReferenceCode = RandomTestUtil.randomString();
+						indexed = false;
+						indexedAsKeyword = false;
+						label = Collections.singletonMap(
+							"en-US", RandomTestUtil.randomString());
+						listTypeDefinitionExternalReferenceCode =
+							"listTypeDefinitionExternalReferenceCode";
+						localized = false;
+						name = "a" + RandomTestUtil.randomString();
+						readOnly = ReadOnly.FALSE;
+						required = false;
+						system = true;
+					}
+				}
+			});
+
+		testPostObjectDefinition_addObjectDefinition(
+			randomModifiableSystemObjectDefinition);
+
+		ListTypeDefinition serviceBuilderlistTypeDefinition =
+			_listTypeDefinitionLocalService.
+				fetchListTypeDefinitionByExternalReferenceCode(
+					"listTypeDefinitionExternalReferenceCode",
+					TestPropsValues.getCompanyId());
+
+		Assert.assertNotNull(serviceBuilderlistTypeDefinition);
+
+		Assert.assertTrue(serviceBuilderlistTypeDefinition.isSystem());
 	}
 
 	@Override
@@ -842,6 +882,9 @@ public class ObjectDefinitionResourceTest
 
 	@Inject
 	private Language _language;
+
+	@Inject
+	private ListTypeDefinitionLocalService _listTypeDefinitionLocalService;
 
 	private ObjectDefinition _objectDefinition;
 

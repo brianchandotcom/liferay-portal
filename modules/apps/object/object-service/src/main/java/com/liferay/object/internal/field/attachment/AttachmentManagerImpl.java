@@ -114,10 +114,10 @@ public class AttachmentManagerImpl implements AttachmentManager {
 			repositoryId = dlFolder.getRepositoryId();
 		}
 
-		ServiceContext cloneServiceContext =
+		ServiceContext clonedServiceContext =
 			(ServiceContext)serviceContext.clone();
 
-		cloneServiceContext.setCompanyId(companyId);
+		clonedServiceContext.setCompanyId(companyId);
 
 		try (InputStream inputStream = new ByteArrayInputStream(fileContent)) {
 			_dlValidator.validateFileSize(
@@ -132,7 +132,7 @@ public class AttachmentManagerImpl implements AttachmentManager {
 				DLUtil.getUniqueTitle(
 					groupId, folderId, FileUtil.stripExtension(fileName)),
 				StringPool.BLANK, null, null, inputStream, fileContent.length,
-				null, null, cloneServiceContext);
+				null, null, clonedServiceContext);
 		}
 	}
 

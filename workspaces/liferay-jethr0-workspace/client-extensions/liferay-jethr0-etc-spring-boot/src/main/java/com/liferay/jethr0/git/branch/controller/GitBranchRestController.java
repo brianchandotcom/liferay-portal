@@ -14,6 +14,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,6 +22,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,6 +32,20 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/git-branches")
 @RestController
 public class GitBranchRestController {
+
+	@GetMapping("{id}")
+	public ResponseEntity<String> gitBranch(
+		@AuthenticationPrincipal Jwt jwt,
+		@PathVariable("id") int gitBranchEntityId) {
+
+		GitBranchEntity gitBranchEntity = _gitBranchEntityRepository.getById(
+			gitBranchEntityId);
+
+		JSONObject gitBranchJSONObject = gitBranchEntity.getJSONObject();
+
+		return new ResponseEntity<>(
+			gitBranchJSONObject.toString(), HttpStatus.OK);
+	}
 
 	@GetMapping
 	public ResponseEntity<String> gitBranches(

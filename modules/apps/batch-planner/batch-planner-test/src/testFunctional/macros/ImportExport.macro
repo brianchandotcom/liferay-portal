@@ -360,49 +360,22 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro importFile(containsHeaders = null, fileName = null, entityType = null, importName = null, csvSeparator = null, fieldMappings = null, stopImportOnError = null) {
-		Click(locator1 = "Button#PLUS");
+	macro importFile(containsHeaders = null, fileName = null, templateName = null, entityType = null, scope = null, importName = null, csvSeparator = null, fieldMappings = null, importStrategy = null, stopImportOnError = null) {
+		ImportExport.gotoImport();
 
-		MenuItem.click(menuItem = "Import File");
-
-		UploadDependencyFile.uploadFile(fileName = ${fileName});
-
-		if (isSet(importName)) {
-			Type(
-				locator1 = "TextInput#NAME",
-				value1 = ${importName});
-		}
-
-		if (isSet(csvSeparator)) {
-			Type(
-				key_text = "CSV Separator",
-				locator1 = "TextInput#ANY",
-				value1 = ${csvSeparator});
-		}
-
-		if (${containsHeaders} == "false") {
-			Uncheck.uncheckNotVisible(
-				checkboxName = "Headers",
-				locator1 = "Checkbox#ANY_CHECKBOX");
-		}
-
-		ImportExport.selectEntity(entityType = ${entityType});
-
-		if (${stopImportOnError} == "false") {
-			Uncheck.uncheckNotVisible(
-				checkboxName = "Stop the Import on Error",
-				locator1 = "Checkbox#ANY_CHECKBOX");
-		}
-
-		if (isSet(fieldMappings)) {
-			ImportExport.mapImport(fieldMappings = ${fieldMappings});
-		}
+		ImportExport.configureImport(
+			containsHeaders = ${containsHeaders},
+			csvSeparator = ${csvSeparator},
+			entityType = ${entityType},
+			fieldMappings = ${fieldMappings},
+			fileName = ${fileName},
+			importName = ${importName},
+			importStrategy = ${importStrategy},
+			scope = ${scope},
+			stopImportOnError = ${stopImportOnError},
+			templateName = ${templateName});
 
 		if (!(isSet(noImport))) {
-			ScrollWebElementIntoView(
-				key_text = "Next",
-				locator1 = "Button#ANY");
-
 			ImportExport.startImportAndWaitForSuccess();
 
 			Click(locator1 = "Button#CLOSE");
@@ -452,6 +425,8 @@ definition {
 
 	@summary = "Default summary"
 	macro replaceAttachmentIdAndHrefInFile(fileName = null, en_US_plural_label = null) {
+		Variables.assertDefined(parameterList = "${en_US_plural_label}, ${fileName}");
+
 		var filePath = TestCase.getDependenciesDirPath(fileName = ${fileName});
 		var response = ObjectDefinitionAPI.getObjectEntries(en_US_plural_label = ${en_US_plural_label});
 

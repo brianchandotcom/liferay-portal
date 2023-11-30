@@ -10,6 +10,8 @@ import {sub} from 'frontend-js-web';
 import React, {useEffect, useRef, useState} from 'react';
 
 import {
+	EXPORT_FILE_FORMAT_SELECTED_EVENT,
+	OBJECT_DEFINITION,
 	SCHEMA_SELECTED_EVENT,
 	TEMPLATE_SELECTED_EVENT,
 	TEMPLATE_SOILED_EVENT,
@@ -65,11 +67,32 @@ function FieldsTable({portletNamespace}) {
 			useTemplateMappingRef.current = false;
 		};
 
+		const handleExportFileFormatUpdated = ({
+			selectedExportFileFormat,
+			selectedSchema,
+		}) => {
+			if (
+				selectedExportFileFormat === 'CSV' &&
+				selectedSchema === OBJECT_DEFINITION
+			) {
+				setFields([]);
+				setSelectedFields([]);
+			}
+		};
+
+		Liferay.on(
+			EXPORT_FILE_FORMAT_SELECTED_EVENT,
+			handleExportFileFormatUpdated
+		);
 		Liferay.on(SCHEMA_SELECTED_EVENT, handleSchemaUpdated);
 		Liferay.on(TEMPLATE_SELECTED_EVENT, handleTemplateUpdate);
 		Liferay.on(TEMPLATE_SOILED_EVENT, handleTemplateSoiled);
 
 		return () => {
+			Liferay.detach(
+				EXPORT_FILE_FORMAT_SELECTED_EVENT,
+				handleExportFileFormatUpdated
+			);
 			Liferay.detach(SCHEMA_SELECTED_EVENT, handleSchemaUpdated);
 			Liferay.detach(TEMPLATE_SELECTED_EVENT, handleTemplateUpdate);
 			Liferay.detach(TEMPLATE_SOILED_EVENT, handleTemplateSoiled);

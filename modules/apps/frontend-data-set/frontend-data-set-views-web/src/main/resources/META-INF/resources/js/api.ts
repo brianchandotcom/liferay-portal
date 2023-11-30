@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {NESTING_DELIMITER,NESTING_ROOT} from '@liferay/frontend-data-set-web';
+import {NESTING_DELIMITER, NESTING_ROOT} from '@liferay/frontend-data-set-web';
 import {fetch} from 'frontend-js-web';
 
 import {OBJECT_RELATIONSHIP} from './Constants';

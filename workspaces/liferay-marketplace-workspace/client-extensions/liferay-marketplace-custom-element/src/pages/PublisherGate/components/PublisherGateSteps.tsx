@@ -49,7 +49,8 @@ const PublisherGateSteps = () => {
 			await fetcher.post('o/c/requestpublisheraccounts/', formData, {});
 
 			setStep(StepType.REQUESTED);
-		} catch (error) {
+		}
+		catch (error) {
 			console.error(error);
 		}
 	};

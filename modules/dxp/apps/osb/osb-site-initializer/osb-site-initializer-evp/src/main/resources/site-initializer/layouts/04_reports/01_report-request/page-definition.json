@@ -169,7 +169,7 @@
 								"widgetConfig": {
 									"properties": "route=generate-report"
 								},
-								"widgetName": "[$CLIENT_EXTENSION_ENTRY_ID:EVP$]"
+								"widgetName": "[$CLIENT_EXTENSION_ENTRY_ERC:EVP$]"
 							}
 						},
 						"type": "Widget"

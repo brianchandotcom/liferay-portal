@@ -24,7 +24,7 @@
 								"widgetConfig": {
 									"properties": "route=onboarding"
 								},
-								"widgetName": "[$CLIENT_EXTENSION_ENTRY_ID:CUSTOMER-PORTAL$]"
+								"widgetName": "[$CLIENT_EXTENSION_ENTRY_ERC:CUSTOMER-PORTAL$]"
 							}
 						},
 						"type": "Widget"

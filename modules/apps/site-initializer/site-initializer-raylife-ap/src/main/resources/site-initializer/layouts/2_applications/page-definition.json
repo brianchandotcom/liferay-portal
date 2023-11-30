@@ -90,7 +90,7 @@
 												"widgetConfig": {
 													"properties": "route=notification-sidebar"
 												},
-												"widgetName": "[$CLIENT_EXTENSION_ENTRY_ID:RAYLIFEAGENTPORTAL$]"
+												"widgetName": "[$CLIENT_EXTENSION_ENTRY_ERC:RAYLIFE-AGENT-PORTAL$]"
 											}
 										},
 										"type": "Widget"
@@ -602,7 +602,7 @@
 																								"widgetConfig": {
 																									"properties": "route=applications-table"
 																								},
-																								"widgetName": "[$CLIENT_EXTENSION_ENTRY_ID:RAYLIFEAGENTPORTAL$]"
+																								"widgetName": "[$CLIENT_EXTENSION_ENTRY_ERC:RAYLIFE-AGENT-PORTAL$]"
 																							}
 																						},
 																						"type": "Widget"
@@ -1813,7 +1813,7 @@
 												"widgetConfig": {
 													"properties": "route=applications"
 												},
-												"widgetName": "[$CLIENT_EXTENSION_ENTRY_ID:RAYLIFEAGENTPORTAL$]"
+												"widgetName": "[$CLIENT_EXTENSION_ENTRY_ERC:RAYLIFE-AGENT-PORTAL$]"
 											}
 										},
 										"type": "Widget"

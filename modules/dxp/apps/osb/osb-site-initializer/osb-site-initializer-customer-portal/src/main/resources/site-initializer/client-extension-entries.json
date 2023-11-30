@@ -6,7 +6,7 @@
 		"elementURLs": [
 			"[$DOCUMENT_URL:/site-initializer/documents/company/remote-app/osb-site-initializer-customer-portal/index.js$]"
 		],
-		"externalReferenceCode": "CP001",
+		"externalReferenceCode": "CUSTOMER-PORTAL",
 		"htmlElementName": "liferay-remote-app-customer-portal",
 		"name_i18n": {
 			"en_US": "Customer Portal"

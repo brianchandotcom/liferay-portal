@@ -88,7 +88,7 @@
 												"widgetConfig": {
 													"properties": "route=notification-sidebar"
 												},
-												"widgetName": "[$CLIENT_EXTENSION_ENTRY_ID:RAYLIFEAGENTPORTAL$]"
+												"widgetName": "[$CLIENT_EXTENSION_ENTRY_ERC:RAYLIFE-AGENT-PORTAL$]"
 											}
 										},
 										"type": "Widget"
@@ -195,7 +195,7 @@
 														"widgetConfig": {
 															"properties": "route=claim-details"
 														},
-														"widgetName": "[$CLIENT_EXTENSION_ENTRY_ID:RAYLIFEAGENTPORTAL$]"
+														"widgetName": "[$CLIENT_EXTENSION_ENTRY_ERC:RAYLIFE-AGENT-PORTAL$]"
 													}
 												},
 												"type": "Widget"

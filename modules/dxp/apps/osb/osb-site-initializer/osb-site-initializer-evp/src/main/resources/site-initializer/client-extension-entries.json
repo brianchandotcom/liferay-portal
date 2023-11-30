@@ -6,7 +6,7 @@
 		"elementURLs": [
 			"[$DOCUMENT_URL:/site-initializer/documents/company/remote-app/osb-site-initializer-evp/index.js$]"
 		],
-		"externalReferenceCode": "EVP001",
+		"externalReferenceCode": "EVP",
 		"htmlElementName": "liferay-remote-app-evp",
 		"name_i18n": {
 			"en_US": "EVP"

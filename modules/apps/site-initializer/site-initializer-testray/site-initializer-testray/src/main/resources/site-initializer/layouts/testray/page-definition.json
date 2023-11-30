@@ -48,7 +48,7 @@
 												"widgetConfig": {
 													"properties": "jiraBaseURL=https://issues.liferay.com"
 												},
-												"widgetName": "[$CLIENT_EXTENSION_ENTRY_ID:TESTRAY$]"
+												"widgetName": "[$CLIENT_EXTENSION_ENTRY_ERC:TESTRAY$]"
 											}
 										},
 										"type": "Widget"

@@ -123,7 +123,7 @@
 								"widgetConfig": {
 									"displayStyleGroupId": "[$GROUP_ID$]"
 								},
-								"widgetName": "[$CLIENT_EXTENSION_ENTRY_ID:REMOTE_APPS$]"
+								"widgetName": "[$CLIENT_EXTENSION_ENTRY_ERC:REMOTE_APPS$]"
 							}
 						},
 						"type": "Widget"

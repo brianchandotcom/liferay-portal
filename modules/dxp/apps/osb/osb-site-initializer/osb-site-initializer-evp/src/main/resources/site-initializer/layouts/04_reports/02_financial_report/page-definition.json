@@ -29,7 +29,7 @@
 								"widgetConfig": {
 									"properties": "route=generate-financial-report"
 								},
-								"widgetName": "[$CLIENT_EXTENSION_ENTRY_ID:EVP$]"
+								"widgetName": "[$CLIENT_EXTENSION_ENTRY_ERC:EVP$]"
 							}
 						},
 						"type": "Widget"

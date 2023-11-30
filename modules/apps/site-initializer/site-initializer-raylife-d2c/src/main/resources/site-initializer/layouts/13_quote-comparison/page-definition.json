@@ -198,7 +198,7 @@
 												"widgetConfig": {
 													"properties": "route=quote-comparison"
 												},
-												"widgetName": "[$CLIENT_EXTENSION_ENTRY_ID:RAYLIFE$]"
+												"widgetName": "[$CLIENT_EXTENSION_ENTRY_ERC:RAYLIFE-D2C$]"
 											}
 										},
 										"type": "Widget"

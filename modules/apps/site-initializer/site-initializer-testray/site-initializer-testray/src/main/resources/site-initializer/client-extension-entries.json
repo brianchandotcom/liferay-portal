@@ -6,7 +6,7 @@
 		"elementURLs": [
 			"[$DOCUMENT_URL:/site-initializer/documents/company/remote-app/site-initializer-testray/index.js$]"
 		],
-		"externalReferenceCode": "TESTRAY001",
+		"externalReferenceCode": "TESTRAY",
 		"htmlElementName": "liferay-remote-app-testray",
 		"name_i18n": {
 			"en_US": "Testray"

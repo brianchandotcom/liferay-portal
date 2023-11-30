@@ -68,9 +68,17 @@ export default function StatusLabel({
 
 	return (
 		<ClayLayout.ContentCol containerElement="span">
+			<span className="sr-only">
+				{sub(
+					Liferay.Language.get('x-language-x'),
+					item.label,
+					status.label
+				)}
+			</span>
+
 			<ClayLayout.ContentSection>
 				<ClayLabel displayType={status.displayType}>
-					{status.label}
+					<span aria-hidden="true">{status.label}</span>
 				</ClayLabel>
 			</ClayLayout.ContentSection>
 		</ClayLayout.ContentCol>

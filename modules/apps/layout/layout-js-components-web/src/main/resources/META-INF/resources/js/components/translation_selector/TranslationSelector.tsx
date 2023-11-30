@@ -7,6 +7,7 @@ import {Option, Picker} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import {useId} from 'frontend-js-components-web';
+import {sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
 import StatusLabel from './StatusLabel';
@@ -26,7 +27,7 @@ const TriggerLabel = React.forwardRef(
 					<ClayIcon symbol={selectedItem.icon} />
 				</span>
 
-				{selectedItem.label}
+				<span aria-hidden="true">{selectedItem.label}</span>
 			</button>
 		);
 	}
@@ -97,6 +98,10 @@ export default function TranslationSelector({
 
 	return (
 		<Picker
+			aria-label={sub(
+				Liferay.Language.get('select-a-language.-current-language-x'),
+				selectedLanguage.label
+			)}
 			as={TriggerLabel}
 			id={selectorId}
 			items={items}
@@ -117,7 +122,7 @@ export default function TranslationSelector({
 									symbol={item.icon}
 								/>
 
-								{item.label}
+								<span aria-hidden="true">{item.label}</span>
 							</ClayLayout.ContentSection>
 						</ClayLayout.ContentCol>
 

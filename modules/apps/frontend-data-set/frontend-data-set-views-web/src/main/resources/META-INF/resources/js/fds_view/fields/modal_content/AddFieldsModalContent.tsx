@@ -51,14 +51,11 @@ const applySavedFDSFields = ({
 
 	visit(fields, (field: IFieldTreeItem) => {
 		const savedFDSField = savedFDSFields.find(
-			(savedFDSField) =>
-				savedFDSField.name === field.name
+			(savedFDSField) => savedFDSField.name === field.name
 		);
 
 		if (savedFDSField) {
-			selectedKeys.add(
-				savedFDSField.name
-			);
+			selectedKeys.add(savedFDSField.name);
 
 			field.savedId = savedFDSField.id;
 		}

@@ -2060,7 +2060,8 @@ public class ServicePreAction extends Action {
 		httpServletResponse.setHeader(
 			"X-Liferay-Request-Group",
 			ListUtil.toString(
-				liferayRequestGroupHeaderValues, StringPool.SPACE));
+				liferayRequestGroupHeaderValues, (String)null,
+				StringPool.SPACE));
 
 		User user = themeDisplay.getUser();
 

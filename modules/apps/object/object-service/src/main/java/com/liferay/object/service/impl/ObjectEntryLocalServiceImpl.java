@@ -2935,6 +2935,12 @@ public class ObjectEntryLocalServiceImpl
 				if (result == null) {
 					result = "0";
 				}
+				else {
+					BigDecimal bigDecimal = new BigDecimal(result.toString());
+
+					result = String.valueOf(
+						BigDecimalUtil.stripTrailingZeros(bigDecimal));
+				}
 			}
 		}
 		catch (SQLException sqlException) {

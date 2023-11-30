@@ -236,6 +236,11 @@ public class PropertiesPortalFileCheck extends BaseFileCheck {
 
 				if (line.indexOf('=') >= 0) {
 					key = line.substring(0, line.indexOf('='));
+
+					if (propertiesMap.containsKey(key)) {
+						return content;
+					}
+
 					value = line.substring(line.indexOf('=') + 1);
 
 					if (!Objects.isNull(value) && !value.equals("\\")) {

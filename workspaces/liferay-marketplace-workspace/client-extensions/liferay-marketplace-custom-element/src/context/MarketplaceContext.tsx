@@ -7,6 +7,7 @@ import {ReactNode, createContext, useContext} from 'react';
 import useSWR, {KeyedMutator} from 'swr';
 
 import SearchBuilder from '../core/SearchBuilder';
+import {Liferay} from '../liferay/liferay';
 import HeadlessAdminUserImpl from '../services/rest/HeadlessAdminUser';
 import HeadlessCommerceDeliveryCatalogImpl from '../services/rest/HeadlessCommerceDeliveryCatalog';
 
@@ -53,8 +54,10 @@ const MarketplaceContextProvider: React.FC<MarketplaceContextProviderProps> = ({
 		}
 	);
 
+	const logedUser = Liferay.ThemeDisplay.isSignedIn();
+
 	const {data: myUserAccount, mutate} = useSWR(
-		'/marketplace/my-user-account',
+		logedUser ? '/marketplace/my-user-account' : null,
 		() => {
 			return HeadlessAdminUserImpl.getMyUserAccount();
 		}

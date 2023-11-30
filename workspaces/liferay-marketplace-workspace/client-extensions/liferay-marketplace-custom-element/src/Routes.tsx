@@ -8,7 +8,7 @@ import GetAppPage from './pages/GetAppPage/GetAppPage';
 import {NextSteps} from './pages/NextSteps';
 import {AppCreationFlow} from './pages/PublishedAppsDashboard/Apps/AppCreationFlow/AppCreationFlow';
 import PublishedAppsDashboardRouter from './pages/PublishedAppsDashboard/PublishedAppsDashboardRouter';
-import PublisherGateRouter from './pages/PublisherGatePage/PublisheGateRouter';
+import PublisherGateRouter from './pages/PublisherGate/PublisheGateRouter';
 import PurchasedAppsDashboardRouter from './pages/PurchasedAppsDashboard/PurchasedAppsDashboardRouter';
 import PurchasedSolutions from './pages/PurchasedSolutions/PurchasedSolutions';
 

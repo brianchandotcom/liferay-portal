@@ -44,7 +44,6 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.Arrays;
@@ -75,9 +74,7 @@ public class OpenAPIResourceTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		_company = CompanyTestUtil.addCompany();
-
-		PortalInstances.initCompany(_company);
+		_company = CompanyTestUtil.addCompany(true);
 
 		_originalName = PrincipalThreadLocal.getName();
 

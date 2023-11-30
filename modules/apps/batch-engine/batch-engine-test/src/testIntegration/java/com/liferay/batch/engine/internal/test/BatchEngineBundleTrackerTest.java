@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ClassUtil;
-import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.zip.ZipWriter;
@@ -140,7 +139,6 @@ public class BatchEngineBundleTrackerTest {
 
 		promise.getValue();
 
-		IntegerWrapper actualCount = new IntegerWrapper();
 		List<String> processedDataFiles = new CopyOnWriteArrayList<>();
 
 		ServiceRegistration<BatchEngineImportTaskExecutor>
@@ -156,7 +154,6 @@ public class BatchEngineBundleTrackerTest {
 							batchEngineImportTask);
 
 						if (dataFileName != null) {
-							actualCount.increment();
 							processedDataFiles.add(dataFileName);
 						}
 					}
@@ -172,7 +169,6 @@ public class BatchEngineBundleTrackerTest {
 							batchEngineImportTask);
 
 						if (dataFileName != null) {
-							actualCount.increment();
 							processedDataFiles.add(dataFileName);
 						}
 					}
@@ -205,7 +201,8 @@ public class BatchEngineBundleTrackerTest {
 			Thread.sleep(2000);
 
 			Assert.assertEquals(
-				expectedDataFiles.length, actualCount.getValue());
+				processedDataFiles.toString(), expectedDataFiles.length,
+				processedDataFiles.size());
 
 			Assert.assertTrue(
 				StringBundler.concat(
@@ -229,7 +226,8 @@ public class BatchEngineBundleTrackerTest {
 			Thread.sleep(2000);
 
 			Assert.assertEquals(
-				expectedDataFiles.length, actualCount.getValue());
+				processedDataFiles.toString(), expectedDataFiles.length,
+				processedDataFiles.size());
 		}
 		finally {
 			bundle.uninstall();

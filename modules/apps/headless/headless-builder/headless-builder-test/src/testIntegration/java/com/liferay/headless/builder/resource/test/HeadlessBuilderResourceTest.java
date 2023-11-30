@@ -1118,14 +1118,13 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 
 	@Test
 	public void testGetWithPostEndpoint() throws Exception {
+		int index = 10;
+
 		ObjectDefinition objectDefinition = _addObjectDefinition(
-			10, true, ObjectDefinitionConstants.SCOPE_COMPANY);
+			index, true, ObjectDefinitionConstants.SCOPE_COMPANY);
 
 		_addAPIApplicationWithGetAndPostEndpoint(
-			_API_APPLICATION_ERC_1, _BASE_URL_1, _API_ENDPOINT_ERC_1, 10,
-			objectDefinition.getExternalReferenceCode(), "/testget",
-			"/testpost", _API_ENDPOINT_ERC_2,
-			APIApplication.Endpoint.Scope.COMPANY);
+			objectDefinition.getExternalReferenceCode(), index);
 
 		_publishAPIApplication(_API_APPLICATION_ERC_1);
 
@@ -2226,11 +2225,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 	}
 
 	private void _addAPIApplicationWithGetAndPostEndpoint(
-			String apiApplicationExternalReferenceCode, String baseURL,
-			String getAPIEndpointExternalReferenceCode, int index,
-			String objectDefinitionExternalReferenceCode, String pathGet,
-			String pathPost, String postAPIEndpointExternalReferenceCode,
-			APIApplication.Endpoint.Scope scope)
+			String objectDefinitionExternalReferenceCode, int index)
 		throws Exception {
 
 		String apiSchemaExternalReferenceCode = RandomTestUtil.randomString();
@@ -2241,17 +2236,17 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				JSONUtil.putAll(
 					// Order is relevant to reproduce the issue
 					_createAPIEndpoint(
-						postAPIEndpointExternalReferenceCode, Http.Method.POST,
-						pathPost, null,
+						_API_ENDPOINT_ERC_2, Http.Method.POST,
+						"/testpost", null,
 						APIApplication.Endpoint.RetrieveType.SINGLE_ELEMENT.
 							getValue(),
-						scope),
+						APIApplication.Endpoint.Scope.COMPANY),
 					_createAPIEndpoint(
-						getAPIEndpointExternalReferenceCode, Http.Method.GET,
-						pathGet, null,
+						_API_ENDPOINT_ERC_1, Http.Method.GET,
+						"/testget", null,
 						APIApplication.Endpoint.RetrieveType.COLLECTION.
 							getValue(),
-						scope))
+						APIApplication.Endpoint.Scope.COMPANY))
 			).put(
 				"apiApplicationToAPISchemas",
 				JSONUtil.put(
@@ -2328,8 +2323,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 								"name", "multiselectPicklistProperty"
 							).put(
 								"objectFieldERC",
-								_API_SCHEMA_MULTISELECT_PICKLIST_FIELD_ERC +
-									index
+								_API_SCHEMA_MULTISELECT_PICKLIST_FIELD_ERC + index
 							),
 							JSONUtil.put(
 								"description", "description"
@@ -2384,9 +2378,10 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			).put(
 				"applicationStatus", "unpublished"
 			).put(
-				"baseURL", baseURL
+				"baseURL", _BASE_URL_1
 			).put(
-				"externalReferenceCode", apiApplicationExternalReferenceCode
+				"externalReferenceCode",
+				_API_APPLICATION_ERC_1
 			).put(
 				"title", RandomTestUtil.randomString()
 			).toString(),
@@ -2397,8 +2392,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			StringBundler.concat(
 				"headless-builder/schemas/by-external-reference-code/",
 				apiSchemaExternalReferenceCode,
-				"/responseAPISchemaToAPIEndpoints/",
-				getAPIEndpointExternalReferenceCode),
+				"/responseAPISchemaToAPIEndpoints/", _API_ENDPOINT_ERC_1),
 			Http.Method.PUT);
 
 		assertSuccessfulJSONObject(
@@ -2406,8 +2400,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			StringBundler.concat(
 				"headless-builder/schemas/by-external-reference-code/",
 				apiSchemaExternalReferenceCode,
-				"/requestAPISchemaToAPIEndpoints/",
-				postAPIEndpointExternalReferenceCode),
+				"/requestAPISchemaToAPIEndpoints/", _API_ENDPOINT_ERC_2),
 			Http.Method.PUT);
 
 		assertSuccessfulJSONObject(
@@ -2415,8 +2408,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			StringBundler.concat(
 				"headless-builder/schemas/by-external-reference-code/",
 				apiSchemaExternalReferenceCode,
-				"/responseAPISchemaToAPIEndpoints/",
-				postAPIEndpointExternalReferenceCode),
+				"/responseAPISchemaToAPIEndpoints/", _API_ENDPOINT_ERC_2),
 			Http.Method.PUT);
 	}
 

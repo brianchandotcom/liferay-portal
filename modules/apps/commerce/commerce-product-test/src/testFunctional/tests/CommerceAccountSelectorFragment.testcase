@@ -236,7 +236,7 @@ definition {
 		}
 
 		task ("And the user is able to create new orders") {
-			Button.click(button = "Create New Order");
+			CommerceAcceleratorsInitializer.createNewOrderFromAccountSelectorDropdown();
 
 			WaitForVisible(locator1 = "CommerceOrders#PENDING_ORDERS_ORDER_ID");
 

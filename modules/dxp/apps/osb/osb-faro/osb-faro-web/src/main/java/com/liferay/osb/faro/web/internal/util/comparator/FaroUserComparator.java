@@ -38,26 +38,25 @@ public class FaroUserComparator extends OrderByComparator<FaroUser> {
 				orderByField -> {
 					String format = StringPool.BLANK;
 
-					if (((orderByField.getOrderBy() ==
-							OrderByField.OrderBy.desc) &&
-						 StringUtil.equals(
-							 orderByField.getFieldName(), "firstName")) ||
-						StringUtil.equals(
-							orderByField.getFieldName(), "lastName")) {
-
-						format =
-							"CASE WHEN lower(%s) IS NULL THEN 1 ELSE 0 END, ";
-						format = String.format(
-							format,
-							_fieldNames.get(orderByField.getFieldName()));
-					}
-
 					if (StringUtil.equals(
 							orderByField.getFieldName(), "status")) {
 
 						format = "%s %s";
 					}
 					else {
+						if (((orderByField.getOrderBy() ==
+								OrderByField.OrderBy.desc) &&
+							 StringUtil.equals(
+								 orderByField.getFieldName(), "firstName")) ||
+							StringUtil.equals(
+								orderByField.getFieldName(), "lastName")) {
+
+							format = String.format(
+								"CASE WHEN lower(%s) IS NULL THEN 1 ELSE 0 " +
+									"END, ",
+								_fieldNames.get(orderByField.getFieldName()));
+						}
+
 						format += "lower(%s) %s";
 					}
 

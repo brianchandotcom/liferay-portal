@@ -51,6 +51,7 @@ import com.paypal.orders.AmountBreakdown;
 import com.paypal.orders.AmountWithBreakdown;
 import com.paypal.orders.ApplicationContext;
 import com.paypal.orders.Authorization;
+import com.paypal.orders.AuthorizeRequest;
 import com.paypal.orders.Item;
 import com.paypal.orders.LinkDescription;
 import com.paypal.orders.Money;
@@ -67,6 +68,7 @@ import com.paypal.orders.ShippingDetail;
 import com.paypal.payments.AuthorizationsCaptureRequest;
 import com.paypal.payments.AuthorizationsVoidRequest;
 import com.paypal.payments.Capture;
+import com.paypal.payments.CaptureRequest;
 import com.paypal.payments.CapturesRefundRequest;
 import com.paypal.payments.Refund;
 import com.paypal.payments.RefundRequest;
@@ -120,13 +122,14 @@ public class PayPalCommercePaymentIntegration
 					commercePaymentEntry.getTransactionCode()
 				).prefer(
 					"return=representation"
+				).requestBody(
+					new AuthorizeRequest()
 				);
 
 			ordersAuthorizeRequest.header(
 				PayPalCommercePaymentMethodConstants.
 					PAYPAL_PARTNER_ATTRIBUTION_ID,
 				"Liferay_SP_PPCP_API");
-			ordersAuthorizeRequest.requestBody(new OrderRequest());
 
 			_debug(ordersAuthorizeRequest);
 
@@ -244,13 +247,14 @@ public class PayPalCommercePaymentIntegration
 				).payPalRequestId(
 					String.valueOf(
 						commercePaymentEntry.getCommercePaymentEntryId())
+				).requestBody(
+					new CaptureRequest()
 				);
 
 			authorizationsCaptureRequest.header(
 				PayPalCommercePaymentMethodConstants.
 					PAYPAL_PARTNER_ATTRIBUTION_ID,
 				"Liferay_SP_PPCP_API");
-			authorizationsCaptureRequest.requestBody(new OrderRequest());
 
 			_debug(authorizationsCaptureRequest);
 
@@ -315,30 +319,26 @@ public class PayPalCommercePaymentIntegration
 			PayPalHttpClient payPalHttpClient = _getPayPalHttpClient(
 				commercePaymentEntry);
 
-			CommerceCurrency commerceCurrency =
-				_commerceCurrencyLocalService.getCommerceCurrency(
-					commercePaymentEntry.getCompanyId(),
-					commercePaymentEntry.getCurrencyCode());
-
 			CapturesRefundRequest capturesRefundRequest =
 				new CapturesRefundRequest(
 					commercePaymentEntry.getTransactionCode()
 				).prefer(
 					"return=representation"
 				).requestBody(
-					new RefundRequest() {
-						{
-							amount(
-								new com.paypal.payments.Money(
-								).currencyCode(
-									commercePaymentEntry.getCurrencyCode()
-								).value(
-									_toScaledString(
-										commerceCurrency,
-										commercePaymentEntry.getAmount())
-								));
-						}
-					}
+					new RefundRequest(
+					).amount(
+						new com.paypal.payments.Money(
+						).currencyCode(
+							commercePaymentEntry.getCurrencyCode()
+						).value(
+							_toScaledString(
+								_commerceCurrencyLocalService.
+									getCommerceCurrency(
+										commercePaymentEntry.getCompanyId(),
+										commercePaymentEntry.getCurrencyCode()),
+								commercePaymentEntry.getAmount())
+						)
+					)
 				);
 
 			_debug(capturesRefundRequest);
@@ -543,10 +543,6 @@ public class PayPalCommercePaymentIntegration
 		PayPalGroupServiceConfiguration payPalGroupServiceConfiguration =
 			_getPayPalGroupServiceConfiguration(commerceOrder.getGroupId());
 
-		Payee payee = new Payee();
-
-		payee.merchantId(payPalGroupServiceConfiguration.merchantId());
-
 		return new PurchaseUnitRequest(
 		).amountWithBreakdown(
 			new AmountWithBreakdown(
@@ -590,7 +586,10 @@ public class PayPalCommercePaymentIntegration
 					);
 				})
 		).payee(
-			payee
+			new Payee(
+			).merchantId(
+				payPalGroupServiceConfiguration.merchantId()
+			)
 		).referenceId(
 			String.valueOf(commercePaymentEntry.getCommercePaymentEntryId())
 		).shippingDetail(
@@ -602,38 +601,33 @@ public class PayPalCommercePaymentIntegration
 			CommercePaymentEntry commercePaymentEntry)
 		throws PortalException {
 
-		PurchaseUnitRequest purchaseUnitRequest = new PurchaseUnitRequest();
-
-		AmountWithBreakdown amountWithBreakdown = new AmountWithBreakdown();
-
 		CommerceCurrency commerceCurrency =
 			_commerceCurrencyLocalService.getCommerceCurrency(
 				commercePaymentEntry.getCompanyId(),
 				commercePaymentEntry.getCurrencyCode());
 
-		amountWithBreakdown.currencyCode(commerceCurrency.getCode());
-		amountWithBreakdown.value(
-			_toScaledString(
-				commerceCurrency, commercePaymentEntry.getAmount()));
-
-		purchaseUnitRequest.amountWithBreakdown(amountWithBreakdown);
-
-		purchaseUnitRequest.description(
-			"Payment: " + commercePaymentEntry.getCommercePaymentEntryId());
-
-		Payee payee = new Payee();
-
 		PayPalGroupServiceConfiguration payPalGroupServiceConfiguration =
 			_getPayPalGroupServiceConfiguration(commercePaymentEntry);
 
-		payee.merchantId(payPalGroupServiceConfiguration.merchantId());
-
-		purchaseUnitRequest.payee(payee);
-
-		purchaseUnitRequest.referenceId(
-			String.valueOf(commercePaymentEntry.getCommercePaymentEntryId()));
-
-		return purchaseUnitRequest;
+		return new PurchaseUnitRequest(
+		).amountWithBreakdown(
+			new AmountWithBreakdown(
+			).currencyCode(
+				commerceCurrency.getCode()
+			).value(
+				_toScaledString(
+					commerceCurrency, commercePaymentEntry.getAmount())
+			)
+		).description(
+			"Payment: " + commercePaymentEntry.getCommercePaymentEntryId()
+		).payee(
+			new Payee(
+			).merchantId(
+				payPalGroupServiceConfiguration.merchantId()
+			)
+		).referenceId(
+			String.valueOf(commercePaymentEntry.getCommercePaymentEntryId())
+		);
 	}
 
 	private String _getErrorMessages(IOException ioException, String prefix) {
@@ -741,12 +735,12 @@ public class PayPalCommercePaymentIntegration
 	private Money _toMoney(
 		CommerceCurrency commerceCurrency, BigDecimal value) {
 
-		Money money = new Money();
-
-		money.currencyCode(commerceCurrency.getCode());
-		money.value(_toScaledString(commerceCurrency, value));
-
-		return money;
+		return new Money(
+		).currencyCode(
+			commerceCurrency.getCode()
+		).value(
+			_toScaledString(commerceCurrency, value)
+		);
 	}
 
 	private String _toScaledString(
@@ -767,36 +761,35 @@ public class PayPalCommercePaymentIntegration
 			return null;
 		}
 
-		ShippingDetail shippingDetail = new ShippingDetail();
-
-		AddressPortable addressPortable = new AddressPortable();
-
-		addressPortable.addressLine1(shippingCommerceAddress.getStreet1());
-		addressPortable.addressLine2(shippingCommerceAddress.getStreet2());
-
+		Country country = shippingCommerceAddress.getCountry();
 		Region region = shippingCommerceAddress.getRegion();
 
-		if (region != null) {
-			addressPortable.adminArea1(region.getRegionCode());
+		if ((country == null) || (region == null)) {
+			return null;
 		}
 
-		addressPortable.adminArea2(shippingCommerceAddress.getCity());
-
-		Country country = shippingCommerceAddress.getCountry();
-
-		addressPortable.countryCode(country.getA2());
-
-		addressPortable.postalCode(shippingCommerceAddress.getZip());
-
-		shippingDetail.addressPortable(addressPortable);
-
-		Name name = new Name();
-
-		name.fullName(shippingCommerceAddress.getName());
-
-		shippingDetail.name(name);
-
-		return shippingDetail;
+		return new ShippingDetail(
+		).addressPortable(
+			new AddressPortable(
+			).addressLine1(
+				shippingCommerceAddress.getStreet1()
+			).addressLine2(
+				shippingCommerceAddress.getStreet2()
+			).adminArea1(
+				region.getRegionCode()
+			).adminArea2(
+				shippingCommerceAddress.getCity()
+			).countryCode(
+				country.getA2()
+			).postalCode(
+				shippingCommerceAddress.getZip()
+			)
+		).name(
+			new Name(
+			).fullName(
+				shippingCommerceAddress.getName()
+			)
+		);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

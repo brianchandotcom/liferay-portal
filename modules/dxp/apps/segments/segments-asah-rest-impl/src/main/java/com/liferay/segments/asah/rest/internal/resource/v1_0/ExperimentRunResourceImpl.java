@@ -72,7 +72,7 @@ public class ExperimentRunResourceImpl extends BaseExperimentRunResourceImpl {
 				BigDecimalUtil.divide(
 					experimentRun.getConfidenceLevel(), 100, 2,
 					RoundingMode.HALF_DOWN),
-				segmentsExperienceKeySplitMap));
+				segmentsExperienceKeySplitMap, null));
 	}
 
 	private ExperimentVariant _toExperimentVariant(

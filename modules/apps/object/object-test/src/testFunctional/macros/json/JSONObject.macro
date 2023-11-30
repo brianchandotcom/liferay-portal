@@ -476,6 +476,38 @@ definition {
 					}'
 			''';
 		}
+		else if (${fieldBusinessType} == "AutoIncrement") {
+			var curl = '''
+				${portalURL}/o/object-admin/v1.0/object-definitions/${objectId}/object-fields \
+					-H 'Content-Type: application/json' \
+					-u ${userEmailAddress}:${userPassword} \
+					-d '{
+						"type": "${fieldType}",
+						"businessType": "${fieldBusinessType}",
+						"indexed": ${indexed},
+						"indexedAsKeyword": ${indexedAsKeyword},
+						"label": {
+							"en_US": "${fieldLabelName}"
+						},
+						"name": "${fieldName}",
+						"objectFieldSettings": [
+							{
+								"name": "prefix",
+								"value": "${prefix}"
+							},
+							{
+								"name": "initialValue",
+								"value": "${initialValue}"
+							},
+							{
+								"name": "suffix",
+								"value": "${suffix}"
+							}
+						],
+						"required": false
+					}'
+			''';
+		}
 		else {
 			var curl = '''
 				${portalURL}/o/object-admin/v1.0/object-definitions/${objectId}/object-fields \

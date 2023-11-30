@@ -201,20 +201,23 @@ definition {
 			indexed = ${indexed},
 			indexedAsKeyword = ${indexedAsKeyword},
 			indexedLanguageId = ${indexedLanguageId},
+			initialValue = ${initialValue},
 			isReadOnly = ${isReadOnly},
 			isRequired = ${isRequired},
 			objectName = ${objectName},
 			outputOption = ${outputOption},
 			picklistName = ${picklistName},
+			prefix = ${prefix},
 			readOnlyExpression = ${readOnlyExpression},
 			showFilesInDocumentsAndMedia = ${showFilesInDocumentsAndMedia},
+			suffix = ${suffix},
 			timeStorageOption = ${timeStorageOption},
 			userEmailAddress = ${userEmailAddress},
 			userPassword = ${userPassword});
 	}
 
 	@summary = "Default summary"
-	macro addObjectFieldViaUI(fieldTimeStorage = null, fieldName = null, acceptUniqueValuesOnly = null, formulaFieldOption = null, fieldPicklist = null, itemName = null, field = null, fieldLabel = null, sorting = null, markAsState = null, fieldAttachment = null, functionType = null, relationship = null, fieldType = null, isMandatory = null) {
+	macro addObjectFieldViaUI(prefixValue = null, initialValue = null, suffixValue = null, fieldTimeStorage = null, fieldName = null, acceptUniqueValuesOnly = null, formulaFieldOption = null, fieldPicklist = null, itemName = null, field = null, fieldLabel = null, sorting = null, markAsState = null, fieldAttachment = null, functionType = null, relationship = null, fieldType = null, isMandatory = null) {
 		LexiconEntry.gotoAdd();
 
 		Type(
@@ -264,6 +267,29 @@ definition {
 					ObjectAdmin.selectDropdownItem(
 						labelName = "Field",
 						optionName = ${field});
+				}
+			}
+
+			if (${fieldType} == "Auto Increment") {
+				if (isSet(prefixValue)) {
+					Type(
+						key_labelName = "Prefix",
+						locator1 = "ObjectField#INPUT_GENERIC_LABEL",
+						value1 = ${prefixValue});
+				}
+
+				if (isSet(initialValue)) {
+					Type(
+						key_labelName = "Initial Value",
+						locator1 = "ObjectField#INPUT_GENERIC_LABEL",
+						value1 = ${initialValue});
+				}
+
+				if (isSet(suffixValue)) {
+					Type(
+						key_labelName = "Suffix",
+						locator1 = "ObjectField#INPUT_GENERIC_LABEL",
+						value1 = ${suffixValue});
 				}
 			}
 		}

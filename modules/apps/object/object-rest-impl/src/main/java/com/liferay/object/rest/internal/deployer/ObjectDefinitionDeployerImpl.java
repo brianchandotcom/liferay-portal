@@ -585,7 +585,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	private List<ServiceRegistration<?>> _registerExceptionMappers(
 		String jaxRsApplicationName, ObjectDefinition objectDefinition) {
 
-		String selectCondition = StringBundler.concat(
+		String applicationSelectFilterString = StringBundler.concat(
 			"(|(liferay.objects.exception.mapper = true)(osgi.jaxrs.name= ",
 			jaxRsApplicationName, "))");
 
@@ -593,7 +593,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			_bundleContext.registerService(
 				ExceptionMapper.class, new ObjectAssetCategoryExceptionMapper(),
 				HashMapDictionaryBuilder.<String, Object>put(
-					"osgi.jaxrs.application.select", selectCondition
+					"osgi.jaxrs.application.select",
+					applicationSelectFilterString
 				).put(
 					"osgi.jaxrs.extension", "true"
 				).put(
@@ -605,7 +606,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				ExceptionMapper.class,
 				new ObjectEntryManagerHttpExceptionMapper(),
 				HashMapDictionaryBuilder.<String, Object>put(
-					"osgi.jaxrs.application.select", selectCondition
+					"osgi.jaxrs.application.select",
+					applicationSelectFilterString
 				).put(
 					"osgi.jaxrs.extension", "true"
 				).put(
@@ -617,7 +619,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				ExceptionMapper.class,
 				new ObjectEntryStatusExceptionMapper(_language),
 				HashMapDictionaryBuilder.<String, Object>put(
-					"osgi.jaxrs.application.select", selectCondition
+					"osgi.jaxrs.application.select",
+					applicationSelectFilterString
 				).put(
 					"osgi.jaxrs.extension", "true"
 				).put(
@@ -629,7 +632,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				ExceptionMapper.class,
 				new ObjectEntryValuesExceptionMapper(_language),
 				HashMapDictionaryBuilder.<String, Object>put(
-					"osgi.jaxrs.application.select", selectCondition
+					"osgi.jaxrs.application.select",
+					applicationSelectFilterString
 				).put(
 					"osgi.jaxrs.extension", "true"
 				).put(
@@ -641,7 +645,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				ExceptionMapper.class,
 				new ObjectRelationshipDeletionTypeExceptionMapper(_language),
 				HashMapDictionaryBuilder.<String, Object>put(
-					"osgi.jaxrs.application.select", selectCondition
+					"osgi.jaxrs.application.select",
+					applicationSelectFilterString
 				).put(
 					"osgi.jaxrs.extension", "true"
 				).put(
@@ -654,7 +659,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				new ObjectValidationRuleEngineExceptionMapper(
 					_jsonFactory, _language),
 				HashMapDictionaryBuilder.<String, Object>put(
-					"osgi.jaxrs.application.select", selectCondition
+					"osgi.jaxrs.application.select",
+					applicationSelectFilterString
 				).put(
 					"osgi.jaxrs.extension", "true"
 				).put(
@@ -666,7 +672,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				ExceptionMapper.class,
 				new RequiredObjectRelationshipExceptionMapper(_language),
 				HashMapDictionaryBuilder.<String, Object>put(
-					"osgi.jaxrs.application.select", selectCondition
+					"osgi.jaxrs.application.select",
+					applicationSelectFilterString
 				).put(
 					"osgi.jaxrs.extension", "true"
 				).put(
@@ -678,7 +685,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				ExceptionMapper.class,
 				new UnsupportedOperationExceptionMapper(),
 				HashMapDictionaryBuilder.<String, Object>put(
-					"osgi.jaxrs.application.select", selectCondition
+					"osgi.jaxrs.application.select",
+					applicationSelectFilterString
 				).put(
 					"osgi.jaxrs.extension", "true"
 				).put(

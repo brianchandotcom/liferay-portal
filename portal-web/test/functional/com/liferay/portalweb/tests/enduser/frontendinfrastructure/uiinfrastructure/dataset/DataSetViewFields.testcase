@@ -86,6 +86,81 @@ definition {
 		}
 	}
 
+	@description = "LPS-194126 Confirm that a new translation field has been created"
+	@priority = 3
+	test AssertTheNewFieldTranslation {
+		task ("Given a new Object entity") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "DataSetObject",
+				objectName = "DataSetObject",
+				pluralLabelName = "DataSetObjects");
+		}
+
+		task ("And Enable the Enable Entry Translation toggle in the Details tab") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectSystemObject(label = "DataSetObject");
+
+			ObjectAdmin.goToDetailsTab();
+
+			Check.checkNotVisible(
+				checkboxName = "Enable Entry Translation",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+
+			Button.clickSave();
+		}
+
+		task ("And Add a translation to the added field title") {
+			ObjectAdmin.goToFieldsTab();
+
+			ObjectAdmin.addObjectFieldViaUI(
+				fieldLabel = "Custom Field",
+				fieldName = "customField",
+				fieldType = "Text");
+
+			ObjectAdmin.goToFieldsDetails(label = "Custom Field");
+
+			ObjectAdmin.chooseAnyLanguage(
+				newLanguage = "pt_BR",
+				symbolName = "");
+
+			Type(
+				key_placeHolder = "Text to translate",
+				locator1 = "TextInput#ANY_PLACEHOLDER",
+				value1 = "Custom Field Translated");
+		}
+
+		task ("And activate and publish the object ") {
+			CreateObject.saveObject();
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "DataSetObject");
+		}
+
+		task ("When a new data set entry And add a new view") {
+			DataSetAdmin.createAndConfigureDataSetEntry(
+				dataSetName = "Custom Data Set Entry",
+				dataSetViewDescription = "View Description",
+				dataSetViewName = "Custom view",
+				restApplication = "/c/datasetobjects",
+				restEndpoint = "/",
+				restSchema = "DataSetObject");
+		}
+
+		task ("And go to fields tab") {
+			DataSetAdmin.goToTab(tabName = "Fields");
+		}
+
+		task ("And click on add button") {
+			LexiconEntry.gotoAdd();
+		}
+
+		task ("Then there is “Custom field” field available") {
+			AssertElementPresent(
+				key_name = "customField",
+				locator1 = "DataSet#FIELDS_ITEM");
+		}
+	}
+
 	@description = "LPS-176516 Confirm the success of the changes, and addition of the new language"
 	@priority = 4
 	test AssertTheSuccessMessageInField {

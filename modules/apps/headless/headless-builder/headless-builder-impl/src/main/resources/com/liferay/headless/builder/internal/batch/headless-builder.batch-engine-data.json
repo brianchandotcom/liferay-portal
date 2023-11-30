@@ -318,6 +318,7 @@
 			"objectRelationships": [
 				{
 					"deletionType": "cascade",
+					"externalReferenceCode": "apiEndpointToAPIFilters",
 					"label": {
 						"en_US": "API Endpoint to API Filters"
 					},
@@ -333,6 +334,7 @@
 				},
 				{
 					"deletionType": "cascade",
+					"externalReferenceCode": "apiEndpointToAPISorts",
 					"label": {
 						"en_US": "API Endpoint API Sorts"
 					},
@@ -433,6 +435,7 @@
 			"objectRelationships": [
 				{
 					"deletionType": "cascade",
+					"externalReferenceCode": "apiPropertiesToAPIProperties",
 					"label": {
 						"en_US": "API Properties to API Properties"
 					},
@@ -517,6 +520,7 @@
 			"objectRelationships": [
 				{
 					"deletionType": "cascade",
+					"externalReferenceCode": "apiSchemaToAPIProperties",
 					"label": {
 						"en_US": "API Schema to API Properties"
 					},
@@ -532,6 +536,7 @@
 				},
 				{
 					"deletionType": "disassociate",
+					"externalReferenceCode": "requestAPISchemaToAPIEndpoints",
 					"label": {
 						"en_US": "Request API Schema to API Endpoints"
 					},
@@ -547,6 +552,7 @@
 				},
 				{
 					"deletionType": "disassociate",
+					"externalReferenceCode": "responseAPISchemaToAPIEndpoints",
 					"label": {
 						"en_US": "Response API Schema to API Endpoints"
 					},
@@ -704,6 +710,7 @@
 			"objectRelationships": [
 				{
 					"deletionType": "cascade",
+					"externalReferenceCode": "apiApplicationToAPIEndpoints",
 					"label": {
 						"en_US": "API Application to API Endpoints"
 					},
@@ -719,6 +726,7 @@
 				},
 				{
 					"deletionType": "cascade",
+					"externalReferenceCode": "apiApplicationToAPISchemas",
 					"label": {
 						"en_US": "API Application to API Schemas"
 					},

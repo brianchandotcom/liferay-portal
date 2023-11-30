@@ -8,9 +8,8 @@ package com.liferay.portal.reports.engine.console.web.internal.admin.portlet.act
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cal.Recurrence;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -39,6 +38,7 @@ import java.io.InputStream;
 import java.text.DateFormat;
 
 import java.util.Calendar;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -46,8 +46,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.springframework.mock.web.MockHttpServletResponse;
 
 /**
  * @author Feliphe Marinho
@@ -139,21 +137,16 @@ public class AddSchedulerMVCActionCommandTest {
 		_mockLiferayPortletActionRequest.addParameter(
 			"useVariabledateReportDefinitionParameter3", "startDate");
 
-		MockLiferayPortletActionResponse mockLiferayPortletActionResponse =
-			new MockLiferayPortletActionResponse();
-
 		_mvcActionCommand.processAction(
-			_mockLiferayPortletActionRequest, mockLiferayPortletActionResponse);
+			_mockLiferayPortletActionRequest,
+			new MockLiferayPortletActionResponse());
 
-		MockHttpServletResponse mockHttpServletResponse =
-			(MockHttpServletResponse)
-				mockLiferayPortletActionResponse.getHttpServletResponse();
+		List<Entry> entries = _entryLocalService.getEntries(
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			mockHttpServletResponse.getContentAsString());
+		Assert.assertEquals(entries.toString(), 1, entries.size());
 
-		Entry entry = _entryLocalService.getEntry(
-			jsonObject.getLong("entryId"));
+		Entry entry = entries.get(0);
 
 		_entryLocalService.unscheduleEntry(entry.getEntryId());
 

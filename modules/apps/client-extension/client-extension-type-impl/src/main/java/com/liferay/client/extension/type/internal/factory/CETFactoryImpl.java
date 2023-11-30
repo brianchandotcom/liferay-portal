@@ -58,8 +58,8 @@ public class CETFactoryImpl implements CETFactory {
 			ClientExtensionEntryConstants.TYPE_CUSTOM_ELEMENT,
 			new CustomElementCETImplFactoryImpl()
 		).put(
-			ClientExtensionEntryConstants.TYPE_EDITOR_CONFIGURATION,
-			new EditorConfigurationCETImplFactoryImpl()
+			ClientExtensionEntryConstants.TYPE_EDITOR_CONFIG_CONTRIBUTOR,
+			new EditorConfigContributorCETImplFactoryImpl()
 		).put(
 			ClientExtensionEntryConstants.TYPE_FDS_CELL_RENDERER,
 			new FDSCellRendererCETImplFactoryImpl()

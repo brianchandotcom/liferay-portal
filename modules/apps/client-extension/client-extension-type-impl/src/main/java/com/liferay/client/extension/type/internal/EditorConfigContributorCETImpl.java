@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -7,7 +7,7 @@ package com.liferay.client.extension.type.internal;
 
 import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.client.extension.model.ClientExtensionEntry;
-import com.liferay.client.extension.type.EditorConfigurationCET;
+import com.liferay.client.extension.type.EditorConfigContributorCET;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -22,16 +22,16 @@ import javax.portlet.PortletRequest;
 /**
  * @author Daniel Sanz
  */
-public class EditorConfigurationCETImpl
-	extends BaseCETImpl implements EditorConfigurationCET {
+public class EditorConfigContributorCETImpl
+	extends BaseCETImpl implements EditorConfigContributorCET {
 
-	public EditorConfigurationCETImpl(
+	public EditorConfigContributorCETImpl(
 		ClientExtensionEntry clientExtensionEntry) {
 
 		super(clientExtensionEntry);
 	}
 
-	public EditorConfigurationCETImpl(PortletRequest portletRequest) {
+	public EditorConfigContributorCETImpl(PortletRequest portletRequest) {
 		this(
 			StringPool.BLANK,
 			UnicodePropertiesBuilder.create(
@@ -57,7 +57,7 @@ public class EditorConfigurationCETImpl
 			).build());
 	}
 
-	public EditorConfigurationCETImpl(
+	public EditorConfigContributorCETImpl(
 		String baseURL, long companyId, String description,
 		String externalReferenceCode, String name, Properties properties,
 		String sourceCodeURL, UnicodeProperties typeSettingsUnicodeProperties) {
@@ -67,7 +67,7 @@ public class EditorConfigurationCETImpl
 			properties, sourceCodeURL, typeSettingsUnicodeProperties);
 	}
 
-	public EditorConfigurationCETImpl(
+	public EditorConfigContributorCETImpl(
 		String baseURL, UnicodeProperties typeSettingsUnicodeProperties) {
 
 		super(baseURL, typeSettingsUnicodeProperties);
@@ -75,7 +75,7 @@ public class EditorConfigurationCETImpl
 
 	@Override
 	public String getEditJSP() {
-		return "/admin/edit_editor_configuration.jsp";
+		return "/admin/edit_editor_config_contributor.jsp";
 	}
 
 	@Override
@@ -95,7 +95,7 @@ public class EditorConfigurationCETImpl
 
 	@Override
 	public String getType() {
-		return ClientExtensionEntryConstants.TYPE_EDITOR_CONFIGURATION;
+		return ClientExtensionEntryConstants.TYPE_EDITOR_CONFIG_CONTRIBUTOR;
 	}
 
 	@Override
@@ -114,6 +114,6 @@ public class EditorConfigurationCETImpl
 	}
 
 	private static final Set<String> _urlCETPropertyNames =
-		getURLCETPropertyNames(EditorConfigurationCET.class);
+		getURLCETPropertyNames(EditorConfigContributorCET.class);
 
 }

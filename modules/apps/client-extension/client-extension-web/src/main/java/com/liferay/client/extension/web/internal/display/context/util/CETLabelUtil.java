@@ -46,6 +46,13 @@ public class CETLabelUtil {
 		}
 		else if (Objects.equals(
 					type,
+					ClientExtensionEntryConstants.
+						TYPE_EDITOR_CONFIG_CONTRIBUTOR)) {
+
+			return "editor-config-contributor";
+		}
+		else if (Objects.equals(
+					type,
 					ClientExtensionEntryConstants.TYPE_FDS_CELL_RENDERER)) {
 
 			return "fds-cell-renderer";

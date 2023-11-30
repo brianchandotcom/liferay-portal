@@ -59,7 +59,7 @@
 	},
 	{
 		"description": "This is a description.",
-		"name": "customElement",
+		"name": "editorConfigContributor",
 		"properties": [
 			{
 				"name": "description",
@@ -80,17 +80,17 @@
 			},
 			{
 				"default": "",
+				"name": "editorConfigKeys",
+				"type": "CETProperty.Type.StringList"
+			},
+			{
+				"default": "",
 				"name": "editorNames",
 				"type": "CETProperty.Type.StringList"
 			},
 			{
 				"default": "",
 				"name": "portletNames",
-				"type": "CETProperty.Type.StringList"
-			},
-			{
-				"default": "",
-				"name": "editorConfigKeys",
 				"type": "CETProperty.Type.StringList"
 			},
 			{

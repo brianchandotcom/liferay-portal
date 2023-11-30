@@ -21,12 +21,13 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.sharing.model.SharingEntry;
+import com.liferay.sharing.security.permission.SharingPermission;
 import com.liferay.sharing.service.SharingEntryLocalService;
 import com.liferay.sharing.web.internal.constants.SharingPortletKeys;
 import com.liferay.sharing.web.internal.constants.SharingWebKeys;
 import com.liferay.sharing.web.internal.display.SharingEntryPermissionDisplay;
 import com.liferay.sharing.web.internal.display.SharingEntryPermissionDisplayAction;
-import com.liferay.sharing.web.internal.helper.SharingHelper;
+import com.liferay.sharing.web.internal.util.SharingHelperUtil;
 
 import java.text.DateFormat;
 import java.text.Format;
@@ -148,7 +149,7 @@ public class ViewManageCollaboratorsMVCRenderCommand
 
 				SharingEntryPermissionDisplayAction
 					userSharingEntryPermissionDisplayActionKey =
-						_sharingHelper.
+						SharingHelperUtil.
 							getSharingEntryPermissionDisplayActionKey(
 								sharingEntry);
 
@@ -195,9 +196,10 @@ public class ViewManageCollaboratorsMVCRenderCommand
 			WebKeys.THEME_DISPLAY);
 
 		List<SharingEntryPermissionDisplay> sharingEntryPermissionDisplays =
-			_sharingHelper.getSharingEntryPermissionDisplays(
-				themeDisplay.getPermissionChecker(), classNameId, classPK,
-				themeDisplay.getScopeGroupId(), themeDisplay.getLocale());
+			SharingHelperUtil.getSharingEntryPermissionDisplays(
+				themeDisplay.getPermissionChecker(), _sharingPermission,
+				classNameId, classPK, themeDisplay.getScopeGroupId(),
+				themeDisplay.getLocale());
 
 		JSONArray sharingEntryPermissionDisplaySelectOptionsJSONArray =
 			_jsonFactory.createJSONArray();
@@ -228,7 +230,7 @@ public class ViewManageCollaboratorsMVCRenderCommand
 	private SharingEntryLocalService _sharingEntryLocalService;
 
 	@Reference
-	private SharingHelper _sharingHelper;
+	private SharingPermission _sharingPermission;
 
 	@Reference
 	private UserLocalService _userLocalService;

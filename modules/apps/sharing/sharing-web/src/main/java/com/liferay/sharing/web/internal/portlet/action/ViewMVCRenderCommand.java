@@ -12,9 +12,10 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.sharing.constants.SharingPortletKeys;
+import com.liferay.sharing.security.permission.SharingPermission;
 import com.liferay.sharing.web.internal.constants.SharingWebKeys;
 import com.liferay.sharing.web.internal.display.SharingEntryPermissionDisplayAction;
-import com.liferay.sharing.web.internal.helper.SharingHelper;
+import com.liferay.sharing.web.internal.util.SharingHelperUtil;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -62,8 +63,8 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 				SharingEntryPermissionDisplayAction.VIEW.getActionId()
 			).put(
 				"sharingEntryPermissionDisplays",
-				_sharingHelper.getSharingEntryPermissionDisplays(
-					themeDisplay.getPermissionChecker(),
+				SharingHelperUtil.getSharingEntryPermissionDisplays(
+					themeDisplay.getPermissionChecker(), _sharingPermission,
 					ParamUtil.getLong(renderRequest, "classNameId"),
 					ParamUtil.getLong(renderRequest, "classPK"),
 					themeDisplay.getScopeGroupId(), themeDisplay.getLocale())
@@ -104,6 +105,6 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	@Reference
-	private SharingHelper _sharingHelper;
+	private SharingPermission _sharingPermission;
 
 }

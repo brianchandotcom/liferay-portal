@@ -357,7 +357,7 @@ definition {
 				entityType = "C_Student (v1_0 - Liferay Object REST)",
 				fieldMappings = "name:Student Name,externalReferenceCode:External Reference Code",
 				fileName = "csv_student_import.csv",
-				noExport = "true");
+				noImport = "true");
 		}
 
 		task ("When save as template with a template name") {

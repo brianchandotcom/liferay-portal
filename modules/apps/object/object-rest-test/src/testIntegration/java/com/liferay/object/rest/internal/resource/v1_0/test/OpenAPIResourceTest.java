@@ -75,13 +75,13 @@ public class OpenAPIResourceTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		_originalName = PrincipalThreadLocal.getName();
-
-		PrincipalThreadLocal.setName(TestPropsValues.getUserId());
-
 		_company = CompanyTestUtil.addCompany();
 
 		PortalInstances.initCompany(_company);
+
+		_originalName = PrincipalThreadLocal.getName();
+
+		PrincipalThreadLocal.setName(TestPropsValues.getUserId());
 	}
 
 	@AfterClass

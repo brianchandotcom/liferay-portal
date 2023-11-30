@@ -157,6 +157,8 @@ function Rule({onDelete, onEdit, rule, savedRuleId, setSavedRuleId}) {
 								{Liferay.Language.get('edit')}
 							</ClayDropDown.Item>
 
+							<ClayDropDown.Divider />
+
 							<ClayDropDown.Item onClick={() => onDelete(rule)}>
 								<ClayIcon className="mr-2" symbol="trash" />
 

@@ -318,7 +318,7 @@
 			"objectRelationships": [
 				{
 					"deletionType": "cascade",
-					"externalReferenceCode": "apiEndpointToAPIFilters",
+					"externalReferenceCode": "L_API_ENDPOINT_TO_API_FILTERS",
 					"label": {
 						"en_US": "API Endpoint to API Filters"
 					},
@@ -334,7 +334,7 @@
 				},
 				{
 					"deletionType": "cascade",
-					"externalReferenceCode": "apiEndpointToAPISorts",
+					"externalReferenceCode": "L_API_ENDPOINT_TO_API_SORTS",
 					"label": {
 						"en_US": "API Endpoint API Sorts"
 					},
@@ -435,7 +435,7 @@
 			"objectRelationships": [
 				{
 					"deletionType": "cascade",
-					"externalReferenceCode": "apiPropertiesToAPIProperties",
+					"externalReferenceCode": "L_API_PROPERTIES_TO_API_PROPERTIES",
 					"label": {
 						"en_US": "API Properties to API Properties"
 					},
@@ -520,7 +520,7 @@
 			"objectRelationships": [
 				{
 					"deletionType": "cascade",
-					"externalReferenceCode": "apiSchemaToAPIProperties",
+					"externalReferenceCode": "L_API_SCHEMA_TO_API_PROPERTIES",
 					"label": {
 						"en_US": "API Schema to API Properties"
 					},
@@ -536,7 +536,7 @@
 				},
 				{
 					"deletionType": "disassociate",
-					"externalReferenceCode": "requestAPISchemaToAPIEndpoints",
+					"externalReferenceCode": "L_REQUEST_API_SCHEMA_TO_API_ENDPOINTS",
 					"label": {
 						"en_US": "Request API Schema to API Endpoints"
 					},
@@ -552,7 +552,7 @@
 				},
 				{
 					"deletionType": "disassociate",
-					"externalReferenceCode": "responseAPISchemaToAPIEndpoints",
+					"externalReferenceCode": "L_RESPONSE_API_SCHEMA_TO_API_ENDPOINTS",
 					"label": {
 						"en_US": "Response API Schema to API Endpoints"
 					},
@@ -710,7 +710,7 @@
 			"objectRelationships": [
 				{
 					"deletionType": "cascade",
-					"externalReferenceCode": "apiApplicationToAPIEndpoints",
+					"externalReferenceCode": "L_API_APPLICATION_TO_API_ENDPOINTS",
 					"label": {
 						"en_US": "API Application to API Endpoints"
 					},
@@ -726,7 +726,7 @@
 				},
 				{
 					"deletionType": "cascade",
-					"externalReferenceCode": "apiApplicationToAPISchemas",
+					"externalReferenceCode": "L_API_APPLICATION_TO_API_SCHEMAS",
 					"label": {
 						"en_US": "API Application to API Schemas"
 					},

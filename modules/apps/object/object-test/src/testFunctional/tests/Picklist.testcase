@@ -73,6 +73,72 @@ definition {
 		Picklist.assertPicklistNotPresent(picklistName = "Update Picklist Test");
 	}
 
+	@description = "LPS-193364 - Verify the user can create a custom picklist and an object entry with an item from the picklist"
+	@priority = 4
+	test CanCreateObjectEntryWithPicklist {
+		task ("Given a custom picklist with several items") {
+			Picklist.addPicklistViaAPI(picklistName = "Picklist 193364");
+
+			for (var itemName : list "1,2,3,4,5") {
+				Picklist.addPicklistItemViaAPI(
+					itemKey = "item${itemName}",
+					itemName = "Item ${itemName}",
+					picklistName = "Picklist 193364");
+			}
+		}
+
+		task ("and Given the picklist has the custom label") {
+			Picklist.gotoPicklists();
+
+			AssertTextEquals(
+				key_label = "Custom",
+				locator1 = "ObjectAdmin#OBJECT_STATUS",
+				value1 = "Custom");
+		}
+
+		task ("and Given a custom object definition with a picklist field") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 193364",
+				objectName = "CustomObject193364",
+				pluralLabelName = "Custom Objects 193364");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 193364");
+
+			ObjectAdmin.goToFieldsTab();
+
+			ObjectAdmin.addObjectFieldViaUI(
+				fieldLabel = "List Field",
+				fieldPicklist = "Picklist 193364",
+				fieldType = "Picklist",
+				itemName = "Item 3",
+				markAsState = "true");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject193364");
+		}
+
+		task ("When the user creates an object entry") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject193364");
+
+			LexiconEntry.gotoAdd();
+		}
+
+		task ("Then the user is able to choose from the items in the picklist") {
+			ObjectAdmin.selectDropdownItem(
+				labelName = "List Field",
+				optionName = "Item 2");
+
+			PortletEntry.save();
+		}
+
+		task ("and Then the object entry value on the table is the picklist item") {
+			Navigator.gotoBack();
+
+			ObjectPortlet.viewEntryDetails(entry = "Item 2");
+		}
+	}
+
 	@description = "LPS-152677 - Verify that it's possible to create an object with a state added to the picklist"
 	@priority = 4
 	test CanCreateObjectWithState {
@@ -147,18 +213,6 @@ definition {
 
 			ObjectPortlet.viewEntry(entry = "Picklist Item Test");
 		}
-	}
-
-	@description = "LPS-136595 - Verify it is possible to create a Picklist"
-	@priority = 5
-	test CanCreatePicklist {
-		property portal.acceptance = "true";
-
-		Picklist.gotoPicklists();
-
-		Picklist.addPicklistViaUI(picklistName = "Picklist Test");
-
-		Picklist.assertPicklist(picklistName = "Picklist Test");
 	}
 
 	@description = "LPS-136595 - Verify it is possible to create an item for a Picklist"

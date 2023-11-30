@@ -18,6 +18,7 @@ import com.liferay.object.exception.ObjectDefinitionAccountEntryRestrictedExcept
 import com.liferay.object.exception.ObjectEntryCountException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.model.ObjectEntryTable;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectFieldLocalService;
@@ -32,14 +33,17 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroupRole;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -58,6 +62,9 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -84,8 +91,8 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 
 	@Override
 	public ObjectEntry addObjectEntry(
-			long groupId, long objectDefinitionId,
-			Map<String, Serializable> values, ServiceContext serviceContext)
+		long groupId, long objectDefinitionId,
+		Map<String, Serializable> values, ServiceContext serviceContext)
 		throws PortalException {
 
 		if (!ObjectEntryThreadLocal.isSkipObjectEntryResourcePermission()) {
@@ -101,8 +108,8 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 
 	@Override
 	public ObjectEntry addOrUpdateObjectEntry(
-			String externalReferenceCode, long groupId, long objectDefinitionId,
-			Map<String, Serializable> values, ServiceContext serviceContext)
+		String externalReferenceCode, long groupId, long objectDefinitionId,
+		Map<String, Serializable> values, ServiceContext serviceContext)
 		throws PortalException {
 
 		ObjectEntry objectEntry = objectEntryPersistence.fetchByERC_C_ODI(
@@ -126,7 +133,7 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 
 	@Override
 	public void checkModelResourcePermission(
-			long objectDefinitionId, long objectEntryId, String actionId)
+		long objectDefinitionId, long objectEntryId, String actionId)
 		throws PortalException {
 
 		ModelResourcePermission<ObjectEntry> modelResourcePermission =
@@ -151,7 +158,7 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 
 	@Override
 	public ObjectEntry deleteObjectEntry(
-			String externalReferenceCode, long companyId, long groupId)
+		String externalReferenceCode, long companyId, long groupId)
 		throws PortalException {
 
 		ObjectEntry objectEntry = objectEntryLocalService.getObjectEntry(
@@ -164,7 +171,7 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 
 	@Override
 	public ObjectEntry fetchManyToOneObjectEntry(
-			long groupId, long objectRelationshipId, long primaryKey)
+		long groupId, long objectRelationshipId, long primaryKey)
 		throws PortalException {
 
 		ObjectEntry objectEntry =
@@ -198,8 +205,8 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 
 	@Override
 	public List<ObjectEntry> getManyToManyObjectEntries(
-			long groupId, long objectRelationshipId, long primaryKey,
-			boolean related, boolean reverse, String search, int start, int end)
+		long groupId, long objectRelationshipId, long primaryKey,
+		boolean related, boolean reverse, String search, int start, int end)
 		throws PortalException {
 
 		List<ObjectEntry> objectEntries =
@@ -220,8 +227,8 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 
 	@Override
 	public int getManyToManyObjectEntriesCount(
-			long groupId, long objectRelationshipId, long primaryKey,
-			boolean related, boolean reverse, String search)
+		long groupId, long objectRelationshipId, long primaryKey,
+		boolean related, boolean reverse, String search)
 		throws PortalException {
 
 		return objectEntryLocalService.getManyToManyObjectEntriesCount(
@@ -262,7 +269,7 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 
 	@Override
 	public ObjectEntry getObjectEntry(
-			String externalReferenceCode, long companyId, long groupId)
+		String externalReferenceCode, long companyId, long groupId)
 		throws PortalException {
 
 		ObjectEntry objectEntry = objectEntryLocalService.getObjectEntry(
@@ -277,8 +284,8 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 
 	@Override
 	public List<ObjectEntry> getOneToManyObjectEntries(
-			long groupId, long objectRelationshipId, long primaryKey,
-			boolean related, String search, int start, int end)
+		long groupId, long objectRelationshipId, long primaryKey,
+		boolean related, String search, int start, int end)
 		throws PortalException {
 
 		List<ObjectEntry> objectEntries =
@@ -299,8 +306,8 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 
 	@Override
 	public int getOneToManyObjectEntriesCount(
-			long groupId, long objectRelationshipId, long primaryKey,
-			boolean related, String search)
+		long groupId, long objectRelationshipId, long primaryKey,
+		boolean related, String search)
 		throws PortalException {
 
 		return objectEntryLocalService.getOneToManyObjectEntriesCount(
@@ -309,7 +316,7 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 
 	@Override
 	public boolean hasModelResourcePermission(
-			long objectDefinitionId, long objectEntryId, String actionId)
+		long objectDefinitionId, long objectEntryId, String actionId)
 		throws PortalException {
 
 		ModelResourcePermission<ObjectEntry> modelResourcePermission =
@@ -321,7 +328,7 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 
 	@Override
 	public boolean hasModelResourcePermission(
-			ObjectEntry objectEntry, String actionId)
+		ObjectEntry objectEntry, String actionId)
 		throws PortalException {
 
 		ModelResourcePermission<ObjectEntry> modelResourcePermission =
@@ -333,7 +340,7 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 
 	@Override
 	public boolean hasModelResourcePermission(
-			User user, long objectEntryId, String actionId)
+		User user, long objectEntryId, String actionId)
 		throws PortalException {
 
 		ObjectEntry objectEntry = objectEntryLocalService.getObjectEntry(
@@ -348,7 +355,7 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 
 	@Override
 	public boolean hasPortletResourcePermission(
-			long groupId, long objectDefinitionId, String actionId)
+		long groupId, long objectDefinitionId, String actionId)
 		throws PortalException {
 
 		PortletResourcePermission portletResourcePermission =
@@ -360,8 +367,8 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 
 	@Override
 	public ObjectEntry updateObjectEntry(
-			long objectEntryId, Map<String, Serializable> values,
-			ServiceContext serviceContext)
+		long objectEntryId, Map<String, Serializable> values,
+		ServiceContext serviceContext)
 		throws PortalException {
 
 		ObjectEntry objectEntry = objectEntryLocalService.getObjectEntry(
@@ -380,13 +387,14 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
+
 		_objectConfiguration = ConfigurableUtil.createConfigurable(
 			ObjectConfiguration.class, properties);
 	}
 
 	private void _checkAddObjectEntryPortletResourcePermission(
-			long groupId, long objectDefinitionId,
-			Map<String, Serializable> values)
+		long groupId, long objectDefinitionId,
+		Map<String, Serializable> values)
 		throws PortalException {
 
 		PortletResourcePermission portletResourcePermission =
@@ -398,8 +406,8 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 			permissionChecker, groupId, ObjectActionKeys.ADD_OBJECT_ENTRY);
 
 		if (permissionChecker.hasPermission(
-				groupId, portletResourcePermission.getResourceName(), 0,
-				ObjectActionKeys.ADD_OBJECT_ENTRY)) {
+			groupId, portletResourcePermission.getResourceName(), 0,
+			ObjectActionKeys.ADD_OBJECT_ENTRY)) {
 
 			return;
 		}
@@ -456,7 +464,7 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 				getAccountEntryOrganizationRels(accountEntryId);
 
 		for (AccountEntryOrganizationRel accountEntryOrganizationRel :
-				accountEntryOrganizationRels) {
+			accountEntryOrganizationRels) {
 
 			Organization organization =
 				accountEntryOrganizationRel.getOrganization();
@@ -472,7 +480,7 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 					UserGroupRole::getRoleId));
 
 			for (Organization ancestorOrganization :
-					organization.getAncestors()) {
+				organization.getAncestors()) {
 
 				group = _groupLocalService.getOrganizationGroup(
 					objectDefinition.getCompanyId(),
@@ -498,7 +506,7 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 			}
 
 			if (resourcePermission.hasActionId(
-					ObjectActionKeys.ADD_OBJECT_ENTRY)) {
+				ObjectActionKeys.ADD_OBJECT_ENTRY)) {
 
 				return;
 			}
@@ -520,7 +528,7 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 	}
 
 	private PortletResourcePermission _getPortletResourcePermission(
-			long objectDefinitionId)
+		long objectDefinitionId)
 		throws PortalException {
 
 		ObjectDefinition objectDefinition =
@@ -536,7 +544,7 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 	}
 
 	private long _getRootObjectEntryAccountEntryId(
-			ObjectDefinition objectDefinition, Map<String, Serializable> values)
+		ObjectDefinition objectDefinition, Map<String, Serializable> values)
 		throws PortalException {
 
 		Tree tree = _treeFactory.createObjectDefinitionTree(
@@ -579,19 +587,77 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 			return;
 		}
 
-		int count = objectEntryPersistence.countByU_ODI(
-			user.getUserId(), objectDefinitionId);
-		long maximumNumberOfGuestUserObjectEntriesPerObjectDefinition =
-			_objectConfiguration.
-				maximumNumberOfGuestUserObjectEntriesPerObjectDefinition();
+		if (FeatureFlagManagerUtil.isEnabled("LPS-192957")) {
+			ObjectDefinition objectDefinition =
+				_objectDefinitionPersistence.findByPrimaryKey(
+					objectDefinitionId);
 
-		if (count >= maximumNumberOfGuestUserObjectEntriesPerObjectDefinition) {
-			throw new ObjectEntryCountException(
-				StringBundler.concat(
-					"Unable to exceed ",
-					maximumNumberOfGuestUserObjectEntriesPerObjectDefinition,
-					" guest object entries for object definition ",
-					objectDefinitionId));
+			try {
+				_objectConfiguration =
+					_configurationProvider.getCompanyConfiguration(
+						ObjectConfiguration.class,
+						objectDefinition.getCompanyId());
+
+				if (_objectConfiguration == null) {
+					_objectConfiguration =
+						_configurationProvider.getSystemConfiguration(
+							ObjectConfiguration.class);
+				}
+			}
+			catch (ConfigurationException configurationException) {
+				throw new RuntimeException(configurationException);
+			}
+
+			LocalDate beginningDate = _getStartDateInterval();
+
+			long count =
+				objectEntryLocalService.getObjectEntriesCount(user.getUserId(),
+					objectDefinition, ObjectEntryTable.INSTANCE.createDate.gte(
+						Date.from(beginningDate.atStartOfDay(
+							ZoneId.systemDefault()).toInstant())));
+
+			long maximumNumberOfGuestUserObjectEntriesPerObjectDefinition =
+				_objectConfiguration.
+					maximumNumberOfGuestUserObjectEntriesPerObjectDefinition();
+
+			if (count >=
+				maximumNumberOfGuestUserObjectEntriesPerObjectDefinition) {
+				throw new ObjectEntryCountException(
+					StringBundler.concat(
+						"Unable to exceed ",
+						maximumNumberOfGuestUserObjectEntriesPerObjectDefinition,
+						" guest object entries for object definition ",
+						objectDefinitionId));
+			}
+
+		}
+		else {
+			int count = objectEntryPersistence.countByU_ODI(
+				user.getUserId(), objectDefinitionId);
+			long maximumNumberOfGuestUserObjectEntriesPerObjectDefinition =
+				_objectConfiguration.
+					maximumNumberOfGuestUserObjectEntriesPerObjectDefinition();
+
+			if (count >=
+				maximumNumberOfGuestUserObjectEntriesPerObjectDefinition) {
+				throw new ObjectEntryCountException(
+					StringBundler.concat(
+						"Unable to exceed ",
+						maximumNumberOfGuestUserObjectEntriesPerObjectDefinition,
+						" guest object entries for object definition ",
+						objectDefinitionId));
+			}
+		}
+	}
+
+	private LocalDate _getStartDateInterval() {
+
+		if (_objectConfiguration.timeScale().equals("days")) {
+			return LocalDate.now().minusDays(_objectConfiguration.duration());
+		}
+		else {
+			return LocalDate.now().minusDays(
+				_objectConfiguration.duration() * 7);
 		}
 	}
 
@@ -601,6 +667,9 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 	@Reference
 	private AccountEntryOrganizationRelLocalService
 		_accountEntryOrganizationRelLocalService;
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

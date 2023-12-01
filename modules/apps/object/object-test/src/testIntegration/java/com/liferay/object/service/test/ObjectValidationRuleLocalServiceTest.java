@@ -459,8 +459,20 @@ public class ObjectValidationRuleLocalServiceTest {
 		_testDeleteObjectValidationRule(
 			systemObjectValidationRule.getObjectValidationRuleId());
 
-		ObjectField textObjectField = _objectFieldLocalService.fetchObjectField(
-			_objectDefinition.getObjectDefinitionId(), "textObjectField");
+		ObjectField textObjectField1 =
+			_objectFieldLocalService.fetchObjectField(
+				_objectDefinition.getObjectDefinitionId(), "textObjectField");
+		ObjectField textObjectField2 = ObjectFieldUtil.addCustomObjectField(
+			new TextObjectFieldBuilder(
+			).userId(
+				TestPropsValues.getUserId()
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).name(
+				"a" + RandomTestUtil.randomString()
+			).objectDefinitionId(
+				_objectDefinition.getObjectDefinitionId()
+			).build());
 
 		objectValidationRule = _addObjectValidationRule(
 			ObjectValidationRuleConstants.ENGINE_TYPE_COMPOSITE_KEY,
@@ -475,30 +487,44 @@ public class ObjectValidationRuleLocalServiceTest {
 					ObjectValidationRuleSettingConstants.
 						NAME_COMPOSITE_KEY_OBJECT_FIELD_ID
 				).value(
-					String.valueOf(textObjectField.getObjectFieldId())
+					String.valueOf(textObjectField1.getObjectFieldId())
 				).build(),
 				new ObjectValidationRuleSettingBuilder(
 				).name(
 					ObjectValidationRuleSettingConstants.
 						NAME_COMPOSITE_KEY_OBJECT_FIELD_ID
 				).value(
-					() -> {
-						ObjectField objectField =
-							ObjectFieldUtil.addCustomObjectField(
-								new TextObjectFieldBuilder(
-								).userId(
-									TestPropsValues.getUserId()
-								).labelMap(
-									LocalizedMapUtil.getLocalizedMap(
-										RandomTestUtil.randomString())
-								).name(
-									"a" + RandomTestUtil.randomString()
-								).objectDefinitionId(
-									_objectDefinition.getObjectDefinitionId()
-								).build());
+					String.valueOf(textObjectField2.getObjectFieldId())
+				).build()));
 
-						return String.valueOf(objectField.getObjectFieldId());
-					}
+		_testDeleteObjectValidationRule(
+			objectValidationRule.getObjectValidationRuleId());
+
+		_objectDefinitionLocalService.publishCustomObjectDefinition(
+			TestPropsValues.getUserId(),
+			_objectDefinition.getObjectDefinitionId());
+
+		objectValidationRule = _addObjectValidationRule(
+			ObjectValidationRuleConstants.ENGINE_TYPE_COMPOSITE_KEY,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			StringPool.BLANK,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			ObjectValidationRuleConstants.OUTPUT_TYPE_FULL_VALIDATION,
+			StringPool.BLANK, false,
+			Arrays.asList(
+				new ObjectValidationRuleSettingBuilder(
+				).name(
+					ObjectValidationRuleSettingConstants.
+						NAME_COMPOSITE_KEY_OBJECT_FIELD_ID
+				).value(
+					String.valueOf(textObjectField1.getObjectFieldId())
+				).build(),
+				new ObjectValidationRuleSettingBuilder(
+				).name(
+					ObjectValidationRuleSettingConstants.
+						NAME_COMPOSITE_KEY_OBJECT_FIELD_ID
+				).value(
+					String.valueOf(textObjectField2.getObjectFieldId())
 				).build()));
 
 		_testDeleteObjectValidationRule(

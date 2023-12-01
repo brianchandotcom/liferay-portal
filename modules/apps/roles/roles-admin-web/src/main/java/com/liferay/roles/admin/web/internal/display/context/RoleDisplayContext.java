@@ -11,7 +11,6 @@ import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.application.list.display.context.logic.PersonalMenuEntryHelper;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -214,24 +213,6 @@ public class RoleDisplayContext {
 				}
 			}
 		};
-	}
-
-	public List<NavigationItem> getSelectAssigneesNavigationItems(
-			PortletURL portletURL)
-		throws Exception {
-
-		return NavigationItemListBuilder.add(
-			navigationItem -> {
-				navigationItem.setActive(true);
-				navigationItem.setHref(portletURL, "tabs2", "users");
-
-				String tabs2 = ParamUtil.getString(
-					_httpServletRequest, "tabs2", "users");
-
-				navigationItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, tabs2));
-			}
-		).build();
 	}
 
 	public List<NavigationItem> getViewRoleNavigationItems(

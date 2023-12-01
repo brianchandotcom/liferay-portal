@@ -30,13 +30,7 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 EditRoleAssignmentsManagementToolbarDisplayContext editRoleAssignmentsManagementToolbarDisplayContext = new EditRoleAssignmentsManagementToolbarDisplayContext(request, renderRequest, renderResponse, displayStyle, "available");
 
 SearchContainer<?> searchContainer = editRoleAssignmentsManagementToolbarDisplayContext.getSearchContainer();
-
-PortletURL portletURL = editRoleAssignmentsManagementToolbarDisplayContext.getPortletURL();
 %>
-
-<clay:navigation-bar
-	navigationItems="<%= roleDisplayContext.getSelectAssigneesNavigationItems(portletURL) %>"
-/>
 
 <clay:management-toolbar
 	clearResultsURL="<%= editRoleAssignmentsManagementToolbarDisplayContext.getClearResultsURL() %>"
@@ -54,7 +48,7 @@ PortletURL portletURL = editRoleAssignmentsManagementToolbarDisplayContext.getPo
 	viewTypeItems="<%= editRoleAssignmentsManagementToolbarDisplayContext.getViewTypeItems() %>"
 />
 
-<aui:form action="<%= portletURL %>" cssClass="container-fluid container-fluid-max-xl container-form-lg" method="post" name="fm">
+<aui:form action="<%= editRoleAssignmentsManagementToolbarDisplayContext.getPortletURL() %>" cssClass="container-fluid container-fluid-max-xl container-form-lg" method="post" name="fm">
 	<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
 	<aui:input name="tabs3" type="hidden" value="available" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />

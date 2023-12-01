@@ -335,8 +335,7 @@ if (deliveryMaxSubscriptionCycles > 0) {
 			document.querySelector(
 				'#<portlet:namespace />cycleLengthContainer .input-group-text'
 			).innerHTML = subscriptionTypeLabel;
-		},
-		['liferay-portlet-url']
+		}
 	);
 
 	Liferay.provide(
@@ -373,8 +372,7 @@ if (deliveryMaxSubscriptionCycles > 0) {
 			document.querySelector(
 				'#<portlet:namespace />deliveryCycleLengthContainer .input-group-text'
 			).innerHTML = subscriptionTypeLabel;
-		},
-		['liferay-portlet-url']
+		}
 	);
 </aui:script>
 

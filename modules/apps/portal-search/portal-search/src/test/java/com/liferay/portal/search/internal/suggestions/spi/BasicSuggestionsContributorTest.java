@@ -6,10 +6,8 @@
 package com.liferay.portal.search.internal.suggestions.spi;
 
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
-import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
-import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -62,7 +60,6 @@ public class BasicSuggestionsContributorTest {
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
 
-		_setUpAssetEntryLocalService();
 		_setUpBasicSuggestionsContributor();
 		_setUpLiferayPortletRequest();
 		_setUpSearchContext();
@@ -184,16 +181,6 @@ public class BasicSuggestionsContributorTest {
 			_suggestionsContributorConfiguration);
 	}
 
-	private void _setUpAssetEntryLocalService() throws Exception {
-		Mockito.doReturn(
-			Mockito.mock(AssetEntry.class)
-		).when(
-			_assetEntryLocalService
-		).getEntry(
-			Mockito.anyString(), Mockito.anyLong()
-		);
-	}
-
 	private void _setUpAssetRendererFactoryRegistryUtil(
 			boolean assetRendererFactoryNull, String title, String summary)
 		throws Exception {
@@ -253,9 +240,6 @@ public class BasicSuggestionsContributorTest {
 	private void _setUpBasicSuggestionsContributor() {
 		_basicSuggestionsContributor = new BasicSuggestionsContributor();
 
-		ReflectionTestUtil.setFieldValue(
-			_basicSuggestionsContributor, "_assetEntryLocalService",
-			_assetEntryLocalService);
 		ReflectionTestUtil.setFieldValue(
 			_basicSuggestionsContributor, "_searcher", _searcher);
 		ReflectionTestUtil.setFieldValue(
@@ -414,9 +398,6 @@ public class BasicSuggestionsContributorTest {
 		_suggestionsContributorConfiguration.setDisplayGroupName(
 			testName.getMethodName());
 	}
-
-	@Mock
-	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Mock
 	private AssetRendererFactory<?> _assetRendererFactory;

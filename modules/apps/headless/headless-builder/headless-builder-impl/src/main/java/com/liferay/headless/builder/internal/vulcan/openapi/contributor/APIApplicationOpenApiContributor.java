@@ -9,7 +9,6 @@ import com.liferay.headless.builder.application.APIApplication;
 import com.liferay.headless.builder.application.provider.APIApplicationProvider;
 import com.liferay.headless.builder.constants.HeadlessBuilderConstants;
 import com.liferay.headless.builder.internal.util.OpenAPIUtil;
-import com.liferay.headless.builder.internal.util.PathUtil;
 import com.liferay.object.rest.dto.v1_0.FileEntry;
 import com.liferay.object.rest.dto.v1_0.ListEntry;
 import com.liferay.petra.string.StringPool;
@@ -186,7 +185,11 @@ public class APIApplicationOpenApiContributor implements OpenAPIContributor {
 			path = StringPool.SLASH + path;
 		}
 
-		return PathUtil.getPathPrefix(endpoint.getScope()) + path;
+		if (endpoint.getScope() == APIApplication.Endpoint.Scope.SITE) {
+			return HeadlessBuilderConstants.BASE_PATH_SCOPES_SUFFIX + path;
+		}
+
+		return path;
 	}
 
 	private Map<String, Schema> _removedUnusedPageSchema(

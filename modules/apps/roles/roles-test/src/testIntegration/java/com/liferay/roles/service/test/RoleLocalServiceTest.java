@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.model.Team;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
@@ -43,6 +45,7 @@ import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.comparator.RoleRoleIdComparator;
@@ -172,6 +175,10 @@ public class RoleLocalServiceTest {
 		_role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 		_user = UserTestUtil.addUser();
 		_userGroup = UserGroupTestUtil.addUserGroup();
+
+		PermissionThreadLocal.setPermissionChecker(
+			_permissionCheckerFactory.create(
+				UserTestUtil.getAdminUser(PortalUtil.getDefaultCompanyId())));
 
 		_roleLocalService.addUserRole(_user.getUserId(), _role);
 		_roleLocalService.addGroupRole(_group.getGroupId(), _role);
@@ -689,6 +696,9 @@ public class RoleLocalServiceTest {
 
 	@Inject
 	private static OrganizationLocalService _organizationLocalService;
+
+	@Inject
+	private static PermissionCheckerFactory _permissionCheckerFactory;
 
 	@Inject
 	private static ResourceActionLocalService _resourceActionLocalService;

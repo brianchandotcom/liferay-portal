@@ -13,6 +13,8 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.UserBag;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -26,6 +28,7 @@ import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.security.permission.UserBagFactoryUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -121,6 +124,10 @@ public class UserBagFactoryUtilTest {
 
 	@Test
 	public void testGetRoles() throws Exception {
+		PermissionThreadLocal.setPermissionChecker(
+			_permissionCheckerFactory.create(
+				UserTestUtil.getAdminUser(PortalUtil.getDefaultCompanyId())));
+
 		Role regularRole = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
 		_userLocalService.addRoleUser(regularRole.getRoleId(), _user);
@@ -240,6 +247,9 @@ public class UserBagFactoryUtilTest {
 
 		return userBag.getUserUserGroupGroups();
 	}
+
+	@Inject
+	private static PermissionCheckerFactory _permissionCheckerFactory;
 
 	@DeleteAfterTestRun
 	private Group _childGroup;

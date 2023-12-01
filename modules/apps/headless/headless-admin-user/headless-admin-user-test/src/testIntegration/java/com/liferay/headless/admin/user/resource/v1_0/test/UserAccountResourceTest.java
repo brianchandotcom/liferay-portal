@@ -50,6 +50,7 @@ import com.liferay.portal.kernel.security.auth.Authenticator;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -80,6 +81,7 @@ import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityField;
@@ -381,6 +383,10 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	@Override
 	@Test
 	public void testGetUserAccount() throws Exception {
+		PermissionThreadLocal.setPermissionChecker(
+			_permissionCheckerFactory.create(
+				UserTestUtil.getAdminUser(PortalUtil.getDefaultCompanyId())));
+
 		super.testGetUserAccount();
 
 		Group group = GroupTestUtil.addGroup();
@@ -1809,6 +1815,9 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	private long[] _toUserIds(List<User> users) {
 		return ListUtil.toLongArray(users, User.USER_ID_ACCESSOR);
 	}
+
+	@Inject
+	private static PermissionCheckerFactory _permissionCheckerFactory;
 
 	private AccountEntry _accountEntry;
 

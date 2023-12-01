@@ -6,15 +6,20 @@
 package com.liferay.portal.search.internal.suggestions.spi.asah.user.activity;
 
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.rest.dto.v1_0.SuggestionsContributorConfiguration;
 import com.liferay.portal.search.spi.suggestions.SuggestionsContributor;
 import com.liferay.portal.search.suggestions.SuggestionsContributorResults;
 import com.liferay.portal.search.suggestions.spi.constants.AsahSuggestionsConstants;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Gustavo Lima
@@ -36,6 +41,9 @@ public class RecentSitesUserActivityAsahSuggestionsContributor
 		SuggestionsContributorConfiguration
 			suggestionsContributorConfiguration) {
 
+		_themeDisplay = (ThemeDisplay)liferayPortletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		return getSuggestionsContributorResults(
 			AsahSuggestionsConstants.INDIVIDUALS,
 			AsahSuggestionsConstants.RECENT_SITES, searchContext,
@@ -47,6 +55,13 @@ public class RecentSitesUserActivityAsahSuggestionsContributor
 	protected String getAssetURL(
 		String destinationBaseURL, JSONObject itemJSONObject) {
 
+		Group group = _groupLocalService.fetchGroup(
+			itemJSONObject.getLong("groupId"));
+
+		if (group != null) {
+			return group.getDisplayURL(_themeDisplay);
+		}
+
 		return itemJSONObject.getString("url");
 	}
 
@@ -54,5 +69,10 @@ public class RecentSitesUserActivityAsahSuggestionsContributor
 	protected String getText(JSONObject itemJSONObject) {
 		return itemJSONObject.getString("title");
 	}
+
+	@Reference
+	private GroupLocalService _groupLocalService;
+
+	private ThemeDisplay _themeDisplay;
 
 }

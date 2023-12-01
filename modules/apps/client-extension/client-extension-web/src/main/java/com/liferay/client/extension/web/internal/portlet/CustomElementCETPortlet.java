@@ -11,12 +11,14 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -71,12 +73,14 @@ public class CustomElementCETPortlet extends BaseCETPortlet<CustomElementCET> {
 				"javax.portlet.version", "3.0"
 			).build();
 
+		long lastModified = System.currentTimeMillis();
+
 		String cssURLs = cet.getCSSURLs();
 
 		if (Validator.isNotNull(cssURLs)) {
 			dictionary.put(
 				"com.liferay.portlet.header-portal-css",
-				_prepareURLs(cssURLs.split(StringPool.NEW_LINE)));
+				_prepareURLs(lastModified, cssURLs.split(StringPool.NEW_LINE)));
 		}
 
 		String urls = cet.getURLs();
@@ -91,7 +95,7 @@ public class CustomElementCETPortlet extends BaseCETPortlet<CustomElementCET> {
 
 		dictionary.put(
 			"com.liferay.portlet.header-portal-javascript",
-			_prepareURLs(urlsArray));
+			_prepareURLs(lastModified, urlsArray));
 
 		return dictionary;
 	}
@@ -147,8 +151,15 @@ public class CustomElementCETPortlet extends BaseCETPortlet<CustomElementCET> {
 		printWriter.flush();
 	}
 
-	private String[] _prepareURLs(String[] urls) {
+	private String[] _prepareURLs(long lastModified, String[] urls) {
 		for (int i = 0; i < urls.length; i++) {
+			if (!FeatureFlagManagerUtil.isEnabled("LPS-202104") &&
+				!urls[i].contains("?t=") && !urls[i].contains("&t=")) {
+
+				urls[i] = HttpComponentsUtil.addParameter(
+					urls[i], "t", lastModified);
+			}
+
 			if (!urls[i].startsWith("module:")) {
 				urls[i] = "nocombo:" + urls[i];
 			}

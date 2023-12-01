@@ -7,10 +7,17 @@
 
 <%@ include file="/data_layout_renderer/init.jsp" %>
 
-<div class="sheet">
-	<clay:container-fluid
-		cssClass="ddm-form-builder-app"
-	>
+<c:choose>
+	<c:when test='<%= Objects.equals(displayType, "borderless") %>'>
 		<%= content %>
-	</clay:container-fluid>
-</div>
+	</c:when>
+	<c:otherwise>
+		<div class="sheet">
+			<clay:container-fluid
+				cssClass="ddm-form-builder-app"
+			>
+				<%= content %>
+			</clay:container-fluid>
+		</div>
+	</c:otherwise>
+</c:choose>

@@ -24,6 +24,7 @@
 <%@ page import="java.util.HashMap" %>
 <%@ page import="java.util.Locale" %>
 <%@ page import="java.util.Map" %>
+<%@ page import="java.util.Objects" %>
 <%@ page import="java.util.Set" %>
 
 <%@ taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@

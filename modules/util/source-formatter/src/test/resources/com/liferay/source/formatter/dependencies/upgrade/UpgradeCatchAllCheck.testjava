@@ -10,7 +10,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Nícolas Moura
  */
-public class UpgradeCatchAllCheck {
+public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 
 	public void method() {
 		AccountPortletKeys.COMMERCE_ACCOUNT_ADMIN;

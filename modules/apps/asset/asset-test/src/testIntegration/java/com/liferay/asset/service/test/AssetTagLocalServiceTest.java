@@ -365,18 +365,18 @@ public class AssetTagLocalServiceTest {
 	@FeatureFlags("LPS-194362")
 	@Test
 	public void testGetTagsWithCaseInsensitive() throws Exception {
-		String[] tagNames = {"tag1", "Tag1"};
+		String[] expectedTagNames = {"tag1", "Tag1"};
 
-		_addAssetTags(tagNames);
+		_addAssetTags(expectedTagNames);
 
-		Arrays.sort(tagNames);
+		Arrays.sort(expectedTagNames);
 
-		_addArticle(tagNames);
+		_addArticle(expectedTagNames);
 
-		_assertGetTags(tagNames, "tag1");
-		_assertGetTags(tagNames, "TAG1");
-		_assertGetTags(Arrays.copyOfRange(tagNames, 0, 1), "TAG1", 0, 1);
-		_assertGetTags(Arrays.copyOfRange(tagNames, 0, 1), "Tag1", 0, 1);
+		_assertGetTags(expectedTagNames.length, expectedTagNames, "tag1");
+		_assertGetTags(expectedTagNames.length, expectedTagNames, "TAG1");
+		_assertGetTags(1, expectedTagNames, "TAG1", 0, 1);
+		_assertGetTags(1, expectedTagNames, "Tag1", 0, 1);
 	}
 
 	@FeatureFlags("LPS-194362")
@@ -512,27 +512,32 @@ public class AssetTagLocalServiceTest {
 		return assetTags;
 	}
 
-	private void _assertGetTags(String[] expectedTagNames, String name) {
+	private void _assertGetTags(
+		long expectedLength, String[] expectedTagNames, String name) {
+
 		_assertGetTags(
-			expectedTagNames, name, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+			expectedLength, expectedTagNames, name, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS);
 	}
 
 	private void _assertGetTags(
-		String[] expectedTagNames, String name, int start, int end) {
+		long expectedLength, String[] expectedTagNames, String name, int start,
+		int end) {
 
-		List<AssetTag> assetTags = _assetTagLocalService.getTags(
+		List<AssetTag> actualAssetTags = _assetTagLocalService.getTags(
 			_group.getGroupId(),
 			_classNameLocalService.getClassNameId(
 				JournalArticle.class.getName()),
 			name, start, end);
 
 		Assert.assertEquals(
-			assetTags.toString(), expectedTagNames.length, assetTags.size());
+			actualAssetTags.toString(), expectedLength, actualAssetTags.size());
+
 		Assert.assertTrue(
 			ArrayUtil.containsAll(
+				expectedTagNames,
 				TransformUtil.transformToArray(
-					assetTags, AssetTag::getName, String.class),
-				expectedTagNames));
+					actualAssetTags, AssetTag::getName, String.class)));
 	}
 
 	private void _testAddMultipleTags(List<String> tagNames)

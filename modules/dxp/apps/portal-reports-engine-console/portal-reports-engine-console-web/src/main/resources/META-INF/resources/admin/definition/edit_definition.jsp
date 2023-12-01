@@ -212,7 +212,7 @@ else {
 		HashMapBuilder.<String, Object>put(
 			"namespace", liferayPortletResponse.getNamespace()
 		).put(
-			"parameters", BeanParamUtil.getString(definition, request, "reportParameters")
+			"parameters", reportsEngineDisplayContext.getReportParameters()
 		).build()
 	%>'
 	module="admin/js/ReportParameters"

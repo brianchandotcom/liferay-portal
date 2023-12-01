@@ -12,9 +12,15 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -24,14 +30,17 @@ import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.reports.engine.console.constants.ReportsEngineConsolePortletKeys;
+import com.liferay.portal.reports.engine.console.model.Definition;
 import com.liferay.portal.reports.engine.console.service.DefinitionServiceUtil;
 import com.liferay.portal.reports.engine.console.service.EntryServiceUtil;
 import com.liferay.portal.reports.engine.console.service.SourceServiceUtil;
+import com.liferay.portal.reports.engine.console.web.internal.admin.constants.ReportsEngineWebKeys;
 import com.liferay.portal.reports.engine.console.web.internal.admin.display.context.helper.ReportsEngineRequestHelper;
 import com.liferay.portal.reports.engine.console.web.internal.admin.search.DefinitionDisplayTerms;
 import com.liferay.portal.reports.engine.console.web.internal.admin.search.DefinitionSearch;
@@ -198,6 +207,42 @@ public class ReportsEngineDisplayContext {
 		).setTabs1(
 			_getTabs1()
 		).buildPortletURL();
+	}
+
+	public String getReportParameters() throws JSONException {
+		Definition definition = (Definition)_httpServletRequest.getAttribute(
+			ReportsEngineWebKeys.DEFINITION);
+
+		String reportParameters = BeanParamUtil.getString(
+			definition, _httpServletRequest, "reportParameters");
+
+		if (!JSONUtil.isJSONArray(reportParameters)) {
+			return null;
+		}
+
+		JSONArray reportParametersJSONArray = JSONFactoryUtil.createJSONArray(
+			reportParameters);
+
+		for (int i = 0; i < reportParametersJSONArray.length(); i++) {
+			JSONObject reportParameterJSONObject =
+				reportParametersJSONArray.getJSONObject(i);
+
+			if (reportParameterJSONObject.has("value")) {
+				reportParameterJSONObject.put(
+					"value",
+					HtmlUtil.escapeJS(
+						reportParameterJSONObject.getString("value")));
+			}
+
+			if (reportParameterJSONObject.has("key")) {
+				reportParameterJSONObject.put(
+					"key",
+					HtmlUtil.escapeJS(
+						reportParameterJSONObject.getString("key")));
+			}
+		}
+
+		return reportParametersJSONArray.toString();
 	}
 
 	public SearchContainer<?> getSearchContainer() throws PortalException {

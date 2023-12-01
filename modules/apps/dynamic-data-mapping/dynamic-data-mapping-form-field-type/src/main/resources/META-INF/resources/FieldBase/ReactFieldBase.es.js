@@ -381,6 +381,7 @@ export function FieldBase({
 									'ddm-label': showLabel || required,
 									'ddm-repeatable': repeatable,
 								})}
+								{...(type === 'select' && {id: id ?? name})}
 							>
 								{showLabel && label && (
 									<LabelProperty

@@ -11,16 +11,33 @@ import React, {useEffect, useState} from 'react';
 import {MultiSelectItem, MultiSelectProps} from './select.d';
 
 const MultipleSelection = ({
+	errorMessage,
+	id,
+	label,
 	name,
 	onChange,
 	options,
 	readOnly,
 	required,
+	tip,
 	value: values,
 }: MultiSelectProps) => {
 	const [items, setItems] = useState<MultiSelectItem[]>([]);
 	const [loading, setLoading] = useState<boolean>();
 	const {activeTabTitle, viewMode} = useFormState();
+
+	const accessibleProps = {
+		...(label && {
+			'aria-labelledby': `${id ?? name}`,
+		}),
+		...(tip && {
+			'aria-describedby': `${id ?? name}_fieldHelp`,
+		}),
+		...(errorMessage && {
+			'aria-errormessage': `${id ?? name}_fieldError`,
+		}),
+		'aria-required': required,
+	};
 
 	useEffect(() => {
 		const newItems = options.filter((option) => {
@@ -50,8 +67,7 @@ const MultipleSelection = ({
 		<>
 			{!loading && (
 				<ClayMultiSelect
-					aria-labelledby={name}
-					aria-required={required}
+					{...accessibleProps}
 					disabled={readOnly}
 					items={items}
 					onItemsChange={(itemsChanged: MultiSelectItem[]) => {

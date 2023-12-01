@@ -18,6 +18,7 @@ interface Item {
 interface MainProps {
 	defaultSearch?: boolean;
 	editingLanguageId?: Locale;
+	errorMessage?: string;
 	fixedOptions?: Option<string>[];
 	id?: string;
 	label: string;
@@ -36,6 +37,7 @@ interface MainProps {
 	required?: boolean;
 	selectedKey: string;
 	showEmptyOption: boolean;
+	tip?: string;
 	value?: string[] | string;
 	visible?: boolean;
 }

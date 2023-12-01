@@ -7,11 +7,15 @@
 
 import {MultiSelectProps} from './select.d';
 declare const MultipleSelection: ({
+	errorMessage,
+	id,
+	label,
 	name,
 	onChange,
 	options,
 	readOnly,
 	required,
+	tip,
 	value: values,
 }: MultiSelectProps) => JSX.Element;
 export default MultipleSelection;

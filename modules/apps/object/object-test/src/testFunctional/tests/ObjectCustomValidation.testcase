@@ -2001,8 +2001,8 @@ definition {
 		task ("Then only the integer, picklist, relationship, and text are listed") {
 			for (var nonListedFields : list "Custom Field0,Custom Field1,Custom Field2,Custom Field4,Custom Field5,Custom Field6,Custom Field10") {
 				AssertElementNotPresent(
-					key_columnName = ${nonListedFields},
-					locator1 = "ObjectCustomValidation#COMPOSITE_KEY_FIELD");
+					key_columnOption = ${nonListedFields},
+					locator1 = "ObjectCustomViews#CHECKBOX_COLUMN_OPTION");
 			}
 
 			Button.clickCancel();

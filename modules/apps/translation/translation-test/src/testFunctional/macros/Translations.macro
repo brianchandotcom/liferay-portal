@@ -547,7 +547,7 @@ definition {
 			var pageNameTranslation = "false";
 		}
 
-		AntCommands.runCommand("build-test-translation.xml", "update-translation-file -Dcontentpage.translation.file=${contentPageTranslation} -Dcontentpage.translation.fragment.target=<![CDATA[<p>${fragmentContentTranslation}</p> -Dcontentpage.translation.fragment.target.original=<![CDATA[<p>${fragmentContent}</p> -Dcontentpage.translation.title.target=<![CDATA[${pageNameTranslation}]]></target> -Dcontentpage.translation.title.target.original=<![CDATA[${pageName}]]></target> -Doperation=${operation} -Dtranslation.file.encoding=${encoding} -Dtranslation.file.name=${translationFileName} -Dtranslation.zip.file.name=${translationZipFileName}");
+		AntCommands.runCommand("build-test-translation.xml", "update-translation-file -Dcontentpage.translation.file=${contentPageTranslation} -Dcontentpage.translation.fragment.target=${fragmentContentTranslation} -Dcontentpage.translation.fragment.target.original=${fragmentContent} -Dcontentpage.translation.title.target=<![CDATA[${pageNameTranslation}]]></target> -Dcontentpage.translation.title.target.original=<![CDATA[${pageName}]]></target> -Doperation=${operation} -Dtranslation.file.encoding=${encoding} -Dtranslation.file.name=${translationFileName} -Dtranslation.zip.file.name=${translationZipFileName}");
 	}
 
 	@summary = "Default summary"

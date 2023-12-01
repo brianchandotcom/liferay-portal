@@ -76,12 +76,6 @@ public class PageEntityExtensionWriterInterceptorTest {
 		);
 
 		Mockito.when(
-			_user.getUserId()
-		).thenReturn(
-			_USER_ID
-		);
-
-		Mockito.when(
 			_entityExtensionHandler.getExtendedProperties(
 				Mockito.anyLong(), Mockito.anyLong(), Mockito.any())
 		).thenReturn(
@@ -100,6 +94,12 @@ public class PageEntityExtensionWriterInterceptorTest {
 				Mockito.any(MediaType.class))
 		).thenReturn(
 			_entityExtensionHandlerContextResolver
+		);
+
+		Mockito.when(
+			_user.getUserId()
+		).thenReturn(
+			_USER_ID
 		);
 
 		Mockito.when(

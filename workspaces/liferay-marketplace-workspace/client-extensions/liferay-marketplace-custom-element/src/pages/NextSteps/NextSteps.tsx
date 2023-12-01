@@ -132,12 +132,8 @@ export function NextSteps({
 					isTrial ? (
 						<>
 							<p>
-								Congratulations on agreeing to purchase{' '}
-								<strong>{appName}</strong>. Payment is required
-								before licensing the app. An invoice will be
-								sent to the email address listed in the order.
-								Once payment is processed, you will be notified
-								as to the next steps to license your app.
+								You will need to create a license for your app
+								before deploying it to your DXP instance
 							</p>
 							<p>
 								Your Order ID is: <strong>{orderId}</strong>

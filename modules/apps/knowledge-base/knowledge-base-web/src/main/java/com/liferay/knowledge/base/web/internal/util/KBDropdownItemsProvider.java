@@ -594,8 +594,8 @@ public class KBDropdownItemsProvider {
 						_liferayPortletRequest,
 						KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
 						PortletRequest.RENDER_PHASE)
-				).setMVCPath(
-					"/admin/common/edit_kb_article.jsp"
+				).setMVCRenderCommandName(
+					"/knowledge_base/edit_kb_article"
 				).setRedirect(
 					_currentURL
 				).setParameter(

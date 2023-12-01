@@ -142,8 +142,8 @@ public class KBArticleAssetRenderer
 				liferayPortletRequest, _getGroup(liferayPortletRequest),
 				KBPortletKeys.KNOWLEDGE_BASE_ADMIN, 0, 0,
 				PortletRequest.RENDER_PHASE)
-		).setMVCPath(
-			"/admin/common/edit_kb_article.jsp"
+		).setMVCRenderCommandName(
+			"/knowledge_base/edit_kb_article"
 		).setParameter(
 			"resourcePrimKey", _kbArticle.getResourcePrimKey()
 		).buildPortletURL();

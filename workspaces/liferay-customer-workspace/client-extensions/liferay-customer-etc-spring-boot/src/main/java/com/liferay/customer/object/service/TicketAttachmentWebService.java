@@ -29,15 +29,17 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class TicketAttachmentWebService {
 
 	public TicketAttachment addTicketAttachment(
-			Jwt jwt, String accountKey, String fileName, String fileSize,
-			String md5Checksum, int statusCode, String type,
-			long zendeskTicketId)
+			Jwt jwt, String accountKey, String externalReferenceCode,
+			String fileName, String fileSize, String md5Checksum,
+			int statusCode, String type, long zendeskTicketId)
 		throws Exception {
 
 		JSONObject requestJSONObject = new JSONObject();
 
 		requestJSONObject.put(
 			"accountKey", accountKey
+		).put(
+			"externalReferenceCode", externalReferenceCode
 		).put(
 			"fileName", fileName
 		).put(

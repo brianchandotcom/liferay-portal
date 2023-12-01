@@ -8,9 +8,9 @@ import ClayLayout from '@clayui/layout';
 import {useState} from 'react';
 import {Link} from 'react-router-dom';
 
-import './UpstreamBranchesPage.css';
 import Jethr0Breadcrumbs from '../../components/Jethr0Breadcrumbs/Jethr0Breadcrumbs';
 import Jethr0Card from '../../components/Jethr0Card/Jethr0Card';
+import Jethr0ContainerFluid from '../../components/Jethr0ContainerFluid/Jethr0ContainerFluid';
 import Jethr0NavigationBar from '../../components/Jethr0NavigationBar/Jethr0NavigationBar';
 import Jethr0Table from '../../components/Jethr0Table/Jethr0Table';
 import {toLocaleString} from '../../services/DateUtil';
@@ -133,13 +133,13 @@ function UpstreamBranchesPage() {
 			<Jethr0Card>
 				<Jethr0NavigationBar active="Upstream Branches" />
 				<Jethr0Breadcrumbs breadcrumbs={breadcrumbs} />
-				<ClayLayout.ContainerFluid className="jethr0-upstream-branch-pages-menu">
+				<Jethr0ContainerFluid>
 					<ClayLayout.Row justify="between">
 						<Heading level={3} weight="lighter">
 							Upstream Branches
 						</Heading>
 					</ClayLayout.Row>
-				</ClayLayout.ContainerFluid>
+				</Jethr0ContainerFluid>
 				<UpstreamBranches />
 			</Jethr0Card>
 		</ClayLayout.Container>

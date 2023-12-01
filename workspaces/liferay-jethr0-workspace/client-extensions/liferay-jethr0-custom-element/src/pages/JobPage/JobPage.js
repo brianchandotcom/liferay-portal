@@ -9,10 +9,10 @@ import ClayPanel from '@clayui/panel';
 import {useState} from 'react';
 import {Link, useParams} from 'react-router-dom';
 
-import './JobPage.css';
 import Jethr0Breadcrumbs from '../../components/Jethr0Breadcrumbs/Jethr0Breadcrumbs';
 import Jethr0ButtonsRow from '../../components/Jethr0ButtonsRow/Jethr0ButtonsRow';
 import Jethr0Card from '../../components/Jethr0Card/Jethr0Card';
+import Jethr0ContainerFluid from '../../components/Jethr0ContainerFluid/Jethr0ContainerFluid';
 import Jethr0NavigationBar from '../../components/Jethr0NavigationBar/Jethr0NavigationBar';
 import Jethr0Table from '../../components/Jethr0Table/Jethr0Table';
 import {toLocaleString} from '../../services/DateUtil';
@@ -192,7 +192,7 @@ function JobPage() {
 			<Jethr0Card>
 				<Jethr0NavigationBar active="Jobs" />
 				<Jethr0Breadcrumbs breadcrumbs={breadcrumbs} />
-				<ClayLayout.ContainerFluid className="jethr0-job-page-menu">
+				<Jethr0ContainerFluid>
 					<ClayLayout.Row justify="between">
 						<Heading level={3} weight="lighter">
 							{jobName}
@@ -211,7 +211,7 @@ function JobPage() {
 							]}
 						/>
 					</ClayLayout.Row>
-				</ClayLayout.ContainerFluid>
+				</Jethr0ContainerFluid>
 				<JobInformation job={job} />
 				<JobBuilds jobId={id} />
 			</Jethr0Card>

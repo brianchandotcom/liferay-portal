@@ -8,10 +8,10 @@ import ClayLayout from '@clayui/layout';
 import {useState} from 'react';
 import {Link} from 'react-router-dom';
 
-import './JobsPage.css';
 import Jethr0Breadcrumbs from '../../components/Jethr0Breadcrumbs/Jethr0Breadcrumbs';
 import Jethr0ButtonsRow from '../../components/Jethr0ButtonsRow/Jethr0ButtonsRow';
 import Jethr0Card from '../../components/Jethr0Card/Jethr0Card';
+import Jethr0ContainerFluid from '../../components/Jethr0ContainerFluid/Jethr0ContainerFluid';
 import Jethr0NavigationBar from '../../components/Jethr0NavigationBar/Jethr0NavigationBar';
 import Jethr0Table from '../../components/Jethr0Table/Jethr0Table';
 import {toLocaleString} from '../../services/DateUtil';
@@ -79,7 +79,7 @@ function JobsPage() {
 			<Jethr0Card>
 				<Jethr0NavigationBar active="Jobs" />
 				<Jethr0Breadcrumbs breadcrumbs={breadcrumbs} />
-				<ClayLayout.ContainerFluid className="jethr0-job-pages-menu">
+				<Jethr0ContainerFluid>
 					<ClayLayout.Row justify="between">
 						<Heading level={3} weight="lighter">
 							Jobs
@@ -90,7 +90,7 @@ function JobsPage() {
 							]}
 						/>
 					</ClayLayout.Row>
-				</ClayLayout.ContainerFluid>
+				</Jethr0ContainerFluid>
 				<Jobs />
 			</Jethr0Card>
 		</ClayLayout.Container>

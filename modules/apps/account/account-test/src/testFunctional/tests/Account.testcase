@@ -4047,6 +4047,167 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-188650 (TC-2). Headless Admin User can list the ACTIVE Users on a certain API page sorted by given name"
+	@priority = 4
+	test HeadlessAdminCanListActiveUsersWithPagingAndSortingByGivenName {
+		task ("Given: Multiple Users are created") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Users and Organizations");
+
+			User.createMultipleUsers(letter = "a,b,c,d,e,f,g,h,i,j,k,l");
+		}
+
+		task ("When: Every other one is deactivated") {
+			User.deactivateMultipleUsers(letter = "b,d,f,h,j,l");
+		}
+
+		task ("Then: The new endpoint lists the User on a required page by the required sorting") {
+			APIExplorer.executeAPIMethodCompact(
+				api = "headless-admin-user",
+				assertValue = "i@liferay.com",
+				direction = "p",
+				method = "getUserAccountsByStatusPage",
+				parameter = "status",
+				parameter_four = "sort",
+				parameter_three = "pageSize",
+				parameter_two = "page",
+				service = "UserAccount",
+				value = "active",
+				value_four = "givenName",
+				value_three = 1,
+				value_two = 5,
+				version = "v1.0");
+		}
+	}
+
+	@description = "This is a use case for LPS-188650 (TC-4). Headless Admin User can list a specific User by email address"
+	@priority = 4
+	test HeadlessAdminCanListASpecificUserByEmailAddress {
+		task ("Given: Multiple Users are created") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Users and Organizations");
+
+			User.createMultipleUsers(letter = "a,b,c,d,e,f,g,h,i,j,k,l");
+		}
+
+		task ("When: Every other one is deactivated") {
+			User.deactivateMultipleUsers(letter = "b,d,f,h,j,l");
+		}
+
+		task ("Then: The new endpoint lists the required User by email address") {
+			APIExplorer.executeAPIMethodCompact(
+				api = "headless-admin-user",
+				assertValue = "f@liferay.com",
+				direction = "p",
+				method = "getUserAccountByEmailAddress",
+				parameter = "emailAddress",
+				service = "UserAccount",
+				value = "f@liferay.com",
+				version = "v1.0");
+		}
+	}
+
+	@description = "This is a use case for LPS-188650 (TC-3). Headless Admin User can list a specific inactive User by name"
+	@priority = 4
+	test HeadlessAdminCanListASpecificUserByName {
+		task ("Given: Multiple Users are created") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Users and Organizations");
+
+			User.createMultipleUsers(letter = "a,b,c,d,e,f,g,h,i,j,k,l");
+		}
+
+		task ("When: Every other one is deactivated") {
+			User.deactivateMultipleUsers(letter = "b,d,f,h,j,l");
+		}
+
+		task ("Then: The new endpoint lists the required User") {
+			APIExplorer.executeAPIMethodCompact(
+				api = "headless-admin-user",
+				assertValue = "l@liferay.com",
+				direction = "p",
+				method = "getUserAccountsByStatusPage",
+				parameter = "status",
+				parameter_two = "search",
+				service = "UserAccount",
+				value = "inactive",
+				value_two = "l",
+				version = "v1.0");
+		}
+	}
+
+	@description = "This is a use case for LPS-188650 (TC-5). Headless Admin User can list a specific User by User ID"
+	@priority = 4
+	test HeadlessAdminCanListASpecificUserByUserID {
+		task ("Given: Multiple Users are created") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Users and Organizations");
+
+			User.createMultipleUsers(letter = "a,b,c,d,e,f,g,h,i,j,k,l");
+		}
+
+		task ("When: Every other one is deactivated") {
+			User.deactivateMultipleUsers(letter = "b,d,f,h,j,l");
+		}
+
+		task ("Then: The new endpoint lists the required User by email address") {
+			var userId = JSONUserSetter.setUserId(userEmailAddress = "g@liferay.com");
+
+			APIExplorer.executeAPIMethodCompact(
+				api = "headless-admin-user",
+				assertValue = "g@liferay.com",
+				direction = "p",
+				method = "getUserAccount",
+				parameter = "userAccountId",
+				service = "UserAccount",
+				value = ${userId},
+				version = "v1.0");
+		}
+	}
+
+	@description = "This is a use case for LPS-188650 (TC-1). Headless Admin User can list the INACTIVE Users on a certain API page sorted by family name"
+	@priority = 4
+	test HeadlessAdminCanListInactiveUsersWithPagingAndSortingByFamilyName {
+		task ("Given: Multiple Users are created") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Users and Organizations");
+
+			User.createMultipleUsers(letter = "a,b,c,d,e,f,g,h,i,j,k,l");
+		}
+
+		task ("When: Every other one is deactivated") {
+			User.deactivateMultipleUsers(letter = "b,d,f,h,j,l");
+		}
+
+		task ("Then: The new endpoint lists the User on a required page by the required sorting") {
+			APIExplorer.executeAPIMethodCompact(
+				api = "headless-admin-user",
+				assertValue = "h@liferay.com",
+				direction = "p",
+				method = "getUserAccountsByStatusPage",
+				parameter = "status",
+				parameter_four = "sort",
+				parameter_three = "pageSize",
+				parameter_two = "page",
+				service = "UserAccount",
+				value = "inactive",
+				value_four = "familyName",
+				value_three = 1,
+				value_two = 4,
+				version = "v1.0");
+		}
+	}
+
 	@description = "This is a use case for LPS-117171. It asserts that Filter By Navigation does not display when assigning a user to a Person Account since domains are not applicable for this type of account."
 	@priority = 4
 	test NoFilterByNavigationForPersonAccount {

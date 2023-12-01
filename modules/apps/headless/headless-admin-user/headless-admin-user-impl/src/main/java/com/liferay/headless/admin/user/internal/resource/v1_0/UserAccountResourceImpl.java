@@ -498,6 +498,12 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 
 		User user = _userService.getUserById(userAccountId);
 
+		if (user.getStatus() == WorkflowConstants.STATUS_PENDING) {
+			throw new BadRequestException(
+				"User " + user.getUserId() +
+					" cannot be updated during the verification process");
+		}
+
 		Contact contact = user.getContact();
 
 		String sms = contact.getSmsSn();
@@ -928,6 +934,14 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 			Long userAccountId, UserAccount userAccount)
 		throws Exception {
 
+		User user = _userService.getUserById(userAccountId);
+
+		if (user.getStatus() == WorkflowConstants.STATUS_PENDING) {
+			throw new BadRequestException(
+				"User " + user.getUserId() +
+					" cannot be updated during the verification process");
+		}
+
 		String status = userAccount.getStatusAsString();
 
 		Integer workflowStatus = null;
@@ -957,8 +971,6 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 					accountBrief.getId(), userAccountId);
 			}
 		}
-
-		User user = _userService.getUserById(userAccountId);
 
 		String sms = null;
 		String facebook = null;

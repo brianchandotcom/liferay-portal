@@ -10,29 +10,10 @@ import {disableSubmitButton} from '../utils/submitButtonController.es';
 
 let REVALIDATE_UPDATES = [];
 
-const requireUpdatePageFieldNames = [
-	'alphabeticalOrder',
-	'autocomplete',
-	'dataSourceType',
-	'ddmDataProviderInstanceId',
-	'expirationDate',
-	'hideField',
-	'inputMask',
-	'limitToOneSubmissionPerUser',
-	'multiple',
-	'neverExpire',
-	'numericInputMask',
-	'options',
-	'predefinedValue',
-	'requireConfirmation',
-	'required',
-	'sendEmailNotification',
-	'storageType',
-	'validation',
-];
+const notRequireUpdatePageFieldNames = ['requiredErrorMessage'];
 
 const needsPageUpdate = (fieldName) => {
-	return requireUpdatePageFieldNames.includes(fieldName);
+	return !notRequireUpdatePageFieldNames.includes(fieldName);
 };
 
 const getEditedPages = ({

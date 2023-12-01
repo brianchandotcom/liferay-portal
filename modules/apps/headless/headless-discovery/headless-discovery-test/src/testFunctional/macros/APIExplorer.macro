@@ -206,4 +206,94 @@ definition {
 		}
 	}
 
+	@summary = "Default summary"
+	macro executeAPIMethodCompact(api = null, version= null, parameter_two = null, parameter_three = null, parameter_four = null, method = null, requestBody = null, service = null, parameter = null, scopeKey = null, value_two = null, direction = null, assertValue = null) {
+		APIExplorer.navigateToOpenAPI(
+				api = ${api},
+				version = ${version});
+
+		Variables.assertDefined(parameterList = "${service},${method}");
+
+		APIExplorer.expandAPIMethod(
+			method = ${method},
+			service = ${service});
+
+		if (isSet(parameter)) {
+			if (${parameter} == "siteId") {
+				if (!(isSet(groupName))) {
+					var groupName = "Guest";
+				}
+
+				var value = JSONGroupAPI._getGroupIdByNameNoSelenium(
+					groupName = ${groupName},
+					site = "true");
+			}
+
+			Type(
+				locator1 = "OpenAPI#PARAMETER_UNDER_METHOD",
+				method = ${method},
+				parameter = ${parameter},
+				value1 = ${value});
+
+			if (isSet(parameter_two)) {
+				Type(
+					locator1 = "OpenAPI#PARAMETER_UNDER_METHOD",
+					method = ${method},
+					parameter = ${parameter_two},
+					value1 = ${value_two});
+			}
+
+			if (isSet(parameter_three)) {
+				Type(
+					locator1 = "OpenAPI#PARAMETER_UNDER_METHOD",
+					method = ${method},
+					parameter = ${parameter_three},
+					value1 = ${value_three});
+			}
+
+			if (isSet(parameter_four)) {
+				Type(
+					locator1 = "OpenAPI#PARAMETER_UNDER_METHOD",
+					method = ${method},
+					parameter = ${parameter_four},
+					value1 = ${value_four});
+			}
+
+			if (isSet(scopeKey)) {
+				Type(
+					locator1 = "OpenAPI#PARAMETER_UNDER_METHOD",
+					method = ${method},
+					parameter = "scopeKey",
+					value1 = ${scopeKey});
+			}
+		}
+
+		if (isSet(requestBody)) {
+			Type(
+				locator1 = "OpenAPI#REQUEST_BODY",
+				method = ${method},
+				value1 = ${requestBody});
+		}
+
+		Click(
+			locator1 = "Button#EXECUTE",
+			method = ${method});
+
+		if (isSet(direction)) {
+			if (${direction} == "p") {
+				AssertTextEquals.assertPartialText(
+					locator1 = "OpenAPI#RESPONSE_BODY",
+					method = ${method},
+					value1 = ${assertValue},);
+			}
+
+			if (${direction} == "n") {
+				AssertTextNotEquals.assertNotPartialText(
+					locator1 = "OpenAPI#RESPONSE_BODY",
+					method = ${method},
+					value1 = ${assertValue},);
+			}
+		}
+	}
+
 }

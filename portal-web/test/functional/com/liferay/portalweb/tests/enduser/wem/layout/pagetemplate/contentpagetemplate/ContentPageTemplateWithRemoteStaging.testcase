@@ -37,7 +37,7 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		task ("Given content page template is created") {
+		task ("Given a content page template with fragment") {
 			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
 
 			PageTemplatesAdmin.addCollection(collectionName = "Page Template Collection");
@@ -45,9 +45,7 @@ definition {
 			PageTemplatesAdmin.addPageTemplate(
 				pageTemplateName = "Content Page Template Name",
 				pageTemplateType = "Content Page Template");
-		}
 
-		task ("And fragment is added to content page template") {
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
 				fragmentName = "Button");
@@ -55,7 +53,7 @@ definition {
 			PageEditor.publish();
 		}
 
-		task ("When content page template is published to live") {
+		task ("When publish content page template to remote live") {
 			Staging.openStagingAdmin(siteURLKey = "test-site-name");
 
 			Staging.publishCustomPublication(

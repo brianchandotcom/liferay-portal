@@ -6,7 +6,6 @@
 package com.liferay.object.service;
 
 import com.liferay.object.model.ObjectFolder;
-import com.liferay.object.model.ObjectFolderItem;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -16,7 +15,6 @@ import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -71,8 +69,7 @@ public interface ObjectFolderService extends BaseService {
 
 	public ObjectFolder updateObjectFolder(
 			String externalReferenceCode, long objectFolderId,
-			Map<Locale, String> labelMap,
-			List<ObjectFolderItem> objectFolderItems)
+			Map<Locale, String> labelMap)
 		throws PortalException;
 
 }

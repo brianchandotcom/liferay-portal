@@ -8,7 +8,6 @@ package com.liferay.object.service;
 import com.liferay.object.model.ObjectFolder;
 import com.liferay.portal.kernel.exception.PortalException;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -70,12 +69,11 @@ public class ObjectFolderServiceUtil {
 
 	public static ObjectFolder updateObjectFolder(
 			String externalReferenceCode, long objectFolderId,
-			Map<java.util.Locale, String> labelMap,
-			List<com.liferay.object.model.ObjectFolderItem> objectFolderItems)
+			Map<java.util.Locale, String> labelMap)
 		throws PortalException {
 
 		return getService().updateObjectFolder(
-			externalReferenceCode, objectFolderId, labelMap, objectFolderItems);
+			externalReferenceCode, objectFolderId, labelMap);
 	}
 
 	public static ObjectFolderService getService() {

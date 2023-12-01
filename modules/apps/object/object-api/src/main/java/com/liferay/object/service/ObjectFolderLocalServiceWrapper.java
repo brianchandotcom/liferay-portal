@@ -451,13 +451,11 @@ public class ObjectFolderLocalServiceWrapper
 	@Override
 	public com.liferay.object.model.ObjectFolder updateObjectFolder(
 			String externalReferenceCode, long objectFolderId,
-			java.util.Map<java.util.Locale, String> labelMap,
-			java.util.List<com.liferay.object.model.ObjectFolderItem>
-				objectFolderItems)
+			java.util.Map<java.util.Locale, String> labelMap)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectFolderLocalService.updateObjectFolder(
-			externalReferenceCode, objectFolderId, labelMap, objectFolderItems);
+			externalReferenceCode, objectFolderId, labelMap);
 	}
 
 	@Override

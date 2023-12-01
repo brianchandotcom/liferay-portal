@@ -385,12 +385,11 @@ public class ObjectFolderLocalServiceUtil {
 
 	public static ObjectFolder updateObjectFolder(
 			String externalReferenceCode, long objectFolderId,
-			Map<java.util.Locale, String> labelMap,
-			List<com.liferay.object.model.ObjectFolderItem> objectFolderItems)
+			Map<java.util.Locale, String> labelMap)
 		throws PortalException {
 
 		return getService().updateObjectFolder(
-			externalReferenceCode, objectFolderId, labelMap, objectFolderItems);
+			externalReferenceCode, objectFolderId, labelMap);
 	}
 
 	public static ObjectFolderLocalService getService() {

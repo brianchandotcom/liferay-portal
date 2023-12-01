@@ -349,6 +349,33 @@ public class AssetTagLocalServiceTest {
 
 	@FeatureFlags("LPS-194362")
 	@Test
+	public void testGetTagSizeWithCaseInsensitive() throws Exception {
+		String[] tagNames = {"tag1", "Tag1"};
+
+		_addArticle(tagNames);
+		_addArticle(tagNames);
+
+		_addArticle(new String[] {"TAG1"});
+
+		long classNameId = _classNameLocalService.getClassNameId(
+			JournalArticle.class.getName());
+
+		Assert.assertEquals(
+			2,
+			_assetTagLocalService.getTagsSize(
+				_group.getGroupId(), classNameId, "tag1"));
+		Assert.assertEquals(
+			2,
+			_assetTagLocalService.getTagsSize(
+				_group.getGroupId(), classNameId, "Tag1"));
+		Assert.assertEquals(
+			1,
+			_assetTagLocalService.getTagsSize(
+				_group.getGroupId(), classNameId, "TAG1"));
+	}
+
+	@FeatureFlags("LPS-194362")
+	@Test
 	public void testGetTagsWithCaseInsensitive() throws Exception {
 		_assetTagLocalService.addTag(
 			TestPropsValues.getUserId(), _group.getGroupId(), "tag1",
@@ -364,11 +391,7 @@ public class AssetTagLocalServiceTest {
 
 		Arrays.sort(tagNames);
 
-		_serviceContext.setAssetTagNames(tagNames);
-
-		JournalTestUtil.addArticle(
-			_group.getGroupId(),
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, _serviceContext);
+		_addArticle(tagNames);
 
 		_assertGetTags(tagNames, "tag1");
 		_assertGetTags(tagNames, "TAG1");
@@ -481,6 +504,14 @@ public class AssetTagLocalServiceTest {
 
 	@Rule
 	public ExpectedException expectedException = ExpectedException.none();
+
+	private void _addArticle(String[] tagNames) throws Exception {
+		_serviceContext.setAssetTagNames(tagNames);
+
+		JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, _serviceContext);
+	}
 
 	private void _assertGetTags(String[] expectedTagNames, String name) {
 		_assertGetTags(

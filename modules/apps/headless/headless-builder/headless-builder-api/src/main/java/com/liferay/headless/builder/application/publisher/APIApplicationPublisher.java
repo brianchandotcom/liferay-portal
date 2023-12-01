@@ -10,6 +10,8 @@ package com.liferay.headless.builder.application.publisher;
  */
 public interface APIApplicationPublisher {
 
+	public void publish(long companyId) throws Exception;
+
 	public void publish(String baseURL, long companyId) throws Exception;
 
 	public void unpublish(String baseURL, long companyId);

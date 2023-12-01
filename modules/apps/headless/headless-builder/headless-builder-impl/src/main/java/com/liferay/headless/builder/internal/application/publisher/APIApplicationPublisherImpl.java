@@ -58,6 +58,17 @@ public class APIApplicationPublisherImpl
 
 	@Clusterable
 	@Override
+	public void publish(long companyId) throws Exception {
+		for (APIApplication apiApplication :
+				_apiApplicationProvider.getPublishedAPIApplications(
+					companyId)) {
+
+			publish(apiApplication.getBaseURL(), apiApplication.getCompanyId());
+		}
+	}
+
+	@Clusterable
+	@Override
 	public void publish(String baseURL, long companyId) throws Exception {
 		if (!FeatureFlagManagerUtil.isEnabled("LPS-178642")) {
 			throw new UnsupportedOperationException(

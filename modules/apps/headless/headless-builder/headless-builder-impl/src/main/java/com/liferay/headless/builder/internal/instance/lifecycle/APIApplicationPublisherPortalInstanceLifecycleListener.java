@@ -5,8 +5,6 @@
 
 package com.liferay.headless.builder.internal.instance.lifecycle;
 
-import com.liferay.headless.builder.application.APIApplication;
-import com.liferay.headless.builder.application.provider.APIApplicationProvider;
 import com.liferay.headless.builder.application.publisher.APIApplicationPublisher;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.EveryNodeEveryStartup;
@@ -37,21 +35,11 @@ public class APIApplicationPublisherPortalInstanceLifecycleListener
 
 		TransactionCommitCallbackUtil.registerCallback(
 			() -> {
-				for (APIApplication apiApplication :
-						_apiApplicationProvider.getPublishedAPIApplications(
-							company.getCompanyId())) {
-
-					_apiApplicationPublisher.publish(
-						apiApplication.getBaseURL(),
-						apiApplication.getCompanyId());
-				}
+				_apiApplicationPublisher.publish(company.getCompanyId());
 
 				return null;
 			});
 	}
-
-	@Reference
-	private APIApplicationProvider _apiApplicationProvider;
 
 	@Reference
 	private APIApplicationPublisher _apiApplicationPublisher;

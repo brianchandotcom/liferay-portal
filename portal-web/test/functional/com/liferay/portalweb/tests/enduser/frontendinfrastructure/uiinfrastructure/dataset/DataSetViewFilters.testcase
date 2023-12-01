@@ -2302,11 +2302,6 @@ definition {
 				description = "New Client Extension Frontend Data Set Filter",
 				javaScriptURL = "https://liferay.github.io/liferay-frontend-projects/date-filter.js",
 				name = "Frontend Data Set Filter");
-
-
-			// FileInstall.deployFileOnServer(jarFile = "liferay-sample-fds-filter.zip");
-
-			// WaitForConsoleTextPresent(value1 = "STARTED liferaysamplefdsfilter_7.4.13");
 		}
 
 		task("When the user goes to the Filter tab ") {
@@ -2375,11 +2370,6 @@ definition {
 				description = "New Client Extension Frontend Data Set Filter",
 				javaScriptURL = "https://liferay.github.io/liferay-frontend-projects/date-filter.js",
 				name = "Frontend Data Set Filter");
-
-
-			// FileInstall.deployFileOnServer(jarFile = "liferay-sample-fds-filter.zip");
-
-			// WaitForConsoleTextPresent(value1 = "STARTED liferaysamplefdsfilter_7.4.13");
 		}
 
 		task("When the user goes to the Filter tab ") {

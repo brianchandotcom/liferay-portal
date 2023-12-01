@@ -382,68 +382,43 @@ if (deliveryMaxSubscriptionCycles > 0) {
 />
 </commerce-ui:panel>
 
-<aui:script>
-	Liferay.provide(
-		window,
-		'<portlet:namespace />selectSubscriptionType',
-		() => {
-			const subscriptionLength = document.getElementById(
+<aui:script require="frontend-js-web/index as frontendJsWeb">
+	const {createPortletURL} = frontendJsWeb;
+
+	Liferay.provide(window, '<portlet:namespace />selectSubscriptionType', () => {
+		const portletURL = createPortletURL('<%= currentURLObj %>', {
+			subscriptionLength: document.getElementById(
 				'<portlet:namespace />subscriptionLength'
-			).value;
-			const subscriptionType = document.getElementById(
+			).value,
+			subscriptionType: document.getElementById(
 				'<portlet:namespace />subscriptionType'
-			).value;
-			const maxSubscriptionCycles = document.getElementById(
+			).value,
+			maxSubscriptionCycles: document.getElementById(
 				'<portlet:namespace />maxSubscriptionCycles'
-			).value;
+			).value,
+		});
 
-			const portletURL = new Liferay.PortletURL.createURL(
-				'<%= currentURLObj %>'
-			);
-
-			portletURL.setParameter('subscriptionLength', subscriptionLength);
-			portletURL.setParameter('subscriptionType', subscriptionType);
-			portletURL.setParameter('maxSubscriptionCycles', maxSubscriptionCycles);
-
-			window.location.replace(portletURL.toString());
-		},
-		['liferay-portlet-url']
-	);
+		window.location.replace(portletURL.toString());
+	});
 
 	Liferay.provide(
 		window,
 		'<portlet:namespace />selectDeliverySubscriptionType',
 		() => {
-			const deliverySubscriptionLength = document.getElementById(
-				'<portlet:namespace />deliverySubscriptionLength'
-			).value;
-			const deliverySubscriptionType = document.getElementById(
-				'<portlet:namespace />deliverySubscriptionType'
-			).value;
-			const deliveryMaxSubscriptionCycles = document.getElementById(
-				'<portlet:namespace />deliveryMaxSubscriptionCycles'
-			).value;
-
-			const portletURL = new Liferay.PortletURL.createURL(
-				'<%= currentURLObj %>'
-			);
-
-			portletURL.setParameter(
-				'deliverySubscriptionLength',
-				deliverySubscriptionLength
-			);
-			portletURL.setParameter(
-				'deliverySubscriptionType',
-				deliverySubscriptionType
-			);
-			portletURL.setParameter(
-				'deliveryMaxSubscriptionCycles',
-				deliveryMaxSubscriptionCycles
-			);
+			const portletURL = createPortletURL('<%= currentURLObj %>', {
+				deliverySubscriptionLength: document.getElementById(
+					'<portlet:namespace />deliverySubscriptionLength'
+				).value,
+				deliverySubscriptionType: document.getElementById(
+					'<portlet:namespace />deliverySubscriptionType'
+				).value,
+				deliveryMaxSubscriptionCycles: document.getElementById(
+					'<portlet:namespace />deliveryMaxSubscriptionCycles'
+				).value,
+			});
 
 			window.location.replace(portletURL.toString());
-		},
-		['liferay-portlet-url']
+		}
 	);
 </aui:script>
 

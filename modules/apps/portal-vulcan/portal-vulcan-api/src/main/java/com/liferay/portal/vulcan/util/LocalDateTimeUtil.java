@@ -22,6 +22,12 @@ public class LocalDateTimeUtil {
 	}
 
 	public static LocalDateTime toLocalDateTime(Date date, Date defaultDate) {
+		return toLocalDateTime(date, defaultDate, ZoneId.systemDefault());
+	}
+
+	public static LocalDateTime toLocalDateTime(
+		Date date, Date defaultDate, ZoneId zoneId) {
+
 		Instant instant = null;
 
 		if (date == null) {
@@ -35,7 +41,7 @@ public class LocalDateTimeUtil {
 			instant = date.toInstant();
 		}
 
-		ZonedDateTime zonedDateTime = instant.atZone(ZoneId.systemDefault());
+		ZonedDateTime zonedDateTime = instant.atZone(zoneId);
 
 		return zonedDateTime.toLocalDateTime();
 	}

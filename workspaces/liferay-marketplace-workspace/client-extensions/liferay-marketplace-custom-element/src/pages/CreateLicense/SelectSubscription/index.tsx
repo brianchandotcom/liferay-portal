@@ -4,6 +4,7 @@
  */
 
 import ClayLoadingIndicator from '@clayui/loading-indicator';
+import classNames from 'classnames';
 import {useParams} from 'react-router-dom';
 import useSWR from 'swr';
 
@@ -41,34 +42,45 @@ const SelectSubscription = ({
 			{isLoading && <ClayLoadingIndicator />}
 
 			<RadioCardList
-				contentList={subscriptions.map((licenseKey) => ({
-					description: (
-						<small className="text-success">
-							{i18n.sub('key-activations-available-x-of-x', [
-								Math.abs(
-									licenseKey.provisionedCount -
-										licenseKey.purchasedCount
-								).toString(),
-								licenseKey.purchasedCount.toString(),
-							])}
-						</small>
-					),
-					label: `${formatDate(licenseKey.startDate)} - ${
-						licenseKey?.endDate
-							? formatDate(
-									new Date(licenseKey.endDate).toISOString()
-							  )
-							: 'DNE'
-					}`,
-					selected:
-						selectedSubscriptionValue?.name === licenseKey.name,
-					title: (
-						<h3 className="mt-0 text-capitalize">
-							{licenseKey.name}
-						</h3>
-					),
-					value: licenseKey,
-				}))}
+				contentList={subscriptions.map((licenseKey) => {
+					const availableKeys = Math.abs(
+						licenseKey.provisionedCount - licenseKey.purchasedCount
+					);
+
+					return {
+						description: (
+							<small
+								className={classNames({
+									'text-danger': availableKeys <= 0,
+									'text-success': availableKeys > 0,
+								})}
+							>
+								{i18n.sub('key-activations-available-x-of-x', [
+									availableKeys.toString(),
+									licenseKey.purchasedCount.toString(),
+								])}
+							</small>
+						),
+						disabled: availableKeys <= 0,
+						label: `${formatDate(licenseKey.startDate)} - ${
+							licenseKey?.endDate
+								? formatDate(
+										new Date(
+											licenseKey.endDate
+										).toISOString()
+								  )
+								: 'DNE'
+						}`,
+						selected:
+							selectedSubscriptionValue?.name === licenseKey.name,
+						title: (
+							<h3 className="mt-0 text-capitalize">
+								{licenseKey.name}
+							</h3>
+						),
+						value: licenseKey,
+					};
+				})}
 				leftRadio
 				onSelect={({value}) => onSelectSubscription(value)}
 			/>

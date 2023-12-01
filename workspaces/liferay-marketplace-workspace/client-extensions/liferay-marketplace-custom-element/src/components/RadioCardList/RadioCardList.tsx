@@ -18,6 +18,7 @@ interface RadioCardListProps<T> {
 export interface RadioCardContent<T> {
 	children?: ReactNode;
 	description?: ReactNode;
+	disabled?: boolean;
 	imageURL?: string;
 	label?: string;
 	selected: boolean;
@@ -41,6 +42,7 @@ const RadioCardList = <T extends unknown>({
 				<RadioCard
 					activeRadio={content.selected}
 					description={content.description}
+					disabled={content.disabled}
 					imageURL={content.imageURL}
 					index={index}
 					key={index}

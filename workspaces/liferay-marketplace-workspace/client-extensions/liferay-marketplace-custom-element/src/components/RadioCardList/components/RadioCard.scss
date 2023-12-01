@@ -8,6 +8,14 @@
 		color: #2e5aac !important;
 	}
 
+	&.radio-disabled {
+		background-color: #fff !important;
+		border: solid #c9c9cf 2px !important;
+		box-shadow: none !important;
+		opacity: 0.5 !important;
+		pointer-events: none;
+	}
+
 	&.radio-selected {
 		background-color: #e6edfb !important;
 		border: solid #6a8fea 2px !important;

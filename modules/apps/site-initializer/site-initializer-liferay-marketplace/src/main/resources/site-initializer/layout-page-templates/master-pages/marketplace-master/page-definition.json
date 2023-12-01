@@ -88,7 +88,7 @@
 														"definition": {
 															"fragment": {
 																"key": "liferay-sites",
-																"siteKey": "[$GROUP_KEY$]"
+																"siteKey": "mp"
 															},
 															"fragmentConfig": {},
 															"fragmentFields": [],
@@ -102,7 +102,7 @@
 																		"definition": {
 																			"fragment": {
 																				"key": "sites",
-																				"siteKey": "[$GROUP_KEY$]"
+																				"siteKey": "mp"
 																			},
 																			"fragmentConfig": {},
 																			"fragmentFields": [
@@ -163,13 +163,13 @@
 														"definition": {
 															"widgetInstance": {
 																"widgetConfig": {
-																	"displayStyle": "ddmTemplate_LANGUAGE-SELECTOR",
-																	"displayStyleGroupId": "[$GROUP_ID$]",
 																	"showCurrentGroup": "true",
-																	"showGuestGroup": "false",
+																	"displayStyle": "ddmTemplate_LANGUAGE-SELECTOR",
 																	"showLayout": "true",
+																	"showPortletBreadcrumb": "true",
 																	"showParentGroups": "true",
-																	"showPortletBreadcrumb": "true"
+																	"displayStyleGroupId": "35158",
+																	"showGuestGroup": "false"
 																},
 																"widgetName": "com_liferay_site_navigation_language_web_portlet_SiteNavigationLanguagePortlet"
 															}
@@ -199,7 +199,7 @@
 														"definition": {
 															"fragment": {
 																"key": "site-search",
-																"siteKey": "[$GROUP_KEY$]"
+																"siteKey": "mp"
 															},
 															"fragmentConfig": {
 																"searchBlueprintId": 0
@@ -253,7 +253,7 @@
 														"definition": {
 															"fragment": {
 																"key": "account-menu",
-																"siteKey": "[$GROUP_KEY$]"
+																"siteKey": "mp"
 															},
 															"fragmentConfig": {
 																"siteNavigationMenuId": 0
@@ -409,7 +409,7 @@
 																								},
 																								{
 																									"fieldName": "siteKey",
-																									"fieldValue": "[$GROUP_KEY$]"
+																									"fieldValue": "mp"
 																								}
 																							]
 																						}
@@ -474,7 +474,7 @@
 																								},
 																								{
 																									"fieldName": "siteKey",
-																									"fieldValue": "[$GROUP_KEY$]"
+																									"fieldValue": "mp"
 																								}
 																							]
 																						}
@@ -533,10 +533,10 @@
 															},
 															"fragmentConfig": {
 																"displayStyle": "horizontal",
-																"hoveredItemColor": "#0053F0",
 																"selectedItemColor": "",
-																"source": {},
-																"sublevels": "-1"
+																"sublevels": "-1",
+																"hoveredItemColor": "#0053F0",
+																"source": {}
 															},
 															"fragmentFields": [],
 															"indexed": true
@@ -592,7 +592,7 @@
 														"definition": {
 															"fragment": {
 																"key": "mobile-menu-buttom",
-																"siteKey": "[$GROUP_KEY$]"
+																"siteKey": "mp"
 															},
 															"fragmentConfig": {},
 															"fragmentFields": [],
@@ -697,8 +697,8 @@
 												"key": "BASIC_COMPONENT-separator"
 											},
 											"fragmentConfig": {
-												"bottomSpacing": "3",
-												"separatorColor": "light"
+												"separatorColor": "light",
+												"bottomSpacing": "3"
 											},
 											"fragmentFields": [],
 											"fragmentStyle": {
@@ -744,10 +744,10 @@
 											},
 											"fragmentConfig": {
 												"displayStyle": "stacked",
-												"selectedItemColor": "",
-												"sublevels": "-1",
 												"hoveredItemColor": "",
-												"source": "{\"siteNavigationMenuId\":\"57205\",\"parentSiteNavigationMenuItemId\":\"0\",\"privateLayout\":\"false\",\"title\":\"Mobile Menu\",\"type\":\"class com.liferay.site.navigation.item.selector.SiteNavigationMenuItemSelectorReturnType\"}"
+												"selectedItemColor": "",
+												"source": "{\"siteNavigationMenuId\":\"57205\",\"parentSiteNavigationMenuItemId\":\"0\",\"privateLayout\":\"false\",\"title\":\"Mobile Menu\",\"type\":\"class com.liferay.site.navigation.item.selector.SiteNavigationMenuItemSelectorReturnType\"}",
+												"sublevels": "-1"
 											},
 											"fragmentFields": [],
 											"fragmentStyle": {

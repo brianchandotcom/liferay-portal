@@ -464,12 +464,13 @@ public class SegmentsExperimentLocalServiceWrapper
 	@Override
 	public SegmentsExperiment runSegmentsExperiment(
 			long segmentsExperimentId, double confidenceLevel,
-			java.util.Map<Long, Double> segmentsExperienceIdSplitMap)
+			java.util.Map<Long, Double> segmentsExperienceIdSplitMap,
+			String type)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _segmentsExperimentLocalService.runSegmentsExperiment(
-			segmentsExperimentId, confidenceLevel,
-			segmentsExperienceIdSplitMap);
+			segmentsExperimentId, confidenceLevel, segmentsExperienceIdSplitMap,
+			type);
 	}
 
 	@Override

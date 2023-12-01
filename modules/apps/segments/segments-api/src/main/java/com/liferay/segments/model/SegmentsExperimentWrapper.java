@@ -359,6 +359,11 @@ public class SegmentsExperimentWrapper
 		return model.getStatus();
 	}
 
+	@Override
+	public String getType() {
+		return model.getType();
+	}
+
 	/**
 	 * Returns the type settings of this segments experiment.
 	 *

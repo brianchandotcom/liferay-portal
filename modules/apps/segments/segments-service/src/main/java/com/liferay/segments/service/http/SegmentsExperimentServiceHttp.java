@@ -382,7 +382,8 @@ public class SegmentsExperimentServiceHttp {
 			runSegmentsExperiment(
 				HttpPrincipal httpPrincipal, long segmentsExperimentId,
 				double confidenceLevel,
-				java.util.Map<Long, Double> segmentsExperienceIdSplitMap)
+				java.util.Map<Long, Double> segmentsExperienceIdSplitMap,
+				String type)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -392,7 +393,7 @@ public class SegmentsExperimentServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, segmentsExperimentId, confidenceLevel,
-				segmentsExperienceIdSplitMap);
+				segmentsExperienceIdSplitMap, type);
 
 			Object returnObj = null;
 
@@ -426,7 +427,8 @@ public class SegmentsExperimentServiceHttp {
 			runSegmentsExperiment(
 				HttpPrincipal httpPrincipal, String segmentsExperimentKey,
 				double confidenceLevel,
-				java.util.Map<String, Double> segmentsExperienceKeySplitMap)
+				java.util.Map<String, Double> segmentsExperienceKeySplitMap,
+				String type)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -436,7 +438,7 @@ public class SegmentsExperimentServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, segmentsExperimentKey, confidenceLevel,
-				segmentsExperienceKeySplitMap);
+				segmentsExperienceKeySplitMap, type);
 
 			Object returnObj = null;
 
@@ -708,9 +710,13 @@ public class SegmentsExperimentServiceHttp {
 	private static final Class<?>[] _getSegmentsExperimentParameterTypes7 =
 		new Class[] {String.class};
 	private static final Class<?>[] _runSegmentsExperimentParameterTypes8 =
-		new Class[] {long.class, double.class, java.util.Map.class};
+		new Class[] {
+			long.class, double.class, java.util.Map.class, String.class
+		};
 	private static final Class<?>[] _runSegmentsExperimentParameterTypes9 =
-		new Class[] {String.class, double.class, java.util.Map.class};
+		new Class[] {
+			String.class, double.class, java.util.Map.class, String.class
+		};
 	private static final Class<?>[] _updateSegmentsExperimentParameterTypes10 =
 		new Class[] {
 			long.class, String.class, String.class, String.class, String.class

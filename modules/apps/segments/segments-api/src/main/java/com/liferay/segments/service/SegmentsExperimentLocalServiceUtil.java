@@ -409,12 +409,12 @@ public class SegmentsExperimentLocalServiceUtil {
 
 	public static SegmentsExperiment runSegmentsExperiment(
 			long segmentsExperimentId, double confidenceLevel,
-			Map<Long, Double> segmentsExperienceIdSplitMap)
+			Map<Long, Double> segmentsExperienceIdSplitMap, String type)
 		throws PortalException {
 
 		return getService().runSegmentsExperiment(
-			segmentsExperimentId, confidenceLevel,
-			segmentsExperienceIdSplitMap);
+			segmentsExperimentId, confidenceLevel, segmentsExperienceIdSplitMap,
+			type);
 	}
 
 	public static SegmentsExperiment updateSegmentsExperiment(

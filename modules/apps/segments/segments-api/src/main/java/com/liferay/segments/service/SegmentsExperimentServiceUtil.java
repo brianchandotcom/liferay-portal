@@ -102,22 +102,22 @@ public class SegmentsExperimentServiceUtil {
 
 	public static SegmentsExperiment runSegmentsExperiment(
 			long segmentsExperimentId, double confidenceLevel,
-			Map<Long, Double> segmentsExperienceIdSplitMap)
+			Map<Long, Double> segmentsExperienceIdSplitMap, String type)
 		throws PortalException {
 
 		return getService().runSegmentsExperiment(
-			segmentsExperimentId, confidenceLevel,
-			segmentsExperienceIdSplitMap);
+			segmentsExperimentId, confidenceLevel, segmentsExperienceIdSplitMap,
+			type);
 	}
 
 	public static SegmentsExperiment runSegmentsExperiment(
 			String segmentsExperimentKey, double confidenceLevel,
-			Map<String, Double> segmentsExperienceKeySplitMap)
+			Map<String, Double> segmentsExperienceKeySplitMap, String type)
 		throws PortalException {
 
 		return getService().runSegmentsExperiment(
 			segmentsExperimentKey, confidenceLevel,
-			segmentsExperienceKeySplitMap);
+			segmentsExperienceKeySplitMap, type);
 	}
 
 	public static SegmentsExperiment updateSegmentsExperiment(

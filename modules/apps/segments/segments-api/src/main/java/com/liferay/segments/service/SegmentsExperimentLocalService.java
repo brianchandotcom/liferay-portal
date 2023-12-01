@@ -353,7 +353,7 @@ public interface SegmentsExperimentLocalService
 
 	public SegmentsExperiment runSegmentsExperiment(
 			long segmentsExperimentId, double confidenceLevel,
-			Map<Long, Double> segmentsExperienceIdSplitMap)
+			Map<Long, Double> segmentsExperienceIdSplitMap, String type)
 		throws PortalException;
 
 	public SegmentsExperiment updateSegmentsExperiment(

@@ -91,12 +91,12 @@ public interface SegmentsExperimentService extends BaseService {
 
 	public SegmentsExperiment runSegmentsExperiment(
 			long segmentsExperimentId, double confidenceLevel,
-			Map<Long, Double> segmentsExperienceIdSplitMap)
+			Map<Long, Double> segmentsExperienceIdSplitMap, String type)
 		throws PortalException;
 
 	public SegmentsExperiment runSegmentsExperiment(
 			String segmentsExperimentKey, double confidenceLevel,
-			Map<String, Double> segmentsExperienceKeySplitMap)
+			Map<String, Double> segmentsExperienceKeySplitMap, String type)
 		throws PortalException;
 
 	public SegmentsExperiment updateSegmentsExperiment(

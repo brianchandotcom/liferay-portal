@@ -120,7 +120,7 @@
 	markupView="lexicon"
 	persistState=true
 >
-	<#assign vocabularyNames = assetCategoriesSearchFacetDisplayContext.getVocabularyNames() />
+	<#assign vocabularyNames = assetCategoriesSearchFacetDisplayContext.getVocabularyNames()![] />
 
 	<@liferay_ui.panel
 		collapsible=true

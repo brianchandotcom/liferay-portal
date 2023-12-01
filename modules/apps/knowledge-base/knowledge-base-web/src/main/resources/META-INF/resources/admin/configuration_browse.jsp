@@ -14,6 +14,8 @@ kbGroupServiceConfiguration = ParameterMapUtil.setParameterMap(KBGroupServiceCon
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(kbConfigurationDisplayContext.getBackURL());
 portletDisplay.setURLBackTitle("knowledge-base");
+
+String emailParam = StringPool.BLANK;
 %>
 
 <clay:container-fluid
@@ -145,82 +147,115 @@ portletDisplay.setURLBackTitle("knowledge-base");
 
 					<c:choose>
 						<c:when test='<%= Objects.equals(kbConfigurationDisplayContext.getNavigation(), "article-added-email") %>'>
+
+							<%
+							emailParam = "emailKBArticleAdded";
+							%>
+
 							<div class="c-px-4 panel-group-flush">
 								<liferay-frontend:email-notification-settings
 									emailBody="<%= kbGroupServiceConfiguration.emailKBArticleAddedBody() %>"
 									emailDefinitionTerms="<%= emailDefinitionTerms %>"
 									emailEnabled="<%= kbGroupServiceConfiguration.emailKBArticleAddedEnabled() %>"
-									emailParam="emailKBArticleAdded"
+									emailParam="<%= emailParam %>"
 									emailSubject="<%= kbGroupServiceConfiguration.emailKBArticleAddedSubject() %>"
 								/>
 							</div>
 						</c:when>
 						<c:when test='<%= Objects.equals(kbConfigurationDisplayContext.getNavigation(), "article-updated-email") %>'>
+
+							<%
+							emailParam = "emailKBArticleUpdated";
+							%>
+
 							<div class="c-px-4 panel-group-flush">
 								<liferay-frontend:email-notification-settings
 									emailBody="<%= kbGroupServiceConfiguration.emailKBArticleUpdatedBody() %>"
 									emailDefinitionTerms="<%= emailDefinitionTerms %>"
 									emailEnabled="<%= kbGroupServiceConfiguration.emailKBArticleUpdatedEnabled() %>"
-									emailParam="emailKBArticleUpdated"
+									emailParam="<%= emailParam %>"
 									emailSubject="<%= kbGroupServiceConfiguration.emailKBArticleUpdatedSubject() %>"
 								/>
 							</div>
 						</c:when>
 						<c:when test='<%= Objects.equals(kbConfigurationDisplayContext.getNavigation(), "article-review-email") %>'>
+
+							<%
+							emailParam = "emailKBArticleReview";
+							%>
+
 							<div class="c-px-4 panel-group-flush">
 								<liferay-frontend:email-notification-settings
 									emailBody="<%= kbGroupServiceConfiguration.emailKBArticleReviewBody() %>"
 									emailDefinitionTerms="<%= emailDefinitionTerms %>"
 									emailEnabled="<%= kbGroupServiceConfiguration.emailKBArticleReviewEnabled() %>"
-									emailParam="emailKBArticleReview"
+									emailParam="<%= emailParam %>"
 									emailSubject="<%= kbGroupServiceConfiguration.emailKBArticleReviewSubject() %>"
 								/>
 							</div>
 						</c:when>
 						<c:when test='<%= Objects.equals(kbConfigurationDisplayContext.getNavigation(), "article-expired-email") %>'>
+
+							<%
+							emailParam = "emailKBArticleExpired";
+							%>
+
 							<div class="c-px-4 panel-group-flush">
 								<liferay-frontend:email-notification-settings
 									emailBody="<%= kbGroupServiceConfiguration.emailKBArticleExpiredBody() %>"
 									emailDefinitionTerms="<%= emailDefinitionTerms %>"
 									emailEnabled="<%= kbGroupServiceConfiguration.emailKBArticleExpiredEnabled() %>"
-									emailParam="emailKBArticleExpired"
+									emailParam="<%= emailParam %>"
 									emailSubject="<%= kbGroupServiceConfiguration.emailKBArticleExpiredSubject() %>"
 								/>
 							</div>
 						</c:when>
 						<c:when test='<%= Objects.equals(kbConfigurationDisplayContext.getNavigation(), "suggestion-received-email") %>'>
+
+							<%
+							emailParam = "emailKBArticleSuggestionReceived";
+							%>
+
 							<div class="c-px-4 panel-group-flush">
 								<liferay-frontend:email-notification-settings
 									emailBody="<%= kbGroupServiceConfiguration.emailKBArticleSuggestionReceivedBody() %>"
 									emailDefinitionTerms="<%= emailDefinitionTerms %>"
 									emailEnabled="<%= kbGroupServiceConfiguration.emailKBArticleSuggestionReceivedEnabled() %>"
-									emailParam="emailKBArticleSuggestionReceived"
+									emailParam="<%= emailParam %>"
 									emailSubject="<%= kbGroupServiceConfiguration.emailKBArticleSuggestionReceivedSubject() %>"
 								/>
 							</div>
 						</c:when>
 						<c:when test='<%= Objects.equals(kbConfigurationDisplayContext.getNavigation(), "suggestion-in-progress-email") %>'>
+
+							<%
+							emailParam = "emailKBArticleSuggestionInProgress";
+							%>
+
 							<div class="c-px-4 panel-group-flush">
 								<liferay-frontend:email-notification-settings
 									emailBody="<%= kbGroupServiceConfiguration.emailKBArticleSuggestionInProgressBody() %>"
 									emailDefinitionTerms="<%= emailDefinitionTerms %>"
 									emailEnabled="<%= kbGroupServiceConfiguration.emailKBArticleSuggestionInProgressEnabled() %>"
-									emailParam="emailKBArticleSuggestionInProgress"
+									emailParam="<%= emailParam %>"
 									emailSubject="<%= kbGroupServiceConfiguration.emailKBArticleSuggestionInProgressSubject() %>"
 								/>
-							</div>
-						</c:when>
+							</div> </c:when>
 						<c:when test='<%= Objects.equals(kbConfigurationDisplayContext.getNavigation(), "suggestion-resolved-email") %>'>
+
+							<%
+							emailParam = "emailKBArticleSuggestionResolved";
+							%>
+
 							<div class="c-px-4 panel-group-flush">
 								<liferay-frontend:email-notification-settings
 									emailBody="<%= kbGroupServiceConfiguration.emailKBArticleSuggestionResolvedBody() %>"
 									emailDefinitionTerms="<%= emailDefinitionTerms %>"
 									emailEnabled="<%= kbGroupServiceConfiguration.emailKBArticleSuggestionResolvedEnabled() %>"
-									emailParam="emailKBArticleSuggestionResolved"
+									emailParam="<%= emailParam %>"
 									emailSubject="<%= kbGroupServiceConfiguration.emailKBArticleSuggestionResolvedSubject() %>"
 								/>
-							</div>
-						</c:when>
+							</div> </c:when>
 						<c:when test='<%= Objects.equals(kbConfigurationDisplayContext.getNavigation(), "rss") && PortalUtil.isRSSFeedsEnabled() %>'>
 							<div class="c-px-4 panel-group-flush">
 								<liferay-rss:rss-settings
@@ -249,61 +284,27 @@ portletDisplay.setURLBackTitle("knowledge-base");
 				</clay:sheet>
 
 				<aui:button-row>
-					<clay:button
-						cssClass="c-mr-2"
-						label="save"
-						onClick='<%= liferayPortletResponse.getNamespace() + "save();" %>'
-						type="submit"
-					/>
+					<div class="c-gap-1 d-flex">
+						<clay:button
+							additionalProps='<%=
+								HashMapBuilder.<String, Object>put(
+									"emailParam", emailParam
+								).build()
+							%>'
+							cssClass="c-mr-2"
+							label="save"
+							propsTransformer="admin/js/SaveConfigurationButtonPropsTransformer"
+						/>
 
-					<clay:link
-						displayType="secondary"
-						href="<%= kbConfigurationDisplayContext.getBackURL() %>"
-						label="cancel"
-						type="button"
-					/>
+						<clay:link
+							displayType="secondary"
+							href="<%= kbConfigurationDisplayContext.getBackURL() %>"
+							label="cancel"
+							type="button"
+						/>
+					</div>
 				</aui:button-row>
 			</aui:form>
 		</clay:col>
 	</clay:row>
 </clay:container-fluid>
-
-<script>
-	function <portlet:namespace />save() {
-		var form = document.getElementById('<portlet:namespace />fm');
-
-		if (form) {
-			var emailKBArticleAddedEditor = window.<portlet:namespace />emailKBArticleAdded.getHTML();
-			var emailKBArticleExpiredEditor = window.<portlet:namespace />emailKBArticleExpired.getHTML();
-			var emailKBArticleReviewEditor = window.<portlet:namespace />emailKBArticleReview.getHTML();
-			var emailKBArticleSuggestionInProgressEditor = window.<portlet:namespace />emailKBArticleSuggestionInProgress.getHTML();
-			var emailKBArticleSuggestionReceivedEditor = window.<portlet:namespace />emailKBArticleSuggestionReceived.getHTML();
-			var emailKBArticleSuggestionResolvedEditor = window.<portlet:namespace />emailKBArticleSuggestionResolved.getHTML();
-			var emailKBArticleUpdatedEditor = window.<portlet:namespace />emailKBArticleUpdated.getHTML();
-
-			document.getElementById(
-				'<portlet:namespace />emailKBArticleAddedBody'
-			).value = emailKBArticleAddedEditor;
-			document.getElementById(
-				'<portlet:namespace />emailKBArticleUpdatedBody'
-			).value = emailKBArticleUpdatedEditor;
-			document.getElementById(
-				'<portlet:namespace />emailKBArticleReviewBody'
-			).value = emailKBArticleReviewEditor;
-			document.getElementById(
-				'<portlet:namespace />emailKBArticleExpiredBody'
-			).value = emailKBArticleExpiredEditor;
-			document.getElementById(
-				'<portlet:namespace />emailKBArticleSuggestionReceivedBody'
-			).value = emailKBArticleSuggestionReceivedEditor;
-			document.getElementById(
-				'<portlet:namespace />emailKBArticleSuggestionInProgressBody'
-			).value = emailKBArticleSuggestionInProgressEditor;
-			document.getElementById(
-				'<portlet:namespace />emailKBArticleSuggestionResolvedBody'
-			).value = emailKBArticleSuggestionResolvedEditor;
-
-			submitForm(form);
-		}
-	}
-</script>

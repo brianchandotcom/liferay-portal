@@ -71,6 +71,7 @@ KBAdminManagementToolbarDisplayContext kbAdminManagementToolbarDisplayContext = 
 		<clay:container-fluid
 			cssClass="container-view sidenav-content"
 		>
+			<liferay-ui:error exception="<%= DuplicateLockException.class %>" message="this-article-is-currently-being-edited-by-another-user" />
 
 			<%
 			KBAdminViewDisplayContext kbAdminViewDisplayContext = new KBAdminViewDisplayContext(parentResourceClassNameId, parentResourcePrimKey, request, liferayPortletResponse);

@@ -108,6 +108,8 @@ if (portletTitleBasedNavigation) {
 	</c:if>
 
 	<div class="sidenav-content <%= portletTitleBasedNavigation ? "container-fluid container-fluid-max-xl container-form-lg" : StringPool.BLANK %>">
+		<liferay-ui:error exception="<%= DuplicateLockException.class %>" message="this-article-is-currently-being-edited-by-another-user" />
+
 		<c:if test="<%= !portletTitleBasedNavigation %>">
 			<div class="autofit-row">
 				<div class="autofit-col autofit-col-expand">

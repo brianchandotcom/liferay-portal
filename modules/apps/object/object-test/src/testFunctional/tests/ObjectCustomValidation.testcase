@@ -16,7 +16,7 @@ definition {
 		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
-	}
+		}
 	}
 
 	@description = "LPS-144474 - Verify a valid object entry can be added when the validation is set to full validation"

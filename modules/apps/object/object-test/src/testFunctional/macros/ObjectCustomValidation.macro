@@ -79,17 +79,19 @@ definition {
 
 	@summary = "Macro to select fields in a composite key validation type"
 	macro selectCompositeKeyField(fieldList = null) {
-		Variables.assertDefined(parameterList = ${fieldList});
+		LexiconEntry.gotoAdd();
 
-		Click(locator1 = "ObjectCustomValidation#ADD_COMPOSITE_KEY_FIELDS");
+		SelectFrame(locator1 = "ObjectCustomViews#VIEW_MODAL_CONTENT");
 
 		for (var fieldLabel : list ${fieldList}) {
-			Click(
-				key_columnName = ${fieldLabel},
-				locator1 = "ObjectCustomValidation#COMPOSITE_KEY_FIELD");
+			Click.clickAtNotVisible(
+				key_columnOption = ${fieldLabel},
+				locator1 = "ObjectCustomViews#CHECKBOX_COLUMN_OPTION");
 		}
 
-		Button.clickSave();
+		PortletEntry.save();
+
+		SelectFrame(locator1 = "IFrame#IFRAME");
 	}
 
 }

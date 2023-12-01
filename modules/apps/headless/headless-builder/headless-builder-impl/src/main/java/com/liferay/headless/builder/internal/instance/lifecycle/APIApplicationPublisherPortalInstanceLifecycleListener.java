@@ -30,7 +30,7 @@ public class APIApplicationPublisherPortalInstanceLifecycleListener
 	implements EveryNodeEveryStartup {
 
 	@Override
-	public void portalInstanceRegistered(Company company) throws Exception {
+	public void portalInstanceRegistered(Company company) {
 		if (!FeatureFlagManagerUtil.isEnabled("LPS-178642")) {
 			return;
 		}

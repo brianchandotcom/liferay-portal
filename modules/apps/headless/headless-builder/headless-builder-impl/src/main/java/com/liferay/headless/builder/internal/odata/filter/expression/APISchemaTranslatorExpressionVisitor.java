@@ -58,9 +58,8 @@ public class APISchemaTranslatorExpressionVisitor
 
 	@Override
 	public Expression visitBinaryExpressionOperation(
-			BinaryExpression.Operation operation, Expression leftExpression,
-			Expression rightExpression)
-		throws ExpressionVisitException {
+		BinaryExpression.Operation operation, Expression leftExpression,
+		Expression rightExpression) {
 
 		return _expressionFactory.createBinaryExpression(
 			leftExpression, operation, rightExpression);
@@ -84,17 +83,15 @@ public class APISchemaTranslatorExpressionVisitor
 
 	@Override
 	public Expression visitComplexPropertyExpression(
-			ComplexPropertyExpression complexPropertyExpression)
-		throws ExpressionVisitException {
+		ComplexPropertyExpression complexPropertyExpression) {
 
 		return complexPropertyExpression;
 	}
 
 	@Override
 	public Expression visitLambdaFunctionExpression(
-			LambdaFunctionExpression.Type type, String variableName,
-			Expression expression)
-		throws ExpressionVisitException {
+		LambdaFunctionExpression.Type type, String variableName,
+		Expression expression) {
 
 		return _expressionFactory.createLambdaFunctionExpression(
 			type, variableName, expression);
@@ -102,17 +99,15 @@ public class APISchemaTranslatorExpressionVisitor
 
 	@Override
 	public Expression visitLambdaVariableExpression(
-			LambdaVariableExpression lambdaVariableExpression)
-		throws ExpressionVisitException {
+		LambdaVariableExpression lambdaVariableExpression) {
 
 		return lambdaVariableExpression;
 	}
 
 	@Override
 	public Expression visitListExpressionOperation(
-			ListExpression.Operation operation, Expression leftExpression,
-			List<Expression> rightExpressions)
-		throws ExpressionVisitException {
+		ListExpression.Operation operation, Expression leftExpression,
+		List<Expression> rightExpressions) {
 
 		return _expressionFactory.createListExpression(
 			leftExpression, operation, rightExpressions);
@@ -120,8 +115,7 @@ public class APISchemaTranslatorExpressionVisitor
 
 	@Override
 	public Expression visitLiteralExpression(
-			LiteralExpression literalExpression)
-		throws ExpressionVisitException {
+		LiteralExpression literalExpression) {
 
 		return literalExpression;
 	}
@@ -138,8 +132,7 @@ public class APISchemaTranslatorExpressionVisitor
 
 	@Override
 	public Expression visitMethodExpression(
-			List<Expression> expressions, MethodExpression.Type type)
-		throws ExpressionVisitException {
+		List<Expression> expressions, MethodExpression.Type type) {
 
 		return _expressionFactory.createMethodExpression(expressions, type);
 	}
@@ -153,8 +146,7 @@ public class APISchemaTranslatorExpressionVisitor
 
 	@Override
 	public Expression visitPrimitivePropertyExpression(
-			PrimitivePropertyExpression primitivePropertyExpression)
-		throws ExpressionVisitException {
+		PrimitivePropertyExpression primitivePropertyExpression) {
 
 		return _expressionFactory.createPrimitivePropertyExpression(
 			_propertyNames.get(primitivePropertyExpression.getName()));
@@ -162,8 +154,7 @@ public class APISchemaTranslatorExpressionVisitor
 
 	@Override
 	public Expression visitUnaryExpressionOperation(
-			UnaryExpression.Operation operation, Expression expression)
-		throws ExpressionVisitException {
+		UnaryExpression.Operation operation, Expression expression) {
 
 		return _expressionFactory.createUnaryExpression(expression, operation);
 	}

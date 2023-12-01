@@ -3,6 +3,7 @@
 [#if mdfClaimId?has_content]
 	[#assign permissionAction = restClient.get("/c/permissionactions?filter=object%20eq%20%27MDF%20Claim%27&pageSize=-1") /]
 	[#assign mdfClaim = (restClient.get("/c/mdfclaims/${mdfClaimId}"))! /]
+	[#assign mdfRequestIdFromMdfClaim = mdfClaim.r_mdfReqToMDFClms_c_mdfRequestId! /]
 
 	[#assign hasMarketingReviewAction = (permissionAction.items?filter(permissionAction -> permissionAction.action == "MARKETING-REVIEW-STATUS-UPDATE")?has_content)! /]
 	[#assign hasApproveAction = (permissionAction.items?filter(permissionAction -> permissionAction.action== "APPROVE")?has_content)! /]
@@ -68,6 +69,7 @@
 			});
 
 			if (response.ok) {
+				updateMDFRequestStatusToCompleted(`${mdfRequestIdFromMdfClaim}`);
 				location.reload();
 
 				return;
@@ -78,6 +80,18 @@
 				type: 'danger',
 			});
 		};
+
+		const updateMDFRequestStatusToCompleted = async (mdfRequestId) => {
+			const completedStatus = "completed";
+			const response = await fetch(`/o/c/mdfrequests/` + mdfRequestId, {
+				body: `{"mdfRequestStatus": "` + completedStatus + `"}`,
+				headers: {
+					'content-type': 'application/json',
+					'x-csrf-token': Liferay.authToken,
+				},
+				method: 'PATCH',
+			});
+		}
 
 		const callClaimPaidModal = (status) => {
 			return Liferay.Util.openModal({

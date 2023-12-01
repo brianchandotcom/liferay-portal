@@ -262,6 +262,9 @@
 									},
 									{
 										"key": "marketingDirectorReview"
+									},
+									{
+										"key": "completed"
 									}
 								]
 							},

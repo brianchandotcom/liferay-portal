@@ -1,5 +1,6 @@
 {
 	"currencyCode": "USD",
+	"externalReferenceCode": "MARKETPLACE",
 	"name": "Marketplace Channel",
 	"type": "site"
 }

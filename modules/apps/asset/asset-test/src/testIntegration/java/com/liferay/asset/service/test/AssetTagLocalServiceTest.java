@@ -44,6 +44,7 @@ import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -82,13 +83,7 @@ public class AssetTagLocalServiceTest {
 
 	@Test(expected = DuplicateTagException.class)
 	public void testAddDuplicateTags() throws Exception {
-		_assetTagLocalService.addTag(
-			TestPropsValues.getUserId(), _group.getGroupId(), "tag",
-			_serviceContext);
-
-		_assetTagLocalService.addTag(
-			TestPropsValues.getUserId(), _group.getGroupId(), "tag",
-			_serviceContext);
+		_addAssetTags(new String[] {"tag", "tag"});
 	}
 
 	@Test
@@ -251,27 +246,15 @@ public class AssetTagLocalServiceTest {
 	@FeatureFlags("LPS-194362")
 	@Test
 	public void testFetchTagWithCaseSensitive() throws PortalException {
-		AssetTag expectedAssetTag1 = _assetTagLocalService.addTag(
-			TestPropsValues.getUserId(), _group.getGroupId(), "tag",
-			_serviceContext);
+		List<AssetTag> assetTags = _addAssetTags(new String[] {"tag", "TAG"});
 
-		AssetTag expectedAssetTag2 = _assetTagLocalService.addTag(
-			TestPropsValues.getUserId(), _group.getGroupId(), "TAG",
-			_serviceContext);
+		for (AssetTag assetTag : assetTags) {
+			AssetTag actualAssetTag = _assetTagLocalService.fetchTag(
+				_group.getGroupId(), assetTag.getName());
 
-		AssetTag actualAssetTag1 = _assetTagLocalService.fetchTag(
-			_group.getGroupId(), "tag");
-
-		Assert.assertNotNull(actualAssetTag1);
-		Assert.assertEquals(
-			expectedAssetTag1.getTagId(), actualAssetTag1.getTagId());
-
-		AssetTag actualAssetTag2 = _assetTagLocalService.fetchTag(
-			_group.getGroupId(), "TAG");
-
-		Assert.assertNotNull(actualAssetTag2);
-		Assert.assertEquals(
-			expectedAssetTag2.getTagId(), actualAssetTag2.getTagId());
+			Assert.assertNotNull(actualAssetTag);
+			Assert.assertEquals(assetTag.getTagId(), actualAssetTag.getTagId());
+		}
 
 		Assert.assertNull(
 			_assetTagLocalService.fetchTag(_group.getGroupId(), "Tag"));
@@ -285,26 +268,20 @@ public class AssetTagLocalServiceTest {
 		Group group = GroupTestUtil.addGroup();
 
 		try {
-			AssetTag expectedAssetTag1 = _assetTagLocalService.addTag(
-				TestPropsValues.getUserId(), _group.getGroupId(), "tAg1",
-				_serviceContext);
+			List<AssetTag> assetTags = _addAssetTags(
+				new String[] {"tAg1", "TAG1"});
 
 			_assetTagLocalService.addTag(
 				TestPropsValues.getUserId(), group.getGroupId(), "tAg1",
 				_serviceContext);
 
-			AssetTag expectedAssetTag2 = _assetTagLocalService.addTag(
-				TestPropsValues.getUserId(), _group.getGroupId(), "TAG1",
-				_serviceContext);
+			for (AssetTag assetTag : assetTags) {
+				Assert.assertArrayEquals(
+					new long[] {assetTag.getTagId()},
+					_assetTagLocalService.getTagIds(
+						new long[] {_group.getGroupId()}, assetTag.getName()));
+			}
 
-			Assert.assertArrayEquals(
-				new long[] {expectedAssetTag1.getTagId()},
-				_assetTagLocalService.getTagIds(
-					new long[] {_group.getGroupId()}, "tAg1"));
-			Assert.assertArrayEquals(
-				new long[] {expectedAssetTag2.getTagId()},
-				_assetTagLocalService.getTagIds(
-					new long[] {_group.getGroupId()}, "TAG1"));
 			Assert.assertArrayEquals(
 				new long[0],
 				_assetTagLocalService.getTagIds(
@@ -377,17 +354,9 @@ public class AssetTagLocalServiceTest {
 	@FeatureFlags("LPS-194362")
 	@Test
 	public void testGetTagsWithCaseInsensitive() throws Exception {
-		_assetTagLocalService.addTag(
-			TestPropsValues.getUserId(), _group.getGroupId(), "tag1",
-			_serviceContext);
-		_assetTagLocalService.addTag(
-			TestPropsValues.getUserId(), _group.getGroupId(), "Tag1",
-			_serviceContext);
-		_assetTagLocalService.addTag(
-			TestPropsValues.getUserId(), _group.getGroupId(), "TAG1",
-			_serviceContext);
-
 		String[] tagNames = {"tag1", "Tag1"};
+
+		_addAssetTags(tagNames);
 
 		Arrays.sort(tagNames);
 
@@ -402,27 +371,15 @@ public class AssetTagLocalServiceTest {
 	@FeatureFlags("LPS-194362")
 	@Test
 	public void testGetTagWithCaseSensitive() throws PortalException {
-		AssetTag expectedAssetTag1 = _assetTagLocalService.addTag(
-			TestPropsValues.getUserId(), _group.getGroupId(), "tag",
-			_serviceContext);
+		List<AssetTag> assetTags = _addAssetTags(new String[] {"tag", "TAG"});
 
-		AssetTag expectedAssetTag2 = _assetTagLocalService.addTag(
-			TestPropsValues.getUserId(), _group.getGroupId(), "TAG",
-			_serviceContext);
+		for (AssetTag assetTag : assetTags) {
+			AssetTag actualAssetTag = _assetTagLocalService.getTag(
+				_group.getGroupId(), assetTag.getName());
 
-		AssetTag actualAssetTag1 = _assetTagLocalService.getTag(
-			_group.getGroupId(), "tag");
-
-		Assert.assertNotNull(actualAssetTag1);
-		Assert.assertEquals(
-			expectedAssetTag1.getTagId(), actualAssetTag1.getTagId());
-
-		AssetTag actualAssetTag2 = _assetTagLocalService.getTag(
-			_group.getGroupId(), "TAG");
-
-		Assert.assertNotNull(actualAssetTag2);
-		Assert.assertEquals(
-			expectedAssetTag2.getTagId(), actualAssetTag2.getTagId());
+			Assert.assertNotNull(actualAssetTag);
+			Assert.assertEquals(assetTag.getTagId(), actualAssetTag.getTagId());
+		}
 
 		expectedException.expect(NoSuchTagException.class);
 
@@ -457,19 +414,9 @@ public class AssetTagLocalServiceTest {
 	@FeatureFlags("LPS-194362")
 	@Test
 	public void testSearchWithCaseInsensitive() throws PortalException {
-		_assetTagLocalService.addTag(
-			TestPropsValues.getUserId(), _group.getGroupId(), "tag1",
-			_serviceContext);
-
-		_assetTagLocalService.addTag(
-			TestPropsValues.getUserId(), _group.getGroupId(), "Tag1",
-			_serviceContext);
-
-		_assetTagLocalService.addTag(
-			TestPropsValues.getUserId(), _group.getGroupId(), "TAG1",
-			_serviceContext);
-
 		String[] tagNames = {"tag1", "Tag1", "TAG1"};
+
+		_addAssetTags(tagNames);
 
 		for (String tagName : tagNames) {
 			List<AssetTag> assetTags = _assetTagLocalService.search(
@@ -511,6 +458,21 @@ public class AssetTagLocalServiceTest {
 		JournalTestUtil.addArticle(
 			_group.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, _serviceContext);
+	}
+
+	private List<AssetTag> _addAssetTags(String[] tagNames)
+		throws PortalException {
+
+		List<AssetTag> assetTags = new ArrayList<>();
+
+		for (String tagName : tagNames) {
+			assetTags.add(
+				_assetTagLocalService.addTag(
+					TestPropsValues.getUserId(), _group.getGroupId(), tagName,
+					_serviceContext));
+		}
+
+		return assetTags;
 	}
 
 	private void _assertGetTags(String[] expectedTagNames, String name) {

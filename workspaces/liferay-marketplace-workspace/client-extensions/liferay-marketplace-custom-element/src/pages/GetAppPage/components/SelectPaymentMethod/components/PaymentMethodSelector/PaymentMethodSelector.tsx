@@ -10,24 +10,27 @@ import {CardButton} from '../../../../../../components/CardButton/CardButton';
 import {PaymentMethod} from '../../../../enums/paymentMethod';
 import {StepType} from '../../../../enums/stepType';
 
-const getPaymentMethods = (selectedPaymentMethod: PaymentMethod) => [
+const getPaymentMethods = (
+	disablePaidMethods: boolean,
+	selectedPaymentMethod: PaymentMethod
+) => [
 	{
 		description: 'Try Now. Pay Later.',
-		disabled: selectedPaymentMethod === PaymentMethod.PAY,
+		disabled: selectedPaymentMethod !== PaymentMethod.TRIAL,
 		icon: task_checked_icon,
 		method: PaymentMethod.TRIAL,
 		title: '30-day trial',
 	},
 	{
 		description: 'Pay Today',
-		disabled: selectedPaymentMethod !== PaymentMethod.PAY,
+		disabled: disablePaidMethods,
 		icon: credit_card_icon,
 		method: PaymentMethod.PAY,
 		title: 'Pay Now',
 	},
 	{
 		description: 'Requires a PO Number',
-		disabled: selectedPaymentMethod !== PaymentMethod.PAY,
+		disabled: disablePaidMethods,
 		icon: document_icon,
 		method: PaymentMethod.ORDER,
 		title: 'Invoice',
@@ -44,24 +47,35 @@ export function PaymentMethodSelector({
 	setSelectedPaymentMethod: (value: PaymentMethod) => void;
 	step: StepType;
 }) {
-	const paymentMethods = getPaymentMethods(selectedPaymentMethod);
+	const disablePaidMethods =
+		selectedPaymentMethod !== PaymentMethod.PAY &&
+		selectedPaymentMethod !== PaymentMethod.ORDER;
+
+	const paymentMethods = getPaymentMethods(
+		disablePaidMethods,
+		selectedPaymentMethod
+	);
 
 	return (
 		<>
-			{paymentMethods.map((paymentMethod, index) => (
-				<CardButton
-					{...paymentMethod}
-					disabled={paymentMethod.disabled || false}
-					key={index}
-					onClick={() => {
-						if (!paymentMethod.disabled) {
-							setSelectedPaymentMethod(paymentMethod.method);
+			{paymentMethods.map((paymentMethod, index) => {
+				return (
+					<CardButton
+						{...paymentMethod}
+						disabled={paymentMethod.disabled || false}
+						key={index}
+						onClick={() => {
+							if (!paymentMethod.disabled) {
+								setSelectedPaymentMethod(paymentMethod.method);
+							}
+						}}
+						selected={
+							paymentMethod.method === selectedPaymentMethod
 						}
-					}}
-					selected={paymentMethod.method === selectedPaymentMethod}
-					step={step}
-				/>
-			))}
+						step={step}
+					/>
+				);
+			})}
 		</>
 	);
 }

@@ -277,3 +277,12 @@ WebDAV clients can no longer use the user's screenName or emailAddress, nor the 
 WebDAV (or Digest Auth more generally) now requires each user to generate a separate password for this access, and it requires the user to take specific Account Settings UI actions to do so. Previously a simple web login would suffice. To avoid unexpected WebDav access rejections, we decided to simplify the the UX and use userId.
 ----
 ```
+----
+
+# 51895916ce756437c2ae1c11a734c9e640abbb05
+
+On the message of the commit 51895916ce756437c2ae1c11a734c9e640abbb05 the file path is not the complete path:
+
+so the correct message on **What** section should be
+
+modules/apps/document-library/document-library-web/src/main/java/com/liferay/document/library/web/internal/configuration/CacheControlConfiguration.java

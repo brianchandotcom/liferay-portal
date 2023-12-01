@@ -156,7 +156,8 @@ const AppsTable: React.FC<AppsTableProps> = ({items}) => {
 													<DropDown.Item
 														data-tooltip-align="left"
 														disabled={
-															orderStatusIsNotCompleted
+															orderStatusIsNotCompleted ||
+															isFreeApp
 														}
 														onClick={() =>
 															navigate(
@@ -185,7 +186,9 @@ const AppsTable: React.FC<AppsTableProps> = ({items}) => {
 														);
 													}}
 												>
-													Manage License Key(s)
+													{i18n.translate(
+														'manage-license-keys'
+													)}
 												</DropDown.Item>
 											</>
 										)}

@@ -11939,12 +11939,17 @@ dl.store.antivirus.enabled=true</echo>
 		<if>
 			<equals arg1="${external.database.enabled}" arg2="true" />
 			<then>
-				<replace
+				<echo append="true" file="portal-impl/src/portal-ext.properties">
+
+jdbc.test.driverClassName=${database.driver}
+jdbc.test.url=${database.url}
+jdbc.test.username=${database.username}
+jdbc.test.password=${database.password}</echo>
+				<replaceregexp
 					file="portal-impl/src/portal-ext.properties"
-				>
-					<replacetoken>jdbc.default</replacetoken>
-					<replacevalue>jdbc.test</replacevalue>
-				</replace>
+					match="(jdbc.test.url.*)(lportal)"
+					replace="\1lportal1"
+				/>
 			</then>
 		</if>
 

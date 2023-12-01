@@ -21,20 +21,35 @@ definition {
 	@priority = 4
 	test ExternalDataSourceSmoke {
 		property ci.retries.disabled = "true";
+		property databases.size = "1";
 		property external.database.enabled = "true";
 		property test.assert.warning.exceptions = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
+		var projectDir = PropsUtil.get("project.dir");
+		var testServiceDir = "/modules/test/external-data-source-test-service";
+
+		FileUtil.copyDirectory("${projectDir}/modules/test/external-data-source-test-controller-test/src/testIntegration/resources/META-INF/services", "${projectDir}/${testServiceDir}/src/main/resources/META-INF");
+
+		AntCommands.runCommand("build-test.xml", "build-service -Dgradle.file.path=${testServiceDir}");
 
 		AntCommands.runCommand("build-test.xml", "deploy-osgi-module-to-specific-bundle -DliferayHome=${liferayHome} -Dmodule.base.dir=/modules/test/external-data-source-test-api");
 
 		WaitForConsoleTextPresent(value1 = "STARTED com.liferay.external.data.source.test.api_");
 
-		AntCommands.runCommand("build-test.xml", "deploy-osgi-module-to-specific-bundle -DliferayHome=${liferayHome} -Dmodule.base.dir=/modules/test/external-data-source-test-service");
+		AntCommands.runCommand("build-test.xml", "deploy-osgi-module-to-specific-bundle -DliferayHome=${liferayHome} -Dmodule.base.dir=${testServiceDir}");
 
 		WaitForConsoleTextPresent(value1 = "STARTED com.liferay.external.data.source.test.service_");
+
+		SQL.assertTextNotInMySQLStatementResult(
+			mysqlStatement = "SHOW tables in lportal",
+			text = "TestEntity");
+
+		SQL.assertTextInMySQLStatementResult(
+			mysqlStatement = "SHOW tables in lportal1",
+			text = "TestEntity");
 
 		SignIn.signInTestSetup();
 

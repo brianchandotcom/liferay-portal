@@ -8,7 +8,6 @@ package com.liferay.object.service.impl;
 import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.constants.ObjectConstants;
 import com.liferay.object.model.ObjectFolder;
-import com.liferay.object.model.ObjectFolderItem;
 import com.liferay.object.service.base.ObjectFolderServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -16,7 +15,6 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -86,15 +84,14 @@ public class ObjectFolderServiceImpl extends ObjectFolderServiceBaseImpl {
 	@Override
 	public ObjectFolder updateObjectFolder(
 			String externalReferenceCode, long objectFolderId,
-			Map<Locale, String> labelMap,
-			List<ObjectFolderItem> objectFolderItems)
+			Map<Locale, String> labelMap)
 		throws PortalException {
 
 		_objectFolderModelResourcePermission.check(
 			getPermissionChecker(), objectFolderId, ActionKeys.UPDATE);
 
 		return objectFolderLocalService.updateObjectFolder(
-			externalReferenceCode, objectFolderId, labelMap, objectFolderItems);
+			externalReferenceCode, objectFolderId, labelMap);
 	}
 
 	@Reference(

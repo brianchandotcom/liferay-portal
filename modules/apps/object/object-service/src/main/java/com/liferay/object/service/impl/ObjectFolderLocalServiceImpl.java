@@ -9,7 +9,6 @@ import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.exception.ObjectFolderLabelException;
 import com.liferay.object.exception.ObjectFolderNameException;
 import com.liferay.object.model.ObjectFolder;
-import com.liferay.object.model.ObjectFolderItem;
 import com.liferay.object.service.ObjectFolderItemLocalService;
 import com.liferay.object.service.base.ObjectFolderLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
@@ -181,22 +180,13 @@ public class ObjectFolderLocalServiceImpl
 	@Override
 	public ObjectFolder updateObjectFolder(
 			String externalReferenceCode, long objectFolderId,
-			Map<Locale, String> labelMap,
-			List<ObjectFolderItem> objectFolderItems)
+			Map<Locale, String> labelMap)
 		throws PortalException {
 
 		_validateLabel(labelMap);
 
 		ObjectFolder objectFolder = objectFolderPersistence.findByPrimaryKey(
 			objectFolderId);
-
-		for (ObjectFolderItem objectFolderItem : objectFolderItems) {
-			_objectFolderItemLocalService.updateObjectFolderItem(
-				objectFolderItem.getObjectDefinitionId(),
-				objectFolder.getObjectFolderId(),
-				objectFolderItem.getPositionX(),
-				objectFolderItem.getPositionY());
-		}
 
 		if (objectFolder.isUncategorized()) {
 			return objectFolder;

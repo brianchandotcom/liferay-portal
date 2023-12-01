@@ -793,6 +793,10 @@
 		"to": ""
 	},
 	{
+		"from": "ConfigurationBeanDeclaration",
+		"issueKey": "LPS-198405"
+	},
+	{
 		"classNames": [
 			"CPDefinitionLinkLocalService",
 			"CPDefinitionLinkLocalServiceUtil"

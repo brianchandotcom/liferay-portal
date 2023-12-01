@@ -11,6 +11,7 @@ import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemFieldValues;
+import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemFormProvider;
@@ -30,7 +31,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.translation.constants.TranslationActionKeys;
@@ -97,7 +97,9 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 
 			Object object = _getInfoItem(
 				className, classPK,
-				ParamUtil.getString(renderRequest, "version"));
+				ParamUtil.getString(
+					renderRequest, "version",
+					InfoItemIdentifier.VERSION_LATEST));
 
 			if (object == null) {
 				return _getErrorJSP(
@@ -255,9 +257,7 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 			ClassPKInfoItemIdentifier infoItemIdentifier =
 				new ClassPKInfoItemIdentifier(classPK);
 
-			if (!Validator.isBlank(version)) {
-				infoItemIdentifier.setVersion(version);
-			}
+			infoItemIdentifier.setVersion(version);
 
 			return infoItemObjectProvider.getInfoItem(infoItemIdentifier);
 		}

@@ -70,8 +70,6 @@ public abstract class BaseMessageBodyWriter
 		).writeValue(
 			outputStream, object
 		);
-
-		outputStream.flush();
 	}
 
 	private ObjectMapper _getObjectMapper(Class<?> clazz) {

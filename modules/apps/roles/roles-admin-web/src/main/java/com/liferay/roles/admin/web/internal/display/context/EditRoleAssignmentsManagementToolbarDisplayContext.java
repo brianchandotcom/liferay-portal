@@ -161,23 +161,11 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 	}
 
 	public List<DropdownItem> getFilterDropdownItems() {
+		if (FeatureFlagManagerUtil.isEnabled("LPS-144527")) {
+			return null;
+		}
+
 		return DropdownItemListBuilder.addGroup(
-			dropdownGroupItem -> {
-				dropdownGroupItem.setDropdownItems(
-					DropdownItemList.of(
-						DropdownItemBuilder.setActive(
-							true
-						).setHref(
-							StringPool.BLANK
-						).setLabel(
-							LanguageUtil.get(_httpServletRequest, "all")
-						).build()));
-				dropdownGroupItem.setLabel(
-					LanguageUtil.get(
-						_httpServletRequest, "filter-by-navigation"));
-			}
-		).addGroup(
-			() -> !FeatureFlagManagerUtil.isEnabled("LPS-144527"),
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(getOrderByDropDownItems());
 				dropdownGroupItem.setLabel(

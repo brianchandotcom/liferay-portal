@@ -603,7 +603,8 @@ public class ObjectEntryDTOConverter
 		if (entityExtensionHandler != null) {
 			nestedFieldsRelatedProperties =
 				entityExtensionHandler.getExtendedProperties(
-					objectDefinition.getCompanyId(), dto);
+					objectDefinition.getCompanyId(),
+					dtoConverterContext.getUserId(), dto);
 		}
 
 		return ExtendedEntity.extend(dto, nestedFieldsRelatedProperties, null);

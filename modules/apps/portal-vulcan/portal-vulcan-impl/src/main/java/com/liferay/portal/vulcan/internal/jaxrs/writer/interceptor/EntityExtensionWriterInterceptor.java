@@ -8,6 +8,7 @@ package com.liferay.portal.vulcan.internal.jaxrs.writer.interceptor;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.vulcan.extension.EntityExtensionHandler;
 import com.liferay.portal.vulcan.jaxrs.extension.ExtendedEntity;
 
@@ -53,7 +54,7 @@ public class EntityExtensionWriterInterceptor implements WriterInterceptor {
 				ExtendedEntity.extend(
 					writerInterceptorContext.getEntity(),
 					entityExtensionHandler.getExtendedProperties(
-						_company.getCompanyId(),
+						_company.getCompanyId(), _user.getUserId(),
 						writerInterceptorContext.getEntity()),
 					entityExtensionHandler.getFilteredPropertyNames(
 						_company.getCompanyId(),
@@ -89,5 +90,8 @@ public class EntityExtensionWriterInterceptor implements WriterInterceptor {
 
 	@Context
 	private Providers _providers;
+
+	@Context
+	private User _user;
 
 }

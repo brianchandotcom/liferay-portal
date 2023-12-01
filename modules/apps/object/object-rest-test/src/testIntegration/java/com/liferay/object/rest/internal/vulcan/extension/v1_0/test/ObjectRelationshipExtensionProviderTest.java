@@ -133,8 +133,8 @@ public class ObjectRelationshipExtensionProviderTest {
 
 		Map<String, Serializable> extendedProperties =
 			_extensionProvider.getExtendedProperties(
-				TestPropsValues.getCompanyId(), UserAccount.class.getName(),
-				userAccount);
+				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+				UserAccount.class.getName(), userAccount);
 
 		Assert.assertNull(extendedProperties);
 
@@ -142,8 +142,8 @@ public class ObjectRelationshipExtensionProviderTest {
 			_getNestedFieldsContext(RandomTestUtil.randomString()));
 
 		extendedProperties = _extensionProvider.getExtendedProperties(
-			TestPropsValues.getCompanyId(), UserAccount.class.getName(),
-			userAccount);
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			UserAccount.class.getName(), userAccount);
 
 		Assert.assertTrue(extendedProperties.isEmpty());
 
@@ -151,8 +151,8 @@ public class ObjectRelationshipExtensionProviderTest {
 			_getNestedFieldsContext(_objectRelationship.getName()));
 
 		extendedProperties = _extensionProvider.getExtendedProperties(
-			TestPropsValues.getCompanyId(), UserAccount.class.getName(),
-			userAccount);
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			UserAccount.class.getName(), userAccount);
 
 		Assert.assertEquals(
 			extendedProperties.toString(), 1, extendedProperties.size());

@@ -223,7 +223,7 @@ public class EntityExtensionTest {
 
 		@Override
 		public Map<String, Serializable> getExtendedProperties(
-			long companyId, String className, Object entity) {
+			long companyId, long userId, String className, Object entity) {
 
 			return HashMapBuilder.<String, Serializable>put(
 				_propertyName, RandomTestUtil.randomString()

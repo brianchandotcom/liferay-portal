@@ -43,7 +43,7 @@ public class ObjectEntryExtensionProvider extends BaseObjectExtensionProvider {
 
 	@Override
 	public Map<String, Serializable> getExtendedProperties(
-		long companyId, String className, Object entity) {
+		long companyId, long userId, String className, Object entity) {
 
 		try {
 			ObjectDefinition objectDefinition = fetchObjectDefinition(

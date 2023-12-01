@@ -583,28 +583,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				objectDefinition));
 	}
 
-	private ServiceRegistration<ExceptionMapper<?>> _registerExceptionMapper(
-		ExceptionMapper<?> exceptionMapper, String jaxRsApplicationName,
-		ObjectDefinition objectDefinition) {
-
-		Class<? extends ExceptionMapper> clazz = exceptionMapper.getClass();
-
-		return _bundleContext.registerService(
-			(Class<ExceptionMapper<?>>)(Class<?>)ExceptionMapper.class,
-			exceptionMapper,
-			HashMapDictionaryBuilder.<String, Object>put(
-				"osgi.jaxrs.application.select",
-				StringBundler.concat(
-					"(|(liferay.objects.exception.mapper=true)",
-					"(osgi.jaxrs.name= ", jaxRsApplicationName, "))")
-			).put(
-				"osgi.jaxrs.extension", "true"
-			).put(
-				"osgi.jaxrs.name",
-				objectDefinition.getOSGiJaxRsName(clazz.getSimpleName())
-			).build());
-	}
-
 	private List<ServiceRegistration<?>> _registerExceptionMappers(
 		String jaxRsApplicationName, ObjectDefinition objectDefinition) {
 
@@ -619,8 +597,25 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					_jsonFactory, _language),
 				new RequiredObjectRelationshipExceptionMapper(_language),
 				new UnsupportedOperationExceptionMapper()),
-			exceptionMapper -> _registerExceptionMapper(
-				exceptionMapper, jaxRsApplicationName, objectDefinition));
+			exceptionMapper -> {
+				Class<? extends ExceptionMapper> clazz =
+					((ExceptionMapper<?>)exceptionMapper).getClass();
+
+				return _bundleContext.registerService(
+					(Class<ExceptionMapper<?>>)(Class<?>)ExceptionMapper.class,
+					exceptionMapper,
+					HashMapDictionaryBuilder.<String, Object>put(
+						"osgi.jaxrs.application.select",
+						StringBundler.concat(
+							"(|(liferay.objects.exception.mapper=true)",
+							"(osgi.jaxrs.name= ", jaxRsApplicationName, "))")
+					).put(
+						"osgi.jaxrs.extension", "true"
+					).put(
+						"osgi.jaxrs.name",
+						objectDefinition.getOSGiJaxRsName(clazz.getSimpleName())
+					).build());
+			});
 	}
 
 	private boolean _shouldUnregisterApplication(String restContextPath) {

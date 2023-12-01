@@ -1,3 +1,5 @@
+@import 'atlas-variables';
+
 hr {
 	margin: 6px;
 }
@@ -22,8 +24,13 @@ hr {
 		font-weight: 600;
 		line-height: 1.3rem;
 		overflow: hidden;
+		padding-right: 4rem;
 		text-overflow: ellipsis;
 		white-space: nowrap;
 		width: 10rem;
+
+		&--danger {
+			color: $danger;
+		}
 	}
 }

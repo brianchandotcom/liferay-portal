@@ -149,6 +149,25 @@ export async function deleteRelationship(
 	}
 }
 
+export async function getDbTableName({
+	baseResourceURL,
+	objectDefinitionId,
+}: {
+	baseResourceURL: string;
+	objectDefinitionId: number;
+}) {
+	const objectDefinitionInfoURL = createResourceURL(baseResourceURL, {
+		objectDefinitionId,
+		p_p_resource_id: '/object_definitions/get_object_definition_info',
+	}).href;
+
+	const objectDefinitionInfoResponse = await API.fetchJSON<{
+		tableName: string;
+	}>(objectDefinitionInfoURL);
+
+	return objectDefinitionInfoResponse.tableName;
+}
+
 export function getObjectDefinitionNodeActions({
 	baseResourceURL,
 	handleDeleteObjectDefinition,
@@ -364,6 +383,7 @@ export function getObjectFolderActions({
 }
 
 export async function getUpdatedModelBuilderStructurePayload(
+	baseResourceURL: string,
 	currentObjectFolderName: string
 ) {
 	const {items: objectFolders} = await API.getAllObjectFolders();
@@ -397,23 +417,29 @@ export async function getUpdatedModelBuilderStructurePayload(
 					})
 			);
 
-			const updateObjectFolderObjectDefinitions = ({
+			const updateObjectFolderObjectDefinitions = async ({
 				linkedObjectDefinition,
 				objectDefinitions,
 			}: {
 				linkedObjectDefinition: boolean;
 				objectDefinitions: ObjectDefinition[];
 			}) => {
-				objectDefinitions.forEach((objectDefinition) => {
+				for await (const objectDefinition of objectDefinitions) {
 					const objectFolderItem = objectFolder.objectFolderItems.find(
 						(objectFolderItem) =>
 							objectFolderItem.objectDefinitionExternalReferenceCode ===
 							objectDefinition.externalReferenceCode
 					);
 
+					const dbTableName = await getDbTableName({
+						baseResourceURL,
+						objectDefinitionId: objectDefinition.id,
+					});
+
 					if (objectFolderItem) {
 						objectFolderWithObjectDefinitions.push({
 							...objectDefinition,
+							dbTableName,
 							hasObjectDefinitionDeleteResourcePermission: !!objectDefinition
 								.actions.delete,
 							hasObjectDefinitionManagePermissionsResourcePermission: !!objectDefinition
@@ -447,15 +473,15 @@ export async function getUpdatedModelBuilderStructurePayload(
 							showAllObjectFields: false,
 						});
 					}
-				});
+				}
 			};
 
-			updateObjectFolderObjectDefinitions({
+			await updateObjectFolderObjectDefinitions({
 				linkedObjectDefinition: false,
 				objectDefinitions: objectDefinitionsFilteredByObjectFolder,
 			});
 
-			updateObjectFolderObjectDefinitions({
+			await updateObjectFolderObjectDefinitions({
 				linkedObjectDefinition: true,
 				objectDefinitions: linkedObjectDefinitions,
 			});

@@ -5,9 +5,10 @@
 
 /// <reference types="react" />
 
-import './ObjectDefinitionNodeHeader.scss';
 import {DropDownItems} from '../types';
+import './ObjectDefinitionNodeHeader.scss';
 interface ObjectDefinitionNodeHeaderProps {
+	dbTableName: string | undefined;
 	dropDownItems: DropDownItems[];
 	handleSelectObjectDefinitionNode: () => void;
 	isLinkedObjectDefinition: boolean;
@@ -20,6 +21,7 @@ interface ObjectDefinitionNodeHeaderProps {
 	system: boolean;
 }
 export default function ObjectDefinitionNodeHeader({
+	dbTableName,
 	dropDownItems,
 	handleSelectObjectDefinitionNode,
 	isLinkedObjectDefinition,

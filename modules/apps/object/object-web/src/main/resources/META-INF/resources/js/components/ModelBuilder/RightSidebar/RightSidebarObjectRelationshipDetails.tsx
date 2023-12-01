@@ -248,6 +248,7 @@ export function RightSidebarObjectRelationshipDetails({
 
 	const updateModelBuilderStructure = async () => {
 		const payload = await getUpdatedModelBuilderStructurePayload(
+			baseResourceURL,
 			selectedObjectFolder.name
 		);
 

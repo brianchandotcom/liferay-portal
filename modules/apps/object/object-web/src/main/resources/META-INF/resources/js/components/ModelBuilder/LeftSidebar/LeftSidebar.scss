@@ -60,6 +60,11 @@
 		border-radius: 8px;
 	}
 
+	&-item--danger.treeview-link {
+		background-color: transparent;
+		color: $danger !important;
+	}
+
 	&-item-linked.treeview-link {
 		background-color: transparent;
 		color: #6b6c7e80;

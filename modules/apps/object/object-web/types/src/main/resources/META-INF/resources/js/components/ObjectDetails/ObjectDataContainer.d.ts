@@ -6,7 +6,7 @@
 import {FormError} from '@liferay/object-js-components-web';
 import {ChangeEventHandler} from 'react';
 interface ObjectDataContainerProps {
-	dbTableName: string;
+	dbTableName: string | undefined;
 	errors: FormError<ObjectDefinition>;
 	handleChange: ChangeEventHandler<HTMLInputElement>;
 	hasUpdateObjectDefinitionPermission: boolean;

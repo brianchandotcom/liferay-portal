@@ -16,7 +16,10 @@ import {
 import {Scope} from '../ObjectDetails/EditObjectDetails';
 import {ModalAddObjectDefinition} from '../ViewObjectDefinitions/ModalAddObjectDefinition';
 import {ModalEditObjectFolder} from '../ViewObjectDefinitions/ModalEditObjectFolder';
-import {getUpdatedModelBuilderStructurePayload} from '../ViewObjectDefinitions/objectDefinitionUtil';
+import {
+	getDbTableName,
+	getUpdatedModelBuilderStructurePayload,
+} from '../ViewObjectDefinitions/objectDefinitionUtil';
 import Diagram from './Diagram/Diagram';
 import EditObjectFolderHeader from './EditObjectFolderHeader/EditObjectFolderHeader';
 import {ModalPublishObjectDefinitions} from './EditObjectFolderHeader/ModalPublishObjectDefinitions';
@@ -99,6 +102,7 @@ export default function EditObjectFolder({
 		newObjectRelationshipId: number
 	) => {
 		const payload = await getUpdatedModelBuilderStructurePayload(
+			baseResourceURL,
 			selectedObjectFolder.name
 		);
 
@@ -149,6 +153,7 @@ export default function EditObjectFolder({
 
 		const updateModelBuilderStructure = async () => {
 			const payload = await getUpdatedModelBuilderStructurePayload(
+				baseResourceURL,
 				objectFolderName
 			);
 
@@ -204,9 +209,18 @@ export default function EditObjectFolder({
 					objectFolderExternalReferenceCode={
 						selectedObjectFolder.externalReferenceCode
 					}
-					onAfterSubmit={(newObjectDefinition) => {
+					onAfterSubmit={async (newObjectDefinition) => {
+						const dbTableName = await getDbTableName({
+							baseResourceURL,
+							objectDefinitionId: newObjectDefinition.id,
+						} as {
+							baseResourceURL: string;
+							objectDefinitionId: number;
+						});
+
 						dispatch({
 							payload: {
+								dbTableName,
 								newObjectDefinition,
 								objectDefinitionNodes: nodes,
 								selectedObjectFolderName:

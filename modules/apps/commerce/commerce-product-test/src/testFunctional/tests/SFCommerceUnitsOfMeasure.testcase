@@ -1348,6 +1348,63 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-12447 | The Inventory Quantity can be decimal only if there is a UOM attached to the SKU."
+	@priority = 5
+	test CanInventoryQuantityBeDecimalOnlyWithUOM {
+		property portal.acceptance = "true";
+
+		task ("Given a Minium site") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And add a UOM for MIN93015 with Decimal Allowed (Precision) set to 3") {
+			CommerceJSONSKUsAPI._addCommerceUOM(
+				basePrice = 10,
+				precision = 3,
+				productSKU = "MIN93015",
+				uomKey = "test",
+				uomName = "Test");
+		}
+
+		task ("Then the inventory quantity should be with 3 decimals because the Decimal Allowed (Precision) = 3") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "ABS Sensor");
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceNavigator.gotoEntry(entryName = "MIN93015");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Inventory");
+
+			CommerceSKUs.viewSkuUomWarehouse(
+				uomKey = "test",
+				uomLists = "0:Italy,1:United States - Northeast,2:United States - Southwest");
+
+			CommerceSKUs.viewSkuUomInventory(uomQuantityLists = "0:20.000,1:60.000,2:60.000");
+		}
+
+		task ("When the admin delets the UOM") {
+			CommerceJSONSKUsAPI._deleteAllCommerceUOMs(productSKU = "MIN93015");
+		}
+
+		task ("Then the inventory quantity should be without decimals") {
+			SelectFrameTop();
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Inventory");
+
+			CommerceSKUs.viewSkuUomWarehouse(
+				uomKey = "",
+				uomLists = "0:Italy,1:United States - Northeast,2:United States - Southwest");
+
+			CommerceSKUs.viewSkuUomInventory(uomQuantityLists = "0:20,1:60,2:60");
+		}
+	}
+
 	@description = "This is a test for COMMERCE-12381 | Verify that Price On Application works correctly on the minicart with UOM"
 	@priority = 5
 	test CanPriceOnApplicationWithUOMBeShownInMiniCart {

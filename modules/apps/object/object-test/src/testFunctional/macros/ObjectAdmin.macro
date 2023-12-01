@@ -1607,7 +1607,7 @@ definition {
 			key_labelName = ${labelName},
 			locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON");
 
-		Click(
+		Click.javaScriptClick(
 			key_optionName = ${optionName},
 			locator1 = "ObjectAdmin#CLAY_GENERIC_DROPDOWN_ITEM");
 	}

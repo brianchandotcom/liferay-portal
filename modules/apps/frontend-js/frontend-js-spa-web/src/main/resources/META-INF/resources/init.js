@@ -33,11 +33,15 @@ const initSPA = function (config) {
 				const host = loginRedirectURL.host || window.location.host;
 
 				if (app.isLinkSameOrigin_(host)) {
-					match =
-						uri.searchParams.get('p_p_lifecycle') === '1' &&
-						!config.excludedTargetPortlets.some((item) =>
-							uri.searchParams.get('p_p_id')?.includes(item)
-						);
+					match = uri.searchParams.get('p_p_lifecycle') === '1';
+
+					if (match) {
+						const id = uri.searchParams.get('p_p_id');
+
+						if (id && config.excludedTargetPortlets) {
+							match = !config.excludedTargetPortlets.includes(id);
+						}
+					}
 				}
 
 				return match;

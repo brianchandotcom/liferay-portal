@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.translation.constants.TranslationActionKeys;
@@ -94,7 +95,9 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 			_translator = _translatorRegistry.getCompanyTranslator(
 				themeDisplay.getCompanyId());
 
-			Object object = _getInfoItem(className, classPK);
+			Object object = _getInfoItem(
+				className, classPK,
+				ParamUtil.getString(renderRequest, "version"));
 
 			if (object == null) {
 				return _getErrorJSP(
@@ -236,7 +239,9 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 		return "/translate.jsp";
 	}
 
-	private Object _getInfoItem(String className, long classPK) {
+	private Object _getInfoItem(
+		String className, long classPK, String version) {
+
 		try {
 			InfoItemObjectProvider<Object> infoItemObjectProvider =
 				_infoItemServiceRegistry.getFirstInfoItemService(
@@ -247,8 +252,14 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 				return null;
 			}
 
-			return infoItemObjectProvider.getInfoItem(
-				new ClassPKInfoItemIdentifier(classPK));
+			ClassPKInfoItemIdentifier infoItemIdentifier =
+				new ClassPKInfoItemIdentifier(classPK);
+
+			if (!Validator.isBlank(version)) {
+				infoItemIdentifier.setVersion(version);
+			}
+
+			return infoItemObjectProvider.getInfoItem(infoItemIdentifier);
 		}
 		catch (NoSuchInfoItemException noSuchInfoItemException) {
 			if (_log.isDebugEnabled()) {

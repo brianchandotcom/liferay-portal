@@ -1999,7 +1999,7 @@ definition {
 		}
 
 		task ("Then only the integer, picklist, relationship, and text are listed") {
-			for (var nonListedFields : list "Custom Field0,Custom Field1,Custom Field2,Custom Field3,Custom Field4,Custom Field5,Custom Field6,Custom Field10") {
+			for (var nonListedFields : list "Custom Field0,Custom Field1,Custom Field2,Custom Field4,Custom Field5,Custom Field6,Custom Field10") {
 				AssertElementNotPresent(
 					key_columnName = ${nonListedFields},
 					locator1 = "ObjectCustomValidation#COMPOSITE_KEY_FIELD");
@@ -2009,7 +2009,7 @@ definition {
 		}
 
 		task ("and Given the validation is configured and the object definition is published") {
-			ObjectCustomValidation.selectCompositeKeyField(fieldList = "Custom Field7, Custom Field8, Relationship");
+			ObjectCustomValidation.selectCompositeKeyField(fieldList = "Custom Field8,Custom Field7,Custom Field3,Relationship");
 
 			PortletEntry.save();
 

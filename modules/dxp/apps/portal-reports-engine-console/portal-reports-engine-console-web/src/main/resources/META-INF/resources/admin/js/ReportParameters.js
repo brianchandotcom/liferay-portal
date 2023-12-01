@@ -308,14 +308,8 @@ export default function ReportParameters({namespace, parameters}) {
 		}
 	}
 
-	parametersKeyElement.addEventListener('change', () =>
-		toggleAddParameterButton()
-	);
-
-	parametersValueElement.addEventListener('change', () =>
-		toggleAddParameterButton()
-	);
-
+	parametersKeyElement.addEventListener('keyup', toggleAddParameterButton);
+	parametersValueElement.addEventListener('keyup', toggleAddParameterButton);
 	addParameterElement.addEventListener('click', addParameter);
 
 	removeReportElement.addEventListener('click', () => {

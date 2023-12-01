@@ -21,7 +21,7 @@ const useGetProductByOrderId = (orderId: string) => {
 		}
 
 		const product = await getProductById({
-			nestedFields: 'attachments, productSpecifications',
+			nestedFields: 'attachments',
 			productId: placedOrder.placedOrderItems[0].productId,
 		});
 

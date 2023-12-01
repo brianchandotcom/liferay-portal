@@ -17,7 +17,6 @@ import OrderStatus, {
 import Table from '../../../../components/Table/Table';
 import {useMarketplaceContext} from '../../../../context/MarketplaceContext';
 import {OrderType} from '../../../../enums/OrderType';
-import useGetProductByOrderId from '../../../../hooks/useGetProductByOrderId';
 import i18n from '../../../../i18n';
 import {showAppImage} from '../../../../utils/util';
 
@@ -128,21 +127,16 @@ const AppsTable: React.FC<AppsTableProps> = ({items}) => {
 							id,
 							orderStatusInfo,
 							orderTypeExternalReferenceCode,
+							placedOrderItems,
 							virtualURL,
 						}
 					) => {
 						const orderStatusIsNotCompleted =
 							orderStatusInfo?.label !== OrderStatuses.COMPLETED;
 
-						// eslint-disable-next-line react-hooks/rules-of-hooks
-						const {data} = useGetProductByOrderId(id as string);
-
 						const isFreeApp =
-							data?.product?.productSpecifications?.find(
-								(specification) =>
-									specification?.specificationKey ===
-									'price-model'
-							)?.value?.en_US === 'Free';
+							placedOrderItems[0]?.price?.price === 0 &&
+							placedOrderItems[0]?.sku !== 'TRIAL';
 
 						return (
 							<div onClick={(event) => event.stopPropagation()}>

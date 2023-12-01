@@ -101,6 +101,99 @@ definition {
 		}
 	}
 
+	@description = "LPS-169223 - Verify after importing an object entry with a modified auto increment field value, new object entries increment based off of the modified value"
+	@priority = 4
+	test CanIncrementAfterImportingObjectEntry {
+		task ("Given an object definition called Shoes that contains an auto-increment field and a text field") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Shoe",
+				objectName = "Shoe",
+				pluralLabelName = "Shoes");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Color",
+				fieldName = "color",
+				fieldType = "String",
+				isRequired = "true",
+				objectName = "Shoe");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "AutoIncrement",
+				fieldLabelName = "Identification",
+				fieldName = "identification",
+				fieldType = "String",
+				initialValue = 001,
+				isRequired = "false",
+				objectName = "Shoe",
+				prefix = "",
+				suffix = "-Sneakers");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "Shoe");
+		}
+
+		task ("and Given an object entry") {
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				ercName = "shoe001",
+				fieldName = "color",
+				objectName = "Shoe",
+				value = "Blue");
+		}
+
+		task ("and Given the object entry is exported") {
+			ImportExport.exportAndUnzipFile(
+				entityType = "C_Shoe (v1_0 - Liferay Object REST)",
+				exportFileFormat = "JSON");
+		}
+
+		task ("and Given the auto increment field value and the ERC are modified in the JSON file") {
+			var tempFileName = TestCase.getDownloadedTempFileName(fileNamePattern = "export.json");
+			var tempFileDirectory = selenium.getOutputDirName();
+
+			var filePath = "${tempFileDirectory}/${tempFileName}";
+
+			FileUtil.replaceStringInFile(${filePath}, "shoe001", "shoe020");
+
+			FileUtil.replaceStringInFile(${filePath}, "001-Sneakers", "020-Sneakers");
+
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.gotoImport();
+
+			UploadFile(
+				locator1 = "TextInput#FILE",
+				value1 = ${filePath});
+
+			ImportExport.selectEntity(entityType = "C_Shoe (v1_0 - Liferay Object REST)");
+
+			WaitForElementPresent(locator1 = "ImportExport#IMPORT_MAPPING_HEADER");
+		}
+
+		task ("and Given the object entry is imported") {
+			ImportExport.startImportAndWaitForSuccess();
+		}
+
+		task ("When the user creates a new object entry") {
+			ObjectAdmin.goToCustomObject(objectName = "Shoe");
+
+			LexiconEntry.gotoAdd();
+
+			ObjectPortlet.typeCustomField(
+				customField = "Color",
+				entry = "Black");
+
+			PortletEntry.save();
+		}
+
+		task ("Then the auto increment field value for the new entry is based off of the imported object entry") {
+			ObjectAdmin.goToCustomObject(objectName = "Shoe");
+
+			for (var identificationName : list "001,020,021") {
+				ObjectPortlet.viewEntry(entry = "${identificationName}-Sneakers");
+			}
+		}
+	}
+
 	@description = "LPS-169223 - Verify the auto increment fields in object entries are read only"
 	@priority = 4
 	test VerifyFieldIsReadOnly {

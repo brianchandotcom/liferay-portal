@@ -2222,5 +2222,74 @@ definition {
 				locator1 = "DataSet#FILTER_TABLE_CELL");
 		}
 	}
+	
+	@description = "LPS-182558. Verify client extension filter modal informs the user there is not client extension available."
+	@priority = 5
+	test AssertNoClientExtensionAvailableMessage {
+		task ("Given a new data set entry") {
+            DataSetAdmin.goToDataSetAdminPage();
+
+            DataSetAdmin.createDataSet(
+                key_name = "Data Set Test",
+                key_type = "data-set-manager/fields");
+        }
+
+        task ("And a new view") {
+
+            DataSetAdmin.goToViews(dataSetName = "Data Set Test");
+
+            DataSetAdmin.createDataSetView(
+                description = "Description",
+                key_name = "View Test");
+
+            DataSetAdmin.goToSpecificViewPage(
+                dataSetName = "Data Set Test",
+                key_viewName = "View Test");
+        }
+
+        task ("When the user goes to the Filters tab") {
+
+			DataSetAdmin.goToTab(tabName = "Filters");
+
+		}
+
+		task ("And clicks on plus button"){
+			LexiconEntry.gotoAdd();
+		}
+
+		task("Then the Client Extension option is displayed in the dropdown") {
+			AssertVisible(key_fieldName = "Client Extension",
+            locator1 = "FormViewBuilder#OBJECT_FIELD_BUTTON_DROPDOWN");
+		}
+
+		task("When the user clicks on Client Extension option") {
+			Click(key_fieldName = "Client Extension",
+            locator1 = "FormViewBuilder#OBJECT_FIELD_BUTTON_DROPDOWN");	
+		}
+
+		task("Then the “New Client Extension filter” modal is displayed") {
+			AssertVisible(locator1="AccessibilityMenu#MODAL_TITLE",
+			key_modal_title = "New Client Extension Filter");
+		}
+
+		task("And the Name field is editable"){
+			Type(
+				key_text = "Name",
+				locator1 = "TextInput#ANY",
+				value1 = "Client Extension Filter");
+		}
+
+		task("And the Save button is disabled") {
+			AssertVisible(locator1 = "Button#ANY_DISABLED",
+			key_text = "Save");
+
+		}
+
+		task("And the message 'Info: No Client Extensions are available.'") {
+			AssertTextEquals.assertPartialText(locator1 = "Modal#BODY",
+			value1= "No frontend data set filter client extensions are available. Add a client extension first in order to create a filter.");
+		}
+	}
+
 
 }

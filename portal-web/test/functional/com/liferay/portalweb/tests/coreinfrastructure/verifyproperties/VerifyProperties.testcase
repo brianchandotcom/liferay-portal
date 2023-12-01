@@ -1,4 +1,4 @@
-@component-name = "portal-verify-properties"
+@component-name = "portal-upgrades"
 definition {
 
 	property app.server.types = "tomcat";
@@ -6,7 +6,7 @@ definition {
 	property database.types = "mysql";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.main.component.name = "Verify Properties";
+	property testray.main.component.name = "Upgrade Logging";
 
 	@description = "LRQA-78904: Upgrade will be stopped if Verify Properties fails when enable AutoUpgrade"
 	@priority = 3

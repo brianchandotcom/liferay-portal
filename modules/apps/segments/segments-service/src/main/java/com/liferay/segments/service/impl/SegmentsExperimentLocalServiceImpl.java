@@ -45,6 +45,7 @@ import com.liferay.segments.exception.SegmentsExperimentGoalException;
 import com.liferay.segments.exception.SegmentsExperimentNameException;
 import com.liferay.segments.exception.SegmentsExperimentRelSplitException;
 import com.liferay.segments.exception.SegmentsExperimentStatusException;
+import com.liferay.segments.exception.SegmentsExperimentTypeException;
 import com.liferay.segments.exception.WinnerSegmentsExperienceException;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.model.SegmentsExperiment;
@@ -274,7 +275,7 @@ public class SegmentsExperimentLocalServiceImpl
 	@Override
 	public SegmentsExperiment runSegmentsExperiment(
 			long segmentsExperimentId, double confidenceLevel,
-			Map<Long, Double> segmentsExperienceIdSplitMap)
+			Map<Long, Double> segmentsExperienceIdSplitMap, String type)
 		throws PortalException {
 
 		SegmentsExperiment segmentsExperiment =
@@ -286,6 +287,7 @@ public class SegmentsExperimentLocalServiceImpl
 		_validateConfidenceLevel(confidenceLevel);
 		_validateSegmentsExperimentRels(segmentsExperienceIdSplitMap);
 		_validateSplit(segmentsExperienceIdSplitMap);
+		_validateType(type);
 
 		UnicodeProperties typeSettingsUnicodeProperties =
 			segmentsExperiment.getTypeSettingsProperties();
@@ -296,6 +298,8 @@ public class SegmentsExperimentLocalServiceImpl
 
 		typeSettingsUnicodeProperties.setProperty(
 			"confidenceLevel", String.valueOf(confidenceLevel));
+
+		typeSettingsUnicodeProperties.setProperty("type", type);
 
 		segmentsExperiment.setTypeSettings(
 			typeSettingsUnicodeProperties.toString());
@@ -694,6 +698,12 @@ public class SegmentsExperimentLocalServiceImpl
 				StringBundler.concat(
 					"Status ", newStatusObject.name(),
 					" requires a winner segments experience"));
+		}
+	}
+
+	private void _validateType(String type) throws PortalException {
+		if (SegmentsExperimentConstants.Type.parse(type) == null) {
+			throw new SegmentsExperimentTypeException();
 		}
 	}
 

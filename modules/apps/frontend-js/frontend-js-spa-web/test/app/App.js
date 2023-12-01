@@ -1748,15 +1748,15 @@ describe('App', function () {
 			this.app.navigate('/path2').then(() => {
 				const lifecycleOrder = [
 					StubScreen.prototype.load,
-					StubScreen.prototype.evaluateStyles,
 					StubScreen.prototype.flip,
+					StubScreen.prototype.evaluateStyles,
 					StubScreen.prototype.evaluateScripts,
 					StubScreen.prototype.activate,
 					StubScreen.prototype.beforeDeactivate,
 					StubScreen2.prototype.load,
 					StubScreen.prototype.deactivate,
-					StubScreen2.prototype.evaluateStyles,
 					StubScreen2.prototype.flip,
+					StubScreen2.prototype.evaluateStyles,
 					StubScreen2.prototype.evaluateScripts,
 					StubScreen2.prototype.activate,
 					StubScreen.prototype.disposeInternal,

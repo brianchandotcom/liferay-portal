@@ -61,14 +61,6 @@ public class BundleLogger extends LogServiceEnabledLogger
 
     InternalLogger getLogger(final String className)
     {
-        if ( className != null )
-        {
-            final Object logServiceSupport = this.logServiceTracker.getService();
-            if ( logServiceSupport != null )
-            {
-                return ((LogServiceSupport)logServiceSupport).getLogger(className);
-            }
-        }
         return this.getLogger();
     }
 

@@ -634,7 +634,7 @@ public class ObjectDefinitionResourceTest
 			_objectFolder1 = _objectFolderLocalService.updateObjectFolder(
 				RandomTestUtil.randomString(),
 				_objectFolder1.getObjectFolderId(),
-				_objectFolder1.getLabelMap(), Collections.emptyList());
+				_objectFolder1.getLabelMap());
 
 			objectDefinition1 = objectDefinitionResource.getObjectDefinition(
 				objectDefinition1.getId());

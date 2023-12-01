@@ -38,7 +38,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
-import java.util.Collections;
 import java.util.Locale;
 import java.util.Map;
 
@@ -248,15 +247,14 @@ public class ObjectFolderLocalServiceTest {
 			() -> _objectFolderLocalService.updateObjectFolder(
 				_uncategorizedObjectFolder.getExternalReferenceCode(),
 				objectFolder1.getObjectFolderId(),
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				Collections.emptyList()));
+				LocalizedMapUtil.getLocalizedMap(
+					RandomTestUtil.randomString())));
 		AssertUtils.assertFailure(
 			ObjectFolderLabelException.class,
 			"Label is null for locale " + LocaleUtil.US.getDisplayName(),
 			() -> _objectFolderLocalService.updateObjectFolder(
 				RandomTestUtil.randomString(),
-				objectFolder1.getObjectFolderId(), null,
-				Collections.emptyList()));
+				objectFolder1.getObjectFolderId(), null));
 
 		_objectFolderLocalService.deleteObjectFolder(objectFolder1);
 
@@ -268,8 +266,7 @@ public class ObjectFolderLocalServiceTest {
 			RandomTestUtil.randomString());
 
 		objectFolder2 = _objectFolderLocalService.updateObjectFolder(
-			externalReferenceCode, objectFolder2.getObjectFolderId(), labelMap,
-			Collections.emptyList());
+			externalReferenceCode, objectFolder2.getObjectFolderId(), labelMap);
 
 		_assertObjectFolder(
 			externalReferenceCode, labelMap, objectFolder2.getName(),

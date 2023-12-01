@@ -28,8 +28,6 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
-import java.util.Collections;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -260,8 +258,8 @@ public class ObjectFolderServiceTest {
 
 			_objectFolderService.updateObjectFolder(
 				RandomTestUtil.randomString(), objectFolder.getObjectFolderId(),
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				Collections.emptyList());
+				LocalizedMapUtil.getLocalizedMap(
+					RandomTestUtil.randomString()));
 		}
 		finally {
 			if (objectFolder != null) {

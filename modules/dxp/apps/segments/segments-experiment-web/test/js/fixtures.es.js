@@ -39,6 +39,10 @@ export const segmentsExperiment = {
 		label: 'Draft',
 		value: 0,
 	},
+	type: {
+		label: 'A/B Test',
+		value: 'AB',
+	},
 };
 
 export const segmentsExperiences = [

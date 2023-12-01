@@ -57,7 +57,7 @@ const FieldsSelectorDropdown = ({fields}) => {
 						'component-action': Liferay.FeatureFlags['LPS-193005'],
 					})}
 					displayType="secondary"
-					size="xs"
+					size={Liferay.FeatureFlags['LPS-193005'] ? 'xs' : undefined}
 					symbol={active ? 'caret-top' : 'caret-bottom'}
 				/>
 			}

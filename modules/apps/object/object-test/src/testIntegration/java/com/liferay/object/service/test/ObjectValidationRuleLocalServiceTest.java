@@ -474,6 +474,59 @@ public class ObjectValidationRuleLocalServiceTest {
 		Assert.assertNull(
 			_objectValidationRuleLocalService.fetchObjectValidationRule(
 				systemObjectValidationRule.getObjectValidationRuleId()));
+
+		ObjectField textObjectField = _objectFieldLocalService.fetchObjectField(
+			_objectDefinition.getObjectDefinitionId(), "textObjectField");
+
+		objectValidationRule = _addObjectValidationRule(
+			ObjectValidationRuleConstants.ENGINE_TYPE_COMPOSITE_KEY,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			StringPool.BLANK,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			ObjectValidationRuleConstants.OUTPUT_TYPE_FULL_VALIDATION,
+			StringPool.BLANK, false,
+			Arrays.asList(
+				new ObjectValidationRuleSettingBuilder(
+				).name(
+					ObjectValidationRuleSettingConstants.
+						NAME_COMPOSITE_KEY_OBJECT_FIELD_ID
+				).value(
+					String.valueOf(textObjectField.getObjectFieldId())
+				).build(),
+				new ObjectValidationRuleSettingBuilder(
+				).name(
+					ObjectValidationRuleSettingConstants.
+						NAME_COMPOSITE_KEY_OBJECT_FIELD_ID
+				).value(
+					() -> {
+						ObjectField objectField =
+							ObjectFieldUtil.addCustomObjectField(
+								new TextObjectFieldBuilder(
+								).userId(
+									TestPropsValues.getUserId()
+								).labelMap(
+									LocalizedMapUtil.getLocalizedMap(
+										RandomTestUtil.randomString())
+								).name(
+									"a" + RandomTestUtil.randomString()
+								).objectDefinitionId(
+									_objectDefinition.getObjectDefinitionId()
+								).build());
+
+						return String.valueOf(objectField.getObjectFieldId());
+					}
+				).build()));
+
+		Assert.assertNotNull(
+			_objectValidationRuleLocalService.fetchObjectValidationRule(
+				objectValidationRule.getObjectValidationRuleId()));
+
+		_objectValidationRuleLocalService.deleteObjectValidationRule(
+			objectValidationRule.getObjectValidationRuleId());
+
+		Assert.assertNull(
+			_objectValidationRuleLocalService.fetchObjectValidationRule(
+				objectValidationRule.getObjectValidationRuleId()));
 	}
 
 	@Test

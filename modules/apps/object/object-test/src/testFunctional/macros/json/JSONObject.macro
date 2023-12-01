@@ -621,6 +621,10 @@ definition {
 			var userPassword = "test";
 		}
 
+		if (!(isSet(ercName))) {
+			var ercName = "";
+		}
+
 		var objectName = StringUtil.toLowerCase(${objectName});
 
 		var curl = '''
@@ -629,6 +633,7 @@ definition {
 				-H 'Content-Type: application/json' \
 				-u ${userEmailAddress}:${userPassword} \
 				-d '{
+					"externalReferenceCode": "${ercName}",
 					"${fieldName}": "${value}"
 				}'
 		''';

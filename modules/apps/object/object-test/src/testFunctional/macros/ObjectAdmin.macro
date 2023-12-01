@@ -445,6 +445,7 @@ definition {
 	@summary = "Default summary"
 	macro addObjectSingleFieldEntryViaAPI(userPassword = null, fieldName = null, objectName = null, userEmailAddress = null, value = null) {
 		var objectEntryId = JSONObject.addObjectSingleFieldEntry(
+			ercName = ${ercName},
 			fieldName = ${fieldName},
 			objectName = ${objectName},
 			userEmailAddress = ${userEmailAddress},

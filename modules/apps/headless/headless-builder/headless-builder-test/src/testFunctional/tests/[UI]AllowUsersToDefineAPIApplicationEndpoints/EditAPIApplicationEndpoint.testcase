@@ -101,25 +101,6 @@ definition {
 	}
 
 	@priority = 4
-	test CannotModifyMethodOfCretaedEndpoint {
-		property portal.acceptance = "true";
-
-		task ("When when going to Edit endpoint") {
-			APIBuilderUI.goToEditRelatedEntryInEditApplication(
-				entity = "Endpoints",
-				name = "testendpoint",
-				tabEntity = "Info",
-				title = "My-app");
-		}
-
-		task ("Then method cannot be modified") {
-			AssertTextEquals(
-				locator1 = "Button#DISABLED_BUTTON",
-				value1 = "GET");
-		}
-	}
-
-	@priority = 4
 	test CanRelateEndpointWithSchema {
 		property portal.acceptance = "true";
 

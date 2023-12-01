@@ -33,7 +33,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
-import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.Group;
@@ -224,42 +223,37 @@ public class StagingImplTest {
 		Layout remoteStagingGroupLayout = LayoutTestUtil.addTypePortletLayout(
 			_remoteStagingGroup);
 
-		try {
-			long remoteLiveGroupLayoutPlid = _executeWithRemoteCredentials(
-				() -> StagingUtil.getRemoteLayoutPlid(
-					TestPropsValues.getUserId(),
-					remoteStagingGroupLayout.getGroupId(),
-					remoteStagingGroupLayout.getPlid()));
+		long remoteLiveGroupLayoutPlid = _executeWithRemoteCredentials(
+			() -> StagingUtil.getRemoteLayoutPlid(
+				TestPropsValues.getUserId(),
+				remoteStagingGroupLayout.getGroupId(),
+				remoteStagingGroupLayout.getPlid()));
 
-			Assert.assertEquals(0L, remoteLiveGroupLayoutPlid);
+		Assert.assertEquals(0L, remoteLiveGroupLayoutPlid);
 
-			Map<String, String[]> parameters =
-				ExportImportConfigurationParameterMapFactoryUtil.
-					buildFullPublishParameterMap();
+		Map<String, String[]> parameters =
+			ExportImportConfigurationParameterMapFactoryUtil.
+				buildFullPublishParameterMap();
 
-			StagingUtil.publishLayouts(
-				TestPropsValues.getUserId(), _remoteStagingGroup.getGroupId(),
-				_remoteLiveGroup.getGroupId(), false, parameters);
+		StagingUtil.publishLayouts(
+			TestPropsValues.getUserId(), _remoteStagingGroup.getGroupId(),
+			_remoteLiveGroup.getGroupId(), false, parameters);
 
-			remoteLiveGroupLayoutPlid = _executeWithRemoteCredentials(
-				() -> StagingUtil.getRemoteLayoutPlid(
-					TestPropsValues.getUserId(),
-					remoteStagingGroupLayout.getGroupId(),
-					remoteStagingGroupLayout.getPlid()));
+		remoteLiveGroupLayoutPlid = _executeWithRemoteCredentials(
+			() -> StagingUtil.getRemoteLayoutPlid(
+				TestPropsValues.getUserId(),
+				remoteStagingGroupLayout.getGroupId(),
+				remoteStagingGroupLayout.getPlid()));
 
-			Layout remoteLiveGroupLayout = LayoutServiceUtil.fetchLayout(
-				_remoteLiveGroup.getGroupId(),
-				remoteStagingGroupLayout.isPrivateLayout(),
-				remoteStagingGroupLayout.getLayoutId());
+		Layout remoteLiveGroupLayout = LayoutServiceUtil.fetchLayout(
+			_remoteLiveGroup.getGroupId(),
+			remoteStagingGroupLayout.isPrivateLayout(),
+			remoteStagingGroupLayout.getLayoutId());
 
-			Assert.assertNotNull(remoteLiveGroupLayout);
+		Assert.assertNotNull(remoteLiveGroupLayout);
 
-			Assert.assertEquals(
-				remoteLiveGroupLayout.getPlid(), remoteLiveGroupLayoutPlid);
-		}
-		catch (NoSuchLayoutException noSuchLayoutException) {
-			Assert.fail();
-		}
+		Assert.assertEquals(
+			remoteLiveGroupLayout.getPlid(), remoteLiveGroupLayoutPlid);
 	}
 
 	@Test

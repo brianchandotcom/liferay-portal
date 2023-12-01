@@ -47,10 +47,10 @@ public class ContentSecurityPolicyNonceManager {
 	}
 
 	public String setNonce(HttpServletRequest httpServletRequest) {
+		String nonce = null;
+
 		httpServletRequest = _portal.getOriginalServletRequest(
 			httpServletRequest);
-
-		String nonce;
 
 		ContentSecurityPolicyConfiguration contentSecurityPolicyConfiguration =
 			ContentSecurityPolicyConfigurationUtil.

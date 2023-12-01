@@ -37,7 +37,7 @@ public class ContentSecurityPolicyConfigurationUtil {
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPS-134060")) {
 			contentSecurityPolicyConfiguration =
-				_DISABLED_CONTENT_SECURITY_POLICY_CONFIGURATION;
+				_CONTENT_SECURITY_POLICY_CONFIGURATION;
 		}
 		else {
 			try {
@@ -68,7 +68,7 @@ public class ContentSecurityPolicyConfigurationUtil {
 	}
 
 	private static final ContentSecurityPolicyConfiguration
-		_DISABLED_CONTENT_SECURITY_POLICY_CONFIGURATION =
+		_CONTENT_SECURITY_POLICY_CONFIGURATION =
 			new ContentSecurityPolicyConfiguration() {
 
 				@Override

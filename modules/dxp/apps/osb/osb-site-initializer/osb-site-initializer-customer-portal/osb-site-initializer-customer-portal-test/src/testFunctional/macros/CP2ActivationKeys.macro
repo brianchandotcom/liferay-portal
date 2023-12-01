@@ -473,7 +473,7 @@ definition {
 			field = ${keyType},
 			option = ${option});
 
-		CP2ActivationKeys.selectFistActiveSubscriptionInput(index = ${optionIndex});
+		CP2ActivationKeys.selectFirstActiveSubscriptionInput(index = ${optionIndex});
 
 		CustomerPortal.clickAtButton(text = "Next");
 
@@ -484,6 +484,8 @@ definition {
 		CP2ActivationKeys.fulfillActivationKey(
 			hostName = ${hostName},
 			numberOfActivationKeys = ${numberOfActivationKeys});
+
+		CustomerPortal.clickAtButton(text = "Generate ${numberOfActivationKeys} Key");
 	}
 
 	@summary = "Default summary"

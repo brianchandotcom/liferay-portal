@@ -82,6 +82,7 @@ definition {
 				fieldType = "Environment Name",
 				hostName = "renewtest",
 				keyType = "Key Type",
+				numberOfActivationKeys = 1,
 				option = "Production",
 				optionIndex = 2);
 
@@ -94,10 +95,9 @@ definition {
 				fieldType = "Environment Name",
 				hostName = "renewtest",
 				keyType = "Key Type",
+				numberOfActivationKeys = 1,
 				option = "Production",
 				optionIndex = 2);
-
-			CustomerPortal.clickAtButton(text = "Generate 1 Key");
 
 			// This step is a work around for a current issue with the key creation modal
 

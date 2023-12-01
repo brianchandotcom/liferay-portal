@@ -72,6 +72,7 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -278,7 +279,8 @@ public class StructuredContentResourceImpl
 			structuredContent.getContentFields(), ddmStructure);
 
 		LocalDateTime localDateTime = LocalDateTimeUtil.toLocalDateTime(
-			structuredContent.getDatePublished());
+			structuredContent.getDatePublished(), null,
+			ZoneId.of(contextUser.getTimeZoneId()));
 
 		ServiceContext serviceContext = ServiceContextBuilder.create(
 			siteId, contextHttpServletRequest,

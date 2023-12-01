@@ -91,6 +91,7 @@ export default {
 		'Lorem ipsum dolor sit amet consectetur.',
 	'mac-addresses': 'Mac Addresses',
 	'manage': 'Manage',
+	'manage-license-keys': 'Manage License Key(s)',
 	'monetize-your-apps-and-solutions': 'Monetize your apps and solutions',
 	'more-info': 'More Info',
 	'name': 'Name',

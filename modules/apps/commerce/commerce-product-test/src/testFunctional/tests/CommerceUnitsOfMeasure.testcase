@@ -2072,6 +2072,7 @@ definition {
 		task ("When one UOM is added to the SKU MIN93015") {
 			CommerceJSONSKUsAPI._addCommerceUOM(
 				basePrice = 10,
+				precision = 0,
 				productSKU = "MIN93015",
 				uomKey = "uomKey1",
 				uomName = "uomName1");

@@ -1357,7 +1357,7 @@ definition {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 		}
 
-		task ("And add a UOM for MIN93015 with Decimal Allowed (Precision) set to 3") {
+		task ("And Admin adds a UOM for MIN93015 with Decimal Allowed (Precision) set to 3") {
 			CommerceJSONSKUsAPI._addCommerceUOM(
 				basePrice = 10,
 				precision = 3,
@@ -1386,11 +1386,11 @@ definition {
 			CommerceSKUs.viewSkuUomInventory(uomQuantityLists = "0:20.000,1:60.000,2:60.000");
 		}
 
-		task ("When the admin delets the UOM") {
+		task ("When the admin deletes the UOM") {
 			CommerceJSONSKUsAPI._deleteAllCommerceUOMs(productSKU = "MIN93015");
 		}
 
-		task ("Then the inventory quantity should be without decimals") {
+		task ("Then the inventory quantity should be shown without decimals") {
 			SelectFrameTop();
 
 			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");

@@ -764,7 +764,9 @@ const RenameFDSEntryModalContent = ({
 		})
 			.then((response) => {
 				if (!response.ok) {
-					throw Error();
+					openDefaultFailureToast();
+
+					setSaveButtonDisabled(false);
 				}
 
 				closeModal();

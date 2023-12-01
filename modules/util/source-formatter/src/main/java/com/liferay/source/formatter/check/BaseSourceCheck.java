@@ -74,24 +74,6 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		return _weight;
 	}
 
-	public boolean hasParameterTypes(
-		String content, String fileContent, String fileName,
-		String[] parameterList, String[] parameterTypes) {
-
-		for (int i = 0; i < parameterTypes.length; i++) {
-			String variableTypeName = getVariableTypeName(
-				content, null, fileContent, fileName, parameterList[i], true);
-
-			if ((variableTypeName == null) ||
-				!parameterTypes[i].equals(variableTypeName)) {
-
-				return false;
-			}
-		}
-
-		return true;
-	}
-
 	@Override
 	public boolean isEnabled(String absolutePath) {
 		Class<?> clazz = getClass();

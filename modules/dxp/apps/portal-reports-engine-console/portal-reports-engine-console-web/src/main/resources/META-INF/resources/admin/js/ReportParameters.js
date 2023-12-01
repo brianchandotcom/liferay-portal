@@ -40,6 +40,18 @@ export default function ReportParameters({namespace, parameters}) {
 
 	const addParameterElement = document.querySelector('.add-parameter');
 
+	const removeReportElement = document.querySelector(
+		'.remove-existing-report'
+	);
+
+	const existingReportElement = document.querySelector('.existing-report');
+
+	const templateReportElement = document.querySelector('.template-report');
+
+	const cancelUpdateReportElement = document.querySelector(
+		'.cancel-update-template-report'
+	);
+
 	portletMessageContainer.style.display = 'none';
 
 	reportParametersElement.value = parameters;
@@ -305,6 +317,18 @@ export default function ReportParameters({namespace, parameters}) {
 	);
 
 	addParameterElement.addEventListener('click', addParameter);
+
+	removeReportElement.addEventListener('click', () => {
+		existingReportElement.style.display = 'none';
+		templateReportElement.style.display = 'block';
+		cancelUpdateReportElement.style.display = 'block';
+	});
+
+	cancelUpdateReportElement.addEventListener('click', () => {
+		existingReportElement.style.display = 'block';
+		templateReportElement.style.display = 'none';
+		cancelUpdateReportElement.style.display = 'none';
+	});
 
 	parametersTypeElement.addEventListener('change', (event) => {
 		const currentTarget = event.currentTarget;

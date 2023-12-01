@@ -1920,19 +1920,75 @@ public class ObjectEntryLocalServiceImpl
 		Predicate searchPredicate = null;
 
 		for (ObjectField objectField : objectFields) {
+			Predicate objectFieldPredicate = null;
+
 			Table<?> table = _objectFieldLocalService.getTable(
 				objectDefinitionId, objectField.getName());
 
 			Column<?, ?> column = table.getColumn(
 				objectField.getDBColumnName());
 
-			if (column == null) {
-				continue;
-			}
+			if (Objects.equals(
+					objectField.getRelationshipType(),
+					ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
 
-			Predicate objectFieldPredicate =
-				ObjectEntrySearchUtil.getObjectFieldPredicate(
-					(Column<?, Object>)column, objectField.getDBType(), search);
+				ObjectRelationship objectRelationship =
+					_objectRelationshipPersistence.fetchByObjectFieldId2(
+						objectField.getObjectFieldId());
+
+				ObjectDefinition objectDefinition =
+					_objectDefinitionPersistence.findByPrimaryKey(
+						objectRelationship.getObjectDefinitionId1());
+
+				ObjectField titleObjectField =
+					_objectFieldLocalService.fetchObjectField(
+						objectDefinition.getTitleObjectFieldId());
+
+				DynamicObjectDefinitionTable dynamicObjectDefinitionTable =
+					null;
+
+				if (Objects.equals(
+						titleObjectField.getDBTableName(),
+						objectDefinition.getDBTableName())) {
+
+					dynamicObjectDefinitionTable =
+						_getDynamicObjectDefinitionTable(
+							objectDefinition.getObjectDefinitionId());
+				}
+				else {
+					dynamicObjectDefinitionTable =
+						_getExtensionDynamicObjectDefinitionTable(
+							objectDefinition.getObjectDefinitionId());
+				}
+
+				Predicate relatedModelsPredicate =
+					ObjectEntrySearchUtil.getRelatedModelsPredicate(
+						dynamicObjectDefinitionTable, objectDefinition,
+						_objectFieldLocalService, search);
+
+				if (relatedModelsPredicate == null) {
+					continue;
+				}
+
+				objectFieldPredicate = column.in(
+					DSLQueryFactoryUtil.select(
+						dynamicObjectDefinitionTable.getPrimaryKeyColumn()
+					).from(
+						dynamicObjectDefinitionTable
+					).where(
+						relatedModelsPredicate
+					));
+			}
+			else {
+				if (column == null) {
+					continue;
+				}
+
+				objectFieldPredicate =
+					ObjectEntrySearchUtil.getObjectFieldPredicate(
+						(Column<?, Object>)column, objectField.getDBType(),
+						search);
+			}
 
 			if (searchPredicate == null) {
 				searchPredicate = objectFieldPredicate;

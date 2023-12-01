@@ -17,7 +17,7 @@
 </tr>
 <tr>
 	<td>AS7LEAKTRACKER</td>
-	<td>//span[contains(@id,'as7LeakInstances')]//li/code[contains(text(),'AS7LeakRequestScopeBean')]</td>
+	<td>//span[contains(@id,'as7LeakInstances')]//li/code[contains(text(),'AS7Leak')]</td>
 	<td></td>
 </tr>
 <tr>

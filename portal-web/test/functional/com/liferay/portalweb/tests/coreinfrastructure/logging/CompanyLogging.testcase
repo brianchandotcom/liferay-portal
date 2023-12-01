@@ -17,11 +17,7 @@ definition {
 	}
 
 	tearDown {
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
-		if (${testLiferayVirtualInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
+		PortalInstances.tearDownCP();
 	}
 
 	@description = "Any logs that would appear specifically in company A should never appear in the logs of company B"
@@ -30,7 +26,7 @@ definition {
 		property portal.acceptance = "true";
 		property test.assert.warning.exceptions = "true";
 		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
+		property test.run.type = "sequential";
 
 		for (var portalInstanceName : list "www.able.com,www.baker.com") {
 			HeadlessPortalInstanceAPI.addPortalInstance(
@@ -130,7 +126,7 @@ definition {
 	test GetAllCompanyLogs {
 		property test.assert.warning.exceptions = "true";
 		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
+		property test.run.type = "sequential";
 
 		task ("Given two new virtual instances are created") {
 			for (var portalInstanceName : list "www.able.com,www.baker.com") {
@@ -174,7 +170,7 @@ definition {
 		property portal.acceptance = "true";
 		property test.assert.warning.exceptions = "true";
 		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
+		property test.run.type = "sequential";
 
 		task ("Given a new instance is created") {
 			HeadlessPortalInstanceAPI.addPortalInstance(
@@ -236,7 +232,7 @@ definition {
 	test GetCompanyAdminLogsFromDifferentCompany {
 		property test.assert.warning.exceptions = "true";
 		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
+		property test.run.type = "sequential";
 
 		task ("Given a new instance is created") {
 			HeadlessPortalInstanceAPI.addPortalInstance(

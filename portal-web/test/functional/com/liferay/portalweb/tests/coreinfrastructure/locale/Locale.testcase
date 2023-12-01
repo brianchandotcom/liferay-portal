@@ -129,7 +129,7 @@ definition {
 	@priority = 4
 	test CanRemoveAvailableLanguageFromSite {
 		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
+		property test.run.type = "sequential";
 
 		User.firstLoginPG();
 
@@ -941,7 +941,7 @@ definition {
 	@priority = 4
 	test ViewDefaultAvailableTimeZonesForInstancesAndUsers {
 		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
+		property test.run.type = "sequential";
 
 		User.firstLoginPG();
 
@@ -1073,7 +1073,7 @@ definition {
 	@priority = 4
 	test ViewTimeZoneIDInNonEnglishLocale {
 		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
+		property test.run.type = "sequential";
 
 		User.firstLoginPG();
 
@@ -1232,7 +1232,7 @@ definition {
 	@priority = 3
 	test VirtualHostLanguageCanBeChangedWithUserDefaultLanguage {
 		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
+		property test.run.type = "sequential";
 
 		User.firstLoginPG();
 

@@ -12,7 +12,7 @@ EditKBArticleDisplayContext editKBArticleDisplayContext = new EditKBArticleDispl
 
 if (editKBArticleDisplayContext.isPortletTitleBasedNavigation()) {
 	portletDisplay.setShowBackIcon(true);
-	portletDisplay.setURLBack(editKBArticleDisplayContext.getRedirect());
+	portletDisplay.setURLBack(editKBArticleDisplayContext.getCancelURL());
 	portletDisplay.setURLBackTitle(portletDisplay.getTitle());
 
 	renderResponse.setTitle(editKBArticleDisplayContext.getHeaderTitle());
@@ -21,7 +21,7 @@ if (editKBArticleDisplayContext.isPortletTitleBasedNavigation()) {
 
 <c:if test="<%= !editKBArticleDisplayContext.isHeaderVisible() %>">
 	<liferay-ui:header
-		backURL="<%= editKBArticleDisplayContext.getRedirect() %>"
+		backURL="<%= editKBArticleDisplayContext.getCancelURL() %>"
 		localizeTitle="<%= false %>"
 		title="<%= editKBArticleDisplayContext.getHeaderTitle() %>"
 	/>
@@ -44,7 +44,7 @@ if (editKBArticleDisplayContext.isPortletTitleBasedNavigation()) {
 							borderless="<%= true %>"
 							cssClass="mr-3"
 							displayType="secondary"
-							href="<%= editKBArticleDisplayContext.getRedirect() %>"
+							href="<%= editKBArticleDisplayContext.getCancelURL() %>"
 							label="cancel"
 							small="<%= true %>"
 							type="button"

@@ -92,6 +92,12 @@ public class UpdateKBArticleMVCActionCommand
 			kbArticle = _kbArticleService.revertKBArticle(
 				resourcePrimKey, version, serviceContext);
 		}
+		else if (cmd.equals(Constants.CANCEL)) {
+			_kbArticleService.unlockKBArticle(resourcePrimKey);
+
+			hideDefaultSuccessMessage(actionRequest);
+			sendRedirect(actionRequest, actionResponse);
+		}
 
 		if (!cmd.equals(Constants.ADD) && !cmd.equals(Constants.UPDATE)) {
 			return;

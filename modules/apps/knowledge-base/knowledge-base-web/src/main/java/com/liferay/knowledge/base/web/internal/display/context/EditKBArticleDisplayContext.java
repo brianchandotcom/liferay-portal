@@ -106,6 +106,20 @@ public class EditKBArticleDisplayContext {
 		return sections;
 	}
 
+	public String getCancelURL() {
+		return PortletURLBuilder.createActionURL(
+			_liferayPortletResponse
+		).setActionName(
+			"/knowledge_base/update_kb_article"
+		).setCMD(
+			Constants.CANCEL
+		).setRedirect(
+			getRedirect()
+		).setParameter(
+			"resourcePrimKey", getResourcePrimKey()
+		).buildString();
+	}
+
 	public String getContent() {
 		return BeanParamUtil.getString(
 			getKBArticle(), _liferayPortletRequest, "content",

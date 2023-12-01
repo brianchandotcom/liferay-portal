@@ -118,6 +118,7 @@ function SegmentsExperimentsActions({
 			{viewExperimentDetailsURL && (
 				<ClayLink
 					className="btn btn-secondary btn-sm mt-3 w-100"
+					decoration="none"
 					displayType="secondary"
 					href={viewExperimentDetailsURL}
 					target="_blank"
@@ -130,11 +131,16 @@ function SegmentsExperimentsActions({
 		</>
 	);
 
-	function _handleRunExperiment({confidenceLevel, splitVariantsMap}) {
+	function _handleRunExperiment({
+		confidenceLevel,
+		segmentsExperimentType,
+		splitVariantsMap,
+	}) {
 		const body = {
 			confidenceLevel,
 			segmentsExperimentId: experiment.segmentsExperimentId,
 			segmentsExperimentRels: JSON.stringify(splitVariantsMap),
+			segmentsExperimentType,
 			status: STATUS_RUNNING,
 		};
 

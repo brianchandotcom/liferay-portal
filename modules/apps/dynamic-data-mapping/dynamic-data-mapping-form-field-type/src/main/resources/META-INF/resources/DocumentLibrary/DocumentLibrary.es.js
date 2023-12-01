@@ -8,7 +8,6 @@ import ClayCard from '@clayui/card';
 import {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayProgressBar from '@clayui/progress-bar';
-import axios from 'axios';
 import {
 	PagesVisitor,
 	convertToFormData,
@@ -487,50 +486,53 @@ const Main = ({
 			return;
 		}
 
-		const data = {
-			[`${portletNamespace}file`]: file,
-		};
+		const request = new XMLHttpRequest();
 
-		axios
-			.post(guestUploadURL, convertToFormData(data), {
-				onUploadProgress: (event) => {
-					const progress = Math.round(
-						(event.loaded * 100) / event.total
-					);
+		request.upload.addEventListener('progress', (event) => {
+			disableSubmitButton();
 
-					setCurrentValue(null);
+			setCurrentValue(null);
 
-					setProgress(progress);
-
-					disableSubmitButton();
-				},
-			})
-			.then((response) => {
-				const {error, file} = response.data;
-
+			setProgress(Math.round((event.loaded * 100) / event.total));
+		});
+		request.addEventListener('readystatechange', (event) => {
+			if (request.readyState === 4) {
 				disableSubmitButton(false);
 
-				if (error) {
-					handleGuestUploadFileChanged(error.message, event, null);
+				let response;
+
+				try {
+					response = JSON.parse(request.responseText);
 				}
-				else {
+				catch (error) {
+					response = request.responseText;
+				}
+
+				if (response.success) {
 					handleGuestUploadFileChanged(
 						'',
 						event,
-						JSON.stringify(file)
+						JSON.stringify(response.file)
+					);
+				}
+				else {
+					handleGuestUploadFileChanged(
+						response.error.message,
+						event,
+						null
 					);
 				}
 
 				setProgress(0);
-			})
-			.catch(() => {
-				disableSubmitButton(false);
+			}
+		});
 
-				setProgress(0);
+		request.open('POST', guestUploadURL);
+		request.send(
+			convertToFormData({
+				[`${portletNamespace}file`]: file,
 			})
-			.finally(() => {
-				onBlur(event);
-			});
+		);
 	};
 
 	const hasCustomError =

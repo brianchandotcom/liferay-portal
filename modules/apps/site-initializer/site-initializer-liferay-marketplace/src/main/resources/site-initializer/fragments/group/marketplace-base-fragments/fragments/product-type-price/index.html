@@ -12,7 +12,6 @@
 [/#if]
 
 [#if channelId?has_content]
-
 	[#assign layoutURL = (themeDisplay.getPortalURL() + themeDisplay.getURLCurrent())!"" /]
 
 	[#assign
@@ -44,27 +43,27 @@
 		[#if productSpecification.specificationKey == "price-model"]
 
 			[#if productSpecification.value == "Free"]
-				[#list skus as skuItem]
-					[#if skuItem.purchasable == true]
+				[#list skus as sku]
+					[#if sku.purchasable == true]
 						[#assign priceText = "Free"]
 					[/#if]
 				[/#list]
-			[#break]
-			[#elseif productSpecification.value == "Paid"]
+
+			[#else]
 				[#assign standardPrice = "" /]
 				[#assign trailText = "" /]
 
-				[#list skus as skuItem]
-					[#if skuItem.purchasable == true]
-						[#if skuItem.sku == "STANDARD"]
-							[#assign standardPrice = skuItem.price.price?string.currency /]
+				[#list skus as sku]
+					[#if sku.purchasable == true]
+						[#if sku.sku == "STANDARD"]
+							[#assign standardPrice = sku.price.price?string.currency /]
 						[/#if]
 					[/#if]
 				[/#list]
 
-				[#list skus as skuItem]
-					[#if skuItem.purchasable == true]
-						[#if skuItem.sku == "TRIAL"]
+				[#list skus as sku]
+					[#if sku.purchasable == true]
+						[#if sku.sku == "TRIAL"]
 							[#assign trailText = "30-day trial or "]
 						[/#if]
 					[/#if]

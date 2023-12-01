@@ -1053,6 +1053,18 @@ this task.
 	<webApplication id="liferay" location="liferay-portal.war" name="liferay" contextRoot="/" />]]></replacevalue>
 		</replace>
 
+		<replace
+			file="${app.server.openliberty.conf.dir}/server.xml"
+			token="9080"
+			value="8080"
+		/>
+
+		<replace
+			file="${app.server.openliberty.conf.dir}/server.xml"
+			token="9443"
+			value="8443"
+		/>
+
 		<echo file="${app.server.openliberty.conf.dir}/jvm.options">${app.server.tcserver.jvm.args}</echo>
 
 		<replaceregexp file="${app.server.openliberty.conf.dir}/jvm.options" flags="g" match="\s+" replace="${line.separator}" />

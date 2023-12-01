@@ -1,0 +1,168 @@
+definition {
+
+	@summary = "Body setup"
+	macro _curlSetupBody(mandatoryFields = null, optionalFields = null) {
+		var bodyValues = "";
+
+		if (isSet(mandatoryFields)) {
+			var bodyValues = StringUtil.concat(${bodyValues}, ${mandatoryFields});
+		}
+
+		if (isSet(optionalFields)) {
+			if (isSet(mandatoryFields)) {
+				var bodyValues = StringUtil.concat(${bodyValues}, ", ");
+			}
+
+			var bodyValues = StringUtil.concat(${bodyValues}, ${optionalFields});
+		}
+
+		var body = "-d {${bodyValues}}";
+
+		return ${body};
+	}
+
+	@summary = "Header setup"
+	macro _curlSetupHeader(userId = null, additionalResources = null, domain = null, virtualHost = null, port = null, printHeader = null, externalReferenceCode = null, requestParams = null, organizationId = null) {
+		if (isSet(virtualHost)) {
+			if (!(isSet(port))) {
+				var port = 8080;
+			}
+
+			var portalURL = "http://${virtualHost}:${port}";
+		}
+		else {
+			var portalURL = JSONCompany.getPortalURL();
+		}
+
+		if (!(isSet(domain))) {
+			var domain = "liferay.com";
+		}
+
+		if (isSet(userId)) {
+			var api = "v2/Users/${userId}";
+		}
+		else {
+			var api = "v2/Users";
+		}
+
+		var header = '''
+			${portalURL}/o/scim/v1.0/${api} \
+				-u test@${domain}:test \
+				-H accept: application/scim+json \
+				-H Content-Type: application/scim+json
+		''';
+
+		if (isSet(additionalResources)) {
+			var api = StringUtil.add(${api}, ${additionalResources}, "/");
+		}
+
+		if (isSet(requestParams)) {
+			var api = StringUtil.concat(${api}, "?${requestParams}");
+		}
+
+		if (isSet(printHeader) && (${printHeader} == "true")) {
+			var header = StringUtil.concat(${header}, " -i ");
+		}
+
+		return ${header};
+	}
+
+	@summary = "deleteUser endpoint"
+	macro deleteUser(userId = null, port = null, domain = null, virtualHost = null, printHeader = null) {
+		Variables.assertDefined(parameterList = ${userId});
+
+		var request = SCIMAPI._curlSetupHeader(
+			domain = ${domain},
+			port = ${port},
+			printHeader = ${printHeader},
+			userId = ${userId},
+			virtualHost = ${virtualHost});
+
+		var response = JSONCurlUtil.delete(${request});
+
+		return ${response};
+	}
+
+	@summary = "getUser endpoint"
+	macro getUser(userId = null, port = null, domain = null, virtualHost = null, printHeader = null, requestParams = null) {
+		Variables.assertDefined(parameterList = ${userId});
+
+		var request = SCIMAPI._curlSetupHeader(
+			domain = ${domain},
+			port = ${port},
+			printHeader = ${printHeader},
+			userId = ${userId},
+			virtualHost = ${virtualHost});
+
+		var response = JSONCurlUtil.get(${request});
+
+		return ${response};
+	}
+
+	@summary = "getUsers endpoint"
+	macro getUsers(port = null, domain = null, virtualHost = null, printHeader = null, requestParams = null) {
+		var request = SCIMAPI._curlSetupHeader(
+			domain = ${domain},
+			port = ${port},
+			printHeader = ${printHeader},
+			requestParams = ${requestParams},
+			virtualHost = ${virtualHost});
+
+		var response = JSONCurlUtil.get(${request});
+
+		return ${response};
+	}
+
+	@summary = "postUser endpoint"
+	macro postUser(port = null, domain = null, virtualHost = null, printHeader = null, familyName = null, givenName = null, userName = null, emailAddress = null, optionalFields = null) {
+		Variables.assertDefined(parameterList = "${familyName}, ${givenName}, ${userName}, ${emailAddress}");
+
+		var header = SCIMAPI._curlSetupHeader(
+			domain = ${domain},
+			port = ${port},
+			printHeader = ${printHeader},
+			virtualHost = ${virtualHost});
+		var body = SCIMAPI._curlSetupBody(optionalFields = '''"emails":[{"value":"${emailAddress}"}],"name":{"familyName":"${familyName}","givenName":"${givenName}"},"userName":"${userName}"''');
+
+		var request = StringUtil.add(${header}, ${body}, " ");
+
+		var response = JSONCurlUtil.post(${request});
+
+		return ${response};
+	}
+
+	@summary = "putUser endpoint"
+	macro putUser(userId = null, port = null, domain = null, virtualHost = null, printHeader = null, familyName = null, givenName = null, userName = null, emailAddress = null, optionalFields = null) {
+		Variables.assertDefined(parameterList = ${userId});
+
+		var header = SCIMAPI._curlSetupHeader(
+			domain = ${domain},
+			port = ${port},
+			printHeader = ${printHeader},
+			userId = ${userId},
+			virtualHost = ${virtualHost});
+
+		if (!(isSet(familyName)) && !(isSet(givenName)) && !(isSet(userName)) && !(isSet(emailAddress))) {
+			var userData = SCIMAPI.getUser(
+				domain = ${domain},
+				port = ${port},
+				printHeader = "false",
+				userId = ${userId},
+				virtualHost = ${virtualHost});
+
+			var emailAddress = JSONUtil.getWithJSONPath(${userData}, "$.emails[0].value");
+			var familyName = JSONUtil.getWithJSONPath(${userData}, "$.name.familyName");
+			var givenName = JSONUtil.getWithJSONPath(${userData}, "$.name.givenName");
+			var userName = JSONUtil.getWithJSONPath(${userData}, "$.userName");
+		}
+
+		var body = SCIMAPI._curlSetupBody(optionalFields = '''"emails":[{"value":"${emailAddress}"}],"name":{"familyName":"${familyName}","givenName":"${givenName}"},"userName":"${userName}"''');
+
+		var request = StringUtil.add(${header}, ${body}, " ");
+
+		var response = JSONCurlUtil.put(${request});
+
+		return ${response};
+	}
+
+}

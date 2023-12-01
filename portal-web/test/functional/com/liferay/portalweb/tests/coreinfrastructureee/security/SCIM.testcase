@@ -166,21 +166,20 @@ definition {
 
 			TestUtils.assertPartialEquals(
 				actual = ${response},
-				expected = "\"totalResults\": 0"
-			);
+				expected = "\"totalResults\":0");
 		}
 
 		task ("When: A User is posted by postV2User, the previous method sends back a list of the linked Users") {
 			var response = SCIMAPI.postUser(
-				printheader = "true",
+				emailAddress = "eren@liferay.com",
 				familyName = "Yeager",
 				givenName = "Eren",
-				userName = "eren",
-				emailAddress = "eren@liferay.com");
+				printheader = "true",
+				userName = "eren");
 
 			TestUtils.assertPartialEquals(
 				actual = ${response},
-				expected = '''"emails":[{"value":"eren@liferay.com"}]''');
+				expected = '''"emails":[{"type":"default","value":"eren@liferay.com"''');
 		}
 
 		task ("Then: Verify that as a User was created and linked to the client, the method sends back the number of linked Users (alongside the data of the Users)") {
@@ -188,7 +187,7 @@ definition {
 
 			TestUtils.assertPartialEquals(
 				actual = ${response},
-				expected = "\"totalResults\": 1");
+				expected = "\"totalResults\":1");
 		}
 	}
 
@@ -355,15 +354,15 @@ definition {
 				matcherField = "userName");
 
 			var response = SCIMAPI.postUser(
-				printheader = "true",
+				emailAddress = "eren@liferay.com",
 				familyName = "Yeager",
 				givenName = "Eren",
-				userName = "eren",
-				emailAddress = "eren@liferay.com");
+				printheader = "true",
+				userName = "eren");
 
 			TestUtils.assertPartialEquals(
 				actual = ${response},
-				expected = '''"emails":[{"value":"eren@liferay.com"}]''');
+				expected = '''"emails":[{"type":"default","value":"eren@liferay.com"''');
 		}
 
 		task ("When: Another SCIM Client is set up and it tries to post the same User") {
@@ -387,11 +386,11 @@ definition {
 
 		task ("Then: The posting will fail, as the User is linked to a different SCIM Client") {
 			var response = SCIMAPI.postUser(
-				printheader = "true",
+				emailAddress = "eren@liferay.com",
 				familyName = "Yeager",
 				givenName = "Eren",
-				userName = "eren",
-				emailAddress = "eren@liferay.com");
+				printheader = "true",
+				userName = "eren");
 
 			TestUtils.assertPartialEquals(
 				actual = ${response},
@@ -433,16 +432,16 @@ definition {
 				userScreenName = "eren");
 
 			var response = SCIMAPI.putUser(
-				printheader = "true",
-				userId = "69420",
+				emailAddress = "user@liferay.com",
 				familyName = "Ser",
 				givenName = "U",
-				userName = "user",
-				emailAddress = "user@liferay.com");
+				printheader = "true",
+				userId = 69420,
+				userName = "user");
 
 			TestUtils.assertPartialEquals(
 				actual = ${response},
-				expected = "No user found with user ID 69420");
+				expected = '''"Specified resource (e.g., User) or endpoint does not exist.","status":"404"''');
 		}
 
 		task ("When: It tries to update an existing User, who is not linked to the Client (save the User ID)") {
@@ -451,16 +450,16 @@ definition {
 
 		task ("Then: The updating fails as the User is not linked to the Client") {
 			var response = SCIMAPI.putUser(
-				printheader = "true",
-				userId = ${userId},
+				emailAddress = "yeager@liferay.com",
 				familyName = "Yeager",
 				givenName = "Eren",
-				userName = "eren",
-				emailAddress = "yeager@liferay.com");
+				printheader = "true",
+				userId = ${userId},
+				userName = "eren");
 
 			TestUtils.assertPartialEquals(
 				actual = ${response},
-				expected = "No user found with user ID ${userId}");
+				expected = "User ${userId} is not a SCIM user");
 		}
 	}
 
@@ -487,15 +486,15 @@ definition {
 				matcherField = "userName");
 
 			var response = SCIMAPI.postUser(
-				printheader = "true",
+				emailAddress = "eren@liferay.com",
 				familyName = "Yeager",
 				givenName = "Eren",
-				userName = "eren",
-				emailAddress = "eren@liferay.com");
+				printheader = "true",
+				userName = "eren");
 
 			TestUtils.assertPartialEquals(
 				actual = ${response},
-				expected = '''"emails":[{"value":"eren@liferay.com"}]''');
+				expected = '''"emails":[{"type":"default","value":"eren@liferay.com"''');
 
 			var userId = JSONUserSetter.setUserId(userEmailAddress = "eren@liferay.com");
 		}
@@ -521,12 +520,12 @@ definition {
 
 		task ("Then: The update will fail, as the User is linked to a different Client") {
 			var response = SCIMAPI.putUser(
-				printheader = "true",
-				userId = ${userId},
+				emailAddress = "yeager@liferay.com",
 				familyName = "Yeager",
 				givenName = "Eren",
-				userName = "eren",
-				emailAddress = "yeager@liferay.com");
+				printheader = "true",
+				userId = ${userId},
+				userName = "eren");
 
 			TestUtils.assertPartialEquals(
 				actual = ${response},
@@ -582,7 +581,7 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		task ("Given: After setting up SCIM Client and creating a User on the Portal getV2UserById throws an error there are no linked Users") {
+		task ("Given: After setting up SCIM Client and creating a User on the Portal getV2UserById throws an error the User is not linked to the Client") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Configuration",
 				panel = "Control Panel",
@@ -617,20 +616,20 @@ definition {
 
 			TestUtils.assertPartialEquals(
 				actual = ${response},
-				expected = "No user found with user ID ${userId}");
+				expected = "User ${userId} is not a SCIM user");
 		}
 
 		task ("When: A User is posted by postV2User, it gets linked to the active SCIM Client") {
 			var response = SCIMAPI.postUser(
-				printheader = "true",
+				emailAddress = "eren@liferay.com",
 				familyName = "Yeager",
 				givenName = "Eren",
-				userName = "eren",
-				emailAddress = "eren@liferay.com");
+				printheader = "true",
+				userName = "eren");
 
 			TestUtils.assertPartialEquals(
 				actual = ${response},
-				expected = '''"emails":[{"value":"eren@liferay.com"}]''');
+				expected = '''"emails":[{"type":"default","value":"eren@liferay.com"''');
 		}
 
 		task ("Then: Verify that as a User was linked to the client, the method sends back the User with the given ID") {
@@ -640,7 +639,7 @@ definition {
 
 			TestUtils.assertPartialEquals(
 				actual = ${response},
-				expected = '''"emails":[{"value":"eren@liferay.com"}]''');
+				expected = '''"emails":[{"type":"default","value":"eren@liferay.com"''');
 		}
 	}
 
@@ -667,15 +666,15 @@ definition {
 				matcherField = "userName");
 
 			var response = SCIMAPI.postUser(
-				printheader = "true",
+				emailAddress = "eren@liferay.com",
 				familyName = "Yeager",
 				givenName = "Eren",
-				userName = "eren",
-				emailAddress = "eren@liferay.com");
+				printheader = "true",
+				userName = "eren");
 
 			TestUtils.assertPartialEquals(
 				actual = ${response},
-				expected = '''"emails":[{"value":"eren@liferay.com"}]''');
+				expected = '''"emails":[{"type":"default","value":"eren@liferay.com"''');
 		}
 
 		task ("When: The User gets deactivated via Portal") {
@@ -690,15 +689,15 @@ definition {
 
 		task ("Then: Verify that as a User was linked to the client, the method reactivates the User") {
 			var response = SCIMAPI.postUser(
-				printheader = "true",
+				emailAddress = "eren@liferay.com",
 				familyName = "Yeager",
 				givenName = "Eren",
-				userName = "eren",
-				emailAddress = "eren@liferay.com");
+				printheader = "true",
+				userName = "eren");
 
 			TestUtils.assertPartialEquals(
 				actual = ${response},
-				expected = '''"active": true''');
+				expected = '''"emails":[{"type":"default","value":"eren@liferay.com"''');
 		}
 	}
 
@@ -746,15 +745,15 @@ definition {
 
 		task ("Then: Verify that the method reactivates the User") {
 			var response = SCIMAPI.postUser(
-				printheader = "true",
+				emailAddress = "eren@liferay.com",
 				familyName = "Yeager",
 				givenName = "Eren",
-				userName = "eren",
-				emailAddress = "eren@liferay.com");
+				printheader = "true",
+				userName = "eren");
 
 			TestUtils.assertPartialEquals(
 				actual = ${response},
-				expected = '''"active": true''');
+				expected = '''"emails":[{"type":"default","value":"eren@liferay.com"''');
 		}
 	}
 
@@ -781,15 +780,15 @@ definition {
 				matcherField = "userName");
 
 			var response = SCIMAPI.postUser(
-				printheader = "true",
+				emailAddress = "eren@liferay.com",
 				familyName = "Yeager",
 				givenName = "Eren",
-				userName = "eren",
-				emailAddress = "eren@liferay.com");
+				printheader = "true",
+				userName = "eren");
 
 			TestUtils.assertPartialEquals(
 				actual = ${response},
-				expected = '''"emails":[{"value":"eren@liferay.com"}]''');
+				expected = '''"emails":[{"type":"default","value":"eren@liferay.com"''');
 		}
 
 		task ("When: The User's ID is saved") {
@@ -798,16 +797,16 @@ definition {
 
 		task ("Then: The updating is successful as the User is linked to the Client") {
 			var response = SCIMAPI.putUser(
-				printheader = "true",
-				userId = ${userId},
+				emailAddress = "yeager@liferay.com",
 				familyName = "Yeager",
 				givenName = "Eren",
-				userName = "eren",
-				emailAddress = "yeager@liferay.com");
+				printheader = "true",
+				userId = ${userId},
+				userName = "eren");
 
 			TestUtils.assertPartialEquals(
 				actual = ${response},
-				expected = '''"emails":[{"value":"yeager@liferay.com"}]''');
+				expected = '''"emails":[{"type":"default","value":"yeager@liferay.com"''');
 		}
 	}
 

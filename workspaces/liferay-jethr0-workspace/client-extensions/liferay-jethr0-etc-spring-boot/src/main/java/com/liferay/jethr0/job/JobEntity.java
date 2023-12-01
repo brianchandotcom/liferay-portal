@@ -58,6 +58,10 @@ public interface JobEntity extends Entity {
 
 	public String getName();
 
+	public Map<String, String> getParameters();
+
+	public String getParameterValue(String name);
+
 	public int getPriority();
 
 	public Date getStartDate();
@@ -93,6 +97,8 @@ public interface JobEntity extends Entity {
 	public void removeTestSuiteEntity(TestSuiteEntity testSuiteEntity);
 
 	public void setName(String name);
+
+	public void setParameterValue(String name, String value);
 
 	public void setPriority(int priority);
 

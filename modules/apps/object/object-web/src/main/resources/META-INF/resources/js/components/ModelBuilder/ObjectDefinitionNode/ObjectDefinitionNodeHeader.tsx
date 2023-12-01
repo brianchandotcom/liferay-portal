@@ -7,12 +7,15 @@ import {ClayButtonWithIcon} from '@clayui/button';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
+import classNames from 'classnames';
 import React from 'react';
 
-import './ObjectDefinitionNodeHeader.scss';
 import {DropDownItems} from '../types';
 
+import './ObjectDefinitionNodeHeader.scss';
+
 interface ObjectDefinitionNodeHeaderProps {
+	dbTableName: string | undefined;
 	dropDownItems: DropDownItems[];
 	handleSelectObjectDefinitionNode: () => void;
 	isLinkedObjectDefinition: boolean;
@@ -26,6 +29,7 @@ interface ObjectDefinitionNodeHeaderProps {
 }
 
 export default function ObjectDefinitionNodeHeader({
+	dbTableName,
 	dropDownItems,
 	handleSelectObjectDefinitionNode,
 	isLinkedObjectDefinition,
@@ -44,9 +48,22 @@ export default function ObjectDefinitionNodeHeader({
 				}}
 			>
 				<div className="lfr-objects__model-builder-node-header-label-container">
-					<div className="lfr-objects__model-builder-node-header-label-title">
-						{isLinkedObjectDefinition && (
-							<ClayIcon className="c-pt-1 text-4" symbol="link" />
+					<div
+						className={classNames(
+							'lfr-objects__model-builder-node-header-label-title',
+							!dbTableName?.length &&
+								'lfr-objects__model-builder-node-header-label-title--danger'
+						)}
+					>
+						{(!dbTableName?.length || isLinkedObjectDefinition) && (
+							<ClayIcon
+								className="c-pt-1 text-4"
+								symbol={
+									!dbTableName?.length
+										? 'exclamation-circle'
+										: 'link'
+								}
+							/>
 						)}
 
 						<span>{objectDefinitionLabel}</span>

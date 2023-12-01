@@ -49,6 +49,13 @@ export declare function deleteRelationship(
 	id: number,
 	reloadAfterDeletion?: boolean
 ): Promise<void>;
+export declare function getDbTableName({
+	baseResourceURL,
+	objectDefinitionId,
+}: {
+	baseResourceURL: string;
+	objectDefinitionId: number;
+}): Promise<string>;
 export declare function getObjectDefinitionNodeActions({
 	baseResourceURL,
 	handleDeleteObjectDefinition,
@@ -104,6 +111,7 @@ export declare function getObjectFolderActions({
 	  }
 )[];
 export declare function getUpdatedModelBuilderStructurePayload(
+	baseResourceURL: string,
 	currentObjectFolderName: string
 ): Promise<{
 	objectFolders: ObjectFolder[];

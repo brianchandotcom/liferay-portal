@@ -160,6 +160,7 @@ function DiagramBuilder() {
 		newObjectRelationshipId: number
 	) => {
 		const payload = await getUpdatedModelBuilderStructurePayload(
+			baseResourceURL,
 			selectedObjectFolder.name
 		);
 

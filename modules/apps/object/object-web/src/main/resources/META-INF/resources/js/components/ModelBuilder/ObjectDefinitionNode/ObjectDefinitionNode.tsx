@@ -24,6 +24,7 @@ const selfRelationshipHandleStyle = {
 };
 export function ObjectDefinitionNode({
 	data: {
+		dbTableName,
 		defaultLanguageId,
 		externalReferenceCode,
 		hasObjectDefinitionDeleteResourcePermission,
@@ -152,6 +153,7 @@ export function ObjectDefinitionNode({
 				}}
 			>
 				<ObjectDefinitionNodeHeader
+					dbTableName={dbTableName}
 					dropDownItems={getObjectDefinitionNodeActions({
 						baseResourceURL,
 						handleDeleteObjectDefinition,

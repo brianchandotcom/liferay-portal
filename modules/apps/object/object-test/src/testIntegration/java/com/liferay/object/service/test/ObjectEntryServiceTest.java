@@ -34,8 +34,8 @@ import com.liferay.object.tree.Tree;
 import com.liferay.object.tree.TreeFactory;
 import com.liferay.object.tree.constants.TreeConstants;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.exception.NoSuchResourceActionException;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
+import com.liferay.portal.kernel.exception.NoSuchResourceActionException;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
@@ -60,7 +60,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
@@ -73,6 +73,7 @@ import java.io.Serializable;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
@@ -657,18 +658,21 @@ public class ObjectEntryServiceTest {
 
 	@Test
 	public void testValidateMaximumNumberOfObjectEntries() throws Exception {
-
 		_setUser(_guestUser);
 
-		Dictionary<String, Object> objectConfigurationDictionary = new HashMapDictionary<String, Object>();
-		objectConfigurationDictionary.put("maximumNumberOfGuestUserObjectEntriesPerObjectDefinition", 1);
-		objectConfigurationDictionary.put("duration", 1);
-		objectConfigurationDictionary.put("timeScale", "days");
-		objectConfigurationDictionary.put("maximumFileSizeForGuestUsers", 25);
+		Dictionary<String, Object> objectConfigurationDictionary =
+			HashMapDictionaryBuilder.<String, Object>put(
+				"duration", 1
+			).put(
+				"maximumFileSizeForGuestUsers", 25
+			).put(
+				"maximumNumberOfGuestUserObjectEntriesPerObjectDefinition", 1
+			).put(
+				"timeScale", "days"
+			).build();
 
 		ConfigurationTestUtil.saveConfiguration(
-			ObjectConfiguration.class.getName(),
-			objectConfigurationDictionary);
+			ObjectConfiguration.class.getName(), objectConfigurationDictionary);
 
 		Role guestRole = _roleLocalService.getRole(
 			TestPropsValues.getCompanyId(), RoleConstants.GUEST);
@@ -679,16 +683,18 @@ public class ObjectEntryServiceTest {
 			String.valueOf(TestPropsValues.getCompanyId()),
 			guestRole.getRoleId(), ObjectActionKeys.ADD_OBJECT_ENTRY);
 
-		Assert.assertNotNull(_objectEntryService.addObjectEntry(
-			0, _objectDefinition.getObjectDefinitionId(),
-			Collections.emptyMap(),
-			ServiceContextTestUtil.getServiceContext(
-				TestPropsValues.getGroupId(), _guestUser.getUserId())));
+		Assert.assertNotNull(
+			_objectEntryService.addObjectEntry(
+				0, _objectDefinition.getObjectDefinitionId(),
+				Collections.emptyMap(),
+				ServiceContextTestUtil.getServiceContext(
+					TestPropsValues.getGroupId(), _guestUser.getUserId())));
 
 		AssertUtils.assertFailure(
 			ObjectEntryCountException.class,
-			StringBundler.concat("Unable to exceed ",
-				1, " guest object entries for object definition ",
+			StringBundler.concat(
+				"Unable to exceed ", 1,
+				" guest object entries for object definition ",
 				_objectDefinition.getObjectDefinitionId()),
 			() -> _objectEntryService.addObjectEntry(
 				0, _objectDefinition.getObjectDefinitionId(),
@@ -696,16 +702,23 @@ public class ObjectEntryServiceTest {
 				ServiceContextTestUtil.getServiceContext(
 					TestPropsValues.getGroupId(), _guestUser.getUserId())));
 
-		ConfigurationTestUtil.deleteConfiguration(ObjectConfiguration.class.getName());
+		ConfigurationTestUtil.deleteConfiguration(
+			ObjectConfiguration.class.getName());
 
-		objectConfigurationDictionary.put("maximumNumberOfGuestUserObjectEntriesPerObjectDefinition", 2);
-		objectConfigurationDictionary.put("timeScale", "weeks");
+		HashMapDictionaryBuilder.put(
+			"maximumNumberOfGuestUserObjectEntriesPerObjectDefinition", 2);
+		HashMapDictionaryBuilder.put("timeScale", "weeks");
 
-		ConfigurationTestUtil.saveConfiguration(ObjectConfiguration.class.getName(), objectConfigurationDictionary);
+		ConfigurationTestUtil.saveConfiguration(
+			ObjectConfiguration.class.getName(), objectConfigurationDictionary);
 
-		LocalDate beginningDate = LocalDate.now().minusDays(7);
-		Date createdDate = Date.from(beginningDate.atStartOfDay(
-			ZoneId.systemDefault()).toInstant());
+		Date createDate = Date.from(
+			LocalDate.now(
+			).minusDays(
+				7
+			).atStartOfDay(
+				ZoneId.systemDefault()
+			).toInstant());
 
 		ObjectEntry objectEntry = _objectEntryService.addObjectEntry(
 			0, _objectDefinition.getObjectDefinitionId(),
@@ -713,25 +726,21 @@ public class ObjectEntryServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				TestPropsValues.getGroupId(), _guestUser.getUserId()));
 
-		objectEntry.setCreateDate(createdDate);
+		objectEntry.setCreateDate(createDate);
 
 		_objectEntryPersistence.update(objectEntry);
 
 		AssertUtils.assertFailure(
 			ObjectEntryCountException.class,
-			StringBundler.concat("Unable to exceed ",
-				2, " guest object entries for object definition ",
+			StringBundler.concat(
+				"Unable to exceed ", 2,
+				" guest object entries for object definition ",
 				_objectDefinition.getObjectDefinitionId()),
 			() -> _objectEntryService.addObjectEntry(
 				0, _objectDefinition.getObjectDefinitionId(),
 				Collections.emptyMap(),
 				ServiceContextTestUtil.getServiceContext(
 					TestPropsValues.getGroupId(), _guestUser.getUserId())));
-	}
-
-	@Test
-	public void unitTest() {
-
 	}
 
 	private ObjectEntry _addObjectEntry(User user) throws Exception {
@@ -793,10 +802,10 @@ public class ObjectEntryServiceTest {
 	private ObjectEntryLocalService _objectEntryLocalService;
 
 	@Inject
-	private ObjectEntryService _objectEntryService;
+	private ObjectEntryPersistence _objectEntryPersistence;
 
 	@Inject
-	private ObjectEntryPersistence _objectEntryPersistence;
+	private ObjectEntryService _objectEntryService;
 
 	@Inject
 	private ObjectFieldLocalService _objectFieldLocalService;

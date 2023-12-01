@@ -239,3 +239,20 @@ setIndexWriterHelper() method is being removed.
 This setter was added for the class UserIndexer (see 73427a8). UserIndexer has been deprecated and removed from the portal though.
 ----
 ```
+----
+
+# 76c2d3b68c19a1b33f18e9221d83f34310daed45
+
+Typo in file path.
+
+Correct message should be:
+```
+LPS-196035 Avoid needing to regenerate after every screenName or emailAddress change. Use the immutable userId field for WebDAV access.
+
+# breaking_change_report
+## What portal-impl/src/com/liferay/portal/model/impl/UserImpl.java
+WebDAV clients can no longer use the user's screenName or emailAddress, nor the user's regular password when authenticating via Digest Auth.
+## Why
+WebDAV (or Digest Auth more generally) now requires each user to generate a separate password for this access, and it requires the user to take specific Account Settings UI actions to do so. Previously a simple web login would suffice. To avoid unexpected WebDav access rejections, we decided to simplify the the UX and use userId.
+----
+```

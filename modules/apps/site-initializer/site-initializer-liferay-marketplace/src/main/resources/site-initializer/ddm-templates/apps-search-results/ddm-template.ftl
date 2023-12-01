@@ -14,6 +14,11 @@
 		height: 3rem;
 	}
 
+	.adt-apps-search-results .card-image-title-container .title-container {
+		word-wrap: break-word;
+		word-break: break-word;
+	}
+
 	.adt-apps-search-results .cards-container .app-search-results-card .card-image-title-container .image-container .app-search-image {
 		height: 3rem;
 		min-width: 3rem;
@@ -116,7 +121,7 @@
 							</div>
 
 							<div class="pl-2">
-								<div class="font-weight-semi-bold h2 mt-1">
+								<div class="font-weight-semi-bold h2 mt-1 title-container">
 									${productName}
 								</div>
 								<#if productSpecifications?has_content>

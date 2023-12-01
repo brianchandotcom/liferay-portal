@@ -39,6 +39,10 @@
 			font-size: 1rem;
 			font-weight: 600;
 			line-height: 1.5rem;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			width: 190px;
 		}
 
 		&-apps {

@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 function SliderWithLabel({
+	disabled,
 	label,
 	max = 99,
 	min = 1,
@@ -17,7 +18,7 @@ function SliderWithLabel({
 }) {
 	return (
 		<label className="form-group-autofit">
-			<span className="form-group-item">
+			<span className="font-weight-normal form-group-item">
 				{label}
 
 				{subTitle && (
@@ -30,6 +31,7 @@ function SliderWithLabel({
 			<div className="flex-row form-group-item">
 				<ClaySlider
 					className="w-100"
+					disabled={disabled}
 					max={max}
 					min={min}
 					onChange={onValueChange}

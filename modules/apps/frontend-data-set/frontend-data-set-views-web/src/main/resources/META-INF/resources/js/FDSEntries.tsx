@@ -749,8 +749,6 @@ const RenameFDSEntryModalContent = ({
 	const [saveButtonDisabled, setSaveButtonDisabled] = useState(false);
 
 	function saveFDSEntryRename() {
-		setSaveButtonDisabled(true);
-
 		fetch(itemData.actions.update.href, {
 			body: JSON.stringify({
 				externalReferenceCode: itemData.externalReferenceCode,
@@ -782,6 +780,16 @@ const RenameFDSEntryModalContent = ({
 			});
 	}
 
+	const validate = () => {
+		if (!fdsEntryLabel) {
+			setLabelValidationError(true);
+
+			return false;
+		}
+
+		return true;
+	};
+
 	return (
 		<>
 			<ClayModal.Header>
@@ -804,8 +812,19 @@ const RenameFDSEntryModalContent = ({
 				last={
 					<ClayButton.Group spaced>
 						<ClayButton
-							disabled={!fdsEntryLabel || saveButtonDisabled}
-							onClick={saveFDSEntryRename}
+							disabled={saveButtonDisabled}
+							onClick={() => {
+								setSaveButtonDisabled(true);
+
+								const success = validate();
+
+								if (success) {
+									saveFDSEntryRename();
+								}
+								else {
+									setSaveButtonDisabled(false);
+								}
+							}}
 						>
 							{Liferay.Language.get('save')}
 						</ClayButton>

@@ -8,9 +8,9 @@
 		{
 			"bcc": "",
 			"cc": "",
-			"from": "[%CURRENT_USER_EMAIL_ADDRESS%]",
+			"from": "do-not-reply@liferay.com",
 			"fromName": {
-				"en-US": "[%CURRENT_USER_FIRST_NAME%]"
+				"en-US": "Liferay Marketplace"
 			},
 			"to": {
 				"en-US": "[%GETAPPINFORMATION_AUTHOR_EMAIL_ADDRESS%]"

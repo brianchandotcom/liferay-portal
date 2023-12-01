@@ -58,24 +58,20 @@ export function PaymentMethodSelector({
 
 	return (
 		<>
-			{paymentMethods.map((paymentMethod, index) => {
-				return (
-					<CardButton
-						{...paymentMethod}
-						disabled={paymentMethod.disabled || false}
-						key={index}
-						onClick={() => {
-							if (!paymentMethod.disabled) {
-								setSelectedPaymentMethod(paymentMethod.method);
-							}
-						}}
-						selected={
-							paymentMethod.method === selectedPaymentMethod
+			{paymentMethods.map((paymentMethod, index) => (
+				<CardButton
+					{...paymentMethod}
+					disabled={paymentMethod.disabled || false}
+					key={index}
+					onClick={() => {
+						if (!paymentMethod.disabled) {
+							setSelectedPaymentMethod(paymentMethod.method);
 						}
-						step={step}
-					/>
-				);
-			})}
+					}}
+					selected={paymentMethod.method === selectedPaymentMethod}
+					step={step}
+				/>
+			))}
 		</>
 	);
 }

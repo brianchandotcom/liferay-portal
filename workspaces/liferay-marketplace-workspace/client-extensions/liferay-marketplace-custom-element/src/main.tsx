@@ -34,7 +34,7 @@ class WebComponent extends HTMLElement {
 				>
 					<MarketplaceContextProvider properties={properties}>
 						<AppContextProvider gravatarAPI={GRAVATAR_API}>
-							<App route={this.getAttribute('path') || '/'} />
+							<App route={this.getAttribute('route') || '/'} />
 						</AppContextProvider>
 					</MarketplaceContextProvider>
 				</SWRConfig>

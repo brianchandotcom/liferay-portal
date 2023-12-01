@@ -60,11 +60,6 @@
 		<td>//input[contains(@class,'form-control') and contains(@placeholder,'Add a label')]</td>
 		<td></td>
 	</tr>
-	<tr>
-		<td>COMPOSITE_KEY_FIELD</td>
-		<td>//span[@class="custom-control-label-text" and contains(text(),'${fieldLabel}')]/../..//input[@class='custom-control-input']</td>
-		<td></td>
-	</tr>
 </tbody>
 </table>
 </body>

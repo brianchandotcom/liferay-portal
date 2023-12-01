@@ -2635,4 +2635,68 @@ definition {
 		}
 	}
 
+	@description = "LPS-182558. Verify it's not possible to save a client extension filter with Client Extension field empty"
+	@priority = 4
+	test CanNotCreateClientExtensionFilterWithClientExtensionFieldEmpty {
+
+		task("Given a new Client Extension Frontend Data Set filter") {
+
+			ClientExtensionGeneral.goToRemoteAppsPortlet();
+
+			ClientExtensionGeneral.addFrontendDataSetFilter(
+				description = "New Client Extension Frontend Data Set Filter",
+				javaScriptURL = "https://liferay.github.io/liferay-frontend-projects/date-filter.js",
+				name = "Frontend Data Set Filter");
+		}
+
+		task("When the user goes to the Filter tab ") {
+			DataSetAdmin.goToDataSetAdminPage();
+
+			DataSetAdmin.goToDataSetViewAdminPage(dataSetName = "Data Set Test");
+
+			DataSetAdmin.goToTab(tabName = "Filters", dataSetViewName = "View Test");	
+		}
+
+		task("And clicks on plus button") {
+			LexiconEntry.gotoAdd();
+		}
+
+		task("And selects the Client Extension option") {
+			Click(key_fieldName = "Client Extension",
+            locator1 = "FormViewBuilder#OBJECT_FIELD_BUTTON_DROPDOWN");	
+		}
+
+		task("When the user fills the Name field") {
+			Type(
+				key_text = "Name",
+				locator1 = "TextInput#ANY",
+				value1 = "Liferay Sample Data Set Filter");
+		}
+
+		task("And selects an option on Filter by field"){
+			Click(
+				dropdownLabel = "Filter By",
+            	locator1 = "ObjectField#ANY_DROPDOWN_LABEL");
+
+        	DropdownMenuItem.click(menuItem = "creator");
+		}
+
+		task("And clicks on Save button") {
+			Button.clickSave();
+		}
+
+		task("Then Save button is disabled") {
+			AssertVisible(locator1 = "Button#ANY_DISABLED",
+			key_text = "Save");
+		}
+
+		task("And it’s not possible to create a client extension filter") {
+			Click(locator1 = "Button#CLOSE_MODAL",
+			key_modalTitle = "New Client Extension Filter");
+
+			AssertElementNotPresent(locator1 = "DataSet#FILTERS_ENTRY",
+			key_entryName = "Liferay Sample Data Set Filter");
+		}
+
+	}
 }

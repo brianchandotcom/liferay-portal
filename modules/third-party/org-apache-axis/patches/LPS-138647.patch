@@ -1,0 +1,196 @@
+diff --git a/org/apache/axis/transport/http/AxisServlet.java b/org/apache/axis/transport/http/AxisServlet.java
+index eca4afd6f27a9..8ef9839369d36 100644
+--- a/org/apache/axis/transport/http/AxisServlet.java
++++ b/org/apache/axis/transport/http/AxisServlet.java
+@@ -557,7 +557,7 @@ public class AxisServlet extends AxisServletBase {
+             writer.println(Messages.getMessage("foundJWS00") + "<p>");
+             String url = request.getRequestURI();
+             String urltext = Messages.getMessage("foundJWS01");
+-            writer.println("<a href='" + url + "?wsdl'>" + urltext + "</a>");
++            writer.println("<a href='" + escapeHREF(url) + "?wsdl'>" + urltext + "</a>");
+         } else {
+             response.setStatus(HttpURLConnection.HTTP_NOT_FOUND);
+             writer.println(Messages.getMessage("noService06"));
+@@ -1106,6 +1106,112 @@ public class AxisServlet extends AxisServletBase {
+         }
+     }
+ 
++    private String escapeAttribute(String attribute) {
++        if (attribute == null) {
++            return null;
++        }
++
++        if (attribute.length() == 0) {
++            return "";
++        }
++
++        StringBuilder sb = null;
++        int lastReplacementIndex = 0;
++
++        for (int i = 0; i < attribute.length(); i++) {
++            char c = attribute.charAt(i);
++
++            if (c < _ATTRIBUTE_ESCAPES.length) {
++                String replacement = _ATTRIBUTE_ESCAPES[c];
++
++                if (replacement == null) {
++                    continue;
++                }
++
++                if (sb == null) {
++                    sb = new StringBuilder(attribute.length() + 64);
++                }
++
++                if (i > lastReplacementIndex) {
++                    sb.append(attribute, lastReplacementIndex, i);
++                }
++
++                sb.append(replacement);
++
++                lastReplacementIndex = i + 1;
++            }
++            else if (!isValidXmlCharacter(c) ||
++                     isUnicodeCompatibilityCharacter(c)) {
++
++                if (sb == null) {
++                    sb = new StringBuilder(attribute.length() + 64);
++                }
++
++                if (i > lastReplacementIndex) {
++                    sb.append(attribute, lastReplacementIndex, i);
++                }
++
++                sb.append(' ');
++
++                lastReplacementIndex = i + 1;
++            }
++        }
++
++        if (sb == null) {
++            return attribute;
++        }
++
++        if (lastReplacementIndex < attribute.length()) {
++            sb.append(attribute, lastReplacementIndex, attribute.length());
++        }
++
++        return sb.toString();
++    }
++
++    private String escapeHREF(String href) {
++        if (href == null) {
++            return null;
++        }
++
++        if (href.length() == 0) {
++            return "";
++        }
++
++        char c = href.charAt(0);
++
++        if ((c == '\\') || (c == '/')) {
++            return escapeAttribute(href);
++        }
++
++        c = Character.toLowerCase(c);
++
++        if ((c >= 'a') && (c <= 'z') &&
++            (c != 'd') && (c != 'j')) {
++
++            return escapeAttribute(href);
++        }
++
++        int index = href.indexOf(":");
++
++        if (index > -1) {
++            href = replaceFirst(
++                href, ":", "%3a", index);
++        }
++
++        return escapeAttribute(href);
++    }
++
++    private boolean isUnicodeCompatibilityCharacter(char c) {
++        if (((c >= '\u007f') && (c <= '\u0084')) ||
++            ((c >= '\u0086') && (c <= '\u009f')) ||
++            ((c >= '\ufdd0') && (c <= '\ufdef'))) {
++
++            return true;
++        }
++
++        return false;
++    }
++
+     /**
+      * Attempts to invoke a plugin for the query string supplied in the URL.
+      *
+@@ -1238,6 +1344,32 @@ public class AxisServlet extends AxisServletBase {
+         return false;
+     }
+ 
++    private String replaceFirst(
++        String s, String oldSub, String newSub, int fromIndex) {
++
++        if ((s == null) || (oldSub == null) || (newSub == null)) {
++            return null;
++        }
++
++        if (oldSub.equals(newSub)) {
++            return s;
++        }
++
++        int y = s.indexOf(oldSub, fromIndex);
++
++        if (y >= 0) {
++            StringBuilder sb = new StringBuilder();
++
++            sb.append(s.substring(0, y));
++            sb.append(newSub);
++            sb.append(s.substring(y + oldSub.length()));
++
++            return sb.toString();
++        }
++
++        return s;
++    }
++
+     /**
+      * getRequestPath a returns request path for web service padded with
+      * request.getPathInfo for web services served from /services directory.
+@@ -1251,5 +1383,35 @@ public class AxisServlet extends AxisServletBase {
+         return request.getServletPath() + ((request.getPathInfo() != null) ?
+                                            request.getPathInfo() : "");
+     }
++
++    private static boolean isValidXmlCharacter(char c) {
++        if (((c >= ' ') && (c <= '\ud7ff')) ||
++            ((c >= '\ue000') && (c <= '\ufffd')) || Character.isSurrogate(c) ||
++            (c == '\t') || (c == '\n') ||
++            (c == '\r')) {
++
++            return true;
++        }
++
++        return false;
++    }
++
++    private static final String[] _ATTRIBUTE_ESCAPES = new String[256];
++
++    static {
++        for (int i = 0; i < 256; i++) {
++            char c = (char)i;
++
++            if (!isValidXmlCharacter(c)) {
++                _ATTRIBUTE_ESCAPES[i] = " ";
++            }
++
++            _ATTRIBUTE_ESCAPES['&'] = "&amp;";
++            _ATTRIBUTE_ESCAPES['\''] = "&#39;";
++            _ATTRIBUTE_ESCAPES['>'] = "&gt;";
++            _ATTRIBUTE_ESCAPES['<'] = "&lt;";
++            _ATTRIBUTE_ESCAPES['\"'] = "&quot;";
++        }
++    }
+ }
+ /* @generated */
+\ No newline at end of file

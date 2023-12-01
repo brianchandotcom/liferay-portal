@@ -56,6 +56,7 @@ import com.liferay.portal.kernel.servlet.TransferHeadersHelperUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -522,8 +523,14 @@ public class PortletContainerImpl implements PortletContainer {
 				liferayActionResponse.getRedirectLocation();
 
 			if (Validator.isNotNull(redirectLocation)) {
-				return new ActionResult(
-					events, PortalUtil.escapeRedirect(redirectLocation));
+				if (!GetterUtil.getBoolean(
+						liferayActionResponse.getProperty("redirectAllowed"))) {
+
+					redirectLocation = PortalUtil.escapeRedirect(
+						redirectLocation);
+				}
+
+				return new ActionResult(events, redirectLocation);
 			}
 
 			if (!portlet.isActionURLRedirect()) {

@@ -134,6 +134,8 @@ public class MarketplaceStorePortlet extends MVCPortlet {
 			redirect, OAuthConstants.CALLBACK, callbackURL);
 
 		actionResponse.sendRedirect(redirect);
+
+		actionResponse.addProperty("redirectAllowed", "true");
 	}
 
 	public void deauthorize(

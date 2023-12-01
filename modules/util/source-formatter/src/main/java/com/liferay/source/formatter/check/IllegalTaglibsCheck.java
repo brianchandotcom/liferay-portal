@@ -37,7 +37,9 @@ public class IllegalTaglibsCheck extends BaseFileCheck {
 		SourceFormatterArgs sourceFormatterArgs =
 			sourceProcessor.getSourceFormatterArgs();
 
-		if (!sourceFormatterArgs.isFormatCurrentBranch()) {
+		if (!sourceFormatterArgs.isFormatCurrentBranch() ||
+			absolutePath.contains("/portal-web/")) {
+
 			return content;
 		}
 

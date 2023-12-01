@@ -250,7 +250,7 @@
 		</check>
 		<check name="IllegalTaglibsCheck">
 			<category name="Bug Prevention" />
-			<description name="Finds cases of incorrect use of certain taglibs." />
+			<description name="Finds cases of incorrect use of certain deprecated taglibs in modules." />
 		</check>
 	</source-processor>
 	<source-processor name="GradleSourceProcessor">

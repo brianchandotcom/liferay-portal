@@ -1,6 +1,4 @@
-create unique index IX_221AEC7F on CSFixedOptionQualifier (classNameId, classPK, commerceShippingFixedOptionId);
-create index IX_F58BD6F4 on CSFixedOptionQualifier (classNameId, commerceShippingFixedOptionId);
-create index IX_9ABCCE34 on CSFixedOptionQualifier (commerceShippingFixedOptionId);
+create unique index IX_1D29E189 on CSFixedOptionQualifier (commerceShippingFixedOptionId, classNameId, classPK);
 
 create index IX_D89A7E24 on CShippingFixedOptionRel (commerceShippingFixedOptionId);
 create index IX_4AA09D60 on CShippingFixedOptionRel (commerceShippingMethodId);

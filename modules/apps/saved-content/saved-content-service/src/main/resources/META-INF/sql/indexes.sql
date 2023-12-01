@@ -1,11 +1,5 @@
-create index IX_2F9B1655 on SavedContentEntry (companyId, classNameId, classPK, ctCollectionId);
-create unique index IX_4715B10F on SavedContentEntry (companyId, userId, classNameId, classPK, ctCollectionId);
-create index IX_77522BD7 on SavedContentEntry (groupId, classNameId, classPK, ctCollectionId);
-create index IX_EC57682 on SavedContentEntry (groupId, ctCollectionId);
-create unique index IX_CFA82491 on SavedContentEntry (groupId, userId, classNameId, classPK, ctCollectionId);
-create index IX_6E4EB6BC on SavedContentEntry (groupId, userId, ctCollectionId);
-create index IX_3F8E562C on SavedContentEntry (userId, classNameId, ctCollectionId);
-create index IX_6031E3DE on SavedContentEntry (userId, ctCollectionId);
-create index IX_881FA18 on SavedContentEntry (uuid_[$COLUMN_LENGTH:75$], companyId, ctCollectionId);
-create index IX_99BA6E0C on SavedContentEntry (uuid_[$COLUMN_LENGTH:75$], ctCollectionId);
-create unique index IX_D78AE31A on SavedContentEntry (uuid_[$COLUMN_LENGTH:75$], groupId, ctCollectionId);
+create index IX_85EFE02D on SavedContentEntry (classNameId, classPK, companyId);
+create unique index IX_83823B11 on SavedContentEntry (classNameId, classPK, userId, companyId, ctCollectionId);
+create unique index IX_51690E53 on SavedContentEntry (classNameId, classPK, userId, groupId, ctCollectionId);
+create index IX_ECAA972A on SavedContentEntry (userId, groupId);
+create index IX_AAA0B3AE on SavedContentEntry (uuid_[$COLUMN_LENGTH:75$]);

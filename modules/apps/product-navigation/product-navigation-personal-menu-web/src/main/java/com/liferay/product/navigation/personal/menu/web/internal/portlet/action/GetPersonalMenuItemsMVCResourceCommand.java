@@ -291,25 +291,32 @@ public class GetPersonalMenuItemsMVCResourceCommand
 		for (String personalMenuGroup :
 				new TreeSet<>(_serviceTrackerMap.keySet())) {
 
-			JSONArray personalMenuEntriesJSONArray =
-				_getPersonalMenuEntriesJSONArray(
-					portletRequest,
-					_serviceTrackerMap.getService(personalMenuGroup));
+			try {
+				JSONArray personalMenuEntriesJSONArray =
+					_getPersonalMenuEntriesJSONArray(
+						portletRequest,
+						_serviceTrackerMap.getService(personalMenuGroup));
 
-			if (personalMenuEntriesJSONArray.length() == 0) {
-				continue;
+				if (personalMenuEntriesJSONArray.length() == 0) {
+					continue;
+				}
+
+				if (jsonArray.length() > 0) {
+					jsonArray.put(dividerJSONObject);
+				}
+
+				jsonArray.put(
+					JSONUtil.put(
+						"items", personalMenuEntriesJSONArray
+					).put(
+						"type", "group"
+					));
 			}
-
-			if (jsonArray.length() > 0) {
-				jsonArray.put(dividerJSONObject);
+			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(exception);
+				}
 			}
-
-			jsonArray.put(
-				JSONUtil.put(
-					"items", personalMenuEntriesJSONArray
-				).put(
-					"type", "group"
-				));
 		}
 
 		if ((jsonArray.length() > 0) && !themeDisplay.isImpersonated()) {

@@ -9,10 +9,14 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.VerticalCard;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -87,7 +91,17 @@ public class SelectGlobalTemplatesVerticalCard implements VerticalCard {
 
 	@Override
 	public String getTitle() {
-		return HtmlUtil.escape(_layoutPageTemplateEntry.getName());
+		Layout layout = LayoutLocalServiceUtil.fetchLayout(
+			_layoutPageTemplateEntry.getPlid());
+
+		if (layout == null) {
+			return HtmlUtil.escape(_layoutPageTemplateEntry.getName());
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return HtmlUtil.escape(layout.getName(themeDisplay.getLocale()));
 	}
 
 	@Override

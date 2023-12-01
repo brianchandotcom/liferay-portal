@@ -10,7 +10,7 @@ import {SegmentsVariantType} from '../../types.es';
 import {SliderWithLabel} from '../SliderWithLabel.es';
 import {changeSplitValue} from './utils.es';
 
-function SplitPicker({onChange, variants}) {
+function SplitPicker({disabled, onChange, selectedTestType, variants}) {
 	const [splitVariants, dispatch] = useReducer(_reducer, variants);
 
 	useEffect(() => {
@@ -22,6 +22,7 @@ function SplitPicker({onChange, variants}) {
 			{splitVariants.map((variant) => {
 				return (
 					<SliderWithLabel
+						disabled={disabled}
 						key={variant.segmentsExperimentRelId}
 						label={variant.name}
 						onValueChange={(value) =>
@@ -31,6 +32,7 @@ function SplitPicker({onChange, variants}) {
 								variantId: variant.segmentsExperimentRelId,
 							})
 						}
+						selectedTestType={selectedTestType}
 						value={variant.split}
 					/>
 				);

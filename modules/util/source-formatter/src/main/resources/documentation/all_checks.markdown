@@ -112,7 +112,7 @@ HTMLEmptyLinesCheck | [Styling](styling_checks.markdown#styling-checks) | .html 
 HTMLWhitespaceCheck | [Styling](styling_checks.markdown#styling-checks) | .html or .path | Finds missing and unnecessary whitespace in `.html` files. |
 [IfStatementCheck](check/if_statement_check.markdown#ifstatementcheck) | [Styling](styling_checks.markdown#styling-checks) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds empty if-statements and consecutive if-statements with identical bodies |
 IllegalImportsCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds cases of incorrect use of certain classes. |
-IllegalTaglibsCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .ftl, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds cases of incorrect use of certain taglibs. |
+IllegalTaglibsCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .ftl, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds cases of incorrect use of certain deprecated taglibs in modules. |
 [IncorrectFileLocationCheck](check/incorrect_file_location_check.markdown#incorrectfilelocationcheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | | Checks that `/src/*/java/` only contains `.java` files. |
 IncorrectFilePathCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | | Checks that file path contains illegal characters. |
 [InstanceInitializerCheck](check/instance_initializer_check.markdown#instanceinitializercheck) | [Styling](styling_checks.markdown#styling-checks) | .java | Performs several checks on class instance initializer. |

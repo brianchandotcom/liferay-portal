@@ -48,7 +48,7 @@ GradleProvidedDependenciesCheck | .gradle | Validates the scope of dependencies 
 GradleTestDependencyVersionCheck | .gradle | Checks the version for dependencies in gradle build files. |
 GradleTestUtilDeployDirCheck | .gradle | Checks for incorrect use of `deployDir`. |
 IllegalImportsCheck | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds cases of incorrect use of certain classes. |
-IllegalTaglibsCheck | .ftl, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds cases of incorrect use of certain taglibs. |
+IllegalTaglibsCheck | .ftl, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds cases of incorrect use of certain deprecated taglibs in modules. |
 [IncorrectFileLocationCheck](check/incorrect_file_location_check.markdown#incorrectfilelocationcheck) | | Checks that `/src/*/java/` only contains `.java` files. |
 IncorrectFilePathCheck | | Checks that file path contains illegal characters. |
 JSCompatibilityCheck | | Checks for JavaScript compatibility. |

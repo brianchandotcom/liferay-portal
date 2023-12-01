@@ -561,6 +561,8 @@ public class JournalDisplayContext {
 			return _displayStyle;
 		}
 
+		String[] displayViews = getDisplayViews();
+
 		PortalPreferences portalPreferences =
 			PortletPreferencesFactoryUtil.getPortalPreferences(
 				_httpServletRequest);
@@ -570,13 +572,22 @@ public class JournalDisplayContext {
 
 		if (Validator.isNull(_displayStyle)) {
 			_displayStyle = portalPreferences.getValue(
-				JournalPortletKeys.JOURNAL, "display-style", "descriptive");
+				JournalPortletKeys.JOURNAL, "display-style",
+				_journalWebConfiguration.defaultDisplayView());
+		}
+
+		if (!ArrayUtil.contains(displayViews, _displayStyle)) {
+			_displayStyle = displayViews[0];
 		}
 
 		portalPreferences.setValue(
 			JournalPortletKeys.JOURNAL, "display-style", _displayStyle);
 
 		return _displayStyle;
+	}
+
+	public String[] getDisplayViews() {
+		return _journalWebConfiguration.displayViews();
 	}
 
 	public JournalFolder getFolder() {

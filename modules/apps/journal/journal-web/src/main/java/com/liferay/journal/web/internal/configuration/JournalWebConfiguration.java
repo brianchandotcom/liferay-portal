@@ -33,6 +33,17 @@ public interface JournalWebConfiguration {
 	public boolean structureFieldIndexableEnable();
 
 	@Meta.AD(
+		deflt = "descriptive", name = "default-display-view", required = false
+	)
+	public String defaultDisplayView();
+
+	@Meta.AD(
+		deflt = "icon|descriptive|list", name = "display-views",
+		required = false
+	)
+	public String[] displayViews();
+
+	@Meta.AD(
 		deflt = "false", name = "journal-article-show-id", required = false
 	)
 	public boolean journalArticleShowId();

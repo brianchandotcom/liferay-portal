@@ -1436,7 +1436,7 @@ public class DDMFormAdminDisplayContext {
 		if (Validator.isNull(displayStyle)) {
 			displayStyle = portalPreferences.getValue(
 				DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN, "display-style",
-				"list");
+				ddmFormWebConfiguration.defaultDisplayView());
 		}
 		else if (ArrayUtil.contains(displayViews, displayStyle)) {
 			portalPreferences.setValue(

@@ -34,4 +34,11 @@ public interface DDLWebConfiguration {
 	)
 	public String csvExport();
 
+	@Meta.AD(
+		deflt = "list", name = "default-display-view",
+		optionLabels = {"%list", "%table"},
+		optionValues = {"descriptive", "list"}, required = false
+	)
+	public String defaultDisplayView();
+
 }

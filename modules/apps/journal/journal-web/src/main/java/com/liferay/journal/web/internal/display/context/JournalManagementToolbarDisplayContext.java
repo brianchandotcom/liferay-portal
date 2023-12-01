@@ -594,7 +594,7 @@ public class JournalManagementToolbarDisplayContext
 
 	@Override
 	protected String getDefaultDisplayStyle() {
-		return "descriptive";
+		return _journalWebConfiguration.defaultDisplayView();
 	}
 
 	@Override
@@ -604,7 +604,7 @@ public class JournalManagementToolbarDisplayContext
 
 	@Override
 	protected String[] getDisplayViews() {
-		return new String[] {"list", "descriptive", "icon"};
+		return _journalDisplayContext.getDisplayViews();
 	}
 
 	@Override

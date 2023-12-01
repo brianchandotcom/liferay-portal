@@ -11,6 +11,7 @@ import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageEngineManager;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
@@ -37,6 +38,7 @@ import com.liferay.portal.workflow.kaleo.forms.constants.KaleoFormsWebKeys;
 import com.liferay.portal.workflow.kaleo.forms.exception.NoSuchKaleoProcessException;
 import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess;
 import com.liferay.portal.workflow.kaleo.forms.service.KaleoProcessService;
+import com.liferay.portal.workflow.kaleo.forms.web.internal.configuration.KaleoFormsWebConfiguration;
 import com.liferay.portal.workflow.kaleo.forms.web.internal.display.context.KaleoFormsAdminDisplayContext;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
@@ -194,6 +196,9 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 			_parameterNames.add(
 				"name" + LocaleUtil.toLanguageId(availableLocale));
 		}
+
+		_kaleoFormsWebConfiguration = ConfigurableUtil.createConfigurable(
+			KaleoFormsWebConfiguration.class, properties);
 	}
 
 	@Override
@@ -405,8 +410,8 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 		KaleoFormsAdminDisplayContext kaleoFormsAdminDisplayContext =
 			new KaleoFormsAdminDisplayContext(
 				_ddlRecordLocalService, _ddmStorageEngineManager, _htmlParser,
-				_kaleoDefinitionVersionLocalService, renderRequest,
-				renderResponse);
+				_kaleoDefinitionVersionLocalService,
+				_kaleoFormsWebConfiguration, renderRequest, renderResponse);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, kaleoFormsAdminDisplayContext);
@@ -430,6 +435,8 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 	@Reference
 	private KaleoDefinitionVersionLocalService
 		_kaleoDefinitionVersionLocalService;
+
+	private volatile KaleoFormsWebConfiguration _kaleoFormsWebConfiguration;
 
 	@Reference
 	private KaleoProcessService _kaleoProcessService;

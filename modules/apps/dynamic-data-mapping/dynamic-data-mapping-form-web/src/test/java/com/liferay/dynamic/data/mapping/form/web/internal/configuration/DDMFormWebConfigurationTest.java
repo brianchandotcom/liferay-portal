@@ -32,6 +32,8 @@ public class DDMFormWebConfigurationTest {
 		Assert.assertEquals(
 			"enabled-with-warning", ddmFormWebConfiguration.csvExport());
 		Assert.assertEquals(
+			"list", ddmFormWebConfiguration.defaultDisplayView());
+		Assert.assertEquals(
 			"doc, docx, jpeg, jpg, pdf, png, ppt, pptx, tiff, txt, xls, xlsx",
 			ddmFormWebConfiguration.guestUploadFileExtensions());
 		Assert.assertEquals(

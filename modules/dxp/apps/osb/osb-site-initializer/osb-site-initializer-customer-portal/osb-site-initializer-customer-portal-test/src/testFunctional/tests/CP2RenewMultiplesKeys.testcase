@@ -51,6 +51,9 @@ definition {
 	@ignore = "true"
 	@priority = 4
 	test AssertThatTheUserCanRenewTheKeys {
+
+		// Test ignored because it needs accounts with real data
+
 		task ("Given the user Role is Changed to Administrator") {
 			CP2Utils.assigneToRoleViaUsersTab(
 				accountRoleTitle = "Administrator",
@@ -95,6 +98,8 @@ definition {
 				optionIndex = 2);
 
 			CustomerPortal.clickAtButton(text = "Generate 1 Key");
+
+			// This step is a work around for a current issue with the key creation modal
 
 			Alert.viewErrorMessage(errorMessage = "Error:An unexpected error occurred.");
 

@@ -465,7 +465,7 @@ definition {
 			value1 = ${content});
 	}
 
-	@summary = "Generate a new key by clicking in the button and fill the form."
+	@summary = "Create a new key inside Customer Portal Site"
 	macro fullFlowGenerateKey(keyType = null,option = null,fieldText = null,fieldType = null,hostName = null,numberOfActivationKeys = null) {
 		CP2ActivationKeys.generateNewKey();
 
@@ -586,7 +586,7 @@ definition {
 		Click(locator1 = "CP2ActivationKeys#COMPLIMENTARY_KEY");
 	}
 
-	@summary = "Default summary"
+	@summary = "Select the First Active Subscription on the generate new key modal"
 	macro selectFirstActiveSubscriptionInput(index = null) {
 		if (isSet(index)) {
 			var key_position = ${index};

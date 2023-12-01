@@ -17,6 +17,7 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapListener;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
@@ -182,6 +183,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.Dictionary;
 import java.util.HashMap;
@@ -189,7 +191,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.SortedMap;
 import java.util.Stack;
+import java.util.TreeMap;
+import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 
@@ -852,7 +857,8 @@ public class GraphQLServletExtender {
 		ProcessingElementsContainer processingElementsContainer,
 		List<ServletData> servletDatas) {
 
-		Map<String, Method> methods = new HashMap<>();
+		Map<String, SortedMap<String, TreeSet<Method>>> methods =
+			new HashMap<>();
 
 		for (ServletData servletData : servletDatas) {
 			if (servletData.getGraphQLNamespace() != null) {
@@ -874,28 +880,72 @@ public class GraphQLServletExtender {
 
 				_servletDataMap.put(method, servletData);
 
-				methods.compute(
-					method.getName(),
-					(key, value) -> {
-						if ((value == null) ||
-							((value != null) &&
-							 (_getVersion(value) < _getVersion(method)))) {
+				SortedMap<String, TreeSet<Method>> methodSortedMap =
+					methods.computeIfAbsent(
+						method.getName(),
+						key -> new TreeMap<>(Comparator.naturalOrder()));
 
-							return method;
-						}
+				TreeSet<Method> methodTreeSet = methodSortedMap.computeIfAbsent(
+					servletData.getApplicationName(),
+					key -> new TreeSet<>(
+						Comparator.comparing(
+							this::_getVersion
+						).reversed()));
 
-						return value;
-					});
+				methodTreeSet.add(method);
 			}
 		}
 
-		for (Method method : methods.values()) {
-			Class<?> clazz = method.getDeclaringClass();
+		for (SortedMap<String, TreeSet<Method>> methodSortedMap :
+				methods.values()) {
 
-			graphQLObjectTypeBuilder.field(
-				_graphQLFieldRetriever.getField(
-					clazz.getSimpleName(), method,
-					processingElementsContainer));
+			String firstApplicationName = methodSortedMap.firstKey();
+
+			for (Map.Entry<String, TreeSet<Method>> entry :
+					methodSortedMap.entrySet()) {
+
+				String applicationName = entry.getKey();
+				TreeSet<Method> methodTreeSet = entry.getValue();
+
+				if (StringUtil.equals(applicationName, firstApplicationName)) {
+					Method firstMethod = methodTreeSet.first();
+
+					for (Method method : methodTreeSet) {
+						Class<?> clazz = method.getDeclaringClass();
+
+						GraphQLFieldDefinition field =
+							_graphQLFieldRetriever.getField(
+								clazz.getSimpleName(), method,
+								processingElementsContainer);
+
+						if (firstMethod == method) {
+							graphQLObjectTypeBuilder.field(field);
+						}
+						else if (_log.isDebugEnabled()) {
+							_log.debug(
+								StringBundler.concat(
+									"There is already a field called \"",
+									field.getName(),
+									"\" in the same application \"",
+									applicationName,
+									"\". The field of the version \"",
+									_getVersion(method), "\" will be ignored"));
+						}
+					}
+				}
+				else if (_log.isDebugEnabled()) {
+					MethodNameBuilder methodNameBuilder = new MethodNameBuilder(
+						methodTreeSet.first());
+
+					_log.debug(
+						StringBundler.concat(
+							"There is already a field called \"",
+							methodNameBuilder.build(),
+							"\" in the application \"", firstApplicationName,
+							"\". The field of the application \"",
+							applicationName, "\" will be ignored."));
+				}
+			}
 		}
 	}
 

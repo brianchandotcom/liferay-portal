@@ -522,7 +522,8 @@ public class SegmentsExperimentLocalServiceTest {
 		segmentsExperiment =
 			_segmentsExperimentLocalService.runSegmentsExperiment(
 				segmentsExperiment.getSegmentsExperimentId(), confidenceLevel,
-				segmentsExperienceIdSplitMap);
+				segmentsExperienceIdSplitMap,
+				SegmentsExperimentConstants.Type.AB.name());
 
 		Assert.assertEquals(
 			SegmentsExperimentConstants.STATUS_RUNNING,
@@ -576,7 +577,8 @@ public class SegmentsExperimentLocalServiceTest {
 					return variantSegmentsExperience.getSegmentsExperienceId();
 				},
 				0.30
-			).build());
+			).build(),
+			SegmentsExperimentConstants.Type.AB.name());
 	}
 
 	@Test(expected = RunSegmentsExperimentException.class)
@@ -587,7 +589,8 @@ public class SegmentsExperimentLocalServiceTest {
 			segmentsExperiment.getSegmentsExperimentId(), 0.95,
 			HashMapBuilder.put(
 				segmentsExperiment.getSegmentsExperienceId(), 1.00
-			).build());
+			).build(),
+			SegmentsExperimentConstants.Type.AB.name());
 	}
 
 	@Test(expected = SegmentsExperimentConfidenceLevelException.class)
@@ -611,7 +614,8 @@ public class SegmentsExperimentLocalServiceTest {
 				segmentsExperiment.getSegmentsExperienceId(), 0.70
 			).put(
 				variantSegmentsExperience.getSegmentsExperienceId(), 0.30
-			).build());
+			).build(),
+			SegmentsExperimentConstants.Type.AB.name());
 	}
 
 	@Test(expected = SegmentsExperimentRelSplitException.class)
@@ -635,7 +639,8 @@ public class SegmentsExperimentLocalServiceTest {
 				segmentsExperiment.getSegmentsExperienceId(), 0.70
 			).put(
 				variantSegmentsExperience.getSegmentsExperienceId(), 0.40
-			).build());
+			).build(),
+			SegmentsExperimentConstants.Type.AB.name());
 	}
 
 	@Test(expected = LockedSegmentsExperimentException.class)
@@ -663,7 +668,8 @@ public class SegmentsExperimentLocalServiceTest {
 				segmentsExperiment.getSegmentsExperienceId(), 0.70
 			).put(
 				variantSegmentsExperience.getSegmentsExperienceId(), 0.30
-			).build());
+			).build(),
+			SegmentsExperimentConstants.Type.AB.name());
 	}
 
 	@Test(expected = LockedSegmentsExperimentException.class)

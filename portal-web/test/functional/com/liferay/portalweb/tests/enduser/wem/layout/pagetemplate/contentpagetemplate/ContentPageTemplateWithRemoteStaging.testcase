@@ -1,0 +1,76 @@
+@component-name = "portal-wcm"
+definition {
+
+	property app.server.bundles.size = "1";
+	property ci.retries.disabled = "true";
+	property custom.properties = "auth.verifier.TunnelAuthVerifier.hosts.allowed=${line.separator}tunneling.servlet.shared.secret=1234567890123456";
+	property databases.size = "1";
+	property minimum.slave.ram = "24";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Content Page Templates";
+
+	setUp {
+		task ("Set up virtual instance") {
+			TestCase.setUpPortalInstance();
+		}
+
+		task ("Sign in") {
+			User.firstLoginPG();
+		}
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = "Test Site Name");
+		}
+
+		task ("Activate remote staging") {
+			Staging.remoteStagingSetUp(
+				remotePort = 9080,
+				siteName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a test for LPS-156013. Check if Layout related to content page templates are published as private layout in live and staging."
+	@priority = 4
+	test ViewContentPageTemplateAsPrivateLayoutInStagingAndLive {
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Given content page template is created") {
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+			PageTemplatesAdmin.addCollection(collectionName = "Page Template Collection");
+
+			PageTemplatesAdmin.addPageTemplate(
+				pageTemplateName = "Content Page Template Name",
+				pageTemplateType = "Content Page Template");
+		}
+
+		task ("And fragment is added to content page template") {
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+
+			PageEditor.publish();
+		}
+
+		task ("When content page template is published to live") {
+			Staging.openStagingAdmin(siteURLKey = "test-site-name");
+
+			Staging.publishCustomPublication(
+				publicationTitle = "My Publish Title",
+				remoteStaging = "true");
+		}
+
+		task ("Then assert if privateLayout column is set to true in staging and live databases") {
+			SQL.assertTextInMySQLStatementResult(
+				mysqlStatement = "SELECT privateLayout FROM lportal.Layout WHERE name LIKE '%Content Page Template Name%' LIMIT 1",
+				text = 1);
+
+			SQL.assertTextInMySQLStatementResult(
+				mysqlStatement = "SELECT privateLayout FROM lportal_remote.Layout WHERE name LIKE '%Content Page Template Name%' LIMIT 1",
+				text = 1);
+		}
+	}
+
+}

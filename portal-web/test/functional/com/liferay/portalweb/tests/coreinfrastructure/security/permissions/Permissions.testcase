@@ -28,7 +28,7 @@ definition {
 	@description = "This is a use case for LRQA-5029. Verify guest users cannot configure blogs."
 	@priority = 5
 	test CannotConfigureBlogsPortletAsGuestPG {
-		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
+		property app.server.types = "jboss,openliberty,tcserver,tomcat,weblogic,websphere,wildfly";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property environment.acceptance = "true";
 		property operating.system.types = "alpine,amazonlinux,centos,debian,fedora,orcllinux,osx,redhat,rockylinux,solaris,suse,ubuntu,windows";

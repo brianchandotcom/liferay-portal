@@ -4009,7 +4009,7 @@ definition {
 	@priority = 4
 	test SPInitiatedSSOSyncsUserAttributesFromIdPToSPDefaultMapping {
 		property app.server.bundles.size = "0";
-		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
+		property app.server.types = "jboss,openliberty,tcserver,tomcat,weblogic,websphere,wildfly";
 		property database.types = "hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property environment.acceptance = "true";
 		property operating.system.types = "alpine,amazonlinux,centos,debian,fedora,orcllinux,osx,redhat,rockylinux,solaris,suse,ubuntu,windows";

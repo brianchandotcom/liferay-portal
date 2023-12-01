@@ -3852,6 +3852,26 @@ information. Make sure to commit in all format-javadoc results.
 		<antcall target="functional-bundle-wildfly-mysql57-jdk8" />
 	</target>
 
+	<target name="functional-bundle-openliberty-mysql57-jdk8">
+		<run-functional-test
+			app.server.type="openliberty"
+			database.type="mysql"
+			database.version="5.7"
+			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
+			test.fix.pack.base.url="${test.fix.pack.base.url}"
+			test.license.xml.url="${test.license.xml.url}"
+			test.plugin.zip.url="${test.plugin.zip.url}"
+			test.plugins.war.zip.url="${test.plugins.war.zip.url}"
+			test.portal.bundle.dependencies.zip.url="${test.portal.bundle.dependencies.zip.url}"
+			test.portal.bundle.osgi.zip.url="${test.portal.bundle.osgi.zip.url}"
+			test.portal.bundle.tools.zip.url="${test.portal.bundle.tools.zip.url}"
+			test.portal.bundle.war.url="${test.portal.bundle.war.url}"
+			test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
+			test.portal.lpkg.name="${test.portal.lpkg.name}"
+			test.sql.zip.url="${test.sql.zip.url}"
+		/>
+	</target>
+
 	<target name="functional-bundle-orcllinux7-tomcat90-mysql57-jdk8">
 		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
 
@@ -4837,6 +4857,10 @@ information. Make sure to commit in all format-javadoc results.
 		<run-functional-test app.server.type="jboss" app.server.version="7.4.0" database.type="mysql" test.portal.log.assert="true" />
 	</target>
 
+	<target name="functional-openliberty23-mysql57-jdk8">
+		<run-functional-test app.server.type="openliberty" database.type="mysql" />
+	</target>
+
 	<target name="functional-orcllinux6-tomcat90-mysql57-jdk8">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="5.7" test.portal.log.assert="true" />
 	</target>
@@ -4889,6 +4913,28 @@ information. Make sure to commit in all format-javadoc results.
 
 	<target name="functional-smoke-bundle-jboss74-mysql57-jdk8">
 		<antcall target="functional-bundle-jboss74-mysql57-jdk8" />
+	</target>
+
+	<target name="functional-smoke-bundle-openliberty-mysql57-jdk8">
+		<run-functional-test
+			app.server.type="openliberty"
+			database.type="mysql"
+			database.version="5.7"
+			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
+			test.fix.pack.base.url="${test.fix.pack.base.url}"
+			test.license.xml.url="${test.license.xml.url}"
+			test.plugin.zip.url="${test.plugin.zip.url}"
+			test.plugins.war.zip.url="${test.plugins.war.zip.url}"
+			test.portal.bundle.dependencies.zip.url="${test.portal.bundle.dependencies.zip.url}"
+			test.portal.bundle.osgi.zip.url="${test.portal.bundle.osgi.zip.url}"
+			test.portal.bundle.tools.zip.url="${test.portal.bundle.tools.zip.url}"
+			test.portal.bundle.version="${test.portal.bundle.version}"
+			test.portal.bundle.war.url="${test.portal.bundle.war.url}"
+			test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
+			test.portal.log.assert="true"
+			test.portal.lpkg.name="${test.portal.lpkg.name}"
+			test.sql.zip.url="${test.sql.zip.url}"
+		/>
 	</target>
 
 	<target name="functional-smoke-bundle-tcserver-mysql57-jdk8">
@@ -5092,6 +5138,10 @@ information. Make sure to commit in all format-javadoc results.
 		<set-app-server-version-number app.server.type="jboss" app.server.version="7.4.0" />
 
 		<run-functional-test app.server.type="jboss" app.server.version="7.4.0" database.type="mysql" database.version="5.7" test.portal.log.assert="true" />
+	</target>
+
+	<target name="functional-smoke-openliberty23-mysql57-jdk8">
+		<run-functional-test app.server.type="openliberty" database.type="mysql" database.version="5.7" test.portal.log.assert="true" />
 	</target>
 
 	<target name="functional-smoke-startup-cold-tomcat90-hypersonic20-jdk8">

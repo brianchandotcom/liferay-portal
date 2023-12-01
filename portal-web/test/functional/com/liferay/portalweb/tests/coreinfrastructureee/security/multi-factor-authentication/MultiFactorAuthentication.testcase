@@ -894,7 +894,7 @@ definition {
 	@description = "This is a use case for LPS-101720. As an End User, OTP verification shows up in login process when OTP is enabled."
 	@priority = 4
 	test LoginWithOTPEnabled {
-		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
+		property app.server.types = "jboss,openliberty,tcserver,tomcat,weblogic,websphere,wildfly";
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property database.types = "hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property environment.acceptance = "true";
@@ -948,7 +948,7 @@ definition {
 	@description = "This is a use case for LPS-101720. As an End User, OTP verification shows up in login process when OTP is enabled and scoped by Company Id."
 	@priority = 4
 	test LoginWithOTPEnabledByCompanyId {
-		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
+		property app.server.types = "jboss,openliberty,tcserver,tomcat,weblogic,websphere,wildfly";
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property database.types = "hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property environment.acceptance = "true";
@@ -1007,7 +1007,7 @@ definition {
 	@description = "This is a use case for LPS-101720. As an End User, OTP verification shows up in login process when OTP is enabled and scoped by Company Web Id."
 	@priority = 4
 	test LoginWithOTPEnabledByCompanyWebId {
-		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
+		property app.server.types = "jboss,openliberty,tcserver,tomcat,weblogic,websphere,wildfly";
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property database.types = "hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property environment.acceptance = "true";

@@ -104,7 +104,7 @@ public class ObjectRelationshipExtensionProvider
 					return defaultObjectEntryManager.
 						fetchRelatedManyToOneObjectEntry(
 							_getDefaultDTOConverterContext(
-								objectDefinition, primaryKey, null, null),
+								objectDefinition, primaryKey, null, userId),
 							objectDefinition, primaryKey,
 							objectRelationship.getName());
 				}
@@ -118,7 +118,7 @@ public class ObjectRelationshipExtensionProvider
 					defaultObjectEntryManager.
 						getObjectEntryRelatedObjectEntries(
 							_getDefaultDTOConverterContext(
-								objectDefinition, primaryKey, null, null),
+								objectDefinition, primaryKey, null, userId),
 							objectDefinition, primaryKey,
 							objectRelationship.getName(),
 							Pagination.of(

@@ -365,63 +365,30 @@ String defaultLanguageId = cpDefinitionOptionRelDisplayContext.getCatalogDefault
 	</aui:form>
 </liferay-frontend:side-panel-content>
 
-<aui:script>
-	function setParameters(portletURL) {
-		var nameInput = document.getElementById('<portlet:namespace />name');
-		var descriptionInput = document.getElementById(
-			'<portlet:namespace />description'
-		);
-		var priorityInput = document.getElementById(
-			'<portlet:namespace />priority'
-		);
-		var facetableInput = document.getElementById(
-			'<portlet:namespace />facetable'
-		);
-		var requiredInput = document.getElementById(
-			'<portlet:namespace />required'
-		);
-		var skuContributorInput = document.getElementById(
-			'<portlet:namespace />skuContributor'
-		);
-		var ddmFormFieldTypeNameSelect = document.getElementById(
-			'<portlet:namespace />DDMFormFieldTypeName'
-		);
-		var infoItemServiceKeySelect = document.getElementById(
-			'<portlet:namespace />infoItemServiceKey'
-		);
-		var priceTypeSelect = document.getElementById(
-			'<portlet:namespace />priceType'
-		);
+<aui:script require="frontend-js-web/index as frontendJsWeb">
+	const {createPortletURL} = frontendJsWeb;
 
-		portletURL.setParameter('name', nameInput.value);
-		portletURL.setParameter('description', descriptionInput.value);
-		portletURL.setParameter('priority', priorityInput.value);
-		portletURL.setParameter('facetable', facetableInput.checked);
-		portletURL.setParameter('required', requiredInput.checked);
-		portletURL.setParameter('skuContributor', skuContributorInput.checked);
-		portletURL.setParameter(
-			'ddmFormFieldTypeName',
-			ddmFormFieldTypeNameSelect.value
-		);
-		portletURL.setParameter(
-			'infoItemServiceKey',
-			infoItemServiceKeySelect.value
-		);
-		portletURL.setParameter('priceType', priceTypeSelect.value);
-	}
+	Liferay.provide(window, '<portlet:namespace />selectCollectionProvider', () => {
+		const portletURL = createPortletURL('<%= currentURLObj %>', {
+			description: document.getElementById('<portlet:namespace />description')
+				.value,
+			facetable: document.getElementById('<portlet:namespace />facetable')
+				.checked,
+			infoItemServiceKey: document.getElementById(
+				'<portlet:namespace />infoItemServiceKey'
+			).value,
+			name: document.getElementById('<portlet:namespace />name').value,
+			priceType: document.getElementById('<portlet:namespace />priceType')
+				.value,
+			priority: document.getElementById('<portlet:namespace />priority')
+				.value,
+			required: document.getElementById('<portlet:namespace />required')
+				.checked,
+			skuContributor: document.getElementById(
+				'<portlet:namespace />skuContributor'
+			).checked,
+		});
 
-	Liferay.provide(
-		window,
-		'<portlet:namespace />selectCollectionProvider',
-		() => {
-			var portletURL = new Liferay.PortletURL.createURL(
-				'<%= currentURLObj %>'
-			);
-
-			setParameters(portletURL);
-
-			window.location.replace(portletURL.toString());
-		},
-		['liferay-portlet-url']
-	);
+		window.location.replace(portletURL.toString());
+	});
 </aui:script>

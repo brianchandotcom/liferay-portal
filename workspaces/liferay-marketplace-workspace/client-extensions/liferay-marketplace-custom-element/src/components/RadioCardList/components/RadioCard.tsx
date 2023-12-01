@@ -17,6 +17,7 @@ import emptyPictureIcon from '../../../assets/icons/avatar.svg';
 interface RadioCardProps {
 	activeRadio: boolean | undefined;
 	description?: ReactNode;
+	disabled?: boolean;
 	imageURL?: string;
 	index?: number;
 	label?: string;
@@ -29,6 +30,7 @@ interface RadioCardProps {
 const NewRadioCard = ({
 	activeRadio,
 	description,
+	disabled,
 	imageURL,
 	index,
 	label,
@@ -43,6 +45,7 @@ const NewRadioCard = ({
 				'align-items-center cursor-pointer d-flex form-control justify-content-between mb-5 px-0 py-4 radio-card',
 				{
 					'bg-transparent': !activeRadio,
+					'radio-disabled': disabled,
 					'radio-selected': activeRadio,
 				}
 			)}

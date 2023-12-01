@@ -1898,7 +1898,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 	}
 
 	@Test
-	public void testPostObjectEntry() throws Exception {
+	public void testPostWithAllFields() throws Exception {
 		ObjectDefinition objectDefinition = _addObjectDefinition(
 			7, true, ObjectDefinitionConstants.SCOPE_COMPANY);
 
@@ -2026,7 +2026,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 	}
 
 	@Test
-	public void testPostWithObjectException() throws Exception {
+	public void testPostWithMissingRequiredField() throws Exception {
 		ObjectDefinition objectDefinition = _addObjectDefinition(
 			8, true, ObjectDefinitionConstants.SCOPE_COMPANY);
 

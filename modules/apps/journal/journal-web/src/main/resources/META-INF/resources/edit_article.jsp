@@ -248,7 +248,7 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 							displayType="secondary"
 							expanded="<%= true %>"
 						>
-							<div class="panel-body">
+							<div class="c-px-2 panel-body">
 								<%@ include file="/article_content.jspf" %>
 							</div>
 						</clay:panel>

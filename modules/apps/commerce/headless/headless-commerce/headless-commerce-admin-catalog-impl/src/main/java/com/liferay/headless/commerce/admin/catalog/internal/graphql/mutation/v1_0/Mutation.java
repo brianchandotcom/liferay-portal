@@ -10,6 +10,7 @@ import com.liferay.headless.commerce.admin.catalog.dto.v1_0.AttachmentBase64;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.AttachmentUrl;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Catalog;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Category;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Currency;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Diagram;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.GroupedProduct;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.MappedProduct;
@@ -34,6 +35,7 @@ import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Specification;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.AttachmentResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.CatalogResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.CategoryResource;
+import com.liferay.headless.commerce.admin.catalog.resource.v1_0.CurrencyResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.DiagramResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.GroupedProductResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.LowStockActionResource;
@@ -112,6 +114,14 @@ public class Mutation {
 
 		_categoryResourceComponentServiceObjects =
 			categoryResourceComponentServiceObjects;
+	}
+
+	public static void setCurrencyResourceComponentServiceObjects(
+		ComponentServiceObjects<CurrencyResource>
+			currencyResourceComponentServiceObjects) {
+
+		_currencyResourceComponentServiceObjects =
+			currencyResourceComponentServiceObjects;
 	}
 
 	public static void setDiagramResourceComponentServiceObjects(
@@ -656,6 +666,83 @@ public class Mutation {
 			this::_populateResourceContext,
 			categoryResource -> categoryResource.patchProductIdCategory(
 				id, categories));
+	}
+
+	@GraphQLField
+	public Response createCurrenciesPageExportBatch(
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("sort") String sortsString,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_currencyResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			currencyResource -> currencyResource.postCurrenciesPageExportBatch(
+				search, _filterBiFunction.apply(currencyResource, filterString),
+				_sortsBiFunction.apply(currencyResource, sortsString),
+				callbackURL, contentType, fieldNames));
+	}
+
+	@GraphQLField
+	public Currency createCurrency(@GraphQLName("currency") Currency currency)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_currencyResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			currencyResource -> currencyResource.postCurrency(currency));
+	}
+
+	@GraphQLField
+	public Response createCurrencyBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_currencyResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			currencyResource -> currencyResource.postCurrencyBatch(
+				callbackURL, object));
+	}
+
+	@GraphQLField
+	public boolean deleteCurrency(@GraphQLName("id") Long id) throws Exception {
+		_applyVoidComponentServiceObjects(
+			_currencyResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			currencyResource -> currencyResource.deleteCurrency(id));
+
+		return true;
+	}
+
+	@GraphQLField
+	public Response deleteCurrencyBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_currencyResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			currencyResource -> currencyResource.deleteCurrencyBatch(
+				callbackURL, object));
+	}
+
+	@GraphQLField
+	public Currency patchCurrency(
+			@GraphQLName("id") Long id,
+			@GraphQLName("currency") Currency currency)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_currencyResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			currencyResource -> currencyResource.patchCurrency(id, currency));
 	}
 
 	@GraphQLField
@@ -2445,6 +2532,25 @@ public class Mutation {
 			_vulcanBatchEngineImportTaskResource);
 	}
 
+	private void _populateResourceContext(CurrencyResource currencyResource)
+		throws Exception {
+
+		currencyResource.setContextAcceptLanguage(_acceptLanguage);
+		currencyResource.setContextCompany(_company);
+		currencyResource.setContextHttpServletRequest(_httpServletRequest);
+		currencyResource.setContextHttpServletResponse(_httpServletResponse);
+		currencyResource.setContextUriInfo(_uriInfo);
+		currencyResource.setContextUser(_user);
+		currencyResource.setGroupLocalService(_groupLocalService);
+		currencyResource.setRoleLocalService(_roleLocalService);
+
+		currencyResource.setVulcanBatchEngineExportTaskResource(
+			_vulcanBatchEngineExportTaskResource);
+
+		currencyResource.setVulcanBatchEngineImportTaskResource(
+			_vulcanBatchEngineImportTaskResource);
+	}
+
 	private void _populateResourceContext(DiagramResource diagramResource)
 		throws Exception {
 
@@ -2944,6 +3050,8 @@ public class Mutation {
 		_catalogResourceComponentServiceObjects;
 	private static ComponentServiceObjects<CategoryResource>
 		_categoryResourceComponentServiceObjects;
+	private static ComponentServiceObjects<CurrencyResource>
+		_currencyResourceComponentServiceObjects;
 	private static ComponentServiceObjects<DiagramResource>
 		_diagramResourceComponentServiceObjects;
 	private static ComponentServiceObjects<GroupedProductResource>

@@ -8,6 +8,7 @@ package com.liferay.headless.commerce.admin.catalog.internal.graphql.query.v1_0;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Attachment;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Catalog;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Category;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Currency;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Diagram;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.GroupedProduct;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.LinkedProduct;
@@ -39,6 +40,7 @@ import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Specification;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.AttachmentResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.CatalogResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.CategoryResource;
+import com.liferay.headless.commerce.admin.catalog.resource.v1_0.CurrencyResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.DiagramResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.GroupedProductResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.LinkedProductResource;
@@ -121,6 +123,14 @@ public class Query {
 
 		_categoryResourceComponentServiceObjects =
 			categoryResourceComponentServiceObjects;
+	}
+
+	public static void setCurrencyResourceComponentServiceObjects(
+		ComponentServiceObjects<CurrencyResource>
+			currencyResourceComponentServiceObjects) {
+
+		_currencyResourceComponentServiceObjects =
+			currencyResourceComponentServiceObjects;
 	}
 
 	public static void setDiagramResourceComponentServiceObjects(
@@ -562,6 +572,44 @@ public class Query {
 			categoryResource -> new CategoryPage(
 				categoryResource.getProductIdCategoriesPage(
 					id, Pagination.of(page, pageSize))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {currencies(filter: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public CurrencyPage currencies(
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_currencyResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			currencyResource -> new CurrencyPage(
+				currencyResource.getCurrenciesPage(
+					search,
+					_filterBiFunction.apply(currencyResource, filterString),
+					Pagination.of(page, pageSize),
+					_sortsBiFunction.apply(currencyResource, sortsString))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {currency(id: ___){active, code, formatPattern, id, maxFractionDigits, minFractionDigits, name, primary, priority, rate, roundingMode, symbol}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public Currency currency(@GraphQLName("id") Long id) throws Exception {
+		return _applyComponentServiceObjects(
+			_currencyResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			currencyResource -> currencyResource.getCurrency(id));
 	}
 
 	/**
@@ -2928,6 +2976,39 @@ public class Query {
 
 	}
 
+	@GraphQLName("CurrencyPage")
+	public class CurrencyPage {
+
+		public CurrencyPage(Page currencyPage) {
+			actions = currencyPage.getActions();
+
+			items = currencyPage.getItems();
+			lastPage = currencyPage.getLastPage();
+			page = currencyPage.getPage();
+			pageSize = currencyPage.getPageSize();
+			totalCount = currencyPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Map<String, Map<String, String>> actions;
+
+		@GraphQLField
+		protected java.util.Collection<Currency> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
 	@GraphQLName("DiagramPage")
 	public class DiagramPage {
 
@@ -3916,6 +3997,19 @@ public class Query {
 		categoryResource.setRoleLocalService(_roleLocalService);
 	}
 
+	private void _populateResourceContext(CurrencyResource currencyResource)
+		throws Exception {
+
+		currencyResource.setContextAcceptLanguage(_acceptLanguage);
+		currencyResource.setContextCompany(_company);
+		currencyResource.setContextHttpServletRequest(_httpServletRequest);
+		currencyResource.setContextHttpServletResponse(_httpServletResponse);
+		currencyResource.setContextUriInfo(_uriInfo);
+		currencyResource.setContextUser(_user);
+		currencyResource.setGroupLocalService(_groupLocalService);
+		currencyResource.setRoleLocalService(_roleLocalService);
+	}
+
 	private void _populateResourceContext(DiagramResource diagramResource)
 		throws Exception {
 
@@ -4363,6 +4457,8 @@ public class Query {
 		_catalogResourceComponentServiceObjects;
 	private static ComponentServiceObjects<CategoryResource>
 		_categoryResourceComponentServiceObjects;
+	private static ComponentServiceObjects<CurrencyResource>
+		_currencyResourceComponentServiceObjects;
 	private static ComponentServiceObjects<DiagramResource>
 		_diagramResourceComponentServiceObjects;
 	private static ComponentServiceObjects<GroupedProductResource>

@@ -91,6 +91,8 @@ public class OpenAPIResourceImpl {
 
 			add(CategoryResourceImpl.class);
 
+			add(CurrencyResourceImpl.class);
+
 			add(DiagramResourceImpl.class);
 
 			add(GroupedProductResourceImpl.class);

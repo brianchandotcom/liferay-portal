@@ -27,6 +27,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import org.apache.felix.scr.impl.config.ScrConfigurationImpl;
 import org.apache.felix.scr.impl.inject.ClassUtils;
+import org.apache.felix.scr.impl.logger.LogServiceEnabledLogger;
 import org.apache.felix.scr.impl.logger.ScrLogger;
 import org.apache.felix.scr.impl.manager.RegionConfigurationSupport;
 import org.apache.felix.scr.impl.runtime.ServiceComponentRuntimeImpl;
@@ -81,6 +82,8 @@ public class Activator extends AbstractExtender
     private ComponentCommands m_componentCommands;
 
 	private ServiceTracker<ConfigurationAdmin, ConfigurationAdmin> _configAdminTracker;
+
+	private ServiceTracker<Object, Object> _logServiceTracker;
 
 	private volatile ServiceReference<ConfigurationAdmin> _serviceReference;
 
@@ -138,6 +141,43 @@ public class Activator extends AbstractExtender
 			});
 
 		_configAdminTracker.open();
+
+		_logServiceTracker = new ServiceTracker<>(context, "org.osgi.service.log.LogService", new ServiceTrackerCustomizer<Object, Object>()
+        {
+            private volatile boolean hasService = false;
+
+            @Override
+            public Object addingService(final ServiceReference<Object> reference)
+            {
+                if ( !hasService )
+                {
+                    final Object logService = context.getService(reference);
+                    if ( logService != null )
+                    {
+                        hasService = true;
+
+                        LogServiceEnabledLogger.setLogService(logService);
+
+						return logService;
+                    }
+                }
+                return null;
+            }
+
+            @Override
+            public void modifiedService(final ServiceReference<Object> reference, final Object service)
+            {
+            }
+
+            @Override
+            public void removedService(final ServiceReference<Object> reference, final Object service)
+            {
+                hasService = false;
+                context.ungetService(reference);
+            }
+        } );
+
+        _logServiceTracker.open();
     }
 
     public void restart(boolean globalExtender)
@@ -222,6 +262,8 @@ public class Activator extends AbstractExtender
     public void stop(BundleContext context) throws Exception
     {
         super.stop( context );
+
+		_logServiceTracker.close();
 
         _configAdminTracker.close();
     }

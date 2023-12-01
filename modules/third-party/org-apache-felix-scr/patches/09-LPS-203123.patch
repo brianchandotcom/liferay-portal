@@ -1,0 +1,182 @@
+diff --git a/org/apache/felix/scr/impl/Activator.java b/org/apache/felix/scr/impl/Activator.java
+index ebc6536896bb8..ec1baba30e366 100755
+--- a/org/apache/felix/scr/impl/Activator.java
++++ b/org/apache/felix/scr/impl/Activator.java
+@@ -27,6 +27,7 @@ import java.util.concurrent.locks.ReentrantLock;
+ 
+ import org.apache.felix.scr.impl.config.ScrConfigurationImpl;
+ import org.apache.felix.scr.impl.inject.ClassUtils;
++import org.apache.felix.scr.impl.logger.LogServiceEnabledLogger;
+ import org.apache.felix.scr.impl.logger.ScrLogger;
+ import org.apache.felix.scr.impl.manager.RegionConfigurationSupport;
+ import org.apache.felix.scr.impl.runtime.ServiceComponentRuntimeImpl;
+@@ -82,6 +83,8 @@ public class Activator extends AbstractExtender
+ 
+ 	private ServiceTracker<ConfigurationAdmin, ConfigurationAdmin> _configAdminTracker;
+ 
++	private ServiceTracker<Object, Object> _logServiceTracker;
++
+ 	private volatile ServiceReference<ConfigurationAdmin> _serviceReference;
+ 
+ 	private volatile RegionConfigurationSupport _regionConfigurationSupport;
+@@ -138,6 +141,43 @@ public class Activator extends AbstractExtender
+ 			});
+ 
+ 		_configAdminTracker.open();
++
++		_logServiceTracker = new ServiceTracker<>(context, "org.osgi.service.log.LogService", new ServiceTrackerCustomizer<Object, Object>()
++        {
++            private volatile boolean hasService = false;
++
++            @Override
++            public Object addingService(final ServiceReference<Object> reference)
++            {
++                if ( !hasService )
++                {
++                    final Object logService = context.getService(reference);
++                    if ( logService != null )
++                    {
++                        hasService = true;
++
++                        LogServiceEnabledLogger.setLogService(logService);
++
++						return logService;
++                    }
++                }
++                return null;
++            }
++
++            @Override
++            public void modifiedService(final ServiceReference<Object> reference, final Object service)
++            {
++            }
++
++            @Override
++            public void removedService(final ServiceReference<Object> reference, final Object service)
++            {
++                hasService = false;
++                context.ungetService(reference);
++            }
++        } );
++
++        _logServiceTracker.open();
+     }
+ 
+     public void restart(boolean globalExtender)
+@@ -223,6 +263,8 @@ public class Activator extends AbstractExtender
+     {
+         super.stop( context );
+ 
++		_logServiceTracker.close();
++
+         _configAdminTracker.close();
+     }
+ 
+diff --git a/org/apache/felix/scr/impl/logger/BundleLogger.java b/org/apache/felix/scr/impl/logger/BundleLogger.java
+index 8325720158eb2..4d052e2d28ddc 100755
+--- a/org/apache/felix/scr/impl/logger/BundleLogger.java
++++ b/org/apache/felix/scr/impl/logger/BundleLogger.java
+@@ -61,14 +61,6 @@ public class BundleLogger extends LogServiceEnabledLogger
+ 
+     InternalLogger getLogger(final String className)
+     {
+-        if ( className != null )
+-        {
+-            final Object logServiceSupport = this.logServiceTracker.getService();
+-            if ( logServiceSupport != null )
+-            {
+-                return ((LogServiceSupport)logServiceSupport).getLogger(className);
+-            }
+-        }
+         return this.getLogger();
+     }
+ 
+diff --git a/org/apache/felix/scr/impl/logger/LogServiceEnabledLogger.java b/org/apache/felix/scr/impl/logger/LogServiceEnabledLogger.java
+index 7324f8e1b45bc..6f48fde534ba3 100755
+--- a/org/apache/felix/scr/impl/logger/LogServiceEnabledLogger.java
++++ b/org/apache/felix/scr/impl/logger/LogServiceEnabledLogger.java
+@@ -20,62 +20,23 @@ package org.apache.felix.scr.impl.logger;
+ 
+ import org.apache.felix.scr.impl.manager.ScrConfiguration;
+ import org.osgi.framework.BundleContext;
+-import org.osgi.framework.ServiceReference;
+-import org.osgi.util.tracker.ServiceTracker;
+-import org.osgi.util.tracker.ServiceTrackerCustomizer;
+ 
+ /**
+  * This abstract class adds support for using a LogService
+  * (or LoggerFactory for R7+).
+  */
+-abstract class LogServiceEnabledLogger extends AbstractLogger
++public abstract class LogServiceEnabledLogger extends AbstractLogger
+ {
+-    // name of the LogService class (this is a string to not create a reference to the class)
+-    // With R7, LogService is deprecated but extends the newer LoggerFactory
+-    private static final String LOGSERVICE_CLASS = "org.osgi.service.log.LogService";
++    private static volatile LogServiceSupport _logServiceSupport;
++
++	public static void setLogService(Object logService) {
++		_logServiceSupport = new LogServiceSupport(null, logService);
++	}
+ 
+-    // the log service to log messages to
+-    protected final ServiceTracker<Object, Object> logServiceTracker;
+ 
+     public LogServiceEnabledLogger(final ScrConfiguration config, final BundleContext bundleContext)
+     {
+         super(config, getBundleIdentifier(bundleContext.getBundle()));
+-        // Start a tracker for the log service
+-        // we only track a single log service which in reality should be enough
+-        logServiceTracker = new ServiceTracker<>( bundleContext, LOGSERVICE_CLASS, new ServiceTrackerCustomizer<Object, Object>()
+-        {
+-            private volatile boolean hasService = false;
+-
+-            @Override
+-            public Object addingService(final ServiceReference<Object> reference)
+-            {
+-                if ( !hasService )
+-                {
+-                    final Object logService = bundleContext.getService(reference);
+-                    if ( logService != null )
+-                    {
+-                        hasService = true;
+-                        final LogServiceSupport lsl = new LogServiceSupport(bundleContext.getBundle(), logService);
+-                        return lsl;
+-                    }
+-                }
+-                return null;
+-            }
+-
+-            @Override
+-            public void modifiedService(final ServiceReference<Object> reference, final Object service)
+-            {
+-                // nothing to do
+-            }
+-
+-            @Override
+-            public void removedService(final ServiceReference<Object> reference, final Object service)
+-            {
+-                hasService = false;
+-                bundleContext.ungetService(reference);
+-            }
+-        } );
+-        logServiceTracker.open();
+     }
+ 
+     /**
+@@ -83,14 +44,12 @@ abstract class LogServiceEnabledLogger extends AbstractLogger
+      */
+     public void close()
+     {
+-        // stop the tracker
+-        logServiceTracker.close();
+     }
+ 
+     @Override
+     InternalLogger getLogger()
+     {
+-		LogServiceSupport logServiceSupport = (LogServiceSupport)logServiceTracker.getService();
++		LogServiceSupport logServiceSupport = _logServiceSupport;
+ 
+ 		if (logServiceSupport == null) {
+ 			return getDefaultLogger();

@@ -33,7 +33,7 @@ public class EntityExtensionHandler {
 	}
 
 	public Map<String, Serializable> getExtendedProperties(
-			long companyId, Object entity)
+			long companyId, long userId, Object entity)
 		throws Exception {
 
 		Map<String, Serializable> extendedProperties = new HashMap<>();
@@ -41,7 +41,7 @@ public class EntityExtensionHandler {
 		for (ExtensionProvider extensionProvider : _extensionProviders) {
 			Map<String, Serializable> extensionProviderExtendedProperties =
 				extensionProvider.getExtendedProperties(
-					companyId, _className, entity);
+					companyId, userId, _className, entity);
 
 			if (extensionProviderExtendedProperties != null) {
 				extendedProperties.putAll(extensionProviderExtendedProperties);

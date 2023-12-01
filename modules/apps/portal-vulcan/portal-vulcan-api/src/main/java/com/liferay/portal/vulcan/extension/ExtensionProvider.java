@@ -16,7 +16,7 @@ import java.util.Map;
 public interface ExtensionProvider {
 
 	public Map<String, Serializable> getExtendedProperties(
-			long companyId, String className, Object entity)
+			long companyId, long userId, String className, Object entity)
 		throws Exception;
 
 	public Map<String, PropertyDefinition> getExtendedPropertyDefinitions(

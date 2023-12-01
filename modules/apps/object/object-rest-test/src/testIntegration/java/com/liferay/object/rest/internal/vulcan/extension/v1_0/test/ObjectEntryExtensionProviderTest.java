@@ -247,8 +247,8 @@ public class ObjectEntryExtensionProviderTest {
 
 		Map<String, Serializable> extendedProperties =
 			_extensionProvider.getExtendedProperties(
-				TestPropsValues.getCompanyId(), UserAccount.class.getName(),
-				userAccount);
+				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+				UserAccount.class.getName(), userAccount);
 
 		Assert.assertEquals(
 			values.get("boolean"), extendedProperties.get("boolean"));

@@ -468,7 +468,8 @@ public class ObjectDefinitionGraphQLDTOContributor
 		if (entityExtensionHandler != null) {
 			nestedFieldsRelatedProperties =
 				entityExtensionHandler.getExtendedProperties(
-					objectDefinition.getCompanyId(), systemObjectEntry);
+					objectDefinition.getCompanyId(),
+					dtoConverterContext.getUserId(), systemObjectEntry);
 		}
 
 		return ExtendedEntity.extend(

@@ -6,7 +6,9 @@
 package com.liferay.portal.vulcan.internal.jaxrs.writer.interceptor;
 
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.vulcan.extension.EntityExtensionHandler;
 import com.liferay.portal.vulcan.internal.jaxrs.context.resolver.EntityExtensionHandlerContextResolver;
@@ -54,6 +56,8 @@ public class PageEntityExtensionWriterInterceptorTest {
 			_pageEntityExtensionWriterInterceptor, "_company", _company);
 		ReflectionTestUtil.setFieldValue(
 			_pageEntityExtensionWriterInterceptor, "_providers", _providers);
+		ReflectionTestUtil.setFieldValue(
+			_pageEntityExtensionWriterInterceptor, "_user", _user);
 	}
 
 	@Test
@@ -72,8 +76,14 @@ public class PageEntityExtensionWriterInterceptorTest {
 		);
 
 		Mockito.when(
+			_user.getUserId()
+		).thenReturn(
+			_USER_ID
+		);
+
+		Mockito.when(
 			_entityExtensionHandler.getExtendedProperties(
-				Mockito.anyLong(), Mockito.any())
+				Mockito.anyLong(), Mockito.anyLong(), Mockito.any())
 		).thenReturn(
 			extendedProperties
 		);
@@ -123,7 +133,8 @@ public class PageEntityExtensionWriterInterceptorTest {
 		Mockito.verify(
 			_entityExtensionHandler
 		).getExtendedProperties(
-			Mockito.eq(_COMPANY_ID), Mockito.eq(_TEST_ENTITY)
+			Mockito.eq(_COMPANY_ID), Mockito.eq(_USER_ID),
+			Mockito.eq(_TEST_ENTITY)
 		);
 
 		Mockito.verify(
@@ -266,6 +277,8 @@ public class PageEntityExtensionWriterInterceptorTest {
 
 	private static final TestEntity _TEST_ENTITY = new TestEntity();
 
+	private static final long _USER_ID = RandomTestUtil.randomLong();
+
 	private final Company _company = Mockito.mock(Company.class);
 	private final EntityExtensionHandler _entityExtensionHandler = Mockito.mock(
 		EntityExtensionHandler.class);
@@ -275,6 +288,7 @@ public class PageEntityExtensionWriterInterceptorTest {
 	private PageEntityExtensionWriterInterceptor
 		_pageEntityExtensionWriterInterceptor;
 	private final Providers _providers = Mockito.mock(Providers.class);
+	private final User _user = Mockito.mock(User.class);
 	private final WriterInterceptorContext _writerInterceptorContext =
 		Mockito.mock(WriterInterceptorContext.class);
 

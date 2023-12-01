@@ -60,7 +60,8 @@ public class EntityExtensionHandlerTest {
 
 		Mockito.when(
 			_mockedExtensionProvider1.getExtendedProperties(
-				Mockito.anyLong(), Mockito.anyString(), Mockito.any())
+				Mockito.anyLong(), Mockito.anyLong(), Mockito.anyString(),
+				Mockito.any())
 		).thenReturn(
 			testMap1
 		);
@@ -70,26 +71,28 @@ public class EntityExtensionHandlerTest {
 
 		Mockito.when(
 			_mockedExtensionProvider2.getExtendedProperties(
-				Mockito.anyLong(), Mockito.anyString(), Mockito.any())
+				Mockito.anyLong(), Mockito.anyLong(), Mockito.anyString(),
+				Mockito.any())
 		).thenReturn(
 			testMap2
 		);
 
 		Map<String, Serializable> extendedProperties =
-			_entityExtensionHandler.getExtendedProperties(_COMPANY_ID, _OBJECT);
+			_entityExtensionHandler.getExtendedProperties(
+				_COMPANY_ID, _USER_ID, _OBJECT);
 
 		Mockito.verify(
 			_mockedExtensionProvider1
 		).getExtendedProperties(
-			Mockito.eq(_COMPANY_ID), Mockito.eq(_CLASS_NAME),
-			Mockito.eq(_OBJECT)
+			Mockito.eq(_COMPANY_ID), Mockito.eq(_USER_ID),
+			Mockito.eq(_CLASS_NAME), Mockito.eq(_OBJECT)
 		);
 
 		Mockito.verify(
 			_mockedExtensionProvider2
 		).getExtendedProperties(
-			Mockito.eq(_COMPANY_ID), Mockito.eq(_CLASS_NAME),
-			Mockito.eq(_OBJECT)
+			Mockito.eq(_COMPANY_ID), Mockito.eq(_USER_ID),
+			Mockito.eq(_CLASS_NAME), Mockito.eq(_OBJECT)
 		);
 
 		Assert.assertEquals(

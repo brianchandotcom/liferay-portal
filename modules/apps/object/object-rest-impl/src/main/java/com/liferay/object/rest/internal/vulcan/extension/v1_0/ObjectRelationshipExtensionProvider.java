@@ -59,7 +59,7 @@ public class ObjectRelationshipExtensionProvider
 
 	@Override
 	public Map<String, Serializable> getExtendedProperties(
-			long companyId, String className, Object entity)
+			long companyId, long userId, String className, Object entity)
 		throws Exception {
 
 		ObjectDefinition objectDefinition = fetchObjectDefinition(

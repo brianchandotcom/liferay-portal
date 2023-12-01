@@ -2437,5 +2437,74 @@ definition {
 		}
 	}
 
+	@description = "LPS-182558. Verify it's possible to close the 'New Client Extension Filter' modal and the creation of a client extension filter."
+	@priority = 3
+	test CanCloseClientExtensionFilterCreation { 
+		task("Given a new Client Extension Frontend Data Set filter") {
+
+			ClientExtensionGeneral.goToRemoteAppsPortlet();
+
+			ClientExtensionGeneral.addFrontendDataSetFilter(
+				description = "New Client Extension Frontend Data Set Filter",
+				javaScriptURL = "https://liferay.github.io/liferay-frontend-projects/date-filter.js",
+				name = "Frontend Data Set Filter");
+		}
+
+		task("When the user goes to the Filter tab ") {
+			DataSetAdmin.goToDataSetAdminPage();
+
+			DataSetAdmin.goToDataSetViewAdminPage(dataSetName = "Data Set Test");
+
+			DataSetAdmin.goToTab(tabName = "Filters", dataSetViewName = "View Test");	
+		}
+
+		task("And clicks on plus button") {
+			LexiconEntry.gotoAdd();
+		}
+
+		task("And selects the Client Extension option") {
+			Click(key_fieldName = "Client Extension",
+            locator1 = "FormViewBuilder#OBJECT_FIELD_BUTTON_DROPDOWN");	
+		}
+
+		task("And the user fills the Name field") {
+			Type(
+				key_text = "Name",
+				locator1 = "TextInput#ANY",
+				value1 = "Liferay Sample Data Set Filter");
+		}
+
+		task("And selects an option on Filter by field"){
+			Click(
+				dropdownLabel = "Filter By",
+            	locator1 = "ObjectField#ANY_DROPDOWN_LABEL");
+
+        	DropdownMenuItem.click(menuItem = "creator");
+		}
+
+		task("When the user selects the created client extension") {
+			Click(
+				key_label = "Client Extension",
+            	locator1 = "FrontendDataSet#OPEN_DROPDOWN_MENU");
+
+			DropdownMenuItem.click(menuItem = "Frontend Data Set Filter");
+		}
+
+		task("And clicks on close button") {
+			Click(locator1 = "Button#CLOSE_MODAL",
+			key_modalTitle = "New Client Extension Filter");
+		}
+
+		task("Then the modal is closed") {
+			AssertElementNotPresent(locator1="AccessibilityMenu#MODAL_TITLE",
+			key_modal_title = "New Client Extension Filter");
+		}
+
+		task("And the client extension filter is not created") {
+			AssertElementNotPresent(locator1 = "DataSet#FILTERS_ENTRY",
+			key_entryName = "Liferay Sample Data Set Filter");
+		}
+	}
+
 
 }

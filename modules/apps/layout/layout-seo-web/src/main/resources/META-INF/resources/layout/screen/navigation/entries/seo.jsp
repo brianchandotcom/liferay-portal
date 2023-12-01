@@ -210,15 +210,14 @@ boolean nondefaultAssetDisplayPage = selLayout.isTypeAssetDisplay() && !layoutsS
 							<aui:validator errorMessage="please-enter-a-valid-page-priority" name="range">[0,1]</aui:validator>
 						</aui:input>
 
-						<aui:select cssClass="propagatable-field" disabled="<%= nondefaultAssetDisplayPage || selLayout.isLayoutPrototypeLinkActive() %>" label="change-frequency" name="TypeSettingsProperties--sitemap-changefreq--" value='<%= layoutTypeSettingsUnicodeProperties.getProperty("sitemap-changefreq", PropsValues.SITES_SITEMAP_DEFAULT_CHANGE_FREQUENCY) %>'>
-							<aui:option label="always" />
-							<aui:option label="hourly" />
-							<aui:option label="daily" />
-							<aui:option label="weekly" />
-							<aui:option label="monthly" />
-							<aui:option label="yearly" />
-							<aui:option label="never" />
-						</aui:select>
+						<clay:select
+							cssClass="propagatable-field"
+							disabled="<%= nondefaultAssetDisplayPage || selLayout.isLayoutPrototypeLinkActive() %>"
+							id='<%= liferayPortletResponse.getNamespace() + "sitemap-changefreq" %>'
+							label="change-frequency"
+							name="TypeSettingsProperties--sitemap-changefreq--"
+							options="<%= layoutsSEODisplayContext.getSitemapChangeFrequencySelectOptions() %>"
+						/>
 					</div>
 				</clay:sheet-section>
 			</clay:sheet>

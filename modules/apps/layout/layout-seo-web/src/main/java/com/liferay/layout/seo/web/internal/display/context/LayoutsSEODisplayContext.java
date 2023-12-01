@@ -16,6 +16,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureServiceUtil;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageEngineManager;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.SelectOption;
 import com.liferay.info.exception.NoSuchFormVariationException;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemClassDetails;
@@ -39,6 +40,7 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -59,15 +61,20 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLCodec;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.site.display.context.GroupDisplayContextHelper;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.portlet.MimeResponse;
 import javax.portlet.PortletRequest;
@@ -534,6 +541,30 @@ public class LayoutsSEODisplayContext {
 		).put(
 			"titleSuffix", getPageTitleSuffix()
 		).build();
+	}
+
+	public List<SelectOption> getSitemapChangeFrequencySelectOptions() {
+		Layout selLayout = getSelLayout();
+
+		UnicodeProperties layoutTypeSettingsUnicodeProperties =
+			selLayout.getTypeSettingsProperties();
+
+		String selectedSitemapChangeFrequencyOption =
+			layoutTypeSettingsUnicodeProperties.getProperty(
+				"sitemap-changefreq",
+				PropsValues.SITES_SITEMAP_DEFAULT_CHANGE_FREQUENCY);
+
+		return TransformUtil.transform(
+			Arrays.asList(
+				"always", "hourly", "daily", "weekly", "monthly", "yearly",
+				"never"),
+			sitemapChangeFrequencyOption -> new SelectOption(
+				LanguageUtil.get(
+					_httpServletRequest, sitemapChangeFrequencyOption),
+				sitemapChangeFrequencyOption,
+				Objects.equals(
+					sitemapChangeFrequencyOption,
+					selectedSitemapChangeFrequencyOption)));
 	}
 
 	public boolean isDefaultAssetDisplayPage() {

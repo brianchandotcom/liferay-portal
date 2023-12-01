@@ -35,41 +35,32 @@ List<CommerceDiscountRuleType> commerceDiscountRuleTypes = commerceDiscountDispl
 	</aui:form>
 
 	<aui:script require="commerce-frontend-js/utilities/eventsDefinitions as events, commerce-frontend-js/utilities/forms/index as FormUtils, commerce-frontend-js/ServiceProvider/index as ServiceProvider">
-		var CommerceDiscountRuleResource = ServiceProvider.default.AdminPricingAPI(
+		const CommerceDiscountRuleResource = ServiceProvider.default.AdminPricingAPI(
 			'v2'
 		);
 
-		Liferay.provide(
-			window,
-			'<portlet:namespace />apiSubmit',
-			(form) => {
-				var name = form.querySelector('#name').value;
+		Liferay.provide(window, '<portlet:namespace />apiSubmit', (form) => {
+			const discountRuleData = {
+				name: document.getElementById('name').value,
+				type: document.getElementById('type').value,
+			};
 
-				var commerceDiscountRuleType = form.querySelector('#type').value;
-
-				var discountRuleData = {
-					name: name,
-					type: commerceDiscountRuleType,
-				};
-
-				return CommerceDiscountRuleResource.addDiscountRule(
-					'<%= commerceDiscountDisplayContext.getCommerceDiscountId() %>',
-					discountRuleData
-				)
-					.then((payload) => {
-						window.parent.Liferay.fire(events.CLOSE_MODAL, {
-							successNotification: {
-								message:
-									'<liferay-ui:message key="your-request-completed-successfully" />',
-								showSuccessNotification: true,
-							},
-						});
-					})
-					.catch((error) => {
-						return Promise.reject(error);
+			return CommerceDiscountRuleResource.addDiscountRule(
+				'<%= commerceDiscountDisplayContext.getCommerceDiscountId() %>',
+				discountRuleData
+			)
+				.then((payload) => {
+					window.parent.Liferay.fire(events.CLOSE_MODAL, {
+						successNotification: {
+							message:
+								'<liferay-ui:message key="your-request-completed-successfully" />',
+							showSuccessNotification: true,
+						},
 					});
-			},
-			['liferay-portlet-url']
-		);
+				})
+				.catch((error) => {
+					return Promise.reject(error);
+				});
+		});
 	</aui:script>
 </commerce-ui:modal-content>

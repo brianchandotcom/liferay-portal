@@ -133,6 +133,8 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 			fragmentEntryLink.setCss(fragmentEntry.getCss());
 			fragmentEntryLink.setHtml(fragmentEntry.getHtml());
 			fragmentEntryLink.setJs(fragmentEntry.getJs());
+			fragmentEntryLink.setConfiguration(
+				fragmentEntry.getConfiguration());
 			fragmentEntryLink.setType(fragmentEntry.getType());
 		}
 

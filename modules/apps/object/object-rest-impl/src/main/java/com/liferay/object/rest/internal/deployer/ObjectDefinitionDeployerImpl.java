@@ -595,7 +595,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			HashMapDictionaryBuilder.<String, Object>put(
 				"osgi.jaxrs.application.select",
 				StringBundler.concat(
-					"(|(liferay.objects.exception.mapper = true)",
+					"(|(liferay.objects.exception.mapper=true)",
 					"(osgi.jaxrs.name= ", jaxRsApplicationName, "))")
 			).put(
 				"osgi.jaxrs.extension", "true"

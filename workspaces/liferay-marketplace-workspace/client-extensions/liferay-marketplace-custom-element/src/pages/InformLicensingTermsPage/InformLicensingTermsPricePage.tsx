@@ -8,16 +8,25 @@ import {NewAppPageFooterButtons} from '../../components/NewAppPageFooterButtons/
 import {Section} from '../../components/Section/Section';
 import {
 	LicensePrice,
+	PriceEntry,
+	Sku,
 	useAppContext,
 } from '../../manage-app-state/AppManageState';
 
 import './InformLicensingTermsPage.scss';
 import {LicenseTier} from '../../enums/licenseTier';
 import {TYPES} from '../../manage-app-state/actionTypes';
-import {getSKUById, patchSKUById} from '../../utils/api';
+import {
+	getPriceEntrieListByPricelistId,
+	getPricelistByCatalogName,
+	getProductById,
+	getProductIdSkusPage,
+	patchPriceEntry,
+	patchSKUById,
+	postPriceEntryIdTierPrice,
+} from '../../utils/api';
 import IconButton from './components/IconButton/IconButton';
 import LicensePriceCard from './components/LicensePriceCard';
-
 interface InformLicensingTermsPricePageProps {
 	onClickBack: () => void;
 	onClickContinue: () => void;
@@ -27,7 +36,7 @@ export function InformLicensingTermsPricePage({
 	onClickBack,
 	onClickContinue,
 }: InformLicensingTermsPricePageProps) {
-	const [{appLicensePrice, skuVersionId}, dispatch] = useAppContext();
+	const [{appLicensePrice, appProductId}, dispatch] = useAppContext();
 
 	const handleAddPriceTier = (licenseTier: LicenseTier) => {
 		dispatch({
@@ -59,6 +68,53 @@ export function InformLicensingTermsPricePage({
 			},
 			type: TYPES.UPDATE_APP_LICENSE_PRICES,
 		});
+	};
+
+	const handlePostPriceEntryIdTierPrice = async (sku: Sku) => {
+		const product = await getProductById({
+			nestedFields: 'catalog',
+			productId: appProductId,
+		});
+
+		const catalogName = product?.catalog?.name;
+		const priceList = await getPricelistByCatalogName(catalogName);
+		const priceListId = priceList?.items[0]?.id;
+		const priceEntries = await getPriceEntrieListByPricelistId(priceListId);
+		const priceEntryForUpdate = {
+			bulkPricing: true,
+			hasTierPrice: false,
+		};
+
+		const processTier = async (priceEntry: PriceEntry) => {
+			const skuName = priceEntry?.sku?.name?.toLowerCase();
+			const tiers = appLicensePrice[skuName];
+
+			for (const {key, value} of tiers || []) {
+				const tierPrice = {
+					minimumQuantity: key,
+					price: value,
+					priceEntryId: priceEntry?.priceEntryId,
+				};
+
+				await postPriceEntryIdTierPrice(
+					priceEntry?.priceEntryId,
+					tierPrice
+				);
+			}
+		};
+
+		for (const priceEntry of priceEntries?.items || []) {
+			if (priceEntry?.sku?.id === sku?.id) {
+				if (!priceEntry?.bulkPricing || priceEntry?.hasTierPrice) {
+					await patchPriceEntry(
+						priceEntryForUpdate,
+						priceEntry?.priceEntryId
+					);
+				}
+
+				await processTier(priceEntry);
+			}
+		}
 	};
 
 	return (
@@ -124,12 +180,19 @@ export function InformLicensingTermsPricePage({
 				onClickBack={() => onClickBack()}
 				onClickContinue={() => {
 					const submitLicensePrice = async () => {
-						const skuJSON = await getSKUById(skuVersionId);
-						const skuBody = {
-							...skuJSON,
-							price: parseFloat(appLicensePrice),
-						};
-						await patchSKUById(skuVersionId, skuBody);
+						const skusJSON = await getProductIdSkusPage(
+							appProductId
+						);
+
+						for (const sku of skusJSON?.items) {
+							const skuBody = {
+								...sku,
+								price: parseFloat(appLicensePrice),
+							};
+							handlePostPriceEntryIdTierPrice(sku);
+
+							await patchSKUById(sku?.id, skuBody);
+						}
 					};
 
 					submitLicensePrice();

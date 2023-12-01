@@ -39,6 +39,79 @@ export async function getCatalogId() {
 	return catalogs[0].id;
 }
 
+export function getDxpOptionBody() {
+	return {
+		fieldType: 'radio',
+		key: 'dxp-license-usage-type',
+		name: {en_US: 'DXP License Usage Type'},
+	};
+}
+
+export function getDxpProductOptionBody(newOptionId: number) {
+	return {
+		facetable: false,
+		fieldType: 'radio',
+		key: 'dxp-license-usage-type',
+		name: {
+			en_US: 'DXP License Usage Type',
+		},
+		optionId: newOptionId,
+		productOptionValues: [],
+		required: true,
+		skuContributor: true,
+	};
+}
+
+export function getLicenceTypesObject() {
+	return [
+		{key: 'developer', name: 'DEVELOPER'},
+		{key: 'standard', name: 'STANDARD'},
+		{key: 'trial', name: ' TRIAL'},
+	];
+}
+
+export function getOptionDeveloperBody() {
+	return {key: 'developer', name: {en_US: 'Developer'}, priority: 1};
+}
+
+export function getOptionNoBody() {
+	return {key: 'no', name: {en_US: 'No'}, priority: 0};
+}
+
+export function getOptionYesBody() {
+	return {key: 'yes', name: {en_US: 'Yes'}, priority: 1};
+}
+export function getOptionStandardBody() {
+	return {key: 'standard', name: {en_US: 'Standard'}, priority: 0};
+}
+
+export function getOptionTrialBody() {
+	return {key: 'trial', name: {en_US: 'Trial'}, priority: 2};
+}
+
+export function getTrialOptionBody() {
+	return {
+		fieldType: 'radio',
+		key: 'trial',
+		name: {en_US: 'Trial'},
+	};
+}
+
+export function getTrialProductOptionBody(newOptionId: number) {
+	return {
+		facetable: false,
+		fieldType: 'radio',
+		key: 'trial',
+		name: {
+			en_US: 'Trial',
+		},
+		optionId: newOptionId,
+		productOptionValues: [],
+		required: true,
+		skuContributor: true,
+	};
+}
+
 export function getInitials(userName: string) {
 	const names = userName.trim().split(' ');
 	const lastNameIndex = names.length - 1;

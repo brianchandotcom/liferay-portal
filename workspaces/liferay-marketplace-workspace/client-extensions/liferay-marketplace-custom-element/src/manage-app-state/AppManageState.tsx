@@ -12,12 +12,6 @@ type Specification = {
 	id: number;
 	value: string;
 };
-
-type LicenceTiersPrices = {
-	developer: LicensePrice[];
-	standard: LicensePrice[];
-};
-
 export type LicensePrice = {key: number; value: number};
 
 export type InitialStateProps = {
@@ -29,7 +23,7 @@ export type InitialStateProps = {
 	appId: string;
 	appInstallationGuideURL: Specification;
 	appLicense: Specification;
-	appLicensePrice: LicenceTiersPrices;
+	appLicensePrice: any;
 	appLogo: UploadedFile;
 	appName: string;
 	appNotes: string;
@@ -43,6 +37,11 @@ export type InitialStateProps = {
 	buildAppPackages: {[key: string]: UploadedFile[]};
 	catalogId: number;
 	dayTrial: string;
+	dxpOptionValuesId: {
+		developerOptionId: number;
+		standardOptionId: number;
+		trialOptionId: number;
+	};
 	gravatarAPI: string;
 	optionId: number;
 	optionValuesId: {noOptionId: number; yesOptionId: number};
@@ -54,6 +53,10 @@ export type InitialStateProps = {
 	supportURL: Specification;
 	versionName?: string;
 };
+
+export type Sku = {id: number};
+
+export type PriceEntry = {priceEntryId: number; sku: {name: string}};
 
 const initialState = ({
 	appBuild: 'upload',

@@ -594,6 +594,18 @@ export async function getProductSubscriptionConfiguration({
 	return await response.json();
 }
 
+export async function getProductIdSkusPage(productId: number) {
+	const response = await fetch(
+		`${baseURL}/o/headless-commerce-admin-catalog/v1.0/products/${productId}/skus`,
+		{
+			headers,
+			method: 'GET',
+		}
+	);
+
+	return await response.json();
+}
+
 export async function getSKUById(skuId: number) {
 	const response = await fetch(
 		`${baseURL}/o/headless-commerce-admin-catalog/v1.0/skus/${skuId}`,
@@ -770,21 +782,12 @@ export async function postCheckoutCart({
 	return (await await response.json()) as PostCheckoutCartResponse;
 }
 
-export async function postOptionValue(
-	key: string,
-	name: string,
-	optionId: number,
-	priority: number
-) {
+export async function postOptionValue(optionBody: any, optionId: number) {
 	{
 		const response = await fetch(
 			`${baseURL}/o/headless-commerce-admin-catalog/v1.0/productOptions/${optionId}/productOptionValues`,
 			{
-				body: JSON.stringify({
-					key,
-					name: {en_US: name},
-					priority,
-				}),
+				body: JSON.stringify(optionBody),
 				headers,
 				method: 'POST',
 			}
@@ -809,15 +812,53 @@ export async function postOrder(order: Order) {
 	return (await response.json()) as Order;
 }
 
-export async function postTrialOption() {
+export async function patchPriceEntry(priceEntry: any, priceEntryId: number) {
+	const response = await fetch(
+		`/o/headless-commerce-admin-pricing/v2.0/price-entries/${priceEntryId}`,
+		{
+			body: JSON.stringify(priceEntry),
+			headers,
+			method: 'PATCH',
+		}
+	);
+
+	return await response.json();
+}
+
+export async function postPriceEntryIdTierPrice(
+	priceEntryId: any,
+	tierPrice: any
+) {
+	const response = await fetch(
+		`/o/headless-commerce-admin-pricing/v2.0/price-entries/${priceEntryId}/tier-prices`,
+		{
+			body: JSON.stringify(tierPrice),
+			headers,
+			method: 'POST',
+		}
+	);
+
+	return await response.json();
+}
+
+export async function postProduct(product: any) {
+	const response = await fetch(
+		'/o/headless-commerce-admin-catalog/v1.0/products',
+		{
+			body: JSON.stringify(product),
+			headers,
+			method: 'POST',
+		}
+	);
+
+	return (await response.json()) as Product;
+}
+
+export async function postOption(optionBody: any) {
 	const response = await fetch(
 		`${baseURL}/o/headless-commerce-admin-catalog/v1.0/options`,
 		{
-			body: JSON.stringify({
-				fieldType: 'radio',
-				key: 'trial',
-				name: {en_US: 'Trial'},
-			}),
+			body: JSON.stringify(optionBody),
 			headers,
 			method: 'POST',
 		}
@@ -828,31 +869,14 @@ export async function postTrialOption() {
 	return id;
 }
 
-export async function postTrialProductOption(
-	optionId: number,
-	productId: number
+export async function postProductOption(
+	productId: number,
+	productOptionBody: any
 ) {
 	const response = await fetch(
 		`${baseURL}/o/headless-commerce-admin-catalog/v1.0/products/${productId}/productOptions`,
 		{
-			body: JSON.stringify([
-				{
-					description: {
-						en_US:
-							'Specifies if a trial exists for a given app or solution submission.',
-					},
-					facetable: true,
-					fieldType: 'radio',
-					key: 'trial',
-					name: {
-						en_US: 'Trial',
-					},
-					optionId,
-					productOptionValues: [],
-					required: true,
-					skuContributor: true,
-				},
-			]),
+			body: JSON.stringify([productOptionBody]),
 			headers,
 			method: 'POST',
 		}

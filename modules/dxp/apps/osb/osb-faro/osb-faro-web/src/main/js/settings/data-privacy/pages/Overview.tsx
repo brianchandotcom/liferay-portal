@@ -18,18 +18,35 @@ import {withCurrentUser} from 'shared/hoc';
 
 const DATA_RETENTION_PERIOD_KEY = 'data-retention-period';
 
+const ONE_DAY = '86400000';
+const ONE_MONTH = '2592000000';
 const SEVEN_MONTHS = '18144000000';
 const THIRTEEN_MONTHS = '33696000000';
+const TWO_DAYS = '172800000';
 
-const RETENTION_OPTIONS = [SEVEN_MONTHS, THIRTEEN_MONTHS];
+let RETENTION_OPTIONS = [SEVEN_MONTHS, THIRTEEN_MONTHS];
+
+if (FARO_ENV === 'uat') {
+	RETENTION_OPTIONS = [ONE_DAY, TWO_DAYS, SEVEN_MONTHS, THIRTEEN_MONTHS];
+}
 
 const convertMillisecondsToMonths = (milliseconds: number): number =>
 	Math.round(milliseconds / 1000 / 60 / 60 / 24 / 30);
 
-const getRetentionLabel = (milliseconds: number): string =>
-	sub(Liferay.Language.get('x-months'), [
+const convertMillisecondsToDays = (milliseconds: number): number =>
+	Math.round(milliseconds / 1000 / 60 / 60 / 24);
+
+const getRetentionLabel = (milliseconds: number): string => {
+	if (milliseconds < parseInt(ONE_MONTH)) {
+		return sub(Liferay.Language.get('x-days'), [
+			convertMillisecondsToDays(milliseconds)
+		]) as string;
+	}
+
+	return sub(Liferay.Language.get('x-months'), [
 		convertMillisecondsToMonths(milliseconds)
 	]) as string;
+};
 
 const fetchDownload = ({fromDate, groupId, toDate, type}) =>
 	fetch(

@@ -10,10 +10,14 @@ import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.Serializable;
@@ -98,6 +102,19 @@ public class ExportImportConfigurationFactory {
 		boolean secureConnection = ParamUtil.getBoolean(
 			portletRequest, "secureConnection");
 		long remoteGroupId = ParamUtil.getLong(portletRequest, "remoteGroupId");
+
+		if (Validator.isNull(remoteAddress) || (remotePort == 0)) {
+			Group group = GroupLocalServiceUtil.getGroup(sourceGroupId);
+
+			if (Validator.isNull(remoteAddress)) {
+				remoteAddress = group.getTypeSettingsProperty("remoteAddress");
+			}
+
+			if (remotePort == 0) {
+				remotePort = GetterUtil.getInteger(
+					group.getTypeSettingsProperty("remotePort"));
+			}
+		}
 
 		return buildDefaultRemotePublishingExportImportConfiguration(
 			themeDisplay.getUser(), sourceGroupId, privateLayout, remoteAddress,

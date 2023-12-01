@@ -438,16 +438,8 @@ public class ObjectValidationRuleLocalServiceTest {
 		ObjectValidationRule objectValidationRule = _addObjectValidationRule(
 			ObjectValidationRuleConstants.ENGINE_TYPE_DDM, _VALID_DDM_SCRIPT);
 
-		Assert.assertNotNull(
-			_objectValidationRuleLocalService.fetchObjectValidationRule(
-				objectValidationRule.getObjectValidationRuleId()));
-
-		_objectValidationRuleLocalService.deleteObjectValidationRule(
+		_testDeleteObjectValidationRule(
 			objectValidationRule.getObjectValidationRuleId());
-
-		Assert.assertNull(
-			_objectValidationRuleLocalService.fetchObjectValidationRule(
-				objectValidationRule.getObjectValidationRuleId()));
 
 		ObjectValidationRule systemObjectValidationRule =
 			_addObjectValidationRule(
@@ -464,16 +456,8 @@ public class ObjectValidationRuleLocalServiceTest {
 			() -> _objectValidationRuleLocalService.deleteObjectValidationRule(
 				systemObjectValidationRule.getObjectValidationRuleId()));
 
-		Assert.assertNotNull(
-			_objectValidationRuleLocalService.fetchObjectValidationRule(
-				systemObjectValidationRule.getObjectValidationRuleId()));
-
-		_objectValidationRuleLocalService.deleteObjectValidationRule(
+		_testDeleteObjectValidationRule(
 			systemObjectValidationRule.getObjectValidationRuleId());
-
-		Assert.assertNull(
-			_objectValidationRuleLocalService.fetchObjectValidationRule(
-				systemObjectValidationRule.getObjectValidationRuleId()));
 
 		ObjectField textObjectField = _objectFieldLocalService.fetchObjectField(
 			_objectDefinition.getObjectDefinitionId(), "textObjectField");
@@ -517,16 +501,8 @@ public class ObjectValidationRuleLocalServiceTest {
 					}
 				).build()));
 
-		Assert.assertNotNull(
-			_objectValidationRuleLocalService.fetchObjectValidationRule(
-				objectValidationRule.getObjectValidationRuleId()));
-
-		_objectValidationRuleLocalService.deleteObjectValidationRule(
+		_testDeleteObjectValidationRule(
 			objectValidationRule.getObjectValidationRuleId());
-
-		Assert.assertNull(
-			_objectValidationRuleLocalService.fetchObjectValidationRule(
-				objectValidationRule.getObjectValidationRuleId()));
 	}
 
 	@Test
@@ -741,6 +717,21 @@ public class ObjectValidationRuleLocalServiceTest {
 				}
 			}
 		}
+	}
+
+	private void _testDeleteObjectValidationRule(long objectValidationRuleId)
+		throws Exception {
+
+		Assert.assertNotNull(
+			_objectValidationRuleLocalService.fetchObjectValidationRule(
+				objectValidationRuleId));
+
+		_objectValidationRuleLocalService.deleteObjectValidationRule(
+			objectValidationRuleId);
+
+		Assert.assertNull(
+			_objectValidationRuleLocalService.fetchObjectValidationRule(
+				objectValidationRuleId));
 	}
 
 	private static final String _VALID_DDM_SCRIPT =

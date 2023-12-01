@@ -120,6 +120,7 @@ import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -511,7 +512,8 @@ public class StructuredContentResourceImpl
 
 		LocalDateTime localDateTime = LocalDateTimeUtil.toLocalDateTime(
 			structuredContent.getDatePublished(),
-			journalArticle.getDisplayDate());
+			journalArticle.getDisplayDate(),
+			ZoneId.of(contextUser.getTimeZoneId()));
 
 		return _toStructuredContent(
 			_journalArticleService.updateArticle(
@@ -716,7 +718,8 @@ public class StructuredContentResourceImpl
 			structuredContent.getContentStructureId());
 
 		LocalDateTime localDateTime = LocalDateTimeUtil.toLocalDateTime(
-			structuredContent.getDatePublished());
+			structuredContent.getDatePublished(), null,
+			ZoneId.of(contextUser.getTimeZoneId()));
 
 		Map<Locale, String> titleMap = LocalizedMapUtil.getLocalizedMap(
 			contextAcceptLanguage.getPreferredLocale(),
@@ -1306,7 +1309,8 @@ public class StructuredContentResourceImpl
 
 		LocalDateTime localDateTime = LocalDateTimeUtil.toLocalDateTime(
 			structuredContent.getDatePublished(),
-			journalArticle.getDisplayDate());
+			journalArticle.getDisplayDate(),
+			ZoneId.of(contextUser.getTimeZoneId()));
 
 		return _toStructuredContent(
 			_journalArticleService.updateArticle(

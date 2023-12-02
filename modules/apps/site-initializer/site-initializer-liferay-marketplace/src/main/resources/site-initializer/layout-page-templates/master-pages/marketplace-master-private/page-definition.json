@@ -830,7 +830,7 @@
 							{
 								"definition": {
 									"fragment": {
-										"key": "marketplace-footer",
+										"key": "marketplace-footer-private",
 										"siteKey": "[$GROUP_KEY$]"
 									},
 									"fragmentConfig": {

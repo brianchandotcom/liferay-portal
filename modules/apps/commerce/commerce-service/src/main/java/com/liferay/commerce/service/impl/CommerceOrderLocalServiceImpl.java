@@ -39,7 +39,10 @@ import com.liferay.commerce.model.attributes.provider.CommerceModelAttributesPro
 import com.liferay.commerce.order.CommerceOrderThreadLocal;
 import com.liferay.commerce.price.CommerceOrderPrice;
 import com.liferay.commerce.price.CommerceOrderPriceCalculation;
+import com.liferay.commerce.product.constants.CommerceChannelAccountEntryRelConstants;
 import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.product.model.CommerceChannelAccountEntryRel;
+import com.liferay.commerce.product.service.CommerceChannelAccountEntryRelLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceAddressLocalService;
 import com.liferay.commerce.service.CommerceOrderItemLocalService;
@@ -216,6 +219,7 @@ public class CommerceOrderLocalServiceImpl
 		// Commerce order
 
 		_validateAccountOrdersLimit(groupId, commerceAccountId);
+		_validateCommerceChannelAccount(groupId, commerceAccountId);
 		_validateGuestOrders();
 
 		if (commerceCurrencyId <= 0) {
@@ -2768,6 +2772,34 @@ public class CommerceOrderLocalServiceImpl
 		}
 	}
 
+	private void _validateCommerceChannelAccount(
+			long commerceChannelGroupId, long accountEntryId)
+		throws PortalException {
+
+		CommerceChannel commerceChannel =
+			_commerceChannelLocalService.getCommerceChannelByGroupId(
+				commerceChannelGroupId);
+
+		CommerceChannelAccountEntryRel commerceChannelAccountEntryRel =
+			_commerceChannelAccountEntryRelLocalService.
+				fetchCommerceChannelAccountEntryRel(
+					accountEntryId, commerceChannel.getCommerceChannelId(),
+					CommerceChannelAccountEntryRelConstants.TYPE_ELIGIBILITY);
+
+		int commerceChannelAccountEntryRelsCount =
+			_commerceChannelAccountEntryRelLocalService.
+				getCommerceChannelAccountEntryRelsCount(
+					commerceChannel.getCommerceChannelId(), null,
+					CommerceChannelAccountEntryRelConstants.TYPE_ELIGIBILITY);
+
+		if ((commerceChannelAccountEntryRel == null) &&
+			(commerceChannelAccountEntryRelsCount != 0)) {
+
+			throw new PortalException(
+				"This account is not eligible for this channel");
+		}
+	}
+
 	private void _validateGuestOrders() throws PortalException {
 		int count = commerceOrderPersistence.countByUserId(
 			UserConstants.USER_ID_DEFAULT);
@@ -2790,6 +2822,10 @@ public class CommerceOrderLocalServiceImpl
 
 	@Reference
 	private CommerceAddressLocalService _commerceAddressLocalService;
+
+	@Reference
+	private CommerceChannelAccountEntryRelLocalService
+		_commerceChannelAccountEntryRelLocalService;
 
 	@Reference
 	private CommerceChannelLocalService _commerceChannelLocalService;

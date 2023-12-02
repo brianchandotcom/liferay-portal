@@ -17,7 +17,8 @@
 					{
 						"definition": {
 							"indexed": true,
-							"layout": {}
+							"layout": {
+							}
 						},
 						"pageElements": [
 							{
@@ -90,13 +91,16 @@
 																"key": "liferay-sites",
 																"siteKey": "[$GROUP_KEY$]"
 															},
-															"fragmentConfig": {},
-															"fragmentFields": [],
+															"fragmentConfig": {
+															},
+															"fragmentFields": [
+															],
 															"indexed": true
 														},
 														"pageElements": [
 															{
-																"definition": {},
+																"definition": {
+																},
 																"pageElements": [
 																	{
 																		"definition": {
@@ -104,48 +108,56 @@
 																				"key": "sites",
 																				"siteKey": "[$GROUP_KEY$]"
 																			},
-																			"fragmentConfig": {},
+																			"fragmentConfig": {
+																			},
 																			"fragmentFields": [
 																				{
 																					"id": "menuItemTextcommunity",
 																					"value": {
-																						"fragmentLink": {}
+																						"fragmentLink": {
+																						}
 																					}
 																				},
 																				{
 																					"id": "menuItemTextLiferay",
 																					"value": {
-																						"fragmentLink": {}
+																						"fragmentLink": {
+																						}
 																					}
 																				},
 																				{
 																					"id": "menuItemTextLiferayLearn",
 																					"value": {
-																						"fragmentLink": {}
+																						"fragmentLink": {
+																						}
 																					}
 																				},
 																				{
 																					"id": "menuItemTextCustomerPortal",
 																					"value": {
-																						"fragmentLink": {}
+																						"fragmentLink": {
+																						}
 																					}
 																				},
 																				{
 																					"id": "menuItemTextHelpCenter",
 																					"value": {
-																						"fragmentLink": {}
+																						"fragmentLink": {
+																						}
 																					}
 																				},
 																				{
 																					"id": "menuItemTextMarketplace",
 																					"value": {
-																						"fragmentLink": {}
+																						"fragmentLink": {
+																						}
 																					}
 																				},
 																				{
 																					"id": "menuItemTextpartner",
 																					"value": {
-																						"fragmentLink": {}
+																						"fragmentLink": {
+																						}
 																					}
 																				}
 																			],
@@ -220,25 +232,29 @@
 																{
 																	"id": "suggestionsPopularItem4",
 																	"value": {
-																		"fragmentLink": {}
+																		"fragmentLink": {
+																		}
 																	}
 																},
 																{
 																	"id": "suggestionsPopularItem3",
 																	"value": {
-																		"fragmentLink": {}
+																		"fragmentLink": {
+																		}
 																	}
 																},
 																{
 																	"id": "suggestionsPopularItem2",
 																	"value": {
-																		"fragmentLink": {}
+																		"fragmentLink": {
+																		}
 																	}
 																},
 																{
 																	"id": "suggestionsPopularItem1",
 																	"value": {
-																		"fragmentLink": {}
+																		"fragmentLink": {
+																		}
 																	}
 																}
 															],
@@ -274,7 +290,8 @@
 																{
 																	"id": "link_notifications",
 																	"value": {
-																		"fragmentLink": {}
+																		"fragmentLink": {
+																		}
 																	}
 																}
 															],
@@ -290,7 +307,9 @@
 									},
 									{
 										"definition": {
-											"cssClasses": ["nav-mobile-class"],
+											"cssClasses": [
+												"nav-mobile-class"
+											],
 											"customCSS": ".[$FRAGMENT_CLASS$] {\n \n}",
 											"fragmentStyle": {
 												"borderWidth": "0",
@@ -535,10 +554,12 @@
 																"displayStyle": "horizontal",
 																"hoveredItemColor": "#0053F0",
 																"selectedItemColor": "",
-																"source": {},
+																"source": {
+																},
 																"sublevels": "-1"
 															},
-															"fragmentFields": [],
+															"fragmentFields": [
+															],
 															"indexed": true
 														},
 														"type": "Fragment"
@@ -594,8 +615,10 @@
 																"key": "mobile-menu-buttom",
 																"siteKey": "[$GROUP_KEY$]"
 															},
-															"fragmentConfig": {},
-															"fragmentFields": [],
+															"fragmentConfig": {
+															},
+															"fragmentFields": [
+															],
 															"fragmentStyle": {
 																"hidden": true
 															},
@@ -623,7 +646,8 @@
 														},
 														"pageElements": [
 															{
-																"definition": {},
+																"definition": {
+																},
 																"type": "FragmentDropZone"
 															}
 														],
@@ -644,13 +668,15 @@
 										"minHeight": "50vh"
 									},
 									"indexed": true,
-									"layout": {}
+									"layout": {
+									}
 								},
 								"pageElements": [
 									{
 										"definition": {
 											"fragmentSettings": {
-												"unallowedFragments": []
+												"unallowedFragments": [
+												]
 											}
 										},
 										"type": "DropZone"
@@ -688,7 +714,8 @@
 										}
 									],
 									"indexed": true,
-									"layout": {}
+									"layout": {
+									}
 								},
 								"pageElements": [
 									{
@@ -700,7 +727,8 @@
 												"bottomSpacing": "3",
 												"separatorColor": "light"
 											},
-											"fragmentFields": [],
+											"fragmentFields": [
+											],
 											"fragmentStyle": {
 												"hidden": true,
 												"textColor": "brandColor2"
@@ -744,12 +772,13 @@
 											},
 											"fragmentConfig": {
 												"displayStyle": "stacked",
-												"selectedItemColor": "",
-												"sublevels": "-1",
 												"hoveredItemColor": "",
-												"source": "{\"siteNavigationMenuId\":\"57205\",\"parentSiteNavigationMenuItemId\":\"0\",\"privateLayout\":\"false\",\"title\":\"Mobile Menu\",\"type\":\"class com.liferay.site.navigation.item.selector.SiteNavigationMenuItemSelectorReturnType\"}"
+												"selectedItemColor": "",
+												"source": "{\"siteNavigationMenuId\":\"57205\",\"parentSiteNavigationMenuItemId\":\"0\",\"privateLayout\":\"false\",\"title\":\"Mobile Menu\",\"type\":\"class com.liferay.site.navigation.item.selector.SiteNavigationMenuItemSelectorReturnType\"}",
+												"sublevels": "-1"
 											},
-											"fragmentFields": [],
+											"fragmentFields": [
+											],
 											"fragmentStyle": {
 												"hidden": true
 											},
@@ -794,7 +823,8 @@
 					{
 						"definition": {
 							"indexed": true,
-							"layout": {}
+							"layout": {
+							}
 						},
 						"pageElements": [
 							{
@@ -803,8 +833,10 @@
 										"key": "marketplace-footer",
 										"siteKey": "[$GROUP_KEY$]"
 									},
-									"fragmentConfig": {},
-									"fragmentFields": [],
+									"fragmentConfig": {
+									},
+									"fragmentFields": [
+									],
 									"indexed": true
 								},
 								"type": "Fragment"

@@ -124,6 +124,43 @@ import org.springframework.context.ConfigurableApplicationContext;
  */
 public class ModuleFrameworkImpl implements ModuleFramework {
 
+	@Override
+	public Framework createFramework() throws Exception {
+		if (_log.isDebugEnabled()) {
+			_log.debug("Initializing the OSGi framework");
+		}
+
+		_validateModuleFrameworkBaseDirForEquinox();
+
+		_initRequiredStartupDirs();
+
+		Thread currentThread = Thread.currentThread();
+
+		ServiceLoader<FrameworkFactory> serviceLoader = ServiceLoader.load(
+			FrameworkFactory.class, currentThread.getContextClassLoader());
+
+		Iterator<FrameworkFactory> iterator = serviceLoader.iterator();
+
+		FrameworkFactory frameworkFactory = iterator.next();
+
+		if (_log.isDebugEnabled()) {
+			Class<?> clazz = frameworkFactory.getClass();
+
+			_log.debug("Using the OSGi framework factory " + clazz.getName());
+		}
+
+		Map<String, String> properties = _buildFrameworkProperties(
+			frameworkFactory.getClass());
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Creating a new OSGi framework instance");
+		}
+
+		_framework = frameworkFactory.newFramework(properties);
+
+		return _framework;
+	}
+
 	public Bundle getBundle(
 			BundleContext bundleContext, InputStream inputStream)
 		throws PortalException {
@@ -166,40 +203,10 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 	@Override
 	public void initFramework() throws Exception {
 		if (_log.isDebugEnabled()) {
-			_log.debug("Initializing the OSGi framework");
-		}
-
-		_validateModuleFrameworkBaseDirForEquinox();
-
-		_initRequiredStartupDirs();
-
-		Thread currentThread = Thread.currentThread();
-
-		ServiceLoader<FrameworkFactory> serviceLoader = ServiceLoader.load(
-			FrameworkFactory.class, currentThread.getContextClassLoader());
-
-		Iterator<FrameworkFactory> iterator = serviceLoader.iterator();
-
-		FrameworkFactory frameworkFactory = iterator.next();
-
-		if (_log.isDebugEnabled()) {
-			Class<?> clazz = frameworkFactory.getClass();
-
-			_log.debug("Using the OSGi framework factory " + clazz.getName());
-		}
-
-		Map<String, String> properties = _buildFrameworkProperties(
-			frameworkFactory.getClass());
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Creating a new OSGi framework instance");
-		}
-
-		_framework = frameworkFactory.newFramework(properties);
-
-		if (_log.isDebugEnabled()) {
 			_log.debug("Initializing the new OSGi framework instance");
 		}
+
+		Thread currentThread = Thread.currentThread();
 
 		ClassLoader classLoader = currentThread.getContextClassLoader();
 

@@ -78,6 +78,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Future;
 import java.util.concurrent.FutureTask;
 
 import javax.servlet.ServletContext;
@@ -355,9 +356,21 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 			}
 		}
 
+		ModuleFrameworkUtil.createFramework();
+
+		ExecutorService executorService =
+			SystemExecutorServiceUtil.getExecutorService();
+
+		Future<?> future = executorService.submit(
+			() -> {
+				DBInitUtil.init();
+
+				return null;
+			});
+
 		ModuleFrameworkUtil.initFramework();
 
-		DBInitUtil.init();
+		future.get();
 
 		_arrayApplicationContext = new ArrayApplicationContext(
 			PropsValues.SPRING_INFRASTRUCTURE_CONFIGS);
@@ -392,9 +405,6 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 
 					return null;
 				});
-
-			ExecutorService executorService =
-				SystemExecutorServiceUtil.getExecutorService();
 
 			executorService.submit(
 				SystemExecutorServiceUtil.renameThread(

@@ -204,6 +204,8 @@ public class InitUtil {
 				PropsValues.LIFERAY_WEB_PORTAL_CONTEXT_TEMPDIR =
 					System.getProperty(SystemProperties.TMP_DIR);
 
+				ModuleFrameworkUtil.createFramework();
+
 				ModuleFrameworkUtil.initFramework();
 
 				if (initFrameworkCallbackRunnable != null) {

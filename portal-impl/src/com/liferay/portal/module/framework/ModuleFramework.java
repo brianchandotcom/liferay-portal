@@ -13,6 +13,8 @@ import org.osgi.framework.launch.Framework;
  */
 public interface ModuleFramework {
 
+	public Framework createFramework() throws Exception;
+
 	public Framework getFramework();
 
 	public void initFramework() throws Exception;

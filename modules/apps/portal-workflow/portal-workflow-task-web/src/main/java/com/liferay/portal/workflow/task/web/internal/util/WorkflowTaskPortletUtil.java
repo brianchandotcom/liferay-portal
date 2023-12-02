@@ -14,7 +14,6 @@ import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.workflow.comparator.WorkflowComparatorFactory;
-import com.liferay.portal.workflow.task.web.internal.configuration.WorkflowTaskWebConfiguration;
 
 import javax.portlet.PortletRequest;
 
@@ -33,13 +32,8 @@ public class WorkflowTaskPortletUtil {
 			portletRequest, "displayStyle");
 
 		if (Validator.isNull(displayStyle)) {
-			WorkflowTaskWebConfiguration workflowTaskWebConfiguration =
-				(WorkflowTaskWebConfiguration)portletRequest.getAttribute(
-					WorkflowTaskWebConfiguration.class.getName());
-
 			displayStyle = portalPreferences.getValue(
-				PortletKeys.MY_WORKFLOW_TASK, "display-style",
-				workflowTaskWebConfiguration.defaultDisplayView());
+				PortletKeys.MY_WORKFLOW_TASK, "display-style", "list");
 		}
 		else if (ArrayUtil.contains(displayViews, displayStyle)) {
 			portalPreferences.setValue(

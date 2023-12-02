@@ -2018,7 +2018,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 	@Test
 	public void testPostWithAllFields() throws Exception {
 		_addAPIApplicationWithPostEndpoint(
-			true, 1, _objectDefinition1.getExternalReferenceCode());
+			true, _objectDefinition1.getExternalReferenceCode());
 
 		_publishAPIApplication(_API_APPLICATION_ERC_1);
 
@@ -2247,7 +2247,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 	@Test
 	public void testPostWithoutResponseSchema() throws Exception {
 		_addAPIApplicationWithPostEndpoint(
-			false, 1, _objectDefinition1.getExternalReferenceCode());
+			false, _objectDefinition1.getExternalReferenceCode());
 
 		_publishAPIApplication(_API_APPLICATION_ERC_1);
 
@@ -2448,7 +2448,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 	}
 
 	private void _addAPIApplicationWithPostEndpoint(
-			boolean addResponseSchema, int index,
+			boolean addResponseSchema,
 			String objectDefinitionExternalReferenceCode)
 		throws Exception {
 
@@ -2476,7 +2476,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 								"name", "attachmentProperty"
 							).put(
 								"objectFieldERC",
-								_API_SCHEMA_ATTACHMENT_FIELD_ERC + index
+								_API_SCHEMA_ATTACHMENT_FIELD_ERC + 1
 							),
 							JSONUtil.put(
 								"description", "description"
@@ -2484,15 +2484,14 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 								"name", "booleanProperty"
 							).put(
 								"objectFieldERC",
-								_API_SCHEMA_BOOLEAN_FIELD_ERC + index
+								_API_SCHEMA_BOOLEAN_FIELD_ERC + 1
 							),
 							JSONUtil.put(
 								"description", "description"
 							).put(
 								"name", "dateProperty"
 							).put(
-								"objectFieldERC",
-								_API_SCHEMA_DATE_FIELD_ERC + index
+								"objectFieldERC", _API_SCHEMA_DATE_FIELD_ERC + 1
 							),
 							JSONUtil.put(
 								"description", "description"
@@ -2500,7 +2499,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 								"name", "dateTimeProperty"
 							).put(
 								"objectFieldERC",
-								_API_SCHEMA_DATE_TIME_FIELD_ERC + index
+								_API_SCHEMA_DATE_TIME_FIELD_ERC + 1
 							),
 							JSONUtil.put(
 								"description", "description"
@@ -2508,7 +2507,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 								"name", "decimalProperty"
 							).put(
 								"objectFieldERC",
-								_API_SCHEMA_DECIMAL_FIELD_ERC + index
+								_API_SCHEMA_DECIMAL_FIELD_ERC + 1
 							),
 							JSONUtil.put(
 								"description", "description"
@@ -2516,7 +2515,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 								"name", "integerProperty"
 							).put(
 								"objectFieldERC",
-								_API_SCHEMA_INTEGER_FIELD_ERC + index
+								_API_SCHEMA_INTEGER_FIELD_ERC + 1
 							),
 							JSONUtil.put(
 								"description", "description"
@@ -2524,7 +2523,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 								"name", "longIntegerProperty"
 							).put(
 								"objectFieldERC",
-								_API_SCHEMA_LONG_INTEGER_FIELD_ERC + index
+								_API_SCHEMA_LONG_INTEGER_FIELD_ERC + 1
 							),
 							JSONUtil.put(
 								"description", "description"
@@ -2532,7 +2531,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 								"name", "longTextProperty"
 							).put(
 								"objectFieldERC",
-								_API_SCHEMA_LONG_TEXT_FIELD_ERC + index
+								_API_SCHEMA_LONG_TEXT_FIELD_ERC + 1
 							),
 							JSONUtil.put(
 								"description", "description"
@@ -2540,8 +2539,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 								"name", "multiselectPicklistProperty"
 							).put(
 								"objectFieldERC",
-								_API_SCHEMA_MULTISELECT_PICKLIST_FIELD_ERC +
-									index
+								_API_SCHEMA_MULTISELECT_PICKLIST_FIELD_ERC + 1
 							),
 							JSONUtil.put(
 								"description", "description"
@@ -2549,7 +2547,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 								"name", "picklistProperty"
 							).put(
 								"objectFieldERC",
-								_API_SCHEMA_PICKLIST_FIELD_ERC + index
+								_API_SCHEMA_PICKLIST_FIELD_ERC + 1
 							),
 							JSONUtil.put(
 								"description", "description"
@@ -2557,7 +2555,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 								"name", "precisionDecimalProperty"
 							).put(
 								"objectFieldERC",
-								_API_SCHEMA_PRECISION_DECIMAL_FIELD_ERC + index
+								_API_SCHEMA_PRECISION_DECIMAL_FIELD_ERC + 1
 							),
 							JSONUtil.put(
 								"description", "description"
@@ -2565,15 +2563,14 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 								"name", "richTextProperty"
 							).put(
 								"objectFieldERC",
-								_API_SCHEMA_RICH_TEXT_FIELD_ERC + index
+								_API_SCHEMA_RICH_TEXT_FIELD_ERC + 1
 							),
 							JSONUtil.put(
 								"description", "description"
 							).put(
 								"name", "textProperty"
 							).put(
-								"objectFieldERC",
-								_API_SCHEMA_TEXT_FIELD_ERC + index
+								"objectFieldERC", _API_SCHEMA_TEXT_FIELD_ERC + 1
 							),
 							JSONUtil.put(
 								"description", "description"
@@ -2581,7 +2578,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 								"name", "textUniqueProperty"
 							).put(
 								"objectFieldERC",
-								_API_SCHEMA_UNIQUE_TEXT_FIELD_ERC + index
+								_API_SCHEMA_UNIQUE_TEXT_FIELD_ERC + 1
 							))
 					).put(
 						"description", "description"

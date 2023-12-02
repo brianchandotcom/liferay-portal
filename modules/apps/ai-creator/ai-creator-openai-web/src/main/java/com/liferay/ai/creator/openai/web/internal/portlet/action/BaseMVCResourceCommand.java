@@ -10,7 +10,6 @@ import com.liferay.ai.creator.openai.web.internal.client.AICreatorOpenAIClient;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -25,8 +24,9 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Roberto Díaz
  * @author Lourdes Fernández Besada
  */
-public abstract class BaseAICreatorOpenAIResouceCommand
-	extends BaseMVCResourceCommand {
+public abstract class BaseMVCResourceCommand
+	extends
+	com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand {
 
 	protected void addDisabledConfigurationErrorMessage(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)

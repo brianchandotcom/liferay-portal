@@ -106,6 +106,16 @@ public class MockAICreatorOpenAIClient implements AICreatorOpenAIClient {
 			new UnsupportedOperationException("Unsupported key: " + key));
 	}
 
+	private String[] _getGenerations(String url, int count) {
+		String[] generations = new String[count];
+
+		for (int i = 0; i < count; i++) {
+			generations[i] = url;
+		}
+
+		return generations;
+	}
+
 	private String _getSampleCompletion(long sleepMillis) {
 		if ((sleepMillis <= 0) || (sleepMillis > 10000)) {
 			return "OPENAI_API_COMPLETION_RESPONSE_CONTENT";
@@ -121,16 +131,6 @@ public class MockAICreatorOpenAIClient implements AICreatorOpenAIClient {
 		}
 
 		return "OPENAI_API_COMPLETION_RESPONSE_CONTENT";
-	}
-
-	private String[] _getGenerations(String url, int count) {
-		String[] generations = new String[count];
-
-		for (int i = 0; i < count; i++) {
-			generations[i] = url;
-		}
-
-		return generations;
 	}
 
 	private static final String _USER_CONTENT_SLEEP_MILLIS_PREFIX =

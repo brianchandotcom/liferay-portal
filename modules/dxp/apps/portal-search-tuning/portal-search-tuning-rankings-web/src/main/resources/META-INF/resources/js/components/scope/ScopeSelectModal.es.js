@@ -13,7 +13,6 @@ import React, {useEffect, useState} from 'react';
 
 import {fetchResponse} from '../../utils/api.es';
 import {DELTAS, SCOPE_TYPES} from '../../utils/constants.es';
-import {sub} from '../../utils/language.es';
 
 /**
  * Modal that opens when user clicks on "View More" in ScopeSelect dropdown.
@@ -26,6 +25,7 @@ const ScopeSelectModal = ({
 	locator,
 	observer,
 	onSubmit,
+	paramPrefix = '',
 	selected = '',
 	title,
 	type = SCOPE_TYPES.SITE,
@@ -39,7 +39,10 @@ const ScopeSelectModal = ({
 	useEffect(() => {
 		setLoading(true);
 
-		fetchResponse(fetchItemsUrl, {page: activePage, pageSize: delta})
+		fetchResponse(fetchItemsUrl, {
+			[`${paramPrefix}page`]: activePage,
+			[`${paramPrefix}pageSize`]: delta,
+		})
 			.then((response) => {
 				setResource(response);
 			})
@@ -49,7 +52,7 @@ const ScopeSelectModal = ({
 			.finally(() => {
 				setLoading(false);
 			});
-	}, [activePage, delta, fetchItemsUrl]);
+	}, [activePage, delta, fetchItemsUrl, paramPrefix]);
 
 	/**
 	 * Handles what is displayed depending on loading/error/results/no results.
@@ -94,11 +97,10 @@ const ScopeSelectModal = ({
 								</ClayTable.Cell>
 
 								<ClayTable.Cell expanded headingCell>
-									{type === SCOPE_TYPES.SITE
-										? Liferay.Language.get('child-sites')
-										: Liferay.Language.get(
-												'external-reference-code'
-										  )}
+									{type === SCOPE_TYPES.SXP_BLUEPRINT &&
+										Liferay.Language.get(
+											'external-reference-code'
+										)}
 								</ClayTable.Cell>
 							</ClayTable.Row>
 						</ClayTable.Head>
@@ -111,14 +113,8 @@ const ScopeSelectModal = ({
 									</ClayTable.Cell>
 
 									<ClayTable.Cell>
-										{type === SCOPE_TYPES.SITE
-											? sub(
-													Liferay.Language.get(
-														'x-child-sites'
-													),
-													[item.sites?.length]
-											  )
-											: item.externalReferenceCode}
+										{type === SCOPE_TYPES.SXP_BLUEPRINT &&
+											item.externalReferenceCode}
 									</ClayTable.Cell>
 
 									<ClayTable.Cell align="right">
@@ -194,6 +190,7 @@ export default function ({
 	fetchItemsUrl,
 	locator,
 	onSubmit,
+	paramPrefix,
 	selected,
 	title,
 	type,
@@ -214,6 +211,7 @@ export default function ({
 					locator={locator}
 					observer={observer}
 					onSubmit={_handleSubmit}
+					paramPrefix={paramPrefix}
 					selected={selected}
 					title={title}
 					type={type}

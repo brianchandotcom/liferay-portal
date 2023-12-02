@@ -118,9 +118,6 @@ public class ProductOptionValueDTOConverter
 					cpDefinitionOptionRel.getCPDefinitionOptionRelId();
 				quantity = String.valueOf(
 					cpDefinitionOptionValueRel.getQuantity());
-
-				skuId =
-					(cpInstance == null) ? null : cpInstance.getCPInstanceId();
 				unitOfMeasureKey =
 					cpDefinitionOptionValueRel.getUnitOfMeasureKey();
 
@@ -377,6 +374,14 @@ public class ProductOptionValueDTOConverter
 
 						return true;
 					});
+				setSkuId(
+					() -> {
+						if (cpInstance == null) {
+							return null;
+						}
+
+						return cpInstance.getCPInstanceId();
+					});
 				setVisible(
 					() -> {
 						if (!cpDefinitionOptionRel.isSkuContributor() ||
@@ -489,13 +494,12 @@ public class ProductOptionValueDTOConverter
 
 		COREntryType corEntryType = _corEntryTypeRegistry.getCOREntryType(
 			COREntryConstants.TYPE_PRODUCTS_LIMIT);
+		List<Long> cProductIds = new ArrayList<>();
 
 		List<COREntry> corEntries = _corEntryLocalService.getCOREntries(
 			cpDefinitionOptionRel.getCompanyId(), true,
 			COREntryConstants.TYPE_PRODUCTS_LIMIT, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS);
-
-		List<Long> cProductIds = new ArrayList<>();
 
 		for (COREntry corEntry : corEntries) {
 			if (!corEntryType.evaluate(corEntry, corEntryTypeItems)) {

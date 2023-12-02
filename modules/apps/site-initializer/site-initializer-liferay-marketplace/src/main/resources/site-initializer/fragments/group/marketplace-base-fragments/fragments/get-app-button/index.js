@@ -9,6 +9,9 @@ const contactPublisherButtonElement = fragmentElement.querySelector(
 	'button#contact-publisher'
 );
 const getAppButtonElement = fragmentElement.querySelector('button#get-app');
+const getAppDescriptionElement = fragmentElement.querySelector(
+	'#get-app-description'
+);
 const tooltipElement = fragmentElement.querySelector('.clay-tooltip-bottom');
 
 const productId = fragmentElement
@@ -16,18 +19,62 @@ const productId = fragmentElement
 	.innerText.replace(/[\n\r]+|[\s]{2,}/g, ' ')
 	.trim();
 
-const redirectPage = () => {
-	if (layoutMode !== 'edit') {
-		getAppButtonElement.onclick = () => {
-			window.location.href = `${getSiteURL()}/get-app?productId=${productId}`;
-		};
+const getSkuOptionValue = (sku, optionValue) =>
+	sku.toLowerCase() === optionValue ||
+	(sku?.skuOptions?.some(
+		(skuOption) => skuOption.skuOptionValueKey === optionType
+	) &&
+		sku.purchasable);
+
+const getProductPrice = (product) => {
+	const {productSpecifications = []} = product;
+
+	const priceModel = productSpecifications.find(
+		(productSpecification) =>
+			productSpecification.specificationKey === 'price-model'
+	);
+
+	if (priceModel?.value === 'Free') {
+		return 'Free';
 	}
+
+	const licenseType = productSpecifications.find(
+		(productSpecification) =>
+			productSpecification.specificationKey === 'license-type'
+	);
+
+	const licenseTypeText =
+		licenseType?.value === 'Perpetual' ? 'One-Time' : 'Annually';
+
+	const hasTrialSku = product?.skus?.some(({sku}) =>
+		getSkuOptionValue(sku, 'trial')
+	);
+
+	const standardSku =
+		product?.skus?.find(({sku}) => getSkuOptionValue(sku, 'standard')) ??
+		product?.skus[0];
+
+	const standardPrice = standardSku
+		? standardSku?.price?.priceFormatted?.replace(' ', '').replace(',', '.')
+		: '';
+
+	const price = `${hasTrialSku ? '30-day trial or' : ''} ${standardPrice}`;
+
+	return `${price} ${licenseTypeText}`;
+};
+
+const customizeGetAppButton = (product) => {
+	getAppButtonElement.onclick = () => {
+		window.location.href = `${getSiteURL()}/get-app?productId=${productId}`;
+	};
+
+	getAppDescriptionElement.innerText = getProductPrice(product);
 };
 
 const getCommerceProduct = async (channelId) => {
 	try {
 		const response = await fetch(
-			`/o/headless-commerce-delivery-catalog/v1.0/channels/${channelId}/products/${productId}?nestedFields=skus&accountId=-1`
+			`/o/headless-commerce-delivery-catalog/v1.0/channels/${channelId}/products/${productId}?nestedFields=productSpecifications,skus&accountId=-1`
 		);
 
 		const product = await response.json();
@@ -120,8 +167,6 @@ const customizeUnavailableButton = async (product) => {
 		contactPublisherButtonElement.click();
 
 		sessionStorage.removeItem('@marketplace/redirect-to');
-
-		return;
 	}
 };
 
@@ -132,13 +177,13 @@ const main = async () => {
 		return;
 	}
 
-	const {skus = [], ...product} = await getCommerceProduct(channelId);
-	const skuPublished = skus.some((sku) => sku.purchasable);
+	const product = await getCommerceProduct(channelId);
+	const skuPublished = product.skus.some((sku) => sku.purchasable);
 
 	if (skuPublished) {
 		getAppButtonElement.classList.remove('d-none');
 
-		return redirectPage();
+		return customizeGetAppButton(product);
 	}
 
 	contactPublisherButtonElement.classList.remove('d-none');

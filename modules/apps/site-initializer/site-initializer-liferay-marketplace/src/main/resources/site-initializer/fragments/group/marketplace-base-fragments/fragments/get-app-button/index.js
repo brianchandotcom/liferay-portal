@@ -80,7 +80,8 @@ const getCommerceProduct = async (channelId) => {
 		const product = await response.json();
 
 		return product ?? {skus: []};
-	} catch {
+	}
+	catch {
 		return {skus: []};
 	}
 };

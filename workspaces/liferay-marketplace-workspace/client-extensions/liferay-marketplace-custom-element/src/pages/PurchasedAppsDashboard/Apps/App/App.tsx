@@ -23,7 +23,6 @@ const App = () => {
 
 	const {isPaidApp} = getProductPriceModel(product);
 
-
 	return (
 		<div className="app-details-page-container mt-6">
 			<div className="app-details-body-container">
@@ -82,27 +81,29 @@ const App = () => {
 						<h5 className="col">License Price</h5>
 						<div className="col-8">
 							{placedOrder.placedOrderItems.map(
-								(order: PlacedOrderItems) => <div
-								className={classNames('row', {
-									'justify-content-end': !isPaidApp,
-								})}
-								key={order.id}
-							>
-								{isPaidApp && (
-									<>
-										<p className="col text-capitalize">
-											{order.sku.toLowerCase() ||
-												''}
+								(order: PlacedOrderItems) => (
+									<div
+										className={classNames('row', {
+											'justify-content-end': !isPaidApp,
+										})}
+										key={order.id}
+									>
+										{isPaidApp && (
+											<>
+												<p className="col text-capitalize">
+													{order.sku.toLowerCase() ||
+														''}
+												</p>
+												<p className="col">
+													{order.quantity}
+												</p>
+											</>
+										)}
+										<p className="col-3">
+											{order.price.priceFormatted}
 										</p>
-										<p className="col">
-											{order.quantity}
-										</p>
-									</>
-								)}
-								<p className="col-3">
-									{order.price.priceFormatted}
-								</p>
-							</div>
+									</div>
+								)
 							)}
 						</div>
 					</div>

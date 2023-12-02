@@ -48,7 +48,6 @@ import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess;
 import com.liferay.portal.workflow.kaleo.forms.service.KaleoProcessServiceUtil;
 import com.liferay.portal.workflow.kaleo.forms.util.comparator.KaleoProcessCreateDateComparator;
 import com.liferay.portal.workflow.kaleo.forms.util.comparator.KaleoProcessModifiedDateComparator;
-import com.liferay.portal.workflow.kaleo.forms.web.internal.configuration.KaleoFormsWebConfiguration;
 import com.liferay.portal.workflow.kaleo.forms.web.internal.display.context.helper.KaleoFormsAdminRequestHelper;
 import com.liferay.portal.workflow.kaleo.forms.web.internal.search.KaleoProcessSearch;
 import com.liferay.portal.workflow.kaleo.forms.web.internal.security.permission.resource.KaleoFormsPermission;
@@ -77,7 +76,6 @@ public class KaleoFormsAdminDisplayContext {
 		DDLRecordLocalService ddlRecordLocalService,
 		DDMStorageEngineManager ddmStorageEngineManager, HtmlParser htmlParser,
 		KaleoDefinitionVersionLocalService kaleoDefinitionVersionLocalService,
-		KaleoFormsWebConfiguration kaleoFormsWebConfiguration,
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		_ddlRecordLocalService = ddlRecordLocalService;
@@ -85,7 +83,6 @@ public class KaleoFormsAdminDisplayContext {
 		_htmlParser = htmlParser;
 		_kaleoDefinitionVersionLocalService =
 			kaleoDefinitionVersionLocalService;
-		_kaleoFormsWebConfiguration = kaleoFormsWebConfiguration;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 
@@ -167,7 +164,7 @@ public class KaleoFormsAdminDisplayContext {
 		if (Validator.isNull(_kaleoFormsAdminDisplayStyle)) {
 			_kaleoFormsAdminDisplayStyle = portalPreferences.getValue(
 				KaleoFormsPortletKeys.KALEO_FORMS_ADMIN, "display-style",
-				_kaleoFormsWebConfiguration.defaultDisplayView());
+				"list");
 		}
 		else if (ArrayUtil.contains(
 					getDisplayViews(), _kaleoFormsAdminDisplayStyle)) {
@@ -624,7 +621,6 @@ public class KaleoFormsAdminDisplayContext {
 		_kaleoDefinitionVersionLocalService;
 	private String _kaleoFormsAdminDisplayStyle;
 	private final KaleoFormsAdminRequestHelper _kaleoFormsAdminRequestHelper;
-	private final KaleoFormsWebConfiguration _kaleoFormsWebConfiguration;
 	private Long _kaleoProcessId;
 	private String _orderByCol;
 	private String _orderByType;

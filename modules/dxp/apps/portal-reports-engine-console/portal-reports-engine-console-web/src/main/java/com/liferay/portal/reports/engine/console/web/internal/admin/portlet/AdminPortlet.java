@@ -7,7 +7,6 @@ package com.liferay.portal.reports.engine.console.web.internal.admin.portlet;
 
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
@@ -23,13 +22,10 @@ import com.liferay.portal.reports.engine.console.model.Definition;
 import com.liferay.portal.reports.engine.console.model.Source;
 import com.liferay.portal.reports.engine.console.service.DefinitionLocalService;
 import com.liferay.portal.reports.engine.console.service.SourceLocalService;
-import com.liferay.portal.reports.engine.console.web.internal.admin.configuration.ReportsEngineAdminWebConfiguration;
 import com.liferay.portal.reports.engine.console.web.internal.admin.constants.ReportsEngineWebKeys;
 
 import java.io.IOException;
 import java.io.InputStream;
-
-import java.util.Map;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
@@ -38,16 +34,13 @@ import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Gavin Wan
  */
 @Component(
-	configurationPid = "com.liferay.portal.reports.engine.console.web.internal.admin.configuration.ReportsEngineAdminWebConfiguration",
 	property = {
 		"com.liferay.portlet.css-class-wrapper=reports-portlet",
 		"com.liferay.portlet.display-category=category.hidden",
@@ -88,9 +81,6 @@ public class AdminPortlet extends MVCPortlet {
 			_setDefinitionRequestAttribute(renderRequest);
 
 			_setSourceRequestAttribute(renderRequest);
-
-			_setReportsEngineAdminWebConfigurationRequestAttribute(
-				renderRequest);
 		}
 		catch (Exception exception) {
 			if (isSessionErrorException(exception)) {
@@ -127,14 +117,6 @@ public class AdminPortlet extends MVCPortlet {
 		catch (Exception exception) {
 			throw new PortletException(exception);
 		}
-	}
-
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		_reportsEngineAdminWebConfiguration =
-			ConfigurableUtil.createConfigurable(
-				ReportsEngineAdminWebConfiguration.class, properties);
 	}
 
 	@Reference
@@ -180,14 +162,6 @@ public class AdminPortlet extends MVCPortlet {
 		renderRequest.setAttribute(ReportsEngineWebKeys.DEFINITION, definition);
 	}
 
-	private void _setReportsEngineAdminWebConfigurationRequestAttribute(
-		RenderRequest renderRequest) {
-
-		renderRequest.setAttribute(
-			ReportsEngineAdminWebConfiguration.class.getName(),
-			_reportsEngineAdminWebConfiguration);
-	}
-
 	private void _setSourceRequestAttribute(RenderRequest renderRequest)
 		throws PortalException {
 
@@ -201,8 +175,5 @@ public class AdminPortlet extends MVCPortlet {
 
 		renderRequest.setAttribute(ReportsEngineWebKeys.SOURCE, source);
 	}
-
-	private volatile ReportsEngineAdminWebConfiguration
-		_reportsEngineAdminWebConfiguration;
 
 }

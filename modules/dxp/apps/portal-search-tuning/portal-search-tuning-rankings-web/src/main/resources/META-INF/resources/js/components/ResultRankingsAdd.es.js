@@ -250,6 +250,7 @@ function ResultRankingsAdd({cancelURL, fetchSitesURL, formName, namespace}) {
 						}}
 						onBlur={_handleBlur('scope')}
 						onSelect={_handleScopeChange}
+						paramPrefix={namespace}
 						selected={scope}
 						title={Liferay.Language.get('select-site')}
 						touched={touched.scope}

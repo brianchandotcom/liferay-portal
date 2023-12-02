@@ -36,6 +36,7 @@ const ScopeSelect = ({
 		id: 'externalReferenceCode',
 		label: 'descriptiveName',
 	},
+	paramPrefix = '',
 	onSelect,
 	onBlur,
 	title,
@@ -54,8 +55,8 @@ const ScopeSelect = ({
 		setLoading(true);
 
 		fetchResponse(fetchItemsUrl, {
-			page: 1,
-			pageSize: 5,
+			[`${paramPrefix}page`]: 1,
+			[`${paramPrefix}pageSize`]: 5,
 		})
 			.then(({items}) => {
 				setResourceItems(items || []);
@@ -151,21 +152,16 @@ const ScopeSelect = ({
 										{item[locator.label]}
 									</div>
 
-									<div className="list-group-text">
-										{type === SCOPE_TYPES.SITE
-											? sub(
-													Liferay.Language.get(
-														'x-child-sites'
-													),
-													[item.sites?.length]
-											  )
-											: sub(
-													Liferay.Language.get(
-														'external-reference-code-x'
-													),
-													[item.externalReferenceCode]
-											  )}
-									</div>
+									{type === SCOPE_TYPES.SXP_BLUEPRINT && (
+										<div className="list-group-text">
+											{sub(
+												Liferay.Language.get(
+													'external-reference-code-x'
+												),
+												[item.externalReferenceCode]
+											)}
+										</div>
+									)}
 								</ClayDropDown.Item>
 							)}
 						</ClayDropDown.Group>
@@ -183,6 +179,7 @@ const ScopeSelect = ({
 								fetchItemsUrl={fetchItemsUrl}
 								locator={locator}
 								onSubmit={_handleSelect}
+								paramPrefix={paramPrefix}
 								selected={selected}
 								title={title}
 								type={type}

@@ -96,7 +96,6 @@ public class BatchEngineBundleTrackerTest {
 			"batch8", "/batch8/data1.batch-engine-data.json",
 			"/batch8/data2.batch-engine-data.json",
 			"/batch8/data3.batch-engine-data.json");
-
 		_testProcessBatchEngineBundle(
 			"batch9", "/batch9/data.batch-engine-data.json");
 
@@ -203,7 +202,6 @@ public class BatchEngineBundleTrackerTest {
 			Assert.assertEquals(
 				processedDataFileNames.toString(), expectedDataFileNames.length,
 				processedDataFileNames.size());
-
 			Assert.assertTrue(
 				StringBundler.concat(
 					"Expected ", expectedDataFileNames.length, " was ",

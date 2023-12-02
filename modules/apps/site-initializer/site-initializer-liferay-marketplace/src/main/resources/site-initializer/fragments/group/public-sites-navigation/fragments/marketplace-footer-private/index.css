@@ -1,0 +1,21 @@
+.private-footer {
+	border-top: 1px solid #E2E2E4;
+	font-size: 13px;
+	line-height: 16px;
+}
+
+.private-footer, .private-footer a {
+	color: #6C6C75;
+}
+
+@media (max-width: 575px) {
+	.private-footer .max-nav {
+		flex-direction: column;
+	}
+}
+
+@media (min-width: 576px) and (max-width: 992px) {
+	.private-footer .max-nav p {
+		flex: 0 1 100%;
+	}
+}

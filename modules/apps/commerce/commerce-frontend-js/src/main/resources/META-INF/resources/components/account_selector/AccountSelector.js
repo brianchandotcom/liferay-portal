@@ -8,6 +8,7 @@ import {fetch} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useState} from 'react';
 
+import ServiceProvider from '../../ServiceProvider/index';
 import {
 	CURRENT_ACCOUNT_UPDATED,
 	CURRENT_ORDER_UPDATED,
@@ -19,11 +20,8 @@ import {selectAccount} from './util/index';
 import AccountsListView from './views/AccountsListView';
 import OrdersListView from './views/OrdersListView';
 
-const USER_RESOURCE_ENDPOINT = '/o/headless-admin-user/v1.0/accounts';
-
-const accountsApi = new URL(
-	`${themeDisplay.getPathContext()}${USER_RESOURCE_ENDPOINT}`,
-	themeDisplay.getPortalURL()
+const DeliveryCatalogAPIServiceProvider = ServiceProvider.DeliveryCatalogAPI(
+	'v1'
 );
 
 function AccountSelector({
@@ -51,11 +49,18 @@ function AccountSelector({
 	const [currentUser, setCurrentUser] = useState({});
 
 	useEffect(() => {
+		const accountsApi = new URL(
+			`${themeDisplay.getPathContext()}${DeliveryCatalogAPIServiceProvider.baseURL(
+				commerceChannelId
+			)}`,
+			themeDisplay.getPortalURL()
+		);
+
 		fetch(accountsApi.toString())
 			.then((response) => response.json())
 			.then((response) => setCurrentUser(response))
 			.catch((error) => showErrorNotification(error.message));
-	}, []);
+	}, [commerceChannelId]);
 
 	const changeAccount = (account) => {
 		selectAccount(account.id, setCurrentAccountURL)
@@ -114,6 +119,7 @@ function AccountSelector({
 							: ''
 					}
 					changeAccount={changeAccount}
+					commerceChannelId={commerceChannelId}
 					currentAccount={currentAccount}
 					currentUser={currentUser}
 					disabled={!active}

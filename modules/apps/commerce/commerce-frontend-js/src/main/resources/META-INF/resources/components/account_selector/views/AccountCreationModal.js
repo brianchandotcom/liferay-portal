@@ -9,13 +9,17 @@ import ClayModal from '@clayui/modal';
 import {fetch} from 'frontend-js-web';
 import React, {useState} from 'react';
 
+import ServiceProvider from '../../../ServiceProvider/index';
 import AccountCreationModalBody from './AccountCreationModalBody';
 
-const ACCOUNTS_ROOT_ENDPOINT = '/o/headless-admin-user/v1.0/accounts';
+const DeliveryCatalogAPIServiceProvider = ServiceProvider.DeliveryCatalogAPI(
+	'v1'
+);
 
 export default function AccountCreationModal({
 	accountTypes,
 	closeModal,
+	commerceChannelId,
 	handleAccountChange,
 	observer,
 }) {
@@ -28,6 +32,13 @@ export default function AccountCreationModal({
 		type: accountTypes[0],
 	});
 
+	const apiUrl = new URL(
+		`${themeDisplay.getPathContext()}${DeliveryCatalogAPIServiceProvider.baseURL(
+			commerceChannelId
+		)}`,
+		themeDisplay.getPortalURL()
+	);
+
 	const createAccount = (event) => {
 		event.preventDefault();
 
@@ -35,11 +46,11 @@ export default function AccountCreationModal({
 			({value}) => value
 		);
 
-		fetch(ACCOUNTS_ROOT_ENDPOINT, {
+		fetch(apiUrl, {
 			body: JSON.stringify({
 				description: accountData.description,
 				externalReferenceCode: accountData.externalReferenceCode,
-				id: accountData.taxId,
+				taxId: accountData.taxId,
 				name: accountData.name,
 				organizationIds,
 				type: accountData.type,

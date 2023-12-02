@@ -13,6 +13,7 @@ import com.liferay.commerce.internal.util.AccountEntryUtil;
 import com.liferay.commerce.product.constants.CommerceChannelAccountEntryRelConstants;
 import com.liferay.commerce.product.model.CommerceChannelAccountEntryRel;
 import com.liferay.commerce.product.service.CommerceChannelAccountEntryRelService;
+import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -23,6 +24,7 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.search.spi.model.permission.SearchPermissionFilterContributor;
 
 import java.util.ArrayList;
@@ -50,6 +52,8 @@ public class AccountEntrySearchPermissionFilterContributor
 		}
 
 		try {
+			_addCommerceChannelIdsFilter(booleanFilter);
+
 			if (_accountEntryModelResourcePermission.contains(
 					permissionChecker, 0,
 					CommerceAccountActionKeys.
@@ -99,6 +103,30 @@ public class AccountEntrySearchPermissionFilterContributor
 		}
 	}
 
+	private void _addCommerceChannelIdsFilter(BooleanFilter booleanFilter)
+		throws PortalException {
+
+		long commerceChannelId = AccountEntryUtil.getCommerceChannelId(
+			CommerceContextThreadLocal.get(), CommerceGroupThreadLocal.get());
+
+		int commerceChannelAccountEntryRelCounts =
+			_commerceChannelAccountEntryRelService.
+				getCommerceChannelAccountEntryRelsCount(
+					commerceChannelId, null,
+					CommerceChannelAccountEntryRelConstants.TYPE_ELIGIBILITY);
+
+		if ((commerceChannelId > 0) &&
+			(commerceChannelAccountEntryRelCounts > 0)) {
+
+			TermsFilter termsFilter = new TermsFilter("commerceChannelIds");
+
+			termsFilter.addValues(
+				ArrayUtil.toStringArray(new long[] {commerceChannelId}));
+
+			booleanFilter.add(termsFilter, BooleanClauseOccur.MUST);
+		}
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		AccountEntrySearchPermissionFilterContributor.class);
 
@@ -113,5 +141,8 @@ public class AccountEntrySearchPermissionFilterContributor
 	@Reference
 	private CommerceChannelAccountEntryRelService
 		_commerceChannelAccountEntryRelService;
+
+	@Reference
+	private CommerceChannelLocalService _commerceChannelLocalService;
 
 }

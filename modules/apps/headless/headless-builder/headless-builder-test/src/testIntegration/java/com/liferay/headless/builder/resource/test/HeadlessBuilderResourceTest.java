@@ -143,11 +143,11 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				false, listTypeEntries);
 
 		_objectDefinition1 = _addObjectDefinition(
-			1, false, ObjectDefinitionConstants.SCOPE_COMPANY);
+			1, ObjectDefinitionConstants.SCOPE_COMPANY);
 		_objectDefinition2 = _addObjectDefinition(
-			2, false, ObjectDefinitionConstants.SCOPE_COMPANY);
+			2, ObjectDefinitionConstants.SCOPE_COMPANY);
 		_objectDefinition3 = _addObjectDefinition(
-			3, false, ObjectDefinitionConstants.SCOPE_COMPANY);
+			3, ObjectDefinitionConstants.SCOPE_COMPANY);
 
 		_objectRelationship1 = _addObjectRelationship(
 			_objectDefinition1, _objectDefinition2,
@@ -162,11 +162,11 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			_objectDefinition2, _objectRelationship2.getName());
 
 		_siteScopedObjectDefinition1 = _addObjectDefinition(
-			1, false, ObjectDefinitionConstants.SCOPE_SITE);
+			1, ObjectDefinitionConstants.SCOPE_SITE);
 		_siteScopedObjectDefinition2 = _addObjectDefinition(
-			2, false, ObjectDefinitionConstants.SCOPE_SITE);
+			2, ObjectDefinitionConstants.SCOPE_SITE);
 		_siteScopedObjectDefinition3 = _addObjectDefinition(
-			3, false, ObjectDefinitionConstants.SCOPE_SITE);
+			3, ObjectDefinitionConstants.SCOPE_SITE);
 
 		_siteScopedObjectRelationship1 = _addObjectRelationship(
 			_siteScopedObjectDefinition1, _siteScopedObjectDefinition2,
@@ -1035,11 +1035,11 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 	@Test
 	public void testGetWithIndirectlyUnrelatedObjectEntries() throws Exception {
 		ObjectDefinition objectDefinition1 = _addObjectDefinition(
-			4, false, ObjectDefinitionConstants.SCOPE_COMPANY);
+			4, ObjectDefinitionConstants.SCOPE_COMPANY);
 		ObjectDefinition objectDefinition2 = _addObjectDefinition(
-			5, false, ObjectDefinitionConstants.SCOPE_COMPANY);
+			5, ObjectDefinitionConstants.SCOPE_COMPANY);
 		ObjectDefinition objectDefinition3 = _addObjectDefinition(
-			6, false, ObjectDefinitionConstants.SCOPE_COMPANY);
+			6, ObjectDefinitionConstants.SCOPE_COMPANY);
 
 		ObjectRelationship objectRelationship1 = _addObjectRelationship(
 			objectDefinition2, objectDefinition1,
@@ -2140,11 +2140,89 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 
 	@Test
 	public void testPostWithMissingRequiredField() throws Exception {
-		ObjectDefinition objectDefinition = _addObjectDefinition(
-			8, true, ObjectDefinitionConstants.SCOPE_COMPANY);
+		String objectFieldExternalReferenceCode = RandomTestUtil.randomString();
 
-		_addAPIApplicationWithPostEndpoint(
-			true, 8, objectDefinition.getExternalReferenceCode());
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				Collections.singletonList(
+					new IntegerObjectFieldBuilder(
+					).externalReferenceCode(
+						objectFieldExternalReferenceCode
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						"integerField"
+					).required(
+						true
+					).build()),
+				ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		String apiSchemaExternalReferenceCode = RandomTestUtil.randomString();
+
+		assertSuccessfulJSONObject(
+			JSONUtil.put(
+				"apiApplicationToAPIEndpoints",
+				JSONUtil.putAll(
+					_createAPIEndpoint(
+						HeadlessBuilderResourceTest._API_ENDPOINT_ERC_1,
+						Http.Method.POST, "/test", null,
+						APIApplication.Endpoint.RetrieveType.SINGLE_ELEMENT.
+							getValue(),
+						APIApplication.Endpoint.Scope.COMPANY))
+			).put(
+				"apiApplicationToAPISchemas",
+				JSONUtil.put(
+					JSONUtil.put(
+						"apiSchemaToAPIProperties",
+						JSONUtil.putAll(
+							JSONUtil.put(
+								"description", "description"
+							).put(
+								"name", "integerProperty"
+							).put(
+								"objectFieldERC",
+								objectFieldExternalReferenceCode
+							))
+					).put(
+						"description", "description"
+					).put(
+						"externalReferenceCode", apiSchemaExternalReferenceCode
+					).put(
+						"mainObjectDefinitionERC",
+						objectDefinition.getExternalReferenceCode()
+					).put(
+						"name", "name"
+					))
+			).put(
+				"applicationStatus", "unpublished"
+			).put(
+				"baseURL", HeadlessBuilderResourceTest._BASE_URL_1
+			).put(
+				"externalReferenceCode",
+				HeadlessBuilderResourceTest._API_APPLICATION_ERC_1
+			).put(
+				"title", RandomTestUtil.randomString()
+			).toString(),
+			"headless-builder/applications", Http.Method.POST);
+
+		assertSuccessfulJSONObject(
+			null,
+			StringBundler.concat(
+				"headless-builder/schemas/by-external-reference-code/",
+				apiSchemaExternalReferenceCode,
+				"/requestAPISchemaToAPIEndpoints/",
+				HeadlessBuilderResourceTest._API_ENDPOINT_ERC_1),
+			Http.Method.PUT);
+
+		assertSuccessfulJSONObject(
+			null,
+			StringBundler.concat(
+				"headless-builder/schemas/by-external-reference-code/",
+				apiSchemaExternalReferenceCode,
+				"/responseAPISchemaToAPIEndpoints/",
+				HeadlessBuilderResourceTest._API_ENDPOINT_ERC_1),
+			Http.Method.PUT);
 
 		_publishAPIApplication(_API_APPLICATION_ERC_1);
 
@@ -2154,7 +2232,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			).put(
 				"title",
 				"No value was provided for required object field " +
-					"\"richTextField\""
+					"\"integerField\""
 			).toString(),
 			HTTPTestUtil.invokeToJSONObject(
 				JSONUtil.put(
@@ -2622,8 +2700,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			).build());
 	}
 
-	private ObjectDefinition _addObjectDefinition(
-			int index, boolean required, String scope)
+	private ObjectDefinition _addObjectDefinition(int index, String scope)
 		throws Exception {
 
 		return ObjectDefinitionTestUtil.publishObjectDefinition(
@@ -2661,8 +2738,6 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 						RandomTestUtil.randomString())
 				).name(
 					"dateField"
-				).required(
-					required
 				).build(),
 				new DateTimeObjectFieldBuilder(
 				).externalReferenceCode(
@@ -2677,8 +2752,6 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 						_createObjectFieldSetting(
 							ObjectFieldSettingConstants.NAME_TIME_STORAGE,
 							ObjectFieldSettingConstants.VALUE_CONVERT_TO_UTC))
-				).required(
-					required
 				).build(),
 				new DecimalObjectFieldBuilder(
 				).externalReferenceCode(
@@ -2688,8 +2761,6 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 						RandomTestUtil.randomString())
 				).name(
 					"decimalField"
-				).required(
-					required
 				).build(),
 				new IntegerObjectFieldBuilder(
 				).externalReferenceCode(
@@ -2699,8 +2770,6 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 						RandomTestUtil.randomString())
 				).name(
 					"integerField"
-				).required(
-					required
 				).build(),
 				new LongIntegerObjectFieldBuilder(
 				).externalReferenceCode(
@@ -2710,8 +2779,6 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 						RandomTestUtil.randomString())
 				).name(
 					"longIntegerField"
-				).required(
-					required
 				).build(),
 				new LongTextObjectFieldBuilder(
 				).externalReferenceCode(
@@ -2721,8 +2788,6 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 						RandomTestUtil.randomString())
 				).name(
 					"longTextField"
-				).required(
-					required
 				).build(),
 				new MultiselectPicklistObjectFieldBuilder(
 				).externalReferenceCode(
@@ -2734,8 +2799,6 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 					_listTypeDefinition.getListTypeDefinitionId()
 				).name(
 					"multiselectPicklistField"
-				).required(
-					required
 				).build(),
 				new PicklistObjectFieldBuilder(
 				).externalReferenceCode(
@@ -2747,8 +2810,6 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 					"picklistField"
 				).listTypeDefinitionId(
 					_listTypeDefinition.getListTypeDefinitionId()
-				).required(
-					required
 				).build(),
 				new PrecisionDecimalObjectFieldBuilder(
 				).externalReferenceCode(
@@ -2758,8 +2819,6 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 						RandomTestUtil.randomString())
 				).name(
 					"precisionDecimalField"
-				).required(
-					required
 				).build(),
 				new RichTextObjectFieldBuilder(
 				).externalReferenceCode(
@@ -2769,8 +2828,6 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 						RandomTestUtil.randomString())
 				).name(
 					"richTextField"
-				).required(
-					required
 				).build(),
 				new TextObjectFieldBuilder(
 				).externalReferenceCode(
@@ -2780,8 +2837,6 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 						RandomTestUtil.randomString())
 				).name(
 					"textField"
-				).required(
-					required
 				).build(),
 				new TextObjectFieldBuilder(
 				).externalReferenceCode(
@@ -2796,8 +2851,6 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 						_createObjectFieldSetting(
 							ObjectFieldSettingConstants.NAME_UNIQUE_VALUES,
 							Boolean.TRUE.toString()))
-				).required(
-					required
 				).build()),
 			scope);
 	}

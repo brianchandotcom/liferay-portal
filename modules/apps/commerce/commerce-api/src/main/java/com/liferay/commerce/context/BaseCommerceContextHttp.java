@@ -225,9 +225,23 @@ public class BaseCommerceContextHttp implements CommerceContext {
 					return _commerceOrder;
 				}
 
-				httpSession.setAttribute(
-					CommerceOrder.class.getName() + StringPool.POUND + groupId,
-					_commerceOrder.getUuid());
+				if (_isChannelAccountEntry(
+						_commerceOrder.getCommerceAccountId(),
+						getCommerceChannelId())) {
+
+					httpSession.setAttribute(
+						CommerceOrder.class.getName() + StringPool.POUND +
+							groupId,
+						_commerceOrder.getUuid());
+				}
+				else {
+					httpSession.setAttribute(
+						CommerceOrder.class.getName() + StringPool.POUND +
+							groupId,
+						StringPool.BLANK);
+
+					_commerceOrder = null;
+				}
 			}
 
 			return _commerceOrder;
@@ -293,6 +307,30 @@ public class BaseCommerceContextHttp implements CommerceContext {
 		}
 
 		return commerceCurrency;
+	}
+
+	private boolean _isChannelAccountEntry(
+		long accountEntryId, long commerceChannelId) {
+
+		CommerceChannelAccountEntryRel commerceChannelAccountEntryRel =
+			_commerceChannelAccountEntryRelLocalService.
+				fetchCommerceChannelAccountEntryRel(
+					accountEntryId, commerceChannelId,
+					CommerceChannelAccountEntryRelConstants.TYPE_ELIGIBILITY);
+
+		int commerceChannelAccountEntryRelsCount =
+			_commerceChannelAccountEntryRelLocalService.
+				getCommerceChannelAccountEntryRelsCount(
+					commerceChannelId, null,
+					CommerceChannelAccountEntryRelConstants.TYPE_ELIGIBILITY);
+
+		if ((commerceChannelAccountEntryRel != null) ||
+			(commerceChannelAccountEntryRelsCount == 0)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

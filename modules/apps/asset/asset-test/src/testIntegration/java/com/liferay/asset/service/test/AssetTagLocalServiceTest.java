@@ -532,7 +532,6 @@ public class AssetTagLocalServiceTest {
 
 		Assert.assertEquals(
 			actualAssetTags.toString(), expectedLength, actualAssetTags.size());
-
 		Assert.assertTrue(
 			ArrayUtil.containsAll(
 				expectedTagNames,

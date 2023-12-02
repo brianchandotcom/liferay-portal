@@ -17,8 +17,11 @@ import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.commerce.configuration.CommerceAccountGroupServiceConfiguration;
 import com.liferay.commerce.configuration.CommerceAccountServiceConfiguration;
 import com.liferay.commerce.constants.CommerceConstants;
+import com.liferay.commerce.product.constants.CommerceChannelAccountEntryRelConstants;
 import com.liferay.commerce.product.constants.CommerceChannelConstants;
 import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.product.model.CommerceChannelAccountEntryRel;
+import com.liferay.commerce.product.service.CommerceChannelAccountEntryRelLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.util.CommerceAccountHelper;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -43,6 +46,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -280,6 +284,8 @@ public class CommerceAccountHelperImpl implements CommerceAccountHelper {
 			long commerceChannelGroupId, HttpServletRequest httpServletRequest)
 		throws PortalException {
 
+		int commerceSiteType = getCommerceSiteType(commerceChannelGroupId);
+
 		CommerceChannel commerceChannel =
 			_commerceChannelLocalService.getCommerceChannelByGroupId(
 				commerceChannelGroupId);
@@ -289,71 +295,84 @@ public class CommerceAccountHelperImpl implements CommerceAccountHelper {
 			_currentAccountEntryManager.getCurrentAccountEntry(
 				commerceChannel.getSiteGroupId(), userId);
 
-		if ((accountEntry == null) ||
-			(accountEntry.getStatus() != WorkflowConstants.STATUS_APPROVED)) {
+		if (((accountEntry == null) ||
+			 (accountEntry.getStatus() != WorkflowConstants.STATUS_APPROVED)) &&
+			((commerceSiteType == CommerceChannelConstants.SITE_TYPE_B2C) ||
+			 (commerceSiteType == CommerceChannelConstants.SITE_TYPE_B2X))) {
 
-			int commerceSiteType = getCommerceSiteType(commerceChannelGroupId);
+			accountEntry = _accountEntryLocalService.fetchPersonAccountEntry(
+				userId);
 
-			if ((commerceSiteType == CommerceChannelConstants.SITE_TYPE_B2C) ||
-				(commerceSiteType == CommerceChannelConstants.SITE_TYPE_B2X)) {
-
+			if (accountEntry == null) {
 				accountEntry =
-					_accountEntryLocalService.fetchPersonAccountEntry(userId);
+					_accountEntryLocalService.fetchSupplierAccountEntry(userId);
 
 				if (accountEntry == null) {
-					accountEntry =
-						_accountEntryLocalService.fetchSupplierAccountEntry(
-							userId);
+					User user = _userLocalService.getUser(userId);
 
-					if (accountEntry == null) {
-						User user = _userLocalService.getUser(userId);
+					if (user.isGuestUser()) {
+						accountEntry =
+							_accountEntryLocalService.getGuestAccountEntry(
+								commerceChannel.getCompanyId());
+					}
+					else {
+						ServiceContext serviceContext = new ServiceContext();
 
-						if (user.isGuestUser()) {
-							accountEntry =
-								_accountEntryLocalService.getGuestAccountEntry(
-									commerceChannel.getCompanyId());
-						}
-						else {
-							ServiceContext serviceContext =
-								new ServiceContext();
+						serviceContext.setCompanyId(user.getCompanyId());
+						serviceContext.setUserId(userId);
 
-							serviceContext.setCompanyId(user.getCompanyId());
-							serviceContext.setUserId(userId);
-
-							accountEntry =
-								_accountEntryLocalService.addAccountEntry(
-									userId,
-									AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
-									user.getFullName(), null, null,
-									user.getEmailAddress(), null,
-									StringPool.BLANK,
-									AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON,
-									WorkflowConstants.STATUS_APPROVED,
-									serviceContext);
-
-							addAccountEntryUserRel(
-								accountEntry.getAccountEntryId(), userId,
+						accountEntry =
+							_accountEntryLocalService.addAccountEntry(
+								userId,
+								AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
+								user.getFullName(), null, null,
+								user.getEmailAddress(), null, StringPool.BLANK,
+								AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON,
+								WorkflowConstants.STATUS_APPROVED,
 								serviceContext);
-						}
+
+						addAccountEntryUserRel(
+							accountEntry.getAccountEntryId(), userId,
+							serviceContext);
 					}
 				}
 			}
+		}
 
-			if (accountEntry == null) {
+		if (accountEntry != null) {
+			if (_isChannelAccountEntry(
+					accountEntry, commerceChannel.getCommerceChannelId())) {
+
 				setCurrentCommerceAccount(
 					httpServletRequest, commerceChannelGroupId,
-					AccountConstants.ACCOUNT_ENTRY_ID_GUEST);
+					accountEntry.getAccountEntryId());
+
+				return accountEntry;
+			}
+
+			List<AccountEntry> accountEntries =
+				_getCommerceChannelAccountEntries(
+					commerceChannel.getCommerceChannelId());
+
+			if (!accountEntries.isEmpty()) {
+				accountEntry = accountEntries.get(0);
+
+				setCurrentCommerceAccount(
+					httpServletRequest, commerceChannelGroupId,
+					accountEntry.getAccountEntryId());
 			}
 			else {
 				setCurrentCommerceAccount(
 					httpServletRequest, commerceChannelGroupId,
-					accountEntry.getAccountEntryId());
+					AccountConstants.ACCOUNT_ENTRY_ID_GUEST);
+
+				return null;
 			}
 		}
 		else {
 			setCurrentCommerceAccount(
 				httpServletRequest, commerceChannelGroupId,
-				accountEntry.getAccountEntryId());
+				AccountConstants.ACCOUNT_ENTRY_ID_GUEST);
 		}
 
 		return accountEntry;
@@ -364,6 +383,12 @@ public class CommerceAccountHelperImpl implements CommerceAccountHelper {
 			long userId, long commerceChannelGroupId)
 		throws PortalException {
 
+		List<AccountEntry> userAccountEntries = new ArrayList<>();
+
+		CommerceChannel commerceChannel =
+			_commerceChannelLocalService.getCommerceChannelByGroupId(
+				commerceChannelGroupId);
+
 		List<AccountEntry> accountEntries =
 			_accountEntryLocalService.getUserAccountEntries(
 				userId, AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT,
@@ -371,8 +396,16 @@ public class CommerceAccountHelperImpl implements CommerceAccountHelper {
 				WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS);
 
+		for (AccountEntry accountEntry : accountEntries) {
+			if (_isChannelAccountEntry(
+					accountEntry, commerceChannel.getCommerceChannelId())) {
+
+				userAccountEntries.add(accountEntry);
+			}
+		}
+
 		return ListUtil.toLongArray(
-			accountEntries, AccountEntryModel::getAccountEntryId);
+			userAccountEntries, AccountEntryModel::getAccountEntryId);
 	}
 
 	@Override
@@ -457,11 +490,65 @@ public class CommerceAccountHelperImpl implements CommerceAccountHelper {
 		}
 	}
 
+	private List<AccountEntry> _getCommerceChannelAccountEntries(
+			long commerceChannelId)
+		throws PortalException {
+
+		List<AccountEntry> userAccountEntries = new ArrayList<>();
+
+		CommerceChannel commerceChannel =
+			_commerceChannelLocalService.getCommerceChannel(commerceChannelId);
+
+		List<AccountEntry> accountEntries =
+			_accountEntryLocalService.getAccountEntries(
+				commerceChannel.getCompanyId(),
+				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
+
+		for (AccountEntry accountEntry : accountEntries) {
+			if (_isChannelAccountEntry(
+					accountEntry, commerceChannel.getCommerceChannelId())) {
+
+				userAccountEntries.add(accountEntry);
+			}
+		}
+
+		return userAccountEntries;
+	}
+
+	private boolean _isChannelAccountEntry(
+		AccountEntry accountEntry, long commerceChannelId) {
+
+		CommerceChannelAccountEntryRel commerceChannelAccountEntryRel =
+			_commerceChannelAccountEntryRelLocalService.
+				fetchCommerceChannelAccountEntryRel(
+					accountEntry.getAccountEntryId(), commerceChannelId,
+					CommerceChannelAccountEntryRelConstants.TYPE_ELIGIBILITY);
+
+		int commerceChannelAccountEntryRelsCount =
+			_commerceChannelAccountEntryRelLocalService.
+				getCommerceChannelAccountEntryRelsCount(
+					commerceChannelId, null,
+					CommerceChannelAccountEntryRelConstants.TYPE_ELIGIBILITY);
+
+		if ((commerceChannelAccountEntryRel != null) ||
+			(commerceChannelAccountEntryRelsCount == 0)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	@Reference
 	private AccountEntryLocalService _accountEntryLocalService;
 
 	@Reference
 	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
+
+	@Reference
+	private CommerceChannelAccountEntryRelLocalService
+		_commerceChannelAccountEntryRelLocalService;
 
 	@Reference
 	private CommerceChannelLocalService _commerceChannelLocalService;

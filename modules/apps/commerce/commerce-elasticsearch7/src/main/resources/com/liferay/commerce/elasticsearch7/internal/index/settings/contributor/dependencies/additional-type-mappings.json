@@ -72,6 +72,10 @@
 			"store": true,
 			"type": "keyword"
 		},
+		"commerceChannelId": {
+			"store": true,
+			"type": "keyword"
+		},
 		"couponCode": {
 			"store": true,
 			"type": "keyword"

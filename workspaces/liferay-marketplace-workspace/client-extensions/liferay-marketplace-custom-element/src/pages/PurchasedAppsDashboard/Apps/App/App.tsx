@@ -6,7 +6,11 @@
 import {useOutletContext, useParams} from 'react-router-dom';
 
 import './App.scss';
+
+import classNames from 'classnames';
+
 import {DetailedCard} from '../../../../components/DetailedCard/DetailedCard';
+import getProductPriceModel from '../../../GetAppPage/utils/getProductPriceModel';
 import {formatDate} from '../../../PublishedAppsDashboard/PublishedDashboardPageUtil';
 
 const App = () => {
@@ -16,6 +20,9 @@ const App = () => {
 	const projectNameField = product.customFields.find(
 		(field: {name: string}) => field.name === 'Project Name'
 	);
+
+	const {isPaidApp} = getProductPriceModel(product);
+
 
 	return (
 		<div className="app-details-page-container mt-6">
@@ -61,29 +68,41 @@ const App = () => {
 					cardTitle="Summary"
 					clayIcon="shopping-cart"
 				>
-					<div className="justify-content-center mb-2 mt-4 row">
-						<h5 className="col-3">Type</h5>
-						<h5 className="col-1">Qty</h5>
-					</div>
-					<div className="mb-2 row">
+					{isPaidApp && (
+						<div className="justify-content-center mb-2 mt-4 row">
+							<h5 className="col-3">Type</h5>
+							<h5 className="col-1">Qty</h5>
+						</div>
+					)}
+					<div
+						className={classNames('row mb-2', {
+							'mt-6': !isPaidApp,
+						})}
+					>
 						<h5 className="col">License Price</h5>
 						<div className="col-8">
 							{placedOrder.placedOrderItems.map(
-								(order: PlacedOrderItems) => {
-									return (
-										<div className="row" key={order.id}>
-											<p className="col text-capitalize">
-												{order.sku.toLowerCase() || ''}
-											</p>
-											<p className="col">
-												{order.quantity}
-											</p>
-											<p className="col-3">
-												{order.price.priceFormatted}
-											</p>
-										</div>
-									);
-								}
+								(order: PlacedOrderItems) => <div
+								className={classNames('row', {
+									'justify-content-end': !isPaidApp,
+								})}
+								key={order.id}
+							>
+								{isPaidApp && (
+									<>
+										<p className="col text-capitalize">
+											{order.sku.toLowerCase() ||
+												''}
+										</p>
+										<p className="col">
+											{order.quantity}
+										</p>
+									</>
+								)}
+								<p className="col-3">
+									{order.price.priceFormatted}
+								</p>
+							</div>
 							)}
 						</div>
 					</div>

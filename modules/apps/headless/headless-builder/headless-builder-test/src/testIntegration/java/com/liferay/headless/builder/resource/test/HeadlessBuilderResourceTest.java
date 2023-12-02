@@ -2017,11 +2017,8 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 
 	@Test
 	public void testPostWithAllFields() throws Exception {
-		ObjectDefinition objectDefinition = _addObjectDefinition(
-			7, true, ObjectDefinitionConstants.SCOPE_COMPANY);
-
 		_addAPIApplicationWithPostEndpoint(
-			true, 7, objectDefinition.getExternalReferenceCode());
+			true, 1, _objectDefinition1.getExternalReferenceCode());
 
 		_publishAPIApplication(_API_APPLICATION_ERC_1);
 
@@ -2135,8 +2132,8 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 
 		List<ObjectEntry> objectEntries =
 			_objectEntryLocalService.getObjectEntries(
-				0, objectDefinition.getObjectDefinitionId(), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
+				0, _objectDefinition1.getObjectDefinitionId(),
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		Assert.assertEquals(objectEntries.toString(), 1, objectEntries.size());
 	}
@@ -2171,11 +2168,8 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 
 	@Test
 	public void testPostWithoutResponseSchema() throws Exception {
-		ObjectDefinition objectDefinition = _addObjectDefinition(
-			9, false, ObjectDefinitionConstants.SCOPE_COMPANY);
-
 		_addAPIApplicationWithPostEndpoint(
-			false, 9, objectDefinition.getExternalReferenceCode());
+			false, 1, _objectDefinition1.getExternalReferenceCode());
 
 		_publishAPIApplication(_API_APPLICATION_ERC_1);
 
@@ -2194,8 +2188,8 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 
 		List<ObjectEntry> objectEntries =
 			_objectEntryLocalService.getObjectEntries(
-				0, objectDefinition.getObjectDefinitionId(), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
+				0, _objectDefinition1.getObjectDefinitionId(),
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		ObjectEntry objectEntry = objectEntries.get(objectEntries.size() - 1);
 

@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -43,6 +42,7 @@ import com.liferay.segments.service.SegmentsEntryRelLocalService;
 import com.liferay.segments.service.SegmentsEntryRoleLocalService;
 import com.liferay.segments.test.util.SegmentsTestUtil;
 
+import java.util.Dictionary;
 import java.util.List;
 
 import org.junit.After;
@@ -100,7 +100,7 @@ public class SegmentsEntryReindexMessageListenerTest {
 	public void testAssignRolesBySegmentManually() throws Exception {
 		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
-		HashMapDictionary<String, Object> properties =
+		Dictionary<String, Object> properties =
 			HashMapDictionaryBuilder.<String, Object>put(
 				"roleSegmentationEnabled", true
 			).put(

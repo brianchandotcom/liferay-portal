@@ -1,0 +1,38 @@
+<%--
+/**
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+--%>
+
+<div id="item-finder-root-account"></div>
+
+<liferay-frontend:component
+	context='<%=
+		HashMapBuilder.<String, Object>put(
+			"channelExternalReferenceCode", HtmlUtil.escapeJS(commerceChannel.getExternalReferenceCode())
+		).put(
+			"channelId", commerceChannelId
+		).put(
+			"dataSetId", CommerceChannelFDSNames.CHANNEL_QUALIFIER_ACCOUNTS
+		).put(
+			"rootPortletId", portletDisplay.getRootPortletId()
+		).put(
+			"spritemap", themeDisplay.getPathThemeSpritemap()
+		).build()
+	%>'
+	module="js/account_entries"
+/>
+
+<commerce-ui:panel
+	bodyClasses="p-0"
+	title='<%= LanguageUtil.get(request, "accounts") %>'
+>
+	<frontend-data-set:headless-display
+		apiURL="<%= commerceChannelAccountEntryQualifiersDisplayContext.getCommerceChannelAccountEntriesAPIURL() %>"
+		fdsActionDropdownItems="<%= commerceChannelAccountEntryQualifiersDisplayContext.getCommerceChannelAccountEntryFDSActionDropdownItems() %>"
+		formName="fm"
+		id="<%= CommerceChannelFDSNames.CHANNEL_QUALIFIER_ACCOUNTS %>"
+		itemsPerPage="<%= 10 %>"
+	/>
+</commerce-ui:panel>

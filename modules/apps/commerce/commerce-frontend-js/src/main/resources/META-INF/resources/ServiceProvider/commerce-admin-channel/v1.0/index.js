@@ -4,6 +4,7 @@
  */
 
 export {default as accountAddressChannelAPI} from './AccountAddressChannel';
+export {default as channelAccountAPI} from './ChannelAccount';
 export {default as paymentMethodGroupRelOrderTypeAPI} from './PaymentMethodGroupRelOrderType';
 export {default as paymentMethodGroupRelTermAPI} from './PaymentMethodGroupRelTerm';
 export {default as shippingFixedOptionOrderTypeAPI} from './ShippingFixedOptionOrderType';

@@ -18,6 +18,9 @@ public class CommerceChannelFDSNames {
 	public static final String CHANNEL_HEALTH_CHECK =
 		CPPortletKeys.COMMERCE_CHANNELS + "-channelHealthCheck";
 
+	public static final String CHANNEL_QUALIFIER_ACCOUNTS =
+		CPPortletKeys.COMMERCE_CHANNELS + "-channel-qualifier-accounts";
+
 	public static final String PAYMENT_METHOD =
 		CPPortletKeys.COMMERCE_CHANNELS + "-paymentMethod";
 

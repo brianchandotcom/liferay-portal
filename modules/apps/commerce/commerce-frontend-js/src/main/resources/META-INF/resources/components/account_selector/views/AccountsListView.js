@@ -15,13 +15,14 @@ import AccountCreationModal from './AccountCreationModal';
 import EmptyListView from './EmptyListView';
 import ListView from './ListView';
 
-const {baseURL: ACCOUNTS_RESOURCE_ENDPOINT} = ServiceProvider.AdminAccountAPI(
+const DeliveryCatalogAPIServiceProvider = ServiceProvider.DeliveryCatalogAPI(
 	'v1'
 );
 
 export default function AccountsListView({
 	accountEntryAllowedTypes,
 	changeAccount,
+	commerceChannelId,
 	currentAccount,
 	currentUser,
 	disabled,
@@ -36,9 +37,13 @@ export default function AccountsListView({
 	const accountsListRef = useRef();
 
 	const apiUrl = new URL(
-		`${themeDisplay.getPathContext()}${ACCOUNTS_RESOURCE_ENDPOINT}`,
+		`${themeDisplay.getPathContext()}${DeliveryCatalogAPIServiceProvider.baseURL(
+			commerceChannelId
+		)}`,
 		themeDisplay.getPortalURL()
 	);
+
+	apiUrl.searchParams.append('sort', 'name');
 
 	const filterString = accountEntryAllowedTypes
 		.map((accountEntryAllowedType) => `'${accountEntryAllowedType}'`)
@@ -136,6 +141,7 @@ export default function AccountsListView({
 				<AccountCreationModal
 					accountTypes={accountEntryAllowedTypes}
 					closeModal={onClose}
+					commerceChannelId={commerceChannelId}
 					handleAccountChange={changeAccount}
 					observer={observer}
 				/>

@@ -25,7 +25,6 @@ import java.util.TreeSet;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -131,7 +130,7 @@ public abstract class BaseJobEntity extends BaseEntity implements JobEntity {
 		jsonObject.put(
 			"name", getName()
 		).put(
-			"parameters", String.valueOf(_getParametersJSONArray())
+			"parameters", String.valueOf(_getParametersJSONObject())
 		).put(
 			"priority", getPriority()
 		).put(
@@ -281,22 +280,17 @@ public abstract class BaseJobEntity extends BaseEntity implements JobEntity {
 		_state = State.get(jsonObject.getJSONObject("state"));
 		_type = Type.get(jsonObject.getJSONObject("type"));
 
-		String paramaters = jsonObject.getString("parameters");
+		String parameters = jsonObject.getString("parameters");
 
-		if (StringUtil.isNullOrEmpty(paramaters)) {
+		if (StringUtil.isNullOrEmpty(parameters)) {
 			return;
 		}
 
 		try {
-			JSONArray parametersJSONArray = new JSONArray(paramaters);
+			JSONObject parametersJSONObject = new JSONObject(parameters);
 
-			for (int i = 0; i < parametersJSONArray.length(); i++) {
-				JSONObject parameterJSONObject =
-					parametersJSONArray.getJSONObject(i);
-
-				_parameters.put(
-					parameterJSONObject.getString("name"),
-					parameterJSONObject.getString("value"));
+			for (String key : parametersJSONObject.keySet()) {
+				_parameters.put(key, parametersJSONObject.getString(key));
 			}
 		}
 		catch (JSONException jsonException) {
@@ -306,38 +300,21 @@ public abstract class BaseJobEntity extends BaseEntity implements JobEntity {
 		}
 	}
 
-	private JSONArray _getParametersJSONArray() {
-		JSONArray buildParametersJSONArray = new JSONArray();
+	private JSONObject _getParametersJSONObject() {
+		JSONObject parametersJSONObject = new JSONObject();
 
 		if (_parameters.isEmpty()) {
-			return buildParametersJSONArray;
+			return parametersJSONObject;
 		}
 
 		Set<String> parameterNames = new TreeSet<>(_parameters.keySet());
 
 		for (String parameterName : parameterNames) {
-			if (!parameterName.matches("[A-Z0-9_]+")) {
-				continue;
-			}
-
-			String parameterValue = _parameters.get(parameterName);
-
-			if (StringUtil.isNullOrEmpty(parameterValue)) {
-				continue;
-			}
-
-			JSONObject parameterJSONObject = new JSONObject();
-
-			parameterJSONObject.put(
-				"name", parameterName
-			).put(
-				"value", parameterValue
-			);
-
-			buildParametersJSONArray.put(parameterJSONObject);
+			parametersJSONObject.put(
+				parameterName, _parameters.get(parameterName));
 		}
 
-		return buildParametersJSONArray;
+		return parametersJSONObject;
 	}
 
 	private static final Log _log = LogFactory.getLog(BaseJobEntity.class);

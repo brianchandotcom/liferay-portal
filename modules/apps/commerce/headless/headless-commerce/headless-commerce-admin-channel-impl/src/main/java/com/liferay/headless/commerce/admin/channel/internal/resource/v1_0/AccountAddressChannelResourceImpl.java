@@ -155,10 +155,10 @@ public class AccountAddressChannelResourceImpl
 			long addressId, AccountAddressChannel accountAddressChannel)
 		throws Exception {
 
+		CommerceChannel commerceChannel = null;
+
 		ServiceContext serviceContext =
 			_serviceContextHelper.getServiceContext();
-
-		CommerceChannel commerceChannel;
 
 		if (Validator.isNull(
 				accountAddressChannel.

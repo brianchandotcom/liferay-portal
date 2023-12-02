@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+
+<project basedir="." default="test" name="portal-test-openliberty" xmlns:antelope="antlib:ise.antelope.tasks">
+	<import file="build-test.xml" />
+
+	<target name="run-openliberty">
+		<lstopwatch action="start" name="run.openliberty" />
+
+		<antcall target="run-simple-server" />
+
+		<lstopwatch action="total" name="run.openliberty" />
+	</target>
+
+	<target name="run-selenium-openliberty">
+		<lstopwatch action="start" name="run.selenium.openliberty" />
+
+		<app-server-properties-update>
+			app.server.type=openliberty
+		</app-server-properties-update>
+
+		<if>
+			<not>
+				<isset property="build.app.server" />
+			</not>
+			<then>
+				<ant antfile="build-dist.xml" target="unzip-openliberty" />
+
+				<ant target="all" />
+			</then>
+		</if>
+
+		<antcall target="record-test-generated-properties" />
+
+		<antcall target="prepare-selenium">
+			<param name="test.class" value="${test.class}" />
+		</antcall>
+
+		<antcall inheritAll="false" target="run-openliberty">
+			<param name="test.class" value="${test.class}" />
+		</antcall>
+
+		<lstopwatch action="total" name="run.selenium.openliberty" />
+	</target>
+</project>

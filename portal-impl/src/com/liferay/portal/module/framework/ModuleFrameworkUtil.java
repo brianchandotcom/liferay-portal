@@ -20,6 +20,10 @@ import org.osgi.framework.launch.Framework;
  */
 public class ModuleFrameworkUtil {
 
+	public static Framework createFramework() throws Exception {
+		return _moduleFramework.createFramework();
+	}
+
 	public static Framework getFramework() {
 		return _moduleFramework.getFramework();
 	}

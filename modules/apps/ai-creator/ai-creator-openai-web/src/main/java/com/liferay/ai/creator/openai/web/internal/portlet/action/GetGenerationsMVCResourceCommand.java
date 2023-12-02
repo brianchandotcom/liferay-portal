@@ -21,7 +21,7 @@ import javax.portlet.ResourceResponse;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Lourdes Fernández Besada
+ * @author Roberto Díaz
  */
 @Component(
 	property = {
@@ -30,8 +30,7 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = MVCResourceCommand.class
 )
-public class GetGenerationsMVCResourceCommand
-	extends BaseAICreatorOpenAIResouceCommand {
+public class GetGenerationsMVCResourceCommand extends BaseMVCResourceCommand {
 
 	@Override
 	protected void doServeResource(

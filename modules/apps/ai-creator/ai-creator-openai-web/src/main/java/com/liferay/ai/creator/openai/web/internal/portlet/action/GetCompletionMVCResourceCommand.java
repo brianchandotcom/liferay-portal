@@ -31,8 +31,7 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = MVCResourceCommand.class
 )
-public class GetCompletionMVCResourceCommand
-	extends BaseAICreatorOpenAIResouceCommand {
+public class GetCompletionMVCResourceCommand extends BaseMVCResourceCommand {
 
 	@Override
 	protected void doServeResource(

@@ -92,7 +92,7 @@ public class CommerceChannelAccountEntryRelLocalServiceImpl
 			commerceChannelAccountEntryRelPersistence.update(
 				commerceChannelAccountEntryRel);
 
-		if (className.equals(Address.class.getName()) &&
+		if ((className != null) && className.equals(Address.class.getName()) &&
 			(commerceChannelAccountEntryRel.getCommerceChannelId() == 0)) {
 
 			_updateDefaultAccountEntryAddress(
@@ -251,6 +251,15 @@ public class CommerceChannelAccountEntryRelLocalServiceImpl
 	@Override
 	public List<CommerceChannelAccountEntryRel>
 		getCommerceChannelAccountEntryRels(
+			long commerceChannelId, String name, int type, int start, int end) {
+
+		return commerceChannelAccountEntryRelFinder.findByC_T(
+			commerceChannelId, name, type, start, end);
+	}
+
+	@Override
+	public List<CommerceChannelAccountEntryRel>
+		getCommerceChannelAccountEntryRels(
 			String className, long classPK, long commerceChannelId, int type) {
 
 		return commerceChannelAccountEntryRelPersistence.findByC_C_C_T(
@@ -264,6 +273,14 @@ public class CommerceChannelAccountEntryRelLocalServiceImpl
 
 		return commerceChannelAccountEntryRelPersistence.countByA_T(
 			accountEntryId, type);
+	}
+
+	@Override
+	public int getCommerceChannelAccountEntryRelsCount(
+		long commerceChannelId, String name, int type) {
+
+		return commerceChannelAccountEntryRelFinder.countByC_T(
+			commerceChannelId, name, type);
 	}
 
 	public CommerceChannelAccountEntryRel updateCommerceChannelAccountEntryRel(

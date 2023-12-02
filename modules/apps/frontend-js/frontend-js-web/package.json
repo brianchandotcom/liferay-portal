@@ -35,5 +35,5 @@
 		"test": "liferay-npm-scripts test",
 		"watch": "liferay-npm-scripts webpack --watch"
 	},
-	"version": "5.0.98"
+	"version": "5.0.99"
 }

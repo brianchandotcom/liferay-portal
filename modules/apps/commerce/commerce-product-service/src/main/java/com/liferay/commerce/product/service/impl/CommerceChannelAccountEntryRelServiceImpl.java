@@ -149,6 +149,16 @@ public class CommerceChannelAccountEntryRelServiceImpl
 	@Override
 	public List<CommerceChannelAccountEntryRel>
 		getCommerceChannelAccountEntryRels(
+			long commerceChannelId, String name, int type, int start, int end) {
+
+		return commerceChannelAccountEntryRelLocalService.
+			getCommerceChannelAccountEntryRels(
+				commerceChannelId, name, type, start, end);
+	}
+
+	@Override
+	public List<CommerceChannelAccountEntryRel>
+		getCommerceChannelAccountEntryRels(
 			String className, long classPK, long commerceChannelId, int type) {
 
 		return commerceChannelAccountEntryRelLocalService.
@@ -167,6 +177,15 @@ public class CommerceChannelAccountEntryRelServiceImpl
 
 		return commerceChannelAccountEntryRelLocalService.
 			getCommerceChannelAccountEntryRelsCount(accountEntryId, type);
+	}
+
+	@Override
+	public int getCommerceChannelAccountEntryRelsCount(
+		long commerceChannelId, String name, int type) {
+
+		return commerceChannelAccountEntryRelLocalService.
+			getCommerceChannelAccountEntryRelsCount(
+				commerceChannelId, name, type);
 	}
 
 	@Override

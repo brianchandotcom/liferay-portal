@@ -40,10 +40,8 @@ import com.liferay.portal.kernel.util.Validator;
 import java.io.IOException;
 import java.io.InputStream;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import java.util.zip.ZipEntry;
@@ -67,7 +65,9 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 	public CompletableFuture<Void> processBatchEngineUnits(
 		Collection<BatchEngineUnit> batchEngineUnits) {
 
-		List<CompletableFuture<Void>> completableFutures = new ArrayList<>();
+		CompletableFuture<Void> completableFuture = new CompletableFuture<>();
+
+		completableFuture.complete(null);
 
 		for (BatchEngineUnit batchEngineUnit : batchEngineUnits) {
 			try {
@@ -80,16 +80,31 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 					_featureFlagBatchEngineUnitProcessor.
 						registerBatchEngineUnit(
 							batchEngineUnitMetaInfo.getCompanyId(), featureFlag,
-							() -> _processBatchEngineUnit(batchEngineUnit));
+							() -> {
+								CompletableFuture<Void> localCompletableFuture =
+									new CompletableFuture<>();
+
+								Runnable runnable = _processBatchEngineUnit(
+									batchEngineUnit, localCompletableFuture);
+
+								runnable.run();
+
+								return localCompletableFuture;
+							});
 
 					continue;
 				}
 
-				CompletableFuture<Void> completableFuture =
-					_processBatchEngineUnit(batchEngineUnit);
+				CompletableFuture<Void> nextCompletableFuture =
+					new CompletableFuture<>();
 
-				if (completableFuture != null) {
-					completableFutures.add(completableFuture);
+				Runnable runnable = _processBatchEngineUnit(
+					batchEngineUnit, nextCompletableFuture);
+
+				if (runnable != null) {
+					completableFuture.thenRun(runnable);
+
+					completableFuture = nextCompletableFuture;
 				}
 
 				if (_log.isInfoEnabled()) {
@@ -107,8 +122,7 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 			}
 		}
 
-		return CompletableFuture.allOf(
-			completableFutures.toArray(new CompletableFuture[0]));
+		return completableFuture;
 	}
 
 	@Activate
@@ -116,13 +130,12 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 		_bundleContext = bundleContext;
 	}
 
-	private CompletableFuture<Void> _execute(
+	private Runnable _execute(
 			BatchEngineUnit batchEngineUnit,
 			BatchEngineUnitConfiguration batchEngineUnitConfiguration,
-			byte[] content, String contentType)
+			byte[] content, String contentType,
+			CompletableFuture<Void> completableFuture)
 		throws Exception {
-
-		CompletableFuture<Void> completableFuture = new CompletableFuture<>();
 
 		ServiceTracker<Object, Object> serviceTracker =
 			new ServiceTracker<Object, Object>(
@@ -171,9 +184,7 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 
 			};
 
-		serviceTracker.open();
-
-		return completableFuture;
+		return serviceTracker::open;
 	}
 
 	private void _execute(
@@ -311,8 +322,9 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 		return false;
 	}
 
-	private CompletableFuture<Void> _processBatchEngineUnit(
-			BatchEngineUnit batchEngineUnit)
+	private Runnable _processBatchEngineUnit(
+			BatchEngineUnit batchEngineUnit,
+			CompletableFuture<Void> completableFuture)
 		throws Exception {
 
 		BatchEngineUnitConfiguration batchEngineUnitConfiguration = null;
@@ -355,8 +367,8 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 		}
 
 		return _execute(
-			batchEngineUnit, batchEngineUnitConfiguration, content,
-			contentType);
+			batchEngineUnit, batchEngineUnitConfiguration, content, contentType,
+			completableFuture);
 	}
 
 	private BatchEngineUnitConfiguration _updateBatchEngineUnitConfiguration(

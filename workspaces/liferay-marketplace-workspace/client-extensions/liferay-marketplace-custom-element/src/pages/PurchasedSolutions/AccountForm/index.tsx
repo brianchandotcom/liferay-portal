@@ -62,10 +62,9 @@ const AccountForm: React.FC<AccountFormType> = ({
 
 	useEffect(() => {
 		(async () => {
-			const industriesListTypeEntries =
-				await getListTypeDefinitionByExternalReferenceCode(
-					externalReferenceCode
-				);
+			const industriesListTypeEntries = await getListTypeDefinitionByExternalReferenceCode(
+				externalReferenceCode
+			);
 
 			setIndustries(industriesListTypeEntries?.listTypeEntries);
 		})();
@@ -249,8 +248,10 @@ const AccountForm: React.FC<AccountFormType> = ({
 														accountForm.setValue(
 															'phone',
 															{
-																code: phone.code,
-																flag: phone.flag,
+																code:
+																	phone.code,
+																flag:
+																	phone.flag,
 															}
 														);
 													}}

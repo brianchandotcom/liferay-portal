@@ -22,10 +22,9 @@ const useAccountForm = (
 	const [accounts, setAccounts] = useState<Account[]>([]);
 	const {myUserAccount} = useMarketplaceContext();
 
-	const accountBriefs = useMemo(
-		() => myUserAccount?.accountBriefs || [],
-		[myUserAccount?.accountBriefs]
-	);
+	const accountBriefs = useMemo(() => myUserAccount?.accountBriefs || [], [
+		myUserAccount?.accountBriefs,
+	]);
 
 	const {
 		formState: {errors, isValid},

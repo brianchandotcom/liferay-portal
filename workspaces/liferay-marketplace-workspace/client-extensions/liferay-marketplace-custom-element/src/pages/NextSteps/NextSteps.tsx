@@ -217,11 +217,10 @@ export function NextSteps({
 							Liferay.CommerceContext.account = {
 								accountId: cart?.accountId,
 							};
-							window.location.href =
-								Liferay.ThemeDisplay.getCanonicalURL().replace(
-									'/next-steps',
-									`/customer-dashboard`
-								);
+							window.location.href = Liferay.ThemeDisplay.getCanonicalURL().replace(
+								'/next-steps',
+								`/customer-dashboard`
+							);
 						});
 					}}
 					onClickContinue={() => {

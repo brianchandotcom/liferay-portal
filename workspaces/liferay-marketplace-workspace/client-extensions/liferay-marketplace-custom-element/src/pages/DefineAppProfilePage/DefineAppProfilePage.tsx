@@ -119,8 +119,7 @@ export function DefineAppProfilePage({
 					{
 						channelId: channel?.id as number,
 						currencyCode: channel?.currencyCode as string,
-						externalReferenceCode:
-							channel?.externalReferenceCode as string,
+						externalReferenceCode: channel?.externalReferenceCode as string,
 						id: channel?.id as number,
 						name: channel?.name as string,
 						type: channel?.type as string,

@@ -7,7 +7,6 @@ import './ProductCard.scss';
 import {
 	getThumbnailByProductAttachment,
 	getValueFromDeliverySpecifications,
-	getValueFromSpecifications,
 } from '../../../../utils/util';
 
 interface ProductCardProps {

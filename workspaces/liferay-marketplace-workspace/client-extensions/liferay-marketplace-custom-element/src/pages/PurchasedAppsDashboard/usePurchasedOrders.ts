@@ -9,7 +9,7 @@ import {getPlacedOrders} from '../../utils/api';
 
 type Props = {
 	accountId: number;
-	channelId: number;
+	channelId: number | string;
 	orderTypeExternalReferenceCodes: string[];
 	page: number;
 	pageSize: number;

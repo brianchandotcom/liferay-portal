@@ -19,7 +19,7 @@ function changeResource(resource: RequestInfo) {
 const fetcher = async <T = any>(
 	resource: RequestInfo,
 	options?: RequestInit
-): Promise<T | undefined> => {
+): Promise<T> => {
 	const response = await fetch(changeResource(resource), {
 		...options,
 		headers: {
@@ -42,6 +42,8 @@ const fetcher = async <T = any>(
 	if (options?.method !== 'DELETE' && response.status !== 204) {
 		return response.json();
 	}
+
+	return {} as T;
 };
 
 fetcher.delete = (resource: RequestInfo) =>

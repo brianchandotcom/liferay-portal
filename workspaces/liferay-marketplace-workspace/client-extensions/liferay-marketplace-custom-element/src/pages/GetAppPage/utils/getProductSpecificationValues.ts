@@ -6,10 +6,10 @@
 export function getProductSpecificationValues(
 	productSpecifications: DeliveryProductSpecification[]
 ) {
-	const {value: productSpecificationValue} = productSpecifications.find(
+	const productSpecification = productSpecifications.find(
 		({value}) =>
 			value.toLowerCase() === 'cloud' || value.toLowerCase() === 'dxp'
 	) as DeliveryProductSpecification;
 
-	return productSpecificationValue;
+	return productSpecification?.value ?? '';
 }

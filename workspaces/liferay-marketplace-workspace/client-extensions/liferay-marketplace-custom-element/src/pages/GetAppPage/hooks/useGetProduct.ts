@@ -5,10 +5,9 @@
 
 import {useCallback, useEffect, useState} from 'react';
 
-import {getDeliveryProductById} from '../../../utils/api';
-import {getUrlParam} from '../../../utils/getUrlParam';
 import {useMarketplaceContext} from '../../../context/MarketplaceContext';
-import {Liferay} from '../../../liferay/liferay';
+import HeadlessCommerceDeliveryCatalogImpl from '../../../services/rest/HeadlessCommerceDeliveryCatalog';
+import {getUrlParam} from '../../../utils/getUrlParam';
 
 const useGetProduct = (
 	selectedProduct: DeliveryProduct | undefined,
@@ -22,16 +21,17 @@ const useGetProduct = (
 		setProductId(selectedProduct?.productId || urlProductId);
 
 		if (productId) {
-			const fetchProduct = await getDeliveryProductById(
-				Liferay.CommerceContext?.account?.accountId || 0,
+			const fetchProduct = await HeadlessCommerceDeliveryCatalogImpl.getProduct(
 				channel.id,
 				productId,
-				'attachments,productSpecifications,skus'
+				new URLSearchParams({
+					nestedFields: 'attachments,productSpecifications,skus',
+				})
 			);
 
 			setProduct(fetchProduct);
 		}
-	}, [productId, selectedProduct?.productId, setProduct]);
+	}, [channel?.id, productId, selectedProduct?.productId, setProduct]);
 
 	useEffect(() => {
 		getProductInformation();

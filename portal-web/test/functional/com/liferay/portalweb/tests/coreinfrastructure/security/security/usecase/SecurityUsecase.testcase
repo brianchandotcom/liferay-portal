@@ -55,7 +55,7 @@ definition {
 
 			TestUtils.assertPartialEquals(
 				actual = ${response},
-				expected = "X-Liferay-Request-Group: ${groupId},5t,4x");
+				expected = "X-Liferay-Request-Group: ${groupId} 5t 4x");
 		}
 	}
 
@@ -81,7 +81,7 @@ definition {
 
 			TestUtils.assertPartialEquals(
 				actual = ${response},
-				expected = "X-Liferay-Request-Group: ${groupId},0t,1x,4x,s");
+				expected = "X-Liferay-Request-Group: ${groupId} 0t 1x 4x s");
 		}
 	}
 
@@ -123,7 +123,7 @@ definition {
 
 			TestUtils.assertPartialEquals(
 				actual = ${response},
-				expected = "X-Liferay-Request-Group: ${groupId},3t,9x,s");
+				expected = "X-Liferay-Request-Group: ${groupId} 3t 9x s");
 		}
 	}
 
@@ -167,7 +167,7 @@ definition {
 
 			TestUtils.assertPartialEquals(
 				actual = ${response},
-				expected = "X-Liferay-Request-Group: ${groupId},0t,8x");
+				expected = "X-Liferay-Request-Group: ${groupId} 0t 8x");
 		}
 	}
 
@@ -213,13 +213,13 @@ definition {
 
 			TestUtils.assertPartialEquals(
 				actual = ${profileResponse},
-				expected = "X-Liferay-Request-Group: ${groupId},0t,10x,6x");
+				expected = "X-Liferay-Request-Group: ${groupId} 0t 10x 6x");
 		}
 
 		task ("And: Verify that 0t and 5x show in the response header.") {
 			TestUtils.assertPartialEquals(
 				actual = ${dashboardResponse},
-				expected = "X-Liferay-Request-Group: ${groupId},0t,5x");
+				expected = "X-Liferay-Request-Group: ${groupId} 0t 5x");
 		}
 	}
 
@@ -260,7 +260,7 @@ definition {
 
 			TestUtils.assertPartialEquals(
 				actual = ${response},
-				expected = "X-Liferay-Request-Group: ${groupId},2t,2x,s");
+				expected = "X-Liferay-Request-Group: ${groupId} 2t 2x s");
 		}
 	}
 
@@ -292,7 +292,7 @@ definition {
 
 			TestUtils.assertPartialEquals(
 				actual = ${response},
-				expected = "X-Liferay-Request-Group: ${groupId},0t,7x");
+				expected = "X-Liferay-Request-Group: ${groupId} 0t 7x");
 		}
 	}
 
@@ -331,7 +331,7 @@ definition {
 
 			TestUtils.assertPartialEquals(
 				actual = ${stagingSiteResponse},
-				expected = "X-Liferay-Request-Group: ${groupId},1t,3x");
+				expected = "X-Liferay-Request-Group: ${groupId} 1t 3x");
 		}
 
 		task ("And: Verify that 1t, 3x, and s show in the response header of live site page") {
@@ -341,7 +341,7 @@ definition {
 
 			TestUtils.assertPartialEquals(
 				actual = ${liveSiteResponse},
-				expected = "X-Liferay-Request-Group: ${groupId},1t,3x,s");
+				expected = "X-Liferay-Request-Group: ${groupId} 1t 3x s");
 		}
 	}
 

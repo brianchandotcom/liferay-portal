@@ -38,6 +38,12 @@ class HeadlessCommerceAdminCatalog {
 		);
 	}
 
+	async getCatalogs(searchParams = new URLSearchParams()) {
+		return fetcher<APIResponse<Catalog>>(
+			`/o/headless-commerce-admin-catalog/v1.0/catalogs?${searchParams.toString()}`
+		);
+	}
+
 	async getProductSpecifications(productId: string | number) {
 		const response = await fetcher(
 			`/o/headless-commerce-admin-catalog/v1.0/products/${productId}/productSpecifications`
@@ -80,8 +86,6 @@ class HeadlessCommerceAdminCatalog {
 		);
 	}
 }
-
-export {HeadlessCommerceAdminCatalog};
 
 const HeadlessCommerceAdminCatalogImpl = new HeadlessCommerceAdminCatalog();
 

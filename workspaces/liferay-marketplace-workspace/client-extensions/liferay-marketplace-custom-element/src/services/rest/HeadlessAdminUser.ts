@@ -7,11 +7,15 @@ import fetcher from '../fetcher';
 
 class HeadlessAdminUser {
 	async getAccount(accountId: string | number) {
-		return fetcher(`/o/headless-admin-user/v1.0/accounts/${accountId}`);
+		return fetcher<UserAccount>(
+			`/o/headless-admin-user/v1.0/accounts/${accountId}`
+		);
 	}
 
-	async getAccounts() {
-		return fetcher(`/o/headless-admin-user/v1.0/accounts?pageSize=-1`);
+	async getAccounts(searchParams = new URLSearchParams()) {
+		return fetcher<APIResponse<UserAccount>>(
+			`/o/headless-admin-user/v1.0/accounts?${searchParams.toString()}`
+		);
 	}
 
 	async getMyUserAccount() {

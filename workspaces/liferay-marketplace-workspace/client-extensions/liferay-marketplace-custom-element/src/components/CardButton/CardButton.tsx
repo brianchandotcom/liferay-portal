@@ -22,7 +22,7 @@ export function CardButton({
 	title,
 }: {
 	description: string;
-	disabled: boolean;
+	disabled?: boolean;
 	icon?: ReactNode;
 	iconRight?: boolean;
 	onClick: (event: MouseEvent) => void;

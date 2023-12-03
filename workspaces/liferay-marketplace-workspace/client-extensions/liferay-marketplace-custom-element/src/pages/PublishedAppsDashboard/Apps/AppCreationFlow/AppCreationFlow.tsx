@@ -19,10 +19,10 @@ import {CustomizeAppStorefrontPage} from '../../../StorefrontPage/CustomizeAppSt
 import {initialFLowListItems} from './AppCreationFlowUtil';
 
 import './AppCreationFlow.scss';
+import {useSupplierAccount} from '../../../../hooks/data/useSupplierAccounts';
 import {Liferay} from '../../../../liferay/liferay';
 import {useAppContext} from '../../../../manage-app-state/AppManageState';
 import {DefineAppProfilePage} from '../../../DefineAppProfilePage/DefineAppProfilePage';
-import {useAccountCached} from '../../PublishedAppsDashboardOutlet';
 
 type SetAppFlowListStateProps = {
 	checkedItems?: string[];
@@ -31,11 +31,11 @@ type SetAppFlowListStateProps = {
 
 export function AppCreationFlow() {
 	const [{appERC, appProductId, priceModel}] = useAppContext();
-	const [appFlowListItems, setAppFlowListItems] =
-		useState(initialFLowListItems);
+	const [appFlowListItems, setAppFlowListItems] = useState(
+		initialFLowListItems
+	);
 	const [currentFlow, setCurrentFlow] = useState('create');
-	const {accountId} = Liferay.CommerceContext.account || {};
-	const account = useAccountCached([], accountId as string);
+	const {data: supplierAccount} = useSupplierAccount();
 
 	const setAppFlowListState = ({
 		checkedItems,
@@ -71,7 +71,8 @@ export function AppCreationFlow() {
 	return (
 		<div className="app-creation-flow-container">
 			<NewAppToolBar
-				accountName={account?.name}
+				accountImage={supplierAccount?.logoURL}
+				accountName={supplierAccount?.name as string}
 				enableDropdown={currentFlow === 'submit'}
 			/>
 
@@ -248,8 +249,7 @@ export function AppCreationFlow() {
 								});
 
 								setCurrentFlow('licensingPrice');
-							}
-							else {
+							} else {
 								setAppFlowListState({
 									checkedItems: [
 										'create',
@@ -322,8 +322,7 @@ export function AppCreationFlow() {
 								});
 
 								setCurrentFlow('licensingPrice');
-							}
-							else {
+							} else {
 								setAppFlowListState({
 									checkedItems: [
 										'create',

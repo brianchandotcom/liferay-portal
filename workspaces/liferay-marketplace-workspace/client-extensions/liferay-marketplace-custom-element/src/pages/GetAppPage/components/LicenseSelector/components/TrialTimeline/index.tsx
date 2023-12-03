@@ -7,15 +7,15 @@ import ClayIcon from '@clayui/icon';
 
 import './index.scss';
 
-import {Dispatch, useState} from 'react';
+import {useState} from 'react';
 
 import {CardButton} from '../../../../../../components/CardButton/CardButton';
 
 type TrialTimelineProps = {
-	setLicenseSelected: Dispatch<boolean>;
+	handleLicenseSelect: () => void;
 };
 
-export function TrialTimeline({setLicenseSelected}: TrialTimelineProps) {
+export function TrialTimeline({handleLicenseSelect}: TrialTimelineProps) {
 	const [selectedLicense, setSelectedLicense] = useState(false);
 
 	return (
@@ -40,7 +40,7 @@ export function TrialTimeline({setLicenseSelected}: TrialTimelineProps) {
 				}
 				iconRight
 				onClick={() => {
-					setLicenseSelected(true);
+					handleLicenseSelect();
 					setSelectedLicense(true);
 				}}
 				selected={selectedLicense}

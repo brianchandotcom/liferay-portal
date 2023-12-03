@@ -9,8 +9,8 @@ import {useMarketplaceContext} from '../../../../../../context/MarketplaceContex
 import useCart from '../../../../../../hooks/useCart';
 import {Liferay} from '../../../../../../liferay/liferay';
 import {getLicenseDescription, getTierPrice} from '../../../../../../utils/api';
-import LicenseCard from '../../LicenseCard';
 import {SkuOptions} from '../../../../enums/skuOptions';
+import LicenseCard from '../../LicenseCard';
 
 interface PaidTimelineProps {
 	cartUtil: ReturnType<typeof useCart>;
@@ -40,9 +40,9 @@ export function PaidTimeline({cartUtil, product}: PaidTimelineProps) {
 	const purchasebleSkus = skus?.filter((sku) =>
 		sku?.skuOptions.find(
 			(skuOption) =>
-				skuOption.skuOptionKey.toLocaleLowerCase() !==
+				skuOption.skuOptionValueKey.toLocaleLowerCase() !==
 					SkuOptions.TRIAL ||
-				(skuOption.skuOptionKey.toLocaleLowerCase() ===
+				(skuOption.skuOptionValueKey.toLocaleLowerCase() ===
 					SkuOptions.TRIAL &&
 					skuOption.skuOptionValueKey === 'no')
 		)

@@ -5,18 +5,15 @@
 
 import useSWR from 'swr';
 
+import {Liferay} from '../../liferay/liferay';
+import HeadlessCommerceDeliveryCatalogImpl from '../../services/rest/HeadlessCommerceDeliveryCatalog';
 import {
 	getAccountInfoFromCommerce,
 	getCart,
 	getCartItems,
-	getDeliveryProductById,
-	getProductById,
 } from '../../utils/api';
-import {useAppContext} from '../../manage-app-state/AppManageState';
-import {useMarketplaceContext} from '../../context/MarketplaceContext';
 
 const useNextSteps = (orderId: string) => {
-	const {channel} = useMarketplaceContext();
 	const {data = [], isLoading: cartLoading} = useSWR(
 		`/next-steps/cart/${orderId}`,
 		() => {
@@ -37,21 +34,23 @@ const useNextSteps = (orderId: string) => {
 		productId
 			? `/next-steps/product/${productId}_${firstCartItem.id}`
 			: null,
-		() => {
-			return getDeliveryProductById(
-				accountId,
-				channel.id,
+		() =>
+			HeadlessCommerceDeliveryCatalogImpl.getProduct(
+				Liferay.CommerceContext.commerceChannelId,
 				productId,
-				'attachments,productSpecifications'
-			);
-		}
+				new URLSearchParams({
+					accountId,
+					nestedFields: 'attachments,productSpecifications',
+				})
+			)
 	);
 
-	const {data: accountCommerce, isLoading: accountCommerceLoading} = useSWR(
+	const {
+		data: accountCommerce,
+		isLoading: accountCommerceLoading,
+	} = useSWR(
 		accountId ? `/next-steps/account-commerce/${accountId}` : null,
-		() => {
-			return getAccountInfoFromCommerce(accountId);
-		}
+		() => getAccountInfoFromCommerce(accountId)
 	);
 
 	return {

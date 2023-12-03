@@ -4,11 +4,13 @@
  */
 
 import {useEffect} from 'react';
-import {HashRouter, Navigate, Route, Routes} from 'react-router-dom';
+import {HashRouter, Route, Routes} from 'react-router-dom';
 
+import SearchBuilder from '../../core/SearchBuilder';
 import {Liferay} from '../../liferay/liferay';
 import CommerceSelectAccountImpl from '../../services/rest/CommerceSelectAccount';
-import {getAccounts, getCatalogs} from '../../utils/api';
+import HeadlessAdminUserImpl from '../../services/rest/HeadlessAdminUser';
+import HeadlessCommerceAdminCatalogImpl from '../../services/rest/HeadlessCommerceAdminCatalog';
 import Accounts from './Accounts/Accounts';
 import Apps from './Apps';
 import App from './Apps/App';
@@ -22,32 +24,43 @@ const PublishedAppsDashboardRouter = () => {
 	const {accountId} = Liferay.CommerceContext.account || {};
 
 	useEffect(() => {
-		async function loadData() {
-			const accountItems = (await getAccounts()) || [];
+		const loadData = async () => {
+			const [
+				supplierAccountResponse,
+				catalogResponse,
+			] = await Promise.all([
+				HeadlessAdminUserImpl.getAccounts(
+					new URLSearchParams({
+						filter: SearchBuilder.eq('type', 'supplier'),
+					})
+				),
+				HeadlessCommerceAdminCatalogImpl.getCatalogs(
+					new URLSearchParams({
+						fields: 'accountId,id',
+						pageSize: '-1',
+					})
+				),
+			]);
 
-			const accounts = accountItems ? accountItems.items || [] : [];
-			const catalogs = (await getCatalogs()) || [];
+			const {items: catalogs = []} = catalogResponse;
+			const {items: supplierAccounts = []} = supplierAccountResponse;
 
-			const suppliers = accounts.filter((account) => {
-				return !!catalogs.find((catalog) => {
-					return catalog.accountId === account.id;
-				});
-			});
+			const suppliers = supplierAccounts.filter((supplierAccount) =>
+				catalogs.some(
+					(catalog) => catalog.accountId === supplierAccount.id
+				)
+			);
 
 			if (!suppliers.length) {
 				window.location.href = Liferay.ThemeDisplay.getCanonicalURL().replace(
 					'/publisher-dashboard',
-					`/home`
+					'/home'
 				);
-
-				return <Navigate replace to="/home" />;
 			}
 
 			if (
 				!accountId ||
-				!suppliers.find((supplier) => {
-					return supplier.id === accountId;
-				})
+				!suppliers.find((supplier) => supplier.id === accountId)
 			) {
 				await CommerceSelectAccountImpl.selectAccount(suppliers[0].id);
 
@@ -57,7 +70,7 @@ const PublishedAppsDashboardRouter = () => {
 
 				window.location.reload();
 			}
-		}
+		};
 
 		loadData();
 	}, [accountId]);

@@ -4,7 +4,6 @@
  */
 
 import ClayIcon from '@clayui/icon';
-import {useCallback, useEffect, useState} from 'react';
 
 import {CardButton} from '../../../../components/CardButton/CardButton';
 
@@ -18,7 +17,7 @@ import {PaymentMethod} from '../../enums/paymentMethod';
 import {PaidTimeline} from './components/PaidTimeline';
 import {TrialTimeline} from './components/TrialTimeline';
 
-interface LicenseSelectorProps {
+type LicenseSelectorProps = {
 	cartUtil: ReturnType<typeof useCart>;
 	formUtils: {
 		setValue: UseFormSetValue<GetAppForm>;
@@ -28,7 +27,8 @@ interface LicenseSelectorProps {
 	selectedProduct?: DeliveryProduct;
 	setLicenseSelected: (licenseSelected: boolean) => void;
 	sku: DeliverySKU;
-}
+	trialSKU: any;
+};
 
 export function LicenseSelector({
 	cartUtil,
@@ -36,41 +36,11 @@ export function LicenseSelector({
 	onSelectLicense,
 	selectedProduct,
 	setLicenseSelected,
+	trialSKU,
 }: LicenseSelectorProps) {
-	const [trialSKU, setTrialSKU] = useState<DeliverySKU>();
-	const [disabledButton, setDisabledButton] = useState<boolean>(true);
-
-	const hasTrialSkuVerification = useCallback(() => {
-		const skus = selectedProduct?.skus;
-
-		const [trialSkuOption] =
-			skus?.filter((sku) =>
-				sku?.skuOptions.find((skuOption) => {
-					return (
-						skuOption.skuOptionKey.toLocaleLowerCase() ===
-							'trial' &&
-						skuOption.skuOptionValueKey.toLocaleLowerCase() ===
-							'yes'
-					);
-				})
-			) || [];
-
-		if (trialSkuOption) {
-			setDisabledButton(false);
-			setTrialSKU(trialSkuOption);
-		}
-	}, [selectedProduct?.skus]);
-
-	useEffect(() => {
-		hasTrialSkuVerification();
-	}, [hasTrialSkuVerification]);
-
-	const handleLicenseSelect = (licenseSelected: boolean) => {
-		if (licenseSelected) {
-			onSelectLicense(trialSKU);
-			setLicenseSelected(true);
-			setDisabledButton(false);
-		}
+	const handleLicenseSelect = () => {
+		onSelectLicense(trialSKU);
+		setLicenseSelected(true);
 	};
 
 	return (
@@ -78,7 +48,7 @@ export function LicenseSelector({
 			<div className="license-selector mb-6">
 				<CardButton
 					description="Try now. Pay Later"
-					disabled={disabledButton}
+					disabled={!trialSKU}
 					icon={
 						<span className="license-icon">
 							<ClayIcon symbol="check-circle" />
@@ -105,7 +75,6 @@ export function LicenseSelector({
 
 				<CardButton
 					description="Pay Today"
-					disabled={false}
 					icon={
 						<span className="license-icon">
 							<ClayIcon symbol="credit-card" />
@@ -127,7 +96,7 @@ export function LicenseSelector({
 				<div className="timeline-container">
 					{formUtils.watch('selectedTimeline') === 'trial' ? (
 						<TrialTimeline
-							setLicenseSelected={handleLicenseSelect}
+							handleLicenseSelect={handleLicenseSelect}
 						/>
 					) : (
 						<PaidTimeline

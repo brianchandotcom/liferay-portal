@@ -3,103 +3,46 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useEffect, useMemo, useState} from 'react';
+import {useMemo, useState} from 'react';
 import {Outlet} from 'react-router-dom';
 import useSWR from 'swr';
 
 import {DashboardNavigation} from '../../components/DashboardNavigation/DashboardNavigation';
-import {AppProps} from '../../components/DashboardTable/DashboardTable';
-import HeadlessAdminUserImpl from '../../services/rest/HeadlessAdminUser';
 
 import './PublishedAppsDashboard.scss';
 
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 
 import SearchBuilder from '../../core/SearchBuilder';
+import {useCatalogs} from '../../hooks/data/useCatalogs';
+import {
+	useSupplierAccount,
+	useSupplierAccounts,
+} from '../../hooks/data/useSupplierAccounts';
 import {Liferay} from '../../liferay/liferay';
 import HeadlessCommerceAdminCatalogImpl from '../../services/rest/HeadlessCommerceAdminCatalog';
-import {
-	getAccountInfoFromCommerce,
-	getAccounts,
-	getCatalogs,
-} from '../../utils/api';
 import {getAccountImage} from '../../utils/util';
 import {initialDashboardNavigationItems} from './PublishedDashboardPageUtil';
 
-const useAccountCached = (accounts: any[], accountId: string | null) => {
-	const {data: account} = useSWR(`/account/${accountId}`, async () => {
-		if (!accountId) {
-			return;
-		}
-		const cacheAccount = accounts?.find(
-			({id}: Account) => id === Number(accountId)
-		);
-
-		if (cacheAccount) {
-			return cacheAccount;
-		}
-
-		const account = await HeadlessAdminUserImpl.getAccount(
-			accountId as string
-		);
-
-		return account;
-	});
-
-	return account ?? accounts[0];
-};
-
 const PublishedAppsDashboardOutlet = () => {
-	const [commerceAccount, setCommerceAccount] = useState<CommerceAccount>();
-	const [selectedApp, setSelectedApp] = useState<AppProps>();
+	const {accountId} = Liferay.CommerceContext.account || {};
+	const [page, setPage] = useState(1);
 	const [showDashboardNavigation, setShowDashboardNavigation] = useState(
 		true
 	);
-	const {accountId} = Liferay.CommerceContext.account || {};
-	const [page, setPage] = useState(1);
 
-	const {data: accounts = []} = useSWR('/published/accounts', async () => {
-		const accounts = await getAccounts();
+	const {data: catalogs = []} = useCatalogs();
+	const {data: supplierAccount} = useSupplierAccount();
+	const {data: supplierAccounts = []} = useSupplierAccounts();
 
-		return accounts.items ?? [];
-	});
-
-	const {data: catalogs = []} = useSWR('/my-catalogs', async () => {
-		const catalogs = await getCatalogs();
-
-		return catalogs || [];
-	});
-
-	const selectedAccount = useAccountCached(
-		accounts ?? [],
-		accountId as string
+	const catalogId = useMemo(
+		() => catalogs.find((catalog) => catalog.accountId === accountId)?.id,
+		[accountId, catalogs]
 	);
-
-	const catalogId = useMemo(() => {
-		const currentCatalog = catalogs.find((catalog) => {
-			return catalog.accountId === accountId;
-		});
-
-		if (currentCatalog) {
-			return currentCatalog.id;
-		}
-	}, [accountId, catalogs]);
-
-	useEffect(() => {
-		const getAccountCommerce = async () => {
-			const commerceAccountResponse = await getAccountInfoFromCommerce(
-				selectedAccount.id
-			);
-
-			setCommerceAccount(commerceAccountResponse);
-		};
-
-		getAccountCommerce();
-	}, [selectedAccount?.id]);
 
 	const {data: publishedProductTable = {}, isLoading} = useSWR(
 		catalogId
-			? `/user-published-apps/${selectedAccount?.id}/${page}`
+			? `/user-published-apps/${supplierAccount?.id}/${page}`
 			: null,
 		() =>
 			HeadlessCommerceAdminCatalogImpl.getProducts(
@@ -120,13 +63,9 @@ const PublishedAppsDashboardOutlet = () => {
 		<div className="published-apps-dashboard-page-container">
 			<DashboardNavigation
 				accountAppsNumber={publishedProductTable.totalCount}
-				accountIcon={getAccountImage(commerceAccount?.logoURL)}
-				accounts={(accounts || []).filter((account) => {
-					return !!catalogs.find((catalog) => {
-						return catalog.accountId === account.id;
-					});
-				})}
-				currentAccount={selectedAccount}
+				accountIcon={getAccountImage(supplierAccount?.logoURL)}
+				accounts={(supplierAccounts as unknown) as Account[]}
+				currentAccount={(supplierAccount as unknown) as Account}
 				dashboardNavigationItems={initialDashboardNavigationItems}
 			/>
 
@@ -135,17 +74,11 @@ const PublishedAppsDashboardOutlet = () => {
 			) : (
 				<Outlet
 					context={{
-						accountId,
 						appsTotalCount: publishedProductTable.totalCount,
 						catalogId,
-						commerceAccount,
-						page,
 						publishedProductTable,
-						selectedAccount,
-						selectedApp,
-						setCommerceAccount,
+						selectedAccount: supplierAccount,
 						setPage,
-						setSelectedApp,
 						setShowDashboardNavigation,
 						showDashboardNavigation,
 					}}
@@ -154,7 +87,5 @@ const PublishedAppsDashboardOutlet = () => {
 		</div>
 	);
 };
-
-export {useAccountCached};
 
 export default PublishedAppsDashboardOutlet;

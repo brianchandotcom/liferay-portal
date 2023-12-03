@@ -21,46 +21,44 @@ import {getAccountImage, removeProtocolURL} from '../../../utils/util';
 import './Accounts.scss';
 import EmptyState from '../../../components/EmptyState';
 import useMembers from '../../../components/MembersPage/useMembers';
+import {Liferay} from '../../../liferay/liferay';
 
 type AccountDetailsPageProps = {
-	commerceAccount?: CommerceAccount;
 	selectedAccount: Account;
 	totalApps: number;
 	totalMembers: number;
 };
 
-interface AccountHeaderButtonProps {
+type AccountHeaderButtonProps = {
 	count: string;
 	name: string;
 	onClick?: (value: string) => void;
 	text: string;
 	title: string;
-}
+};
 
-function AccountHeaderButton({
+const AccountHeaderButton: React.FC<AccountHeaderButtonProps> = ({
 	count,
 	name,
 	onClick,
 	text,
 	title,
-}: AccountHeaderButtonProps) {
-	return (
-		<div className="d-flex flex-column">
-			<span className="font-weight-bold mb-4">{title}</span>
+}) => (
+	<div className="d-flex flex-column">
+		<span className="font-weight-bold mb-4">{title}</span>
 
-			<ClayButton
-				displayType="unstyled"
-				onClick={() => onClick && onClick(name)}
-			>
-				<strong className="font-weight-bold mr-1">{count}</strong>
+		<ClayButton
+			displayType="unstyled"
+			onClick={() => onClick && onClick(name)}
+		>
+			<strong className="font-weight-bold mr-1">{count}</strong>
 
-				<span>{text}</span>
+			<span>{text}</span>
 
-				<ClayIcon symbol="angle-right-small" />
-			</ClayButton>
-		</div>
-	);
-}
+			<ClayIcon symbol="angle-right-small" />
+		</ClayButton>
+	</div>
+);
 
 const maskDigits = (str: string) => {
 	const first3Digits = str.slice(0, 3);
@@ -71,14 +69,14 @@ const maskDigits = (str: string) => {
 };
 
 function AccountDetailsPage({
-	commerceAccount,
 	selectedAccount,
 	totalApps,
 	totalMembers,
 }: AccountDetailsPageProps) {
 	const navigate = useNavigate();
-	const [selectedAccountAddress, setSelectedAccountAddress] =
-		useState<AccountPostalAddresses[]>();
+	const [selectedAccountAddress, setSelectedAccountAddress] = useState<
+		AccountPostalAddresses[]
+	>();
 
 	let accountType = '';
 	if (selectedAccount) {
@@ -111,7 +109,7 @@ function AccountDetailsPage({
 							<img
 								alt="Account Image"
 								className="account-details-header-left-content-image"
-								src={getAccountImage(commerceAccount?.logoURL)}
+								src={getAccountImage(selectedAccount?.logoURL)}
 							/>
 
 							<div className="account-details-header-left-content-text-container">
@@ -127,14 +125,14 @@ function AccountDetailsPage({
 
 						<div className="account-details-header-right-container">
 							<AccountHeaderButton
-								count={totalApps as unknown as string}
+								count={(totalApps as unknown) as string}
 								name="apps"
 								onClick={() => navigate('/')}
 								text="Apps"
 								title="Apps"
 							/>
 							<AccountHeaderButton
-								count={totalMembers as unknown as string}
+								count={(totalMembers as unknown) as string}
 								name="members"
 								onClick={() => navigate('/members')}
 								text="Items"
@@ -341,7 +339,7 @@ function AccountDetailsPage({
 
 										<td className="account-details-body-table-description">
 											{maskDigits(
-												commerceAccount?.taxId ?? ''
+												selectedAccount?.taxId ?? ''
 											)}
 										</td>
 									</tr>
@@ -367,11 +365,10 @@ function AccountDetailsPage({
 }
 
 const Accounts = () => {
-	const {accountId, appsTotalCount, commerceAccount, selectedAccount} =
-		useOutletContext<any>();
+	const {appsTotalCount, selectedAccount} = useOutletContext<any>();
 
 	const {members} = useMembers({
-		accountId,
+		accountId: Liferay.CommerceContext.account?.accountId ?? 0,
 		isCustomerDashboard: false,
 		isPublisherDashboard: true,
 		selectedAccount,
@@ -379,7 +376,6 @@ const Accounts = () => {
 
 	return (
 		<AccountDetailsPage
-			commerceAccount={commerceAccount}
 			selectedAccount={selectedAccount}
 			totalApps={appsTotalCount}
 			totalMembers={members?.length ?? 0}

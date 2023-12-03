@@ -126,14 +126,11 @@ export function CreateProjectModal({
 		});
 
 		await patchOrderByERC(cartCheckoutResponse.orderUUID, {
-			orderStatus: 1,
-		});
-
-		await patchOrderByERC(cartCheckoutResponse.orderUUID, {
 			customFields: {
 				'Github username': githubUsername,
 				'Project Name': projectName,
 			},
+			orderStatus: 1,
 		});
 
 		handleClose();

@@ -9,15 +9,10 @@ import projectsIcon from '../../../assets/icons/projects_icon.svg';
 import {ProjectsPage} from '../../ProjectsPage/ProjectsPage';
 
 const Projects = () => {
-	const {selectedAccount, setShowDashboardNavigation} =
-		useOutletContext<any>();
+	const {selectedAccount} = useOutletContext<any>();
 
 	return (
-		<ProjectsPage
-			icon={projectsIcon}
-			selectedAccount={selectedAccount}
-			setShowDashboardNavigation={setShowDashboardNavigation}
-		/>
+		<ProjectsPage icon={projectsIcon} selectedAccount={selectedAccount} />
 	);
 };
 

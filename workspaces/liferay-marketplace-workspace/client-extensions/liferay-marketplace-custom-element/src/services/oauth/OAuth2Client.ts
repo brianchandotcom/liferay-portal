@@ -9,8 +9,9 @@ class OAuth2Client {
 	public oAuth2Client: IOAuth2ClientAgentApplication;
 
 	constructor(agentName: string) {
-		this.oAuth2Client =
-			Liferay.OAuth2Client.FromUserAgentApplication(agentName);
+		this.oAuth2Client = Liferay.OAuth2Client.FromUserAgentApplication(
+			agentName
+		);
 	}
 }
 

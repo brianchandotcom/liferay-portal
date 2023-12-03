@@ -63,8 +63,9 @@ export function BillingAddress({
 		>
 			<div className="billing-address-section-card-addresses">
 				{addresses.map((address, index) => {
-					const {description, title} =
-						getPostalAddressDescription(address);
+					const {description, title} = getPostalAddressDescription(
+						address
+					);
 
 					return (
 						<RadioCard

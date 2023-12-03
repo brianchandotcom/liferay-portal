@@ -257,7 +257,8 @@ export function InformLicensingTermsPage({
 										skuOptions: [
 											{
 												key: productOptionId,
-												value: optionValuesId.yesOptionId,
+												value:
+													optionValuesId.yesOptionId,
 											},
 										],
 

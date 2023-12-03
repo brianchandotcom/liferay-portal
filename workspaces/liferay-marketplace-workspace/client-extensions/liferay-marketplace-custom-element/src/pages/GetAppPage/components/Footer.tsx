@@ -16,6 +16,7 @@ interface ProductFooterProps {
 	addresses: BillingAddress[];
 	cartId?: number;
 	cartUtil: ReturnType<typeof useCart>;
+	disabled: boolean;
 	enablePurchaseButton: boolean;
 	handleGetApp: (orderId?: number) => void;
 	isFreeApp: boolean;
@@ -42,6 +43,7 @@ const onCancel = () => {
 const ProductFooter = ({
 	addresses,
 	cartUtil,
+	disabled,
 	enablePurchaseButton,
 	handleGetApp,
 	isFreeApp,
@@ -124,6 +126,7 @@ const ProductFooter = ({
 						<ClayButton
 							className="ml-5"
 							disabled={
+								disabled ||
 								(step === StepType.ACCOUNT &&
 									!selectedAccount) ||
 								(step === StepType.LICENSES && !licenseSelected)

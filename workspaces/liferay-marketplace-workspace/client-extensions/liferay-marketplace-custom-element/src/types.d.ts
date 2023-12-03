@@ -17,6 +17,7 @@ type Account = {
 	id: number;
 	logoURL?: string;
 	name: string;
+	taxId: string;
 	type: string;
 };
 
@@ -199,7 +200,7 @@ type CommerceOption = {
 	name: string;
 };
 
-interface Order {
+type Order = {
 	account: {
 		id: number;
 		type: string;
@@ -236,12 +237,13 @@ interface Order {
 	orderTypeId?: number;
 	shippingAmount?: number;
 	shippingWithTaxAmount?: number;
-}
+};
 
-interface OrderType {
+type OrderType = {
 	externalReferenceCode: string;
+	id: number;
 	name: {[key: string]: string};
-}
+};
 
 type PaymentMethodSelector = 'order' | 'pay' | 'trial' | 'free';
 
@@ -376,14 +378,15 @@ interface DeliveryProductSpecification {
 	value: string;
 }
 
-interface DeliverySKU {
+type DeliverySKU = {
 	customFields?: CustomField[];
 	externalReferenceCode: string;
 	id: number;
 	price: {price: number; priceFormatted: string};
+	purchasable: boolean;
 	sku: string;
 	skuOptions: {skuOptionKey: string; skuOptionValueKey: string}[];
-}
+};
 
 interface DeliveryProduct {
 	attachments: DeliveryProductAttachment[];
@@ -487,6 +490,8 @@ type UserAccount = {
 	image: string;
 	isCustomerAccount: boolean;
 	isPublisherAccount: boolean;
+	logoURL: string;
+	name: string;
 	newsSubscription: boolean;
 	password: string;
 };

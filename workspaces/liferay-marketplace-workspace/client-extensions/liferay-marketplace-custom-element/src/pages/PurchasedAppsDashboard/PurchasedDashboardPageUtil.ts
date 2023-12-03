@@ -9,19 +9,6 @@ import membersIcon from '../../assets/icons/person_fill_icon.svg';
 import {DashboardListItems} from '../../components/DashboardNavigation/DashboardNavigation';
 import {AppProps} from '../../components/DashboardTable/DashboardTable';
 
-export const appList: AppProps[] = [];
-
-export const initialAccountState: Account[] = [
-	{
-		description: '',
-		emailAddress: '',
-		externalReferenceCode: '',
-		id: 0,
-		name: '',
-		type: '',
-	},
-];
-
 export const initialAppState: AppProps = {
 	attachments: [
 		{
@@ -73,42 +60,40 @@ export const customerAppPermissionDescriptions: PermissionDescription[] = [
 	},
 ];
 
-export const customerDashboardPermissionDescriptions: PermissionDescription[] =
-	[
-		{
-			permissionName: 'Manage my own member profile',
-			permissionTooltip: 'Manage my own profile information (via Okta)',
-			permittedRoles: ['Account Administrator', 'Account Buyer'],
-		},
-		{
-			permissionName: 'Manage customer account',
-			permissionTooltip: 'Manage all attributes of account',
-			permittedRoles: ['Account Administrator'],
-		},
-		{
-			permissionName: 'View account members',
-			permissionTooltip: 'View all members and roles in account',
-			permittedRoles: ['Account Administrator', 'Account Buyer'],
-		},
-		{
-			permissionName: 'Manage members and roles',
-			permissionTooltip: 'Manage roles of the members - invite & remove',
-			permittedRoles: ['Account Administrator'],
-		},
-		{
-			permissionName: 'View all invoice information',
-			permissionTooltip:
-				'View invoices of past purchases in the Marketplace',
-			permittedRoles: ['Account Administrator', 'Account Buyer'],
-		},
-	];
+export const customerDashboardPermissionDescriptions: PermissionDescription[] = [
+	{
+		permissionName: 'Manage my own member profile',
+		permissionTooltip: 'Manage my own profile information (via Okta)',
+		permittedRoles: ['Account Administrator', 'Account Buyer'],
+	},
+	{
+		permissionName: 'Manage customer account',
+		permissionTooltip: 'Manage all attributes of account',
+		permittedRoles: ['Account Administrator'],
+	},
+	{
+		permissionName: 'View account members',
+		permissionTooltip: 'View all members and roles in account',
+		permittedRoles: ['Account Administrator', 'Account Buyer'],
+	},
+	{
+		permissionName: 'Manage members and roles',
+		permissionTooltip: 'Manage roles of the members - invite & remove',
+		permittedRoles: ['Account Administrator'],
+	},
+	{
+		permissionName: 'View all invoice information',
+		permissionTooltip: 'View invoices of past purchases in the Marketplace',
+		permittedRoles: ['Account Administrator', 'Account Buyer'],
+	},
+];
 
 export const initialDashboardNavigationItems: DashboardListItems[] = [
 	{
 		itemIcon: appsIcon,
 		itemName: 'myApps',
 		itemTitle: 'My Apps',
-		items: appList,
+		items: [],
 		path: '/',
 	},
 	{

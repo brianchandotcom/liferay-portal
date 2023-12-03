@@ -20,11 +20,10 @@ import ClayIcon from '@clayui/icon';
 
 import {useMarketplaceContext} from '../../context/MarketplaceContext';
 
-interface ProjectsPageProps {
+type ProjectsPageProps = {
 	icon: string;
 	selectedAccount: Account;
-	setShowDashboardNavigation: (value: boolean) => void;
-}
+};
 
 const projectsTableHeaders = [
 	{
@@ -47,11 +46,7 @@ const projectsTableHeaders = [
 	},
 ];
 
-export function ProjectsPage({
-	icon,
-	selectedAccount,
-	setShowDashboardNavigation,
-}: ProjectsPageProps) {
+export function ProjectsPage({icon, selectedAccount}: ProjectsPageProps) {
 	const {channel} = useMarketplaceContext();
 	const [visible, setVisible] = useState(false);
 	const [showNextStepsPage, setShowNextStepsPage] = useState(false);
@@ -102,7 +97,6 @@ export function ProjectsPage({
 				}}
 				linkText="Learn more about Projects"
 				onClickContinue={() => {
-					setShowDashboardNavigation(true);
 					setShowNextStepsPage(false);
 				}}
 				showBackButton={false}

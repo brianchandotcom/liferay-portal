@@ -48,6 +48,14 @@ public class CommercePaymentEntryRefundTypeImpl
 	}
 
 	@Override
+	public Map<Locale, String> getNameMap() {
+		LocalizedValuesMap localizedValuesMap =
+			_commercePaymentEntryRefundTypeConfiguration.name();
+
+		return localizedValuesMap.getValues();
+	}
+
+	@Override
 	public int getPriority() {
 		return _commercePaymentEntryRefundTypeConfiguration.priority();
 	}

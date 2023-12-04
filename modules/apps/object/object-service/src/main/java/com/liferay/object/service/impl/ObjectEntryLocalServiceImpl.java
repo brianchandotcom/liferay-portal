@@ -275,15 +275,15 @@ public class ObjectEntryLocalServiceImpl
 
 		ObjectEntry objectEntry = objectEntryPersistence.create(objectEntryId);
 
+
 		objectEntry.setGroupId(groupId);
 		objectEntry.setCompanyId(user.getCompanyId());
-
-		_setExternalReferenceCode(objectEntry, values);
-
 		objectEntry.setUserId(user.getUserId());
 		objectEntry.setUserName(user.getFullName());
 		objectEntry.setCreateDate(new Date());
 		objectEntry.setObjectDefinitionId(objectDefinitionId);
+
+		_setExternalReferenceCode(objectEntry, values);
 
 		_setRootObjectEntryId(objectDefinition, objectEntry, values);
 
@@ -3732,8 +3732,8 @@ public class ObjectEntryLocalServiceImpl
 
 				_validateExternalReferenceCode(
 					externalReferenceCode, objectEntry.getCompanyId(),
-					objectEntry.getGroupId(), objectEntry.getObjectEntryId(),
-					objectEntry.isNew());
+					objectEntry.getObjectDefinitionId(),
+					objectEntry.getObjectEntryId());
 
 				objectEntry.setExternalReferenceCode(externalReferenceCode);
 			}
@@ -4024,17 +4024,14 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	private void _validateExternalReferenceCode(
-		String externalReferenceCode, long companyId, long groupId,
-		long objectEntryId, boolean newObjectEntry) {
+		String externalReferenceCode, long companyId, long objectDefinitionId,
+		long objectEntryId) {
 
-		ObjectEntry ercObjectEntries = objectEntryPersistence.fetchByERC_G_C(
-			externalReferenceCode, groupId, companyId);
+		ObjectEntry objectEntry = objectEntryPersistence.fetchByERC_C_ODI(
+			externalReferenceCode, companyId, objectDefinitionId);
 
-		if (newObjectEntry && (ercObjectEntries != null)) {
-			throw new DuplicateObjectEntryExternalReferenceCodeException();
-		}
-		else if ((ercObjectEntries != null) &&
-				 (ercObjectEntries.getObjectEntryId() != objectEntryId)) {
+		if ((objectEntry != null) &&
+			(objectEntry.getObjectEntryId() != objectEntryId)) {
 
 			throw new DuplicateObjectEntryExternalReferenceCodeException();
 		}

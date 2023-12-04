@@ -3,13 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {ScreenReaderAnnouncerContext} from '@liferay/layout-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {ComponentProps, useContext, useRef} from 'react';
 
 import useActionValues from '../../../app/utils/useActionValues';
 import RuleBuilderItem from './RuleBuilderItem';
 import RuleSelect from './RuleSelect';
-import {ScreenReaderAnnouncerContext} from './ScreenReaderContext';
 
 export interface Action {
 	action?: 'fragment';

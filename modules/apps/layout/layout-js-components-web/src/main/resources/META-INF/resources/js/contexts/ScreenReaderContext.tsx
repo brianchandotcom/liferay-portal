@@ -5,9 +5,9 @@
 
 import React, {ReactNode, useCallback, useRef} from 'react';
 
-import ScreenReaderAnnouncer from '../../../common/components/ScreenReaderAnnouncer';
+import ScreenReaderAnnouncer from '../components/screen_reader_announcer/ScreenReaderAnnouncer';
 
-export type ScreenReaderAnnouncerContextType = {
+type ScreenReaderAnnouncerContextType = {
 	sendMessage: (message: string) => void;
 };
 
@@ -17,7 +17,7 @@ const ScreenReaderAnnouncerContext = React.createContext<
 	sendMessage: () => {},
 });
 
-export default function ScreenReaderAnnouncerContextProvider({
+function ScreenReaderAnnouncerContextProvider({
 	children,
 }: {
 	children: ReactNode;
@@ -41,4 +41,8 @@ export default function ScreenReaderAnnouncerContextProvider({
 	);
 }
 
-export {ScreenReaderAnnouncerContext};
+export {
+	ScreenReaderAnnouncerContext,
+	ScreenReaderAnnouncerContextProvider,
+	ScreenReaderAnnouncerContextType,
+};

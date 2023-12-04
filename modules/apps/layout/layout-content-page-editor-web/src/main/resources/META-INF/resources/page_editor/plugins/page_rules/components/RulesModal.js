@@ -8,6 +8,7 @@ import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayModal, {useModal} from '@clayui/modal';
+import {ScreenReaderAnnouncerContextProvider} from '@liferay/layout-js-components-web';
 import classNames from 'classnames';
 import {useId} from 'frontend-js-components-web';
 import {openToast} from 'frontend-js-web';
@@ -23,7 +24,6 @@ import {
 	RuleBuilderActionSection,
 	RuleBuilderConditionSection,
 } from './RuleBuilderSection';
-import ScreenReaderAnnouncerContext from './ScreenReaderContext';
 
 export default function RulesModal({editingRule, onCloseModal}) {
 	const {observer, onClose} = useModal({
@@ -201,7 +201,7 @@ export default function RulesModal({editingRule, onCloseModal}) {
 					)}
 				</p>
 
-				<ScreenReaderAnnouncerContext>
+				<ScreenReaderAnnouncerContextProvider>
 					<div
 						aria-label={Liferay.Language.get('conditions')}
 						role="group"
@@ -232,7 +232,7 @@ export default function RulesModal({editingRule, onCloseModal}) {
 							}}
 						/>
 					</div>
-				</ScreenReaderAnnouncerContext>
+				</ScreenReaderAnnouncerContextProvider>
 			</ClayModal.Body>
 
 			<ClayModal.Footer

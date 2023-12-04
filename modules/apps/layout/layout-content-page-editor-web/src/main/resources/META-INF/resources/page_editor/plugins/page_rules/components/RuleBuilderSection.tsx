@@ -7,6 +7,7 @@ import ClayButton from '@clayui/button';
 import {Option, Picker} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
 import ClayPanel from '@clayui/panel';
+import {ScreenReaderAnnouncerContext} from '@liferay/layout-js-components-web';
 import React, {Dispatch, SetStateAction, useContext, useMemo} from 'react';
 import {flushSync} from 'react-dom';
 
@@ -16,7 +17,6 @@ import {v4 as uuidv4} from 'uuid';
 
 import ActionComponent, {Action} from './Action';
 import ConditionComponent, {Condition} from './Condition';
-import {ScreenReaderAnnouncerContext} from './ScreenReaderContext';
 
 const TriggerLabel = React.forwardRef<HTMLButtonElement, any>(
 	({children, className: _className, onClick, ...otherProps}, ref) => (

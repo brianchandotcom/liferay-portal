@@ -55,7 +55,9 @@ public class ContentSecurityPolicyTopHeadDynamicInclude
 			ContentSecurityPolicyConfigurationUtil.
 				getContentSecurityPolicyConfiguration(httpServletRequest);
 
-		if (contentSecurityPolicyConfiguration.enabled()) {
+		if ((contentSecurityPolicyConfiguration != null) &&
+			contentSecurityPolicyConfiguration.enabled()) {
+
 			String policy = contentSecurityPolicyConfiguration.policy();
 
 			if (!policy.contains("'strict-dynamic'")) {

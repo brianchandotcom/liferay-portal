@@ -114,6 +114,7 @@ definition {
 			else {
 				var relatedSchema = '''
 					"apiApplicationToAPISchemas": [{
+						"description": "${description}",
 						"externalReferenceCode": "${schemaERC}",
 						"mainObjectDefinitionERC": "${mainObjectDefinitionErc}",
 						"name": "${schemaName}"

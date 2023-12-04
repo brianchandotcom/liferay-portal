@@ -71,10 +71,12 @@ public class CommercePaymentEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(43);
+		StringBundler sb = new StringBundler(53);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", externalReferenceCode=");
+		sb.append(externalReferenceCode);
 		sb.append(", commercePaymentEntryId=");
 		sb.append(commercePaymentEntryId);
 		sb.append(", companyId=");
@@ -105,16 +107,24 @@ public class CommercePaymentEntryCacheModel
 		sb.append(errorMessages);
 		sb.append(", languageId=");
 		sb.append(languageId);
+		sb.append(", note=");
+		sb.append(note);
 		sb.append(", paymentIntegrationKey=");
 		sb.append(paymentIntegrationKey);
 		sb.append(", paymentIntegrationType=");
 		sb.append(paymentIntegrationType);
 		sb.append(", paymentStatus=");
 		sb.append(paymentStatus);
+		sb.append(", reasonKey=");
+		sb.append(reasonKey);
+		sb.append(", reasonName=");
+		sb.append(reasonName);
 		sb.append(", redirectURL=");
 		sb.append(redirectURL);
 		sb.append(", transactionCode=");
 		sb.append(transactionCode);
+		sb.append(", type=");
+		sb.append(type);
 		sb.append("}");
 
 		return sb.toString();
@@ -126,6 +136,15 @@ public class CommercePaymentEntryCacheModel
 			new CommercePaymentEntryImpl();
 
 		commercePaymentEntryImpl.setMvccVersion(mvccVersion);
+
+		if (externalReferenceCode == null) {
+			commercePaymentEntryImpl.setExternalReferenceCode("");
+		}
+		else {
+			commercePaymentEntryImpl.setExternalReferenceCode(
+				externalReferenceCode);
+		}
+
 		commercePaymentEntryImpl.setCommercePaymentEntryId(
 			commercePaymentEntryId);
 		commercePaymentEntryImpl.setCompanyId(companyId);
@@ -192,6 +211,13 @@ public class CommercePaymentEntryCacheModel
 			commercePaymentEntryImpl.setLanguageId(languageId);
 		}
 
+		if (note == null) {
+			commercePaymentEntryImpl.setNote("");
+		}
+		else {
+			commercePaymentEntryImpl.setNote(note);
+		}
+
 		if (paymentIntegrationKey == null) {
 			commercePaymentEntryImpl.setPaymentIntegrationKey("");
 		}
@@ -203,6 +229,20 @@ public class CommercePaymentEntryCacheModel
 		commercePaymentEntryImpl.setPaymentIntegrationType(
 			paymentIntegrationType);
 		commercePaymentEntryImpl.setPaymentStatus(paymentStatus);
+
+		if (reasonKey == null) {
+			commercePaymentEntryImpl.setReasonKey("");
+		}
+		else {
+			commercePaymentEntryImpl.setReasonKey(reasonKey);
+		}
+
+		if (reasonName == null) {
+			commercePaymentEntryImpl.setReasonName("");
+		}
+		else {
+			commercePaymentEntryImpl.setReasonName(reasonName);
+		}
 
 		if (redirectURL == null) {
 			commercePaymentEntryImpl.setRedirectURL("");
@@ -218,6 +258,8 @@ public class CommercePaymentEntryCacheModel
 			commercePaymentEntryImpl.setTransactionCode(transactionCode);
 		}
 
+		commercePaymentEntryImpl.setType(type);
+
 		commercePaymentEntryImpl.resetOriginalValues();
 
 		return commercePaymentEntryImpl;
@@ -228,6 +270,7 @@ public class CommercePaymentEntryCacheModel
 		throws ClassNotFoundException, IOException {
 
 		mvccVersion = objectInput.readLong();
+		externalReferenceCode = objectInput.readUTF();
 
 		commercePaymentEntryId = objectInput.readLong();
 
@@ -249,18 +292,30 @@ public class CommercePaymentEntryCacheModel
 		currencyCode = objectInput.readUTF();
 		errorMessages = (String)objectInput.readObject();
 		languageId = objectInput.readUTF();
+		note = (String)objectInput.readObject();
 		paymentIntegrationKey = objectInput.readUTF();
 
 		paymentIntegrationType = objectInput.readInt();
 
 		paymentStatus = objectInput.readInt();
+		reasonKey = objectInput.readUTF();
+		reasonName = objectInput.readUTF();
 		redirectURL = (String)objectInput.readObject();
 		transactionCode = objectInput.readUTF();
+
+		type = objectInput.readInt();
 	}
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		if (externalReferenceCode == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(externalReferenceCode);
+		}
 
 		objectOutput.writeLong(commercePaymentEntryId);
 
@@ -320,6 +375,13 @@ public class CommercePaymentEntryCacheModel
 			objectOutput.writeUTF(languageId);
 		}
 
+		if (note == null) {
+			objectOutput.writeObject("");
+		}
+		else {
+			objectOutput.writeObject(note);
+		}
+
 		if (paymentIntegrationKey == null) {
 			objectOutput.writeUTF("");
 		}
@@ -330,6 +392,20 @@ public class CommercePaymentEntryCacheModel
 		objectOutput.writeInt(paymentIntegrationType);
 
 		objectOutput.writeInt(paymentStatus);
+
+		if (reasonKey == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(reasonKey);
+		}
+
+		if (reasonName == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(reasonName);
+		}
 
 		if (redirectURL == null) {
 			objectOutput.writeObject("");
@@ -344,9 +420,12 @@ public class CommercePaymentEntryCacheModel
 		else {
 			objectOutput.writeUTF(transactionCode);
 		}
+
+		objectOutput.writeInt(type);
 	}
 
 	public long mvccVersion;
+	public String externalReferenceCode;
 	public long commercePaymentEntryId;
 	public long companyId;
 	public long userId;
@@ -362,10 +441,14 @@ public class CommercePaymentEntryCacheModel
 	public String currencyCode;
 	public String errorMessages;
 	public String languageId;
+	public String note;
 	public String paymentIntegrationKey;
 	public int paymentIntegrationType;
 	public int paymentStatus;
+	public String reasonKey;
+	public String reasonName;
 	public String redirectURL;
 	public String transactionCode;
+	public int type;
 
 }

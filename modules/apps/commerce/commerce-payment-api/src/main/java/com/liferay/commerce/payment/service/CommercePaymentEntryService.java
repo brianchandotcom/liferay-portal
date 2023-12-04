@@ -11,10 +11,13 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.math.BigDecimal;
 
 import java.util.List;
 
@@ -43,6 +46,40 @@ public interface CommercePaymentEntryService extends BaseService {
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.commerce.payment.service.impl.CommercePaymentEntryServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the commerce payment entry remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link CommercePaymentEntryServiceUtil} if injection and service tracking are not available.
 	 */
+	public CommercePaymentEntry addCommercePaymentEntry(
+			long classNameId, long classPK, long commerceChannelId,
+			BigDecimal amount, String callbackURL, String cancelURL,
+			String currencyCode, String languageId, String note,
+			String paymentIntegrationKey, int paymentIntegrationType,
+			String reasonKey, String transactionCode, int type,
+			ServiceContext serviceContext)
+		throws PortalException;
+
+	public CommercePaymentEntry addOrUpdateCommercePaymentEntry(
+			String externalReferenceCode, long classNameId, long classPK,
+			long commerceChannelId, BigDecimal amount, String callbackURL,
+			String cancelURL, String currencyCode, String errorMessages,
+			String languageId, String note, String paymentIntegrationKey,
+			int paymentIntegrationType, int paymentStatus, String reasonKey,
+			String redirectURL, String transactionCode, int type,
+			ServiceContext serviceContext)
+		throws PortalException;
+
+	public CommercePaymentEntry deleteCommercePaymentEntry(
+			long commercePaymentEntryId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommercePaymentEntry fetchByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommercePaymentEntry> getCommercePaymentEntries(
+			long companyId, long classNameId, long classPK, int type, int start,
+			int end, OrderByComparator<CommercePaymentEntry> orderByComparator)
+		throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommercePaymentEntry> getCommercePaymentEntries(
 			long companyId, long classNameId, long classPK, int start, int end,
@@ -68,6 +105,23 @@ public interface CommercePaymentEntryService extends BaseService {
 			String[] paymentMethodNames, int[] paymentStatuses,
 			boolean excludeStatuses, int start, int end, String orderByField,
 			boolean reverse)
+		throws PortalException;
+
+	public CommercePaymentEntry updateCommercePaymentEntry(
+			String externalReferenceCode, long commercePaymentEntryId,
+			long commerceChannelId, BigDecimal amount, String callbackURL,
+			String cancelURL, String currencyCode, String errorMessages,
+			String languageId, String note, String paymentIntegrationKey,
+			int paymentIntegrationType, int paymentStatus, String reasonKey,
+			String redirectURL, String transactionCode, int type)
+		throws PortalException;
+
+	public CommercePaymentEntry updateCommercePaymentEntryNote(
+			long commercePaymentEntryId, String note)
+		throws PortalException;
+
+	public CommercePaymentEntry updateCommercePaymentEntryReasonKey(
+			long commercePaymentEntryId, String reasonKey)
 		throws PortalException;
 
 }

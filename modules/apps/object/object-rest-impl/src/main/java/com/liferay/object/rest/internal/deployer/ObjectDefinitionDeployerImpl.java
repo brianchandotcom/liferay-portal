@@ -599,7 +599,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				new UnsupportedOperationExceptionMapper()),
 			exceptionMapper -> {
 				Class<? extends ExceptionMapper> clazz =
-					((ExceptionMapper<?>)exceptionMapper).getClass();
+					exceptionMapper.getClass();
 
 				return _bundleContext.registerService(
 					(Class<ExceptionMapper<?>>)(Class<?>)ExceptionMapper.class,

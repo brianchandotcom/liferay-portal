@@ -80,19 +80,19 @@ public class DeleteLayoutPageTemplateEntryMVCActionCommand
 			}
 		}
 
-		if (deleteLayoutPageTemplateEntryIds.length ==
-				deleteLayoutPageTemplateEntryIdsList.size()) {
+		String tabs1 = ParamUtil.getString(actionRequest, "tabs1");
 
-			SessionErrors.add(actionRequest, PortalException.class);
-
+		if (!Objects.equals(tabs1, "display-page-templates")) {
 			sendRedirect(actionRequest, actionResponse);
 
 			return;
 		}
 
-		String tabs1 = ParamUtil.getString(actionRequest, "tabs1");
+		if (deleteLayoutPageTemplateEntryIds.length ==
+				deleteLayoutPageTemplateEntryIdsList.size()) {
 
-		if (!Objects.equals(tabs1, "display-page-templates")) {
+			SessionErrors.add(actionRequest, PortalException.class);
+
 			sendRedirect(actionRequest, actionResponse);
 
 			return;

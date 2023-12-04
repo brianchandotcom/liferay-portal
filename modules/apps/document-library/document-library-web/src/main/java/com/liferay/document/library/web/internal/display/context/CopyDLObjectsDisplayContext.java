@@ -8,6 +8,7 @@ package com.liferay.document.library.web.internal.display.context;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileShortcut;
 import com.liferay.document.library.kernel.model.DLFolder;
+import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileShortcutLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLFolderLocalServiceUtil;
@@ -22,7 +23,6 @@ import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -90,9 +90,7 @@ public class CopyDLObjectsDisplayContext {
 
 		if (dlFileEntry != null) {
 			if (useParentFolderName) {
-				DLFolder folder = dlFileEntry.getFolder();
-
-				_dlObjectName = folder.getName();
+				_dlObjectName = _getFolderName(dlFileEntry.getFolder());
 			}
 			else {
 				_dlObjectName = dlFileEntry.getTitle();
@@ -106,15 +104,7 @@ public class CopyDLObjectsDisplayContext {
 
 		if (dlFolder != null) {
 			if (useParentFolderName) {
-				DLFolder parentFolder = dlFolder.getParentFolder();
-
-				if (parentFolder == null) {
-					_dlObjectName = LanguageUtil.get(
-						_httpServletRequest, "home");
-				}
-				else {
-					_dlObjectName = parentFolder.getName();
-				}
+				_dlObjectName = _getFolderName(dlFolder.getParentFolder());
 			}
 			else {
 				_dlObjectName = dlFolder.getName();
@@ -127,9 +117,7 @@ public class CopyDLObjectsDisplayContext {
 			DLFileShortcutLocalServiceUtil.getDLFileShortcut(dlObjectIds[0]);
 
 		if (useParentFolderName) {
-			Folder folder = dlFileShortcut.getFolder();
-
-			_dlObjectName = folder.getName();
+			_dlObjectName = _getFolderName(dlFileShortcut.getDLFolder());
 		}
 		else {
 			_dlObjectName = dlFileShortcut.getToTitle();
@@ -213,6 +201,17 @@ public class CopyDLObjectsDisplayContext {
 		folderItemSelectorCriterion.setShowMountFolder(false);
 
 		return folderItemSelectorCriterion;
+	}
+
+	private String _getFolderName(DLFolder dlFolder) {
+		if ((dlFolder == null) ||
+			(dlFolder.getFolderId() ==
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
+
+			return LanguageUtil.get(_httpServletRequest, "home");
+		}
+
+		return dlFolder.getName();
 	}
 
 	private Group _getGroup(long repositoryId) throws PortalException {

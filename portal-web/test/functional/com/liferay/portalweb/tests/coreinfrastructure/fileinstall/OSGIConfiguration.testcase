@@ -37,7 +37,6 @@ definition {
 		property test.assert.warning.exceptions = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
-		property testray.main.component.name = "Database Partitioning";
 
 		PortalInstances.openVirtualInstancesAdmin();
 

@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -13,7 +13,6 @@ import com.liferay.sharing.display.context.util.SharingDropdownItemFactory;
 import com.liferay.sharing.interpreter.SharingEntryInterpreterProvider;
 import com.liferay.sharing.security.permission.SharingPermission;
 import com.liferay.sharing.service.SharingEntryLocalService;
-import com.liferay.sharing.web.internal.servlet.taglib.ui.SharingEntryDropdownItemContributorRegistry;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -33,7 +32,6 @@ public abstract class BaseMVCRenderCommand {
 			portal.getLiferayPortletRequest(renderRequest),
 			portal.getLiferayPortletResponse(renderResponse),
 			sharingConfigurationFactory, sharingDropdownItemFactory,
-			sharingEntryDropdownItemContributorRegistry,
 			sharingEntryInterpreterProvider::getSharingEntryInterpreter,
 			sharingEntryLocalService, sharingPermission);
 	}
@@ -52,10 +50,6 @@ public abstract class BaseMVCRenderCommand {
 
 	@Reference
 	protected SharingDropdownItemFactory sharingDropdownItemFactory;
-
-	@Reference
-	protected SharingEntryDropdownItemContributorRegistry
-		sharingEntryDropdownItemContributorRegistry;
 
 	@Reference
 	protected SharingEntryInterpreterProvider sharingEntryInterpreterProvider;

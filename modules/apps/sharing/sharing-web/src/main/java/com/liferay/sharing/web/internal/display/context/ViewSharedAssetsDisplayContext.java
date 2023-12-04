@@ -11,10 +11,13 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuil
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
 import com.liferay.item.selector.ItemSelector;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
@@ -24,6 +27,7 @@ import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -40,8 +44,9 @@ import com.liferay.sharing.service.SharingEntryLocalService;
 import com.liferay.sharing.servlet.taglib.ui.SharingEntryDropdownItemContributor;
 import com.liferay.sharing.util.comparator.SharingEntryModifiedDateComparator;
 import com.liferay.sharing.web.internal.constants.SharingPortletKeys;
-import com.liferay.sharing.web.internal.servlet.taglib.ui.SharingEntryDropdownItemContributorRegistry;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
@@ -49,6 +54,9 @@ import java.util.function.Function;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Sergio González
@@ -61,8 +69,6 @@ public class ViewSharedAssetsDisplayContext {
 		LiferayPortletResponse liferayPortletResponse,
 		SharingConfigurationFactory sharingConfigurationFactory,
 		SharingDropdownItemFactory sharingDropdownItemFactory,
-		SharingEntryDropdownItemContributorRegistry
-			sharingEntryDropdownItemContributorRegistry,
 		Function<SharingEntry, SharingEntryInterpreter>
 			sharingEntryInterpreterFunction,
 		SharingEntryLocalService sharingEntryLocalService,
@@ -74,8 +80,6 @@ public class ViewSharedAssetsDisplayContext {
 		_liferayPortletResponse = liferayPortletResponse;
 		_sharingConfigurationFactory = sharingConfigurationFactory;
 		_sharingDropdownItemFactory = sharingDropdownItemFactory;
-		_sharingEntryDropdownItemContributorRegistry =
-			sharingEntryDropdownItemContributorRegistry;
 		_sharingEntryInterpreterFunction = sharingEntryInterpreterFunction;
 		_sharingEntryLocalService = sharingEntryLocalService;
 		_sharingPermission = sharingPermission;
@@ -207,9 +211,7 @@ public class ViewSharedAssetsDisplayContext {
 
 		SharingEntryDropdownItemContributor
 			sharingEntryDropdownItemContributor =
-				_sharingEntryDropdownItemContributorRegistry.
-					getSharingEntryMenuItemContributor(
-						sharingEntry.getClassNameId());
+				_getSharingEntryMenuItemContributor(sharingEntry);
 
 		return DropdownItemListBuilder.add(
 			() -> _hasEditPermission(
@@ -304,6 +306,17 @@ public class ViewSharedAssetsDisplayContext {
 		return true;
 	}
 
+	private SharingEntryDropdownItemContributor
+			_getSharingEntryMenuItemContributor(SharingEntry sharingEntry)
+		throws PortalException {
+
+		ClassName className = ClassNameLocalServiceUtil.getClassName(
+			sharingEntry.getClassNameId());
+
+		return new CompositeSharingEntryDropdownItemContributor(
+			_serviceTrackerMap.getService(className.getClassName()));
+	}
+
 	private PortletURL _getURLEdit(
 			SharingEntry sharingEntry,
 			LiferayPortletRequest liferayPortletRequest,
@@ -350,6 +363,18 @@ public class ViewSharedAssetsDisplayContext {
 		return ParamUtil.getBoolean(_httpServletRequest, "incoming", true);
 	}
 
+	private static final ServiceTrackerMap
+		<String, List<SharingEntryDropdownItemContributor>> _serviceTrackerMap;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(
+			ViewSharedAssetsDisplayContext.class);
+
+		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
+			bundle.getBundleContext(),
+			SharingEntryDropdownItemContributor.class, "model.class.name");
+	}
+
 	private final PortletURL _currentURLObj;
 	private final GroupLocalService _groupLocalService;
 	private final HttpServletRequest _httpServletRequest;
@@ -361,12 +386,49 @@ public class ViewSharedAssetsDisplayContext {
 	private SearchContainer<SharingEntry> _searchContainer;
 	private final SharingConfigurationFactory _sharingConfigurationFactory;
 	private final SharingDropdownItemFactory _sharingDropdownItemFactory;
-	private final SharingEntryDropdownItemContributorRegistry
-		_sharingEntryDropdownItemContributorRegistry;
 	private final Function<SharingEntry, SharingEntryInterpreter>
 		_sharingEntryInterpreterFunction;
 	private final SharingEntryLocalService _sharingEntryLocalService;
 	private final SharingPermission _sharingPermission;
 	private final ThemeDisplay _themeDisplay;
+
+	private static final class CompositeSharingEntryDropdownItemContributor
+		implements SharingEntryDropdownItemContributor {
+
+		public CompositeSharingEntryDropdownItemContributor(
+			List<SharingEntryDropdownItemContributor>
+				sharingEntryDropdownItemContributors) {
+
+			_sharingEntryDropdownItemContributors =
+				sharingEntryDropdownItemContributors;
+		}
+
+		@Override
+		public List<DropdownItem> getSharingEntryDropdownItems(
+			SharingEntry sharingEntry, ThemeDisplay themeDisplay) {
+
+			if (ListUtil.isEmpty(_sharingEntryDropdownItemContributors)) {
+				return Collections.emptyList();
+			}
+
+			List<DropdownItem> dropdownItems = new ArrayList<>();
+
+			for (SharingEntryDropdownItemContributor
+					sharingEntryDropdownItemContributor :
+						_sharingEntryDropdownItemContributors) {
+
+				dropdownItems.addAll(
+					sharingEntryDropdownItemContributor.
+						getSharingEntryDropdownItems(
+							sharingEntry, themeDisplay));
+			}
+
+			return dropdownItems;
+		}
+
+		private final List<SharingEntryDropdownItemContributor>
+			_sharingEntryDropdownItemContributors;
+
+	}
 
 }

@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.layout.util.structure.test;
+package com.liferay.layout.helper.structure.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.layout.helper.structure.LayoutStructureRulesHelper;
 import com.liferay.layout.util.structure.LayoutStructure;
-import com.liferay.layout.util.structure.LayoutStructureRulesHelper;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
@@ -158,7 +158,8 @@ public class LayoutStructureRulesHelperTest {
 
 		return StringUtil.read(
 			clazz.getClassLoader(),
-			"com/liferay/layout/util/structure/test/dependencies/" + fileName);
+			"com/liferay/layout/helper/structure/test/dependencies/" +
+				fileName);
 	}
 
 	@DeleteAfterTestRun

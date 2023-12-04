@@ -12,6 +12,7 @@ Export-Package:\
 	com.liferay.layout.exporter,\
 	com.liferay.layout.friendly.url,\
 	com.liferay.layout.helper,\
+	com.liferay.layout.helper.structure,\
 	com.liferay.layout.importer,\
 	com.liferay.layout.list.permission.provider,\
 	com.liferay.layout.list.retriever,\

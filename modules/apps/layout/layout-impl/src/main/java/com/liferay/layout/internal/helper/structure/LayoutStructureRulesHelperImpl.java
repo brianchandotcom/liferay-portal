@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.layout.internal.util.structure;
+package com.liferay.layout.internal.helper.structure;
 
+import com.liferay.layout.helper.structure.LayoutStructureRulesHelper;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureRule;
-import com.liferay.layout.util.structure.LayoutStructureRulesHelper;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;

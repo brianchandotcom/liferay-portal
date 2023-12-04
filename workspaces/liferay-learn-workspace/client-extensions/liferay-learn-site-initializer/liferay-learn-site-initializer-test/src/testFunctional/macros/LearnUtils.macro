@@ -1,3 +1,21 @@
 definition {
 
+	@summary = "Teardown to Learn Site"
+	macro tearDownLearn() {
+		ApplicationsMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites");
+
+		Refresh();
+
+		PortletEntry.selectAll();
+
+		ClickNoError(locator1 = "Icon#DELETE");
+
+		Click(locator1 = "Button#MODAL_DELETE");
+
+		Alert.viewSuccessMessage();
+	}
+
 }

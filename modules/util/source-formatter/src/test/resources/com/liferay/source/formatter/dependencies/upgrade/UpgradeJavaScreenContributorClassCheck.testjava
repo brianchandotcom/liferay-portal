@@ -1,0 +1,58 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.dependencies.upgrade;
+
+@Component(service = PortalSettingsConfigurationScreenContributor.class)
+public class UpgradeJavaScreenContributorClassCheck
+	implements PortalSettingsConfigurationScreenContributor {
+
+	@Override
+	public String getCategoryKey() {
+		return "test-category-key";
+	}
+
+	@Override
+	public String getJspPath() {
+		return "/portal_settings/test.jsp";
+	}
+
+	@Override
+	public String getKey() {
+		return "test-key";
+	}
+
+	@Override
+	public String getName(Locale locale) {
+		return _language.get(locale, "test-configuration-name");
+	}
+
+	@Override
+	public String getSaveMVCActionCommandName() {
+		return "/test-name/test-command-name";
+	}
+
+	@Override
+	public ServletContext getServletContext() {
+		return _servletContext;
+	}
+
+	@Override
+	public void setAttributes(
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
+
+		httpServletRequest.setAttribute(null, null);
+	}
+
+	@Reference
+	private Language _language;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.test.web)"
+	)
+	private ServletContext _servletContext;
+
+}

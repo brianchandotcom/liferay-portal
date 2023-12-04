@@ -51,6 +51,4 @@ public interface AssetDisplayPageEntry
 
 			};
 
-	public long getPlid();
-
 }

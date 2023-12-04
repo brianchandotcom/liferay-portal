@@ -65,6 +65,8 @@ public class AssetDisplayPageEntryTable
 	public final Column<AssetDisplayPageEntryTable, Integer> type =
 		createColumn(
 			"type_", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
+	public final Column<AssetDisplayPageEntryTable, Long> plid = createColumn(
+		"plid", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 
 	private AssetDisplayPageEntryTable() {
 		super("AssetDisplayPageEntry", AssetDisplayPageEntryTable::new);

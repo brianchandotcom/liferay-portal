@@ -293,25 +293,29 @@ const APIGUI = () => {
 					</ClayModal>
 				)}
 
-				{!showGraphQL && (
-					<SwaggerUI
-						displayOperationId={true}
-						requestInterceptor={requestInterceptor}
-						supportedSubmitMethods={[
-							'get',
-							'put',
-							'post',
-							'delete',
-							'patch',
-						]}
-						tryItOutEnabled={true}
-						url={
-							endpoint ||
-							endpoints.find((url) =>
-								url.includes('headless-delivery')
-							)
-						}
-					/>
+				{!endpoint.startsWith('http://localhost:8080') ? (
+					<>Error!!</>
+				) : (
+					!showGraphQL && (
+						<SwaggerUI
+							displayOperationId={true}
+							requestInterceptor={requestInterceptor}
+							supportedSubmitMethods={[
+								'get',
+								'put',
+								'post',
+								'delete',
+								'patch',
+							]}
+							tryItOutEnabled={true}
+							url={
+								endpoint ||
+								endpoints.find((url) =>
+									url.includes('headless-delivery')
+								)
+							}
+						/>
+					)
 				)}
 
 				{showGraphQL && (

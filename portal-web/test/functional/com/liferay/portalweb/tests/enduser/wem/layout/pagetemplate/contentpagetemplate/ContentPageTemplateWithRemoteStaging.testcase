@@ -56,9 +56,7 @@ definition {
 		task ("When publish content page template to remote live") {
 			Staging.openStagingAdmin(siteURLKey = "test-site-name");
 
-			Staging.publishCustomPublication(
-				publicationTitle = "My Publish Title",
-				remoteStaging = "true");
+			Staging.publishCustomPublication(remoteStaging = "true");
 		}
 
 		task ("Then assert if privateLayout column is set to true in staging and live databases") {

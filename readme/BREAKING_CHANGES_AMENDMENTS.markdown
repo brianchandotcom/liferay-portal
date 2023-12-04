@@ -225,3 +225,17 @@ Class is removed.
 This class has been deprecated since 7.1.x, its only usage in rules_user_custom_attribute_content.drl is replaced by FacetImpl.
 ----
 ```
+----
+
+# f46f1e49076f31484ad6cceede099bb16c9ef911
+Incorrect format on breaking change
+
+Correct message should be:
+```
+# breaking
+## What portal-kernel/src/com/liferay/portal/kernel/dao/orm/IndexableActionableDynamicQuery.java
+setIndexWriterHelper() method is being removed.
+## Why
+This setter was added for the class UserIndexer (see 73427a8). UserIndexer has been deprecated and removed from the portal though.
+----
+```

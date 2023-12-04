@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.osb.client.extension.util.zendesk.service;
+package com.liferay.osb.spring.boot.client.zendesk.service;
 
-import com.liferay.osb.client.extension.util.zendesk.model.ZendeskOrganization;
-import com.liferay.osb.client.extension.util.zendesk.model.ZendeskTicket;
-import com.liferay.osb.client.extension.util.zendesk.model.ZendeskUser;
+import com.liferay.osb.spring.boot.client.zendesk.model.ZendeskOrganization;
+import com.liferay.osb.spring.boot.client.zendesk.model.ZendeskTicket;
+import com.liferay.osb.spring.boot.client.zendesk.model.ZendeskUser;
 import com.liferay.petra.string.StringPool;
 
 import java.util.Base64;
@@ -192,15 +192,15 @@ public class ZendeskWebService {
 		return "Basic " + encodedZendeskCredentials;
 	}
 
-	@Value("${liferay.customer.zendesk.api.email.address}")
+	@Value("${liferay.osb.spring.boot.client.zendesk.api.email.address}")
 	private String _zendeskAPIEmailAddress;
 
-	@Value("${liferay.customer.zendesk.api.token}")
+	@Value("${liferay.osb.spring.boot.client.zendesk.api.token}")
 	private String _zendeskAPIToken;
 
 	private String _zendeskAuthorization;
 
-	@Value("${liferay.customer.zendesk.url}")
+	@Value("${liferay.osb.spring.boot.client.zendesk.url}")
 	private String _zendeskURL;
 
 }

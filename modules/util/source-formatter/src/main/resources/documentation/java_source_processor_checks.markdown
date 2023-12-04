@@ -255,6 +255,7 @@ SystemEventCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-preventio
 TernaryOperatorCheck | [Styling](styling_checks.markdown#styling-checks) | Finds use of ternary operator in `java` files (use if statement instead). |
 TestClassCheck | [Naming Conventions](naming_conventions_checks.markdown#naming-conventions-checks) | Checks that names of test classes follow naming conventions. |
 TestClassMissingLiferayUnitTestRuleCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Finds missing LiferayUnitTestRule. |
+[ThreadContextClassLoaderCheck](check/thread_context_class_loader_check.markdown#threadcontextclassloadercheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Checks usage of `Thread.setContextClassLoader` |
 ThreadLocalUtilCheck | [Performance](performance_checks.markdown#performance-checks) | Finds new instances of `java.lang.Thread` (use `ThreadLocalUtil.create` instead). |
 ThreadNameCheck | [Naming Conventions](naming_conventions_checks.markdown#naming-conventions-checks) | Checks that names of threads follow naming conventions. |
 TransactionalTestRuleCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Finds usage of `TransactionalTestRule` in `*StagedModelDataHandlerTest`. |

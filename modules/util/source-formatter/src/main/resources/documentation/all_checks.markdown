@@ -440,6 +440,7 @@ TXTStylingCheck | [Styling](styling_checks.markdown#styling-checks) | .txt | App
 TernaryOperatorCheck | [Styling](styling_checks.markdown#styling-checks) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds use of ternary operator in `java` files (use if statement instead). |
 TestClassCheck | [Naming Conventions](naming_conventions_checks.markdown#naming-conventions-checks) | .java | Checks that names of test classes follow naming conventions. |
 TestClassMissingLiferayUnitTestRuleCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .java | Finds missing LiferayUnitTestRule. |
+[ThreadContextClassLoaderCheck](check/thread_context_class_loader_check.markdown#threadcontextclassloadercheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .java | Checks usage of `Thread.setContextClassLoader` |
 ThreadLocalUtilCheck | [Performance](performance_checks.markdown#performance-checks) | .java | Finds new instances of `java.lang.Thread` (use `ThreadLocalUtil.create` instead). |
 ThreadNameCheck | [Naming Conventions](naming_conventions_checks.markdown#naming-conventions-checks) | .java | Checks that names of threads follow naming conventions. |
 TransactionalTestRuleCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .java | Finds usage of `TransactionalTestRule` in `*StagedModelDataHandlerTest`. |

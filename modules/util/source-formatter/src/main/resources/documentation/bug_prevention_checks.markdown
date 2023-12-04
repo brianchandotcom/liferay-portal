@@ -191,6 +191,7 @@ ServiceUpdateCheck | .java | Checks that there are no stale references in servic
 SystemEventCheck | .java | Finds missing or redundant usage of @SystemEvent for delete events. |
 TLDTypeCheck | .tld | Ensures the fully qualified name is used for types in `.tld` file. |
 TestClassMissingLiferayUnitTestRuleCheck | .java | Finds missing LiferayUnitTestRule. |
+[ThreadContextClassLoaderCheck](check/thread_context_class_loader_check.markdown#threadcontextclassloadercheck) | .java | Checks usage of `Thread.setContextClassLoader` |
 TransactionalTestRuleCheck | .java | Finds usage of `TransactionalTestRule` in `*StagedModelDataHandlerTest`. |
 UnparameterizedClassCheck | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds `Class` instantiation without generic type. |
 UnwrappedVariableInfoCheck | .java | Finds cases where the variable should be wrapped into an inner class in order to defer array elements initialization. |

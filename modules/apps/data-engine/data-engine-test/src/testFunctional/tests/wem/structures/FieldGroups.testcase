@@ -925,9 +925,13 @@ definition {
 				fieldLabel = "Numeric",
 				index = 2,
 				value = 2);
+
+			PortletEntry.publish();
 		}
 
 		task ("When the user re-orders the repeatable fields groups using drag and drop") {
+			WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+
 			AssertElementPresent(locator1 = "DDMEditStructure#FORM_FIELD_GROUP_TARGET_SPACE");
 
 			DragAndDrop.javaScriptDragAndDropToObject(

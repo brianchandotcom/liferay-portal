@@ -38,6 +38,17 @@ import org.springframework.scheduling.annotation.Scheduled;
 @EnableScheduling
 public class JobEntityRepository extends BaseEntityRepository<JobEntity> {
 
+	@Override
+	public JobEntity create(JSONObject jsonObject) {
+		Object parameters = jsonObject.opt("parameters");
+
+		if (parameters != null) {
+			jsonObject.put("parameters", String.valueOf(parameters));
+		}
+
+		return super.create(jsonObject);
+	}
+
 	public JobEntity create(
 		String name, int priority, Date startDate, JobEntity.State state,
 		JobEntity.Type type) {

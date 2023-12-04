@@ -27,7 +27,7 @@ create table OAuth2Application (
 	homePageURL STRING null,
 	iconFileEntryId LONG,
 	jwks VARCHAR(3999) null,
-	name VARCHAR(75) null,
+	name VARCHAR(255) null,
 	privacyPolicyURL STRING null,
 	redirectURIs STRING null,
 	rememberDevice BOOLEAN,

@@ -8,9 +8,9 @@ package com.liferay.customer;
 import com.liferay.customer.google.service.GoogleCloudStorageWebService;
 import com.liferay.customer.object.model.TicketAttachment;
 import com.liferay.customer.object.service.TicketAttachmentWebService;
-import com.liferay.osb.client.extension.util.zendesk.model.ZendeskOrganization;
-import com.liferay.osb.client.extension.util.zendesk.model.ZendeskTicket;
-import com.liferay.osb.client.extension.util.zendesk.service.ZendeskWebService;
+import com.liferay.osb.spring.boot.client.zendesk.model.ZendeskOrganization;
+import com.liferay.osb.spring.boot.client.zendesk.model.ZendeskTicket;
+import com.liferay.osb.spring.boot.client.zendesk.service.ZendeskWebService;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

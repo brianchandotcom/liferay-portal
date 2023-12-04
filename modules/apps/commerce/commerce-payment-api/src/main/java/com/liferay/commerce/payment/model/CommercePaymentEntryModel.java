@@ -6,15 +6,20 @@
 package com.liferay.commerce.payment.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
+import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.model.AttachedModel;
 import com.liferay.portal.kernel.model.AuditedModel;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
+import com.liferay.portal.kernel.model.LocalizedModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 
 import java.math.BigDecimal;
 
 import java.util.Date;
+import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -32,7 +37,8 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface CommercePaymentEntryModel
 	extends AttachedModel, AuditedModel, BaseModel<CommercePaymentEntry>,
-			MVCCModel, ShardedModel {
+			ExternalReferenceCodeModel, LocalizedModel, MVCCModel,
+			ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -69,6 +75,23 @@ public interface CommercePaymentEntryModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the external reference code of this commerce payment entry.
+	 *
+	 * @return the external reference code of this commerce payment entry
+	 */
+	@AutoEscape
+	@Override
+	public String getExternalReferenceCode();
+
+	/**
+	 * Sets the external reference code of this commerce payment entry.
+	 *
+	 * @param externalReferenceCode the external reference code of this commerce payment entry
+	 */
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode);
 
 	/**
 	 * Returns the commerce payment entry ID of this commerce payment entry.
@@ -327,6 +350,21 @@ public interface CommercePaymentEntryModel
 	public void setLanguageId(String languageId);
 
 	/**
+	 * Returns the note of this commerce payment entry.
+	 *
+	 * @return the note of this commerce payment entry
+	 */
+	@AutoEscape
+	public String getNote();
+
+	/**
+	 * Sets the note of this commerce payment entry.
+	 *
+	 * @param note the note of this commerce payment entry
+	 */
+	public void setNote(String note);
+
+	/**
 	 * Returns the payment integration key of this commerce payment entry.
 	 *
 	 * @return the payment integration key of this commerce payment entry
@@ -370,6 +408,122 @@ public interface CommercePaymentEntryModel
 	public void setPaymentStatus(int paymentStatus);
 
 	/**
+	 * Returns the reason key of this commerce payment entry.
+	 *
+	 * @return the reason key of this commerce payment entry
+	 */
+	@AutoEscape
+	public String getReasonKey();
+
+	/**
+	 * Sets the reason key of this commerce payment entry.
+	 *
+	 * @param reasonKey the reason key of this commerce payment entry
+	 */
+	public void setReasonKey(String reasonKey);
+
+	/**
+	 * Returns the reason name of this commerce payment entry.
+	 *
+	 * @return the reason name of this commerce payment entry
+	 */
+	public String getReasonName();
+
+	/**
+	 * Returns the localized reason name of this commerce payment entry in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the locale of the language
+	 * @return the localized reason name of this commerce payment entry
+	 */
+	@AutoEscape
+	public String getReasonName(Locale locale);
+
+	/**
+	 * Returns the localized reason name of this commerce payment entry in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the local of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized reason name of this commerce payment entry. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	 */
+	@AutoEscape
+	public String getReasonName(Locale locale, boolean useDefault);
+
+	/**
+	 * Returns the localized reason name of this commerce payment entry in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @return the localized reason name of this commerce payment entry
+	 */
+	@AutoEscape
+	public String getReasonName(String languageId);
+
+	/**
+	 * Returns the localized reason name of this commerce payment entry in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized reason name of this commerce payment entry
+	 */
+	@AutoEscape
+	public String getReasonName(String languageId, boolean useDefault);
+
+	@AutoEscape
+	public String getReasonNameCurrentLanguageId();
+
+	@AutoEscape
+	public String getReasonNameCurrentValue();
+
+	/**
+	 * Returns a map of the locales and localized reason names of this commerce payment entry.
+	 *
+	 * @return the locales and localized reason names of this commerce payment entry
+	 */
+	public Map<Locale, String> getReasonNameMap();
+
+	/**
+	 * Sets the reason name of this commerce payment entry.
+	 *
+	 * @param reasonName the reason name of this commerce payment entry
+	 */
+	public void setReasonName(String reasonName);
+
+	/**
+	 * Sets the localized reason name of this commerce payment entry in the language.
+	 *
+	 * @param reasonName the localized reason name of this commerce payment entry
+	 * @param locale the locale of the language
+	 */
+	public void setReasonName(String reasonName, Locale locale);
+
+	/**
+	 * Sets the localized reason name of this commerce payment entry in the language, and sets the default locale.
+	 *
+	 * @param reasonName the localized reason name of this commerce payment entry
+	 * @param locale the locale of the language
+	 * @param defaultLocale the default locale
+	 */
+	public void setReasonName(
+		String reasonName, Locale locale, Locale defaultLocale);
+
+	public void setReasonNameCurrentLanguageId(String languageId);
+
+	/**
+	 * Sets the localized reason names of this commerce payment entry from the map of locales and localized reason names.
+	 *
+	 * @param reasonNameMap the locales and localized reason names of this commerce payment entry
+	 */
+	public void setReasonNameMap(Map<Locale, String> reasonNameMap);
+
+	/**
+	 * Sets the localized reason names of this commerce payment entry from the map of locales and localized reason names, and sets the default locale.
+	 *
+	 * @param reasonNameMap the locales and localized reason names of this commerce payment entry
+	 * @param defaultLocale the default locale
+	 */
+	public void setReasonNameMap(
+		Map<Locale, String> reasonNameMap, Locale defaultLocale);
+
+	/**
 	 * Returns the redirect url of this commerce payment entry.
 	 *
 	 * @return the redirect url of this commerce payment entry
@@ -398,6 +552,33 @@ public interface CommercePaymentEntryModel
 	 * @param transactionCode the transaction code of this commerce payment entry
 	 */
 	public void setTransactionCode(String transactionCode);
+
+	/**
+	 * Returns the type of this commerce payment entry.
+	 *
+	 * @return the type of this commerce payment entry
+	 */
+	public int getType();
+
+	/**
+	 * Sets the type of this commerce payment entry.
+	 *
+	 * @param type the type of this commerce payment entry
+	 */
+	public void setType(int type);
+
+	@Override
+	public String[] getAvailableLanguageIds();
+
+	@Override
+	public String getDefaultLanguageId();
+
+	@Override
+	public void prepareLocalizedFieldsForImport() throws LocaleException;
+
+	@Override
+	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
+		throws LocaleException;
 
 	@Override
 	public CommercePaymentEntry cloneWithOriginalValues();

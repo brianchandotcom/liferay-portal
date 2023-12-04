@@ -130,11 +130,13 @@ public abstract class CommercePaymentEntryLocalServiceBaseImpl
 	 *
 	 * @param commercePaymentEntry the commerce payment entry
 	 * @return the commerce payment entry that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public CommercePaymentEntry deleteCommercePaymentEntry(
-		CommercePaymentEntry commercePaymentEntry) {
+			CommercePaymentEntry commercePaymentEntry)
+		throws PortalException {
 
 		return commercePaymentEntryPersistence.remove(commercePaymentEntry);
 	}
@@ -246,6 +248,24 @@ public abstract class CommercePaymentEntryLocalServiceBaseImpl
 
 		return commercePaymentEntryPersistence.fetchByPrimaryKey(
 			commercePaymentEntryId);
+	}
+
+	@Override
+	public CommercePaymentEntry
+		fetchCommercePaymentEntryByExternalReferenceCode(
+			String externalReferenceCode, long companyId) {
+
+		return commercePaymentEntryPersistence.fetchByERC_C(
+			externalReferenceCode, companyId);
+	}
+
+	@Override
+	public CommercePaymentEntry getCommercePaymentEntryByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return commercePaymentEntryPersistence.findByERC_C(
+			externalReferenceCode, companyId);
 	}
 
 	/**

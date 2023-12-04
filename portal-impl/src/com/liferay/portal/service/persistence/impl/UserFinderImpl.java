@@ -106,8 +106,8 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 	public static final String JOIN_BY_NO_ORGANIZATIONS =
 		UserFinder.class.getName() + ".joinByNoOrganizations";
 
-	public static final String JOIN_BY_NO_ORGANIZATIONS_OR_ACCOUNTS =
-		UserFinder.class.getName() + ".joinByNoOrganizationsOrAccounts";
+	public static final String JOIN_BY_NO_ORGANIZATIONS_OR_ACCOUNT_ENTRIES =
+		UserFinder.class.getName() + ".joinByNoOrganizationsOrAccountEntries";
 
 	public static final String JOIN_BY_USER_GROUP_ROLE =
 		UserFinder.class.getName() + ".joinByUserGroupRole";
@@ -885,8 +885,9 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 		else if (key.equals("noOrganizations")) {
 			join = CustomSQLUtil.get(JOIN_BY_NO_ORGANIZATIONS);
 		}
-		else if (key.equals("noOrganizationsOrAccounts")) {
-			join = CustomSQLUtil.get(JOIN_BY_NO_ORGANIZATIONS_OR_ACCOUNTS);
+		else if (key.equals("noOrganizationsOrAccountEntries")) {
+			join = CustomSQLUtil.get(
+				JOIN_BY_NO_ORGANIZATIONS_OR_ACCOUNT_ENTRIES);
 		}
 		else if (key.equals("userGroupRole")) {
 			join = CustomSQLUtil.get(JOIN_BY_USER_GROUP_ROLE);
@@ -1311,8 +1312,9 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 		else if (key.equals("noOrganizations")) {
 			join = CustomSQLUtil.get(JOIN_BY_NO_ORGANIZATIONS);
 		}
-		else if (key.equals("noOrganizationsOrAccounts")) {
-			join = CustomSQLUtil.get(JOIN_BY_NO_ORGANIZATIONS_OR_ACCOUNTS);
+		else if (key.equals("noOrganizationsOrAccountEntries")) {
+			join = CustomSQLUtil.get(
+				JOIN_BY_NO_ORGANIZATIONS_OR_ACCOUNT_ENTRIES);
 		}
 		else if (key.equals("userGroupRole")) {
 			join = CustomSQLUtil.get(JOIN_BY_USER_GROUP_ROLE);

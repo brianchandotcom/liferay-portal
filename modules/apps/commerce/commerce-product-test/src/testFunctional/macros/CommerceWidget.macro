@@ -121,7 +121,7 @@ definition {
 
 		echo("THE NUMBER OF FACETED LABELS IS ${count}");
 
-		if (${count} != ${expectedLabels}) {
+		while ((${count} != ${expectedLabels}) && (maxIterations = "10")) {
 			CommerceProducts.openProductsAdmin();
 
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/catalog");

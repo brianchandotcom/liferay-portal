@@ -455,9 +455,7 @@ public class ObjectDefinitionResourceImpl
 				_objectDefinitionService.getObjectDefinition(
 					objectDefinitionId);
 
-		if (!serviceBuilderObjectDefinition.isApproved()) {
-			_addListTypeDefinition(objectDefinition);
-		}
+		_addListTypeDefinition(objectDefinition);
 
 		long accountEntryRestrictedObjectFieldId = 0;
 

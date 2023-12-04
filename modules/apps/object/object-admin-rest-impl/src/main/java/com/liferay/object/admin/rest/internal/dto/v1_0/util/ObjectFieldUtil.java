@@ -16,6 +16,7 @@ import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectFilterLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -29,6 +30,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -71,7 +73,7 @@ public class ObjectFieldUtil {
 		}
 
 		if (objectField.getObjectFieldSettings() != null) {
-			_addListTypeEntries(
+			_addOrDeleteListTypeEntries(
 				listTypeDefinition, listTypeEntryLocalService, objectField,
 				userId);
 		}
@@ -202,7 +204,7 @@ public class ObjectFieldUtil {
 		return serviceBuilderObjectField;
 	}
 
-	private static void _addListTypeEntries(
+	private static void _addOrDeleteListTypeEntries(
 			ListTypeDefinition listTypeDefinition,
 			ListTypeEntryLocalService listTypeEntryLocalService,
 			ObjectField objectField, long userId)
@@ -225,17 +227,21 @@ public class ObjectFieldUtil {
 			JSONArray objectStatesJSONArray = jsonObject.getJSONArray(
 				"objectStates");
 
+			List<String> serviceBuilderListTypeEntryKeys =
+				TransformUtil.transform(
+					listTypeEntryLocalService.getListTypeEntries(
+						listTypeDefinition.getListTypeDefinitionId()),
+					ListTypeEntry::getKey);
+
 			for (int i = 0; i < objectStatesJSONArray.length(); i++) {
 				JSONObject objectStateJSONObject =
 					objectStatesJSONArray.getJSONObject(i);
 
 				String key = objectStateJSONObject.getString("key");
 
-				ListTypeEntry listTypeEntry =
-					listTypeEntryLocalService.fetchListTypeEntry(
-						listTypeDefinition.getListTypeDefinitionId(), key);
+				if (serviceBuilderListTypeEntryKeys.contains(key)) {
+					serviceBuilderListTypeEntryKeys.remove(key);
 
-				if (listTypeEntry != null) {
 					continue;
 				}
 
@@ -243,6 +249,11 @@ public class ObjectFieldUtil {
 					null, userId, listTypeDefinition.getListTypeDefinitionId(),
 					key,
 					Collections.singletonMap(LocaleUtil.getDefault(), key));
+			}
+
+			for (String key : serviceBuilderListTypeEntryKeys) {
+				listTypeEntryLocalService.deleteListTypeEntryByKey(
+					listTypeDefinition.getListTypeDefinitionId(), key);
 			}
 		}
 	}

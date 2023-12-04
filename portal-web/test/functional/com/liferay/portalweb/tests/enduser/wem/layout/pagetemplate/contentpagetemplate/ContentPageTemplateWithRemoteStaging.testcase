@@ -65,7 +65,7 @@ definition {
 				text = 1);
 
 			SQL.assertTextInMySQLStatementResult(
-				mysqlStatement = "SELECT privateLayout FROM lportal_remote.Layout WHERE name LIKE '%Content Page Template Name%' LIMIT 1",
+				mysqlStatement = "SELECT privateLayout FROM lportal1_remote.Layout WHERE name LIKE '%Content Page Template Name%' LIMIT 1",
 				text = 1);
 		}
 	}

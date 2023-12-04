@@ -3,11 +3,31 @@
 
 <resource-action-mapping>
 	<model-resource>
+		<model-name>com.liferay.commerce.payment</model-name>
+		<portlet-ref>
+			<portlet-name>com_liferay_commerce_payment_web_internal_portlet_CommercePaymentPortlet</portlet-name>
+		</portlet-ref>
+		<root>true</root>
+		<weight>1</weight>
+		<permissions>
+			<supports>
+				<action-key>ADD_PAYMENT</action-key>
+				<action-key>ADD_REFUND</action-key>
+			</supports>
+			<site-member-defaults />
+			<guest-defaults />
+			<guest-unsupported>
+				<action-key>ADD_PAYMENT</action-key>
+				<action-key>ADD_REFUND</action-key>
+			</guest-unsupported>
+		</permissions>
+	</model-resource>
+	<model-resource>
 		<model-name>com.liferay.commerce.payment.model.CommercePaymentEntry</model-name>
 		<portlet-ref>
 			<portlet-name>com_liferay_commerce_payment_web_internal_portlet_CommercePaymentPortlet</portlet-name>
 		</portlet-ref>
-		<weight>1</weight>
+		<weight>2</weight>
 		<permissions>
 			<supports>
 				<action-key>DELETE</action-key>

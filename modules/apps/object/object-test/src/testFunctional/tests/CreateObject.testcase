@@ -4625,8 +4625,8 @@ definition {
 
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldBusinessType = "Date",
-			fieldLabelName = "Date",
-			fieldName = "customObjectField",
+			fieldLabelName = "Event",
+			fieldName = "event",
 			fieldType = "Date",
 			isRequired = "false",
 			objectName = "CustomObject113");
@@ -4644,14 +4644,13 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 113");
 
-		CreateObject.selectTitleField(fieldLabel = "Date");
+		CreateObject.selectTitleField(fieldLabel = "Event");
 
 		CreateObject.saveObject();
 
-		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
-			fieldName = "customObjectField",
-			objectName = "CustomObject113",
-			value = "2021-01-01");
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject113");
+
+		ObjectPortlet.addSingleFieldEntryViaUI(entry = "01-01-2021");
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject113");
 

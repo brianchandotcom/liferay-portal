@@ -374,58 +374,6 @@ public class SourceFormatterUtil {
 		}
 	}
 
-	public static void git(
-		List<String> args, String baseDirName, String[] includes,
-		Consumer<String> consumer) {
-
-		if (_gitTopLevelFolder == null) {
-			List<String> lines = git(
-				Arrays.asList("rev-parse", "--show-toplevel"), baseDirName);
-
-			_gitTopLevelFolder = lines.get(0);
-		}
-
-		List<String> deletedFileNames = _getDeletedFileNames(baseDirName);
-
-		List<String> allArgs = new ArrayList<>(args);
-
-		List<String> filters = new ArrayList<>();
-
-		ArrayUtil.isNotEmptyForEach(
-			includes, includeGlob -> filters.add(":(glob)" + includeGlob));
-
-		if (ListUtil.isNotEmpty(filters)) {
-			allArgs.add("--");
-
-			allArgs.addAll(filters);
-		}
-
-		List<String> result = new ArrayList<>();
-
-		git(
-			allArgs, baseDirName,
-			line -> {
-				if (deletedFileNames.contains(line)) {
-					return;
-				}
-
-				result.add(
-					_gitTopLevelFolder + StringPool.FORWARD_SLASH + line);
-			});
-
-		List<String> unCachedFileNames = _getUnCachedFileNames();
-
-		for (String unCachedFileName : unCachedFileNames) {
-			if (!result.contains(unCachedFileName)) {
-				result.add(unCachedFileName);
-			}
-		}
-
-		for (String fileName : result) {
-			consumer.accept(fileName);
-		}
-	}
-
 	public static void printError(String fileName, File file) {
 		printError(fileName, file.toString());
 	}
@@ -439,7 +387,7 @@ public class SourceFormatterUtil {
 
 		List<String> result = new ArrayList<>();
 
-		git(
+		_scanForFileNames(
 			Arrays.asList("ls-files", "-z", "--full-name"), baseDirName,
 			includes, result::add);
 
@@ -694,6 +642,58 @@ public class SourceFormatterUtil {
 		_unCachedFileNames = unCachedFileNames;
 
 		return _unCachedFileNames;
+	}
+
+	private static void _scanForFileNames(
+		List<String> args, String baseDirName, String[] includes,
+		Consumer<String> consumer) {
+
+		if (_gitTopLevelFolder == null) {
+			List<String> lines = git(
+				Arrays.asList("rev-parse", "--show-toplevel"), baseDirName);
+
+			_gitTopLevelFolder = lines.get(0);
+		}
+
+		List<String> deletedFileNames = _getDeletedFileNames(baseDirName);
+
+		List<String> allArgs = new ArrayList<>(args);
+
+		List<String> filters = new ArrayList<>();
+
+		ArrayUtil.isNotEmptyForEach(
+			includes, includeGlob -> filters.add(":(glob)" + includeGlob));
+
+		if (ListUtil.isNotEmpty(filters)) {
+			allArgs.add("--");
+
+			allArgs.addAll(filters);
+		}
+
+		List<String> fileNames = new ArrayList<>();
+
+		git(
+			allArgs, baseDirName,
+			line -> {
+				if (deletedFileNames.contains(line)) {
+					return;
+				}
+
+				fileNames.add(
+					_gitTopLevelFolder + StringPool.FORWARD_SLASH + line);
+			});
+
+		List<String> unCachedFileNames = _getUnCachedFileNames();
+
+		for (String unCachedFileName : unCachedFileNames) {
+			if (!fileNames.contains(unCachedFileName)) {
+				fileNames.add(unCachedFileName);
+			}
+		}
+
+		for (String fileName : fileNames) {
+			consumer.accept(fileName);
+		}
 	}
 
 	private static List<String> _scanForFileNames(

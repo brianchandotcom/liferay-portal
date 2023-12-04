@@ -50,17 +50,23 @@ public class OnDemandAdminTicketGeneratorImpl
 			Company company, String justification, long requestorUserId)
 		throws PortalException {
 
-		_onDemandAdminHelper.checkRequestAdministratorAccessPermission(
-			company.getCompanyId(), requestorUserId);
+		return generate(
+			company, justification, _userLocalService.getUser(requestorUserId));
+	}
 
-		User requestorUser = _userLocalService.getUser(requestorUserId);
+	public Ticket generate(
+			Company company, String justification, User requestorUser)
+		throws PortalException {
+
+		_onDemandAdminHelper.checkRequestAdministratorAccessPermission(
+			company.getCompanyId(), requestorUser.getUserId());
 
 		User user = _addOnDemandAdminUser(company, requestorUser);
 
 		AuditMessage auditMessage = AuditMessageBuilder.buildAuditMessage(
 			OnDemandAdminConstants.
 				AUDIT_EVENT_TYPE_ON_DEMAND_ADMIN_TICKET_GENERATED,
-			User.class.getName(), requestorUserId, null);
+			User.class.getName(), requestorUser.getUserId(), null);
 
 		auditMessage.setAdditionalInfo(
 			JSONUtil.put(

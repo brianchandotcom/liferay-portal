@@ -67,8 +67,7 @@ public class OnDemandAdminTicketGeneratorDBPartitionTest
 			}
 
 			Ticket ticket = _onDemandAdminTicketGenerator.generate(
-				_companyLocalService.getCompany(targetCompanyId), null,
-				user.getUserId());
+				_companyLocalService.getCompany(targetCompanyId), null, user);
 
 			Assert.assertNotNull(ticket);
 			Assert.assertNotEquals(user.getCompanyId(), ticket.getCompanyId());

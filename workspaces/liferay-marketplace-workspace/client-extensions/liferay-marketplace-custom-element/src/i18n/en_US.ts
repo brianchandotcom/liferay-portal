@@ -23,7 +23,7 @@ export default {
 	'back-to-my-apps': 'Back to My Apps',
 	'becoming-a-liferay-marketplace-publisher':
 		'Becoming a Liferay Marketplace publisher',
-	'by-requesting-a-publisher-account-,-you-agree-to-the':
+	'by-requesting-a-publisher-account-you-agree-to-the':
 		'By requesting a Publisher account, you agree to the',
 	'cancel': 'Cancel',
 	'cash': 'Cash',

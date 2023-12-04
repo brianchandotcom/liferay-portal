@@ -55,6 +55,11 @@
 				"actionId": "ADD_COMMERCE_ORDER",
 				"resource": "com.liferay.commerce.order",
 				"scope": 3
+			},
+			{
+				"actionId": "VIEW",
+				"resource": "com.liferay.commerce.model.CommerceOrderType",
+				"scope": 3
 			}
 		],
 		"name": "Account Buyer",
@@ -71,6 +76,17 @@
 		],
 		"name": "Invited Member",
 		"type": 6
+	},
+	{
+		"actions": [
+			{
+				"actionId": "VIEW",
+				"resource": "com.liferay.commerce.model.CommerceOrderType",
+				"scope": 3
+			}
+		],
+		"name": "Account Administrator",
+		"type": 1
 	},
 	{
 		"name": "Account Administrator (Regular)",

@@ -136,5 +136,59 @@
 		"resourceName": "com.liferay.commerce.product.model.CommerceChannel",
 		"roleName": "Guest",
 		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"UPDATE"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.commerce.product.model.CommerceChannel",
+		"roleName": "Supplier",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"UPDATE"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.expando.kernel.model.ExpandoColumn",
+		"roleName": "Supplier",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.commerce.product.model.CPOptionCategory",
+		"roleName": "Supplier",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.commerce.product.model.CPOption",
+		"roleName": "Supplier",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.commerce.product.model.CPSpecificationOption",
+		"roleName": "Supplier",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"ADD_DOCUMENT"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.document.library",
+		"roleName": "Supplier",
+		"scope": "1"
 	}
 ]

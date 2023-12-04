@@ -85,7 +85,7 @@ public class AnalyticsRenderFragmentLayoutUtil {
 					"data-analytics-asset-version",
 					fileEntry -> fileEntry.getVersion()
 				).build(),
-				"file")
+				"document")
 		).build();
 
 }

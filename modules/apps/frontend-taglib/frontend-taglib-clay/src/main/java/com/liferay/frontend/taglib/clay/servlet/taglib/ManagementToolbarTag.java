@@ -698,11 +698,7 @@ public class ManagementToolbarTag extends BaseContainerTag {
 		props.put("searchInputAutoFocus", isSearchInputAutoFocus());
 		props.put(
 			"searchInputName", _namespace(namespace, getSearchInputName()));
-
-		if (FeatureFlagManagerUtil.isEnabled("LPS-198573")) {
-			props.put("searchResultsTitle", getSearchResultsTitle());
-		}
-
+		props.put("searchResultsTitle", getSearchResultsTitle());
 		props.put("searchValue", getSearchValue());
 		props.put("selectAllURL", getSelectAllURL());
 		props.put("selectable", isSelectable());
@@ -1336,9 +1332,7 @@ public class ManagementToolbarTag extends BaseContainerTag {
 
 		String searchResultsTitle = getSearchResultsTitle();
 
-		if (FeatureFlagManagerUtil.isEnabled("LPS-198573") &&
-			isShowResultsBar() && Validator.isNotNull(searchResultsTitle)) {
-
+		if (isShowResultsBar() && Validator.isNotNull(searchResultsTitle)) {
 			jspWriter.write("<div class=\"c-mt-4 container-fluid ");
 			jspWriter.write("container-fluid-max-xl\"><h3>");
 			jspWriter.write(searchResultsTitle);
@@ -1405,51 +1399,35 @@ public class ManagementToolbarTag extends BaseContainerTag {
 	private String _getResultsLanguageKey(
 		boolean hasFilters, int itemsTotal, String searchValue) {
 
-		if (FeatureFlagManagerUtil.isEnabled("LPS-198573")) {
-			if (Validator.isNull(searchValue)) {
-				if (hasFilters) {
-					if (itemsTotal == 1) {
-						return "x-result-found-with-filters";
-					}
-
-					return "x-results-found-with-filters";
-				}
-
-				if (itemsTotal == 1) {
-					return "x-result-found";
-				}
-
-				return "x-results-found";
-			}
-
+		if (Validator.isNull(searchValue)) {
 			if (hasFilters) {
 				if (itemsTotal == 1) {
-					return "x-result-found-for-x-with-filters";
+					return "x-result-found-with-filters";
 				}
 
-				return "x-results-found-for-x-with-filters";
+				return "x-results-found-with-filters";
 			}
 
 			if (itemsTotal == 1) {
-				return "x-result-found-for-x";
+				return "x-result-found";
 			}
 
-			return "x-results-found-for-x";
+			return "x-results-found";
 		}
 
-		if (Validator.isNull(searchValue)) {
+		if (hasFilters) {
 			if (itemsTotal == 1) {
-				return "x-result-for";
+				return "x-result-found-for-x-with-filters";
 			}
 
-			return "x-results-for";
+			return "x-results-found-for-x-with-filters";
 		}
 
 		if (itemsTotal == 1) {
-			return "x-result-for-x";
+			return "x-result-found-for-x";
 		}
 
-		return "x-results-for-x";
+		return "x-results-found-for-x";
 	}
 
 	private String _namespace(String namespace, String prop) {

@@ -234,10 +234,6 @@ const FilterOrderControls = ({
 };
 
 function addActiveIcons(itemList) {
-	if (!Liferay.FeatureFlags['LPS-198573']) {
-		return itemList;
-	}
-
 	return itemList.map((item) => ({
 		...item,
 		items: item.items ? addActiveIcons(item.items) : undefined,

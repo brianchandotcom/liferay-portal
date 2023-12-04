@@ -15,53 +15,35 @@ import React, {useEffect, useRef} from 'react';
  * 	same logic than the corresponding Java method.
  */
 function getResultText(searchValue, itemTotal, filterTotal) {
-	if (Liferay.FeatureFlags['LPS-198573']) {
-		if (!searchValue) {
-			if (filterTotal) {
-				if (itemTotal === 1) {
-					return Liferay.Language.get('x-result-found-with-filters');
-				}
-
-				return Liferay.Language.get('x-results-found-with-filters');
-			}
-
-			if (itemTotal === 1) {
-				return Liferay.Language.get('x-result-found');
-			}
-
-			return Liferay.Language.get('x-results-found');
-		}
-
+	if (!searchValue) {
 		if (filterTotal) {
 			if (itemTotal === 1) {
-				return Liferay.Language.get(
-					'x-result-found-for-x-with-filters'
-				);
+				return Liferay.Language.get('x-result-found-with-filters');
 			}
 
-			return Liferay.Language.get('x-results-found-for-x-with-filters');
+			return Liferay.Language.get('x-results-found-with-filters');
 		}
 
 		if (itemTotal === 1) {
-			return Liferay.Language.get('x-result-found-for-x');
+			return Liferay.Language.get('x-result-found');
 		}
 
-		return Liferay.Language.get('x-results-found-for-x');
+		return Liferay.Language.get('x-results-found');
 	}
 
-	if (!searchValue) {
+	if (filterTotal) {
 		if (itemTotal === 1) {
-			return Liferay.Language.get('x-result-for');
+			return Liferay.Language.get('x-result-found-for-x-with-filters');
 		}
 
-		return Liferay.Language.get('x-results-for');
+		return Liferay.Language.get('x-results-found-for-x-with-filters');
 	}
 
 	if (itemTotal === 1) {
-		return Liferay.Language.get('x-result-for-x');
+		return Liferay.Language.get('x-result-found-for-x');
 	}
 
-	return Liferay.Language.get('x-results-for-x');
+	return Liferay.Language.get('x-results-found-for-x');
 }
 
 const ResultsBar = ({
@@ -174,7 +156,7 @@ const ResultsBar = ({
 				</ManagementToolbar.ResultsBarItem>
 			</ManagementToolbar.ResultsBar>
 
-			{Liferay.FeatureFlags['LPS-198573'] && Boolean(title) && (
+			{Boolean(title) && (
 				<ClayLayout.ContainerFluid className="c-mt-4" size="xl">
 					<h3>{title}</h3>
 				</ClayLayout.ContainerFluid>

@@ -1,18 +1,5 @@
-$barchart: '.analytics-bar-chart-html';
-$c: '.analytics-variant-card';
-$charts: '.analytics-variant-card-charts';
-$table: '.analytics-variant-card-table';
-
-#{$c} {
-	#{$charts} {
-		width: 100%;
-
-		& > .navigation-bar {
-			margin-bottom: 65px;
-		}
-	}
-
-	#{$barchart} {
+.analytics-variant-card {
+	.analytics-bar-chart-html {
 		margin-bottom: 4rem;
 
 		&-header {
@@ -25,14 +12,6 @@ $table: '.analytics-variant-card-table';
 
 		&-progress > div {
 			border-radius: 0;
-		}
-	}
-
-	#{$table} {
-		margin-top: 2.8rem;
-
-		.table-responsive {
-			margin-bottom: 0;
 		}
 	}
 

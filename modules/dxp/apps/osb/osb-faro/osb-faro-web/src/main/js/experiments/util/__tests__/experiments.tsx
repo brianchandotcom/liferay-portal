@@ -1,10 +1,5 @@
-import React from 'react';
 import {
-	dateFormatter,
-	formatHistogramKeyValue,
-	formatProcessedDate,
 	formatYAxis,
-	getActions,
 	getFormattedMedian,
 	getFormattedMedianLabel,
 	getFormattedProbabilityToWin,
@@ -12,76 +7,10 @@ import {
 	getMetricUnit,
 	getStatusColor,
 	getStatusName,
-	getStep,
 	getTicks,
 	getVariantLabels,
-	normalizeHistogram,
 	toThousandsABTesting
 } from '../experiments';
-
-const DATA_MOCK = {
-	dxpVariants: [
-		{
-			changes: 1,
-			control: true,
-			dxpVariantId: 'DEFAULT',
-			dxpVariantName: 'Control',
-			trafficSplit: 50,
-			uniqueVisitors: 10
-		},
-		{
-			changes: 1,
-			control: false,
-			dxpVariantId: '37414',
-			dxpVariantName: 'Variant 1',
-			trafficSplit: 50,
-			uniqueVisitors: 1000
-		}
-	],
-	goal: {
-		metric: 'BOUNCE_RATE' as const
-	},
-	metricsHistogram: [
-		{
-			processedDate: '2019-08-21T12:55:29.861',
-			variantMetrics: [
-				{
-					confidenceInterval: [0.5, 2.5],
-					dxpVariantId: 'DEFAULT',
-					improvement: 0.3,
-					median: 0.4,
-					probabilityToWin: 50
-				},
-				{
-					confidenceInterval: [0.6, 3.2],
-					dxpVariantId: '37414',
-					improvement: 0.4,
-					median: 0.5,
-					probabilityToWin: 50
-				}
-			]
-		},
-		{
-			processedDate: '2019-08-22T12:55:29.861',
-			variantMetrics: [
-				{
-					confidenceInterval: [0.6, 2.6],
-					dxpVariantId: 'DEFAULT',
-					improvement: 0.4,
-					median: 0.5,
-					probabilityToWin: 50
-				},
-				{
-					confidenceInterval: [0.7, 3.5],
-					dxpVariantId: '37414',
-					improvement: 0.6,
-					median: 0.6,
-					probabilityToWin: 50
-				}
-			]
-		}
-	]
-};
 
 const mockBestVariant = {
 	changes: 1,
@@ -131,40 +60,6 @@ describe('getMetricUnit', () => {
 		expect(getMetricUnit('CLICK_RATE')).toEqual('%');
 		expect(getMetricUnit('MAX_SCROLL_DEPTH')).toEqual('%');
 		expect(getMetricUnit('TIME_ON_PAGE')).toEqual('s');
-	});
-});
-
-describe('dateFormatter', () => {
-	it('should formatter a date as YYYY-MM-DD', () => {
-		expect(dateFormatter(new Date('2019-08-21T12:55:29.861'))).toEqual(
-			'2019-08-21'
-		);
-	});
-});
-
-describe('normalizeHistogram', () => {
-	it('should return a new histogram in default format', () => {
-		const normalizedHistogram = normalizeHistogram(DATA_MOCK);
-
-		expect(
-			Array.isArray(normalizedHistogram[0].variantsHistogram)
-		).toBeTruthy();
-		expect(normalizedHistogram[0].variantsHistogram[0].median).toEqual(0.4);
-	});
-});
-
-describe('formatHistogramKeyValue', () => {
-	it('should return a histogram as key value object', () => {
-		const normalizedHistogram = normalizeHistogram(DATA_MOCK);
-		const histogramKeyValue = formatHistogramKeyValue(
-			normalizedHistogram,
-			'%'
-		);
-
-		expect(typeof histogramKeyValue).toBe('object');
-		expect(typeof histogramKeyValue['data1']).toBe('object');
-		expect(typeof histogramKeyValue['data1']['2019-08-21']).toBe('object');
-		expect(histogramKeyValue['data1']['2019-08-21']['median']).toEqual(0.4);
 	});
 });
 
@@ -245,39 +140,6 @@ describe('getFormattedProbabilityToWin', () => {
 
 	it('should return formatted probability to win when value is greater than 99.9', () => {
 		expect(getFormattedProbabilityToWin(100)).toEqual('> 99.9');
-	});
-});
-
-describe('getStep', () => {
-	it('should get formatted step', () => {
-		const stepUnFormatted = {
-			Description: () => <div>{'Step description'}</div>,
-			label: 'Step label',
-			showIcon: false,
-			title: 'Step title'
-		};
-
-		expect(getStep(stepUnFormatted)).toMatchSnapshot();
-	});
-});
-
-describe('formatProcessedDate', () => {
-	it('should format processed date', () => {
-		expect(formatProcessedDate('2019-08-21T00:00:00.000')).toEqual(
-			new Date('2019-08-21T00:00:00.000Z')
-		);
-
-		expect(formatProcessedDate('2019-08-21T03:00:00.000')).toEqual(
-			new Date('2019-08-21T00:00:00.000Z')
-		);
-
-		expect(formatProcessedDate('2019-08-21T12:00:00.000')).toEqual(
-			new Date('2019-08-21T00:00:00.000Z')
-		);
-
-		expect(formatProcessedDate('2019-08-21T21:00:00.000')).toEqual(
-			new Date('2019-08-21T00:00:00.000Z')
-		);
 	});
 });
 
@@ -411,184 +273,5 @@ describe('toThousandsABTesting', () => {
 		expect(toThousandsABTesting(4560000000)).toEqual('4B');
 		expect(toThousandsABTesting(4567000000)).toEqual('4B');
 		expect(toThousandsABTesting(1500000000000)).toEqual('1T');
-	});
-});
-
-describe('getActions', () => {
-	it('should return actions for COMPLETED status', () => {
-		const onDelete = jest.fn();
-
-		expect(getActions('COMPLETED', {onDelete})).toEqual([
-			{
-				displayType: 'secondary',
-				label: 'Delete',
-				onClick: onDelete
-			}
-		]);
-	});
-
-	it('should return actions for DRAFT status', () => {
-		expect(
-			getActions('DRAFT', {
-				id: '123',
-				pageURL: 'https://liferay.com'
-			})
-		).toEqual([
-			{
-				displayType: 'primary',
-				label: 'Review',
-				redirectURL:
-					'https://liferay.com?segmentsExperimentKey=123&segmentsExperimentAction=reviewAndRun'
-			},
-			{
-				displayType: 'secondary',
-				label: 'Delete',
-				redirectURL:
-					'https://liferay.com?segmentsExperimentKey=123&segmentsExperimentAction=delete'
-			}
-		]);
-	});
-
-	it('should return actions for FINISHED_NO_WINNER status and able to publish', () => {
-		expect(
-			getActions('FINISHED_NO_WINNER', {
-				id: '123',
-				pageURL: 'https://liferay.com',
-				publishable: true
-			})
-		).toEqual([
-			{
-				displayType: 'primary',
-				label: 'Publish',
-				redirectURL:
-					'https://liferay.com?segmentsExperimentKey=123&segmentsExperimentAction=publish'
-			},
-			{
-				displayType: 'secondary',
-				label: 'Delete',
-				redirectURL:
-					'https://liferay.com?segmentsExperimentKey=123&segmentsExperimentAction=delete'
-			}
-		]);
-	});
-
-	it('should return actions for FINISHED_NO_WINNER status and not able to publish', () => {
-		expect(
-			getActions('FINISHED_NO_WINNER', {
-				id: '123',
-				pageURL: 'https://liferay.com',
-				publishable: true
-			})
-		).toEqual([
-			{
-				displayType: 'primary',
-				label: 'Publish',
-				redirectURL:
-					'https://liferay.com?segmentsExperimentKey=123&segmentsExperimentAction=publish'
-			},
-			{
-				displayType: 'secondary',
-				label: 'Delete',
-				redirectURL:
-					'https://liferay.com?segmentsExperimentKey=123&segmentsExperimentAction=delete'
-			}
-		]);
-	});
-
-	it('should return actions for FINISHED_WINNER status and able to publish', () => {
-		expect(
-			getActions('FINISHED_WINNER', {
-				id: '123',
-				pageURL: 'https://liferay.com',
-				publishable: true
-			})
-		).toEqual([
-			{
-				displayType: 'primary',
-				label: 'Publish',
-				redirectURL:
-					'https://liferay.com?segmentsExperimentKey=123&segmentsExperimentAction=publish'
-			},
-			{
-				displayType: 'secondary',
-				label: 'Delete',
-				redirectURL:
-					'https://liferay.com?segmentsExperimentKey=123&segmentsExperimentAction=delete'
-			}
-		]);
-	});
-
-	it('should return actions for FINISHED_WINNER status and not able to publish', () => {
-		expect(
-			getActions('FINISHED_WINNER', {
-				id: '123',
-				pageURL: 'https://liferay.com',
-				publishable: true
-			})
-		).toEqual([
-			{
-				displayType: 'primary',
-				label: 'Publish',
-				redirectURL:
-					'https://liferay.com?segmentsExperimentKey=123&segmentsExperimentAction=publish'
-			},
-			{
-				displayType: 'secondary',
-				label: 'Delete',
-				redirectURL:
-					'https://liferay.com?segmentsExperimentKey=123&segmentsExperimentAction=delete'
-			}
-		]);
-	});
-
-	it('should return actions for TERMINATED status and able to publish', () => {
-		expect(
-			getActions('TERMINATED', {
-				id: '123',
-				pageURL: 'https://liferay.com',
-				publishable: true
-			})
-		).toEqual([
-			{
-				displayType: 'primary',
-				label: 'Publish',
-				redirectURL:
-					'https://liferay.com?segmentsExperimentKey=123&segmentsExperimentAction=publish'
-			},
-			{
-				displayType: 'secondary',
-				label: 'Delete',
-				redirectURL:
-					'https://liferay.com?segmentsExperimentKey=123&segmentsExperimentAction=delete'
-			}
-		]);
-	});
-
-	it('should return actions for TERMINATED status and not able to publish', () => {
-		const onDelete = jest.fn();
-
-		expect(getActions('TERMINATED', {onDelete})).toEqual([
-			{
-				displayType: 'secondary',
-				label: 'Delete',
-				onClick: onDelete
-			}
-		]);
-	});
-
-	it('should return actions for RUNNING status and able to publish', () => {
-		expect(
-			getActions('RUNNING', {
-				id: '123',
-				pageURL: 'https://liferay.com'
-			})
-		).toEqual([
-			{
-				displayType: 'secondary',
-				label: 'Terminate',
-				redirectURL:
-					'https://liferay.com?segmentsExperimentKey=123&segmentsExperimentAction=terminate'
-			}
-		]);
 	});
 });

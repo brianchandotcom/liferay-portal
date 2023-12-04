@@ -1,71 +1,23 @@
 import * as breadcrumbs from 'shared/util/breadcrumbs';
 import BasePage from 'shared/components/base-page';
 import DeleteExperimentModal from 'experiments/components/modals/DeleteExperimentModal';
-import ErrorPage from 'shared/pages/ErrorPage';
 import React, {useState} from 'react';
-import SessionCard from 'experiments/components/SessionCard';
-import SummaryCard from 'experiments/components/summary-card/SummaryCard';
+import StatesRenderer from 'shared/components/states-renderer/StatesRenderer';
+import TestTrafficCard from 'experiments/components/test-traffic/TestTrafficCard';
 import TextTruncate from 'shared/components/TextTruncate';
-import VariantCard from 'experiments/components/variant-card/index';
-import {connect, ConnectedProps} from 'react-redux';
-import {EXPERIMENT_ROOT_QUERY} from 'experiments/queries/ExperimentQuery';
-import {getActions, useAddRefetch} from 'experiments/util/experiments';
-import {RootState} from 'shared/store';
-import {Router} from 'shared/types';
-import {Routes, toRoute} from 'shared/util/router';
-import {SafeResults} from 'shared/hoc/util';
-import {StateProvider} from 'experiments/state';
+import {EXPERIMENT_QUERY} from 'experiments/queries/ExperimentQuery';
+import {getActions} from 'experiments/util/experiments';
+import {Routes} from 'shared/util/router';
+import {SessionsCard} from 'experiments/components/SessionsCard';
+import {SummaryCard} from 'experiments/components/summary-card/SummaryCard';
 import {useChannelContext} from 'shared/context/channel';
 import {useModal} from '@clayui/modal';
+import {useParams} from 'react-router-dom';
 import {useQuery} from '@apollo/react-hooks';
+import {VariantCard} from 'experiments/components/variant-card/VariantCard';
 
-const NAV_ITEMS = [
-	{
-		exact: true,
-		label: Liferay.Language.get('report'),
-		route: Routes.TESTS_OVERVIEW
-	}
-];
-
-const connector = connect(
-	(
-		store: RootState,
-		{
-			router: {
-				params: {groupId}
-			}
-		}: {router: Router}
-	) => ({
-		timeZoneId: store.getIn([
-			'projects',
-			groupId,
-			'data',
-			'timeZone',
-			'timeZoneId'
-		])
-	})
-);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-interface IExperimentOverviewPage
-	extends React.HTMLAttributes<HTMLElement>,
-		PropsFromRedux {
-	router: Router;
-}
-
-interface IExperimentActionsProps extends React.HTMLAttributes<HTMLElement> {
-	experiment: {
-		id: string;
-		pageURL: string;
-		publishable: boolean;
-		status: string;
-	};
-}
-
-const ExperimentActions: React.FC<IExperimentActionsProps> = ({
-	experiment: {id, pageURL, publishable, status}
-}) => {
+const ExperimentActions = ({experiment}) => {
+	const {id, pageURL, publishable, status} = experiment;
 	const [visibleDeleteModal, setVisibleDeleteModal] = useState(false);
 	const {observer, onClose} = useModal({
 		onClose: () => setVisibleDeleteModal(false)
@@ -93,27 +45,23 @@ const ExperimentActions: React.FC<IExperimentActionsProps> = ({
 	);
 };
 
-const ExperimentOverviewPage: React.FC<IExperimentOverviewPage> = ({
-	router,
-	timeZoneId
-}) => {
-	const {
-		params: {channelId, groupId, id: experimentId}
-	} = router;
-
-	const {refetch, ...result} = useQuery(EXPERIMENT_ROOT_QUERY, {
-		fetchPolicy: 'network-only',
-		variables: {experimentId}
-	});
-
+const ExperimentOverviewPage = () => {
+	const {channelId, groupId, id} = useParams();
 	const {selectedChannel} = useChannelContext();
 
-	useAddRefetch(refetch);
+	const {data, error, loading} = useQuery(EXPERIMENT_QUERY, {
+		fetchPolicy: 'network-only',
+		variables: {experimentId: id}
+	});
 
 	return (
-		<SafeResults {...result}>
-			{({experiment}) =>
-				experiment ? (
+		<StatesRenderer error={!!error} loading={loading}>
+			<StatesRenderer.Loading />
+
+			<StatesRenderer.Error apolloError={error} />
+
+			{!!data && (
+				<StatesRenderer.Success>
 					<BasePage documentTitle={Liferay.Language.get('tests')}>
 						<BasePage.Header
 							breadcrumbs={[
@@ -125,96 +73,91 @@ const ExperimentOverviewPage: React.FC<IExperimentOverviewPage> = ({
 								}),
 								breadcrumbs.getTests({channelId, groupId}),
 								breadcrumbs.getEntityName({
-									label: experiment.name
+									label: data.experiment.name
 								})
 							]}
 							groupId={groupId}
 						>
 							<BasePage.Header.TitleSection
 								subtitle={
-									<TextTruncate title={experiment.pageURL}>
+									<TextTruncate
+										title={data.experiment.pageURL}
+									>
 										<a
-											href={experiment.pageURL}
+											href={data.experiment.pageURL}
 											target='_blank'
 										>
-											{experiment.pageURL}
+											{data.experiment.pageURL}
 										</a>
 									</TextTruncate>
 								}
-								title={experiment.name}
+								title={data.experiment.name}
 							/>
 
-							<ExperimentActions experiment={experiment} />
+							<ExperimentActions experiment={data.experiment} />
 
 							<BasePage.Header.NavBar
-								items={NAV_ITEMS}
+								items={[
+									{
+										exact: true,
+										label: Liferay.Language.get('report'),
+										route: Routes.TESTS_OVERVIEW
+									}
+								]}
 								routeParams={{
 									channelId,
 									groupId,
-									id: experimentId,
-									title: experiment.name,
-									touchpoint: experiment.pageURL
+									id,
+									title: data.experiment.name,
+									touchpoint: data.experiment.pageURL
 								}}
 							/>
 						</BasePage.Header>
 
-						<BasePage.Context.Provider
-							value={{
-								filters: {},
-								router
-							}}
-						>
-							<BasePage.Body>
-								<div className='row'>
-									<div className='col-sm-12'>
-										<SummaryCard
-											status={experiment.status}
-											timeZoneId={timeZoneId}
-										/>
-									</div>
+						<BasePage.Body>
+							<div className='row'>
+								<div className='col-sm-12'>
+									<SummaryCard experiment={data.experiment} />
 								</div>
+							</div>
 
-								{experiment.status !== 'DRAFT' && (
-									<>
+							{data.experiment.status !== 'DRAFT' && (
+								<>
+									{data.experiment.type === 'MAB' && (
 										<div className='row'>
 											<div className='col-sm-12'>
-												<VariantCard
-													label={Liferay.Language.get(
-														'variant-report'
-													)}
+												<TestTrafficCard
+													experiment={data.experiment}
 												/>
 											</div>
 										</div>
+									)}
 
+									<div className='row'>
+										<div className='col-sm-12'>
+											<VariantCard
+												experiment={data.experiment}
+											/>
+										</div>
+									</div>
+
+									{data.experiment.type === 'AB' && (
 										<div className='row'>
 											<div className='col-sm-12'>
-												<SessionCard
-													label={Liferay.Language.get(
-														'test-sessions'
-													)}
+												<SessionsCard
+													experiment={data.experiment}
 												/>
 											</div>
 										</div>
-									</>
-								)}
-							</BasePage.Body>
-						</BasePage.Context.Provider>
+									)}
+								</>
+							)}
+						</BasePage.Body>
 					</BasePage>
-				) : (
-					<ErrorPage
-						href={toRoute(Routes.TESTS, {channelId, groupId})}
-						linkLabel={Liferay.Language.get('go-to-tests')}
-					/>
-				)
-			}
-		</SafeResults>
+				</StatesRenderer.Success>
+			)}
+		</StatesRenderer>
 	);
 };
 
-const ExperimentWithState = props => (
-	<StateProvider>
-		<ExperimentOverviewPage {...props} />
-	</StateProvider>
-);
-
-export default connector(ExperimentWithState);
+export default ExperimentOverviewPage;

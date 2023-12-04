@@ -1,54 +1,32 @@
-import BasePage from 'shared/components/base-page';
-import getMedianMapper from 'experiments/hocs/mappers/experiment-variant-median-mapper';
-import HTMLBarChart from 'shared/components/HTMLBarChart';
+import HTMLBarChart, {IHTMLBarChartProps} from 'shared/components/HTMLBarChart';
 import Legend from 'shared/components/Legend';
-import NoResultsDisplay from 'shared/components/NoResultsDisplay';
-import React, {useContext} from 'react';
-import {EXPERIMENT_QUERY} from 'experiments/queries/ExperimentQuery';
-import {SafeResults} from 'shared/hoc/util';
-import {Sizes} from 'shared/util/constants';
-import {useQuery} from '@apollo/react-hooks';
+import React from 'react';
+import {
+	getLegendData,
+	getMedianGraphData,
+	getMetricUnit,
+	mergedVariants
+} from 'experiments/util/experiments';
 
-const MediansChart = () => {
+export const MediansChart = ({experiment}) => {
 	const {
-		router: {
-			params: {id: experimentId}
-		}
-	} = useContext(BasePage.Context);
+		dxpVariants,
+		goal,
+		metrics: {variantMetrics}
+	} = experiment;
 
-	const result = useQuery(EXPERIMENT_QUERY, {
-		variables: {experimentId}
+	const variants = mergedVariants(dxpVariants, variantMetrics);
+	const metricUnit = getMetricUnit(goal?.metric);
+	const mediansData = getMedianGraphData({
+		dxpVariants: variants,
+		metricUnit
 	});
 
 	return (
-		<SafeResults {...result}>
-			{props => {
-				const {empty, legend, mediansData} = getMedianMapper(props);
+		<>
+			<HTMLBarChart {...(mediansData as IHTMLBarChartProps)} />
 
-				return empty ? (
-					<NoResultsDisplay
-						description={Liferay.Language.get(
-							'metrics-will-show-once-there-are-visitors-to-your-variants'
-						)}
-						icon={{
-							border: false,
-							size: Sizes.XLarge,
-							symbol: 'ac-chart'
-						}}
-						title={Liferay.Language.get(
-							'we-are-currently-collecting-data'
-						)}
-					/>
-				) : (
-					<>
-						<HTMLBarChart {...mediansData} />
-
-						<Legend data={legend} />
-					</>
-				);
-			}}
-		</SafeResults>
+			<Legend data={getLegendData(variants)} />
+		</>
 	);
 };
-
-export default MediansChart;

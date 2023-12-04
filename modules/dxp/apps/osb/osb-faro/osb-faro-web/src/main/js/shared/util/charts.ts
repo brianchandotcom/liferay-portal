@@ -215,27 +215,6 @@ export const getAxisMeasures = (value: number) => {
 };
 
 /**
- * Return the chart max value from composite data.
- * @param {Array}
- * @returns {Object}
- */
-export const getAxisMeasuresFromCompositeData = ([
-	data1,
-	data2,
-	dataPrevious
-]: number[][]) => {
-	const maxStackedData = d3.max(data1) + d3.max(data2);
-
-	return getAxisMeasures(
-		Math.max(
-			dataPrevious
-				? Math.max(maxStackedData, d3.max(dataPrevious))
-				: maxStackedData
-		)
-	);
-};
-
-/**
  * Return the chart max value from a data
  * @param {Array} data
  */
@@ -406,31 +385,3 @@ export const getMetricFormatter = type => {
 		return value => value;
 	}
 };
-
-export const getLegendLineDashed = color =>
-	`<div class="legend-icon line line-dashed" style="background-image: linear-gradient(90deg, ${color} 28.3%, transparent 28.3% 38.3%, ${color} 38.3% 61.6%, transparent 61.6% 71.6%, ${color} 71.6% 100%);"></div>`;
-
-export const getLegendCircle = (color: string): string =>
-	`<div class="legend-icon circle" style="background-color: ${color};"></div>`;
-
-/**
- * Return a svg line icon
- * @param {color} string
- * @returns {string} svg HTML element
- */
-export const getLegendLine = color =>
-	`<div class="legend-icon line" style="background-color: ${color};"></div>`;
-
-/**
- * is Empty Data
- * @param {array} data
- * @returns {boolean}
- */
-export function isEmptyData(data) {
-	return d3.sum(d3.merge(data)) === 0;
-}
-
-/**
- * Return the color based on index
- */
-export const nextColor = d3.scaleOrdinal().range(Colors.pallete);

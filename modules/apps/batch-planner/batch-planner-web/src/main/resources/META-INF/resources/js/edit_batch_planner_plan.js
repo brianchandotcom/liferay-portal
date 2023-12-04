@@ -113,7 +113,6 @@ export default function ({
 			);
 
 			const data = await response.json();
-
 			Liferay.fire(SCHEMA_SELECTED_EVENT, {
 				isExport,
 				schema: data.items,

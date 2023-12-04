@@ -192,7 +192,7 @@ definition {
 
 			AssertElementPresent(
 				key_title = "Email From",
-				locator1 = "Header#H1_TITLE");
+				locator1 = "Header#H2_TITLE");
 		}
 	}
 
@@ -220,7 +220,7 @@ definition {
 
 			AssertElementPresent(
 				key_title = "Email From",
-				locator1 = "Header#H1_TITLE");
+				locator1 = "Header#H2_TITLE");
 		}
 	}
 

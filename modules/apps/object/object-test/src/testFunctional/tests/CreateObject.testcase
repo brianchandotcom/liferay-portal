@@ -7773,7 +7773,17 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObjectA163");
 
-		ObjectPortlet.assertDeleteEntryButtonNotPresent(entry = "Entry A");
+		ObjectPortlet.assertDeleteEntryButtonIsPresent(entry = "Entry A");
+
+		ClickNoError(locator1 = "ObjectPortlet#DELETE_ENTRY_BUTTON");
+
+		Button.clickDelete();
+
+		AssertTextEquals(
+			locator1 = "Modal#MODAL_CONTENT",
+			value1 = "Deletion Not Possible The prevent deletion type in the object relationship Relationship with object definition CustomObjectB163 is preventing this object entry from being deleted. Close");
+
+		Button.click(button = "Close");
 
 		ObjectPortlet.viewEntry(entry = "Entry A");
 
@@ -7947,7 +7957,17 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObjectA165");
 
-		ObjectPortlet.assertDeleteEntryButtonNotPresent(entry = "Entry A");
+		ObjectPortlet.assertDeleteEntryButtonIsPresent(entry = "Entry A");
+
+		ClickNoError(locator1 = "ObjectPortlet#DELETE_ENTRY_BUTTON");
+
+		Button.clickDelete();
+
+		AssertTextEquals(
+			locator1 = "Modal#MODAL_CONTENT",
+			value1 = "Deletion Not Possible The prevent deletion type in the object relationship Relationship with object definition CustomObjectB165 is preventing this object entry from being deleted. Close");
+
+		Button.click(button = "Close");
 
 		ObjectPortlet.viewEntry(entry = "Entry A");
 	}

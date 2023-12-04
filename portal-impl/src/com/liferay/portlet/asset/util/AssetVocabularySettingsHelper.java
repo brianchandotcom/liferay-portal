@@ -70,6 +70,14 @@ public class AssetVocabularySettingsHelper {
 			classNameId, classTypePK, getClassNameIdsAndClassTypePKs());
 	}
 
+	public boolean isClassNameIdAndClassTypePKDepotRequired(
+		long classNameId, long classTypePK) {
+
+		return isClassNameIdAndClassTypePKSpecified(
+			classNameId, classTypePK,
+			getDepotRequiredClassNameIdsAndClassTypePKs());
+	}
+
 	public boolean isClassNameIdAndClassTypePKRequired(
 		long classNameId, long classTypePK) {
 
@@ -212,6 +220,17 @@ public class AssetVocabularySettingsHelper {
 		return classTypePKs;
 	}
 
+	protected String[] getDepotRequiredClassNameIdsAndClassTypePKs() {
+		String value = _unicodeProperties.getProperty(
+			_KEY_REQUIRED_DEPOT_CLASS_NAME_IDS_AND_CLASS_TYPE_PKS);
+
+		if (Validator.isNull(value)) {
+			return new String[0];
+		}
+
+		return StringUtil.split(value);
+	}
+
 	protected String[] getRequiredClassNameIdsAndClassTypePKs() {
 		String value = _unicodeProperties.getProperty(
 			_KEY_REQUIRED_CLASS_NAME_IDS_AND_CLASS_TYPE_PKS);
@@ -252,6 +271,10 @@ public class AssetVocabularySettingsHelper {
 	private static final String
 		_KEY_REQUIRED_CLASS_NAME_IDS_AND_CLASS_TYPE_PKS =
 			"requiredClassNameIds";
+
+	private static final String
+		_KEY_REQUIRED_DEPOT_CLASS_NAME_IDS_AND_CLASS_TYPE_PKS =
+			"requiredDepotClassNameIds";
 
 	private static final String
 		_KEY_SELECTED_CLASS_NAME_IDS_AND_CLASS_TYPE_PKS =

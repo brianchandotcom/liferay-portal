@@ -447,6 +447,22 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 
 		return layout;
 	}
+	public long fetchLayoutPlid(String uuid, long groupId, boolean privateLayout)
+		throws PortalException {
+
+		Layout layout = layoutLocalService.fetchLayout(
+			uuid, groupId, privateLayout);
+
+		if(layout != null){
+
+			LayoutPermissionUtil.check(
+				getPermissionChecker(), layout, ActionKeys.VIEW);
+
+			return layout.getPlid();
+		}
+
+		return 0;
+	}
 
 	/**
 	 * Returns all the ancestor layouts of the layout.

@@ -51,7 +51,7 @@ String emailParam = StringPool.BLANK;
 				<%= kbConfigurationDisplayContext.getTitle() %>
 			</h2>
 
-			<liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL">
+			<liferay-portlet:actionURL portletConfiguration="<%= true %>" varImpl="configurationActionURL">
 				<portlet:param name="navigation" value="<%= kbConfigurationDisplayContext.getNavigation() %>" />
 				<portlet:param name="serviceName" value="<%= KBConstants.SERVICE_NAME %>" />
 				<portlet:param name="settingsScope" value="group" />
@@ -282,6 +282,10 @@ String emailParam = StringPool.BLANK;
 						</c:otherwise>
 					</c:choose>
 				</clay:sheet>
+
+				<%
+				configurationActionURL.setParameter("emailParam", emailParam);
+				%>
 
 				<aui:button-row>
 					<div class="c-gap-1 d-flex">

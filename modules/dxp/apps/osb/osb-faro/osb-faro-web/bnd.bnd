@@ -50,5 +50,8 @@ Import-Package:\
 	com.liferay.portal.util;version="[48.0.0,9999.0.0)",\
 	\
 	*
+Provide-Capability:\
+	liferay.language.resources;\
+		resource.bundle.base.name="content.Language"
 Web-ContextPath: /osb-faro-web
 -dsannotations-options: inherit

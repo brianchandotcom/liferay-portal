@@ -390,7 +390,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				"oDataFilter", "textField eq 'value5' or textField eq 'value7'"
 			).put(
 				"r_apiEndpointToAPIFilters_c_apiEndpointERC",
-				HeadlessBuilderResourceTest._API_ENDPOINT_ERC_1
+				_API_ENDPOINT_ERC_1
 			).toString(),
 			"headless-builder/filters", Http.Method.POST);
 
@@ -1055,10 +1055,8 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				"apiApplicationToAPIEndpoints",
 				JSONUtil.putAll(
 					_createAPIEndpoint(
-						HeadlessBuilderResourceTest._API_ENDPOINT_ERC_1,
-						Http.Method.GET,
-						HeadlessBuilderResourceTest._API_APPLICATION_PATH_1,
-						null,
+						_API_ENDPOINT_ERC_1, Http.Method.GET,
+						_API_APPLICATION_PATH_1, null,
 						APIApplication.Endpoint.RetrieveType.COLLECTION.
 							getValue(),
 						APIApplication.Endpoint.Scope.COMPANY))
@@ -1100,18 +1098,16 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			).put(
 				"applicationStatus", "unpublished"
 			).put(
-				"baseURL", HeadlessBuilderResourceTest._BASE_URL_1
+				"baseURL", _BASE_URL_1
 			).put(
-				"externalReferenceCode",
-				HeadlessBuilderResourceTest._API_APPLICATION_ERC_1
+				"externalReferenceCode", _API_APPLICATION_ERC_1
 			).put(
 				"title", RandomTestUtil.randomString()
 			).toString(),
 			"headless-builder/applications", Http.Method.POST);
 
 		_relateAPIEndpointWithAPISchemas(
-			HeadlessBuilderResourceTest._API_ENDPOINT_ERC_1,
-			apiSchemaExternalReferenceCode);
+			_API_ENDPOINT_ERC_1, apiSchemaExternalReferenceCode);
 
 		_publishAPIApplication(_API_APPLICATION_ERC_1);
 
@@ -1936,10 +1932,8 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				"apiApplicationToAPIEndpoints",
 				JSONUtil.putAll(
 					_createAPIEndpoint(
-						HeadlessBuilderResourceTest._API_ENDPOINT_ERC_1,
-						Http.Method.GET,
-						HeadlessBuilderResourceTest._API_APPLICATION_PATH_1,
-						null,
+						_API_ENDPOINT_ERC_1, Http.Method.GET,
+						_API_APPLICATION_PATH_1, null,
 						APIApplication.Endpoint.RetrieveType.COLLECTION.
 							getValue(),
 						APIApplication.Endpoint.Scope.COMPANY))
@@ -1979,18 +1973,16 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			).put(
 				"applicationStatus", "unpublished"
 			).put(
-				"baseURL", HeadlessBuilderResourceTest._BASE_URL_1
+				"baseURL", _BASE_URL_1
 			).put(
-				"externalReferenceCode",
-				HeadlessBuilderResourceTest._API_APPLICATION_ERC_1
+				"externalReferenceCode", _API_APPLICATION_ERC_1
 			).put(
 				"title", RandomTestUtil.randomString()
 			).toString(),
 			"headless-builder/applications", Http.Method.POST);
 
 		_relateAPIEndpointWithAPISchemas(
-			HeadlessBuilderResourceTest._API_ENDPOINT_ERC_1,
-			apiSchemaExternalReferenceCode);
+			_API_ENDPOINT_ERC_1, apiSchemaExternalReferenceCode);
 
 		_publishAPIApplication(_API_APPLICATION_ERC_1);
 
@@ -2165,8 +2157,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				"apiApplicationToAPIEndpoints",
 				JSONUtil.putAll(
 					_createAPIEndpoint(
-						HeadlessBuilderResourceTest._API_ENDPOINT_ERC_1,
-						Http.Method.POST, "/test", null,
+						_API_ENDPOINT_ERC_1, Http.Method.POST, "/test", null,
 						APIApplication.Endpoint.RetrieveType.SINGLE_ELEMENT.
 							getValue(),
 						APIApplication.Endpoint.Scope.COMPANY))
@@ -2197,10 +2188,9 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			).put(
 				"applicationStatus", "unpublished"
 			).put(
-				"baseURL", HeadlessBuilderResourceTest._BASE_URL_1
+				"baseURL", _BASE_URL_1
 			).put(
-				"externalReferenceCode",
-				HeadlessBuilderResourceTest._API_APPLICATION_ERC_1
+				"externalReferenceCode", _API_APPLICATION_ERC_1
 			).put(
 				"title", RandomTestUtil.randomString()
 			).toString(),
@@ -2211,8 +2201,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			StringBundler.concat(
 				"headless-builder/schemas/by-external-reference-code/",
 				apiSchemaExternalReferenceCode,
-				"/requestAPISchemaToAPIEndpoints/",
-				HeadlessBuilderResourceTest._API_ENDPOINT_ERC_1),
+				"/requestAPISchemaToAPIEndpoints/", _API_ENDPOINT_ERC_1),
 			Http.Method.PUT);
 
 		assertSuccessfulJSONObject(
@@ -2220,8 +2209,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			StringBundler.concat(
 				"headless-builder/schemas/by-external-reference-code/",
 				apiSchemaExternalReferenceCode,
-				"/responseAPISchemaToAPIEndpoints/",
-				HeadlessBuilderResourceTest._API_ENDPOINT_ERC_1),
+				"/responseAPISchemaToAPIEndpoints/", _API_ENDPOINT_ERC_1),
 			Http.Method.PUT);
 
 		_publishAPIApplication(_API_APPLICATION_ERC_1);
@@ -2459,8 +2447,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				"apiApplicationToAPIEndpoints",
 				JSONUtil.putAll(
 					_createAPIEndpoint(
-						HeadlessBuilderResourceTest._API_ENDPOINT_ERC_1,
-						Http.Method.POST, "/test", null,
+						_API_ENDPOINT_ERC_1, Http.Method.POST, "/test", null,
 						APIApplication.Endpoint.RetrieveType.SINGLE_ELEMENT.
 							getValue(),
 						APIApplication.Endpoint.Scope.COMPANY))
@@ -2593,10 +2580,9 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			).put(
 				"applicationStatus", "unpublished"
 			).put(
-				"baseURL", HeadlessBuilderResourceTest._BASE_URL_1
+				"baseURL", _BASE_URL_1
 			).put(
-				"externalReferenceCode",
-				HeadlessBuilderResourceTest._API_APPLICATION_ERC_1
+				"externalReferenceCode", _API_APPLICATION_ERC_1
 			).put(
 				"title", RandomTestUtil.randomString()
 			).toString(),
@@ -2607,8 +2593,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			StringBundler.concat(
 				"headless-builder/schemas/by-external-reference-code/",
 				apiSchemaExternalReferenceCode,
-				"/requestAPISchemaToAPIEndpoints/",
-				HeadlessBuilderResourceTest._API_ENDPOINT_ERC_1),
+				"/requestAPISchemaToAPIEndpoints/", _API_ENDPOINT_ERC_1),
 			Http.Method.PUT);
 
 		if (addResponseSchema) {
@@ -2617,8 +2602,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				StringBundler.concat(
 					"headless-builder/schemas/by-external-reference-code/",
 					apiSchemaExternalReferenceCode,
-					"/responseAPISchemaToAPIEndpoints/",
-					HeadlessBuilderResourceTest._API_ENDPOINT_ERC_1),
+					"/responseAPISchemaToAPIEndpoints/", _API_ENDPOINT_ERC_1),
 				Http.Method.PUT);
 		}
 	}
@@ -2628,8 +2612,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			JSONUtil.put(
 				"oDataSort", sortString
 			).put(
-				"r_apiEndpointToAPISorts_c_apiEndpointERC",
-				HeadlessBuilderResourceTest._API_ENDPOINT_ERC_1
+				"r_apiEndpointToAPISorts_c_apiEndpointERC", _API_ENDPOINT_ERC_1
 			).toString(),
 			"headless-builder/sorts", Http.Method.POST);
 	}

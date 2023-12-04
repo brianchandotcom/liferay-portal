@@ -293,6 +293,11 @@ public interface LayoutService extends BaseService {
 			long groupId, boolean privateLayout, long layoutId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long fetchLayoutPlid(
+			String uuid, long groupId, boolean privateLayout)
+		throws PortalException;
+
 	/**
 	 * Returns all the ancestor layouts of the layout.
 	 *

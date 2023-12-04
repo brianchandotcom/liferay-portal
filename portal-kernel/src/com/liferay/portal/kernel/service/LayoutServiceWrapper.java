@@ -329,6 +329,14 @@ public class LayoutServiceWrapper
 		return _layoutService.fetchLayout(groupId, privateLayout, layoutId);
 	}
 
+	@Override
+	public long fetchLayoutPlid(
+			String uuid, long groupId, boolean privateLayout)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutService.fetchLayoutPlid(uuid, groupId, privateLayout);
+	}
+
 	/**
 	 * Returns all the ancestor layouts of the layout.
 	 *

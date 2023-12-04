@@ -2564,6 +2564,9 @@ public class PropsValues {
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.WORK_DIR_OVERRIDE_ENABLED));
 
+	public static final int XML_RPC_MAX_PARAMETERS = GetterUtil.getInteger(
+		PropsUtil.get(PropsKeys.XML_RPC_MAX_PARAMETERS), 50);
+
 	public static final boolean XML_SECURITY_ENABLED = GetterUtil.getBoolean(
 		PropsUtil.get(PropsKeys.XML_SECURITY_ENABLED));
 

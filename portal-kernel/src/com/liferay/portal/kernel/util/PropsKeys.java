@@ -2908,6 +2908,9 @@ public interface PropsKeys {
 	public static final String WORKFLOW_EMAIL_FROM_NAME =
 		"workflow.email.from.name";
 
+	public static final String XML_RPC_MAX_PARAMETERS =
+		"xml.rpc.max.parameters";
+
 	public static final String XML_SECURITY_ENABLED = "xml.security.enabled";
 
 	public static final String XML_SITEMAP_INDEX_ENABLED =

@@ -56,6 +56,9 @@ const VariationsNav = ({
 				{states.showDefaultStateHeaderAddVariationButton() && (
 					<ClayTooltipProvider>
 						<ClayButtonWithIcon
+							aria-label={Liferay.Language.get(
+								'create-variation'
+							)}
 							data-tooltip-align="top"
 							displayType="unstyled"
 							onClick={handleAddVariation}

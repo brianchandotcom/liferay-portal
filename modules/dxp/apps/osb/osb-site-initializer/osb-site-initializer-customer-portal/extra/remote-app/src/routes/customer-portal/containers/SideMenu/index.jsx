@@ -6,7 +6,6 @@
 import classNames from 'classnames';
 import {useEffect, useMemo, useRef, useState} from 'react';
 import {useAppPropertiesContext} from '~/common/contexts/AppPropertiesContext';
-import {AttachmentsIcon} from '~/common/icons';
 import i18n from '../../../../common/I18n';
 import {Button} from '../../../../common/components';
 import getKebabCase from '../../../../common/utils/getKebabCase';
@@ -171,11 +170,10 @@ const SideMenu = () => {
 
 				{featureFlags.includes('ISSD-119') && (
 					<div className="d-flex">
-						<div className="align-items-center d-flex mr-2">
-							<AttachmentsIcon />
-						</div>
-
-						<MenuItem to={getKebabCase(MENU_TYPES.attachments)}>
+						<MenuItem
+							iconKey="attachments"
+							to={getKebabCase(MENU_TYPES.attachments)}
+						>
 							{i18n.translate(
 								getKebabCase(MENU_TYPES.attachments)
 							)}

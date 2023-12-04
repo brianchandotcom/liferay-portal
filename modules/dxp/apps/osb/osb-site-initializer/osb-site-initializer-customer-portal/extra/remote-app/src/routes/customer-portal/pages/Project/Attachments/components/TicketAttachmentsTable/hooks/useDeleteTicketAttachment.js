@@ -12,7 +12,7 @@ export default function useDelete() {
 	const onDelete = async (ticketAttachmentId) => {
 		setIsDeleting(true);
 
-		await deleteTicketAttachment(ticketAttachmentId).then(() => {
+		await deleteTicketAttachment(ticketAttachmentId).finally(() => {
 			setIsDeleting(false);
 		});
 	};

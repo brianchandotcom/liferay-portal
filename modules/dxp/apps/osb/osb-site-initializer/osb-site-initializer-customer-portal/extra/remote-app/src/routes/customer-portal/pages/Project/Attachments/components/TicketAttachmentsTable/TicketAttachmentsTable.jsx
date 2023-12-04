@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayAlert from '@clayui/alert';
 import {useModal} from '@clayui/core';
 import {useEffect, useState} from 'react';
 import {PAGE_ROUTER_TYPES} from '~/common/utils/constants';
@@ -27,18 +26,15 @@ const TicketAttachmentsTable = ({
 }) => {
 	const {
 		data: myUserAccountData,
-		loading: myUserAccountLoading,
+		loading,
 	} = useMyUserAccountByAccountExternalReferenceCode(
 		koroneikiAccountLoading,
 		koroneikiAccount?.accountKey
 	);
-
-	const loading = myUserAccountLoading;
 	const loggedUserAccount = myUserAccountData?.myUserAccount;
 
 	const [ticketAttachments, setTicketAttachments] = useState([]);
 	const [selectedTicketAttachment, setSelectedTicketAttachment] = useState();
-	const [toastItems, setToastItems] = useState([]);
 
 	const {handleSortChange, sortConfig} = useSort();
 	const {
@@ -55,9 +51,7 @@ const TicketAttachmentsTable = ({
 				koroneikiAccount?.accountKey
 			);
 
-			const ticketAttachmentsData = await ticketAttachmentsResponse.json();
-
-			const ticketAttachments = ticketAttachmentsData.items.map(
+			const ticketAttachments = ticketAttachmentsResponse.items.map(
 				(ticketAttachment) => ({
 					accountKey: ticketAttachment.accountKey,
 					creatorId: loggedUserAccount?.id,
@@ -92,7 +86,11 @@ const TicketAttachmentsTable = ({
 					onDelete={() => {
 						onDelete(selectedTicketAttachment?.ticketAttachmentId);
 						onOpenChange(false);
-						setToastItems([...toastItems, Math.random() * 100]);
+						Liferay.Util.openToast({
+							message: i18n.translate('was-deleted-successfully'),
+							title: selectedTicketAttachment?.fileName,
+							type: 'success',
+						});
 					}}
 					removing={isDeleting}
 				>
@@ -107,31 +105,6 @@ const TicketAttachmentsTable = ({
 					</p>
 				</DeleteTicketAttachmentModal>
 			)}
-
-			<ClayAlert.ToastContainer>
-				{toastItems.map((value) => (
-					<ClayAlert
-						autoClose={5000}
-						displayType="success"
-						key={value}
-						onClose={() => {
-							setToastItems((prevItems) =>
-								prevItems.filter((item) => item !== value)
-							);
-						}}
-					>
-						<div className="alert-successful-attachments text-paragraph">
-							{selectedTicketAttachment?.fileName}
-
-							<span> </span>
-
-							<div className="d-inline-block pr-3">
-								{i18n.translate('was-deleted-successfully')}
-							</div>
-						</div>
-					</ClayAlert>
-				))}
-			</ClayAlert.ToastContainer>
 
 			{sortedTicketAttachmentsFilteredPerPage &&
 			paginationConfig.totalCount > 0 &&
@@ -156,11 +129,9 @@ const TicketAttachmentsTable = ({
 										</div>
 
 										<div className="m-0 text-neutral-7 text-paragraph-sm text-truncate">
-											{i18n.translate('by')}
-
-											<span> </span>
-
-											{ticketAttachment?.creatorName}
+											{`${i18n.translate('by')} ${
+												ticketAttachment?.creatorName
+											}`}
 										</div>
 									</div>
 								),

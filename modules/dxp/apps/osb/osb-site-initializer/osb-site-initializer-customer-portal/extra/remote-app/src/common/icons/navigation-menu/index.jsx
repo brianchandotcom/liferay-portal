@@ -5,6 +5,7 @@
 
 export * from './analytics_icon';
 export * from './analytics_icon_gray';
+export * from '../attachments_icon';
 export * from './commerce_icon';
 export * from './commerce_icon_gray';
 export * from './dxp_icon';

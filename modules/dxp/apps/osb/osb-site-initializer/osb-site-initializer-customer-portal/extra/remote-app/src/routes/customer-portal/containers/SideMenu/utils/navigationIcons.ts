@@ -10,6 +10,10 @@ const navigationIcons = {
 		NavigationMenuIcons.AnalyticsIcon,
 		NavigationMenuIcons.AnalyticsIconGray,
 	],
+	attachments: [
+		NavigationMenuIcons.AttachmentsIcon,
+		NavigationMenuIcons.AttachmentsIcon,
+	],
 	commerce: [
 		NavigationMenuIcons.CommerceIcon,
 		NavigationMenuIcons.CommerceIconGray,

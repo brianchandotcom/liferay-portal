@@ -14,21 +14,14 @@ export default function useSort() {
 	const [sortConfig, setSortConfig] = useState(DEFAULT_SORT_CONFIG);
 
 	const handleSortChange = (column) => {
-		if (column === sortConfig.columnName) {
-			setSortConfig({
-				columnName: column,
-				direction:
-					sortConfig.direction === 'descending'
-						? 'ascending'
-						: 'descending',
-			});
-		}
-		else {
-			setSortConfig({
-				columnName: column,
-				direction: sortConfig.direction,
-			});
-		}
+		setSortConfig({
+			columnName: column,
+			direction: column === sortConfig.columnName ?
+				sortConfig.direction === 'descending'
+					? 'ascending'
+					: 'descending'
+				: sortConfig.direction,
+		});
 	};
 
 	return {handleSortChange, sortConfig};

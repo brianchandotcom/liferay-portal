@@ -138,7 +138,9 @@ definition {
 
 		DoubleClick(locator1 = "FormFields#TEXT_MULTILINE_FIELD");
 
-		RobotType.robotTypeShortcut(locator1 = "Ctrl + a");
+		Type.sendKeys(
+			locator1 = "FormFields#TEXT_MULTILINE_FIELD",
+			value1 = "keys=CONTROL,a");
 
 		KeyPress(
 			locator1 = "FormFields#TEXT_MULTILINE_FIELD",

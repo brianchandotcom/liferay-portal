@@ -221,8 +221,13 @@ public class InputTag extends IncludeTag {
 				return urlTitle;
 			}
 
-			String languageId = LanguageUtil.getLanguageId(
-				LocaleUtil.getDefault());
+			String languageId = BeanPropertiesUtil.getString(
+				_getModel(), "defaultLanguageId");
+
+			if (languageId == null) {
+				languageId = LanguageUtil.getLanguageId(
+					LocaleUtil.getDefault());
+			}
 
 			return LocalizationUtil.getXml(
 				HashMapBuilder.put(

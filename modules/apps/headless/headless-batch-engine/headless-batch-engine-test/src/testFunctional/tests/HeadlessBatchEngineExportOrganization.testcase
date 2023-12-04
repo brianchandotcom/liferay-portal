@@ -1,0 +1,85 @@
+@component-name = "portal-headless"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Headless Batch Engine API";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		for (var externalReferenceCodeList : list "sub_organizationErc,organizationErc") {
+			OrganizationAPI.deleteOrganizationByExternalReferenceCode(externalReferenceCode = ${externalReferenceCodeList});
+		}
+
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@priority = 4
+	test CanExportAllOrganizations {
+		property portal.acceptance = "true";
+
+		task ("Given a new organization") {
+			JSONOrganization.addOrganization(
+				externalReferenceCode = "organizationErc",
+				organizationName = "testOrganization");
+		}
+
+		task ("And Given a sub_tesOrganization in the created testOrganization") {
+			JSONOrganization.addOrganization(
+				externalReferenceCode = "sub_organizationErc",
+				organizationName = "sub_testOrganization",
+				parentOrganizationName = "testOrganization");
+		}
+
+		task ("And Given using POST export-task with className com.liferay.headless.admin.user.dto.v1_0.Organization and parameter flatten=true") {
+			var response = ExportTask.createExportTask(
+				className = "com.liferay.headless.admin.user.dto.v1_0.Organization",
+				contentType = "JSON");
+
+			var externalReferenceCode = JSONPathUtil.getErcValue(response = ${response});
+		}
+
+		task ("And Given using GET export-task/by-external-reference-code/${externalReferenceCode}/content with externalReferenceCode from POST") {
+			APIExplorer.navigateToOpenAPI(
+				api = "headless-batch-engine",
+				version = "v1.0");
+
+			APIExplorer.executeAPIMethod(
+				method = "getExportTaskByExternalReferenceCodeContent",
+				parameter = "externalReferenceCode",
+				service = "ExportTask",
+				value = ${externalReferenceCode});
+		}
+
+		task ("When click download file") {
+			WaitForElementPresent(
+				key_text = "Download file",
+				locator1 = "Link#ANY");
+
+			Click(
+				key_text = "Download file",
+				locator1 = "Link#ANY");
+		}
+
+		task ("Then the downloaded file includes the testOrganization and its sub_testOrganization") {
+			var fileName = selenium.getAttribute("//a[contains(.,'Download file')]@download");
+
+			AntCommands.runCommand("build-test.xml", "unzip-temp-file -DfileName=${fileName}");
+
+			BatchEngine.assertExportedFileContainsCorrectObject(
+				expectedValue = "testOrganization,sub_testOrganization",
+				fileName = "export.json",
+				jsonObject = "$..[0]name");
+		}
+	}
+
+}

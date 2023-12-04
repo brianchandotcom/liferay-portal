@@ -7,8 +7,11 @@ package com.liferay.commerce.constants;
 
 /**
  * @author Luca Pellizzon
+ * @author Alessio Antonio Rendina
  */
 public class CommercePaymentEntryConstants {
+
+	public static final String RESOURCE_NAME = "com.liferay.commerce.payment";
 
 	public static final int STATUS_AUTHORIZED =
 		CommerceOrderPaymentConstants.STATUS_AUTHORIZED;
@@ -29,5 +32,30 @@ public class CommercePaymentEntryConstants {
 
 	public static final int STATUS_REFUND =
 		CommerceOrderPaymentConstants.STATUS_REFUNDED;
+
+	public static final int TYPE_PAYMENT = 0;
+
+	public static final int TYPE_REFUND = 1;
+
+	public static String getPaymentLabelStyle(int paymentStatus) {
+		return CommerceOrderPaymentConstants.getOrderPaymentLabelStyle(
+			paymentStatus);
+	}
+
+	public static String getPaymentStatusLabel(int paymentStatus) {
+		return CommerceOrderPaymentConstants.getOrderPaymentStatusLabel(
+			paymentStatus);
+	}
+
+	public static String getTypeLabel(int type) {
+		if (type == TYPE_PAYMENT) {
+			return "payment";
+		}
+		else if (type == TYPE_REFUND) {
+			return "refund";
+		}
+
+		return null;
+	}
 
 }

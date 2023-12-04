@@ -45,7 +45,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -476,14 +475,13 @@ public class AssetPublisherPortlet extends MVCPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Layout layout = themeDisplay.getLayout();
-
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		StringBundler sb = new StringBundler(6);
 
 		String layoutFriendlyURL = GetterUtil.getString(
-			portal.getLayoutFriendlyURL(layout, themeDisplay));
+			portal.getLayoutFriendlyURL(
+				themeDisplay.getLayout(), themeDisplay));
 
 		if (!layoutFriendlyURL.startsWith(Http.HTTP_WITH_SLASH) &&
 			!layoutFriendlyURL.startsWith(Http.HTTPS_WITH_SLASH)) {
@@ -592,21 +590,19 @@ public class AssetPublisherPortlet extends MVCPortlet {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				resourceRequest);
 
-			String className = ParamUtil.getString(
-				resourceRequest, "className");
-			long classTypeId = ParamUtil.getLong(
-				resourceRequest, "classTypeId");
 			String fieldName = ParamUtil.getString(resourceRequest, "name");
 
 			AssetRendererFactory<?> assetRendererFactory =
 				AssetRendererFactoryRegistryUtil.
-					getAssetRendererFactoryByClassName(className);
+					getAssetRendererFactoryByClassName(
+						ParamUtil.getString(resourceRequest, "className"));
 
 			ClassTypeReader classTypeReader =
 				assetRendererFactory.getClassTypeReader();
 
 			ClassType classType = classTypeReader.getClassType(
-				classTypeId, themeDisplay.getLocale());
+				ParamUtil.getLong(resourceRequest, "classTypeId"),
+				themeDisplay.getLocale());
 
 			ClassTypeField classTypeField = classType.getClassTypeField(
 				fieldName);
@@ -692,10 +688,10 @@ public class AssetPublisherPortlet extends MVCPortlet {
 		PortletPreferences portletPreferences =
 			resourceRequest.getPreferences();
 
-		boolean enableRss = GetterUtil.getBoolean(
-			portletPreferences.getValue("enableRss", null));
+		if (!portal.isRSSFeedsEnabled() ||
+			!GetterUtil.getBoolean(
+				portletPreferences.getValue("enableRss", null))) {
 
-		if (!portal.isRSSFeedsEnabled() || !enableRss) {
 			try {
 				portal.sendRSSFeedsDisabledError(
 					resourceRequest, resourceResponse);
@@ -731,24 +727,20 @@ public class AssetPublisherPortlet extends MVCPortlet {
 		try (OutputStream outputStream =
 				resourceResponse.getPortletOutputStream()) {
 
-			String rootPortletId = PortletIdCodec.decodePortletName(
-				portal.getPortletId(resourceRequest));
-
-			AssetPublisherDisplayContext assetPublisherDisplayContext =
+			resourceRequest.setAttribute(
+				AssetPublisherWebKeys.ASSET_PUBLISHER_DISPLAY_CONTEXT,
 				new AssetPublisherDisplayContext(
 					assetHelper, assetListAssetEntryProvider,
 					assetListEntrySegmentsEntryRelLocalService,
 					assetPublisherCustomizerRegistry.
-						getAssetPublisherCustomizer(rootPortletId),
+						getAssetPublisherCustomizer(
+							PortletIdCodec.decodePortletName(
+								portal.getPortletId(resourceRequest))),
 					assetPublisherHelper, assetPublisherWebConfiguration,
 					assetPublisherWebHelper, infoItemServiceRegistry,
 					itemSelector, portal, resourceRequest, resourceResponse,
 					resourceRequest.getPreferences(), requestContextMapper,
-					segmentsEntryRetriever);
-
-			resourceRequest.setAttribute(
-				AssetPublisherWebKeys.ASSET_PUBLISHER_DISPLAY_CONTEXT,
-				assetPublisherDisplayContext);
+					segmentsEntryRetriever));
 
 			portletPreferences = resourceRequest.getPreferences();
 
@@ -765,20 +757,18 @@ public class AssetPublisherPortlet extends MVCPortlet {
 				return;
 			}
 
-			String assetLinkBehavior = portletPreferences.getValue(
-				"assetLinkBehavior", "showFullContent");
-			String rssDisplayStyle = portletPreferences.getValue(
-				"rssDisplayStyle", RSSUtil.DISPLAY_STYLE_ABSTRACT);
 			String rssFeedType = portletPreferences.getValue(
 				"rssFeedType", RSSUtil.FEED_TYPE_DEFAULT);
-			String rssName = portletPreferences.getValue("rssName", null);
-
-			String format = RSSUtil.getFeedTypeFormat(rssFeedType);
-			double version = RSSUtil.getFeedTypeVersion(rssFeedType);
 
 			String rss = _exportToRSS(
-				resourceRequest, resourceResponse, rssName, format, version,
-				rssDisplayStyle, assetLinkBehavior,
+				resourceRequest, resourceResponse,
+				portletPreferences.getValue("rssName", null),
+				RSSUtil.getFeedTypeFormat(rssFeedType),
+				RSSUtil.getFeedTypeVersion(rssFeedType),
+				portletPreferences.getValue(
+					"rssDisplayStyle", RSSUtil.DISPLAY_STYLE_ABSTRACT),
+				portletPreferences.getValue(
+					"assetLinkBehavior", "showFullContent"),
 				_getAssetEntries(resourceRequest, portletPreferences));
 
 			outputStream.write(rss.getBytes(StringPool.UTF8));

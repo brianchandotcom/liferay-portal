@@ -17,7 +17,7 @@ export default function useLanguageDirection() {
 
 		if (wrapper) {
 			wrapper.dir = currentLanguageDirection;
-			wrapper.lang = languageId;
+			wrapper.lang = languageId.replace('_', '-');
 		}
 	}, [languageId]);
 }

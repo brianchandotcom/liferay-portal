@@ -51,7 +51,7 @@ public class UpgradeProcessTest {
 		_db = DBManagerUtil.getDB();
 
 		_tempIndexCounter = ReflectionTestUtil.getFieldValue(
-			UpgradeProcess.class, "_temporaryIndexSuffix");
+			UpgradeProcess.class, "_tempIndexCounter");
 	}
 
 	@AfterClass

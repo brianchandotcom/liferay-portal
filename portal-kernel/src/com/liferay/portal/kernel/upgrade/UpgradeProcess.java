@@ -176,7 +176,7 @@ public abstract class UpgradeProcess
 			String tableName, boolean unique, String... columnNames)
 		throws Exception {
 
-		String indexName = "IX_TEMP_" + _temporaryIndexSuffix.incrementAndGet();
+		String indexName = "IX_TEMP_" + _tempIndexCounter.incrementAndGet();
 
 		IndexMetadata indexMetadata = new IndexMetadata(
 			indexName, tableName, unique, columnNames);
@@ -412,7 +412,7 @@ public abstract class UpgradeProcess
 	private static final Map
 		<String, List<ObjectValuePair<String, IndexMetadata>>>
 			_portalIndexesSQL = new HashMap<>();
-	private static final AtomicLong _temporaryIndexSuffix = new AtomicLong(0);
+	private static final AtomicLong _tempIndexCounter = new AtomicLong(0);
 
 	private String _upgradeInfo;
 

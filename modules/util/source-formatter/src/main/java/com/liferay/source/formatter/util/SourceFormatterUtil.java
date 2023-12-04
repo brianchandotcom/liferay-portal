@@ -379,7 +379,7 @@ public class SourceFormatterUtil {
 			List<String> lines = git(
 				Arrays.asList("rev-parse", "--show-toplevel"), baseDirName);
 
-			_gitTopLevelFolder = new File(lines.get(0));
+			_gitTopLevelFolder = lines.get(0);
 		}
 
 		List<String> deletedFileNames = _getDeletedFileNames(baseDirName);
@@ -404,13 +404,8 @@ public class SourceFormatterUtil {
 					return;
 				}
 
-				line = StringBundler.concat(
-					StringUtil.replace(
-						_gitTopLevelFolder.getPath(), CharPool.BACK_SLASH,
-						CharPool.SLASH),
-					StringPool.FORWARD_SLASH, line);
-
-				consumer.accept(line);
+				consumer.accept(
+					_gitTopLevelFolder + StringPool.FORWARD_SLASH + line);
 			});
 	}
 
@@ -795,7 +790,7 @@ public class SourceFormatterUtil {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SourceFormatterUtil.class);
 
-	private static File _gitTopLevelFolder;
+	private static String _gitTopLevelFolder;
 
 	private static class PathMatchers {
 

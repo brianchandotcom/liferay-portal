@@ -5,10 +5,8 @@
 
 package com.liferay.layout.page.template.service.impl;
 
-import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
 import com.liferay.layout.page.template.exception.DuplicateLayoutPageTemplateCollectionException;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateCollectionNameException;
-import com.liferay.layout.page.template.exception.RequiredLayoutPageTemplateEntryException;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
@@ -27,7 +25,6 @@ import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
-import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -102,16 +99,6 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 	public LayoutPageTemplateCollection deleteLayoutPageTemplateCollection(
 			LayoutPageTemplateCollection layoutPageTemplateCollection)
 		throws PortalException {
-
-		if (FeatureFlagManagerUtil.isEnabled("LPS-189856") &&
-			!GroupThreadLocal.isDeleteInProcess() &&
-			_hasAssetDisplayPageEntry(
-				layoutPageTemplateCollection.getGroupId(),
-				layoutPageTemplateCollection.
-					getLayoutPageTemplateCollectionId())) {
-
-			throw new RequiredLayoutPageTemplateEntryException();
-		}
 
 		// Layout page template collection
 
@@ -360,45 +347,6 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 		}
 	}
 
-	private boolean _hasAssetDisplayPageEntry(
-		long groupId, long layoutPageTemplateCollectionId) {
-
-		List<LayoutPageTemplateCollection> layoutPageTemplateCollections =
-			layoutPageTemplateCollectionPersistence.findByG_P(
-				groupId, layoutPageTemplateCollectionId);
-
-		for (LayoutPageTemplateCollection layoutPageTemplateCollection :
-				layoutPageTemplateCollections) {
-
-			if (_hasAssetDisplayPageEntry(
-					groupId,
-					layoutPageTemplateCollection.
-						getLayoutPageTemplateCollectionId())) {
-
-				return true;
-			}
-		}
-
-		List<LayoutPageTemplateEntry> layoutPageTemplateEntries =
-			_layoutPageTemplateEntryLocalService.getLayoutPageTemplateEntries(
-				groupId, layoutPageTemplateCollectionId);
-
-		for (LayoutPageTemplateEntry layoutPageTemplateEntry :
-				layoutPageTemplateEntries) {
-
-			int assetDisplayPageEntriesCount =
-				_assetDisplayPageEntryLocalService.
-					getAssetDisplayPageEntriesCountByLayoutPageTemplateEntryId(
-						layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
-
-			if (assetDisplayPageEntriesCount > 0) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
 	private void _validate(long groupId, String name, int type)
 		throws PortalException {
 
@@ -423,10 +371,6 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 			throw new DuplicateLayoutPageTemplateCollectionException(name);
 		}
 	}
-
-	@Reference
-	private AssetDisplayPageEntryLocalService
-		_assetDisplayPageEntryLocalService;
 
 	@Reference
 	private CustomSQL _customSQL;

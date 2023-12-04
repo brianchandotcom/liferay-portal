@@ -73,7 +73,7 @@ public class OpenAPIResourceTest {
 		new LiferayIntegrationTestRule();
 
 	@BeforeClass
-	public static void setUpClass() throws Exception {
+	public static void setUpClass() throws Throwable {
 		_company = CompanyTestUtil.addCompany(true);
 
 		_originalName = PrincipalThreadLocal.getName();

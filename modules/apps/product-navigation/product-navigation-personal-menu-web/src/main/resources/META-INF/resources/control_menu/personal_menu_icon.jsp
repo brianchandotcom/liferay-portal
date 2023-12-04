@@ -46,13 +46,17 @@
 			String notificationsURL = PersonalApplicationURLUtil.getPersonalApplicationURL(request, PortletProviderUtil.getPortletId(UserNotificationEvent.class.getName(), PortletProvider.Action.VIEW));
 			%>
 
-			<aui:a href="<%= (notificationsURL != null) ? notificationsURL : null %>">
+			<a
+				aria-label='<%= notificationsCount + StringPool.SPACE + LanguageUtil.get(request, "new-notification") %>'
+				class="panel-notifications-count"
+				href="<%= (notificationsURL != null) ? notificationsURL : null %>"
+				title='<%= notificationsCount + StringPool.SPACE + LanguageUtil.get(request, "new-notification") %>'
+			>
 				<clay:badge
-					cssClass="panel-notifications-count"
 					displayType="danger"
 					label="<%= String.valueOf(notificationsCount) %>"
 				/>
-			</aui:a>
+			</a>
 		</c:if>
 	</span>
 </li>

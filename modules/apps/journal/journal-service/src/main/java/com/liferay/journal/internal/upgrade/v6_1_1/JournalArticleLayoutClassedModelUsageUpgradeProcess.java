@@ -6,11 +6,13 @@
 package com.liferay.journal.internal.upgrade.v6_1_1;
 
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
+import com.liferay.journal.constants.JournalContentPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.util.constants.LayoutClassedModelUsageConstants;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.model.Portlet;
@@ -56,6 +58,9 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcess
 				layoutClassedModelUsageTypes, resourcePrimKeysMap);
 
 			_addAssetPublisherPortletPreferencesLayoutClassedModelUsages(
+				layoutClassedModelUsageTypes, resourcePrimKeysMap);
+
+			_addJournalContentPortletPreferencesLayoutClassedModelUsages(
 				layoutClassedModelUsageTypes, resourcePrimKeysMap);
 
 			_addDefaultLayoutClassedModelUsages(resourcePrimKeysMap);
@@ -167,6 +172,36 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcess
 
 			preparedStatement.executeBatch();
 		}
+	}
+
+	private void _addJournalContentPortletPreferencesLayoutClassedModelUsages(
+			Map<Long, Integer> layoutClassedModelUsageTypes,
+			Map<Long, Map<Long, Long>> resourcePrimKeysMap)
+		throws Exception {
+
+		String sql = StringUtil.read(
+			JournalArticleLayoutClassedModelUsageUpgradeProcess.class.
+				getResourceAsStream(
+					"dependencies/journal_content_portlet.sql"));
+
+		sql = StringUtil.replace(
+			sql, "[$PortletKeys.PREFS_OWNER_ID_DEFAULT$]",
+			String.valueOf(PortletKeys.PREFS_OWNER_ID_DEFAULT));
+		sql = StringUtil.replace(
+			sql, "[$PortletKeys.PREFS_OWNER_TYPE_LAYOUT$]",
+			String.valueOf(PortletKeys.PREFS_OWNER_TYPE_LAYOUT));
+		sql = StringUtil.replace(
+			sql, "[$JournalContentPortletKeys.JOURNAL_CONTENT$]",
+			JournalContentPortletKeys.JOURNAL_CONTENT);
+		sql = StringUtil.replace(
+			sql, "[$journalArticleClassNameId$]",
+			String.valueOf(_journalArticleClassNameId));
+		sql = StringUtil.replace(
+			sql, "[$portletClassNameId$]", String.valueOf(_portletClassNameId));
+
+		_addPortletPreferencesLayoutClassedModelUsages(
+			layoutClassedModelUsageTypes, resourcePrimKeysMap, sql,
+			"journal content portlet");
 	}
 
 	private void _addJournalContentSearchLayoutClassedModelUsages(

@@ -1284,7 +1284,7 @@
 				Users_Orgs.organizationId IS NULL
 		]]>
 	</sql>
-	<sql id="com.liferay.portal.kernel.service.persistence.UserFinder.joinByNoOrganizationsOrAccounts">
+	<sql id="com.liferay.portal.kernel.service.persistence.UserFinder.joinByNoOrganizationsOrAccountEntries">
 		<![CDATA[
 			LEFT JOIN
 				Users_Orgs ON

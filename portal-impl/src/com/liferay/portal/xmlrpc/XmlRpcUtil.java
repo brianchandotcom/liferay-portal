@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.xml.StAXReaderUtil;
 import com.liferay.portal.kernel.xmlrpc.Response;
 import com.liferay.portal.kernel.xmlrpc.XmlRpcException;
+import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
 
@@ -145,6 +146,8 @@ public class XmlRpcUtil {
 
 			String name = xmlStreamReader.getLocalName();
 
+			int paramCount = 0;
+
 			while (!name.equals("methodCall")) {
 				xmlStreamReader.nextTag();
 
@@ -152,6 +155,14 @@ public class XmlRpcUtil {
 
 				if (!name.equals("param")) {
 					continue;
+				}
+
+				paramCount++;
+
+				if ((PropsValues.XML_RPC_MAX_PARAMETERS != -1) &&
+					(paramCount > PropsValues.XML_RPC_MAX_PARAMETERS)) {
+
+					throw new IOException("Too many XML-RPC parameters");
 				}
 
 				xmlStreamReader.nextTag();

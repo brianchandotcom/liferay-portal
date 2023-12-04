@@ -897,6 +897,53 @@ public class StructuredContentResourceTest
 					randomStructuredContent3));
 	}
 
+	@Test
+	public void testPutStructuredContentWithDifferentTimeZone()
+		throws Exception {
+
+		User user = UserTestUtil.addGroupAdminUser(testGroup);
+
+		user.setTimeZoneId("America/Sao_Paulo");
+
+		user = _userLocalService.updateUser(user);
+
+		user = _userLocalService.updatePassword(
+			user.getUserId(), "test", "test", false, true);
+
+		try {
+			StructuredContent postStructuredContent =
+				structuredContentResource.postSiteStructuredContent(
+					testGroup.getGroupId(), randomStructuredContent());
+
+			StructuredContentResource.Builder builder =
+				StructuredContentResource.builder();
+
+			StructuredContentResource structuredContentResource =
+				builder.authentication(
+					user.getEmailAddress(), "test"
+				).locale(
+					LocaleUtil.getDefault()
+				).build();
+
+			postStructuredContent.setDatePublished(new Date());
+
+			StructuredContent putStructuredContent =
+				structuredContentResource.putStructuredContent(
+					postStructuredContent.getId(), postStructuredContent);
+
+			JournalArticle journalArticle =
+				_journalArticleLocalService.fetchLatestArticle(
+					putStructuredContent.getId());
+
+			Assert.assertEquals(
+				journalArticle.getDisplayDate(),
+				putStructuredContent.getDatePublished());
+		}
+		finally {
+			_userLocalService.deleteUser(user);
+		}
+	}
+
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {

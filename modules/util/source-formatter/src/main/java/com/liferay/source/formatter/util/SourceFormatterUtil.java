@@ -359,6 +359,9 @@ public class SourceFormatterUtil {
 			if (allArgs.contains("ls-files") && allArgs.contains("-z")) {
 				scanner.useDelimiter("\0");
 			}
+			else {
+				scanner.useDelimiter("\n");
+			}
 
 			while (scanner.hasNext()) {
 				consumer.accept(scanner.next());
@@ -397,6 +400,8 @@ public class SourceFormatterUtil {
 			allArgs.addAll(filters);
 		}
 
+		List<String> result = new ArrayList<>();
+
 		git(
 			allArgs, baseDirName,
 			line -> {
@@ -404,9 +409,21 @@ public class SourceFormatterUtil {
 					return;
 				}
 
-				consumer.accept(
+				result.add(
 					_gitTopLevelFolder + StringPool.FORWARD_SLASH + line);
 			});
+
+		List<String> unCachedFileNames = _getUnCachedFileNames();
+
+		for (String unCachedFileName : unCachedFileNames) {
+			if (!result.contains(unCachedFileName)) {
+				result.add(unCachedFileName);
+			}
+		}
+
+		for (String fileName : result) {
+			consumer.accept(fileName);
+		}
 	}
 
 	public static void printError(String fileName, File file) {
@@ -642,6 +659,31 @@ public class SourceFormatterUtil {
 		return pathMatchers;
 	}
 
+	private static synchronized List<String> _getUnCachedFileNames() {
+		if (_unCachedFileNames != null) {
+			return _unCachedFileNames;
+		}
+
+		List<String> unCachedFileNames = new ArrayList<>();
+
+		git(
+			Arrays.asList("add", ".", "--dry-run"), _gitTopLevelFolder,
+			line -> {
+				if (!line.startsWith("add ")) {
+					return;
+				}
+
+				line = line.substring(5, line.length() - 1);
+
+				unCachedFileNames.add(
+					_gitTopLevelFolder + StringPool.SLASH + line);
+			});
+
+		_unCachedFileNames = unCachedFileNames;
+
+		return _unCachedFileNames;
+	}
+
 	private static List<String> _scanForFileNames(
 			final String baseDirName, final PathMatchers pathMatchers,
 			final boolean includeSubrepositories)
@@ -791,6 +833,7 @@ public class SourceFormatterUtil {
 		SourceFormatterUtil.class);
 
 	private static String _gitTopLevelFolder;
+	private static List<String> _unCachedFileNames;
 
 	private static class PathMatchers {
 

@@ -317,15 +317,15 @@
 			<matches>Portlet com_liferay_commerce.* failed to initialize</matches>
 		</ignore-error>
 		<ignore-error description="LPS-195673 - temporarily ignore until fixed">
+			<contains>(IX_A9FF4B2C|ix_a9ff4b2c)</contains>
+			<matches></matches>
+		</ignore-error>
+		<ignore-error description="LPS-195673 - temporarily ignore until fixed">
 			<contains>ERROR: current transaction is aborted, commands ignored until end of transaction block</contains>
 			<matches></matches>
 		</ignore-error>
 		<ignore-error description="LPS-195673 - temporarily ignore until fixed">
 			<contains>insert into ResourcePermission</contains>
-			<matches></matches>
-		</ignore-error>
-		<ignore-error description="LPS-195673 - temporarily ignore until fixed">
-			<contains>IX_A9FF4B2C</contains>
 			<matches></matches>
 		</ignore-error>
 		<ignore-error description="LRQA-24859">

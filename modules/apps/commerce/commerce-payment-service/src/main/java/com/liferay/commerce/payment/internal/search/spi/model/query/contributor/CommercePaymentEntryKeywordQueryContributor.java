@@ -62,10 +62,6 @@ public class CommercePaymentEntryKeywordQueryContributor
 		_queryHelper.addSearchTerm(
 			booleanQuery, searchContext, "currencyCode", false);
 		_queryHelper.addSearchTerm(
-			booleanQuery, searchContext, "paymentMethodName", false);
-		_queryHelper.addSearchTerm(
-			booleanQuery, searchContext, "paymentStatus", false);
-		_queryHelper.addSearchTerm(
 			booleanQuery, searchContext, "transactionCode", false);
 	}
 

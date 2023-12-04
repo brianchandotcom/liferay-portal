@@ -1042,6 +1042,44 @@ definition {
 		}
 	}
 
+	@description = "LPS-196835 Confirm that the user can change the selected icon in the Item Action"
+	@priority = 4
+	test CanChangeIconOnItemAction {
+		task ("When the user clicks on the plus button in the Item Action") {
+			LexiconEntry.gotoAdd();
+		}
+
+		task ("And user click on the plus button and choose an icon") {
+			LexiconEntry.gotoAdd();
+
+			SelectFrameTop();
+
+			Type(
+				locator1 = "DataSet#MODAL_SEARCH",
+				value1 = "analytics");
+
+			Click.mouseOverClick(
+				key_text = "analytics",
+				locator1 = "Modal#MODAL_ICON");
+		}
+
+		task ("Then user clicks on the Change icon button, the Select an icon modal is displayed and the icon previously selected is high-lighted") {
+			Click.mouseOverClick(
+				key_text = "change",
+				locator1 = "Icon#ANY");
+
+			AssertElementPresent(
+				locator1 = "Modal#HEADER",
+				value1 = "Select an Icon");
+		}
+
+		task ("And user can change to another icon") {
+			Click.mouseOverClick(
+				key_text = "accessibility",
+				locator1 = "Modal#MODAL_ICON");
+		}
+	}
+
 	@description = "LPS-196835 Confirm that the icon picker shows in Item Actions creation page when is selected on the icon field"
 	@priority = 3
 	test CanChooseAIconOnItemAction {

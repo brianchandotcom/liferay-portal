@@ -3,5 +3,5 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-export declare const NESTING_DELIMITER: string;
-export declare const NESTING_ROOT: string;
+export const FDS_NESTED_FIELD_NAME_DELIMITER: string = '.';
+export const FDS_NESTED_FIELD_NAME_PARENT_SUFFIX: string = `${FDS_NESTED_FIELD_NAME_DELIMITER}*`;

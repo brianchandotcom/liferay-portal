@@ -6,9 +6,11 @@
 package com.liferay.portal.search.internal.suggestions.spi.asah.user.activity;
 
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
+import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -138,6 +140,24 @@ public abstract class BaseUserActivityAsahSuggestionsContributor
 		sb.append(sort);
 
 		return sb.toString();
+	}
+
+	@Override
+	protected boolean isEnabled(
+		AnalyticsSettingsManager analyticsSettingsManager, long companyId) {
+
+		try {
+			if (FeatureFlagManagerUtil.isEnabled("LPS-176691") &&
+				analyticsSettingsManager.isAnalyticsEnabled(companyId)) {
+
+				return true;
+			}
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+		}
+
+		return false;
 	}
 
 	@Reference

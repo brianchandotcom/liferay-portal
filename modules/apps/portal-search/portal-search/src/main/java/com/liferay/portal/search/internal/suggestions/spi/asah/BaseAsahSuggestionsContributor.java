@@ -9,7 +9,6 @@ import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -201,22 +200,8 @@ public abstract class BaseAsahSuggestionsContributor {
 		return itemJSONObject.getString("keywords");
 	}
 
-	protected boolean isEnabled(
-		AnalyticsSettingsManager analyticsSettingsManager, long companyId) {
-
-		try {
-			if (FeatureFlagManagerUtil.isEnabled("LPS-159643") &&
-				analyticsSettingsManager.isAnalyticsEnabled(companyId)) {
-
-				return true;
-			}
-		}
-		catch (Exception exception) {
-			_log.error(exception);
-		}
-
-		return false;
-	}
+	protected abstract boolean isEnabled(
+		AnalyticsSettingsManager analyticsSettingsManager, long companyId);
 
 	@Reference
 	protected AnalyticsSettingsManager analyticsSettingsManager;

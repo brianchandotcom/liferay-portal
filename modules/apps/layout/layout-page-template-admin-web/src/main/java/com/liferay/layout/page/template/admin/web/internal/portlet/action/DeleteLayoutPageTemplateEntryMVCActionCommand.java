@@ -105,10 +105,7 @@ public class DeleteLayoutPageTemplateEntryMVCActionCommand
 			_language.format(
 				_portal.getHttpServletRequest(actionRequest),
 				"you-successfully-deleted-x-display-page-templates",
-				new Object[] {
-					deleteLayoutPageTemplateEntryIds.length -
-						deleteLayoutPageTemplateEntryIdsList.size()
-				}));
+				new Object[] {deleteLayoutPageTemplateEntryIds.length}));
 
 		sendRedirect(actionRequest, actionResponse);
 	}

@@ -5,6 +5,7 @@
 
 package com.liferay.analytics.layout.page.template.web.internal.servlet.taglib.util;
 
+import com.liferay.journal.model.JournalArticle;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -68,7 +69,13 @@ public class AnalyticsRenderFragmentLayoutUtil {
 			"com.liferay.blogs.model.BlogsEntry", new AnalyticsAssetType("blog")
 		).put(
 			"com.liferay.journal.model.JournalArticle",
-			new AnalyticsAssetType("web-content")
+			new AnalyticsAssetType(
+				HashMapBuilder.<String, Function<JournalArticle, String>>put(
+					"data-analytics-web-content-resource-pk",
+					journalArticle -> String.valueOf(
+						journalArticle.getResourcePrimKey())
+				).build(),
+				"web-content")
 		).put(
 			"com.liferay.portal.kernel.repository.model.FileEntry",
 			new AnalyticsAssetType(

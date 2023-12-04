@@ -3199,7 +3199,10 @@ public class ObjectEntryLocalServiceTest {
 		long objectEntryId2 = objectEntry2.getObjectEntryId();
 
 		AssertUtils.assertFailure(
-			DuplicateObjectEntryExternalReferenceCodeException.class, null,
+			DuplicateObjectEntryExternalReferenceCodeException.class,
+			"Duplicate object entry with external reference code " +
+				"newExternalReferenceCode and object definition id " +
+					_objectDefinition.getObjectDefinitionId(),
 			() -> _objectEntryLocalService.updateObjectEntry(
 				TestPropsValues.getUserId(), objectEntryId2,
 				HashMapBuilder.<String, Serializable>put(
@@ -3225,7 +3228,11 @@ public class ObjectEntryLocalServiceTest {
 			ServiceContextTestUtil.getServiceContext());
 
 		AssertUtils.assertFailure(
-			DuplicateObjectEntryExternalReferenceCodeException.class, null,
+			DuplicateObjectEntryExternalReferenceCodeException.class,
+			StringBundler.concat(
+				"Duplicate object entry with external reference code ",
+				objectEntry1.getUuid(), " and object definition id ",
+				_objectDefinition.getObjectDefinitionId()),
 			() -> _objectEntryLocalService.updateObjectEntry(
 				TestPropsValues.getUserId(), objectEntryId1,
 				HashMapBuilder.<String, Serializable>put(

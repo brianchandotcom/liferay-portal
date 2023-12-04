@@ -4033,7 +4033,11 @@ public class ObjectEntryLocalServiceImpl
 		if ((objectEntry != null) &&
 			(objectEntry.getObjectEntryId() != objectEntryId)) {
 
-			throw new DuplicateObjectEntryExternalReferenceCodeException();
+			throw new DuplicateObjectEntryExternalReferenceCodeException(
+				StringBundler.concat(
+					"Duplicate object entry with external reference code ",
+					externalReferenceCode, " and object definition id ",
+					objectDefinitionId));
 		}
 	}
 

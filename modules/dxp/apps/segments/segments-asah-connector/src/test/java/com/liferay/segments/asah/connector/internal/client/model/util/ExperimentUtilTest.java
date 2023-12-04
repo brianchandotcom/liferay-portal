@@ -475,6 +475,12 @@ public class ExperimentUtilTest {
 			segmentsExperiment
 		).getStatus();
 
+		Mockito.doReturn(
+			"AB"
+		).when(
+			segmentsExperiment
+		).getType();
+
 		return segmentsExperiment;
 	}
 

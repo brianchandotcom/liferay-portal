@@ -22,7 +22,7 @@ export enum StepType {
 }
 
 const PublisherGateSteps = () => {
-	const [step, setStep] = useState<StepType>(StepType.SUMMARY);
+	const [step, setStep] = useState<StepType>(StepType.FORM);
 	const form = useForm<PublisherForm>({
 		defaultValues: {
 			emailAddress: '',

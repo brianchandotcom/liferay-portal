@@ -48,9 +48,9 @@ export type GetAppForm = {
 const getProductBasePriceAndTrial = (product: DeliveryProduct) => {
 	const baseValue = {
 		basePrice: 0,
-		firstSku: null,
+		firstSku: undefined,
 		isTrial: false,
-		trialSku: null,
+		trialSku: undefined,
 	};
 
 	if (!product) {
@@ -58,17 +58,18 @@ const getProductBasePriceAndTrial = (product: DeliveryProduct) => {
 	}
 
 	const {isFreeApp} = getProductPriceModel(product);
+	const skus = (product.skus as unknown) as DeliverySKU[];
 
 	if (isFreeApp) {
-		return {basePrice: 0, isTrial: false};
+		return {
+			...baseValue,
+			firstSku: skus.find((sku) => sku.price.price === 0) ?? skus[0],
+		};
 	}
 
-	const skus = (product.skus as unknown) as DeliverySKU[];
 	const skusLicenseUsageTypes = skus
-		.map(({price, purchasable, sku, skuOptions}) => ({
-			price,
-			purchasable,
-			sku,
+		.map(({skuOptions, ...sku}) => ({
+			...sku,
 			skuOptions: skuOptions.find((skuOption) =>
 				[SkuOptions.STANDARD, SkuOptions.TRIAL].includes(
 					skuOption.skuOptionValueKey as SkuOptions
@@ -214,8 +215,7 @@ const GetAppFlow = () => {
 			}
 
 			window.location.href = nextStepsCallbackURL;
-		}
-		catch (error) {
+		} catch (error) {
 			console.error('Unable to handleGetApp', error);
 		}
 

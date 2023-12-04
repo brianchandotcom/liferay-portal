@@ -129,7 +129,7 @@ const PublisherGateSummary: React.FC<PublisherGateSummaryProps> = ({
 					<span>
 						<p className="privacy-text text-justify">
 							{i18n.translate(
-								'by-requesting-a-publisher-account-,-you-agree-to-the'
+								'by-requesting-a-publisher-account-you-agree-to-the'
 							)}
 							&nbsp;
 							<strong>{i18n.translate('content-policy')}</strong>
@@ -137,7 +137,7 @@ const PublisherGateSummary: React.FC<PublisherGateSummaryProps> = ({
 							<strong>
 								{i18n.translate('terms-of-service')}
 							</strong>
-							{i18n.translate('and')}&nbsp;
+							{` ${i18n.translate('and')} `}&nbsp;
 							<strong>{i18n.translate('privacy-policy')}</strong>
 							&nbsp;
 							{i18n.translate(

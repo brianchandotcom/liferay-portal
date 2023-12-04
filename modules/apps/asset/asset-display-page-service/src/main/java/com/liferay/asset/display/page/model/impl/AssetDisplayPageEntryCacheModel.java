@@ -69,7 +69,7 @@ public class AssetDisplayPageEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -99,6 +99,8 @@ public class AssetDisplayPageEntryCacheModel
 		sb.append(layoutPageTemplateEntryId);
 		sb.append(", type=");
 		sb.append(type);
+		sb.append(", plid=");
+		sb.append(plid);
 		sb.append("}");
 
 		return sb.toString();
@@ -151,6 +153,7 @@ public class AssetDisplayPageEntryCacheModel
 		assetDisplayPageEntryImpl.setLayoutPageTemplateEntryId(
 			layoutPageTemplateEntryId);
 		assetDisplayPageEntryImpl.setType(type);
+		assetDisplayPageEntryImpl.setPlid(plid);
 
 		assetDisplayPageEntryImpl.resetOriginalValues();
 
@@ -182,6 +185,8 @@ public class AssetDisplayPageEntryCacheModel
 		layoutPageTemplateEntryId = objectInput.readLong();
 
 		type = objectInput.readInt();
+
+		plid = objectInput.readLong();
 	}
 
 	@Override
@@ -222,6 +227,8 @@ public class AssetDisplayPageEntryCacheModel
 		objectOutput.writeLong(layoutPageTemplateEntryId);
 
 		objectOutput.writeInt(type);
+
+		objectOutput.writeLong(plid);
 	}
 
 	public long mvccVersion;
@@ -238,5 +245,6 @@ public class AssetDisplayPageEntryCacheModel
 	public long classPK;
 	public long layoutPageTemplateEntryId;
 	public int type;
+	public long plid;
 
 }

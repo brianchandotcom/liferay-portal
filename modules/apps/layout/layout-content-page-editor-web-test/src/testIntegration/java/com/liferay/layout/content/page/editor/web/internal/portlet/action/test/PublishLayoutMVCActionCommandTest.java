@@ -385,6 +385,59 @@ public class PublishLayoutMVCActionCommandTest {
 		}
 	}
 
+	@Test
+	public void testPublishedLayoutFragmentEntryLinkWithFreemarketEmbeddedPortletAndDynamicInstanceId()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		try {
+			ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+			String html = StringBundler.concat(
+				"<div class=\"fragment_1\">[@liferay_portlet[\"runtime\"]",
+				"portletName=\"com_liferay_journal_content_web_portlet_",
+				"JournalContentPortlet\" instanceId=\"",
+				"fragmentEntryLinkNamespace\" persistSettings=false /]</div>");
+
+			Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+			Layout draftLayout = layout.fetchDraftLayout();
+
+			Assert.assertNotNull(draftLayout);
+
+			FragmentEntryLink fragmentEntryLink = _addFragmentEntryLinkToLayout(
+				"{}", html, draftLayout, serviceContext);
+
+			String portletId = PortletIdCodec.encode(
+				JournalContentPortletKeys.JOURNAL_CONTENT,
+				fragmentEntryLink.getNamespace());
+
+			JournalArticle journalArticle = JournalTestUtil.addJournalArticle(
+				_dataDefinitionResourceFactory,
+				_createDDMFormField(DDMFormFieldTypeConstants.TEXT),
+				_ddmFormValuesToFieldsConverter, RandomTestUtil.randomString(),
+				_group.getGroupId(), _journalConverter);
+
+			AssetEntry assetEntry = _assetEntryLocalService.getEntry(
+				JournalArticle.class.getName(),
+				journalArticle.getResourcePrimKey());
+
+			_setUpPortletPreferences(
+				assetEntry, journalArticle, draftLayout, portletId);
+
+			ContentLayoutTestUtil.publishLayout(draftLayout, layout);
+
+			_assertPortletPreferences(
+				assetEntry, journalArticle, layout, portletId);
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+	}
+
 	private FragmentEntryLink _addFragmentEntryLinkToLayout(
 			String editableValues, String html, Layout layout,
 			ServiceContext serviceContext)

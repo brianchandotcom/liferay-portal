@@ -130,25 +130,25 @@ public class LocalizedMapUtil {
 		return Collections.singletonMap(LocaleUtil.getDefault(), label);
 	}
 
-	public static Map<String, String> mergeI18nMap(
-		Map<String, String> i18nMap, String locale, String value) {
+	public static Map<String, String> mergeLanguageIdMap(
+		Map<String, String> languageIdMap, String locale, String value) {
 
 		if (Validator.isNull(locale)) {
-			return i18nMap;
+			return languageIdMap;
 		}
 
-		if (i18nMap == null) {
+		if (languageIdMap == null) {
 			return Collections.singletonMap(locale, value);
 		}
 
 		if (Validator.isNotNull(value)) {
-			i18nMap.put(locale, value);
+			languageIdMap.put(locale, value);
 		}
 		else {
-			i18nMap.remove(locale);
+			languageIdMap.remove(locale);
 		}
 
-		return i18nMap;
+		return languageIdMap;
 	}
 
 	public static Map<Locale, String> mergeLocalizedMap(

@@ -802,6 +802,7 @@
 		<module name="com.liferay.source.formatter.checkstyle.check.ThreadContextClassLoaderCheck">
 			<property name="category" value="Bug Prevention" />
 			<property name="description" value="Checks usage of `Thread.setContextClassLoader`" />
+			<property name="enabled" value="false" />
 			<message key="thread.context.class.loader.util.use" value="Use ''ThreadContextClassLoaderUtil.swap()'' instead to swap the context class loader of the current thread" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.ThreadLocalUtilCheck">

@@ -110,47 +110,9 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcess
 			"LayoutClassedModelUsage.containerType = 0 and ",
 			"LayoutClassedModelUsage.plid = 0 )");
 
-		try (LoggingTimer loggingTimer = new LoggingTimer();
-			SafeCloseable safeCloseable = addTemporaryIndex(
-				"AssetEntry", false, "classUuid", "classNameId", "visible")) {
-
-			processConcurrently(
-				SQLTransformer.transform(sql),
-				StringBundler.concat(
-					"insert into LayoutClassedModelUsage (uuid_, ",
-					"layoutClassedModelUsageId, groupId, companyId, ",
-					"createDate, modifiedDate, classNameId, classPK, ",
-					"containerKey, containerType, plid, type_ ) values (?, ?, ",
-					"?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"),
-				resultSet -> new Object[] {
-					resultSet.getLong("groupId"),
-					resultSet.getLong("companyId"),
-					resultSet.getLong("classPK"), resultSet.getLong("plid"),
-					GetterUtil.getString(resultSet.getString("portletId"))
-				},
-				(values, preparedStatement) -> {
-					long groupId = (Long)values[0];
-					long companyId = (Long)values[1];
-					long classPK = (Long)values[2];
-					long plid = (Long)values[3];
-					String portletId = (String)values[4];
-
-					_addLayoutClassedModelUsage(
-						groupId, companyId, _journalArticleClassNameId, classPK,
-						portletId, _portletClassNameId, plid,
-						layoutClassedModelUsageTypes, preparedStatement,
-						resourcePrimKeysMap);
-
-					Map<Long, Long> companyResourcePrimKeysMap =
-						resourcePrimKeysMap.computeIfAbsent(
-							companyId, key -> new ConcurrentHashMap<>());
-
-					companyResourcePrimKeysMap.computeIfAbsent(
-						classPK, key -> groupId);
-				},
-				"Unable to create manual selection asset publisher layout " +
-					"classed model usages");
-		}
+		_addPortletPreferencesLayoutClassedModelUsages(
+			layoutClassedModelUsageTypes, resourcePrimKeysMap, sql,
+			"manual selection asset publisher");
 	}
 
 	private void _addDefaultLayoutClassedModelUsages(
@@ -313,6 +275,55 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcess
 				companyId, key -> new ConcurrentHashMap<>());
 
 		companyResourcePrimKeysMap.computeIfAbsent(classPK, key -> groupId);
+	}
+
+	private void _addPortletPreferencesLayoutClassedModelUsages(
+			Map<Long, Integer> layoutClassedModelUsageTypes,
+			Map<Long, Map<Long, Long>> resourcePrimKeysMap, String sql,
+			String usageType)
+		throws Exception {
+
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			SafeCloseable safeCloseable = addTemporaryIndex(
+				"AssetEntry", false, "classUuid", "classNameId", "visible")) {
+
+			processConcurrently(
+				SQLTransformer.transform(sql),
+				StringBundler.concat(
+					"insert into LayoutClassedModelUsage (uuid_, ",
+					"layoutClassedModelUsageId, groupId, companyId, ",
+					"createDate, modifiedDate, classNameId, classPK, ",
+					"containerKey, containerType, plid, type_ ) values (?, ?, ",
+					"?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"),
+				resultSet -> new Object[] {
+					resultSet.getLong("groupId"),
+					resultSet.getLong("companyId"),
+					resultSet.getLong("classPK"), resultSet.getLong("plid"),
+					GetterUtil.getString(resultSet.getString("portletId"))
+				},
+				(values, preparedStatement) -> {
+					long groupId = (Long)values[0];
+					long companyId = (Long)values[1];
+					long classPK = (Long)values[2];
+					long plid = (Long)values[3];
+					String portletId = (String)values[4];
+
+					_addLayoutClassedModelUsage(
+						groupId, companyId, _journalArticleClassNameId, classPK,
+						portletId, _portletClassNameId, plid,
+						layoutClassedModelUsageTypes, preparedStatement,
+						resourcePrimKeysMap);
+
+					Map<Long, Long> companyResourcePrimKeysMap =
+						resourcePrimKeysMap.computeIfAbsent(
+							companyId, key -> new ConcurrentHashMap<>());
+
+					companyResourcePrimKeysMap.computeIfAbsent(
+						classPK, key -> groupId);
+				},
+				"Unable to create layout classed model usages for " +
+					usageType);
+		}
 	}
 
 	private int _getLayoutClassedModelUsageType(long plid) throws Exception {

@@ -323,18 +323,18 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			LayoutPageTemplateEntry layoutPageTemplateEntry)
 		throws PortalException {
 
-		// Layout page template
-
 		if (!GroupThreadLocal.isDeleteInProcess()) {
-			int count =
+			int assetDisplayPageEntriesCount =
 				_assetDisplayPageEntryLocalService.
 					getAssetDisplayPageEntriesCountByLayoutPageTemplateEntryId(
 						layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
 
-			if (count > 0) {
+			if (assetDisplayPageEntriesCount > 0) {
 				throw new RequiredLayoutPageTemplateEntryException();
 			}
 		}
+
+		// Layout page template
 
 		layoutPageTemplateEntryPersistence.remove(layoutPageTemplateEntry);
 

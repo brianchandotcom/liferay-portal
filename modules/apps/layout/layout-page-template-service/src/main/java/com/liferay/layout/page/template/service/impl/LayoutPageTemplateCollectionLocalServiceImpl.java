@@ -103,8 +103,6 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 			LayoutPageTemplateCollection layoutPageTemplateCollection)
 		throws PortalException {
 
-		// Layout page template collection
-
 		if (FeatureFlagManagerUtil.isEnabled("LPS-189856") &&
 			!GroupThreadLocal.isDeleteInProcess() &&
 			_hasAssetDisplayPageEntry(
@@ -114,6 +112,8 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 
 			throw new RequiredLayoutPageTemplateEntryException();
 		}
+
+		// Layout page template collection
 
 		layoutPageTemplateCollectionPersistence.remove(
 			layoutPageTemplateCollection);
@@ -386,12 +386,12 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 		for (LayoutPageTemplateEntry layoutPageTemplateEntry :
 				layoutPageTemplateEntries) {
 
-			int count =
+			int assetDisplayPageEntriesCount =
 				_assetDisplayPageEntryLocalService.
 					getAssetDisplayPageEntriesCountByLayoutPageTemplateEntryId(
 						layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
 
-			if (count > 0) {
+			if (assetDisplayPageEntriesCount > 0) {
 				return true;
 			}
 		}

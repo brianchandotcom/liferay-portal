@@ -214,6 +214,18 @@ public class SourceFormatterUtil {
 		return null;
 	}
 
+	public static List<String> getFilesByGit(
+		String baseDirName, String[] includes) {
+
+		List<String> result = new ArrayList<>();
+
+		git(
+			Arrays.asList("ls-files", "-z", "--full-name"), baseDirName,
+			includes, result::add);
+
+		return result;
+	}
+
 	public static String getGitContent(String fileName, String branchName) {
 		URL url = getPortalGitURL(fileName, branchName);
 

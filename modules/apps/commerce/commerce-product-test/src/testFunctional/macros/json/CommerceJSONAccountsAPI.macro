@@ -694,14 +694,33 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro getAccountFieldByAccountName(field = null, accountName = null) {
-		Variables.assertDefined(parameterList = ${accountName});
+	macro _getExportTaskId(className = null, contentType = null) {
+		var response = CommerceJSONAccountsAPI._postExportTask(
+			className = ${className},
+			contentType = ${contentType});
 
-		var responseBody = CommerceJSONAccountsAPI._getAccounts();
+		var exportTaskId = JSONUtil.getWithJSONPath(${response}, "$..id");
 
-		var fieldValue = JSONUtil.getWithJSONPath(${responseBody}, "$..[?(@['name'] == '${accountName}')]['${field}']");
+		return ${exportTaskId};
+	}
 
-		return ${fieldValue};
+	@summary = "Default summary"
+	macro _postExportTask(className = null, contentType = null) {
+		Variables.assertDefined(parameterList = "${className},${contentType}");
+
+		var portalURL = JSONCompany.getPortalURL();
+		var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
+			groupName = "Guest",
+			site = "true");
+		var curl = '''
+			${portalURL}/o/headless-batch-engine/v1.0/export-task/${className}/${contentType} \
+				-u test@liferay.com:test \
+				-H Content-Type: application/json
+		''';
+
+		var response = JSONCurlUtil.post(${curl});
+
+		return ${response};
 	}
 
 	@summary = "Default summary"
@@ -726,34 +745,14 @@ definition {
 	}
 
 	@summary = "Default summary"
-    macro _getExportTaskId(className = null, contentType = null) {
-        var response = CommerceJSONAccountsAPI._postExportTask(
-            className = ${className},
-            contentType = ${contentType});
+	macro getAccountFieldByAccountName(field = null, accountName = null) {
+		Variables.assertDefined(parameterList = ${accountName});
 
-        var exportTaskId = JSONUtil.getWithJSONPath(${response}, "$..id");
+		var responseBody = CommerceJSONAccountsAPI._getAccounts();
 
-        return ${exportTaskId};
-    }
+		var fieldValue = JSONUtil.getWithJSONPath(${responseBody}, "$..[?(@['name'] == '${accountName}')]['${field}']");
 
-    @summary = "Default summary"
-    macro _postExportTask(className = null, contentType = null) {
-        Variables.assertDefined(parameterList = "${className},${contentType}");
-        var portalURL = JSONCompany.getPortalURL();
-
-        var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
-            groupName = "Guest",
-            site = "true");
-
-        var curl = '''
-            ${portalURL}/o/headless-batch-engine/v1.0/export-task/${className}/${contentType} \
-                -u test@liferay.com:test \
-                -H Content-Type: application/json
-        ''';
-
-        var response = JSONCurlUtil.post(${curl});
-
-        return ${response};
-    }
+		return ${fieldValue};
+	}
 
 }

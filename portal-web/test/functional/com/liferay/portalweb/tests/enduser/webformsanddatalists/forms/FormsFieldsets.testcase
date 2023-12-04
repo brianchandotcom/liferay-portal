@@ -1571,9 +1571,13 @@ definition {
 			fieldName = "Select from List",
 			selectOption = "Option 1");
 
+		ClickNoError(locator1 = "FormFields#PORTLET_BODY");
+
 		FormFields.selectSelectOption(
 			fieldName = "Select from List",
 			selectOption = "Option 2");
+
+		ClickNoError(locator1 = "FormFields#PORTLET_BODY");
 
 		Click(
 			key_fieldName = "Select from List",

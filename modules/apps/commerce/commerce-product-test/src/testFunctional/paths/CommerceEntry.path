@@ -481,6 +481,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENTRY_CONTENT_ENTRY_NAME_INDEX</td>
+	<td>//*[@data-qa-id='row']//*[normalize-space(text())='${key_rowEntry}'][${key_index}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>RESOURCE_TABLE_SELECT</td>
 	<td>//*[@data-qa-id='row']//*[normalize-space(text())='${key_rowEntry}']//..//..//select</td>
 	<td></td>
@@ -708,6 +713,16 @@
 <tr>
 	<td>ORDERS_ENTRY_BODY_VERTICAL_ELLIPSIS</td>
 	<td>//div[@class='table-list-title']/../../../*[contains(.,'${key_value}')]//*[name()='svg'][contains(@class,'icon-ellipsis')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BODY_VERTICAL_ELLIPSIS_ACCOUNT</td>
+	<td>//div[@class='data-set-wrapper' or @class='searchcontainer-content']//a[text()='${key_name}']/../../..//*[*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BODY_VERTICAL_ELLIPSIS_ORDER</td>
+	<td>//div[contains(@class,'portlet') and contains(@class,'container')]//a[span/*[name()='svg'][contains(@class,'icon-ellipsis')]] | //*[contains(@class,'sheet-title')]//*[contains(@class,'dropdown-toggle')][.//*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
 	<td></td>
 </tr>
 <tr>

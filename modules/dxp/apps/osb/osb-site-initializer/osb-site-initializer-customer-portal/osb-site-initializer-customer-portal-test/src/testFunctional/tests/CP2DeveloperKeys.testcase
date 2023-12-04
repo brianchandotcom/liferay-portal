@@ -84,29 +84,40 @@ definition {
 	@description = "Automation ID: LPS-146187 | Test Summary: Check that the dropdown list contains 5 DXP versions for the user to choose from."
 	@priority = 4
 	test CanViewQuantityDxpVersionsDropDownList {
-		task ("Go to CP2.0 and join a project") {
+		task ("Given that the user is given the administrator role in the project") {
+			Account.openAccountsAdmin();
+
+			CustomerPortal.accountTableProject(title = ${testAccount});
+
+			Account.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Account Administrator",
+				accountUserName = "Test Test");
+		}
+		task ("And access a project") {
 			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
-			CustomerPortal.enterOnProject(title = "2022 FIFA World Cup Qatar - FAN ID");
+			CustomerPortal.enterOnProject(title = ${testAccount});
+
+			CP2Utils.onboardingFlow();
 		}
 
-		task ("Go to the product activation page") {
+		task ("When go to the product activation page") {
 			CP2NavigationMenu.goToProductActivation();
 
 			CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
 		}
 
-		task ("Open the dropdown and verify that there are 5 DXP versions") {
+		task ("And verify that are 5 DXP versions") {
 			CustomerPortal.viewVersions(
 				dropDownItems = "7.4,7.3,7.2,7.1,7.0",
 				dropDownLabel = "Developer Keys");
 		}
 
-		task ("Click on finish activation") {
+		task ("And click on finish activation") {
 			CustomerPortal.clickOnFinishActivationButton();
 		}
 
-		task ("Can see that there are 5 DXP versions") {
+		task ("Then verify that are 5 DXP versions") {
 			CustomerPortal.viewVersions(
 				dropDownItems = "7.4,7.3,7.2,7.1,7.0",
 				dropDownLabel = "Liferay DXP Version",

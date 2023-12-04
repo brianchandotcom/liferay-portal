@@ -963,7 +963,7 @@
 </tr>
 <tr>
 	<td>VALIDATION_ARGUMENT</td>
-	<td>//div[contains(@data-field-name, 'selectedValidation')]//button[@aria-labelledby='selectedValidation_field']</td>
+	<td>//div[contains(@data-field-name, 'selectedValidation')]//button[@aria-labelledby='selectedValidation']</td>
 	<td></td>
 </tr>
 <tr>

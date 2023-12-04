@@ -3,6 +3,7 @@
 <model-hints>
 	<model name="com.liferay.commerce.payment.model.CommercePaymentEntry">
 		<field name="mvccVersion" type="long" />
+		<field name="externalReferenceCode" type="String" />
 		<field name="commercePaymentEntryId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
@@ -24,15 +25,21 @@
 			<hint-collection name="CLOB" />
 		</field>
 		<field name="languageId" type="String" />
+		<field name="note" type="String">
+			<hint-collection name="CLOB" />
+		</field>
 		<field name="paymentIntegrationKey" type="String" />
 		<field name="paymentIntegrationType" type="int" />
 		<field name="paymentStatus" type="int" />
+		<field name="reasonKey" type="String" />
+		<field localized="true" name="reasonName" type="String" />
 		<field name="redirectURL" type="String">
 			<hint-collection name="CLOB" />
 		</field>
 		<field name="transactionCode" type="String">
 			<hint name="max-length">255</hint>
 		</field>
+		<field name="type" type="int" />
 	</model>
 	<model name="com.liferay.commerce.payment.model.CommercePaymentEntryAudit">
 		<field name="mvccVersion" type="long" />

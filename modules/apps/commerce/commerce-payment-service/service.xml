@@ -4,7 +4,7 @@
 <service-builder auto-import-default-references="false" auto-namespace-tables="false" dependency-injector="ds" mvcc-enabled="true" package-path="com.liferay.commerce.payment">
 	<author>Luca Pellizzon</author>
 	<namespace>Commerce</namespace>
-	<entity local-service="true" name="CommercePaymentEntry" remote-service="true">
+	<entity external-reference-code="company" local-service="true" name="CommercePaymentEntry" remote-service="true">
 
 		<!-- PK fields -->
 
@@ -29,11 +29,15 @@
 		<column name="currencyCode" type="String" />
 		<column name="errorMessages" type="String" />
 		<column name="languageId" type="String" />
+		<column name="note" type="String" />
 		<column name="paymentIntegrationKey" type="String" />
 		<column name="paymentIntegrationType" type="int" />
 		<column name="paymentStatus" type="int" />
+		<column name="reasonKey" type="String" />
+		<column localized="true" name="reasonName" type="String" />
 		<column name="redirectURL" type="String" />
 		<column name="transactionCode" type="String" />
+		<column name="type" type="int" />
 
 		<!-- Order -->
 
@@ -50,6 +54,12 @@
 			<finder-column name="companyId" />
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
+		</finder>
+		<finder name="C_C_C_T" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+			<finder-column name="type" />
 		</finder>
 	</entity>
 	<entity local-service="true" name="CommercePaymentEntryAudit" remote-service="true">
@@ -176,6 +186,10 @@
 		</finder>
 	</entity>
 	<exceptions>
+		<exception>CommercePaymentEntryAmount</exception>
+		<exception>CommercePaymentEntryClassNameId</exception>
+		<exception>CommercePaymentEntryClassPK</exception>
+		<exception>CommercePaymentEntryReasonKey</exception>
 		<exception>CommercePaymentMethodGroupRelEngineKey</exception>
 		<exception>CommercePaymentMethodGroupRelName</exception>
 		<exception>DuplicateCommercePaymentMethodGroupRelQualifier</exception>

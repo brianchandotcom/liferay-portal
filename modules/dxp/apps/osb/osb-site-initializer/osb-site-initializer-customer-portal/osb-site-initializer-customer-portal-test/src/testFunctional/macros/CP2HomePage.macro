@@ -21,6 +21,7 @@ definition {
 	macro clickAtCookiePoliceLink() {
 		Click(locator1 = "CP2HomePage#COOKIE_LINK");
 	}
+
 	@summary = "Click on Cookie Policy at mega menu"
 	macro clickAtCookiePoliceMenu() {
 		Click(locator1 = "CP2HomePage#COOKIE_POLICY_MEGA_MENU");

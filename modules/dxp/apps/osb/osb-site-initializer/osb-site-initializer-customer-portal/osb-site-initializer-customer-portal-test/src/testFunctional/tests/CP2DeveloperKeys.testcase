@@ -93,6 +93,7 @@ definition {
 				accountRoleTitle = "Account Administrator",
 				accountUserName = "Test Test");
 		}
+
 		task ("And access a project") {
 			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 

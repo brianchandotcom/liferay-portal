@@ -48,10 +48,12 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-148181 | Test Summary: Verify if when the user types a email at Invite Your Team Members the same email appears at Accounts - Details - Project that you are testing"
-	@ignore = "true" 
+	@ignore = "true"
 	@priority = 5
 	test IfInvitedIsSeenOnAccountRoles {
+
 		// Ignored due to deprecated object
+
 		task ("Change the user role in the project") {
 			Account.openAccountsAdmin();
 

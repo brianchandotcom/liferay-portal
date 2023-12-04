@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
@@ -105,6 +106,19 @@ public class ListTypeEntryLocalServiceImpl
 			listTypeEntryId);
 
 		return deleteListTypeEntry(listTypeEntry);
+	}
+
+	public void deleteListTypeEntryByKey(long listTypeDefinitionId, String key)
+		throws PortalException {
+
+		for (ListTypeEntry listTypeEntry :
+				listTypeEntryPersistence.findByListTypeDefinitionId(
+					listTypeDefinitionId)) {
+
+			if (StringUtil.equals(listTypeEntry.getKey(), key)) {
+				listTypeEntryLocalService.deleteListTypeEntry(listTypeEntry);
+			}
+		}
 	}
 
 	@Override

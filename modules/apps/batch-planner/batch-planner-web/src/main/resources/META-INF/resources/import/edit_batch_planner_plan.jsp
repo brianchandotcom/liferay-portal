@@ -46,11 +46,19 @@ renderResponse.setTitle(editable ? LanguageUtil.get(request, "edit-template") : 
 								<clay:col
 									md="6"
 								>
-									<clay:select
-										id='<%= liferayPortletResponse.getNamespace() + "internalClassNameKey" %>'
-										label='<%= LanguageUtil.get(request, "entity-type") %>'
-										name="internalClassNameKey"
-										options="<%= editBatchPlannerPlanDisplayContext.getInternalClassNameKeySelectOptions() %>"
+									<react:component
+										module="js/components/ImportEntityType"
+										props='<%=
+											HashMapBuilder.<String, Object>put(
+												"internalClassNameKeyId", liferayPortletResponse.getNamespace() + "internalClassNameKey"
+											).put(
+												"internalClassNameKeyInitialOptions", editBatchPlannerPlanDisplayContext.getInternalClassNameKeySelectOptions()
+											).put(
+												"internalClassNameKeyLabel", LanguageUtil.get(request, "entity-type")
+											).put(
+												"internalClassNameKeyName", liferayPortletResponse.getNamespace() + "internalClassNameKey"
+											).build()
+										%>'
 									/>
 								</clay:col>
 							</clay:row>

@@ -381,9 +381,16 @@ public class SourceFormatterUtil {
 	public static List<String> scanForFileNames(
 		String baseDirName, String[] includes) {
 
-		return _scanForFileNames(
+		List<String> deletedFileNames = _scanForFileNames(
+			Arrays.asList("ls-files", "-d", "-z", "--full-name"), baseDirName,
+			includes);
+
+		List<String> fileNames = _scanForFileNames(
 			Arrays.asList("ls-files", "-z", "--full-name"), baseDirName,
 			includes);
+
+		return ListUtil.filter(
+			fileNames, fileName -> !deletedFileNames.contains(fileName));
 	}
 
 	public static List<String> scanForFileNames(
@@ -557,12 +564,6 @@ public class SourceFormatterUtil {
 		}
 	}
 
-	private static List<String> _getDeletedFileNames(String baseDirName) {
-		return _scanForFileNames(
-			Arrays.asList("ls-files", "-d", "-z", "--full-name"), baseDirName,
-			new String[0]);
-	}
-
 	private static String _getDocumentationURLString(String checkName) {
 		String markdownFileName = getMarkdownFileName(checkName);
 
@@ -641,13 +642,14 @@ public class SourceFormatterUtil {
 		List<String> args, String baseDirName, String[] includes) {
 
 		if (_gitTopLevelFolder == null) {
-			List<String> lines = git(
-				Arrays.asList("rev-parse", "--show-toplevel"), baseDirName);
+			List<String> lines = new ArrayList<>();
+
+			git(
+				Arrays.asList("rev-parse", "--show-toplevel"), "",
+				line -> lines.add(line));
 
 			_gitTopLevelFolder = lines.get(0);
 		}
-
-		List<String> deletedFileNames = _getDeletedFileNames(baseDirName);
 
 		List<String> allArgs = new ArrayList<>(args);
 
@@ -666,14 +668,8 @@ public class SourceFormatterUtil {
 
 		git(
 			allArgs, baseDirName,
-			line -> {
-				if (deletedFileNames.contains(line)) {
-					return;
-				}
-
-				fileNames.add(
-					_gitTopLevelFolder + StringPool.FORWARD_SLASH + line);
-			});
+			line -> fileNames.add(
+				_gitTopLevelFolder + StringPool.FORWARD_SLASH + line));
 
 		List<String> unCachedFileNames = _getUnCachedFileNames();
 

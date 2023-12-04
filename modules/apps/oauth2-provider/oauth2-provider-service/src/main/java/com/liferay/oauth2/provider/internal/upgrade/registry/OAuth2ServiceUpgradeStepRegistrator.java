@@ -131,6 +131,11 @@ public class OAuth2ServiceUpgradeStepRegistrator
 				}
 
 			});
+
+		registry.register(
+			"4.2.3", "4.2.4",
+			UpgradeProcessFactory.alterColumnType(
+				"OAuth2Application", "name", "VARCHAR(255) null"));
 	}
 
 	@Reference

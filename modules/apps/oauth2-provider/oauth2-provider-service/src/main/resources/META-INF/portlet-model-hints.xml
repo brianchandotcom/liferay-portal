@@ -34,7 +34,9 @@
 		<field name="jwks" type="String">
 			<hint name="max-length">3999</hint>
 		</field>
-		<field name="name" type="String" />
+		<field name="name" type="String">
+			<hint name="max-length">255</hint>
+		</field>
 		<field name="privacyPolicyURL" type="String">
 			<hint-collection name="URL" />
 			<validator name="url" />

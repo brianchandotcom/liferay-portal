@@ -40,7 +40,6 @@ import com.liferay.sharing.service.SharingEntryLocalService;
 import com.liferay.sharing.servlet.taglib.ui.SharingEntryDropdownItemContributor;
 import com.liferay.sharing.util.comparator.SharingEntryModifiedDateComparator;
 import com.liferay.sharing.web.internal.constants.SharingPortletKeys;
-import com.liferay.sharing.web.internal.filter.SharedAssetsFilterItemRegistry;
 import com.liferay.sharing.web.internal.servlet.taglib.ui.SharingEntryDropdownItemContributorRegistry;
 
 import java.util.List;
@@ -60,7 +59,6 @@ public class ViewSharedAssetsDisplayContext {
 		GroupLocalService groupLocalService, ItemSelector itemSelector,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		SharedAssetsFilterItemRegistry sharedAssetsFilterItemRegistry,
 		SharingConfigurationFactory sharingConfigurationFactory,
 		SharingDropdownItemFactory sharingDropdownItemFactory,
 		SharingEntryDropdownItemContributorRegistry
@@ -74,7 +72,6 @@ public class ViewSharedAssetsDisplayContext {
 		_itemSelector = itemSelector;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
-		_sharedAssetsFilterItemRegistry = sharedAssetsFilterItemRegistry;
 		_sharingConfigurationFactory = sharingConfigurationFactory;
 		_sharingDropdownItemFactory = sharingDropdownItemFactory;
 		_sharingEntryDropdownItemContributorRegistry =
@@ -102,8 +99,7 @@ public class ViewSharedAssetsDisplayContext {
 
 		return new ViewSharedAssetsManagementToolbarDisplayContext(
 			_httpServletRequest, _itemSelector, _liferayPortletRequest,
-			_liferayPortletResponse, getSearchContainer(),
-			_sharedAssetsFilterItemRegistry, this);
+			_liferayPortletResponse, getSearchContainer(), this);
 	}
 
 	public NavigationItemList getNavigationItems() {
@@ -363,8 +359,6 @@ public class ViewSharedAssetsDisplayContext {
 	private String _orderByCol;
 	private String _orderByType;
 	private SearchContainer<SharingEntry> _searchContainer;
-	private final SharedAssetsFilterItemRegistry
-		_sharedAssetsFilterItemRegistry;
 	private final SharingConfigurationFactory _sharingConfigurationFactory;
 	private final SharingDropdownItemFactory _sharingDropdownItemFactory;
 	private final SharingEntryDropdownItemContributorRegistry

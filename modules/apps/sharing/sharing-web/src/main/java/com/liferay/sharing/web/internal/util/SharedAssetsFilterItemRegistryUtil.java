@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.sharing.web.internal.filter;
+package com.liferay.sharing.web.internal.util;
 
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
@@ -14,18 +14,17 @@ import com.liferay.sharing.filter.SharedAssetsFilterItem;
 import java.util.Collections;
 import java.util.List;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Alejandro Tardín
  */
-@Component(service = SharedAssetsFilterItemRegistry.class)
-public class SharedAssetsFilterItemRegistry {
+public class SharedAssetsFilterItemRegistryUtil {
 
-	public SharedAssetsFilterItem getSharedAssetsFilterItem(String className) {
+	public static SharedAssetsFilterItem getSharedAssetsFilterItem(
+		String className) {
+
 		for (SharedAssetsFilterItem sharedAssetsFilterItem :
 				_serviceTrackerList) {
 
@@ -39,24 +38,22 @@ public class SharedAssetsFilterItemRegistry {
 		return null;
 	}
 
-	public List<SharedAssetsFilterItem> getSharedAssetsFilterItems() {
+	public static List<SharedAssetsFilterItem> getSharedAssetsFilterItems() {
 		return _serviceTrackerList.toList();
 	}
 
-	@Activate
-	protected void activate(BundleContext bundleContext) {
+	private static final ServiceTrackerList<SharedAssetsFilterItem>
+		_serviceTrackerList;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(
+			SharedAssetsFilterItemRegistryUtil.class);
+
 		_serviceTrackerList = ServiceTrackerListFactory.open(
-			bundleContext, SharedAssetsFilterItem.class,
+			bundle.getBundleContext(), SharedAssetsFilterItem.class,
 			Collections.reverseOrder(
 				new PropertyServiceReferenceComparator<>(
 					"navigation.item.order")));
 	}
-
-	@Deactivate
-	protected void deactivate() {
-		_serviceTrackerList.close();
-	}
-
-	private ServiceTrackerList<SharedAssetsFilterItem> _serviceTrackerList;
 
 }

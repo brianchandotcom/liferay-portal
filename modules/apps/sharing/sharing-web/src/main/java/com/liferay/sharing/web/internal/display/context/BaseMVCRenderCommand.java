@@ -13,7 +13,6 @@ import com.liferay.sharing.display.context.util.SharingDropdownItemFactory;
 import com.liferay.sharing.interpreter.SharingEntryInterpreterProvider;
 import com.liferay.sharing.security.permission.SharingPermission;
 import com.liferay.sharing.service.SharingEntryLocalService;
-import com.liferay.sharing.web.internal.filter.SharedAssetsFilterItemRegistry;
 import com.liferay.sharing.web.internal.servlet.taglib.ui.SharingEntryDropdownItemContributorRegistry;
 
 import javax.portlet.RenderRequest;
@@ -33,8 +32,7 @@ public abstract class BaseMVCRenderCommand {
 			groupLocalService, itemSelector,
 			portal.getLiferayPortletRequest(renderRequest),
 			portal.getLiferayPortletResponse(renderResponse),
-			sharedAssetsFilterItemRegistry, sharingConfigurationFactory,
-			sharingDropdownItemFactory,
+			sharingConfigurationFactory, sharingDropdownItemFactory,
 			sharingEntryDropdownItemContributorRegistry,
 			sharingEntryInterpreterProvider::getSharingEntryInterpreter,
 			sharingEntryLocalService, sharingPermission);
@@ -48,9 +46,6 @@ public abstract class BaseMVCRenderCommand {
 
 	@Reference
 	protected Portal portal;
-
-	@Reference
-	protected SharedAssetsFilterItemRegistry sharedAssetsFilterItemRegistry;
 
 	@Reference
 	protected SharingConfigurationFactory sharingConfigurationFactory;

@@ -21,8 +21,8 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.sharing.filter.SharedAssetsFilterItem;
-import com.liferay.sharing.web.internal.filter.SharedAssetsFilterItemRegistry;
 import com.liferay.sharing.web.internal.item.selector.SharedAssetsFilterItemItemSelectorCriterion;
+import com.liferay.sharing.web.internal.util.SharedAssetsFilterItemRegistryUtil;
 
 import java.util.List;
 import java.util.Map;
@@ -44,7 +44,6 @@ public class ViewSharedAssetsManagementToolbarDisplayContext
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
 		SearchContainer<?> searchContainer,
-		SharedAssetsFilterItemRegistry sharedAssetsFilterItemRegistry,
 		ViewSharedAssetsDisplayContext viewSharedAssetsDisplayContext) {
 
 		super(
@@ -52,7 +51,6 @@ public class ViewSharedAssetsManagementToolbarDisplayContext
 			searchContainer);
 
 		_itemSelector = itemSelector;
-		_sharedAssetsFilterItemRegistry = sharedAssetsFilterItemRegistry;
 		_viewSharedAssetsDisplayContext = viewSharedAssetsDisplayContext;
 	}
 
@@ -136,7 +134,7 @@ public class ViewSharedAssetsManagementToolbarDisplayContext
 	private String _getClassNameLabel(String className) {
 		if (Validator.isNotNull(className)) {
 			SharedAssetsFilterItem sharedAssetsFilterItem =
-				_sharedAssetsFilterItemRegistry.getSharedAssetsFilterItem(
+				SharedAssetsFilterItemRegistryUtil.getSharedAssetsFilterItem(
 					className);
 
 			if (sharedAssetsFilterItem != null) {
@@ -193,8 +191,6 @@ public class ViewSharedAssetsManagementToolbarDisplayContext
 	}
 
 	private final ItemSelector _itemSelector;
-	private final SharedAssetsFilterItemRegistry
-		_sharedAssetsFilterItemRegistry;
 	private final ViewSharedAssetsDisplayContext
 		_viewSharedAssetsDisplayContext;
 

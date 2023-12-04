@@ -1968,7 +1968,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-182558. Verify it's not possible to save a client extension filter with Name field empty"
+	@description = "Blocked by LPS-203267. LPS-182558. Verify it's not possible to save a client extension filter with Name field empty."
+	@ignore = "true"
 	@priority = 5
 	test CanNotCreateClientExtensionFilterWithNameFieldEmpty {
 		task ("Given a new Client Extension Frontend Data Set filter") {

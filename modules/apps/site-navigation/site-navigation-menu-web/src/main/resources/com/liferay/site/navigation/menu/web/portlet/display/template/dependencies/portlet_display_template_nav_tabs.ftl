@@ -44,12 +44,13 @@
 
 					<#if navItem.isChildSelected() || navItem.isSelected()>
 						<#assign
-							nav_item_css_class = "${nav_item_css_class} selected active"
+							nav_item_css_class = "${nav_item_css_class} selected"
+							nav_item_link_css_class = "${nav_item_link_css_class} active"
 						/>
 					</#if>
 
-					<li class="nav-item ${nav_item_css_class}" id="layout_${portletDisplay.getId()}_${navItem.getLayoutId()}" role="presentation">
-						<a ${nav_item_attr_has_popup} class="nav-link ${nav_item_link_css_class}" ${nav_item_href_link} ${navItem.getTarget()} role="menuitem">
+					<li class="${nav_item_css_class}" id="layout_${portletDisplay.getId()}_${navItem.getLayoutId()}" role="presentation">
+						<a ${nav_item_attr_has_popup} class="${nav_item_link_css_class}" ${nav_item_href_link} ${navItem.getTarget()} role="menuitem">
 							<span class="text-truncate"><@liferay_theme["layout-icon"] layout=navItem.getLayout() /> ${navItem.getName()} ${nav_item_caret}</span>
 						</a>
 

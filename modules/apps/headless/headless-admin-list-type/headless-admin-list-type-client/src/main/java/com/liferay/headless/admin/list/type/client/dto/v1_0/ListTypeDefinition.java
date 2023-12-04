@@ -194,6 +194,28 @@ public class ListTypeDefinition implements Cloneable, Serializable {
 
 	protected Map<String, String> name_i18n;
 
+	public Map<String, String> getName_languageId() {
+		return name_languageId;
+	}
+
+	public void setName_languageId(Map<String, String> name_languageId) {
+		this.name_languageId = name_languageId;
+	}
+
+	public void setName_languageId(
+		UnsafeSupplier<Map<String, String>, Exception>
+			name_languageIdUnsafeSupplier) {
+
+		try {
+			name_languageId = name_languageIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Map<String, String> name_languageId;
+
 	public Boolean getSystem() {
 		return system;
 	}

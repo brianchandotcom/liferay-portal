@@ -131,6 +131,36 @@ public class ListEntry implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, String> name_i18n;
 
+	@Schema
+	@Valid
+	public Map<String, String> getName_languageId() {
+		return name_languageId;
+	}
+
+	public void setName_languageId(Map<String, String> name_languageId) {
+		this.name_languageId = name_languageId;
+	}
+
+	@JsonIgnore
+	public void setName_languageId(
+		UnsafeSupplier<Map<String, String>, Exception>
+			name_languageIdUnsafeSupplier) {
+
+		try {
+			name_languageId = name_languageIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Map<String, String> name_languageId;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -194,6 +224,16 @@ public class ListEntry implements Serializable {
 			sb.append("\"name_i18n\": ");
 
 			sb.append(_toJSON(name_i18n));
+		}
+
+		if (name_languageId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"name_languageId\": ");
+
+			sb.append(_toJSON(name_languageId));
 		}
 
 		sb.append("}");

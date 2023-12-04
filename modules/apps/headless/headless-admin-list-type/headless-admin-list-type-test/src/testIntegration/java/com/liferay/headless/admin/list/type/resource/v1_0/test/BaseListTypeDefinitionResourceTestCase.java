@@ -1141,6 +1141,14 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("name_languageId", additionalAssertFieldName)) {
+				if (listTypeDefinition.getName_languageId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("system", additionalAssertFieldName)) {
 				if (listTypeDefinition.getSystem() == null) {
 					valid = false;
@@ -1353,6 +1361,17 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 				if (!equals(
 						(Map)listTypeDefinition1.getName_i18n(),
 						(Map)listTypeDefinition2.getName_i18n())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("name_languageId", additionalAssertFieldName)) {
+				if (!equals(
+						(Map)listTypeDefinition1.getName_languageId(),
+						(Map)listTypeDefinition2.getName_languageId())) {
 
 					return false;
 				}
@@ -1651,6 +1670,11 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 		}
 
 		if (entityFieldName.equals("name_i18n")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("name_languageId")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}

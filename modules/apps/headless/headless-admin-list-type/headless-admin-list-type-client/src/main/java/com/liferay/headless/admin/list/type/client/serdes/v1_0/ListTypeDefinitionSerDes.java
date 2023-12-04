@@ -166,6 +166,16 @@ public class ListTypeDefinitionSerDes {
 			sb.append(_toJSON(listTypeDefinition.getName_i18n()));
 		}
 
+		if (listTypeDefinition.getName_languageId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"name_languageId\": ");
+
+			sb.append(_toJSON(listTypeDefinition.getName_languageId()));
+		}
+
 		if (listTypeDefinition.getSystem() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -267,6 +277,15 @@ public class ListTypeDefinitionSerDes {
 				"name_i18n", String.valueOf(listTypeDefinition.getName_i18n()));
 		}
 
+		if (listTypeDefinition.getName_languageId() == null) {
+			map.put("name_languageId", null);
+		}
+		else {
+			map.put(
+				"name_languageId",
+				String.valueOf(listTypeDefinition.getName_languageId()));
+		}
+
 		if (listTypeDefinition.getSystem() == null) {
 			map.put("system", null);
 		}
@@ -352,6 +371,13 @@ public class ListTypeDefinitionSerDes {
 			else if (Objects.equals(jsonParserFieldName, "name_i18n")) {
 				if (jsonParserFieldValue != null) {
 					listTypeDefinition.setName_i18n(
+						(Map)ListTypeDefinitionSerDes.toMap(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "name_languageId")) {
+				if (jsonParserFieldValue != null) {
+					listTypeDefinition.setName_languageId(
 						(Map)ListTypeDefinitionSerDes.toMap(
 							(String)jsonParserFieldValue));
 				}

@@ -201,10 +201,6 @@ public class SourceFormatterUtil {
 	}
 
 	public static File getFile(String baseDirName, String fileName, int level) {
-		if (Validator.isBlank(baseDirName)) {
-			baseDirName = "./";
-		}
-
 		for (int i = 0; i < level; i++) {
 			File file = new File(baseDirName + fileName);
 

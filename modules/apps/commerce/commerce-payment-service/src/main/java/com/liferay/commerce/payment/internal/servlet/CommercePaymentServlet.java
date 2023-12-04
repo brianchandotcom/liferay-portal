@@ -211,8 +211,9 @@ public class CommercePaymentServlet extends HttpServlet {
 					commerceOrder.getCommerceOrderId(), commerceChannelId,
 					commerceOrder.getTotal(), _nextUrl, _nextUrl,
 					commerceCurrency.getCode(),
-					_language.getLanguageId(httpServletRequest),
-					commerceOrder.getCommercePaymentMethodKey(), 0, null,
+					_language.getLanguageId(httpServletRequest), null,
+					commerceOrder.getCommercePaymentMethodKey(), 0, null, null,
+					CommercePaymentEntryConstants.TYPE_PAYMENT,
 					ServiceContextFactory.getInstance(httpServletRequest));
 
 			commercePaymentEntry =

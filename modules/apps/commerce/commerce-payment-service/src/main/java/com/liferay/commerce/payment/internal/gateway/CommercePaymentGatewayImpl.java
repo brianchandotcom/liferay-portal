@@ -64,11 +64,23 @@ public class CommercePaymentGatewayImpl implements CommercePaymentGateway {
 
 		commercePaymentEntry =
 			_commercePaymentEntryLocalService.updateCommercePaymentEntry(
+				commercePaymentEntry.getExternalReferenceCode(),
 				commercePaymentEntry.getCommercePaymentEntryId(),
+				commercePaymentEntry.getCommerceChannelId(),
+				commercePaymentEntry.getAmount(),
+				commercePaymentEntry.getCallbackURL(),
+				commercePaymentEntry.getCancelURL(),
+				commercePaymentEntry.getCurrencyCode(),
 				authorizedCommercePaymentEntry.getErrorMessages(),
+				commercePaymentEntry.getLanguageId(),
+				commercePaymentEntry.getNote(),
+				commercePaymentEntry.getPaymentIntegrationKey(),
+				commercePaymentEntry.getPaymentIntegrationType(),
 				authorizedCommercePaymentEntry.getPaymentStatus(),
+				commercePaymentEntry.getReasonKey(),
 				authorizedCommercePaymentEntry.getRedirectURL(),
-				authorizedCommercePaymentEntry.getTransactionCode());
+				authorizedCommercePaymentEntry.getTransactionCode(),
+				commercePaymentEntry.getType());
 
 		CommercePaymentEntryAuditConfiguration
 			commercePaymentEntryAuditConfiguration =
@@ -128,11 +140,23 @@ public class CommercePaymentGatewayImpl implements CommercePaymentGateway {
 
 		commercePaymentEntry =
 			_commercePaymentEntryLocalService.updateCommercePaymentEntry(
+				commercePaymentEntry.getExternalReferenceCode(),
 				commercePaymentEntry.getCommercePaymentEntryId(),
+				commercePaymentEntry.getCommerceChannelId(),
+				commercePaymentEntry.getAmount(),
+				commercePaymentEntry.getCallbackURL(),
+				commercePaymentEntry.getCancelURL(),
+				commercePaymentEntry.getCurrencyCode(),
 				cancelledCommercePaymentEntry.getErrorMessages(),
+				commercePaymentEntry.getLanguageId(),
+				commercePaymentEntry.getNote(),
+				commercePaymentEntry.getPaymentIntegrationKey(),
+				commercePaymentEntry.getPaymentIntegrationType(),
 				cancelledCommercePaymentEntry.getPaymentStatus(),
+				commercePaymentEntry.getReasonKey(),
 				cancelledCommercePaymentEntry.getRedirectURL(),
-				cancelledCommercePaymentEntry.getTransactionCode());
+				cancelledCommercePaymentEntry.getTransactionCode(),
+				commercePaymentEntry.getType());
 
 		CommercePaymentEntryAuditConfiguration
 			commercePaymentEntryAuditConfiguration =
@@ -191,11 +215,23 @@ public class CommercePaymentGatewayImpl implements CommercePaymentGateway {
 
 		commercePaymentEntry =
 			_commercePaymentEntryLocalService.updateCommercePaymentEntry(
+				commercePaymentEntry.getExternalReferenceCode(),
 				commercePaymentEntry.getCommercePaymentEntryId(),
+				commercePaymentEntry.getCommerceChannelId(),
+				commercePaymentEntry.getAmount(),
+				commercePaymentEntry.getCallbackURL(),
+				commercePaymentEntry.getCancelURL(),
+				commercePaymentEntry.getCurrencyCode(),
 				capturedCommercePaymentEntry.getErrorMessages(),
+				commercePaymentEntry.getLanguageId(),
+				commercePaymentEntry.getNote(),
+				commercePaymentEntry.getPaymentIntegrationKey(),
+				commercePaymentEntry.getPaymentIntegrationType(),
 				capturedCommercePaymentEntry.getPaymentStatus(),
+				commercePaymentEntry.getReasonKey(),
 				capturedCommercePaymentEntry.getRedirectURL(),
-				capturedCommercePaymentEntry.getTransactionCode());
+				capturedCommercePaymentEntry.getTransactionCode(),
+				commercePaymentEntry.getType());
 
 		CommercePaymentEntryAuditConfiguration
 			commercePaymentEntryAuditConfiguration =
@@ -255,11 +291,23 @@ public class CommercePaymentGatewayImpl implements CommercePaymentGateway {
 
 		commercePaymentEntry =
 			_commercePaymentEntryLocalService.updateCommercePaymentEntry(
+				commercePaymentEntry.getExternalReferenceCode(),
 				commercePaymentEntry.getCommercePaymentEntryId(),
+				commercePaymentEntry.getCommerceChannelId(),
+				commercePaymentEntry.getAmount(),
+				commercePaymentEntry.getCallbackURL(),
+				commercePaymentEntry.getCancelURL(),
+				commercePaymentEntry.getCurrencyCode(),
 				refundedCommercePaymentEntry.getErrorMessages(),
+				commercePaymentEntry.getLanguageId(),
+				commercePaymentEntry.getNote(),
+				commercePaymentEntry.getPaymentIntegrationKey(),
+				commercePaymentEntry.getPaymentIntegrationType(),
 				refundedCommercePaymentEntry.getPaymentStatus(),
+				commercePaymentEntry.getReasonKey(),
 				refundedCommercePaymentEntry.getRedirectURL(),
-				refundedCommercePaymentEntry.getTransactionCode());
+				refundedCommercePaymentEntry.getTransactionCode(),
+				commercePaymentEntry.getType());
 
 		CommercePaymentEntryAuditConfiguration
 			commercePaymentEntryAuditConfiguration =

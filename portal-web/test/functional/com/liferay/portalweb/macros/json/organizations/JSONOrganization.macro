@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addOrganization(organizationType = null, organizationCountry = null, organizationName = null, organizationSite = null, organizationRegion = null, parentOrganizationName = null) {
+	macro addOrganization(externalReferenceCode = null, organizationType = null, organizationCountry = null, organizationName = null, organizationSite = null, organizationRegion = null, parentOrganizationName = null) {
 		Variables.assertDefined(parameterList = ${organizationName});
 
 		if (isSet(parentOrganizationName)) {
@@ -9,6 +9,7 @@ definition {
 		}
 
 		JSONOrganizationAPI._addOrganization(
+			externalReferenceCode = ${externalReferenceCode},
 			organizationCountry = ${organizationCountry},
 			organizationName = ${organizationName},
 			organizationRegion = ${organizationRegion},

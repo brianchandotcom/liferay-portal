@@ -10,6 +10,10 @@ definition {
 			var organizationSite = "false";
 		}
 
+		if (!(isSet(externalReferenceCode))) {
+			var externalReferenceCode = "";
+		}
+
 		if (isSet(parentOrganizationId)) {
 			var parentOrganizationId = ${parentOrganizationId};
 		}
@@ -47,7 +51,7 @@ definition {
 		var curl = '''
 			${portalURL}/api/jsonws/organization/add-organization \
 				-u ${userLoginInfo} \
-				-d externalReferenceCode='' \
+				-d externalReferenceCode=${externalReferenceCode} \
 				-d parentOrganizationId=${parentOrganizationId} \
 				-d name=${organizationNameEncoded} \
 				-d type=${organizationType} \

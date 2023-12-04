@@ -504,7 +504,12 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 			callables, getExecutorService(), "update");
 
 		try {
-			parallelExecutor.execute();
+			if (Objects.equals(getJobName(), "test-portal-release")) {
+				parallelExecutor.execute(60L * 240L);
+			}
+			else {
+				parallelExecutor.execute();
+			}
 		}
 		catch (TimeoutException timeoutException) {
 			throw new RuntimeException(timeoutException);

@@ -8,10 +8,12 @@ Export-Package:\
 	com.liferay.site.display.context,\
 	com.liferay.site.exception,\
 	com.liferay.site.initializer,\
+	com.liferay.site.manager,\
 	com.liferay.site.model,\
 	com.liferay.site.model.adapter,\
+	com.liferay.site.provider,\
+	com.liferay.site.provider.helper,\
 	com.liferay.site.search,\
 	com.liferay.site.service,\
 	com.liferay.site.service.persistence,\
-	com.liferay.site.settings.configuration.admin.display,\
-	com.liferay.site.util
+	com.liferay.site.settings.configuration.admin.display

@@ -14,12 +14,14 @@ import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -76,9 +78,20 @@ public interface CommercePaymentEntryLocalService
 	public CommercePaymentEntry addCommercePaymentEntry(
 			long userId, long classNameId, long classPK, long commerceChannelId,
 			BigDecimal amount, String callbackURL, String cancelURL,
-			String currencyCode, String languageId,
+			String currencyCode, String languageId, String note,
 			String paymentIntegrationKey, int paymentIntegrationType,
-			String transactionCode, ServiceContext serviceContext)
+			String reasonKey, String transactionCode, int type,
+			ServiceContext serviceContext)
+		throws PortalException;
+
+	public CommercePaymentEntry addOrUpdateCommercePaymentEntry(
+			String externalReferenceCode, long userId, long classNameId,
+			long classPK, long commerceChannelId, BigDecimal amount,
+			String callbackURL, String cancelURL, String currencyCode,
+			String errorMessages, String languageId, String note,
+			String paymentIntegrationKey, int paymentIntegrationType,
+			int paymentStatus, String reasonKey, String redirectURL,
+			String transactionCode, int type, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -109,10 +122,13 @@ public interface CommercePaymentEntryLocalService
 	 *
 	 * @param commercePaymentEntry the commerce payment entry
 	 * @return the commerce payment entry that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public CommercePaymentEntry deleteCommercePaymentEntry(
-		CommercePaymentEntry commercePaymentEntry);
+			CommercePaymentEntry commercePaymentEntry)
+		throws PortalException;
 
 	/**
 	 * Deletes the commerce payment entry with the primary key from the database. Also notifies the appropriate model listeners.
@@ -210,8 +226,17 @@ public interface CommercePaymentEntryLocalService
 		DynamicQuery dynamicQuery, Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommercePaymentEntry fetchByExternalReferenceCode(
+		String externalReferenceCode, long companyId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommercePaymentEntry fetchCommercePaymentEntry(
 		long commercePaymentEntryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommercePaymentEntry
+		fetchCommercePaymentEntryByExternalReferenceCode(
+			String externalReferenceCode, long companyId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -233,6 +258,11 @@ public interface CommercePaymentEntryLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommercePaymentEntry> getCommercePaymentEntries(
+		long companyId, long classNameId, long classPK, int type, int start,
+		int end, OrderByComparator<CommercePaymentEntry> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommercePaymentEntry> getCommercePaymentEntries(
 		long companyId, long classNameId, long classPK, int start, int end,
 		OrderByComparator<CommercePaymentEntry> orderByComparator);
 
@@ -248,6 +278,10 @@ public interface CommercePaymentEntryLocalService
 	public int getCommercePaymentEntriesCount(
 		long companyId, long classNameId, long classPK);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommercePaymentEntriesCount(
+		long companyId, long classNameId, long classPK, int type);
+
 	/**
 	 * Returns the commerce payment entry with the primary key.
 	 *
@@ -258,6 +292,11 @@ public interface CommercePaymentEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommercePaymentEntry getCommercePaymentEntry(
 			long commercePaymentEntryId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommercePaymentEntry getCommercePaymentEntryByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -301,8 +340,22 @@ public interface CommercePaymentEntryLocalService
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CommercePaymentEntry updateCommercePaymentEntry(
-			long commercePaymentEntryId, String errorMessages,
-			int paymentStatus, String redirectURL, String transactionCode)
+			String externalReferenceCode, long commercePaymentEntryId,
+			long commerceChannelId, BigDecimal amount, String callbackURL,
+			String cancelURL, String currencyCode, String errorMessages,
+			String languageId, String note, String paymentIntegrationKey,
+			int paymentIntegrationType, int paymentStatus, String reasonKey,
+			String redirectURL, String transactionCode, int type)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public CommercePaymentEntry updateCommercePaymentEntryNote(
+			long commercePaymentEntryId, String note)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public CommercePaymentEntry updateCommercePaymentEntryReasonKey(
+			long commercePaymentEntryId, String reasonKey)
 		throws PortalException;
 
 }

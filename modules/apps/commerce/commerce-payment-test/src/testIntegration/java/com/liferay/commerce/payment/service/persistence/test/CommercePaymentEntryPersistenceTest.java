@@ -6,6 +6,7 @@
 package com.liferay.commerce.payment.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.commerce.payment.exception.DuplicateCommercePaymentEntryExternalReferenceCodeException;
 import com.liferay.commerce.payment.exception.NoSuchPaymentEntryException;
 import com.liferay.commerce.payment.model.CommercePaymentEntry;
 import com.liferay.commerce.payment.service.CommercePaymentEntryLocalServiceUtil;
@@ -17,6 +18,8 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -120,6 +123,9 @@ public class CommercePaymentEntryPersistenceTest {
 
 		newCommercePaymentEntry.setMvccVersion(RandomTestUtil.nextLong());
 
+		newCommercePaymentEntry.setExternalReferenceCode(
+			RandomTestUtil.randomString());
+
 		newCommercePaymentEntry.setCompanyId(RandomTestUtil.nextLong());
 
 		newCommercePaymentEntry.setUserId(RandomTestUtil.nextLong());
@@ -149,6 +155,8 @@ public class CommercePaymentEntryPersistenceTest {
 
 		newCommercePaymentEntry.setLanguageId(RandomTestUtil.randomString());
 
+		newCommercePaymentEntry.setNote(RandomTestUtil.randomString());
+
 		newCommercePaymentEntry.setPaymentIntegrationKey(
 			RandomTestUtil.randomString());
 
@@ -157,10 +165,16 @@ public class CommercePaymentEntryPersistenceTest {
 
 		newCommercePaymentEntry.setPaymentStatus(RandomTestUtil.nextInt());
 
+		newCommercePaymentEntry.setReasonKey(RandomTestUtil.randomString());
+
+		newCommercePaymentEntry.setReasonName(RandomTestUtil.randomString());
+
 		newCommercePaymentEntry.setRedirectURL(RandomTestUtil.randomString());
 
 		newCommercePaymentEntry.setTransactionCode(
 			RandomTestUtil.randomString());
+
+		newCommercePaymentEntry.setType(RandomTestUtil.nextInt());
 
 		_commercePaymentEntries.add(
 			_persistence.update(newCommercePaymentEntry));
@@ -172,6 +186,9 @@ public class CommercePaymentEntryPersistenceTest {
 		Assert.assertEquals(
 			existingCommercePaymentEntry.getMvccVersion(),
 			newCommercePaymentEntry.getMvccVersion());
+		Assert.assertEquals(
+			existingCommercePaymentEntry.getExternalReferenceCode(),
+			newCommercePaymentEntry.getExternalReferenceCode());
 		Assert.assertEquals(
 			existingCommercePaymentEntry.getCommercePaymentEntryId(),
 			newCommercePaymentEntry.getCommercePaymentEntryId());
@@ -220,6 +237,9 @@ public class CommercePaymentEntryPersistenceTest {
 			existingCommercePaymentEntry.getLanguageId(),
 			newCommercePaymentEntry.getLanguageId());
 		Assert.assertEquals(
+			existingCommercePaymentEntry.getNote(),
+			newCommercePaymentEntry.getNote());
+		Assert.assertEquals(
 			existingCommercePaymentEntry.getPaymentIntegrationKey(),
 			newCommercePaymentEntry.getPaymentIntegrationKey());
 		Assert.assertEquals(
@@ -229,11 +249,44 @@ public class CommercePaymentEntryPersistenceTest {
 			existingCommercePaymentEntry.getPaymentStatus(),
 			newCommercePaymentEntry.getPaymentStatus());
 		Assert.assertEquals(
+			existingCommercePaymentEntry.getReasonKey(),
+			newCommercePaymentEntry.getReasonKey());
+		Assert.assertEquals(
+			existingCommercePaymentEntry.getReasonName(),
+			newCommercePaymentEntry.getReasonName());
+		Assert.assertEquals(
 			existingCommercePaymentEntry.getRedirectURL(),
 			newCommercePaymentEntry.getRedirectURL());
 		Assert.assertEquals(
 			existingCommercePaymentEntry.getTransactionCode(),
 			newCommercePaymentEntry.getTransactionCode());
+		Assert.assertEquals(
+			existingCommercePaymentEntry.getType(),
+			newCommercePaymentEntry.getType());
+	}
+
+	@Test(
+		expected = DuplicateCommercePaymentEntryExternalReferenceCodeException.class
+	)
+	public void testUpdateWithExistingExternalReferenceCode() throws Exception {
+		CommercePaymentEntry commercePaymentEntry = addCommercePaymentEntry();
+
+		CommercePaymentEntry newCommercePaymentEntry =
+			addCommercePaymentEntry();
+
+		newCommercePaymentEntry.setCompanyId(
+			commercePaymentEntry.getCompanyId());
+
+		newCommercePaymentEntry = _persistence.update(newCommercePaymentEntry);
+
+		Session session = _persistence.getCurrentSession();
+
+		session.evict(newCommercePaymentEntry);
+
+		newCommercePaymentEntry.setExternalReferenceCode(
+			commercePaymentEntry.getExternalReferenceCode());
+
+		_persistence.update(newCommercePaymentEntry);
 	}
 
 	@Test
@@ -250,6 +303,24 @@ public class CommercePaymentEntryPersistenceTest {
 			RandomTestUtil.nextLong());
 
 		_persistence.countByC_C_C(0L, 0L, 0L);
+	}
+
+	@Test
+	public void testCountByC_C_C_T() throws Exception {
+		_persistence.countByC_C_C_T(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+
+		_persistence.countByC_C_C_T(0L, 0L, 0L, 0);
+	}
+
+	@Test
+	public void testCountByERC_C() throws Exception {
+		_persistence.countByERC_C("", RandomTestUtil.nextLong());
+
+		_persistence.countByERC_C("null", 0L);
+
+		_persistence.countByERC_C((String)null, 0L);
 	}
 
 	@Test
@@ -281,12 +352,13 @@ public class CommercePaymentEntryPersistenceTest {
 	protected OrderByComparator<CommercePaymentEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
 			"CommercePaymentEntry", "mvccVersion", true,
-			"commercePaymentEntryId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true,
-			"classNameId", true, "classPK", true, "commerceChannelId", true,
-			"amount", true, "currencyCode", true, "languageId", true,
-			"paymentIntegrationKey", true, "paymentIntegrationType", true,
-			"paymentStatus", true, "transactionCode", true);
+			"externalReferenceCode", true, "commercePaymentEntryId", true,
+			"companyId", true, "userId", true, "userName", true, "createDate",
+			true, "modifiedDate", true, "classNameId", true, "classPK", true,
+			"commerceChannelId", true, "amount", true, "currencyCode", true,
+			"languageId", true, "paymentIntegrationKey", true,
+			"paymentIntegrationType", true, "paymentStatus", true, "reasonKey",
+			true, "reasonName", true, "transactionCode", true, "type", true);
 	}
 
 	@Test
@@ -525,12 +597,84 @@ public class CommercePaymentEntryPersistenceTest {
 		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
+	public void testResetOriginalValues() throws Exception {
+		CommercePaymentEntry newCommercePaymentEntry =
+			addCommercePaymentEntry();
+
+		_persistence.clearCache();
+
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(
+				newCommercePaymentEntry.getPrimaryKey()));
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		CommercePaymentEntry newCommercePaymentEntry =
+			addCommercePaymentEntry();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			CommercePaymentEntry.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"commercePaymentEntryId",
+				newCommercePaymentEntry.getCommercePaymentEntryId()));
+
+		List<CommercePaymentEntry> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(
+		CommercePaymentEntry commercePaymentEntry) {
+
+		Assert.assertEquals(
+			commercePaymentEntry.getExternalReferenceCode(),
+			ReflectionTestUtil.invoke(
+				commercePaymentEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "externalReferenceCode"));
+		Assert.assertEquals(
+			Long.valueOf(commercePaymentEntry.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(
+				commercePaymentEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "companyId"));
+	}
+
 	protected CommercePaymentEntry addCommercePaymentEntry() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
 		CommercePaymentEntry commercePaymentEntry = _persistence.create(pk);
 
 		commercePaymentEntry.setMvccVersion(RandomTestUtil.nextLong());
+
+		commercePaymentEntry.setExternalReferenceCode(
+			RandomTestUtil.randomString());
 
 		commercePaymentEntry.setCompanyId(RandomTestUtil.nextLong());
 
@@ -561,6 +705,8 @@ public class CommercePaymentEntryPersistenceTest {
 
 		commercePaymentEntry.setLanguageId(RandomTestUtil.randomString());
 
+		commercePaymentEntry.setNote(RandomTestUtil.randomString());
+
 		commercePaymentEntry.setPaymentIntegrationKey(
 			RandomTestUtil.randomString());
 
@@ -569,9 +715,15 @@ public class CommercePaymentEntryPersistenceTest {
 
 		commercePaymentEntry.setPaymentStatus(RandomTestUtil.nextInt());
 
+		commercePaymentEntry.setReasonKey(RandomTestUtil.randomString());
+
+		commercePaymentEntry.setReasonName(RandomTestUtil.randomString());
+
 		commercePaymentEntry.setRedirectURL(RandomTestUtil.randomString());
 
 		commercePaymentEntry.setTransactionCode(RandomTestUtil.randomString());
+
+		commercePaymentEntry.setType(RandomTestUtil.nextInt());
 
 		_commercePaymentEntries.add(_persistence.update(commercePaymentEntry));
 

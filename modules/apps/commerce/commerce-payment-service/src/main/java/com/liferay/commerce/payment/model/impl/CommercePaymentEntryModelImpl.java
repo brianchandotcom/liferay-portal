@@ -11,6 +11,7 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
+import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -21,6 +22,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -39,8 +42,11 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
@@ -68,18 +74,20 @@ public class CommercePaymentEntryModelImpl
 	public static final String TABLE_NAME = "CommercePaymentEntry";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"commercePaymentEntryId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"classNameId", Types.BIGINT},
-		{"classPK", Types.BIGINT}, {"commerceChannelId", Types.BIGINT},
-		{"amount", Types.DECIMAL}, {"callbackURL", Types.CLOB},
-		{"cancelURL", Types.CLOB}, {"currencyCode", Types.VARCHAR},
-		{"errorMessages", Types.CLOB}, {"languageId", Types.VARCHAR},
+		{"mvccVersion", Types.BIGINT}, {"externalReferenceCode", Types.VARCHAR},
+		{"commercePaymentEntryId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
+		{"commerceChannelId", Types.BIGINT}, {"amount", Types.DECIMAL},
+		{"callbackURL", Types.CLOB}, {"cancelURL", Types.CLOB},
+		{"currencyCode", Types.VARCHAR}, {"errorMessages", Types.CLOB},
+		{"languageId", Types.VARCHAR}, {"note", Types.CLOB},
 		{"paymentIntegrationKey", Types.VARCHAR},
 		{"paymentIntegrationType", Types.INTEGER},
-		{"paymentStatus", Types.INTEGER}, {"redirectURL", Types.CLOB},
-		{"transactionCode", Types.VARCHAR}
+		{"paymentStatus", Types.INTEGER}, {"reasonKey", Types.VARCHAR},
+		{"reasonName", Types.VARCHAR}, {"redirectURL", Types.CLOB},
+		{"transactionCode", Types.VARCHAR}, {"type_", Types.INTEGER}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -87,6 +95,7 @@ public class CommercePaymentEntryModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("commercePaymentEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
@@ -102,15 +111,19 @@ public class CommercePaymentEntryModelImpl
 		TABLE_COLUMNS_MAP.put("currencyCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("errorMessages", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("languageId", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("note", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("paymentIntegrationKey", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("paymentIntegrationType", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("paymentStatus", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("reasonKey", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("reasonName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("redirectURL", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("transactionCode", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("type_", Types.INTEGER);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommercePaymentEntry (mvccVersion LONG default 0 not null,commercePaymentEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,commerceChannelId LONG,amount BIGDECIMAL null,callbackURL TEXT null,cancelURL TEXT null,currencyCode VARCHAR(75) null,errorMessages TEXT null,languageId VARCHAR(75) null,paymentIntegrationKey VARCHAR(75) null,paymentIntegrationType INTEGER,paymentStatus INTEGER,redirectURL TEXT null,transactionCode VARCHAR(255) null)";
+		"create table CommercePaymentEntry (mvccVersion LONG default 0 not null,externalReferenceCode VARCHAR(75) null,commercePaymentEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,commerceChannelId LONG,amount BIGDECIMAL null,callbackURL TEXT null,cancelURL TEXT null,currencyCode VARCHAR(75) null,errorMessages TEXT null,languageId VARCHAR(75) null,note TEXT null,paymentIntegrationKey VARCHAR(75) null,paymentIntegrationType INTEGER,paymentStatus INTEGER,reasonKey VARCHAR(75) null,reasonName STRING null,redirectURL TEXT null,transactionCode VARCHAR(255) null,type_ INTEGER)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CommercePaymentEntry";
@@ -146,11 +159,23 @@ public class CommercePaymentEntryModelImpl
 	public static final long COMPANYID_COLUMN_BITMASK = 4L;
 
 	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long EXTERNALREFERENCECODE_COLUMN_BITMASK = 8L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long TYPE_COLUMN_BITMASK = 16L;
+
+	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long CREATEDATE_COLUMN_BITMASK = 8L;
+	public static final long CREATEDATE_COLUMN_BITMASK = 32L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -265,6 +290,9 @@ public class CommercePaymentEntryModelImpl
 			attributeGetterFunctions.put(
 				"mvccVersion", CommercePaymentEntry::getMvccVersion);
 			attributeGetterFunctions.put(
+				"externalReferenceCode",
+				CommercePaymentEntry::getExternalReferenceCode);
+			attributeGetterFunctions.put(
 				"commercePaymentEntryId",
 				CommercePaymentEntry::getCommercePaymentEntryId);
 			attributeGetterFunctions.put(
@@ -296,6 +324,7 @@ public class CommercePaymentEntryModelImpl
 				"errorMessages", CommercePaymentEntry::getErrorMessages);
 			attributeGetterFunctions.put(
 				"languageId", CommercePaymentEntry::getLanguageId);
+			attributeGetterFunctions.put("note", CommercePaymentEntry::getNote);
 			attributeGetterFunctions.put(
 				"paymentIntegrationKey",
 				CommercePaymentEntry::getPaymentIntegrationKey);
@@ -305,9 +334,14 @@ public class CommercePaymentEntryModelImpl
 			attributeGetterFunctions.put(
 				"paymentStatus", CommercePaymentEntry::getPaymentStatus);
 			attributeGetterFunctions.put(
+				"reasonKey", CommercePaymentEntry::getReasonKey);
+			attributeGetterFunctions.put(
+				"reasonName", CommercePaymentEntry::getReasonName);
+			attributeGetterFunctions.put(
 				"redirectURL", CommercePaymentEntry::getRedirectURL);
 			attributeGetterFunctions.put(
 				"transactionCode", CommercePaymentEntry::getTransactionCode);
+			attributeGetterFunctions.put("type", CommercePaymentEntry::getType);
 
 			_attributeGetterFunctions = Collections.unmodifiableMap(
 				attributeGetterFunctions);
@@ -331,6 +365,10 @@ public class CommercePaymentEntryModelImpl
 				"mvccVersion",
 				(BiConsumer<CommercePaymentEntry, Long>)
 					CommercePaymentEntry::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"externalReferenceCode",
+				(BiConsumer<CommercePaymentEntry, String>)
+					CommercePaymentEntry::setExternalReferenceCode);
 			attributeSetterBiConsumers.put(
 				"commercePaymentEntryId",
 				(BiConsumer<CommercePaymentEntry, Long>)
@@ -392,6 +430,10 @@ public class CommercePaymentEntryModelImpl
 				(BiConsumer<CommercePaymentEntry, String>)
 					CommercePaymentEntry::setLanguageId);
 			attributeSetterBiConsumers.put(
+				"note",
+				(BiConsumer<CommercePaymentEntry, String>)
+					CommercePaymentEntry::setNote);
+			attributeSetterBiConsumers.put(
 				"paymentIntegrationKey",
 				(BiConsumer<CommercePaymentEntry, String>)
 					CommercePaymentEntry::setPaymentIntegrationKey);
@@ -404,6 +446,14 @@ public class CommercePaymentEntryModelImpl
 				(BiConsumer<CommercePaymentEntry, Integer>)
 					CommercePaymentEntry::setPaymentStatus);
 			attributeSetterBiConsumers.put(
+				"reasonKey",
+				(BiConsumer<CommercePaymentEntry, String>)
+					CommercePaymentEntry::setReasonKey);
+			attributeSetterBiConsumers.put(
+				"reasonName",
+				(BiConsumer<CommercePaymentEntry, String>)
+					CommercePaymentEntry::setReasonName);
+			attributeSetterBiConsumers.put(
 				"redirectURL",
 				(BiConsumer<CommercePaymentEntry, String>)
 					CommercePaymentEntry::setRedirectURL);
@@ -411,6 +461,10 @@ public class CommercePaymentEntryModelImpl
 				"transactionCode",
 				(BiConsumer<CommercePaymentEntry, String>)
 					CommercePaymentEntry::setTransactionCode);
+			attributeSetterBiConsumers.put(
+				"type",
+				(BiConsumer<CommercePaymentEntry, Integer>)
+					CommercePaymentEntry::setType);
 
 			_attributeSetterBiConsumers = Collections.unmodifiableMap(
 				(Map)attributeSetterBiConsumers);
@@ -431,6 +485,35 @@ public class CommercePaymentEntryModelImpl
 		}
 
 		_mvccVersion = mvccVersion;
+	}
+
+	@JSON
+	@Override
+	public String getExternalReferenceCode() {
+		if (_externalReferenceCode == null) {
+			return "";
+		}
+		else {
+			return _externalReferenceCode;
+		}
+	}
+
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_externalReferenceCode = externalReferenceCode;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalExternalReferenceCode() {
+		return getColumnOriginalValue("externalReferenceCode");
 	}
 
 	@JSON
@@ -761,6 +844,26 @@ public class CommercePaymentEntryModelImpl
 
 	@JSON
 	@Override
+	public String getNote() {
+		if (_note == null) {
+			return "";
+		}
+		else {
+			return _note;
+		}
+	}
+
+	@Override
+	public void setNote(String note) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_note = note;
+	}
+
+	@JSON
+	@Override
 	public String getPaymentIntegrationKey() {
 		if (_paymentIntegrationKey == null) {
 			return "";
@@ -811,6 +914,138 @@ public class CommercePaymentEntryModelImpl
 
 	@JSON
 	@Override
+	public String getReasonKey() {
+		if (_reasonKey == null) {
+			return "";
+		}
+		else {
+			return _reasonKey;
+		}
+	}
+
+	@Override
+	public void setReasonKey(String reasonKey) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_reasonKey = reasonKey;
+	}
+
+	@JSON
+	@Override
+	public String getReasonName() {
+		if (_reasonName == null) {
+			return "";
+		}
+		else {
+			return _reasonName;
+		}
+	}
+
+	@Override
+	public String getReasonName(Locale locale) {
+		String languageId = LocaleUtil.toLanguageId(locale);
+
+		return getReasonName(languageId);
+	}
+
+	@Override
+	public String getReasonName(Locale locale, boolean useDefault) {
+		String languageId = LocaleUtil.toLanguageId(locale);
+
+		return getReasonName(languageId, useDefault);
+	}
+
+	@Override
+	public String getReasonName(String languageId) {
+		return LocalizationUtil.getLocalization(getReasonName(), languageId);
+	}
+
+	@Override
+	public String getReasonName(String languageId, boolean useDefault) {
+		return LocalizationUtil.getLocalization(
+			getReasonName(), languageId, useDefault);
+	}
+
+	@Override
+	public String getReasonNameCurrentLanguageId() {
+		return _reasonNameCurrentLanguageId;
+	}
+
+	@JSON
+	@Override
+	public String getReasonNameCurrentValue() {
+		Locale locale = getLocale(_reasonNameCurrentLanguageId);
+
+		return getReasonName(locale);
+	}
+
+	@Override
+	public Map<Locale, String> getReasonNameMap() {
+		return LocalizationUtil.getLocalizationMap(getReasonName());
+	}
+
+	@Override
+	public void setReasonName(String reasonName) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_reasonName = reasonName;
+	}
+
+	@Override
+	public void setReasonName(String reasonName, Locale locale) {
+		setReasonName(reasonName, locale, LocaleUtil.getDefault());
+	}
+
+	@Override
+	public void setReasonName(
+		String reasonName, Locale locale, Locale defaultLocale) {
+
+		String languageId = LocaleUtil.toLanguageId(locale);
+		String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
+
+		if (Validator.isNotNull(reasonName)) {
+			setReasonName(
+				LocalizationUtil.updateLocalization(
+					getReasonName(), "ReasonName", reasonName, languageId,
+					defaultLanguageId));
+		}
+		else {
+			setReasonName(
+				LocalizationUtil.removeLocalization(
+					getReasonName(), "ReasonName", languageId));
+		}
+	}
+
+	@Override
+	public void setReasonNameCurrentLanguageId(String languageId) {
+		_reasonNameCurrentLanguageId = languageId;
+	}
+
+	@Override
+	public void setReasonNameMap(Map<Locale, String> reasonNameMap) {
+		setReasonNameMap(reasonNameMap, LocaleUtil.getDefault());
+	}
+
+	@Override
+	public void setReasonNameMap(
+		Map<Locale, String> reasonNameMap, Locale defaultLocale) {
+
+		if (reasonNameMap == null) {
+			return;
+		}
+
+		setReasonName(
+			LocalizationUtil.updateLocalization(
+				reasonNameMap, getReasonName(), "ReasonName",
+				LocaleUtil.toLanguageId(defaultLocale)));
+	}
+
+	@JSON
+	@Override
 	public String getRedirectURL() {
 		if (_redirectURL == null) {
 			return "";
@@ -847,6 +1082,31 @@ public class CommercePaymentEntryModelImpl
 		}
 
 		_transactionCode = transactionCode;
+	}
+
+	@JSON
+	@Override
+	public int getType() {
+		return _type;
+	}
+
+	@Override
+	public void setType(int type) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_type = type;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public int getOriginalType() {
+		return GetterUtil.getInteger(
+			this.<Integer>getColumnOriginalValue("type_"));
 	}
 
 	public long getColumnBitmask() {
@@ -888,6 +1148,73 @@ public class CommercePaymentEntryModelImpl
 	}
 
 	@Override
+	public String[] getAvailableLanguageIds() {
+		Set<String> availableLanguageIds = new TreeSet<String>();
+
+		Map<Locale, String> reasonNameMap = getReasonNameMap();
+
+		for (Map.Entry<Locale, String> entry : reasonNameMap.entrySet()) {
+			Locale locale = entry.getKey();
+			String value = entry.getValue();
+
+			if (Validator.isNotNull(value)) {
+				availableLanguageIds.add(LocaleUtil.toLanguageId(locale));
+			}
+		}
+
+		return availableLanguageIds.toArray(
+			new String[availableLanguageIds.size()]);
+	}
+
+	@Override
+	public String getDefaultLanguageId() {
+		String xml = getReasonName();
+
+		if (xml == null) {
+			return "";
+		}
+
+		Locale defaultLocale = LocaleUtil.getDefault();
+
+		return LocalizationUtil.getDefaultLanguageId(xml, defaultLocale);
+	}
+
+	@Override
+	public void prepareLocalizedFieldsForImport() throws LocaleException {
+		Locale defaultLocale = LocaleUtil.fromLanguageId(
+			getDefaultLanguageId());
+
+		Locale[] availableLocales = LocaleUtil.fromLanguageIds(
+			getAvailableLanguageIds());
+
+		Locale defaultImportLocale = LocalizationUtil.getDefaultImportLocale(
+			CommercePaymentEntry.class.getName(), getPrimaryKey(),
+			defaultLocale, availableLocales);
+
+		prepareLocalizedFieldsForImport(defaultImportLocale);
+	}
+
+	@Override
+	@SuppressWarnings("unused")
+	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
+		throws LocaleException {
+
+		Locale defaultLocale = LocaleUtil.getDefault();
+
+		String modelDefaultLanguageId = getDefaultLanguageId();
+
+		String reasonName = getReasonName(defaultLocale);
+
+		if (Validator.isNull(reasonName)) {
+			setReasonName(getReasonName(modelDefaultLanguageId), defaultLocale);
+		}
+		else {
+			setReasonName(
+				getReasonName(defaultLocale), defaultLocale, defaultLocale);
+		}
+	}
+
+	@Override
 	public CommercePaymentEntry toEscapedModel() {
 		if (_escapedModel == null) {
 			Function<InvocationHandler, CommercePaymentEntry>
@@ -908,6 +1235,8 @@ public class CommercePaymentEntryModelImpl
 			new CommercePaymentEntryImpl();
 
 		commercePaymentEntryImpl.setMvccVersion(getMvccVersion());
+		commercePaymentEntryImpl.setExternalReferenceCode(
+			getExternalReferenceCode());
 		commercePaymentEntryImpl.setCommercePaymentEntryId(
 			getCommercePaymentEntryId());
 		commercePaymentEntryImpl.setCompanyId(getCompanyId());
@@ -924,13 +1253,17 @@ public class CommercePaymentEntryModelImpl
 		commercePaymentEntryImpl.setCurrencyCode(getCurrencyCode());
 		commercePaymentEntryImpl.setErrorMessages(getErrorMessages());
 		commercePaymentEntryImpl.setLanguageId(getLanguageId());
+		commercePaymentEntryImpl.setNote(getNote());
 		commercePaymentEntryImpl.setPaymentIntegrationKey(
 			getPaymentIntegrationKey());
 		commercePaymentEntryImpl.setPaymentIntegrationType(
 			getPaymentIntegrationType());
 		commercePaymentEntryImpl.setPaymentStatus(getPaymentStatus());
+		commercePaymentEntryImpl.setReasonKey(getReasonKey());
+		commercePaymentEntryImpl.setReasonName(getReasonName());
 		commercePaymentEntryImpl.setRedirectURL(getRedirectURL());
 		commercePaymentEntryImpl.setTransactionCode(getTransactionCode());
+		commercePaymentEntryImpl.setType(getType());
 
 		commercePaymentEntryImpl.resetOriginalValues();
 
@@ -944,6 +1277,8 @@ public class CommercePaymentEntryModelImpl
 
 		commercePaymentEntryImpl.setMvccVersion(
 			this.<Long>getColumnOriginalValue("mvccVersion"));
+		commercePaymentEntryImpl.setExternalReferenceCode(
+			this.<String>getColumnOriginalValue("externalReferenceCode"));
 		commercePaymentEntryImpl.setCommercePaymentEntryId(
 			this.<Long>getColumnOriginalValue("commercePaymentEntryId"));
 		commercePaymentEntryImpl.setCompanyId(
@@ -974,16 +1309,24 @@ public class CommercePaymentEntryModelImpl
 			this.<String>getColumnOriginalValue("errorMessages"));
 		commercePaymentEntryImpl.setLanguageId(
 			this.<String>getColumnOriginalValue("languageId"));
+		commercePaymentEntryImpl.setNote(
+			this.<String>getColumnOriginalValue("note"));
 		commercePaymentEntryImpl.setPaymentIntegrationKey(
 			this.<String>getColumnOriginalValue("paymentIntegrationKey"));
 		commercePaymentEntryImpl.setPaymentIntegrationType(
 			this.<Integer>getColumnOriginalValue("paymentIntegrationType"));
 		commercePaymentEntryImpl.setPaymentStatus(
 			this.<Integer>getColumnOriginalValue("paymentStatus"));
+		commercePaymentEntryImpl.setReasonKey(
+			this.<String>getColumnOriginalValue("reasonKey"));
+		commercePaymentEntryImpl.setReasonName(
+			this.<String>getColumnOriginalValue("reasonName"));
 		commercePaymentEntryImpl.setRedirectURL(
 			this.<String>getColumnOriginalValue("redirectURL"));
 		commercePaymentEntryImpl.setTransactionCode(
 			this.<String>getColumnOriginalValue("transactionCode"));
+		commercePaymentEntryImpl.setType(
+			this.<Integer>getColumnOriginalValue("type_"));
 
 		return commercePaymentEntryImpl;
 	}
@@ -1065,6 +1408,18 @@ public class CommercePaymentEntryModelImpl
 			new CommercePaymentEntryCacheModel();
 
 		commercePaymentEntryCacheModel.mvccVersion = getMvccVersion();
+
+		commercePaymentEntryCacheModel.externalReferenceCode =
+			getExternalReferenceCode();
+
+		String externalReferenceCode =
+			commercePaymentEntryCacheModel.externalReferenceCode;
+
+		if ((externalReferenceCode != null) &&
+			(externalReferenceCode.length() == 0)) {
+
+			commercePaymentEntryCacheModel.externalReferenceCode = null;
+		}
 
 		commercePaymentEntryCacheModel.commercePaymentEntryId =
 			getCommercePaymentEntryId();
@@ -1149,6 +1504,14 @@ public class CommercePaymentEntryModelImpl
 			commercePaymentEntryCacheModel.languageId = null;
 		}
 
+		commercePaymentEntryCacheModel.note = getNote();
+
+		String note = commercePaymentEntryCacheModel.note;
+
+		if ((note != null) && (note.length() == 0)) {
+			commercePaymentEntryCacheModel.note = null;
+		}
+
 		commercePaymentEntryCacheModel.paymentIntegrationKey =
 			getPaymentIntegrationKey();
 
@@ -1166,6 +1529,22 @@ public class CommercePaymentEntryModelImpl
 
 		commercePaymentEntryCacheModel.paymentStatus = getPaymentStatus();
 
+		commercePaymentEntryCacheModel.reasonKey = getReasonKey();
+
+		String reasonKey = commercePaymentEntryCacheModel.reasonKey;
+
+		if ((reasonKey != null) && (reasonKey.length() == 0)) {
+			commercePaymentEntryCacheModel.reasonKey = null;
+		}
+
+		commercePaymentEntryCacheModel.reasonName = getReasonName();
+
+		String reasonName = commercePaymentEntryCacheModel.reasonName;
+
+		if ((reasonName != null) && (reasonName.length() == 0)) {
+			commercePaymentEntryCacheModel.reasonName = null;
+		}
+
 		commercePaymentEntryCacheModel.redirectURL = getRedirectURL();
 
 		String redirectURL = commercePaymentEntryCacheModel.redirectURL;
@@ -1181,6 +1560,8 @@ public class CommercePaymentEntryModelImpl
 		if ((transactionCode != null) && (transactionCode.length() == 0)) {
 			commercePaymentEntryCacheModel.transactionCode = null;
 		}
+
+		commercePaymentEntryCacheModel.type = getType();
 
 		return commercePaymentEntryCacheModel;
 	}
@@ -1245,6 +1626,7 @@ public class CommercePaymentEntryModelImpl
 	}
 
 	private long _mvccVersion;
+	private String _externalReferenceCode;
 	private long _commercePaymentEntryId;
 	private long _companyId;
 	private long _userId;
@@ -1261,13 +1643,20 @@ public class CommercePaymentEntryModelImpl
 	private String _currencyCode;
 	private String _errorMessages;
 	private String _languageId;
+	private String _note;
 	private String _paymentIntegrationKey;
 	private int _paymentIntegrationType;
 	private int _paymentStatus;
+	private String _reasonKey;
+	private String _reasonName;
+	private String _reasonNameCurrentLanguageId;
 	private String _redirectURL;
 	private String _transactionCode;
+	private int _type;
 
 	public <T> T getColumnValue(String columnName) {
+		columnName = _attributeNames.getOrDefault(columnName, columnName);
+
 		Function<CommercePaymentEntry, Object> function =
 			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
 				columnName);
@@ -1297,6 +1686,8 @@ public class CommercePaymentEntryModelImpl
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
 		_columnOriginalValues.put(
+			"externalReferenceCode", _externalReferenceCode);
+		_columnOriginalValues.put(
 			"commercePaymentEntryId", _commercePaymentEntryId);
 		_columnOriginalValues.put("companyId", _companyId);
 		_columnOriginalValues.put("userId", _userId);
@@ -1312,13 +1703,27 @@ public class CommercePaymentEntryModelImpl
 		_columnOriginalValues.put("currencyCode", _currencyCode);
 		_columnOriginalValues.put("errorMessages", _errorMessages);
 		_columnOriginalValues.put("languageId", _languageId);
+		_columnOriginalValues.put("note", _note);
 		_columnOriginalValues.put(
 			"paymentIntegrationKey", _paymentIntegrationKey);
 		_columnOriginalValues.put(
 			"paymentIntegrationType", _paymentIntegrationType);
 		_columnOriginalValues.put("paymentStatus", _paymentStatus);
+		_columnOriginalValues.put("reasonKey", _reasonKey);
+		_columnOriginalValues.put("reasonName", _reasonName);
 		_columnOriginalValues.put("redirectURL", _redirectURL);
 		_columnOriginalValues.put("transactionCode", _transactionCode);
+		_columnOriginalValues.put("type_", _type);
+	}
+
+	private static final Map<String, String> _attributeNames;
+
+	static {
+		Map<String, String> attributeNames = new HashMap<>();
+
+		attributeNames.put("type_", "type");
+
+		_attributeNames = Collections.unmodifiableMap(attributeNames);
 	}
 
 	private transient Map<String, Object> _columnOriginalValues;
@@ -1334,45 +1739,55 @@ public class CommercePaymentEntryModelImpl
 
 		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("commercePaymentEntryId", 2L);
+		columnBitmasks.put("externalReferenceCode", 2L);
 
-		columnBitmasks.put("companyId", 4L);
+		columnBitmasks.put("commercePaymentEntryId", 4L);
 
-		columnBitmasks.put("userId", 8L);
+		columnBitmasks.put("companyId", 8L);
 
-		columnBitmasks.put("userName", 16L);
+		columnBitmasks.put("userId", 16L);
 
-		columnBitmasks.put("createDate", 32L);
+		columnBitmasks.put("userName", 32L);
 
-		columnBitmasks.put("modifiedDate", 64L);
+		columnBitmasks.put("createDate", 64L);
 
-		columnBitmasks.put("classNameId", 128L);
+		columnBitmasks.put("modifiedDate", 128L);
 
-		columnBitmasks.put("classPK", 256L);
+		columnBitmasks.put("classNameId", 256L);
 
-		columnBitmasks.put("commerceChannelId", 512L);
+		columnBitmasks.put("classPK", 512L);
 
-		columnBitmasks.put("amount", 1024L);
+		columnBitmasks.put("commerceChannelId", 1024L);
 
-		columnBitmasks.put("callbackURL", 2048L);
+		columnBitmasks.put("amount", 2048L);
 
-		columnBitmasks.put("cancelURL", 4096L);
+		columnBitmasks.put("callbackURL", 4096L);
 
-		columnBitmasks.put("currencyCode", 8192L);
+		columnBitmasks.put("cancelURL", 8192L);
 
-		columnBitmasks.put("errorMessages", 16384L);
+		columnBitmasks.put("currencyCode", 16384L);
 
-		columnBitmasks.put("languageId", 32768L);
+		columnBitmasks.put("errorMessages", 32768L);
 
-		columnBitmasks.put("paymentIntegrationKey", 65536L);
+		columnBitmasks.put("languageId", 65536L);
 
-		columnBitmasks.put("paymentIntegrationType", 131072L);
+		columnBitmasks.put("note", 131072L);
 
-		columnBitmasks.put("paymentStatus", 262144L);
+		columnBitmasks.put("paymentIntegrationKey", 262144L);
 
-		columnBitmasks.put("redirectURL", 524288L);
+		columnBitmasks.put("paymentIntegrationType", 524288L);
 
-		columnBitmasks.put("transactionCode", 1048576L);
+		columnBitmasks.put("paymentStatus", 1048576L);
+
+		columnBitmasks.put("reasonKey", 2097152L);
+
+		columnBitmasks.put("reasonName", 4194304L);
+
+		columnBitmasks.put("redirectURL", 8388608L);
+
+		columnBitmasks.put("transactionCode", 16777216L);
+
+		columnBitmasks.put("type_", 33554432L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

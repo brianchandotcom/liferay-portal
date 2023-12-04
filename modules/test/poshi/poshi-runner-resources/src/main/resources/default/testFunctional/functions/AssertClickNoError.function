@@ -22,12 +22,11 @@ definition {
 	function assertTextClick(locator1, value1) {
 		selenium.waitForVisible(${locator1}, "true");
 
-		var value = GetterUtil.getString(${value1});
-        var regex = RegexUtil.escapeRegexChars(${value});
+        var regex = RegexUtil.escapeRegexChars(${value1});
 
-		selenium.waitForTextMatches(${locator1}, "(?i)${regex}");
+		selenium.waitForTextMatches(${locator1}, "(?iu)${regex}");
 
-		selenium.assertTextMatches(${locator1}, "(?i)${regex}");
+		selenium.assertTextMatches(${locator1}, "(?iu)${regex}");
 
 		selenium.mouseOver(${locator1});
 

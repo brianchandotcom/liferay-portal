@@ -35,7 +35,7 @@ definition {
 		var value = GetterUtil.getString(${value1});
         var regex = RegexUtil.escapeRegexChars(${value});
 
-		selenium.waitForTextMatches(${locator1}, "(?i)${regex}");
+		selenium.waitForTextMatches(${locator1}, "(?iu)${regex}");
 
 		selenium.waitForVisible(${locator1}, "true");
 
@@ -70,7 +70,9 @@ definition {
 
 		selenium.waitForTextMatches(${locator1}, "(?i)${regex}");
 
-		selenium.waitForVisible(${locator1}, "true");
+		selenium.waitForTextMatches(${locator1}, "(?iu)${regex}");
+
+		selenium.waitForVisible("${locator2}");
 
 		ScrollWebElementIntoView.scrollWebElementIntoView(locator1 = ${locator2});
 
@@ -112,7 +114,7 @@ definition {
 
 		var regex = RegexUtil.escapeRegexChars(${value1});
 
-		selenium.waitForTextMatches(${locator1}, "(?i).*${regex}.*");
+		selenium.waitForTextMatches(${locator1}, "(?iu).*${regex}.*");
 
 		selenium.waitForVisible(${locator1}, "true");
 

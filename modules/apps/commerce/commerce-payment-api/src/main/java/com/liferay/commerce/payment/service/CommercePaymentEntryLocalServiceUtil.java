@@ -55,17 +55,36 @@ public class CommercePaymentEntryLocalServiceUtil {
 	public static CommercePaymentEntry addCommercePaymentEntry(
 			long userId, long classNameId, long classPK, long commerceChannelId,
 			java.math.BigDecimal amount, String callbackURL, String cancelURL,
-			String currencyCode, String languageId,
+			String currencyCode, String languageId, String note,
 			String paymentIntegrationKey, int paymentIntegrationType,
-			String transactionCode,
+			String reasonKey, String transactionCode, int type,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addCommercePaymentEntry(
 			userId, classNameId, classPK, commerceChannelId, amount,
-			callbackURL, cancelURL, currencyCode, languageId,
-			paymentIntegrationKey, paymentIntegrationType, transactionCode,
-			serviceContext);
+			callbackURL, cancelURL, currencyCode, languageId, note,
+			paymentIntegrationKey, paymentIntegrationType, reasonKey,
+			transactionCode, type, serviceContext);
+	}
+
+	public static CommercePaymentEntry addOrUpdateCommercePaymentEntry(
+			String externalReferenceCode, long userId, long classNameId,
+			long classPK, long commerceChannelId, java.math.BigDecimal amount,
+			String callbackURL, String cancelURL, String currencyCode,
+			String errorMessages, String languageId, String note,
+			String paymentIntegrationKey, int paymentIntegrationType,
+			int paymentStatus, String reasonKey, String redirectURL,
+			String transactionCode, int type,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addOrUpdateCommercePaymentEntry(
+			externalReferenceCode, userId, classNameId, classPK,
+			commerceChannelId, amount, callbackURL, cancelURL, currencyCode,
+			errorMessages, languageId, note, paymentIntegrationKey,
+			paymentIntegrationType, paymentStatus, reasonKey, redirectURL,
+			transactionCode, type, serviceContext);
 	}
 
 	/**
@@ -105,9 +124,11 @@ public class CommercePaymentEntryLocalServiceUtil {
 	 *
 	 * @param commercePaymentEntry the commerce payment entry
 	 * @return the commerce payment entry that was removed
+	 * @throws PortalException
 	 */
 	public static CommercePaymentEntry deleteCommercePaymentEntry(
-		CommercePaymentEntry commercePaymentEntry) {
+			CommercePaymentEntry commercePaymentEntry)
+		throws PortalException {
 
 		return getService().deleteCommercePaymentEntry(commercePaymentEntry);
 	}
@@ -225,10 +246,25 @@ public class CommercePaymentEntryLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
+	public static CommercePaymentEntry fetchByExternalReferenceCode(
+		String externalReferenceCode, long companyId) {
+
+		return getService().fetchByExternalReferenceCode(
+			externalReferenceCode, companyId);
+	}
+
 	public static CommercePaymentEntry fetchCommercePaymentEntry(
 		long commercePaymentEntryId) {
 
 		return getService().fetchCommercePaymentEntry(commercePaymentEntryId);
+	}
+
+	public static CommercePaymentEntry
+		fetchCommercePaymentEntryByExternalReferenceCode(
+			String externalReferenceCode, long companyId) {
+
+		return getService().fetchCommercePaymentEntryByExternalReferenceCode(
+			externalReferenceCode, companyId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
@@ -255,6 +291,15 @@ public class CommercePaymentEntryLocalServiceUtil {
 	}
 
 	public static List<CommercePaymentEntry> getCommercePaymentEntries(
+		long companyId, long classNameId, long classPK, int type, int start,
+		int end, OrderByComparator<CommercePaymentEntry> orderByComparator) {
+
+		return getService().getCommercePaymentEntries(
+			companyId, classNameId, classPK, type, start, end,
+			orderByComparator);
+	}
+
+	public static List<CommercePaymentEntry> getCommercePaymentEntries(
 		long companyId, long classNameId, long classPK, int start, int end,
 		OrderByComparator<CommercePaymentEntry> orderByComparator) {
 
@@ -278,6 +323,13 @@ public class CommercePaymentEntryLocalServiceUtil {
 			companyId, classNameId, classPK);
 	}
 
+	public static int getCommercePaymentEntriesCount(
+		long companyId, long classNameId, long classPK, int type) {
+
+		return getService().getCommercePaymentEntriesCount(
+			companyId, classNameId, classPK, type);
+	}
+
 	/**
 	 * Returns the commerce payment entry with the primary key.
 	 *
@@ -290,6 +342,15 @@ public class CommercePaymentEntryLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getCommercePaymentEntry(commercePaymentEntryId);
+	}
+
+	public static CommercePaymentEntry
+			getCommercePaymentEntryByExternalReferenceCode(
+				String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return getService().getCommercePaymentEntryByExternalReferenceCode(
+			externalReferenceCode, companyId);
 	}
 
 	public static
@@ -344,13 +405,36 @@ public class CommercePaymentEntryLocalServiceUtil {
 	}
 
 	public static CommercePaymentEntry updateCommercePaymentEntry(
-			long commercePaymentEntryId, String errorMessages,
-			int paymentStatus, String redirectURL, String transactionCode)
+			String externalReferenceCode, long commercePaymentEntryId,
+			long commerceChannelId, java.math.BigDecimal amount,
+			String callbackURL, String cancelURL, String currencyCode,
+			String errorMessages, String languageId, String note,
+			String paymentIntegrationKey, int paymentIntegrationType,
+			int paymentStatus, String reasonKey, String redirectURL,
+			String transactionCode, int type)
 		throws PortalException {
 
 		return getService().updateCommercePaymentEntry(
-			commercePaymentEntryId, errorMessages, paymentStatus, redirectURL,
-			transactionCode);
+			externalReferenceCode, commercePaymentEntryId, commerceChannelId,
+			amount, callbackURL, cancelURL, currencyCode, errorMessages,
+			languageId, note, paymentIntegrationKey, paymentIntegrationType,
+			paymentStatus, reasonKey, redirectURL, transactionCode, type);
+	}
+
+	public static CommercePaymentEntry updateCommercePaymentEntryNote(
+			long commercePaymentEntryId, String note)
+		throws PortalException {
+
+		return getService().updateCommercePaymentEntryNote(
+			commercePaymentEntryId, note);
+	}
+
+	public static CommercePaymentEntry updateCommercePaymentEntryReasonKey(
+			long commercePaymentEntryId, String reasonKey)
+		throws PortalException {
+
+		return getService().updateCommercePaymentEntryReasonKey(
+			commercePaymentEntryId, reasonKey);
 	}
 
 	public static CommercePaymentEntryLocalService getService() {

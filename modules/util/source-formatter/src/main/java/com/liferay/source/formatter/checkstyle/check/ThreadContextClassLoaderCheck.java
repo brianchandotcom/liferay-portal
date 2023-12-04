@@ -22,6 +22,16 @@ public class ThreadContextClassLoaderCheck extends BaseCheck {
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
+		String absolutePath = getAbsolutePath();
+
+		for (String allowedFileName :
+				getAttributeValues(_ALLOWED_FILE_NAMES_KEY)) {
+
+			if (absolutePath.endsWith(allowedFileName)) {
+				return;
+			}
+		}
+
 		if (!Objects.equals(getMethodName(detailAST), "currentThread") ||
 			!Objects.equals(getClassOrVariableName(detailAST), "Thread")) {
 
@@ -89,6 +99,8 @@ public class ThreadContextClassLoaderCheck extends BaseCheck {
 			}
 		}
 	}
+
+	private static final String _ALLOWED_FILE_NAMES_KEY = "allowedFileNames";
 
 	private static final String _MSG_THREAD_CONTEXT_CLASS_LOADER_UTIL_USE =
 		"thread.context.class.loader.util.use";

@@ -45,7 +45,6 @@ DisplayPageManagementToolbarDisplayContext displayPageManagementToolbarDisplayCo
 >
 	<portlet:actionURL name="/layout_page_template_admin/delete_layout_page_template_entry" var="deleteDisplayPageURL">
 		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="tabs1" value="display-page-templates" />
 	</portlet:actionURL>
 
 	<aui:form action="<%= deleteDisplayPageURL %>" cssClass="container-fluid container-fluid-max-xl" name="fm">

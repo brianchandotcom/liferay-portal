@@ -617,7 +617,7 @@ public class SourceFormatterUtil {
 		String[] excludes, String[] includes,
 		SourceFormatterExcludes sourceFormatterExcludes) {
 
-		PathMatchers pathMatchers = new PathMatchers();
+		PathMatchers pathMatchers = new PathMatchers(FileSystems.getDefault());
 
 		for (String exclude : excludes) {
 			pathMatchers.addExcludeSyntaxPattern(
@@ -795,10 +795,13 @@ public class SourceFormatterUtil {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SourceFormatterUtil.class);
 
-	private static final FileSystem _fileSystem = FileSystems.getDefault();
 	private static File _gitTopLevelFolder;
 
 	private static class PathMatchers {
+
+		public PathMatchers(FileSystem fileSystem) {
+			_fileSystem = fileSystem;
+		}
 
 		public void addExcludeSyntaxPattern(
 			ExcludeSyntaxPattern excludeSyntaxPattern) {
@@ -931,6 +934,7 @@ public class SourceFormatterUtil {
 			new ArrayList<>();
 		private final Map<String, List<PathMatcher>>
 			_excludeFilePathMatchersMap = new HashMap<>();
+		private final FileSystem _fileSystem;
 		private final List<PathMatcher> _includeFilePathMatchers =
 			new ArrayList<>();
 

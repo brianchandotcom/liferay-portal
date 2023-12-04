@@ -621,6 +621,10 @@ public class JournalManagementToolbarDisplayContext
 					).setNavigation(
 						"all"
 					).setParameter(
+						"assetCategoryId", (String)null
+					).setParameter(
+						"assetTagId", (String)null
+					).setParameter(
 						"ddmStructureId", (String)null
 					).setParameter(
 						"navigationMine", (Boolean)null

@@ -1283,12 +1283,10 @@ public class JournalDisplayContext {
 	}
 
 	public boolean isFilterApplied() {
-		if (getStatus() != WorkflowConstants.STATUS_ANY) {
-			return true;
-		}
+		if ((getStatus() != WorkflowConstants.STATUS_ANY) ||
+			isNavigationMine() || isNavigationRecent()) {
 
-		if (isNavigationHome()) {
-			return false;
+			return true;
 		}
 
 		for (String parameterName : _PARAMETER_NAMES) {
@@ -2096,7 +2094,7 @@ public class JournalDisplayContext {
 	}
 
 	private static final String[] _PARAMETER_NAMES = {
-		"assetCategoryId", "assetTagId", "ddmStructureId", "navigation"
+		"assetCategoryId", "assetTagId", "ddmStructureId"
 	};
 
 	private static final Log _log = LogFactoryUtil.getLog(

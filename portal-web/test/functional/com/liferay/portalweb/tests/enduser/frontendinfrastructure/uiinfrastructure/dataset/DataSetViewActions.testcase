@@ -3008,6 +3008,38 @@ definition {
 		}
 	}
 
+	@description = "LPS-196835 Confirm that both change button and delete button are shown in the picker after selection in the Item Action"
+	@priority = 3
+	test CanSeeRecycleAndChangeButtonAfterSelectAIconOnItemAction {
+		task ("When the user clicks on the plus button in the Item Action") {
+			LexiconEntry.gotoAdd();
+		}
+
+		task ("And user click on the plus button and choose an icon") {
+			LexiconEntry.gotoAdd();
+
+			SelectFrameTop();
+
+			Type(
+				locator1 = "DataSet#MODAL_SEARCH",
+				value1 = "analytics");
+
+			Click.mouseOverClick(
+				key_text = "analytics",
+				locator1 = "Modal#MODAL_ICON");
+		}
+
+		task ("Then the Recycle bin button and the Change icon button are displayed next to the icon field") {
+			AssertElementPresent(
+				key_text = "change",
+				locator1 = "Icon#ANY");
+
+			AssertElementPresent(
+				key_text = "trash",
+				locator1 = "Icon#ANY");
+		}
+	}
+
 	@description = "LPS-191485. Verify if when the user hovers over the Message field a text appears in the Item Action"
 	@priority = 3
 	test CanSeeTextInMessageTabsFieldOnItemAction {

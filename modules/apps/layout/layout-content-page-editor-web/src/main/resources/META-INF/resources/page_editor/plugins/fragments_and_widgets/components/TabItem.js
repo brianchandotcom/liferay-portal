@@ -39,6 +39,20 @@ const ITEM_PROPTYPES_SHAPE = PropTypes.shape({
 export default function TabItem({displayStyle, item, onRemoveHighlighted}) {
 	const dispatch = useDispatch();
 	const [disabled, setDisabled] = useState(item.disabled);
+	const setMovementSource = useSetMovementSource();
+
+	const onMovementSource = (event) => {
+		if (event.key === 'Enter' || event.key === ' ') {
+			setMovementSource({
+				...item.data,
+				fragmentEntryType: item.data.type,
+				icon: item.icon,
+				isWidget: Boolean(item.data.portletId),
+				name: item.label,
+				type: item.type,
+			});
+		}
+	};
 
 	const onToggleHighlighted = useCallback(() => {
 		if (item.data.portletId) {
@@ -112,6 +126,7 @@ export default function TabItem({displayStyle, item, onRemoveHighlighted}) {
 			disabled={disabled || isDraggingSource || item.disabled}
 			handlerRef={item.disabled ? null : sourceRef}
 			item={item}
+			onMovementSource={onMovementSource}
 			onToggleHighlighted={onToggleHighlighted}
 		/>
 	) : (
@@ -119,6 +134,7 @@ export default function TabItem({displayStyle, item, onRemoveHighlighted}) {
 			disabled={disabled || isDraggingSource || item.disabled}
 			handlerRef={item.disabled || disabled ? null : sourceRef}
 			item={item}
+			onMovementSource={onMovementSource}
 			onToggleHighlighted={onToggleHighlighted}
 		/>
 	);
@@ -129,7 +145,13 @@ TabItem.propTypes = {
 	item: ITEM_PROPTYPES_SHAPE.isRequired,
 };
 
-const ListItem = ({disabled, handlerRef, item, onToggleHighlighted}) => {
+const ListItem = ({
+	disabled,
+	handlerRef,
+	item,
+	onMovementSource,
+	onToggleHighlighted,
+}) => {
 	const {isTarget, setElement} = useKeyboardNavigation({
 		type: LIST_ITEM_TYPES.listItem,
 	});
@@ -147,6 +169,7 @@ const ListItem = ({disabled, handlerRef, item, onToggleHighlighted}) => {
 					'page-editor__fragments-widgets__tab-list-item--active': isActive,
 				}
 			)}
+			onKeyDown={onMovementSource}
 			ref={setElement}
 			role="menuitem"
 			tabIndex={isTarget ? 0 : -1}
@@ -187,7 +210,13 @@ ListItem.propTypes = {
 	onToggleHighlighted: PropTypes.func.isRequired,
 };
 
-const CardItem = ({disabled, handlerRef, item, onToggleHighlighted}) => {
+const CardItem = ({
+	disabled,
+	handlerRef,
+	item,
+	onMovementSource,
+	onToggleHighlighted,
+}) => {
 	const {isTarget, setElement} = useKeyboardNavigation({
 		type: LIST_ITEM_TYPES.listItem,
 	});
@@ -203,6 +232,7 @@ const CardItem = ({disabled, handlerRef, item, onToggleHighlighted}) => {
 					'page-editor__fragments-widgets__tab-list-item--active': isActive,
 				}
 			)}
+			onKeyDown={onMovementSource}
 			ref={setElement}
 			role="menuitem"
 			tabIndex={isTarget ? 0 : -1}

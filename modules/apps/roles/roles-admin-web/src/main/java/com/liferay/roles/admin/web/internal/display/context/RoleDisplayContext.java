@@ -376,7 +376,9 @@ public class RoleDisplayContext {
 
 			Role role = RoleServiceUtil.fetchRole(roleId);
 
-			if (Objects.equals(RoleConstants.ADMINISTRATOR, role.getName())) {
+			if ((role != null) &&
+				Objects.equals(RoleConstants.ADMINISTRATOR, role.getName())) {
+
 				assigneeTypeNames = ArrayUtil.filter(
 					assigneeTypeNames, name -> !name.equals("segments"));
 			}

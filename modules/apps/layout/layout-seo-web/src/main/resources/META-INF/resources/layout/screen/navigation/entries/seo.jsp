@@ -188,10 +188,6 @@ boolean nondefaultAssetDisplayPage = selLayout.isTypeAssetDisplay() && !layoutsS
 					<liferay-ui:error exception="<%= SitemapIncludeException.class %>" message="please-select-a-valid-include-value" />
 					<liferay-ui:error exception="<%= SitemapPagePriorityException.class %>" message="please-enter-a-valid-page-priority" />
 
-					<%
-					boolean sitemapInclude = GetterUtil.getBoolean(layoutTypeSettingsUnicodeProperties.getProperty(LayoutTypePortletConstants.SITEMAP_INCLUDE), true);
-					%>
-
 					<div class="<%= nondefaultAssetDisplayPage ? "section-disabled" : StringPool.BLANK %>">
 						<c:if test="<%= nondefaultAssetDisplayPage %>">
 							<clay:alert
@@ -200,10 +196,14 @@ boolean nondefaultAssetDisplayPage = selLayout.isTypeAssetDisplay() && !layoutsS
 							/>
 						</c:if>
 
-						<aui:select cssClass="propagatable-field" disabled="<%= nondefaultAssetDisplayPage || selLayout.isLayoutPrototypeLinkActive() %>" label="include" name="TypeSettingsProperties--sitemap-include--">
-							<aui:option label="yes" selected="<%= sitemapInclude %>" value="1" />
-							<aui:option label="no" selected="<%= !sitemapInclude %>" value="0" />
-						</aui:select>
+						<clay:select
+							cssClass="propagatable-field"
+							disabled="<%= nondefaultAssetDisplayPage || selLayout.isLayoutPrototypeLinkActive() %>"
+							id='<%= liferayPortletResponse.getNamespace() + "sitemap-include" %>'
+							label="include"
+							name="TypeSettingsProperties--sitemap-include--"
+							options="<%= layoutsSEODisplayContext.getSitemapIncludeSelectOptions() %>"
+						/>
 
 						<aui:input cssClass="propagatable-field" disabled="<%= nondefaultAssetDisplayPage || selLayout.isLayoutPrototypeLinkActive() %>" helpMessage="page-priority-help" label="page-priority" name="TypeSettingsProperties--sitemap-priority--" placeholder="0.0" size="3" type="text" value='<%= layoutTypeSettingsUnicodeProperties.getProperty("sitemap-priority", PropsValues.SITES_SITEMAP_DEFAULT_PRIORITY) %>'>
 							<aui:validator name="number" />

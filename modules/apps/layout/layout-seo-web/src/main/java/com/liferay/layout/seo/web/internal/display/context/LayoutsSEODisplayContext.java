@@ -28,6 +28,7 @@ import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
+import com.liferay.layout.admin.kernel.model.LayoutTypePortletConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.seo.canonical.url.LayoutSEOCanonicalURLProvider;
@@ -56,6 +57,7 @@ import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -565,6 +567,26 @@ public class LayoutsSEODisplayContext {
 				Objects.equals(
 					sitemapChangeFrequencyOption,
 					selectedSitemapChangeFrequencyOption)));
+	}
+
+	public List<SelectOption> getSitemapIncludeSelectOptions() {
+		Layout selLayout = getSelLayout();
+
+		UnicodeProperties layoutTypeSettingsUnicodeProperties =
+			selLayout.getTypeSettingsProperties();
+
+		boolean sitemapInclude = GetterUtil.getBoolean(
+			layoutTypeSettingsUnicodeProperties.getProperty(
+				LayoutTypePortletConstants.SITEMAP_INCLUDE),
+			true);
+
+		return Arrays.asList(
+			new SelectOption(
+				LanguageUtil.get(_httpServletRequest, "yes"), "1",
+				sitemapInclude),
+			new SelectOption(
+				LanguageUtil.get(_httpServletRequest, "no"), "0",
+				!sitemapInclude));
 	}
 
 	public boolean isDefaultAssetDisplayPage() {

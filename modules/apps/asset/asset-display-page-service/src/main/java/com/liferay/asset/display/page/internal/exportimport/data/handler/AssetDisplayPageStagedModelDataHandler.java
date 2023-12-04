@@ -22,6 +22,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
@@ -98,12 +99,20 @@ public class AssetDisplayPageStagedModelDataHandler
 				assetDisplayPageEntry.getLayoutPageTemplateEntryId());
 		}
 
+		Map<Long, Long> plids =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				Layout.class);
+
 		importedAssetDisplayPageEntry.setGroupId(
 			portletDataContext.getScopeGroupId());
 		importedAssetDisplayPageEntry.setCompanyId(
 			portletDataContext.getCompanyId());
 		importedAssetDisplayPageEntry.setLayoutPageTemplateEntryId(
 			layoutPageTemplateEntryId);
+		importedAssetDisplayPageEntry.setPlid(
+			MapUtil.getLong(
+				plids, assetDisplayPageEntry.getPlid(),
+				assetDisplayPageEntry.getPlid()));
 
 		Map<Long, Long> newClassPKsMap =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(

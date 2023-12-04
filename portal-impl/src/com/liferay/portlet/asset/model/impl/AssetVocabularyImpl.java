@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.asset.util.AssetVocabularySettingsHelper;
@@ -157,11 +158,24 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 			classNameId, classTypePK);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #isMissingRequiredCategory(long, long, long[], long)}
+	 */
+	@Deprecated
 	@Override
 	public boolean isMissingRequiredCategory(
 		long classNameId, long classTypePK, long[] categoryIds) {
 
-		if (!isRequired(classNameId, classTypePK)) {
+		return isMissingRequiredCategory(
+			classNameId, classTypePK, categoryIds,
+			GroupThreadLocal.getGroupId());
+	}
+
+	@Override
+	public boolean isMissingRequiredCategory(
+		long classNameId, long classTypePK, long[] categoryIds, long groupId) {
+
+		if (!isRequired(classNameId, classTypePK, groupId)) {
 			return false;
 		}
 
@@ -179,10 +193,45 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 		return vocabularySettingsHelper.isMultiValued();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #isRequired(long, long, long)}
+	 */
+	@Deprecated
 	@Override
 	public boolean isRequired(long classNameId, long classTypePK) {
+		return isRequired(
+			classNameId, classTypePK, GroupThreadLocal.getGroupId());
+	}
+
+	@Override
+	public boolean isRequired(
+		long classNameId, long classTypePK, long groupId) {
+
 		AssetVocabularySettingsHelper vocabularySettingsHelper =
 			getVocabularySettingsHelper();
+
+		Group currentGroup = GroupLocalServiceUtil.fetchGroup(groupId);
+
+		if ((currentGroup != null) && currentGroup.isDepot()) {
+			if (vocabularySettingsHelper.isClassNameIdAndClassTypePKRequired(
+					classNameId, classTypePK) ||
+				vocabularySettingsHelper.
+					isClassNameIdAndClassTypePKDepotRequired(
+						classNameId, classTypePK)) {
+
+				return true;
+			}
+
+			return false;
+		}
+
+		Group vocabularyGroup = GroupLocalServiceUtil.fetchGroup(getGroupId());
+
+		if ((vocabularyGroup != null) && vocabularyGroup.isDepot()) {
+			return vocabularySettingsHelper.
+				isClassNameIdAndClassTypePKDepotRequired(
+					classNameId, classTypePK);
+		}
 
 		return vocabularySettingsHelper.isClassNameIdAndClassTypePKRequired(
 			classNameId, classTypePK);

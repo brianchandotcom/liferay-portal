@@ -77,7 +77,7 @@ public class AssetDisplayLayoutUpgradeProcessTest {
 
 		_addAssetDisplayPageEntry(
 			journalArticle.getResourcePrimKey(), 0,
-			AssetDisplayPageConstants.TYPE_DEFAULT);
+			AssetDisplayPageConstants.TYPE_DEFAULT, 0);
 
 		_runUpgrade();
 
@@ -94,7 +94,7 @@ public class AssetDisplayLayoutUpgradeProcessTest {
 
 		_addAssetDisplayPageEntry(
 			journalArticle.getResourcePrimKey(), 0,
-			AssetDisplayPageConstants.TYPE_NONE);
+			AssetDisplayPageConstants.TYPE_NONE, 0);
 
 		_runUpgrade();
 
@@ -115,7 +115,8 @@ public class AssetDisplayLayoutUpgradeProcessTest {
 		_addAssetDisplayPageEntry(
 			journalArticle.getResourcePrimKey(),
 			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
-			AssetDisplayPageConstants.TYPE_SPECIFIC);
+			AssetDisplayPageConstants.TYPE_SPECIFIC,
+			layoutPageTemplateEntry.getPlid());
 
 		_runUpgrade();
 
@@ -138,7 +139,7 @@ public class AssetDisplayLayoutUpgradeProcessTest {
 		_addAssetDisplayPageEntry(
 			journalArticle.getResourcePrimKey(),
 			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
-			AssetDisplayPageConstants.TYPE_SPECIFIC);
+			AssetDisplayPageConstants.TYPE_SPECIFIC, 0);
 
 		_runUpgrade();
 
@@ -148,7 +149,7 @@ public class AssetDisplayLayoutUpgradeProcessTest {
 	}
 
 	private void _addAssetDisplayPageEntry(
-		long classPK, long layoutPageTemplateEntryId, int type) {
+		long classPK, long layoutPageTemplateEntryId, int type, long plid) {
 
 		AssetDisplayPageEntry assetDisplayPageEntry =
 			_assetDisplayPageEntryLocalService.createAssetDisplayPageEntry(
@@ -163,6 +164,7 @@ public class AssetDisplayLayoutUpgradeProcessTest {
 		assetDisplayPageEntry.setLayoutPageTemplateEntryId(
 			layoutPageTemplateEntryId);
 		assetDisplayPageEntry.setType(type);
+		assetDisplayPageEntry.setPlid(plid);
 
 		_assetDisplayPageEntryLocalService.updateAssetDisplayPageEntry(
 			assetDisplayPageEntry);

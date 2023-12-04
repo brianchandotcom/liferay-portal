@@ -303,20 +303,7 @@ public class ObjectFieldResourceTest extends BaseObjectFieldResourceTestCase {
 
 		// Unique
 
-		ObjectField objectField = randomObjectField();
-
-		objectField.setObjectFieldSettings(
-			new ObjectFieldSetting[] {
-				new ObjectFieldSetting() {
-					{
-						name = ObjectFieldSettingConstants.NAME_UNIQUE_VALUES;
-						value = "true";
-					}
-				}
-			});
-
-		objectField = objectFieldResource.postObjectDefinitionObjectField(
-			_objectDefinition.getObjectDefinitionId(), objectField);
+		ObjectField objectField = _addUniqueObjectField();
 
 		Assert.assertTrue(objectField.getUnique());
 
@@ -343,6 +330,44 @@ public class ObjectFieldResourceTest extends BaseObjectFieldResourceTestCase {
 	@Override
 	@Test
 	public void testGraphQLGetObjectFieldNotFound() {
+	}
+
+	@Override
+	@Test
+	public void testPatchObjectField() throws Exception {
+		super.testPatchObjectField();
+
+		// Unique
+
+		ObjectField postObjectField = _addUniqueObjectField();
+
+		ObjectField randomObjectField1 = randomObjectField();
+
+		ObjectField patchObjectField = objectFieldResource.patchObjectField(
+			postObjectField.getId(), randomObjectField1);
+
+		assertEquals(randomObjectField1, patchObjectField);
+		Assert.assertTrue(patchObjectField.getUnique());
+
+		// Unique to not unique
+
+		ObjectField randomObjectField2 = randomObjectField();
+
+		randomObjectField2.setObjectFieldSettings(
+			new ObjectFieldSetting[] {
+				new ObjectFieldSetting() {
+					{
+						name = ObjectFieldSettingConstants.NAME_UNIQUE_VALUES;
+						value = "false";
+					}
+				}
+			});
+
+		patchObjectField = objectFieldResource.patchObjectField(
+			postObjectField.getId(), randomObjectField2);
+
+		assertEquals(randomObjectField2, patchObjectField);
+		Assert.assertFalse(patchObjectField.getUnique());
 	}
 
 	@Override
@@ -449,6 +474,23 @@ public class ObjectFieldResourceTest extends BaseObjectFieldResourceTestCase {
 			_objectDefinition.getObjectDefinitionId(), randomObjectField());
 
 		return _objectField;
+	}
+
+	private ObjectField _addUniqueObjectField() throws Exception {
+		ObjectField objectField = randomObjectField();
+
+		objectField.setObjectFieldSettings(
+			new ObjectFieldSetting[] {
+				new ObjectFieldSetting() {
+					{
+						name = ObjectFieldSettingConstants.NAME_UNIQUE_VALUES;
+						value = "true";
+					}
+				}
+			});
+
+		return objectFieldResource.postObjectDefinitionObjectField(
+			_objectDefinition.getObjectDefinitionId(), objectField);
 	}
 
 	private ObjectDefinition _objectDefinition;

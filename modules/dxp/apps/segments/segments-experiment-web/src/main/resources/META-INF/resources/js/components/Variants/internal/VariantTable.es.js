@@ -184,6 +184,14 @@ function VariantTable({
 									<ClayTable.Cell>
 										<div className="d-flex justify-content-end">
 											<ClayButton
+												aria-label={sub(
+													Liferay.Language.get(
+														'edit-x'
+													),
+													Liferay.Language.get(
+														'variant'
+													)
+												)}
 												borderless
 												className="btn-monospaced"
 												displayType="secondary"
@@ -272,6 +280,14 @@ function VariantTable({
 								{publishable && (
 									<ClayTable.Cell>
 										<ClayButton
+											aria-label={sub(
+												Liferay.Language.get(
+													'publish-x'
+												),
+												Liferay.Language.get(
+													'experience'
+												)
+											)}
 											borderless
 											data-testid={`publish-button-${name}`}
 											data-title={Liferay.Language.get(

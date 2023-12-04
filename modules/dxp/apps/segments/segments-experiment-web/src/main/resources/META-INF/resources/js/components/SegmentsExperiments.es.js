@@ -133,6 +133,10 @@ function Experiments({
 						{!experiment.editable &&
 							experiment.status.value !== STATUS_RUNNING && (
 								<ClayButton
+									aria-label={sub(
+										Liferay.Language.get('delete-x'),
+										Liferay.Language.get('variant')
+									)}
 									className="text-secondary"
 									data-testid="delete-variant"
 									displayType={null}

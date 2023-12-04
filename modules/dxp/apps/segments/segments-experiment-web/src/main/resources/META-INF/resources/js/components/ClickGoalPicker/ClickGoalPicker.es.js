@@ -8,7 +8,7 @@ import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {ReactPortal, useEventListener} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
-import {throttle} from 'frontend-js-web';
+import {sub, throttle} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -273,6 +273,10 @@ function ClickGoalPicker({allowEdit = true, onSelectClickGoalTarget, target}) {
 							{allowEdit && selectedTarget && (
 								<ClayInput.GroupInsetItem after>
 									<ClayButtonWithIcon
+										aria-label={sub(
+											Liferay.Language.get('clear-x'),
+											Liferay.Language.get('text')
+										)}
 										data-tooltip-align="bottom-right"
 										disabled={!selectedTarget}
 										displayType="unstyled"
@@ -287,6 +291,9 @@ function ClickGoalPicker({allowEdit = true, onSelectClickGoalTarget, target}) {
 
 						<ClayInput.GroupItem shrink>
 							<ClayButtonWithIcon
+								aria-label={Liferay.Language.get(
+									'show-element'
+								)}
 								data-tooltip-align="bottom-right"
 								disabled={!selectedTarget}
 								displayType="secondary"

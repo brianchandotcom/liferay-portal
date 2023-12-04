@@ -87,6 +87,7 @@ definition {
 				title = "My-app");
 
 			APIBuilderUI.createAPIEndpoint(
+				method = "GET",
 				path = "testendpoint2",
 				retrieveType = "Collection",
 				scope = "Company");
@@ -285,26 +286,6 @@ definition {
 				key_placeHolder = "Enter Path",
 				locator1 = "TextInput#ANY_PLACEHOLDER",
 				value1 = "updatedendpoint");
-		}
-	}
-
-	@priority = 3
-	test GetIsDefaultMethodValue {
-		task ("When creating endpoint with valid data") {
-			APIBuilderUI.switchToRelatedEntryInEditApplication(
-				entity = "Endpoints",
-				title = "My-app");
-
-			APIBuilderUI.createAPIEndpoint(
-				path = "testendpoint2",
-				retrieveType = "Collection",
-				scope = "Company");
-		}
-
-		task ("Then enpoint method is GET by default") {
-			AssertTextEquals(
-				locator1 = "Button#DISABLED_BUTTON",
-				value1 = "GET");
 		}
 	}
 

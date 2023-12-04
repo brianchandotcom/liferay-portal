@@ -39,9 +39,10 @@ definition {
 				title = "test1");
 
 			APIBuilderUI.createAPIEndpoint(
+				method = "GET",
 				path = "testendpoint1",
-				scope = "Company",
-				title = "test1");
+				retrieveType = "Collection",
+				scope = "Company");
 		}
 
 		task ("Then the endpoint with Company scope is created successfully and listed") {
@@ -74,9 +75,10 @@ definition {
 				title = "test2");
 
 			APIBuilderUI.createAPIEndpoint(
+				method = "GET",
 				path = "testendpoint2",
-				scope = "Site",
-				title = "test2");
+				retrieveType = "Collection",
+				scope = "Site");
 		}
 
 		task ("Then the endpoint with site scope is created successfully and listed") {

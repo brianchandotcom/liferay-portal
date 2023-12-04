@@ -58,7 +58,9 @@ public class ObjectEntrySearchUtil {
 		ObjectDefinition objectDefinition,
 		ObjectFieldLocalService objectFieldLocalService, String search) {
 
-		if ((objectDefinition == null) || Validator.isNull(search)) {
+		if ((dynamicObjectDefinitionTable == null) ||
+			(objectDefinition == null) || Validator.isNull(search)) {
+
 			return null;
 		}
 

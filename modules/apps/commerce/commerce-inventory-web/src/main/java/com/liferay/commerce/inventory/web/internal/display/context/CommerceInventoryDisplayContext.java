@@ -51,21 +51,21 @@ public class CommerceInventoryDisplayContext {
 	public CommerceInventoryDisplayContext(
 		CommerceInventoryReplenishmentItemService
 			commerceInventoryReplenishmentItemService,
-		CommerceInventoryWarehouseService commerceInventoryWarehouseService,
 		CommerceInventoryWarehouseItemService
 			commerceInventoryWarehouseItemService,
 		ModelResourcePermission<CommerceInventoryWarehouse>
 			commerceInventoryWarehouseModelResourcePermission,
+		CommerceInventoryWarehouseService commerceInventoryWarehouseService,
 		CommerceQuantityFormatter commerceQuantityFormatter,
 		HttpServletRequest httpServletRequest) {
 
 		_commerceInventoryReplenishmentItemService =
 			commerceInventoryReplenishmentItemService;
-		_commerceInventoryWarehouseService = commerceInventoryWarehouseService;
 		_commerceInventoryWarehouseItemService =
 			commerceInventoryWarehouseItemService;
 		_commerceInventoryWarehouseModelResourcePermission =
 			commerceInventoryWarehouseModelResourcePermission;
+		_commerceInventoryWarehouseService = commerceInventoryWarehouseService;
 		_commerceQuantityFormatter = commerceQuantityFormatter;
 
 		_cpRequestHelper = new CPRequestHelper(httpServletRequest);

@@ -468,6 +468,47 @@ public class StructuredContentResourceTest
 
 		Assert.assertEquals(title, getStructuredContent.getTitle());
 
+		// Different time zone
+
+		User user = UserTestUtil.addGroupAdminUser(testGroup);
+
+		user.setTimeZoneId("America/Sao_Paulo");
+
+		user = _userLocalService.updateUser(user);
+
+		user = _userLocalService.updatePassword(
+			user.getUserId(), "test", "test", false, true);
+
+		try {
+			postStructuredContent =
+				structuredContentResource.postSiteStructuredContent(
+					testGroup.getGroupId(), randomStructuredContent());
+
+			StructuredContentResource structuredContentResource =
+				builder.authentication(
+					user.getEmailAddress(), "test"
+				).locale(
+					LocaleUtil.getDefault()
+				).build();
+
+			postStructuredContent.setDatePublished(new Date());
+
+			StructuredContent putStructuredContent =
+				structuredContentResource.putStructuredContent(
+					postStructuredContent.getId(), postStructuredContent);
+
+			JournalArticle journalArticle =
+				_journalArticleLocalService.fetchLatestArticle(
+					putStructuredContent.getId());
+
+			Assert.assertEquals(
+				journalArticle.getDisplayDate(),
+				putStructuredContent.getDatePublished());
+		}
+		finally {
+			_userLocalService.deleteUser(user);
+		}
+
 		// Role admin user
 
 		postStructuredContent = testGetStructuredContent_addStructuredContent();

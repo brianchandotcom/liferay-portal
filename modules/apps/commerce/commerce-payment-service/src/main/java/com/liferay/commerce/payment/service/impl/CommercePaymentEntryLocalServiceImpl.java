@@ -6,6 +6,12 @@
 package com.liferay.commerce.payment.service.impl;
 
 import com.liferay.commerce.constants.CommercePaymentEntryConstants;
+import com.liferay.commerce.payment.entry.CommercePaymentEntryRefundType;
+import com.liferay.commerce.payment.entry.CommercePaymentEntryRefundTypeRegistry;
+import com.liferay.commerce.payment.exception.CommercePaymentEntryAmountException;
+import com.liferay.commerce.payment.exception.CommercePaymentEntryClassNameIdException;
+import com.liferay.commerce.payment.exception.CommercePaymentEntryClassPKException;
+import com.liferay.commerce.payment.exception.CommercePaymentEntryReasonKeyException;
 import com.liferay.commerce.payment.model.CommercePaymentEntry;
 import com.liferay.commerce.payment.service.CommercePaymentEntryAuditLocalService;
 import com.liferay.commerce.payment.service.base.CommercePaymentEntryLocalServiceBaseImpl;
@@ -14,6 +20,7 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Field;
@@ -22,9 +29,11 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -52,6 +61,7 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Luca Pellizzon
+ * @author Alessio Antonio Rendina
  */
 @Component(
 	property = "model.class.name=com.liferay.commerce.payment.model.CommercePaymentEntry",
@@ -65,10 +75,19 @@ public class CommercePaymentEntryLocalServiceImpl
 	public CommercePaymentEntry addCommercePaymentEntry(
 			long userId, long classNameId, long classPK, long commerceChannelId,
 			BigDecimal amount, String callbackURL, String cancelURL,
-			String currencyCode, String languageId,
+			String currencyCode, String languageId, String note,
 			String paymentIntegrationKey, int paymentIntegrationType,
-			String transactionCode, ServiceContext serviceContext)
+			String reasonKey, String transactionCode, int type,
+			ServiceContext serviceContext)
 		throws PortalException {
+
+		CommercePaymentEntryRefundType commercePaymentEntryRefundType =
+			_commercePaymentEntryRefundTypeRegistry.
+				getCommercePaymentEntryRefundType(reasonKey);
+
+		_validate(
+			commercePaymentEntryRefundType, classNameId, classPK, amount,
+			reasonKey, type);
 
 		CommercePaymentEntry commercePaymentEntry =
 			commercePaymentEntryPersistence.create(
@@ -88,11 +107,20 @@ public class CommercePaymentEntryLocalServiceImpl
 		commercePaymentEntry.setCancelURL(cancelURL);
 		commercePaymentEntry.setCurrencyCode(currencyCode);
 		commercePaymentEntry.setLanguageId(languageId);
+		commercePaymentEntry.setNote(note);
 		commercePaymentEntry.setPaymentIntegrationKey(paymentIntegrationKey);
 		commercePaymentEntry.setPaymentIntegrationType(paymentIntegrationType);
 		commercePaymentEntry.setPaymentStatus(
 			CommercePaymentEntryConstants.STATUS_PENDING);
+		commercePaymentEntry.setReasonKey(reasonKey);
+
+		if (commercePaymentEntryRefundType != null) {
+			commercePaymentEntry.setReasonNameMap(
+				commercePaymentEntryRefundType.getNameMap());
+		}
+
 		commercePaymentEntry.setTransactionCode(transactionCode);
+		commercePaymentEntry.setType(type);
 
 		commercePaymentEntry = commercePaymentEntryPersistence.update(
 			commercePaymentEntry);
@@ -101,6 +129,53 @@ public class CommercePaymentEntryLocalServiceImpl
 			commercePaymentEntry, serviceContext);
 
 		return commercePaymentEntry;
+	}
+
+	@Override
+	public CommercePaymentEntry addOrUpdateCommercePaymentEntry(
+			String externalReferenceCode, long userId, long classNameId,
+			long classPK, long commerceChannelId, BigDecimal amount,
+			String callbackURL, String cancelURL, String currencyCode,
+			String errorMessages, String languageId, String note,
+			String paymentIntegrationKey, int paymentIntegrationType,
+			int paymentStatus, String reasonKey, String redirectURL,
+			String transactionCode, int type, ServiceContext serviceContext)
+		throws PortalException {
+
+		if (Validator.isBlank(externalReferenceCode)) {
+			externalReferenceCode = null;
+		}
+
+		// Update
+
+		CommercePaymentEntry commercePaymentEntry = null;
+
+		if (Validator.isNotNull(externalReferenceCode)) {
+			commercePaymentEntry = commercePaymentEntryPersistence.fetchByERC_C(
+				externalReferenceCode, serviceContext.getCompanyId());
+		}
+
+		if (commercePaymentEntry != null) {
+			return commercePaymentEntryLocalService.updateCommercePaymentEntry(
+				externalReferenceCode, commerceChannelId,
+				commercePaymentEntry.getCommercePaymentEntryId(), amount,
+				callbackURL, cancelURL, currencyCode, errorMessages, languageId,
+				note, paymentIntegrationKey, paymentIntegrationType,
+				paymentStatus, reasonKey, redirectURL, transactionCode, type);
+		}
+
+		// Add
+
+		commercePaymentEntry =
+			commercePaymentEntryLocalService.addCommercePaymentEntry(
+				userId, classNameId, classPK, commerceChannelId, amount,
+				callbackURL, cancelURL, currencyCode, languageId, note,
+				paymentIntegrationKey, paymentIntegrationType, reasonKey,
+				transactionCode, type, serviceContext);
+
+		commercePaymentEntry.setExternalReferenceCode(externalReferenceCode);
+
+		return commercePaymentEntryPersistence.update(commercePaymentEntry);
 	}
 
 	@Override
@@ -120,23 +195,55 @@ public class CommercePaymentEntryLocalServiceImpl
 
 	@Indexable(type = IndexableType.DELETE)
 	@Override
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
+	public CommercePaymentEntry deleteCommercePaymentEntry(
+			CommercePaymentEntry commercePaymentEntry)
+		throws PortalException {
+
+		commercePaymentEntryPersistence.remove(commercePaymentEntry);
+
+		_resourceLocalService.deleteResource(
+			commercePaymentEntry, ResourceConstants.SCOPE_INDIVIDUAL);
+
+		_commercePaymentEntryAuditLocalService.deleteCommercePaymentEntryAudits(
+			commercePaymentEntry.getCommercePaymentEntryId());
+
+		return commercePaymentEntry;
+	}
+
+	@Override
 	public CommercePaymentEntry deleteCommercePaymentEntry(
 			long commercePaymentEntryId)
 		throws PortalException {
 
 		CommercePaymentEntry commercePaymentEntry =
-			commercePaymentEntryPersistence.remove(commercePaymentEntryId);
+			commercePaymentEntryPersistence.findByPrimaryKey(
+				commercePaymentEntryId);
 
-		_resourceLocalService.deleteResource(
-			commercePaymentEntry.getCompanyId(),
-			CommercePaymentEntry.class.getName(),
-			ResourceConstants.SCOPE_INDIVIDUAL,
-			commercePaymentEntry.getCommercePaymentEntryId());
+		return commercePaymentEntryLocalService.deleteCommercePaymentEntry(
+			commercePaymentEntry);
+	}
 
-		_commercePaymentEntryAuditLocalService.deleteCommercePaymentEntryAudits(
-			commercePaymentEntryId);
+	@Override
+	public CommercePaymentEntry fetchByExternalReferenceCode(
+		String externalReferenceCode, long companyId) {
 
-		return commercePaymentEntry;
+		if (Validator.isBlank(externalReferenceCode)) {
+			return null;
+		}
+
+		return commercePaymentEntryPersistence.fetchByERC_C(
+			externalReferenceCode, companyId);
+	}
+
+	@Override
+	public List<CommercePaymentEntry> getCommercePaymentEntries(
+		long companyId, long classNameId, long classPK, int type, int start,
+		int end, OrderByComparator<CommercePaymentEntry> orderByComparator) {
+
+		return commercePaymentEntryPersistence.findByC_C_C_T(
+			companyId, classNameId, classPK, type, start, end,
+			orderByComparator);
 	}
 
 	@Override
@@ -154,6 +261,14 @@ public class CommercePaymentEntryLocalServiceImpl
 
 		return commercePaymentEntryPersistence.countByC_C_C(
 			companyId, classNameId, classPK);
+	}
+
+	@Override
+	public int getCommercePaymentEntriesCount(
+		long companyId, long classNameId, long classPK, int type) {
+
+		return commercePaymentEntryPersistence.countByC_C_C_T(
+			companyId, classNameId, classPK, type);
 	}
 
 	@Override
@@ -203,21 +318,111 @@ public class CommercePaymentEntryLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommercePaymentEntry updateCommercePaymentEntry(
-			long commercePaymentEntryId, String errorMessages,
-			int paymentStatus, String redirectURL, String transactionCode)
+			String externalReferenceCode, long commercePaymentEntryId,
+			long commerceChannelId, BigDecimal amount, String callbackURL,
+			String cancelURL, String currencyCode, String errorMessages,
+			String languageId, String note, String paymentIntegrationKey,
+			int paymentIntegrationType, int paymentStatus, String reasonKey,
+			String redirectURL, String transactionCode, int type)
+		throws PortalException {
+
+		if (Validator.isBlank(externalReferenceCode)) {
+			externalReferenceCode = null;
+		}
+
+		CommercePaymentEntry commercePaymentEntry =
+			commercePaymentEntryLocalService.getCommercePaymentEntry(
+				commercePaymentEntryId);
+
+		CommercePaymentEntryRefundType commercePaymentEntryRefundType =
+			_commercePaymentEntryRefundTypeRegistry.
+				getCommercePaymentEntryRefundType(reasonKey);
+
+		_validate(
+			commercePaymentEntryRefundType,
+			commercePaymentEntry.getClassNameId(),
+			commercePaymentEntry.getClassPK(), amount, reasonKey, type);
+
+		commercePaymentEntry.setExternalReferenceCode(externalReferenceCode);
+		commercePaymentEntry.setCommerceChannelId(commerceChannelId);
+		commercePaymentEntry.setAmount(amount);
+		commercePaymentEntry.setCallbackURL(callbackURL);
+		commercePaymentEntry.setCancelURL(cancelURL);
+		commercePaymentEntry.setCurrencyCode(currencyCode);
+		commercePaymentEntry.setErrorMessages(errorMessages);
+		commercePaymentEntry.setLanguageId(languageId);
+		commercePaymentEntry.setNote(note);
+		commercePaymentEntry.setPaymentIntegrationKey(paymentIntegrationKey);
+		commercePaymentEntry.setPaymentIntegrationType(paymentIntegrationType);
+		commercePaymentEntry.setPaymentStatus(paymentStatus);
+
+		if (Validator.isNull(reasonKey)) {
+			commercePaymentEntry.setReasonKey(null);
+			commercePaymentEntry.setReasonNameMap(null);
+		}
+		else if (!reasonKey.equals(commercePaymentEntry.getReasonKey())) {
+			commercePaymentEntry.setReasonKey(reasonKey);
+			commercePaymentEntry.setReasonNameMap(
+				commercePaymentEntryRefundType.getNameMap());
+		}
+
+		commercePaymentEntry.setRedirectURL(redirectURL);
+
+		if (Validator.isNotNull(transactionCode)) {
+			commercePaymentEntry.setTransactionCode(transactionCode);
+		}
+
+		commercePaymentEntry.setType(type);
+
+		return commercePaymentEntryPersistence.update(commercePaymentEntry);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public CommercePaymentEntry updateCommercePaymentEntryNote(
+			long commercePaymentEntryId, String note)
 		throws PortalException {
 
 		CommercePaymentEntry commercePaymentEntry =
 			commercePaymentEntryLocalService.getCommercePaymentEntry(
 				commercePaymentEntryId);
 
-		commercePaymentEntry.setErrorMessages(errorMessages);
-		commercePaymentEntry.setPaymentStatus(paymentStatus);
-		commercePaymentEntry.setRedirectURL(redirectURL);
-		commercePaymentEntry.setTransactionCode(transactionCode);
+		commercePaymentEntry.setNote(note);
 
-		return commercePaymentEntryLocalService.updateCommercePaymentEntry(
-			commercePaymentEntry);
+		return commercePaymentEntryPersistence.update(commercePaymentEntry);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public CommercePaymentEntry updateCommercePaymentEntryReasonKey(
+			long commercePaymentEntryId, String reasonKey)
+		throws PortalException {
+
+		CommercePaymentEntry commercePaymentEntry =
+			commercePaymentEntryLocalService.getCommercePaymentEntry(
+				commercePaymentEntryId);
+
+		CommercePaymentEntryRefundType commercePaymentEntryRefundType =
+			_commercePaymentEntryRefundTypeRegistry.
+				getCommercePaymentEntryRefundType(reasonKey);
+
+		_validate(
+			commercePaymentEntryRefundType,
+			commercePaymentEntry.getClassNameId(),
+			commercePaymentEntry.getClassPK(), commercePaymentEntry.getAmount(),
+			reasonKey, commercePaymentEntry.getType());
+
+		if (Validator.isNull(reasonKey)) {
+			commercePaymentEntry.setReasonKey(null);
+			commercePaymentEntry.setReasonNameMap(null);
+		}
+		else if (!reasonKey.equals(commercePaymentEntry.getReasonKey())) {
+			commercePaymentEntry.setReasonKey(reasonKey);
+			commercePaymentEntry.setReasonNameMap(
+				commercePaymentEntryRefundType.getNameMap());
+		}
+
+		return commercePaymentEntryPersistence.update(commercePaymentEntry);
 	}
 
 	private SearchRequest _getSearchRequest(
@@ -318,11 +523,64 @@ public class CommercePaymentEntryLocalServiceImpl
 			params.get("excludePaymentStatuses"));
 
 		searchContext.setAttribute("excludePaymentStatuses", excludeStatuses);
+
+		Integer type = (Integer)params.get("type");
+
+		if (type != null) {
+			searchContext.setAttribute("type", type);
+		}
 	}
+
+	private void _validate(
+			CommercePaymentEntryRefundType commercePaymentEntryRefundType,
+			long classNameId, long classPK, BigDecimal amount, String reasonKey,
+			int type)
+		throws PortalException {
+
+		if (classNameId <= 0) {
+			throw new CommercePaymentEntryClassNameIdException();
+		}
+
+		if (type == CommercePaymentEntryConstants.TYPE_REFUND) {
+			if (classNameId != _classNameLocalService.getClassNameId(
+					CommercePaymentEntry.class.getName())) {
+
+				throw new CommercePaymentEntryClassNameIdException();
+			}
+
+			CommercePaymentEntry commercePaymentEntry =
+				commercePaymentEntryPersistence.fetchByPrimaryKey(classPK);
+
+			if ((commercePaymentEntry == null) ||
+				(commercePaymentEntry.getPaymentStatus() !=
+					CommercePaymentEntryConstants.STATUS_COMPLETED)) {
+
+				throw new CommercePaymentEntryClassPKException();
+			}
+		}
+
+		if (amount.compareTo(BigDecimal.ZERO) <= 0) {
+			throw new CommercePaymentEntryAmountException();
+		}
+
+		if (Validator.isNotNull(reasonKey) &&
+			((commercePaymentEntryRefundType == null) ||
+			 (type != CommercePaymentEntryConstants.TYPE_REFUND))) {
+
+			throw new CommercePaymentEntryReasonKeyException();
+		}
+	}
+
+	@Reference
+	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
 	private CommercePaymentEntryAuditLocalService
 		_commercePaymentEntryAuditLocalService;
+
+	@Reference
+	private CommercePaymentEntryRefundTypeRegistry
+		_commercePaymentEntryRefundTypeRegistry;
 
 	@Reference
 	private ResourceLocalService _resourceLocalService;

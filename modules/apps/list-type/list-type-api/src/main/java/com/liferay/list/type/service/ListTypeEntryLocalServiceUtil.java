@@ -115,6 +115,13 @@ public class ListTypeEntryLocalServiceUtil {
 		return getService().deleteListTypeEntry(listTypeEntryId);
 	}
 
+	public static void deleteListTypeEntryByKey(
+			long listTypeDefinitionId, String key)
+		throws PortalException {
+
+		getService().deleteListTypeEntryByKey(listTypeDefinitionId, key);
+	}
+
 	public static void deleteListTypeEntryByListTypeDefinitionId(
 			long listTypeDefinitionId)
 		throws PortalException {

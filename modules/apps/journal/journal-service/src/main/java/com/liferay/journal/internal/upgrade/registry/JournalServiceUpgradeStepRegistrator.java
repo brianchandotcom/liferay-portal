@@ -56,12 +56,12 @@ import com.liferay.journal.internal.upgrade.v4_0_0.JournalArticleDDMFieldsUpgrad
 import com.liferay.journal.internal.upgrade.v4_1_0.JournalArticleExternalReferenceCodeUpgradeProcess;
 import com.liferay.journal.internal.upgrade.v4_3_1.BasicWebContentAssetEntryClassTypeIdUpgradeProcess;
 import com.liferay.journal.internal.upgrade.v4_4_0.GlobalJournalArticleUrlTitleUpgradeProcess;
-import com.liferay.journal.internal.upgrade.v4_4_3.JournalArticleLayoutClassedModelUsageUpgradeProcess;
 import com.liferay.journal.internal.upgrade.v4_4_4.JournalFeedTypeUpgradeProcess;
 import com.liferay.journal.internal.upgrade.v5_1_0.JournalArticleDDMStructureIdUpgradeProcess;
 import com.liferay.journal.internal.upgrade.v5_1_1.JournalArticleAssetEntryClassTypeIdUpgradeProcess;
 import com.liferay.journal.internal.upgrade.v5_2_0.JournalFeedDDMStructureIdUpgradeProcess;
 import com.liferay.journal.internal.upgrade.v6_1_0.JournalArticleSmallImageSourceUpgradeProcess;
+import com.liferay.journal.internal.upgrade.v6_1_1.JournalArticleLayoutClassedModelUsageUpgradeProcess;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.portal.change.tracking.store.CTStoreFactory;
@@ -342,10 +342,7 @@ public class JournalServiceUpgradeStepRegistrator
 
 		registry.register("4.4.1", "4.4.2", new DummyUpgradeStep());
 
-		registry.register(
-			"4.4.2", "4.4.3",
-			new JournalArticleLayoutClassedModelUsageUpgradeProcess(
-				_classNameLocalService));
+		registry.register("4.4.2", "4.4.3", new DummyUpgradeStep());
 
 		registry.register(
 			"4.4.3", "4.4.4",
@@ -392,6 +389,11 @@ public class JournalServiceUpgradeStepRegistrator
 			UpgradeProcessFactory.addColumns(
 				"JournalArticle", "smallImageSource INTEGER"),
 			new JournalArticleSmallImageSourceUpgradeProcess());
+
+		registry.register(
+			"6.1.0", "6.1.1",
+			new JournalArticleLayoutClassedModelUsageUpgradeProcess(
+				_classNameLocalService));
 	}
 
 	private void _deleteTempImages() throws Exception {

@@ -905,6 +905,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PORTLET_BODY</td>
+	<td>//div[@class = 'portlet-body']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

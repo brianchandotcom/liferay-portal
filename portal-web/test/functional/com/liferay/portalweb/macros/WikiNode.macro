@@ -50,7 +50,7 @@ definition {
 		PortletEntry.inputTitle(title = ${wikiPageTitle});
 
 		SelectFrame.selectFrameNoLoading(
-			key_title = "Rich Text Editor",
+			key_title = "Editor",
 			locator1 = "IFrame#MODAL_ANY");
 
 		Type(

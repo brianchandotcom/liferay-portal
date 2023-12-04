@@ -238,7 +238,7 @@ function Variants({selectedSegmentsExperienceId}) {
 }
 
 Variants.propTypes = {
-	onVariantPublish: PropTypes.func.isRequired,
+	onVariantPublish: PropTypes.func,
 	selectedSegmentsExperienceId: PropTypes.string.isRequired,
 };
 

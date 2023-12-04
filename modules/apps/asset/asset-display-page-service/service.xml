@@ -27,6 +27,7 @@
 		<column name="classPK" type="long" />
 		<column name="layoutPageTemplateEntryId" type="long" />
 		<column name="type" type="int" />
+		<column name="plid" type="long" />
 
 		<!-- Finder methods -->
 

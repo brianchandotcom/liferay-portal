@@ -335,6 +335,14 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 	}
 
 	@Override
+	protected Role testPostRole_addRole(Role role) throws Exception {
+		role.setRoleType(
+			RoleConstants.getTypeLabel(RoleConstants.TYPE_REGULAR));
+
+		return role;
+	}
+
+	@Override
 	protected Role testPostRoleUserAccountAssociation_addRole()
 		throws Exception {
 

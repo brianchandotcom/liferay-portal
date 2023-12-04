@@ -118,6 +118,9 @@ function JobInformation({job}) {
 		);
 	}
 
+	const jobParameterDefinitions = job.type.parameterDefinitions;
+	const jobParameters = JSON.parse(job.parameters);
+
 	return (
 		<ClayPanel
 			collapsable
@@ -126,39 +129,89 @@ function JobInformation({job}) {
 			displayType="secondary"
 		>
 			<ClayPanel.Body>
-				Job Name: {job.name}
-				<br />
-				Job ID: {job.id}
-				<br />
-				Job State: {job.state.name}
-				<br />
-				Job Type: {job.type.name}
-				<br />
-				Create Date: {toLocaleString(job.dateCreated)}
-				<br />
-				Modified Date: {toLocaleString(job.dateModified)}
-				<br />
-				Start Date: {toLocaleString(job.startDate)}
-				{job.jenkinsGitHubURL && job.jenkinsGitHubURL !== null && (
-					<>
-						<br />
-						Jenkins GitHub URL:{' '}
-						<a href={job.jenkinsGitHubURL}>
-							{job.jenkinsGitHubURL}
-						</a>
-					</>
-				)}
-				{job.portalPullRequestURL && (
-					<>
-						<br />
-						Portal Pull Request URL:{' '}
-						<a href={job.portalPullRequestURL}>
-							{job.portalPullRequestURL}
-						</a>
-					</>
-				)}
+				<JobInformationField
+					fieldLabel="Job Name"
+					fieldType="STRING"
+					fieldValue={job.name}
+				/>
+				<JobInformationField
+					fieldLabel="Job ID"
+					fieldType="STRING"
+					fieldValue={job.id}
+				/>
+				<JobInformationField
+					fieldLabel="Job State"
+					fieldType="STRING"
+					fieldValue={job.state.name}
+				/>
+				<JobInformationField
+					fieldLabel="Job Type"
+					fieldType="STRING"
+					fieldValue={job.type.name}
+				/>
+				<JobInformationField
+					fieldLabel="Create Date"
+					fieldType="DATE"
+					fieldValue={job.dateCreated}
+				/>
+				<JobInformationField
+					fieldLabel="Modified Date"
+					fieldType="DATE"
+					fieldValue={job.dateModified}
+				/>
+				<JobInformationField
+					fieldLabel="Start Date"
+					fieldType="DATE"
+					fieldValue={job.startDate}
+				/>
+				{jobParameters &&
+					jobParameterDefinitions &&
+					jobParameterDefinitions.map((jobParameterDefinition) => {
+						return (
+							<JobInformationField
+								fieldLabel={jobParameterDefinition.label}
+								fieldType={jobParameterDefinition.type}
+								fieldValue={
+									jobParameters[jobParameterDefinition.key]
+								}
+								key={jobParameterDefinition.key}
+							/>
+						);
+					})}
 			</ClayPanel.Body>
 		</ClayPanel>
+	);
+}
+
+function JobInformationField({fieldLabel, fieldType, fieldValue}) {
+	if (fieldType === 'DATE') {
+		return (
+			<>
+				{fieldLabel + ': ' + toLocaleString(fieldValue)}
+				<br />
+			</>
+		);
+	}
+
+	if (fieldType === 'URL') {
+		return (
+			<>
+				{fieldLabel + ': '}
+				<a href={fieldValue}>{fieldValue}</a>
+				<br />
+			</>
+		);
+	}
+
+	if (fieldValue === undefined) {
+		fieldValue = '';
+	}
+
+	return (
+		<>
+			{fieldLabel + ': ' + fieldValue}
+			<br />
+		</>
 	);
 }
 

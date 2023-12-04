@@ -20,7 +20,6 @@ import java.io.File;
 import java.io.IOException;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -192,20 +191,21 @@ public class JavaUpgradeConnectionCheck extends BaseJavaTermCheck {
 
 		List<String> upgradeAbsolutePaths = new ArrayList<>();
 
-		SourceFormatterUtil.git(
-			Arrays.asList("ls-files", "-z", "--full-name"),
-			portalDir.getCanonicalPath(), new String[] {"**/*.java"},
-			line -> {
-				for (String skipDirName : _SKIP_DIR_NAMES) {
-					if (line.contains(skipDirName)) {
-						return;
-					}
-				}
+		List<String> fileNames = SourceFormatterUtil.getFilesByGit(
+			portalDir.getCanonicalPath(), new String[] {"**/*.java"});
 
-				if (line.contains("/upgrade/")) {
-					upgradeAbsolutePaths.add(line);
+		outerLoop:
+		for (String fileName : fileNames) {
+			for (String skipDirName : _SKIP_DIR_NAMES) {
+				if (fileName.contains(skipDirName)) {
+					continue outerLoop;
 				}
-			});
+			}
+
+			if (fileName.contains("/upgrade/")) {
+				upgradeAbsolutePaths.add(fileName);
+			}
+		}
 
 		_upgradeAbsolutePaths = upgradeAbsolutePaths;
 
@@ -231,10 +231,8 @@ public class JavaUpgradeConnectionCheck extends BaseJavaTermCheck {
 	}
 
 	private static final String[] _SKIP_DIR_NAMES = {
-		"/.git/", "/.gradle/", "/.idea/", "/.m2/", "/.settings/", "/bin/",
-		"/build/", "/classes/", "/dependencies/", "/node_modules/",
-		"/node_modules_cache/", "/sdk/", "/sql/", "/test/", "/test-classes/",
-		"/test-coverage/", "/test-results/", "/tmp/"
+		"/sdk/", "/sql/", "/test/", "/test-classes/", "/test-coverage/",
+		"/test-results/", "/tmp/"
 	};
 
 	private static final Pattern _extendedClassPattern = Pattern.compile(

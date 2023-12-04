@@ -12,7 +12,6 @@ import com.liferay.source.formatter.util.SourceFormatterUtil;
 
 import java.io.File;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -98,33 +97,23 @@ public class XMLLog4jLoggersCheck extends BaseFileCheck {
 
 		File file = getPortalDir();
 
-		SourceFormatterUtil.git(
-			Arrays.asList("ls-files", "-z", "--full-name"),
-			file.getCanonicalPath(), new String[] {"**/com/liferay/**/*.java"},
-			line -> {
-				for (String skipDirName : _SKIP_DIR_NAMES) {
-					if (line.contains(skipDirName)) {
-						return;
-					}
-				}
+		List<String> fileNames = SourceFormatterUtil.getFilesByGit(
+			file.getCanonicalPath(), new String[] {"**/com/liferay/**/*.java"});
 
-				String fileName = line.substring(
-					0, line.lastIndexOf(CharPool.PERIOD));
+		outerLoop:
+		for (String curFileName : fileNames) {
+			String fileName = curFileName.substring(
+				0, curFileName.lastIndexOf(CharPool.PERIOD));
 
-				fileName = StringUtil.replace(
-					fileName, CharPool.SLASH, CharPool.PERIOD);
+			fileName = StringUtil.replace(
+				fileName, CharPool.SLASH, CharPool.PERIOD);
 
-				_classNames.add(
-					fileName.substring(fileName.indexOf("com.liferay")));
-			});
+			_classNames.add(
+				fileName.substring(fileName.indexOf("com.liferay")));
+		}
 
 		return _classNames;
 	}
-
-	private static final String[] _SKIP_DIR_NAMES = {
-		"/.git/", "/.gradle/", "/.idea/", "/.m2/", "/.settings/", "/bin/",
-		"/build/", "/classes/", "/node_modules/", "/node_modules_cache/"
-	};
 
 	private Set<String> _classNames;
 

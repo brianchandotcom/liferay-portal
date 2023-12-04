@@ -14,7 +14,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.search.internal.configuration.AsahSearchKeywordsConfiguration;
+import com.liferay.portal.search.internal.configuration.SiteActivityAsahConfiguration;
 import com.liferay.portal.search.internal.suggestions.spi.asah.BaseAsahSuggestionsContributor;
 import com.liferay.portal.search.internal.web.cache.AsahWebCacheItem;
 import com.liferay.portal.search.rest.dto.v1_0.SuggestionsContributorConfiguration;
@@ -26,13 +26,13 @@ import org.osgi.service.component.annotations.Activate;
 /**
  * @author Petteri Karttunen
  */
-public abstract class BaseKeywordsAsahSuggestionsContributor
+public abstract class BaseSiteActivityAsahSuggestionsContributor
 	extends BaseAsahSuggestionsContributor {
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		_asahSearchKeywordsConfiguration = ConfigurableUtil.createConfigurable(
-			AsahSearchKeywordsConfiguration.class, properties);
+		_siteActivityAsahConfiguration = ConfigurableUtil.createConfigurable(
+			SiteActivityAsahConfiguration.class, properties);
 	}
 
 	@Override
@@ -61,7 +61,7 @@ public abstract class BaseKeywordsAsahSuggestionsContributor
 			suggestionsContributorConfiguration.getSize(), 5);
 
 		return AsahWebCacheItem.get(
-			analyticsConfiguration, _asahSearchKeywordsConfiguration,
+			analyticsConfiguration, _siteActivityAsahConfiguration,
 			getURL(
 				analyticsConfiguration, basePath, displayLanguageId, groupId,
 				minCounts, path, size, sort),
@@ -110,7 +110,7 @@ public abstract class BaseKeywordsAsahSuggestionsContributor
 
 	private static final int _MIN_COUNTS = 5;
 
-	private volatile AsahSearchKeywordsConfiguration
-		_asahSearchKeywordsConfiguration;
+	private volatile SiteActivityAsahConfiguration
+		_siteActivityAsahConfiguration;
 
 }

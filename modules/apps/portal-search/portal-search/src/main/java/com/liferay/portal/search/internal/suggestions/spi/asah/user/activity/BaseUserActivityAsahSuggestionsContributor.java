@@ -17,7 +17,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.search.internal.configuration.AsahUserActivityConfiguration;
+import com.liferay.portal.search.internal.configuration.UserActivityAsahConfiguration;
 import com.liferay.portal.search.internal.suggestions.spi.asah.BaseAsahSuggestionsContributor;
 import com.liferay.portal.search.internal.web.cache.AsahWebCacheItem;
 import com.liferay.portal.search.rest.dto.v1_0.SuggestionsContributorConfiguration;
@@ -37,8 +37,8 @@ public abstract class BaseUserActivityAsahSuggestionsContributor
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		_asahUserActivityConfiguration = ConfigurableUtil.createConfigurable(
-			AsahUserActivityConfiguration.class, properties);
+		_userActivityAsahConfiguration = ConfigurableUtil.createConfigurable(
+			UserActivityAsahConfiguration.class, properties);
 	}
 
 	@Override
@@ -70,7 +70,7 @@ public abstract class BaseUserActivityAsahSuggestionsContributor
 			suggestionsContributorConfiguration.getSize(), 5);
 
 		return AsahWebCacheItem.get(
-			analyticsConfiguration, _asahUserActivityConfiguration,
+			analyticsConfiguration, _userActivityAsahConfiguration,
 			getURL(
 				analyticsConfiguration,
 				StringBundler.concat(
@@ -200,7 +200,7 @@ public abstract class BaseUserActivityAsahSuggestionsContributor
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseUserActivityAsahSuggestionsContributor.class);
 
-	private volatile AsahUserActivityConfiguration
-		_asahUserActivityConfiguration;
+	private volatile UserActivityAsahConfiguration
+		_userActivityAsahConfiguration;
 
 }

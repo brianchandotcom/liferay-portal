@@ -28,11 +28,11 @@ import org.osgi.service.component.annotations.Component;
  * @author Gustavo Lima
  */
 @Component(
-	configurationPid = "com.liferay.portal.search.internal.configuration.AsahUserActivityConfiguration",
-	property = "search.suggestions.contributor.name=asahRecentAssets",
+	configurationPid = "com.liferay.portal.search.internal.configuration.UserActivityAsahConfiguration",
+	property = "search.suggestions.contributor.name=recentAssetsUserActivity",
 	service = SuggestionsContributor.class
 )
-public class RecentlyViewedUserActivityAsahSuggestionsContributor
+public class RecentAssetsUserActivityAsahSuggestionsContributor
 	extends BaseUserActivityAsahSuggestionsContributor
 	implements SuggestionsContributor {
 
@@ -92,7 +92,7 @@ public class RecentlyViewedUserActivityAsahSuggestionsContributor
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		RecentlyViewedUserActivityAsahSuggestionsContributor.class);
+		RecentAssetsUserActivityAsahSuggestionsContributor.class);
 
 	private static final HashMap<String, String> _contentTypeToClassNameMap =
 		HashMapBuilder.put(

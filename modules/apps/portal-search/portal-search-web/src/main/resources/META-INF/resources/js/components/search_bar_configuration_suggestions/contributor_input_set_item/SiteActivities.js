@@ -27,13 +27,13 @@ import TimeRangeInput from './inputs/TimeRangeInput';
 function getSiteActivitiesContributorActivityOptions() {
 	const options = [
 		{
-			contributorName: CONTRIBUTOR_TYPES.ASAH_TOP_SEARCH_KEYWORDS,
+			contributorName: CONTRIBUTOR_TYPES.ASAH_TOP_SEARCH_SITE_ACTIVITY,
 			description: Liferay.Language.get('top-searches-help'),
 			learnMessageResourceKey: 'search-bar-suggestions-site-activities',
 			title: Liferay.Language.get('top-searches'),
 		},
 		{
-			contributorName: CONTRIBUTOR_TYPES.ASAH_RECENT_SEARCH_KEYWORDS,
+			contributorName: CONTRIBUTOR_TYPES.ASAH_RECENT_SEARCH_SITE_ACTIVITY,
 			description: Liferay.Language.get('trending-searches-help'),
 			learnMessageResourceKey: 'search-bar-suggestions-site-activities',
 			title: Liferay.Language.get('trending-searches'),
@@ -43,28 +43,32 @@ function getSiteActivitiesContributorActivityOptions() {
 	if (Liferay.FeatureFlags['LPS-176691']) {
 		return options.concat([
 			{
-				contributorName: CONTRIBUTOR_TYPES.ASAH_RECENT_SEARCHES,
+				contributorName:
+					CONTRIBUTOR_TYPES.ASAH_RECENT_SEARCHES_USER_ACTIVITY,
 				description: Liferay.Language.get('recent-searches-help'),
 				learnMessageResourceKey:
 					'search-bar-suggestions-site-activities',
 				title: Liferay.Language.get('recent-searches'),
 			},
 			{
-				contributorName: CONTRIBUTOR_TYPES.ASAH_RECENT_PAGES,
+				contributorName:
+					CONTRIBUTOR_TYPES.ASAH_RECENT_PAGES_USER_ACTIVITY,
 				description: Liferay.Language.get('recent-pages-help'),
 				learnMessageResourceKey:
 					'search-bar-suggestions-site-activities',
 				title: Liferay.Language.get('recent-pages'),
 			},
 			{
-				contributorName: CONTRIBUTOR_TYPES.ASAH_RECENT_SITES,
+				contributorName:
+					CONTRIBUTOR_TYPES.ASAH_RECENT_SITES_USER_ACTIVITY,
 				description: Liferay.Language.get('recent-sites-help'),
 				learnMessageResourceKey:
 					'search-bar-suggestions-site-activities',
 				title: Liferay.Language.get('recent-sites'),
 			},
 			{
-				contributorName: CONTRIBUTOR_TYPES.ASAH_RECENT_ASSETS,
+				contributorName:
+					CONTRIBUTOR_TYPES.ASAH_RECENT_ASSETS_USER_ACTIVITY,
 				description: Liferay.Language.get('recently-viewed-help'),
 				learnMessageResourceKey:
 					'search-bar-suggestions-site-activities',
@@ -230,8 +234,8 @@ function SiteActivities({index, onBlur, onInputSetItemChange, touched, value}) {
 			</div>
 
 			{[
-				CONTRIBUTOR_TYPES.ASAH_TOP_SEARCH_KEYWORDS,
-				CONTRIBUTOR_TYPES.ASAH_RECENT_SEARCH_KEYWORDS,
+				CONTRIBUTOR_TYPES.ASAH_TOP_SEARCH_SITE_ACTIVITY,
+				CONTRIBUTOR_TYPES.ASAH_RECENT_SEARCH_SITE_ACTIVITY,
 			].includes(value.contributorName) ? (
 				<div className="c-mb-0 form-group-autofit">
 					<CharacterThresholdInput
@@ -258,8 +262,8 @@ function SiteActivities({index, onBlur, onInputSetItemChange, touched, value}) {
 					/>
 				</div>
 			) : [
-					CONTRIBUTOR_TYPES.ASAH_RECENT_PAGES,
-					CONTRIBUTOR_TYPES.ASAH_RECENT_SITES,
+					CONTRIBUTOR_TYPES.ASAH_RECENT_PAGES_USER_ACTIVITY,
+					CONTRIBUTOR_TYPES.ASAH_RECENT_SITES_USER_ACTIVITY,
 			  ].includes(value.contributorName) ? (
 				<div className="c-mb-0 form-group-autofit">
 					<CharacterThresholdInput
@@ -291,7 +295,7 @@ function SiteActivities({index, onBlur, onInputSetItemChange, touched, value}) {
 						/>
 
 						{value.contributorName ===
-							CONTRIBUTOR_TYPES.ASAH_RECENT_SEARCHES && (
+							CONTRIBUTOR_TYPES.ASAH_RECENT_SEARCHES_USER_ACTIVITY && (
 							<MatchDisplayLanguageInput
 								onChange={_handleChangeAttributeInput(
 									'matchDisplayLanguageId'
@@ -301,7 +305,7 @@ function SiteActivities({index, onBlur, onInputSetItemChange, touched, value}) {
 						)}
 
 						{value.contributorName ===
-							CONTRIBUTOR_TYPES.ASAH_RECENT_ASSETS && (
+							CONTRIBUTOR_TYPES.ASAH_RECENT_ASSETS_USER_ACTIVITY && (
 							<ContentTypeInput
 								onBlur={onBlur('attributes.contentType')}
 								onChange={_handleChangeAttributeValue(
@@ -315,7 +319,7 @@ function SiteActivities({index, onBlur, onInputSetItemChange, touched, value}) {
 
 					<div className="c-mb-0 form-group-autofit">
 						{value.contributorName ===
-							CONTRIBUTOR_TYPES.ASAH_RECENT_SEARCHES && (
+							CONTRIBUTOR_TYPES.ASAH_RECENT_SEARCHES_USER_ACTIVITY && (
 							<MinimumSearchesInput
 								onBlur={onBlur('attributes.minCounts')}
 								onChange={_handleChangeAttributeInput(

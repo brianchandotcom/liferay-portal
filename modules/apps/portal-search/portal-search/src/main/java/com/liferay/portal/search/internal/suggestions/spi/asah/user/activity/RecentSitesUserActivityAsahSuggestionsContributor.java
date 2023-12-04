@@ -25,8 +25,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Gustavo Lima
  */
 @Component(
-	configurationPid = "com.liferay.portal.search.internal.configuration.AsahUserActivityConfiguration",
-	property = "search.suggestions.contributor.name=asahRecentSites",
+	configurationPid = "com.liferay.portal.search.internal.configuration.UserActivityAsahConfiguration",
+	property = "search.suggestions.contributor.name=recentSitesUserActivity",
 	service = SuggestionsContributor.class
 )
 public class RecentSitesUserActivityAsahSuggestionsContributor

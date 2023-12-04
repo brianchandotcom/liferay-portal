@@ -19,12 +19,12 @@ import org.osgi.service.component.annotations.Component;
  * @author Petteri Karttunen
  */
 @Component(
-	configurationPid = "com.liferay.portal.search.internal.configuration.AsahSearchKeywordsConfiguration",
-	property = "search.suggestions.contributor.name=asahRecentSearchKeywords",
+	configurationPid = "com.liferay.portal.search.internal.configuration.SiteActivityAsahConfiguration",
+	property = "search.suggestions.contributor.name=topSearchSiteActivity",
 	service = SuggestionsContributor.class
 )
-public class RecentSearchKeywordsAsahSuggestionsContributor
-	extends BaseKeywordsAsahSuggestionsContributor
+public class TopSearchSiteActivityAsahSuggestionsContributor
+	extends BaseSiteActivityAsahSuggestionsContributor
 	implements SuggestionsContributor {
 
 	@Override
@@ -38,7 +38,7 @@ public class RecentSearchKeywordsAsahSuggestionsContributor
 		return getSuggestionsContributorResults(
 			AsahSuggestionsConstants.PAGES,
 			AsahSuggestionsConstants.SEARCH_KEYWORDS, searchContext,
-			"lastModifiedDate,desc,counts,desc,keywords,asc",
+			"counts,desc,lastModifiedDate,desc,keywords,asc",
 			suggestionsContributorConfiguration);
 	}
 

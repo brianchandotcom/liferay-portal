@@ -25,6 +25,11 @@
 	<td>//div[contains(@data-field-name,'logMessageFormat')]//button</td>
 	<td></td>
 </tr>
+<tr>
+	<td>OUTPUT_LOG_TO_CONSOLE</td>
+	<td>//div[@data-field-name='outputToConsole']//span[contains(.,'Output to Console')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -84,7 +84,21 @@ public class AssetDisplayPageEntryLocalServiceImpl
 		assetDisplayPageEntry.setPlid(
 			_getPlid(classNameId, classPK, layoutPageTemplateEntryId));
 
-		return assetDisplayPageEntryPersistence.update(assetDisplayPageEntry);
+		assetDisplayPageEntry = assetDisplayPageEntryPersistence.update(
+			assetDisplayPageEntry);
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
+				layoutPageTemplateEntryId);
+
+		if (layoutPageTemplateEntry != null) {
+			layoutPageTemplateEntry.setModifiedDate(new Date());
+
+			_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
+				layoutPageTemplateEntry);
+		}
+
+		return assetDisplayPageEntry;
 	}
 
 	@Override
@@ -212,7 +226,21 @@ public class AssetDisplayPageEntryLocalServiceImpl
 
 		assetDisplayPageEntry.setPlid(plid);
 
-		return assetDisplayPageEntryPersistence.update(assetDisplayPageEntry);
+		assetDisplayPageEntry = assetDisplayPageEntryPersistence.update(
+			assetDisplayPageEntry);
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
+				layoutPageTemplateEntryId);
+
+		if (layoutPageTemplateEntry != null) {
+			layoutPageTemplateEntry.setModifiedDate(new Date());
+
+			_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
+				layoutPageTemplateEntry);
+		}
+
+		return assetDisplayPageEntry;
 	}
 
 	private long _getPlid(

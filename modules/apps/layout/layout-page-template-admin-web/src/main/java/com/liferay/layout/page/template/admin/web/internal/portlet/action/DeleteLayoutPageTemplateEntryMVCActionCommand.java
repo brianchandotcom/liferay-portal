@@ -5,7 +5,9 @@
 
 package com.liferay.layout.page.template.admin.web.internal.portlet.action;
 
+import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
+import com.liferay.layout.page.template.exception.RequiredLayoutPageTemplateEntryException;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -65,9 +67,25 @@ public class DeleteLayoutPageTemplateEntryMVCActionCommand
 		for (long deleteLayoutPageTemplateEntryId :
 				deleteLayoutPageTemplateEntryIds) {
 
+			int assetDisplayPageEntriesCount =
+				_assetDisplayPageEntryLocalService.
+					getAssetDisplayPageEntriesCountByLayoutPageTemplateEntryId(
+						deleteLayoutPageTemplateEntryId);
+
 			try {
-				_layoutPageTemplateEntryService.deleteLayoutPageTemplateEntry(
-					deleteLayoutPageTemplateEntryId);
+				if (assetDisplayPageEntriesCount > 0) {
+					deleteLayoutPageTemplateIdsList.add(
+						deleteLayoutPageTemplateEntryId);
+
+					SessionErrors.add(
+						actionRequest,
+						RequiredLayoutPageTemplateEntryException.class);
+				}
+				else {
+					_layoutPageTemplateEntryService.
+						deleteLayoutPageTemplateEntry(
+							deleteLayoutPageTemplateEntryId);
+				}
 			}
 			catch (PortalException portalException) {
 				if (_log.isDebugEnabled()) {
@@ -100,6 +118,10 @@ public class DeleteLayoutPageTemplateEntryMVCActionCommand
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DeleteLayoutPageTemplateEntryMVCActionCommand.class);
+
+	@Reference
+	private AssetDisplayPageEntryLocalService
+		_assetDisplayPageEntryLocalService;
 
 	@Reference
 	private Language _language;

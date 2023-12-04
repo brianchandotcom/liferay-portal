@@ -18,7 +18,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	id = "com.liferay.portal.search.internal.configuration.SiteActivityAsahConfiguration",
 	localization = "content/Language",
-	name = "asah-search-keywords-configuration-name"
+	name = "asah-search-site-activity-configuration-name"
 )
 public interface SiteActivityAsahConfiguration extends AsahConfiguration {
 

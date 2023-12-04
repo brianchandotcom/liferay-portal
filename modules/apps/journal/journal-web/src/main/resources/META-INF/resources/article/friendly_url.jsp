@@ -28,6 +28,7 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 <liferay-friendly-url:input
 	className="<%= JournalArticle.class.getName() %>"
 	classPK="<%= (article == null) || (article.getPrimaryKey() == 0) ? 0 : article.getResourcePrimKey() %>"
+	defaultLanguageId="<%= journalEditArticleDisplayContext.getDefaultArticleLanguageId() %>"
 	inputAddon="<%= journalEditArticleDisplayContext.getFriendlyURLBase() %>"
 	name="friendlyURL"
 	showHistory="<%= false %>"

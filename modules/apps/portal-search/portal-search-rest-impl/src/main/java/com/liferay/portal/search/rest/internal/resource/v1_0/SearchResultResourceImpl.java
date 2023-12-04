@@ -16,12 +16,16 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.BooleanClauseFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
+import com.liferay.portal.kernel.search.IndexerPostProcessor;
+import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
@@ -29,6 +33,8 @@ import com.liferay.portal.kernel.search.generic.MatchAllQuery;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
+import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -51,6 +57,7 @@ import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.searcher.Searcher;
+import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContributor;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -64,14 +71,21 @@ import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.MultivaluedMap;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.InvalidSyntaxException;
+import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -105,6 +119,16 @@ public class SearchResultResourceImpl extends BaseSearchResultResourceImpl {
 			_searchRequestBuilderFactory.builder(
 			).companyId(
 				contextCompany.getCompanyId()
+			).fetchSourceIncludes(
+				new String[] {
+					_localization.getLocalizedName(
+						com.liferay.portal.kernel.search.Field.CONTENT,
+						contextAcceptLanguage.getPreferredLanguageId()),
+					_localization.getLocalizedName(
+						com.liferay.portal.kernel.search.Field.DESCRIPTION,
+						contextAcceptLanguage.getPreferredLanguageId()),
+					com.liferay.portal.kernel.search.Field.MODIFIED_DATE
+				}
 			).from(
 				pagination.getStartPosition()
 			).size(
@@ -122,11 +146,6 @@ public class SearchResultResourceImpl extends BaseSearchResultResourceImpl {
 			searchRequestBuilder.modelIndexerClassNames(entryClassNamesArray);
 		}
 
-		List<String> fields = Arrays.asList(
-			ParamUtil.getStringValues(contextHttpServletRequest, "fields"));
-
-		_setFetchSourceIncludes(fields, searchRequestBuilder);
-
 		if (!Validator.isBlank(search)) {
 			searchRequestBuilder.queryString(search);
 		}
@@ -138,8 +157,10 @@ public class SearchResultResourceImpl extends BaseSearchResultResourceImpl {
 		}
 
 		return _toSearchPage(
-			searchRequestBody.getFacetConfigurations(), fields, pagination,
-			_searcher.search(searchRequestBuilder.build()));
+			searchRequestBody.getFacetConfigurations(),
+			Arrays.asList(
+				ParamUtil.getStringValues(contextHttpServletRequest, "fields")),
+			pagination, _searcher.search(searchRequestBuilder.build()));
 	}
 
 	private void _addSearchContextAttributes(
@@ -286,6 +307,76 @@ public class SearchResultResourceImpl extends BaseSearchResultResourceImpl {
 			com.liferay.portal.kernel.search.Field.ENTRY_CLASS_PK);
 	}
 
+	private ModelSummaryContributor _getModelSummaryContributor(
+		String entryClassName) {
+
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
+
+		try {
+			Collection<ServiceReference<ModelSummaryContributor>>
+				serviceReferences = bundleContext.getServiceReferences(
+					ModelSummaryContributor.class,
+					"(indexer.class.name=" + entryClassName + ")");
+
+			if (serviceReferences.isEmpty()) {
+				return null;
+			}
+
+			Iterator<ServiceReference<ModelSummaryContributor>> iterator =
+				serviceReferences.iterator();
+
+			return bundleContext.getService(iterator.next());
+		}
+		catch (InvalidSyntaxException invalidSyntaxException) {
+			_log.error(invalidSyntaxException);
+		}
+
+		return null;
+	}
+
+	private Summary _getSummary(
+		String entryClassName,
+		com.liferay.portal.kernel.search.Document legacyDocument) {
+
+		if (legacyDocument == null) {
+			return null;
+		}
+
+		ModelSummaryContributor modelSummaryContributor =
+			_getModelSummaryContributor(entryClassName);
+
+		if (modelSummaryContributor == null) {
+			return null;
+		}
+
+		String snippet = legacyDocument.get(
+			com.liferay.portal.kernel.search.Field.SNIPPET);
+
+		Locale originalThemeDisplayLocale =
+			LocaleThreadLocal.getThemeDisplayLocale();
+
+		LocaleThreadLocal.setThemeDisplayLocale(
+			contextAcceptLanguage.getPreferredLocale());
+
+		Summary summary = modelSummaryContributor.getSummary(
+			legacyDocument, contextAcceptLanguage.getPreferredLocale(),
+			snippet);
+
+		if (summary != null) {
+			List<IndexerPostProcessor> indexerPostProcessors =
+				_indexerRegistry.getIndexerPostProcessors(entryClassName);
+
+			indexerPostProcessors.forEach(
+				indexerPostProcessor -> indexerPostProcessor.postProcessSummary(
+					summary, legacyDocument,
+					contextAcceptLanguage.getPreferredLocale(), snippet));
+		}
+
+		LocaleThreadLocal.setThemeDisplayLocale(originalThemeDisplayLocale);
+
+		return summary;
+	}
+
 	private boolean _isAllowedSearchContextAttribute(String key) {
 		if (key.startsWith("search.experiences.") ||
 			key.equals("search.empty.search")) {
@@ -363,16 +454,24 @@ public class SearchResultResourceImpl extends BaseSearchResultResourceImpl {
 	}
 
 	private void _setDescription(
-		AssetRenderer<?> assetRenderer, List<String> fields,
-		SearchResult searchResult) {
+		AssetRenderer<?> assetRenderer,
+		com.liferay.portal.kernel.search.Document legacyDocument,
+		String entryClassName, List<String> fields, SearchResult searchResult) {
 
 		if (!_isEmptyOrContains(fields, "description")) {
 			return;
 		}
 
-		searchResult.setDescription(
-			assetRenderer.getSearchSummary(
-				contextAcceptLanguage.getPreferredLocale()));
+		Summary summary = _getSummary(entryClassName, legacyDocument);
+
+		if (summary != null) {
+			searchResult.setDescription(summary.getContent());
+		}
+		else {
+			searchResult.setDescription(
+				assetRenderer.getSearchSummary(
+					contextAcceptLanguage.getPreferredLocale()));
+		}
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -438,17 +537,6 @@ public class SearchResultResourceImpl extends BaseSearchResultResourceImpl {
 		}
 		catch (Exception exception) {
 			_log.error(exception);
-		}
-	}
-
-	private void _setFetchSourceIncludes(
-		List<String> fields, SearchRequestBuilder searchRequestBuilder) {
-
-		if (!_isEmptyOrContains(fields, "dateModified")) {
-			searchRequestBuilder.fetchSourceIncludes(
-				new String[] {
-					"com.liferay.portal.kernel.search.Field.MODIFIED_DATE"
-				});
 		}
 	}
 
@@ -525,9 +613,16 @@ public class SearchResultResourceImpl extends BaseSearchResultResourceImpl {
 
 		List<SearchResult> searchResults = new ArrayList<>();
 
+		List<com.liferay.portal.kernel.search.Document> legacyDocuments =
+			searchResponse.getDocuments71();
+
 		SearchHits searchHits = searchResponse.getSearchHits();
 
-		for (SearchHit searchHit : searchHits.getSearchHits()) {
+		List<SearchHit> searchHitsList = searchHits.getSearchHits();
+
+		for (int i = 0; i < searchHitsList.size(); i++) {
+			SearchHit searchHit = searchHitsList.get(i);
+
 			SearchResult searchResult = new SearchResult();
 
 			Document document = searchHit.getDocument();
@@ -544,7 +639,18 @@ public class SearchResultResourceImpl extends BaseSearchResultResourceImpl {
 			}
 
 			if (assetRenderer != null) {
-				_setDescription(assetRenderer, fields, searchResult);
+				com.liferay.portal.kernel.search.Document legacyDocument =
+					legacyDocuments.get(i);
+
+				if (!Objects.equals(
+						legacyDocument.getUID(), searchHit.getId())) {
+
+					legacyDocument = null;
+				}
+
+				_setDescription(
+					assetRenderer, legacyDocument, entryClassName, fields,
+					searchResult);
 				_setDTOFields(
 					embedded, entryClassName, entryClassPK, fields,
 					searchResult);
@@ -579,7 +685,13 @@ public class SearchResultResourceImpl extends BaseSearchResultResourceImpl {
 	private FacetResponseProcessor _facetResponseProcessor;
 
 	@Reference
+	private IndexerRegistry _indexerRegistry;
+
+	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private Localization _localization;
 
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;

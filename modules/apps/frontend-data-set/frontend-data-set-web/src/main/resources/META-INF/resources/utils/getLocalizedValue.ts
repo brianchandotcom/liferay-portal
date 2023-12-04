@@ -3,7 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {NESTING_DELIMITER, NESTING_ROOT} from '../Constants';
+import {
+	FDS_NESTED_FIELD_NAME_DELIMITER,
+	FDS_NESTED_FIELD_NAME_PARENT_SUFFIX,
+} from '../constants';
 interface ILocalizedItemDetails {
 	rootPropertyName: string;
 	value: string;
@@ -34,15 +37,18 @@ function getLanguageKey(data: any): string {
 }
 
 function resolveField(path: string | Array<string>, item: any) {
-	if (Array.isArray(path) || !path.includes(NESTING_DELIMITER)) {
+	if (
+		Array.isArray(path) ||
+		!path.includes(FDS_NESTED_FIELD_NAME_DELIMITER)
+	) {
 		const rootPropertyName = typeof path === 'string' ? path : path[0];
 
 		return {resolvedFieldname: path, resolvedItem: item, rootPropertyName};
 	}
 
-	const itemPath = path.split(NESTING_DELIMITER);
+	const itemPath = path.split(FDS_NESTED_FIELD_NAME_DELIMITER);
 
-	if (path.includes(NESTING_ROOT)) {
+	if (path.includes(FDS_NESTED_FIELD_NAME_PARENT_SUFFIX)) {
 		itemPath.pop();
 	}
 

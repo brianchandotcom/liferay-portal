@@ -24,4 +24,7 @@ export {default as FDS_EVENT} from './utils/eventsDefinitions';
 
 // Frontend Data Set Constants
 
-export {NESTING_DELIMITER, NESTING_ROOT} from './Constants';
+export {
+	FDS_NESTED_FIELD_NAME_DELIMITER,
+	FDS_NESTED_FIELD_NAME_PARENT_SUFFIX,
+} from './constants';

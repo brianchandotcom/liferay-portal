@@ -531,8 +531,8 @@ definition {
 	@description = "Verify that Not Published processes are displayed on table"
 	@priority = 4
 	test DisplaysNonPublishedProcessesOnTable {
-		property test.liferay.virtual.instance = "true";
-		property test.run.type = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",

@@ -11,6 +11,7 @@ import React, {useCallback, useEffect, useRef, useState} from 'react';
 import SaveTemplateModal from './SaveTemplateModal';
 import {
 	EXPORT_FILE_FORMAT_SELECTED_EVENT,
+	FILE_EXTENSION_EVENT,
 	OBJECT_DEFINITION,
 	SCHEMA_SELECTED_EVENT,
 	TEMPLATE_SELECTED_EVENT,
@@ -59,6 +60,12 @@ function SaveTemplate({
 				setDisable(true);
 			}
 		};
+		
+		function handleFileExtensionUpdate({entityType, fileExtension}) {
+			if (fileExtension === 'csv' && entityType === OBJECT_DEFINITION) {
+				setDisable(true);
+			}
+		}
 
 		function handleSchemaChange({schema}) {
 			if (schema && !useTemplateMappingRef.current) {
@@ -86,6 +93,7 @@ function SaveTemplate({
 			handleExportFileFormatUpdated
 		);
 		Liferay.on(SCHEMA_SELECTED_EVENT, handleSchemaChange);
+		Liferay.on(FILE_EXTENSION_EVENT, handleFileExtensionUpdate);
 		Liferay.on(TEMPLATE_SELECTED_EVENT, handleTemplateSelection);
 		Liferay.on(TEMPLATE_SOILED_EVENT, handleTemplateSoiled);
 
@@ -94,6 +102,7 @@ function SaveTemplate({
 				EXPORT_FILE_FORMAT_SELECTED_EVENT,
 				handleExportFileFormatUpdated
 			);
+			Liferay.detach(FILE_EXTENSION_EVENT, handleFileExtensionUpdate);
 			Liferay.detach(SCHEMA_SELECTED_EVENT, handleSchemaChange);
 			Liferay.detach(TEMPLATE_SELECTED_EVENT, handleTemplateSelection);
 			Liferay.detach(TEMPLATE_SOILED_EVENT, handleTemplateSoiled);

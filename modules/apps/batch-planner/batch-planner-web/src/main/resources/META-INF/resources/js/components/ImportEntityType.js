@@ -19,19 +19,19 @@ function ImportEntityType({
 		internalClassNameKeyOptions,
 		dispatchInternalClassNameKeyOptions,
 	] = useReducer((state, fileExtension) => {
-        if (fileExtension === 'csv') {
-            return internalClassNameKeyInitialOptions.filter(
-                (item) => item.value !== OBJECT_DEFINITION
-            );
-        }
-        else {
-            return internalClassNameKeyInitialOptions;
-        }
+		if (fileExtension === 'csv') {
+			return internalClassNameKeyInitialOptions.filter(
+				(item) => item.value !== OBJECT_DEFINITION
+			);
+		}
+		else {
+			return internalClassNameKeyInitialOptions;
+		}
 	}, internalClassNameKeyInitialOptions);
-    
+
 	useEffect(() => {
 		function handleFileExtensionUpdate({fileExtension}) {
-			dispatchInternalClassNameKeyOptions(fileExtension)
+			dispatchInternalClassNameKeyOptions(fileExtension);
 		}
 
 		Liferay.on(FILE_EXTENSION_EVENT, handleFileExtensionUpdate);

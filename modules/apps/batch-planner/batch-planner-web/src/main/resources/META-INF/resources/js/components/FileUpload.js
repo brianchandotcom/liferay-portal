@@ -11,6 +11,7 @@ import parseFile from '../FileParsers';
 import {
 	CSV_ENCLOSING_CHARACTERS,
 	CSV_FORMAT,
+	FILE_EXTENSION_EVENT,
 	FILE_EXTENSION_INPUT_PARTIAL_NAME,
 	FILE_SCHEMA_EVENT,
 	IMPORT_FILE_FORMATS,
@@ -87,6 +88,14 @@ function FileUpload({portletNamespace}) {
 		const onComplete = ({extension, fileContent, schema}) => {
 			updateExtensionInputValue(portletNamespace, extension);
 
+			const internalClassNameKeySelect = document.querySelector(
+				`#${portletNamespace}internalClassNameKey`
+			);
+
+			Liferay.fire(FILE_EXTENSION_EVENT, {
+				entityType: internalClassNameKeySelect?.value,
+				fileExtension,
+			});
 			Liferay.fire(FILE_SCHEMA_EVENT, {
 				fileContent,
 				schema,

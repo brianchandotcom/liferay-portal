@@ -9,7 +9,9 @@ import React, {useEffect, useState} from 'react';
 
 import {
 	CREATE_STRATEGIES,
+	FILE_EXTENSION_EVENT,
 	HEADLESS_BATCH_PLANNER_URL,
+	OBJECT_DEFINITION,
 	SCHEMA_SELECTED_EVENT,
 	UPDATE_STRATEGIES,
 } from '../constants';
@@ -18,6 +20,12 @@ function StrategyItems({portletNamespace}) {
 	const [strategies, setStrategies] = useState([]);
 
 	useEffect(() => {
+		function handleFileExtensionUpdate({entityType, fileExtension}) {
+			if (fileExtension === 'csv' && entityType === OBJECT_DEFINITION) {
+				setStrategies([]);
+			}
+		}
+
 		const handleSchemaUpdated = (event) => {
 			if (event.schemaName) {
 				fetch(
@@ -36,9 +44,11 @@ function StrategyItems({portletNamespace}) {
 			}
 		};
 
+		Liferay.on(FILE_EXTENSION_EVENT, handleFileExtensionUpdate);
 		Liferay.on(SCHEMA_SELECTED_EVENT, handleSchemaUpdated);
 
 		return () => {
+			Liferay.detach(FILE_EXTENSION_EVENT, handleFileExtensionUpdate);
 			Liferay.detach(SCHEMA_SELECTED_EVENT, handleSchemaUpdated);
 		};
 	}, []);

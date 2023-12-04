@@ -613,12 +613,12 @@ public class SourceFormatterUtil {
 		return pathMatchers;
 	}
 
-	private static synchronized List<String> _getUnCachedFileNames() {
-		if (_unCachedFileNames != null) {
-			return _unCachedFileNames;
+	private static synchronized List<String> _getUntrackedFileNames() {
+		if (_untrackedFileNames != null) {
+			return _untrackedFileNames;
 		}
 
-		List<String> unCachedFileNames = new ArrayList<>();
+		List<String> untrackedFileNames = new ArrayList<>();
 
 		git(
 			Arrays.asList("add", ".", "--dry-run"), _gitTopLevelFolder,
@@ -629,13 +629,13 @@ public class SourceFormatterUtil {
 
 				line = line.substring(5, line.length() - 1);
 
-				unCachedFileNames.add(
+				untrackedFileNames.add(
 					_gitTopLevelFolder + StringPool.SLASH + line);
 			});
 
-		_unCachedFileNames = unCachedFileNames;
+		_untrackedFileNames = untrackedFileNames;
 
-		return _unCachedFileNames;
+		return _untrackedFileNames;
 	}
 
 	private static List<String> _scanForFileNames(
@@ -669,13 +669,13 @@ public class SourceFormatterUtil {
 		git(
 			allArgs, baseDirName,
 			line -> fileNames.add(
-				_gitTopLevelFolder + StringPool.FORWARD_SLASH + line));
+				_gitTopLevelFolder + StringPool.SLASH + line));
 
-		List<String> unCachedFileNames = _getUnCachedFileNames();
+		List<String> untrackedFileNames = _getUntrackedFileNames();
 
-		for (String unCachedFileName : unCachedFileNames) {
-			if (!fileNames.contains(unCachedFileName)) {
-				fileNames.add(unCachedFileName);
+		for (String untrackedFileName : untrackedFileNames) {
+			if (!fileNames.contains(untrackedFileName)) {
+				fileNames.add(untrackedFileName);
 			}
 		}
 
@@ -831,7 +831,7 @@ public class SourceFormatterUtil {
 		SourceFormatterUtil.class);
 
 	private static String _gitTopLevelFolder;
-	private static List<String> _unCachedFileNames;
+	private static List<String> _untrackedFileNames;
 
 	private static class PathMatchers {
 

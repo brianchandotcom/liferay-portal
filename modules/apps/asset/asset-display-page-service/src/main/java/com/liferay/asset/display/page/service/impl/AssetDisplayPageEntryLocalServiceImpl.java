@@ -9,15 +9,28 @@ import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
 import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.asset.display.page.model.AssetDisplayPageEntryTable;
 import com.liferay.asset.display.page.service.base.AssetDisplayPageEntryLocalServiceBaseImpl;
+import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
+import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetEntryTable;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.info.search.InfoSearchClassMapperRegistry;
+import com.liferay.layout.display.page.LayoutDisplayPageProvider;
+import com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
@@ -68,6 +81,8 @@ public class AssetDisplayPageEntryLocalServiceImpl
 		assetDisplayPageEntry.setLayoutPageTemplateEntryId(
 			layoutPageTemplateEntryId);
 		assetDisplayPageEntry.setType(type);
+		assetDisplayPageEntry.setPlid(
+			_getPlid(classNameId, classPK, layoutPageTemplateEntryId));
 
 		return assetDisplayPageEntryPersistence.update(assetDisplayPageEntry);
 	}
@@ -191,7 +206,77 @@ public class AssetDisplayPageEntryLocalServiceImpl
 			layoutPageTemplateEntryId);
 		assetDisplayPageEntry.setType(type);
 
+		long plid = _getPlid(
+			assetDisplayPageEntry.getClassNameId(),
+			assetDisplayPageEntry.getClassPK(), layoutPageTemplateEntryId);
+
+		assetDisplayPageEntry.setPlid(plid);
+
 		return assetDisplayPageEntryPersistence.update(assetDisplayPageEntry);
+	}
+
+	private long _getPlid(
+		long classNameId, long classPK, long layoutPageTemplateEntryId) {
+
+		String className = _portal.getClassName(classNameId);
+
+		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
+			_layoutDisplayPageProviderRegistry.
+				getLayoutDisplayPageProviderByClassName(className);
+
+		if (layoutDisplayPageProvider == null) {
+			return LayoutConstants.DEFAULT_PLID;
+		}
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
+				layoutPageTemplateEntryId);
+
+		if (layoutPageTemplateEntry != null) {
+			return layoutPageTemplateEntry.getPlid();
+		}
+
+		AssetRendererFactory<?> assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				className);
+
+		AssetEntry assetEntry = null;
+
+		if (assetRendererFactory != null) {
+			try {
+				assetEntry = assetRendererFactory.getAssetEntry(
+					className, classPK);
+			}
+			catch (PortalException portalException) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(portalException);
+				}
+			}
+		}
+		else {
+			assetEntry = _assetEntryLocalService.fetchEntry(
+				classNameId, classPK);
+		}
+
+		if (assetEntry == null) {
+			return LayoutConstants.DEFAULT_PLID;
+		}
+
+		Layout layout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
+			assetEntry.getLayoutUuid(), assetEntry.getGroupId(), false);
+
+		if (layout != null) {
+			return layout.getPlid();
+		}
+
+		layout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
+			assetEntry.getLayoutUuid(), assetEntry.getGroupId(), true);
+
+		if (layout != null) {
+			return layout.getPlid();
+		}
+
+		return LayoutConstants.DEFAULT_PLID;
 	}
 
 	private Predicate _getPredicate(
@@ -237,8 +322,25 @@ public class AssetDisplayPageEntryLocalServiceImpl
 		);
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		AssetDisplayPageEntryLocalServiceImpl.class);
+
+	@Reference
+	private AssetEntryLocalService _assetEntryLocalService;
+
 	@Reference
 	private InfoSearchClassMapperRegistry _infoSearchClassMapperRegistry;
+
+	@Reference
+	private LayoutDisplayPageProviderRegistry
+		_layoutDisplayPageProviderRegistry;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
 
 	@Reference
 	private Portal _portal;

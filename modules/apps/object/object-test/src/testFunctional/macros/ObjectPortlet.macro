@@ -53,6 +53,22 @@ definition {
 	}
 
 	@summary = "Default summary"
+	macro assertDeleteEntryButtonIsPresent(entry = null) {
+		if (IsElementPresent(key_entry = "", locator1 = "ObjectPortlet#ENTRY_KEBAB_MENU")) {
+			Click(
+				key_entry = ${entry},
+				locator1 = "ObjectPortlet#ENTRY_KEBAB_MENU");
+		}
+		else {
+			AssertElementPresent(
+				key_entry = ${entry},
+				locator1 = "ObjectPortlet#ENTRY_KEBAB_MENU");
+		}
+
+		AssertElementPresent(locator1 = "ObjectPortlet#DELETE_ENTRY_BUTTON");
+	}
+
+	@summary = "Default summary"
 	macro assertDeleteEntryButtonNotPresent(entry = null) {
 		if (IsElementPresent(key_entry = "", locator1 = "ObjectPortlet#ENTRY_KEBAB_MENU")) {
 			Click(

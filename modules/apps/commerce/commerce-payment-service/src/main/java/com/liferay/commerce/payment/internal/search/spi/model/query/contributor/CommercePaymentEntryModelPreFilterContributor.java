@@ -37,6 +37,7 @@ public class CommercePaymentEntryModelPreFilterContributor
 		_filterByCurrencyCodes(booleanFilter, searchContext);
 		_filterByPaymentMethodNames(booleanFilter, searchContext);
 		_filterByStatuses(booleanFilter, searchContext);
+		_filterByType(booleanFilter, searchContext);
 	}
 
 	private void _filterByClassNameIds(
@@ -173,6 +174,16 @@ public class CommercePaymentEntryModelPreFilterContributor
 		}
 		else {
 			booleanFilter.add(statusesBooleanFilter, BooleanClauseOccur.MUST);
+		}
+	}
+
+	private void _filterByType(
+		BooleanFilter booleanFilter, SearchContext searchContext) {
+
+		Integer type = (Integer)searchContext.getAttribute("type");
+
+		if (type != null) {
+			booleanFilter.addRequiredTerm("type", type);
 		}
 	}
 

@@ -175,12 +175,22 @@ public class DownstreamBuild extends BaseBuild {
 		String status = getStatus();
 
 		if (!status.equals("completed") && (getParentBuild() != null)) {
+			System.out.println(
+				JenkinsResultsParserUtil.combine(
+					"[", getBuildName(), "] Skipped creating a failure GitHub ",
+					"message because status is ", status));
+
 			return null;
 		}
 
 		String result = getResult();
 
 		if (result.equals("SUCCESS")) {
+			System.out.println(
+				JenkinsResultsParserUtil.combine(
+					"[", getBuildName(), "] Skipped creating a failure GitHub ",
+					"message because result is ", result));
+
 			return null;
 		}
 
@@ -237,14 +247,29 @@ public class DownstreamBuild extends BaseBuild {
 				Dom4JUtil.getOrderedListElement(
 					upstreamJobFailureElements,
 					upstreamJobFailureMessageElement, 3);
+
+				System.out.println(
+					JenkinsResultsParserUtil.combine(
+						"[", getBuildName(), "] Saved an upstream failure ",
+						"GitHub message"));
 			}
 
 			Dom4JUtil.getOrderedListElement(failureElements, messageElement, 3);
 
 			if (failureElements.isEmpty()) {
+				System.out.println(
+					JenkinsResultsParserUtil.combine(
+						"[", getBuildName(),
+						"] Skipped creating a failure GitHub message because ",
+						"no failure elements created"));
+
 				return null;
 			}
 		}
+
+		System.out.println(
+			JenkinsResultsParserUtil.combine(
+				"[", getBuildName(), "] Created a failure GitHub message"));
 
 		return messageElement;
 	}

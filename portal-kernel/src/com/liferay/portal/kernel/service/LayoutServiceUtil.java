@@ -328,6 +328,13 @@ public class LayoutServiceUtil {
 		return getService().fetchLayout(groupId, privateLayout, layoutId);
 	}
 
+	public static long fetchLayoutPlid(
+			String uuid, long groupId, boolean privateLayout)
+		throws PortalException {
+
+		return getService().fetchLayoutPlid(uuid, groupId, privateLayout);
+	}
+
 	/**
 	 * Returns all the ancestor layouts of the layout.
 	 *

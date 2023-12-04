@@ -225,6 +225,7 @@ definition {
 	@description = "Verify an existing factory config can be modified."
 	@priority = 3
 	test ModifyFactoryConfig {
+		property ci.retries.disabled = "false";
 		property database.types = "mysql";
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.auth.verifier.internal.tunnel.configuration.TunnelAuthVerifierConfiguration~test1.config";
 		property osgi.module.configurations = "urlsIncludes=\"/api/liferay/original\"";

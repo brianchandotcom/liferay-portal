@@ -150,6 +150,7 @@ public class AccountEntryAnalyticsDXPEntityBatchEngineTaskItemDelegate
 		throws Exception {
 
 		return DSLQueryFactoryUtil.select(
+			AccountEntryTable.INSTANCE
 		).from(
 			AccountEntryTable.INSTANCE
 		).where(

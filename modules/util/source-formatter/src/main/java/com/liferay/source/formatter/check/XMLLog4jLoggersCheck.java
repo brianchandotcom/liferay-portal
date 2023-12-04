@@ -97,7 +97,7 @@ public class XMLLog4jLoggersCheck extends BaseFileCheck {
 
 		File file = getPortalDir();
 
-		List<String> fileNames = SourceFormatterUtil.getFilesByGit(
+		List<String> fileNames = SourceFormatterUtil.scanForFileNames(
 			file.getCanonicalPath(), new String[] {"**/com/liferay/**/*.java"});
 
 		outerLoop:

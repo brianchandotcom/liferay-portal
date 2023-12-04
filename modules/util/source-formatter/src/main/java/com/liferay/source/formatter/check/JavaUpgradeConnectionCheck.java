@@ -191,7 +191,7 @@ public class JavaUpgradeConnectionCheck extends BaseJavaTermCheck {
 
 		List<String> upgradeAbsolutePaths = new ArrayList<>();
 
-		List<String> fileNames = SourceFormatterUtil.getFilesByGit(
+		List<String> fileNames = SourceFormatterUtil.scanForFileNames(
 			portalDir.getCanonicalPath(), new String[] {"**/*.java"});
 
 		outerLoop:

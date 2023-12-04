@@ -436,7 +436,7 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 				continue;
 			}
 
-			fileNames = SourceFormatterUtil.getFilesByGit(
+			fileNames = SourceFormatterUtil.scanForFileNames(
 				file.getCanonicalPath(), new String[] {"**/*.java"});
 
 			break;

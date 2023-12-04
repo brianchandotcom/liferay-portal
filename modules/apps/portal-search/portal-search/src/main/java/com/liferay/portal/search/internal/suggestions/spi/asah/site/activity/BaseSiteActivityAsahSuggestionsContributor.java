@@ -6,10 +6,14 @@
 package com.liferay.portal.search.internal.suggestions.spi.asah.site.activity;
 
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
+import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -106,9 +110,30 @@ public abstract class BaseSiteActivityAsahSuggestionsContributor
 		return sb.toString();
 	}
 
+	@Override
+	protected boolean isEnabled(
+		AnalyticsSettingsManager analyticsSettingsManager, long companyId) {
+
+		try {
+			if (FeatureFlagManagerUtil.isEnabled("LPS-159643") &&
+				analyticsSettingsManager.isAnalyticsEnabled(companyId)) {
+
+				return true;
+			}
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+		}
+
+		return false;
+	}
+
 	private static final int _CHARACTER_THRESHOLD = 2;
 
 	private static final int _MIN_COUNTS = 5;
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		BaseSiteActivityAsahSuggestionsContributor.class);
 
 	private volatile SiteActivityAsahConfiguration
 		_siteActivityAsahConfiguration;

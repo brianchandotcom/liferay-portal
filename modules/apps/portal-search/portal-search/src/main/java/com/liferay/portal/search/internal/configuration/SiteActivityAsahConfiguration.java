@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -10,17 +10,17 @@ import aQute.bnd.annotation.metatype.Meta;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
- * @author Gustavo Lima
+ * @author Petteri Karttunen
  */
 @ExtendedObjectClassDefinition(
 	category = "search", scope = ExtendedObjectClassDefinition.Scope.COMPANY
 )
 @Meta.OCD(
-	id = "com.liferay.portal.search.internal.configuration.AsahUserActivityConfiguration",
+	id = "com.liferay.portal.search.internal.configuration.SiteActivityAsahConfiguration",
 	localization = "content/Language",
-	name = "asah-search-user-activity-configuration-name"
+	name = "asah-search-keywords-configuration-name"
 )
-public interface AsahUserActivityConfiguration extends AsahConfiguration {
+public interface SiteActivityAsahConfiguration extends AsahConfiguration {
 
 	@Meta.AD(deflt = "14400", name = "cache-timeout", required = false)
 	public int cacheTimeout();

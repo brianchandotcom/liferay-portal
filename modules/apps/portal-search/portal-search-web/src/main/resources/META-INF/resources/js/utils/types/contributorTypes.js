@@ -4,23 +4,23 @@
  */
 
 export const CONTRIBUTOR_TYPES = {
-	ASAH_RECENT_ASSETS: 'asahRecentAssets',
-	ASAH_RECENT_PAGES: 'asahRecentPages',
-	ASAH_RECENT_SEARCH_KEYWORDS: 'asahRecentSearchKeywords',
-	ASAH_RECENT_SEARCHES: 'asahRecentSearches',
-	ASAH_RECENT_SITES: 'asahRecentSites',
-	ASAH_TOP_SEARCH_KEYWORDS: 'asahTopSearchKeywords',
+	ASAH_RECENT_ASSETS_USER_ACTIVITY: 'recentAssetsUserActivity',
+	ASAH_RECENT_PAGES_USER_ACTIVITY: 'recentPagesUserActivity',
+	ASAH_RECENT_SEARCH_SITE_ACTIVITY: 'recentSearchSiteActivity',
+	ASAH_RECENT_SEARCHES_USER_ACTIVITY: 'recentSearchesUserActivity',
+	ASAH_RECENT_SITES_USER_ACTIVITY: 'recentSitesUserActivity',
+	ASAH_TOP_SEARCH_SITE_ACTIVITY: 'topSearchSiteActivity',
 	BASIC: 'basic',
 	SXP_BLUEPRINT: 'sxpBlueprint',
 };
 
 export const CONTRIBUTOR_TYPES_ASAH_DEFAULT_DISPLAY_GROUP_NAMES = {
-	[CONTRIBUTOR_TYPES.ASAH_RECENT_SEARCH_KEYWORDS]: 'trending-searches',
-	[CONTRIBUTOR_TYPES.ASAH_TOP_SEARCH_KEYWORDS]: 'top-searches',
-	[CONTRIBUTOR_TYPES.ASAH_RECENT_SEARCHES]: 'recent-searches',
-	[CONTRIBUTOR_TYPES.ASAH_RECENT_PAGES]: 'recent-pages',
-	[CONTRIBUTOR_TYPES.ASAH_RECENT_SITES]: 'recent-sites',
-	[CONTRIBUTOR_TYPES.ASAH_RECENT_ASSETS]: 'recently-viewed',
+	[CONTRIBUTOR_TYPES.ASAH_RECENT_SEARCH_SITE_ACTIVITY]: 'trending-searches',
+	[CONTRIBUTOR_TYPES.ASAH_TOP_SEARCH_SITE_ACTIVITY]: 'top-searches',
+	[CONTRIBUTOR_TYPES.ASAH_RECENT_SEARCHES_USER_ACTIVITY]: 'recent-searches',
+	[CONTRIBUTOR_TYPES.ASAH_RECENT_PAGES_USER_ACTIVITY]: 'recent-pages',
+	[CONTRIBUTOR_TYPES.ASAH_RECENT_SITES_USER_ACTIVITY]: 'recent-sites',
+	[CONTRIBUTOR_TYPES.ASAH_RECENT_ASSETS_USER_ACTIVITY]: 'recently-viewed',
 };
 
 export const CONTRIBUTOR_TYPES_DEFAULT_ATTRIBUTES = {
@@ -34,31 +34,31 @@ export const CONTRIBUTOR_TYPES_DEFAULT_ATTRIBUTES = {
 		includeAssetURL: true,
 		sxpBlueprintExternalReferenceCode: '',
 	},
-	[CONTRIBUTOR_TYPES.ASAH_RECENT_SEARCH_KEYWORDS]: {
+	[CONTRIBUTOR_TYPES.ASAH_RECENT_SEARCH_SITE_ACTIVITY]: {
 		characterThreshold: '0',
 		matchDisplayLanguageId: true,
 		minCounts: '5',
 	},
-	[CONTRIBUTOR_TYPES.ASAH_TOP_SEARCH_KEYWORDS]: {
+	[CONTRIBUTOR_TYPES.ASAH_TOP_SEARCH_SITE_ACTIVITY]: {
 		characterThreshold: '0',
 		matchDisplayLanguageId: true,
 		minCounts: '5',
 	},
-	[CONTRIBUTOR_TYPES.ASAH_RECENT_SEARCHES]: {
+	[CONTRIBUTOR_TYPES.ASAH_RECENT_SEARCHES_USER_ACTIVITY]: {
 		characterThreshold: '0',
 		matchDisplayLanguageId: true,
 		minCounts: '0',
 		rangeKey: '0',
 	},
-	[CONTRIBUTOR_TYPES.ASAH_RECENT_PAGES]: {
+	[CONTRIBUTOR_TYPES.ASAH_RECENT_PAGES_USER_ACTIVITY]: {
 		characterThreshold: '0',
 		rangeKey: '0',
 	},
-	[CONTRIBUTOR_TYPES.ASAH_RECENT_SITES]: {
+	[CONTRIBUTOR_TYPES.ASAH_RECENT_SITES_USER_ACTIVITY]: {
 		characterThreshold: '0',
 		rangeKey: '0',
 	},
-	[CONTRIBUTOR_TYPES.ASAH_RECENT_ASSETS]: {
+	[CONTRIBUTOR_TYPES.ASAH_RECENT_ASSETS_USER_ACTIVITY]: {
 		characterThreshold: '0',
 		contentType: '',
 		rangeKey: '0',

@@ -62,9 +62,15 @@ public class AnalyticsConfigurationModelListener
 		String[] syncedAccountGroupIds =
 			analyticsConfiguration.syncedAccountGroupIds();
 
-		if (!ArrayUtil.isEmpty(syncedAccountGroupIds)) {
+		if (!analyticsConfiguration.syncAllAccounts() &&
+			!ArrayUtil.isEmpty(syncedAccountGroupIds)) {
+
 			properties.put(
 				"previousSyncedAccountGroupIds", syncedAccountGroupIds);
+		}
+
+		if (analyticsConfiguration.syncAllAccounts()) {
+			properties.put("previousSyncedAccountGroupIds", new String[0]);
 		}
 
 		String[] syncedCommerceChannelIds =
@@ -96,9 +102,15 @@ public class AnalyticsConfigurationModelListener
 		String[] syncedOrganizationIds =
 			analyticsConfiguration.syncedOrganizationIds();
 
-		if (!ArrayUtil.isEmpty(syncedOrderFieldNames)) {
+		if (!analyticsConfiguration.syncAllContacts() &&
+			!ArrayUtil.isEmpty(syncedOrganizationIds)) {
+
 			properties.put(
 				"previousSyncedOrganizationIds", syncedOrganizationIds);
+		}
+
+		if (analyticsConfiguration.syncAllContacts()) {
+			properties.put("previousSyncedOrganizationIds", new String[0]);
 		}
 
 		String[] syncedProductFieldNames =
@@ -120,8 +132,14 @@ public class AnalyticsConfigurationModelListener
 		String[] syncedUserGroupIds =
 			analyticsConfiguration.syncedUserGroupIds();
 
-		if (!ArrayUtil.isEmpty(syncedProductFieldNames)) {
+		if (!analyticsConfiguration.syncAllContacts() &&
+			!ArrayUtil.isEmpty(syncedUserGroupIds)) {
+
 			properties.put("previousSyncedUserGroupIds", syncedUserGroupIds);
+		}
+
+		if (analyticsConfiguration.syncAllContacts()) {
+			properties.put("previousSyncedUserGroupIds", new String[0]);
 		}
 
 		String token = analyticsConfiguration.token();

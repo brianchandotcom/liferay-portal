@@ -329,11 +329,7 @@ public class SourceFormatterUtil {
 	}
 
 	public static List<String> git(List<String> args, String baseDirName) {
-		List<String> result = new ArrayList<>();
-
-		git(args, baseDirName, result::add);
-
-		return result;
+		return _scanForFileNames(args, baseDirName, new String[0]);
 	}
 
 	public static void git(
@@ -385,13 +381,9 @@ public class SourceFormatterUtil {
 	public static List<String> scanForFileNames(
 		String baseDirName, String[] includes) {
 
-		List<String> result = new ArrayList<>();
-
-		_scanForFileNames(
+		return _scanForFileNames(
 			Arrays.asList("ls-files", "-z", "--full-name"), baseDirName,
-			includes, result::add);
-
-		return result;
+			includes);
 	}
 
 	public static List<String> scanForFileNames(
@@ -566,8 +558,9 @@ public class SourceFormatterUtil {
 	}
 
 	private static List<String> _getDeletedFileNames(String baseDirName) {
-		return git(
-			Arrays.asList("ls-files", "-d", "-z", "--full-name"), baseDirName);
+		return _scanForFileNames(
+			Arrays.asList("ls-files", "-d", "-z", "--full-name"), baseDirName,
+			new String[0]);
 	}
 
 	private static String _getDocumentationURLString(String checkName) {
@@ -644,9 +637,8 @@ public class SourceFormatterUtil {
 		return _unCachedFileNames;
 	}
 
-	private static void _scanForFileNames(
-		List<String> args, String baseDirName, String[] includes,
-		Consumer<String> consumer) {
+	private static List<String> _scanForFileNames(
+		List<String> args, String baseDirName, String[] includes) {
 
 		if (_gitTopLevelFolder == null) {
 			List<String> lines = git(
@@ -691,9 +683,7 @@ public class SourceFormatterUtil {
 			}
 		}
 
-		for (String fileName : fileNames) {
-			consumer.accept(fileName);
-		}
+		return fileNames;
 	}
 
 	private static List<String> _scanForFileNames(

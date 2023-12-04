@@ -309,7 +309,7 @@ public class CETFactoryImpl implements CETFactory {
 		UnicodeProperties transformedUnicodeProperties = new UnicodeProperties(
 			true);
 
-		String modifiedTimestamp = String.valueOf(
+		String modifiedTime = String.valueOf(
 			(modifiedDate == null) ? 0 : modifiedDate.getTime());
 
 		for (Map.Entry<String, String> entry : unicodeProperties.entrySet()) {
@@ -318,7 +318,7 @@ public class CETFactoryImpl implements CETFactory {
 
 			if (cetImplFactory.isURLCETPropertyName(name)) {
 				value = value.replaceAll(
-					Pattern.quote("${modifiedTimestamp}"), modifiedTimestamp);
+					Pattern.quote("${modifiedTime}"), modifiedTime);
 			}
 
 			transformedUnicodeProperties.put(name, value);

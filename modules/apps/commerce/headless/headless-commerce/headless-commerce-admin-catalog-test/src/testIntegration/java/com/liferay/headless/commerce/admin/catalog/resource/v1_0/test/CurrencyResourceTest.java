@@ -6,14 +6,167 @@
 package com.liferay.headless.commerce.admin.catalog.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.commerce.currency.model.CommerceCurrency;
+import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
+import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Currency;
+import com.liferay.headless.commerce.admin.catalog.client.pagination.Page;
+import com.liferay.headless.commerce.admin.catalog.client.pagination.Pagination;
+import com.liferay.headless.commerce.core.util.LanguageUtils;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.test.rule.FeatureFlags;
+import com.liferay.portal.test.rule.Inject;
 
+import java.math.BigDecimal;
+
+import java.util.List;
+
+import org.junit.Assert;
 import org.junit.Ignore;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
  * @author Zoltán Takács
  */
-@Ignore
+@FeatureFlags("COMMERCE-12170")
 @RunWith(Arquillian.class)
 public class CurrencyResourceTest extends BaseCurrencyResourceTestCase {
+
+	@Override
+	@Test
+	public void testGetCurrenciesPage() throws Exception {
+		Page<Currency> page = currencyResource.getCurrenciesPage(
+			null, null, Pagination.of(1, -1), null);
+
+		long totalCount = page.getTotalCount();
+
+		Currency currency1 = testGetCurrenciesPage_addCurrency(
+			randomCurrency());
+
+		Currency currency2 = testGetCurrenciesPage_addCurrency(
+			randomCurrency());
+
+		page = currencyResource.getCurrenciesPage(
+			null, null, Pagination.of(1, -1), null);
+
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
+
+		assertContains(currency1, (List<Currency>)page.getItems());
+		assertContains(currency2, (List<Currency>)page.getItems());
+		assertValid(page, testGetCurrenciesPage_getExpectedActions());
+
+		currencyResource.deleteCurrency(currency1.getId());
+
+		currencyResource.deleteCurrency(currency2.getId());
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetCurrenciesPage() throws Exception {
+	}
+
+	@Override
+	protected String[] getAdditionalAssertFieldNames() {
+		return new String[] {"active", "name", "symbol"};
+	}
+
+	@Override
+	protected String[] getIgnoredEntityFieldNames() {
+		return new String[] {"name", "formatPattern"};
+	}
+
+	protected Currency randomCurrency() throws Exception {
+		return new Currency() {
+			{
+				active = RandomTestUtil.randomBoolean();
+				code = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				formatPattern = LanguageUtils.getLanguageIdMap(
+					RandomTestUtil.randomLocaleStringMap());
+				id = RandomTestUtil.randomLong();
+				maxFractionDigits = RandomTestUtil.randomInt();
+				minFractionDigits = RandomTestUtil.randomInt();
+				name = LanguageUtils.getLanguageIdMap(
+					RandomTestUtil.randomLocaleStringMap());
+				primary = RandomTestUtil.randomBoolean();
+				priority = RandomTestUtil.randomDouble();
+				rate = BigDecimal.valueOf(RandomTestUtil.randomDouble());
+				roundingMode = RandomTestUtil.randomEnum(RoundingMode.class);
+				symbol = StringUtil.toLowerCase(RandomTestUtil.randomString());
+			}
+		};
+	}
+
+	@Override
+	protected Currency testDeleteCurrency_addCurrency() throws Exception {
+		return _addCommerceCurrency(randomCurrency());
+	}
+
+	@Override
+	protected Currency testGetCurrenciesPage_addCurrency(Currency currency)
+		throws Exception {
+
+		return _addCommerceCurrency(currency);
+	}
+
+	@Override
+	protected Currency testGetCurrency_addCurrency() throws Exception {
+		return _addCommerceCurrency(randomCurrency());
+	}
+
+	@Override
+	protected Currency testGraphQLCurrency_addCurrency() throws Exception {
+		return _addCommerceCurrency(randomCurrency());
+	}
+
+	@Override
+	protected Currency testPatchCurrency_addCurrency() throws Exception {
+		return _addCommerceCurrency(randomCurrency());
+	}
+
+	@Override
+	protected Currency testPostCurrency_addCurrency(Currency currency)
+		throws Exception {
+
+		return _addCommerceCurrency(currency);
+	}
+
+	private Currency _addCommerceCurrency(Currency currency) throws Exception {
+		CommerceCurrency commerceCurrency =
+			_commerceCurrencyLocalService.addCommerceCurrency(
+				TestPropsValues.getUserId(), currency.getCode(),
+				LanguageUtils.getLocalizedMap(currency.getName()),
+				currency.getSymbol(), currency.getRate(),
+				LanguageUtils.getLocalizedMap(currency.getFormatPattern()),
+				currency.getMaxFractionDigits(),
+				currency.getMinFractionDigits(),
+				currency.getRoundingModeAsString(), currency.getPrimary(),
+				currency.getPriority(), currency.getActive());
+
+		return new Currency() {
+			{
+				active = commerceCurrency.isActive();
+				code = commerceCurrency.getCode();
+				formatPattern = LanguageUtils.getLanguageIdMap(
+					commerceCurrency.getFormatPatternMap());
+				id = commerceCurrency.getCommerceCurrencyId();
+				maxFractionDigits = commerceCurrency.getMaxFractionDigits();
+				minFractionDigits = commerceCurrency.getMinFractionDigits();
+				name = LanguageUtils.getLanguageIdMap(
+					commerceCurrency.getNameMap());
+				primary = commerceCurrency.isPrimary();
+				priority = commerceCurrency.getPriority();
+				rate = commerceCurrency.getRate();
+				roundingMode = RoundingMode.valueOf(
+					commerceCurrency.getRoundingMode());
+				symbol = commerceCurrency.getSymbol();
+			}
+		};
+	}
+
+	@Inject
+	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
+
 }

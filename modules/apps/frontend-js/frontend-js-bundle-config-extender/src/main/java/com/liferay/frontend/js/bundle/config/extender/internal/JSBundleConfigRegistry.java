@@ -5,15 +5,14 @@
 
 package com.liferay.frontend.js.bundle.config.extender.internal;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.string.StringPool;
 
 import java.net.URL;
 
 import java.util.Collection;
 import java.util.Dictionary;
-import java.util.Map;
-import java.util.concurrent.ConcurrentSkipListMap;
 
 import javax.servlet.ServletContext;
 
@@ -24,7 +23,6 @@ import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
@@ -33,10 +31,10 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 @Component(service = JSBundleConfigRegistry.class)
 public class JSBundleConfigRegistry
 	implements ServiceTrackerCustomizer
-		<ServletContext, ServiceReference<ServletContext>> {
+		<ServletContext, JSBundleConfigRegistry.JSConfig> {
 
 	@Override
-	public ServiceReference<ServletContext> addingService(
+	public JSConfig addingService(
 		ServiceReference<ServletContext> serviceReference) {
 
 		Bundle bundle = serviceReference.getBundle();
@@ -53,12 +51,9 @@ public class JSBundleConfigRegistry
 				ServletContext servletContext = _bundleContext.getService(
 					serviceReference);
 
-				_jsConfigs.put(
-					serviceReference, new JSConfig(servletContext, url));
-
 				_lastModified = System.currentTimeMillis();
 
-				return serviceReference;
+				return new JSConfig(servletContext, url);
 			}
 		}
 
@@ -66,33 +61,21 @@ public class JSBundleConfigRegistry
 	}
 
 	public Collection<JSConfig> getJSConfigs() {
-		return _jsConfigs.values();
+		return _serviceTrackerList.toList();
 	}
 
 	public long getLastModified() {
 		return _lastModified;
 	}
 
-	public long getTrackingCount() {
-		return _serviceTracker.getTrackingCount();
-	}
-
 	@Override
 	public void modifiedService(
-		ServiceReference<ServletContext> serviceReference,
-		ServiceReference<ServletContext> trackedServiceReference) {
-
-		removedService(serviceReference, trackedServiceReference);
-
-		addingService(serviceReference);
+		ServiceReference<ServletContext> serviceReference, JSConfig jsConfig) {
 	}
 
 	@Override
 	public void removedService(
-		ServiceReference<ServletContext> serviceReference,
-		ServiceReference<ServletContext> trackedServiceReference) {
-
-		JSConfig jsConfig = _jsConfigs.remove(serviceReference);
+		ServiceReference<ServletContext> serviceReference, JSConfig jsConfig) {
 
 		if (jsConfig != null) {
 			_bundleContext.ungetService(serviceReference);
@@ -122,35 +105,23 @@ public class JSBundleConfigRegistry
 	}
 
 	@Activate
-	protected void activate(
-			ComponentContext componentContext, Map<String, Object> properties)
+	protected void activate(ComponentContext componentContext)
 		throws Exception {
-
-		if (_serviceTracker != null) {
-			_serviceTracker.close();
-		}
 
 		_bundleContext = componentContext.getBundleContext();
 
-		_serviceTracker = ServiceTrackerFactory.open(
-			_bundleContext,
-			"(&(objectClass=" + ServletContext.class.getName() +
-				")(osgi.web.contextpath=*))",
+		_serviceTrackerList = ServiceTrackerListFactory.open(
+			_bundleContext, ServletContext.class, "(osgi.web.contextpath=*)",
 			this);
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_serviceTracker.close();
-
-		_serviceTracker = null;
+		_serviceTrackerList.close();
 	}
 
 	private BundleContext _bundleContext;
-	private final Map<ServiceReference<ServletContext>, JSConfig> _jsConfigs =
-		new ConcurrentSkipListMap<>();
 	private volatile long _lastModified = System.currentTimeMillis();
-	private ServiceTracker<ServletContext, ServiceReference<ServletContext>>
-		_serviceTracker;
+	private ServiceTrackerList<JSConfig> _serviceTrackerList;
 
 }

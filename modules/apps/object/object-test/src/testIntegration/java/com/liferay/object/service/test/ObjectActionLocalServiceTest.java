@@ -801,7 +801,7 @@ public class ObjectActionLocalServiceTest {
 			).toString()
 		).build();
 
-		// When you add a new object entry that belongs to "objectDefinition",
+		// When you add a new object entry that belongs to an object definition,
 		// update the newly added object entry
 
 		_addObjectAction(
@@ -810,8 +810,8 @@ public class ObjectActionLocalServiceTest {
 			ObjectActionTriggerConstants.KEY_ON_AFTER_ADD, unicodeProperties,
 			false);
 
-		// When you update an object entry that belongs to "objectDefinition",
-		// add a new object entry to "objectDefinition"
+		// When you update an object entry that belongs to an object definition,
+		// add a new object entry to the object definition
 
 		_addObjectAction(
 			RandomTestUtil.randomString(),
@@ -819,19 +819,16 @@ public class ObjectActionLocalServiceTest {
 			ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE, unicodeProperties,
 			false);
 
+		// Each call to the method _testAddObjectActionWithCircularReference
+		// should increase the expected objects entries count by 2. The only
+		// exception is for the 4th call when we inject with a broken thread
+		// local.
+
 		_testAddObjectActionWithCircularReference(2);
+		_testAddObjectActionWithCircularReference(4);
+		_testAddObjectActionWithCircularReference(6);
 
-		for (ObjectEntry objectEntry :
-				_objectEntryLocalService.getObjectEntries(
-					0, _objectDefinition.getObjectDefinitionId(),
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
-
-			_objectEntryLocalService.deleteObjectEntry(objectEntry);
-		}
-
-		int expectedObjectEntriesCount = RandomTestUtil.randomInt(3, 20);
-
-		Object originalClearObjectEntryIdsMapThreadLocal =
+		Object clearObjectEntryIdsMapThreadLocal =
 			ReflectionTestUtil.getAndSetFieldValue(
 				ObjectActionThreadLocal.class,
 				"_clearObjectEntryIdsMapThreadLocal",
@@ -839,28 +836,24 @@ public class ObjectActionLocalServiceTest {
 
 					@Override
 					public Boolean get() {
-						if (_count < expectedObjectEntriesCount) {
-							_count++;
-
-							return true;
-						}
-
-						return false;
+						return true;
 					}
-
-					private int _count = 1;
 
 				});
 
 		try {
-			_testAddObjectActionWithCircularReference(
-				expectedObjectEntriesCount);
+			_testAddObjectActionWithCircularReference(8);
+
+			Assert.fail();
+		}
+		catch (StackOverflowError stackOverflowError) {
+			Assert.assertNotNull(stackOverflowError);
 		}
 		finally {
 			ReflectionTestUtil.setFieldValue(
 				ObjectActionThreadLocal.class,
 				"_clearObjectEntryIdsMapThreadLocal",
-				originalClearObjectEntryIdsMapThreadLocal);
+				clearObjectEntryIdsMapThreadLocal);
 		}
 	}
 

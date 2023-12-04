@@ -62,7 +62,7 @@ definition {
 		task ("When I click on the Cookie police link at the bottom of the page") {
 			ScrollWebElementIntoView(locator1 = "CP2HomePage#COOKIE_LINK");
 
-			CP2HomePage.clickAtCookiePoliceLink();
+			CP2HomePage.clickAtCookiePoliceMenu();
 		}
 
 		task ("Then I should be able to assert that the Cookie police page is loaded") {

@@ -1,28 +1,32 @@
 definition {
 
-	@summary = "Default summary"
+	@summary = "Assert that the guide video button is present"
 	macro assertGuideVideosButton() {
 		AssertElementPresent(locator1 = "CP2HomePage#GUIDE_VIDEOS_BUTTON");
 	}
 
-	@summary = "Default summary"
+	@summary = "Assert that the site language change"
 	macro assertLanguageChange(siteTitle = null) {
 		var key_title = ${siteTitle};
 
 		AssertVisible(locator1 = "CP2HomePage#WELCOME_PAGE");
 	}
 
-	@summary = "Default summary"
+	@summary = "Verify if the modal isin't present"
 	macro assertModalNotPresent() {
 		AssertElementNotPresent(locator1 = "CP2HomePage#ONBOARDING_MODAL");
 	}
 
-	@summary = "Default summary"
+	@summary = "Click on Cookie Policy at footer"
 	macro clickAtCookiePoliceLink() {
 		Click(locator1 = "CP2HomePage#COOKIE_LINK");
 	}
+	@summary = "Click on Cookie Policy at mega menu"
+	macro clickAtCookiePoliceMenu() {
+		Click(locator1 = "CP2HomePage#COOKIE_POLICY_MEGA_MENU");
+	}
 
-	@summary = "Default summary"
+	@summary = "Clicks at Language button"
 	macro clickAtLanguageButton(language = null) {
 		var key_option = ${language};
 

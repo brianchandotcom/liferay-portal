@@ -16,6 +16,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>COOKIE_POLICY_MEGA_MENU</td>
+	<td>//span[contains(.,'Cookie Policy')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DROPDOWN_LANGUAGE_OPTIONS</td>
 	<td>//div[contains(@class, 'dropdown-menu')]/div[contains(@class,language-dropdown)]/ul/li/a[contains(.,'${key_option}')]</td>
 	<td></td>

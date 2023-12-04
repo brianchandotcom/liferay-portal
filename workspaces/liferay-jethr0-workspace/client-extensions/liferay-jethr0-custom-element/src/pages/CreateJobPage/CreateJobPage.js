@@ -16,13 +16,11 @@ import postSpringBootData from '../../services/postSpringBootData';
 import useSpringBootData from '../../services/useSpringBootData';
 
 function CreateJobPage() {
-	const [jenkinsGitHubURL, setJenkinsGitHubURL] = useState(null);
 	const [jobName, setJobName] = useState(null);
+	const [jobParameters, setJobParameters] = useState(null);
 	const [jobPriority, setJobPriority] = useState(4);
 	const [jobTypeKey, setJobTypeKey] = useState('portalPullRequestSF');
 	const [jobTypes, setJobTypes] = useState(null);
-	const [portalPullRequestURL, setPortalPullRequestURL] = useState(null);
-	const [testSuiteName, setTestSuiteName] = useState('sf');
 
 	function redirectToJobPage(data) {
 		const json = JSON.parse(data);
@@ -42,6 +40,22 @@ function CreateJobPage() {
 		}
 	}
 
+	function setJobParametersFromJobTypeKey(jobTypeKey) {
+		for (const jobType of jobTypes) {
+			if (jobType.key === jobTypeKey) {
+				let jobParameters = {};
+
+				jobType.parameterDefinitions.forEach((parameterDefinition) => {
+					jobParameters[parameterDefinition.key] = parameterDefinition.valueDefault;
+				});
+
+				setJobParameters(jobParameters);
+
+				break;
+			}
+		}
+	}
+
 	const breadcrumbs = [
 		{active: false, link: '/', name: 'Home'},
 		{active: false, link: '/jobs', name: 'Jobs'},
@@ -53,6 +67,7 @@ function CreateJobPage() {
 		urlPath: '/jobs/types',
 	});
 
+	let jobParameterDefinitions = null;
 	let jobTypesOptions = [];
 
 	if (jobTypes !== null) {
@@ -66,15 +81,23 @@ function CreateJobPage() {
 		if (jobName === null && jobTypeKey !== null) {
 			setJobNameFromJobTypeKey(jobTypeKey);
 		}
+
+		if (jobParameters === null && jobTypeKey !== null) {
+			setJobParametersFromJobTypeKey(jobTypeKey);
+		}
+
+		let jobType = jobTypes.find((jobType) => {
+			return jobType.key === jobTypeKey;
+		});
+
+		jobParameterDefinitions = jobType.parameterDefinitions;
 	}
 
 	const jobData = {
-		jenkinsGitHubURL,
 		name: jobName,
-		portalPullRequestURL,
+		parameters: jobParameters,
 		priority: jobPriority,
 		state: 'queued',
-		testSuiteName,
 		type: jobTypeKey,
 	};
 
@@ -111,6 +134,7 @@ function CreateJobPage() {
 						id="jobType"
 						onChange={(event) => {
 							setJobNameFromJobTypeKey(event.target.value);
+							setJobParametersFromJobTypeKey(event.target.value);
 							setJobTypeKey(event.target.value);
 						}}
 						options={jobTypesOptions}
@@ -132,47 +156,34 @@ function CreateJobPage() {
 					/>
 				</ClayForm.Group>
 
-				<ClayForm.Group>
-					<label htmlFor="jenkinsGitHubURL">Jenkins GitHub URL</label>
+				{
+					jobParameters && jobParameterDefinitions &&
+					jobParameterDefinitions.map((jobParameterDefinition) => {
+						return (
+							<ClayForm.Group key={jobParameterDefinition.key}>
+								<label htmlFor={jobParameterDefinition.key}>
+									{jobParameterDefinition.label}
+								</label>
 
-					<ClayInput
-						id="jenkinsGitHubURL"
-						onChange={(event) => {
-							setJenkinsGitHubURL(event.target.value);
-						}}
-						placeholder="Insert your Jenkins GitHub URL here"
-						type="text"
-					/>
-				</ClayForm.Group>
-
-				<ClayForm.Group>
-					<label htmlFor="portalPullRequestURL">
-						Portal Pull Request URL
-					</label>
-
-					<ClayInput
-						id="portalPullRequestURL"
-						onChange={(event) => {
-							setPortalPullRequestURL(event.target.value);
-						}}
-						placeholder="Insert your Portal Pull Request URL here"
-						type="text"
-					/>
-				</ClayForm.Group>
-
-				<ClayForm.Group>
-					<label htmlFor="testSuiteName">Test Suite Name</label>
-
-					<ClayInput
-						id="testSuiteName"
-						onChange={(event) => {
-							setTestSuiteName(event.target.value);
-						}}
-						placeholder="Insert your Test Suite Name here"
-						type="text"
-						value={testSuiteName}
-					/>
-				</ClayForm.Group>
+								<ClayInput
+									id={jobParameterDefinition.key}
+									onChange={(event) => {
+										setJobParameters({
+											...jobParameters,
+											[jobParameterDefinition.key]:
+												event.target.value,
+										});
+									}}
+									placeholder={
+										jobParameterDefinition.valueDescription
+									}
+									type="text"
+									value={jobParameters[jobParameterDefinition.key] || ''}
+								/>
+							</ClayForm.Group>
+						);
+					})
+				}
 
 				<Jethr0ButtonsRow
 					buttons={[

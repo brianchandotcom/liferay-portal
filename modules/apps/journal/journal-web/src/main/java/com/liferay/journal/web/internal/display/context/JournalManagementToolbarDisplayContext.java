@@ -660,16 +660,58 @@ public class JournalManagementToolbarDisplayContext
 				).build());
 		}
 		else {
-			filterNavigationDropdownItems = getDropdownItems(
-				getNavigationEntriesMap(),
-				PortletURLBuilder.create(
-					getPortletURL()
-				).setKeywords(
-					StringPool.BLANK
-				).setParameter(
-					"ddmStructureId", (String)null
-				).buildPortletURL(),
-				getNavigationParam(), getNavigation());
+			filterNavigationDropdownItems.add(
+				DropdownItemBuilder.setActive(
+					_journalDisplayContext.isNavigationMine()
+				).setHref(
+					PortletURLBuilder.create(
+						getPortletURL()
+					).setKeywords(
+						StringPool.BLANK
+					).setNavigation(
+						"all"
+					).setParameter(
+						"assetCategoryId", (String)null
+					).setParameter(
+						"assetTagId", (String)null
+					).setParameter(
+						"ddmStructureId", (String)null
+					).buildPortletURL()
+				).setLabel(
+					LanguageUtil.get(httpServletRequest, "all")
+				).build());
+			filterNavigationDropdownItems.add(
+				DropdownItemBuilder.setActive(
+					_journalDisplayContext.isNavigationMine()
+				).setHref(
+					PortletURLBuilder.create(
+						getPortletURL()
+					).setKeywords(
+						StringPool.BLANK
+					).setNavigation(
+						"mine"
+					).setParameter(
+						"ddmStructureId", (String)null
+					).buildPortletURL()
+				).setLabel(
+					LanguageUtil.get(httpServletRequest, "mine")
+				).build());
+			filterNavigationDropdownItems.add(
+				DropdownItemBuilder.setActive(
+					_journalDisplayContext.isNavigationRecent()
+				).setHref(
+					PortletURLBuilder.create(
+						getPortletURL()
+					).setKeywords(
+						StringPool.BLANK
+					).setNavigation(
+						"recent"
+					).setParameter(
+						"ddmStructureId", (String)null
+					).buildPortletURL()
+				).setLabel(
+					LanguageUtil.get(httpServletRequest, "recent")
+				).build());
 		}
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPS-194763") ||

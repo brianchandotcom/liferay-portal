@@ -3682,6 +3682,38 @@ definition {
 		}
 	}
 
+	@description = "LPS-196835 Confirm that the user can use search box and the autocomplete function to choose an icon in the Item Action"
+	@priority = 3
+	test SearchIconFillsAutomaticallyOnItemAction {
+		task ("When the user clicks on the plus button in the Item Action") {
+			LexiconEntry.gotoAdd();
+		}
+
+		task ("And clicks on the plus button in the icon picker") {
+			LexiconEntry.gotoAdd();
+		}
+
+		task ("And the user types incompleted icon name in the search box in the icon picker") {
+			SelectFrameTop();
+
+			Type(
+				locator1 = "DataSet#MODAL_SEARCH",
+				value1 = "analy");
+		}
+
+		task ("Then the autocomplete result shows in the search box") {
+			AssertVisible(
+				key_text = "analytics",
+				locator1 = "Modal#MODAL_ICON");
+		}
+
+		task ("And user can choose the icon") {
+			Click.mouseOverClick(
+				key_text = "analytics",
+				locator1 = "Modal#MODAL_ICON");
+		}
+	}
+
 	@description = "LPS-194351 Confirm that a created action can be edited and changes are displayed, and the Headless Action Key and Confirmation Message fields can be left empty in the Creation Action"
 	@priority = 3
 	test SomeFieldsMayBeEmptyInCreationAction {

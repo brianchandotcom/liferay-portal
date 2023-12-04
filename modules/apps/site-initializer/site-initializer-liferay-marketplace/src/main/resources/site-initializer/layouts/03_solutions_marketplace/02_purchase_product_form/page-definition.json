@@ -27,8 +27,9 @@
 						"definition": {
 							"widgetInstance": {
 								"widgetConfig": {
+									"properties": "path=purchased-solutions"
 								},
-								"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_[$COMPANY_ID$]_LXC_liferay_marketplace_custom_element_purchased_solutions"
+								"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_[$COMPANY_ID$]_LXC_liferay_marketplace_custom_element"
 							}
 						},
 						"type": "Widget"

@@ -128,7 +128,10 @@ public class PortletRegistryImpl implements PortletRegistry {
 
 			String portletId = PortletIdCodec.encode(
 				PortletIdCodec.decodePortletName(portletName),
-				PortletIdCodec.decodeUserId(portletName), instanceId);
+				PortletIdCodec.decodeUserId(portletName),
+				StringUtil.replace(
+					instanceId, "fragmentEntryLinkNamespace",
+					fragmentEntryLink.getNamespace()));
 
 			portletIds.add(portletId);
 		}

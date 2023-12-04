@@ -7,7 +7,6 @@ package com.liferay.commerce.payment.internal.upgrade.registry;
 
 import com.liferay.commerce.payment.internal.upgrade.v1_0_1.CommercePaymentMethodGroupRelUpgradeProcess;
 import com.liferay.commerce.payment.internal.upgrade.v1_2_0.util.CommercePaymentMethodGroupRelQualifierTable;
-import com.liferay.commerce.payment.internal.upgrade.v1_4_0.CommercePaymentEntryUpgradeProcess;
 import com.liferay.commerce.payment.internal.upgrade.v1_4_0.util.CommercePaymentEntryAuditTable;
 import com.liferay.commerce.payment.internal.upgrade.v1_4_0.util.CommercePaymentEntryTable;
 import com.liferay.portal.kernel.log.Log;
@@ -16,6 +15,7 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
+import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
@@ -65,8 +65,9 @@ public class CommercePaymentServiceUpgradeStepRegistrator
 		registry.register(
 			"1.3.0", "1.4.0", CommercePaymentEntryTable.create(),
 			CommercePaymentEntryAuditTable.create(),
-			new CommercePaymentEntryUpgradeProcess(
-				_resourceActionLocalService));
+			new com.liferay.commerce.payment.internal.upgrade.v1_4_0.
+				CommercePaymentEntryUpgradeProcess(
+					_resourceActionLocalService));
 
 		registry.register(
 			"1.4.0", "1.5.0",
@@ -90,6 +91,24 @@ public class CommercePaymentServiceUpgradeStepRegistrator
 			UpgradeProcessFactory.addColumns(
 				"CommercePaymentEntry", "cancelURL TEXT null",
 				"errorMessages TEXT null", "languageId VARCHAR(75) null"));
+
+		registry.register(
+			"1.6.0", "1.7.0",
+			UpgradeProcessFactory.addColumns(
+				"CommercePaymentEntry", "note TEXT null",
+				"reasonKey VARCHAR(75) null", "reasonName STRING null"),
+			new BaseExternalReferenceCodeUpgradeProcess() {
+
+				@Override
+				protected String[][] getTableAndPrimaryKeyColumnNames() {
+					return new String[][] {
+						{"CommercePaymentEntry", "commercePaymentEntryId"}
+					};
+				}
+
+			},
+			new com.liferay.commerce.payment.internal.upgrade.v1_7_0.
+				CommercePaymentEntryUpgradeProcess());
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce payment upgrade step registrator finished");

@@ -146,6 +146,8 @@ definition {
 
 			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
+			CustomerPortal.search(searchItem = "Test Account Analytics Cloud");
+
 			CustomerPortal.enterOnProject(title = "Test Account Analytics Cloud");
 		}
 

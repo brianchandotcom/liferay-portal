@@ -496,6 +496,210 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-196462. The New Rule modal is accessible using Keyboard navigation and Screen Reader."
+	@priority = 4
+	test ManagePageRuleViaKeyboard {
+		property custom.properties = "feature.flag.LPS-169837=true";
+
+		task ("Given a page designer has a Button fragment on a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = ${randomSiteName});
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+		}
+
+		task ("When the page designer navigates to the Page Rules panel") {
+			PageEditor.gotoTab(tabName = "Page Rules");
+		}
+
+		task ("Then the page designer could add a page rule via keyboard") {
+			KeyPress(
+				key_text = "times",
+				locator1 = "Icon#ANY",
+				value1 = "\TAB");
+
+			KeyPress(
+				key_text = "New Rule",
+				locator1 = "Button#ANY",
+				value1 = "\ENTER");
+
+			AssertTextEquals(
+				index = 1,
+				locator1 = "Modal#BODY_MESSAGE",
+				value1 = "Add at least one condition and one action to complete the rule.");
+
+			KeyPress(
+				locator1 = "Modal#CLOSE_BUTTON",
+				value1 = "\TAB");
+
+			Type.sendKeys(
+				key_text = "Rule Name",
+				locator1 = "TextInput#ANY",
+				value1 = "Test Page Rule");
+
+			KeyPress(
+				key_text = "Rule Name",
+				locator1 = "TextInput#ANY",
+				value1 = "\TAB");
+
+			KeyPress(
+				locator1 = "//div[contains(@class,'rule-builder-item--condition')]",
+				value1 = "\TAB");
+
+			KeyPress(
+				index = 1,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION_ITEM",
+				value1 = "\ENTER");
+
+			KeyPress(
+				index = 1,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION_ITEM",
+				value1 = "\ENTER");
+
+			KeyPress(
+				index = 1,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION_ITEM",
+				value1 = "\TAB");
+
+			KeyPress(
+				index = 2,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION_ITEM",
+				value1 = "\ENTER");
+
+			KeyPress(
+				index = 2,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION_ITEM",
+				value1 = "\ENTER");
+
+			KeyPress(
+				index = 2,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION_ITEM",
+				value1 = "\TAB");
+
+			KeyPress(
+				index = 3,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION_ITEM",
+				value1 = "\ENTER");
+
+			KeyPress(
+				index = 3,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION_ITEM",
+				value1 = "\ENTER");
+
+			KeyPress(
+				locator1 = "//div[contains(@class,'rule-builder-item--action')]",
+				value1 = "\TAB");
+
+			KeyPress(
+				index = 1,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_ACTION_ITEM",
+				value1 = "\ENTER");
+
+			KeyPress(
+				index = 1,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_ACTION_ITEM",
+				value1 = "\DOWN");
+
+			KeyPress(
+				index = 1,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_ACTION_ITEM",
+				value1 = "\ENTER");
+
+			KeyPress(
+				index = 1,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_ACTION_ITEM",
+				value1 = "\TAB");
+
+			KeyPress(
+				index = 2,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_ACTION_ITEM",
+				value1 = "\ENTER");
+
+			KeyPress(
+				index = 2,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_ACTION_ITEM",
+				value1 = "\ENTER");
+
+			KeyPress(
+				index = 2,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_ACTION_ITEM",
+				value1 = "\TAB");
+
+			KeyPress(
+				index = 3,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_ACTION_ITEM",
+				value1 = "\ENTER");
+
+			KeyPress(
+				index = 3,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_ACTION_ITEM",
+				value1 = "\ENTER");
+
+			KeyPress(
+				key_text = "Cancel",
+				locator1 = "Modal#MODAL_FOOTER_BUTTON",
+				value1 = "\TAB");
+
+			KeyPress(
+				key_text = "Save",
+				locator1 = "Modal#MODAL_FOOTER_BUTTON",
+				value1 = "\ENTER");
+
+			Alert.viewSuccessMessage();
+
+			AssertVisible(
+				key_rule = "Test Page RuleIfUserIs the UsertestHideFragmentButton",
+				key_ruleName = "Test Page Rule",
+				locator1 = "PageEditor#PAGE_RULE_LIST_ITEM");
+		}
+
+		task ("When the page designer focuses on the ellipsis button of page rule via keyboard") {
+			KeyPress(
+				key_text = "New Rule",
+				locator1 = "Button#ANY",
+				value1 = "\TAB");
+
+			AssertElementFocused(
+				key_ruleName = "Test Page Rule",
+				locator1 = "PageEditor#PAGE_RULE_LIST_ITEM_ELLIPSIS");
+		}
+
+		task ("Then the page designer could delete the page rule via keyboard") {
+			KeyPress(
+				key_ruleName = "Test Page Rule",
+				locator1 = "PageEditor#PAGE_RULE_LIST_ITEM_ELLIPSIS",
+				value1 = "\ENTER");
+
+			KeyPress(
+				key_menuItem = "Edit",
+				locator1 = "MenuItem#ANY_MENU_ITEM",
+				value1 = "\DOWN");
+
+			KeyPress(
+				key_menuItem = "Delete",
+				locator1 = "MenuItem#ANY_MENU_ITEM",
+				value1 = "\ENTER");
+
+			Alert.viewSuccessMessage();
+
+			AssertTextEquals(
+				locator1 = "Message#EMPTY_STATE_INFO",
+				value1 = "No Rules Yet");
+
+			AssertTextEquals(
+				locator1 = "Message#EMPTY_STATE_TEXT",
+				value1 = "Fortunately, it is very easy to add new ones.");
+		}
+	}
+
 	@description = "This is a test for LPS-196461. The Section “Page rules“is accessible via Keyboard and also everything inside that tab."
 	@priority = 3
 	test OpenPageRulesPanelViaKeyboard {

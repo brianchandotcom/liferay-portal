@@ -432,7 +432,9 @@ definition {
 		}
 
 		if (isSet(parameterOption)) {
-			ObjectRelationships.editRelationshipsParameter(parameterOption = ${parameterOption});
+			ObjectAdmin.selectDropdownItem(
+				labelName = "Parameter",
+				optionName = ${parameterOption});
 		}
 
 		if (${invalidEntry} == "true") {

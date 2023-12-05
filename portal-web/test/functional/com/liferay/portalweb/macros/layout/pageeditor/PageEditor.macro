@@ -1055,6 +1055,59 @@ definition {
 		PageEditor.waitForAutoSave();
 	}
 
+	@summary = "Add a page rule"
+	macro addPageRule(selectActionValue = null, selectItemForTheCondition = null, selectConditionValue = null, ruleName = null, selectItemForTheAction = null, selectAction = null, selectCondition = null) {
+		Button.click(button = "New Rule");
+
+		AssertTextEquals(
+			locator1 = "Modal#HEADER",
+			value1 = "New Rule");
+
+		if (isSet(ruleName)) {
+			InputField.editText(
+				fieldLabel = "Rule Name",
+				text = ${ruleName});
+		}
+
+		Click(
+			index = 1,
+			locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION_ITEM");
+
+		DropdownMenuItem.click(menuItem = ${selectItemForTheCondition});
+
+		Click(
+			index = 2,
+			locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION_ITEM");
+
+		DropdownMenuItem.click(menuItem = ${selectCondition});
+
+		Click(
+			index = 3,
+			locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION_ITEM");
+
+		DropdownMenuItem.click(menuItem = ${selectConditionValue});
+
+		Click(
+			index = 1,
+			locator1 = "PageEditor#PAGE_RULE_BUILDER_ACTION_ITEM");
+
+		DropdownMenuItem.click(menuItem = ${selectAction});
+
+		Click(
+			index = 2,
+			locator1 = "PageEditor#PAGE_RULE_BUILDER_ACTION_ITEM");
+
+		DropdownMenuItem.click(menuItem = ${selectItemForTheAction});
+
+		Click(
+			index = 3,
+			locator1 = "PageEditor#PAGE_RULE_BUILDER_ACTION_ITEM");
+
+		DropdownMenuItem.click(menuItem = ${selectActionValue});
+
+		Modal.save();
+	}
+
 	@summary = "Default summary"
 	macro addVideoFragmentURL(videoLink = null) {
 		Type(

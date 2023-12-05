@@ -1,0 +1,25 @@
+assemble:
+    - fromTask: bootJar
+liferay-sample-commerce-shipping-engine-sb:
+    enabledShippingEngineOptionsPath: "/shipping/engine/options/enabled"
+    key: liferay-sample-commerce-shipping-engine-sb
+    name: Liferay Sample Commerce Shipping Engine SB
+    oAuth2ApplicationExternalReferenceCode: liferay-sample-commerce-shipping-engine-sb-oauth-application-user-agent
+    shippingEngineLocalizedDescriptionPath: "/shipping/engine/description"
+    shippingEngineLocalizedNamePath: "/shipping/engine/name"
+    shippingEngineOptionLabelPath: "/shipping/engine/option/label"
+    shippingEngineOptionsPath: "/shipping/engine/options"
+    shippingEngineTypeSettings:
+        key1: value1
+        key2: value2
+        key3: value3
+        key4: value4
+        key5: value5
+    type: commerceShippingEngine
+liferay-sample-commerce-shipping-engine-sb-oauth-application-user-agent:
+    .serviceAddress: localhost:58081
+    .serviceScheme: http
+    name: Liferay Sample Commerce Shipping Engine SB OAuth Application User Agent
+    scopes:
+        - Liferay.Headless.Admin.Workflow.everything
+    type: oAuthApplicationUserAgent

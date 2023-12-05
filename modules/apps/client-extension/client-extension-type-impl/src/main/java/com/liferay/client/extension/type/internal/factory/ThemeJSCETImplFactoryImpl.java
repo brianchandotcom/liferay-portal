@@ -22,7 +22,8 @@ import javax.portlet.PortletRequest;
 /**
  * @author Iván Zaera Avellón
  */
-public class ThemeJSCETImplFactoryImpl extends BaseCETImplFactoryImpl<ThemeJSCET> {
+public class ThemeJSCETImplFactoryImpl
+	extends BaseCETImplFactoryImpl<ThemeJSCET> {
 
 	public ThemeJSCETImplFactoryImpl() {
 		super(ThemeJSCET.class);

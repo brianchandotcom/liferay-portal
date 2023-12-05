@@ -49,13 +49,15 @@ public class CardinalityAssetEntryValidator implements AssetEntryValidator {
 				_assetVocabularyLocalService.getGroupsVocabularies(
 					_portal.getCurrentAndAncestorSiteGroupIds(groupId))) {
 
-			validate(classNameId, classTypePK, categoryIds, assetVocabulary);
+			validate(
+				groupId, classNameId, classTypePK, categoryIds,
+				assetVocabulary);
 		}
 	}
 
 	protected void validate(
-			long classNameId, long classTypePK, long[] categoryIds,
-			AssetVocabulary assetVocabulary)
+			long groupId, long classNameId, long classTypePK,
+			long[] categoryIds, AssetVocabulary assetVocabulary)
 		throws PortalException {
 
 		if (!assetVocabulary.isAssociatedToClassNameIdAndClassTypePK(
@@ -65,7 +67,7 @@ public class CardinalityAssetEntryValidator implements AssetEntryValidator {
 		}
 
 		if (assetVocabulary.isMissingRequiredCategory(
-				classNameId, classTypePK, categoryIds)) {
+				classNameId, classTypePK, categoryIds, groupId)) {
 
 			throw new AssetCategoryException(
 				assetVocabulary, AssetCategoryException.AT_LEAST_ONE_CATEGORY);

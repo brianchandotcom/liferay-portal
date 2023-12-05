@@ -166,7 +166,9 @@ public class AssetVocabularyCTDisplayRenderer
 
 			sb.append(name);
 
-			if (assetVocabulary.isRequired(classNameId, classTypePK)) {
+			if (assetVocabulary.isRequired(
+					classNameId, classTypePK, assetVocabulary.getGroupId())) {
+
 				sb.append(StringPool.SPACE);
 				sb.append(StringPool.STAR);
 			}

@@ -429,8 +429,8 @@ public class DLViewDisplayContext {
 		for (AssetVocabulary assetVocabulary : assetVocabularies) {
 			if (assetVocabulary.isRequired(
 					classNameId,
-					DLFileEntryTypeConstants.
-						FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT)) {
+					DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
+					themeDisplay.getScopeGroupId())) {
 
 				return false;
 			}

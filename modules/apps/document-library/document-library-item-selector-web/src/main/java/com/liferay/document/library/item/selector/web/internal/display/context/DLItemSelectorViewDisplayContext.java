@@ -330,7 +330,8 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 
 			for (AssetVocabulary assetVocabulary : assetVocabularies) {
 				if (assetVocabulary.isRequired(
-						classNameId, defaultFileEntryTypeId)) {
+						classNameId, defaultFileEntryTypeId,
+						_themeDisplay.getScopeGroupId())) {
 
 					return null;
 				}

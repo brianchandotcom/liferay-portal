@@ -35,6 +35,9 @@ public class AddGroupDisplayContext {
 		_disablePrivateLayouts = disablePrivateLayouts;
 		_httpServletRequest = httpServletRequest;
 		_renderResponse = renderResponse;
+
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	public String getAddGroupURL() {
@@ -65,11 +68,7 @@ public class AddGroupDisplayContext {
 			return _groupsIds;
 		}
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		long[] groupsIds = {themeDisplay.getCompanyGroupId()};
+		long[] groupsIds = {_themeDisplay.getCompanyGroupId()};
 
 		if (_getParentGroupId() > 0) {
 			groupsIds = PortalUtil.getCurrentAndAncestorSiteGroupIds(
@@ -89,7 +88,8 @@ public class AddGroupDisplayContext {
 
 		for (AssetVocabulary assetVocabulary : assetVocabularies) {
 			if (assetVocabulary.isAssociatedToClassNameId(classNameId) &&
-				assetVocabulary.isRequired(classNameId, 0)) {
+				assetVocabulary.isRequired(
+					classNameId, 0, _themeDisplay.getScopeGroupId())) {
 
 				return true;
 			}
@@ -106,7 +106,8 @@ public class AddGroupDisplayContext {
 
 		for (AssetVocabulary assetVocabulary : assetVocabularies) {
 			if (assetVocabulary.isAssociatedToClassNameId(classNameId) &&
-				assetVocabulary.isRequired(classNameId, 0)) {
+				assetVocabulary.isRequired(
+					classNameId, 0, _themeDisplay.getScopeGroupId())) {
 
 				int assetVocabularyCategoriesCount =
 					AssetCategoryServiceUtil.getVocabularyCategoriesCount(
@@ -153,5 +154,6 @@ public class AddGroupDisplayContext {
 	private final HttpServletRequest _httpServletRequest;
 	private Long _parentGroupId;
 	private final RenderResponse _renderResponse;
+	private final ThemeDisplay _themeDisplay;
 
 }

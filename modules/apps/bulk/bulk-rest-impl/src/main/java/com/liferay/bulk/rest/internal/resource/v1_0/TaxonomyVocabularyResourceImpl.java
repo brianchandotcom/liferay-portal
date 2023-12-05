@@ -62,7 +62,7 @@ public class TaxonomyVocabularyResourceImpl
 			transform(
 				assetCategoriesMap.entrySet(),
 				entry -> _toTaxonomyVocabulary(
-					entry.getValue(), entry.getKey())));
+					entry.getValue(), entry.getKey(), siteId)));
 	}
 
 	private Set<AssetCategory> _getAssetCategories(
@@ -169,15 +169,16 @@ public class TaxonomyVocabularyResourceImpl
 	}
 
 	private TaxonomyVocabulary _toTaxonomyVocabulary(
-		List<AssetCategory> assetCategories, AssetVocabulary assetVocabulary) {
+		List<AssetCategory> assetCategories, AssetVocabulary assetVocabulary,
+		long siteId) {
 
 		return new TaxonomyVocabulary() {
 			{
 				multiValued = assetVocabulary.isMultiValued();
 				name = assetVocabulary.getName();
 				required = assetVocabulary.isRequired(
-					_getClassNameId(),
-					AssetCategoryConstants.ALL_CLASS_TYPE_PK);
+					_getClassNameId(), AssetCategoryConstants.ALL_CLASS_TYPE_PK,
+					siteId);
 				taxonomyCategories = transformToArray(
 					assetCategories,
 					assetCategory -> new TaxonomyCategory() {

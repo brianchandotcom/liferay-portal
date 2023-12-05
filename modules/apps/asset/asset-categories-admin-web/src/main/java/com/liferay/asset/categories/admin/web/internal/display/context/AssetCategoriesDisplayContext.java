@@ -203,7 +203,10 @@ public class AssetCategoriesDisplayContext {
 
 			sb.append(name);
 
-			if (vocabulary.isRequired(classNameId, classTypePK)) {
+			if (vocabulary.isRequired(
+					classNameId, classTypePK,
+					_themeDisplay.getScopeGroupId())) {
+
 				sb.append(StringPool.SPACE);
 				sb.append(StringPool.STAR);
 				sb.append(StringPool.OPEN_PARENTHESIS);

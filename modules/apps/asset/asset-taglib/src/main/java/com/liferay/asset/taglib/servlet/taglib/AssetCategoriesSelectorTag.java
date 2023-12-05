@@ -358,7 +358,8 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 				).put(
 					"required",
 					vocabulary.isRequired(
-						PortalUtil.getClassNameId(_className), _classTypePK) &&
+						PortalUtil.getClassNameId(_className), _classTypePK,
+						themeDisplay.getScopeGroupId()) &&
 					_showRequiredLabel
 				).put(
 					"selectedCategories", selectedCategoryIds
@@ -517,7 +518,8 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 			vocabulary -> {
 				if (_showOnlyRequiredVocabularies &&
 					!vocabulary.isRequired(
-						PortalUtil.getClassNameId(_className), _classTypePK)) {
+						PortalUtil.getClassNameId(_className), _classTypePK,
+						themeDisplay.getScopeGroupId())) {
 
 					return false;
 				}

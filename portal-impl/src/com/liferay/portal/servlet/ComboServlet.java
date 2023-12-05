@@ -595,8 +595,12 @@ public class ComboServlet extends HttpServlet {
 
 		String[] parts = StringUtil.split(path, StringPool.SLASH);
 
-		for (String part : parts) {
-			if (part.equals(StringPool.PERIOD)) {
+		for (int i = 0; i < parts.length; i++) {
+			String part = parts[i];
+
+			if (((i != 0) && Validator.isBlank(part)) ||
+				part.equals(StringPool.PERIOD)) {
+
 				continue;
 			}
 

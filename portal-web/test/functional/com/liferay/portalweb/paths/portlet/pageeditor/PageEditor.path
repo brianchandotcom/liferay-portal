@@ -990,6 +990,11 @@
 	<td>//div[@aria-label='Page Rules Panel']//li[.//*[normalize-space(text())='${key_ruleName}']][normalize-space()='${key_rule}']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>PAGE_RULE_LIST_ITEM_ELLIPSIS</td>
+	<td>//div[@aria-label='Page Rules Panel']//li[.//*[normalize-space(text())='${key_ruleName}']]//button[contains(@class,'dropdown-toggle')]</td>
+	<td></td>
+</tr>
 
 <!--PAGE_STRUCTURE_ITEM_CONFIGURATION-->
 

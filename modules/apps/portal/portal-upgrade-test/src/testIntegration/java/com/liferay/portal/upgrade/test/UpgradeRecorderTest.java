@@ -210,7 +210,6 @@ public class UpgradeRecorderTest {
 		StartupHelperUtil.setUpgrading(false);
 
 		Assert.assertEquals("success", _getResult());
-
 		Assert.assertEquals("no upgrade", _getType());
 	}
 
@@ -226,7 +225,6 @@ public class UpgradeRecorderTest {
 		StartupHelperUtil.setUpgrading(false);
 
 		Assert.assertEquals("success", _getResult());
-
 		Assert.assertEquals("no upgrade", _getType());
 	}
 
@@ -242,7 +240,6 @@ public class UpgradeRecorderTest {
 		StartupHelperUtil.setUpgrading(false);
 
 		Assert.assertEquals("success", _getResult());
-
 		Assert.assertEquals("no upgrade", _getType());
 	}
 
@@ -265,7 +262,6 @@ public class UpgradeRecorderTest {
 		}
 
 		Assert.assertEquals("unresolved", _getResult());
-
 		Assert.assertEquals("major", _getType());
 	}
 

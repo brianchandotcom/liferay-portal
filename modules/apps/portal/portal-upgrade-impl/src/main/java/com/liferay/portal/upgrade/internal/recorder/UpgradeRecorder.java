@@ -157,9 +157,7 @@ public class UpgradeRecorder {
 						" upgrade finished with result ", _result));
 
 				if (!_result.equals("failure") && !_errorMessages.isEmpty()) {
-					_log.info(
-						"Unrelated errors occur during the upgrade, please " +
-							"check the logs");
+					_log.info("Unrelated errors occur during the upgrade");
 				}
 			}
 		}

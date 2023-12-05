@@ -4246,6 +4246,75 @@ definition {
 		}
 	}
 
+	@summary = "Edit the page rule"
+	macro editPageRule(newRuleName = null, selectActionValue = null, selectItemForTheCondition = null, selectConditionValue = null, ruleName = null, selectItemForTheAction = null, selectAction = null, selectCondition = null) {
+		Click(
+			key_ruleName = ${ruleName},
+			locator1 = "PageEditor#PAGE_RULE_LIST_ITEM_ELLIPSIS");
+
+		DropdownMenuItem.click(menuItem = "Edit");
+
+		AssertTextEquals(
+			locator1 = "Modal#HEADER",
+			value1 = "Edit Rule");
+
+		if (isSet(newRuleName)) {
+			InputField.editText(
+				fieldLabel = "Rule Name",
+				text = ${newRuleName});
+		}
+
+		if (isSet(selectItemForTheCondition)) {
+			Click(
+				index = 1,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_EXISTING_CONDITION_ITEM");
+
+			DropdownMenuItem.click(menuItem = ${selectItemForTheCondition});
+		}
+
+		if (isSet(selectCondition)) {
+			Click(
+				index = 2,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_EXISTING_CONDITION_ITEM");
+
+			DropdownMenuItem.click(menuItem = ${selectCondition});
+		}
+
+		if (isSet(selectConditionValue)) {
+			Click(
+				index = 3,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_EXISTING_CONDITION_ITEM");
+
+			DropdownMenuItem.click(menuItem = ${selectConditionValue});
+		}
+
+		if (isSet(selectAction)) {
+			Click(
+				index = 1,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_EXISTING_ACTION_ITEM");
+
+			DropdownMenuItem.click(menuItem = ${selectAction});
+		}
+
+		if (isSet(selectItemForTheAction)) {
+			Click(
+				index = 2,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_EXISTING_ACTION_ITEM");
+
+			DropdownMenuItem.click(menuItem = ${selectItemForTheAction});
+		}
+
+		if (isSet(selectActionValue)) {
+			Click(
+				index = 3,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_EXISTING_ACTION_ITEM");
+
+			DropdownMenuItem.click(menuItem = ${selectActionValue});
+		}
+
+		Modal.save();
+	}
+
 	@summary = "Default summary"
 	macro editTabs(persistSelectedTab = null, panel = null, numberOfTabs = null) {
 		PageEditor.clickConfigurableField(fragmentName = "Tabs");

@@ -7,6 +7,7 @@ package com.liferay.site.internal.configuration.manager;
 
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.site.configuration.manager.SitemapConfigurationManager;
 import com.liferay.site.internal.configuration.SitemapCompanyConfiguration;
 
@@ -49,6 +50,23 @@ public class SitemapConfigurationManagerImpl
 				SitemapCompanyConfiguration.class, companyId);
 
 		return sitemapCompanyConfiguration.includeWebContent();
+	}
+
+	@Override
+	public void saveSitemapCompanyConfiguration(
+			long companyId, boolean includeCategories, boolean includePages,
+			boolean includeWebContent)
+		throws ConfigurationException {
+
+		_configurationProvider.saveCompanyConfiguration(
+			SitemapCompanyConfiguration.class, companyId,
+			HashMapDictionaryBuilder.<String, Object>put(
+				"includeCategories", includeCategories
+			).put(
+				"includePages", includePages
+			).put(
+				"includeWebContent", includeWebContent
+			).build());
 	}
 
 	@Reference

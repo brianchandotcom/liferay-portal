@@ -13,9 +13,8 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 
-import javax.annotation.Resource;
-
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Luca Pellizzon
@@ -116,7 +115,7 @@ public class CommercePaymentEntryModelResourcePermission
 			commercePaymentEntry.getCommercePaymentEntryId(), actionId);
 	}
 
-	@Resource
+	@Reference
 	private CommercePaymentEntryLocalService _commercePaymentEntryLocalService;
 
 }

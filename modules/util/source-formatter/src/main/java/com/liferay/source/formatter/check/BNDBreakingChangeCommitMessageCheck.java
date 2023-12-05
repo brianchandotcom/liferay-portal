@@ -173,8 +173,6 @@ public class BNDBreakingChangeCommitMessageCheck extends BaseFileCheck {
 					"Incorrect commit message in SHA ", parts[0], ": The ",
 					"commit message contains '# breaking' should end with ",
 					"'\\n\\n----'"));
-
-			return;
 		}
 
 		for (String header : _BREAKING_CHANGE_HEADER_NAMES) {
@@ -212,8 +210,6 @@ public class BNDBreakingChangeCommitMessageCheck extends BaseFileCheck {
 						"There should be an empty line after/before '----', ",
 						"'# breaking', '## What', '## Why' and '## ",
 						"Alternatives'"));
-
-				return;
 			}
 		}
 	}

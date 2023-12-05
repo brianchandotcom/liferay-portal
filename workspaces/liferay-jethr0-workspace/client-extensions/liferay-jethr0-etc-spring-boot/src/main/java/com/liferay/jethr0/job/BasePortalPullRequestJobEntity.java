@@ -33,38 +33,13 @@ public abstract class BasePortalPullRequestJobEntity
 
 	@Override
 	public URL getJenkinsGitHubURL() {
-		if (_jenkinsGitHubURL != null) {
-			return _jenkinsGitHubURL;
-		}
+		String jenkinsGitHubURL = getParameterValue("jenkinsGitHubURL");
 
-		String jenkinsGitHubBranchName = getJenkinsGitHubBranchName();
-		String jenkinsGitHubBranchUserName = getJenkinsGitHubBranchUserName();
-
-		if (StringUtil.isNullOrEmpty(jenkinsGitHubBranchName) ||
-			StringUtil.isNullOrEmpty(jenkinsGitHubBranchUserName)) {
-
+		if (StringUtil.isNullOrEmpty(jenkinsGitHubURL)) {
 			return null;
 		}
 
-		_jenkinsGitHubURL = StringUtil.toURL(
-			StringUtil.combine(
-				"https://github.com/", jenkinsGitHubBranchUserName,
-				"/liferay-jenkins-ee/tree/", jenkinsGitHubBranchName));
-
-		return _jenkinsGitHubURL;
-	}
-
-	@Override
-	public JSONObject getJSONObject() {
-		JSONObject jsonObject = super.getJSONObject();
-
-		jsonObject.put(
-			"jenkinsGitHubURL", getJenkinsGitHubURL()
-		).put(
-			"portalPullRequestURL", getPortalPullRequestURL()
-		);
-
-		return jsonObject;
+		return StringUtil.toURL(jenkinsGitHubURL);
 	}
 
 	@Override
@@ -74,7 +49,13 @@ public abstract class BasePortalPullRequestJobEntity
 
 	@Override
 	public URL getPortalPullRequestURL() {
-		return _portalPullRequestURL;
+		String portalPullRequestURL = getParameterValue("portalPullRequestURL");
+
+		if (StringUtil.isNullOrEmpty(portalPullRequestURL)) {
+			return null;
+		}
+
+		return StringUtil.toURL(portalPullRequestURL);
 	}
 
 	@Override
@@ -93,7 +74,7 @@ public abstract class BasePortalPullRequestJobEntity
 
 	@Override
 	public String getTestSuiteName() {
-		return _testSuiteName;
+		return getParameterValue("testSuiteName");
 	}
 
 	@Override
@@ -108,7 +89,7 @@ public abstract class BasePortalPullRequestJobEntity
 
 	@Override
 	public void setJenkinsGitHubURL(URL jenkinsGitHubURL) {
-		_jenkinsGitHubURL = jenkinsGitHubURL;
+		setParameterValue("jenkinsGitHubURL", String.valueOf(jenkinsGitHubURL));
 	}
 
 	@Override
@@ -118,7 +99,8 @@ public abstract class BasePortalPullRequestJobEntity
 
 	@Override
 	public void setPortalPullRequestURL(URL portalPullRequestURL) {
-		_portalPullRequestURL = portalPullRequestURL;
+		setParameterValue(
+			"portalPullRequestURL", String.valueOf(portalPullRequestURL));
 	}
 
 	@Override
@@ -136,7 +118,7 @@ public abstract class BasePortalPullRequestJobEntity
 
 	@Override
 	public void setTestSuiteName(String testSuiteName) {
-		_testSuiteName = testSuiteName;
+		setParameterValue("testSuiteName", testSuiteName);
 	}
 
 	public void setUpstreamBranchName(String upstreamBranchName) {
@@ -149,21 +131,6 @@ public abstract class BasePortalPullRequestJobEntity
 
 	protected BasePortalPullRequestJobEntity(JSONObject jsonObject) {
 		super(jsonObject);
-
-		String jenkinsGitHubURLString = jsonObject.optString(
-			"jenkinsGitHubURL");
-
-		if (!StringUtil.isNullOrEmpty(jenkinsGitHubURLString)) {
-			_jenkinsGitHubURL = StringUtil.toURL(jenkinsGitHubURLString);
-		}
-
-		String portalPullRequestURLString = jsonObject.optString(
-			"portalPullRequestURL");
-
-		if (!StringUtil.isNullOrEmpty(portalPullRequestURLString)) {
-			_portalPullRequestURL = StringUtil.toURL(
-				portalPullRequestURLString);
-		}
 	}
 
 	protected String getBuildParameterValue(String buildParameterName) {
@@ -215,9 +182,11 @@ public abstract class BasePortalPullRequestJobEntity
 			return _jenkinsGitHubBranchName;
 		}
 
-		if (_jenkinsGitHubURL != null) {
+		URL jenkinsGitHubURL = getJenkinsGitHubURL();
+
+		if (jenkinsGitHubURL != null) {
 			Matcher matcher = _jenkinsGitHubURLPattern.matcher(
-				String.valueOf(_jenkinsGitHubURL));
+				String.valueOf(jenkinsGitHubURL));
 
 			if (matcher.find()) {
 				_jenkinsGitHubBranchName = matcher.group("branchName");
@@ -237,9 +206,11 @@ public abstract class BasePortalPullRequestJobEntity
 			return _jenkinsGitHubBranchUserName;
 		}
 
-		if (_jenkinsGitHubURL != null) {
+		URL jenkinsGitHubURL = getJenkinsGitHubURL();
+
+		if (jenkinsGitHubURL != null) {
 			Matcher matcher = _jenkinsGitHubURLPattern.matcher(
-				String.valueOf(_jenkinsGitHubURL));
+				String.valueOf(jenkinsGitHubURL));
 
 			if (matcher.find()) {
 				_jenkinsGitHubBranchUserName = matcher.group("branchUserName");
@@ -313,13 +284,10 @@ public abstract class BasePortalPullRequestJobEntity
 
 	private String _jenkinsGitHubBranchName;
 	private String _jenkinsGitHubBranchUserName;
-	private URL _jenkinsGitHubURL;
 	private String _originName;
-	private URL _portalPullRequestURL;
 	private String _senderBranchName;
 	private String _senderBranchSHA;
 	private String _senderUserName;
-	private String _testSuiteName;
 	private String _upstreamBranchName;
 	private String _upstreamBranchSHA;
 

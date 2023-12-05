@@ -5,10 +5,7 @@
 
 package com.liferay.jethr0.job;
 
-import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.util.StringUtil;
-
-import java.net.URL;
 
 import java.util.Arrays;
 import java.util.List;
@@ -31,85 +28,8 @@ public class DefaultPortalPullRequestJobEntity
 			TEST_SUITE_NAME_PARAMETER_DEFINITION);
 	}
 
-	@Override
-	public URL getPortalPullRequestURL() {
-		if (_portalPullRequestURL != null) {
-			return _portalPullRequestURL;
-		}
-
-		_portalPullRequestURL = super.getPortalPullRequestURL();
-
-		if (_portalPullRequestURL != null) {
-			return _portalPullRequestURL;
-		}
-
-		int pullRequestNumber = 0;
-		String receiverUserName = null;
-		String repositoryName = null;
-
-		for (BuildEntity initialBuildEntity : getInitialBuildEntities()) {
-			String pullRequestNumberParameterValue =
-				initialBuildEntity.getBuildParameterValue(
-					"GITHUB_PULL_REQUEST_NUMBER");
-
-			if (!StringUtil.isNullOrEmpty(pullRequestNumberParameterValue)) {
-				pullRequestNumber = Integer.valueOf(
-					pullRequestNumberParameterValue);
-			}
-
-			String receiverUserNameParameterValue =
-				initialBuildEntity.getBuildParameterValue(
-					"GITHUB_RECEIVER_USERNAME");
-
-			if (!StringUtil.isNullOrEmpty(receiverUserNameParameterValue)) {
-				receiverUserName = receiverUserNameParameterValue;
-			}
-
-			String repositoryNameParameterValue =
-				initialBuildEntity.getBuildParameterValue(
-					"GITHUB_REPOSITORY_NAME");
-
-			if (!StringUtil.isNullOrEmpty(repositoryNameParameterValue)) {
-				repositoryName = repositoryNameParameterValue;
-			}
-		}
-
-		if ((pullRequestNumber > 0) &&
-			!StringUtil.isNullOrEmpty(receiverUserName) &&
-			!StringUtil.isNullOrEmpty(repositoryName)) {
-
-			_portalPullRequestURL = StringUtil.toURL(
-				StringUtil.combine(
-					"https://github.com/", receiverUserName, "/",
-					repositoryName, "/pull/", pullRequestNumber));
-
-			return _portalPullRequestURL;
-		}
-
-		return null;
-	}
-
-	@Override
-	public String getTestSuiteName() {
-		if (!StringUtil.isNullOrEmpty(_testSuiteName)) {
-			return _testSuiteName;
-		}
-
-		_testSuiteName = super.getTestSuiteName();
-
-		if (!StringUtil.isNullOrEmpty(_testSuiteName)) {
-			return _testSuiteName;
-		}
-
-		_testSuiteName = getBuildParameterValue("CI_TEST_SUITE");
-
-		return _testSuiteName;
-	}
-
 	protected DefaultPortalPullRequestJobEntity(JSONObject jsonObject) {
 		super(jsonObject);
-
-		_testSuiteName = jsonObject.optString("testSuiteName");
 	}
 
 	@Override
@@ -206,10 +126,8 @@ public class DefaultPortalPullRequestJobEntity
 			"(?<repositoryName>liferay-portal(-ee)?)",
 			"/pull/(?<number>\\d+)"));
 
-	private URL _portalPullRequestURL;
 	private long _pullRequestNumber;
 	private String _receiverUserName;
 	private String _repositoryName;
-	private String _testSuiteName;
 
 }

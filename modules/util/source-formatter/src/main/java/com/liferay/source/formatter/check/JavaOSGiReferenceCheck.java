@@ -430,16 +430,14 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 		for (int i = 0; i < sourceFormatterArgs.getMaxDirLevel(); i++) {
 			File file = new File(getBaseDirName() + moduleRootDirLocation);
 
-			if (!file.exists()) {
-				moduleRootDirLocation = "../" + moduleRootDirLocation;
+			if (file.exists()) {
+				fileNames = SourceFormatterUtil.scanForFileNames(
+					file.getCanonicalPath(), new String[] {"**/*.java"});
 
-				continue;
+				break;
 			}
 
-			fileNames = SourceFormatterUtil.scanForFileNames(
-				file.getCanonicalPath(), new String[] {"**/*.java"});
-
-			break;
+			moduleRootDirLocation = "../" + moduleRootDirLocation;
 		}
 
 		for (String fileName : fileNames) {

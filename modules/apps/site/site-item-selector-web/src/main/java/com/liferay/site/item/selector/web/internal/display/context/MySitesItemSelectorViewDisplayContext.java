@@ -17,8 +17,8 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.site.provider.GroupSearchProvider;
 import com.liferay.site.search.GroupSearch;
-import com.liferay.site.util.GroupSearchProvider;
 
 import java.util.Arrays;
 import java.util.Collections;

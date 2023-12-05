@@ -8,7 +8,7 @@ package com.liferay.style.book.web.internal.portlet.action;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.site.util.GroupURLProvider;
+import com.liferay.site.provider.GroupURLProvider;
 import com.liferay.style.book.constants.StyleBookPortletKeys;
 
 import javax.portlet.RenderRequest;

@@ -32,7 +32,7 @@ page import="com.liferay.site.item.selector.web.internal.constants.SitesItemSele
 page import="com.liferay.site.item.selector.web.internal.display.context.SitesItemSelectorViewManagementToolbarDisplayContext" %><%@
 page import="com.liferay.site.item.selector.web.internal.frontend.taglib.clay.servlet.taglib.SiteVerticalCard" %><%@
 page import="com.liferay.site.navigation.taglib.servlet.taglib.util.BreadcrumbEntriesUtil" %><%@
-page import="com.liferay.site.util.GroupURLProvider" %>
+page import="com.liferay.site.provider.GroupURLProvider" %>
 
 <%@ page import="java.util.List" %><%@
 page import="java.util.Map" %>

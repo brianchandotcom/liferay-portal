@@ -6,7 +6,7 @@
 package com.liferay.journal.web.internal.util;
 
 import com.liferay.portal.kernel.module.service.Snapshot;
-import com.liferay.site.util.RecentGroupManager;
+import com.liferay.site.manager.RecentGroupManager;
 
 /**
  * @author Víctor Galán

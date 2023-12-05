@@ -12,8 +12,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.site.item.selector.display.context.SitesItemSelectorViewDisplayContext;
+import com.liferay.site.manager.RecentGroupManager;
 import com.liferay.site.search.GroupSearch;
-import com.liferay.site.util.RecentGroupManager;
 
 import javax.portlet.PortletURL;
 

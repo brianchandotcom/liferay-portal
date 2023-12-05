@@ -13,7 +13,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.site.admin.web.internal.constants.SiteAdminPortletKeys;
 import com.liferay.site.admin.web.internal.constants.SiteAdminWebKeys;
 import com.liferay.site.constants.SiteWebKeys;
-import com.liferay.site.util.GroupSearchProvider;
+import com.liferay.site.provider.GroupSearchProvider;
 
 import java.util.ArrayList;
 import java.util.List;

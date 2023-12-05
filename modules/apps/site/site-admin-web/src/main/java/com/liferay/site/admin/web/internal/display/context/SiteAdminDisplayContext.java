@@ -45,8 +45,8 @@ import com.liferay.site.admin.web.internal.servlet.taglib.util.SiteActionDropdow
 import com.liferay.site.constants.SiteWebKeys;
 import com.liferay.site.navigation.taglib.servlet.taglib.util.BreadcrumbEntryBuilder;
 import com.liferay.site.navigation.taglib.servlet.taglib.util.BreadcrumbEntryListBuilder;
+import com.liferay.site.provider.GroupSearchProvider;
 import com.liferay.site.search.GroupSearch;
-import com.liferay.site.util.GroupSearchProvider;
 
 import java.util.Collections;
 import java.util.List;

@@ -36,7 +36,7 @@ import com.liferay.portal.kernel.xml.SAXReader;
 import com.liferay.portal.util.LayoutTypeControllerTracker;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.site.util.Sitemap;
-import com.liferay.site.util.SitemapURLProvider;
+import com.liferay.site.provider.SitemapURLProvider;
 
 import java.text.DateFormat;
 

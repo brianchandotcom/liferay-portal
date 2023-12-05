@@ -31,7 +31,7 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.site.admin.web.internal.constants.SiteAdminPortletKeys;
 import com.liferay.site.constants.SiteWebKeys;
 import com.liferay.site.initializer.SiteInitializerRegistry;
-import com.liferay.site.util.GroupSearchProvider;
+import com.liferay.site.provider.GroupSearchProvider;
 
 import java.io.IOException;
 

@@ -257,7 +257,10 @@ public interface JobEntity extends Entity {
 			DefaultPortalPullRequestJobEntity.class),
 		PORTAL_PULL_REQUEST_SF(
 			"portalPullRequestSF", "Portal Pull Request SF",
-			SFPortalPullRequestJobEntity.class);
+			SFPortalPullRequestJobEntity.class),
+		PORTAL_UPSTREAM_TEST_SUITE(
+			"portalUpstreamTestSuite", "Portal Upstream Test Suite",
+			TestSuitePortalUpstreamJobEntity.class);
 
 		public static Type get(JSONObject jsonObject) {
 			return getByKey(jsonObject.getString("key"));

@@ -550,6 +550,11 @@ const ActionForm = ({
 									onChange={(event) =>
 										setActionData({
 											...actionData,
+											method:
+												event.target.value ===
+												ACTION_TYPE.ASYNC
+													? ACTION_METHOD.DELETE
+													: '',
 											type: event.target.value,
 										})
 									}

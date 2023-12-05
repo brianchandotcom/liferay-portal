@@ -8,6 +8,7 @@ package com.liferay.site.internal.provider.helper;
 import com.liferay.layout.admin.kernel.model.LayoutTypePortletConstants;
 import com.liferay.layout.seo.model.LayoutSEOEntry;
 import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -50,8 +51,10 @@ public class SitemapURLProviderHelperImpl implements SitemapURLProviderHelper {
 			for (Map.Entry<Locale, String> entry : robotsMap.entrySet()) {
 				String value = entry.getValue();
 
-				if (StringUtil.containsIgnoreCase(value, "nofollow") ||
-					StringUtil.containsIgnoreCase(value, "noindex")) {
+				if (StringUtil.containsIgnoreCase(
+						value, "nofollow", StringPool.BLANK) ||
+					StringUtil.containsIgnoreCase(
+						value, "noindex", StringPool.BLANK)) {
 
 					return true;
 				}

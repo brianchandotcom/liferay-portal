@@ -150,42 +150,52 @@ function ReviewExperimentModal({modalObserver, onModalClose, onRun, variants}) {
 					</div>
 				) : (
 					<div ref={measureHeight}>
-						<h3 className="border-bottom-0 sheet-subtitle text-secondary">
-							{Liferay.Language.get('test-type')}
-						</h3>
+						{!Liferay.FeatureFlags['LRAC-15017'] && (
+							<h3 className="border-bottom-0 sheet-subtitle text-secondary">
+								{Liferay.Language.get('traffic-split')}
+							</h3>
+						)}
 
-						<hr />
+						{Liferay.FeatureFlags['LRAC-15017'] && (
+							<>
+								<h3 className="sheet-subtitle text-secondary">
+									{Liferay.Language.get('test-type')}
+								</h3>
 
-						<p className="small">
-							{Liferay.Language.get(
-								'choose-how-your-experiment-is-going-to-be-measured'
-							)}
-						</p>
+								<p className="small">
+									{Liferay.Language.get(
+										'choose-how-your-experiment-is-going-to-be-measured'
+									)}
+								</p>
 
-						<label>{Liferay.Language.get('standard')}</label>
+								<label>
+									{Liferay.Language.get('standard')}
+								</label>
 
-						<p className="small">
-							{Liferay.Language.get(
-								'use-the-ab-test-methodology-to-determine-which-variant-performs-better-based-on-statistical-significance,-it-requires-high-traffic-to-reach-conclusive-results'
-							)}
-						</p>
+								<p className="small">
+									{Liferay.Language.get(
+										'use-the-ab-test-methodology-to-determine-which-variant-performs-better-based-on-statistical-significance,-it-requires-high-traffic-to-reach-conclusive-results'
+									)}
+								</p>
 
-						<ClayRadioGroup
-							inline
-							onChange={setSelectedTestType}
-							value={selectedTestType}
-						>
-							<ClayRadio
-								label={Liferay.Language.get(
-									'enable-standard-test-type'
-								)}
-								value="AB"
-							/>
-						</ClayRadioGroup>
+								<ClayRadioGroup
+									inline
+									onChange={setSelectedTestType}
+									value={selectedTestType}
+								>
+									<ClayRadio
+										label={Liferay.Language.get(
+											'enable-standard-test-type'
+										)}
+										value="AB"
+									/>
+								</ClayRadioGroup>
 
-						<h3 className="border-bottom-0 mt-3 sheet-subtitle text-secondary">
-							{Liferay.Language.get('traffic-split')}
-						</h3>
+								<h3 className="border-bottom-0 mt-3 sheet-subtitle text-secondary">
+									{Liferay.Language.get('traffic-split')}
+								</h3>
+							</>
+						)}
 
 						<SplitPicker
 							disabled={selectedTestType === 'MAB'}
@@ -211,26 +221,30 @@ function ReviewExperimentModal({modalObserver, onModalClose, onRun, variants}) {
 							value={confidenceLevel}
 						/>
 
-						<label>{Liferay.Language.get('Dynamic')}</label>
+						{Liferay.FeatureFlags['LRAC-15017'] && (
+							<>
+								<label>{Liferay.Language.get('Dynamic')}</label>
 
-						<p className="small">
-							{Liferay.Language.get(
-								'dynamic-test-multi-armed-bandit-method-description'
-							)}
-						</p>
+								<p className="small">
+									{Liferay.Language.get(
+										'dynamic-test-multi-armed-bandit-method-description'
+									)}
+								</p>
 
-						<ClayRadioGroup
-							inline
-							onChange={setSelectedTestType}
-							value={selectedTestType}
-						>
-							<ClayRadio
-								label={Liferay.Language.get(
-									'enable-dynamic-test-type'
-								)}
-								value="MAB"
-							/>
-						</ClayRadioGroup>
+								<ClayRadioGroup
+									inline
+									onChange={setSelectedTestType}
+									value={selectedTestType}
+								>
+									<ClayRadio
+										label={Liferay.Language.get(
+											'enable-dynamic-test-type'
+										)}
+										value="MAB"
+									/>
+								</ClayRadioGroup>
+							</>
+						)}
 
 						<hr />
 

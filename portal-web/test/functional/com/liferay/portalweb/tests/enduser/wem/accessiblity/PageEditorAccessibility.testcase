@@ -946,19 +946,37 @@ definition {
 	test ViewAccessibilityOfPageRulesPanel {
 		property custom.properties = "feature.flag.LPS-169837=true";
 
-		task ("Given a page designer has a content page") {
+		task ("Given a page designer has a Button fragment on a content page") {
 			JSONLayout.addPublicLayout(
 				groupName = ${randomSiteName},
 				layoutName = "Test Page Name",
 				type = "content");
-		}
 
-		task ("When the page designer opens the Page Rules panel") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
 				siteName = ${randomSiteName});
 
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+		}
+
+		task ("When the page designer opens the Page Rules panel") {
 			PageEditor.gotoTab(tabName = "Page Rules");
+		}
+
+		task ("Then the Page Rules panel should have correct accessibility") {
+			AssertElementAccessible(locator1 = "//div[@aria-label='Page Rules Panel']");
+		}
+
+		task ("When the page designer adds a page rule") {
+			PageEditor.addPageRule(
+				selectAction = "Hide",
+				selectActionValue = "Button",
+				selectCondition = "Is the User",
+				selectConditionValue = "test",
+				selectItemForTheAction = "Fragment",
+				selectItemForTheCondition = "User");
 		}
 
 		task ("Then the Page Rules panel should have correct accessibility") {

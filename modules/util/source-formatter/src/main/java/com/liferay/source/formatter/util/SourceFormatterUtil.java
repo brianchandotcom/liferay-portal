@@ -388,28 +388,7 @@ public class SourceFormatterUtil {
 		fileNames = ListUtil.filter(
 			fileNames, fileName -> !deletedFileNames.contains(fileName));
 
-		List<String> untrackedFileNames = _getUntrackedFileNames();
-
-		PathMatchers pathMatchers = _getPathMatchers(
-			new String[0], includes, new SourceFormatterExcludes());
-
-		for (String untrackedFileName : untrackedFileNames) {
-			if (fileNames.contains(untrackedFileName)) {
-				continue;
-			}
-
-			for (PathMatcher pathMatcher :
-					pathMatchers.getIncludeFilePathMatchers()) {
-
-				Path path = Paths.get(untrackedFileName);
-
-				if (pathMatcher.matches(path)) {
-					fileNames.add(untrackedFileName);
-
-					break;
-				}
-			}
-		}
+		fileNames.addAll(_getUntrackedFileNames(includes));
 
 		return fileNames;
 	}
@@ -634,12 +613,17 @@ public class SourceFormatterUtil {
 		return pathMatchers;
 	}
 
-	private static synchronized List<String> _getUntrackedFileNames() {
+	private static synchronized List<String> _getUntrackedFileNames(
+		String[] includes) {
+
 		if (_untrackedFileNames != null) {
 			return _untrackedFileNames;
 		}
 
 		_untrackedFileNames = new ArrayList<>();
+
+		PathMatchers pathMatchers = _getPathMatchers(
+			new String[0], includes, new SourceFormatterExcludes());
 
 		git(
 			Arrays.asList("add", ".", "--dry-run", "--no-all"),
@@ -651,8 +635,19 @@ public class SourceFormatterUtil {
 
 				line = line.substring(5, line.length() - 1);
 
-				_untrackedFileNames.add(
-					_gitTopLevelFolder + StringPool.SLASH + line);
+				line = _gitTopLevelFolder + StringPool.SLASH + line;
+
+				Path path = Paths.get(line);
+
+				for (PathMatcher pathMatcher :
+						pathMatchers.getIncludeFilePathMatchers()) {
+
+					if (pathMatcher.matches(path)) {
+						_untrackedFileNames.add(line);
+
+						return;
+					}
+				}
 			});
 
 		return _untrackedFileNames;

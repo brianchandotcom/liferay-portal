@@ -5043,12 +5043,6 @@ definition {
 			PortletEntry.save();
 		}
 
-		// Workaround for LPS-201346
-
-		Portlet.shutdownServer();
-
-		Portlet.startServer(deleteLiferayHome = "false");
-
 		task ("Create a test content page with a collection display fragment") {
 			JSONLayout.addPublicLayout(
 				groupName = "Guest",

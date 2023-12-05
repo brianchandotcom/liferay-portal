@@ -65,7 +65,7 @@ public abstract class BaseUserActivityAsahSuggestionsContributor
 		String displayLanguageId = getDisplayLanguageId(
 			attributes, searchContext.getLocale());
 		long groupId = getGroupId(searchContext);
-		int minCounts = getMinCounts(attributes, _MIN_COUNTS);
+		int minCounts = getMinCounts(attributes, 0);
 		int page = _getPage(attributes);
 		int rangeKey = _getRangeKey(attributes);
 		int size = GetterUtil.getInteger(
@@ -219,8 +219,6 @@ public abstract class BaseUserActivityAsahSuggestionsContributor
 	}
 
 	private static final int _CHARACTER_THRESHOLD = 0;
-
-	private static final int _MIN_COUNTS = 0;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseUserActivityAsahSuggestionsContributor.class);

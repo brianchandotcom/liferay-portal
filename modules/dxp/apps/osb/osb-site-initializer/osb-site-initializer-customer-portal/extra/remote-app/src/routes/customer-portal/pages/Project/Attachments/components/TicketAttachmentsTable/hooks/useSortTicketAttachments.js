@@ -16,11 +16,12 @@ export default function useSort() {
 	const handleSortChange = (column) => {
 		setSortConfig({
 			columnName: column,
-			direction: column === sortConfig.columnName ?
-				sortConfig.direction === 'descending'
-					? 'ascending'
-					: 'descending'
-				: sortConfig.direction,
+			direction:
+				column === sortConfig.columnName
+					? sortConfig.direction === 'descending'
+						? 'ascending'
+						: 'descending'
+					: sortConfig.direction,
 		});
 	};
 

@@ -27,6 +27,13 @@ public interface PortalUpstreamJobEntity {
 				"Insert your Upstream Branch Name here", null);
 
 	public static JobEntity.ParameterDefinition
+		PARAMETER_DEFINITION_UPSTREAM_BRANCH_SHA =
+			new JobEntity.ParameterDefinition(
+				"upstreamBranchSHA", "Upstream Branch SHA",
+				JobEntity.ParameterDefinition.Type.STRING, null,
+				"Insert your Upstream Branch SHA here", null);
+
+	public static JobEntity.ParameterDefinition
 		PARAMETER_DEFINITION_UPSTREAM_BRANCH_URL =
 			new JobEntity.ParameterDefinition(
 				"upstreamBranchURL", "Upstream Branch URL",
@@ -40,11 +47,15 @@ public interface PortalUpstreamJobEntity {
 
 	public String getUpstreamBranchName();
 
+	public String getUpstreamBranchSHA();
+
 	public URL getUpstreamBranchURL();
 
 	public void setTestSuiteName(String testSuiteName);
 
 	public void setUpstreamBranchName(String upstreamBranchName);
+
+	public void setUpstreamBranchSHA(String upstreamBranchSHA);
 
 	public void setUpstreamBranchURL(URL upstreamBranchURL);
 

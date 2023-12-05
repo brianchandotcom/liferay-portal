@@ -9,6 +9,7 @@ import com.liferay.jethr0.util.StringUtil;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import org.json.JSONObject;
 
@@ -23,11 +24,26 @@ public class TestSuitePortalUpstreamJobEntity
 			PARAMETER_DEFINITION_JENKINS_GITHUB_URL,
 			PARAMETER_DEFINITION_TEST_SUITE_NAME,
 			PARAMETER_DEFINITION_UPSTREAM_BRANCH_NAME,
+			PARAMETER_DEFINITION_UPSTREAM_BRANCH_SHA,
 			PARAMETER_DEFINITION_UPSTREAM_BRANCH_URL);
 	}
 
 	protected TestSuitePortalUpstreamJobEntity(JSONObject jsonObject) {
 		super(jsonObject);
+	}
+
+	@Override
+	protected Map<String, String> getInitialBuildParameters() {
+		Map<String, String> initialBuildParamaters =
+			super.getInitialBuildParameters();
+
+		initialBuildParamaters.put(
+			"CI_TEST_SUITE", String.valueOf(getTestSuiteName()));
+		initialBuildParamaters.put("PORTAL_GIT_COMMIT", getUpstreamBranchSHA());
+		initialBuildParamaters.put(
+			"PORTAL_GITHUB_URL", String.valueOf(getUpstreamBranchURL()));
+
+		return initialBuildParamaters;
 	}
 
 	@Override

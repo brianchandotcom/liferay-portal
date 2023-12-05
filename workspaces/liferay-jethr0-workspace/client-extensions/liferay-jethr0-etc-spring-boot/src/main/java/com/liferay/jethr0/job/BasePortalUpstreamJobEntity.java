@@ -28,6 +28,11 @@ public abstract class BasePortalUpstreamJobEntity
 	}
 
 	@Override
+	public String getUpstreamBranchSHA() {
+		return getParameterValue("upstreamBranchSHA");
+	}
+
+	@Override
 	public URL getUpstreamBranchURL() {
 		String upstreamBranchURL = getParameterValue("upstreamBranchURL");
 
@@ -46,6 +51,11 @@ public abstract class BasePortalUpstreamJobEntity
 	@Override
 	public void setUpstreamBranchName(String upstreamBranchName) {
 		setParameterValue("upstreamBranchName", upstreamBranchName);
+	}
+
+	@Override
+	public void setUpstreamBranchSHA(String upstreamBranchSHA) {
+		setParameterValue("upstreamBranchSHA", upstreamBranchSHA);
 	}
 
 	@Override

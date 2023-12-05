@@ -5,6 +5,7 @@
 
 package com.liferay.source.formatter.check;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -181,6 +182,19 @@ public class BNDBreakingChangeCommitMessageCheck extends BaseFileCheck {
 
 			if (x == -1) {
 				continue;
+			}
+
+			if (header.equals("## Alternatives") || header.equals("## Why")) {
+				char c = parts[1].charAt(x + header.length());
+
+				if (c != CharPool.NEW_LINE) {
+					addMessage(
+						fileName,
+						StringBundler.concat(
+							"Incorrect commit message in SHA ", parts[0], ": ",
+							"There should be a line break after ' ", header,
+							"'"));
+				}
 			}
 
 			int lineNumber = SourceUtil.getLineNumber(parts[1], x);

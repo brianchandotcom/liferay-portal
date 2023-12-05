@@ -20,8 +20,7 @@ public class SFPortalPullRequestJobEntity
 	public static List<ParameterDefinition> getParameterDefinitions() {
 		return Arrays.asList(
 			PARAMETER_DEFINITION_JENKINS_GITHUB_URL,
-			PARAMETER_DEFINITION_PORTAL_PULL_REQUEST,
-			PARAMETER_DEFINITION_TEST_SUITE_NAME);
+			PARAMETER_DEFINITION_PORTAL_PULL_REQUEST);
 	}
 
 	protected SFPortalPullRequestJobEntity(JSONObject jsonObject) {

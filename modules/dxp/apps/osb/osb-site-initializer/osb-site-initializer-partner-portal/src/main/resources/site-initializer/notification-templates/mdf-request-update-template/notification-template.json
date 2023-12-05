@@ -1,0 +1,24 @@
+{
+	"description": "",
+	"editorType": "richText",
+	"externalReferenceCode": "PRM-MDF-REQUEST-UPDATE-NOTIFICATION-TEMPLATE",
+	"name": "PRM MDF Request Update Request More Info Notification Template",
+	"recipientType": "email",
+	"recipients": [
+		{
+			"bcc": "",
+			"cc": "",
+			"from": "partner-portal-admin@liferay.com",
+			"fromName": {
+				"en-US": "Partner Portal"
+			},
+			"to": {
+				"en-US": "parter-marketing@liferay.com"
+			}
+		}
+	],
+	"subject": {
+		"en_US": "[Liferay Partner Portal] MDF Request Updated due to More info requested"
+	},
+	"type": "email"
+}

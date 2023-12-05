@@ -354,9 +354,6 @@ public class PublishLayoutMVCActionCommandTest {
 
 			_addFragmentEntryLinkToLayout(html, draftLayout, serviceContext);
 
-			String portletId = PortletIdCodec.encode(
-				JournalContentPortletKeys.JOURNAL_CONTENT, "myInstanceId");
-
 			JournalArticle journalArticle = JournalTestUtil.addJournalArticle(
 				_dataDefinitionResourceFactory, _createDDMFormField(),
 				_ddmFormValuesToFieldsConverter, RandomTestUtil.randomString(),
@@ -365,6 +362,9 @@ public class PublishLayoutMVCActionCommandTest {
 			AssetEntry assetEntry = _assetEntryLocalService.getEntry(
 				JournalArticle.class.getName(),
 				journalArticle.getResourcePrimKey());
+
+			String portletId = PortletIdCodec.encode(
+				JournalContentPortletKeys.JOURNAL_CONTENT, "myInstanceId");
 
 			_setUpPortletPreferences(
 				assetEntry, journalArticle, draftLayout, portletId);
@@ -402,13 +402,6 @@ public class PublishLayoutMVCActionCommandTest {
 
 			Assert.assertNotNull(draftLayout);
 
-			FragmentEntryLink fragmentEntryLink = _addFragmentEntryLinkToLayout(
-				html, draftLayout, serviceContext);
-
-			String portletId = PortletIdCodec.encode(
-				JournalContentPortletKeys.JOURNAL_CONTENT,
-				fragmentEntryLink.getNamespace());
-
 			JournalArticle journalArticle = JournalTestUtil.addJournalArticle(
 				_dataDefinitionResourceFactory, _createDDMFormField(),
 				_ddmFormValuesToFieldsConverter, RandomTestUtil.randomString(),
@@ -417,6 +410,13 @@ public class PublishLayoutMVCActionCommandTest {
 			AssetEntry assetEntry = _assetEntryLocalService.getEntry(
 				JournalArticle.class.getName(),
 				journalArticle.getResourcePrimKey());
+
+			FragmentEntryLink fragmentEntryLink = _addFragmentEntryLinkToLayout(
+				html, draftLayout, serviceContext);
+
+			String portletId = PortletIdCodec.encode(
+				JournalContentPortletKeys.JOURNAL_CONTENT,
+				fragmentEntryLink.getNamespace());
 
 			_setUpPortletPreferences(
 				assetEntry, journalArticle, draftLayout, portletId);

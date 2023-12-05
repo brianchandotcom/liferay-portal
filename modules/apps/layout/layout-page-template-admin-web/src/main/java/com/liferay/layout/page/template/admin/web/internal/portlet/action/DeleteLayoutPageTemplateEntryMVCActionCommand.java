@@ -98,21 +98,14 @@ public class DeleteLayoutPageTemplateEntryMVCActionCommand
 			return;
 		}
 
-		if (!deleteLayoutPageTemplateIdsList.isEmpty()) {
-			SessionErrors.add(actionRequest, PortalException.class);
+		hideDefaultSuccessMessage(actionRequest);
 
-			hideDefaultErrorMessage(actionRequest);
-		}
-		else if (deleteLayoutPageTemplateEntryIds.length > 0) {
-			hideDefaultSuccessMessage(actionRequest);
-
-			MultiSessionMessages.add(
-				actionRequest, "displayPageTemplateDeleted",
-				_language.format(
-					_portal.getHttpServletRequest(actionRequest),
-					"you-successfully-deleted-x-display-page-templates",
-					new Object[] {deleteLayoutPageTemplateEntryIds.length}));
-		}
+		MultiSessionMessages.add(
+			actionRequest, "displayPageTemplateDeleted",
+			_language.format(
+				_portal.getHttpServletRequest(actionRequest),
+				"you-successfully-deleted-x-display-page-templates",
+				new Object[] {deleteLayoutPageTemplateEntryIds.length}));
 
 		sendRedirect(actionRequest, actionResponse);
 	}

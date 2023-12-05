@@ -76,7 +76,7 @@ public class SitemapPortalSettingsConfigurationScreenWrapper
 
 		@Override
 		public String getSaveMVCActionCommandName() {
-			return null;
+			return "/site_sitemap/save_company_configuration";
 		}
 
 		@Override

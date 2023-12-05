@@ -20,4 +20,9 @@ public interface SitemapConfigurationManager {
 	public boolean includeWebContent(long companyId)
 		throws ConfigurationException;
 
+	public void saveSitemapCompanyConfiguration(
+			long companyId, boolean includeCategories, boolean includePages,
+			boolean includeWebContent)
+		throws ConfigurationException;
+
 }

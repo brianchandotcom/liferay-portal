@@ -9,9 +9,10 @@ import React, {useEffect, useState} from 'react';
 
 import {
 	CREATE_STRATEGIES,
+	CSV_FORMAT,
 	FILE_EXTENSION_EVENT,
 	HEADLESS_BATCH_PLANNER_URL,
-	OBJECT_DEFINITION,
+	OBJECT_DEFINITION_ENTITY_TYPE,
 	SCHEMA_SELECTED_EVENT,
 	UPDATE_STRATEGIES,
 } from '../constants';
@@ -21,7 +22,10 @@ function StrategyItems({portletNamespace}) {
 
 	useEffect(() => {
 		function handleFileExtensionUpdate({entityType, fileExtension}) {
-			if (fileExtension === 'csv' && entityType === OBJECT_DEFINITION) {
+			if (
+				fileExtension === CSV_FORMAT &&
+				entityType === OBJECT_DEFINITION_ENTITY_TYPE
+			) {
 				setStrategies([]);
 			}
 		}

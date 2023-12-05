@@ -10,9 +10,10 @@ import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import SaveTemplateModal from './SaveTemplateModal';
 import {
+	CSV_FORMAT,
 	EXPORT_FILE_FORMAT_SELECTED_EVENT,
 	FILE_EXTENSION_EVENT,
-	OBJECT_DEFINITION,
+	OBJECT_DEFINITION_ENTITY_TYPE,
 	SCHEMA_SELECTED_EVENT,
 	TEMPLATE_SELECTED_EVENT,
 	TEMPLATE_SOILED_EVENT,
@@ -54,15 +55,18 @@ function SaveTemplate({
 			selectedSchema,
 		}) => {
 			if (
-				selectedExportFileFormat === 'CSV' &&
-				selectedSchema === OBJECT_DEFINITION
+				selectedExportFileFormat === CSV_FORMAT.toUpperCase() &&
+				selectedSchema === OBJECT_DEFINITION_ENTITY_TYPE
 			) {
 				setDisable(true);
 			}
 		};
-		
+
 		function handleFileExtensionUpdate({entityType, fileExtension}) {
-			if (fileExtension === 'csv' && entityType === OBJECT_DEFINITION) {
+			if (
+				fileExtension === CSV_FORMAT &&
+				entityType === OBJECT_DEFINITION_ENTITY_TYPE
+			) {
 				setDisable(true);
 			}
 		}

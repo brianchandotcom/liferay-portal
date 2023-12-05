@@ -10,9 +10,10 @@ import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 
 import SaveTemplate from '../SaveTemplate';
 import {
+	CSV_FORMAT,
 	FILE_EXTENSION_EVENT,
 	FILE_SCHEMA_EVENT,
-	OBJECT_DEFINITION,
+	OBJECT_DEFINITION_ENTITY_TYPE,
 	SCHEMA_SELECTED_EVENT,
 	TEMPLATE_SELECTED_EVENT,
 	TEMPLATE_SOILED_EVENT,
@@ -121,7 +122,10 @@ function ImportForm({
 		}
 
 		function handleFileExtensionUpdate({entityType, fileExtension}) {
-			if (fileExtension === 'csv' && entityType === OBJECT_DEFINITION) {
+			if (
+				fileExtension === CSV_FORMAT &&
+				entityType === OBJECT_DEFINITION_ENTITY_TYPE
+			) {
 				setDbFields({
 					optional: [],
 					required: [],

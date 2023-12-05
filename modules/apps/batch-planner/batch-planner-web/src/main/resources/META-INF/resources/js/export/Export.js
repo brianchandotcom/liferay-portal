@@ -11,7 +11,7 @@ import React, {useCallback, useEffect, useState} from 'react';
 
 import {
 	EXPORT_FILE_FORMAT_SELECTED_EVENT,
-	OBJECT_DEFINITION,
+	OBJECT_DEFINITION_ENTITY_TYPE,
 	SCHEMA_SELECTED_EVENT,
 } from '../constants';
 import ExportModal from './ExportModal';
@@ -58,7 +58,7 @@ function Export({
 		}) => {
 			if (
 				selectedExportFileFormat === 'CSV' &&
-				selectedSchema === OBJECT_DEFINITION
+				selectedSchema === OBJECT_DEFINITION_ENTITY_TYPE
 			) {
 				setDisable(true);
 			}

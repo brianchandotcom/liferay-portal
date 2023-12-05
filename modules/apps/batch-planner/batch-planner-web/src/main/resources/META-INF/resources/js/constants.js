@@ -57,7 +57,7 @@ export const PROCESS_STARTED = 'STARTED';
 
 export const EXPORT_FILE_FORMAT_SELECTED_EVENT =
 	'ie-export-file-format-selected';
-export const OBJECT_DEFINITION =
+export const OBJECT_DEFINITION_ENTITY_TYPE =
 	'com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition';
 export const SCHEMA_SELECTED_EVENT = 'ie-schema-selected';
 export const IMPORT_STRATEGY_SELECTED_EVENT = 'ie-import-strategy-selected';

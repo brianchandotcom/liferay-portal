@@ -6,7 +6,11 @@
 import {ClaySelect} from '@clayui/form';
 import React, {useEffect, useReducer} from 'react';
 
-import {FILE_EXTENSION_EVENT, OBJECT_DEFINITION} from '../constants';
+import {
+	CSV_FORMAT,
+	FILE_EXTENSION_EVENT,
+	OBJECT_DEFINITION_ENTITY_TYPE,
+} from '../constants';
 
 function ImportEntityType({
 	internalClassNameKeyId,
@@ -19,9 +23,9 @@ function ImportEntityType({
 		internalClassNameKeyOptions,
 		dispatchInternalClassNameKeyOptions,
 	] = useReducer((state, fileExtension) => {
-		if (fileExtension === 'csv') {
+		if (fileExtension === CSV_FORMAT) {
 			return internalClassNameKeyInitialOptions.filter(
-				(item) => item.value !== OBJECT_DEFINITION
+				(item) => item.value !== OBJECT_DEFINITION_ENTITY_TYPE
 			);
 		}
 		else {

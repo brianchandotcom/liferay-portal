@@ -30,6 +30,7 @@ import java.util.regex.Pattern;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -321,6 +322,24 @@ public abstract class BaseJobEntity extends BaseEntity implements JobEntity {
 		}
 	}
 
+	protected JSONObject getInitialBuildJSONObject() {
+		JSONObject initialBuildJSONObject = new JSONObject();
+
+		initialBuildJSONObject.put(
+			"initialBuild", true
+		).put(
+			"jenkinsJobName", getJenkinsJobName()
+		).put(
+			"name", "top-level"
+		).put(
+			"parameters", String.valueOf(_getInitialBuildParametersJSONArray())
+		).put(
+			"state", BuildEntity.State.OPENED
+		);
+
+		return initialBuildJSONObject;
+	}
+
 	protected Map<String, String> getInitialBuildParameters() {
 		return HashMapBuilder.put(
 			"BUILD_PRIORITY", String.valueOf(getPriority())
@@ -382,6 +401,39 @@ public abstract class BaseJobEntity extends BaseEntity implements JobEntity {
 		}
 
 		return matcher.group("branchUserName");
+	}
+
+	protected abstract String getJenkinsJobName();
+
+	private JSONArray _getInitialBuildParametersJSONArray() {
+		JSONArray initialBuildParametersJSONArray = new JSONArray();
+
+		Map<String, String> initialBuildParameters =
+			getInitialBuildParameters();
+
+		for (Map.Entry<String, String> initialBuildParameter :
+				initialBuildParameters.entrySet()) {
+
+			String initialBuildParameterValue =
+				initialBuildParameter.getValue();
+
+			if (StringUtil.isNullOrEmpty(initialBuildParameterValue)) {
+				continue;
+			}
+
+			JSONObject initialBuildParameterJSONObject = new JSONObject();
+
+			initialBuildParameterJSONObject.put(
+				"name", initialBuildParameter.getKey()
+			).put(
+				"value", initialBuildParameterValue
+			);
+
+			initialBuildParametersJSONArray.put(
+				initialBuildParameterJSONObject);
+		}
+
+		return initialBuildParametersJSONArray;
 	}
 
 	private JSONObject _getParametersJSONObject() {

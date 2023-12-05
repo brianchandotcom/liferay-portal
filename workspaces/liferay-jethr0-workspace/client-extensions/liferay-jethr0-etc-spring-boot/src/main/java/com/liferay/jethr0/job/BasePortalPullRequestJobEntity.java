@@ -5,16 +5,13 @@
 
 package com.liferay.jethr0.job;
 
-import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.util.StringUtil;
 
 import java.net.URL;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
@@ -25,7 +22,7 @@ public abstract class BasePortalPullRequestJobEntity
 
 	@Override
 	public List<JSONObject> getInitialBuildJSONObjects() {
-		return Collections.singletonList(_getInitialBuildJSONObject());
+		return Collections.singletonList(getInitialBuildJSONObject());
 	}
 
 	@Override
@@ -112,57 +109,6 @@ public abstract class BasePortalPullRequestJobEntity
 
 	protected BasePortalPullRequestJobEntity(JSONObject jsonObject) {
 		super(jsonObject);
-	}
-
-	protected abstract String getJenkinsJobName();
-
-	private JSONObject _getInitialBuildJSONObject() {
-		JSONObject initialBuildJSONObject = new JSONObject();
-
-		initialBuildJSONObject.put(
-			"initialBuild", true
-		).put(
-			"jenkinsJobName", getJenkinsJobName()
-		).put(
-			"name", "top-level"
-		).put(
-			"parameters", String.valueOf(_getInitialBuildParametersJSONArray())
-		).put(
-			"state", BuildEntity.State.OPENED
-		);
-
-		return initialBuildJSONObject;
-	}
-
-	private JSONArray _getInitialBuildParametersJSONArray() {
-		JSONArray initialBuildParametersJSONArray = new JSONArray();
-
-		Map<String, String> initialBuildParameters =
-			getInitialBuildParameters();
-
-		for (Map.Entry<String, String> initialBuildParameter :
-				initialBuildParameters.entrySet()) {
-
-			String initialBuildParameterValue =
-				initialBuildParameter.getValue();
-
-			if (StringUtil.isNullOrEmpty(initialBuildParameterValue)) {
-				continue;
-			}
-
-			JSONObject initialBuildParameterJSONObject = new JSONObject();
-
-			initialBuildParameterJSONObject.put(
-				"name", initialBuildParameter.getKey()
-			).put(
-				"value", initialBuildParameterValue
-			);
-
-			initialBuildParametersJSONArray.put(
-				initialBuildParameterJSONObject);
-		}
-
-		return initialBuildParametersJSONArray;
 	}
 
 	private String _originName;

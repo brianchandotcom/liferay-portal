@@ -19,6 +19,11 @@ public class DefaultJobEntity extends BaseJobEntity {
 		return Arrays.asList(PARAMETER_DEFINITION_JENKINS_GITHUB_URL);
 	}
 
+	@Override
+	public String getJenkinsJobName() {
+		return getName();
+	}
+
 	protected DefaultJobEntity(JSONObject jsonObject) {
 		super(jsonObject);
 	}

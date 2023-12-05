@@ -406,7 +406,7 @@
 																					"fieldKey": "FileEntry_previewImage",
 																					"itemReference": {
 																						"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																						"classPK": 36335
+																						"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/logo.svg#]"
 																					}
 																				}
 																			}

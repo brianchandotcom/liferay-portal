@@ -89,7 +89,7 @@
 														"definition": {
 															"fragment": {
 																"key": "liferay-sites",
-																"siteKey": "mp"
+																"siteKey": "[$GROUP_KEY$]"
 															},
 															"fragmentConfig": {
 															},
@@ -105,8 +105,7 @@
 																	{
 																		"definition": {
 																			"fragment": {
-																				"key": "sites",
-																				"siteKey": "mp"
+																				"key": "sites"
 																			},
 																			"fragmentConfig": {
 																			},
@@ -176,7 +175,7 @@
 															"widgetInstance": {
 																"widgetConfig": {
 																	"displayStyle": "ddmTemplate_LANGUAGE-SELECTOR",
-																	"displayStyleGroupId": "35158",
+																	"displayStyleGroupId": "[$GROUP_ID$]",
 																	"showCurrentGroup": "true",
 																	"showGuestGroup": "false",
 																	"showLayout": "true",
@@ -211,7 +210,7 @@
 														"definition": {
 															"fragment": {
 																"key": "site-search",
-																"siteKey": "mp"
+																"siteKey": "[$GROUP_KEY$]"
 															},
 															"fragmentConfig": {
 																"searchBlueprintId": 0
@@ -269,7 +268,7 @@
 														"definition": {
 															"fragment": {
 																"key": "account-menu",
-																"siteKey": "mp"
+																"siteKey": "[$GROUP_KEY$]"
 															},
 															"fragmentConfig": {
 																"siteNavigationMenuId": 0
@@ -406,7 +405,7 @@
 																					"fieldKey": "FileEntry_previewImage",
 																					"itemReference": {
 																						"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																						"classPK": 36335
+																						"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/logo.svg#]"
 																					}
 																				}
 																			}
@@ -428,7 +427,7 @@
 																								},
 																								{
 																									"fieldName": "siteKey",
-																									"fieldValue": "mp"
+																									"fieldValue": "[$GROUP_KEY$]"
 																								}
 																							]
 																						}
@@ -493,7 +492,7 @@
 																								},
 																								{
 																									"fieldName": "siteKey",
-																									"fieldValue": "mp"
+																									"fieldValue": "[$GROUP_KEY$]"
 																								}
 																							]
 																						}
@@ -612,8 +611,7 @@
 													{
 														"definition": {
 															"fragment": {
-																"key": "mobile-menu-buttom",
-																"siteKey": "mp"
+																"key": "mobile-menu-buttom"
 															},
 															"fragmentConfig": {
 															},

@@ -423,7 +423,7 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 		String methodCall = JavaSourceUtil.getMethodCall(
 			javaMethodContent, matcher.start());
 
-		List<String> parameterNames = JavaSourceUtil.getParameterList(
+		List<String> parameterNames = JavaSourceUtil.getParameterNames(
 			methodCall);
 
 		if (!_hasValidMethodCall(
@@ -543,13 +543,20 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 		String fileName, String from, String javaMethodContent,
 		JSONObject jsonObject, String newContent, List<String> parameterNames) {
 
-		List<String> parameterTypes = JavaSourceUtil.getParameterList(from);
+		List<String> fromParameters = JavaSourceUtil.getParameterNames(from);
 
-		if (parameterNames.size() != parameterTypes.size()) {
+		boolean skipParametersValidation = jsonObject.getBoolean(
+			"skipParametersValidation");
+
+		if (!skipParametersValidation) {
+			fromParameters = JavaSourceUtil.getParameterTypes(from);
+		}
+
+		if (parameterNames.size() != fromParameters.size()) {
 			return false;
 		}
 
-		if (jsonObject.getBoolean("skipParametersValidation")) {
+		if (skipParametersValidation) {
 			return true;
 		}
 
@@ -561,7 +568,7 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 			sendMessage = true;
 		}
 		else if (fileName.endsWith(".java")) {
-			for (int i = 0; i < parameterTypes.size(); i++) {
+			for (int i = 0; i < fromParameters.size(); i++) {
 				String parameterName = parameterNames.get(i);
 
 				String variableTypeName = getVariableTypeName(
@@ -572,7 +579,7 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 					sendMessage = true;
 				}
 				else if (!StringUtil.equals(
-							parameterTypes.get(i), variableTypeName)) {
+							fromParameters.get(i), variableTypeName)) {
 
 					return false;
 				}

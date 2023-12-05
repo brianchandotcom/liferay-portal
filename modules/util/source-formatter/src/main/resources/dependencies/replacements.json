@@ -16,7 +16,7 @@
 		"to": "CookiesConstants.NAME_ID"
 	},
 	{
-		"from": "CookieKeys.getCookie(HttpServletRequest, String)",
+		"from": "CookieKeys.getCookie(HttpServletRequest paramName, String paramName)",
 		"issueKey": "LPS-159679",
 		"newImports": [
 			"com.liferay.portal.kernel.cookies.CookiesManagerUtil"
@@ -32,7 +32,7 @@
 		"to": "CookiesConstants.NAME_USER_UUID"
 	},
 	{
-		"from": "CookieUtil.get(HttpServletRequest, String)",
+		"from": "CookieUtil.get(HttpServletRequest paramName, String paramName)",
 		"issueKey": "LPS-159681",
 		"newImports": [
 			"com.liferay.portal.kernel.cookies.CookiesManagerUtil"
@@ -40,7 +40,7 @@
 		"to": "CookiesManagerUtil.getCookieValue(param#1#, param#0#)"
 	},
 	{
-		"from": "CookieUtil.get(HttpServletRequest, String, boolean)",
+		"from": "CookieUtil.get(HttpServletRequest paramName, String paramName, boolean paramName)",
 		"issueKey": "LPS-159681",
 		"newImports": [
 			"com.liferay.portal.kernel.cookies.CookiesManagerUtil"
@@ -52,7 +52,7 @@
 			"JournalFolderLocalService",
 			"JournalFolderLocalServiceUtil"
 		],
-		"from": "addFolder(long, long, long, String, String, ServiceContext)",
+		"from": "addFolder(long paramName, long paramName, long paramName, String paramName, String paramName, ServiceContext paramName)",
 		"issueKey": "LPS-184731",
 		"to": "addFolder(null, param#0#, param#1#, param#2#, param#3#, param#4#, param#5#)"
 	},
@@ -115,7 +115,7 @@
 			"CommerceAddressLocalService",
 			"CommerceAddressLocalServiceUtil"
 		],
-		"from": "updateCommerceAddress(CommerceAddress)",
+		"from": "updateCommerceAddress(CommerceAddress paramName)",
 		"issueKey": "LPS-186925",
 		"newImports": [
 			"com.liferay.portal.kernel.service.ServiceContextThreadLocal"
@@ -143,7 +143,7 @@
 		"to": "fetchCountryByA2"
 	},
 	{
-		"from": "CommerceShippingOption(String, String, BigDecimal)",
+		"from": "CommerceShippingOption(String paramName, String paramName, BigDecimal paramName)",
 		"issueKey": "LPS-187666",
 		"skipParametersValidation": true,
 		"to": "CommerceShippingOption(param#2#, \"\", param#0#, param#0#, 0)"
@@ -177,7 +177,7 @@
 			"AssetVocabularyLocalService",
 			"AssetVocabularyService"
 		],
-		"from": "searchVocabularies(long, long, String, int, int)",
+		"from": "searchVocabularies(long paramName, long paramName, String paramName, int paramName, int paramName)",
 		"issueKey": "LPS-189866",
 		"newImports": [
 			"com.liferay.portal.kernel.search.Sort"
@@ -198,7 +198,7 @@
 			"LayoutLocalService",
 			"LayoutLocalServiceUtil"
 		],
-		"from": "addLayout(long, long, boolean, long, long, long, Map<java.util.Locale, String>, Map<java.util.Locale, String>, Map<java.util.Locale, String>, Map<java.util.Locale, String>, Map<java.util.Locale, String>, String, String, boolean, boolean, Map<java.util.Locale, String>, ServiceContext)",
+		"from": "addLayout(long paramName, long paramName, boolean paramName, long paramName, long paramName, long paramName, Map<java.util.Locale, String> paramName, Map<java.util.Locale, String> paramName, Map<java.util.Locale, String> paramName, Map<java.util.Locale, String> paramName, Map<java.util.Locale, String> paramName, String paramName, String paramName, boolean paramName, boolean paramName, Map<java.util.Locale, String> paramName, ServiceContext paramName)",
 		"issueKey": "LPS-190401",
 		"to": "addLayout(param#0#, param#1#, param#2#, param#3#, param#4#, param#5#, param#6#, param#7#, param#8#, param#9#, param#10#, param#11#, param#12#, param#13#, param#14#, param#15#, 0, param#16#)"
 	},
@@ -209,7 +209,7 @@
 			"LayoutService",
 			"LayoutServiceUtil"
 		],
-		"from": "updateLayout(long, boolean, long, long, Map<java.util.Locale, String>, Map<java.util.Locale, String>, Map<java.util.Locale, String>, Map<java.util.Locale, String>, Map<java.util.Locale, String>, String, boolean, Map<java.util.Locale, String>, boolean, byte[], ServiceContext)",
+		"from": "updateLayout(long paramName, boolean paramName, long paramName, long paramName, Map<java.util.Locale, String> paramName, Map<java.util.Locale, String> paramName, Map<java.util.Locale, String> paramName, Map<java.util.Locale, String> paramName, Map<java.util.Locale, String> paramName, String paramName, boolean paramName, Map<java.util.Locale, String> paramName, boolean paramName, byte[] paramName, ServiceContext paramName)",
 		"issueKey": "LPS-190401",
 		"to": "updateLayout(param#0#, param#1#, param#2#, param#3#, param#4#, param#5#, param#6#, param#7#, param#8#, param#9#, param#10#, param#11#, param#12#, param#13#, 0, 0, 0, param#14#)"
 	},
@@ -218,7 +218,7 @@
 			"CPDefinitionLocalService",
 			"CPDefinitionService"
 		],
-		"from": "fetchCPDefinitionByCProductExternalReferenceCode(long, String)",
+		"from": "fetchCPDefinitionByCProductExternalReferenceCode(long paramName, String paramName)",
 		"issueKey": "LPS-190521",
 		"to": "fetchCPDefinitionByCProductExternalReferenceCode(param#1#, param#0#)"
 	},
@@ -244,12 +244,12 @@
 			"AssetCategoryLocalService",
 			"AssetCategoryLocalServiceUtil"
 		],
-		"from": "addCategory(long, long, long, Map<Locale, String>, Map<Locale, String>, long, String[], ServiceContext)",
+		"from": "addCategory(long paramName, long paramName, long paramName, Map<Locale, String> paramName, Map<Locale, String> paramName, long paramName, String[] paramName, ServiceContext paramName)",
 		"issueKey": "LPS-192320",
 		"to": "addCategory(null, param#0#, param#1#, param#2#, param#3#, param#4#, param#5#, param#6#, param#7#)"
 	},
 	{
-		"from": "DLUtil.getGroupIds(ThemeDisplay)",
+		"from": "DLUtil.getGroupIds(ThemeDisplay paramName)",
 		"issueKey": "LPS-192396",
 		"newImports": [
 			"com.liferay.portal.kernel.util.PortalUtil"
@@ -276,7 +276,7 @@
 			"UserService",
 			"UserServiceUtil"
 		],
-		"from": "addUser(long, boolean, String, String, boolean, String, String, long, String, Locale, String, String, String, long, long, boolean, int, int, int, String, long[], long[], long[], long[], boolean, ServiceContext)",
+		"from": "addUser(long paramName, boolean paramName, String paramName, String paramName, boolean paramName, String paramName, String paramName, long paramName, String paramName, Locale paramName, String paramName, String paramName, String paramName, long paramName, long paramName, boolean paramName, int paramName, int paramName, int paramName, String paramName, long[] paramName, long[] paramName, long[] paramName, long[] paramName, boolean paramName, ServiceContext paramName)",
 		"issueKey": "LPS-192661",
 		"newImports": [
 			"com.liferay.portal.kernel.service.ServiceContextThreadLocal"
@@ -290,7 +290,7 @@
 			"UserService",
 			"UserServiceUtil"
 		],
-		"from": "addUser(long, boolean, String, String, boolean, String, String, long, String, Locale, String, String, String, long, long, boolean, int, int, int, String, long[], long[], long[], long[], List<Address>, List<EmailAddress>, List<Phone>, List<Website>, List<AnnouncementsDelivery>, boolean, ServiceContext)",
+		"from": "addUser(long paramName, boolean paramName, String paramName, String paramName, boolean paramName, String paramName, String paramName, long paramName, String paramName, Locale paramName, String paramName, String paramName, String paramName, long paramName, long paramName, boolean paramName, int paramName, int paramName, int paramName, String paramName, long[] paramName, long[] paramName, long[] paramName, long[] paramName, List<Address> paramName, List<EmailAddress> paramName, List<Phone> paramName, List<Website> paramName, List<AnnouncementsDelivery> paramName, boolean paramName, ServiceContext paramName)",
 		"issueKey": "LPS-192661",
 		"newImports": [
 			"com.liferay.portal.kernel.service.ServiceContextThreadLocal"
@@ -304,7 +304,7 @@
 			"UserService",
 			"UserServiceUtil"
 		],
-		"from": "addUser(long, long, boolean, String, String, boolean, String, String, long, String, Locale, String, String, String, long, long, boolean, int, int, int, String, long[], long[], long[], long[], boolean, ServiceContext)",
+		"from": "addUser(long paramName, long paramName, boolean paramName, String paramName, String paramName, boolean paramName, String paramName, String paramName, long paramName, String paramName, Locale paramName, String paramName, String paramName, String paramName, long paramName, long paramName, boolean paramName, int paramName, int paramName, int paramName, String paramName, long[] paramName, long[] paramName, long[] paramName, long[] paramName, boolean paramName, ServiceContext paramName)",
 		"issueKey": "LPS-192661",
 		"newImports": [
 			"com.liferay.portal.kernel.service.ServiceContextThreadLocal"
@@ -318,7 +318,7 @@
 			"UserService",
 			"UserServiceUtil"
 		],
-		"from": "updateStatus(long, int)",
+		"from": "updateStatus(long paramName, int paramName)",
 		"issueKey": "LPS-192661",
 		"to": "updateStatus(param#0#, param#1#, ServiceContextThreadLocal.getServiceContext())"
 	},
@@ -329,7 +329,7 @@
 			"AddressService",
 			"AddressServiceUtil"
 		],
-		"from": "addAddress(long, String, long, String, String, String, String, String, long, long, long, boolean, boolean)",
+		"from": "addAddress(long paramName, String paramName, long paramName, String paramName, String paramName, String paramName, String paramName, String paramName, long paramName, long paramName, long paramName, boolean paramName, boolean paramName)",
 		"issueKey": "LPS-193462",
 		"to": "addAddress(null, param#0#, param#1#, param#2#, null, null, param#3#, param#4#, param#5#, param#6#, param#7#, param#8#, param#9#, param#10#, param#11#, param#12#, null, ServiceContextThreadLocal.getServiceContext())"
 	},
@@ -340,7 +340,7 @@
 			"AddressService",
 			"AddressServiceUtil"
 		],
-		"from": "addAddress(long, String, long, String, String, String, String, String, long, long, long, boolean, boolean, ServiceContext)",
+		"from": "addAddress(long paramName, String paramName, long paramName, String paramName, String paramName, String paramName, String paramName, String paramName, long paramName, long paramName, long paramName, boolean paramName, boolean paramName, ServiceContext paramName)",
 		"issueKey": "LPS-193462",
 		"to": "addAddress(null, param#0#, param#1#, param#2#, null, null, param#3#, param#4#, param#5#, param#6#, param#7#, param#8#, param#9#, param#10#, param#11#, param#12#, null, param#13#)"
 	},
@@ -348,7 +348,7 @@
 		"classNames": [
 			"PhoneLocalServiceUtil"
 		],
-		"from": "addPhone(long, String, long, String, String, long, boolean)",
+		"from": "addPhone(long paramName, String paramName, long paramName, String paramName, String paramName, long paramName, boolean paramName)",
 		"issueKey": "LPS-193473",
 		"newImports": [
 			"com.liferay.portal.kernel.service.ServiceContextThreadLocal"
@@ -360,7 +360,7 @@
 			"DLFolderService",
 			"DLFolderServiceUtil"
 		],
-		"from": "addFolder(long, long, boolean, long, String, String, ServiceContext)",
+		"from": "addFolder(long paramName, long paramName, boolean paramName, long paramName, String paramName, String paramName, ServiceContext paramName)",
 		"issueKey": "LPS-194001",
 		"to": "addFolder(null, param#0#, param#1#, param#2#, param#3#, param#4#, param#5#, param#6#)"
 	},
@@ -369,7 +369,7 @@
 			"DLFolderLocalService",
 			"DLFolderLocalServiceUtil"
 		],
-		"from": "addFolder(long, long, long, boolean, long, String, String, boolean, ServiceContext)",
+		"from": "addFolder(long paramName, long paramName, long paramName, boolean paramName, long paramName, String paramName, String paramName, boolean paramName, ServiceContext paramName)",
 		"issueKey": "LPS-194001",
 		"to": "addFolder(null, param#0#, param#1#, param#2#, param#3#, param#4#, param#5#, param#6#, param#7#, param#8#)"
 	},
@@ -386,7 +386,7 @@
 			"DLAppLocalService",
 			"DLAppLocalServiceUtil"
 		],
-		"from": "updateFileEntry(long, long, String, String, String, String, String, boolean, byte[], ServiceContext)",
+		"from": "updateFileEntry(long paramName, long paramName, String paramName, String paramName, String paramName, String paramName, String paramName, boolean paramName, byte[] paramName, ServiceContext paramName)",
 		"issueKey": "LPS-194134",
 		"newImports": [
 			"com.liferay.document.library.kernel.model.DLVersionNumberIncrease",
@@ -399,7 +399,7 @@
 			"DLAppLocalService",
 			"DLAppLocalServiceUtil"
 		],
-		"from": "updateFileEntry(long, long, String, String, String, String, String, DLVersionNumberIncrease, byte[], ServiceContext)",
+		"from": "updateFileEntry(long paramName, long paramName, String paramName, String paramName, String paramName, String paramName, String paramName, DLVersionNumberIncrease paramName, byte[] paramName, ServiceContext paramName)",
 		"issueKey": "LPS-194134",
 		"newImports": [
 			"com.liferay.document.library.kernel.model.DLVersionNumberIncrease",
@@ -412,7 +412,7 @@
 			"DLAppLocalService",
 			"DLAppLocalServiceUtil"
 		],
-		"from": "addFileEntry(long, long, long, String, String, String, String, String, byte[], ServiceContext)",
+		"from": "addFileEntry(long paramName, long paramName, long paramName, String paramName, String paramName, String paramName, String paramName, String paramName, byte[] paramName, ServiceContext paramName)",
 		"issueKey": "LPS-194818",
 		"to": "addFileEntry(null, param#0#, param#1#, param#2#, param#3#, param#4#, param#5#, null, param#6#, param#7#, param#8#, null, null, param#9#)"
 	},
@@ -425,7 +425,7 @@
 		"classNames": [
 			"PortletDisplay"
 		],
-		"from": "getPortletInstanceConfiguration(Class<T>)",
+		"from": "getPortletInstanceConfiguration(Class<T> paramName)",
 		"issueKey": "LPS-195850",
 		"newImports": [
 			"com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil",
@@ -434,7 +434,7 @@
 		"to": "ConfigurationProviderUtil.getPortletInstanceConfiguration(param#0#, ServiceContextThreadLocal.getServiceContext().getThemeDisplay())"
 	},
 	{
-		"from": "portletDisplay.getPortletInstanceConfiguration(Class<T>)",
+		"from": "portletDisplay.getPortletInstanceConfiguration(Class<T> paramName)",
 		"issueKey": "LPS-195850",
 		"newImports": [
 			"com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil"
@@ -448,7 +448,7 @@
 		"classNames": [
 			"CaptchaUtil"
 		],
-		"from": "serveImage(ResourceRequest, ResourceResponse)",
+		"from": "serveImage(ResourceRequest paramName, ResourceResponse paramName)",
 		"issueKey": "LPS-196215",
 		"newImports": [
 			"com.liferay.portal.kernel.util.PortalUtil"
@@ -460,7 +460,7 @@
 			"AssetCategoryLocalService",
 			"AssetCategoryLocalServiceUtil"
 		],
-		"from": "fetchAssetCategoryByExternalReferenceCode(long, String)",
+		"from": "fetchAssetCategoryByExternalReferenceCode(long paramName, String paramName)",
 		"issueKey": "LPS-196608"
 	},
 	{
@@ -468,7 +468,7 @@
 			"CommercePriceListLocalService",
 			"CommercePriceListLocalServiceUtil"
 		],
-		"from": "fetchByExternalReferenceCode(long, String)",
+		"from": "fetchByExternalReferenceCode(long paramName, String paramName)",
 		"issueKey": "LPS-196611",
 		"to": "fetchByExternalReferenceCode(param#1#, param#0#)"
 	},
@@ -490,7 +490,7 @@
 			"CommercePriceEntryLocalService",
 			"CommercePriceEntryLocalServiceUtil"
 		],
-		"from": "addCommercePriceEntry(String, long, String, long, BigDecimal, BigDecimal, ServiceContext)",
+		"from": "addCommercePriceEntry(String paramName, long paramName, String paramName, long paramName, BigDecimal paramName, BigDecimal paramName, ServiceContext paramName)",
 		"issueKey": "LPS-196627",
 		"to": "addCommercePriceEntry(param#0#, param#1#, param#2#, param#3#, param#4#, false, param#5#, null, param#6#)"
 	},
@@ -498,7 +498,7 @@
 		"classNames": [
 			"CommerceAccountHelper"
 		],
-		"from": "getCurrentCommerceAccount(HttpServletRequest)",
+		"from": "getCurrentCommerceAccount(HttpServletRequest paramName)",
 		"issueKey": "LPS-196638",
 		"to": "getCurrentAccountEntry(0, param#0#)"
 	},
@@ -507,7 +507,7 @@
 			"AccountGroupLocalService",
 			"AccountGroupLocalServiceUtil"
 		],
-		"from": "fetchCommerceAccountGroupByExternalReferenceCode(long, String)",
+		"from": "fetchCommerceAccountGroupByExternalReferenceCode(long paramName, String paramName)",
 		"issueKey": "LPS-196639",
 		"to": "fetchAccountGroupByExternalReferenceCode(param#1#, param#0#)"
 	},
@@ -518,7 +518,7 @@
 			"AccountGroupRelService",
 			"AccountGroupRelServiceUtil"
 		],
-		"from": "addCommerceAccountGroupRel(String, long, long, ServiceContext)",
+		"from": "addCommerceAccountGroupRel(String paramName, long paramName, long paramName, ServiceContext paramName)",
 		"issueKey": "LPS-196652",
 		"to": "addAccountGroupRel(param#2#, param#0#, param#1#)"
 	},
@@ -543,7 +543,7 @@
 			"CommerceOrderItemLocalService",
 			"CommerceOrderItemService"
 		],
-		"from": "addCommerceOrderItem(long, long, int, int, String, CommerceContext, ServiceContext)",
+		"from": "addCommerceOrderItem(long paramName, long paramName, int paramName, int paramName, String paramName, CommerceContext paramName, ServiceContext paramName)",
 		"issueKey": "LPS-197459",
 		"to": "addCommerceOrderItem(0, param#0#, param#1#, param#4#, BigDecimal.valueOf(param#2#), param#1#, BigDecimal.valueOf(param#3#), null, param#5#, param#6#)"
 	},
@@ -552,7 +552,7 @@
 			"CommerceOrderItemLocalServiceUtil",
 			"CommerceOrderItemServiceUtil"
 		],
-		"from": "addCommerceOrderItem(long, long, int, int, String, CommerceContext, ServiceContext)",
+		"from": "addCommerceOrderItem(long paramName, long paramName, int paramName, int paramName, String paramName, CommerceContext paramName, ServiceContext paramName)",
 		"issueKey": "LPS-197459",
 		"to": "addCommerceOrderItem(param#0#, param#1#, param#4#, BigDecimal.valueOf(param#2#), param#1#, BigDecimal.valueOf(param#3#), null, param#5#, param#6#)"
 	},
@@ -561,7 +561,7 @@
 			"CommerceOrderItemLocalService",
 			"CommerceOrderItemLocalServiceUtil"
 		],
-		"from": "deleteCommerceOrderItems(long)",
+		"from": "deleteCommerceOrderItems(long paramName)",
 		"issueKey": "LPS-197459",
 		"to": "deleteCommerceOrderItems(0, param#0#)"
 	},
@@ -572,7 +572,7 @@
 			"CPDefinitionService",
 			"CPDefinitionServiceUtil"
 		],
-		"from": "upsertCPDefinition(long, long, Map<Locale, String>, Map<Locale, String>, Map<Locale, String>, Map<Locale, String>, Map<Locale, String>, Map<Locale, String>, Map<Locale, String>, String, boolean, boolean, boolean, boolean, double, double, double, double, double, long, boolean, boolean, String, boolean, int, int, int, int, int, int, int, int, int, int, boolean, String, boolean, int, String, UnicodeProperties, long, String, ServiceContext)",
+		"from": "upsertCPDefinition(long paramName, long paramName, Map<Locale, String> paramName, Map<Locale, String> paramName, Map<Locale, String> paramName, Map<Locale, String> paramName, Map<Locale, String> paramName, Map<Locale, String> paramName, Map<Locale, String> paramName, String paramName, boolean paramName, boolean paramName, boolean paramName, boolean paramName, double paramName, double paramName, double paramName, double paramName, double paramName, long paramName, boolean paramName, boolean paramName, String paramName, boolean paramName, int paramName, int paramName, int paramName, int paramName, int paramName, int paramName, int paramName, int paramName, int paramName, int paramName, boolean paramName, String paramName, boolean paramName, int paramName, String paramName, UnicodeProperties paramName, long paramName, String paramName, ServiceContext paramName)",
 		"issueKey": "LPS-197613",
 		"to": "upsertCPDefinition(param#41#, param#0#, param#1#, param#2#, param#3#, param#4#, param#5#, param#6#, param#7#, param#8#, param#9#, param#10#, param#11#, param#12#, param#13#, param#14#, param#15#, param#16#, param#17#, param#18#, param#19#, param#20#, param#21#, param#22#, param#23#, param#24#, param#25#, param#26#, param#27#, param#28#, param#29#, param#30#, param#31#, param#32#, param#33#, param#34#, param#35#, param#36#, param#37#, param#38#, param#39#, param#40#, 0, param#42#)"
 	},
@@ -626,7 +626,7 @@
 			"CPInstanceService",
 			"CPInstanceServiceUtil"
 		],
-		"from": "fetchByExternalReferenceCode(long, String)",
+		"from": "fetchByExternalReferenceCode(long paramName, String paramName)",
 		"issueKey": "LPS-197965",
 		"to": "fetchByExternalReferenceCode(param#1#, param#0#)"
 	},
@@ -635,7 +635,7 @@
 			"CPInstanceLocalService",
 			"CPInstanceLocalServiceUtil"
 		],
-		"from": "fetchCPInstanceByExternalReferenceCode(long, String)",
+		"from": "fetchCPInstanceByExternalReferenceCode(long paramName, String paramName)",
 		"issueKey": "LPS-197965",
 		"to": "fetchCPInstanceByExternalReferenceCode(param#1#, param#0#)"
 	},
@@ -764,7 +764,7 @@
 			"CommerceOrderLocalService",
 			"CommerceOrderLocalServiceUtil"
 		],
-		"from": "addCommerceOrder(long, long, long, long, long, long, long, long, String, int, int, int, int, int, int, int, String, BigDecimal, String, BigDecimal, BigDecimal, BigDecimal, BigDecimal, BigDecimal, BigDecimal, ServiceContext)",
+		"from": "addCommerceOrder(long paramName, long paramName, long paramName, long paramName, long paramName, long paramName, long paramName, long paramName, String paramName, int paramName, int paramName, int paramName, int paramName, int paramName, int paramName, int paramName, String paramName, BigDecimal paramName, String paramName, BigDecimal paramName, BigDecimal paramName, BigDecimal paramName, BigDecimal paramName, BigDecimal paramName, BigDecimal paramName, ServiceContext paramName)",
 		"issueKey": "LPS-198138",
 		"to": "addCommerceOrder(param#0#, param#1#, param#2#, param#3#, param#4#, param#5#, param#6#, param#7#, param#8#, param#9#, param#10#, param#11#, param#12#, param#13#, param#14#, param#15#, param#16#, param#17#, param#18#)"
 	},
@@ -773,14 +773,14 @@
 			"AssetVocabularyLocalService",
 			"AssetVocabularyLocalServiceUtil"
 		],
-		"from": "fetchAssetVocabularyByExternalReferenceCode(long, String)",
+		"from": "fetchAssetVocabularyByExternalReferenceCode(long paramName, String paramName)",
 		"issueKey": "LPS-198292"
 	},
 	{
 		"classNames": [
 			"DefaultFragmentRendererContext"
 		],
-		"from": "setSegmentsExperienceIds(long[])",
+		"from": "setSegmentsExperienceIds(long[] paramName)",
 		"issueKey": "LPS-198401",
 		"to": ""
 	},
@@ -788,7 +788,7 @@
 		"classNames": [
 			"DefaultFragmentRendererContext"
 		],
-		"from": "setFieldValues(Map<String, Object>)",
+		"from": "setFieldValues(Map<String, Object> paramName)",
 		"issueKey": "LPS-198402",
 		"to": ""
 	},
@@ -801,7 +801,7 @@
 			"CPDefinitionLinkLocalService",
 			"CPDefinitionLinkLocalServiceUtil"
 		],
-		"from": "addCPDefinitionLinkByCProductId(long, long, double, String, ServiceContext)",
+		"from": "addCPDefinitionLinkByCProductId(long paramName, long paramName, double paramName, String paramName, ServiceContext paramName)",
 		"issueKey": "LPS-198610",
 		"to": "addCPDefinitionLinkByCProductId(param#0#, param#1#, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, true, param#2#, param#3#, param#4#)"
 	},
@@ -812,7 +812,7 @@
 			"CalendarBookingService",
 			"CalendarBookingServiceUtil"
 		],
-		"from": "search(long, long[], long[], long[], long, String, long, long, boolean, int[], int, int, OrderByComparator<CalendarBooking>)",
+		"from": "search(long paramName, long[] paramName, long[] paramName, long[] paramName, long paramName, String paramName, long paramName, long paramName, boolean paramName, int[] paramName, int paramName, int paramName, OrderByComparator<CalendarBooking> paramName)",
 		"issueKey": "LPS-202779",
 		"to": "search(param#0#, param#1#, param#2#, param#3#, param#4#, param#5#, param#6#, param#7#, null, param#8#, param#9#, param#10#, param#11#, param#12#)"
 	},
@@ -833,7 +833,7 @@
 			"DLAppService",
 			"DLAppServiceUtil"
 		],
-		"from": "addFolder(long, long, long, String, String, ServiceContext)",
+		"from": "addFolder(long paramName, long paramName, long paramName, String paramName, String paramName, ServiceContext paramName)",
 		"issueKey": "LPS-202927",
 		"to": "addFolder(null, param#0#, param#1#, param#2#, param#3#, param#4#, param#5#)"
 	}

@@ -29,7 +29,7 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class CIHelpGitHubEventHandler extends BaseGitHubIssueEventHandler {
+public class HelpGitHubIssueEventHandler extends BaseGitHubIssueEventHandler {
 
 	@Override
 	public String process() throws InvalidJSONException, IOException {
@@ -45,7 +45,7 @@ public class CIHelpGitHubEventHandler extends BaseGitHubIssueEventHandler {
 		return gitHubComment.getBody();
 	}
 
-	protected CIHelpGitHubEventHandler(
+	protected HelpGitHubIssueEventHandler(
 		EventHandlerContext eventHandlerContext, JSONObject messageJSONObject) {
 
 		super(eventHandlerContext, messageJSONObject);
@@ -209,7 +209,7 @@ public class CIHelpGitHubEventHandler extends BaseGitHubIssueEventHandler {
 	}
 
 	private static final Log _log = LogFactory.getLog(
-		CIHelpGitHubEventHandler.class);
+		HelpGitHubIssueEventHandler.class);
 
 	private Properties _jenkinsBuildProperties;
 	private GitBranchEntity _jenkinsGitBranchEntity;

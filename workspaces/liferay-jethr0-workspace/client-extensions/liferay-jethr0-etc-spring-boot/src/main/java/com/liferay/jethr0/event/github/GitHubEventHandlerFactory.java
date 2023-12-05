@@ -37,11 +37,11 @@ public class GitHubEventHandlerFactory extends BaseEventHandlerFactory {
 					String body = commentJSONObject.getString("body");
 
 					if (body.startsWith("ci:help")) {
-						return new CIHelpGitHubEventHandler(
+						return new HelpGitHubIssueEventHandler(
 							eventHandlerContext, messageJSONObject);
 					}
 					else if (body.startsWith("ci:test")) {
-						return new CITestGitHubEventHandler(
+						return new TestGitHubIssueEventHandler(
 							eventHandlerContext, messageJSONObject);
 					}
 
@@ -54,7 +54,7 @@ public class GitHubEventHandlerFactory extends BaseEventHandlerFactory {
 					messageJSONObject.optJSONObject("pull_request");
 
 				if (pullRequestJSONObject != null) {
-					return new OpenPullRequestEventHandler(
+					return new OpenGitHubPullRequestEventHandler(
 						eventHandlerContext, messageJSONObject);
 				}
 			}

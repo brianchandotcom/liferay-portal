@@ -23,7 +23,7 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class CITestGitHubEventHandler extends BaseGitHubIssueEventHandler {
+public class TestGitHubIssueEventHandler extends BaseGitHubIssueEventHandler {
 
 	@Override
 	public String process() throws InvalidJSONException, IOException {
@@ -38,7 +38,7 @@ public class CITestGitHubEventHandler extends BaseGitHubIssueEventHandler {
 		return jobEntity.toString();
 	}
 
-	protected CITestGitHubEventHandler(
+	protected TestGitHubIssueEventHandler(
 		EventHandlerContext eventHandlerContext, JSONObject messageJSONObject) {
 
 		super(eventHandlerContext, messageJSONObject);

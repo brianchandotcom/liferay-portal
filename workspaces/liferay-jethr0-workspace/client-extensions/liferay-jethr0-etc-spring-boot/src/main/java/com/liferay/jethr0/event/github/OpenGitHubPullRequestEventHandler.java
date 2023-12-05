@@ -25,7 +25,7 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class OpenPullRequestEventHandler
+public class OpenGitHubPullRequestEventHandler
 	extends BaseGitHubPullRequestEventHandler {
 
 	@Override
@@ -43,7 +43,7 @@ public class OpenPullRequestEventHandler
 		return jobEntities.toString();
 	}
 
-	protected OpenPullRequestEventHandler(
+	protected OpenGitHubPullRequestEventHandler(
 		EventHandlerContext eventHandlerContext, JSONObject messageJSONObject) {
 
 		super(eventHandlerContext, messageJSONObject);

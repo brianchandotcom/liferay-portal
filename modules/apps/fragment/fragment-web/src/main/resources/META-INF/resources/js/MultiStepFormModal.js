@@ -95,45 +95,45 @@ export function MultiStepFormModal({
 			onSubmit={handleFormSubmit}
 			size={size}
 		>
-			<ClayForm ref={formRef}>
-				{title && <ClayModal.Header>{title}</ClayModal.Header>}
+			{title && <ClayModal.Header>{title}</ClayModal.Header>}
 
-				<ClayModal.Body>
+			<ClayModal.Body>
+				<ClayForm ref={formRef}>
 					{React.Children.map(children, mapChild)}
-				</ClayModal.Body>
+				</ClayForm>
+			</ClayModal.Body>
 
-				<ClayModal.Footer
-					last={
-						<ClayButton.Group spaced>
-							<ClayButton
-								displayType="secondary"
-								onClick={
-									isPreviousButtonEnabled
-										? handlePreviousStepButtonClick
-										: onClose
-								}
-							>
-								{isPreviousButtonEnabled
-									? Liferay.Language.get('previous')
-									: Liferay.Language.get('cancel')}
-							</ClayButton>
+			<ClayModal.Footer
+				last={
+					<ClayButton.Group spaced>
+						<ClayButton
+							displayType="secondary"
+							onClick={
+								isPreviousButtonEnabled
+									? handlePreviousStepButtonClick
+									: onClose
+							}
+						>
+							{isPreviousButtonEnabled
+								? Liferay.Language.get('previous')
+								: Liferay.Language.get('cancel')}
+						</ClayButton>
 
-							<ClayButton
-								displayType="primary"
-								onClick={
-									isNextButtonEnabled
-										? handleNextStepButtonClick
-										: handleFormSubmit
-								}
-							>
-								{isNextButtonEnabled
-									? Liferay.Language.get('next')
-									: submitLabel}
-							</ClayButton>
-						</ClayButton.Group>
-					}
-				/>
-			</ClayForm>
+						<ClayButton
+							displayType="primary"
+							onClick={
+								isNextButtonEnabled
+									? handleNextStepButtonClick
+									: handleFormSubmit
+							}
+						>
+							{isNextButtonEnabled
+								? Liferay.Language.get('next')
+								: submitLabel}
+						</ClayButton>
+					</ClayButton.Group>
+				}
+			/>
 		</ClayModal>
 	);
 }

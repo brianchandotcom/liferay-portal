@@ -374,6 +374,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9103 | Test Summary: [AC] Properties created when no data source was connected, and then the admin connect data sources to workspace"
 	@priority = 3
 	test CreatePropertiesWhenNoDataSourceIsConnected {
+		property test.run.type = "single";
+
 		task ("Add a new property on AC") {
 			ACUtils.launchAC();
 

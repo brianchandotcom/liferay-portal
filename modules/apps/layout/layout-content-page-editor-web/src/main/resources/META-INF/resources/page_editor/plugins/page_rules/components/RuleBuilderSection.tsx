@@ -283,31 +283,35 @@ export function RuleBuilderConditionSection({
 			displayType="secondary"
 			showCollapseIcon
 		>
-			<ClayPanel.Body className="px-3" role="menu">
-				{conditions.map((condition, index, conditions) => (
-					<ConditionComponent
-						condition={condition}
-						key={condition.id}
-						onConditionChange={(condition) =>
-							setConditions((previousConditions) => {
-								const newConditions = [...previousConditions];
+			<ClayPanel.Body className="px-3">
+				<div role="menu">
+					{conditions.map((condition, index, conditions) => (
+						<ConditionComponent
+							condition={condition}
+							key={condition.id}
+							onConditionChange={(condition) =>
+								setConditions((previousConditions) => {
+									const newConditions = [
+										...previousConditions,
+									];
 
-								newConditions[index] = condition;
+									newConditions[index] = condition;
 
-								return newConditions;
-							})
-						}
-						onDeleteCondition={() =>
-							onDeleteCondition(condition, index)
-						}
-						showDeleteButton={
-							conditions.length > 1 || !!condition.type
-						}
-						wrapperRef={(element) =>
-							setConditionRef(condition, element)
-						}
-					/>
-				))}
+									return newConditions;
+								})
+							}
+							onDeleteCondition={() =>
+								onDeleteCondition(condition, index)
+							}
+							showDeleteButton={
+								conditions.length > 1 || !!condition.type
+							}
+							wrapperRef={(element) =>
+								setConditionRef(condition, element)
+							}
+						/>
+					))}
+				</div>
 
 				<ClayButton
 					className="mt-2"

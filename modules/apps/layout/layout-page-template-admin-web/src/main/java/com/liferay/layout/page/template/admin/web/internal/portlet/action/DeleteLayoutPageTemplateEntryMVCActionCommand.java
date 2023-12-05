@@ -88,6 +88,16 @@ public class DeleteLayoutPageTemplateEntryMVCActionCommand
 			return;
 		}
 
+		if (deleteLayoutPageTemplateEntryIds.length ==
+				deleteLayoutPageTemplateIdsList.size()) {
+
+			SessionErrors.add(actionRequest, PortalException.class);
+
+			sendRedirect(actionRequest, actionResponse);
+
+			return;
+		}
+
 		if (!deleteLayoutPageTemplateIdsList.isEmpty()) {
 			SessionErrors.add(actionRequest, PortalException.class);
 

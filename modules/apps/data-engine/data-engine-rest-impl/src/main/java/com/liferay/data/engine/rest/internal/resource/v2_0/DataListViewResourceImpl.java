@@ -54,7 +54,6 @@ import java.util.Set;
 
 import javax.validation.ValidationException;
 
-import javax.ws.rs.BadRequestException;
 import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
@@ -99,13 +98,6 @@ public class DataListViewResourceImpl extends BaseDataListViewResourceImpl {
 			Long dataDefinitionId, String keywords, Pagination pagination,
 			Sort[] sorts)
 		throws Exception {
-
-		if (pagination.getPageSize() > 250) {
-			throw new BadRequestException(
-				_language.format(
-					contextAcceptLanguage.getPreferredLocale(),
-					"page-size-is-greater-than-x", 250));
-		}
 
 		if (ArrayUtil.isEmpty(sorts)) {
 			sorts = new Sort[] {

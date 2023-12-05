@@ -24,6 +24,10 @@ public class ExportImportObjectDefinitionUtil {
 	public static void prepareObjectDefinitionForExport(
 		JSONFactory jsonFactory, ObjectDefinition objectDefinition) {
 
+		if (objectDefinition == null) {
+			return;
+		}
+
 		for (ObjectAction objectAction : objectDefinition.getObjectActions()) {
 			Map<String, Object> parameters =
 				(Map<String, Object>)objectAction.getParameters();

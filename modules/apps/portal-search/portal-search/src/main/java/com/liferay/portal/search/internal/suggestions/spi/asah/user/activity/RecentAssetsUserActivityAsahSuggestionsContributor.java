@@ -61,22 +61,22 @@ public class RecentAssetsUserActivityAsahSuggestionsContributor
 
 		if (url.endsWith("/search")) {
 			try {
-				String entryClassName = _contentTypeToClassNameMap.get(
+				String className = _contentTypeToClassNameMap.get(
 					itemJSONObject.getString("contentType"));
 
 				AssetRendererFactory<?> assetRendererFactory =
 					AssetRendererFactoryRegistryUtil.
-						getAssetRendererFactoryByClassName(entryClassName);
+						getAssetRendererFactoryByClassName(className);
 
 				if (assetRendererFactory == null) {
 					return null;
 				}
 
-				long entryClassPK = itemJSONObject.getLong("assetId");
+				long classPK = itemJSONObject.getLong("assetId");
 
 				return AssetURLUtil.getAssetURLView(
-					assetRendererFactory.getAssetRenderer(entryClassPK),
-					assetRendererFactory, entryClassName, entryClassPK,
+					assetRendererFactory.getAssetRenderer(classPK),
+					assetRendererFactory, className, classPK,
 					_liferayPortletRequest, _liferayPortletResponse);
 			}
 			catch (Exception exception) {

@@ -986,6 +986,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGE_RULE_BUILDER_EXISTING_ACTION_ITEM</td>
+	<td>xpath=(//div[contains(@class,'rule-builder-item--action')]//button[@role='combobox'])[${index}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_RULE_BUILDER_EXISTING_CONDITION_ITEM</td>
+	<td>xpath=(//div[contains(@class,'rule-builder-item--condition')]//button[@role='combobox'])[${index}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGE_RULE_LIST_ITEM</td>
 	<td>//div[@aria-label='Page Rules Panel']//li[.//*[normalize-space(text())='${key_ruleName}']][normalize-space()='${key_rule}']</td>
 	<td></td>

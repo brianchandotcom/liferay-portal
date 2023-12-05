@@ -22,10 +22,10 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.search.asset.AssetURLViewProvider;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
-import com.liferay.portal.search.internal.util.AssetURLUtil;
 import com.liferay.portal.search.rest.dto.v1_0.SuggestionsContributorConfiguration;
 import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
@@ -184,7 +184,7 @@ public class BasicSuggestionsContributor implements SuggestionsContributor {
 						liferayPortletRequest, liferayPortletResponse));
 				suggestionBuilder.attribute(
 					"assetURL",
-					AssetURLUtil.getAssetURLView(
+					_assetURLViewProvider.getAssetURLView(
 						assetRenderer, assetRendererFactory, entryClassName,
 						entryClassPK, liferayPortletRequest,
 						liferayPortletResponse));
@@ -250,6 +250,9 @@ public class BasicSuggestionsContributor implements SuggestionsContributor {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BasicSuggestionsContributor.class);
+
+	@Reference
+	private AssetURLViewProvider _assetURLViewProvider;
 
 	@Reference
 	private Searcher _searcher;

@@ -29,7 +29,7 @@ import org.json.JSONObject;
  */
 public interface JobEntity extends Entity {
 
-	public static ParameterDefinition JENKINS_GITHUB_URL_PARAMETER_DEFINITION =
+	public static ParameterDefinition PARAMETER_DEFINITION_JENKINS_GITHUB_URL =
 		new ParameterDefinition(
 			"jenkinsGitHubURL", "Jenkins GitHub URL",
 			ParameterDefinition.Type.URL,

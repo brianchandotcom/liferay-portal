@@ -12,14 +12,14 @@ import java.net.URL;
  */
 public interface PortalPullRequestJobEntity extends JobEntity {
 
-	public static ParameterDefinition PORTAL_PULL_REQUEST_PARAMETER_DEFINITION =
+	public static ParameterDefinition PARAMETER_DEFINITION_PORTAL_PULL_REQUEST =
 		new ParameterDefinition(
 			"portalPullRequestURL", "Portal Pull Request URL",
 			ParameterDefinition.Type.URL, null,
 			"e.g. https://github.com/[user]/liferay-portal/pull/[number]",
 			"https://github.com/[^/]+/liferay-portal(-ee)?/pull/[^/]+");
 
-	public static ParameterDefinition TEST_SUITE_NAME_PARAMETER_DEFINITION =
+	public static ParameterDefinition PARAMETER_DEFINITION_TEST_SUITE_NAME =
 		new ParameterDefinition(
 			"testSuiteName", "Test Suite Name", ParameterDefinition.Type.STRING,
 			null, "Insert your Test Suite Name here", null);

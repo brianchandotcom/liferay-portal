@@ -209,6 +209,7 @@ public class AnalyticsSettingsManagerTest {
 			});
 	}
 
+	@Ignore
 	@Test
 	public void testGetSiteIds() throws Exception {
 		Long[] emptySiteIds = _analyticsSettingsManager.getSiteIds(

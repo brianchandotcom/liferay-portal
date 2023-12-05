@@ -111,28 +111,34 @@ export function RuleBuilderActionSection({
 			}
 			displayType="secondary"
 		>
-			<ClayPanel.Body className="px-3" role="menu">
-				{actions.map((action, index) => (
-					<ActionComponent
-						action={action}
-						key={action.id}
-						layoutDataItems={layoutDataItems}
-						onActionChange={(action) =>
-							setActions((previousActions) => {
-								const newActions = [...previousActions];
+			<ClayPanel.Body className="px-3">
+				<div role="menu">
+					{actions.map((action, index) => (
+						<ActionComponent
+							action={action}
+							key={action.id}
+							layoutDataItems={layoutDataItems}
+							onActionChange={(action) =>
+								setActions((previousActions) => {
+									const newActions = [...previousActions];
 
-								newActions[index] = action;
+									newActions[index] = action;
 
-								return newActions;
-							})
-						}
-						onDeleteAction={() => {
-							onDeleteAction(action, index);
-						}}
-						showDeleteButton={actions.length > 1 || !!action.type}
-						wrapperRef={(element) => setActionRef(action, element)}
-					/>
-				))}
+									return newActions;
+								})
+							}
+							onDeleteAction={() => {
+								onDeleteAction(action, index);
+							}}
+							showDeleteButton={
+								actions.length > 1 || !!action.type
+							}
+							wrapperRef={(element) =>
+								setActionRef(action, element)
+							}
+						/>
+					))}
+				</div>
 
 				<ClayButton
 					className="mt-2"
@@ -237,6 +243,11 @@ export function RuleBuilderConditionSection({
 
 						<div className="align-items-center d-flex">
 							<Picker
+								aria-label={
+									conditionType === 'all'
+										? Liferay.Language.get('all')
+										: Liferay.Language.get('any')
+								}
 								as={TriggerLabel}
 								items={[
 									{

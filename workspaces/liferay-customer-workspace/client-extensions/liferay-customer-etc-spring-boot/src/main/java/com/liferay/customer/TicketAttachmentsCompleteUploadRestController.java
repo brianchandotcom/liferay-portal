@@ -132,7 +132,7 @@ public class TicketAttachmentsCompleteUploadRestController
 	@Autowired
 	private TicketAttachmentWebService _ticketAttachmentWebService;
 
-	@Value("${liferay.customer.zendesk.api.email.address}")
+	@Value("${liferay.osb.spring.boot.client.zendesk.api.email.address}")
 	private String _zendeskAPIEmailAddress;
 
 	@Autowired

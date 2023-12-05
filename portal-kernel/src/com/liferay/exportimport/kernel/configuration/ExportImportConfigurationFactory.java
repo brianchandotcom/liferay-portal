@@ -93,17 +93,18 @@ public class ExportImportConfigurationFactory {
 		long sourceGroupId = ParamUtil.getLong(portletRequest, "sourceGroupId");
 		boolean privateLayout = ParamUtil.getBoolean(
 			portletRequest, "privateLayout");
-		String remotePathContext = ParamUtil.getString(
-			portletRequest, "remotePathContext");
-		boolean secureConnection = ParamUtil.getBoolean(
-			portletRequest, "secureConnection");
-		long remoteGroupId = ParamUtil.getLong(portletRequest, "remoteGroupId");
 
 		Group group = GroupLocalServiceUtil.getGroup(sourceGroupId);
 
 		String remoteAddress = group.getTypeSettingsProperty("remoteAddress");
 		int remotePort = GetterUtil.getInteger(
 			group.getTypeSettingsProperty("remotePort"));
+
+		String remotePathContext = ParamUtil.getString(
+			portletRequest, "remotePathContext");
+		boolean secureConnection = ParamUtil.getBoolean(
+			portletRequest, "secureConnection");
+		long remoteGroupId = ParamUtil.getLong(portletRequest, "remoteGroupId");
 
 		return buildDefaultRemotePublishingExportImportConfiguration(
 			themeDisplay.getUser(), sourceGroupId, privateLayout, remoteAddress,

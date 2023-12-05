@@ -60,13 +60,13 @@ public abstract class BaseSiteActivityAsahSuggestionsContributor
 		String displayLanguageId = getDisplayLanguageId(
 			attributes, searchContext.getLocale());
 		long groupId = getGroupId(searchContext);
-		int minCounts = getMinCounts(attributes, _MIN_COUNTS);
+		int minCounts = getMinCounts(attributes, 5);
 		int size = GetterUtil.getInteger(
 			suggestionsContributorConfiguration.getSize(), 5);
 
 		return AsahWebCacheItem.get(
 			analyticsConfiguration, _siteActivityAsahConfiguration,
-			getURL(
+			_getURL(
 				analyticsConfiguration, basePath, displayLanguageId, groupId,
 				minCounts, path, size, sort),
 			StringBundler.concat(
@@ -74,40 +74,6 @@ public abstract class BaseSiteActivityAsahSuggestionsContributor
 				StringPool.POUND, displayLanguageId, StringPool.POUND, groupId,
 				StringPool.POUND, minCounts, StringPool.POUND, size,
 				StringPool.POUND, sort));
-	}
-
-	protected String getURL(
-		AnalyticsConfiguration analyticsConfiguration, String basePath,
-		String displayLanguageId, long groupId, int minCounts, String path,
-		int size, String sort) {
-
-		StringBundler sb = new StringBundler(15);
-
-		sb.append(analyticsConfiguration.liferayAnalyticsFaroBackendURL());
-		sb.append("/api/1.0/");
-		sb.append(basePath);
-		sb.append("/");
-		sb.append(path);
-
-		sb.append("?minCounts=");
-		sb.append(minCounts);
-
-		if (!Validator.isBlank(displayLanguageId)) {
-			sb.append("&displayLanguageId=");
-			sb.append(displayLanguageId);
-		}
-
-		if (groupId > 0) {
-			sb.append("&groupId=");
-			sb.append(groupId);
-		}
-
-		sb.append("&size=");
-		sb.append(size);
-		sb.append("&sort=");
-		sb.append(sort);
-
-		return sb.toString();
 	}
 
 	@Override
@@ -128,9 +94,43 @@ public abstract class BaseSiteActivityAsahSuggestionsContributor
 		return false;
 	}
 
-	private static final int _CHARACTER_THRESHOLD = 2;
+	private String _getURL(
+		AnalyticsConfiguration analyticsConfiguration, String basePath,
+		String displayLanguageId, long groupId, int minCounts, String path,
+		int size, String sort) {
 
-	private static final int _MIN_COUNTS = 5;
+		StringBundler sb = new StringBundler(18);
+
+		sb.append(analyticsConfiguration.liferayAnalyticsFaroBackendURL());
+		sb.append("/api/1.0/");
+		sb.append(basePath);
+		sb.append("/");
+		sb.append(path);
+		sb.append("?");
+
+		if (!Validator.isBlank(displayLanguageId)) {
+			sb.append("displayLanguageId=");
+			sb.append(displayLanguageId);
+			sb.append("&");
+		}
+
+		if (groupId > 0) {
+			sb.append("&groupId=");
+			sb.append(groupId);
+			sb.append("&");
+		}
+
+		sb.append("minCounts=");
+		sb.append(minCounts);
+		sb.append("&size=");
+		sb.append(size);
+		sb.append("&sort=");
+		sb.append(sort);
+
+		return sb.toString();
+	}
+
+	private static final int _CHARACTER_THRESHOLD = 2;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseSiteActivityAsahSuggestionsContributor.class);

@@ -7,10 +7,6 @@ package com.liferay.jethr0.event.github;
 
 import com.liferay.jethr0.event.BaseEventHandler;
 import com.liferay.jethr0.event.EventHandlerContext;
-import com.liferay.jethr0.event.github.client.GitHubClient;
-import com.liferay.jethr0.event.github.comment.GitHubComment;
-import com.liferay.jethr0.event.github.issue.GitHubIssue;
-import com.liferay.jethr0.event.github.pullrequest.GitHubPullRequest;
 import com.liferay.jethr0.event.github.repository.GitHubRepository;
 import com.liferay.jethr0.git.branch.GitBranchEntity;
 import com.liferay.jethr0.git.branch.repository.GitBranchEntityRepository;
@@ -21,11 +17,7 @@ import java.io.IOException;
 
 import java.net.URL;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Objects;
 import java.util.Properties;
-import java.util.Set;
 
 import org.json.JSONObject;
 
@@ -38,104 +30,6 @@ public abstract class BaseGitHubEventHandler extends BaseEventHandler {
 		EventHandlerContext eventHandlerContext, JSONObject messageJSONObject) {
 
 		super(eventHandlerContext, messageJSONObject);
-	}
-
-	protected Set<String> getAvailableTestSuites()
-		throws InvalidJSONException, IOException {
-
-		Set<String> availableTestSuites = new HashSet<>();
-
-		String upstreamAvailableTestSuites = getUpstreamBranchCIPropertyValue(
-			"ci.test.available.suites");
-
-		if (!StringUtil.isNullOrEmpty(upstreamAvailableTestSuites)) {
-			Collections.addAll(
-				availableTestSuites, upstreamAvailableTestSuites.split(","));
-		}
-
-		String senderAvailableTestSuites = getSenderBranchCIPropertyValue(
-			"ci.test.available.suites");
-
-		if (!StringUtil.isNullOrEmpty(senderAvailableTestSuites)) {
-			Collections.addAll(
-				availableTestSuites, senderAvailableTestSuites.split(","));
-		}
-
-		return availableTestSuites;
-	}
-
-	protected String getCIProperty(String ciPropertyName)
-		throws InvalidJSONException, IOException {
-
-		String upstreamBranchCIPropertyValue = getUpstreamBranchCIPropertyValue(
-			ciPropertyName);
-
-		if (!StringUtil.isNullOrEmpty(upstreamBranchCIPropertyValue)) {
-			return upstreamBranchCIPropertyValue;
-		}
-
-		String senderBranchCIPropertyValue = getSenderBranchCIPropertyValue(
-			ciPropertyName);
-
-		if (!StringUtil.isNullOrEmpty(senderBranchCIPropertyValue)) {
-			return senderBranchCIPropertyValue;
-		}
-
-		return null;
-	}
-
-	protected GitHubComment getGitHubComment() throws InvalidJSONException {
-		JSONObject messageJSONObject = getMessageJSONObject();
-
-		JSONObject commentJSONObject = messageJSONObject.optJSONObject(
-			"comment");
-
-		if (commentJSONObject == null) {
-			throw new InvalidJSONException(
-				"Missing \"comment\" from message JSON");
-		}
-
-		return new GitHubComment(commentJSONObject);
-	}
-
-	protected GitHubIssue getGitHubIssue() throws InvalidJSONException {
-		JSONObject messageJSONObject = getMessageJSONObject();
-
-		JSONObject issueJSONObject = messageJSONObject.optJSONObject("issue");
-
-		if (issueJSONObject == null) {
-			throw new InvalidJSONException(
-				"Missing \"issue\" from message JSON");
-		}
-
-		return new GitHubIssue(issueJSONObject);
-	}
-
-	protected GitHubPullRequest getGitHubPullRequest()
-		throws InvalidJSONException {
-
-		if (_gitHubPullRequest != null) {
-			return _gitHubPullRequest;
-		}
-
-		JSONObject messageJSONObject = getMessageJSONObject();
-
-		JSONObject pullRequestJSONObject = messageJSONObject.optJSONObject(
-			"pull_request");
-
-		if (pullRequestJSONObject != null) {
-			_gitHubPullRequest = new GitHubPullRequest(pullRequestJSONObject);
-
-			return _gitHubPullRequest;
-		}
-
-		GitHubIssue gitHubIssue = getGitHubIssue();
-
-		GitHubClient gitHubClient = getGitHubClient();
-
-		_gitHubPullRequest = gitHubClient.getGitHubPullRequest(gitHubIssue);
-
-		return _gitHubPullRequest;
 	}
 
 	protected GitHubRepository getGitHubRepository()
@@ -188,118 +82,9 @@ public abstract class BaseGitHubEventHandler extends BaseEventHandler {
 		return _jenkinsGitBranchEntity;
 	}
 
-	protected String getSenderBranchCIPropertyValue(String propertyName)
-		throws InvalidJSONException, IOException {
-
-		GitBranchEntity gitBranchEntity = getSenderGitBranchEntity();
-
-		if (gitBranchEntity == null) {
-			return null;
-		}
-
-		Properties properties = gitBranchEntity.getProperties("ci.properties");
-
-		if (properties == null) {
-			return null;
-		}
-
-		return PropertiesUtil.getPropertyValue(properties, propertyName);
-	}
-
-	protected GitBranchEntity getSenderGitBranchEntity()
-		throws InvalidJSONException {
-
-		if (_senderGitBranchEntity != null) {
-			return _senderGitBranchEntity;
-		}
-
-		GitBranchEntityRepository gitBranchEntityRepository =
-			getGitBranchEntityRepository();
-
-		GitHubPullRequest gitHubPullRequest = getGitHubPullRequest();
-
-		_senderGitBranchEntity = gitBranchEntityRepository.getByURL(
-			gitHubPullRequest.getHeadBranchURL());
-
-		return _senderGitBranchEntity;
-	}
-
-	protected String getUpstreamBranchCIPropertyValue(String propertyName)
-		throws InvalidJSONException, IOException {
-
-		GitBranchEntity gitBranchEntity = getUpstreamGitBranchEntity();
-
-		if (gitBranchEntity == null) {
-			return null;
-		}
-
-		Properties properties = gitBranchEntity.getProperties("ci.properties");
-
-		if (properties == null) {
-			return null;
-		}
-
-		return PropertiesUtil.getPropertyValue(properties, propertyName);
-	}
-
-	protected GitBranchEntity getUpstreamGitBranchEntity()
-		throws InvalidJSONException {
-
-		if (_upstreamGitBranchEntity != null) {
-			return _upstreamGitBranchEntity;
-		}
-
-		GitBranchEntityRepository gitBranchEntityRepository =
-			getGitBranchEntityRepository();
-
-		GitHubPullRequest gitHubPullRequest = getGitHubPullRequest();
-
-		_upstreamGitBranchEntity = gitBranchEntityRepository.getByURL(
-			gitHubPullRequest.getUpstreamBranchURL());
-
-		return _upstreamGitBranchEntity;
-	}
-
-	protected boolean isGitHubCIEnabledBranchNames()
-		throws InvalidJSONException, IOException {
-
-		GitHubRepository gitHubRepository = getGitHubRepository();
-
-		String gitHubCIEnabledBranchNames = getJenkinsBranchBuildPropertyValue(
-			StringUtil.combine(
-				"github.ci.enabled.branch.names[", gitHubRepository.getName(),
-				"]"));
-
-		if (StringUtil.isNullOrEmpty(gitHubCIEnabledBranchNames)) {
-			return false;
-		}
-
-		GitBranchEntity upstreamGitBranchEntity = getUpstreamGitBranchEntity();
-
-		if (upstreamGitBranchEntity == null) {
-			return false;
-		}
-
-		for (String gitHubCIEnabledBranchName :
-				gitHubCIEnabledBranchNames.split(",")) {
-
-			if (Objects.equals(
-					gitHubCIEnabledBranchName,
-					upstreamGitBranchEntity.getBranchName())) {
-
-				return true;
-			}
-		}
-
-		return false;
-	}
-
 	private static final URL _JENKINS_GITHUB_URL = StringUtil.toURL(
 		"https://github.com/liferay/liferay-jenkins-ee");
 
-	private GitHubPullRequest _gitHubPullRequest;
 	private GitBranchEntity _jenkinsGitBranchEntity;
-	private GitBranchEntity _senderGitBranchEntity;
-	private GitBranchEntity _upstreamGitBranchEntity;
 
 }

@@ -19,8 +19,11 @@ import com.liferay.jethr0.util.StringUtil;
 
 import java.io.IOException;
 
+import java.net.URL;
+
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
 
@@ -151,6 +154,40 @@ public abstract class BaseGitHubEventHandler extends BaseEventHandler {
 		return new GitHubRepository(repositoryJSONObject);
 	}
 
+	protected String getJenkinsBranchBuildPropertyValue(String propertyName)
+		throws IOException {
+
+		GitBranchEntity gitBranchEntity = getJenkinsGitBranchEntity();
+
+		if (gitBranchEntity == null) {
+			return null;
+		}
+
+		Properties properties = PropertiesUtil.combine(
+			gitBranchEntity.getProperties("build.properties"),
+			gitBranchEntity.getProperties("commands/build.properties"));
+
+		if (properties == null) {
+			return null;
+		}
+
+		return PropertiesUtil.getPropertyValue(properties, propertyName);
+	}
+
+	protected GitBranchEntity getJenkinsGitBranchEntity() {
+		if (_jenkinsGitBranchEntity != null) {
+			return _jenkinsGitBranchEntity;
+		}
+
+		GitBranchEntityRepository gitBranchEntityRepository =
+			getGitBranchEntityRepository();
+
+		_jenkinsGitBranchEntity = gitBranchEntityRepository.getByURL(
+			_JENKINS_GITHUB_URL);
+
+		return _jenkinsGitBranchEntity;
+	}
+
 	protected String getSenderBranchCIPropertyValue(String propertyName)
 		throws InvalidJSONException, IOException {
 
@@ -223,7 +260,45 @@ public abstract class BaseGitHubEventHandler extends BaseEventHandler {
 		return _upstreamGitBranchEntity;
 	}
 
+	protected boolean isGitHubCIEnabledBranchNames()
+		throws InvalidJSONException, IOException {
+
+		GitHubRepository gitHubRepository = getGitHubRepository();
+
+		String gitHubCIEnabledBranchNames = getJenkinsBranchBuildPropertyValue(
+			StringUtil.combine(
+				"github.ci.enabled.branch.names[", gitHubRepository.getName(),
+				"]"));
+
+		if (StringUtil.isNullOrEmpty(gitHubCIEnabledBranchNames)) {
+			return false;
+		}
+
+		GitBranchEntity upstreamGitBranchEntity = getUpstreamGitBranchEntity();
+
+		if (upstreamGitBranchEntity == null) {
+			return false;
+		}
+
+		for (String gitHubCIEnabledBranchName :
+				gitHubCIEnabledBranchNames.split(",")) {
+
+			if (Objects.equals(
+					gitHubCIEnabledBranchName,
+					upstreamGitBranchEntity.getBranchName())) {
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private static final URL _JENKINS_GITHUB_URL = StringUtil.toURL(
+		"https://github.com/liferay/liferay-jenkins-ee");
+
 	private GitHubPullRequest _gitHubPullRequest;
+	private GitBranchEntity _jenkinsGitBranchEntity;
 	private GitBranchEntity _senderGitBranchEntity;
 	private GitBranchEntity _upstreamGitBranchEntity;
 

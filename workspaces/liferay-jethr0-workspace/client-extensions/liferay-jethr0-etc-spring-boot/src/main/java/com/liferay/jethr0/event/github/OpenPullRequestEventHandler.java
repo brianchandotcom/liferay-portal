@@ -26,6 +26,9 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import org.json.JSONObject;
 
 /**
@@ -35,6 +38,14 @@ public class OpenPullRequestEventHandler extends BaseGitHubEventHandler {
 
 	@Override
 	public String process() throws InvalidJSONException, IOException {
+		if (!isGitHubCIEnabledBranchNames()) {
+			if (_log.isInfoEnabled()) {
+				_log.info("Skipped processing opened pull request");
+			}
+
+			return null;
+		}
+
 		Set<JobEntity> jobEntities = _createJobEntities();
 
 		for (JobEntity jobEntity : jobEntities) {
@@ -167,6 +178,8 @@ public class OpenPullRequestEventHandler extends BaseGitHubEventHandler {
 		GitHubUser receiverGitHubUser =
 			gitHubPullRequest.getReceiverGitHubUser();
 
+		Set<String> testSuites = new HashSet<>();
+
 		for (String ciTestAutoRecipient : ciTestAutoRecipients) {
 			Matcher matcher = _ciTestAutoRecipientPattern.matcher(
 				ciTestAutoRecipient);
@@ -180,15 +193,14 @@ public class OpenPullRequestEventHandler extends BaseGitHubEventHandler {
 
 			String testSuitesString = matcher.group("testSuites");
 
-			Set<String> testSuites = new HashSet<>();
-
 			Collections.addAll(testSuites, testSuitesString.split(","));
-
-			return testSuites;
 		}
 
-		return null;
+		return testSuites;
 	}
+
+	private static final Log _log = LogFactory.getLog(
+		OpenPullRequestEventHandler.class);
 
 	private static final Pattern _ciTestAutoRecipientPattern = Pattern.compile(
 		"(?<userName>[^\\]]+)\\[(?<testSuites>[^\\]]+)\\]");

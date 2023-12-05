@@ -217,6 +217,8 @@ public class ComboServletTest {
 
 		_testService("/js/aui.js", "/js/./aui.js", _portalServletContext);
 
+		_testService("/js/aui.js", "/js//aui.js", _portalServletContext);
+
 		_testService("/js/aui.js", "/js/down/../aui.js", _portalServletContext);
 	}
 

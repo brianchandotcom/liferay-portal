@@ -39,7 +39,7 @@ definition {
 				fragmentName = "Button");
 		}
 
-		task ("When the page designer navigates to the Page Ruls panel") {
+		task ("When the page designer navigates to the Page Rules panel") {
 			PageEditor.gotoTab(tabName = "Page Rules");
 		}
 
@@ -88,7 +88,7 @@ definition {
 				targetFragmentName = "Heading");
 		}
 
-		task ("When the page designer navigates to the Page Ruls panel") {
+		task ("When the page designer navigates to the Page Rules panel") {
 			PageEditor.gotoTab(tabName = "Page Rules");
 		}
 

@@ -72,7 +72,7 @@ public class ImportObjectFolderMVCActionCommand extends BaseMVCActionCommand {
 				"title",
 				_language.get(
 					_portal.getHttpServletRequest(actionRequest),
-					"the-structure-failed-to-import"));
+					"the-object-folder-failed-to-import"));
 
 			JSONPortletResponseUtil.writeJSON(
 				actionRequest, actionResponse, jsonObject);

@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -105,7 +104,7 @@ public class AssetTagFinderTest {
 	public void testCountByG_C_N_WithClassNameId() throws Exception {
 		_testCountByG_C_N(
 			RandomTestUtil.randomString(),
-			PortalUtil.getClassNameId(MBMessage.class));
+			_portal.getClassNameId(MBMessage.class));
 	}
 
 	@Test

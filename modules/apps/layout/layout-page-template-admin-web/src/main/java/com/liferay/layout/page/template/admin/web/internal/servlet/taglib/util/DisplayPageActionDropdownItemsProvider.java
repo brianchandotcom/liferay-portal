@@ -345,6 +345,8 @@ public class DisplayPageActionDropdownItemsProvider {
 						"/delete_layout_page_template_entry"
 				).setRedirect(
 					_themeDisplay.getURLCurrent()
+				).setTabs1(
+					"display-page-templates"
 				).setParameter(
 					"layoutPageTemplateEntryId",
 					_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()

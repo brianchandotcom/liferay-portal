@@ -44,6 +44,7 @@ DisplayPageManagementToolbarDisplayContext displayPageManagementToolbarDisplayCo
 	cssClass="container-view sidenav-content"
 >
 	<portlet:actionURL name="/layout_page_template_admin/delete_layout_page_template_entry" var="deleteDisplayPageURL">
+		<portlet:param name="tabs1" value="display-page-templates" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 	</portlet:actionURL>
 

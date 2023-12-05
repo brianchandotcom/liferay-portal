@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -7,6 +7,7 @@ package com.liferay.asset.kernel.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetTag;
+import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.kernel.service.persistence.AssetTagFinder;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.message.boards.constants.MBCategoryConstants;
@@ -27,7 +28,9 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
@@ -62,6 +65,9 @@ public class AssetTagFinderTest {
 
 		String name = RandomTestUtil.randomString();
 
+		_serviceContext = ServiceContextTestUtil.getServiceContext(
+			_group.getGroupId(), TestPropsValues.getUserId());
+
 		_scopeGroup = GroupLocalServiceUtil.addGroup(
 			TestPropsValues.getUserId(), _group.getParentGroupId(),
 			Layout.class.getName(), layout.getPlid(),
@@ -73,8 +79,7 @@ public class AssetTagFinderTest {
 			GroupConstants.TYPE_SITE_OPEN, true,
 			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION,
 			StringPool.SLASH + FriendlyURLNormalizerUtil.normalize(name), false,
-			true,
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+			true, _serviceContext);
 	}
 
 	@After
@@ -82,6 +87,17 @@ public class AssetTagFinderTest {
 		GroupLocalServiceUtil.deleteGroup(_scopeGroup);
 
 		GroupLocalServiceUtil.deleteGroup(_group);
+	}
+
+	@FeatureFlags("LPS-194362")
+	@Test
+	public void testCountByG_C_N_WithCaseSensitiveTags() throws Exception {
+		_assetTagLocalService.addTag(
+			TestPropsValues.getUserId(), _group.getGroupId(), "tag1",
+			_serviceContext);
+
+		_testCountByG_C_N("Tag1", _portal.getClassNameId(MBMessage.class));
+		_testCountByG_C_N("Tag1", 0);
 	}
 
 	@Test
@@ -130,16 +146,12 @@ public class AssetTagFinderTest {
 	protected void addMBMessage(long groupId, String assetTagName)
 		throws Exception {
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				groupId, TestPropsValues.getUserId());
-
-		serviceContext.setAssetTagNames(new String[] {assetTagName});
+		_serviceContext.setAssetTagNames(new String[] {assetTagName});
 
 		MBTestUtil.addMessageWithWorkflow(
 			groupId, MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), true,
-			serviceContext);
+			_serviceContext);
 	}
 
 	private void _testCountByG_C_N(String assetTagName, long classNameId)
@@ -168,7 +180,15 @@ public class AssetTagFinderTest {
 	@Inject
 	private AssetTagFinder _assetTagFinder;
 
+	@Inject
+	private AssetTagLocalService _assetTagLocalService;
+
 	private Group _group;
+
+	@Inject
+	private Portal _portal;
+
 	private Group _scopeGroup;
+	private ServiceContext _serviceContext;
 
 }

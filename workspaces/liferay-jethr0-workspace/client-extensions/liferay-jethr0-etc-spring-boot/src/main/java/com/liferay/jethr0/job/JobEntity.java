@@ -29,6 +29,14 @@ import org.json.JSONObject;
  */
 public interface JobEntity extends Entity {
 
+	public static ParameterDefinition JENKINS_GITHUB_URL_PARAMETER_DEFINITION =
+		new ParameterDefinition(
+			"jenkinsGitHubURL", "Jenkins GitHub URL",
+			ParameterDefinition.Type.URL,
+			"https://github.com/liferay/liferay-jenkins-ee/tree/master",
+			"e.g. https://github.com/[user]/liferay-jenkins-ee/tree/[branch]",
+			"https://github.com/[^/]+/liferay-jenkins-ee/tree/[^/]+");
+
 	public void addBuildEntities(Set<BuildEntity> buildEntities);
 
 	public void addBuildEntity(BuildEntity buildEntity);

@@ -10,6 +10,8 @@ import com.liferay.jethr0.util.StringUtil;
 
 import java.net.URL;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -21,6 +23,13 @@ import org.json.JSONObject;
  */
 public class DefaultPortalPullRequestJobEntity
 	extends BasePortalPullRequestJobEntity {
+
+	public static List<ParameterDefinition> getParameterDefinitions() {
+		return Arrays.asList(
+			JENKINS_GITHUB_URL_PARAMETER_DEFINITION,
+			PORTAL_PULL_REQUEST_PARAMETER_DEFINITION,
+			TEST_SUITE_NAME_PARAMETER_DEFINITION);
+	}
 
 	@Override
 	public URL getPortalPullRequestURL() {

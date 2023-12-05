@@ -19,8 +19,8 @@ jest.mock('recharts', () => {
 
 	return {
 		...OriginalModule,
-		ResponsiveContainer: ({children, height}) => (
-			<OriginalModule.ResponsiveContainer height={height} width={800}>
+		ResponsiveContainer: ({children}) => (
+			<OriginalModule.ResponsiveContainer aspect={1} width={100}>
 				{children}
 			</OriginalModule.ResponsiveContainer>
 		),

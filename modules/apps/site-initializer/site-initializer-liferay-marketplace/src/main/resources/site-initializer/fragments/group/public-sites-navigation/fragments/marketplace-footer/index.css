@@ -53,3 +53,8 @@
 .public-footer .social-icons {
 	max-width: 188px;
 }
+
+.public-footer .social-icons li img {
+	height: 18px;
+	width: 18px;
+}

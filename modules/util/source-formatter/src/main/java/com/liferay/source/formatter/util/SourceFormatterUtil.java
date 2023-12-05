@@ -328,21 +328,6 @@ public class SourceFormatterUtil {
 		return suppressionsFiles;
 	}
 
-	public static List<String> git(List<String> args, String baseDirName) {
-		List<String> fileNames = _scanForFileNames(
-			args, baseDirName, new String[0]);
-
-		List<String> untrackedFileNames = _getUntrackedFileNames();
-
-		for (String untrackedFileName : untrackedFileNames) {
-			if (!fileNames.contains(untrackedFileName)) {
-				fileNames.add(untrackedFileName);
-			}
-		}
-
-		return fileNames;
-	}
-
 	public static void git(
 		List<String> args, String baseDirName, Consumer<String> consumer) {
 

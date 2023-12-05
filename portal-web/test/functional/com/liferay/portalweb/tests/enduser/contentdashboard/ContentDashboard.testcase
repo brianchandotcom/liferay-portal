@@ -6110,7 +6110,7 @@ definition {
 		task ("Check if extension is present") {
 			AssertTextEquals(
 				locator1 = "ManagementBar#SEARCH_RESULT_SUMMARY",
-				value1 = "10 Results for");
+				value1 = "10 Results Found With Filters");
 		}
 	}
 

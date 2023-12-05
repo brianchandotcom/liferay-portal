@@ -416,7 +416,7 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "Search#SEARCH_INFO",
-				value1 = "2 Results for \"Guild\"");
+				value1 = "2 Results Found for \"Guild\"");
 
 			Click(locator1 = "ManagementBar#FILTER_AND_ORDER");
 

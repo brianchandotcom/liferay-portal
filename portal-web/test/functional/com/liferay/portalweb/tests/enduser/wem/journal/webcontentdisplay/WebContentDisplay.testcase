@@ -857,7 +857,7 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 
 			AssertTextEquals(
 				locator1 = "Search#SEARCH_INFO",
-				value1 = "2 Results for \"ABS Sensor\"");
+				value1 = "2 Results Found for \"ABS Sensor\"");
 
 			for (var entryTitle : list "ABS Sensor,Tesla ABS Wheel Speed Sensor") {
 				LexiconList.viewListEntryTitle(listEntry = ${entryTitle});

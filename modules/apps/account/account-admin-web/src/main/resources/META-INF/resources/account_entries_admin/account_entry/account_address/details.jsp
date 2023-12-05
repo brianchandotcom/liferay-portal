@@ -39,7 +39,7 @@ renderResponse.setTitle((addressDisplay.getAddressId() == 0) ? LanguageUtil.get(
 >
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (addressDisplay.getAddressId() == 0) ? Constants.ADD : Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= backURL %>" />
-	<aui:input name="addressDisplay.getAddressId()" type="hidden" value="<%= addressDisplay.getAddressId() %>" />
+	<aui:input name="accountEntryAddressId" type="hidden" value="<%= addressDisplay.getAddressId() %>" />
 	<aui:input name="accountEntryId" type="hidden" value="<%= accountEntryDisplay.getAccountEntryId() %>" />
 	<aui:input name="defaultType" type="hidden" value="<%= defaultType %>" />
 

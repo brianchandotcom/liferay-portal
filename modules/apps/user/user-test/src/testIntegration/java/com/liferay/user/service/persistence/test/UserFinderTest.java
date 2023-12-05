@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Team;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -164,6 +165,9 @@ public class UserFinderTest {
 		).put(
 			"usersTeams", new Long[] {_team.getTeamId()}
 		).build();
+
+		_originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
 	}
 
 	@After
@@ -174,6 +178,8 @@ public class UserFinderTest {
 			_organization1.getOrganizationId());
 		_groupLocalService.clearUserGroupGroups(_userGroup.getUserGroupId());
 		_teamLocalService.clearUserGroupTeams(_userGroup.getUserGroupId());
+
+		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
 	}
 
 	@Test
@@ -457,6 +463,7 @@ public class UserFinderTest {
 	private LinkedHashMap<String, Object> _inheritedUserGroupsParams;
 	private LinkedHashMap<String, Object> _inheritedUserRolesParams;
 	private LinkedHashMap<String, Object> _inheritedUserTeamsParams;
+	private PermissionChecker _originalPermissionChecker;
 	private long _roleId;
 
 	@Inject

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.model.Team;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -94,12 +95,17 @@ public class RoleLocalServiceTest {
 		_resourcePermission = ResourcePermissionTestUtil.addResourcePermission(
 			_arbitraryResourceAction.getBitwiseValue(),
 			_arbitraryResourceAction.getName(), _arbitraryRole.getRoleId());
+
+		_originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
 	}
 
 	@AfterClass
 	public static void tearDownClass() {
 		_resourcePermissionLocalService.deleteResourcePermission(
 			_resourcePermission);
+
+		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
 	}
 
 	@Test
@@ -696,6 +702,8 @@ public class RoleLocalServiceTest {
 
 	@Inject
 	private static OrganizationLocalService _organizationLocalService;
+
+	private static PermissionChecker _originalPermissionChecker;
 
 	@Inject
 	private static PermissionCheckerFactory _permissionCheckerFactory;

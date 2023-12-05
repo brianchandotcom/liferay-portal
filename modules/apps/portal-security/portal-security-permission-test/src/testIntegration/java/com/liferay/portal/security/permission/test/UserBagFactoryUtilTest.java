@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.UserBag;
@@ -39,6 +40,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -74,6 +76,14 @@ public class UserBagFactoryUtilTest {
 		_userGroup = UserGroupTestUtil.addUserGroup(_childGroup.getGroupId());
 
 		_user = UserTestUtil.addUser();
+
+		_originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+	}
+
+	@After
+	public void tearDown() {
+		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
 	}
 
 	@Test
@@ -259,6 +269,8 @@ public class UserBagFactoryUtilTest {
 
 	@Inject
 	private GroupLocalService _groupLocalService;
+
+	private PermissionChecker _originalPermissionChecker;
 
 	@DeleteAfterTestRun
 	private Group _parentGroup;

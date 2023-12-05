@@ -107,6 +107,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import javax.ws.rs.core.Response;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -177,6 +178,14 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		).locale(
 			LocaleUtil.getDefault()
 		).build();
+
+		_originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
 	}
 
 	@Override
@@ -1838,6 +1847,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	@Inject
 	private OrganizationLocalService _organizationLocalService;
 
+	private PermissionChecker _originalPermissionChecker;
 	private UserAccountResource _otherUserAccountResource;
 	private UserAccount _regularUserAccount;
 	private String _regularUserAccountCurrentPassword;

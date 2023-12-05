@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
@@ -39,6 +40,7 @@ import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -73,6 +75,14 @@ public class UserGroupLocalServiceTest {
 
 		GroupLocalServiceUtil.addRoleGroup(
 			_role.getRoleId(), _userGroup1.getGroupId());
+
+		_originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+	}
+
+	@After
+	public void tearDown() {
+		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
 	}
 
 	@Test
@@ -288,6 +298,8 @@ public class UserGroupLocalServiceTest {
 	private static Role _role;
 	private static UserGroup _userGroup1;
 	private static UserGroup _userGroup2;
+
+	private PermissionChecker _originalPermissionChecker;
 
 	@Inject
 	private UserGroupLocalService _userGroupLocalService;

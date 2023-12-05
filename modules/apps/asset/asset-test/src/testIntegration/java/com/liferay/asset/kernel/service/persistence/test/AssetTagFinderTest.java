@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.kernel.service.persistence.AssetTagFinder;
+import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.model.MBMessage;
@@ -117,6 +118,22 @@ public class AssetTagFinderTest {
 		_testFindByG_C_N(
 			RandomTestUtil.randomString(),
 			_portal.getClassNameId(MBMessage.class));
+	}
+
+	@FeatureFlags("LPS-194362")
+	@Test
+	public void testFindByG_C_N_WithCaseSensitiveTags() throws Exception {
+		_assetTagLocalService.addTag(
+			TestPropsValues.getUserId(), _group.getGroupId(), "tag1",
+			_serviceContext);
+
+		_serviceContext.setAssetTagNames(new String[] {"tag1"});
+
+		JournalTestUtil.addArticle(
+			_group.getGroupId(), "New journal article",
+			RandomTestUtil.randomString(), _serviceContext);
+
+		_testFindByG_C_N("Tag1", _portal.getClassNameId(MBMessage.class));
 	}
 
 	protected void addMBMessage(long groupId, String assetTagName)

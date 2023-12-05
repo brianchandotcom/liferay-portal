@@ -2,8 +2,25 @@ components:
     schemas:
         SimpleCaptcha:
             properties:
+                image:
+                    type: string
                 token:
                     type: string
+        SimpleCaptchaForm:
+            properties:
+                answer:
+                    type: string
+                token:
+                    type: string
+            required:
+                - token
+        GenericError:
+            description:
+                https://www.schema.org/GenericError
+            properties:
+                message:
+                    type: string
+            type: object
 info:
     description:
         "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
@@ -27,4 +44,76 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/SimpleCaptcha"
+                    description:
+                        Send a captcha token and image.
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/GenericError"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/GenericError"
+                    description:
+                        Unexpected error
+            tags: ["SimpleCaptcha"]
+        post:
+            operationId: postSimpleCaptcha
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/SimpleCaptchaForm"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/SimpleCaptchaForm"
+            responses:
+                202:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/SimpleCaptchaForm"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/SimpleCaptchaForm"
+                400:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/GenericError"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/GenericError"
+                    description:
+                        Bad request response
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/GenericError"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/GenericError"
+                    description:
+                        Forbidden access to Simple Captcha Headless API
+                406:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/SimpleCaptcha"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/SimpleCaptcha"
+                    description:
+                        Validate captcha is failed and send a new captcha
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/GenericError"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/GenericError"
+                    description:
+                        Server does not support Headless API Captcha
             tags: ["SimpleCaptcha"]

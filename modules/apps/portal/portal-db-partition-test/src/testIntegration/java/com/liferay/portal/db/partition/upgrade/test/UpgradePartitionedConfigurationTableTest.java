@@ -21,15 +21,19 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import java.util.Map;
 import java.util.Objects;
+
+import javax.sql.DataSource;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -55,6 +59,8 @@ public class UpgradePartitionedConfigurationTableTest
 		insertPartitionRequiredData();
 
 		_companyId = TestPropsValues.getCompanyId();
+
+		_dataSource = InfrastructureUtil.getDataSource();
 
 		_defaultSchemaName = connection.getCatalog();
 	}
@@ -202,7 +208,9 @@ public class UpgradePartitionedConfigurationTableTest
 
 				DBPartitionUtil.forEachCompanyId(
 					currentCompanyId -> {
-						try (PreparedStatement preparedStatement =
+						try (Connection connection =
+								_dataSource.getConnection();
+							PreparedStatement preparedStatement =
 								connection.prepareStatement(
 									"select dictionary from Configuration_ " +
 										"where configurationId = ?")) {
@@ -260,6 +268,7 @@ public class UpgradePartitionedConfigurationTableTest
 			"v2_0_0.ConfigurationUpgradeProcess";
 
 	private static long _companyId;
+	private static DataSource _dataSource;
 	private static String _defaultSchemaName;
 
 	private class ConfigurationEntry {

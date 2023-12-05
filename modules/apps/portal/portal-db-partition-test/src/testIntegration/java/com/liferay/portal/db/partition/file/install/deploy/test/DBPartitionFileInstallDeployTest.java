@@ -19,16 +19,20 @@ import com.liferay.portal.db.partition.test.util.BaseDBPartitionTestCase;
 import com.liferay.portal.file.install.FileInstaller;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import java.util.Objects;
+
+import javax.sql.DataSource;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -76,6 +80,8 @@ public class DBPartitionFileInstallDeployTest extends BaseDBPartitionTestCase {
 				}
 			}
 		}
+
+		_dataSource = InfrastructureUtil.getDataSource();
 	}
 
 	@AfterClass
@@ -149,7 +155,8 @@ public class DBPartitionFileInstallDeployTest extends BaseDBPartitionTestCase {
 
 		DBPartitionUtil.forEachCompanyId(
 			companyId -> {
-				try (PreparedStatement preparedStatement =
+				try (Connection connection = _dataSource.getConnection();
+					PreparedStatement preparedStatement =
 						connection.prepareStatement(
 							"select dictionary from Configuration_ where " +
 								"configurationId = ?")) {
@@ -326,7 +333,8 @@ public class DBPartitionFileInstallDeployTest extends BaseDBPartitionTestCase {
 
 			DBPartitionUtil.forEachCompanyId(
 				companyId -> {
-					try (PreparedStatement preparedStatement =
+					try (Connection connection = _dataSource.getConnection();
+						PreparedStatement preparedStatement =
 							connection.prepareStatement(
 								"delete from Configuration_ where " +
 									"configurationId = ?")) {
@@ -351,6 +359,7 @@ public class DBPartitionFileInstallDeployTest extends BaseDBPartitionTestCase {
 	private static final String _TEST_VALUE_2 = "testValue2";
 
 	private static long _companyId;
+	private static DataSource _dataSource;
 	private static FileInstaller _fileInstaller;
 
 }

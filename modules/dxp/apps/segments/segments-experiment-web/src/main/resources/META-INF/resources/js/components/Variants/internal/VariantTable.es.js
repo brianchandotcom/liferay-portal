@@ -91,7 +91,7 @@ function VariantTable({
 			<ClayTable>
 				<ClayTable.Head>
 					<ClayTable.Row>
-						<ClayTable.Cell expandable headingCell>
+						<ClayTable.Cell expanded headingCell>
 							{Liferay.Language.get('name')}
 						</ClayTable.Cell>
 
@@ -137,7 +137,7 @@ function VariantTable({
 								}
 								key={segmentsExperimentRelId}
 							>
-								<ClayTable.Cell expandable headingTitle>
+								<ClayTable.Cell expanded headingTitle>
 									<ClayButton
 										className="lfr-portal-tooltip text-break"
 										data-title={name}

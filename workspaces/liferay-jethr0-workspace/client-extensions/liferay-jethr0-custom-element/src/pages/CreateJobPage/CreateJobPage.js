@@ -43,10 +43,11 @@ function CreateJobPage() {
 	function setJobParametersFromJobTypeKey(jobTypeKey) {
 		for (const jobType of jobTypes) {
 			if (jobType.key === jobTypeKey) {
-				let jobParameters = {};
+				const jobParameters = {};
 
 				jobType.parameterDefinitions.forEach((parameterDefinition) => {
-					jobParameters[parameterDefinition.key] = parameterDefinition.valueDefault;
+					jobParameters[parameterDefinition.key] =
+						parameterDefinition.valueDefault;
 				});
 
 				setJobParameters(jobParameters);
@@ -86,7 +87,7 @@ function CreateJobPage() {
 			setJobParametersFromJobTypeKey(jobTypeKey);
 		}
 
-		let jobType = jobTypes.find((jobType) => {
+		const jobType = jobTypes.find((jobType) => {
 			return jobType.key === jobTypeKey;
 		});
 
@@ -156,8 +157,8 @@ function CreateJobPage() {
 					/>
 				</ClayForm.Group>
 
-				{
-					jobParameters && jobParameterDefinitions &&
+				{jobParameters &&
+					jobParameterDefinitions &&
 					jobParameterDefinitions.map((jobParameterDefinition) => {
 						return (
 							<ClayForm.Group key={jobParameterDefinition.key}>
@@ -178,12 +179,15 @@ function CreateJobPage() {
 										jobParameterDefinition.valueDescription
 									}
 									type="text"
-									value={jobParameters[jobParameterDefinition.key] || ''}
+									value={
+										jobParameters[
+											jobParameterDefinition.key
+										] || ''
+									}
 								/>
 							</ClayForm.Group>
 						);
-					})
-				}
+					})}
 
 				<Jethr0ButtonsRow
 					buttons={[

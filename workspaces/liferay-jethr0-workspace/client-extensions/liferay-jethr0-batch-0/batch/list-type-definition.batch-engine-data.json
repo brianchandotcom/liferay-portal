@@ -290,6 +290,14 @@
 					"name_i18n": {
 						"en-US": "Portal Pull Request SF"
 					}
+				},
+				{
+					"externalReferenceCode": "portalUpstreamTestSuite",
+					"key": "portalUpstreamTestSuite",
+					"name": "Portal Upstream Test Suite",
+					"name_i18n": {
+						"en-US": "Portal Upstream Test Suite"
+					}
 				}
 			],
 			"name": "jobType",

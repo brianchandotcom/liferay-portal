@@ -637,7 +637,7 @@ public class SourceFormatterUtil {
 			return _untrackedFileNames;
 		}
 
-		List<String> untrackedFileNames = new ArrayList<>();
+		_untrackedFileNames = new ArrayList<>();
 
 		git(
 			Arrays.asList("add", ".", "--dry-run", "--no-all"),
@@ -649,11 +649,9 @@ public class SourceFormatterUtil {
 
 				line = line.substring(5, line.length() - 1);
 
-				untrackedFileNames.add(
+				_untrackedFileNames.add(
 					_gitTopLevelFolder + StringPool.SLASH + line);
 			});
-
-		_untrackedFileNames = untrackedFileNames;
 
 		return _untrackedFileNames;
 	}

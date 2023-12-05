@@ -148,7 +148,7 @@ boolean nondefaultAssetDisplayPage = selLayout.isTypeAssetDisplay() && !layoutsS
 								<div>
 									<react:component
 										module="js/seo/PreviewSeo"
-										props="<%= layoutsSEODisplayContext.getSeoPreviewSeoProperties() %>"
+										props="<%= layoutsSEODisplayContext.getSEOPreviewSeoProperties() %>"
 										servletContext="<%= application %>"
 									/>
 								</div>

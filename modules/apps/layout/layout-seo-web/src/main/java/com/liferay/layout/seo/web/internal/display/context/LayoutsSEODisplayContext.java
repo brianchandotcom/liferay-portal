@@ -494,7 +494,7 @@ public class LayoutsSEODisplayContext {
 			layout.getLayoutId());
 	}
 
-	public HashMap<String, Object> getSEOMappingData() throws PortalException {
+	public Map<String, Object> getSEOMappingData() throws PortalException {
 		return HashMapBuilder.<String, Object>putAll(
 			_getBaseSEOMappingData()
 		).put(
@@ -507,7 +507,7 @@ public class LayoutsSEODisplayContext {
 		).build();
 	}
 
-	public Map<String, Object> getSeoPreviewSeoProperties()
+	public Map<String, Object> getSEOPreviewSeoProperties()
 		throws PortalException {
 
 		return HashMapBuilder.<String, Object>put(

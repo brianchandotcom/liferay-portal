@@ -29,15 +29,11 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class CIHelpGitHubEventHandler extends BaseGitHubEventHandler {
+public class CIHelpGitHubEventHandler extends BaseGitHubIssueEventHandler {
 
 	@Override
 	public String process() throws InvalidJSONException, IOException {
-		if (!isGitHubCIEnabledBranchNames()) {
-			if (_log.isInfoEnabled()) {
-				_log.info("Skipped processing ci:help");
-			}
-
+		if (closeInvalidUpstreamGitHubBranchName()) {
 			return null;
 		}
 

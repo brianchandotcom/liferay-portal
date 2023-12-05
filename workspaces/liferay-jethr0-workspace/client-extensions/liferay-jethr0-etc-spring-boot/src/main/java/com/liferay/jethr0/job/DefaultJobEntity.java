@@ -16,7 +16,7 @@ import org.json.JSONObject;
 public class DefaultJobEntity extends BaseJobEntity {
 
 	public static List<ParameterDefinition> getParameterDefinitions() {
-		return Arrays.asList(JENKINS_GITHUB_URL_PARAMETER_DEFINITION);
+		return Arrays.asList(PARAMETER_DEFINITION_JENKINS_GITHUB_URL);
 	}
 
 	protected DefaultJobEntity(JSONObject jsonObject) {

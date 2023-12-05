@@ -665,9 +665,15 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 						"confirmationMessage",
 						properties.get("confirmationMessage")
 					).put(
+						"errorMessage", properties.get("errorMessage")
+					).put(
+						"method", properties.get("method")
+					).put(
 						"permissionKey", properties.get("permissionKey")
 					).put(
 						"status", properties.get("confirmationMessageType")
+					).put(
+						"successMessage", properties.get("successMessage")
 					).put(
 						"title", properties.get("label")
 					)

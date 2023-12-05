@@ -169,6 +169,7 @@ public abstract class BaseSimpleCaptchaResourceTestCase {
 
 		SimpleCaptcha simpleCaptcha = randomSimpleCaptcha();
 
+		simpleCaptcha.setImage(regex);
 		simpleCaptcha.setToken(regex);
 
 		String json = SimpleCaptchaSerDes.toJSON(simpleCaptcha);
@@ -177,6 +178,7 @@ public abstract class BaseSimpleCaptchaResourceTestCase {
 
 		simpleCaptcha = SimpleCaptchaSerDes.toDTO(json);
 
+		Assert.assertEquals(regex, simpleCaptcha.getImage());
 		Assert.assertEquals(regex, simpleCaptcha.getToken());
 	}
 
@@ -186,13 +188,8 @@ public abstract class BaseSimpleCaptchaResourceTestCase {
 	}
 
 	@Test
-	public void testGraphQLGetSimpleCaptcha() throws Exception {
-		Assert.assertTrue(true);
-	}
-
-	@Test
-	public void testGraphQLGetSimpleCaptchaNotFound() throws Exception {
-		Assert.assertTrue(true);
+	public void testPostSimpleCaptcha() throws Exception {
+		Assert.assertTrue(false);
 	}
 
 	protected void assertContains(
@@ -270,6 +267,14 @@ public abstract class BaseSimpleCaptchaResourceTestCase {
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals("image", additionalAssertFieldName)) {
+				if (simpleCaptcha.getImage() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
 
 			if (Objects.equals("token", additionalAssertFieldName)) {
 				if (simpleCaptcha.getToken() == null) {
@@ -397,6 +402,16 @@ public abstract class BaseSimpleCaptchaResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals("image", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						simpleCaptcha1.getImage(), simpleCaptcha2.getImage())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("token", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						simpleCaptcha1.getToken(), simpleCaptcha2.getToken())) {
@@ -510,6 +525,52 @@ public abstract class BaseSimpleCaptchaResourceTestCase {
 		sb.append(operator);
 		sb.append(" ");
 
+		if (entityFieldName.equals("image")) {
+			Object object = simpleCaptcha.getImage();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("token")) {
 			Object object = simpleCaptcha.getToken();
 
@@ -600,6 +661,7 @@ public abstract class BaseSimpleCaptchaResourceTestCase {
 	protected SimpleCaptcha randomSimpleCaptcha() throws Exception {
 		return new SimpleCaptcha() {
 			{
+				image = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				token = StringUtil.toLowerCase(RandomTestUtil.randomString());
 			}
 		};

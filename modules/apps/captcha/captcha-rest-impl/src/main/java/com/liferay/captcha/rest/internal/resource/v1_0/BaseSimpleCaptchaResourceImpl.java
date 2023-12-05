@@ -6,6 +6,7 @@
 package com.liferay.captcha.rest.internal.resource.v1_0;
 
 import com.liferay.captcha.rest.dto.v1_0.SimpleCaptcha;
+import com.liferay.captcha.rest.dto.v1_0.SimpleCaptchaForm;
 import com.liferay.captcha.rest.resource.v1_0.SimpleCaptchaResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -62,6 +63,25 @@ public abstract class BaseSimpleCaptchaResourceImpl
 	@Override
 	public SimpleCaptcha getSimpleCaptcha() throws Exception {
 		return new SimpleCaptcha();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/captcha/v1.0/simple-captcha' -d $'{"answer": ___, "token": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "SimpleCaptcha")
+		}
+	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.Path("/simple-captcha")
+	@javax.ws.rs.POST
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public void postSimpleCaptcha(SimpleCaptchaForm simpleCaptchaForm)
+		throws Exception {
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

@@ -5,7 +5,7 @@
 
 package com.liferay.captcha.rest.client.serdes.v1_0;
 
-import com.liferay.captcha.rest.client.dto.v1_0.SimpleCaptcha;
+import com.liferay.captcha.rest.client.dto.v1_0.SimpleCaptchaForm;
 import com.liferay.captcha.rest.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -21,24 +21,24 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class SimpleCaptchaSerDes {
+public class SimpleCaptchaFormSerDes {
 
-	public static SimpleCaptcha toDTO(String json) {
-		SimpleCaptchaJSONParser simpleCaptchaJSONParser =
-			new SimpleCaptchaJSONParser();
+	public static SimpleCaptchaForm toDTO(String json) {
+		SimpleCaptchaFormJSONParser simpleCaptchaFormJSONParser =
+			new SimpleCaptchaFormJSONParser();
 
-		return simpleCaptchaJSONParser.parseToDTO(json);
+		return simpleCaptchaFormJSONParser.parseToDTO(json);
 	}
 
-	public static SimpleCaptcha[] toDTOs(String json) {
-		SimpleCaptchaJSONParser simpleCaptchaJSONParser =
-			new SimpleCaptchaJSONParser();
+	public static SimpleCaptchaForm[] toDTOs(String json) {
+		SimpleCaptchaFormJSONParser simpleCaptchaFormJSONParser =
+			new SimpleCaptchaFormJSONParser();
 
-		return simpleCaptchaJSONParser.parseToDTOs(json);
+		return simpleCaptchaFormJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(SimpleCaptcha simpleCaptcha) {
-		if (simpleCaptcha == null) {
+	public static String toJSON(SimpleCaptchaForm simpleCaptchaForm) {
+		if (simpleCaptchaForm == null) {
 			return "null";
 		}
 
@@ -46,21 +46,21 @@ public class SimpleCaptchaSerDes {
 
 		sb.append("{");
 
-		if (simpleCaptcha.getImage() != null) {
+		if (simpleCaptchaForm.getAnswer() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"image\": ");
+			sb.append("\"answer\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(simpleCaptcha.getImage()));
+			sb.append(_escape(simpleCaptchaForm.getAnswer()));
 
 			sb.append("\"");
 		}
 
-		if (simpleCaptcha.getToken() != null) {
+		if (simpleCaptchaForm.getToken() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -69,7 +69,7 @@ public class SimpleCaptchaSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(simpleCaptcha.getToken()));
+			sb.append(_escape(simpleCaptchaForm.getToken()));
 
 			sb.append("\"");
 		}
@@ -80,62 +80,64 @@ public class SimpleCaptchaSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		SimpleCaptchaJSONParser simpleCaptchaJSONParser =
-			new SimpleCaptchaJSONParser();
+		SimpleCaptchaFormJSONParser simpleCaptchaFormJSONParser =
+			new SimpleCaptchaFormJSONParser();
 
-		return simpleCaptchaJSONParser.parseToMap(json);
+		return simpleCaptchaFormJSONParser.parseToMap(json);
 	}
 
-	public static Map<String, String> toMap(SimpleCaptcha simpleCaptcha) {
-		if (simpleCaptcha == null) {
+	public static Map<String, String> toMap(
+		SimpleCaptchaForm simpleCaptchaForm) {
+
+		if (simpleCaptchaForm == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (simpleCaptcha.getImage() == null) {
-			map.put("image", null);
+		if (simpleCaptchaForm.getAnswer() == null) {
+			map.put("answer", null);
 		}
 		else {
-			map.put("image", String.valueOf(simpleCaptcha.getImage()));
+			map.put("answer", String.valueOf(simpleCaptchaForm.getAnswer()));
 		}
 
-		if (simpleCaptcha.getToken() == null) {
+		if (simpleCaptchaForm.getToken() == null) {
 			map.put("token", null);
 		}
 		else {
-			map.put("token", String.valueOf(simpleCaptcha.getToken()));
+			map.put("token", String.valueOf(simpleCaptchaForm.getToken()));
 		}
 
 		return map;
 	}
 
-	public static class SimpleCaptchaJSONParser
-		extends BaseJSONParser<SimpleCaptcha> {
+	public static class SimpleCaptchaFormJSONParser
+		extends BaseJSONParser<SimpleCaptchaForm> {
 
 		@Override
-		protected SimpleCaptcha createDTO() {
-			return new SimpleCaptcha();
+		protected SimpleCaptchaForm createDTO() {
+			return new SimpleCaptchaForm();
 		}
 
 		@Override
-		protected SimpleCaptcha[] createDTOArray(int size) {
-			return new SimpleCaptcha[size];
+		protected SimpleCaptchaForm[] createDTOArray(int size) {
+			return new SimpleCaptchaForm[size];
 		}
 
 		@Override
 		protected void setField(
-			SimpleCaptcha simpleCaptcha, String jsonParserFieldName,
+			SimpleCaptchaForm simpleCaptchaForm, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "image")) {
+			if (Objects.equals(jsonParserFieldName, "answer")) {
 				if (jsonParserFieldValue != null) {
-					simpleCaptcha.setImage((String)jsonParserFieldValue);
+					simpleCaptchaForm.setAnswer((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "token")) {
 				if (jsonParserFieldValue != null) {
-					simpleCaptcha.setToken((String)jsonParserFieldValue);
+					simpleCaptchaForm.setToken((String)jsonParserFieldValue);
 				}
 			}
 		}

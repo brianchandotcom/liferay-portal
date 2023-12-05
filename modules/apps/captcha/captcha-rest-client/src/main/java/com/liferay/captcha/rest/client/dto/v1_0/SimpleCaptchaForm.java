@@ -6,7 +6,7 @@
 package com.liferay.captcha.rest.client.dto.v1_0;
 
 import com.liferay.captcha.rest.client.function.UnsafeSupplier;
-import com.liferay.captcha.rest.client.serdes.v1_0.SimpleCaptchaSerDes;
+import com.liferay.captcha.rest.client.serdes.v1_0.SimpleCaptchaFormSerDes;
 
 import java.io.Serializable;
 
@@ -19,32 +19,32 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class SimpleCaptcha implements Cloneable, Serializable {
+public class SimpleCaptchaForm implements Cloneable, Serializable {
 
-	public static SimpleCaptcha toDTO(String json) {
-		return SimpleCaptchaSerDes.toDTO(json);
+	public static SimpleCaptchaForm toDTO(String json) {
+		return SimpleCaptchaFormSerDes.toDTO(json);
 	}
 
-	public String getImage() {
-		return image;
+	public String getAnswer() {
+		return answer;
 	}
 
-	public void setImage(String image) {
-		this.image = image;
+	public void setAnswer(String answer) {
+		this.answer = answer;
 	}
 
-	public void setImage(
-		UnsafeSupplier<String, Exception> imageUnsafeSupplier) {
+	public void setAnswer(
+		UnsafeSupplier<String, Exception> answerUnsafeSupplier) {
 
 		try {
-			image = imageUnsafeSupplier.get();
+			answer = answerUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected String image;
+	protected String answer;
 
 	public String getToken() {
 		return token;
@@ -68,8 +68,8 @@ public class SimpleCaptcha implements Cloneable, Serializable {
 	protected String token;
 
 	@Override
-	public SimpleCaptcha clone() throws CloneNotSupportedException {
-		return (SimpleCaptcha)super.clone();
+	public SimpleCaptchaForm clone() throws CloneNotSupportedException {
+		return (SimpleCaptchaForm)super.clone();
 	}
 
 	@Override
@@ -78,13 +78,13 @@ public class SimpleCaptcha implements Cloneable, Serializable {
 			return true;
 		}
 
-		if (!(object instanceof SimpleCaptcha)) {
+		if (!(object instanceof SimpleCaptchaForm)) {
 			return false;
 		}
 
-		SimpleCaptcha simpleCaptcha = (SimpleCaptcha)object;
+		SimpleCaptchaForm simpleCaptchaForm = (SimpleCaptchaForm)object;
 
-		return Objects.equals(toString(), simpleCaptcha.toString());
+		return Objects.equals(toString(), simpleCaptchaForm.toString());
 	}
 
 	@Override
@@ -95,7 +95,7 @@ public class SimpleCaptcha implements Cloneable, Serializable {
 	}
 
 	public String toString() {
-		return SimpleCaptchaSerDes.toJSON(this);
+		return SimpleCaptchaFormSerDes.toJSON(this);
 	}
 
 }

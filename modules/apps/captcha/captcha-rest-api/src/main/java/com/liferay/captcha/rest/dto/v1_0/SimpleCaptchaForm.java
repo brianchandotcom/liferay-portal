@@ -27,6 +27,8 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.constraints.NotEmpty;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -34,34 +36,35 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("SimpleCaptcha")
+@GraphQLName("SimpleCaptchaForm")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "SimpleCaptcha")
-public class SimpleCaptcha implements Serializable {
+@Schema(requiredProperties = {"token"})
+@XmlRootElement(name = "SimpleCaptchaForm")
+public class SimpleCaptchaForm implements Serializable {
 
-	public static SimpleCaptcha toDTO(String json) {
-		return ObjectMapperUtil.readValue(SimpleCaptcha.class, json);
+	public static SimpleCaptchaForm toDTO(String json) {
+		return ObjectMapperUtil.readValue(SimpleCaptchaForm.class, json);
 	}
 
-	public static SimpleCaptcha unsafeToDTO(String json) {
-		return ObjectMapperUtil.unsafeReadValue(SimpleCaptcha.class, json);
+	public static SimpleCaptchaForm unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(SimpleCaptchaForm.class, json);
 	}
 
 	@Schema
-	public String getImage() {
-		return image;
+	public String getAnswer() {
+		return answer;
 	}
 
-	public void setImage(String image) {
-		this.image = image;
+	public void setAnswer(String answer) {
+		this.answer = answer;
 	}
 
 	@JsonIgnore
-	public void setImage(
-		UnsafeSupplier<String, Exception> imageUnsafeSupplier) {
+	public void setAnswer(
+		UnsafeSupplier<String, Exception> answerUnsafeSupplier) {
 
 		try {
-			image = imageUnsafeSupplier.get();
+			answer = answerUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -73,7 +76,7 @@ public class SimpleCaptcha implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String image;
+	protected String answer;
 
 	@Schema
 	public String getToken() {
@@ -101,6 +104,7 @@ public class SimpleCaptcha implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@NotEmpty
 	protected String token;
 
 	@Override
@@ -109,13 +113,13 @@ public class SimpleCaptcha implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof SimpleCaptcha)) {
+		if (!(object instanceof SimpleCaptchaForm)) {
 			return false;
 		}
 
-		SimpleCaptcha simpleCaptcha = (SimpleCaptcha)object;
+		SimpleCaptchaForm simpleCaptchaForm = (SimpleCaptchaForm)object;
 
-		return Objects.equals(toString(), simpleCaptcha.toString());
+		return Objects.equals(toString(), simpleCaptchaForm.toString());
 	}
 
 	@Override
@@ -130,16 +134,16 @@ public class SimpleCaptcha implements Serializable {
 
 		sb.append("{");
 
-		if (image != null) {
+		if (answer != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"image\": ");
+			sb.append("\"answer\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(image));
+			sb.append(_escape(answer));
 
 			sb.append("\"");
 		}
@@ -165,7 +169,7 @@ public class SimpleCaptcha implements Serializable {
 
 	@Schema(
 		accessMode = Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.captcha.rest.dto.v1_0.SimpleCaptcha",
+		defaultValue = "com.liferay.captcha.rest.dto.v1_0.SimpleCaptchaForm",
 		name = "x-class-name"
 	)
 	public String xClassName;

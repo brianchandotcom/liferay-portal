@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.layout.internal.util;
+package com.liferay.layout.internal.manager;
 
 import com.liferay.layout.admin.kernel.model.LayoutTypePortletConstants;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
@@ -35,7 +35,7 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReader;
 import com.liferay.portal.util.LayoutTypeControllerTracker;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.site.util.Sitemap;
+import com.liferay.site.manager.SitemapManager;
 import com.liferay.site.provider.SitemapURLProvider;
 
 import java.text.DateFormat;
@@ -57,8 +57,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jorge Ferrer
  * @author Vilmos Papp
  */
-@Component(service = Sitemap.class)
-public class SitemapImpl implements Sitemap {
+@Component(service = SitemapManager.class)
+public class SitemapManagerImpl implements SitemapManager {
 
 	@Override
 	public void addURLElement(
@@ -462,7 +462,7 @@ public class SitemapImpl implements Sitemap {
 	private static final int _MAXIMUM_SIZE = 50 * 1024 * 1024;
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		SitemapImpl.class.getName());
+		SitemapManagerImpl.class.getName());
 
 	private static final BundleContext _bundleContext =
 		SystemBundleUtil.getBundleContext();

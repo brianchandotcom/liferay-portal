@@ -35,7 +35,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.site.util.Sitemap;
+import com.liferay.site.manager.SitemapManager;
 import com.liferay.site.provider.SitemapURLProvider;
 import com.liferay.site.provider.helper.SitemapURLProviderHelper;
 
@@ -99,8 +99,8 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 		int count = _journalArticleService.getLayoutArticlesCount(
 			layoutSet.getGroupId());
 
-		if (count > Sitemap.MAXIMUM_ENTRIES) {
-			start = count - Sitemap.MAXIMUM_ENTRIES;
+		if (count > SitemapManager.MAXIMUM_ENTRIES) {
+			start = count - SitemapManager.MAXIMUM_ENTRIES;
 			end = count;
 		}
 
@@ -297,7 +297,7 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 				_getAvailableLocales(journalArticle));
 
 			for (String alternateURL : alternateURLs.values()) {
-				_sitemap.addURLElement(
+				_sitemapManager.addURLElement(
 					element, alternateURL, null,
 					journalArticle.getModifiedDate(), articleURL,
 					alternateURLs);
@@ -329,8 +329,8 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 		int count = _journalArticleService.getArticlesByLayoutUuidCount(
 			groupId, layoutUuid);
 
-		if (count > Sitemap.MAXIMUM_ENTRIES) {
-			start = count - Sitemap.MAXIMUM_ENTRIES;
+		if (count > SitemapManager.MAXIMUM_ENTRIES) {
+			start = count - SitemapManager.MAXIMUM_ENTRIES;
 			end = count;
 		}
 
@@ -365,7 +365,7 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 	private Portal _portal;
 
 	@Reference
-	private Sitemap _sitemap;
+	private SitemapManager _sitemapManager;
 
 	@Reference
 	private SitemapURLProviderHelper _sitemapURLProviderHelper;

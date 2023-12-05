@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.site.util.Sitemap;
+import com.liferay.site.manager.SitemapManager;
 import com.liferay.site.provider.SitemapURLProvider;
 import com.liferay.site.provider.helper.SitemapURLProviderHelper;
 
@@ -140,7 +140,7 @@ public class AssetCategorySitemapURLProvider implements SitemapURLProvider {
 			_portal.getLocale(themeDisplay.getRequest()));
 
 		for (String alternateFriendlyURL : alternateFriendlyURLs.values()) {
-			_sitemap.addURLElement(
+			_sitemapManager.addURLElement(
 				element, alternateFriendlyURL, typeSettingsUnicodeProperties,
 				layout.getModifiedDate(), categoryFriendlyURL,
 				alternateFriendlyURLs);
@@ -172,7 +172,7 @@ public class AssetCategorySitemapURLProvider implements SitemapURLProvider {
 	private Portal _portal;
 
 	@Reference
-	private Sitemap _sitemap;
+	private SitemapManager _sitemapManager;
 
 	@Reference
 	private SitemapURLProviderHelper _sitemapURLProviderHelper;

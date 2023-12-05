@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.util.LayoutTypeControllerTracker;
-import com.liferay.site.util.Sitemap;
+import com.liferay.site.manager.SitemapManager;
 import com.liferay.site.provider.SitemapURLProvider;
 import com.liferay.site.provider.helper.SitemapURLProviderHelper;
 import com.liferay.translation.info.item.provider.InfoItemLanguagesProvider;
@@ -85,8 +85,8 @@ public class LayoutSitemapURLProvider implements SitemapURLProvider {
 				layoutSet.getGroupId(), layoutSet.isPrivateLayout(),
 				entry.getKey());
 
-			if (count > Sitemap.MAXIMUM_ENTRIES) {
-				start = count - Sitemap.MAXIMUM_ENTRIES;
+			if (count > SitemapManager.MAXIMUM_ENTRIES) {
+				start = count - SitemapManager.MAXIMUM_ENTRIES;
 				end = count;
 			}
 
@@ -121,7 +121,7 @@ public class LayoutSitemapURLProvider implements SitemapURLProvider {
 			layoutFullURL, themeDisplay, layout, _getAvailableLocales(layout));
 
 		for (String alternateURL : alternateURLs.values()) {
-			_sitemap.addURLElement(
+			_sitemapManager.addURLElement(
 				element, alternateURL, typeSettingsUnicodeProperties,
 				layout.getModifiedDate(), layoutFullURL, alternateURLs);
 		}
@@ -162,7 +162,7 @@ public class LayoutSitemapURLProvider implements SitemapURLProvider {
 	private Portal _portal;
 
 	@Reference
-	private Sitemap _sitemap;
+	private SitemapManager _sitemapManager;
 
 	@Reference
 	private SitemapURLProviderHelper _sitemapURLProviderHelper;

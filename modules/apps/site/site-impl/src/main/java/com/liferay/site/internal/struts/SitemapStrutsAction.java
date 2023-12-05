@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.site.util.Sitemap;
+import com.liferay.site.manager.SitemapManager;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -116,7 +116,7 @@ public class SitemapStrutsAction implements StrutsAction {
 				String layoutUuid = ParamUtil.getString(
 					httpServletRequest, "layoutUuid");
 
-				String sitemap = _sitemap.getSitemap(
+				String sitemap = _sitemapManager.getSitemap(
 					layoutUuid, layoutSet.getGroupId(),
 					layoutSet.isPrivateLayout(), themeDisplay);
 
@@ -160,7 +160,7 @@ public class SitemapStrutsAction implements StrutsAction {
 	private Portal _portal;
 
 	@Reference
-	private Sitemap _sitemap;
+	private SitemapManager _sitemapManager;
 
 	@Reference
 	private VirtualHostLocalService _virtualHostLocalService;

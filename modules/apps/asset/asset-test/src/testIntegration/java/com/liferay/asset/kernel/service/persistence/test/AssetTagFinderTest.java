@@ -114,33 +114,9 @@ public class AssetTagFinderTest {
 
 	@Test
 	public void testFindByG_C_N() throws Exception {
-		long classNameId = PortalUtil.getClassNameId(MBMessage.class);
-		String assetTagName = RandomTestUtil.randomString();
-
-		List<AssetTag> initialScopeGroupAssetTags = _assetTagFinder.findByG_C_N(
-			_scopeGroup.getGroupId(), classNameId, assetTagName,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-		List<AssetTag> initialSiteGroupAssetTags = _assetTagFinder.findByG_C_N(
-			_scopeGroup.getParentGroupId(), classNameId, assetTagName,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-
-		addMBMessage(_scopeGroup.getGroupId(), assetTagName);
-
-		List<AssetTag> scopeGroupAssetTags = _assetTagFinder.findByG_C_N(
-			_scopeGroup.getGroupId(), classNameId, assetTagName,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-
-		Assert.assertEquals(
-			scopeGroupAssetTags.toString(),
-			initialScopeGroupAssetTags.size() + 1, scopeGroupAssetTags.size());
-
-		List<AssetTag> siteGroupAssetTags = _assetTagFinder.findByG_C_N(
-			_scopeGroup.getParentGroupId(), classNameId, assetTagName,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-
-		Assert.assertEquals(
-			siteGroupAssetTags.toString(), initialSiteGroupAssetTags.size(),
-			siteGroupAssetTags.size());
+		_testFindByG_C_N(
+			RandomTestUtil.randomString(),
+			_portal.getClassNameId(MBMessage.class));
 	}
 
 	protected void addMBMessage(long groupId, String assetTagName)
@@ -175,6 +151,35 @@ public class AssetTagFinderTest {
 
 		Assert.assertEquals(
 			initialSiteGroupAssetTagsCount, siteGroupAssetTagsCount);
+	}
+
+	private void _testFindByG_C_N(String assetTagName, long classNameId)
+		throws Exception {
+
+		List<AssetTag> initialScopeGroupAssetTags = _assetTagFinder.findByG_C_N(
+			_scopeGroup.getGroupId(), classNameId, assetTagName,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+		List<AssetTag> initialSiteGroupAssetTags = _assetTagFinder.findByG_C_N(
+			_scopeGroup.getParentGroupId(), classNameId, assetTagName,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		addMBMessage(_scopeGroup.getGroupId(), assetTagName);
+
+		List<AssetTag> scopeGroupAssetTags = _assetTagFinder.findByG_C_N(
+			_scopeGroup.getGroupId(), classNameId, assetTagName,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		Assert.assertEquals(
+			scopeGroupAssetTags.toString(),
+			initialScopeGroupAssetTags.size() + 1, scopeGroupAssetTags.size());
+
+		List<AssetTag> siteGroupAssetTags = _assetTagFinder.findByG_C_N(
+			_scopeGroup.getParentGroupId(), classNameId, assetTagName,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		Assert.assertEquals(
+			siteGroupAssetTags.toString(), initialSiteGroupAssetTags.size(),
+			siteGroupAssetTags.size());
 	}
 
 	@Inject

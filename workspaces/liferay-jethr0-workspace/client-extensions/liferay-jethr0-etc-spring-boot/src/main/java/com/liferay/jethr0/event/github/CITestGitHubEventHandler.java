@@ -10,6 +10,7 @@ import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
 import com.liferay.jethr0.event.EventHandlerContext;
 import com.liferay.jethr0.event.github.comment.GitHubComment;
 import com.liferay.jethr0.event.github.pullrequest.GitHubPullRequest;
+import com.liferay.jethr0.event.github.user.GitHubUser;
 import com.liferay.jethr0.git.branch.GitBranchEntity;
 import com.liferay.jethr0.jenkins.JenkinsQueue;
 import com.liferay.jethr0.job.JobEntity;
@@ -95,15 +96,22 @@ public class CITestGitHubEventHandler extends BaseGitHubEventHandler {
 				portalPullRequestJobEntity.setPortalPullRequestURL(
 					gitHubPullRequest.getHTMLURL());
 
+				GitHubUser originGitHubUser =
+					gitHubPullRequest.getOriginGitHubUser();
+
 				portalPullRequestJobEntity.setOriginName(
-					gitHubPullRequest.getHeadUserName());
+					originGitHubUser.getName());
 
 				portalPullRequestJobEntity.setSenderBranchName(
 					gitHubPullRequest.getHeadBranchName());
 				portalPullRequestJobEntity.setSenderBranchSHA(
 					gitHubPullRequest.getHeadBranchSHA());
+
+				GitHubUser senderGitHubUser =
+					gitHubPullRequest.getSenderGitHubUser();
+
 				portalPullRequestJobEntity.setSenderUserName(
-					gitHubPullRequest.getSenderUserName());
+					senderGitHubUser.getName());
 
 				portalPullRequestJobEntity.setUpstreamBranchName(
 					gitHubPullRequest.getBaseBranchName());

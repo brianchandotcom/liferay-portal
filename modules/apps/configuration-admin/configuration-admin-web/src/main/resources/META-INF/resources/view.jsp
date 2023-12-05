@@ -10,7 +10,10 @@
 <%
 List<ConfigurationCategorySectionDisplay> configurationCategorySectionDisplays = (List<ConfigurationCategorySectionDisplay>)request.getAttribute(ConfigurationAdminWebKeys.CONFIGURATION_CATEGORY_SECTION_DISPLAYS);
 ConfigurationEntryRetriever configurationEntryRetriever = (ConfigurationEntryRetriever)request.getAttribute(ConfigurationAdminWebKeys.CONFIGURATION_ENTRY_RETRIEVER);
+
 ConfigurationScopeDisplayContext configurationScopeDisplayContext = ConfigurationScopeDisplayContextFactory.create(renderRequest);
+
+ExtendedObjectClassDefinition.Scope scope = configurationScopeDisplayContext.getScope();
 %>
 
 <portlet:renderURL var="redirectURL" />
@@ -36,6 +39,20 @@ ConfigurationScopeDisplayContext configurationScopeDisplayContext = Configuratio
 	cssClass="container-view"
 	fullWidth='<%= FeatureFlagManagerUtil.isEnabled("LPS-184404") %>'
 >
+	<c:if test="<%= scope.equals(ExtendedObjectClassDefinition.Scope.COMPANY) || scope.equals(ExtendedObjectClassDefinition.Scope.SYSTEM) %>">
+
+		<%
+		String[] installedPatches = PatcherValues.INSTALLED_PATCH_NAMES;
+		%>
+
+		<div class="alert alert-info">
+			<strong><liferay-ui:message key="info" /></strong>: <%= ReleaseInfo.getReleaseInfo() %>
+			<c:if test="<%= (installedPatches != null) && (installedPatches.length > 0) %>">
+				<strong><liferay-ui:message key="patch" /></strong>: <%= StringUtil.merge(installedPatches, StringPool.COMMA_AND_SPACE) %>
+			</c:if>
+		</div>
+	</c:if>
+
 	<c:if test="<%= configurationCategorySectionDisplays.isEmpty() %>">
 		<liferay-frontend:empty-result-message
 			animationType="<%= EmptyResultMessageKeys.AnimationType.SEARCH %>"

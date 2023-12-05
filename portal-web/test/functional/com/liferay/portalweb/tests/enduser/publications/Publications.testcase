@@ -365,9 +365,13 @@ definition {
 			changeCategory = "Document",
 			changeTitle = "DM Document Title Edit");
 
+		// Workaround LPS-201510
+
+		PublicationsNavigator.gotoReviewChanges();
+
 		PublicationsChanges.filterChangesByItem(
 			checkboxName = "Deleted",
-			menuItem = "Types");
+			menuItem = "Changed");
 
 		PublicationsChanges.viewChanges(
 			changeCategory = "Web Content Article",
@@ -383,6 +387,10 @@ definition {
 		PublicationsChanges.viewChangesResultNotPresent(
 			changeCategory = "Document",
 			changeTitle = "DM Document Title Edit");
+
+		// Workaround LPS-201510
+
+		PublicationsNavigator.gotoReviewChanges();
 
 		PublicationsChanges.filterChangesByItem(
 			checkboxName = "Modified",
@@ -402,6 +410,10 @@ definition {
 		PublicationsChanges.viewChangesResultNotPresent(
 			changeCategory = "Web Content Article",
 			changeTitle = "WC WebContent Title 2");
+
+		// Workaround LPS-201510
+
+		PublicationsNavigator.gotoReviewChanges();
 
 		PublicationsChanges.filterChangesByItem(
 			checkboxName = "Site Name",
@@ -425,6 +437,10 @@ definition {
 			changeCategory = "Web Content Article",
 			changeTitle = "WC WebContent Title 2");
 
+		// Workaround LPS-201510
+
+		PublicationsNavigator.gotoReviewChanges();
+
 		PublicationsChanges.filterChangesByItem(
 			checkboxName = "Test Site Name",
 			menuItem = "Sites");
@@ -444,6 +460,10 @@ definition {
 			changeCategory = "Document",
 			changeTitle = "DM Document Title Edit");
 
+		// Workaround LPS-201510
+
+		PublicationsNavigator.gotoReviewChanges();
+
 		PublicationsChanges.filterChangesByItem(
 			checkboxName = "Document",
 			menuItem = "Types");
@@ -462,6 +482,10 @@ definition {
 		PublicationsChanges.viewChangesResultNotPresent(
 			changeCategory = "Web Content Article",
 			changeTitle = "WC WebContent Title 2");
+
+		// Workaround LPS-201510
+
+		PublicationsNavigator.gotoReviewChanges();
 
 		PublicationsChanges.filterChangesByItem(
 			checkboxName = "Web Content Article",

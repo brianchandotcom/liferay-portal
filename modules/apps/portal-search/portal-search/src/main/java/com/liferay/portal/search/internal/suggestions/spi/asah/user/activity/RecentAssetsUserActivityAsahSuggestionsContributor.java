@@ -55,6 +55,7 @@ public class RecentAssetsUserActivityAsahSuggestionsContributor
 			suggestionsContributorConfiguration);
 	}
 
+	@Override
 	protected String getAssetURL(
 		String destinationBaseURL, JSONObject itemJSONObject) {
 
@@ -88,6 +89,7 @@ public class RecentAssetsUserActivityAsahSuggestionsContributor
 		return url;
 	}
 
+	@Override
 	protected String getText(JSONObject itemJSONObject) {
 		return itemJSONObject.getString("assetTitle");
 	}

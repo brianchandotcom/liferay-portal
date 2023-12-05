@@ -73,11 +73,11 @@ public abstract class BaseUserActivityAsahSuggestionsContributor
 
 		return AsahWebCacheItem.get(
 			analyticsConfiguration, _userActivityAsahConfiguration,
-			getURL(
+			_getURL(
 				analyticsConfiguration,
 				StringBundler.concat(
 					basePath, StringPool.FORWARD_SLASH,
-					_getHashedEmail(searchContext.getUserId())),
+					_getHashedEmailAddress(searchContext.getUserId())),
 				contentType, displayLanguageId, groupId, minCounts, page, path,
 				rangeKey, size, sort),
 			StringBundler.concat(
@@ -88,7 +88,7 @@ public abstract class BaseUserActivityAsahSuggestionsContributor
 				StringPool.POUND, size, StringPool.POUND, sort));
 	}
 
-	protected String getURL(
+	private String _getURL(
 		AnalyticsConfiguration analyticsConfiguration, String basePath,
 		String contentType, String displayLanguageId, long groupId,
 		long minCounts, int page, String path, int rangeKey, int size,
@@ -176,7 +176,7 @@ public abstract class BaseUserActivityAsahSuggestionsContributor
 		return MapUtil.getString(attributes, "contentType", StringPool.BLANK);
 	}
 
-	private String _getHashedEmail(long userId) {
+	private String _getHashedEmailAddress(long userId) {
 		try {
 			MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
 

@@ -43,12 +43,14 @@ public class RecentPagesUserActivityAsahSuggestionsContributor
 			suggestionsContributorConfiguration);
 	}
 
+	@Override
 	protected String getAssetURL(
 		String destinationBaseURL, JSONObject itemJSONObject) {
 
 		return itemJSONObject.getString("url");
 	}
 
+	@Override
 	protected String getText(JSONObject itemJSONObject) {
 		return itemJSONObject.getString("title");
 	}

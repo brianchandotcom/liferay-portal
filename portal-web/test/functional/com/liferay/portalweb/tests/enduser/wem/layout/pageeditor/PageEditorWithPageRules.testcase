@@ -21,6 +21,45 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-196462. The New Rule Modal allows the user to create new rules."
+	@priority = 3
+	test AddPageRule {
+		task ("Given a page designer has a Button fragment on a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+		}
+
+		task ("When the page designer navigates to the Page Ruls panel") {
+			PageEditor.gotoTab(tabName = "Page Rules");
+		}
+
+		task ("Then the page designer could add a page rule") {
+			PageEditor.addPageRule(
+				ruleName = "Test Page Rule",
+				selectAction = "Hide",
+				selectActionValue = "Button",
+				selectCondition = "Is the User",
+				selectConditionValue = "test",
+				selectItemForTheAction = "Fragment",
+				selectItemForTheCondition = "User");
+
+			AssertVisible(
+				key_rule = "Test Page RuleIfUserIs the UsertestHideFragmentButton",
+				key_ruleName = "Test Page Rule",
+				locator1 = "PageEditor#PAGE_RULE_LIST_ITEM");
+		}
+	}
+
 	@description = "This is a test for LPS-196461. There is a new section for Page Rules in the left side bar."
 	@priority = 3
 	test OpenPageRulesPanel {

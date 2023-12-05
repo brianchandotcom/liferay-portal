@@ -137,6 +137,12 @@
 				<required>false</required>
 			</attribute>
 			<attribute>
+				<name>displayType</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+				<required>false</required>
+			</attribute>
+			<attribute>
 				<name>languageId</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>

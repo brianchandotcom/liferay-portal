@@ -46,7 +46,6 @@ import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
@@ -632,9 +631,6 @@ public class PublishLayoutMVCActionCommandTest {
 	@Inject
 	private LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
-
-	@Inject
-	private PermissionCheckerFactory _permissionCheckerFactory;
 
 	@Inject
 	private PortletPreferencesFactory _portletPreferencesFactory;

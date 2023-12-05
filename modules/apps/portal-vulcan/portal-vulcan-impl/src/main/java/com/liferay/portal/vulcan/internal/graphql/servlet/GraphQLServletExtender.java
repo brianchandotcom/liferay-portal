@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
 import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.osgi.service.tracker.collections.EagerServiceTrackerCustomizer;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
@@ -2496,7 +2497,7 @@ public class GraphQLServletExtender {
 	}
 
 	private class GraphQLContributorServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer
+		implements EagerServiceTrackerCustomizer
 			<GraphQLContributor, GraphQLContributor> {
 
 		@Override

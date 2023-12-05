@@ -290,15 +290,6 @@
 			[/#if]
 		[/#if]
 
-		[#if mdfClaimStatusKey == 'draft']
-			[#if hasMarketingReviewAction]
-				[#assign count = count + 1]
-				<li class="dropdown-item" id="dropdownMDFClaimStatusItem" onclick="callMDFClaimModal('pendingMarketingReview')">
-					Pending Marketing Review
-				</li>
-			[/#if]
-		[/#if]
-
 		[#if mdfClaimStatusKey == 'inDirectorReview']
 			[#if hasFinanceReviewAction]
 				[#assign count = count + 1]

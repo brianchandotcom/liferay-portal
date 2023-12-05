@@ -385,7 +385,7 @@ public class SourceFormatterUtil {
 			Arrays.asList("ls-files", "-z", "--full-name"), baseDirName,
 			includes);
 
-		List<String> results = ListUtil.filter(
+		fileNames = ListUtil.filter(
 			fileNames, fileName -> !deletedFileNames.contains(fileName));
 
 		List<String> untrackedFileNames = _getUntrackedFileNames();
@@ -409,7 +409,7 @@ public class SourceFormatterUtil {
 			}
 		}
 
-		return results;
+		return fileNames;
 	}
 
 	public static List<String> scanForFileNames(

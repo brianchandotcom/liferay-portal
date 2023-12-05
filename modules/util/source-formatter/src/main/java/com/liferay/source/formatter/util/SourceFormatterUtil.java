@@ -329,7 +329,18 @@ public class SourceFormatterUtil {
 	}
 
 	public static List<String> git(List<String> args, String baseDirName) {
-		return _scanForFileNames(args, baseDirName, new String[0]);
+		List<String> fileNames = _scanForFileNames(
+			args, baseDirName, new String[0]);
+
+		List<String> untrackedFileNames = _getUntrackedFileNames();
+
+		for (String untrackedFileName : untrackedFileNames) {
+			if (!fileNames.contains(untrackedFileName)) {
+				fileNames.add(untrackedFileName);
+			}
+		}
+
+		return fileNames;
 	}
 
 	public static void git(
@@ -383,14 +394,37 @@ public class SourceFormatterUtil {
 
 		List<String> deletedFileNames = _scanForFileNames(
 			Arrays.asList("ls-files", "-d", "-z", "--full-name"), baseDirName,
-			includes);
+			new String[0]);
 
 		List<String> fileNames = _scanForFileNames(
 			Arrays.asList("ls-files", "-z", "--full-name"), baseDirName,
 			includes);
 
-		return ListUtil.filter(
+		List<String> results = ListUtil.filter(
 			fileNames, fileName -> !deletedFileNames.contains(fileName));
+
+		List<String> untrackedFileNames = _getUntrackedFileNames();
+
+		PathMatchers pathMatchers = _getPathMatchers(
+			new String[0], includes, new SourceFormatterExcludes());
+
+		for (String untrackedFileName : untrackedFileNames) {
+			if (!fileNames.contains(untrackedFileName)) {
+				for (PathMatcher pathMatcher :
+						pathMatchers.getIncludeFilePathMatchers()) {
+
+					Path filePath = Paths.get(untrackedFileName);
+
+					if (pathMatcher.matches(filePath)) {
+						fileNames.add(untrackedFileName);
+
+						break;
+					}
+				}
+			}
+		}
+
+		return results;
 	}
 
 	public static List<String> scanForFileNames(
@@ -621,7 +655,8 @@ public class SourceFormatterUtil {
 		List<String> untrackedFileNames = new ArrayList<>();
 
 		git(
-			Arrays.asList("add", ".", "--dry-run"), _gitTopLevelFolder,
+			Arrays.asList("add", ".", "--dry-run", "--no-all"),
+			_gitTopLevelFolder,
 			line -> {
 				if (!line.startsWith("add ")) {
 					return;
@@ -645,8 +680,8 @@ public class SourceFormatterUtil {
 			List<String> lines = new ArrayList<>();
 
 			git(
-				Arrays.asList("rev-parse", "--show-toplevel"), "",
-				line -> lines.add(line));
+				Arrays.asList("rev-parse", "--show-toplevel"), baseDirName,
+				lines::add);
 
 			_gitTopLevelFolder = lines.get(0);
 		}
@@ -670,14 +705,6 @@ public class SourceFormatterUtil {
 			allArgs, baseDirName,
 			line -> fileNames.add(
 				_gitTopLevelFolder + StringPool.SLASH + line));
-
-		List<String> untrackedFileNames = _getUntrackedFileNames();
-
-		for (String untrackedFileName : untrackedFileNames) {
-			if (!fileNames.contains(untrackedFileName)) {
-				fileNames.add(untrackedFileName);
-			}
-		}
 
 		return fileNames;
 	}

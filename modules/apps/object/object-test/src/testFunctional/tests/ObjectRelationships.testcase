@@ -289,23 +289,23 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		task ("Create a custom object, and a self relationship") {
+		task ("Given the object Account related with a custom object definition School") {
 			ObjectAdmin.addObjectViaAPI(
-				labelName = "Custom Object",
-				objectName = "CustomObject",
-				pluralLabelName = "Custom Objects");
+				labelName = "School",
+				objectName = "School",
+				pluralLabelName = "School");
 
 			ObjectAdmin.addObjectRelationshipViaAPI(
-				objectName_1 = "CustomObject",
-				objectName_2 = "CustomObject",
-				relationshipLabel = "Self Relationship",
-				relationshipName = "selfRelationship",
+				objectName_1 = "AccountEntry",
+				objectName_2 = "School",
+				relationshipLabel = "Teacher",
+				relationshipName = "teacher",
 				relationshipType = "oneToMany");
 
-			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+			ObjectAdmin.publishObjectViaAPI(objectName = "School");
 		}
 
-		task ("Create an relationship from Postal Address to custom object created") {
+		task ("When creating a relationship from Postal Address to School") {
 			ObjectAdmin.openObjectAdmin();
 
 			ObjectPortlet.selectCustomObject(label = "Postal Address");
@@ -313,15 +313,15 @@ definition {
 			ObjectAdmin.gotoRelationshipsTab();
 
 			ObjectAdmin.addObjectRelationshipViaUI(
-				label = "Relationship with Custom Object",
-				object = "Custom Object",
-				parameterOption = "Self Relationship",
+				label = "Postal Address with School",
+				object = "School",
+				parameterOption = "Teacher",
 				type = "One to Many");
 		}
 
-		task ("Assert there is a relationship created") {
+		task ("Then the relationship is added") {
 			AssertElementPresent(
-				key_label = "Relationship with Custom Object",
+				key_label = "Postal Address with School",
 				locator1 = "ObjectAdmin#RELATIONSHIP_LABEL");
 		}
 	}

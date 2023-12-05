@@ -356,6 +356,14 @@ public class LayoutPageTemplateCollectionLocalServiceUtil {
 
 	public static List<LayoutPageTemplateCollection>
 		getLayoutPageTemplateCollections(
+			long groupId, long layoutPageTemplateCollectionId) {
+
+		return getService().getLayoutPageTemplateCollections(
+			groupId, layoutPageTemplateCollectionId);
+	}
+
+	public static List<LayoutPageTemplateCollection>
+		getLayoutPageTemplateCollections(
 			long groupId, String name, int type, int start, int end,
 			OrderByComparator<LayoutPageTemplateCollection> orderByComparator) {
 

@@ -60,6 +60,66 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-196462. More rules can be added to the page and the input Rule is filled by default."
+	@priority = 3
+	test AddPageRulesWithDefaultName {
+		task ("Given a page designer has fragments on a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading",
+				targetFragmentName = "Button");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Paragraph",
+				targetFragmentName = "Heading");
+		}
+
+		task ("When the page designer navigates to the Page Ruls panel") {
+			PageEditor.gotoTab(tabName = "Page Rules");
+		}
+
+		task ("Then the page designer could add page rules with default name") {
+			for (var fragmentName : list "Button,Heading,Paragraph") {
+				PageEditor.addPageRule(
+					selectAction = "Hide",
+					selectActionValue = ${fragmentName},
+					selectCondition = "Is the User",
+					selectConditionValue = "test",
+					selectItemForTheAction = "Fragment",
+					selectItemForTheCondition = "User");
+			}
+
+			AssertVisible(
+				key_rule = "RuleIfUserIs the UsertestHideFragmentButton",
+				key_ruleName = "Rule",
+				locator1 = "PageEditor#PAGE_RULE_LIST_ITEM");
+
+			AssertVisible(
+				key_rule = "Rule 1IfUserIs the UsertestHideFragmentHeading",
+				key_ruleName = "Rule 1",
+				locator1 = "PageEditor#PAGE_RULE_LIST_ITEM");
+
+			AssertVisible(
+				key_rule = "Rule 2IfUserIs the UsertestHideFragmentParagraph",
+				key_ruleName = "Rule 2",
+				locator1 = "PageEditor#PAGE_RULE_LIST_ITEM");
+		}
+	}
+
 	@description = "This is a test for LPS-196461. There is a new section for Page Rules in the left side bar."
 	@priority = 3
 	test OpenPageRulesPanel {

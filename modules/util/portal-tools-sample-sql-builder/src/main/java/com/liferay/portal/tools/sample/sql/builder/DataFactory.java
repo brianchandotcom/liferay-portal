@@ -6553,7 +6553,10 @@ public class DataFactory {
 			}
 		}
 
-		if (privateLayout) {
+		if (name.equals("search")) {
+			typeSettingsUnicodeProperties.setProperty("privateLayout", "true");
+		}
+		else {
 			typeSettingsUnicodeProperties.setProperty(
 				"privateLayout", String.valueOf(privateLayout));
 		}

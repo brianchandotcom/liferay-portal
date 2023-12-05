@@ -11,8 +11,8 @@ import React, {useEffect, useRef, useState} from 'react';
 
 import {
 	CSV_FORMAT,
+	DISALLOWED_CSV_ENTITY_TYPES,
 	EXPORT_FILE_FORMAT_SELECTED_EVENT,
-	OBJECT_DEFINITION_ENTITY_TYPE,
 	SCHEMA_SELECTED_EVENT,
 	TEMPLATE_SELECTED_EVENT,
 	TEMPLATE_SOILED_EVENT,
@@ -74,7 +74,7 @@ function FieldsTable({portletNamespace}) {
 		}) => {
 			if (
 				selectedExportFileFormat === CSV_FORMAT.toUpperCase() &&
-				selectedSchema === OBJECT_DEFINITION_ENTITY_TYPE
+				DISALLOWED_CSV_ENTITY_TYPES.includes(selectedSchema)
 			) {
 				setFields([]);
 				setSelectedFields([]);

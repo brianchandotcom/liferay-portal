@@ -9,8 +9,8 @@ import React, {useEffect, useReducer, useState} from 'react';
 
 import {
 	CSV_FORMAT,
+	DISALLOWED_CSV_ENTITY_TYPES,
 	EXPORT_FILE_FORMAT_SELECTED_EVENT,
-	OBJECT_DEFINITION_ENTITY_TYPE,
 } from '../constants';
 
 function ExportSettings({
@@ -39,7 +39,7 @@ function ExportSettings({
 		if (action === 'update') {
 			if (selectedExternalTypeOption === CSV_FORMAT.toUpperCase()) {
 				return internalClassNameKeyInitialOptions.filter(
-					(item) => item.value !== OBJECT_DEFINITION_ENTITY_TYPE
+					(item) => !DISALLOWED_CSV_ENTITY_TYPES.includes(item.value)
 				);
 			}
 			else {

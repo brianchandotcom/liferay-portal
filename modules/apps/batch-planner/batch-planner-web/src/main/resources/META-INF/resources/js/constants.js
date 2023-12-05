@@ -9,6 +9,9 @@ export const EXPORT_FILE_NAME = 'Export.zip';
 export const FILE_EXTENSION_EVENT = 'file-extension';
 export const FILE_EXTENSION_INPUT_PARTIAL_NAME = 'externalType';
 export const FILE_SCHEMA_EVENT = 'file-schema';
+export const DISALLOWED_CSV_ENTITY_TYPES = [
+	'com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition',
+];
 
 export const HEADERS = new Headers({
 	'Accept': 'application/json',

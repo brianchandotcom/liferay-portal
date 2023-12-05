@@ -10,8 +10,8 @@ import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useState} from 'react';
 
 import {
+	DISALLOWED_CSV_ENTITY_TYPES,
 	EXPORT_FILE_FORMAT_SELECTED_EVENT,
-	OBJECT_DEFINITION_ENTITY_TYPE,
 	SCHEMA_SELECTED_EVENT,
 } from '../constants';
 import ExportModal from './ExportModal';
@@ -58,7 +58,7 @@ function Export({
 		}) => {
 			if (
 				selectedExportFileFormat === 'CSV' &&
-				selectedSchema === OBJECT_DEFINITION_ENTITY_TYPE
+				DISALLOWED_CSV_ENTITY_TYPES.includes(selectedSchema)
 			) {
 				setDisable(true);
 			}

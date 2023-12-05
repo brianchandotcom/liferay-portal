@@ -8,8 +8,8 @@ import React, {useEffect, useReducer} from 'react';
 
 import {
 	CSV_FORMAT,
+	DISALLOWED_CSV_ENTITY_TYPES,
 	FILE_EXTENSION_EVENT,
-	OBJECT_DEFINITION_ENTITY_TYPE,
 } from '../constants';
 
 function ImportEntityType({
@@ -25,7 +25,7 @@ function ImportEntityType({
 	] = useReducer((state, fileExtension) => {
 		if (fileExtension === CSV_FORMAT) {
 			return internalClassNameKeyInitialOptions.filter(
-				(item) => item.value !== OBJECT_DEFINITION_ENTITY_TYPE
+				(item) => !DISALLOWED_CSV_ENTITY_TYPES.includes(item.value)
 			);
 		}
 		else {

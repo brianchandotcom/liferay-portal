@@ -68,8 +68,7 @@ public class AnalyticsConfigurationModelListener
 			properties.put(
 				"previousSyncedAccountGroupIds", syncedAccountGroupIds);
 		}
-
-		if (analyticsConfiguration.syncAllAccounts()) {
+		else if (analyticsConfiguration.syncAllAccounts()) {
 			properties.put("previousSyncedAccountGroupIds", new String[0]);
 		}
 
@@ -108,8 +107,7 @@ public class AnalyticsConfigurationModelListener
 			properties.put(
 				"previousSyncedOrganizationIds", syncedOrganizationIds);
 		}
-
-		if (analyticsConfiguration.syncAllContacts()) {
+		else if (analyticsConfiguration.syncAllContacts()) {
 			properties.put("previousSyncedOrganizationIds", new String[0]);
 		}
 
@@ -137,8 +135,7 @@ public class AnalyticsConfigurationModelListener
 
 			properties.put("previousSyncedUserGroupIds", syncedUserGroupIds);
 		}
-
-		if (analyticsConfiguration.syncAllContacts()) {
+		else if (analyticsConfiguration.syncAllContacts()) {
 			properties.put("previousSyncedUserGroupIds", new String[0]);
 		}
 

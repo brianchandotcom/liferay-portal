@@ -339,7 +339,7 @@ public interface UserResource {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-			httpInvoker.body(user.toString(), "application/json");
+			httpInvoker.body(user.toString(), "application/scim+json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -431,7 +431,8 @@ public interface UserResource {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-			httpInvoker.body(queryAttributes.toString(), "application/json");
+			httpInvoker.body(
+				queryAttributes.toString(), "application/scim+json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -710,7 +711,7 @@ public interface UserResource {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-			httpInvoker.body(user.toString(), "application/json");
+			httpInvoker.body(user.toString(), "application/scim+json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(

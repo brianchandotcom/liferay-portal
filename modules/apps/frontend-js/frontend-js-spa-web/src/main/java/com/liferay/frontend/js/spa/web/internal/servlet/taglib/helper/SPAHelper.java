@@ -260,17 +260,13 @@ public class SPAHelper {
 
 	private JSONArray _getExcludedTargetPortletsJSONArray() {
 		return _jsonFactory.createJSONArray(
-			_SPA_DEFAULT_EXCLUDED_TARGET_PORTLETS);
+			new String[] {PortletKeys.USERS_ADMIN, PortletKeys.SERVER_ADMIN});
 	}
 
 	private static final String _REDIRECT_PARAM_NAME;
 
 	private static final String[] _SPA_DEFAULT_EXCLUDED_PATHS = {
 		"/c/document_library", "/documents", "/image"
-	};
-
-	private static final String[] _SPA_DEFAULT_EXCLUDED_TARGET_PORTLETS = {
-		PortletKeys.USERS_ADMIN, PortletKeys.SERVER_ADMIN
 	};
 
 	private static final String _SPA_NAVIGATION_EXCEPTION_SELECTOR_KEY =

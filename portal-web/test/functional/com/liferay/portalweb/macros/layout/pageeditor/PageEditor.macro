@@ -1970,6 +1970,17 @@ definition {
 		Confirm.dismissAlert();
 	}
 
+	@summary = "Delete the page rule"
+	macro deletePageRule(ruleName = null) {
+		Click(
+			key_ruleName = ${ruleName},
+			locator1 = "PageEditor#PAGE_RULE_LIST_ITEM_ELLIPSIS");
+
+		DropdownMenuItem.click(menuItem = "Delete");
+
+		Alert.viewSuccessMessage();
+	}
+
 	@summary = "Default summary"
 	macro deprioritizeExperience(experienceName = null) {
 		var key_experienceName = ${experienceName};

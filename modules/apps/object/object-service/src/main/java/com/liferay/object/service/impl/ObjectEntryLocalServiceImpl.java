@@ -275,7 +275,6 @@ public class ObjectEntryLocalServiceImpl
 
 		ObjectEntry objectEntry = objectEntryPersistence.create(objectEntryId);
 
-
 		objectEntry.setGroupId(groupId);
 		objectEntry.setCompanyId(user.getCompanyId());
 		objectEntry.setUserId(user.getUserId());
@@ -284,7 +283,6 @@ public class ObjectEntryLocalServiceImpl
 		objectEntry.setObjectDefinitionId(objectDefinitionId);
 
 		_setExternalReferenceCode(objectEntry, values);
-
 		_setRootObjectEntryId(objectDefinition, objectEntry, values);
 
 		objectEntry.setStatus(WorkflowConstants.STATUS_DRAFT);

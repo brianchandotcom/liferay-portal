@@ -13,7 +13,7 @@ import React, {useEffect, useState} from 'react';
 
 const DIFFERENCE_IN_YEARS = 1;
 
-export function isValidDate(dateString) {
+export function isValidDate(dateString, userTimeZone) {
 
 	// Regular expression for the 'yyyy-MM-dd HH:mm' format
 
@@ -28,7 +28,9 @@ export function isValidDate(dateString) {
 		.match(dateRegex);
 	const date = new Date(year, month - 1, day, hour, minute);
 
-	const currenDate = new Date();
+	const currenDate = new Date(
+		new Date().toLocaleString('en-US', {timeZone: userTimeZone})
+	);
 
 	if (date <= currenDate) {
 		return false;
@@ -72,8 +74,10 @@ export default function ScheduleModal({
 	const currentYear = new Date().getFullYear();
 
 	useEffect(() => {
-		setInvalidDate(displayDate !== '' && !isValidDate(displayDate));
-	}, [displayDate]);
+		setInvalidDate(
+			displayDate !== '' && !isValidDate(displayDate, timeZone)
+		);
+	}, [displayDate, timeZone]);
 
 	return (
 		<ClayModal observer={observer} size="md">

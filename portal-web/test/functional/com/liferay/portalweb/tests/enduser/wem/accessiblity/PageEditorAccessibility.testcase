@@ -799,6 +799,33 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-196462. The New Rule Modal complies with WCAG 2.1 AA standard."
+	@priority = 2
+	test ViewAccessibilityOfNewRuleModal {
+		property custom.properties = "feature.flag.LPS-169837=true";
+
+		task ("Given a page designer has a Button fragment on a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = ${randomSiteName});
+		}
+
+		task ("When the page designer opens the New Rule modal") {
+			PageEditor.gotoTab(tabName = "Page Rules");
+
+			Button.click(button = "New Rule");
+		}
+
+		task ("Then the New Rule modal should have correct accessibility") {
+			AssertElementAccessible(locator1 = "Modal#MODAL_CONTENT");
+		}
+	}
+
 	@description = "This is a test for LPS-165288. The Page Design Options panel should have correct accessibility."
 	@priority = 3
 	test ViewAccessibilityOfPageDesignOptionsPanel {

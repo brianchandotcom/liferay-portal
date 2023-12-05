@@ -178,6 +178,10 @@ definition {
 			ObjectExportImport.importObject(
 				objectName = "CustomObject187390",
 				tempFile = "true");
+
+			WaitForVisible(
+				key_labelName = "Custom Object 187390",
+				locator1 = "CreateObject#VIEW_OBJECT");
 		}
 
 		task ("When the user creates an object entry with each field type filled") {

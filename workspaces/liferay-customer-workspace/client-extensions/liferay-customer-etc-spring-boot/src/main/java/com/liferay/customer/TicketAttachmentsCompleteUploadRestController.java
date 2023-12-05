@@ -48,8 +48,19 @@ public class TicketAttachmentsCompleteUploadRestController
 		throws Exception {
 
 		try {
+			String emailAddress = null;
+
+			String grantType = jwt.getClaimAsString("grant_type");
+
+			if (grantType.equals("authorization_code")) {
+				emailAddress = jwt.getClaimAsString("username");
+			}
+			else {
+				emailAddress = _zendeskAPIEmailAddress;
+			}
+
 			ZendeskUser zendeskUser = _zendeskWebService.fetchZendeskUser(
-				jwt.getClaimAsString("username"));
+				emailAddress);
 
 			if (zendeskUser == null) {
 				return new ResponseEntity<>(
@@ -103,9 +114,9 @@ public class TicketAttachmentsCompleteUploadRestController
 		}
 
 		sb.append("<a href=\"");
-		sb.append(_lxcDXPServerProtocol);
+		sb.append(lxcDXPServerProtocol);
 		sb.append("://");
-		sb.append(_lxcDXPMainDomain);
+		sb.append(lxcDXPMainDomain);
 		sb.append("/placeholder/");
 		sb.append(ticketAttachment.getTicketAttachmentId());
 		sb.append("\">");
@@ -118,14 +129,11 @@ public class TicketAttachmentsCompleteUploadRestController
 	private static final Log _log = LogFactory.getLog(
 		TicketAttachmentsCompleteUploadRestController.class);
 
-	@Value("${com.liferay.lxc.dxp.mainDomain}")
-	private String _lxcDXPMainDomain;
-
-	@Value("${com.liferay.lxc.dxp.server.protocol}")
-	private String _lxcDXPServerProtocol;
-
 	@Autowired
 	private TicketAttachmentWebService _ticketAttachmentWebService;
+
+	@Value("${liferay.customer.zendesk.api.email.address}")
+	private String _zendeskAPIEmailAddress;
 
 	@Autowired
 	private ZendeskWebService _zendeskWebService;

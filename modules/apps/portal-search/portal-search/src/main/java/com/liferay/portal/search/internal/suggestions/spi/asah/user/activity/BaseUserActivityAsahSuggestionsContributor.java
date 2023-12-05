@@ -94,47 +94,52 @@ public abstract class BaseUserActivityAsahSuggestionsContributor
 		long minCounts, int page, String path, int rangeKey, int size,
 		String sort) {
 
-		StringBundler sb = new StringBundler(22);
+		StringBundler sb = new StringBundler(28);
 
 		sb.append(analyticsConfiguration.liferayAnalyticsFaroBackendURL());
 		sb.append("/api/1.0/");
 		sb.append(basePath);
 		sb.append("/");
-
 		sb.append(path);
 		sb.append("?");
 
-		if (minCounts > 0) {
-			sb.append("&minCounts=");
-			sb.append(minCounts);
-		}
-
 		if (!Validator.isBlank(contentType)) {
-			sb.append("&contentType=");
+			sb.append("contentType=");
 			sb.append(contentType);
+			sb.append("&");
 		}
 
 		if (!Validator.isBlank(displayLanguageId)) {
-			sb.append("&displayLanguageId=");
+			sb.append("displayLanguageId=");
 			sb.append(displayLanguageId);
+			sb.append("&");
 		}
 
 		if (groupId > 0) {
-			sb.append("&groupId=");
+			sb.append("groupId=");
 			sb.append(groupId);
+			sb.append("&");
+		}
+
+		if (minCounts > 0) {
+			sb.append("minCounts=");
+			sb.append(minCounts);
+			sb.append("&");
 		}
 
 		if (page > 0) {
-			sb.append("&page=");
+			sb.append("page=");
 			sb.append(page);
+			sb.append("&");
 		}
 
 		if (rangeKey != 7) {
-			sb.append("&rangeKey=");
+			sb.append("rangeKey=");
 			sb.append(rangeKey);
+			sb.append("&");
 		}
 
-		sb.append("&size=");
+		sb.append("size=");
 		sb.append(size);
 		sb.append("&sort=");
 		sb.append(sort);

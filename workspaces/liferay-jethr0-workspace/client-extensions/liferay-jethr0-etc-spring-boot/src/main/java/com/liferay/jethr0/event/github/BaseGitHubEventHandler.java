@@ -115,6 +115,17 @@ public abstract class BaseGitHubEventHandler extends BaseEventHandler {
 			return _gitHubPullRequest;
 		}
 
+		JSONObject messageJSONObject = getMessageJSONObject();
+
+		JSONObject pullRequestJSONObject = messageJSONObject.optJSONObject(
+			"pull_request");
+
+		if (pullRequestJSONObject != null) {
+			_gitHubPullRequest = new GitHubPullRequest(pullRequestJSONObject);
+
+			return _gitHubPullRequest;
+		}
+
 		GitHubIssue gitHubIssue = getGitHubIssue();
 
 		GitHubClient gitHubClient = getGitHubClient();

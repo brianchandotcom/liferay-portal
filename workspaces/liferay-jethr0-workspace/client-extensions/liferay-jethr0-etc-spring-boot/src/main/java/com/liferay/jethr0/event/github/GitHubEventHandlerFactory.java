@@ -24,6 +24,8 @@ public class GitHubEventHandlerFactory extends BaseEventHandlerFactory {
 	public EventHandler newEventHandler(JSONObject messageJSONObject)
 		throws IllegalArgumentException {
 
+		EventHandlerContext eventHandlerContext = getEventHandlerContext();
+
 		String action = messageJSONObject.optString("action");
 
 		if (!StringUtil.isNullOrEmpty(action)) {
@@ -32,9 +34,6 @@ public class GitHubEventHandlerFactory extends BaseEventHandlerFactory {
 					"comment");
 
 				if (commentJSONObject != null) {
-					EventHandlerContext eventHandlerContext =
-						getEventHandlerContext();
-
 					String body = commentJSONObject.getString("body");
 
 					if (body.startsWith("ci:help")) {
@@ -50,6 +49,15 @@ public class GitHubEventHandlerFactory extends BaseEventHandlerFactory {
 						"Invalid \"body\" from comment JSON");
 				}
 			}
+			else if (action.equals("opened")) {
+				JSONObject pullRequestJSONObject =
+					messageJSONObject.optJSONObject("pull_request");
+
+				if (pullRequestJSONObject != null) {
+					return new OpenPullRequestEventHandler(
+						eventHandlerContext, messageJSONObject);
+				}
+			}
 
 			throw new IllegalArgumentException(
 				"Invalid \"action\" from message JSON");
@@ -59,7 +67,7 @@ public class GitHubEventHandlerFactory extends BaseEventHandlerFactory {
 
 		if (pusherJSONObject != null) {
 			return new PusherGitHubEventHandler(
-				getEventHandlerContext(), messageJSONObject);
+				eventHandlerContext, messageJSONObject);
 		}
 
 		throw new IllegalArgumentException("Invalid message JSON");

@@ -25,6 +25,7 @@ UpgradeJavaMultiVMPoolUtilCheck | [Upgrade](upgrade_checks.markdown#upgrade-chec
 UpgradeJavaPortletIdMethodCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Replace the 'document.get(Field.PORTLET_ID)' by the new interface 'PortletProviderUtil.getPortletId' |
 UpgradeJavaPortletSharedSearchSettingsCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Replaces the Optional return type of the methods `getParameterValues` and `getPortletPreferences` of `PortletSharedSearchSettings` class |
 UpgradeJavaSchedulerEntryImplConstructorCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Replace constructors that use the empty constructor of the SchedulerEntryImpl class. |
+UpgradeJavaScreenContributorClassCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Replace class `PortalSettingsConfigurationScreenContributor` by `ConfigurationScreenWrapper` and create an inner class |
 UpgradeJavaServiceReferenceAnnotationCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Run code migration to replace '@ServiceReference' by '@Reference' |
 UpgradeJavaStorageTypeAwareCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Run code to delete StorageTypeAware interface |
 UpgradePortletFTLCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Include the CSS classes 'cadmin' and include for impression of 'right cadmin' in 'portlet.ftl' file |

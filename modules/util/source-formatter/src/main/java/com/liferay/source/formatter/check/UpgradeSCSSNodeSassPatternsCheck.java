@@ -8,6 +8,7 @@ package com.liferay.source.formatter.check;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
+import com.liferay.portal.tools.ToolsUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -28,6 +29,10 @@ public class UpgradeSCSSNodeSassPatternsCheck extends BaseUpgradeCheck {
 		boolean replaced = false;
 
 		while (divisionMatcher.find()) {
+			if (ToolsUtil.isInsideQuotes(content, divisionMatcher.start())) {
+				continue;
+			}
+
 			StringBuilder sb = new StringBuilder();
 
 			sb.append("math.div(");
@@ -98,7 +103,7 @@ public class UpgradeSCSSNodeSassPatternsCheck extends BaseUpgradeCheck {
 	}
 
 	private static final Pattern _divisionPattern = Pattern.compile(
-		"(\\$\\w+|[0-9.]+)\\s*\\/\\s*(\\$\\w+|[0-9.]+)");
+		"(\\$\\w+|[0-9]+[.]*[0-9]*)\\s*\\/\\s*(\\$\\w+|[0-9]+[.]*[0-9]*)");
 	private static final Pattern _interpolationPattern = Pattern.compile(
 		"([\\w-\\.]+)\\#\\{([\\w\\.\\$\\(\\), \\&]+)" +
 			"\\}([\\w-\\.\\#\\{\\.\\$\\}]*)");

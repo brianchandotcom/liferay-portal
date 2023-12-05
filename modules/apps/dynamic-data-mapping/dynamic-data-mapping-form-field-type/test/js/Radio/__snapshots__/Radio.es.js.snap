@@ -11,48 +11,52 @@ exports[`Field Radio has a helptext 1`] = `
       class="ddm__radio"
     >
       <div
-        class="custom-control custom-radio custom-control-outside"
+        class=""
       >
-        <label>
-          <input
-            class="custom-control-input"
-            name="radioField_0"
-            role="radio"
-            type="radio"
-            value="option1"
-          />
-          <span
-            class="custom-control-label"
-          >
+        <div
+          class="custom-control custom-radio custom-control-outside"
+          data-checked="false"
+        >
+          <label>
+            <input
+              class="custom-control-input"
+              role="radio"
+              type="radio"
+              value="option1"
+            />
             <span
-              class="custom-control-label-text"
+              class="custom-control-label"
             >
-              Option 1
+              <span
+                class="custom-control-label-text"
+              >
+                Option 1
+              </span>
             </span>
-          </span>
-        </label>
-      </div>
-      <div
-        class="custom-control custom-radio custom-control-outside"
-      >
-        <label>
-          <input
-            class="custom-control-input"
-            name="radioField_1"
-            role="radio"
-            type="radio"
-            value="option2"
-          />
-          <span
-            class="custom-control-label"
-          >
+          </label>
+        </div>
+        <div
+          class="custom-control custom-radio custom-control-outside"
+          data-checked="false"
+        >
+          <label>
+            <input
+              class="custom-control-input"
+              role="radio"
+              type="radio"
+              value="option2"
+            />
             <span
-              class="custom-control-label-text"
+              class="custom-control-label"
             >
-              Option 2
+              <span
+                class="custom-control-label-text"
+              >
+                Option 2
+              </span>
             </span>
-          </span>
-        </label>
+          </label>
+        </div>
       </div>
     </div>
     <input
@@ -101,48 +105,52 @@ exports[`Field Radio has a label 1`] = `
       class="ddm__radio"
     >
       <div
-        class="custom-control custom-radio custom-control-outside"
+        class=""
       >
-        <label>
-          <input
-            class="custom-control-input"
-            name="radioField_0"
-            role="radio"
-            type="radio"
-            value="option1"
-          />
-          <span
-            class="custom-control-label"
-          >
+        <div
+          class="custom-control custom-radio custom-control-outside"
+          data-checked="false"
+        >
+          <label>
+            <input
+              class="custom-control-input"
+              role="radio"
+              type="radio"
+              value="option1"
+            />
             <span
-              class="custom-control-label-text"
+              class="custom-control-label"
             >
-              Option 1
+              <span
+                class="custom-control-label-text"
+              >
+                Option 1
+              </span>
             </span>
-          </span>
-        </label>
-      </div>
-      <div
-        class="custom-control custom-radio custom-control-outside"
-      >
-        <label>
-          <input
-            class="custom-control-input"
-            name="radioField_1"
-            role="radio"
-            type="radio"
-            value="option2"
-          />
-          <span
-            class="custom-control-label"
-          >
+          </label>
+        </div>
+        <div
+          class="custom-control custom-radio custom-control-outside"
+          data-checked="false"
+        >
+          <label>
+            <input
+              class="custom-control-input"
+              role="radio"
+              type="radio"
+              value="option2"
+            />
             <span
-              class="custom-control-label-text"
+              class="custom-control-label"
             >
-              Option 2
+              <span
+                class="custom-control-label-text"
+              >
+                Option 2
+              </span>
             </span>
-          </span>
-        </label>
+          </label>
+        </div>
       </div>
     </div>
     <input
@@ -176,48 +184,52 @@ exports[`Field Radio has a placeholder 1`] = `
       class="ddm__radio"
     >
       <div
-        class="custom-control custom-radio custom-control-outside"
+        class=""
       >
-        <label>
-          <input
-            class="custom-control-input"
-            name="radioField_0"
-            role="radio"
-            type="radio"
-            value="option1"
-          />
-          <span
-            class="custom-control-label"
-          >
+        <div
+          class="custom-control custom-radio custom-control-outside"
+          data-checked="false"
+        >
+          <label>
+            <input
+              class="custom-control-input"
+              role="radio"
+              type="radio"
+              value="option1"
+            />
             <span
-              class="custom-control-label-text"
+              class="custom-control-label"
             >
-              Option 1
+              <span
+                class="custom-control-label-text"
+              >
+                Option 1
+              </span>
             </span>
-          </span>
-        </label>
-      </div>
-      <div
-        class="custom-control custom-radio custom-control-outside"
-      >
-        <label>
-          <input
-            class="custom-control-input"
-            name="radioField_1"
-            role="radio"
-            type="radio"
-            value="option2"
-          />
-          <span
-            class="custom-control-label"
-          >
+          </label>
+        </div>
+        <div
+          class="custom-control custom-radio custom-control-outside"
+          data-checked="false"
+        >
+          <label>
+            <input
+              class="custom-control-input"
+              role="radio"
+              type="radio"
+              value="option2"
+            />
             <span
-              class="custom-control-label-text"
+              class="custom-control-label"
             >
-              Option 2
+              <span
+                class="custom-control-label-text"
+              >
+                Option 2
+              </span>
             </span>
-          </span>
-        </label>
+          </label>
+        </div>
       </div>
     </div>
     <input
@@ -245,48 +257,52 @@ exports[`Field Radio has a value 1`] = `
       class="ddm__radio"
     >
       <div
-        class="custom-control custom-radio custom-control-outside"
+        class=""
       >
-        <label>
-          <input
-            class="custom-control-input"
-            name="radioField_0"
-            role="radio"
-            type="radio"
-            value="option1"
-          />
-          <span
-            class="custom-control-label"
-          >
+        <div
+          class="custom-control custom-radio custom-control-outside"
+          data-checked="false"
+        >
+          <label>
+            <input
+              class="custom-control-input"
+              role="radio"
+              type="radio"
+              value="option1"
+            />
             <span
-              class="custom-control-label-text"
+              class="custom-control-label"
             >
-              Option 1
+              <span
+                class="custom-control-label-text"
+              >
+                Option 1
+              </span>
             </span>
-          </span>
-        </label>
-      </div>
-      <div
-        class="custom-control custom-radio custom-control-outside"
-      >
-        <label>
-          <input
-            class="custom-control-input"
-            name="radioField_1"
-            role="radio"
-            type="radio"
-            value="option2"
-          />
-          <span
-            class="custom-control-label"
-          >
+          </label>
+        </div>
+        <div
+          class="custom-control custom-radio custom-control-outside"
+          data-checked="false"
+        >
+          <label>
+            <input
+              class="custom-control-input"
+              role="radio"
+              type="radio"
+              value="option2"
+            />
             <span
-              class="custom-control-label-text"
+              class="custom-control-label"
             >
-              Option 2
+              <span
+                class="custom-control-label-text"
+              >
+                Option 2
+              </span>
             </span>
-          </span>
-        </label>
+          </label>
+        </div>
       </div>
     </div>
     <input
@@ -314,48 +330,52 @@ exports[`Field Radio has an id 1`] = `
       class="ddm__radio"
     >
       <div
-        class="custom-control custom-radio custom-control-outside"
+        class=""
       >
-        <label>
-          <input
-            class="custom-control-input"
-            name="radioField_0"
-            role="radio"
-            type="radio"
-            value="option1"
-          />
-          <span
-            class="custom-control-label"
-          >
+        <div
+          class="custom-control custom-radio custom-control-outside"
+          data-checked="false"
+        >
+          <label>
+            <input
+              class="custom-control-input"
+              role="radio"
+              type="radio"
+              value="option1"
+            />
             <span
-              class="custom-control-label-text"
+              class="custom-control-label"
             >
-              Option 1
+              <span
+                class="custom-control-label-text"
+              >
+                Option 1
+              </span>
             </span>
-          </span>
-        </label>
-      </div>
-      <div
-        class="custom-control custom-radio custom-control-outside"
-      >
-        <label>
-          <input
-            class="custom-control-input"
-            name="radioField_1"
-            role="radio"
-            type="radio"
-            value="option2"
-          />
-          <span
-            class="custom-control-label"
-          >
+          </label>
+        </div>
+        <div
+          class="custom-control custom-radio custom-control-outside"
+          data-checked="false"
+        >
+          <label>
+            <input
+              class="custom-control-input"
+              role="radio"
+              type="radio"
+              value="option2"
+            />
             <span
-              class="custom-control-label-text"
+              class="custom-control-label"
             >
-              Option 2
+              <span
+                class="custom-control-label-text"
+              >
+                Option 2
+              </span>
             </span>
-          </span>
-        </label>
+          </label>
+        </div>
       </div>
     </div>
     <input
@@ -383,50 +403,54 @@ exports[`Field Radio is not editable 1`] = `
       class="ddm__radio"
     >
       <div
-        class="custom-control custom-radio custom-control-outside"
+        class=""
       >
-        <label>
-          <input
-            class="custom-control-input"
-            disabled=""
-            name="radioField_0"
-            role="radio"
-            type="radio"
-            value="option1"
-          />
-          <span
-            class="custom-control-label"
-          >
+        <div
+          class="custom-control custom-radio custom-control-outside"
+          data-checked="false"
+        >
+          <label>
+            <input
+              class="custom-control-input"
+              disabled=""
+              role="radio"
+              type="radio"
+              value="option1"
+            />
             <span
-              class="custom-control-label-text"
+              class="custom-control-label"
             >
-              Option 1
+              <span
+                class="custom-control-label-text"
+              >
+                Option 1
+              </span>
             </span>
-          </span>
-        </label>
-      </div>
-      <div
-        class="custom-control custom-radio custom-control-outside"
-      >
-        <label>
-          <input
-            class="custom-control-input"
-            disabled=""
-            name="radioField_1"
-            role="radio"
-            type="radio"
-            value="option2"
-          />
-          <span
-            class="custom-control-label"
-          >
+          </label>
+        </div>
+        <div
+          class="custom-control custom-radio custom-control-outside"
+          data-checked="false"
+        >
+          <label>
+            <input
+              class="custom-control-input"
+              disabled=""
+              role="radio"
+              type="radio"
+              value="option2"
+            />
             <span
-              class="custom-control-label-text"
+              class="custom-control-label"
             >
-              Option 2
+              <span
+                class="custom-control-label-text"
+              >
+                Option 2
+              </span>
             </span>
-          </span>
-        </label>
+          </label>
+        </div>
       </div>
     </div>
     <input
@@ -454,50 +478,54 @@ exports[`Field Radio is not required 1`] = `
       class="ddm__radio"
     >
       <div
-        class="custom-control custom-radio custom-control-outside"
+        class=""
       >
-        <label>
-          <input
-            aria-required="false"
-            class="custom-control-input"
-            name="radioField_0"
-            role="radio"
-            type="radio"
-            value="option1"
-          />
-          <span
-            class="custom-control-label"
-          >
+        <div
+          class="custom-control custom-radio custom-control-outside"
+          data-checked="false"
+        >
+          <label>
+            <input
+              aria-required="false"
+              class="custom-control-input"
+              role="radio"
+              type="radio"
+              value="option1"
+            />
             <span
-              class="custom-control-label-text"
+              class="custom-control-label"
             >
-              Option 1
+              <span
+                class="custom-control-label-text"
+              >
+                Option 1
+              </span>
             </span>
-          </span>
-        </label>
-      </div>
-      <div
-        class="custom-control custom-radio custom-control-outside"
-      >
-        <label>
-          <input
-            aria-required="false"
-            class="custom-control-input"
-            name="radioField_1"
-            role="radio"
-            type="radio"
-            value="option2"
-          />
-          <span
-            class="custom-control-label"
-          >
+          </label>
+        </div>
+        <div
+          class="custom-control custom-radio custom-control-outside"
+          data-checked="false"
+        >
+          <label>
+            <input
+              aria-required="false"
+              class="custom-control-input"
+              role="radio"
+              type="radio"
+              value="option2"
+            />
             <span
-              class="custom-control-label-text"
+              class="custom-control-label"
             >
-              Option 2
+              <span
+                class="custom-control-label-text"
+              >
+                Option 2
+              </span>
             </span>
-          </span>
-        </label>
+          </label>
+        </div>
       </div>
     </div>
     <input
@@ -530,48 +558,52 @@ exports[`Field Radio renders Label if showLabel is true 1`] = `
       class="ddm__radio"
     >
       <div
-        class="custom-control custom-radio custom-control-outside"
+        class=""
       >
-        <label>
-          <input
-            class="custom-control-input"
-            name="radioField_0"
-            role="radio"
-            type="radio"
-            value="option1"
-          />
-          <span
-            class="custom-control-label"
-          >
+        <div
+          class="custom-control custom-radio custom-control-outside"
+          data-checked="false"
+        >
+          <label>
+            <input
+              class="custom-control-input"
+              role="radio"
+              type="radio"
+              value="option1"
+            />
             <span
-              class="custom-control-label-text"
+              class="custom-control-label"
             >
-              Option 1
+              <span
+                class="custom-control-label-text"
+              >
+                Option 1
+              </span>
             </span>
-          </span>
-        </label>
-      </div>
-      <div
-        class="custom-control custom-radio custom-control-outside"
-      >
-        <label>
-          <input
-            class="custom-control-input"
-            name="radioField_1"
-            role="radio"
-            type="radio"
-            value="option2"
-          />
-          <span
-            class="custom-control-label"
-          >
+          </label>
+        </div>
+        <div
+          class="custom-control custom-radio custom-control-outside"
+          data-checked="false"
+        >
+          <label>
+            <input
+              class="custom-control-input"
+              role="radio"
+              type="radio"
+              value="option2"
+            />
             <span
-              class="custom-control-label-text"
+              class="custom-control-label"
             >
-              Option 2
+              <span
+                class="custom-control-label-text"
+              >
+                Option 2
+              </span>
             </span>
-          </span>
-        </label>
+          </label>
+        </div>
       </div>
     </div>
     <input
@@ -603,7 +635,11 @@ exports[`Field Radio renders no options when options is empty 1`] = `
   >
     <div
       class="ddm__radio"
-    />
+    >
+      <div
+        class=""
+      />
+    </div>
     <input
       name="radioField"
       type="hidden"
@@ -629,48 +665,52 @@ exports[`Field Radio renders options 1`] = `
       class="ddm__radio"
     >
       <div
-        class="custom-control custom-radio custom-control-outside"
+        class=""
       >
-        <label>
-          <input
-            class="custom-control-input"
-            name="radioField_0"
-            role="radio"
-            type="radio"
-            value="item"
-          />
-          <span
-            class="custom-control-label"
-          >
+        <div
+          class="custom-control custom-radio custom-control-outside"
+          data-checked="false"
+        >
+          <label>
+            <input
+              class="custom-control-input"
+              role="radio"
+              type="radio"
+              value="item"
+            />
             <span
-              class="custom-control-label-text"
+              class="custom-control-label"
             >
-              label
+              <span
+                class="custom-control-label-text"
+              >
+                label
+              </span>
             </span>
-          </span>
-        </label>
-      </div>
-      <div
-        class="custom-control custom-radio custom-control-outside"
-      >
-        <label>
-          <input
-            class="custom-control-input"
-            name="radioField_1"
-            role="radio"
-            type="radio"
-            value="item2"
-          />
-          <span
-            class="custom-control-label"
-          >
+          </label>
+        </div>
+        <div
+          class="custom-control custom-radio custom-control-outside"
+          data-checked="false"
+        >
+          <label>
+            <input
+              class="custom-control-input"
+              role="radio"
+              type="radio"
+              value="item2"
+            />
             <span
-              class="custom-control-label-text"
+              class="custom-control-label"
             >
-              label2
+              <span
+                class="custom-control-label-text"
+              >
+                label2
+              </span>
             </span>
-          </span>
-        </label>
+          </label>
+        </div>
       </div>
     </div>
     <input

@@ -121,10 +121,29 @@ public class GetSitesMVCResourceCommand implements MVCResourceCommand {
 				return 0;
 			});
 
+		int pageSize = ParamUtil.getInteger(resourceRequest, "pageSize");
+		int totalCount = allGroups.size();
+
+		int lastPage = (int)Math.ceil((double)totalCount / pageSize);
+
+		int page = ParamUtil.getInteger(resourceRequest, "page");
+
+		if (page > lastPage) {
+			page = lastPage;
+		}
+
+		int endPosition = pageSize * page;
+
+		int startPosition = endPosition - pageSize;
+
+		if (endPosition > totalCount) {
+			endPosition = totalCount;
+		}
+
 		return JSONUtil.put(
 			"items",
 			JSONUtil.toJSONArray(
-				allGroups,
+				allGroups.subList(startPosition, endPosition),
 				group -> JSONUtil.put(
 					"descriptiveName",
 					group.getDescriptiveName(themeDisplay.getLocale())
@@ -136,16 +155,13 @@ public class GetSitesMVCResourceCommand implements MVCResourceCommand {
 					"name", group.getName(themeDisplay.getLocale())
 				))
 		).put(
-			"lastPage",
-			(int)Math.ceil(
-				(double)allGroups.size() /
-					ParamUtil.getInteger(resourceRequest, "pageSize"))
+			"lastPage", lastPage
 		).put(
-			"page", ParamUtil.getInteger(resourceRequest, "page")
+			"page", page
 		).put(
-			"pageSize", ParamUtil.getInteger(resourceRequest, "pageSize")
+			"pageSize", pageSize
 		).put(
-			"totalCount", allGroups.size()
+			"totalCount", totalCount
 		);
 	}
 

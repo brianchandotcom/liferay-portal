@@ -35,7 +35,12 @@ public class GitHubPullRequest {
 		_headGitHubCommit = new GitHubCommit(headJSONObject);
 		_headGitHubRepository = new GitHubRepository(
 			headJSONObject.getJSONObject("repo"));
-		_headGitHubUser = new GitHubUser(headJSONObject.getJSONObject("user"));
+
+		_originGitHubUser = new GitHubUser(
+			headJSONObject.getJSONObject("user"));
+
+		_receiverGitHubUser = new GitHubUser(
+			baseJSONObject.getJSONObject("user"));
 
 		_senderGitHubUser = new GitHubUser(jsonObject.getJSONObject("user"));
 	}
@@ -67,16 +72,20 @@ public class GitHubPullRequest {
 				getHeadBranchName()));
 	}
 
-	public String getHeadUserName() {
-		return _headGitHubUser.getName();
-	}
-
 	public URL getHTMLURL() {
 		return StringUtil.toURL(_jsonObject.getString("html_url"));
 	}
 
-	public String getSenderUserName() {
-		return _senderGitHubUser.getName();
+	public GitHubUser getOriginGitHubUser() {
+		return _originGitHubUser;
+	}
+
+	public GitHubUser getReceiverGitHubUser() {
+		return _receiverGitHubUser;
+	}
+
+	public GitHubUser getSenderGitHubUser() {
+		return _senderGitHubUser;
 	}
 
 	public URL getUpstreamBranchURL() {
@@ -92,8 +101,9 @@ public class GitHubPullRequest {
 	private final String _headBranchName;
 	private final GitHubCommit _headGitHubCommit;
 	private final GitHubRepository _headGitHubRepository;
-	private final GitHubUser _headGitHubUser;
 	private final JSONObject _jsonObject;
+	private final GitHubUser _originGitHubUser;
+	private final GitHubUser _receiverGitHubUser;
 	private final GitHubUser _senderGitHubUser;
 
 }

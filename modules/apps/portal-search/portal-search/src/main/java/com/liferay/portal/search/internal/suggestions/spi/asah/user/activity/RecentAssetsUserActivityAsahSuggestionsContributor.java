@@ -20,6 +20,7 @@ import com.liferay.portal.search.spi.suggestions.SuggestionsContributor;
 import com.liferay.portal.search.suggestions.SuggestionsContributorResults;
 import com.liferay.portal.search.suggestions.spi.constants.AsahSuggestionsConstants;
 
+import java.util.Map;
 import java.util.HashMap;
 
 import org.osgi.service.component.annotations.Component;

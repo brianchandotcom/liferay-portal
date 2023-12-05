@@ -212,7 +212,7 @@
 </tr>
 <tr>
 	<td>FIELD_TARGET_LABEL_AND_BODY_OPTION</td>
-	<td>//div[contains(@class,'ddm-drag')]//div[contains(*,'${key_fieldName}')]/*/*/*/*/*/*[contains(text(),'${key_optionName}')]</td>
+	<td>//div[contains(@class,'ddm-drag')]//div[contains(@*,'${key_fieldName}')]//following-sibling::div[@class='ddm__radio']//descendant::div//descendant::span[text()='${key_optionName}']</td>
 	<td></td>
 </tr>
 <tr>
@@ -537,12 +537,12 @@
 
 <tr>
 	<td>RADIO_OPTION_LABEL</td>
-	<td>//label[contains(.,'${key_radioOption}')]/input[@type='radio' and contains(@name,'${key_fieldName}')]/../span | //div[@class='ddm-field']//*[text()='${key_fieldName}']/..//span[text()='${key_radioOption}']</td>
+	<td>//div[contains(@*,'${key_fieldName}')]//following-sibling::div[@class='ddm__radio']/descendant::span[text()='${key_radioOption}'] | //div[@*='${key_fieldName}']//div[contains(@*,'ddm__radio')]//descendant::span[text()='${key_radioOption}']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RADIO_OPTION_CHECKED</td>
-	<td>//label[contains(@*,'${key_radioOption}') or contains(.,'${key_radioOption}')]/input[@type='radio' and @checked="checked" and contains(@name,'${key_fieldName}')] | //label[contains(@*,'${key_radioOption}') or contains(.,'${key_radioOption}')]/input[@type='radio' and @checked="" and contains(@name,'${key_fieldName}')] | //fieldset//legend[text()='${key_fieldName}']/..//span[text()='${key_radioOption}']</td>
+	<td>//div[@*='${key_fieldName}']//div[contains(@*,'ddm__radio')]//div[@data-checked='true']//descendant::span[text()='${key_radioOption}']</td>
 	<td></td>
 </tr>
 <tr>

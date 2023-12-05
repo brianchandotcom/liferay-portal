@@ -385,6 +385,10 @@ definition {
 		task ("Enable and save configuration") {
 			FormFields.enableCheckbox(fieldName = "Enabled");
 
+			FormFields.selectSelectOption(
+				fieldName = "Token Location",
+				selectOption = "Request Header");
+
 			SystemSettings.saveConfiguration();
 
 			// The pause is necessary because it takes a while to load new configuration

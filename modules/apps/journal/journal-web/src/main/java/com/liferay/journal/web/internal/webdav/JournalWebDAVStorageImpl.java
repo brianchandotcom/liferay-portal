@@ -90,6 +90,11 @@ public class JournalWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 	}
 
 	@Override
+	public String getToken() {
+		return "journal";
+	}
+
+	@Override
 	public int putResource(WebDAVRequest webDAVRequest) throws WebDAVException {
 		return _ddmWebDAV.putResource(
 			webDAVRequest, getRootPath(), getToken(),

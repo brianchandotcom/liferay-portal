@@ -1036,6 +1036,7 @@ definition {
 	@priority = 3
 	test CanCreateActionUsingGroovyScripWithOnOrderStatusUpdate {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given an action in the Commerce Order object") {
 			ObjectAdmin.openObjectAdmin();
@@ -2998,6 +2999,7 @@ definition {
 	test CanUseExpressionWithGroovyScript {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given an object with a field is created") {
 			ObjectAdmin.addObjectViaAPI(

@@ -17,6 +17,7 @@ java.lang.Long dataLayoutId = GetterUtil.getLong(String.valueOf(request.getAttri
 java.lang.Long dataRecordId = GetterUtil.getLong(String.valueOf(request.getAttribute("liferay-data-engine:data-layout-renderer:dataRecordId")));
 java.util.Map<java.lang.String, java.lang.Object> dataRecordValues = (java.util.Map<java.lang.String, java.lang.Object>)request.getAttribute("liferay-data-engine:data-layout-renderer:dataRecordValues");
 java.lang.String defaultLanguageId = GetterUtil.getString((java.lang.String)request.getAttribute("liferay-data-engine:data-layout-renderer:defaultLanguageId"));
+java.lang.String displayType = GetterUtil.getString((java.lang.String)request.getAttribute("liferay-data-engine:data-layout-renderer:displayType"));
 java.lang.String languageId = GetterUtil.getString((java.lang.String)request.getAttribute("liferay-data-engine:data-layout-renderer:languageId"));
 java.lang.String namespace = GetterUtil.getString((java.lang.String)request.getAttribute("liferay-data-engine:data-layout-renderer:namespace"));
 boolean persistDefaultValues = GetterUtil.getBoolean(String.valueOf(request.getAttribute("liferay-data-engine:data-layout-renderer:persistDefaultValues")));

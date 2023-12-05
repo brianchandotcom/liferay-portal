@@ -53,6 +53,10 @@ public abstract class BaseDataLayoutRendererTag extends com.liferay.taglib.util.
 		return _defaultLanguageId;
 	}
 
+	public java.lang.String getDisplayType() {
+		return _displayType;
+	}
+
 	public java.lang.String getLanguageId() {
 		return _languageId;
 	}
@@ -105,6 +109,10 @@ public abstract class BaseDataLayoutRendererTag extends com.liferay.taglib.util.
 		_defaultLanguageId = defaultLanguageId;
 	}
 
+	public void setDisplayType(java.lang.String displayType) {
+		_displayType = displayType;
+	}
+
 	public void setLanguageId(java.lang.String languageId) {
 		_languageId = languageId;
 	}
@@ -147,6 +155,7 @@ public abstract class BaseDataLayoutRendererTag extends com.liferay.taglib.util.
 		_dataRecordId = null;
 		_dataRecordValues = null;
 		_defaultLanguageId = null;
+		_displayType = null;
 		_languageId = null;
 		_namespace = null;
 		_persistDefaultValues = false;
@@ -169,6 +178,7 @@ public abstract class BaseDataLayoutRendererTag extends com.liferay.taglib.util.
 		setNamespacedAttribute(request, "dataRecordId", _dataRecordId);
 		setNamespacedAttribute(request, "dataRecordValues", _dataRecordValues);
 		setNamespacedAttribute(request, "defaultLanguageId", _defaultLanguageId);
+		setNamespacedAttribute(request, "displayType", _displayType);
 		setNamespacedAttribute(request, "languageId", _languageId);
 		setNamespacedAttribute(request, "namespace", _namespace);
 		setNamespacedAttribute(request, "persistDefaultValues", _persistDefaultValues);
@@ -189,6 +199,7 @@ public abstract class BaseDataLayoutRendererTag extends com.liferay.taglib.util.
 	private java.lang.Long _dataRecordId = null;
 	private java.util.Map<java.lang.String, java.lang.Object> _dataRecordValues = null;
 	private java.lang.String _defaultLanguageId = null;
+	private java.lang.String _displayType = null;
 	private java.lang.String _languageId = null;
 	private java.lang.String _namespace = null;
 	private boolean _persistDefaultValues = false;

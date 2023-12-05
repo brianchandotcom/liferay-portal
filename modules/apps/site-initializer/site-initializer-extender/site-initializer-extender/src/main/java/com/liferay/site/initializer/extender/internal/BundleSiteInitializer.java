@@ -4366,6 +4366,14 @@ public class BundleSiteInitializer implements SiteInitializer {
 					accountBriefsJSONObject,
 					jsonObject.getString("emailAddress"), serviceContext);
 			}
+
+			userAccount = userAccountResource.getUserAccountByEmailAddress(
+				userAccount.getEmailAddress());
+
+			userAccount.setStatus(UserAccount.Status.INACTIVE);
+
+			userAccountResource.patchUserAccount(
+				userAccount.getId(), userAccount);
 		}
 	}
 

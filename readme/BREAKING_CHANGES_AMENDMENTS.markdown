@@ -1,3 +1,24 @@
+# 3aa30f7e03264d3798731f301853ec4f952c3637
+
+The commit message does not include the full path. The correct message should be:
+
+```
+COMMERCE-12579 Use new find method. Also rename hasDirectReplacement.
+
+# breaking
+ 
+## What modules/apps/commerce/commerce-product-content-api/src/main/java/com/liferay/commerce/product/content/helper/CPContentHelper.java
+
+modules/apps/commerce/commerce-product-content-api/src/main/java/com/liferay/commerce/product/content/helper/CPContentHelper.java has method hasDirectReplacement renamed to isDirectReplacement
+
+## Why
+
+The method now checks whether the sku is a replacement of another product rather than checking whether it has replacements
+
+```
+
+----
+
 # 1063732432e7a5e5d3cf782ec1652728ef053eb9
 
 On the message of the commit 1063732432e7a5e5d3cf782ec1652728ef053eb9 the file path is not the complete path:

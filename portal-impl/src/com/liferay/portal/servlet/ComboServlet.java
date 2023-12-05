@@ -45,10 +45,12 @@ import com.liferay.portlet.documentlibrary.constants.DLFriendlyURLConstants;
 import java.io.IOException;
 import java.io.Serializable;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -162,6 +164,12 @@ public class ComboServlet extends HttpServlet {
 			}
 			else {
 				name = modulePortletId.concat(name);
+			}
+
+			name = _canonicalizePath(name);
+
+			if (Validator.isNull(name)) {
+				continue;
 			}
 
 			modulePathsSet.add(name);
@@ -576,6 +584,36 @@ public class ComboServlet extends HttpServlet {
 		}
 
 		return validModuleExtension;
+	}
+
+	private String _canonicalizePath(String path) {
+		if (!path.contains(StringPool.PERIOD)) {
+			return path;
+		}
+
+		List<String> canonicalParts = new ArrayList<>();
+
+		String[] parts = StringUtil.split(path, StringPool.SLASH);
+
+		for (String part : parts) {
+			if (part.equals(StringPool.PERIOD)) {
+				continue;
+			}
+
+			if (part.equals(StringPool.DOUBLE_PERIOD)) {
+				if (canonicalParts.isEmpty()) {
+					return null;
+				}
+
+				canonicalParts.remove(canonicalParts.size() - 1);
+
+				continue;
+			}
+
+			canonicalParts.add(part);
+		}
+
+		return StringUtil.merge(canonicalParts, StringPool.SLASH);
 	}
 
 	private String _getModulePathExtension(String modulePath) {

@@ -210,6 +210,17 @@ public class ComboServletTest {
 	}
 
 	@Test
+	public void testServiceWithNoncanonicalPaths() throws Exception {
+		_testService(null, "/../js/aui.js", _portalServletContext);
+
+		_testService("/js/aui.js", "/./js/aui.js", _portalServletContext);
+
+		_testService("/js/aui.js", "/js/./aui.js", _portalServletContext);
+
+		_testService("/js/aui.js", "/js/down/../aui.js", _portalServletContext);
+	}
+
+	@Test
 	public void testServiceWithoutPortletIdButWithContext() throws Exception {
 		_testService(
 			"/js/javascript.js", "/portal/js/javascript.js",
@@ -391,7 +402,7 @@ public class ComboServletTest {
 			mockHttpServletRequest, new MockHttpServletResponse());
 
 		Mockito.verify(
-			servletContext
+			servletContext, Mockito.times((path == null) ? 0 : 1)
 		).getRequestDispatcher(
 			path
 		);

@@ -71,11 +71,24 @@ public interface AssetVocabulary extends AssetVocabularyModel, PersistedModel {
 	public boolean isAssociatedToClassNameIdAndClassTypePK(
 		long classNameId, long classTypePK);
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #isMissingRequiredCategory(long, long, long[], long)}
+	 */
+	@Deprecated
 	public boolean isMissingRequiredCategory(
 		long classNameId, long classTypePK, long[] categoryIds);
 
+	public boolean isMissingRequiredCategory(
+		long classNameId, long classTypePK, long[] categoryIds, long groupId);
+
 	public boolean isMultiValued();
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #isRequired(long, long, long)}
+	 */
+	@Deprecated
 	public boolean isRequired(long classNameId, long classTypePK);
+
+	public boolean isRequired(long classNameId, long classTypePK, long groupId);
 
 }

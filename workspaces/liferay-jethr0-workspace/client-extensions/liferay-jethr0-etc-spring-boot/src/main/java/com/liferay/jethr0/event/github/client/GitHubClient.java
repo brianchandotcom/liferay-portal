@@ -39,6 +39,22 @@ import org.springframework.web.reactive.function.client.WebClient;
 @Configuration
 public class GitHubClient {
 
+	public void closeGitHubIssue(GitHubIssue gitHubIssue) {
+		JSONObject requestJSONObject = new JSONObject();
+
+		requestJSONObject.put("state", "closed");
+
+		_requestPatch(gitHubIssue.getPullRequestAPIURL(), requestJSONObject);
+	}
+
+	public void closeGitHubPullRequest(GitHubPullRequest gitHubPullRequest) {
+		JSONObject requestJSONObject = new JSONObject();
+
+		requestJSONObject.put("state", "closed");
+
+		_requestPatch(gitHubPullRequest.getAPIURL(), requestJSONObject);
+	}
+
 	public GitHubComment createGitHubComment(
 		GitHubIssue gitHubIssue, String body) {
 
@@ -49,6 +65,19 @@ public class GitHubClient {
 		return new GitHubComment(
 			new JSONObject(
 				_requestPost(gitHubIssue.getCommentsURL(), requestJSONObject)));
+	}
+
+	public GitHubComment createGitHubComment(
+		GitHubPullRequest gitHubPullRequest, String body) {
+
+		JSONObject requestJSONObject = new JSONObject();
+
+		requestJSONObject.put("body", body);
+
+		return new GitHubComment(
+			new JSONObject(
+				_requestPost(
+					gitHubPullRequest.getCommentsURL(), requestJSONObject)));
 	}
 
 	public String getFileContent(
@@ -139,6 +168,51 @@ public class GitHubClient {
 					MediaType.APPLICATION_JSON
 				).header(
 					"Authorization", _getAuthorization()
+				).retrieve(
+				).bodyToMono(
+					String.class
+				).block();
+
+				if (response == null) {
+					throw new RuntimeException("No response");
+				}
+
+				return response;
+			}
+
+			@Override
+			protected String getRetryMessage(int retryCount) {
+				return StringUtil.combine(
+					"Unable to post to ", url, ". Retry attempt ", retryCount,
+					" of ", maxRetries);
+			}
+
+		};
+
+		return retryable.executeWithRetries();
+	}
+
+	private String _requestPatch(URL url, JSONObject requestJSONObject) {
+		String urlString = url.toString();
+
+		String gitHubURL = urlString.replaceAll(
+			"https://api\\.github\\.com", _gitHubProxyURL);
+
+		Retryable<String> retryable = new BaseRetryable<String>() {
+
+			@Override
+			public String execute() {
+				String response = WebClient.create(
+					gitHubURL
+				).patch(
+				).accept(
+					MediaType.APPLICATION_JSON
+				).contentType(
+					MediaType.APPLICATION_JSON
+				).header(
+					"Authorization", _getAuthorization()
+				).body(
+					BodyInserters.fromValue(requestJSONObject.toString())
 				).retrieve(
 				).bodyToMono(
 					String.class

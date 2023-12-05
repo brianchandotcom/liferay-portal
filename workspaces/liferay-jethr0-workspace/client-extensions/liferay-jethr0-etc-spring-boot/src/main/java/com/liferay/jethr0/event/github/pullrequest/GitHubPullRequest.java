@@ -45,6 +45,10 @@ public class GitHubPullRequest {
 		_senderGitHubUser = new GitHubUser(jsonObject.getJSONObject("user"));
 	}
 
+	public URL getAPIURL() {
+		return StringUtil.toURL(_jsonObject.getString("url"));
+	}
+
 	public String getBaseBranchName() {
 		return _baseBranchName;
 	}
@@ -55,6 +59,10 @@ public class GitHubPullRequest {
 
 	public String getBaseRepositoryName() {
 		return _baseGitHubRepository.getName();
+	}
+
+	public URL getCommentsURL() {
+		return StringUtil.toURL(_jsonObject.getString("comments_url"));
 	}
 
 	public String getHeadBranchName() {

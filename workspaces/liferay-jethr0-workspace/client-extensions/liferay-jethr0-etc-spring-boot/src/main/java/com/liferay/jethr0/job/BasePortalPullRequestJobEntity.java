@@ -9,9 +9,6 @@ import com.liferay.jethr0.util.StringUtil;
 
 import java.net.URL;
 
-import java.util.Collections;
-import java.util.List;
-
 import org.json.JSONObject;
 
 /**
@@ -19,11 +16,6 @@ import org.json.JSONObject;
  */
 public abstract class BasePortalPullRequestJobEntity
 	extends BaseJobEntity implements PortalPullRequestJobEntity {
-
-	@Override
-	public List<JSONObject> getInitialBuildJSONObjects() {
-		return Collections.singletonList(getInitialBuildJSONObject());
-	}
 
 	@Override
 	public String getOriginName() {

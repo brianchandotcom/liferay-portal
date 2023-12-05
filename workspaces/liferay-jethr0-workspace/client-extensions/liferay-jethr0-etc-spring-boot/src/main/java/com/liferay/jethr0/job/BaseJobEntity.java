@@ -118,7 +118,7 @@ public abstract class BaseJobEntity extends BaseEntity implements JobEntity {
 
 	@Override
 	public List<JSONObject> getInitialBuildJSONObjects() {
-		return Collections.emptyList();
+		return Collections.singletonList(getInitialBuildJSONObject());
 	}
 
 	@Override

@@ -341,7 +341,7 @@ public class AddGroupMVCActionCommand extends BaseMVCActionCommand {
 		String friendlyURL = ParamUtil.getString(
 			actionRequest, "groupFriendlyURL");
 		boolean manualMembership = ParamUtil.getBoolean(
-			actionRequest, "manualMembership");
+			actionRequest, "manualMembership", true);
 		boolean inheritContent = ParamUtil.getBoolean(
 			actionRequest, "inheritContent");
 		boolean active = ParamUtil.getBoolean(actionRequest, "active", true);

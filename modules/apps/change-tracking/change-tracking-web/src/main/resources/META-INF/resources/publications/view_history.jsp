@@ -17,8 +17,19 @@ ViewHistoryDisplayContext viewHistoryDisplayContext = (ViewHistoryDisplayContext
 
 <clay:container-fluid>
 	<frontend-data-set:headless-display
+		additionalProps='<%=
+			HashMapBuilder.<String, Object>put(
+				"getPublicationStatusURL",
+				ResourceURLBuilder.createResourceURL(
+					renderResponse
+				).setResourceID(
+					"/change_tracking/get_publication_status"
+				).buildString()
+			).build()
+		%>'
 		apiURL="<%= viewHistoryDisplayContext.getAPIURL() %>"
 		fdsActionDropdownItems="<%= viewHistoryDisplayContext.getFDSActionDropdownItems() %>"
 		id="<%= PublicationsFDSNames.PUBLICATIONS_HISTORY %>"
+		propsTransformer="publications/js/components/PublicationHistoryPropsTransformer"
 	/>
 </clay:container-fluid>

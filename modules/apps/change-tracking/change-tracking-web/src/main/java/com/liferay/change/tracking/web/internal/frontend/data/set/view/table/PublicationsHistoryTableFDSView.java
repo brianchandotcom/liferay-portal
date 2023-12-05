@@ -11,7 +11,6 @@ import com.liferay.frontend.data.set.view.table.BaseTableFDSView;
 import com.liferay.frontend.data.set.view.table.FDSTableSchema;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilder;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilderFactory;
-import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 
 import java.util.Locale;
 
@@ -52,17 +51,12 @@ public class PublicationsHistoryTableFDSView extends BaseTableFDSView {
 			"ownerName", "published-by"
 		).add(
 			"status", "status",
-			fdsTableSchemaField ->
-				fdsTableSchemaField.setContentRendererModuleURL(
-					_npmResolver.resolveModuleName("change-tracking-web") +
-						"/publications/js/components/StatusRenderer")
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"customPublicationHistoryStatusRenderer")
 		).build();
 	}
 
 	@Reference
 	private FDSTableSchemaBuilderFactory _fdsTableSchemaBuilderFactory;
-
-	@Reference
-	private NPMResolver _npmResolver;
 
 }

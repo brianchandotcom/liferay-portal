@@ -419,7 +419,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Search#SEARCH_INFO",
-			value1 = "1 Result for \"${imageFileName}\"");
+			value1 = "1 Result Found for \"${imageFileName}\"");
 
 		AssertElementPresent(locator1 = "ItemSelector#SELECT_FILE_IMAGE_CARD");
 

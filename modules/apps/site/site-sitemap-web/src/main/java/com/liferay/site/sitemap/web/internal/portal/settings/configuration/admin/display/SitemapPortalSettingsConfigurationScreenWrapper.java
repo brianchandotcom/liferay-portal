@@ -9,12 +9,18 @@ import com.liferay.configuration.admin.display.ConfigurationScreen;
 import com.liferay.configuration.admin.display.ConfigurationScreenWrapper;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.settings.configuration.admin.display.PortalSettingsConfigurationScreenContributor;
 import com.liferay.portal.settings.configuration.admin.display.PortalSettingsConfigurationScreenFactory;
+import com.liferay.site.configuration.manager.SitemapConfigurationManager;
+import com.liferay.site.sitemap.web.internal.display.context.SitemapCompanyConfigurationDisplayContext;
 
 import java.util.Locale;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -42,6 +48,9 @@ public class SitemapPortalSettingsConfigurationScreenWrapper
 	@Reference(target = "(osgi.web.symbolicname=com.liferay.site.sitemap.web)")
 	private ServletContext _servletContext;
 
+	@Reference
+	private SitemapConfigurationManager _sitemapConfigurationManager;
+
 	private class SitemapPortalSettingsConfigurationScreenContributor
 		implements PortalSettingsConfigurationScreenContributor {
 
@@ -52,7 +61,7 @@ public class SitemapPortalSettingsConfigurationScreenWrapper
 
 		@Override
 		public String getJspPath() {
-			return null;
+			return "/configuration/sitemap_company_configuration.jsp";
 		}
 
 		@Override
@@ -82,6 +91,22 @@ public class SitemapPortalSettingsConfigurationScreenWrapper
 			}
 
 			return true;
+		}
+
+		@Override
+		public void setAttributes(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse) {
+
+			PortalSettingsConfigurationScreenContributor.super.setAttributes(
+				httpServletRequest, httpServletResponse);
+
+			httpServletRequest.setAttribute(
+				SitemapCompanyConfigurationDisplayContext.class.getName(),
+				new SitemapCompanyConfigurationDisplayContext(
+					_sitemapConfigurationManager,
+					(ThemeDisplay)httpServletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY)));
 		}
 
 	}

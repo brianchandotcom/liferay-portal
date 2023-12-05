@@ -823,7 +823,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			if (group == null) {
 				String className = null;
 				long classPK = 0;
-				int type = GroupConstants.TYPE_SITE_OPEN;
+				int type = GroupConstants.TYPE_SITE_RESTRICTED;
 				String friendlyURL = null;
 				boolean site = true;
 

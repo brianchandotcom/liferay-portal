@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.Portal;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -77,6 +78,14 @@ public class DeleteLayoutPageTemplateEntryMVCActionCommand
 				deleteLayoutPageTemplateIdsList.add(
 					deleteLayoutPageTemplateEntryId);
 			}
+		}
+
+		String tabs1 = ParamUtil.getString(actionRequest, "tabs1");
+
+		if (!Objects.equals(tabs1, "display-page-templates")) {
+			sendRedirect(actionRequest, actionResponse);
+
+			return;
 		}
 
 		if (!deleteLayoutPageTemplateIdsList.isEmpty()) {

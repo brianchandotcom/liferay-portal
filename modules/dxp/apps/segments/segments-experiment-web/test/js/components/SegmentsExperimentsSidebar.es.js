@@ -28,6 +28,16 @@ import {
 import renderApp from '../renderApp.es';
 
 jest.mock(
+	'../../../src/main/resources/META-INF/resources/js/util/navigation.es',
+	() => {
+		return {
+			getSegmentsExperimentAction: jest.fn(),
+			navigateToExperience: jest.fn(),
+		};
+	}
+);
+
+jest.mock(
 	'../../../src/main/resources/META-INF/resources/js/util/toasts.es',
 	() => {
 		return {

@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.service.PhoneLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.WebsiteLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.url.validator.URLValidator;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -218,6 +219,18 @@ public class EditCompanyMVCActionCommand extends BaseFormMVCActionCommand {
 
 		UnicodeProperties unicodeProperties = PropertiesParamUtil.getProperties(
 			actionRequest, "settings--");
+
+		String http = unicodeProperties.getProperty(PropsKeys.CDN_HOST_HTTP);
+
+		if (!Validator.isBlank(http) && !_urlValidator.isValid(http)) {
+			throw new WebsiteURLException(http);
+		}
+
+		String https = unicodeProperties.getProperty(PropsKeys.CDN_HOST_HTTPS);
+
+		if (!Validator.isBlank(https) && !_urlValidator.isValid(https)) {
+			throw new WebsiteURLException(https);
+		}
 
 		if (unicodeProperties.containsKey(PropsKeys.ADMIN_EMAIL_FROM_ADDRESS) &&
 			!Validator.isEmailAddress(
@@ -400,6 +413,9 @@ public class EditCompanyMVCActionCommand extends BaseFormMVCActionCommand {
 
 	@Reference
 	private PrefsProps _prefsProps;
+
+	@Reference
+	private URLValidator _urlValidator;
 
 	@Reference
 	private UserLocalService _userLocalService;

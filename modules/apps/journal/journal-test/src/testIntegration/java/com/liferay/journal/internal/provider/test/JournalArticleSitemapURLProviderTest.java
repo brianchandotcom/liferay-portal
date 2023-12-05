@@ -200,6 +200,15 @@ public class JournalArticleSitemapURLProviderTest {
 	}
 
 	@Test
+	public void testJournalArticleSitemapURLProviderDefaultLayoutRobotsContainingNofollow()
+		throws Exception {
+
+		_assertVisitLayoutDefaultLayout(
+			RandomTestUtil.randomString() + ", nofollow," +
+				RandomTestUtil.randomString());
+	}
+
+	@Test
 	public void testJournalArticleSitemapURLProviderDefaultLayoutRobotsWithNofollow()
 		throws Exception {
 

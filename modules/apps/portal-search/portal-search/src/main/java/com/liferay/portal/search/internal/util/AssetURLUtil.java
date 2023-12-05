@@ -36,8 +36,8 @@ public class AssetURLUtil {
 
 	public static String getAssetURLView(
 		AssetRenderer<?> assetRenderer,
-		AssetRendererFactory<?> assetRendererFactory, String entryClassName,
-		long entryClassPK, LiferayPortletRequest liferayPortletRequest,
+		AssetRendererFactory<?> assetRendererFactory, String className,
+		long classPK, LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 
 		try {
@@ -60,7 +60,7 @@ public class AssetURLUtil {
 			mutableRenderParameters.setValue("mvcPath", "/view_content.jsp");
 
 			AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
-				entryClassName, entryClassPK);
+				className, classPK);
 
 			mutableRenderParameters.setValue(
 				"assetEntryId", String.valueOf(assetEntry.getEntryId()));
@@ -90,8 +90,8 @@ public class AssetURLUtil {
 		catch (Exception exception) {
 			_log.error(
 				StringBundler.concat(
-					"Unable to get view URL for class ", entryClassName,
-					" with primary key ", entryClassPK),
+					"Unable to get view URL for class ", className,
+					" with primary key ", classPK),
 				exception);
 		}
 

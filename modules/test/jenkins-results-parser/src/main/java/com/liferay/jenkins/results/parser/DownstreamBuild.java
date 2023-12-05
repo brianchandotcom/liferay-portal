@@ -261,7 +261,7 @@ public class DownstreamBuild extends BaseBuild {
 					JenkinsResultsParserUtil.combine(
 						"[", getBuildName(),
 						"] Skipped creating a failure GitHub message because ",
-						"no failure elements created"));
+						"no failure elements were created"));
 
 				return null;
 			}

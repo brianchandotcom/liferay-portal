@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.portlet.bridges.mvc.constants.MVCRenderConstants;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -1645,6 +1644,10 @@ public class ContentDashboardAdminPortletTest {
 			new MockLiferayPortletContext(path));
 
 		mockLiferayPortletRenderRequest.setAttribute(
+			WebKeys.PORTLET_ID,
+			"com_liferay_content_dashboard_web_portlet_" +
+				"ContentDashboardAdminPortlet");
+		mockLiferayPortletRenderRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, _getThemeDisplay(locale));
 
 		PortletPreferences portletPreferences =
@@ -1678,9 +1681,7 @@ public class ContentDashboardAdminPortletTest {
 		themeDisplay.setCompany(_company);
 		themeDisplay.setLanguageId(_language.getLanguageId(locale));
 		themeDisplay.setLocale(locale);
-		themeDisplay.setPermissionChecker(
-			PermissionThreadLocal.getPermissionChecker());
-		themeDisplay.setUser(_company.getGuestUser());
+		themeDisplay.setUser(TestPropsValues.getUser());
 
 		return themeDisplay;
 	}

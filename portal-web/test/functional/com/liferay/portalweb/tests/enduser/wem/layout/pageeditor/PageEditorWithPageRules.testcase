@@ -120,6 +120,75 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-196462. Rules can be edited and deleted from the ellipsis button of the list of rules in the sidebar."
+	@priority = 3
+	test EditAndDeletePageRule {
+		task ("Given a page designer has a page rule on a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading",
+				targetFragmentName = "Button");
+
+			PageEditor.gotoTab(tabName = "Page Rules");
+
+			PageEditor.addPageRule(
+				selectAction = "Hide",
+				selectActionValue = "Button",
+				selectCondition = "Is the User",
+				selectConditionValue = "test",
+				selectItemForTheAction = "Fragment",
+				selectItemForTheCondition = "User");
+		}
+
+		task ("When the page designer accesses to the Page Rules panel") {
+			PageEditor.gotoTab(tabName = "Page Rules");
+		}
+
+		task ("Then the page designer could edit the page rule") {
+			PageEditor.editPageRule(
+				newRuleName = "Test Page Rule",
+				ruleName = "Rule",
+				selectAction = "Show",
+				selectActionValue = "Heading",
+				selectCondition = "Has the Role Of",
+				selectConditionValue = "Power User");
+
+			AssertVisible(
+				key_rule = "Test Page RuleIfUserHas the Role OfPower UserShowFragmentHeading",
+				key_ruleName = "Test Page Rule",
+				locator1 = "PageEditor#PAGE_RULE_LIST_ITEM");
+		}
+
+		task ("When the page designer accesses to the Page Rules panel") {
+			PageEditor.gotoTab(tabName = "Page Rules");
+
+			PageEditor.deletePageRule(ruleName = "Test Page Rule");
+		}
+
+		task ("Then the page designer could delete the page rule") {
+			AssertTextEquals(
+				locator1 = "Message#EMPTY_STATE_INFO",
+				value1 = "No Rules Yet");
+
+			AssertTextEquals(
+				locator1 = "Message#EMPTY_STATE_TEXT",
+				value1 = "Fortunately, it is very easy to add new ones.");
+		}
+	}
+
 	@description = "This is a test for LPS-196461. There is a new section for Page Rules in the left side bar."
 	@priority = 3
 	test OpenPageRulesPanel {

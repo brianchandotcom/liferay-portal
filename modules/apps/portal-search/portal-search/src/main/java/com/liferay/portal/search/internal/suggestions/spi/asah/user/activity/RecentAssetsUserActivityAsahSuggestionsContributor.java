@@ -21,7 +21,6 @@ import com.liferay.portal.search.suggestions.SuggestionsContributorResults;
 import com.liferay.portal.search.suggestions.spi.constants.AsahSuggestionsConstants;
 
 import java.util.Map;
-import java.util.HashMap;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -63,7 +62,7 @@ public class RecentAssetsUserActivityAsahSuggestionsContributor
 
 		if (url.endsWith("/search")) {
 			try {
-				String className = _contentTypeToClassNameMap.get(
+				String className = _classNames.get(
 					itemJSONObject.getString("contentType"));
 
 				AssetRendererFactory<?> assetRendererFactory =
@@ -96,17 +95,15 @@ public class RecentAssetsUserActivityAsahSuggestionsContributor
 	private static final Log _log = LogFactoryUtil.getLog(
 		RecentAssetsUserActivityAsahSuggestionsContributor.class);
 
-	private static final HashMap<String, String> _contentTypeToClassNameMap =
-		HashMapBuilder.put(
-			"blog", "com.liferay.blogs.model.BlogsEntry"
-		).put(
-			"document", "com.liferay.document.library.kernel.model.DLFileEntry"
-		).put(
-			"form",
-			"com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord"
-		).put(
-			"web-content", "com.liferay.journal.model.JournalArticle"
-		).build();
+	private static final Map<String, String> _classNames = HashMapBuilder.put(
+		"blog", "com.liferay.blogs.model.BlogsEntry"
+	).put(
+		"document", "com.liferay.document.library.kernel.model.DLFileEntry"
+	).put(
+		"form", "com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord"
+	).put(
+		"web-content", "com.liferay.journal.model.JournalArticle"
+	).build();
 
 	@Reference
 	private AssetURLViewProvider _assetURLViewProvider;

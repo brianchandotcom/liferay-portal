@@ -1,0 +1,24 @@
+{
+	"description": "",
+	"editorType": "richText",
+	"externalReferenceCode": "PRM-CLAIM-MORE-INFO-REQUESTED-TEMPLATE",
+	"name": "PRM Claim More Info Requested Template",
+	"recipientType": "email",
+	"recipients": [
+		{
+			"bcc": "",
+			"cc": "",
+			"from": "partner-portal-admin@liferay.com",
+			"fromName": {
+				"en-US": "Partner Portal"
+			},
+			"to": {
+				"en-US": "liferay@liferay.com"
+			}
+		}
+	],
+	"subject": {
+		"en_US": "[Liferay Partner Portal] MDF Claim More Info Requested"
+	},
+	"type": "email"
+}

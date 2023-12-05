@@ -42,7 +42,7 @@ public abstract class BaseGitHubEventHandler extends BaseEventHandler {
 
 		Set<String> availableTestSuites = new HashSet<>();
 
-		String upstreamAvailableTestSuites = _getUpstreamBranchCIPropertyValue(
+		String upstreamAvailableTestSuites = getUpstreamBranchCIPropertyValue(
 			"ci.test.available.suites");
 
 		if (!StringUtil.isNullOrEmpty(upstreamAvailableTestSuites)) {
@@ -50,7 +50,7 @@ public abstract class BaseGitHubEventHandler extends BaseEventHandler {
 				availableTestSuites, upstreamAvailableTestSuites.split(","));
 		}
 
-		String senderAvailableTestSuites = _getSenderBranchCIPropertyValue(
+		String senderAvailableTestSuites = getSenderBranchCIPropertyValue(
 			"ci.test.available.suites");
 
 		if (!StringUtil.isNullOrEmpty(senderAvailableTestSuites)) {
@@ -64,14 +64,14 @@ public abstract class BaseGitHubEventHandler extends BaseEventHandler {
 	protected String getCIProperty(String ciPropertyName)
 		throws InvalidJSONException, IOException {
 
-		String upstreamBranchCIPropertyValue =
-			_getUpstreamBranchCIPropertyValue(ciPropertyName);
+		String upstreamBranchCIPropertyValue = getUpstreamBranchCIPropertyValue(
+			ciPropertyName);
 
 		if (!StringUtil.isNullOrEmpty(upstreamBranchCIPropertyValue)) {
 			return upstreamBranchCIPropertyValue;
 		}
 
-		String senderBranchCIPropertyValue = _getSenderBranchCIPropertyValue(
+		String senderBranchCIPropertyValue = getSenderBranchCIPropertyValue(
 			ciPropertyName);
 
 		if (!StringUtil.isNullOrEmpty(senderBranchCIPropertyValue)) {
@@ -151,6 +151,24 @@ public abstract class BaseGitHubEventHandler extends BaseEventHandler {
 		return new GitHubRepository(repositoryJSONObject);
 	}
 
+	protected String getSenderBranchCIPropertyValue(String propertyName)
+		throws InvalidJSONException, IOException {
+
+		GitBranchEntity gitBranchEntity = getSenderGitBranchEntity();
+
+		if (gitBranchEntity == null) {
+			return null;
+		}
+
+		Properties properties = gitBranchEntity.getProperties("ci.properties");
+
+		if (properties == null) {
+			return null;
+		}
+
+		return PropertiesUtil.getPropertyValue(properties, propertyName);
+	}
+
 	protected GitBranchEntity getSenderGitBranchEntity()
 		throws InvalidJSONException {
 
@@ -169,6 +187,24 @@ public abstract class BaseGitHubEventHandler extends BaseEventHandler {
 		return _senderGitBranchEntity;
 	}
 
+	protected String getUpstreamBranchCIPropertyValue(String propertyName)
+		throws InvalidJSONException, IOException {
+
+		GitBranchEntity gitBranchEntity = getUpstreamGitBranchEntity();
+
+		if (gitBranchEntity == null) {
+			return null;
+		}
+
+		Properties properties = gitBranchEntity.getProperties("ci.properties");
+
+		if (properties == null) {
+			return null;
+		}
+
+		return PropertiesUtil.getPropertyValue(properties, propertyName);
+	}
+
 	protected GitBranchEntity getUpstreamGitBranchEntity()
 		throws InvalidJSONException {
 
@@ -185,42 +221,6 @@ public abstract class BaseGitHubEventHandler extends BaseEventHandler {
 			gitHubPullRequest.getUpstreamBranchURL());
 
 		return _upstreamGitBranchEntity;
-	}
-
-	private String _getSenderBranchCIPropertyValue(String propertyName)
-		throws InvalidJSONException, IOException {
-
-		GitBranchEntity gitBranchEntity = getSenderGitBranchEntity();
-
-		if (gitBranchEntity == null) {
-			return null;
-		}
-
-		Properties properties = gitBranchEntity.getProperties("ci.properties");
-
-		if (properties == null) {
-			return null;
-		}
-
-		return PropertiesUtil.getPropertyValue(properties, propertyName);
-	}
-
-	private String _getUpstreamBranchCIPropertyValue(String propertyName)
-		throws InvalidJSONException, IOException {
-
-		GitBranchEntity gitBranchEntity = getUpstreamGitBranchEntity();
-
-		if (gitBranchEntity == null) {
-			return null;
-		}
-
-		Properties properties = gitBranchEntity.getProperties("ci.properties");
-
-		if (properties == null) {
-			return null;
-		}
-
-		return PropertiesUtil.getPropertyValue(properties, propertyName);
 	}
 
 	private GitHubPullRequest _gitHubPullRequest;

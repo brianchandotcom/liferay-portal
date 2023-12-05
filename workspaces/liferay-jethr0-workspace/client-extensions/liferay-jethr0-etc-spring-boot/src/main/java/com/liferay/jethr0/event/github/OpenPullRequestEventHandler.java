@@ -11,12 +11,10 @@ import com.liferay.jethr0.event.EventHandlerContext;
 import com.liferay.jethr0.event.github.pullrequest.GitHubPullRequest;
 import com.liferay.jethr0.event.github.user.GitHubUser;
 import com.liferay.jethr0.git.branch.GitBranchEntity;
-import com.liferay.jethr0.git.branch.repository.GitBranchEntityRepository;
 import com.liferay.jethr0.jenkins.JenkinsQueue;
 import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.job.PortalPullRequestJobEntity;
 import com.liferay.jethr0.job.repository.JobEntityRepository;
-import com.liferay.jethr0.util.PropertiesUtil;
 import com.liferay.jethr0.util.StringUtil;
 
 import java.io.IOException;
@@ -148,24 +146,28 @@ public class OpenPullRequestEventHandler extends BaseGitHubEventHandler {
 
 		GitHubPullRequest gitHubPullRequest = getGitHubPullRequest();
 
-		GitBranchEntityRepository gitBranchEntityRepository =
-			getGitBranchEntityRepository();
+		Set<String> ciTestAutoRecipients = new HashSet<>();
 
-		GitBranchEntity gitBranchEntity = gitBranchEntityRepository.getByURL(
-			gitHubPullRequest.getUpstreamBranchURL());
-
-		String ciTestAutoRecipients = PropertiesUtil.getPropertyValue(
-			gitBranchEntity.getProperties("ci.properties"),
+		String upstreamCITestAutoRecipients = getUpstreamBranchCIPropertyValue(
 			"ci.test.auto.recipients");
 
-		if (StringUtil.isNullOrEmpty(ciTestAutoRecipients)) {
-			return null;
+		if (!StringUtil.isNullOrEmpty(upstreamCITestAutoRecipients)) {
+			Collections.addAll(
+				ciTestAutoRecipients, upstreamCITestAutoRecipients.split(","));
+		}
+
+		String senderCITestAutoRecipients = getSenderBranchCIPropertyValue(
+			"ci.test.auto.recipients");
+
+		if (!StringUtil.isNullOrEmpty(senderCITestAutoRecipients)) {
+			Collections.addAll(
+				ciTestAutoRecipients, senderCITestAutoRecipients.split(","));
 		}
 
 		GitHubUser receiverGitHubUser =
 			gitHubPullRequest.getReceiverGitHubUser();
 
-		for (String ciTestAutoRecipient : ciTestAutoRecipients.split(",")) {
+		for (String ciTestAutoRecipient : ciTestAutoRecipients) {
 			Matcher matcher = _ciTestAutoRecipientPattern.matcher(
 				ciTestAutoRecipient);
 

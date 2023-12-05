@@ -24,8 +24,6 @@ public interface PortalPullRequestJobEntity extends JobEntity {
 			"testSuiteName", "Test Suite Name", ParameterDefinition.Type.STRING,
 			null, "Insert your Test Suite Name here", null);
 
-	public URL getJenkinsGitHubURL();
-
 	public String getOriginName();
 
 	public URL getPortalPullRequestURL();
@@ -41,8 +39,6 @@ public interface PortalPullRequestJobEntity extends JobEntity {
 	public String getUpstreamBranchName();
 
 	public String getUpstreamBranchSHA();
-
-	public void setJenkinsGitHubURL(URL jenkinsGitHubURL);
 
 	public void setOriginName(String originName);
 

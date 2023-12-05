@@ -13,6 +13,8 @@ import com.liferay.jethr0.task.TaskEntity;
 import com.liferay.jethr0.testsuite.TestSuiteEntity;
 import com.liferay.jethr0.util.StringUtil;
 
+import java.net.URL;
+
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -118,6 +120,17 @@ public abstract class BaseJobEntity extends BaseEntity implements JobEntity {
 	@Override
 	public Set<JenkinsCohortEntity> getJenkinsCohortEntities() {
 		return getRelatedEntities(JenkinsCohortEntity.class);
+	}
+
+	@Override
+	public URL getJenkinsGitHubURL() {
+		String jenkinsGitHubURL = getParameterValue("jenkinsGitHubURL");
+
+		if (StringUtil.isNullOrEmpty(jenkinsGitHubURL)) {
+			return null;
+		}
+
+		return StringUtil.toURL(jenkinsGitHubURL);
 	}
 
 	@Override
@@ -244,6 +257,11 @@ public abstract class BaseJobEntity extends BaseEntity implements JobEntity {
 	@Override
 	public void removeTestSuiteEntity(TestSuiteEntity testSuiteEntity) {
 		removeRelatedEntity(testSuiteEntity);
+	}
+
+	@Override
+	public void setJenkinsGitHubURL(URL jenkinsGitHubURL) {
+		setParameterValue("jenkinsGitHubURL", String.valueOf(jenkinsGitHubURL));
 	}
 
 	@Override

@@ -32,17 +32,6 @@ public abstract class BasePortalPullRequestJobEntity
 	}
 
 	@Override
-	public URL getJenkinsGitHubURL() {
-		String jenkinsGitHubURL = getParameterValue("jenkinsGitHubURL");
-
-		if (StringUtil.isNullOrEmpty(jenkinsGitHubURL)) {
-			return null;
-		}
-
-		return StringUtil.toURL(jenkinsGitHubURL);
-	}
-
-	@Override
 	public String getOriginName() {
 		return _originName;
 	}
@@ -85,11 +74,6 @@ public abstract class BasePortalPullRequestJobEntity
 	@Override
 	public String getUpstreamBranchSHA() {
 		return _upstreamBranchSHA;
-	}
-
-	@Override
-	public void setJenkinsGitHubURL(URL jenkinsGitHubURL) {
-		setParameterValue("jenkinsGitHubURL", String.valueOf(jenkinsGitHubURL));
 	}
 
 	@Override

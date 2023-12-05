@@ -15,6 +15,8 @@ import com.liferay.jethr0.testsuite.TestSuiteEntity;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import java.net.URL;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -68,6 +70,8 @@ public interface JobEntity extends Entity {
 
 	public Set<JenkinsCohortEntity> getJenkinsCohortEntities();
 
+	public URL getJenkinsGitHubURL();
+
 	public String getName();
 
 	public Map<String, String> getParameters();
@@ -107,6 +111,8 @@ public interface JobEntity extends Entity {
 	public void removeTestSuiteEntities(Set<TestSuiteEntity> testSuiteEntities);
 
 	public void removeTestSuiteEntity(TestSuiteEntity testSuiteEntity);
+
+	public void setJenkinsGitHubURL(URL jenkinsGitHubURL);
 
 	public void setName(String name);
 

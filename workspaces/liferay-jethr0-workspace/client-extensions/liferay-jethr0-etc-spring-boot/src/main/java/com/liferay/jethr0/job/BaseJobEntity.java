@@ -12,6 +12,7 @@ import com.liferay.jethr0.jenkins.cohort.JenkinsCohortEntity;
 import com.liferay.jethr0.task.TaskEntity;
 import com.liferay.jethr0.testsuite.TestSuiteEntity;
 import com.liferay.jethr0.util.StringUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.net.URL;
 
@@ -23,6 +24,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -318,6 +321,69 @@ public abstract class BaseJobEntity extends BaseEntity implements JobEntity {
 		}
 	}
 
+	protected Map<String, String> getInitialBuildParameters() {
+		return HashMapBuilder.put(
+			"BUILD_PRIORITY", String.valueOf(getPriority())
+		).put(
+			"JENKINS_GITHUB_BRANCH_NAME",
+			() -> {
+				String jenkinsGitHubBranchName = getJenkinsGitHubBranchName();
+
+				if (StringUtil.isNullOrEmpty(jenkinsGitHubBranchName)) {
+					return null;
+				}
+
+				return jenkinsGitHubBranchName;
+			}
+		).put(
+			"JENKINS_GITHUB_BRANCH_USERNAME",
+			() -> {
+				String jenkinsGitHubBranchUserName =
+					getJenkinsGitHubBranchUserName();
+
+				if (StringUtil.isNullOrEmpty(jenkinsGitHubBranchUserName)) {
+					return null;
+				}
+
+				return jenkinsGitHubBranchUserName;
+			}
+		).build();
+	}
+
+	protected String getJenkinsGitHubBranchName() {
+		URL jenkinsGitHubURL = getJenkinsGitHubURL();
+
+		if (jenkinsGitHubURL == null) {
+			return null;
+		}
+
+		Matcher matcher = _jenkinsGitHubURLPattern.matcher(
+			String.valueOf(jenkinsGitHubURL));
+
+		if (!matcher.find()) {
+			return null;
+		}
+
+		return matcher.group("branchName");
+	}
+
+	protected String getJenkinsGitHubBranchUserName() {
+		URL jenkinsGitHubURL = getJenkinsGitHubURL();
+
+		if (jenkinsGitHubURL == null) {
+			return null;
+		}
+
+		Matcher matcher = _jenkinsGitHubURLPattern.matcher(
+			String.valueOf(jenkinsGitHubURL));
+
+		if (!matcher.find()) {
+			return null;
+		}
+
+		return matcher.group("branchUserName");
+	}
+
 	private JSONObject _getParametersJSONObject() {
 		JSONObject parametersJSONObject = new JSONObject();
 
@@ -336,6 +402,10 @@ public abstract class BaseJobEntity extends BaseEntity implements JobEntity {
 	}
 
 	private static final Log _log = LogFactory.getLog(BaseJobEntity.class);
+
+	private static final Pattern _jenkinsGitHubURLPattern = Pattern.compile(
+		"https://github.com/(?<branchUserName>[^/]+)/liferay-jenkins-ee/tree/" +
+			"(?<branchName>[^/]+)");
 
 	private String _name;
 	private final Map<String, String> _parameters = new HashMap<>();

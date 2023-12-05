@@ -88,65 +88,6 @@ public abstract class BaseUserActivityAsahSuggestionsContributor
 				StringPool.POUND, size, StringPool.POUND, sort));
 	}
 
-	private String _getURL(
-		AnalyticsConfiguration analyticsConfiguration, String basePath,
-		String contentType, String displayLanguageId, long groupId,
-		long minCounts, int page, String path, int rangeKey, int size,
-		String sort) {
-
-		StringBundler sb = new StringBundler(28);
-
-		sb.append(analyticsConfiguration.liferayAnalyticsFaroBackendURL());
-		sb.append("/api/1.0/");
-		sb.append(basePath);
-		sb.append("/");
-		sb.append(path);
-		sb.append("?");
-
-		if (!Validator.isBlank(contentType)) {
-			sb.append("contentType=");
-			sb.append(contentType);
-			sb.append("&");
-		}
-
-		if (!Validator.isBlank(displayLanguageId)) {
-			sb.append("displayLanguageId=");
-			sb.append(displayLanguageId);
-			sb.append("&");
-		}
-
-		if (groupId > 0) {
-			sb.append("groupId=");
-			sb.append(groupId);
-			sb.append("&");
-		}
-
-		if (minCounts > 0) {
-			sb.append("minCounts=");
-			sb.append(minCounts);
-			sb.append("&");
-		}
-
-		if (page > 0) {
-			sb.append("page=");
-			sb.append(page);
-			sb.append("&");
-		}
-
-		if (rangeKey != 7) {
-			sb.append("rangeKey=");
-			sb.append(rangeKey);
-			sb.append("&");
-		}
-
-		sb.append("size=");
-		sb.append(size);
-		sb.append("&sort=");
-		sb.append(sort);
-
-		return sb.toString();
-	}
-
 	@Override
 	protected boolean isEnabled(
 		AnalyticsSettingsManager analyticsSettingsManager, long companyId) {
@@ -216,6 +157,65 @@ public abstract class BaseUserActivityAsahSuggestionsContributor
 		}
 
 		return MapUtil.getInteger(attributes, "rangeKey", 0);
+	}
+
+	private String _getURL(
+		AnalyticsConfiguration analyticsConfiguration, String basePath,
+		String contentType, String displayLanguageId, long groupId,
+		long minCounts, int page, String path, int rangeKey, int size,
+		String sort) {
+
+		StringBundler sb = new StringBundler(28);
+
+		sb.append(analyticsConfiguration.liferayAnalyticsFaroBackendURL());
+		sb.append("/api/1.0/");
+		sb.append(basePath);
+		sb.append("/");
+		sb.append(path);
+		sb.append("?");
+
+		if (!Validator.isBlank(contentType)) {
+			sb.append("contentType=");
+			sb.append(contentType);
+			sb.append("&");
+		}
+
+		if (!Validator.isBlank(displayLanguageId)) {
+			sb.append("displayLanguageId=");
+			sb.append(displayLanguageId);
+			sb.append("&");
+		}
+
+		if (groupId > 0) {
+			sb.append("groupId=");
+			sb.append(groupId);
+			sb.append("&");
+		}
+
+		if (minCounts > 0) {
+			sb.append("minCounts=");
+			sb.append(minCounts);
+			sb.append("&");
+		}
+
+		if (page > 0) {
+			sb.append("page=");
+			sb.append(page);
+			sb.append("&");
+		}
+
+		if (rangeKey != 7) {
+			sb.append("rangeKey=");
+			sb.append(rangeKey);
+			sb.append("&");
+		}
+
+		sb.append("size=");
+		sb.append(size);
+		sb.append("&sort=");
+		sb.append(sort);
+
+		return sb.toString();
 	}
 
 	private static final int _CHARACTER_THRESHOLD = 0;

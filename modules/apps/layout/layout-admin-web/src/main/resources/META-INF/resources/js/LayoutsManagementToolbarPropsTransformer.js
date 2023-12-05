@@ -3,7 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {addParams, navigate, openConfirmModal} from 'frontend-js-web';
+import {
+	addParams,
+	navigate,
+	openConfirmModal,
+	openSelectionModal,
+} from 'frontend-js-web';
 
 import openDeleteLayoutModal from './openDeleteLayoutModal';
 
@@ -43,6 +48,28 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 		});
 	};
 
+	const permissions = (itemData) => {
+		const keys = Array.from(
+			document.querySelectorAll(
+				`[name=${portletNamespace}rowIds]:checked`
+			)
+		).map(({value}) => value);
+
+		const url = new URL(itemData?.permissionsURL);
+
+		openSelectionModal({
+			title: Liferay.Language.get('permissions'),
+			url: addParams(
+				{
+					[`_${url.searchParams.get(
+						'p_p_id'
+					)}_resourcePrimKey`]: keys.join(','),
+				},
+				itemData?.permissionsURL
+			),
+		});
+	};
+
 	const exportTranslation = ({exportTranslationURL}) => {
 		const keys = Array.from(
 			document.querySelectorAll(
@@ -79,6 +106,9 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 			}
 			else if (action === 'exportTranslation') {
 				exportTranslation(data);
+			}
+			else if (action === 'permissions') {
+				permissions(data);
 			}
 		},
 	};

@@ -439,18 +439,12 @@ public class FacetRequestContributor {
 		for (int i = 0; i < rangesJSONArray.length(); i++) {
 			JSONObject rangeJSONObject = rangesJSONArray.getJSONObject(i);
 
-			String label = rangeJSONObject.getString("label");
-
-			if (Validator.isBlank(label)) {
-				label = rangeJSONObject.getString("range");
-			}
-
 			String range = rangeJSONObject.getString("range");
 
 			String[] rangeParts = RangeParserUtil.parserRange(range);
 
 			dateRangeAggregation.addRange(
-				new Range(label, rangeParts[0], rangeParts[1]));
+				new Range(range, rangeParts[0], rangeParts[1]));
 		}
 
 		return dateRangeAggregation;

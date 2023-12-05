@@ -356,15 +356,13 @@ public class PublishLayoutMVCActionCommandTest {
 
 			Assert.assertNotNull(draftLayout);
 
-			_addFragmentEntryLinkToLayout(
-				"{}", html, draftLayout, serviceContext);
+			_addFragmentEntryLinkToLayout(html, draftLayout, serviceContext);
 
 			String portletId = PortletIdCodec.encode(
 				JournalContentPortletKeys.JOURNAL_CONTENT, "myInstanceId");
 
 			JournalArticle journalArticle = JournalTestUtil.addJournalArticle(
-				_dataDefinitionResourceFactory,
-				_createDDMFormField(DDMFormFieldTypeConstants.TEXT),
+				_dataDefinitionResourceFactory, _createDDMFormField(),
 				_ddmFormValuesToFieldsConverter, RandomTestUtil.randomString(),
 				_group.getGroupId(), _journalConverter);
 
@@ -409,15 +407,14 @@ public class PublishLayoutMVCActionCommandTest {
 			Assert.assertNotNull(draftLayout);
 
 			FragmentEntryLink fragmentEntryLink = _addFragmentEntryLinkToLayout(
-				"{}", html, draftLayout, serviceContext);
+				html, draftLayout, serviceContext);
 
 			String portletId = PortletIdCodec.encode(
 				JournalContentPortletKeys.JOURNAL_CONTENT,
 				fragmentEntryLink.getNamespace());
 
 			JournalArticle journalArticle = JournalTestUtil.addJournalArticle(
-				_dataDefinitionResourceFactory,
-				_createDDMFormField(DDMFormFieldTypeConstants.TEXT),
+				_dataDefinitionResourceFactory, _createDDMFormField(),
 				_ddmFormValuesToFieldsConverter, RandomTestUtil.randomString(),
 				_group.getGroupId(), _journalConverter);
 
@@ -439,8 +436,7 @@ public class PublishLayoutMVCActionCommandTest {
 	}
 
 	private FragmentEntryLink _addFragmentEntryLinkToLayout(
-			String editableValues, String html, Layout layout,
-			ServiceContext serviceContext)
+			String html, Layout layout, ServiceContext serviceContext)
 		throws Exception {
 
 		FragmentCollection fragmentCollection =
@@ -457,8 +453,7 @@ public class PublishLayoutMVCActionCommandTest {
 				WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 		return ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
-			editableValues, fragmentEntry.getCss(),
-			fragmentEntry.getConfiguration(),
+			"{}", fragmentEntry.getCss(), fragmentEntry.getConfiguration(),
 			fragmentEntry.getFragmentEntryId(), fragmentEntry.getHtml(),
 			fragmentEntry.getJs(), layout, fragmentEntry.getFragmentEntryKey(),
 			fragmentEntry.getType(), null, 0,
@@ -540,8 +535,9 @@ public class PublishLayoutMVCActionCommandTest {
 			portletPreferences.getValue("groupId", null));
 	}
 
-	private DDMFormField _createDDMFormField(String type) {
-		DDMFormField ddmFormField = new DDMFormField("name", type);
+	private DDMFormField _createDDMFormField() {
+		DDMFormField ddmFormField = new DDMFormField(
+			"name", DDMFormFieldTypeConstants.TEXT);
 
 		ddmFormField.setDataType("text");
 		ddmFormField.setIndexType("text");

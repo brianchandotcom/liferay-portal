@@ -51,6 +51,7 @@ import com.liferay.knowledge.base.service.persistence.KBFolderPersistence;
 import com.liferay.knowledge.base.util.KnowledgeBaseUtil;
 import com.liferay.knowledge.base.util.comparator.KBArticlePriorityComparator;
 import com.liferay.knowledge.base.util.comparator.KBArticleVersionComparator;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -73,6 +74,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.lock.Lock;
+import com.liferay.portal.kernel.lock.LockManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -90,6 +93,7 @@ import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -1104,6 +1108,18 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 	}
 
 	@Override
+	public Lock lock(long userId, long resourcePrimKey) throws PortalException {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-195016")) {
+			return null;
+		}
+
+		return LockManagerUtil.lock(
+			userId, KBArticleConstants.getClassName(), resourcePrimKey,
+			String.valueOf(userId), false,
+			KBArticleConstants.LOCK_EXPIRATION_TIME);
+	}
+
+	@Override
 	public void moveDependentKBArticlesToTrash(
 			long parentResourcePrimKey, long trashEntryId)
 		throws PortalException {
@@ -1382,6 +1398,17 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		_subscriptionLocalService.addSubscription(
 			userId, groupId, KBArticle.class.getName(), resourcePrimKey);
+	}
+
+	@Override
+	public void unlock(long userId, long resourcePrimKey) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-195016")) {
+			return;
+		}
+
+		LockManagerUtil.unlock(
+			KBArticleConstants.getClassName(), String.valueOf(resourcePrimKey),
+			String.valueOf(userId));
 	}
 
 	@Override
@@ -2870,6 +2897,25 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		if (!kbArticles.isEmpty()) {
 			throw new KBArticleUrlTitleException.MustNotBeDuplicate(urlTitle);
+		}
+	}
+
+	private KBArticle _withLock(
+			long userId, long resourcePrimKey,
+			UnsafeSupplier<KBArticle, PortalException> unsafeSupplier)
+		throws PortalException {
+
+		Lock lock = lock(userId, resourcePrimKey);
+
+		try {
+			return unsafeSupplier.get();
+		}
+		finally {
+			if (lock != null) {
+				LockManagerUtil.unlock(
+					KBArticleConstants.getClassName(),
+					String.valueOf(resourcePrimKey));
+			}
 		}
 	}
 

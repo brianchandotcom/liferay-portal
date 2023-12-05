@@ -81,10 +81,9 @@ public class RangeFacetProcessor implements FacetProcessor<SolrQuery> {
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject rangeJSONObject = jsonArray.getJSONObject(i);
 
-			String label = rangeJSONObject.getString("label");
 			String range = rangeJSONObject.getString("range");
 
-			putFacetParameters(map, facet, label, range);
+			putFacetParameters(map, facet, range);
 		}
 	}
 
@@ -98,7 +97,7 @@ public class RangeFacetProcessor implements FacetProcessor<SolrQuery> {
 			return;
 		}
 
-		putFacetParameters(map, facet, "custom-range", range);
+		putFacetParameters(map, facet, range);
 	}
 
 	protected JSONObject getFacetParametersJSONObject(
@@ -116,10 +115,10 @@ public class RangeFacetProcessor implements FacetProcessor<SolrQuery> {
 	}
 
 	protected void putFacetParameters(
-		Map<String, JSONObject> map, Facet facet, String label, String range) {
+		Map<String, JSONObject> map, Facet facet, String range) {
 
 		String name =
-			FacetUtil.getAggregationName(facet) + StringPool.UNDERLINE + label;
+			FacetUtil.getAggregationName(facet) + StringPool.UNDERLINE + range;
 
 		JSONObject jsonObject = getFacetParametersJSONObject(facet, range);
 

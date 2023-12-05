@@ -1685,13 +1685,13 @@ public class ContentDashboardAdminPortletTest {
 		themeDisplay.setCompany(_company);
 		themeDisplay.setLanguageId(_language.getLanguageId(locale));
 
-		Group controlPanelGroup = _groupLocalService.getGroup(
+		Group group = _groupLocalService.getGroup(
 			TestPropsValues.getCompanyId(), GroupConstants.CONTROL_PANEL);
 
-		Layout controlPanelLayout = _layoutLocalService.fetchDefaultLayout(
-			controlPanelGroup.getGroupId(), true);
+		Layout layout = _layoutLocalService.fetchDefaultLayout(
+			group.getGroupId(), true);
 
-		themeDisplay.setLayout(controlPanelLayout);
+		themeDisplay.setLayout(layout);
 
 		themeDisplay.setLocale(locale);
 		themeDisplay.setUser(TestPropsValues.getUser());

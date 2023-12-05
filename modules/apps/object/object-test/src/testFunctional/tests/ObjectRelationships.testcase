@@ -1140,31 +1140,25 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		task ("Create a custom object, and a self relationship") {
+		task ("Given the object Account related twice with a custom object definition Hospital") {
 			ObjectAdmin.addObjectViaAPI(
-				labelName = "Custom Object",
-				objectName = "CustomObject",
-				pluralLabelName = "Custom Objects");
+				labelName = "Hospital",
+				objectName = "Hospital",
+				pluralLabelName = "Hospital");
 
-			ObjectAdmin.addObjectFieldViaAPI(
-				fieldBusinessType = "Text",
-				fieldLabelName = "Custom Field",
-				fieldName = "customField",
-				fieldType = "String",
-				isRequired = "false",
-				objectName = "CustomObject");
+			for (var nameRelationship : list "Public,Private") {
+				ObjectAdmin.addObjectRelationshipViaAPI(
+					objectName_1 = "AccountEntry",
+					objectName_2 = "Hospital",
+					relationshipLabel = "Relationship ${nameRelationship}",
+					relationshipName = "relationship${nameRelationship}",
+					relationshipType = "oneToMany");
+			}
 
-			ObjectAdmin.addObjectRelationshipViaAPI(
-				objectName_1 = "CustomObject",
-				objectName_2 = "CustomObject",
-				relationshipLabel = "Self Relationship",
-				relationshipName = "selfRelationship",
-				relationshipType = "oneToMany");
-
-			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+			ObjectAdmin.publishObjectViaAPI(objectName = "Hospital");
 		}
 
-		task ("Create an realtionship from Postal Address to custom object created") {
+		task ("and Given a relationship from Postal Address to Hospital") {
 			ObjectAdmin.openObjectAdmin();
 
 			ObjectPortlet.selectCustomObject(label = "Postal Address");
@@ -1172,18 +1166,29 @@ definition {
 			ObjectAdmin.gotoRelationshipsTab();
 
 			ObjectAdmin.addObjectRelationshipViaUI(
-				label = "Relationship with Custom Object",
-				object = "Custom Object",
-				parameterOption = "Self Relationship",
+				label = "Relationship Order",
+				object = "Hospital",
+				parameterOption = "Relationship Public",
 				type = "One to Many");
 		}
 
-		task ("Verify it's possible to edit a relationship parameter") {
-			ObjectAdmin.goToRelationshipsDetails(fieldName = "Relationship with Custom Object");
+		task ("When editing the parameter of the relationship") {
+			ObjectAdmin.goToRelationshipsDetails(fieldName = "Relationship Order");
 
-			ObjectRelationships.editRelationshipsParameter(parameterOption = "Relationship with Custom Object");
+			ObjectAdmin.selectDropdownItem(
+				labelName = "Parameter",
+				optionName = "Relationship Private");
 
 			PortletEntry.save();
+		}
+
+		task ("Then the parameter is updated") {
+			ObjectAdmin.goToRelationshipsDetails(fieldName = "Relationship Order");
+
+			AssertTextEquals(
+				key_labelName = "Parameter",
+				locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON",
+				value1 = "Relationship Private");
 		}
 	}
 

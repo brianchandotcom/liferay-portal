@@ -11,7 +11,6 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
-import com.liferay.portal.kernel.util.GroupThreadLocal;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -27,16 +26,14 @@ public class LayoutPageTemplateEntryModelListener
 	public void onBeforeRemove(LayoutPageTemplateEntry layoutPageTemplateEntry)
 		throws ModelListenerException {
 
-		if (!GroupThreadLocal.isDeleteInProcess()) {
-			int assetDisplayPageEntriesCount =
-				_assetDisplayPageEntryLocalService.
-					getAssetDisplayPageEntriesCountByLayoutPageTemplateEntryId(
-						layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
+		int assetDisplayPageEntriesCount =
+			_assetDisplayPageEntryLocalService.
+				getAssetDisplayPageEntriesCountByLayoutPageTemplateEntryId(
+					layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
 
-			if (assetDisplayPageEntriesCount > 0) {
-				throw new ModelListenerException(
-					new RequiredLayoutPageTemplateEntryException());
-			}
+		if (assetDisplayPageEntriesCount > 0) {
+			throw new ModelListenerException(
+				new RequiredLayoutPageTemplateEntryException());
 		}
 	}
 

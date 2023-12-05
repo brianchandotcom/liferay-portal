@@ -1055,6 +1055,14 @@ this task.
 
 		<replace
 			file="${app.server.openliberty.conf.dir}/server.xml"
+		>
+			<replacetoken><![CDATA[id="defaultHttpEndpoint"]]></replacetoken>
+			<replacevalue><![CDATA[id="defaultHttpEndpoint"
+		host="*"]]></replacevalue>
+		</replace>
+
+		<replace
+			file="${app.server.openliberty.conf.dir}/server.xml"
 			token="9080"
 			value="8080"
 		/>

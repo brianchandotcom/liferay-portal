@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ClayRadio} from '@clayui/form';
+import {ClayRadio, ClayRadioGroup} from '@clayui/form';
 import React, {useMemo} from 'react';
 
 import {FieldBase} from '../FieldBase/ReactFieldBase.es';
@@ -58,23 +58,28 @@ const Radio = ({
 	return (
 		<FieldBase {...otherProps} name={name} readOnly={disabled}>
 			<div className="ddm__radio" onBlur={onBlur} onFocus={onFocus}>
-				{options.map((option, index) => (
-					<ClayRadio
-						aria-required={otherProps.required}
-						checked={currentValue === option.value}
-						disabled={disabled}
-						inline={inline}
-						key={option.value}
-						label={option.label}
-						name={`${name}_${index}`}
-						onChange={(event) => {
-							setCurrentValue(option.value);
-
-							onChange(event);
-						}}
-						value={option.value}
-					/>
-				))}
+				<ClayRadioGroup
+					inline={inline}
+					onChange={(value) => {
+						setCurrentValue(value);
+						onChange({target: {value}});
+					}}
+					value={currentValue}
+				>
+					{options.map((option, index) => (
+						<ClayRadio
+							aria-required={otherProps.required}
+							containerProps={{
+								'data-checked': currentValue === option.value,
+							}}
+							disabled={disabled}
+							key={option.value}
+							label={option.label}
+							name={`${name}_${index}`}
+							value={option.value}
+						/>
+					))}
+				</ClayRadioGroup>
 			</div>
 
 			<input name={name} type="hidden" value={currentValue} />

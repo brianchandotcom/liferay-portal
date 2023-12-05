@@ -3429,8 +3429,8 @@ public class BundleSiteInitializerTest {
 			).build();
 
 		UserAccount userAccount =
-			userAccountResource.getUserAccountByExternalReferenceCode(
-				"TESTUSER1");
+			userAccountResource.getUserAccountByEmailAddress(
+				"test.user1@liferay.com");
 
 		Assert.assertNotNull(userAccount);
 
@@ -3442,7 +3442,7 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(
 			"testalternatename1", userAccount.getAlternateName());
 		Assert.assertEquals(
-			"test.user1@liferay.com", userAccount.getEmailAddress());
+			UserAccount.Status.INACTIVE, userAccount.getStatus());
 
 		OrganizationBrief[] organizationBriefs =
 			userAccount.getOrganizationBriefs();
@@ -3452,8 +3452,8 @@ public class BundleSiteInitializerTest {
 
 		_assertUserSiteGroups(userAccount.getId());
 
-		userAccount = userAccountResource.getUserAccountByExternalReferenceCode(
-			"TESTUSER2");
+		userAccount = userAccountResource.getUserAccountByEmailAddress(
+			"test.user2@liferay.com");
 
 		Assert.assertNotNull(userAccount);
 
@@ -3465,7 +3465,7 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(
 			"testalternatename2", userAccount.getAlternateName());
 		Assert.assertEquals(
-			"test.user2@liferay.com", userAccount.getEmailAddress());
+			UserAccount.Status.INACTIVE, userAccount.getStatus());
 
 		organizationBriefs = userAccount.getOrganizationBriefs();
 
@@ -3485,8 +3485,8 @@ public class BundleSiteInitializerTest {
 			).build();
 
 		UserAccount userAccount =
-			userAccountResource.getUserAccountByExternalReferenceCode(
-				"TESTUSER1");
+			userAccountResource.getUserAccountByEmailAddress(
+				"test.user1@liferay.com");
 
 		Assert.assertNotNull(userAccount);
 
@@ -3508,8 +3508,8 @@ public class BundleSiteInitializerTest {
 
 		_assertUserSiteGroups(userAccount.getId());
 
-		userAccount = userAccountResource.getUserAccountByExternalReferenceCode(
-			"TESTUSER2");
+		userAccount = userAccountResource.getUserAccountByEmailAddress(
+			"test.user2.update@liferay.com");
 
 		Assert.assertNotNull(userAccount);
 
@@ -3521,7 +3521,7 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(
 			"testalternatename2update", userAccount.getAlternateName());
 		Assert.assertEquals(
-			"test.user2.update@liferay.com", userAccount.getEmailAddress());
+			UserAccount.Status.INACTIVE, userAccount.getStatus());
 
 		organizationBriefs = userAccount.getOrganizationBriefs();
 
@@ -3530,8 +3530,8 @@ public class BundleSiteInitializerTest {
 
 		_assertUserSiteGroups(userAccount.getId());
 
-		userAccount = userAccountResource.getUserAccountByExternalReferenceCode(
-			"TESTUSER3");
+		userAccount = userAccountResource.getUserAccountByEmailAddress(
+			"test.user3@liferay.com");
 
 		Assert.assertNotNull(userAccount);
 
@@ -3543,7 +3543,7 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(
 			"testalternatename3", userAccount.getAlternateName());
 		Assert.assertEquals(
-			"test.user3@liferay.com", userAccount.getEmailAddress());
+			UserAccount.Status.INACTIVE, userAccount.getStatus());
 
 		organizationBriefs = userAccount.getOrganizationBriefs();
 

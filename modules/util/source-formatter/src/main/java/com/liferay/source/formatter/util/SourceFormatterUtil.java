@@ -394,17 +394,19 @@ public class SourceFormatterUtil {
 			new String[0], includes, new SourceFormatterExcludes());
 
 		for (String untrackedFileName : untrackedFileNames) {
-			if (!fileNames.contains(untrackedFileName)) {
-				for (PathMatcher pathMatcher :
-						pathMatchers.getIncludeFilePathMatchers()) {
+			if (fileNames.contains(untrackedFileName)) {
+				continue;
+			}
 
-					Path filePath = Paths.get(untrackedFileName);
+			for (PathMatcher pathMatcher :
+					pathMatchers.getIncludeFilePathMatchers()) {
 
-					if (pathMatcher.matches(filePath)) {
-						fileNames.add(untrackedFileName);
+				Path path = Paths.get(untrackedFileName);
 
-						break;
-					}
+				if (pathMatcher.matches(path)) {
+					fileNames.add(untrackedFileName);
+
+					break;
 				}
 			}
 		}

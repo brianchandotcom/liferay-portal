@@ -38,7 +38,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -101,8 +100,6 @@ public class PublishLayoutMVCActionCommandTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
-
-		_company = _companyLocalService.getCompany(_group.getCompanyId());
 	}
 
 	@Test
@@ -604,8 +601,6 @@ public class PublishLayoutMVCActionCommandTest {
 
 	@Inject
 	private BulkLayoutConverter _bulkLayoutConverter;
-
-	private Company _company;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;

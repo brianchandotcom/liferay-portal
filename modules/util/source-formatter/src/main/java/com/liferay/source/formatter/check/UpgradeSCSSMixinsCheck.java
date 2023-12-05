@@ -72,9 +72,9 @@ public class UpgradeSCSSMixinsCheck extends BaseUpgradeCheck {
 	}
 
 	private String _replaceMediaQuery(String fileName, String mixin) {
-		List<String> parameterList = JavaSourceUtil.getParameterList(mixin);
+		List<String> parameterNames = JavaSourceUtil.getParameterNames(mixin);
 
-		if (parameterList.size() != 1) {
+		if (parameterNames.size() != 1) {
 			String message = StringBundler.concat(
 				"Do not use 'media-query' mixing, replace with its equivalent ",
 				"(e.g., media-breakpoint-up, media-breakpoint-only, ",
@@ -82,10 +82,10 @@ public class UpgradeSCSSMixinsCheck extends BaseUpgradeCheck {
 
 			addMessage(fileName, message);
 		}
-		else if (parameterList.contains("md")) {
+		else if (parameterNames.contains("md")) {
 			return "media-breakpoint-up(lg)";
 		}
-		else if (parameterList.contains("sm")) {
+		else if (parameterNames.contains("sm")) {
 			return "media-breakpoint-up(md)";
 		}
 
@@ -93,23 +93,23 @@ public class UpgradeSCSSMixinsCheck extends BaseUpgradeCheck {
 	}
 
 	private String _replaceRespondTo(String mixin) {
-		List<String> parameterList = JavaSourceUtil.getParameterList(mixin);
+		List<String> parameterNames = JavaSourceUtil.getParameterNames(mixin);
 
-		if (parameterList.contains("desktop")) {
-			if (parameterList.contains("tablet")) {
+		if (parameterNames.contains("desktop")) {
+			if (parameterNames.contains("tablet")) {
 				return "media-breakpoint-up(md)";
 			}
 
 			return "media-breakpoint-up(lg)";
 		}
-		else if (parameterList.contains("phone")) {
-			if (parameterList.contains("tablet")) {
+		else if (parameterNames.contains("phone")) {
+			if (parameterNames.contains("tablet")) {
 				return "media-breakpoint-down(md)";
 			}
 
 			return "media-breakpoint-down(sm)";
 		}
-		else if (parameterList.contains("tablet")) {
+		else if (parameterNames.contains("tablet")) {
 			return "media-breakpoint-only(md)";
 		}
 

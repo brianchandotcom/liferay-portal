@@ -75,12 +75,9 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
-
-import javax.validation.ValidationException;
 
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -140,9 +137,7 @@ public class DataLayoutResourceImpl extends BaseDataLayoutResourceImpl {
 			Sort[] sorts)
 		throws Exception {
 
-		return _getDataLayouts(
-			dataDefinitionId, keywords,
-			contextAcceptLanguage.getPreferredLocale(), pagination, sorts);
+		return _getDataLayouts(dataDefinitionId, keywords, pagination, sorts);
 	}
 
 	@Override
@@ -411,14 +406,9 @@ public class DataLayoutResourceImpl extends BaseDataLayoutResourceImpl {
 	}
 
 	private Page<DataLayout> _getDataLayouts(
-			long dataDefinitionId, String keywords, Locale locale,
-			Pagination pagination, Sort[] sorts)
+			long dataDefinitionId, String keywords, Pagination pagination,
+			Sort[] sorts)
 		throws Exception {
-
-		if (pagination.getPageSize() > 250) {
-			throw new ValidationException(
-				_language.format(locale, "page-size-is-greater-than-x", 250));
-		}
 
 		if (ArrayUtil.isEmpty(sorts)) {
 			sorts = new Sort[] {

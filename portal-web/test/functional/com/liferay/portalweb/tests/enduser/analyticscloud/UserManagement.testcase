@@ -889,7 +889,7 @@ definition {
 		}
 
 		task ("Open the URL again") {
-			Open.openNoError(locator1 = ${workspaceURL});
+			Open.openNoError(value1 = ${workspaceURL});
 		}
 
 		task ("Assert Page Title") {

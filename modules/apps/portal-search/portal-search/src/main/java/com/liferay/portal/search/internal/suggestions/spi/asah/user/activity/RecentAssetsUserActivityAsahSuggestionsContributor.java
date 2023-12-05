@@ -14,7 +14,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.search.asset.AssetURLViewProvider;
+import com.liferay.portal.search.internal.util.AssetURLUtil;
 import com.liferay.portal.search.rest.dto.v1_0.SuggestionsContributorConfiguration;
 import com.liferay.portal.search.spi.suggestions.SuggestionsContributor;
 import com.liferay.portal.search.suggestions.SuggestionsContributorResults;
@@ -23,7 +23,6 @@ import com.liferay.portal.search.suggestions.spi.constants.AsahSuggestionsConsta
 import java.util.HashMap;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Gustavo Lima
@@ -62,7 +61,7 @@ public class RecentAssetsUserActivityAsahSuggestionsContributor
 
 		if (url.endsWith("/search")) {
 			try {
-				String className = _contentTypeToClassNameMap.get(
+				String className = _classNames.get(
 					itemJSONObject.getString("contentType"));
 
 				AssetRendererFactory<?> assetRendererFactory =
@@ -75,7 +74,7 @@ public class RecentAssetsUserActivityAsahSuggestionsContributor
 
 				long classPK = itemJSONObject.getLong("assetId");
 
-				return _assetURLViewProvider.getAssetURLView(
+				return AssetURLUtil.getAssetURLView(
 					assetRendererFactory.getAssetRenderer(classPK),
 					assetRendererFactory, className, classPK,
 					_liferayPortletRequest, _liferayPortletResponse);
@@ -95,7 +94,7 @@ public class RecentAssetsUserActivityAsahSuggestionsContributor
 	private static final Log _log = LogFactoryUtil.getLog(
 		RecentAssetsUserActivityAsahSuggestionsContributor.class);
 
-	private static final HashMap<String, String> _contentTypeToClassNameMap =
+	private static final Map<String, String> _classNames =
 		HashMapBuilder.put(
 			"blog", "com.liferay.blogs.model.BlogsEntry"
 		).put(
@@ -106,9 +105,6 @@ public class RecentAssetsUserActivityAsahSuggestionsContributor
 		).put(
 			"web-content", "com.liferay.journal.model.JournalArticle"
 		).build();
-
-	@Reference
-	private AssetURLViewProvider _assetURLViewProvider;
 
 	private LiferayPortletRequest _liferayPortletRequest;
 	private LiferayPortletResponse _liferayPortletResponse;

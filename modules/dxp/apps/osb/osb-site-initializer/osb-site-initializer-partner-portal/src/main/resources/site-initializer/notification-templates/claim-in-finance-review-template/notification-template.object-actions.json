@@ -1,0 +1,14 @@
+[
+	{
+		"active": true,
+		"conditionExpression": "mdfClaimStatus == 'inFinanceReview'",
+		"externalReferenceCode": "MDF-CLAIM-IN-FINANCE-NOTIFICATION-1",
+		"label": {
+			"en_US": "Notification MDF Claim In Finance Review"
+		},
+		"name": "notificationMDFClaimInFinanceReview",
+		"objectActionExecutorKey": "notification",
+		"objectActionTriggerKey": "onAfterUpdate",
+		"objectDefinitionId": "[$OBJECT_DEFINITION_ID:MDFClaim$]"
+	}
+]

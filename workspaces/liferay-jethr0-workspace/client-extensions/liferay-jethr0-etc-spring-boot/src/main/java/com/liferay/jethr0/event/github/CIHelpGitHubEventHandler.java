@@ -33,6 +33,14 @@ public class CIHelpGitHubEventHandler extends BaseGitHubEventHandler {
 
 	@Override
 	public String process() throws InvalidJSONException, IOException {
+		if (!isGitHubCIEnabledBranchNames()) {
+			if (_log.isInfoEnabled()) {
+				_log.info("Skipped processing ci:help");
+			}
+
+			return null;
+		}
+
 		GitHubClient gitHubClient = getGitHubClient();
 
 		GitHubComment gitHubComment = gitHubClient.createGitHubComment(

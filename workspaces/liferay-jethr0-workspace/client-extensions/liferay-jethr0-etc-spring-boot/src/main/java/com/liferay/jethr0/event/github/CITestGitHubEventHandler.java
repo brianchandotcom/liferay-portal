@@ -27,6 +27,9 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import org.json.JSONObject;
 
 /**
@@ -36,6 +39,14 @@ public class CITestGitHubEventHandler extends BaseGitHubEventHandler {
 
 	@Override
 	public String process() throws InvalidJSONException, IOException {
+		if (!isGitHubCIEnabledBranchNames()) {
+			if (_log.isInfoEnabled()) {
+				_log.info("Skipped processing ci:test");
+			}
+
+			return null;
+		}
+
 		JobEntity jobEntity = _getJobEntity();
 
 		BuildEntityRepository buildEntityRepository = getBuildRepository();
@@ -161,6 +172,9 @@ public class CITestGitHubEventHandler extends BaseGitHubEventHandler {
 
 		return "default";
 	}
+
+	private static final Log _log = LogFactory.getLog(
+		OpenPullRequestEventHandler.class);
 
 	private static final Pattern _pattern = Pattern.compile(
 		"ci:test(\\:(?<testOptions>[^\\s]+))?");

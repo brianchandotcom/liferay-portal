@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
+import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -234,6 +235,8 @@ public interface KBArticleService extends BaseService {
 	public String[] getTempAttachmentNames(long groupId, String tempFolderName)
 		throws PortalException;
 
+	public Lock lock(long resourcePrimKey) throws PortalException;
+
 	public void moveKBArticle(
 			long resourcePrimKey, long parentResourceClassNameId,
 			long parentResourcePrimKey, double priority)
@@ -251,6 +254,8 @@ public interface KBArticleService extends BaseService {
 
 	public void subscribeKBArticle(long groupId, long resourcePrimKey)
 		throws PortalException;
+
+	public void unlock(long resourcePrimKey) throws PortalException;
 
 	public void unsubscribeGroupKBArticles(long groupId, String portletId)
 		throws PortalException;

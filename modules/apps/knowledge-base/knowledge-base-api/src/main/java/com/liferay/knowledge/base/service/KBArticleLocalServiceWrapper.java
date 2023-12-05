@@ -795,6 +795,14 @@ public class KBArticleLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.lock.Lock lock(
+			long userId, long resourcePrimKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _kbArticleLocalService.lock(userId, resourcePrimKey);
+	}
+
+	@Override
 	public void moveDependentKBArticlesToTrash(
 			long parentResourcePrimKey, long trashEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -902,6 +910,11 @@ public class KBArticleLocalServiceWrapper
 
 		_kbArticleLocalService.subscribeKBArticle(
 			userId, groupId, resourcePrimKey);
+	}
+
+	@Override
+	public void unlock(long userId, long resourcePrimKey) {
+		_kbArticleLocalService.unlock(userId, resourcePrimKey);
 	}
 
 	@Override

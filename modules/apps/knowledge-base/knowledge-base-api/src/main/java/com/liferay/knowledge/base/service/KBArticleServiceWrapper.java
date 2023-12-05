@@ -384,6 +384,13 @@ public class KBArticleServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.lock.Lock lock(long resourcePrimKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _kbArticleService.lock(resourcePrimKey);
+	}
+
+	@Override
 	public void moveKBArticle(
 			long resourcePrimKey, long parentResourceClassNameId,
 			long parentResourcePrimKey, double priority)
@@ -423,6 +430,13 @@ public class KBArticleServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_kbArticleService.subscribeKBArticle(groupId, resourcePrimKey);
+	}
+
+	@Override
+	public void unlock(long resourcePrimKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_kbArticleService.unlock(resourcePrimKey);
 	}
 
 	@Override

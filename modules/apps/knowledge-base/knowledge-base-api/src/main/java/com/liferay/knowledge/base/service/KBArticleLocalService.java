@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -525,6 +526,8 @@ public interface KBArticleLocalService
 			long userId, long resourcePrimKey, int increment)
 		throws PortalException;
 
+	public Lock lock(long userId, long resourcePrimKey) throws PortalException;
+
 	public void moveDependentKBArticlesToTrash(
 			long parentResourcePrimKey, long trashEntryId)
 		throws PortalException;
@@ -572,6 +575,8 @@ public interface KBArticleLocalService
 	public void subscribeKBArticle(
 			long userId, long groupId, long resourcePrimKey)
 		throws PortalException;
+
+	public void unlock(long userId, long resourcePrimKey);
 
 	public void unsubscribeGroupKBArticles(long userId, long groupId)
 		throws PortalException;

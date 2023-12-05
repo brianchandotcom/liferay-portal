@@ -340,6 +340,12 @@ public class KBArticleServiceUtil {
 		return getService().getTempAttachmentNames(groupId, tempFolderName);
 	}
 
+	public static com.liferay.portal.kernel.lock.Lock lock(long resourcePrimKey)
+		throws PortalException {
+
+		return getService().lock(resourcePrimKey);
+	}
+
 	public static void moveKBArticle(
 			long resourcePrimKey, long parentResourceClassNameId,
 			long parentResourcePrimKey, double priority)
@@ -375,6 +381,10 @@ public class KBArticleServiceUtil {
 		throws PortalException {
 
 		getService().subscribeKBArticle(groupId, resourcePrimKey);
+	}
+
+	public static void unlock(long resourcePrimKey) throws PortalException {
+		getService().unlock(resourcePrimKey);
 	}
 
 	public static void unsubscribeGroupKBArticles(

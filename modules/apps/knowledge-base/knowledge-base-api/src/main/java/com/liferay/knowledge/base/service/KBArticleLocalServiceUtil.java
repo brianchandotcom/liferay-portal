@@ -699,6 +699,13 @@ public class KBArticleLocalServiceUtil {
 		getService().incrementViewCount(userId, resourcePrimKey, increment);
 	}
 
+	public static com.liferay.portal.kernel.lock.Lock lock(
+			long userId, long resourcePrimKey)
+		throws PortalException {
+
+		return getService().lock(userId, resourcePrimKey);
+	}
+
 	public static void moveDependentKBArticlesToTrash(
 			long parentResourcePrimKey, long trashEntryId)
 		throws PortalException {
@@ -791,6 +798,10 @@ public class KBArticleLocalServiceUtil {
 		throws PortalException {
 
 		getService().subscribeKBArticle(userId, groupId, resourcePrimKey);
+	}
+
+	public static void unlock(long userId, long resourcePrimKey) {
+		getService().unlock(userId, resourcePrimKey);
 	}
 
 	public static void unsubscribeGroupKBArticles(long userId, long groupId)

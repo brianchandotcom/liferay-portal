@@ -205,6 +205,10 @@ components:
                             type: integer
                         name:
                             type: string
+                        name_i18n:
+                            additionalProperties:
+                                type: string
+                            type: object
                     type: object
                 parentTaxonomyVocabulary:
                     description:
@@ -215,6 +219,10 @@ components:
                             type: integer
                         name:
                             type: string
+                        name_i18n:
+                            additionalProperties:
+                                type: string
+                            type: object
                     readOnly: true
                     type: object
                 siteId:

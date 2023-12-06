@@ -106,6 +106,8 @@ definition {
 			fieldType = "Single Selection",
 			formPageNumber = 0);
 
+		var singleSelectionFieldName = FormFields.getFieldName();
+
 		Type(
 			key_rowNumber = 1,
 			locator1 = "FormFields#OPTIONS_OPTION_VALUE_FIELD",
@@ -124,20 +126,22 @@ definition {
 			key_selectOption = "Duplicate",
 			locator1 = "FormViewBuilder#SELECT_FIELD_OPTIONS_LIST");
 
+		var duplicatedSingleSelectionFieldName = FormFields.getFieldName();
+
 		FormFields.viewOptionSingleSelection(
-			fieldName = "Single Selection",
+			fieldName = ${singleSelectionFieldName},
 			optionName = "Option 1");
 
 		FormFields.viewOptionSingleSelection(
-			fieldName = "Single Selection",
+			fieldName = ${singleSelectionFieldName},
 			optionName = "Option 2");
 
 		FormFields.viewOptionSingleSelection(
-			fieldName = "Copy of Single Selection",
+			fieldName = ${duplicatedSingleSelectionFieldName},
 			optionName = "Option 1");
 
 		FormFields.viewOptionSingleSelection(
-			fieldName = "Copy of Single Selection",
+			fieldName = ${duplicatedSingleSelectionFieldName},
 			optionName = "Option 2");
 
 		FormViewBuilder.assertHelpTextPresent(

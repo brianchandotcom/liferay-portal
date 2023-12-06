@@ -498,6 +498,8 @@ definition {
 			fieldPositionNumber = 0,
 			fieldType = "Single Selection");
 
+		var singleSelectionFieldName = FormFields.getFieldName();
+
 		FormFields.editOptionsRow(
 			optionValue = "United",
 			rowNumber = 1);
@@ -543,7 +545,7 @@ definition {
 		FormsAdminNavigator.gotoPublishedForm();
 
 		FormFields.selectRadioOption(
-			fieldName = "Single Selection",
+			fieldName = ${singleSelectionFieldName},
 			radioOption = "United");
 
 		Click.javaScriptClick(

@@ -96,6 +96,19 @@ public interface CompanyLocalService
 		throws PortalException;
 
 	/**
+	 * Adds a company that was previously extracted using the {@link #extractCompany(long)}.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param name the company's name, null if no name change is required
+	 * @param virtualHostname the company's virtual host name, null if no virtualHostname is required
+	 * @param webId the the company's web domain, null if no webId change is required
+	 * @return the company
+	 */
+	public Company addDBPartitionCompany(
+			long companyId, String name, String virtualHostName, String webId)
+		throws PortalException;
+
+	/**
 	 * Returns the company with the web domain.
 	 *
 	 * The method sets mail domain to the web domain to the default name set in
@@ -244,6 +257,13 @@ public interface CompanyLocalService
 	public long dynamicQueryCount(
 		DynamicQuery dynamicQuery, Projection projection);
 
+	/**
+	 * Extract a DBPartition company to a standalone schema, so that it can
+	 * afterwards be inserted by {@link #addDBPartitionCompany(long, String, String, String)}
+	 *
+	 * @param companyId the primary key of the company to extract
+	 * @return the company extracted
+	 */
 	public Company extractCompany(long companyId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

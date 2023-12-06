@@ -3,42 +3,45 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.jethr0.job.definition;
+package com.liferay.jethr0.job.definition.parameter;
+
+import com.liferay.jethr0.util.StringUtil;
 
 /**
  * @author Michael Hashimoto
  */
-public class PortalBuildProfileJobParameterDefinition
+public class PortalBranchURLJobParameterDefinition
 	extends BaseJobParameterDefinition {
 
 	@Override
 	public String getKey() {
-		return "portalBuildProfile";
+		return "portalBranchURL";
 	}
 
 	@Override
 	public String getLabel() {
-		return "Portal Build Profile";
+		return "Portal Branch URL";
 	}
 
 	@Override
 	public Type getType() {
-		return Type.STRING;
+		return Type.URL;
 	}
 
 	@Override
 	public String getValueDefault() {
-		return "dxp";
+		return null;
 	}
 
 	@Override
 	public String getValueDescription() {
-		return "Insert your Build Profile here (i.e. 'dxp' or 'portal')";
+		return StringUtil.combine(
+			"e.g. https://github.com/[user]/liferay-portal/tree/[branch]");
 	}
 
 	@Override
 	public String getValueRegex() {
-		return "(dxp|portal)";
+		return "https://github.com/[^/]+/liferay-portal(-ee)?/tree/[^/]+";
 	}
 
 }

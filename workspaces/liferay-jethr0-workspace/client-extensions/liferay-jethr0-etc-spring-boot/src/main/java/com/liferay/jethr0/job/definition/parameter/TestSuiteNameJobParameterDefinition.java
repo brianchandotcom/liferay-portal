@@ -3,45 +3,48 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.jethr0.job.definition;
-
-import com.liferay.jethr0.util.StringUtil;
+package com.liferay.jethr0.job.definition.parameter;
 
 /**
  * @author Michael Hashimoto
  */
-public class PortalBranchURLJobParameterDefinition
+public class TestSuiteNameJobParameterDefinition
 	extends BaseJobParameterDefinition {
+
+	public TestSuiteNameJobParameterDefinition(String valueDefault) {
+		_valueDefault = valueDefault;
+	}
 
 	@Override
 	public String getKey() {
-		return "portalBranchURL";
+		return "testSuiteName";
 	}
 
 	@Override
 	public String getLabel() {
-		return "Portal Branch URL";
+		return "Test Suite Name";
 	}
 
 	@Override
 	public Type getType() {
-		return Type.URL;
+		return Type.STRING;
 	}
 
 	@Override
 	public String getValueDefault() {
-		return null;
+		return _valueDefault;
 	}
 
 	@Override
 	public String getValueDescription() {
-		return StringUtil.combine(
-			"e.g. https://github.com/[user]/liferay-portal/tree/[branch]");
+		return "Insert your Test Suite Name here";
 	}
 
 	@Override
 	public String getValueRegex() {
-		return "https://github.com/[^/]+/liferay-portal(-ee)?/tree/[^/]+";
+		return null;
 	}
+
+	private final String _valueDefault;
 
 }

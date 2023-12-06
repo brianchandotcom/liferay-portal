@@ -14,11 +14,7 @@
 	<bean class="com.liferay.portal.spring.aop.AopConfigurableApplicationContextConfigurator" id="configurableApplicationContextConfigurator" />
 	<bean class="org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy" id="liferayDataSource">
 		<property name="targetDataSource">
-			<bean class="com.liferay.portal.dao.jdbc.spring.DataSourceFactoryBean">
-				<property name="dataSource">
-					<bean class="com.liferay.portal.dao.init.DBInitUtil" factory-method="getDataSource" />
-				</property>
-			</bean>
+			<bean class="com.liferay.portal.dao.init.DBInitUtil" factory-method="getDataSource" />
 		</property>
 	</bean>
 </beans>

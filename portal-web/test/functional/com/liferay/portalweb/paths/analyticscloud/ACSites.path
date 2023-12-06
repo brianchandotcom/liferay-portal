@@ -156,8 +156,11 @@
 
 <!-- AC Sites -->
 
-	<td>SITE_PATH</td>
-	<td>//*[name()='svg']//*[contains(@class, 'analytics-sankey-title') and @y='0']//*[text()='${key_pageName}']</td>
+<tr>
+	<td>PATH_PAGE_NAME_POPOVER</td>
+	<td>//div[contains(@class,'clay-popover-top')]//div[text()='${key_pageName}']</td>
+	<td></td>
+</tr>
 <tr>
 	<td>PATH_PAGE_NAME_SANKEY</td>
 	<td>//*[contains(@class,'recharts-sankey-nodes')]//*[contains(text(),'${key_pageName}')]</td>

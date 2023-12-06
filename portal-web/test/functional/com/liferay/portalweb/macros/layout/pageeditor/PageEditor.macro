@@ -200,7 +200,7 @@ definition {
 		if (${navTab} == "Fragments") {
 			AssertElementPresent(
 				key_columnNumber = ${columnNumber},
-				key_elementHeader = "//div[@aria-label='${fragmentName}']",
+				key_elementHeader = "//div[@data-name='${fragmentName}']",
 				key_position = ${position},
 				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 		}
@@ -208,7 +208,7 @@ definition {
 		if (${navTab} == "Widgets") {
 			AssertElementPresent(
 				key_columnNumber = ${columnNumber},
-				key_elementHeader = "//div[@aria-label='${portletName}']",
+				key_elementHeader = "//div[@data-name='${portletName}']",
 				key_position = ${position},
 				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 
@@ -294,7 +294,7 @@ definition {
 
 			if (${navTab} == "Fragments") {
 				AssertElementPresent(
-					key_elementHeader = "//div[@aria-label='${fragmentName}']",
+					key_elementHeader = "//div[@data-name='${fragmentName}']",
 					key_elementType = "Container",
 					key_position = ${position},
 					locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
@@ -302,7 +302,7 @@ definition {
 
 			if (${navTab} == "Widgets") {
 				AssertElementPresent(
-					key_elementHeader = "//div[@aria-label='${portletName}']",
+					key_elementHeader = "//div[@data-name='${portletName}']",
 					key_elementType = "Container",
 					key_position = ${position},
 					locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
@@ -2030,7 +2030,7 @@ definition {
 		if (isSet(columnNumber)) {
 			Click.clickNoWaitForVisible(
 				key_columnNumber = ${columnNumber},
-				key_elementHeader = "//div[@aria-label='${key_fragmentName}']",
+				key_elementHeader = "//div[@data-name='${key_fragmentName}']",
 				key_position = 1,
 				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 		}
@@ -2097,7 +2097,7 @@ definition {
 		if (isSet(columnNumber)) {
 			Click.clickNoWaitForVisible(
 				key_columnNumber = ${columnNumber},
-				key_elementHeader = "//div[@aria-label='${key_fragmentName}']",
+				key_elementHeader = "//div[@data-name='${key_fragmentName}']",
 				key_position = 1,
 				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 		}
@@ -2496,7 +2496,7 @@ definition {
 		if (isSet(columnNumber)) {
 			Click.clickNoWaitForVisible(
 				key_columnNumber = ${columnNumber},
-				key_elementHeader = "//div[@aria-label='${key_fragmentName}']",
+				key_elementHeader = "//div[@data-name='${key_fragmentName}']",
 				key_position = 1,
 				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 		}
@@ -2970,7 +2970,7 @@ definition {
 		if (isSet(columnNumber)) {
 			Click.clickNoWaitForVisible(
 				key_columnNumber = ${columnNumber},
-				key_elementHeader = "//div[@aria-label='Form Container']",
+				key_elementHeader = "//div[@data-name='Form Container']",
 				key_position = 1,
 				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 		}
@@ -4405,7 +4405,7 @@ function getWebElement(locator) {
   return document.evaluate(locator, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
 }
 
-return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}]").classList).filter(className => className.includes('lfr-layout-structure-item'))[0];
+return	Array.from(getWebElement("(//div[@data-name='${fragmentName}'])[${index}]").classList).filter(className => className.includes('lfr-layout-structure-item'))[0];
 		''';
 
 		var className = selenium.getEval(${javascript});
@@ -4443,7 +4443,7 @@ function getWebElement(locator) {
   return document.evaluate(locator, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
 }
 
-return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}]").classList).filter(className => className.includes('lfr-layout-structure-item'))[0];
+return	Array.from(getWebElement("(//div[@data-name='${fragmentName}'])[${index}]").classList).filter(className => className.includes('lfr-layout-structure-item'))[0];
 		''';
 
 		var topperStylesClass = selenium.getEval(${javascript});
@@ -5661,7 +5661,7 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 
 		AssertElementPresent(
 			key_columnNumber = ${moduleNumber},
-			key_elementHeader = "//div[@aria-label='${elementName}']",
+			key_elementHeader = "//div[@data-name='${elementName}']",
 			key_position = ${position},
 			locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 	}
@@ -5674,7 +5674,7 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 
 		AssertElementNotPresent(
 			key_columnNumber = ${moduleNumber},
-			key_elementHeader = "//div[@aria-label='${elementName}']",
+			key_elementHeader = "//div[@data-name='${elementName}']",
 			key_position = ${position},
 			locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 	}

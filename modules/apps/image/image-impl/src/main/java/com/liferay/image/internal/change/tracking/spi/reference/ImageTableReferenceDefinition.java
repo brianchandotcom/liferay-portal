@@ -38,7 +38,7 @@ public class ImageTableReferenceDefinition
 			).innerJoinON(
 				ImageTable.INSTANCE,
 				CTSContentTable.INSTANCE.companyId.eq(
-					0L
+					ImageTable.INSTANCE.companyId
 				).and(
 					CTSContentTable.INSTANCE.repositoryId.eq(0L)
 				).and(

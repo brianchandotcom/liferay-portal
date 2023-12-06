@@ -12,6 +12,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.db.partition.DBPartitionUtil;
 import com.liferay.portal.db.partition.test.util.BaseDBPartitionTestCase;
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.User;
@@ -231,7 +232,7 @@ public class UpgradePartitionedConfigurationTableTest
 							try (ResultSet resultSet =
 									preparedStatement.executeQuery()) {
 
-								if ((companyId == 0) ||
+								if ((companyId == CompanyConstants.SYSTEM) ||
 									Objects.equals(
 										currentCompanyId, companyId)) {
 
@@ -295,7 +296,7 @@ public class UpgradePartitionedConfigurationTableTest
 				UpgradePartitionedConfigurationTableTest.class.getName() + "~" +
 					RandomTestUtil.randomString();
 
-			String dictionary = "";
+			String dictionary = StringPool.BLANK;
 
 			if (scopeValue != null) {
 				dictionary = StringBundler.concat(

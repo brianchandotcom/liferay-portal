@@ -35,18 +35,18 @@ public class TestSuitePortalUpstreamJobEntity
 
 	@Override
 	protected Map<String, String> getInitialBuildParameters() {
-		Map<String, String> initialBuildParamaters =
+		Map<String, String> initialBuildParameters =
 			super.getInitialBuildParameters();
 
-		initialBuildParamaters.put(
+		initialBuildParameters.put(
 			"CI_TEST_SUITE", String.valueOf(getTestSuiteName()));
-		initialBuildParamaters.put("PORTAL_GIT_COMMIT", getUpstreamBranchSHA());
-		initialBuildParamaters.put(
+		initialBuildParameters.put("PORTAL_GIT_COMMIT", getUpstreamBranchSHA());
+		initialBuildParameters.put(
 			"PORTAL_GITHUB_URL", String.valueOf(getUpstreamBranchURL()));
-		initialBuildParamaters.put(
+		initialBuildParameters.put(
 			"TEST_PORTAL_BUILD_PROFILE", getBuildProfile());
 
-		return initialBuildParamaters;
+		return initialBuildParameters;
 	}
 
 	@Override

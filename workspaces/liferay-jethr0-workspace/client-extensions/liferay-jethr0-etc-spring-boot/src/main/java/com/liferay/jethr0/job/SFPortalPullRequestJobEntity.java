@@ -29,13 +29,13 @@ public class SFPortalPullRequestJobEntity
 
 	@Override
 	protected Map<String, String> getInitialBuildParameters() {
-		Map<String, String> initialBuildParamaters =
+		Map<String, String> initialBuildParameters =
 			super.getInitialBuildParameters();
 
-		initialBuildParamaters.put(
+		initialBuildParameters.put(
 			"PULL_REQUEST_URL", String.valueOf(getPortalPullRequestURL()));
 
-		return initialBuildParamaters;
+		return initialBuildParameters;
 	}
 
 	@Override

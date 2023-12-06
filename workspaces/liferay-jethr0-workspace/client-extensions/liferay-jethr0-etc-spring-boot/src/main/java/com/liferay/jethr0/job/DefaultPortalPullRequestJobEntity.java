@@ -34,32 +34,32 @@ public class DefaultPortalPullRequestJobEntity
 
 	@Override
 	protected Map<String, String> getInitialBuildParameters() {
-		Map<String, String> initialBuildParamaters =
+		Map<String, String> initialBuildParameters =
 			super.getInitialBuildParameters();
 
-		initialBuildParamaters.put("CI_TEST_SUITE", getTestSuiteName());
-		initialBuildParamaters.put("GITHUB_ORIGIN_NAME", getOriginName());
-		initialBuildParamaters.put(
+		initialBuildParameters.put("CI_TEST_SUITE", getTestSuiteName());
+		initialBuildParameters.put("GITHUB_ORIGIN_NAME", getOriginName());
+		initialBuildParameters.put(
 			"GITHUB_PULL_REQUEST_NUMBER",
 			String.valueOf(_getPullRequestNumber()));
-		initialBuildParamaters.put(
+		initialBuildParameters.put(
 			"GITHUB_RECEIVER_USERNAME", _getPullRequestReceiverUserName());
-		initialBuildParamaters.put(
+		initialBuildParameters.put(
 			"GITHUB_REPOSITORY_NAME", _getPullRequestRepositoryName());
-		initialBuildParamaters.put(
+		initialBuildParameters.put(
 			"GITHUB_SENDER_BRANCH_NAME", getSenderBranchName());
-		initialBuildParamaters.put(
+		initialBuildParameters.put(
 			"GITHUB_SENDER_BRANCH_SHA", getSenderBranchSHA());
-		initialBuildParamaters.put(
+		initialBuildParameters.put(
 			"GITHUB_SENDER_USERNAME", getSenderUserName());
-		initialBuildParamaters.put(
+		initialBuildParameters.put(
 			"GITHUB_UPSTREAM_BRANCH_NAME", getUpstreamBranchName());
-		initialBuildParamaters.put(
+		initialBuildParameters.put(
 			"GITHUB_UPSTREAM_BRANCH_SHA", getUpstreamBranchSHA());
 
-		initialBuildParamaters.put("TEST_PORTAL_BUILD_PROFILE", "dxp");
+		initialBuildParameters.put("TEST_PORTAL_BUILD_PROFILE", "dxp");
 
-		return initialBuildParamaters;
+		return initialBuildParameters;
 	}
 
 	@Override

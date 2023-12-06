@@ -11,6 +11,8 @@ import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
 import com.liferay.jethr0.bui1d.run.BuildRunEntity;
 import com.liferay.jethr0.jenkins.JenkinsQueue;
 import com.liferay.jethr0.job.JobEntity;
+import com.liferay.jethr0.job.definition.JobDefinition;
+import com.liferay.jethr0.job.definition.JobDefinitionFactory;
 import com.liferay.jethr0.job.queue.JobQueue;
 import com.liferay.jethr0.job.repository.JobEntityRepository;
 
@@ -152,6 +154,22 @@ public class JobRestController {
 		}
 
 		return new ResponseEntity<>(buildsJSONArray.toString(), HttpStatus.OK);
+	}
+
+	@GetMapping("/definitions")
+	public ResponseEntity<String> jobDefinitions(
+		@AuthenticationPrincipal Jwt jwt) {
+
+		JSONArray jobDefinitionsJSONArray = new JSONArray();
+
+		for (JobDefinition jobDefinition :
+				JobDefinitionFactory.getJobDefinitions()) {
+
+			jobDefinitionsJSONArray.put(jobDefinition.getJSONObject());
+		}
+
+		return new ResponseEntity<>(
+			jobDefinitionsJSONArray.toString(), HttpStatus.OK);
 	}
 
 	@GetMapping("/queue")

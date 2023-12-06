@@ -53,7 +53,9 @@ public class RankingSearchRequestContributor
 		SearchContext searchContext = _getSearchContext(searchRequest);
 
 		if (GetterUtil.getBoolean(
-				searchContext.getAttribute("rankings.admin.search"))) {
+				searchContext.getAttribute("rankings.admin.search")) ||
+			!GetterUtil.getBoolean(
+				searchContext.getAttribute("search.tunning.rankings.apply"))) {
 
 			return searchRequest;
 		}

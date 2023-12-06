@@ -118,7 +118,8 @@ definition {
 				addGuestPermissions = ${addGuestPermissions},
 				assetCategoryIds = ${assetCategoryIds},
 				assetTagNames = ${assetTagNames},
-				groupName = ${groupName});
+				groupName = ${groupName},
+				workflowAction = ${workflowAction});
 		}
 
 		if (!(isSet(urlTitle))) {
@@ -137,6 +138,13 @@ definition {
 		if (!(isSet(displayDate))) {
 			var displayDate = "2020-01-01T01:01:00Z";
 		}
+		else {
+			var increaseMinutes = StringUtil.replace(480, 0, ${increaseMinutes});
+
+			var displayDate = DateUtil.getDateOffsetByMinutes(${increaseMinutes}, "yyyy-MM-dd HH:mm");
+
+			echo("## * displayDate: ${displayDate}");
+		}
 
 		var parentResourceClassNameId = JSONClassname._getClassNameId(value = "com.liferay.knowledge.base.model.KBFolder");
 		var userLoginInfo = JSONUtil2.formatJSONUser();
@@ -154,9 +162,9 @@ definition {
 				-d description=${kbDescription} \
 				-d sections= \
 				-d sourceURL= \
-				-d displayDate=${displayDate} \
-				-d expirationDate=${expirationDate} \
-				-d reviewDate=${reviewDate} \
+				-d <CURL_DATA[displayDate=${displayDate}]CURL_DATA> \
+				-d <CURL_DATA[expirationDate=${expirationDate}]CURL_DATA> \
+				-d <CURL_DATA[reviewDate=${reviewDate}]CURL_DATA> \
 				-d selectedFileNames= \
 				-d serviceContext=${serviceContext}
 		''';
@@ -195,6 +203,13 @@ definition {
 		if (!(isSet(displayDate))) {
 			var displayDate = "2020-01-01T01:01:00Z";
 		}
+		else {
+			var increaseMinutes = StringUtil.replace(480, 0, ${increaseMinutes});
+
+			var displayDate = DateUtil.getDateOffsetByMinutes(${increaseMinutes}, "yyyy-MM-dd HH:mm");
+
+			echo("## * displayDate: ${displayDate}");
+		}
 
 		var userLoginInfo = JSONUtil2.formatJSONUser();
 
@@ -211,9 +226,9 @@ definition {
 				-d description= \
 				-d sections= \
 				-d sourceURL= \
-				-d displayDate=${displayDate} \
-				-d expirationDate=${expirationDate} \
-				-d reviewDate=${reviewDate}
+				-d <CURL_DATA[displayDate=${displayDate}]CURL_DATA> \
+				-d <CURL_DATA[expirationDate=${expirationDate}]CURL_DATA> \
+				-d <CURL_DATA[reviewDate=${reviewDate}]CURL_DATA>
 				-d selectedFileNames= \
 		''';
 

@@ -28,11 +28,11 @@ public class TestSuitePortalUpstreamJobEntity
 
 		initialBuildParameters.put(
 			"CI_TEST_SUITE", String.valueOf(getTestSuiteName()));
-		initialBuildParameters.put("PORTAL_GIT_COMMIT", getBranchSHA());
+		initialBuildParameters.put("PORTAL_GIT_COMMIT", getPortalBranchSHA());
 		initialBuildParameters.put(
-			"PORTAL_GITHUB_URL", String.valueOf(getBranchURL()));
+			"PORTAL_GITHUB_URL", String.valueOf(getPortalBranchURL()));
 		initialBuildParameters.put(
-			"TEST_PORTAL_BUILD_PROFILE", getBuildProfile());
+			"TEST_PORTAL_BUILD_PROFILE", getPortalBuildProfile());
 
 		return initialBuildParameters;
 	}
@@ -40,7 +40,8 @@ public class TestSuitePortalUpstreamJobEntity
 	@Override
 	protected String getJenkinsJobName() {
 		return StringUtil.combine(
-			"test-portal-testsuite-upstream(", getUpstreamBranchName(), ")");
+			"test-portal-testsuite-upstream(", getPortalUpstreamBranchName(),
+			")");
 	}
 
 }

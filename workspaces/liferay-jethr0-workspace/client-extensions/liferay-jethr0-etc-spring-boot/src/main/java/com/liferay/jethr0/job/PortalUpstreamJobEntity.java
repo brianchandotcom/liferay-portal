@@ -12,24 +12,24 @@ import java.net.URL;
  */
 public interface PortalUpstreamJobEntity extends JobEntity {
 
-	public String getBranchSHA();
+	public String getPortalBranchSHA();
 
-	public URL getBranchURL();
+	public URL getPortalBranchURL();
 
-	public String getBuildProfile();
+	public String getPortalBuildProfile();
+
+	public String getPortalUpstreamBranchName();
 
 	public String getTestSuiteName();
 
-	public String getUpstreamBranchName();
+	public void setPortalBranchSHA(String portalBranchSHA);
 
-	public void setBranchSHA(String branchSHA);
+	public void setPortalBranchURL(URL portalBranchURL);
 
-	public void setBranchURL(URL branchURL);
-
-	public void setBuildProfile(String buildProfile);
+	public void setPortalBuildProfile(String portalBuildProfile);
 
 	public void setTestSuiteName(String testSuiteName);
 
-	public void setUpstreamBranchName(String upstreamBranchName);
+	public void setUpstreamPortalBranchName(String portalUpstreamBranchName);
 
 }

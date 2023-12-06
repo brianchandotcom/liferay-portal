@@ -30,11 +30,11 @@ public class AcceptancePortalUpstreamJobEntity
 		Map<String, String> initialBuildParameters =
 			super.getInitialBuildParameters();
 
-		initialBuildParameters.put("PORTAL_GIT_COMMIT", getBranchSHA());
+		initialBuildParameters.put("PORTAL_GIT_COMMIT", getPortalBranchSHA());
 		initialBuildParameters.put(
-			"PORTAL_GITHUB_URL", String.valueOf(getBranchURL()));
+			"PORTAL_GITHUB_URL", String.valueOf(getPortalBranchURL()));
 		initialBuildParameters.put(
-			"TEST_PORTAL_BUILD_PROFILE", getBuildProfile());
+			"TEST_PORTAL_BUILD_PROFILE", getPortalBuildProfile());
 
 		return initialBuildParameters;
 	}
@@ -45,12 +45,12 @@ public class AcceptancePortalUpstreamJobEntity
 
 		sb.append("test-portal-acceptance-upstream");
 
-		if (Objects.equals(getBuildProfile(), "dxp")) {
+		if (Objects.equals(getPortalBuildProfile(), "dxp")) {
 			sb.append("-dxp");
 		}
 
 		sb.append("(");
-		sb.append(getUpstreamBranchName());
+		sb.append(getPortalUpstreamBranchName());
 		sb.append(")");
 
 		return sb.toString();

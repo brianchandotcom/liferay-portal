@@ -239,7 +239,7 @@ definition {
 		}
 
 		task ("And Then Department and Role are listed in alphabetical order with Employee listed in them with the link icon") {
-			AssertClick(
+			AssertElementPresent(
 				key_index = 2,
 				locator1 = "ObjectModelBuilder#SIDEBAR_FOLDER_BY_INDEX",
 				value1 = "Department");
@@ -249,7 +249,7 @@ definition {
 				key_objectLabel = "Employee",
 				locator1 = "ObjectModelBuilder#LINKED_OBJECT_IN_OTHER_FOLDERS");
 
-			AssertClick(
+			AssertElementPresent(
 				key_index = 3,
 				locator1 = "ObjectModelBuilder#SIDEBAR_FOLDER_BY_INDEX",
 				value1 = "Role");

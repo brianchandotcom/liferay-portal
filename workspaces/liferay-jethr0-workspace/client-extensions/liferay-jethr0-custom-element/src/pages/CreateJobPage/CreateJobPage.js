@@ -20,7 +20,7 @@ function CreateJobPage() {
 	const [jobParameters, setJobParameters] = useState(null);
 	const [jobPriority, setJobPriority] = useState(4);
 	const [jobTypeKey, setJobTypeKey] = useState('portalPullRequestSF');
-	const [jobTypes, setJobTypes] = useState(null);
+	const [jobDefinitions, setJobDefinitions] = useState(null);
 
 	function redirectToJobPage(data) {
 		const json = JSON.parse(data);
@@ -31,9 +31,9 @@ function CreateJobPage() {
 	}
 
 	function setJobNameFromJobTypeKey(jobTypeKey) {
-		for (const jobType of jobTypes) {
-			if (jobType.key === jobTypeKey) {
-				setJobName(jobType.name);
+		for (const jobDefinition of jobDefinitions) {
+			if (jobDefinition.key === jobTypeKey) {
+				setJobName(jobDefinition.label);
 
 				break;
 			}
@@ -41,11 +41,11 @@ function CreateJobPage() {
 	}
 
 	function setJobParametersFromJobTypeKey(jobTypeKey) {
-		for (const jobType of jobTypes) {
-			if (jobType.key === jobTypeKey) {
+		for (const jobDefinition of jobDefinitions) {
+			if (jobDefinition.key === jobTypeKey) {
 				const jobParameters = {};
 
-				jobType.parameterDefinitions.forEach((parameterDefinition) => {
+				jobDefinition.parameterDefinitions.forEach((parameterDefinition) => {
 					jobParameters[parameterDefinition.key] =
 						parameterDefinition.valueDefault;
 				});
@@ -64,18 +64,18 @@ function CreateJobPage() {
 	];
 
 	useSpringBootData({
-		setData: setJobTypes,
-		urlPath: '/jobs/types',
+		setData: setJobDefinitions,
+		urlPath: '/jobs/definitions',
 	});
 
 	let jobParameterDefinitions = null;
-	let jobTypesOptions = [];
+	let jobTypeOptions = [];
 
-	if (jobTypes !== null) {
-		jobTypesOptions = jobTypes.map((jobType) => {
+	if (jobDefinitions !== null) {
+		jobTypeOptions = jobDefinitions.map((jobDefinition) => {
 			return {
-				label: jobType.name,
-				value: jobType.key,
+				label: jobDefinition.label,
+				value: jobDefinition.key,
 			};
 		});
 
@@ -87,11 +87,11 @@ function CreateJobPage() {
 			setJobParametersFromJobTypeKey(jobTypeKey);
 		}
 
-		const jobType = jobTypes.find((jobType) => {
-			return jobType.key === jobTypeKey;
+		const jobDefinition = jobDefinitions.find((jobDefinition) => {
+			return jobDefinition.key === jobTypeKey;
 		});
 
-		jobParameterDefinitions = jobType.parameterDefinitions;
+		jobParameterDefinitions = jobDefinition.parameterDefinitions;
 	}
 
 	const jobData = {
@@ -138,7 +138,7 @@ function CreateJobPage() {
 							setJobParametersFromJobTypeKey(event.target.value);
 							setJobTypeKey(event.target.value);
 						}}
-						options={jobTypesOptions}
+						options={jobTypeOptions}
 						value={jobTypeKey}
 					/>
 				</ClayForm.Group>

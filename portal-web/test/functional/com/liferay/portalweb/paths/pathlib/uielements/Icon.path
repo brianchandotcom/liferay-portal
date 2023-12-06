@@ -312,7 +312,7 @@
 </tr>
 <tr>
 	<td>OK</td>
-	<td>//*[name()='svg'][contains(@class,'check')]</td>
+	<td>//div[contains(@class,'toolbar')]//*[name()='svg'][contains(@class,'check')]</td>
 	<td></td>
 </tr>
 <tr>

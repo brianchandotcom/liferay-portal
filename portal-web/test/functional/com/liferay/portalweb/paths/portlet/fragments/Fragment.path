@@ -99,22 +99,22 @@
 </tr>
 <tr>
 	<td>FRAGMENT_BODY_IN_FRAGMENT</td>
-	<td>//div[@aria-label='${key_inFragmentName}']/div[contains(@class,'page-editor__topper__content')]//div[@aria-label='${key_fragmentName}']</td>
+	<td>//div[@data-name='${key_inFragmentName}']/div[contains(@class,'page-editor__topper__content')]//div[@data-name='${key_fragmentName}']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FRAGMENT_CONTENT</td>
-	<td>xpath=(//div[@aria-label='${key_fragmentName}']//div[contains(@class,'page-editor__fragment-content')])[${index}]</td>
+	<td>xpath=(//div[@data-name='${key_fragmentName}']//div[contains(@class,'page-editor__fragment-content')])[${index}]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FRAGMENT_LABEL</td>
-	<td>xpath=(//div[@aria-label='${key_fragmentName}'])[${index}]</td>
+	<td>xpath=(//div[@data-name='${key_fragmentName}'])[${index}]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ACTIVE_FRAGMENT_LABEL</td>
-	<td>xpath=(//div[@aria-label='${key_fragmentName}'])[${index}][contains(@class,'highlighted')]</td>
+	<td>xpath=(//div[@data-name='${key_fragmentName}'])[${index}][contains(@class,'highlighted')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -124,22 +124,22 @@
 </tr>
 <tr>
 	<td>FRAGMENT_POSITION</td>
-	<td>xpath=(//div[contains(@class,'page-editor__topper')][@draggable='true'])[${key_position}][@aria-label='${key_fragmentName}']</td>
+	<td>xpath=(//div[contains(@class,'page-editor__topper')][@draggable='true'])[${key_position}][@data-name='${key_fragmentName}']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ALERT_INFO</td>
-	<td>//div[@aria-label='${key_fragmentName}']//div[contains(@class,'alert')][normalize-space()='${key_alertInfo}']</td>
+	<td>//div[@data-name='${key_fragmentName}']//div[contains(@class,'alert')][normalize-space()='${key_alertInfo}']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MESSAGE_INFO</td>
-	<td>//div[@aria-label='${key_fragmentName}']//div[@class='portlet-msg-info' and contains(.,'${key_messageInfo}')]</td>
+	<td>//div[@data-name='${key_fragmentName}']//div[@class='portlet-msg-info' and contains(.,'${key_messageInfo}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NO_COLLECTION_SELECTED_MESSAGE</td>
-	<td>//div[@aria-label='${key_fragmentName}']//div[contains(@class,'page-editor__collection__message')][normalize-space(text())='${key_messageInfo}']</td>
+	<td>//div[@data-name='${key_fragmentName}']//div[contains(@class,'page-editor__collection__message')][normalize-space(text())='${key_messageInfo}']</td>
 	<td></td>
 </tr>
 <tr>
@@ -149,12 +149,12 @@
 </tr>
 <tr>
 	<td>DROP_ZONE_NESTED_ELEMENT</td>
-	<td>xpath=(//lfr-drop-zone[${key_position}])//div[@aria-label='${key_elementName}']</td>
+	<td>xpath=(//lfr-drop-zone[${key_position}])//div[@data-name='${key_elementName}']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NO_FRAGMENTS_MESSAGE</td>
-	<td>xpath=(//div[@aria-label='${key_fragmentName}']//p[contains(@class,'page-editor__no-fragments-state__message')][normalize-space()='${key_messageInfo}'])[${key_position}]</td>
+	<td>xpath=(//div[@data-name='${key_fragmentName}']//p[contains(@class,'page-editor__no-fragments-state__message')][normalize-space()='${key_messageInfo}'])[${key_position}]</td>
 	<td></td>
 </tr>
 
@@ -297,7 +297,7 @@
 
 <tr>
 	<td>AVAILABLE_ADAPTIVE_MEDIA</td>
-	<td>//div[@aria-label='${key_fragmentName}']//div[contains(@class,'page-editor__topper__content')]//*[contains(@data-lfr-editable-id,'${id}')]/preceding-sibling::source[contains(@srcset,'${key_adaptiveMediaName}')]
+	<td>//div[@data-name='${key_fragmentName}']//div[contains(@class,'page-editor__topper__content')]//*[contains(@data-lfr-editable-id,'${id}')]/preceding-sibling::source[contains(@srcset,'${key_adaptiveMediaName}')]
 	</td>
 	<td></td>
 </tr>

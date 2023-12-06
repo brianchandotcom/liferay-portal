@@ -14,6 +14,7 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.frontend.js.components.sample.web.internal.constants.FrontendJSComponentsSampleWebKeys" %><%@
 page import="com.liferay.frontend.js.components.sample.web.internal.display.context.TranslationManagerDisplayContext" %><%@
+page import="com.liferay.learn.LearnMessageUtil" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %>
 
 <%@ page import="java.util.List" %><%@

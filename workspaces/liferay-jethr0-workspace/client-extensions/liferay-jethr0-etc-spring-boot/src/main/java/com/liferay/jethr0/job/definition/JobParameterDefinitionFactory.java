@@ -16,6 +16,9 @@ public class JobParameterDefinitionFactory {
 		if (type == JobParameterDefinition.Type.JENKINS_BRANCH_URL) {
 			return new JenkinsBranchURLJobParameterDefinition();
 		}
+		else if (type == JobParameterDefinition.Type.PORTAL_PULL_REQUEST_URL) {
+			return new PortalPullRequestURLJobParameterDefinition();
+		}
 
 		return null;
 	}

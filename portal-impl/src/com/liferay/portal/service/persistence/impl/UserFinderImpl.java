@@ -883,12 +883,12 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 		else if (key.equals("groupsUserGroups")) {
 			join = CustomSQLUtil.get(JOIN_BY_GROUPS_USER_GROUPS);
 		}
-		else if (key.equals("noOrganizations")) {
-			join = CustomSQLUtil.get(JOIN_BY_NO_ORGANIZATIONS);
-		}
 		else if (key.equals("noAccountEntriesAndNoOrganizations")) {
 			join = CustomSQLUtil.get(
 				JOIN_BY_NO_ACCOUNT_ENTRIES_AND_NO_ORGANIZATIONS);
+		}
+		else if (key.equals("noOrganizations")) {
+			join = CustomSQLUtil.get(JOIN_BY_NO_ORGANIZATIONS);
 		}
 		else if (key.equals("userGroupRole")) {
 			join = CustomSQLUtil.get(JOIN_BY_USER_GROUP_ROLE);
@@ -1310,12 +1310,12 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 					"Groups_UserGroups.groupId = " + groupIds[0]);
 			}
 		}
-		else if (key.equals("noOrganizations")) {
-			join = CustomSQLUtil.get(JOIN_BY_NO_ORGANIZATIONS);
-		}
 		else if (key.equals("noAccountEntriesAndNoOrganizations")) {
 			join = CustomSQLUtil.get(
 				JOIN_BY_NO_ACCOUNT_ENTRIES_AND_NO_ORGANIZATIONS);
+		}
+		else if (key.equals("noOrganizations")) {
+			join = CustomSQLUtil.get(JOIN_BY_NO_ORGANIZATIONS);
 		}
 		else if (key.equals("userGroupRole")) {
 			join = CustomSQLUtil.get(JOIN_BY_USER_GROUP_ROLE);

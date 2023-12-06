@@ -6189,6 +6189,11 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 					return true;
 				}
 			}
+			else if (key.equals("noAccountEntriesAndNoOrganizations")) {
+				if (!Boolean.TRUE.equals(entry.getValue())) {
+					return true;
+				}
+			}
 			else if (key.equals("noOrganizations")) {
 				if (!Boolean.TRUE.equals(entry.getValue())) {
 					return true;
@@ -6199,11 +6204,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				if ((usersOrgsCount == null) ||
 					(GetterUtil.getLong(usersOrgsCount) != 0)) {
 
-					return true;
-				}
-			}
-			else if (key.equals("noAccountEntriesAndNoOrganizations")) {
-				if (!Boolean.TRUE.equals(entry.getValue())) {
 					return true;
 				}
 			}

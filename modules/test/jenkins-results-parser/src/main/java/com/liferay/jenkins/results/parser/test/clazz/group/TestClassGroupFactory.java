@@ -46,8 +46,7 @@ public class TestClassGroupFactory {
 		}
 
 		if (batchTestClassGroup instanceof PlaywrightBatchTestClassGroup) {
-			return new PlaywrightAxisTestClassGroup(
-				(PlaywrightBatchTestClassGroup)batchTestClassGroup);
+			return new PlaywrightAxisTestClassGroup(batchTestClassGroup);
 		}
 
 		if (batchTestClassGroup instanceof PluginsGulpBatchTestClassGroup) {

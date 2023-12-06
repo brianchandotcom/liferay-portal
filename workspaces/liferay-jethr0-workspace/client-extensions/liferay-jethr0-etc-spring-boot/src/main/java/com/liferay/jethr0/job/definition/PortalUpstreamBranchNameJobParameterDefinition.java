@@ -23,7 +23,7 @@ public class PortalUpstreamBranchNameJobParameterDefinition
 
 	@Override
 	public Type getType() {
-		return Type.PORTAL_UPSTREAM_BRANCH_NAME;
+		return Type.STRING;
 	}
 
 	@Override

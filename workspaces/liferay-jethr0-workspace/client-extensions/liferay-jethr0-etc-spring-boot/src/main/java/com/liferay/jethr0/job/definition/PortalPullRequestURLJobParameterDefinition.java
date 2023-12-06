@@ -25,7 +25,7 @@ public class PortalPullRequestURLJobParameterDefinition
 
 	@Override
 	public Type getType() {
-		return Type.PORTAL_PULL_REQUEST_URL;
+		return Type.URL;
 	}
 
 	@Override

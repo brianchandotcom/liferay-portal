@@ -25,7 +25,7 @@ public class JenkinsBranchURLJobParameterDefinition
 
 	@Override
 	public Type getType() {
-		return Type.JENKINS_BRANCH_URL;
+		return Type.URL;
 	}
 
 	@Override

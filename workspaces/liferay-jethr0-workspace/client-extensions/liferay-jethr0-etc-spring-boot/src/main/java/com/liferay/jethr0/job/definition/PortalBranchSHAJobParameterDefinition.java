@@ -22,8 +22,8 @@ public class PortalBranchSHAJobParameterDefinition
 	}
 
 	@Override
-	public JobParameterDefinition.Type getType() {
-		return JobParameterDefinition.Type.PORTAL_BRANCH_SHA;
+	public Type getType() {
+		return Type.STRING;
 	}
 
 	@Override

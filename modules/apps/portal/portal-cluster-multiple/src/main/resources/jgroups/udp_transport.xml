@@ -30,6 +30,13 @@
 	<FD_ALL />
 	<VERIFY_SUSPECT timeout="1500" />
 	<!--<BARRIER />-->
+	<ASYM_ENCRYPT
+		asym_algorithm="RSA"
+		asym_keylength="512"
+		sym_algorithm="AES/CBC/PKCS5Padding"
+		sym_iv_length="16"
+		sym_keylength="128"
+	/>
 	<pbcast.NAKACK2 xmit_interval="500"
 					xmit_table_num_rows="100"
 					xmit_table_msgs_per_row="2000"

@@ -45,18 +45,20 @@ const SearchableEntitiesTableModal: React.FC<ISearchableEntitiesTableModalProps>
 		<Modal className={className} size={size}>
 			<Modal.Header onClose={onClose} title={title} />
 
-			<SearchableEntityTable
-				{...otherProps}
-				autoFocusSearch
-				delta={delta}
-				onDeltaChange={onDeltaChange}
-				onOrderIOMapChange={onOrderIOMapChange}
-				onPageChange={onPageChange}
-				onQueryChange={onQueryChange}
-				orderIOMap={orderIOMap}
-				page={page}
-				query={query}
-			/>
+			<Modal.Body className='p-0'>
+				<SearchableEntityTable
+					{...otherProps}
+					autoFocusSearch
+					delta={delta}
+					onDeltaChange={onDeltaChange}
+					onOrderIOMapChange={onOrderIOMapChange}
+					onPageChange={onPageChange}
+					onQueryChange={onQueryChange}
+					orderIOMap={orderIOMap}
+					page={page}
+					query={query}
+				/>
+			</Modal.Body>
 
 			<Modal.Footer>
 				<ClayButton

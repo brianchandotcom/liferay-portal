@@ -328,44 +328,6 @@ public class SourceFormatterUtil {
 		return suppressionsFiles;
 	}
 
-	public static void git(
-		List<String> args, String baseDirName, Consumer<String> consumer) {
-
-		List<String> allArgs = new ArrayList<>();
-
-		allArgs.add("git");
-
-		allArgs.addAll(args);
-
-		ProcessBuilder processBuilder = new ProcessBuilder(allArgs);
-
-		if (!Validator.isBlank(baseDirName)) {
-			processBuilder.directory(new File(baseDirName));
-		}
-
-		try {
-			Process process = processBuilder.start();
-
-			Scanner scanner = new Scanner(process.getInputStream());
-
-			if (allArgs.contains("ls-files") && allArgs.contains("-z")) {
-				scanner.useDelimiter("\0");
-			}
-			else {
-				scanner.useDelimiter("\n");
-			}
-
-			while (scanner.hasNext()) {
-				consumer.accept(scanner.next());
-			}
-
-			scanner.close();
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
-	}
-
 	public static void printError(String fileName, File file) {
 		printError(fileName, file.toString());
 	}
@@ -451,6 +413,44 @@ public class SourceFormatterUtil {
 		}
 
 		return sb.toString();
+	}
+
+	private static void _executeGitCommand(
+		List<String> args, String baseDirName, Consumer<String> consumer) {
+
+		List<String> allArgs = new ArrayList<>();
+
+		allArgs.add("git");
+
+		allArgs.addAll(args);
+
+		ProcessBuilder processBuilder = new ProcessBuilder(allArgs);
+
+		if (!Validator.isBlank(baseDirName)) {
+			processBuilder.directory(new File(baseDirName));
+		}
+
+		try {
+			Process process = processBuilder.start();
+
+			Scanner scanner = new Scanner(process.getInputStream());
+
+			if (allArgs.contains("ls-files") && allArgs.contains("-z")) {
+				scanner.useDelimiter("\0");
+			}
+			else {
+				scanner.useDelimiter("\n");
+			}
+
+			while (scanner.hasNext()) {
+				consumer.accept(scanner.next());
+			}
+
+			scanner.close();
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
 	}
 
 	private static List<String> _filterRecentChangesFileNames(
@@ -623,7 +623,7 @@ public class SourceFormatterUtil {
 		if (_untrackedFileNames == null) {
 			_untrackedFileNames = new ArrayList<>();
 
-			git(
+			_executeGitCommand(
 				Arrays.asList("add", ".", "--dry-run", "--no-all"),
 				_gitTopLevelFolder,
 				line -> {
@@ -666,7 +666,7 @@ public class SourceFormatterUtil {
 		if (_gitTopLevelFolder == null) {
 			List<String> lines = new ArrayList<>();
 
-			git(
+			_executeGitCommand(
 				Arrays.asList("rev-parse", "--show-toplevel"), baseDirName,
 				lines::add);
 
@@ -688,7 +688,7 @@ public class SourceFormatterUtil {
 
 		List<String> fileNames = new ArrayList<>();
 
-		git(
+		_executeGitCommand(
 			allArgs, baseDirName,
 			line -> fileNames.add(
 				_gitTopLevelFolder + StringPool.SLASH + line));

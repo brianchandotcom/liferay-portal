@@ -45,6 +45,9 @@ public class JobEntityFactory extends BaseEntityFactory<JobEntity> {
 		else if (jobEntityType == JobEntity.Type.PORTAL_RELEASE) {
 			return new PortalReleaseJobEntity(jsonObject);
 		}
+		else if (jobEntityType == JobEntity.Type.PORTAL_UPSTREAM_ACCEPTANCE) {
+			return new AcceptancePortalUpstreamJobEntity(jsonObject);
+		}
 		else if (jobEntityType == JobEntity.Type.PORTAL_UPSTREAM_TEST_SUITE) {
 			return new TestSuitePortalUpstreamJobEntity(jsonObject);
 		}

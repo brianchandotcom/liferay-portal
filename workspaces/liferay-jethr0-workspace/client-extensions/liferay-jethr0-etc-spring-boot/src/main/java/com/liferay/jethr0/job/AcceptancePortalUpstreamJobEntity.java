@@ -32,8 +32,6 @@ public class AcceptancePortalUpstreamJobEntity
 
 		initialBuildParameters.put("PORTAL_GIT_COMMIT", getPortalBranchSHA());
 		initialBuildParameters.put(
-			"PORTAL_GITHUB_URL", String.valueOf(getPortalBranchURL()));
-		initialBuildParameters.put(
 			"TEST_PORTAL_BUILD_PROFILE", getPortalBuildProfile());
 
 		return initialBuildParameters;

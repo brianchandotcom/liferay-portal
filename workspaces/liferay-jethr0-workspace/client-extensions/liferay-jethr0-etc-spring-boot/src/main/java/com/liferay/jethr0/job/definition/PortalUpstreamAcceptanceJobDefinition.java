@@ -20,8 +20,6 @@ public class PortalUpstreamAcceptanceJobDefinition extends BaseJobDefinition {
 		Set<JobParameterDefinition> jobParameterDefinitions = new HashSet<>();
 
 		jobParameterDefinitions.add(
-			new JenkinsBranchURLJobParameterDefinition());
-		jobParameterDefinitions.add(
 			new PortalBranchSHAJobParameterDefinition());
 		jobParameterDefinitions.add(
 			new PortalBuildProfileJobParameterDefinition());

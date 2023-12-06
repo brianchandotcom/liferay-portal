@@ -192,7 +192,8 @@ public class JavaUpgradeConnectionCheck extends BaseJavaTermCheck {
 		List<String> upgradeAbsolutePaths = new ArrayList<>();
 
 		List<String> fileNames = SourceFormatterUtil.scanForFileNames(
-			portalDir.getCanonicalPath(), new String[] {"**/upgrade/**.java"});
+			portalDir.getCanonicalPath(),
+			new String[] {"**/upgrade/**/*.java"});
 
 		outerLoop:
 		for (String fileName : fileNames) {

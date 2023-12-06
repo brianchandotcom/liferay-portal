@@ -72,6 +72,7 @@
 										"pageElements": [
 											{
 												"definition": {
+													"customCSS": ".[$FRAGMENT_CLASS$] img {\n    height: 90px;\n    object-fit: cover;\n    width: 90px;\n}",
 													"fragment": {
 														"key": "image",
 														"siteKey": "[$GROUP_KEY$]"
@@ -87,7 +88,7 @@
 																},
 																"text": {
 																	"mapping": {
-																		"fieldKey": "__CUSTOM_FIELD_App_Icon",
+																		"fieldKey": "ddmTemplate__ddmTemplate_[$TEMPLATE_ENTRY_ID:marketplace_apps_icon$]",
 																		"itemReference": {
 																			"contextSource": "DisplayPageItem"
 																		}
@@ -97,8 +98,10 @@
 														}
 													],
 													"fragmentStyle": {
+														"height": "90px",
 														"maxHeight": "90px",
-														"maxWidth": "90px"
+														"maxWidth": "90px",
+														"width":  "90px"
 													},
 													"indexed": true
 												},
@@ -154,39 +157,61 @@
 												"pageElements": [
 													{
 														"definition": {
-															"fragment": {
-																"key": "text",
-																"siteKey": "[$GROUP_KEY$]"
+															"fragmentStyle": {
+																"backgroundColor": "colorNeutral3",
+																"borderWidth": "0",
+																"marginBottom": "0",
+																"marginLeft": "2",
+																"marginRight": "2",
+																"marginTop": "0",
+																"paddingBottom": "0",
+																"paddingLeft": "2",
+																"paddingRight": "2",
+																"paddingTop": "0"
 															},
-															"fragmentConfig": {
-																"fontSize": "font-size-paragraph-base",
-																"smallCaps": false,
-																"tabletScreenCenter": false
-															},
-															"fragmentFields": [
-																{
-																	"id": "text",
-																	"value": {
-																		"fragmentLink": {
-																		},
-																		"text": {
-																			"mapping": {
-																				"fieldKey": "CPDefinition_name",
-																				"itemReference": {
-																					"contextSource": "DisplayPageItem"
+															"indexed": true,
+															"layout": {
+															}
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "text",
+																		"siteKey": "[$GROUP_KEY$]"
+																	},
+																	"fragmentConfig": {
+																		"fontSize": "font-size-paragraph-base",
+																		"smallCaps": false,
+																		"tabletScreenCenter": false
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "text",
+																			"value": {
+																				"fragmentLink": {
+																				},
+																				"text": {
+																					"mapping": {
+																						"fieldKey": "CPDefinition_name",
+																						"itemReference": {
+																							"contextSource": "DisplayPageItem"
+																						}
+																					}
 																				}
 																			}
 																		}
-																	}
-																}
-															],
-															"fragmentStyle": {
-																"fontSize": "28px",
-																"fontWeight": "600"
-															},
-															"indexed": true
-														},
-														"type": "Fragment"
+																	],
+																	"fragmentStyle": {
+																		"fontSize": "28px",
+																		"fontWeight": "600"
+																	},
+																	"indexed": true
+																},
+																"type": "Fragment"
+															}
+														],
+														"type": "Section"
 													},
 													{
 														"definition": {

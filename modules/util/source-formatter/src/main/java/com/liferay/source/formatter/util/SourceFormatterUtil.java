@@ -388,7 +388,11 @@ public class SourceFormatterUtil {
 		fileNames = ListUtil.filter(
 			fileNames, fileName -> !deletedFileNames.contains(fileName));
 
-		fileNames.addAll(_getUntrackedFileNames(includes));
+		for (String untrackedFileName : _getUntrackedFileNames(includes)) {
+			if (!fileNames.contains(untrackedFileName)) {
+				fileNames.add(untrackedFileName);
+			}
+		}
 
 		return fileNames;
 	}
@@ -616,41 +620,44 @@ public class SourceFormatterUtil {
 	private static synchronized List<String> _getUntrackedFileNames(
 		String[] includes) {
 
-		if (_untrackedFileNames != null) {
-			return _untrackedFileNames;
-		}
+		if (_untrackedFileNames == null) {
+			_untrackedFileNames = new ArrayList<>();
 
-		_untrackedFileNames = new ArrayList<>();
+			git(
+				Arrays.asList("add", ".", "--dry-run", "--no-all"),
+				_gitTopLevelFolder,
+				line -> {
+					if (!line.startsWith("add ")) {
+						return;
+					}
+
+					line = line.substring(5, line.length() - 1);
+
+					_untrackedFileNames.add(
+						_gitTopLevelFolder + StringPool.SLASH + line);
+				});
+		}
 
 		PathMatchers pathMatchers = _getPathMatchers(
 			new String[0], includes, new SourceFormatterExcludes());
 
-		git(
-			Arrays.asList("add", ".", "--dry-run", "--no-all"),
-			_gitTopLevelFolder,
-			line -> {
-				if (!line.startsWith("add ")) {
-					return;
+		List<String> untrackedFileNames = new ArrayList<>();
+
+		for (String untrackedFileName : _untrackedFileNames) {
+			Path path = Paths.get(untrackedFileName);
+
+			for (PathMatcher pathMatcher :
+					pathMatchers.getIncludeFilePathMatchers()) {
+
+				if (pathMatcher.matches(path)) {
+					untrackedFileNames.add(untrackedFileName);
+
+					break;
 				}
+			}
+		}
 
-				line = line.substring(5, line.length() - 1);
-
-				line = _gitTopLevelFolder + StringPool.SLASH + line;
-
-				Path path = Paths.get(line);
-
-				for (PathMatcher pathMatcher :
-						pathMatchers.getIncludeFilePathMatchers()) {
-
-					if (pathMatcher.matches(path)) {
-						_untrackedFileNames.add(line);
-
-						return;
-					}
-				}
-			});
-
-		return _untrackedFileNames;
+		return untrackedFileNames;
 	}
 
 	private static List<String> _scanForFileNames(

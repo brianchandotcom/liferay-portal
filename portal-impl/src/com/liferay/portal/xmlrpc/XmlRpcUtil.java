@@ -128,6 +128,8 @@ public class XmlRpcUtil {
 		XMLStreamReader xmlStreamReader = null;
 
 		try {
+			int paramCount = 0;
+
 			XMLInputFactory xmlInputFactory =
 				StAXReaderUtil.getXMLInputFactory();
 
@@ -145,8 +147,6 @@ public class XmlRpcUtil {
 			xmlStreamReader.nextTag();
 
 			String name = xmlStreamReader.getLocalName();
-
-			int paramCount = 0;
 
 			while (!name.equals("methodCall")) {
 				xmlStreamReader.nextTag();

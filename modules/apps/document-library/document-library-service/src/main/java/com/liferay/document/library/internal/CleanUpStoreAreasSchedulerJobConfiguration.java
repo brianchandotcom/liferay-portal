@@ -70,6 +70,10 @@ public class CleanUpStoreAreasSchedulerJobConfiguration
 		StoreAreaProcessor storeAreaProcessor =
 			_storeAreaProcessorSnapshot.get();
 
+		if (storeAreaProcessor == null) {
+			return;
+		}
+
 		_startOffsets.put(
 			companyId,
 			storeAreaProcessor.cleanUpDeletedStoreArea(

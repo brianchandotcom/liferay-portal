@@ -37,4 +37,10 @@ public interface DefaultSearchResultPermissionFilterConfiguration {
 	)
 	public int searchQueryResultWindowLimit();
 
+	@Meta.AD(
+		deflt = "0", description = "permission-filtering-time-limit-help",
+		name = "permission-filtering-time-limit", required = false
+	)
+	public long permissionFilteringTimeLimit();
+
 }

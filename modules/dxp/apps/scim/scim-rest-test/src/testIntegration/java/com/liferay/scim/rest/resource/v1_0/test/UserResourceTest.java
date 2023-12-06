@@ -6,14 +6,375 @@
 package com.liferay.scim.rest.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.expando.kernel.model.ExpandoColumn;
+import com.liferay.expando.kernel.model.ExpandoTable;
+import com.liferay.expando.kernel.model.ExpandoTableConstants;
+import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
+import com.liferay.expando.kernel.service.ExpandoTableLocalService;
+import com.liferay.expando.kernel.service.ExpandoValueLocalService;
+import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DataGuard;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.test.rule.FeatureFlags;
+import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.scim.rest.client.dto.v1_0.MultiValuedAttribute;
+import com.liferay.scim.rest.client.dto.v1_0.Name;
+import com.liferay.scim.rest.client.dto.v1_0.User;
+import com.liferay.scim.rest.client.http.HttpInvoker;
 
+import java.util.Arrays;
+
+import org.junit.AfterClass;
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.ClassRule;
 import org.junit.Ignore;
+import org.junit.Rule;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
  * @author Olivér Kecskeméty
  */
-@Ignore
+@DataGuard(scope = DataGuard.Scope.METHOD)
+@FeatureFlags("LPS-96845")
 @RunWith(Arquillian.class)
 public class UserResourceTest extends BaseUserResourceTestCase {
+
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new LiferayIntegrationTestRule();
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		BaseUserResourceTestCase.setUpClass();
+
+		_pid = ConfigurationTestUtil.createFactoryConfiguration(
+			"com.liferay.scim.rest.internal.configuration." +
+				"ScimClientOAuth2ApplicationConfiguration",
+			HashMapDictionaryBuilder.<String, Object>put(
+				"companyId", TestPropsValues.getCompanyId()
+			).put(
+				"matcherField", "email"
+			).put(
+				"oAuth2ApplicationName", "scim-client-test"
+			).build());
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		ConfigurationTestUtil.deleteConfiguration(_pid);
+	}
+
+	@Override
+	@Test
+	public void testDeleteV2User() throws Exception {
+		User user = testDeleteV2User_addUser();
+
+		assertHttpResponseStatusCode(
+			204, userResource.deleteV2UserHttpResponse(user.getId()));
+
+		assertHttpResponseStatusCode(
+			404, userResource.getV2UserByIdHttpResponse(user.getId()));
+
+		com.liferay.portal.kernel.model.User portalUser =
+			_userLocalService.getUserByExternalReferenceCode(
+				user.getExternalId(), TestPropsValues.getCompanyId());
+
+		Assert.assertFalse(portalUser.isActive());
+	}
+
+	@Override
+	@Test
+	public void testGetV2UserById() throws Exception {
+		assertHttpResponseStatusCode(
+			404, userResource.getV2UserByIdHttpResponse("12345"));
+
+		User user = testDeleteV2User_addUser();
+
+		HttpInvoker.HttpResponse httpResponse =
+			userResource.getV2UserByIdHttpResponse(user.getId());
+
+		assertHttpResponseStatusCode(200, httpResponse);
+		assertValid(User.toDTO(httpResponse.getContent()));
+	}
+
+	@Override
+	@Test
+	public void testGetV2Users() throws Exception {
+		_assertListResponse(userResource.getV2Users(5, 0), 0, 0);
+
+		User user1 = testDeleteV2User_addUser();
+		User user2 = testDeleteV2User_addUser();
+
+		_assertListResponse(userResource.getV2Users(5, 0), 2, 2, user1, user2);
+
+		User user3 = testDeleteV2User_addUser();
+
+		_assertListResponse(userResource.getV2Users(5, 3), 3, 1, user3);
+	}
+
+	@Override
+	@Test
+	public void testPostV2User() throws Exception {
+		User postUser1 = randomUser();
+
+		userResource.postV2User(postUser1);
+
+		com.liferay.portal.kernel.model.User portalUser1 =
+			_userLocalService.getUserByExternalReferenceCode(
+				postUser1.getExternalId(), TestPropsValues.getCompanyId());
+
+		assertEquals(
+			postUser1, _getUser(String.valueOf(portalUser1.getUserId())));
+
+		// Provision an existent User with no Scim Client Id set
+
+		com.liferay.portal.kernel.model.User portalUser2 =
+			UserTestUtil.addUser();
+
+		User postUser2 = _createUser(portalUser2);
+
+		HttpInvoker.HttpResponse httpResponse =
+			userResource.postV2UserHttpResponse(postUser2);
+
+		postUser2 = User.toDTO(httpResponse.getContent());
+
+		Assert.assertEquals(
+			portalUser2.getUserId(), GetterUtil.getInteger(postUser2.getId()));
+
+		com.liferay.portal.kernel.model.User updatedPortalUser2 =
+			_userLocalService.getUser(portalUser2.getUserId());
+
+		Assert.assertEquals(
+			postUser2.getExternalId(),
+			updatedPortalUser2.getExternalReferenceCode());
+
+		// Provision an existent inactive User with no Scim Client Id set
+
+		updatedPortalUser2 = _userLocalService.updateStatus(
+			updatedPortalUser2.getUserId(), WorkflowConstants.STATUS_INACTIVE,
+			new ServiceContext());
+
+		Assert.assertFalse(updatedPortalUser2.isActive());
+
+		postUser2.setActive(true);
+
+		userResource.postV2User(postUser2);
+
+		updatedPortalUser2 = _userLocalService.getUserByExternalReferenceCode(
+			postUser2.getExternalId(), TestPropsValues.getCompanyId());
+
+		Assert.assertTrue(updatedPortalUser2.isActive());
+
+		// Provision an existent User provided by another Scim Client
+
+		com.liferay.portal.kernel.model.User portalUser3 =
+			UserTestUtil.addUser();
+
+		_saveSCIMClientId(portalUser3);
+
+		User postUser3 = _createUser(portalUser3);
+
+		assertHttpResponseStatusCode(
+			409, userResource.postV2UserHttpResponse(postUser3));
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testPostV2UserSearch() throws Exception {
+	}
+
+	@Override
+	@Test
+	public void testPutV2User() throws Exception {
+		User user = testDeleteV2User_addUser();
+
+		String newTitle = StringUtil.toLowerCase(RandomTestUtil.randomString());
+
+		user.setTitle(newTitle);
+
+		HttpInvoker.HttpResponse httpResponse =
+			userResource.putV2UserHttpResponse(user.getId(), user);
+
+		assertEquals(user, User.toDTO(httpResponse.getContent()));
+	}
+
+	@Override
+	protected String[] getAdditionalAssertFieldNames() {
+		return new String[] {
+			"emails", "externalId", "name", "title", "userName"
+		};
+	}
+
+	@Override
+	protected User randomUser() throws Exception {
+		User user = super.randomUser();
+
+		user.setActive(true);
+		user.setEmails(
+			new MultiValuedAttribute[] {
+				new MultiValuedAttribute() {
+					{
+						primary = true;
+						type = "default";
+						value = user.getUserName() + "@liferay.com";
+					}
+				}
+			});
+		user.setId((String)null);
+		user.setName(
+			new Name() {
+				{
+					familyName = RandomTestUtil.randomString();
+					givenName = RandomTestUtil.randomString();
+					middleName = RandomTestUtil.randomString();
+				}
+			});
+		user.setSchemas(
+			new String[] {"urn:ietf:params:scim:schemas:core:2.0:User"});
+
+		return user;
+	}
+
+	@Override
+	protected User testDeleteV2User_addUser() throws Exception {
+		User user = randomUser();
+
+		HttpInvoker.HttpResponse httpResponse =
+			userResource.postV2UserHttpResponse(user);
+
+		Assert.assertEquals(2, httpResponse.getStatusCode() / 100);
+
+		JSONObject userJSONObject = _jsonFactory.createJSONObject(
+			httpResponse.getContent());
+
+		user.setId(userJSONObject.getString("id"));
+
+		return user;
+	}
+
+	private void _assertListResponse(
+			Object response, long expectedTotalResults,
+			long expectedItemsPerPage, User... expectedUsers)
+		throws Exception {
+
+		JSONObject listResponseJSONObject = _jsonFactory.createJSONObject(
+			response.toString());
+
+		JSONArray schemasJSONArray = listResponseJSONObject.getJSONArray(
+			"schemas");
+
+		Assert.assertEquals(
+			"urn:ietf:params:scim:api:messages:2.0:ListResponse",
+			schemasJSONArray.get(0));
+
+		Assert.assertEquals(
+			expectedTotalResults,
+			listResponseJSONObject.getLong("totalResults"));
+		Assert.assertEquals(
+			expectedItemsPerPage,
+			listResponseJSONObject.getLong("itemsPerPage"));
+
+		if (ArrayUtil.isEmpty(expectedUsers)) {
+			Assert.assertFalse(listResponseJSONObject.has("Resources"));
+
+			return;
+		}
+
+		JSONArray resourcesJSONArray = listResponseJSONObject.getJSONArray(
+			"Resources");
+
+		Assert.assertEquals(expectedUsers.length, resourcesJSONArray.length());
+
+		for (int i = 0; i < resourcesJSONArray.length(); i++) {
+			JSONObject userJSONObject = resourcesJSONArray.getJSONObject(i);
+
+			assertContains(
+				User.toDTO(userJSONObject.toString()),
+				Arrays.asList(expectedUsers));
+		}
+	}
+
+	private User _createUser(com.liferay.portal.kernel.model.User portalUser)
+		throws Exception {
+
+		User user = randomUser();
+
+		user.setEmails(
+			new MultiValuedAttribute[] {
+				new MultiValuedAttribute() {
+					{
+						primary = true;
+						type = "default";
+						value = portalUser.getEmailAddress();
+					}
+				}
+			});
+
+		return user;
+	}
+
+	private User _getUser(String userId) throws Exception {
+		Object userObject = userResource.getV2UserById(userId);
+
+		return User.toDTO(userObject.toString());
+	}
+
+	private void _saveSCIMClientId(com.liferay.portal.kernel.model.User user)
+		throws Exception {
+
+		ExpandoTable expandoTable = _expandoTableLocalService.getTable(
+			user.getCompanyId(),
+			_classNameLocalService.getClassNameId(
+				com.liferay.portal.kernel.model.User.class.getName()),
+			ExpandoTableConstants.DEFAULT_TABLE_NAME);
+
+		ExpandoColumn expandoColumn = _expandoColumnLocalService.getColumn(
+			expandoTable.getTableId(), "scimClientId");
+
+		_expandoValueLocalService.addValue(
+			user.getCompanyId(),
+			com.liferay.portal.kernel.model.User.class.getName(),
+			ExpandoTableConstants.DEFAULT_TABLE_NAME, expandoColumn.getName(),
+			user.getUserId(), RandomTestUtil.randomString());
+	}
+
+	private static String _pid;
+
+	@Inject
+	private ClassNameLocalService _classNameLocalService;
+
+	@Inject
+	private ExpandoColumnLocalService _expandoColumnLocalService;
+
+	@Inject
+	private ExpandoTableLocalService _expandoTableLocalService;
+
+	@Inject
+	private ExpandoValueLocalService _expandoValueLocalService;
+
+	@Inject
+	private JSONFactory _jsonFactory;
+
+	@Inject
+	private UserLocalService _userLocalService;
+
 }

@@ -188,9 +188,13 @@ definition {
 		}
 
 		task ("Check if the page name is displayed correctly") {
+			Click.clickNoMouseOver(
+				key_pageName = "Snúið Vinsælar",
+				locator1 = "ACSites#PATH_PAGE_NAME_SANKEY");
+
 			AssertElementPresent(
 				key_pageName = "Snúið Vinsælar þú - Site Name - ${dataSourceName}",
-				locator1 = "ACSites#SITE_PATH");
+				locator1 = "ACSites#PATH_PAGE_NAME_POPOVER");
 		}
 	}
 

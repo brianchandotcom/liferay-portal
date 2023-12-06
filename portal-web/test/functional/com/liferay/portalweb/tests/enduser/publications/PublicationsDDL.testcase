@@ -5,7 +5,7 @@ definition {
 	property osgi.module.configuration.file.names = "com.liferay.change.tracking.configuration.CTSettingsConfiguration.config";
 	property osgi.module.configurations = "enabled=B\"true\"";
 	property osgi.modules.includes = "dynamic-data-lists";
-	property portal.release = "true";
+	property portal.release = "false";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Publications";
 

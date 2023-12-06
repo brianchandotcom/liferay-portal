@@ -50,10 +50,9 @@ public class DDMFieldAttributeTableReferenceDefinitionTest
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
 			RandomTestUtil.randomString());
 
+		_ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(ddmForm);
 		_ddmStructure = DDMStructureTestUtil.addStructure(
 			DDMFormInstance.class.getName(), ddmForm);
-
-		_ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(ddmForm);
 	}
 
 	@Override

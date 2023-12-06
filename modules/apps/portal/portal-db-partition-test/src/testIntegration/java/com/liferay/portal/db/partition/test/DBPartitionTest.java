@@ -60,18 +60,14 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 
 		createControlTable(TEST_CONTROL_TABLE_NAME);
 
-		addDBPartitions();
-
-		insertPartitionRequiredData();
+		BaseDBPartitionTestCase.setUpDBPartitions();
 	}
 
 	@AfterClass
 	public static void tearDownClass() throws Exception {
-		deletePartitionRequiredData();
-
-		removeDBPartitions();
-
 		dropControlTable(TEST_CONTROL_TABLE_NAME);
+
+		BaseDBPartitionTestCase.tearDownDBPartitions();
 	}
 
 	@After

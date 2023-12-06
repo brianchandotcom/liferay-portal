@@ -44,16 +44,12 @@ public abstract class BaseVirtualInstanceOperationTestCase
 	public static void setUpClass() throws Exception {
 		BaseDBPartitionTestCase.setUpClass();
 
-		addDBPartitions();
-
-		insertPartitionRequiredData();
+		BaseDBPartitionTestCase.setUpDBPartitions();
 	}
 
 	@AfterClass
 	public static void tearDownClass() throws Exception {
-		deletePartitionRequiredData();
-
-		removeDBPartitions();
+		BaseDBPartitionTestCase.tearDownDBPartitions();
 	}
 
 	@After

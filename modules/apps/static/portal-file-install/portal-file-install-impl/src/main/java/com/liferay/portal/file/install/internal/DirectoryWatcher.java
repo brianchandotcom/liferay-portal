@@ -30,7 +30,6 @@ import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -56,7 +55,6 @@ import org.osgi.framework.Constants;
 import org.osgi.framework.FrameworkEvent;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.Version;
-import org.osgi.framework.VersionRange;
 import org.osgi.framework.startlevel.BundleStartLevel;
 import org.osgi.framework.startlevel.FrameworkStartLevel;
 import org.osgi.framework.wiring.BundleRevision;
@@ -326,163 +324,6 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 				}
 			}
 		}
-	}
-
-	private void _findBundlesWithOptionalPackagesToRefresh(
-		Set<Bundle> refreshBundles) {
-
-		Set<Bundle> bundles = new HashSet<>();
-
-		for (Artifact artifact : _getArtifacts()) {
-			long bundleId = artifact.getBundleId();
-
-			if (bundleId > 0) {
-				Bundle bundle = _bundleContext.getBundle(bundleId);
-
-				if (bundle != null) {
-					bundles.add(bundle);
-				}
-			}
-		}
-
-		bundles.removeAll(refreshBundles);
-
-		if (bundles.isEmpty()) {
-			return;
-		}
-
-		Map<Bundle, Map<String, Map<String, String>>> importMap =
-			new HashMap<>();
-
-		Iterator<Bundle> iterator = bundles.iterator();
-
-		while (iterator.hasNext()) {
-			Bundle bundle = iterator.next();
-
-			Dictionary<String, String> header = bundle.getHeaders(
-				StringPool.BLANK);
-
-			String importHeader = header.get(Constants.IMPORT_PACKAGE);
-
-			Map<String, Map<String, String>> imports = _parseHeader(
-				importHeader);
-
-			Collection<Map<String, String>> set = imports.values();
-
-			Iterator<Map<String, String>> parameterIterator = set.iterator();
-
-			while (parameterIterator.hasNext()) {
-				Map<String, String> attributes = parameterIterator.next();
-
-				String resolution = attributes.get(
-					Constants.RESOLUTION_DIRECTIVE);
-
-				if (!Objects.equals(
-						Constants.RESOLUTION_OPTIONAL, resolution)) {
-
-					parameterIterator.remove();
-				}
-			}
-
-			if (imports.isEmpty()) {
-				iterator.remove();
-			}
-			else {
-				importMap.put(bundle, imports);
-			}
-		}
-
-		if (bundles.isEmpty()) {
-			return;
-		}
-
-		Map<String, Map<String, String>> exportMap = new HashMap<>();
-
-		for (Bundle bundle : refreshBundles) {
-			if (bundle.getState() != Bundle.UNINSTALLED) {
-				Dictionary<String, String> headers = bundle.getHeaders(
-					StringPool.BLANK);
-
-				String bundleExports = headers.get(Constants.EXPORT_PACKAGE);
-
-				if (bundleExports != null) {
-					exportMap.putAll(_parseHeader(bundleExports));
-				}
-			}
-		}
-
-		iterator = bundles.iterator();
-
-		while (iterator.hasNext()) {
-			Bundle bundle = iterator.next();
-
-			Map<String, Map<String, String>> imports = importMap.get(bundle);
-
-			Set<Map.Entry<String, Map<String, String>>> importSet =
-				imports.entrySet();
-
-			Iterator<Map.Entry<String, Map<String, String>>> importIterator =
-				importSet.iterator();
-
-			while (importIterator.hasNext()) {
-				Map.Entry<String, Map<String, String>> importEntry =
-					importIterator.next();
-
-				boolean matching = false;
-
-				for (Map.Entry<String, Map<String, String>> exportEntry :
-						exportMap.entrySet()) {
-
-					if (Objects.equals(
-							importEntry.getKey(), exportEntry.getKey())) {
-
-						Map<String, String> importAttributes =
-							importEntry.getValue();
-
-						String importVersionString = importAttributes.get(
-							Constants.VERSION_ATTRIBUTE);
-
-						if (importVersionString == null) {
-							matching = true;
-
-							break;
-						}
-
-						Version exportedVersion = Version.emptyVersion;
-
-						Map<String, String> exportAttributes =
-							exportEntry.getValue();
-
-						String exportVersionString = exportAttributes.get(
-							Constants.VERSION_ATTRIBUTE);
-
-						if (exportVersionString != null) {
-							exportedVersion = Version.parseVersion(
-								exportVersionString);
-						}
-
-						VersionRange importedVersionRange = new VersionRange(
-							importVersionString);
-
-						if (importedVersionRange.includes(exportedVersion)) {
-							matching = true;
-
-							break;
-						}
-					}
-				}
-
-				if (!matching) {
-					importIterator.remove();
-				}
-			}
-
-			if (imports.isEmpty()) {
-				iterator.remove();
-			}
-		}
-
-		refreshBundles.addAll(bundles);
 	}
 
 	private FileInstaller _findFileInstaller(
@@ -856,107 +697,6 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 		return _stateChanged.get();
 	}
 
-	private List<String> _parseDelimitedString(String value, char delimiter) {
-		if (value == null) {
-			return Collections.<String>emptyList();
-		}
-
-		List<String> strings = new ArrayList<>();
-
-		StringBundler sb = new StringBundler();
-
-		boolean inQuotes = false;
-
-		for (int i = 0; i < value.length(); i++) {
-			char c = value.charAt(i);
-
-			if ((c == delimiter) && !inQuotes) {
-				String string = sb.toString();
-
-				strings.add(string.trim());
-
-				sb = new StringBundler();
-			}
-			else if (c == CharPool.QUOTE) {
-				inQuotes = !inQuotes;
-			}
-			else {
-				sb.append(c);
-			}
-		}
-
-		String string = sb.toString();
-
-		string = string.trim();
-
-		if (string.length() > 0) {
-			strings.add(string);
-		}
-
-		return strings;
-	}
-
-	private Map<String, Map<String, String>> _parseHeader(String header) {
-		List<String> imports = _parseDelimitedString(header, CharPool.COMMA);
-
-		Map<String, Map<String, String>> headers = _parseImports(imports);
-
-		if (headers == null) {
-			return Collections.emptyMap();
-		}
-
-		return headers;
-	}
-
-	private Map<String, Map<String, String>> _parseImports(
-		List<String> imports) {
-
-		if (imports.isEmpty()) {
-			return null;
-		}
-
-		Map<String, Map<String, String>> finalImports = new HashMap<>();
-
-		for (String clause : imports) {
-			List<String> tokens = _parseDelimitedString(
-				clause, CharPool.SEMICOLON);
-
-			List<String> paths = new ArrayList<>();
-
-			Map<String, String> attributes = new HashMap<>();
-
-			for (String token : tokens) {
-				int index = token.indexOf(StringPool.EQUAL);
-
-				if (index == -1) {
-					paths.add(token);
-
-					continue;
-				}
-
-				String key = token.substring(0, index);
-
-				if (token.charAt(index - 1) == CharPool.COLON) {
-					key = key.substring(0, key.length() - 1);
-				}
-
-				key = key.trim();
-
-				String value = token.substring(index + 1);
-
-				value = value.trim();
-
-				attributes.put(key, value);
-			}
-
-			for (String path : paths) {
-				finalImports.put(path, attributes);
-			}
-		}
-
-		return finalImports;
-	}
-
 	private void _process(Set<File> files) throws InterruptedException {
 		List<Artifact> createdArtifacts = new ArrayList<>();
 		List<Artifact> deletedArtifacts = new ArrayList<>();
@@ -1011,8 +751,6 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 			bundles.addAll(installedBundles);
 
 			_findBundlesWithFragmentsToRefresh(bundles);
-
-			_findBundlesWithOptionalPackagesToRefresh(bundles);
 
 			if (!bundles.isEmpty()) {
 				_refresh(bundles);

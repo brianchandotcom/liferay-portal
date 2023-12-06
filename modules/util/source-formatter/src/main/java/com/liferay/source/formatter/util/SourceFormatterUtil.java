@@ -435,6 +435,21 @@ public class SourceFormatterUtil {
 	}
 
 	public static List<String> matchFileContents(
+		List<String> argList, String baseDirName, String[] excludes,
+		String[] includes, SourceFormatterExcludes sourceFormatterExcludes,
+		boolean includeSubrepositories) {
+
+		if (ArrayUtil.isEmpty(includes)) {
+			return new ArrayList<>();
+		}
+
+		return _matchFileContents(
+			argList, baseDirName,
+			_getPathMatchers(excludes, includes, sourceFormatterExcludes),
+			includeSubrepositories);
+	}
+
+	public static List<String> matchFileContents(
 		String baseDirName, List<String> argList) {
 
 		return _matchFileContents(baseDirName, argList);
@@ -745,7 +760,29 @@ public class SourceFormatterUtil {
 	}
 
 	private static List<String> _matchFileContents(
-		String baseDirName, String searchContent, List<String> argList) {
+		List<String> argList, String baseDirName, PathMatchers pathMatchers,
+		boolean includeSubrepositories) {
+
+		List<String> args = new ArrayList<>();
+
+		args.add("grep");
+
+		args.addAll(argList);
+
+		try {
+			return git(args, baseDirName, pathMatchers, includeSubrepositories);
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+		}
+
+		return null;
+	}
+
+	private static List<String> _matchFileContents(
+		String baseDirName, List<String> argList) {
 
 		List<String> args = new ArrayList<>();
 

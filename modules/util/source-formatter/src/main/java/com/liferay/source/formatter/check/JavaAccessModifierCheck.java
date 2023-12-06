@@ -6,62 +6,82 @@
 package com.liferay.source.formatter.check;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.source.formatter.BNDSettings;
+import com.liferay.source.formatter.check.util.JavaSourceUtil;
 import com.liferay.source.formatter.parser.JavaClass;
+import com.liferay.source.formatter.parser.JavaClassParser;
 import com.liferay.source.formatter.parser.JavaTerm;
 import com.liferay.source.formatter.parser.JavaVariable;
+import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 
+import java.io.File;
 import java.io.IOException;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * @author Seiphon Wang
  */
-public class JavaAccessModifierCheck extends BaseJavaTermCheck {
+public class JavaAccessModifierCheck extends BaseFileCheck {
 
 	@Override
 	protected String doProcess(
-			String fileName, String absolutePath, JavaTerm javaTerm,
-			String fileContent)
+			String fileName, String absolutePath, String content)
 		throws Exception {
 
-		String content = javaTerm.getContent();
-
-		if (!javaTerm.hasAnnotation("Component") || !_hasSubclasses(javaTerm) ||
-			!_isAnnotationsInherit(absolutePath)) {
-
+		if (!content.contains("@Component")) {
 			return content;
 		}
 
-		if (javaTerm instanceof JavaClass) {
-			JavaClass javaClass = (JavaClass)javaTerm;
+		String packageName = JavaSourceUtil.getPackageName(content);
 
-			List<JavaTerm> childJavaTerms = javaClass.getChildJavaTerms();
+		if (!packageName.startsWith("com.liferay")) {
+			return content;
+		}
 
-			for (JavaTerm childJavaTerm : childJavaTerms) {
-				if (childJavaTerm instanceof JavaVariable) {
-					JavaVariable javaVariable = (JavaVariable)childJavaTerm;
+		BNDSettings bndSettings = getBNDSettings(fileName);
 
-					String javaTermContent = javaVariable.getContent();
+		if (bndSettings == null) {
+			return content;
+		}
 
-					String accessModifier = javaVariable.getAccessModifier();
+		String bndSettingsContent = bndSettings.getContent();
 
-					if (javaTermContent.contains("@Reference") &&
-						accessModifier.equals("private")) {
+		if (!bndSettingsContent.contains("-dsannotations-options: inherit")) {
+			return content;
+		}
 
-						addMessage(
-							fileName,
-							"The access modifier of variable '" +
-								javaVariable.getName() +
-									"' should be 'protected'.");
-					}
+		JavaClass javaClass = JavaClassParser.parseJavaClass(fileName, content);
+
+		if (!_hasSubclasses(javaClass)) {
+			return content;
+		}
+
+		List<JavaTerm> childJavaTerms = javaClass.getChildJavaTerms();
+
+		for (JavaTerm childJavaTerm : childJavaTerms) {
+			if (childJavaTerm instanceof JavaVariable) {
+				JavaVariable javaVariable = (JavaVariable)childJavaTerm;
+
+				String javaTermContent = javaVariable.getContent();
+
+				String accessModifier = javaVariable.getAccessModifier();
+
+				if (javaTermContent.contains("@Reference") &&
+					accessModifier.equals("private")) {
+
+					addMessage(
+						fileName,
+						"The access modifier of variable '" +
+							javaVariable.getName() +
+								"' should be 'protected'.");
 				}
 			}
 		}
@@ -69,31 +89,38 @@ public class JavaAccessModifierCheck extends BaseJavaTermCheck {
 		return content;
 	}
 
-	@Override
-	protected String[] getCheckableJavaTermNames() {
-		return new String[] {JAVA_CLASS};
-	}
+	private boolean _hasSubclasses(JavaClass javaClass) {
+		String className = javaClass.getName();
 
-	private boolean _hasSubclasses(JavaTerm javaTerm) {
-		String className = javaTerm.getName();
+		String packageName = javaClass.getPackageName();
 
-		String packageName = javaTerm.getPackageName();
+		String moduleRootDirLocation = "modules/";
 
-		List<String> lines = SourceFormatterUtil.matchFileContents(
-			getBaseDirName(),
-			Arrays.asList(
-				"-E", "-l",
-				StringBundler.concat(
-					"(extends ", className, ")|(extends ", packageName, ".",
-					className, ")"),
-				"--", "*.java"));
+		List<String> lines = new ArrayList<>();
+
+		for (int i = 0; i < 6; i++) {
+			File file = new File(getBaseDirName() + moduleRootDirLocation);
+
+			if (file.exists()) {
+				lines = SourceFormatterUtil.matchFileContents(
+					Arrays.asList(
+						"-E", "-l",
+						StringBundler.concat(
+							"(extends ", className, ")|(extends ", packageName,
+							".", className, ")")),
+					getBaseDirName(), new String[0], new String[] {"**/*.java"},
+					getSourceFormatterExcludes(), false);
+			}
+
+			moduleRootDirLocation = "../" + moduleRootDirLocation;
+		}
 
 		if (!lines.isEmpty()) {
 			for (String line : lines) {
 				if (line.contains("/src/test/java/") ||
 					line.contains("/test/unit/")) {
 
-					break;
+					continue;
 				}
 
 				Path baseDir = Paths.get(getBaseDirName());
@@ -102,19 +129,20 @@ public class JavaAccessModifierCheck extends BaseJavaTermCheck {
 
 				if (Files.exists(filePath)) {
 					try {
-						List<String> fileLines = Files.readAllLines(filePath);
+						String content = FileUtil.read(filePath.toFile());
 
-						for (String fileLine : fileLines) {
-							if (fileLine.contains(
-									StringBundler.concat(
-										"package ", packageName, ";")) ||
-								fileLine.contains(
-									StringBundler.concat(
-										"import ", packageName, ".",
-										className))) {
+						if (!content.contains("@Component")) {
+							return false;
+						}
 
-								return true;
-							}
+						if (content.contains(
+								StringBundler.concat(
+									"package ", packageName, ";")) ||
+							content.contains(
+								StringBundler.concat(
+									"import ", packageName, ".", className))) {
+
+							return true;
 						}
 					}
 					catch (IOException ioException) {
@@ -124,52 +152,6 @@ public class JavaAccessModifierCheck extends BaseJavaTermCheck {
 		}
 
 		return false;
-	}
-
-	private boolean _isAnnotationsInherit(String filePathString) {
-		Path filePath = Paths.get(filePathString);
-
-		Path bndPath = _searchBndFile(filePath.getParent());
-
-		if (bndPath != null) {
-			try {
-				List<String> lines = Files.readAllLines(bndPath);
-
-				for (String line : lines) {
-					if (Objects.equals(
-							line, "-dsannotations-options: inherit")) {
-
-						return true;
-					}
-				}
-			}
-			catch (IOException ioException) {
-			}
-		}
-
-		return false;
-	}
-
-	private Path _searchBndFile(Path currentPath) {
-		Path result = null;
-
-		while (currentPath != null) {
-			Path bndFilePath = currentPath.resolve("bnd.bnd");
-
-			if (Files.exists(bndFilePath)) {
-				result = bndFilePath;
-
-				break;
-			}
-
-			if (currentPath.equals(Paths.get(getBaseDirName()))) {
-				break;
-			}
-
-			currentPath = currentPath.getParent();
-		}
-
-		return result;
 	}
 
 }

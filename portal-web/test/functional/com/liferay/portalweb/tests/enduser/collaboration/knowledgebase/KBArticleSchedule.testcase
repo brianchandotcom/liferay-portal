@@ -1,0 +1,396 @@
+@component-name = "portal-knowledge-base"
+definition {
+
+	property custom.properties = "company.default.time.zone=America/Los_Angeles${line.separator}feature.flag.LPS-188058=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property test.liferay.virtual.instance = "false";
+	property test.run.type = "single";
+	property testray.main.component.name = "Knowledge Base";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			KBArticle.tearDownCP();
+		}
+	}
+
+	@description = "This test ensures that users can add an article with a scheduled date."
+	@priority = 5
+	test CanAddArticleWithScheduledDate {
+		KBArticle.updateCheckInterval(fieldValue = 1);
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.addArticleWithScheduledDate(
+			increaseMinutes = 1,
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		KBArticle.viewCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title",
+			kbStatus = "Scheduled");
+
+		// We need to wait for the system time to pass by 1 minute in order to verify the scheduled article is published. There is currently no easy way to manipulate the system time in CI for automation. 1 minute is the shortest value we can set while ensuring the stability of the test. See LPS-188060.
+
+		Pause(value1 = 60000);
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.viewCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title",
+			kbStatus = "Approved");
+	}
+
+	@description = "This test ensures that users can add a scheduled article with expiration date."
+	@priority = 5
+	test CanAddScheduledArticleWithExpirationDate {
+		KBArticle.updateCheckInterval(fieldValue = 1);
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.addArticleWithScheduledDate(
+			expirationDate = "true",
+			increaseMinutes = 1,
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		KBArticle.viewCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title",
+			kbStatus = "Scheduled");
+
+		// We need to wait for the system time to pass by 1 minute in order to verify the scheduled article is published. There is currently no easy way to manipulate the system time in CI for automation. 1 minute is the shortest value we can set while ensuring the stability of the test. See LPS-188060.
+
+		Pause(value1 = 60000);
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.viewExpirationStatus(
+			kbArticleTitle = "Knowledge Base Article Title",
+			kbExpirationStatus = "Expiring Soon");
+
+		KBArticle.viewCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title",
+			kbStatus = "Approved");
+	}
+
+	@description = "This test ensures that users can edit a scheduled article."
+	@priority = 5
+	test CanEditScheduledArticle {
+		KBArticle.updateCheckInterval(fieldValue = 1);
+
+		JSONKnowledgeBase.addkBArticle(
+			displayDate = "true",
+			groupName = "Guest",
+			increaseMinutes = 5,
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		var tooltipMessageDate = DateUtil.getDateOffsetByMinutes(5, "MMMM d, yyyy h:mm a");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.editScheduledDate(
+			increaseMinutes = 1,
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title",
+			tooltipMessageDate = ${tooltipMessageDate});
+
+		KBArticle.viewCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title",
+			kbStatus = "Scheduled");
+
+		// We need to wait for the system time to pass by 1 minute in order to verify the scheduled article is published. There is currently no easy way to manipulate the system time in CI for automation. 1 minute is the shortest value we can set while ensuring the stability of the test. See LPS-188060.
+
+		Pause(value1 = 60000);
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.viewCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title",
+			kbStatus = "Approved");
+	}
+
+	@description = "This test ensures that users can add an article with an invalid scheduled date."
+	@priority = 4
+	test CannotAddArticleWithInvalidScheduledDate {
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.addArticleWithScheduledDate(
+			increaseMinutes = "-1",
+			invalidScheduledDate = "true",
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+	}
+
+	@description = "This test ensures that an error is displayed when the scheduled date is after the expiration date."
+	@priority = 3
+	test CannotConfigureScheduledDateAfterExpirationDate {
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.addArticleWithScheduledDate(
+			expirationDate = "true",
+			increaseMinutes = 10,
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title",
+			scheduledDateAfterexpirationDate = "true");
+	}
+
+	@description = "This test ensures that users can publish a scheduled article immediately when editing a scheduled article."
+	@priority = 5
+	test CanPublishScheduledArticleImmediately {
+		JSONKnowledgeBase.addkBArticle(
+			displayDate = "true",
+			groupName = "Guest",
+			increaseMinutes = 5,
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.editScheduledDate(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title",
+			publishNow = "true");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.viewCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title",
+			kbStatus = "Approved");
+	}
+
+	@description = "This test ensures that users can publish a draft article with a scheduled date."
+	@priority = 4
+	test CanScheduleDraftArticle {
+		KBArticle.updateCheckInterval(fieldValue = 1);
+
+		JSONKnowledgeBase.addkBArticle(
+			groupName = "Guest",
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title",
+			workflowAction = "DRAFT");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.editScheduledDate(
+			editDraftArticle = "true",
+			increaseMinutes = 1,
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		LexiconList.viewListEntryLabel(
+			listEntry = "Knowledge Base Article Title",
+			listEntryLabel = "Scheduled");
+
+		// We need to wait for the system time to pass by 1 minute in order to verify the scheduled article is published. There is currently no easy way to manipulate the system time in CI for automation. 1 minute is the shortest value we can set while ensuring the stability of the test. See LPS-188060.
+
+		Pause(value1 = 60000);
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		LexiconList.viewListEntryLabel(
+			listEntry = "Knowledge Base Article Title",
+			listEntryLabel = "Approved");
+	}
+
+	@description = "This test ensures that a child article scheduled after the parent will be published on its scheduled date."
+	@priority = 5
+	test ChildArticleScheduledAfterParentCanBePublishedOnItsScheduledDate {
+		KBArticle.updateCheckInterval(fieldValue = 1);
+
+		JSONKnowledgeBase.addkBArticle(
+			displayDate = "true",
+			groupName = "Guest",
+			increaseMinutes = 1,
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.addArticleWithScheduledDate(
+			addChildArticleWithScheduledDate = "true",
+			increaseMinutes = 2,
+			kbArticleContent = "Knowledge Base Child Article Content",
+			kbArticleTitle = "Knowledge Base Child Article Title",
+			kbParentArticleTitle = "Knowledge Base Article Title");
+
+		// We need to wait for the system time to pass by 1 minute in order to verify the scheduled parent article is published. There is currently no easy way to manipulate the system time in CI for automation. 1 minute is the shortest value we can set while ensuring the stability of the test. See LPS-188060.
+
+		Pause(value1 = 60000);
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		LexiconList.viewListEntryLabel(
+			listEntry = "Knowledge Base Article Title",
+			listEntryLabel = "Approved");
+
+		KBArticle.gotoChildArticleDescriptiveDetails(kbArticleTitle = "Knowledge Base Article Title");
+
+		LexiconList.viewListEntryLabel(
+			listEntry = "Knowledge Base Child Article Title",
+			listEntryLabel = "Scheduled");
+
+		// We need to wait for the system time to pass by 1 minute in order to verify the scheduled child article is published. There is currently no easy way to manipulate the system time in CI for automation. 1 minute is the shortest value we can set while ensuring the stability of the test. See LPS-188060.
+
+		Pause(value1 = 60000);
+
+		Refresh();
+
+		LexiconList.viewListEntryLabel(
+			listEntry = "Knowledge Base Child Article Title",
+			listEntryLabel = "Approved");
+	}
+
+	@description = "This test ensures that a child article scheduled before the parent will not be published until its parent is published."
+	@priority = 5
+	test ChildArticleScheduledBeforeParentCanBePublishedWhenParentIsPublished {
+		KBArticle.updateCheckInterval(fieldValue = 1);
+
+		JSONKnowledgeBase.addkBArticle(
+			displayDate = "true",
+			groupName = "Guest",
+			increaseMinutes = 2,
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		JSONKnowledgeBase.addkBChildArticle(
+			displayDate = "true",
+			groupName = "Guest",
+			increaseMinutes = 1,
+			kbArticleTitle = "Knowledge Base Article Title",
+			kbChildArticleContent = "Knowledge Base Child Article Content",
+			kbChildArticleTitle = "Knowledge Base Child Article Title");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		// We need to wait for the system time to pass by 1 minute in order to verify the scheduled child article is not published. There is currently no easy way to manipulate the system time in CI for automation. 1 minute is the shortest value we can set while ensuring the stability of the test. See LPS-188060.
+
+		Pause(value1 = 60000);
+
+		KBArticle.gotoChildArticleDescriptiveDetails(kbArticleTitle = "Knowledge Base Article Title");
+
+		LexiconList.viewListEntryLabel(
+			listEntry = "Knowledge Base Child Article Title",
+			listEntryLabel = "Scheduled");
+
+		// We need to wait for the system time to pass by 1 minute in order to verify the scheduled articles are published. There is currently no easy way to manipulate the system time in CI for automation. 1 minute is the shortest value we can set while ensuring the stability of the test. See LPS-188060.
+
+		Pause(value1 = 60000);
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		LexiconList.viewListEntryLabel(
+			listEntry = "Knowledge Base Article Title",
+			listEntryLabel = "Approved");
+
+		KBArticle.gotoChildArticleDescriptiveDetails(kbArticleTitle = "Knowledge Base Article Title");
+
+		LexiconList.viewListEntryLabel(
+			listEntry = "Knowledge Base Child Article Title",
+			listEntryLabel = "Approved");
+	}
+
+	@description = "This test ensures that the expired article can be published again when the date reaches a new scheduled date."
+	@priority = 4
+	test ExpiredArticleCanBePublishedWithNewScheduledDate {
+		KBArticle.updateCheckInterval(fieldValue = 1);
+
+		JSONKnowledgeBase.addkBArticle(
+			groupName = "Guest",
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Expire",
+			rowEntry = "Knowledge Base Article Title");
+
+		KBArticle.editScheduledDate(
+			editExpiredArticle = "true",
+			increaseMinutes = 1,
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		LexiconList.viewListEntryLabel(
+			listEntry = "Knowledge Base Article Title",
+			listEntryLabel = "Scheduled");
+
+		// We need to wait for the system time to pass by 1 minute in order to verify the scheduled article is published. There is currently no easy way to manipulate the system time in CI for automation. 1 minute is the shortest value we can set while ensuring the stability of the test. See LPS-188060.
+
+		Pause(value1 = 60000);
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.viewCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title",
+			kbStatus = "Approved");
+	}
+
+	@description = "This test ensures that the scheduled article can be published in the live site after reaching the scheduled date."
+	@priority = 4
+	test ScheduledArticleCanBePublshedOnLiveSite {
+		KBArticle.updateCheckInterval(fieldValue = 1);
+
+		HeadlessSite.addSite(siteName = "Site Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "knowledge base Page");
+
+		JSONStaging.enableLocalStaging(groupName = "Site Name");
+
+		KBAdmin.openKBAdmin(siteURLKey = "site-name-staging");
+
+		KBArticle.addArticleWithScheduledDate(
+			increaseMinutes = 1,
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "knowledge base Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		KBAdmin.openKBAdmin(siteURLKey = "site-name");
+
+		LexiconList.viewListEntryLabel(
+			listEntry = "Knowledge Base Article Title",
+			listEntryLabel = "Scheduled");
+
+		// We need to wait for the system time to pass by 1 minute in order to verify the scheduled article is published. There is currently no easy way to manipulate the system time in CI for automation. 1 minute is the shortest value we can set while ensuring the stability of the test. See LPS-188060.
+
+		Pause(value1 = 60000);
+
+		KBAdmin.openKBAdmin(siteURLKey = "site-name");
+
+		LexiconList.viewListEntryLabel(
+			listEntry = "Knowledge Base Article Title",
+			listEntryLabel = "Approved");
+	}
+
+}

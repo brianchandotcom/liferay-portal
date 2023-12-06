@@ -86,6 +86,58 @@ definition {
 		WorkflowComment.add(workflowComment = "Workflow Comment");
 	}
 
+	@description = "This test ensures that a scheduled article reaches the publish date, the status will be changed from “Pending“ to “Approve” after approving."
+	@priority = 5
+	test CanApproveReachingScheduledDateArticle {
+		property custom.properties = "company.default.time.zone=America/Los_Angeles${line.separator}feature.flag.LPS-188058=true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		Workflow.openWorkflowProcessBuilderConfiguration();
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Knowledge Base Article");
+
+		KBArticle.updateCheckInterval(fieldValue = 1);
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.addArticleWithScheduledDate(
+			increaseMinutes = 1,
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title",
+			workflowEnabled = "true");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		LexiconList.viewListEntryLabel(
+			listEntry = "Knowledge Base Article Title",
+			listEntryLabel = "Pending");
+
+		// We need to wait for the system time to pass by 1 minute in order to verify the scheduled article is published. There is currently no easy way to manipulate the system time in CI for automation. 1 minute is the shortest value we can set while ensuring the stability of the test. See LPS-188060.
+
+		Pause(value1 = 60000);
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Knowledge Base Article Title",
+			workflowAssetType = "Knowledge Base Article",
+			workflowTask = "Review");
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "Knowledge Base Article Title",
+			workflowAssetType = "Knowledge Base Article",
+			workflowTask = "Review");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		LexiconList.viewListEntryLabel(
+			listEntry = "Knowledge Base Article Title",
+			listEntryLabel = "Approved");
+	}
+
 	@e2etest
 	@priority = 4
 	@refactordone
@@ -113,6 +165,64 @@ definition {
 			kbArticleContent = "Knowledge Base Article Content",
 			kbArticleTitle = "Knowledge Base Article Title",
 			kbStatus = "Pending");
+	}
+
+	@description = "This test ensures that a scheduled article does not reach the publish date, The status will be changed from “Pending“ to “Scheduled” after approving."
+	@priority = 5
+	test ScheduledArticleCanBePublishedAfterApproving {
+		property custom.properties = "company.default.time.zone=America/Los_Angeles${line.separator}feature.flag.LPS-188058=true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		Workflow.openWorkflowProcessBuilderConfiguration();
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Knowledge Base Article");
+
+		KBArticle.updateCheckInterval(fieldValue = 1);
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.addArticleWithScheduledDate(
+			increaseMinutes = 1,
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title",
+			workflowEnabled = "true");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		LexiconList.viewListEntryLabel(
+			listEntry = "Knowledge Base Article Title",
+			listEntryLabel = "Pending");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Knowledge Base Article Title",
+			workflowAssetType = "Knowledge Base Article",
+			workflowTask = "Review");
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "Knowledge Base Article Title",
+			workflowAssetType = "Knowledge Base Article",
+			workflowTask = "Review");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		LexiconList.viewListEntryLabel(
+			listEntry = "Knowledge Base Article Title",
+			listEntryLabel = "Scheduled");
+
+		// We need to wait for the system time to pass by 1 minute in order to verify the scheduled article is published. There is currently no easy way to manipulate the system time in CI for automation. 1 minute is the shortest value we can set while ensuring the stability of the test. See LPS-188060.
+
+		Pause(value1 = 60000);
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		LexiconList.viewListEntryLabel(
+			listEntry = "Knowledge Base Article Title",
+			listEntryLabel = "Approved");
 	}
 
 	@priority = 4

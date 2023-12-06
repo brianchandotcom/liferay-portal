@@ -28,7 +28,7 @@ public interface JobParameterDefinition {
 
 	public enum Type {
 
-		JENKINS_BRANCH_URL, PORTAL_PULL_REQUEST_URL
+		JENKINS_BRANCH_URL, PORTAL_PULL_REQUEST_URL, TEST_SUITE_NAME
 
 	}
 

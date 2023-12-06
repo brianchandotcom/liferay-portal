@@ -11,6 +11,7 @@ import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
+import com.liferay.portal.kernel.service.UserGroupService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -88,7 +89,8 @@ public class GroupResourceImpl extends BaseGroupResourceImpl {
 			_classNameLocalService, _companyLocalService, _configurationAdmin,
 			_expandoColumnLocalService, _expandoTableLocalService,
 			_expandoValueLocalService, _searcher, _searchRequestBuilderFactory,
-			_userGroupLocalService, _userLocalService, _userService);
+			_userGroupLocalService, _userGroupService, _userLocalService,
+			_userService);
 	}
 
 	private Response _buildResponse(SCIMResponse scimResponse) {
@@ -145,6 +147,9 @@ public class GroupResourceImpl extends BaseGroupResourceImpl {
 
 	@Reference
 	private UserGroupLocalService _userGroupLocalService;
+
+	@Reference
+	private UserGroupService _userGroupService;
 
 	@Reference
 	private UserLocalService _userLocalService;

@@ -27,11 +27,13 @@ import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
+import com.liferay.portal.kernel.service.UserGroupService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -90,7 +92,8 @@ public class UserManagerImpl implements UserManager {
 		ExpandoValueLocalService expandoValueLocalService, Searcher searcher,
 		SearchRequestBuilderFactory searchRequestBuilderFactory,
 		UserGroupLocalService userGroupLocalService,
-		UserLocalService userLocalService, UserService userService) {
+		UserGroupService userGroupService, UserLocalService userLocalService,
+		UserService userService) {
 
 		_classNameLocalService = classNameLocalService;
 		_companyLocalService = companyLocalService;
@@ -101,6 +104,7 @@ public class UserManagerImpl implements UserManager {
 		_searcher = searcher;
 		_searchRequestBuilderFactory = searchRequestBuilderFactory;
 		_userGroupLocalService = userGroupLocalService;
+		_userGroupService = userGroupService;
 		_userLocalService = userLocalService;
 		_userService = userService;
 	}
@@ -128,15 +132,18 @@ public class UserManagerImpl implements UserManager {
 	}
 
 	@Override
-	public void deleteGroup(String groupId) throws CharonException {
+	public void deleteGroup(String groupId)
+		throws CharonException, NotFoundException {
+
 		try {
-			_userGroupLocalService.deleteUserGroup(
-				_getUserGroup(
-					CompanyThreadLocal.getCompanyId(),
-					GetterUtil.getLong(groupId)));
+			_userGroupService.deleteUserGroup(GetterUtil.getLong(groupId));
 		}
-		catch (AbstractCharonException abstractCharonException) {
-			ReflectionUtil.throwException(abstractCharonException);
+		catch (PrincipalException principalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(principalException);
+			}
+
+			throw new NotFoundException();
 		}
 		catch (PortalException portalException) {
 			throw new CharonException(
@@ -279,7 +286,7 @@ public class UserManagerImpl implements UserManager {
 					long userGroupId = document.getLong(Field.ENTRY_CLASS_PK);
 
 					return ScimGroupUtil.toGroup(
-						_userGroupLocalService.getUserGroup(userGroupId));
+						_userGroupService.getUserGroup(userGroupId));
 				}));
 	}
 
@@ -484,11 +491,8 @@ public class UserManagerImpl implements UserManager {
 			company.getCompanyId(), group.getExternalId(),
 			GetterUtil.getLong(group.getId()));
 
-		long companyId = company.getCompanyId();
-
 		if (userGroup == null) {
-			userGroup = _userGroupLocalService.addUserGroup(
-				_userLocalService.getGuestUserId(companyId), companyId,
+			userGroup = _userGroupService.addUserGroup(
 				group.getDisplayName(), null, new ServiceContext());
 
 			userGroup.setExternalReferenceCode(group.getExternalId());
@@ -514,8 +518,8 @@ public class UserManagerImpl implements UserManager {
 					"Group was provisioned by another SCIM client");
 			}
 
-			userGroup = _userGroupLocalService.updateUserGroup(
-				companyId, userGroup.getPrimaryKey(), group.getDisplayName(),
+			userGroup = _userGroupService.updateUserGroup(
+				userGroup.getPrimaryKey(), group.getDisplayName(),
 				userGroup.getDescription(), new ServiceContext());
 
 			if (!Objects.equals(
@@ -791,8 +795,18 @@ public class UserManagerImpl implements UserManager {
 	private UserGroup _getUserGroup(long companyId, long userGroupId)
 		throws AbstractCharonException {
 
-		UserGroup userGroup = _userGroupLocalService.fetchUserGroup(
-			userGroupId);
+		UserGroup userGroup = null;
+
+		try {
+			userGroup = _userGroupService.fetchUserGroup(userGroupId);
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+
+			throw new NotFoundException();
+		}
 
 		if (userGroup == null) {
 			throw new NotFoundException(
@@ -984,6 +998,7 @@ public class UserManagerImpl implements UserManager {
 	private final Searcher _searcher;
 	private final SearchRequestBuilderFactory _searchRequestBuilderFactory;
 	private final UserGroupLocalService _userGroupLocalService;
+	private final UserGroupService _userGroupService;
 	private final UserLocalService _userLocalService;
 	private final UserService _userService;
 

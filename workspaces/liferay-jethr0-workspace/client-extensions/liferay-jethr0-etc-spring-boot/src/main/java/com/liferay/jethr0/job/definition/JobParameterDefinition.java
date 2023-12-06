@@ -5,17 +5,28 @@
 
 package com.liferay.jethr0.job.definition;
 
-import java.util.Set;
-
 import org.json.JSONObject;
 
 /**
  * @author Michael Hashimoto
  */
-public interface JobDefinition extends Comparable<JobDefinition> {
-
-	public Set<JobParameterDefinition> getJobParameterDefinitions();
+public interface JobParameterDefinition {
 
 	public JSONObject getJSONObject();
+
+	public String getKey();
+
+	public String getLabel();
+
+	public Type getType();
+
+	public String getValueDefault();
+
+	public String getValueDescription();
+
+	public String getValueRegex();
+
+	public enum Type {
+	}
 
 }

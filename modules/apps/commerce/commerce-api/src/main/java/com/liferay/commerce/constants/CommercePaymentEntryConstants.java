@@ -33,9 +33,16 @@ public class CommercePaymentEntryConstants {
 	public static final int STATUS_REFUND =
 		CommerceOrderPaymentConstants.STATUS_REFUNDED;
 
+	public static final int[] STATUSES = {
+		STATUS_AUTHORIZED, STATUS_CANCELLED, STATUS_COMPLETED, STATUS_CREATED,
+		STATUS_FAILED, STATUS_PENDING, STATUS_REFUND
+	};
+
 	public static final int TYPE_PAYMENT = 0;
 
 	public static final int TYPE_REFUND = 1;
+
+	public static final int[] TYPES = {TYPE_PAYMENT, TYPE_REFUND};
 
 	public static String getPaymentLabelStyle(int paymentStatus) {
 		return CommerceOrderPaymentConstants.getOrderPaymentLabelStyle(
@@ -43,6 +50,13 @@ public class CommercePaymentEntryConstants {
 	}
 
 	public static String getPaymentStatusLabel(int paymentStatus) {
+		if (paymentStatus == STATUS_CREATED) {
+			return "created";
+		}
+		else if (paymentStatus == STATUS_REFUND) {
+			return "refund";
+		}
+
 		return CommerceOrderPaymentConstants.getOrderPaymentStatusLabel(
 			paymentStatus);
 	}

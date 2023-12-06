@@ -13,12 +13,16 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 import com.liferay.portal.db.partition.DBPartitionUtil;
 import com.liferay.portal.db.partition.test.util.BaseDBPartitionTestCase;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.util.BundleUtil;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
@@ -58,6 +62,8 @@ public class UpgradePartitionedConfigurationTableTest
 
 		insertPartitionRequiredData();
 
+		insertPartitionData();
+
 		_companyId = TestPropsValues.getCompanyId();
 
 		_dataSource = InfrastructureUtil.getDataSource();
@@ -87,12 +93,16 @@ public class UpgradePartitionedConfigurationTableTest
 				}
 			});
 
+		_omniAdminUser = UserTestUtil.addOmniAdminUser();
+
 		Group group = null;
 
 		try (SafeCloseable safeCloseable =
 				CompanyThreadLocal.setWithSafeCloseable(COMPANY_IDS[0])) {
 
-			group = GroupTestUtil.addGroup();
+			group = GroupTestUtil.addGroup(
+				COMPANY_IDS[0], _omniAdminUser.getUserId(),
+				GroupConstants.DEFAULT_PARENT_GROUP_ID);
 		}
 
 		Map<Long, ConfigurationEntry> validConfigurationEntries =
@@ -270,6 +280,9 @@ public class UpgradePartitionedConfigurationTableTest
 	private static long _companyId;
 	private static DataSource _dataSource;
 	private static String _defaultSchemaName;
+
+	@DeleteAfterTestRun
+	private User _omniAdminUser;
 
 	private class ConfigurationEntry {
 

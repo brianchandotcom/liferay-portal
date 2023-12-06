@@ -5,19 +5,12 @@
 
 package com.liferay.jethr0.job;
 
-import java.util.Arrays;
-import java.util.List;
-
 import org.json.JSONObject;
 
 /**
  * @author Michael Hashimoto
  */
 public class PortalReleaseJobEntity extends BaseJobEntity {
-
-	public static List<ParameterDefinition> getParameterDefinitions() {
-		return Arrays.asList(PARAMETER_DEFINITION_JENKINS_GITHUB_URL);
-	}
 
 	@Override
 	public String getJenkinsJobName() {

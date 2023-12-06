@@ -252,18 +252,6 @@ public class JobRestController {
 		return new ResponseEntity<>(jobsJSONArray.toString(), HttpStatus.OK);
 	}
 
-	@GetMapping("/types")
-	public ResponseEntity<String> jobTypes(@AuthenticationPrincipal Jwt jwt) {
-		JSONArray jobTypesJSONArray = new JSONArray();
-
-		for (JobEntity.Type type : JobEntity.Type.values()) {
-			jobTypesJSONArray.put(type.getJSONObject());
-		}
-
-		return new ResponseEntity<>(
-			jobTypesJSONArray.toString(), HttpStatus.OK);
-	}
-
 	@Autowired
 	private BuildEntityRepository _buildEntityRepository;
 

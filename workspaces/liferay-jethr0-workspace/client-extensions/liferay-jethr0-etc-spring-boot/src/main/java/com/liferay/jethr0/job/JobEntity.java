@@ -12,9 +12,6 @@ import com.liferay.jethr0.jenkins.cohort.JenkinsCohortEntity;
 import com.liferay.jethr0.task.TaskEntity;
 import com.liferay.jethr0.testsuite.TestSuiteEntity;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
 import java.net.URL;
 
 import java.util.Date;
@@ -23,21 +20,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
  * @author Michael Hashimoto
  */
 public interface JobEntity extends Entity {
-
-	public static ParameterDefinition PARAMETER_DEFINITION_JENKINS_GITHUB_URL =
-		new ParameterDefinition(
-			"jenkinsGitHubURL", "Jenkins GitHub URL",
-			ParameterDefinition.Type.URL,
-			"https://github.com/liferay/liferay-jenkins-ee/tree/master",
-			"e.g. https://github.com/[user]/liferay-jenkins-ee/tree/[branch]",
-			"https://github.com/[^/]+/liferay-jenkins-ee/tree/[^/]+");
 
 	public void addBuildEntities(Set<BuildEntity> buildEntities);
 
@@ -124,79 +112,6 @@ public interface JobEntity extends Entity {
 
 	public void setState(State state);
 
-	public class ParameterDefinition {
-
-		public ParameterDefinition(
-			String key, String label, Type type, String valueDefault,
-			String valueDescription, String valueRegex) {
-
-			_key = key;
-			_label = label;
-			_type = type;
-			_valueDefault = valueDefault;
-			_valueDescription = valueDescription;
-			_valueRegex = valueRegex;
-		}
-
-		public JSONObject getJSONObject() {
-			JSONObject jsonObject = new JSONObject();
-
-			jsonObject.put(
-				"key", getKey()
-			).put(
-				"label", getLabel()
-			).put(
-				"type", getType()
-			).put(
-				"valueDefault", getValueDefault()
-			).put(
-				"valueDescription", getValueDescription()
-			).put(
-				"valueRegex", getValueRegex()
-			);
-
-			return jsonObject;
-		}
-
-		public String getKey() {
-			return _key;
-		}
-
-		public String getLabel() {
-			return _label;
-		}
-
-		public Type getType() {
-			return _type;
-		}
-
-		public String getValueDefault() {
-			return _valueDefault;
-		}
-
-		public String getValueDescription() {
-			return _valueDescription;
-		}
-
-		public String getValueRegex() {
-			return _valueRegex;
-		}
-
-		public enum Type {
-
-			STRING, URL
-
-		}
-
-		private final String _key;
-		private final String _label;
-		private final Type _type;
-		private final String _valueDefault;
-		private final String _valueDescription;
-		private final String _valueRegex;
-
-	}
-
 	public enum State {
 
 		BLOCKED("blocked", "Blocked"), COMPLETED("completed", "Completed"),
@@ -251,30 +166,18 @@ public interface JobEntity extends Entity {
 
 	public enum Type {
 
-		DEFAULT("default", "Default", DefaultJobEntity.class),
-		PORTAL_APP_RELEASE(
-			"portalAppRelease", "Portal App Release",
-			PortalAppReleaseJobEntity.class),
+		DEFAULT("default", "Default"),
+		PORTAL_APP_RELEASE("portalAppRelease", "Portal App Release"),
 		PORTAL_FIXPACK_RELEASE(
-			"portalFixpackRelease", "Portal Fixpack Release",
-			PortalFixpackReleaseJobEntity.class),
-		PORTAL_HOTFIX_RELEASE(
-			"portalHotfixRelease", "Portal Hotfix Release",
-			PortalHotfixReleaseJobEntity.class),
-		PORTAL_PULL_REQUEST(
-			"portalPullRequest", "Portal Pull Request",
-			DefaultPortalPullRequestJobEntity.class),
-		PORTAL_PULL_REQUEST_SF(
-			"portalPullRequestSF", "Portal Pull Request SF",
-			SFPortalPullRequestJobEntity.class),
-		PORTAL_RELEASE(
-			"portalRelease", "Portal Release", PortalReleaseJobEntity.class),
+			"portalFixpackRelease", "Portal Fixpack Release"),
+		PORTAL_HOTFIX_RELEASE("portalHotfixRelease", "Portal Hotfix Release"),
+		PORTAL_PULL_REQUEST("portalPullRequest", "Portal Pull Request"),
+		PORTAL_PULL_REQUEST_SF("portalPullRequestSF", "Portal Pull Request SF"),
+		PORTAL_RELEASE("portalRelease", "Portal Release"),
 		PORTAL_UPSTREAM_ACCEPTANCE(
-			"portalUpstreamAcceptance", "Portal Upstream Acceptance",
-			AcceptancePortalUpstreamJobEntity.class),
+			"portalUpstreamAcceptance", "Portal Upstream Acceptance"),
 		PORTAL_UPSTREAM_TEST_SUITE(
-			"portalUpstreamTestSuite", "Portal Upstream Test Suite",
-			TestSuitePortalUpstreamJobEntity.class);
+			"portalUpstreamTestSuite", "Portal Upstream Test Suite");
 
 		public static Type get(JSONObject jsonObject) {
 			return getByKey(jsonObject.getString("key"));
@@ -295,8 +198,6 @@ public interface JobEntity extends Entity {
 				"key", getKey()
 			).put(
 				"name", getName()
-			).put(
-				"parameterDefinitions", _getJobParameterDefinitionsJSONArray()
 			);
 
 			return jsonObject;
@@ -310,41 +211,9 @@ public interface JobEntity extends Entity {
 			return _name;
 		}
 
-		private Type(String key, String name, Class<?> clazz) {
+		private Type(String key, String name) {
 			_key = key;
 			_name = name;
-			_clazz = clazz;
-		}
-
-		private JSONArray _getJobParameterDefinitionsJSONArray() {
-			try {
-				Method method = _clazz.getMethod("getParameterDefinitions");
-
-				Object object = method.invoke(null);
-
-				if (!(object instanceof List)) {
-					return null;
-				}
-
-				JSONArray parameterDefinitionsJSONArray = new JSONArray();
-
-				List<ParameterDefinition> parameterDefinitions =
-					(List<ParameterDefinition>)object;
-
-				for (ParameterDefinition parameterDefinition :
-						parameterDefinitions) {
-
-					parameterDefinitionsJSONArray.put(
-						parameterDefinition.getJSONObject());
-				}
-
-				return parameterDefinitionsJSONArray;
-			}
-			catch (IllegalAccessException | InvocationTargetException |
-				   NoSuchMethodException exception) {
-
-				throw new RuntimeException(exception);
-			}
 		}
 
 		private static final Map<String, Type> _types = new HashMap<>();
@@ -355,7 +224,6 @@ public interface JobEntity extends Entity {
 			}
 		}
 
-		private final Class<?> _clazz;
 		private final String _key;
 		private final String _name;
 

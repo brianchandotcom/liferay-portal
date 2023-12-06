@@ -7,8 +7,6 @@ package com.liferay.jethr0.job;
 
 import com.liferay.jethr0.util.StringUtil;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -20,13 +18,6 @@ import org.json.JSONObject;
  */
 public class DefaultPortalPullRequestJobEntity
 	extends BasePortalPullRequestJobEntity {
-
-	public static List<ParameterDefinition> getParameterDefinitions() {
-		return Arrays.asList(
-			PARAMETER_DEFINITION_JENKINS_GITHUB_URL,
-			PARAMETER_DEFINITION_PORTAL_PULL_REQUEST,
-			PARAMETER_DEFINITION_TEST_SUITE_NAME);
-	}
 
 	protected DefaultPortalPullRequestJobEntity(JSONObject jsonObject) {
 		super(jsonObject);

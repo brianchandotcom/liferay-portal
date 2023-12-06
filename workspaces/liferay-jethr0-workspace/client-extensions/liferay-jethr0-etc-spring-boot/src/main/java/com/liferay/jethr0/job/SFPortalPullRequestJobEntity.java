@@ -5,8 +5,6 @@
 
 package com.liferay.jethr0.job;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 
 import org.json.JSONObject;
@@ -16,12 +14,6 @@ import org.json.JSONObject;
  */
 public class SFPortalPullRequestJobEntity
 	extends BasePortalPullRequestJobEntity {
-
-	public static List<ParameterDefinition> getParameterDefinitions() {
-		return Arrays.asList(
-			PARAMETER_DEFINITION_JENKINS_GITHUB_URL,
-			PARAMETER_DEFINITION_PORTAL_PULL_REQUEST);
-	}
 
 	protected SFPortalPullRequestJobEntity(JSONObject jsonObject) {
 		super(jsonObject);

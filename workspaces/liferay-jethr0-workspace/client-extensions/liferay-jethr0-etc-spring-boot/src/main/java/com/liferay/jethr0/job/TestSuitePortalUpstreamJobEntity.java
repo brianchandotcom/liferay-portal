@@ -7,8 +7,6 @@ package com.liferay.jethr0.job;
 
 import com.liferay.jethr0.util.StringUtil;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 
 import org.json.JSONObject;
@@ -18,15 +16,6 @@ import org.json.JSONObject;
  */
 public class TestSuitePortalUpstreamJobEntity
 	extends BasePortalUpstreamJobEntity {
-
-	public static List<ParameterDefinition> getParameterDefinitions() {
-		return Arrays.asList(
-			PARAMETER_DEFINITION_BRANCH_SHA, PARAMETER_DEFINITION_BRANCH_URL,
-			PARAMETER_DEFINITION_BUILD_PROFILE,
-			PARAMETER_DEFINITION_JENKINS_GITHUB_URL,
-			PARAMETER_DEFINITION_TEST_SUITE_NAME,
-			PARAMETER_DEFINITION_UPSTREAM_BRANCH_NAME);
-	}
 
 	protected TestSuitePortalUpstreamJobEntity(JSONObject jsonObject) {
 		super(jsonObject);

@@ -5,8 +5,6 @@
 
 package com.liferay.jethr0.job;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -17,14 +15,6 @@ import org.json.JSONObject;
  */
 public class AcceptancePortalUpstreamJobEntity
 	extends BasePortalUpstreamJobEntity {
-
-	public static List<ParameterDefinition> getParameterDefinitions() {
-		return Arrays.asList(
-			PARAMETER_DEFINITION_BRANCH_SHA, PARAMETER_DEFINITION_BRANCH_URL,
-			PARAMETER_DEFINITION_BUILD_PROFILE,
-			PARAMETER_DEFINITION_JENKINS_GITHUB_URL,
-			PARAMETER_DEFINITION_UPSTREAM_BRANCH_NAME);
-	}
 
 	@Override
 	public String getTestSuiteName() {

@@ -12,34 +12,6 @@ import java.net.URL;
  */
 public interface PortalUpstreamJobEntity extends JobEntity {
 
-	public static ParameterDefinition PARAMETER_DEFINITION_BRANCH_SHA =
-		new ParameterDefinition(
-			"branchSHA", "Branch SHA", ParameterDefinition.Type.STRING, null,
-			"Insert your Branch SHA here", null);
-
-	public static ParameterDefinition PARAMETER_DEFINITION_BRANCH_URL =
-		new ParameterDefinition(
-			"branchURL", "Branch URL", ParameterDefinition.Type.URL,
-			"https://github.com/liferay/liferay-portal/tree/master",
-			"e.g. https://github.com/[user]/liferay-portal(-ee)/tree/[name]",
-			"https://github.com/[^/]+/liferay-portal(-ee)?/tree/[^/]+");
-
-	public static ParameterDefinition PARAMETER_DEFINITION_BUILD_PROFILE =
-		new ParameterDefinition(
-			"buildProfile", "Build Profile", ParameterDefinition.Type.STRING,
-			"dxp", "e.g. dxp or portal", null);
-
-	public static ParameterDefinition PARAMETER_DEFINITION_TEST_SUITE_NAME =
-		new ParameterDefinition(
-			"testSuiteName", "Test Suite Name", ParameterDefinition.Type.STRING,
-			null, "Insert your Test Suite Name here", null);
-
-	public static ParameterDefinition
-		PARAMETER_DEFINITION_UPSTREAM_BRANCH_NAME = new ParameterDefinition(
-			"upstreamBranchName", "Upstream Branch Name",
-			ParameterDefinition.Type.STRING, "master",
-			"Insert your Upstream Branch Name here", null);
-
 	public String getBranchSHA();
 
 	public URL getBranchURL();

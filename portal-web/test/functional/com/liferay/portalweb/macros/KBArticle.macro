@@ -774,6 +774,85 @@ definition {
 	}
 
 	@summary = "Default summary"
+	macro editScheduledDate(increaseMinutes = null, tooltipMessageDate = null, kbArticleTitle = null) {
+		if (isSet(tooltipMessageDate)) {
+			MouseOver.javaScriptFocus(locator1 = "Icon#TOOLTIP");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#TOOLTIP",
+				value1 = ${tooltipMessageDate});
+		}
+
+		Click(
+			key_rowEntry = ${kbArticleTitle},
+			locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
+
+		MenuItem.click(menuItem = "Edit");
+
+		if (isSet(tooltipMessageDate)) {
+			MouseOver.javaScriptFocus(
+				key_text = "Edit Schedule",
+				locator1 = "Button#ANY");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#TOOLTIP",
+				value1 = "This article will be published on ${tooltipMessageDate}");
+		}
+
+		if (isSet(editExpiredArticle)) {
+			var expirationDate = DateUtil.getDateOffsetByDays(1, "MM/dd/yyyy");
+
+			Panel.expandPanel(panel = "Expiration Date");
+
+			Type(
+				locator1 = "TextInput#EXPIRATION_DATE",
+				value1 = ${expirationDate});
+
+			Button.click(button = "Publish");
+
+			MenuItem.click(menuItem = "Schedule Publication");
+		}
+		else if (isSet(editDraftArticle)) {
+			Button.click(button = "Publish");
+
+			MenuItem.click(menuItem = "Schedule Publication");
+		}
+		else {
+			Button.click(button = "Edit Schedule");
+
+			AssertTextEquals(
+				locator1 = "Modal#HEADER",
+				value1 = "Edit Scheduled Publication");
+		}
+
+		if (isSet(publishNow)) {
+			Button.click(button = "Publish Now");
+
+			Alert.viewSuccessMessageText(successMessage = "${kbArticleTitle} was successfully published");
+		}
+		else {
+			var scheduledDate = DateUtil.getDateOffsetByMinutes(${increaseMinutes}, "yyyy-MM-dd HH:mm");
+
+			var successMessageDate = DateUtil.format(${scheduledDate}, "yyyy-MM-dd HH:mm", "M/d/yy h:mm a");
+
+			echo("## * currentDate: ${currentDate}");
+
+			echo("## * scheduledDate: ${scheduledDate}");
+
+			echo("## * successMessageDate: ${successMessageDate}");
+
+			Type(
+				key_placeHolder = "yyyy-MM-dd HH:mm",
+				locator1 = "TextInput#ANY_PLACEHOLDER",
+				value1 = ${scheduledDate});
+
+			Button.click(button = "Schedule");
+
+			Alert.viewSuccessMessageText(successMessage = "${kbArticleTitle} will be published on ${successMessageDate}");
+		}
+	}
+
+	@summary = "Default summary"
 	macro enableDescriptionOnPortlet(portletName = null) {
 		Portlet.gotoPortletOptions(
 			portletName = ${portletName},

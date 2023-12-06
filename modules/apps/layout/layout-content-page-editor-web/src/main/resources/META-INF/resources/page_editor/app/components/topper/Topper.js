@@ -206,6 +206,7 @@ function TopperContent({
 				'highlighted': isHighlighted,
 				'hovered': isHovered,
 			})}
+			data-name={name}
 			onClick={(event) => {
 				event.stopPropagation();
 

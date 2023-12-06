@@ -4,5 +4,11 @@
 			"message": "Learn more about beta features.",
 			"url": "https://learn.liferay.com/w/dxp/system-administration/configuring-liferay/feature-flags"
 		}
+	},
+	"deprecated-features": {
+		"en_US": {
+			"message": "Learn more about deprecated features.",
+			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/upgrading-liferay/reference/maintenance-mode-and-deprecations-in-7-4"
+		}
 	}
 }

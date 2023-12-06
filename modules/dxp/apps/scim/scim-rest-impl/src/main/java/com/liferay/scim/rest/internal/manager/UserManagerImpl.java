@@ -516,7 +516,8 @@ public class UserManagerImpl implements UserManager {
 		String userScimClientId = _getScimClientId(portalUser);
 
 		if (Validator.isNull(userScimClientId)) {
-			throw new NotFoundException("No user found with user ID " + userId);
+			throw new NotFoundException(
+				"User " + userId + " is not a SCIM user");
 		}
 
 		ScimClientOAuth2ApplicationConfiguration

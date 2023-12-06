@@ -18,6 +18,22 @@ public abstract class BasePortalUpstreamJobEntity
 	extends BaseJobEntity implements PortalUpstreamJobEntity {
 
 	@Override
+	public String getBranchSHA() {
+		return getParameterValue("branchSHA");
+	}
+
+	@Override
+	public URL getBranchURL() {
+		String upstreamBranchURL = getParameterValue("branchURL");
+
+		if (StringUtil.isNullOrEmpty(upstreamBranchURL)) {
+			return null;
+		}
+
+		return StringUtil.toURL(upstreamBranchURL);
+	}
+
+	@Override
 	public String getBuildProfile() {
 		return getParameterValue("buildProfile");
 	}
@@ -33,19 +49,13 @@ public abstract class BasePortalUpstreamJobEntity
 	}
 
 	@Override
-	public String getUpstreamBranchSHA() {
-		return getParameterValue("upstreamBranchSHA");
+	public void setBranchSHA(String branchSHA) {
+		setParameterValue("branchSHA", branchSHA);
 	}
 
 	@Override
-	public URL getUpstreamBranchURL() {
-		String upstreamBranchURL = getParameterValue("upstreamBranchURL");
-
-		if (StringUtil.isNullOrEmpty(upstreamBranchURL)) {
-			return null;
-		}
-
-		return StringUtil.toURL(upstreamBranchURL);
+	public void setBranchURL(URL branchURL) {
+		setParameterValue("branchURL", String.valueOf(branchURL));
 	}
 
 	@Override
@@ -61,17 +71,6 @@ public abstract class BasePortalUpstreamJobEntity
 	@Override
 	public void setUpstreamBranchName(String upstreamBranchName) {
 		setParameterValue("upstreamBranchName", upstreamBranchName);
-	}
-
-	@Override
-	public void setUpstreamBranchSHA(String upstreamBranchSHA) {
-		setParameterValue("upstreamBranchSHA", upstreamBranchSHA);
-	}
-
-	@Override
-	public void setUpstreamBranchURL(URL upstreamBranchURL) {
-		setParameterValue(
-			"upstreamBranchName", String.valueOf(upstreamBranchURL));
 	}
 
 	protected BasePortalUpstreamJobEntity(JSONObject jsonObject) {

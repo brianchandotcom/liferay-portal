@@ -20,11 +20,10 @@ public class AcceptancePortalUpstreamJobEntity
 
 	public static List<ParameterDefinition> getParameterDefinitions() {
 		return Arrays.asList(
+			PARAMETER_DEFINITION_BRANCH_SHA, PARAMETER_DEFINITION_BRANCH_URL,
 			PARAMETER_DEFINITION_BUILD_PROFILE,
 			PARAMETER_DEFINITION_JENKINS_GITHUB_URL,
-			PARAMETER_DEFINITION_UPSTREAM_BRANCH_NAME,
-			PARAMETER_DEFINITION_UPSTREAM_BRANCH_SHA,
-			PARAMETER_DEFINITION_UPSTREAM_BRANCH_URL);
+			PARAMETER_DEFINITION_UPSTREAM_BRANCH_NAME);
 	}
 
 	@Override
@@ -41,9 +40,9 @@ public class AcceptancePortalUpstreamJobEntity
 		Map<String, String> initialBuildParameters =
 			super.getInitialBuildParameters();
 
-		initialBuildParameters.put("PORTAL_GIT_COMMIT", getUpstreamBranchSHA());
+		initialBuildParameters.put("PORTAL_GIT_COMMIT", getBranchSHA());
 		initialBuildParameters.put(
-			"PORTAL_GITHUB_URL", String.valueOf(getUpstreamBranchURL()));
+			"PORTAL_GITHUB_URL", String.valueOf(getBranchURL()));
 		initialBuildParameters.put(
 			"TEST_PORTAL_BUILD_PROFILE", getBuildProfile());
 

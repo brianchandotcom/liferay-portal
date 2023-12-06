@@ -12,6 +12,18 @@ import java.net.URL;
  */
 public interface PortalUpstreamJobEntity extends JobEntity {
 
+	public static ParameterDefinition PARAMETER_DEFINITION_BRANCH_SHA =
+		new ParameterDefinition(
+			"branchSHA", "Branch SHA", ParameterDefinition.Type.STRING, null,
+			"Insert your Branch SHA here", null);
+
+	public static ParameterDefinition PARAMETER_DEFINITION_BRANCH_URL =
+		new ParameterDefinition(
+			"branchURL", "Branch URL", ParameterDefinition.Type.URL,
+			"https://github.com/liferay/liferay-portal/tree/master",
+			"e.g. https://github.com/[user]/liferay-portal(-ee)/tree/[name]",
+			"https://github.com/[^/]+/liferay-portal(-ee)?/tree/[^/]+");
+
 	public static ParameterDefinition PARAMETER_DEFINITION_BUILD_PROFILE =
 		new ParameterDefinition(
 			"buildProfile", "Build Profile", ParameterDefinition.Type.STRING,
@@ -28,19 +40,9 @@ public interface PortalUpstreamJobEntity extends JobEntity {
 			ParameterDefinition.Type.STRING, "master",
 			"Insert your Upstream Branch Name here", null);
 
-	public static ParameterDefinition PARAMETER_DEFINITION_UPSTREAM_BRANCH_SHA =
-		new ParameterDefinition(
-			"upstreamBranchSHA", "Upstream Branch SHA",
-			ParameterDefinition.Type.STRING, null,
-			"Insert your Upstream Branch SHA here", null);
+	public String getBranchSHA();
 
-	public static ParameterDefinition PARAMETER_DEFINITION_UPSTREAM_BRANCH_URL =
-		new ParameterDefinition(
-			"upstreamBranchURL", "Upstream Branch URL",
-			ParameterDefinition.Type.URL,
-			"https://github.com/liferay/liferay-portal/tree/master",
-			"e.g. https://github.com/[user]/liferay-portal(-ee)/tree/[name]",
-			"https://github.com/[^/]+/liferay-portal(-ee)?/tree/[^/]+");
+	public URL getBranchURL();
 
 	public String getBuildProfile();
 
@@ -48,18 +50,14 @@ public interface PortalUpstreamJobEntity extends JobEntity {
 
 	public String getUpstreamBranchName();
 
-	public String getUpstreamBranchSHA();
+	public void setBranchSHA(String branchSHA);
 
-	public URL getUpstreamBranchURL();
+	public void setBranchURL(URL branchURL);
 
 	public void setBuildProfile(String buildProfile);
 
 	public void setTestSuiteName(String testSuiteName);
 
 	public void setUpstreamBranchName(String upstreamBranchName);
-
-	public void setUpstreamBranchSHA(String upstreamBranchSHA);
-
-	public void setUpstreamBranchURL(URL upstreamBranchURL);
 
 }

@@ -18,4 +18,8 @@ public interface JobDefinition extends Comparable<JobDefinition> {
 
 	public JSONObject getJSONObject();
 
+	public String getKey();
+
+	public String getLabel();
+
 }

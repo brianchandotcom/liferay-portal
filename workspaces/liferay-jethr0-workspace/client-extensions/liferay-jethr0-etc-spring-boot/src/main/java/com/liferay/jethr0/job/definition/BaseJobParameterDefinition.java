@@ -14,6 +14,13 @@ public abstract class BaseJobParameterDefinition
 	implements JobParameterDefinition {
 
 	@Override
+	public int compareTo(JobParameterDefinition jobParameterDefinition) {
+		String label = getLabel();
+
+		return label.compareTo(jobParameterDefinition.getLabel());
+	}
+
+	@Override
 	public JSONObject getJSONObject() {
 		JSONObject jsonObject = new JSONObject();
 

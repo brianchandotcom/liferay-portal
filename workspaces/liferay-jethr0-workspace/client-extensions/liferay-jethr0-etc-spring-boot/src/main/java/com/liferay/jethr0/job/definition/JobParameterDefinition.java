@@ -10,7 +10,8 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public interface JobParameterDefinition {
+public interface JobParameterDefinition
+	extends Comparable<JobParameterDefinition> {
 
 	public JSONObject getJSONObject();
 

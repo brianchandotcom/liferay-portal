@@ -77,7 +77,8 @@
 					<#assign
 						portalURL = portalUtil.getLayoutURL(themeDisplay)
 						productId = entry.getClassPK() + 1
-						product = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels/"+ channelId +"/products/"+ productId +"?accountId=-1&nestedFields=productSpecifications,categories")
+						product = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels/"+ channelId +"/products/"+ productId +"?accountId=-1&images.accountId=-1&nestedFields=productSpecifications,categories,images")
+						productImage = product.images?filter(item -> item.tags?seq_contains("app icon"))![]
 						productSpecifications = product.productSpecifications![]
 					/>
 
@@ -99,15 +100,24 @@
 						<#assign productURL = "" />
 					</#if>
 
-					<#if product.urlImage?has_content>
-						<#assign productThumbnail = product.urlImage?split("/o") />
+					<#if productImage?has_content>
+						<#assign productThumbnail = productImage[0].src?split("/o") />
 						<#if productThumbnail?has_content && productThumbnail?size gte 2>
 							<#assign productThumbnail1 = "/o/${productThumbnail[1]}"!"" />
 						<#else>
 							<#assign productThumbnail1 = "/o/commerce-media/default/?groupId=${scopeGroupId}" />
 						</#if>
 					<#else>
-						<#assign productThumbnail1 = "/o/commerce-media/default/?groupId=${scopeGroupId}" />
+						<#if product.urlImage?has_content>
+							<#assign productThumbnail = product.urlImage?split("/o") />
+							<#if productThumbnail?has_content && productThumbnail?size gte 2>
+								<#assign productThumbnail1 = "/o/${productThumbnail[1]}"!"" />
+							<#else>
+								<#assign productThumbnail1 = "/o/commerce-media/default/?groupId=${scopeGroupId}" />
+							</#if>
+						<#else>
+							<#assign productThumbnail1 = "/o/commerce-media/default/?groupId=${scopeGroupId}" />
+						</#if>
 					</#if>
 
 					<a class="app-search-results-card bg-white border-radius-medium d-flex flex-column mb-0 p-3 text-dark text-decoration-none" href=${productURL}>

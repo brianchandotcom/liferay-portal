@@ -10,6 +10,7 @@ import com.liferay.mail.kernel.auth.token.provider.MailAuthTokenProviderRegistry
 import com.liferay.mail.kernel.model.Account;
 import com.liferay.mail.kernel.model.MailMessage;
 import com.liferay.mail.kernel.service.MailService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.cluster.Clusterable;
 import com.liferay.portal.kernel.log.Log;
@@ -26,6 +27,7 @@ import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
@@ -78,9 +80,7 @@ public class MailServiceImpl implements IdentifiableOSGiService, MailService {
 		if (_log.isDebugEnabled()) {
 			session.setDebug(true);
 
-			Properties sessionProperties = session.getProperties();
-
-			sessionProperties.list(System.out);
+			_debugLogProperties(session.getProperties());
 		}
 
 		return session;
@@ -255,7 +255,7 @@ public class MailServiceImpl implements IdentifiableOSGiService, MailService {
 		if (_log.isDebugEnabled()) {
 			session.setDebug(true);
 
-			properties.list(System.out);
+			_debugLogProperties(properties);
 		}
 
 		if (!oAuth2AuthEnable) {
@@ -277,6 +277,23 @@ public class MailServiceImpl implements IdentifiableOSGiService, MailService {
 
 				return null;
 			});
+	}
+
+	private void _debugLogProperties(Properties properties) {
+		if (_log.isDebugEnabled()) {
+			for (String propertyName : properties.stringPropertyNames()) {
+				String propertyValue = properties.getProperty(propertyName);
+
+				if (propertyName.contains("password")) {
+					propertyValue = "***";
+				}
+
+				_log.debug(
+					StringBundler.concat(
+						"Property: ", propertyName, StringPool.EQUAL,
+						propertyValue));
+			}
+		}
 	}
 
 	private Properties _getProperties(Account account) {

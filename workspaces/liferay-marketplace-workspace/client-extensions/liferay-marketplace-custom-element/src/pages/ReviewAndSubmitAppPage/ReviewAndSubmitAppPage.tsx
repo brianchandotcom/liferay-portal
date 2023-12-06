@@ -115,20 +115,11 @@ export function ReviewAndSubmitAppPage({
 				}
 			});
 
-			const attachment = productResponse.attachments.find(
-				({customFields}) =>
-					customFields?.find(
-						({
-							customValue: {
-								data: [value],
-							},
-							name,
-						}) => name === 'App Icon' && value === 'No'
-					)
-			);
+			const attachment = productResponse.attachments.find((attachment) => {
+				return (attachment.tags || []).indexOf('app icon') < 0});
 
 			const thumbnail = showAppImage(
-				getThumbnailByProductAttachment(productResponse.attachments)
+				getThumbnailByProductAttachment(productResponse.images)
 			);
 
 			const newApp = {
@@ -139,7 +130,9 @@ export function ReviewAndSubmitAppPage({
 				name: productResponse.name['en_US'],
 				price: nonTrialSKU?.price as number,
 				priceModel,
-				storefront: productResponse.images,
+				storefront: (productResponse.images || []).filter(image => {
+					return image.galleryEnabled
+				}),
 				supportAndHelp: supportAndHelpCardInfos,
 				tags: productTags,
 				thumbnail,

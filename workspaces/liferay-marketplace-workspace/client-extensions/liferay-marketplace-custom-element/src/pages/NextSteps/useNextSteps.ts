@@ -40,7 +40,7 @@ const useNextSteps = (orderId: string) => {
 				productId,
 				new URLSearchParams({
 					accountId,
-					nestedFields: 'attachments,productSpecifications',
+					nestedFields: 'attachments,images,productSpecifications',
 				})
 			)
 	);

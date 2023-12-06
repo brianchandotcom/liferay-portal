@@ -522,6 +522,24 @@ export async function getProductAttachments(
 	return items as DeliveryProductAttachment[];
 }
 
+export async function getDeliveryProductImages(
+	accountId: number,
+	channelId: number,
+	productId: number
+) {
+	const response = await fetch(
+		`${baseURL}/o/headless-commerce-delivery-catalog/v1.0/channels/${channelId}/products/${productId}/images?accountId=${accountId}`,
+		{
+			headers,
+			method: 'GET',
+		}
+	);
+
+	const {items} = await response.json();
+
+	return items as DeliveryProductAttachment[];
+}
+
 export async function getProductIdCategories({appId}: {appId: string}) {
 	const response = await fetch(
 		`${baseURL}/o/headless-commerce-admin-catalog/v1.0/products/${appId}/categories`,

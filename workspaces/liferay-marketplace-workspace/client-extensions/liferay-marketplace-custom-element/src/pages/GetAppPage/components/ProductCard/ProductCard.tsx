@@ -30,7 +30,7 @@ const ProductCard = ({
 
 	const getIconUrl = () => {
 		const iconURL = product
-			? getThumbnailByProductAttachment(product.attachments)?.split('/o/')
+			? getThumbnailByProductAttachment(product.images)?.split('/o/')
 			: '';
 
 		return iconURL ? `/o/${iconURL[1]}` : '';
@@ -42,7 +42,7 @@ const ProductCard = ({
 				<div className="d-flex flex-row">
 					<img
 						alt="App Icon"
-						className="rounded"
+						className="rounded object-fit-cover"
 						height="64px"
 						src={getIconUrl()}
 						width="64px"

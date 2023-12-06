@@ -20,8 +20,8 @@ interface DashboardNavigationListItem {
 export function DashboardNavigationListItem({
 	item,
 }: DashboardNavigationListItem) {
-	const {attachments, name, status, version} = item;
-	const thumbnail = getThumbnailByProductAttachment(attachments);
+	const {images, name, status, version} = item;
+	const thumbnail = getThumbnailByProductAttachment(images);
 
 	return (
 		<NavLink

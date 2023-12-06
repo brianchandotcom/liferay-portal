@@ -53,7 +53,7 @@ const PublishedAppsDashboardOutlet = () => {
 						.lambda('categoryNames', 'App')
 						.build(),
 					nestedFields:
-						'attachments,productChannels,productSpecifications',
+						'attachments,images,productChannels,productSpecifications',
 					page: page.toString(),
 				})
 			)

@@ -72,7 +72,7 @@ export function NextSteps({
 			item.sku.endsWith('ts') || item.sku.toLowerCase().includes('trial')
 	);
 
-	const appIcon = getThumbnailByProductAttachment(product?.attachments);
+	const appIcon = getThumbnailByProductAttachment(product?.images);
 
 	const appLogo = showAppImage(appIcon as string).replace(
 		(appIcon as string)?.split('/o')[0],

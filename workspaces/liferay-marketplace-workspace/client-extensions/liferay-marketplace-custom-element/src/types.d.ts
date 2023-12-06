@@ -361,7 +361,7 @@ interface DeliveryProductAttachment {
 	id: number;
 	priority: number;
 	src: string;
-	tags: any;
+	tags?: string[];
 	title: string;
 	type: number;
 }
@@ -409,9 +409,11 @@ interface DeliveryProduct {
 interface ProductAttachment {
 	customFields?: CustomField[];
 	externalReferenceCode: string;
+	galleryEnabled: boolean;
 	id: number;
 	priority: number;
 	src: string;
+	tags?: string[];
 	title: {[key: string]: string};
 }
 

@@ -316,6 +316,7 @@ export function ProvideAppBuildPage({
 
 					const buildAppPackageId = await submitBase64EncodedFile({
 						appERC,
+						isAppIcon: false,
 						file: appPackage.file,
 						requestFunction: createAttachment,
 						title: appPackage.fileName,
@@ -325,7 +326,6 @@ export function ProvideAppBuildPage({
 
 					await addExpandoValue({
 						attributeValues: {
-							'App Icon': 'No',
 							'Liferay Version': versionKey,
 						},
 						className:

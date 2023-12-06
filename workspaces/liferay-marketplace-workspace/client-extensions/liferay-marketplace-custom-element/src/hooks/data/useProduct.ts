@@ -14,7 +14,7 @@ const useDeliveryProduct = (productId: string) => {
 			Liferay.CommerceContext.commerceChannelId,
 			productId,
 			new URLSearchParams({
-				nestedFields: 'attachments,productSpecifications,skus',
+				nestedFields: 'attachments,images,productSpecifications,skus',
 			})
 		)
 	);

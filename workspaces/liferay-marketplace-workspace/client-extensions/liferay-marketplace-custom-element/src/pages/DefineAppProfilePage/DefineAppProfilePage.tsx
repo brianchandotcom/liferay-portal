@@ -23,6 +23,7 @@ import {
 	addExpandoValue,
 	createApp,
 	createAttachment,
+	createImage,
 	getCategories,
 	getVocabularies,
 	updateApp,
@@ -145,20 +146,10 @@ export function DefineAppProfilePage({
 		if (appLogo) {
 			const attachmentId = await submitBase64EncodedFile({
 				appERC: appERC ?? product.externalReferenceCode,
+				isAppIcon: true,
 				file: appLogo.file,
-				requestFunction: createAttachment,
+				requestFunction: createImage,
 				title: appLogo.fileName,
-			});
-
-			addExpandoValue({
-				attributeValues: {
-					'App Icon': 'Yes',
-				},
-				className:
-					'com.liferay.commerce.product.model.CPAttachmentFileEntry',
-				classPK: attachmentId as number,
-				companyId: getCompanyId(),
-				tableName: 'CUSTOM_FIELDS',
 			});
 		}
 

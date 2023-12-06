@@ -27,7 +27,7 @@ const LicenseDetailsModalHeader: React.FC<LicenseDetailsModalHeaderProps> = ({
 			<OrderDetailsHeader
 				className="d-flex flex-row justify-content-between mt-3"
 				hasOrderDescription={modalData?.description}
-				image={getThumbnailByProductAttachment(product?.attachments)}
+				image={getThumbnailByProductAttachment(product?.images)}
 				name={product?.name}
 				version={modalData?.productVersion}
 			/>

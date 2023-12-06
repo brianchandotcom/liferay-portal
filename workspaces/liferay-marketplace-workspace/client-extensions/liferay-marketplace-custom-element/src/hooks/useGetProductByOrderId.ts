@@ -26,7 +26,7 @@ const useGetProductByOrderId = (orderId: string) => {
 			placedOrder.placedOrderItems[0].productId,
 			new URLSearchParams({
 				accountId: '-1',
-				nestedFields: 'attachments,productSpecifications',
+				nestedFields: 'attachments,images,productSpecifications',
 			})
 		);
 

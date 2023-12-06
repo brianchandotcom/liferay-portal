@@ -2,6 +2,10 @@
 	background: var(--neutral-01, #f7f7f8);
 	border-radius: 10px;
 
+	.object-fit-cover {
+		object-fit: cover;
+	}
+
 	.price-text {
 		color: var(--neutral-10, #282934);
 		font-size: 13px;

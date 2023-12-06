@@ -148,6 +148,7 @@ export function CustomizeAppStorefrontPage({
 							appERC,
 							file: image.file,
 							index,
+							isAppIcon: false,
 							requestFunction: createImage,
 							title: image.fileName,
 						});

@@ -16,6 +16,7 @@ export type AppProps = {
 	attachments: Partial<ProductAttachment>[];
 	catalogId: number;
 	externalReferenceCode: string;
+	images: Partial<ProductAttachment>[];
 	lastUpdatedBy?: string;
 	name: string;
 	productId: number;

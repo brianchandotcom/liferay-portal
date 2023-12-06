@@ -40,7 +40,7 @@ const App = () => {
 			HeadlessCommerceAdminCatalogImpl.getProduct(
 				productId,
 				new URLSearchParams({
-					nestedFields: 'attachments,productSpecifications',
+					nestedFields: 'attachments,images,productSpecifications',
 				})
 			)
 	);
@@ -83,7 +83,7 @@ const App = () => {
 		(m: string) => m.toUpperCase()
 	);
 
-	const thumbnail = getThumbnailByProductAttachment(selectedApp?.attachments);
+	const thumbnail = getThumbnailByProductAttachment(selectedApp?.images);
 
 	return (
 		<div className="app-details-page-container">

@@ -7,7 +7,7 @@ import {useState} from 'react';
 import {Outlet} from 'react-router-dom';
 
 import {DashboardNavigation} from '../../components/DashboardNavigation/DashboardNavigation';
-import {getProductAttachments} from '../../utils/api';
+import {getDeliveryProductImages, getProductAttachments} from '../../utils/api';
 import {
 	getAccountImage,
 	getThumbnailByProductAttachment,
@@ -95,7 +95,7 @@ const PurchasedAppsDashboardOutlet = () => {
 				placedOrders.items.map(async (order) => {
 					const [placeOrderItem] = order.placedOrderItems;
 
-					const attachments = await getProductAttachments(
+					const images = await getDeliveryProductImages(
 						selectedAccount.id,
 						channelId,
 						placeOrderItem.productId
@@ -105,7 +105,7 @@ const PurchasedAppsDashboardOutlet = () => {
 						...order,
 						name: placeOrderItem.name,
 						productId: order.placedOrderItems[0].productId,
-						thumbnail: getThumbnailByProductAttachment(attachments),
+						thumbnail: getThumbnailByProductAttachment(images),
 						type: placeOrderItem.subscription
 							? 'Subscription'
 							: 'Perpetual',

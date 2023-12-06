@@ -20,6 +20,14 @@ export const initialAppState: AppProps = {
 	],
 	catalogId: 0,
 	externalReferenceCode: '',
+	images: [
+		{
+			externalReferenceCode: '',
+			id: 0,
+			src: '',
+			title: {},
+		},
+	],
 	lastUpdatedBy: '',
 	name: '',
 	productId: 0,

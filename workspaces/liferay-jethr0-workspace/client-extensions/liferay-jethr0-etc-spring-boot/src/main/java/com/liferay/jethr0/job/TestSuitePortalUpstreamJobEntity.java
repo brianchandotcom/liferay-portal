@@ -21,11 +21,20 @@ public class TestSuitePortalUpstreamJobEntity
 
 	public static List<ParameterDefinition> getParameterDefinitions() {
 		return Arrays.asList(
+			PARAMETER_DEFINITION_BUILD_PROFILE,
 			PARAMETER_DEFINITION_JENKINS_GITHUB_URL,
 			PARAMETER_DEFINITION_TEST_SUITE_NAME,
 			PARAMETER_DEFINITION_UPSTREAM_BRANCH_NAME,
 			PARAMETER_DEFINITION_UPSTREAM_BRANCH_SHA,
 			PARAMETER_DEFINITION_UPSTREAM_BRANCH_URL);
+	}
+
+	public String getBuildProfile() {
+		return getParameterValue("buildProfile");
+	}
+
+	public void setBuildProfile(String buildProfile) {
+		setParameterValue("buildProfile", buildProfile);
 	}
 
 	protected TestSuitePortalUpstreamJobEntity(JSONObject jsonObject) {
@@ -42,6 +51,8 @@ public class TestSuitePortalUpstreamJobEntity
 		initialBuildParamaters.put("PORTAL_GIT_COMMIT", getUpstreamBranchSHA());
 		initialBuildParamaters.put(
 			"PORTAL_GITHUB_URL", String.valueOf(getUpstreamBranchURL()));
+		initialBuildParamaters.put(
+			"TEST_PORTAL_BUILD_PROFILE", getBuildProfile());
 
 		return initialBuildParamaters;
 	}

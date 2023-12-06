@@ -10,38 +10,37 @@ import java.net.URL;
 /**
  * @author Michael Hashimoto
  */
-public interface PortalUpstreamJobEntity {
+public interface PortalUpstreamJobEntity extends JobEntity {
 
-	public static JobEntity.ParameterDefinition
-		PARAMETER_DEFINITION_TEST_SUITE_NAME =
-			new JobEntity.ParameterDefinition(
-				"testSuiteName", "Test Suite Name",
-				JobEntity.ParameterDefinition.Type.STRING, null,
-				"Insert your Test Suite Name here", null);
+	public static ParameterDefinition PARAMETER_DEFINITION_BUILD_PROFILE =
+		new ParameterDefinition(
+			"buildProfile", "Build Profile", ParameterDefinition.Type.STRING,
+			"dxp", "e.g. dxp or portal", null);
 
-	public static JobEntity.ParameterDefinition
-		PARAMETER_DEFINITION_UPSTREAM_BRANCH_NAME =
-			new JobEntity.ParameterDefinition(
-				"upstreamBranchName", "Upstream Branch Name",
-				JobEntity.ParameterDefinition.Type.STRING, "master",
-				"Insert your Upstream Branch Name here", null);
+	public static ParameterDefinition PARAMETER_DEFINITION_TEST_SUITE_NAME =
+		new ParameterDefinition(
+			"testSuiteName", "Test Suite Name", ParameterDefinition.Type.STRING,
+			null, "Insert your Test Suite Name here", null);
 
-	public static JobEntity.ParameterDefinition
-		PARAMETER_DEFINITION_UPSTREAM_BRANCH_SHA =
-			new JobEntity.ParameterDefinition(
-				"upstreamBranchSHA", "Upstream Branch SHA",
-				JobEntity.ParameterDefinition.Type.STRING, null,
-				"Insert your Upstream Branch SHA here", null);
+	public static ParameterDefinition
+		PARAMETER_DEFINITION_UPSTREAM_BRANCH_NAME = new ParameterDefinition(
+			"upstreamBranchName", "Upstream Branch Name",
+			ParameterDefinition.Type.STRING, "master",
+			"Insert your Upstream Branch Name here", null);
 
-	public static JobEntity.ParameterDefinition
-		PARAMETER_DEFINITION_UPSTREAM_BRANCH_URL =
-			new JobEntity.ParameterDefinition(
-				"upstreamBranchURL", "Upstream Branch URL",
-				JobEntity.ParameterDefinition.Type.URL,
-				"https://github.com/liferay/liferay-portal/tree/master",
-				"e.g. https://github.com/[user]/liferay-portal(-ee)/tree" +
-					"/[name]",
-				"https://github.com/[^/]+/liferay-portal(-ee)?/tree/[^/]+");
+	public static ParameterDefinition PARAMETER_DEFINITION_UPSTREAM_BRANCH_SHA =
+		new ParameterDefinition(
+			"upstreamBranchSHA", "Upstream Branch SHA",
+			ParameterDefinition.Type.STRING, null,
+			"Insert your Upstream Branch SHA here", null);
+
+	public static ParameterDefinition PARAMETER_DEFINITION_UPSTREAM_BRANCH_URL =
+		new ParameterDefinition(
+			"upstreamBranchURL", "Upstream Branch URL",
+			ParameterDefinition.Type.URL,
+			"https://github.com/liferay/liferay-portal/tree/master",
+			"e.g. https://github.com/[user]/liferay-portal(-ee)/tree/[name]",
+			"https://github.com/[^/]+/liferay-portal(-ee)?/tree/[^/]+");
 
 	public String getTestSuiteName();
 

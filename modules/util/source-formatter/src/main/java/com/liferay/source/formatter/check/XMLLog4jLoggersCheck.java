@@ -100,10 +100,9 @@ public class XMLLog4jLoggersCheck extends BaseFileCheck {
 		List<String> fileNames = SourceFormatterUtil.scanForFileNames(
 			file.getCanonicalPath(), new String[] {"**/com/liferay/**/*.java"});
 
-		outerLoop:
-		for (String curFileName : fileNames) {
-			String fileName = curFileName.substring(
-				0, curFileName.lastIndexOf(CharPool.PERIOD));
+		for (String fileName : fileNames) {
+			fileName = fileName.substring(
+				0, fileName.lastIndexOf(CharPool.PERIOD));
 
 			fileName = StringUtil.replace(
 				fileName, CharPool.SLASH, CharPool.PERIOD);

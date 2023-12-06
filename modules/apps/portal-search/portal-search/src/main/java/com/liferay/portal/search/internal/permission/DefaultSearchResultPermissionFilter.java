@@ -81,6 +81,9 @@ public class DefaultSearchResultPermissionFilter
 		_searchQueryResultWindowLimit =
 			defaultSearchResultPermissionFilterConfiguration.
 				searchQueryResultWindowLimit();
+		_timeLimit =
+			defaultSearchResultPermissionFilterConfiguration.
+				permissionFilteringTimeLimit();
 	}
 
 	@Override
@@ -332,6 +335,7 @@ public class DefaultSearchResultPermissionFilter
 	private final Function<SearchContext, Hits> _searchFunction;
 	private final int _searchQueryResultWindowLimit;
 	private final SearchRequestBuilderFactory _searchRequestBuilderFactory;
+	private final long _timeLimit;
 
 	private class SlidingWindowSearcher {
 
@@ -446,7 +450,8 @@ public class DefaultSearchResultPermissionFilter
 				if (_stopSearching(
 						docsBeforeFiltering, numberOfDocsCollected,
 						numberOfTotalDocsNeeded, originalTotalHits,
-						slidingWindowEnd, slidingWindowSize)) {
+						slidingWindowEnd, slidingWindowSize,
+						slidingWindowStopWatch)) {
 
 					_updateHits(
 						slidingWindowHelper.getDocumentsAndScoresTuple(), hits,
@@ -556,7 +561,8 @@ public class DefaultSearchResultPermissionFilter
 		private boolean _stopSearching(
 			Document[] docsBeforeFiltering, int numberOfDocsCollected,
 			int numberOfTotalDocsNeeded, int originalTotalHits,
-			int slidingWindowEnd, int slidingWindowSize) {
+			int slidingWindowEnd, int slidingWindowSize,
+			StopWatch slidingWindowStopWatch) {
 
 			if ((slidingWindowEnd >= originalTotalHits) ||
 				(docsBeforeFiltering.length < slidingWindowSize)) {
@@ -569,7 +575,9 @@ public class DefaultSearchResultPermissionFilter
 			}
 
 			if ((numberOfDocsCollected == numberOfTotalDocsNeeded) ||
-				(slidingWindowEnd == PropsValues.INDEX_SEARCH_LIMIT)) {
+				(slidingWindowEnd == PropsValues.INDEX_SEARCH_LIMIT) ||
+				((_timeLimit > 0) &&
+				 (slidingWindowStopWatch.getTime() > _timeLimit))) {
 
 				return true;
 			}

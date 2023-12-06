@@ -4138,6 +4138,10 @@ public class JenkinsResultsParserUtil {
 
 		synchronized (_redactTokens) {
 			for (String redactToken : _redactTokens) {
+				if (_forbiddenRedactTokens.contains(redactToken)) {
+					continue;
+				}
+
 				string = string.replace(redactToken, "[REDACTED]");
 			}
 		}

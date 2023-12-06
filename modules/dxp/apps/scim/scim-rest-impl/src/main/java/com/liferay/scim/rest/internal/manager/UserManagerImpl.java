@@ -504,35 +504,34 @@ public class UserManagerImpl implements UserManager {
 	private ScimUser _getScimUser(long companyId, long userId)
 		throws AbstractCharonException {
 
+		com.liferay.portal.kernel.model.User portalUser = null;
+
 		try {
-			com.liferay.portal.kernel.model.User portalUser =
-				_userService.getUserById(userId);
-
-			String userScimClientId = _getScimClientId(portalUser);
-
-			if (Validator.isNull(userScimClientId)) {
-				throw new NotFoundException(
-					"No user found with user ID " + userId);
-			}
-
-			ScimClientOAuth2ApplicationConfiguration
-				scimClientOAuth2ApplicationConfiguration =
-					_getScimClientOAuth2ApplicationConfiguration(companyId);
-
-			String scimClientId = ScimClientUtil.generateScimClientId(
-				scimClientOAuth2ApplicationConfiguration.
-					oAuth2ApplicationName());
-
-			if (!Objects.equals(userScimClientId, scimClientId)) {
-				throw new ConflictException(
-					"User was provisioned by another SCIM client");
-			}
-
-			return _toScimUser(portalUser);
+			portalUser = _userService.getUserById(userId);
 		}
 		catch (PortalException portalException) {
 			throw new NotFoundException(portalException.getMessage());
 		}
+
+		String userScimClientId = _getScimClientId(portalUser);
+
+		if (Validator.isNull(userScimClientId)) {
+			throw new NotFoundException("No user found with user ID " + userId);
+		}
+
+		ScimClientOAuth2ApplicationConfiguration
+			scimClientOAuth2ApplicationConfiguration =
+				_getScimClientOAuth2ApplicationConfiguration(companyId);
+
+		String scimClientId = ScimClientUtil.generateScimClientId(
+			scimClientOAuth2ApplicationConfiguration.oAuth2ApplicationName());
+
+		if (!Objects.equals(userScimClientId, scimClientId)) {
+			throw new ConflictException(
+				"User was provisioned by another SCIM client");
+		}
+
+		return _toScimUser(portalUser);
 	}
 
 	private void _saveScimClientId(

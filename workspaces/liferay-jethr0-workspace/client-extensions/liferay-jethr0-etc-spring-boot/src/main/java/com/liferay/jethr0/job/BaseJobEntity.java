@@ -322,6 +322,20 @@ public abstract class BaseJobEntity extends BaseEntity implements JobEntity {
 		}
 	}
 
+	protected String getBranchURLGroupValue(URL branchURL, String groupName) {
+		if (branchURL == null) {
+			return null;
+		}
+
+		Matcher matcher = _branchURLPattern.matcher(String.valueOf(branchURL));
+
+		if (!matcher.find()) {
+			return null;
+		}
+
+		return matcher.group(groupName);
+	}
+
 	protected JSONObject getInitialBuildJSONObject() {
 		JSONObject initialBuildJSONObject = new JSONObject();
 
@@ -344,63 +358,18 @@ public abstract class BaseJobEntity extends BaseEntity implements JobEntity {
 		return HashMapBuilder.put(
 			"BUILD_PRIORITY", String.valueOf(getPriority())
 		).put(
-			"JENKINS_GITHUB_BRANCH_NAME",
-			() -> {
-				String jenkinsGitHubBranchName = getJenkinsGitHubBranchName();
-
-				if (StringUtil.isNullOrEmpty(jenkinsGitHubBranchName)) {
-					return null;
-				}
-
-				return jenkinsGitHubBranchName;
-			}
+			"JENKINS_GITHUB_BRANCH_NAME", getJenkinsBranchName()
 		).put(
-			"JENKINS_GITHUB_BRANCH_USERNAME",
-			() -> {
-				String jenkinsGitHubBranchUserName =
-					getJenkinsGitHubBranchUserName();
-
-				if (StringUtil.isNullOrEmpty(jenkinsGitHubBranchUserName)) {
-					return null;
-				}
-
-				return jenkinsGitHubBranchUserName;
-			}
+			"JENKINS_GITHUB_BRANCH_USERNAME", getJenkinsBranchUserName()
 		).build();
 	}
 
-	protected String getJenkinsGitHubBranchName() {
-		URL jenkinsGitHubURL = getJenkinsGitHubURL();
-
-		if (jenkinsGitHubURL == null) {
-			return null;
-		}
-
-		Matcher matcher = _jenkinsGitHubURLPattern.matcher(
-			String.valueOf(jenkinsGitHubURL));
-
-		if (!matcher.find()) {
-			return null;
-		}
-
-		return matcher.group("branchName");
+	protected String getJenkinsBranchName() {
+		return getBranchURLGroupValue(getJenkinsGitHubURL(), "branchName");
 	}
 
-	protected String getJenkinsGitHubBranchUserName() {
-		URL jenkinsGitHubURL = getJenkinsGitHubURL();
-
-		if (jenkinsGitHubURL == null) {
-			return null;
-		}
-
-		Matcher matcher = _jenkinsGitHubURLPattern.matcher(
-			String.valueOf(jenkinsGitHubURL));
-
-		if (!matcher.find()) {
-			return null;
-		}
-
-		return matcher.group("branchUserName");
+	protected String getJenkinsBranchUserName() {
+		return getBranchURLGroupValue(getJenkinsGitHubURL(), "userName");
 	}
 
 	protected abstract String getJenkinsJobName();
@@ -455,8 +424,8 @@ public abstract class BaseJobEntity extends BaseEntity implements JobEntity {
 
 	private static final Log _log = LogFactory.getLog(BaseJobEntity.class);
 
-	private static final Pattern _jenkinsGitHubURLPattern = Pattern.compile(
-		"https://github.com/(?<branchUserName>[^/]+)/liferay-jenkins-ee/tree/" +
+	private static final Pattern _branchURLPattern = Pattern.compile(
+		"https://github.com/(?<userName>[^/]+)/(?<repositoryName>[^/]+)/tree/" +
 			"(?<branchName>[^/]+)");
 
 	private String _name;

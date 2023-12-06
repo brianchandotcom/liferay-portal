@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.language.constants.LanguageConstants;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.portlet.bridges.mvc.constants.MVCRenderConstants;
@@ -1688,10 +1687,8 @@ public class ContentDashboardAdminPortletTest {
 		Group group = _groupLocalService.getGroup(
 			TestPropsValues.getCompanyId(), GroupConstants.CONTROL_PANEL);
 
-		Layout layout = _layoutLocalService.fetchDefaultLayout(
-			group.getGroupId(), true);
-
-		themeDisplay.setLayout(layout);
+		themeDisplay.setLayout(
+			_layoutLocalService.fetchDefaultLayout(group.getGroupId(), true));
 
 		themeDisplay.setLocale(locale);
 		themeDisplay.setUser(TestPropsValues.getUser());

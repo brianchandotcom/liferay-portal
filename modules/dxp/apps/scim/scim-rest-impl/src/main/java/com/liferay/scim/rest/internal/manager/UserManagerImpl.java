@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Contact;
-import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
@@ -32,6 +31,7 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
@@ -60,7 +60,6 @@ import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 
 import org.wso2.charon3.core.exceptions.AbstractCharonException;
-import org.wso2.charon3.core.exceptions.BadRequestException;
 import org.wso2.charon3.core.exceptions.CharonException;
 import org.wso2.charon3.core.exceptions.ConflictException;
 import org.wso2.charon3.core.exceptions.NotFoundException;
@@ -86,7 +85,7 @@ public class UserManagerImpl implements UserManager {
 		ExpandoTableLocalService expandoTableLocalService,
 		ExpandoValueLocalService expandoValueLocalService, Searcher searcher,
 		SearchRequestBuilderFactory searchRequestBuilderFactory,
-		UserLocalService userLocalService) {
+		UserLocalService userLocalService, UserService userService) {
 
 		_classNameLocalService = classNameLocalService;
 		_companyLocalService = companyLocalService;
@@ -97,6 +96,7 @@ public class UserManagerImpl implements UserManager {
 		_searcher = searcher;
 		_searchRequestBuilderFactory = searchRequestBuilderFactory;
 		_userLocalService = userLocalService;
+		_userService = userService;
 	}
 
 	@Override
@@ -137,7 +137,7 @@ public class UserManagerImpl implements UserManager {
 			_getScimUser(
 				CompanyThreadLocal.getCompanyId(), GetterUtil.getLong(userId));
 
-			_userLocalService.updateStatus(
+			_userService.updateStatus(
 				GetterUtil.getLong(userId), WorkflowConstants.STATUS_INACTIVE,
 				new ServiceContext());
 		}
@@ -167,8 +167,8 @@ public class UserManagerImpl implements UserManager {
 	}
 
 	@Override
-	public User getUser(String userId, Map<String, Boolean> requiredAttributes)
-		throws BadRequestException, CharonException, NotFoundException {
+	public User getUser(
+		String userId, Map<String, Boolean> requiredAttributes) {
 
 		try {
 			ScimUser scimUser = _getScimUser(
@@ -200,10 +200,9 @@ public class UserManagerImpl implements UserManager {
 
 	@Override
 	public UsersGetResponse listUsersWithGET(
-			Node node, Integer startIndex, Integer count, String sortBy,
-			String sortOrder, String domainName,
-			Map<String, Boolean> requiredAttributes)
-		throws BadRequestException, CharonException, NotImplementedException {
+		Node node, Integer startIndex, Integer count, String sortBy,
+		String sortOrder, String domainName,
+		Map<String, Boolean> requiredAttributes) {
 
 		if (startIndex != null) {
 			startIndex--;
@@ -261,7 +260,7 @@ public class UserManagerImpl implements UserManager {
 
 					return ScimUserUtil.toUser(
 						_toScimUser(
-							_userLocalService.getUser(
+							_userService.getUserById(
 								document.getLong(Field.ENTRY_CLASS_PK))));
 				}));
 	}
@@ -364,19 +363,17 @@ public class UserManagerImpl implements UserManager {
 			ScimUser scimUser)
 		throws Exception {
 
-		com.liferay.portal.kernel.model.User portalUser =
-			_userLocalService.addUser(
-				0, scimUser.getCompanyId(), scimUser.isAutoPassword(),
-				scimUser.getPassword(), scimUser.getPassword(),
-				scimUser.isAutoScreenName(), scimUser.getScreenName(),
-				scimUser.getEmailAddress(), scimUser.getLocale(),
-				scimUser.getFirstName(), scimUser.getMiddleName(),
-				scimUser.getLastName(), 0, 0, scimUser.isMale(), birthdayMonth,
-				birthdayDay, birthdayYear, StringPool.BLANK,
-				UserConstants.TYPE_REGULAR, scimUser.getGroupIds(),
-				scimUser.getOrganizationIds(), scimUser.getRoleIds(),
-				scimUser.getUserGroupIds(), scimUser.isSendEmail(),
-				new ServiceContext());
+		com.liferay.portal.kernel.model.User portalUser = _userService.addUser(
+			scimUser.getCompanyId(), scimUser.isAutoPassword(),
+			scimUser.getPassword(), scimUser.getPassword(),
+			scimUser.isAutoScreenName(), scimUser.getScreenName(),
+			scimUser.getEmailAddress(), scimUser.getLocale(),
+			scimUser.getFirstName(), scimUser.getMiddleName(),
+			scimUser.getLastName(), 0, 0, scimUser.isMale(), birthdayMonth,
+			birthdayDay, birthdayYear, StringPool.BLANK, scimUser.getGroupIds(),
+			scimUser.getOrganizationIds(), scimUser.getRoleIds(),
+			scimUser.getUserGroupIds(), scimUser.isSendEmail(),
+			new ServiceContext());
 
 		portalUser.setExternalReferenceCode(
 			scimUser.getExternalReferenceCode());
@@ -507,32 +504,35 @@ public class UserManagerImpl implements UserManager {
 	private ScimUser _getScimUser(long companyId, long userId)
 		throws AbstractCharonException {
 
-		com.liferay.portal.kernel.model.User portalUser =
-			_userLocalService.fetchUserById(userId);
+		try {
+			com.liferay.portal.kernel.model.User portalUser =
+				_userService.getUserById(userId);
 
-		if (portalUser == null) {
-			throw new NotFoundException("No user found with user ID " + userId);
+			String userScimClientId = _getScimClientId(portalUser);
+
+			if (Validator.isNull(userScimClientId)) {
+				throw new NotFoundException(
+					"No user found with user ID " + userId);
+			}
+
+			ScimClientOAuth2ApplicationConfiguration
+				scimClientOAuth2ApplicationConfiguration =
+					_getScimClientOAuth2ApplicationConfiguration(companyId);
+
+			String scimClientId = ScimClientUtil.generateScimClientId(
+				scimClientOAuth2ApplicationConfiguration.
+					oAuth2ApplicationName());
+
+			if (!Objects.equals(userScimClientId, scimClientId)) {
+				throw new ConflictException(
+					"User was provisioned by another SCIM client");
+			}
+
+			return _toScimUser(portalUser);
 		}
-
-		String userScimClientId = _getScimClientId(portalUser);
-
-		if (Validator.isNull(userScimClientId)) {
-			throw new NotFoundException("No user found with user ID " + userId);
+		catch (PortalException portalException) {
+			throw new NotFoundException(portalException.getMessage());
 		}
-
-		ScimClientOAuth2ApplicationConfiguration
-			scimClientOAuth2ApplicationConfiguration =
-				_getScimClientOAuth2ApplicationConfiguration(companyId);
-
-		String scimClientId = ScimClientUtil.generateScimClientId(
-			scimClientOAuth2ApplicationConfiguration.oAuth2ApplicationName());
-
-		if (!Objects.equals(userScimClientId, scimClientId)) {
-			throw new ConflictException(
-				"User was provisioned by another SCIM client");
-		}
-
-		return _toScimUser(portalUser);
 	}
 
 	private void _saveScimClientId(
@@ -637,7 +637,7 @@ public class UserManagerImpl implements UserManager {
 
 		Contact contact = portalUser.getContact();
 
-		portalUser = _userLocalService.updateUser(
+		portalUser = _userService.updateUser(
 			portalUser.getUserId(), scimUser.getPassword(), StringPool.BLANK,
 			StringPool.BLANK, false, portalUser.getReminderQueryQuestion(),
 			portalUser.getReminderQueryAnswer(), portalUser.getScreenName(),
@@ -650,7 +650,9 @@ public class UserManagerImpl implements UserManager {
 			contact.getSkypeSn(), contact.getTwitterSn(),
 			scimUser.getJobTitle(), portalUser.getGroupIds(),
 			portalUser.getOrganizationIds(), portalUser.getRoleIds(), null,
-			portalUser.getUserGroupIds(), new ServiceContext());
+			portalUser.getUserGroupIds(), portalUser.getAddresses(),
+			portalUser.getEmailAddresses(), portalUser.getPhones(),
+			portalUser.getWebsites(), null, new ServiceContext());
 
 		if (!Objects.equals(
 				portalUser.getExternalReferenceCode(),
@@ -691,5 +693,6 @@ public class UserManagerImpl implements UserManager {
 	private final Searcher _searcher;
 	private final SearchRequestBuilderFactory _searchRequestBuilderFactory;
 	private final UserLocalService _userLocalService;
+	private final UserService _userService;
 
 }

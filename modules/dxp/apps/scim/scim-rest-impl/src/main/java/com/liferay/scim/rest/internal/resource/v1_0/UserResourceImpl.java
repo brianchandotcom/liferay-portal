@@ -11,6 +11,7 @@ import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.Searcher;
@@ -86,7 +87,7 @@ public class UserResourceImpl extends BaseUserResourceImpl {
 			_classNameLocalService, _companyLocalService, _configurationAdmin,
 			_expandoColumnLocalService, _expandoTableLocalService,
 			_expandoValueLocalService, _searcher, _searchRequestBuilderFactory,
-			_userLocalService);
+			_userLocalService, _userService);
 	}
 
 	private Response _buildResponse(SCIMResponse scimResponse) {
@@ -145,5 +146,8 @@ public class UserResourceImpl extends BaseUserResourceImpl {
 	private UserLocalService _userLocalService;
 
 	private UserManager _userManager;
+
+	@Reference
+	private UserService _userService;
 
 }

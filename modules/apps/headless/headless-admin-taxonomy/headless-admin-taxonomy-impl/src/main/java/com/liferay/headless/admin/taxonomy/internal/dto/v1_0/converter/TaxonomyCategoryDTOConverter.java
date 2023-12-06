@@ -85,6 +85,9 @@ public class TaxonomyCategoryDTOConverter
 				id = parentAssetCategory.getCategoryId();
 				name = parentAssetCategory.getTitle(
 					dtoConverterContext.getLocale());
+				name_i18n = LocalizedMapUtil.getI18nMap(
+					dtoConverterContext.isAcceptAllLanguages(),
+					parentAssetCategory.getTitleMap());
 			}
 		};
 	}
@@ -192,6 +195,9 @@ public class TaxonomyCategoryDTOConverter
 								id = assetCategory.getVocabularyId();
 								name = assetVocabulary.getTitle(
 									dtoConverterContext.getLocale());
+								name_i18n = LocalizedMapUtil.getI18nMap(
+									dtoConverterContext.isAcceptAllLanguages(),
+									assetVocabulary.getTitleMap());
 							}
 						};
 					});

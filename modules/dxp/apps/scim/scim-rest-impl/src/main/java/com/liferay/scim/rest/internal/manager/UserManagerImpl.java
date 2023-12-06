@@ -510,7 +510,7 @@ public class UserManagerImpl implements UserManager {
 			portalUser = _userService.getUserById(userId);
 		}
 		catch (PortalException portalException) {
-			throw new NotFoundException(portalException.getMessage());
+			throw new NotFoundException();
 		}
 
 		String userScimClientId = _getScimClientId(portalUser);

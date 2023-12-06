@@ -1,0 +1,7 @@
+{
+	"className": "com.liferay.template.model.TemplateEntry",
+	"ddmTemplateKey": "MARKETPLACE SUPPORTED VERSIONS",
+	"infoItemClassName": "com.liferay.commerce.product.model.CPDefinition",
+	"name": "marketplace_supported_versions",
+	"resourceClassName": "com.liferay.template.model.TemplateEntry"
+}

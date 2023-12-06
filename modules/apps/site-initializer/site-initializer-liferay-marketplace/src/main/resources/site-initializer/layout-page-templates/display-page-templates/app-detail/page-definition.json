@@ -1135,7 +1135,7 @@
 																						},
 																						"text": {
 																							"mapping": {
-																								"fieldKey": "AssetVocabulary_[$TAXONOMY_VOCABULARY_ID:Marketplace Liferay Version$]",
+																								"fieldKey": "ddmTemplate__ddmTemplate_[$TEMPLATE_ENTRY_ID:marketplace_supported_versions$]",
 																								"itemReference": {
 																									"contextSource": "DisplayPageItem"
 																								}

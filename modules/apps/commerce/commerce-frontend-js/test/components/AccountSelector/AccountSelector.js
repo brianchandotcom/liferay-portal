@@ -6,13 +6,7 @@
 import '../../tests_utilities/polyfills';
 
 import '@testing-library/jest-dom/extend-expect';
-import {
-	act,
-	cleanup,
-	fireEvent,
-	render,
-	waitForElementToBeRemoved,
-} from '@testing-library/react';
+import {act, cleanup, fireEvent, render, waitFor} from '@testing-library/react';
 import fetchMock from 'fetch-mock';
 import React from 'react';
 
@@ -24,10 +18,12 @@ import {
 } from '../../tests_utilities/fake_data/accounts';
 import {getOrders} from '../../tests_utilities/fake_data/orders';
 
-const ACCOUNTS_HEADLESS_API_ENDPOINT = ServiceProvider.AdminAccountAPI('v1')
-	.baseURL;
+const ACCOUNTS_HEADLESS_API_ENDPOINT = ServiceProvider.DeliveryCatalogAPI(
+	'v1'
+).baseURL(24324);
 
-const USERS_HEADLESS_API_ENDPOINT = '/o/headless-admin-user/v1.0/accounts';
+const COMMERCE_DELIVERY_CATALOG_HEADLESS_API_ENDPOINT =
+	'/headless-commerce-delivery-catalog/v1.0/channels/24324/accounts';
 
 describe('AccountSelector', () => {
 	beforeEach(() => {
@@ -41,7 +37,9 @@ describe('AccountSelector', () => {
 			).cartsByAccountIdAndChannelIdURL(42332, 24324)}`
 		);
 
-		const usersEndpointRegexp = new RegExp(USERS_HEADLESS_API_ENDPOINT);
+		const usersEndpointRegexp = new RegExp(
+			COMMERCE_DELIVERY_CATALOG_HEADLESS_API_ENDPOINT
+		);
 
 		fetchMock.mock(accountsEndpointRegexp, (url) => getAccounts(url));
 		fetchMock.mock(ordersEndpointRegexp, (url) => getOrders(url));
@@ -94,8 +92,10 @@ describe('AccountSelector', () => {
 				);
 			});
 
-			await waitForElementToBeRemoved(() =>
-				renderedComponent.queryByText(/loading/i)
+			await waitFor(() =>
+				expect(
+					renderedComponent.queryByText(/loading/i)
+				).not.toBeInTheDocument()
 			);
 
 			const accountsList = renderedComponent.baseElement.querySelectorAll(
@@ -120,8 +120,10 @@ describe('AccountSelector', () => {
 				);
 			});
 
-			await waitForElementToBeRemoved(() =>
-				renderedComponent.queryByText(/loading/i)
+			await waitFor(() =>
+				expect(
+					renderedComponent.queryByText(/loading/i)
+				).not.toBeInTheDocument()
 			);
 
 			const accountsListItem = renderedComponent.baseElement.querySelectorAll(
@@ -199,8 +201,10 @@ describe('AccountSelector', () => {
 				);
 			});
 
-			await waitForElementToBeRemoved(() =>
-				renderedComponent.queryByText(/loading/i)
+			await waitFor(() =>
+				expect(
+					renderedComponent.queryByText(/loading/i)
+				).not.toBeInTheDocument()
 			);
 
 			const orders = renderedComponent.baseElement.querySelectorAll(

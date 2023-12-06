@@ -353,6 +353,20 @@ public abstract class BaseDBPartitionTestCase {
 			DBPartitionUtil.class, "_defaultPartitionName");
 	}
 
+	protected static void setUpDBPartitions() throws Exception {
+		addDBPartitions();
+
+		insertPartitionRequiredData();
+
+		insertPartitionData();
+	}
+
+	protected static void tearDownDBPartitions() throws Exception {
+		deletePartitionRequiredData();
+
+		removeDBPartitions();
+	}
+
 	protected void createAndPopulateControlTable(String tableName)
 		throws Exception {
 

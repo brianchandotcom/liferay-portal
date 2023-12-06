@@ -74,9 +74,16 @@ export default request => {
 
 	let requestURL = `${baseURL}/${path}`;
 
-	const authData = {
+	// Remove undefined values from object authData
+
+	const authData = Object.entries({
 		...stringifyValues(data)
-	};
+	})
+		.filter(([, value]) => value !== undefined)
+		.reduce((obj, [key, value]) => {
+			obj[key] = value;
+			return obj;
+		}, {});
 
 	const config = {method};
 

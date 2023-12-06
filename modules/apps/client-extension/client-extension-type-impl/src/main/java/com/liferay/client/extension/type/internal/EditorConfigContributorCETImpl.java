@@ -6,18 +6,11 @@
 package com.liferay.client.extension.type.internal;
 
 import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
-import com.liferay.client.extension.model.ClientExtensionEntry;
 import com.liferay.client.extension.type.EditorConfigContributorCET;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 
+import java.util.Date;
 import java.util.Properties;
-import java.util.Set;
-
-import javax.portlet.PortletRequest;
 
 /**
  * @author Daniel Sanz
@@ -26,51 +19,15 @@ public class EditorConfigContributorCETImpl
 	extends BaseCETImpl implements EditorConfigContributorCET {
 
 	public EditorConfigContributorCETImpl(
-		ClientExtensionEntry clientExtensionEntry) {
-
-		super(clientExtensionEntry);
-	}
-
-	public EditorConfigContributorCETImpl(PortletRequest portletRequest) {
-		this(
-			StringPool.BLANK,
-			UnicodePropertiesBuilder.create(
-				true
-			).put(
-				"editorConfigKeys",
-				StringUtil.merge(
-					ParamUtil.getStringValues(
-						portletRequest, "editorConfigKeys"),
-					StringPool.NEW_LINE)
-			).put(
-				"editorNames",
-				StringUtil.merge(
-					ParamUtil.getStringValues(portletRequest, "editorNames"),
-					StringPool.NEW_LINE)
-			).put(
-				"portletNames",
-				StringUtil.merge(
-					ParamUtil.getStringValues(portletRequest, "portletNames"),
-					StringPool.NEW_LINE)
-			).put(
-				"url", ParamUtil.getString(portletRequest, "url")
-			).build());
-	}
-
-	public EditorConfigContributorCETImpl(
-		String baseURL, long companyId, String description,
-		String externalReferenceCode, String name, Properties properties,
-		String sourceCodeURL, UnicodeProperties typeSettingsUnicodeProperties) {
+		String baseURL, long companyId, Date createDate, String description,
+		String externalReferenceCode, Date modifiedDate, String name,
+		Properties properties, boolean readOnly, String sourceCodeURL,
+		int status, UnicodeProperties typeSettingsUnicodeProperties) {
 
 		super(
-			baseURL, companyId, description, externalReferenceCode, name,
-			properties, sourceCodeURL, typeSettingsUnicodeProperties);
-	}
-
-	public EditorConfigContributorCETImpl(
-		String baseURL, UnicodeProperties typeSettingsUnicodeProperties) {
-
-		super(baseURL, typeSettingsUnicodeProperties);
+			baseURL, companyId, createDate, description, externalReferenceCode,
+			modifiedDate, name, properties, readOnly, sourceCodeURL, status,
+			typeSettingsUnicodeProperties);
 	}
 
 	@Override
@@ -107,13 +64,5 @@ public class EditorConfigContributorCETImpl
 	public boolean hasProperties() {
 		return true;
 	}
-
-	@Override
-	protected boolean isURLCETPropertyName(String name) {
-		return _urlCETPropertyNames.contains(name);
-	}
-
-	private static final Set<String> _urlCETPropertyNames =
-		getURLCETPropertyNames(EditorConfigContributorCET.class);
 
 }

@@ -6,15 +6,15 @@
 package com.liferay.client.extension.type.internal.factory;
 
 import com.liferay.client.extension.exception.ClientExtensionEntryTypeSettingsException;
-import com.liferay.client.extension.model.ClientExtensionEntry;
 import com.liferay.client.extension.type.EditorConfigContributorCET;
-import com.liferay.client.extension.type.factory.CETImplFactory;
 import com.liferay.client.extension.type.internal.EditorConfigContributorCETImpl;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.Date;
 import java.util.Properties;
 
 import javax.portlet.PortletRequest;
@@ -23,46 +23,50 @@ import javax.portlet.PortletRequest;
  * @author Daniel Sanz
  */
 public class EditorConfigContributorCETImplFactoryImpl
-	implements CETImplFactory<EditorConfigContributorCET> {
+	extends BaseCETImplFactoryImpl<EditorConfigContributorCET> {
 
-	@Override
-	public EditorConfigContributorCET create(
-			ClientExtensionEntry clientExtensionEntry)
-		throws PortalException {
-
-		return new EditorConfigContributorCETImpl(clientExtensionEntry);
-	}
-
-	@Override
-	public EditorConfigContributorCET create(PortletRequest portletRequest)
-		throws PortalException {
-
-		return new EditorConfigContributorCETImpl(portletRequest);
+	public EditorConfigContributorCETImplFactoryImpl() {
+		super(EditorConfigContributorCET.class);
 	}
 
 	@Override
 	public EditorConfigContributorCET create(
-			String baseURL, long companyId, String description,
-			String externalReferenceCode, String name, Properties properties,
-			String sourceCodeURL, UnicodeProperties unicodeProperties)
-		throws PortalException {
+		String baseURL, long companyId, Date createDate, String description,
+		String externalReferenceCode, Date modifiedDate, String name,
+		Properties properties, boolean readOnly, String sourceCodeURL,
+		int status, UnicodeProperties typeSettingsUnicodeProperties) {
 
 		return new EditorConfigContributorCETImpl(
-			baseURL, companyId, description, externalReferenceCode, name,
-			properties, sourceCodeURL, unicodeProperties);
+			baseURL, companyId, createDate, description, externalReferenceCode,
+			modifiedDate, name, properties, readOnly, sourceCodeURL, status,
+			typeSettingsUnicodeProperties);
+	}
+
+	@Override
+	public UnicodeProperties getUnicodeProperties(
+		PortletRequest portletRequest) {
+
+		return UnicodePropertiesBuilder.create(
+			true
+		).put(
+			"editorConfigKeys",
+			ParamUtil.getString(portletRequest, "editorConfigKeys")
+		).put(
+			"editorNames", ParamUtil.getString(portletRequest, "editorNames")
+		).put(
+			"portletNames", ParamUtil.getString(portletRequest, "portletNames")
+		).put(
+			"url", ParamUtil.getString(portletRequest, "url")
+		).build();
 	}
 
 	@Override
 	public void validate(
-			UnicodeProperties newTypeSettingsUnicodeProperties,
-			UnicodeProperties oldTypeSettingsUnicodeProperties)
+			EditorConfigContributorCET newEditorConfigContributorCET,
+			EditorConfigContributorCET oldEditorConfigContributorCET)
 		throws PortalException {
 
-		EditorConfigContributorCET editorConfigContributorCET =
-			new EditorConfigContributorCETImpl(
-				StringPool.BLANK, newTypeSettingsUnicodeProperties);
-
-		if (Validator.isNull(editorConfigContributorCET.getURL())) {
+		if (Validator.isNull(newEditorConfigContributorCET.getURL())) {
 			throw new ClientExtensionEntryTypeSettingsException(
 				"At least one JavaScript URL is required",
 				"please-enter-at-least-one-javascript-url");

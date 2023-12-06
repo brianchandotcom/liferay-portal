@@ -298,7 +298,6 @@ public class SegmentsExperimentLocalServiceImpl
 
 		typeSettingsUnicodeProperties.setProperty(
 			"confidenceLevel", String.valueOf(confidenceLevel));
-
 		typeSettingsUnicodeProperties.setProperty("type", type);
 
 		segmentsExperiment.setTypeSettings(

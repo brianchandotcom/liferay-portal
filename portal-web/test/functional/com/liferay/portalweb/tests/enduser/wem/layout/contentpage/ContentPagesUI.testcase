@@ -606,7 +606,7 @@ definition {
 			var leftSidebarPanelWidth = selenium.getElementWidth("Sidebar#PANEL_OPEN");
 			var bodyWidth = selenium.getElementWidth("//body");
 			var rightSidebarWidth = selenium.getElementWidth("PageEditor#ITEM_CONFIGURATION_SIDEBAR");
-			var gridFragmentWidth = selenium.getElementWidth("//div[@aria-label='Grid']");
+			var gridFragmentWidth = selenium.getElementWidth("//div[@data-name='Grid']");
 			var leftSidebarWidth = ${leftSidebarButtonsWidth} + ${leftSidebarPanelWidth};
 			var offsetWidth = selenium.getAttribute("//div[contains(@class,'overflow-auto')]@offsetWidth");
 			var clientWidth = selenium.getAttribute("//div[contains(@class,'overflow-auto')]@clientWidth");
@@ -1117,7 +1117,7 @@ definition {
 			var leftSidebarPanelWidth = selenium.getElementWidth("Sidebar#PANEL_OPEN");
 			var bodyWidth = selenium.getElementWidth("//body");
 			var rightSidebarWidth = selenium.getElementWidth("PageEditor#ITEM_CONFIGURATION_SIDEBAR");
-			var headingFragmentWidth = selenium.getElementWidth("//div[@aria-label='Heading']");
+			var headingFragmentWidth = selenium.getElementWidth("//div[@data-name='Heading']");
 			var leftSidebarWidth = ${leftSidebarButtonsWidth} + ${leftSidebarPanelWidth};
 
 			var bothSidebarWidth = ${leftSidebarWidth} + ${rightSidebarWidth};

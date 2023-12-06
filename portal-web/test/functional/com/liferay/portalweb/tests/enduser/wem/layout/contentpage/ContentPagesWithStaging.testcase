@@ -693,7 +693,7 @@ definition {
 			MenuItem.click(menuItem = "Add Heading");
 
 			AssertElementPresent(
-				key_elementHeader = "//div[@aria-label='Heading']",
+				key_elementHeader = "//div[@data-name='Heading']",
 				key_position = 1,
 				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
 

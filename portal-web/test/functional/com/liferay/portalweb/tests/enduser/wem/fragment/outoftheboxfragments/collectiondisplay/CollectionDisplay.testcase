@@ -211,7 +211,7 @@ definition {
 				key_collectionName = "Basic Components",
 				key_fragmentName = "Heading",
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
-				locator2 = "//div[@aria-label='Collection Display']//div[contains(@class,'page-editor__collection__message')]");
+				locator2 = "//div[@data-name='Collection Display']//div[contains(@class,'page-editor__collection__message')]");
 		}
 
 		task ("Then the page creator should see an error message") {
@@ -1601,7 +1601,7 @@ definition {
 		task ("Access to the mapping panel of Heading") {
 			Click.clickNoWaitForVisible(
 				key_colPosition = 1,
-				key_element = "//div[@aria-label='Heading']",
+				key_element = "//div[@data-name='Heading']",
 				key_fragmentName = "Collection Display",
 				key_rowPosition = 1,
 				locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT");
@@ -1676,7 +1676,7 @@ definition {
 		task ("Access to the mapping panel of Heading") {
 			Click.clickNoWaitForVisible(
 				key_colPosition = 1,
-				key_element = "//div[@aria-label='Heading']",
+				key_element = "//div[@data-name='Heading']",
 				key_fragmentName = "Collection Display",
 				key_rowPosition = 1,
 				locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT");
@@ -1747,7 +1747,7 @@ definition {
 		task ("Access to the mapping panel of Heading") {
 			Click.clickNoWaitForVisible(
 				key_colPosition = 1,
-				key_element = "//div[@aria-label='Heading']",
+				key_element = "//div[@data-name='Heading']",
 				key_fragmentName = "Collection Display",
 				key_rowPosition = 1,
 				locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT");
@@ -2342,7 +2342,7 @@ definition {
 				pageName = "Content Page Name",
 				siteName = "Test Site Name");
 
-			var fragmentId = selenium.getText("//div[@aria-label='Fragment Name']");
+			var fragmentId = selenium.getText("//div[@data-name='Fragment Name']");
 
 			AssertTextNotEquals(
 				key_columnNumber = 1,
@@ -2364,7 +2364,7 @@ definition {
 				pageName = "Content Page Name 2",
 				siteName = "Test Site Name");
 
-			var fragmentId2 = selenium.getText("//div[@aria-label='Fragment Name']//div[contains(@id,'fragment-')]");
+			var fragmentId2 = selenium.getText("//div[@data-name='Fragment Name']//div[contains(@id,'fragment-')]");
 
 			AssertTextNotEquals.assertNotPartialMatch(
 				key_columnNumber = 1,

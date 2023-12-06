@@ -67,7 +67,7 @@ definition {
 				position = 1);
 
 			for (var text : list "Web Content Title 5,Web Content Title 4,Web Content Title 3,Web Content Title 2,Web Content Title 1") {
-				AssertVisible(locator1 = "//div[@aria-label='Collection Display']//div[contains(@class,'col-')][normalize-space()='${text}']");
+				AssertVisible(locator1 = "//div[@data-name='Collection Display']//div[contains(@class,'col-')][normalize-space()='${text}']");
 			}
 
 			AssertTextEquals(

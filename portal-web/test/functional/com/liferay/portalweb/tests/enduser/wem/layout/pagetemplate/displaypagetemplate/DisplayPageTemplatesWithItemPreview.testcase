@@ -601,7 +601,7 @@ definition {
 
 		task ("View the title of collection items are shown as Bulleted List") {
 			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
-				AssertVisible(locator1 = "//div[@aria-label='Collection Display']//li[normalize-space()='${title}']");
+				AssertVisible(locator1 = "//div[@data-name='Collection Display']//li[normalize-space()='${title}']");
 			}
 		}
 

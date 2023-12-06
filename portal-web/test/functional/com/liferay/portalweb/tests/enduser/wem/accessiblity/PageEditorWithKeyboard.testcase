@@ -54,7 +54,7 @@ definition {
 				upCount = 1);
 
 			AssertElementPresent(
-				key_elementHeader = "//div[@aria-label='Button']",
+				key_elementHeader = "//div[@data-name='Button']",
 				key_elementType = "Container",
 				key_position = 1,
 				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
@@ -65,7 +65,7 @@ definition {
 				widgetName = "Web Content Display");
 
 			AssertElementPresent(
-				key_elementHeader = "//div[@aria-label='Web Content Display']",
+				key_elementHeader = "//div[@data-name='Web Content Display']",
 				key_elementType = "Container",
 				key_position = 1,
 				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
@@ -102,7 +102,7 @@ definition {
 
 			AssertElementPresent(
 				key_columnNumber = 3,
-				key_elementHeader = "//div[@aria-label='Heading']",
+				key_elementHeader = "//div[@data-name='Heading']",
 				key_position = 1,
 				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 
@@ -113,7 +113,7 @@ definition {
 
 			AssertElementPresent(
 				key_columnNumber = 1,
-				key_elementHeader = "//div[@aria-label='Asset Publisher']",
+				key_elementHeader = "//div[@data-name='Asset Publisher']",
 				key_position = 1,
 				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 
@@ -912,7 +912,7 @@ definition {
 				upCount = 4);
 
 			AssertElementPresent(
-				key_elementHeader = "//div[@aria-label='Documents and Media']",
+				key_elementHeader = "//div[@data-name='Documents and Media']",
 				key_elementType = "Container",
 				key_position = 1,
 				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.Searcher;
@@ -130,7 +131,14 @@ public abstract class SXPBlueprintInfoCollectionProvider<T>
 					collectionQuery.getInfoFilter(KeywordsInfoFilter.class);
 
 				if (keywordsInfoFilter != null) {
-					searchContext.setKeywords(keywordsInfoFilter.getKeywords());
+					String keywords = keywordsInfoFilter.getKeywords();
+
+					searchContext.setKeywords(keywords);
+
+					if (!Validator.isBlank(keywords)) {
+						searchContext.setAttribute(
+							"search.tunning.rankings.apply", Boolean.TRUE);
+					}
 				}
 
 				searchContext.setLocale(serviceContext.getLocale());

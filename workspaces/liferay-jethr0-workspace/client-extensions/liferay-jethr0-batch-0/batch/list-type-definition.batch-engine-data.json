@@ -276,6 +276,30 @@
 					}
 				},
 				{
+					"externalReferenceCode": "portalAppRelease",
+					"key": "portalAppRelease",
+					"name": "Portal App Release",
+					"name_i18n": {
+						"en-US": "Portal App Release"
+					}
+				},
+				{
+					"externalReferenceCode": "portalFixpackRelease",
+					"key": "portalFixpackRelease",
+					"name": "Portal Fixpack Release",
+					"name_i18n": {
+						"en-US": "Portal Fixpack Release"
+					}
+				},
+				{
+					"externalReferenceCode": "portalHotfixRelease",
+					"key": "portalHotfixRelease",
+					"name": "Portal Hotfix Release",
+					"name_i18n": {
+						"en-US": "Portal Hotfix Release"
+					}
+				},
+				{
 					"externalReferenceCode": "portalPullRequest",
 					"key": "portalPullRequest",
 					"name": "Portal Pull Request",
@@ -289,6 +313,14 @@
 					"name": "Portal Pull Request SF",
 					"name_i18n": {
 						"en-US": "Portal Pull Request SF"
+					}
+				},
+				{
+					"externalReferenceCode": "portalRelease",
+					"key": "portalRelease",
+					"name": "Portal Release",
+					"name_i18n": {
+						"en-US": "Portal Release"
 					}
 				},
 				{

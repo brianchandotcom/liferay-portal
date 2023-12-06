@@ -3,24 +3,24 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.jethr0.job.definition;
+package com.liferay.jethr0.job.definition.parameter;
 
 import com.liferay.jethr0.util.StringUtil;
 
 /**
  * @author Michael Hashimoto
  */
-public class JenkinsBranchURLJobParameterDefinition
+public class PortalPullRequestURLJobParameterDefinition
 	extends BaseJobParameterDefinition {
 
 	@Override
 	public String getKey() {
-		return "jenkinsBranchURL";
+		return "portalPullRequestURL";
 	}
 
 	@Override
 	public String getLabel() {
-		return "Jenkins Branch URL";
+		return "Portal Pull Request URL";
 	}
 
 	@Override
@@ -36,13 +36,12 @@ public class JenkinsBranchURLJobParameterDefinition
 	@Override
 	public String getValueDescription() {
 		return StringUtil.combine(
-			"e.g. https://github.com/[user]/liferay-jenkins-ee/",
-			"tree/[branch]");
+			"e.g. https://github.com/[user]/liferay-portal/pull/", "[number]");
 	}
 
 	@Override
 	public String getValueRegex() {
-		return "https://github.com/[^/]+/liferay-jenkins-ee/tree/[^/]+";
+		return "https://github.com/[^/]+/liferay-portal(-ee)?/pull/[^/]+";
 	}
 
 }

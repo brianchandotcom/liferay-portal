@@ -6,6 +6,8 @@
 package com.liferay.jethr0.job.definition;
 
 import com.liferay.jethr0.job.JobEntity;
+import com.liferay.jethr0.job.definition.parameter.JenkinsBranchURLJobParameterDefinition;
+import com.liferay.jethr0.job.definition.parameter.JobParameterDefinition;
 
 import java.util.Collections;
 import java.util.Set;

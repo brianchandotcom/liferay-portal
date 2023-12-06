@@ -5,6 +5,8 @@
 
 package com.liferay.jethr0.job.definition;
 
+import com.liferay.jethr0.job.definition.parameter.JobParameterDefinition;
+
 import java.util.Set;
 
 import org.json.JSONObject;

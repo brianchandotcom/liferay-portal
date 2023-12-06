@@ -3,22 +3,22 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.jethr0.job.definition;
+package com.liferay.jethr0.job.definition.parameter;
 
 /**
  * @author Michael Hashimoto
  */
-public class PortalBranchSHAJobParameterDefinition
+public class PortalUpstreamBranchNameJobParameterDefinition
 	extends BaseJobParameterDefinition {
 
 	@Override
 	public String getKey() {
-		return "portalBranchSHA";
+		return "portalUpstreamBranchName";
 	}
 
 	@Override
 	public String getLabel() {
-		return "Portal Branch SHA";
+		return "Portal Upstream Branch Name";
 	}
 
 	@Override
@@ -33,12 +33,12 @@ public class PortalBranchSHAJobParameterDefinition
 
 	@Override
 	public String getValueDescription() {
-		return "e.g. 617eb3201c2ad33025bfe6a3989ba90c268431ba";
+		return "Insert your Portal Upstream Branch Name here";
 	}
 
 	@Override
 	public String getValueRegex() {
-		return "[a-f0-9]+";
+		return null;
 	}
 
 }

@@ -3,22 +3,22 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.jethr0.job.definition;
+package com.liferay.jethr0.job.definition.parameter;
 
 /**
  * @author Michael Hashimoto
  */
-public class TestSuiteNameJobParameterDefinition
+public class PortalBranchSHAJobParameterDefinition
 	extends BaseJobParameterDefinition {
 
 	@Override
 	public String getKey() {
-		return "testSuiteName";
+		return "portalBranchSHA";
 	}
 
 	@Override
 	public String getLabel() {
-		return "Test Suite Name";
+		return "Portal Branch SHA";
 	}
 
 	@Override
@@ -28,23 +28,17 @@ public class TestSuiteNameJobParameterDefinition
 
 	@Override
 	public String getValueDefault() {
-		return _valueDefault;
+		return null;
 	}
 
 	@Override
 	public String getValueDescription() {
-		return "Insert your Test Suite Name here";
+		return "e.g. 617eb3201c2ad33025bfe6a3989ba90c268431ba";
 	}
 
 	@Override
 	public String getValueRegex() {
-		return null;
+		return "[a-f0-9]+";
 	}
-
-	protected TestSuiteNameJobParameterDefinition(String valueDefault) {
-		_valueDefault = valueDefault;
-	}
-
-	private final String _valueDefault;
 
 }

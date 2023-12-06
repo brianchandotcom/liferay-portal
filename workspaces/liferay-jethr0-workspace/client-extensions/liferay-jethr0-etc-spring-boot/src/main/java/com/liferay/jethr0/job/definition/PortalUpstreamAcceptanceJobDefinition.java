@@ -6,6 +6,10 @@
 package com.liferay.jethr0.job.definition;
 
 import com.liferay.jethr0.job.JobEntity;
+import com.liferay.jethr0.job.definition.parameter.JobParameterDefinition;
+import com.liferay.jethr0.job.definition.parameter.PortalBranchSHAJobParameterDefinition;
+import com.liferay.jethr0.job.definition.parameter.PortalBuildProfileJobParameterDefinition;
+import com.liferay.jethr0.job.definition.parameter.PortalUpstreamBranchNameJobParameterDefinition;
 
 import java.util.HashSet;
 import java.util.Set;

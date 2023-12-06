@@ -19,6 +19,9 @@ public class JobParameterDefinitionFactory {
 		else if (type == JobParameterDefinition.Type.PORTAL_PULL_REQUEST_URL) {
 			return new PortalPullRequestURLJobParameterDefinition();
 		}
+		else if (type == JobParameterDefinition.Type.TEST_SUITE_NAME) {
+			return new TestSuiteNameJobParameterDefinition();
+		}
 
 		return null;
 	}

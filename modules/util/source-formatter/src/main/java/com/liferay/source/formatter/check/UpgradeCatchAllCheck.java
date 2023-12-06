@@ -113,13 +113,12 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 	}
 
 	private static List<String> _getInterpolatedNewParameterNames(
-		List<String> parameterNames, List<String> newParameterNames) {
+		List<String> parameterNames, List<String> newParameterNames,
+		String prefix) {
 
 		List<String> interpolatedNewParameterNames = new ArrayList<>();
 
 		for (String newParameterName : newParameterNames) {
-			String prefix = "param#";
-
 			if (newParameterName.contains(prefix)) {
 				int index = GetterUtil.getInteger(
 					newParameterName.substring(
@@ -273,7 +272,7 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 		sb.append(
 			StringUtil.merge(
 				_getInterpolatedNewParameterNames(
-					parameterNames, newParameterNames),
+					parameterNames, newParameterNames, prefix),
 				StringPool.COMMA_AND_SPACE));
 
 		sb.append(lastCharacter);

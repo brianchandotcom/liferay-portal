@@ -10,6 +10,7 @@ import com.liferay.headless.admin.taxonomy.client.serdes.v1_0.ParentTaxonomyCate
 
 import java.io.Serializable;
 
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -62,6 +63,28 @@ public class ParentTaxonomyCategory implements Cloneable, Serializable {
 	}
 
 	protected String name;
+
+	public Map<String, String> getName_i18n() {
+		return name_i18n;
+	}
+
+	public void setName_i18n(Map<String, String> name_i18n) {
+		this.name_i18n = name_i18n;
+	}
+
+	public void setName_i18n(
+		UnsafeSupplier<Map<String, String>, Exception>
+			name_i18nUnsafeSupplier) {
+
+		try {
+			name_i18n = name_i18nUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Map<String, String> name_i18n;
 
 	@Override
 	public ParentTaxonomyCategory clone() throws CloneNotSupportedException {

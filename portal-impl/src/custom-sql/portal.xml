@@ -1275,6 +1275,19 @@
 				Groups_UserGroups.groupId = ?
 		]]>
 	</sql>
+	<sql id="com.liferay.portal.kernel.service.persistence.UserFinder.joinByNoAccountEntriesAndNoOrganizations">
+		<![CDATA[
+			LEFT JOIN
+				AccountEntryUserRel ON
+					User_.userId = AccountEntryUserRel.accountUserId
+			LEFT JOIN
+				Users_Orgs ON
+					User_.userId = Users_Orgs.userId
+			WHERE
+				(AccountEntryUserRel.accountEntryId IS NULL) AND
+				(Users_Orgs.organizationId IS NULL)
+		]]>
+	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.UserFinder.joinByNoOrganizations">
 		<![CDATA[
 			LEFT JOIN
@@ -1282,19 +1295,6 @@
 					User_.userId = Users_Orgs.userId
 			WHERE
 				Users_Orgs.organizationId IS NULL
-		]]>
-	</sql>
-	<sql id="com.liferay.portal.kernel.service.persistence.UserFinder.joinByNoOrganizationsOrAccountEntries">
-		<![CDATA[
-			LEFT JOIN
-				Users_Orgs ON
-					User_.userId = Users_Orgs.userId
-			LEFT JOIN
-				AccountEntryUserRel ON
-					User_.userId = AccountEntryUserRel.accountUserId
-			WHERE
-				(Users_Orgs.organizationId IS NULL) AND
-				(AccountEntryUserRel.accountEntryId IS NULL)
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.UserFinder.joinByUserGroupRole">

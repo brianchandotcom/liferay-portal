@@ -58,7 +58,9 @@ function AccountSelector({
 
 		fetch(accountsApi.toString())
 			.then((response) => response.json())
-			.then((response) => setCurrentUser(response))
+			.then((response) => {
+				setCurrentUser(response);
+			})
 			.catch((error) => showErrorNotification(error.message));
 	}, [commerceChannelId]);
 

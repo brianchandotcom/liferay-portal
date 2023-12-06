@@ -174,20 +174,20 @@ definition {
 
 		task ("View the title of assets are shown in the first module") {
 			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
-				AssertVisible(locator1 = "xpath=(//div[@aria-label='Collection Display'])[1]//div[@aria-label='Heading']//*[contains(@data-lfr-editable-id,'element-text')][normalize-space()='${title}']");
+				AssertVisible(locator1 = "xpath=(//div[@data-name='Collection Display'])[1]//div[@data-name='Heading']//*[contains(@data-lfr-editable-id,'element-text')][normalize-space()='${title}']");
 			}
 		}
 
 		task ("View the name of associated categories are shown in the second module") {
 			for (var n : list "1,2,3") {
-				AssertVisible(locator1 = "xpath=((//div[@aria-label='Collection Display'])[2]//div[@aria-label='Button']//*[contains(@data-lfr-editable-id,'link')][normalize-space()='Category Name 1'])[${n}]");
+				AssertVisible(locator1 = "xpath=((//div[@data-name='Collection Display'])[2]//div[@data-name='Button']//*[contains(@data-lfr-editable-id,'link')][normalize-space()='Category Name 1'])[${n}]");
 			}
 
 			for (var n : list "1,2") {
-				AssertVisible(locator1 = "xpath=((//div[@aria-label='Collection Display'])[2]//div[@aria-label='Button']//*[contains(@data-lfr-editable-id,'link')][normalize-space()='Category Name 2'])[${n}]");
+				AssertVisible(locator1 = "xpath=((//div[@data-name='Collection Display'])[2]//div[@data-name='Button']//*[contains(@data-lfr-editable-id,'link')][normalize-space()='Category Name 2'])[${n}]");
 			}
 
-			AssertVisible(locator1 = "xpath=(//div[@aria-label='Collection Display'])[2]//div[@aria-label='Button']//*[contains(@data-lfr-editable-id,'link')][normalize-space()='Category Name 3']");
+			AssertVisible(locator1 = "xpath=(//div[@data-name='Collection Display'])[2]//div[@data-name='Button']//*[contains(@data-lfr-editable-id,'link')][normalize-space()='Category Name 3']");
 		}
 
 		task ("Navigate to page at view mode") {
@@ -542,7 +542,7 @@ definition {
 			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
 				AssertTextEquals(
 					key_colPosition = 1,
-					key_element = "//div[@aria-label='Heading']//*[contains(@data-lfr-editable-id,'element-text')]",
+					key_element = "//div[@data-name='Heading']//*[contains(@data-lfr-editable-id,'element-text')]",
 					key_fragmentName = "Collection Display",
 					key_rowPosition = ${n},
 					locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT",
@@ -558,7 +558,7 @@ definition {
 			for (var title : list "Blogs Entry Title,Web Content Title") {
 				AssertTextEquals(
 					key_colPosition = 1,
-					key_element = "//div[contains(@class,'row')][${n}]//div[@aria-label='Button']//*[contains(@data-lfr-editable-id,'link')]",
+					key_element = "//div[contains(@class,'row')][${n}]//div[@data-name='Button']//*[contains(@data-lfr-editable-id,'link')]",
 					key_fragmentName = "Collection Display",
 					key_rowPosition = 1,
 					locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT",
@@ -572,7 +572,7 @@ definition {
 			for (var title : list "Document Title,Web Content Title") {
 				AssertTextEquals(
 					key_colPosition = 1,
-					key_element = "//div[contains(@class,'row')][${n}]//div[@aria-label='Button']//*[contains(@data-lfr-editable-id,'link')]",
+					key_element = "//div[contains(@class,'row')][${n}]//div[@data-name='Button']//*[contains(@data-lfr-editable-id,'link')]",
 					key_fragmentName = "Collection Display",
 					key_rowPosition = 2,
 					locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT",
@@ -586,7 +586,7 @@ definition {
 			for (var title : list "Document Title,Blogs Entry Title") {
 				AssertTextEquals(
 					key_colPosition = 1,
-					key_element = "//div[contains(@class,'row')][${n}]//div[@aria-label='Button']//*[contains(@data-lfr-editable-id,'link')]",
+					key_element = "//div[contains(@class,'row')][${n}]//div[@data-name='Button']//*[contains(@data-lfr-editable-id,'link')]",
 					key_fragmentName = "Collection Display",
 					key_rowPosition = 3,
 					locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT",

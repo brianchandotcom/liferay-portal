@@ -65,7 +65,7 @@ definition {
 
 			TestUtils.assertPartialAttributeValue(
 				attribute = "class",
-				element = "//div[@aria-label='Heading']//div[contains(@class,'page-editor__fragment-content')]",
+				element = "//div[@data-name='Heading']//div[contains(@class,'page-editor__fragment-content')]",
 				value = "background-color");
 		}
 	}
@@ -112,7 +112,7 @@ definition {
 			for (var cssClass : list "background-color,border-color,box-shadow") {
 				TestUtils.assertPartialAttributeValue(
 					attribute = "class",
-					element = "//div[@aria-label='Heading']//div[contains(@class,'page-editor__fragment-content')]",
+					element = "//div[@data-name='Heading']//div[contains(@class,'page-editor__fragment-content')]",
 					value = ${cssClass});
 			}
 		}

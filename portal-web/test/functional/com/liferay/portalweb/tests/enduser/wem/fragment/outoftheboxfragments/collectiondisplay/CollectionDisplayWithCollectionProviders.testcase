@@ -149,7 +149,7 @@ definition {
 
 		task ("View the title of web content shown in the second module") {
 			for (var n : list "1,2,3") {
-				AssertVisible(locator1 = "xpath=(//div[@aria-label='Collection Display']//div[contains(@class,'page-editor__collection')]//ul[not(contains(@class,'list-group'))]/li[1][normalize-space(text())='Web Content Title'])[${n}]");
+				AssertVisible(locator1 = "xpath=(//div[@data-name='Collection Display']//div[contains(@class,'page-editor__collection')]//ul[not(contains(@class,'list-group'))]/li[1][normalize-space(text())='Web Content Title'])[${n}]");
 			}
 
 			PageEditor.publish();
@@ -519,7 +519,7 @@ definition {
 				value1 = "Start");
 
 			var blockWidth = selenium.getElementWidth("//div[contains(@class,'page-editor__collection__block')]");
-			var collectionDisplayWidth = selenium.getElementWidth("//div[@aria-label='Collection Display']//div[contains(@class,'page-editor__topper__content')]");
+			var collectionDisplayWidth = selenium.getElementWidth("//div[@data-name='Collection Display']//div[contains(@class,'page-editor__topper__content')]");
 
 			StringUtil.assertEquals(${collectionDisplayWidth}, ${blockWidth});
 		}
@@ -547,7 +547,7 @@ definition {
 				position = 1);
 
 			var blockWidth = selenium.getElementWidth("//div[contains(@class,'page-editor__collection__block')]");
-			var collectionDisplayWidth = selenium.getElementWidth("//div[@aria-label='Collection Display']//div[contains(@class,'page-editor__topper__content')]");
+			var collectionDisplayWidth = selenium.getElementWidth("//div[@data-name='Collection Display']//div[contains(@class,'page-editor__topper__content')]");
 
 			TestUtils.isLessThan(
 				actual = ${blockWidth},
@@ -2435,7 +2435,7 @@ definition {
 			for (var title : list "Third Web Content,Second Web Content,First Web Content") {
 				AssertTextEquals(
 					key_colPosition = 1,
-					key_element = "//div[@aria-label='Heading']//*[contains(@data-lfr-editable-id,'element-text')]",
+					key_element = "//div[@data-name='Heading']//*[contains(@data-lfr-editable-id,'element-text')]",
 					key_fragmentName = "Collection Display",
 					key_rowPosition = ${n},
 					locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT",
@@ -2614,7 +2614,7 @@ definition {
 			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
 				AssertTextEquals(
 					key_colPosition = 1,
-					key_element = "//div[@aria-label='Heading']//*[contains(@data-lfr-editable-id,'element-text')]",
+					key_element = "//div[@data-name='Heading']//*[contains(@data-lfr-editable-id,'element-text')]",
 					key_fragmentName = "Collection Display",
 					key_rowPosition = ${n},
 					locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT",
@@ -2631,7 +2631,7 @@ definition {
 				key_collectionName = "Basic Components",
 				key_fragmentName = "Paragraph",
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
-				locator2 = "//div[@aria-label='Heading']//div[contains(@class,'page-editor__topper__content')]",
+				locator2 = "//div[@data-name='Heading']//div[contains(@class,'page-editor__topper__content')]",
 				value1 = "");
 
 			PageEditor.waitForAutoSave();
@@ -2969,7 +2969,7 @@ definition {
 			for (var title : list "Third Web Content,Second Web Content,First Web Content") {
 				AssertTextEquals(
 					key_colPosition = 1,
-					key_element = "//div[@aria-label='Heading']//*[contains(@data-lfr-editable-id,'element-text')]",
+					key_element = "//div[@data-name='Heading']//*[contains(@data-lfr-editable-id,'element-text')]",
 					key_fragmentName = "Collection Display",
 					key_rowPosition = ${n},
 					locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT",

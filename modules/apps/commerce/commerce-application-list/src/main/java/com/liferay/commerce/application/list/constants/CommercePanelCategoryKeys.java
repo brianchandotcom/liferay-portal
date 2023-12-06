@@ -28,6 +28,9 @@ public class CommercePanelCategoryKeys {
 	public static final String COMMERCE_ORDERS_MANAGEMENT =
 		COMMERCE_ORDER_MANAGEMENT;
 
+	public static final String COMMERCE_PAYMENT_MANAGEMENT =
+		"commerce.payment_management";
+
 	public static final String COMMERCE_PRICING = "commerce.pricing";
 
 	public static final String COMMERCE_PRODUCT_MANAGEMENT =

@@ -220,6 +220,14 @@ public class EditCompanyMVCActionCommand extends BaseFormMVCActionCommand {
 		UnicodeProperties unicodeProperties = PropertiesParamUtil.getProperties(
 			actionRequest, "settings--");
 
+		if (unicodeProperties.containsKey(PropsKeys.ADMIN_EMAIL_FROM_ADDRESS) &&
+			!Validator.isEmailAddress(
+				unicodeProperties.getProperty(
+					PropsKeys.ADMIN_EMAIL_FROM_ADDRESS))) {
+
+			throw new EmailAddressException();
+		}
+
 		String http = unicodeProperties.getProperty(PropsKeys.CDN_HOST_HTTP);
 
 		if (!Validator.isBlank(http) && !_urlValidator.isValid(http)) {
@@ -230,14 +238,6 @@ public class EditCompanyMVCActionCommand extends BaseFormMVCActionCommand {
 
 		if (!Validator.isBlank(https) && !_urlValidator.isValid(https)) {
 			throw new WebsiteURLException(https);
-		}
-
-		if (unicodeProperties.containsKey(PropsKeys.ADMIN_EMAIL_FROM_ADDRESS) &&
-			!Validator.isEmailAddress(
-				unicodeProperties.getProperty(
-					PropsKeys.ADMIN_EMAIL_FROM_ADDRESS))) {
-
-			throw new EmailAddressException();
 		}
 
 		String[] discardLegacyKeys = ParamUtil.getStringValues(

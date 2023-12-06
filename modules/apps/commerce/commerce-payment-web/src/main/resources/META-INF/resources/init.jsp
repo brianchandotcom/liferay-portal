@@ -22,6 +22,7 @@ page import="com.liferay.commerce.payment.exception.CommercePaymentMethodGroupRe
 page import="com.liferay.commerce.payment.exception.DuplicateCommercePaymentMethodGroupRelQualifierException" %><%@
 page import="com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel" %><%@
 page import="com.liferay.commerce.payment.web.internal.constants.CommercePaymentMethodGroupRelFDSNames" %><%@
+page import="com.liferay.commerce.payment.web.internal.constants.CommercePaymentsFDSNames" %><%@
 page import="com.liferay.commerce.payment.web.internal.display.context.CommerceChannelAccountEntryRelDisplayContext" %><%@
 page import="com.liferay.commerce.payment.web.internal.display.context.CommercePaymentMethodGroupRelQualifiersDisplayContext" %><%@
 page import="com.liferay.commerce.payment.web.internal.display.context.CommercePaymentMethodGroupRelsDisplayContext" %><%@

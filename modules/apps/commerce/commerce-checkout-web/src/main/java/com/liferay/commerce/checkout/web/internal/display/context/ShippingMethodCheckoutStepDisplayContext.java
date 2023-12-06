@@ -35,6 +35,7 @@ import java.math.BigDecimal;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -126,7 +127,7 @@ public class ShippingMethodCheckoutStepDisplayContext {
 			_commerceShippingEngineRegistry.getCommerceShippingEngine(
 				commerceShippingMethod.getEngineKey());
 
-		return commerceShippingEngine.getCommerceShippingOptions(
+		return commerceShippingEngine.getEnabledCommerceShippingOptions(
 			_getCommerceContext(), _commerceOrder, themeDisplay.getLocale());
 	}
 
@@ -160,27 +161,35 @@ public class ShippingMethodCheckoutStepDisplayContext {
 			CommerceShippingMethod commerceShippingMethod)
 		throws PortalException {
 
-		List<CommerceShippingOption> filteredCommerceShippingOptions =
-			new ArrayList<>();
-
 		List<CommerceShippingOption> commerceShippingOptions =
 			getCommerceShippingOptions(commerceShippingMethod);
 
-		for (CommerceShippingFixedOption commerceShippingFixedOption :
-				getFilteredCommerceShippingFixedOptions()) {
+		if (Objects.equals(
+				commerceShippingMethod.getEngineKey(), "by-weight") ||
+			Objects.equals(commerceShippingMethod.getEngineKey(), "fixed")) {
 
-			for (CommerceShippingOption commerceShippingOption :
-					commerceShippingOptions) {
+			List<CommerceShippingOption> filteredCommerceShippingOptions =
+				new ArrayList<>();
 
-				String key = commerceShippingFixedOption.getKey();
+			for (CommerceShippingFixedOption commerceShippingFixedOption :
+					getFilteredCommerceShippingFixedOptions()) {
 
-				if (key.equals(commerceShippingOption.getKey())) {
-					filteredCommerceShippingOptions.add(commerceShippingOption);
+				for (CommerceShippingOption commerceShippingOption :
+						commerceShippingOptions) {
+
+					String key = commerceShippingFixedOption.getKey();
+
+					if (key.equals(commerceShippingOption.getKey())) {
+						filteredCommerceShippingOptions.add(
+							commerceShippingOption);
+					}
 				}
 			}
+
+			return filteredCommerceShippingOptions;
 		}
 
-		return filteredCommerceShippingOptions;
+		return commerceShippingOptions;
 	}
 
 	public boolean isHideShippingPriceZero() throws PortalException {

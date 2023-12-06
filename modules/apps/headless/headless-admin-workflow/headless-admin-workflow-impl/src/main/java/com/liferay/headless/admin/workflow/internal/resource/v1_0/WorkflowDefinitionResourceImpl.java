@@ -71,9 +71,7 @@ public class WorkflowDefinitionResourceImpl
 		if (StringUtil.equalsIgnoreCase(createStrategy, "UPSERT")) {
 			if (contextBatchUnsafeConsumer != null) {
 				contextBatchUnsafeConsumer.accept(
-					workflowDefinitions,
-					workflowDefinition -> postWorkflowDefinitionDeploy(
-						workflowDefinition));
+					workflowDefinitions, this::postWorkflowDefinitionDeploy);
 			}
 			else {
 				for (WorkflowDefinition workflowDefinition :

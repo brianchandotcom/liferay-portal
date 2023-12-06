@@ -1,0 +1,21 @@
+diff --git a/org/apache/felix/scr/impl/BundleComponentActivator.java b/org/apache/felix/scr/impl/BundleComponentActivator.java
+index 67d21c2b2a2d4..bdf5d0b227e59 100755
+--- a/org/apache/felix/scr/impl/BundleComponentActivator.java
++++ b/org/apache/felix/scr/impl/BundleComponentActivator.java
+@@ -377,6 +377,16 @@ public class BundleComponentActivator implements ComponentActivator
+             return new URL[0];
+         }
+ 
++		if (descriptorLocation.indexOf('*') == -1) {
++			URL url = bundle.getEntry(descriptorLocation);
++
++			if (url == null) {
++				return new URL[0];
++			}
++
++			return new URL[] {url};
++		}
++
+         // split pattern and path
+         final int lios = descriptorLocation.lastIndexOf( "/" );
+         final String path;

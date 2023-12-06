@@ -16,8 +16,22 @@ public class JobParameterDefinitionFactory {
 		if (type == JobParameterDefinition.Type.JENKINS_BRANCH_URL) {
 			return new JenkinsBranchURLJobParameterDefinition();
 		}
+		else if (type == JobParameterDefinition.Type.PORTAL_BRANCH_SHA) {
+			return new PortalBranchSHAJobParameterDefinition();
+		}
+		else if (type == JobParameterDefinition.Type.PORTAL_BRANCH_URL) {
+			return new PortalBranchURLJobParameterDefinition();
+		}
+		else if (type == JobParameterDefinition.Type.PORTAL_BUILD_PROFILE) {
+			return new PortalBuildProfileJobParameterDefinition();
+		}
 		else if (type == JobParameterDefinition.Type.PORTAL_PULL_REQUEST_URL) {
 			return new PortalPullRequestURLJobParameterDefinition();
+		}
+		else if (type ==
+					JobParameterDefinition.Type.PORTAL_UPSTREAM_BRANCH_NAME) {
+
+			return new PortalUpstreamBranchNameJobParameterDefinition();
 		}
 		else if (type == JobParameterDefinition.Type.TEST_SUITE_NAME) {
 			return new TestSuiteNameJobParameterDefinition();

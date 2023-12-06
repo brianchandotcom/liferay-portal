@@ -67,7 +67,7 @@
 							</span>
 						</span>
 					</#if>
-					
+
 					<#if termDisplayContexts?has_content>
 						<span class="autofit-col">
 							<@clay.button
@@ -119,24 +119,24 @@
 					</#if>
 				</#list>
 			</div>
-			
+
 			<div class="collapse show" id="${namespace}treeItem${id}">
 				<ul class="treeview-group" role="group">
 					<#assign
 						termDisplayContextCount = 1
 						hasTermDisplayContextHidden = false
 					/>
-					
+
 					<#list termDisplayContexts as termDisplayContext>
-						<#assign hideClass = ""/>
-					
+						<#assign hideClass = "" />
+
 						<#if termDisplayContextCount gt 8 && !termDisplayContext.isSelected()>
 							<#assign
 								hideClass = "${vocabularyName}-class d-none"
 								hasTermDisplayContextHidden = true
 							/>
 						</#if>
-						
+
 						<@treeview_item
 							cssClassTreeItem="tree-item-category"
 							frequency=termDisplayContext.getFrequency()
@@ -148,11 +148,11 @@
 							termDisplayContextClass=hideClass
 							vocabularyName=vocabularyName
 						/>
-						
-						<#assign termDisplayContextCount++/>
+
+						<#assign termDisplayContextCount++ />
 					</#list>
-					
-					<#if termDisplayContextCount gt 8 && hasTermDisplayContextHidden == true>
+
+					<#if (termDisplayContextCount gt 8) && hasTermDisplayContextHidden>
 						<@clay.button
 							cssClass="btn-unstyled facet-clear-btn view-all-btn"
 							displayType="link"
@@ -213,58 +213,58 @@
 			}
 		}
 	}
-	
+
 	function clearSelections(id) {
 		const selections = document.getElementsByClassName(id.split('_')[0]);
-		
+
 		for (selection of selections) {
 			if (selection.checked) {
 				selection.checked = false;
 			}
 		}
-	
+
 		Liferay.Search.FacetUtil.changeSelection(event);
 	}
-	
+
 	function load() {
 		const viewAllBtns = document.getElementsByClassName('view-all-btn');
-	
+
 		for (viewAllBtn of viewAllBtns) {
 			if(sessionStorage.getItem(viewAllBtn.id)) {
 				viewAllBtn.click();
 			}
 		}
 	}
-	
+
 	load();
-	
+
 	function selectAll(id) {
 		const selections = document.getElementsByClassName(id.split('_')[0]);
-		
+
 		for (selection of selections) {
 			if (!selection.checked) {
 				selection.checked = true;
 			}
 		}
-	
+
 		Liferay.Search.FacetUtil.changeSelection(event);
 	}
-	
+
 	function viewAll(id) {
 		const selections = document.getElementsByClassName(id.split('_')[0]+'-class');
-		
+
 		for (selection of selections) {
 			if (!selection.checked) {
 				selection.classList.remove('d-none');
 			}
 		}
-	
+
 		document.getElementById(id).classList.add('d-none');
-		
+
 		sessionStorage.setItem(id, true);
 	}
 </@>
-		
+
 <style>
 	.autofit-col .c-inner {
 		color: #282934;
@@ -272,7 +272,7 @@
 		height: 16px;
 		width: 16px;
 	}
-	
+
 	.btn-unstyled.facet-clear-btn {
 		color: var(--action-neutral-default, #2B3A4B);
 		font-family: 'Source Sans Pro', sans-serif;
@@ -281,19 +281,19 @@
 		font-weight: 400;
 		line-height: 16px;
 	}
-	
+
 	.custom-checkbox.custom-control .custom-control-label {
 		display: flex;
 	}
-	
+
 	.custom-checkbox.custom-control .custom-control-label .custom-control-label-text{
 		width: fit-content;
 	}
-	
+
 	.custom-control-label:hover:before {
-  	box-shadow: 0px 0px 0px 8px #EDF3FE;
+	box-shadow: 0px 0px 0px 8px #EDF3FE;
 	}
-	
+
 	.custom-control-label .text-truncate-inline {
 		color: var(--neutral-10, #282934);
 		font-family: 'Source Sans Pro', sans-serif;
@@ -302,7 +302,7 @@
 		font-weight: 400;
 		line-height: 16px;
 	}
-	
+
 	.text-truncate-inline .text-truncate {
 		color: var(--neutral-10, #282934);
 		font-family: 'Source Sans Pro', sans-serif;
@@ -311,7 +311,7 @@
 		font-weight: 600;
 		line-height: 20px;
 	}
-	
+
 	.treeview.treeview-light.treeview-nested.treeview-vocabulary-display {
 		align-items: flex-start;
 		background: var(--neutral-01, #F7F7F8);
@@ -323,7 +323,7 @@
 		padding: 16px;
 		width: 350px;
 	}
-	
+
 	.treeview.treeview-light.treeview-nested.treeview-vocabulary-display .treeview-item {
 		align-items: flex-start;
 		align-self: stretch;

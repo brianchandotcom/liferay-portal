@@ -292,6 +292,14 @@
 					}
 				},
 				{
+					"externalReferenceCode": "portalUpstreamAcceptance",
+					"key": "portalUpstreamAcceptance",
+					"name": "Portal Upstream Acceptance",
+					"name_i18n": {
+						"en-US": "Portal Upstream Acceptance"
+					}
+				},
+				{
 					"externalReferenceCode": "portalUpstreamTestSuite",
 					"key": "portalUpstreamTestSuite",
 					"name": "Portal Upstream Test Suite",

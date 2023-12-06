@@ -18,6 +18,11 @@ public abstract class BasePortalUpstreamJobEntity
 	extends BaseJobEntity implements PortalUpstreamJobEntity {
 
 	@Override
+	public String getBuildProfile() {
+		return getParameterValue("buildProfile");
+	}
+
+	@Override
 	public String getTestSuiteName() {
 		return getParameterValue("testSuiteName");
 	}
@@ -41,6 +46,11 @@ public abstract class BasePortalUpstreamJobEntity
 		}
 
 		return StringUtil.toURL(upstreamBranchURL);
+	}
+
+	@Override
+	public void setBuildProfile(String buildProfile) {
+		setParameterValue("buildProfile", buildProfile);
 	}
 
 	@Override

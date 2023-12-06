@@ -42,6 +42,8 @@ public interface PortalUpstreamJobEntity extends JobEntity {
 			"e.g. https://github.com/[user]/liferay-portal(-ee)/tree/[name]",
 			"https://github.com/[^/]+/liferay-portal(-ee)?/tree/[^/]+");
 
+	public String getBuildProfile();
+
 	public String getTestSuiteName();
 
 	public String getUpstreamBranchName();
@@ -49,6 +51,8 @@ public interface PortalUpstreamJobEntity extends JobEntity {
 	public String getUpstreamBranchSHA();
 
 	public URL getUpstreamBranchURL();
+
+	public void setBuildProfile(String buildProfile);
 
 	public void setTestSuiteName(String testSuiteName);
 

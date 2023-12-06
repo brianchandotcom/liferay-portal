@@ -5,31 +5,34 @@
 
 package com.liferay.jethr0.job;
 
-import com.liferay.jethr0.util.StringUtil;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.json.JSONObject;
 
 /**
  * @author Michael Hashimoto
  */
-public class TestSuitePortalUpstreamJobEntity
+public class AcceptancePortalUpstreamJobEntity
 	extends BasePortalUpstreamJobEntity {
 
 	public static List<ParameterDefinition> getParameterDefinitions() {
 		return Arrays.asList(
 			PARAMETER_DEFINITION_BUILD_PROFILE,
 			PARAMETER_DEFINITION_JENKINS_GITHUB_URL,
-			PARAMETER_DEFINITION_TEST_SUITE_NAME,
 			PARAMETER_DEFINITION_UPSTREAM_BRANCH_NAME,
 			PARAMETER_DEFINITION_UPSTREAM_BRANCH_SHA,
 			PARAMETER_DEFINITION_UPSTREAM_BRANCH_URL);
 	}
 
-	protected TestSuitePortalUpstreamJobEntity(JSONObject jsonObject) {
+	@Override
+	public String getTestSuiteName() {
+		return "acceptance-upstream";
+	}
+
+	protected AcceptancePortalUpstreamJobEntity(JSONObject jsonObject) {
 		super(jsonObject);
 	}
 
@@ -38,8 +41,6 @@ public class TestSuitePortalUpstreamJobEntity
 		Map<String, String> initialBuildParamaters =
 			super.getInitialBuildParameters();
 
-		initialBuildParamaters.put(
-			"CI_TEST_SUITE", String.valueOf(getTestSuiteName()));
 		initialBuildParamaters.put("PORTAL_GIT_COMMIT", getUpstreamBranchSHA());
 		initialBuildParamaters.put(
 			"PORTAL_GITHUB_URL", String.valueOf(getUpstreamBranchURL()));
@@ -51,8 +52,19 @@ public class TestSuitePortalUpstreamJobEntity
 
 	@Override
 	protected String getJenkinsJobName() {
-		return StringUtil.combine(
-			"test-portal-testsuite-upstream(", getUpstreamBranchName(), ")");
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("test-portal-acceptance-upstream");
+
+		if (Objects.equals(getBuildProfile(), "dxp")) {
+			sb.append("-dxp");
+		}
+
+		sb.append("(");
+		sb.append(getUpstreamBranchName());
+		sb.append(")");
+
+		return sb.toString();
 	}
 
 }

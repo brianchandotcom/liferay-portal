@@ -18,14 +18,14 @@ public class JobDefinitionFactory {
 	public static Set<JobDefinition> getJobDefinitions() {
 		Set<JobDefinition> jobDefinitions = new TreeSet<>();
 
-		for (JobEntity.Type jobEntityType : JobEntity.Type.values()) {
-			jobDefinitions.add(newJobDefinition(jobEntityType));
+		for (JobEntity.Type type : JobEntity.Type.values()) {
+			jobDefinitions.add(newJobDefinition(type));
 		}
 
 		return jobDefinitions;
 	}
 
-	public static JobDefinition newJobDefinition(JobEntity.Type jobEntityType) {
+	public static JobDefinition newJobDefinition(JobEntity.Type type) {
 		return null;
 	}
 

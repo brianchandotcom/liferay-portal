@@ -27,6 +27,9 @@ public interface JobParameterDefinition {
 	public String getValueRegex();
 
 	public enum Type {
+
+		JENKINS_BRANCH_URL
+
 	}
 
 }

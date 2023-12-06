@@ -11,7 +11,11 @@ package com.liferay.jethr0.job.definition;
 public class JobParameterDefinitionFactory {
 
 	public static JobParameterDefinition newJobParameterDefinition(
-		JobParameterDefinition.Type jobParameterDefinitionType) {
+		JobParameterDefinition.Type type) {
+
+		if (type == JobParameterDefinition.Type.JENKINS_BRANCH_URL) {
+			return new JenkinsBranchURLJobParameterDefinition();
+		}
 
 		return null;
 	}

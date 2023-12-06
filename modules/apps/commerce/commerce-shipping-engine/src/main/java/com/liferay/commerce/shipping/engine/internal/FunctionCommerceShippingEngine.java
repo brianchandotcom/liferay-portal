@@ -8,6 +8,7 @@ package com.liferay.commerce.shipping.engine.internal;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.exception.CommerceShippingEngineException;
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceShippingEngine;
 import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.model.CommerceShippingOption;
@@ -30,11 +31,18 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
+import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
 import java.math.BigDecimal;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -110,7 +118,7 @@ public class FunctionCommerceShippingEngine implements CommerceShippingEngine {
 		catch (Exception exception) {
 			_log.error(exception);
 
-			throw new CommerceShippingEngineException(exception.getMessage());
+			return Collections.emptyList();
 		}
 	}
 
@@ -166,7 +174,7 @@ public class FunctionCommerceShippingEngine implements CommerceShippingEngine {
 		catch (Exception exception) {
 			_log.error(exception);
 
-			throw new CommerceShippingEngineException(exception.getMessage());
+			return Collections.emptyList();
 		}
 	}
 
@@ -199,6 +207,17 @@ public class FunctionCommerceShippingEngine implements CommerceShippingEngine {
 		}
 
 		return StringPool.BLANK;
+	}
+
+	public UnicodeProperties getTypeSettingsUnicodeProperties() {
+		return UnicodePropertiesBuilder.create(
+			true
+		).putAll(
+			ObjectMapperUtil.readValue(
+				Map.class,
+				_functionCommerceShippingEngineConfiguration.
+					shippingEngineTypeSettings())
+		).build();
 	}
 
 	@Activate
@@ -256,6 +275,94 @@ public class FunctionCommerceShippingEngine implements CommerceShippingEngine {
 		}
 	}
 
+	private JSONObject _getCommerceOrderJSONObject(CommerceOrder commerceOrder)
+		throws Exception {
+
+		DTOConverter<?, ?> commerceOrderDTOConverter =
+			_dtoConverterRegistry.getDTOConverter(
+				"Liferay.Headless.Commerce.Admin.Order",
+				CommerceOrder.class.getName(), "v1.0");
+
+		DefaultDTOConverterContext dtoConverterContext =
+			new DefaultDTOConverterContext(
+				_dtoConverterRegistry, commerceOrder.getCommerceOrderId(),
+				LocaleUtil.getSiteDefault(), null, null);
+
+		dtoConverterContext.setAttribute("secure", Boolean.FALSE);
+
+		JSONObject commerceOrderJSONObject = _jsonFactory.createJSONObject(
+			String.valueOf(
+				commerceOrderDTOConverter.toDTO(dtoConverterContext)));
+
+		DTOConverter<?, ?> accountEntryDTOConverter =
+			_dtoConverterRegistry.getDTOConverter(
+				"Liferay.Headless.Commerce.Admin.Order",
+				"com.liferay.account.model.AccountEntry", "v1.0");
+
+		dtoConverterContext = new DefaultDTOConverterContext(
+			_dtoConverterRegistry, commerceOrder.getCommerceAccountId(),
+			LocaleUtil.getSiteDefault(), null, null);
+
+		dtoConverterContext.setAttribute("secure", Boolean.FALSE);
+
+		JSONObject accountEntryJSONObject = _jsonFactory.createJSONObject(
+			_jsonFactory.looseSerializeDeep(
+				accountEntryDTOConverter.toDTO(dtoConverterContext)));
+
+		commerceOrderJSONObject.put("account", accountEntryJSONObject);
+
+		JSONArray commerceOrderItemsJSONArray = _jsonFactory.createJSONArray();
+
+		DTOConverter<?, ?> commerceOrderItemDTOConverter =
+			_dtoConverterRegistry.getDTOConverter(
+				"Liferay.Headless.Commerce.Admin.Order",
+				CommerceOrderItem.class.getName(), "v1.0");
+
+		List<CommerceOrderItem> commerceOrderItems =
+			commerceOrder.getCommerceOrderItems();
+
+		for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
+			dtoConverterContext = new DefaultDTOConverterContext(
+				_dtoConverterRegistry,
+				commerceOrderItem.getCommerceOrderItemId(),
+				LocaleUtil.getSiteDefault(), null, null);
+
+			dtoConverterContext.setAttribute("secure", Boolean.FALSE);
+
+			JSONObject commerceOrderItemJSONObject =
+				_jsonFactory.createJSONObject(
+					_jsonFactory.looseSerializeDeep(
+						commerceOrderItemDTOConverter.toDTO(
+							dtoConverterContext)));
+
+			commerceOrderItemsJSONArray.put(commerceOrderItemJSONObject);
+		}
+
+		commerceOrderJSONObject.put("orderItems", commerceOrderItemsJSONArray);
+
+		DTOConverter<?, ?> commerceShippingAddressDTOConverter =
+			_dtoConverterRegistry.getDTOConverter(
+				"Liferay.Headless.Commerce.Admin.Order", "ShippingAddress",
+				"v1.0");
+
+		dtoConverterContext = new DefaultDTOConverterContext(
+			_dtoConverterRegistry, commerceOrder.getShippingAddressId(),
+			LocaleUtil.getSiteDefault(), null, null);
+
+		dtoConverterContext.setAttribute("secure", Boolean.FALSE);
+
+		JSONObject commerceShippingAddressJSONObject =
+			_jsonFactory.createJSONObject(
+				_jsonFactory.looseSerializeDeep(
+					commerceShippingAddressDTOConverter.toDTO(
+						dtoConverterContext)));
+
+		commerceOrderJSONObject.put(
+			"shippingAddress", commerceShippingAddressJSONObject);
+
+		return commerceOrderJSONObject;
+	}
+
 	private List<CommerceShippingOption> _getCommerceShippingOptions(
 		JSONObject jsonObject) {
 
@@ -303,9 +410,7 @@ public class FunctionCommerceShippingEngine implements CommerceShippingEngine {
 			(key, value) -> typeSettingsJSONObject.put(key, value));
 
 		return JSONUtil.put(
-			"commerceContext", _jsonFactory.looseSerializeDeep(commerceContext)
-		).put(
-			"commerceOrder", _jsonFactory.looseSerializeDeep(commerceOrder)
+			"order", _getCommerceOrderJSONObject(commerceOrder)
 		).put(
 			"typeSettings", typeSettingsJSONObject
 		);
@@ -320,6 +425,9 @@ public class FunctionCommerceShippingEngine implements CommerceShippingEngine {
 	@Reference
 	private CommerceShippingMethodLocalService
 		_commerceShippingMethodLocalService;
+
+	@Reference
+	private DTOConverterRegistry _dtoConverterRegistry;
 
 	private volatile FunctionCommerceShippingEngineConfiguration
 		_functionCommerceShippingEngineConfiguration;

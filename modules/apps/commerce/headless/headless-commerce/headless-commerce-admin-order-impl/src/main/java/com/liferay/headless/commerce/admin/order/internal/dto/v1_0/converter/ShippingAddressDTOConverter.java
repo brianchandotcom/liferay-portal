@@ -21,7 +21,11 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	property = "dto.class.name=ShippingAddress", service = DTOConverter.class
+	property = {
+		"application.name=Liferay.Headless.Commerce.Admin.Order",
+		"dto.class.name=ShippingAddress", "version=v1.0"
+	},
+	service = DTOConverter.class
 )
 public class ShippingAddressDTOConverter
 	implements DTOConverter<CommerceAddress, ShippingAddress> {

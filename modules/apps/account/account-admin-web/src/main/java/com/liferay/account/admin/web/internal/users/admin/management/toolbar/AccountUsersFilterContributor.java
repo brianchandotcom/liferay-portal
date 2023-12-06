@@ -54,7 +54,7 @@ public class AccountUsersFilterContributor implements FilterContributor {
 				new long[] {AccountConstants.ACCOUNT_ENTRY_ID_ANY});
 		}
 		else if (currentValue.equals("unassociated-users")) {
-			params.put("noOrganizationsOrAccountEntries", new long[0]);
+			params.put("noAccountEntriesAndNoOrganizations", new long[0]);
 		}
 
 		return params;

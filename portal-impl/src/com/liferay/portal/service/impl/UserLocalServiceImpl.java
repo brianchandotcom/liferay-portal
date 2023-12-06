@@ -6202,7 +6202,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 					return true;
 				}
 			}
-			else if (key.equals("noOrganizationsOrAccountEntries")) {
+			else if (key.equals("noAccountEntriesAndNoOrganizations")) {
 				if (!Boolean.TRUE.equals(entry.getValue())) {
 					return true;
 				}

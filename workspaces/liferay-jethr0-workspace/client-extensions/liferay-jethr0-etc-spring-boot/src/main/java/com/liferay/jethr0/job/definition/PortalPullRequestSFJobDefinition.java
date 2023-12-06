@@ -13,7 +13,7 @@ import java.util.Set;
 /**
  * @author Michael Hashimoto
  */
-public class PortalPullRequestJobDefinition extends BaseJobDefinition {
+public class PortalPullRequestSFJobDefinition extends BaseJobDefinition {
 
 	@Override
 	public Set<JobParameterDefinition> getJobParameterDefinitions() {
@@ -24,12 +24,12 @@ public class PortalPullRequestJobDefinition extends BaseJobDefinition {
 		jobParameterDefinitions.add(
 			new PortalPullRequestURLJobParameterDefinition());
 		jobParameterDefinitions.add(
-			new TestSuiteNameJobParameterDefinition("default"));
+			new TestSuiteNameJobParameterDefinition("sf"));
 
 		return jobParameterDefinitions;
 	}
 
-	protected PortalPullRequestJobDefinition(JobEntity.Type jobEntityType) {
+	protected PortalPullRequestSFJobDefinition(JobEntity.Type jobEntityType) {
 		super(jobEntityType);
 	}
 

@@ -28,7 +28,7 @@ public class TestSuiteNameJobParameterDefinition
 
 	@Override
 	public String getValueDefault() {
-		return "default";
+		return _valueDefault;
 	}
 
 	@Override
@@ -40,5 +40,11 @@ public class TestSuiteNameJobParameterDefinition
 	public String getValueRegex() {
 		return null;
 	}
+
+	protected TestSuiteNameJobParameterDefinition(String valueDefault) {
+		_valueDefault = valueDefault;
+	}
+
+	private final String _valueDefault;
 
 }

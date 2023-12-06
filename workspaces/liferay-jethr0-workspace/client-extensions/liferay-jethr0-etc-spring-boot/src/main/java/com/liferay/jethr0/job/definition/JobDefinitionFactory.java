@@ -29,6 +29,9 @@ public class JobDefinitionFactory {
 		if (type == JobEntity.Type.PORTAL_PULL_REQUEST) {
 			return new PortalPullRequestJobDefinition(type);
 		}
+		else if (type == JobEntity.Type.PORTAL_PULL_REQUEST_SF) {
+			return new PortalPullRequestSFJobDefinition(type);
+		}
 
 		return null;
 	}

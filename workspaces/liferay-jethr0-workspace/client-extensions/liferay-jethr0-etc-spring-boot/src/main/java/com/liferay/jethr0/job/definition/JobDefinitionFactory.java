@@ -26,6 +26,10 @@ public class JobDefinitionFactory {
 	}
 
 	public static JobDefinition newJobDefinition(JobEntity.Type type) {
+		if (type == JobEntity.Type.PORTAL_PULL_REQUEST) {
+			return new PortalPullRequestJobDefinition(type);
+		}
+
 		return null;
 	}
 

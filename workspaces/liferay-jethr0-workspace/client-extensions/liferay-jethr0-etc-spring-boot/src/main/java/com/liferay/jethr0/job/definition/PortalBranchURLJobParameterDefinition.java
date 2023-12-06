@@ -24,8 +24,8 @@ public class PortalBranchURLJobParameterDefinition
 	}
 
 	@Override
-	public JobParameterDefinition.Type getType() {
-		return JobParameterDefinition.Type.PORTAL_BRANCH_URL;
+	public Type getType() {
+		return Type.URL;
 	}
 
 	@Override

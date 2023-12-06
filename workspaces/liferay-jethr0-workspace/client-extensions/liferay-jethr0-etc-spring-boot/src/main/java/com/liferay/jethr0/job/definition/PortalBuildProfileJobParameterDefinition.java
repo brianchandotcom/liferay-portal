@@ -22,8 +22,8 @@ public class PortalBuildProfileJobParameterDefinition
 	}
 
 	@Override
-	public JobParameterDefinition.Type getType() {
-		return JobParameterDefinition.Type.PORTAL_BUILD_PROFILE;
+	public Type getType() {
+		return Type.STRING;
 	}
 
 	@Override

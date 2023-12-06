@@ -23,7 +23,7 @@ public class TestSuiteNameJobParameterDefinition
 
 	@Override
 	public Type getType() {
-		return Type.TEST_SUITE_NAME;
+		return Type.STRING;
 	}
 
 	@Override

@@ -430,7 +430,7 @@ export function ModalAddFilter({
 		}
 	};
 
-	const aggregationRelationshipOrDateFieldType =
+	const aggregationRelationshipOrDateFieldBusinessType =
 		selectedFilterBy?.businessType === 'Date' ||
 		(aggregationFilter &&
 			selectedFilterBy?.businessType === 'Relationship');
@@ -483,7 +483,7 @@ export function ModalAddFilter({
 				)}
 
 				{selectedFilterBy &&
-					!aggregationRelationshipOrDateFieldType && (
+					!aggregationRelationshipOrDateFieldBusinessType && (
 						<SingleSelect
 							error={errors.selectedFilterType}
 							items={

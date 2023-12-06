@@ -250,20 +250,20 @@ const Layout: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 
 interface ILayoutWrapperProps extends React.HTMLAttributes<HTMLElement> {
 	isViewOnly: boolean;
-	objectFieldTypes: ObjectFieldType[];
+	objectFieldBusinessTypes: ObjectFieldBusinessType[];
 	objectLayoutId: string;
 }
 
 export default function LayoutWrapper({
 	isViewOnly,
-	objectFieldTypes,
+	objectFieldBusinessTypes,
 	objectLayoutId,
 }: ILayoutWrapperProps) {
 	return (
 		<LayoutContextProvider
 			value={{
 				isViewOnly,
-				objectFieldTypes,
+				objectFieldBusinessTypes,
 				objectLayoutId,
 			}}
 		>

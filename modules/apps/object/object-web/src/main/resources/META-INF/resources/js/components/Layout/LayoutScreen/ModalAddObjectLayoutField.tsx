@@ -79,7 +79,7 @@ interface IProps extends React.HTMLAttributes<HTMLElement> {
 }
 
 interface ObjectFieldItem {
-	businessType: ObjectFieldBusinessType;
+	businessType: ObjectFieldBusinessTypeName;
 	label: string;
 	readOnly: string;
 	required: boolean;

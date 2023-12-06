@@ -22,7 +22,7 @@ type TState = {
 	creationLanguageId: Liferay.Language.Locale;
 	enableCategorization: boolean;
 	isViewOnly: boolean;
-	objectFieldTypes: ObjectFieldType[];
+	objectFieldBusinessTypes: ObjectFieldBusinessType[];
 	objectFields: TObjectField[];
 	objectLayout: TObjectLayout;
 	objectLayoutId: string;
@@ -466,7 +466,7 @@ interface ILayoutContextProviderProps
 	extends React.HTMLAttributes<HTMLElement> {
 	value: {
 		isViewOnly: boolean;
-		objectFieldTypes: ObjectFieldType[];
+		objectFieldBusinessTypes: ObjectFieldBusinessType[];
 		objectLayoutId: string;
 	};
 }

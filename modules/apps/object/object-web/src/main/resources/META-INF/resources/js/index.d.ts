@@ -266,7 +266,7 @@ interface ObjectEntry {
 
 interface ObjectField {
 	DBType: string;
-	businessType: ObjectFieldBusinessType;
+	businessType: ObjectFieldBusinessTypeName;
 	defaultValue?: string;
 	externalReferenceCode: string;
 	id: number;
@@ -288,7 +288,7 @@ interface ObjectField {
 	system?: boolean;
 }
 
-type ObjectFieldBusinessType =
+type ObjectFieldBusinessTypeName =
 	| 'Aggregation'
 	| 'Attachment'
 	| 'AutoIncrement'
@@ -379,8 +379,8 @@ type ObjectFieldSettingValue =
 	| number
 	| string;
 
-interface ObjectFieldType {
-	businessType: ObjectFieldBusinessType;
+interface ObjectFieldBusinessType {
+	businessType: ObjectFieldBusinessTypeName;
 	dbType: string;
 	description: string;
 	label: string;
@@ -482,7 +482,7 @@ interface PickList {
 }
 
 interface PredefinedValue {
-	businessType: ObjectFieldBusinessType;
+	businessType: ObjectFieldBusinessTypeName;
 	inputAsValue: boolean;
 	label: LocalizedValue<string>;
 	name: string;

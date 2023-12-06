@@ -32,11 +32,11 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"javax.portlet.name=" + ObjectPortletKeys.OBJECT_DEFINITIONS,
-		"mvc.command.name=/object_definitions/get_object_field_types"
+		"mvc.command.name=/object_definitions/get_object_field_business_types"
 	},
 	service = MVCResourceCommand.class
 )
-public class GetObjectFieldTypesMVCResourceCommand
+public class GetObjectFieldBusinessTypesMVCResourceCommand
 	extends BaseMVCResourceCommand {
 
 	@Override
@@ -55,7 +55,7 @@ public class GetObjectFieldTypesMVCResourceCommand
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse,
 			JSONUtil.put(
-				"objectFieldTypes",
+				"objectFieldBusinessTypes",
 				ObjectFieldBusinessTypeUtil.getObjectFieldBusinessTypeMaps(
 					_portal.getLocale(resourceRequest),
 					ListUtil.filter(

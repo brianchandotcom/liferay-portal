@@ -72,7 +72,7 @@ public class GetObjectFieldInfoMVCResourceCommand
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse,
 			JSONUtil.put(
-				"objectFieldTypes",
+				"objectFieldBusinessTypes",
 				ObjectFieldBusinessTypeUtil.getObjectFieldBusinessTypeMaps(
 					locale,
 					ListUtil.filter(

@@ -92,7 +92,7 @@ export function UniqueCompositeKey({
 		'Picklist',
 		'Relationship',
 		'Text',
-	] as ObjectFieldBusinessType[];
+	] as ObjectFieldBusinessTypeName[];
 
 	const filteredCustomObjectFields = customObjectFields.filter(
 		(customObjectField) =>

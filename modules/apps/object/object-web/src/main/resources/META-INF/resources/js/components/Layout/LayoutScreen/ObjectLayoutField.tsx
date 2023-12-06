@@ -30,7 +30,7 @@ export function ObjectLayoutField({
 	tabIndex,
 }: ObjectLayoutFieldProps) {
 	const [
-		{creationLanguageId, objectFieldTypes, objectFields},
+		{creationLanguageId, objectFieldBusinessTypes, objectFields},
 		dispatch,
 	] = useLayoutContext();
 
@@ -38,7 +38,7 @@ export function ObjectLayoutField({
 		({name}) => name === objectFieldName
 	)!;
 
-	const objectFieldType = objectFieldTypes.find(
+	const objectFieldBusinessTypeInfo = objectFieldBusinessTypes.find(
 		({businessType}) => businessType === objectField.businessType
 	);
 
@@ -69,7 +69,7 @@ export function ObjectLayoutField({
 					)}
 				>
 					<small className="text-secondary">
-						{objectFieldType?.label} |{' '}
+						{objectFieldBusinessTypeInfo?.label} |{' '}
 					</small>
 
 					<ClayLabel

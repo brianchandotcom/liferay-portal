@@ -56,7 +56,7 @@ interface ObjectFieldFormBaseProps {
 	objectDefinitionExternalReferenceCode: string;
 	objectDefinitionName: string;
 	objectField: Partial<ObjectField>;
-	objectFieldTypes: ObjectFieldType[];
+	objectFieldBusinessTypesInfo: ObjectFieldBusinessType[];
 	objectRelationshipId?: number;
 	onAggregationFilterChange?: (aggregationFilterArray: []) => void;
 	onObjectRelationshipChange?: (
@@ -185,7 +185,7 @@ export default function ObjectFieldFormBase({
 	objectDefinitionExternalReferenceCode,
 	objectDefinitionName,
 	objectField: values,
-	objectFieldTypes,
+	objectFieldBusinessTypesInfo,
 	objectRelationshipId,
 	onAggregationFilterChange,
 	onObjectRelationshipChange,
@@ -229,9 +229,10 @@ export default function ObjectFieldFormBase({
 	}, [listTypeDefinitions, values.listTypeDefinitionExternalReferenceCode]);
 
 	const handleTypeChange = async (selectedBusinessType: string) => {
-		const selectedObjectFieldType = objectFieldTypes.find(
-			(objectFieldType) =>
-				objectFieldType.businessType === selectedBusinessType
+		const selectedObjectFieldBusinessTypeInfo = objectFieldBusinessTypesInfo.find(
+			(objectFieldBusinessTypeInfo) =>
+				objectFieldBusinessTypeInfo.businessType ===
+				selectedBusinessType
 		);
 
 		const objectFieldSettings: ObjectFieldSetting[] =
@@ -241,8 +242,8 @@ export default function ObjectFieldFormBase({
 
 		const isSearchableByText =
 			selectedBusinessType === 'Attachment' ||
-			selectedObjectFieldType?.dbType === 'Clob' ||
-			selectedObjectFieldType?.dbType === 'String';
+			selectedObjectFieldBusinessTypeInfo?.dbType === 'Clob' ||
+			selectedObjectFieldBusinessTypeInfo?.dbType === 'String';
 
 		const indexedAsKeyword = isSearchableByText && values.indexedAsKeyword;
 
@@ -254,8 +255,8 @@ export default function ObjectFieldFormBase({
 		setSelectedOutputValue(undefined);
 
 		setValues({
-			DBType: selectedObjectFieldType?.dbType,
-			businessType: selectedObjectFieldType?.businessType,
+			DBType: selectedObjectFieldBusinessTypeInfo?.dbType,
+			businessType: selectedObjectFieldBusinessTypeInfo?.businessType,
 			indexed,
 			indexedAsKeyword,
 			indexedLanguageId,
@@ -268,8 +269,8 @@ export default function ObjectFieldFormBase({
 		if (onSubmit) {
 			onSubmit({
 				...values,
-				DBType: selectedObjectFieldType?.dbType,
-				businessType: selectedObjectFieldType?.businessType,
+				DBType: selectedObjectFieldBusinessTypeInfo?.dbType,
+				businessType: selectedObjectFieldBusinessTypeInfo?.businessType,
 				indexed,
 				indexedAsKeyword,
 				indexedLanguageId,
@@ -370,9 +371,11 @@ export default function ObjectFieldFormBase({
 	};
 
 	const applyFeatureFlag = () => {
-		return objectFieldTypes.filter((objectFieldType) => {
-			return objectFieldType.businessType !== 'Formula';
-		});
+		return objectFieldBusinessTypesInfo.filter(
+			(objectFieldBusinessTypeInfo) => {
+				return objectFieldBusinessTypeInfo.businessType !== 'Formula';
+			}
+		);
 	};
 
 	useEffect(() => {
@@ -430,14 +433,14 @@ export default function ObjectFieldFormBase({
 				}
 			/>
 
-			<SingleSelect<ObjectFieldType>
+			<SingleSelect<ObjectFieldBusinessType>
 				className={className}
 				disabled={disabled}
 				error={errors.businessType}
 				items={
 					!Liferay.FeatureFlags['LPS-164948']
 						? applyFeatureFlag()
-						: objectFieldTypes
+						: objectFieldBusinessTypesInfo
 				}
 				label={Liferay.Language.get('type')}
 				onSelectionChange={(value) => {

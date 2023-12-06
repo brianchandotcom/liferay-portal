@@ -6,12 +6,12 @@
 import React from 'react';
 interface ILayoutWrapperProps extends React.HTMLAttributes<HTMLElement> {
 	isViewOnly: boolean;
-	objectFieldTypes: ObjectFieldType[];
+	objectFieldBusinessTypes: ObjectFieldBusinessType[];
 	objectLayoutId: string;
 }
 export default function LayoutWrapper({
 	isViewOnly,
-	objectFieldTypes,
+	objectFieldBusinessTypes,
 	objectLayoutId,
 }: ILayoutWrapperProps): JSX.Element;
 export {};

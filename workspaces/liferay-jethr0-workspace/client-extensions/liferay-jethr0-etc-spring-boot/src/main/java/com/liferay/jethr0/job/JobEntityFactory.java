@@ -24,11 +24,26 @@ public class JobEntityFactory extends BaseEntityFactory<JobEntity> {
 		JobEntity.Type jobEntityType = JobEntity.Type.getByKey(
 			typeJSONObject.getString("key"));
 
+		if (jobEntityType == JobEntity.Type.PORTAL_APP_RELEASE) {
+			return new PortalAppReleaseJobEntity(jsonObject);
+		}
+
+		if (jobEntityType == JobEntity.Type.PORTAL_FIXPACK_RELEASE) {
+			return new PortalFixpackReleaseJobEntity(jsonObject);
+		}
+
+		if (jobEntityType == JobEntity.Type.PORTAL_HOTFIX_RELEASE) {
+			return new PortalHotfixReleaseJobEntity(jsonObject);
+		}
+
 		if (jobEntityType == JobEntity.Type.PORTAL_PULL_REQUEST) {
 			return new DefaultPortalPullRequestJobEntity(jsonObject);
 		}
 		else if (jobEntityType == JobEntity.Type.PORTAL_PULL_REQUEST_SF) {
 			return new SFPortalPullRequestJobEntity(jsonObject);
+		}
+		else if (jobEntityType == JobEntity.Type.PORTAL_RELEASE) {
+			return new PortalReleaseJobEntity(jsonObject);
 		}
 		else if (jobEntityType == JobEntity.Type.PORTAL_UPSTREAM_TEST_SUITE) {
 			return new TestSuitePortalUpstreamJobEntity(jsonObject);

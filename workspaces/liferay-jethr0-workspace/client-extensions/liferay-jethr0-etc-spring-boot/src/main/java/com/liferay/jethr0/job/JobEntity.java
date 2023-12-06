@@ -252,12 +252,23 @@ public interface JobEntity extends Entity {
 	public enum Type {
 
 		DEFAULT("default", "Default", DefaultJobEntity.class),
+		PORTAL_APP_RELEASE(
+			"portalAppRelease", "Portal App Release",
+			PortalAppReleaseJobEntity.class),
+		PORTAL_FIXPACK_RELEASE(
+			"portalFixpackRelease", "Portal Fixpack Release",
+			PortalFixpackReleaseJobEntity.class),
+		PORTAL_HOTFIX_RELEASE(
+			"portalHotfixRelease", "Portal Hotfix Release",
+			PortalHotfixReleaseJobEntity.class),
 		PORTAL_PULL_REQUEST(
 			"portalPullRequest", "Portal Pull Request",
 			DefaultPortalPullRequestJobEntity.class),
 		PORTAL_PULL_REQUEST_SF(
 			"portalPullRequestSF", "Portal Pull Request SF",
 			SFPortalPullRequestJobEntity.class),
+		PORTAL_RELEASE(
+			"portalRelease", "Portal Release", PortalReleaseJobEntity.class),
 		PORTAL_UPSTREAM_ACCEPTANCE(
 			"portalUpstreamAcceptance", "Portal Upstream Acceptance",
 			AcceptancePortalUpstreamJobEntity.class),

@@ -64,9 +64,7 @@ const AppOutlet = () => {
 
 	const {data, error, isLoading} = useGetProductByOrderId(orderId as string);
 
-	const appImage = getThumbnailByProductAttachment(
-		data?.product?.images
-	);
+	const appImage = getThumbnailByProductAttachment(data?.product?.images);
 
 	const productCreatorAccountName = data?.product?.catalogName || '';
 

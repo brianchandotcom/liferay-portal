@@ -88,7 +88,8 @@ export function getThumbnailByProductAttachment(
 
 	const thumbnail =
 		images.find((images) => {
-			return (images.tags || []).indexOf('app icon') >= 0}) || images[0];
+			return (images.tags || []).indexOf('app icon') >= 0;
+		}) || images[0];
 
 	return thumbnail?.src;
 }

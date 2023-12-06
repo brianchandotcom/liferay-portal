@@ -42,7 +42,7 @@ const ProductCard = ({
 				<div className="d-flex flex-row">
 					<img
 						alt="App Icon"
-						className="rounded object-fit-cover"
+						className="object-fit-cover rounded"
 						height="64px"
 						src={getIconUrl()}
 						width="64px"

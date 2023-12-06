@@ -504,24 +504,6 @@ export async function getProductById({
 	return (await response.json()) as Product;
 }
 
-export async function getProductAttachments(
-	accountId: number,
-	channelId: number,
-	productId: number
-) {
-	const response = await fetch(
-		`${baseURL}/o/headless-commerce-delivery-catalog/v1.0/channels/${channelId}/products/${productId}/attachments?accountId=${accountId}`,
-		{
-			headers,
-			method: 'GET',
-		}
-	);
-
-	const {items} = await response.json();
-
-	return items as DeliveryProductAttachment[];
-}
-
 export async function getDeliveryProductImages(
 	accountId: number,
 	channelId: number,

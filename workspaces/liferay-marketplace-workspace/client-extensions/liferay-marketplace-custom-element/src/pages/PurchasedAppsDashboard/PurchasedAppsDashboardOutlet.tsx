@@ -7,7 +7,7 @@ import {useState} from 'react';
 import {Outlet} from 'react-router-dom';
 
 import {DashboardNavigation} from '../../components/DashboardNavigation/DashboardNavigation';
-import {getDeliveryProductImages, getProductAttachments} from '../../utils/api';
+import {getDeliveryProductImages} from '../../utils/api';
 import {
 	getAccountImage,
 	getThumbnailByProductAttachment,

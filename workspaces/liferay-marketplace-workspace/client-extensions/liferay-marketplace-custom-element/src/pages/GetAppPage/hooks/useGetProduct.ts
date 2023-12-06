@@ -25,7 +25,8 @@ const useGetProduct = (
 				channel.id,
 				productId,
 				new URLSearchParams({
-					nestedFields: 'attachments,images,productSpecifications,skus',
+					nestedFields:
+						'attachments,images,productSpecifications,skus',
 				})
 			);
 

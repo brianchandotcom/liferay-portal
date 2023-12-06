@@ -35,7 +35,7 @@
 		"react-dropzone": "^14.2.3",
 		"react-hook-form": "^7.45.0",
 		"react-router-dom": "^6.8.0",
-		"react-select": "^5.7.0",
+		"react-select": "5.7.0",
 		"sass": "^1.57.1",
 		"swr": "^2.2.4",
 		"zod": "^3.21.4"

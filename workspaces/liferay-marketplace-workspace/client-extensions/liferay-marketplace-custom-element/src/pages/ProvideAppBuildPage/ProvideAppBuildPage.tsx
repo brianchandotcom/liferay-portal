@@ -316,8 +316,8 @@ export function ProvideAppBuildPage({
 
 					const buildAppPackageId = await submitBase64EncodedFile({
 						appERC,
-						isAppIcon: false,
 						file: appPackage.file,
+						isAppIcon: false,
 						requestFunction: createAttachment,
 						title: appPackage.fileName,
 					});

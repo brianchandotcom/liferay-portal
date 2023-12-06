@@ -12,7 +12,7 @@ import classNames from 'classnames';
 
 import {FieldBase} from '../FieldBase';
 
-interface MultiSelectProps<T> {
+type MultiSelectProps<T> = {
 	className?: string;
 	helpMessage?: string;
 	hideFeedback?: boolean;
@@ -23,29 +23,30 @@ interface MultiSelectProps<T> {
 	placeholder?: string;
 	required?: boolean;
 	tooltip?: string;
-}
+};
 
 const colourStyles: StylesConfig<any, true> = {
-	control: (styles) => ({
-		...styles,
-		border: '2px solid #B1B2B9',
-		borderRadius: '8px',
-	}),
-	multiValue: (styles) => {
-		return {
+	control: (styles) =>
+		({
+			...styles,
+			border: '2px solid #B1B2B9',
+			borderRadius: '8px',
+		} as any),
+	multiValue: (styles) =>
+		({
 			...styles,
 			backgroundColor: '#E6EBF5',
 			color: '#1C3667',
-		};
-	},
-	multiValueRemove: (styles) => ({
-		...styles,
-		':hover': {
-			backgroundColor: '#1C3667',
-			color: 'white',
-		},
-		'color': '#1C3667',
-	}),
+		} as any),
+	multiValueRemove: (styles) =>
+		({
+			...styles,
+			':hover': {
+				backgroundColor: '#1C3667',
+				color: 'white',
+			},
+			'color': '#1C3667',
+		} as any),
 };
 
 export function MultiSelect<T>({

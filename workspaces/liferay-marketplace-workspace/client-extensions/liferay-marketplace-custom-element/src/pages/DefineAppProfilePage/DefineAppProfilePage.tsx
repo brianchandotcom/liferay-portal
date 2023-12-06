@@ -20,9 +20,7 @@ import {UploadLogo} from '../../components/UploadLogo/UploadLogo';
 import {useAppContext} from '../../manage-app-state/AppManageState';
 import {TYPES} from '../../manage-app-state/actionTypes';
 import {
-	addExpandoValue,
 	createApp,
-	createAttachment,
 	createImage,
 	getCategories,
 	getVocabularies,
@@ -32,16 +30,15 @@ import {submitBase64EncodedFile} from '../../utils/util';
 
 import './DefineAppProfilePage.scss';
 import {useMarketplaceContext} from '../../context/MarketplaceContext';
-import {getCompanyId} from '../../liferay/constants';
 
-interface DefineAppProfilePageProps {
+type DefineAppProfilePageProps = {
 	onClickBack: () => void;
 	onClickContinue: () => void;
-}
+};
 
-interface VocabDropdownItem extends Categories {
+type VocabDropdownItem = {
 	checked: boolean;
-}
+} & Categories;
 
 export function DefineAppProfilePage({
 	onClickBack,
@@ -144,10 +141,10 @@ export function DefineAppProfilePage({
 		}
 
 		if (appLogo) {
-			const attachmentId = await submitBase64EncodedFile({
+			await submitBase64EncodedFile({
 				appERC: appERC ?? product.externalReferenceCode,
-				isAppIcon: true,
 				file: appLogo.file,
+				isAppIcon: true,
 				requestFunction: createImage,
 				title: appLogo.fileName,
 			});

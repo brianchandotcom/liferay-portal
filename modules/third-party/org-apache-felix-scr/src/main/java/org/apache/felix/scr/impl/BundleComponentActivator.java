@@ -377,6 +377,16 @@ public class BundleComponentActivator implements ComponentActivator
             return new URL[0];
         }
 
+		if (descriptorLocation.indexOf('*') == -1) {
+			URL url = bundle.getEntry(descriptorLocation);
+
+			if (url == null) {
+				return new URL[0];
+			}
+
+			return new URL[] {url};
+		}
+
         // split pattern and path
         final int lios = descriptorLocation.lastIndexOf( "/" );
         final String path;

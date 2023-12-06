@@ -139,7 +139,9 @@ public class UniqueCompositeKeyObjectValidationRuleEngineImpl
 				Map<String, Object> objectFieldProperties =
 					(Map<String, Object>)entryValues.get(objectField.getName());
 
-				value = String.valueOf(objectFieldProperties.get("key"));
+				if (objectFieldProperties != null) {
+					value = String.valueOf(objectFieldProperties.get("key"));
+				}
 			}
 			else {
 				value = String.valueOf(entryValues.get(objectField.getName()));

@@ -247,7 +247,7 @@ definition {
 			var totalHeight = Css.getElementPropertyValue(
 				element = "//div[contains(@class,'page-editor__container')]",
 				property = "scrollHeight");
-			var containerHeight = selenium.getElementHeight("//div[@aria-label='Container']//div[contains(@class,'page-editor__topper__content')]");
+			var containerHeight = selenium.getElementHeight("//div[@data-name='Container']//div[contains(@class,'page-editor__topper__content')]");
 
 			TestUtils.isGreaterThan(
 				actual = ${totalHeight},
@@ -268,7 +268,7 @@ definition {
 			var totalHeight = Css.getElementPropertyValue(
 				element = "//div[contains(@class,'page-editor__container')]",
 				property = "scrollHeight");
-			var containerHeight = selenium.getElementHeight("//div[@aria-label='Container']//div[contains(@class,'page-editor__topper__content')]");
+			var containerHeight = selenium.getElementHeight("//div[@data-name='Container']//div[contains(@class,'page-editor__topper__content')]");
 
 			StringUtil.assertEquals(${containerHeight}, ${totalHeight});
 		}
@@ -581,7 +581,7 @@ definition {
 
 		task ("Then the page creator sees the second Container inside the first one") {
 			AssertElementPresent(
-				key_elementHeader = "//div[@aria-label='Container']",
+				key_elementHeader = "//div[@data-name='Container']",
 				key_elementType = "Container",
 				key_position = 1,
 				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
@@ -600,7 +600,7 @@ definition {
 
 		task ("Then the page creator sees the second Container outside the first one") {
 			AssertElementNotPresent(
-				key_elementHeader = "//div[@aria-label='Container']",
+				key_elementHeader = "//div[@data-name='Container']",
 				key_elementType = "Container",
 				key_position = 1,
 				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
@@ -641,7 +641,7 @@ definition {
 			PageEditor.viewDuplicateFragment(fragmentName = "Container");
 
 			AssertElementPresent(
-				key_elementHeader = "//div[@aria-label='Grid']",
+				key_elementHeader = "//div[@data-name='Grid']",
 				key_position = 2,
 				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
 		}
@@ -1147,7 +1147,7 @@ definition {
 				textColor = "white");
 
 			AssertElementPresent(
-				key_elementHeader = "//div[@aria-label='Heading']",
+				key_elementHeader = "//div[@data-name='Heading']",
 				key_position = 2,
 				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
 		}

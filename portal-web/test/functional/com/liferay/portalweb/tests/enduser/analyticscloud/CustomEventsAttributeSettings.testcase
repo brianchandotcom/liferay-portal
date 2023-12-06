@@ -350,6 +350,8 @@ definition {
 		}
 
 		task ("Edit the new attribute") {
+			ACUtils.searchBar(searchItem = ${attributeName});
+
 			ACNavigation.openItem(itemName = ${attributeName});
 
 			ACUtils.clickAnyButton(button = "Edit");

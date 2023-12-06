@@ -9,8 +9,9 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayModal, {useModal} from '@clayui/modal';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import ClayTable from '@clayui/table';
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 
+import NamespaceContext from '../../NamespaceContext';
 import {fetchResponse} from '../../utils/api.es';
 import {DELTAS, SCOPE_TYPES} from '../../utils/constants.es';
 
@@ -25,11 +26,12 @@ const ScopeSelectModal = ({
 	locator,
 	observer,
 	onSubmit,
-	paramPrefix = '',
 	selected = '',
 	title,
 	type = SCOPE_TYPES.SITE,
 }) => {
+	const {namespace} = useContext(NamespaceContext);
+
 	const [activePage, setActivePage] = useState(1);
 	const [delta, setDelta] = useState(10);
 	const [resource, setResource] = useState({});
@@ -38,6 +40,8 @@ const ScopeSelectModal = ({
 
 	useEffect(() => {
 		setLoading(true);
+
+		const paramPrefix = type === SCOPE_TYPES.SITE ? namespace : '';
 
 		fetchResponse(fetchItemsUrl, {
 			[`${paramPrefix}page`]: activePage,
@@ -52,7 +56,7 @@ const ScopeSelectModal = ({
 			.finally(() => {
 				setLoading(false);
 			});
-	}, [activePage, delta, fetchItemsUrl, paramPrefix]);
+	}, [activePage, delta, fetchItemsUrl, namespace, type]);
 
 	/**
 	 * Handles what is displayed depending on loading/error/results/no results.

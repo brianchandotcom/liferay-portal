@@ -9,8 +9,9 @@ import ClayForm from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import getCN from 'classnames';
-import React, {useRef, useState} from 'react';
+import React, {useContext, useRef, useState} from 'react';
 
+import NamespaceContext from '../../NamespaceContext';
 import {fetchResponse} from '../../utils/api.es';
 import {SCOPE_TYPES} from '../../utils/constants.es';
 import {sub} from '../../utils/language.es';
@@ -36,13 +37,14 @@ const ScopeSelect = ({
 		id: 'externalReferenceCode',
 		label: 'descriptiveName',
 	},
-	paramPrefix = '',
 	onSelect,
 	onBlur,
 	title,
 	touched = false,
 	type = SCOPE_TYPES.SITE,
 }) => {
+	const {namespace} = useContext(NamespaceContext);
+
 	const [activeDropdown, setActiveDropdown] = useState(false);
 	const [displayName, setDisplayName] = useState('');
 	const [loading, setLoading] = useState(false);
@@ -53,6 +55,8 @@ const ScopeSelect = ({
 
 	const _fetchDropdownItems = () => {
 		setLoading(true);
+
+		const paramPrefix = type === SCOPE_TYPES.SITE ? namespace : '';
 
 		fetchResponse(fetchItemsUrl, {
 			[`${paramPrefix}page`]: 1,
@@ -179,7 +183,6 @@ const ScopeSelect = ({
 								fetchItemsUrl={fetchItemsUrl}
 								locator={locator}
 								onSubmit={_handleSelect}
-								paramPrefix={paramPrefix}
 								selected={selected}
 								title={title}
 								type={type}

@@ -10,8 +10,9 @@ import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
 import {LearnMessage, LearnResourcesContext} from 'frontend-js-components-web';
 import {navigate} from 'frontend-js-web';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 
+import NamespaceContext from '../NamespaceContext';
 import {SCOPE_TYPES} from '../utils/constants.es';
 import {sub} from '../utils/language.es';
 import ScopeSelect from './scope/ScopeSelect.es';
@@ -35,7 +36,7 @@ const SCOPE_INFO = {
 	},
 };
 
-function ResultRankingsAdd({cancelURL, fetchSitesURL, formName, namespace}) {
+function ResultRankingsAdd({cancelURL, fetchSitesURL, formName}) {
 	const [errors, setErrors] = useState({});
 	const [scopeType, setScopeType] = useState(SCOPE_TYPES.EVERYTHING);
 	const [scope, setScope] = useState('');
@@ -44,6 +45,8 @@ function ResultRankingsAdd({cancelURL, fetchSitesURL, formName, namespace}) {
 	const [touched, setTouched] = useState({});
 
 	const alignElementRef = useRef();
+
+	const {namespace} = useContext(NamespaceContext);
 
 	const _getErrors = (searchQuery, scopeType, scope) => {
 		const errors = {};
@@ -250,7 +253,6 @@ function ResultRankingsAdd({cancelURL, fetchSitesURL, formName, namespace}) {
 						}}
 						onBlur={_handleBlur('scope')}
 						onSelect={_handleScopeChange}
-						paramPrefix={namespace}
 						selected={scope}
 						title={Liferay.Language.get('select-site')}
 						touched={touched.scope}
@@ -325,12 +327,13 @@ export default function ({
 }) {
 	return (
 		<LearnResourcesContext.Provider value={learnResources}>
-			<ResultRankingsAdd
-				cancelURL={cancelURL}
-				fetchSitesURL={fetchSitesURL}
-				formName={formName}
-				namespace={namespace}
-			/>
+			<NamespaceContext.Provider value={{namespace}}>
+				<ResultRankingsAdd
+					cancelURL={cancelURL}
+					fetchSitesURL={fetchSitesURL}
+					formName={formName}
+				/>
+			</NamespaceContext.Provider>
 		</LearnResourcesContext.Provider>
 	);
 }

@@ -32,9 +32,7 @@ definition {
 		}
 
 		task ("Go to Site Page") {
-			ACUtils.navigateToSitePage(
-				pageName = "AC Page",
-				siteName = "Site Name");
+			Navigator.openSiteURL(siteName = "Site Name");
 		}
 
 		task ("Create an AB Test") {

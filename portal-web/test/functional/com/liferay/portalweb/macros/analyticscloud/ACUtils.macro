@@ -1031,9 +1031,7 @@ definition {
 	macro tearDownABTest() {
 		ACUtils.launchDXP();
 
-		ACUtils.navigateToSitePage(
-			pageName = "AC Page",
-			siteName = "Site Name");
+		Navigator.openSiteURL(siteName = "Site Name");
 
 		ABTest.openABTestPanel();
 

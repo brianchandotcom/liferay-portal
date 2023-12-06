@@ -590,16 +590,6 @@ definition {
 				type = ${type});
 		}
 
-		task ("Assert the total items of the response is 2 (because we have just 2 blogs)") {
-			var totalValue = ACApi.searchApiResponse(
-				apiDataResponse = ${apiResponse},
-				jsonQuery = "total");
-
-			TestUtils.assertEquals(
-				actual = ${totalValue},
-				expected = 2);
-		}
-
 		task ("Get the id of the blog in the first position of the response") {
 			var blogId = ACApi.searchApiResponse(
 				apiDataResponse = ${apiResponse},

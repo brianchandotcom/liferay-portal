@@ -50,9 +50,9 @@ export default function AccountCreationModal({
 			body: JSON.stringify({
 				description: accountData.description,
 				externalReferenceCode: accountData.externalReferenceCode,
-				taxId: accountData.taxId,
 				name: accountData.name,
 				organizationIds,
+				taxId: accountData.taxId,
 				type: accountData.type,
 			}),
 			headers: {

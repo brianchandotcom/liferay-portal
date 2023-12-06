@@ -3,5 +3,6 @@
 <Configuration strict="true">
 	<Loggers>
 		<Logger level="INFO" name="com.liferay.scim.rest.internal.configuration" />
+		<Logger level="ERROR" name="org.wso2.charon3.core.schema" />
 	</Loggers>
 </Configuration>

@@ -471,7 +471,7 @@ public class GroupServiceTest {
 			_groupService.searchCount(
 				TestPropsValues.getCompanyId(), "liferay%", null,
 				new String[] {
-					"manualMembership:false:boolean", "site:true:boolean"
+					"manualMembership:true:boolean", "site:true:boolean"
 				}));
 	}
 
@@ -482,7 +482,7 @@ public class GroupServiceTest {
 			_groupService.searchCount(
 				TestPropsValues.getCompanyId(), "Liferay%", null,
 				new String[] {
-					"manualMembership:false:boolean", "site:true:boolean"
+					"manualMembership:true:boolean", "site:true:boolean"
 				}));
 	}
 

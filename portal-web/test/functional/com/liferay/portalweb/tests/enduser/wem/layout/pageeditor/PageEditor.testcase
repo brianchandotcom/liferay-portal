@@ -1,0 +1,66 @@
+@component-name = "portal-wcm"
+definition {
+
+	property ci.retries.disabled = "true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Page Editor";
+
+	setUp {
+		task ("Set up virtual instance") {
+			TestCase.setUpPortalInstance();
+		}
+
+		task ("Sign in") {
+			User.firstLoginPG();
+		}
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a test for LPS-191483. View warning message displays for big image file size used in page edit mode."
+	@priority = 4
+	test ViewWarningMessageOfImageFragment {
+		property custom.properties = "feature.flag.LPS-187284=true${line.separator}feature.flag.LPS-187285=true";
+
+		task ("Given a user has an Image fragment on a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Image");
+		}
+
+		task ("When the user displays a big image on Image fragment") {
+			PageEditor.editFragmentImage(
+				fragmentName = "Image",
+				id = "image-square",
+				imageFileName = "high_resolution_photo.jpg",
+				uploadFileName = "high_resolution_photo.jpg");
+		}
+
+		task ("Then the user should see the warning message in the Resolution section") {
+			AssertTextEquals(
+				locator1 = "Message#WARNING_FEEDBACK",
+				value1 = "Big image file size used. Please consider configuring adaptive media, lazy loading, or reducing the image size.");
+		}
+
+		task ("When the user enables the lazy loading") {
+			PageEditor.configureFragment(enableLazyLoading = "true");
+		}
+
+		task ("Then the user cannot see the warning message") {
+			AssertElementNotPresent(locator1 = "Message#WARNING_FEEDBACK");
+		}
+	}
+
+}

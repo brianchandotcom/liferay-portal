@@ -18,12 +18,6 @@ if (StringUtil.equals(definitionsNavigation, "published")) {
 else if (StringUtil.equals(definitionsNavigation, "not-published")) {
 	displayedStatus = WorkflowConstants.STATUS_DRAFT;
 }
-
-PortletURL portletURL = PortletURLBuilder.createRenderURL(
-	renderResponse
-).setParameter(
-	"definitionsNavigation", definitionsNavigation
-).buildPortletURL();
 %>
 
 <clay:management-toolbar
@@ -99,7 +93,6 @@ PortletURL portletURL = PortletURLBuilder.createRenderURL(
 			displayStyle="list"
 			markupView="lexicon"
 			resultRowSplitter="<%= new WorkflowDefinitionResultRowSplitter() %>"
-			searchContainer="<%= new WorkflowDefinitionSearch(renderRequest, portletURL) %>"
 		/>
 	</liferay-ui:search-container>
 </clay:container-fluid>

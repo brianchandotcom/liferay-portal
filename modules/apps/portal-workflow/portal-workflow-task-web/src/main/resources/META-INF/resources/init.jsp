@@ -51,7 +51,8 @@ page import="com.liferay.portal.workflow.task.web.internal.display.context.Workf
 page import="com.liferay.portal.workflow.task.web.internal.display.context.WorkflowTaskManagementToolbarDisplayContext" %><%@
 page import="com.liferay.taglib.search.DateSearchEntry" %>
 
-<%@ page import="java.util.Collections" %>
+<%@ page import="java.util.Collections" %><%@
+page import="java.util.Objects" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
 

@@ -12,10 +12,6 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 String backURL = ParamUtil.getString(request, "backURL", redirect);
 
-DateSearchEntry dateSearchEntry = new DateSearchEntry();
-
-String displayStyle = workflowTaskDisplayContext.getDisplayStyle();
-
 if (Validator.isNotNull(backURL)) {
 	portletDisplay.setShowBackIcon(true);
 	portletDisplay.setURLBack(backURL);
@@ -78,7 +74,7 @@ String tabs1 = ParamUtil.getString(renderRequest, "tabs1", "assigned-to-me");
 			</portlet:renderURL>
 
 			<c:choose>
-				<c:when test='<%= displayStyle.equals("descriptive") %>'>
+				<c:when test='<%= Objects.equals(workflowTaskDisplayContext.getDisplayStyle(), "descriptive") %>'>
 					<liferay-ui:search-container-column-icon
 						cssClass="asset-icon"
 						icon="<%= workflowTaskDisplayContext.getAssetIconCssClass(workflowTask) %>"
@@ -90,6 +86,8 @@ String tabs1 = ParamUtil.getString(renderRequest, "tabs1", "assigned-to-me");
 						<h5 class="text-default">
 
 							<%
+							DateSearchEntry dateSearchEntry = new DateSearchEntry();
+
 							dateSearchEntry.setDate(workflowTaskDisplayContext.getLastActivityDate(workflowTask));
 							%>
 
@@ -206,10 +204,9 @@ String tabs1 = ParamUtil.getString(renderRequest, "tabs1", "assigned-to-me");
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator
-			displayStyle="<%= displayStyle %>"
+			displayStyle="<%= workflowTaskDisplayContext.getDisplayStyle() %>"
 			markupView="lexicon"
 			resultRowSplitter="<%= new WorkflowTaskResultRowSplitter() %>"
-			searchContainer="<%= workflowTaskDisplayContext.getWorkflowTaskSearch() %>"
 		/>
 	</liferay-ui:search-container>
 </clay:container-fluid>

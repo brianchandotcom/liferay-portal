@@ -95,9 +95,10 @@ String tabs1 = ParamUtil.getString(renderRequest, "tabs1", "assigned-to-me");
 						</h5>
 
 						<h4>
-							<aui:a href="<%= rowURL %>">
-								<%= HtmlUtil.escape(workflowTaskDisplayContext.getAssetTitle(workflowTask)) %>
-							</aui:a>
+							<clay:link
+								href="<%= rowURL %>"
+								label="<%= HtmlUtil.escape(workflowTaskDisplayContext.getAssetTitle(workflowTask)) %>"
+							/>
 						</h4>
 
 						<h5 class="text-default">

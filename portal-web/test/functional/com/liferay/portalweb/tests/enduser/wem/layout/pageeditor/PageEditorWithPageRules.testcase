@@ -274,6 +274,150 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-196462. The New Rule Modal allows the user to delete conditions and actions."
+	@priority = 4
+	test DeleteConditionsAndActions {
+		task ("Given a page designer has fragments on a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading",
+				targetFragmentName = "Button");
+		}
+
+		task ("When the page designer adds conditions and actions on the New Rule modal") {
+			PageEditor.gotoTab(tabName = "Page Rules");
+
+			Button.click(button = "New Rule");
+
+			AssertTextEquals(
+				locator1 = "Modal#HEADER",
+				value1 = "New Rule");
+
+			Click(
+				index = 1,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION_ITEM");
+
+			DropdownMenuItem.click(menuItem = "User");
+
+			Click(
+				index = 2,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION_ITEM");
+
+			DropdownMenuItem.click(menuItem = "Is the User");
+
+			Click(
+				index = 3,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION_ITEM");
+
+			DropdownMenuItem.click(menuItem = "test");
+
+			Button.click(button = "Add Condition");
+
+			Click(
+				index = 1,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION_ITEM");
+
+			DropdownMenuItem.click(menuItem = "User");
+
+			Click(
+				index = 2,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION_ITEM");
+
+			DropdownMenuItem.click(menuItem = "Has the Role Of");
+
+			Click(
+				index = 3,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION_ITEM");
+
+			DropdownMenuItem.click(menuItem = "Power User");
+
+			Click(
+				index = 1,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_ACTION_ITEM");
+
+			DropdownMenuItem.click(menuItem = "Hide");
+
+			Click(
+				index = 2,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_ACTION_ITEM");
+
+			DropdownMenuItem.click(menuItem = "Fragment");
+
+			Click(
+				index = 3,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_ACTION_ITEM");
+
+			DropdownMenuItem.click(menuItem = "Button");
+
+			Button.click(button = "Add Action");
+
+			Click(
+				index = 1,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_ACTION_ITEM");
+
+			DropdownMenuItem.click(menuItem = "Hide");
+
+			Click(
+				index = 2,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_ACTION_ITEM");
+
+			DropdownMenuItem.click(menuItem = "Fragment");
+
+			Click(
+				index = 3,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_ACTION_ITEM");
+
+			DropdownMenuItem.click(menuItem = "Heading");
+		}
+
+		task ("Then the page designer could delete conditions and actions") {
+			for (var index : list "2,1") {
+				PageEditor.deletePageRuleAction(index = ${index});
+
+				PageEditor.deletePageRuleCondition(index = ${index});
+			}
+
+			AssertElementNotPresent(
+				index = 2,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION");
+
+			AssertElementNotPresent(
+				index = 2,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_ACTION");
+
+			AssertVisible(
+				index = 1,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION");
+
+			AssertVisible(
+				index = 1,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_ACTION");
+
+			AssertTextEquals(
+				index = 1,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION_ITEM",
+				value1 = "Select");
+
+			AssertTextEquals(
+				index = 1,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_ACTION_ITEM",
+				value1 = "Select");
+		}
+	}
+
 	@description = "This is a test for LPS-196462. Rules can be edited and deleted from the ellipsis button of the list of rules in the sidebar."
 	@priority = 3
 	test EditAndDeletePageRule {

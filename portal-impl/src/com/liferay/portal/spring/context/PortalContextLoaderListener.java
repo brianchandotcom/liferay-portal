@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.servlet.ServletContextClassLoaderPool;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.ClearThreadLocalUtil;
 import com.liferay.portal.kernel.util.ClearTimerThreadUtil;
+import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ModuleFrameworkPropsValues;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
@@ -359,6 +360,8 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		Future<?> future = executorService.submit(
 			() -> {
 				DBInitUtil.init();
+
+				InfrastructureUtil.setDataSource(DBInitUtil.getDataSource());
 
 				return null;
 			});

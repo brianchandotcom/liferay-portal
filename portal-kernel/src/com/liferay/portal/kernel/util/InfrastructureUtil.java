@@ -29,12 +29,7 @@ import javax.sql.DataSource;
 public class InfrastructureUtil {
 
 	public static DataSource getDataSource() {
-		try {
-			return _dataSourceDefaultNoticeableFuture.get();
-		}
-		catch (Exception exception) {
-			return ReflectionUtil.throwException(exception);
-		}
+		return _dataSource;
 	}
 
 	public static Session getMailSession() {
@@ -54,8 +49,8 @@ public class InfrastructureUtil {
 		}
 	}
 
-	public void setDataSource(DataSource dataSource) {
-		_dataSourceDefaultNoticeableFuture.set(dataSource);
+	public static void setDataSource(DataSource dataSource) {
+		_dataSource = dataSource;
 	}
 
 	public void setTransactionManager(Object transactionManager) {
@@ -87,8 +82,7 @@ public class InfrastructureUtil {
 	private static final Log _log = LogFactoryUtil.getLog(
 		InfrastructureUtil.class);
 
-	private static final DefaultNoticeableFuture<DataSource>
-		_dataSourceDefaultNoticeableFuture = new DefaultNoticeableFuture<>();
+	private static DataSource _dataSource;
 	private static Session _mailSession;
 	private static final DefaultNoticeableFuture<Object>
 		_transactionManagerDefaultNoticeableFuture =

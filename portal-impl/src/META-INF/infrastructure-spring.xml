@@ -9,7 +9,6 @@
 >
 	<bean class="com.liferay.portal.dao.init.DBInitUtil" factory-method="getDataSource" id="liferayDataSource" />
 	<bean class="com.liferay.portal.kernel.util.InfrastructureUtil">
-		<property name="dataSource" ref="liferayDataSource" />
 		<property name="transactionManager" ref="liferayTransactionManager" />
 	</bean>
 </beans>

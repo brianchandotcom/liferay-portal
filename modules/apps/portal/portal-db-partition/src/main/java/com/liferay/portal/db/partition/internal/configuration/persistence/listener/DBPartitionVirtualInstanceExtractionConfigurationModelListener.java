@@ -35,7 +35,8 @@ public class DBPartitionVirtualInstanceExtractionConfigurationModelListener
 	public void doOnAfterSave(Dictionary<String, Object> properties)
 		throws Exception {
 
-		_companyLocalService.extractCompany((long)properties.get("companyId"));
+		_companyLocalService.extractDBPartitionCompany(
+			(long)properties.get("companyId"));
 	}
 
 	@Override

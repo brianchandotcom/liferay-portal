@@ -30,11 +30,13 @@ public class DBPartitionVirtualInstanceExtractionConfigurationModelListenerTest
 	public void testDeployConfiguration() throws Exception {
 		try (AutoCloseable autoCloseable = swapCompanyLocalService(
 				(proxy, method, args) -> {
-					if (Objects.equals(method.getName(), "extractCompany")) {
+					if (Objects.equals(
+							method.getName(), "extractDBPartitionCompany")) {
+
 						Assert.assertEquals(
 							COMPANY_IDS[0], GetterUtil.getLong(args[0]));
 
-						_calledExtractCompany = true;
+						_calledExtractDBPartitionCompany = true;
 					}
 
 					return null;
@@ -43,7 +45,7 @@ public class DBPartitionVirtualInstanceExtractionConfigurationModelListenerTest
 			deployConfiguration(
 				_PID, "companyId=L\"" + COMPANY_IDS[0] + "\"\n");
 
-			Assert.assertTrue(_calledExtractCompany);
+			Assert.assertTrue(_calledExtractDBPartitionCompany);
 
 			verifyConfigurationIsDeletedAfterDeploy(_PID);
 		}
@@ -53,6 +55,6 @@ public class DBPartitionVirtualInstanceExtractionConfigurationModelListenerTest
 		"com.liferay.portal.db.partition.internal.configuration." +
 			"DBPartitionVirtualInstanceExtractionConfiguration";
 
-	private boolean _calledExtractCompany;
+	private boolean _calledExtractDBPartitionCompany;
 
 }

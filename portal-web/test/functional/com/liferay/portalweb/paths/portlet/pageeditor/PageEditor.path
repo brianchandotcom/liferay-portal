@@ -976,8 +976,18 @@
 <!--PAGE_RULES-->
 
 <tr>
+	<td>PAGE_RULE_BUILDER_ACTION</td>
+	<td>xpath=(//div[contains(@class,'rule-builder-item--action')])[${index}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGE_RULE_BUILDER_ACTION_ITEM</td>
 	<td>xpath=(//div[contains(@class,'rule-builder-item--action')][@aria-label='Incomplete Action']//button[@role='combobox'])[${index}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_RULE_BUILDER_CONDITION</td>
+	<td>xpath=(//div[contains(@class,'rule-builder-item--condition')])[${index}]</td>
 	<td></td>
 </tr>
 <tr>

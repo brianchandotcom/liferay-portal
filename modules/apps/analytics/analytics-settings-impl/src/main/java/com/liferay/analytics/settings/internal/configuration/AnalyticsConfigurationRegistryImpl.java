@@ -407,6 +407,16 @@ public class AnalyticsConfigurationRegistryImpl
 					});
 			}
 
+			if (!_analyticsSettingsManager.syncedAccountSettingsEnabled(
+					companyId) &&
+				!_analyticsSettingsManager.syncedContactSettingsEnabled(
+					companyId)) {
+
+				unscheduleDispatchTriggerNames.add(
+					AnalyticsDXPEntityBatchExporterConstants.
+						DISPATCH_TRIGGER_NAME_DXP_ENTITIES);
+			}
+
 			if (!unscheduleDispatchTriggerNames.isEmpty()) {
 				_analyticsDXPEntityBatchExporter.unscheduleExportTriggers(
 					companyId,

@@ -32,6 +32,7 @@
 	disabled="<%= ddmFormAdminDisplayContext.isDisabledManagementBar() %>"
 	filterDropdownItems="<%= ddmFormAdminDisplayContext.getFilterItemsDropdownItems() %>"
 	itemsTotal="<%= ddmFormAdminDisplayContext.getTotalItems() %>"
+	orderDropdownItems="<%= ddmFormAdminDisplayContext.getOrderItemsDropdownItems() %>"
 	propsTransformer="admin/js/DDMFormAdminManagementToolbarPropsTransformer"
 	searchActionURL="<%= ddmFormAdminDisplayContext.getSearchActionURL() %>"
 	searchContainerId="<%= ddmFormAdminDisplayContext.getSearchContainerId() %>"

@@ -14,17 +14,7 @@ KaleoDefinitionVersionSearch kaleoDefinitionVersionSearch = kaleoDesignerDisplay
 <liferay-ui:success key='<%= KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestProcessed" %>' message='<%= (String)MultiSessionMessages.get(renderRequest, KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestProcessed") %>' translateMessage="<%= false %>" />
 
 <clay:management-toolbar
-	clearResultsURL="<%= kaleoDesignerDisplayContext.getClearResultsURL() %>"
-	creationMenu="<%= kaleoDesignerDisplayContext.getCreationMenu(pageContext) %>"
-	filterDropdownItems="<%= kaleoDesignerDisplayContext.getFilterItemsDropdownItems() %>"
-	itemsTotal="<%= kaleoDesignerDisplayContext.getTotalItems(displayedStatus) %>"
-	searchActionURL="<%= kaleoDesignerDisplayContext.getSearchActionURL() %>"
-	searchContainerId="<%= kaleoDesignerDisplayContext.getSearchContainerId() %>"
-	searchFormName="fm1"
-	selectable="<%= false %>"
-	showSearch="<%= true %>"
-	sortingOrder="<%= kaleoDesignerDisplayContext.getOrderByType() %>"
-	sortingURL="<%= kaleoDesignerDisplayContext.getSortingURL() %>"
+	managementToolbarDisplayContext="<%= new KaleoDesignerManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, displayedStatus, kaleoDesignerDisplayContext) %>"
 />
 
 <clay:container-fluid>

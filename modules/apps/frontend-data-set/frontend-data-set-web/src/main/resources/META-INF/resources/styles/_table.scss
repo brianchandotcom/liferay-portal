@@ -38,7 +38,7 @@
 
 	&.item-actions,
 	&.item-selector {
-		width: 1%;
+		width: 0;
 	}
 }
 
@@ -112,25 +112,6 @@
 	}
 }
 
-.fixed {
-	.dnd-td,
-	.dnd-th {
-		align-items: center;
-		display: flex;
-		min-width: auto;
-	}
-
-	.dnd-tr {
-		display: flex;
-		width: fit-content;
-	}
-
-	.dnd-thead,
-	.dnd-tbody {
-		display: block;
-	}
-}
-
 .dnd-table {
 	background-color: $table-bg;
 	border: 1px solid $table-list-border-color;
@@ -146,6 +127,23 @@
 	&.fixed {
 		display: block;
 		overflow: auto;
+
+		.dnd-td,
+		.dnd-th {
+			align-items: center;
+			display: flex;
+			min-width: auto;
+		}
+
+		.dnd-tr {
+			display: flex;
+			width: fit-content;
+		}
+
+		.dnd-thead,
+		.dnd-tbody {
+			display: block;
+		}
 	}
 
 	&.is-dragging {
@@ -156,6 +154,10 @@
 
 	.content-renderer-image {
 		width: 1%;
+	}
+
+	.dnd-tbody {
+		display: none;
 	}
 
 	&.with-quick-actions {
@@ -203,6 +205,16 @@
 		&.is-allowed {
 			background: $primary;
 		}
+	}
+}
+
+.fds-table {
+	&.fixed tbody tr {
+		display: table-row;
+	}
+
+	tbody tr {
+		display: none;
 	}
 }
 

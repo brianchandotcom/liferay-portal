@@ -25,7 +25,9 @@ function Table({children, className}) {
 		return (
 			<ClayTable
 				className={classNames(
+					'fds-table',
 					{
+						'fixed': isFixed,
 						'is-dragging': draggingColumnName !== null,
 					},
 					className

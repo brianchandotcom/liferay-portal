@@ -16,14 +16,15 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.BooleanClauseFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
-import com.liferay.portal.kernel.search.IndexerPostProcessor;
+import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
@@ -33,7 +34,6 @@ import com.liferay.portal.kernel.search.generic.MatchAllQuery;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -57,7 +57,6 @@ import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.searcher.Searcher;
-import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContributor;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -71,21 +70,15 @@ import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.MultivaluedMap;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.InvalidSyntaxException;
-import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -307,31 +300,12 @@ public class SearchResultResourceImpl extends BaseSearchResultResourceImpl {
 			com.liferay.portal.kernel.search.Field.ENTRY_CLASS_PK);
 	}
 
-	private ModelSummaryContributor _getModelSummaryContributor(
-		String entryClassName) {
-
-		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
-
-		try {
-			Collection<ServiceReference<ModelSummaryContributor>>
-				serviceReferences = bundleContext.getServiceReferences(
-					ModelSummaryContributor.class,
-					"(indexer.class.name=" + entryClassName + ")");
-
-			if (serviceReferences.isEmpty()) {
-				return null;
-			}
-
-			Iterator<ServiceReference<ModelSummaryContributor>> iterator =
-				serviceReferences.iterator();
-
-			return bundleContext.getService(iterator.next());
-		}
-		catch (InvalidSyntaxException invalidSyntaxException) {
-			_log.error(invalidSyntaxException);
+	private Indexer<Object> _getIndexer(String entryClassName) {
+		if (_indexerRegistry != null) {
+			return _indexerRegistry.getIndexer(entryClassName);
 		}
 
-		return null;
+		return IndexerRegistryUtil.getIndexer(entryClassName);
 	}
 
 	private Summary _getSummary(
@@ -342,39 +316,23 @@ public class SearchResultResourceImpl extends BaseSearchResultResourceImpl {
 			return null;
 		}
 
-		ModelSummaryContributor modelSummaryContributor =
-			_getModelSummaryContributor(entryClassName);
+		Indexer<?> indexer = _getIndexer(entryClassName);
 
-		if (modelSummaryContributor == null) {
+		if (indexer == null) {
 			return null;
 		}
 
-		Locale originalThemeDisplayLocale =
-			LocaleThreadLocal.getThemeDisplayLocale();
-
-		LocaleThreadLocal.setThemeDisplayLocale(
-			contextAcceptLanguage.getPreferredLocale());
-
-		String snippet = legacyDocument.get(
-			com.liferay.portal.kernel.search.Field.SNIPPET);
-
-		Summary summary = modelSummaryContributor.getSummary(
-			legacyDocument, contextAcceptLanguage.getPreferredLocale(),
-			snippet);
-
-		if (summary != null) {
-			List<IndexerPostProcessor> indexerPostProcessors =
-				_indexerRegistry.getIndexerPostProcessors(entryClassName);
-
-			indexerPostProcessors.forEach(
-				indexerPostProcessor -> indexerPostProcessor.postProcessSummary(
-					summary, legacyDocument,
-					contextAcceptLanguage.getPreferredLocale(), snippet));
+		try {
+			return indexer.getSummary(
+				legacyDocument, contextAcceptLanguage.getPreferredLocale(),
+				legacyDocument.get(
+					com.liferay.portal.kernel.search.Field.SNIPPET));
+		}
+		catch (SearchException searchException) {
+			_log.error(searchException);
 		}
 
-		LocaleThreadLocal.setThemeDisplayLocale(originalThemeDisplayLocale);
-
-		return summary;
+		return null;
 	}
 
 	private boolean _isAllowedSearchContextAttribute(String key) {
@@ -649,8 +607,8 @@ public class SearchResultResourceImpl extends BaseSearchResultResourceImpl {
 				}
 
 				_setDescription(
-					assetRenderer, legacyDocument, entryClassName, fields,
-					searchResult);
+					assetRenderer, legacyDocument, _getEntryClassName(document),
+					fields, searchResult);
 
 				_setDTOFields(
 					embedded, entryClassName, entryClassPK, fields,

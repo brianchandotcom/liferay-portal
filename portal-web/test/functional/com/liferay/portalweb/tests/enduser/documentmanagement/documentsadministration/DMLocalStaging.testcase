@@ -1205,6 +1205,62 @@ definition {
 		DMDocument.viewCP(dmDocumentTitle = "DM Document 2 Title");
 	}
 
+	@description = "This is a test for LPS-179135. It ensures that Documents and Media widget's configuration can published after changing its root folder."
+	@priority = 4
+	test CanPublishWidgetConfiguration {
+		property portal.acceptance = "true";
+
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Site Name-staging");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_1.jpeg",
+			folderName = "DM Folder Name",
+			groupName = "Site Name-staging",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpeg");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = 1,
+			groupName = "Site Name (Staging)",
+			layoutName = "Staging DM Page",
+			site = "false",
+			widgetName = "Documents and Media");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.configurePublishToLive(checkPublishPermission = "true");
+
+		Staging.publishToLive();
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		DMDocument.setRootFolder(
+			dmRootFolderName = "DM Folder Name",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.configurePublishToLive(checkPublishPermission = "true");
+
+		Staging.publishToLive();
+
+		Navigator.openSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		DMDocument.viewCardTitle(dmDocumentTitle = "Document_1.jpeg");
+	}
+
 	@description = "This is a test for LPS-136831. It checks that a file can be replaced and republished."
 	@priority = 3
 	test CanReplaceFileAndRepublish {

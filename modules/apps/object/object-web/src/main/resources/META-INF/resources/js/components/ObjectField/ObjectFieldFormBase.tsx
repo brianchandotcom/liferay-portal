@@ -450,10 +450,7 @@ export default function ObjectFieldFormBase({
 				selectedKey={values.businessType}
 			>
 				{(item) => (
-					<Option
-						key={item.businessType}
-						textValue={item.businessType}
-					>
+					<Option key={item.businessType} textValue={item.label}>
 						<div className="lfr-objects__object-field-form-base-object-field-type-option">
 							<Text size={3} weight="semi-bold">
 								{item.label}

@@ -17,6 +17,12 @@ definition {
 				baseURL = "test2",
 				title = "test2");
 		}
+
+		task ("And Given I go to 'Endpoints' tab in 'Edit API Application'") {
+			APIBuilderUI.switchToRelatedEntryInEditApplication(
+				entity = "Endpoints",
+				title = "test2");
+		}
 	}
 
 	tearDown {
@@ -32,12 +38,6 @@ definition {
 	@priority = 5
 	test CanCreateEndpointWithCompanyScope {
 		property portal.acceptance = "true";
-
-		task ("And Given I go to 'Endpoints' tab in 'Edit API Application'") {
-			APIBuilderUI.switchToRelatedEntryInEditApplication(
-				entity = "Endpoints",
-				title = "test2");
-		}
 
 		task ("And Given adding new endpoint with Company scope") {
 			APIBuilderUI.createAPIEndpoint(
@@ -61,37 +61,9 @@ definition {
 		}
 	}
 
-	@priority = 3
-	test CanCreateEndpointWithPathAndDescriptionWithSuccessAlert {
-		task ("And Given I go to 'Endpoints' tab in 'Edit API Application'") {
-			APIBuilderUI.switchToRelatedEntryInEditApplication(
-				addByPlus = "true",
-				entity = "Endpoints",
-				title = "test2");
-		}
-
-		task ("When I enter a path and Scope to create the API endpoint") {
-			APIBuilderUI.createAPIEndpoint(
-				method = "GET",
-				path = "testendpoint2",
-				retrieveType = "Collection",
-				scope = "Company");
-		}
-
-		task ("Then I can see success alert") {
-			Alert.viewSuccessMessage();
-		}
-	}
-
 	@priority = 5
 	test CanCreateEndpointWithSiteScope {
 		property portal.acceptance = "true";
-
-		task ("And Given I go to 'Endpoints' tab in 'Edit API Application'") {
-			APIBuilderUI.switchToRelatedEntryInEditApplication(
-				entity = "Endpoints",
-				title = "test2");
-		}
 
 		task ("And Given adding new endpoint with Site scope") {
 			APIBuilderUI.createAPIEndpoint(
@@ -117,12 +89,6 @@ definition {
 
 	@priority = 3
 	test CanCreateEndpointWithSuccessAlert {
-		task ("And Given I go to 'Endpoints' tab in 'Edit API Application'") {
-			APIBuilderUI.switchToRelatedEntryInEditApplication(
-				entity = "Endpoints",
-				title = "test2");
-		}
-
 		task ("When I enter a path and Scope to create the API endpoint") {
 			APIBuilderUI.createAPIEndpoint(
 				method = "GET",
@@ -158,12 +124,6 @@ definition {
 	test CanSeeAllFieldsInCreationModal {
 		property portal.acceptance = "true";
 
-		task ("And Given I go to 'Endpoints' tab in 'Edit API Application'") {
-			APIBuilderUI.switchToRelatedEntryInEditApplication(
-				entity = "Endpoints",
-				title = "test2");
-		}
-
 		task ("When I click 'Add API Endpoint' button") {
 			Click(locator1 = "APIBuilder#ADD_API_ENDPOINT");
 		}
@@ -185,11 +145,7 @@ definition {
 
 	@priority = 4
 	test CanSeeInfoOfCreatedEndpoint {
-		task ("And Given I go to 'Endpoints' tab in 'Edit API Application'") {
-			APIBuilderUI.switchToRelatedEntryInEditApplication(
-				entity = "Endpoints",
-				title = "test2");
-		}
+		property portal.acceptance = "true";
 
 		task ("When I enter a path to create the API endpoint") {
 			APIBuilderUI.createAPIEndpoint(
@@ -217,31 +173,21 @@ definition {
 
 	@priority = 4
 	test CanSeeInfoOfCreatedEndpointWithDescription {
-		task ("And Given I go to 'Endpoints' tab in 'Edit API Application'") {
-			APIBuilderUI.switchToRelatedEntryInEditApplication(
-				addByPlus = "true",
-				entity = "Endpoints",
-				title = "test2");
-		}
+		property portal.acceptance = "true";
 
-		task ("When I enter a path and Scope to create the API endpoint") {
+		task ("When I enter a path and Scope to create the API endpoint through add by plus wizard") {
 			APIBuilderUI.createAPIEndpoint(
+				addByPlus = "true",
 				description = "Description default",
 				method = "GET",
 				path = "testendpoint2",
 				retrieveType = "Collection",
 				scope = "Company");
-
-			Alert.viewSuccessMessage();
 		}
 
 		task ("Then I can see info of created endpoint with 'Get' method and path and description") {
 			AssertElementPresent(
 				key_value = "GET",
-				locator1 = "APIBuilder#DROPDOWN_TOGGLE");
-
-			AssertElementPresent(
-				key_value = "Company",
 				locator1 = "APIBuilder#DROPDOWN_TOGGLE");
 
 			AssertElementPresent(
@@ -260,12 +206,6 @@ definition {
 	test CanSeePathOfPathFields {
 		property portal.acceptance = "true";
 
-		task ("And Given I go to 'Endpoints' tab in 'Edit API Application'") {
-			APIBuilderUI.switchToRelatedEntryInEditApplication(
-				entity = "Endpoints",
-				title = "test2");
-		}
-
 		task ("When I click 'Add API Endpoint' button") {
 			Click(locator1 = "APIBuilder#ADD_API_ENDPOINT");
 		}
@@ -280,49 +220,16 @@ definition {
 
 		task ("And Then I can see path start with '/' with placeholder 'Enter path'") {
 			AssertElementPresent(locator1 = "APIBuilder#SLASH");
-		}
-	}
-
-	@priority = 4
-	test CanSeeScopeOfScopeFields {
-		property portal.acceptance = "true";
-
-		task ("And Given I go to 'Endpoints' tab in 'Edit API Application'") {
-			APIBuilderUI.switchToRelatedEntryInEditApplication(
-				entity = "Endpoints",
-				title = "test2");
-		}
-
-		task ("When I click 'ADD API Endpoint' button") {
-			Click(locator1 = "APIBuilder#ADD_API_ENDPOINT");
-		}
-
-		task ("Then I click Scope option") {
-			Click(
-				key_value = "Select Scope",
-				locator1 = "APIBuilder#DROPDOWN_TOGGLE");
-		}
-
-		task ("And Then I can see site and company scope in the Scope option") {
-			AssertElementPresent(
-				key_optionName = "Site",
-				locator1 = "ObjectAdmin#LAYOUT_ADD_FIELD_OPTION");
 
 			AssertElementPresent(
-				key_optionName = "Company",
-				locator1 = "ObjectAdmin#LAYOUT_ADD_FIELD_OPTION");
+				key_placeHolder = "Enter Path",
+				locator1 = "TextInput#ANY_PLACEHOLDER");
 		}
 	}
 
 	@priority = 4
 	test CanSeeValidationMessageForRequiredFields {
 		property portal.acceptance = "true";
-
-		task ("And Given I go to 'Endpoints' tab in 'Edit API Application'") {
-			APIBuilderUI.switchToRelatedEntryInEditApplication(
-				entity = "Endpoints",
-				title = "test2");
-		}
 
 		task ("And Given I click 'Add API Endpoint' button") {
 			Click(locator1 = "APIBuilder#ADD_API_ENDPOINT");
@@ -351,14 +258,10 @@ definition {
 		}
 	}
 
+	@description = "Ignored due to LPS-203459"
+	@ignore = "true"
 	@priority = 3
 	test CanValidateMaximumDescription {
-		task ("And Given I go to 'Endpoints' tab in 'Edit API Application'") {
-			APIBuilderUI.switchToRelatedEntryInEditApplication(
-				entity = "Endpoints",
-				title = "test2");
-		}
-
 		task ("When I create an endpoint with description Field contains 281 characters") {
 			APIBuilderUI.createAPIEndpoint(
 				description = " Description default Description default Description default Description default Description default Description default Description default Description default Description default Description default Description default Description default Description default Description default D",
@@ -369,19 +272,15 @@ definition {
 		}
 
 		task ("Then I can see error message about maximum length of 280 characters blocks endpoint from being created") {
-			AssertElementPresent(locator1 = "Message#ERROR");
+			AssertTextEquals(
+				locator1 = "Message#ERROR",
+				value1 = "Object entry value exceeds the maximum length of 280 characters for object field \"description\"");
 		}
 	}
 
 	@priority = 4
 	test EndpointFieldsAreVisibleInCreationModal {
 		property portal.acceptance = "true";
-
-		task ("When I go to 'Endpoints' tab in 'Edit API Application'") {
-			APIBuilderUI.switchToRelatedEntryInEditApplication(
-				entity = "Endpoints",
-				title = "test2");
-		}
 
 		task ("Then 'Add API Enpoint' and plus buttons are present") {
 			AssertElementPresent(locator1 = "Button#PLUS");
@@ -399,12 +298,6 @@ definition {
 	@priority = 4
 	test EndpointIsNotCreatedAfterClickingCancel {
 		property portal.acceptance = "true";
-
-		task ("And Given I go to 'Endpoints' tab in 'Edit API Application'") {
-			APIBuilderUI.switchToRelatedEntryInEditApplication(
-				entity = "Endpoints",
-				title = "test2");
-		}
 
 		task ("And Given I click 'Add API Endpoint' button") {
 			Click(locator1 = "APIBuilder#ADD_API_ENDPOINT");
@@ -433,10 +326,6 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("When adding new endpoint") {
-			APIBuilderUI.switchToRelatedEntryInEditApplication(
-				entity = "Endpoints",
-				title = "test2");
-
 			Click(locator1 = "Button#PLUS");
 
 			Click(

@@ -10,7 +10,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionRegistryUtil;
 import com.liferay.portlet.documentlibrary.service.base.DLFileVersionServiceBaseImpl;
 
 import java.util.List;
@@ -27,7 +27,11 @@ public class DLFileVersionServiceImpl extends DLFileVersionServiceBaseImpl {
 		DLFileVersion fileVersion = dlFileVersionLocalService.getFileVersion(
 			fileVersionId);
 
-		_fileEntryModelResourcePermission.check(
+		ModelResourcePermission<FileEntry> fileEntryModelResourcePermission =
+			ModelResourcePermissionRegistryUtil.getModelResourcePermission(
+				FileEntry.class.getName());
+
+		fileEntryModelResourcePermission.check(
 			getPermissionChecker(), fileVersion.getFileEntryId(),
 			ActionKeys.VIEW);
 
@@ -38,7 +42,11 @@ public class DLFileVersionServiceImpl extends DLFileVersionServiceBaseImpl {
 	public List<DLFileVersion> getFileVersions(long fileEntryId, int status)
 		throws PortalException {
 
-		_fileEntryModelResourcePermission.check(
+		ModelResourcePermission<FileEntry> fileEntryModelResourcePermission =
+			ModelResourcePermissionRegistryUtil.getModelResourcePermission(
+				FileEntry.class.getName());
+
+		fileEntryModelResourcePermission.check(
 			getPermissionChecker(), fileEntryId, ActionKeys.VIEW);
 
 		return dlFileVersionLocalService.getFileVersions(fileEntryId, status);
@@ -48,7 +56,11 @@ public class DLFileVersionServiceImpl extends DLFileVersionServiceBaseImpl {
 	public int getFileVersionsCount(long fileEntryId, int status)
 		throws PortalException {
 
-		_fileEntryModelResourcePermission.check(
+		ModelResourcePermission<FileEntry> fileEntryModelResourcePermission =
+			ModelResourcePermissionRegistryUtil.getModelResourcePermission(
+				FileEntry.class.getName());
+
+		fileEntryModelResourcePermission.check(
 			getPermissionChecker(), fileEntryId, ActionKeys.VIEW);
 
 		return dlFileVersionPersistence.countByF_S(fileEntryId, status);
@@ -58,7 +70,11 @@ public class DLFileVersionServiceImpl extends DLFileVersionServiceBaseImpl {
 	public DLFileVersion getLatestFileVersion(long fileEntryId)
 		throws PortalException {
 
-		_fileEntryModelResourcePermission.check(
+		ModelResourcePermission<FileEntry> fileEntryModelResourcePermission =
+			ModelResourcePermissionRegistryUtil.getModelResourcePermission(
+				FileEntry.class.getName());
+
+		fileEntryModelResourcePermission.check(
 			getPermissionChecker(), fileEntryId, ActionKeys.VIEW);
 
 		return dlFileVersionLocalService.getLatestFileVersion(
@@ -70,17 +86,15 @@ public class DLFileVersionServiceImpl extends DLFileVersionServiceBaseImpl {
 			long fileEntryId, boolean excludeWorkingCopy)
 		throws PortalException {
 
-		_fileEntryModelResourcePermission.check(
+		ModelResourcePermission<FileEntry> fileEntryModelResourcePermission =
+			ModelResourcePermissionRegistryUtil.getModelResourcePermission(
+				FileEntry.class.getName());
+
+		fileEntryModelResourcePermission.check(
 			getPermissionChecker(), fileEntryId, ActionKeys.VIEW);
 
 		return dlFileVersionLocalService.getLatestFileVersion(
 			fileEntryId, excludeWorkingCopy);
 	}
-
-	private static volatile ModelResourcePermission<FileEntry>
-		_fileEntryModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				DLFileVersionServiceImpl.class,
-				"_fileEntryModelResourcePermission", FileEntry.class);
 
 }

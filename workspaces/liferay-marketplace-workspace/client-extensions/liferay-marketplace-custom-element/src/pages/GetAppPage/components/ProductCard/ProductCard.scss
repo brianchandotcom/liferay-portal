@@ -32,11 +32,22 @@
 
 	.sub-text {
 		color: var(--neutral-08, #54555f);
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		width: 330px;
+		overflow: hidden;
 	}
 
 	small {
 		&.subscription-banner-text {
 			color: #54555f !important;
 		}
+	}
+
+	&-title {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		width: 330px;
 	}
 }

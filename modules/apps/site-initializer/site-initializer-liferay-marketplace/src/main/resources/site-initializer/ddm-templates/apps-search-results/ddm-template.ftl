@@ -155,7 +155,7 @@
 						</div>
 
 						<div class="d-flex flex-column font-size-paragraph-small h-100 justify-content-between">
-							<div class="font-weight-normal mb-2">
+							<div class="font-weight-normal mb-2 text-break">
 								${productDescription}
 							</div>
 

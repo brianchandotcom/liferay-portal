@@ -1981,6 +1981,36 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	@summary = "Delete a page rule action"
+	macro deletePageRuleAction() {
+		if (!(isSet(index))) {
+			var index = 1;
+		}
+
+		MouseOver.mouseOverNotVisible(
+			index = ${index},
+			locator1 = "PageEditor#PAGE_RULE_BUILDER_ACTION_DELETE_BUTTON");
+
+		Click(
+			index = ${index},
+			locator1 = "PageEditor#PAGE_RULE_BUILDER_ACTION_DELETE_BUTTON");
+	}
+
+	@summary = "Delete a page rule condition"
+	macro deletePageRuleCondition() {
+		if (!(isSet(index))) {
+			var index = 1;
+		}
+
+		MouseOver.mouseOverNotVisible(
+			index = ${index},
+			locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION_DELETE_BUTTON");
+
+		Click(
+			index = ${index},
+			locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION_DELETE_BUTTON");
+	}
+
 	@summary = "Default summary"
 	macro deprioritizeExperience(experienceName = null) {
 		var key_experienceName = ${experienceName};

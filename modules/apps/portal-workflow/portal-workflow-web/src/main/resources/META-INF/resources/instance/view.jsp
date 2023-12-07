@@ -13,11 +13,9 @@ DateSearchEntry dateSearchEntry = new DateSearchEntry();
 String displayStyle = workflowInstanceViewDisplayContext.getDisplayStyle();
 %>
 
-<aui:form action="<%= workflowInstanceViewDisplayContext.getViewPortletURL() %>" method="post" name="fm">
-	<clay:management-toolbar
-		managementToolbarDisplayContext="<%= new WorkflowInstanceViewManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, workflowInstanceViewDisplayContext.getSearchContainer()) %>"
-	/>
-</aui:form>
+<clay:management-toolbar
+	managementToolbarDisplayContext="<%= new WorkflowInstanceViewManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, workflowInstanceViewDisplayContext.getSearchContainer()) %>"
+/>
 
 <clay:container-fluid
 	cssClass="workflow-instance-container"

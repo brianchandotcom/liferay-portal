@@ -61,9 +61,9 @@ public class
 					deleteLayoutPageTemplateCollection(
 						deleteLayoutPageTemplateCollectionId);
 			}
-			catch (PortalException portalException) {
+			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(portalException);
+					_log.debug(exception);
 				}
 
 				deleteLayoutPageTemplateCollectionIdsList.add(
@@ -83,9 +83,9 @@ public class
 				_layoutPageTemplateEntryService.deleteLayoutPageTemplateEntry(
 					deleteLayoutPageTemplateEntryId);
 			}
-			catch (PortalException portalException) {
+			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(portalException);
+					_log.debug(exception);
 				}
 
 				deleteLayoutPageTemplateEntryIdsList.add(

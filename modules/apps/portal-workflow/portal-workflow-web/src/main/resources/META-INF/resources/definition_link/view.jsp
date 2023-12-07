@@ -13,7 +13,17 @@ Map<String, String> resourceTooltips = workflowDefinitionLinkDisplayContext.getR
 boolean showStripeMessage = workflowDefinitionLinkDisplayContext.showStripeMessage(request);
 %>
 
-<liferay-util:include page="/definition_link/management_bar.jsp" servletContext="<%= application %>" />
+<clay:management-toolbar
+	clearResultsURL="<%= workflowDefinitionLinkDisplayContext.getClearResultsURL() %>"
+	filterDropdownItems="<%= workflowDefinitionLinkDisplayContext.getFilterOptions(request) %>"
+	itemsTotal="<%= workflowDefinitionLinkDisplayContext.getTotalItems() %>"
+	searchActionURL="<%= workflowDefinitionLinkDisplayContext.getSearchURL() %>"
+	searchContainerId="workflowDefinitionLinks"
+	searchFormName="fm1"
+	selectable="<%= false %>"
+	sortingOrder="<%= workflowDefinitionLinkDisplayContext.getOrderByType() %>"
+	sortingURL="<%= workflowDefinitionLinkDisplayContext.getSortingURL() %>"
+/>
 
 <clay:container-fluid
 	cssClass="workflow-definition-link-container"

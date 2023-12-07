@@ -109,12 +109,12 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-196044. Check the accessibility in page audit improvement when adding an Image fragment."
+	@description = "This is a test for LPS-196044 and LPS-191483. Check the accessibility in page audit improvement when adding an Image fragment. Check the accessibility when warning message displays for big image file size."
 	@priority = 3
 	test ViewAccessibilityOfImageFragment {
 		property custom.properties = "feature.flag.LPS-187284=true${line.separator}feature.flag.LPS-187285=true";
 
-		task ("Given a user has a Button fragment on a content page") {
+		task ("Given a user has a Image fragment on a content page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
 				layoutName = "Test Page Name",
@@ -127,17 +127,23 @@ definition {
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
 				fragmentName = "Image");
+		}
 
+		task ("When the user displays a big image in Image fragment") {
 			PageEditor.editFragmentImage(
 				fragmentName = "Image",
 				id = "image-square",
 				imageFileName = "high_resolution_photo.jpg",
 				uploadFileName = "high_resolution_photo.jpg");
+		}
 
-			PageEditor.publish();
+		task ("Then the Resolution section should have correct accessibility") {
+			AssertElementAccessible(locator1 = "//div[contains(@class,'tab')][contains(@class,'active')]/div[contains(@class,'form-group')][.//*[normalize-space()='Resolution']]");
 		}
 
 		task ("When the user opens the Page Audit sidebar") {
+			PageEditor.publish();
+
 			PageAudit.openPageAuditSidebar();
 		}
 

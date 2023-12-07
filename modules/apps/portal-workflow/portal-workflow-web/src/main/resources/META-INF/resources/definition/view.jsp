@@ -30,9 +30,7 @@ PortletURL portletURL = PortletURLBuilder.createRenderURL(
 	managementToolbarDisplayContext="<%= new WorkflowDefinitionManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, renderRequest, displayedStatus, workflowDefinitionDisplayContext) %>"
 />
 
-<clay:container-fluid
-	cssClass="workflow-definition-container"
->
+<clay:container-fluid>
 	<liferay-ui:error exception="<%= RequiredWorkflowDefinitionException.class %>">
 		<liferay-ui:message arguments="<%= workflowDefinitionDisplayContext.getMessageArguments((RequiredWorkflowDefinitionException)errorException) %>" key="<%= workflowDefinitionDisplayContext.getMessageKey((RequiredWorkflowDefinitionException)errorException) %>" translateArguments="<%= false %>" />
 	</liferay-ui:error>

@@ -15,10 +15,7 @@ Map<String, String> resourceTooltips = workflowDefinitionLinkDisplayContext.getR
 	managementToolbarDisplayContext="<%= new WorkflowDefinitionLinkManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, workflowDefinitionLinkDisplayContext.getSearchContainer()) %>"
 />
 
-<clay:container-fluid
-	cssClass="workflow-definition-link-container"
-	id='<%= liferayPortletResponse.getNamespace() + "Container" %>'
->
+<clay:container-fluid>
 	<c:if test="<%= workflowDefinitionLinkDisplayContext.showStripeMessage(request) %>">
 		<clay:alert
 			dismissible="<%= true %>"

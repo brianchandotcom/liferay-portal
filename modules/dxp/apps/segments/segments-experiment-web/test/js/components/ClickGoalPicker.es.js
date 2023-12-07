@@ -15,6 +15,15 @@ import renderApp from '../renderApp.es';
 describe('ClickGoalPicker', () => {
 	afterEach(cleanup);
 
+	beforeAll(() => {
+		window.Liferay = {
+			...Liferay,
+			FeatureFlags: {
+				'LRAC-15017': true,
+			},
+		};
+	});
+
 	it('Experiment renders when goal value is click', () => {
 		const experiment = {
 			...segmentsExperiment,

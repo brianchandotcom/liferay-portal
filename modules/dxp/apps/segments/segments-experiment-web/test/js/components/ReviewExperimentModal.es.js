@@ -124,6 +124,15 @@ const getEstimatedTimeMockFactory = (days) => () => {
 };
 
 describe('ReviewExperimentModal', () => {
+	beforeAll(() => {
+		window.Liferay = {
+			...Liferay,
+			FeatureFlags: {
+				'LRAC-15017': true,
+			},
+		};
+	});
+
 	describe('Estimated days', () => {
 		afterEach(() => {
 			jest.clearAllTimers();

@@ -27,16 +27,7 @@ PortletURL portletURL = PortletURLBuilder.createRenderURL(
 %>
 
 <clay:management-toolbar
-	clearResultsURL="<%= workflowDefinitionDisplayContext.getClearResultsURL(request) %>"
-	creationMenu="<%= workflowDefinitionDisplayContext.getCreationMenu(pageContext) %>"
-	filterDropdownItems="<%= workflowDefinitionDisplayContext.getFilterOptions(request) %>"
-	itemsTotal="<%= workflowDefinitionDisplayContext.getTotalItems(request, renderRequest, displayedStatus) %>"
-	searchActionURL="<%= workflowDefinitionDisplayContext.getSearchURL(request) %>"
-	searchContainerId="workflowDefinitions"
-	searchFormName="fm1"
-	selectable="<%= false %>"
-	sortingOrder='<%= ParamUtil.getString(request, "orderByType", "asc") %>'
-	sortingURL="<%= workflowDefinitionDisplayContext.getSortingURL(request) %>"
+	managementToolbarDisplayContext="<%= new WorkflowDefinitionManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, renderRequest, displayedStatus, workflowDefinitionDisplayContext) %>"
 />
 
 <clay:container-fluid

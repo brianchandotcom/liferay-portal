@@ -15,16 +15,7 @@ String displayStyle = workflowInstanceViewDisplayContext.getDisplayStyle();
 
 <aui:form action="<%= workflowInstanceViewDisplayContext.getViewPortletURL() %>" method="post" name="fm">
 	<clay:management-toolbar
-		clearResultsURL="<%= workflowInstanceViewDisplayContext.getClearResultsURL() %>"
-		filterDropdownItems="<%= workflowInstanceViewDisplayContext.getFilterOptions(request) %>"
-		itemsTotal="<%= workflowInstanceViewDisplayContext.getTotalItems() %>"
-		searchActionURL="<%= workflowInstanceViewDisplayContext.getSearchURL() %>"
-		searchContainerId="workflowInstance"
-		searchFormName="fm1"
-		selectable="<%= false %>"
-		sortingOrder='<%= ParamUtil.getString(request, "orderByType", "asc") %>'
-		sortingURL="<%= workflowInstanceViewDisplayContext.getSortingURL(request) %>"
-		viewTypeItems="<%= workflowInstanceViewDisplayContext.getViewTypes() %>"
+		managementToolbarDisplayContext="<%= new WorkflowInstanceViewManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, workflowInstanceViewDisplayContext.getSearchContainer()) %>"
 	/>
 </aui:form>
 

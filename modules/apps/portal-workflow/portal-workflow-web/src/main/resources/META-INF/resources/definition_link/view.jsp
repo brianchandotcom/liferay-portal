@@ -14,15 +14,7 @@ boolean showStripeMessage = workflowDefinitionLinkDisplayContext.showStripeMessa
 %>
 
 <clay:management-toolbar
-	clearResultsURL="<%= workflowDefinitionLinkDisplayContext.getClearResultsURL() %>"
-	filterDropdownItems="<%= workflowDefinitionLinkDisplayContext.getFilterOptions(request) %>"
-	itemsTotal="<%= workflowDefinitionLinkDisplayContext.getTotalItems() %>"
-	searchActionURL="<%= workflowDefinitionLinkDisplayContext.getSearchURL() %>"
-	searchContainerId="workflowDefinitionLinks"
-	searchFormName="fm1"
-	selectable="<%= false %>"
-	sortingOrder="<%= workflowDefinitionLinkDisplayContext.getOrderByType() %>"
-	sortingURL="<%= workflowDefinitionLinkDisplayContext.getSortingURL() %>"
+	managementToolbarDisplayContext="<%= new WorkflowDefinitionLinkManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, workflowDefinitionLinkDisplayContext.getSearchContainer()) %>"
 />
 
 <clay:container-fluid

@@ -41,6 +41,45 @@ definition {
 		}
 	}
 
+	@description = "This case covers LPS-175896. When removing guest's view permission of a kb child article, they can not view the child article on knowledge base display."
+	@priority = 4
+	test CanNotViewChildArticleAsGuestAfterRemovePermission {
+		JSONKnowledgeBase.addkBArticle(
+			groupName = "Guest",
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.addChildArticleViaKBAdmin(
+			kbArticleTitle = "Knowledge Base Article Title",
+			kbChildArticleContent = "Knowledge Base Article Content Child",
+			kbChildArticleTitle = "Knowledge Base Article Title Child 1");
+
+		LexiconEntry.openEntryMenu(rowEntry = "Knowledge Base Article Title");
+
+		MenuItem.click(menuItem = "View Child Articles");
+
+		KBArticle.goToEntryPermissions(kbArticleTitle = "Knowledge Base Article Title Child 1");
+
+		PermissionsInline.addOrRemoveAnyPermissionsFromSpecificRole(
+			addOrRemoveViewPermission = "Remove",
+			permissionsKeyList = "INLINE_PERMISSIONS_VIEW_CHECKBOX",
+			roleTitle = "guest");
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		KBDisplayWidget.viewChildArticleHierarchyViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Title");
+
+		User.logoutPG();
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		KBDisplayWidget.viewParentArticleHierarchyViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Title");
+
+		KBArticle.viewNoPGViaKBDisplay(kbArticleTitle = "Knowledge Base Article Title");
+	}
+
 	@description = "This test ensures that users can edit the kb entry permissions by clicking the ellipsis on the kb entry."
 	@priority = 5
 	test CanViewArticleAsGuest {

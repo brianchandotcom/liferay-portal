@@ -25,6 +25,10 @@ renderResponse.setTitle(editable ? LanguageUtil.get(request, "edit-template") : 
 		<input id="<portlet:namespace />batchPlannerPlanId" name="<portlet:namespace />batchPlannerPlanId" type="hidden" value="<%= batchPlannerPlanId %>" />
 		<input id="<portlet:namespace />export" name="<portlet:namespace />export" type="hidden" value="<%= true %>" />
 
+		<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPS-173135") %>'>
+			<input id="<portlet:namespace />containsHeaders" name="<portlet:namespace />containsHeaders" type="hidden" value="<%= true %>" />
+		</c:if>
+
 		<div class="card">
 			<h4 class="card-header"><liferay-ui:message key="export-settings" /></h4>
 

@@ -127,14 +127,14 @@ public abstract class BaseJobEntity extends BaseEntity implements JobEntity {
 	}
 
 	@Override
-	public URL getJenkinsGitHubURL() {
-		String jenkinsGitHubURL = getParameterValue("jenkinsGitHubURL");
+	public URL getJenkinsBranchURL() {
+		String jenkinsBranchURL = getParameterValue("jenkinsBranchURL");
 
-		if (StringUtil.isNullOrEmpty(jenkinsGitHubURL)) {
+		if (StringUtil.isNullOrEmpty(jenkinsBranchURL)) {
 			return null;
 		}
 
-		return StringUtil.toURL(jenkinsGitHubURL);
+		return StringUtil.toURL(jenkinsBranchURL);
 	}
 
 	@Override
@@ -264,8 +264,8 @@ public abstract class BaseJobEntity extends BaseEntity implements JobEntity {
 	}
 
 	@Override
-	public void setJenkinsGitHubURL(URL jenkinsGitHubURL) {
-		setParameterValue("jenkinsGitHubURL", String.valueOf(jenkinsGitHubURL));
+	public void setJenkinsBranchURL(URL jenkinsBranchURL) {
+		setParameterValue("jenkinsBranchURL", String.valueOf(jenkinsBranchURL));
 	}
 
 	@Override
@@ -365,11 +365,11 @@ public abstract class BaseJobEntity extends BaseEntity implements JobEntity {
 	}
 
 	protected String getJenkinsBranchName() {
-		return getBranchURLGroupValue(getJenkinsGitHubURL(), "branchName");
+		return getBranchURLGroupValue(getJenkinsBranchURL(), "branchName");
 	}
 
 	protected String getJenkinsBranchUserName() {
-		return getBranchURLGroupValue(getJenkinsGitHubURL(), "userName");
+		return getBranchURLGroupValue(getJenkinsBranchURL(), "userName");
 	}
 
 	protected abstract String getJenkinsJobName();

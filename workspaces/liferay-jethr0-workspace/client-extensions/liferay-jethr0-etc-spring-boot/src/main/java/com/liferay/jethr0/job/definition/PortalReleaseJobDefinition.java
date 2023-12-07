@@ -8,6 +8,7 @@ package com.liferay.jethr0.job.definition;
 import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.job.definition.parameter.JenkinsBranchURLJobParameterDefinition;
 import com.liferay.jethr0.job.definition.parameter.JobParameterDefinition;
+import com.liferay.jethr0.job.definition.parameter.PortalBranchSHAJobParameterDefinition;
 import com.liferay.jethr0.job.definition.parameter.PortalBranchURLJobParameterDefinition;
 import com.liferay.jethr0.job.definition.parameter.PortalBuildProfileJobParameterDefinition;
 import com.liferay.jethr0.job.definition.parameter.PortalReleaseDependenciesURLParameterDefinition;
@@ -36,6 +37,8 @@ public class PortalReleaseJobDefinition extends BaseJobDefinition {
 
 		jobParameterDefinitions.add(
 			new JenkinsBranchURLJobParameterDefinition());
+		jobParameterDefinitions.add(
+			new PortalBranchSHAJobParameterDefinition());
 		jobParameterDefinitions.add(
 			new PortalBranchURLJobParameterDefinition());
 		jobParameterDefinitions.add(

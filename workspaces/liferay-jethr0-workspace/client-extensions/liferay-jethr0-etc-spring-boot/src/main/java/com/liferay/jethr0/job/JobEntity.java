@@ -58,7 +58,7 @@ public interface JobEntity extends Entity {
 
 	public Set<JenkinsCohortEntity> getJenkinsCohortEntities();
 
-	public URL getJenkinsGitHubURL();
+	public URL getJenkinsBranchURL();
 
 	public String getName();
 
@@ -100,7 +100,7 @@ public interface JobEntity extends Entity {
 
 	public void removeTestSuiteEntity(TestSuiteEntity testSuiteEntity);
 
-	public void setJenkinsGitHubURL(URL jenkinsGitHubURL);
+	public void setJenkinsBranchURL(URL jenkinsGitHubURL);
 
 	public void setName(String name);
 

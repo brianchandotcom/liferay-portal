@@ -15,12 +15,12 @@ public class PortalReleaseWarURLParameterDefinition
 
 	@Override
 	public String getKey() {
-		return "portalReleaseDependenciesURL";
+		return "portalReleaseWarURL";
 	}
 
 	@Override
 	public String getLabel() {
-		return "Portal Release Dependencies URL";
+		return "Portal Release War URL";
 	}
 
 	@Override

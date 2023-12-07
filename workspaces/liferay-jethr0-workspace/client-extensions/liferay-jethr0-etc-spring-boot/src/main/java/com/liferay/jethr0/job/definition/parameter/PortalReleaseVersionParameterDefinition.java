@@ -13,17 +13,17 @@ public class PortalReleaseVersionParameterDefinition
 
 	@Override
 	public String getKey() {
-		return "portalReleaseDependenciesURL";
+		return "portalReleaseVersion";
 	}
 
 	@Override
 	public String getLabel() {
-		return "Portal Release Dependencies URL";
+		return "Portal Release Version";
 	}
 
 	@Override
 	public JobParameterDefinition.Type getType() {
-		return JobParameterDefinition.Type.URL;
+		return JobParameterDefinition.Type.STRING;
 	}
 
 	@Override

@@ -15,12 +15,12 @@ public class PortalReleaseSQLURLParameterDefinition
 
 	@Override
 	public String getKey() {
-		return "portalReleaseDependenciesURL";
+		return "portalReleaseSQLURL";
 	}
 
 	@Override
 	public String getLabel() {
-		return "Portal Release Dependencies URL";
+		return "Portal Release SQL URL";
 	}
 
 	@Override

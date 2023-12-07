@@ -15,12 +15,12 @@ public class PortalReleaseTomcatURLParameterDefinition
 
 	@Override
 	public String getKey() {
-		return "portalReleaseDependenciesURL";
+		return "portalReleaseTomcatURL";
 	}
 
 	@Override
 	public String getLabel() {
-		return "Portal Release Dependencies URL";
+		return "Portal Release Tomcat URL";
 	}
 
 	@Override

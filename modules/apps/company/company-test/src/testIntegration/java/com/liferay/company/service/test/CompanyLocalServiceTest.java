@@ -778,13 +778,13 @@ public class CompanyLocalServiceTest {
 	}
 
 	@Test
-	public void testExtractCompany() {
+	public void testExtractDBPartitionCompany() {
 		if (DBPartition.isPartitionEnabled()) {
 			return;
 		}
 
 		try {
-			_companyLocalService.extractCompany(1L);
+			_companyLocalService.extractDBPartitionCompany(1L);
 
 			Assert.fail();
 		}
@@ -795,9 +795,9 @@ public class CompanyLocalServiceTest {
 	}
 
 	@Test
-	public void testExtractDefaultCompany() {
+	public void testextractDBPartitionCompanyDefaultCompany() {
 		try {
-			_companyLocalService.extractCompany(
+			_companyLocalService.extractDBPartitionCompany(
 				PortalInstances.getDefaultCompanyId());
 
 			Assert.fail();

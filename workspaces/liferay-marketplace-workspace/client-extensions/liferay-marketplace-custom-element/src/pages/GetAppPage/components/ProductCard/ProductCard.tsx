@@ -49,7 +49,9 @@ const ProductCard = ({
 					/>
 
 					<div className="align-items-center ml-4">
-						<h1 className="text-weight-bold">{product?.name}</h1>
+						<h1 className="product-banner-title text-weight-bold">
+							{product?.name}
+						</h1>
 
 						<div className="sub-text">
 							{getValueFromDeliverySpecifications(

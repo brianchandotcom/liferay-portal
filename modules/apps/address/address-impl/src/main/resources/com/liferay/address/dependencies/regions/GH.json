@@ -1,0 +1,66 @@
+[
+	{
+		"name": "Ahafo",
+		"regionCode": "AF"
+	},
+	{
+		"name": "Ashanti",
+		"regionCode": "AH"
+	},
+	{
+		"name": "Bono",
+		"regionCode": "BO"
+	},
+	{
+		"name": "Bono East",
+		"regionCode": "BE"
+	},
+	{
+		"name": "Central",
+		"regionCode": "CP"
+	},
+	{
+		"name": "Eastern",
+		"regionCode": "EP"
+	},
+	{
+		"name": "Greater Accra",
+		"regionCode": "AA"
+	},
+	{
+		"name": "North East",
+		"regionCode": "NE"
+	},
+	{
+		"name": "Northern",
+		"regionCode": "NP"
+	},
+	{
+		"name": "Oti",
+		"regionCode": "OT"
+	},
+	{
+		"name": "Savannah",
+		"regionCode": "SV"
+	},
+	{
+		"name": "Upper East",
+		"regionCode": "UE"
+	},
+	{
+		"name": "Upper West",
+		"regionCode": "UW"
+	},
+	{
+		"name": "Volta",
+		"regionCode": "TV"
+	},
+	{
+		"name": "Western",
+		"regionCode": "WP"
+	},
+	{
+		"name": "Western North",
+		"regionCode": "WN"
+	}
+]

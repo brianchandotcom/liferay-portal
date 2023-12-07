@@ -1,54 +1,54 @@
 [
 	{
 		"name": "Agder",
-		"regionCode": 42.0
+		"regionCode": "42.0"
 	},
 	{
 		"name": "Innlandet",
-		"regionCode": 34.0
+		"regionCode": "34.0"
 	},
 	{
-		"name": "Jan Mayen ",
-		"regionCode": 22.0
+		"name": "Jan Mayen (Arctic Region)",
+		"regionCode": "22.0"
 	},
 	{
 		"name": "Møre og Romsdal",
-		"regionCode": 15.0
+		"regionCode": "15.0"
 	},
 	{
 		"name": "Nordland",
-		"regionCode": 18.0
+		"regionCode": "18.0"
 	},
 	{
 		"name": "Oslo",
-		"regionCode": 3.0
+		"regionCode": "3.0"
 	},
 	{
 		"name": "Rogaland",
-		"regionCode": 11.0
+		"regionCode": "11.0"
 	},
 	{
 		"name": "Svalbard",
-		"regionCode": 21.0
+		"regionCode": "21.0"
 	},
 	{
 		"name": "Troms og Finnmark",
-		"regionCode": 54.0
+		"regionCode": "54.0"
 	},
 	{
 		"name": "Trøndelag",
-		"regionCode": 50.0
+		"regionCode": "50.0"
 	},
 	{
 		"name": "Vestfold og Telemark",
-		"regionCode": 38.0
+		"regionCode": "38.0"
 	},
 	{
 		"name": "Vestland",
-		"regionCode": 46.0
+		"regionCode": "46.0"
 	},
 	{
 		"name": "Viken",
-		"regionCode": 30.0
+		"regionCode": "30.0"
 	}
 ]

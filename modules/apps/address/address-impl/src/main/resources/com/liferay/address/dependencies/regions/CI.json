@@ -1,0 +1,58 @@
+[
+	{
+		"name": "Abidjan",
+		"regionCode": "AB"
+	},
+	{
+		"name": "Bas-Sassandra",
+		"regionCode": "BS"
+	},
+	{
+		"name": "Comoé",
+		"regionCode": "CM"
+	},
+	{
+		"name": "Denguélé",
+		"regionCode": "DN"
+	},
+	{
+		"name": "Gôh-Djiboua",
+		"regionCode": "GD"
+	},
+	{
+		"name": "Lacs",
+		"regionCode": "LC"
+	},
+	{
+		"name": "Lagunes",
+		"regionCode": "LG"
+	},
+	{
+		"name": "Montagnes",
+		"regionCode": "MG"
+	},
+	{
+		"name": "Sassandra-Marahoué",
+		"regionCode": "SM"
+	},
+	{
+		"name": "Savanes",
+		"regionCode": "SV"
+	},
+	{
+		"name": "Vallée du Bandama",
+		"regionCode": "VB"
+	},
+	{
+		"name": "Woroba",
+		"regionCode": "WR"
+	},
+	{
+		"name": "Yamoussoukro",
+		"regionCode": "YM"
+	},
+	{
+		"name": "Zanzan",
+		"regionCode": "ZZ"
+	}
+]

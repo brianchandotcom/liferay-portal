@@ -1,0 +1,34 @@
+[
+	{
+		"name": "Ad Dawḩah",
+		"regionCode": "DA"
+	},
+	{
+		"name": "Al Khawr wa adh Dhakhīrah",
+		"regionCode": "KH"
+	},
+	{
+		"name": "Al Wakrah",
+		"regionCode": "WA"
+	},
+	{
+		"name": "Ar Rayyān",
+		"regionCode": "RA"
+	},
+	{
+		"name": "Ash Shamāl",
+		"regionCode": "MS"
+	},
+	{
+		"name": "Ash Shīḩānīyah",
+		"regionCode": "SH"
+	},
+	{
+		"name": "Az̧ Z̧a‘āyin",
+		"regionCode": "ZA"
+	},
+	{
+		"name": "Umm Şalāl",
+		"regionCode": "US"
+	}
+]

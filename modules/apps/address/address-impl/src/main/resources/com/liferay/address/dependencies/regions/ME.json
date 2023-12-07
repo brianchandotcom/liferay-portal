@@ -1,0 +1,98 @@
+[
+	{
+		"name": "Andrijevica",
+		"regionCode": "1.0"
+	},
+	{
+		"name": "Bar",
+		"regionCode": "2.0"
+	},
+	{
+		"name": "Berane",
+		"regionCode": "3.0"
+	},
+	{
+		"name": "Bijelo Polje",
+		"regionCode": "4.0"
+	},
+	{
+		"name": "Budva",
+		"regionCode": "5.0"
+	},
+	{
+		"name": "Cetinje",
+		"regionCode": "6.0"
+	},
+	{
+		"name": "Danilovgrad",
+		"regionCode": "7.0"
+	},
+	{
+		"name": "Gusinje",
+		"regionCode": "22.0"
+	},
+	{
+		"name": "Herceg-Novi",
+		"regionCode": "8.0"
+	},
+	{
+		"name": "Kolašin",
+		"regionCode": "9.0"
+	},
+	{
+		"name": "Kotor",
+		"regionCode": "10.0"
+	},
+	{
+		"name": "Mojkovac",
+		"regionCode": "11.0"
+	},
+	{
+		"name": "Nikšić",
+		"regionCode": "12.0"
+	},
+	{
+		"name": "Petnjica",
+		"regionCode": "23.0"
+	},
+	{
+		"name": "Plav",
+		"regionCode": "13.0"
+	},
+	{
+		"name": "Pljevlja",
+		"regionCode": "14.0"
+	},
+	{
+		"name": "Plužine",
+		"regionCode": "15.0"
+	},
+	{
+		"name": "Podgorica",
+		"regionCode": "16.0"
+	},
+	{
+		"name": "Rožaje",
+		"regionCode": "17.0"
+	},
+	{
+		"name": "Šavnik",
+		"regionCode": "18.0"
+	},
+	{
+		"name": "Tivat",
+		"regionCode": "19.0"
+	},
+	{
+		"name": "Tuzi",
+		"regionCode": "24.0"
+	},
+	{
+		"name": "Ulcinj",
+		"regionCode": "20.0"
+	},
+	{
+		"name": "Žabljak",
+		"regionCode": "21.0"
+	}
+]

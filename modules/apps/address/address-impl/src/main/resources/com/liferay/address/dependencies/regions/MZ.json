@@ -1,0 +1,46 @@
+[
+	{
+		"name": "Cabo Delgado",
+		"regionCode": "P"
+	},
+	{
+		"name": "Gaza",
+		"regionCode": "G"
+	},
+	{
+		"name": "Inhambane",
+		"regionCode": "I"
+	},
+	{
+		"name": "Manica",
+		"regionCode": "B"
+	},
+	{
+		"name": "Maputo",
+		"regionCode": "MPM"
+	},
+	{
+		"name": "Maputo",
+		"regionCode": "L"
+	},
+	{
+		"name": "Nampula",
+		"regionCode": "N"
+	},
+	{
+		"name": "Niassa",
+		"regionCode": "A"
+	},
+	{
+		"name": "Sofala",
+		"regionCode": "S"
+	},
+	{
+		"name": "Tete",
+		"regionCode": "T"
+	},
+	{
+		"name": "Zambézia",
+		"regionCode": "Q"
+	}
+]

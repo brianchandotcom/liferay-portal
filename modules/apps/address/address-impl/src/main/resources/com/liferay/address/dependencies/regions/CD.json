@@ -1,0 +1,106 @@
+[
+	{
+		"name": "Bas-Uélé",
+		"regionCode": "BU"
+	},
+	{
+		"name": "Équateur",
+		"regionCode": "EQ"
+	},
+	{
+		"name": "Haut-Katanga",
+		"regionCode": "HK"
+	},
+	{
+		"name": "Haut-Lomami",
+		"regionCode": "HL"
+	},
+	{
+		"name": "Haut-Uélé",
+		"regionCode": "HU"
+	},
+	{
+		"name": "Ituri",
+		"regionCode": "IT"
+	},
+	{
+		"name": "Kasaï",
+		"regionCode": "KS"
+	},
+	{
+		"name": "Kasaï Central",
+		"regionCode": "KC"
+	},
+	{
+		"name": "Kasaï Oriental",
+		"regionCode": "KE"
+	},
+	{
+		"name": "Kinshasa",
+		"regionCode": "KN"
+	},
+	{
+		"name": "Kongo Central",
+		"regionCode": "BC"
+	},
+	{
+		"name": "Kwango",
+		"regionCode": "KG"
+	},
+	{
+		"name": "Kwilu",
+		"regionCode": "KL"
+	},
+	{
+		"name": "Lomami",
+		"regionCode": "LO"
+	},
+	{
+		"name": "Lualaba",
+		"regionCode": "LU"
+	},
+	{
+		"name": "Mai-Ndombe",
+		"regionCode": "MN"
+	},
+	{
+		"name": "Maniema",
+		"regionCode": "MA"
+	},
+	{
+		"name": "Mongala",
+		"regionCode": "MO"
+	},
+	{
+		"name": "Nord-Kivu",
+		"regionCode": "NK"
+	},
+	{
+		"name": "Nord-Ubangi",
+		"regionCode": "NU"
+	},
+	{
+		"name": "Sankuru",
+		"regionCode": "SA"
+	},
+	{
+		"name": "Sud-Kivu",
+		"regionCode": "SK"
+	},
+	{
+		"name": "Sud-Ubangi",
+		"regionCode": "SU"
+	},
+	{
+		"name": "Tanganyika",
+		"regionCode": "TA"
+	},
+	{
+		"name": "Tshopo",
+		"regionCode": "TO"
+	},
+	{
+		"name": "Tshuapa",
+		"regionCode": "TU"
+	}
+]

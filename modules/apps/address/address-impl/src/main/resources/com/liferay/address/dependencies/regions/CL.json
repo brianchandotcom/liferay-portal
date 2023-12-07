@@ -1,0 +1,66 @@
+[
+	{
+		"name": "Aisén del General Carlos Ibañez del Campo",
+		"regionCode": "AI"
+	},
+	{
+		"name": "Antofagasta",
+		"regionCode": "AN"
+	},
+	{
+		"name": "Arica y Parinacota",
+		"regionCode": "AP"
+	},
+	{
+		"name": "Atacama",
+		"regionCode": "AT"
+	},
+	{
+		"name": "Biobío",
+		"regionCode": "BI"
+	},
+	{
+		"name": "Coquimbo",
+		"regionCode": "CO"
+	},
+	{
+		"name": "La Araucanía",
+		"regionCode": "AR"
+	},
+	{
+		"name": "Libertador General Bernardo O'Higgins",
+		"regionCode": "LI"
+	},
+	{
+		"name": "Los Lagos",
+		"regionCode": "LL"
+	},
+	{
+		"name": "Los Ríos",
+		"regionCode": "LR"
+	},
+	{
+		"name": "Magallanes",
+		"regionCode": "MA"
+	},
+	{
+		"name": "Maule",
+		"regionCode": "ML"
+	},
+	{
+		"name": "Ñuble",
+		"regionCode": "NB"
+	},
+	{
+		"name": "Región Metropolitana de Santiago",
+		"regionCode": "RM"
+	},
+	{
+		"name": "Tarapacá",
+		"regionCode": "TA"
+	},
+	{
+		"name": "Valparaíso",
+		"regionCode": "VS"
+	}
+]

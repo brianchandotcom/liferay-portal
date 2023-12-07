@@ -1,0 +1,38 @@
+[
+	{
+		"name": "Gauteng",
+		"regionCode": "GP"
+	},
+	{
+		"name": "Kwazulu-Natal",
+		"regionCode": "KZN"
+	},
+	{
+		"name": "Limpopo",
+		"regionCode": "LP"
+	},
+	{
+		"name": "Mpumalanga",
+		"regionCode": "MP"
+	},
+	{
+		"name": "Northern Cape",
+		"regionCode": "NC"
+	},
+	{
+		"name": "North-West",
+		"regionCode": "NW"
+	},
+	{
+		"name": "Oos-Kaap",
+		"regionCode": "EC"
+	},
+	{
+		"name": "Free State",
+		"regionCode": "FS"
+	},
+	{
+		"name": "Western Cape",
+		"regionCode": "WC"
+	}
+]

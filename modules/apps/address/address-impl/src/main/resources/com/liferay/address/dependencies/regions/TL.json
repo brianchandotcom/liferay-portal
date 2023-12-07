@@ -1,0 +1,54 @@
+[
+	{
+		"name": "Aileu",
+		"regionCode": "AL"
+	},
+	{
+		"name": "Ainaro",
+		"regionCode": "AN"
+	},
+	{
+		"name": "Baucau",
+		"regionCode": "BA"
+	},
+	{
+		"name": "Bobonaro",
+		"regionCode": "BO"
+	},
+	{
+		"name": "Cova Lima",
+		"regionCode": "CO"
+	},
+	{
+		"name": "Díli",
+		"regionCode": "DI"
+	},
+	{
+		"name": "Ermera",
+		"regionCode": "ER"
+	},
+	{
+		"name": "Lautém",
+		"regionCode": "LA"
+	},
+	{
+		"name": "Liquiça",
+		"regionCode": "LI"
+	},
+	{
+		"name": "Manatuto",
+		"regionCode": "MT"
+	},
+	{
+		"name": "Manufahi",
+		"regionCode": "MF"
+	},
+	{
+		"name": "Oé-Cusse Ambeno",
+		"regionCode": "OE"
+	},
+	{
+		"name": "Viqueque",
+		"regionCode": "VI"
+	}
+]

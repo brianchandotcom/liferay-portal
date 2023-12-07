@@ -1,0 +1,26 @@
+[
+	{
+		"name": "Belize",
+		"regionCode": "BZ"
+	},
+	{
+		"name": "Cayo",
+		"regionCode": "CY"
+	},
+	{
+		"name": "Corozal",
+		"regionCode": "CZL"
+	},
+	{
+		"name": "Orange Walk",
+		"regionCode": "OW"
+	},
+	{
+		"name": "Stann Creek",
+		"regionCode": "SC"
+	},
+	{
+		"name": "Toledo",
+		"regionCode": "TOL"
+	}
+]

@@ -1,0 +1,110 @@
+[
+	{
+		"name": "Avtonomna Respublika Krym",
+		"regionCode": "43.0"
+	},
+	{
+		"name": "Cherkaska oblast",
+		"regionCode": "71.0"
+	},
+	{
+		"name": "Chernihivska oblast",
+		"regionCode": "74.0"
+	},
+	{
+		"name": "Chernivetska oblast",
+		"regionCode": "77.0"
+	},
+	{
+		"name": "Dnipropetrovska oblast",
+		"regionCode": "12.0"
+	},
+	{
+		"name": "Donetska oblast",
+		"regionCode": "14.0"
+	},
+	{
+		"name": "Ivano-Frankivska oblast",
+		"regionCode": "26.0"
+	},
+	{
+		"name": "Kharkivska oblast",
+		"regionCode": "63.0"
+	},
+	{
+		"name": "Khersonska oblast",
+		"regionCode": "65.0"
+	},
+	{
+		"name": "Khmelnytska oblast",
+		"regionCode": "68.0"
+	},
+	{
+		"name": "Kirovohradska oblast",
+		"regionCode": "35.0"
+	},
+	{
+		"name": "Kyiv",
+		"regionCode": "30.0"
+	},
+	{
+		"name": "Kyivska oblast",
+		"regionCode": "32.0"
+	},
+	{
+		"name": "Luhanska oblast",
+		"regionCode": "9.0"
+	},
+	{
+		"name": "Lvivska oblast",
+		"regionCode": "46.0"
+	},
+	{
+		"name": "Mykolaivska oblast",
+		"regionCode": "48.0"
+	},
+	{
+		"name": "Odeska oblast",
+		"regionCode": "51.0"
+	},
+	{
+		"name": "Poltavska oblast",
+		"regionCode": "53.0"
+	},
+	{
+		"name": "Rivnenska oblast",
+		"regionCode": "56.0"
+	},
+	{
+		"name": "Sevastopol",
+		"regionCode": "40.0"
+	},
+	{
+		"name": "Sumska oblast",
+		"regionCode": "59.0"
+	},
+	{
+		"name": "Ternopilska oblast",
+		"regionCode": "61.0"
+	},
+	{
+		"name": "Vinnytska oblast",
+		"regionCode": "5.0"
+	},
+	{
+		"name": "Volynska oblast",
+		"regionCode": "7.0"
+	},
+	{
+		"name": "Zakarpatska oblast",
+		"regionCode": "21.0"
+	},
+	{
+		"name": "Zaporizka oblast",
+		"regionCode": "23.0"
+	},
+	{
+		"name": "Zhytomyrska oblast",
+		"regionCode": "18.0"
+	}
+]

@@ -1,0 +1,114 @@
+[
+	{
+		"name": "Blagoevgrad",
+		"regionCode": "1.0"
+	},
+	{
+		"name": "Burgas",
+		"regionCode": "2.0"
+	},
+	{
+		"name": "Dobrich",
+		"regionCode": "8.0"
+	},
+	{
+		"name": "Gabrovo",
+		"regionCode": "7.0"
+	},
+	{
+		"name": "Haskovo",
+		"regionCode": "26.0"
+	},
+	{
+		"name": "Kardzhali",
+		"regionCode": "9.0"
+	},
+	{
+		"name": "Kyustendil",
+		"regionCode": "10.0"
+	},
+	{
+		"name": "Lovech",
+		"regionCode": "11.0"
+	},
+	{
+		"name": "Montana",
+		"regionCode": "12.0"
+	},
+	{
+		"name": "Pazardzhik",
+		"regionCode": "13.0"
+	},
+	{
+		"name": "Pernik",
+		"regionCode": "14.0"
+	},
+	{
+		"name": "Pleven",
+		"regionCode": "15.0"
+	},
+	{
+		"name": "Plovdiv",
+		"regionCode": "16.0"
+	},
+	{
+		"name": "Razgrad",
+		"regionCode": "17.0"
+	},
+	{
+		"name": "Ruse",
+		"regionCode": "18.0"
+	},
+	{
+		"name": "Shumen",
+		"regionCode": "27.0"
+	},
+	{
+		"name": "Silistra",
+		"regionCode": "19.0"
+	},
+	{
+		"name": "Sliven",
+		"regionCode": "20.0"
+	},
+	{
+		"name": "Smolyan",
+		"regionCode": "21.0"
+	},
+	{
+		"name": "Sofia",
+		"regionCode": "23.0"
+	},
+	{
+		"name": "Sofia (stolitsa)",
+		"regionCode": "22.0"
+	},
+	{
+		"name": "Stara Zagora",
+		"regionCode": "24.0"
+	},
+	{
+		"name": "Targovishte",
+		"regionCode": "25.0"
+	},
+	{
+		"name": "Varna",
+		"regionCode": "3.0"
+	},
+	{
+		"name": "Veliko Tarnovo",
+		"regionCode": "4.0"
+	},
+	{
+		"name": "Vidin",
+		"regionCode": "5.0"
+	},
+	{
+		"name": "Vratsa",
+		"regionCode": "6.0"
+	},
+	{
+		"name": "Yambol",
+		"regionCode": "28.0"
+	}
+]

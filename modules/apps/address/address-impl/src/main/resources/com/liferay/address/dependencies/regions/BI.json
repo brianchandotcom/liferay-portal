@@ -1,0 +1,74 @@
+[
+	{
+		"name": "Bubanza",
+		"regionCode": "BB"
+	},
+	{
+		"name": "Bujumbura Mairie",
+		"regionCode": "BM"
+	},
+	{
+		"name": "Bujumbura Rural",
+		"regionCode": "BL"
+	},
+	{
+		"name": "Bururi",
+		"regionCode": "BR"
+	},
+	{
+		"name": "Cankuzo",
+		"regionCode": "CA"
+	},
+	{
+		"name": "Cibitoke",
+		"regionCode": "CI"
+	},
+	{
+		"name": "Gitega",
+		"regionCode": "GI"
+	},
+	{
+		"name": "Karuzi",
+		"regionCode": "KR"
+	},
+	{
+		"name": "Kayanza",
+		"regionCode": "KY"
+	},
+	{
+		"name": "Kirundo",
+		"regionCode": "KI"
+	},
+	{
+		"name": "Makamba",
+		"regionCode": "MA"
+	},
+	{
+		"name": "Muramvya",
+		"regionCode": "MU"
+	},
+	{
+		"name": "Muyinga",
+		"regionCode": "MY"
+	},
+	{
+		"name": "Mwaro",
+		"regionCode": "MW"
+	},
+	{
+		"name": "Ngozi",
+		"regionCode": "NG"
+	},
+	{
+		"name": "Rumonge",
+		"regionCode": "RM"
+	},
+	{
+		"name": "Rutana",
+		"regionCode": "RT"
+	},
+	{
+		"name": "Ruyigi",
+		"regionCode": "RY"
+	}
+]

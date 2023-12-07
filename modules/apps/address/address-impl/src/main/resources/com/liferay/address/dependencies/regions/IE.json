@@ -1,0 +1,122 @@
+[
+	{
+		"name": "Carlow",
+		"regionCode": "CW"
+	},
+	{
+		"name": "Cavan",
+		"regionCode": "CN"
+	},
+	{
+		"name": "Clare",
+		"regionCode": "CE"
+	},
+	{
+		"name": "Connaught",
+		"regionCode": "C"
+	},
+	{
+		"name": "Cork",
+		"regionCode": "CO"
+	},
+	{
+		"name": "Donegal",
+		"regionCode": "DL"
+	},
+	{
+		"name": "Dublin",
+		"regionCode": "D"
+	},
+	{
+		"name": "Galway",
+		"regionCode": "G"
+	},
+	{
+		"name": "Kerry",
+		"regionCode": "KY"
+	},
+	{
+		"name": "Kildare",
+		"regionCode": "KE"
+	},
+	{
+		"name": "Kilkenny",
+		"regionCode": "KK"
+	},
+	{
+		"name": "Laois",
+		"regionCode": "LS"
+	},
+	{
+		"name": "Leinster",
+		"regionCode": "L"
+	},
+	{
+		"name": "Leitrim",
+		"regionCode": "LM"
+	},
+	{
+		"name": "Limerick",
+		"regionCode": "LK"
+	},
+	{
+		"name": "Longford",
+		"regionCode": "LD"
+	},
+	{
+		"name": "Louth",
+		"regionCode": "LH"
+	},
+	{
+		"name": "Mayo",
+		"regionCode": "MO"
+	},
+	{
+		"name": "Meath",
+		"regionCode": "MH"
+	},
+	{
+		"name": "Monaghan",
+		"regionCode": "MN"
+	},
+	{
+		"name": "Munster",
+		"regionCode": "M"
+	},
+	{
+		"name": "Offaly",
+		"regionCode": "OY"
+	},
+	{
+		"name": "Roscommon",
+		"regionCode": "RN"
+	},
+	{
+		"name": "Sligo",
+		"regionCode": "SO"
+	},
+	{
+		"name": "Tipperary",
+		"regionCode": "TA"
+	},
+	{
+		"name": "Ulster",
+		"regionCode": "U"
+	},
+	{
+		"name": "Waterford",
+		"regionCode": "WD"
+	},
+	{
+		"name": "Westmeath",
+		"regionCode": "WH"
+	},
+	{
+		"name": "Wexford",
+		"regionCode": "WX"
+	},
+	{
+		"name": "Wicklow",
+		"regionCode": "WW"
+	}
+]

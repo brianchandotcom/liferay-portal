@@ -1,0 +1,394 @@
+[
+	{
+		"name": "Abra",
+		"regionCode": "ABR"
+	},
+	{
+		"name": "Agusan del Norte",
+		"regionCode": "AGN"
+	},
+	{
+		"name": "Agusan del Sur",
+		"regionCode": "AGS"
+	},
+	{
+		"name": "Aklan",
+		"regionCode": "AKL"
+	},
+	{
+		"name": "Albay",
+		"regionCode": "ALB"
+	},
+	{
+		"name": "Antique",
+		"regionCode": "ANT"
+	},
+	{
+		"name": "Apayao",
+		"regionCode": "APA"
+	},
+	{
+		"name": "Aurora",
+		"regionCode": "AUR"
+	},
+	{
+		"name": "Autonomous Region in Muslim Mindanao (ARMM)",
+		"regionCode": "14.0"
+	},
+	{
+		"name": "Basilan",
+		"regionCode": "BAS"
+	},
+	{
+		"name": "Bataan",
+		"regionCode": "BAN"
+	},
+	{
+		"name": "Batanes",
+		"regionCode": "BTN"
+	},
+	{
+		"name": "Batangas",
+		"regionCode": "BTG"
+	},
+	{
+		"name": "Benguet",
+		"regionCode": "BEN"
+	},
+	{
+		"name": "Bicol (Region V)",
+		"regionCode": "5.0"
+	},
+	{
+		"name": "Biliran",
+		"regionCode": "BIL"
+	},
+	{
+		"name": "Bohol",
+		"regionCode": "BOH"
+	},
+	{
+		"name": "Bukidnon",
+		"regionCode": "BUK"
+	},
+	{
+		"name": "Bulacan",
+		"regionCode": "BUL"
+	},
+	{
+		"name": "Cagayan",
+		"regionCode": "CAG"
+	},
+	{
+		"name": "Cagayan Valley (Region II)",
+		"regionCode": "2.0"
+	},
+	{
+		"name": "Calabarzon (Region IV-A)",
+		"regionCode": "40.0"
+	},
+	{
+		"name": "Camarines Norte",
+		"regionCode": "CAN"
+	},
+	{
+		"name": "Camarines Sur",
+		"regionCode": "CAS"
+	},
+	{
+		"name": "Camiguin",
+		"regionCode": "CAM"
+	},
+	{
+		"name": "Capiz",
+		"regionCode": "CAP"
+	},
+	{
+		"name": "Caraga (Region XIII)",
+		"regionCode": "13.0"
+	},
+	{
+		"name": "Catanduanes",
+		"regionCode": "CAT"
+	},
+	{
+		"name": "Cavite",
+		"regionCode": "CAV"
+	},
+	{
+		"name": "Cebu",
+		"regionCode": "CEB"
+	},
+	{
+		"name": "Central Luzon (Region III)",
+		"regionCode": "3.0"
+	},
+	{
+		"name": "Central Visayas (Region VII)",
+		"regionCode": "7.0"
+	},
+	{
+		"name": "Cordillera Administrative Region (CAR)",
+		"regionCode": "15.0"
+	},
+	{
+		"name": "Cotabato",
+		"regionCode": "NCO"
+	},
+	{
+		"name": "Davao (Region XI)",
+		"regionCode": "11.0"
+	},
+	{
+		"name": "Davao de Oro",
+		"regionCode": "COM"
+	},
+	{
+		"name": "Davao del Norte",
+		"regionCode": "DAV"
+	},
+	{
+		"name": "Davao del Sur",
+		"regionCode": "DAS"
+	},
+	{
+		"name": "Davao Occidental",
+		"regionCode": "DVO"
+	},
+	{
+		"name": "Davao Oriental",
+		"regionCode": "DAO"
+	},
+	{
+		"name": "Dinagat Islands",
+		"regionCode": "DIN"
+	},
+	{
+		"name": "Eastern Samar",
+		"regionCode": "EAS"
+	},
+	{
+		"name": "Eastern Visayas (Region VIII)",
+		"regionCode": "8.0"
+	},
+	{
+		"name": "Guimaras",
+		"regionCode": "GUI"
+	},
+	{
+		"name": "Ifugao",
+		"regionCode": "IFU"
+	},
+	{
+		"name": "Ilocos (Region I)",
+		"regionCode": "1.0"
+	},
+	{
+		"name": "Ilocos Norte",
+		"regionCode": "ILN"
+	},
+	{
+		"name": "Ilocos Sur",
+		"regionCode": "ILS"
+	},
+	{
+		"name": "Iloilo",
+		"regionCode": "ILI"
+	},
+	{
+		"name": "Isabela",
+		"regionCode": "ISA"
+	},
+	{
+		"name": "Kalinga",
+		"regionCode": "KAL"
+	},
+	{
+		"name": "La Union",
+		"regionCode": "LUN"
+	},
+	{
+		"name": "Laguna",
+		"regionCode": "LAG"
+	},
+	{
+		"name": "Lanao del Norte",
+		"regionCode": "LAN"
+	},
+	{
+		"name": "Lanao del Sur",
+		"regionCode": "LAS"
+	},
+	{
+		"name": "Leyte",
+		"regionCode": "LEY"
+	},
+	{
+		"name": "Maguindanao",
+		"regionCode": "MAG"
+	},
+	{
+		"name": "Marinduque",
+		"regionCode": "MAD"
+	},
+	{
+		"name": "Masbate",
+		"regionCode": "MAS"
+	},
+	{
+		"name": "Mimaropa (Region IV-B)",
+		"regionCode": "41.0"
+	},
+	{
+		"name": "Mindoro Occidental",
+		"regionCode": "MDC"
+	},
+	{
+		"name": "Mindoro Oriental",
+		"regionCode": "MDR"
+	},
+	{
+		"name": "Misamis Occidental",
+		"regionCode": "MSC"
+	},
+	{
+		"name": "Misamis Oriental",
+		"regionCode": "MSR"
+	},
+	{
+		"name": "Mountain Province",
+		"regionCode": "MOU"
+	},
+	{
+		"name": "National Capital Region",
+		"regionCode": "0.0"
+	},
+	{
+		"name": "Negros Occidental",
+		"regionCode": "NEC"
+	},
+	{
+		"name": "Negros Oriental",
+		"regionCode": "NER"
+	},
+	{
+		"name": "Northern Mindanao (Region X)",
+		"regionCode": "10.0"
+	},
+	{
+		"name": "Northern Samar",
+		"regionCode": "NSA"
+	},
+	{
+		"name": "Nueva Ecija",
+		"regionCode": "NUE"
+	},
+	{
+		"name": "Nueva Vizcaya",
+		"regionCode": "NUV"
+	},
+	{
+		"name": "Palawan",
+		"regionCode": "PLW"
+	},
+	{
+		"name": "Pampanga",
+		"regionCode": "PAM"
+	},
+	{
+		"name": "Pangasinan",
+		"regionCode": "PAN"
+	},
+	{
+		"name": "Quezon",
+		"regionCode": "QUE"
+	},
+	{
+		"name": "Quirino",
+		"regionCode": "QUI"
+	},
+	{
+		"name": "Rizal",
+		"regionCode": "RIZ"
+	},
+	{
+		"name": "Romblon",
+		"regionCode": "ROM"
+	},
+	{
+		"name": "Samar",
+		"regionCode": "WSA"
+	},
+	{
+		"name": "Sarangani",
+		"regionCode": "SAR"
+	},
+	{
+		"name": "Siquijor",
+		"regionCode": "SIG"
+	},
+	{
+		"name": "Soccsksargen (Region XII)",
+		"regionCode": "12.0"
+	},
+	{
+		"name": "Sorsogon",
+		"regionCode": "SOR"
+	},
+	{
+		"name": "South Cotabato",
+		"regionCode": "SCO"
+	},
+	{
+		"name": "Southern Leyte",
+		"regionCode": "SLE"
+	},
+	{
+		"name": "Sultan Kudarat",
+		"regionCode": "SUK"
+	},
+	{
+		"name": "Sulu",
+		"regionCode": "SLU"
+	},
+	{
+		"name": "Surigao del Norte",
+		"regionCode": "SUN"
+	},
+	{
+		"name": "Surigao del Sur",
+		"regionCode": "SUR"
+	},
+	{
+		"name": "Tarlac",
+		"regionCode": "TAR"
+	},
+	{
+		"name": "Tawi-Tawi",
+		"regionCode": "TAW"
+	},
+	{
+		"name": "Western Visayas (Region VI)",
+		"regionCode": "6.0"
+	},
+	{
+		"name": "Zambales",
+		"regionCode": "ZMB"
+	},
+	{
+		"name": "Zamboanga del Norte",
+		"regionCode": "ZAN"
+	},
+	{
+		"name": "Zamboanga del Sur",
+		"regionCode": "ZAS"
+	},
+	{
+		"name": "Zamboanga Peninsula (Region IX)",
+		"regionCode": "9.0"
+	},
+	{
+		"name": "Zamboanga Sibugay",
+		"regionCode": "ZSI"
+	}
+]

@@ -1,0 +1,26 @@
+[
+	{
+		"name": "Antananarivo",
+		"regionCode": "T"
+	},
+	{
+		"name": "Antsiranana",
+		"regionCode": "D"
+	},
+	{
+		"name": "Fianarantsoa",
+		"regionCode": "F"
+	},
+	{
+		"name": "Mahajanga",
+		"regionCode": "M"
+	},
+	{
+		"name": "Toamasina",
+		"regionCode": "A"
+	},
+	{
+		"name": "Toliara",
+		"regionCode": "U"
+	}
+]

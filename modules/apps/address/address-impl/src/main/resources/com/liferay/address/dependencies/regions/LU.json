@@ -1,0 +1,50 @@
+[
+	{
+		"name": "Capellen",
+		"regionCode": "CA"
+	},
+	{
+		"name": "Clerf",
+		"regionCode": "CL"
+	},
+	{
+		"name": "Diekirch",
+		"regionCode": "DI"
+	},
+	{
+		"name": "Echternach",
+		"regionCode": "EC"
+	},
+	{
+		"name": "Esch an der Alzette",
+		"regionCode": "ES"
+	},
+	{
+		"name": "Grevenmacher",
+		"regionCode": "GR"
+	},
+	{
+		"name": "Luxemburg",
+		"regionCode": "LU"
+	},
+	{
+		"name": "Mersch",
+		"regionCode": "ME"
+	},
+	{
+		"name": "Redingen",
+		"regionCode": "RD"
+	},
+	{
+		"name": "Remich",
+		"regionCode": "RM"
+	},
+	{
+		"name": "Vianden",
+		"regionCode": "VD"
+	},
+	{
+		"name": "Wiltz",
+		"regionCode": "WI"
+	}
+]

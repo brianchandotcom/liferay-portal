@@ -1,0 +1,94 @@
+[
+	{
+		"name": "Al Baţḩā’",
+		"regionCode": "BA"
+	},
+	{
+		"name": "Al Buḩayrah",
+		"regionCode": "LC"
+	},
+	{
+		"name": "Baḩr al Ghazāl",
+		"regionCode": "BG"
+	},
+	{
+		"name": "Būrkū",
+		"regionCode": "BO"
+	},
+	{
+		"name": "Ḩajjar Lamīs",
+		"regionCode": "HL"
+	},
+	{
+		"name": "Inīdī al Gharbī",
+		"regionCode": "EO"
+	},
+	{
+		"name": "Inīdī ash Sharqī",
+		"regionCode": "EE"
+	},
+	{
+		"name": "Kānim",
+		"regionCode": "KA"
+	},
+	{
+		"name": "Lūghūn al Gharbī",
+		"regionCode": "LO"
+	},
+	{
+		"name": "Lūghūn ash Sharqī",
+		"regionCode": "LR"
+	},
+	{
+		"name": "Madīnat Injamīnā",
+		"regionCode": "ND"
+	},
+	{
+		"name": "Māndūl",
+		"regionCode": "MA"
+	},
+	{
+		"name": "Māyū Kībbī al Gharbī",
+		"regionCode": "MO"
+	},
+	{
+		"name": "Māyū Kībbī ash Sharqī",
+		"regionCode": "ME"
+	},
+	{
+		"name": "Qīrā",
+		"regionCode": "GR"
+	},
+	{
+		"name": "Salāmāt",
+		"regionCode": "SA"
+	},
+	{
+		"name": "Shārī al Awsaţ",
+		"regionCode": "MC"
+	},
+	{
+		"name": "Shārī Bāqirmī",
+		"regionCode": "CB"
+	},
+	{
+		"name": "Sīlā",
+		"regionCode": "SI"
+	},
+	{
+		"name": "Tānjīlī",
+		"regionCode": "TA"
+	},
+	{
+		"name": "Tibastī",
+		"regionCode": "TI"
+	},
+	{
+		"name": "Waddāy",
+		"regionCode": "OD"
+	},
+	{
+		"name": "Wādī Fīrā’",
+		"regionCode": "WF"
+	}
+]

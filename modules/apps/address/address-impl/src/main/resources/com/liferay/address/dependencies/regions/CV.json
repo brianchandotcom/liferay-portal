@@ -1,0 +1,98 @@
+[
+	{
+		"name": "Boa Vista",
+		"regionCode": "BV"
+	},
+	{
+		"name": "Brava",
+		"regionCode": "BR"
+	},
+	{
+		"name": "Ilhas de Barlavento",
+		"regionCode": "B"
+	},
+	{
+		"name": "Ilhas de Sotavento",
+		"regionCode": "S"
+	},
+	{
+		"name": "Maio",
+		"regionCode": "MA"
+	},
+	{
+		"name": "Mosteiros",
+		"regionCode": "MO"
+	},
+	{
+		"name": "Paul",
+		"regionCode": "PA"
+	},
+	{
+		"name": "Porto Novo",
+		"regionCode": "PN"
+	},
+	{
+		"name": "Praia",
+		"regionCode": "PR"
+	},
+	{
+		"name": "Ribeira Brava",
+		"regionCode": "RB"
+	},
+	{
+		"name": "Ribeira Grande",
+		"regionCode": "RG"
+	},
+	{
+		"name": "Ribeira Grande de Santiago",
+		"regionCode": "RS"
+	},
+	{
+		"name": "Sal",
+		"regionCode": "SL"
+	},
+	{
+		"name": "Santa Catarina",
+		"regionCode": "CA"
+	},
+	{
+		"name": "Santa Catarina do Fogo",
+		"regionCode": "CF"
+	},
+	{
+		"name": "Santa Cruz",
+		"regionCode": "CR"
+	},
+	{
+		"name": "São Domingos",
+		"regionCode": "SD"
+	},
+	{
+		"name": "São Filipe",
+		"regionCode": "SF"
+	},
+	{
+		"name": "São Lourenço dos Órgãos",
+		"regionCode": "SO"
+	},
+	{
+		"name": "São Miguel",
+		"regionCode": "SM"
+	},
+	{
+		"name": "São Salvador do Mundo",
+		"regionCode": "SS"
+	},
+	{
+		"name": "São Vicente",
+		"regionCode": "SV"
+	},
+	{
+		"name": "Tarrafal",
+		"regionCode": "TA"
+	},
+	{
+		"name": "Tarrafal de São Nicolau",
+		"regionCode": "TS"
+	}
+]

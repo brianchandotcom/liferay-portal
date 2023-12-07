@@ -1,0 +1,138 @@
+[
+	{
+		"name": "Badakhshān",
+		"regionCode": "BDS"
+	},
+	{
+		"name": "Bādghīs",
+		"regionCode": "BDG"
+	},
+	{
+		"name": "Baghlān",
+		"regionCode": "BGL"
+	},
+	{
+		"name": "Balkh",
+		"regionCode": "BAL"
+	},
+	{
+		"name": "Bāmyān",
+		"regionCode": "BAM"
+	},
+	{
+		"name": "Dāykundī",
+		"regionCode": "DAY"
+	},
+	{
+		"name": "Farāh",
+		"regionCode": "FRA"
+	},
+	{
+		"name": "Fāryāb",
+		"regionCode": "FYB"
+	},
+	{
+		"name": "Ghaznī",
+		"regionCode": "GHA"
+	},
+	{
+		"name": "Ghōr",
+		"regionCode": "GHO"
+	},
+	{
+		"name": "Helmand",
+		"regionCode": "HEL"
+	},
+	{
+		"name": "Herāt",
+		"regionCode": "HER"
+	},
+	{
+		"name": "Jowzjān",
+		"regionCode": "JOW"
+	},
+	{
+		"name": "Kābul",
+		"regionCode": "KAB"
+	},
+	{
+		"name": "Kandahār",
+		"regionCode": "KAN"
+	},
+	{
+		"name": "Kāpīsā",
+		"regionCode": "KAP"
+	},
+	{
+		"name": "Khōst",
+		"regionCode": "KHO"
+	},
+	{
+		"name": "Kunaṟ",
+		"regionCode": "KNR"
+	},
+	{
+		"name": "Kunduz",
+		"regionCode": "KDZ"
+	},
+	{
+		"name": "Laghmān",
+		"regionCode": "LAG"
+	},
+	{
+		"name": "Lōgar",
+		"regionCode": "LOG"
+	},
+	{
+		"name": "Nangarhār",
+		"regionCode": "NAN"
+	},
+	{
+		"name": "Nīmrōz",
+		"regionCode": "NIM"
+	},
+	{
+		"name": "Nūristān",
+		"regionCode": "NUR"
+	},
+	{
+		"name": "Paktīkā",
+		"regionCode": "PKA"
+	},
+	{
+		"name": "Paktiyā",
+		"regionCode": "PIA"
+	},
+	{
+		"name": "Panjshayr",
+		"regionCode": "PAN"
+	},
+	{
+		"name": "Parwān",
+		"regionCode": "PAR"
+	},
+	{
+		"name": "Samangān",
+		"regionCode": "SAM"
+	},
+	{
+		"name": "Sar-e Pul",
+		"regionCode": "SAR"
+	},
+	{
+		"name": "Takhār",
+		"regionCode": "TAK"
+	},
+	{
+		"name": "Uruzgān",
+		"regionCode": "URU"
+	},
+	{
+		"name": "Wardak",
+		"regionCode": "WAR"
+	},
+	{
+		"name": "Zābul",
+		"regionCode": "ZAB"
+	}
+]

@@ -1,0 +1,558 @@
+[
+	{
+		"name": "Abim",
+		"regionCode": "314.0"
+	},
+	{
+		"name": "Adjumani",
+		"regionCode": "301.0"
+	},
+	{
+		"name": "Agago",
+		"regionCode": "322.0"
+	},
+	{
+		"name": "Alebtong",
+		"regionCode": "323.0"
+	},
+	{
+		"name": "Amolatar",
+		"regionCode": "315.0"
+	},
+	{
+		"name": "Amudat",
+		"regionCode": "324.0"
+	},
+	{
+		"name": "Amuria",
+		"regionCode": "216.0"
+	},
+	{
+		"name": "Amuru",
+		"regionCode": "316.0"
+	},
+	{
+		"name": "Apac",
+		"regionCode": "302.0"
+	},
+	{
+		"name": "Arua",
+		"regionCode": "303.0"
+	},
+	{
+		"name": "Budaka",
+		"regionCode": "217.0"
+	},
+	{
+		"name": "Bududa",
+		"regionCode": "218.0"
+	},
+	{
+		"name": "Bugiri",
+		"regionCode": "201.0"
+	},
+	{
+		"name": "Bugweri",
+		"regionCode": "235.0"
+	},
+	{
+		"name": "Buhweju",
+		"regionCode": "420.0"
+	},
+	{
+		"name": "Buikwe",
+		"regionCode": "117.0"
+	},
+	{
+		"name": "Bukedea",
+		"regionCode": "219.0"
+	},
+	{
+		"name": "Bukomansibi",
+		"regionCode": "118.0"
+	},
+	{
+		"name": "Bukwo",
+		"regionCode": "220.0"
+	},
+	{
+		"name": "Bulambuli",
+		"regionCode": "225.0"
+	},
+	{
+		"name": "Buliisa",
+		"regionCode": "416.0"
+	},
+	{
+		"name": "Bundibugyo",
+		"regionCode": "401.0"
+	},
+	{
+		"name": "Bunyangabu",
+		"regionCode": "430.0"
+	},
+	{
+		"name": "Bushenyi",
+		"regionCode": "402.0"
+	},
+	{
+		"name": "Busia",
+		"regionCode": "202.0"
+	},
+	{
+		"name": "Butaleja",
+		"regionCode": "221.0"
+	},
+	{
+		"name": "Butambala",
+		"regionCode": "119.0"
+	},
+	{
+		"name": "Butebo",
+		"regionCode": "233.0"
+	},
+	{
+		"name": "Buvuma",
+		"regionCode": "120.0"
+	},
+	{
+		"name": "Buyende",
+		"regionCode": "226.0"
+	},
+	{
+		"name": "Central",
+		"regionCode": "C"
+	},
+	{
+		"name": "Dokolo",
+		"regionCode": "317.0"
+	},
+	{
+		"name": "Eastern",
+		"regionCode": "E"
+	},
+	{
+		"name": "Gomba",
+		"regionCode": "121.0"
+	},
+	{
+		"name": "Gulu",
+		"regionCode": "304.0"
+	},
+	{
+		"name": "Hoima",
+		"regionCode": "403.0"
+	},
+	{
+		"name": "Ibanda",
+		"regionCode": "417.0"
+	},
+	{
+		"name": "Iganga",
+		"regionCode": "203.0"
+	},
+	{
+		"name": "Isingiro",
+		"regionCode": "418.0"
+	},
+	{
+		"name": "Jinja",
+		"regionCode": "204.0"
+	},
+	{
+		"name": "Kaabong",
+		"regionCode": "318.0"
+	},
+	{
+		"name": "Kabale",
+		"regionCode": "404.0"
+	},
+	{
+		"name": "Kabarole",
+		"regionCode": "405.0"
+	},
+	{
+		"name": "Kaberamaido",
+		"regionCode": "213.0"
+	},
+	{
+		"name": "Kagadi",
+		"regionCode": "427.0"
+	},
+	{
+		"name": "Kakumiro",
+		"regionCode": "428.0"
+	},
+	{
+		"name": "Kalaki",
+		"regionCode": "237.0"
+	},
+	{
+		"name": "Kalangala",
+		"regionCode": "101.0"
+	},
+	{
+		"name": "Kaliro",
+		"regionCode": "222.0"
+	},
+	{
+		"name": "Kalungu",
+		"regionCode": "122.0"
+	},
+	{
+		"name": "Kampala",
+		"regionCode": "102.0"
+	},
+	{
+		"name": "Kamuli",
+		"regionCode": "205.0"
+	},
+	{
+		"name": "Kamwenge",
+		"regionCode": "413.0"
+	},
+	{
+		"name": "Kanungu",
+		"regionCode": "414.0"
+	},
+	{
+		"name": "Kapchorwa",
+		"regionCode": "206.0"
+	},
+	{
+		"name": "Kapelebyong",
+		"regionCode": "236.0"
+	},
+	{
+		"name": "Karenga",
+		"regionCode": "335.0"
+	},
+	{
+		"name": "Kasanda",
+		"regionCode": "126.0"
+	},
+	{
+		"name": "Kasese",
+		"regionCode": "406.0"
+	},
+	{
+		"name": "Katakwi",
+		"regionCode": "207.0"
+	},
+	{
+		"name": "Kayunga",
+		"regionCode": "112.0"
+	},
+	{
+		"name": "Kazo",
+		"regionCode": "433.0"
+	},
+	{
+		"name": "Kibaale",
+		"regionCode": "407.0"
+	},
+	{
+		"name": "Kiboga",
+		"regionCode": "103.0"
+	},
+	{
+		"name": "Kibuku",
+		"regionCode": "227.0"
+	},
+	{
+		"name": "Kikuube",
+		"regionCode": "432.0"
+	},
+	{
+		"name": "Kiruhura",
+		"regionCode": "419.0"
+	},
+	{
+		"name": "Kiryandongo",
+		"regionCode": "421.0"
+	},
+	{
+		"name": "Kisoro",
+		"regionCode": "408.0"
+	},
+	{
+		"name": "Kitagwenda",
+		"regionCode": "434.0"
+	},
+	{
+		"name": "Kitgum",
+		"regionCode": "305.0"
+	},
+	{
+		"name": "Koboko",
+		"regionCode": "319.0"
+	},
+	{
+		"name": "Kole",
+		"regionCode": "325.0"
+	},
+	{
+		"name": "Kotido",
+		"regionCode": "306.0"
+	},
+	{
+		"name": "Kumi",
+		"regionCode": "208.0"
+	},
+	{
+		"name": "Kwania",
+		"regionCode": "333.0"
+	},
+	{
+		"name": "Kween",
+		"regionCode": "228.0"
+	},
+	{
+		"name": "Kyankwanzi",
+		"regionCode": "123.0"
+	},
+	{
+		"name": "Kyegegwa",
+		"regionCode": "422.0"
+	},
+	{
+		"name": "Kyenjojo",
+		"regionCode": "415.0"
+	},
+	{
+		"name": "Kyotera",
+		"regionCode": "125.0"
+	},
+	{
+		"name": "Lamwo",
+		"regionCode": "326.0"
+	},
+	{
+		"name": "Lira",
+		"regionCode": "307.0"
+	},
+	{
+		"name": "Luuka",
+		"regionCode": "229.0"
+	},
+	{
+		"name": "Luwero",
+		"regionCode": "104.0"
+	},
+	{
+		"name": "Lwengo",
+		"regionCode": "124.0"
+	},
+	{
+		"name": "Lyantonde",
+		"regionCode": "114.0"
+	},
+	{
+		"name": "Madi-Okollo",
+		"regionCode": "336.0"
+	},
+	{
+		"name": "Manafwa",
+		"regionCode": "223.0"
+	},
+	{
+		"name": "Maracha",
+		"regionCode": "320.0"
+	},
+	{
+		"name": "Masaka",
+		"regionCode": "105.0"
+	},
+	{
+		"name": "Masindi",
+		"regionCode": "409.0"
+	},
+	{
+		"name": "Mayuge",
+		"regionCode": "214.0"
+	},
+	{
+		"name": "Mbale",
+		"regionCode": "209.0"
+	},
+	{
+		"name": "Mbarara",
+		"regionCode": "410.0"
+	},
+	{
+		"name": "Mitooma",
+		"regionCode": "423.0"
+	},
+	{
+		"name": "Mityana",
+		"regionCode": "115.0"
+	},
+	{
+		"name": "Moroto",
+		"regionCode": "308.0"
+	},
+	{
+		"name": "Moyo",
+		"regionCode": "309.0"
+	},
+	{
+		"name": "Mpigi",
+		"regionCode": "106.0"
+	},
+	{
+		"name": "Mubende",
+		"regionCode": "107.0"
+	},
+	{
+		"name": "Mukono",
+		"regionCode": "108.0"
+	},
+	{
+		"name": "Nabilatuk",
+		"regionCode": "334.0"
+	},
+	{
+		"name": "Nakapiripirit",
+		"regionCode": "311.0"
+	},
+	{
+		"name": "Nakaseke",
+		"regionCode": "116.0"
+	},
+	{
+		"name": "Nakasongola",
+		"regionCode": "109.0"
+	},
+	{
+		"name": "Namayingo",
+		"regionCode": "230.0"
+	},
+	{
+		"name": "Namisindwa",
+		"regionCode": "234.0"
+	},
+	{
+		"name": "Namutumba",
+		"regionCode": "224.0"
+	},
+	{
+		"name": "Napak",
+		"regionCode": "327.0"
+	},
+	{
+		"name": "Nebbi",
+		"regionCode": "310.0"
+	},
+	{
+		"name": "Ngora",
+		"regionCode": "231.0"
+	},
+	{
+		"name": "Northern",
+		"regionCode": "N"
+	},
+	{
+		"name": "Ntoroko",
+		"regionCode": "424.0"
+	},
+	{
+		"name": "Ntungamo",
+		"regionCode": "411.0"
+	},
+	{
+		"name": "Nwoya",
+		"regionCode": "328.0"
+	},
+	{
+		"name": "Obongi",
+		"regionCode": "337.0"
+	},
+	{
+		"name": "Omoro",
+		"regionCode": "331.0"
+	},
+	{
+		"name": "Otuke",
+		"regionCode": "329.0"
+	},
+	{
+		"name": "Oyam",
+		"regionCode": "321.0"
+	},
+	{
+		"name": "Pader",
+		"regionCode": "312.0"
+	},
+	{
+		"name": "Pakwach",
+		"regionCode": "332.0"
+	},
+	{
+		"name": "Pallisa",
+		"regionCode": "210.0"
+	},
+	{
+		"name": "Rakai",
+		"regionCode": "110.0"
+	},
+	{
+		"name": "Rubanda",
+		"regionCode": "429.0"
+	},
+	{
+		"name": "Rubirizi",
+		"regionCode": "425.0"
+	},
+	{
+		"name": "Rukiga",
+		"regionCode": "431.0"
+	},
+	{
+		"name": "Rukungiri",
+		"regionCode": "412.0"
+	},
+	{
+		"name": "Rwampara",
+		"regionCode": "435.0"
+	},
+	{
+		"name": "Sembabule",
+		"regionCode": "111.0"
+	},
+	{
+		"name": "Serere",
+		"regionCode": "232.0"
+	},
+	{
+		"name": "Sheema",
+		"regionCode": "426.0"
+	},
+	{
+		"name": "Sironko",
+		"regionCode": "215.0"
+	},
+	{
+		"name": "Soroti",
+		"regionCode": "211.0"
+	},
+	{
+		"name": "Tororo",
+		"regionCode": "212.0"
+	},
+	{
+		"name": "Wakiso",
+		"regionCode": "113.0"
+	},
+	{
+		"name": "Western",
+		"regionCode": "W"
+	},
+	{
+		"name": "Yumbe",
+		"regionCode": "313.0"
+	},
+	{
+		"name": "Zombo",
+		"regionCode": "330.0"
+	}
+]

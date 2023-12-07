@@ -1,0 +1,110 @@
+[
+	{
+		"name": "Ad Daqahlīyah",
+		"regionCode": "DK"
+	},
+	{
+		"name": "Al Baḩr al Aḩmar",
+		"regionCode": "BA"
+	},
+	{
+		"name": "Al Buḩayrah",
+		"regionCode": "BH"
+	},
+	{
+		"name": "Al Fayyūm",
+		"regionCode": "FYM"
+	},
+	{
+		"name": "Al Gharbīyah",
+		"regionCode": "GH"
+	},
+	{
+		"name": "Al Iskandarīyah",
+		"regionCode": "ALX"
+	},
+	{
+		"name": "Al Ismā'īlīyah",
+		"regionCode": "IS"
+	},
+	{
+		"name": "Al Jīzah",
+		"regionCode": "GZ"
+	},
+	{
+		"name": "Al Minūfīyah",
+		"regionCode": "MNF"
+	},
+	{
+		"name": "Al Minyā",
+		"regionCode": "MN"
+	},
+	{
+		"name": "Al Qāhirah",
+		"regionCode": "C"
+	},
+	{
+		"name": "Al Qalyūbīyah",
+		"regionCode": "KB"
+	},
+	{
+		"name": "Al Uqşur",
+		"regionCode": "LX"
+	},
+	{
+		"name": "Al Wādī al Jadīd",
+		"regionCode": "WAD"
+	},
+	{
+		"name": "As Suways",
+		"regionCode": "SUZ"
+	},
+	{
+		"name": "Ash Sharqīyah",
+		"regionCode": "SHR"
+	},
+	{
+		"name": "Aswān",
+		"regionCode": "ASN"
+	},
+	{
+		"name": "Asyūţ",
+		"regionCode": "AST"
+	},
+	{
+		"name": "Banī Suwayf",
+		"regionCode": "BNS"
+	},
+	{
+		"name": "Būr Sa‘īd",
+		"regionCode": "PTS"
+	},
+	{
+		"name": "Dumyāţ",
+		"regionCode": "DT"
+	},
+	{
+		"name": "Janūb Sīnā'",
+		"regionCode": "JS"
+	},
+	{
+		"name": "Kafr ash Shaykh",
+		"regionCode": "KFS"
+	},
+	{
+		"name": "Maţrūḩ",
+		"regionCode": "MT"
+	},
+	{
+		"name": "Qinā",
+		"regionCode": "KN"
+	},
+	{
+		"name": "Shamāl Sīnā'",
+		"regionCode": "SIN"
+	},
+	{
+		"name": "Sūhāj",
+		"regionCode": "SHG"
+	}
+]

@@ -1,0 +1,66 @@
+[
+	{
+		"name": "Al Khalīl",
+		"regionCode": "HBN"
+	},
+	{
+		"name": "Al Quds",
+		"regionCode": "JEM"
+	},
+	{
+		"name": "Arīḩā wal Aghwār",
+		"regionCode": "JRH"
+	},
+	{
+		"name": "Bayt Laḩm",
+		"regionCode": "BTH"
+	},
+	{
+		"name": "Dayr al Balaḩ",
+		"regionCode": "DEB"
+	},
+	{
+		"name": "Ghazzah",
+		"regionCode": "GZA"
+	},
+	{
+		"name": "Janīn",
+		"regionCode": "JEN"
+	},
+	{
+		"name": "Khān Yūnis",
+		"regionCode": "KYS"
+	},
+	{
+		"name": "Nāblus",
+		"regionCode": "NBS"
+	},
+	{
+		"name": "Qalqīlyah",
+		"regionCode": "QQA"
+	},
+	{
+		"name": "Rafaḩ",
+		"regionCode": "RFH"
+	},
+	{
+		"name": "Rām Allāh wal Bīrah",
+		"regionCode": "RBH"
+	},
+	{
+		"name": "Salfīt",
+		"regionCode": "SLT"
+	},
+	{
+		"name": "Shamāl Ghazzah",
+		"regionCode": "NGZ"
+	},
+	{
+		"name": "Ţūbās",
+		"regionCode": "TBS"
+	},
+	{
+		"name": "Ţūlkarm",
+		"regionCode": "TKM"
+	}
+]

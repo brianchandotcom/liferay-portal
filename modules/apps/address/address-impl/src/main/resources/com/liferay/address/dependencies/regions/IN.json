@@ -8,7 +8,7 @@
 		"regionCode": "AP"
 	},
 	{
-		"name": "Arunachal Pradesh",
+		"name": "Arunāchal Pradesh",
 		"regionCode": "AR"
 	},
 	{
@@ -16,19 +16,19 @@
 		"regionCode": "AS"
 	},
 	{
-		"name": "Bihar",
+		"name": "Bihār",
 		"regionCode": "BR"
 	},
 	{
-		"name": "Chandigarh",
+		"name": "Chandīgarh",
 		"regionCode": "CH"
 	},
 	{
-		"name": "Chhattisgarh",
+		"name": "Chhattīsgarh",
 		"regionCode": "CT"
 	},
 	{
-		"name": "Dadra and Nagar Haveli and Daman and Diu",
+		"name": "Dādra and Nagar Haveli and Damān and Diu",
 		"regionCode": "DH"
 	},
 	{
@@ -40,27 +40,27 @@
 		"regionCode": "GA"
 	},
 	{
-		"name": "Gujarat",
+		"name": "Gujarāt",
 		"regionCode": "GJ"
 	},
 	{
-		"name": "Haryana",
+		"name": "Haryāna",
 		"regionCode": "HR"
 	},
 	{
-		"name": "Himachal Pradesh",
+		"name": "Himāchal Pradesh",
 		"regionCode": "HP"
 	},
 	{
-		"name": "Jammu and Kashmir",
+		"name": "Jammu and Kashmīr",
 		"regionCode": "JK"
 	},
 	{
-		"name": "Jharkhand",
+		"name": "Jhārkhand",
 		"regionCode": "JH"
 	},
 	{
-		"name": "Karnataka",
+		"name": "Karnātaka",
 		"regionCode": "KA"
 	},
 	{
@@ -68,7 +68,7 @@
 		"regionCode": "KL"
 	},
 	{
-		"name": "Ladakh",
+		"name": "Ladākh",
 		"regionCode": "LA"
 	},
 	{
@@ -80,7 +80,7 @@
 		"regionCode": "MP"
 	},
 	{
-		"name": "Maharashtra",
+		"name": "Mahārāshtra",
 		"regionCode": "MH"
 	},
 	{
@@ -88,7 +88,7 @@
 		"regionCode": "MN"
 	},
 	{
-		"name": "Meghalaya",
+		"name": "Meghālaya",
 		"regionCode": "ML"
 	},
 	{
@@ -96,7 +96,7 @@
 		"regionCode": "MZ"
 	},
 	{
-		"name": "Nagaland",
+		"name": "Nāgāland",
 		"regionCode": "NL"
 	},
 	{
@@ -112,7 +112,7 @@
 		"regionCode": "PB"
 	},
 	{
-		"name": "Rajasthan",
+		"name": "Rājasthān",
 		"regionCode": "RJ"
 	},
 	{
@@ -120,11 +120,11 @@
 		"regionCode": "SK"
 	},
 	{
-		"name": "Tamil Nadu",
+		"name": "Tamil Nādu",
 		"regionCode": "TN"
 	},
 	{
-		"name": "Telangana",
+		"name": "Telangāna",
 		"regionCode": "TG"
 	},
 	{
@@ -134,6 +134,10 @@
 	{
 		"name": "Uttar Pradesh",
 		"regionCode": "UP"
+	},
+	{
+		"name": "Uttarākhand",
+		"regionCode": "UT"
 	},
 	{
 		"name": "West Bengal",

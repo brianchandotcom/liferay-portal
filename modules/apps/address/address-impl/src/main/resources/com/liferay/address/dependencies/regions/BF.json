@@ -1,0 +1,230 @@
+[
+	{
+		"name": "Balé",
+		"regionCode": "BAL"
+	},
+	{
+		"name": "Bam",
+		"regionCode": "BAM"
+	},
+	{
+		"name": "Banwa",
+		"regionCode": "BAN"
+	},
+	{
+		"name": "Bazèga",
+		"regionCode": "BAZ"
+	},
+	{
+		"name": "Boucle du Mouhoun",
+		"regionCode": "1.0"
+	},
+	{
+		"name": "Bougouriba",
+		"regionCode": "BGR"
+	},
+	{
+		"name": "Boulgou",
+		"regionCode": "BLG"
+	},
+	{
+		"name": "Boulkiemdé",
+		"regionCode": "BLK"
+	},
+	{
+		"name": "Cascades",
+		"regionCode": "2.0"
+	},
+	{
+		"name": "Centre",
+		"regionCode": "3.0"
+	},
+	{
+		"name": "Centre-Est",
+		"regionCode": "4.0"
+	},
+	{
+		"name": "Centre-Nord",
+		"regionCode": "5.0"
+	},
+	{
+		"name": "Centre-Ouest",
+		"regionCode": "6.0"
+	},
+	{
+		"name": "Centre-Sud",
+		"regionCode": "7.0"
+	},
+	{
+		"name": "Comoé",
+		"regionCode": "COM"
+	},
+	{
+		"name": "Est",
+		"regionCode": "8.0"
+	},
+	{
+		"name": "Ganzourgou",
+		"regionCode": "GAN"
+	},
+	{
+		"name": "Gnagna",
+		"regionCode": "GNA"
+	},
+	{
+		"name": "Gourma",
+		"regionCode": "GOU"
+	},
+	{
+		"name": "Hauts-Bassins",
+		"regionCode": "9.0"
+	},
+	{
+		"name": "Houet",
+		"regionCode": "HOU"
+	},
+	{
+		"name": "Ioba",
+		"regionCode": "IOB"
+	},
+	{
+		"name": "Kénédougou",
+		"regionCode": "KEN"
+	},
+	{
+		"name": "Komondjari",
+		"regionCode": "KMD"
+	},
+	{
+		"name": "Kompienga",
+		"regionCode": "KMP"
+	},
+	{
+		"name": "Kossi",
+		"regionCode": "KOS"
+	},
+	{
+		"name": "Koulpélogo",
+		"regionCode": "KOP"
+	},
+	{
+		"name": "Kouritenga",
+		"regionCode": "KOT"
+	},
+	{
+		"name": "Kourwéogo",
+		"regionCode": "KOW"
+	},
+	{
+		"name": "Léraba",
+		"regionCode": "LER"
+	},
+	{
+		"name": "Loroum",
+		"regionCode": "LOR"
+	},
+	{
+		"name": "Mouhoun",
+		"regionCode": "MOU"
+	},
+	{
+		"name": "Nahouri",
+		"regionCode": "NAO"
+	},
+	{
+		"name": "Namentenga",
+		"regionCode": "NAM"
+	},
+	{
+		"name": "Nayala",
+		"regionCode": "NAY"
+	},
+	{
+		"name": "Nord",
+		"regionCode": "10.0"
+	},
+	{
+		"name": "Noumbiel",
+		"regionCode": "NOU"
+	},
+	{
+		"name": "Oubritenga",
+		"regionCode": "OUB"
+	},
+	{
+		"name": "Oudalan",
+		"regionCode": "OUD"
+	},
+	{
+		"name": "Passoré",
+		"regionCode": "PAS"
+	},
+	{
+		"name": "Plateau-Central",
+		"regionCode": "11.0"
+	},
+	{
+		"name": "Poni",
+		"regionCode": "PON"
+	},
+	{
+		"name": "Sahel",
+		"regionCode": "12.0"
+	},
+	{
+		"name": "Sanguié",
+		"regionCode": "SNG"
+	},
+	{
+		"name": "Sanmatenga",
+		"regionCode": "SMT"
+	},
+	{
+		"name": "Séno",
+		"regionCode": "SEN"
+	},
+	{
+		"name": "Sissili",
+		"regionCode": "SIS"
+	},
+	{
+		"name": "Soum",
+		"regionCode": "SOM"
+	},
+	{
+		"name": "Sourou",
+		"regionCode": "SOR"
+	},
+	{
+		"name": "Sud-Ouest",
+		"regionCode": "13.0"
+	},
+	{
+		"name": "Tapoa",
+		"regionCode": "TAP"
+	},
+	{
+		"name": "Tuy",
+		"regionCode": "TUI"
+	},
+	{
+		"name": "Yagha",
+		"regionCode": "YAG"
+	},
+	{
+		"name": "Yatenga",
+		"regionCode": "YAT"
+	},
+	{
+		"name": "Ziro",
+		"regionCode": "ZIR"
+	},
+	{
+		"name": "Zondoma",
+		"regionCode": "ZON"
+	},
+	{
+		"name": "Zoundwéogo",
+		"regionCode": "ZOU"
+	}
+]

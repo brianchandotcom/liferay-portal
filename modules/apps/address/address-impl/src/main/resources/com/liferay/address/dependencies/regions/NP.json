@@ -1,0 +1,30 @@
+[
+	{
+		"name": "Bagmati",
+		"regionCode": "P3"
+	},
+	{
+		"name": "Gandaki",
+		"regionCode": "P4"
+	},
+	{
+		"name": "Karnali",
+		"regionCode": "P6"
+	},
+	{
+		"name": "Lumbini",
+		"regionCode": "P5"
+	},
+	{
+		"name": "Madhesh",
+		"regionCode": "P2"
+	},
+	{
+		"name": "Koshi",
+		"regionCode": "P1"
+	},
+	{
+		"name": "Sudurpashchim",
+		"regionCode": "P7"
+	}
+]

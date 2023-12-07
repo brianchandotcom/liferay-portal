@@ -1,0 +1,58 @@
+[
+	{
+		"name": "Aiwo",
+		"regionCode": "1.0"
+	},
+	{
+		"name": "Anabar",
+		"regionCode": "2.0"
+	},
+	{
+		"name": "Anetan",
+		"regionCode": "3.0"
+	},
+	{
+		"name": "Anibare",
+		"regionCode": "4.0"
+	},
+	{
+		"name": "Baitsi",
+		"regionCode": "5.0"
+	},
+	{
+		"name": "Boe",
+		"regionCode": "6.0"
+	},
+	{
+		"name": "Buada",
+		"regionCode": "7.0"
+	},
+	{
+		"name": "Denigomodu",
+		"regionCode": "8.0"
+	},
+	{
+		"name": "Ewa",
+		"regionCode": "9.0"
+	},
+	{
+		"name": "Ijuw",
+		"regionCode": "10.0"
+	},
+	{
+		"name": "Meneng",
+		"regionCode": "11.0"
+	},
+	{
+		"name": "Nibok",
+		"regionCode": "12.0"
+	},
+	{
+		"name": "Uaboe",
+		"regionCode": "13.0"
+	},
+	{
+		"name": "Yaren",
+		"regionCode": "14.0"
+	}
+]

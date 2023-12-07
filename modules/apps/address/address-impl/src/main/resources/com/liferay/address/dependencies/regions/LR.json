@@ -1,0 +1,62 @@
+[
+	{
+		"name": "Bomi",
+		"regionCode": "BM"
+	},
+	{
+		"name": "Bong",
+		"regionCode": "BG"
+	},
+	{
+		"name": "Gbarpolu",
+		"regionCode": "GP"
+	},
+	{
+		"name": "Grand Bassa",
+		"regionCode": "GB"
+	},
+	{
+		"name": "Grand Cape Mount",
+		"regionCode": "CM"
+	},
+	{
+		"name": "Grand Gedeh",
+		"regionCode": "GG"
+	},
+	{
+		"name": "Grand Kru",
+		"regionCode": "GK"
+	},
+	{
+		"name": "Lofa",
+		"regionCode": "LO"
+	},
+	{
+		"name": "Margibi",
+		"regionCode": "MG"
+	},
+	{
+		"name": "Maryland",
+		"regionCode": "MY"
+	},
+	{
+		"name": "Montserrado",
+		"regionCode": "MO"
+	},
+	{
+		"name": "Nimba",
+		"regionCode": "NI"
+	},
+	{
+		"name": "River Cess",
+		"regionCode": "RI"
+	},
+	{
+		"name": "River Gee",
+		"regionCode": "RG"
+	},
+	{
+		"name": "Sinoe",
+		"regionCode": "SI"
+	}
+]

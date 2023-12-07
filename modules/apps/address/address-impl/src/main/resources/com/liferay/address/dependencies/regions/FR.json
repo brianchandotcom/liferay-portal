@@ -1,43 +1,47 @@
 [
 	{
 		"name": "Ain",
-		"regionCode": "1"
+		"regionCode": "1.0"
 	},
 	{
 		"name": "Aisne",
-		"regionCode": "2"
+		"regionCode": "2.0"
 	},
 	{
 		"name": "Allier",
-		"regionCode": "3"
+		"regionCode": "3.0"
 	},
 	{
 		"name": "Alpes-de-Haute-Provence",
-		"regionCode": "4"
+		"regionCode": "4.0"
 	},
 	{
 		"name": "Alpes-Maritimes",
-		"regionCode": "6"
+		"regionCode": "6.0"
+	},
+	{
+		"name": "Alsace",
+		"regionCode": "6AE"
 	},
 	{
 		"name": "Ardèche",
-		"regionCode": "7"
+		"regionCode": "7.0"
 	},
 	{
 		"name": "Ardennes",
-		"regionCode": "8"
+		"regionCode": "8.0"
 	},
 	{
 		"name": "Ariège",
-		"regionCode": "9"
+		"regionCode": "9.0"
 	},
 	{
 		"name": "Aube",
-		"regionCode": "10"
+		"regionCode": "10.0"
 	},
 	{
 		"name": "Aude",
-		"regionCode": "11"
+		"regionCode": "11.0"
 	},
 	{
 		"name": "Auvergne-Rhône-Alpes",
@@ -45,15 +49,15 @@
 	},
 	{
 		"name": "Aveyron",
-		"regionCode": "12"
+		"regionCode": "12.0"
 	},
 	{
 		"name": "Bas-Rhin",
-		"regionCode": "67"
+		"regionCode": "67.0"
 	},
 	{
 		"name": "Bouches-du-Rhône",
-		"regionCode": "13"
+		"regionCode": "13.0"
 	},
 	{
 		"name": "Bourgogne-Franche-Comté",
@@ -65,11 +69,11 @@
 	},
 	{
 		"name": "Calvados",
-		"regionCode": "14"
+		"regionCode": "14.0"
 	},
 	{
 		"name": "Cantal",
-		"regionCode": "15"
+		"regionCode": "15.0"
 	},
 	{
 		"name": "Centre-Val de Loire",
@@ -77,15 +81,15 @@
 	},
 	{
 		"name": "Charente",
-		"regionCode": "16"
+		"regionCode": "16.0"
 	},
 	{
 		"name": "Charente-Maritime",
-		"regionCode": "17"
+		"regionCode": "17.0"
 	},
 	{
 		"name": "Cher",
-		"regionCode": "18"
+		"regionCode": "18.0"
 	},
 	{
 		"name": "Clipperton",
@@ -93,7 +97,7 @@
 	},
 	{
 		"name": "Corrèze",
-		"regionCode": "19"
+		"regionCode": "19.0"
 	},
 	{
 		"name": "Corse",
@@ -105,83 +109,75 @@
 	},
 	{
 		"name": "Côte-d'Or",
-		"regionCode": "21"
+		"regionCode": "21.0"
 	},
 	{
 		"name": "Côtes-d'Armor",
-		"regionCode": "22"
+		"regionCode": "22.0"
 	},
 	{
 		"name": "Creuse",
-		"regionCode": "23"
+		"regionCode": "23.0"
 	},
 	{
 		"name": "Deux-Sèvres",
-		"regionCode": "79"
+		"regionCode": "79.0"
 	},
 	{
 		"name": "Dordogne",
-		"regionCode": "24"
+		"regionCode": "24.0"
 	},
 	{
 		"name": "Doubs",
-		"regionCode": "25"
+		"regionCode": "25.0"
 	},
 	{
 		"name": "Drôme",
-		"regionCode": "26"
+		"regionCode": "26.0"
 	},
 	{
 		"name": "Essonne",
-		"regionCode": "91"
+		"regionCode": "91.0"
 	},
 	{
 		"name": "Eure",
-		"regionCode": "27"
+		"regionCode": "27.0"
 	},
 	{
 		"name": "Eure-et-Loir",
-		"regionCode": "28"
+		"regionCode": "28.0"
 	},
 	{
 		"name": "Finistère",
-		"regionCode": "29"
+		"regionCode": "29.0"
 	},
 	{
 		"name": "Gard",
-		"regionCode": "30"
+		"regionCode": "30.0"
 	},
 	{
 		"name": "Gers",
-		"regionCode": "32"
+		"regionCode": "32.0"
 	},
 	{
 		"name": "Gironde",
-		"regionCode": "33"
+		"regionCode": "33.0"
 	},
 	{
 		"name": "Grand-Est",
 		"regionCode": "GES"
 	},
 	{
-		"name": "Guadeloupe (dept)",
-		"regionCode": "971"
+		"name": "Guadeloupe",
+		"regionCode": "971.0"
 	},
 	{
-		"name": "Guadeloupe (region)",
-		"regionCode": "GP"
-	},
-	{
-		"name": "Guyane (dept)",
-		"regionCode": "973"
-	},
-	{
-		"name": "Guyane (region)",
-		"regionCode": "GF"
+		"name": "Guyane",
+		"regionCode": "973.0"
 	},
 	{
 		"name": "Haut-Rhin",
-		"regionCode": "68"
+		"regionCode": "68.0"
 	},
 	{
 		"name": "Haute-Corse",
@@ -189,35 +185,35 @@
 	},
 	{
 		"name": "Haute-Garonne",
-		"regionCode": "31"
+		"regionCode": "31.0"
 	},
 	{
 		"name": "Haute-Loire",
-		"regionCode": "43"
+		"regionCode": "43.0"
 	},
 	{
 		"name": "Haute-Marne",
-		"regionCode": "52"
+		"regionCode": "52.0"
 	},
 	{
 		"name": "Haute-Saône",
-		"regionCode": "70"
+		"regionCode": "70.0"
 	},
 	{
 		"name": "Haute-Savoie",
-		"regionCode": "74"
+		"regionCode": "74.0"
 	},
 	{
 		"name": "Haute-Vienne",
-		"regionCode": "87"
+		"regionCode": "87.0"
 	},
 	{
 		"name": "Hautes-Alpes",
-		"regionCode": "5"
+		"regionCode": "5.0"
 	},
 	{
 		"name": "Hautes-Pyrénées",
-		"regionCode": "65"
+		"regionCode": "65.0"
 	},
 	{
 		"name": "Hauts-de-France",
@@ -225,11 +221,11 @@
 	},
 	{
 		"name": "Hauts-de-Seine",
-		"regionCode": "92"
+		"regionCode": "92.0"
 	},
 	{
 		"name": "Hérault",
-		"regionCode": "34"
+		"regionCode": "34.0"
 	},
 	{
 		"name": "Île-de-France",
@@ -237,119 +233,111 @@
 	},
 	{
 		"name": "Ille-et-Vilaine",
-		"regionCode": "35"
+		"regionCode": "35.0"
 	},
 	{
 		"name": "Indre",
-		"regionCode": "36"
+		"regionCode": "36.0"
 	},
 	{
 		"name": "Indre-et-Loire",
-		"regionCode": "37"
+		"regionCode": "37.0"
 	},
 	{
 		"name": "Isère",
-		"regionCode": "38"
+		"regionCode": "38.0"
 	},
 	{
 		"name": "Jura",
-		"regionCode": "39"
+		"regionCode": "39.0"
 	},
 	{
-		"name": "La Réunion (dept)",
-		"regionCode": "974"
-	},
-	{
-		"name": "La Réunion (region)",
-		"regionCode": "RE"
+		"name": "La Réunion",
+		"regionCode": "974.0"
 	},
 	{
 		"name": "Landes",
-		"regionCode": "40"
+		"regionCode": "40.0"
 	},
 	{
 		"name": "Loir-et-Cher",
-		"regionCode": "41"
+		"regionCode": "41.0"
 	},
 	{
 		"name": "Loire",
-		"regionCode": "42"
+		"regionCode": "42.0"
 	},
 	{
 		"name": "Loire-Atlantique",
-		"regionCode": "44"
+		"regionCode": "44.0"
 	},
 	{
 		"name": "Loiret",
-		"regionCode": "45"
+		"regionCode": "45.0"
 	},
 	{
 		"name": "Lot",
-		"regionCode": "46"
+		"regionCode": "46.0"
 	},
 	{
 		"name": "Lot-et-Garonne",
-		"regionCode": "47"
+		"regionCode": "47.0"
 	},
 	{
 		"name": "Lozère",
-		"regionCode": "48"
+		"regionCode": "48.0"
 	},
 	{
 		"name": "Maine-et-Loire",
-		"regionCode": "49"
+		"regionCode": "49.0"
 	},
 	{
 		"name": "Manche",
-		"regionCode": "50"
+		"regionCode": "50.0"
 	},
 	{
 		"name": "Marne",
-		"regionCode": "51"
+		"regionCode": "51.0"
 	},
 	{
-		"name": "Martinique (dept)",
-		"regionCode": "972"
-	},
-	{
-		"name": "Martinique (region)",
-		"regionCode": "MQ"
+		"name": "Martinique",
+		"regionCode": "972.0"
 	},
 	{
 		"name": "Mayenne",
-		"regionCode": "53"
+		"regionCode": "53.0"
 	},
 	{
-		"name": "Mayotte (dept)",
-		"regionCode": "976"
+		"name": "Mayotte",
+		"regionCode": "976.0"
 	},
 	{
-		"name": "Mayotte (region)",
-		"regionCode": "YT"
+		"name": "Métropole de Lyon",
+		"regionCode": "69M"
 	},
 	{
 		"name": "Meurthe-et-Moselle",
-		"regionCode": "54"
+		"regionCode": "54.0"
 	},
 	{
 		"name": "Meuse",
-		"regionCode": "55"
+		"regionCode": "55.0"
 	},
 	{
 		"name": "Morbihan",
-		"regionCode": "56"
+		"regionCode": "56.0"
 	},
 	{
 		"name": "Moselle",
-		"regionCode": "57"
+		"regionCode": "57.0"
 	},
 	{
 		"name": "Nièvre",
-		"regionCode": "58"
+		"regionCode": "58.0"
 	},
 	{
 		"name": "Nord",
-		"regionCode": "59"
+		"regionCode": "59.0"
 	},
 	{
 		"name": "Normandie",
@@ -369,26 +357,26 @@
 	},
 	{
 		"name": "Oise",
-		"regionCode": "60"
+		"regionCode": "60.0"
 	},
 	{
 		"name": "Orne",
-		"regionCode": "61"
+		"regionCode": "61.0"
 	},
 	{
 		"name": "Paris",
-		"regionCode": "75"
+		"regionCode": "75C"
 	},
 	{
 		"name": "Pas-de-Calais",
-		"regionCode": "62"
+		"regionCode": "62.0"
 	},
 	{
 		"name": "Pays-de-la-Loire",
 		"regionCode": "PDL"
 	},
 	{
-		"name": "Polynésie francaise",
+		"name": "Polynésie française",
 		"regionCode": "PF"
 	},
 	{
@@ -397,19 +385,19 @@
 	},
 	{
 		"name": "Puy-de-Dôme",
-		"regionCode": "63"
+		"regionCode": "63.0"
 	},
 	{
 		"name": "Pyrénées-Atlantiques",
-		"regionCode": "64"
+		"regionCode": "64.0"
 	},
 	{
 		"name": "Pyrénées-Orientales",
-		"regionCode": "66"
+		"regionCode": "66.0"
 	},
 	{
 		"name": "Rhône",
-		"regionCode": "69"
+		"regionCode": "69.0"
 	},
 	{
 		"name": "Saint-Barthélemy",
@@ -425,39 +413,39 @@
 	},
 	{
 		"name": "Saône-et-Loire",
-		"regionCode": "71"
+		"regionCode": "71.0"
 	},
 	{
 		"name": "Sarthe",
-		"regionCode": "72"
+		"regionCode": "72.0"
 	},
 	{
 		"name": "Savoie",
-		"regionCode": "73"
+		"regionCode": "73.0"
 	},
 	{
 		"name": "Seine-et-Marne",
-		"regionCode": "77"
+		"regionCode": "77.0"
 	},
 	{
 		"name": "Seine-Maritime",
-		"regionCode": "76"
+		"regionCode": "76.0"
 	},
 	{
 		"name": "Seine-Saint-Denis",
-		"regionCode": "93"
+		"regionCode": "93.0"
 	},
 	{
 		"name": "Somme",
-		"regionCode": "80"
+		"regionCode": "80.0"
 	},
 	{
 		"name": "Tarn",
-		"regionCode": "81"
+		"regionCode": "81.0"
 	},
 	{
 		"name": "Tarn-et-Garonne",
-		"regionCode": "82"
+		"regionCode": "82.0"
 	},
 	{
 		"name": "Terres australes françaises",
@@ -465,35 +453,35 @@
 	},
 	{
 		"name": "Territoire de Belfort",
-		"regionCode": "90"
+		"regionCode": "90.0"
 	},
 	{
 		"name": "Val-d'Oise",
-		"regionCode": "95"
+		"regionCode": "95.0"
 	},
 	{
 		"name": "Val-de-Marne",
-		"regionCode": "94"
+		"regionCode": "94.0"
 	},
 	{
 		"name": "Var",
-		"regionCode": "83"
+		"regionCode": "83.0"
 	},
 	{
 		"name": "Vaucluse",
-		"regionCode": "84"
+		"regionCode": "84.0"
 	},
 	{
 		"name": "Vendée",
-		"regionCode": "85"
+		"regionCode": "85.0"
 	},
 	{
 		"name": "Vienne",
-		"regionCode": "86"
+		"regionCode": "86.0"
 	},
 	{
 		"name": "Vosges",
-		"regionCode": "88"
+		"regionCode": "88.0"
 	},
 	{
 		"name": "Wallis-et-Futuna",
@@ -501,10 +489,10 @@
 	},
 	{
 		"name": "Yonne",
-		"regionCode": "89"
+		"regionCode": "89.0"
 	},
 	{
 		"name": "Yvelines",
-		"regionCode": "78"
+		"regionCode": "78.0"
 	}
 ]

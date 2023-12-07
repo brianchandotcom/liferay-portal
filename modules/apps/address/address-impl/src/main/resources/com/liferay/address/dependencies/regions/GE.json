@@ -1,0 +1,50 @@
+[
+	{
+		"name": "Abkhazia",
+		"regionCode": "AB"
+	},
+	{
+		"name": "Ajaria",
+		"regionCode": "AJ"
+	},
+	{
+		"name": "Guria",
+		"regionCode": "GU"
+	},
+	{
+		"name": "Imereti",
+		"regionCode": "IM"
+	},
+	{
+		"name": "K'akheti",
+		"regionCode": "KA"
+	},
+	{
+		"name": "Kvemo Kartli",
+		"regionCode": "KK"
+	},
+	{
+		"name": "Mtskheta-Mtianeti",
+		"regionCode": "MM"
+	},
+	{
+		"name": "Rach'a-Lechkhumi-Kvemo Svaneti",
+		"regionCode": "RL"
+	},
+	{
+		"name": "Samegrelo-Zemo Svaneti",
+		"regionCode": "SZ"
+	},
+	{
+		"name": "Samtskhe-Javakheti",
+		"regionCode": "SJ"
+	},
+	{
+		"name": "Shida Kartli",
+		"regionCode": "SK"
+	},
+	{
+		"name": "Tbilisi",
+		"regionCode": "TB"
+	}
+]

@@ -1,0 +1,42 @@
+[
+	{
+		"name": "Artibonite",
+		"regionCode": "AR"
+	},
+	{
+		"name": "Centre",
+		"regionCode": "CE"
+	},
+	{
+		"name": "Grande’Anse",
+		"regionCode": "GA"
+	},
+	{
+		"name": "Nippes",
+		"regionCode": "NI"
+	},
+	{
+		"name": "Nord",
+		"regionCode": "ND"
+	},
+	{
+		"name": "Nord-Est",
+		"regionCode": "NE"
+	},
+	{
+		"name": "Nord-Ouest",
+		"regionCode": "NO"
+	},
+	{
+		"name": "Ouest",
+		"regionCode": "OU"
+	},
+	{
+		"name": "Sud",
+		"regionCode": "SD"
+	},
+	{
+		"name": "Sud-Est",
+		"regionCode": "SE"
+	}
+]

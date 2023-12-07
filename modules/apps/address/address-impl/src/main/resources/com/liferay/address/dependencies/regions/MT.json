@@ -1,0 +1,274 @@
+[
+	{
+		"name": "Attard",
+		"regionCode": "1.0"
+	},
+	{
+		"name": "Balzan",
+		"regionCode": "2.0"
+	},
+	{
+		"name": "Birgu",
+		"regionCode": "3.0"
+	},
+	{
+		"name": "Birkirkara",
+		"regionCode": "4.0"
+	},
+	{
+		"name": "Birżebbuġa",
+		"regionCode": "5.0"
+	},
+	{
+		"name": "Bormla",
+		"regionCode": "6.0"
+	},
+	{
+		"name": "Dingli",
+		"regionCode": "7.0"
+	},
+	{
+		"name": "Fgura",
+		"regionCode": "8.0"
+	},
+	{
+		"name": "Floriana",
+		"regionCode": "9.0"
+	},
+	{
+		"name": "Fontana",
+		"regionCode": "10.0"
+	},
+	{
+		"name": "Għajnsielem",
+		"regionCode": "13.0"
+	},
+	{
+		"name": "Għarb",
+		"regionCode": "14.0"
+	},
+	{
+		"name": "Għargħur",
+		"regionCode": "15.0"
+	},
+	{
+		"name": "Għasri",
+		"regionCode": "16.0"
+	},
+	{
+		"name": "Għaxaq",
+		"regionCode": "17.0"
+	},
+	{
+		"name": "Gudja",
+		"regionCode": "11.0"
+	},
+	{
+		"name": "Gżira",
+		"regionCode": "12.0"
+	},
+	{
+		"name": "Ħamrun",
+		"regionCode": "18.0"
+	},
+	{
+		"name": "Iklin",
+		"regionCode": "19.0"
+	},
+	{
+		"name": "Isla",
+		"regionCode": "20.0"
+	},
+	{
+		"name": "Kalkara",
+		"regionCode": "21.0"
+	},
+	{
+		"name": "Kerċem",
+		"regionCode": "22.0"
+	},
+	{
+		"name": "Kirkop",
+		"regionCode": "23.0"
+	},
+	{
+		"name": "Lija",
+		"regionCode": "24.0"
+	},
+	{
+		"name": "Luqa",
+		"regionCode": "25.0"
+	},
+	{
+		"name": "Marsa",
+		"regionCode": "26.0"
+	},
+	{
+		"name": "Marsaskala",
+		"regionCode": "27.0"
+	},
+	{
+		"name": "Marsaxlokk",
+		"regionCode": "28.0"
+	},
+	{
+		"name": "Mdina",
+		"regionCode": "29.0"
+	},
+	{
+		"name": "Mellieħa",
+		"regionCode": "30.0"
+	},
+	{
+		"name": "Mġarr",
+		"regionCode": "31.0"
+	},
+	{
+		"name": "Mosta",
+		"regionCode": "32.0"
+	},
+	{
+		"name": "Mqabba",
+		"regionCode": "33.0"
+	},
+	{
+		"name": "Msida",
+		"regionCode": "34.0"
+	},
+	{
+		"name": "Mtarfa",
+		"regionCode": "35.0"
+	},
+	{
+		"name": "Munxar",
+		"regionCode": "36.0"
+	},
+	{
+		"name": "Nadur",
+		"regionCode": "37.0"
+	},
+	{
+		"name": "Naxxar",
+		"regionCode": "38.0"
+	},
+	{
+		"name": "Paola",
+		"regionCode": "39.0"
+	},
+	{
+		"name": "Pembroke",
+		"regionCode": "40.0"
+	},
+	{
+		"name": "Pietà",
+		"regionCode": "41.0"
+	},
+	{
+		"name": "Qala",
+		"regionCode": "42.0"
+	},
+	{
+		"name": "Qormi",
+		"regionCode": "43.0"
+	},
+	{
+		"name": "Qrendi",
+		"regionCode": "44.0"
+	},
+	{
+		"name": "Rabat Gozo",
+		"regionCode": "45.0"
+	},
+	{
+		"name": "Rabat Malta",
+		"regionCode": "46.0"
+	},
+	{
+		"name": "Safi",
+		"regionCode": "47.0"
+	},
+	{
+		"name": "Saint John",
+		"regionCode": "49.0"
+	},
+	{
+		"name": "Saint Julian's",
+		"regionCode": "48.0"
+	},
+	{
+		"name": "Saint Lawrence",
+		"regionCode": "50.0"
+	},
+	{
+		"name": "Saint Lucia's",
+		"regionCode": "53.0"
+	},
+	{
+		"name": "Saint Paul's Bay",
+		"regionCode": "51.0"
+	},
+	{
+		"name": "Sannat",
+		"regionCode": "52.0"
+	},
+	{
+		"name": "Santa Venera",
+		"regionCode": "54.0"
+	},
+	{
+		"name": "Siġġiewi",
+		"regionCode": "55.0"
+	},
+	{
+		"name": "Sliema",
+		"regionCode": "56.0"
+	},
+	{
+		"name": "Swieqi",
+		"regionCode": "57.0"
+	},
+	{
+		"name": "Ta' Xbiex",
+		"regionCode": "58.0"
+	},
+	{
+		"name": "Tarxien",
+		"regionCode": "59.0"
+	},
+	{
+		"name": "Valletta",
+		"regionCode": "60.0"
+	},
+	{
+		"name": "Xagħra",
+		"regionCode": "61.0"
+	},
+	{
+		"name": "Xewkija",
+		"regionCode": "62.0"
+	},
+	{
+		"name": "Xgħajra",
+		"regionCode": "63.0"
+	},
+	{
+		"name": "Żabbar",
+		"regionCode": "64.0"
+	},
+	{
+		"name": "Żebbuġ Gozo",
+		"regionCode": "65.0"
+	},
+	{
+		"name": "Żebbuġ Malta",
+		"regionCode": "66.0"
+	},
+	{
+		"name": "Żejtun",
+		"regionCode": "67.0"
+	},
+	{
+		"name": "Żurrieq",
+		"regionCode": "68.0"
+	}
+]

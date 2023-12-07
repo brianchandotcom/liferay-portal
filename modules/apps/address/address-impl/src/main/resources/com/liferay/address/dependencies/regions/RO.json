@@ -1,0 +1,170 @@
+[
+	{
+		"name": "Alba",
+		"regionCode": "AB"
+	},
+	{
+		"name": "Arad",
+		"regionCode": "AR"
+	},
+	{
+		"name": "Argeș",
+		"regionCode": "AG"
+	},
+	{
+		"name": "Bacău",
+		"regionCode": "BC"
+	},
+	{
+		"name": "Bihor",
+		"regionCode": "BH"
+	},
+	{
+		"name": "Bistrița-Năsăud",
+		"regionCode": "BN"
+	},
+	{
+		"name": "Botoșani",
+		"regionCode": "BT"
+	},
+	{
+		"name": "Brăila",
+		"regionCode": "BR"
+	},
+	{
+		"name": "Brașov",
+		"regionCode": "BV"
+	},
+	{
+		"name": "București",
+		"regionCode": "B"
+	},
+	{
+		"name": "Buzău",
+		"regionCode": "BZ"
+	},
+	{
+		"name": "Călărași",
+		"regionCode": "CL"
+	},
+	{
+		"name": "Caraș-Severin",
+		"regionCode": "CS"
+	},
+	{
+		"name": "Cluj",
+		"regionCode": "CJ"
+	},
+	{
+		"name": "Constanța",
+		"regionCode": "CT"
+	},
+	{
+		"name": "Covasna",
+		"regionCode": "CV"
+	},
+	{
+		"name": "Dâmbovița",
+		"regionCode": "DB"
+	},
+	{
+		"name": "Dolj",
+		"regionCode": "DJ"
+	},
+	{
+		"name": "Galați",
+		"regionCode": "GL"
+	},
+	{
+		"name": "Giurgiu",
+		"regionCode": "GR"
+	},
+	{
+		"name": "Gorj",
+		"regionCode": "GJ"
+	},
+	{
+		"name": "Harghita",
+		"regionCode": "HR"
+	},
+	{
+		"name": "Hunedoara",
+		"regionCode": "HD"
+	},
+	{
+		"name": "Ialomița",
+		"regionCode": "IL"
+	},
+	{
+		"name": "Iași",
+		"regionCode": "IS"
+	},
+	{
+		"name": "Ilfov",
+		"regionCode": "IF"
+	},
+	{
+		"name": "Maramureș",
+		"regionCode": "MM"
+	},
+	{
+		"name": "Mehedinți",
+		"regionCode": "MH"
+	},
+	{
+		"name": "Mureș",
+		"regionCode": "MS"
+	},
+	{
+		"name": "Neamț",
+		"regionCode": "NT"
+	},
+	{
+		"name": "Olt",
+		"regionCode": "OT"
+	},
+	{
+		"name": "Prahova",
+		"regionCode": "PH"
+	},
+	{
+		"name": "Sălaj",
+		"regionCode": "SJ"
+	},
+	{
+		"name": "Satu Mare",
+		"regionCode": "SM"
+	},
+	{
+		"name": "Sibiu",
+		"regionCode": "SB"
+	},
+	{
+		"name": "Suceava",
+		"regionCode": "SV"
+	},
+	{
+		"name": "Teleorman",
+		"regionCode": "TR"
+	},
+	{
+		"name": "Timiș",
+		"regionCode": "TM"
+	},
+	{
+		"name": "Tulcea",
+		"regionCode": "TL"
+	},
+	{
+		"name": "Vâlcea",
+		"regionCode": "VL"
+	},
+	{
+		"name": "Vaslui",
+		"regionCode": "VS"
+	},
+	{
+		"name": "Vrancea",
+		"regionCode": "VN"
+	}
+]

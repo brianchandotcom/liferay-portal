@@ -1,0 +1,90 @@
+[
+	{
+		"name": "Alta Verapaz",
+		"regionCode": "16.0"
+	},
+	{
+		"name": "Baja Verapaz",
+		"regionCode": "15.0"
+	},
+	{
+		"name": "Chimaltenango",
+		"regionCode": "4.0"
+	},
+	{
+		"name": "Chiquimula",
+		"regionCode": "20.0"
+	},
+	{
+		"name": "El Progreso",
+		"regionCode": "2.0"
+	},
+	{
+		"name": "Escuintla",
+		"regionCode": "5.0"
+	},
+	{
+		"name": "Guatemala",
+		"regionCode": "1.0"
+	},
+	{
+		"name": "Huehuetenango",
+		"regionCode": "13.0"
+	},
+	{
+		"name": "Izabal",
+		"regionCode": "18.0"
+	},
+	{
+		"name": "Jalapa",
+		"regionCode": "21.0"
+	},
+	{
+		"name": "Jutiapa",
+		"regionCode": "22.0"
+	},
+	{
+		"name": "Petén",
+		"regionCode": "17.0"
+	},
+	{
+		"name": "Quetzaltenango",
+		"regionCode": "9.0"
+	},
+	{
+		"name": "Quiché",
+		"regionCode": "14.0"
+	},
+	{
+		"name": "Retalhuleu",
+		"regionCode": "11.0"
+	},
+	{
+		"name": "Sacatepéquez",
+		"regionCode": "3.0"
+	},
+	{
+		"name": "San Marcos",
+		"regionCode": "12.0"
+	},
+	{
+		"name": "Santa Rosa",
+		"regionCode": "6.0"
+	},
+	{
+		"name": "Sololá",
+		"regionCode": "7.0"
+	},
+	{
+		"name": "Suchitepéquez",
+		"regionCode": "10.0"
+	},
+	{
+		"name": "Totonicapán",
+		"regionCode": "8.0"
+	},
+	{
+		"name": "Zacapa",
+		"regionCode": "19.0"
+	}
+]

@@ -1,0 +1,46 @@
+[
+	{
+		"name": "Ad Dākhilīyah",
+		"regionCode": "DA"
+	},
+	{
+		"name": "Al Buraymī",
+		"regionCode": "BU"
+	},
+	{
+		"name": "Al Wusţá",
+		"regionCode": "WU"
+	},
+	{
+		"name": "Az̧ Z̧āhirah",
+		"regionCode": "ZA"
+	},
+	{
+		"name": "Janūb al Bāţinah",
+		"regionCode": "BJ"
+	},
+	{
+		"name": "Janūb ash Sharqīyah",
+		"regionCode": "SJ"
+	},
+	{
+		"name": "Masqaţ",
+		"regionCode": "MA"
+	},
+	{
+		"name": "Musandam",
+		"regionCode": "MU"
+	},
+	{
+		"name": "Shamāl al Bāţinah",
+		"regionCode": "BS"
+	},
+	{
+		"name": "Shamāl ash Sharqīyah",
+		"regionCode": "SS"
+	},
+	{
+		"name": "Z̧ufār",
+		"regionCode": "ZU"
+	}
+]

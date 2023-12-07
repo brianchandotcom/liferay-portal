@@ -1,0 +1,26 @@
+[
+	{
+		"name": "Charlotte",
+		"regionCode": "1.0"
+	},
+	{
+		"name": "Grenadines",
+		"regionCode": "6.0"
+	},
+	{
+		"name": "Saint Andrew",
+		"regionCode": "2.0"
+	},
+	{
+		"name": "Saint David",
+		"regionCode": "3.0"
+	},
+	{
+		"name": "Saint George",
+		"regionCode": "4.0"
+	},
+	{
+		"name": "Saint Patrick",
+		"regionCode": "5.0"
+	}
+]

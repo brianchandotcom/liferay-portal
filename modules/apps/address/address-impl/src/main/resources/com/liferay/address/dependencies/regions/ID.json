@@ -44,6 +44,10 @@
 		"regionCode": "JI"
 	},
 	{
+		"name": "Kalimantan",
+		"regionCode": "KA"
+	},
+	{
 		"name": "Kalimantan Barat",
 		"regionCode": "KB"
 	},
@@ -62,10 +66,6 @@
 	{
 		"name": "Kalimantan Utara",
 		"regionCode": "KU"
-	},
-	{
-		"name": "Kalinantan",
-		"regionCode": "KA"
 	},
 	{
 		"name": "Kepulauan Bangka Belitung",
@@ -114,6 +114,18 @@
 	{
 		"name": "Papua Barat",
 		"regionCode": "PB"
+	},
+	{
+		"name": "Papua Pengunungan",
+		"regionCode": "PE"
+	},
+	{
+		"name": "Papua Selatan",
+		"regionCode": "PS"
+	},
+	{
+		"name": "Papua Tengah",
+		"regionCode": "PT"
 	},
 	{
 		"name": "Riau",

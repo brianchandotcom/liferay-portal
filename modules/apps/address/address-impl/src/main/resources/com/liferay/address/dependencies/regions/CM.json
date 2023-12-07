@@ -1,0 +1,42 @@
+[
+	{
+		"name": "Adamaoua",
+		"regionCode": "AD"
+	},
+	{
+		"name": "Centre",
+		"regionCode": "CE"
+	},
+	{
+		"name": "East",
+		"regionCode": "ES"
+	},
+	{
+		"name": "Far North",
+		"regionCode": "EN"
+	},
+	{
+		"name": "Littoral",
+		"regionCode": "LT"
+	},
+	{
+		"name": "North",
+		"regionCode": "NO"
+	},
+	{
+		"name": "North-West",
+		"regionCode": "NW"
+	},
+	{
+		"name": "South",
+		"regionCode": "SU"
+	},
+	{
+		"name": "South-West",
+		"regionCode": "SW"
+	},
+	{
+		"name": "West",
+		"regionCode": "OU"
+	}
+]

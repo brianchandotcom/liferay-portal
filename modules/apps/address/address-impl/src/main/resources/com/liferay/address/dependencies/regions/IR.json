@@ -1,0 +1,126 @@
+[
+	{
+		"name": "Alborz",
+		"regionCode": "30.0"
+	},
+	{
+		"name": "Ardabīl",
+		"regionCode": "24.0"
+	},
+	{
+		"name": "Āz̄ārbāyjān-e Ghārbī",
+		"regionCode": "4.0"
+	},
+	{
+		"name": "Āz̄ārbāyjān-e Shārqī",
+		"regionCode": "3.0"
+	},
+	{
+		"name": "Būshehr",
+		"regionCode": "18.0"
+	},
+	{
+		"name": "Chahār Maḩāl va Bakhtīārī",
+		"regionCode": "14.0"
+	},
+	{
+		"name": "Eşfahān",
+		"regionCode": "10.0"
+	},
+	{
+		"name": "Fārs",
+		"regionCode": "7.0"
+	},
+	{
+		"name": "Gīlān",
+		"regionCode": "1.0"
+	},
+	{
+		"name": "Golestān",
+		"regionCode": "27.0"
+	},
+	{
+		"name": "Hamadān",
+		"regionCode": "13.0"
+	},
+	{
+		"name": "Hormozgān",
+		"regionCode": "22.0"
+	},
+	{
+		"name": "Īlām",
+		"regionCode": "16.0"
+	},
+	{
+		"name": "Kermān",
+		"regionCode": "8.0"
+	},
+	{
+		"name": "Kermānshāh",
+		"regionCode": "5.0"
+	},
+	{
+		"name": "Khorāsān-e Jonūbī",
+		"regionCode": "29.0"
+	},
+	{
+		"name": "Khorāsān-e Raẕavī",
+		"regionCode": "9.0"
+	},
+	{
+		"name": "Khorāsān-e Shomālī",
+		"regionCode": "28.0"
+	},
+	{
+		"name": "Khūzestān",
+		"regionCode": "6.0"
+	},
+	{
+		"name": "Kohgīlūyeh va Bowyer Aḩmad",
+		"regionCode": "17.0"
+	},
+	{
+		"name": "Kordestān",
+		"regionCode": "12.0"
+	},
+	{
+		"name": "Lorestān",
+		"regionCode": "15.0"
+	},
+	{
+		"name": "Markazī",
+		"regionCode": "0.0"
+	},
+	{
+		"name": "Māzandarān",
+		"regionCode": "2.0"
+	},
+	{
+		"name": "Qazvīn",
+		"regionCode": "26.0"
+	},
+	{
+		"name": "Qom",
+		"regionCode": "25.0"
+	},
+	{
+		"name": "Semnān",
+		"regionCode": "20.0"
+	},
+	{
+		"name": "Sīstān va Balūchestān",
+		"regionCode": "11.0"
+	},
+	{
+		"name": "Tehrān",
+		"regionCode": "23.0"
+	},
+	{
+		"name": "Yazd",
+		"regionCode": "21.0"
+	},
+	{
+		"name": "Zanjān",
+		"regionCode": "19.0"
+	}
+]

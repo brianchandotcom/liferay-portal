@@ -1,0 +1,30 @@
+[
+	{
+		"name": "Azad Jammu and Kashmir",
+		"regionCode": "JK"
+	},
+	{
+		"name": "Balochistan",
+		"regionCode": "BA"
+	},
+	{
+		"name": "Gilgit-Baltistan",
+		"regionCode": "GB"
+	},
+	{
+		"name": "Islamabad",
+		"regionCode": "IS"
+	},
+	{
+		"name": "Khyber Pakhtunkhwa",
+		"regionCode": "KP"
+	},
+	{
+		"name": "Punjab",
+		"regionCode": "PB"
+	},
+	{
+		"name": "Sindh",
+		"regionCode": "SD"
+	}
+]

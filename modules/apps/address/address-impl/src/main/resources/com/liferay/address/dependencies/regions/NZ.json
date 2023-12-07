@@ -1,0 +1,70 @@
+[
+	{
+		"name": "Auckland",
+		"regionCode": "AUK"
+	},
+	{
+		"name": "Bay of Plenty",
+		"regionCode": "BOP"
+	},
+	{
+		"name": "Canterbury",
+		"regionCode": "CAN"
+	},
+	{
+		"name": "Chatham Islands Territory",
+		"regionCode": "CIT"
+	},
+	{
+		"name": "Gisborne",
+		"regionCode": "GIS"
+	},
+	{
+		"name": "Greater Wellington",
+		"regionCode": "WGN"
+	},
+	{
+		"name": "Hawke's Bay",
+		"regionCode": "HKB"
+	},
+	{
+		"name": "Manawatū-Whanganui",
+		"regionCode": "MWT"
+	},
+	{
+		"name": "Marlborough",
+		"regionCode": "MBH"
+	},
+	{
+		"name": "Nelson",
+		"regionCode": "NSN"
+	},
+	{
+		"name": "Northland",
+		"regionCode": "NTL"
+	},
+	{
+		"name": "Otago",
+		"regionCode": "OTA"
+	},
+	{
+		"name": "Southland",
+		"regionCode": "STL"
+	},
+	{
+		"name": "Taranaki",
+		"regionCode": "TKI"
+	},
+	{
+		"name": "Tasman",
+		"regionCode": "TAS"
+	},
+	{
+		"name": "Waikato",
+		"regionCode": "WKO"
+	},
+	{
+		"name": "West Coast",
+		"regionCode": "WTC"
+	}
+]

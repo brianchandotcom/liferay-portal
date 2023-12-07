@@ -1,0 +1,58 @@
+[
+	{
+		"name": "Ahuachapán",
+		"regionCode": "AH"
+	},
+	{
+		"name": "Cabañas",
+		"regionCode": "CA"
+	},
+	{
+		"name": "Chalatenango",
+		"regionCode": "CH"
+	},
+	{
+		"name": "Cuscatlán",
+		"regionCode": "CU"
+	},
+	{
+		"name": "La Libertad",
+		"regionCode": "LI"
+	},
+	{
+		"name": "La Paz",
+		"regionCode": "PA"
+	},
+	{
+		"name": "La Unión",
+		"regionCode": "UN"
+	},
+	{
+		"name": "Morazán",
+		"regionCode": "MO"
+	},
+	{
+		"name": "San Miguel",
+		"regionCode": "SM"
+	},
+	{
+		"name": "San Salvador",
+		"regionCode": "SS"
+	},
+	{
+		"name": "San Vicente",
+		"regionCode": "SV"
+	},
+	{
+		"name": "Santa Ana",
+		"regionCode": "SA"
+	},
+	{
+		"name": "Sonsonate",
+		"regionCode": "SO"
+	},
+	{
+		"name": "Usulután",
+		"regionCode": "US"
+	}
+]

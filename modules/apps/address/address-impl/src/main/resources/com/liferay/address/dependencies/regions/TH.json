@@ -1,0 +1,314 @@
+[
+	{
+		"name": "Amnat Charoen",
+		"regionCode": "37.0"
+	},
+	{
+		"name": "Ang Thong",
+		"regionCode": "15.0"
+	},
+	{
+		"name": "Bueng Kan",
+		"regionCode": "38.0"
+	},
+	{
+		"name": "Buri Ram",
+		"regionCode": "31.0"
+	},
+	{
+		"name": "Chachoengsao",
+		"regionCode": "24.0"
+	},
+	{
+		"name": "Chai Nat",
+		"regionCode": "18.0"
+	},
+	{
+		"name": "Chaiyaphum",
+		"regionCode": "36.0"
+	},
+	{
+		"name": "Chanthaburi",
+		"regionCode": "22.0"
+	},
+	{
+		"name": "Chiang Mai",
+		"regionCode": "50.0"
+	},
+	{
+		"name": "Chiang Rai",
+		"regionCode": "57.0"
+	},
+	{
+		"name": "Chon Buri",
+		"regionCode": "20.0"
+	},
+	{
+		"name": "Chumphon",
+		"regionCode": "86.0"
+	},
+	{
+		"name": "Kalasin",
+		"regionCode": "46.0"
+	},
+	{
+		"name": "Kamphaeng Phet",
+		"regionCode": "62.0"
+	},
+	{
+		"name": "Kanchanaburi",
+		"regionCode": "71.0"
+	},
+	{
+		"name": "Khon Kaen",
+		"regionCode": "40.0"
+	},
+	{
+		"name": "Krabi",
+		"regionCode": "81.0"
+	},
+	{
+		"name": "Krung Thep Maha Nakhon",
+		"regionCode": "10.0"
+	},
+	{
+		"name": "Lampang",
+		"regionCode": "52.0"
+	},
+	{
+		"name": "Lamphun",
+		"regionCode": "51.0"
+	},
+	{
+		"name": "Loei",
+		"regionCode": "42.0"
+	},
+	{
+		"name": "Lop Buri",
+		"regionCode": "16.0"
+	},
+	{
+		"name": "Mae Hong Son",
+		"regionCode": "58.0"
+	},
+	{
+		"name": "Maha Sarakham",
+		"regionCode": "44.0"
+	},
+	{
+		"name": "Mukdahan",
+		"regionCode": "49.0"
+	},
+	{
+		"name": "Nakhon Nayok",
+		"regionCode": "26.0"
+	},
+	{
+		"name": "Nakhon Pathom",
+		"regionCode": "73.0"
+	},
+	{
+		"name": "Nakhon Phanom",
+		"regionCode": "48.0"
+	},
+	{
+		"name": "Nakhon Ratchasima",
+		"regionCode": "30.0"
+	},
+	{
+		"name": "Nakhon Sawan",
+		"regionCode": "60.0"
+	},
+	{
+		"name": "Nakhon Si Thammarat",
+		"regionCode": "80.0"
+	},
+	{
+		"name": "Nan",
+		"regionCode": "55.0"
+	},
+	{
+		"name": "Narathiwat",
+		"regionCode": "96.0"
+	},
+	{
+		"name": "Nong Bua Lam Phu",
+		"regionCode": "39.0"
+	},
+	{
+		"name": "Nong Khai",
+		"regionCode": "43.0"
+	},
+	{
+		"name": "Nonthaburi",
+		"regionCode": "12.0"
+	},
+	{
+		"name": "Pathum Thani",
+		"regionCode": "13.0"
+	},
+	{
+		"name": "Pattani",
+		"regionCode": "94.0"
+	},
+	{
+		"name": "Phangnga",
+		"regionCode": "82.0"
+	},
+	{
+		"name": "Phatthalung",
+		"regionCode": "93.0"
+	},
+	{
+		"name": "Phatthaya",
+		"regionCode": "S"
+	},
+	{
+		"name": "Phayao",
+		"regionCode": "56.0"
+	},
+	{
+		"name": "Phetchabun",
+		"regionCode": "67.0"
+	},
+	{
+		"name": "Phetchaburi",
+		"regionCode": "76.0"
+	},
+	{
+		"name": "Phichit",
+		"regionCode": "66.0"
+	},
+	{
+		"name": "Phitsanulok",
+		"regionCode": "65.0"
+	},
+	{
+		"name": "Phra Nakhon Si Ayutthaya",
+		"regionCode": "14.0"
+	},
+	{
+		"name": "Phrae",
+		"regionCode": "54.0"
+	},
+	{
+		"name": "Phuket",
+		"regionCode": "83.0"
+	},
+	{
+		"name": "Prachin Buri",
+		"regionCode": "25.0"
+	},
+	{
+		"name": "Prachuap Khiri Khan",
+		"regionCode": "77.0"
+	},
+	{
+		"name": "Ranong",
+		"regionCode": "85.0"
+	},
+	{
+		"name": "Ratchaburi",
+		"regionCode": "70.0"
+	},
+	{
+		"name": "Rayong",
+		"regionCode": "21.0"
+	},
+	{
+		"name": "Roi Et",
+		"regionCode": "45.0"
+	},
+	{
+		"name": "Sa Kaeo",
+		"regionCode": "27.0"
+	},
+	{
+		"name": "Sakon Nakhon",
+		"regionCode": "47.0"
+	},
+	{
+		"name": "Samut Prakan",
+		"regionCode": "11.0"
+	},
+	{
+		"name": "Samut Sakhon",
+		"regionCode": "74.0"
+	},
+	{
+		"name": "Samut Songkhram",
+		"regionCode": "75.0"
+	},
+	{
+		"name": "Saraburi",
+		"regionCode": "19.0"
+	},
+	{
+		"name": "Satun",
+		"regionCode": "91.0"
+	},
+	{
+		"name": "Si Sa Ket",
+		"regionCode": "33.0"
+	},
+	{
+		"name": "Sing Buri",
+		"regionCode": "17.0"
+	},
+	{
+		"name": "Songkhla",
+		"regionCode": "90.0"
+	},
+	{
+		"name": "Sukhothai",
+		"regionCode": "64.0"
+	},
+	{
+		"name": "Suphan Buri",
+		"regionCode": "72.0"
+	},
+	{
+		"name": "Surat Thani",
+		"regionCode": "84.0"
+	},
+	{
+		"name": "Surin",
+		"regionCode": "32.0"
+	},
+	{
+		"name": "Tak",
+		"regionCode": "63.0"
+	},
+	{
+		"name": "Trang",
+		"regionCode": "92.0"
+	},
+	{
+		"name": "Trat",
+		"regionCode": "23.0"
+	},
+	{
+		"name": "Ubon Ratchathani",
+		"regionCode": "34.0"
+	},
+	{
+		"name": "Udon Thani",
+		"regionCode": "41.0"
+	},
+	{
+		"name": "Uthai Thani",
+		"regionCode": "61.0"
+	},
+	{
+		"name": "Uttaradit",
+		"regionCode": "53.0"
+	},
+	{
+		"name": "Yala",
+		"regionCode": "95.0"
+	},
+	{
+		"name": "Yasothon",
+		"regionCode": "35.0"
+	}
+]

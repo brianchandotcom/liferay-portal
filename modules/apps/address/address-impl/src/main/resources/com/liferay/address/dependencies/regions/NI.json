@@ -1,0 +1,70 @@
+[
+	{
+		"name": "Boaco",
+		"regionCode": "BO"
+	},
+	{
+		"name": "Carazo",
+		"regionCode": "CA"
+	},
+	{
+		"name": "Chinandega",
+		"regionCode": "CI"
+	},
+	{
+		"name": "Chontales",
+		"regionCode": "CO"
+	},
+	{
+		"name": "Costa Caribe Norte",
+		"regionCode": "AN"
+	},
+	{
+		"name": "Costa Caribe Sur",
+		"regionCode": "AS"
+	},
+	{
+		"name": "Estelí",
+		"regionCode": "ES"
+	},
+	{
+		"name": "Granada",
+		"regionCode": "GR"
+	},
+	{
+		"name": "Jinotega",
+		"regionCode": "JI"
+	},
+	{
+		"name": "León",
+		"regionCode": "LE"
+	},
+	{
+		"name": "Madriz",
+		"regionCode": "MD"
+	},
+	{
+		"name": "Managua",
+		"regionCode": "MN"
+	},
+	{
+		"name": "Masaya",
+		"regionCode": "MS"
+	},
+	{
+		"name": "Matagalpa",
+		"regionCode": "MT"
+	},
+	{
+		"name": "Nueva Segovia",
+		"regionCode": "NS"
+	},
+	{
+		"name": "Río San Juan",
+		"regionCode": "SJ"
+	},
+	{
+		"name": "Rivas",
+		"regionCode": "RI"
+	}
+]

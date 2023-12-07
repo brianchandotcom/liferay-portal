@@ -1,0 +1,58 @@
+[
+	{
+		"name": "Ágion Óros",
+		"regionCode": "69.0"
+	},
+	{
+		"name": "Anatolikí Makedonía kai Thráki",
+		"regionCode": "A"
+	},
+	{
+		"name": "Attikí",
+		"regionCode": "I"
+	},
+	{
+		"name": "Dytikí Elláda",
+		"regionCode": "G"
+	},
+	{
+		"name": "Dytikí Makedonía",
+		"regionCode": "C"
+	},
+	{
+		"name": "Ionía Nísia",
+		"regionCode": "F"
+	},
+	{
+		"name": "Ípeiros",
+		"regionCode": "D"
+	},
+	{
+		"name": "Kentrikí Makedonía",
+		"regionCode": "B"
+	},
+	{
+		"name": "Kríti",
+		"regionCode": "M"
+	},
+	{
+		"name": "Nótio Aigaío",
+		"regionCode": "L"
+	},
+	{
+		"name": "Pelopónnisos",
+		"regionCode": "J"
+	},
+	{
+		"name": "Stereá Elláda",
+		"regionCode": "H"
+	},
+	{
+		"name": "Thessalía",
+		"regionCode": "E"
+	},
+	{
+		"name": "Vóreio Aigaío",
+		"regionCode": "K"
+	}
+]

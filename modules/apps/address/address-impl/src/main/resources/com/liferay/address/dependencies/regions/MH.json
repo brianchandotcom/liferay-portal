@@ -1,0 +1,106 @@
+[
+	{
+		"name": "Ailinglaplap",
+		"regionCode": "ALL"
+	},
+	{
+		"name": "Ailuk",
+		"regionCode": "ALK"
+	},
+	{
+		"name": "Arno",
+		"regionCode": "ARN"
+	},
+	{
+		"name": "Aur",
+		"regionCode": "AUR"
+	},
+	{
+		"name": "Bikini & Kili",
+		"regionCode": "KIL"
+	},
+	{
+		"name": "Ebon",
+		"regionCode": "EBO"
+	},
+	{
+		"name": "Enewetak & Ujelang",
+		"regionCode": "ENI"
+	},
+	{
+		"name": "Jabat",
+		"regionCode": "JAB"
+	},
+	{
+		"name": "Jaluit",
+		"regionCode": "JAL"
+	},
+	{
+		"name": "Kwajalein",
+		"regionCode": "KWA"
+	},
+	{
+		"name": "Lae",
+		"regionCode": "LAE"
+	},
+	{
+		"name": "Lib",
+		"regionCode": "LIB"
+	},
+	{
+		"name": "Likiep",
+		"regionCode": "LIK"
+	},
+	{
+		"name": "Majuro",
+		"regionCode": "MAJ"
+	},
+	{
+		"name": "Maloelap",
+		"regionCode": "MAL"
+	},
+	{
+		"name": "Mejit",
+		"regionCode": "MEJ"
+	},
+	{
+		"name": "Mili",
+		"regionCode": "MIL"
+	},
+	{
+		"name": "Namdrik",
+		"regionCode": "NMK"
+	},
+	{
+		"name": "Namu",
+		"regionCode": "NMU"
+	},
+	{
+		"name": "Ralik chain",
+		"regionCode": "L"
+	},
+	{
+		"name": "Ratak chain",
+		"regionCode": "T"
+	},
+	{
+		"name": "Rongelap",
+		"regionCode": "RON"
+	},
+	{
+		"name": "Ujae",
+		"regionCode": "UJA"
+	},
+	{
+		"name": "Utrik",
+		"regionCode": "UTI"
+	},
+	{
+		"name": "Wotho",
+		"regionCode": "WTH"
+	},
+	{
+		"name": "Wotje",
+		"regionCode": "WTJ"
+	}
+]

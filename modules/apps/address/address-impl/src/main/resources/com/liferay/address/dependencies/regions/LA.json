@@ -1,0 +1,74 @@
+[
+	{
+		"name": "Attapu",
+		"regionCode": "AT"
+	},
+	{
+		"name": "Bokèo",
+		"regionCode": "BK"
+	},
+	{
+		"name": "Bolikhamxai",
+		"regionCode": "BL"
+	},
+	{
+		"name": "Champasak",
+		"regionCode": "CH"
+	},
+	{
+		"name": "Houaphan",
+		"regionCode": "HO"
+	},
+	{
+		"name": "Khammouan",
+		"regionCode": "KH"
+	},
+	{
+		"name": "Louang Namtha",
+		"regionCode": "LM"
+	},
+	{
+		"name": "Louangphabang",
+		"regionCode": "LP"
+	},
+	{
+		"name": "Oudômxai",
+		"regionCode": "OU"
+	},
+	{
+		"name": "Phôngsali",
+		"regionCode": "PH"
+	},
+	{
+		"name": "Salavan",
+		"regionCode": "SL"
+	},
+	{
+		"name": "Savannakhét",
+		"regionCode": "SV"
+	},
+	{
+		"name": "Viangchan",
+		"regionCode": "VT"
+	},
+	{
+		"name": "Viangchan",
+		"regionCode": "VI"
+	},
+	{
+		"name": "Xaignabouli",
+		"regionCode": "XA"
+	},
+	{
+		"name": "Xaisômboun",
+		"regionCode": "XS"
+	},
+	{
+		"name": "Xékong",
+		"regionCode": "XE"
+	},
+	{
+		"name": "Xiangkhouang",
+		"regionCode": "XI"
+	}
+]

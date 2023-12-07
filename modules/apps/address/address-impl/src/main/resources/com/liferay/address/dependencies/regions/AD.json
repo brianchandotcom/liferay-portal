@@ -1,0 +1,30 @@
+[
+	{
+		"name": "Andorra la Vella",
+		"regionCode": "7.0"
+	},
+	{
+		"name": "Canillo",
+		"regionCode": "2.0"
+	},
+	{
+		"name": "Encamp",
+		"regionCode": "3.0"
+	},
+	{
+		"name": "Escaldes-Engordany",
+		"regionCode": "8.0"
+	},
+	{
+		"name": "La Massana",
+		"regionCode": "4.0"
+	},
+	{
+		"name": "Ordino",
+		"regionCode": "5.0"
+	},
+	{
+		"name": "Sant Julià de Lòria",
+		"regionCode": "6.0"
+	}
+]

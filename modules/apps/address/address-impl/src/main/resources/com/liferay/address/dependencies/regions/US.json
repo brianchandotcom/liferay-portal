@@ -8,6 +8,10 @@
 		"regionCode": "AK"
 	},
 	{
+		"name": "American Samoa",
+		"regionCode": "AS"
+	},
+	{
 		"name": "Arizona",
 		"regionCode": "AZ"
 	},
@@ -28,12 +32,12 @@
 		"regionCode": "CT"
 	},
 	{
-		"name": "District of Columbia",
-		"regionCode": "DC"
-	},
-	{
 		"name": "Delaware",
 		"regionCode": "DE"
+	},
+	{
+		"name": "District of Columbia",
+		"regionCode": "DC"
 	},
 	{
 		"name": "Florida",
@@ -42,6 +46,10 @@
 	{
 		"name": "Georgia",
 		"regionCode": "GA"
+	},
+	{
+		"name": "Guam",
+		"regionCode": "GU"
 	},
 	{
 		"name": "Hawaii",
@@ -140,6 +148,10 @@
 		"regionCode": "ND"
 	},
 	{
+		"name": "Northern Mariana Islands",
+		"regionCode": "MP"
+	},
+	{
 		"name": "Ohio",
 		"regionCode": "OH"
 	},
@@ -180,12 +192,20 @@
 		"regionCode": "TX"
 	},
 	{
+		"name": "United States Minor Outlying Islands",
+		"regionCode": "UM"
+	},
+	{
 		"name": "Utah",
 		"regionCode": "UT"
 	},
 	{
 		"name": "Vermont",
 		"regionCode": "VT"
+	},
+	{
+		"name": "Virgin Islands, U.S.",
+		"regionCode": "VI"
 	},
 	{
 		"name": "Virginia",

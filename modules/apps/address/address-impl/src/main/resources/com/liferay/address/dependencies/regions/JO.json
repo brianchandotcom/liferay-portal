@@ -1,0 +1,50 @@
+[
+	{
+		"name": "‘Ajlūn",
+		"regionCode": "AJ"
+	},
+	{
+		"name": "Al ‘Aqabah",
+		"regionCode": "AQ"
+	},
+	{
+		"name": "Al ‘A̅şimah",
+		"regionCode": "AM"
+	},
+	{
+		"name": "Al Balqā’",
+		"regionCode": "BA"
+	},
+	{
+		"name": "Al Karak",
+		"regionCode": "KA"
+	},
+	{
+		"name": "Al Mafraq",
+		"regionCode": "MA"
+	},
+	{
+		"name": "Aţ Ţafīlah",
+		"regionCode": "AT"
+	},
+	{
+		"name": "Az Zarqā’",
+		"regionCode": "AZ"
+	},
+	{
+		"name": "Irbid",
+		"regionCode": "IR"
+	},
+	{
+		"name": "Jarash",
+		"regionCode": "JA"
+	},
+	{
+		"name": "Ma‘ān",
+		"regionCode": "MN"
+	},
+	{
+		"name": "Mādabā",
+		"regionCode": "MD"
+	}
+]

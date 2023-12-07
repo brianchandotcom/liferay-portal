@@ -1,0 +1,26 @@
+[
+	{
+		"name": "Ahal",
+		"regionCode": "A"
+	},
+	{
+		"name": "Aşgabat",
+		"regionCode": "S"
+	},
+	{
+		"name": "Balkan",
+		"regionCode": "B"
+	},
+	{
+		"name": "Daşoguz",
+		"regionCode": "D"
+	},
+	{
+		"name": "Lebap",
+		"regionCode": "L"
+	},
+	{
+		"name": "Mary",
+		"regionCode": "M"
+	}
+]

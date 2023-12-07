@@ -1,0 +1,34 @@
+[
+	{
+		"name": "‘Akkār",
+		"regionCode": "AK"
+	},
+	{
+		"name": "Al Janūb",
+		"regionCode": "JA"
+	},
+	{
+		"name": "Ash Shimāl",
+		"regionCode": "AS"
+	},
+	{
+		"name": "B‘alabak-Al Hirmil",
+		"regionCode": "BH"
+	},
+	{
+		"name": "Bayrūt",
+		"regionCode": "BA"
+	},
+	{
+		"name": "Béqaa",
+		"regionCode": "BI"
+	},
+	{
+		"name": "Mont-Liban",
+		"regionCode": "JL"
+	},
+	{
+		"name": "Nabatîyé",
+		"regionCode": "NA"
+	}
+]

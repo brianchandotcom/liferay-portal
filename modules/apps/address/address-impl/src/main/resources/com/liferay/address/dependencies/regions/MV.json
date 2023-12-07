@@ -1,0 +1,86 @@
+[
+	{
+		"name": "Addu",
+		"regionCode": "1.0"
+	},
+	{
+		"name": "Ariatholhu Dhekunuburi",
+		"regionCode": "0.0"
+	},
+	{
+		"name": "Ariatholhu Uthuruburi",
+		"regionCode": "2.0"
+	},
+	{
+		"name": "Faadhippolhu",
+		"regionCode": "3.0"
+	},
+	{
+		"name": "Felidheatholhu",
+		"regionCode": "4.0"
+	},
+	{
+		"name": "Fuvammulah",
+		"regionCode": "29.0"
+	},
+	{
+		"name": "Hahdhunmathi",
+		"regionCode": "5.0"
+	},
+	{
+		"name": "Huvadhuatholhu Dhekunuburi",
+		"regionCode": "28.0"
+	},
+	{
+		"name": "Huvadhuatholhu Uthuruburi",
+		"regionCode": "27.0"
+	},
+	{
+		"name": "Kolhumadulu",
+		"regionCode": "8.0"
+	},
+	{
+		"name": "Maale",
+		"regionCode": "MLE"
+	},
+	{
+		"name": "Maaleatholhu",
+		"regionCode": "26.0"
+	},
+	{
+		"name": "Maalhosmadulu Dhekunuburi",
+		"regionCode": "20.0"
+	},
+	{
+		"name": "Maalhosmadulu Uthuruburi",
+		"regionCode": "13.0"
+	},
+	{
+		"name": "Miladhunmadulu Dhekunuburi",
+		"regionCode": "25.0"
+	},
+	{
+		"name": "Miladhunmadulu Uthuruburi",
+		"regionCode": "24.0"
+	},
+	{
+		"name": "Mulakatholhu",
+		"regionCode": "12.0"
+	},
+	{
+		"name": "Nilandheatholhu Dhekunuburi",
+		"regionCode": "17.0"
+	},
+	{
+		"name": "Nilandheatholhu Uthuruburi",
+		"regionCode": "14.0"
+	},
+	{
+		"name": "Thiladhunmathee Dhekunuburi",
+		"regionCode": "23.0"
+	},
+	{
+		"name": "Thiladhunmathee Uthuruburi",
+		"regionCode": "7.0"
+	}
+]

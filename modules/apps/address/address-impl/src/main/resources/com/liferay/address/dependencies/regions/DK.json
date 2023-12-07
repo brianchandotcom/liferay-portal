@@ -1,0 +1,22 @@
+[
+	{
+		"name": "Hovedstaden",
+		"regionCode": "84.0"
+	},
+	{
+		"name": "Midtjylland",
+		"regionCode": "82.0"
+	},
+	{
+		"name": "Nordjylland",
+		"regionCode": "81.0"
+	},
+	{
+		"name": "Sjælland",
+		"regionCode": "85.0"
+	},
+	{
+		"name": "Syddanmark",
+		"regionCode": "83.0"
+	}
+]

@@ -1,0 +1,66 @@
+[
+	{
+		"name": "Central",
+		"regionCode": "CE"
+	},
+	{
+		"name": "Chobe",
+		"regionCode": "CH"
+	},
+	{
+		"name": "Francistown",
+		"regionCode": "FR"
+	},
+	{
+		"name": "Gaborone",
+		"regionCode": "GA"
+	},
+	{
+		"name": "Ghanzi",
+		"regionCode": "GH"
+	},
+	{
+		"name": "Jwaneng",
+		"regionCode": "JW"
+	},
+	{
+		"name": "Kgalagadi",
+		"regionCode": "KG"
+	},
+	{
+		"name": "Kgatleng",
+		"regionCode": "KL"
+	},
+	{
+		"name": "Kweneng",
+		"regionCode": "KW"
+	},
+	{
+		"name": "Lobatse",
+		"regionCode": "LO"
+	},
+	{
+		"name": "North East",
+		"regionCode": "NE"
+	},
+	{
+		"name": "North West",
+		"regionCode": "NW"
+	},
+	{
+		"name": "Selibe Phikwe",
+		"regionCode": "SP"
+	},
+	{
+		"name": "South East",
+		"regionCode": "SE"
+	},
+	{
+		"name": "Southern",
+		"regionCode": "SO"
+	},
+	{
+		"name": "Sowa Town",
+		"regionCode": "ST"
+	}
+]

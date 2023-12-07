@@ -1,0 +1,70 @@
+[
+	{
+		"name": "Fontvieille",
+		"regionCode": "FO"
+	},
+	{
+		"name": "Jardin Exotique",
+		"regionCode": "JE"
+	},
+	{
+		"name": "La Colle",
+		"regionCode": "CL"
+	},
+	{
+		"name": "La Condamine",
+		"regionCode": "CO"
+	},
+	{
+		"name": "La Gare",
+		"regionCode": "GA"
+	},
+	{
+		"name": "La Source",
+		"regionCode": "SO"
+	},
+	{
+		"name": "Larvotto",
+		"regionCode": "LA"
+	},
+	{
+		"name": "Malbousquet",
+		"regionCode": "MA"
+	},
+	{
+		"name": "Monaco-Ville",
+		"regionCode": "MO"
+	},
+	{
+		"name": "Moneghetti",
+		"regionCode": "MG"
+	},
+	{
+		"name": "Monte-Carlo",
+		"regionCode": "MC"
+	},
+	{
+		"name": "Moulins",
+		"regionCode": "MU"
+	},
+	{
+		"name": "Port-Hercule",
+		"regionCode": "PH"
+	},
+	{
+		"name": "Saint-Roman",
+		"regionCode": "SR"
+	},
+	{
+		"name": "Sainte-Dévote",
+		"regionCode": "SD"
+	},
+	{
+		"name": "Spélugues",
+		"regionCode": "SP"
+	},
+	{
+		"name": "Vallon de la Rousse",
+		"regionCode": "VR"
+	}
+]

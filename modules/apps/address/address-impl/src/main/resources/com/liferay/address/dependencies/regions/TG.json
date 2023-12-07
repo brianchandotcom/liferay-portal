@@ -1,0 +1,22 @@
+[
+	{
+		"name": "Centrale",
+		"regionCode": "C"
+	},
+	{
+		"name": "Kara",
+		"regionCode": "K"
+	},
+	{
+		"name": "Maritime (Region)",
+		"regionCode": "M"
+	},
+	{
+		"name": "Plateaux",
+		"regionCode": "P"
+	},
+	{
+		"name": "Savanes",
+		"regionCode": "S"
+	}
+]

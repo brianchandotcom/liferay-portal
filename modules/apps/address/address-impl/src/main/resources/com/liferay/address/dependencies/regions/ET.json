@@ -1,0 +1,54 @@
+[
+	{
+		"name": "Ādīs Ābeba",
+		"regionCode": "AA"
+	},
+	{
+		"name": "Āfar",
+		"regionCode": "AF"
+	},
+	{
+		"name": "Āmara",
+		"regionCode": "AM"
+	},
+	{
+		"name": "Bīnshangul Gumuz",
+		"regionCode": "BE"
+	},
+	{
+		"name": "Dirē Dawa",
+		"regionCode": "DD"
+	},
+	{
+		"name": "Gambēla Hizboch",
+		"regionCode": "GA"
+	},
+	{
+		"name": "Hārerī Hizb",
+		"regionCode": "HA"
+	},
+	{
+		"name": "Oromīya",
+		"regionCode": "OR"
+	},
+	{
+		"name": "Sīdama",
+		"regionCode": "SI"
+	},
+	{
+		"name": "Sumalē",
+		"regionCode": "SO"
+	},
+	{
+		"name": "Tigray",
+		"regionCode": "TI"
+	},
+	{
+		"name": "YeDebub Bihēroch Bihēreseboch na Hizboch",
+		"regionCode": "SN"
+	},
+	{
+		"name": "YeDebub M‘irab Ītyop’iya Hizboch",
+		"regionCode": "SW"
+	}
+]

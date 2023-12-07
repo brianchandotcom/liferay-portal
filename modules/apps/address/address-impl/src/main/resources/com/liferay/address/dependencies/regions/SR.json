@@ -1,0 +1,42 @@
+[
+	{
+		"name": "Brokopondo",
+		"regionCode": "BR"
+	},
+	{
+		"name": "Commewijne",
+		"regionCode": "CM"
+	},
+	{
+		"name": "Coronie",
+		"regionCode": "CR"
+	},
+	{
+		"name": "Marowijne",
+		"regionCode": "MA"
+	},
+	{
+		"name": "Nickerie",
+		"regionCode": "NI"
+	},
+	{
+		"name": "Para",
+		"regionCode": "PR"
+	},
+	{
+		"name": "Paramaribo",
+		"regionCode": "PM"
+	},
+	{
+		"name": "Saramacca",
+		"regionCode": "SA"
+	},
+	{
+		"name": "Sipaliwini",
+		"regionCode": "SI"
+	},
+	{
+		"name": "Wanica",
+		"regionCode": "WA"
+	}
+]

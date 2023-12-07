@@ -1,0 +1,50 @@
+[
+	{
+		"name": "Bafatá",
+		"regionCode": "BA"
+	},
+	{
+		"name": "Biombo",
+		"regionCode": "BM"
+	},
+	{
+		"name": "Bissau",
+		"regionCode": "BS"
+	},
+	{
+		"name": "Bolama / Bijagós",
+		"regionCode": "BL"
+	},
+	{
+		"name": "Cacheu",
+		"regionCode": "CA"
+	},
+	{
+		"name": "Gabú",
+		"regionCode": "GA"
+	},
+	{
+		"name": "Leste",
+		"regionCode": "L"
+	},
+	{
+		"name": "Norte",
+		"regionCode": "N"
+	},
+	{
+		"name": "Oio",
+		"regionCode": "OI"
+	},
+	{
+		"name": "Quinara",
+		"regionCode": "QU"
+	},
+	{
+		"name": "Sul",
+		"regionCode": "S"
+	},
+	{
+		"name": "Tombali",
+		"regionCode": "TO"
+	}
+]

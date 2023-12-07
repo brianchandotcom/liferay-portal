@@ -1,0 +1,46 @@
+[
+	{
+		"name": "Balzers",
+		"regionCode": "1.0"
+	},
+	{
+		"name": "Eschen",
+		"regionCode": "2.0"
+	},
+	{
+		"name": "Gamprin",
+		"regionCode": "3.0"
+	},
+	{
+		"name": "Mauren",
+		"regionCode": "4.0"
+	},
+	{
+		"name": "Planken",
+		"regionCode": "5.0"
+	},
+	{
+		"name": "Ruggell",
+		"regionCode": "6.0"
+	},
+	{
+		"name": "Schaan",
+		"regionCode": "7.0"
+	},
+	{
+		"name": "Schellenberg",
+		"regionCode": "8.0"
+	},
+	{
+		"name": "Triesen",
+		"regionCode": "9.0"
+	},
+	{
+		"name": "Triesenberg",
+		"regionCode": "10.0"
+	},
+	{
+		"name": "Vaduz",
+		"regionCode": "11.0"
+	}
+]

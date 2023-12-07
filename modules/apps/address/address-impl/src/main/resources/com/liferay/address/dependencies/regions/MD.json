@@ -1,0 +1,150 @@
+[
+	{
+		"name": "Anenii Noi",
+		"regionCode": "AN"
+	},
+	{
+		"name": "Bălți",
+		"regionCode": "BA"
+	},
+	{
+		"name": "Basarabeasca",
+		"regionCode": "BS"
+	},
+	{
+		"name": "Bender [Tighina]",
+		"regionCode": "BD"
+	},
+	{
+		"name": "Briceni",
+		"regionCode": "BR"
+	},
+	{
+		"name": "Cahul",
+		"regionCode": "CA"
+	},
+	{
+		"name": "Călărași",
+		"regionCode": "CL"
+	},
+	{
+		"name": "Cantemir",
+		"regionCode": "CT"
+	},
+	{
+		"name": "Căușeni",
+		"regionCode": "CS"
+	},
+	{
+		"name": "Chișinău",
+		"regionCode": "CU"
+	},
+	{
+		"name": "Cimișlia",
+		"regionCode": "CM"
+	},
+	{
+		"name": "Criuleni",
+		"regionCode": "CR"
+	},
+	{
+		"name": "Dondușeni",
+		"regionCode": "DO"
+	},
+	{
+		"name": "Drochia",
+		"regionCode": "DR"
+	},
+	{
+		"name": "Dubăsari",
+		"regionCode": "DU"
+	},
+	{
+		"name": "Edineț",
+		"regionCode": "ED"
+	},
+	{
+		"name": "Fălești",
+		"regionCode": "FA"
+	},
+	{
+		"name": "Florești",
+		"regionCode": "FL"
+	},
+	{
+		"name": "Găgăuzia, Unitatea teritorială autonomă (UTAG)",
+		"regionCode": "GA"
+	},
+	{
+		"name": "Glodeni",
+		"regionCode": "GL"
+	},
+	{
+		"name": "Hîncești",
+		"regionCode": "HI"
+	},
+	{
+		"name": "Ialoveni",
+		"regionCode": "IA"
+	},
+	{
+		"name": "Leova",
+		"regionCode": "LE"
+	},
+	{
+		"name": "Nisporeni",
+		"regionCode": "NI"
+	},
+	{
+		"name": "Ocnița",
+		"regionCode": "OC"
+	},
+	{
+		"name": "Orhei",
+		"regionCode": "OR"
+	},
+	{
+		"name": "Rezina",
+		"regionCode": "RE"
+	},
+	{
+		"name": "Rîșcani",
+		"regionCode": "RI"
+	},
+	{
+		"name": "Sîngerei",
+		"regionCode": "SI"
+	},
+	{
+		"name": "Șoldănești",
+		"regionCode": "SD"
+	},
+	{
+		"name": "Soroca",
+		"regionCode": "SO"
+	},
+	{
+		"name": "Ștefan Vodă",
+		"regionCode": "SV"
+	},
+	{
+		"name": "Stînga Nistrului, unitatea teritorială din",
+		"regionCode": "SN"
+	},
+	{
+		"name": "Strășeni",
+		"regionCode": "ST"
+	},
+	{
+		"name": "Taraclia",
+		"regionCode": "TA"
+	},
+	{
+		"name": "Telenești",
+		"regionCode": "TE"
+	},
+	{
+		"name": "Ungheni",
+		"regionCode": "UN"
+	}
+]

@@ -1,0 +1,58 @@
+[
+	{
+		"name": "Al Ḩasakah",
+		"regionCode": "HA"
+	},
+	{
+		"name": "Al Lādhiqīyah",
+		"regionCode": "LA"
+	},
+	{
+		"name": "Al Qunayţirah",
+		"regionCode": "QU"
+	},
+	{
+		"name": "Ar Raqqah",
+		"regionCode": "RA"
+	},
+	{
+		"name": "As Suwaydā'",
+		"regionCode": "SU"
+	},
+	{
+		"name": "Dar'ā",
+		"regionCode": "DR"
+	},
+	{
+		"name": "Dayr az Zawr",
+		"regionCode": "DY"
+	},
+	{
+		"name": "Dimashq",
+		"regionCode": "DI"
+	},
+	{
+		"name": "Ḩalab",
+		"regionCode": "HL"
+	},
+	{
+		"name": "Ḩamāh",
+		"regionCode": "HM"
+	},
+	{
+		"name": "Ḩimş",
+		"regionCode": "HI"
+	},
+	{
+		"name": "Idlib",
+		"regionCode": "ID"
+	},
+	{
+		"name": "Rīf Dimashq",
+		"regionCode": "RD"
+	},
+	{
+		"name": "Ţarţūs",
+		"regionCode": "TA"
+	}
+]

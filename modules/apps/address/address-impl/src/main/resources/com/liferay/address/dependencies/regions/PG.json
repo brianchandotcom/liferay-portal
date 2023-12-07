@@ -1,0 +1,90 @@
+[
+	{
+		"name": "Bougainville",
+		"regionCode": "NSB"
+	},
+	{
+		"name": "Central",
+		"regionCode": "CPM"
+	},
+	{
+		"name": "Chimbu",
+		"regionCode": "CPK"
+	},
+	{
+		"name": "East New Britain",
+		"regionCode": "EBR"
+	},
+	{
+		"name": "East Sepik",
+		"regionCode": "ESW"
+	},
+	{
+		"name": "Eastern Highlands",
+		"regionCode": "EHG"
+	},
+	{
+		"name": "Enga",
+		"regionCode": "EPW"
+	},
+	{
+		"name": "Gulf",
+		"regionCode": "GPK"
+	},
+	{
+		"name": "Hela",
+		"regionCode": "HLA"
+	},
+	{
+		"name": "Jiwaka",
+		"regionCode": "JWK"
+	},
+	{
+		"name": "Madang",
+		"regionCode": "MPM"
+	},
+	{
+		"name": "Manus",
+		"regionCode": "MRL"
+	},
+	{
+		"name": "Milne Bay",
+		"regionCode": "MBA"
+	},
+	{
+		"name": "Morobe",
+		"regionCode": "MPL"
+	},
+	{
+		"name": "National Capital District (Port Moresby)",
+		"regionCode": "NCD"
+	},
+	{
+		"name": "New Ireland",
+		"regionCode": "NIK"
+	},
+	{
+		"name": "Northern",
+		"regionCode": "NPP"
+	},
+	{
+		"name": "Southern Highlands",
+		"regionCode": "SHM"
+	},
+	{
+		"name": "West New Britain",
+		"regionCode": "WBK"
+	},
+	{
+		"name": "West Sepik",
+		"regionCode": "SAN"
+	},
+	{
+		"name": "Western",
+		"regionCode": "WPD"
+	},
+	{
+		"name": "Western Highlands",
+		"regionCode": "WHM"
+	}
+]

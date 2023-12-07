@@ -7,12 +7,6 @@
 
 <%@ include file="/instance/init.jsp" %>
 
-<%
-DateSearchEntry dateSearchEntry = new DateSearchEntry();
-
-String displayStyle = workflowInstanceViewDisplayContext.getDisplayStyle();
-%>
-
 <clay:management-toolbar
 	managementToolbarDisplayContext="<%= new WorkflowInstanceViewManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, workflowInstanceViewDisplayContext.getSearchContainer()) %>"
 />
@@ -41,7 +35,7 @@ String displayStyle = workflowInstanceViewDisplayContext.getDisplayStyle();
 			</portlet:renderURL>
 
 			<c:choose>
-				<c:when test='<%= displayStyle.equals("descriptive") %>'>
+				<c:when test='<%= Objects.equals(workflowInstanceViewDisplayContext.getDisplayStyle(), "descriptive") %>'>
 					<liferay-ui:search-container-column-icon
 						cssClass="asset-icon"
 						icon="<%= workflowInstanceViewDisplayContext.getAssetIconCssClass(workflowInstance) %>"
@@ -53,6 +47,8 @@ String displayStyle = workflowInstanceViewDisplayContext.getDisplayStyle();
 						<h5 class="text-default">
 
 							<%
+							DateSearchEntry dateSearchEntry = new DateSearchEntry();
+
 							dateSearchEntry.setDate(workflowInstanceViewDisplayContext.getLastActivityDate(workflowInstance));
 							%>
 
@@ -163,7 +159,7 @@ String displayStyle = workflowInstanceViewDisplayContext.getDisplayStyle();
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator
-			displayStyle="<%= displayStyle %>"
+			displayStyle="<%= workflowInstanceViewDisplayContext.getDisplayStyle() %>"
 			markupView="lexicon"
 			resultRowSplitter="<%= new WorkflowInstanceResultRowSplitter() %>"
 			searchContainer="<%= workflowInstanceViewDisplayContext.getSearchContainer() %>"

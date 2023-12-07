@@ -9,7 +9,7 @@ definition {
 			value1 = "Select File");
 
 		if (isSet(userEmailAddress)) {
-			SelectWindow(value1 = "GoogleLogin#PAGE_TITLE");
+			SelectWindow(value1 = "Sign in - Google Accounts");
 
 			if (IsElementPresent(locator1 = "GoogleLogin#HEADER")) {
 				AssertClick(

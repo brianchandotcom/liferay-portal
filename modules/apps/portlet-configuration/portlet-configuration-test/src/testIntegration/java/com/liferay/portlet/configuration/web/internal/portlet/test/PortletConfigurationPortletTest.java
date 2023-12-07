@@ -1,0 +1,231 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.portlet.configuration.web.internal.portlet.test;
+
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.servlet.PortletServlet;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.portletmvc4spring.test.mock.web.portlet.MockActionResponse;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
+import javax.portlet.ActionParameters;
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.MutableActionParameters;
+import javax.portlet.Portlet;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import org.springframework.mock.web.MockHttpServletRequest;
+
+/**
+ * @author Mikel Lorza
+ */
+@RunWith(Arquillian.class)
+public class PortletConfigurationPortletTest {
+
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE);
+
+	@Before
+	public void setUp() throws Exception {
+		_group = GroupTestUtil.addGroup();
+
+		_company = _companyLocalService.getCompany(_group.getCompanyId());
+	}
+
+	@Test
+	public void testUpdateRolePermissions() throws Exception {
+		List<String> plids = new ArrayList<>();
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		plids.add(String.valueOf(layout.getPlid()));
+
+		List<Long> roleIds = new ArrayList<>();
+
+		for (int i = 0; i < 10; i++) {
+			Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+			roleIds.add(role.getRoleId());
+		}
+
+		ReflectionTestUtil.invoke(
+			_portlet, "updateRolePermissions",
+			new Class<?>[] {ActionRequest.class, ActionResponse.class},
+			_getMockActionRequest(plids, roleIds), new MockActionResponse());
+
+		_assertResourcePermissions(plids, roleIds);
+	}
+
+	private void _assertResourcePermissions(
+		List<String> plids, List<Long> roleIds) {
+
+		for (String plid : plids) {
+			for (long roleId : roleIds) {
+				Assert.assertNotNull(
+					_resourcePermissionLocalService.fetchResourcePermission(
+						_company.getCompanyId(), Layout.class.getName(),
+						ResourceConstants.SCOPE_INDIVIDUAL, plid, roleId));
+			}
+		}
+	}
+
+	private MockActionRequest _getMockActionRequest(
+			List<String> plids, List<Long> roleIds)
+		throws Exception {
+
+		MockActionRequest mockActionRequest = new MockActionRequest();
+
+		mockActionRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, _getThemeDisplay());
+
+		mockActionRequest.setParameter("modelResource", Layout.class.getName());
+		mockActionRequest.setParameter(
+			"resourceGroupId", String.valueOf(_group.getGroupId()));
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setParameter(
+			"resourcePrimKey", StringUtil.merge(plids, StringPool.COMMA));
+
+		mockActionRequest.setAttribute(
+			PortletServlet.PORTLET_SERVLET_REQUEST, mockHttpServletRequest);
+
+		String roleSearchContainerPrimaryKeys = StringPool.BLANK;
+
+		for (long roleId : roleIds) {
+			mockActionRequest.setParameter(roleId + "_ACTION_DELETE", "");
+			mockActionRequest.setParameter(roleId + "_ACTION_UPDATE", "");
+			mockActionRequest.setParameter(roleId + "_ACTION_VIEW", "");
+
+			roleSearchContainerPrimaryKeys = StringBundler.concat(
+				roleSearchContainerPrimaryKeys, roleId, StringPool.COMMA);
+		}
+
+		mockActionRequest.setParameter(
+			"rolesSearchContainerPrimaryKeys", roleSearchContainerPrimaryKeys);
+
+		return mockActionRequest;
+	}
+
+	private ThemeDisplay _getThemeDisplay() throws Exception {
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		themeDisplay.setCompany(_company);
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		themeDisplay.setLayout(layout);
+		themeDisplay.setLayoutSet(layout.getLayoutSet());
+
+		themeDisplay.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));
+		themeDisplay.setScopeGroupId(_group.getGroupId());
+		themeDisplay.setSiteGroupId(_group.getGroupId());
+		themeDisplay.setUser(TestPropsValues.getUser());
+
+		return themeDisplay;
+	}
+
+	private Company _company;
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
+
+	@DeleteAfterTestRun
+	private Group _group;
+
+	@Inject(
+		filter = "component.name=com.liferay.portlet.configuration.web.internal.portlet.PortletConfigurationPortlet"
+	)
+	private Portlet _portlet;
+
+	@Inject
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	private static class MockActionRequest
+		extends MockLiferayPortletActionRequest {
+
+		@Override
+		public ActionParameters getActionParameters() {
+			return new MockActionParameters();
+		}
+
+		private class MockActionParameters implements ActionParameters {
+
+			@Override
+			public MutableActionParameters clone() {
+				return null;
+			}
+
+			@Override
+			public Set<String> getNames() {
+				return getParameterMap().keySet();
+			}
+
+			@Override
+			public String getValue(String name) {
+				return getParameter(name);
+			}
+
+			@Override
+			public String[] getValues(String name) {
+				return getParameterValues(name);
+			}
+
+			@Override
+			public boolean isEmpty() {
+				return getParameterMap().isEmpty();
+			}
+
+			@Override
+			public int size() {
+				return getParameterMap().size();
+			}
+
+		}
+
+	}
+
+}

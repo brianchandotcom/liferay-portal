@@ -6,8 +6,6 @@
 package com.liferay.portal.kernel.security.permission.resource;
 
 import com.liferay.portal.kernel.internal.security.permission.resource.DefaultPortletResourcePermission;
-import com.liferay.portal.kernel.service.BaseService;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 /**
  * @author Preston Crary
@@ -20,15 +18,6 @@ public class PortletResourcePermissionFactory {
 
 		return new DefaultPortletResourcePermission(
 			resourceName, portletResourcePermissionLogics);
-	}
-
-	public static PortletResourcePermission getInstance(
-		Class<? extends BaseService> declaringServiceClass, String fieldName,
-		String resourceName) {
-
-		return ServiceProxyFactory.newServiceTrackedInstance(
-			PortletResourcePermission.class, declaringServiceClass, fieldName,
-			"(resource.name=" + resourceName + ")", true);
 	}
 
 }

@@ -741,7 +741,7 @@ definition {
 
 		WebContent.addCP(webContentTitle = "Depot WebContent Title Edit");
 
-		Button.clickSave();
+		Button.click(button = "Save");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
@@ -806,13 +806,17 @@ definition {
 
 		WebContentNavigator.gotoAddCP();
 
-		WebContent.addWithWorkflowCP(
+		WebContent.addCP(
 			webContentContent = "Depot WebContent Content",
 			webContentTitle = "Depot WebContent Title");
 
-		WebContentNavigator.gotoViewStatus(
-			webContentStatus = "Pending",
-			webContentTitle = "Depot WebContent Title");
+		Button.click(button = "Submit for Workflow");
+
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
+
+		LexiconList.viewListEntryLabel(
+			listEntry = "Depot WebContent Title",
+			listEntryLabel = "Pending");
 
 		WorkflowAsset.gotoViaNotification(
 			assetType = "Web Content Article",

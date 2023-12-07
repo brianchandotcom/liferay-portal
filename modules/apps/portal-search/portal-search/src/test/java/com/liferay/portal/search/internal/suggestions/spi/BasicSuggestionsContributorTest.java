@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.search.asset.AssetURLViewProvider;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
@@ -60,6 +61,7 @@ public class BasicSuggestionsContributorTest {
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
 
+		_setUpAssetURLViewProvider();
 		_setUpBasicSuggestionsContributor();
 		_setUpLiferayPortletRequest();
 		_setUpSearchContext();
@@ -237,9 +239,23 @@ public class BasicSuggestionsContributorTest {
 		);
 	}
 
+	private void _setUpAssetURLViewProvider() {
+		Mockito.doReturn(
+			RandomTestUtil.randomString()
+		).when(
+			_assetURLViewProvider
+		).getAssetURLView(
+			Mockito.any(), Mockito.any(), Mockito.anyString(),
+			Mockito.anyLong(), Mockito.any(), Mockito.any()
+		);
+	}
+
 	private void _setUpBasicSuggestionsContributor() {
 		_basicSuggestionsContributor = new BasicSuggestionsContributor();
 
+		ReflectionTestUtil.setFieldValue(
+			_basicSuggestionsContributor, "_assetURLViewProvider",
+			_assetURLViewProvider);
 		ReflectionTestUtil.setFieldValue(
 			_basicSuggestionsContributor, "_searcher", _searcher);
 		ReflectionTestUtil.setFieldValue(
@@ -401,6 +417,9 @@ public class BasicSuggestionsContributorTest {
 
 	@Mock
 	private AssetRendererFactory<?> _assetRendererFactory;
+
+	@Mock
+	private AssetURLViewProvider _assetURLViewProvider;
 
 	private BasicSuggestionsContributor _basicSuggestionsContributor;
 

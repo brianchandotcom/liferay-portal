@@ -17,9 +17,9 @@ const App = () => {
 	const {orderId} = useParams();
 	const {placedOrder, product} = useOutletContext<any>();
 
-	const projectNameField = product.customFields.find(
-		(field: {name: string}) => field.name === 'Project Name'
-	);
+	const projectNameField = Object.values(
+		placedOrder.customFields
+	).find((field) => Object.keys(field === 'Project Name'));
 
 	const {isPaidApp} = getProductPriceModel(product);
 
@@ -31,7 +31,7 @@ const App = () => {
 					cardTitle="Details"
 					clayIcon="order-form-tag"
 				>
-					<div className="mb-2 mt-4 row">
+					<div className="mb-2 mt-7 row">
 						<h5 className="col-6">Order ID</h5>
 						<p className="col">{orderId}</p>
 					</div>
@@ -47,16 +47,14 @@ const App = () => {
 					</div>
 					<div className="mb-2 row">
 						<h5 className="col-6">Customer Project</h5>
-						<p className="col">
-							{projectNameField.customValue.data || '-'}
-						</p>
+						<p className="col">{projectNameField || '-'}</p>
 					</div>
 					<div className="mb-2 row">
 						<h5 className="col-6">Purchased by</h5>
 						<p className="col">{placedOrder.author}</p>
 					</div>
 					<div className="row">
-						<h5 className="col-6">Purchase Number</h5>
+						<h5 className="col-6">Purchase Order Number</h5>
 						<p className="col">
 							{placedOrder.purchaseOrderNumber || '-'}
 						</p>
@@ -81,58 +79,66 @@ const App = () => {
 						<h5 className="col">License Price</h5>
 						<div className="col-8">
 							{placedOrder.placedOrderItems.map(
-								(order: PlacedOrderItems) => (
-									<div
-										className={classNames('row', {
-											'justify-content-end': !isPaidApp,
-										})}
-										key={order.id}
-									>
-										{isPaidApp && (
-											<>
-												<p className="col text-capitalize">
-													{order.sku.toLowerCase() ||
-														''}
-												</p>
-												<p className="col">
-													{order.quantity}
-												</p>
-											</>
-										)}
-										<p className="col-3">
-											{order.price.priceFormatted}
-										</p>
-									</div>
-								)
+								(order: PlacedOrderItems) => {
+									const optionName = JSON.parse(
+										order.options
+									);
+
+									return (
+										<div
+											className={classNames('mb-2 row', {
+												'justify-content-end': !isPaidApp,
+											})}
+											key={order.id}
+										>
+											{isPaidApp && (
+												<>
+													<p className="col-5 text-capitalize">
+														{optionName[0].value ||
+															''}
+													</p>
+													<p className="col-3">
+														{order.quantity}
+													</p>
+												</>
+											)}
+											<p className="col-4 text-right">
+												{order.price.priceFormatted}
+											</p>
+										</div>
+									);
+								}
 							)}
 						</div>
 					</div>
 					<div className="justify-content-between mb-2 row">
-						<h5 className="col-2">Subtotal</h5>
-						<p className="col-2">
+						<h5 className="col">Subtotal</h5>
+						<p className="col-3 text-right">
 							{placedOrder.summary.subtotalFormatted || ''}
 						</p>
 					</div>
 					<div className="justify-content-between mb-2 row">
-						<h6 className="col">Subtotal Discount</h6>
-						<p className="col-2">
+						<h5 className="col">Subtotal Discount</h5>
+						<p className="col-3 text-right">
 							{placedOrder.summary.totalDiscountValueFormatted ||
 								''}
 						</p>
 					</div>
 					<div className="justify-content-between mb-2 row">
-						<h6 className="col">Coupon Code</h6>
-						<p className="col-2">{placedOrder.couponCode || '-'}</p>
+						<h5 className="col">Coupon Code</h5>
+						<p className="col-3 text-right">
+							{placedOrder.couponCode || '-'}
+						</p>
 					</div>
 					<div className="justify-content-between mb-2 row">
 						<h5 className="col">Tax/VAT</h5>
-						<p className="col-2">
+						<p className="col-3 text-right">
 							{placedOrder.summary.taxValueFormatted || ''}
 						</p>
 					</div>
 					<div className="justify-content-between row">
 						<h5 className="col">Total</h5>
-						<p className="col-2">
+						<p className="col-3 text-right">
 							{placedOrder.summary.totalFormatted || ''}
 						</p>
 					</div>

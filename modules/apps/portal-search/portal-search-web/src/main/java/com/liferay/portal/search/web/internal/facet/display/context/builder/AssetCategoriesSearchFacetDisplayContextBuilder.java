@@ -337,8 +337,8 @@ public class AssetCategoriesSearchFacetDisplayContextBuilder
 			assetCategoriesSearchFacetDisplayContext) {
 
 		if (_buckets.isEmpty()) {
-			assetCategoriesSearchFacetDisplayContext.setBucketDisplayContexts(
-				getEmptyBucketDisplayContexts());
+			_setEmptyBucketDisplayContexts(
+				assetCategoriesSearchFacetDisplayContext);
 
 			return;
 		}
@@ -449,6 +449,49 @@ public class AssetCategoriesSearchFacetDisplayContextBuilder
 
 		assetCategoriesSearchFacetDisplayContext.setBucketDisplayContexts(
 			bucketDisplayContexts);
+		assetCategoriesSearchFacetDisplayContext.setBucketDisplayContextsMap(
+			bucketDisplayContextsMap);
+		assetCategoriesSearchFacetDisplayContext.setVocabularyNames(
+			_sortVocabularyNames(vocabularyNames));
+	}
+
+	private void _setEmptyBucketDisplayContexts(
+		AssetCategoriesSearchFacetDisplayContext
+			assetCategoriesSearchFacetDisplayContext) {
+
+		List<BucketDisplayContext> bucketDisplayContexts =
+			getEmptyBucketDisplayContexts();
+
+		assetCategoriesSearchFacetDisplayContext.setBucketDisplayContexts(
+			bucketDisplayContexts);
+
+		if (bucketDisplayContexts.isEmpty()) {
+			return;
+		}
+
+		Map<String, List<BucketDisplayContext>> bucketDisplayContextsMap =
+			new HashMap<>();
+		Set<String> vocabularyNames = new HashSet<>();
+
+		for (BucketDisplayContext bucketDisplayContext :
+				bucketDisplayContexts) {
+
+			AssetCategory assetCategory =
+				_assetCategoryLocalService.fetchAssetCategory(
+					Long.valueOf(bucketDisplayContext.getFilterValue()));
+
+			AssetVocabulary assetVocabulary =
+				_assetVocabularyLocalService.fetchAssetVocabulary(
+					assetCategory.getVocabularyId());
+
+			String vocabularyName = assetVocabulary.getTitle(_locale);
+
+			bucketDisplayContextsMap.put(
+				vocabularyName, ListUtil.toList(bucketDisplayContext));
+
+			vocabularyNames.add(vocabularyName);
+		}
+
 		assetCategoriesSearchFacetDisplayContext.setBucketDisplayContextsMap(
 			bucketDisplayContextsMap);
 		assetCategoriesSearchFacetDisplayContext.setVocabularyNames(

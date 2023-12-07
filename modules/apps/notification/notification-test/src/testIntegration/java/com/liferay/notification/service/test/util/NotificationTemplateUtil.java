@@ -46,6 +46,31 @@ public class NotificationTemplateUtil {
 	}
 
 	public static NotificationContext createNotificationContext(
+		User user, long objectDefinitionId, String body, String description,
+		List<NotificationRecipientSetting> notificationRecipientSettings,
+		String subject, String type, List<Long> attachmentObjectFieldIds) {
+
+		NotificationContext notificationContext = new NotificationContext();
+
+		notificationContext.setAttachmentObjectFieldIds(
+			attachmentObjectFieldIds);
+		notificationContext.setNotificationQueueEntry(
+			createNotificationQueueEntry(user, body, subject, type));
+		notificationContext.setNotificationRecipient(
+			NotificationRecipientLocalServiceUtil.createNotificationRecipient(
+				RandomTestUtil.randomInt()));
+		notificationContext.setNotificationRecipientSettings(
+			notificationRecipientSettings);
+		notificationContext.setNotificationTemplate(
+			createNotificationTemplate(
+				user.getUserId(), objectDefinitionId, body, description,
+				subject, type));
+		notificationContext.setType(type);
+
+		return notificationContext;
+	}
+
+	public static NotificationContext createNotificationContext(
 		User user, String description, String type) {
 
 		return createNotificationContext(
@@ -58,21 +83,9 @@ public class NotificationTemplateUtil {
 		List<NotificationRecipientSetting> notificationRecipientSettings,
 		String subject, String type) {
 
-		NotificationContext notificationContext = new NotificationContext();
-
-		notificationContext.setNotificationQueueEntry(
-			createNotificationQueueEntry(user, body, subject, type));
-		notificationContext.setNotificationRecipient(
-			NotificationRecipientLocalServiceUtil.createNotificationRecipient(
-				RandomTestUtil.randomInt()));
-		notificationContext.setNotificationRecipientSettings(
-			notificationRecipientSettings);
-		notificationContext.setNotificationTemplate(
-			createNotificationTemplate(
-				user.getUserId(), body, description, subject, type));
-		notificationContext.setType(type);
-
-		return notificationContext;
+		return createNotificationContext(
+			user, 0, body, description, notificationRecipientSettings, subject,
+			type, Collections.emptyList());
 	}
 
 	public static NotificationContext createNotificationContext(
@@ -120,14 +133,15 @@ public class NotificationTemplateUtil {
 	}
 
 	public static NotificationTemplate createNotificationTemplate(
-		long userId, String body, String description, String subject,
-		String type) {
+		long userId, long objectDefinitionId, String body, String description,
+		String subject, String type) {
 
 		NotificationTemplate notificationTemplate =
 			NotificationTemplateLocalServiceUtil.createNotificationTemplate(
 				RandomTestUtil.randomInt());
 
 		notificationTemplate.setUserId(userId);
+		notificationTemplate.setObjectDefinitionId(objectDefinitionId);
 		notificationTemplate.setBody(body);
 		notificationTemplate.setDescription(description);
 		notificationTemplate.setEditorType(

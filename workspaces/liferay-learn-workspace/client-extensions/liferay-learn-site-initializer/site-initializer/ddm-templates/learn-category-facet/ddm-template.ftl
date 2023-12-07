@@ -1,8 +1,76 @@
+<style>
+	.autofit-col .c-inner {
+		color: #282934;
+		flex-shrink: 0;
+		height: 16px;
+		width: 16px;
+	}
+
+	.btn-unstyled.facet-clear-btn {
+		color: var(--action-neutral-default, #2B3A4B);
+		font-family: 'Source Sans Pro', sans-serif;
+		font-size: 13px;
+		font-style: normal;
+		font-weight: 400;
+		line-height: 16px;
+	}
+
+	.custom-checkbox.custom-control .custom-control-label {
+		display: flex;
+	}
+
+	.custom-checkbox.custom-control .custom-control-label .custom-control-label-text{
+		width: fit-content;
+	}
+
+	.custom-control-label:hover:before {
+	box-shadow: 0px 0px 0px 8px #EDF3FE;
+	}
+
+	.custom-control-label .text-truncate-inline {
+		color: var(--neutral-10, #282934);
+		font-family: 'Source Sans Pro', sans-serif;
+		font-size: 13px;
+		font-style: normal;
+		font-weight: 400;
+		line-height: 16px;
+	}
+
+	.text-truncate-inline .text-truncate {
+		color: var(--neutral-10, #282934);
+		font-family: 'Source Sans Pro', sans-serif;
+		font-size: 18px;
+		font-style: normal;
+		font-weight: 600;
+		line-height: 20px;
+	}
+
+	.treeview.treeview-light.treeview-nested.treeview-vocabulary-display {
+		align-items: flex-start;
+		background: var(--neutral-01, #F7F7F8);
+		border-radius: 10px;
+		display: flex;
+		flex-direction: column;
+		gap: 15px;
+		margin-top: 40px;
+		padding: 16px;
+		width: 350px;
+	}
+
+	.treeview.treeview-light.treeview-nested.treeview-vocabulary-display .treeview-item {
+		align-items: flex-start;
+		align-self: stretch;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+	}
+</style>
+
 <#macro treeview_item
 	cssClassTreeItem = ""
 	frequency = 0
-	id = ""
 	frequencyVisible = true
+	id = ""
 	name = ""
 	selectable = false
 	selected = false
@@ -264,71 +332,3 @@
 		sessionStorage.setItem(id, true);
 	}
 </@>
-
-<style>
-	.autofit-col .c-inner {
-		color: #282934;
-		flex-shrink: 0;
-		height: 16px;
-		width: 16px;
-	}
-
-	.btn-unstyled.facet-clear-btn {
-		color: var(--action-neutral-default, #2B3A4B);
-		font-family: 'Source Sans Pro', sans-serif;
-		font-size: 13px;
-		font-style: normal;
-		font-weight: 400;
-		line-height: 16px;
-	}
-
-	.custom-checkbox.custom-control .custom-control-label {
-		display: flex;
-	}
-
-	.custom-checkbox.custom-control .custom-control-label .custom-control-label-text{
-		width: fit-content;
-	}
-
-	.custom-control-label:hover:before {
-	box-shadow: 0px 0px 0px 8px #EDF3FE;
-	}
-
-	.custom-control-label .text-truncate-inline {
-		color: var(--neutral-10, #282934);
-		font-family: 'Source Sans Pro', sans-serif;
-		font-size: 13px;
-		font-style: normal;
-		font-weight: 400;
-		line-height: 16px;
-	}
-
-	.text-truncate-inline .text-truncate {
-		color: var(--neutral-10, #282934);
-		font-family: 'Source Sans Pro', sans-serif;
-		font-size: 18px;
-		font-style: normal;
-		font-weight: 600;
-		line-height: 20px;
-	}
-
-	.treeview.treeview-light.treeview-nested.treeview-vocabulary-display {
-		align-items: flex-start;
-		background: var(--neutral-01, #F7F7F8);
-		border-radius: 10px;
-		display: flex;
-		flex-direction: column;
-		gap: 15px;
-		margin-top: 40px;
-		padding: 16px;
-		width: 350px;
-	}
-
-	.treeview.treeview-light.treeview-nested.treeview-vocabulary-display .treeview-item {
-		align-items: flex-start;
-		align-self: stretch;
-		display: flex;
-		flex-direction: column;
-		justify-content: space-between;
-	}
-</style>

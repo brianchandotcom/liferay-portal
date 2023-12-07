@@ -9,6 +9,7 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 
 import java.util.Collection;
+import java.util.Locale;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -48,6 +49,13 @@ public interface Indexer<T> {
 	 */
 	@Deprecated
 	public String getSortField(String orderByCol);
+
+	public default Summary getSummary(
+			Document document, Locale locale, String snippet)
+		throws SearchException {
+
+		return null;
+	}
 
 	public Summary getSummary(
 			Document document, String snippet, PortletRequest portletRequest,

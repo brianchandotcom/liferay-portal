@@ -55,7 +55,6 @@ page import="com.liferay.portal.workflow.kaleo.designer.web.internal.dao.search.
 page import="com.liferay.portal.workflow.kaleo.designer.web.internal.permission.KaleoDefinitionVersionPermission" %><%@
 page import="com.liferay.portal.workflow.kaleo.designer.web.internal.portlet.display.context.KaleoDesignerDisplayContext" %><%@
 page import="com.liferay.portal.workflow.kaleo.designer.web.internal.portlet.display.context.KaleoDesignerManagementToolbarDisplayContext" %><%@
-page import="com.liferay.portal.workflow.kaleo.designer.web.internal.search.KaleoDefinitionVersionSearch" %><%@
 page import="com.liferay.portal.workflow.kaleo.model.KaleoDefinition" %><%@
 page import="com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion" %><%@
 page import="com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalServiceUtil" %><%@

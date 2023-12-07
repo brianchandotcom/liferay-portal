@@ -7,10 +7,6 @@
 
 <%@ include file="/designer/init.jsp" %>
 
-<%
-KaleoDefinitionVersionSearch kaleoDefinitionVersionSearch = kaleoDesignerDisplayContext.getKaleoDefinitionVersionSearch(displayedStatus);
-%>
-
 <liferay-ui:success key='<%= KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestProcessed" %>' message='<%= (String)MultiSessionMessages.get(renderRequest, KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestProcessed") %>' translateMessage="<%= false %>" />
 
 <clay:management-toolbar
@@ -28,14 +24,8 @@ KaleoDefinitionVersionSearch kaleoDefinitionVersionSearch = kaleoDesignerDisplay
 
 	<liferay-ui:search-container
 		emptyResultsMessage="no-workflow-definitions-are-defined"
-		id="<%= kaleoDesignerDisplayContext.getSearchContainerId() %>"
-		searchContainer="<%= kaleoDefinitionVersionSearch %>"
+		searchContainer="<%= kaleoDesignerDisplayContext.getKaleoDefinitionVersionSearch(displayedStatus) %>"
 	>
-
-		<%
-		request.setAttribute(WebKeys.SEARCH_CONTAINER, searchContainer);
-		%>
-
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion"
 			escapedModel="<%= false %>"
@@ -76,10 +66,8 @@ KaleoDefinitionVersionSearch kaleoDefinitionVersionSearch = kaleoDesignerDisplay
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator
-			displayStyle="list"
 			markupView="lexicon"
 			resultRowSplitter="<%= new KaleoDefinitionVersionResultRowSplitter() %>"
-			searchContainer="<%= kaleoDefinitionVersionSearch %>"
 		/>
 	</liferay-ui:search-container>
 </clay:container-fluid>

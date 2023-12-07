@@ -139,7 +139,7 @@ public class CustomJspBagRegistryUtil {
 			String portalJsp = getPortalJsp(customJsp, customJspDir);
 
 			if (customJspGlobal) {
-				File portalJspFile = new File(_portalWebDir + portalJsp);
+				File portalJspFile = new File(_portalWebDir, portalJsp);
 
 				File portalJspBackupFile = getPortalJspBackupFile(
 					portalJspFile);
@@ -154,7 +154,7 @@ public class CustomJspBagRegistryUtil {
 			}
 
 			FileUtil.write(
-				_portalWebDir + portalJsp,
+				new File(_portalWebDir, portalJsp),
 				getCustomJspInputStream(
 					customJspBag.getURLContainer(), customJsp));
 		}

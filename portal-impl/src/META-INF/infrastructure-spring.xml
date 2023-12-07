@@ -12,5 +12,4 @@
 		<property name="dataSource" ref="liferayDataSource" />
 		<property name="transactionManager" ref="liferayTransactionManager" />
 	</bean>
-	<bean class="com.liferay.portal.spring.aop.AopConfigurableApplicationContextConfigurator" id="configurableApplicationContextConfigurator" />
 </beans>

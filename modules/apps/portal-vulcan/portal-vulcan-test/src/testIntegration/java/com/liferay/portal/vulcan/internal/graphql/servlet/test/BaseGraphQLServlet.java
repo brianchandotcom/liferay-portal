@@ -172,6 +172,11 @@ public class BaseGraphQLServlet {
 		}
 
 		@Override
+		public String getApplicationName() {
+			return "test";
+		}
+
+		@Override
 		public Object getMutation() {
 			return _testMutation;
 		}

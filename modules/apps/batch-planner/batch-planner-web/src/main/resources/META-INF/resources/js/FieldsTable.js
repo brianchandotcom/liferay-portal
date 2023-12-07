@@ -5,12 +5,17 @@
 
 import ClayAlert from '@clayui/alert';
 import {ClayCheckbox} from '@clayui/form';
+import ClayIcon from '@clayui/icon';
+import ClayLabel from '@clayui/label';
 import ClayTable from '@clayui/table';
+import {ClayTooltipProvider} from '@clayui/tooltip';
 import {sub} from 'frontend-js-web';
 import React, {useEffect, useRef, useState} from 'react';
 
 import {
+	CSV_FORMAT,
 	EXPORT_FILE_FORMAT_SELECTED_EVENT,
+	FORBIDDEN_CSV_FIELDS_ENTITY_TYPES,
 	OBJECT_DEFINITION,
 	SCHEMA_SELECTED_EVENT,
 	TEMPLATE_SELECTED_EVENT,
@@ -20,12 +25,31 @@ import getFieldsFromSchema from './getFieldsFromSchema';
 
 function FieldsTable({portletNamespace}) {
 	const [fields, setFields] = useState([]);
+	const [selectedExportFileFormat, setSelectedExportFileFormat] = useState(
+		''
+	);
 	const [selectedFields, setSelectedFields] = useState([]);
+	const [selectedSchemaName, setSelectedSchemaName] = useState('');
 	const useTemplateMappingRef = useRef();
+
+	const getForbiddenValues = (part, o) =>
+		Object.entries(o).find(([k]) => part.startsWith(k))?.[1];
+
+	const isForbidden = (fieldType) => {
+		return (
+			selectedExportFileFormat === CSV_FORMAT.toUpperCase() &&
+			getForbiddenValues(
+				selectedSchemaName,
+				FORBIDDEN_CSV_FIELDS_ENTITY_TYPES
+			).includes(fieldType)
+		);
+	};
 
 	useEffect(() => {
 		const handleSchemaUpdated = (event) => {
 			if (event.schema) {
+				setSelectedSchemaName(event.schemaName);
+
 				const newFields = getFieldsFromSchema(event.schema);
 
 				const formattedFields = [
@@ -71,6 +95,7 @@ function FieldsTable({portletNamespace}) {
 			selectedExportFileFormat,
 			selectedSchema,
 		}) => {
+			setSelectedExportFileFormat(selectedExportFileFormat);
 			if (
 				selectedExportFileFormat === 'CSV' &&
 				selectedSchema === OBJECT_DEFINITION
@@ -154,15 +179,22 @@ function FieldsTable({portletNamespace}) {
 							>
 								{Liferay.Language.get('attribute-code')}
 							</ClayTable.Cell>
+
+							<ClayTable.Cell
+								className="table-cell-expand-small"
+								headingCell
+							/>
 						</ClayTable.Row>
 					</ClayTable.Head>
 
 					<ClayTable.Body id="fieldsTableBody">
 						{fields.map((field) => {
-							const included = selectedFields.some(
-								(selectedField) =>
-									selectedField.name === field.name
-							);
+							const included =
+								!isForbidden(field.type) &&
+								selectedFields.some(
+									(selectedField) =>
+										selectedField.name === field.name
+								);
 
 							return (
 								<ClayTable.Row key={field.name}>
@@ -175,6 +207,7 @@ function FieldsTable({portletNamespace}) {
 												field.name
 											)}
 											checked={included}
+											disabled={isForbidden(field.type)}
 											id={`${portletNamespace}fieldName_${field.name}`}
 											name={`${portletNamespace}fieldName`}
 											onChange={() => {
@@ -204,10 +237,40 @@ function FieldsTable({portletNamespace}) {
 
 									<ClayTable.Cell>
 										<label
+											className={
+												isForbidden(field.type)
+													? 'disabled'
+													: ''
+											}
 											htmlFor={`${portletNamespace}fieldName_${field.name}`}
 										>
 											{field.name}
 										</label>
+									</ClayTable.Cell>
+
+									<ClayTable.Cell className="pr-5 text-right">
+										{isForbidden(field.type) && (
+											<>
+												<ClayLabel displayType="info">
+													{Liferay.Language.get(
+														'not-supported'
+													)}
+												</ClayLabel>
+												<ClayTooltipProvider>
+													<span
+														className="inline-item-after"
+														title={Liferay.Language.get(
+															'at-the-moment-it-is-not-possible-to-export-this-type-of-field'
+														)}
+													>
+														<ClayIcon
+															className="text-secondary"
+															symbol="question-circle-full"
+														/>
+													</span>
+												</ClayTooltipProvider>
+											</>
+										)}
 									</ClayTable.Cell>
 								</ClayTable.Row>
 							);

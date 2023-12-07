@@ -233,6 +233,9 @@ type Order = {
 		}
 	];
 	orderStatus: number;
+	orderStatusInfo?: {
+		label: string;
+	};
 	orderTypeExternalReferenceCode?: string;
 	orderTypeId?: number;
 	shippingAmount?: number;
@@ -395,7 +398,7 @@ interface DeliveryProduct {
 	customFields?: CustomField[];
 	description: string;
 	externalReferenceCode: string;
-	id?: number;
+	id: number;
 	images: ProductImages[];
 	modifiedDate: string;
 	name: string;
@@ -576,6 +579,8 @@ type RadioOption<T> = {
 	index: number;
 	value: T;
 };
+
+type StorageType = 'persisted' | 'temporary';
 
 type APIResponse<Query = any> = {
 	actions: ObjectActions;

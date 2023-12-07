@@ -55,10 +55,6 @@ export function LicenseSelector({
 						</span>
 					}
 					onClick={() => {
-						if (cartUtil?.cart?.id) {
-							cartUtil.removeCart(cartUtil?.cart?.id);
-						}
-
 						formUtils.setValue(
 							'selectedPaymentMethod',
 							PaymentMethod.TRIAL

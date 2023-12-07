@@ -142,6 +142,8 @@ const GetAppFlow = () => {
 		accountId: account?.id!,
 		channelId: channel?.id,
 		orderType,
+		product: product as DeliveryProduct,
+		setValue,
 	});
 
 	useEffect(() => {
@@ -217,7 +219,9 @@ const GetAppFlow = () => {
 			window.location.href = nextStepsCallbackURL;
 		}
 		catch (error) {
-			console.error('Unable to handleGetApp', error);
+
+			// console.error('Unable to handleGetApp', error);
+
 		}
 
 		setLoading(false);
@@ -311,7 +315,7 @@ const GetAppFlow = () => {
 		if (step === StepType.LICENSES || step === StepType.PAYMENT) {
 			return (
 				<span className="price-text-value">
-					{cartUtil?.cart?.id
+					{cartUtil?.cart?.id && watch('selectedTimeline') !== 'trial'
 						? `${cartUtil?.cart?.summary?.totalFormatted}`
 						: `$0`}
 				</span>
@@ -403,7 +407,7 @@ const GetAppFlow = () => {
 					)}
 
 					<div className="align-self-center h1 mb-6">
-						{StepsInformation[step].title}
+						{StepsInformation[step]?.title}
 					</div>
 
 					<div>{StepsInformation[step].component}</div>

@@ -54,9 +54,10 @@
 						</h5>
 
 						<h4>
-							<aui:a href="<%= rowURL %>">
-								<%= workflowInstanceViewDisplayContext.getAssetTitle(workflowInstance) %>
-							</aui:a>
+							<clay:link
+								href="<%= rowURL %>"
+								label="<%= workflowInstanceViewDisplayContext.getAssetTitle(workflowInstance) %>"
+							/>
 						</h4>
 
 						<h5 class="text-default">

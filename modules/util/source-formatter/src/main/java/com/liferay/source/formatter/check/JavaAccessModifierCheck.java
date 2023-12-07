@@ -95,14 +95,35 @@ public class JavaAccessModifierCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private static String _extractSuperClassName(String sourceCode) {
-		Matcher matcher = _superClassPattern.matcher(sourceCode);
+	private static String _extractSuperClassName(String content) {
+		Matcher matcher = _superClassPattern.matcher(content);
 
 		if (matcher.find()) {
 			return matcher.group(1);
 		}
 
 		return null;
+	}
+
+	private static String _extractSuperClassNameWithPackageName(
+		String content) {
+
+		String superClassName = _extractSuperClassName(content);
+
+		if (superClassName == null) {
+			return null;
+		}
+
+		Pattern superClassImportPattern = Pattern.compile(
+			"import\\s+([\\w.]+" + superClassName + "\\s*;)", Pattern.DOTALL);
+
+		Matcher matcher = superClassImportPattern.matcher(content);
+
+		if (matcher.find()) {
+			return matcher.group(1);
+		}
+
+		return JavaSourceUtil.getPackageName(content) + "." + superClassName;
 	}
 
 	private Map<String, List<String>> _getCommponentJavaFileMap() {
@@ -152,7 +173,8 @@ public class JavaAccessModifierCheck extends BaseFileCheck {
 					try {
 						String content = FileUtil.read(filePath.toFile());
 
-						String superClassName = _extractSuperClassName(content);
+						String superClassName =
+							_extractSuperClassNameWithPackageName(content);
 
 						if (superClassName != null) {
 							List<String> subclassList =
@@ -183,7 +205,10 @@ public class JavaAccessModifierCheck extends BaseFileCheck {
 
 		String className = javaClass.getName();
 
-		List<String> subclassNames = componentJavaFileMap.get(className);
+		String packageName = javaClass.getPackageName();
+
+		List<String> subclassNames = componentJavaFileMap.get(
+			packageName + "." + className);
 
 		if (ListUtil.isEmpty(subclassNames)) {
 			return false;
@@ -193,7 +218,7 @@ public class JavaAccessModifierCheck extends BaseFileCheck {
 	}
 
 	private static final Pattern _superClassPattern = Pattern.compile(
-		"extends\\s+(\\w+)", Pattern.DOTALL);
+		"extends\\s+(\\w+(<.*?>)?)", Pattern.DOTALL);
 
 	private Map<String, List<String>> _componentJavaFileMap;
 

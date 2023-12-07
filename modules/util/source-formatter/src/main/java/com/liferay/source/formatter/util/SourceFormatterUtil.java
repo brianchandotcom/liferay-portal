@@ -449,12 +449,6 @@ public class SourceFormatterUtil {
 			includeSubrepositories);
 	}
 
-	public static List<String> matchFileContents(
-		String baseDirName, List<String> argList) {
-
-		return _matchFileContents(baseDirName, argList);
-	}
-
 	public static void printError(String fileName, File file) {
 		printError(fileName, file.toString());
 	}

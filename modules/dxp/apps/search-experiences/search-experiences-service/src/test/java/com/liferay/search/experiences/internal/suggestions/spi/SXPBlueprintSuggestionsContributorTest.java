@@ -6,26 +6,20 @@
 package com.liferay.search.experiences.internal.suggestions.spi;
 
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
-import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
-import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.search.asset.AssetURLViewProvider;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
@@ -73,11 +67,9 @@ public class SXPBlueprintSuggestionsContributorTest {
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
 
-		_setUpAssetEntryLocalService();
-		_setUpLayoutLocalService();
+		_setUpAssetURLViewProvider();
 		_setUpLiferayPortletRequest();
 		_setUpLiferayPortletResponse();
-		_setUpPortalUtil();
 		_setUpSearchContext();
 		_setUpSearchRequestBuilderFactory();
 		_setUpSuggestionsContributorConfiguration();
@@ -205,24 +197,6 @@ public class SXPBlueprintSuggestionsContributorTest {
 				_suggestionsContributorConfiguration);
 	}
 
-	private void _setUpAssetEntryLocalService() throws Exception {
-		AssetEntry assetEntry = Mockito.mock(AssetEntry.class);
-
-		Mockito.doReturn(
-			RandomTestUtil.randomLong()
-		).when(
-			assetEntry
-		).getEntryId();
-
-		Mockito.doReturn(
-			assetEntry
-		).when(
-			_assetEntryLocalService
-		).getEntry(
-			Mockito.anyString(), Mockito.anyLong()
-		);
-	}
-
 	private void _setUpAssetRendererFactoryRegistryUtil(
 			String title, String summary)
 		throws Exception {
@@ -282,13 +256,14 @@ public class SXPBlueprintSuggestionsContributorTest {
 			_serviceTrackerMap);
 	}
 
-	private void _setUpLayoutLocalService() {
+	private void _setUpAssetURLViewProvider() {
 		Mockito.doReturn(
-			Mockito.mock(Layout.class)
+			RandomTestUtil.randomString()
 		).when(
-			_layoutLocalService
-		).fetchLayoutByFriendlyURL(
-			Mockito.anyLong(), Mockito.anyBoolean(), Mockito.anyString()
+			_assetURLViewProvider
+		).getAssetURLView(
+			Mockito.any(), Mockito.any(), Mockito.anyString(),
+			Mockito.anyLong(), Mockito.any(), Mockito.any()
 		);
 	}
 
@@ -321,24 +296,6 @@ public class SXPBlueprintSuggestionsContributorTest {
 		).when(
 			liferayPortletURL
 		).getRenderParameters();
-	}
-
-	private void _setUpPortalUtil() {
-		Portal portal = Mockito.mock(Portal.class);
-
-		Mockito.doAnswer(
-			invocation -> new String[] {
-				invocation.getArgument(0, String.class), StringPool.BLANK
-			}
-		).when(
-			portal
-		).stripURLAnchor(
-			Mockito.anyString(), Mockito.anyString()
-		);
-
-		PortalUtil portalUtil = new PortalUtil();
-
-		portalUtil.setPortal(portal);
 	}
 
 	private void _setUpSearchContext() {
@@ -518,8 +475,8 @@ public class SXPBlueprintSuggestionsContributorTest {
 			new SXPBlueprintSuggestionsContributor();
 
 		ReflectionTestUtil.setFieldValue(
-			_sxpBlueprintSuggestionsContributor, "_assetEntryLocalService",
-			_assetEntryLocalService);
+			_sxpBlueprintSuggestionsContributor, "_assetURLViewProvider",
+			_assetURLViewProvider);
 		ReflectionTestUtil.setFieldValue(
 			_sxpBlueprintSuggestionsContributor, "_searcher", _searcher);
 		ReflectionTestUtil.setFieldValue(
@@ -535,13 +492,10 @@ public class SXPBlueprintSuggestionsContributorTest {
 	}
 
 	@Mock
-	private AssetEntryLocalService _assetEntryLocalService;
-
-	@Mock
 	private AssetRendererFactory<?> _assetRendererFactory;
 
 	@Mock
-	private LayoutLocalService _layoutLocalService;
+	private AssetURLViewProvider _assetURLViewProvider;
 
 	@Mock
 	private LiferayPortletRequest _liferayPortletRequest;

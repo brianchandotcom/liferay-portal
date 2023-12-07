@@ -981,6 +981,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGE_RULE_BUILDER_ACTION_DELETE_BUTTON</td>
+	<td>xpath=(//div[contains(@class,'rule-builder-item--action')])[${index}]//button[contains(@class,'delete')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGE_RULE_BUILDER_ACTION_ITEM</td>
 	<td>xpath=(//div[contains(@class,'rule-builder-item--action')][@aria-label='Incomplete Action']//button[@role='combobox'])[${index}]</td>
 	<td></td>
@@ -988,6 +993,11 @@
 <tr>
 	<td>PAGE_RULE_BUILDER_CONDITION</td>
 	<td>xpath=(//div[contains(@class,'rule-builder-item--condition')])[${index}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_RULE_BUILDER_CONDITION_DELETE_BUTTON</td>
+	<td>xpath=(//div[contains(@class,'rule-builder-item--condition')])[${index}]//button[contains(@class,'delete')]</td>
 	<td></td>
 </tr>
 <tr>

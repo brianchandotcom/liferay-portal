@@ -563,6 +563,12 @@ public class UserLocalServiceTest {
 
 			_userLocalService.updatePassword(
 				user.getUserId(), password1, password1, false, false);
+
+			Assert.assertEquals(
+				Authenticator.SUCCESS,
+				_userLocalService.authenticateByEmailAddress(
+					user.getCompanyId(), user.getEmailAddress(), password2,
+					null, null, null));
 		}
 		catch (PortalException portalException) {
 			Assert.assertEquals(

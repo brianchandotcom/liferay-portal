@@ -531,7 +531,7 @@ public class UserLocalServiceTest {
 	}
 
 	@Test
-	public void testPasswordHistoryCheckingLastPasswords() throws Exception {
+	public void testPasswordHistory() throws Exception {
 		User user = UserTestUtil.addUser();
 
 		PasswordPolicy passwordPolicy = user.getPasswordPolicy();

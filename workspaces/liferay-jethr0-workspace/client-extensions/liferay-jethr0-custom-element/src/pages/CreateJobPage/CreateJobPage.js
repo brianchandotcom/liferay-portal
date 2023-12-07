@@ -45,10 +45,12 @@ function CreateJobPage() {
 			if (jobDefinition.key === jobTypeKey) {
 				const jobParameters = {};
 
-				jobDefinition.parameterDefinitions.forEach((parameterDefinition) => {
-					jobParameters[parameterDefinition.key] =
-						parameterDefinition.valueDefault;
-				});
+				jobDefinition.parameterDefinitions.forEach(
+					(parameterDefinition) => {
+						jobParameters[parameterDefinition.key] =
+							parameterDefinition.valueDefault;
+					}
+				);
 
 				setJobParameters(jobParameters);
 

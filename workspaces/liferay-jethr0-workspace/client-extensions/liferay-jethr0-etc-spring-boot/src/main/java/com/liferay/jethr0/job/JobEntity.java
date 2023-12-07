@@ -56,9 +56,9 @@ public interface JobEntity extends Entity {
 
 	public List<JSONObject> getInitialBuildJSONObjects();
 
-	public Set<JenkinsCohortEntity> getJenkinsCohortEntities();
-
 	public URL getJenkinsBranchURL();
+
+	public Set<JenkinsCohortEntity> getJenkinsCohortEntities();
 
 	public String getName();
 

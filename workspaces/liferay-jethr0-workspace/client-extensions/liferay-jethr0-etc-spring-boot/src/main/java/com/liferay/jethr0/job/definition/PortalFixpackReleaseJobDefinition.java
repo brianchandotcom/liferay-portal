@@ -26,12 +26,18 @@ public class PortalFixpackReleaseJobDefinition extends BaseJobDefinition {
 	public Set<JobParameterDefinition> getJobParameterDefinitions() {
 		Set<JobParameterDefinition> jobParameterDefinitions = new HashSet<>();
 
-		jobParameterDefinitions.add(new JenkinsBranchURLJobParameterDefinition());
-		jobParameterDefinitions.add(new PortalBranchURLJobParameterDefinition());
-		jobParameterDefinitions.add(new PortalFixpackReleaseURLJobParameterDefinition());
-		jobParameterDefinitions.add(new PortalPatchTicketURLJobParameterDefinition());
-		jobParameterDefinitions.add(new PortalUpstreamBranchNameJobParameterDefinition());
-		jobParameterDefinitions.add(new TestSuiteNameJobParameterDefinition("portal-fixpack-release"));
+		jobParameterDefinitions.add(
+			new JenkinsBranchURLJobParameterDefinition());
+		jobParameterDefinitions.add(
+			new PortalBranchURLJobParameterDefinition());
+		jobParameterDefinitions.add(
+			new PortalFixpackReleaseURLJobParameterDefinition());
+		jobParameterDefinitions.add(
+			new PortalPatchTicketURLJobParameterDefinition());
+		jobParameterDefinitions.add(
+			new PortalUpstreamBranchNameJobParameterDefinition());
+		jobParameterDefinitions.add(
+			new TestSuiteNameJobParameterDefinition("portal-fixpack-release"));
 
 		return jobParameterDefinitions;
 	}

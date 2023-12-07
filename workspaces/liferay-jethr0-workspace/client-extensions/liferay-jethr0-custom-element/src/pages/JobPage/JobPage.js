@@ -184,8 +184,8 @@ function JobInformation({job}) {
 }
 
 function JobInformationField({fieldLabel, fieldType, fieldValue}) {
-	if ((fieldValue === undefined) || (fieldValue === '')) {
-		return <></>
+	if (fieldValue === undefined || fieldValue === '') {
+		return <></>;
 	}
 
 	if (fieldType === 'DATE') {

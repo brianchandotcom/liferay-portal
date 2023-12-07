@@ -124,11 +124,6 @@ public abstract class BaseJobEntity extends BaseEntity implements JobEntity {
 	}
 
 	@Override
-	public Set<JenkinsCohortEntity> getJenkinsCohortEntities() {
-		return getRelatedEntities(JenkinsCohortEntity.class);
-	}
-
-	@Override
 	public URL getJenkinsBranchURL() {
 		String jenkinsBranchURL = getParameterValue("jenkinsBranchURL");
 
@@ -140,10 +135,16 @@ public abstract class BaseJobEntity extends BaseEntity implements JobEntity {
 	}
 
 	@Override
+	public Set<JenkinsCohortEntity> getJenkinsCohortEntities() {
+		return getRelatedEntities(JenkinsCohortEntity.class);
+	}
+
+	@Override
 	public JSONObject getJSONObject() {
 		JSONObject jsonObject = super.getJSONObject();
 
 		JobEntity.State state = getState();
+
 		JobEntity.Type type = getType();
 
 		JobDefinition jobDefinition = JobDefinitionFactory.newJobDefinition(

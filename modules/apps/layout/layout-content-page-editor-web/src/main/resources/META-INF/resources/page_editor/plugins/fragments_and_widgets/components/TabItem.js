@@ -43,6 +43,8 @@ export default function TabItem({displayStyle, item, onRemoveHighlighted}) {
 
 	const onMovementSource = (event) => {
 		if (event.key === 'Enter' || event.key === ' ') {
+			event.preventDefault();
+
 			setMovementSource({
 				...item.data,
 				fragmentEntryType: item.data.type,

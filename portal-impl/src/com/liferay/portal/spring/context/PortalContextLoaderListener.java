@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.util.PortalLifecycleUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.log4j.Log4JUtil;
 import com.liferay.portal.module.framework.ModuleFrameworkUtil;
+import com.liferay.portal.spring.aop.AopConfigurableApplicationContextConfigurator;
 import com.liferay.portal.spring.aop.DynamicProxyCreator;
 import com.liferay.portal.spring.configurator.ConfigurableApplicationContextConfigurator;
 import com.liferay.portal.spring.override.OverrideBeanDefinitionRegistryPostProcessor;
@@ -161,10 +162,6 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 
 		_cleanUpJDBCDrivers();
 
-		ModuleFrameworkUtil.unregisterContext(_arrayApplicationContext);
-
-		_arrayApplicationContext.close();
-
 		try {
 			ModuleFrameworkUtil.stopFramework(
 				PropsValues.MODULE_FRAMEWORK_STOP_WAIT_TIMEOUT);
@@ -258,9 +255,7 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 
 		ConfigurableApplicationContextConfigurator
 			configurableApplicationContextConfigurator =
-				_arrayApplicationContext.getBean(
-					"configurableApplicationContextConfigurator",
-					ConfigurableApplicationContextConfigurator.class);
+				new AopConfigurableApplicationContextConfigurator();
 
 		configurableApplicationContextConfigurator.configure(
 			configurableWebApplicationContext);
@@ -372,13 +367,6 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 
 		future.get();
 
-		_arrayApplicationContext = new ArrayApplicationContext(
-			PropsValues.SPRING_INFRASTRUCTURE_CONFIGS);
-
-		servletContext.setAttribute(
-			PortalApplicationContext.PARENT_APPLICATION_CONTEXT,
-			_arrayApplicationContext);
-
 		ClassLoader portalClassLoader = PortalClassLoaderUtil.getClassLoader();
 
 		ClassLoaderPool.register(_portalServletContextName, portalClassLoader);
@@ -410,8 +398,6 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 				SystemExecutorServiceUtil.renameThread(
 					springInitTask, "Portal Spring Init Thread"));
 		}
-
-		ModuleFrameworkUtil.registerContext(_arrayApplicationContext);
 
 		ModuleFrameworkUtil.startFramework();
 
@@ -517,7 +503,6 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		}
 	}
 
-	private ArrayApplicationContext _arrayApplicationContext;
 	private ServiceWrapperRegistry _serviceWrapperRegistry;
 
 }

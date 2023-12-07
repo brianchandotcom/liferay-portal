@@ -41,9 +41,9 @@ import com.liferay.portal.log.Log4jLogFactoryImpl;
 import com.liferay.portal.log4j.Log4JUtil;
 import com.liferay.portal.module.framework.ModuleFrameworkUtil;
 import com.liferay.portal.security.xml.SecureXMLFactoryProviderImpl;
+import com.liferay.portal.spring.aop.AopConfigurableApplicationContextConfigurator;
 import com.liferay.portal.spring.bean.LiferayBeanFactory;
 import com.liferay.portal.spring.configurator.ConfigurableApplicationContextConfigurator;
-import com.liferay.portal.spring.context.ArrayApplicationContext;
 import com.liferay.portal.xml.SAXReaderImpl;
 
 import java.lang.reflect.Field;
@@ -215,21 +215,13 @@ public class InitUtil {
 
 			DBInitUtil.init();
 
-			ApplicationContext infrastructureApplicationContext =
-				new ArrayApplicationContext(
-					PropsValues.SPRING_INFRASTRUCTURE_CONFIGS);
-
 			if (initModuleFramework) {
-				ModuleFrameworkUtil.registerContext(
-					infrastructureApplicationContext);
-
 				ModuleFrameworkUtil.startFramework();
 			}
 
 			ConfigurableApplicationContext configurableApplicationContext =
 				new ClassPathXmlApplicationContext(
-					configLocations.toArray(new String[0]), false,
-					infrastructureApplicationContext) {
+					configLocations.toArray(new String[0]), false) {
 
 					@Override
 					protected DefaultListableBeanFactory createBeanFactory() {
@@ -239,18 +231,12 @@ public class InitUtil {
 
 				};
 
-			if (infrastructureApplicationContext.containsBean(
-					"configurableApplicationContextConfigurator")) {
+			ConfigurableApplicationContextConfigurator
+				configurableApplicationContextConfigurator =
+					new AopConfigurableApplicationContextConfigurator();
 
-				ConfigurableApplicationContextConfigurator
-					configurableApplicationContextConfigurator =
-						infrastructureApplicationContext.getBean(
-							"configurableApplicationContextConfigurator",
-							ConfigurableApplicationContextConfigurator.class);
-
-				configurableApplicationContextConfigurator.configure(
-					configurableApplicationContext);
-			}
+			configurableApplicationContextConfigurator.configure(
+				configurableApplicationContext);
 
 			configurableApplicationContext.refresh();
 

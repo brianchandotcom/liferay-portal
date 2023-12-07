@@ -2020,6 +2020,7 @@ public class VerifyProperties {
 		"sites.form.add.miscellaneous", "sites.form.add.seo",
 		"sites.form.update.advanced", "sites.form.update.main",
 		"sites.form.update.miscellaneous", "sites.form.update.seo",
+		"spring.infrastructure.configs",
 		"sql.data.com.liferay.portal.kernel.model.Country.country.id",
 		"sql.data.com.liferay.portal.kernel.model.ListType.account.address",
 		"sql.data.com.liferay.portal.kernel.model.ListType.account.email." +

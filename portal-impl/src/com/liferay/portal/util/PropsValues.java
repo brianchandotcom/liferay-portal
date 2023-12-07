@@ -2209,9 +2209,6 @@ public class PropsValues {
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.SPRING_HIBERNATE_SESSION_FACTORY_VERIFY));
 
-	public static final String[] SPRING_INFRASTRUCTURE_CONFIGS =
-		PropsUtil.getArray(PropsKeys.SPRING_INFRASTRUCTURE_CONFIGS);
-
 	public static int STAGING_DRAFT_EXPORT_IMPORT_CONFIGURATION_CHECK_INTERVAL =
 		GetterUtil.getInteger(
 			PropsUtil.get(

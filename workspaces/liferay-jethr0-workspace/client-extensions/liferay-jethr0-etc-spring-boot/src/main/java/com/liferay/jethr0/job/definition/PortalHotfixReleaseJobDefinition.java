@@ -14,6 +14,7 @@ import com.liferay.jethr0.job.definition.parameter.PortalPatchTicketURLJobParame
 import com.liferay.jethr0.job.definition.parameter.PortalPatcherBuildIDJobParameterDefinition;
 import com.liferay.jethr0.job.definition.parameter.PortalPatcherRequestKeyJobParameterDefinition;
 import com.liferay.jethr0.job.definition.parameter.PortalPatcherUserIDJobParameterDefinition;
+import com.liferay.jethr0.job.definition.parameter.PortalReleaseVersionParameterDefinition;
 import com.liferay.jethr0.job.definition.parameter.PortalUpstreamBranchNameJobParameterDefinition;
 import com.liferay.jethr0.job.definition.parameter.TestSuiteNameJobParameterDefinition;
 
@@ -43,6 +44,8 @@ public class PortalHotfixReleaseJobDefinition extends BaseJobDefinition {
 			new PortalPatcherUserIDJobParameterDefinition());
 		jobParameterDefinitions.add(
 			new PortalPatchTicketURLJobParameterDefinition());
+		jobParameterDefinitions.add(
+			new PortalReleaseVersionParameterDefinition());
 		jobParameterDefinitions.add(
 			new PortalUpstreamBranchNameJobParameterDefinition());
 		jobParameterDefinitions.add(

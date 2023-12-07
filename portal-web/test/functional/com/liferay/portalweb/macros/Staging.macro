@@ -522,6 +522,10 @@ definition {
 		if (isSet(checkPublicPages)) {
 			ContentConfiguration.checkPublicPages(checkPublicPages = ${checkPublicPages});
 		}
+
+		if (isSet(checkPublishPermission)) {
+			Click(locator1 = "Checkbox#PERMISSIONS");
+		}
 	}
 
 	@summary = "Default summary"

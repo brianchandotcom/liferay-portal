@@ -51,16 +51,7 @@ String tabs1 = ParamUtil.getString(renderRequest, "tabs1", "assigned-to-me");
 />
 
 <clay:management-toolbar
-	clearResultsURL="<%= workflowTaskDisplayContext.getClearResultsURL() %>"
-	filterDropdownItems="<%= workflowTaskDisplayContext.getFilterOptions() %>"
-	itemsTotal="<%= workflowTaskDisplayContext.getTotalItems() %>"
-	searchActionURL="<%= workflowTaskDisplayContext.getSearchURL() %>"
-	searchContainerId="workflowTasks"
-	searchFormName="fm1"
-	selectable="<%= false %>"
-	sortingOrder="<%= workflowTaskDisplayContext.getOrderByType() %>"
-	sortingURL="<%= workflowTaskDisplayContext.getSortingURL() %>"
-	viewTypeItems="<%= workflowTaskDisplayContext.getViewTypes() %>"
+	managementToolbarDisplayContext="<%= new WorkflowTaskManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, workflowTaskDisplayContext.getWorkflowTaskSearch()) %>"
 />
 
 <clay:container-fluid>

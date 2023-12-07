@@ -38,8 +38,9 @@ public class EmptyOnClickRowChecker extends RowChecker {
 		boolean disabled, String name, String value, String checkBoxRowIds,
 		String checkBoxAllRowIds, String checkBoxPostOnClick) {
 
-		StringBundler sb = new StringBundler(18);
+		StringBundler sb = new StringBundler(20);
 
+		sb.append("<div class=\"custom-checkbox custom-control\"><label>");
 		sb.append("<input ");
 
 		String rowElementId = (String)httpServletRequest.getAttribute(
@@ -55,7 +56,7 @@ public class EmptyOnClickRowChecker extends RowChecker {
 			sb.append("checked ");
 		}
 
-		sb.append("class=\"");
+		sb.append("class=\"custom-control-input ");
 		sb.append(getCssClass());
 		sb.append("\" ");
 
@@ -77,7 +78,8 @@ public class EmptyOnClickRowChecker extends RowChecker {
 					checkBoxRowIds, checkBoxAllRowIds, checkBoxPostOnClick));
 		}
 
-		sb.append(">");
+		sb.append("><span class=\"custom-control-label\"></span>");
+		sb.append("</label></div>");
 
 		return sb.toString();
 	}

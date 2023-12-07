@@ -166,8 +166,9 @@ public class EntriesChecker extends RowChecker {
 		String checkBoxAllRowIds, String checkBoxPostOnClick,
 		Map<String, Object> data) {
 
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(21);
 
+		sb.append("<div class=\"custom-checkbox custom-control\"><label>");
 		sb.append("<input ");
 
 		String rowElementId = (String)httpServletRequest.getAttribute(
@@ -183,7 +184,7 @@ public class EntriesChecker extends RowChecker {
 			sb.append("checked ");
 		}
 
-		sb.append("class=\"");
+		sb.append("class=\"custom-control-input ");
 		sb.append(getCssClass());
 		sb.append("\" ");
 
@@ -206,7 +207,8 @@ public class EntriesChecker extends RowChecker {
 		}
 
 		sb.append(HtmlUtil.buildData(data));
-		sb.append(">");
+		sb.append("><span class=\"custom-control-label\"></span>");
+		sb.append("</label></div>");
 
 		return sb.toString();
 	}

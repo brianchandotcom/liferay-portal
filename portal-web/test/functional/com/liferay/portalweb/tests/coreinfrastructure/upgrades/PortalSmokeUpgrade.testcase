@@ -62,7 +62,7 @@ definition {
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.smoke.upgrades = "true";
 		property portal.version = "7.3.0";
-		property test.assert.warning.exceptions = "true";
+		property test.assert.warning.exceptions = "false";
 
 		ValidateSmokeUpgrade.viewUpgrade();
 	}

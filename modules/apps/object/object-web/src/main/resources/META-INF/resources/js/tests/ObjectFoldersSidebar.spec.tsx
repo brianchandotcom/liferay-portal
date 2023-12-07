@@ -5,6 +5,7 @@
 
 import '@testing-library/jest-dom/extend-expect';
 import {render, screen} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import ObjectFoldersSideBar from '../components/ViewObjectDefinitions/ObjectFoldersSidebar';
@@ -57,5 +58,17 @@ describe('The ObjectFoldersSidebar component should', () => {
 		expect(screen.getByText('Ticket')).toBeInTheDocument();
 
 		expect(screen.getByText('Uncategorized')).toBeInTheDocument();
+
+		userEvent.click(
+			screen.getByRole('button', {name: 'object-folder-actions'})
+		);
+
+		const menuItem = screen.getAllByRole('menuitem');
+
+		expect(menuItem).toHaveLength(2);
+
+		expect(menuItem[0]).toHaveAttribute('value', 'exportObjectFolder');
+
+		expect(menuItem[1]).toHaveAttribute('value', 'importObjectFolder');
 	});
 });

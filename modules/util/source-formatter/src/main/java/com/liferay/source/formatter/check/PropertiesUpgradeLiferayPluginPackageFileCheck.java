@@ -6,6 +6,7 @@
 package com.liferay.source.formatter.check;
 
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 
 import java.util.regex.Matcher;
@@ -22,7 +23,13 @@ public class PropertiesUpgradeLiferayPluginPackageFileCheck
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
-		if (!fileName.endsWith("/liferay-plugin-package.properties")) {
+		String suffix = "/liferay-plugin-package.properties";
+
+		if (!fileName.endsWith(suffix) ||
+			FileUtil.exists(
+				StringUtil.replace(
+					fileName, suffix, "/liferay-look-and-feel.xml"))) {
+
 			return content;
 		}
 

@@ -32,15 +32,22 @@ public class DBPartitionInsertVirtualInstanceOperation
 	protected void activate(Map<String, Object> properties) {
 		onVirtualInstance(
 			() -> {
-				Company company = _companyLocalService.addDBPartitionCompany(
-					GetterUtil.getLong(properties.get("companyId")),
-					(String)properties.get("newName"),
-					(String)properties.get("newVirtualHostName"),
-					(String)properties.get("newWebId"));
+				long companyId = GetterUtil.getLong(
+					properties.get("companyId"));
 
-				_portalInstancesLocalService.synchronizePortalInstances();
+				if (_companyLocalService.fetchCompany(companyId) == null) {
+					Company company =
+						_companyLocalService.addDBPartitionCompany(
+							companyId, (String)properties.get("newName"),
+							(String)properties.get("newVirtualHostName"),
+							(String)properties.get("newWebId"));
 
-				return company;
+					_portalInstancesLocalService.synchronizePortalInstances();
+
+					return company;
+				}
+
+				return null;
 			},
 			properties);
 	}

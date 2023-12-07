@@ -263,9 +263,9 @@ AUI.add(
 								fieldNamePrefix,
 								fieldNameSuffix,
 								id,
+								languageId,
 								name: A.Lang.String.escapeHTML(name),
 								namespace,
-								value: languageId,
 							})
 						);
 
@@ -701,7 +701,7 @@ AUI.add(
 				},
 
 				INPUT_HIDDEN_TEMPLATE:
-					'<input id="{namespace}{id}_{value}" name="{namespace}{fieldNamePrefix}{name}_{value}{fieldNameSuffix}" type="hidden" value="" />',
+					'<input data-field-name={name} data-language-id={languageId} id="{namespace}{id}_{languageId}" name="{namespace}{fieldNamePrefix}{name}_{languageId}{fieldNameSuffix}" type="hidden" value="" />',
 
 				TRANSLATION_STATUS_TEMPLATE:
 					'<span aria-label="{translationAriaLabel}" role="button" tabindex="0"> {languageId} <span class="dropdown-item-indicator-end w-auto"><span class="label label-{translationStatusCssClass}">{translationStatus}</span></span></span>',

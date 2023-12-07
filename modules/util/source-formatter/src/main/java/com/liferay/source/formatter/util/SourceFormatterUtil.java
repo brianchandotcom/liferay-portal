@@ -350,9 +350,24 @@ public class SourceFormatterUtil {
 		fileNames = ListUtil.filter(
 			fileNames, fileName -> !deletedFileNames.contains(fileName));
 
-		for (String untrackedFileName : _getUntrackedFileNames(includes)) {
-			if (!fileNames.contains(untrackedFileName)) {
-				fileNames.add(untrackedFileName);
+		PathMatchers pathMatchers = _getPathMatchers(
+			new String[0], includes, new SourceFormatterExcludes());
+
+		for (String untrackedFileName : _getUntrackedFileNames()) {
+			if (fileNames.contains(untrackedFileName)) {
+				continue;
+			}
+
+			Path path = Paths.get(untrackedFileName);
+
+			for (PathMatcher pathMatcher :
+					pathMatchers.getIncludeFilePathMatchers()) {
+
+				if (pathMatcher.matches(path)) {
+					fileNames.add(untrackedFileName);
+
+					break;
+				}
 			}
 		}
 
@@ -617,47 +632,28 @@ public class SourceFormatterUtil {
 		return pathMatchers;
 	}
 
-	private static synchronized List<String> _getUntrackedFileNames(
-		String[] includes) {
-
-		if (_untrackedFileNames == null) {
-			_untrackedFileNames = new ArrayList<>();
-
-			_executeGitCommand(
-				Arrays.asList("add", ".", "--dry-run", "--no-all"),
-				_gitTopLevelFolder,
-				line -> {
-					if (!line.startsWith("add ")) {
-						return;
-					}
-
-					line = line.substring(5, line.length() - 1);
-
-					_untrackedFileNames.add(
-						_gitTopLevelFolder + StringPool.SLASH + line);
-				});
+	private static synchronized List<String> _getUntrackedFileNames() {
+		if (_untrackedFileNames != null) {
+			return _untrackedFileNames;
 		}
 
-		PathMatchers pathMatchers = _getPathMatchers(
-			new String[0], includes, new SourceFormatterExcludes());
+		_untrackedFileNames = new ArrayList<>();
 
-		List<String> untrackedFileNames = new ArrayList<>();
-
-		for (String untrackedFileName : _untrackedFileNames) {
-			Path path = Paths.get(untrackedFileName);
-
-			for (PathMatcher pathMatcher :
-					pathMatchers.getIncludeFilePathMatchers()) {
-
-				if (pathMatcher.matches(path)) {
-					untrackedFileNames.add(untrackedFileName);
-
-					break;
+		_executeGitCommand(
+			Arrays.asList("add", ".", "--dry-run", "--no-all"),
+			_gitTopLevelFolder,
+			line -> {
+				if (!line.startsWith("add ")) {
+					return;
 				}
-			}
-		}
 
-		return untrackedFileNames;
+				line = line.substring(5, line.length() - 1);
+
+				_untrackedFileNames.add(
+					_gitTopLevelFolder + StringPool.SLASH + line);
+			});
+
+		return _untrackedFileNames;
 	}
 
 	private static List<String> _scanForFileNames(

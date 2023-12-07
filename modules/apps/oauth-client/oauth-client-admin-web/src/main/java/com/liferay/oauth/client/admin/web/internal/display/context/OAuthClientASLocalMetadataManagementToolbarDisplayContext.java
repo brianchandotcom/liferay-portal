@@ -81,8 +81,11 @@ public class OAuthClientASLocalMetadataManagementToolbarDisplayContext
 	}
 
 	public List<DropdownItem> getFilterDropdownItems() {
+		if (FeatureFlagManagerUtil.isEnabled("LPS-144527")) {
+			return null;
+		}
+
 		return DropdownItemListBuilder.addGroup(
-			() -> !FeatureFlagManagerUtil.isEnabled("LPS-144527"),
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(getOrderByDropdownItems());
 				dropdownGroupItem.setLabel(

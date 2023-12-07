@@ -5,23 +5,14 @@
 
 package com.liferay.portal.workflow.web.internal.display.context;
 
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
-import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
-import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
-import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -38,7 +29,6 @@ import com.liferay.portal.kernel.workflow.WorkflowLog;
 import com.liferay.portal.kernel.workflow.search.WorkflowModelSearchResult;
 import com.liferay.portal.workflow.comparator.WorkflowComparatorFactory;
 import com.liferay.portal.workflow.constants.WorkflowPortletKeys;
-import com.liferay.portal.workflow.constants.WorkflowWebKeys;
 import com.liferay.portal.workflow.manager.WorkflowLogManager;
 import com.liferay.portal.workflow.util.WorkflowDefinitionManagerUtil;
 import com.liferay.portal.workflow.web.internal.search.WorkflowInstanceSearch;
@@ -51,11 +41,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-
-import javax.portlet.PortletException;
-import javax.portlet.PortletURL;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Leonardo Barros
@@ -109,14 +94,6 @@ public class WorkflowInstanceViewDisplayContext
 			workflowInstanceRequestHelper.getLocale());
 	}
 
-	public String getClearResultsURL() {
-		return PortletURLBuilder.create(
-			getViewPortletURL()
-		).setKeywords(
-			StringPool.BLANK
-		).buildString();
-	}
-
 	public String getDefinition(WorkflowInstance workflowInstance)
 		throws PortalException {
 
@@ -135,49 +112,14 @@ public class WorkflowInstanceViewDisplayContext
 	public String getDisplayStyle() {
 		if (_displayStyle == null) {
 			_displayStyle = WorkflowInstancePortletUtil.getDisplayStyle(
-				liferayPortletRequest, getDisplayViews());
+				liferayPortletRequest, new String[] {"descriptive", "list"});
 		}
 
 		return _displayStyle;
 	}
 
-	public String[] getDisplayViews() {
-		return _DISPLAY_VIEWS;
-	}
-
 	public Date getEndDate(WorkflowInstance workflowInstance) {
 		return workflowInstance.getEndDate();
-	}
-
-	public DropdownItemList getFilterOptions(
-		HttpServletRequest httpServletRequest) {
-
-		return DropdownItemListBuilder.addGroup(
-			dropdownGroupItem -> {
-				dropdownGroupItem.setDropdownItems(
-					DropdownItemListBuilder.add(
-						_getFilterNavigationDropdownItem("all")
-					).add(
-						_getFilterNavigationDropdownItem("pending")
-					).add(
-						_getFilterNavigationDropdownItem("completed")
-					).build());
-				dropdownGroupItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "filter"));
-			}
-		).addGroup(
-			() -> !FeatureFlagManagerUtil.isEnabled("LPS-144527"),
-			dropdownGroupItem -> {
-				dropdownGroupItem.setDropdownItems(
-					DropdownItemListBuilder.add(
-						_getOrderByDropdownItem("last-activity-date")
-					).add(
-						_getOrderByDropdownItem("end-date")
-					).build());
-				dropdownGroupItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "order-by"));
-			}
-		).build();
 	}
 
 	public String getHeaderTitle() {
@@ -280,85 +222,6 @@ public class WorkflowInstanceViewDisplayContext
 			workflowModelSearchResult.getLength());
 
 		return _searchContainer;
-	}
-
-	public String getSearchURL() {
-		ThemeDisplay themeDisplay =
-			workflowInstanceRequestHelper.getThemeDisplay();
-
-		return PortletURLBuilder.create(
-			getViewPortletURL()
-		).setParameter(
-			"groupId", themeDisplay.getScopeGroupId()
-		).buildString();
-	}
-
-	public String getSortingURL(HttpServletRequest httpServletRequest)
-		throws PortletException {
-
-		return PortletURLBuilder.createRenderURL(
-			workflowInstanceRequestHelper.getLiferayPortletResponse()
-		).setNavigation(
-			() -> {
-				String navigation = getNavigation();
-
-				if (Validator.isNotNull(navigation)) {
-					return navigation;
-				}
-
-				return null;
-			}
-		).setParameter(
-			"orderByCol",
-			() -> {
-				String orderByCol = getOrderByCol();
-
-				if (Validator.isNotNull(orderByCol)) {
-					return orderByCol;
-				}
-
-				return null;
-			}
-		).setParameter(
-			"orderByType",
-			() -> {
-				if (Objects.equals(getOrderByType(), "asc")) {
-					return "desc";
-				}
-
-				return "asc";
-			}
-		).setParameter(
-			"tab", WorkflowWebKeys.WORKFLOW_TAB_INSTANCE
-		).buildString();
-	}
-
-	public int getTotalItems() throws PortalException {
-		SearchContainer<WorkflowInstance> searchContainer =
-			getSearchContainer();
-
-		return searchContainer.getTotal();
-	}
-
-	public PortletURL getViewPortletURL() {
-		return PortletURLBuilder.createRenderURL(
-			liferayPortletResponse
-		).setNavigation(
-			getNavigation()
-		).setParameter(
-			"orderByType", getOrderByType()
-		).setParameter(
-			"tab", WorkflowWebKeys.WORKFLOW_TAB_INSTANCE
-		).buildPortletURL();
-	}
-
-	public ViewTypeItemList getViewTypes() {
-		return new ViewTypeItemList(getViewPortletURL(), getDisplayStyle()) {
-			{
-				addListViewTypeItem();
-				addTableViewTypeItem();
-			}
-		};
 	}
 
 	public String getWorkflowContextEntryClassName(
@@ -509,19 +372,6 @@ public class WorkflowInstanceViewDisplayContext
 	protected WorkflowModelSearchResult<WorkflowInstance>
 		workflowModelSearchResult;
 
-	private UnsafeConsumer<DropdownItem, Exception>
-		_getFilterNavigationDropdownItem(String navigation) {
-
-		return dropdownItem -> {
-			dropdownItem.setActive(Objects.equals(getNavigation(), navigation));
-			dropdownItem.setHref(
-				getViewPortletURL(), "navigation", navigation, "mvcPath",
-				"/view.jsp");
-			dropdownItem.setLabel(
-				LanguageUtil.get(httpServletRequest, navigation));
-		};
-	}
-
 	private WorkflowLog _getLatestWorkflowLog(WorkflowInstance workflowInstance)
 		throws PortalException {
 
@@ -537,19 +387,6 @@ public class WorkflowInstanceViewDisplayContext
 
 		return workflowLogs.get(0);
 	}
-
-	private UnsafeConsumer<DropdownItem, Exception> _getOrderByDropdownItem(
-		String orderByCol) {
-
-		return dropdownItem -> {
-			dropdownItem.setActive(Objects.equals(getOrderByCol(), orderByCol));
-			dropdownItem.setHref(getViewPortletURL(), "orderByCol", orderByCol);
-			dropdownItem.setLabel(
-				LanguageUtil.get(httpServletRequest, orderByCol));
-		};
-	}
-
-	private static final String[] _DISPLAY_VIEWS = {"descriptive", "list"};
 
 	private String _displayStyle;
 	private String _keywords;

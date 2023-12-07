@@ -1,3 +1,35 @@
+<style>
+	.card-container {
+		height: 150px;
+	}
+
+	.home-card {
+		background-color:#FBFCFE!important;
+		border-color:#E7EFFF!important;
+		border-radius: 10px!important;
+		border-width:1px!important;
+		min-width: 100%;
+	}
+
+	.home-card:hover {
+		background-color: #EDF3FE!important;
+		border-color: #0053F0!important;
+	}
+
+	.product-cards {
+		min-width: 100%;
+	}
+
+	.subtitle {
+		color: #54555F;
+		font-size: small;
+	}
+
+	.title {
+		color: #282934;
+	}
+</style>
+
 <#assign taxonomyVocabularies = restClient.get("/headless-admin-taxonomy/v1.0/sites/${themeDisplay.getSiteGroupId()}/taxonomy-vocabularies").items />
 
 <#if taxonomyVocabularies?has_content>
@@ -37,35 +69,3 @@
 		</#list>
 	</div>
 </#if>
-
-<style>
-	.card-container {
-		height: 150px;
-	}
-
-	.home-card {
-		background-color:#FBFCFE!important;
-		border-color:#E7EFFF!important;
-		border-radius: 10px!important;
-		border-width:1px!important;
-		min-width: 100%;
-	}
-
-	.home-card:hover {
-		background-color: #EDF3FE!important;
-		border-color: #0053F0!important;
-	}
-
-	.product-cards {
-		min-width: 100%;
-	}
-
-	.subtitle {
-		color: #54555F;
-		font-size: small;
-	}
-
-	.title {
-		color: #282934;
-	}
-</style>

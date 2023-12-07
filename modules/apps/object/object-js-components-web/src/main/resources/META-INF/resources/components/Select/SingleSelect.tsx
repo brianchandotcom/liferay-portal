@@ -45,7 +45,7 @@ export function SingleSelect<T extends SingleSelectOption>({
 	items,
 	label,
 	onSelectionChange,
-	placeholder,
+	placeholder = Liferay.Language.get('select-an-option'),
 	required,
 	selectedKey,
 	tooltip,

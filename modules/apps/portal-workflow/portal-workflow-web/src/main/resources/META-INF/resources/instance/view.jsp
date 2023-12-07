@@ -11,9 +11,7 @@
 	managementToolbarDisplayContext="<%= new WorkflowInstanceViewManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, workflowInstanceViewDisplayContext.getSearchContainer()) %>"
 />
 
-<clay:container-fluid
-	cssClass="workflow-instance-container"
->
+<clay:container-fluid>
 	<liferay-ui:search-container
 		id="workflowInstances"
 		searchContainer="<%= workflowInstanceViewDisplayContext.getSearchContainer() %>"

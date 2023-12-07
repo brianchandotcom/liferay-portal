@@ -32,11 +32,14 @@ public class JobDefinitionFactory {
 		else if (type == JobEntity.Type.PORTAL_PULL_REQUEST_SF) {
 			return new PortalPullRequestSFJobDefinition(type);
 		}
-		else if (type == JobEntity.Type.PORTAL_RELEASE) {
-			return new PortalReleaseJobDefinition(type);
+		else if (type == JobEntity.Type.PORTAL_FIXPACK_RELEASE) {
+			return new PortalFixpackReleaseJobDefinition(type);
 		}
 		else if (type == JobEntity.Type.PORTAL_HOTFIX_RELEASE) {
 			return new PortalHotfixReleaseJobDefinition(type);
+		}
+		else if (type == JobEntity.Type.PORTAL_RELEASE) {
+			return new PortalReleaseJobDefinition(type);
 		}
 		else if (type == JobEntity.Type.PORTAL_UPSTREAM_ACCEPTANCE) {
 			return new PortalUpstreamAcceptanceJobDefinition(type);

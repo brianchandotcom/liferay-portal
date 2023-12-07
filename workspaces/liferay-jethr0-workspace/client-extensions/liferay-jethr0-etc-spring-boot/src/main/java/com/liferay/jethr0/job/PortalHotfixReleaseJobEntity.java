@@ -24,13 +24,13 @@ public class PortalHotfixReleaseJobEntity extends BaseJobEntity {
 	}
 
 	public URL getPortalBranchURL() {
-		String upstreamBranchURL = getParameterValue("portalBranchURL");
+		String portalBranchURL = getParameterValue("portalBranchURL");
 
-		if (StringUtil.isNullOrEmpty(upstreamBranchURL)) {
+		if (StringUtil.isNullOrEmpty(portalBranchURL)) {
 			return null;
 		}
 
-		return StringUtil.toURL(upstreamBranchURL);
+		return StringUtil.toURL(portalBranchURL);
 	}
 
 	public URL getPortalHotfixReleaseURL() {

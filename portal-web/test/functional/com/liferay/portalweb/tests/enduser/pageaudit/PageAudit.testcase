@@ -1516,4 +1516,70 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-191483. View warning message displays for big image file size used in page audit."
+	@priority = 4
+	test ViewWarningMessageOfImageFragment {
+		property custom.properties = "feature.flag.LPS-187284=true${line.separator}feature.flag.LPS-187285=true";
+
+		task ("Given a user has an Image fragment with a big image on a content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Image");
+
+			PageEditor.editFragmentImage(
+				fragmentName = "Image",
+				id = "image-square",
+				imageFileName = "high_resolution_photo.jpg",
+				uploadFileName = "high_resolution_photo.jpg");
+
+			PageEditor.publish();
+		}
+
+		task ("When the user goes to the details of Image fragment on Page Audit panel") {
+			PageAudit.openPageAuditSidebar();
+
+			PageAudit.goToElementDetails(elementName = "Image");
+		}
+
+		task ("Then the user should see the warning message") {
+			AssertVisible(
+				errorTitle = "Big image file size used.",
+				locator1 = "PageAudit#ERROR_WARNING_TITLE");
+
+			AssertTextEquals(
+				locator1 = "PageAudit#WARNING_TEXT",
+				value1 = "Please consider configuring adaptive media, lazy loading, or reducing the image size.");
+		}
+
+		task ("When the user enables the lazy loading") {
+			ContentPages.gotoPageEditor();
+
+			PageEditor.clickEditableField(
+				fragmentName = "Image",
+				id = "image");
+
+			Navigator.gotoNavTab(navTab = "Image Source");
+
+			PageEditor.configureFragment(enableLazyLoading = "true");
+
+			PageEditor.publish();
+
+		}
+
+		task ("Then the user cannot see the warning message on the details of Image fragment") {
+			WaitForElementPresent(locator1 = "PageAudit#SIDEBAR");
+
+			PageAudit.goToElementDetails(elementName = "Image");
+
+			AssertTextEquals(
+				key_panel = "Warnings",
+				locator1 = "Panel#PANEL_ALERT_FEEDBACK",
+				value1 = "No issues found in this component.");
+		}
+	}
+
 }

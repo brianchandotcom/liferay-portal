@@ -592,9 +592,17 @@ public class MissingEmptyLineCheck extends BaseCheck {
 		}
 
 		for (DetailAST identDetailAST : identDetailASTList) {
-			if (!isMethodNameDetailAST(identDetailAST) &&
-				variableName.equals(identDetailAST.getText())) {
+			if (!variableName.equals(identDetailAST.getText())) {
+				continue;
+			}
 
+			DetailAST parentDetailAST = identDetailAST.getParent();
+
+			if (parentDetailAST.getType() == TokenTypes.VARIABLE_DEF) {
+				return false;
+			}
+
+			if (!isMethodNameDetailAST(identDetailAST)) {
 				return true;
 			}
 		}

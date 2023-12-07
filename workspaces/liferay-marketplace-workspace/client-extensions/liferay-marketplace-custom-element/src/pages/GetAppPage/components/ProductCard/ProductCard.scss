@@ -32,10 +32,10 @@
 
 	.sub-text {
 		color: var(--neutral-08, #54555f);
+		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
 		width: 330px;
-		overflow: hidden;
 	}
 
 	small {

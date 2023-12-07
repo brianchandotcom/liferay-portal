@@ -103,6 +103,24 @@
 	},
 	{
 		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:LicenseTypesDescription$]",
+		"roleName": "User",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"ADD_OBJECT_ENTRY"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:LicenseTypesDescription$]",
+		"roleName": "User",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
 			"UPDATE",
 			"VIEW"
 		],

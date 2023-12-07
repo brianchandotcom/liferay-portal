@@ -9,6 +9,8 @@ import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.entity.BaseEntity;
 import com.liferay.jethr0.git.branch.GitBranchEntity;
 import com.liferay.jethr0.jenkins.cohort.JenkinsCohortEntity;
+import com.liferay.jethr0.job.definition.JobDefinition;
+import com.liferay.jethr0.job.definition.JobDefinitionFactory;
 import com.liferay.jethr0.task.TaskEntity;
 import com.liferay.jethr0.testsuite.TestSuiteEntity;
 import com.liferay.jethr0.util.StringUtil;
@@ -144,7 +146,12 @@ public abstract class BaseJobEntity extends BaseEntity implements JobEntity {
 		JobEntity.State state = getState();
 		JobEntity.Type type = getType();
 
+		JobDefinition jobDefinition = JobDefinitionFactory.newJobDefinition(
+			type);
+
 		jsonObject.put(
+			"definition", jobDefinition.getJSONObject()
+		).put(
 			"name", getName()
 		).put(
 			"parameters", String.valueOf(_getParametersJSONObject())

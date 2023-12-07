@@ -118,7 +118,7 @@ function JobInformation({job}) {
 		);
 	}
 
-	const jobParameterDefinitions = job.type.parameterDefinitions;
+	const jobParameterDefinitions = job.definition.parameterDefinitions;
 	const jobParameters = JSON.parse(job.parameters);
 
 	return (
@@ -184,10 +184,15 @@ function JobInformation({job}) {
 }
 
 function JobInformationField({fieldLabel, fieldType, fieldValue}) {
+	if ((fieldValue === undefined) || (fieldValue === '')) {
+		return <></>
+	}
+
 	if (fieldType === 'DATE') {
 		return (
 			<>
-				{fieldLabel + ': ' + toLocaleString(fieldValue)}
+				<strong>{fieldLabel + ': '}</strong>
+				{toLocaleString(fieldValue)}
 				<br />
 			</>
 		);
@@ -196,20 +201,17 @@ function JobInformationField({fieldLabel, fieldType, fieldValue}) {
 	if (fieldType === 'URL') {
 		return (
 			<>
-				{fieldLabel + ': '}
+				<strong>{fieldLabel + ': '}</strong>
 				<a href={fieldValue}>{fieldValue}</a>
 				<br />
 			</>
 		);
 	}
 
-	if (fieldValue === undefined) {
-		fieldValue = '';
-	}
-
 	return (
 		<>
-			{fieldLabel + ': ' + fieldValue}
+			<strong>{fieldLabel + ': '}</strong>
+			{fieldValue}
 			<br />
 		</>
 	);

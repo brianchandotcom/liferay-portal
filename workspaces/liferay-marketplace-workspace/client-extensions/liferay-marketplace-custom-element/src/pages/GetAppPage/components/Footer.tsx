@@ -81,6 +81,11 @@ const ProductFooter = ({
 	const onContinue = async (nextStep: StepType) => {
 		const isAccountStep = step === StepType.ACCOUNT;
 		const isLicenseStep = step === StepType.LICENSES;
+		if (selectedPaymentMethod === PaymentMethod.TRIAL) {
+			if (cartUtil?.cart?.id) {
+				cartUtil.removeCart(cartUtil?.cart?.id);
+			}
+		}
 
 		if ((!isFreeApp && isAccountStep && selectedAccount) || isLicenseStep) {
 			return setStep(nextStep);

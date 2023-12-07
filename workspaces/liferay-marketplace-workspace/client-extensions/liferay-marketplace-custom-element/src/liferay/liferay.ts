@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {LiferayStorage} from '../core/Storage';
+
 export interface IOAuth2ClientAgentApplication {
 	authorizeURL: string;
 	clientId: string;
@@ -45,6 +47,8 @@ interface ILiferay {
 		isSignedIn: () => boolean;
 	};
 	Util: {
+		LocalStorage: LiferayStorage;
+		SessionStorage: LiferayStorage;
 		navigate: (path: string) => void;
 		openToast: (options?: {
 			message: string;
@@ -82,6 +86,10 @@ export const Liferay = window.Liferay || {
 		isSignedIn: () => {
 			return false;
 		},
+	},
+	Util: {
+		LocalStorage: localStorage,
+		SessionStorage: sessionStorage,
 	},
 	detach: (
 		type: keyof WindowEventMap,

@@ -5,9 +5,6 @@
 
 package com.liferay.marketplace;
 
-import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.CustomField;
-import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Sku;
-import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.SkuResource;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchase;
 import com.liferay.osb.koroneiki.phloem.rest.client.resource.v1_0.ProductPurchaseResource;
 import com.liferay.osb.provisioning.marketplace.rest.client.dto.v1_0.AppLicenseKey;
@@ -191,7 +188,6 @@ public class ProvisioningRestController extends BaseRestController {
 		appLicenseKey.setProductName(
 			productPurchase.getProduct(
 			).getName());
-		appLicenseKey.setProductVersion(_getProductVersion(jsonObject, jwt));
 
 		Date startDate = productPurchase.getStartDate();
 
@@ -264,36 +260,6 @@ public class ProvisioningRestController extends BaseRestController {
 
 			return _oauthAccessToken;
 		}
-	}
-
-	private String _getProductVersion(JSONObject jsonObject, Jwt jwt) {
-		String version = "1.0.0";
-
-		try {
-			SkuResource skuResource = SkuResource.builder(
-			).header(
-				HttpHeaders.AUTHORIZATION, "Bearer " + jwt.getTokenValue()
-			).endpoint(
-				new URL(lxcDXPServerProtocol + "://" + lxcDXPMainDomain)
-			).build();
-
-			Sku sku = skuResource.getSku(jsonObject.getLong("skuId"));
-
-			for (CustomField customField : sku.getCustomFields()) {
-				if (Objects.equals(customField.getName(), "Version")) {
-					version = customField.getCustomValue(
-					).getData(
-					).toString();
-
-					break;
-				}
-			}
-		}
-		catch (Exception exception) {
-			_log.error("Unable to set SKU Version " + exception.getMessage());
-		}
-
-		return version;
 	}
 
 	private void _initResourceBuilders() throws Exception {

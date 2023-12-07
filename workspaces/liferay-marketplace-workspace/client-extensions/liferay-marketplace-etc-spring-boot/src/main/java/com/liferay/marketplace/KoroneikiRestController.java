@@ -12,6 +12,7 @@ import com.liferay.headless.admin.user.client.pagination.Page;
 import com.liferay.headless.admin.user.client.resource.v1_0.AccountResource;
 import com.liferay.headless.admin.user.client.resource.v1_0.PostalAddressResource;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.ProductSpecification;
+import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Sku;
 import com.liferay.headless.commerce.admin.catalog.client.pagination.Pagination;
 import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.ProductSpecificationResource;
 import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.SkuResource;
@@ -29,11 +30,14 @@ import com.liferay.petra.string.StringPool;
 
 import java.net.URL;
 
+import java.nio.charset.Charset;
+
 import java.time.Instant;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
@@ -42,6 +46,15 @@ import java.util.Objects;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.http.HttpStatus;
+import org.apache.http.StatusLine;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -70,7 +83,7 @@ public class KoroneikiRestController extends BaseRestController {
 			@PathVariable("orderId") long orderId)
 		throws Exception {
 
-		_initResourceBuilders(jwt);
+		_initResourceBuilders();
 
 		JSONArray jsonArray = new JSONArray();
 
@@ -179,7 +192,7 @@ public class KoroneikiRestController extends BaseRestController {
 				).put(
 					"purchasedCount", orderItem.getQuantity()
 				).put(
-					"skuId", orderItem.getSkuId()
+					"productVersion", _getProductVersion(orderItem.getSkuId())
 				).put(
 					"startDate",
 					ZonedDateTime.ofInstant(
@@ -216,7 +229,7 @@ public class KoroneikiRestController extends BaseRestController {
 			return;
 		}
 
-		_initResourceBuilders(jwt);
+		_initResourceBuilders();
 
 		Order order = _orderResource.getOrder(
 			commerceOrderJSONObject.getLong("id"));
@@ -299,6 +312,57 @@ public class KoroneikiRestController extends BaseRestController {
 		}
 	}
 
+	private String _getOAuthAuthorization() throws Exception {
+		if ((_oauthAccessToken != null) &&
+			(System.currentTimeMillis() < (_oauthExpirationMillis - 15000))) {
+
+			return _oauthAccessToken;
+		}
+
+		HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
+
+		HttpPost httpPost = new HttpPost(
+			new URL(lxcDXPServerProtocol + "://" + lxcDXPMainDomain) +
+				"/o/oauth2/token");
+
+		httpPost.setEntity(
+			new UrlEncodedFormEntity(
+				Arrays.asList(
+					new BasicNameValuePair("client_id", _dxpAuthClientId),
+					new BasicNameValuePair(
+						"client_secret", _dxpAuthClientSecret),
+					new BasicNameValuePair(
+						"grant_type", "client_credentials"))));
+		httpPost.setHeader("Content-Type", "application/x-www-form-urlencoded");
+
+		try (CloseableHttpClient closeableHttpClient =
+				httpClientBuilder.build();
+			CloseableHttpResponse closeableHttpResponse =
+				closeableHttpClient.execute(httpPost)) {
+
+			StatusLine statusLine = closeableHttpResponse.getStatusLine();
+
+			if (statusLine.getStatusCode() != HttpStatus.SC_OK) {
+				throw new Exception("Unable to get OAuth authorization");
+			}
+
+			JSONObject jsonObject = new JSONObject(
+				EntityUtils.toString(
+					closeableHttpResponse.getEntity(),
+					Charset.defaultCharset()));
+
+			_oauthExpirationMillis =
+				(jsonObject.getLong("expires_in") * 1000) +
+					System.currentTimeMillis();
+
+			_oauthAccessToken =
+				jsonObject.getString("token_type") + " " +
+					jsonObject.getString("access_token");
+
+			return _oauthAccessToken;
+		}
+	}
+
 	private Map<String, String> _getProductSpecificationsMap(
 		Collection<ProductSpecification> productSpecifications) {
 
@@ -318,13 +382,40 @@ public class KoroneikiRestController extends BaseRestController {
 		return map;
 	}
 
-	private void _initResourceBuilders(Jwt jwt) throws Exception {
+	private String _getProductVersion(Long skuId) {
+		String version = "1.0.0";
+
+		try {
+			Sku sku = _skuResource.getSku(skuId);
+
+			for (com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.
+					CustomField customField : sku.getCustomFields()) {
+
+				if (Objects.equals(customField.getName(), "Version")) {
+					version = customField.getCustomValue(
+					).getData(
+					).toString();
+
+					break;
+				}
+			}
+		}
+		catch (Exception exception) {
+			_log.error("Unable to set SKU Version " + exception.getMessage());
+		}
+
+		return version;
+	}
+
+	private void _initResourceBuilders() throws Exception {
+		String authorization = _getOAuthAuthorization();
+
 		URL liferayDXPURL = new URL(
 			lxcDXPServerProtocol + "://" + lxcDXPMainDomain);
 
 		_accountResource = AccountResource.builder(
 		).header(
-			HttpHeaders.AUTHORIZATION, "Bearer " + jwt.getTokenValue()
+			HttpHeaders.AUTHORIZATION, authorization
 		).endpoint(
 			liferayDXPURL
 		).build();
@@ -342,21 +433,21 @@ public class KoroneikiRestController extends BaseRestController {
 
 		_orderItemResource = OrderItemResource.builder(
 		).header(
-			HttpHeaders.AUTHORIZATION, "Bearer " + jwt.getTokenValue()
+			HttpHeaders.AUTHORIZATION, authorization
 		).endpoint(
 			liferayDXPURL
 		).build();
 
 		_orderResource = OrderResource.builder(
 		).header(
-			HttpHeaders.AUTHORIZATION, "Bearer " + jwt.getTokenValue()
+			HttpHeaders.AUTHORIZATION, authorization
 		).endpoint(
 			liferayDXPURL
 		).build();
 
 		_postalAddressResource = PostalAddressResource.builder(
 		).header(
-			HttpHeaders.AUTHORIZATION, "Bearer " + jwt.getTokenValue()
+			HttpHeaders.AUTHORIZATION, authorization
 		).endpoint(
 			liferayDXPURL
 		).build();
@@ -377,14 +468,14 @@ public class KoroneikiRestController extends BaseRestController {
 
 		_productSpecificationResource = ProductSpecificationResource.builder(
 		).header(
-			HttpHeaders.AUTHORIZATION, "Bearer " + jwt.getTokenValue()
+			HttpHeaders.AUTHORIZATION, authorization
 		).endpoint(
 			liferayDXPURL
 		).build();
 
 		_skuResource = SkuResource.builder(
 		).header(
-			HttpHeaders.AUTHORIZATION, "Bearer " + jwt.getTokenValue()
+			HttpHeaders.AUTHORIZATION, authorization
 		).endpoint(
 			liferayDXPURL
 		).build();
@@ -579,6 +670,13 @@ public class KoroneikiRestController extends BaseRestController {
 		KoroneikiRestController.class);
 
 	private AccountResource _accountResource;
+
+	@Value("${liferay.marketplace.dxp.auth.client.id}")
+	private String _dxpAuthClientId;
+
+	@Value("${liferay.marketplace.dxp.auth.client.secret}")
+	private String _dxpAuthClientSecret;
+
 	private
 		com.liferay.osb.koroneiki.phloem.rest.client.resource.v1_0.
 			AccountResource _koroneikiAccountResource;
@@ -589,6 +687,8 @@ public class KoroneikiRestController extends BaseRestController {
 	@Value("${liferay.marketplace.koroneiki.auth.url}")
 	private String _koroneikiAuthURL;
 
+	private String _oauthAccessToken;
+	private long _oauthExpirationMillis;
 	private OrderItemResource _orderItemResource;
 	private OrderResource _orderResource;
 	private PostalAddressResource _postalAddressResource;

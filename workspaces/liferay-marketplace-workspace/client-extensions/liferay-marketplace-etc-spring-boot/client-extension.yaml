@@ -5,14 +5,21 @@ liferay-marketplace-etc-spring-boot-koroneiki-product-purchase:
     oAuth2ApplicationExternalReferenceCode: liferay-marketplace-etc-spring-boot-oauth-application-user-agent
     resourcePath: /koroneiki/product-purchase
     type: objectAction
-liferay-marketplace-etc-spring-boot-oauth-application-user-agent:
+liferay-marketplace-etc-spring-boot-oauth-application-headless-server:
     .serviceAddress: localhost:58081
     .serviceScheme: http
-    name: Liferay Marketplace Etc Spring Boot OAuth Application User Agent
+    name: Liferay Marketplace Etc Spring Boot OAuth Application Headless Server
     scopes:
         - Liferay.Headless.Admin.User.everything
         - Liferay.Headless.Admin.Workflow.everything
         - Liferay.Headless.Commerce.Admin.Catalog.everything
         - Liferay.Headless.Commerce.Admin.Order.everything
         - Liferay.Headless.Commerce.Delivery.Catalog.everything
+    type: oAuthApplicationHeadlessServer
+liferay-marketplace-etc-spring-boot-oauth-application-user-agent:
+    .serviceAddress: localhost:58081
+    .serviceScheme: http
+    name: Liferay Marketplace Etc Spring Boot OAuth Application User Agent
+    scopes:
+        - Liferay.Headless.Admin.User.read
     type: oAuthApplicationUserAgent

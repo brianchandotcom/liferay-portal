@@ -274,6 +274,104 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-196462. The New Rule Modal requires at least one condition and one action to complete the rule."
+	@priority = 4
+	test CannotAddPageRuleWithoutConditionOrAction {
+		task ("Given a page designer has a Button on a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+		}
+
+		task ("When the page designer opens the New Rule modal") {
+			PageEditor.gotoTab(tabName = "Page Rules");
+
+			Button.click(button = "New Rule");
+
+			AssertTextEquals(
+				locator1 = "Modal#HEADER",
+				value1 = "New Rule");
+		}
+
+		task ("Then the page designer cannot add page rule without condition or action") {
+			AssertTextEquals(
+				index = 1,
+				locator1 = "Modal#BODY_MESSAGE",
+				value1 = "Add at least one condition and one action to complete the rule.");
+
+			Click(
+				key_text = "Save",
+				locator1 = "Modal#MODAL_FOOTER_BUTTON");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Modal#MODAL_ERROR",
+				value1 = "The rule is incomplete. Please check that the conditions and actions are completed before saving.");
+
+			Click(
+				index = 1,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION_ITEM");
+
+			DropdownMenuItem.click(menuItem = "User");
+
+			Click(
+				index = 2,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION_ITEM");
+
+			DropdownMenuItem.click(menuItem = "Is the User");
+
+			Click(
+				index = 3,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION_ITEM");
+
+			DropdownMenuItem.click(menuItem = "test");
+
+			Click(
+				key_text = "Save",
+				locator1 = "Modal#MODAL_FOOTER_BUTTON");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Modal#MODAL_ERROR",
+				value1 = "The rule is incomplete. Please check that the conditions and actions are completed before saving.");
+
+			PageEditor.deletePageRuleCondition();
+
+			Click(
+				index = 1,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_ACTION_ITEM");
+
+			DropdownMenuItem.click(menuItem = "Hide");
+
+			Click(
+				index = 2,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_ACTION_ITEM");
+
+			DropdownMenuItem.click(menuItem = "Fragment");
+
+			Click(
+				index = 3,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_ACTION_ITEM");
+
+			DropdownMenuItem.click(menuItem = "Button");
+
+			Click(
+				key_text = "Save",
+				locator1 = "Modal#MODAL_FOOTER_BUTTON");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Modal#MODAL_ERROR",
+				value1 = "The rule is incomplete. Please check that the conditions and actions are completed before saving.");
+		}
+	}
+
 	@description = "This is a test for LPS-196462. The New Rule Modal allows the user to delete conditions and actions."
 	@priority = 4
 	test DeleteConditionsAndActions {

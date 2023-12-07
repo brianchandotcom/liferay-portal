@@ -531,11 +531,6 @@ definition {
 				locator1 = "Button#ANY",
 				value1 = "\ENTER");
 
-			AssertTextEquals(
-				index = 1,
-				locator1 = "Modal#BODY_MESSAGE",
-				value1 = "Add at least one condition and one action to complete the rule.");
-
 			KeyPress(
 				locator1 = "Modal#CLOSE_BUTTON",
 				value1 = "\TAB");

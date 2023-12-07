@@ -182,6 +182,26 @@ public class NotificationQueueEntryLocalServiceImpl
 					notificationRecipientSetting);
 		}
 
+		Repository repository = _getRepository(notificationQueueEntry);
+
+		if (repository != null) {
+			try {
+				Folder folder = _portletFileRepository.getPortletFolder(
+					repository.getRepositoryId(),
+					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+					String.valueOf(
+						notificationQueueEntry.getNotificationQueueEntryId()));
+
+				_portletFileRepository.deletePortletFolder(
+					folder.getFolderId());
+			}
+			catch (PortalException portalException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(portalException);
+				}
+			}
+		}
+
 		return notificationQueueEntry;
 	}
 

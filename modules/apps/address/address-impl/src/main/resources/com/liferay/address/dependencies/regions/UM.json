@@ -1,0 +1,38 @@
+[
+	{
+		"name": "Baker Island",
+		"regionCode": "81.0"
+	},
+	{
+		"name": "Howland Island",
+		"regionCode": "84.0"
+	},
+	{
+		"name": "Jarvis Island",
+		"regionCode": "86.0"
+	},
+	{
+		"name": "Johnston Atoll",
+		"regionCode": "67.0"
+	},
+	{
+		"name": "Kingman Reef",
+		"regionCode": "89.0"
+	},
+	{
+		"name": "Midway Islands",
+		"regionCode": "71.0"
+	},
+	{
+		"name": "Navassa Island",
+		"regionCode": "76.0"
+	},
+	{
+		"name": "Palmyra Atoll",
+		"regionCode": "95.0"
+	},
+	{
+		"name": "Wake Island",
+		"regionCode": "79.0"
+	}
+]

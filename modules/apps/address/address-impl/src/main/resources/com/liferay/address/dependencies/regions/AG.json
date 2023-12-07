@@ -1,0 +1,34 @@
+[
+	{
+		"name": "Barbuda",
+		"regionCode": "10.0"
+	},
+	{
+		"name": "Redonda",
+		"regionCode": "11.0"
+	},
+	{
+		"name": "Saint George",
+		"regionCode": "3.0"
+	},
+	{
+		"name": "Saint John",
+		"regionCode": "4.0"
+	},
+	{
+		"name": "Saint Mary",
+		"regionCode": "5.0"
+	},
+	{
+		"name": "Saint Paul",
+		"regionCode": "6.0"
+	},
+	{
+		"name": "Saint Peter",
+		"regionCode": "7.0"
+	},
+	{
+		"name": "Saint Philip",
+		"regionCode": "8.0"
+	}
+]

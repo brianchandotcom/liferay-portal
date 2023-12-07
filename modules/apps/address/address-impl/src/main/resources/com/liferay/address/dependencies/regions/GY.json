@@ -1,0 +1,42 @@
+[
+	{
+		"name": "Barima-Waini",
+		"regionCode": "BA"
+	},
+	{
+		"name": "Cuyuni-Mazaruni",
+		"regionCode": "CU"
+	},
+	{
+		"name": "Demerara-Mahaica",
+		"regionCode": "DE"
+	},
+	{
+		"name": "East Berbice-Corentyne",
+		"regionCode": "EB"
+	},
+	{
+		"name": "Essequibo Islands-West Demerara",
+		"regionCode": "ES"
+	},
+	{
+		"name": "Mahaica-Berbice",
+		"regionCode": "MA"
+	},
+	{
+		"name": "Pomeroon-Supenaam",
+		"regionCode": "PM"
+	},
+	{
+		"name": "Potaro-Siparuni",
+		"regionCode": "PT"
+	},
+	{
+		"name": "Upper Demerara-Berbice",
+		"regionCode": "UD"
+	},
+	{
+		"name": "Upper Takutu-Upper Essequibo",
+		"regionCode": "UT"
+	}
+]

@@ -1,0 +1,90 @@
+[
+	{
+		"name": "Changhua",
+		"regionCode": "CHA"
+	},
+	{
+		"name": "Chiayi",
+		"regionCode": "CYI"
+	},
+	{
+		"name": "Chiayi",
+		"regionCode": "CYQ"
+	},
+	{
+		"name": "Hsinchu",
+		"regionCode": "HSZ"
+	},
+	{
+		"name": "Hsinchu",
+		"regionCode": "HSQ"
+	},
+	{
+		"name": "Hualien",
+		"regionCode": "HUA"
+	},
+	{
+		"name": "Kaohsiung",
+		"regionCode": "KHH"
+	},
+	{
+		"name": "Keelung",
+		"regionCode": "KEE"
+	},
+	{
+		"name": "Kinmen",
+		"regionCode": "KIN"
+	},
+	{
+		"name": "Lienchiang",
+		"regionCode": "LIE"
+	},
+	{
+		"name": "Miaoli",
+		"regionCode": "MIA"
+	},
+	{
+		"name": "Nantou",
+		"regionCode": "NAN"
+	},
+	{
+		"name": "New Taipei",
+		"regionCode": "NWT"
+	},
+	{
+		"name": "Penghu",
+		"regionCode": "PEN"
+	},
+	{
+		"name": "Pingtung",
+		"regionCode": "PIF"
+	},
+	{
+		"name": "Taichung",
+		"regionCode": "TXG"
+	},
+	{
+		"name": "Tainan",
+		"regionCode": "TNN"
+	},
+	{
+		"name": "Taipei",
+		"regionCode": "TPE"
+	},
+	{
+		"name": "Taitung",
+		"regionCode": "TTT"
+	},
+	{
+		"name": "Taoyuan",
+		"regionCode": "TAO"
+	},
+	{
+		"name": "Yilan",
+		"regionCode": "ILA"
+	},
+	{
+		"name": "Yunlin",
+		"regionCode": "YUN"
+	}
+]

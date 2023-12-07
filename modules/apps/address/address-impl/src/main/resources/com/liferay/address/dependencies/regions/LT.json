@@ -1,0 +1,282 @@
+[
+	{
+		"name": "Akmenė",
+		"regionCode": "1.0"
+	},
+	{
+		"name": "Alytaus apskritis",
+		"regionCode": "AL"
+	},
+	{
+		"name": "Alytaus miestas",
+		"regionCode": "2.0"
+	},
+	{
+		"name": "Alytus",
+		"regionCode": "3.0"
+	},
+	{
+		"name": "Anykščiai",
+		"regionCode": "4.0"
+	},
+	{
+		"name": "Birštonas",
+		"regionCode": "5.0"
+	},
+	{
+		"name": "Biržai",
+		"regionCode": "6.0"
+	},
+	{
+		"name": "Druskininkai",
+		"regionCode": "7.0"
+	},
+	{
+		"name": "Elektrėnai",
+		"regionCode": "8.0"
+	},
+	{
+		"name": "Ignalina",
+		"regionCode": "9.0"
+	},
+	{
+		"name": "Jonava",
+		"regionCode": "10.0"
+	},
+	{
+		"name": "Joniškis",
+		"regionCode": "11.0"
+	},
+	{
+		"name": "Jurbarkas",
+		"regionCode": "12.0"
+	},
+	{
+		"name": "Kaišiadorys",
+		"regionCode": "13.0"
+	},
+	{
+		"name": "Kalvarija",
+		"regionCode": "14.0"
+	},
+	{
+		"name": "Kaunas",
+		"regionCode": "16.0"
+	},
+	{
+		"name": "Kauno apskritis",
+		"regionCode": "KU"
+	},
+	{
+		"name": "Kauno miestas",
+		"regionCode": "15.0"
+	},
+	{
+		"name": "Kazlų Rūdos",
+		"regionCode": "17.0"
+	},
+	{
+		"name": "Kėdainiai",
+		"regionCode": "18.0"
+	},
+	{
+		"name": "Kelmė",
+		"regionCode": "19.0"
+	},
+	{
+		"name": "Klaipėda",
+		"regionCode": "21.0"
+	},
+	{
+		"name": "Klaipėdos apskritis",
+		"regionCode": "KL"
+	},
+	{
+		"name": "Klaipėdos miestas",
+		"regionCode": "20.0"
+	},
+	{
+		"name": "Kretinga",
+		"regionCode": "22.0"
+	},
+	{
+		"name": "Kupiškis",
+		"regionCode": "23.0"
+	},
+	{
+		"name": "Lazdijai",
+		"regionCode": "24.0"
+	},
+	{
+		"name": "Marijampolė",
+		"regionCode": "25.0"
+	},
+	{
+		"name": "Marijampolės apskritis",
+		"regionCode": "MR"
+	},
+	{
+		"name": "Mažeikiai",
+		"regionCode": "26.0"
+	},
+	{
+		"name": "Molėtai",
+		"regionCode": "27.0"
+	},
+	{
+		"name": "Neringa",
+		"regionCode": "28.0"
+	},
+	{
+		"name": "Pagėgiai",
+		"regionCode": "29.0"
+	},
+	{
+		"name": "Pakruojis",
+		"regionCode": "30.0"
+	},
+	{
+		"name": "Palangos miestas",
+		"regionCode": "31.0"
+	},
+	{
+		"name": "Panevėžio apskritis",
+		"regionCode": "PN"
+	},
+	{
+		"name": "Panevėžio miestas",
+		"regionCode": "32.0"
+	},
+	{
+		"name": "Panevėžys",
+		"regionCode": "33.0"
+	},
+	{
+		"name": "Pasvalys",
+		"regionCode": "34.0"
+	},
+	{
+		"name": "Plungė",
+		"regionCode": "35.0"
+	},
+	{
+		"name": "Prienai",
+		"regionCode": "36.0"
+	},
+	{
+		"name": "Radviliškis",
+		"regionCode": "37.0"
+	},
+	{
+		"name": "Raseiniai",
+		"regionCode": "38.0"
+	},
+	{
+		"name": "Rietavas",
+		"regionCode": "39.0"
+	},
+	{
+		"name": "Rokiškis",
+		"regionCode": "40.0"
+	},
+	{
+		"name": "Šakiai",
+		"regionCode": "41.0"
+	},
+	{
+		"name": "Šalčininkai",
+		"regionCode": "42.0"
+	},
+	{
+		"name": "Šiauliai",
+		"regionCode": "44.0"
+	},
+	{
+		"name": "Šiaulių apskritis",
+		"regionCode": "SA"
+	},
+	{
+		"name": "Šiaulių miestas",
+		"regionCode": "43.0"
+	},
+	{
+		"name": "Šilalė",
+		"regionCode": "45.0"
+	},
+	{
+		"name": "Šilutė",
+		"regionCode": "46.0"
+	},
+	{
+		"name": "Širvintos",
+		"regionCode": "47.0"
+	},
+	{
+		"name": "Skuodas",
+		"regionCode": "48.0"
+	},
+	{
+		"name": "Švenčionys",
+		"regionCode": "49.0"
+	},
+	{
+		"name": "Tauragė",
+		"regionCode": "50.0"
+	},
+	{
+		"name": "Tauragės apskritis",
+		"regionCode": "TA"
+	},
+	{
+		"name": "Telšiai",
+		"regionCode": "51.0"
+	},
+	{
+		"name": "Telšių apskritis",
+		"regionCode": "TE"
+	},
+	{
+		"name": "Trakai",
+		"regionCode": "52.0"
+	},
+	{
+		"name": "Ukmergė",
+		"regionCode": "53.0"
+	},
+	{
+		"name": "Utena",
+		"regionCode": "54.0"
+	},
+	{
+		"name": "Utenos apskritis",
+		"regionCode": "UT"
+	},
+	{
+		"name": "Varėna",
+		"regionCode": "55.0"
+	},
+	{
+		"name": "Vilkaviškis",
+		"regionCode": "56.0"
+	},
+	{
+		"name": "Vilniaus apskritis",
+		"regionCode": "VL"
+	},
+	{
+		"name": "Vilniaus miestas",
+		"regionCode": "57.0"
+	},
+	{
+		"name": "Vilnius",
+		"regionCode": "58.0"
+	},
+	{
+		"name": "Visaginas",
+		"regionCode": "59.0"
+	},
+	{
+		"name": "Zarasai",
+		"regionCode": "60.0"
+	}
+]

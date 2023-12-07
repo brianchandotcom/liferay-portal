@@ -1,0 +1,46 @@
+[
+	{
+		"name": "Aragac̣otn",
+		"regionCode": "AG"
+	},
+	{
+		"name": "Ararat",
+		"regionCode": "AR"
+	},
+	{
+		"name": "Armavir",
+		"regionCode": "AV"
+	},
+	{
+		"name": "Erevan",
+		"regionCode": "ER"
+	},
+	{
+		"name": "Geġark'unik'",
+		"regionCode": "GR"
+	},
+	{
+		"name": "Kotayk'",
+		"regionCode": "KT"
+	},
+	{
+		"name": "Loṙi",
+		"regionCode": "LO"
+	},
+	{
+		"name": "Širak",
+		"regionCode": "SH"
+	},
+	{
+		"name": "Syunik'",
+		"regionCode": "SU"
+	},
+	{
+		"name": "Tavuš",
+		"regionCode": "TV"
+	},
+	{
+		"name": "Vayoć Jor",
+		"regionCode": "VD"
+	}
+]

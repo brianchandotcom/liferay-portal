@@ -1,0 +1,50 @@
+[
+	{
+		"name": "Berat",
+		"regionCode": "1.0"
+	},
+	{
+		"name": "Dibër",
+		"regionCode": "9.0"
+	},
+	{
+		"name": "Durrës",
+		"regionCode": "2.0"
+	},
+	{
+		"name": "Elbasan",
+		"regionCode": "3.0"
+	},
+	{
+		"name": "Fier",
+		"regionCode": "4.0"
+	},
+	{
+		"name": "Gjirokastër",
+		"regionCode": "5.0"
+	},
+	{
+		"name": "Korçë",
+		"regionCode": "6.0"
+	},
+	{
+		"name": "Kukës",
+		"regionCode": "7.0"
+	},
+	{
+		"name": "Lezhë",
+		"regionCode": "8.0"
+	},
+	{
+		"name": "Shkodër",
+		"regionCode": "10.0"
+	},
+	{
+		"name": "Tiranë",
+		"regionCode": "11.0"
+	},
+	{
+		"name": "Vlorë",
+		"regionCode": "12.0"
+	}
+]

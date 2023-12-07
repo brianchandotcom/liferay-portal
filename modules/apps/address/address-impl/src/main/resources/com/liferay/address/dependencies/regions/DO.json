@@ -1,0 +1,170 @@
+[
+	{
+		"name": "Azua",
+		"regionCode": "2.0"
+	},
+	{
+		"name": "Baoruco",
+		"regionCode": "3.0"
+	},
+	{
+		"name": "Barahona",
+		"regionCode": "4.0"
+	},
+	{
+		"name": "Cibao Nordeste",
+		"regionCode": "33.0"
+	},
+	{
+		"name": "Cibao Noroeste",
+		"regionCode": "34.0"
+	},
+	{
+		"name": "Cibao Norte",
+		"regionCode": "35.0"
+	},
+	{
+		"name": "Cibao Sur",
+		"regionCode": "36.0"
+	},
+	{
+		"name": "Dajabón",
+		"regionCode": "5.0"
+	},
+	{
+		"name": "Distrito Nacional (Santo Domingo)",
+		"regionCode": "1.0"
+	},
+	{
+		"name": "Duarte",
+		"regionCode": "6.0"
+	},
+	{
+		"name": "El Seibo",
+		"regionCode": "8.0"
+	},
+	{
+		"name": "El Valle",
+		"regionCode": "37.0"
+	},
+	{
+		"name": "Elías Piña",
+		"regionCode": "7.0"
+	},
+	{
+		"name": "Enriquillo",
+		"regionCode": "38.0"
+	},
+	{
+		"name": "Espaillat",
+		"regionCode": "9.0"
+	},
+	{
+		"name": "Hato Mayor",
+		"regionCode": "30.0"
+	},
+	{
+		"name": "Hermanas Mirabal",
+		"regionCode": "19.0"
+	},
+	{
+		"name": "Higuamo",
+		"regionCode": "39.0"
+	},
+	{
+		"name": "Independencia",
+		"regionCode": "10.0"
+	},
+	{
+		"name": "La Altagracia",
+		"regionCode": "11.0"
+	},
+	{
+		"name": "La Romana",
+		"regionCode": "12.0"
+	},
+	{
+		"name": "La Vega",
+		"regionCode": "13.0"
+	},
+	{
+		"name": "María Trinidad Sánchez",
+		"regionCode": "14.0"
+	},
+	{
+		"name": "Monseñor Nouel",
+		"regionCode": "28.0"
+	},
+	{
+		"name": "Monte Cristi",
+		"regionCode": "15.0"
+	},
+	{
+		"name": "Monte Plata",
+		"regionCode": "29.0"
+	},
+	{
+		"name": "Ozama",
+		"regionCode": "40.0"
+	},
+	{
+		"name": "Pedernales",
+		"regionCode": "16.0"
+	},
+	{
+		"name": "Peravia",
+		"regionCode": "17.0"
+	},
+	{
+		"name": "Puerto Plata",
+		"regionCode": "18.0"
+	},
+	{
+		"name": "Samaná",
+		"regionCode": "20.0"
+	},
+	{
+		"name": "San Cristóbal",
+		"regionCode": "21.0"
+	},
+	{
+		"name": "San José de Ocoa",
+		"regionCode": "31.0"
+	},
+	{
+		"name": "San Juan",
+		"regionCode": "22.0"
+	},
+	{
+		"name": "San Pedro de Macorís",
+		"regionCode": "23.0"
+	},
+	{
+		"name": "Sánchez Ramírez",
+		"regionCode": "24.0"
+	},
+	{
+		"name": "Santiago",
+		"regionCode": "25.0"
+	},
+	{
+		"name": "Santiago Rodríguez",
+		"regionCode": "26.0"
+	},
+	{
+		"name": "Santo Domingo",
+		"regionCode": "32.0"
+	},
+	{
+		"name": "Valdesia",
+		"regionCode": "41.0"
+	},
+	{
+		"name": "Valverde",
+		"regionCode": "27.0"
+	},
+	{
+		"name": "Yuma",
+		"regionCode": "42.0"
+	}
+]

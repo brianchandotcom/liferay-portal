@@ -1,0 +1,34 @@
+[
+	{
+		"name": "Funafuti",
+		"regionCode": "FUN"
+	},
+	{
+		"name": "Nanumaga",
+		"regionCode": "NMG"
+	},
+	{
+		"name": "Nanumea",
+		"regionCode": "NMA"
+	},
+	{
+		"name": "Niutao",
+		"regionCode": "NIT"
+	},
+	{
+		"name": "Nui",
+		"regionCode": "NUI"
+	},
+	{
+		"name": "Nukufetau",
+		"regionCode": "NKF"
+	},
+	{
+		"name": "Nukulaelae",
+		"regionCode": "NKL"
+	},
+	{
+		"name": "Vaitupu",
+		"regionCode": "VAI"
+	}
+]

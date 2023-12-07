@@ -1,0 +1,42 @@
+[
+	{
+		"name": "Central Equatoria",
+		"regionCode": "EC"
+	},
+	{
+		"name": "Eastern Equatoria",
+		"regionCode": "EE"
+	},
+	{
+		"name": "Jonglei",
+		"regionCode": "JG"
+	},
+	{
+		"name": "Lakes",
+		"regionCode": "LK"
+	},
+	{
+		"name": "Northern Bahr el Ghazal",
+		"regionCode": "BN"
+	},
+	{
+		"name": "Unity",
+		"regionCode": "UY"
+	},
+	{
+		"name": "Upper Nile",
+		"regionCode": "NU"
+	},
+	{
+		"name": "Warrap",
+		"regionCode": "WR"
+	},
+	{
+		"name": "Western Bahr el Ghazal",
+		"regionCode": "BW"
+	},
+	{
+		"name": "Western Equatoria",
+		"regionCode": "EW"
+	}
+]

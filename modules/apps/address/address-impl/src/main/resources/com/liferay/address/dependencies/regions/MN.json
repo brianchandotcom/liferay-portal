@@ -1,0 +1,90 @@
+[
+	{
+		"name": "Arhangay",
+		"regionCode": "73.0"
+	},
+	{
+		"name": "Bayan-Ölgiy",
+		"regionCode": "71.0"
+	},
+	{
+		"name": "Bayanhongor",
+		"regionCode": "69.0"
+	},
+	{
+		"name": "Bulgan",
+		"regionCode": "67.0"
+	},
+	{
+		"name": "Darhan uul",
+		"regionCode": "37.0"
+	},
+	{
+		"name": "Dornod",
+		"regionCode": "61.0"
+	},
+	{
+		"name": "Dornogovĭ",
+		"regionCode": "63.0"
+	},
+	{
+		"name": "Dundgovĭ",
+		"regionCode": "59.0"
+	},
+	{
+		"name": "Dzavhan",
+		"regionCode": "57.0"
+	},
+	{
+		"name": "Govĭ-Altay",
+		"regionCode": "65.0"
+	},
+	{
+		"name": "Govĭ-Sümber",
+		"regionCode": "64.0"
+	},
+	{
+		"name": "Hentiy",
+		"regionCode": "39.0"
+	},
+	{
+		"name": "Hovd",
+		"regionCode": "43.0"
+	},
+	{
+		"name": "Hövsgöl",
+		"regionCode": "41.0"
+	},
+	{
+		"name": "Ömnögovĭ",
+		"regionCode": "53.0"
+	},
+	{
+		"name": "Orhon",
+		"regionCode": "35.0"
+	},
+	{
+		"name": "Övörhangay",
+		"regionCode": "55.0"
+	},
+	{
+		"name": "Selenge",
+		"regionCode": "49.0"
+	},
+	{
+		"name": "Sühbaatar",
+		"regionCode": "51.0"
+	},
+	{
+		"name": "Töv",
+		"regionCode": "47.0"
+	},
+	{
+		"name": "Ulaanbaatar",
+		"regionCode": "1.0"
+	},
+	{
+		"name": "Uvs",
+		"regionCode": "46.0"
+	}
+]

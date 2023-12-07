@@ -1,0 +1,30 @@
+[
+	{
+		"name": "Bresckaja voblasć",
+		"regionCode": "BR"
+	},
+	{
+		"name": "Homieĺskaja voblasć",
+		"regionCode": "HO"
+	},
+	{
+		"name": "Horad Minsk",
+		"regionCode": "HM"
+	},
+	{
+		"name": "Hrodzyenskaya voblasts'",
+		"regionCode": "HR"
+	},
+	{
+		"name": "Mahilioŭskaja voblasć",
+		"regionCode": "MA"
+	},
+	{
+		"name": "Minskaja voblasć",
+		"regionCode": "MI"
+	},
+	{
+		"name": "Viciebskaja voblasć",
+		"regionCode": "VI"
+	}
+]

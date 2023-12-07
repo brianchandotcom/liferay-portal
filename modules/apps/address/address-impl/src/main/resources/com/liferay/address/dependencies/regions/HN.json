@@ -1,0 +1,74 @@
+[
+	{
+		"name": "Atlántida",
+		"regionCode": "AT"
+	},
+	{
+		"name": "Choluteca",
+		"regionCode": "CH"
+	},
+	{
+		"name": "Colón",
+		"regionCode": "CL"
+	},
+	{
+		"name": "Comayagua",
+		"regionCode": "CM"
+	},
+	{
+		"name": "Copán",
+		"regionCode": "CP"
+	},
+	{
+		"name": "Cortés",
+		"regionCode": "CR"
+	},
+	{
+		"name": "El Paraíso",
+		"regionCode": "EP"
+	},
+	{
+		"name": "Francisco Morazán",
+		"regionCode": "FM"
+	},
+	{
+		"name": "Gracias a Dios",
+		"regionCode": "GD"
+	},
+	{
+		"name": "Intibucá",
+		"regionCode": "IN"
+	},
+	{
+		"name": "Islas de la Bahía",
+		"regionCode": "IB"
+	},
+	{
+		"name": "La Paz",
+		"regionCode": "LP"
+	},
+	{
+		"name": "Lempira",
+		"regionCode": "LE"
+	},
+	{
+		"name": "Ocotepeque",
+		"regionCode": "OC"
+	},
+	{
+		"name": "Olancho",
+		"regionCode": "OL"
+	},
+	{
+		"name": "Santa Bárbara",
+		"regionCode": "SB"
+	},
+	{
+		"name": "Valle",
+		"regionCode": "VA"
+	},
+	{
+		"name": "Yoro",
+		"regionCode": "YO"
+	}
+]

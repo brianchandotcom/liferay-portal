@@ -1,38 +1,38 @@
 [
 	{
 		"name": "Burgenland",
-		"regionCode": 1.0
+		"regionCode": "1.0"
 	},
 	{
 		"name": "Kärnten",
-		"regionCode": 2.0
+		"regionCode": "2.0"
 	},
 	{
 		"name": "Niederösterreich",
-		"regionCode": 3.0
+		"regionCode": "3.0"
 	},
 	{
 		"name": "Oberösterreich",
-		"regionCode": 4.0
+		"regionCode": "4.0"
 	},
 	{
 		"name": "Salzburg",
-		"regionCode": 5.0
+		"regionCode": "5.0"
 	},
 	{
 		"name": "Steiermark",
-		"regionCode": 6.0
+		"regionCode": "6.0"
 	},
 	{
 		"name": "Tirol",
-		"regionCode": 7.0
-	},
-	{
-		"name": "Vienna",
-		"regionCode": 9.0
+		"regionCode": "7.0"
 	},
 	{
 		"name": "Vorarlberg",
-		"regionCode": 8.0
+		"regionCode": "8.0"
+	},
+	{
+		"name": "Wien",
+		"regionCode": "9.0"
 	}
 ]

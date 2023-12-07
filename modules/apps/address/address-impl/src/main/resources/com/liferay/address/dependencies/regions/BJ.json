@@ -1,0 +1,50 @@
+[
+	{
+		"name": "Alibori",
+		"regionCode": "AL"
+	},
+	{
+		"name": "Atacora",
+		"regionCode": "AK"
+	},
+	{
+		"name": "Atlantique",
+		"regionCode": "AQ"
+	},
+	{
+		"name": "Borgou",
+		"regionCode": "BO"
+	},
+	{
+		"name": "Collines",
+		"regionCode": "CO"
+	},
+	{
+		"name": "Couffo",
+		"regionCode": "KO"
+	},
+	{
+		"name": "Donga",
+		"regionCode": "DO"
+	},
+	{
+		"name": "Littoral",
+		"regionCode": "LI"
+	},
+	{
+		"name": "Mono",
+		"regionCode": "MO"
+	},
+	{
+		"name": "Ouémé",
+		"regionCode": "OU"
+	},
+	{
+		"name": "Plateau",
+		"regionCode": "PL"
+	},
+	{
+		"name": "Zou",
+		"regionCode": "ZO"
+	}
+]

@@ -1,0 +1,106 @@
+[
+	{
+		"name": "Amazonas",
+		"regionCode": "AMA"
+	},
+	{
+		"name": "Ancash",
+		"regionCode": "ANC"
+	},
+	{
+		"name": "Apurímac",
+		"regionCode": "APU"
+	},
+	{
+		"name": "Arequipa",
+		"regionCode": "ARE"
+	},
+	{
+		"name": "Ayacucho",
+		"regionCode": "AYA"
+	},
+	{
+		"name": "Ica",
+		"regionCode": "ICA"
+	},
+	{
+		"name": "Junín",
+		"regionCode": "JUN"
+	},
+	{
+		"name": "El Callao",
+		"regionCode": "CAL"
+	},
+	{
+		"name": "Cusco",
+		"regionCode": "CUS"
+	},
+	{
+		"name": "La Libertad",
+		"regionCode": "LAL"
+	},
+	{
+		"name": "Lambayeque",
+		"regionCode": "LAM"
+	},
+	{
+		"name": "Lima",
+		"regionCode": "LIM"
+	},
+	{
+		"name": "Municipalidad Metropolitana de Lima",
+		"regionCode": "LMA"
+	},
+	{
+		"name": "Loreto",
+		"regionCode": "LOR"
+	},
+	{
+		"name": "Madre de Dios",
+		"regionCode": "MDD"
+	},
+	{
+		"name": "Moquegua",
+		"regionCode": "MOQ"
+	},
+	{
+		"name": "Pasco",
+		"regionCode": "PAS"
+	},
+	{
+		"name": "Piura",
+		"regionCode": "PIU"
+	},
+	{
+		"name": "Puno",
+		"regionCode": "PUN"
+	},
+	{
+		"name": "Cajamarca",
+		"regionCode": "CAJ"
+	},
+	{
+		"name": "San Martín",
+		"regionCode": "SAM"
+	},
+	{
+		"name": "Tacna",
+		"regionCode": "TAC"
+	},
+	{
+		"name": "Tumbes",
+		"regionCode": "TUM"
+	},
+	{
+		"name": "Ucayali",
+		"regionCode": "UCA"
+	},
+	{
+		"name": "Huancavelica",
+		"regionCode": "HUV"
+	},
+	{
+		"name": "Huánuco",
+		"regionCode": "HUC"
+	}
+]

@@ -1,10 +1,14 @@
 [
 	{
-		"name": "Bonaire",
-		"regionCode": "BQ1"
+		"name": "Aruba",
+		"regionCode": "AW"
 	},
 	{
-		"name": "Curacao",
+		"name": "Bonaire",
+		"regionCode": "BO"
+	},
+	{
+		"name": "Curaçao",
 		"regionCode": "CW"
 	},
 	{
@@ -16,7 +20,7 @@
 		"regionCode": "FL"
 	},
 	{
-		"name": "Fryslan",
+		"name": "Fryslân",
 		"regionCode": "FR"
 	},
 	{
@@ -45,11 +49,11 @@
 	},
 	{
 		"name": "Saba",
-		"regionCode": "BQ2"
+		"regionCode": "SA"
 	},
 	{
 		"name": "Sint Eustatuis",
-		"regionCode": "BQ3"
+		"regionCode": "SE"
 	},
 	{
 		"name": "Utrecht",

@@ -1,0 +1,34 @@
+[
+	{
+		"name": "Banskobystrický kraj",
+		"regionCode": "BC"
+	},
+	{
+		"name": "Bratislavský kraj",
+		"regionCode": "BL"
+	},
+	{
+		"name": "Košický kraj",
+		"regionCode": "KI"
+	},
+	{
+		"name": "Nitriansky kraj",
+		"regionCode": "NI"
+	},
+	{
+		"name": "Prešovský kraj",
+		"regionCode": "PV"
+	},
+	{
+		"name": "Trenčiansky kraj",
+		"regionCode": "TC"
+	},
+	{
+		"name": "Trnavský kraj",
+		"regionCode": "TA"
+	},
+	{
+		"name": "Žilinský kraj",
+		"regionCode": "ZI"
+	}
+]

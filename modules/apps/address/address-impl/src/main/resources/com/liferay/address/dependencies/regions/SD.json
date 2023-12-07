@@ -1,0 +1,74 @@
+[
+	{
+		"name": "Al Baḩr al Aḩmar",
+		"regionCode": "RS"
+	},
+	{
+		"name": "Al Jazīrah",
+		"regionCode": "GZ"
+	},
+	{
+		"name": "Al Kharţūm",
+		"regionCode": "KH"
+	},
+	{
+		"name": "Al Qaḑārif",
+		"regionCode": "GD"
+	},
+	{
+		"name": "An Nīl al Abyaḑ",
+		"regionCode": "NW"
+	},
+	{
+		"name": "An Nīl al Azraq",
+		"regionCode": "NB"
+	},
+	{
+		"name": "Ash Shamālīyah",
+		"regionCode": "NO"
+	},
+	{
+		"name": "Gharb Dārfūr",
+		"regionCode": "DW"
+	},
+	{
+		"name": "Gharb Kurdufān",
+		"regionCode": "GK"
+	},
+	{
+		"name": "Janūb Dārfūr",
+		"regionCode": "DS"
+	},
+	{
+		"name": "Janūb Kurdufān",
+		"regionCode": "KS"
+	},
+	{
+		"name": "Kassalā",
+		"regionCode": "KA"
+	},
+	{
+		"name": "Nahr an Nīl",
+		"regionCode": "NR"
+	},
+	{
+		"name": "Shamāl Dārfūr",
+		"regionCode": "DN"
+	},
+	{
+		"name": "Shamāl Kurdufān",
+		"regionCode": "KN"
+	},
+	{
+		"name": "Sharq Dārfūr",
+		"regionCode": "DE"
+	},
+	{
+		"name": "Sinnār",
+		"regionCode": "SI"
+	},
+	{
+		"name": "Wasaţ Dārfūr",
+		"regionCode": "DC"
+	}
+]

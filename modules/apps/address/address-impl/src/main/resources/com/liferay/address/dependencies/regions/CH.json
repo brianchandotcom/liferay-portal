@@ -4,16 +4,12 @@
 		"regionCode": "AG"
 	},
 	{
-		"name": "Appenzell Innerhoden",
-		"regionCode": "AI"
-	},
-	{
 		"name": "Appenzell Ausserrhoden",
 		"regionCode": "AR"
 	},
 	{
-		"name": "Bern",
-		"regionCode": "BE"
+		"name": "Appenzell Innerrhoden",
+		"regionCode": "AI"
 	},
 	{
 		"name": "Basel-Landschaft",
@@ -22,6 +18,10 @@
 	{
 		"name": "Basel-Stadt",
 		"regionCode": "BS"
+	},
+	{
+		"name": "Bern",
+		"regionCode": "BE"
 	},
 	{
 		"name": "Freiburg",
@@ -68,12 +68,12 @@
 		"regionCode": "SH"
 	},
 	{
-		"name": "Solothurn",
-		"regionCode": "SO"
-	},
-	{
 		"name": "Schwyz",
 		"regionCode": "SZ"
+	},
+	{
+		"name": "Solothurn",
+		"regionCode": "SO"
 	},
 	{
 		"name": "Thurgau",
@@ -92,7 +92,7 @@
 		"regionCode": "VD"
 	},
 	{
-		"name": "Valais",
+		"name": "Wallis",
 		"regionCode": "VS"
 	},
 	{

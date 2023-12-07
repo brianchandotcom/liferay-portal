@@ -1,0 +1,46 @@
+[
+	{
+		"name": "A'ana",
+		"regionCode": "AA"
+	},
+	{
+		"name": "Aiga-i-le-Tai",
+		"regionCode": "AL"
+	},
+	{
+		"name": "Atua",
+		"regionCode": "AT"
+	},
+	{
+		"name": "Fa'asaleleaga",
+		"regionCode": "FA"
+	},
+	{
+		"name": "Gaga'emauga",
+		"regionCode": "GE"
+	},
+	{
+		"name": "Gagaifomauga",
+		"regionCode": "GI"
+	},
+	{
+		"name": "Palauli",
+		"regionCode": "PA"
+	},
+	{
+		"name": "Satupa'itea",
+		"regionCode": "SA"
+	},
+	{
+		"name": "Tuamasaga",
+		"regionCode": "TU"
+	},
+	{
+		"name": "Va'a-o-Fonoti",
+		"regionCode": "VF"
+	},
+	{
+		"name": "Vaisigano",
+		"regionCode": "VS"
+	}
+]

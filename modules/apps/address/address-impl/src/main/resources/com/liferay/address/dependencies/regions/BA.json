@@ -1,0 +1,14 @@
+[
+	{
+		"name": "Brčko distrikt",
+		"regionCode": "BRC"
+	},
+	{
+		"name": "Federacija Bosne i Hercegovine",
+		"regionCode": "BIH"
+	},
+	{
+		"name": "Republika Srpska",
+		"regionCode": "SRP"
+	}
+]

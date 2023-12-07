@@ -1,0 +1,58 @@
+[
+	{
+		"name": "//Karas",
+		"regionCode": "KA"
+	},
+	{
+		"name": "Erongo",
+		"regionCode": "ER"
+	},
+	{
+		"name": "Hardap",
+		"regionCode": "HA"
+	},
+	{
+		"name": "Kavango East",
+		"regionCode": "KE"
+	},
+	{
+		"name": "Kavango West",
+		"regionCode": "KW"
+	},
+	{
+		"name": "Khomas",
+		"regionCode": "KH"
+	},
+	{
+		"name": "Kunene",
+		"regionCode": "KU"
+	},
+	{
+		"name": "Ohangwena",
+		"regionCode": "OW"
+	},
+	{
+		"name": "Omaheke",
+		"regionCode": "OH"
+	},
+	{
+		"name": "Omusati",
+		"regionCode": "OS"
+	},
+	{
+		"name": "Oshana",
+		"regionCode": "ON"
+	},
+	{
+		"name": "Oshikoto",
+		"regionCode": "OT"
+	},
+	{
+		"name": "Otjozondjupa",
+		"regionCode": "OD"
+	},
+	{
+		"name": "Zambezi",
+		"regionCode": "CA"
+	}
+]

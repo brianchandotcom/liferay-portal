@@ -1,0 +1,26 @@
+[
+	{
+		"name": "Banjul",
+		"regionCode": "B"
+	},
+	{
+		"name": "Central River",
+		"regionCode": "M"
+	},
+	{
+		"name": "Lower River",
+		"regionCode": "L"
+	},
+	{
+		"name": "North Bank",
+		"regionCode": "N"
+	},
+	{
+		"name": "Upper River",
+		"regionCode": "U"
+	},
+	{
+		"name": "Western",
+		"regionCode": "W"
+	}
+]

@@ -1,0 +1,126 @@
+[
+	{
+		"name": "Balaka",
+		"regionCode": "BA"
+	},
+	{
+		"name": "Blantyre",
+		"regionCode": "BL"
+	},
+	{
+		"name": "Central Region",
+		"regionCode": "C"
+	},
+	{
+		"name": "Chikwawa",
+		"regionCode": "CK"
+	},
+	{
+		"name": "Chiradzulu",
+		"regionCode": "CR"
+	},
+	{
+		"name": "Chitipa",
+		"regionCode": "CT"
+	},
+	{
+		"name": "Dedza",
+		"regionCode": "DE"
+	},
+	{
+		"name": "Dowa",
+		"regionCode": "DO"
+	},
+	{
+		"name": "Karonga",
+		"regionCode": "KR"
+	},
+	{
+		"name": "Kasungu",
+		"regionCode": "KS"
+	},
+	{
+		"name": "Likoma",
+		"regionCode": "LK"
+	},
+	{
+		"name": "Lilongwe",
+		"regionCode": "LI"
+	},
+	{
+		"name": "Machinga",
+		"regionCode": "MH"
+	},
+	{
+		"name": "Mangochi",
+		"regionCode": "MG"
+	},
+	{
+		"name": "Mchinji",
+		"regionCode": "MC"
+	},
+	{
+		"name": "Mulanje",
+		"regionCode": "MU"
+	},
+	{
+		"name": "Mwanza",
+		"regionCode": "MW"
+	},
+	{
+		"name": "Mzimba",
+		"regionCode": "MZ"
+	},
+	{
+		"name": "Neno",
+		"regionCode": "NE"
+	},
+	{
+		"name": "Nkhata Bay",
+		"regionCode": "NB"
+	},
+	{
+		"name": "Nkhotakota",
+		"regionCode": "NK"
+	},
+	{
+		"name": "Northern Region",
+		"regionCode": "N"
+	},
+	{
+		"name": "Nsanje",
+		"regionCode": "NS"
+	},
+	{
+		"name": "Ntcheu",
+		"regionCode": "NU"
+	},
+	{
+		"name": "Ntchisi",
+		"regionCode": "NI"
+	},
+	{
+		"name": "Phalombe",
+		"regionCode": "PH"
+	},
+	{
+		"name": "Rumphi",
+		"regionCode": "RU"
+	},
+	{
+		"name": "Salima",
+		"regionCode": "SA"
+	},
+	{
+		"name": "Southern Region",
+		"regionCode": "S"
+	},
+	{
+		"name": "Thyolo",
+		"regionCode": "TH"
+	},
+	{
+		"name": "Zomba",
+		"regionCode": "ZO"
+	}
+]

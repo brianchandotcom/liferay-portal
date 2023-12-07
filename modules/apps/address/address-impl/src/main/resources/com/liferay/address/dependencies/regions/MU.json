@@ -1,0 +1,50 @@
+[
+	{
+		"name": "Agalega Islands",
+		"regionCode": "AG"
+	},
+	{
+		"name": "Black River",
+		"regionCode": "BL"
+	},
+	{
+		"name": "Cargados Carajos Shoals",
+		"regionCode": "CC"
+	},
+	{
+		"name": "Flacq",
+		"regionCode": "FL"
+	},
+	{
+		"name": "Grand Port",
+		"regionCode": "GP"
+	},
+	{
+		"name": "Moka",
+		"regionCode": "MO"
+	},
+	{
+		"name": "Pamplemousses",
+		"regionCode": "PA"
+	},
+	{
+		"name": "Plaines Wilhems",
+		"regionCode": "PW"
+	},
+	{
+		"name": "Port Louis",
+		"regionCode": "PL"
+	},
+	{
+		"name": "Rivière du Rempart",
+		"regionCode": "RR"
+	},
+	{
+		"name": "Rodrigues Island",
+		"regionCode": "RO"
+	},
+	{
+		"name": "Savanne",
+		"regionCode": "SA"
+	}
+]

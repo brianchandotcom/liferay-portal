@@ -1,0 +1,42 @@
+[
+	{
+		"name": "Central",
+		"regionCode": "2.0"
+	},
+	{
+		"name": "Copperbelt",
+		"regionCode": "8.0"
+	},
+	{
+		"name": "Eastern",
+		"regionCode": "3.0"
+	},
+	{
+		"name": "Luapula",
+		"regionCode": "4.0"
+	},
+	{
+		"name": "Lusaka",
+		"regionCode": "9.0"
+	},
+	{
+		"name": "Muchinga",
+		"regionCode": "10.0"
+	},
+	{
+		"name": "North-Western",
+		"regionCode": "6.0"
+	},
+	{
+		"name": "Northern",
+		"regionCode": "5.0"
+	},
+	{
+		"name": "Southern",
+		"regionCode": "7.0"
+	},
+	{
+		"name": "Western",
+		"regionCode": "1.0"
+	}
+]

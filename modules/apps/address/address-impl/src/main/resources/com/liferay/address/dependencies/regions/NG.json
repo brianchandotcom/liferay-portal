@@ -1,0 +1,150 @@
+[
+	{
+		"name": "Abia",
+		"regionCode": "AB"
+	},
+	{
+		"name": "Abuja Federal Capital Territory",
+		"regionCode": "FC"
+	},
+	{
+		"name": "Adamawa",
+		"regionCode": "AD"
+	},
+	{
+		"name": "Akwa Ibom",
+		"regionCode": "AK"
+	},
+	{
+		"name": "Anambra",
+		"regionCode": "AN"
+	},
+	{
+		"name": "Bauchi",
+		"regionCode": "BA"
+	},
+	{
+		"name": "Bayelsa",
+		"regionCode": "BY"
+	},
+	{
+		"name": "Benue",
+		"regionCode": "BE"
+	},
+	{
+		"name": "Borno",
+		"regionCode": "BO"
+	},
+	{
+		"name": "Cross River",
+		"regionCode": "CR"
+	},
+	{
+		"name": "Delta",
+		"regionCode": "DE"
+	},
+	{
+		"name": "Ebonyi",
+		"regionCode": "EB"
+	},
+	{
+		"name": "Edo",
+		"regionCode": "ED"
+	},
+	{
+		"name": "Ekiti",
+		"regionCode": "EK"
+	},
+	{
+		"name": "Enugu",
+		"regionCode": "EN"
+	},
+	{
+		"name": "Gombe",
+		"regionCode": "GO"
+	},
+	{
+		"name": "Imo",
+		"regionCode": "IM"
+	},
+	{
+		"name": "Jigawa",
+		"regionCode": "JI"
+	},
+	{
+		"name": "Kaduna",
+		"regionCode": "KD"
+	},
+	{
+		"name": "Kano",
+		"regionCode": "KN"
+	},
+	{
+		"name": "Katsina",
+		"regionCode": "KT"
+	},
+	{
+		"name": "Kebbi",
+		"regionCode": "KE"
+	},
+	{
+		"name": "Kogi",
+		"regionCode": "KO"
+	},
+	{
+		"name": "Kwara",
+		"regionCode": "KW"
+	},
+	{
+		"name": "Lagos",
+		"regionCode": "LA"
+	},
+	{
+		"name": "Nasarawa",
+		"regionCode": "NA"
+	},
+	{
+		"name": "Niger",
+		"regionCode": "NI"
+	},
+	{
+		"name": "Ogun",
+		"regionCode": "OG"
+	},
+	{
+		"name": "Ondo",
+		"regionCode": "ON"
+	},
+	{
+		"name": "Osun",
+		"regionCode": "OS"
+	},
+	{
+		"name": "Oyo",
+		"regionCode": "OY"
+	},
+	{
+		"name": "Plateau",
+		"regionCode": "PL"
+	},
+	{
+		"name": "Rivers",
+		"regionCode": "RI"
+	},
+	{
+		"name": "Sokoto",
+		"regionCode": "SO"
+	},
+	{
+		"name": "Taraba",
+		"regionCode": "TA"
+	},
+	{
+		"name": "Yobe",
+		"regionCode": "YO"
+	},
+	{
+		"name": "Zamfara",
+		"regionCode": "ZA"
+	}
+]

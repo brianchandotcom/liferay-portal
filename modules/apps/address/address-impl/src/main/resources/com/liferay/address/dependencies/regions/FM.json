@@ -1,0 +1,18 @@
+[
+	{
+		"name": "Chuuk",
+		"regionCode": "TRK"
+	},
+	{
+		"name": "Kosrae",
+		"regionCode": "KSA"
+	},
+	{
+		"name": "Pohnpei",
+		"regionCode": "PNI"
+	},
+	{
+		"name": "Yap",
+		"regionCode": "YAP"
+	}
+]

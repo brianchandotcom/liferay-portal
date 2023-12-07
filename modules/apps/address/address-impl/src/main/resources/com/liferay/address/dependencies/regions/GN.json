@@ -1,0 +1,166 @@
+[
+	{
+		"name": "Beyla",
+		"regionCode": "BE"
+	},
+	{
+		"name": "Boffa",
+		"regionCode": "BF"
+	},
+	{
+		"name": "Boké",
+		"regionCode": "BK"
+	},
+	{
+		"name": "Boké",
+		"regionCode": "B"
+	},
+	{
+		"name": "Conakry",
+		"regionCode": "C"
+	},
+	{
+		"name": "Coyah",
+		"regionCode": "CO"
+	},
+	{
+		"name": "Dabola",
+		"regionCode": "DB"
+	},
+	{
+		"name": "Dalaba",
+		"regionCode": "DL"
+	},
+	{
+		"name": "Dinguiraye",
+		"regionCode": "DI"
+	},
+	{
+		"name": "Dubréka",
+		"regionCode": "DU"
+	},
+	{
+		"name": "Faranah",
+		"regionCode": "FA"
+	},
+	{
+		"name": "Faranah",
+		"regionCode": "F"
+	},
+	{
+		"name": "Forécariah",
+		"regionCode": "FO"
+	},
+	{
+		"name": "Fria",
+		"regionCode": "FR"
+	},
+	{
+		"name": "Gaoual",
+		"regionCode": "GA"
+	},
+	{
+		"name": "Guékédou",
+		"regionCode": "GU"
+	},
+	{
+		"name": "Kankan",
+		"regionCode": "KA"
+	},
+	{
+		"name": "Kankan",
+		"regionCode": "K"
+	},
+	{
+		"name": "Kérouané",
+		"regionCode": "KE"
+	},
+	{
+		"name": "Kindia",
+		"regionCode": "KD"
+	},
+	{
+		"name": "Kindia",
+		"regionCode": "D"
+	},
+	{
+		"name": "Kissidougou",
+		"regionCode": "KS"
+	},
+	{
+		"name": "Koubia",
+		"regionCode": "KB"
+	},
+	{
+		"name": "Koundara",
+		"regionCode": "KN"
+	},
+	{
+		"name": "Kouroussa",
+		"regionCode": "KO"
+	},
+	{
+		"name": "Labé",
+		"regionCode": "LA"
+	},
+	{
+		"name": "Labé",
+		"regionCode": "L"
+	},
+	{
+		"name": "Lélouma",
+		"regionCode": "LE"
+	},
+	{
+		"name": "Lola",
+		"regionCode": "LO"
+	},
+	{
+		"name": "Macenta",
+		"regionCode": "MC"
+	},
+	{
+		"name": "Mali",
+		"regionCode": "ML"
+	},
+	{
+		"name": "Mamou",
+		"regionCode": "MM"
+	},
+	{
+		"name": "Mamou",
+		"regionCode": "M"
+	},
+	{
+		"name": "Mandiana",
+		"regionCode": "MD"
+	},
+	{
+		"name": "Nzérékoré",
+		"regionCode": "NZ"
+	},
+	{
+		"name": "Nzérékoré",
+		"regionCode": "N"
+	},
+	{
+		"name": "Pita",
+		"regionCode": "PI"
+	},
+	{
+		"name": "Siguiri",
+		"regionCode": "SI"
+	},
+	{
+		"name": "Télimélé",
+		"regionCode": "TE"
+	},
+	{
+		"name": "Tougué",
+		"regionCode": "TO"
+	},
+	{
+		"name": "Yomou",
+		"regionCode": "YO"
+	}
+]

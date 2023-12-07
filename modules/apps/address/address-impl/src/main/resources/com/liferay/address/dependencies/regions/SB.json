@@ -1,0 +1,42 @@
+[
+	{
+		"name": "Capital Territory (Honiara)",
+		"regionCode": "CT"
+	},
+	{
+		"name": "Central",
+		"regionCode": "CE"
+	},
+	{
+		"name": "Choiseul",
+		"regionCode": "CH"
+	},
+	{
+		"name": "Guadalcanal",
+		"regionCode": "GU"
+	},
+	{
+		"name": "Isabel",
+		"regionCode": "IS"
+	},
+	{
+		"name": "Makira-Ulawa",
+		"regionCode": "MK"
+	},
+	{
+		"name": "Malaita",
+		"regionCode": "ML"
+	},
+	{
+		"name": "Rennell and Bellona",
+		"regionCode": "RB"
+	},
+	{
+		"name": "Temotu",
+		"regionCode": "TE"
+	},
+	{
+		"name": "Western",
+		"regionCode": "WE"
+	}
+]

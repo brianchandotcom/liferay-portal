@@ -1,0 +1,38 @@
+[
+	{
+		"name": "Chuquisaca",
+		"regionCode": "H"
+	},
+	{
+		"name": "Cochabamba",
+		"regionCode": "C"
+	},
+	{
+		"name": "El Beni",
+		"regionCode": "B"
+	},
+	{
+		"name": "La Paz",
+		"regionCode": "L"
+	},
+	{
+		"name": "Oruro",
+		"regionCode": "O"
+	},
+	{
+		"name": "Pando",
+		"regionCode": "N"
+	},
+	{
+		"name": "Potosí",
+		"regionCode": "P"
+	},
+	{
+		"name": "Santa Cruz",
+		"regionCode": "S"
+	},
+	{
+		"name": "Tarija",
+		"regionCode": "T"
+	}
+]

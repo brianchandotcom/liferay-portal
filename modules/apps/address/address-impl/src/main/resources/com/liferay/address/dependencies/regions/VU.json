@@ -1,0 +1,26 @@
+[
+	{
+		"name": "Malampa",
+		"regionCode": "MAP"
+	},
+	{
+		"name": "Pénama",
+		"regionCode": "PAM"
+	},
+	{
+		"name": "Sanma",
+		"regionCode": "SAM"
+	},
+	{
+		"name": "Shéfa",
+		"regionCode": "SEE"
+	},
+	{
+		"name": "Taféa",
+		"regionCode": "TAE"
+	},
+	{
+		"name": "Torba",
+		"regionCode": "TOB"
+	}
+]

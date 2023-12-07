@@ -1,0 +1,22 @@
+[
+	{
+		"name": "'Eua",
+		"regionCode": "1.0"
+	},
+	{
+		"name": "Ha'apai",
+		"regionCode": "2.0"
+	},
+	{
+		"name": "Niuas",
+		"regionCode": "3.0"
+	},
+	{
+		"name": "Tongatapu",
+		"regionCode": "4.0"
+	},
+	{
+		"name": "Vava'u",
+		"regionCode": "5.0"
+	}
+]

@@ -1,0 +1,62 @@
+[
+	{
+		"name": "Arima",
+		"regionCode": "ARI"
+	},
+	{
+		"name": "Chaguanas",
+		"regionCode": "CHA"
+	},
+	{
+		"name": "Couva-Tabaquite-Talparo",
+		"regionCode": "CTT"
+	},
+	{
+		"name": "Diego Martin",
+		"regionCode": "DMN"
+	},
+	{
+		"name": "Mayaro-Rio Claro",
+		"regionCode": "MRC"
+	},
+	{
+		"name": "Penal-Debe",
+		"regionCode": "PED"
+	},
+	{
+		"name": "Point Fortin",
+		"regionCode": "PTF"
+	},
+	{
+		"name": "Port of Spain",
+		"regionCode": "POS"
+	},
+	{
+		"name": "Princes Town",
+		"regionCode": "PRT"
+	},
+	{
+		"name": "San Fernando",
+		"regionCode": "SFO"
+	},
+	{
+		"name": "San Juan-Laventille",
+		"regionCode": "SJL"
+	},
+	{
+		"name": "Sangre Grande",
+		"regionCode": "SGE"
+	},
+	{
+		"name": "Siparia",
+		"regionCode": "SIP"
+	},
+	{
+		"name": "Tobago",
+		"regionCode": "TOB"
+	},
+	{
+		"name": "Tunapuna-Piarco",
+		"regionCode": "TUP"
+	}
+]

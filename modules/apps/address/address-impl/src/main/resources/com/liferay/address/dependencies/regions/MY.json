@@ -1,0 +1,66 @@
+[
+	{
+		"name": "Johor",
+		"regionCode": "1.0"
+	},
+	{
+		"name": "Kedah",
+		"regionCode": "2.0"
+	},
+	{
+		"name": "Kelantan",
+		"regionCode": "3.0"
+	},
+	{
+		"name": "Melaka",
+		"regionCode": "4.0"
+	},
+	{
+		"name": "Negeri Sembilan",
+		"regionCode": "5.0"
+	},
+	{
+		"name": "Pahang",
+		"regionCode": "6.0"
+	},
+	{
+		"name": "Perak",
+		"regionCode": "8.0"
+	},
+	{
+		"name": "Perlis",
+		"regionCode": "9.0"
+	},
+	{
+		"name": "Pulau Pinang",
+		"regionCode": "7.0"
+	},
+	{
+		"name": "Sabah",
+		"regionCode": "12.0"
+	},
+	{
+		"name": "Sarawak",
+		"regionCode": "13.0"
+	},
+	{
+		"name": "Selangor",
+		"regionCode": "10.0"
+	},
+	{
+		"name": "Terengganu",
+		"regionCode": "11.0"
+	},
+	{
+		"name": "Wilayah Persekutuan Kuala Lumpur",
+		"regionCode": "14.0"
+	},
+	{
+		"name": "Wilayah Persekutuan Labuan",
+		"regionCode": "15.0"
+	},
+	{
+		"name": "Wilayah Persekutuan Putrajaya",
+		"regionCode": "16.0"
+	}
+]

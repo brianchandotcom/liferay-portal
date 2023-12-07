@@ -1,0 +1,90 @@
+[
+	{
+		"name": "Al Buţnān",
+		"regionCode": "BU"
+	},
+	{
+		"name": "Al Jabal al Akhḑar",
+		"regionCode": "JA"
+	},
+	{
+		"name": "Al Jabal al Gharbī",
+		"regionCode": "JG"
+	},
+	{
+		"name": "Al Jafārah",
+		"regionCode": "JI"
+	},
+	{
+		"name": "Al Jufrah",
+		"regionCode": "JU"
+	},
+	{
+		"name": "Al Kufrah",
+		"regionCode": "KF"
+	},
+	{
+		"name": "Al Marj",
+		"regionCode": "MJ"
+	},
+	{
+		"name": "Al Marqab",
+		"regionCode": "MB"
+	},
+	{
+		"name": "Al Wāḩāt",
+		"regionCode": "WA"
+	},
+	{
+		"name": "An Nuqāţ al Khams",
+		"regionCode": "NQ"
+	},
+	{
+		"name": "Az Zāwiyah",
+		"regionCode": "ZA"
+	},
+	{
+		"name": "Banghāzī",
+		"regionCode": "BA"
+	},
+	{
+		"name": "Darnah",
+		"regionCode": "DR"
+	},
+	{
+		"name": "Ghāt",
+		"regionCode": "GT"
+	},
+	{
+		"name": "Mişrātah",
+		"regionCode": "MI"
+	},
+	{
+		"name": "Murzuq",
+		"regionCode": "MQ"
+	},
+	{
+		"name": "Nālūt",
+		"regionCode": "NL"
+	},
+	{
+		"name": "Sabhā",
+		"regionCode": "SB"
+	},
+	{
+		"name": "Surt",
+		"regionCode": "SR"
+	},
+	{
+		"name": "Ţarābulus",
+		"regionCode": "TB"
+	},
+	{
+		"name": "Wādī al Ḩayāt",
+		"regionCode": "WD"
+	},
+	{
+		"name": "Wādī ash Shāţi’",
+		"regionCode": "WS"
+	}
+]

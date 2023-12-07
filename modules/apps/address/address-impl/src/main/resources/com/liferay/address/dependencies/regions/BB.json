@@ -1,0 +1,46 @@
+[
+	{
+		"name": "Christ Church",
+		"regionCode": "1.0"
+	},
+	{
+		"name": "Saint Andrew",
+		"regionCode": "2.0"
+	},
+	{
+		"name": "Saint George",
+		"regionCode": "3.0"
+	},
+	{
+		"name": "Saint James",
+		"regionCode": "4.0"
+	},
+	{
+		"name": "Saint John",
+		"regionCode": "5.0"
+	},
+	{
+		"name": "Saint Joseph",
+		"regionCode": "6.0"
+	},
+	{
+		"name": "Saint Lucy",
+		"regionCode": "7.0"
+	},
+	{
+		"name": "Saint Michael",
+		"regionCode": "8.0"
+	},
+	{
+		"name": "Saint Peter",
+		"regionCode": "9.0"
+	},
+	{
+		"name": "Saint Philip",
+		"regionCode": "10.0"
+	},
+	{
+		"name": "Saint Thomas",
+		"regionCode": "11.0"
+	}
+]

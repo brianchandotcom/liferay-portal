@@ -1,0 +1,78 @@
+[
+	{
+		"name": "Al Anbār",
+		"regionCode": "AN"
+	},
+	{
+		"name": "Al Başrah",
+		"regionCode": "BA"
+	},
+	{
+		"name": "Al Muthanná",
+		"regionCode": "MU"
+	},
+	{
+		"name": "Al Qādisīyah",
+		"regionCode": "QA"
+	},
+	{
+		"name": "An Najaf",
+		"regionCode": "NA"
+	},
+	{
+		"name": "Arbīl",
+		"regionCode": "AR"
+	},
+	{
+		"name": "As Sulaymānīyah",
+		"regionCode": "SU"
+	},
+	{
+		"name": "Bābil",
+		"regionCode": "BB"
+	},
+	{
+		"name": "Baghdād",
+		"regionCode": "BG"
+	},
+	{
+		"name": "Dahūk",
+		"regionCode": "DA"
+	},
+	{
+		"name": "Dhī Qār",
+		"regionCode": "DQ"
+	},
+	{
+		"name": "Diyālá",
+		"regionCode": "DI"
+	},
+	{
+		"name": "Iqlīm Kūrdistān",
+		"regionCode": "KR"
+	},
+	{
+		"name": "Karbalā’",
+		"regionCode": "KA"
+	},
+	{
+		"name": "Kirkūk",
+		"regionCode": "KI"
+	},
+	{
+		"name": "Maysān",
+		"regionCode": "MA"
+	},
+	{
+		"name": "Nīnawá",
+		"regionCode": "NI"
+	},
+	{
+		"name": "Şalāḩ ad Dīn",
+		"regionCode": "SD"
+	},
+	{
+		"name": "Wāsiţ",
+		"regionCode": "WA"
+	}
+]

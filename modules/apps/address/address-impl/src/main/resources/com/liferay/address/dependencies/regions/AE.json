@@ -1,0 +1,30 @@
+[
+	{
+		"name": "‘Ajmān",
+		"regionCode": "AJ"
+	},
+	{
+		"name": "Abū Z̧aby",
+		"regionCode": "AZ"
+	},
+	{
+		"name": "Al Fujayrah",
+		"regionCode": "FU"
+	},
+	{
+		"name": "Ash Shāriqah",
+		"regionCode": "SH"
+	},
+	{
+		"name": "Dubayy",
+		"regionCode": "DU"
+	},
+	{
+		"name": "Ra’s al Khaymah",
+		"regionCode": "RK"
+	},
+	{
+		"name": "Umm al Qaywayn",
+		"regionCode": "UQ"
+	}
+]

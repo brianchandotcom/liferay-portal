@@ -1,0 +1,22 @@
+[
+	{
+		"name": "Eastern",
+		"regionCode": "E"
+	},
+	{
+		"name": "North Western",
+		"regionCode": "NW"
+	},
+	{
+		"name": "Northern",
+		"regionCode": "N"
+	},
+	{
+		"name": "Southern",
+		"regionCode": "S"
+	},
+	{
+		"name": "Western Area (Freetown)",
+		"regionCode": "W"
+	}
+]

@@ -1,0 +1,98 @@
+[
+	{
+		"name": "Azuay",
+		"regionCode": "A"
+	},
+	{
+		"name": "Bolívar",
+		"regionCode": "B"
+	},
+	{
+		"name": "Cañar",
+		"regionCode": "F"
+	},
+	{
+		"name": "Carchi",
+		"regionCode": "C"
+	},
+	{
+		"name": "Chimborazo",
+		"regionCode": "H"
+	},
+	{
+		"name": "Cotopaxi",
+		"regionCode": "X"
+	},
+	{
+		"name": "El Oro",
+		"regionCode": "O"
+	},
+	{
+		"name": "Esmeraldas",
+		"regionCode": "E"
+	},
+	{
+		"name": "Galápagos",
+		"regionCode": "W"
+	},
+	{
+		"name": "Guayas",
+		"regionCode": "G"
+	},
+	{
+		"name": "Imbabura",
+		"regionCode": "I"
+	},
+	{
+		"name": "Loja",
+		"regionCode": "L"
+	},
+	{
+		"name": "Los Ríos",
+		"regionCode": "R"
+	},
+	{
+		"name": "Manabí",
+		"regionCode": "M"
+	},
+	{
+		"name": "Morona Santiago",
+		"regionCode": "S"
+	},
+	{
+		"name": "Napo",
+		"regionCode": "N"
+	},
+	{
+		"name": "Orellana",
+		"regionCode": "D"
+	},
+	{
+		"name": "Pastaza",
+		"regionCode": "Y"
+	},
+	{
+		"name": "Pichincha",
+		"regionCode": "P"
+	},
+	{
+		"name": "Santa Elena",
+		"regionCode": "SE"
+	},
+	{
+		"name": "Santo Domingo de los Tsáchilas",
+		"regionCode": "SD"
+	},
+	{
+		"name": "Sucumbíos",
+		"regionCode": "U"
+	},
+	{
+		"name": "Tungurahua",
+		"regionCode": "T"
+	},
+	{
+		"name": "Zamora Chinchipe",
+		"regionCode": "Z"
+	}
+]

@@ -1,0 +1,350 @@
+[
+	{
+		"name": "Agadir-Ida-Ou-Tanane",
+		"regionCode": "AGD"
+	},
+	{
+		"name": "Al Haouz",
+		"regionCode": "HAO"
+	},
+	{
+		"name": "Al Hoceïma",
+		"regionCode": "HOC"
+	},
+	{
+		"name": "Aousserd (EH)",
+		"regionCode": "AOU"
+	},
+	{
+		"name": "Assa-Zag (EH-partial)",
+		"regionCode": "ASZ"
+	},
+	{
+		"name": "Azilal",
+		"regionCode": "AZI"
+	},
+	{
+		"name": "Béni Mellal",
+		"regionCode": "BEM"
+	},
+	{
+		"name": "Béni Mellal-Khénifra",
+		"regionCode": "5.0"
+	},
+	{
+		"name": "Benslimane",
+		"regionCode": "BES"
+	},
+	{
+		"name": "Berkane",
+		"regionCode": "BER"
+	},
+	{
+		"name": "Berrechid",
+		"regionCode": "BRR"
+	},
+	{
+		"name": "Boujdour (EH)",
+		"regionCode": "BOD"
+	},
+	{
+		"name": "Boulemane",
+		"regionCode": "BOM"
+	},
+	{
+		"name": "Casablanca",
+		"regionCode": "CAS"
+	},
+	{
+		"name": "Casablanca-Settat",
+		"regionCode": "6.0"
+	},
+	{
+		"name": "Chefchaouen",
+		"regionCode": "CHE"
+	},
+	{
+		"name": "Chichaoua",
+		"regionCode": "CHI"
+	},
+	{
+		"name": "Chtouka-Ait Baha",
+		"regionCode": "CHT"
+	},
+	{
+		"name": "Dakhla-Oued Ed-Dahab (EH)",
+		"regionCode": "12.0"
+	},
+	{
+		"name": "Drâa-Tafilalet",
+		"regionCode": "8.0"
+	},
+	{
+		"name": "Driouch",
+		"regionCode": "DRI"
+	},
+	{
+		"name": "El Hajeb",
+		"regionCode": "HAJ"
+	},
+	{
+		"name": "El Jadida",
+		"regionCode": "JDI"
+	},
+	{
+		"name": "El Kelâa des Sraghna",
+		"regionCode": "KES"
+	},
+	{
+		"name": "Errachidia",
+		"regionCode": "ERR"
+	},
+	{
+		"name": "Es-Semara (EH-partial)",
+		"regionCode": "ESM"
+	},
+	{
+		"name": "Essaouira",
+		"regionCode": "ESI"
+	},
+	{
+		"name": "Fahs-Anjra",
+		"regionCode": "FAH"
+	},
+	{
+		"name": "Fès",
+		"regionCode": "FES"
+	},
+	{
+		"name": "Fès-Meknès",
+		"regionCode": "3.0"
+	},
+	{
+		"name": "Figuig",
+		"regionCode": "FIG"
+	},
+	{
+		"name": "Fquih Ben Salah",
+		"regionCode": "FQH"
+	},
+	{
+		"name": "Guelmim",
+		"regionCode": "GUE"
+	},
+	{
+		"name": "Guelmim-Oued Noun (EH-partial)",
+		"regionCode": "10.0"
+	},
+	{
+		"name": "Guercif",
+		"regionCode": "GUF"
+	},
+	{
+		"name": "Ifrane",
+		"regionCode": "IFR"
+	},
+	{
+		"name": "Inezgane-Ait Melloul",
+		"regionCode": "INE"
+	},
+	{
+		"name": "Jerada",
+		"regionCode": "JRA"
+	},
+	{
+		"name": "Kénitra",
+		"regionCode": "KEN"
+	},
+	{
+		"name": "Khémisset",
+		"regionCode": "KHE"
+	},
+	{
+		"name": "Khénifra",
+		"regionCode": "KHN"
+	},
+	{
+		"name": "Khouribga",
+		"regionCode": "KHO"
+	},
+	{
+		"name": "L'Oriental",
+		"regionCode": "2.0"
+	},
+	{
+		"name": "Laâyoune (EH)",
+		"regionCode": "LAA"
+	},
+	{
+		"name": "Laâyoune-Sakia El Hamra (EH-partial)",
+		"regionCode": "11.0"
+	},
+	{
+		"name": "Larache",
+		"regionCode": "LAR"
+	},
+	{
+		"name": "M’diq-Fnideq",
+		"regionCode": "MDF"
+	},
+	{
+		"name": "Marrakech",
+		"regionCode": "MAR"
+	},
+	{
+		"name": "Marrakech-Safi",
+		"regionCode": "7.0"
+	},
+	{
+		"name": "Médiouna",
+		"regionCode": "MED"
+	},
+	{
+		"name": "Meknès",
+		"regionCode": "MEK"
+	},
+	{
+		"name": "Midelt",
+		"regionCode": "MID"
+	},
+	{
+		"name": "Mohammadia",
+		"regionCode": "MOH"
+	},
+	{
+		"name": "Moulay Yacoub",
+		"regionCode": "MOU"
+	},
+	{
+		"name": "Nador",
+		"regionCode": "NAD"
+	},
+	{
+		"name": "Nouaceur",
+		"regionCode": "NOU"
+	},
+	{
+		"name": "Ouarzazate",
+		"regionCode": "OUA"
+	},
+	{
+		"name": "Oued Ed-Dahab (EH)",
+		"regionCode": "OUD"
+	},
+	{
+		"name": "Ouezzane",
+		"regionCode": "OUZ"
+	},
+	{
+		"name": "Oujda-Angad",
+		"regionCode": "OUJ"
+	},
+	{
+		"name": "Rabat",
+		"regionCode": "RAB"
+	},
+	{
+		"name": "Rabat-Salé-Kénitra",
+		"regionCode": "4.0"
+	},
+	{
+		"name": "Rehamna",
+		"regionCode": "REH"
+	},
+	{
+		"name": "Safi",
+		"regionCode": "SAF"
+	},
+	{
+		"name": "Salé",
+		"regionCode": "SAL"
+	},
+	{
+		"name": "Sefrou",
+		"regionCode": "SEF"
+	},
+	{
+		"name": "Settat",
+		"regionCode": "SET"
+	},
+	{
+		"name": "Sidi Bennour",
+		"regionCode": "SIB"
+	},
+	{
+		"name": "Sidi Ifni",
+		"regionCode": "SIF"
+	},
+	{
+		"name": "Sidi Kacem",
+		"regionCode": "SIK"
+	},
+	{
+		"name": "Sidi Slimane",
+		"regionCode": "SIL"
+	},
+	{
+		"name": "Skhirate-Témara",
+		"regionCode": "SKH"
+	},
+	{
+		"name": "Souss-Massa",
+		"regionCode": "9.0"
+	},
+	{
+		"name": "Tan-Tan (EH-partial)",
+		"regionCode": "TNT"
+	},
+	{
+		"name": "Tanger-Assilah",
+		"regionCode": "TNG"
+	},
+	{
+		"name": "Tanger-Tétouan-Al Hoceïma",
+		"regionCode": "1.0"
+	},
+	{
+		"name": "Taounate",
+		"regionCode": "TAO"
+	},
+	{
+		"name": "Taourirt",
+		"regionCode": "TAI"
+	},
+	{
+		"name": "Tarfaya (EH-partial)",
+		"regionCode": "TAF"
+	},
+	{
+		"name": "Taroudannt",
+		"regionCode": "TAR"
+	},
+	{
+		"name": "Tata",
+		"regionCode": "TAT"
+	},
+	{
+		"name": "Taza",
+		"regionCode": "TAZ"
+	},
+	{
+		"name": "Tétouan",
+		"regionCode": "TET"
+	},
+	{
+		"name": "Tinghir",
+		"regionCode": "TIN"
+	},
+	{
+		"name": "Tiznit",
+		"regionCode": "TIZ"
+	},
+	{
+		"name": "Youssoufia",
+		"regionCode": "YUS"
+	},
+	{
+		"name": "Zagora",
+		"regionCode": "ZAG"
+	}
+]

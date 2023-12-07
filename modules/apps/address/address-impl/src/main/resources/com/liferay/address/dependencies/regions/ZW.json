@@ -1,0 +1,42 @@
+[
+	{
+		"name": "Bulawayo",
+		"regionCode": "BU"
+	},
+	{
+		"name": "Harare",
+		"regionCode": "HA"
+	},
+	{
+		"name": "Manicaland",
+		"regionCode": "MA"
+	},
+	{
+		"name": "Mashonaland Central",
+		"regionCode": "MC"
+	},
+	{
+		"name": "Mashonaland East",
+		"regionCode": "ME"
+	},
+	{
+		"name": "Mashonaland West",
+		"regionCode": "MW"
+	},
+	{
+		"name": "Masvingo",
+		"regionCode": "MV"
+	},
+	{
+		"name": "Matabeleland North",
+		"regionCode": "MN"
+	},
+	{
+		"name": "Matabeleland South",
+		"regionCode": "MS"
+	},
+	{
+		"name": "Midlands",
+		"regionCode": "MI"
+	}
+]

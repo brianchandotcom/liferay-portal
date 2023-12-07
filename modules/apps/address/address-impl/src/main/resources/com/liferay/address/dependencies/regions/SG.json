@@ -1,0 +1,22 @@
+[
+	{
+		"name": "Central Singapore",
+		"regionCode": "1.0"
+	},
+	{
+		"name": "North East",
+		"regionCode": "2.0"
+	},
+	{
+		"name": "North West",
+		"regionCode": "3.0"
+	},
+	{
+		"name": "South East",
+		"regionCode": "4.0"
+	},
+	{
+		"name": "South West",
+		"regionCode": "5.0"
+	}
+]

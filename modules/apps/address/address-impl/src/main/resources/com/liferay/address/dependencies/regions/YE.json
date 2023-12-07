@@ -1,0 +1,90 @@
+[
+	{
+		"name": "‘Adan",
+		"regionCode": "AD"
+	},
+	{
+		"name": "‘Amrān",
+		"regionCode": "AM"
+	},
+	{
+		"name": "Abyan",
+		"regionCode": "AB"
+	},
+	{
+		"name": "Aḑ Ḑāli‘",
+		"regionCode": "DA"
+	},
+	{
+		"name": "Al Bayḑā’",
+		"regionCode": "BA"
+	},
+	{
+		"name": "Al Ḩudaydah",
+		"regionCode": "HU"
+	},
+	{
+		"name": "Al Jawf",
+		"regionCode": "JA"
+	},
+	{
+		"name": "Al Mahrah",
+		"regionCode": "MR"
+	},
+	{
+		"name": "Al Maḩwīt",
+		"regionCode": "MW"
+	},
+	{
+		"name": "Amānat al ‘Āşimah [city]",
+		"regionCode": "SA"
+	},
+	{
+		"name": "Arkhabīl Suquţrá",
+		"regionCode": "SU"
+	},
+	{
+		"name": "Dhamār",
+		"regionCode": "DH"
+	},
+	{
+		"name": "Ḩaḑramawt",
+		"regionCode": "HD"
+	},
+	{
+		"name": "Ḩajjah",
+		"regionCode": "HJ"
+	},
+	{
+		"name": "Ibb",
+		"regionCode": "IB"
+	},
+	{
+		"name": "Laḩij",
+		"regionCode": "LA"
+	},
+	{
+		"name": "Ma’rib",
+		"regionCode": "MA"
+	},
+	{
+		"name": "Raymah",
+		"regionCode": "RA"
+	},
+	{
+		"name": "Şāʻdah",
+		"regionCode": "SD"
+	},
+	{
+		"name": "Şanʻā’",
+		"regionCode": "SN"
+	},
+	{
+		"name": "Shabwah",
+		"regionCode": "SH"
+	},
+	{
+		"name": "Tāʻizz",
+		"regionCode": "TA"
+	}
+]

@@ -1,0 +1,42 @@
+[
+	{
+		"name": "Anse la Raye",
+		"regionCode": "1.0"
+	},
+	{
+		"name": "Canaries",
+		"regionCode": "12.0"
+	},
+	{
+		"name": "Castries",
+		"regionCode": "2.0"
+	},
+	{
+		"name": "Choiseul",
+		"regionCode": "3.0"
+	},
+	{
+		"name": "Dennery",
+		"regionCode": "5.0"
+	},
+	{
+		"name": "Gros Islet",
+		"regionCode": "6.0"
+	},
+	{
+		"name": "Laborie",
+		"regionCode": "7.0"
+	},
+	{
+		"name": "Micoud",
+		"regionCode": "8.0"
+	},
+	{
+		"name": "Soufrière",
+		"regionCode": "10.0"
+	},
+	{
+		"name": "Vieux Fort",
+		"regionCode": "11.0"
+	}
+]

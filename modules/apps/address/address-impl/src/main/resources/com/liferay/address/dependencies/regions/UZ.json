@@ -1,0 +1,58 @@
+[
+	{
+		"name": "Andijon",
+		"regionCode": "AN"
+	},
+	{
+		"name": "Buxoro",
+		"regionCode": "BU"
+	},
+	{
+		"name": "Farg‘ona",
+		"regionCode": "FA"
+	},
+	{
+		"name": "Jizzax",
+		"regionCode": "JI"
+	},
+	{
+		"name": "Namangan",
+		"regionCode": "NG"
+	},
+	{
+		"name": "Navoiy",
+		"regionCode": "NW"
+	},
+	{
+		"name": "Qashqadaryo",
+		"regionCode": "QA"
+	},
+	{
+		"name": "Qoraqalpog‘iston Respublikasi",
+		"regionCode": "QR"
+	},
+	{
+		"name": "Samarqand",
+		"regionCode": "SA"
+	},
+	{
+		"name": "Sirdaryo",
+		"regionCode": "SI"
+	},
+	{
+		"name": "Surxondaryo",
+		"regionCode": "SU"
+	},
+	{
+		"name": "Toshkent",
+		"regionCode": "TO"
+	},
+	{
+		"name": "Toshkent",
+		"regionCode": "TK"
+	},
+	{
+		"name": "Xorazm",
+		"regionCode": "XO"
+	}
+]

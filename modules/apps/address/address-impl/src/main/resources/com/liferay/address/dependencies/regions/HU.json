@@ -16,7 +16,7 @@
 		"regionCode": "BC"
 	},
 	{
-		"name": "Borsod-Abauj-Zemplen",
+		"name": "Borsod-Abaúj-Zemplén",
 		"regionCode": "BZ"
 	},
 	{
@@ -24,7 +24,7 @@
 		"regionCode": "BU"
 	},
 	{
-		"name": "Csongrád",
+		"name": "Csongrád-Csanád",
 		"regionCode": "CS"
 	},
 	{
@@ -120,7 +120,7 @@
 		"regionCode": "SN"
 	},
 	{
-		"name": "Szabolcs-á-Bereg",
+		"name": "Szabolcs-Szatmár-Bereg",
 		"regionCode": "SZ"
 	},
 	{
@@ -160,7 +160,7 @@
 		"regionCode": "VE"
 	},
 	{
-		"name": "Veszprém (City)",
+		"name": "Veszprém",
 		"regionCode": "VM"
 	},
 	{

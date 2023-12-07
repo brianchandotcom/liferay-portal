@@ -1,0 +1,22 @@
+[
+	{
+		"name": "Avannaata Kommunia",
+		"regionCode": "AV"
+	},
+	{
+		"name": "Kommune Kujalleq",
+		"regionCode": "KU"
+	},
+	{
+		"name": "Kommune Qeqertalik",
+		"regionCode": "QT"
+	},
+	{
+		"name": "Kommuneqarfik Sermersooq",
+		"regionCode": "SM"
+	},
+	{
+		"name": "Qeqqata Kommunia",
+		"regionCode": "QE"
+	}
+]

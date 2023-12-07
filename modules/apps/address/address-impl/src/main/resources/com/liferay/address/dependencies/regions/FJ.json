@@ -1,0 +1,78 @@
+[
+	{
+		"name": "Ba",
+		"regionCode": "1.0"
+	},
+	{
+		"name": "Bua",
+		"regionCode": "2.0"
+	},
+	{
+		"name": "Cakaudrove",
+		"regionCode": "3.0"
+	},
+	{
+		"name": "Central",
+		"regionCode": "C"
+	},
+	{
+		"name": "Eastern",
+		"regionCode": "E"
+	},
+	{
+		"name": "Kadavu",
+		"regionCode": "4.0"
+	},
+	{
+		"name": "Lau",
+		"regionCode": "5.0"
+	},
+	{
+		"name": "Lomaiviti",
+		"regionCode": "6.0"
+	},
+	{
+		"name": "Macuata",
+		"regionCode": "7.0"
+	},
+	{
+		"name": "Nadroga and Navosa",
+		"regionCode": "8.0"
+	},
+	{
+		"name": "Naitasiri",
+		"regionCode": "9.0"
+	},
+	{
+		"name": "Namosi",
+		"regionCode": "10.0"
+	},
+	{
+		"name": "Northern",
+		"regionCode": "N"
+	},
+	{
+		"name": "Ra",
+		"regionCode": "11.0"
+	},
+	{
+		"name": "Rewa",
+		"regionCode": "12.0"
+	},
+	{
+		"name": "Rotuma",
+		"regionCode": "R"
+	},
+	{
+		"name": "Serua",
+		"regionCode": "13.0"
+	},
+	{
+		"name": "Tailevu",
+		"regionCode": "14.0"
+	},
+	{
+		"name": "Western",
+		"regionCode": "W"
+	}
+]

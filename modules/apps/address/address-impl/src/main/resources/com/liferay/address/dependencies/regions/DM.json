@@ -1,0 +1,42 @@
+[
+	{
+		"name": "Saint Andrew",
+		"regionCode": "2.0"
+	},
+	{
+		"name": "Saint David",
+		"regionCode": "3.0"
+	},
+	{
+		"name": "Saint George",
+		"regionCode": "4.0"
+	},
+	{
+		"name": "Saint John",
+		"regionCode": "5.0"
+	},
+	{
+		"name": "Saint Joseph",
+		"regionCode": "6.0"
+	},
+	{
+		"name": "Saint Luke",
+		"regionCode": "7.0"
+	},
+	{
+		"name": "Saint Mark",
+		"regionCode": "8.0"
+	},
+	{
+		"name": "Saint Patrick",
+		"regionCode": "9.0"
+	},
+	{
+		"name": "Saint Paul",
+		"regionCode": "10.0"
+	},
+	{
+		"name": "Saint Peter",
+		"regionCode": "11.0"
+	}
+]

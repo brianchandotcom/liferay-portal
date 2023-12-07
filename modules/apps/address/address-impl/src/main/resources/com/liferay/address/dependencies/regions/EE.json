@@ -1,0 +1,374 @@
+[
+	{
+		"name": "Alutaguse",
+		"regionCode": "130.0"
+	},
+	{
+		"name": "Anija",
+		"regionCode": "141.0"
+	},
+	{
+		"name": "Antsla",
+		"regionCode": "142.0"
+	},
+	{
+		"name": "Elva",
+		"regionCode": "171.0"
+	},
+	{
+		"name": "Häädemeeste",
+		"regionCode": "214.0"
+	},
+	{
+		"name": "Haapsalu",
+		"regionCode": "184.0"
+	},
+	{
+		"name": "Haljala",
+		"regionCode": "191.0"
+	},
+	{
+		"name": "Harjumaa",
+		"regionCode": "37.0"
+	},
+	{
+		"name": "Harku",
+		"regionCode": "198.0"
+	},
+	{
+		"name": "Hiiumaa",
+		"regionCode": "39.0"
+	},
+	{
+		"name": "Ida-Virumaa",
+		"regionCode": "45.0"
+	},
+	{
+		"name": "Järva",
+		"regionCode": "255.0"
+	},
+	{
+		"name": "Järvamaa",
+		"regionCode": "52.0"
+	},
+	{
+		"name": "Jõelähtme",
+		"regionCode": "245.0"
+	},
+	{
+		"name": "Jõgeva",
+		"regionCode": "247.0"
+	},
+	{
+		"name": "Jõgevamaa",
+		"regionCode": "50.0"
+	},
+	{
+		"name": "Jõhvi",
+		"regionCode": "251.0"
+	},
+	{
+		"name": "Kadrina",
+		"regionCode": "272.0"
+	},
+	{
+		"name": "Kambja",
+		"regionCode": "283.0"
+	},
+	{
+		"name": "Kanepi",
+		"regionCode": "284.0"
+	},
+	{
+		"name": "Kastre",
+		"regionCode": "291.0"
+	},
+	{
+		"name": "Kehtna",
+		"regionCode": "293.0"
+	},
+	{
+		"name": "Keila",
+		"regionCode": "296.0"
+	},
+	{
+		"name": "Kihnu",
+		"regionCode": "303.0"
+	},
+	{
+		"name": "Kiili",
+		"regionCode": "305.0"
+	},
+	{
+		"name": "Kohila",
+		"regionCode": "317.0"
+	},
+	{
+		"name": "Kohtla-Järve",
+		"regionCode": "321.0"
+	},
+	{
+		"name": "Kose",
+		"regionCode": "338.0"
+	},
+	{
+		"name": "Kuusalu",
+		"regionCode": "353.0"
+	},
+	{
+		"name": "Lääne-Harju",
+		"regionCode": "431.0"
+	},
+	{
+		"name": "Lääne-Nigula",
+		"regionCode": "441.0"
+	},
+	{
+		"name": "Lääne-Virumaa",
+		"regionCode": "60.0"
+	},
+	{
+		"name": "Läänemaa",
+		"regionCode": "56.0"
+	},
+	{
+		"name": "Lääneranna",
+		"regionCode": "430.0"
+	},
+	{
+		"name": "Loksa",
+		"regionCode": "424.0"
+	},
+	{
+		"name": "Lüganuse",
+		"regionCode": "442.0"
+	},
+	{
+		"name": "Luunja",
+		"regionCode": "432.0"
+	},
+	{
+		"name": "Maardu",
+		"regionCode": "446.0"
+	},
+	{
+		"name": "Märjamaa",
+		"regionCode": "503.0"
+	},
+	{
+		"name": "Muhu",
+		"regionCode": "478.0"
+	},
+	{
+		"name": "Mulgi",
+		"regionCode": "480.0"
+	},
+	{
+		"name": "Mustvee",
+		"regionCode": "486.0"
+	},
+	{
+		"name": "Narva",
+		"regionCode": "511.0"
+	},
+	{
+		"name": "Narva-Jõesuu",
+		"regionCode": "514.0"
+	},
+	{
+		"name": "Nõo",
+		"regionCode": "528.0"
+	},
+	{
+		"name": "Otepää",
+		"regionCode": "557.0"
+	},
+	{
+		"name": "Paide",
+		"regionCode": "567.0"
+	},
+	{
+		"name": "Pärnu",
+		"regionCode": "624.0"
+	},
+	{
+		"name": "Pärnumaa",
+		"regionCode": "68.0"
+	},
+	{
+		"name": "Peipsiääre",
+		"regionCode": "586.0"
+	},
+	{
+		"name": "Põhja-Pärnumaa",
+		"regionCode": "638.0"
+	},
+	{
+		"name": "Põhja-Sakala",
+		"regionCode": "615.0"
+	},
+	{
+		"name": "Põltsamaa",
+		"regionCode": "618.0"
+	},
+	{
+		"name": "Põlva",
+		"regionCode": "622.0"
+	},
+	{
+		"name": "Põlvamaa",
+		"regionCode": "64.0"
+	},
+	{
+		"name": "Raasiku",
+		"regionCode": "651.0"
+	},
+	{
+		"name": "Rae",
+		"regionCode": "653.0"
+	},
+	{
+		"name": "Rakvere",
+		"regionCode": "663.0"
+	},
+	{
+		"name": "Rakvere",
+		"regionCode": "661.0"
+	},
+	{
+		"name": "Räpina",
+		"regionCode": "708.0"
+	},
+	{
+		"name": "Rapla",
+		"regionCode": "668.0"
+	},
+	{
+		"name": "Raplamaa",
+		"regionCode": "71.0"
+	},
+	{
+		"name": "Rõuge",
+		"regionCode": "698.0"
+	},
+	{
+		"name": "Ruhnu",
+		"regionCode": "689.0"
+	},
+	{
+		"name": "Saarde",
+		"regionCode": "712.0"
+	},
+	{
+		"name": "Saaremaa",
+		"regionCode": "714.0"
+	},
+	{
+		"name": "Saaremaa",
+		"regionCode": "74.0"
+	},
+	{
+		"name": "Saku",
+		"regionCode": "719.0"
+	},
+	{
+		"name": "Saue",
+		"regionCode": "726.0"
+	},
+	{
+		"name": "Setomaa",
+		"regionCode": "732.0"
+	},
+	{
+		"name": "Sillamäe",
+		"regionCode": "735.0"
+	},
+	{
+		"name": "Tallinn",
+		"regionCode": "784.0"
+	},
+	{
+		"name": "Tapa",
+		"regionCode": "792.0"
+	},
+	{
+		"name": "Tartu",
+		"regionCode": "793.0"
+	},
+	{
+		"name": "Tartu",
+		"regionCode": "796.0"
+	},
+	{
+		"name": "Tartumaa",
+		"regionCode": "79.0"
+	},
+	{
+		"name": "Toila",
+		"regionCode": "803.0"
+	},
+	{
+		"name": "Tori",
+		"regionCode": "809.0"
+	},
+	{
+		"name": "Tõrva",
+		"regionCode": "824.0"
+	},
+	{
+		"name": "Türi",
+		"regionCode": "834.0"
+	},
+	{
+		"name": "Väike-Maarja",
+		"regionCode": "928.0"
+	},
+	{
+		"name": "Valga",
+		"regionCode": "855.0"
+	},
+	{
+		"name": "Valgamaa",
+		"regionCode": "81.0"
+	},
+	{
+		"name": "Viimsi",
+		"regionCode": "890.0"
+	},
+	{
+		"name": "Viljandi",
+		"regionCode": "897.0"
+	},
+	{
+		"name": "Viljandi",
+		"regionCode": "899.0"
+	},
+	{
+		"name": "Viljandimaa",
+		"regionCode": "84.0"
+	},
+	{
+		"name": "Vinni",
+		"regionCode": "901.0"
+	},
+	{
+		"name": "Viru-Nigula",
+		"regionCode": "903.0"
+	},
+	{
+		"name": "Vormsi",
+		"regionCode": "907.0"
+	},
+	{
+		"name": "Võru",
+		"regionCode": "919.0"
+	},
+	{
+		"name": "Võru",
+		"regionCode": "917.0"
+	},
+	{
+		"name": "Võrumaa",
+		"regionCode": "87.0"
+	}
+]

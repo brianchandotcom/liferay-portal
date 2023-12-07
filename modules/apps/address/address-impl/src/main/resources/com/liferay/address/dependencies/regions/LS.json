@@ -1,0 +1,42 @@
+[
+	{
+		"name": "Berea",
+		"regionCode": "D"
+	},
+	{
+		"name": "Botha-Bothe",
+		"regionCode": "B"
+	},
+	{
+		"name": "Leribe",
+		"regionCode": "C"
+	},
+	{
+		"name": "Mafeteng",
+		"regionCode": "E"
+	},
+	{
+		"name": "Maseru",
+		"regionCode": "A"
+	},
+	{
+		"name": "Mohale's Hoek",
+		"regionCode": "F"
+	},
+	{
+		"name": "Mokhotlong",
+		"regionCode": "J"
+	},
+	{
+		"name": "Qacha's Nek",
+		"regionCode": "H"
+	},
+	{
+		"name": "Quthing",
+		"regionCode": "G"
+	},
+	{
+		"name": "Thaba-Tseka",
+		"regionCode": "K"
+	}
+]

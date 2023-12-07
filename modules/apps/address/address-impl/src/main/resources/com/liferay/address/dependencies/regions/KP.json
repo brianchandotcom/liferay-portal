@@ -1,0 +1,54 @@
+[
+	{
+		"name": "Chagang-do",
+		"regionCode": "4.0"
+	},
+	{
+		"name": "Hamgyǒng-namdo",
+		"regionCode": "8.0"
+	},
+	{
+		"name": "Hamkyeongpukto",
+		"regionCode": "9.0"
+	},
+	{
+		"name": "Hwanghae-bukto",
+		"regionCode": "6.0"
+	},
+	{
+		"name": "Hwanghae-namdo",
+		"regionCode": "5.0"
+	},
+	{
+		"name": "Kaesŏng",
+		"regionCode": "15.0"
+	},
+	{
+		"name": "Kangweonto",
+		"regionCode": "7.0"
+	},
+	{
+		"name": "Namp’o",
+		"regionCode": "14.0"
+	},
+	{
+		"name": "P'yǒngan-bukto",
+		"regionCode": "3.0"
+	},
+	{
+		"name": "P'yǒngyang",
+		"regionCode": "1.0"
+	},
+	{
+		"name": "Phyeongannamto",
+		"regionCode": "2.0"
+	},
+	{
+		"name": "Raseon",
+		"regionCode": "13.0"
+	},
+	{
+		"name": "Ryangkangto",
+		"regionCode": "10.0"
+	}
+]

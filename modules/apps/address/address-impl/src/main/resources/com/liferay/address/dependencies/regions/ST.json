@@ -1,0 +1,30 @@
+[
+	{
+		"name": "Água Grande",
+		"regionCode": "1.0"
+	},
+	{
+		"name": "Cantagalo",
+		"regionCode": "2.0"
+	},
+	{
+		"name": "Caué",
+		"regionCode": "3.0"
+	},
+	{
+		"name": "Lembá",
+		"regionCode": "4.0"
+	},
+	{
+		"name": "Lobata",
+		"regionCode": "5.0"
+	},
+	{
+		"name": "Mé-Zóchi",
+		"regionCode": "6.0"
+	},
+	{
+		"name": "Príncipe",
+		"regionCode": "P"
+	}
+]

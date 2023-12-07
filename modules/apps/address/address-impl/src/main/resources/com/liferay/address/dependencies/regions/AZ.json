@@ -1,0 +1,314 @@
+[
+	{
+		"name": "Abşeron",
+		"regionCode": "ABS"
+	},
+	{
+		"name": "Ağcabədi",
+		"regionCode": "AGC"
+	},
+	{
+		"name": "Ağdam",
+		"regionCode": "AGM"
+	},
+	{
+		"name": "Ağdaş",
+		"regionCode": "AGS"
+	},
+	{
+		"name": "Ağstafa",
+		"regionCode": "AGA"
+	},
+	{
+		"name": "Ağsu",
+		"regionCode": "AGU"
+	},
+	{
+		"name": "Astara",
+		"regionCode": "AST"
+	},
+	{
+		"name": "Babək",
+		"regionCode": "BAB"
+	},
+	{
+		"name": "Bakı",
+		"regionCode": "BA"
+	},
+	{
+		"name": "Balakən",
+		"regionCode": "BAL"
+	},
+	{
+		"name": "Beyləqan",
+		"regionCode": "BEY"
+	},
+	{
+		"name": "Bərdə",
+		"regionCode": "BAR"
+	},
+	{
+		"name": "Biləsuvar",
+		"regionCode": "BIL"
+	},
+	{
+		"name": "Cəbrayıl",
+		"regionCode": "CAB"
+	},
+	{
+		"name": "Cəlilabad",
+		"regionCode": "CAL"
+	},
+	{
+		"name": "Culfa",
+		"regionCode": "CUL"
+	},
+	{
+		"name": "Daşkəsən",
+		"regionCode": "DAS"
+	},
+	{
+		"name": "Füzuli",
+		"regionCode": "FUZ"
+	},
+	{
+		"name": "Gədəbəy",
+		"regionCode": "GAD"
+	},
+	{
+		"name": "Gəncə",
+		"regionCode": "GA"
+	},
+	{
+		"name": "Goranboy",
+		"regionCode": "GOR"
+	},
+	{
+		"name": "Göyçay",
+		"regionCode": "GOY"
+	},
+	{
+		"name": "Göygöl",
+		"regionCode": "GYG"
+	},
+	{
+		"name": "Hacıqabul",
+		"regionCode": "HAC"
+	},
+	{
+		"name": "İmişli",
+		"regionCode": "IMI"
+	},
+	{
+		"name": "İsmayıllı",
+		"regionCode": "ISM"
+	},
+	{
+		"name": "Kǝngǝrli",
+		"regionCode": "KAN"
+	},
+	{
+		"name": "Kəlbəcər",
+		"regionCode": "KAL"
+	},
+	{
+		"name": "Kürdəmir",
+		"regionCode": "KUR"
+	},
+	{
+		"name": "Laçın",
+		"regionCode": "LAC"
+	},
+	{
+		"name": "Lerik",
+		"regionCode": "LER"
+	},
+	{
+		"name": "Lənkəran",
+		"regionCode": "LA"
+	},
+	{
+		"name": "Lənkəran",
+		"regionCode": "LAN"
+	},
+	{
+		"name": "Masallı",
+		"regionCode": "MAS"
+	},
+	{
+		"name": "Mingəçevir",
+		"regionCode": "MI"
+	},
+	{
+		"name": "Naftalan",
+		"regionCode": "NA"
+	},
+	{
+		"name": "Naxçıvan",
+		"regionCode": "NV"
+	},
+	{
+		"name": "Naxçıvan",
+		"regionCode": "NX"
+	},
+	{
+		"name": "Neftçala",
+		"regionCode": "NEF"
+	},
+	{
+		"name": "Oğuz",
+		"regionCode": "OGU"
+	},
+	{
+		"name": "Ordubad",
+		"regionCode": "ORD"
+	},
+	{
+		"name": "Qax",
+		"regionCode": "QAX"
+	},
+	{
+		"name": "Qazax",
+		"regionCode": "QAZ"
+	},
+	{
+		"name": "Qəbələ",
+		"regionCode": "QAB"
+	},
+	{
+		"name": "Qobustan",
+		"regionCode": "QOB"
+	},
+	{
+		"name": "Quba",
+		"regionCode": "QBA"
+	},
+	{
+		"name": "Qubadlı",
+		"regionCode": "QBI"
+	},
+	{
+		"name": "Qusar",
+		"regionCode": "QUS"
+	},
+	{
+		"name": "Saatlı",
+		"regionCode": "SAT"
+	},
+	{
+		"name": "Sabirabad",
+		"regionCode": "SAB"
+	},
+	{
+		"name": "Şabran",
+		"regionCode": "SBN"
+	},
+	{
+		"name": "Şahbuz",
+		"regionCode": "SAH"
+	},
+	{
+		"name": "Salyan",
+		"regionCode": "SAL"
+	},
+	{
+		"name": "Şamaxı",
+		"regionCode": "SMI"
+	},
+	{
+		"name": "Samux",
+		"regionCode": "SMX"
+	},
+	{
+		"name": "Sədərək",
+		"regionCode": "SAD"
+	},
+	{
+		"name": "Şəki",
+		"regionCode": "SA"
+	},
+	{
+		"name": "Şəki",
+		"regionCode": "SAK"
+	},
+	{
+		"name": "Şəmkir",
+		"regionCode": "SKR"
+	},
+	{
+		"name": "Şərur",
+		"regionCode": "SAR"
+	},
+	{
+		"name": "Şirvan",
+		"regionCode": "SR"
+	},
+	{
+		"name": "Siyəzən",
+		"regionCode": "SIY"
+	},
+	{
+		"name": "Sumqayıt",
+		"regionCode": "SM"
+	},
+	{
+		"name": "Şuşa",
+		"regionCode": "SUS"
+	},
+	{
+		"name": "Tərtər",
+		"regionCode": "TAR"
+	},
+	{
+		"name": "Tovuz",
+		"regionCode": "TOV"
+	},
+	{
+		"name": "Ucar",
+		"regionCode": "UCA"
+	},
+	{
+		"name": "Xaçmaz",
+		"regionCode": "XAC"
+	},
+	{
+		"name": "Xankəndi",
+		"regionCode": "XA"
+	},
+	{
+		"name": "Xızı",
+		"regionCode": "XIZ"
+	},
+	{
+		"name": "Xocalı",
+		"regionCode": "XCI"
+	},
+	{
+		"name": "Xocavənd",
+		"regionCode": "XVD"
+	},
+	{
+		"name": "Yardımlı",
+		"regionCode": "YAR"
+	},
+	{
+		"name": "Yevlax",
+		"regionCode": "YE"
+	},
+	{
+		"name": "Yevlax",
+		"regionCode": "YEV"
+	},
+	{
+		"name": "Zaqatala",
+		"regionCode": "ZAQ"
+	},
+	{
+		"name": "Zəngilan",
+		"regionCode": "ZAN"
+	},
+	{
+		"name": "Zərdab",
+		"regionCode": "ZAR"
+	}
+]

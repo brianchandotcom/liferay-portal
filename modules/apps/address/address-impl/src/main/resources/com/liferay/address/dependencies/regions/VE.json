@@ -1,0 +1,102 @@
+[
+	{
+		"name": "Amazonas",
+		"regionCode": "Z"
+	},
+	{
+		"name": "Anzoátegui",
+		"regionCode": "B"
+	},
+	{
+		"name": "Apure",
+		"regionCode": "C"
+	},
+	{
+		"name": "Aragua",
+		"regionCode": "D"
+	},
+	{
+		"name": "Barinas",
+		"regionCode": "E"
+	},
+	{
+		"name": "Bolívar",
+		"regionCode": "F"
+	},
+	{
+		"name": "Carabobo",
+		"regionCode": "G"
+	},
+	{
+		"name": "Cojedes",
+		"regionCode": "H"
+	},
+	{
+		"name": "Delta Amacuro",
+		"regionCode": "Y"
+	},
+	{
+		"name": "Dependencias Federales",
+		"regionCode": "W"
+	},
+	{
+		"name": "Distrito Capital",
+		"regionCode": "A"
+	},
+	{
+		"name": "Falcón",
+		"regionCode": "I"
+	},
+	{
+		"name": "Guárico",
+		"regionCode": "J"
+	},
+	{
+		"name": "La Guaira",
+		"regionCode": "X"
+	},
+	{
+		"name": "Lara",
+		"regionCode": "K"
+	},
+	{
+		"name": "Mérida",
+		"regionCode": "L"
+	},
+	{
+		"name": "Miranda",
+		"regionCode": "M"
+	},
+	{
+		"name": "Monagas",
+		"regionCode": "N"
+	},
+	{
+		"name": "Nueva Esparta",
+		"regionCode": "O"
+	},
+	{
+		"name": "Portuguesa",
+		"regionCode": "P"
+	},
+	{
+		"name": "Sucre",
+		"regionCode": "R"
+	},
+	{
+		"name": "Táchira",
+		"regionCode": "S"
+	},
+	{
+		"name": "Trujillo",
+		"regionCode": "T"
+	},
+	{
+		"name": "Yaracuy",
+		"regionCode": "U"
+	},
+	{
+		"name": "Zulia",
+		"regionCode": "V"
+	}
+]

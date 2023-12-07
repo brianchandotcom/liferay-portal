@@ -4,10 +4,6 @@
 		"regionCode": "AH"
 	},
 	{
-		"name": "Aomen",
-		"regionCode": "MO"
-	},
-	{
 		"name": "Beijing Shi",
 		"regionCode": "BJ"
 	},
@@ -52,6 +48,10 @@
 		"regionCode": "HA"
 	},
 	{
+		"name": "Hong Kong SAR",
+		"regionCode": "HK"
+	},
+	{
 		"name": "Hubei Sheng",
 		"regionCode": "HB"
 	},
@@ -76,11 +76,15 @@
 		"regionCode": "LN"
 	},
 	{
+		"name": "Macao SAR",
+		"regionCode": "MO"
+	},
+	{
 		"name": "Nei Mongol Zizhiqu",
 		"regionCode": "NM"
 	},
 	{
-		"name": "Ningxia Sheng",
+		"name": "Ningxia Huizu Zizhiqu",
 		"regionCode": "NX"
 	},
 	{
@@ -96,7 +100,7 @@
 		"regionCode": "SD"
 	},
 	{
-		"name": "Shanghai Sheng",
+		"name": "Shanghai Shi",
 		"regionCode": "SH"
 	},
 	{
@@ -114,10 +118,6 @@
 	{
 		"name": "Tianjin Shi",
 		"regionCode": "TJ"
-	},
-	{
-		"name": "Xianggang",
-		"regionCode": "HK"
 	},
 	{
 		"name": "Xinjiang Uygur Zizhiqu",

@@ -1,0 +1,134 @@
+[
+	{
+		"name": "Amazonas",
+		"regionCode": "AMA"
+	},
+	{
+		"name": "Antioquia",
+		"regionCode": "ANT"
+	},
+	{
+		"name": "Arauca",
+		"regionCode": "ARA"
+	},
+	{
+		"name": "Atlántico",
+		"regionCode": "ATL"
+	},
+	{
+		"name": "Bolívar",
+		"regionCode": "BOL"
+	},
+	{
+		"name": "Boyacá",
+		"regionCode": "BOY"
+	},
+	{
+		"name": "Caldas",
+		"regionCode": "CAL"
+	},
+	{
+		"name": "Caquetá",
+		"regionCode": "CAQ"
+	},
+	{
+		"name": "Casanare",
+		"regionCode": "CAS"
+	},
+	{
+		"name": "Cauca",
+		"regionCode": "CAU"
+	},
+	{
+		"name": "Cesar",
+		"regionCode": "CES"
+	},
+	{
+		"name": "Chocó",
+		"regionCode": "CHO"
+	},
+	{
+		"name": "Córdoba",
+		"regionCode": "COR"
+	},
+	{
+		"name": "Cundinamarca",
+		"regionCode": "CUN"
+	},
+	{
+		"name": "Distrito Capital de Bogotá",
+		"regionCode": "DC"
+	},
+	{
+		"name": "Guainía",
+		"regionCode": "GUA"
+	},
+	{
+		"name": "Guaviare",
+		"regionCode": "GUV"
+	},
+	{
+		"name": "Huila",
+		"regionCode": "HUI"
+	},
+	{
+		"name": "La Guajira",
+		"regionCode": "LAG"
+	},
+	{
+		"name": "Magdalena",
+		"regionCode": "MAG"
+	},
+	{
+		"name": "Meta",
+		"regionCode": "MET"
+	},
+	{
+		"name": "Nariño",
+		"regionCode": "NAR"
+	},
+	{
+		"name": "Norte de Santander",
+		"regionCode": "NSA"
+	},
+	{
+		"name": "Putumayo",
+		"regionCode": "PUT"
+	},
+	{
+		"name": "Quindío",
+		"regionCode": "QUI"
+	},
+	{
+		"name": "Risaralda",
+		"regionCode": "RIS"
+	},
+	{
+		"name": "San Andrés, Providencia y Santa Catalina",
+		"regionCode": "SAP"
+	},
+	{
+		"name": "Santander",
+		"regionCode": "SAN"
+	},
+	{
+		"name": "Sucre",
+		"regionCode": "SUC"
+	},
+	{
+		"name": "Tolima",
+		"regionCode": "TOL"
+	},
+	{
+		"name": "Valle del Cauca",
+		"regionCode": "VAC"
+	},
+	{
+		"name": "Vaupés",
+		"regionCode": "VAU"
+	},
+	{
+		"name": "Vichada",
+		"regionCode": "VID"
+	}
+]

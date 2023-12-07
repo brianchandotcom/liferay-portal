@@ -1,0 +1,66 @@
+[
+	{
+		"name": "Artemisa",
+		"regionCode": "15.0"
+	},
+	{
+		"name": "Camagüey",
+		"regionCode": "9.0"
+	},
+	{
+		"name": "Ciego de Ávila",
+		"regionCode": "8.0"
+	},
+	{
+		"name": "Cienfuegos",
+		"regionCode": "6.0"
+	},
+	{
+		"name": "Granma",
+		"regionCode": "12.0"
+	},
+	{
+		"name": "Guantánamo",
+		"regionCode": "14.0"
+	},
+	{
+		"name": "Holguín",
+		"regionCode": "11.0"
+	},
+	{
+		"name": "Isla de la Juventud",
+		"regionCode": "99.0"
+	},
+	{
+		"name": "La Habana",
+		"regionCode": "3.0"
+	},
+	{
+		"name": "Las Tunas",
+		"regionCode": "10.0"
+	},
+	{
+		"name": "Matanzas",
+		"regionCode": "4.0"
+	},
+	{
+		"name": "Mayabeque",
+		"regionCode": "16.0"
+	},
+	{
+		"name": "Pinar del Río",
+		"regionCode": "1.0"
+	},
+	{
+		"name": "Sancti Spíritus",
+		"regionCode": "7.0"
+	},
+	{
+		"name": "Santiago de Cuba",
+		"regionCode": "13.0"
+	},
+	{
+		"name": "Villa Clara",
+		"regionCode": "5.0"
+	}
+]

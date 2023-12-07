@@ -1,0 +1,30 @@
+[
+	{
+		"name": "Alajuela",
+		"regionCode": "A"
+	},
+	{
+		"name": "Cartago",
+		"regionCode": "C"
+	},
+	{
+		"name": "Guanacaste",
+		"regionCode": "G"
+	},
+	{
+		"name": "Heredia",
+		"regionCode": "H"
+	},
+	{
+		"name": "Limón",
+		"regionCode": "L"
+	},
+	{
+		"name": "Puntarenas",
+		"regionCode": "P"
+	},
+	{
+		"name": "San José",
+		"regionCode": "SJ"
+	}
+]

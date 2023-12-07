@@ -1,0 +1,38 @@
+[
+	{
+		"name": "Acquaviva",
+		"regionCode": "1.0"
+	},
+	{
+		"name": "Borgo Maggiore",
+		"regionCode": "6.0"
+	},
+	{
+		"name": "Chiesanuova",
+		"regionCode": "2.0"
+	},
+	{
+		"name": "Città di San Marino",
+		"regionCode": "7.0"
+	},
+	{
+		"name": "Domagnano",
+		"regionCode": "3.0"
+	},
+	{
+		"name": "Faetano",
+		"regionCode": "4.0"
+	},
+	{
+		"name": "Fiorentino",
+		"regionCode": "5.0"
+	},
+	{
+		"name": "Montegiardino",
+		"regionCode": "8.0"
+	},
+	{
+		"name": "Serravalle",
+		"regionCode": "9.0"
+	}
+]

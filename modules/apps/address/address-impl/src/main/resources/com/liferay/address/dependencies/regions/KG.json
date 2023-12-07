@@ -1,0 +1,38 @@
+[
+	{
+		"name": "Batken",
+		"regionCode": "B"
+	},
+	{
+		"name": "Bishkek Shaary",
+		"regionCode": "GB"
+	},
+	{
+		"name": "Chüy",
+		"regionCode": "C"
+	},
+	{
+		"name": "Jalal-Abad",
+		"regionCode": "J"
+	},
+	{
+		"name": "Naryn",
+		"regionCode": "N"
+	},
+	{
+		"name": "Osh",
+		"regionCode": "O"
+	},
+	{
+		"name": "Osh Shaary",
+		"regionCode": "GO"
+	},
+	{
+		"name": "Talas",
+		"regionCode": "T"
+	},
+	{
+		"name": "Ysyk-Köl",
+		"regionCode": "Y"
+	}
+]

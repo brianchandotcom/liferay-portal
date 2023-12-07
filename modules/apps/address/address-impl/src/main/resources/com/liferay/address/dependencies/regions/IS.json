@@ -1,0 +1,290 @@
+[
+	{
+		"name": "Akraneskaupstaður",
+		"regionCode": "AKN"
+	},
+	{
+		"name": "Akureyrarbær",
+		"regionCode": "AKU"
+	},
+	{
+		"name": "Árneshreppur",
+		"regionCode": "ARN"
+	},
+	{
+		"name": "Ásahreppur",
+		"regionCode": "ASA"
+	},
+	{
+		"name": "Austurland",
+		"regionCode": "7.0"
+	},
+	{
+		"name": "Bláskógabyggð",
+		"regionCode": "BLA"
+	},
+	{
+		"name": "Bolungarvíkurkaupstaður",
+		"regionCode": "BOL"
+	},
+	{
+		"name": "Borgarbyggð",
+		"regionCode": "BOG"
+	},
+	{
+		"name": "Dalabyggð",
+		"regionCode": "DAB"
+	},
+	{
+		"name": "Dalvíkurbyggð",
+		"regionCode": "DAV"
+	},
+	{
+		"name": "Eyja- og Miklaholtshreppur",
+		"regionCode": "EOM"
+	},
+	{
+		"name": "Eyjafjarðarsveit",
+		"regionCode": "EYF"
+	},
+	{
+		"name": "Fjallabyggð",
+		"regionCode": "FJL"
+	},
+	{
+		"name": "Fjarðabyggð",
+		"regionCode": "FJD"
+	},
+	{
+		"name": "Fljótsdalshreppur",
+		"regionCode": "FLR"
+	},
+	{
+		"name": "Flóahreppur",
+		"regionCode": "FLA"
+	},
+	{
+		"name": "Garðabær",
+		"regionCode": "GAR"
+	},
+	{
+		"name": "Grímsnes- og Grafningshreppur",
+		"regionCode": "GOG"
+	},
+	{
+		"name": "Grindavíkurbær",
+		"regionCode": "GRN"
+	},
+	{
+		"name": "Grundarfjarðarbær",
+		"regionCode": "GRU"
+	},
+	{
+		"name": "Grýtubakkahreppur",
+		"regionCode": "GRY"
+	},
+	{
+		"name": "Hafnarfjarðarkaupstaður",
+		"regionCode": "HAF"
+	},
+	{
+		"name": "Höfuðborgarsvæði",
+		"regionCode": "1.0"
+	},
+	{
+		"name": "Hörgársveit",
+		"regionCode": "HRG"
+	},
+	{
+		"name": "Hrunamannahreppur",
+		"regionCode": "HRU"
+	},
+	{
+		"name": "Húnabyggð",
+		"regionCode": "HUG"
+	},
+	{
+		"name": "Húnaþing vestra",
+		"regionCode": "HUV"
+	},
+	{
+		"name": "Hvalfjarðarsveit",
+		"regionCode": "HVA"
+	},
+	{
+		"name": "Hveragerðisbær",
+		"regionCode": "HVE"
+	},
+	{
+		"name": "Ísafjarðarbær",
+		"regionCode": "ISA"
+	},
+	{
+		"name": "Kaldrananeshreppur",
+		"regionCode": "KAL"
+	},
+	{
+		"name": "Kjósarhreppur",
+		"regionCode": "KJO"
+	},
+	{
+		"name": "Kópavogsbær",
+		"regionCode": "KOP"
+	},
+	{
+		"name": "Langanesbyggð",
+		"regionCode": "LAN"
+	},
+	{
+		"name": "Mosfellsbær",
+		"regionCode": "MOS"
+	},
+	{
+		"name": "Múlaþing",
+		"regionCode": "MUL"
+	},
+	{
+		"name": "Mýrdalshreppur",
+		"regionCode": "MYR"
+	},
+	{
+		"name": "Norðurland eystra",
+		"regionCode": "6.0"
+	},
+	{
+		"name": "Norðurland vestra",
+		"regionCode": "5.0"
+	},
+	{
+		"name": "Norðurþing",
+		"regionCode": "NOR"
+	},
+	{
+		"name": "Rangárþing eystra",
+		"regionCode": "RGE"
+	},
+	{
+		"name": "Rangárþing ytra",
+		"regionCode": "RGY"
+	},
+	{
+		"name": "Reykhólahreppur",
+		"regionCode": "RHH"
+	},
+	{
+		"name": "Reykjanesbær",
+		"regionCode": "RKN"
+	},
+	{
+		"name": "Reykjavíkurborg",
+		"regionCode": "RKV"
+	},
+	{
+		"name": "Seltjarnarnesbær",
+		"regionCode": "SEL"
+	},
+	{
+		"name": "Skaftárhreppur",
+		"regionCode": "SKF"
+	},
+	{
+		"name": "Skagabyggð",
+		"regionCode": "SKG"
+	},
+	{
+		"name": "Skagafjörður",
+		"regionCode": "SKR"
+	},
+	{
+		"name": "Skeiða- og Gnúpverjahreppur",
+		"regionCode": "SOG"
+	},
+	{
+		"name": "Skorradalshreppur",
+		"regionCode": "SKO"
+	},
+	{
+		"name": "Snæfellsbær",
+		"regionCode": "SNF"
+	},
+	{
+		"name": "Strandabyggð",
+		"regionCode": "STR"
+	},
+	{
+		"name": "Stykkishólmsbær",
+		"regionCode": "STY"
+	},
+	{
+		"name": "Súðavíkurhreppur",
+		"regionCode": "SDV"
+	},
+	{
+		"name": "Suðurland",
+		"regionCode": "8.0"
+	},
+	{
+		"name": "Suðurnes",
+		"regionCode": "2.0"
+	},
+	{
+		"name": "Suðurnesjabær",
+		"regionCode": "SDN"
+	},
+	{
+		"name": "Svalbarðsstrandarhreppur",
+		"regionCode": "SBT"
+	},
+	{
+		"name": "Sveitarfélagið Árborg",
+		"regionCode": "SFA"
+	},
+	{
+		"name": "Sveitarfélagið Hornafjörður",
+		"regionCode": "SHF"
+	},
+	{
+		"name": "Sveitarfélagið Ölfus",
+		"regionCode": "SOL"
+	},
+	{
+		"name": "Sveitarfélagið Skagaströnd",
+		"regionCode": "SSS"
+	},
+	{
+		"name": "Sveitarfélagið Vogar",
+		"regionCode": "SVG"
+	},
+	{
+		"name": "Tálknafjarðarhreppur",
+		"regionCode": "TAL"
+	},
+	{
+		"name": "Tjörneshreppur",
+		"regionCode": "TJO"
+	},
+	{
+		"name": "Vestfirðir",
+		"regionCode": "4.0"
+	},
+	{
+		"name": "Vestmannaeyjabær",
+		"regionCode": "VEM"
+	},
+	{
+		"name": "Vesturbyggð",
+		"regionCode": "VER"
+	},
+	{
+		"name": "Vesturland",
+		"regionCode": "3.0"
+	},
+	{
+		"name": "Vopnafjarðarhreppur",
+		"regionCode": "VOP"
+	},
+	{
+		"name": "Þingeyjarsveit",
+		"regionCode": "THG"
+	}
+]

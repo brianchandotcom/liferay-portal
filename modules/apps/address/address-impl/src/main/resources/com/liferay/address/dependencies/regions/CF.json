@@ -1,0 +1,70 @@
+[
+	{
+		"name": "Bamingui-Bangoran",
+		"regionCode": "BB"
+	},
+	{
+		"name": "Bangui",
+		"regionCode": "BGF"
+	},
+	{
+		"name": "Basse-Kotto",
+		"regionCode": "BK"
+	},
+	{
+		"name": "Gribingui",
+		"regionCode": "KB"
+	},
+	{
+		"name": "Haut-Mbomou",
+		"regionCode": "HM"
+	},
+	{
+		"name": "Haute-Kotto",
+		"regionCode": "HK"
+	},
+	{
+		"name": "Haute-Sangha / Mambéré-Kadéï",
+		"regionCode": "HS"
+	},
+	{
+		"name": "Kémo-Gribingui",
+		"regionCode": "KG"
+	},
+	{
+		"name": "Lobaye",
+		"regionCode": "LB"
+	},
+	{
+		"name": "Mbomou",
+		"regionCode": "MB"
+	},
+	{
+		"name": "Nana-Mambéré",
+		"regionCode": "NM"
+	},
+	{
+		"name": "Ombella-Mpoko",
+		"regionCode": "MP"
+	},
+	{
+		"name": "Ouaka",
+		"regionCode": "UK"
+	},
+	{
+		"name": "Ouham",
+		"regionCode": "AC"
+	},
+	{
+		"name": "Ouham-Pendé",
+		"regionCode": "OP"
+	},
+	{
+		"name": "Sangha",
+		"regionCode": "SE"
+	},
+	{
+		"name": "Vakaga",
+		"regionCode": "VK"
+	}
+]

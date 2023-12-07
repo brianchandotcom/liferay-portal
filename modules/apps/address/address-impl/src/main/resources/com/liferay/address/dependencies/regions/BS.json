@@ -1,0 +1,130 @@
+[
+	{
+		"name": "Acklins",
+		"regionCode": "AK"
+	},
+	{
+		"name": "Berry Islands",
+		"regionCode": "BY"
+	},
+	{
+		"name": "Bimini",
+		"regionCode": "BI"
+	},
+	{
+		"name": "Black Point",
+		"regionCode": "BP"
+	},
+	{
+		"name": "Cat Island",
+		"regionCode": "CI"
+	},
+	{
+		"name": "Central Abaco",
+		"regionCode": "CO"
+	},
+	{
+		"name": "Central Andros",
+		"regionCode": "CS"
+	},
+	{
+		"name": "Central Eleuthera",
+		"regionCode": "CE"
+	},
+	{
+		"name": "City of Freeport",
+		"regionCode": "FP"
+	},
+	{
+		"name": "Crooked Island and Long Cay",
+		"regionCode": "CK"
+	},
+	{
+		"name": "East Grand Bahama",
+		"regionCode": "EG"
+	},
+	{
+		"name": "Exuma",
+		"regionCode": "EX"
+	},
+	{
+		"name": "Grand Cay",
+		"regionCode": "GC"
+	},
+	{
+		"name": "Harbour Island",
+		"regionCode": "HI"
+	},
+	{
+		"name": "Hope Town",
+		"regionCode": "HT"
+	},
+	{
+		"name": "Inagua",
+		"regionCode": "IN"
+	},
+	{
+		"name": "Long Island",
+		"regionCode": "LI"
+	},
+	{
+		"name": "Mangrove Cay",
+		"regionCode": "MC"
+	},
+	{
+		"name": "Mayaguana",
+		"regionCode": "MG"
+	},
+	{
+		"name": "Moore's Island",
+		"regionCode": "MI"
+	},
+	{
+		"name": "New Providence",
+		"regionCode": "NP"
+	},
+	{
+		"name": "North Abaco",
+		"regionCode": "NO"
+	},
+	{
+		"name": "North Andros",
+		"regionCode": "NS"
+	},
+	{
+		"name": "North Eleuthera",
+		"regionCode": "NE"
+	},
+	{
+		"name": "Ragged Island",
+		"regionCode": "RI"
+	},
+	{
+		"name": "Rum Cay",
+		"regionCode": "RC"
+	},
+	{
+		"name": "San Salvador",
+		"regionCode": "SS"
+	},
+	{
+		"name": "South Abaco",
+		"regionCode": "SO"
+	},
+	{
+		"name": "South Andros",
+		"regionCode": "SA"
+	},
+	{
+		"name": "South Eleuthera",
+		"regionCode": "SE"
+	},
+	{
+		"name": "Spanish Wells",
+		"regionCode": "SW"
+	},
+	{
+		"name": "West Grand Bahama",
+		"regionCode": "WG"
+	}
+]

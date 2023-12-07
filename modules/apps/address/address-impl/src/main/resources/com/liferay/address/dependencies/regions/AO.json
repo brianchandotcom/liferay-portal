@@ -1,0 +1,74 @@
+[
+	{
+		"name": "Bengo",
+		"regionCode": "BGO"
+	},
+	{
+		"name": "Benguela",
+		"regionCode": "BGU"
+	},
+	{
+		"name": "Bié",
+		"regionCode": "BIE"
+	},
+	{
+		"name": "Cabinda",
+		"regionCode": "CAB"
+	},
+	{
+		"name": "Cuando Cubango",
+		"regionCode": "CCU"
+	},
+	{
+		"name": "Cuanza-Norte",
+		"regionCode": "CNO"
+	},
+	{
+		"name": "Cuanza-Sul",
+		"regionCode": "CUS"
+	},
+	{
+		"name": "Cunene",
+		"regionCode": "CNN"
+	},
+	{
+		"name": "Huambo",
+		"regionCode": "HUA"
+	},
+	{
+		"name": "Huíla",
+		"regionCode": "HUI"
+	},
+	{
+		"name": "Luanda",
+		"regionCode": "LUA"
+	},
+	{
+		"name": "Lunda-Norte",
+		"regionCode": "LNO"
+	},
+	{
+		"name": "Lunda-Sul",
+		"regionCode": "LSU"
+	},
+	{
+		"name": "Malange",
+		"regionCode": "MAL"
+	},
+	{
+		"name": "Moxico",
+		"regionCode": "MOX"
+	},
+	{
+		"name": "Namibe",
+		"regionCode": "NAM"
+	},
+	{
+		"name": "Uíge",
+		"regionCode": "UIG"
+	},
+	{
+		"name": "Zaire",
+		"regionCode": "ZAI"
+	}
+]

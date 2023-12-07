@@ -1,0 +1,174 @@
+[
+	{
+		"name": "Ādažu novads",
+		"regionCode": "11.0"
+	},
+	{
+		"name": "Aizkraukles novads",
+		"regionCode": "2.0"
+	},
+	{
+		"name": "Alūksnes novads",
+		"regionCode": "7.0"
+	},
+	{
+		"name": "Augšdaugavas novads",
+		"regionCode": "111.0"
+	},
+	{
+		"name": "Balvu novads",
+		"regionCode": "15.0"
+	},
+	{
+		"name": "Bauskas novads",
+		"regionCode": "16.0"
+	},
+	{
+		"name": "Cēsu novads",
+		"regionCode": "22.0"
+	},
+	{
+		"name": "Daugavpils",
+		"regionCode": "DGV"
+	},
+	{
+		"name": "Dienvidkurzemes Novads",
+		"regionCode": "112.0"
+	},
+	{
+		"name": "Dobeles novads",
+		"regionCode": "26.0"
+	},
+	{
+		"name": "Gulbenes novads",
+		"regionCode": "33.0"
+	},
+	{
+		"name": "Jēkabpils novads",
+		"regionCode": "42.0"
+	},
+	{
+		"name": "Jelgava",
+		"regionCode": "JEL"
+	},
+	{
+		"name": "Jelgavas novads",
+		"regionCode": "41.0"
+	},
+	{
+		"name": "Jūrmala",
+		"regionCode": "JUR"
+	},
+	{
+		"name": "Ķekavas novads",
+		"regionCode": "52.0"
+	},
+	{
+		"name": "Krāslavas novads",
+		"regionCode": "47.0"
+	},
+	{
+		"name": "Kuldīgas novads",
+		"regionCode": "50.0"
+	},
+	{
+		"name": "Liepāja",
+		"regionCode": "LPX"
+	},
+	{
+		"name": "Limbažu novads",
+		"regionCode": "54.0"
+	},
+	{
+		"name": "Līvānu novads",
+		"regionCode": "56.0"
+	},
+	{
+		"name": "Ludzas novads",
+		"regionCode": "58.0"
+	},
+	{
+		"name": "Madonas novads",
+		"regionCode": "59.0"
+	},
+	{
+		"name": "Mārupes novads",
+		"regionCode": "62.0"
+	},
+	{
+		"name": "Ogres novads",
+		"regionCode": "67.0"
+	},
+	{
+		"name": "Olaines novads",
+		"regionCode": "68.0"
+	},
+	{
+		"name": "Preiļu novads",
+		"regionCode": "73.0"
+	},
+	{
+		"name": "Rēzekne",
+		"regionCode": "REZ"
+	},
+	{
+		"name": "Rēzeknes novads",
+		"regionCode": "77.0"
+	},
+	{
+		"name": "Rīga",
+		"regionCode": "RIX"
+	},
+	{
+		"name": "Ropažu novads",
+		"regionCode": "80.0"
+	},
+	{
+		"name": "Salaspils novads",
+		"regionCode": "87.0"
+	},
+	{
+		"name": "Saldus novads",
+		"regionCode": "88.0"
+	},
+	{
+		"name": "Saulkrastu novads",
+		"regionCode": "89.0"
+	},
+	{
+		"name": "Siguldas novads",
+		"regionCode": "91.0"
+	},
+	{
+		"name": "Smiltenes novads",
+		"regionCode": "94.0"
+	},
+	{
+		"name": "Talsu novads",
+		"regionCode": "97.0"
+	},
+	{
+		"name": "Tukuma novads",
+		"regionCode": "99.0"
+	},
+	{
+		"name": "Valkas novads",
+		"regionCode": "101.0"
+	},
+	{
+		"name": "Valmieras Novads",
+		"regionCode": "113.0"
+	},
+	{
+		"name": "Varakļānu novads",
+		"regionCode": "102.0"
+	},
+	{
+		"name": "Ventspils",
+		"regionCode": "VEN"
+	},
+	{
+		"name": "Ventspils novads",
+		"regionCode": "106.0"
+	}
+]

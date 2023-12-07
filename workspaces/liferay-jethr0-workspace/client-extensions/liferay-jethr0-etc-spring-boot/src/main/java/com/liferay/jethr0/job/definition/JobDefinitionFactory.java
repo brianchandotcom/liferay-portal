@@ -35,6 +35,9 @@ public class JobDefinitionFactory {
 		else if (type == JobEntity.Type.PORTAL_RELEASE) {
 			return new PortalReleaseJobDefinition(type);
 		}
+		else if (type == JobEntity.Type.PORTAL_HOTFIX_RELEASE) {
+			return new PortalHotfixReleaseJobDefinition(type);
+		}
 		else if (type == JobEntity.Type.PORTAL_UPSTREAM_ACCEPTANCE) {
 			return new PortalUpstreamAcceptanceJobDefinition(type);
 		}

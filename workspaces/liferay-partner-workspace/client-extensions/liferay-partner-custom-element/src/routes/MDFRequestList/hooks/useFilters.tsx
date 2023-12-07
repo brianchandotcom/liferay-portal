@@ -80,7 +80,9 @@ export default function useFilters(
 		}
 
 		if (filters.searchTerm) {
-			initialFilter = getSearchFilterTerm(filters.searchTerm);
+			initialFilter = initialFilter.concat(
+				getSearchFilterTerm(filters.searchTerm)
+			);
 		}
 
 		onFilter({

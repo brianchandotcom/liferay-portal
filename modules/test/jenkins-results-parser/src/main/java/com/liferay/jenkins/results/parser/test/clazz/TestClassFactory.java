@@ -12,6 +12,7 @@ import com.liferay.jenkins.results.parser.test.clazz.group.FunctionalBatchTestCl
 import com.liferay.jenkins.results.parser.test.clazz.group.JSUnitModulesBatchTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.JUnitBatchTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.NPMTestBatchTestClassGroup;
+import com.liferay.jenkins.results.parser.test.clazz.group.PlaywrightBatchTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.PluginsBatchTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.PluginsGulpBatchTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.RESTBuilderModulesBatchTestClassGroup;
@@ -190,6 +191,13 @@ public class TestClassFactory {
 			_npmTestClasses.put(canonicalFile, npmTestClass);
 
 			return _npmTestClasses.get(canonicalFile);
+		}
+		else if (batchTestClassGroup instanceof PlaywrightBatchTestClassGroup) {
+			if (jsonObject != null) {
+				return new PlaywrightTestClass(batchTestClassGroup, jsonObject);
+			}
+
+			return new PlaywrightTestClass(batchTestClassGroup, testClassFile);
 		}
 		else if (batchTestClassGroup instanceof PluginsBatchTestClassGroup) {
 			if (jsonObject != null) {

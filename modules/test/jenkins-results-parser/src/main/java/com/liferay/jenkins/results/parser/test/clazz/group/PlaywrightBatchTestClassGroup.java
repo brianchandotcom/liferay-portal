@@ -6,13 +6,16 @@
 package com.liferay.jenkins.results.parser.test.clazz.group;
 
 import com.liferay.jenkins.results.parser.PortalTestClassJob;
+import com.liferay.jenkins.results.parser.test.clazz.TestClassFactory;
+
+import java.io.File;
 
 import org.json.JSONObject;
 
 /**
  * @author Kenji Heigel
  */
-public class PlaywrightBatchTestClassGroup extends DefaultBatchTestClassGroup {
+public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 
 	protected PlaywrightBatchTestClassGroup(
 		JSONObject jsonObject, PortalTestClassJob portalTestClassJob) {
@@ -24,6 +27,24 @@ public class PlaywrightBatchTestClassGroup extends DefaultBatchTestClassGroup {
 		String batchName, PortalTestClassJob portalTestClassJob) {
 
 		super(batchName, portalTestClassJob);
+
+		if (ignore()) {
+			return;
+		}
+
+		File buildTestBatchFile = new File(
+			portalGitWorkingDirectory.getWorkingDirectory(),
+			"build-test-batch.xml");
+
+		for (int axisIndex = 0; axisIndex < getAxisCount(); axisIndex++) {
+			addTestClass(
+				TestClassFactory.newTestClass(
+					this, buildTestBatchFile, String.valueOf(axisIndex)));
+		}
+
+		setAxisTestClassGroups();
+
+		setSegmentTestClassGroups();
 	}
 
 }

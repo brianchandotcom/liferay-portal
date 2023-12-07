@@ -161,7 +161,7 @@ public abstract class DemoCreatorService {
 				UserConstants.USER_ID_DEFAULT, portal.getDefaultCompanyId(),
 				false, "test", "test", true, screenName, emailAddress,
 				LocaleUtil.US, firstName, null, lastName, 0, 0, true, 1, 1,
-				1970, null, UserConstants.TYPE_GUEST, null, null, null, null,
+				1970, null, UserConstants.TYPE_REGULAR, null, null, null, null,
 				false, null);
 
 			user.setPasswordReset(false);

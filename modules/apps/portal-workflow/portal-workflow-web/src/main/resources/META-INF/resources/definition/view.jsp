@@ -38,11 +38,6 @@ else if (StringUtil.equals(definitionsNavigation, "not-published")) {
 		id="workflowDefinitions"
 		searchContainer="<%= workflowDefinitionDisplayContext.getSearch(request, renderRequest, displayedStatus) %>"
 	>
-
-		<%
-		request.setAttribute(WebKeys.SEARCH_CONTAINER, searchContainer);
-		%>
-
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.workflow.WorkflowDefinition"
 			modelVar="workflowDefinition"

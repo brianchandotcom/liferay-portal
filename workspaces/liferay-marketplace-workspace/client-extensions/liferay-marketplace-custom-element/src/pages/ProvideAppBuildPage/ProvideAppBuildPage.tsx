@@ -69,6 +69,10 @@ const UPLOAD_MAX_SIZE = 500000000;
 const UploadAppPackagesComponent = ({versionName}: {versionName: string}) => {
 	const [{appType, buildAppPackages}, dispatch] = useAppContext();
 
+	const enableUploadFiles =
+		!buildAppPackages[versionName]?.length ||
+		buildAppPackages[versionName]?.length < 10;
+
 	const handleUploadAppPackages = (files: File[], versionName?: string) => {
 		const newUploadedPackage = files.map((file) => ({
 			error: false,
@@ -120,7 +124,7 @@ const UploadAppPackagesComponent = ({versionName}: {versionName: string}) => {
 				}
 				versionName={versionName}
 			/>
-			{!buildAppPackages?.length && (
+			{enableUploadFiles && (
 				<DropzoneUpload
 					acceptFileTypes={
 						acceptFileTypes[
@@ -278,8 +282,7 @@ export function ProvideAppBuildPage({
 			}
 
 			newCategories = [...categories.items, ...newCategories];
-		}
-		else {
+		} else {
 			newCategories = [
 				...categories.items.filter((category) => {
 					if (
@@ -335,8 +338,7 @@ export function ProvideAppBuildPage({
 						tableName: 'CUSTOM_FIELDS',
 					});
 				}
-			}
-			catch (error) {
+			} catch (error) {
 				console.error(
 					'Failed during the submitAppBuildPackages',
 					error
@@ -640,8 +642,7 @@ export function ProvideAppBuildPage({
 						await submitAppBuildCategories();
 						await submitAppBuildTypeSpecification();
 						await submitAppBuildPackages();
-					}
-					catch (error) {
+					} catch (error) {
 						console.error(
 							'Something went wrong to buildCategores | buildTypeSpecifications | buildPackages'
 						);

@@ -56,6 +56,7 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -158,6 +159,7 @@ public class UpdateDisplayPageEntryContentTypeMVCActionCommandTest {
 			message);
 	}
 
+	@FeatureFlags("LPS-180328")
 	@Test
 	public void testUpdateDisplayPageEntryContentTypeOnLockedLayout()
 		throws Exception {

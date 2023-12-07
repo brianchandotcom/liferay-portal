@@ -280,14 +280,6 @@ public class DDLDisplayContext {
 
 		return DropdownItemListBuilder.addGroup(
 			dropdownGroupItem -> {
-				dropdownGroupItem.setDropdownItems(
-					getFilterNavigationDropdownItems());
-				dropdownGroupItem.setLabel(
-					LanguageUtil.get(
-						httpServletRequest, "filter-by-navigation"));
-			}
-		).addGroup(
-			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(getOrderByDropdownItems());
 				dropdownGroupItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "order-by"));

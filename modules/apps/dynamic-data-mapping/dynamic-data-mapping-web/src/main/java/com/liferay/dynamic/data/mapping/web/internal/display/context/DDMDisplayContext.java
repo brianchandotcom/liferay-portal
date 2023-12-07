@@ -298,15 +298,6 @@ public class DDMDisplayContext {
 	public List<DropdownItem> getFilterItemsDropdownItems() {
 		return DropdownItemListBuilder.addGroup(
 			dropdownGroupItem -> {
-				dropdownGroupItem.setDropdownItems(
-					_getFilterNavigationDropdownItems());
-				dropdownGroupItem.setLabel(
-					LanguageUtil.get(
-						_ddmWebRequestHelper.getRequest(),
-						"filter-by-navigation"));
-			}
-		).addGroup(
-			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(_getOrderByDropdownItems());
 				dropdownGroupItem.setLabel(
 					LanguageUtil.get(
@@ -797,17 +788,6 @@ public class DDMDisplayContext {
 		}
 
 		return null;
-	}
-
-	private List<DropdownItem> _getFilterNavigationDropdownItems() {
-		return DropdownItemListBuilder.add(
-			dropdownItem -> {
-				dropdownItem.setActive(true);
-				dropdownItem.setHref(_getPortletURL(), "navigation", "all");
-				dropdownItem.setLabel(
-					LanguageUtil.get(_ddmWebRequestHelper.getRequest(), "all"));
-			}
-		).build();
 	}
 
 	private String _getKeywords() {

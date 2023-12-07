@@ -193,14 +193,6 @@ public class KaleoFormsAdminDisplayContext {
 
 		return DropdownItemListBuilder.addGroup(
 			dropdownGroupItem -> {
-				dropdownGroupItem.setDropdownItems(
-					getFilterNavigationDropdownItems());
-				dropdownGroupItem.setLabel(
-					LanguageUtil.get(
-						httpServletRequest, "filter-by-navigation"));
-			}
-		).addGroup(
-			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(getOrderByDropdownItems());
 				dropdownGroupItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "order-by"));
@@ -517,18 +509,6 @@ public class KaleoFormsAdminDisplayContext {
 		}
 
 		return _tabs1Unpublished;
-	}
-
-	protected List<DropdownItem> getFilterNavigationDropdownItems() {
-		return DropdownItemListBuilder.add(
-			dropdownItem -> {
-				dropdownItem.setActive(true);
-				dropdownItem.setHref(getPortletURL(), "navigation", "all");
-				dropdownItem.setLabel(
-					LanguageUtil.get(
-						_kaleoFormsAdminRequestHelper.getRequest(), "all"));
-			}
-		).build();
 	}
 
 	protected String getKeywords() {

@@ -75,12 +75,31 @@ public class PortletConfigurationPortletTest {
 
 	@Test
 	public void testUpdateRolePermissions() throws Exception {
+		List<String> plids = _addLayouts(1);
+
+		List<Long> roleIds = _addRoles();
+
+		ReflectionTestUtil.invoke(
+			_portlet, "updateRolePermissions",
+			new Class<?>[] {ActionRequest.class, ActionResponse.class},
+			_getMockActionRequest(plids, roleIds), new MockActionResponse());
+
+		_assertResourcePermissions(plids, roleIds);
+	}
+
+	private List<String> _addLayouts(int numberOfItems) throws Exception {
 		List<String> plids = new ArrayList<>();
 
-		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+		for (int i = 0; i < numberOfItems; i++) {
+			Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
-		plids.add(String.valueOf(layout.getPlid()));
+			plids.add(String.valueOf(layout.getPlid()));
+		}
 
+		return plids;
+	}
+
+	private List<Long> _addRoles() throws Exception {
 		List<Long> roleIds = new ArrayList<>();
 
 		for (int i = 0; i < 10; i++) {
@@ -89,12 +108,7 @@ public class PortletConfigurationPortletTest {
 			roleIds.add(role.getRoleId());
 		}
 
-		ReflectionTestUtil.invoke(
-			_portlet, "updateRolePermissions",
-			new Class<?>[] {ActionRequest.class, ActionResponse.class},
-			_getMockActionRequest(plids, roleIds), new MockActionResponse());
-
-		_assertResourcePermissions(plids, roleIds);
+		return roleIds;
 	}
 
 	private void _assertResourcePermissions(

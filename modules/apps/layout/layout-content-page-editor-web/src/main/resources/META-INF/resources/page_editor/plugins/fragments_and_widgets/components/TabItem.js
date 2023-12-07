@@ -345,6 +345,7 @@ const HighlightButton = ({
 			onBlur={() => setItemActive(false)}
 			onClick={onToggleHighlighted}
 			onFocus={onFocus}
+			onKeyDown={(event) => event.stopPropagation()}
 			symbol={highlighted ? 'star' : 'star-o'}
 			tabIndex={isNavigationTarget ? 0 : -1}
 			title={title}
@@ -384,6 +385,7 @@ const AddButton = ({isNavigationTarget, item, setItemActive}) => {
 				})
 			}
 			onFocus={() => setItemActive(true)}
+			onKeyDown={(event) => event.stopPropagation()}
 			symbol="plus"
 			tabIndex={isNavigationTarget ? 0 : -1}
 			title={sub(Liferay.Language.get('add-x'), item.label)}

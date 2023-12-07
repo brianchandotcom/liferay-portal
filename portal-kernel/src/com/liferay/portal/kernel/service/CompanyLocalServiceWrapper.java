@@ -71,6 +71,15 @@ public class CompanyLocalServiceWrapper
 			defaultAdminMiddleName, defaultAdminLastName);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.model.Company addDBPartitionCompany(
+			long companyId, String name, String virtualHostName, String webId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _companyLocalService.addDBPartitionCompany(
+			companyId, name, virtualHostName, webId);
+	}
+
 	/**
 	 * Returns the company with the web domain.
 	 *
@@ -287,11 +296,11 @@ public class CompanyLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.Company extractCompany(
+	public com.liferay.portal.kernel.model.Company extractDBPartitionCompany(
 			long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _companyLocalService.extractCompany(companyId);
+		return _companyLocalService.extractDBPartitionCompany(companyId);
 	}
 
 	@Override

@@ -319,6 +319,84 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		}
 	}
 
+	public Company addDBPartitionCompany(
+			long companyId, String name, String virtualHostName, String webId)
+		throws PortalException {
+
+		if (!DBPartition.isPartitionEnabled()) {
+			throw new UnsupportedOperationException(
+				"Database partition must be enabled");
+		}
+
+		if (companyId == PortalInstances.getDefaultCompanyId()) {
+			throw new IllegalArgumentException(
+				"companyId matches default companyId " + companyId);
+		}
+
+		DBPartitionUtil.insertDBPartition(companyId);
+
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setWithSafeCloseable(companyId)) {
+
+			companyPersistence.clearCache();
+			_virtualHostPersistence.clearCache();
+
+			Company company = companyPersistence.findByPrimaryKey(companyId);
+
+			if (Validator.isNotNull(name) &&
+				!StringUtil.equals(company.getName(), name)) {
+
+				validateName(companyId, name);
+
+				company.setName(name);
+
+				company = companyPersistence.update(company);
+			}
+
+			if (Validator.isNotNull(virtualHostName) &&
+				!StringUtil.equals(
+					company.getVirtualHostname(), virtualHostName)) {
+
+				validateVirtualHost(company.getWebId(), virtualHostName);
+
+				company = updateVirtualHostname(companyId, virtualHostName);
+			}
+
+			if (Validator.isNotNull(webId) &&
+				!StringUtil.equals(company.getWebId(), webId)) {
+
+				validateWebId(webId);
+
+				company.setWebId(webId);
+
+				company = companyPersistence.update(company);
+			}
+
+			preregisterCompany(company);
+
+			_resourceActionLocalService.checkResourceActions();
+
+			TransactionCommitCallbackUtil.registerCallback(
+				() -> {
+					Company insertedCompany =
+						companyPersistence.findByPrimaryKey(companyId);
+
+					registerCompany(insertedCompany);
+
+					PortalInstances.initCompany(insertedCompany, true);
+
+					return null;
+				});
+
+			return company;
+		}
+		catch (PortalException portalException) {
+			extractDBPartitionCompany(companyId);
+
+			throw portalException;
+		}
+	}
+
 	/**
 	 * Returns the company with the web domain.
 	 *

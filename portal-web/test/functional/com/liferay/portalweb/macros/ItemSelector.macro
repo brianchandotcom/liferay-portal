@@ -457,7 +457,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Search#SEARCH_INFO",
-			value1 = "1 Result for \"${imageFileName}\"");
+			value1 = "1 Result Found for \"${imageFileName}\"");
 
 		LexiconCard.viewCardPresent(card = ${imageFileName});
 

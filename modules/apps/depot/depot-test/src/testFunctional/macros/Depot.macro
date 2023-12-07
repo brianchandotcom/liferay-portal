@@ -1234,12 +1234,12 @@ definition {
 		if (${resultCount} != 1) {
 			AssertTextEquals.assertPartialText(
 				locator1 = "ManagementBar#SEARCH_RESULT_SUMMARY",
-				value1 = "${resultCount} Results for ${searchTerm}");
+				value1 = "${resultCount} Results Found for ${searchTerm}");
 		}
 		else {
 			AssertTextEquals.assertPartialText(
 				locator1 = "ManagementBar#SEARCH_RESULT_SUMMARY",
-				value1 = "1 Result for ${searchTerm}");
+				value1 = "1 Result Found for ${searchTerm}");
 		}
 
 		for (var depotName : list ${includedResults}) {

@@ -17,6 +17,7 @@ CalendarResourceDisplayTerms displayTerms = new CalendarResourceDisplayTerms(ren
 	disabled="<%= calendarDisplayContext.isDisabledManagementBar() %>"
 	filterDropdownItems="<%= calendarDisplayContext.getFilterItemsDropdownItems() %>"
 	itemsTotal="<%= calendarDisplayContext.getTotalItems() %>"
+	orderDropdownItems="<%= calendarDisplayContext.getOrderItemsDropdownItems() %>"
 	searchActionURL="<%= calendarDisplayContext.getSearchActionURL() %>"
 	searchContainerId="<%= calendarDisplayContext.getSearchContainerId() %>"
 	searchFormName="fm"

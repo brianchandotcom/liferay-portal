@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
@@ -188,12 +189,17 @@ public class KaleoFormsAdminDisplayContext {
 	}
 
 	public List<DropdownItem> getFilterItemsDropdownItems() {
+		if (FeatureFlagManagerUtil.isEnabled("LPS-144527")) {
+			return null;
+		}
+
 		HttpServletRequest httpServletRequest =
 			_kaleoFormsAdminRequestHelper.getRequest();
 
 		return DropdownItemListBuilder.addGroup(
 			dropdownGroupItem -> {
-				dropdownGroupItem.setDropdownItems(getOrderByDropdownItems());
+				dropdownGroupItem.setDropdownItems(
+					getOrderItemsDropdownItems());
 				dropdownGroupItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "order-by"));
 			}
@@ -303,6 +309,14 @@ public class KaleoFormsAdminDisplayContext {
 			"admin-order-by-type", "asc");
 
 		return _orderByType;
+	}
+
+	public List<DropdownItem> getOrderItemsDropdownItems() {
+		return DropdownItemListBuilder.add(
+			_getOrderByDropdownItem("create-date")
+		).add(
+			_getOrderByDropdownItem("modified-date")
+		).build();
 	}
 
 	public PortletURL getPortletURL() {
@@ -513,14 +527,6 @@ public class KaleoFormsAdminDisplayContext {
 
 	protected String getKeywords() {
 		return ParamUtil.getString(_renderRequest, "keywords");
-	}
-
-	protected List<DropdownItem> getOrderByDropdownItems() {
-		return DropdownItemListBuilder.add(
-			_getOrderByDropdownItem("create-date")
-		).add(
-			_getOrderByDropdownItem("modified-date")
-		).build();
 	}
 
 	protected boolean hasResults() {

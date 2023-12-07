@@ -29,6 +29,7 @@ PortletURL portletURL = ddmDataProviderDisplayContext.getPortletURL();
 	disabled="<%= ddmDataProviderDisplayContext.isDisabledManagementBar() %>"
 	filterDropdownItems="<%= ddmDataProviderDisplayContext.getFilterItemsDropdownItems() %>"
 	itemsTotal="<%= ddmDataProviderDisplayContext.getTotalItems() %>"
+	orderDropdownItems="<%= ddmDataProviderDisplayContext.getOrderItemsDropdownItems() %>"
 	propsTransformer="js/DDMDataProviderManagementToolbarPropsTransformer"
 	searchActionURL="<%= portletURL.toString() %>"
 	searchContainerId="<%= ddmDataProviderDisplayContext.getSearchContainerId() %>"

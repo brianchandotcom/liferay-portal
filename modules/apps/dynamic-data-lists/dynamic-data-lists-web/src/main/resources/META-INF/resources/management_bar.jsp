@@ -28,6 +28,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 	disabled="<%= ddlDisplayContext.isDisabledManagementBar() %>"
 	filterDropdownItems="<%= ddlDisplayContext.getFilterItemsDropdownItems() %>"
 	itemsTotal="<%= ddlDisplayContext.getTotalItems() %>"
+	orderDropdownItems="<%= ddlDisplayContext.getOrderItemsDropdownItems() %>"
 	propsTransformer="js/ManagementToolbarPropsTransformer"
 	searchActionURL="<%= portletURL.toString() %>"
 	searchContainerId="<%= ddlDisplayContext.getSearchContainerId() %>"

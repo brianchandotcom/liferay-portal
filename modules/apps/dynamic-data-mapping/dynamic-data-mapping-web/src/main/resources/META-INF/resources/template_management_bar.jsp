@@ -27,6 +27,7 @@ boolean includeCheckBox = ParamUtil.getBoolean(request, "includeCheckBox", true)
 	disabled="<%= ddmDisplayContext.isDisabledManagementBar(DDMWebKeys.DYNAMIC_DATA_MAPPING_TEMPLATE) %>"
 	filterDropdownItems="<%= ddmDisplayContext.getFilterItemsDropdownItems() %>"
 	itemsTotal="<%= ddmDisplayContext.getTotalItems(DDMWebKeys.DYNAMIC_DATA_MAPPING_TEMPLATE) %>"
+	orderDropdownItems="<%= ddmDisplayContext.getOrderItemsDropdownItems() %>"
 	propsTransformer="js/DDMTemplateManagementToolbarPropsTransformer"
 	searchActionURL="<%= ddmDisplayContext.getTemplateSearchActionURL() %>"
 	searchContainerId="<%= ddmDisplayContext.getTemplateSearchContainerId() %>"

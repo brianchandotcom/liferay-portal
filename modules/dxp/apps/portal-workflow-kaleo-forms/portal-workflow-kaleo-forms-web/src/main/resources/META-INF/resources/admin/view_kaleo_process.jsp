@@ -45,6 +45,7 @@ KaleoProcess kaleoProcess = kaleoFormsViewRecordsDisplayContext.getKaleoProcess(
 	creationMenu="<%= kaleoFormsViewRecordsDisplayContext.getCreationMenu() %>"
 	filterDropdownItems="<%= kaleoFormsViewRecordsDisplayContext.getFilterItemsDropdownItems() %>"
 	itemsTotal="<%= kaleoFormsViewRecordsDisplayContext.getTotalItems() %>"
+	orderDropdownItems="<%= kaleoFormsViewRecordsDisplayContext.getOrderItemsDropdownItems() %>"
 	propsTransformer="admin/js/KaleoFormsViewRecordsManagementToolbarPropsTransformer"
 	searchActionURL="<%= kaleoFormsViewRecordsDisplayContext.getSearchActionURL() %>"
 	searchContainerId="<%= kaleoFormsViewRecordsDisplayContext.getSearchContainerId() %>"

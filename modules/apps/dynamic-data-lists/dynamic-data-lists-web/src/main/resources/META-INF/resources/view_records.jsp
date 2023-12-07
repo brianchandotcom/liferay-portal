@@ -45,6 +45,7 @@ if (!ddlDisplayContext.isAdminPortlet()) {
 	disabled="<%= ddlViewRecordsDisplayContext.isDisabledManagementBar() %>"
 	filterDropdownItems="<%= ddlViewRecordsDisplayContext.getFilterItemsDropdownItems() %>"
 	itemsTotal="<%= ddlViewRecordsDisplayContext.getTotalItems() %>"
+	orderDropdownItems="<%= ddlViewRecordsDisplayContext.getOrderItemsDropdownItems() %>"
 	propsTransformer="js/ViewRecordsManagementToolbarPropsTransformer"
 	searchActionURL="<%= ddlViewRecordsDisplayContext.getSearchActionURL() %>"
 	searchContainerId="<%= ddlViewRecordsDisplayContext.getSearchContainerId() %>"

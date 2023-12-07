@@ -17,6 +17,7 @@
 	disabled="<%= ddmFormBrowserDisplayContext.isDisabledManagementBar() %>"
 	filterDropdownItems="<%= ddmFormBrowserDisplayContext.getFilterItemsDropdownItems() %>"
 	itemsTotal="<%= ddmFormBrowserDisplayContext.getTotalItems() %>"
+	orderDropdownItems="<%= ddmFormBrowserDisplayContext.getOrderItemsDropdownItems() %>"
 	searchActionURL="<%= ddmFormBrowserDisplayContext.getSearchActionURL() %>"
 	searchContainerId="<%= ddmFormBrowserDisplayContext.getSearchContainerId() %>"
 	searchFormName="searchFm"

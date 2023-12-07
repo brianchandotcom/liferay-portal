@@ -32,6 +32,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
@@ -245,12 +246,17 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 	}
 
 	public List<DropdownItem> getFilterItemsDropdownItems() {
+		if (FeatureFlagManagerUtil.isEnabled("LPS-144527")) {
+			return null;
+		}
+
 		HttpServletRequest httpServletRequest =
 			PortalUtil.getHttpServletRequest(_renderRequest);
 
 		return DropdownItemListBuilder.addGroup(
 			dropdownGroupItem -> {
-				dropdownGroupItem.setDropdownItems(getOrderByDropdownItems());
+				dropdownGroupItem.setDropdownItems(
+					getOrderItemsDropdownItems());
 				dropdownGroupItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "order-by"));
 			}
@@ -307,6 +313,21 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 			"view-entries-order-by-type", "asc");
 
 		return _orderByType;
+	}
+
+	public List<DropdownItem> getOrderItemsDropdownItems() {
+		return DropdownItemListBuilder.add(
+			dropdownItem -> {
+				String orderByCol = "modified-date";
+
+				dropdownItem.setActive(orderByCol.equals(getOrderByCol()));
+				dropdownItem.setHref(getPortletURL(), "orderByCol", orderByCol);
+				dropdownItem.setLabel(
+					LanguageUtil.get(
+						PortalUtil.getHttpServletRequest(_renderRequest),
+						orderByCol));
+			}
+		).build();
 	}
 
 	public PortletURL getPortletURL() {
@@ -479,21 +500,6 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 
 	protected String getKeywords() {
 		return ParamUtil.getString(_renderRequest, "keywords");
-	}
-
-	protected List<DropdownItem> getOrderByDropdownItems() {
-		return DropdownItemListBuilder.add(
-			dropdownItem -> {
-				String orderByCol = "modified-date";
-
-				dropdownItem.setActive(orderByCol.equals(getOrderByCol()));
-				dropdownItem.setHref(getPortletURL(), "orderByCol", orderByCol);
-				dropdownItem.setLabel(
-					LanguageUtil.get(
-						PortalUtil.getHttpServletRequest(_renderRequest),
-						orderByCol));
-			}
-		).build();
 	}
 
 	protected boolean hasResults() {

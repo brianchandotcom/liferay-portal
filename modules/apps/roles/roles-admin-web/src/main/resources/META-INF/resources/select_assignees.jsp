@@ -37,6 +37,7 @@ SearchContainer<?> searchContainer = editRoleAssignmentsManagementToolbarDisplay
 	creationMenu="<%= editRoleAssignmentsManagementToolbarDisplayContext.getCreationMenu() %>"
 	filterDropdownItems="<%= editRoleAssignmentsManagementToolbarDisplayContext.getFilterDropdownItems() %>"
 	itemsTotal="<%= searchContainer.getTotal() %>"
+	orderDropdownItems="<%= editRoleAssignmentsManagementToolbarDisplayContext.getOrderByDropDownItems() %>"
 	propsTransformer="js/SelectAssigneesManagementToolbarPropsTransformer"
 	searchActionURL="<%= editRoleAssignmentsManagementToolbarDisplayContext.getSearchActionURL() %>"
 	searchContainerId="assigneesSearch"

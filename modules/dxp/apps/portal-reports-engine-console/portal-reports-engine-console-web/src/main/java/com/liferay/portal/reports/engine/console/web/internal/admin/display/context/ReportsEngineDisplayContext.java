@@ -11,10 +11,10 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
-import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -41,6 +41,7 @@ import com.liferay.portal.reports.engine.console.web.internal.admin.search.Sourc
 import com.liferay.portal.reports.engine.console.web.internal.admin.search.SourceSearch;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 import javax.portlet.PortletURL;
@@ -138,12 +139,14 @@ public class ReportsEngineDisplayContext {
 	}
 
 	public DropdownItemList getFilterOptions() {
+		if (FeatureFlagManagerUtil.isEnabled("LPS-144527")) {
+			return null;
+		}
+
 		return DropdownItemListBuilder.addGroup(
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
-					DropdownItemListBuilder.add(
-						_getOrderByDropdownItem("create-date")
-					).build());
+					getOrderItemsDropdownItems());
 				dropdownGroupItem.setLabel(
 					LanguageUtil.get(
 						_reportsEngineRequestHelper.getRequest(), "order-by"));
@@ -161,6 +164,21 @@ public class ReportsEngineDisplayContext {
 			"asc");
 
 		return _orderByType;
+	}
+
+	public List<DropdownItem> getOrderItemsDropdownItems() {
+		return DropdownItemListBuilder.add(
+			dropdownItem -> {
+				dropdownItem.setActive(
+					Objects.equals(_getOrderByCol(), "create-date"));
+				dropdownItem.setHref(
+					getPortletURL(), "orderByCol", "create-date");
+				dropdownItem.setLabel(
+					LanguageUtil.get(
+						_reportsEngineRequestHelper.getRequest(),
+						"create-date"));
+			}
+		).build();
 	}
 
 	public PortletURL getPortletURL() {
@@ -396,19 +414,6 @@ public class ReportsEngineDisplayContext {
 			"create-date");
 
 		return _orderByCol;
-	}
-
-	private UnsafeConsumer<DropdownItem, Exception> _getOrderByDropdownItem(
-		String orderByCol) {
-
-		return dropdownItem -> {
-			dropdownItem.setActive(
-				Objects.equals(_getOrderByCol(), orderByCol));
-			dropdownItem.setHref(getPortletURL(), "orderByCol", orderByCol);
-			dropdownItem.setLabel(
-				LanguageUtil.get(
-					_reportsEngineRequestHelper.getRequest(), orderByCol));
-		};
 	}
 
 	private String _getPortletName() {

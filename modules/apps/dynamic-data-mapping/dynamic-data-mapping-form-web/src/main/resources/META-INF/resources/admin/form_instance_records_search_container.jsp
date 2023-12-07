@@ -29,6 +29,7 @@ PortletURL portletURL = ddmFormViewFormInstanceRecordsDisplayContext.getPortletU
 	disabled="<%= ddmFormViewFormInstanceRecordsDisplayContext.isDisabledManagementBar() %>"
 	filterDropdownItems="<%= ddmFormViewFormInstanceRecordsDisplayContext.getFilterItemsDropdownItems() %>"
 	itemsTotal="<%= ddmFormViewFormInstanceRecordsDisplayContext.getTotalItems() %>"
+	orderDropdownItems="<%= ddmFormViewFormInstanceRecordsDisplayContext.getOrderItemsDropdownItems() %>"
 	propsTransformer="admin/js/DDMFormViewFormInstanceRecordsManagementToolbarPropsTransformer"
 	searchActionURL="<%= ddmFormViewFormInstanceRecordsDisplayContext.getSearchActionURL() %>"
 	searchContainerId="<%= ddmFormViewFormInstanceRecordsDisplayContext.getSearchContainerId() %>"

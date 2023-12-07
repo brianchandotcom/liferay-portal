@@ -30,6 +30,7 @@ if ((classPK > 0) && (structureClassNameId == classNameId)) {
 	disabled="<%= ddmDisplayContext.isDisabledManagementBar(DDMWebKeys.DYNAMIC_DATA_MAPPING_TEMPLATE) %>"
 	filterDropdownItems="<%= ddmDisplayContext.getFilterItemsDropdownItems() %>"
 	itemsTotal="<%= ddmDisplayContext.getTotalItems(DDMWebKeys.DYNAMIC_DATA_MAPPING_TEMPLATE) %>"
+	orderDropdownItems="<%= ddmDisplayContext.getOrderItemsDropdownItems() %>"
 	searchActionURL="<%= ddmDisplayContext.getSelectTemplateSearchActionURL() %>"
 	searchFormName="searchForm"
 	selectable="<%= false %>"

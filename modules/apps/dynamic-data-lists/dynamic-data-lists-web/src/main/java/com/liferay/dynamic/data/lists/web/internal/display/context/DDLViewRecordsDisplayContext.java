@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -218,11 +219,16 @@ public class DDLViewRecordsDisplayContext {
 	}
 
 	public List<DropdownItem> getFilterItemsDropdownItems() {
+		if (FeatureFlagManagerUtil.isEnabled("LPS-144527")) {
+			return null;
+		}
+
 		HttpServletRequest httpServletRequest = _ddlRequestHelper.getRequest();
 
 		return DropdownItemListBuilder.addGroup(
 			dropdownGroupItem -> {
-				dropdownGroupItem.setDropdownItems(getOrderByDropdownItems());
+				dropdownGroupItem.setDropdownItems(
+					getOrderItemsDropdownItems());
 				dropdownGroupItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "order-by"));
 			}
@@ -262,6 +268,14 @@ public class DDLViewRecordsDisplayContext {
 			"view-records-order-by-type", "asc");
 
 		return _orderByType;
+	}
+
+	public List<DropdownItem> getOrderItemsDropdownItems() {
+		return DropdownItemListBuilder.add(
+			getOrderByDropdownItem("create-date")
+		).add(
+			getOrderByDropdownItem("modified-date")
+		).build();
 	}
 
 	public PortletURL getPortletURL() {
@@ -517,14 +531,6 @@ public class DDLViewRecordsDisplayContext {
 			dropdownItem.setLabel(
 				LanguageUtil.get(_ddlRequestHelper.getRequest(), orderByCol));
 		};
-	}
-
-	protected List<DropdownItem> getOrderByDropdownItems() {
-		return DropdownItemListBuilder.add(
-			getOrderByDropdownItem("create-date")
-		).add(
-			getOrderByDropdownItem("modified-date")
-		).build();
 	}
 
 	protected PermissionChecker getPermissionChecker() {

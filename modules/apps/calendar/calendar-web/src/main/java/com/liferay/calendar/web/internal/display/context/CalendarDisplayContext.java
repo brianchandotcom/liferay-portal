@@ -34,6 +34,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -240,8 +241,10 @@ public class CalendarDisplayContext {
 					LanguageUtil.get(httpServletRequest, "scope"));
 			}
 		).addGroup(
+			() -> !FeatureFlagManagerUtil.isEnabled("LPS-144527"),
 			dropdownGroupItem -> {
-				dropdownGroupItem.setDropdownItems(_getOrderByDropdownItems());
+				dropdownGroupItem.setDropdownItems(
+					getOrderItemsDropdownItems());
 				dropdownGroupItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "order-by"));
 			}
@@ -373,6 +376,17 @@ public class CalendarDisplayContext {
 		_orderByType = orderByType;
 
 		return _orderByType;
+	}
+
+	public List<DropdownItem> getOrderItemsDropdownItems() {
+		return DropdownItemListBuilder.add(
+			dropdownItem -> {
+				dropdownItem.setActive(Objects.equals(getOrderByCol(), "name"));
+				dropdownItem.setHref(getPortletURL(), "orderByCol", "name");
+				dropdownItem.setLabel(
+					LanguageUtil.get(_themeDisplay.getRequest(), "name"));
+			}
+		).build();
 	}
 
 	public List<Calendar> getOtherCalendars(User user, long[] calendarIds)
@@ -634,17 +648,6 @@ public class CalendarDisplayContext {
 		).buildPortletURL();
 
 		return _iteratorURL;
-	}
-
-	private List<DropdownItem> _getOrderByDropdownItems() {
-		return DropdownItemListBuilder.add(
-			dropdownItem -> {
-				dropdownItem.setActive(Objects.equals(getOrderByCol(), "name"));
-				dropdownItem.setHref(getPortletURL(), "orderByCol", "name");
-				dropdownItem.setLabel(
-					LanguageUtil.get(_themeDisplay.getRequest(), "name"));
-			}
-		).build();
 	}
 
 	private String _getPortletPreference(String name, String defaultValue) {

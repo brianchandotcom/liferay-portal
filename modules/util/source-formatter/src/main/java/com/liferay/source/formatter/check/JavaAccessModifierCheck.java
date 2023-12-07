@@ -5,7 +5,9 @@
 
 package com.liferay.source.formatter.check;
 
-import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.CharPool;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.BNDSettings;
 import com.liferay.source.formatter.check.util.JavaSourceUtil;
 import com.liferay.source.formatter.parser.JavaClass;
@@ -25,6 +27,10 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Seiphon Wang
@@ -89,10 +95,22 @@ public class JavaAccessModifierCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private boolean _hasSubclasses(JavaClass javaClass) {
-		String className = javaClass.getName();
+	private static String _extractSuperClassName(String sourceCode) {
+		Matcher matcher = _superClassPattern.matcher(sourceCode);
 
-		String packageName = javaClass.getPackageName();
+		if (matcher.find()) {
+			return matcher.group(1);
+		}
+
+		return null;
+	}
+
+	private Map<String, List<String>> _getCommponentJavaFileMap() {
+		if (_componentJavaFileMap != null) {
+			return _componentJavaFileMap;
+		}
+
+		_componentJavaFileMap = new ConcurrentHashMap<>();
 
 		String moduleRootDirLocation = "modules/";
 
@@ -103,12 +121,8 @@ public class JavaAccessModifierCheck extends BaseFileCheck {
 
 			if (file.exists()) {
 				lines = SourceFormatterUtil.matchFileContents(
-					Arrays.asList(
-						"-E", "-l",
-						StringBundler.concat(
-							"(extends ", className, ")|(extends ", packageName,
-							".", className, ")")),
-					getBaseDirName(), new String[0], new String[] {"**/*.java"},
+					Arrays.asList("-E", "-l", "@Component"), getBaseDirName(),
+					new String[0], new String[] {"**/*.java"},
 					getSourceFormatterExcludes(), false);
 			}
 
@@ -128,21 +142,30 @@ public class JavaAccessModifierCheck extends BaseFileCheck {
 				Path filePath = baseDir.resolve(line);
 
 				if (Files.exists(filePath)) {
+					String fileName = filePath.toString();
+
+					fileName = StringUtil.replace(
+						fileName, CharPool.BACK_SLASH, CharPool.SLASH);
+
+					String className = JavaSourceUtil.getClassName(fileName);
+
 					try {
 						String content = FileUtil.read(filePath.toFile());
 
-						if (!content.contains("@Component")) {
-							return false;
-						}
+						String superClassName = _extractSuperClassName(content);
 
-						if (content.contains(
-								StringBundler.concat(
-									"package ", packageName, ";")) ||
-							content.contains(
-								StringBundler.concat(
-									"import ", packageName, ".", className))) {
+						if (superClassName != null) {
+							List<String> subclassList =
+								_componentJavaFileMap.get(superClassName);
 
-							return true;
+							if (subclassList == null) {
+								subclassList = new ArrayList<>();
+							}
+
+							subclassList.add(className);
+
+							_componentJavaFileMap.put(
+								superClassName, subclassList);
 						}
 					}
 					catch (IOException ioException) {
@@ -151,7 +174,27 @@ public class JavaAccessModifierCheck extends BaseFileCheck {
 			}
 		}
 
-		return false;
+		return _componentJavaFileMap;
 	}
+
+	private boolean _hasSubclasses(JavaClass javaClass) {
+		Map<String, List<String>> componentJavaFileMap =
+			_getCommponentJavaFileMap();
+
+		String className = javaClass.getName();
+
+		List<String> subclassNames = componentJavaFileMap.get(className);
+
+		if (ListUtil.isEmpty(subclassNames)) {
+			return false;
+		}
+
+		return true;
+	}
+
+	private static final Pattern _superClassPattern = Pattern.compile(
+		"extends\\s+(\\w+)", Pattern.DOTALL);
+
+	private Map<String, List<String>> _componentJavaFileMap;
 
 }

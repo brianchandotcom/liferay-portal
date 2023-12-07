@@ -142,16 +142,6 @@ public class ReportsEngineDisplayContext {
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
 					DropdownItemListBuilder.add(
-						_getFilterNavigationDropdownItem("all")
-					).build());
-				dropdownGroupItem.setLabel(
-					LanguageUtil.get(
-						_reportsEngineRequestHelper.getRequest(), "filter"));
-			}
-		).addGroup(
-			dropdownGroupItem -> {
-				dropdownGroupItem.setDropdownItems(
-					DropdownItemListBuilder.add(
 						_getOrderByDropdownItem("create-date")
 					).build());
 				dropdownGroupItem.setLabel(
@@ -383,21 +373,6 @@ public class ReportsEngineDisplayContext {
 		}
 
 		return entrySearch;
-	}
-
-	private UnsafeConsumer<DropdownItem, Exception>
-		_getFilterNavigationDropdownItem(String navigation) {
-
-		return dropdownItem -> {
-			dropdownItem.setActive(
-				Objects.equals(_getNavigation(), navigation));
-			dropdownItem.setHref(
-				getPortletURL(), "navigation", navigation, "mvcPath",
-				"/admin/view.jsp", "tabs1", _getTabs1());
-			dropdownItem.setLabel(
-				LanguageUtil.get(
-					_reportsEngineRequestHelper.getRequest(), navigation));
-		};
 	}
 
 	private String _getNavigation() {

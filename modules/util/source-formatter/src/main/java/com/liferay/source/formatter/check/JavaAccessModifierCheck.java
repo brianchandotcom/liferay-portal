@@ -95,27 +95,15 @@ public class JavaAccessModifierCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private static String _extractSuperClassName(String content) {
-		Matcher matcher = _superClassPattern.matcher(content);
-
-		if (matcher.find()) {
-			return matcher.group(1);
-		}
-
-		return null;
-	}
-
-	private static String _extractSuperClassNameWithPackageName(
-		String content) {
-
-		String superClassName = _extractSuperClassName(content);
+	private static String _getSuperClassNameWithPackageName(String content) {
+		String superClassName = JavaSourceUtil.getSuperClassName(content);
 
 		if (superClassName == null) {
 			return null;
 		}
 
 		Pattern superClassImportPattern = Pattern.compile(
-			"import\\s+([\\w.]+" + superClassName + "\\s*;)", Pattern.DOTALL);
+			"import\\s+([\\w.]+" + superClassName + ")\\s*;", Pattern.DOTALL);
 
 		Matcher matcher = superClassImportPattern.matcher(content);
 
@@ -158,9 +146,9 @@ public class JavaAccessModifierCheck extends BaseFileCheck {
 					continue;
 				}
 
-				Path baseDir = Paths.get(getBaseDirName());
+				Path baseDirPath = Paths.get(getBaseDirName());
 
-				Path filePath = baseDir.resolve(line);
+				Path filePath = baseDirPath.resolve(line);
 
 				if (Files.exists(filePath)) {
 					String fileName = filePath.toString();
@@ -174,7 +162,7 @@ public class JavaAccessModifierCheck extends BaseFileCheck {
 						String content = FileUtil.read(filePath.toFile());
 
 						String superClassName =
-							_extractSuperClassNameWithPackageName(content);
+							_getSuperClassNameWithPackageName(content);
 
 						if (superClassName != null) {
 							List<String> subclassList =
@@ -216,9 +204,6 @@ public class JavaAccessModifierCheck extends BaseFileCheck {
 
 		return true;
 	}
-
-	private static final Pattern _superClassPattern = Pattern.compile(
-		"extends\\s+(\\w+(<.*?>)?)", Pattern.DOTALL);
 
 	private Map<String, List<String>> _componentJavaFileMap;
 

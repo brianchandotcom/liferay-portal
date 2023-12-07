@@ -88,6 +88,7 @@ import com.liferay.site.item.selector.criterion.SiteItemSelectorCriterion;
 import com.liferay.site.manager.RecentGroupManager;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -593,16 +594,33 @@ public class JournalEditArticleDisplayContext {
 	}
 
 	public Map<String, Object> getFieldMap() throws PortalException {
-		if (_article == null) {
-			return null;
-		}
-
 		return HashMapBuilder.<String, Object>put(
-			"description", _article.getDescriptionMap()
+			"descriptionMapAsXML",
+			() -> {
+				if (_article != null) {
+					return _article.getDescriptionMap();
+				}
+
+				return Collections.emptyMap();
+			}
 		).put(
-			"friendlyURL", _article.getFriendlyURLMap()
+			"friendlyURL",
+			() -> {
+				if (_article != null) {
+					return _article.getFriendlyURLMap();
+				}
+
+				return Collections.emptyMap();
+			}
 		).put(
-			"title", _article.getTitleMap()
+			"titleMapAsXML",
+			() -> {
+				if (_article != null) {
+					return _article.getTitleMap();
+				}
+
+				return Collections.emptyMap();
+			}
 		).build();
 	}
 

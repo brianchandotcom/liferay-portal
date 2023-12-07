@@ -658,6 +658,8 @@ AUI.add(
 					);
 
 					if (languageStatusNode) {
+						Liferay.fire('inputLocalized:updateTranslationStatus');
+
 						languageStatusNode.setHTML(
 							A.Lang.sub(instance.TRANSLATION_STATUS_TEMPLATE, {
 								languageId: languageId.replaceAll(/_/g, '-'),

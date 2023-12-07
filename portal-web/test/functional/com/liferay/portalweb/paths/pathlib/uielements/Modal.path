@@ -61,6 +61,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MODAL_ERROR</td>
+	<td>//div[contains(@class,'modal-body')]//div[contains(@class,'alert-danger')][not(contains(@style,'display: none'))]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MODAL_SHOW</td>
 	<td>//div[contains(@role,'dialog')][contains(@class,'modal')][contains(@class,'show')]</td>
 	<td></td>

@@ -760,6 +760,8 @@ definition {
 
 		Staging.publishToLive();
 
+		Refresh();
+
 		Navigator.openSitePage(
 			pageName = "Test Page",
 			siteName = "Test Embedded Video Site Name");

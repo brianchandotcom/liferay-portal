@@ -10,15 +10,24 @@ import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.url.URLContainer;
 import com.liferay.portal.kernel.util.CustomJspRegistryUtil;
+import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.context.PortalContextLoaderListener;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.util.CustomJspRegistryImpl;
+import com.liferay.portal.util.FastDateFormatFactoryImpl;
 import com.liferay.portal.util.PortalImpl;
 
+import java.io.File;
+import java.io.IOException;
+
 import java.net.URL;
+
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,7 +37,9 @@ import java.util.Set;
 
 import javax.servlet.ServletContext;
 
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Test;
@@ -58,30 +69,42 @@ public class CustomJspBagRegistryUtilTest {
 			new CustomJspRegistryUtil();
 
 		customJspRegistryUtil.setCustomJspRegistry(new CustomJspRegistryImpl());
+	}
 
-		_servletContext = Mockito.mock(ServletContext.class);
+	@Before
+	public void setUp() throws IOException {
+		FastDateFormatFactoryUtil fastDateFormatFactoryUtil =
+			new FastDateFormatFactoryUtil();
 
-		Mockito.when(
-			_servletContext.getRealPath(Mockito.anyString())
-		).thenReturn(
-			StringPool.BLANK
-		);
+		fastDateFormatFactoryUtil.setFastDateFormatFactory(
+			new FastDateFormatFactoryImpl());
 
-		ServletContextPool.put(
-			PortalContextLoaderListener.getPortalServletContextName(),
-			_servletContext);
+		_file = FileUtil.createTempFolder();
+
+		_setUpServletContext(_file.getPath());
+	}
+
+	@After
+	public void tearDown() {
+		FileUtil.deltree(_file);
 	}
 
 	@Test
 	public void testGetCustomJspBags() {
 		_testGetCustomJspBags(
 			false, "TEST_CUSTOM_JSP_BAG", "Test Custom JSP Bag");
+
+		Assert.assertFalse(Files.exists(Paths.get(_file.getPath() + "html")));
+		Assert.assertTrue(Files.exists(Paths.get(_file.getPath() + "/html")));
 	}
 
 	@Test
 	public void testGetGlobalCustomJspBags() {
 		_testGetCustomJspBags(
 			true, "TEST_GLOBAL_CUSTOM_JSP_BAG", "Test Global Custom JSP Bag");
+
+		Assert.assertFalse(Files.exists(Paths.get(_file.getPath() + "html")));
+		Assert.assertTrue(Files.exists(Paths.get(_file.getPath() + "/html")));
 	}
 
 	private CustomJspBag _getCustomJspBag(String targetContextId) {
@@ -102,6 +125,20 @@ public class CustomJspBagRegistryUtilTest {
 		}
 
 		return null;
+	}
+
+	private void _setUpServletContext(String path) {
+		ServletContext servletContext = Mockito.mock(ServletContext.class);
+
+		Mockito.when(
+			servletContext.getRealPath(Mockito.anyString())
+		).thenReturn(
+			path
+		);
+
+		ServletContextPool.put(
+			PortalContextLoaderListener.getPortalServletContextName(),
+			servletContext);
 	}
 
 	private void _testGetCustomJspBags(
@@ -145,7 +182,8 @@ public class CustomJspBagRegistryUtilTest {
 
 	private static final BundleContext _bundleContext =
 		SystemBundleUtil.getBundleContext();
-	private static ServletContext _servletContext;
+
+	private File _file;
 
 	private static class TestCustomJspBag implements CustomJspBag {
 

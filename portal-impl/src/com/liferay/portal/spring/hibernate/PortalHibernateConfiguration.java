@@ -7,6 +7,8 @@ package com.liferay.portal.spring.hibernate;
 
 import com.liferay.petra.io.Deserializer;
 import com.liferay.petra.io.Serializer;
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.internal.change.tracking.hibernate.CTSQLInterceptor;
@@ -278,18 +280,10 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 			return;
 		}
 
-		Thread currentThread = Thread.currentThread();
+		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
+				PortalHibernateConfiguration.class.getClassLoader())) {
 
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		currentThread.setContextClassLoader(
-			PortalHibernateConfiguration.class.getClassLoader());
-
-		try {
 			configuration.addXmlMapping(_loadBinding(configuration, url));
-		}
-		finally {
-			currentThread.setContextClassLoader(contextClassLoader);
 		}
 	}
 

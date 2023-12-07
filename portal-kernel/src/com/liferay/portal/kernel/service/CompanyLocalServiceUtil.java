@@ -79,6 +79,14 @@ public class CompanyLocalServiceUtil {
 			defaultAdminMiddleName, defaultAdminLastName);
 	}
 
+	public static Company addDBPartitionCompany(
+			long companyId, String name, String virtualHostName, String webId)
+		throws PortalException {
+
+		return getService().addDBPartitionCompany(
+			companyId, name, virtualHostName, webId);
+	}
+
 	/**
 	 * Returns the company with the web domain.
 	 *
@@ -259,10 +267,10 @@ public class CompanyLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static Company extractCompany(long companyId)
+	public static Company extractDBPartitionCompany(long companyId)
 		throws PortalException {
 
-		return getService().extractCompany(companyId);
+		return getService().extractDBPartitionCompany(companyId);
 	}
 
 	public static Company fetchCompany(long companyId) {

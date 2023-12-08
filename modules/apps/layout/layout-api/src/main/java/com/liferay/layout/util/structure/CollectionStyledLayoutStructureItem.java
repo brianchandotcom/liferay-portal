@@ -459,10 +459,6 @@ public class CollectionStyledLayoutStructureItem
 			setJustify(itemConfigJSONObject.getString("justify"));
 		}
 
-		if (itemConfigJSONObject.has("showAllItems")) {
-			setShowAllItems(itemConfigJSONObject.getBoolean("showAllItems"));
-		}
-
 		if (itemConfigJSONObject.has("listItemStyle")) {
 			setListItemStyle(itemConfigJSONObject.getString("listItemStyle"));
 		}
@@ -494,6 +490,10 @@ public class CollectionStyledLayoutStructureItem
 
 		if (itemConfigJSONObject.has("paginationType")) {
 			setPaginationType(itemConfigJSONObject.getString("paginationType"));
+		}
+
+		if (itemConfigJSONObject.has("showAllItems")) {
+			setShowAllItems(itemConfigJSONObject.getBoolean("showAllItems"));
 		}
 
 		if (itemConfigJSONObject.has("templateKey")) {

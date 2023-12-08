@@ -61,6 +61,12 @@ public class CustomJspBagRegistryUtilTest {
 
 	@BeforeClass
 	public static void setUpClass() {
+		FastDateFormatFactoryUtil fastDateFormatFactoryUtil =
+			new FastDateFormatFactoryUtil();
+
+		fastDateFormatFactoryUtil.setFastDateFormatFactory(
+			new FastDateFormatFactoryImpl());
+
 		PortalUtil portalUtil = new PortalUtil();
 
 		portalUtil.setPortal(new PortalImpl());
@@ -73,15 +79,19 @@ public class CustomJspBagRegistryUtilTest {
 
 	@Before
 	public void setUp() throws IOException {
-		FastDateFormatFactoryUtil fastDateFormatFactoryUtil =
-			new FastDateFormatFactoryUtil();
-
-		fastDateFormatFactoryUtil.setFastDateFormatFactory(
-			new FastDateFormatFactoryImpl());
-
 		_tempFolder = FileUtil.createTempFolder();
 
-		_setUpServletContext(_tempFolder.getPath());
+		ServletContext servletContext = Mockito.mock(ServletContext.class);
+
+		Mockito.when(
+			servletContext.getRealPath(Mockito.anyString())
+		).thenReturn(
+			_tempFolder.getPath()
+		);
+
+		ServletContextPool.put(
+			PortalContextLoaderListener.getPortalServletContextName(),
+			servletContext);
 	}
 
 	@After
@@ -93,22 +103,12 @@ public class CustomJspBagRegistryUtilTest {
 	public void testGetCustomJspBags() {
 		_testGetCustomJspBags(
 			false, "TEST_CUSTOM_JSP_BAG", "Test Custom JSP Bag");
-
-		Assert.assertFalse(
-			Files.exists(Paths.get(_tempFolder.getPath() + "html")));
-		Assert.assertTrue(
-			Files.exists(Paths.get(_tempFolder.getPath() + "/html")));
 	}
 
 	@Test
 	public void testGetGlobalCustomJspBags() {
 		_testGetCustomJspBags(
 			true, "TEST_GLOBAL_CUSTOM_JSP_BAG", "Test Global Custom JSP Bag");
-
-		Assert.assertFalse(
-			Files.exists(Paths.get(_tempFolder.getPath() + "html")));
-		Assert.assertTrue(
-			Files.exists(Paths.get(_tempFolder.getPath() + "/html")));
 	}
 
 	private CustomJspBag _getCustomJspBag(String targetContextId) {
@@ -129,20 +129,6 @@ public class CustomJspBagRegistryUtilTest {
 		}
 
 		return null;
-	}
-
-	private void _setUpServletContext(String path) {
-		ServletContext servletContext = Mockito.mock(ServletContext.class);
-
-		Mockito.when(
-			servletContext.getRealPath(Mockito.anyString())
-		).thenReturn(
-			path
-		);
-
-		ServletContextPool.put(
-			PortalContextLoaderListener.getPortalServletContextName(),
-			servletContext);
 	}
 
 	private void _testGetCustomJspBags(
@@ -178,6 +164,11 @@ public class CustomJspBagRegistryUtilTest {
 						servletContextNames.toString(),
 					servletContextNames.contains(contextId));
 			}
+
+			Assert.assertFalse(
+				Files.exists(Paths.get(_tempFolder.getPath() + "html")));
+			Assert.assertTrue(
+				Files.exists(Paths.get(_tempFolder.getPath() + "/html")));
 		}
 		finally {
 			serviceRegistration.unregister();

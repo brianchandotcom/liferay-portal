@@ -12706,7 +12706,7 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 		<if>
 			<isset property="digital.signature.account.base.uri" />
 			<then>
-				<echo append="true" file="${project.dir}/portal-test/src/test-portal-impl-ext.properties">
+				<echo append="true" file="${project.dir}/portal-test/src/test-portal-impl.properties">
 					digital.signature.account.base.uri=${digital.signature.account.base.uri}
 				</echo>
 			</then>
@@ -12715,7 +12715,7 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 		<if>
 			<isset property="digital.signature.api.accountId" />
 			<then>
-				<echo append="true" file="${project.dir}/portal-test/src/test-portal-impl-ext.properties">
+				<echo append="true" file="${project.dir}/portal-test/src/test-portal-impl.properties">
 					digital.signature.api.accountId=${digital.signature.api.accountId}
 				</echo>
 			</then>
@@ -12724,7 +12724,7 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 		<if>
 			<isset property="digital.signature.api.username" />
 			<then>
-				<echo append="true" file="${project.dir}/portal-test/src/test-portal-impl-ext.properties">
+				<echo append="true" file="${project.dir}/portal-test/src/test-portal-impl.properties">
 					digital.signature.api.username=${digital.signature.api.username}
 				</echo>
 			</then>
@@ -12733,7 +12733,7 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 		<if>
 			<isset property="digital.signature.integration.key" />
 			<then>
-				<echo append="true" file="${project.dir}/portal-test/src/test-portal-impl-ext.properties">
+				<echo append="true" file="${project.dir}/portal-test/src/test-portal-impl.properties">
 					digital.signature.integration.key=${digital.signature.integration.key}
 				</echo>
 			</then>
@@ -12742,13 +12742,13 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 		<if>
 			<isset property="digital.signature.rsa.private.key" />
 			<then>
-				<echo append="true" file="${project.dir}/portal-test/src/test-portal-impl-ext.properties">
+				<echo append="true" file="${project.dir}/portal-test/src/test-portal-impl.properties">
 					digital.signature.rsa.private.key=${digital.signature.rsa.private.key}
 				</echo>
 			</then>
 		</if>
 
-		<echo append="true" file="${project.dir}/portal-test/src/test-portal-impl-ext.properties">
+		<echo append="true" file="${project.dir}/portal-test/src/test-portal-impl.properties">
 			digital.signature.site.settings.strategy=always-inherit
 		</echo>
 	</target>
@@ -12757,7 +12757,7 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 		<if>
 			<isset property="object.storage.salesforce.consumer.key" />
 			<then>
-				<echo append="true" file="${project.dir}/portal-test/src/test-portal-impl-ext.properties">
+				<echo append="true" file="${project.dir}/portal-test/src/test-portal-impl.properties">
 					object.storage.salesforce.consumer.key=${object.storage.salesforce.consumer.key}
 				</echo>
 			</then>
@@ -12766,7 +12766,7 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 		<if>
 			<isset property="object.storage.salesforce.consumer.secret" />
 			<then>
-				<echo append="true" file="${project.dir}/portal-test/src/test-portal-impl-ext.properties">
+				<echo append="true" file="${project.dir}/portal-test/src/test-portal-impl.properties">
 					object.storage.salesforce.consumer.secret=${object.storage.salesforce.consumer.secret}
 				</echo>
 			</then>
@@ -12775,7 +12775,7 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 		<if>
 			<isset property="object.storage.salesforce.login.url" />
 			<then>
-				<echo append="true" file="${project.dir}/portal-test/src/test-portal-impl-ext.properties">
+				<echo append="true" file="${project.dir}/portal-test/src/test-portal-impl.properties">
 					object.storage.salesforce.login.url=${object.storage.salesforce.login.url}
 				</echo>
 			</then>
@@ -12784,7 +12784,7 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 		<if>
 			<isset property="object.storage.salesforce.password" />
 			<then>
-				<echo append="true" file="${project.dir}/portal-test/src/test-portal-impl-ext.properties">
+				<echo append="true" file="${project.dir}/portal-test/src/test-portal-impl.properties">
 					object.storage.salesforce.password=${object.storage.salesforce.password}
 				</echo>
 			</then>
@@ -12793,7 +12793,7 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 		<if>
 			<isset property="object.storage.salesforce.username" />
 			<then>
-				<echo append="true" file="${project.dir}/portal-test/src/test-portal-impl-ext.properties">
+				<echo append="true" file="${project.dir}/portal-test/src/test-portal-impl.properties">
 					object.storage.salesforce.username=${object.storage.salesforce.username}
 				</echo>
 			</then>

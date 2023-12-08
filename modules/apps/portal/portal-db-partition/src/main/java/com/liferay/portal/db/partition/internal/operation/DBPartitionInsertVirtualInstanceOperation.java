@@ -1,0 +1,54 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.portal.db.partition.internal.operation;
+
+import com.liferay.portal.instances.service.PortalInstancesLocalService;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
+
+import java.util.Map;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
+import org.osgi.service.component.annotations.Reference;
+
+/**
+ * @author Mariano Álvaro Sáiz
+ */
+@Component(
+	configurationPid = "com.liferay.portal.db.partition.internal.configuration.DBPartitionInsertVirtualInstanceConfiguration",
+	configurationPolicy = ConfigurationPolicy.REQUIRE, enabled = false,
+	service = {}
+)
+public class DBPartitionInsertVirtualInstanceOperation
+	extends BaseVirtualInstanceOperation {
+
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		onVirtualInstance(
+			() -> {
+				Company company = _companyLocalService.addDBPartitionCompany(
+					GetterUtil.getLong(properties.get("companyId")),
+					(String)properties.get("newName"),
+					(String)properties.get("newVirtualHostName"),
+					(String)properties.get("newWebId"));
+
+				_portalInstancesLocalService.synchronizePortalInstances();
+
+				return company;
+			},
+			properties);
+	}
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private PortalInstancesLocalService _portalInstancesLocalService;
+
+}

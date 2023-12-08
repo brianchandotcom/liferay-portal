@@ -111,8 +111,10 @@ public class BatchBuild extends BaseParentBuild {
 			return _gitHubMessageElement;
 		}
 
-		Map<Build, Element> downstreamBuildFailureMessages =
-			getDownstreamBuildMessages(getFailedDownstreamBuilds());
+		List<Build> failedDownstreamBuilds = getFailedDownstreamBuilds();
+
+		List<Element> downstreamBuildFailureMessages =
+			getDownstreamBuildMessages(failedDownstreamBuilds);
 
 		if (result.equals("FAILURE") &&
 			downstreamBuildFailureMessages.isEmpty()) {
@@ -125,32 +127,22 @@ public class BatchBuild extends BaseParentBuild {
 		List<Element> failureElements = new ArrayList<>();
 		List<Element> upstreamJobFailureElements = new ArrayList<>();
 
-		for (Map.Entry<Build, Element> entry :
-				downstreamBuildFailureMessages.entrySet()) {
+		for (Build failedDownstreamBuild : failedDownstreamBuilds) {
+			Element gitHubMessageElement =
+				failedDownstreamBuild.getGitHubMessageElement();
 
-			Build failedDownstreamBuild = entry.getKey();
+			if (gitHubMessageElement != null) {
+				failureElements.add(gitHubMessageElement);
+			}
 
-			Element upstreamJobFailureElement =
+			Element gitHubMessageUpstreamJobFailureElement =
 				failedDownstreamBuild.
 					getGitHubMessageUpstreamJobFailureElement();
 
-			if (upstreamJobFailureElement != null) {
-				upstreamJobFailureElements.add(upstreamJobFailureElement);
+			if (gitHubMessageUpstreamJobFailureElement != null) {
+				upstreamJobFailureElements.add(
+					gitHubMessageUpstreamJobFailureElement);
 			}
-
-			Element failureElement = entry.getValue();
-
-			if (failureElement == null) {
-				continue;
-			}
-
-			if (isHighPriorityBuildFailureElement(failureElement)) {
-				failureElements.add(0, failureElement);
-
-				continue;
-			}
-
-			failureElements.add(failureElement);
 		}
 
 		if (!upstreamJobFailureElements.isEmpty()) {

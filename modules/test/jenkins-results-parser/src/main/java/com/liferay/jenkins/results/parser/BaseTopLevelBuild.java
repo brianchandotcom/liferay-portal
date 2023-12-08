@@ -993,11 +993,11 @@ public abstract class BaseTopLevelBuild
 			System.out.println(sb.toString());
 		}
 
-		Map<Build, Element> downstreamBuildFailureMessages =
-			getDownstreamBuildMessages(failedDownstreamBuilds);
+		List<Element> downstreamBuildMessages = getDownstreamBuildMessages(
+			failedDownstreamBuilds);
 
 		System.out.println(
-			"Collected " + downstreamBuildFailureMessages.size() +
+			"Collected " + downstreamBuildMessages.size() +
 				" downstream failure messages");
 
 		List<Element> allCurrentBuildFailureElements = new ArrayList<>();
@@ -1005,47 +1005,21 @@ public abstract class BaseTopLevelBuild
 
 		int maxFailureCount = 5;
 
-		for (Map.Entry<Build, Element> entry :
-				downstreamBuildFailureMessages.entrySet()) {
+		for (Build failedDownstreamBuild : failedDownstreamBuilds) {
+			Element gitHubMessageElement =
+				failedDownstreamBuild.getGitHubMessageElement();
 
-			Build failedDownstreamBuild = entry.getKey();
-
-			Element failureElement = entry.getValue();
-
-			if (failureElement == null) {
-				System.out.println(
-					"Failure element for [" +
-						failedDownstreamBuild.getBuildName() + "] is null");
+			if (gitHubMessageElement != null) {
+				allCurrentBuildFailureElements.add(gitHubMessageElement);
 			}
 
-			if (failureElement != null) {
-				System.out.println(
-					JenkinsResultsParserUtil.combine(
-						failedDownstreamBuild.getBuildName(),
-						" failure element object ID: ",
-						String.valueOf(failureElement.hashCode())));
-
-				if (!failedDownstreamBuild.isUniqueFailure()) {
-					upstreamBuildFailureElements.add(failureElement);
-
-					continue;
-				}
-
-				if (isHighPriorityBuildFailureElement(failureElement)) {
-					allCurrentBuildFailureElements.add(0, failureElement);
-
-					continue;
-				}
-
-				allCurrentBuildFailureElements.add(failureElement);
-			}
-
-			Element upstreamJobFailureElement =
+			Element gitHubMessageUpstreamJobFailureElement =
 				failedDownstreamBuild.
 					getGitHubMessageUpstreamJobFailureElement();
 
-			if (upstreamJobFailureElement != null) {
-				upstreamBuildFailureElements.add(upstreamJobFailureElement);
+			if (gitHubMessageUpstreamJobFailureElement != null) {
+				upstreamBuildFailureElements.add(
+					gitHubMessageUpstreamJobFailureElement);
 			}
 		}
 

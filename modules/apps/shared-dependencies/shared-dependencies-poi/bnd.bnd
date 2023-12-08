@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Shared Dependencies Poi
 Bundle-SymbolicName: com.liferay.shared.dependencies.poi
-Bundle-Version: 1.0.2
+Bundle-Version: 3.0.0
 Import-Package:\
 	!com.github.javaparser.*,\
 	!com.github.luben.zstd.*,\

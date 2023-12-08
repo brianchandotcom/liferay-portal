@@ -237,6 +237,10 @@ public class AxisBuild extends BaseBuild {
 
 	@Override
 	public Element getGitHubMessageElement() {
+		if (_gitHubMessageElement != null) {
+			return _gitHubMessageElement;
+		}
+
 		String status = getStatus();
 
 		if (!status.equals("completed") && (getParentBuild() != null)) {
@@ -289,7 +293,9 @@ public class AxisBuild extends BaseBuild {
 			}
 		}
 
-		return messageElement;
+		_gitHubMessageElement = messageElement;
+
+		return _gitHubMessageElement;
 	}
 
 	@Override
@@ -575,5 +581,6 @@ public class AxisBuild extends BaseBuild {
 		_AXIS_VARIABLE_REGEX);
 
 	private String _axisVariable;
+	private Element _gitHubMessageElement;
 
 }

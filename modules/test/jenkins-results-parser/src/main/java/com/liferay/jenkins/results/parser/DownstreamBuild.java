@@ -172,6 +172,10 @@ public class DownstreamBuild extends BaseBuild {
 
 	@Override
 	public Element getGitHubMessageElement() {
+		if (_gitHubMessageElement != null) {
+			return _gitHubMessageElement;
+		}
+
 		String status = getStatus();
 
 		if (!status.equals("completed") && (getParentBuild() != null)) {
@@ -291,7 +295,9 @@ public class DownstreamBuild extends BaseBuild {
 				"[", getBuildName(), "] Created a failure GitHub message: ",
 				String.valueOf(hashCode())));
 
-		return messageElement;
+		_gitHubMessageElement = messageElement;
+
+		return _gitHubMessageElement;
 	}
 
 	public Map<String, List<String>> getTestClassMethodsMap() {
@@ -1005,5 +1011,7 @@ public class DownstreamBuild extends BaseBuild {
 		new CIFailureMessageGenerator(),
 		new GenericFailureMessageGenerator()
 	};
+
+	private Element _gitHubMessageElement;
 
 }

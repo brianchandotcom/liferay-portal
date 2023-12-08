@@ -5,8 +5,9 @@
 
 package com.liferay.portal.db.partition.internal.operation;
 
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.db.partition.internal.configuration.DBPartitionExtractVirtualInstanceConfiguration;
 import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.Map;
 
@@ -30,8 +31,15 @@ public class DBPartitionExtractVirtualInstanceOperation
 	protected void activate(Map<String, Object> properties) {
 		onVirtualInstance(
 			() -> {
-				long companyId = GetterUtil.getLong(
-					properties.get("companyId"));
+				DBPartitionExtractVirtualInstanceConfiguration
+					dBPartitionExtractVirtualInstanceConfiguration =
+						ConfigurableUtil.createConfigurable(
+							DBPartitionExtractVirtualInstanceConfiguration.
+								class,
+							properties);
+
+				long companyId =
+					dBPartitionExtractVirtualInstanceConfiguration.companyId();
 
 				if (_companyLocalService.fetchCompany(companyId) != null) {
 					return _companyLocalService.extractDBPartitionCompany(

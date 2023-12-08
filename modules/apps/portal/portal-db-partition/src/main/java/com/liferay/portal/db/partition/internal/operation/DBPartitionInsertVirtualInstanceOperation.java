@@ -5,10 +5,11 @@
 
 package com.liferay.portal.db.partition.internal.operation;
 
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.db.partition.internal.configuration.DBPartitionInsertVirtualInstanceConfiguration;
 import com.liferay.portal.instances.service.PortalInstancesLocalService;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.Map;
 
@@ -32,15 +33,25 @@ public class DBPartitionInsertVirtualInstanceOperation
 	protected void activate(Map<String, Object> properties) {
 		onVirtualInstance(
 			() -> {
-				long companyId = GetterUtil.getLong(
-					properties.get("companyId"));
+				DBPartitionInsertVirtualInstanceConfiguration
+					dBPartitionInsertVirtualInstanceConfiguration =
+						ConfigurableUtil.createConfigurable(
+							DBPartitionInsertVirtualInstanceConfiguration.class,
+							properties);
+
+				long companyId =
+					dBPartitionInsertVirtualInstanceConfiguration.companyId();
 
 				if (_companyLocalService.fetchCompany(companyId) == null) {
 					Company company =
 						_companyLocalService.addDBPartitionCompany(
-							companyId, (String)properties.get("newName"),
-							(String)properties.get("newVirtualHostName"),
-							(String)properties.get("newWebId"));
+							companyId,
+							dBPartitionInsertVirtualInstanceConfiguration.
+								newName(),
+							dBPartitionInsertVirtualInstanceConfiguration.
+								newVirtualHostname(),
+							dBPartitionInsertVirtualInstanceConfiguration.
+								newWebId());
 
 					_portalInstancesLocalService.synchronizePortalInstances();
 

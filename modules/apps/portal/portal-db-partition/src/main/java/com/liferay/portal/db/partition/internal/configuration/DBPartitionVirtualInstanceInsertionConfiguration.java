@@ -12,24 +12,22 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Mariano Álvaro Sáiz
  */
-@ExtendedObjectClassDefinition(category = "infrastructure", generateUI = false)
+@ExtendedObjectClassDefinition(generateUI = false)
 @Meta.OCD(
-	id = "com.liferay.portal.db.partition.internal.configuration.DBPartitionVirtualInstanceInsertionConfiguration",
-	localization = "content/Language",
-	name = "db-partition-virtual-instance-insertion-configuration-name"
+	id = "com.liferay.portal.db.partition.internal.configuration.DBPartitionVirtualInstanceInsertionConfiguration"
 )
 public interface DBPartitionVirtualInstanceInsertionConfiguration {
 
-	@Meta.AD(name = "company-id")
+	@Meta.AD
 	public String companyId();
 
-	@Meta.AD(name = "new-name", required = false)
+	@Meta.AD(required = false)
 	public String newName();
 
-	@Meta.AD(name = "new-virtual-host", required = false)
+	@Meta.AD(required = false)
 	public String newVirtualHost();
 
-	@Meta.AD(name = "new-web-id", required = false)
+	@Meta.AD(required = false)
 	public String newWebId();
 
 }

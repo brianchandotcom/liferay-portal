@@ -12,15 +12,13 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Mariano Álvaro Sáiz
  */
-@ExtendedObjectClassDefinition(category = "infrastructure", generateUI = false)
+@ExtendedObjectClassDefinition(generateUI = false)
 @Meta.OCD(
-	id = "com.liferay.portal.db.partition.internal.configuration.DBPartitionVirtualInstanceExtractionConfiguration",
-	localization = "content/Language",
-	name = "db-partition-virtual-instance-extraction-configuration-name"
+	id = "com.liferay.portal.db.partition.internal.configuration.DBPartitionVirtualInstanceExtractionConfiguration"
 )
 public interface DBPartitionVirtualInstanceExtractionConfiguration {
 
-	@Meta.AD(name = "company-id")
+	@Meta.AD
 	public String companyId();
 
 }

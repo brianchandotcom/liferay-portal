@@ -256,7 +256,14 @@ definition {
 
 	@summary = "Default summary"
 	macro configureImport(containsHeaders = null, fileName = null, templateName = null, entityType = null, scope = null, importName = null, csvSeparator = null, fieldMappings = null, importStrategy = null, stopImportOnError = null) {
-		UploadDependencyFile.uploadFile(fileName = ${fileName});
+		if (isSet(tempFile)) {
+			UploadTempFile.uploadTempFileHiddenNoMouseOver(
+				locator1 = "TextInput#FILE",
+				value1 = ${tempFile});
+		}
+		else {
+			UploadDependencyFile.uploadFile(fileName = ${fileName});
+		}
 
 		if (isSet(importName)) {
 			Type(
@@ -289,6 +296,12 @@ definition {
 			Select(
 				locator1 = "ImportExport#IMPORT_STRATEGY",
 				value1 = ${importStrategy});
+		}
+
+		if (isSet(updateStrategy)) {
+			Select(
+				locator1 = "ImportExport#UPDATE_STRATEGY",
+				value1 = ${updateStrategy});
 		}
 
 		if (${stopImportOnError} == "false") {
@@ -361,6 +374,8 @@ definition {
 
 	@summary = "Default summary"
 	macro importFile(containsHeaders = null, fileName = null, templateName = null, entityType = null, scope = null, importName = null, csvSeparator = null, fieldMappings = null, importStrategy = null, stopImportOnError = null) {
+		ImportExport.openImportExportAdmin();
+
 		ImportExport.gotoImport();
 
 		ImportExport.configureImport(
@@ -373,6 +388,7 @@ definition {
 			importStrategy = ${importStrategy},
 			scope = ${scope},
 			stopImportOnError = ${stopImportOnError},
+			tempFile = ${tempFile},
 			templateName = ${templateName});
 
 		if (!(isSet(noImport))) {

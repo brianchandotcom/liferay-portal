@@ -25,6 +25,8 @@ import java.util.List;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -109,16 +111,45 @@ public class
 
 		MultiSessionMessages.add(
 			actionRequest, "displayPageTemplateDeleted",
-			_language.format(
-				_portal.getHttpServletRequest(actionRequest),
-				"you-successfully-deleted-x-display-page-templates-and-x-" +
+			_getMessage(
+				deleteLayoutPageTemplateEntryIds.length -
+					deleteLayoutPageTemplateEntryIdsList.size(),
+				deleteLayoutPageTemplateCollectionIds.length -
+					deleteLayoutPageTemplateCollectionIdsList.size(),
+				_portal.getHttpServletRequest(actionRequest)));
+	}
+
+	private String _getMessage(
+		int displayPageTemplates, int folders,
+		HttpServletRequest httpServletRequest) {
+
+		if ((displayPageTemplates == 1) && (folders == 1)) {
+			return _language.format(
+				httpServletRequest,
+				"you-successfully-deleted-x-display-page-template-and-x-folder",
+				new Object[] {displayPageTemplates, folders});
+		}
+
+		if ((displayPageTemplates == 1) && (folders > 1)) {
+			return _language.format(
+				httpServletRequest,
+				"you-successfully-deleted-x-display-page-template-and-x-" +
 					"folders",
-				new Object[] {
-					deleteLayoutPageTemplateEntryIds.length -
-						deleteLayoutPageTemplateEntryIdsList.size(),
-					deleteLayoutPageTemplateCollectionIds.length -
-						deleteLayoutPageTemplateCollectionIdsList.size()
-				}));
+				new Object[] {displayPageTemplates, folders});
+		}
+
+		if ((displayPageTemplates > 1) && (folders == 1)) {
+			return _language.format(
+				httpServletRequest,
+				"you-successfully-deleted-x-display-page-templates-and-x-" +
+					"folder",
+				new Object[] {displayPageTemplates, folders});
+		}
+
+		return _language.format(
+			httpServletRequest,
+			"you-successfully-deleted-x-display-page-templates-and-x-folders",
+			new Object[] {displayPageTemplates, folders});
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

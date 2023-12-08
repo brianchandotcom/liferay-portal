@@ -18,7 +18,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface DBPartitionExtractVirtualInstanceConfiguration {
 
-	@Meta.AD
-	public String companyId();
+	@Meta.AD(type = Meta.Type.Long)
+	public long companyId();
 
 }

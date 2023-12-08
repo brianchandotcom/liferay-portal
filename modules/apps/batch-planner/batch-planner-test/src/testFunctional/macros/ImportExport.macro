@@ -444,7 +444,9 @@ definition {
 		Variables.assertDefined(parameterList = "${en_US_plural_label}, ${fileName}");
 
 		var filePath = TestCase.getDependenciesDirPath(fileName = ${fileName});
-		var response = ObjectDefinitionAPI.getObjectEntries(en_US_plural_label = ${en_US_plural_label});
+		var response = ObjectDefinitionAPI.getObjectEntries(
+			en_US_plural_label = ${en_US_plural_label},
+			scopeKey = ${scopeKey});
 
 		var attachmenId = JSONPathUtil.getProperty(
 			property = "$.items..diploma.id",

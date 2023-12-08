@@ -88,21 +88,6 @@ public class PasswordEncryptorUtilTest {
 				PropsValuesTestUtil.swapWithSafeCloseable(
 					"PASSWORDS_ENCRYPTION_BOUNCYCASTLE_ENABLED", true)) {
 
-			expectedPassword = PasswordEncryptorUtil.encrypt(
-				algorithm, plainPassword, (String)null);
-		}
-
-		try (SafeCloseable safeCloseable =
-				PropsValuesTestUtil.swapWithSafeCloseable(
-					"PASSWORDS_ENCRYPTION_BOUNCYCASTLE_ENABLED", false)) {
-
-			testEncrypt(plainPassword, expectedPassword);
-		}
-
-		try (SafeCloseable safeCloseable =
-				PropsValuesTestUtil.swapWithSafeCloseable(
-					"PASSWORDS_ENCRYPTION_BOUNCYCASTLE_ENABLED", true)) {
-
 			String encryptedPassword =
 				"AAAAoAAB9ADyaBP3fTtsBh8YlRn1CU7VLYR/mnH7ADMNMz2o";
 
@@ -113,6 +98,16 @@ public class PasswordEncryptorUtilTest {
 					CharPool.CLOSE_CURLY_BRACE, encryptedPassword));
 
 			testLegacyEncrypt(algorithm, plainPassword, encryptedPassword);
+
+			expectedPassword = PasswordEncryptorUtil.encrypt(
+				algorithm, plainPassword, (String)null);
+		}
+
+		try (SafeCloseable safeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"PASSWORDS_ENCRYPTION_BOUNCYCASTLE_ENABLED", false)) {
+
+			testEncrypt(plainPassword, expectedPassword);
 		}
 	}
 

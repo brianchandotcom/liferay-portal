@@ -25,7 +25,7 @@ public interface DBPartitionVirtualInstanceInsertionConfiguration {
 	public String newName();
 
 	@Meta.AD(required = false)
-	public String newVirtualHost();
+	public String newVirtualHostname();
 
 	@Meta.AD(required = false)
 	public String newWebId();

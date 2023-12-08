@@ -100,7 +100,7 @@ public class GetSitesMVCResourceCommand implements MVCResourceCommand {
 
 		List<Group> allGroups = new ArrayList<>();
 
-		_addGroupsWithChildren(
+		_addGroups(
 			allGroups,
 			_groupService.getGroups(
 				themeDisplay.getCompanyId(),
@@ -141,16 +141,14 @@ public class GetSitesMVCResourceCommand implements MVCResourceCommand {
 		);
 	}
 
-	private void _addGroupsWithChildren(
-		List<Group> allGroups, List<Group> groups) {
-
+	private void _addGroups(List<Group> allGroups, List<Group> groups) {
 		groups.forEach(
 			group -> {
 				if (!group.isActive()) {
 					return;
 				}
 
-				_addGroupsWithChildren(allGroups, group.getChildren(true));
+				_addGroups(allGroups, group.getChildren(true));
 
 				allGroups.add(group);
 			});

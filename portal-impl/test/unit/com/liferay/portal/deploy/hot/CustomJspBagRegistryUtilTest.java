@@ -79,14 +79,14 @@ public class CustomJspBagRegistryUtilTest {
 		fastDateFormatFactoryUtil.setFastDateFormatFactory(
 			new FastDateFormatFactoryImpl());
 
-		_file = FileUtil.createTempFolder();
+		_tempFolder = FileUtil.createTempFolder();
 
-		_setUpServletContext(_file.getPath());
+		_setUpServletContext(_tempFolder.getPath());
 	}
 
 	@After
 	public void tearDown() {
-		FileUtil.deltree(_file);
+		FileUtil.deltree(_tempFolder);
 	}
 
 	@Test
@@ -94,8 +94,10 @@ public class CustomJspBagRegistryUtilTest {
 		_testGetCustomJspBags(
 			false, "TEST_CUSTOM_JSP_BAG", "Test Custom JSP Bag");
 
-		Assert.assertFalse(Files.exists(Paths.get(_file.getPath() + "html")));
-		Assert.assertTrue(Files.exists(Paths.get(_file.getPath() + "/html")));
+		Assert.assertFalse(
+			Files.exists(Paths.get(_tempFolder.getPath() + "html")));
+		Assert.assertTrue(
+			Files.exists(Paths.get(_tempFolder.getPath() + "/html")));
 	}
 
 	@Test
@@ -103,8 +105,10 @@ public class CustomJspBagRegistryUtilTest {
 		_testGetCustomJspBags(
 			true, "TEST_GLOBAL_CUSTOM_JSP_BAG", "Test Global Custom JSP Bag");
 
-		Assert.assertFalse(Files.exists(Paths.get(_file.getPath() + "html")));
-		Assert.assertTrue(Files.exists(Paths.get(_file.getPath() + "/html")));
+		Assert.assertFalse(
+			Files.exists(Paths.get(_tempFolder.getPath() + "html")));
+		Assert.assertTrue(
+			Files.exists(Paths.get(_tempFolder.getPath() + "/html")));
 	}
 
 	private CustomJspBag _getCustomJspBag(String targetContextId) {
@@ -183,7 +187,7 @@ public class CustomJspBagRegistryUtilTest {
 	private static final BundleContext _bundleContext =
 		SystemBundleUtil.getBundleContext();
 
-	private File _file;
+	private File _tempFolder;
 
 	private static class TestCustomJspBag implements CustomJspBag {
 

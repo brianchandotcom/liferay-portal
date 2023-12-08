@@ -96,7 +96,7 @@ definition {
 				fieldMappings = "name:name,type:type,externalReferenceCode:externalReferenceCode",
 				fileName = "json_account_import.json",
 				importStrategy = "Add or Update Records",
-				updateStrategy = "Update changed Record Fields");
+				updateStrategy = "Update Changed Record Fields");
 		}
 
 		task ("When importing file with Next button") {

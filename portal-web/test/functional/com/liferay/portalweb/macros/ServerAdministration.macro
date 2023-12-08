@@ -120,7 +120,9 @@ definition {
 			locator1 = "ServerAdministrationScript#EXECUTE_BUTTON",
 			value1 = "Execute");
 
-		Alert.viewSuccessMessage();
+		if (!(isSet(skipSuccessAssert)) || (${skipSuccessAssert} == "false")) {
+			Alert.viewSuccessMessage();
+		}
 	}
 
 	@summary = "Execute server resource actions"

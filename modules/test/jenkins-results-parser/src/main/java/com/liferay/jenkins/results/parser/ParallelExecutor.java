@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.SortedMap;
+import java.util.TreeMap;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
@@ -194,6 +196,8 @@ public class ParallelExecutor<T> {
 					"Parallel executor is required");
 			}
 
+			_callables = new ArrayList<>(callables);
+
 			_totalTaskCount = callables.size();
 
 			_parallelExecutor = parallelExecutor;
@@ -292,7 +296,7 @@ public class ParallelExecutor<T> {
 				return null;
 			}
 
-			return _results;
+			return new ArrayList<>(_resultsSortedMap.values());
 		}
 
 		public int getRunningTaskCount() {
@@ -389,8 +393,18 @@ public class ParallelExecutor<T> {
 
 				try {
 					for (Task<T> processorTask : _runningTasks) {
+						TaskCallable<T> taskCallable =
+							processorTask.getCallable();
+
+						int callableIndex = _callables.indexOf(
+							taskCallable.getNestedCallable());
+
 						if (aborted() || Thread.interrupted()) {
 							abort();
+
+							if (_parallelExecutor._excludeNulls == false) {
+								_resultsSortedMap.put(callableIndex, null);
+							}
 
 							throw new RuntimeException(
 								_parallelExecutor + " has been aborted");
@@ -415,6 +429,13 @@ public class ParallelExecutor<T> {
 										exception);
 
 								if (_parallelExecutor._failOnError) {
+									if (_parallelExecutor._excludeNulls ==
+											false) {
+
+										_resultsSortedMap.put(
+											callableIndex, null);
+									}
+
 									abort();
 
 									throw runtimeException;
@@ -428,7 +449,7 @@ public class ParallelExecutor<T> {
 							if ((result != null) ||
 								(_parallelExecutor._excludeNulls == false)) {
 
-								_results.add(result);
+								_resultsSortedMap.put(callableIndex, result);
 							}
 
 							latestCompletedProcessorTasks.add(processorTask);
@@ -478,9 +499,35 @@ public class ParallelExecutor<T> {
 									future.cancel(true);
 
 									processorTask.fail();
+
+									if (_parallelExecutor._excludeNulls ==
+											false) {
+
+										TaskCallable<T> taskCallable =
+											processorTask.getCallable();
+
+										int callableIndex = _callables.indexOf(
+											taskCallable.getNestedCallable());
+
+										_resultsSortedMap.put(
+											callableIndex, null);
+									}
 								}
 
 								_completedTasks.add(processorTask);
+							}
+						}
+
+						if (_parallelExecutor._excludeNulls == false) {
+							for (Callable<T> callable : _callables) {
+								int callableIndex = _callables.indexOf(
+									callable);
+
+								if (!_resultsSortedMap.containsKey(
+										callableIndex)) {
+
+									_resultsSortedMap.put(callableIndex, null);
+								}
 							}
 						}
 
@@ -566,11 +613,12 @@ public class ParallelExecutor<T> {
 		}
 
 		private boolean _aborted;
+		private List<Callable<T>> _callables;
 		private final Map<String, Collection<Callable<T>>> _callablesMap;
 		private List<Task<T>> _completedTasks = new ArrayList<>();
 		private ExecutorService _executorService;
 		private final ParallelExecutor<T> _parallelExecutor;
-		private List<T> _results = new ArrayList<>();
+		private final SortedMap<Integer, T> _resultsSortedMap = new TreeMap<>();
 		private List<TaskRunnable.Task<T>> _runningTasks = new ArrayList<>();
 		private Long _startTimeMillis;
 		private final int _totalTaskCount;
@@ -646,6 +694,10 @@ public class ParallelExecutor<T> {
 				}
 
 				return null;
+			}
+
+			public Callable<T> getNestedCallable() {
+				return _callable;
 			}
 
 			public boolean isDone() {

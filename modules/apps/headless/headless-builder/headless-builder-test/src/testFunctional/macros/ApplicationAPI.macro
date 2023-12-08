@@ -36,11 +36,10 @@ definition {
 		Variables.assertDefined(parameterList = "${baseURL},${title}");
 
 		var curl = ApplicationAPI._curlAPIApplication(virtualHost = ${virtualHost});
+		var titleWithoutSpace = StringUtil.removeSpaces(${title});
 
 		if (!(isSet(externalReferenceCode))) {
-			var title = StringUtil.removeSpaces(${title});
-
-			var externalReferenceCode = ${title};
+			var externalReferenceCode = ${titleWithoutSpace};
 		}
 
 		if (!(isSet(status))) {
@@ -60,7 +59,7 @@ definition {
 			}
 
 			if (!(isSet(endpointERC))) {
-				var endpointERC = ${endpointName};
+				var endpointERC = "${titleWithoutSpace}_${endpointName}";
 			}
 
 			if (isSet(retrieveType)) {
@@ -92,7 +91,7 @@ definition {
 		}
 
 		if (!(isSet(schemaERC))) {
-			var schemaERC = ${schemaName};
+			var schemaERC = "${titleWithoutSpace}_${schemaName}";
 		}
 
 		if (isSet(relatedSchema)) {
@@ -114,7 +113,7 @@ definition {
 			else {
 				var relatedSchema = '''
 					"apiApplicationToAPISchemas": [{
-						"description": "${description}",
+						"description": "description",
 						"externalReferenceCode": "${schemaERC}",
 						"mainObjectDefinitionERC": "${mainObjectDefinitionErc}",
 						"name": "${schemaName}"

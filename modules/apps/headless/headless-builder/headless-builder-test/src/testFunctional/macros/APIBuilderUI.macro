@@ -489,6 +489,30 @@ definition {
 	}
 
 	@summary = "Default summary"
+	macro updateSchemaNameAndDescription(tabEntity = null, name = null, schemaDescription = null, title = null, schemaName = null, entity = null) {
+		Variables.assertDefined(parameterList = "${name},${entity},${title},${tabEntity},${schemaName},${schemaDescription},");
+
+		APIBuilderUI.goToEditRelatedEntryInEditApplication(
+			entity = ${entity},
+			name = ${name},
+			tabEntity = ${tabEntity},
+			title = ${title});
+
+		Type(
+			locator1 = "TextInput#NAME",
+			value1 = ${schemaName});
+
+		Type(
+			key_fieldId = "Description",
+			locator1 = "TextArea#ANY_ID",
+			value1 = ${schemaDescription});
+
+		if (isSet(publish)) {
+			Click(locator1 = "APIBuilder#PUBLISH_BUTTON");
+		}
+	}
+
+	@summary = "Default summary"
 	macro viewItemsInOrder(itemList = null) {
 		Variables.assertDefined(parameterList = ${itemList});
 

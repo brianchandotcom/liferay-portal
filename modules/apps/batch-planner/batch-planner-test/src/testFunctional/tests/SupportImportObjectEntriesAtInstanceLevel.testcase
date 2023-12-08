@@ -70,10 +70,6 @@ definition {
 				key_entry = ${studentEntryId},
 				objectName = "Student");
 		}
-
-		task ("And Given navigate to Data Migration Center") {
-			ImportExport.openImportExportAdmin();
-		}
 	}
 
 	tearDown {

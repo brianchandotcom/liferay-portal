@@ -77,8 +77,6 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Given a completed import") {
-			ImportExport.openImportExportAdmin();
-
 			ImportExport.importFile(
 				entityType = "Account (v1_0 - Liferay Headless Admin User)",
 				fieldMappings = "name:Account Name,type:Account Type,description:Account Description,externalReferenceCode:External Reference Code",
@@ -385,8 +383,6 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Given Object Definition import and export") {
-			ImportExport.openImportExportAdmin();
-
 			ImportExport.importFile(
 				entityType = "ObjectDefinition (v1_0 - Liferay Object Admin REST)",
 				fileName = "json_objectDefinition_import_approved.json");
@@ -658,8 +654,6 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Given Object Definition import and export") {
-			ImportExport.openImportExportAdmin();
-
 			ImportExport.importFile(
 				entityType = "ObjectDefinition (v1_0 - Liferay Object Admin REST)",
 				fileName = "json_objectDefinition_import_approved.json");
@@ -887,8 +881,6 @@ definition {
 	@priority = 3
 	test CanSearchExecutions {
 		task ("Given object definition import and export") {
-			ImportExport.openImportExportAdmin();
-
 			ImportExport.importFile(
 				entityType = "ObjectDefinition (v1_0 - Liferay Object Admin REST)",
 				fileName = "json_objectDefinition_import_approved.json");
@@ -1205,8 +1197,6 @@ definition {
 		}
 
 		task ("And given a succesful import") {
-			ImportExport.openImportExportAdmin();
-
 			ImportExport.importFile(
 				entityType = "Account (v1_0 - Liferay Headless Admin User)",
 				fieldMappings = "name:Account Name,type:Account Type,description:Account Description,externalReferenceCode:External Reference Code",
@@ -1515,8 +1505,6 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Given a failed account import in which one of 3 rows was skipped due to an error in the second row") {
-			ImportExport.openImportExportAdmin();
-
 			ImportExport.importFile(
 				entityType = "Account (v1_0 - Liferay Headless Admin User)",
 				fieldMappings = "name:Account Name,type:Account Type,description:Account Description,externalReferenceCode:External Reference Code",

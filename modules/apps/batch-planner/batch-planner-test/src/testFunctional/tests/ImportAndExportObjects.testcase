@@ -351,8 +351,6 @@ definition {
 				name = "Student",
 				requiredStringFieldName = "name");
 
-			ImportExport.openImportExportAdmin();
-
 			ImportExport.importFile(
 				entityType = "C_Student (v1_0 - Liferay Object REST)",
 				fieldMappings = "name:Student Name,externalReferenceCode:External Reference Code",

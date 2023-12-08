@@ -149,7 +149,7 @@ dependencies {
 	api(group: "com.liferay", name: "com.liferay.gradle.plugins", version: "14.0.218") {
 		exclude group: "biz.aQute.bnd", module: "biz.aQute.bnd"
 	}
-	api(group: "com.liferay", name: "com.liferay.gradle.plugins.css.builder", version: "5.0.11") {
+	api(group: "com.liferay", name: "com.liferay.gradle.plugins.css.builder", version: "5.0.12") {
 		exclude group: "biz.aQute.bnd", module: "biz.aQute.bnd"
 	}
 	api(group: "com.liferay", name: "com.liferay.gradle.plugins.poshi.runner", version: "4.0.10") {
@@ -157,7 +157,7 @@ dependencies {
 	}
 	api group: "com.liferay", name: "com.liferay.gradle.plugins.source.formatter", version: "5.2.80"
 	api group: "com.liferay", name: "com.liferay.gradle.plugins.target.platform", version: "3.0.22"
-	api(group: "com.liferay", name: "com.liferay.gradle.plugins.theme.builder", version: "2.0.25") {
+	api(group: "com.liferay", name: "com.liferay.gradle.plugins.theme.builder", version: "2.0.26") {
 		exclude group: "biz.aQute.bnd", module: "biz.aQute.bnd"
 	}
 	api group: "com.liferay", name: "com.liferay.petra.lang", version: "5.1.2"

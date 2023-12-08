@@ -3,7 +3,7 @@
 		"className": "com.liferay.headless.admin.user.dto.v1_0.UserAccount",
 		"parameters": {
 			"containsHeaders": "true",
-			"createStrategy": "INSERT",
+			"createStrategy": "UPSERT",
 			"onErrorFail": "false",
 			"taskItemDelegateName": "DEFAULT",
 			"updateStrategy": "UPDATE"

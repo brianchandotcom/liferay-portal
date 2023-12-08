@@ -36,6 +36,8 @@ const useRecentTickets = () => {
 					suggestions,
 					ticketStatus: ticket.ticketStatus?.name,
 					type: ticket.type?.name,
+					assignee: ticket.userToJ3Y7Ticket,
+					externalReferenceCode: ticket.externalReferenceCode
 				};
 			});
 		}

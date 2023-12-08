@@ -317,7 +317,7 @@
 			<matches>Portlet com_liferay_commerce.* failed to initialize</matches>
 		</ignore-error>
 		<ignore-error description="LPS-195673 - temporarily ignore until fixed">
-			<contains>(IX_A9FF4B2C|ix_a9ff4b2c)</contains>
+			<contains>(IX_DBE2592|ix_DBE2592)</contains>
 			<matches></matches>
 		</ignore-error>
 		<ignore-error description="LPS-195673 - temporarily ignore until fixed">

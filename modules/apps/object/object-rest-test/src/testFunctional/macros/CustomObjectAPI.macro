@@ -258,13 +258,26 @@ definition {
 		Variables.assertDefined(parameterList = "${en_US_plural_label},${name},${relationshipName},${relatedObjectName},${relatedObjectErc}");
 
 		var portalURL = JSONCompany.getPortalURL();
+		var api = "o/c/${en_US_plural_label}";
 
 		if (!(isSet(externalReferenceCode))) {
 			var externalReferenceCode = "";
 		}
 
+		if (isSet(scopeKey)) {
+			if (!(isSet(groupName))) {
+				var groupName = "Guest";
+			}
+
+			var scopeKey = JSONGroupAPI._getSiteIdByGroupKeyNoSelenium(
+				groupName = ${groupName},
+				token = ${token});
+
+			var api = StringUtil.add(${api}, "/scopes/${scopeKey}", "");
+		}
+
 		var curl = '''
-			${portalURL}/o/c/${en_US_plural_label} \
+			${portalURL}/${api} \
 				-u test@liferay.com:test \
 				-H Content-Type: application/json \
 				-d {

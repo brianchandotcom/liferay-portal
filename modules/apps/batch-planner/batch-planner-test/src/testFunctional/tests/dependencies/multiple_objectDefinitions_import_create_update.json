@@ -1,0 +1,398 @@
+[
+	{
+		"externalReferenceCode": "Student",
+		"label": {
+			"en_US": "Student"
+		},
+		"name": "Student",
+		"objectFields": [
+			{
+				"DBType": "String",
+				"businessType": "Text",
+				"externalReferenceCode": "976cd9b3-2b21-3576-e719-4c4b66a552d5",
+				"id": 41226,
+				"indexed": false,
+				"indexedAsKeyword": false,
+				"indexedLanguageId": "",
+				"label": {
+					"en_US": "Author"
+				},
+				"listTypeDefinitionId": 0,
+				"localized": false,
+				"name": "creator",
+				"objectFieldSettings": [
+				],
+				"readOnly": "true",
+				"readOnlyConditionExpression": "",
+				"required": false,
+				"state": false,
+				"system": true,
+				"type": "String",
+				"unique": false
+			},
+			{
+				"DBType": "Date",
+				"businessType": "Date",
+				"externalReferenceCode": "9a1e52f3-9391-fdf3-5d47-9a2c06e86121",
+				"id": 41228,
+				"indexed": false,
+				"indexedAsKeyword": false,
+				"indexedLanguageId": "",
+				"label": {
+					"en_US": "Create Date"
+				},
+				"listTypeDefinitionId": 0,
+				"localized": false,
+				"name": "createDate",
+				"objectFieldSettings": [
+				],
+				"readOnly": "true",
+				"readOnlyConditionExpression": "",
+				"required": false,
+				"state": false,
+				"system": true,
+				"type": "Date",
+				"unique": false
+			},
+			{
+				"DBType": "String",
+				"businessType": "Text",
+				"externalReferenceCode": "06a818bd-713d-ce86-6f69-f49370db2c32",
+				"id": 41230,
+				"indexed": false,
+				"indexedAsKeyword": false,
+				"indexedLanguageId": "",
+				"label": {
+					"en_US": "External Reference Code"
+				},
+				"listTypeDefinitionId": 0,
+				"localized": false,
+				"name": "externalReferenceCode",
+				"objectFieldSettings": [
+				],
+				"readOnly": "false",
+				"readOnlyConditionExpression": "",
+				"required": false,
+				"state": false,
+				"system": true,
+				"type": "String",
+				"unique": false
+			},
+			{
+				"DBType": "Long",
+				"businessType": "LongInteger",
+				"externalReferenceCode": "2b77a2da-0f1f-3f77-2fda-3a546453d581",
+				"id": 41232,
+				"indexed": true,
+				"indexedAsKeyword": true,
+				"indexedLanguageId": "",
+				"label": {
+					"en_US": "ID"
+				},
+				"listTypeDefinitionId": 0,
+				"localized": false,
+				"name": "id",
+				"objectFieldSettings": [
+				],
+				"readOnly": "true",
+				"readOnlyConditionExpression": "",
+				"required": false,
+				"state": false,
+				"system": true,
+				"type": "Long",
+				"unique": false
+			},
+			{
+				"DBType": "Date",
+				"businessType": "Date",
+				"externalReferenceCode": "f5b7f263-61e5-e4d5-496f-58fa7ff35ac6",
+				"id": 41234,
+				"indexed": false,
+				"indexedAsKeyword": false,
+				"indexedLanguageId": "",
+				"label": {
+					"en_US": "Modified Date"
+				},
+				"listTypeDefinitionId": 0,
+				"localized": false,
+				"name": "modifiedDate",
+				"objectFieldSettings": [
+				],
+				"readOnly": "true",
+				"readOnlyConditionExpression": "",
+				"required": false,
+				"state": false,
+				"system": true,
+				"type": "Date",
+				"unique": false
+			},
+			{
+				"DBType": "String",
+				"businessType": "Text",
+				"externalReferenceCode": "af3451d2-40fb-afb6-0d79-f4dc8e15139e",
+				"id": 41236,
+				"indexed": false,
+				"indexedAsKeyword": false,
+				"indexedLanguageId": "",
+				"label": {
+					"en_US": "Status"
+				},
+				"listTypeDefinitionId": 0,
+				"localized": false,
+				"name": "status",
+				"objectFieldSettings": [
+				],
+				"readOnly": "true",
+				"readOnlyConditionExpression": "",
+				"required": false,
+				"state": false,
+				"system": true,
+				"type": "String",
+				"unique": false
+			},
+			{
+				"DBType": "String",
+				"businessType": "Text",
+				"externalReferenceCode": "studentName",
+				"id": 41238,
+				"indexed": true,
+				"indexedAsKeyword": true,
+				"indexedLanguageId": "",
+				"label": {
+					"en_US": "name"
+				},
+				"listTypeDefinitionId": 0,
+				"localized": false,
+				"name": "name",
+				"objectFieldSettings": [
+				],
+				"readOnly": "false",
+				"readOnlyConditionExpression": "",
+				"required": true,
+				"state": false,
+				"system": false,
+				"type": "String",
+				"unique": false
+			},
+			{
+				"DBType": "String",
+				"businessType": "Text",
+				"externalReferenceCode": "f466bdca-6c97-ac3b-f251-07c45c4e7cdc",
+				"id": 41320,
+				"indexed": true,
+				"indexedAsKeyword": false,
+				"indexedLanguageId": "",
+				"label": {
+					"en_US": "additional"
+				},
+				"listTypeDefinitionId": 0,
+				"localized": false,
+				"name": "additional",
+				"objectFieldSettings": [
+				],
+				"readOnly": "false",
+				"readOnlyConditionExpression": "",
+				"required": false,
+				"state": false,
+				"system": false,
+				"type": "String",
+				"unique": false
+			}
+		],
+		"pluralLabel": {
+			"en_US": "Student"
+		},
+		"scope": "company",
+		"status": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"externalReferenceCode": "Teacher",
+		"label": {
+			"en_US": "Teacher"
+		},
+		"name": "Teacher",
+		"objectFields": [
+			{
+				"DBType": "String",
+				"businessType": "Text",
+				"externalReferenceCode": "96842cf2-bf5b-716a-9da8-19e5480c0043",
+				"id": 41274,
+				"indexed": false,
+				"indexedAsKeyword": false,
+				"indexedLanguageId": "",
+				"label": {
+					"en_US": "Author"
+				},
+				"listTypeDefinitionId": 0,
+				"localized": false,
+				"name": "creator",
+				"objectFieldSettings": [
+				],
+				"readOnly": "true",
+				"readOnlyConditionExpression": "",
+				"required": false,
+				"state": false,
+				"system": true,
+				"type": "String",
+				"unique": false
+			},
+			{
+				"DBType": "Date",
+				"businessType": "Date",
+				"externalReferenceCode": "0582d95f-b3a5-0e08-0ce1-8bac0e0d10b4",
+				"id": 41276,
+				"indexed": false,
+				"indexedAsKeyword": false,
+				"indexedLanguageId": "",
+				"label": {
+					"en_US": "Create Date"
+				},
+				"listTypeDefinitionId": 0,
+				"localized": false,
+				"name": "createDate",
+				"objectFieldSettings": [
+				],
+				"readOnly": "true",
+				"readOnlyConditionExpression": "",
+				"required": false,
+				"state": false,
+				"system": true,
+				"type": "Date",
+				"unique": false
+			},
+			{
+				"DBType": "String",
+				"businessType": "Text",
+				"externalReferenceCode": "ccceea61-9545-079d-fd87-70c3e7c0cded",
+				"id": 41278,
+				"indexed": false,
+				"indexedAsKeyword": false,
+				"indexedLanguageId": "",
+				"label": {
+					"en_US": "External Reference Code"
+				},
+				"listTypeDefinitionId": 0,
+				"localized": false,
+				"name": "externalReferenceCode",
+				"objectFieldSettings": [
+				],
+				"readOnly": "false",
+				"readOnlyConditionExpression": "",
+				"required": false,
+				"state": false,
+				"system": true,
+				"type": "String",
+				"unique": false
+			},
+			{
+				"DBType": "Long",
+				"businessType": "LongInteger",
+				"externalReferenceCode": "29f38c3d-b90c-7574-6513-9a35eec24a53",
+				"id": 41280,
+				"indexed": true,
+				"indexedAsKeyword": true,
+				"indexedLanguageId": "",
+				"label": {
+					"en_US": "ID"
+				},
+				"listTypeDefinitionId": 0,
+				"localized": false,
+				"name": "id",
+				"objectFieldSettings": [
+				],
+				"readOnly": "true",
+				"readOnlyConditionExpression": "",
+				"required": false,
+				"state": false,
+				"system": true,
+				"type": "Long",
+				"unique": false
+			},
+			{
+				"DBType": "Date",
+				"businessType": "Date",
+				"externalReferenceCode": "5d8d27d0-d81f-0172-43d9-d5375b280143",
+				"id": 41282,
+				"indexed": false,
+				"indexedAsKeyword": false,
+				"indexedLanguageId": "",
+				"label": {
+					"en_US": "Modified Date"
+				},
+				"listTypeDefinitionId": 0,
+				"localized": false,
+				"name": "modifiedDate",
+				"objectFieldSettings": [
+				],
+				"readOnly": "true",
+				"readOnlyConditionExpression": "",
+				"required": false,
+				"state": false,
+				"system": true,
+				"type": "Date",
+				"unique": false
+			},
+			{
+				"DBType": "String",
+				"businessType": "Text",
+				"externalReferenceCode": "a5fd0450-0ff2-938d-bebb-62ce990e8085",
+				"id": 41284,
+				"indexed": false,
+				"indexedAsKeyword": false,
+				"indexedLanguageId": "",
+				"label": {
+					"en_US": "Status"
+				},
+				"listTypeDefinitionId": 0,
+				"localized": false,
+				"name": "status",
+				"objectFieldSettings": [
+				],
+				"readOnly": "true",
+				"readOnlyConditionExpression": "",
+				"required": false,
+				"state": false,
+				"system": true,
+				"type": "String",
+				"unique": false
+			},
+			{
+				"DBType": "String",
+				"businessType": "Text",
+				"externalReferenceCode": "teacherName",
+				"id": 41286,
+				"indexed": true,
+				"indexedAsKeyword": true,
+				"indexedLanguageId": "",
+				"label": {
+					"en_US": "name"
+				},
+				"listTypeDefinitionId": 0,
+				"localized": false,
+				"name": "name",
+				"objectFieldSettings": [
+				],
+				"readOnly": "false",
+				"readOnlyConditionExpression": "",
+				"required": true,
+				"state": false,
+				"system": false,
+				"type": "String",
+				"unique": false
+			}
+		],
+		"pluralLabel": {
+			"en_US": "Teacher"
+		},
+		"scope": "company",
+		"status": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	}
+]

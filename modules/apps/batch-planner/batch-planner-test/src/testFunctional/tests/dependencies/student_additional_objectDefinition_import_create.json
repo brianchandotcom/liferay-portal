@@ -1,0 +1,212 @@
+[
+	{
+		"externalReferenceCode": "2b4e57d8-f671-2d50-ca36-468126f619ee",
+		"label": {
+			"en_US": "Student"
+		},
+		"name": "Student",
+		"objectFields": [
+			{
+				"DBType": "String",
+				"businessType": "Text",
+				"externalReferenceCode": "81abbd1a-1fc4-14d3-197e-8832489f8a89",
+				"id": 37796,
+				"indexed": false,
+				"indexedAsKeyword": false,
+				"indexedLanguageId": "",
+				"label": {
+					"en_US": "Author"
+				},
+				"listTypeDefinitionId": 0,
+				"localized": false,
+				"name": "creator",
+				"objectFieldSettings": [
+				],
+				"readOnly": "true",
+				"readOnlyConditionExpression": "",
+				"required": false,
+				"state": false,
+				"system": true,
+				"type": "String",
+				"unique": false
+			},
+			{
+				"DBType": "Date",
+				"businessType": "Date",
+				"externalReferenceCode": "99c55160-be9e-a37e-f0f8-6ff72ab3c8fc",
+				"id": 37798,
+				"indexed": false,
+				"indexedAsKeyword": false,
+				"indexedLanguageId": "",
+				"label": {
+					"en_US": "Create Date"
+				},
+				"listTypeDefinitionId": 0,
+				"localized": false,
+				"name": "createDate",
+				"objectFieldSettings": [
+				],
+				"readOnly": "true",
+				"readOnlyConditionExpression": "",
+				"required": false,
+				"state": false,
+				"system": true,
+				"type": "Date",
+				"unique": false
+			},
+			{
+				"DBType": "String",
+				"businessType": "Text",
+				"externalReferenceCode": "680cff9b-27b1-54db-311e-671977c3fe6a",
+				"id": 37800,
+				"indexed": false,
+				"indexedAsKeyword": false,
+				"indexedLanguageId": "",
+				"label": {
+					"en_US": "External Reference Code"
+				},
+				"listTypeDefinitionId": 0,
+				"localized": false,
+				"name": "externalReferenceCode",
+				"objectFieldSettings": [
+				],
+				"readOnly": "false",
+				"readOnlyConditionExpression": "",
+				"required": false,
+				"state": false,
+				"system": true,
+				"type": "String",
+				"unique": false
+			},
+			{
+				"DBType": "Long",
+				"businessType": "LongInteger",
+				"externalReferenceCode": "4efd8fae-39c4-7acf-ab00-55877603f791",
+				"id": 37802,
+				"indexed": true,
+				"indexedAsKeyword": true,
+				"indexedLanguageId": "",
+				"label": {
+					"en_US": "ID"
+				},
+				"listTypeDefinitionId": 0,
+				"localized": false,
+				"name": "id",
+				"objectFieldSettings": [
+				],
+				"readOnly": "true",
+				"readOnlyConditionExpression": "",
+				"required": false,
+				"state": false,
+				"system": true,
+				"type": "Long",
+				"unique": false
+			},
+			{
+				"DBType": "Date",
+				"businessType": "Date",
+				"externalReferenceCode": "46693b4f-72a8-9f7b-a233-a5e77a6a305d",
+				"id": 37804,
+				"indexed": false,
+				"indexedAsKeyword": false,
+				"indexedLanguageId": "",
+				"label": {
+					"en_US": "Modified Date"
+				},
+				"listTypeDefinitionId": 0,
+				"localized": false,
+				"name": "modifiedDate",
+				"objectFieldSettings": [
+				],
+				"readOnly": "true",
+				"readOnlyConditionExpression": "",
+				"required": false,
+				"state": false,
+				"system": true,
+				"type": "Date",
+				"unique": false
+			},
+			{
+				"DBType": "String",
+				"businessType": "Text",
+				"externalReferenceCode": "95a42bb7-e9d3-8e1e-6f71-61a44a0398aa",
+				"id": 37806,
+				"indexed": false,
+				"indexedAsKeyword": false,
+				"indexedLanguageId": "",
+				"label": {
+					"en_US": "Status"
+				},
+				"listTypeDefinitionId": 0,
+				"localized": false,
+				"name": "status",
+				"objectFieldSettings": [
+				],
+				"readOnly": "true",
+				"readOnlyConditionExpression": "",
+				"required": false,
+				"state": false,
+				"system": true,
+				"type": "String",
+				"unique": false
+			},
+			{
+				"DBType": "String",
+				"businessType": "Text",
+				"externalReferenceCode": "af2cd84b-10f9-3483-c052-7c6a60022d01",
+				"id": 37814,
+				"indexed": true,
+				"indexedAsKeyword": false,
+				"indexedLanguageId": "",
+				"label": {
+					"en_US": "name"
+				},
+				"listTypeDefinitionId": 0,
+				"localized": false,
+				"name": "name",
+				"objectFieldSettings": [
+				],
+				"readOnly": "false",
+				"readOnlyConditionExpression": "",
+				"required": false,
+				"state": false,
+				"system": false,
+				"type": "String",
+				"unique": false
+			},
+			{
+				"DBType": "String",
+				"businessType": "Text",
+				"externalReferenceCode": "e721eab7-da28-787a-c7e0-8ac3e666d542",
+				"id": 37933,
+				"indexed": true,
+				"indexedAsKeyword": false,
+				"indexedLanguageId": "",
+				"label": {
+					"en_US": "additional"
+				},
+				"listTypeDefinitionId": 0,
+				"localized": false,
+				"name": "additional",
+				"objectFieldSettings": [
+				],
+				"readOnly": "false",
+				"readOnlyConditionExpression": "",
+				"required": false,
+				"state": false,
+				"system": false,
+				"type": "String",
+				"unique": false
+			}
+		],
+		"pluralLabel": {
+			"en_US": "Student"
+		},
+		"scope": "company",
+		"status": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	}
+]

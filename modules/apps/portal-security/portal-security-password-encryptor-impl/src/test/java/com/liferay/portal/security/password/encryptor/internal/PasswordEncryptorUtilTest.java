@@ -15,10 +15,8 @@ import com.liferay.portal.kernel.security.pwd.PasswordEncryptorUtil;
 import com.liferay.portal.kernel.test.util.PropsValuesTestUtil;
 import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.util.DigesterImpl;
-import com.liferay.portal.util.PropsUtil;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -323,22 +321,13 @@ public class PasswordEncryptorUtilTest {
 			String expectedPassword)
 		throws Exception {
 
-		String originalLegacyAlgorithm = PropsUtil.get(
-			PropsKeys.PASSWORDS_ENCRYPTION_ALGORITHM_LEGACY);
-
-		try {
-			PropsUtil.set(
-				PropsKeys.PASSWORDS_ENCRYPTION_ALGORITHM_LEGACY,
-				legacyAlgorithm);
+		try (SafeCloseable safeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"PASSWORDS_ENCRYPTION_ALGORITHM_LEGACY", legacyAlgorithm)) {
 
 			Assert.assertEquals(
 				expectedPassword,
 				PasswordEncryptorUtil.encrypt(plainPassword, expectedPassword));
-		}
-		finally {
-			PropsUtil.set(
-				PropsKeys.PASSWORDS_ENCRYPTION_ALGORITHM_LEGACY,
-				originalLegacyAlgorithm);
 		}
 	}
 

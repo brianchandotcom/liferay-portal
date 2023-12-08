@@ -8,6 +8,7 @@ import {useOutletContext, useParams} from 'react-router-dom';
 import './App.scss';
 
 import classNames from 'classnames';
+import {ReactNode} from 'react';
 
 import {DetailedCard} from '../../../../components/DetailedCard/DetailedCard';
 import getProductPriceModel from '../../../GetAppPage/utils/getProductPriceModel';
@@ -17,9 +18,10 @@ const App = () => {
 	const {orderId} = useParams();
 	const {placedOrder, product} = useOutletContext<any>();
 
-	const projectNameField = Object.values(
-		placedOrder.customFields
-	).find((field) => Object.keys(field === 'Project Name'));
+	const projectNameField =
+		Object.values(placedOrder.customFields).find((field) =>
+			Object.keys(field === 'Project Name')
+		) || '-';
 
 	const {isPaidApp} = getProductPriceModel(product);
 
@@ -47,7 +49,7 @@ const App = () => {
 					</div>
 					<div className="mb-2 row">
 						<h5 className="col-6">Customer Project</h5>
-						<p className="col">{projectNameField || '-'}</p>
+						<p className="col">{projectNameField as ReactNode}</p>
 					</div>
 					<div className="mb-2 row">
 						<h5 className="col-6">Purchased by</h5>

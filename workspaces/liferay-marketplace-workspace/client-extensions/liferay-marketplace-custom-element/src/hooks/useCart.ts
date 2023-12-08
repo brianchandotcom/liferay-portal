@@ -50,7 +50,7 @@ const useCart = ({
 		);
 
 		if (existingItem) {
-			setCartItems((prevCart: CartItem[]) =>
+			return setCartItems((prevCart: CartItem[]) =>
 				prevCart.map((item) =>
 					item.skuId === skuId
 						? {...item, quantity: item.quantity + 1}
@@ -58,12 +58,11 @@ const useCart = ({
 				)
 			);
 		}
-		else {
-			setCartItems((prevCart: CartItem[]) => [
-				...prevCart,
-				{productId, quantity: 1, skuId},
-			]);
-		}
+
+		setCartItems((prevCart: CartItem[]) => [
+			...prevCart,
+			{productId, quantity: 1, skuId},
+		]);
 	};
 
 	const removeFromCart = (skuId: number) => {
@@ -79,9 +78,7 @@ const useCart = ({
 	};
 
 	const updateCartItems = async (cartId: number, data: any) => {
-		const response = await updateCart(cartId, data);
-
-		return response;
+		return updateCart(cartId, data);
 	};
 
 	const removeCart = (cartId: number) => {
@@ -104,50 +101,54 @@ const useCart = ({
 
 	useEffect(() => {
 		(async () => {
-			if (accountId && channelId && product) {
-				const {items: orderList} = await fetcher(
-					`o/headless-commerce-delivery-cart/v1.0/channels/${channelId}/account/${accountId}/carts`
+			if (!accountId || !product) {
+				return;
+			}
+
+			const {items: orders = []} = await fetcher(
+				`o/headless-commerce-delivery-cart/v1.0/channels/${channelId}/account/${accountId}/carts`
+			);
+
+			if (!orders?.length || !product.id) {
+				return;
+			}
+
+			const [order] = orders;
+
+			setCart(order);
+
+			const openOrders = orders.filter(
+				(order: Order) => order?.orderStatusInfo?.label === 'open'
+			);
+
+			if (!openOrders) {
+				return;
+			}
+
+			const cartItemsResponse = await fetcher(
+				`o/headless-commerce-delivery-cart/v1.0/carts/${openOrders[0]?.id}/items`
+			);
+
+			const hasCartItem = cartItemsResponse.items.some(
+				(cartItem: CartItem) => cartItem.productId === product.id + 1
+			);
+
+			if (hasCartItem) {
+				const cartItemsList = await cartItemsResponse?.items?.map(
+					(item: CartItem) => ({
+						productId: item.productId,
+						quantity: item.quantity,
+						skuId: item.skuId,
+					})
 				);
 
-				if (orderList?.length && product.id) {
-					setCart(orderList[0]);
+				setCartItems(cartItemsList);
+				setValue('selectedTimeline', 'paid');
 
-					const openCartList = await orderList?.filter(
-						(order: Order) =>
-							order?.orderStatusInfo?.label === 'open'
-					);
-
-					if (openCartList) {
-						const cartItemsResponse = await fetcher(
-							`o/headless-commerce-delivery-cart/v1.0/carts/${openCartList[0]?.id}/items`
-						);
-
-						const test = cartItemsResponse.items.some(
-							(cartItem: CartItem) =>
-								cartItem.productId === product.id + 1
-						);
-
-						if (test) {
-							const cartItemsList = await cartItemsResponse?.items?.map(
-								(item: CartItem) => {
-									return {
-										productId: item.productId,
-										quantity: item.quantity,
-										skuId: item.skuId,
-									};
-								}
-							);
-
-							setCartItems(cartItemsList);
-							setValue('selectedTimeline', 'paid');
-
-							return;
-						}
-
-						removeCart(orderList[0].id);
-					}
-				}
+				return;
 			}
+
+			removeCart(order.id);
 		})();
 	}, [accountId, channelId, product, setValue]);
 

@@ -23,7 +23,13 @@ import './App.scss';
 
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 
-const AppNavbar = () => {
+import getProductPriceModel from '../../../GetAppPage/utils/getProductPriceModel';
+
+type AppNavbarProps = {
+	showLicenseTab: boolean;
+};
+
+const AppNavbar: React.FC<AppNavbarProps> = ({showLicenseTab}) => {
 	const location = useLocation();
 
 	const routeParams = location.pathname.split('/').filter(Boolean);
@@ -42,16 +48,18 @@ const AppNavbar = () => {
 					Details
 				</NavLink>
 
-				<NavLink
-					className={({isActive}) =>
-						classNames('nav-link', {
-							active: isActive,
-						})
-					}
-					to="licenses"
-				>
-					Licenses
-				</NavLink>
+				{showLicenseTab && (
+					<NavLink
+						className={({isActive}) =>
+							classNames('nav-link', {
+								active: isActive,
+							})
+						}
+						to="licenses"
+					>
+						Licenses
+					</NavLink>
+				)}
 			</ul>
 		</div>
 	);
@@ -76,6 +84,10 @@ const AppOutlet = () => {
 		return <div>Error: {error.message}</div>;
 	}
 
+	const placedOrderItems = data?.placedOrder.placedOrderItems ?? [];
+
+	const {isFreeApp} = getProductPriceModel(data?.product);
+
 	return (
 		<div className="app-details-header d-flex flex-column w-100">
 			<ClayButton
@@ -96,7 +108,15 @@ const AppOutlet = () => {
 				productOwner={productCreatorAccountName}
 			/>
 
-			<AppNavbar />
+			<AppNavbar
+				showLicenseTab={
+					!(
+						isFreeApp ||
+						(placedOrderItems[0]?.price?.price === 0 &&
+							placedOrderItems[0]?.sku !== 'TRIAL')
+					)
+				}
+			/>
 
 			<Outlet context={data} />
 		</div>

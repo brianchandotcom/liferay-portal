@@ -150,48 +150,48 @@ const AppsTable: React.FC<AppsTableProps> = ({items}) => {
 								>
 									<DropDown.ItemList>
 										{orderTypeExternalReferenceCode ===
-											OrderType.DXP && (
-											<>
-												<ClayTooltipProvider>
+											OrderType.DXP &&
+											!isFreeApp && (
+												<>
+													<ClayTooltipProvider>
+														<DropDown.Item
+															data-tooltip-align="left"
+															disabled={
+																orderStatusIsNotCompleted
+															}
+															onClick={() =>
+																navigate(
+																	`order/${id}/create-license`
+																)
+															}
+															title={
+																orderStatusIsNotCompleted
+																	? i18n.translate(
+																			'the-order-must-be-completed-before-licensing-this-app.'
+																	  )
+																	: undefined
+															}
+														>
+															{i18n.translate(
+																'create-license-key'
+															)}
+														</DropDown.Item>
+													</ClayTooltipProvider>
+
 													<DropDown.Item
-														data-tooltip-align="left"
-														disabled={
-															orderStatusIsNotCompleted ||
-															isFreeApp
-														}
-														onClick={() =>
+														disabled={isFreeApp}
+														onClick={() => {
 															navigate(
-																`order/${id}/create-license`
-															)
-														}
-														title={
-															orderStatusIsNotCompleted
-																? i18n.translate(
-																		'the-order-must-be-completed-before-licensing-this-app.'
-																  )
-																: undefined
-														}
+																`order/${id}/licenses`
+															);
+														}}
 													>
 														{i18n.translate(
-															'create-license-key'
+															'manage-license-keys'
 														)}
 													</DropDown.Item>
-												</ClayTooltipProvider>
-
-												<DropDown.Item
-													disabled={isFreeApp}
-													onClick={() => {
-														navigate(
-															`order/${id}/licenses`
-														);
-													}}
-												>
-													{i18n.translate(
-														'manage-license-keys'
-													)}
-												</DropDown.Item>
-											</>
-										)}
+												</>
+											)}
 
 										{orderTypeExternalReferenceCode ===
 											OrderType.CLOUD && (

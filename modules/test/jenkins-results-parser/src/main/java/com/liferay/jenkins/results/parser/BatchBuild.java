@@ -100,13 +100,15 @@ public class BatchBuild extends BaseParentBuild {
 		Element messageElement = super.getGitHubMessageElement();
 
 		if (messageElement == null) {
-			return messageElement;
+			return null;
 		}
 
 		String result = getResult();
 
 		if (result.equals("ABORTED") && (getDownstreamBuildCount(null) == 0)) {
-			return messageElement;
+			_gitHubMessageElement = messageElement;
+
+			return _gitHubMessageElement;
 		}
 
 		Map<Build, Element> downstreamBuildFailureMessages =
@@ -115,7 +117,9 @@ public class BatchBuild extends BaseParentBuild {
 		if (result.equals("FAILURE") &&
 			downstreamBuildFailureMessages.isEmpty()) {
 
-			return messageElement;
+			_gitHubMessageElement = messageElement;
+
+			return _gitHubMessageElement;
 		}
 
 		List<Element> failureElements = new ArrayList<>();
@@ -171,7 +175,9 @@ public class BatchBuild extends BaseParentBuild {
 			return null;
 		}
 
-		return messageElement;
+		_gitHubMessageElement = messageElement;
+
+		return _gitHubMessageElement;
 	}
 
 	@Override
@@ -483,5 +489,7 @@ public class BatchBuild extends BaseParentBuild {
 		JenkinsResultsParserUtil.getNewThreadPoolExecutor(10, true);
 	private static final Pattern _jobVariantPattern = Pattern.compile(
 		"(?<batchName>[^/]+)(/.*)?");
+
+	private Element _gitHubMessageElement;
 
 }

@@ -1567,7 +1567,6 @@ definition {
 			PageEditor.configureFragment(enableLazyLoading = "true");
 
 			PageEditor.publish();
-
 		}
 
 		task ("Then the user cannot see the warning message on the details of Image fragment") {

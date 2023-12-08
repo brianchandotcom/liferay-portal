@@ -14,11 +14,20 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(generateUI = false)
 @Meta.OCD(
-	id = "com.liferay.portal.db.partition.internal.configuration.DBPartitionVirtualInstanceExtractionConfiguration"
+	id = "com.liferay.portal.db.partition.internal.configuration.DBPartitionInsertVirtualInstanceConfiguration"
 )
-public interface DBPartitionVirtualInstanceExtractionConfiguration {
+public interface DBPartitionInsertVirtualInstanceConfiguration {
 
 	@Meta.AD
 	public String companyId();
+
+	@Meta.AD(required = false)
+	public String newName();
+
+	@Meta.AD(required = false)
+	public String newVirtualHostname();
+
+	@Meta.AD(required = false)
+	public String newWebId();
 
 }

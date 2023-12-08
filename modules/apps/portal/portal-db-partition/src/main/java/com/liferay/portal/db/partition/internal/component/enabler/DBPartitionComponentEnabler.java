@@ -5,8 +5,8 @@
 
 package com.liferay.portal.db.partition.internal.component.enabler;
 
-import com.liferay.portal.db.partition.internal.configuration.persistence.listener.DBPartitionVirtualInstanceExtractionConfigurationModelListener;
-import com.liferay.portal.db.partition.internal.configuration.persistence.listener.DBPartitionVirtualInstanceInsertionConfigurationModelListener;
+import com.liferay.portal.db.partition.internal.operation.DBPartitionExtractVirtualInstanceOperation;
+import com.liferay.portal.db.partition.internal.operation.DBPartitionInsertVirtualInstanceOperation;
 import com.liferay.portal.kernel.db.partition.DBPartition;
 
 import org.osgi.service.component.ComponentContext;
@@ -23,11 +23,9 @@ public class DBPartitionComponentEnabler {
 	protected void activate(ComponentContext componentContext) {
 		if (DBPartition.isPartitionEnabled()) {
 			componentContext.enableComponent(
-				DBPartitionVirtualInstanceExtractionConfigurationModelListener.
-					class.getName());
+				DBPartitionExtractVirtualInstanceOperation.class.getName());
 			componentContext.enableComponent(
-				DBPartitionVirtualInstanceInsertionConfigurationModelListener.
-					class.getName());
+				DBPartitionInsertVirtualInstanceOperation.class.getName());
 		}
 	}
 

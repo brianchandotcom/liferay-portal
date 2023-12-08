@@ -3,21 +3,16 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.db.partition.internal.configuration.persistence.listener.test;
+package com.liferay.portal.db.partition.internal.operation.test;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.db.partition.test.util.BaseDBPartitionTestCase;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
-import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.util.PropsValues;
-
-import java.lang.reflect.InvocationHandler;
 
 import java.nio.charset.Charset;
 import java.nio.file.Files;
@@ -38,12 +33,11 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
-import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Mariano Álvaro Sáiz
  */
-public abstract class BaseConfigurationModelListenerTestCase
+public abstract class BaseVirtualInstanceOperationTestCase
 	extends BaseDBPartitionTestCase {
 
 	@BeforeClass
@@ -63,8 +57,6 @@ public abstract class BaseConfigurationModelListenerTestCase
 
 	protected void deployConfiguration(String pid, String content)
 		throws Exception {
-
-		_waitForConfigurationModelListenerEnabled();
 
 		Assert.assertNull(
 			_configurationAdmin.listConfigurations(
@@ -86,26 +78,7 @@ public abstract class BaseConfigurationModelListenerTestCase
 		}
 	}
 
-	protected abstract String getListenerName();
-
-	protected AutoCloseable swapCompanyLocalService(
-			InvocationHandler invocationHandler)
-		throws Exception {
-
-		_waitForConfigurationModelListenerEnabled();
-
-		CompanyLocalService companyLocalService =
-			ReflectionTestUtil.getAndSetFieldValue(
-				_configurationModelListener, "_companyLocalService",
-				(CompanyLocalService)ProxyUtil.newProxyInstance(
-					CompanyLocalService.class.getClassLoader(),
-					new Class<?>[] {CompanyLocalService.class},
-					invocationHandler));
-
-		return () -> ReflectionTestUtil.setFieldValue(
-			_configurationModelListener, "_companyLocalService",
-			companyLocalService);
-	}
+	protected abstract String getComponentName();
 
 	protected void verifyConfigurationIsDeletedAfterDeploy(String pid)
 		throws Exception {
@@ -164,20 +137,9 @@ public abstract class BaseConfigurationModelListenerTestCase
 		return serviceRegistration::unregister;
 	}
 
-	private void _waitForConfigurationModelListenerEnabled() throws Exception {
-		ServiceTracker<?, ?> serviceTracker = ServiceTrackerFactory.open(
-			SystemBundleUtil.getBundleContext(),
-			"(component.name=*." + getListenerName() + ")");
-
-		_configurationModelListener = serviceTracker.waitForService(10000);
-
-		serviceTracker.close();
-	}
-
 	@Inject
 	private ConfigurationAdmin _configurationAdmin;
 
-	private Object _configurationModelListener;
 	private Path _configurationPath;
 	private CountDownLatch _countDownLatch;
 

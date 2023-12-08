@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.db.partition.internal.configuration.persistence.listener.test;
+package com.liferay.portal.db.partition.internal.operation.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 
@@ -14,26 +14,23 @@ import org.junit.runner.RunWith;
  * @author Mariano Álvaro Sáiz
  */
 @RunWith(Arquillian.class)
-public class DBPartitionVirtualInstanceInsertionConfigurationModelListenerTest
-	extends BaseConfigurationModelListenerTestCase {
+public class DBPartitionExtractVirtualInstanceOperationTest
+	extends BaseVirtualInstanceOperationTestCase {
 
 	@Override
-	public String getListenerName() {
-		return "DBPartitionVirtualInstanceInsertionConfigurationModelListener";
+	public String getComponentName() {
+		return "DBPartitionExtractVirtualInstanceOperation";
 	}
 
 	@Test
 	public void testDeployConfiguration() throws Exception {
-		deployConfiguration(
-			_PID,
-			"newWebId=T\"testNewWebId\"\ncompanyId=L\"" + COMPANY_IDS[0] +
-				"\"\n");
+		deployConfiguration(_PID, "companyId=L\"" + COMPANY_IDS[0] + "\"\n");
 
 		verifyConfigurationIsDeletedAfterDeploy(_PID);
 	}
 
 	private static final String _PID =
 		"com.liferay.portal.db.partition.internal.configuration." +
-			"DBPartitionVirtualInstanceInsertionConfiguration";
+			"DBPartitionExtractVirtualInstanceConfiguration";
 
 }

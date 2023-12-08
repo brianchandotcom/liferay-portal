@@ -30,6 +30,9 @@ import java.util.Map;
  */
 public class DefaultFullNameGenerator implements FullNameGenerator {
 
+	public static final DefaultFullNameGenerator INSTANCE =
+		new DefaultFullNameGenerator();
+
 	@Override
 	public String getFullName(
 		String firstName, String middleName, String lastName) {

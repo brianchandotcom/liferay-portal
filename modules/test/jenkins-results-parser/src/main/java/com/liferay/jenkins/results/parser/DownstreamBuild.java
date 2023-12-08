@@ -269,7 +269,8 @@ public class DownstreamBuild extends BaseBuild {
 
 		System.out.println(
 			JenkinsResultsParserUtil.combine(
-				"[", getBuildName(), "] Created a failure GitHub message"));
+				"[", getBuildName(), "] Created a failure GitHub message: ",
+				String.valueOf(hashCode())));
 
 		return messageElement;
 	}

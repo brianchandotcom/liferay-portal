@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -590,7 +589,7 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 		return count;
 	}
 
-	protected Map<Build, Element> getDownstreamBuildMessages(
+	protected List<Element> getDownstreamBuildMessages(
 		List<Build> downstreamBuilds) {
 
 		List<Callable<Element>> callables = new ArrayList<>();
@@ -615,15 +614,7 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 			callables, getExecutorService(), "getDownstreamBuildMessages");
 
 		try {
-			List<Element> elements = parallelExecutor.execute();
-
-			Map<Build, Element> elementsMap = new LinkedHashMap<>();
-
-			for (int i = 0; i < elements.size(); i++) {
-				elementsMap.put(downstreamBuilds.get(i), elements.get(i));
-			}
-
-			return elementsMap;
+			return parallelExecutor.execute();
 		}
 		catch (TimeoutException timeoutException) {
 			throw new RuntimeException(timeoutException);

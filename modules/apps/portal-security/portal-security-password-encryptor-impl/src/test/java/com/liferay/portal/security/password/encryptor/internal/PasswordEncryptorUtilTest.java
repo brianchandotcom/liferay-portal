@@ -5,6 +5,7 @@
 
 package com.liferay.portal.security.password.encryptor.internal;
 
+import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -197,34 +198,90 @@ public class PasswordEncryptorUtilTest {
 
 	@Test
 	public void testEncryptPBKDF2() throws Exception {
-		runTests(
+		UnsafeRunnable<Exception> unsafeRunnable = () -> runTests(
 			PasswordEncryptor.TYPE_PBKDF2 + "WithHmacSHA1", "password",
 			"AAAAoAAB9ADJZ16OuMAPPHe2CUbP0HPyXvagoKHumh7iHU3c",
 			PasswordEncryptor.TYPE_PBKDF2 + "WithHmacSHA1");
+
+		try (SafeCloseable safeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"PASSWORDS_ENCRYPTION_BOUNCYCASTLE_ENABLED", false)) {
+
+			unsafeRunnable.run();
+		}
+
+		try (SafeCloseable safeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"PASSWORDS_ENCRYPTION_BOUNCYCASTLE_ENABLED", true)) {
+
+			unsafeRunnable.run();
+		}
 	}
 
 	@Test
 	public void testEncryptPBKDF2With50000Rounds() throws Exception {
-		runTests(
+		UnsafeRunnable<Exception> unsafeRunnable = () -> runTests(
 			PasswordEncryptor.TYPE_PBKDF2 + "WithHmacSHA1/50000", "password",
 			"AAAAoAAAw1B+jxO3UiVsWdBk4B9xGd/Ko3GKHW2afYhuit49",
 			PasswordEncryptor.TYPE_PBKDF2 + "WithHmacSHA1");
+
+		try (SafeCloseable safeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"PASSWORDS_ENCRYPTION_BOUNCYCASTLE_ENABLED", false)) {
+
+			unsafeRunnable.run();
+		}
+
+		try (SafeCloseable safeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"PASSWORDS_ENCRYPTION_BOUNCYCASTLE_ENABLED", true)) {
+
+			unsafeRunnable.run();
+		}
 	}
 
 	@Test
 	public void testEncryptPBKDF2With50000RoundsAnd128Key() throws Exception {
-		runTests(
+		UnsafeRunnable<Exception> unsafeRunnable = () -> runTests(
 			PasswordEncryptor.TYPE_PBKDF2 + "WithHmacSHA1/128/50000",
 			"password", "AAAAoAAAw1AbW1e1Str9wSLWIX5X9swLn+j5/5+m6auSPdva",
 			PasswordEncryptor.TYPE_PBKDF2 + "WithHmacSHA1");
+
+		try (SafeCloseable safeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"PASSWORDS_ENCRYPTION_BOUNCYCASTLE_ENABLED", false)) {
+
+			unsafeRunnable.run();
+		}
+
+		try (SafeCloseable safeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"PASSWORDS_ENCRYPTION_BOUNCYCASTLE_ENABLED", true)) {
+
+			unsafeRunnable.run();
+		}
 	}
 
 	@Test
 	public void testEncryptPBKDF2With720000RoundsAnd128Key() throws Exception {
-		runTests(
+		UnsafeRunnable<Exception> unsafeRunnable = () -> runTests(
 			PasswordEncryptor.TYPE_PBKDF2 + "WithHmacSHA1/128/720000",
 			"password", "AAAAoAAB9ADyaBP3fTtsBh8YlRn1CU7VLYR/mnH7ADMNMz2o",
 			PasswordEncryptor.TYPE_PBKDF2 + "WithHmacSHA1");
+
+		try (SafeCloseable safeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"PASSWORDS_ENCRYPTION_BOUNCYCASTLE_ENABLED", false)) {
+
+			unsafeRunnable.run();
+		}
+
+		try (SafeCloseable safeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"PASSWORDS_ENCRYPTION_BOUNCYCASTLE_ENABLED", true)) {
+
+			unsafeRunnable.run();
+		}
 	}
 
 	@Test

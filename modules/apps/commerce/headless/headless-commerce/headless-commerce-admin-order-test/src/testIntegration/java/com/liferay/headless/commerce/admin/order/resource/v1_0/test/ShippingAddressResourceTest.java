@@ -108,9 +108,10 @@ public class ShippingAddressResourceTest
 				testGroup.getGroupId(), RandomTestUtil.randomString(),
 				CommerceChannelConstants.CHANNEL_TYPE_SITE, null,
 				commerceCurrency.getCode(), serviceContext);
+
 		CommerceOrder commerceOrder =
 			_commerceOrderLocalService.addCommerceOrder(
-				user.getUserId(), testGroup.getGroupId(),
+				user.getUserId(), commerceChannel.getGroupId(),
 				address.getAddressId(), accountEntry.getAccountEntryId(),
 				commerceCurrency.getCommerceCurrencyId(),
 				CommerceOrderConstants.TYPE_PK_FULFILLMENT, 0,

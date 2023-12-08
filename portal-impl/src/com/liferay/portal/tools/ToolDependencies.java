@@ -77,7 +77,7 @@ public class ToolDependencies {
 				(proxy, method, args) -> null),
 			null);
 		bundleContext.registerService(
-			FullNameGenerator.class, new DefaultFullNameGenerator(), null);
+			FullNameGenerator.class, DefaultFullNameGenerator.INSTANCE, null);
 
 		CacheKeyGeneratorUtil cacheKeyGeneratorUtil =
 			new CacheKeyGeneratorUtil();

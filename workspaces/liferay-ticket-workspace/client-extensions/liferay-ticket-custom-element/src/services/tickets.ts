@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {Ticket} from '../types';
 import {Liferay} from './liferay';
 import {
 	J3Y7_PRIORITIES,
@@ -56,7 +57,7 @@ export async function fetchTickets({queryKey}: FetchTicketsQueryKey) {
 	}
 
 	const response = await fetch(
-		`/o/c/j3y7tickets?pageSize=${pageSize}&page=${page}&sort=dateModified:desc${filterString}${searchString}`,
+		`/o/c/j3y7tickets?pageSize=${pageSize}&page=${page}&sort=dateModified:desc${filterString}${searchString}&nestedFields=userToJ3Y7Ticket`,
 		{
 			headers: {
 				'accept': 'application/json',
@@ -121,5 +122,45 @@ export async function generateNewTicket() {
 			'x-csrf-token': Liferay.authToken,
 		},
 		method: 'POST',
+	});
+}
+
+export async function updateTicketStatus(ticket: Ticket) {
+	let listTypeDefinitions = {} as ListTypeDefinitions;
+
+	if (!(J3Y7_PRIORITIES in listTypeDefinitions)) {
+		listTypeDefinitions = await fetchListTypeDefinitions();
+	}
+	const priorities = listTypeDefinitions[J3Y7_PRIORITIES] as any[];
+	const regions = listTypeDefinitions[J3Y7_REGIONS] as any[];
+	const resolutions = listTypeDefinitions[J3Y7_RESOLUTIONS] as any[];
+	const types = listTypeDefinitions[J3Y7_TYPES] as any[];
+
+
+	ticket.priority = priorities.find(p => p.name === ticket.priority);
+	ticket.region = regions.find(p => p.name === ticket.region);
+	ticket.resolution = resolutions.find(p => p.name === ticket.resolution);
+	ticket.type = types.find(p => p.name === ticket.type);
+
+
+	return fetch(`/o/c/j3y7tickets/${ticket.id}`, {
+		body: JSON.stringify(ticket),
+		headers: {
+			'accept': 'application/json',
+			'content-Type': 'application/json',
+			'x-csrf-token': Liferay.authToken,
+		},
+		method: 'PUT',
+	});
+}
+
+export async function assignTicketToMe(ticket:Ticket){
+	return fetch(`/o/c/j3y7tickets/by-external-reference-code/${ticket.externalReferenceCode}/object-actions/AssignTicketToMe`, {
+		headers: {
+			'accept': 'application/json',
+			'content-Type': 'application/json',
+			'x-csrf-token': Liferay.authToken,
+		},
+		method: 'PUT',
 	});
 }

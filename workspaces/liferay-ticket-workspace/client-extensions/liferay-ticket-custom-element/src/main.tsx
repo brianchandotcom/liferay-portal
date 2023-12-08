@@ -3,10 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {createRoot} from 'react-dom/client';
-import {QueryClient, QueryClientProvider} from 'react-query';
+import { createRoot } from 'react-dom/client';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
 import TicketApp from './pages/TicketApp';
+import { Outlet, Link, HashRouter, Routes, Route, Navigate } from 'react-router-dom';
+import TicketsByStatusDashboard from './pages/TicketsByStatusDashboard';
 
 const queryClient = new QueryClient();
 class TicketWebComponent extends HTMLElement {
@@ -14,9 +16,51 @@ class TicketWebComponent extends HTMLElement {
 		const root = createRoot(this);
 
 		root.render(
-			<QueryClientProvider client={queryClient}>
-				<TicketApp queryClient={queryClient} />
-			</QueryClientProvider>
+			<>
+				<QueryClientProvider client={queryClient}>
+					<div className="container">
+						<section className="container current-tickets m-0 p-0 row">
+							<div className="col-lg-2">
+								<nav className="h-100 site-navigation">
+									<h6 className="text-uppercase">Site</h6>
+									<ul>
+										<li>
+											<a href="/#/dashboard">Dashboard</a>
+										</li>
+										<li>
+											<a href="/#/ticketapp">
+												Tickets App
+											</a>
+										</li>
+									</ul>
+								</nav>
+							</div>
+							<div className="col-lg-10">
+								<HashRouter basename="/">
+									<Routes>
+										<Route path="/dashboard"
+											element={
+												<TicketsByStatusDashboard
+													queryClient={queryClient}
+												/>
+											}
+										/>
+										<Route path="/ticketapp"
+											element={
+												<TicketApp
+													queryClient={queryClient}
+												/>
+											}
+										/>
+										<Route path="/" element={<Navigate replace to="/dashboard" />} />
+									</Routes>
+								</HashRouter>
+								<Outlet />
+							</div>
+						</section>
+					</div>
+				</QueryClientProvider>
+			</>
 		);
 	}
 }

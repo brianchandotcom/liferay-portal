@@ -18,6 +18,8 @@ export type Ticket = {
 	}[];
 	ticketStatus: string;
 	type: string;
+	assignee: any;
+	externalReferenceCode:string;
 };
 
 export type TicketPayload = {
@@ -32,4 +34,6 @@ export type TicketPayload = {
 	suggestions: string;
 	ticketStatus: {name: string};
 	type: {name: string};
+	userToJ3Y7Ticket: any;
+	externalReferenceCode:string;
 };

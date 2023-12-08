@@ -108,18 +108,24 @@ definition {
 			var userPassword = "test";
 		}
 
-		var entryLanguage = ${entryLanguage};
 		var objectName = StringUtil.toLowerCase(${objectName});
 		var list1 = ListUtil.newListFromString(${fieldNameList});
 		var list2 = ListUtil.newListFromString(${valueList});
-		var list3 = ListUtil.newListFromString(${entryLanguageList});
 		var size1 = ListUtil.size(${list1});
-		var size2 = ListUtil.size(${list3});
 		var fieldName = ListUtil.get(${list1}, 0);
 		var value = ListUtil.get(${list2}, 0);
-		var language = ListUtil.get(${list3}, 0);
+
 		var data1 = "\"${fieldName}\": \"${value}\"";
-		var data2 = "\"${language}\": \"${value}\"";
+
+		if (isSet(entryLanguageList)) {
+			var list3 = ListUtil.newListFromString(${entryLanguageList});
+
+			var size2 = ListUtil.size(${list3});
+			var language = ListUtil.get(${list3}, 0);
+
+			var data2 = "\"${language}\": \"${value}\"";
+		}
+
 		var i = 1;
 
 		if (isSet(entryLanguageList)) {

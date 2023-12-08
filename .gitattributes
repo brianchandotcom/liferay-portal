@@ -1,2 +1,3 @@
 *.pom	text eol=lf
+.m2-tmp/**/*.pom linguist-generated=true
 ivy.xml	text eol=lf

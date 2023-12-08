@@ -77,7 +77,6 @@ public class PortletBagImpl implements PortletBag {
 		_filterString =
 			"(|(javax.portlet.name=" + portletName +
 				")(javax.portlet.name=ALL))";
-
 		_resourceBundleLoaderSnapshot = new Snapshot<>(
 			PortletBagImpl.class, ResourceBundleLoader.class,
 			StringBundler.concat(

@@ -66,6 +66,8 @@ public class CollectionStyledLayoutStructureItem
 			!Objects.equals(
 				_listStyle, collectionStyledLayoutStructureItem._listStyle) ||
 			!Objects.equals(
+				_namespace, collectionStyledLayoutStructureItem._namespace) ||
+			!Objects.equals(
 				_numberOfColumns,
 				collectionStyledLayoutStructureItem._numberOfColumns) ||
 			!Objects.equals(
@@ -162,6 +164,8 @@ public class CollectionStyledLayoutStructureItem
 		).put(
 			"listStyle", _listStyle
 		).put(
+			"namespace", _namespace
+		).put(
 			"numberOfColumns", _numberOfColumns
 		).put(
 			"numberOfItems", _numberOfItems
@@ -231,6 +235,10 @@ public class CollectionStyledLayoutStructureItem
 
 	public String getListStyle() {
 		return _listStyle;
+	}
+
+	public String getNamespace() {
+		return _namespace;
 	}
 
 	public int getNumberOfColumns() {
@@ -341,6 +349,10 @@ public class CollectionStyledLayoutStructureItem
 
 	public void setListStyle(String listStyle) {
 		_listStyle = listStyle;
+	}
+
+	public void setNamespace(String namespace) {
+		_namespace = namespace;
 	}
 
 	public void setNumberOfColumns(int numberOfColumns) {
@@ -459,6 +471,10 @@ public class CollectionStyledLayoutStructureItem
 			setListStyle(itemConfigJSONObject.getString("listStyle"));
 		}
 
+		if (itemConfigJSONObject.has("namespace")) {
+			setNamespace(itemConfigJSONObject.getString("namespace"));
+		}
+
 		if (itemConfigJSONObject.has("numberOfColumns")) {
 			setNumberOfColumns(itemConfigJSONObject.getInt("numberOfColumns"));
 		}
@@ -515,6 +531,7 @@ public class CollectionStyledLayoutStructureItem
 	private String _justify = "";
 	private String _listItemStyle;
 	private String _listStyle;
+	private String _namespace;
 	private int _numberOfColumns = 1;
 	private int _numberOfItems = 5;
 	private int _numberOfItemsPerPage = 20;

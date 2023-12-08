@@ -1660,7 +1660,8 @@ public class PropsValues {
 
 	public static boolean PASSWORDS_ENCRYPTION_BOUNCYCASTLE_ENABLED =
 		GetterUtil.getBoolean(
-			PropsUtil.get(PropsKeys.PASSWORDS_ENCRYPTION_BOUNCYCASTLE_ENABLED));
+			PropsUtil.get(PropsKeys.PASSWORDS_ENCRYPTION_BOUNCYCASTLE_ENABLED),
+			true);
 
 	public static String PASSWORDS_PASSWORDPOLICYTOOLKIT_GENERATOR =
 		PropsUtil.get(PropsKeys.PASSWORDS_PASSWORDPOLICYTOOLKIT_GENERATOR);

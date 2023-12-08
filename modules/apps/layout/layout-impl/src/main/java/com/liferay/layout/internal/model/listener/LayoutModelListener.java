@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.ModelListener;
-import com.liferay.portal.kernel.service.LayoutRevisionLocalServiceUtil;
+import com.liferay.portal.kernel.service.LayoutRevisionLocalService;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.servlet.filters.cache.CacheUtil;
@@ -100,7 +100,7 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 				return;
 			}
 
-			LayoutRevisionLocalServiceUtil.deleteLayoutLayoutRevisions(
+			_layoutRevisionLocalService.deleteLayoutLayoutRevisions(
 				layout.getPlid());
 		}
 		catch (IllegalStateException illegalStateException) {
@@ -152,6 +152,9 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 
 	@Reference
 	private LayoutLocalizationLocalService _layoutLocalizationLocalService;
+
+	@Reference
+	private LayoutRevisionLocalService _layoutRevisionLocalService;
 
 	@Reference
 	private Portal _portal;

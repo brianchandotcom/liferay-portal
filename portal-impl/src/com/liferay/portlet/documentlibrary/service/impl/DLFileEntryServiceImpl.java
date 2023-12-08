@@ -536,13 +536,13 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 	public DLFileEntry getFileEntry(long groupId, long folderId, String title)
 		throws PortalException {
 
-		DLFileEntry dlFileEntry = dlFileEntryLocalService.getFileEntry(
-			groupId, folderId, title);
-
 		ModelResourcePermission<DLFileEntry>
 			dlFileEntryModelResourcePermission =
 				ModelResourcePermissionRegistryUtil.getModelResourcePermission(
 					DLFileEntry.class.getName());
+
+		DLFileEntry dlFileEntry = dlFileEntryLocalService.getFileEntry(
+			groupId, folderId, title);
 
 		dlFileEntryModelResourcePermission.check(
 			getPermissionChecker(), dlFileEntry, ActionKeys.VIEW);

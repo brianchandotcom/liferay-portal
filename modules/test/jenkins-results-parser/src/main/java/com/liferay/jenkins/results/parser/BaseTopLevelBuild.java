@@ -996,6 +996,10 @@ public abstract class BaseTopLevelBuild
 		Map<Build, Element> downstreamBuildFailureMessages =
 			getDownstreamBuildMessages(failedDownstreamBuilds);
 
+		System.out.println(
+			"Collected " + downstreamBuildFailureMessages.size() +
+				" downstream failure messages");
+
 		List<Element> allCurrentBuildFailureElements = new ArrayList<>();
 		List<Element> upstreamBuildFailureElements = new ArrayList<>();
 
@@ -1008,7 +1012,19 @@ public abstract class BaseTopLevelBuild
 
 			Element failureElement = entry.getValue();
 
+			if (failureElement == null) {
+				System.out.println(
+					"Failure element for [" +
+						failedDownstreamBuild.getBuildName() + "] is null");
+			}
+
 			if (failureElement != null) {
+				System.out.println(
+					JenkinsResultsParserUtil.combine(
+						failedDownstreamBuild.getBuildName(),
+						" failure element object ID: ",
+						String.valueOf(failureElement.hashCode())));
+
 				if (!failedDownstreamBuild.isUniqueFailure()) {
 					upstreamBuildFailureElements.add(failureElement);
 

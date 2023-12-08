@@ -109,8 +109,6 @@ definition {
 		}
 
 		task ("And Then existing Student item's name is updated") {
-			var response = ObjectDefinitionAPI.getObjectEntries(en_US_plural_label = "students");
-
 			var actualValue = JSONUtil.getWithJSONPath(${response}, "$..items[?(@.externalReferenceCode=='studentErc')].name");
 
 			TestUtils.assertEquals(
@@ -119,8 +117,6 @@ definition {
 		}
 
 		task ("And Then existing Student's relationship field is unchanged") {
-			var response = ObjectDefinitionAPI.getObjectEntries(en_US_plural_label = "students");
-
 			var actualValue = JSONUtil.getWithJSONPath(${response}, "$..items[?(@.externalReferenceCode=='studentErc')].subjectStudentsERC");
 
 			TestUtils.assertEquals(

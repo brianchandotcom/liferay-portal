@@ -33,7 +33,7 @@ public class PortalUpstreamBranchNameJobParameterDefinition
 
 	@Override
 	public String getValueDescription() {
-		return "Insert your Portal Upstream Branch Name here";
+		return "Insert your portal upstream branch name here";
 	}
 
 	@Override

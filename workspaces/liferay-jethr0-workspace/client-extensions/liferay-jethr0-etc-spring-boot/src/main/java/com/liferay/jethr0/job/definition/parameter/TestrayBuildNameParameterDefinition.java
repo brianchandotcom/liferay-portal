@@ -33,7 +33,7 @@ public class TestrayBuildNameParameterDefinition
 
 	@Override
 	public String getValueDescription() {
-		return "Insert your Testray Build Name here";
+		return "Insert your Testray build name here";
 	}
 
 	@Override

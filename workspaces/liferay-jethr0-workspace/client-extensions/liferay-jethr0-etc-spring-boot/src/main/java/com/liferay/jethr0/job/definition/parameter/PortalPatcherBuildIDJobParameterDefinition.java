@@ -33,7 +33,7 @@ public class PortalPatcherBuildIDJobParameterDefinition
 
 	@Override
 	public String getValueDescription() {
-		return "Insert your Patcher Build ID here";
+		return "Insert your portal patcher build ID here";
 	}
 
 	@Override

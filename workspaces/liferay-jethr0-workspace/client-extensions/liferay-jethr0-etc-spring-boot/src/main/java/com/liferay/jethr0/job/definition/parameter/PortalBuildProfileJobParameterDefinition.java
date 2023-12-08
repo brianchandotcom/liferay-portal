@@ -33,7 +33,7 @@ public class PortalBuildProfileJobParameterDefinition
 
 	@Override
 	public String getValueDescription() {
-		return "Insert your Build Profile here (i.e. 'dxp' or 'portal')";
+		return "Insert your portal build profile here (i.e. 'dxp' or 'portal')";
 	}
 
 	@Override

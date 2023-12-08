@@ -33,7 +33,7 @@ public class PortalPatcherRequestKeyJobParameterDefinition
 
 	@Override
 	public String getValueDescription() {
-		return "Insert your Patcher Request Key here";
+		return "Insert your portal patcher request key here";
 	}
 
 	@Override

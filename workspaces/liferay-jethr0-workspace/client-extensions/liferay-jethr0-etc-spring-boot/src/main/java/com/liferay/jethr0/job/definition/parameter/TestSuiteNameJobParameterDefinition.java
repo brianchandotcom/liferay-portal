@@ -37,7 +37,7 @@ public class TestSuiteNameJobParameterDefinition
 
 	@Override
 	public String getValueDescription() {
-		return "Insert your Test Suite Name here";
+		return "Insert your test suite name here";
 	}
 
 	@Override

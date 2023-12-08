@@ -33,7 +33,7 @@ public class TestrayRoutineNameParameterDefinition
 
 	@Override
 	public String getValueDescription() {
-		return "Insert your Testray Routine Name here";
+		return "Insert your Testray routine name here";
 	}
 
 	@Override

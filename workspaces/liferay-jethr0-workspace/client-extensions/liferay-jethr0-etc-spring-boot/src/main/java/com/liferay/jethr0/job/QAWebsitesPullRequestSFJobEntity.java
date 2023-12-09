@@ -5,12 +5,23 @@
 
 package com.liferay.jethr0.job;
 
+import java.net.URL;
+
 import org.json.JSONObject;
 
 /**
  * @author Michael Hashimoto
  */
 public class QAWebsitesPullRequestSFJobEntity extends BaseJobEntity {
+
+	public URL getQAWebsitesPullRequestURL() {
+		return getParameterValueURL("qaWebsitesPullRequestURL");
+	}
+
+	public void setQAWebsitesPullRequestURL(URL qaWebsitesPullRequestURL) {
+		setParameterValueURL(
+			"qaWebsitesPullRequestURL", qaWebsitesPullRequestURL);
+	}
 
 	protected QAWebsitesPullRequestSFJobEntity(JSONObject jsonObject) {
 		super(jsonObject);

@@ -78,13 +78,13 @@ public class CompanyLocalServiceDBPartitionTest
 	public void testAddDBPartitionCompanyWhenRenamingFails() throws Exception {
 		_company = CompanyTestUtil.addCompany();
 
-		boolean standalonePartition = false;
+		boolean standaloneDBPartition = false;
 
 		try {
 			_companyLocalService.extractDBPartitionCompany(
 				_company.getCompanyId());
 
-			standalonePartition = true;
+			standaloneDBPartition = true;
 
 			Company defaultCompany = _companyLocalService.getCompany(
 				PortalInstances.getDefaultCompanyId());
@@ -94,9 +94,9 @@ public class CompanyLocalServiceDBPartitionTest
 					_company.getCompanyId(), null, null,
 					defaultCompany.getWebId());
 
-				standalonePartition = true;
+				standaloneDBPartition = true;
 
-				Assert.fail("Should fail due to duplicated webId");
+				Assert.fail("Should fail due to duplicate web ID");
 			}
 			catch (PortalException portalException) {
 				long[] companyIds = PortalInstances.getCompanyIdsBySQL();
@@ -104,12 +104,12 @@ public class CompanyLocalServiceDBPartitionTest
 				Assert.assertFalse(
 					ArrayUtil.contains(companyIds, _company.getCompanyId()));
 
-				_checkStandalonePartitionTables(
+				_checkStandaloneDBPartitionTables(
 					_company.getCompanyId(), "Company", "VirtualHost");
 			}
 		}
 		finally {
-			if (standalonePartition) {
+			if (standaloneDBPartition) {
 				removeDBPartitions(new long[] {_company.getCompanyId()});
 			}
 		}
@@ -125,13 +125,13 @@ public class CompanyLocalServiceDBPartitionTest
 		String virtualHostName = "new" + _company.getVirtualHostname();
 		String webId = "new" + _company.getWebId();
 
-		boolean standalonePartition = true;
+		boolean standaloneDBPartition = true;
 
 		try {
 			_company = _companyLocalService.addDBPartitionCompany(
 				_company.getCompanyId(), name, virtualHostName, webId);
 
-			standalonePartition = false;
+			standaloneDBPartition = false;
 
 			long[] companyIds = PortalInstances.getCompanyIdsBySQL();
 
@@ -143,7 +143,7 @@ public class CompanyLocalServiceDBPartitionTest
 			Assert.assertEquals(webId, _company.getWebId());
 		}
 		finally {
-			if (standalonePartition) {
+			if (standaloneDBPartition) {
 				removeDBPartitions(new long[] {_company.getCompanyId()});
 			}
 		}
@@ -156,17 +156,17 @@ public class CompanyLocalServiceDBPartitionTest
 			companyId -> _resourceActionLocalService.checkResourceActions());
 	}
 
-	private void _checkStandalonePartitionTables(
+	private void _checkStandaloneDBPartitionTables(
 			long companyId, String... expectedTableNames)
 		throws Exception {
 
-		DatabaseMetaData databaseMetaData = connection.getMetaData();
-
 		List<String> tableNames = new ArrayList<>();
 
+		DatabaseMetaData databaseMetaData = connection.getMetaData();
+
 		try (ResultSet resultSet = databaseMetaData.getTables(
-				_DB_PARTITION_SCHEMA_NAME_PREFIX + companyId,
-				dbInspector.getSchema(), null, new String[] {"TABLE"})) {
+				"lpartitiontest_" + companyId, dbInspector.getSchema(), null,
+				new String[] {"TABLE"})) {
 
 			while (resultSet.next()) {
 				tableNames.add(
@@ -179,9 +179,6 @@ public class CompanyLocalServiceDBPartitionTest
 				tableNames.contains(StringUtil.toUpperCase(expectedTableName)));
 		}
 	}
-
-	private static final String _DB_PARTITION_SCHEMA_NAME_PREFIX =
-		"lpartitiontest_";
 
 	@Inject
 	private static CompanyLocalService _companyLocalService;

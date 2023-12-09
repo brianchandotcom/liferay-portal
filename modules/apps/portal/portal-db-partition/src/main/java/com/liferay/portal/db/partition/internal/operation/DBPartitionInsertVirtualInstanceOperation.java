@@ -42,21 +42,20 @@ public class DBPartitionInsertVirtualInstanceOperation
 				long companyId =
 					dBPartitionInsertVirtualInstanceConfiguration.companyId();
 
-				if (_companyLocalService.fetchCompany(companyId) == null) {
-					Company company =
-						_companyLocalService.addDBPartitionCompany(
-							companyId,
-							dBPartitionInsertVirtualInstanceConfiguration.
-								newName(),
-							dBPartitionInsertVirtualInstanceConfiguration.
-								newVirtualHostname(),
-							dBPartitionInsertVirtualInstanceConfiguration.
-								newWebId());
-
-					_portalInstancesLocalService.synchronizePortalInstances();
-
-					return company;
+				if (_companyLocalService.fetchCompany(companyId) != null) {
+					return null;
 				}
+
+				Company company = _companyLocalService.addDBPartitionCompany(
+					companyId,
+					dBPartitionInsertVirtualInstanceConfiguration.newName(),
+					dBPartitionInsertVirtualInstanceConfiguration.
+						newVirtualHostname(),
+					dBPartitionInsertVirtualInstanceConfiguration.newWebId());
+
+				_portalInstancesLocalService.synchronizePortalInstances();
+
+				return company;
 
 				return null;
 			},

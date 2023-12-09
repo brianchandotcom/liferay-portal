@@ -31,13 +31,13 @@ public abstract class BaseVirtualInstanceOperation {
 
 			if (company != null) {
 				_deleteConfiguration(
-					_PORTAL_INSTANCES_CONFIGURATION_PID + "~" +
-						company.getWebId());
+					"com.liferay.portal.instances.internal.configuration." +
+						"PortalInstancesConfiguration~" + company.getWebId());
 			}
 		}
 		catch (Exception exception) {
 			_log.error(
-				"Unable to perform operation over virtual instance", exception);
+				"Unable to perform operation on virtual instance", exception);
 		}
 		finally {
 			_deleteConfiguration((String)properties.get("service.pid"));
@@ -55,10 +55,6 @@ public abstract class BaseVirtualInstanceOperation {
 			_log.error(ioException);
 		}
 	}
-
-	private static final String _PORTAL_INSTANCES_CONFIGURATION_PID =
-		"com.liferay.portal.instances.internal.configuration." +
-			"PortalInstancesConfiguration";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseVirtualInstanceOperation.class);

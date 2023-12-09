@@ -41,12 +41,12 @@ public class DBPartitionExtractVirtualInstanceOperation
 				long companyId =
 					dBPartitionExtractVirtualInstanceConfiguration.companyId();
 
-				if (_companyLocalService.fetchCompany(companyId) != null) {
-					return _companyLocalService.extractDBPartitionCompany(
-						companyId);
+				if (_companyLocalService.fetchCompany(companyId) == null) {
+					return null;
 				}
 
-				return null;
+				return _companyLocalService.extractDBPartitionCompany(
+					companyId);
 			},
 			properties);
 	}

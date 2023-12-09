@@ -330,7 +330,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		if (companyId == PortalInstances.getDefaultCompanyId()) {
 			throw new IllegalArgumentException(
-				"companyId matches default companyId " + companyId);
+				"Company ID " + companyId + " is the default company ID");
 		}
 
 		DBPartitionUtil.insertDBPartition(companyId);
@@ -378,12 +378,12 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 			TransactionCommitCallbackUtil.registerCallback(
 				() -> {
-					Company insertedCompany =
+					Company dbPartitionCompany =
 						companyPersistence.findByPrimaryKey(companyId);
 
-					registerCompany(insertedCompany);
+					registerCompany(dbPartitionCompany);
 
-					PortalInstances.initCompany(insertedCompany, true);
+					PortalInstances.initCompany(dbPartitionCompany, true);
 
 					return null;
 				});

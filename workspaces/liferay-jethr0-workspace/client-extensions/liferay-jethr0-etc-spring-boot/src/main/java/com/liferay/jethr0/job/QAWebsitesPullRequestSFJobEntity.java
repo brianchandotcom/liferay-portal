@@ -7,6 +7,8 @@ package com.liferay.jethr0.job;
 
 import java.net.URL;
 
+import java.util.Map;
+
 import org.json.JSONObject;
 
 /**
@@ -25,6 +27,17 @@ public class QAWebsitesPullRequestSFJobEntity extends BaseJobEntity {
 
 	protected QAWebsitesPullRequestSFJobEntity(JSONObject jsonObject) {
 		super(jsonObject);
+	}
+
+	@Override
+	protected Map<String, String> getInitialBuildParameters() {
+		Map<String, String> initialBuildParameters =
+			super.getInitialBuildParameters();
+
+		initialBuildParameters.put(
+			"PULL_REQUEST_URL", String.valueOf(getQAWebsitesPullRequestURL()));
+
+		return initialBuildParameters;
 	}
 
 	@Override

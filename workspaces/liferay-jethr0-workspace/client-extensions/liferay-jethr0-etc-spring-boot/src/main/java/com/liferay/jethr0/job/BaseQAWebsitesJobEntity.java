@@ -14,7 +14,7 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class QAWebsitesDailyJobEntity extends BaseJobEntity {
+public class BaseQAWebsitesJobEntity extends BaseJobEntity {
 
 	public String getQAWebsitesBranchSHA() {
 		return getParameterValue("qaWebsitesBranchSHA");
@@ -72,7 +72,7 @@ public class QAWebsitesDailyJobEntity extends BaseJobEntity {
 		setParameterValue("testSuiteName", testSuiteName);
 	}
 
-	protected QAWebsitesDailyJobEntity(JSONObject jsonObject) {
+	protected BaseQAWebsitesJobEntity(JSONObject jsonObject) {
 		super(jsonObject);
 	}
 

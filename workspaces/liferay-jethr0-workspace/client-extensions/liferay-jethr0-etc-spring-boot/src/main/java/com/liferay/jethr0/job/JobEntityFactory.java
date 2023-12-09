@@ -55,13 +55,13 @@ public class JobEntityFactory extends BaseEntityFactory<JobEntity> {
 			return new PoshiReleaseJobEntity(jsonObject);
 		}
 		else if (jobEntityType == JobEntity.Type.QA_WEBSITES_DAILY) {
-			return new QAWebsitesDailyJobEntity(jsonObject);
+			return new DailyQAWebsitesJobEntity(jsonObject);
 		}
 		else if (jobEntityType == JobEntity.Type.QA_WEBSITES_PULL_REQUEST_SF) {
 			return new QAWebsitesPullRequestSFJobEntity(jsonObject);
 		}
 		else if (jobEntityType == JobEntity.Type.QA_WEBSITES_WEEKLY) {
-			return new QAWebsitesWeeklyJobEntity(jsonObject);
+			return new WeeklyQAWebsitesJobEntity(jsonObject);
 		}
 
 		return new DefaultJobEntity(jsonObject);

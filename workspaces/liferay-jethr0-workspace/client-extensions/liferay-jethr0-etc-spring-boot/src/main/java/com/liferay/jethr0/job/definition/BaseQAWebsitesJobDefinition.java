@@ -22,7 +22,7 @@ import java.util.Set;
 /**
  * @author Michael Hashimoto
  */
-public class QAWebsitesDailyJobDefinition extends BaseJobDefinition {
+public class BaseQAWebsitesJobDefinition extends BaseJobDefinition {
 
 	@Override
 	public Set<JobParameterDefinition> getJobParameterDefinitions() {
@@ -50,7 +50,7 @@ public class QAWebsitesDailyJobDefinition extends BaseJobDefinition {
 		return jobParameterDefinitions;
 	}
 
-	protected QAWebsitesDailyJobDefinition(JobEntity.Type jobEntityType) {
+	protected BaseQAWebsitesJobDefinition(JobEntity.Type jobEntityType) {
 		super(jobEntityType);
 	}
 

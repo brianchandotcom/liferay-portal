@@ -51,7 +51,10 @@ public class JobDefinitionFactory {
 			return new PoshiReleaseJobDefinition(type);
 		}
 		else if (type == JobEntity.Type.QA_WEBSITES_DAILY) {
-			return new QAWebsitesDailyJobDefinition(type);
+			return new DailyQAWebsitesJobDefinition(type);
+		}
+		else if (type == JobEntity.Type.QA_WEBSITES_WEEKLY) {
+			return new WeeklyQAWebsitesJobDefinition(type);
 		}
 
 		return new DefaultJobDefinition(type);

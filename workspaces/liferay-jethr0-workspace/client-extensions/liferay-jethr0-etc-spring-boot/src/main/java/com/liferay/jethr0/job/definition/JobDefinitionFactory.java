@@ -50,6 +50,9 @@ public class JobDefinitionFactory {
 		else if (type == JobEntity.Type.POSHI_RELEASE) {
 			return new PoshiReleaseJobDefinition(type);
 		}
+		else if (type == JobEntity.Type.QA_WEBSITES_DAILY) {
+			return new QAWebsitesDailyJobDefinition(type);
+		}
 
 		return new DefaultJobDefinition(type);
 	}

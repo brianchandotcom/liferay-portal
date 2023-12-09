@@ -14,7 +14,7 @@ amSearchContainer.setId("imageConfigurationEntries");
 amSearchContainer.setRowChecker(new ImageConfigurationEntriesChecker(liferayPortletResponse));
 amSearchContainer.setResultsAndTotal((List)request.getAttribute(AMWebKeys.CONFIGURATION_ENTRIES_LIST));
 
-AMManagementToolbarDisplayContext amManagementToolbarDisplayContext = new AMManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, currentURLObj);
+AMManagementToolbarDisplayContext amManagementToolbarDisplayContext = new AMManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, currentURLObj, searchContainer);
 %>
 
 <clay:management-toolbar

@@ -177,7 +177,12 @@ public interface JobEntity extends Entity {
 		PORTAL_UPSTREAM_ACCEPTANCE(
 			"portalUpstreamAcceptance", "Portal Upstream Acceptance"),
 		PORTAL_UPSTREAM_TEST_SUITE(
-			"portalUpstreamTestSuite", "Portal Upstream Test Suite");
+			"portalUpstreamTestSuite", "Portal Upstream Test Suite"),
+		POSHI_RELEASE("poshiRelease", "Poshi Release"),
+		QA_WEBSITES_DAILY("qaWebsitesDaily", "QA Websites Daily"),
+		QA_WEBSITES_PULL_REQUEST_SF(
+			"qaWebsitesPullRequestSF", "QA Websites Pull Request SF"),
+		QA_WEBSITES_WEEKLY("qaWebsitesWeekly", "QA Websites Weekly");
 
 		public static Type get(JSONObject jsonObject) {
 			return getByKey(jsonObject.getString("key"));

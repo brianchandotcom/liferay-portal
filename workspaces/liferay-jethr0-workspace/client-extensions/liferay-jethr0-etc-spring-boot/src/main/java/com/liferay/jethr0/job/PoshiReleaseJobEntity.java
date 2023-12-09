@@ -9,6 +9,8 @@ import com.liferay.jethr0.util.StringUtil;
 
 import java.net.URL;
 
+import java.util.Map;
+
 import org.json.JSONObject;
 
 /**
@@ -40,6 +42,19 @@ public class PoshiReleaseJobEntity extends BaseJobEntity {
 
 	protected PoshiReleaseJobEntity(JSONObject jsonObject) {
 		super(jsonObject);
+	}
+
+	@Override
+	protected Map<String, String> getInitialBuildParameters() {
+		Map<String, String> initialBuildParameters =
+			super.getInitialBuildParameters();
+
+		initialBuildParameters.put(
+			"PORTAL_GITHUB_URL", String.valueOf(getPortalBranchURL()));
+		initialBuildParameters.put(
+			"PORTAL_MASTER_CI_TEST_SUITE", getTestSuiteName());
+
+		return initialBuildParameters;
 	}
 
 	@Override

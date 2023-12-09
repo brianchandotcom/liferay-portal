@@ -47,6 +47,9 @@ public class JobDefinitionFactory {
 		else if (type == JobEntity.Type.PORTAL_UPSTREAM_TEST_SUITE) {
 			return new PortalUpstreamTestSuiteJobDefinition(type);
 		}
+		else if (type == JobEntity.Type.POSHI_RELEASE) {
+			return new PoshiReleaseJobDefinition(type);
+		}
 
 		return new DefaultJobDefinition(type);
 	}

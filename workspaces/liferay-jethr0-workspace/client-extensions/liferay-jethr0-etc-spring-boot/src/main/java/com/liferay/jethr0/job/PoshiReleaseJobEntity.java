@@ -5,12 +5,38 @@
 
 package com.liferay.jethr0.job;
 
+import com.liferay.jethr0.util.StringUtil;
+
+import java.net.URL;
+
 import org.json.JSONObject;
 
 /**
  * @author Michael Hashimoto
  */
 public class PoshiReleaseJobEntity extends BaseJobEntity {
+
+	public URL getPortalBranchURL() {
+		String upstreamBranchURL = getParameterValue("portalBranchURL");
+
+		if (StringUtil.isNullOrEmpty(upstreamBranchURL)) {
+			return null;
+		}
+
+		return StringUtil.toURL(upstreamBranchURL);
+	}
+
+	public String getTestSuiteName() {
+		return getParameterValue("testSuiteName");
+	}
+
+	public void setPortalBranchURL(URL portalBranchURL) {
+		setParameterValue("portalBranchURL", String.valueOf(portalBranchURL));
+	}
+
+	public void setTestSuiteName(String testSuiteName) {
+		setParameterValue("testSuiteName", testSuiteName);
+	}
 
 	protected PoshiReleaseJobEntity(JSONObject jsonObject) {
 		super(jsonObject);

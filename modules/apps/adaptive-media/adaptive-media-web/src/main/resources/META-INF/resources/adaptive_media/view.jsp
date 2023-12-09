@@ -8,6 +8,12 @@
 <%@ include file="/adaptive_media/init.jsp" %>
 
 <%
+SearchContainer<?> amSearchContainer = new SearchContainer<>(renderRequest, renderResponse.createRenderURL(), null, "there-are-no-image-resolutions");
+
+amSearchContainer.setId("imageConfigurationEntries");
+amSearchContainer.setRowChecker(new ImageConfigurationEntriesChecker(liferayPortletResponse));
+amSearchContainer.setResultsAndTotal((List)request.getAttribute(AMWebKeys.CONFIGURATION_ENTRIES_LIST));
+
 AMManagementToolbarDisplayContext amManagementToolbarDisplayContext = new AMManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, currentURLObj);
 %>
 
@@ -69,23 +75,12 @@ AMManagementToolbarDisplayContext amManagementToolbarDisplayContext = new AMMana
 
 			currentBackgroundTaskConfigurationEntryUuids.add(configurationEntryUuid);
 		}
-
-		List<AMImageConfigurationEntry> selectedConfigurationEntries = amManagementToolbarDisplayContext.getSelectedConfigurationEntries();
 		%>
 
 		<aui:form action="<%= deleteImageConfigurationEntryURL %>" method="post" name="fm">
 			<liferay-ui:search-container
-				emptyResultsMessage="there-are-no-image-resolutions"
-				id="imageConfigurationEntries"
-				iteratorURL="<%= renderResponse.createRenderURL() %>"
-				rowChecker="<%= new ImageConfigurationEntriesChecker(liferayPortletResponse) %>"
-				total="<%= selectedConfigurationEntries.size() %>"
+				searchContainer="<%= amSearchContainer %>"
 			>
-				<liferay-ui:search-container-results
-					calculateStartAndEnd="<%= true %>"
-					results="<%= selectedConfigurationEntries %>"
-				/>
-
 				<liferay-ui:search-container-row
 					className="com.liferay.adaptive.media.image.configuration.AMImageConfigurationEntry"
 					modelVar="amImageConfigurationEntry"

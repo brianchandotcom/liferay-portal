@@ -53,6 +53,9 @@ public class JobDefinitionFactory {
 		else if (type == JobEntity.Type.QA_WEBSITES_DAILY) {
 			return new DailyQAWebsitesJobDefinition(type);
 		}
+		else if (type == JobEntity.Type.QA_WEBSITES_PULL_REQUEST_SF) {
+			return new QAWebsitesPullRequestSFJobDefinition(type);
+		}
 		else if (type == JobEntity.Type.QA_WEBSITES_WEEKLY) {
 			return new WeeklyQAWebsitesJobDefinition(type);
 		}

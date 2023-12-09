@@ -338,6 +338,38 @@
 					"name_i18n": {
 						"en-US": "Portal Upstream Test Suite"
 					}
+				},
+				{
+					"externalReferenceCode": "poshiRelease",
+					"key": "poshiRelease",
+					"name": "Poshi Release",
+					"name_i18n": {
+						"en-US": "Poshi Release"
+					}
+				},
+				{
+					"externalReferenceCode": "qaWebsitesDaily",
+					"key": "qaWebsitesDaily",
+					"name": "QA Websites Daily",
+					"name_i18n": {
+						"en-US": "QA Websites Daily"
+					}
+				},
+				{
+					"externalReferenceCode": "qaWebsitesPullRequestSF",
+					"key": "qaWebsitesPullRequestSF",
+					"name": "QA Websites Pull Request SF",
+					"name_i18n": {
+						"en-US": "QA Websites Pull Request SF"
+					}
+				},
+				{
+					"externalReferenceCode": "qaWebsitesWeekly",
+					"key": "qaWebsitesWeekly",
+					"name": "QA Websites Weekly",
+					"name_i18n": {
+						"en-US": "QA Websites Weekly"
+					}
 				}
 			],
 			"name": "jobType",

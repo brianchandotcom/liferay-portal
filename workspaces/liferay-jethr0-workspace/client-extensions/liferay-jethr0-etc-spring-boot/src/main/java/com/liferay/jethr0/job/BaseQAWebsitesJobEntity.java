@@ -82,7 +82,7 @@ public class BaseQAWebsitesJobEntity extends BaseJobEntity {
 			super.getInitialBuildParameters();
 
 		initialBuildParameters.put("CI_TEST_SUITE", getTestSuiteName());
-		initialBuildParameters.put("PROJECT_NAMES", getQAWebsitesQuery());
+		initialBuildParameters.put("PROJECT_NAMES", getQAWebsitesProjectName());
 		initialBuildParameters.put(
 			"TEST_QA_WEBSITES_BRANCH_NAME", _getQAWebsitesBranchName());
 		initialBuildParameters.put(

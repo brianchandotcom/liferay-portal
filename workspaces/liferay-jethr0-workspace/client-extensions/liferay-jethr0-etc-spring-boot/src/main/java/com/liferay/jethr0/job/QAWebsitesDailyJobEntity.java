@@ -7,6 +7,8 @@ package com.liferay.jethr0.job;
 
 import java.net.URL;
 
+import java.util.Map;
+
 import org.json.JSONObject;
 
 /**
@@ -75,8 +77,35 @@ public class QAWebsitesDailyJobEntity extends BaseJobEntity {
 	}
 
 	@Override
+	protected Map<String, String> getInitialBuildParameters() {
+		Map<String, String> initialBuildParameters =
+			super.getInitialBuildParameters();
+
+		initialBuildParameters.put("CI_TEST_SUITE", getTestSuiteName());
+		initialBuildParameters.put("PROJECT_NAMES", getQAWebsitesQuery());
+		initialBuildParameters.put(
+			"TEST_QA_WEBSITES_BRANCH_NAME", _getQAWebsitesBranchName());
+		initialBuildParameters.put(
+			"TEST_QA_WEBSITES_BRANCH_USERNAME", _getQAWebsitesBranchUserName());
+		initialBuildParameters.put(
+			"TEST_QA_WEBSITES_GIT_ID", getQAWebsitesBranchSHA());
+		initialBuildParameters.put(
+			"TEST_QA_WEBSITES_PROPERTY_QUERY", getQAWebsitesQuery());
+
+		return initialBuildParameters;
+	}
+
+	@Override
 	protected String getJenkinsJobName() {
 		return "test-qa-websites-functional-daily";
+	}
+
+	private String _getQAWebsitesBranchName() {
+		return getBranchURLGroupValue(getQAWebsitesBranchURL(), "branchName");
+	}
+
+	private String _getQAWebsitesBranchUserName() {
+		return getBranchURLGroupValue(getQAWebsitesBranchURL(), "userName");
 	}
 
 }

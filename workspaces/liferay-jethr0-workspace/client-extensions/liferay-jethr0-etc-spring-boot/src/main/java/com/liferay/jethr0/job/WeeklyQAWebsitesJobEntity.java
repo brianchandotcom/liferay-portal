@@ -10,9 +10,9 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class QAWebsitesWeeklyJobEntity extends BaseJobEntity {
+public class WeeklyQAWebsitesJobEntity extends BaseQAWebsitesJobEntity {
 
-	protected QAWebsitesWeeklyJobEntity(JSONObject jsonObject) {
+	protected WeeklyQAWebsitesJobEntity(JSONObject jsonObject) {
 		super(jsonObject);
 	}
 

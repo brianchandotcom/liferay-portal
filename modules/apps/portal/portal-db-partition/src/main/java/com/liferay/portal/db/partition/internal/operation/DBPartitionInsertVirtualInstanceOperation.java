@@ -56,8 +56,6 @@ public class DBPartitionInsertVirtualInstanceOperation
 				_portalInstancesLocalService.synchronizePortalInstances();
 
 				return company;
-
-				return null;
 			},
 			properties);
 	}

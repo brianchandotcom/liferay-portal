@@ -90,11 +90,11 @@ public class CompanyLocalServiceDBPartitionTest
 				PortalInstances.getDefaultCompanyId());
 
 			try {
-				_companyLocalService.addDBPartitionCompany(
+				_company = _companyLocalService.addDBPartitionCompany(
 					_company.getCompanyId(), null, null,
 					defaultCompany.getWebId());
 
-				standaloneDBPartition = true;
+				standaloneDBPartition = false;
 
 				Assert.fail("Should fail due to duplicate web ID");
 			}

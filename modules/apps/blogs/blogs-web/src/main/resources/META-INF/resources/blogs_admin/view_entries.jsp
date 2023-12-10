@@ -21,7 +21,7 @@ PortletURL portletURL = entriesSearchContainer.getIteratorURL();
 %>
 
 <clay:management-toolbar
-	managementToolbarDisplayContext="<%= new BlogsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, entriesSearchContainer, trashHelper, displayStyle) %>"
+	managementToolbarDisplayContext="<%= new BlogsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, entriesSearchContainer, trashHelper) %>"
 	propsTransformer="{BlogEntriesManagementToolbarPropsTransformer} from blogs-web"
 />
 

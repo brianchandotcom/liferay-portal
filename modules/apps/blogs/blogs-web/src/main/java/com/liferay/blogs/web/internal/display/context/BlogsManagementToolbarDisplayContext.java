@@ -14,8 +14,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -52,15 +50,13 @@ public class BlogsManagementToolbarDisplayContext
 		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		SearchContainer<BlogsEntry> searchContainer, TrashHelper trashHelper,
-		String displayStyle) {
+		SearchContainer<BlogsEntry> searchContainer, TrashHelper trashHelper) {
 
 		super(
 			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
 			searchContainer);
 
 		_trashHelper = trashHelper;
-		_displayStyle = displayStyle;
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -198,37 +194,13 @@ public class BlogsManagementToolbarDisplayContext
 	}
 
 	@Override
-	public List<ViewTypeItem> getViewTypeItems() {
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
-			liferayPortletResponse
-		).setMVCRenderCommandName(
-			"/blogs/view"
-		).buildPortletURL();
+	protected String getDefaultDisplayStyle() {
+		return "icon";
+	}
 
-		if (searchContainer.getDelta() > 0) {
-			portletURL.setParameter(
-				"delta", String.valueOf(searchContainer.getDelta()));
-		}
-
-		portletURL.setParameter("orderBycol", searchContainer.getOrderByCol());
-		portletURL.setParameter(
-			"orderByType", searchContainer.getOrderByType());
-		portletURL.setParameter("entriesNavigation", getNavigation());
-
-		if (searchContainer.getCur() > 0) {
-			portletURL.setParameter(
-				"cur", String.valueOf(searchContainer.getCur()));
-		}
-
-		return new ViewTypeItemList(portletURL, _displayStyle) {
-			{
-				addCardViewTypeItem();
-
-				addListViewTypeItem();
-
-				addTableViewTypeItem();
-			}
-		};
+	@Override
+	protected String[] getDisplayViews() {
+		return new String[] {"list", "descriptive", "icon"};
 	}
 
 	@Override
@@ -242,54 +214,12 @@ public class BlogsManagementToolbarDisplayContext
 	}
 
 	@Override
-	protected List<DropdownItem> getOrderByDropdownItems() {
-		return DropdownItemListBuilder.add(
-			dropdownItem -> {
-				dropdownItem.setActive(
-					Objects.equals(getOrderByCol(), "title"));
-				dropdownItem.setHref(
-					_getCurrentSortingURL(), "orderByCol", "title");
-				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "title"));
-			}
-		).add(
-			dropdownItem -> {
-				dropdownItem.setActive(
-					Objects.equals(getOrderByCol(), "display-date"));
-				dropdownItem.setHref(
-					_getCurrentSortingURL(), "orderByCol", "display-date");
-				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "display-date"));
-			}
-		).add(
-			this::_isSearch,
-			dropdownItem -> {
-				dropdownItem.setActive(
-					Objects.equals(getOrderByCol(), "relevance"));
-				dropdownItem.setHref(
-					_getCurrentSortingURL(), "orderByCol", "relevance");
-				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "relevance"));
-			}
-		).build();
-	}
+	protected String[] getOrderByKeys() {
+		if (_isSearch()) {
+			return new String[] {"title", "display-date", "relevance"};
+		}
 
-	private PortletURL _getCurrentSortingURL() {
-		return PortletURLBuilder.create(
-			getPortletURL()
-		).setMVCRenderCommandName(
-			"/blogs/view"
-		).setKeywords(
-			() -> {
-				if (_isSearch()) {
-					return _getKeywords();
-				}
-
-				return null;
-			}
-		).setParameter(
-			SearchContainer.DEFAULT_CUR_PARAM, "0"
-		).buildPortletURL();
+		return new String[] {"title", "display-date"};
 	}
 
 	private String _getKeywords() {
@@ -320,7 +250,6 @@ public class BlogsManagementToolbarDisplayContext
 		}
 	}
 
-	private final String _displayStyle;
 	private String _keywords;
 	private final ThemeDisplay _themeDisplay;
 	private final TrashHelper _trashHelper;

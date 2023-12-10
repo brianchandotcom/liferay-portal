@@ -13,20 +13,10 @@ SearchContainer<?> amSearchContainer = new SearchContainer<>(renderRequest, rend
 amSearchContainer.setId("imageConfigurationEntries");
 amSearchContainer.setRowChecker(new ImageConfigurationEntriesChecker(liferayPortletResponse));
 amSearchContainer.setResultsAndTotal((List)request.getAttribute(AMWebKeys.CONFIGURATION_ENTRIES_LIST));
-
-AMManagementToolbarDisplayContext amManagementToolbarDisplayContext = new AMManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, currentURLObj, searchContainer);
 %>
 
 <clay:management-toolbar
-	clearResultsURL="<%= amManagementToolbarDisplayContext.getClearResultsURL() %>"
-	creationMenu="<%= amManagementToolbarDisplayContext.getCreationMenu() %>"
-	disabled="<%= amManagementToolbarDisplayContext.isDisabled() %>"
-	filterDropdownItems="<%= amManagementToolbarDisplayContext.getFilterDropdownItems() %>"
-	filterLabelItems="<%= amManagementToolbarDisplayContext.getFilterLabelItems() %>"
-	infoPanelId="infoPanelId"
-	itemsTotal="<%= amManagementToolbarDisplayContext.getTotalItems() %>"
-	searchContainerId="imageConfigurationEntries"
-	showSearch="<%= false %>"
+	managementToolbarDisplayContext="<%= new AMManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, amSearchContainer) %>"
 />
 
 <div class="closed sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">

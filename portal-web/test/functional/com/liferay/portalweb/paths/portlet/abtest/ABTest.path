@@ -32,7 +32,7 @@
 </tr>
 <tr>
 	<td>AB_TEST_SIDE_BAR</td>
-	<td>//div[contains(@class,'sidebar') and descendant::*[contains(.,'A/B Test')]]</td>
+	<td>//div[contains(@class,'segments-experiment-panel')][.//*[normalize-space()='Tests']]</td>
 	<td></td>
 </tr>
 <tr>

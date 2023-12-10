@@ -174,6 +174,11 @@ public class BlogsManagementToolbarDisplayContext
 	}
 
 	@Override
+	public String getSearchContainerId() {
+		return "blogEntries";
+	}
+
+	@Override
 	public String getSortingURL() {
 		PortletURL sortingURL = getPortletURL();
 

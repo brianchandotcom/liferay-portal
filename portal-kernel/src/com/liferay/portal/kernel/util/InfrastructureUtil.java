@@ -40,6 +40,15 @@ public class InfrastructureUtil {
 		return _mailSession;
 	}
 
+	public static Object getSessionFactory() {
+		try {
+			return _sessionFactoryDefaultNoticeableFuture.get();
+		}
+		catch (Exception exception) {
+			return ReflectionUtil.throwException(exception);
+		}
+	}
+
 	public static Object getTransactionManager() {
 		try {
 			return _transactionManagerDefaultNoticeableFuture.get();
@@ -51,6 +60,10 @@ public class InfrastructureUtil {
 
 	public static void setDataSource(DataSource dataSource) {
 		_dataSource = dataSource;
+	}
+
+	public static void setSessionFactory(Object sessionFactory) {
+		_sessionFactoryDefaultNoticeableFuture.set(sessionFactory);
 	}
 
 	public void setTransactionManager(Object transactionManager) {
@@ -84,6 +97,9 @@ public class InfrastructureUtil {
 
 	private static DataSource _dataSource;
 	private static Session _mailSession;
+	private static final DefaultNoticeableFuture<Object>
+		_sessionFactoryDefaultNoticeableFuture =
+			new DefaultNoticeableFuture<>();
 	private static final DefaultNoticeableFuture<Object>
 		_transactionManagerDefaultNoticeableFuture =
 			new DefaultNoticeableFuture<>();

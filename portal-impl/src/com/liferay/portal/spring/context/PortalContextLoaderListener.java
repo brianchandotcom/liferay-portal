@@ -47,6 +47,7 @@ import com.liferay.portal.module.framework.ModuleFrameworkUtil;
 import com.liferay.portal.spring.aop.AopConfigurableApplicationContextConfigurator;
 import com.liferay.portal.spring.aop.DynamicProxyCreator;
 import com.liferay.portal.spring.configurator.ConfigurableApplicationContextConfigurator;
+import com.liferay.portal.spring.hibernate.PortalHibernateConfiguration;
 import com.liferay.portal.spring.override.OverrideBeanDefinitionRegistryPostProcessor;
 import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.util.InitUtil;
@@ -87,6 +88,8 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 
 import javax.sql.DataSource;
+
+import org.hibernate.SessionFactory;
 
 import org.springframework.beans.CachedIntrospectionResults;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
@@ -160,6 +163,11 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		closeDataSource("liferayDataSource");
 
 		super.contextDestroyed(servletContextEvent);
+
+		SessionFactory sessionFactory =
+			(SessionFactory)InfrastructureUtil.getSessionFactory();
+
+		sessionFactory.close();
 
 		_cleanUpJDBCDrivers();
 
@@ -361,7 +369,25 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 			() -> {
 				DBInitUtil.init();
 
-				InfrastructureUtil.setDataSource(DBInitUtil.getDataSource());
+				DataSource dataSource = DBInitUtil.getDataSource();
+
+				InfrastructureUtil.setDataSource(dataSource);
+
+				executorService.submit(
+					() -> {
+						PortalHibernateConfiguration
+							portalHibernateConfiguration =
+								new PortalHibernateConfiguration();
+
+						portalHibernateConfiguration.setDataSource(dataSource);
+
+						portalHibernateConfiguration.afterPropertiesSet();
+
+						InfrastructureUtil.setSessionFactory(
+							portalHibernateConfiguration.getObject());
+
+						return null;
+					});
 
 				return null;
 			});

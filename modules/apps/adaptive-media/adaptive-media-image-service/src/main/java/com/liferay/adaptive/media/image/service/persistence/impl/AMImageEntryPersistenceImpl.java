@@ -13,7 +13,9 @@ import com.liferay.adaptive.media.image.model.impl.AMImageEntryModelImpl;
 import com.liferay.adaptive.media.image.service.persistence.AMImageEntryPersistence;
 import com.liferay.adaptive.media.image.service.persistence.AMImageEntryUtil;
 import com.liferay.adaptive.media.image.service.persistence.impl.constants.AMImageEntryPersistenceConstants;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -168,109 +170,111 @@ public class AMImageEntryPersistenceImpl
 		OrderByComparator<AMImageEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		uuid = Objects.toString(uuid, "");
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					AMImageEntry.class)) {
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			AMImageEntry.class);
+			uuid = Objects.toString(uuid, "");
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = null;
+			Object[] finderArgs = null;
 
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
+			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
 
-			if (useFinderCache && productionMode) {
-				finderPath = _finderPathWithoutPaginationFindByUuid;
-				finderArgs = new Object[] {uuid};
+				if (useFinderCache) {
+					finderPath = _finderPathWithoutPaginationFindByUuid;
+					finderArgs = new Object[] {uuid};
+				}
 			}
-		}
-		else if (useFinderCache && productionMode) {
-			finderPath = _finderPathWithPaginationFindByUuid;
-			finderArgs = new Object[] {uuid, start, end, orderByComparator};
-		}
+			else if (useFinderCache) {
+				finderPath = _finderPathWithPaginationFindByUuid;
+				finderArgs = new Object[] {uuid, start, end, orderByComparator};
+			}
 
-		List<AMImageEntry> list = null;
+			List<AMImageEntry> list = null;
 
-		if (useFinderCache && productionMode) {
-			list = (List<AMImageEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+			if (useFinderCache) {
+				list = (List<AMImageEntry>)finderCache.getResult(
+					finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (AMImageEntry amImageEntry : list) {
-					if (!uuid.equals(amImageEntry.getUuid())) {
-						list = null;
+				if ((list != null) && !list.isEmpty()) {
+					for (AMImageEntry amImageEntry : list) {
+						if (!uuid.equals(amImageEntry.getUuid())) {
+							list = null;
 
-						break;
+							break;
+						}
 					}
 				}
 			}
-		}
 
-		if (list == null) {
-			StringBundler sb = null;
+			if (list == null) {
+				StringBundler sb = null;
 
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
-
-			sb.append(_SQL_SELECT_AMIMAGEENTRY_WHERE);
-
-			boolean bindUuid = false;
-
-			if (uuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_UUID_UUID_3);
-			}
-			else {
-				bindUuid = true;
-
-				sb.append(_FINDER_COLUMN_UUID_UUID_2);
-			}
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(AMImageEntryModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindUuid) {
-					queryPos.add(uuid);
+				if (orderByComparator != null) {
+					sb = new StringBundler(
+						3 + (orderByComparator.getOrderByFields().length * 2));
+				}
+				else {
+					sb = new StringBundler(3);
 				}
 
-				list = (List<AMImageEntry>)QueryUtil.list(
-					query, getDialect(), start, end);
+				sb.append(_SQL_SELECT_AMIMAGEENTRY_WHERE);
 
-				cacheResult(list);
+				boolean bindUuid = false;
 
-				if (useFinderCache && productionMode) {
-					finderCache.putResult(finderPath, finderArgs, list);
+				if (uuid.isEmpty()) {
+					sb.append(_FINDER_COLUMN_UUID_UUID_3);
+				}
+				else {
+					bindUuid = true;
+
+					sb.append(_FINDER_COLUMN_UUID_UUID_2);
+				}
+
+				if (orderByComparator != null) {
+					appendOrderByComparator(
+						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				}
+				else {
+					sb.append(AMImageEntryModelImpl.ORDER_BY_JPQL);
+				}
+
+				String sql = sb.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					if (bindUuid) {
+						queryPos.add(uuid);
+					}
+
+					list = (List<AMImageEntry>)QueryUtil.list(
+						query, getDialect(), start, end);
+
+					cacheResult(list);
+
+					if (useFinderCache) {
+						finderCache.putResult(finderPath, finderArgs, list);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
 				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return list;
+			return list;
+		}
 	}
 
 	/**
@@ -567,70 +571,64 @@ public class AMImageEntryPersistenceImpl
 	 */
 	@Override
 	public int countByUuid(String uuid) {
-		uuid = Objects.toString(uuid, "");
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					AMImageEntry.class)) {
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			AMImageEntry.class);
+			uuid = Objects.toString(uuid, "");
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = _finderPathCountByUuid;
 
-		Long count = null;
+			Object[] finderArgs = new Object[] {uuid};
 
-		if (productionMode) {
-			finderPath = _finderPathCountByUuid;
+			Long count = (Long)finderCache.getResult(
+				finderPath, finderArgs, this);
 
-			finderArgs = new Object[] {uuid};
+			if (count == null) {
+				StringBundler sb = new StringBundler(2);
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-		}
+				sb.append(_SQL_COUNT_AMIMAGEENTRY_WHERE);
 
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
+				boolean bindUuid = false;
 
-			sb.append(_SQL_COUNT_AMIMAGEENTRY_WHERE);
+				if (uuid.isEmpty()) {
+					sb.append(_FINDER_COLUMN_UUID_UUID_3);
+				}
+				else {
+					bindUuid = true;
 
-			boolean bindUuid = false;
-
-			if (uuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_UUID_UUID_3);
-			}
-			else {
-				bindUuid = true;
-
-				sb.append(_FINDER_COLUMN_UUID_UUID_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindUuid) {
-					queryPos.add(uuid);
+					sb.append(_FINDER_COLUMN_UUID_UUID_2);
 				}
 
-				count = (Long)query.uniqueResult();
+				String sql = sb.toString();
 
-				if (productionMode) {
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					if (bindUuid) {
+						queryPos.add(uuid);
+					}
+
+					count = (Long)query.uniqueResult();
+
 					finderCache.putResult(finderPath, finderArgs, count);
 				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return count.intValue();
+			return count.intValue();
+		}
 	}
 
 	private static final String _FINDER_COLUMN_UUID_UUID_2 =
@@ -703,106 +701,100 @@ public class AMImageEntryPersistenceImpl
 	public AMImageEntry fetchByUUID_G(
 		String uuid, long groupId, boolean useFinderCache) {
 
-		uuid = Objects.toString(uuid, "");
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					AMImageEntry.class)) {
 
-		Object[] finderArgs = null;
+			uuid = Objects.toString(uuid, "");
 
-		if (useFinderCache) {
-			finderArgs = new Object[] {uuid, groupId};
-		}
+			Object[] finderArgs = null;
 
-		Object result = null;
-
-		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByUUID_G, finderArgs, this);
-		}
-
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			AMImageEntry.class);
-
-		if (result instanceof AMImageEntry) {
-			AMImageEntry amImageEntry = (AMImageEntry)result;
-
-			if (!Objects.equals(uuid, amImageEntry.getUuid()) ||
-				(groupId != amImageEntry.getGroupId())) {
-
-				result = null;
-			}
-			else if (!ctPersistenceHelper.isProductionMode(
-						AMImageEntry.class, amImageEntry.getPrimaryKey())) {
-
-				result = null;
-			}
-		}
-		else if (!productionMode && (result instanceof List<?>)) {
-			result = null;
-		}
-
-		if (result == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_SELECT_AMIMAGEENTRY_WHERE);
-
-			boolean bindUuid = false;
-
-			if (uuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_UUID_G_UUID_3);
-			}
-			else {
-				bindUuid = true;
-
-				sb.append(_FINDER_COLUMN_UUID_G_UUID_2);
+			if (useFinderCache) {
+				finderArgs = new Object[] {uuid, groupId};
 			}
 
-			sb.append(_FINDER_COLUMN_UUID_G_GROUPID_2);
+			Object result = null;
 
-			String sql = sb.toString();
+			if (useFinderCache) {
+				result = finderCache.getResult(
+					_finderPathFetchByUUID_G, finderArgs, this);
+			}
 
-			Session session = null;
+			if (result instanceof AMImageEntry) {
+				AMImageEntry amImageEntry = (AMImageEntry)result;
 
-			try {
-				session = openSession();
+				if (!Objects.equals(uuid, amImageEntry.getUuid()) ||
+					(groupId != amImageEntry.getGroupId())) {
 
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindUuid) {
-					queryPos.add(uuid);
+					result = null;
 				}
+			}
 
-				queryPos.add(groupId);
+			if (result == null) {
+				StringBundler sb = new StringBundler(4);
 
-				List<AMImageEntry> list = query.list();
+				sb.append(_SQL_SELECT_AMIMAGEENTRY_WHERE);
 
-				if (list.isEmpty()) {
-					if (useFinderCache && productionMode) {
-						finderCache.putResult(
-							_finderPathFetchByUUID_G, finderArgs, list);
-					}
+				boolean bindUuid = false;
+
+				if (uuid.isEmpty()) {
+					sb.append(_FINDER_COLUMN_UUID_G_UUID_3);
 				}
 				else {
-					AMImageEntry amImageEntry = list.get(0);
+					bindUuid = true;
 
-					result = amImageEntry;
+					sb.append(_FINDER_COLUMN_UUID_G_UUID_2);
+				}
 
-					cacheResult(amImageEntry);
+				sb.append(_FINDER_COLUMN_UUID_G_GROUPID_2);
+
+				String sql = sb.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					if (bindUuid) {
+						queryPos.add(uuid);
+					}
+
+					queryPos.add(groupId);
+
+					List<AMImageEntry> list = query.list();
+
+					if (list.isEmpty()) {
+						if (useFinderCache) {
+							finderCache.putResult(
+								_finderPathFetchByUUID_G, finderArgs, list);
+						}
+					}
+					else {
+						AMImageEntry amImageEntry = list.get(0);
+
+						result = amImageEntry;
+
+						cacheResult(amImageEntry);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
 				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (AMImageEntry)result;
+			if (result instanceof List<?>) {
+				return null;
+			}
+			else {
+				return (AMImageEntry)result;
+			}
 		}
 	}
 
@@ -831,74 +823,68 @@ public class AMImageEntryPersistenceImpl
 	 */
 	@Override
 	public int countByUUID_G(String uuid, long groupId) {
-		uuid = Objects.toString(uuid, "");
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					AMImageEntry.class)) {
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			AMImageEntry.class);
+			uuid = Objects.toString(uuid, "");
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = _finderPathCountByUUID_G;
 
-		Long count = null;
+			Object[] finderArgs = new Object[] {uuid, groupId};
 
-		if (productionMode) {
-			finderPath = _finderPathCountByUUID_G;
+			Long count = (Long)finderCache.getResult(
+				finderPath, finderArgs, this);
 
-			finderArgs = new Object[] {uuid, groupId};
+			if (count == null) {
+				StringBundler sb = new StringBundler(3);
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-		}
+				sb.append(_SQL_COUNT_AMIMAGEENTRY_WHERE);
 
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
+				boolean bindUuid = false;
 
-			sb.append(_SQL_COUNT_AMIMAGEENTRY_WHERE);
+				if (uuid.isEmpty()) {
+					sb.append(_FINDER_COLUMN_UUID_G_UUID_3);
+				}
+				else {
+					bindUuid = true;
 
-			boolean bindUuid = false;
-
-			if (uuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_UUID_G_UUID_3);
-			}
-			else {
-				bindUuid = true;
-
-				sb.append(_FINDER_COLUMN_UUID_G_UUID_2);
-			}
-
-			sb.append(_FINDER_COLUMN_UUID_G_GROUPID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindUuid) {
-					queryPos.add(uuid);
+					sb.append(_FINDER_COLUMN_UUID_G_UUID_2);
 				}
 
-				queryPos.add(groupId);
+				sb.append(_FINDER_COLUMN_UUID_G_GROUPID_2);
 
-				count = (Long)query.uniqueResult();
+				String sql = sb.toString();
 
-				if (productionMode) {
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					if (bindUuid) {
+						queryPos.add(uuid);
+					}
+
+					queryPos.add(groupId);
+
+					count = (Long)query.uniqueResult();
+
 					finderCache.putResult(finderPath, finderArgs, count);
 				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return count.intValue();
+			return count.intValue();
+		}
 	}
 
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 =
@@ -991,117 +977,119 @@ public class AMImageEntryPersistenceImpl
 		OrderByComparator<AMImageEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		uuid = Objects.toString(uuid, "");
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					AMImageEntry.class)) {
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			AMImageEntry.class);
+			uuid = Objects.toString(uuid, "");
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = null;
+			Object[] finderArgs = null;
 
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
+			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
 
-			if (useFinderCache && productionMode) {
-				finderPath = _finderPathWithoutPaginationFindByUuid_C;
-				finderArgs = new Object[] {uuid, companyId};
+				if (useFinderCache) {
+					finderPath = _finderPathWithoutPaginationFindByUuid_C;
+					finderArgs = new Object[] {uuid, companyId};
+				}
 			}
-		}
-		else if (useFinderCache && productionMode) {
-			finderPath = _finderPathWithPaginationFindByUuid_C;
-			finderArgs = new Object[] {
-				uuid, companyId, start, end, orderByComparator
-			};
-		}
+			else if (useFinderCache) {
+				finderPath = _finderPathWithPaginationFindByUuid_C;
+				finderArgs = new Object[] {
+					uuid, companyId, start, end, orderByComparator
+				};
+			}
 
-		List<AMImageEntry> list = null;
+			List<AMImageEntry> list = null;
 
-		if (useFinderCache && productionMode) {
-			list = (List<AMImageEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+			if (useFinderCache) {
+				list = (List<AMImageEntry>)finderCache.getResult(
+					finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (AMImageEntry amImageEntry : list) {
-					if (!uuid.equals(amImageEntry.getUuid()) ||
-						(companyId != amImageEntry.getCompanyId())) {
+				if ((list != null) && !list.isEmpty()) {
+					for (AMImageEntry amImageEntry : list) {
+						if (!uuid.equals(amImageEntry.getUuid()) ||
+							(companyId != amImageEntry.getCompanyId())) {
 
-						list = null;
+							list = null;
 
-						break;
+							break;
+						}
 					}
 				}
 			}
-		}
 
-		if (list == null) {
-			StringBundler sb = null;
+			if (list == null) {
+				StringBundler sb = null;
 
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					4 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(4);
-			}
-
-			sb.append(_SQL_SELECT_AMIMAGEENTRY_WHERE);
-
-			boolean bindUuid = false;
-
-			if (uuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_UUID_C_UUID_3);
-			}
-			else {
-				bindUuid = true;
-
-				sb.append(_FINDER_COLUMN_UUID_C_UUID_2);
-			}
-
-			sb.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(AMImageEntryModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindUuid) {
-					queryPos.add(uuid);
+				if (orderByComparator != null) {
+					sb = new StringBundler(
+						4 + (orderByComparator.getOrderByFields().length * 2));
+				}
+				else {
+					sb = new StringBundler(4);
 				}
 
-				queryPos.add(companyId);
+				sb.append(_SQL_SELECT_AMIMAGEENTRY_WHERE);
 
-				list = (List<AMImageEntry>)QueryUtil.list(
-					query, getDialect(), start, end);
+				boolean bindUuid = false;
 
-				cacheResult(list);
+				if (uuid.isEmpty()) {
+					sb.append(_FINDER_COLUMN_UUID_C_UUID_3);
+				}
+				else {
+					bindUuid = true;
 
-				if (useFinderCache && productionMode) {
-					finderCache.putResult(finderPath, finderArgs, list);
+					sb.append(_FINDER_COLUMN_UUID_C_UUID_2);
+				}
+
+				sb.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
+
+				if (orderByComparator != null) {
+					appendOrderByComparator(
+						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				}
+				else {
+					sb.append(AMImageEntryModelImpl.ORDER_BY_JPQL);
+				}
+
+				String sql = sb.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					if (bindUuid) {
+						queryPos.add(uuid);
+					}
+
+					queryPos.add(companyId);
+
+					list = (List<AMImageEntry>)QueryUtil.list(
+						query, getDialect(), start, end);
+
+					cacheResult(list);
+
+					if (useFinderCache) {
+						finderCache.putResult(finderPath, finderArgs, list);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
 				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return list;
+			return list;
+		}
 	}
 
 	/**
@@ -1426,74 +1414,68 @@ public class AMImageEntryPersistenceImpl
 	 */
 	@Override
 	public int countByUuid_C(String uuid, long companyId) {
-		uuid = Objects.toString(uuid, "");
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					AMImageEntry.class)) {
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			AMImageEntry.class);
+			uuid = Objects.toString(uuid, "");
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = _finderPathCountByUuid_C;
 
-		Long count = null;
+			Object[] finderArgs = new Object[] {uuid, companyId};
 
-		if (productionMode) {
-			finderPath = _finderPathCountByUuid_C;
+			Long count = (Long)finderCache.getResult(
+				finderPath, finderArgs, this);
 
-			finderArgs = new Object[] {uuid, companyId};
+			if (count == null) {
+				StringBundler sb = new StringBundler(3);
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-		}
+				sb.append(_SQL_COUNT_AMIMAGEENTRY_WHERE);
 
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
+				boolean bindUuid = false;
 
-			sb.append(_SQL_COUNT_AMIMAGEENTRY_WHERE);
+				if (uuid.isEmpty()) {
+					sb.append(_FINDER_COLUMN_UUID_C_UUID_3);
+				}
+				else {
+					bindUuid = true;
 
-			boolean bindUuid = false;
-
-			if (uuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_UUID_C_UUID_3);
-			}
-			else {
-				bindUuid = true;
-
-				sb.append(_FINDER_COLUMN_UUID_C_UUID_2);
-			}
-
-			sb.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindUuid) {
-					queryPos.add(uuid);
+					sb.append(_FINDER_COLUMN_UUID_C_UUID_2);
 				}
 
-				queryPos.add(companyId);
+				sb.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
 
-				count = (Long)query.uniqueResult();
+				String sql = sb.toString();
 
-				if (productionMode) {
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					if (bindUuid) {
+						queryPos.add(uuid);
+					}
+
+					queryPos.add(companyId);
+
+					count = (Long)query.uniqueResult();
+
 					finderCache.putResult(finderPath, finderArgs, count);
 				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return count.intValue();
+			return count.intValue();
+		}
 	}
 
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 =
@@ -1579,96 +1561,100 @@ public class AMImageEntryPersistenceImpl
 		OrderByComparator<AMImageEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			AMImageEntry.class);
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					AMImageEntry.class)) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = null;
+			Object[] finderArgs = null;
 
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
+			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
 
-			if (useFinderCache && productionMode) {
-				finderPath = _finderPathWithoutPaginationFindByGroupId;
-				finderArgs = new Object[] {groupId};
+				if (useFinderCache) {
+					finderPath = _finderPathWithoutPaginationFindByGroupId;
+					finderArgs = new Object[] {groupId};
+				}
 			}
-		}
-		else if (useFinderCache && productionMode) {
-			finderPath = _finderPathWithPaginationFindByGroupId;
-			finderArgs = new Object[] {groupId, start, end, orderByComparator};
-		}
+			else if (useFinderCache) {
+				finderPath = _finderPathWithPaginationFindByGroupId;
+				finderArgs = new Object[] {
+					groupId, start, end, orderByComparator
+				};
+			}
 
-		List<AMImageEntry> list = null;
+			List<AMImageEntry> list = null;
 
-		if (useFinderCache && productionMode) {
-			list = (List<AMImageEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+			if (useFinderCache) {
+				list = (List<AMImageEntry>)finderCache.getResult(
+					finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (AMImageEntry amImageEntry : list) {
-					if (groupId != amImageEntry.getGroupId()) {
-						list = null;
+				if ((list != null) && !list.isEmpty()) {
+					for (AMImageEntry amImageEntry : list) {
+						if (groupId != amImageEntry.getGroupId()) {
+							list = null;
 
-						break;
+							break;
+						}
 					}
 				}
 			}
-		}
 
-		if (list == null) {
-			StringBundler sb = null;
+			if (list == null) {
+				StringBundler sb = null;
 
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
+				if (orderByComparator != null) {
+					sb = new StringBundler(
+						3 + (orderByComparator.getOrderByFields().length * 2));
+				}
+				else {
+					sb = new StringBundler(3);
+				}
 
-			sb.append(_SQL_SELECT_AMIMAGEENTRY_WHERE);
+				sb.append(_SQL_SELECT_AMIMAGEENTRY_WHERE);
 
-			sb.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
+				sb.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(AMImageEntryModelImpl.ORDER_BY_JPQL);
-			}
+				if (orderByComparator != null) {
+					appendOrderByComparator(
+						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				}
+				else {
+					sb.append(AMImageEntryModelImpl.ORDER_BY_JPQL);
+				}
 
-			String sql = sb.toString();
+				String sql = sb.toString();
 
-			Session session = null;
+				Session session = null;
 
-			try {
-				session = openSession();
+				try {
+					session = openSession();
 
-				Query query = session.createQuery(sql);
+					Query query = session.createQuery(sql);
 
-				QueryPos queryPos = QueryPos.getInstance(query);
+					QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(groupId);
+					queryPos.add(groupId);
 
-				list = (List<AMImageEntry>)QueryUtil.list(
-					query, getDialect(), start, end);
+					list = (List<AMImageEntry>)QueryUtil.list(
+						query, getDialect(), start, end);
 
-				cacheResult(list);
+					cacheResult(list);
 
-				if (useFinderCache && productionMode) {
-					finderCache.putResult(finderPath, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(finderPath, finderArgs, list);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
 				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return list;
+			return list;
+		}
 	}
 
 	/**
@@ -1956,57 +1942,51 @@ public class AMImageEntryPersistenceImpl
 	 */
 	@Override
 	public int countByGroupId(long groupId) {
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			AMImageEntry.class);
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					AMImageEntry.class)) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = _finderPathCountByGroupId;
 
-		Long count = null;
+			Object[] finderArgs = new Object[] {groupId};
 
-		if (productionMode) {
-			finderPath = _finderPathCountByGroupId;
+			Long count = (Long)finderCache.getResult(
+				finderPath, finderArgs, this);
 
-			finderArgs = new Object[] {groupId};
+			if (count == null) {
+				StringBundler sb = new StringBundler(2);
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-		}
+				sb.append(_SQL_COUNT_AMIMAGEENTRY_WHERE);
 
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
+				sb.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
-			sb.append(_SQL_COUNT_AMIMAGEENTRY_WHERE);
+				String sql = sb.toString();
 
-			sb.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
+				Session session = null;
 
-			String sql = sb.toString();
+				try {
+					session = openSession();
 
-			Session session = null;
+					Query query = session.createQuery(sql);
 
-			try {
-				session = openSession();
+					QueryPos queryPos = QueryPos.getInstance(query);
 
-				Query query = session.createQuery(sql);
+					queryPos.add(groupId);
 
-				QueryPos queryPos = QueryPos.getInstance(query);
+					count = (Long)query.uniqueResult();
 
-				queryPos.add(groupId);
-
-				count = (Long)query.uniqueResult();
-
-				if (productionMode) {
 					finderCache.putResult(finderPath, finderArgs, count);
 				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return count.intValue();
+			return count.intValue();
+		}
 	}
 
 	private static final String _FINDER_COLUMN_GROUPID_GROUPID_2 =
@@ -2088,98 +2068,100 @@ public class AMImageEntryPersistenceImpl
 		OrderByComparator<AMImageEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			AMImageEntry.class);
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					AMImageEntry.class)) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = null;
+			Object[] finderArgs = null;
 
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
+			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
 
-			if (useFinderCache && productionMode) {
-				finderPath = _finderPathWithoutPaginationFindByCompanyId;
-				finderArgs = new Object[] {companyId};
+				if (useFinderCache) {
+					finderPath = _finderPathWithoutPaginationFindByCompanyId;
+					finderArgs = new Object[] {companyId};
+				}
 			}
-		}
-		else if (useFinderCache && productionMode) {
-			finderPath = _finderPathWithPaginationFindByCompanyId;
-			finderArgs = new Object[] {
-				companyId, start, end, orderByComparator
-			};
-		}
+			else if (useFinderCache) {
+				finderPath = _finderPathWithPaginationFindByCompanyId;
+				finderArgs = new Object[] {
+					companyId, start, end, orderByComparator
+				};
+			}
 
-		List<AMImageEntry> list = null;
+			List<AMImageEntry> list = null;
 
-		if (useFinderCache && productionMode) {
-			list = (List<AMImageEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+			if (useFinderCache) {
+				list = (List<AMImageEntry>)finderCache.getResult(
+					finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (AMImageEntry amImageEntry : list) {
-					if (companyId != amImageEntry.getCompanyId()) {
-						list = null;
+				if ((list != null) && !list.isEmpty()) {
+					for (AMImageEntry amImageEntry : list) {
+						if (companyId != amImageEntry.getCompanyId()) {
+							list = null;
 
-						break;
+							break;
+						}
 					}
 				}
 			}
-		}
 
-		if (list == null) {
-			StringBundler sb = null;
+			if (list == null) {
+				StringBundler sb = null;
 
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
+				if (orderByComparator != null) {
+					sb = new StringBundler(
+						3 + (orderByComparator.getOrderByFields().length * 2));
+				}
+				else {
+					sb = new StringBundler(3);
+				}
 
-			sb.append(_SQL_SELECT_AMIMAGEENTRY_WHERE);
+				sb.append(_SQL_SELECT_AMIMAGEENTRY_WHERE);
 
-			sb.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
+				sb.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
 
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(AMImageEntryModelImpl.ORDER_BY_JPQL);
-			}
+				if (orderByComparator != null) {
+					appendOrderByComparator(
+						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				}
+				else {
+					sb.append(AMImageEntryModelImpl.ORDER_BY_JPQL);
+				}
 
-			String sql = sb.toString();
+				String sql = sb.toString();
 
-			Session session = null;
+				Session session = null;
 
-			try {
-				session = openSession();
+				try {
+					session = openSession();
 
-				Query query = session.createQuery(sql);
+					Query query = session.createQuery(sql);
 
-				QueryPos queryPos = QueryPos.getInstance(query);
+					QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(companyId);
+					queryPos.add(companyId);
 
-				list = (List<AMImageEntry>)QueryUtil.list(
-					query, getDialect(), start, end);
+					list = (List<AMImageEntry>)QueryUtil.list(
+						query, getDialect(), start, end);
 
-				cacheResult(list);
+					cacheResult(list);
 
-				if (useFinderCache && productionMode) {
-					finderCache.putResult(finderPath, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(finderPath, finderArgs, list);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
 				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return list;
+			return list;
+		}
 	}
 
 	/**
@@ -2467,57 +2449,51 @@ public class AMImageEntryPersistenceImpl
 	 */
 	@Override
 	public int countByCompanyId(long companyId) {
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			AMImageEntry.class);
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					AMImageEntry.class)) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = _finderPathCountByCompanyId;
 
-		Long count = null;
+			Object[] finderArgs = new Object[] {companyId};
 
-		if (productionMode) {
-			finderPath = _finderPathCountByCompanyId;
+			Long count = (Long)finderCache.getResult(
+				finderPath, finderArgs, this);
 
-			finderArgs = new Object[] {companyId};
+			if (count == null) {
+				StringBundler sb = new StringBundler(2);
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-		}
+				sb.append(_SQL_COUNT_AMIMAGEENTRY_WHERE);
 
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
+				sb.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
 
-			sb.append(_SQL_COUNT_AMIMAGEENTRY_WHERE);
+				String sql = sb.toString();
 
-			sb.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
+				Session session = null;
 
-			String sql = sb.toString();
+				try {
+					session = openSession();
 
-			Session session = null;
+					Query query = session.createQuery(sql);
 
-			try {
-				session = openSession();
+					QueryPos queryPos = QueryPos.getInstance(query);
 
-				Query query = session.createQuery(sql);
+					queryPos.add(companyId);
 
-				QueryPos queryPos = QueryPos.getInstance(query);
+					count = (Long)query.uniqueResult();
 
-				queryPos.add(companyId);
-
-				count = (Long)query.uniqueResult();
-
-				if (productionMode) {
 					finderCache.putResult(finderPath, finderArgs, count);
 				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return count.intValue();
+			return count.intValue();
+		}
 	}
 
 	private static final String _FINDER_COLUMN_COMPANYID_COMPANYID_2 =
@@ -2602,114 +2578,118 @@ public class AMImageEntryPersistenceImpl
 		OrderByComparator<AMImageEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		configurationUuid = Objects.toString(configurationUuid, "");
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					AMImageEntry.class)) {
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			AMImageEntry.class);
+			configurationUuid = Objects.toString(configurationUuid, "");
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = null;
+			Object[] finderArgs = null;
 
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
+			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
 
-			if (useFinderCache && productionMode) {
-				finderPath =
-					_finderPathWithoutPaginationFindByConfigurationUuid;
-				finderArgs = new Object[] {configurationUuid};
+				if (useFinderCache) {
+					finderPath =
+						_finderPathWithoutPaginationFindByConfigurationUuid;
+					finderArgs = new Object[] {configurationUuid};
+				}
 			}
-		}
-		else if (useFinderCache && productionMode) {
-			finderPath = _finderPathWithPaginationFindByConfigurationUuid;
-			finderArgs = new Object[] {
-				configurationUuid, start, end, orderByComparator
-			};
-		}
+			else if (useFinderCache) {
+				finderPath = _finderPathWithPaginationFindByConfigurationUuid;
+				finderArgs = new Object[] {
+					configurationUuid, start, end, orderByComparator
+				};
+			}
 
-		List<AMImageEntry> list = null;
+			List<AMImageEntry> list = null;
 
-		if (useFinderCache && productionMode) {
-			list = (List<AMImageEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+			if (useFinderCache) {
+				list = (List<AMImageEntry>)finderCache.getResult(
+					finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (AMImageEntry amImageEntry : list) {
-					if (!configurationUuid.equals(
-							amImageEntry.getConfigurationUuid())) {
+				if ((list != null) && !list.isEmpty()) {
+					for (AMImageEntry amImageEntry : list) {
+						if (!configurationUuid.equals(
+								amImageEntry.getConfigurationUuid())) {
 
-						list = null;
+							list = null;
 
-						break;
+							break;
+						}
 					}
 				}
 			}
-		}
 
-		if (list == null) {
-			StringBundler sb = null;
+			if (list == null) {
+				StringBundler sb = null;
 
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
-
-			sb.append(_SQL_SELECT_AMIMAGEENTRY_WHERE);
-
-			boolean bindConfigurationUuid = false;
-
-			if (configurationUuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_CONFIGURATIONUUID_CONFIGURATIONUUID_3);
-			}
-			else {
-				bindConfigurationUuid = true;
-
-				sb.append(_FINDER_COLUMN_CONFIGURATIONUUID_CONFIGURATIONUUID_2);
-			}
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(AMImageEntryModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindConfigurationUuid) {
-					queryPos.add(configurationUuid);
+				if (orderByComparator != null) {
+					sb = new StringBundler(
+						3 + (orderByComparator.getOrderByFields().length * 2));
+				}
+				else {
+					sb = new StringBundler(3);
 				}
 
-				list = (List<AMImageEntry>)QueryUtil.list(
-					query, getDialect(), start, end);
+				sb.append(_SQL_SELECT_AMIMAGEENTRY_WHERE);
 
-				cacheResult(list);
+				boolean bindConfigurationUuid = false;
 
-				if (useFinderCache && productionMode) {
-					finderCache.putResult(finderPath, finderArgs, list);
+				if (configurationUuid.isEmpty()) {
+					sb.append(
+						_FINDER_COLUMN_CONFIGURATIONUUID_CONFIGURATIONUUID_3);
+				}
+				else {
+					bindConfigurationUuid = true;
+
+					sb.append(
+						_FINDER_COLUMN_CONFIGURATIONUUID_CONFIGURATIONUUID_2);
+				}
+
+				if (orderByComparator != null) {
+					appendOrderByComparator(
+						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				}
+				else {
+					sb.append(AMImageEntryModelImpl.ORDER_BY_JPQL);
+				}
+
+				String sql = sb.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					if (bindConfigurationUuid) {
+						queryPos.add(configurationUuid);
+					}
+
+					list = (List<AMImageEntry>)QueryUtil.list(
+						query, getDialect(), start, end);
+
+					cacheResult(list);
+
+					if (useFinderCache) {
+						finderCache.putResult(finderPath, finderArgs, list);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
 				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return list;
+			return list;
+		}
 	}
 
 	/**
@@ -3017,70 +2997,66 @@ public class AMImageEntryPersistenceImpl
 	 */
 	@Override
 	public int countByConfigurationUuid(String configurationUuid) {
-		configurationUuid = Objects.toString(configurationUuid, "");
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					AMImageEntry.class)) {
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			AMImageEntry.class);
+			configurationUuid = Objects.toString(configurationUuid, "");
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = _finderPathCountByConfigurationUuid;
 
-		Long count = null;
+			Object[] finderArgs = new Object[] {configurationUuid};
 
-		if (productionMode) {
-			finderPath = _finderPathCountByConfigurationUuid;
+			Long count = (Long)finderCache.getResult(
+				finderPath, finderArgs, this);
 
-			finderArgs = new Object[] {configurationUuid};
+			if (count == null) {
+				StringBundler sb = new StringBundler(2);
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-		}
+				sb.append(_SQL_COUNT_AMIMAGEENTRY_WHERE);
 
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
+				boolean bindConfigurationUuid = false;
 
-			sb.append(_SQL_COUNT_AMIMAGEENTRY_WHERE);
+				if (configurationUuid.isEmpty()) {
+					sb.append(
+						_FINDER_COLUMN_CONFIGURATIONUUID_CONFIGURATIONUUID_3);
+				}
+				else {
+					bindConfigurationUuid = true;
 
-			boolean bindConfigurationUuid = false;
-
-			if (configurationUuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_CONFIGURATIONUUID_CONFIGURATIONUUID_3);
-			}
-			else {
-				bindConfigurationUuid = true;
-
-				sb.append(_FINDER_COLUMN_CONFIGURATIONUUID_CONFIGURATIONUUID_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindConfigurationUuid) {
-					queryPos.add(configurationUuid);
+					sb.append(
+						_FINDER_COLUMN_CONFIGURATIONUUID_CONFIGURATIONUUID_2);
 				}
 
-				count = (Long)query.uniqueResult();
+				String sql = sb.toString();
 
-				if (productionMode) {
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					if (bindConfigurationUuid) {
+						queryPos.add(configurationUuid);
+					}
+
+					count = (Long)query.uniqueResult();
+
 					finderCache.putResult(finderPath, finderArgs, count);
 				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return count.intValue();
+			return count.intValue();
+		}
 	}
 
 	private static final String
@@ -3168,98 +3144,101 @@ public class AMImageEntryPersistenceImpl
 		OrderByComparator<AMImageEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			AMImageEntry.class);
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					AMImageEntry.class)) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = null;
+			Object[] finderArgs = null;
 
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
+			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
 
-			if (useFinderCache && productionMode) {
-				finderPath = _finderPathWithoutPaginationFindByFileVersionId;
-				finderArgs = new Object[] {fileVersionId};
+				if (useFinderCache) {
+					finderPath =
+						_finderPathWithoutPaginationFindByFileVersionId;
+					finderArgs = new Object[] {fileVersionId};
+				}
 			}
-		}
-		else if (useFinderCache && productionMode) {
-			finderPath = _finderPathWithPaginationFindByFileVersionId;
-			finderArgs = new Object[] {
-				fileVersionId, start, end, orderByComparator
-			};
-		}
+			else if (useFinderCache) {
+				finderPath = _finderPathWithPaginationFindByFileVersionId;
+				finderArgs = new Object[] {
+					fileVersionId, start, end, orderByComparator
+				};
+			}
 
-		List<AMImageEntry> list = null;
+			List<AMImageEntry> list = null;
 
-		if (useFinderCache && productionMode) {
-			list = (List<AMImageEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+			if (useFinderCache) {
+				list = (List<AMImageEntry>)finderCache.getResult(
+					finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (AMImageEntry amImageEntry : list) {
-					if (fileVersionId != amImageEntry.getFileVersionId()) {
-						list = null;
+				if ((list != null) && !list.isEmpty()) {
+					for (AMImageEntry amImageEntry : list) {
+						if (fileVersionId != amImageEntry.getFileVersionId()) {
+							list = null;
 
-						break;
+							break;
+						}
 					}
 				}
 			}
-		}
 
-		if (list == null) {
-			StringBundler sb = null;
+			if (list == null) {
+				StringBundler sb = null;
 
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
+				if (orderByComparator != null) {
+					sb = new StringBundler(
+						3 + (orderByComparator.getOrderByFields().length * 2));
+				}
+				else {
+					sb = new StringBundler(3);
+				}
 
-			sb.append(_SQL_SELECT_AMIMAGEENTRY_WHERE);
+				sb.append(_SQL_SELECT_AMIMAGEENTRY_WHERE);
 
-			sb.append(_FINDER_COLUMN_FILEVERSIONID_FILEVERSIONID_2);
+				sb.append(_FINDER_COLUMN_FILEVERSIONID_FILEVERSIONID_2);
 
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(AMImageEntryModelImpl.ORDER_BY_JPQL);
-			}
+				if (orderByComparator != null) {
+					appendOrderByComparator(
+						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				}
+				else {
+					sb.append(AMImageEntryModelImpl.ORDER_BY_JPQL);
+				}
 
-			String sql = sb.toString();
+				String sql = sb.toString();
 
-			Session session = null;
+				Session session = null;
 
-			try {
-				session = openSession();
+				try {
+					session = openSession();
 
-				Query query = session.createQuery(sql);
+					Query query = session.createQuery(sql);
 
-				QueryPos queryPos = QueryPos.getInstance(query);
+					QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(fileVersionId);
+					queryPos.add(fileVersionId);
 
-				list = (List<AMImageEntry>)QueryUtil.list(
-					query, getDialect(), start, end);
+					list = (List<AMImageEntry>)QueryUtil.list(
+						query, getDialect(), start, end);
 
-				cacheResult(list);
+					cacheResult(list);
 
-				if (useFinderCache && productionMode) {
-					finderCache.putResult(finderPath, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(finderPath, finderArgs, list);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
 				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return list;
+			return list;
+		}
 	}
 
 	/**
@@ -3550,57 +3529,51 @@ public class AMImageEntryPersistenceImpl
 	 */
 	@Override
 	public int countByFileVersionId(long fileVersionId) {
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			AMImageEntry.class);
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					AMImageEntry.class)) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = _finderPathCountByFileVersionId;
 
-		Long count = null;
+			Object[] finderArgs = new Object[] {fileVersionId};
 
-		if (productionMode) {
-			finderPath = _finderPathCountByFileVersionId;
+			Long count = (Long)finderCache.getResult(
+				finderPath, finderArgs, this);
 
-			finderArgs = new Object[] {fileVersionId};
+			if (count == null) {
+				StringBundler sb = new StringBundler(2);
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-		}
+				sb.append(_SQL_COUNT_AMIMAGEENTRY_WHERE);
 
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
+				sb.append(_FINDER_COLUMN_FILEVERSIONID_FILEVERSIONID_2);
 
-			sb.append(_SQL_COUNT_AMIMAGEENTRY_WHERE);
+				String sql = sb.toString();
 
-			sb.append(_FINDER_COLUMN_FILEVERSIONID_FILEVERSIONID_2);
+				Session session = null;
 
-			String sql = sb.toString();
+				try {
+					session = openSession();
 
-			Session session = null;
+					Query query = session.createQuery(sql);
 
-			try {
-				session = openSession();
+					QueryPos queryPos = QueryPos.getInstance(query);
 
-				Query query = session.createQuery(sql);
+					queryPos.add(fileVersionId);
 
-				QueryPos queryPos = QueryPos.getInstance(query);
+					count = (Long)query.uniqueResult();
 
-				queryPos.add(fileVersionId);
-
-				count = (Long)query.uniqueResult();
-
-				if (productionMode) {
 					finderCache.putResult(finderPath, finderArgs, count);
 				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return count.intValue();
+			return count.intValue();
+		}
 	}
 
 	private static final String _FINDER_COLUMN_FILEVERSIONID_FILEVERSIONID_2 =
@@ -3690,118 +3663,120 @@ public class AMImageEntryPersistenceImpl
 		OrderByComparator<AMImageEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		configurationUuid = Objects.toString(configurationUuid, "");
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					AMImageEntry.class)) {
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			AMImageEntry.class);
+			configurationUuid = Objects.toString(configurationUuid, "");
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = null;
+			Object[] finderArgs = null;
 
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
+			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
 
-			if (useFinderCache && productionMode) {
-				finderPath = _finderPathWithoutPaginationFindByC_C;
-				finderArgs = new Object[] {companyId, configurationUuid};
+				if (useFinderCache) {
+					finderPath = _finderPathWithoutPaginationFindByC_C;
+					finderArgs = new Object[] {companyId, configurationUuid};
+				}
 			}
-		}
-		else if (useFinderCache && productionMode) {
-			finderPath = _finderPathWithPaginationFindByC_C;
-			finderArgs = new Object[] {
-				companyId, configurationUuid, start, end, orderByComparator
-			};
-		}
+			else if (useFinderCache) {
+				finderPath = _finderPathWithPaginationFindByC_C;
+				finderArgs = new Object[] {
+					companyId, configurationUuid, start, end, orderByComparator
+				};
+			}
 
-		List<AMImageEntry> list = null;
+			List<AMImageEntry> list = null;
 
-		if (useFinderCache && productionMode) {
-			list = (List<AMImageEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+			if (useFinderCache) {
+				list = (List<AMImageEntry>)finderCache.getResult(
+					finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (AMImageEntry amImageEntry : list) {
-					if ((companyId != amImageEntry.getCompanyId()) ||
-						!configurationUuid.equals(
-							amImageEntry.getConfigurationUuid())) {
+				if ((list != null) && !list.isEmpty()) {
+					for (AMImageEntry amImageEntry : list) {
+						if ((companyId != amImageEntry.getCompanyId()) ||
+							!configurationUuid.equals(
+								amImageEntry.getConfigurationUuid())) {
 
-						list = null;
+							list = null;
 
-						break;
+							break;
+						}
 					}
 				}
 			}
-		}
 
-		if (list == null) {
-			StringBundler sb = null;
+			if (list == null) {
+				StringBundler sb = null;
 
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					4 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(4);
-			}
-
-			sb.append(_SQL_SELECT_AMIMAGEENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_C_COMPANYID_2);
-
-			boolean bindConfigurationUuid = false;
-
-			if (configurationUuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_C_CONFIGURATIONUUID_3);
-			}
-			else {
-				bindConfigurationUuid = true;
-
-				sb.append(_FINDER_COLUMN_C_C_CONFIGURATIONUUID_2);
-			}
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(AMImageEntryModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				if (bindConfigurationUuid) {
-					queryPos.add(configurationUuid);
+				if (orderByComparator != null) {
+					sb = new StringBundler(
+						4 + (orderByComparator.getOrderByFields().length * 2));
+				}
+				else {
+					sb = new StringBundler(4);
 				}
 
-				list = (List<AMImageEntry>)QueryUtil.list(
-					query, getDialect(), start, end);
+				sb.append(_SQL_SELECT_AMIMAGEENTRY_WHERE);
 
-				cacheResult(list);
+				sb.append(_FINDER_COLUMN_C_C_COMPANYID_2);
 
-				if (useFinderCache && productionMode) {
-					finderCache.putResult(finderPath, finderArgs, list);
+				boolean bindConfigurationUuid = false;
+
+				if (configurationUuid.isEmpty()) {
+					sb.append(_FINDER_COLUMN_C_C_CONFIGURATIONUUID_3);
+				}
+				else {
+					bindConfigurationUuid = true;
+
+					sb.append(_FINDER_COLUMN_C_C_CONFIGURATIONUUID_2);
+				}
+
+				if (orderByComparator != null) {
+					appendOrderByComparator(
+						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				}
+				else {
+					sb.append(AMImageEntryModelImpl.ORDER_BY_JPQL);
+				}
+
+				String sql = sb.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					queryPos.add(companyId);
+
+					if (bindConfigurationUuid) {
+						queryPos.add(configurationUuid);
+					}
+
+					list = (List<AMImageEntry>)QueryUtil.list(
+						query, getDialect(), start, end);
+
+					cacheResult(list);
+
+					if (useFinderCache) {
+						finderCache.putResult(finderPath, finderArgs, list);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
 				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return list;
+			return list;
+		}
 	}
 
 	/**
@@ -4127,74 +4102,68 @@ public class AMImageEntryPersistenceImpl
 	 */
 	@Override
 	public int countByC_C(long companyId, String configurationUuid) {
-		configurationUuid = Objects.toString(configurationUuid, "");
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					AMImageEntry.class)) {
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			AMImageEntry.class);
+			configurationUuid = Objects.toString(configurationUuid, "");
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = _finderPathCountByC_C;
 
-		Long count = null;
+			Object[] finderArgs = new Object[] {companyId, configurationUuid};
 
-		if (productionMode) {
-			finderPath = _finderPathCountByC_C;
+			Long count = (Long)finderCache.getResult(
+				finderPath, finderArgs, this);
 
-			finderArgs = new Object[] {companyId, configurationUuid};
+			if (count == null) {
+				StringBundler sb = new StringBundler(3);
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-		}
+				sb.append(_SQL_COUNT_AMIMAGEENTRY_WHERE);
 
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
+				sb.append(_FINDER_COLUMN_C_C_COMPANYID_2);
 
-			sb.append(_SQL_COUNT_AMIMAGEENTRY_WHERE);
+				boolean bindConfigurationUuid = false;
 
-			sb.append(_FINDER_COLUMN_C_C_COMPANYID_2);
+				if (configurationUuid.isEmpty()) {
+					sb.append(_FINDER_COLUMN_C_C_CONFIGURATIONUUID_3);
+				}
+				else {
+					bindConfigurationUuid = true;
 
-			boolean bindConfigurationUuid = false;
-
-			if (configurationUuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_C_CONFIGURATIONUUID_3);
-			}
-			else {
-				bindConfigurationUuid = true;
-
-				sb.append(_FINDER_COLUMN_C_C_CONFIGURATIONUUID_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				if (bindConfigurationUuid) {
-					queryPos.add(configurationUuid);
+					sb.append(_FINDER_COLUMN_C_C_CONFIGURATIONUUID_2);
 				}
 
-				count = (Long)query.uniqueResult();
+				String sql = sb.toString();
 
-				if (productionMode) {
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					queryPos.add(companyId);
+
+					if (bindConfigurationUuid) {
+						queryPos.add(configurationUuid);
+					}
+
+					count = (Long)query.uniqueResult();
+
 					finderCache.putResult(finderPath, finderArgs, count);
 				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return count.intValue();
+			return count.intValue();
+		}
 	}
 
 	private static final String _FINDER_COLUMN_C_C_COMPANYID_2 =
@@ -4273,107 +4242,102 @@ public class AMImageEntryPersistenceImpl
 	public AMImageEntry fetchByC_F(
 		String configurationUuid, long fileVersionId, boolean useFinderCache) {
 
-		configurationUuid = Objects.toString(configurationUuid, "");
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					AMImageEntry.class)) {
 
-		Object[] finderArgs = null;
+			configurationUuid = Objects.toString(configurationUuid, "");
 
-		if (useFinderCache) {
-			finderArgs = new Object[] {configurationUuid, fileVersionId};
-		}
+			Object[] finderArgs = null;
 
-		Object result = null;
-
-		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByC_F, finderArgs, this);
-		}
-
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			AMImageEntry.class);
-
-		if (result instanceof AMImageEntry) {
-			AMImageEntry amImageEntry = (AMImageEntry)result;
-
-			if (!Objects.equals(
-					configurationUuid, amImageEntry.getConfigurationUuid()) ||
-				(fileVersionId != amImageEntry.getFileVersionId())) {
-
-				result = null;
-			}
-			else if (!ctPersistenceHelper.isProductionMode(
-						AMImageEntry.class, amImageEntry.getPrimaryKey())) {
-
-				result = null;
-			}
-		}
-		else if (!productionMode && (result instanceof List<?>)) {
-			result = null;
-		}
-
-		if (result == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_SELECT_AMIMAGEENTRY_WHERE);
-
-			boolean bindConfigurationUuid = false;
-
-			if (configurationUuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_F_CONFIGURATIONUUID_3);
-			}
-			else {
-				bindConfigurationUuid = true;
-
-				sb.append(_FINDER_COLUMN_C_F_CONFIGURATIONUUID_2);
+			if (useFinderCache) {
+				finderArgs = new Object[] {configurationUuid, fileVersionId};
 			}
 
-			sb.append(_FINDER_COLUMN_C_F_FILEVERSIONID_2);
+			Object result = null;
 
-			String sql = sb.toString();
+			if (useFinderCache) {
+				result = finderCache.getResult(
+					_finderPathFetchByC_F, finderArgs, this);
+			}
 
-			Session session = null;
+			if (result instanceof AMImageEntry) {
+				AMImageEntry amImageEntry = (AMImageEntry)result;
 
-			try {
-				session = openSession();
+				if (!Objects.equals(
+						configurationUuid,
+						amImageEntry.getConfigurationUuid()) ||
+					(fileVersionId != amImageEntry.getFileVersionId())) {
 
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindConfigurationUuid) {
-					queryPos.add(configurationUuid);
+					result = null;
 				}
+			}
 
-				queryPos.add(fileVersionId);
+			if (result == null) {
+				StringBundler sb = new StringBundler(4);
 
-				List<AMImageEntry> list = query.list();
+				sb.append(_SQL_SELECT_AMIMAGEENTRY_WHERE);
 
-				if (list.isEmpty()) {
-					if (useFinderCache && productionMode) {
-						finderCache.putResult(
-							_finderPathFetchByC_F, finderArgs, list);
-					}
+				boolean bindConfigurationUuid = false;
+
+				if (configurationUuid.isEmpty()) {
+					sb.append(_FINDER_COLUMN_C_F_CONFIGURATIONUUID_3);
 				}
 				else {
-					AMImageEntry amImageEntry = list.get(0);
+					bindConfigurationUuid = true;
 
-					result = amImageEntry;
+					sb.append(_FINDER_COLUMN_C_F_CONFIGURATIONUUID_2);
+				}
 
-					cacheResult(amImageEntry);
+				sb.append(_FINDER_COLUMN_C_F_FILEVERSIONID_2);
+
+				String sql = sb.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					if (bindConfigurationUuid) {
+						queryPos.add(configurationUuid);
+					}
+
+					queryPos.add(fileVersionId);
+
+					List<AMImageEntry> list = query.list();
+
+					if (list.isEmpty()) {
+						if (useFinderCache) {
+							finderCache.putResult(
+								_finderPathFetchByC_F, finderArgs, list);
+						}
+					}
+					else {
+						AMImageEntry amImageEntry = list.get(0);
+
+						result = amImageEntry;
+
+						cacheResult(amImageEntry);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
 				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (AMImageEntry)result;
+			if (result instanceof List<?>) {
+				return null;
+			}
+			else {
+				return (AMImageEntry)result;
+			}
 		}
 	}
 
@@ -4403,74 +4367,70 @@ public class AMImageEntryPersistenceImpl
 	 */
 	@Override
 	public int countByC_F(String configurationUuid, long fileVersionId) {
-		configurationUuid = Objects.toString(configurationUuid, "");
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					AMImageEntry.class)) {
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			AMImageEntry.class);
+			configurationUuid = Objects.toString(configurationUuid, "");
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = _finderPathCountByC_F;
 
-		Long count = null;
+			Object[] finderArgs = new Object[] {
+				configurationUuid, fileVersionId
+			};
 
-		if (productionMode) {
-			finderPath = _finderPathCountByC_F;
+			Long count = (Long)finderCache.getResult(
+				finderPath, finderArgs, this);
 
-			finderArgs = new Object[] {configurationUuid, fileVersionId};
+			if (count == null) {
+				StringBundler sb = new StringBundler(3);
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-		}
+				sb.append(_SQL_COUNT_AMIMAGEENTRY_WHERE);
 
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
+				boolean bindConfigurationUuid = false;
 
-			sb.append(_SQL_COUNT_AMIMAGEENTRY_WHERE);
+				if (configurationUuid.isEmpty()) {
+					sb.append(_FINDER_COLUMN_C_F_CONFIGURATIONUUID_3);
+				}
+				else {
+					bindConfigurationUuid = true;
 
-			boolean bindConfigurationUuid = false;
-
-			if (configurationUuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_F_CONFIGURATIONUUID_3);
-			}
-			else {
-				bindConfigurationUuid = true;
-
-				sb.append(_FINDER_COLUMN_C_F_CONFIGURATIONUUID_2);
-			}
-
-			sb.append(_FINDER_COLUMN_C_F_FILEVERSIONID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindConfigurationUuid) {
-					queryPos.add(configurationUuid);
+					sb.append(_FINDER_COLUMN_C_F_CONFIGURATIONUUID_2);
 				}
 
-				queryPos.add(fileVersionId);
+				sb.append(_FINDER_COLUMN_C_F_FILEVERSIONID_2);
 
-				count = (Long)query.uniqueResult();
+				String sql = sb.toString();
 
-				if (productionMode) {
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					if (bindConfigurationUuid) {
+						queryPos.add(configurationUuid);
+					}
+
+					queryPos.add(fileVersionId);
+
+					count = (Long)query.uniqueResult();
+
 					finderCache.putResult(finderPath, finderArgs, count);
 				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return count.intValue();
+			return count.intValue();
+		}
 	}
 
 	private static final String _FINDER_COLUMN_C_F_CONFIGURATIONUUID_2 =
@@ -4505,25 +4465,29 @@ public class AMImageEntryPersistenceImpl
 	 */
 	@Override
 	public void cacheResult(AMImageEntry amImageEntry) {
-		if (amImageEntry.getCtCollectionId() != 0) {
-			return;
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					amImageEntry.getCtCollectionId())) {
+
+			entityCache.putResult(
+				AMImageEntryImpl.class, amImageEntry.getPrimaryKey(),
+				amImageEntry);
+
+			finderCache.putResult(
+				_finderPathFetchByUUID_G,
+				new Object[] {
+					amImageEntry.getUuid(), amImageEntry.getGroupId()
+				},
+				amImageEntry);
+
+			finderCache.putResult(
+				_finderPathFetchByC_F,
+				new Object[] {
+					amImageEntry.getConfigurationUuid(),
+					amImageEntry.getFileVersionId()
+				},
+				amImageEntry);
 		}
-
-		entityCache.putResult(
-			AMImageEntryImpl.class, amImageEntry.getPrimaryKey(), amImageEntry);
-
-		finderCache.putResult(
-			_finderPathFetchByUUID_G,
-			new Object[] {amImageEntry.getUuid(), amImageEntry.getGroupId()},
-			amImageEntry);
-
-		finderCache.putResult(
-			_finderPathFetchByC_F,
-			new Object[] {
-				amImageEntry.getConfigurationUuid(),
-				amImageEntry.getFileVersionId()
-			},
-			amImageEntry);
 	}
 
 	private int _valueObjectFinderCacheListThreshold;
@@ -4543,15 +4507,16 @@ public class AMImageEntryPersistenceImpl
 		}
 
 		for (AMImageEntry amImageEntry : amImageEntries) {
-			if (amImageEntry.getCtCollectionId() != 0) {
-				continue;
-			}
+			try (SafeCloseable safeCloseable =
+					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+						amImageEntry.getCtCollectionId())) {
 
-			if (entityCache.getResult(
-					AMImageEntryImpl.class, amImageEntry.getPrimaryKey()) ==
-						null) {
+				if (entityCache.getResult(
+						AMImageEntryImpl.class, amImageEntry.getPrimaryKey()) ==
+							null) {
 
-				cacheResult(amImageEntry);
+					cacheResult(amImageEntry);
+				}
 			}
 		}
 	}
@@ -4601,22 +4566,29 @@ public class AMImageEntryPersistenceImpl
 	protected void cacheUniqueFindersCache(
 		AMImageEntryModelImpl amImageEntryModelImpl) {
 
-		Object[] args = new Object[] {
-			amImageEntryModelImpl.getUuid(), amImageEntryModelImpl.getGroupId()
-		};
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					amImageEntryModelImpl.getCtCollectionId())) {
 
-		finderCache.putResult(_finderPathCountByUUID_G, args, Long.valueOf(1));
-		finderCache.putResult(
-			_finderPathFetchByUUID_G, args, amImageEntryModelImpl);
+			Object[] args = new Object[] {
+				amImageEntryModelImpl.getUuid(),
+				amImageEntryModelImpl.getGroupId()
+			};
 
-		args = new Object[] {
-			amImageEntryModelImpl.getConfigurationUuid(),
-			amImageEntryModelImpl.getFileVersionId()
-		};
+			finderCache.putResult(
+				_finderPathCountByUUID_G, args, Long.valueOf(1));
+			finderCache.putResult(
+				_finderPathFetchByUUID_G, args, amImageEntryModelImpl);
 
-		finderCache.putResult(_finderPathCountByC_F, args, Long.valueOf(1));
-		finderCache.putResult(
-			_finderPathFetchByC_F, args, amImageEntryModelImpl);
+			args = new Object[] {
+				amImageEntryModelImpl.getConfigurationUuid(),
+				amImageEntryModelImpl.getFileVersionId()
+			};
+
+			finderCache.putResult(_finderPathCountByC_F, args, Long.valueOf(1));
+			finderCache.putResult(
+				_finderPathFetchByC_F, args, amImageEntryModelImpl);
+		}
 	}
 
 	/**
@@ -4797,16 +4769,6 @@ public class AMImageEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		if (amImageEntry.getCtCollectionId() != 0) {
-			if (isNew) {
-				amImageEntry.setNew(false);
-			}
-
-			amImageEntry.resetOriginalValues();
-
-			return amImageEntry;
-		}
-
 		entityCache.putResult(
 			AMImageEntryImpl.class, amImageEntryModelImpl, false, true);
 
@@ -4871,10 +4833,20 @@ public class AMImageEntryPersistenceImpl
 		if (ctPersistenceHelper.isProductionMode(
 				AMImageEntry.class, primaryKey)) {
 
-			return super.fetchByPrimaryKey(primaryKey);
+			try (SafeCloseable safeCloseable =
+					CTCollectionThreadLocal.
+						setProductionModeWithSafeCloseable()) {
+
+				return super.fetchByPrimaryKey(primaryKey);
+			}
 		}
 
-		AMImageEntry amImageEntry = null;
+		AMImageEntry amImageEntry = (AMImageEntry)entityCache.getResult(
+			AMImageEntryImpl.class, primaryKey);
+
+		if (amImageEntry != null) {
+			return amImageEntry;
+		}
 
 		Session session = null;
 
@@ -4914,7 +4886,12 @@ public class AMImageEntryPersistenceImpl
 		Set<Serializable> primaryKeys) {
 
 		if (ctPersistenceHelper.isProductionMode(AMImageEntry.class)) {
-			return super.fetchByPrimaryKeys(primaryKeys);
+			try (SafeCloseable safeCloseable =
+					CTCollectionThreadLocal.
+						setProductionModeWithSafeCloseable()) {
+
+				return super.fetchByPrimaryKeys(primaryKeys);
+			}
 		}
 
 		if (primaryKeys.isEmpty()) {
@@ -4935,6 +4912,33 @@ public class AMImageEntryPersistenceImpl
 				map.put(primaryKey, amImageEntry);
 			}
 
+			return map;
+		}
+
+		Set<Serializable> uncachedPrimaryKeys = null;
+
+		for (Serializable primaryKey : primaryKeys) {
+			try (SafeCloseable safeCloseable =
+					ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+						AMImageEntry.class, primaryKey)) {
+
+				AMImageEntry amImageEntry = (AMImageEntry)entityCache.getResult(
+					AMImageEntryImpl.class, primaryKey);
+
+				if (amImageEntry == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<>();
+					}
+
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, amImageEntry);
+				}
+			}
+		}
+
+		if (uncachedPrimaryKeys == null) {
 			return map;
 		}
 
@@ -5063,78 +5067,80 @@ public class AMImageEntryPersistenceImpl
 		int start, int end, OrderByComparator<AMImageEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			AMImageEntry.class);
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					AMImageEntry.class)) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = null;
+			Object[] finderArgs = null;
 
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
+			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
 
-			if (useFinderCache && productionMode) {
-				finderPath = _finderPathWithoutPaginationFindAll;
-				finderArgs = FINDER_ARGS_EMPTY;
-			}
-		}
-		else if (useFinderCache && productionMode) {
-			finderPath = _finderPathWithPaginationFindAll;
-			finderArgs = new Object[] {start, end, orderByComparator};
-		}
-
-		List<AMImageEntry> list = null;
-
-		if (useFinderCache && productionMode) {
-			list = (List<AMImageEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-			String sql = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					2 + (orderByComparator.getOrderByFields().length * 2));
-
-				sb.append(_SQL_SELECT_AMIMAGEENTRY);
-
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-
-				sql = sb.toString();
-			}
-			else {
-				sql = _SQL_SELECT_AMIMAGEENTRY;
-
-				sql = sql.concat(AMImageEntryModelImpl.ORDER_BY_JPQL);
-			}
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				list = (List<AMImageEntry>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache && productionMode) {
-					finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderPath = _finderPathWithoutPaginationFindAll;
+					finderArgs = FINDER_ARGS_EMPTY;
 				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
+			else if (useFinderCache) {
+				finderPath = _finderPathWithPaginationFindAll;
+				finderArgs = new Object[] {start, end, orderByComparator};
 			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return list;
+			List<AMImageEntry> list = null;
+
+			if (useFinderCache) {
+				list = (List<AMImageEntry>)finderCache.getResult(
+					finderPath, finderArgs, this);
+			}
+
+			if (list == null) {
+				StringBundler sb = null;
+				String sql = null;
+
+				if (orderByComparator != null) {
+					sb = new StringBundler(
+						2 + (orderByComparator.getOrderByFields().length * 2));
+
+					sb.append(_SQL_SELECT_AMIMAGEENTRY);
+
+					appendOrderByComparator(
+						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+
+					sql = sb.toString();
+				}
+				else {
+					sql = _SQL_SELECT_AMIMAGEENTRY;
+
+					sql = sql.concat(AMImageEntryModelImpl.ORDER_BY_JPQL);
+				}
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					list = (List<AMImageEntry>)QueryUtil.list(
+						query, getDialect(), start, end);
+
+					cacheResult(list);
+
+					if (useFinderCache) {
+						finderCache.putResult(finderPath, finderArgs, list);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
+			}
+
+			return list;
+		}
 	}
 
 	/**
@@ -5155,40 +5161,36 @@ public class AMImageEntryPersistenceImpl
 	 */
 	@Override
 	public int countAll() {
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			AMImageEntry.class);
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					AMImageEntry.class)) {
 
-		Long count = null;
-
-		if (productionMode) {
-			count = (Long)finderCache.getResult(
+			Long count = (Long)finderCache.getResult(
 				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
-		}
 
-		if (count == null) {
-			Session session = null;
+			if (count == null) {
+				Session session = null;
 
-			try {
-				session = openSession();
+				try {
+					session = openSession();
 
-				Query query = session.createQuery(_SQL_COUNT_AMIMAGEENTRY);
+					Query query = session.createQuery(_SQL_COUNT_AMIMAGEENTRY);
 
-				count = (Long)query.uniqueResult();
+					count = (Long)query.uniqueResult();
 
-				if (productionMode) {
 					finderCache.putResult(
 						_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return count.intValue();
+			return count.intValue();
+		}
 	}
 
 	@Override

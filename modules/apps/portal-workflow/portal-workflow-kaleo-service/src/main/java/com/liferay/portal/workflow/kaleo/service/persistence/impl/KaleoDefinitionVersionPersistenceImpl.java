@@ -5,7 +5,9 @@
 
 package com.liferay.portal.workflow.kaleo.service.persistence.impl;
 
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -168,98 +170,102 @@ public class KaleoDefinitionVersionPersistenceImpl
 		OrderByComparator<KaleoDefinitionVersion> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			KaleoDefinitionVersion.class);
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					KaleoDefinitionVersion.class)) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = null;
+			Object[] finderArgs = null;
 
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
+			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
 
-			if (useFinderCache && productionMode) {
-				finderPath = _finderPathWithoutPaginationFindByCompanyId;
-				finderArgs = new Object[] {companyId};
+				if (useFinderCache) {
+					finderPath = _finderPathWithoutPaginationFindByCompanyId;
+					finderArgs = new Object[] {companyId};
+				}
 			}
-		}
-		else if (useFinderCache && productionMode) {
-			finderPath = _finderPathWithPaginationFindByCompanyId;
-			finderArgs = new Object[] {
-				companyId, start, end, orderByComparator
-			};
-		}
+			else if (useFinderCache) {
+				finderPath = _finderPathWithPaginationFindByCompanyId;
+				finderArgs = new Object[] {
+					companyId, start, end, orderByComparator
+				};
+			}
 
-		List<KaleoDefinitionVersion> list = null;
+			List<KaleoDefinitionVersion> list = null;
 
-		if (useFinderCache && productionMode) {
-			list = (List<KaleoDefinitionVersion>)finderCache.getResult(
-				finderPath, finderArgs, this);
+			if (useFinderCache) {
+				list = (List<KaleoDefinitionVersion>)finderCache.getResult(
+					finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (KaleoDefinitionVersion kaleoDefinitionVersion : list) {
-					if (companyId != kaleoDefinitionVersion.getCompanyId()) {
-						list = null;
+				if ((list != null) && !list.isEmpty()) {
+					for (KaleoDefinitionVersion kaleoDefinitionVersion : list) {
+						if (companyId !=
+								kaleoDefinitionVersion.getCompanyId()) {
 
-						break;
+							list = null;
+
+							break;
+						}
 					}
 				}
 			}
-		}
 
-		if (list == null) {
-			StringBundler sb = null;
+			if (list == null) {
+				StringBundler sb = null;
 
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
+				if (orderByComparator != null) {
+					sb = new StringBundler(
+						3 + (orderByComparator.getOrderByFields().length * 2));
+				}
+				else {
+					sb = new StringBundler(3);
+				}
 
-			sb.append(_SQL_SELECT_KALEODEFINITIONVERSION_WHERE);
+				sb.append(_SQL_SELECT_KALEODEFINITIONVERSION_WHERE);
 
-			sb.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
+				sb.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
 
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(KaleoDefinitionVersionModelImpl.ORDER_BY_JPQL);
-			}
+				if (orderByComparator != null) {
+					appendOrderByComparator(
+						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				}
+				else {
+					sb.append(KaleoDefinitionVersionModelImpl.ORDER_BY_JPQL);
+				}
 
-			String sql = sb.toString();
+				String sql = sb.toString();
 
-			Session session = null;
+				Session session = null;
 
-			try {
-				session = openSession();
+				try {
+					session = openSession();
 
-				Query query = session.createQuery(sql);
+					Query query = session.createQuery(sql);
 
-				QueryPos queryPos = QueryPos.getInstance(query);
+					QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(companyId);
+					queryPos.add(companyId);
 
-				list = (List<KaleoDefinitionVersion>)QueryUtil.list(
-					query, getDialect(), start, end);
+					list = (List<KaleoDefinitionVersion>)QueryUtil.list(
+						query, getDialect(), start, end);
 
-				cacheResult(list);
+					cacheResult(list);
 
-				if (useFinderCache && productionMode) {
-					finderCache.putResult(finderPath, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(finderPath, finderArgs, list);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
 				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return list;
+			return list;
+		}
 	}
 
 	/**
@@ -557,57 +563,51 @@ public class KaleoDefinitionVersionPersistenceImpl
 	 */
 	@Override
 	public int countByCompanyId(long companyId) {
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			KaleoDefinitionVersion.class);
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					KaleoDefinitionVersion.class)) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = _finderPathCountByCompanyId;
 
-		Long count = null;
+			Object[] finderArgs = new Object[] {companyId};
 
-		if (productionMode) {
-			finderPath = _finderPathCountByCompanyId;
+			Long count = (Long)finderCache.getResult(
+				finderPath, finderArgs, this);
 
-			finderArgs = new Object[] {companyId};
+			if (count == null) {
+				StringBundler sb = new StringBundler(2);
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-		}
+				sb.append(_SQL_COUNT_KALEODEFINITIONVERSION_WHERE);
 
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
+				sb.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
 
-			sb.append(_SQL_COUNT_KALEODEFINITIONVERSION_WHERE);
+				String sql = sb.toString();
 
-			sb.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
+				Session session = null;
 
-			String sql = sb.toString();
+				try {
+					session = openSession();
 
-			Session session = null;
+					Query query = session.createQuery(sql);
 
-			try {
-				session = openSession();
+					QueryPos queryPos = QueryPos.getInstance(query);
 
-				Query query = session.createQuery(sql);
+					queryPos.add(companyId);
 
-				QueryPos queryPos = QueryPos.getInstance(query);
+					count = (Long)query.uniqueResult();
 
-				queryPos.add(companyId);
-
-				count = (Long)query.uniqueResult();
-
-				if (productionMode) {
 					finderCache.putResult(finderPath, finderArgs, count);
 				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return count.intValue();
+			return count.intValue();
+		}
 	}
 
 	private static final String _FINDER_COLUMN_COMPANYID_COMPANYID_2 =
@@ -693,117 +693,120 @@ public class KaleoDefinitionVersionPersistenceImpl
 		OrderByComparator<KaleoDefinitionVersion> orderByComparator,
 		boolean useFinderCache) {
 
-		name = Objects.toString(name, "");
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					KaleoDefinitionVersion.class)) {
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			KaleoDefinitionVersion.class);
+			name = Objects.toString(name, "");
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = null;
+			Object[] finderArgs = null;
 
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
+			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
 
-			if (useFinderCache && productionMode) {
-				finderPath = _finderPathWithoutPaginationFindByC_N;
-				finderArgs = new Object[] {companyId, name};
+				if (useFinderCache) {
+					finderPath = _finderPathWithoutPaginationFindByC_N;
+					finderArgs = new Object[] {companyId, name};
+				}
 			}
-		}
-		else if (useFinderCache && productionMode) {
-			finderPath = _finderPathWithPaginationFindByC_N;
-			finderArgs = new Object[] {
-				companyId, name, start, end, orderByComparator
-			};
-		}
+			else if (useFinderCache) {
+				finderPath = _finderPathWithPaginationFindByC_N;
+				finderArgs = new Object[] {
+					companyId, name, start, end, orderByComparator
+				};
+			}
 
-		List<KaleoDefinitionVersion> list = null;
+			List<KaleoDefinitionVersion> list = null;
 
-		if (useFinderCache && productionMode) {
-			list = (List<KaleoDefinitionVersion>)finderCache.getResult(
-				finderPath, finderArgs, this);
+			if (useFinderCache) {
+				list = (List<KaleoDefinitionVersion>)finderCache.getResult(
+					finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (KaleoDefinitionVersion kaleoDefinitionVersion : list) {
-					if ((companyId != kaleoDefinitionVersion.getCompanyId()) ||
-						!name.equals(kaleoDefinitionVersion.getName())) {
+				if ((list != null) && !list.isEmpty()) {
+					for (KaleoDefinitionVersion kaleoDefinitionVersion : list) {
+						if ((companyId !=
+								kaleoDefinitionVersion.getCompanyId()) ||
+							!name.equals(kaleoDefinitionVersion.getName())) {
 
-						list = null;
+							list = null;
 
-						break;
+							break;
+						}
 					}
 				}
 			}
-		}
 
-		if (list == null) {
-			StringBundler sb = null;
+			if (list == null) {
+				StringBundler sb = null;
 
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					4 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(4);
-			}
-
-			sb.append(_SQL_SELECT_KALEODEFINITIONVERSION_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_N_COMPANYID_2);
-
-			boolean bindName = false;
-
-			if (name.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_N_NAME_3);
-			}
-			else {
-				bindName = true;
-
-				sb.append(_FINDER_COLUMN_C_N_NAME_2);
-			}
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(KaleoDefinitionVersionModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				if (bindName) {
-					queryPos.add(name);
+				if (orderByComparator != null) {
+					sb = new StringBundler(
+						4 + (orderByComparator.getOrderByFields().length * 2));
+				}
+				else {
+					sb = new StringBundler(4);
 				}
 
-				list = (List<KaleoDefinitionVersion>)QueryUtil.list(
-					query, getDialect(), start, end);
+				sb.append(_SQL_SELECT_KALEODEFINITIONVERSION_WHERE);
 
-				cacheResult(list);
+				sb.append(_FINDER_COLUMN_C_N_COMPANYID_2);
 
-				if (useFinderCache && productionMode) {
-					finderCache.putResult(finderPath, finderArgs, list);
+				boolean bindName = false;
+
+				if (name.isEmpty()) {
+					sb.append(_FINDER_COLUMN_C_N_NAME_3);
+				}
+				else {
+					bindName = true;
+
+					sb.append(_FINDER_COLUMN_C_N_NAME_2);
+				}
+
+				if (orderByComparator != null) {
+					appendOrderByComparator(
+						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				}
+				else {
+					sb.append(KaleoDefinitionVersionModelImpl.ORDER_BY_JPQL);
+				}
+
+				String sql = sb.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					queryPos.add(companyId);
+
+					if (bindName) {
+						queryPos.add(name);
+					}
+
+					list = (List<KaleoDefinitionVersion>)QueryUtil.list(
+						query, getDialect(), start, end);
+
+					cacheResult(list);
+
+					if (useFinderCache) {
+						finderCache.putResult(finderPath, finderArgs, list);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
 				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return list;
+			return list;
+		}
 	}
 
 	/**
@@ -1132,74 +1135,68 @@ public class KaleoDefinitionVersionPersistenceImpl
 	 */
 	@Override
 	public int countByC_N(long companyId, String name) {
-		name = Objects.toString(name, "");
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					KaleoDefinitionVersion.class)) {
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			KaleoDefinitionVersion.class);
+			name = Objects.toString(name, "");
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = _finderPathCountByC_N;
 
-		Long count = null;
+			Object[] finderArgs = new Object[] {companyId, name};
 
-		if (productionMode) {
-			finderPath = _finderPathCountByC_N;
+			Long count = (Long)finderCache.getResult(
+				finderPath, finderArgs, this);
 
-			finderArgs = new Object[] {companyId, name};
+			if (count == null) {
+				StringBundler sb = new StringBundler(3);
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-		}
+				sb.append(_SQL_COUNT_KALEODEFINITIONVERSION_WHERE);
 
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
+				sb.append(_FINDER_COLUMN_C_N_COMPANYID_2);
 
-			sb.append(_SQL_COUNT_KALEODEFINITIONVERSION_WHERE);
+				boolean bindName = false;
 
-			sb.append(_FINDER_COLUMN_C_N_COMPANYID_2);
+				if (name.isEmpty()) {
+					sb.append(_FINDER_COLUMN_C_N_NAME_3);
+				}
+				else {
+					bindName = true;
 
-			boolean bindName = false;
-
-			if (name.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_N_NAME_3);
-			}
-			else {
-				bindName = true;
-
-				sb.append(_FINDER_COLUMN_C_N_NAME_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				if (bindName) {
-					queryPos.add(name);
+					sb.append(_FINDER_COLUMN_C_N_NAME_2);
 				}
 
-				count = (Long)query.uniqueResult();
+				String sql = sb.toString();
 
-				if (productionMode) {
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					queryPos.add(companyId);
+
+					if (bindName) {
+						queryPos.add(name);
+					}
+
+					count = (Long)query.uniqueResult();
+
 					finderCache.putResult(finderPath, finderArgs, count);
 				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return count.intValue();
+			return count.intValue();
+		}
 	}
 
 	private static final String _FINDER_COLUMN_C_N_COMPANYID_2 =
@@ -1285,125 +1282,120 @@ public class KaleoDefinitionVersionPersistenceImpl
 	public KaleoDefinitionVersion fetchByC_N_V(
 		long companyId, String name, String version, boolean useFinderCache) {
 
-		name = Objects.toString(name, "");
-		version = Objects.toString(version, "");
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					KaleoDefinitionVersion.class)) {
 
-		Object[] finderArgs = null;
+			name = Objects.toString(name, "");
+			version = Objects.toString(version, "");
 
-		if (useFinderCache) {
-			finderArgs = new Object[] {companyId, name, version};
-		}
+			Object[] finderArgs = null;
 
-		Object result = null;
-
-		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByC_N_V, finderArgs, this);
-		}
-
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			KaleoDefinitionVersion.class);
-
-		if (result instanceof KaleoDefinitionVersion) {
-			KaleoDefinitionVersion kaleoDefinitionVersion =
-				(KaleoDefinitionVersion)result;
-
-			if ((companyId != kaleoDefinitionVersion.getCompanyId()) ||
-				!Objects.equals(name, kaleoDefinitionVersion.getName()) ||
-				!Objects.equals(version, kaleoDefinitionVersion.getVersion())) {
-
-				result = null;
-			}
-			else if (!ctPersistenceHelper.isProductionMode(
-						KaleoDefinitionVersion.class,
-						kaleoDefinitionVersion.getPrimaryKey())) {
-
-				result = null;
-			}
-		}
-		else if (!productionMode && (result instanceof List<?>)) {
-			result = null;
-		}
-
-		if (result == null) {
-			StringBundler sb = new StringBundler(5);
-
-			sb.append(_SQL_SELECT_KALEODEFINITIONVERSION_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_N_V_COMPANYID_2);
-
-			boolean bindName = false;
-
-			if (name.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_N_V_NAME_3);
-			}
-			else {
-				bindName = true;
-
-				sb.append(_FINDER_COLUMN_C_N_V_NAME_2);
+			if (useFinderCache) {
+				finderArgs = new Object[] {companyId, name, version};
 			}
 
-			boolean bindVersion = false;
+			Object result = null;
 
-			if (version.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_N_V_VERSION_3);
-			}
-			else {
-				bindVersion = true;
-
-				sb.append(_FINDER_COLUMN_C_N_V_VERSION_2);
+			if (useFinderCache) {
+				result = finderCache.getResult(
+					_finderPathFetchByC_N_V, finderArgs, this);
 			}
 
-			String sql = sb.toString();
+			if (result instanceof KaleoDefinitionVersion) {
+				KaleoDefinitionVersion kaleoDefinitionVersion =
+					(KaleoDefinitionVersion)result;
 
-			Session session = null;
+				if ((companyId != kaleoDefinitionVersion.getCompanyId()) ||
+					!Objects.equals(name, kaleoDefinitionVersion.getName()) ||
+					!Objects.equals(
+						version, kaleoDefinitionVersion.getVersion())) {
 
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				if (bindName) {
-					queryPos.add(name);
+					result = null;
 				}
+			}
 
-				if (bindVersion) {
-					queryPos.add(version);
-				}
+			if (result == null) {
+				StringBundler sb = new StringBundler(5);
 
-				List<KaleoDefinitionVersion> list = query.list();
+				sb.append(_SQL_SELECT_KALEODEFINITIONVERSION_WHERE);
 
-				if (list.isEmpty()) {
-					if (useFinderCache && productionMode) {
-						finderCache.putResult(
-							_finderPathFetchByC_N_V, finderArgs, list);
-					}
+				sb.append(_FINDER_COLUMN_C_N_V_COMPANYID_2);
+
+				boolean bindName = false;
+
+				if (name.isEmpty()) {
+					sb.append(_FINDER_COLUMN_C_N_V_NAME_3);
 				}
 				else {
-					KaleoDefinitionVersion kaleoDefinitionVersion = list.get(0);
+					bindName = true;
 
-					result = kaleoDefinitionVersion;
+					sb.append(_FINDER_COLUMN_C_N_V_NAME_2);
+				}
 
-					cacheResult(kaleoDefinitionVersion);
+				boolean bindVersion = false;
+
+				if (version.isEmpty()) {
+					sb.append(_FINDER_COLUMN_C_N_V_VERSION_3);
+				}
+				else {
+					bindVersion = true;
+
+					sb.append(_FINDER_COLUMN_C_N_V_VERSION_2);
+				}
+
+				String sql = sb.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					queryPos.add(companyId);
+
+					if (bindName) {
+						queryPos.add(name);
+					}
+
+					if (bindVersion) {
+						queryPos.add(version);
+					}
+
+					List<KaleoDefinitionVersion> list = query.list();
+
+					if (list.isEmpty()) {
+						if (useFinderCache) {
+							finderCache.putResult(
+								_finderPathFetchByC_N_V, finderArgs, list);
+						}
+					}
+					else {
+						KaleoDefinitionVersion kaleoDefinitionVersion =
+							list.get(0);
+
+						result = kaleoDefinitionVersion;
+
+						cacheResult(kaleoDefinitionVersion);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
 				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (KaleoDefinitionVersion)result;
+			if (result instanceof List<?>) {
+				return null;
+			}
+			else {
+				return (KaleoDefinitionVersion)result;
+			}
 		}
 	}
 
@@ -1436,90 +1428,84 @@ public class KaleoDefinitionVersionPersistenceImpl
 	 */
 	@Override
 	public int countByC_N_V(long companyId, String name, String version) {
-		name = Objects.toString(name, "");
-		version = Objects.toString(version, "");
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					KaleoDefinitionVersion.class)) {
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			KaleoDefinitionVersion.class);
+			name = Objects.toString(name, "");
+			version = Objects.toString(version, "");
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = _finderPathCountByC_N_V;
 
-		Long count = null;
+			Object[] finderArgs = new Object[] {companyId, name, version};
 
-		if (productionMode) {
-			finderPath = _finderPathCountByC_N_V;
+			Long count = (Long)finderCache.getResult(
+				finderPath, finderArgs, this);
 
-			finderArgs = new Object[] {companyId, name, version};
+			if (count == null) {
+				StringBundler sb = new StringBundler(4);
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-		}
+				sb.append(_SQL_COUNT_KALEODEFINITIONVERSION_WHERE);
 
-		if (count == null) {
-			StringBundler sb = new StringBundler(4);
+				sb.append(_FINDER_COLUMN_C_N_V_COMPANYID_2);
 
-			sb.append(_SQL_COUNT_KALEODEFINITIONVERSION_WHERE);
+				boolean bindName = false;
 
-			sb.append(_FINDER_COLUMN_C_N_V_COMPANYID_2);
+				if (name.isEmpty()) {
+					sb.append(_FINDER_COLUMN_C_N_V_NAME_3);
+				}
+				else {
+					bindName = true;
 
-			boolean bindName = false;
-
-			if (name.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_N_V_NAME_3);
-			}
-			else {
-				bindName = true;
-
-				sb.append(_FINDER_COLUMN_C_N_V_NAME_2);
-			}
-
-			boolean bindVersion = false;
-
-			if (version.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_N_V_VERSION_3);
-			}
-			else {
-				bindVersion = true;
-
-				sb.append(_FINDER_COLUMN_C_N_V_VERSION_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				if (bindName) {
-					queryPos.add(name);
+					sb.append(_FINDER_COLUMN_C_N_V_NAME_2);
 				}
 
-				if (bindVersion) {
-					queryPos.add(version);
+				boolean bindVersion = false;
+
+				if (version.isEmpty()) {
+					sb.append(_FINDER_COLUMN_C_N_V_VERSION_3);
+				}
+				else {
+					bindVersion = true;
+
+					sb.append(_FINDER_COLUMN_C_N_V_VERSION_2);
 				}
 
-				count = (Long)query.uniqueResult();
+				String sql = sb.toString();
 
-				if (productionMode) {
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					queryPos.add(companyId);
+
+					if (bindName) {
+						queryPos.add(name);
+					}
+
+					if (bindVersion) {
+						queryPos.add(version);
+					}
+
+					count = (Long)query.uniqueResult();
+
 					finderCache.putResult(finderPath, finderArgs, count);
 				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return count.intValue();
+			return count.intValue();
+		}
 	}
 
 	private static final String _FINDER_COLUMN_C_N_V_COMPANYID_2 =
@@ -1553,22 +1539,23 @@ public class KaleoDefinitionVersionPersistenceImpl
 	 */
 	@Override
 	public void cacheResult(KaleoDefinitionVersion kaleoDefinitionVersion) {
-		if (kaleoDefinitionVersion.getCtCollectionId() != 0) {
-			return;
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					kaleoDefinitionVersion.getCtCollectionId())) {
+
+			entityCache.putResult(
+				KaleoDefinitionVersionImpl.class,
+				kaleoDefinitionVersion.getPrimaryKey(), kaleoDefinitionVersion);
+
+			finderCache.putResult(
+				_finderPathFetchByC_N_V,
+				new Object[] {
+					kaleoDefinitionVersion.getCompanyId(),
+					kaleoDefinitionVersion.getName(),
+					kaleoDefinitionVersion.getVersion()
+				},
+				kaleoDefinitionVersion);
 		}
-
-		entityCache.putResult(
-			KaleoDefinitionVersionImpl.class,
-			kaleoDefinitionVersion.getPrimaryKey(), kaleoDefinitionVersion);
-
-		finderCache.putResult(
-			_finderPathFetchByC_N_V,
-			new Object[] {
-				kaleoDefinitionVersion.getCompanyId(),
-				kaleoDefinitionVersion.getName(),
-				kaleoDefinitionVersion.getVersion()
-			},
-			kaleoDefinitionVersion);
 	}
 
 	private int _valueObjectFinderCacheListThreshold;
@@ -1593,29 +1580,32 @@ public class KaleoDefinitionVersionPersistenceImpl
 		for (KaleoDefinitionVersion kaleoDefinitionVersion :
 				kaleoDefinitionVersions) {
 
-			if (kaleoDefinitionVersion.getCtCollectionId() != 0) {
-				continue;
-			}
+			try (SafeCloseable safeCloseable =
+					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+						kaleoDefinitionVersion.getCtCollectionId())) {
 
-			KaleoDefinitionVersion cachedKaleoDefinitionVersion =
-				(KaleoDefinitionVersion)entityCache.getResult(
-					KaleoDefinitionVersionImpl.class,
-					kaleoDefinitionVersion.getPrimaryKey());
+				KaleoDefinitionVersion cachedKaleoDefinitionVersion =
+					(KaleoDefinitionVersion)entityCache.getResult(
+						KaleoDefinitionVersionImpl.class,
+						kaleoDefinitionVersion.getPrimaryKey());
 
-			if (cachedKaleoDefinitionVersion == null) {
-				cacheResult(kaleoDefinitionVersion);
-			}
-			else {
-				KaleoDefinitionVersionModelImpl
-					kaleoDefinitionVersionModelImpl =
-						(KaleoDefinitionVersionModelImpl)kaleoDefinitionVersion;
-				KaleoDefinitionVersionModelImpl
-					cachedKaleoDefinitionVersionModelImpl =
-						(KaleoDefinitionVersionModelImpl)
-							cachedKaleoDefinitionVersion;
+				if (cachedKaleoDefinitionVersion == null) {
+					cacheResult(kaleoDefinitionVersion);
+				}
+				else {
+					KaleoDefinitionVersionModelImpl
+						kaleoDefinitionVersionModelImpl =
+							(KaleoDefinitionVersionModelImpl)
+								kaleoDefinitionVersion;
+					KaleoDefinitionVersionModelImpl
+						cachedKaleoDefinitionVersionModelImpl =
+							(KaleoDefinitionVersionModelImpl)
+								cachedKaleoDefinitionVersion;
 
-				kaleoDefinitionVersionModelImpl.setContentAsXML(
-					cachedKaleoDefinitionVersionModelImpl.getContentAsXML());
+					kaleoDefinitionVersionModelImpl.setContentAsXML(
+						cachedKaleoDefinitionVersionModelImpl.
+							getContentAsXML());
+				}
 			}
 		}
 	}
@@ -1672,15 +1662,21 @@ public class KaleoDefinitionVersionPersistenceImpl
 	protected void cacheUniqueFindersCache(
 		KaleoDefinitionVersionModelImpl kaleoDefinitionVersionModelImpl) {
 
-		Object[] args = new Object[] {
-			kaleoDefinitionVersionModelImpl.getCompanyId(),
-			kaleoDefinitionVersionModelImpl.getName(),
-			kaleoDefinitionVersionModelImpl.getVersion()
-		};
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					kaleoDefinitionVersionModelImpl.getCtCollectionId())) {
 
-		finderCache.putResult(_finderPathCountByC_N_V, args, Long.valueOf(1));
-		finderCache.putResult(
-			_finderPathFetchByC_N_V, args, kaleoDefinitionVersionModelImpl);
+			Object[] args = new Object[] {
+				kaleoDefinitionVersionModelImpl.getCompanyId(),
+				kaleoDefinitionVersionModelImpl.getName(),
+				kaleoDefinitionVersionModelImpl.getVersion()
+			};
+
+			finderCache.putResult(
+				_finderPathCountByC_N_V, args, Long.valueOf(1));
+			finderCache.putResult(
+				_finderPathFetchByC_N_V, args, kaleoDefinitionVersionModelImpl);
+		}
 	}
 
 	/**
@@ -1872,16 +1868,6 @@ public class KaleoDefinitionVersionPersistenceImpl
 			closeSession(session);
 		}
 
-		if (kaleoDefinitionVersion.getCtCollectionId() != 0) {
-			if (isNew) {
-				kaleoDefinitionVersion.setNew(false);
-			}
-
-			kaleoDefinitionVersion.resetOriginalValues();
-
-			return kaleoDefinitionVersion;
-		}
-
 		entityCache.putResult(
 			KaleoDefinitionVersionImpl.class, kaleoDefinitionVersionModelImpl,
 			false, true);
@@ -1949,10 +1935,21 @@ public class KaleoDefinitionVersionPersistenceImpl
 		if (ctPersistenceHelper.isProductionMode(
 				KaleoDefinitionVersion.class, primaryKey)) {
 
-			return super.fetchByPrimaryKey(primaryKey);
+			try (SafeCloseable safeCloseable =
+					CTCollectionThreadLocal.
+						setProductionModeWithSafeCloseable()) {
+
+				return super.fetchByPrimaryKey(primaryKey);
+			}
 		}
 
-		KaleoDefinitionVersion kaleoDefinitionVersion = null;
+		KaleoDefinitionVersion kaleoDefinitionVersion =
+			(KaleoDefinitionVersion)entityCache.getResult(
+				KaleoDefinitionVersionImpl.class, primaryKey);
+
+		if (kaleoDefinitionVersion != null) {
+			return kaleoDefinitionVersion;
+		}
 
 		Session session = null;
 
@@ -1996,7 +1993,12 @@ public class KaleoDefinitionVersionPersistenceImpl
 		if (ctPersistenceHelper.isProductionMode(
 				KaleoDefinitionVersion.class)) {
 
-			return super.fetchByPrimaryKeys(primaryKeys);
+			try (SafeCloseable safeCloseable =
+					CTCollectionThreadLocal.
+						setProductionModeWithSafeCloseable()) {
+
+				return super.fetchByPrimaryKeys(primaryKeys);
+			}
 		}
 
 		if (primaryKeys.isEmpty()) {
@@ -2018,6 +2020,34 @@ public class KaleoDefinitionVersionPersistenceImpl
 				map.put(primaryKey, kaleoDefinitionVersion);
 			}
 
+			return map;
+		}
+
+		Set<Serializable> uncachedPrimaryKeys = null;
+
+		for (Serializable primaryKey : primaryKeys) {
+			try (SafeCloseable safeCloseable =
+					ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+						KaleoDefinitionVersion.class, primaryKey)) {
+
+				KaleoDefinitionVersion kaleoDefinitionVersion =
+					(KaleoDefinitionVersion)entityCache.getResult(
+						KaleoDefinitionVersionImpl.class, primaryKey);
+
+				if (kaleoDefinitionVersion == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<>();
+					}
+
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, kaleoDefinitionVersion);
+				}
+			}
+		}
+
+		if (uncachedPrimaryKeys == null) {
 			return map;
 		}
 
@@ -2152,78 +2182,81 @@ public class KaleoDefinitionVersionPersistenceImpl
 		OrderByComparator<KaleoDefinitionVersion> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			KaleoDefinitionVersion.class);
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					KaleoDefinitionVersion.class)) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = null;
+			Object[] finderArgs = null;
 
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
+			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
 
-			if (useFinderCache && productionMode) {
-				finderPath = _finderPathWithoutPaginationFindAll;
-				finderArgs = FINDER_ARGS_EMPTY;
-			}
-		}
-		else if (useFinderCache && productionMode) {
-			finderPath = _finderPathWithPaginationFindAll;
-			finderArgs = new Object[] {start, end, orderByComparator};
-		}
-
-		List<KaleoDefinitionVersion> list = null;
-
-		if (useFinderCache && productionMode) {
-			list = (List<KaleoDefinitionVersion>)finderCache.getResult(
-				finderPath, finderArgs, this);
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-			String sql = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					2 + (orderByComparator.getOrderByFields().length * 2));
-
-				sb.append(_SQL_SELECT_KALEODEFINITIONVERSION);
-
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-
-				sql = sb.toString();
-			}
-			else {
-				sql = _SQL_SELECT_KALEODEFINITIONVERSION;
-
-				sql = sql.concat(KaleoDefinitionVersionModelImpl.ORDER_BY_JPQL);
-			}
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				list = (List<KaleoDefinitionVersion>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache && productionMode) {
-					finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderPath = _finderPathWithoutPaginationFindAll;
+					finderArgs = FINDER_ARGS_EMPTY;
 				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
+			else if (useFinderCache) {
+				finderPath = _finderPathWithPaginationFindAll;
+				finderArgs = new Object[] {start, end, orderByComparator};
 			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return list;
+			List<KaleoDefinitionVersion> list = null;
+
+			if (useFinderCache) {
+				list = (List<KaleoDefinitionVersion>)finderCache.getResult(
+					finderPath, finderArgs, this);
+			}
+
+			if (list == null) {
+				StringBundler sb = null;
+				String sql = null;
+
+				if (orderByComparator != null) {
+					sb = new StringBundler(
+						2 + (orderByComparator.getOrderByFields().length * 2));
+
+					sb.append(_SQL_SELECT_KALEODEFINITIONVERSION);
+
+					appendOrderByComparator(
+						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+
+					sql = sb.toString();
+				}
+				else {
+					sql = _SQL_SELECT_KALEODEFINITIONVERSION;
+
+					sql = sql.concat(
+						KaleoDefinitionVersionModelImpl.ORDER_BY_JPQL);
+				}
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					list = (List<KaleoDefinitionVersion>)QueryUtil.list(
+						query, getDialect(), start, end);
+
+					cacheResult(list);
+
+					if (useFinderCache) {
+						finderCache.putResult(finderPath, finderArgs, list);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
+			}
+
+			return list;
+		}
 	}
 
 	/**
@@ -2244,41 +2277,37 @@ public class KaleoDefinitionVersionPersistenceImpl
 	 */
 	@Override
 	public int countAll() {
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			KaleoDefinitionVersion.class);
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					KaleoDefinitionVersion.class)) {
 
-		Long count = null;
-
-		if (productionMode) {
-			count = (Long)finderCache.getResult(
+			Long count = (Long)finderCache.getResult(
 				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
-		}
 
-		if (count == null) {
-			Session session = null;
+			if (count == null) {
+				Session session = null;
 
-			try {
-				session = openSession();
+				try {
+					session = openSession();
 
-				Query query = session.createQuery(
-					_SQL_COUNT_KALEODEFINITIONVERSION);
+					Query query = session.createQuery(
+						_SQL_COUNT_KALEODEFINITIONVERSION);
 
-				count = (Long)query.uniqueResult();
+					count = (Long)query.uniqueResult();
 
-				if (productionMode) {
 					finderCache.putResult(
 						_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return count.intValue();
+			return count.intValue();
+		}
 	}
 
 	@Override

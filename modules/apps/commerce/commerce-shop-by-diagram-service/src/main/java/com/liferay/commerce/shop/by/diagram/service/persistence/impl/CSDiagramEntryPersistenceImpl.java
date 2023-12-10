@@ -13,7 +13,9 @@ import com.liferay.commerce.shop.by.diagram.model.impl.CSDiagramEntryModelImpl;
 import com.liferay.commerce.shop.by.diagram.service.persistence.CSDiagramEntryPersistence;
 import com.liferay.commerce.shop.by.diagram.service.persistence.CSDiagramEntryUtil;
 import com.liferay.commerce.shop.by.diagram.service.persistence.impl.constants.CommercePersistenceConstants;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -169,98 +171,103 @@ public class CSDiagramEntryPersistenceImpl
 		OrderByComparator<CSDiagramEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			CSDiagramEntry.class);
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					CSDiagramEntry.class)) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = null;
+			Object[] finderArgs = null;
 
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
+			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
 
-			if (useFinderCache && productionMode) {
-				finderPath = _finderPathWithoutPaginationFindByCPDefinitionId;
-				finderArgs = new Object[] {CPDefinitionId};
+				if (useFinderCache) {
+					finderPath =
+						_finderPathWithoutPaginationFindByCPDefinitionId;
+					finderArgs = new Object[] {CPDefinitionId};
+				}
 			}
-		}
-		else if (useFinderCache && productionMode) {
-			finderPath = _finderPathWithPaginationFindByCPDefinitionId;
-			finderArgs = new Object[] {
-				CPDefinitionId, start, end, orderByComparator
-			};
-		}
+			else if (useFinderCache) {
+				finderPath = _finderPathWithPaginationFindByCPDefinitionId;
+				finderArgs = new Object[] {
+					CPDefinitionId, start, end, orderByComparator
+				};
+			}
 
-		List<CSDiagramEntry> list = null;
+			List<CSDiagramEntry> list = null;
 
-		if (useFinderCache && productionMode) {
-			list = (List<CSDiagramEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+			if (useFinderCache) {
+				list = (List<CSDiagramEntry>)finderCache.getResult(
+					finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (CSDiagramEntry csDiagramEntry : list) {
-					if (CPDefinitionId != csDiagramEntry.getCPDefinitionId()) {
-						list = null;
+				if ((list != null) && !list.isEmpty()) {
+					for (CSDiagramEntry csDiagramEntry : list) {
+						if (CPDefinitionId !=
+								csDiagramEntry.getCPDefinitionId()) {
 
-						break;
+							list = null;
+
+							break;
+						}
 					}
 				}
 			}
-		}
 
-		if (list == null) {
-			StringBundler sb = null;
+			if (list == null) {
+				StringBundler sb = null;
 
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
+				if (orderByComparator != null) {
+					sb = new StringBundler(
+						3 + (orderByComparator.getOrderByFields().length * 2));
+				}
+				else {
+					sb = new StringBundler(3);
+				}
 
-			sb.append(_SQL_SELECT_CSDIAGRAMENTRY_WHERE);
+				sb.append(_SQL_SELECT_CSDIAGRAMENTRY_WHERE);
 
-			sb.append(_FINDER_COLUMN_CPDEFINITIONID_CPDEFINITIONID_2);
+				sb.append(_FINDER_COLUMN_CPDEFINITIONID_CPDEFINITIONID_2);
 
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(CSDiagramEntryModelImpl.ORDER_BY_JPQL);
-			}
+				if (orderByComparator != null) {
+					appendOrderByComparator(
+						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				}
+				else {
+					sb.append(CSDiagramEntryModelImpl.ORDER_BY_JPQL);
+				}
 
-			String sql = sb.toString();
+				String sql = sb.toString();
 
-			Session session = null;
+				Session session = null;
 
-			try {
-				session = openSession();
+				try {
+					session = openSession();
 
-				Query query = session.createQuery(sql);
+					Query query = session.createQuery(sql);
 
-				QueryPos queryPos = QueryPos.getInstance(query);
+					QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(CPDefinitionId);
+					queryPos.add(CPDefinitionId);
 
-				list = (List<CSDiagramEntry>)QueryUtil.list(
-					query, getDialect(), start, end);
+					list = (List<CSDiagramEntry>)QueryUtil.list(
+						query, getDialect(), start, end);
 
-				cacheResult(list);
+					cacheResult(list);
 
-				if (useFinderCache && productionMode) {
-					finderCache.putResult(finderPath, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(finderPath, finderArgs, list);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
 				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return list;
+			return list;
+		}
 	}
 
 	/**
@@ -556,57 +563,51 @@ public class CSDiagramEntryPersistenceImpl
 	 */
 	@Override
 	public int countByCPDefinitionId(long CPDefinitionId) {
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			CSDiagramEntry.class);
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					CSDiagramEntry.class)) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = _finderPathCountByCPDefinitionId;
 
-		Long count = null;
+			Object[] finderArgs = new Object[] {CPDefinitionId};
 
-		if (productionMode) {
-			finderPath = _finderPathCountByCPDefinitionId;
+			Long count = (Long)finderCache.getResult(
+				finderPath, finderArgs, this);
 
-			finderArgs = new Object[] {CPDefinitionId};
+			if (count == null) {
+				StringBundler sb = new StringBundler(2);
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-		}
+				sb.append(_SQL_COUNT_CSDIAGRAMENTRY_WHERE);
 
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
+				sb.append(_FINDER_COLUMN_CPDEFINITIONID_CPDEFINITIONID_2);
 
-			sb.append(_SQL_COUNT_CSDIAGRAMENTRY_WHERE);
+				String sql = sb.toString();
 
-			sb.append(_FINDER_COLUMN_CPDEFINITIONID_CPDEFINITIONID_2);
+				Session session = null;
 
-			String sql = sb.toString();
+				try {
+					session = openSession();
 
-			Session session = null;
+					Query query = session.createQuery(sql);
 
-			try {
-				session = openSession();
+					QueryPos queryPos = QueryPos.getInstance(query);
 
-				Query query = session.createQuery(sql);
+					queryPos.add(CPDefinitionId);
 
-				QueryPos queryPos = QueryPos.getInstance(query);
+					count = (Long)query.uniqueResult();
 
-				queryPos.add(CPDefinitionId);
-
-				count = (Long)query.uniqueResult();
-
-				if (productionMode) {
 					finderCache.putResult(finderPath, finderArgs, count);
 				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return count.intValue();
+			return count.intValue();
+		}
 	}
 
 	private static final String _FINDER_COLUMN_CPDEFINITIONID_CPDEFINITIONID_2 =
@@ -689,98 +690,100 @@ public class CSDiagramEntryPersistenceImpl
 		OrderByComparator<CSDiagramEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			CSDiagramEntry.class);
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					CSDiagramEntry.class)) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = null;
+			Object[] finderArgs = null;
 
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
+			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
 
-			if (useFinderCache && productionMode) {
-				finderPath = _finderPathWithoutPaginationFindByCPInstanceId;
-				finderArgs = new Object[] {CPInstanceId};
+				if (useFinderCache) {
+					finderPath = _finderPathWithoutPaginationFindByCPInstanceId;
+					finderArgs = new Object[] {CPInstanceId};
+				}
 			}
-		}
-		else if (useFinderCache && productionMode) {
-			finderPath = _finderPathWithPaginationFindByCPInstanceId;
-			finderArgs = new Object[] {
-				CPInstanceId, start, end, orderByComparator
-			};
-		}
+			else if (useFinderCache) {
+				finderPath = _finderPathWithPaginationFindByCPInstanceId;
+				finderArgs = new Object[] {
+					CPInstanceId, start, end, orderByComparator
+				};
+			}
 
-		List<CSDiagramEntry> list = null;
+			List<CSDiagramEntry> list = null;
 
-		if (useFinderCache && productionMode) {
-			list = (List<CSDiagramEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+			if (useFinderCache) {
+				list = (List<CSDiagramEntry>)finderCache.getResult(
+					finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (CSDiagramEntry csDiagramEntry : list) {
-					if (CPInstanceId != csDiagramEntry.getCPInstanceId()) {
-						list = null;
+				if ((list != null) && !list.isEmpty()) {
+					for (CSDiagramEntry csDiagramEntry : list) {
+						if (CPInstanceId != csDiagramEntry.getCPInstanceId()) {
+							list = null;
 
-						break;
+							break;
+						}
 					}
 				}
 			}
-		}
 
-		if (list == null) {
-			StringBundler sb = null;
+			if (list == null) {
+				StringBundler sb = null;
 
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
+				if (orderByComparator != null) {
+					sb = new StringBundler(
+						3 + (orderByComparator.getOrderByFields().length * 2));
+				}
+				else {
+					sb = new StringBundler(3);
+				}
 
-			sb.append(_SQL_SELECT_CSDIAGRAMENTRY_WHERE);
+				sb.append(_SQL_SELECT_CSDIAGRAMENTRY_WHERE);
 
-			sb.append(_FINDER_COLUMN_CPINSTANCEID_CPINSTANCEID_2);
+				sb.append(_FINDER_COLUMN_CPINSTANCEID_CPINSTANCEID_2);
 
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(CSDiagramEntryModelImpl.ORDER_BY_JPQL);
-			}
+				if (orderByComparator != null) {
+					appendOrderByComparator(
+						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				}
+				else {
+					sb.append(CSDiagramEntryModelImpl.ORDER_BY_JPQL);
+				}
 
-			String sql = sb.toString();
+				String sql = sb.toString();
 
-			Session session = null;
+				Session session = null;
 
-			try {
-				session = openSession();
+				try {
+					session = openSession();
 
-				Query query = session.createQuery(sql);
+					Query query = session.createQuery(sql);
 
-				QueryPos queryPos = QueryPos.getInstance(query);
+					QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(CPInstanceId);
+					queryPos.add(CPInstanceId);
 
-				list = (List<CSDiagramEntry>)QueryUtil.list(
-					query, getDialect(), start, end);
+					list = (List<CSDiagramEntry>)QueryUtil.list(
+						query, getDialect(), start, end);
 
-				cacheResult(list);
+					cacheResult(list);
 
-				if (useFinderCache && productionMode) {
-					finderCache.putResult(finderPath, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(finderPath, finderArgs, list);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
 				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return list;
+			return list;
+		}
 	}
 
 	/**
@@ -1074,57 +1077,51 @@ public class CSDiagramEntryPersistenceImpl
 	 */
 	@Override
 	public int countByCPInstanceId(long CPInstanceId) {
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			CSDiagramEntry.class);
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					CSDiagramEntry.class)) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = _finderPathCountByCPInstanceId;
 
-		Long count = null;
+			Object[] finderArgs = new Object[] {CPInstanceId};
 
-		if (productionMode) {
-			finderPath = _finderPathCountByCPInstanceId;
+			Long count = (Long)finderCache.getResult(
+				finderPath, finderArgs, this);
 
-			finderArgs = new Object[] {CPInstanceId};
+			if (count == null) {
+				StringBundler sb = new StringBundler(2);
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-		}
+				sb.append(_SQL_COUNT_CSDIAGRAMENTRY_WHERE);
 
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
+				sb.append(_FINDER_COLUMN_CPINSTANCEID_CPINSTANCEID_2);
 
-			sb.append(_SQL_COUNT_CSDIAGRAMENTRY_WHERE);
+				String sql = sb.toString();
 
-			sb.append(_FINDER_COLUMN_CPINSTANCEID_CPINSTANCEID_2);
+				Session session = null;
 
-			String sql = sb.toString();
+				try {
+					session = openSession();
 
-			Session session = null;
+					Query query = session.createQuery(sql);
 
-			try {
-				session = openSession();
+					QueryPos queryPos = QueryPos.getInstance(query);
 
-				Query query = session.createQuery(sql);
+					queryPos.add(CPInstanceId);
 
-				QueryPos queryPos = QueryPos.getInstance(query);
+					count = (Long)query.uniqueResult();
 
-				queryPos.add(CPInstanceId);
-
-				count = (Long)query.uniqueResult();
-
-				if (productionMode) {
 					finderCache.putResult(finderPath, finderArgs, count);
 				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return count.intValue();
+			return count.intValue();
+		}
 	}
 
 	private static final String _FINDER_COLUMN_CPINSTANCEID_CPINSTANCEID_2 =
@@ -1207,98 +1204,100 @@ public class CSDiagramEntryPersistenceImpl
 		OrderByComparator<CSDiagramEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			CSDiagramEntry.class);
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					CSDiagramEntry.class)) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = null;
+			Object[] finderArgs = null;
 
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
+			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
 
-			if (useFinderCache && productionMode) {
-				finderPath = _finderPathWithoutPaginationFindByCProductId;
-				finderArgs = new Object[] {CProductId};
+				if (useFinderCache) {
+					finderPath = _finderPathWithoutPaginationFindByCProductId;
+					finderArgs = new Object[] {CProductId};
+				}
 			}
-		}
-		else if (useFinderCache && productionMode) {
-			finderPath = _finderPathWithPaginationFindByCProductId;
-			finderArgs = new Object[] {
-				CProductId, start, end, orderByComparator
-			};
-		}
+			else if (useFinderCache) {
+				finderPath = _finderPathWithPaginationFindByCProductId;
+				finderArgs = new Object[] {
+					CProductId, start, end, orderByComparator
+				};
+			}
 
-		List<CSDiagramEntry> list = null;
+			List<CSDiagramEntry> list = null;
 
-		if (useFinderCache && productionMode) {
-			list = (List<CSDiagramEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+			if (useFinderCache) {
+				list = (List<CSDiagramEntry>)finderCache.getResult(
+					finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (CSDiagramEntry csDiagramEntry : list) {
-					if (CProductId != csDiagramEntry.getCProductId()) {
-						list = null;
+				if ((list != null) && !list.isEmpty()) {
+					for (CSDiagramEntry csDiagramEntry : list) {
+						if (CProductId != csDiagramEntry.getCProductId()) {
+							list = null;
 
-						break;
+							break;
+						}
 					}
 				}
 			}
-		}
 
-		if (list == null) {
-			StringBundler sb = null;
+			if (list == null) {
+				StringBundler sb = null;
 
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
+				if (orderByComparator != null) {
+					sb = new StringBundler(
+						3 + (orderByComparator.getOrderByFields().length * 2));
+				}
+				else {
+					sb = new StringBundler(3);
+				}
 
-			sb.append(_SQL_SELECT_CSDIAGRAMENTRY_WHERE);
+				sb.append(_SQL_SELECT_CSDIAGRAMENTRY_WHERE);
 
-			sb.append(_FINDER_COLUMN_CPRODUCTID_CPRODUCTID_2);
+				sb.append(_FINDER_COLUMN_CPRODUCTID_CPRODUCTID_2);
 
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(CSDiagramEntryModelImpl.ORDER_BY_JPQL);
-			}
+				if (orderByComparator != null) {
+					appendOrderByComparator(
+						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				}
+				else {
+					sb.append(CSDiagramEntryModelImpl.ORDER_BY_JPQL);
+				}
 
-			String sql = sb.toString();
+				String sql = sb.toString();
 
-			Session session = null;
+				Session session = null;
 
-			try {
-				session = openSession();
+				try {
+					session = openSession();
 
-				Query query = session.createQuery(sql);
+					Query query = session.createQuery(sql);
 
-				QueryPos queryPos = QueryPos.getInstance(query);
+					QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(CProductId);
+					queryPos.add(CProductId);
 
-				list = (List<CSDiagramEntry>)QueryUtil.list(
-					query, getDialect(), start, end);
+					list = (List<CSDiagramEntry>)QueryUtil.list(
+						query, getDialect(), start, end);
 
-				cacheResult(list);
+					cacheResult(list);
 
-				if (useFinderCache && productionMode) {
-					finderCache.putResult(finderPath, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(finderPath, finderArgs, list);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
 				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return list;
+			return list;
+		}
 	}
 
 	/**
@@ -1589,57 +1588,51 @@ public class CSDiagramEntryPersistenceImpl
 	 */
 	@Override
 	public int countByCProductId(long CProductId) {
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			CSDiagramEntry.class);
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					CSDiagramEntry.class)) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = _finderPathCountByCProductId;
 
-		Long count = null;
+			Object[] finderArgs = new Object[] {CProductId};
 
-		if (productionMode) {
-			finderPath = _finderPathCountByCProductId;
+			Long count = (Long)finderCache.getResult(
+				finderPath, finderArgs, this);
 
-			finderArgs = new Object[] {CProductId};
+			if (count == null) {
+				StringBundler sb = new StringBundler(2);
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-		}
+				sb.append(_SQL_COUNT_CSDIAGRAMENTRY_WHERE);
 
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
+				sb.append(_FINDER_COLUMN_CPRODUCTID_CPRODUCTID_2);
 
-			sb.append(_SQL_COUNT_CSDIAGRAMENTRY_WHERE);
+				String sql = sb.toString();
 
-			sb.append(_FINDER_COLUMN_CPRODUCTID_CPRODUCTID_2);
+				Session session = null;
 
-			String sql = sb.toString();
+				try {
+					session = openSession();
 
-			Session session = null;
+					Query query = session.createQuery(sql);
 
-			try {
-				session = openSession();
+					QueryPos queryPos = QueryPos.getInstance(query);
 
-				Query query = session.createQuery(sql);
+					queryPos.add(CProductId);
 
-				QueryPos queryPos = QueryPos.getInstance(query);
+					count = (Long)query.uniqueResult();
 
-				queryPos.add(CProductId);
-
-				count = (Long)query.uniqueResult();
-
-				if (productionMode) {
 					finderCache.putResult(finderPath, finderArgs, count);
 				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return count.intValue();
+			return count.intValue();
+		}
 	}
 
 	private static final String _FINDER_COLUMN_CPRODUCTID_CPRODUCTID_2 =
@@ -1709,106 +1702,100 @@ public class CSDiagramEntryPersistenceImpl
 	public CSDiagramEntry fetchByCPDI_S(
 		long CPDefinitionId, String sequence, boolean useFinderCache) {
 
-		sequence = Objects.toString(sequence, "");
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					CSDiagramEntry.class)) {
 
-		Object[] finderArgs = null;
+			sequence = Objects.toString(sequence, "");
 
-		if (useFinderCache) {
-			finderArgs = new Object[] {CPDefinitionId, sequence};
-		}
+			Object[] finderArgs = null;
 
-		Object result = null;
-
-		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByCPDI_S, finderArgs, this);
-		}
-
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			CSDiagramEntry.class);
-
-		if (result instanceof CSDiagramEntry) {
-			CSDiagramEntry csDiagramEntry = (CSDiagramEntry)result;
-
-			if ((CPDefinitionId != csDiagramEntry.getCPDefinitionId()) ||
-				!Objects.equals(sequence, csDiagramEntry.getSequence())) {
-
-				result = null;
-			}
-			else if (!ctPersistenceHelper.isProductionMode(
-						CSDiagramEntry.class, csDiagramEntry.getPrimaryKey())) {
-
-				result = null;
-			}
-		}
-		else if (!productionMode && (result instanceof List<?>)) {
-			result = null;
-		}
-
-		if (result == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_SELECT_CSDIAGRAMENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_CPDI_S_CPDEFINITIONID_2);
-
-			boolean bindSequence = false;
-
-			if (sequence.isEmpty()) {
-				sb.append(_FINDER_COLUMN_CPDI_S_SEQUENCE_3);
-			}
-			else {
-				bindSequence = true;
-
-				sb.append(_FINDER_COLUMN_CPDI_S_SEQUENCE_2);
+			if (useFinderCache) {
+				finderArgs = new Object[] {CPDefinitionId, sequence};
 			}
 
-			String sql = sb.toString();
+			Object result = null;
 
-			Session session = null;
+			if (useFinderCache) {
+				result = finderCache.getResult(
+					_finderPathFetchByCPDI_S, finderArgs, this);
+			}
 
-			try {
-				session = openSession();
+			if (result instanceof CSDiagramEntry) {
+				CSDiagramEntry csDiagramEntry = (CSDiagramEntry)result;
 
-				Query query = session.createQuery(sql);
+				if ((CPDefinitionId != csDiagramEntry.getCPDefinitionId()) ||
+					!Objects.equals(sequence, csDiagramEntry.getSequence())) {
 
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(CPDefinitionId);
-
-				if (bindSequence) {
-					queryPos.add(sequence);
+					result = null;
 				}
+			}
 
-				List<CSDiagramEntry> list = query.list();
+			if (result == null) {
+				StringBundler sb = new StringBundler(4);
 
-				if (list.isEmpty()) {
-					if (useFinderCache && productionMode) {
-						finderCache.putResult(
-							_finderPathFetchByCPDI_S, finderArgs, list);
-					}
+				sb.append(_SQL_SELECT_CSDIAGRAMENTRY_WHERE);
+
+				sb.append(_FINDER_COLUMN_CPDI_S_CPDEFINITIONID_2);
+
+				boolean bindSequence = false;
+
+				if (sequence.isEmpty()) {
+					sb.append(_FINDER_COLUMN_CPDI_S_SEQUENCE_3);
 				}
 				else {
-					CSDiagramEntry csDiagramEntry = list.get(0);
+					bindSequence = true;
 
-					result = csDiagramEntry;
+					sb.append(_FINDER_COLUMN_CPDI_S_SEQUENCE_2);
+				}
 
-					cacheResult(csDiagramEntry);
+				String sql = sb.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					queryPos.add(CPDefinitionId);
+
+					if (bindSequence) {
+						queryPos.add(sequence);
+					}
+
+					List<CSDiagramEntry> list = query.list();
+
+					if (list.isEmpty()) {
+						if (useFinderCache) {
+							finderCache.putResult(
+								_finderPathFetchByCPDI_S, finderArgs, list);
+						}
+					}
+					else {
+						CSDiagramEntry csDiagramEntry = list.get(0);
+
+						result = csDiagramEntry;
+
+						cacheResult(csDiagramEntry);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
 				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (CSDiagramEntry)result;
+			if (result instanceof List<?>) {
+				return null;
+			}
+			else {
+				return (CSDiagramEntry)result;
+			}
 		}
 	}
 
@@ -1837,74 +1824,68 @@ public class CSDiagramEntryPersistenceImpl
 	 */
 	@Override
 	public int countByCPDI_S(long CPDefinitionId, String sequence) {
-		sequence = Objects.toString(sequence, "");
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					CSDiagramEntry.class)) {
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			CSDiagramEntry.class);
+			sequence = Objects.toString(sequence, "");
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = _finderPathCountByCPDI_S;
 
-		Long count = null;
+			Object[] finderArgs = new Object[] {CPDefinitionId, sequence};
 
-		if (productionMode) {
-			finderPath = _finderPathCountByCPDI_S;
+			Long count = (Long)finderCache.getResult(
+				finderPath, finderArgs, this);
 
-			finderArgs = new Object[] {CPDefinitionId, sequence};
+			if (count == null) {
+				StringBundler sb = new StringBundler(3);
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-		}
+				sb.append(_SQL_COUNT_CSDIAGRAMENTRY_WHERE);
 
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
+				sb.append(_FINDER_COLUMN_CPDI_S_CPDEFINITIONID_2);
 
-			sb.append(_SQL_COUNT_CSDIAGRAMENTRY_WHERE);
+				boolean bindSequence = false;
 
-			sb.append(_FINDER_COLUMN_CPDI_S_CPDEFINITIONID_2);
+				if (sequence.isEmpty()) {
+					sb.append(_FINDER_COLUMN_CPDI_S_SEQUENCE_3);
+				}
+				else {
+					bindSequence = true;
 
-			boolean bindSequence = false;
-
-			if (sequence.isEmpty()) {
-				sb.append(_FINDER_COLUMN_CPDI_S_SEQUENCE_3);
-			}
-			else {
-				bindSequence = true;
-
-				sb.append(_FINDER_COLUMN_CPDI_S_SEQUENCE_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(CPDefinitionId);
-
-				if (bindSequence) {
-					queryPos.add(sequence);
+					sb.append(_FINDER_COLUMN_CPDI_S_SEQUENCE_2);
 				}
 
-				count = (Long)query.uniqueResult();
+				String sql = sb.toString();
 
-				if (productionMode) {
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					queryPos.add(CPDefinitionId);
+
+					if (bindSequence) {
+						queryPos.add(sequence);
+					}
+
+					count = (Long)query.uniqueResult();
+
 					finderCache.putResult(finderPath, finderArgs, count);
 				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return count.intValue();
+			return count.intValue();
+		}
 	}
 
 	private static final String _FINDER_COLUMN_CPDI_S_CPDEFINITIONID_2 =
@@ -1932,20 +1913,22 @@ public class CSDiagramEntryPersistenceImpl
 	 */
 	@Override
 	public void cacheResult(CSDiagramEntry csDiagramEntry) {
-		if (csDiagramEntry.getCtCollectionId() != 0) {
-			return;
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					csDiagramEntry.getCtCollectionId())) {
+
+			entityCache.putResult(
+				CSDiagramEntryImpl.class, csDiagramEntry.getPrimaryKey(),
+				csDiagramEntry);
+
+			finderCache.putResult(
+				_finderPathFetchByCPDI_S,
+				new Object[] {
+					csDiagramEntry.getCPDefinitionId(),
+					csDiagramEntry.getSequence()
+				},
+				csDiagramEntry);
 		}
-
-		entityCache.putResult(
-			CSDiagramEntryImpl.class, csDiagramEntry.getPrimaryKey(),
-			csDiagramEntry);
-
-		finderCache.putResult(
-			_finderPathFetchByCPDI_S,
-			new Object[] {
-				csDiagramEntry.getCPDefinitionId(), csDiagramEntry.getSequence()
-			},
-			csDiagramEntry);
 	}
 
 	private int _valueObjectFinderCacheListThreshold;
@@ -1966,15 +1949,16 @@ public class CSDiagramEntryPersistenceImpl
 		}
 
 		for (CSDiagramEntry csDiagramEntry : csDiagramEntries) {
-			if (csDiagramEntry.getCtCollectionId() != 0) {
-				continue;
-			}
+			try (SafeCloseable safeCloseable =
+					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+						csDiagramEntry.getCtCollectionId())) {
 
-			if (entityCache.getResult(
-					CSDiagramEntryImpl.class, csDiagramEntry.getPrimaryKey()) ==
-						null) {
+				if (entityCache.getResult(
+						CSDiagramEntryImpl.class,
+						csDiagramEntry.getPrimaryKey()) == null) {
 
-				cacheResult(csDiagramEntry);
+					cacheResult(csDiagramEntry);
+				}
 			}
 		}
 	}
@@ -2024,14 +2008,20 @@ public class CSDiagramEntryPersistenceImpl
 	protected void cacheUniqueFindersCache(
 		CSDiagramEntryModelImpl csDiagramEntryModelImpl) {
 
-		Object[] args = new Object[] {
-			csDiagramEntryModelImpl.getCPDefinitionId(),
-			csDiagramEntryModelImpl.getSequence()
-		};
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					csDiagramEntryModelImpl.getCtCollectionId())) {
 
-		finderCache.putResult(_finderPathCountByCPDI_S, args, Long.valueOf(1));
-		finderCache.putResult(
-			_finderPathFetchByCPDI_S, args, csDiagramEntryModelImpl);
+			Object[] args = new Object[] {
+				csDiagramEntryModelImpl.getCPDefinitionId(),
+				csDiagramEntryModelImpl.getSequence()
+			};
+
+			finderCache.putResult(
+				_finderPathCountByCPDI_S, args, Long.valueOf(1));
+			finderCache.putResult(
+				_finderPathFetchByCPDI_S, args, csDiagramEntryModelImpl);
+		}
 	}
 
 	/**
@@ -2214,16 +2204,6 @@ public class CSDiagramEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		if (csDiagramEntry.getCtCollectionId() != 0) {
-			if (isNew) {
-				csDiagramEntry.setNew(false);
-			}
-
-			csDiagramEntry.resetOriginalValues();
-
-			return csDiagramEntry;
-		}
-
 		entityCache.putResult(
 			CSDiagramEntryImpl.class, csDiagramEntryModelImpl, false, true);
 
@@ -2288,10 +2268,20 @@ public class CSDiagramEntryPersistenceImpl
 		if (ctPersistenceHelper.isProductionMode(
 				CSDiagramEntry.class, primaryKey)) {
 
-			return super.fetchByPrimaryKey(primaryKey);
+			try (SafeCloseable safeCloseable =
+					CTCollectionThreadLocal.
+						setProductionModeWithSafeCloseable()) {
+
+				return super.fetchByPrimaryKey(primaryKey);
+			}
 		}
 
-		CSDiagramEntry csDiagramEntry = null;
+		CSDiagramEntry csDiagramEntry = (CSDiagramEntry)entityCache.getResult(
+			CSDiagramEntryImpl.class, primaryKey);
+
+		if (csDiagramEntry != null) {
+			return csDiagramEntry;
+		}
 
 		Session session = null;
 
@@ -2331,7 +2321,12 @@ public class CSDiagramEntryPersistenceImpl
 		Set<Serializable> primaryKeys) {
 
 		if (ctPersistenceHelper.isProductionMode(CSDiagramEntry.class)) {
-			return super.fetchByPrimaryKeys(primaryKeys);
+			try (SafeCloseable safeCloseable =
+					CTCollectionThreadLocal.
+						setProductionModeWithSafeCloseable()) {
+
+				return super.fetchByPrimaryKeys(primaryKeys);
+			}
 		}
 
 		if (primaryKeys.isEmpty()) {
@@ -2352,6 +2347,34 @@ public class CSDiagramEntryPersistenceImpl
 				map.put(primaryKey, csDiagramEntry);
 			}
 
+			return map;
+		}
+
+		Set<Serializable> uncachedPrimaryKeys = null;
+
+		for (Serializable primaryKey : primaryKeys) {
+			try (SafeCloseable safeCloseable =
+					ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+						CSDiagramEntry.class, primaryKey)) {
+
+				CSDiagramEntry csDiagramEntry =
+					(CSDiagramEntry)entityCache.getResult(
+						CSDiagramEntryImpl.class, primaryKey);
+
+				if (csDiagramEntry == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<>();
+					}
+
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, csDiagramEntry);
+				}
+			}
+		}
+
+		if (uncachedPrimaryKeys == null) {
 			return map;
 		}
 
@@ -2483,78 +2506,80 @@ public class CSDiagramEntryPersistenceImpl
 		int start, int end, OrderByComparator<CSDiagramEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			CSDiagramEntry.class);
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					CSDiagramEntry.class)) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = null;
+			Object[] finderArgs = null;
 
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
+			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
 
-			if (useFinderCache && productionMode) {
-				finderPath = _finderPathWithoutPaginationFindAll;
-				finderArgs = FINDER_ARGS_EMPTY;
-			}
-		}
-		else if (useFinderCache && productionMode) {
-			finderPath = _finderPathWithPaginationFindAll;
-			finderArgs = new Object[] {start, end, orderByComparator};
-		}
-
-		List<CSDiagramEntry> list = null;
-
-		if (useFinderCache && productionMode) {
-			list = (List<CSDiagramEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-			String sql = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					2 + (orderByComparator.getOrderByFields().length * 2));
-
-				sb.append(_SQL_SELECT_CSDIAGRAMENTRY);
-
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-
-				sql = sb.toString();
-			}
-			else {
-				sql = _SQL_SELECT_CSDIAGRAMENTRY;
-
-				sql = sql.concat(CSDiagramEntryModelImpl.ORDER_BY_JPQL);
-			}
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				list = (List<CSDiagramEntry>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache && productionMode) {
-					finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderPath = _finderPathWithoutPaginationFindAll;
+					finderArgs = FINDER_ARGS_EMPTY;
 				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
+			else if (useFinderCache) {
+				finderPath = _finderPathWithPaginationFindAll;
+				finderArgs = new Object[] {start, end, orderByComparator};
 			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return list;
+			List<CSDiagramEntry> list = null;
+
+			if (useFinderCache) {
+				list = (List<CSDiagramEntry>)finderCache.getResult(
+					finderPath, finderArgs, this);
+			}
+
+			if (list == null) {
+				StringBundler sb = null;
+				String sql = null;
+
+				if (orderByComparator != null) {
+					sb = new StringBundler(
+						2 + (orderByComparator.getOrderByFields().length * 2));
+
+					sb.append(_SQL_SELECT_CSDIAGRAMENTRY);
+
+					appendOrderByComparator(
+						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+
+					sql = sb.toString();
+				}
+				else {
+					sql = _SQL_SELECT_CSDIAGRAMENTRY;
+
+					sql = sql.concat(CSDiagramEntryModelImpl.ORDER_BY_JPQL);
+				}
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					list = (List<CSDiagramEntry>)QueryUtil.list(
+						query, getDialect(), start, end);
+
+					cacheResult(list);
+
+					if (useFinderCache) {
+						finderCache.putResult(finderPath, finderArgs, list);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
+			}
+
+			return list;
+		}
 	}
 
 	/**
@@ -2575,40 +2600,37 @@ public class CSDiagramEntryPersistenceImpl
 	 */
 	@Override
 	public int countAll() {
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			CSDiagramEntry.class);
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					CSDiagramEntry.class)) {
 
-		Long count = null;
-
-		if (productionMode) {
-			count = (Long)finderCache.getResult(
+			Long count = (Long)finderCache.getResult(
 				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
-		}
 
-		if (count == null) {
-			Session session = null;
+			if (count == null) {
+				Session session = null;
 
-			try {
-				session = openSession();
+				try {
+					session = openSession();
 
-				Query query = session.createQuery(_SQL_COUNT_CSDIAGRAMENTRY);
+					Query query = session.createQuery(
+						_SQL_COUNT_CSDIAGRAMENTRY);
 
-				count = (Long)query.uniqueResult();
+					count = (Long)query.uniqueResult();
 
-				if (productionMode) {
 					finderCache.putResult(
 						_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return count.intValue();
+			return count.intValue();
+		}
 	}
 
 	@Override

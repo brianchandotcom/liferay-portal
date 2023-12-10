@@ -5,7 +5,9 @@
 
 package com.liferay.portal.service.persistence.impl;
 
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -160,98 +162,102 @@ public class WorkflowDefinitionLinkPersistenceImpl
 		OrderByComparator<WorkflowDefinitionLink> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
-			WorkflowDefinitionLink.class);
+		try (SafeCloseable safeCloseable =
+				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
+					WorkflowDefinitionLink.class)) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = null;
+			Object[] finderArgs = null;
 
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
+			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
 
-			if (useFinderCache && productionMode) {
-				finderPath = _finderPathWithoutPaginationFindByCompanyId;
-				finderArgs = new Object[] {companyId};
+				if (useFinderCache) {
+					finderPath = _finderPathWithoutPaginationFindByCompanyId;
+					finderArgs = new Object[] {companyId};
+				}
 			}
-		}
-		else if (useFinderCache && productionMode) {
-			finderPath = _finderPathWithPaginationFindByCompanyId;
-			finderArgs = new Object[] {
-				companyId, start, end, orderByComparator
-			};
-		}
+			else if (useFinderCache) {
+				finderPath = _finderPathWithPaginationFindByCompanyId;
+				finderArgs = new Object[] {
+					companyId, start, end, orderByComparator
+				};
+			}
 
-		List<WorkflowDefinitionLink> list = null;
+			List<WorkflowDefinitionLink> list = null;
 
-		if (useFinderCache && productionMode) {
-			list = (List<WorkflowDefinitionLink>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+			if (useFinderCache) {
+				list = (List<WorkflowDefinitionLink>)FinderCacheUtil.getResult(
+					finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (WorkflowDefinitionLink workflowDefinitionLink : list) {
-					if (companyId != workflowDefinitionLink.getCompanyId()) {
-						list = null;
+				if ((list != null) && !list.isEmpty()) {
+					for (WorkflowDefinitionLink workflowDefinitionLink : list) {
+						if (companyId !=
+								workflowDefinitionLink.getCompanyId()) {
 
-						break;
+							list = null;
+
+							break;
+						}
 					}
 				}
 			}
-		}
 
-		if (list == null) {
-			StringBundler sb = null;
+			if (list == null) {
+				StringBundler sb = null;
 
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
+				if (orderByComparator != null) {
+					sb = new StringBundler(
+						3 + (orderByComparator.getOrderByFields().length * 2));
+				}
+				else {
+					sb = new StringBundler(3);
+				}
 
-			sb.append(_SQL_SELECT_WORKFLOWDEFINITIONLINK_WHERE);
+				sb.append(_SQL_SELECT_WORKFLOWDEFINITIONLINK_WHERE);
 
-			sb.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
+				sb.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
 
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(WorkflowDefinitionLinkModelImpl.ORDER_BY_JPQL);
-			}
+				if (orderByComparator != null) {
+					appendOrderByComparator(
+						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				}
+				else {
+					sb.append(WorkflowDefinitionLinkModelImpl.ORDER_BY_JPQL);
+				}
 
-			String sql = sb.toString();
+				String sql = sb.toString();
 
-			Session session = null;
+				Session session = null;
 
-			try {
-				session = openSession();
+				try {
+					session = openSession();
 
-				Query query = session.createQuery(sql);
+					Query query = session.createQuery(sql);
 
-				QueryPos queryPos = QueryPos.getInstance(query);
+					QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(companyId);
+					queryPos.add(companyId);
 
-				list = (List<WorkflowDefinitionLink>)QueryUtil.list(
-					query, getDialect(), start, end);
+					list = (List<WorkflowDefinitionLink>)QueryUtil.list(
+						query, getDialect(), start, end);
 
-				cacheResult(list);
+					cacheResult(list);
 
-				if (useFinderCache && productionMode) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+					if (useFinderCache) {
+						FinderCacheUtil.putResult(finderPath, finderArgs, list);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
 				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return list;
+			return list;
+		}
 	}
 
 	/**
@@ -549,58 +555,51 @@ public class WorkflowDefinitionLinkPersistenceImpl
 	 */
 	@Override
 	public int countByCompanyId(long companyId) {
-		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
-			WorkflowDefinitionLink.class);
+		try (SafeCloseable safeCloseable =
+				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
+					WorkflowDefinitionLink.class)) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = _finderPathCountByCompanyId;
 
-		Long count = null;
+			Object[] finderArgs = new Object[] {companyId};
 
-		if (productionMode) {
-			finderPath = _finderPathCountByCompanyId;
-
-			finderArgs = new Object[] {companyId};
-
-			count = (Long)FinderCacheUtil.getResult(
+			Long count = (Long)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
-		}
 
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
+			if (count == null) {
+				StringBundler sb = new StringBundler(2);
 
-			sb.append(_SQL_COUNT_WORKFLOWDEFINITIONLINK_WHERE);
+				sb.append(_SQL_COUNT_WORKFLOWDEFINITIONLINK_WHERE);
 
-			sb.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
+				sb.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
 
-			String sql = sb.toString();
+				String sql = sb.toString();
 
-			Session session = null;
+				Session session = null;
 
-			try {
-				session = openSession();
+				try {
+					session = openSession();
 
-				Query query = session.createQuery(sql);
+					Query query = session.createQuery(sql);
 
-				QueryPos queryPos = QueryPos.getInstance(query);
+					QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(companyId);
+					queryPos.add(companyId);
 
-				count = (Long)query.uniqueResult();
+					count = (Long)query.uniqueResult();
 
-				if (productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, count);
 				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return count.intValue();
+			return count.intValue();
+		}
 	}
 
 	private static final String _FINDER_COLUMN_COMPANYID_COMPANYID_2 =
@@ -695,110 +694,114 @@ public class WorkflowDefinitionLinkPersistenceImpl
 		OrderByComparator<WorkflowDefinitionLink> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
-			WorkflowDefinitionLink.class);
+		try (SafeCloseable safeCloseable =
+				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
+					WorkflowDefinitionLink.class)) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = null;
+			Object[] finderArgs = null;
 
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
+			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
 
-			if (useFinderCache && productionMode) {
-				finderPath = _finderPathWithoutPaginationFindByG_C_C;
-				finderArgs = new Object[] {groupId, companyId, classNameId};
+				if (useFinderCache) {
+					finderPath = _finderPathWithoutPaginationFindByG_C_C;
+					finderArgs = new Object[] {groupId, companyId, classNameId};
+				}
 			}
-		}
-		else if (useFinderCache && productionMode) {
-			finderPath = _finderPathWithPaginationFindByG_C_C;
-			finderArgs = new Object[] {
-				groupId, companyId, classNameId, start, end, orderByComparator
-			};
-		}
+			else if (useFinderCache) {
+				finderPath = _finderPathWithPaginationFindByG_C_C;
+				finderArgs = new Object[] {
+					groupId, companyId, classNameId, start, end,
+					orderByComparator
+				};
+			}
 
-		List<WorkflowDefinitionLink> list = null;
+			List<WorkflowDefinitionLink> list = null;
 
-		if (useFinderCache && productionMode) {
-			list = (List<WorkflowDefinitionLink>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+			if (useFinderCache) {
+				list = (List<WorkflowDefinitionLink>)FinderCacheUtil.getResult(
+					finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (WorkflowDefinitionLink workflowDefinitionLink : list) {
-					if ((groupId != workflowDefinitionLink.getGroupId()) ||
-						(companyId != workflowDefinitionLink.getCompanyId()) ||
-						(classNameId !=
-							workflowDefinitionLink.getClassNameId())) {
+				if ((list != null) && !list.isEmpty()) {
+					for (WorkflowDefinitionLink workflowDefinitionLink : list) {
+						if ((groupId != workflowDefinitionLink.getGroupId()) ||
+							(companyId !=
+								workflowDefinitionLink.getCompanyId()) ||
+							(classNameId !=
+								workflowDefinitionLink.getClassNameId())) {
 
-						list = null;
+							list = null;
 
-						break;
+							break;
+						}
 					}
 				}
 			}
-		}
 
-		if (list == null) {
-			StringBundler sb = null;
+			if (list == null) {
+				StringBundler sb = null;
 
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					5 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(5);
-			}
+				if (orderByComparator != null) {
+					sb = new StringBundler(
+						5 + (orderByComparator.getOrderByFields().length * 2));
+				}
+				else {
+					sb = new StringBundler(5);
+				}
 
-			sb.append(_SQL_SELECT_WORKFLOWDEFINITIONLINK_WHERE);
+				sb.append(_SQL_SELECT_WORKFLOWDEFINITIONLINK_WHERE);
 
-			sb.append(_FINDER_COLUMN_G_C_C_GROUPID_2);
+				sb.append(_FINDER_COLUMN_G_C_C_GROUPID_2);
 
-			sb.append(_FINDER_COLUMN_G_C_C_COMPANYID_2);
+				sb.append(_FINDER_COLUMN_G_C_C_COMPANYID_2);
 
-			sb.append(_FINDER_COLUMN_G_C_C_CLASSNAMEID_2);
+				sb.append(_FINDER_COLUMN_G_C_C_CLASSNAMEID_2);
 
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(WorkflowDefinitionLinkModelImpl.ORDER_BY_JPQL);
-			}
+				if (orderByComparator != null) {
+					appendOrderByComparator(
+						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				}
+				else {
+					sb.append(WorkflowDefinitionLinkModelImpl.ORDER_BY_JPQL);
+				}
 
-			String sql = sb.toString();
+				String sql = sb.toString();
 
-			Session session = null;
+				Session session = null;
 
-			try {
-				session = openSession();
+				try {
+					session = openSession();
 
-				Query query = session.createQuery(sql);
+					Query query = session.createQuery(sql);
 
-				QueryPos queryPos = QueryPos.getInstance(query);
+					QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(groupId);
+					queryPos.add(groupId);
 
-				queryPos.add(companyId);
+					queryPos.add(companyId);
 
-				queryPos.add(classNameId);
+					queryPos.add(classNameId);
 
-				list = (List<WorkflowDefinitionLink>)QueryUtil.list(
-					query, getDialect(), start, end);
+					list = (List<WorkflowDefinitionLink>)QueryUtil.list(
+						query, getDialect(), start, end);
 
-				cacheResult(list);
+					cacheResult(list);
 
-				if (useFinderCache && productionMode) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+					if (useFinderCache) {
+						FinderCacheUtil.putResult(finderPath, finderArgs, list);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
 				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return list;
+			return list;
+		}
 	}
 
 	/**
@@ -1133,66 +1136,61 @@ public class WorkflowDefinitionLinkPersistenceImpl
 	 */
 	@Override
 	public int countByG_C_C(long groupId, long companyId, long classNameId) {
-		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
-			WorkflowDefinitionLink.class);
+		try (SafeCloseable safeCloseable =
+				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
+					WorkflowDefinitionLink.class)) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = _finderPathCountByG_C_C;
 
-		Long count = null;
+			Object[] finderArgs = new Object[] {
+				groupId, companyId, classNameId
+			};
 
-		if (productionMode) {
-			finderPath = _finderPathCountByG_C_C;
-
-			finderArgs = new Object[] {groupId, companyId, classNameId};
-
-			count = (Long)FinderCacheUtil.getResult(
+			Long count = (Long)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
-		}
 
-		if (count == null) {
-			StringBundler sb = new StringBundler(4);
+			if (count == null) {
+				StringBundler sb = new StringBundler(4);
 
-			sb.append(_SQL_COUNT_WORKFLOWDEFINITIONLINK_WHERE);
+				sb.append(_SQL_COUNT_WORKFLOWDEFINITIONLINK_WHERE);
 
-			sb.append(_FINDER_COLUMN_G_C_C_GROUPID_2);
+				sb.append(_FINDER_COLUMN_G_C_C_GROUPID_2);
 
-			sb.append(_FINDER_COLUMN_G_C_C_COMPANYID_2);
+				sb.append(_FINDER_COLUMN_G_C_C_COMPANYID_2);
 
-			sb.append(_FINDER_COLUMN_G_C_C_CLASSNAMEID_2);
+				sb.append(_FINDER_COLUMN_G_C_C_CLASSNAMEID_2);
 
-			String sql = sb.toString();
+				String sql = sb.toString();
 
-			Session session = null;
+				Session session = null;
 
-			try {
-				session = openSession();
+				try {
+					session = openSession();
 
-				Query query = session.createQuery(sql);
+					Query query = session.createQuery(sql);
 
-				QueryPos queryPos = QueryPos.getInstance(query);
+					QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(groupId);
+					queryPos.add(groupId);
 
-				queryPos.add(companyId);
+					queryPos.add(companyId);
 
-				queryPos.add(classNameId);
+					queryPos.add(classNameId);
 
-				count = (Long)query.uniqueResult();
+					count = (Long)query.uniqueResult();
 
-				if (productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, count);
 				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return count.intValue();
+			return count.intValue();
+		}
 	}
 
 	private static final String _FINDER_COLUMN_G_C_C_GROUPID_2 =
@@ -1292,109 +1290,112 @@ public class WorkflowDefinitionLinkPersistenceImpl
 		OrderByComparator<WorkflowDefinitionLink> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
-			WorkflowDefinitionLink.class);
+		try (SafeCloseable safeCloseable =
+				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
+					WorkflowDefinitionLink.class)) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = null;
+			Object[] finderArgs = null;
 
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
+			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
 
-			if (useFinderCache && productionMode) {
-				finderPath = _finderPathWithoutPaginationFindByG_C_CPK;
-				finderArgs = new Object[] {groupId, companyId, classPK};
+				if (useFinderCache) {
+					finderPath = _finderPathWithoutPaginationFindByG_C_CPK;
+					finderArgs = new Object[] {groupId, companyId, classPK};
+				}
 			}
-		}
-		else if (useFinderCache && productionMode) {
-			finderPath = _finderPathWithPaginationFindByG_C_CPK;
-			finderArgs = new Object[] {
-				groupId, companyId, classPK, start, end, orderByComparator
-			};
-		}
+			else if (useFinderCache) {
+				finderPath = _finderPathWithPaginationFindByG_C_CPK;
+				finderArgs = new Object[] {
+					groupId, companyId, classPK, start, end, orderByComparator
+				};
+			}
 
-		List<WorkflowDefinitionLink> list = null;
+			List<WorkflowDefinitionLink> list = null;
 
-		if (useFinderCache && productionMode) {
-			list = (List<WorkflowDefinitionLink>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+			if (useFinderCache) {
+				list = (List<WorkflowDefinitionLink>)FinderCacheUtil.getResult(
+					finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (WorkflowDefinitionLink workflowDefinitionLink : list) {
-					if ((groupId != workflowDefinitionLink.getGroupId()) ||
-						(companyId != workflowDefinitionLink.getCompanyId()) ||
-						(classPK != workflowDefinitionLink.getClassPK())) {
+				if ((list != null) && !list.isEmpty()) {
+					for (WorkflowDefinitionLink workflowDefinitionLink : list) {
+						if ((groupId != workflowDefinitionLink.getGroupId()) ||
+							(companyId !=
+								workflowDefinitionLink.getCompanyId()) ||
+							(classPK != workflowDefinitionLink.getClassPK())) {
 
-						list = null;
+							list = null;
 
-						break;
+							break;
+						}
 					}
 				}
 			}
-		}
 
-		if (list == null) {
-			StringBundler sb = null;
+			if (list == null) {
+				StringBundler sb = null;
 
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					5 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(5);
-			}
+				if (orderByComparator != null) {
+					sb = new StringBundler(
+						5 + (orderByComparator.getOrderByFields().length * 2));
+				}
+				else {
+					sb = new StringBundler(5);
+				}
 
-			sb.append(_SQL_SELECT_WORKFLOWDEFINITIONLINK_WHERE);
+				sb.append(_SQL_SELECT_WORKFLOWDEFINITIONLINK_WHERE);
 
-			sb.append(_FINDER_COLUMN_G_C_CPK_GROUPID_2);
+				sb.append(_FINDER_COLUMN_G_C_CPK_GROUPID_2);
 
-			sb.append(_FINDER_COLUMN_G_C_CPK_COMPANYID_2);
+				sb.append(_FINDER_COLUMN_G_C_CPK_COMPANYID_2);
 
-			sb.append(_FINDER_COLUMN_G_C_CPK_CLASSPK_2);
+				sb.append(_FINDER_COLUMN_G_C_CPK_CLASSPK_2);
 
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(WorkflowDefinitionLinkModelImpl.ORDER_BY_JPQL);
-			}
+				if (orderByComparator != null) {
+					appendOrderByComparator(
+						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				}
+				else {
+					sb.append(WorkflowDefinitionLinkModelImpl.ORDER_BY_JPQL);
+				}
 
-			String sql = sb.toString();
+				String sql = sb.toString();
 
-			Session session = null;
+				Session session = null;
 
-			try {
-				session = openSession();
+				try {
+					session = openSession();
 
-				Query query = session.createQuery(sql);
+					Query query = session.createQuery(sql);
 
-				QueryPos queryPos = QueryPos.getInstance(query);
+					QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(groupId);
+					queryPos.add(groupId);
 
-				queryPos.add(companyId);
+					queryPos.add(companyId);
 
-				queryPos.add(classPK);
+					queryPos.add(classPK);
 
-				list = (List<WorkflowDefinitionLink>)QueryUtil.list(
-					query, getDialect(), start, end);
+					list = (List<WorkflowDefinitionLink>)QueryUtil.list(
+						query, getDialect(), start, end);
 
-				cacheResult(list);
+					cacheResult(list);
 
-				if (useFinderCache && productionMode) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+					if (useFinderCache) {
+						FinderCacheUtil.putResult(finderPath, finderArgs, list);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
 				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return list;
+			return list;
+		}
 	}
 
 	/**
@@ -1728,66 +1729,59 @@ public class WorkflowDefinitionLinkPersistenceImpl
 	 */
 	@Override
 	public int countByG_C_CPK(long groupId, long companyId, long classPK) {
-		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
-			WorkflowDefinitionLink.class);
+		try (SafeCloseable safeCloseable =
+				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
+					WorkflowDefinitionLink.class)) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = _finderPathCountByG_C_CPK;
 
-		Long count = null;
+			Object[] finderArgs = new Object[] {groupId, companyId, classPK};
 
-		if (productionMode) {
-			finderPath = _finderPathCountByG_C_CPK;
-
-			finderArgs = new Object[] {groupId, companyId, classPK};
-
-			count = (Long)FinderCacheUtil.getResult(
+			Long count = (Long)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
-		}
 
-		if (count == null) {
-			StringBundler sb = new StringBundler(4);
+			if (count == null) {
+				StringBundler sb = new StringBundler(4);
 
-			sb.append(_SQL_COUNT_WORKFLOWDEFINITIONLINK_WHERE);
+				sb.append(_SQL_COUNT_WORKFLOWDEFINITIONLINK_WHERE);
 
-			sb.append(_FINDER_COLUMN_G_C_CPK_GROUPID_2);
+				sb.append(_FINDER_COLUMN_G_C_CPK_GROUPID_2);
 
-			sb.append(_FINDER_COLUMN_G_C_CPK_COMPANYID_2);
+				sb.append(_FINDER_COLUMN_G_C_CPK_COMPANYID_2);
 
-			sb.append(_FINDER_COLUMN_G_C_CPK_CLASSPK_2);
+				sb.append(_FINDER_COLUMN_G_C_CPK_CLASSPK_2);
 
-			String sql = sb.toString();
+				String sql = sb.toString();
 
-			Session session = null;
+				Session session = null;
 
-			try {
-				session = openSession();
+				try {
+					session = openSession();
 
-				Query query = session.createQuery(sql);
+					Query query = session.createQuery(sql);
 
-				QueryPos queryPos = QueryPos.getInstance(query);
+					QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(groupId);
+					queryPos.add(groupId);
 
-				queryPos.add(companyId);
+					queryPos.add(companyId);
 
-				queryPos.add(classPK);
+					queryPos.add(classPK);
 
-				count = (Long)query.uniqueResult();
+					count = (Long)query.uniqueResult();
 
-				if (productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, count);
 				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return count.intValue();
+			return count.intValue();
+		}
 	}
 
 	private static final String _FINDER_COLUMN_G_C_CPK_GROUPID_2 =
@@ -1894,129 +1888,134 @@ public class WorkflowDefinitionLinkPersistenceImpl
 		OrderByComparator<WorkflowDefinitionLink> orderByComparator,
 		boolean useFinderCache) {
 
-		workflowDefinitionName = Objects.toString(workflowDefinitionName, "");
+		try (SafeCloseable safeCloseable =
+				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
+					WorkflowDefinitionLink.class)) {
 
-		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
-			WorkflowDefinitionLink.class);
+			workflowDefinitionName = Objects.toString(
+				workflowDefinitionName, "");
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = null;
+			Object[] finderArgs = null;
 
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
+			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
 
-			if (useFinderCache && productionMode) {
-				finderPath = _finderPathWithoutPaginationFindByC_W_W;
+				if (useFinderCache) {
+					finderPath = _finderPathWithoutPaginationFindByC_W_W;
+					finderArgs = new Object[] {
+						companyId, workflowDefinitionName,
+						workflowDefinitionVersion
+					};
+				}
+			}
+			else if (useFinderCache) {
+				finderPath = _finderPathWithPaginationFindByC_W_W;
 				finderArgs = new Object[] {
-					companyId, workflowDefinitionName, workflowDefinitionVersion
+					companyId, workflowDefinitionName,
+					workflowDefinitionVersion, start, end, orderByComparator
 				};
 			}
-		}
-		else if (useFinderCache && productionMode) {
-			finderPath = _finderPathWithPaginationFindByC_W_W;
-			finderArgs = new Object[] {
-				companyId, workflowDefinitionName, workflowDefinitionVersion,
-				start, end, orderByComparator
-			};
-		}
 
-		List<WorkflowDefinitionLink> list = null;
+			List<WorkflowDefinitionLink> list = null;
 
-		if (useFinderCache && productionMode) {
-			list = (List<WorkflowDefinitionLink>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+			if (useFinderCache) {
+				list = (List<WorkflowDefinitionLink>)FinderCacheUtil.getResult(
+					finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (WorkflowDefinitionLink workflowDefinitionLink : list) {
-					if ((companyId != workflowDefinitionLink.getCompanyId()) ||
-						!workflowDefinitionName.equals(
-							workflowDefinitionLink.
-								getWorkflowDefinitionName()) ||
-						(workflowDefinitionVersion !=
-							workflowDefinitionLink.
-								getWorkflowDefinitionVersion())) {
+				if ((list != null) && !list.isEmpty()) {
+					for (WorkflowDefinitionLink workflowDefinitionLink : list) {
+						if ((companyId !=
+								workflowDefinitionLink.getCompanyId()) ||
+							!workflowDefinitionName.equals(
+								workflowDefinitionLink.
+									getWorkflowDefinitionName()) ||
+							(workflowDefinitionVersion !=
+								workflowDefinitionLink.
+									getWorkflowDefinitionVersion())) {
 
-						list = null;
+							list = null;
 
-						break;
+							break;
+						}
 					}
 				}
 			}
-		}
 
-		if (list == null) {
-			StringBundler sb = null;
+			if (list == null) {
+				StringBundler sb = null;
 
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					5 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(5);
-			}
-
-			sb.append(_SQL_SELECT_WORKFLOWDEFINITIONLINK_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_W_W_COMPANYID_2);
-
-			boolean bindWorkflowDefinitionName = false;
-
-			if (workflowDefinitionName.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_W_W_WORKFLOWDEFINITIONNAME_3);
-			}
-			else {
-				bindWorkflowDefinitionName = true;
-
-				sb.append(_FINDER_COLUMN_C_W_W_WORKFLOWDEFINITIONNAME_2);
-			}
-
-			sb.append(_FINDER_COLUMN_C_W_W_WORKFLOWDEFINITIONVERSION_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(WorkflowDefinitionLinkModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				if (bindWorkflowDefinitionName) {
-					queryPos.add(workflowDefinitionName);
+				if (orderByComparator != null) {
+					sb = new StringBundler(
+						5 + (orderByComparator.getOrderByFields().length * 2));
+				}
+				else {
+					sb = new StringBundler(5);
 				}
 
-				queryPos.add(workflowDefinitionVersion);
+				sb.append(_SQL_SELECT_WORKFLOWDEFINITIONLINK_WHERE);
 
-				list = (List<WorkflowDefinitionLink>)QueryUtil.list(
-					query, getDialect(), start, end);
+				sb.append(_FINDER_COLUMN_C_W_W_COMPANYID_2);
 
-				cacheResult(list);
+				boolean bindWorkflowDefinitionName = false;
 
-				if (useFinderCache && productionMode) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (workflowDefinitionName.isEmpty()) {
+					sb.append(_FINDER_COLUMN_C_W_W_WORKFLOWDEFINITIONNAME_3);
+				}
+				else {
+					bindWorkflowDefinitionName = true;
+
+					sb.append(_FINDER_COLUMN_C_W_W_WORKFLOWDEFINITIONNAME_2);
+				}
+
+				sb.append(_FINDER_COLUMN_C_W_W_WORKFLOWDEFINITIONVERSION_2);
+
+				if (orderByComparator != null) {
+					appendOrderByComparator(
+						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				}
+				else {
+					sb.append(WorkflowDefinitionLinkModelImpl.ORDER_BY_JPQL);
+				}
+
+				String sql = sb.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					queryPos.add(companyId);
+
+					if (bindWorkflowDefinitionName) {
+						queryPos.add(workflowDefinitionName);
+					}
+
+					queryPos.add(workflowDefinitionVersion);
+
+					list = (List<WorkflowDefinitionLink>)QueryUtil.list(
+						query, getDialect(), start, end);
+
+					cacheResult(list);
+
+					if (useFinderCache) {
+						FinderCacheUtil.putResult(finderPath, finderArgs, list);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
 				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return list;
+			return list;
+		}
 	}
 
 	/**
@@ -2382,81 +2381,75 @@ public class WorkflowDefinitionLinkPersistenceImpl
 		long companyId, String workflowDefinitionName,
 		int workflowDefinitionVersion) {
 
-		workflowDefinitionName = Objects.toString(workflowDefinitionName, "");
+		try (SafeCloseable safeCloseable =
+				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
+					WorkflowDefinitionLink.class)) {
 
-		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
-			WorkflowDefinitionLink.class);
+			workflowDefinitionName = Objects.toString(
+				workflowDefinitionName, "");
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = _finderPathCountByC_W_W;
 
-		Long count = null;
-
-		if (productionMode) {
-			finderPath = _finderPathCountByC_W_W;
-
-			finderArgs = new Object[] {
+			Object[] finderArgs = new Object[] {
 				companyId, workflowDefinitionName, workflowDefinitionVersion
 			};
 
-			count = (Long)FinderCacheUtil.getResult(
+			Long count = (Long)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
-		}
 
-		if (count == null) {
-			StringBundler sb = new StringBundler(4);
+			if (count == null) {
+				StringBundler sb = new StringBundler(4);
 
-			sb.append(_SQL_COUNT_WORKFLOWDEFINITIONLINK_WHERE);
+				sb.append(_SQL_COUNT_WORKFLOWDEFINITIONLINK_WHERE);
 
-			sb.append(_FINDER_COLUMN_C_W_W_COMPANYID_2);
+				sb.append(_FINDER_COLUMN_C_W_W_COMPANYID_2);
 
-			boolean bindWorkflowDefinitionName = false;
+				boolean bindWorkflowDefinitionName = false;
 
-			if (workflowDefinitionName.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_W_W_WORKFLOWDEFINITIONNAME_3);
-			}
-			else {
-				bindWorkflowDefinitionName = true;
+				if (workflowDefinitionName.isEmpty()) {
+					sb.append(_FINDER_COLUMN_C_W_W_WORKFLOWDEFINITIONNAME_3);
+				}
+				else {
+					bindWorkflowDefinitionName = true;
 
-				sb.append(_FINDER_COLUMN_C_W_W_WORKFLOWDEFINITIONNAME_2);
-			}
-
-			sb.append(_FINDER_COLUMN_C_W_W_WORKFLOWDEFINITIONVERSION_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				if (bindWorkflowDefinitionName) {
-					queryPos.add(workflowDefinitionName);
+					sb.append(_FINDER_COLUMN_C_W_W_WORKFLOWDEFINITIONNAME_2);
 				}
 
-				queryPos.add(workflowDefinitionVersion);
+				sb.append(_FINDER_COLUMN_C_W_W_WORKFLOWDEFINITIONVERSION_2);
 
-				count = (Long)query.uniqueResult();
+				String sql = sb.toString();
 
-				if (productionMode) {
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					queryPos.add(companyId);
+
+					if (bindWorkflowDefinitionName) {
+						queryPos.add(workflowDefinitionName);
+					}
+
+					queryPos.add(workflowDefinitionVersion);
+
+					count = (Long)query.uniqueResult();
+
 					FinderCacheUtil.putResult(finderPath, finderArgs, count);
 				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return count.intValue();
+			return count.intValue();
+		}
 	}
 
 	private static final String _FINDER_COLUMN_C_W_W_COMPANYID_2 =
@@ -2567,118 +2560,121 @@ public class WorkflowDefinitionLinkPersistenceImpl
 		int end, OrderByComparator<WorkflowDefinitionLink> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
-			WorkflowDefinitionLink.class);
+		try (SafeCloseable safeCloseable =
+				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
+					WorkflowDefinitionLink.class)) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = null;
+			Object[] finderArgs = null;
 
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
+			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
 
-			if (useFinderCache && productionMode) {
-				finderPath = _finderPathWithoutPaginationFindByG_C_C_C;
+				if (useFinderCache) {
+					finderPath = _finderPathWithoutPaginationFindByG_C_C_C;
+					finderArgs = new Object[] {
+						groupId, companyId, classNameId, classPK
+					};
+				}
+			}
+			else if (useFinderCache) {
+				finderPath = _finderPathWithPaginationFindByG_C_C_C;
 				finderArgs = new Object[] {
-					groupId, companyId, classNameId, classPK
+					groupId, companyId, classNameId, classPK, start, end,
+					orderByComparator
 				};
 			}
-		}
-		else if (useFinderCache && productionMode) {
-			finderPath = _finderPathWithPaginationFindByG_C_C_C;
-			finderArgs = new Object[] {
-				groupId, companyId, classNameId, classPK, start, end,
-				orderByComparator
-			};
-		}
 
-		List<WorkflowDefinitionLink> list = null;
+			List<WorkflowDefinitionLink> list = null;
 
-		if (useFinderCache && productionMode) {
-			list = (List<WorkflowDefinitionLink>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+			if (useFinderCache) {
+				list = (List<WorkflowDefinitionLink>)FinderCacheUtil.getResult(
+					finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (WorkflowDefinitionLink workflowDefinitionLink : list) {
-					if ((groupId != workflowDefinitionLink.getGroupId()) ||
-						(companyId != workflowDefinitionLink.getCompanyId()) ||
-						(classNameId !=
-							workflowDefinitionLink.getClassNameId()) ||
-						(classPK != workflowDefinitionLink.getClassPK())) {
+				if ((list != null) && !list.isEmpty()) {
+					for (WorkflowDefinitionLink workflowDefinitionLink : list) {
+						if ((groupId != workflowDefinitionLink.getGroupId()) ||
+							(companyId !=
+								workflowDefinitionLink.getCompanyId()) ||
+							(classNameId !=
+								workflowDefinitionLink.getClassNameId()) ||
+							(classPK != workflowDefinitionLink.getClassPK())) {
 
-						list = null;
+							list = null;
 
-						break;
+							break;
+						}
 					}
 				}
 			}
-		}
 
-		if (list == null) {
-			StringBundler sb = null;
+			if (list == null) {
+				StringBundler sb = null;
 
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					6 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(6);
-			}
+				if (orderByComparator != null) {
+					sb = new StringBundler(
+						6 + (orderByComparator.getOrderByFields().length * 2));
+				}
+				else {
+					sb = new StringBundler(6);
+				}
 
-			sb.append(_SQL_SELECT_WORKFLOWDEFINITIONLINK_WHERE);
+				sb.append(_SQL_SELECT_WORKFLOWDEFINITIONLINK_WHERE);
 
-			sb.append(_FINDER_COLUMN_G_C_C_C_GROUPID_2);
+				sb.append(_FINDER_COLUMN_G_C_C_C_GROUPID_2);
 
-			sb.append(_FINDER_COLUMN_G_C_C_C_COMPANYID_2);
+				sb.append(_FINDER_COLUMN_G_C_C_C_COMPANYID_2);
 
-			sb.append(_FINDER_COLUMN_G_C_C_C_CLASSNAMEID_2);
+				sb.append(_FINDER_COLUMN_G_C_C_C_CLASSNAMEID_2);
 
-			sb.append(_FINDER_COLUMN_G_C_C_C_CLASSPK_2);
+				sb.append(_FINDER_COLUMN_G_C_C_C_CLASSPK_2);
 
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(WorkflowDefinitionLinkModelImpl.ORDER_BY_JPQL);
-			}
+				if (orderByComparator != null) {
+					appendOrderByComparator(
+						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				}
+				else {
+					sb.append(WorkflowDefinitionLinkModelImpl.ORDER_BY_JPQL);
+				}
 
-			String sql = sb.toString();
+				String sql = sb.toString();
 
-			Session session = null;
+				Session session = null;
 
-			try {
-				session = openSession();
+				try {
+					session = openSession();
 
-				Query query = session.createQuery(sql);
+					Query query = session.createQuery(sql);
 
-				QueryPos queryPos = QueryPos.getInstance(query);
+					QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(groupId);
+					queryPos.add(groupId);
 
-				queryPos.add(companyId);
+					queryPos.add(companyId);
 
-				queryPos.add(classNameId);
+					queryPos.add(classNameId);
 
-				queryPos.add(classPK);
+					queryPos.add(classPK);
 
-				list = (List<WorkflowDefinitionLink>)QueryUtil.list(
-					query, getDialect(), start, end);
+					list = (List<WorkflowDefinitionLink>)QueryUtil.list(
+						query, getDialect(), start, end);
 
-				cacheResult(list);
+					cacheResult(list);
 
-				if (useFinderCache && productionMode) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+					if (useFinderCache) {
+						FinderCacheUtil.putResult(finderPath, finderArgs, list);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
 				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return list;
+			return list;
+		}
 	}
 
 	/**
@@ -3034,72 +3030,65 @@ public class WorkflowDefinitionLinkPersistenceImpl
 	public int countByG_C_C_C(
 		long groupId, long companyId, long classNameId, long classPK) {
 
-		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
-			WorkflowDefinitionLink.class);
+		try (SafeCloseable safeCloseable =
+				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
+					WorkflowDefinitionLink.class)) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = _finderPathCountByG_C_C_C;
 
-		Long count = null;
-
-		if (productionMode) {
-			finderPath = _finderPathCountByG_C_C_C;
-
-			finderArgs = new Object[] {
+			Object[] finderArgs = new Object[] {
 				groupId, companyId, classNameId, classPK
 			};
 
-			count = (Long)FinderCacheUtil.getResult(
+			Long count = (Long)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
-		}
 
-		if (count == null) {
-			StringBundler sb = new StringBundler(5);
+			if (count == null) {
+				StringBundler sb = new StringBundler(5);
 
-			sb.append(_SQL_COUNT_WORKFLOWDEFINITIONLINK_WHERE);
+				sb.append(_SQL_COUNT_WORKFLOWDEFINITIONLINK_WHERE);
 
-			sb.append(_FINDER_COLUMN_G_C_C_C_GROUPID_2);
+				sb.append(_FINDER_COLUMN_G_C_C_C_GROUPID_2);
 
-			sb.append(_FINDER_COLUMN_G_C_C_C_COMPANYID_2);
+				sb.append(_FINDER_COLUMN_G_C_C_C_COMPANYID_2);
 
-			sb.append(_FINDER_COLUMN_G_C_C_C_CLASSNAMEID_2);
+				sb.append(_FINDER_COLUMN_G_C_C_C_CLASSNAMEID_2);
 
-			sb.append(_FINDER_COLUMN_G_C_C_C_CLASSPK_2);
+				sb.append(_FINDER_COLUMN_G_C_C_C_CLASSPK_2);
 
-			String sql = sb.toString();
+				String sql = sb.toString();
 
-			Session session = null;
+				Session session = null;
 
-			try {
-				session = openSession();
+				try {
+					session = openSession();
 
-				Query query = session.createQuery(sql);
+					Query query = session.createQuery(sql);
 
-				QueryPos queryPos = QueryPos.getInstance(query);
+					QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(groupId);
+					queryPos.add(groupId);
 
-				queryPos.add(companyId);
+					queryPos.add(companyId);
 
-				queryPos.add(classNameId);
+					queryPos.add(classNameId);
 
-				queryPos.add(classPK);
+					queryPos.add(classPK);
 
-				count = (Long)query.uniqueResult();
+					count = (Long)query.uniqueResult();
 
-				if (productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, count);
 				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return count.intValue();
+			return count.intValue();
+		}
 	}
 
 	private static final String _FINDER_COLUMN_G_C_C_C_GROUPID_2 =
@@ -3204,130 +3193,124 @@ public class WorkflowDefinitionLinkPersistenceImpl
 		long groupId, long companyId, long classNameId, long classPK,
 		long typePK, boolean useFinderCache) {
 
-		Object[] finderArgs = null;
+		try (SafeCloseable safeCloseable =
+				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
+					WorkflowDefinitionLink.class)) {
 
-		if (useFinderCache) {
-			finderArgs = new Object[] {
-				groupId, companyId, classNameId, classPK, typePK
-			};
-		}
+			Object[] finderArgs = null;
 
-		Object result = null;
-
-		if (useFinderCache) {
-			result = FinderCacheUtil.getResult(
-				_finderPathFetchByG_C_C_C_T, finderArgs, this);
-		}
-
-		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
-			WorkflowDefinitionLink.class);
-
-		if (result instanceof WorkflowDefinitionLink) {
-			WorkflowDefinitionLink workflowDefinitionLink =
-				(WorkflowDefinitionLink)result;
-
-			if ((groupId != workflowDefinitionLink.getGroupId()) ||
-				(companyId != workflowDefinitionLink.getCompanyId()) ||
-				(classNameId != workflowDefinitionLink.getClassNameId()) ||
-				(classPK != workflowDefinitionLink.getClassPK()) ||
-				(typePK != workflowDefinitionLink.getTypePK())) {
-
-				result = null;
+			if (useFinderCache) {
+				finderArgs = new Object[] {
+					groupId, companyId, classNameId, classPK, typePK
+				};
 			}
-			else if (!CTPersistenceHelperUtil.isProductionMode(
-						WorkflowDefinitionLink.class,
-						workflowDefinitionLink.getPrimaryKey())) {
 
-				result = null;
+			Object result = null;
+
+			if (useFinderCache) {
+				result = FinderCacheUtil.getResult(
+					_finderPathFetchByG_C_C_C_T, finderArgs, this);
 			}
-		}
-		else if (!productionMode && (result instanceof List<?>)) {
-			result = null;
-		}
 
-		if (result == null) {
-			StringBundler sb = new StringBundler(7);
+			if (result instanceof WorkflowDefinitionLink) {
+				WorkflowDefinitionLink workflowDefinitionLink =
+					(WorkflowDefinitionLink)result;
 
-			sb.append(_SQL_SELECT_WORKFLOWDEFINITIONLINK_WHERE);
+				if ((groupId != workflowDefinitionLink.getGroupId()) ||
+					(companyId != workflowDefinitionLink.getCompanyId()) ||
+					(classNameId != workflowDefinitionLink.getClassNameId()) ||
+					(classPK != workflowDefinitionLink.getClassPK()) ||
+					(typePK != workflowDefinitionLink.getTypePK())) {
 
-			sb.append(_FINDER_COLUMN_G_C_C_C_T_GROUPID_2);
-
-			sb.append(_FINDER_COLUMN_G_C_C_C_T_COMPANYID_2);
-
-			sb.append(_FINDER_COLUMN_G_C_C_C_T_CLASSNAMEID_2);
-
-			sb.append(_FINDER_COLUMN_G_C_C_C_T_CLASSPK_2);
-
-			sb.append(_FINDER_COLUMN_G_C_C_C_T_TYPEPK_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(groupId);
-
-				queryPos.add(companyId);
-
-				queryPos.add(classNameId);
-
-				queryPos.add(classPK);
-
-				queryPos.add(typePK);
-
-				List<WorkflowDefinitionLink> list = query.list();
-
-				if (list.isEmpty()) {
-					if (useFinderCache && productionMode) {
-						FinderCacheUtil.putResult(
-							_finderPathFetchByG_C_C_C_T, finderArgs, list);
-					}
+					result = null;
 				}
-				else {
-					if (list.size() > 1) {
-						Collections.sort(list, Collections.reverseOrder());
+			}
 
-						if (_log.isWarnEnabled()) {
-							if (!productionMode || !useFinderCache) {
-								finderArgs = new Object[] {
-									groupId, companyId, classNameId, classPK,
-									typePK
-								};
-							}
+			if (result == null) {
+				StringBundler sb = new StringBundler(7);
 
-							_log.warn(
-								"WorkflowDefinitionLinkPersistenceImpl.fetchByG_C_C_C_T(long, long, long, long, long, boolean) with parameters (" +
-									StringUtil.merge(finderArgs) +
-										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+				sb.append(_SQL_SELECT_WORKFLOWDEFINITIONLINK_WHERE);
+
+				sb.append(_FINDER_COLUMN_G_C_C_C_T_GROUPID_2);
+
+				sb.append(_FINDER_COLUMN_G_C_C_C_T_COMPANYID_2);
+
+				sb.append(_FINDER_COLUMN_G_C_C_C_T_CLASSNAMEID_2);
+
+				sb.append(_FINDER_COLUMN_G_C_C_C_T_CLASSPK_2);
+
+				sb.append(_FINDER_COLUMN_G_C_C_C_T_TYPEPK_2);
+
+				String sql = sb.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					queryPos.add(groupId);
+
+					queryPos.add(companyId);
+
+					queryPos.add(classNameId);
+
+					queryPos.add(classPK);
+
+					queryPos.add(typePK);
+
+					List<WorkflowDefinitionLink> list = query.list();
+
+					if (list.isEmpty()) {
+						if (useFinderCache) {
+							FinderCacheUtil.putResult(
+								_finderPathFetchByG_C_C_C_T, finderArgs, list);
 						}
 					}
+					else {
+						if (list.size() > 1) {
+							Collections.sort(list, Collections.reverseOrder());
 
-					WorkflowDefinitionLink workflowDefinitionLink = list.get(0);
+							if (_log.isWarnEnabled()) {
+								if (!useFinderCache) {
+									finderArgs = new Object[] {
+										groupId, companyId, classNameId,
+										classPK, typePK
+									};
+								}
 
-					result = workflowDefinitionLink;
+								_log.warn(
+									"WorkflowDefinitionLinkPersistenceImpl.fetchByG_C_C_C_T(long, long, long, long, long, boolean) with parameters (" +
+										StringUtil.merge(finderArgs) +
+											") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+							}
+						}
 
-					cacheResult(workflowDefinitionLink);
+						WorkflowDefinitionLink workflowDefinitionLink =
+							list.get(0);
+
+						result = workflowDefinitionLink;
+
+						cacheResult(workflowDefinitionLink);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
 				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (WorkflowDefinitionLink)result;
+			if (result instanceof List<?>) {
+				return null;
+			}
+			else {
+				return (WorkflowDefinitionLink)result;
+			}
 		}
 	}
 
@@ -3368,76 +3351,69 @@ public class WorkflowDefinitionLinkPersistenceImpl
 		long groupId, long companyId, long classNameId, long classPK,
 		long typePK) {
 
-		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
-			WorkflowDefinitionLink.class);
+		try (SafeCloseable safeCloseable =
+				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
+					WorkflowDefinitionLink.class)) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = _finderPathCountByG_C_C_C_T;
 
-		Long count = null;
-
-		if (productionMode) {
-			finderPath = _finderPathCountByG_C_C_C_T;
-
-			finderArgs = new Object[] {
+			Object[] finderArgs = new Object[] {
 				groupId, companyId, classNameId, classPK, typePK
 			};
 
-			count = (Long)FinderCacheUtil.getResult(
+			Long count = (Long)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
-		}
 
-		if (count == null) {
-			StringBundler sb = new StringBundler(6);
+			if (count == null) {
+				StringBundler sb = new StringBundler(6);
 
-			sb.append(_SQL_COUNT_WORKFLOWDEFINITIONLINK_WHERE);
+				sb.append(_SQL_COUNT_WORKFLOWDEFINITIONLINK_WHERE);
 
-			sb.append(_FINDER_COLUMN_G_C_C_C_T_GROUPID_2);
+				sb.append(_FINDER_COLUMN_G_C_C_C_T_GROUPID_2);
 
-			sb.append(_FINDER_COLUMN_G_C_C_C_T_COMPANYID_2);
+				sb.append(_FINDER_COLUMN_G_C_C_C_T_COMPANYID_2);
 
-			sb.append(_FINDER_COLUMN_G_C_C_C_T_CLASSNAMEID_2);
+				sb.append(_FINDER_COLUMN_G_C_C_C_T_CLASSNAMEID_2);
 
-			sb.append(_FINDER_COLUMN_G_C_C_C_T_CLASSPK_2);
+				sb.append(_FINDER_COLUMN_G_C_C_C_T_CLASSPK_2);
 
-			sb.append(_FINDER_COLUMN_G_C_C_C_T_TYPEPK_2);
+				sb.append(_FINDER_COLUMN_G_C_C_C_T_TYPEPK_2);
 
-			String sql = sb.toString();
+				String sql = sb.toString();
 
-			Session session = null;
+				Session session = null;
 
-			try {
-				session = openSession();
+				try {
+					session = openSession();
 
-				Query query = session.createQuery(sql);
+					Query query = session.createQuery(sql);
 
-				QueryPos queryPos = QueryPos.getInstance(query);
+					QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(groupId);
+					queryPos.add(groupId);
 
-				queryPos.add(companyId);
+					queryPos.add(companyId);
 
-				queryPos.add(classNameId);
+					queryPos.add(classNameId);
 
-				queryPos.add(classPK);
+					queryPos.add(classPK);
 
-				queryPos.add(typePK);
+					queryPos.add(typePK);
 
-				count = (Long)query.uniqueResult();
+					count = (Long)query.uniqueResult();
 
-				if (productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, count);
 				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return count.intValue();
+			return count.intValue();
+		}
 	}
 
 	private static final String _FINDER_COLUMN_G_C_C_C_T_GROUPID_2 =
@@ -3471,24 +3447,25 @@ public class WorkflowDefinitionLinkPersistenceImpl
 	 */
 	@Override
 	public void cacheResult(WorkflowDefinitionLink workflowDefinitionLink) {
-		if (workflowDefinitionLink.getCtCollectionId() != 0) {
-			return;
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					workflowDefinitionLink.getCtCollectionId())) {
+
+			EntityCacheUtil.putResult(
+				WorkflowDefinitionLinkImpl.class,
+				workflowDefinitionLink.getPrimaryKey(), workflowDefinitionLink);
+
+			FinderCacheUtil.putResult(
+				_finderPathFetchByG_C_C_C_T,
+				new Object[] {
+					workflowDefinitionLink.getGroupId(),
+					workflowDefinitionLink.getCompanyId(),
+					workflowDefinitionLink.getClassNameId(),
+					workflowDefinitionLink.getClassPK(),
+					workflowDefinitionLink.getTypePK()
+				},
+				workflowDefinitionLink);
 		}
-
-		EntityCacheUtil.putResult(
-			WorkflowDefinitionLinkImpl.class,
-			workflowDefinitionLink.getPrimaryKey(), workflowDefinitionLink);
-
-		FinderCacheUtil.putResult(
-			_finderPathFetchByG_C_C_C_T,
-			new Object[] {
-				workflowDefinitionLink.getGroupId(),
-				workflowDefinitionLink.getCompanyId(),
-				workflowDefinitionLink.getClassNameId(),
-				workflowDefinitionLink.getClassPK(),
-				workflowDefinitionLink.getTypePK()
-			},
-			workflowDefinitionLink);
 	}
 
 	private int _valueObjectFinderCacheListThreshold;
@@ -3513,15 +3490,16 @@ public class WorkflowDefinitionLinkPersistenceImpl
 		for (WorkflowDefinitionLink workflowDefinitionLink :
 				workflowDefinitionLinks) {
 
-			if (workflowDefinitionLink.getCtCollectionId() != 0) {
-				continue;
-			}
+			try (SafeCloseable safeCloseable =
+					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+						workflowDefinitionLink.getCtCollectionId())) {
 
-			if (EntityCacheUtil.getResult(
-					WorkflowDefinitionLinkImpl.class,
-					workflowDefinitionLink.getPrimaryKey()) == null) {
+				if (EntityCacheUtil.getResult(
+						WorkflowDefinitionLinkImpl.class,
+						workflowDefinitionLink.getPrimaryKey()) == null) {
 
-				cacheResult(workflowDefinitionLink);
+					cacheResult(workflowDefinitionLink);
+				}
 			}
 		}
 	}
@@ -3578,18 +3556,24 @@ public class WorkflowDefinitionLinkPersistenceImpl
 	protected void cacheUniqueFindersCache(
 		WorkflowDefinitionLinkModelImpl workflowDefinitionLinkModelImpl) {
 
-		Object[] args = new Object[] {
-			workflowDefinitionLinkModelImpl.getGroupId(),
-			workflowDefinitionLinkModelImpl.getCompanyId(),
-			workflowDefinitionLinkModelImpl.getClassNameId(),
-			workflowDefinitionLinkModelImpl.getClassPK(),
-			workflowDefinitionLinkModelImpl.getTypePK()
-		};
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					workflowDefinitionLinkModelImpl.getCtCollectionId())) {
 
-		FinderCacheUtil.putResult(
-			_finderPathCountByG_C_C_C_T, args, Long.valueOf(1));
-		FinderCacheUtil.putResult(
-			_finderPathFetchByG_C_C_C_T, args, workflowDefinitionLinkModelImpl);
+			Object[] args = new Object[] {
+				workflowDefinitionLinkModelImpl.getGroupId(),
+				workflowDefinitionLinkModelImpl.getCompanyId(),
+				workflowDefinitionLinkModelImpl.getClassNameId(),
+				workflowDefinitionLinkModelImpl.getClassPK(),
+				workflowDefinitionLinkModelImpl.getTypePK()
+			};
+
+			FinderCacheUtil.putResult(
+				_finderPathCountByG_C_C_C_T, args, Long.valueOf(1));
+			FinderCacheUtil.putResult(
+				_finderPathFetchByG_C_C_C_T, args,
+				workflowDefinitionLinkModelImpl);
+		}
 	}
 
 	/**
@@ -3781,16 +3765,6 @@ public class WorkflowDefinitionLinkPersistenceImpl
 			closeSession(session);
 		}
 
-		if (workflowDefinitionLink.getCtCollectionId() != 0) {
-			if (isNew) {
-				workflowDefinitionLink.setNew(false);
-			}
-
-			workflowDefinitionLink.resetOriginalValues();
-
-			return workflowDefinitionLink;
-		}
-
 		EntityCacheUtil.putResult(
 			WorkflowDefinitionLinkImpl.class, workflowDefinitionLinkModelImpl,
 			false, true);
@@ -3858,10 +3832,21 @@ public class WorkflowDefinitionLinkPersistenceImpl
 		if (CTPersistenceHelperUtil.isProductionMode(
 				WorkflowDefinitionLink.class, primaryKey)) {
 
-			return super.fetchByPrimaryKey(primaryKey);
+			try (SafeCloseable safeCloseable =
+					CTCollectionThreadLocal.
+						setProductionModeWithSafeCloseable()) {
+
+				return super.fetchByPrimaryKey(primaryKey);
+			}
 		}
 
-		WorkflowDefinitionLink workflowDefinitionLink = null;
+		WorkflowDefinitionLink workflowDefinitionLink =
+			(WorkflowDefinitionLink)EntityCacheUtil.getResult(
+				WorkflowDefinitionLinkImpl.class, primaryKey);
+
+		if (workflowDefinitionLink != null) {
+			return workflowDefinitionLink;
+		}
 
 		Session session = null;
 
@@ -3905,7 +3890,12 @@ public class WorkflowDefinitionLinkPersistenceImpl
 		if (CTPersistenceHelperUtil.isProductionMode(
 				WorkflowDefinitionLink.class)) {
 
-			return super.fetchByPrimaryKeys(primaryKeys);
+			try (SafeCloseable safeCloseable =
+					CTCollectionThreadLocal.
+						setProductionModeWithSafeCloseable()) {
+
+				return super.fetchByPrimaryKeys(primaryKeys);
+			}
 		}
 
 		if (primaryKeys.isEmpty()) {
@@ -3927,6 +3917,34 @@ public class WorkflowDefinitionLinkPersistenceImpl
 				map.put(primaryKey, workflowDefinitionLink);
 			}
 
+			return map;
+		}
+
+		Set<Serializable> uncachedPrimaryKeys = null;
+
+		for (Serializable primaryKey : primaryKeys) {
+			try (SafeCloseable safeCloseable =
+					CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
+						WorkflowDefinitionLink.class, primaryKey)) {
+
+				WorkflowDefinitionLink workflowDefinitionLink =
+					(WorkflowDefinitionLink)EntityCacheUtil.getResult(
+						WorkflowDefinitionLinkImpl.class, primaryKey);
+
+				if (workflowDefinitionLink == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<>();
+					}
+
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, workflowDefinitionLink);
+				}
+			}
+		}
+
+		if (uncachedPrimaryKeys == null) {
 			return map;
 		}
 
@@ -4061,78 +4079,81 @@ public class WorkflowDefinitionLinkPersistenceImpl
 		OrderByComparator<WorkflowDefinitionLink> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
-			WorkflowDefinitionLink.class);
+		try (SafeCloseable safeCloseable =
+				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
+					WorkflowDefinitionLink.class)) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = null;
+			Object[] finderArgs = null;
 
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
+			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
 
-			if (useFinderCache && productionMode) {
-				finderPath = _finderPathWithoutPaginationFindAll;
-				finderArgs = FINDER_ARGS_EMPTY;
-			}
-		}
-		else if (useFinderCache && productionMode) {
-			finderPath = _finderPathWithPaginationFindAll;
-			finderArgs = new Object[] {start, end, orderByComparator};
-		}
-
-		List<WorkflowDefinitionLink> list = null;
-
-		if (useFinderCache && productionMode) {
-			list = (List<WorkflowDefinitionLink>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-			String sql = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					2 + (orderByComparator.getOrderByFields().length * 2));
-
-				sb.append(_SQL_SELECT_WORKFLOWDEFINITIONLINK);
-
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-
-				sql = sb.toString();
-			}
-			else {
-				sql = _SQL_SELECT_WORKFLOWDEFINITIONLINK;
-
-				sql = sql.concat(WorkflowDefinitionLinkModelImpl.ORDER_BY_JPQL);
-			}
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				list = (List<WorkflowDefinitionLink>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache && productionMode) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderPath = _finderPathWithoutPaginationFindAll;
+					finderArgs = FINDER_ARGS_EMPTY;
 				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
+			else if (useFinderCache) {
+				finderPath = _finderPathWithPaginationFindAll;
+				finderArgs = new Object[] {start, end, orderByComparator};
 			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return list;
+			List<WorkflowDefinitionLink> list = null;
+
+			if (useFinderCache) {
+				list = (List<WorkflowDefinitionLink>)FinderCacheUtil.getResult(
+					finderPath, finderArgs, this);
+			}
+
+			if (list == null) {
+				StringBundler sb = null;
+				String sql = null;
+
+				if (orderByComparator != null) {
+					sb = new StringBundler(
+						2 + (orderByComparator.getOrderByFields().length * 2));
+
+					sb.append(_SQL_SELECT_WORKFLOWDEFINITIONLINK);
+
+					appendOrderByComparator(
+						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+
+					sql = sb.toString();
+				}
+				else {
+					sql = _SQL_SELECT_WORKFLOWDEFINITIONLINK;
+
+					sql = sql.concat(
+						WorkflowDefinitionLinkModelImpl.ORDER_BY_JPQL);
+				}
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					list = (List<WorkflowDefinitionLink>)QueryUtil.list(
+						query, getDialect(), start, end);
+
+					cacheResult(list);
+
+					if (useFinderCache) {
+						FinderCacheUtil.putResult(finderPath, finderArgs, list);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
+			}
+
+			return list;
+		}
 	}
 
 	/**
@@ -4153,41 +4174,37 @@ public class WorkflowDefinitionLinkPersistenceImpl
 	 */
 	@Override
 	public int countAll() {
-		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
-			WorkflowDefinitionLink.class);
+		try (SafeCloseable safeCloseable =
+				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
+					WorkflowDefinitionLink.class)) {
 
-		Long count = null;
-
-		if (productionMode) {
-			count = (Long)FinderCacheUtil.getResult(
+			Long count = (Long)FinderCacheUtil.getResult(
 				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
-		}
 
-		if (count == null) {
-			Session session = null;
+			if (count == null) {
+				Session session = null;
 
-			try {
-				session = openSession();
+				try {
+					session = openSession();
 
-				Query query = session.createQuery(
-					_SQL_COUNT_WORKFLOWDEFINITIONLINK);
+					Query query = session.createQuery(
+						_SQL_COUNT_WORKFLOWDEFINITIONLINK);
 
-				count = (Long)query.uniqueResult();
+					count = (Long)query.uniqueResult();
 
-				if (productionMode) {
 					FinderCacheUtil.putResult(
 						_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return count.intValue();
+			return count.intValue();
+		}
 	}
 
 	@Override

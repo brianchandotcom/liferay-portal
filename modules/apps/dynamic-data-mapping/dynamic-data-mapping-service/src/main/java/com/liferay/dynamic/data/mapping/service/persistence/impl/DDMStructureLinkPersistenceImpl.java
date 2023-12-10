@@ -13,7 +13,9 @@ import com.liferay.dynamic.data.mapping.model.impl.DDMStructureLinkModelImpl;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMStructureLinkPersistence;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMStructureLinkUtil;
 import com.liferay.dynamic.data.mapping.service.persistence.impl.constants.DDMPersistenceConstants;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -165,98 +167,100 @@ public class DDMStructureLinkPersistenceImpl
 		OrderByComparator<DDMStructureLink> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			DDMStructureLink.class);
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					DDMStructureLink.class)) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = null;
+			Object[] finderArgs = null;
 
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
+			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
 
-			if (useFinderCache && productionMode) {
-				finderPath = _finderPathWithoutPaginationFindByStructureId;
-				finderArgs = new Object[] {structureId};
+				if (useFinderCache) {
+					finderPath = _finderPathWithoutPaginationFindByStructureId;
+					finderArgs = new Object[] {structureId};
+				}
 			}
-		}
-		else if (useFinderCache && productionMode) {
-			finderPath = _finderPathWithPaginationFindByStructureId;
-			finderArgs = new Object[] {
-				structureId, start, end, orderByComparator
-			};
-		}
+			else if (useFinderCache) {
+				finderPath = _finderPathWithPaginationFindByStructureId;
+				finderArgs = new Object[] {
+					structureId, start, end, orderByComparator
+				};
+			}
 
-		List<DDMStructureLink> list = null;
+			List<DDMStructureLink> list = null;
 
-		if (useFinderCache && productionMode) {
-			list = (List<DDMStructureLink>)finderCache.getResult(
-				finderPath, finderArgs, this);
+			if (useFinderCache) {
+				list = (List<DDMStructureLink>)finderCache.getResult(
+					finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (DDMStructureLink ddmStructureLink : list) {
-					if (structureId != ddmStructureLink.getStructureId()) {
-						list = null;
+				if ((list != null) && !list.isEmpty()) {
+					for (DDMStructureLink ddmStructureLink : list) {
+						if (structureId != ddmStructureLink.getStructureId()) {
+							list = null;
 
-						break;
+							break;
+						}
 					}
 				}
 			}
-		}
 
-		if (list == null) {
-			StringBundler sb = null;
+			if (list == null) {
+				StringBundler sb = null;
 
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
+				if (orderByComparator != null) {
+					sb = new StringBundler(
+						3 + (orderByComparator.getOrderByFields().length * 2));
+				}
+				else {
+					sb = new StringBundler(3);
+				}
 
-			sb.append(_SQL_SELECT_DDMSTRUCTURELINK_WHERE);
+				sb.append(_SQL_SELECT_DDMSTRUCTURELINK_WHERE);
 
-			sb.append(_FINDER_COLUMN_STRUCTUREID_STRUCTUREID_2);
+				sb.append(_FINDER_COLUMN_STRUCTUREID_STRUCTUREID_2);
 
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(DDMStructureLinkModelImpl.ORDER_BY_JPQL);
-			}
+				if (orderByComparator != null) {
+					appendOrderByComparator(
+						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				}
+				else {
+					sb.append(DDMStructureLinkModelImpl.ORDER_BY_JPQL);
+				}
 
-			String sql = sb.toString();
+				String sql = sb.toString();
 
-			Session session = null;
+				Session session = null;
 
-			try {
-				session = openSession();
+				try {
+					session = openSession();
 
-				Query query = session.createQuery(sql);
+					Query query = session.createQuery(sql);
 
-				QueryPos queryPos = QueryPos.getInstance(query);
+					QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(structureId);
+					queryPos.add(structureId);
 
-				list = (List<DDMStructureLink>)QueryUtil.list(
-					query, getDialect(), start, end);
+					list = (List<DDMStructureLink>)QueryUtil.list(
+						query, getDialect(), start, end);
 
-				cacheResult(list);
+					cacheResult(list);
 
-				if (useFinderCache && productionMode) {
-					finderCache.putResult(finderPath, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(finderPath, finderArgs, list);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
 				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return list;
+			return list;
+		}
 	}
 
 	/**
@@ -552,57 +556,51 @@ public class DDMStructureLinkPersistenceImpl
 	 */
 	@Override
 	public int countByStructureId(long structureId) {
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			DDMStructureLink.class);
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					DDMStructureLink.class)) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = _finderPathCountByStructureId;
 
-		Long count = null;
+			Object[] finderArgs = new Object[] {structureId};
 
-		if (productionMode) {
-			finderPath = _finderPathCountByStructureId;
+			Long count = (Long)finderCache.getResult(
+				finderPath, finderArgs, this);
 
-			finderArgs = new Object[] {structureId};
+			if (count == null) {
+				StringBundler sb = new StringBundler(2);
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-		}
+				sb.append(_SQL_COUNT_DDMSTRUCTURELINK_WHERE);
 
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
+				sb.append(_FINDER_COLUMN_STRUCTUREID_STRUCTUREID_2);
 
-			sb.append(_SQL_COUNT_DDMSTRUCTURELINK_WHERE);
+				String sql = sb.toString();
 
-			sb.append(_FINDER_COLUMN_STRUCTUREID_STRUCTUREID_2);
+				Session session = null;
 
-			String sql = sb.toString();
+				try {
+					session = openSession();
 
-			Session session = null;
+					Query query = session.createQuery(sql);
 
-			try {
-				session = openSession();
+					QueryPos queryPos = QueryPos.getInstance(query);
 
-				Query query = session.createQuery(sql);
+					queryPos.add(structureId);
 
-				QueryPos queryPos = QueryPos.getInstance(query);
+					count = (Long)query.uniqueResult();
 
-				queryPos.add(structureId);
-
-				count = (Long)query.uniqueResult();
-
-				if (productionMode) {
 					finderCache.putResult(finderPath, finderArgs, count);
 				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return count.intValue();
+			return count.intValue();
+		}
 	}
 
 	private static final String _FINDER_COLUMN_STRUCTUREID_STRUCTUREID_2 =
@@ -689,104 +687,107 @@ public class DDMStructureLinkPersistenceImpl
 		OrderByComparator<DDMStructureLink> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			DDMStructureLink.class);
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					DDMStructureLink.class)) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = null;
+			Object[] finderArgs = null;
 
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
+			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
 
-			if (useFinderCache && productionMode) {
-				finderPath = _finderPathWithoutPaginationFindByC_C;
-				finderArgs = new Object[] {classNameId, classPK};
+				if (useFinderCache) {
+					finderPath = _finderPathWithoutPaginationFindByC_C;
+					finderArgs = new Object[] {classNameId, classPK};
+				}
 			}
-		}
-		else if (useFinderCache && productionMode) {
-			finderPath = _finderPathWithPaginationFindByC_C;
-			finderArgs = new Object[] {
-				classNameId, classPK, start, end, orderByComparator
-			};
-		}
+			else if (useFinderCache) {
+				finderPath = _finderPathWithPaginationFindByC_C;
+				finderArgs = new Object[] {
+					classNameId, classPK, start, end, orderByComparator
+				};
+			}
 
-		List<DDMStructureLink> list = null;
+			List<DDMStructureLink> list = null;
 
-		if (useFinderCache && productionMode) {
-			list = (List<DDMStructureLink>)finderCache.getResult(
-				finderPath, finderArgs, this);
+			if (useFinderCache) {
+				list = (List<DDMStructureLink>)finderCache.getResult(
+					finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (DDMStructureLink ddmStructureLink : list) {
-					if ((classNameId != ddmStructureLink.getClassNameId()) ||
-						(classPK != ddmStructureLink.getClassPK())) {
+				if ((list != null) && !list.isEmpty()) {
+					for (DDMStructureLink ddmStructureLink : list) {
+						if ((classNameId !=
+								ddmStructureLink.getClassNameId()) ||
+							(classPK != ddmStructureLink.getClassPK())) {
 
-						list = null;
+							list = null;
 
-						break;
+							break;
+						}
 					}
 				}
 			}
-		}
 
-		if (list == null) {
-			StringBundler sb = null;
+			if (list == null) {
+				StringBundler sb = null;
 
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					4 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(4);
-			}
+				if (orderByComparator != null) {
+					sb = new StringBundler(
+						4 + (orderByComparator.getOrderByFields().length * 2));
+				}
+				else {
+					sb = new StringBundler(4);
+				}
 
-			sb.append(_SQL_SELECT_DDMSTRUCTURELINK_WHERE);
+				sb.append(_SQL_SELECT_DDMSTRUCTURELINK_WHERE);
 
-			sb.append(_FINDER_COLUMN_C_C_CLASSNAMEID_2);
+				sb.append(_FINDER_COLUMN_C_C_CLASSNAMEID_2);
 
-			sb.append(_FINDER_COLUMN_C_C_CLASSPK_2);
+				sb.append(_FINDER_COLUMN_C_C_CLASSPK_2);
 
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(DDMStructureLinkModelImpl.ORDER_BY_JPQL);
-			}
+				if (orderByComparator != null) {
+					appendOrderByComparator(
+						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				}
+				else {
+					sb.append(DDMStructureLinkModelImpl.ORDER_BY_JPQL);
+				}
 
-			String sql = sb.toString();
+				String sql = sb.toString();
 
-			Session session = null;
+				Session session = null;
 
-			try {
-				session = openSession();
+				try {
+					session = openSession();
 
-				Query query = session.createQuery(sql);
+					Query query = session.createQuery(sql);
 
-				QueryPos queryPos = QueryPos.getInstance(query);
+					QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(classNameId);
+					queryPos.add(classNameId);
 
-				queryPos.add(classPK);
+					queryPos.add(classPK);
 
-				list = (List<DDMStructureLink>)QueryUtil.list(
-					query, getDialect(), start, end);
+					list = (List<DDMStructureLink>)QueryUtil.list(
+						query, getDialect(), start, end);
 
-				cacheResult(list);
+					cacheResult(list);
 
-				if (useFinderCache && productionMode) {
-					finderCache.putResult(finderPath, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(finderPath, finderArgs, list);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
 				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return list;
+			return list;
+		}
 	}
 
 	/**
@@ -1100,61 +1101,55 @@ public class DDMStructureLinkPersistenceImpl
 	 */
 	@Override
 	public int countByC_C(long classNameId, long classPK) {
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			DDMStructureLink.class);
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					DDMStructureLink.class)) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = _finderPathCountByC_C;
 
-		Long count = null;
+			Object[] finderArgs = new Object[] {classNameId, classPK};
 
-		if (productionMode) {
-			finderPath = _finderPathCountByC_C;
+			Long count = (Long)finderCache.getResult(
+				finderPath, finderArgs, this);
 
-			finderArgs = new Object[] {classNameId, classPK};
+			if (count == null) {
+				StringBundler sb = new StringBundler(3);
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-		}
+				sb.append(_SQL_COUNT_DDMSTRUCTURELINK_WHERE);
 
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
+				sb.append(_FINDER_COLUMN_C_C_CLASSNAMEID_2);
 
-			sb.append(_SQL_COUNT_DDMSTRUCTURELINK_WHERE);
+				sb.append(_FINDER_COLUMN_C_C_CLASSPK_2);
 
-			sb.append(_FINDER_COLUMN_C_C_CLASSNAMEID_2);
+				String sql = sb.toString();
 
-			sb.append(_FINDER_COLUMN_C_C_CLASSPK_2);
+				Session session = null;
 
-			String sql = sb.toString();
+				try {
+					session = openSession();
 
-			Session session = null;
+					Query query = session.createQuery(sql);
 
-			try {
-				session = openSession();
+					QueryPos queryPos = QueryPos.getInstance(query);
 
-				Query query = session.createQuery(sql);
+					queryPos.add(classNameId);
 
-				QueryPos queryPos = QueryPos.getInstance(query);
+					queryPos.add(classPK);
 
-				queryPos.add(classNameId);
+					count = (Long)query.uniqueResult();
 
-				queryPos.add(classPK);
-
-				count = (Long)query.uniqueResult();
-
-				if (productionMode) {
 					finderCache.putResult(finderPath, finderArgs, count);
 				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return count.intValue();
+			return count.intValue();
+		}
 	}
 
 	private static final String _FINDER_COLUMN_C_C_CLASSNAMEID_2 =
@@ -1238,99 +1233,92 @@ public class DDMStructureLinkPersistenceImpl
 		long classNameId, long classPK, long structureId,
 		boolean useFinderCache) {
 
-		Object[] finderArgs = null;
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					DDMStructureLink.class)) {
 
-		if (useFinderCache) {
-			finderArgs = new Object[] {classNameId, classPK, structureId};
-		}
+			Object[] finderArgs = null;
 
-		Object result = null;
-
-		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByC_C_S, finderArgs, this);
-		}
-
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			DDMStructureLink.class);
-
-		if (result instanceof DDMStructureLink) {
-			DDMStructureLink ddmStructureLink = (DDMStructureLink)result;
-
-			if ((classNameId != ddmStructureLink.getClassNameId()) ||
-				(classPK != ddmStructureLink.getClassPK()) ||
-				(structureId != ddmStructureLink.getStructureId())) {
-
-				result = null;
+			if (useFinderCache) {
+				finderArgs = new Object[] {classNameId, classPK, structureId};
 			}
-			else if (!ctPersistenceHelper.isProductionMode(
-						DDMStructureLink.class,
-						ddmStructureLink.getPrimaryKey())) {
 
-				result = null;
+			Object result = null;
+
+			if (useFinderCache) {
+				result = finderCache.getResult(
+					_finderPathFetchByC_C_S, finderArgs, this);
 			}
-		}
-		else if (!productionMode && (result instanceof List<?>)) {
-			result = null;
-		}
 
-		if (result == null) {
-			StringBundler sb = new StringBundler(5);
+			if (result instanceof DDMStructureLink) {
+				DDMStructureLink ddmStructureLink = (DDMStructureLink)result;
 
-			sb.append(_SQL_SELECT_DDMSTRUCTURELINK_WHERE);
+				if ((classNameId != ddmStructureLink.getClassNameId()) ||
+					(classPK != ddmStructureLink.getClassPK()) ||
+					(structureId != ddmStructureLink.getStructureId())) {
 
-			sb.append(_FINDER_COLUMN_C_C_S_CLASSNAMEID_2);
+					result = null;
+				}
+			}
 
-			sb.append(_FINDER_COLUMN_C_C_S_CLASSPK_2);
+			if (result == null) {
+				StringBundler sb = new StringBundler(5);
 
-			sb.append(_FINDER_COLUMN_C_C_S_STRUCTUREID_2);
+				sb.append(_SQL_SELECT_DDMSTRUCTURELINK_WHERE);
 
-			String sql = sb.toString();
+				sb.append(_FINDER_COLUMN_C_C_S_CLASSNAMEID_2);
 
-			Session session = null;
+				sb.append(_FINDER_COLUMN_C_C_S_CLASSPK_2);
 
-			try {
-				session = openSession();
+				sb.append(_FINDER_COLUMN_C_C_S_STRUCTUREID_2);
 
-				Query query = session.createQuery(sql);
+				String sql = sb.toString();
 
-				QueryPos queryPos = QueryPos.getInstance(query);
+				Session session = null;
 
-				queryPos.add(classNameId);
+				try {
+					session = openSession();
 
-				queryPos.add(classPK);
+					Query query = session.createQuery(sql);
 
-				queryPos.add(structureId);
+					QueryPos queryPos = QueryPos.getInstance(query);
 
-				List<DDMStructureLink> list = query.list();
+					queryPos.add(classNameId);
 
-				if (list.isEmpty()) {
-					if (useFinderCache && productionMode) {
-						finderCache.putResult(
-							_finderPathFetchByC_C_S, finderArgs, list);
+					queryPos.add(classPK);
+
+					queryPos.add(structureId);
+
+					List<DDMStructureLink> list = query.list();
+
+					if (list.isEmpty()) {
+						if (useFinderCache) {
+							finderCache.putResult(
+								_finderPathFetchByC_C_S, finderArgs, list);
+						}
+					}
+					else {
+						DDMStructureLink ddmStructureLink = list.get(0);
+
+						result = ddmStructureLink;
+
+						cacheResult(ddmStructureLink);
 					}
 				}
-				else {
-					DDMStructureLink ddmStructureLink = list.get(0);
-
-					result = ddmStructureLink;
-
-					cacheResult(ddmStructureLink);
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
 				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (DDMStructureLink)result;
+			if (result instanceof List<?>) {
+				return null;
+			}
+			else {
+				return (DDMStructureLink)result;
+			}
 		}
 	}
 
@@ -1363,65 +1351,61 @@ public class DDMStructureLinkPersistenceImpl
 	 */
 	@Override
 	public int countByC_C_S(long classNameId, long classPK, long structureId) {
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			DDMStructureLink.class);
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					DDMStructureLink.class)) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = _finderPathCountByC_C_S;
 
-		Long count = null;
+			Object[] finderArgs = new Object[] {
+				classNameId, classPK, structureId
+			};
 
-		if (productionMode) {
-			finderPath = _finderPathCountByC_C_S;
+			Long count = (Long)finderCache.getResult(
+				finderPath, finderArgs, this);
 
-			finderArgs = new Object[] {classNameId, classPK, structureId};
+			if (count == null) {
+				StringBundler sb = new StringBundler(4);
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-		}
+				sb.append(_SQL_COUNT_DDMSTRUCTURELINK_WHERE);
 
-		if (count == null) {
-			StringBundler sb = new StringBundler(4);
+				sb.append(_FINDER_COLUMN_C_C_S_CLASSNAMEID_2);
 
-			sb.append(_SQL_COUNT_DDMSTRUCTURELINK_WHERE);
+				sb.append(_FINDER_COLUMN_C_C_S_CLASSPK_2);
 
-			sb.append(_FINDER_COLUMN_C_C_S_CLASSNAMEID_2);
+				sb.append(_FINDER_COLUMN_C_C_S_STRUCTUREID_2);
 
-			sb.append(_FINDER_COLUMN_C_C_S_CLASSPK_2);
+				String sql = sb.toString();
 
-			sb.append(_FINDER_COLUMN_C_C_S_STRUCTUREID_2);
+				Session session = null;
 
-			String sql = sb.toString();
+				try {
+					session = openSession();
 
-			Session session = null;
+					Query query = session.createQuery(sql);
 
-			try {
-				session = openSession();
+					QueryPos queryPos = QueryPos.getInstance(query);
 
-				Query query = session.createQuery(sql);
+					queryPos.add(classNameId);
 
-				QueryPos queryPos = QueryPos.getInstance(query);
+					queryPos.add(classPK);
 
-				queryPos.add(classNameId);
+					queryPos.add(structureId);
 
-				queryPos.add(classPK);
+					count = (Long)query.uniqueResult();
 
-				queryPos.add(structureId);
-
-				count = (Long)query.uniqueResult();
-
-				if (productionMode) {
 					finderCache.putResult(finderPath, finderArgs, count);
 				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return count.intValue();
+			return count.intValue();
+		}
 	}
 
 	private static final String _FINDER_COLUMN_C_C_S_CLASSNAMEID_2 =
@@ -1449,21 +1433,23 @@ public class DDMStructureLinkPersistenceImpl
 	 */
 	@Override
 	public void cacheResult(DDMStructureLink ddmStructureLink) {
-		if (ddmStructureLink.getCtCollectionId() != 0) {
-			return;
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					ddmStructureLink.getCtCollectionId())) {
+
+			entityCache.putResult(
+				DDMStructureLinkImpl.class, ddmStructureLink.getPrimaryKey(),
+				ddmStructureLink);
+
+			finderCache.putResult(
+				_finderPathFetchByC_C_S,
+				new Object[] {
+					ddmStructureLink.getClassNameId(),
+					ddmStructureLink.getClassPK(),
+					ddmStructureLink.getStructureId()
+				},
+				ddmStructureLink);
 		}
-
-		entityCache.putResult(
-			DDMStructureLinkImpl.class, ddmStructureLink.getPrimaryKey(),
-			ddmStructureLink);
-
-		finderCache.putResult(
-			_finderPathFetchByC_C_S,
-			new Object[] {
-				ddmStructureLink.getClassNameId(),
-				ddmStructureLink.getClassPK(), ddmStructureLink.getStructureId()
-			},
-			ddmStructureLink);
 	}
 
 	private int _valueObjectFinderCacheListThreshold;
@@ -1484,15 +1470,16 @@ public class DDMStructureLinkPersistenceImpl
 		}
 
 		for (DDMStructureLink ddmStructureLink : ddmStructureLinks) {
-			if (ddmStructureLink.getCtCollectionId() != 0) {
-				continue;
-			}
+			try (SafeCloseable safeCloseable =
+					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+						ddmStructureLink.getCtCollectionId())) {
 
-			if (entityCache.getResult(
-					DDMStructureLinkImpl.class,
-					ddmStructureLink.getPrimaryKey()) == null) {
+				if (entityCache.getResult(
+						DDMStructureLinkImpl.class,
+						ddmStructureLink.getPrimaryKey()) == null) {
 
-				cacheResult(ddmStructureLink);
+					cacheResult(ddmStructureLink);
+				}
 			}
 		}
 	}
@@ -1543,15 +1530,21 @@ public class DDMStructureLinkPersistenceImpl
 	protected void cacheUniqueFindersCache(
 		DDMStructureLinkModelImpl ddmStructureLinkModelImpl) {
 
-		Object[] args = new Object[] {
-			ddmStructureLinkModelImpl.getClassNameId(),
-			ddmStructureLinkModelImpl.getClassPK(),
-			ddmStructureLinkModelImpl.getStructureId()
-		};
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					ddmStructureLinkModelImpl.getCtCollectionId())) {
 
-		finderCache.putResult(_finderPathCountByC_C_S, args, Long.valueOf(1));
-		finderCache.putResult(
-			_finderPathFetchByC_C_S, args, ddmStructureLinkModelImpl);
+			Object[] args = new Object[] {
+				ddmStructureLinkModelImpl.getClassNameId(),
+				ddmStructureLinkModelImpl.getClassPK(),
+				ddmStructureLinkModelImpl.getStructureId()
+			};
+
+			finderCache.putResult(
+				_finderPathCountByC_C_S, args, Long.valueOf(1));
+			finderCache.putResult(
+				_finderPathFetchByC_C_S, args, ddmStructureLinkModelImpl);
+		}
 	}
 
 	/**
@@ -1710,16 +1703,6 @@ public class DDMStructureLinkPersistenceImpl
 			closeSession(session);
 		}
 
-		if (ddmStructureLink.getCtCollectionId() != 0) {
-			if (isNew) {
-				ddmStructureLink.setNew(false);
-			}
-
-			ddmStructureLink.resetOriginalValues();
-
-			return ddmStructureLink;
-		}
-
 		entityCache.putResult(
 			DDMStructureLinkImpl.class, ddmStructureLinkModelImpl, false, true);
 
@@ -1784,10 +1767,21 @@ public class DDMStructureLinkPersistenceImpl
 		if (ctPersistenceHelper.isProductionMode(
 				DDMStructureLink.class, primaryKey)) {
 
-			return super.fetchByPrimaryKey(primaryKey);
+			try (SafeCloseable safeCloseable =
+					CTCollectionThreadLocal.
+						setProductionModeWithSafeCloseable()) {
+
+				return super.fetchByPrimaryKey(primaryKey);
+			}
 		}
 
-		DDMStructureLink ddmStructureLink = null;
+		DDMStructureLink ddmStructureLink =
+			(DDMStructureLink)entityCache.getResult(
+				DDMStructureLinkImpl.class, primaryKey);
+
+		if (ddmStructureLink != null) {
+			return ddmStructureLink;
+		}
 
 		Session session = null;
 
@@ -1827,7 +1821,12 @@ public class DDMStructureLinkPersistenceImpl
 		Set<Serializable> primaryKeys) {
 
 		if (ctPersistenceHelper.isProductionMode(DDMStructureLink.class)) {
-			return super.fetchByPrimaryKeys(primaryKeys);
+			try (SafeCloseable safeCloseable =
+					CTCollectionThreadLocal.
+						setProductionModeWithSafeCloseable()) {
+
+				return super.fetchByPrimaryKeys(primaryKeys);
+			}
 		}
 
 		if (primaryKeys.isEmpty()) {
@@ -1848,6 +1847,34 @@ public class DDMStructureLinkPersistenceImpl
 				map.put(primaryKey, ddmStructureLink);
 			}
 
+			return map;
+		}
+
+		Set<Serializable> uncachedPrimaryKeys = null;
+
+		for (Serializable primaryKey : primaryKeys) {
+			try (SafeCloseable safeCloseable =
+					ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+						DDMStructureLink.class, primaryKey)) {
+
+				DDMStructureLink ddmStructureLink =
+					(DDMStructureLink)entityCache.getResult(
+						DDMStructureLinkImpl.class, primaryKey);
+
+				if (ddmStructureLink == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<>();
+					}
+
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, ddmStructureLink);
+				}
+			}
+		}
+
+		if (uncachedPrimaryKeys == null) {
 			return map;
 		}
 
@@ -1980,78 +2007,80 @@ public class DDMStructureLinkPersistenceImpl
 		OrderByComparator<DDMStructureLink> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			DDMStructureLink.class);
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					DDMStructureLink.class)) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = null;
+			Object[] finderArgs = null;
 
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
+			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
 
-			if (useFinderCache && productionMode) {
-				finderPath = _finderPathWithoutPaginationFindAll;
-				finderArgs = FINDER_ARGS_EMPTY;
-			}
-		}
-		else if (useFinderCache && productionMode) {
-			finderPath = _finderPathWithPaginationFindAll;
-			finderArgs = new Object[] {start, end, orderByComparator};
-		}
-
-		List<DDMStructureLink> list = null;
-
-		if (useFinderCache && productionMode) {
-			list = (List<DDMStructureLink>)finderCache.getResult(
-				finderPath, finderArgs, this);
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-			String sql = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					2 + (orderByComparator.getOrderByFields().length * 2));
-
-				sb.append(_SQL_SELECT_DDMSTRUCTURELINK);
-
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-
-				sql = sb.toString();
-			}
-			else {
-				sql = _SQL_SELECT_DDMSTRUCTURELINK;
-
-				sql = sql.concat(DDMStructureLinkModelImpl.ORDER_BY_JPQL);
-			}
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				list = (List<DDMStructureLink>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache && productionMode) {
-					finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderPath = _finderPathWithoutPaginationFindAll;
+					finderArgs = FINDER_ARGS_EMPTY;
 				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
+			else if (useFinderCache) {
+				finderPath = _finderPathWithPaginationFindAll;
+				finderArgs = new Object[] {start, end, orderByComparator};
 			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return list;
+			List<DDMStructureLink> list = null;
+
+			if (useFinderCache) {
+				list = (List<DDMStructureLink>)finderCache.getResult(
+					finderPath, finderArgs, this);
+			}
+
+			if (list == null) {
+				StringBundler sb = null;
+				String sql = null;
+
+				if (orderByComparator != null) {
+					sb = new StringBundler(
+						2 + (orderByComparator.getOrderByFields().length * 2));
+
+					sb.append(_SQL_SELECT_DDMSTRUCTURELINK);
+
+					appendOrderByComparator(
+						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+
+					sql = sb.toString();
+				}
+				else {
+					sql = _SQL_SELECT_DDMSTRUCTURELINK;
+
+					sql = sql.concat(DDMStructureLinkModelImpl.ORDER_BY_JPQL);
+				}
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					list = (List<DDMStructureLink>)QueryUtil.list(
+						query, getDialect(), start, end);
+
+					cacheResult(list);
+
+					if (useFinderCache) {
+						finderCache.putResult(finderPath, finderArgs, list);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
+			}
+
+			return list;
+		}
 	}
 
 	/**
@@ -2072,40 +2101,37 @@ public class DDMStructureLinkPersistenceImpl
 	 */
 	@Override
 	public int countAll() {
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			DDMStructureLink.class);
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					DDMStructureLink.class)) {
 
-		Long count = null;
-
-		if (productionMode) {
-			count = (Long)finderCache.getResult(
+			Long count = (Long)finderCache.getResult(
 				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
-		}
 
-		if (count == null) {
-			Session session = null;
+			if (count == null) {
+				Session session = null;
 
-			try {
-				session = openSession();
+				try {
+					session = openSession();
 
-				Query query = session.createQuery(_SQL_COUNT_DDMSTRUCTURELINK);
+					Query query = session.createQuery(
+						_SQL_COUNT_DDMSTRUCTURELINK);
 
-				count = (Long)query.uniqueResult();
+					count = (Long)query.uniqueResult();
 
-				if (productionMode) {
 					finderCache.putResult(
 						_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return count.intValue();
+			return count.intValue();
+		}
 	}
 
 	@Override

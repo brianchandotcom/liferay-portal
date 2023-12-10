@@ -10,7 +10,9 @@ import com.liferay.expando.kernel.model.ExpandoValue;
 import com.liferay.expando.kernel.model.ExpandoValueTable;
 import com.liferay.expando.kernel.service.persistence.ExpandoValuePersistence;
 import com.liferay.expando.kernel.service.persistence.ExpandoValueUtil;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -155,96 +157,100 @@ public class ExpandoValuePersistenceImpl
 		OrderByComparator<ExpandoValue> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
-			ExpandoValue.class);
+		try (SafeCloseable safeCloseable =
+				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
+					ExpandoValue.class)) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = null;
+			Object[] finderArgs = null;
 
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
+			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
 
-			if (useFinderCache && productionMode) {
-				finderPath = _finderPathWithoutPaginationFindByTableId;
-				finderArgs = new Object[] {tableId};
+				if (useFinderCache) {
+					finderPath = _finderPathWithoutPaginationFindByTableId;
+					finderArgs = new Object[] {tableId};
+				}
 			}
-		}
-		else if (useFinderCache && productionMode) {
-			finderPath = _finderPathWithPaginationFindByTableId;
-			finderArgs = new Object[] {tableId, start, end, orderByComparator};
-		}
+			else if (useFinderCache) {
+				finderPath = _finderPathWithPaginationFindByTableId;
+				finderArgs = new Object[] {
+					tableId, start, end, orderByComparator
+				};
+			}
 
-		List<ExpandoValue> list = null;
+			List<ExpandoValue> list = null;
 
-		if (useFinderCache && productionMode) {
-			list = (List<ExpandoValue>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+			if (useFinderCache) {
+				list = (List<ExpandoValue>)FinderCacheUtil.getResult(
+					finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (ExpandoValue expandoValue : list) {
-					if (tableId != expandoValue.getTableId()) {
-						list = null;
+				if ((list != null) && !list.isEmpty()) {
+					for (ExpandoValue expandoValue : list) {
+						if (tableId != expandoValue.getTableId()) {
+							list = null;
 
-						break;
+							break;
+						}
 					}
 				}
 			}
-		}
 
-		if (list == null) {
-			StringBundler sb = null;
+			if (list == null) {
+				StringBundler sb = null;
 
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
+				if (orderByComparator != null) {
+					sb = new StringBundler(
+						3 + (orderByComparator.getOrderByFields().length * 2));
+				}
+				else {
+					sb = new StringBundler(3);
+				}
 
-			sb.append(_SQL_SELECT_EXPANDOVALUE_WHERE);
+				sb.append(_SQL_SELECT_EXPANDOVALUE_WHERE);
 
-			sb.append(_FINDER_COLUMN_TABLEID_TABLEID_2);
+				sb.append(_FINDER_COLUMN_TABLEID_TABLEID_2);
 
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(ExpandoValueModelImpl.ORDER_BY_JPQL);
-			}
+				if (orderByComparator != null) {
+					appendOrderByComparator(
+						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				}
+				else {
+					sb.append(ExpandoValueModelImpl.ORDER_BY_JPQL);
+				}
 
-			String sql = sb.toString();
+				String sql = sb.toString();
 
-			Session session = null;
+				Session session = null;
 
-			try {
-				session = openSession();
+				try {
+					session = openSession();
 
-				Query query = session.createQuery(sql);
+					Query query = session.createQuery(sql);
 
-				QueryPos queryPos = QueryPos.getInstance(query);
+					QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(tableId);
+					queryPos.add(tableId);
 
-				list = (List<ExpandoValue>)QueryUtil.list(
-					query, getDialect(), start, end);
+					list = (List<ExpandoValue>)QueryUtil.list(
+						query, getDialect(), start, end);
 
-				cacheResult(list);
+					cacheResult(list);
 
-				if (useFinderCache && productionMode) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+					if (useFinderCache) {
+						FinderCacheUtil.putResult(finderPath, finderArgs, list);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
 				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return list;
+			return list;
+		}
 	}
 
 	/**
@@ -532,58 +538,51 @@ public class ExpandoValuePersistenceImpl
 	 */
 	@Override
 	public int countByTableId(long tableId) {
-		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
-			ExpandoValue.class);
+		try (SafeCloseable safeCloseable =
+				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
+					ExpandoValue.class)) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = _finderPathCountByTableId;
 
-		Long count = null;
+			Object[] finderArgs = new Object[] {tableId};
 
-		if (productionMode) {
-			finderPath = _finderPathCountByTableId;
-
-			finderArgs = new Object[] {tableId};
-
-			count = (Long)FinderCacheUtil.getResult(
+			Long count = (Long)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
-		}
 
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
+			if (count == null) {
+				StringBundler sb = new StringBundler(2);
 
-			sb.append(_SQL_COUNT_EXPANDOVALUE_WHERE);
+				sb.append(_SQL_COUNT_EXPANDOVALUE_WHERE);
 
-			sb.append(_FINDER_COLUMN_TABLEID_TABLEID_2);
+				sb.append(_FINDER_COLUMN_TABLEID_TABLEID_2);
 
-			String sql = sb.toString();
+				String sql = sb.toString();
 
-			Session session = null;
+				Session session = null;
 
-			try {
-				session = openSession();
+				try {
+					session = openSession();
 
-				Query query = session.createQuery(sql);
+					Query query = session.createQuery(sql);
 
-				QueryPos queryPos = QueryPos.getInstance(query);
+					QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(tableId);
+					queryPos.add(tableId);
 
-				count = (Long)query.uniqueResult();
+					count = (Long)query.uniqueResult();
 
-				if (productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, count);
 				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return count.intValue();
+			return count.intValue();
+		}
 	}
 
 	private static final String _FINDER_COLUMN_TABLEID_TABLEID_2 =
@@ -665,96 +664,100 @@ public class ExpandoValuePersistenceImpl
 		OrderByComparator<ExpandoValue> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
-			ExpandoValue.class);
+		try (SafeCloseable safeCloseable =
+				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
+					ExpandoValue.class)) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = null;
+			Object[] finderArgs = null;
 
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
+			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
 
-			if (useFinderCache && productionMode) {
-				finderPath = _finderPathWithoutPaginationFindByColumnId;
-				finderArgs = new Object[] {columnId};
+				if (useFinderCache) {
+					finderPath = _finderPathWithoutPaginationFindByColumnId;
+					finderArgs = new Object[] {columnId};
+				}
 			}
-		}
-		else if (useFinderCache && productionMode) {
-			finderPath = _finderPathWithPaginationFindByColumnId;
-			finderArgs = new Object[] {columnId, start, end, orderByComparator};
-		}
+			else if (useFinderCache) {
+				finderPath = _finderPathWithPaginationFindByColumnId;
+				finderArgs = new Object[] {
+					columnId, start, end, orderByComparator
+				};
+			}
 
-		List<ExpandoValue> list = null;
+			List<ExpandoValue> list = null;
 
-		if (useFinderCache && productionMode) {
-			list = (List<ExpandoValue>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+			if (useFinderCache) {
+				list = (List<ExpandoValue>)FinderCacheUtil.getResult(
+					finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (ExpandoValue expandoValue : list) {
-					if (columnId != expandoValue.getColumnId()) {
-						list = null;
+				if ((list != null) && !list.isEmpty()) {
+					for (ExpandoValue expandoValue : list) {
+						if (columnId != expandoValue.getColumnId()) {
+							list = null;
 
-						break;
+							break;
+						}
 					}
 				}
 			}
-		}
 
-		if (list == null) {
-			StringBundler sb = null;
+			if (list == null) {
+				StringBundler sb = null;
 
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
+				if (orderByComparator != null) {
+					sb = new StringBundler(
+						3 + (orderByComparator.getOrderByFields().length * 2));
+				}
+				else {
+					sb = new StringBundler(3);
+				}
 
-			sb.append(_SQL_SELECT_EXPANDOVALUE_WHERE);
+				sb.append(_SQL_SELECT_EXPANDOVALUE_WHERE);
 
-			sb.append(_FINDER_COLUMN_COLUMNID_COLUMNID_2);
+				sb.append(_FINDER_COLUMN_COLUMNID_COLUMNID_2);
 
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(ExpandoValueModelImpl.ORDER_BY_JPQL);
-			}
+				if (orderByComparator != null) {
+					appendOrderByComparator(
+						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				}
+				else {
+					sb.append(ExpandoValueModelImpl.ORDER_BY_JPQL);
+				}
 
-			String sql = sb.toString();
+				String sql = sb.toString();
 
-			Session session = null;
+				Session session = null;
 
-			try {
-				session = openSession();
+				try {
+					session = openSession();
 
-				Query query = session.createQuery(sql);
+					Query query = session.createQuery(sql);
 
-				QueryPos queryPos = QueryPos.getInstance(query);
+					QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(columnId);
+					queryPos.add(columnId);
 
-				list = (List<ExpandoValue>)QueryUtil.list(
-					query, getDialect(), start, end);
+					list = (List<ExpandoValue>)QueryUtil.list(
+						query, getDialect(), start, end);
 
-				cacheResult(list);
+					cacheResult(list);
 
-				if (useFinderCache && productionMode) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+					if (useFinderCache) {
+						FinderCacheUtil.putResult(finderPath, finderArgs, list);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
 				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return list;
+			return list;
+		}
 	}
 
 	/**
@@ -1042,58 +1045,51 @@ public class ExpandoValuePersistenceImpl
 	 */
 	@Override
 	public int countByColumnId(long columnId) {
-		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
-			ExpandoValue.class);
+		try (SafeCloseable safeCloseable =
+				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
+					ExpandoValue.class)) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = _finderPathCountByColumnId;
 
-		Long count = null;
+			Object[] finderArgs = new Object[] {columnId};
 
-		if (productionMode) {
-			finderPath = _finderPathCountByColumnId;
-
-			finderArgs = new Object[] {columnId};
-
-			count = (Long)FinderCacheUtil.getResult(
+			Long count = (Long)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
-		}
 
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
+			if (count == null) {
+				StringBundler sb = new StringBundler(2);
 
-			sb.append(_SQL_COUNT_EXPANDOVALUE_WHERE);
+				sb.append(_SQL_COUNT_EXPANDOVALUE_WHERE);
 
-			sb.append(_FINDER_COLUMN_COLUMNID_COLUMNID_2);
+				sb.append(_FINDER_COLUMN_COLUMNID_COLUMNID_2);
 
-			String sql = sb.toString();
+				String sql = sb.toString();
 
-			Session session = null;
+				Session session = null;
 
-			try {
-				session = openSession();
+				try {
+					session = openSession();
 
-				Query query = session.createQuery(sql);
+					Query query = session.createQuery(sql);
 
-				QueryPos queryPos = QueryPos.getInstance(query);
+					QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(columnId);
+					queryPos.add(columnId);
 
-				count = (Long)query.uniqueResult();
+					count = (Long)query.uniqueResult();
 
-				if (productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, count);
 				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return count.intValue();
+			return count.intValue();
+		}
 	}
 
 	private static final String _FINDER_COLUMN_COLUMNID_COLUMNID_2 =
@@ -1172,96 +1168,100 @@ public class ExpandoValuePersistenceImpl
 		OrderByComparator<ExpandoValue> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
-			ExpandoValue.class);
+		try (SafeCloseable safeCloseable =
+				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
+					ExpandoValue.class)) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = null;
+			Object[] finderArgs = null;
 
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
+			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
 
-			if (useFinderCache && productionMode) {
-				finderPath = _finderPathWithoutPaginationFindByRowId;
-				finderArgs = new Object[] {rowId};
+				if (useFinderCache) {
+					finderPath = _finderPathWithoutPaginationFindByRowId;
+					finderArgs = new Object[] {rowId};
+				}
 			}
-		}
-		else if (useFinderCache && productionMode) {
-			finderPath = _finderPathWithPaginationFindByRowId;
-			finderArgs = new Object[] {rowId, start, end, orderByComparator};
-		}
+			else if (useFinderCache) {
+				finderPath = _finderPathWithPaginationFindByRowId;
+				finderArgs = new Object[] {
+					rowId, start, end, orderByComparator
+				};
+			}
 
-		List<ExpandoValue> list = null;
+			List<ExpandoValue> list = null;
 
-		if (useFinderCache && productionMode) {
-			list = (List<ExpandoValue>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+			if (useFinderCache) {
+				list = (List<ExpandoValue>)FinderCacheUtil.getResult(
+					finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (ExpandoValue expandoValue : list) {
-					if (rowId != expandoValue.getRowId()) {
-						list = null;
+				if ((list != null) && !list.isEmpty()) {
+					for (ExpandoValue expandoValue : list) {
+						if (rowId != expandoValue.getRowId()) {
+							list = null;
 
-						break;
+							break;
+						}
 					}
 				}
 			}
-		}
 
-		if (list == null) {
-			StringBundler sb = null;
+			if (list == null) {
+				StringBundler sb = null;
 
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
+				if (orderByComparator != null) {
+					sb = new StringBundler(
+						3 + (orderByComparator.getOrderByFields().length * 2));
+				}
+				else {
+					sb = new StringBundler(3);
+				}
 
-			sb.append(_SQL_SELECT_EXPANDOVALUE_WHERE);
+				sb.append(_SQL_SELECT_EXPANDOVALUE_WHERE);
 
-			sb.append(_FINDER_COLUMN_ROWID_ROWID_2);
+				sb.append(_FINDER_COLUMN_ROWID_ROWID_2);
 
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(ExpandoValueModelImpl.ORDER_BY_JPQL);
-			}
+				if (orderByComparator != null) {
+					appendOrderByComparator(
+						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				}
+				else {
+					sb.append(ExpandoValueModelImpl.ORDER_BY_JPQL);
+				}
 
-			String sql = sb.toString();
+				String sql = sb.toString();
 
-			Session session = null;
+				Session session = null;
 
-			try {
-				session = openSession();
+				try {
+					session = openSession();
 
-				Query query = session.createQuery(sql);
+					Query query = session.createQuery(sql);
 
-				QueryPos queryPos = QueryPos.getInstance(query);
+					QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(rowId);
+					queryPos.add(rowId);
 
-				list = (List<ExpandoValue>)QueryUtil.list(
-					query, getDialect(), start, end);
+					list = (List<ExpandoValue>)QueryUtil.list(
+						query, getDialect(), start, end);
 
-				cacheResult(list);
+					cacheResult(list);
 
-				if (useFinderCache && productionMode) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+					if (useFinderCache) {
+						FinderCacheUtil.putResult(finderPath, finderArgs, list);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
 				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return list;
+			return list;
+		}
 	}
 
 	/**
@@ -1547,58 +1547,51 @@ public class ExpandoValuePersistenceImpl
 	 */
 	@Override
 	public int countByRowId(long rowId) {
-		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
-			ExpandoValue.class);
+		try (SafeCloseable safeCloseable =
+				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
+					ExpandoValue.class)) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = _finderPathCountByRowId;
 
-		Long count = null;
+			Object[] finderArgs = new Object[] {rowId};
 
-		if (productionMode) {
-			finderPath = _finderPathCountByRowId;
-
-			finderArgs = new Object[] {rowId};
-
-			count = (Long)FinderCacheUtil.getResult(
+			Long count = (Long)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
-		}
 
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
+			if (count == null) {
+				StringBundler sb = new StringBundler(2);
 
-			sb.append(_SQL_COUNT_EXPANDOVALUE_WHERE);
+				sb.append(_SQL_COUNT_EXPANDOVALUE_WHERE);
 
-			sb.append(_FINDER_COLUMN_ROWID_ROWID_2);
+				sb.append(_FINDER_COLUMN_ROWID_ROWID_2);
 
-			String sql = sb.toString();
+				String sql = sb.toString();
 
-			Session session = null;
+				Session session = null;
 
-			try {
-				session = openSession();
+				try {
+					session = openSession();
 
-				Query query = session.createQuery(sql);
+					Query query = session.createQuery(sql);
 
-				QueryPos queryPos = QueryPos.getInstance(query);
+					QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(rowId);
+					queryPos.add(rowId);
 
-				count = (Long)query.uniqueResult();
+					count = (Long)query.uniqueResult();
 
-				if (productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, count);
 				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return count.intValue();
+			return count.intValue();
+		}
 	}
 
 	private static final String _FINDER_COLUMN_ROWID_ROWID_2 =
@@ -1685,104 +1678,106 @@ public class ExpandoValuePersistenceImpl
 		OrderByComparator<ExpandoValue> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
-			ExpandoValue.class);
+		try (SafeCloseable safeCloseable =
+				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
+					ExpandoValue.class)) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = null;
+			Object[] finderArgs = null;
 
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
+			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
 
-			if (useFinderCache && productionMode) {
-				finderPath = _finderPathWithoutPaginationFindByT_C;
-				finderArgs = new Object[] {tableId, columnId};
+				if (useFinderCache) {
+					finderPath = _finderPathWithoutPaginationFindByT_C;
+					finderArgs = new Object[] {tableId, columnId};
+				}
 			}
-		}
-		else if (useFinderCache && productionMode) {
-			finderPath = _finderPathWithPaginationFindByT_C;
-			finderArgs = new Object[] {
-				tableId, columnId, start, end, orderByComparator
-			};
-		}
+			else if (useFinderCache) {
+				finderPath = _finderPathWithPaginationFindByT_C;
+				finderArgs = new Object[] {
+					tableId, columnId, start, end, orderByComparator
+				};
+			}
 
-		List<ExpandoValue> list = null;
+			List<ExpandoValue> list = null;
 
-		if (useFinderCache && productionMode) {
-			list = (List<ExpandoValue>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+			if (useFinderCache) {
+				list = (List<ExpandoValue>)FinderCacheUtil.getResult(
+					finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (ExpandoValue expandoValue : list) {
-					if ((tableId != expandoValue.getTableId()) ||
-						(columnId != expandoValue.getColumnId())) {
+				if ((list != null) && !list.isEmpty()) {
+					for (ExpandoValue expandoValue : list) {
+						if ((tableId != expandoValue.getTableId()) ||
+							(columnId != expandoValue.getColumnId())) {
 
-						list = null;
+							list = null;
 
-						break;
+							break;
+						}
 					}
 				}
 			}
-		}
 
-		if (list == null) {
-			StringBundler sb = null;
+			if (list == null) {
+				StringBundler sb = null;
 
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					4 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(4);
-			}
+				if (orderByComparator != null) {
+					sb = new StringBundler(
+						4 + (orderByComparator.getOrderByFields().length * 2));
+				}
+				else {
+					sb = new StringBundler(4);
+				}
 
-			sb.append(_SQL_SELECT_EXPANDOVALUE_WHERE);
+				sb.append(_SQL_SELECT_EXPANDOVALUE_WHERE);
 
-			sb.append(_FINDER_COLUMN_T_C_TABLEID_2);
+				sb.append(_FINDER_COLUMN_T_C_TABLEID_2);
 
-			sb.append(_FINDER_COLUMN_T_C_COLUMNID_2);
+				sb.append(_FINDER_COLUMN_T_C_COLUMNID_2);
 
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(ExpandoValueModelImpl.ORDER_BY_JPQL);
-			}
+				if (orderByComparator != null) {
+					appendOrderByComparator(
+						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				}
+				else {
+					sb.append(ExpandoValueModelImpl.ORDER_BY_JPQL);
+				}
 
-			String sql = sb.toString();
+				String sql = sb.toString();
 
-			Session session = null;
+				Session session = null;
 
-			try {
-				session = openSession();
+				try {
+					session = openSession();
 
-				Query query = session.createQuery(sql);
+					Query query = session.createQuery(sql);
 
-				QueryPos queryPos = QueryPos.getInstance(query);
+					QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(tableId);
+					queryPos.add(tableId);
 
-				queryPos.add(columnId);
+					queryPos.add(columnId);
 
-				list = (List<ExpandoValue>)QueryUtil.list(
-					query, getDialect(), start, end);
+					list = (List<ExpandoValue>)QueryUtil.list(
+						query, getDialect(), start, end);
 
-				cacheResult(list);
+					cacheResult(list);
 
-				if (useFinderCache && productionMode) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+					if (useFinderCache) {
+						FinderCacheUtil.putResult(finderPath, finderArgs, list);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
 				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return list;
+			return list;
+		}
 	}
 
 	/**
@@ -2094,62 +2089,55 @@ public class ExpandoValuePersistenceImpl
 	 */
 	@Override
 	public int countByT_C(long tableId, long columnId) {
-		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
-			ExpandoValue.class);
+		try (SafeCloseable safeCloseable =
+				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
+					ExpandoValue.class)) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = _finderPathCountByT_C;
 
-		Long count = null;
+			Object[] finderArgs = new Object[] {tableId, columnId};
 
-		if (productionMode) {
-			finderPath = _finderPathCountByT_C;
-
-			finderArgs = new Object[] {tableId, columnId};
-
-			count = (Long)FinderCacheUtil.getResult(
+			Long count = (Long)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
-		}
 
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
+			if (count == null) {
+				StringBundler sb = new StringBundler(3);
 
-			sb.append(_SQL_COUNT_EXPANDOVALUE_WHERE);
+				sb.append(_SQL_COUNT_EXPANDOVALUE_WHERE);
 
-			sb.append(_FINDER_COLUMN_T_C_TABLEID_2);
+				sb.append(_FINDER_COLUMN_T_C_TABLEID_2);
 
-			sb.append(_FINDER_COLUMN_T_C_COLUMNID_2);
+				sb.append(_FINDER_COLUMN_T_C_COLUMNID_2);
 
-			String sql = sb.toString();
+				String sql = sb.toString();
 
-			Session session = null;
+				Session session = null;
 
-			try {
-				session = openSession();
+				try {
+					session = openSession();
 
-				Query query = session.createQuery(sql);
+					Query query = session.createQuery(sql);
 
-				QueryPos queryPos = QueryPos.getInstance(query);
+					QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(tableId);
+					queryPos.add(tableId);
 
-				queryPos.add(columnId);
+					queryPos.add(columnId);
 
-				count = (Long)query.uniqueResult();
+					count = (Long)query.uniqueResult();
 
-				if (productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, count);
 				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return count.intValue();
+			return count.intValue();
+		}
 	}
 
 	private static final String _FINDER_COLUMN_T_C_TABLEID_2 =
@@ -2238,104 +2226,106 @@ public class ExpandoValuePersistenceImpl
 		OrderByComparator<ExpandoValue> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
-			ExpandoValue.class);
+		try (SafeCloseable safeCloseable =
+				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
+					ExpandoValue.class)) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = null;
+			Object[] finderArgs = null;
 
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
+			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
 
-			if (useFinderCache && productionMode) {
-				finderPath = _finderPathWithoutPaginationFindByT_R;
-				finderArgs = new Object[] {tableId, rowId};
+				if (useFinderCache) {
+					finderPath = _finderPathWithoutPaginationFindByT_R;
+					finderArgs = new Object[] {tableId, rowId};
+				}
 			}
-		}
-		else if (useFinderCache && productionMode) {
-			finderPath = _finderPathWithPaginationFindByT_R;
-			finderArgs = new Object[] {
-				tableId, rowId, start, end, orderByComparator
-			};
-		}
+			else if (useFinderCache) {
+				finderPath = _finderPathWithPaginationFindByT_R;
+				finderArgs = new Object[] {
+					tableId, rowId, start, end, orderByComparator
+				};
+			}
 
-		List<ExpandoValue> list = null;
+			List<ExpandoValue> list = null;
 
-		if (useFinderCache && productionMode) {
-			list = (List<ExpandoValue>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+			if (useFinderCache) {
+				list = (List<ExpandoValue>)FinderCacheUtil.getResult(
+					finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (ExpandoValue expandoValue : list) {
-					if ((tableId != expandoValue.getTableId()) ||
-						(rowId != expandoValue.getRowId())) {
+				if ((list != null) && !list.isEmpty()) {
+					for (ExpandoValue expandoValue : list) {
+						if ((tableId != expandoValue.getTableId()) ||
+							(rowId != expandoValue.getRowId())) {
 
-						list = null;
+							list = null;
 
-						break;
+							break;
+						}
 					}
 				}
 			}
-		}
 
-		if (list == null) {
-			StringBundler sb = null;
+			if (list == null) {
+				StringBundler sb = null;
 
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					4 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(4);
-			}
+				if (orderByComparator != null) {
+					sb = new StringBundler(
+						4 + (orderByComparator.getOrderByFields().length * 2));
+				}
+				else {
+					sb = new StringBundler(4);
+				}
 
-			sb.append(_SQL_SELECT_EXPANDOVALUE_WHERE);
+				sb.append(_SQL_SELECT_EXPANDOVALUE_WHERE);
 
-			sb.append(_FINDER_COLUMN_T_R_TABLEID_2);
+				sb.append(_FINDER_COLUMN_T_R_TABLEID_2);
 
-			sb.append(_FINDER_COLUMN_T_R_ROWID_2);
+				sb.append(_FINDER_COLUMN_T_R_ROWID_2);
 
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(ExpandoValueModelImpl.ORDER_BY_JPQL);
-			}
+				if (orderByComparator != null) {
+					appendOrderByComparator(
+						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				}
+				else {
+					sb.append(ExpandoValueModelImpl.ORDER_BY_JPQL);
+				}
 
-			String sql = sb.toString();
+				String sql = sb.toString();
 
-			Session session = null;
+				Session session = null;
 
-			try {
-				session = openSession();
+				try {
+					session = openSession();
 
-				Query query = session.createQuery(sql);
+					Query query = session.createQuery(sql);
 
-				QueryPos queryPos = QueryPos.getInstance(query);
+					QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(tableId);
+					queryPos.add(tableId);
 
-				queryPos.add(rowId);
+					queryPos.add(rowId);
 
-				list = (List<ExpandoValue>)QueryUtil.list(
-					query, getDialect(), start, end);
+					list = (List<ExpandoValue>)QueryUtil.list(
+						query, getDialect(), start, end);
 
-				cacheResult(list);
+					cacheResult(list);
 
-				if (useFinderCache && productionMode) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+					if (useFinderCache) {
+						FinderCacheUtil.putResult(finderPath, finderArgs, list);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
 				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return list;
+			return list;
+		}
 	}
 
 	/**
@@ -2646,62 +2636,55 @@ public class ExpandoValuePersistenceImpl
 	 */
 	@Override
 	public int countByT_R(long tableId, long rowId) {
-		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
-			ExpandoValue.class);
+		try (SafeCloseable safeCloseable =
+				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
+					ExpandoValue.class)) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = _finderPathCountByT_R;
 
-		Long count = null;
+			Object[] finderArgs = new Object[] {tableId, rowId};
 
-		if (productionMode) {
-			finderPath = _finderPathCountByT_R;
-
-			finderArgs = new Object[] {tableId, rowId};
-
-			count = (Long)FinderCacheUtil.getResult(
+			Long count = (Long)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
-		}
 
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
+			if (count == null) {
+				StringBundler sb = new StringBundler(3);
 
-			sb.append(_SQL_COUNT_EXPANDOVALUE_WHERE);
+				sb.append(_SQL_COUNT_EXPANDOVALUE_WHERE);
 
-			sb.append(_FINDER_COLUMN_T_R_TABLEID_2);
+				sb.append(_FINDER_COLUMN_T_R_TABLEID_2);
 
-			sb.append(_FINDER_COLUMN_T_R_ROWID_2);
+				sb.append(_FINDER_COLUMN_T_R_ROWID_2);
 
-			String sql = sb.toString();
+				String sql = sb.toString();
 
-			Session session = null;
+				Session session = null;
 
-			try {
-				session = openSession();
+				try {
+					session = openSession();
 
-				Query query = session.createQuery(sql);
+					Query query = session.createQuery(sql);
 
-				QueryPos queryPos = QueryPos.getInstance(query);
+					QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(tableId);
+					queryPos.add(tableId);
 
-				queryPos.add(rowId);
+					queryPos.add(rowId);
 
-				count = (Long)query.uniqueResult();
+					count = (Long)query.uniqueResult();
 
-				if (productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, count);
 				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return count.intValue();
+			return count.intValue();
+		}
 	}
 
 	private static final String _FINDER_COLUMN_T_R_TABLEID_2 =
@@ -2791,104 +2774,106 @@ public class ExpandoValuePersistenceImpl
 		OrderByComparator<ExpandoValue> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
-			ExpandoValue.class);
+		try (SafeCloseable safeCloseable =
+				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
+					ExpandoValue.class)) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = null;
+			Object[] finderArgs = null;
 
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
+			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
 
-			if (useFinderCache && productionMode) {
-				finderPath = _finderPathWithoutPaginationFindByT_CPK;
-				finderArgs = new Object[] {tableId, classPK};
+				if (useFinderCache) {
+					finderPath = _finderPathWithoutPaginationFindByT_CPK;
+					finderArgs = new Object[] {tableId, classPK};
+				}
 			}
-		}
-		else if (useFinderCache && productionMode) {
-			finderPath = _finderPathWithPaginationFindByT_CPK;
-			finderArgs = new Object[] {
-				tableId, classPK, start, end, orderByComparator
-			};
-		}
+			else if (useFinderCache) {
+				finderPath = _finderPathWithPaginationFindByT_CPK;
+				finderArgs = new Object[] {
+					tableId, classPK, start, end, orderByComparator
+				};
+			}
 
-		List<ExpandoValue> list = null;
+			List<ExpandoValue> list = null;
 
-		if (useFinderCache && productionMode) {
-			list = (List<ExpandoValue>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+			if (useFinderCache) {
+				list = (List<ExpandoValue>)FinderCacheUtil.getResult(
+					finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (ExpandoValue expandoValue : list) {
-					if ((tableId != expandoValue.getTableId()) ||
-						(classPK != expandoValue.getClassPK())) {
+				if ((list != null) && !list.isEmpty()) {
+					for (ExpandoValue expandoValue : list) {
+						if ((tableId != expandoValue.getTableId()) ||
+							(classPK != expandoValue.getClassPK())) {
 
-						list = null;
+							list = null;
 
-						break;
+							break;
+						}
 					}
 				}
 			}
-		}
 
-		if (list == null) {
-			StringBundler sb = null;
+			if (list == null) {
+				StringBundler sb = null;
 
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					4 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(4);
-			}
+				if (orderByComparator != null) {
+					sb = new StringBundler(
+						4 + (orderByComparator.getOrderByFields().length * 2));
+				}
+				else {
+					sb = new StringBundler(4);
+				}
 
-			sb.append(_SQL_SELECT_EXPANDOVALUE_WHERE);
+				sb.append(_SQL_SELECT_EXPANDOVALUE_WHERE);
 
-			sb.append(_FINDER_COLUMN_T_CPK_TABLEID_2);
+				sb.append(_FINDER_COLUMN_T_CPK_TABLEID_2);
 
-			sb.append(_FINDER_COLUMN_T_CPK_CLASSPK_2);
+				sb.append(_FINDER_COLUMN_T_CPK_CLASSPK_2);
 
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(ExpandoValueModelImpl.ORDER_BY_JPQL);
-			}
+				if (orderByComparator != null) {
+					appendOrderByComparator(
+						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				}
+				else {
+					sb.append(ExpandoValueModelImpl.ORDER_BY_JPQL);
+				}
 
-			String sql = sb.toString();
+				String sql = sb.toString();
 
-			Session session = null;
+				Session session = null;
 
-			try {
-				session = openSession();
+				try {
+					session = openSession();
 
-				Query query = session.createQuery(sql);
+					Query query = session.createQuery(sql);
 
-				QueryPos queryPos = QueryPos.getInstance(query);
+					QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(tableId);
+					queryPos.add(tableId);
 
-				queryPos.add(classPK);
+					queryPos.add(classPK);
 
-				list = (List<ExpandoValue>)QueryUtil.list(
-					query, getDialect(), start, end);
+					list = (List<ExpandoValue>)QueryUtil.list(
+						query, getDialect(), start, end);
 
-				cacheResult(list);
+					cacheResult(list);
 
-				if (useFinderCache && productionMode) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+					if (useFinderCache) {
+						FinderCacheUtil.putResult(finderPath, finderArgs, list);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
 				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return list;
+			return list;
+		}
 	}
 
 	/**
@@ -3200,62 +3185,55 @@ public class ExpandoValuePersistenceImpl
 	 */
 	@Override
 	public int countByT_CPK(long tableId, long classPK) {
-		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
-			ExpandoValue.class);
+		try (SafeCloseable safeCloseable =
+				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
+					ExpandoValue.class)) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = _finderPathCountByT_CPK;
 
-		Long count = null;
+			Object[] finderArgs = new Object[] {tableId, classPK};
 
-		if (productionMode) {
-			finderPath = _finderPathCountByT_CPK;
-
-			finderArgs = new Object[] {tableId, classPK};
-
-			count = (Long)FinderCacheUtil.getResult(
+			Long count = (Long)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
-		}
 
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
+			if (count == null) {
+				StringBundler sb = new StringBundler(3);
 
-			sb.append(_SQL_COUNT_EXPANDOVALUE_WHERE);
+				sb.append(_SQL_COUNT_EXPANDOVALUE_WHERE);
 
-			sb.append(_FINDER_COLUMN_T_CPK_TABLEID_2);
+				sb.append(_FINDER_COLUMN_T_CPK_TABLEID_2);
 
-			sb.append(_FINDER_COLUMN_T_CPK_CLASSPK_2);
+				sb.append(_FINDER_COLUMN_T_CPK_CLASSPK_2);
 
-			String sql = sb.toString();
+				String sql = sb.toString();
 
-			Session session = null;
+				Session session = null;
 
-			try {
-				session = openSession();
+				try {
+					session = openSession();
 
-				Query query = session.createQuery(sql);
+					Query query = session.createQuery(sql);
 
-				QueryPos queryPos = QueryPos.getInstance(query);
+					QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(tableId);
+					queryPos.add(tableId);
 
-				queryPos.add(classPK);
+					queryPos.add(classPK);
 
-				count = (Long)query.uniqueResult();
+					count = (Long)query.uniqueResult();
 
-				if (productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, count);
 				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return count.intValue();
+			return count.intValue();
+		}
 	}
 
 	private static final String _FINDER_COLUMN_T_CPK_TABLEID_2 =
@@ -3328,93 +3306,87 @@ public class ExpandoValuePersistenceImpl
 	public ExpandoValue fetchByC_R(
 		long columnId, long rowId, boolean useFinderCache) {
 
-		Object[] finderArgs = null;
+		try (SafeCloseable safeCloseable =
+				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
+					ExpandoValue.class)) {
 
-		if (useFinderCache) {
-			finderArgs = new Object[] {columnId, rowId};
-		}
+			Object[] finderArgs = null;
 
-		Object result = null;
-
-		if (useFinderCache) {
-			result = FinderCacheUtil.getResult(
-				_finderPathFetchByC_R, finderArgs, this);
-		}
-
-		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
-			ExpandoValue.class);
-
-		if (result instanceof ExpandoValue) {
-			ExpandoValue expandoValue = (ExpandoValue)result;
-
-			if ((columnId != expandoValue.getColumnId()) ||
-				(rowId != expandoValue.getRowId())) {
-
-				result = null;
+			if (useFinderCache) {
+				finderArgs = new Object[] {columnId, rowId};
 			}
-			else if (!CTPersistenceHelperUtil.isProductionMode(
-						ExpandoValue.class, expandoValue.getPrimaryKey())) {
 
-				result = null;
+			Object result = null;
+
+			if (useFinderCache) {
+				result = FinderCacheUtil.getResult(
+					_finderPathFetchByC_R, finderArgs, this);
 			}
-		}
-		else if (!productionMode && (result instanceof List<?>)) {
-			result = null;
-		}
 
-		if (result == null) {
-			StringBundler sb = new StringBundler(4);
+			if (result instanceof ExpandoValue) {
+				ExpandoValue expandoValue = (ExpandoValue)result;
 
-			sb.append(_SQL_SELECT_EXPANDOVALUE_WHERE);
+				if ((columnId != expandoValue.getColumnId()) ||
+					(rowId != expandoValue.getRowId())) {
 
-			sb.append(_FINDER_COLUMN_C_R_COLUMNID_2);
+					result = null;
+				}
+			}
 
-			sb.append(_FINDER_COLUMN_C_R_ROWID_2);
+			if (result == null) {
+				StringBundler sb = new StringBundler(4);
 
-			String sql = sb.toString();
+				sb.append(_SQL_SELECT_EXPANDOVALUE_WHERE);
 
-			Session session = null;
+				sb.append(_FINDER_COLUMN_C_R_COLUMNID_2);
 
-			try {
-				session = openSession();
+				sb.append(_FINDER_COLUMN_C_R_ROWID_2);
 
-				Query query = session.createQuery(sql);
+				String sql = sb.toString();
 
-				QueryPos queryPos = QueryPos.getInstance(query);
+				Session session = null;
 
-				queryPos.add(columnId);
+				try {
+					session = openSession();
 
-				queryPos.add(rowId);
+					Query query = session.createQuery(sql);
 
-				List<ExpandoValue> list = query.list();
+					QueryPos queryPos = QueryPos.getInstance(query);
 
-				if (list.isEmpty()) {
-					if (useFinderCache && productionMode) {
-						FinderCacheUtil.putResult(
-							_finderPathFetchByC_R, finderArgs, list);
+					queryPos.add(columnId);
+
+					queryPos.add(rowId);
+
+					List<ExpandoValue> list = query.list();
+
+					if (list.isEmpty()) {
+						if (useFinderCache) {
+							FinderCacheUtil.putResult(
+								_finderPathFetchByC_R, finderArgs, list);
+						}
+					}
+					else {
+						ExpandoValue expandoValue = list.get(0);
+
+						result = expandoValue;
+
+						cacheResult(expandoValue);
 					}
 				}
-				else {
-					ExpandoValue expandoValue = list.get(0);
-
-					result = expandoValue;
-
-					cacheResult(expandoValue);
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
 				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (ExpandoValue)result;
+			if (result instanceof List<?>) {
+				return null;
+			}
+			else {
+				return (ExpandoValue)result;
+			}
 		}
 	}
 
@@ -3443,62 +3415,55 @@ public class ExpandoValuePersistenceImpl
 	 */
 	@Override
 	public int countByC_R(long columnId, long rowId) {
-		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
-			ExpandoValue.class);
+		try (SafeCloseable safeCloseable =
+				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
+					ExpandoValue.class)) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = _finderPathCountByC_R;
 
-		Long count = null;
+			Object[] finderArgs = new Object[] {columnId, rowId};
 
-		if (productionMode) {
-			finderPath = _finderPathCountByC_R;
-
-			finderArgs = new Object[] {columnId, rowId};
-
-			count = (Long)FinderCacheUtil.getResult(
+			Long count = (Long)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
-		}
 
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
+			if (count == null) {
+				StringBundler sb = new StringBundler(3);
 
-			sb.append(_SQL_COUNT_EXPANDOVALUE_WHERE);
+				sb.append(_SQL_COUNT_EXPANDOVALUE_WHERE);
 
-			sb.append(_FINDER_COLUMN_C_R_COLUMNID_2);
+				sb.append(_FINDER_COLUMN_C_R_COLUMNID_2);
 
-			sb.append(_FINDER_COLUMN_C_R_ROWID_2);
+				sb.append(_FINDER_COLUMN_C_R_ROWID_2);
 
-			String sql = sb.toString();
+				String sql = sb.toString();
 
-			Session session = null;
+				Session session = null;
 
-			try {
-				session = openSession();
+				try {
+					session = openSession();
 
-				Query query = session.createQuery(sql);
+					Query query = session.createQuery(sql);
 
-				QueryPos queryPos = QueryPos.getInstance(query);
+					QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(columnId);
+					queryPos.add(columnId);
 
-				queryPos.add(rowId);
+					queryPos.add(rowId);
 
-				count = (Long)query.uniqueResult();
+					count = (Long)query.uniqueResult();
 
-				if (productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, count);
 				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return count.intValue();
+			return count.intValue();
+		}
 	}
 
 	private static final String _FINDER_COLUMN_C_R_COLUMNID_2 =
@@ -3588,104 +3553,106 @@ public class ExpandoValuePersistenceImpl
 		OrderByComparator<ExpandoValue> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
-			ExpandoValue.class);
+		try (SafeCloseable safeCloseable =
+				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
+					ExpandoValue.class)) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = null;
+			Object[] finderArgs = null;
 
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
+			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
 
-			if (useFinderCache && productionMode) {
-				finderPath = _finderPathWithoutPaginationFindByC_C;
-				finderArgs = new Object[] {classNameId, classPK};
+				if (useFinderCache) {
+					finderPath = _finderPathWithoutPaginationFindByC_C;
+					finderArgs = new Object[] {classNameId, classPK};
+				}
 			}
-		}
-		else if (useFinderCache && productionMode) {
-			finderPath = _finderPathWithPaginationFindByC_C;
-			finderArgs = new Object[] {
-				classNameId, classPK, start, end, orderByComparator
-			};
-		}
+			else if (useFinderCache) {
+				finderPath = _finderPathWithPaginationFindByC_C;
+				finderArgs = new Object[] {
+					classNameId, classPK, start, end, orderByComparator
+				};
+			}
 
-		List<ExpandoValue> list = null;
+			List<ExpandoValue> list = null;
 
-		if (useFinderCache && productionMode) {
-			list = (List<ExpandoValue>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+			if (useFinderCache) {
+				list = (List<ExpandoValue>)FinderCacheUtil.getResult(
+					finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (ExpandoValue expandoValue : list) {
-					if ((classNameId != expandoValue.getClassNameId()) ||
-						(classPK != expandoValue.getClassPK())) {
+				if ((list != null) && !list.isEmpty()) {
+					for (ExpandoValue expandoValue : list) {
+						if ((classNameId != expandoValue.getClassNameId()) ||
+							(classPK != expandoValue.getClassPK())) {
 
-						list = null;
+							list = null;
 
-						break;
+							break;
+						}
 					}
 				}
 			}
-		}
 
-		if (list == null) {
-			StringBundler sb = null;
+			if (list == null) {
+				StringBundler sb = null;
 
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					4 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(4);
-			}
+				if (orderByComparator != null) {
+					sb = new StringBundler(
+						4 + (orderByComparator.getOrderByFields().length * 2));
+				}
+				else {
+					sb = new StringBundler(4);
+				}
 
-			sb.append(_SQL_SELECT_EXPANDOVALUE_WHERE);
+				sb.append(_SQL_SELECT_EXPANDOVALUE_WHERE);
 
-			sb.append(_FINDER_COLUMN_C_C_CLASSNAMEID_2);
+				sb.append(_FINDER_COLUMN_C_C_CLASSNAMEID_2);
 
-			sb.append(_FINDER_COLUMN_C_C_CLASSPK_2);
+				sb.append(_FINDER_COLUMN_C_C_CLASSPK_2);
 
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(ExpandoValueModelImpl.ORDER_BY_JPQL);
-			}
+				if (orderByComparator != null) {
+					appendOrderByComparator(
+						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				}
+				else {
+					sb.append(ExpandoValueModelImpl.ORDER_BY_JPQL);
+				}
 
-			String sql = sb.toString();
+				String sql = sb.toString();
 
-			Session session = null;
+				Session session = null;
 
-			try {
-				session = openSession();
+				try {
+					session = openSession();
 
-				Query query = session.createQuery(sql);
+					Query query = session.createQuery(sql);
 
-				QueryPos queryPos = QueryPos.getInstance(query);
+					QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(classNameId);
+					queryPos.add(classNameId);
 
-				queryPos.add(classPK);
+					queryPos.add(classPK);
 
-				list = (List<ExpandoValue>)QueryUtil.list(
-					query, getDialect(), start, end);
+					list = (List<ExpandoValue>)QueryUtil.list(
+						query, getDialect(), start, end);
 
-				cacheResult(list);
+					cacheResult(list);
 
-				if (useFinderCache && productionMode) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+					if (useFinderCache) {
+						FinderCacheUtil.putResult(finderPath, finderArgs, list);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
 				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return list;
+			return list;
+		}
 	}
 
 	/**
@@ -3998,62 +3965,55 @@ public class ExpandoValuePersistenceImpl
 	 */
 	@Override
 	public int countByC_C(long classNameId, long classPK) {
-		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
-			ExpandoValue.class);
+		try (SafeCloseable safeCloseable =
+				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
+					ExpandoValue.class)) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = _finderPathCountByC_C;
 
-		Long count = null;
+			Object[] finderArgs = new Object[] {classNameId, classPK};
 
-		if (productionMode) {
-			finderPath = _finderPathCountByC_C;
-
-			finderArgs = new Object[] {classNameId, classPK};
-
-			count = (Long)FinderCacheUtil.getResult(
+			Long count = (Long)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
-		}
 
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
+			if (count == null) {
+				StringBundler sb = new StringBundler(3);
 
-			sb.append(_SQL_COUNT_EXPANDOVALUE_WHERE);
+				sb.append(_SQL_COUNT_EXPANDOVALUE_WHERE);
 
-			sb.append(_FINDER_COLUMN_C_C_CLASSNAMEID_2);
+				sb.append(_FINDER_COLUMN_C_C_CLASSNAMEID_2);
 
-			sb.append(_FINDER_COLUMN_C_C_CLASSPK_2);
+				sb.append(_FINDER_COLUMN_C_C_CLASSPK_2);
 
-			String sql = sb.toString();
+				String sql = sb.toString();
 
-			Session session = null;
+				Session session = null;
 
-			try {
-				session = openSession();
+				try {
+					session = openSession();
 
-				Query query = session.createQuery(sql);
+					Query query = session.createQuery(sql);
 
-				QueryPos queryPos = QueryPos.getInstance(query);
+					QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(classNameId);
+					queryPos.add(classNameId);
 
-				queryPos.add(classPK);
+					queryPos.add(classPK);
 
-				count = (Long)query.uniqueResult();
+					count = (Long)query.uniqueResult();
 
-				if (productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, count);
 				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return count.intValue();
+			return count.intValue();
+		}
 	}
 
 	private static final String _FINDER_COLUMN_C_C_CLASSNAMEID_2 =
@@ -4134,98 +4094,92 @@ public class ExpandoValuePersistenceImpl
 	public ExpandoValue fetchByT_C_C(
 		long tableId, long columnId, long classPK, boolean useFinderCache) {
 
-		Object[] finderArgs = null;
+		try (SafeCloseable safeCloseable =
+				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
+					ExpandoValue.class)) {
 
-		if (useFinderCache) {
-			finderArgs = new Object[] {tableId, columnId, classPK};
-		}
+			Object[] finderArgs = null;
 
-		Object result = null;
-
-		if (useFinderCache) {
-			result = FinderCacheUtil.getResult(
-				_finderPathFetchByT_C_C, finderArgs, this);
-		}
-
-		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
-			ExpandoValue.class);
-
-		if (result instanceof ExpandoValue) {
-			ExpandoValue expandoValue = (ExpandoValue)result;
-
-			if ((tableId != expandoValue.getTableId()) ||
-				(columnId != expandoValue.getColumnId()) ||
-				(classPK != expandoValue.getClassPK())) {
-
-				result = null;
+			if (useFinderCache) {
+				finderArgs = new Object[] {tableId, columnId, classPK};
 			}
-			else if (!CTPersistenceHelperUtil.isProductionMode(
-						ExpandoValue.class, expandoValue.getPrimaryKey())) {
 
-				result = null;
+			Object result = null;
+
+			if (useFinderCache) {
+				result = FinderCacheUtil.getResult(
+					_finderPathFetchByT_C_C, finderArgs, this);
 			}
-		}
-		else if (!productionMode && (result instanceof List<?>)) {
-			result = null;
-		}
 
-		if (result == null) {
-			StringBundler sb = new StringBundler(5);
+			if (result instanceof ExpandoValue) {
+				ExpandoValue expandoValue = (ExpandoValue)result;
 
-			sb.append(_SQL_SELECT_EXPANDOVALUE_WHERE);
+				if ((tableId != expandoValue.getTableId()) ||
+					(columnId != expandoValue.getColumnId()) ||
+					(classPK != expandoValue.getClassPK())) {
 
-			sb.append(_FINDER_COLUMN_T_C_C_TABLEID_2);
+					result = null;
+				}
+			}
 
-			sb.append(_FINDER_COLUMN_T_C_C_COLUMNID_2);
+			if (result == null) {
+				StringBundler sb = new StringBundler(5);
 
-			sb.append(_FINDER_COLUMN_T_C_C_CLASSPK_2);
+				sb.append(_SQL_SELECT_EXPANDOVALUE_WHERE);
 
-			String sql = sb.toString();
+				sb.append(_FINDER_COLUMN_T_C_C_TABLEID_2);
 
-			Session session = null;
+				sb.append(_FINDER_COLUMN_T_C_C_COLUMNID_2);
 
-			try {
-				session = openSession();
+				sb.append(_FINDER_COLUMN_T_C_C_CLASSPK_2);
 
-				Query query = session.createQuery(sql);
+				String sql = sb.toString();
 
-				QueryPos queryPos = QueryPos.getInstance(query);
+				Session session = null;
 
-				queryPos.add(tableId);
+				try {
+					session = openSession();
 
-				queryPos.add(columnId);
+					Query query = session.createQuery(sql);
 
-				queryPos.add(classPK);
+					QueryPos queryPos = QueryPos.getInstance(query);
 
-				List<ExpandoValue> list = query.list();
+					queryPos.add(tableId);
 
-				if (list.isEmpty()) {
-					if (useFinderCache && productionMode) {
-						FinderCacheUtil.putResult(
-							_finderPathFetchByT_C_C, finderArgs, list);
+					queryPos.add(columnId);
+
+					queryPos.add(classPK);
+
+					List<ExpandoValue> list = query.list();
+
+					if (list.isEmpty()) {
+						if (useFinderCache) {
+							FinderCacheUtil.putResult(
+								_finderPathFetchByT_C_C, finderArgs, list);
+						}
+					}
+					else {
+						ExpandoValue expandoValue = list.get(0);
+
+						result = expandoValue;
+
+						cacheResult(expandoValue);
 					}
 				}
-				else {
-					ExpandoValue expandoValue = list.get(0);
-
-					result = expandoValue;
-
-					cacheResult(expandoValue);
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
 				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (ExpandoValue)result;
+			if (result instanceof List<?>) {
+				return null;
+			}
+			else {
+				return (ExpandoValue)result;
+			}
 		}
 	}
 
@@ -4256,66 +4210,59 @@ public class ExpandoValuePersistenceImpl
 	 */
 	@Override
 	public int countByT_C_C(long tableId, long columnId, long classPK) {
-		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
-			ExpandoValue.class);
+		try (SafeCloseable safeCloseable =
+				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
+					ExpandoValue.class)) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = _finderPathCountByT_C_C;
 
-		Long count = null;
+			Object[] finderArgs = new Object[] {tableId, columnId, classPK};
 
-		if (productionMode) {
-			finderPath = _finderPathCountByT_C_C;
-
-			finderArgs = new Object[] {tableId, columnId, classPK};
-
-			count = (Long)FinderCacheUtil.getResult(
+			Long count = (Long)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
-		}
 
-		if (count == null) {
-			StringBundler sb = new StringBundler(4);
+			if (count == null) {
+				StringBundler sb = new StringBundler(4);
 
-			sb.append(_SQL_COUNT_EXPANDOVALUE_WHERE);
+				sb.append(_SQL_COUNT_EXPANDOVALUE_WHERE);
 
-			sb.append(_FINDER_COLUMN_T_C_C_TABLEID_2);
+				sb.append(_FINDER_COLUMN_T_C_C_TABLEID_2);
 
-			sb.append(_FINDER_COLUMN_T_C_C_COLUMNID_2);
+				sb.append(_FINDER_COLUMN_T_C_C_COLUMNID_2);
 
-			sb.append(_FINDER_COLUMN_T_C_C_CLASSPK_2);
+				sb.append(_FINDER_COLUMN_T_C_C_CLASSPK_2);
 
-			String sql = sb.toString();
+				String sql = sb.toString();
 
-			Session session = null;
+				Session session = null;
 
-			try {
-				session = openSession();
+				try {
+					session = openSession();
 
-				Query query = session.createQuery(sql);
+					Query query = session.createQuery(sql);
 
-				QueryPos queryPos = QueryPos.getInstance(query);
+					QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(tableId);
+					queryPos.add(tableId);
 
-				queryPos.add(columnId);
+					queryPos.add(columnId);
 
-				queryPos.add(classPK);
+					queryPos.add(classPK);
 
-				count = (Long)query.uniqueResult();
+					count = (Long)query.uniqueResult();
 
-				if (productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, count);
 				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return count.intValue();
+			return count.intValue();
+		}
 	}
 
 	private static final String _FINDER_COLUMN_T_C_C_TABLEID_2 =
@@ -4415,122 +4362,124 @@ public class ExpandoValuePersistenceImpl
 		OrderByComparator<ExpandoValue> orderByComparator,
 		boolean useFinderCache) {
 
-		data = Objects.toString(data, "");
+		try (SafeCloseable safeCloseable =
+				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
+					ExpandoValue.class)) {
 
-		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
-			ExpandoValue.class);
+			data = Objects.toString(data, "");
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = null;
+			Object[] finderArgs = null;
 
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
+			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
 
-			if (useFinderCache && productionMode) {
-				finderPath = _finderPathWithoutPaginationFindByT_C_D;
-				finderArgs = new Object[] {tableId, columnId, data};
+				if (useFinderCache) {
+					finderPath = _finderPathWithoutPaginationFindByT_C_D;
+					finderArgs = new Object[] {tableId, columnId, data};
+				}
 			}
-		}
-		else if (useFinderCache && productionMode) {
-			finderPath = _finderPathWithPaginationFindByT_C_D;
-			finderArgs = new Object[] {
-				tableId, columnId, data, start, end, orderByComparator
-			};
-		}
+			else if (useFinderCache) {
+				finderPath = _finderPathWithPaginationFindByT_C_D;
+				finderArgs = new Object[] {
+					tableId, columnId, data, start, end, orderByComparator
+				};
+			}
 
-		List<ExpandoValue> list = null;
+			List<ExpandoValue> list = null;
 
-		if (useFinderCache && productionMode) {
-			list = (List<ExpandoValue>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+			if (useFinderCache) {
+				list = (List<ExpandoValue>)FinderCacheUtil.getResult(
+					finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (ExpandoValue expandoValue : list) {
-					if ((tableId != expandoValue.getTableId()) ||
-						(columnId != expandoValue.getColumnId()) ||
-						!data.equals(expandoValue.getData())) {
+				if ((list != null) && !list.isEmpty()) {
+					for (ExpandoValue expandoValue : list) {
+						if ((tableId != expandoValue.getTableId()) ||
+							(columnId != expandoValue.getColumnId()) ||
+							!data.equals(expandoValue.getData())) {
 
-						list = null;
+							list = null;
 
-						break;
+							break;
+						}
 					}
 				}
 			}
-		}
 
-		if (list == null) {
-			StringBundler sb = null;
+			if (list == null) {
+				StringBundler sb = null;
 
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					5 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(5);
-			}
-
-			sb.append(_SQL_SELECT_EXPANDOVALUE_WHERE);
-
-			sb.append(_FINDER_COLUMN_T_C_D_TABLEID_2);
-
-			sb.append(_FINDER_COLUMN_T_C_D_COLUMNID_2);
-
-			boolean bindData = false;
-
-			if (data.isEmpty()) {
-				sb.append(_FINDER_COLUMN_T_C_D_DATA_3);
-			}
-			else {
-				bindData = true;
-
-				sb.append(_FINDER_COLUMN_T_C_D_DATA_2);
-			}
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(ExpandoValueModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(tableId);
-
-				queryPos.add(columnId);
-
-				if (bindData) {
-					queryPos.add(data);
+				if (orderByComparator != null) {
+					sb = new StringBundler(
+						5 + (orderByComparator.getOrderByFields().length * 2));
+				}
+				else {
+					sb = new StringBundler(5);
 				}
 
-				list = (List<ExpandoValue>)QueryUtil.list(
-					query, getDialect(), start, end);
+				sb.append(_SQL_SELECT_EXPANDOVALUE_WHERE);
 
-				cacheResult(list);
+				sb.append(_FINDER_COLUMN_T_C_D_TABLEID_2);
 
-				if (useFinderCache && productionMode) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				sb.append(_FINDER_COLUMN_T_C_D_COLUMNID_2);
+
+				boolean bindData = false;
+
+				if (data.isEmpty()) {
+					sb.append(_FINDER_COLUMN_T_C_D_DATA_3);
+				}
+				else {
+					bindData = true;
+
+					sb.append(_FINDER_COLUMN_T_C_D_DATA_2);
+				}
+
+				if (orderByComparator != null) {
+					appendOrderByComparator(
+						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				}
+				else {
+					sb.append(ExpandoValueModelImpl.ORDER_BY_JPQL);
+				}
+
+				String sql = sb.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					queryPos.add(tableId);
+
+					queryPos.add(columnId);
+
+					if (bindData) {
+						queryPos.add(data);
+					}
+
+					list = (List<ExpandoValue>)QueryUtil.list(
+						query, getDialect(), start, end);
+
+					cacheResult(list);
+
+					if (useFinderCache) {
+						FinderCacheUtil.putResult(finderPath, finderArgs, list);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
 				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return list;
+			return list;
+		}
 	}
 
 	/**
@@ -4873,79 +4822,72 @@ public class ExpandoValuePersistenceImpl
 	 */
 	@Override
 	public int countByT_C_D(long tableId, long columnId, String data) {
-		data = Objects.toString(data, "");
+		try (SafeCloseable safeCloseable =
+				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
+					ExpandoValue.class)) {
 
-		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
-			ExpandoValue.class);
+			data = Objects.toString(data, "");
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = _finderPathCountByT_C_D;
 
-		Long count = null;
+			Object[] finderArgs = new Object[] {tableId, columnId, data};
 
-		if (productionMode) {
-			finderPath = _finderPathCountByT_C_D;
-
-			finderArgs = new Object[] {tableId, columnId, data};
-
-			count = (Long)FinderCacheUtil.getResult(
+			Long count = (Long)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
-		}
 
-		if (count == null) {
-			StringBundler sb = new StringBundler(4);
+			if (count == null) {
+				StringBundler sb = new StringBundler(4);
 
-			sb.append(_SQL_COUNT_EXPANDOVALUE_WHERE);
+				sb.append(_SQL_COUNT_EXPANDOVALUE_WHERE);
 
-			sb.append(_FINDER_COLUMN_T_C_D_TABLEID_2);
+				sb.append(_FINDER_COLUMN_T_C_D_TABLEID_2);
 
-			sb.append(_FINDER_COLUMN_T_C_D_COLUMNID_2);
+				sb.append(_FINDER_COLUMN_T_C_D_COLUMNID_2);
 
-			boolean bindData = false;
+				boolean bindData = false;
 
-			if (data.isEmpty()) {
-				sb.append(_FINDER_COLUMN_T_C_D_DATA_3);
-			}
-			else {
-				bindData = true;
+				if (data.isEmpty()) {
+					sb.append(_FINDER_COLUMN_T_C_D_DATA_3);
+				}
+				else {
+					bindData = true;
 
-				sb.append(_FINDER_COLUMN_T_C_D_DATA_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(tableId);
-
-				queryPos.add(columnId);
-
-				if (bindData) {
-					queryPos.add(data);
+					sb.append(_FINDER_COLUMN_T_C_D_DATA_2);
 				}
 
-				count = (Long)query.uniqueResult();
+				String sql = sb.toString();
 
-				if (productionMode) {
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					queryPos.add(tableId);
+
+					queryPos.add(columnId);
+
+					if (bindData) {
+						queryPos.add(data);
+					}
+
+					count = (Long)query.uniqueResult();
+
 					FinderCacheUtil.putResult(finderPath, finderArgs, count);
 				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return count.intValue();
+			return count.intValue();
+		}
 	}
 
 	private static final String _FINDER_COLUMN_T_C_D_TABLEID_2 =
@@ -4983,25 +4925,29 @@ public class ExpandoValuePersistenceImpl
 	 */
 	@Override
 	public void cacheResult(ExpandoValue expandoValue) {
-		if (expandoValue.getCtCollectionId() != 0) {
-			return;
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					expandoValue.getCtCollectionId())) {
+
+			EntityCacheUtil.putResult(
+				ExpandoValueImpl.class, expandoValue.getPrimaryKey(),
+				expandoValue);
+
+			FinderCacheUtil.putResult(
+				_finderPathFetchByC_R,
+				new Object[] {
+					expandoValue.getColumnId(), expandoValue.getRowId()
+				},
+				expandoValue);
+
+			FinderCacheUtil.putResult(
+				_finderPathFetchByT_C_C,
+				new Object[] {
+					expandoValue.getTableId(), expandoValue.getColumnId(),
+					expandoValue.getClassPK()
+				},
+				expandoValue);
 		}
-
-		EntityCacheUtil.putResult(
-			ExpandoValueImpl.class, expandoValue.getPrimaryKey(), expandoValue);
-
-		FinderCacheUtil.putResult(
-			_finderPathFetchByC_R,
-			new Object[] {expandoValue.getColumnId(), expandoValue.getRowId()},
-			expandoValue);
-
-		FinderCacheUtil.putResult(
-			_finderPathFetchByT_C_C,
-			new Object[] {
-				expandoValue.getTableId(), expandoValue.getColumnId(),
-				expandoValue.getClassPK()
-			},
-			expandoValue);
 	}
 
 	private int _valueObjectFinderCacheListThreshold;
@@ -5021,15 +4967,16 @@ public class ExpandoValuePersistenceImpl
 		}
 
 		for (ExpandoValue expandoValue : expandoValues) {
-			if (expandoValue.getCtCollectionId() != 0) {
-				continue;
-			}
+			try (SafeCloseable safeCloseable =
+					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+						expandoValue.getCtCollectionId())) {
 
-			if (EntityCacheUtil.getResult(
-					ExpandoValueImpl.class, expandoValue.getPrimaryKey()) ==
-						null) {
+				if (EntityCacheUtil.getResult(
+						ExpandoValueImpl.class, expandoValue.getPrimaryKey()) ==
+							null) {
 
-				cacheResult(expandoValue);
+					cacheResult(expandoValue);
+				}
 			}
 		}
 	}
@@ -5079,25 +5026,31 @@ public class ExpandoValuePersistenceImpl
 	protected void cacheUniqueFindersCache(
 		ExpandoValueModelImpl expandoValueModelImpl) {
 
-		Object[] args = new Object[] {
-			expandoValueModelImpl.getColumnId(),
-			expandoValueModelImpl.getRowId()
-		};
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					expandoValueModelImpl.getCtCollectionId())) {
 
-		FinderCacheUtil.putResult(_finderPathCountByC_R, args, Long.valueOf(1));
-		FinderCacheUtil.putResult(
-			_finderPathFetchByC_R, args, expandoValueModelImpl);
+			Object[] args = new Object[] {
+				expandoValueModelImpl.getColumnId(),
+				expandoValueModelImpl.getRowId()
+			};
 
-		args = new Object[] {
-			expandoValueModelImpl.getTableId(),
-			expandoValueModelImpl.getColumnId(),
-			expandoValueModelImpl.getClassPK()
-		};
+			FinderCacheUtil.putResult(
+				_finderPathCountByC_R, args, Long.valueOf(1));
+			FinderCacheUtil.putResult(
+				_finderPathFetchByC_R, args, expandoValueModelImpl);
 
-		FinderCacheUtil.putResult(
-			_finderPathCountByT_C_C, args, Long.valueOf(1));
-		FinderCacheUtil.putResult(
-			_finderPathFetchByT_C_C, args, expandoValueModelImpl);
+			args = new Object[] {
+				expandoValueModelImpl.getTableId(),
+				expandoValueModelImpl.getColumnId(),
+				expandoValueModelImpl.getClassPK()
+			};
+
+			FinderCacheUtil.putResult(
+				_finderPathCountByT_C_C, args, Long.valueOf(1));
+			FinderCacheUtil.putResult(
+				_finderPathFetchByT_C_C, args, expandoValueModelImpl);
+		}
 	}
 
 	/**
@@ -5252,16 +5205,6 @@ public class ExpandoValuePersistenceImpl
 			closeSession(session);
 		}
 
-		if (expandoValue.getCtCollectionId() != 0) {
-			if (isNew) {
-				expandoValue.setNew(false);
-			}
-
-			expandoValue.resetOriginalValues();
-
-			return expandoValue;
-		}
-
 		EntityCacheUtil.putResult(
 			ExpandoValueImpl.class, expandoValueModelImpl, false, true);
 
@@ -5326,10 +5269,20 @@ public class ExpandoValuePersistenceImpl
 		if (CTPersistenceHelperUtil.isProductionMode(
 				ExpandoValue.class, primaryKey)) {
 
-			return super.fetchByPrimaryKey(primaryKey);
+			try (SafeCloseable safeCloseable =
+					CTCollectionThreadLocal.
+						setProductionModeWithSafeCloseable()) {
+
+				return super.fetchByPrimaryKey(primaryKey);
+			}
 		}
 
-		ExpandoValue expandoValue = null;
+		ExpandoValue expandoValue = (ExpandoValue)EntityCacheUtil.getResult(
+			ExpandoValueImpl.class, primaryKey);
+
+		if (expandoValue != null) {
+			return expandoValue;
+		}
 
 		Session session = null;
 
@@ -5369,7 +5322,12 @@ public class ExpandoValuePersistenceImpl
 		Set<Serializable> primaryKeys) {
 
 		if (CTPersistenceHelperUtil.isProductionMode(ExpandoValue.class)) {
-			return super.fetchByPrimaryKeys(primaryKeys);
+			try (SafeCloseable safeCloseable =
+					CTCollectionThreadLocal.
+						setProductionModeWithSafeCloseable()) {
+
+				return super.fetchByPrimaryKeys(primaryKeys);
+			}
 		}
 
 		if (primaryKeys.isEmpty()) {
@@ -5390,6 +5348,34 @@ public class ExpandoValuePersistenceImpl
 				map.put(primaryKey, expandoValue);
 			}
 
+			return map;
+		}
+
+		Set<Serializable> uncachedPrimaryKeys = null;
+
+		for (Serializable primaryKey : primaryKeys) {
+			try (SafeCloseable safeCloseable =
+					CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
+						ExpandoValue.class, primaryKey)) {
+
+				ExpandoValue expandoValue =
+					(ExpandoValue)EntityCacheUtil.getResult(
+						ExpandoValueImpl.class, primaryKey);
+
+				if (expandoValue == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<>();
+					}
+
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, expandoValue);
+				}
+			}
+		}
+
+		if (uncachedPrimaryKeys == null) {
 			return map;
 		}
 
@@ -5518,78 +5504,80 @@ public class ExpandoValuePersistenceImpl
 		int start, int end, OrderByComparator<ExpandoValue> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
-			ExpandoValue.class);
+		try (SafeCloseable safeCloseable =
+				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
+					ExpandoValue.class)) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = null;
+			Object[] finderArgs = null;
 
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
+			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
 
-			if (useFinderCache && productionMode) {
-				finderPath = _finderPathWithoutPaginationFindAll;
-				finderArgs = FINDER_ARGS_EMPTY;
-			}
-		}
-		else if (useFinderCache && productionMode) {
-			finderPath = _finderPathWithPaginationFindAll;
-			finderArgs = new Object[] {start, end, orderByComparator};
-		}
-
-		List<ExpandoValue> list = null;
-
-		if (useFinderCache && productionMode) {
-			list = (List<ExpandoValue>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-			String sql = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					2 + (orderByComparator.getOrderByFields().length * 2));
-
-				sb.append(_SQL_SELECT_EXPANDOVALUE);
-
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-
-				sql = sb.toString();
-			}
-			else {
-				sql = _SQL_SELECT_EXPANDOVALUE;
-
-				sql = sql.concat(ExpandoValueModelImpl.ORDER_BY_JPQL);
-			}
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				list = (List<ExpandoValue>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache && productionMode) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderPath = _finderPathWithoutPaginationFindAll;
+					finderArgs = FINDER_ARGS_EMPTY;
 				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
+			else if (useFinderCache) {
+				finderPath = _finderPathWithPaginationFindAll;
+				finderArgs = new Object[] {start, end, orderByComparator};
 			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return list;
+			List<ExpandoValue> list = null;
+
+			if (useFinderCache) {
+				list = (List<ExpandoValue>)FinderCacheUtil.getResult(
+					finderPath, finderArgs, this);
+			}
+
+			if (list == null) {
+				StringBundler sb = null;
+				String sql = null;
+
+				if (orderByComparator != null) {
+					sb = new StringBundler(
+						2 + (orderByComparator.getOrderByFields().length * 2));
+
+					sb.append(_SQL_SELECT_EXPANDOVALUE);
+
+					appendOrderByComparator(
+						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+
+					sql = sb.toString();
+				}
+				else {
+					sql = _SQL_SELECT_EXPANDOVALUE;
+
+					sql = sql.concat(ExpandoValueModelImpl.ORDER_BY_JPQL);
+				}
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					list = (List<ExpandoValue>)QueryUtil.list(
+						query, getDialect(), start, end);
+
+					cacheResult(list);
+
+					if (useFinderCache) {
+						FinderCacheUtil.putResult(finderPath, finderArgs, list);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
+			}
+
+			return list;
+		}
 	}
 
 	/**
@@ -5610,40 +5598,36 @@ public class ExpandoValuePersistenceImpl
 	 */
 	@Override
 	public int countAll() {
-		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
-			ExpandoValue.class);
+		try (SafeCloseable safeCloseable =
+				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
+					ExpandoValue.class)) {
 
-		Long count = null;
-
-		if (productionMode) {
-			count = (Long)FinderCacheUtil.getResult(
+			Long count = (Long)FinderCacheUtil.getResult(
 				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
-		}
 
-		if (count == null) {
-			Session session = null;
+			if (count == null) {
+				Session session = null;
 
-			try {
-				session = openSession();
+				try {
+					session = openSession();
 
-				Query query = session.createQuery(_SQL_COUNT_EXPANDOVALUE);
+					Query query = session.createQuery(_SQL_COUNT_EXPANDOVALUE);
 
-				count = (Long)query.uniqueResult();
+					count = (Long)query.uniqueResult();
 
-				if (productionMode) {
 					FinderCacheUtil.putResult(
 						_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return count.intValue();
+			return count.intValue();
+		}
 	}
 
 	@Override

@@ -5,7 +5,9 @@
 
 package com.liferay.segments.service.persistence.impl;
 
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -174,109 +176,111 @@ public class SegmentsExperiencePersistenceImpl
 		OrderByComparator<SegmentsExperience> orderByComparator,
 		boolean useFinderCache) {
 
-		uuid = Objects.toString(uuid, "");
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					SegmentsExperience.class)) {
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			SegmentsExperience.class);
+			uuid = Objects.toString(uuid, "");
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = null;
+			Object[] finderArgs = null;
 
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
+			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
 
-			if (useFinderCache && productionMode) {
-				finderPath = _finderPathWithoutPaginationFindByUuid;
-				finderArgs = new Object[] {uuid};
+				if (useFinderCache) {
+					finderPath = _finderPathWithoutPaginationFindByUuid;
+					finderArgs = new Object[] {uuid};
+				}
 			}
-		}
-		else if (useFinderCache && productionMode) {
-			finderPath = _finderPathWithPaginationFindByUuid;
-			finderArgs = new Object[] {uuid, start, end, orderByComparator};
-		}
+			else if (useFinderCache) {
+				finderPath = _finderPathWithPaginationFindByUuid;
+				finderArgs = new Object[] {uuid, start, end, orderByComparator};
+			}
 
-		List<SegmentsExperience> list = null;
+			List<SegmentsExperience> list = null;
 
-		if (useFinderCache && productionMode) {
-			list = (List<SegmentsExperience>)finderCache.getResult(
-				finderPath, finderArgs, this);
+			if (useFinderCache) {
+				list = (List<SegmentsExperience>)finderCache.getResult(
+					finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (SegmentsExperience segmentsExperience : list) {
-					if (!uuid.equals(segmentsExperience.getUuid())) {
-						list = null;
+				if ((list != null) && !list.isEmpty()) {
+					for (SegmentsExperience segmentsExperience : list) {
+						if (!uuid.equals(segmentsExperience.getUuid())) {
+							list = null;
 
-						break;
+							break;
+						}
 					}
 				}
 			}
-		}
 
-		if (list == null) {
-			StringBundler sb = null;
+			if (list == null) {
+				StringBundler sb = null;
 
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
-
-			sb.append(_SQL_SELECT_SEGMENTSEXPERIENCE_WHERE);
-
-			boolean bindUuid = false;
-
-			if (uuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_UUID_UUID_3);
-			}
-			else {
-				bindUuid = true;
-
-				sb.append(_FINDER_COLUMN_UUID_UUID_2);
-			}
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(SegmentsExperienceModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindUuid) {
-					queryPos.add(uuid);
+				if (orderByComparator != null) {
+					sb = new StringBundler(
+						3 + (orderByComparator.getOrderByFields().length * 2));
+				}
+				else {
+					sb = new StringBundler(3);
 				}
 
-				list = (List<SegmentsExperience>)QueryUtil.list(
-					query, getDialect(), start, end);
+				sb.append(_SQL_SELECT_SEGMENTSEXPERIENCE_WHERE);
 
-				cacheResult(list);
+				boolean bindUuid = false;
 
-				if (useFinderCache && productionMode) {
-					finderCache.putResult(finderPath, finderArgs, list);
+				if (uuid.isEmpty()) {
+					sb.append(_FINDER_COLUMN_UUID_UUID_3);
+				}
+				else {
+					bindUuid = true;
+
+					sb.append(_FINDER_COLUMN_UUID_UUID_2);
+				}
+
+				if (orderByComparator != null) {
+					appendOrderByComparator(
+						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				}
+				else {
+					sb.append(SegmentsExperienceModelImpl.ORDER_BY_JPQL);
+				}
+
+				String sql = sb.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					if (bindUuid) {
+						queryPos.add(uuid);
+					}
+
+					list = (List<SegmentsExperience>)QueryUtil.list(
+						query, getDialect(), start, end);
+
+					cacheResult(list);
+
+					if (useFinderCache) {
+						finderCache.putResult(finderPath, finderArgs, list);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
 				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return list;
+			return list;
+		}
 	}
 
 	/**
@@ -581,70 +585,64 @@ public class SegmentsExperiencePersistenceImpl
 	 */
 	@Override
 	public int countByUuid(String uuid) {
-		uuid = Objects.toString(uuid, "");
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					SegmentsExperience.class)) {
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			SegmentsExperience.class);
+			uuid = Objects.toString(uuid, "");
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = _finderPathCountByUuid;
 
-		Long count = null;
+			Object[] finderArgs = new Object[] {uuid};
 
-		if (productionMode) {
-			finderPath = _finderPathCountByUuid;
+			Long count = (Long)finderCache.getResult(
+				finderPath, finderArgs, this);
 
-			finderArgs = new Object[] {uuid};
+			if (count == null) {
+				StringBundler sb = new StringBundler(2);
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-		}
+				sb.append(_SQL_COUNT_SEGMENTSEXPERIENCE_WHERE);
 
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
+				boolean bindUuid = false;
 
-			sb.append(_SQL_COUNT_SEGMENTSEXPERIENCE_WHERE);
+				if (uuid.isEmpty()) {
+					sb.append(_FINDER_COLUMN_UUID_UUID_3);
+				}
+				else {
+					bindUuid = true;
 
-			boolean bindUuid = false;
-
-			if (uuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_UUID_UUID_3);
-			}
-			else {
-				bindUuid = true;
-
-				sb.append(_FINDER_COLUMN_UUID_UUID_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindUuid) {
-					queryPos.add(uuid);
+					sb.append(_FINDER_COLUMN_UUID_UUID_2);
 				}
 
-				count = (Long)query.uniqueResult();
+				String sql = sb.toString();
 
-				if (productionMode) {
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					if (bindUuid) {
+						queryPos.add(uuid);
+					}
+
+					count = (Long)query.uniqueResult();
+
 					finderCache.putResult(finderPath, finderArgs, count);
 				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return count.intValue();
+			return count.intValue();
+		}
 	}
 
 	private static final String _FINDER_COLUMN_UUID_UUID_2 =
@@ -717,107 +715,101 @@ public class SegmentsExperiencePersistenceImpl
 	public SegmentsExperience fetchByUUID_G(
 		String uuid, long groupId, boolean useFinderCache) {
 
-		uuid = Objects.toString(uuid, "");
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					SegmentsExperience.class)) {
 
-		Object[] finderArgs = null;
+			uuid = Objects.toString(uuid, "");
 
-		if (useFinderCache) {
-			finderArgs = new Object[] {uuid, groupId};
-		}
+			Object[] finderArgs = null;
 
-		Object result = null;
-
-		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByUUID_G, finderArgs, this);
-		}
-
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			SegmentsExperience.class);
-
-		if (result instanceof SegmentsExperience) {
-			SegmentsExperience segmentsExperience = (SegmentsExperience)result;
-
-			if (!Objects.equals(uuid, segmentsExperience.getUuid()) ||
-				(groupId != segmentsExperience.getGroupId())) {
-
-				result = null;
-			}
-			else if (!ctPersistenceHelper.isProductionMode(
-						SegmentsExperience.class,
-						segmentsExperience.getPrimaryKey())) {
-
-				result = null;
-			}
-		}
-		else if (!productionMode && (result instanceof List<?>)) {
-			result = null;
-		}
-
-		if (result == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_SELECT_SEGMENTSEXPERIENCE_WHERE);
-
-			boolean bindUuid = false;
-
-			if (uuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_UUID_G_UUID_3);
-			}
-			else {
-				bindUuid = true;
-
-				sb.append(_FINDER_COLUMN_UUID_G_UUID_2);
+			if (useFinderCache) {
+				finderArgs = new Object[] {uuid, groupId};
 			}
 
-			sb.append(_FINDER_COLUMN_UUID_G_GROUPID_2);
+			Object result = null;
 
-			String sql = sb.toString();
+			if (useFinderCache) {
+				result = finderCache.getResult(
+					_finderPathFetchByUUID_G, finderArgs, this);
+			}
 
-			Session session = null;
+			if (result instanceof SegmentsExperience) {
+				SegmentsExperience segmentsExperience =
+					(SegmentsExperience)result;
 
-			try {
-				session = openSession();
+				if (!Objects.equals(uuid, segmentsExperience.getUuid()) ||
+					(groupId != segmentsExperience.getGroupId())) {
 
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindUuid) {
-					queryPos.add(uuid);
+					result = null;
 				}
+			}
 
-				queryPos.add(groupId);
+			if (result == null) {
+				StringBundler sb = new StringBundler(4);
 
-				List<SegmentsExperience> list = query.list();
+				sb.append(_SQL_SELECT_SEGMENTSEXPERIENCE_WHERE);
 
-				if (list.isEmpty()) {
-					if (useFinderCache && productionMode) {
-						finderCache.putResult(
-							_finderPathFetchByUUID_G, finderArgs, list);
-					}
+				boolean bindUuid = false;
+
+				if (uuid.isEmpty()) {
+					sb.append(_FINDER_COLUMN_UUID_G_UUID_3);
 				}
 				else {
-					SegmentsExperience segmentsExperience = list.get(0);
+					bindUuid = true;
 
-					result = segmentsExperience;
+					sb.append(_FINDER_COLUMN_UUID_G_UUID_2);
+				}
 
-					cacheResult(segmentsExperience);
+				sb.append(_FINDER_COLUMN_UUID_G_GROUPID_2);
+
+				String sql = sb.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					if (bindUuid) {
+						queryPos.add(uuid);
+					}
+
+					queryPos.add(groupId);
+
+					List<SegmentsExperience> list = query.list();
+
+					if (list.isEmpty()) {
+						if (useFinderCache) {
+							finderCache.putResult(
+								_finderPathFetchByUUID_G, finderArgs, list);
+						}
+					}
+					else {
+						SegmentsExperience segmentsExperience = list.get(0);
+
+						result = segmentsExperience;
+
+						cacheResult(segmentsExperience);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
 				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (SegmentsExperience)result;
+			if (result instanceof List<?>) {
+				return null;
+			}
+			else {
+				return (SegmentsExperience)result;
+			}
 		}
 	}
 
@@ -846,74 +838,68 @@ public class SegmentsExperiencePersistenceImpl
 	 */
 	@Override
 	public int countByUUID_G(String uuid, long groupId) {
-		uuid = Objects.toString(uuid, "");
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					SegmentsExperience.class)) {
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			SegmentsExperience.class);
+			uuid = Objects.toString(uuid, "");
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = _finderPathCountByUUID_G;
 
-		Long count = null;
+			Object[] finderArgs = new Object[] {uuid, groupId};
 
-		if (productionMode) {
-			finderPath = _finderPathCountByUUID_G;
+			Long count = (Long)finderCache.getResult(
+				finderPath, finderArgs, this);
 
-			finderArgs = new Object[] {uuid, groupId};
+			if (count == null) {
+				StringBundler sb = new StringBundler(3);
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-		}
+				sb.append(_SQL_COUNT_SEGMENTSEXPERIENCE_WHERE);
 
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
+				boolean bindUuid = false;
 
-			sb.append(_SQL_COUNT_SEGMENTSEXPERIENCE_WHERE);
+				if (uuid.isEmpty()) {
+					sb.append(_FINDER_COLUMN_UUID_G_UUID_3);
+				}
+				else {
+					bindUuid = true;
 
-			boolean bindUuid = false;
-
-			if (uuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_UUID_G_UUID_3);
-			}
-			else {
-				bindUuid = true;
-
-				sb.append(_FINDER_COLUMN_UUID_G_UUID_2);
-			}
-
-			sb.append(_FINDER_COLUMN_UUID_G_GROUPID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindUuid) {
-					queryPos.add(uuid);
+					sb.append(_FINDER_COLUMN_UUID_G_UUID_2);
 				}
 
-				queryPos.add(groupId);
+				sb.append(_FINDER_COLUMN_UUID_G_GROUPID_2);
 
-				count = (Long)query.uniqueResult();
+				String sql = sb.toString();
 
-				if (productionMode) {
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					if (bindUuid) {
+						queryPos.add(uuid);
+					}
+
+					queryPos.add(groupId);
+
+					count = (Long)query.uniqueResult();
+
 					finderCache.putResult(finderPath, finderArgs, count);
 				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return count.intValue();
+			return count.intValue();
+		}
 	}
 
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 =
@@ -1006,117 +992,119 @@ public class SegmentsExperiencePersistenceImpl
 		OrderByComparator<SegmentsExperience> orderByComparator,
 		boolean useFinderCache) {
 
-		uuid = Objects.toString(uuid, "");
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					SegmentsExperience.class)) {
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			SegmentsExperience.class);
+			uuid = Objects.toString(uuid, "");
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = null;
+			Object[] finderArgs = null;
 
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
+			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
 
-			if (useFinderCache && productionMode) {
-				finderPath = _finderPathWithoutPaginationFindByUuid_C;
-				finderArgs = new Object[] {uuid, companyId};
+				if (useFinderCache) {
+					finderPath = _finderPathWithoutPaginationFindByUuid_C;
+					finderArgs = new Object[] {uuid, companyId};
+				}
 			}
-		}
-		else if (useFinderCache && productionMode) {
-			finderPath = _finderPathWithPaginationFindByUuid_C;
-			finderArgs = new Object[] {
-				uuid, companyId, start, end, orderByComparator
-			};
-		}
+			else if (useFinderCache) {
+				finderPath = _finderPathWithPaginationFindByUuid_C;
+				finderArgs = new Object[] {
+					uuid, companyId, start, end, orderByComparator
+				};
+			}
 
-		List<SegmentsExperience> list = null;
+			List<SegmentsExperience> list = null;
 
-		if (useFinderCache && productionMode) {
-			list = (List<SegmentsExperience>)finderCache.getResult(
-				finderPath, finderArgs, this);
+			if (useFinderCache) {
+				list = (List<SegmentsExperience>)finderCache.getResult(
+					finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (SegmentsExperience segmentsExperience : list) {
-					if (!uuid.equals(segmentsExperience.getUuid()) ||
-						(companyId != segmentsExperience.getCompanyId())) {
+				if ((list != null) && !list.isEmpty()) {
+					for (SegmentsExperience segmentsExperience : list) {
+						if (!uuid.equals(segmentsExperience.getUuid()) ||
+							(companyId != segmentsExperience.getCompanyId())) {
 
-						list = null;
+							list = null;
 
-						break;
+							break;
+						}
 					}
 				}
 			}
-		}
 
-		if (list == null) {
-			StringBundler sb = null;
+			if (list == null) {
+				StringBundler sb = null;
 
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					4 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(4);
-			}
-
-			sb.append(_SQL_SELECT_SEGMENTSEXPERIENCE_WHERE);
-
-			boolean bindUuid = false;
-
-			if (uuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_UUID_C_UUID_3);
-			}
-			else {
-				bindUuid = true;
-
-				sb.append(_FINDER_COLUMN_UUID_C_UUID_2);
-			}
-
-			sb.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(SegmentsExperienceModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindUuid) {
-					queryPos.add(uuid);
+				if (orderByComparator != null) {
+					sb = new StringBundler(
+						4 + (orderByComparator.getOrderByFields().length * 2));
+				}
+				else {
+					sb = new StringBundler(4);
 				}
 
-				queryPos.add(companyId);
+				sb.append(_SQL_SELECT_SEGMENTSEXPERIENCE_WHERE);
 
-				list = (List<SegmentsExperience>)QueryUtil.list(
-					query, getDialect(), start, end);
+				boolean bindUuid = false;
 
-				cacheResult(list);
+				if (uuid.isEmpty()) {
+					sb.append(_FINDER_COLUMN_UUID_C_UUID_3);
+				}
+				else {
+					bindUuid = true;
 
-				if (useFinderCache && productionMode) {
-					finderCache.putResult(finderPath, finderArgs, list);
+					sb.append(_FINDER_COLUMN_UUID_C_UUID_2);
+				}
+
+				sb.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
+
+				if (orderByComparator != null) {
+					appendOrderByComparator(
+						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				}
+				else {
+					sb.append(SegmentsExperienceModelImpl.ORDER_BY_JPQL);
+				}
+
+				String sql = sb.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					if (bindUuid) {
+						queryPos.add(uuid);
+					}
+
+					queryPos.add(companyId);
+
+					list = (List<SegmentsExperience>)QueryUtil.list(
+						query, getDialect(), start, end);
+
+					cacheResult(list);
+
+					if (useFinderCache) {
+						finderCache.putResult(finderPath, finderArgs, list);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
 				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return list;
+			return list;
+		}
 	}
 
 	/**
@@ -1444,74 +1432,68 @@ public class SegmentsExperiencePersistenceImpl
 	 */
 	@Override
 	public int countByUuid_C(String uuid, long companyId) {
-		uuid = Objects.toString(uuid, "");
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					SegmentsExperience.class)) {
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			SegmentsExperience.class);
+			uuid = Objects.toString(uuid, "");
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = _finderPathCountByUuid_C;
 
-		Long count = null;
+			Object[] finderArgs = new Object[] {uuid, companyId};
 
-		if (productionMode) {
-			finderPath = _finderPathCountByUuid_C;
+			Long count = (Long)finderCache.getResult(
+				finderPath, finderArgs, this);
 
-			finderArgs = new Object[] {uuid, companyId};
+			if (count == null) {
+				StringBundler sb = new StringBundler(3);
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-		}
+				sb.append(_SQL_COUNT_SEGMENTSEXPERIENCE_WHERE);
 
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
+				boolean bindUuid = false;
 
-			sb.append(_SQL_COUNT_SEGMENTSEXPERIENCE_WHERE);
+				if (uuid.isEmpty()) {
+					sb.append(_FINDER_COLUMN_UUID_C_UUID_3);
+				}
+				else {
+					bindUuid = true;
 
-			boolean bindUuid = false;
-
-			if (uuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_UUID_C_UUID_3);
-			}
-			else {
-				bindUuid = true;
-
-				sb.append(_FINDER_COLUMN_UUID_C_UUID_2);
-			}
-
-			sb.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindUuid) {
-					queryPos.add(uuid);
+					sb.append(_FINDER_COLUMN_UUID_C_UUID_2);
 				}
 
-				queryPos.add(companyId);
+				sb.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
 
-				count = (Long)query.uniqueResult();
+				String sql = sb.toString();
 
-				if (productionMode) {
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					if (bindUuid) {
+						queryPos.add(uuid);
+					}
+
+					queryPos.add(companyId);
+
+					count = (Long)query.uniqueResult();
+
 					finderCache.putResult(finderPath, finderArgs, count);
 				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return count.intValue();
+			return count.intValue();
+		}
 	}
 
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 =
@@ -1599,96 +1581,100 @@ public class SegmentsExperiencePersistenceImpl
 		OrderByComparator<SegmentsExperience> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			SegmentsExperience.class);
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					SegmentsExperience.class)) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = null;
+			Object[] finderArgs = null;
 
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
+			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
 
-			if (useFinderCache && productionMode) {
-				finderPath = _finderPathWithoutPaginationFindByGroupId;
-				finderArgs = new Object[] {groupId};
+				if (useFinderCache) {
+					finderPath = _finderPathWithoutPaginationFindByGroupId;
+					finderArgs = new Object[] {groupId};
+				}
 			}
-		}
-		else if (useFinderCache && productionMode) {
-			finderPath = _finderPathWithPaginationFindByGroupId;
-			finderArgs = new Object[] {groupId, start, end, orderByComparator};
-		}
+			else if (useFinderCache) {
+				finderPath = _finderPathWithPaginationFindByGroupId;
+				finderArgs = new Object[] {
+					groupId, start, end, orderByComparator
+				};
+			}
 
-		List<SegmentsExperience> list = null;
+			List<SegmentsExperience> list = null;
 
-		if (useFinderCache && productionMode) {
-			list = (List<SegmentsExperience>)finderCache.getResult(
-				finderPath, finderArgs, this);
+			if (useFinderCache) {
+				list = (List<SegmentsExperience>)finderCache.getResult(
+					finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (SegmentsExperience segmentsExperience : list) {
-					if (groupId != segmentsExperience.getGroupId()) {
-						list = null;
+				if ((list != null) && !list.isEmpty()) {
+					for (SegmentsExperience segmentsExperience : list) {
+						if (groupId != segmentsExperience.getGroupId()) {
+							list = null;
 
-						break;
+							break;
+						}
 					}
 				}
 			}
-		}
 
-		if (list == null) {
-			StringBundler sb = null;
+			if (list == null) {
+				StringBundler sb = null;
 
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
+				if (orderByComparator != null) {
+					sb = new StringBundler(
+						3 + (orderByComparator.getOrderByFields().length * 2));
+				}
+				else {
+					sb = new StringBundler(3);
+				}
 
-			sb.append(_SQL_SELECT_SEGMENTSEXPERIENCE_WHERE);
+				sb.append(_SQL_SELECT_SEGMENTSEXPERIENCE_WHERE);
 
-			sb.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
+				sb.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(SegmentsExperienceModelImpl.ORDER_BY_JPQL);
-			}
+				if (orderByComparator != null) {
+					appendOrderByComparator(
+						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				}
+				else {
+					sb.append(SegmentsExperienceModelImpl.ORDER_BY_JPQL);
+				}
 
-			String sql = sb.toString();
+				String sql = sb.toString();
 
-			Session session = null;
+				Session session = null;
 
-			try {
-				session = openSession();
+				try {
+					session = openSession();
 
-				Query query = session.createQuery(sql);
+					Query query = session.createQuery(sql);
 
-				QueryPos queryPos = QueryPos.getInstance(query);
+					QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(groupId);
+					queryPos.add(groupId);
 
-				list = (List<SegmentsExperience>)QueryUtil.list(
-					query, getDialect(), start, end);
+					list = (List<SegmentsExperience>)QueryUtil.list(
+						query, getDialect(), start, end);
 
-				cacheResult(list);
+					cacheResult(list);
 
-				if (useFinderCache && productionMode) {
-					finderCache.putResult(finderPath, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(finderPath, finderArgs, list);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
 				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return list;
+			return list;
+		}
 	}
 
 	/**
@@ -2316,57 +2302,51 @@ public class SegmentsExperiencePersistenceImpl
 	 */
 	@Override
 	public int countByGroupId(long groupId) {
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			SegmentsExperience.class);
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					SegmentsExperience.class)) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = _finderPathCountByGroupId;
 
-		Long count = null;
+			Object[] finderArgs = new Object[] {groupId};
 
-		if (productionMode) {
-			finderPath = _finderPathCountByGroupId;
+			Long count = (Long)finderCache.getResult(
+				finderPath, finderArgs, this);
 
-			finderArgs = new Object[] {groupId};
+			if (count == null) {
+				StringBundler sb = new StringBundler(2);
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-		}
+				sb.append(_SQL_COUNT_SEGMENTSEXPERIENCE_WHERE);
 
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
+				sb.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
-			sb.append(_SQL_COUNT_SEGMENTSEXPERIENCE_WHERE);
+				String sql = sb.toString();
 
-			sb.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
+				Session session = null;
 
-			String sql = sb.toString();
+				try {
+					session = openSession();
 
-			Session session = null;
+					Query query = session.createQuery(sql);
 
-			try {
-				session = openSession();
+					QueryPos queryPos = QueryPos.getInstance(query);
 
-				Query query = session.createQuery(sql);
+					queryPos.add(groupId);
 
-				QueryPos queryPos = QueryPos.getInstance(query);
+					count = (Long)query.uniqueResult();
 
-				queryPos.add(groupId);
-
-				count = (Long)query.uniqueResult();
-
-				if (productionMode) {
 					finderCache.putResult(finderPath, finderArgs, count);
 				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return count.intValue();
+			return count.intValue();
+		}
 	}
 
 	/**
@@ -2499,100 +2479,103 @@ public class SegmentsExperiencePersistenceImpl
 		OrderByComparator<SegmentsExperience> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			SegmentsExperience.class);
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					SegmentsExperience.class)) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = null;
+			Object[] finderArgs = null;
 
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
+			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
 
-			if (useFinderCache && productionMode) {
-				finderPath = _finderPathWithoutPaginationFindBySegmentsEntryId;
-				finderArgs = new Object[] {segmentsEntryId};
+				if (useFinderCache) {
+					finderPath =
+						_finderPathWithoutPaginationFindBySegmentsEntryId;
+					finderArgs = new Object[] {segmentsEntryId};
+				}
 			}
-		}
-		else if (useFinderCache && productionMode) {
-			finderPath = _finderPathWithPaginationFindBySegmentsEntryId;
-			finderArgs = new Object[] {
-				segmentsEntryId, start, end, orderByComparator
-			};
-		}
+			else if (useFinderCache) {
+				finderPath = _finderPathWithPaginationFindBySegmentsEntryId;
+				finderArgs = new Object[] {
+					segmentsEntryId, start, end, orderByComparator
+				};
+			}
 
-		List<SegmentsExperience> list = null;
+			List<SegmentsExperience> list = null;
 
-		if (useFinderCache && productionMode) {
-			list = (List<SegmentsExperience>)finderCache.getResult(
-				finderPath, finderArgs, this);
+			if (useFinderCache) {
+				list = (List<SegmentsExperience>)finderCache.getResult(
+					finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (SegmentsExperience segmentsExperience : list) {
-					if (segmentsEntryId !=
-							segmentsExperience.getSegmentsEntryId()) {
+				if ((list != null) && !list.isEmpty()) {
+					for (SegmentsExperience segmentsExperience : list) {
+						if (segmentsEntryId !=
+								segmentsExperience.getSegmentsEntryId()) {
 
-						list = null;
+							list = null;
 
-						break;
+							break;
+						}
 					}
 				}
 			}
-		}
 
-		if (list == null) {
-			StringBundler sb = null;
+			if (list == null) {
+				StringBundler sb = null;
 
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
+				if (orderByComparator != null) {
+					sb = new StringBundler(
+						3 + (orderByComparator.getOrderByFields().length * 2));
+				}
+				else {
+					sb = new StringBundler(3);
+				}
 
-			sb.append(_SQL_SELECT_SEGMENTSEXPERIENCE_WHERE);
+				sb.append(_SQL_SELECT_SEGMENTSEXPERIENCE_WHERE);
 
-			sb.append(_FINDER_COLUMN_SEGMENTSENTRYID_SEGMENTSENTRYID_2);
+				sb.append(_FINDER_COLUMN_SEGMENTSENTRYID_SEGMENTSENTRYID_2);
 
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(SegmentsExperienceModelImpl.ORDER_BY_JPQL);
-			}
+				if (orderByComparator != null) {
+					appendOrderByComparator(
+						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				}
+				else {
+					sb.append(SegmentsExperienceModelImpl.ORDER_BY_JPQL);
+				}
 
-			String sql = sb.toString();
+				String sql = sb.toString();
 
-			Session session = null;
+				Session session = null;
 
-			try {
-				session = openSession();
+				try {
+					session = openSession();
 
-				Query query = session.createQuery(sql);
+					Query query = session.createQuery(sql);
 
-				QueryPos queryPos = QueryPos.getInstance(query);
+					QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(segmentsEntryId);
+					queryPos.add(segmentsEntryId);
 
-				list = (List<SegmentsExperience>)QueryUtil.list(
-					query, getDialect(), start, end);
+					list = (List<SegmentsExperience>)QueryUtil.list(
+						query, getDialect(), start, end);
 
-				cacheResult(list);
+					cacheResult(list);
 
-				if (useFinderCache && productionMode) {
-					finderCache.putResult(finderPath, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(finderPath, finderArgs, list);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
 				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return list;
+			return list;
+		}
 	}
 
 	/**
@@ -2891,57 +2874,51 @@ public class SegmentsExperiencePersistenceImpl
 	 */
 	@Override
 	public int countBySegmentsEntryId(long segmentsEntryId) {
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			SegmentsExperience.class);
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					SegmentsExperience.class)) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = _finderPathCountBySegmentsEntryId;
 
-		Long count = null;
+			Object[] finderArgs = new Object[] {segmentsEntryId};
 
-		if (productionMode) {
-			finderPath = _finderPathCountBySegmentsEntryId;
+			Long count = (Long)finderCache.getResult(
+				finderPath, finderArgs, this);
 
-			finderArgs = new Object[] {segmentsEntryId};
+			if (count == null) {
+				StringBundler sb = new StringBundler(2);
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-		}
+				sb.append(_SQL_COUNT_SEGMENTSEXPERIENCE_WHERE);
 
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
+				sb.append(_FINDER_COLUMN_SEGMENTSENTRYID_SEGMENTSENTRYID_2);
 
-			sb.append(_SQL_COUNT_SEGMENTSEXPERIENCE_WHERE);
+				String sql = sb.toString();
 
-			sb.append(_FINDER_COLUMN_SEGMENTSENTRYID_SEGMENTSENTRYID_2);
+				Session session = null;
 
-			String sql = sb.toString();
+				try {
+					session = openSession();
 
-			Session session = null;
+					Query query = session.createQuery(sql);
 
-			try {
-				session = openSession();
+					QueryPos queryPos = QueryPos.getInstance(query);
 
-				Query query = session.createQuery(sql);
+					queryPos.add(segmentsEntryId);
 
-				QueryPos queryPos = QueryPos.getInstance(query);
+					count = (Long)query.uniqueResult();
 
-				queryPos.add(segmentsEntryId);
-
-				count = (Long)query.uniqueResult();
-
-				if (productionMode) {
 					finderCache.putResult(finderPath, finderArgs, count);
 				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return count.intValue();
+			return count.intValue();
+		}
 	}
 
 	private static final String
@@ -3028,104 +3005,106 @@ public class SegmentsExperiencePersistenceImpl
 		OrderByComparator<SegmentsExperience> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			SegmentsExperience.class);
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					SegmentsExperience.class)) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = null;
+			Object[] finderArgs = null;
 
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
+			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
 
-			if (useFinderCache && productionMode) {
-				finderPath = _finderPathWithoutPaginationFindByG_P;
-				finderArgs = new Object[] {groupId, plid};
+				if (useFinderCache) {
+					finderPath = _finderPathWithoutPaginationFindByG_P;
+					finderArgs = new Object[] {groupId, plid};
+				}
 			}
-		}
-		else if (useFinderCache && productionMode) {
-			finderPath = _finderPathWithPaginationFindByG_P;
-			finderArgs = new Object[] {
-				groupId, plid, start, end, orderByComparator
-			};
-		}
+			else if (useFinderCache) {
+				finderPath = _finderPathWithPaginationFindByG_P;
+				finderArgs = new Object[] {
+					groupId, plid, start, end, orderByComparator
+				};
+			}
 
-		List<SegmentsExperience> list = null;
+			List<SegmentsExperience> list = null;
 
-		if (useFinderCache && productionMode) {
-			list = (List<SegmentsExperience>)finderCache.getResult(
-				finderPath, finderArgs, this);
+			if (useFinderCache) {
+				list = (List<SegmentsExperience>)finderCache.getResult(
+					finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (SegmentsExperience segmentsExperience : list) {
-					if ((groupId != segmentsExperience.getGroupId()) ||
-						(plid != segmentsExperience.getPlid())) {
+				if ((list != null) && !list.isEmpty()) {
+					for (SegmentsExperience segmentsExperience : list) {
+						if ((groupId != segmentsExperience.getGroupId()) ||
+							(plid != segmentsExperience.getPlid())) {
 
-						list = null;
+							list = null;
 
-						break;
+							break;
+						}
 					}
 				}
 			}
-		}
 
-		if (list == null) {
-			StringBundler sb = null;
+			if (list == null) {
+				StringBundler sb = null;
 
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					4 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(4);
-			}
+				if (orderByComparator != null) {
+					sb = new StringBundler(
+						4 + (orderByComparator.getOrderByFields().length * 2));
+				}
+				else {
+					sb = new StringBundler(4);
+				}
 
-			sb.append(_SQL_SELECT_SEGMENTSEXPERIENCE_WHERE);
+				sb.append(_SQL_SELECT_SEGMENTSEXPERIENCE_WHERE);
 
-			sb.append(_FINDER_COLUMN_G_P_GROUPID_2);
+				sb.append(_FINDER_COLUMN_G_P_GROUPID_2);
 
-			sb.append(_FINDER_COLUMN_G_P_PLID_2);
+				sb.append(_FINDER_COLUMN_G_P_PLID_2);
 
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(SegmentsExperienceModelImpl.ORDER_BY_JPQL);
-			}
+				if (orderByComparator != null) {
+					appendOrderByComparator(
+						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				}
+				else {
+					sb.append(SegmentsExperienceModelImpl.ORDER_BY_JPQL);
+				}
 
-			String sql = sb.toString();
+				String sql = sb.toString();
 
-			Session session = null;
+				Session session = null;
 
-			try {
-				session = openSession();
+				try {
+					session = openSession();
 
-				Query query = session.createQuery(sql);
+					Query query = session.createQuery(sql);
 
-				QueryPos queryPos = QueryPos.getInstance(query);
+					QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(groupId);
+					queryPos.add(groupId);
 
-				queryPos.add(plid);
+					queryPos.add(plid);
 
-				list = (List<SegmentsExperience>)QueryUtil.list(
-					query, getDialect(), start, end);
+					list = (List<SegmentsExperience>)QueryUtil.list(
+						query, getDialect(), start, end);
 
-				cacheResult(list);
+					cacheResult(list);
 
-				if (useFinderCache && productionMode) {
-					finderCache.putResult(finderPath, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(finderPath, finderArgs, list);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
 				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return list;
+			return list;
+		}
 	}
 
 	/**
@@ -3789,61 +3768,55 @@ public class SegmentsExperiencePersistenceImpl
 	 */
 	@Override
 	public int countByG_P(long groupId, long plid) {
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			SegmentsExperience.class);
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					SegmentsExperience.class)) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = _finderPathCountByG_P;
 
-		Long count = null;
+			Object[] finderArgs = new Object[] {groupId, plid};
 
-		if (productionMode) {
-			finderPath = _finderPathCountByG_P;
+			Long count = (Long)finderCache.getResult(
+				finderPath, finderArgs, this);
 
-			finderArgs = new Object[] {groupId, plid};
+			if (count == null) {
+				StringBundler sb = new StringBundler(3);
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-		}
+				sb.append(_SQL_COUNT_SEGMENTSEXPERIENCE_WHERE);
 
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
+				sb.append(_FINDER_COLUMN_G_P_GROUPID_2);
 
-			sb.append(_SQL_COUNT_SEGMENTSEXPERIENCE_WHERE);
+				sb.append(_FINDER_COLUMN_G_P_PLID_2);
 
-			sb.append(_FINDER_COLUMN_G_P_GROUPID_2);
+				String sql = sb.toString();
 
-			sb.append(_FINDER_COLUMN_G_P_PLID_2);
+				Session session = null;
 
-			String sql = sb.toString();
+				try {
+					session = openSession();
 
-			Session session = null;
+					Query query = session.createQuery(sql);
 
-			try {
-				session = openSession();
+					QueryPos queryPos = QueryPos.getInstance(query);
 
-				Query query = session.createQuery(sql);
+					queryPos.add(groupId);
 
-				QueryPos queryPos = QueryPos.getInstance(query);
+					queryPos.add(plid);
 
-				queryPos.add(groupId);
+					count = (Long)query.uniqueResult();
 
-				queryPos.add(plid);
-
-				count = (Long)query.uniqueResult();
-
-				if (productionMode) {
 					finderCache.putResult(finderPath, finderArgs, count);
 				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return count.intValue();
+			return count.intValue();
+		}
 	}
 
 	/**
@@ -3994,110 +3967,113 @@ public class SegmentsExperiencePersistenceImpl
 		OrderByComparator<SegmentsExperience> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			SegmentsExperience.class);
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					SegmentsExperience.class)) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = null;
+			Object[] finderArgs = null;
 
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
+			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
 
-			if (useFinderCache && productionMode) {
-				finderPath = _finderPathWithoutPaginationFindByG_S_P;
-				finderArgs = new Object[] {groupId, segmentsEntryId, plid};
+				if (useFinderCache) {
+					finderPath = _finderPathWithoutPaginationFindByG_S_P;
+					finderArgs = new Object[] {groupId, segmentsEntryId, plid};
+				}
 			}
-		}
-		else if (useFinderCache && productionMode) {
-			finderPath = _finderPathWithPaginationFindByG_S_P;
-			finderArgs = new Object[] {
-				groupId, segmentsEntryId, plid, start, end, orderByComparator
-			};
-		}
+			else if (useFinderCache) {
+				finderPath = _finderPathWithPaginationFindByG_S_P;
+				finderArgs = new Object[] {
+					groupId, segmentsEntryId, plid, start, end,
+					orderByComparator
+				};
+			}
 
-		List<SegmentsExperience> list = null;
+			List<SegmentsExperience> list = null;
 
-		if (useFinderCache && productionMode) {
-			list = (List<SegmentsExperience>)finderCache.getResult(
-				finderPath, finderArgs, this);
+			if (useFinderCache) {
+				list = (List<SegmentsExperience>)finderCache.getResult(
+					finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (SegmentsExperience segmentsExperience : list) {
-					if ((groupId != segmentsExperience.getGroupId()) ||
-						(segmentsEntryId !=
-							segmentsExperience.getSegmentsEntryId()) ||
-						(plid != segmentsExperience.getPlid())) {
+				if ((list != null) && !list.isEmpty()) {
+					for (SegmentsExperience segmentsExperience : list) {
+						if ((groupId != segmentsExperience.getGroupId()) ||
+							(segmentsEntryId !=
+								segmentsExperience.getSegmentsEntryId()) ||
+							(plid != segmentsExperience.getPlid())) {
 
-						list = null;
+							list = null;
 
-						break;
+							break;
+						}
 					}
 				}
 			}
-		}
 
-		if (list == null) {
-			StringBundler sb = null;
+			if (list == null) {
+				StringBundler sb = null;
 
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					5 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(5);
-			}
+				if (orderByComparator != null) {
+					sb = new StringBundler(
+						5 + (orderByComparator.getOrderByFields().length * 2));
+				}
+				else {
+					sb = new StringBundler(5);
+				}
 
-			sb.append(_SQL_SELECT_SEGMENTSEXPERIENCE_WHERE);
+				sb.append(_SQL_SELECT_SEGMENTSEXPERIENCE_WHERE);
 
-			sb.append(_FINDER_COLUMN_G_S_P_GROUPID_2);
+				sb.append(_FINDER_COLUMN_G_S_P_GROUPID_2);
 
-			sb.append(_FINDER_COLUMN_G_S_P_SEGMENTSENTRYID_2);
+				sb.append(_FINDER_COLUMN_G_S_P_SEGMENTSENTRYID_2);
 
-			sb.append(_FINDER_COLUMN_G_S_P_PLID_2);
+				sb.append(_FINDER_COLUMN_G_S_P_PLID_2);
 
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(SegmentsExperienceModelImpl.ORDER_BY_JPQL);
-			}
+				if (orderByComparator != null) {
+					appendOrderByComparator(
+						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				}
+				else {
+					sb.append(SegmentsExperienceModelImpl.ORDER_BY_JPQL);
+				}
 
-			String sql = sb.toString();
+				String sql = sb.toString();
 
-			Session session = null;
+				Session session = null;
 
-			try {
-				session = openSession();
+				try {
+					session = openSession();
 
-				Query query = session.createQuery(sql);
+					Query query = session.createQuery(sql);
 
-				QueryPos queryPos = QueryPos.getInstance(query);
+					QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(groupId);
+					queryPos.add(groupId);
 
-				queryPos.add(segmentsEntryId);
+					queryPos.add(segmentsEntryId);
 
-				queryPos.add(plid);
+					queryPos.add(plid);
 
-				list = (List<SegmentsExperience>)QueryUtil.list(
-					query, getDialect(), start, end);
+					list = (List<SegmentsExperience>)QueryUtil.list(
+						query, getDialect(), start, end);
 
-				cacheResult(list);
+					cacheResult(list);
 
-				if (useFinderCache && productionMode) {
-					finderCache.putResult(finderPath, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(finderPath, finderArgs, list);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
 				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return list;
+			return list;
+		}
 	}
 
 	/**
@@ -4799,65 +4775,59 @@ public class SegmentsExperiencePersistenceImpl
 	 */
 	@Override
 	public int countByG_S_P(long groupId, long segmentsEntryId, long plid) {
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			SegmentsExperience.class);
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					SegmentsExperience.class)) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = _finderPathCountByG_S_P;
 
-		Long count = null;
+			Object[] finderArgs = new Object[] {groupId, segmentsEntryId, plid};
 
-		if (productionMode) {
-			finderPath = _finderPathCountByG_S_P;
+			Long count = (Long)finderCache.getResult(
+				finderPath, finderArgs, this);
 
-			finderArgs = new Object[] {groupId, segmentsEntryId, plid};
+			if (count == null) {
+				StringBundler sb = new StringBundler(4);
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-		}
+				sb.append(_SQL_COUNT_SEGMENTSEXPERIENCE_WHERE);
 
-		if (count == null) {
-			StringBundler sb = new StringBundler(4);
+				sb.append(_FINDER_COLUMN_G_S_P_GROUPID_2);
 
-			sb.append(_SQL_COUNT_SEGMENTSEXPERIENCE_WHERE);
+				sb.append(_FINDER_COLUMN_G_S_P_SEGMENTSENTRYID_2);
 
-			sb.append(_FINDER_COLUMN_G_S_P_GROUPID_2);
+				sb.append(_FINDER_COLUMN_G_S_P_PLID_2);
 
-			sb.append(_FINDER_COLUMN_G_S_P_SEGMENTSENTRYID_2);
+				String sql = sb.toString();
 
-			sb.append(_FINDER_COLUMN_G_S_P_PLID_2);
+				Session session = null;
 
-			String sql = sb.toString();
+				try {
+					session = openSession();
 
-			Session session = null;
+					Query query = session.createQuery(sql);
 
-			try {
-				session = openSession();
+					QueryPos queryPos = QueryPos.getInstance(query);
 
-				Query query = session.createQuery(sql);
+					queryPos.add(groupId);
 
-				QueryPos queryPos = QueryPos.getInstance(query);
+					queryPos.add(segmentsEntryId);
 
-				queryPos.add(groupId);
+					queryPos.add(plid);
 
-				queryPos.add(segmentsEntryId);
+					count = (Long)query.uniqueResult();
 
-				queryPos.add(plid);
-
-				count = (Long)query.uniqueResult();
-
-				if (productionMode) {
 					finderCache.putResult(finderPath, finderArgs, count);
 				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return count.intValue();
+			return count.intValue();
+		}
 	}
 
 	/**
@@ -5004,114 +4974,110 @@ public class SegmentsExperiencePersistenceImpl
 		long groupId, String segmentsExperienceKey, long plid,
 		boolean useFinderCache) {
 
-		segmentsExperienceKey = Objects.toString(segmentsExperienceKey, "");
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					SegmentsExperience.class)) {
 
-		Object[] finderArgs = null;
+			segmentsExperienceKey = Objects.toString(segmentsExperienceKey, "");
 
-		if (useFinderCache) {
-			finderArgs = new Object[] {groupId, segmentsExperienceKey, plid};
-		}
+			Object[] finderArgs = null;
 
-		Object result = null;
-
-		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByG_SEK_P, finderArgs, this);
-		}
-
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			SegmentsExperience.class);
-
-		if (result instanceof SegmentsExperience) {
-			SegmentsExperience segmentsExperience = (SegmentsExperience)result;
-
-			if ((groupId != segmentsExperience.getGroupId()) ||
-				!Objects.equals(
-					segmentsExperienceKey,
-					segmentsExperience.getSegmentsExperienceKey()) ||
-				(plid != segmentsExperience.getPlid())) {
-
-				result = null;
-			}
-			else if (!ctPersistenceHelper.isProductionMode(
-						SegmentsExperience.class,
-						segmentsExperience.getPrimaryKey())) {
-
-				result = null;
-			}
-		}
-		else if (!productionMode && (result instanceof List<?>)) {
-			result = null;
-		}
-
-		if (result == null) {
-			StringBundler sb = new StringBundler(5);
-
-			sb.append(_SQL_SELECT_SEGMENTSEXPERIENCE_WHERE);
-
-			sb.append(_FINDER_COLUMN_G_SEK_P_GROUPID_2);
-
-			boolean bindSegmentsExperienceKey = false;
-
-			if (segmentsExperienceKey.isEmpty()) {
-				sb.append(_FINDER_COLUMN_G_SEK_P_SEGMENTSEXPERIENCEKEY_3);
-			}
-			else {
-				bindSegmentsExperienceKey = true;
-
-				sb.append(_FINDER_COLUMN_G_SEK_P_SEGMENTSEXPERIENCEKEY_2);
+			if (useFinderCache) {
+				finderArgs = new Object[] {
+					groupId, segmentsExperienceKey, plid
+				};
 			}
 
-			sb.append(_FINDER_COLUMN_G_SEK_P_PLID_2);
+			Object result = null;
 
-			String sql = sb.toString();
+			if (useFinderCache) {
+				result = finderCache.getResult(
+					_finderPathFetchByG_SEK_P, finderArgs, this);
+			}
 
-			Session session = null;
+			if (result instanceof SegmentsExperience) {
+				SegmentsExperience segmentsExperience =
+					(SegmentsExperience)result;
 
-			try {
-				session = openSession();
+				if ((groupId != segmentsExperience.getGroupId()) ||
+					!Objects.equals(
+						segmentsExperienceKey,
+						segmentsExperience.getSegmentsExperienceKey()) ||
+					(plid != segmentsExperience.getPlid())) {
 
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(groupId);
-
-				if (bindSegmentsExperienceKey) {
-					queryPos.add(segmentsExperienceKey);
+					result = null;
 				}
+			}
 
-				queryPos.add(plid);
+			if (result == null) {
+				StringBundler sb = new StringBundler(5);
 
-				List<SegmentsExperience> list = query.list();
+				sb.append(_SQL_SELECT_SEGMENTSEXPERIENCE_WHERE);
 
-				if (list.isEmpty()) {
-					if (useFinderCache && productionMode) {
-						finderCache.putResult(
-							_finderPathFetchByG_SEK_P, finderArgs, list);
-					}
+				sb.append(_FINDER_COLUMN_G_SEK_P_GROUPID_2);
+
+				boolean bindSegmentsExperienceKey = false;
+
+				if (segmentsExperienceKey.isEmpty()) {
+					sb.append(_FINDER_COLUMN_G_SEK_P_SEGMENTSEXPERIENCEKEY_3);
 				}
 				else {
-					SegmentsExperience segmentsExperience = list.get(0);
+					bindSegmentsExperienceKey = true;
 
-					result = segmentsExperience;
+					sb.append(_FINDER_COLUMN_G_SEK_P_SEGMENTSEXPERIENCEKEY_2);
+				}
 
-					cacheResult(segmentsExperience);
+				sb.append(_FINDER_COLUMN_G_SEK_P_PLID_2);
+
+				String sql = sb.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					queryPos.add(groupId);
+
+					if (bindSegmentsExperienceKey) {
+						queryPos.add(segmentsExperienceKey);
+					}
+
+					queryPos.add(plid);
+
+					List<SegmentsExperience> list = query.list();
+
+					if (list.isEmpty()) {
+						if (useFinderCache) {
+							finderCache.putResult(
+								_finderPathFetchByG_SEK_P, finderArgs, list);
+						}
+					}
+					else {
+						SegmentsExperience segmentsExperience = list.get(0);
+
+						result = segmentsExperience;
+
+						cacheResult(segmentsExperience);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
 				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (SegmentsExperience)result;
+			if (result instanceof List<?>) {
+				return null;
+			}
+			else {
+				return (SegmentsExperience)result;
+			}
 		}
 	}
 
@@ -5146,78 +5112,74 @@ public class SegmentsExperiencePersistenceImpl
 	public int countByG_SEK_P(
 		long groupId, String segmentsExperienceKey, long plid) {
 
-		segmentsExperienceKey = Objects.toString(segmentsExperienceKey, "");
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					SegmentsExperience.class)) {
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			SegmentsExperience.class);
+			segmentsExperienceKey = Objects.toString(segmentsExperienceKey, "");
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = _finderPathCountByG_SEK_P;
 
-		Long count = null;
+			Object[] finderArgs = new Object[] {
+				groupId, segmentsExperienceKey, plid
+			};
 
-		if (productionMode) {
-			finderPath = _finderPathCountByG_SEK_P;
+			Long count = (Long)finderCache.getResult(
+				finderPath, finderArgs, this);
 
-			finderArgs = new Object[] {groupId, segmentsExperienceKey, plid};
+			if (count == null) {
+				StringBundler sb = new StringBundler(4);
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-		}
+				sb.append(_SQL_COUNT_SEGMENTSEXPERIENCE_WHERE);
 
-		if (count == null) {
-			StringBundler sb = new StringBundler(4);
+				sb.append(_FINDER_COLUMN_G_SEK_P_GROUPID_2);
 
-			sb.append(_SQL_COUNT_SEGMENTSEXPERIENCE_WHERE);
+				boolean bindSegmentsExperienceKey = false;
 
-			sb.append(_FINDER_COLUMN_G_SEK_P_GROUPID_2);
+				if (segmentsExperienceKey.isEmpty()) {
+					sb.append(_FINDER_COLUMN_G_SEK_P_SEGMENTSEXPERIENCEKEY_3);
+				}
+				else {
+					bindSegmentsExperienceKey = true;
 
-			boolean bindSegmentsExperienceKey = false;
-
-			if (segmentsExperienceKey.isEmpty()) {
-				sb.append(_FINDER_COLUMN_G_SEK_P_SEGMENTSEXPERIENCEKEY_3);
-			}
-			else {
-				bindSegmentsExperienceKey = true;
-
-				sb.append(_FINDER_COLUMN_G_SEK_P_SEGMENTSEXPERIENCEKEY_2);
-			}
-
-			sb.append(_FINDER_COLUMN_G_SEK_P_PLID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(groupId);
-
-				if (bindSegmentsExperienceKey) {
-					queryPos.add(segmentsExperienceKey);
+					sb.append(_FINDER_COLUMN_G_SEK_P_SEGMENTSEXPERIENCEKEY_2);
 				}
 
-				queryPos.add(plid);
+				sb.append(_FINDER_COLUMN_G_SEK_P_PLID_2);
 
-				count = (Long)query.uniqueResult();
+				String sql = sb.toString();
 
-				if (productionMode) {
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					queryPos.add(groupId);
+
+					if (bindSegmentsExperienceKey) {
+						queryPos.add(segmentsExperienceKey);
+					}
+
+					queryPos.add(plid);
+
+					count = (Long)query.uniqueResult();
+
 					finderCache.putResult(finderPath, finderArgs, count);
 				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return count.intValue();
+			return count.intValue();
+		}
 	}
 
 	private static final String _FINDER_COLUMN_G_SEK_P_GROUPID_2 =
@@ -5305,99 +5267,93 @@ public class SegmentsExperiencePersistenceImpl
 	public SegmentsExperience fetchByG_P_P(
 		long groupId, long plid, int priority, boolean useFinderCache) {
 
-		Object[] finderArgs = null;
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					SegmentsExperience.class)) {
 
-		if (useFinderCache) {
-			finderArgs = new Object[] {groupId, plid, priority};
-		}
+			Object[] finderArgs = null;
 
-		Object result = null;
-
-		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByG_P_P, finderArgs, this);
-		}
-
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			SegmentsExperience.class);
-
-		if (result instanceof SegmentsExperience) {
-			SegmentsExperience segmentsExperience = (SegmentsExperience)result;
-
-			if ((groupId != segmentsExperience.getGroupId()) ||
-				(plid != segmentsExperience.getPlid()) ||
-				(priority != segmentsExperience.getPriority())) {
-
-				result = null;
+			if (useFinderCache) {
+				finderArgs = new Object[] {groupId, plid, priority};
 			}
-			else if (!ctPersistenceHelper.isProductionMode(
-						SegmentsExperience.class,
-						segmentsExperience.getPrimaryKey())) {
 
-				result = null;
+			Object result = null;
+
+			if (useFinderCache) {
+				result = finderCache.getResult(
+					_finderPathFetchByG_P_P, finderArgs, this);
 			}
-		}
-		else if (!productionMode && (result instanceof List<?>)) {
-			result = null;
-		}
 
-		if (result == null) {
-			StringBundler sb = new StringBundler(5);
+			if (result instanceof SegmentsExperience) {
+				SegmentsExperience segmentsExperience =
+					(SegmentsExperience)result;
 
-			sb.append(_SQL_SELECT_SEGMENTSEXPERIENCE_WHERE);
+				if ((groupId != segmentsExperience.getGroupId()) ||
+					(plid != segmentsExperience.getPlid()) ||
+					(priority != segmentsExperience.getPriority())) {
 
-			sb.append(_FINDER_COLUMN_G_P_P_GROUPID_2);
+					result = null;
+				}
+			}
 
-			sb.append(_FINDER_COLUMN_G_P_P_PLID_2);
+			if (result == null) {
+				StringBundler sb = new StringBundler(5);
 
-			sb.append(_FINDER_COLUMN_G_P_P_PRIORITY_2);
+				sb.append(_SQL_SELECT_SEGMENTSEXPERIENCE_WHERE);
 
-			String sql = sb.toString();
+				sb.append(_FINDER_COLUMN_G_P_P_GROUPID_2);
 
-			Session session = null;
+				sb.append(_FINDER_COLUMN_G_P_P_PLID_2);
 
-			try {
-				session = openSession();
+				sb.append(_FINDER_COLUMN_G_P_P_PRIORITY_2);
 
-				Query query = session.createQuery(sql);
+				String sql = sb.toString();
 
-				QueryPos queryPos = QueryPos.getInstance(query);
+				Session session = null;
 
-				queryPos.add(groupId);
+				try {
+					session = openSession();
 
-				queryPos.add(plid);
+					Query query = session.createQuery(sql);
 
-				queryPos.add(priority);
+					QueryPos queryPos = QueryPos.getInstance(query);
 
-				List<SegmentsExperience> list = query.list();
+					queryPos.add(groupId);
 
-				if (list.isEmpty()) {
-					if (useFinderCache && productionMode) {
-						finderCache.putResult(
-							_finderPathFetchByG_P_P, finderArgs, list);
+					queryPos.add(plid);
+
+					queryPos.add(priority);
+
+					List<SegmentsExperience> list = query.list();
+
+					if (list.isEmpty()) {
+						if (useFinderCache) {
+							finderCache.putResult(
+								_finderPathFetchByG_P_P, finderArgs, list);
+						}
+					}
+					else {
+						SegmentsExperience segmentsExperience = list.get(0);
+
+						result = segmentsExperience;
+
+						cacheResult(segmentsExperience);
 					}
 				}
-				else {
-					SegmentsExperience segmentsExperience = list.get(0);
-
-					result = segmentsExperience;
-
-					cacheResult(segmentsExperience);
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
 				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (SegmentsExperience)result;
+			if (result instanceof List<?>) {
+				return null;
+			}
+			else {
+				return (SegmentsExperience)result;
+			}
 		}
 	}
 
@@ -5430,65 +5386,59 @@ public class SegmentsExperiencePersistenceImpl
 	 */
 	@Override
 	public int countByG_P_P(long groupId, long plid, int priority) {
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			SegmentsExperience.class);
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					SegmentsExperience.class)) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = _finderPathCountByG_P_P;
 
-		Long count = null;
+			Object[] finderArgs = new Object[] {groupId, plid, priority};
 
-		if (productionMode) {
-			finderPath = _finderPathCountByG_P_P;
+			Long count = (Long)finderCache.getResult(
+				finderPath, finderArgs, this);
 
-			finderArgs = new Object[] {groupId, plid, priority};
+			if (count == null) {
+				StringBundler sb = new StringBundler(4);
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-		}
+				sb.append(_SQL_COUNT_SEGMENTSEXPERIENCE_WHERE);
 
-		if (count == null) {
-			StringBundler sb = new StringBundler(4);
+				sb.append(_FINDER_COLUMN_G_P_P_GROUPID_2);
 
-			sb.append(_SQL_COUNT_SEGMENTSEXPERIENCE_WHERE);
+				sb.append(_FINDER_COLUMN_G_P_P_PLID_2);
 
-			sb.append(_FINDER_COLUMN_G_P_P_GROUPID_2);
+				sb.append(_FINDER_COLUMN_G_P_P_PRIORITY_2);
 
-			sb.append(_FINDER_COLUMN_G_P_P_PLID_2);
+				String sql = sb.toString();
 
-			sb.append(_FINDER_COLUMN_G_P_P_PRIORITY_2);
+				Session session = null;
 
-			String sql = sb.toString();
+				try {
+					session = openSession();
 
-			Session session = null;
+					Query query = session.createQuery(sql);
 
-			try {
-				session = openSession();
+					QueryPos queryPos = QueryPos.getInstance(query);
 
-				Query query = session.createQuery(sql);
+					queryPos.add(groupId);
 
-				QueryPos queryPos = QueryPos.getInstance(query);
+					queryPos.add(plid);
 
-				queryPos.add(groupId);
+					queryPos.add(priority);
 
-				queryPos.add(plid);
+					count = (Long)query.uniqueResult();
 
-				queryPos.add(priority);
-
-				count = (Long)query.uniqueResult();
-
-				if (productionMode) {
 					finderCache.putResult(finderPath, finderArgs, count);
 				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return count.intValue();
+			return count.intValue();
+		}
 	}
 
 	private static final String _FINDER_COLUMN_G_P_P_GROUPID_2 =
@@ -5587,99 +5537,101 @@ public class SegmentsExperiencePersistenceImpl
 		OrderByComparator<SegmentsExperience> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			SegmentsExperience.class);
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					SegmentsExperience.class)) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = null;
+			Object[] finderArgs = null;
 
-		finderPath = _finderPathWithPaginationFindByG_P_GtP;
-		finderArgs = new Object[] {
-			groupId, plid, priority, start, end, orderByComparator
-		};
+			finderPath = _finderPathWithPaginationFindByG_P_GtP;
+			finderArgs = new Object[] {
+				groupId, plid, priority, start, end, orderByComparator
+			};
 
-		List<SegmentsExperience> list = null;
+			List<SegmentsExperience> list = null;
 
-		if (useFinderCache && productionMode) {
-			list = (List<SegmentsExperience>)finderCache.getResult(
-				finderPath, finderArgs, this);
+			if (useFinderCache) {
+				list = (List<SegmentsExperience>)finderCache.getResult(
+					finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (SegmentsExperience segmentsExperience : list) {
-					if ((groupId != segmentsExperience.getGroupId()) ||
-						(plid != segmentsExperience.getPlid()) ||
-						(priority >= segmentsExperience.getPriority())) {
+				if ((list != null) && !list.isEmpty()) {
+					for (SegmentsExperience segmentsExperience : list) {
+						if ((groupId != segmentsExperience.getGroupId()) ||
+							(plid != segmentsExperience.getPlid()) ||
+							(priority >= segmentsExperience.getPriority())) {
 
-						list = null;
+							list = null;
 
-						break;
+							break;
+						}
 					}
 				}
 			}
-		}
 
-		if (list == null) {
-			StringBundler sb = null;
+			if (list == null) {
+				StringBundler sb = null;
 
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					5 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(5);
-			}
+				if (orderByComparator != null) {
+					sb = new StringBundler(
+						5 + (orderByComparator.getOrderByFields().length * 2));
+				}
+				else {
+					sb = new StringBundler(5);
+				}
 
-			sb.append(_SQL_SELECT_SEGMENTSEXPERIENCE_WHERE);
+				sb.append(_SQL_SELECT_SEGMENTSEXPERIENCE_WHERE);
 
-			sb.append(_FINDER_COLUMN_G_P_GTP_GROUPID_2);
+				sb.append(_FINDER_COLUMN_G_P_GTP_GROUPID_2);
 
-			sb.append(_FINDER_COLUMN_G_P_GTP_PLID_2);
+				sb.append(_FINDER_COLUMN_G_P_GTP_PLID_2);
 
-			sb.append(_FINDER_COLUMN_G_P_GTP_PRIORITY_2);
+				sb.append(_FINDER_COLUMN_G_P_GTP_PRIORITY_2);
 
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(SegmentsExperienceModelImpl.ORDER_BY_JPQL);
-			}
+				if (orderByComparator != null) {
+					appendOrderByComparator(
+						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				}
+				else {
+					sb.append(SegmentsExperienceModelImpl.ORDER_BY_JPQL);
+				}
 
-			String sql = sb.toString();
+				String sql = sb.toString();
 
-			Session session = null;
+				Session session = null;
 
-			try {
-				session = openSession();
+				try {
+					session = openSession();
 
-				Query query = session.createQuery(sql);
+					Query query = session.createQuery(sql);
 
-				QueryPos queryPos = QueryPos.getInstance(query);
+					QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(groupId);
+					queryPos.add(groupId);
 
-				queryPos.add(plid);
+					queryPos.add(plid);
 
-				queryPos.add(priority);
+					queryPos.add(priority);
 
-				list = (List<SegmentsExperience>)QueryUtil.list(
-					query, getDialect(), start, end);
+					list = (List<SegmentsExperience>)QueryUtil.list(
+						query, getDialect(), start, end);
 
-				cacheResult(list);
+					cacheResult(list);
 
-				if (useFinderCache && productionMode) {
-					finderCache.putResult(finderPath, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(finderPath, finderArgs, list);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
 				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return list;
+			return list;
+		}
 	}
 
 	/**
@@ -6379,65 +6331,59 @@ public class SegmentsExperiencePersistenceImpl
 	 */
 	@Override
 	public int countByG_P_GtP(long groupId, long plid, int priority) {
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			SegmentsExperience.class);
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					SegmentsExperience.class)) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = _finderPathWithPaginationCountByG_P_GtP;
 
-		Long count = null;
+			Object[] finderArgs = new Object[] {groupId, plid, priority};
 
-		if (productionMode) {
-			finderPath = _finderPathWithPaginationCountByG_P_GtP;
+			Long count = (Long)finderCache.getResult(
+				finderPath, finderArgs, this);
 
-			finderArgs = new Object[] {groupId, plid, priority};
+			if (count == null) {
+				StringBundler sb = new StringBundler(4);
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-		}
+				sb.append(_SQL_COUNT_SEGMENTSEXPERIENCE_WHERE);
 
-		if (count == null) {
-			StringBundler sb = new StringBundler(4);
+				sb.append(_FINDER_COLUMN_G_P_GTP_GROUPID_2);
 
-			sb.append(_SQL_COUNT_SEGMENTSEXPERIENCE_WHERE);
+				sb.append(_FINDER_COLUMN_G_P_GTP_PLID_2);
 
-			sb.append(_FINDER_COLUMN_G_P_GTP_GROUPID_2);
+				sb.append(_FINDER_COLUMN_G_P_GTP_PRIORITY_2);
 
-			sb.append(_FINDER_COLUMN_G_P_GTP_PLID_2);
+				String sql = sb.toString();
 
-			sb.append(_FINDER_COLUMN_G_P_GTP_PRIORITY_2);
+				Session session = null;
 
-			String sql = sb.toString();
+				try {
+					session = openSession();
 
-			Session session = null;
+					Query query = session.createQuery(sql);
 
-			try {
-				session = openSession();
+					QueryPos queryPos = QueryPos.getInstance(query);
 
-				Query query = session.createQuery(sql);
+					queryPos.add(groupId);
 
-				QueryPos queryPos = QueryPos.getInstance(query);
+					queryPos.add(plid);
 
-				queryPos.add(groupId);
+					queryPos.add(priority);
 
-				queryPos.add(plid);
+					count = (Long)query.uniqueResult();
 
-				queryPos.add(priority);
-
-				count = (Long)query.uniqueResult();
-
-				if (productionMode) {
 					finderCache.putResult(finderPath, finderArgs, count);
 				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return count.intValue();
+			return count.intValue();
+		}
 	}
 
 	/**
@@ -6594,99 +6540,101 @@ public class SegmentsExperiencePersistenceImpl
 		OrderByComparator<SegmentsExperience> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			SegmentsExperience.class);
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					SegmentsExperience.class)) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = null;
+			Object[] finderArgs = null;
 
-		finderPath = _finderPathWithPaginationFindByG_P_LtP;
-		finderArgs = new Object[] {
-			groupId, plid, priority, start, end, orderByComparator
-		};
+			finderPath = _finderPathWithPaginationFindByG_P_LtP;
+			finderArgs = new Object[] {
+				groupId, plid, priority, start, end, orderByComparator
+			};
 
-		List<SegmentsExperience> list = null;
+			List<SegmentsExperience> list = null;
 
-		if (useFinderCache && productionMode) {
-			list = (List<SegmentsExperience>)finderCache.getResult(
-				finderPath, finderArgs, this);
+			if (useFinderCache) {
+				list = (List<SegmentsExperience>)finderCache.getResult(
+					finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (SegmentsExperience segmentsExperience : list) {
-					if ((groupId != segmentsExperience.getGroupId()) ||
-						(plid != segmentsExperience.getPlid()) ||
-						(priority <= segmentsExperience.getPriority())) {
+				if ((list != null) && !list.isEmpty()) {
+					for (SegmentsExperience segmentsExperience : list) {
+						if ((groupId != segmentsExperience.getGroupId()) ||
+							(plid != segmentsExperience.getPlid()) ||
+							(priority <= segmentsExperience.getPriority())) {
 
-						list = null;
+							list = null;
 
-						break;
+							break;
+						}
 					}
 				}
 			}
-		}
 
-		if (list == null) {
-			StringBundler sb = null;
+			if (list == null) {
+				StringBundler sb = null;
 
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					5 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(5);
-			}
+				if (orderByComparator != null) {
+					sb = new StringBundler(
+						5 + (orderByComparator.getOrderByFields().length * 2));
+				}
+				else {
+					sb = new StringBundler(5);
+				}
 
-			sb.append(_SQL_SELECT_SEGMENTSEXPERIENCE_WHERE);
+				sb.append(_SQL_SELECT_SEGMENTSEXPERIENCE_WHERE);
 
-			sb.append(_FINDER_COLUMN_G_P_LTP_GROUPID_2);
+				sb.append(_FINDER_COLUMN_G_P_LTP_GROUPID_2);
 
-			sb.append(_FINDER_COLUMN_G_P_LTP_PLID_2);
+				sb.append(_FINDER_COLUMN_G_P_LTP_PLID_2);
 
-			sb.append(_FINDER_COLUMN_G_P_LTP_PRIORITY_2);
+				sb.append(_FINDER_COLUMN_G_P_LTP_PRIORITY_2);
 
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(SegmentsExperienceModelImpl.ORDER_BY_JPQL);
-			}
+				if (orderByComparator != null) {
+					appendOrderByComparator(
+						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				}
+				else {
+					sb.append(SegmentsExperienceModelImpl.ORDER_BY_JPQL);
+				}
 
-			String sql = sb.toString();
+				String sql = sb.toString();
 
-			Session session = null;
+				Session session = null;
 
-			try {
-				session = openSession();
+				try {
+					session = openSession();
 
-				Query query = session.createQuery(sql);
+					Query query = session.createQuery(sql);
 
-				QueryPos queryPos = QueryPos.getInstance(query);
+					QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(groupId);
+					queryPos.add(groupId);
 
-				queryPos.add(plid);
+					queryPos.add(plid);
 
-				queryPos.add(priority);
+					queryPos.add(priority);
 
-				list = (List<SegmentsExperience>)QueryUtil.list(
-					query, getDialect(), start, end);
+					list = (List<SegmentsExperience>)QueryUtil.list(
+						query, getDialect(), start, end);
 
-				cacheResult(list);
+					cacheResult(list);
 
-				if (useFinderCache && productionMode) {
-					finderCache.putResult(finderPath, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(finderPath, finderArgs, list);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
 				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return list;
+			return list;
+		}
 	}
 
 	/**
@@ -7386,65 +7334,59 @@ public class SegmentsExperiencePersistenceImpl
 	 */
 	@Override
 	public int countByG_P_LtP(long groupId, long plid, int priority) {
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			SegmentsExperience.class);
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					SegmentsExperience.class)) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = _finderPathWithPaginationCountByG_P_LtP;
 
-		Long count = null;
+			Object[] finderArgs = new Object[] {groupId, plid, priority};
 
-		if (productionMode) {
-			finderPath = _finderPathWithPaginationCountByG_P_LtP;
+			Long count = (Long)finderCache.getResult(
+				finderPath, finderArgs, this);
 
-			finderArgs = new Object[] {groupId, plid, priority};
+			if (count == null) {
+				StringBundler sb = new StringBundler(4);
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-		}
+				sb.append(_SQL_COUNT_SEGMENTSEXPERIENCE_WHERE);
 
-		if (count == null) {
-			StringBundler sb = new StringBundler(4);
+				sb.append(_FINDER_COLUMN_G_P_LTP_GROUPID_2);
 
-			sb.append(_SQL_COUNT_SEGMENTSEXPERIENCE_WHERE);
+				sb.append(_FINDER_COLUMN_G_P_LTP_PLID_2);
 
-			sb.append(_FINDER_COLUMN_G_P_LTP_GROUPID_2);
+				sb.append(_FINDER_COLUMN_G_P_LTP_PRIORITY_2);
 
-			sb.append(_FINDER_COLUMN_G_P_LTP_PLID_2);
+				String sql = sb.toString();
 
-			sb.append(_FINDER_COLUMN_G_P_LTP_PRIORITY_2);
+				Session session = null;
 
-			String sql = sb.toString();
+				try {
+					session = openSession();
 
-			Session session = null;
+					Query query = session.createQuery(sql);
 
-			try {
-				session = openSession();
+					QueryPos queryPos = QueryPos.getInstance(query);
 
-				Query query = session.createQuery(sql);
+					queryPos.add(groupId);
 
-				QueryPos queryPos = QueryPos.getInstance(query);
+					queryPos.add(plid);
 
-				queryPos.add(groupId);
+					queryPos.add(priority);
 
-				queryPos.add(plid);
+					count = (Long)query.uniqueResult();
 
-				queryPos.add(priority);
-
-				count = (Long)query.uniqueResult();
-
-				if (productionMode) {
 					finderCache.putResult(finderPath, finderArgs, count);
 				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return count.intValue();
+			return count.intValue();
+		}
 	}
 
 	/**
@@ -7601,109 +7543,111 @@ public class SegmentsExperiencePersistenceImpl
 		OrderByComparator<SegmentsExperience> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			SegmentsExperience.class);
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					SegmentsExperience.class)) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = null;
+			Object[] finderArgs = null;
 
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
+			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
 
-			if (useFinderCache && productionMode) {
-				finderPath = _finderPathWithoutPaginationFindByG_P_A;
-				finderArgs = new Object[] {groupId, plid, active};
+				if (useFinderCache) {
+					finderPath = _finderPathWithoutPaginationFindByG_P_A;
+					finderArgs = new Object[] {groupId, plid, active};
+				}
 			}
-		}
-		else if (useFinderCache && productionMode) {
-			finderPath = _finderPathWithPaginationFindByG_P_A;
-			finderArgs = new Object[] {
-				groupId, plid, active, start, end, orderByComparator
-			};
-		}
+			else if (useFinderCache) {
+				finderPath = _finderPathWithPaginationFindByG_P_A;
+				finderArgs = new Object[] {
+					groupId, plid, active, start, end, orderByComparator
+				};
+			}
 
-		List<SegmentsExperience> list = null;
+			List<SegmentsExperience> list = null;
 
-		if (useFinderCache && productionMode) {
-			list = (List<SegmentsExperience>)finderCache.getResult(
-				finderPath, finderArgs, this);
+			if (useFinderCache) {
+				list = (List<SegmentsExperience>)finderCache.getResult(
+					finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (SegmentsExperience segmentsExperience : list) {
-					if ((groupId != segmentsExperience.getGroupId()) ||
-						(plid != segmentsExperience.getPlid()) ||
-						(active != segmentsExperience.isActive())) {
+				if ((list != null) && !list.isEmpty()) {
+					for (SegmentsExperience segmentsExperience : list) {
+						if ((groupId != segmentsExperience.getGroupId()) ||
+							(plid != segmentsExperience.getPlid()) ||
+							(active != segmentsExperience.isActive())) {
 
-						list = null;
+							list = null;
 
-						break;
+							break;
+						}
 					}
 				}
 			}
-		}
 
-		if (list == null) {
-			StringBundler sb = null;
+			if (list == null) {
+				StringBundler sb = null;
 
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					5 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(5);
-			}
+				if (orderByComparator != null) {
+					sb = new StringBundler(
+						5 + (orderByComparator.getOrderByFields().length * 2));
+				}
+				else {
+					sb = new StringBundler(5);
+				}
 
-			sb.append(_SQL_SELECT_SEGMENTSEXPERIENCE_WHERE);
+				sb.append(_SQL_SELECT_SEGMENTSEXPERIENCE_WHERE);
 
-			sb.append(_FINDER_COLUMN_G_P_A_GROUPID_2);
+				sb.append(_FINDER_COLUMN_G_P_A_GROUPID_2);
 
-			sb.append(_FINDER_COLUMN_G_P_A_PLID_2);
+				sb.append(_FINDER_COLUMN_G_P_A_PLID_2);
 
-			sb.append(_FINDER_COLUMN_G_P_A_ACTIVE_2);
+				sb.append(_FINDER_COLUMN_G_P_A_ACTIVE_2);
 
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(SegmentsExperienceModelImpl.ORDER_BY_JPQL);
-			}
+				if (orderByComparator != null) {
+					appendOrderByComparator(
+						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				}
+				else {
+					sb.append(SegmentsExperienceModelImpl.ORDER_BY_JPQL);
+				}
 
-			String sql = sb.toString();
+				String sql = sb.toString();
 
-			Session session = null;
+				Session session = null;
 
-			try {
-				session = openSession();
+				try {
+					session = openSession();
 
-				Query query = session.createQuery(sql);
+					Query query = session.createQuery(sql);
 
-				QueryPos queryPos = QueryPos.getInstance(query);
+					QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(groupId);
+					queryPos.add(groupId);
 
-				queryPos.add(plid);
+					queryPos.add(plid);
 
-				queryPos.add(active);
+					queryPos.add(active);
 
-				list = (List<SegmentsExperience>)QueryUtil.list(
-					query, getDialect(), start, end);
+					list = (List<SegmentsExperience>)QueryUtil.list(
+						query, getDialect(), start, end);
 
-				cacheResult(list);
+					cacheResult(list);
 
-				if (useFinderCache && productionMode) {
-					finderCache.putResult(finderPath, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(finderPath, finderArgs, list);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
 				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return list;
+			return list;
+		}
 	}
 
 	/**
@@ -8401,65 +8345,59 @@ public class SegmentsExperiencePersistenceImpl
 	 */
 	@Override
 	public int countByG_P_A(long groupId, long plid, boolean active) {
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			SegmentsExperience.class);
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					SegmentsExperience.class)) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = _finderPathCountByG_P_A;
 
-		Long count = null;
+			Object[] finderArgs = new Object[] {groupId, plid, active};
 
-		if (productionMode) {
-			finderPath = _finderPathCountByG_P_A;
+			Long count = (Long)finderCache.getResult(
+				finderPath, finderArgs, this);
 
-			finderArgs = new Object[] {groupId, plid, active};
+			if (count == null) {
+				StringBundler sb = new StringBundler(4);
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-		}
+				sb.append(_SQL_COUNT_SEGMENTSEXPERIENCE_WHERE);
 
-		if (count == null) {
-			StringBundler sb = new StringBundler(4);
+				sb.append(_FINDER_COLUMN_G_P_A_GROUPID_2);
 
-			sb.append(_SQL_COUNT_SEGMENTSEXPERIENCE_WHERE);
+				sb.append(_FINDER_COLUMN_G_P_A_PLID_2);
 
-			sb.append(_FINDER_COLUMN_G_P_A_GROUPID_2);
+				sb.append(_FINDER_COLUMN_G_P_A_ACTIVE_2);
 
-			sb.append(_FINDER_COLUMN_G_P_A_PLID_2);
+				String sql = sb.toString();
 
-			sb.append(_FINDER_COLUMN_G_P_A_ACTIVE_2);
+				Session session = null;
 
-			String sql = sb.toString();
+				try {
+					session = openSession();
 
-			Session session = null;
+					Query query = session.createQuery(sql);
 
-			try {
-				session = openSession();
+					QueryPos queryPos = QueryPos.getInstance(query);
 
-				Query query = session.createQuery(sql);
+					queryPos.add(groupId);
 
-				QueryPos queryPos = QueryPos.getInstance(query);
+					queryPos.add(plid);
 
-				queryPos.add(groupId);
+					queryPos.add(active);
 
-				queryPos.add(plid);
+					count = (Long)query.uniqueResult();
 
-				queryPos.add(active);
-
-				count = (Long)query.uniqueResult();
-
-				if (productionMode) {
 					finderCache.putResult(finderPath, finderArgs, count);
 				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return count.intValue();
+			return count.intValue();
+		}
 	}
 
 	/**
@@ -8630,118 +8568,120 @@ public class SegmentsExperiencePersistenceImpl
 		OrderByComparator<SegmentsExperience> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			SegmentsExperience.class);
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					SegmentsExperience.class)) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = null;
+			Object[] finderArgs = null;
 
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
+			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
 
-			if (useFinderCache && productionMode) {
-				finderPath = _finderPathWithoutPaginationFindByG_S_P_A;
+				if (useFinderCache) {
+					finderPath = _finderPathWithoutPaginationFindByG_S_P_A;
+					finderArgs = new Object[] {
+						groupId, segmentsEntryId, plid, active
+					};
+				}
+			}
+			else if (useFinderCache) {
+				finderPath = _finderPathWithPaginationFindByG_S_P_A;
 				finderArgs = new Object[] {
-					groupId, segmentsEntryId, plid, active
+					groupId, segmentsEntryId, plid, active, start, end,
+					orderByComparator
 				};
 			}
-		}
-		else if (useFinderCache && productionMode) {
-			finderPath = _finderPathWithPaginationFindByG_S_P_A;
-			finderArgs = new Object[] {
-				groupId, segmentsEntryId, plid, active, start, end,
-				orderByComparator
-			};
-		}
 
-		List<SegmentsExperience> list = null;
+			List<SegmentsExperience> list = null;
 
-		if (useFinderCache && productionMode) {
-			list = (List<SegmentsExperience>)finderCache.getResult(
-				finderPath, finderArgs, this);
+			if (useFinderCache) {
+				list = (List<SegmentsExperience>)finderCache.getResult(
+					finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (SegmentsExperience segmentsExperience : list) {
-					if ((groupId != segmentsExperience.getGroupId()) ||
-						(segmentsEntryId !=
-							segmentsExperience.getSegmentsEntryId()) ||
-						(plid != segmentsExperience.getPlid()) ||
-						(active != segmentsExperience.isActive())) {
+				if ((list != null) && !list.isEmpty()) {
+					for (SegmentsExperience segmentsExperience : list) {
+						if ((groupId != segmentsExperience.getGroupId()) ||
+							(segmentsEntryId !=
+								segmentsExperience.getSegmentsEntryId()) ||
+							(plid != segmentsExperience.getPlid()) ||
+							(active != segmentsExperience.isActive())) {
 
-						list = null;
+							list = null;
 
-						break;
+							break;
+						}
 					}
 				}
 			}
-		}
 
-		if (list == null) {
-			StringBundler sb = null;
+			if (list == null) {
+				StringBundler sb = null;
 
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					6 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(6);
-			}
+				if (orderByComparator != null) {
+					sb = new StringBundler(
+						6 + (orderByComparator.getOrderByFields().length * 2));
+				}
+				else {
+					sb = new StringBundler(6);
+				}
 
-			sb.append(_SQL_SELECT_SEGMENTSEXPERIENCE_WHERE);
+				sb.append(_SQL_SELECT_SEGMENTSEXPERIENCE_WHERE);
 
-			sb.append(_FINDER_COLUMN_G_S_P_A_GROUPID_2);
+				sb.append(_FINDER_COLUMN_G_S_P_A_GROUPID_2);
 
-			sb.append(_FINDER_COLUMN_G_S_P_A_SEGMENTSENTRYID_2);
+				sb.append(_FINDER_COLUMN_G_S_P_A_SEGMENTSENTRYID_2);
 
-			sb.append(_FINDER_COLUMN_G_S_P_A_PLID_2);
+				sb.append(_FINDER_COLUMN_G_S_P_A_PLID_2);
 
-			sb.append(_FINDER_COLUMN_G_S_P_A_ACTIVE_2);
+				sb.append(_FINDER_COLUMN_G_S_P_A_ACTIVE_2);
 
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(SegmentsExperienceModelImpl.ORDER_BY_JPQL);
-			}
+				if (orderByComparator != null) {
+					appendOrderByComparator(
+						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				}
+				else {
+					sb.append(SegmentsExperienceModelImpl.ORDER_BY_JPQL);
+				}
 
-			String sql = sb.toString();
+				String sql = sb.toString();
 
-			Session session = null;
+				Session session = null;
 
-			try {
-				session = openSession();
+				try {
+					session = openSession();
 
-				Query query = session.createQuery(sql);
+					Query query = session.createQuery(sql);
 
-				QueryPos queryPos = QueryPos.getInstance(query);
+					QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(groupId);
+					queryPos.add(groupId);
 
-				queryPos.add(segmentsEntryId);
+					queryPos.add(segmentsEntryId);
 
-				queryPos.add(plid);
+					queryPos.add(plid);
 
-				queryPos.add(active);
+					queryPos.add(active);
 
-				list = (List<SegmentsExperience>)QueryUtil.list(
-					query, getDialect(), start, end);
+					list = (List<SegmentsExperience>)QueryUtil.list(
+						query, getDialect(), start, end);
 
-				cacheResult(list);
+					cacheResult(list);
 
-				if (useFinderCache && productionMode) {
-					finderCache.putResult(finderPath, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(finderPath, finderArgs, list);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
 				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return list;
+			return list;
+		}
 	}
 
 	/**
@@ -9730,123 +9670,127 @@ public class SegmentsExperiencePersistenceImpl
 				orderByComparator);
 		}
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			SegmentsExperience.class);
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					SegmentsExperience.class)) {
 
-		Object[] finderArgs = null;
+			Object[] finderArgs = null;
 
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
+			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
 
-			if (useFinderCache && productionMode) {
+				if (useFinderCache) {
+					finderArgs = new Object[] {
+						groupId, StringUtil.merge(segmentsEntryIds), plid,
+						active
+					};
+				}
+			}
+			else if (useFinderCache) {
 				finderArgs = new Object[] {
-					groupId, StringUtil.merge(segmentsEntryIds), plid, active
+					groupId, StringUtil.merge(segmentsEntryIds), plid, active,
+					start, end, orderByComparator
 				};
 			}
-		}
-		else if (useFinderCache && productionMode) {
-			finderArgs = new Object[] {
-				groupId, StringUtil.merge(segmentsEntryIds), plid, active,
-				start, end, orderByComparator
-			};
-		}
 
-		List<SegmentsExperience> list = null;
+			List<SegmentsExperience> list = null;
 
-		if (useFinderCache && productionMode) {
-			list = (List<SegmentsExperience>)finderCache.getResult(
-				_finderPathWithPaginationFindByG_S_P_A, finderArgs, this);
+			if (useFinderCache) {
+				list = (List<SegmentsExperience>)finderCache.getResult(
+					_finderPathWithPaginationFindByG_S_P_A, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (SegmentsExperience segmentsExperience : list) {
-					if ((groupId != segmentsExperience.getGroupId()) ||
-						!ArrayUtil.contains(
-							segmentsEntryIds,
-							segmentsExperience.getSegmentsEntryId()) ||
-						(plid != segmentsExperience.getPlid()) ||
-						(active != segmentsExperience.isActive())) {
+				if ((list != null) && !list.isEmpty()) {
+					for (SegmentsExperience segmentsExperience : list) {
+						if ((groupId != segmentsExperience.getGroupId()) ||
+							!ArrayUtil.contains(
+								segmentsEntryIds,
+								segmentsExperience.getSegmentsEntryId()) ||
+							(plid != segmentsExperience.getPlid()) ||
+							(active != segmentsExperience.isActive())) {
 
-						list = null;
+							list = null;
 
-						break;
+							break;
+						}
 					}
 				}
 			}
-		}
 
-		if (list == null) {
-			StringBundler sb = new StringBundler();
+			if (list == null) {
+				StringBundler sb = new StringBundler();
 
-			sb.append(_SQL_SELECT_SEGMENTSEXPERIENCE_WHERE);
+				sb.append(_SQL_SELECT_SEGMENTSEXPERIENCE_WHERE);
 
-			sb.append(_FINDER_COLUMN_G_S_P_A_GROUPID_2);
+				sb.append(_FINDER_COLUMN_G_S_P_A_GROUPID_2);
 
-			if (segmentsEntryIds.length > 0) {
-				sb.append("(");
+				if (segmentsEntryIds.length > 0) {
+					sb.append("(");
 
-				sb.append(_FINDER_COLUMN_G_S_P_A_SEGMENTSENTRYID_7);
+					sb.append(_FINDER_COLUMN_G_S_P_A_SEGMENTSENTRYID_7);
 
-				sb.append(StringUtil.merge(segmentsEntryIds));
+					sb.append(StringUtil.merge(segmentsEntryIds));
 
-				sb.append(")");
+					sb.append(")");
 
-				sb.append(")");
+					sb.append(")");
 
-				sb.append(WHERE_AND);
-			}
+					sb.append(WHERE_AND);
+				}
 
-			sb.append(_FINDER_COLUMN_G_S_P_A_PLID_2);
+				sb.append(_FINDER_COLUMN_G_S_P_A_PLID_2);
 
-			sb.append(_FINDER_COLUMN_G_S_P_A_ACTIVE_2);
+				sb.append(_FINDER_COLUMN_G_S_P_A_ACTIVE_2);
 
-			sb.setStringAt(
-				removeConjunction(sb.stringAt(sb.index() - 1)), sb.index() - 1);
+				sb.setStringAt(
+					removeConjunction(sb.stringAt(sb.index() - 1)),
+					sb.index() - 1);
 
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(SegmentsExperienceModelImpl.ORDER_BY_JPQL);
-			}
+				if (orderByComparator != null) {
+					appendOrderByComparator(
+						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				}
+				else {
+					sb.append(SegmentsExperienceModelImpl.ORDER_BY_JPQL);
+				}
 
-			String sql = sb.toString();
+				String sql = sb.toString();
 
-			Session session = null;
+				Session session = null;
 
-			try {
-				session = openSession();
+				try {
+					session = openSession();
 
-				Query query = session.createQuery(sql);
+					Query query = session.createQuery(sql);
 
-				QueryPos queryPos = QueryPos.getInstance(query);
+					QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(groupId);
+					queryPos.add(groupId);
 
-				queryPos.add(plid);
+					queryPos.add(plid);
 
-				queryPos.add(active);
+					queryPos.add(active);
 
-				list = (List<SegmentsExperience>)QueryUtil.list(
-					query, getDialect(), start, end);
+					list = (List<SegmentsExperience>)QueryUtil.list(
+						query, getDialect(), start, end);
 
-				cacheResult(list);
+					cacheResult(list);
 
-				if (useFinderCache && productionMode) {
-					finderCache.putResult(
-						_finderPathWithPaginationFindByG_S_P_A, finderArgs,
-						list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathWithPaginationFindByG_S_P_A, finderArgs,
+							list);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
 				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return list;
+			return list;
+		}
 	}
 
 	/**
@@ -9883,69 +9827,65 @@ public class SegmentsExperiencePersistenceImpl
 	public int countByG_S_P_A(
 		long groupId, long segmentsEntryId, long plid, boolean active) {
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			SegmentsExperience.class);
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					SegmentsExperience.class)) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = _finderPathCountByG_S_P_A;
 
-		Long count = null;
+			Object[] finderArgs = new Object[] {
+				groupId, segmentsEntryId, plid, active
+			};
 
-		if (productionMode) {
-			finderPath = _finderPathCountByG_S_P_A;
+			Long count = (Long)finderCache.getResult(
+				finderPath, finderArgs, this);
 
-			finderArgs = new Object[] {groupId, segmentsEntryId, plid, active};
+			if (count == null) {
+				StringBundler sb = new StringBundler(5);
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-		}
+				sb.append(_SQL_COUNT_SEGMENTSEXPERIENCE_WHERE);
 
-		if (count == null) {
-			StringBundler sb = new StringBundler(5);
+				sb.append(_FINDER_COLUMN_G_S_P_A_GROUPID_2);
 
-			sb.append(_SQL_COUNT_SEGMENTSEXPERIENCE_WHERE);
+				sb.append(_FINDER_COLUMN_G_S_P_A_SEGMENTSENTRYID_2);
 
-			sb.append(_FINDER_COLUMN_G_S_P_A_GROUPID_2);
+				sb.append(_FINDER_COLUMN_G_S_P_A_PLID_2);
 
-			sb.append(_FINDER_COLUMN_G_S_P_A_SEGMENTSENTRYID_2);
+				sb.append(_FINDER_COLUMN_G_S_P_A_ACTIVE_2);
 
-			sb.append(_FINDER_COLUMN_G_S_P_A_PLID_2);
+				String sql = sb.toString();
 
-			sb.append(_FINDER_COLUMN_G_S_P_A_ACTIVE_2);
+				Session session = null;
 
-			String sql = sb.toString();
+				try {
+					session = openSession();
 
-			Session session = null;
+					Query query = session.createQuery(sql);
 
-			try {
-				session = openSession();
+					QueryPos queryPos = QueryPos.getInstance(query);
 
-				Query query = session.createQuery(sql);
+					queryPos.add(groupId);
 
-				QueryPos queryPos = QueryPos.getInstance(query);
+					queryPos.add(segmentsEntryId);
 
-				queryPos.add(groupId);
+					queryPos.add(plid);
 
-				queryPos.add(segmentsEntryId);
+					queryPos.add(active);
 
-				queryPos.add(plid);
+					count = (Long)query.uniqueResult();
 
-				queryPos.add(active);
-
-				count = (Long)query.uniqueResult();
-
-				if (productionMode) {
 					finderCache.putResult(finderPath, finderArgs, count);
 				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return count.intValue();
+			return count.intValue();
+		}
 	}
 
 	/**
@@ -9968,84 +9908,79 @@ public class SegmentsExperiencePersistenceImpl
 			segmentsEntryIds = ArrayUtil.sortedUnique(segmentsEntryIds);
 		}
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			SegmentsExperience.class);
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					SegmentsExperience.class)) {
 
-		Object[] finderArgs = null;
-
-		Long count = null;
-
-		if (productionMode) {
-			finderArgs = new Object[] {
+			Object[] finderArgs = new Object[] {
 				groupId, StringUtil.merge(segmentsEntryIds), plid, active
 			};
 
-			count = (Long)finderCache.getResult(
+			Long count = (Long)finderCache.getResult(
 				_finderPathWithPaginationCountByG_S_P_A, finderArgs, this);
-		}
 
-		if (count == null) {
-			StringBundler sb = new StringBundler();
+			if (count == null) {
+				StringBundler sb = new StringBundler();
 
-			sb.append(_SQL_COUNT_SEGMENTSEXPERIENCE_WHERE);
+				sb.append(_SQL_COUNT_SEGMENTSEXPERIENCE_WHERE);
 
-			sb.append(_FINDER_COLUMN_G_S_P_A_GROUPID_2);
+				sb.append(_FINDER_COLUMN_G_S_P_A_GROUPID_2);
 
-			if (segmentsEntryIds.length > 0) {
-				sb.append("(");
+				if (segmentsEntryIds.length > 0) {
+					sb.append("(");
 
-				sb.append(_FINDER_COLUMN_G_S_P_A_SEGMENTSENTRYID_7);
+					sb.append(_FINDER_COLUMN_G_S_P_A_SEGMENTSENTRYID_7);
 
-				sb.append(StringUtil.merge(segmentsEntryIds));
+					sb.append(StringUtil.merge(segmentsEntryIds));
 
-				sb.append(")");
+					sb.append(")");
 
-				sb.append(")");
+					sb.append(")");
 
-				sb.append(WHERE_AND);
-			}
+					sb.append(WHERE_AND);
+				}
 
-			sb.append(_FINDER_COLUMN_G_S_P_A_PLID_2);
+				sb.append(_FINDER_COLUMN_G_S_P_A_PLID_2);
 
-			sb.append(_FINDER_COLUMN_G_S_P_A_ACTIVE_2);
+				sb.append(_FINDER_COLUMN_G_S_P_A_ACTIVE_2);
 
-			sb.setStringAt(
-				removeConjunction(sb.stringAt(sb.index() - 1)), sb.index() - 1);
+				sb.setStringAt(
+					removeConjunction(sb.stringAt(sb.index() - 1)),
+					sb.index() - 1);
 
-			String sql = sb.toString();
+				String sql = sb.toString();
 
-			Session session = null;
+				Session session = null;
 
-			try {
-				session = openSession();
+				try {
+					session = openSession();
 
-				Query query = session.createQuery(sql);
+					Query query = session.createQuery(sql);
 
-				QueryPos queryPos = QueryPos.getInstance(query);
+					QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(groupId);
+					queryPos.add(groupId);
 
-				queryPos.add(plid);
+					queryPos.add(plid);
 
-				queryPos.add(active);
+					queryPos.add(active);
 
-				count = (Long)query.uniqueResult();
+					count = (Long)query.uniqueResult();
 
-				if (productionMode) {
 					finderCache.putResult(
 						_finderPathWithPaginationCountByG_S_P_A, finderArgs,
 						count);
 				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return count.intValue();
+			return count.intValue();
+		}
 	}
 
 	/**
@@ -10239,37 +10174,40 @@ public class SegmentsExperiencePersistenceImpl
 	 */
 	@Override
 	public void cacheResult(SegmentsExperience segmentsExperience) {
-		if (segmentsExperience.getCtCollectionId() != 0) {
-			return;
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					segmentsExperience.getCtCollectionId())) {
+
+			entityCache.putResult(
+				SegmentsExperienceImpl.class,
+				segmentsExperience.getPrimaryKey(), segmentsExperience);
+
+			finderCache.putResult(
+				_finderPathFetchByUUID_G,
+				new Object[] {
+					segmentsExperience.getUuid(),
+					segmentsExperience.getGroupId()
+				},
+				segmentsExperience);
+
+			finderCache.putResult(
+				_finderPathFetchByG_SEK_P,
+				new Object[] {
+					segmentsExperience.getGroupId(),
+					segmentsExperience.getSegmentsExperienceKey(),
+					segmentsExperience.getPlid()
+				},
+				segmentsExperience);
+
+			finderCache.putResult(
+				_finderPathFetchByG_P_P,
+				new Object[] {
+					segmentsExperience.getGroupId(),
+					segmentsExperience.getPlid(),
+					segmentsExperience.getPriority()
+				},
+				segmentsExperience);
 		}
-
-		entityCache.putResult(
-			SegmentsExperienceImpl.class, segmentsExperience.getPrimaryKey(),
-			segmentsExperience);
-
-		finderCache.putResult(
-			_finderPathFetchByUUID_G,
-			new Object[] {
-				segmentsExperience.getUuid(), segmentsExperience.getGroupId()
-			},
-			segmentsExperience);
-
-		finderCache.putResult(
-			_finderPathFetchByG_SEK_P,
-			new Object[] {
-				segmentsExperience.getGroupId(),
-				segmentsExperience.getSegmentsExperienceKey(),
-				segmentsExperience.getPlid()
-			},
-			segmentsExperience);
-
-		finderCache.putResult(
-			_finderPathFetchByG_P_P,
-			new Object[] {
-				segmentsExperience.getGroupId(), segmentsExperience.getPlid(),
-				segmentsExperience.getPriority()
-			},
-			segmentsExperience);
 	}
 
 	private int _valueObjectFinderCacheListThreshold;
@@ -10290,15 +10228,16 @@ public class SegmentsExperiencePersistenceImpl
 		}
 
 		for (SegmentsExperience segmentsExperience : segmentsExperiences) {
-			if (segmentsExperience.getCtCollectionId() != 0) {
-				continue;
-			}
+			try (SafeCloseable safeCloseable =
+					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+						segmentsExperience.getCtCollectionId())) {
 
-			if (entityCache.getResult(
-					SegmentsExperienceImpl.class,
-					segmentsExperience.getPrimaryKey()) == null) {
+				if (entityCache.getResult(
+						SegmentsExperienceImpl.class,
+						segmentsExperience.getPrimaryKey()) == null) {
 
-				cacheResult(segmentsExperience);
+					cacheResult(segmentsExperience);
+				}
 			}
 		}
 	}
@@ -10350,34 +10289,42 @@ public class SegmentsExperiencePersistenceImpl
 	protected void cacheUniqueFindersCache(
 		SegmentsExperienceModelImpl segmentsExperienceModelImpl) {
 
-		Object[] args = new Object[] {
-			segmentsExperienceModelImpl.getUuid(),
-			segmentsExperienceModelImpl.getGroupId()
-		};
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					segmentsExperienceModelImpl.getCtCollectionId())) {
 
-		finderCache.putResult(_finderPathCountByUUID_G, args, Long.valueOf(1));
-		finderCache.putResult(
-			_finderPathFetchByUUID_G, args, segmentsExperienceModelImpl);
+			Object[] args = new Object[] {
+				segmentsExperienceModelImpl.getUuid(),
+				segmentsExperienceModelImpl.getGroupId()
+			};
 
-		args = new Object[] {
-			segmentsExperienceModelImpl.getGroupId(),
-			segmentsExperienceModelImpl.getSegmentsExperienceKey(),
-			segmentsExperienceModelImpl.getPlid()
-		};
+			finderCache.putResult(
+				_finderPathCountByUUID_G, args, Long.valueOf(1));
+			finderCache.putResult(
+				_finderPathFetchByUUID_G, args, segmentsExperienceModelImpl);
 
-		finderCache.putResult(_finderPathCountByG_SEK_P, args, Long.valueOf(1));
-		finderCache.putResult(
-			_finderPathFetchByG_SEK_P, args, segmentsExperienceModelImpl);
+			args = new Object[] {
+				segmentsExperienceModelImpl.getGroupId(),
+				segmentsExperienceModelImpl.getSegmentsExperienceKey(),
+				segmentsExperienceModelImpl.getPlid()
+			};
 
-		args = new Object[] {
-			segmentsExperienceModelImpl.getGroupId(),
-			segmentsExperienceModelImpl.getPlid(),
-			segmentsExperienceModelImpl.getPriority()
-		};
+			finderCache.putResult(
+				_finderPathCountByG_SEK_P, args, Long.valueOf(1));
+			finderCache.putResult(
+				_finderPathFetchByG_SEK_P, args, segmentsExperienceModelImpl);
 
-		finderCache.putResult(_finderPathCountByG_P_P, args, Long.valueOf(1));
-		finderCache.putResult(
-			_finderPathFetchByG_P_P, args, segmentsExperienceModelImpl);
+			args = new Object[] {
+				segmentsExperienceModelImpl.getGroupId(),
+				segmentsExperienceModelImpl.getPlid(),
+				segmentsExperienceModelImpl.getPriority()
+			};
+
+			finderCache.putResult(
+				_finderPathCountByG_P_P, args, Long.valueOf(1));
+			finderCache.putResult(
+				_finderPathFetchByG_P_P, args, segmentsExperienceModelImpl);
+		}
 	}
 
 	/**
@@ -10576,16 +10523,6 @@ public class SegmentsExperiencePersistenceImpl
 			closeSession(session);
 		}
 
-		if (segmentsExperience.getCtCollectionId() != 0) {
-			if (isNew) {
-				segmentsExperience.setNew(false);
-			}
-
-			segmentsExperience.resetOriginalValues();
-
-			return segmentsExperience;
-		}
-
 		entityCache.putResult(
 			SegmentsExperienceImpl.class, segmentsExperienceModelImpl, false,
 			true);
@@ -10651,10 +10588,21 @@ public class SegmentsExperiencePersistenceImpl
 		if (ctPersistenceHelper.isProductionMode(
 				SegmentsExperience.class, primaryKey)) {
 
-			return super.fetchByPrimaryKey(primaryKey);
+			try (SafeCloseable safeCloseable =
+					CTCollectionThreadLocal.
+						setProductionModeWithSafeCloseable()) {
+
+				return super.fetchByPrimaryKey(primaryKey);
+			}
 		}
 
-		SegmentsExperience segmentsExperience = null;
+		SegmentsExperience segmentsExperience =
+			(SegmentsExperience)entityCache.getResult(
+				SegmentsExperienceImpl.class, primaryKey);
+
+		if (segmentsExperience != null) {
+			return segmentsExperience;
+		}
 
 		Session session = null;
 
@@ -10694,7 +10642,12 @@ public class SegmentsExperiencePersistenceImpl
 		Set<Serializable> primaryKeys) {
 
 		if (ctPersistenceHelper.isProductionMode(SegmentsExperience.class)) {
-			return super.fetchByPrimaryKeys(primaryKeys);
+			try (SafeCloseable safeCloseable =
+					CTCollectionThreadLocal.
+						setProductionModeWithSafeCloseable()) {
+
+				return super.fetchByPrimaryKeys(primaryKeys);
+			}
 		}
 
 		if (primaryKeys.isEmpty()) {
@@ -10716,6 +10669,34 @@ public class SegmentsExperiencePersistenceImpl
 				map.put(primaryKey, segmentsExperience);
 			}
 
+			return map;
+		}
+
+		Set<Serializable> uncachedPrimaryKeys = null;
+
+		for (Serializable primaryKey : primaryKeys) {
+			try (SafeCloseable safeCloseable =
+					ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+						SegmentsExperience.class, primaryKey)) {
+
+				SegmentsExperience segmentsExperience =
+					(SegmentsExperience)entityCache.getResult(
+						SegmentsExperienceImpl.class, primaryKey);
+
+				if (segmentsExperience == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<>();
+					}
+
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, segmentsExperience);
+				}
+			}
+		}
+
+		if (uncachedPrimaryKeys == null) {
 			return map;
 		}
 
@@ -10849,78 +10830,80 @@ public class SegmentsExperiencePersistenceImpl
 		OrderByComparator<SegmentsExperience> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			SegmentsExperience.class);
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					SegmentsExperience.class)) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = null;
+			Object[] finderArgs = null;
 
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
+			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
 
-			if (useFinderCache && productionMode) {
-				finderPath = _finderPathWithoutPaginationFindAll;
-				finderArgs = FINDER_ARGS_EMPTY;
-			}
-		}
-		else if (useFinderCache && productionMode) {
-			finderPath = _finderPathWithPaginationFindAll;
-			finderArgs = new Object[] {start, end, orderByComparator};
-		}
-
-		List<SegmentsExperience> list = null;
-
-		if (useFinderCache && productionMode) {
-			list = (List<SegmentsExperience>)finderCache.getResult(
-				finderPath, finderArgs, this);
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-			String sql = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					2 + (orderByComparator.getOrderByFields().length * 2));
-
-				sb.append(_SQL_SELECT_SEGMENTSEXPERIENCE);
-
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-
-				sql = sb.toString();
-			}
-			else {
-				sql = _SQL_SELECT_SEGMENTSEXPERIENCE;
-
-				sql = sql.concat(SegmentsExperienceModelImpl.ORDER_BY_JPQL);
-			}
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				list = (List<SegmentsExperience>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache && productionMode) {
-					finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderPath = _finderPathWithoutPaginationFindAll;
+					finderArgs = FINDER_ARGS_EMPTY;
 				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
+			else if (useFinderCache) {
+				finderPath = _finderPathWithPaginationFindAll;
+				finderArgs = new Object[] {start, end, orderByComparator};
 			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return list;
+			List<SegmentsExperience> list = null;
+
+			if (useFinderCache) {
+				list = (List<SegmentsExperience>)finderCache.getResult(
+					finderPath, finderArgs, this);
+			}
+
+			if (list == null) {
+				StringBundler sb = null;
+				String sql = null;
+
+				if (orderByComparator != null) {
+					sb = new StringBundler(
+						2 + (orderByComparator.getOrderByFields().length * 2));
+
+					sb.append(_SQL_SELECT_SEGMENTSEXPERIENCE);
+
+					appendOrderByComparator(
+						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+
+					sql = sb.toString();
+				}
+				else {
+					sql = _SQL_SELECT_SEGMENTSEXPERIENCE;
+
+					sql = sql.concat(SegmentsExperienceModelImpl.ORDER_BY_JPQL);
+				}
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					list = (List<SegmentsExperience>)QueryUtil.list(
+						query, getDialect(), start, end);
+
+					cacheResult(list);
+
+					if (useFinderCache) {
+						finderCache.putResult(finderPath, finderArgs, list);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
+			}
+
+			return list;
+		}
 	}
 
 	/**
@@ -10941,41 +10924,37 @@ public class SegmentsExperiencePersistenceImpl
 	 */
 	@Override
 	public int countAll() {
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			SegmentsExperience.class);
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					SegmentsExperience.class)) {
 
-		Long count = null;
-
-		if (productionMode) {
-			count = (Long)finderCache.getResult(
+			Long count = (Long)finderCache.getResult(
 				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
-		}
 
-		if (count == null) {
-			Session session = null;
+			if (count == null) {
+				Session session = null;
 
-			try {
-				session = openSession();
+				try {
+					session = openSession();
 
-				Query query = session.createQuery(
-					_SQL_COUNT_SEGMENTSEXPERIENCE);
+					Query query = session.createQuery(
+						_SQL_COUNT_SEGMENTSEXPERIENCE);
 
-				count = (Long)query.uniqueResult();
+					count = (Long)query.uniqueResult();
 
-				if (productionMode) {
 					finderCache.putResult(
 						_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return count.intValue();
+			return count.intValue();
+		}
 	}
 
 	@Override

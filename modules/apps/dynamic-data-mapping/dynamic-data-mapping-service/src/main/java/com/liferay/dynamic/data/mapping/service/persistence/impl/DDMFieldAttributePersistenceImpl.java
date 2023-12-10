@@ -13,7 +13,9 @@ import com.liferay.dynamic.data.mapping.model.impl.DDMFieldAttributeModelImpl;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMFieldAttributePersistence;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMFieldAttributeUtil;
 import com.liferay.dynamic.data.mapping.service.persistence.impl.constants.DDMPersistenceConstants;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -167,98 +169,100 @@ public class DDMFieldAttributePersistenceImpl
 		OrderByComparator<DDMFieldAttribute> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			DDMFieldAttribute.class);
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					DDMFieldAttribute.class)) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = null;
+			Object[] finderArgs = null;
 
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
+			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
 
-			if (useFinderCache && productionMode) {
-				finderPath = _finderPathWithoutPaginationFindByStorageId;
-				finderArgs = new Object[] {storageId};
+				if (useFinderCache) {
+					finderPath = _finderPathWithoutPaginationFindByStorageId;
+					finderArgs = new Object[] {storageId};
+				}
 			}
-		}
-		else if (useFinderCache && productionMode) {
-			finderPath = _finderPathWithPaginationFindByStorageId;
-			finderArgs = new Object[] {
-				storageId, start, end, orderByComparator
-			};
-		}
+			else if (useFinderCache) {
+				finderPath = _finderPathWithPaginationFindByStorageId;
+				finderArgs = new Object[] {
+					storageId, start, end, orderByComparator
+				};
+			}
 
-		List<DDMFieldAttribute> list = null;
+			List<DDMFieldAttribute> list = null;
 
-		if (useFinderCache && productionMode) {
-			list = (List<DDMFieldAttribute>)finderCache.getResult(
-				finderPath, finderArgs, this);
+			if (useFinderCache) {
+				list = (List<DDMFieldAttribute>)finderCache.getResult(
+					finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (DDMFieldAttribute ddmFieldAttribute : list) {
-					if (storageId != ddmFieldAttribute.getStorageId()) {
-						list = null;
+				if ((list != null) && !list.isEmpty()) {
+					for (DDMFieldAttribute ddmFieldAttribute : list) {
+						if (storageId != ddmFieldAttribute.getStorageId()) {
+							list = null;
 
-						break;
+							break;
+						}
 					}
 				}
 			}
-		}
 
-		if (list == null) {
-			StringBundler sb = null;
+			if (list == null) {
+				StringBundler sb = null;
 
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
+				if (orderByComparator != null) {
+					sb = new StringBundler(
+						3 + (orderByComparator.getOrderByFields().length * 2));
+				}
+				else {
+					sb = new StringBundler(3);
+				}
 
-			sb.append(_SQL_SELECT_DDMFIELDATTRIBUTE_WHERE);
+				sb.append(_SQL_SELECT_DDMFIELDATTRIBUTE_WHERE);
 
-			sb.append(_FINDER_COLUMN_STORAGEID_STORAGEID_2);
+				sb.append(_FINDER_COLUMN_STORAGEID_STORAGEID_2);
 
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(DDMFieldAttributeModelImpl.ORDER_BY_JPQL);
-			}
+				if (orderByComparator != null) {
+					appendOrderByComparator(
+						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				}
+				else {
+					sb.append(DDMFieldAttributeModelImpl.ORDER_BY_JPQL);
+				}
 
-			String sql = sb.toString();
+				String sql = sb.toString();
 
-			Session session = null;
+				Session session = null;
 
-			try {
-				session = openSession();
+				try {
+					session = openSession();
 
-				Query query = session.createQuery(sql);
+					Query query = session.createQuery(sql);
 
-				QueryPos queryPos = QueryPos.getInstance(query);
+					QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(storageId);
+					queryPos.add(storageId);
 
-				list = (List<DDMFieldAttribute>)QueryUtil.list(
-					query, getDialect(), start, end);
+					list = (List<DDMFieldAttribute>)QueryUtil.list(
+						query, getDialect(), start, end);
 
-				cacheResult(list);
+					cacheResult(list);
 
-				if (useFinderCache && productionMode) {
-					finderCache.putResult(finderPath, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(finderPath, finderArgs, list);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
 				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return list;
+			return list;
+		}
 	}
 
 	/**
@@ -554,57 +558,51 @@ public class DDMFieldAttributePersistenceImpl
 	 */
 	@Override
 	public int countByStorageId(long storageId) {
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			DDMFieldAttribute.class);
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					DDMFieldAttribute.class)) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = _finderPathCountByStorageId;
 
-		Long count = null;
+			Object[] finderArgs = new Object[] {storageId};
 
-		if (productionMode) {
-			finderPath = _finderPathCountByStorageId;
+			Long count = (Long)finderCache.getResult(
+				finderPath, finderArgs, this);
 
-			finderArgs = new Object[] {storageId};
+			if (count == null) {
+				StringBundler sb = new StringBundler(2);
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-		}
+				sb.append(_SQL_COUNT_DDMFIELDATTRIBUTE_WHERE);
 
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
+				sb.append(_FINDER_COLUMN_STORAGEID_STORAGEID_2);
 
-			sb.append(_SQL_COUNT_DDMFIELDATTRIBUTE_WHERE);
+				String sql = sb.toString();
 
-			sb.append(_FINDER_COLUMN_STORAGEID_STORAGEID_2);
+				Session session = null;
 
-			String sql = sb.toString();
+				try {
+					session = openSession();
 
-			Session session = null;
+					Query query = session.createQuery(sql);
 
-			try {
-				session = openSession();
+					QueryPos queryPos = QueryPos.getInstance(query);
 
-				Query query = session.createQuery(sql);
+					queryPos.add(storageId);
 
-				QueryPos queryPos = QueryPos.getInstance(query);
+					count = (Long)query.uniqueResult();
 
-				queryPos.add(storageId);
-
-				count = (Long)query.uniqueResult();
-
-				if (productionMode) {
 					finderCache.putResult(finderPath, finderArgs, count);
 				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return count.intValue();
+			return count.intValue();
+		}
 	}
 
 	private static final String _FINDER_COLUMN_STORAGEID_STORAGEID_2 =
@@ -694,118 +692,120 @@ public class DDMFieldAttributePersistenceImpl
 		OrderByComparator<DDMFieldAttribute> orderByComparator,
 		boolean useFinderCache) {
 
-		attributeName = Objects.toString(attributeName, "");
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					DDMFieldAttribute.class)) {
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			DDMFieldAttribute.class);
+			attributeName = Objects.toString(attributeName, "");
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = null;
+			Object[] finderArgs = null;
 
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
+			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
 
-			if (useFinderCache && productionMode) {
-				finderPath = _finderPathWithoutPaginationFindByS_AN;
-				finderArgs = new Object[] {storageId, attributeName};
+				if (useFinderCache) {
+					finderPath = _finderPathWithoutPaginationFindByS_AN;
+					finderArgs = new Object[] {storageId, attributeName};
+				}
 			}
-		}
-		else if (useFinderCache && productionMode) {
-			finderPath = _finderPathWithPaginationFindByS_AN;
-			finderArgs = new Object[] {
-				storageId, attributeName, start, end, orderByComparator
-			};
-		}
+			else if (useFinderCache) {
+				finderPath = _finderPathWithPaginationFindByS_AN;
+				finderArgs = new Object[] {
+					storageId, attributeName, start, end, orderByComparator
+				};
+			}
 
-		List<DDMFieldAttribute> list = null;
+			List<DDMFieldAttribute> list = null;
 
-		if (useFinderCache && productionMode) {
-			list = (List<DDMFieldAttribute>)finderCache.getResult(
-				finderPath, finderArgs, this);
+			if (useFinderCache) {
+				list = (List<DDMFieldAttribute>)finderCache.getResult(
+					finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (DDMFieldAttribute ddmFieldAttribute : list) {
-					if ((storageId != ddmFieldAttribute.getStorageId()) ||
-						!attributeName.equals(
-							ddmFieldAttribute.getAttributeName())) {
+				if ((list != null) && !list.isEmpty()) {
+					for (DDMFieldAttribute ddmFieldAttribute : list) {
+						if ((storageId != ddmFieldAttribute.getStorageId()) ||
+							!attributeName.equals(
+								ddmFieldAttribute.getAttributeName())) {
 
-						list = null;
+							list = null;
 
-						break;
+							break;
+						}
 					}
 				}
 			}
-		}
 
-		if (list == null) {
-			StringBundler sb = null;
+			if (list == null) {
+				StringBundler sb = null;
 
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					4 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(4);
-			}
-
-			sb.append(_SQL_SELECT_DDMFIELDATTRIBUTE_WHERE);
-
-			sb.append(_FINDER_COLUMN_S_AN_STORAGEID_2);
-
-			boolean bindAttributeName = false;
-
-			if (attributeName.isEmpty()) {
-				sb.append(_FINDER_COLUMN_S_AN_ATTRIBUTENAME_3);
-			}
-			else {
-				bindAttributeName = true;
-
-				sb.append(_FINDER_COLUMN_S_AN_ATTRIBUTENAME_2);
-			}
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(DDMFieldAttributeModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(storageId);
-
-				if (bindAttributeName) {
-					queryPos.add(attributeName);
+				if (orderByComparator != null) {
+					sb = new StringBundler(
+						4 + (orderByComparator.getOrderByFields().length * 2));
+				}
+				else {
+					sb = new StringBundler(4);
 				}
 
-				list = (List<DDMFieldAttribute>)QueryUtil.list(
-					query, getDialect(), start, end);
+				sb.append(_SQL_SELECT_DDMFIELDATTRIBUTE_WHERE);
 
-				cacheResult(list);
+				sb.append(_FINDER_COLUMN_S_AN_STORAGEID_2);
 
-				if (useFinderCache && productionMode) {
-					finderCache.putResult(finderPath, finderArgs, list);
+				boolean bindAttributeName = false;
+
+				if (attributeName.isEmpty()) {
+					sb.append(_FINDER_COLUMN_S_AN_ATTRIBUTENAME_3);
+				}
+				else {
+					bindAttributeName = true;
+
+					sb.append(_FINDER_COLUMN_S_AN_ATTRIBUTENAME_2);
+				}
+
+				if (orderByComparator != null) {
+					appendOrderByComparator(
+						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				}
+				else {
+					sb.append(DDMFieldAttributeModelImpl.ORDER_BY_JPQL);
+				}
+
+				String sql = sb.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					queryPos.add(storageId);
+
+					if (bindAttributeName) {
+						queryPos.add(attributeName);
+					}
+
+					list = (List<DDMFieldAttribute>)QueryUtil.list(
+						query, getDialect(), start, end);
+
+					cacheResult(list);
+
+					if (useFinderCache) {
+						finderCache.putResult(finderPath, finderArgs, list);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
 				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return list;
+			return list;
+		}
 	}
 
 	/**
@@ -1134,74 +1134,68 @@ public class DDMFieldAttributePersistenceImpl
 	 */
 	@Override
 	public int countByS_AN(long storageId, String attributeName) {
-		attributeName = Objects.toString(attributeName, "");
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					DDMFieldAttribute.class)) {
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			DDMFieldAttribute.class);
+			attributeName = Objects.toString(attributeName, "");
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = _finderPathCountByS_AN;
 
-		Long count = null;
+			Object[] finderArgs = new Object[] {storageId, attributeName};
 
-		if (productionMode) {
-			finderPath = _finderPathCountByS_AN;
+			Long count = (Long)finderCache.getResult(
+				finderPath, finderArgs, this);
 
-			finderArgs = new Object[] {storageId, attributeName};
+			if (count == null) {
+				StringBundler sb = new StringBundler(3);
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-		}
+				sb.append(_SQL_COUNT_DDMFIELDATTRIBUTE_WHERE);
 
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
+				sb.append(_FINDER_COLUMN_S_AN_STORAGEID_2);
 
-			sb.append(_SQL_COUNT_DDMFIELDATTRIBUTE_WHERE);
+				boolean bindAttributeName = false;
 
-			sb.append(_FINDER_COLUMN_S_AN_STORAGEID_2);
+				if (attributeName.isEmpty()) {
+					sb.append(_FINDER_COLUMN_S_AN_ATTRIBUTENAME_3);
+				}
+				else {
+					bindAttributeName = true;
 
-			boolean bindAttributeName = false;
-
-			if (attributeName.isEmpty()) {
-				sb.append(_FINDER_COLUMN_S_AN_ATTRIBUTENAME_3);
-			}
-			else {
-				bindAttributeName = true;
-
-				sb.append(_FINDER_COLUMN_S_AN_ATTRIBUTENAME_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(storageId);
-
-				if (bindAttributeName) {
-					queryPos.add(attributeName);
+					sb.append(_FINDER_COLUMN_S_AN_ATTRIBUTENAME_2);
 				}
 
-				count = (Long)query.uniqueResult();
+				String sql = sb.toString();
 
-				if (productionMode) {
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					queryPos.add(storageId);
+
+					if (bindAttributeName) {
+						queryPos.add(attributeName);
+					}
+
+					count = (Long)query.uniqueResult();
+
 					finderCache.putResult(finderPath, finderArgs, count);
 				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return count.intValue();
+			return count.intValue();
+		}
 	}
 
 	private static final String _FINDER_COLUMN_S_AN_STORAGEID_2 =
@@ -1297,117 +1291,120 @@ public class DDMFieldAttributePersistenceImpl
 		OrderByComparator<DDMFieldAttribute> orderByComparator,
 		boolean useFinderCache) {
 
-		languageId = Objects.toString(languageId, "");
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					DDMFieldAttribute.class)) {
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			DDMFieldAttribute.class);
+			languageId = Objects.toString(languageId, "");
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = null;
+			Object[] finderArgs = null;
 
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
+			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
 
-			if (useFinderCache && productionMode) {
-				finderPath = _finderPathWithoutPaginationFindByS_L;
-				finderArgs = new Object[] {storageId, languageId};
+				if (useFinderCache) {
+					finderPath = _finderPathWithoutPaginationFindByS_L;
+					finderArgs = new Object[] {storageId, languageId};
+				}
 			}
-		}
-		else if (useFinderCache && productionMode) {
-			finderPath = _finderPathWithPaginationFindByS_L;
-			finderArgs = new Object[] {
-				storageId, languageId, start, end, orderByComparator
-			};
-		}
+			else if (useFinderCache) {
+				finderPath = _finderPathWithPaginationFindByS_L;
+				finderArgs = new Object[] {
+					storageId, languageId, start, end, orderByComparator
+				};
+			}
 
-		List<DDMFieldAttribute> list = null;
+			List<DDMFieldAttribute> list = null;
 
-		if (useFinderCache && productionMode) {
-			list = (List<DDMFieldAttribute>)finderCache.getResult(
-				finderPath, finderArgs, this);
+			if (useFinderCache) {
+				list = (List<DDMFieldAttribute>)finderCache.getResult(
+					finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (DDMFieldAttribute ddmFieldAttribute : list) {
-					if ((storageId != ddmFieldAttribute.getStorageId()) ||
-						!languageId.equals(ddmFieldAttribute.getLanguageId())) {
+				if ((list != null) && !list.isEmpty()) {
+					for (DDMFieldAttribute ddmFieldAttribute : list) {
+						if ((storageId != ddmFieldAttribute.getStorageId()) ||
+							!languageId.equals(
+								ddmFieldAttribute.getLanguageId())) {
 
-						list = null;
+							list = null;
 
-						break;
+							break;
+						}
 					}
 				}
 			}
-		}
 
-		if (list == null) {
-			StringBundler sb = null;
+			if (list == null) {
+				StringBundler sb = null;
 
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					4 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(4);
-			}
-
-			sb.append(_SQL_SELECT_DDMFIELDATTRIBUTE_WHERE);
-
-			sb.append(_FINDER_COLUMN_S_L_STORAGEID_2);
-
-			boolean bindLanguageId = false;
-
-			if (languageId.isEmpty()) {
-				sb.append(_FINDER_COLUMN_S_L_LANGUAGEID_3);
-			}
-			else {
-				bindLanguageId = true;
-
-				sb.append(_FINDER_COLUMN_S_L_LANGUAGEID_2);
-			}
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(DDMFieldAttributeModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(storageId);
-
-				if (bindLanguageId) {
-					queryPos.add(languageId);
+				if (orderByComparator != null) {
+					sb = new StringBundler(
+						4 + (orderByComparator.getOrderByFields().length * 2));
+				}
+				else {
+					sb = new StringBundler(4);
 				}
 
-				list = (List<DDMFieldAttribute>)QueryUtil.list(
-					query, getDialect(), start, end);
+				sb.append(_SQL_SELECT_DDMFIELDATTRIBUTE_WHERE);
 
-				cacheResult(list);
+				sb.append(_FINDER_COLUMN_S_L_STORAGEID_2);
 
-				if (useFinderCache && productionMode) {
-					finderCache.putResult(finderPath, finderArgs, list);
+				boolean bindLanguageId = false;
+
+				if (languageId.isEmpty()) {
+					sb.append(_FINDER_COLUMN_S_L_LANGUAGEID_3);
+				}
+				else {
+					bindLanguageId = true;
+
+					sb.append(_FINDER_COLUMN_S_L_LANGUAGEID_2);
+				}
+
+				if (orderByComparator != null) {
+					appendOrderByComparator(
+						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				}
+				else {
+					sb.append(DDMFieldAttributeModelImpl.ORDER_BY_JPQL);
+				}
+
+				String sql = sb.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					queryPos.add(storageId);
+
+					if (bindLanguageId) {
+						queryPos.add(languageId);
+					}
+
+					list = (List<DDMFieldAttribute>)QueryUtil.list(
+						query, getDialect(), start, end);
+
+					cacheResult(list);
+
+					if (useFinderCache) {
+						finderCache.putResult(finderPath, finderArgs, list);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
 				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return list;
+			return list;
+		}
 	}
 
 	/**
@@ -1809,124 +1806,129 @@ public class DDMFieldAttributePersistenceImpl
 				storageId, languageIds[0], start, end, orderByComparator);
 		}
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			DDMFieldAttribute.class);
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					DDMFieldAttribute.class)) {
 
-		Object[] finderArgs = null;
+			Object[] finderArgs = null;
 
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
+			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
 
-			if (useFinderCache && productionMode) {
+				if (useFinderCache) {
+					finderArgs = new Object[] {
+						storageId, StringUtil.merge(languageIds)
+					};
+				}
+			}
+			else if (useFinderCache) {
 				finderArgs = new Object[] {
-					storageId, StringUtil.merge(languageIds)
+					storageId, StringUtil.merge(languageIds), start, end,
+					orderByComparator
 				};
 			}
-		}
-		else if (useFinderCache && productionMode) {
-			finderArgs = new Object[] {
-				storageId, StringUtil.merge(languageIds), start, end,
-				orderByComparator
-			};
-		}
 
-		List<DDMFieldAttribute> list = null;
+			List<DDMFieldAttribute> list = null;
 
-		if (useFinderCache && productionMode) {
-			list = (List<DDMFieldAttribute>)finderCache.getResult(
-				_finderPathWithPaginationFindByS_L, finderArgs, this);
+			if (useFinderCache) {
+				list = (List<DDMFieldAttribute>)finderCache.getResult(
+					_finderPathWithPaginationFindByS_L, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (DDMFieldAttribute ddmFieldAttribute : list) {
-					if ((storageId != ddmFieldAttribute.getStorageId()) ||
-						!ArrayUtil.contains(
-							languageIds, ddmFieldAttribute.getLanguageId())) {
+				if ((list != null) && !list.isEmpty()) {
+					for (DDMFieldAttribute ddmFieldAttribute : list) {
+						if ((storageId != ddmFieldAttribute.getStorageId()) ||
+							!ArrayUtil.contains(
+								languageIds,
+								ddmFieldAttribute.getLanguageId())) {
 
-						list = null;
+							list = null;
 
-						break;
+							break;
+						}
 					}
 				}
 			}
+
+			if (list == null) {
+				StringBundler sb = new StringBundler();
+
+				sb.append(_SQL_SELECT_DDMFIELDATTRIBUTE_WHERE);
+
+				sb.append(_FINDER_COLUMN_S_L_STORAGEID_2);
+
+				if (languageIds.length > 0) {
+					sb.append("(");
+
+					for (int i = 0; i < languageIds.length; i++) {
+						String languageId = languageIds[i];
+
+						if (languageId.isEmpty()) {
+							sb.append(_FINDER_COLUMN_S_L_LANGUAGEID_3);
+						}
+						else {
+							sb.append(_FINDER_COLUMN_S_L_LANGUAGEID_2);
+						}
+
+						if ((i + 1) < languageIds.length) {
+							sb.append(WHERE_OR);
+						}
+					}
+
+					sb.append(")");
+				}
+
+				sb.setStringAt(
+					removeConjunction(sb.stringAt(sb.index() - 1)),
+					sb.index() - 1);
+
+				if (orderByComparator != null) {
+					appendOrderByComparator(
+						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				}
+				else {
+					sb.append(DDMFieldAttributeModelImpl.ORDER_BY_JPQL);
+				}
+
+				String sql = sb.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					queryPos.add(storageId);
+
+					for (String languageId : languageIds) {
+						if ((languageId != null) && !languageId.isEmpty()) {
+							queryPos.add(languageId);
+						}
+					}
+
+					list = (List<DDMFieldAttribute>)QueryUtil.list(
+						query, getDialect(), start, end);
+
+					cacheResult(list);
+
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathWithPaginationFindByS_L, finderArgs,
+							list);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
+			}
+
+			return list;
 		}
-
-		if (list == null) {
-			StringBundler sb = new StringBundler();
-
-			sb.append(_SQL_SELECT_DDMFIELDATTRIBUTE_WHERE);
-
-			sb.append(_FINDER_COLUMN_S_L_STORAGEID_2);
-
-			if (languageIds.length > 0) {
-				sb.append("(");
-
-				for (int i = 0; i < languageIds.length; i++) {
-					String languageId = languageIds[i];
-
-					if (languageId.isEmpty()) {
-						sb.append(_FINDER_COLUMN_S_L_LANGUAGEID_3);
-					}
-					else {
-						sb.append(_FINDER_COLUMN_S_L_LANGUAGEID_2);
-					}
-
-					if ((i + 1) < languageIds.length) {
-						sb.append(WHERE_OR);
-					}
-				}
-
-				sb.append(")");
-			}
-
-			sb.setStringAt(
-				removeConjunction(sb.stringAt(sb.index() - 1)), sb.index() - 1);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(DDMFieldAttributeModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(storageId);
-
-				for (String languageId : languageIds) {
-					if ((languageId != null) && !languageId.isEmpty()) {
-						queryPos.add(languageId);
-					}
-				}
-
-				list = (List<DDMFieldAttribute>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache && productionMode) {
-					finderCache.putResult(
-						_finderPathWithPaginationFindByS_L, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
 	}
 
 	/**
@@ -1955,74 +1957,68 @@ public class DDMFieldAttributePersistenceImpl
 	 */
 	@Override
 	public int countByS_L(long storageId, String languageId) {
-		languageId = Objects.toString(languageId, "");
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					DDMFieldAttribute.class)) {
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			DDMFieldAttribute.class);
+			languageId = Objects.toString(languageId, "");
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = _finderPathCountByS_L;
 
-		Long count = null;
+			Object[] finderArgs = new Object[] {storageId, languageId};
 
-		if (productionMode) {
-			finderPath = _finderPathCountByS_L;
+			Long count = (Long)finderCache.getResult(
+				finderPath, finderArgs, this);
 
-			finderArgs = new Object[] {storageId, languageId};
+			if (count == null) {
+				StringBundler sb = new StringBundler(3);
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-		}
+				sb.append(_SQL_COUNT_DDMFIELDATTRIBUTE_WHERE);
 
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
+				sb.append(_FINDER_COLUMN_S_L_STORAGEID_2);
 
-			sb.append(_SQL_COUNT_DDMFIELDATTRIBUTE_WHERE);
+				boolean bindLanguageId = false;
 
-			sb.append(_FINDER_COLUMN_S_L_STORAGEID_2);
+				if (languageId.isEmpty()) {
+					sb.append(_FINDER_COLUMN_S_L_LANGUAGEID_3);
+				}
+				else {
+					bindLanguageId = true;
 
-			boolean bindLanguageId = false;
-
-			if (languageId.isEmpty()) {
-				sb.append(_FINDER_COLUMN_S_L_LANGUAGEID_3);
-			}
-			else {
-				bindLanguageId = true;
-
-				sb.append(_FINDER_COLUMN_S_L_LANGUAGEID_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(storageId);
-
-				if (bindLanguageId) {
-					queryPos.add(languageId);
+					sb.append(_FINDER_COLUMN_S_L_LANGUAGEID_2);
 				}
 
-				count = (Long)query.uniqueResult();
+				String sql = sb.toString();
 
-				if (productionMode) {
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					queryPos.add(storageId);
+
+					if (bindLanguageId) {
+						queryPos.add(languageId);
+					}
+
+					count = (Long)query.uniqueResult();
+
 					finderCache.putResult(finderPath, finderArgs, count);
 				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return count.intValue();
+			return count.intValue();
+		}
 	}
 
 	/**
@@ -2045,88 +2041,83 @@ public class DDMFieldAttributePersistenceImpl
 			languageIds = ArrayUtil.sortedUnique(languageIds);
 		}
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			DDMFieldAttribute.class);
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					DDMFieldAttribute.class)) {
 
-		Object[] finderArgs = null;
-
-		Long count = null;
-
-		if (productionMode) {
-			finderArgs = new Object[] {
+			Object[] finderArgs = new Object[] {
 				storageId, StringUtil.merge(languageIds)
 			};
 
-			count = (Long)finderCache.getResult(
+			Long count = (Long)finderCache.getResult(
 				_finderPathWithPaginationCountByS_L, finderArgs, this);
-		}
 
-		if (count == null) {
-			StringBundler sb = new StringBundler();
+			if (count == null) {
+				StringBundler sb = new StringBundler();
 
-			sb.append(_SQL_COUNT_DDMFIELDATTRIBUTE_WHERE);
+				sb.append(_SQL_COUNT_DDMFIELDATTRIBUTE_WHERE);
 
-			sb.append(_FINDER_COLUMN_S_L_STORAGEID_2);
+				sb.append(_FINDER_COLUMN_S_L_STORAGEID_2);
 
-			if (languageIds.length > 0) {
-				sb.append("(");
+				if (languageIds.length > 0) {
+					sb.append("(");
 
-				for (int i = 0; i < languageIds.length; i++) {
-					String languageId = languageIds[i];
+					for (int i = 0; i < languageIds.length; i++) {
+						String languageId = languageIds[i];
 
-					if (languageId.isEmpty()) {
-						sb.append(_FINDER_COLUMN_S_L_LANGUAGEID_3);
+						if (languageId.isEmpty()) {
+							sb.append(_FINDER_COLUMN_S_L_LANGUAGEID_3);
+						}
+						else {
+							sb.append(_FINDER_COLUMN_S_L_LANGUAGEID_2);
+						}
+
+						if ((i + 1) < languageIds.length) {
+							sb.append(WHERE_OR);
+						}
 					}
-					else {
-						sb.append(_FINDER_COLUMN_S_L_LANGUAGEID_2);
-					}
 
-					if ((i + 1) < languageIds.length) {
-						sb.append(WHERE_OR);
-					}
+					sb.append(")");
 				}
 
-				sb.append(")");
-			}
+				sb.setStringAt(
+					removeConjunction(sb.stringAt(sb.index() - 1)),
+					sb.index() - 1);
 
-			sb.setStringAt(
-				removeConjunction(sb.stringAt(sb.index() - 1)), sb.index() - 1);
+				String sql = sb.toString();
 
-			String sql = sb.toString();
+				Session session = null;
 
-			Session session = null;
+				try {
+					session = openSession();
 
-			try {
-				session = openSession();
+					Query query = session.createQuery(sql);
 
-				Query query = session.createQuery(sql);
+					QueryPos queryPos = QueryPos.getInstance(query);
 
-				QueryPos queryPos = QueryPos.getInstance(query);
+					queryPos.add(storageId);
 
-				queryPos.add(storageId);
-
-				for (String languageId : languageIds) {
-					if ((languageId != null) && !languageId.isEmpty()) {
-						queryPos.add(languageId);
+					for (String languageId : languageIds) {
+						if ((languageId != null) && !languageId.isEmpty()) {
+							queryPos.add(languageId);
+						}
 					}
-				}
 
-				count = (Long)query.uniqueResult();
+					count = (Long)query.uniqueResult();
 
-				if (productionMode) {
 					finderCache.putResult(
 						_finderPathWithPaginationCountByS_L, finderArgs, count);
 				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return count.intValue();
+			return count.intValue();
+		}
 	}
 
 	private static final String _FINDER_COLUMN_S_L_STORAGEID_2 =
@@ -2224,132 +2215,136 @@ public class DDMFieldAttributePersistenceImpl
 		OrderByComparator<DDMFieldAttribute> orderByComparator,
 		boolean useFinderCache) {
 
-		attributeName = Objects.toString(attributeName, "");
-		smallAttributeValue = Objects.toString(smallAttributeValue, "");
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					DDMFieldAttribute.class)) {
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			DDMFieldAttribute.class);
+			attributeName = Objects.toString(attributeName, "");
+			smallAttributeValue = Objects.toString(smallAttributeValue, "");
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = null;
+			Object[] finderArgs = null;
 
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
+			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
 
-			if (useFinderCache && productionMode) {
-				finderPath = _finderPathWithoutPaginationFindByAN_SAV;
-				finderArgs = new Object[] {attributeName, smallAttributeValue};
+				if (useFinderCache) {
+					finderPath = _finderPathWithoutPaginationFindByAN_SAV;
+					finderArgs = new Object[] {
+						attributeName, smallAttributeValue
+					};
+				}
 			}
-		}
-		else if (useFinderCache && productionMode) {
-			finderPath = _finderPathWithPaginationFindByAN_SAV;
-			finderArgs = new Object[] {
-				attributeName, smallAttributeValue, start, end,
-				orderByComparator
-			};
-		}
+			else if (useFinderCache) {
+				finderPath = _finderPathWithPaginationFindByAN_SAV;
+				finderArgs = new Object[] {
+					attributeName, smallAttributeValue, start, end,
+					orderByComparator
+				};
+			}
 
-		List<DDMFieldAttribute> list = null;
+			List<DDMFieldAttribute> list = null;
 
-		if (useFinderCache && productionMode) {
-			list = (List<DDMFieldAttribute>)finderCache.getResult(
-				finderPath, finderArgs, this);
+			if (useFinderCache) {
+				list = (List<DDMFieldAttribute>)finderCache.getResult(
+					finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (DDMFieldAttribute ddmFieldAttribute : list) {
-					if (!attributeName.equals(
-							ddmFieldAttribute.getAttributeName()) ||
-						!smallAttributeValue.equals(
-							ddmFieldAttribute.getSmallAttributeValue())) {
+				if ((list != null) && !list.isEmpty()) {
+					for (DDMFieldAttribute ddmFieldAttribute : list) {
+						if (!attributeName.equals(
+								ddmFieldAttribute.getAttributeName()) ||
+							!smallAttributeValue.equals(
+								ddmFieldAttribute.getSmallAttributeValue())) {
 
-						list = null;
+							list = null;
 
-						break;
+							break;
+						}
 					}
 				}
 			}
+
+			if (list == null) {
+				StringBundler sb = null;
+
+				if (orderByComparator != null) {
+					sb = new StringBundler(
+						4 + (orderByComparator.getOrderByFields().length * 2));
+				}
+				else {
+					sb = new StringBundler(4);
+				}
+
+				sb.append(_SQL_SELECT_DDMFIELDATTRIBUTE_WHERE);
+
+				boolean bindAttributeName = false;
+
+				if (attributeName.isEmpty()) {
+					sb.append(_FINDER_COLUMN_AN_SAV_ATTRIBUTENAME_3);
+				}
+				else {
+					bindAttributeName = true;
+
+					sb.append(_FINDER_COLUMN_AN_SAV_ATTRIBUTENAME_2);
+				}
+
+				boolean bindSmallAttributeValue = false;
+
+				if (smallAttributeValue.isEmpty()) {
+					sb.append(_FINDER_COLUMN_AN_SAV_SMALLATTRIBUTEVALUE_3);
+				}
+				else {
+					bindSmallAttributeValue = true;
+
+					sb.append(_FINDER_COLUMN_AN_SAV_SMALLATTRIBUTEVALUE_2);
+				}
+
+				if (orderByComparator != null) {
+					appendOrderByComparator(
+						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				}
+				else {
+					sb.append(DDMFieldAttributeModelImpl.ORDER_BY_JPQL);
+				}
+
+				String sql = sb.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					if (bindAttributeName) {
+						queryPos.add(attributeName);
+					}
+
+					if (bindSmallAttributeValue) {
+						queryPos.add(smallAttributeValue);
+					}
+
+					list = (List<DDMFieldAttribute>)QueryUtil.list(
+						query, getDialect(), start, end);
+
+					cacheResult(list);
+
+					if (useFinderCache) {
+						finderCache.putResult(finderPath, finderArgs, list);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
+			}
+
+			return list;
 		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					4 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(4);
-			}
-
-			sb.append(_SQL_SELECT_DDMFIELDATTRIBUTE_WHERE);
-
-			boolean bindAttributeName = false;
-
-			if (attributeName.isEmpty()) {
-				sb.append(_FINDER_COLUMN_AN_SAV_ATTRIBUTENAME_3);
-			}
-			else {
-				bindAttributeName = true;
-
-				sb.append(_FINDER_COLUMN_AN_SAV_ATTRIBUTENAME_2);
-			}
-
-			boolean bindSmallAttributeValue = false;
-
-			if (smallAttributeValue.isEmpty()) {
-				sb.append(_FINDER_COLUMN_AN_SAV_SMALLATTRIBUTEVALUE_3);
-			}
-			else {
-				bindSmallAttributeValue = true;
-
-				sb.append(_FINDER_COLUMN_AN_SAV_SMALLATTRIBUTEVALUE_2);
-			}
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(DDMFieldAttributeModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindAttributeName) {
-					queryPos.add(attributeName);
-				}
-
-				if (bindSmallAttributeValue) {
-					queryPos.add(smallAttributeValue);
-				}
-
-				list = (List<DDMFieldAttribute>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache && productionMode) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
 	}
 
 	/**
@@ -2694,86 +2689,82 @@ public class DDMFieldAttributePersistenceImpl
 	 */
 	@Override
 	public int countByAN_SAV(String attributeName, String smallAttributeValue) {
-		attributeName = Objects.toString(attributeName, "");
-		smallAttributeValue = Objects.toString(smallAttributeValue, "");
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					DDMFieldAttribute.class)) {
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			DDMFieldAttribute.class);
+			attributeName = Objects.toString(attributeName, "");
+			smallAttributeValue = Objects.toString(smallAttributeValue, "");
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = _finderPathCountByAN_SAV;
 
-		Long count = null;
+			Object[] finderArgs = new Object[] {
+				attributeName, smallAttributeValue
+			};
 
-		if (productionMode) {
-			finderPath = _finderPathCountByAN_SAV;
+			Long count = (Long)finderCache.getResult(
+				finderPath, finderArgs, this);
 
-			finderArgs = new Object[] {attributeName, smallAttributeValue};
+			if (count == null) {
+				StringBundler sb = new StringBundler(3);
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-		}
+				sb.append(_SQL_COUNT_DDMFIELDATTRIBUTE_WHERE);
 
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
+				boolean bindAttributeName = false;
 
-			sb.append(_SQL_COUNT_DDMFIELDATTRIBUTE_WHERE);
+				if (attributeName.isEmpty()) {
+					sb.append(_FINDER_COLUMN_AN_SAV_ATTRIBUTENAME_3);
+				}
+				else {
+					bindAttributeName = true;
 
-			boolean bindAttributeName = false;
-
-			if (attributeName.isEmpty()) {
-				sb.append(_FINDER_COLUMN_AN_SAV_ATTRIBUTENAME_3);
-			}
-			else {
-				bindAttributeName = true;
-
-				sb.append(_FINDER_COLUMN_AN_SAV_ATTRIBUTENAME_2);
-			}
-
-			boolean bindSmallAttributeValue = false;
-
-			if (smallAttributeValue.isEmpty()) {
-				sb.append(_FINDER_COLUMN_AN_SAV_SMALLATTRIBUTEVALUE_3);
-			}
-			else {
-				bindSmallAttributeValue = true;
-
-				sb.append(_FINDER_COLUMN_AN_SAV_SMALLATTRIBUTEVALUE_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindAttributeName) {
-					queryPos.add(attributeName);
+					sb.append(_FINDER_COLUMN_AN_SAV_ATTRIBUTENAME_2);
 				}
 
-				if (bindSmallAttributeValue) {
-					queryPos.add(smallAttributeValue);
+				boolean bindSmallAttributeValue = false;
+
+				if (smallAttributeValue.isEmpty()) {
+					sb.append(_FINDER_COLUMN_AN_SAV_SMALLATTRIBUTEVALUE_3);
+				}
+				else {
+					bindSmallAttributeValue = true;
+
+					sb.append(_FINDER_COLUMN_AN_SAV_SMALLATTRIBUTEVALUE_2);
 				}
 
-				count = (Long)query.uniqueResult();
+				String sql = sb.toString();
 
-				if (productionMode) {
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					if (bindAttributeName) {
+						queryPos.add(attributeName);
+					}
+
+					if (bindSmallAttributeValue) {
+						queryPos.add(smallAttributeValue);
+					}
+
+					count = (Long)query.uniqueResult();
+
 					finderCache.putResult(finderPath, finderArgs, count);
 				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return count.intValue();
+			return count.intValue();
+		}
 	}
 
 	private static final String _FINDER_COLUMN_AN_SAV_ATTRIBUTENAME_2 =
@@ -2863,126 +2854,119 @@ public class DDMFieldAttributePersistenceImpl
 		long fieldId, String attributeName, String languageId,
 		boolean useFinderCache) {
 
-		attributeName = Objects.toString(attributeName, "");
-		languageId = Objects.toString(languageId, "");
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					DDMFieldAttribute.class)) {
 
-		Object[] finderArgs = null;
+			attributeName = Objects.toString(attributeName, "");
+			languageId = Objects.toString(languageId, "");
 
-		if (useFinderCache) {
-			finderArgs = new Object[] {fieldId, attributeName, languageId};
-		}
+			Object[] finderArgs = null;
 
-		Object result = null;
-
-		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByF_AN_L, finderArgs, this);
-		}
-
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			DDMFieldAttribute.class);
-
-		if (result instanceof DDMFieldAttribute) {
-			DDMFieldAttribute ddmFieldAttribute = (DDMFieldAttribute)result;
-
-			if ((fieldId != ddmFieldAttribute.getFieldId()) ||
-				!Objects.equals(
-					attributeName, ddmFieldAttribute.getAttributeName()) ||
-				!Objects.equals(
-					languageId, ddmFieldAttribute.getLanguageId())) {
-
-				result = null;
-			}
-			else if (!ctPersistenceHelper.isProductionMode(
-						DDMFieldAttribute.class,
-						ddmFieldAttribute.getPrimaryKey())) {
-
-				result = null;
-			}
-		}
-		else if (!productionMode && (result instanceof List<?>)) {
-			result = null;
-		}
-
-		if (result == null) {
-			StringBundler sb = new StringBundler(5);
-
-			sb.append(_SQL_SELECT_DDMFIELDATTRIBUTE_WHERE);
-
-			sb.append(_FINDER_COLUMN_F_AN_L_FIELDID_2);
-
-			boolean bindAttributeName = false;
-
-			if (attributeName.isEmpty()) {
-				sb.append(_FINDER_COLUMN_F_AN_L_ATTRIBUTENAME_3);
-			}
-			else {
-				bindAttributeName = true;
-
-				sb.append(_FINDER_COLUMN_F_AN_L_ATTRIBUTENAME_2);
+			if (useFinderCache) {
+				finderArgs = new Object[] {fieldId, attributeName, languageId};
 			}
 
-			boolean bindLanguageId = false;
+			Object result = null;
 
-			if (languageId.isEmpty()) {
-				sb.append(_FINDER_COLUMN_F_AN_L_LANGUAGEID_3);
-			}
-			else {
-				bindLanguageId = true;
-
-				sb.append(_FINDER_COLUMN_F_AN_L_LANGUAGEID_2);
+			if (useFinderCache) {
+				result = finderCache.getResult(
+					_finderPathFetchByF_AN_L, finderArgs, this);
 			}
 
-			String sql = sb.toString();
+			if (result instanceof DDMFieldAttribute) {
+				DDMFieldAttribute ddmFieldAttribute = (DDMFieldAttribute)result;
 
-			Session session = null;
+				if ((fieldId != ddmFieldAttribute.getFieldId()) ||
+					!Objects.equals(
+						attributeName, ddmFieldAttribute.getAttributeName()) ||
+					!Objects.equals(
+						languageId, ddmFieldAttribute.getLanguageId())) {
 
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(fieldId);
-
-				if (bindAttributeName) {
-					queryPos.add(attributeName);
+					result = null;
 				}
+			}
 
-				if (bindLanguageId) {
-					queryPos.add(languageId);
-				}
+			if (result == null) {
+				StringBundler sb = new StringBundler(5);
 
-				List<DDMFieldAttribute> list = query.list();
+				sb.append(_SQL_SELECT_DDMFIELDATTRIBUTE_WHERE);
 
-				if (list.isEmpty()) {
-					if (useFinderCache && productionMode) {
-						finderCache.putResult(
-							_finderPathFetchByF_AN_L, finderArgs, list);
-					}
+				sb.append(_FINDER_COLUMN_F_AN_L_FIELDID_2);
+
+				boolean bindAttributeName = false;
+
+				if (attributeName.isEmpty()) {
+					sb.append(_FINDER_COLUMN_F_AN_L_ATTRIBUTENAME_3);
 				}
 				else {
-					DDMFieldAttribute ddmFieldAttribute = list.get(0);
+					bindAttributeName = true;
 
-					result = ddmFieldAttribute;
+					sb.append(_FINDER_COLUMN_F_AN_L_ATTRIBUTENAME_2);
+				}
 
-					cacheResult(ddmFieldAttribute);
+				boolean bindLanguageId = false;
+
+				if (languageId.isEmpty()) {
+					sb.append(_FINDER_COLUMN_F_AN_L_LANGUAGEID_3);
+				}
+				else {
+					bindLanguageId = true;
+
+					sb.append(_FINDER_COLUMN_F_AN_L_LANGUAGEID_2);
+				}
+
+				String sql = sb.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					queryPos.add(fieldId);
+
+					if (bindAttributeName) {
+						queryPos.add(attributeName);
+					}
+
+					if (bindLanguageId) {
+						queryPos.add(languageId);
+					}
+
+					List<DDMFieldAttribute> list = query.list();
+
+					if (list.isEmpty()) {
+						if (useFinderCache) {
+							finderCache.putResult(
+								_finderPathFetchByF_AN_L, finderArgs, list);
+						}
+					}
+					else {
+						DDMFieldAttribute ddmFieldAttribute = list.get(0);
+
+						result = ddmFieldAttribute;
+
+						cacheResult(ddmFieldAttribute);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
 				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (DDMFieldAttribute)result;
+			if (result instanceof List<?>) {
+				return null;
+			}
+			else {
+				return (DDMFieldAttribute)result;
+			}
 		}
 	}
 
@@ -3017,90 +3001,86 @@ public class DDMFieldAttributePersistenceImpl
 	public int countByF_AN_L(
 		long fieldId, String attributeName, String languageId) {
 
-		attributeName = Objects.toString(attributeName, "");
-		languageId = Objects.toString(languageId, "");
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					DDMFieldAttribute.class)) {
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			DDMFieldAttribute.class);
+			attributeName = Objects.toString(attributeName, "");
+			languageId = Objects.toString(languageId, "");
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = _finderPathCountByF_AN_L;
 
-		Long count = null;
+			Object[] finderArgs = new Object[] {
+				fieldId, attributeName, languageId
+			};
 
-		if (productionMode) {
-			finderPath = _finderPathCountByF_AN_L;
+			Long count = (Long)finderCache.getResult(
+				finderPath, finderArgs, this);
 
-			finderArgs = new Object[] {fieldId, attributeName, languageId};
+			if (count == null) {
+				StringBundler sb = new StringBundler(4);
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-		}
+				sb.append(_SQL_COUNT_DDMFIELDATTRIBUTE_WHERE);
 
-		if (count == null) {
-			StringBundler sb = new StringBundler(4);
+				sb.append(_FINDER_COLUMN_F_AN_L_FIELDID_2);
 
-			sb.append(_SQL_COUNT_DDMFIELDATTRIBUTE_WHERE);
+				boolean bindAttributeName = false;
 
-			sb.append(_FINDER_COLUMN_F_AN_L_FIELDID_2);
+				if (attributeName.isEmpty()) {
+					sb.append(_FINDER_COLUMN_F_AN_L_ATTRIBUTENAME_3);
+				}
+				else {
+					bindAttributeName = true;
 
-			boolean bindAttributeName = false;
-
-			if (attributeName.isEmpty()) {
-				sb.append(_FINDER_COLUMN_F_AN_L_ATTRIBUTENAME_3);
-			}
-			else {
-				bindAttributeName = true;
-
-				sb.append(_FINDER_COLUMN_F_AN_L_ATTRIBUTENAME_2);
-			}
-
-			boolean bindLanguageId = false;
-
-			if (languageId.isEmpty()) {
-				sb.append(_FINDER_COLUMN_F_AN_L_LANGUAGEID_3);
-			}
-			else {
-				bindLanguageId = true;
-
-				sb.append(_FINDER_COLUMN_F_AN_L_LANGUAGEID_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(fieldId);
-
-				if (bindAttributeName) {
-					queryPos.add(attributeName);
+					sb.append(_FINDER_COLUMN_F_AN_L_ATTRIBUTENAME_2);
 				}
 
-				if (bindLanguageId) {
-					queryPos.add(languageId);
+				boolean bindLanguageId = false;
+
+				if (languageId.isEmpty()) {
+					sb.append(_FINDER_COLUMN_F_AN_L_LANGUAGEID_3);
+				}
+				else {
+					bindLanguageId = true;
+
+					sb.append(_FINDER_COLUMN_F_AN_L_LANGUAGEID_2);
 				}
 
-				count = (Long)query.uniqueResult();
+				String sql = sb.toString();
 
-				if (productionMode) {
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					queryPos.add(fieldId);
+
+					if (bindAttributeName) {
+						queryPos.add(attributeName);
+					}
+
+					if (bindLanguageId) {
+						queryPos.add(languageId);
+					}
+
+					count = (Long)query.uniqueResult();
+
 					finderCache.putResult(finderPath, finderArgs, count);
 				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return count.intValue();
+			return count.intValue();
+		}
 	}
 
 	private static final String _FINDER_COLUMN_F_AN_L_FIELDID_2 =
@@ -3134,22 +3114,23 @@ public class DDMFieldAttributePersistenceImpl
 	 */
 	@Override
 	public void cacheResult(DDMFieldAttribute ddmFieldAttribute) {
-		if (ddmFieldAttribute.getCtCollectionId() != 0) {
-			return;
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					ddmFieldAttribute.getCtCollectionId())) {
+
+			entityCache.putResult(
+				DDMFieldAttributeImpl.class, ddmFieldAttribute.getPrimaryKey(),
+				ddmFieldAttribute);
+
+			finderCache.putResult(
+				_finderPathFetchByF_AN_L,
+				new Object[] {
+					ddmFieldAttribute.getFieldId(),
+					ddmFieldAttribute.getAttributeName(),
+					ddmFieldAttribute.getLanguageId()
+				},
+				ddmFieldAttribute);
 		}
-
-		entityCache.putResult(
-			DDMFieldAttributeImpl.class, ddmFieldAttribute.getPrimaryKey(),
-			ddmFieldAttribute);
-
-		finderCache.putResult(
-			_finderPathFetchByF_AN_L,
-			new Object[] {
-				ddmFieldAttribute.getFieldId(),
-				ddmFieldAttribute.getAttributeName(),
-				ddmFieldAttribute.getLanguageId()
-			},
-			ddmFieldAttribute);
 	}
 
 	private int _valueObjectFinderCacheListThreshold;
@@ -3170,15 +3151,16 @@ public class DDMFieldAttributePersistenceImpl
 		}
 
 		for (DDMFieldAttribute ddmFieldAttribute : ddmFieldAttributes) {
-			if (ddmFieldAttribute.getCtCollectionId() != 0) {
-				continue;
-			}
+			try (SafeCloseable safeCloseable =
+					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+						ddmFieldAttribute.getCtCollectionId())) {
 
-			if (entityCache.getResult(
-					DDMFieldAttributeImpl.class,
-					ddmFieldAttribute.getPrimaryKey()) == null) {
+				if (entityCache.getResult(
+						DDMFieldAttributeImpl.class,
+						ddmFieldAttribute.getPrimaryKey()) == null) {
 
-				cacheResult(ddmFieldAttribute);
+					cacheResult(ddmFieldAttribute);
+				}
 			}
 		}
 	}
@@ -3230,15 +3212,21 @@ public class DDMFieldAttributePersistenceImpl
 	protected void cacheUniqueFindersCache(
 		DDMFieldAttributeModelImpl ddmFieldAttributeModelImpl) {
 
-		Object[] args = new Object[] {
-			ddmFieldAttributeModelImpl.getFieldId(),
-			ddmFieldAttributeModelImpl.getAttributeName(),
-			ddmFieldAttributeModelImpl.getLanguageId()
-		};
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					ddmFieldAttributeModelImpl.getCtCollectionId())) {
 
-		finderCache.putResult(_finderPathCountByF_AN_L, args, Long.valueOf(1));
-		finderCache.putResult(
-			_finderPathFetchByF_AN_L, args, ddmFieldAttributeModelImpl);
+			Object[] args = new Object[] {
+				ddmFieldAttributeModelImpl.getFieldId(),
+				ddmFieldAttributeModelImpl.getAttributeName(),
+				ddmFieldAttributeModelImpl.getLanguageId()
+			};
+
+			finderCache.putResult(
+				_finderPathCountByF_AN_L, args, Long.valueOf(1));
+			finderCache.putResult(
+				_finderPathFetchByF_AN_L, args, ddmFieldAttributeModelImpl);
+		}
 	}
 
 	/**
@@ -3400,16 +3388,6 @@ public class DDMFieldAttributePersistenceImpl
 			closeSession(session);
 		}
 
-		if (ddmFieldAttribute.getCtCollectionId() != 0) {
-			if (isNew) {
-				ddmFieldAttribute.setNew(false);
-			}
-
-			ddmFieldAttribute.resetOriginalValues();
-
-			return ddmFieldAttribute;
-		}
-
 		entityCache.putResult(
 			DDMFieldAttributeImpl.class, ddmFieldAttributeModelImpl, false,
 			true);
@@ -3475,10 +3453,21 @@ public class DDMFieldAttributePersistenceImpl
 		if (ctPersistenceHelper.isProductionMode(
 				DDMFieldAttribute.class, primaryKey)) {
 
-			return super.fetchByPrimaryKey(primaryKey);
+			try (SafeCloseable safeCloseable =
+					CTCollectionThreadLocal.
+						setProductionModeWithSafeCloseable()) {
+
+				return super.fetchByPrimaryKey(primaryKey);
+			}
 		}
 
-		DDMFieldAttribute ddmFieldAttribute = null;
+		DDMFieldAttribute ddmFieldAttribute =
+			(DDMFieldAttribute)entityCache.getResult(
+				DDMFieldAttributeImpl.class, primaryKey);
+
+		if (ddmFieldAttribute != null) {
+			return ddmFieldAttribute;
+		}
 
 		Session session = null;
 
@@ -3518,7 +3507,12 @@ public class DDMFieldAttributePersistenceImpl
 		Set<Serializable> primaryKeys) {
 
 		if (ctPersistenceHelper.isProductionMode(DDMFieldAttribute.class)) {
-			return super.fetchByPrimaryKeys(primaryKeys);
+			try (SafeCloseable safeCloseable =
+					CTCollectionThreadLocal.
+						setProductionModeWithSafeCloseable()) {
+
+				return super.fetchByPrimaryKeys(primaryKeys);
+			}
 		}
 
 		if (primaryKeys.isEmpty()) {
@@ -3539,6 +3533,34 @@ public class DDMFieldAttributePersistenceImpl
 				map.put(primaryKey, ddmFieldAttribute);
 			}
 
+			return map;
+		}
+
+		Set<Serializable> uncachedPrimaryKeys = null;
+
+		for (Serializable primaryKey : primaryKeys) {
+			try (SafeCloseable safeCloseable =
+					ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+						DDMFieldAttribute.class, primaryKey)) {
+
+				DDMFieldAttribute ddmFieldAttribute =
+					(DDMFieldAttribute)entityCache.getResult(
+						DDMFieldAttributeImpl.class, primaryKey);
+
+				if (ddmFieldAttribute == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<>();
+					}
+
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, ddmFieldAttribute);
+				}
+			}
+		}
+
+		if (uncachedPrimaryKeys == null) {
 			return map;
 		}
 
@@ -3672,78 +3694,80 @@ public class DDMFieldAttributePersistenceImpl
 		OrderByComparator<DDMFieldAttribute> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			DDMFieldAttribute.class);
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					DDMFieldAttribute.class)) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = null;
+			Object[] finderArgs = null;
 
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
+			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
 
-			if (useFinderCache && productionMode) {
-				finderPath = _finderPathWithoutPaginationFindAll;
-				finderArgs = FINDER_ARGS_EMPTY;
-			}
-		}
-		else if (useFinderCache && productionMode) {
-			finderPath = _finderPathWithPaginationFindAll;
-			finderArgs = new Object[] {start, end, orderByComparator};
-		}
-
-		List<DDMFieldAttribute> list = null;
-
-		if (useFinderCache && productionMode) {
-			list = (List<DDMFieldAttribute>)finderCache.getResult(
-				finderPath, finderArgs, this);
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-			String sql = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					2 + (orderByComparator.getOrderByFields().length * 2));
-
-				sb.append(_SQL_SELECT_DDMFIELDATTRIBUTE);
-
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-
-				sql = sb.toString();
-			}
-			else {
-				sql = _SQL_SELECT_DDMFIELDATTRIBUTE;
-
-				sql = sql.concat(DDMFieldAttributeModelImpl.ORDER_BY_JPQL);
-			}
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				list = (List<DDMFieldAttribute>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache && productionMode) {
-					finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderPath = _finderPathWithoutPaginationFindAll;
+					finderArgs = FINDER_ARGS_EMPTY;
 				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
+			else if (useFinderCache) {
+				finderPath = _finderPathWithPaginationFindAll;
+				finderArgs = new Object[] {start, end, orderByComparator};
 			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return list;
+			List<DDMFieldAttribute> list = null;
+
+			if (useFinderCache) {
+				list = (List<DDMFieldAttribute>)finderCache.getResult(
+					finderPath, finderArgs, this);
+			}
+
+			if (list == null) {
+				StringBundler sb = null;
+				String sql = null;
+
+				if (orderByComparator != null) {
+					sb = new StringBundler(
+						2 + (orderByComparator.getOrderByFields().length * 2));
+
+					sb.append(_SQL_SELECT_DDMFIELDATTRIBUTE);
+
+					appendOrderByComparator(
+						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+
+					sql = sb.toString();
+				}
+				else {
+					sql = _SQL_SELECT_DDMFIELDATTRIBUTE;
+
+					sql = sql.concat(DDMFieldAttributeModelImpl.ORDER_BY_JPQL);
+				}
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					list = (List<DDMFieldAttribute>)QueryUtil.list(
+						query, getDialect(), start, end);
+
+					cacheResult(list);
+
+					if (useFinderCache) {
+						finderCache.putResult(finderPath, finderArgs, list);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
+			}
+
+			return list;
+		}
 	}
 
 	/**
@@ -3764,40 +3788,37 @@ public class DDMFieldAttributePersistenceImpl
 	 */
 	@Override
 	public int countAll() {
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			DDMFieldAttribute.class);
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					DDMFieldAttribute.class)) {
 
-		Long count = null;
-
-		if (productionMode) {
-			count = (Long)finderCache.getResult(
+			Long count = (Long)finderCache.getResult(
 				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
-		}
 
-		if (count == null) {
-			Session session = null;
+			if (count == null) {
+				Session session = null;
 
-			try {
-				session = openSession();
+				try {
+					session = openSession();
 
-				Query query = session.createQuery(_SQL_COUNT_DDMFIELDATTRIBUTE);
+					Query query = session.createQuery(
+						_SQL_COUNT_DDMFIELDATTRIBUTE);
 
-				count = (Long)query.uniqueResult();
+					count = (Long)query.uniqueResult();
 
-				if (productionMode) {
 					finderCache.putResult(
 						_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return count.intValue();
+			return count.intValue();
+		}
 	}
 
 	@Override

@@ -13,7 +13,9 @@ import com.liferay.analytics.message.storage.model.impl.AnalyticsAssociationMode
 import com.liferay.analytics.message.storage.service.persistence.AnalyticsAssociationPersistence;
 import com.liferay.analytics.message.storage.service.persistence.AnalyticsAssociationUtil;
 import com.liferay.analytics.message.storage.service.persistence.impl.constants.AnalyticsPersistenceConstants;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -179,118 +181,123 @@ public class AnalyticsAssociationPersistenceImpl
 		OrderByComparator<AnalyticsAssociation> orderByComparator,
 		boolean useFinderCache) {
 
-		associationClassName = Objects.toString(associationClassName, "");
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					AnalyticsAssociation.class)) {
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			AnalyticsAssociation.class);
+			associationClassName = Objects.toString(associationClassName, "");
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = null;
+			Object[] finderArgs = null;
 
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
+			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
 
-			if (useFinderCache && productionMode) {
-				finderPath = _finderPathWithoutPaginationFindByC_A;
-				finderArgs = new Object[] {companyId, associationClassName};
+				if (useFinderCache) {
+					finderPath = _finderPathWithoutPaginationFindByC_A;
+					finderArgs = new Object[] {companyId, associationClassName};
+				}
 			}
-		}
-		else if (useFinderCache && productionMode) {
-			finderPath = _finderPathWithPaginationFindByC_A;
-			finderArgs = new Object[] {
-				companyId, associationClassName, start, end, orderByComparator
-			};
-		}
+			else if (useFinderCache) {
+				finderPath = _finderPathWithPaginationFindByC_A;
+				finderArgs = new Object[] {
+					companyId, associationClassName, start, end,
+					orderByComparator
+				};
+			}
 
-		List<AnalyticsAssociation> list = null;
+			List<AnalyticsAssociation> list = null;
 
-		if (useFinderCache && productionMode) {
-			list = (List<AnalyticsAssociation>)finderCache.getResult(
-				finderPath, finderArgs, this);
+			if (useFinderCache) {
+				list = (List<AnalyticsAssociation>)finderCache.getResult(
+					finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (AnalyticsAssociation analyticsAssociation : list) {
-					if ((companyId != analyticsAssociation.getCompanyId()) ||
-						!associationClassName.equals(
-							analyticsAssociation.getAssociationClassName())) {
+				if ((list != null) && !list.isEmpty()) {
+					for (AnalyticsAssociation analyticsAssociation : list) {
+						if ((companyId !=
+								analyticsAssociation.getCompanyId()) ||
+							!associationClassName.equals(
+								analyticsAssociation.
+									getAssociationClassName())) {
 
-						list = null;
+							list = null;
 
-						break;
+							break;
+						}
 					}
 				}
 			}
-		}
 
-		if (list == null) {
-			StringBundler sb = null;
+			if (list == null) {
+				StringBundler sb = null;
 
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					4 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(4);
-			}
-
-			sb.append(_SQL_SELECT_ANALYTICSASSOCIATION_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_A_COMPANYID_2);
-
-			boolean bindAssociationClassName = false;
-
-			if (associationClassName.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_A_ASSOCIATIONCLASSNAME_3);
-			}
-			else {
-				bindAssociationClassName = true;
-
-				sb.append(_FINDER_COLUMN_C_A_ASSOCIATIONCLASSNAME_2);
-			}
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(AnalyticsAssociationModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				if (bindAssociationClassName) {
-					queryPos.add(associationClassName);
+				if (orderByComparator != null) {
+					sb = new StringBundler(
+						4 + (orderByComparator.getOrderByFields().length * 2));
+				}
+				else {
+					sb = new StringBundler(4);
 				}
 
-				list = (List<AnalyticsAssociation>)QueryUtil.list(
-					query, getDialect(), start, end);
+				sb.append(_SQL_SELECT_ANALYTICSASSOCIATION_WHERE);
 
-				cacheResult(list);
+				sb.append(_FINDER_COLUMN_C_A_COMPANYID_2);
 
-				if (useFinderCache && productionMode) {
-					finderCache.putResult(finderPath, finderArgs, list);
+				boolean bindAssociationClassName = false;
+
+				if (associationClassName.isEmpty()) {
+					sb.append(_FINDER_COLUMN_C_A_ASSOCIATIONCLASSNAME_3);
+				}
+				else {
+					bindAssociationClassName = true;
+
+					sb.append(_FINDER_COLUMN_C_A_ASSOCIATIONCLASSNAME_2);
+				}
+
+				if (orderByComparator != null) {
+					appendOrderByComparator(
+						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				}
+				else {
+					sb.append(AnalyticsAssociationModelImpl.ORDER_BY_JPQL);
+				}
+
+				String sql = sb.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					queryPos.add(companyId);
+
+					if (bindAssociationClassName) {
+						queryPos.add(associationClassName);
+					}
+
+					list = (List<AnalyticsAssociation>)QueryUtil.list(
+						query, getDialect(), start, end);
+
+					cacheResult(list);
+
+					if (useFinderCache) {
+						finderCache.putResult(finderPath, finderArgs, list);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
 				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return list;
+			return list;
+		}
 	}
 
 	/**
@@ -621,74 +628,70 @@ public class AnalyticsAssociationPersistenceImpl
 	 */
 	@Override
 	public int countByC_A(long companyId, String associationClassName) {
-		associationClassName = Objects.toString(associationClassName, "");
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					AnalyticsAssociation.class)) {
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			AnalyticsAssociation.class);
+			associationClassName = Objects.toString(associationClassName, "");
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = _finderPathCountByC_A;
 
-		Long count = null;
+			Object[] finderArgs = new Object[] {
+				companyId, associationClassName
+			};
 
-		if (productionMode) {
-			finderPath = _finderPathCountByC_A;
+			Long count = (Long)finderCache.getResult(
+				finderPath, finderArgs, this);
 
-			finderArgs = new Object[] {companyId, associationClassName};
+			if (count == null) {
+				StringBundler sb = new StringBundler(3);
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-		}
+				sb.append(_SQL_COUNT_ANALYTICSASSOCIATION_WHERE);
 
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
+				sb.append(_FINDER_COLUMN_C_A_COMPANYID_2);
 
-			sb.append(_SQL_COUNT_ANALYTICSASSOCIATION_WHERE);
+				boolean bindAssociationClassName = false;
 
-			sb.append(_FINDER_COLUMN_C_A_COMPANYID_2);
+				if (associationClassName.isEmpty()) {
+					sb.append(_FINDER_COLUMN_C_A_ASSOCIATIONCLASSNAME_3);
+				}
+				else {
+					bindAssociationClassName = true;
 
-			boolean bindAssociationClassName = false;
-
-			if (associationClassName.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_A_ASSOCIATIONCLASSNAME_3);
-			}
-			else {
-				bindAssociationClassName = true;
-
-				sb.append(_FINDER_COLUMN_C_A_ASSOCIATIONCLASSNAME_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				if (bindAssociationClassName) {
-					queryPos.add(associationClassName);
+					sb.append(_FINDER_COLUMN_C_A_ASSOCIATIONCLASSNAME_2);
 				}
 
-				count = (Long)query.uniqueResult();
+				String sql = sb.toString();
 
-				if (productionMode) {
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					queryPos.add(companyId);
+
+					if (bindAssociationClassName) {
+						queryPos.add(associationClassName);
+					}
+
+					count = (Long)query.uniqueResult();
+
 					finderCache.putResult(finderPath, finderArgs, count);
 				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return count.intValue();
+			return count.intValue();
+		}
 	}
 
 	private static final String _FINDER_COLUMN_C_A_COMPANYID_2 =
@@ -792,127 +795,131 @@ public class AnalyticsAssociationPersistenceImpl
 		OrderByComparator<AnalyticsAssociation> orderByComparator,
 		boolean useFinderCache) {
 
-		associationClassName = Objects.toString(associationClassName, "");
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					AnalyticsAssociation.class)) {
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			AnalyticsAssociation.class);
+			associationClassName = Objects.toString(associationClassName, "");
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = null;
+			Object[] finderArgs = null;
 
-		finderPath = _finderPathWithPaginationFindByC_GtM_A;
-		finderArgs = new Object[] {
-			companyId, _getTime(modifiedDate), associationClassName, start, end,
-			orderByComparator
-		};
+			finderPath = _finderPathWithPaginationFindByC_GtM_A;
+			finderArgs = new Object[] {
+				companyId, _getTime(modifiedDate), associationClassName, start,
+				end, orderByComparator
+			};
 
-		List<AnalyticsAssociation> list = null;
+			List<AnalyticsAssociation> list = null;
 
-		if (useFinderCache && productionMode) {
-			list = (List<AnalyticsAssociation>)finderCache.getResult(
-				finderPath, finderArgs, this);
+			if (useFinderCache) {
+				list = (List<AnalyticsAssociation>)finderCache.getResult(
+					finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (AnalyticsAssociation analyticsAssociation : list) {
-					if ((companyId != analyticsAssociation.getCompanyId()) ||
-						(modifiedDate.getTime() >=
-							analyticsAssociation.getModifiedDate(
-							).getTime()) ||
-						!associationClassName.equals(
-							analyticsAssociation.getAssociationClassName())) {
+				if ((list != null) && !list.isEmpty()) {
+					for (AnalyticsAssociation analyticsAssociation : list) {
+						if ((companyId !=
+								analyticsAssociation.getCompanyId()) ||
+							(modifiedDate.getTime() >=
+								analyticsAssociation.getModifiedDate(
+								).getTime()) ||
+							!associationClassName.equals(
+								analyticsAssociation.
+									getAssociationClassName())) {
 
-						list = null;
+							list = null;
 
-						break;
+							break;
+						}
 					}
 				}
 			}
+
+			if (list == null) {
+				StringBundler sb = null;
+
+				if (orderByComparator != null) {
+					sb = new StringBundler(
+						5 + (orderByComparator.getOrderByFields().length * 2));
+				}
+				else {
+					sb = new StringBundler(5);
+				}
+
+				sb.append(_SQL_SELECT_ANALYTICSASSOCIATION_WHERE);
+
+				sb.append(_FINDER_COLUMN_C_GTM_A_COMPANYID_2);
+
+				boolean bindModifiedDate = false;
+
+				if (modifiedDate == null) {
+					sb.append(_FINDER_COLUMN_C_GTM_A_MODIFIEDDATE_1);
+				}
+				else {
+					bindModifiedDate = true;
+
+					sb.append(_FINDER_COLUMN_C_GTM_A_MODIFIEDDATE_2);
+				}
+
+				boolean bindAssociationClassName = false;
+
+				if (associationClassName.isEmpty()) {
+					sb.append(_FINDER_COLUMN_C_GTM_A_ASSOCIATIONCLASSNAME_3);
+				}
+				else {
+					bindAssociationClassName = true;
+
+					sb.append(_FINDER_COLUMN_C_GTM_A_ASSOCIATIONCLASSNAME_2);
+				}
+
+				if (orderByComparator != null) {
+					appendOrderByComparator(
+						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				}
+				else {
+					sb.append(AnalyticsAssociationModelImpl.ORDER_BY_JPQL);
+				}
+
+				String sql = sb.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					queryPos.add(companyId);
+
+					if (bindModifiedDate) {
+						queryPos.add(new Timestamp(modifiedDate.getTime()));
+					}
+
+					if (bindAssociationClassName) {
+						queryPos.add(associationClassName);
+					}
+
+					list = (List<AnalyticsAssociation>)QueryUtil.list(
+						query, getDialect(), start, end);
+
+					cacheResult(list);
+
+					if (useFinderCache) {
+						finderCache.putResult(finderPath, finderArgs, list);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
+			}
+
+			return list;
 		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					5 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(5);
-			}
-
-			sb.append(_SQL_SELECT_ANALYTICSASSOCIATION_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_GTM_A_COMPANYID_2);
-
-			boolean bindModifiedDate = false;
-
-			if (modifiedDate == null) {
-				sb.append(_FINDER_COLUMN_C_GTM_A_MODIFIEDDATE_1);
-			}
-			else {
-				bindModifiedDate = true;
-
-				sb.append(_FINDER_COLUMN_C_GTM_A_MODIFIEDDATE_2);
-			}
-
-			boolean bindAssociationClassName = false;
-
-			if (associationClassName.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_GTM_A_ASSOCIATIONCLASSNAME_3);
-			}
-			else {
-				bindAssociationClassName = true;
-
-				sb.append(_FINDER_COLUMN_C_GTM_A_ASSOCIATIONCLASSNAME_2);
-			}
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(AnalyticsAssociationModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				if (bindModifiedDate) {
-					queryPos.add(new Timestamp(modifiedDate.getTime()));
-				}
-
-				if (bindAssociationClassName) {
-					queryPos.add(associationClassName);
-				}
-
-				list = (List<AnalyticsAssociation>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache && productionMode) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
 	}
 
 	/**
@@ -1277,91 +1284,85 @@ public class AnalyticsAssociationPersistenceImpl
 	public int countByC_GtM_A(
 		long companyId, Date modifiedDate, String associationClassName) {
 
-		associationClassName = Objects.toString(associationClassName, "");
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					AnalyticsAssociation.class)) {
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			AnalyticsAssociation.class);
+			associationClassName = Objects.toString(associationClassName, "");
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = _finderPathWithPaginationCountByC_GtM_A;
 
-		Long count = null;
-
-		if (productionMode) {
-			finderPath = _finderPathWithPaginationCountByC_GtM_A;
-
-			finderArgs = new Object[] {
+			Object[] finderArgs = new Object[] {
 				companyId, _getTime(modifiedDate), associationClassName
 			};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-		}
+			Long count = (Long)finderCache.getResult(
+				finderPath, finderArgs, this);
 
-		if (count == null) {
-			StringBundler sb = new StringBundler(4);
+			if (count == null) {
+				StringBundler sb = new StringBundler(4);
 
-			sb.append(_SQL_COUNT_ANALYTICSASSOCIATION_WHERE);
+				sb.append(_SQL_COUNT_ANALYTICSASSOCIATION_WHERE);
 
-			sb.append(_FINDER_COLUMN_C_GTM_A_COMPANYID_2);
+				sb.append(_FINDER_COLUMN_C_GTM_A_COMPANYID_2);
 
-			boolean bindModifiedDate = false;
+				boolean bindModifiedDate = false;
 
-			if (modifiedDate == null) {
-				sb.append(_FINDER_COLUMN_C_GTM_A_MODIFIEDDATE_1);
-			}
-			else {
-				bindModifiedDate = true;
+				if (modifiedDate == null) {
+					sb.append(_FINDER_COLUMN_C_GTM_A_MODIFIEDDATE_1);
+				}
+				else {
+					bindModifiedDate = true;
 
-				sb.append(_FINDER_COLUMN_C_GTM_A_MODIFIEDDATE_2);
-			}
-
-			boolean bindAssociationClassName = false;
-
-			if (associationClassName.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_GTM_A_ASSOCIATIONCLASSNAME_3);
-			}
-			else {
-				bindAssociationClassName = true;
-
-				sb.append(_FINDER_COLUMN_C_GTM_A_ASSOCIATIONCLASSNAME_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				if (bindModifiedDate) {
-					queryPos.add(new Timestamp(modifiedDate.getTime()));
+					sb.append(_FINDER_COLUMN_C_GTM_A_MODIFIEDDATE_2);
 				}
 
-				if (bindAssociationClassName) {
-					queryPos.add(associationClassName);
+				boolean bindAssociationClassName = false;
+
+				if (associationClassName.isEmpty()) {
+					sb.append(_FINDER_COLUMN_C_GTM_A_ASSOCIATIONCLASSNAME_3);
+				}
+				else {
+					bindAssociationClassName = true;
+
+					sb.append(_FINDER_COLUMN_C_GTM_A_ASSOCIATIONCLASSNAME_2);
 				}
 
-				count = (Long)query.uniqueResult();
+				String sql = sb.toString();
 
-				if (productionMode) {
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					queryPos.add(companyId);
+
+					if (bindModifiedDate) {
+						queryPos.add(new Timestamp(modifiedDate.getTime()));
+					}
+
+					if (bindAssociationClassName) {
+						queryPos.add(associationClassName);
+					}
+
+					count = (Long)query.uniqueResult();
+
 					finderCache.putResult(finderPath, finderArgs, count);
 				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return count.intValue();
+			return count.intValue();
+		}
 	}
 
 	private static final String _FINDER_COLUMN_C_GTM_A_COMPANYID_2 =
@@ -1473,127 +1474,131 @@ public class AnalyticsAssociationPersistenceImpl
 		OrderByComparator<AnalyticsAssociation> orderByComparator,
 		boolean useFinderCache) {
 
-		associationClassName = Objects.toString(associationClassName, "");
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					AnalyticsAssociation.class)) {
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			AnalyticsAssociation.class);
+			associationClassName = Objects.toString(associationClassName, "");
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = null;
+			Object[] finderArgs = null;
 
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
+			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
 
-			if (useFinderCache && productionMode) {
-				finderPath = _finderPathWithoutPaginationFindByC_A_A;
+				if (useFinderCache) {
+					finderPath = _finderPathWithoutPaginationFindByC_A_A;
+					finderArgs = new Object[] {
+						companyId, associationClassName, associationClassPK
+					};
+				}
+			}
+			else if (useFinderCache) {
+				finderPath = _finderPathWithPaginationFindByC_A_A;
 				finderArgs = new Object[] {
-					companyId, associationClassName, associationClassPK
+					companyId, associationClassName, associationClassPK, start,
+					end, orderByComparator
 				};
 			}
-		}
-		else if (useFinderCache && productionMode) {
-			finderPath = _finderPathWithPaginationFindByC_A_A;
-			finderArgs = new Object[] {
-				companyId, associationClassName, associationClassPK, start, end,
-				orderByComparator
-			};
-		}
 
-		List<AnalyticsAssociation> list = null;
+			List<AnalyticsAssociation> list = null;
 
-		if (useFinderCache && productionMode) {
-			list = (List<AnalyticsAssociation>)finderCache.getResult(
-				finderPath, finderArgs, this);
+			if (useFinderCache) {
+				list = (List<AnalyticsAssociation>)finderCache.getResult(
+					finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (AnalyticsAssociation analyticsAssociation : list) {
-					if ((companyId != analyticsAssociation.getCompanyId()) ||
-						!associationClassName.equals(
-							analyticsAssociation.getAssociationClassName()) ||
-						(associationClassPK !=
-							analyticsAssociation.getAssociationClassPK())) {
+				if ((list != null) && !list.isEmpty()) {
+					for (AnalyticsAssociation analyticsAssociation : list) {
+						if ((companyId !=
+								analyticsAssociation.getCompanyId()) ||
+							!associationClassName.equals(
+								analyticsAssociation.
+									getAssociationClassName()) ||
+							(associationClassPK !=
+								analyticsAssociation.getAssociationClassPK())) {
 
-						list = null;
+							list = null;
 
-						break;
+							break;
+						}
 					}
 				}
 			}
-		}
 
-		if (list == null) {
-			StringBundler sb = null;
+			if (list == null) {
+				StringBundler sb = null;
 
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					5 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(5);
-			}
-
-			sb.append(_SQL_SELECT_ANALYTICSASSOCIATION_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_A_A_COMPANYID_2);
-
-			boolean bindAssociationClassName = false;
-
-			if (associationClassName.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_A_A_ASSOCIATIONCLASSNAME_3);
-			}
-			else {
-				bindAssociationClassName = true;
-
-				sb.append(_FINDER_COLUMN_C_A_A_ASSOCIATIONCLASSNAME_2);
-			}
-
-			sb.append(_FINDER_COLUMN_C_A_A_ASSOCIATIONCLASSPK_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(AnalyticsAssociationModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				if (bindAssociationClassName) {
-					queryPos.add(associationClassName);
+				if (orderByComparator != null) {
+					sb = new StringBundler(
+						5 + (orderByComparator.getOrderByFields().length * 2));
+				}
+				else {
+					sb = new StringBundler(5);
 				}
 
-				queryPos.add(associationClassPK);
+				sb.append(_SQL_SELECT_ANALYTICSASSOCIATION_WHERE);
 
-				list = (List<AnalyticsAssociation>)QueryUtil.list(
-					query, getDialect(), start, end);
+				sb.append(_FINDER_COLUMN_C_A_A_COMPANYID_2);
 
-				cacheResult(list);
+				boolean bindAssociationClassName = false;
 
-				if (useFinderCache && productionMode) {
-					finderCache.putResult(finderPath, finderArgs, list);
+				if (associationClassName.isEmpty()) {
+					sb.append(_FINDER_COLUMN_C_A_A_ASSOCIATIONCLASSNAME_3);
+				}
+				else {
+					bindAssociationClassName = true;
+
+					sb.append(_FINDER_COLUMN_C_A_A_ASSOCIATIONCLASSNAME_2);
+				}
+
+				sb.append(_FINDER_COLUMN_C_A_A_ASSOCIATIONCLASSPK_2);
+
+				if (orderByComparator != null) {
+					appendOrderByComparator(
+						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				}
+				else {
+					sb.append(AnalyticsAssociationModelImpl.ORDER_BY_JPQL);
+				}
+
+				String sql = sb.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					queryPos.add(companyId);
+
+					if (bindAssociationClassName) {
+						queryPos.add(associationClassName);
+					}
+
+					queryPos.add(associationClassPK);
+
+					list = (List<AnalyticsAssociation>)QueryUtil.list(
+						query, getDialect(), start, end);
+
+					cacheResult(list);
+
+					if (useFinderCache) {
+						finderCache.putResult(finderPath, finderArgs, list);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
 				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return list;
+			return list;
+		}
 	}
 
 	/**
@@ -1951,80 +1956,74 @@ public class AnalyticsAssociationPersistenceImpl
 	public int countByC_A_A(
 		long companyId, String associationClassName, long associationClassPK) {
 
-		associationClassName = Objects.toString(associationClassName, "");
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					AnalyticsAssociation.class)) {
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			AnalyticsAssociation.class);
+			associationClassName = Objects.toString(associationClassName, "");
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = _finderPathCountByC_A_A;
 
-		Long count = null;
-
-		if (productionMode) {
-			finderPath = _finderPathCountByC_A_A;
-
-			finderArgs = new Object[] {
+			Object[] finderArgs = new Object[] {
 				companyId, associationClassName, associationClassPK
 			};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-		}
+			Long count = (Long)finderCache.getResult(
+				finderPath, finderArgs, this);
 
-		if (count == null) {
-			StringBundler sb = new StringBundler(4);
+			if (count == null) {
+				StringBundler sb = new StringBundler(4);
 
-			sb.append(_SQL_COUNT_ANALYTICSASSOCIATION_WHERE);
+				sb.append(_SQL_COUNT_ANALYTICSASSOCIATION_WHERE);
 
-			sb.append(_FINDER_COLUMN_C_A_A_COMPANYID_2);
+				sb.append(_FINDER_COLUMN_C_A_A_COMPANYID_2);
 
-			boolean bindAssociationClassName = false;
+				boolean bindAssociationClassName = false;
 
-			if (associationClassName.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_A_A_ASSOCIATIONCLASSNAME_3);
-			}
-			else {
-				bindAssociationClassName = true;
+				if (associationClassName.isEmpty()) {
+					sb.append(_FINDER_COLUMN_C_A_A_ASSOCIATIONCLASSNAME_3);
+				}
+				else {
+					bindAssociationClassName = true;
 
-				sb.append(_FINDER_COLUMN_C_A_A_ASSOCIATIONCLASSNAME_2);
-			}
-
-			sb.append(_FINDER_COLUMN_C_A_A_ASSOCIATIONCLASSPK_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				if (bindAssociationClassName) {
-					queryPos.add(associationClassName);
+					sb.append(_FINDER_COLUMN_C_A_A_ASSOCIATIONCLASSNAME_2);
 				}
 
-				queryPos.add(associationClassPK);
+				sb.append(_FINDER_COLUMN_C_A_A_ASSOCIATIONCLASSPK_2);
 
-				count = (Long)query.uniqueResult();
+				String sql = sb.toString();
 
-				if (productionMode) {
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					queryPos.add(companyId);
+
+					if (bindAssociationClassName) {
+						queryPos.add(associationClassName);
+					}
+
+					queryPos.add(associationClassPK);
+
+					count = (Long)query.uniqueResult();
+
 					finderCache.putResult(finderPath, finderArgs, count);
 				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return count.intValue();
+			return count.intValue();
+		}
 	}
 
 	private static final String _FINDER_COLUMN_C_A_A_COMPANYID_2 =
@@ -2055,13 +2054,14 @@ public class AnalyticsAssociationPersistenceImpl
 	 */
 	@Override
 	public void cacheResult(AnalyticsAssociation analyticsAssociation) {
-		if (analyticsAssociation.getCtCollectionId() != 0) {
-			return;
-		}
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					analyticsAssociation.getCtCollectionId())) {
 
-		entityCache.putResult(
-			AnalyticsAssociationImpl.class,
-			analyticsAssociation.getPrimaryKey(), analyticsAssociation);
+			entityCache.putResult(
+				AnalyticsAssociationImpl.class,
+				analyticsAssociation.getPrimaryKey(), analyticsAssociation);
+		}
 	}
 
 	private int _valueObjectFinderCacheListThreshold;
@@ -2084,15 +2084,16 @@ public class AnalyticsAssociationPersistenceImpl
 		for (AnalyticsAssociation analyticsAssociation :
 				analyticsAssociations) {
 
-			if (analyticsAssociation.getCtCollectionId() != 0) {
-				continue;
-			}
+			try (SafeCloseable safeCloseable =
+					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+						analyticsAssociation.getCtCollectionId())) {
 
-			if (entityCache.getResult(
-					AnalyticsAssociationImpl.class,
-					analyticsAssociation.getPrimaryKey()) == null) {
+				if (entityCache.getResult(
+						AnalyticsAssociationImpl.class,
+						analyticsAssociation.getPrimaryKey()) == null) {
 
-				cacheResult(analyticsAssociation);
+					cacheResult(analyticsAssociation);
+				}
 			}
 		}
 	}
@@ -2331,16 +2332,6 @@ public class AnalyticsAssociationPersistenceImpl
 			closeSession(session);
 		}
 
-		if (analyticsAssociation.getCtCollectionId() != 0) {
-			if (isNew) {
-				analyticsAssociation.setNew(false);
-			}
-
-			analyticsAssociation.resetOriginalValues();
-
-			return analyticsAssociation;
-		}
-
 		entityCache.putResult(
 			AnalyticsAssociationImpl.class, analyticsAssociationModelImpl,
 			false, true);
@@ -2405,10 +2396,21 @@ public class AnalyticsAssociationPersistenceImpl
 		if (ctPersistenceHelper.isProductionMode(
 				AnalyticsAssociation.class, primaryKey)) {
 
-			return super.fetchByPrimaryKey(primaryKey);
+			try (SafeCloseable safeCloseable =
+					CTCollectionThreadLocal.
+						setProductionModeWithSafeCloseable()) {
+
+				return super.fetchByPrimaryKey(primaryKey);
+			}
 		}
 
-		AnalyticsAssociation analyticsAssociation = null;
+		AnalyticsAssociation analyticsAssociation =
+			(AnalyticsAssociation)entityCache.getResult(
+				AnalyticsAssociationImpl.class, primaryKey);
+
+		if (analyticsAssociation != null) {
+			return analyticsAssociation;
+		}
 
 		Session session = null;
 
@@ -2448,7 +2450,12 @@ public class AnalyticsAssociationPersistenceImpl
 		Set<Serializable> primaryKeys) {
 
 		if (ctPersistenceHelper.isProductionMode(AnalyticsAssociation.class)) {
-			return super.fetchByPrimaryKeys(primaryKeys);
+			try (SafeCloseable safeCloseable =
+					CTCollectionThreadLocal.
+						setProductionModeWithSafeCloseable()) {
+
+				return super.fetchByPrimaryKeys(primaryKeys);
+			}
 		}
 
 		if (primaryKeys.isEmpty()) {
@@ -2470,6 +2477,34 @@ public class AnalyticsAssociationPersistenceImpl
 				map.put(primaryKey, analyticsAssociation);
 			}
 
+			return map;
+		}
+
+		Set<Serializable> uncachedPrimaryKeys = null;
+
+		for (Serializable primaryKey : primaryKeys) {
+			try (SafeCloseable safeCloseable =
+					ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+						AnalyticsAssociation.class, primaryKey)) {
+
+				AnalyticsAssociation analyticsAssociation =
+					(AnalyticsAssociation)entityCache.getResult(
+						AnalyticsAssociationImpl.class, primaryKey);
+
+				if (analyticsAssociation == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<>();
+					}
+
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, analyticsAssociation);
+				}
+			}
+		}
+
+		if (uncachedPrimaryKeys == null) {
 			return map;
 		}
 
@@ -2604,78 +2639,81 @@ public class AnalyticsAssociationPersistenceImpl
 		OrderByComparator<AnalyticsAssociation> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			AnalyticsAssociation.class);
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					AnalyticsAssociation.class)) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			FinderPath finderPath = null;
+			Object[] finderArgs = null;
 
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
+			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
 
-			if (useFinderCache && productionMode) {
-				finderPath = _finderPathWithoutPaginationFindAll;
-				finderArgs = FINDER_ARGS_EMPTY;
-			}
-		}
-		else if (useFinderCache && productionMode) {
-			finderPath = _finderPathWithPaginationFindAll;
-			finderArgs = new Object[] {start, end, orderByComparator};
-		}
-
-		List<AnalyticsAssociation> list = null;
-
-		if (useFinderCache && productionMode) {
-			list = (List<AnalyticsAssociation>)finderCache.getResult(
-				finderPath, finderArgs, this);
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-			String sql = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					2 + (orderByComparator.getOrderByFields().length * 2));
-
-				sb.append(_SQL_SELECT_ANALYTICSASSOCIATION);
-
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-
-				sql = sb.toString();
-			}
-			else {
-				sql = _SQL_SELECT_ANALYTICSASSOCIATION;
-
-				sql = sql.concat(AnalyticsAssociationModelImpl.ORDER_BY_JPQL);
-			}
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				list = (List<AnalyticsAssociation>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache && productionMode) {
-					finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderPath = _finderPathWithoutPaginationFindAll;
+					finderArgs = FINDER_ARGS_EMPTY;
 				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
+			else if (useFinderCache) {
+				finderPath = _finderPathWithPaginationFindAll;
+				finderArgs = new Object[] {start, end, orderByComparator};
 			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return list;
+			List<AnalyticsAssociation> list = null;
+
+			if (useFinderCache) {
+				list = (List<AnalyticsAssociation>)finderCache.getResult(
+					finderPath, finderArgs, this);
+			}
+
+			if (list == null) {
+				StringBundler sb = null;
+				String sql = null;
+
+				if (orderByComparator != null) {
+					sb = new StringBundler(
+						2 + (orderByComparator.getOrderByFields().length * 2));
+
+					sb.append(_SQL_SELECT_ANALYTICSASSOCIATION);
+
+					appendOrderByComparator(
+						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+
+					sql = sb.toString();
+				}
+				else {
+					sql = _SQL_SELECT_ANALYTICSASSOCIATION;
+
+					sql = sql.concat(
+						AnalyticsAssociationModelImpl.ORDER_BY_JPQL);
+				}
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					list = (List<AnalyticsAssociation>)QueryUtil.list(
+						query, getDialect(), start, end);
+
+					cacheResult(list);
+
+					if (useFinderCache) {
+						finderCache.putResult(finderPath, finderArgs, list);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
+			}
+
+			return list;
+		}
 	}
 
 	/**
@@ -2696,41 +2734,37 @@ public class AnalyticsAssociationPersistenceImpl
 	 */
 	@Override
 	public int countAll() {
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			AnalyticsAssociation.class);
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					AnalyticsAssociation.class)) {
 
-		Long count = null;
-
-		if (productionMode) {
-			count = (Long)finderCache.getResult(
+			Long count = (Long)finderCache.getResult(
 				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
-		}
 
-		if (count == null) {
-			Session session = null;
+			if (count == null) {
+				Session session = null;
 
-			try {
-				session = openSession();
+				try {
+					session = openSession();
 
-				Query query = session.createQuery(
-					_SQL_COUNT_ANALYTICSASSOCIATION);
+					Query query = session.createQuery(
+						_SQL_COUNT_ANALYTICSASSOCIATION);
 
-				count = (Long)query.uniqueResult();
+					count = (Long)query.uniqueResult();
 
-				if (productionMode) {
 					finderCache.putResult(
 						_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
 			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
 
-		return count.intValue();
+			return count.intValue();
+		}
 	}
 
 	@Override

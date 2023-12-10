@@ -66,7 +66,7 @@ public class InfrastructureUtil {
 		_sessionFactoryDefaultNoticeableFuture.set(sessionFactory);
 	}
 
-	public void setTransactionManager(Object transactionManager) {
+	public static void setTransactionManager(Object transactionManager) {
 		_transactionManagerDefaultNoticeableFuture.set(transactionManager);
 	}
 

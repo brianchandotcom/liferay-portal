@@ -49,6 +49,7 @@ import com.liferay.portal.spring.aop.DynamicProxyCreator;
 import com.liferay.portal.spring.configurator.ConfigurableApplicationContextConfigurator;
 import com.liferay.portal.spring.hibernate.PortalHibernateConfiguration;
 import com.liferay.portal.spring.override.OverrideBeanDefinitionRegistryPostProcessor;
+import com.liferay.portal.spring.transaction.TransactionManagerFactory;
 import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.util.InitUtil;
 import com.liferay.portal.util.PortalClassPathUtil;
@@ -383,8 +384,14 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 
 						portalHibernateConfiguration.afterPropertiesSet();
 
-						InfrastructureUtil.setSessionFactory(
-							portalHibernateConfiguration.getObject());
+						SessionFactory sessionFactory =
+							portalHibernateConfiguration.getObject();
+
+						InfrastructureUtil.setSessionFactory(sessionFactory);
+
+						InfrastructureUtil.setTransactionManager(
+							TransactionManagerFactory.createTransactionManager(
+								dataSource, sessionFactory));
 
 						return null;
 					});

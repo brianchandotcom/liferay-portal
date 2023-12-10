@@ -8,7 +8,4 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
 >
 	<bean class="com.liferay.portal.dao.init.DBInitUtil" factory-method="getDataSource" id="liferayDataSource" />
-	<bean class="com.liferay.portal.kernel.util.InfrastructureUtil">
-		<property name="transactionManager" ref="liferayTransactionManager" />
-	</bean>
 </beans>

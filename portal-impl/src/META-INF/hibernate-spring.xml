@@ -35,6 +35,7 @@
 		</property>
 	</bean>
 	<bean class="com.liferay.portal.kernel.util.InfrastructureUtil" factory-method="getSessionFactory" id="liferayHibernateSessionFactory"/>
+	<bean class="com.liferay.portal.kernel.util.InfrastructureUtil" factory-method="getTransactionManager" id="liferayTransactionManager" />
 	<bean class="com.liferay.portal.spring.hibernate.PortalHibernateConfiguration" id="counterHibernateSessionFactory">
 		<property name="configurationResources">
 			<array>
@@ -48,9 +49,5 @@
 			</props>
 		</property>
 		<property name="mvccEnabled" value="false" />
-	</bean>
-	<bean class="com.liferay.portal.spring.transaction.TransactionManagerFactory" factory-method="createTransactionManager" id="liferayTransactionManager">
-		<constructor-arg ref="liferayDataSource" />
-		<constructor-arg ref="liferayHibernateSessionFactory" />
 	</bean>
 </beans>

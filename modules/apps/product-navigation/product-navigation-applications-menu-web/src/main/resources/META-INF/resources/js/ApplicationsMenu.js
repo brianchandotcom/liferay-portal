@@ -265,11 +265,11 @@ const AppsPanel = ({
 						<ClayLayout.Col className="pr-0" md="9" xl="8">
 							<ClayTabs.Content activeIndex={activeTab}>
 								{categories.map(({childCategories}, index) => (
-									<ClayTabs.TabPane
-										aria-labelledby={`${portletNamespace}tab_${index}`}
-										key={`tabPane-${index}`}
-									>
-										<div className="applications-menu-nav-columns c-pt-md-3 c-py-2">
+									<ClayTabs.TabPane key={`tabPane-${index}`}>
+										<div
+											aria-labelledby={`${portletNamespace}tab_${index}`}
+											className="applications-menu-nav-columns c-pt-md-3 c-py-2"
+										>
 											{childCategories.map(
 												({key, label, panelApps}) => (
 													<NavigationSection
@@ -353,9 +353,9 @@ const NavigationSection = ({id, label, panelApps, selectedPortletId}) => {
 				{label}
 			</h2>
 
-			<ul aria-labelledby={id} className="list-unstyled">
+			<ul aria-labelledby={id} className="list-unstyled" role="menu">
 				{panelApps.map(({label, portletId, url}) => (
-					<li className="c-mt-2" key={portletId}>
+					<li className="c-mt-2" key={portletId} role="none">
 						<a
 							className={classNames(
 								'component-link applications-menu-nav-link',
@@ -364,6 +364,7 @@ const NavigationSection = ({id, label, panelApps, selectedPortletId}) => {
 								}
 							)}
 							href={url}
+							role="menuitem"
 						>
 							<span className="c-inner" tabIndex="-1">
 								{label}

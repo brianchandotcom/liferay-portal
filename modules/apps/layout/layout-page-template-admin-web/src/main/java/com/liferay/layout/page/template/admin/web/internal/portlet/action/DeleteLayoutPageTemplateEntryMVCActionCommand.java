@@ -7,7 +7,6 @@ package com.liferay.layout.page.template.admin.web.internal.portlet.action;
 
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -19,8 +18,10 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -61,6 +62,8 @@ public class DeleteLayoutPageTemplateEntryMVCActionCommand
 				actionRequest, "rowIds");
 		}
 
+		Set<Class<?>> exceptionClasses = new HashSet<>();
+
 		List<Long> deleteLayoutPageTemplateEntryIdsList = new ArrayList<>();
 
 		for (long deleteLayoutPageTemplateEntryId :
@@ -77,13 +80,23 @@ public class DeleteLayoutPageTemplateEntryMVCActionCommand
 
 				deleteLayoutPageTemplateEntryIdsList.add(
 					deleteLayoutPageTemplateEntryId);
+
+				exceptionClasses.add(exception.getClass());
+
+				Throwable throwable = exception.getCause();
+
+				if (throwable != null) {
+					exceptionClasses.add(throwable.getClass());
+				}
 			}
 		}
 
 		if (deleteLayoutPageTemplateEntryIds.length ==
 				deleteLayoutPageTemplateEntryIdsList.size()) {
 
-			SessionErrors.add(actionRequest, PortalException.class);
+			for (Class<?> clazz : exceptionClasses) {
+				SessionErrors.add(actionRequest, clazz);
+			}
 
 			sendRedirect(actionRequest, actionResponse);
 

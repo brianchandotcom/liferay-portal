@@ -296,7 +296,18 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 
 		try (ResultSet resultSet = databaseMetaData.getCatalogs()) {
 			while (resultSet.next()) {
-				String schemaName = resultSet.getString("TABLE_CAT");
+				String catalogName = resultSet.getString("TABLE_CAT");
+
+				for (long companyId : COMPANY_IDS) {
+					Assert.assertNotEquals(
+						getPartitionName(companyId), catalogName);
+				}
+			}
+		}
+
+		try (ResultSet resultSet = databaseMetaData.getSchemas()) {
+			while (resultSet.next()) {
+				String schemaName = resultSet.getString("TABLE_SCHEM");
 
 				for (long companyId : COMPANY_IDS) {
 					Assert.assertNotEquals(
@@ -355,8 +366,11 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 
 		List<String> objectNames = new ArrayList<>();
 
+		String partitionName = getPartitionName(companyId);
+
 		try (ResultSet resultSet = databaseMetaData.getTables(
-				getPartitionName(companyId), dbInspector.getSchema(), null,
+				dbPartitionDB.getCatalog(connection, partitionName),
+				dbPartitionDB.getSchema(connection, partitionName), null,
 				new String[] {objectType})) {
 
 			while (resultSet.next()) {

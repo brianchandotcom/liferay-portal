@@ -117,7 +117,8 @@ public class UpgradePartitionedControlTableTest
 		try (Connection connection = dataSource.getConnection();
 			Statement statement = connection.createStatement()) {
 
-			String defaultSchemaName = connection.getCatalog();
+			String defaultSchemaName = dbPartitionDB.getDefaultPartitionName(
+				connection);
 
 			DBPartitionUtil.forEachCompanyId(
 				companyId -> {

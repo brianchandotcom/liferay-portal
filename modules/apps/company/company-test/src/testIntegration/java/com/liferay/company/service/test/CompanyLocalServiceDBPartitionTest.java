@@ -165,8 +165,11 @@ public class CompanyLocalServiceDBPartitionTest
 		DatabaseMetaData databaseMetaData = connection.getMetaData();
 
 		try (ResultSet resultSet = databaseMetaData.getTables(
-				"lpartitiontest_" + companyId, dbInspector.getSchema(), null,
-				new String[] {"TABLE"})) {
+				dbPartitionDB.getCatalog(
+					connection, "lpartitiontest_" + companyId),
+				dbPartitionDB.getSchema(
+					connection, "lpartitiontest_" + companyId),
+				null, new String[] {"TABLE"})) {
 
 			while (resultSet.next()) {
 				tableNames.add(

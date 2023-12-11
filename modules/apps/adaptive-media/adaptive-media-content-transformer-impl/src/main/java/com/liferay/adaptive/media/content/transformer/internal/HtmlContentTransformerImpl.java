@@ -6,7 +6,6 @@
 package com.liferay.adaptive.media.content.transformer.internal;
 
 import com.liferay.adaptive.media.content.transformer.BaseRegexStringContentTransformer;
-import com.liferay.adaptive.media.content.transformer.ContentTransformer;
 import com.liferay.adaptive.media.content.transformer.ContentTransformerContentType;
 import com.liferay.adaptive.media.content.transformer.constants.ContentTransformerContentTypes;
 import com.liferay.adaptive.media.image.html.AMImageHTMLTagFactory;
@@ -18,18 +17,19 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Alejandro Tardín
  */
-@Component(
-	property = "content.transformer.content.type=html",
-	service = ContentTransformer.class
-)
 public class HtmlContentTransformerImpl
 	extends BaseRegexStringContentTransformer {
+
+	public HtmlContentTransformerImpl(
+		AMImageHTMLTagFactory amImageHTMLTagFactory,
+		DLAppLocalService dlAppLocalService) {
+
+		_amImageHTMLTagFactory = amImageHTMLTagFactory;
+		_dlAppLocalService = dlAppLocalService;
+	}
 
 	@Override
 	public ContentTransformerContentType<String>
@@ -75,10 +75,7 @@ public class HtmlContentTransformerImpl
 			"=\"(\\d+)\".*?/?>",
 		Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
 
-	@Reference
-	private AMImageHTMLTagFactory _amImageHTMLTagFactory;
-
-	@Reference
-	private DLAppLocalService _dlAppLocalService;
+	private final AMImageHTMLTagFactory _amImageHTMLTagFactory;
+	private final DLAppLocalService _dlAppLocalService;
 
 }

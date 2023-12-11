@@ -6,6 +6,7 @@
 package com.liferay.dynamic.data.mapping.form.web.internal.display.context;
 
 import com.liferay.dynamic.data.mapping.constants.DDMActionKeys;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldOptionsFactory;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesRegistry;
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
@@ -31,6 +32,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormSuccessPageSettings;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
+import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordVersionLocalService;
@@ -111,6 +113,7 @@ import javax.servlet.http.HttpServletRequest;
 public class DDMFormDisplayContext {
 
 	public DDMFormDisplayContext(
+		DDMFormFieldOptionsFactory ddmFormFieldOptionsFactory,
 		DDMFormFieldTypeServicesRegistry ddmFormFieldTypeServicesRegistry,
 		DDMFormInstanceLocalService ddmFormInstanceLocalService,
 		DDMFormInstanceRecordService ddmFormInstanceRecordService,
@@ -133,6 +136,7 @@ public class DDMFormDisplayContext {
 		UserLocalService userLocalService,
 		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService) {
 
+		_ddmFormFieldOptionsFactory = ddmFormFieldOptionsFactory;
 		_ddmFormFieldTypeServicesRegistry = ddmFormFieldTypeServicesRegistry;
 		_ddmFormInstanceLocalService = ddmFormInstanceLocalService;
 		_ddmFormInstanceRecordService = ddmFormInstanceRecordService;
@@ -273,6 +277,24 @@ public class DDMFormDisplayContext {
 					"objectDefinitionId",
 					String.valueOf(
 						_getObjectDefinitionId(ddmFormField, ddmFormInstance)));
+			}
+			else if (StringUtil.equals(
+						ddmFormField.getType(),
+						DDMFormFieldTypeConstants.SELECT) &&
+					 StringUtil.equals(
+						 ddmFormField.getDataSourceType(), "data-provider")) {
+
+				DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
+					new DDMFormFieldRenderingContext();
+
+				ddmFormFieldRenderingContext.setHttpServletRequest(
+					_getHttpServletRequest());
+				ddmFormFieldRenderingContext.setLocale(
+					getLocale(_getHttpServletRequest(), ddmForm));
+
+				ddmFormField.setDDMFormFieldOptions(
+					_ddmFormFieldOptionsFactory.create(
+						ddmFormField, ddmFormFieldRenderingContext));
 			}
 		}
 
@@ -1208,6 +1230,7 @@ public class DDMFormDisplayContext {
 
 	private Boolean _autosaveEnabled;
 	private final String _containerId;
+	private final DDMFormFieldOptionsFactory _ddmFormFieldOptionsFactory;
 	private final DDMFormFieldTypeServicesRegistry
 		_ddmFormFieldTypeServicesRegistry;
 	private DDMFormInstance _ddmFormInstance;

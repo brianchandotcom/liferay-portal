@@ -44,15 +44,6 @@ public class PermissionsURLTag extends TagSupport {
 
 		redirect = _getRedirect(httpServletRequest, redirect, windowState);
 
-		if (Validator.isNull(windowState)) {
-			if (themeDisplay.isStatePopUp()) {
-				windowState = LiferayWindowState.POP_UP.toString();
-			}
-			else {
-				windowState = WindowState.MAXIMIZED.toString();
-			}
-		}
-
 		PortletURL portletURL = PortletURLBuilder.create(
 			PortletProviderUtil.getPortletURL(
 				httpServletRequest,
@@ -75,7 +66,7 @@ public class PermissionsURLTag extends TagSupport {
 		).setParameter(
 			"resourceGroupId", resourceGroupId
 		).setWindowState(
-			WindowStateFactory.getWindowState(windowState)
+			_getWindowState(windowState, themeDisplay)
 		).buildPortletURL();
 
 		if (Validator.isNotNull(redirect)) {
@@ -132,16 +123,7 @@ public class PermissionsURLTag extends TagSupport {
 			PortletConfigurationApplicationType.PortletConfiguration.CLASS_NAME,
 			PortletProvider.Action.VIEW);
 
-		if (Validator.isNotNull(windowState)) {
-			portletURL.setWindowState(
-				WindowStateFactory.getWindowState(windowState));
-		}
-		else if (themeDisplay.isStatePopUp()) {
-			portletURL.setWindowState(LiferayWindowState.POP_UP);
-		}
-		else {
-			portletURL.setWindowState(WindowState.MAXIMIZED);
-		}
+		portletURL.setWindowState(_getWindowState(windowState, themeDisplay));
 
 		portletURL.setParameter("mvcPath", "/edit_permissions.jsp");
 
@@ -268,6 +250,20 @@ public class PermissionsURLTag extends TagSupport {
 		}
 
 		return resourceGroupId;
+	}
+
+	private static WindowState _getWindowState(
+		String windowState, ThemeDisplay themeDisplay) {
+
+		if (Validator.isNotNull(windowState)) {
+			return WindowStateFactory.getWindowState(windowState);
+		}
+
+		if (themeDisplay.isStatePopUp()) {
+			return LiferayWindowState.POP_UP;
+		}
+
+		return WindowState.MAXIMIZED;
 	}
 
 	private String _modelResource;

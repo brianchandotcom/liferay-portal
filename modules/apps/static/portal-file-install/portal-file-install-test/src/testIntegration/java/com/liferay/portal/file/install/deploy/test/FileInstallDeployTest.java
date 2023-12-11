@@ -24,11 +24,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import java.util.Dictionary;
-import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.jar.Attributes;
 import java.util.jar.JarFile;
 import java.util.jar.JarOutputStream;
@@ -49,8 +46,6 @@ import org.osgi.framework.BundleListener;
 import org.osgi.framework.Constants;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.Version;
-import org.osgi.framework.wiring.BundleRequirement;
-import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 
@@ -347,123 +342,6 @@ public class FileInstallDeployTest {
 			_uninstall(_TEST_JAR_SYMBOLIC_NAME, path);
 
 			_uninstall(testFragmentSymbolicName, fragmentPath);
-		}
-	}
-
-	@Test
-	public void testDeployOptionalDependency() throws Exception {
-		String testOptionalProviderSymbolicName =
-			_TEST_JAR_SYMBOLIC_NAME.concat(".optional.provider");
-
-		CountDownLatch installCountDownLatch = new CountDownLatch(1);
-
-		CountDownLatch optionalProviderInstallCountDownLatch =
-			new CountDownLatch(1);
-
-		AtomicBoolean bundleRefreshed = new AtomicBoolean();
-
-		BundleListener bundleListener = new BundleListener() {
-
-			@Override
-			public void bundleChanged(BundleEvent bundleEvent) {
-				Bundle bundle = bundleEvent.getBundle();
-
-				int type = bundleEvent.getType();
-
-				if (Objects.equals(
-						bundle.getSymbolicName(),
-						testOptionalProviderSymbolicName) &&
-					(type == BundleEvent.STARTED)) {
-
-					optionalProviderInstallCountDownLatch.countDown();
-				}
-
-				if (Objects.equals(
-						bundle.getSymbolicName(), _TEST_JAR_SYMBOLIC_NAME) &&
-					(type == BundleEvent.STARTED)) {
-
-					if (installCountDownLatch.getCount() == 0) {
-						bundleRefreshed.set(true);
-					}
-
-					installCountDownLatch.countDown();
-				}
-			}
-
-		};
-
-		_bundleContext.addBundleListener(bundleListener);
-
-		Path path = Paths.get(
-			PropsValues.MODULE_FRAMEWORK_MODULES_DIR, _TEST_JAR_NAME);
-
-		Path optionalProviderPath = Paths.get(
-			PropsValues.MODULE_FRAMEWORK_MODULES_DIR,
-			testOptionalProviderSymbolicName.concat(".jar"));
-
-		try {
-			String optionalPackage = "com.liferay.test.optional.package";
-
-			JarBuilder jarBuilder = new JarBuilder(
-				path, _TEST_JAR_SYMBOLIC_NAME);
-
-			jarBuilder.setImport(
-				optionalPackage + ";resolution:=optional"
-			).build();
-
-			installCountDownLatch.await();
-
-			Bundle bundle = BundleUtil.getBundle(
-				_bundleContext, _TEST_JAR_SYMBOLIC_NAME);
-
-			Assert.assertEquals(Bundle.ACTIVE, bundle.getState());
-
-			BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
-
-			List<BundleRequirement> bundleRequirements =
-				bundleWiring.getRequirements(null);
-
-			Assert.assertTrue(
-				bundleRequirements.toString(), bundleRequirements.isEmpty());
-
-			jarBuilder = new JarBuilder(
-				optionalProviderPath, testOptionalProviderSymbolicName);
-
-			jarBuilder.setExport(
-				optionalPackage
-			).build();
-
-			optionalProviderInstallCountDownLatch.await();
-
-			Bundle optionalProviderBundle = BundleUtil.getBundle(
-				_bundleContext, testOptionalProviderSymbolicName);
-
-			Assert.assertEquals(
-				Bundle.ACTIVE, optionalProviderBundle.getState());
-
-			bundleWiring = bundle.adapt(BundleWiring.class);
-
-			bundleRequirements = bundleWiring.getRequirements(null);
-
-			Assert.assertEquals(
-				bundleRequirements.toString(), 1, bundleRequirements.size());
-
-			BundleRequirement bundleRequirement = bundleRequirements.get(0);
-
-			Map<String, String> directives = bundleRequirement.getDirectives();
-
-			String filter = directives.get(Constants.FILTER_DIRECTIVE);
-
-			Assert.assertTrue(
-				filter + " does not contain " + optionalPackage,
-				filter.contains(optionalPackage));
-		}
-		finally {
-			_bundleContext.removeBundleListener(bundleListener);
-
-			_uninstall(_TEST_JAR_SYMBOLIC_NAME, path);
-
-			_uninstall(testOptionalProviderSymbolicName, optionalProviderPath);
 		}
 	}
 

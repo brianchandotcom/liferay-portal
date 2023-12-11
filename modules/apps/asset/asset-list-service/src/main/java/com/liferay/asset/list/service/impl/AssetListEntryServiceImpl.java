@@ -164,10 +164,15 @@ public class AssetListEntryServiceImpl extends AssetListEntryServiceBaseImpl {
 			long assetListEntryId, long segmentsEntryId)
 		throws PortalException {
 
+		AssetListEntry assetListEntry =
+			assetListEntryLocalService.getAssetListEntry(assetListEntryId);
+
 		_assetListEntryModelResourcePermission.check(
-			getPermissionChecker(),
-			assetListEntryLocalService.getAssetListEntry(assetListEntryId),
-			ActionKeys.UPDATE);
+			getPermissionChecker(), assetListEntry, ActionKeys.UPDATE);
+
+		_checkCompanyAssetListEntryUsages(
+			assetListEntry.getCompanyId(),
+			String.valueOf(assetListEntry.getAssetListEntryId()));
 
 		assetListEntryLocalService.deleteAssetListEntry(
 			assetListEntryId, segmentsEntryId);

@@ -106,7 +106,7 @@
 						productId = entry.getClassPK() + 1
 						product = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels/"+ channelId +"/products/"+ productId +"?accountId=-1&images.accountId=-1&nestedFields=productSpecifications,categories,images")
 						productCategories=product.categories![]
-						productImage = product.images?filter(item -> item.tags?seq_contains("app icon"))![]
+						productImage = (product.images![])?filter(item -> item.tags?seq_contains("app icon"))![]
 						productSpecifications = product.productSpecifications![]
 					/>
 

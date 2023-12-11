@@ -7,7 +7,7 @@ import ClayCard from '@clayui/card';
 import i18n from '../../../../../common/I18n';
 import {FORMAT_DATE_TYPES} from '../../../../../common/utils/constants';
 import getDateCustomFormat from '../../../../../common/utils/getDateCustomFormat';
-import {getLicenseKeyEndDatesByLicenseType} from '../utils/licenseKeyEndDateUtil';
+import {getLicenseKeyEndDatesByLicenseType} from '../utils/licenseKeyEndDate';
 
 const GenerateCardLayout = ({infoSelectedKey}) => {
 	const startDate = infoSelectedKey?.selectedSubscription?.startDate;
@@ -50,7 +50,11 @@ const GenerateCardLayout = ({infoSelectedKey}) => {
 							{i18n.translate('start-date-exp-date')}
 						</p>
 
-						<p className="font-weight-normal">{currentDate}</p>
+						<p className="font-weight-normal">
+							{infoSelectedKey?.selectedSubscription.perpetual
+								? i18n.translate('not-applicable')
+								: currentDate}
+						</p>
 
 						<p className="m-0">
 							{i18n.translate('key-activations-available')}

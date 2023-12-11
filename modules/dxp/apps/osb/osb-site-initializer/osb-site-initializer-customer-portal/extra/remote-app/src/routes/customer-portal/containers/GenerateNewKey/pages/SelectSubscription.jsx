@@ -24,7 +24,7 @@ import getDateCustomFormat from '~/common/utils/getDateCustomFormat';
 import {useCustomerPortal} from '../../../context';
 import {has100YearsDifference} from '../../ActivationKeysTable/utils';
 import GenerateNewKeySkeleton from '../Skeleton';
-import {getLicenseKeyEndDatesByLicenseType} from '../utils/licenseKeyEndDateUtil';
+import {getLicenseKeyEndDatesByLicenseType} from '../utils/licenseKeyEndDate';
 
 const SelectSubscription = ({
 	accountKey,
@@ -290,7 +290,7 @@ const SelectSubscription = ({
 			.join(', ')
 			.toLowerCase();
 
-		const selectedProductName = selectedSubscription.licenseKeyEndDates.find(
+		const selectedProductName = selectedSubscription?.licenseKeyEndDates?.find(
 			(item) => item.licenseEntryType.includes(selectedProductNames)
 		);
 
@@ -375,13 +375,13 @@ const SelectSubscription = ({
 							mutation: patchOrderItemByExternalReferenceCode,
 							variables: {
 								externalReferenceCode:
-									selectedSubscription.productPurchaseKey,
+									selectedSubscription?.productPurchaseKey,
 								orderItem: {
 									customFields: [
 										{
 											customValue: {
 												data:
-													selectedSubscription.provisionedCount +
+													selectedSubscription?.provisionedCount +
 													1,
 											},
 											name: 'provisionedCount',
@@ -423,7 +423,12 @@ const SelectSubscription = ({
 		navigate,
 		provisioningServerAPI,
 		provisioningService,
-		selectedSubscription,
+		selectedSubscription?.instanceSize,
+		selectedSubscription?.licenseKeyEndDates,
+		selectedSubscription?.productKey,
+		selectedSubscription?.productPurchaseKey,
+		selectedSubscription?.provisionedCount,
+		selectedSubscription?.startDate,
 		sessionId,
 		state.activationKeys,
 		urlPreviousPage,
@@ -473,15 +478,26 @@ const SelectSubscription = ({
 			);
 		}
 
+		const handleAlertFirstDate = () => {
+			if (subscriptionTerm.perpetual) {
+				return getDateCustomFormat(
+					new Date(),
+					FORMAT_DATE_TYPES.day2DMonthSYearN
+				);
+			}
+
+			return getDateCustomFormat(
+				subscriptionTerm.startDate,
+				FORMAT_DATE_TYPES.day2DMonthSYearN
+			);
+		};
+
 		return (
 			<ClayAlert className="px-4 py-3" displayType="info">
 				<span className="text-paragraph">
 					{hasNotPermanentLicence || doesNotAllowPermanentLicense
 						? i18n.sub('activation-keys-will-be-valid-x-x', [
-								getDateCustomFormat(
-									subscriptionTerm.startDate,
-									FORMAT_DATE_TYPES.day2DMonthSYearN
-								),
+								handleAlertFirstDate(),
 								getDateCustomFormat(
 									getLicenseKeyEndDatesByLicenseType({
 										...infoSelectedKey,
@@ -709,8 +725,9 @@ const SelectSubscription = ({
 						{subscriptionTerms
 							?.filter((subscriptionTerm) => {
 								return (
-									new Date() <
-										new Date(subscriptionTerm.endDate) &&
+									(new Date() <
+										new Date(subscriptionTerm.endDate) ||
+										subscriptionTerm.perpetual) &&
 									subscriptionTerm
 								);
 							})
@@ -777,12 +794,6 @@ const SelectSubscription = ({
 										return displayAlertType;
 									}
 
-									if (selected) {
-										setAvailableActivationKeysTotal(
-											numberOfActivationKeysAvailable
-										);
-									}
-
 									return selected && displayAlertType;
 								};
 
@@ -802,12 +813,19 @@ const SelectSubscription = ({
 											0
 										}
 										key={index}
-										label={currentStartAndEndDate}
+										label={
+											subscriptionTerm?.perpetual
+												? i18n.sub('perpetual-duration')
+												: currentStartAndEndDate
+										}
 										onChange={(event) => {
 											setSelectedSubscription({
 												...event.target.value,
 												index,
 											});
+											setAvailableActivationKeysTotal(
+												numberOfActivationKeysAvailable
+											);
 											setInfoSelectedKey(infoSelectedKey);
 											setHasKeyComplimentary(false);
 										}}

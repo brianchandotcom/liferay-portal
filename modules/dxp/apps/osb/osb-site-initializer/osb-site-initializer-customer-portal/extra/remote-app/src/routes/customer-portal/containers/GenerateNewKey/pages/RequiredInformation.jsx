@@ -22,23 +22,8 @@ import getInitialGenerateNewKey from '../../../../../common/utils/constants/getI
 import GenerateCardLayout from '../GenerateCardLayout';
 import KeyInputs from '../KeyInputs';
 import KeySelect from '../KeySelect';
-import {getLicenseKeyEndDatesByLicenseType} from '../utils/licenseKeyEndDateUtil';
-
-const getLicenseEntryTypeSelected = (infoSelectedKey) => {
-	if (infoSelectedKey?.licenseEntryType.includes('Virtual Cluster')) {
-		return 'virtual-cluster';
-	}
-
-	if (infoSelectedKey?.licenseEntryType.includes('OEM')) {
-		return 'oem';
-	}
-
-	if (infoSelectedKey?.licenseEntryType.includes('Enterprise')) {
-		return 'enterprise';
-	}
-
-	return 'production';
-};
+import {getLicenseEntryTypeSelected} from '../utils/licenseEntryType';
+import {getLicenseKeyEndDatesByLicenseType} from '../utils/licenseKeyEndDate';
 
 const RequiredInformation = ({
 	accountKey,

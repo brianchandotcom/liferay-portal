@@ -5,6 +5,7 @@ Check | Category | Description
 UpgradeBNDIncludeResourceCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Checks if the property value `-includeresource` or `Include-Resource` exists and removes it |
 UpgradeCatchAllCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Performs replacements on Liferay's outdated code |
 [UpgradeCatchAllJSPImportsCheck](check/jsp_imports_check.markdown#jspimportscheck) | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Sorts and groups imports in `UpgradeCatchAllCheck.testjsp` file. |
+UpgradeCatchAllJavaImportsCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Sorts and groups imports in `UpgradeCatchAllCheck.testjava` file. |
 UpgradeGradleIncludeResourceCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Replaces with `compileInclude` the configuration attribute for dependencies in `build.gradle` that are listed at `Include-Resource` property at `bnd.bnd` associated file. |
 UpgradeJSPFieldSetGroupCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Run code to remove 'fieldset-group' tag |
 UpgradeJavaAssetEntryAssetCategoriesCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Replaces methods referring to class `AssetEntryAssetCategory` in class `AssetCategoryLocalService` with equivalent methods in class `AssetEntryAssetCategoryRelLocalService`. |

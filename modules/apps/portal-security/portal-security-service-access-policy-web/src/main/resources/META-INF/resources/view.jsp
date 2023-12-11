@@ -8,57 +8,17 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
-
-boolean orderByAsc = false;
-
-String orderByType = ParamUtil.getString(request, "orderByType", "asc");
-
-if (orderByType.equals("asc")) {
-	orderByAsc = true;
-}
-
-OrderByComparator<SAPEntry> orderByComparator = new SAPEntryNameComparator(orderByAsc);
-
-int sapEntriesCount = SAPEntryServiceUtil.getCompanySAPEntriesCount(company.getCompanyId());
-
-PortletURL portletURL = renderResponse.createRenderURL();
+SAPEntryDisplayContext sapEntryDisplayContext = new SAPEntryDisplayContext(liferayPortletRequest, liferayPortletResponse);
 %>
 
 <clay:management-toolbar
-	creationMenu='<%=
-		new JSPCreationMenu(pageContext) {
-			{
-				addPrimaryDropdownItem(dropdownItem -> dropdownItem.setHref(renderResponse.createRenderURL(), "mvcPath", "/edit_entry.jsp", "redirect", PortalUtil.getCurrentURL(httpServletRequest)));
-			}
-		}
-	%>'
-	disabled="<%= sapEntriesCount == 0 %>"
-	selectable="<%= false %>"
-	showCreationMenu="<%= SAPPermission.contains(permissionChecker, SAPActionKeys.ACTION_ADD_SAP_ENTRY) %>"
-	showSearch="<%= false %>"
-	sortingOrder="<%= orderByType %>"
-	sortingURL='<%=
-		PortletURLBuilder.createRenderURL(
-			renderResponse
-		).setParameter(
-			"displayStyle", displayStyle
-		).setParameter(
-			"orderByType", orderByAsc ? "desc" : "asc"
-		).buildString()
-	%>'
+	managementToolbarDisplayContext="<%= new SAPEntryManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, sapEntryDisplayContext.getSearchContainer()) %>"
 />
 
 <clay:container-fluid>
 	<liferay-ui:search-container
-		emptyResultsMessage="there-are-no-service-access-policies"
-		iteratorURL="<%= portletURL %>"
-		total="<%= sapEntriesCount %>"
+		searchContainer="<%= sapEntryDisplayContext.getSearchContainer() %>"
 	>
-		<liferay-ui:search-container-results
-			results="<%= SAPEntryServiceUtil.getCompanySAPEntries(company.getCompanyId(), searchContainer.getStart(), searchContainer.getEnd(), orderByComparator) %>"
-		/>
-
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.security.service.access.policy.model.SAPEntry"
 			escapedModel="<%= true %>"

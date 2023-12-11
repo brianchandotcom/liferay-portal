@@ -367,6 +367,8 @@ definition {
 
 		SelectFrame(locator1 = "Picklist#IFRAME_PICKLIST_MODAL");
 
+		ScrollWebElementIntoView(locator1 = "Picklist#PICKLIST_ITEM_KEBAB_MENU");
+
 		Click.javaScriptClick(locator1 = "Picklist#PICKLIST_ITEM_KEBAB_MENU");
 
 		MenuItem.clickNoError(menuItem = ${menuItem});

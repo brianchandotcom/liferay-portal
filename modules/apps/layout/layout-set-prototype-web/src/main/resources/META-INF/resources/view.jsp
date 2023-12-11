@@ -12,22 +12,8 @@
 <liferay-ui:error exception="<%= RequiredLayoutSetPrototypeException.class %>" message="you-cannot-delete-site-templates-that-are-used-by-a-site" />
 
 <clay:management-toolbar
-	actionDropdownItems="<%= layoutSetPrototypeDisplayContext.getActionDropdownItems() %>"
-	clearResultsURL="<%= layoutSetPrototypeDisplayContext.getClearResultsURL() %>"
-	creationMenu="<%= layoutSetPrototypeDisplayContext.isShowAddButton() ? layoutSetPrototypeDisplayContext.getCreationMenu() : null %>"
-	filterDropdownItems="<%= layoutSetPrototypeDisplayContext.getFilterDropdownItems() %>"
-	infoPanelId="infoPanelId"
-	itemsTotal="<%= layoutSetPrototypeDisplayContext.getTotalItems() %>"
-	orderDropdownItems="<%= layoutSetPrototypeDisplayContext.getOrderByDropdownItems() %>"
+	managementToolbarDisplayContext="<%= new LayoutSetPrototypeManagementToolbarDisplayContext(request, layoutSetPrototypeDisplayContext, liferayPortletRequest, liferayPortletResponse, layoutSetPrototypeDisplayContext.getSearchContainer()) %>"
 	propsTransformer="js/LayoutSetPrototypeManagementToolbarPropsTransformer"
-	searchActionURL="<%= layoutSetPrototypeDisplayContext.getSearchActionURL() %>"
-	searchContainerId="layoutSetPrototype"
-	searchFormName="searchFm"
-	showInfoButton="<%= false %>"
-	showSearch="<%= false %>"
-	sortingOrder="<%= layoutSetPrototypeDisplayContext.getOrderByType() %>"
-	sortingURL="<%= layoutSetPrototypeDisplayContext.getSortingURL() %>"
-	viewTypeItems="<%= layoutSetPrototypeDisplayContext.getViewTypeItems() %>"
 />
 
 <portlet:actionURL name="deleteLayoutSetPrototypes" var="deleteLayoutSetPrototypesURL">

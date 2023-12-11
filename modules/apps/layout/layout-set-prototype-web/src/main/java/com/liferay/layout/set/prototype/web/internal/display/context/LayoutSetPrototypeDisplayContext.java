@@ -5,28 +5,19 @@
 
 package com.liferay.layout.set.prototype.web.internal.display.context;
 
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.layout.set.prototype.constants.LayoutSetPrototypePortletKeys;
 import com.liferay.layout.set.prototype.web.internal.servlet.taglib.util.LayoutSetPrototypeActionDropdownItemsProvider;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
-import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.util.comparator.LayoutSetPrototypeCreateDateComparator;
@@ -34,7 +25,6 @@ import com.liferay.portal.kernel.util.comparator.LayoutSetPrototypeCreateDateCom
 import java.util.List;
 import java.util.Objects;
 
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -54,18 +44,6 @@ public class LayoutSetPrototypeDisplayContext {
 		_renderResponse = renderResponse;
 	}
 
-	public List<DropdownItem> getActionDropdownItems() {
-		return DropdownItemListBuilder.add(
-			dropdownItem -> {
-				dropdownItem.putData("action", "deleteLayoutSetPrototypes");
-				dropdownItem.setIcon("times-circle");
-				dropdownItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, "delete"));
-				dropdownItem.setQuickAction(true);
-			}
-		).build();
-	}
-
 	public Boolean getActive() {
 		String status = ParamUtil.get(_httpServletRequest, "status", "all");
 
@@ -79,33 +57,6 @@ public class LayoutSetPrototypeDisplayContext {
 		return null;
 	}
 
-	public String getClearResultsURL() {
-		return PortletURLBuilder.create(
-			getPortletURL()
-		).setParameter(
-			"orderByCol", getOrderByCol()
-		).setParameter(
-			"orderByType", getOrderByType()
-		).buildString();
-	}
-
-	public CreationMenu getCreationMenu() throws PortalException {
-		return CreationMenuBuilder.addPrimaryDropdownItem(
-			dropdownItem -> {
-				dropdownItem.setHref(
-					PortletURLBuilder.createRenderURL(
-						_renderResponse
-					).setMVCPath(
-						"/edit_layout_set_prototype.jsp"
-					).setRedirect(
-						PortalUtil.getCurrentURL(_httpServletRequest)
-					).buildString());
-				dropdownItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, "add"));
-			}
-		).build();
-	}
-
 	public String getDisplayStyle() {
 		if (Validator.isNotNull(_displayStyle)) {
 			return _displayStyle;
@@ -116,17 +67,6 @@ public class LayoutSetPrototypeDisplayContext {
 			LayoutSetPrototypePortletKeys.LAYOUT_SET_PROTOTYPE, "list");
 
 		return _displayStyle;
-	}
-
-	public List<DropdownItem> getFilterDropdownItems() {
-		return DropdownItemListBuilder.addGroup(
-			dropdownGroupItem -> {
-				dropdownGroupItem.setDropdownItems(
-					_getFilterNavigationDropdownItems());
-				dropdownGroupItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, "filter-by-status"));
-			}
-		).build();
 	}
 
 	public List<DropdownItem> getLayoutSetPrototypeActionDropdownItems(
@@ -154,18 +94,6 @@ public class LayoutSetPrototypeDisplayContext {
 		return _orderByCol;
 	}
 
-	public List<DropdownItem> getOrderByDropdownItems() {
-		return DropdownItemListBuilder.add(
-			dropdownItem -> {
-				dropdownItem.setActive(true);
-				dropdownItem.setHref(
-					getPortletURL(), "orderByCol", "createDate");
-				dropdownItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, "create-date"));
-			}
-		).build();
-	}
-
 	public String getOrderByType() {
 		if (Validator.isNotNull(_orderByType)) {
 			return _orderByType;
@@ -176,20 +104,6 @@ public class LayoutSetPrototypeDisplayContext {
 			LayoutSetPrototypePortletKeys.LAYOUT_SET_PROTOTYPE, "asc");
 
 		return _orderByType;
-	}
-
-	public PortletURL getPortletURL() {
-		return _renderResponse.createRenderURL();
-	}
-
-	public String getSearchActionURL() {
-		return PortletURLBuilder.create(
-			getPortletURL()
-		).setParameter(
-			"orderByCol", getOrderByCol()
-		).setParameter(
-			"orderByType", getOrderByType()
-		).buildString();
 	}
 
 	public SearchContainer<LayoutSetPrototype> getSearchContainer() {
@@ -219,49 +133,12 @@ public class LayoutSetPrototypeDisplayContext {
 				themeDisplay.getCompanyId(), getActive(),
 				searchContainer.getStart(), searchContainer.getEnd(),
 				searchContainer.getOrderByComparator()),
-			_getTotal());
+			LayoutSetPrototypeLocalServiceUtil.searchCount(
+				themeDisplay.getCompanyId(), getActive()));
 		searchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(_renderResponse));
 
 		return searchContainer;
-	}
-
-	public String getSortingURL() {
-		return PortletURLBuilder.create(
-			getPortletURL()
-		).setKeywords(
-			_getKeywords()
-		).setParameter(
-			"orderByCol", getOrderByCol()
-		).setParameter(
-			"orderByType",
-			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc"
-		).buildString();
-	}
-
-	public int getTotalItems() throws PortalException {
-		SearchContainer<LayoutSetPrototype> searchContainer =
-			getSearchContainer();
-
-		return searchContainer.getTotal();
-	}
-
-	public List<ViewTypeItem> getViewTypeItems() {
-		PortletURL portletURL = PortletURLBuilder.createActionURL(
-			_renderResponse
-		).setActionName(
-			"changeDisplayStyle"
-		).setRedirect(
-			PortalUtil.getCurrentURL(_httpServletRequest)
-		).buildPortletURL();
-
-		return new ViewTypeItemList(portletURL, getDisplayStyle()) {
-			{
-				addCardViewTypeItem();
-				addListViewTypeItem();
-				addTableViewTypeItem();
-			}
-		};
 	}
 
 	public boolean isDescriptiveView() {
@@ -303,54 +180,8 @@ public class LayoutSetPrototypeDisplayContext {
 		return false;
 	}
 
-	private List<DropdownItem> _getFilterNavigationDropdownItems() {
-		String status = ParamUtil.getString(
-			_httpServletRequest, "status", "all");
-
-		return DropdownItemListBuilder.add(
-			dropdownItem -> {
-				dropdownItem.setActive(status.equals("all"));
-				dropdownItem.setHref(getPortletURL(), "status", "all");
-				dropdownItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, "all"));
-			}
-		).add(
-			dropdownItem -> {
-				dropdownItem.setActive(status.equals("active"));
-				dropdownItem.setHref(getPortletURL(), "status", "active");
-				dropdownItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, "active"));
-			}
-		).add(
-			dropdownItem -> {
-				dropdownItem.setActive(status.equals("inactive"));
-				dropdownItem.setHref(getPortletURL(), "status", "inactive");
-				dropdownItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, "inactive"));
-			}
-		).build();
-	}
-
-	private String _getKeywords() {
-		if (_keywords == null) {
-			_keywords = ParamUtil.getString(_httpServletRequest, "keywords");
-		}
-
-		return _keywords;
-	}
-
-	private int _getTotal() {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		return LayoutSetPrototypeLocalServiceUtil.searchCount(
-			themeDisplay.getCompanyId(), getActive());
-	}
-
 	private String _displayStyle;
 	private final HttpServletRequest _httpServletRequest;
-	private String _keywords;
 	private String _orderByCol;
 	private String _orderByType;
 	private final RenderRequest _renderRequest;

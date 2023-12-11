@@ -1016,6 +1016,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGE_RULE_BUILDER_SECTION_TITLE</td>
+	<td>//div[contains(@class,'rule-builder-section-title')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGE_RULE_LIST_ITEM</td>
 	<td>//div[@aria-label='Page Rules Panel']//li[.//*[normalize-space(text())='${key_ruleName}']][normalize-space()='${key_rule}']</td>
 	<td></td>

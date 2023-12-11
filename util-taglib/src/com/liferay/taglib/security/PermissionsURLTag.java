@@ -36,18 +36,11 @@ public class PermissionsURLTag extends TagSupport {
 			String windowState, HttpServletRequest httpServletRequest)
 		throws Exception {
 
-		redirect = _getRedirect(httpServletRequest, redirect, windowState);
-
-		PortletURL portletURL = _getPorletURL(
-			httpServletRequest, modelResource, resourceGroupId,
-			 windowState);
-
-		if (Validator.isNotNull(redirect)) {
-			portletURL.setParameter("redirect", redirect);
-			portletURL.setParameter("returnToFullPageURL", redirect);
-		}
-
-		return portletURL.toString();
+		return _getPorletURL(
+			httpServletRequest, modelResource,
+			_getRedirect(httpServletRequest, redirect, windowState),
+			resourceGroupId, windowState
+		).toString();
 	}
 
 	/**
@@ -83,22 +76,10 @@ public class PermissionsURLTag extends TagSupport {
 			HttpServletRequest httpServletRequest)
 		throws Exception {
 
-		redirect = _getRedirect(httpServletRequest, redirect, windowState);
-
 		PortletURL portletURL = _getPorletURL(
-			httpServletRequest, modelResource, resourceGroupId, windowState);
-
-		if (Validator.isNotNull(redirect)) {
-			portletURL.setParameter("redirect", redirect);
-
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			if (!themeDisplay.isStateMaximized()) {
-				portletURL.setParameter("returnToFullPageURL", redirect);
-			}
-		}
+			httpServletRequest, modelResource,
+			_getRedirect(httpServletRequest, redirect, windowState),
+			resourceGroupId, windowState);
 
 		portletURL.setParameter(
 			"modelResourceDescription", modelResourceDescription);
@@ -169,8 +150,7 @@ public class PermissionsURLTag extends TagSupport {
 
 	private static PortletURL _getPorletURL(
 			HttpServletRequest httpServletRequest, String modelResource,
-			Object resourceGroupId,
-			String windowState)
+			String redirect, Object resourceGroupId, String windowState)
 		throws Exception {
 
 		ThemeDisplay themeDisplay =
@@ -185,6 +165,14 @@ public class PermissionsURLTag extends TagSupport {
 				PortletProvider.Action.VIEW)
 		).setMVCPath(
 			"/edit_permissions.jsp"
+		).setRedirect(
+			() -> {
+				if (Validator.isNull(redirect)) {
+					return null;
+				}
+
+				return redirect;
+			}
 		).setPortletResource(
 			() -> {
 				PortletDisplay portletDisplay =
@@ -199,6 +187,17 @@ public class PermissionsURLTag extends TagSupport {
 		).setParameter(
 			"resourceGroupId",
 			_getResourceGroupId(resourceGroupId, themeDisplay)
+		).setParameter(
+			"returnToFullPageURL",
+			() -> {
+				if (Validator.isNull(redirect) ||
+					themeDisplay.isStateMaximized()) {
+
+					return null;
+				}
+
+				return redirect;
+			}
 		).setWindowState(
 			_getWindowState(windowState, themeDisplay)
 		).buildPortletURL();

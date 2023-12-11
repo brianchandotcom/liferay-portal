@@ -307,7 +307,7 @@ const APIGUI = () => {
 					</ClayLayout.Row>
 				) : endpoint && !endpoint.startsWith(origin) ? (
 					<ClayAlert className="mt-4" displayType="danger">
-						Forbiden access.
+						Forbidden access.
 					</ClayAlert>
 				) : (
 					<SwaggerUI

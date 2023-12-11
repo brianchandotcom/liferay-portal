@@ -20,14 +20,22 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro importObject(objectFileName = null, objectName = null) {
+	macro importObject(objectFileName = null, objectName = null, tempFile = null) {
 		ObjectAdmin.openObjectAdmin();
 
 		Click(locator1 = "ObjectAdmin#KEBAB_MENU");
 
 		MenuItem.click(menuItem = "Import Object Definition");
 
-		var filePath = TestCase.getDependenciesDirPath(fileName = "${objectFileName}.json");
+		if (${tempFile} == "true") {
+			var tempFileName = TestCase.getDownloadedTempFileName(fileNamePattern = "Object_Definition_${objectName}*.json");
+			var tempFileDirectory = selenium.getOutputDirName();
+
+			var filePath = "${tempFileDirectory}/${tempFileName}";
+		}
+		else {
+			var filePath = TestCase.getDependenciesDirPath(fileName = "${objectFileName}.json");
+		}
 
 		UploadFile(
 			locator1 = "TextInput#FILE",

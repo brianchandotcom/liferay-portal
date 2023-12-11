@@ -1614,6 +1614,11 @@
 			<description name="Performs replacements on Liferay's outdated code" />
 			<weight>2</weight>
 		</check>
+		<check name="UpgradeCatchAllJavaImportsCheck">
+			<category name="Upgrade" />
+			<description name="Sorts and groups imports in `UpgradeCatchAllCheck.testjava` file." />
+			<weight>1</weight>
+		</check>
 		<check name="UpgradeCatchAllJSPImportsCheck">
 			<category name="Upgrade" />
 			<description name="Sorts and groups imports in `UpgradeCatchAllCheck.testjsp` file." />

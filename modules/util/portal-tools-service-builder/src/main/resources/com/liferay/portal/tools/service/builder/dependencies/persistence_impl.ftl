@@ -786,7 +786,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	public ${entity.name} updateImpl(${apiPackagePath}.model.${entity.name} ${entity.variableName}) {
 		boolean isNew = ${entity.variableName}.isNew();
 
-		<#if entity.isHierarchicalTree() || (entity.collectionEntityFinders?size != 0) || (entity.uniqueEntityFinders?size &gt; 0) || entity.hasEntityColumn("createDate", "Date") || entity.hasEntityColumn("modifiedDate", "Date")>
+		<#if entity.isHierarchicalTree() || (entity.collectionEntityFinders?size != 0) || (entity.uniqueEntityFinders?size &gt; 0) || entity.hasEntityColumn("createDate", "Date") || entity.hasEntityColumn("modifiedDate", "Date") || entity.hasExternalReferenceCode() || entity.hasEntityColumn("externalReferenceCode")>
 			if (!(${entity.variableName} instanceof ${entity.name}ModelImpl)) {
 				InvocationHandler invocationHandler = null;
 
@@ -819,32 +819,34 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				</#if>
 			}
 			else {
-				long userId = GetterUtil.getLong(PrincipalThreadLocal.getName());
+				if (!Objects.equals(${entity.variableName}ModelImpl.getColumnOriginalValue("externalReferenceCode"), ${entity.variableName}.getExternalReferenceCode())){
+					long userId = GetterUtil.getLong(PrincipalThreadLocal.getName());
 
-				if (userId > 0) {
-					<#if entity.hasEntityColumn("companyId")>
-						long companyId = ${entity.variableName}.getCompanyId();
-					<#else>
-						long companyId = 0;
-					</#if>
+					if (userId > 0) {
+						<#if entity.hasEntityColumn("companyId")>
+							long companyId = ${entity.variableName}.getCompanyId();
+						<#else>
+							long companyId = 0;
+						</#if>
 
-					<#if entity.hasEntityColumn("groupId")>
-						long groupId = ${entity.variableName}.getGroupId();
-					<#else>
-						long groupId = 0;
-					</#if>
+						<#if entity.hasEntityColumn("groupId")>
+							long groupId = ${entity.variableName}.getGroupId();
+						<#else>
+							long groupId = 0;
+						</#if>
 
-					long classPK = 0;
+						long classPK = 0;
 
-					if (!isNew) {
-						classPK = ${entity.variableName}.getPrimaryKey();
-					}
+						if (!isNew) {
+							classPK = ${entity.variableName}.getPrimaryKey();
+						}
 
-					try {
-						${entity.variableName}.setExternalReferenceCode(SanitizerUtil.sanitize(companyId, groupId, userId, ${apiPackagePath}.model.${entity.name}.class.getName(), classPK, ContentTypes.TEXT_HTML, Sanitizer.MODE_ALL, ${entity.variableName}.getExternalReferenceCode(), null));
-					}
-					catch (SanitizerException sanitizerException) {
-						throw new SystemException(sanitizerException);
+						try {
+							${entity.variableName}.setExternalReferenceCode(SanitizerUtil.sanitize(companyId, groupId, userId, ${apiPackagePath}.model.${entity.name}.class.getName(), classPK, ContentTypes.TEXT_HTML, Sanitizer.MODE_ALL, ${entity.variableName}.getExternalReferenceCode(), null));
+						}
+						catch (SanitizerException sanitizerException) {
+							throw new SystemException(sanitizerException);
+						}
 					}
 				}
 

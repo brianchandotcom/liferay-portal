@@ -124,9 +124,9 @@ definition {
 		task ("Given that assert no existing keys filter by Any Language") {
 			ManagementBar.setFilterAndOrder(filterBy = "Any Language");
 
-			AssertTextEquals(
+			AssertTextEquals.assertPartialText(
 				locator1 = "Search#SEARCH_INFO",
-				value1 = "0 Results for");
+				value1 = "0 Results Found");
 
 			AssertTextEquals(
 				locator1 = "Message#EMPTY_INFO",
@@ -149,9 +149,9 @@ definition {
 		}
 
 		task ("Then user can only view Overridden keys") {
-			AssertTextEquals(
+			AssertTextEquals.assertPartialText(
 				locator1 = "Search#SEARCH_INFO",
-				value1 = "1 Result for");
+				value1 = "1 Result Found");
 
 			LanguageOverride.assertFilterScope(filterScope = "Any Language");
 
@@ -290,9 +290,9 @@ definition {
 		}
 
 		task ("Then the language key can be viewed in the View page and there is results message") {
-			AssertTextEquals(
+			AssertTextEquals.assertPartialText(
 				locator1 = "Search#SEARCH_INFO",
-				value1 = "1 Result for \"2-synced-contact-data\"");
+				value1 = "1 Result Found for \"2-synced-contact-data\"");
 
 			LanguageOverride.assertLanguageKeyWithoutOverride(
 				languageKey = "2-synced-contact-data",
@@ -382,9 +382,9 @@ definition {
 		}
 
 		task ("Then the language key can be viewed in the View page and there is results message and search for translations") {
-			AssertTextEquals(
+			AssertTextEquals.assertPartialText(
 				locator1 = "Search#SEARCH_INFO",
-				value1 = "1 Result for \"O texto contÃƒÂ©m erro\"");
+				value1 = "1 Result Found for \"O texto contÃƒÂ©m erro\"");
 
 			LanguageOverride.assertSelectedLanguageInListView(
 				currentTranslationOverride = "O texto contÃƒÂ©m erro",
@@ -397,9 +397,9 @@ definition {
 
 			Search.searchCP(searchTerm = "Le texte contient une erreur");
 
-			AssertTextEquals(
+			AssertTextEquals.assertPartialText(
 				locator1 = "Search#SEARCH_INFO",
-				value1 = "1 Result for \"Le texte contient une erreur\"");
+				value1 = "1 Result Found for \"Le texte contient une erreur\"");
 
 			LanguageOverride.assertSelectedLanguageInListView(
 				currentTranslationOverride = "Le texte contient une erreur",

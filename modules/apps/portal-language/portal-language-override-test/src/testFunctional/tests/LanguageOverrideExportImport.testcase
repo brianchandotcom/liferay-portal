@@ -266,9 +266,9 @@ this-is-a-language-key=This is a language key''',
 
 			Search.searchCP(searchTerm = "newkey");
 
-			AssertTextEquals(
+			AssertTextEquals.assertPartialText(
 				locator1 = "Search#SEARCH_INFO",
-				value1 = "0 Results for \"newkey\"");
+				value1 = "0 Results Found for \"newkey\"");
 		}
 	}
 

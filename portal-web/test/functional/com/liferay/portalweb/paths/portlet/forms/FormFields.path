@@ -542,7 +542,7 @@
 </tr>
 <tr>
 	<td>RADIO_OPTION_CHECKED</td>
-	<td>//div[@*='${key_fieldName}']//div[contains(@*,'ddm__radio')]//div[@data-checked='true']//descendant::span[text()='${key_radioOption}']</td>
+	<td>//div[@*='${key_fieldName}']//div[contains(@*,'ddm__radio')]//div[@data-checked='true']//descendant::span[text()='${key_radioOption}'] | //label[contains(@*,'${key_radioOption}') or contains(.,'${key_radioOption}')]/input[@type='radio' and @checked]</td>
 	<td></td>
 </tr>
 <tr>

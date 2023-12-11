@@ -205,7 +205,10 @@ const AppsPanel = ({
 	const [activeTab, setActiveTab] = useState(index);
 
 	return (
-		<div className="applications-menu-wrapper">
+		<nav
+			aria-label={Liferay.Language.get('applications-menu')}
+			className="applications-menu-wrapper"
+		>
 			<div className="applications-menu-header">
 				<ClayLayout.ContainerFluid
 					size={Liferay?.FeatureFlags?.['LPS-184404'] ? false : 'xl'}
@@ -339,7 +342,7 @@ const AppsPanel = ({
 					</ClayLayout.Row>
 				</ClayLayout.ContainerFluid>
 			</div>
-		</div>
+		</nav>
 	);
 };
 

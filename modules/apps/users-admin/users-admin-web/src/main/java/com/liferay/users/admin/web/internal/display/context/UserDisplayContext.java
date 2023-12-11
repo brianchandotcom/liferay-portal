@@ -5,13 +5,10 @@
 
 package com.liferay.users.admin.web.internal.display.context;
 
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.organizations.item.selector.OrganizationItemSelectorCriterion;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Contact;
@@ -20,7 +17,6 @@ import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.PasswordPolicy;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.UserGroupGroupRole;
 import com.liferay.portal.kernel.model.UserGroupRole;
@@ -265,34 +261,6 @@ public class UserDisplayContext {
 
 		return UsersAdminUtil.filterUserGroups(
 			_permissionChecker, _selUser.getUserGroups());
-	}
-
-	public List<NavigationItem> getViewNavigationItems() {
-		String toolbarItem = ParamUtil.getString(
-			_httpServletRequest, "toolbarItem", "view-all-users");
-
-		return NavigationItemListBuilder.add(
-			navigationItem -> {
-				navigationItem.setActive(toolbarItem.equals("view-all-users"));
-				navigationItem.setHref(
-					_renderResponse.createRenderURL(), "toolbarItem",
-					"view-all-users", "usersListView",
-					UserConstants.LIST_VIEW_FLAT_USERS);
-				navigationItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, "users"));
-			}
-		).add(
-			navigationItem -> {
-				navigationItem.setActive(
-					toolbarItem.equals("view-all-organizations"));
-				navigationItem.setHref(
-					_renderResponse.createRenderURL(), "toolbarItem",
-					"view-all-organizations", "usersListView",
-					UserConstants.LIST_VIEW_FLAT_ORGANIZATIONS);
-				navigationItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, "organizations"));
-			}
-		).build();
 	}
 
 	public boolean isAllowRemoveRole(Role role) throws PortalException {

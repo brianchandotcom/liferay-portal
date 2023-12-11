@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.users.admin.constants.UserScreenNavigationEntryConstants;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 import com.liferay.users.admin.item.selector.UserOrganizationItemSelectorCriterion;
 import com.liferay.users.admin.web.internal.search.OrganizationUserChecker;
@@ -373,7 +374,7 @@ public class ViewTreeManagementToolbarDisplayContext {
 		return PortletURLBuilder.createRenderURL(
 			_renderResponse
 		).setMVCRenderCommandName(
-			"/users_admin/view"
+			"/users_admin/organizations_view_tree"
 		).setKeywords(
 			() -> {
 				String[] keywords = ParamUtil.getStringValues(
@@ -396,9 +397,8 @@ public class ViewTreeManagementToolbarDisplayContext {
 		).setParameter(
 			"organizationId", _organization.getOrganizationId()
 		).setParameter(
-			"toolbarItem",
-			GetterUtil.getString(
-				_httpServletRequest.getAttribute("view.jsp-toolbarItem"))
+			"screenNavigationCategoryKey",
+			UserScreenNavigationEntryConstants.CATEGORY_KEY_ORGANIZATIONS
 		).setParameter(
 			"usersListView",
 			GetterUtil.getString(

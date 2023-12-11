@@ -177,7 +177,7 @@ export const ACTIONS = {
 						{
 							mvcRenderCommandName: '/users_admin/view',
 							organizationId,
-							toolbarItem: 'view-all-organizations',
+							screenNavigationCategoryKey: 'organizations',
 							usersListView: 'tree',
 						}
 					);

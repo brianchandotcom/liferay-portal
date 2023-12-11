@@ -8,8 +8,8 @@
 <c:choose>
 	<c:when test="<%= Validator.isNotNull(curOrganization) %>">
 		<liferay-portlet:renderURL varImpl="rowURL">
-			<portlet:param name="mvcRenderCommandName" value="/users_admin/view" />
-			<portlet:param name="toolbarItem" value="<%= toolbarItem %>" />
+			<portlet:param name="mvcRenderCommandName" value="/users_admin/organizations_view_tree" />
+			<portlet:param name="screenNavigationCategoryKey" value="<%= UserScreenNavigationEntryConstants.CATEGORY_KEY_ORGANIZATIONS %>" />
 			<portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_TREE %>" />
 			<portlet:param name="organizationId" value="<%= String.valueOf(curOrganization.getOrganizationId()) %>" />
 		</liferay-portlet:renderURL>

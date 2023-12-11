@@ -308,9 +308,9 @@ public class UsersAdminUtil {
 		PortletURL portletURL = PortletURLBuilder.createRenderURL(
 			renderResponse
 		).setMVCRenderCommandName(
-			"/users_admin/view"
+			"/users_admin/organizations_view_tree"
 		).setParameter(
-			"toolbarItem", "view-all-organizations"
+			"screenNavigationCategoryKey", "organizations"
 		).setParameter(
 			"usersListView", "tree"
 		).buildPortletURL();

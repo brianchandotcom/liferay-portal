@@ -95,7 +95,8 @@ public class OrganizationScreenNavigationEntry
 					httpServletRequest, UsersAdminPortletKeys.USERS_ADMIN,
 					PortletRequest.RENDER_PHASE)
 			).setParameter(
-				"toolbarItem", "view-all-organizations"
+				"screenNavigationCategoryKey",
+				UserScreenNavigationEntryConstants.CATEGORY_KEY_ORGANIZATIONS
 			).setParameter(
 				"usersListView", UserConstants.LIST_VIEW_FLAT_ORGANIZATIONS
 			).buildString();

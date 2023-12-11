@@ -14,7 +14,11 @@ public class UserScreenNavigationEntryConstants {
 
 	public static final String CATEGORY_KEY_GENERAL = "general";
 
+	public static final String CATEGORY_KEY_ORGANIZATIONS = "organizations";
+
 	public static final String CATEGORY_KEY_PREFERENCES = "preferences";
+
+	public static final String CATEGORY_KEY_USERS = "users";
 
 	public static final String ENTRY_KEY_ADDRESSES = "addresses";
 
@@ -43,5 +47,8 @@ public class UserScreenNavigationEntryConstants {
 		"edit.organization.form";
 
 	public static final String SCREEN_NAVIGATION_KEY_USERS = "edit.user.form";
+
+	public static final String SCREEN_NAVIGATION_KEY_USERS_AND_ORGANIZATIONS =
+		"view.users.and.organizations";
 
 }

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.users.admin.constants.UserScreenNavigationEntryConstants;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 import com.liferay.users.admin.management.toolbar.FilterContributor;
 import com.liferay.users.admin.search.UserSearch;
@@ -95,11 +96,12 @@ public class ViewFlatUsersDisplayContextFactory {
 		viewFlatUsersDisplayContext.setManagementToolbarDisplayContext(
 			managementToolbarDisplayContext);
 
+		viewFlatUsersDisplayContext.setScreenNavigationCategoryKey(
+			ParamUtil.getString(
+				httpServletRequest, "screenNavigationCategoryKey",
+				UserScreenNavigationEntryConstants.CATEGORY_KEY_USERS));
 		viewFlatUsersDisplayContext.setSearchContainer(searchContainer);
 		viewFlatUsersDisplayContext.setStatus(userSearchTerms.getStatus());
-		viewFlatUsersDisplayContext.setToolbarItem(
-			ParamUtil.getString(
-				httpServletRequest, "toolbarItem", "view-all-users"));
 		viewFlatUsersDisplayContext.setUsersListView(
 			GetterUtil.getString(
 				httpServletRequest.getAttribute("view.jsp-usersListView")));

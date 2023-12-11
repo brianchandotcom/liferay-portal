@@ -24,16 +24,16 @@ public class ViewFlatUsersDisplayContext {
 		return _managementToolbarDisplayContext;
 	}
 
+	public String getScreenNavigationCategoryKey() {
+		return _screenNavigationCategoryKey;
+	}
+
 	public SearchContainer<User> getSearchContainer() {
 		return _searchContainer;
 	}
 
 	public int getStatus() {
 		return _status;
-	}
-
-	public String getToolbarItem() {
-		return _toolbarItem;
 	}
 
 	public String getUsersListView() {
@@ -54,16 +54,18 @@ public class ViewFlatUsersDisplayContext {
 		_managementToolbarDisplayContext = managementToolbarDisplayContext;
 	}
 
+	public void setScreenNavigationCategoryKey(
+		String screenNavigationCategoryKey) {
+
+		_screenNavigationCategoryKey = screenNavigationCategoryKey;
+	}
+
 	public void setSearchContainer(SearchContainer<User> searchContainer) {
 		_searchContainer = searchContainer;
 	}
 
 	public void setStatus(int status) {
 		_status = status;
-	}
-
-	public void setToolbarItem(String toolbarItem) {
-		_toolbarItem = toolbarItem;
 	}
 
 	public void setUsersListView(String usersListView) {
@@ -76,9 +78,9 @@ public class ViewFlatUsersDisplayContext {
 
 	private String _displayStyle;
 	private ManagementToolbarDisplayContext _managementToolbarDisplayContext;
+	private String _screenNavigationCategoryKey;
 	private SearchContainer<User> _searchContainer;
 	private int _status;
-	private String _toolbarItem;
 	private String _usersListView;
 	private String _viewUsersRedirect;
 

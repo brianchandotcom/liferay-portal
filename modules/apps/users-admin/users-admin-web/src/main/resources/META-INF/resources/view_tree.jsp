@@ -11,8 +11,6 @@
 String backURL = GetterUtil.getString(request.getAttribute("view.jsp-backURL"));
 Organization organization = (Organization)request.getAttribute("view.jsp-organization");
 long organizationId = GetterUtil.getLong(request.getAttribute("view.jsp-organizationId"));
-String toolbarItem = GetterUtil.getString(request.getAttribute("view.jsp-toolbarItem"));
-String usersListView = GetterUtil.getString(request.getAttribute("view.jsp-usersListView"));
 
 String displayStyle = ParamUtil.getString(request, "displayStyle");
 
@@ -50,9 +48,7 @@ PortalUtil.addPortletBreadcrumbEntry(
 	).setMVCPath(
 		"/view.jsp"
 	).setParameter(
-		"toolbarItem", "view-all-organizations"
-	).setParameter(
-		"usersListView", UserConstants.LIST_VIEW_FLAT_ORGANIZATIONS
+		"screenNavigationCategoryKey", UserScreenNavigationEntryConstants.CATEGORY_KEY_ORGANIZATIONS
 	).buildString());
 
 if (organization != null) {
@@ -95,13 +91,13 @@ if (organization != null) {
 		/>
 
 		<aui:form cssClass="container-fluid container-fluid-max-xl" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "search();" %>'>
-			<aui:input name="toolbarItem" type="hidden" value="<%= toolbarItem %>" />
-			<aui:input name="redirect" type="hidden" value="<%= viewTreeManagementToolbarDisplayContext.getPortletURL().toString() %>" />
-			<aui:input name="onErrorRedirect" type="hidden" value="<%= currentURL %>" />
 			<aui:input name="deleteOrganizationIds" type="hidden" />
 			<aui:input name="deleteUserIds" type="hidden" />
+			<aui:input name="onErrorRedirect" type="hidden" value="<%= currentURL %>" />
+			<aui:input name="redirect" type="hidden" value="<%= viewTreeManagementToolbarDisplayContext.getPortletURL().toString() %>" />
 			<aui:input name="removeOrganizationIds" type="hidden" />
 			<aui:input name="removeUserIds" type="hidden" />
+			<aui:input name="screenNavigationCategoryKey" type="hidden" value="<%= UserScreenNavigationEntryConstants.CATEGORY_KEY_ORGANIZATIONS %>" />
 
 			<liferay-ui:error exception="<%= RequiredOrganizationException.class %>" message="you-cannot-delete-organizations-that-have-suborganizations-or-users" />
 			<liferay-ui:error exception="<%= RequiredUserException.class %>" message="you-cannot-delete-or-deactivate-yourself" />
@@ -117,7 +113,7 @@ if (organization != null) {
 
 			</c:if>
 
-			<c:if test="<%= (portletName.equals(UsersAdminPortletKeys.USERS_ADMIN) && usersListView.equals(UserConstants.LIST_VIEW_TREE)) || portletName.equals(UsersAdminPortletKeys.MY_ORGANIZATIONS) %>">
+			<c:if test="<%= portletName.equals(UsersAdminPortletKeys.USERS_ADMIN) || portletName.equals(UsersAdminPortletKeys.MY_ORGANIZATIONS) %>">
 				<div id="breadcrumb">
 					<liferay-site-navigation:breadcrumb
 						breadcrumbEntries="<%= BreadcrumbEntriesUtil.getBreadcrumbEntries(request, false, false, false, true, true) %>"

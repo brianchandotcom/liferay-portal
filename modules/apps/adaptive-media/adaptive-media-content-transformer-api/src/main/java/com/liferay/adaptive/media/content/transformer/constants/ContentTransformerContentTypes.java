@@ -9,7 +9,9 @@ import com.liferay.adaptive.media.content.transformer.ContentTransformerContentT
 
 /**
  * @author Alejandro Tardín
+ * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
  */
+@Deprecated
 public class ContentTransformerContentTypes {
 
 	public static final ContentTransformerContentType<String> HTML =

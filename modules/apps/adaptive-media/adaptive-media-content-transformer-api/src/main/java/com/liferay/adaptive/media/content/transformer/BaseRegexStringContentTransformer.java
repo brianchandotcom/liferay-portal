@@ -19,10 +19,6 @@ public abstract class BaseRegexStringContentTransformer
 	implements ContentTransformer<String> {
 
 	@Override
-	public abstract ContentTransformerContentType<String>
-		getContentTransformerContentType();
-
-	@Override
 	public String transform(String content) throws PortalException {
 		if (Validator.isNull(content)) {
 			return content;

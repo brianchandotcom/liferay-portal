@@ -8,8 +8,6 @@ package com.liferay.expando.web.internal.display.context;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.expando.web.internal.search.CustomFieldChecker;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
@@ -19,7 +17,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Collections;
-import java.util.List;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -41,16 +38,6 @@ public class ExpandoDisplayContext {
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
-	}
-
-	public List<NavigationItem> getNavigationItems(String label) {
-		return NavigationItemListBuilder.add(
-			navigationItem -> {
-				navigationItem.setActive(true);
-				navigationItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, label));
-			}
-		).build();
 	}
 
 	public SearchContainer<String> getSearchContainer() {

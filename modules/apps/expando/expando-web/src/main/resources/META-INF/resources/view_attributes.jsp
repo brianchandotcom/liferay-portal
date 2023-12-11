@@ -38,10 +38,6 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "custom-
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "view-attributes"), null);
 %>
 
-<clay:navigation-bar
-	navigationItems='<%= expandoDisplayContext.getNavigationItems("fields") %>'
-/>
-
 <clay:management-toolbar
 	managementToolbarDisplayContext="<%= new ExpandoManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, expandoDisplayContext.getSearchContainer()) %>"
 	propsTransformer="{ExpandoManagementToolbarPropsTransformer} from expando-web"

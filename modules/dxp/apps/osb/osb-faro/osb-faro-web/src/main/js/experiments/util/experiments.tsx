@@ -51,7 +51,7 @@ const STATUS_NAMES = new Map([
 	['TERMINATED', Liferay.Language.get('terminated')]
 ]);
 
-export const getExperimentLink = ({action, id, pageURL}) => {
+const getExperimentLink = ({action, id, pageURL}) => {
 	const experimentLink = `${pageURL}?segmentsExperimentKey=${id}`;
 
 	if (action) {

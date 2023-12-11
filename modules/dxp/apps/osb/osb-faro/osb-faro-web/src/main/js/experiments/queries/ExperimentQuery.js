@@ -63,6 +63,26 @@ export const EXPERIMENT_QUERY = gql`
 	}
 `;
 
+export const EXPERIMENT_DRAFT_QUERY = gql`
+	query ExperimentDraft($experimentId: String!) {
+		experiment(experimentId: $experimentId) {
+			dxpExperienceName
+			dxpSegmentName
+			dxpVariants {
+				control
+			}
+			goal {
+				metric
+				target
+			}
+			id
+			name
+			pageURL
+			status
+		}
+	}
+`;
+
 export const EXPERIMENT_LIST_QUERY = gql`
 	query Experiments(
 		$channelId: String
@@ -93,16 +113,10 @@ export const EXPERIMENT_LIST_QUERY = gql`
 	}
 `;
 
-export const EXPERIMENT_ROOT_QUERY = gql`
-	query ExperimentRoot($experimentId: String!) {
+export const EXPERIMENT_STATUS_QUERY = gql`
+	query ExperimentStatus($experimentId: String!) {
 		experiment(experimentId: $experimentId) {
-			channelId
-			id
-			name
-			pageURL
-			publishable
 			status
-			type
 		}
 	}
 `;

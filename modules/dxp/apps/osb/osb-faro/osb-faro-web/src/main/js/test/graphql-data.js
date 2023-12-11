@@ -42,8 +42,9 @@ import {
 } from 'event-analysis/queries/EventAnalysisQuery';
 import {EventTypes} from 'event-analysis/utils/types';
 import {
+	EXPERIMENT_DRAFT_QUERY,
 	EXPERIMENT_QUERY,
-	EXPERIMENT_ROOT_QUERY
+	EXPERIMENT_STATUS_QUERY
 } from 'experiments/queries/ExperimentQuery';
 import {getSafeRangeSelectors} from 'shared/util/util';
 import {INTERVAL_KEY_MAP} from 'shared/util/time';
@@ -53,6 +54,36 @@ const METRIC_TYPENAME_MAP = {
 	histogram: 'HistogramMetric',
 	trend: 'Trend'
 };
+
+export function mockExperimentDraftReq() {
+	return {
+		request: {
+			query: EXPERIMENT_DRAFT_QUERY,
+			variables: {
+				experimentId: '123'
+			}
+		},
+		result: {
+			data: {
+				experiment: {
+					__typename: 'Experiment',
+					dxpExperienceName: 'Default',
+					dxpSegmentName: 'Anyone',
+					dxpVariants: [],
+					goal: {
+						__typename: 'Goal',
+						metric: 'CLICK_RATE',
+						target: ''
+					},
+					id: '123',
+					name: 'draw',
+					pageURL: 'https://www.beryl.com/experiment-test',
+					status: 'DRAFT'
+				}
+			}
+		}
+	};
+}
 
 export function mockExperimentReq({
 	publishable = false,
@@ -213,11 +244,11 @@ export function mockExperimentReq({
 	};
 }
 
-export function mockExperimentRootReq({publishable = false, status}) {
+export function mockExperimentStatusReq({status}) {
 	return {
 		request: {
 			fetchPolicy: 'network-only',
-			query: EXPERIMENT_ROOT_QUERY,
+			query: EXPERIMENT_STATUS_QUERY,
 			variables: {
 				experimentId: '123'
 			}
@@ -226,13 +257,7 @@ export function mockExperimentRootReq({publishable = false, status}) {
 			data: {
 				experiment: {
 					__typename: 'Experiment',
-					channelId: '2000',
-					id: '123',
-					name: 'Experiment Test',
-					pageURL: 'https://www.beryl.com/experiment-test',
-					publishable,
-					status,
-					type: 'AB'
+					status
 				}
 			}
 		}

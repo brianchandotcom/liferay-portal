@@ -7,15 +7,9 @@ import {sub} from 'shared/util/lang';
 import {SummaryBaseCard} from './SummaryBaseCard';
 import {SummaryTitle} from './SummaryTitle';
 
-export const SummaryDraftCard = ({experiment}) => {
-	const {
-		dxpExperienceName,
-		dxpSegmentName,
-		dxpVariants,
-		goal,
-		status
-	} = experiment;
-
+export const SummaryDraftCard = ({
+	experiment: {dxpExperienceName, dxpSegmentName, dxpVariants, goal, status}
+}) => {
 	const currentStep = dxpVariants ? 3 : goal ? 2 : 1;
 
 	const totalVariants = dxpVariants?.filter(({control}) => !control).length;
@@ -92,7 +86,7 @@ export const SummaryDraftCard = ({experiment}) => {
 	];
 
 	return (
-		<SummaryBaseCard status={experiment.status.toLowerCase()}>
+		<SummaryBaseCard status={status.toLowerCase()}>
 			<SummaryBaseCard.Header
 				Description={() =>
 					Liferay.Language.get('finish-the-setup-to-run-the-test')

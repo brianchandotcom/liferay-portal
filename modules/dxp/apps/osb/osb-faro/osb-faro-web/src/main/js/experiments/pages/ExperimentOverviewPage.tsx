@@ -5,10 +5,15 @@ import React, {useState} from 'react';
 import StatesRenderer from 'shared/components/states-renderer/StatesRenderer';
 import TestTrafficCard from 'experiments/components/test-traffic/TestTrafficCard';
 import TextTruncate from 'shared/components/TextTruncate';
-import {EXPERIMENT_QUERY} from 'experiments/queries/ExperimentQuery';
+import {
+	EXPERIMENT_DRAFT_QUERY,
+	EXPERIMENT_QUERY,
+	EXPERIMENT_STATUS_QUERY
+} from 'experiments/queries/ExperimentQuery';
 import {getActions} from 'experiments/util/experiments';
 import {Routes} from 'shared/util/router';
 import {SessionsCard} from 'experiments/components/SessionsCard';
+import {Status} from 'experiments/components/summary-card/types';
 import {SummaryCard} from 'experiments/components/summary-card/SummaryCard';
 import {useChannelContext} from 'shared/context/channel';
 import {useModal} from '@clayui/modal';
@@ -46,10 +51,41 @@ const ExperimentActions = ({experiment}) => {
 };
 
 const ExperimentOverviewPage = () => {
+	const {id} = useParams();
+
+	const {data, error, loading} = useQuery(EXPERIMENT_STATUS_QUERY, {
+		fetchPolicy: 'network-only',
+		variables: {experimentId: id}
+	});
+
+	return (
+		<StatesRenderer error={!!error} loading={loading}>
+			<StatesRenderer.Loading />
+
+			<StatesRenderer.Error apolloError={error} />
+
+			{!!data && (
+				<StatesRenderer.Success>
+					<ExperimentOverviewContent
+						status={data.experiment.status}
+					/>
+				</StatesRenderer.Success>
+			)}
+		</StatesRenderer>
+	);
+};
+
+const ExperimentOverviewContent = ({status}) => {
 	const {channelId, groupId, id} = useParams();
 	const {selectedChannel} = useChannelContext();
 
-	const {data, error, loading} = useQuery(EXPERIMENT_QUERY, {
+	let Query = EXPERIMENT_QUERY;
+
+	if (status.toLowerCase() === Status.Draft) {
+		Query = EXPERIMENT_DRAFT_QUERY;
+	}
+
+	const {data, error, loading} = useQuery(Query, {
 		fetchPolicy: 'network-only',
 		variables: {experimentId: id}
 	});

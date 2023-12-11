@@ -6,7 +6,11 @@ import {ApolloProvider} from '@apollo/react-hooks';
 import {fireEvent, render} from '@testing-library/react';
 import {MemoryRouter, Route} from 'react-router-dom';
 import {MockedProvider} from '@apollo/react-testing';
-import {mockExperimentReq} from 'test/graphql-data';
+import {
+	mockExperimentDraftReq,
+	mockExperimentReq,
+	mockExperimentStatusReq
+} from 'test/graphql-data';
 import {Provider} from 'react-redux';
 import {Routes} from 'shared/util/router';
 import {waitForLoadingToBeRemoved} from 'test/helpers';
@@ -23,14 +27,14 @@ jest.mock('react-router-dom', () => ({
 	})
 }));
 
-const WrappedComponent = experiment => (
+const WrappedComponent = ({mocks}) => (
 	<ApolloProvider client={client}>
 		<Provider store={mockStore()}>
 			<MemoryRouter
 				initialEntries={['/workspace/1000/2000/tests/overview/123']}
 			>
 				<Route path={Routes.TESTS_OVERVIEW}>
-					<MockedProvider mocks={[mockExperimentReq(experiment)]}>
+					<MockedProvider mocks={mocks}>
 						<ExperimentOverviewPage />
 					</MockedProvider>
 				</Route>
@@ -60,8 +64,15 @@ describe('ExperimentOverviewPage', () => {
 
 	it('renders review and delete button in the DRAFT status', async () => {
 		const {container, findByRole} = render(
-			<WrappedComponent status='DRAFT' />
+			<WrappedComponent
+				mocks={[
+					mockExperimentStatusReq({status: 'DRAFT'}),
+					mockExperimentDraftReq()
+				]}
+			/>
 		);
+
+		await waitForLoadingToBeRemoved(container);
 
 		await waitForLoadingToBeRemoved(container);
 
@@ -90,7 +101,14 @@ describe('ExperimentOverviewPage', () => {
 
 	it('renders terminate button in the RUNNING status', async () => {
 		const {container, findByRole} = render(
-			<WrappedComponent status='RUNNING' />
+			<WrappedComponent
+				mocks={[
+					mockExperimentStatusReq({status: 'RUNNING'}),
+					mockExperimentReq({
+						status: 'RUNNING'
+					})
+				]}
+			/>
 		);
 
 		await waitForLoadingToBeRemoved(container);
@@ -111,7 +129,14 @@ describe('ExperimentOverviewPage', () => {
 
 	it('renders publish and delete button to experiment to status FINISHED_NO_WINNER', async () => {
 		const {container, findByRole} = render(
-			<WrappedComponent status='FINISHED_NO_WINNER' />
+			<WrappedComponent
+				mocks={[
+					mockExperimentStatusReq({status: 'FINISHED_NO_WINNER'}),
+					mockExperimentReq({
+						status: 'FINISHED_NO_WINNER'
+					})
+				]}
+			/>
 		);
 
 		await waitForLoadingToBeRemoved(container);
@@ -141,7 +166,15 @@ describe('ExperimentOverviewPage', () => {
 
 	it('renders publishabel and delete buttons to experiment to status TERMINATED', async () => {
 		const {container, findByRole} = render(
-			<WrappedComponent publishable status='TERMINATED' />
+			<WrappedComponent
+				mocks={[
+					mockExperimentStatusReq({status: 'TERMINATED'}),
+					mockExperimentReq({
+						publishable: true,
+						status: 'TERMINATED'
+					})
+				]}
+			/>
 		);
 
 		await waitForLoadingToBeRemoved(container);
@@ -171,7 +204,15 @@ describe('ExperimentOverviewPage', () => {
 
 	it('renders publishabel and delete buttons to experiment to status FINISHED_WINNER', async () => {
 		const {container, findByRole} = render(
-			<WrappedComponent publishable status='FINISHED_WINNER' />
+			<WrappedComponent
+				mocks={[
+					mockExperimentStatusReq({status: 'FINISHED_WINNER'}),
+					mockExperimentReq({
+						publishable: true,
+						status: 'FINISHED_WINNER'
+					})
+				]}
+			/>
 		);
 
 		await waitForLoadingToBeRemoved(container);
@@ -201,7 +242,15 @@ describe('ExperimentOverviewPage', () => {
 
 	it('renders publishabel and delete buttons to experiment to status FINISHED_NO_WINNER', async () => {
 		const {container, findByRole} = render(
-			<WrappedComponent publishable status='FINISHED_NO_WINNER' />
+			<WrappedComponent
+				mocks={[
+					mockExperimentStatusReq({status: 'FINISHED_NO_WINNER'}),
+					mockExperimentReq({
+						publishable: true,
+						status: 'FINISHED_NO_WINNER'
+					})
+				]}
+			/>
 		);
 
 		await waitForLoadingToBeRemoved(container);
@@ -231,7 +280,15 @@ describe('ExperimentOverviewPage', () => {
 
 	it('renders publishabel and delete buttons to experiment to status FINISHED_WINNER', async () => {
 		const {container, findByRole} = render(
-			<WrappedComponent publishable status='FINISHED_WINNER' />
+			<WrappedComponent
+				mocks={[
+					mockExperimentStatusReq({status: 'FINISHED_WINNER'}),
+					mockExperimentReq({
+						publishable: true,
+						status: 'FINISHED_WINNER'
+					})
+				]}
+			/>
 		);
 
 		await waitForLoadingToBeRemoved(container);
@@ -256,7 +313,15 @@ describe('ExperimentOverviewPage', () => {
 
 	it('renders publishabel and delete buttons to experiment to status FINISHED_NO_WINNER', async () => {
 		const {container, findByRole} = render(
-			<WrappedComponent publishable status='FINISHED_NO_WINNER' />
+			<WrappedComponent
+				mocks={[
+					mockExperimentStatusReq({status: 'FINISHED_NO_WINNER'}),
+					mockExperimentReq({
+						publishable: true,
+						status: 'FINISHED_NO_WINNER'
+					})
+				]}
+			/>
 		);
 
 		await waitForLoadingToBeRemoved(container);
@@ -281,7 +346,14 @@ describe('ExperimentOverviewPage', () => {
 
 	it('renders delete button to experiment to status TERMINATED', async () => {
 		const {container, findByRole} = render(
-			<WrappedComponent status='TERMINATED' />
+			<WrappedComponent
+				mocks={[
+					mockExperimentStatusReq({status: 'TERMINATED'}),
+					mockExperimentReq({
+						status: 'TERMINATED'
+					})
+				]}
+			/>
 		);
 
 		await waitForLoadingToBeRemoved(container);
@@ -298,9 +370,14 @@ describe('ExperimentOverviewPage', () => {
 	it('renders published label to the control variant', async () => {
 		const {container, findByText} = render(
 			<WrappedComponent
-				publishable
-				publishedDXPVariantId='DEFAULT'
-				status='TERMINATED'
+				mocks={[
+					mockExperimentStatusReq({status: 'TERMINATED'}),
+					mockExperimentReq({
+						publishable: true,
+						publishedDXPVariantId: 'DEFAULT',
+						status: 'TERMINATED'
+					})
+				]}
 			/>
 		);
 
@@ -314,9 +391,14 @@ describe('ExperimentOverviewPage', () => {
 	it('renders published label to the second variant', async () => {
 		const {container, findByText} = render(
 			<WrappedComponent
-				publishable
-				publishedDXPVariantId='44167'
-				status='TERMINATED'
+				mocks={[
+					mockExperimentStatusReq({status: 'TERMINATED'}),
+					mockExperimentReq({
+						publishable: true,
+						publishedDXPVariantId: '44167',
+						status: 'TERMINATED'
+					})
+				]}
 			/>
 		);
 

@@ -8,15 +8,11 @@ package com.liferay.server.admin.web.internal.display.context;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.server.admin.web.internal.constants.ServerAdminNavigationEntryConstants;
 
@@ -25,7 +21,6 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.TreeMap;
 
-import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
 
@@ -39,32 +34,11 @@ public class ViewSystemPropertiesDisplayContext {
 	public ViewSystemPropertiesDisplayContext(
 		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
 		RenderResponse renderResponse) {
 
 		_httpServletRequest = httpServletRequest;
 		_liferayPortletRequest = liferayPortletRequest;
-		_liferayPortletResponse = liferayPortletResponse;
 		_renderResponse = renderResponse;
-
-		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-	}
-
-	public PortletURL getClearResultsURL() throws PortletException {
-		if (_clearResultsURL != null) {
-			return _clearResultsURL;
-		}
-
-		_clearResultsURL = PortletURLBuilder.create(
-			PortletURLUtil.clone(getPortletURL(), _liferayPortletResponse)
-		).setKeywords(
-			StringPool.BLANK
-		).setNavigation(
-			StringPool.NULL
-		).buildPortletURL();
-
-		return _clearResultsURL;
 	}
 
 	public PortletURL getPortletURL() {
@@ -189,16 +163,13 @@ public class ViewSystemPropertiesDisplayContext {
 		return _filteredProperties;
 	}
 
-	private PortletURL _clearResultsURL;
 	private List<Map.Entry<String, String>> _filteredProperties;
 	private final HttpServletRequest _httpServletRequest;
 	private String _keywords;
 	private final LiferayPortletRequest _liferayPortletRequest;
-	private final LiferayPortletResponse _liferayPortletResponse;
 	private Boolean _portalPropertiesTab;
 	private PortletURL _portletURL;
 	private final RenderResponse _renderResponse;
 	private SearchContainer<Map.Entry<String, String>> _searchContainer;
-	private final ThemeDisplay _themeDisplay;
 
 }

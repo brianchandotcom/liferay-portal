@@ -8,8 +8,6 @@ package com.liferay.server.admin.web.internal.display.context;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -28,7 +26,6 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.TreeMap;
 
-import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
@@ -43,32 +40,14 @@ public class ViewPortalPropertiesDisplayContext {
 	public ViewPortalPropertiesDisplayContext(
 		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
 		RenderResponse renderResponse) {
 
 		_httpServletRequest = httpServletRequest;
 		_liferayPortletRequest = liferayPortletRequest;
-		_liferayPortletResponse = liferayPortletResponse;
 		_renderResponse = renderResponse;
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
-	}
-
-	public PortletURL getClearResultsURL() throws PortletException {
-		if (_clearResultsURL != null) {
-			return _clearResultsURL;
-		}
-
-		_clearResultsURL = PortletURLBuilder.create(
-			PortletURLUtil.clone(getPortletURL(), _liferayPortletResponse)
-		).setKeywords(
-			StringPool.BLANK
-		).setNavigation(
-			(String)null
-		).buildPortletURL();
-
-		return _clearResultsURL;
 	}
 
 	public List<String> getOverriddenProperties() {
@@ -135,13 +114,6 @@ public class ViewPortalPropertiesDisplayContext {
 		_searchContainer.setResultsAndTotal(_loadFilteredProperties());
 
 		return _searchContainer;
-	}
-
-	public int getSearchContainerTotal() {
-		SearchContainer<Map.Entry<String, String>> searchContainer =
-			getSearchContainer();
-
-		return searchContainer.getTotal();
 	}
 
 	private String _getKeywords() {
@@ -237,12 +209,10 @@ public class ViewPortalPropertiesDisplayContext {
 		return _filteredProperties;
 	}
 
-	private PortletURL _clearResultsURL;
 	private List<Map.Entry<String, String>> _filteredProperties;
 	private final HttpServletRequest _httpServletRequest;
 	private String _keywords;
 	private final LiferayPortletRequest _liferayPortletRequest;
-	private final LiferayPortletResponse _liferayPortletResponse;
 	private List<String> _overriddenProperties;
 	private Boolean _portalPropertiesTab;
 	private PortletURL _portletURL;

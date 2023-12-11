@@ -845,14 +845,25 @@ public class DBPartitionUtil {
 
 				if ((StringUtil.startsWith(lowerCaseSQL, "alter table") &&
 					 _isSkip(connection, query[2])) ||
-					((StringUtil.startsWith(lowerCaseSQL, "create index") ||
-					  StringUtil.startsWith(lowerCaseSQL, "drop index")) &&
+					(StringUtil.startsWith(lowerCaseSQL, "create index") &&
 					 _isSkip(connection, query[4])) ||
 					(StringUtil.startsWith(
 						lowerCaseSQL, "create unique index") &&
 					 _isSkip(connection, query[5]))) {
 
 					return 0;
+				}
+				else if (StringUtil.startsWith(lowerCaseSQL, "drop index")) {
+					if ((query.length >= 5) && _isSkip(connection, query[4])) {
+						return 0;
+					}
+					else if (query.length <= 4) {
+						sql = StringUtil.replace(
+							sql, "drop index ", "drop index if exists ");
+
+						sql = StringUtil.replace(
+							sql, "DROP INDEX ", "DROP INDEX IF EXISTS ");
+					}
 				}
 
 				if (!StringUtil.startsWith(lowerCaseSQL, "alter table")) {

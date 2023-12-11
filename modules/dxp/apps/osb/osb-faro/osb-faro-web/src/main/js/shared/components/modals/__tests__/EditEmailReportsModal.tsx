@@ -50,7 +50,7 @@ describe('EditEmailReportsModal', () => {
 			'input.toggle-switch-check'
 		);
 
-		expect(container).toContainElement(toggleSwitch);
+		expect(container).toContainElement(toggleSwitch as HTMLElement);
 
 		expect(container).toContainElement(frequency);
 

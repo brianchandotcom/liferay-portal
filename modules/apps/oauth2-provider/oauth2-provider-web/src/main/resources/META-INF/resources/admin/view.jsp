@@ -8,6 +8,8 @@
 <%@ include file="/admin/init.jsp" %>
 
 <%
+OAuth2ApplicationsDisplayContext oAuth2ApplicationsDisplayContext = new OAuth2ApplicationsDisplayContext(liferayPortletRequest, liferayPortletResponse);
+
 int oAuth2ApplicationsCount = OAuth2ApplicationServiceUtil.getOAuth2ApplicationsCount(themeDisplay.getCompanyId());
 
 OAuth2ApplicationsManagementToolbarDisplayContext oAuth2ApplicationsManagementToolbarDisplayContext = new OAuth2ApplicationsManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, currentURLObj);
@@ -40,16 +42,8 @@ String displayStyle = oAuth2ApplicationsManagementToolbarDisplayContext.getDispl
 		<aui:input name="oAuth2ApplicationIds" type="hidden" />
 
 		<liferay-ui:search-container
-			emptyResultsMessage="no-applications-were-found"
-			id="oAuth2ApplicationsSearchContainer"
-			iteratorURL="<%= currentURLObj %>"
-			rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
-			total="<%= oAuth2ApplicationsCount %>"
+			searchContainer="<%= oAuth2ApplicationsDisplayContext.getSearchContainer() %>"
 		>
-			<liferay-ui:search-container-results
-				results="<%= OAuth2ApplicationServiceUtil.getOAuth2Applications(themeDisplay.getCompanyId(), searchContainer.getStart(), searchContainer.getEnd(), oAuth2ApplicationsManagementToolbarDisplayContext.getOrderByComparator()) %>"
-			/>
-
 			<liferay-ui:search-container-row
 				className="com.liferay.oauth2.provider.model.OAuth2Application"
 				escapedModel="<%= true %>"

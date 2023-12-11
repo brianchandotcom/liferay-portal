@@ -17,6 +17,7 @@ import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeCon
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -40,7 +41,6 @@ import java.util.Locale;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -203,9 +203,11 @@ public class ViewBlogsEntryContentDashboardItemActionProviderTest {
 				blogsEntry, mockHttpServletRequest));
 	}
 
-	private ThemeDisplay _getThemeDisplay(Locale locale) {
+	private ThemeDisplay _getThemeDisplay(Locale locale) throws Exception {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
+		themeDisplay.setCompany(
+			_companyLocalService.fetchCompany(TestPropsValues.getCompanyId()));
 		themeDisplay.setLocale(locale);
 		themeDisplay.setSiteGroupId(_group.getGroupId());
 
@@ -218,6 +220,9 @@ public class ViewBlogsEntryContentDashboardItemActionProviderTest {
 
 	@Inject
 	private BlogsEntryLocalService _blogsEntryLocalService;
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 	@Inject(
 		filter = "component.name=com.liferay.content.dashboard.blogs.internal.item.action.provider.ViewBlogsEntryContentDashboardItemActionProvider"

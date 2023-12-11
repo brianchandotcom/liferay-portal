@@ -1175,46 +1175,6 @@ jdbc.default.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 		</sequential>
 	</macrodef>
 
-	<macrodef name="get-mac-address">
-		<sequential>
-			<if>
-				<isset property="mac.address" />
-				<then>
-					<var name="mac.address" value="${mac.address}" />
-				</then>
-				<elseif>
-					<os family="unix" />
-					<then>
-						<if>
-							<isset property="env.JENKINS_HOME" />
-							<then>
-								<exec executable="/bin/bash" os="${os.unix}" outputproperty="mac.address">
-									<arg value="-c" />
-									<arg value="ifconfig eth0 | grep -o -E '([[:xdigit:]]{1,2}:){5}[[:xdigit:]]{1,2}'" />
-								</exec>
-							</then>
-							<elseif>
-								<isset property="network.interface" />
-								<then>
-									<exec executable="/bin/bash" os="${os.unix}" outputproperty="mac.address">
-										<arg value="-c" />
-										<arg value="ifconfig ${network.interface} | grep -o -E '([[:xdigit:]]{1,2}:){5}[[:xdigit:]]{1,2}'" />
-									</exec>
-								</then>
-							</elseif>
-							<else>
-								<fail message="${network.interface} must be set if running get-mac-address locally." />
-							</else>
-						</if>
-					</then>
-				</elseif>
-				<else>
-					<fail message="Support for running get-mac-address on Windows not yet added." />
-				</else>
-			</if>
-		</sequential>
-	</macrodef>
-
 	<macrodef name="get-master-hostname">
 		<attribute default="${env.JENKINS_URL}" name="jenkins.url" />
 
@@ -1459,24 +1419,6 @@ jdbc.default.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 					project.setProperty("poshi.class.name", poshiClassName);
 				]]>
 			</beanshell>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="get-poshi-dir-name">
-		<sequential>
-			<var name="poshi.dir.name" unset="true" />
-
-			<if>
-				<isset property="test.class" />
-				<then>
-					<get-poshi-test-name />
-
-					<antelope:stringutil property="poshi.dir.name" string="${poshi.test.name}">
-						<antelope:replace regex="," replacement="_" />
-						<antelope:replace regex="#" replacement="_" />
-					</antelope:stringutil>
-				</then>
-			</if>
 		</sequential>
 	</macrodef>
 
@@ -1730,65 +1672,6 @@ jdbc.default.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 			</if>
 
 			<propertycopy from="RUN_TEST_CASE_METHOD_GROUP_${test.class}" name="test.class" override="true" />
-		</sequential>
-	</macrodef>
-
-	<macrodef name="get-test-class-name">
-		<sequential>
-			<fail message="Please set the property ${test.class}." unless="test.class" />
-
-			<var name="test.class.name" unset="true" />
-
-			<get-poshi-class-name />
-
-			<beanshell>
-				<![CDATA[
-					import java.util.regex.Matcher;
-					import java.util.regex.Pattern;
-
-					import org.apache.tools.ant.DirectoryScanner;
-
-					String poshiClassName = project.getProperty("poshi.class.name");
-
-					try {
-						DirectoryScanner directoryScanner = new DirectoryScanner();
-
-						if (project.getProperty("test.base.dir.name") != null) {
-							directoryScanner.setBasedir(project.getProperty("test.base.dir.name"));
-						}
-						else {
-							directoryScanner.setBasedir(project.getBaseDir());
-						}
-
-						directoryScanner.setIncludes(new String[] {"**/test/functional/**/" + poshiClassName + ".testcase"});
-
-						directoryScanner.scan();
-
-						String[] fileNames = directoryScanner.getIncludedFiles();
-
-						String fileName = fileNames[0];
-
-						Pattern pattern = Pattern.compile("/test/functional/(?<className>\\S+)");
-
-						Matcher matcher = pattern.matcher(fileName);
-
-						if (!matcher.find()) {
-							throw new RuntimeException("Unable to find className in " + fileName);
-						}
-
-						String className = matcher.group("className");
-
-						className = className.replaceAll("/", ".");
-						className = className.replaceAll("\\.testcase", "TestCase");
-
-						project.setProperty("test.class.name", className);
-					}
-					catch (Exception e) {
-					}
-				]]>
-			</beanshell>
-
-			<fail message="${test.name}.testcase does not exist." unless="test.class.name" />
 		</sequential>
 	</macrodef>
 
@@ -4664,55 +4547,6 @@ tell application "Safari" to quit
 		</sequential>
 	</macrodef>
 
-	<macrodef name="prepare-selenium-site-initializer-partner-portal-salesforce-properties">
-		<sequential>
-			<if>
-				<isset property="site.initializer.partner.portal.login.url" />
-				<then>
-					<echo append="true" file="${test.ext.properties.file}">
-						site.initializer.partner.portal.login.url=${site.initializer.partner.portal.login.url}
-					</echo>
-				</then>
-			</if>
-
-			<if>
-				<isset property="site.initializer.partner.portal.consumer.key" />
-				<then>
-					<echo append="true" file="${test.ext.properties.file}">
-						site.initializer.partner.portal.consumer.key=${site.initializer.partner.portal.consumer.key}
-					</echo>
-				</then>
-			</if>
-
-			<if>
-				<isset property="site.initializer.partner.portal.consumer.secret" />
-				<then>
-					<echo append="true" file="${test.ext.properties.file}">
-						site.initializer.partner.portal.consumer.secret=${site.initializer.partner.portal.consumer.secret}
-					</echo>
-				</then>
-			</if>
-
-			<if>
-				<isset property="site.initializer.partner.portal.username" />
-				<then>
-					<echo append="true" file="${test.ext.properties.file}">
-						site.initializer.partner.portal.username=${site.initializer.partner.portal.username}
-					</echo>
-				</then>
-			</if>
-
-			<if>
-				<isset property="site.initializer.partner.portal.password" />
-				<then>
-					<echo append="true" file="${test.ext.properties.file}">
-						site.initializer.partner.portal.password=${site.initializer.partner.portal.password}
-					</echo>
-				</then>
-			</if>
-		</sequential>
-	</macrodef>
-
 	<macrodef name="prepare-selenium-site-initializer-raylife-d2c-paypal-properties">
 		<sequential>
 			<if>
@@ -5617,50 +5451,6 @@ ${custom.upgrade.properties}</echo>
 			</if>
 
 			<delete file="jps_output" />
-		</sequential>
-	</macrodef>
-
-	<macrodef name="print-search-indices">
-		<sequential>
-			<get-testcase-property property.name="solr.enabled" />
-			<propertycopy from="search.engine[${env.CI_TEST_SUITE}]" name="suite.search.engine" silent="true" />
-
-			<if>
-				<or>
-					<equals arg1="${solr.enabled}" arg2="true" />
-					<equals arg1="${suite.search.engine}" arg2="solr" />
-				</or>
-				<then>
-					<ant antfile="build-test-solr.xml" target="print-solr-indices" />
-				</then>
-				<else>
-					<get-testcase-property property.name="remote.elasticsearch.enabled" />
-
-					<if>
-						<istrue value="${remote.elasticsearch.enabled}" />
-						<then>
-							<var name="elasticsearch.ports" value="9200" />
-						</then>
-						<else>
-							<var name="elasticsearch.ports" value="9201" />
-						</else>
-					</if>
-
-					<get-testcase-property property.name="elasticsearch.ccr.enabled" />
-					<get-testcase-property property.name="elasticsearch.cluster.size" />
-
-					<var if:set="elasticsearch.ccr.enabled" name="elasticsearch.ports" value="${elasticsearch.ports},9202" />
-					<var if:set="elasticsearch.cluster.size" name="elasticsearch.ports" value="${elasticsearch.ports},9201" />
-
-					<for list="${elasticsearch.ports}" param="elasticsearch.port">
-						<sequential>
-							<ant antfile="build-test-elasticsearch7.xml" target="print-elasticsearch-indices">
-								<property name="elasticsearch.port" value="@{elasticsearch.port}" />
-							</ant>
-						</sequential>
-					</for>
-				</else>
-			</if>
 		</sequential>
 	</macrodef>
 
@@ -8399,22 +8189,6 @@ ${docker.start.error}</fail>
 					<ant antfile="build-test-solr.xml" target="stop-solr-core" />
 				</then>
 			</if>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="stop-test-smtp-server">
-		<sequential>
-			<exec executable="/bin/bash" outputproperty="java.pid">
-				<arg value="-c" />
-				<arg value="netstat -nlp | grep 8282 | cut -d/ -f1 | awk '{print $7}'" />
-			</exec>
-
-			<echo>java.pid is${java.pid}</echo>
-
-			<exec executable="/bin/bash">
-				<arg value="-c" />
-				<arg value="kill -9 ${java.pid}" />
-			</exec>
 		</sequential>
 	</macrodef>
 

@@ -24,12 +24,12 @@ public class DLFileVersionServiceImpl extends DLFileVersionServiceBaseImpl {
 	public DLFileVersion getFileVersion(long fileVersionId)
 		throws PortalException {
 
-		DLFileVersion fileVersion = dlFileVersionLocalService.getFileVersion(
-			fileVersionId);
-
 		ModelResourcePermission<FileEntry> fileEntryModelResourcePermission =
 			ModelResourcePermissionRegistryUtil.getModelResourcePermission(
 				FileEntry.class.getName());
+
+		DLFileVersion fileVersion = dlFileVersionLocalService.getFileVersion(
+			fileVersionId);
 
 		fileEntryModelResourcePermission.check(
 			getPermissionChecker(), fileVersion.getFileEntryId(),

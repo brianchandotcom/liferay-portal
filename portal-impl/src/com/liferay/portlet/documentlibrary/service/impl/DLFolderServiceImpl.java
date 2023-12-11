@@ -66,11 +66,11 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 	public void deleteFolder(long folderId, boolean includeTrashedEntries)
 		throws PortalException {
 
-		DLFolder dlFolder = dlFolderLocalService.getFolder(folderId);
-
 		ModelResourcePermission<DLFolder> dlFolderModelResourcePermission =
 			ModelResourcePermissionRegistryUtil.getModelResourcePermission(
 				DLFolder.class.getName());
+
+		DLFolder dlFolder = dlFolderLocalService.getFolder(folderId);
 
 		dlFolderModelResourcePermission.check(
 			getPermissionChecker(), dlFolder, ActionKeys.DELETE);
@@ -93,13 +93,13 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			String externalReferenceCode, long groupId)
 		throws PortalException {
 
-		DLFolder dlFolder =
-			dlFolderLocalService.getDLFolderByExternalReferenceCode(
-				externalReferenceCode, groupId);
-
 		ModelResourcePermission<DLFolder> dlFolderModelResourcePermission =
 			ModelResourcePermissionRegistryUtil.getModelResourcePermission(
 				DLFolder.class.getName());
+
+		DLFolder dlFolder =
+			dlFolderLocalService.getDLFolderByExternalReferenceCode(
+				externalReferenceCode, groupId);
 
 		dlFolderModelResourcePermission.check(
 			getPermissionChecker(), dlFolder, ActionKeys.VIEW);
@@ -170,11 +170,11 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 
 	@Override
 	public DLFolder getFolder(long folderId) throws PortalException {
-		DLFolder dlFolder = dlFolderLocalService.getFolder(folderId);
-
 		ModelResourcePermission<DLFolder> dlFolderModelResourcePermission =
 			ModelResourcePermissionRegistryUtil.getModelResourcePermission(
 				DLFolder.class.getName());
+
+		DLFolder dlFolder = dlFolderLocalService.getFolder(folderId);
 
 		dlFolderModelResourcePermission.check(
 			getPermissionChecker(), dlFolder, ActionKeys.VIEW);
@@ -186,12 +186,12 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 	public DLFolder getFolder(long groupId, long parentFolderId, String name)
 		throws PortalException {
 
-		DLFolder dlFolder = dlFolderLocalService.getFolder(
-			groupId, parentFolderId, name);
-
 		ModelResourcePermission<DLFolder> dlFolderModelResourcePermission =
 			ModelResourcePermissionRegistryUtil.getModelResourcePermission(
 				DLFolder.class.getName());
+
+		DLFolder dlFolder = dlFolderLocalService.getFolder(
+			groupId, parentFolderId, name);
 
 		dlFolderModelResourcePermission.check(
 			getPermissionChecker(), dlFolder, ActionKeys.VIEW);
@@ -694,11 +694,11 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			long expirationTime)
 		throws PortalException {
 
-		DLFolder dlFolder = dlFolderLocalService.getFolder(folderId);
-
 		ModelResourcePermission<DLFolder> dlFolderModelResourcePermission =
 			ModelResourcePermissionRegistryUtil.getModelResourcePermission(
 				DLFolder.class.getName());
+
+		DLFolder dlFolder = dlFolderLocalService.getFolder(folderId);
 
 		dlFolderModelResourcePermission.check(
 			getPermissionChecker(), dlFolder, ActionKeys.UPDATE);
@@ -712,13 +712,13 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			long folderId, long parentFolderId, ServiceContext serviceContext)
 		throws PortalException {
 
-		PermissionChecker permissionChecker = getPermissionChecker();
-
-		DLFolder dlFolder = dlFolderLocalService.getFolder(folderId);
-
 		ModelResourcePermission<DLFolder> dlFolderModelResourcePermission =
 			ModelResourcePermissionRegistryUtil.getModelResourcePermission(
 				DLFolder.class.getName());
+
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		DLFolder dlFolder = dlFolderLocalService.getFolder(folderId);
 
 		dlFolderModelResourcePermission.check(
 			permissionChecker, dlFolder, ActionKeys.UPDATE);

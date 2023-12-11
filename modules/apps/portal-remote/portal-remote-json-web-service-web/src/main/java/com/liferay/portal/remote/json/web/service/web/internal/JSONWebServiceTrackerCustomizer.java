@@ -1,34 +1,33 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.remote.json.web.service.web.internal;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManager;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.wiring.BundleWiring;
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Miguel Pastor
  */
-@Component(service = {})
-public class JSONWebServiceTracker
+public class JSONWebServiceTrackerCustomizer
 	implements ServiceTrackerCustomizer<Object, Object> {
+
+	public JSONWebServiceTrackerCustomizer(
+		JSONWebServiceActionsManager jsonWebServiceActionsManager,
+		BundleContext bundleContext) {
+
+		_jsonWebServiceActionsManager = jsonWebServiceActionsManager;
+		_bundleContext = bundleContext;
+	}
 
 	@Override
 	public Object addingService(ServiceReference<Object> serviceReference) {
@@ -70,28 +69,7 @@ public class JSONWebServiceTracker
 		_bundleContext.ungetService(serviceReference);
 	}
 
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_bundleContext = bundleContext;
-
-		_serviceTracker = ServiceTrackerFactory.open(
-			bundleContext,
-			StringBundler.concat(
-				"(&(json.web.service.context.name=*)(json.web.service.context.",
-				"path=*)(!(objectClass=", AopService.class.getName(), ")))"),
-			this);
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_serviceTracker.close();
-	}
-
-	private BundleContext _bundleContext;
-
-	@Reference
-	private JSONWebServiceActionsManager _jsonWebServiceActionsManager;
-
-	private ServiceTracker<Object, Object> _serviceTracker;
+	private final BundleContext _bundleContext;
+	private final JSONWebServiceActionsManager _jsonWebServiceActionsManager;
 
 }

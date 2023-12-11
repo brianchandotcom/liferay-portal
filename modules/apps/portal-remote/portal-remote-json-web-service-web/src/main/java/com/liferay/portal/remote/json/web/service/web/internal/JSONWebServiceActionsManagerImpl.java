@@ -5,9 +5,11 @@
 
 package com.liferay.portal.remote.json.web.service.web.internal;
 
+import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceAction;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionMapping;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManager;
@@ -40,8 +42,12 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Igor Spasic
@@ -221,6 +227,21 @@ public class JSONWebServiceActionsManagerImpl
 		}
 
 		return count;
+	}
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTracker = ServiceTrackerFactory.open(
+			bundleContext,
+			StringBundler.concat(
+				"(&(json.web.service.context.name=*)(json.web.service.context.",
+				"path=*)(!(objectClass=", AopService.class.getName(), ")))"),
+			new JSONWebServiceTrackerCustomizer(this, bundleContext));
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceTracker.close();
 	}
 
 	private boolean _addJSONWebServiceActionConfig(
@@ -542,6 +563,7 @@ public class JSONWebServiceActionsManagerImpl
 	@Reference
 	private Portal _portal;
 
+	private ServiceTracker<?, ?> _serviceTracker;
 	private final ConcurrentMap<String, JSONWebServiceActionConfig>
 		_signatureIndexedJSONWebServiceActionConfigs =
 			new ConcurrentHashMap<>();

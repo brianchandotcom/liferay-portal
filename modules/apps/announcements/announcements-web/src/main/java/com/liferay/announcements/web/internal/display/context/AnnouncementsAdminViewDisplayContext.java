@@ -183,6 +183,8 @@ public class AnnouncementsAdminViewDisplayContext {
 					_liferayPortletRequest, _liferayPortletResponse),
 				null, "no-entries-were-found");
 
+		announcementsEntriesSearchContainer.setId(getSearchContainerId());
+
 		long classNameId = 0;
 		long classPK = 0;
 

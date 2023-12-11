@@ -11,10 +11,6 @@
 String navigation = ParamUtil.getString(request, "navigation", "announcements");
 
 AnnouncementsAdminViewDisplayContext announcementsAdminViewDisplayContext = new AnnouncementsAdminViewDisplayContext(request, liferayPortletRequest, liferayPortletResponse, renderRequest);
-
-AnnouncementsAdminViewManagementToolbarDisplayContext announcementsAdminViewManagementToolbarDisplayContext = new AnnouncementsAdminViewManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, announcementsAdminViewDisplayContext);
-
-SearchContainer<AnnouncementsEntry> announcementsEntriesSearchContainer = announcementsAdminViewDisplayContext.getSearchContainer();
 %>
 
 <clay:navigation-bar
@@ -38,29 +34,9 @@ SearchContainer<AnnouncementsEntry> announcementsEntriesSearchContainer = announ
 	%>'
 />
 
-<portlet:actionURL name="/announcements/edit_entry" var="deleteEntriesURL" />
-
 <clay:management-toolbar
-	actionDropdownItems="<%= announcementsAdminViewManagementToolbarDisplayContext.getActionDropdownItems() %>"
-	additionalProps='<%=
-		HashMapBuilder.<String, Object>put(
-			"deleteEntriesURL", deleteEntriesURL.toString()
-		).put(
-			"inputId", Constants.CMD
-		).put(
-			"inputValue", Constants.DELETE
-		).build()
-	%>'
-	clearResultsURL="<%= announcementsAdminViewManagementToolbarDisplayContext.getClearResultsURL() %>"
-	creationMenu="<%= announcementsAdminViewManagementToolbarDisplayContext.getCreationMenu() %>"
-	disabled="<%= announcementsAdminViewManagementToolbarDisplayContext.isDisabled() %>"
-	filterDropdownItems="<%= announcementsAdminViewManagementToolbarDisplayContext.getFilterDropdownItems() %>"
-	filterLabelItems="<%= announcementsAdminViewManagementToolbarDisplayContext.getFilterLabelItems() %>"
-	itemsTotal="<%= announcementsEntriesSearchContainer.getTotal() %>"
+	managementToolbarDisplayContext="<%= new AnnouncementsAdminViewManagementToolbarDisplayContext(announcementsAdminViewDisplayContext, request, liferayPortletRequest, liferayPortletResponse) %>"
 	propsTransformer="{AnnouncementsManagementToolbarPropsTransformer} from announcements-web"
-	searchContainerId="<%= announcementsAdminViewDisplayContext.getSearchContainerId() %>"
-	selectable="<%= true %>"
-	showSearch="<%= false %>"
 />
 
 <clay:container-fluid>
@@ -69,14 +45,8 @@ SearchContainer<AnnouncementsEntry> announcementsEntriesSearchContainer = announ
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
 		<liferay-ui:search-container
-			id="<%= announcementsAdminViewDisplayContext.getSearchContainerId() %>"
-			searchContainer="<%= announcementsEntriesSearchContainer %>"
-			total="<%= announcementsEntriesSearchContainer.getTotal() %>"
+			searchContainer="<%= announcementsAdminViewDisplayContext.getSearchContainer() %>"
 		>
-			<liferay-ui:search-container-results
-				results="<%= announcementsEntriesSearchContainer.getResults() %>"
-			/>
-
 			<liferay-ui:search-container-row
 				className="com.liferay.announcements.kernel.model.AnnouncementsEntry"
 				keyProperty="entryId"
@@ -134,7 +104,6 @@ SearchContainer<AnnouncementsEntry> announcementsEntriesSearchContainer = announ
 
 			<liferay-ui:search-iterator
 				markupView="lexicon"
-				searchContainer="<%= announcementsEntriesSearchContainer %>"
 			/>
 		</liferay-ui:search-container>
 	</aui:form>

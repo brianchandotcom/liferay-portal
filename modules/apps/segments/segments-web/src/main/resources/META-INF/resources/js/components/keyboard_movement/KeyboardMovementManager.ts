@@ -266,7 +266,8 @@ function getGroupNumber(groupId: Criteria['groupId']) {
 
 function isValidTarget(target: Target, source: Source) {
 	return !(
-		target.groupId === source.groupId && target.index === source.index
+		!target ||
+		(target.groupId === source.groupId && target.index === source.index)
 	);
 }
 

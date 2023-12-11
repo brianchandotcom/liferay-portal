@@ -1395,6 +1395,22 @@ public class JournalDisplayContext {
 		return true;
 	}
 
+	public boolean isTypeVersions() {
+		if (Objects.equals(getType(), "versions")) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isTypeWebContent() {
+		if (Objects.equals(getType(), "web-content")) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isVersionsTabSelected() throws PortalException {
 		if (Objects.equals(getTab(), "versions")) {
 			return true;

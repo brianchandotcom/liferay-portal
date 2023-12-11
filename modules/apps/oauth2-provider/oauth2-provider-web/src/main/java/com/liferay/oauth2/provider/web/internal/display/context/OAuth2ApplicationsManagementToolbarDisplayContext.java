@@ -10,7 +10,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
-import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.web.internal.constants.OAuth2ProviderPortletKeys;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -21,14 +20,11 @@ import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import javax.portlet.PortletURL;
 
@@ -103,23 +99,6 @@ public class OAuth2ApplicationsManagementToolbarDisplayContext
 			"entries-display-style", "list", true);
 
 		return _displayStyle;
-	}
-
-	public OrderByComparator<OAuth2Application> getOrderByComparator() {
-		String orderByCol = getOrderByCol();
-
-		String columnName = "name";
-
-		if (orderByCol.equals("createDate")) {
-			columnName = "createDate";
-		}
-		else if (orderByCol.equals("clientId")) {
-			columnName = "clientId";
-		}
-
-		return OrderByComparatorFactoryUtil.create(
-			"OAuth2Application", columnName,
-			Objects.equals(getOrderByType(), "asc"));
 	}
 
 	@Override

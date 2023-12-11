@@ -12,6 +12,8 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 String backURL = ParamUtil.getString(request, "backURL", redirect);
 
+OAuth2ConnectedApplicationsDisplayContext oAuth2ConnectedApplicationsDisplayContext = new OAuth2ConnectedApplicationsDisplayContext(liferayPortletRequest, liferayPortletResponse);
+
 OAuth2ConnectedApplicationsManagementToolbarDisplayContext oAuth2ConnectedApplicationsManagementToolbarDisplayContext = new OAuth2ConnectedApplicationsManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, currentURLObj);
 
 int userOAuth2AuthorizationsCount = OAuth2AuthorizationServiceUtil.getUserOAuth2AuthorizationsCount();
@@ -42,16 +44,8 @@ if (Validator.isNotNull(backURL)) {
 		<aui:input name="oAuth2AuthorizationIds" type="hidden" />
 
 		<liferay-ui:search-container
-			emptyResultsMessage="no-connected-applications-were-found"
-			id="oAuth2ConnectedApplicationsSearchContainer"
-			iteratorURL="<%= currentURLObj %>"
-			rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
-			total="<%= userOAuth2AuthorizationsCount %>"
+			searchContainer="<%= oAuth2ConnectedApplicationsDisplayContext.getSearchContainer() %>"
 		>
-			<liferay-ui:search-container-results
-				results="<%= OAuth2AuthorizationServiceUtil.getUserOAuth2Authorizations(searchContainer.getStart(), searchContainer.getEnd(), oAuth2ConnectedApplicationsManagementToolbarDisplayContext.getOrderByComparator()) %>"
-			/>
-
 			<liferay-ui:search-container-row
 				className="com.liferay.oauth2.provider.model.OAuth2Authorization"
 				escapedModel="<%= true %>"

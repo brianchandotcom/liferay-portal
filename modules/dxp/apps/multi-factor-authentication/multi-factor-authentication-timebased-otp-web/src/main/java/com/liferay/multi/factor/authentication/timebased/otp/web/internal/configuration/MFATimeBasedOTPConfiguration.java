@@ -52,27 +52,27 @@ public interface MFATimeBasedOTPConfiguration {
 
 	@Meta.AD(
 		deflt = "${server-property://com.liferay.portal/admin.email.from.address}",
-		description = "set-the-sender-address-on-the-timebased-one-time-password-email",
-		name = "email-totp-replay-from-address", required = false
+		description = "set-the-sender-address-on-the-totp-reuse-attempt-warning-email",
+		name = "email-totp-reuse-attempt-warning-from-address", required = false
 	)
-	public String emailTOTPReplayFromAddress();
+	public String emailTOTPReuseAttemptWarningFromAddress();
 
 	@Meta.AD(
 		deflt = "${server-property://com.liferay.portal/admin.email.from.name}",
-		name = "email-totp-replay-from-name", required = false
+		name = "email-totp-reuse-attempt-warning-from-name", required = false
 	)
-	public String emailTOTPReplayFromName();
+	public String emailTOTPReuseAttemptWarningFromName();
 
 	@Meta.AD(
-		deflt = "${resource:com/liferay/multi/factor/authentication/timebased/otp/configuration/dependencies/email_totp_replay_body.tmpl}",
-		name = "email-totp-replay-body", required = false
+		deflt = "${resource:com/liferay/multi/factor/authentication/timebased/otp/configuration/dependencies/email_totp_reuse_attempt_warning_body.tmpl}",
+		name = "email-totp-reuse-attempt-warning-body", required = false
 	)
-	public LocalizedValuesMap emailTOTPReplayBody();
+	public LocalizedValuesMap emailTOTPReuseAttemptWarningBody();
 
 	@Meta.AD(
-		deflt = "${resource:com/liferay/multi/factor/authentication/timebased/otp/configuration/dependencies/email_totp_replay_subject.tmpl}",
-		name = "email-totp-replay-subject", required = false
+		deflt = "${resource:com/liferay/multi/factor/authentication/timebased/otp/configuration/dependencies/email_totp_reuse_attempt_warning_subject.tmpl}",
+		name = "email-totp-reuse-attempt-warning-subject", required = false
 	)
-	public LocalizedValuesMap emailTOTPReplaySubject();
+	public LocalizedValuesMap emailTOTPReuseAttemptWarningSubject();
 
 }

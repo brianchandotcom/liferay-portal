@@ -426,7 +426,7 @@ public class TimeBasedOTPBrowserSetupMFAChecker
 		return true;
 	}
 
-	private void _sendReplayWarningEmail(
+	private void _sendReuseAttemptWarningEmail(
 			User user, String emailAddress,
 			HttpServletRequest httpServletRequest)
 		throws Exception {
@@ -436,9 +436,10 @@ public class TimeBasedOTPBrowserSetupMFAChecker
 				MFATimeBasedOTPConfiguration.class, user.getCompanyId());
 
 		String fromAddress =
-			mfaTimeBasedOTPConfiguration.emailTOTPReplayFromAddress();
+			mfaTimeBasedOTPConfiguration.
+				emailTOTPReuseAttemptWarningFromAddress();
 		String fromName =
-			mfaTimeBasedOTPConfiguration.emailTOTPReplayFromName();
+			mfaTimeBasedOTPConfiguration.emailTOTPReuseAttemptWarningFromName();
 
 		MailTemplateContextBuilder mailTemplateContextBuilder =
 			MailTemplateFactoryUtil.createMailTemplateContextBuilder();
@@ -459,12 +460,12 @@ public class TimeBasedOTPBrowserSetupMFAChecker
 			mailTemplateContextBuilder.build();
 
 		LocalizedValuesMap subjectLocalizedValuesMap =
-			mfaTimeBasedOTPConfiguration.emailTOTPReplaySubject();
+			mfaTimeBasedOTPConfiguration.emailTOTPReuseAttemptWarningSubject();
 
 		String subject = subjectLocalizedValuesMap.get(user.getLocale());
 
 		LocalizedValuesMap bodyLocalizedValuesMap =
-			mfaTimeBasedOTPConfiguration.emailTOTPReplayBody();
+			mfaTimeBasedOTPConfiguration.emailTOTPReuseAttemptWarningBody();
 
 		String body = bodyLocalizedValuesMap.get(user.getLocale());
 
@@ -506,7 +507,7 @@ public class TimeBasedOTPBrowserSetupMFAChecker
 				mfaTimeBasedOTPEntry.getSharedSecret(), mfaTimeBasedOTP);
 		}
 
-		_sendReplayWarningEmail(
+		_sendReuseAttemptWarningEmail(
 			user, user.getEmailAddress(), httpServletRequest);
 
 		return false;

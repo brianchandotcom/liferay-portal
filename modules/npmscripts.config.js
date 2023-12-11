@@ -687,7 +687,7 @@ module.exports = {
 			'portlet-configuration-css-web',
 			'portlet-configuration-web',
 			'poshi-language-support',
-			'product-navigation-applications-menu',
+			'product-navigation-applications-menu-web',
 			'product-navigation-control-menu',
 			'product-navigation-control-menu-web',
 			'product-navigation-simulation-device',

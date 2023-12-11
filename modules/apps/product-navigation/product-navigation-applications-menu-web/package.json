@@ -15,7 +15,7 @@
 		"react": "16.12.0",
 		"react-dom": "16.12.0"
 	},
-	"name": "product-navigation-applications-menu",
+	"name": "product-navigation-applications-menu-web",
 	"scripts": {
 		"build": "liferay-npm-scripts build",
 		"checkFormat": "liferay-npm-scripts check",

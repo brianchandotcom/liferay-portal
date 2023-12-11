@@ -12,8 +12,6 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 String modelResource = ParamUtil.getString(request, "modelResource");
 
-String modelResourceName = ResourceActionsUtil.getModelResource(request, modelResource);
-
 ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.getCompanyId(), modelResource);
 
 ExpandoDisplayContext expandoDisplayContext = new ExpandoDisplayContext(request, renderRequest, renderResponse);
@@ -31,7 +29,7 @@ PortletURL portletURL = PortletURLBuilder.createRenderURL(
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
-renderResponse.setTitle(modelResourceName);
+renderResponse.setTitle(ResourceActionsUtil.getModelResource(request, modelResource));
 
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "custom-field"), String.valueOf(renderResponse.createRenderURL()));
 

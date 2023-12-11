@@ -270,7 +270,7 @@ const AppsPanel = ({
 											{childCategories.map(
 												({key, label, panelApps}) => (
 													<NavigationSection
-														id={`nav_${key}`}
+														id={key}
 														key={key}
 														label={label}
 														panelApps={panelApps}
@@ -346,31 +346,29 @@ const AppsPanel = ({
 const NavigationSection = ({id, label, panelApps, selectedPortletId}) => {
 	return (
 		<ClayLayout.Col md>
-			<nav aria-labelledby={id}>
-				<h2 className="applications-menu-nav-header c-my-3" id={id}>
-					{label}
-				</h2>
+			<h2 className="applications-menu-nav-header c-my-3" id={id}>
+				{label}
+			</h2>
 
-				<ul className="list-unstyled">
-					{panelApps.map(({label, portletId, url}) => (
-						<li className="c-mt-2" key={portletId}>
-							<a
-								className={classNames(
-									'component-link applications-menu-nav-link',
-									{
-										active: portletId === selectedPortletId,
-									}
-								)}
-								href={url}
-							>
-								<span className="c-inner" tabIndex="-1">
-									{label}
-								</span>
-							</a>
-						</li>
-					))}
-				</ul>
-			</nav>
+			<ul aria-labelledby={id} className="list-unstyled">
+				{panelApps.map(({label, portletId, url}) => (
+					<li className="c-mt-2" key={portletId}>
+						<a
+							className={classNames(
+								'component-link applications-menu-nav-link',
+								{
+									active: portletId === selectedPortletId,
+								}
+							)}
+							href={url}
+						>
+							<span className="c-inner" tabIndex="-1">
+								{label}
+							</span>
+						</a>
+					</li>
+				))}
+			</ul>
 		</ClayLayout.Col>
 	);
 };

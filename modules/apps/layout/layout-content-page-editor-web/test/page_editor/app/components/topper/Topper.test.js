@@ -4,7 +4,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {render, screen} from '@testing-library/react';
+import {render} from '@testing-library/react';
 import React from 'react';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
@@ -72,14 +72,18 @@ describe('Topper', () => {
 	});
 
 	it('renders name of the fragment', () => {
-		renderTopper();
+		const {baseElement} = renderTopper();
 
-		expect(screen.queryByLabelText('grid')).toBeInTheDocument();
+		expect(
+			baseElement.querySelector('[data-name="grid"]')
+		).toBeInTheDocument();
 	});
 
 	it('renders custom name of the fragment', () => {
-		renderTopper({rowConfig: {name: 'customName'}});
+		const {baseElement} = renderTopper({rowConfig: {name: 'customName'}});
 
-		expect(screen.queryByLabelText('customName')).toBeInTheDocument();
+		expect(
+			baseElement.querySelector('[data-name="customName"]')
+		).toBeInTheDocument();
 	});
 });

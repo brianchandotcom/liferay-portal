@@ -720,6 +720,17 @@ public class ContentManager {
 				redirect
 			).setParameter(
 				"assetListEntryId", assetListEntry.getAssetListEntryId()
+			).setParameter(
+				"backURLTitle",
+				() -> {
+					ThemeDisplay themeDisplay =
+						(ThemeDisplay)httpServletRequest.getAttribute(
+							WebKeys.THEME_DISPLAY);
+
+					Layout layout = themeDisplay.getLayout();
+
+					return layout.getName(themeDisplay.getLocale());
+				}
 			).buildString();
 		}
 		catch (PortalException portalException) {

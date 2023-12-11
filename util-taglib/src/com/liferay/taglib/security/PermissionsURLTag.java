@@ -42,12 +42,7 @@ public class PermissionsURLTag extends TagSupport {
 
 		resourceGroupId = _getResourceGroupId(resourceGroupId, themeDisplay);
 
-		if (Validator.isNull(redirect) &&
-			(Validator.isNull(windowState) ||
-			 !windowState.equals(LiferayWindowState.POP_UP.toString()))) {
-
-			redirect = PortalUtil.getCurrentURL(httpServletRequest);
-		}
+		redirect = _getRedirect(httpServletRequest, redirect, windowState);
 
 		if (Validator.isNull(windowState)) {
 			if (themeDisplay.isStatePopUp()) {
@@ -130,12 +125,7 @@ public class PermissionsURLTag extends TagSupport {
 
 		resourceGroupId = _getResourceGroupId(resourceGroupId, themeDisplay);
 
-		if (Validator.isNull(redirect) &&
-			(Validator.isNull(windowState) ||
-			 !windowState.equals(LiferayWindowState.POP_UP.toString()))) {
-
-			redirect = PortalUtil.getCurrentURL(httpServletRequest);
-		}
+		redirect = _getRedirect(httpServletRequest, redirect, windowState);
 
 		PortletURL portletURL = PortletProviderUtil.getPortletURL(
 			httpServletRequest,
@@ -238,6 +228,21 @@ public class PermissionsURLTag extends TagSupport {
 
 	public void setWindowState(String windowState) {
 		_windowState = windowState;
+	}
+
+	private static String _getRedirect(
+		HttpServletRequest httpServletRequest, String redirect,
+		String windowState) {
+
+		if (Validator.isNotNull(redirect) ||
+			(Validator.isNotNull(windowState) &&
+			 StringUtil.equals(
+				 windowState, LiferayWindowState.POP_UP.toString()))) {
+
+			return redirect;
+		}
+
+		return PortalUtil.getCurrentURL(httpServletRequest);
 	}
 
 	private static Object _getResourceGroupId(

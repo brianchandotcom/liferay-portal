@@ -68,4 +68,19 @@ public class OAuth2ConnectedApplicationsManagementToolbarDisplayContext
 			).build());
 	}
 
+	@Override
+	public String getSearchContainerId() {
+		return "oAuth2ConnectedApplicationsSearchContainer";
+	}
+
+	@Override
+	public Boolean isSelectable() {
+		return true;
+	}
+
+	@Override
+	public Boolean isShowSearch() {
+		return false;
+	}
+
 }

@@ -21,7 +21,6 @@ taglib uri="http://liferay.com/tld/user" prefix="liferay-user" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.oauth2.provider.model.OAuth2Application" %><%@
-page import="com.liferay.oauth2.provider.service.OAuth2ApplicationServiceUtil" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@

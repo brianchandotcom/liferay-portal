@@ -9,7 +9,6 @@
 
 <%@ page import="com.liferay.oauth2.provider.model.OAuth2Authorization" %><%@
 page import="com.liferay.oauth2.provider.service.OAuth2ApplicationLocalServiceUtil" %><%@
-page import="com.liferay.oauth2.provider.service.OAuth2AuthorizationServiceUtil" %><%@
 page import="com.liferay.oauth2.provider.web.internal.AssignableScopes" %><%@
 page import="com.liferay.oauth2.provider.web.internal.constants.OAuth2ProviderWebKeys" %><%@
 page import="com.liferay.oauth2.provider.web.internal.display.context.OAuth2ConnectedApplicationsDisplayContext" %><%@

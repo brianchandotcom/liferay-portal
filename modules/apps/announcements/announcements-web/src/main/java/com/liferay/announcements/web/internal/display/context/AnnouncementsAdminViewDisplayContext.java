@@ -5,26 +5,41 @@
 
 package com.liferay.announcements.web.internal.display.context;
 
+import com.liferay.announcements.kernel.model.AnnouncementsEntry;
+import com.liferay.announcements.kernel.service.AnnouncementsEntryLocalServiceUtil;
+import com.liferay.announcements.web.internal.search.AnnouncementsEntryChecker;
 import com.liferay.announcements.web.internal.util.AnnouncementsUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.UserGroup;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portlet.announcements.service.permission.AnnouncementsEntryPermission;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
+
+import javax.portlet.RenderRequest;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -34,9 +49,34 @@ import javax.servlet.http.HttpServletRequest;
 public class AnnouncementsAdminViewDisplayContext {
 
 	public AnnouncementsAdminViewDisplayContext(
-		HttpServletRequest httpServletRequest) {
+		HttpServletRequest httpServletRequest,
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse,
+		RenderRequest renderRequest) {
 
 		_httpServletRequest = httpServletRequest;
+		_liferayPortletRequest = liferayPortletRequest;
+		_liferayPortletResponse = liferayPortletResponse;
+		_renderRequest = renderRequest;
+
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+	}
+
+	public List<String> getAvailableActions(
+			AnnouncementsEntry announcementsEntry)
+		throws PortalException {
+
+		List<String> availableActions = new ArrayList<>();
+
+		if (AnnouncementsEntryPermission.contains(
+				_themeDisplay.getPermissionChecker(), announcementsEntry,
+				ActionKeys.DELETE)) {
+
+			availableActions.add("deleteEntries");
+		}
+
+		return availableActions;
 	}
 
 	public String getCurrentDistributionScopeLabel() throws Exception {
@@ -58,6 +98,10 @@ public class AnnouncementsAdminViewDisplayContext {
 		}
 
 		return "general";
+	}
+
+	public String getDistributionScope() {
+		return ParamUtil.getString(_httpServletRequest, "distributionScope");
 	}
 
 	public Map<String, String> getDistributionScopes() throws Exception {
@@ -125,6 +169,60 @@ public class AnnouncementsAdminViewDisplayContext {
 		return distributionScopes;
 	}
 
+	public String getNavigation() {
+		return ParamUtil.getString(
+			_httpServletRequest, "navigation", "announcements");
+	}
+
+	public SearchContainer<AnnouncementsEntry> getSearchContainer() {
+		SearchContainer<AnnouncementsEntry>
+			announcementsEntriesSearchContainer = new SearchContainer<>(
+				_renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM,
+				SearchContainer.DEFAULT_DELTA,
+				PortletURLUtil.getCurrent(
+					_liferayPortletRequest, _liferayPortletResponse),
+				null, "no-entries-were-found");
+
+		long classNameId = 0;
+		long classPK = 0;
+
+		String[] distributionScopeArray = StringUtil.split(
+			getDistributionScope());
+
+		if (distributionScopeArray.length == 2) {
+			classNameId = GetterUtil.getLong(distributionScopeArray[0]);
+			classPK = GetterUtil.getLong(distributionScopeArray[1]);
+		}
+
+		long announcementsClassNameId = classNameId;
+		long announcementsClassPK = classPK;
+
+		announcementsEntriesSearchContainer.setResultsAndTotal(
+			() -> AnnouncementsEntryLocalServiceUtil.getEntries(
+				_themeDisplay.getCompanyId(), announcementsClassNameId,
+				announcementsClassPK, Objects.equals(getNavigation(), "alerts"),
+				announcementsEntriesSearchContainer.getStart(),
+				announcementsEntriesSearchContainer.getEnd()),
+			AnnouncementsEntryLocalServiceUtil.getEntriesCount(
+				_themeDisplay.getCompanyId(), announcementsClassNameId,
+				announcementsClassPK,
+				Objects.equals(getNavigation(), "alerts")));
+
+		announcementsEntriesSearchContainer.setRowChecker(
+			new AnnouncementsEntryChecker(
+				_liferayPortletRequest, _liferayPortletResponse));
+
+		return announcementsEntriesSearchContainer;
+	}
+
+	public String getSearchContainerId() {
+		if (Objects.equals(getNavigation(), "alerts")) {
+			return "alertsEntries";
+		}
+
+		return "announcementsEntries";
+	}
+
 	public UUID getUuid() {
 		return _UUID;
 	}
@@ -133,5 +231,9 @@ public class AnnouncementsAdminViewDisplayContext {
 		"14f20793-d4e2-4173-acd7-7f1c9cda9a36");
 
 	private final HttpServletRequest _httpServletRequest;
+	private final LiferayPortletRequest _liferayPortletRequest;
+	private final LiferayPortletResponse _liferayPortletResponse;
+	private final RenderRequest _renderRequest;
+	private final ThemeDisplay _themeDisplay;
 
 }

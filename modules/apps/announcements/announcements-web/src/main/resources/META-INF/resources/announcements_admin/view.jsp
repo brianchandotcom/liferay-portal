@@ -10,9 +10,11 @@
 <%
 String navigation = ParamUtil.getString(request, "navigation", "announcements");
 
-AnnouncementsAdminViewManagementToolbarDisplayContext announcementsAdminViewManagementToolbarDisplayContext = new AnnouncementsAdminViewManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, renderRequest);
+AnnouncementsAdminViewDisplayContext announcementsAdminViewDisplayContext = new AnnouncementsAdminViewDisplayContext(request, liferayPortletRequest, liferayPortletResponse, renderRequest);
 
-SearchContainer<AnnouncementsEntry> announcementsEntriesSearchContainer = announcementsAdminViewManagementToolbarDisplayContext.getSearchContainer();
+AnnouncementsAdminViewManagementToolbarDisplayContext announcementsAdminViewManagementToolbarDisplayContext = new AnnouncementsAdminViewManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, announcementsAdminViewDisplayContext);
+
+SearchContainer<AnnouncementsEntry> announcementsEntriesSearchContainer = announcementsAdminViewDisplayContext.getSearchContainer();
 %>
 
 <clay:navigation-bar
@@ -56,7 +58,7 @@ SearchContainer<AnnouncementsEntry> announcementsEntriesSearchContainer = announ
 	filterLabelItems="<%= announcementsAdminViewManagementToolbarDisplayContext.getFilterLabelItems() %>"
 	itemsTotal="<%= announcementsEntriesSearchContainer.getTotal() %>"
 	propsTransformer="{AnnouncementsManagementToolbarPropsTransformer} from announcements-web"
-	searchContainerId="<%= announcementsAdminViewManagementToolbarDisplayContext.getSearchContainerId() %>"
+	searchContainerId="<%= announcementsAdminViewDisplayContext.getSearchContainerId() %>"
 	selectable="<%= true %>"
 	showSearch="<%= false %>"
 />
@@ -67,7 +69,7 @@ SearchContainer<AnnouncementsEntry> announcementsEntriesSearchContainer = announ
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
 		<liferay-ui:search-container
-			id="<%= announcementsAdminViewManagementToolbarDisplayContext.getSearchContainerId() %>"
+			id="<%= announcementsAdminViewDisplayContext.getSearchContainerId() %>"
 			searchContainer="<%= announcementsEntriesSearchContainer %>"
 			total="<%= announcementsEntriesSearchContainer.getTotal() %>"
 		>
@@ -84,7 +86,7 @@ SearchContainer<AnnouncementsEntry> announcementsEntriesSearchContainer = announ
 				<%
 				row.setData(
 					HashMapBuilder.<String, Object>put(
-						"actions", StringUtil.merge(announcementsAdminViewManagementToolbarDisplayContext.getAvailableActions(entry))
+						"actions", StringUtil.merge(announcementsAdminViewDisplayContext.getAvailableActions(entry))
 					).build());
 				%>
 

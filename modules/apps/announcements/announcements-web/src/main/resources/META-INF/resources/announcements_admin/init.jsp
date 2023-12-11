@@ -7,4 +7,6 @@
 
 <%@ include file="/init.jsp" %>
 
+<%@ page import="com.liferay.announcements.web.internal.display.context.AnnouncementsAdminViewDisplayContext" %>
+
 <%@ include file="/announcements_admin/init-ext.jsp" %>

@@ -36,6 +36,10 @@ public interface DBPartitionDB {
 
 	public String getDropPartitionSQL(String partitionName);
 
+	public default String getSafeAlterTable(String alterTableSQL) {
+		return alterTableSQL;
+	}
+
 	public default String getSchema(
 		Connection connection, String partitionName) {
 

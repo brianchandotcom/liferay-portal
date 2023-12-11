@@ -8,17 +8,21 @@ package com.liferay.adaptive.media.content.transformer.internal;
 import com.liferay.adaptive.media.content.transformer.ContentTransformer;
 import com.liferay.adaptive.media.content.transformer.ContentTransformerContentType;
 import com.liferay.adaptive.media.content.transformer.ContentTransformerHandler;
+import com.liferay.adaptive.media.image.html.AMImageHTMLTagFactory;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Transforms the content by invoking the {@link ContentTransformer} available
@@ -41,10 +45,11 @@ public class ContentTransformerHandlerImpl
 			_serviceTrackerMap.getService(contentTransformerContentType);
 
 		if (contentTransformers == null) {
-			return originalContent;
+			contentTransformers = Collections.emptyList();
 		}
 
-		T transformedContent = originalContent;
+		T transformedContent = _htmlContentTransformer.transform(
+			originalContent);
 
 		for (ContentTransformer<?> curContentTransformer :
 				contentTransformers) {
@@ -81,6 +86,9 @@ public class ContentTransformerHandlerImpl
 
 				bundleContext.ungetService(serviceReference);
 			});
+
+		_htmlContentTransformer = new HtmlContentTransformerImpl(
+			_amImageHTMLTagFactory, _dlAppLocalService);
 	}
 
 	@Deactivate
@@ -99,6 +107,13 @@ public class ContentTransformerHandlerImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		ContentTransformerHandlerImpl.class);
 
+	@Reference
+	private AMImageHTMLTagFactory _amImageHTMLTagFactory;
+
+	@Reference
+	private DLAppLocalService _dlAppLocalService;
+
+	private ContentTransformer<String> _htmlContentTransformer;
 	private ServiceTrackerMap
 		<ContentTransformerContentType<?>, List<ContentTransformer<?>>>
 			_serviceTrackerMap;

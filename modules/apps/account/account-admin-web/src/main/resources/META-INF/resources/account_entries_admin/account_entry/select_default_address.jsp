@@ -26,22 +26,9 @@ SearchContainer<AddressDisplay> accountEntryAddressDisplaySearchContainer = Acco
 accountEntryAddressDisplaySearchContainer.setRowChecker(null);
 %>
 
-<portlet:renderURL var="addAccountEntryDefaultAddressURL">
-	<portlet:param name="mvcRenderCommandName" value="/account_admin/edit_account_entry_address" />
-	<portlet:param name="backURL" value='<%= ParamUtil.getString(request, "redirect") %>' />
-	<portlet:param name="accountEntryId" value='<%= ParamUtil.getString(request, "accountEntryId") %>' />
-	<portlet:param name="defaultType" value="<%= type %>" />
-</portlet:renderURL>
-
 <clay:management-toolbar
-	additionalProps='<%=
-		HashMapBuilder.<String, Object>put(
-			"addAccountEntryDefaultAddressURL", addAccountEntryDefaultAddressURL.toString()
-		).build()
-	%>'
 	managementToolbarDisplayContext="<%= new SelectAccountEntryAddressManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, accountEntryAddressDisplaySearchContainer) %>"
 	propsTransformer="{SelectAccountDefaultAddressManagementToolbarPropsTransformer} from account-admin-web"
-	showCreationMenu="<%= true %>"
 />
 
 <clay:container-fluid

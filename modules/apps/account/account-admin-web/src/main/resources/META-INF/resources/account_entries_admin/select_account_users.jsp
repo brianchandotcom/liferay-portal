@@ -15,21 +15,9 @@ SearchContainer<AccountUserDisplay> userSearchContainer = AssignableAccountUserD
 SelectAccountUsersManagementToolbarDisplayContext selectAccountUsersManagementToolbarDisplayContext = new SelectAccountUsersManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, userSearchContainer, selectAccountUsersDisplayContext);
 %>
 
-<portlet:renderURL var="addAccountEntryUserURL">
-	<portlet:param name="mvcRenderCommandName" value="/account_admin/add_account_user" />
-	<portlet:param name="redirect" value='<%= ParamUtil.getString(request, "redirect") %>' />
-	<portlet:param name="accountEntryId" value="<%= String.valueOf(selectAccountUsersDisplayContext.getAccountEntryId()) %>" />
-</portlet:renderURL>
-
 <clay:management-toolbar
-	additionalProps='<%=
-		HashMapBuilder.<String, Object>put(
-			"addAccountEntryUserURL", addAccountEntryUserURL.toString()
-		).build()
-	%>'
 	managementToolbarDisplayContext="<%= selectAccountUsersManagementToolbarDisplayContext %>"
 	propsTransformer="{SelectAccountUsersManagementToolbarPropsTransformer} from account-admin-web"
-	showCreationMenu="<%= selectAccountUsersDisplayContext.isShowCreateButton() %>"
 />
 
 <clay:container-fluid

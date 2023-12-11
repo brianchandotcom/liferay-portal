@@ -15,7 +15,6 @@ accountRoleDisplaySearchContainer.setRowChecker(new SelectAccountUserAccountRole
 
 <clay:management-toolbar
 	managementToolbarDisplayContext="<%= new ViewAccountUserRolesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, accountRoleDisplaySearchContainer) %>"
-	showCreationMenu="<%= false %>"
 />
 
 <clay:container-fluid>

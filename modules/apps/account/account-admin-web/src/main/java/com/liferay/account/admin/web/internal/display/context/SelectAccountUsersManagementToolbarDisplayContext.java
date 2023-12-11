@@ -23,12 +23,14 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -50,6 +52,23 @@ public class SelectAccountUsersManagementToolbarDisplayContext
 			searchContainer);
 
 		_selectAccountUsersDisplayContext = selectAccountUsersDisplayContext;
+	}
+
+	@Override
+	public Map<String, Object> getAdditionalProps() {
+		return HashMapBuilder.<String, Object>put(
+			"addAccountEntryUserURL",
+			PortletURLBuilder.createRenderURL(
+				liferayPortletResponse
+			).setMVCRenderCommandName(
+				"/account_admin/add_account_user"
+			).setRedirect(
+				ParamUtil.getString(httpServletRequest, "redirect")
+			).setParameter(
+				"accountEntryId",
+				_selectAccountUsersDisplayContext.getAccountEntryId()
+			).buildString()
+		).build();
 	}
 
 	@Override
@@ -122,6 +141,11 @@ public class SelectAccountUsersManagementToolbarDisplayContext
 	@Override
 	public Boolean isSelectable() {
 		return !_selectAccountUsersDisplayContext.isSingleSelect();
+	}
+
+	@Override
+	public Boolean isShowCreationMenu() {
+		return _selectAccountUsersDisplayContext.isShowCreateButton();
 	}
 
 	@Override

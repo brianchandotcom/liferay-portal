@@ -10,8 +10,12 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ParamUtil;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -33,6 +37,25 @@ public class SelectAccountEntryAddressManagementToolbarDisplayContext
 	}
 
 	@Override
+	public Map<String, Object> getAdditionalProps() {
+		return HashMapBuilder.<String, Object>put(
+			"addAccountEntryDefaultAddressURL",
+			PortletURLBuilder.createRenderURL(
+				liferayPortletResponse
+			).setMVCRenderCommandName(
+				"/account_admin/edit_account_entry_address"
+			).setBackURL(
+				ParamUtil.getString(httpServletRequest, "redirect")
+			).setParameter(
+				"accountEntryId",
+				ParamUtil.getString(httpServletRequest, "accountEntryId")
+			).setParameter(
+				"defaultType", ParamUtil.getString(httpServletRequest, "type")
+			).buildString()
+		).build();
+	}
+
+	@Override
 	public List<LabelItem> getFilterLabelItems() {
 		return null;
 	}
@@ -44,7 +67,7 @@ public class SelectAccountEntryAddressManagementToolbarDisplayContext
 
 	@Override
 	public Boolean isShowCreationMenu() {
-		return false;
+		return true;
 	}
 
 	@Override

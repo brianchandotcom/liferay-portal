@@ -426,29 +426,6 @@ public class TimeBasedOTPBrowserSetupMFAChecker
 		return true;
 	}
 
-	private void _sendNotificationEmail(
-			String fromAddress, String fromName, String toAddress, User toUser,
-			String subject, String body,
-			MailTemplateContext mailTemplateContext)
-		throws Exception {
-
-		MailTemplate subjectMailTemplate =
-			MailTemplateFactoryUtil.createMailTemplate(subject, false);
-		MailTemplate bodyMailTemplate =
-			MailTemplateFactoryUtil.createMailTemplate(body, true);
-
-		MailMessage mailMessage = new MailMessage(
-			new InternetAddress(fromAddress, fromName),
-			new InternetAddress(toAddress, toUser.getFullName()),
-			subjectMailTemplate.renderAsString(
-				toUser.getLocale(), mailTemplateContext),
-			bodyMailTemplate.renderAsString(
-				toUser.getLocale(), mailTemplateContext),
-			true);
-
-		_mailService.sendEmail(mailMessage);
-	}
-
 	private void _sendReplayWarningEmail(
 			User user, String emailAddress,
 			HttpServletRequest httpServletRequest)
@@ -457,6 +434,29 @@ public class TimeBasedOTPBrowserSetupMFAChecker
 		MFATimeBasedOTPConfiguration mfaTimeBasedOTPConfiguration =
 			_configurationProvider.getCompanyConfiguration(
 				MFATimeBasedOTPConfiguration.class, user.getCompanyId());
+
+		String fromAddress =
+			mfaTimeBasedOTPConfiguration.emailTOTPReplayFromAddress();
+		String fromName =
+			mfaTimeBasedOTPConfiguration.emailTOTPReplayFromName();
+
+		MailTemplateContextBuilder mailTemplateContextBuilder =
+			MailTemplateFactoryUtil.createMailTemplateContextBuilder();
+
+		mailTemplateContextBuilder.put("[$FROM_ADDRESS$]", fromAddress);
+		mailTemplateContextBuilder.put("[$FROM_NAME$]", fromName);
+		mailTemplateContextBuilder.put(
+			"[$PORTAL_URL$]", _portal.getPortalURL(httpServletRequest));
+		mailTemplateContextBuilder.put(
+			"[$REMOTE_ADDRESS$]", httpServletRequest.getRemoteAddr());
+		mailTemplateContextBuilder.put(
+			"[$REMOTE_HOST$]",
+			new EscapableObject<>(httpServletRequest.getRemoteHost()));
+		mailTemplateContextBuilder.put(
+			"[$TO_NAME$]", new EscapableObject<>(user.getFullName()));
+
+		MailTemplateContext mailTemplateContext =
+			mailTemplateContextBuilder.build();
 
 		LocalizedValuesMap subjectLocalizedValuesMap =
 			mfaTimeBasedOTPConfiguration.emailTOTPReplaySubject();
@@ -468,30 +468,21 @@ public class TimeBasedOTPBrowserSetupMFAChecker
 
 		String body = bodyLocalizedValuesMap.get(user.getLocale());
 
-		MailTemplateContextBuilder mailTemplateContextBuilder =
-			MailTemplateFactoryUtil.createMailTemplateContextBuilder();
+		MailTemplate subjectMailTemplate =
+			MailTemplateFactoryUtil.createMailTemplate(subject, false);
+		MailTemplate bodyMailTemplate =
+			MailTemplateFactoryUtil.createMailTemplate(body, true);
 
-		mailTemplateContextBuilder.put(
-			"[$FROM_ADDRESS$]",
-			mfaTimeBasedOTPConfiguration.emailTOTPReplayFromAddress());
-		mailTemplateContextBuilder.put(
-			"[$FROM_NAME$]",
-			mfaTimeBasedOTPConfiguration.emailTOTPReplayFromName());
-		mailTemplateContextBuilder.put(
-			"[$PORTAL_URL$]", _portal.getPortalURL(httpServletRequest));
-		mailTemplateContextBuilder.put(
-			"[$REMOTE_ADDRESS$]", httpServletRequest.getRemoteAddr());
-		mailTemplateContextBuilder.put(
-			"[$REMOTE_HOST$]",
-			new EscapableObject<>(httpServletRequest.getRemoteHost()));
-		mailTemplateContextBuilder.put(
-			"[$TO_NAME$]", new EscapableObject<>(user.getFullName()));
+		MailMessage mailMessage = new MailMessage(
+			new InternetAddress(fromAddress, fromName),
+			new InternetAddress(emailAddress, user.getFullName()),
+			subjectMailTemplate.renderAsString(
+				user.getLocale(), mailTemplateContext),
+			bodyMailTemplate.renderAsString(
+				user.getLocale(), mailTemplateContext),
+			true);
 
-		_sendNotificationEmail(
-			mfaTimeBasedOTPConfiguration.emailTOTPReplayFromAddress(),
-			mfaTimeBasedOTPConfiguration.emailTOTPReplayFromName(),
-			emailAddress, user, subject, body,
-			mailTemplateContextBuilder.build());
+		_mailService.sendEmail(mailMessage);
 	}
 
 	private boolean _verify(

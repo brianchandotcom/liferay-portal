@@ -95,6 +95,7 @@ page import="com.liferay.wiki.model.WikiPage" %><%@
 page import="com.liferay.wiki.service.WikiNodeServiceUtil" %><%@
 page import="com.liferay.wiki.service.WikiPageLocalServiceUtil" %><%@
 page import="com.liferay.wiki.service.WikiPageServiceUtil" %><%@
+page import="com.liferay.wiki.web.internal.display.context.WikiConfigurationDisplayContext" %><%@
 page import="com.liferay.wiki.web.internal.display.context.WikiNodesManagementToolbarDisplayContext" %><%@
 page import="com.liferay.wiki.web.internal.display.context.WikiPagesManagementToolbarDisplayContext" %><%@
 page import="com.liferay.wiki.web.internal.display.context.WikiSearchDisplayContext" %><%@

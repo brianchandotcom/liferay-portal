@@ -11,6 +11,8 @@
 AssetListManagementToolbarDisplayContext assetListManagementToolbarDisplayContext = new AssetListManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, assetListDisplayContext);
 %>
 
+<liferay-ui:error exception="<%= RequiredAssetListEntryException.class %>" message="this-asset-cannot-be-deleted-because-it-is-in-use" />
+
 <clay:navigation-bar
 	inverted="<%= true %>"
 	navigationItems='<%= assetListDisplayContext.getNavigationItems("collections") %>'

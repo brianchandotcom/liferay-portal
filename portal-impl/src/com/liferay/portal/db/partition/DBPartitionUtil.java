@@ -681,7 +681,7 @@ public class DBPartitionUtil {
 
 		return StringBundler.concat(
 			"drop table if exists ", partitionName, StringPool.PERIOD,
-			tableName);
+			tableName, " cascade");
 	}
 
 	private static String _getDropViewSQL(

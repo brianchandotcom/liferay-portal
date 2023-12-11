@@ -1008,7 +1008,8 @@ definition {
 				value1 = "\TAB");
 
 			KeyPress(
-				locator1 = "//div[contains(@class,'rule-builder-item--condition')]",
+				index = 1,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION",
 				value1 = "\TAB");
 
 			KeyPress(
@@ -1052,7 +1053,8 @@ definition {
 				value1 = "\ENTER");
 
 			KeyPress(
-				locator1 = "//div[contains(@class,'rule-builder-item--action')]",
+				index = 1,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_ACTION",
 				value1 = "\TAB");
 
 			KeyPress(

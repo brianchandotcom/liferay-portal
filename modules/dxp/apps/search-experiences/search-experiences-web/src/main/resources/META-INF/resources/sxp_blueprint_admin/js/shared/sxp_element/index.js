@@ -14,7 +14,7 @@ import getCN from 'classnames';
 import {PropTypes} from 'prop-types';
 import React, {useContext, useEffect, useState} from 'react';
 
-import {ASSET_CATEGORY_ID} from '../../utils/constants';
+import {ASSET_CATEGORY_ID, GROUP_ID} from '../../utils/constants';
 import {DEFAULT_SXP_ELEMENT_ICON} from '../../utils/data';
 import isDefined from '../../utils/functions/is_defined';
 import cleanUIConfiguration from '../../utils/sxp_element/clean_ui_configuration';
@@ -32,6 +32,7 @@ import JSONInput from './JSONInput';
 import MultiSelectInput from './MultiSelectInput';
 import NumberInput from './NumberInput';
 import SelectInput from './SelectInput';
+import SiteSelectorInput from './SiteSelectorInput';
 import SliderInput from './SliderInput';
 import TextInput from './TextInput';
 import CategorySelectorInput from './category_selector_input/index';
@@ -209,6 +210,21 @@ function SXPElement({
 					);
 				}
 
+				if (config.name.includes(`${GROUP_ID}s`)) {
+					return (
+						<SiteSelectorInput
+							disabled={disabled}
+							id={inputId}
+							label={config.labelLocalized || config.label}
+							multiple={true}
+							name={inputName}
+							setFieldTouched={setFieldTouched}
+							setFieldValue={setFieldValue}
+							value={uiConfigurationValues[config.name]}
+						/>
+					);
+				}
+
 				return (
 					<MultiSelectInput
 						disabled={disabled}
@@ -224,6 +240,21 @@ function SXPElement({
 				if (config.name === ASSET_CATEGORY_ID) {
 					return (
 						<CategorySelectorInput
+							disabled={disabled}
+							id={inputId}
+							label={config.labelLocalized || config.label}
+							multiple={false}
+							name={inputName}
+							setFieldTouched={setFieldTouched}
+							setFieldValue={setFieldValue}
+							value={uiConfigurationValues[config.name]}
+						/>
+					);
+				}
+
+				if (config.name.includes(GROUP_ID)) {
+					return (
+						<SiteSelectorInput
 							disabled={disabled}
 							id={inputId}
 							label={config.labelLocalized || config.label}

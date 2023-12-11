@@ -11,10 +11,29 @@ export const ASCENDING = Liferay.Language.get('ascending');
 export const DESCENDING = Liferay.Language.get('descending');
 
 export const ASSET_CATEGORY_ID = 'asset_category_id';
+export const GROUP_ID = 'group_id';
 
 export const CONFIG_PREFIX = 'configuration';
 
 export const COPY_BUTTON_CSS_CLASS = 'sxp-copy-button';
+
+export const DEFAULT_DELTAS = [
+	{
+		label: 5,
+	},
+	{
+		label: 10,
+	},
+	{
+		label: 20,
+	},
+	{
+		label: 40,
+	},
+	{
+		label: 50,
+	},
+];
 
 export const DEFAULT_INDEX_CONFIGURATION = {
 	external: false,

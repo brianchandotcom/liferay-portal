@@ -1,36 +1,6 @@
 <?xml version="1.0"?>
 
 <custom-sql>
-	<sql id="com.liferay.commerce.product.service.persistence.CommerceChannelAccountEntryRelFinder.countByC_T">
-		<![CDATA[
-			SELECT
-				COUNT(DISTINCT CChannelAccountEntryRel.CChannelAccountEntryRelId) AS COUNT_VALUE
-			FROM
-				CChannelAccountEntryRel
-			JOIN
-				AccountEntry ON
-					CChannelAccountEntryRel.accountEntryId = AccountEntry.accountEntryId
-			WHERE
-				(CChannelAccountEntryRel.commerceChannelId = ?) AND
-				(CChannelAccountEntryRel.type_ = ?) AND
-				(LOWER(AccountEntry.name) LIKE ? [$AND_OR_NULL_CHECK$])
-		]]>
-	</sql>
-	<sql id="com.liferay.commerce.product.service.persistence.CommerceChannelAccountEntryRelFinder.findByC_T">
-		<![CDATA[
-			SELECT
-				DISTINCT CChannelAccountEntryRel.*
-			FROM
-				CChannelAccountEntryRel
-			JOIN
-				AccountEntry ON
-					CChannelAccountEntryRel.accountEntryId = AccountEntry.accountEntryId
-			WHERE
-				(CChannelAccountEntryRel.commerceChannelId = ?) AND
-				(CChannelAccountEntryRel.type_ = ?) AND
-				(LOWER(AccountEntry.name) LIKE ? [$AND_OR_NULL_CHECK$])
-		]]>
-	</sql>
 	<sql id="com.liferay.commerce.product.service.persistence.CommerceChannelRelFinder.countByC_C">
 		<![CDATA[
 			SELECT

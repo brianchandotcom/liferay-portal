@@ -41,16 +41,17 @@ public class OAuth2ApplicationsManagementToolbarDisplayContext
 	public OAuth2ApplicationsManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		PortletURL currentURLObj) {
+		SearchContainer<?> searchContainer) {
 
 		super(
 			liferayPortletRequest.getHttpServletRequest(),
-			liferayPortletRequest, liferayPortletResponse, currentURLObj);
+			liferayPortletRequest, liferayPortletResponse, searchContainer);
 
 		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
 			liferayPortletRequest);
 	}
 
+	@Override
 	public List<DropdownItem> getActionDropdownItems() {
 		return DropdownItemListBuilder.add(
 			dropdownItem -> {
@@ -63,6 +64,7 @@ public class OAuth2ApplicationsManagementToolbarDisplayContext
 		).build();
 	}
 
+	@Override
 	public Map<String, Object> getAdditionalProps() {
 		return HashMapBuilder.<String, Object>put(
 			"deleteOAuth2ApplicationsURL",
@@ -74,6 +76,7 @@ public class OAuth2ApplicationsManagementToolbarDisplayContext
 		).build();
 	}
 
+	@Override
 	public CreationMenu getCreationMenu() {
 		return CreationMenuBuilder.addPrimaryDropdownItem(
 			dropdownItem -> {
@@ -89,6 +92,7 @@ public class OAuth2ApplicationsManagementToolbarDisplayContext
 		).build();
 	}
 
+	@Override
 	public String getDisplayStyle() {
 		if (Validator.isNotNull(_displayStyle)) {
 			return _displayStyle;
@@ -118,6 +122,7 @@ public class OAuth2ApplicationsManagementToolbarDisplayContext
 			Objects.equals(getOrderByType(), "asc"));
 	}
 
+	@Override
 	public List<DropdownItem> getOrderByDropdownItems() {
 		return getOrderByDropdownItems(
 			HashMapBuilder.put(

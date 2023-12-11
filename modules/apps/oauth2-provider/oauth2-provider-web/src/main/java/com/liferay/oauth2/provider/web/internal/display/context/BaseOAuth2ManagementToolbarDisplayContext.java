@@ -5,6 +5,7 @@
 
 package com.liferay.oauth2.provider.web.internal.display.context;
 
+import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -13,11 +14,9 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.util.ParamUtil;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
@@ -27,35 +26,18 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Tomas Polesovsky
  */
-public abstract class BaseOAuth2ManagementToolbarDisplayContext {
+public abstract class BaseOAuth2ManagementToolbarDisplayContext
+	extends SearchContainerManagementToolbarDisplayContext {
 
 	public BaseOAuth2ManagementToolbarDisplayContext(
 		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		PortletURL currentURLObj) {
+		SearchContainer<?> searchContainer) {
 
-		this.httpServletRequest = httpServletRequest;
-		this.liferayPortletRequest = liferayPortletRequest;
-		this.liferayPortletResponse = liferayPortletResponse;
-		this.currentURLObj = currentURLObj;
-	}
-
-	public String getOrderByCol() {
-		return ParamUtil.getString(liferayPortletRequest, "orderByCol");
-	}
-
-	public String getOrderByType() {
-		return ParamUtil.getString(liferayPortletRequest, "orderByType", "asc");
-	}
-
-	public PortletURL getSortingURL() throws PortletException {
-		return PortletURLBuilder.create(
-			getCurrentSortingURL()
-		).setParameter(
-			"orderByType",
-			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc"
-		).buildPortletURL();
+		super(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			searchContainer);
 	}
 
 	protected PortletURL getCurrentSortingURL() throws PortletException {
@@ -93,10 +75,5 @@ public abstract class BaseOAuth2ManagementToolbarDisplayContext {
 			}
 		};
 	}
-
-	protected PortletURL currentURLObj;
-	protected HttpServletRequest httpServletRequest;
-	protected LiferayPortletRequest liferayPortletRequest;
-	protected LiferayPortletResponse liferayPortletResponse;
 
 }

@@ -8,6 +8,7 @@ package com.liferay.oauth2.provider.web.internal.display.context;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.oauth2.provider.model.OAuth2Authorization;
+import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -30,13 +31,14 @@ public class OAuth2ConnectedApplicationsManagementToolbarDisplayContext
 	public OAuth2ConnectedApplicationsManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		PortletURL currentURLObj) {
+		SearchContainer<?> searchContainer) {
 
 		super(
 			liferayPortletRequest.getHttpServletRequest(),
-			liferayPortletRequest, liferayPortletResponse, currentURLObj);
+			liferayPortletRequest, liferayPortletResponse, searchContainer);
 	}
 
+	@Override
 	public List<DropdownItem> getActionDropdownItems() {
 		return DropdownItemListBuilder.add(
 			dropdownItem -> {
@@ -49,6 +51,7 @@ public class OAuth2ConnectedApplicationsManagementToolbarDisplayContext
 		).build();
 	}
 
+	@Override
 	public Map<String, Object> getAdditionalProps() {
 		return HashMapBuilder.<String, Object>put(
 			"revokeOauthAuthorizationsURL",
@@ -77,6 +80,7 @@ public class OAuth2ConnectedApplicationsManagementToolbarDisplayContext
 			"OAuth2Authorization", columnName, orderByType.equals("asc"));
 	}
 
+	@Override
 	public List<DropdownItem> getOrderByDropdownItems() {
 		return getOrderByDropdownItems(
 			HashMapBuilder.put(

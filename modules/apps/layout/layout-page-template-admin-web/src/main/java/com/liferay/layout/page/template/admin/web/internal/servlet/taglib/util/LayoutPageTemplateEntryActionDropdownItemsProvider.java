@@ -193,15 +193,17 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 			PortletRequest.RENDER_PHASE);
 
 		return dropdownItem -> {
+			PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+
 			dropdownItem.setHref(
 				editPageURL, "mvcRenderCommandName",
 				"/layout_admin/edit_layout", "redirect",
 				_themeDisplay.getURLCurrent(), "backURL",
 				_themeDisplay.getURLCurrent(), "backURLTitle",
-				LanguageUtil.get(_httpServletRequest, "page-templates"),
-				"portletResource",
+				portletDisplay.getPortletDisplayName(), "portletResource",
 				LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES,
 				"selPlid", _layoutPageTemplateEntry.getPlid());
+
 			dropdownItem.setIcon("cog");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "configure"));

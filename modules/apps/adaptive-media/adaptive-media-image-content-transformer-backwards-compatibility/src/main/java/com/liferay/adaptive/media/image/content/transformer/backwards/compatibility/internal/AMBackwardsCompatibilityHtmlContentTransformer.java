@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.Objects;
 import java.util.regex.Matcher;
@@ -92,7 +93,7 @@ public class AMBackwardsCompatibilityHtmlContentTransformer
 		}
 
 		if (matcher.group(5) != null) {
-			long groupId = Long.valueOf(matcher.group(2));
+			long groupId = GetterUtil.getLong(matcher.group(2));
 
 			String uuid = matcher.group(5);
 
@@ -100,8 +101,8 @@ public class AMBackwardsCompatibilityHtmlContentTransformer
 				uuid, groupId);
 		}
 
-		long groupId = Long.valueOf(matcher.group(2));
-		long folderId = Long.valueOf(matcher.group(3));
+		long groupId = GetterUtil.getLong(matcher.group(2));
+		long folderId = GetterUtil.getLong(matcher.group(3));
 		String title = matcher.group(4);
 
 		try {

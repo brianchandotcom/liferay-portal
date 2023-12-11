@@ -24,8 +24,6 @@ import org.junit.Test;
 
 import org.mockito.Mockito;
 
-import org.osgi.framework.BundleException;
-
 /**
  * @author Alejandro Tardín
  */
@@ -37,13 +35,13 @@ public class ContentTransformerHandlerImplTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Before
-	public void setUp() throws BundleException {
+	public void setUp() {
 		_contentTransformerHandlerImpl.setServiceTrackerList(
 			_mockServiceTrackerList);
 	}
 
 	@After
-	public final void tearDown() throws Exception {
+	public final void tearDown() {
 		_contentTransformerHandlerImpl.deactivate();
 	}
 

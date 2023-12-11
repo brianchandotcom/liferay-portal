@@ -11,6 +11,7 @@ import com.liferay.adaptive.media.image.html.constants.AMImageHTMLConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -44,7 +45,7 @@ public class HtmlContentTransformerImpl
 
 	@Override
 	protected FileEntry getFileEntry(Matcher matcher) throws PortalException {
-		long fileEntryId = Long.valueOf(matcher.group(1));
+		long fileEntryId = GetterUtil.getLong(matcher.group(1));
 
 		return _dlAppLocalService.getFileEntry(fileEntryId);
 	}

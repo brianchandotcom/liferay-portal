@@ -32,6 +32,7 @@ page import="com.liferay.asset.kernel.model.ClassTypeReader" %><%@
 page import="com.liferay.asset.kernel.service.AssetEntryServiceUtil" %><%@
 page import="com.liferay.asset.list.constants.AssetListEntryTypeConstants" %><%@
 page import="com.liferay.asset.list.constants.AssetListFormConstants" %><%@
+page import="com.liferay.asset.list.exception.RequiredAssetListEntryException" %><%@
 page import="com.liferay.asset.list.model.AssetListEntry" %><%@
 page import="com.liferay.asset.list.model.AssetListEntryAssetEntryRel" %><%@
 page import="com.liferay.asset.list.web.internal.constants.AssetListWebKeys" %><%@

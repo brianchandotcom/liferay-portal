@@ -12,6 +12,8 @@ $line-height-h3:                  math.div(5.4, 45);
 $line-height-h4:                  math.div(58, 4.4);
 $line-height-h5:                  math.div(5.8, 4.4);
 
+$multiplier: math.div(nth($value, 1), $spacer);
+
 @mixin make($list: "#{'.col-xs-' + $i}, #{'.col-sm-' + $i}") {
 }
 

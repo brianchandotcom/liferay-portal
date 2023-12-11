@@ -11,6 +11,8 @@ $line-height-h3:                  5.4 / 45;
 $line-height-h4:                  58 / 4.4;
 $line-height-h5:                  5.8 / 4.4;
 
+$multiplier: nth($value, 1) / $spacer;
+
 @mixin make($list: ".col-xs-#{$i}, .col-sm-#{$i}") {
 }
 

@@ -232,6 +232,11 @@
 				border-color: $light;
 			}
 		}
+
+		.item-selector-input .form-control.focus {
+			background-color: $errorL2;
+			border-color: $errorL1;
+		}
 	}
 
 	.json-configuration-editor {

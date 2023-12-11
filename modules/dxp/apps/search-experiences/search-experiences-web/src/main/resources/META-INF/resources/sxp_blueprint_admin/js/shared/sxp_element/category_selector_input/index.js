@@ -424,7 +424,7 @@ function CategorySelectorInput({
 	}, []);
 
 	return (
-		<ClayInput.Group small>
+		<ClayInput.Group className="item-selector-input" small>
 			<ClayInput.GroupItem>
 				{multiple ? (
 					<ClayMultiSelect

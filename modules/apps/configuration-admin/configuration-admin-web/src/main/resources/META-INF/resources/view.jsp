@@ -16,18 +16,9 @@ ConfigurationScopeDisplayContext configurationScopeDisplayContext = Configuratio
 ExtendedObjectClassDefinition.Scope scope = configurationScopeDisplayContext.getScope();
 %>
 
-<portlet:renderURL var="redirectURL" />
-
-<portlet:renderURL var="searchURL">
-	<portlet:param name="mvcRenderCommandName" value="/configuration_admin/search_results" />
-	<portlet:param name="redirect" value="<%= redirectURL %>" />
-</portlet:renderURL>
-
 <div class="sticky-top" style="top: var(--control-menu-container-height);">
 	<clay:management-toolbar
-		searchActionURL="<%= searchURL %>"
-		selectable="<%= false %>"
-		showSearch="<%= true %>"
+		managementToolbarDisplayContext="<%= new ConfigurationScopeManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, 0) %>"
 	/>
 </div>
 

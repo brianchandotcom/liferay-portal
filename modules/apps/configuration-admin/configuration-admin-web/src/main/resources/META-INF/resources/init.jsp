@@ -32,6 +32,7 @@ page import="com.liferay.configuration.admin.web.internal.display.ConfigurationM
 page import="com.liferay.configuration.admin.web.internal.display.ConfigurationScopeDisplay" %><%@
 page import="com.liferay.configuration.admin.web.internal.display.context.ConfigurationScopeDisplayContext" %><%@
 page import="com.liferay.configuration.admin.web.internal.display.context.ConfigurationScopeDisplayContextFactory" %><%@
+page import="com.liferay.configuration.admin.web.internal.display.context.ConfigurationScopeManagementToolbarDisplayContext" %><%@
 page import="com.liferay.configuration.admin.web.internal.model.ConfigurationModel" %><%@
 page import="com.liferay.configuration.admin.web.internal.util.ConfigurationCategoryUtil" %><%@
 page import="com.liferay.configuration.admin.web.internal.util.ConfigurationEntryIterator" %><%@

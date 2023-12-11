@@ -35,11 +35,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "search-results"));
 
 <div class="sticky-top" style="top: var(--control-menu-container-height);">
 	<clay:management-toolbar
-		clearResultsURL="<%= redirect %>"
-		itemsTotal="<%= configurationEntryIterator.getTotal() %>"
-		searchActionURL="<%= searchURL.toString() %>"
-		selectable="<%= false %>"
-		showSearch="<%= true %>"
+		managementToolbarDisplayContext="<%= new ConfigurationScopeManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, configurationEntryIterator.getTotal()) %>"
 	/>
 </div>
 

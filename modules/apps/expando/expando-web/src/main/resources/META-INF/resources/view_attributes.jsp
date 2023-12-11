@@ -101,7 +101,84 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "view-at
 				value="<%= modelResource %>"
 			/>
 
-			<%@ include file="/attribute_columns.jspf" %>
+			<liferay-ui:search-container-column-text
+				cssClass="table-cell-expand table-cell-minw-200 table-title"
+				name="name"
+			>
+
+				<%
+				String localizedName = name;
+
+				boolean propertyLocalizeFieldName = GetterUtil.getBoolean(typeSettingsUnicodeProperties.getProperty(ExpandoColumnConstants.PROPERTY_LOCALIZE_FIELD_NAME), true);
+
+				if (propertyLocalizeFieldName) {
+					localizedName = LanguageUtil.get(request, name);
+
+					if (name.equals(localizedName)) {
+						localizedName = TextFormatter.format(name, TextFormatter.J);
+					}
+				}
+				%>
+
+				<a href="<%= rowURL %>"><strong><%= HtmlUtil.escape(localizedName) %></strong></a>
+
+				<br />
+			</liferay-ui:search-container-column-text>
+
+			<liferay-ui:search-container-column-text
+				cssClass="table-cell-expand table-cell-minw-200"
+				href="<%= rowURL %>"
+				name="key"
+				value="<%= HtmlUtil.escape(name) %>"
+			/>
+
+			<liferay-ui:search-container-column-text
+				cssClass="table-cell-expand table-cell-minw-200"
+				href="<%= rowURL %>"
+				name="type"
+				value="<%= LanguageUtil.get(request, ExpandoColumnConstants.getTypeLabel(type)) %>"
+			/>
+
+			<liferay-ui:search-container-column-text
+				cssClass="table-cell-expand-smallest table-cell-ws-nowrap"
+				href="<%= rowURL %>"
+				name="hidden"
+			>
+
+				<%
+				boolean hidden = GetterUtil.getBoolean(typeSettingsUnicodeProperties.getProperty(ExpandoColumnConstants.PROPERTY_HIDDEN));
+				%>
+
+				<liferay-ui:message key="<%= String.valueOf(hidden) %>" />
+			</liferay-ui:search-container-column-text>
+
+			<liferay-ui:search-container-column-text
+				cssClass="table-cell-expand-smallest table-cell-ws-nowrap"
+				href="<%= rowURL %>"
+				name="searchable"
+			>
+
+				<%
+				int indexType = GetterUtil.getInteger(typeSettingsUnicodeProperties.getProperty(ExpandoColumnConstants.INDEX_TYPE));
+				%>
+
+				<c:choose>
+					<c:when test="<%= indexType == ExpandoColumnConstants.INDEX_TYPE_KEYWORD %>">
+						<liferay-ui:message key="as-keyword" />
+					</c:when>
+					<c:when test="<%= indexType == ExpandoColumnConstants.INDEX_TYPE_TEXT %>">
+						<liferay-ui:message key="as-text" />
+					</c:when>
+					<c:otherwise>
+						<liferay-ui:message key="not-searchable" />
+					</c:otherwise>
+				</c:choose>
+			</liferay-ui:search-container-column-text>
+
+			<liferay-ui:search-container-column-jsp
+				cssClass="autofit-col"
+				path="/expando_action.jsp"
+			/>
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator

@@ -175,7 +175,9 @@ definition {
 
 			ObjectAdmin.deleteObjectViaAPI(objectName = "CustomObject187390");
 
-			ObjectExportImport.importObject(objectFileName = "ImportedObjectWith100Fields", objectName = "CustomObject187390");
+			ObjectExportImport.importObject(
+				objectName = "CustomObject187390",
+				tempFile = "true");
 		}
 
 		task ("When the user creates an object entry with each field type filled") {

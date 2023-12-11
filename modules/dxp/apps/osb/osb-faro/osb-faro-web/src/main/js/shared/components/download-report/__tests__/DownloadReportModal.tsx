@@ -1,11 +1,13 @@
 import ClayForm from '@clayui/form';
 import mockStore from 'test/mock-store';
+import moment, {Moment} from 'moment';
 import React, {useState} from 'react';
 import ReactDOM from 'react-dom';
 import {act, cleanup, fireEvent, render} from '@testing-library/react';
 import {Checkbox, Containers, formatContainers} from '../DownloadPDFReport';
 import {DownloadReportButton} from '../DownloadReportButton';
 import {DownloadReportModal, ReportType} from '../DownloadReportModal';
+import {MomentDateRange} from 'shared/components/DateRangeInput';
 import {Provider} from 'react-redux';
 import {sub} from 'shared/util/lang';
 import {toLocale} from 'shared/util/numbers';
@@ -13,8 +15,9 @@ import {useModal} from '@clayui/modal';
 
 jest.unmock('react-dom');
 
-const WrapperCSVComponent = () => (
+const WrapperCSVComponent = props => (
 	<WrapperComponent
+		{...props}
 		alertMessage={
 			sub(
 				Liferay.Language.get(
@@ -44,7 +47,7 @@ const WrapperCSVComponent = () => (
 	/>
 );
 
-const WrapperPDFomponent = ({children}) => (
+const WrapperPDFomponent = ({children, ...otherProps}) => (
 	<WrapperComponent
 		alertMessage={
 			sub(
@@ -66,6 +69,7 @@ const WrapperPDFomponent = ({children}) => (
 			'the-dashboard-will-be-downloaded-exactly-as-it-is-displayed-on-your-screen.-please-verify-if-the-desired-tabs-and-filters-are-selected-before-downloading'
 		)}
 		type={ReportType.PDF}
+		{...otherProps}
 	>
 		{children}
 	</WrapperComponent>
@@ -73,8 +77,10 @@ const WrapperPDFomponent = ({children}) => (
 
 interface IWrapperComponent extends React.HTMLAttributes<HTMLElement> {
 	alertMessage: string;
+	date?: MomentDateRange;
 	descriptionMessage: string;
 	infoMessage: string;
+	minDate?: Moment;
 	requiredDateRange?: boolean;
 	type: ReportType;
 }
@@ -85,7 +91,8 @@ const WrapperComponent: React.FC<IWrapperComponent> = ({
 	descriptionMessage,
 	infoMessage,
 	requiredDateRange = false,
-	type
+	type,
+	...otherProps
 }) => {
 	const [visible, setVisible] = useState(false);
 	const {observer} = useModal({onClose: () => setVisible(false)});
@@ -95,6 +102,7 @@ const WrapperComponent: React.FC<IWrapperComponent> = ({
 			{visible && (
 				<Provider store={mockStore()}>
 					<DownloadReportModal
+						{...otherProps}
 						alertMessage={alertMessage}
 						descriptionMessage={descriptionMessage}
 						infoMessage={infoMessage}
@@ -193,7 +201,12 @@ describe('DownloadReportModal CSV', () => {
 	});
 
 	it('download button should be enabled when there are date range value', () => {
-		const {getByRole, getByTestId} = render(<WrapperCSVComponent />);
+		const {getByRole, getByTestId} = render(
+			<WrapperCSVComponent
+				date={{end: moment(0), start: moment(0)}}
+				minDate={moment(0)}
+			/>
+		);
 
 		fireEvent.click(
 			getByRole('button', {
@@ -217,7 +230,7 @@ describe('DownloadReportModal CSV', () => {
 
 		expect(customRangeInput).toHaveAttribute(
 			'value',
-			'2023-11-10 - 2023-11-11'
+			'1970-01-01 - 1970-01-01'
 		);
 		expect(getByTestId('submit')).not.toHaveAttribute('disabled');
 	});
@@ -273,7 +286,10 @@ describe('DownloadReportModal PDF', () => {
 		];
 
 		const {container, getByRole, getByTestId, getByText} = render(
-			<WrapperPDFomponent>
+			<WrapperPDFomponent
+				date={{end: moment(0), start: moment(0)}}
+				minDate={moment(0)}
+			>
 				<ClayForm.Group>
 					<label>{Liferay.Language.get('select-reports')}</label>
 

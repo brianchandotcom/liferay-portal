@@ -16,7 +16,6 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.wiring.BundleWiring;
-import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -33,67 +32,18 @@ public class JSONWebServiceTracker
 
 	@Override
 	public Object addingService(ServiceReference<Object> serviceReference) {
-		return _registerService(serviceReference);
-	}
-
-	@Override
-	public void modifiedService(
-		ServiceReference<Object> serviceReference, Object service) {
-
-		_unregisterService(service);
-
-		_registerService(serviceReference);
-	}
-
-	@Override
-	public void removedService(
-		ServiceReference<Object> serviceReference, Object service) {
-
-		_unregisterService(service);
-	}
-
-	@Activate
-	protected void activate(ComponentContext componentContext) {
-		_componentContext = componentContext;
-
-		_serviceTracker = ServiceTrackerFactory.open(
-			componentContext.getBundleContext(),
-			StringBundler.concat(
-				"(&(json.web.service.context.name=*)(json.web.service.context.",
-				"path=*)(!(objectClass=", AopService.class.getName(), ")))"),
-			this);
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_componentContext = null;
-
-		_serviceTracker.close();
-
-		_serviceTracker = null;
-	}
-
-	private ClassLoader _getBundleClassLoader(Bundle bundle) {
-		BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
-
-		return bundleWiring.getClassLoader();
-	}
-
-	private Object _getService(ServiceReference<Object> serviceReference) {
-		BundleContext bundleContext = _componentContext.getBundleContext();
-
-		return bundleContext.getService(serviceReference);
-	}
-
-	private Object _registerService(ServiceReference<Object> serviceReference) {
 		String contextName = (String)serviceReference.getProperty(
 			"json.web.service.context.name");
 		String contextPath = (String)serviceReference.getProperty(
 			"json.web.service.context.path");
-		Object service = _getService(serviceReference);
+		Object service = _bundleContext.getService(serviceReference);
+
+		Bundle bundle = serviceReference.getBundle();
+
+		BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
 
 		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
-				_getBundleClassLoader(serviceReference.getBundle()))) {
+				bundleWiring.getClassLoader())) {
 
 			_jsonWebServiceActionsManager.registerService(
 				contextName, contextPath, service);
@@ -102,11 +52,42 @@ public class JSONWebServiceTracker
 		return service;
 	}
 
-	private void _unregisterService(Object service) {
-		_jsonWebServiceActionsManager.unregisterJSONWebServiceActions(service);
+	@Override
+	public void modifiedService(
+		ServiceReference<Object> serviceReference, Object service) {
+
+		removedService(serviceReference, service);
+
+		addingService(serviceReference);
 	}
 
-	private ComponentContext _componentContext;
+	@Override
+	public void removedService(
+		ServiceReference<Object> serviceReference, Object service) {
+
+		_jsonWebServiceActionsManager.unregisterJSONWebServiceActions(service);
+
+		_bundleContext.ungetService(serviceReference);
+	}
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_bundleContext = bundleContext;
+
+		_serviceTracker = ServiceTrackerFactory.open(
+			bundleContext,
+			StringBundler.concat(
+				"(&(json.web.service.context.name=*)(json.web.service.context.",
+				"path=*)(!(objectClass=", AopService.class.getName(), ")))"),
+			this);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceTracker.close();
+	}
+
+	private BundleContext _bundleContext;
 
 	@Reference
 	private JSONWebServiceActionsManager _jsonWebServiceActionsManager;

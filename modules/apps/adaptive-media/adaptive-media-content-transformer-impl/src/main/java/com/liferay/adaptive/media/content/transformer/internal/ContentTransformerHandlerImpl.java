@@ -49,8 +49,15 @@ public class ContentTransformerHandlerImpl
 	public String transform(String originalContent) {
 		String transformedContent = originalContent;
 
-		T transformedContent = _htmlContentTransformer.transform(
-			originalContent);
+		try {
+			transformedContent = _htmlContentTransformer.transform(
+				originalContent);
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+		}
 
 		for (ContentTransformer<?> curContentTransformer :
 				_serviceTrackerList) {

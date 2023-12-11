@@ -79,22 +79,11 @@ public class CopyDLObjectsDisplayContext {
 			return _dlObjectName;
 		}
 
-		boolean useParentFolderName = false;
-
-		if (dlObjectIds.length > 1) {
-			useParentFolderName = true;
-		}
-
 		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.fetchDLFileEntry(
 			dlObjectIds[0]);
 
 		if (dlFileEntry != null) {
-			if (useParentFolderName) {
-				_dlObjectName = _getFolderName(dlFileEntry.getFolder());
-			}
-			else {
-				_dlObjectName = dlFileEntry.getTitle();
-			}
+			_dlObjectName = _getFolderName(dlFileEntry.getFolder());
 
 			return _dlObjectName;
 		}
@@ -103,12 +92,7 @@ public class CopyDLObjectsDisplayContext {
 			dlObjectIds[0]);
 
 		if (dlFolder != null) {
-			if (useParentFolderName) {
-				_dlObjectName = _getFolderName(dlFolder.getParentFolder());
-			}
-			else {
-				_dlObjectName = dlFolder.getName();
-			}
+			_dlObjectName = _getFolderName(dlFolder.getParentFolder());
 
 			return _dlObjectName;
 		}
@@ -116,12 +100,7 @@ public class CopyDLObjectsDisplayContext {
 		DLFileShortcut dlFileShortcut =
 			DLFileShortcutLocalServiceUtil.getDLFileShortcut(dlObjectIds[0]);
 
-		if (useParentFolderName) {
-			_dlObjectName = _getFolderName(dlFileShortcut.getDLFolder());
-		}
-		else {
-			_dlObjectName = dlFileShortcut.getToTitle();
-		}
+		_dlObjectName = _getFolderName(dlFileShortcut.getDLFolder());
 
 		return _dlObjectName;
 	}

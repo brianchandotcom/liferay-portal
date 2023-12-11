@@ -2,7 +2,6 @@ export {compose} from 'redux';
 
 export {default as withPolling} from './WithPolling';
 
-export {default as checkExperimentLink} from './CheckExperimentLink';
 export {default as checkProjectState} from './CheckProjectState';
 export {default as checkSegmentLink} from './CheckSegmentLink';
 export {default as checkValidChannel} from './CheckValidChannel';

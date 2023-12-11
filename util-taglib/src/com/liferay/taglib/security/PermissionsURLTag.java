@@ -36,38 +36,11 @@ public class PermissionsURLTag extends TagSupport {
 			String windowState, HttpServletRequest httpServletRequest)
 		throws Exception {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		resourceGroupId = _getResourceGroupId(resourceGroupId, themeDisplay);
-
 		redirect = _getRedirect(httpServletRequest, redirect, windowState);
 
-		PortletURL portletURL = PortletURLBuilder.create(
-			PortletProviderUtil.getPortletURL(
-				httpServletRequest,
-				PortletConfigurationApplicationType.PortletConfiguration.
-					CLASS_NAME,
-				PortletProvider.Action.VIEW)
-		).setMVCPath(
-			"/edit_permissions.jsp"
-		).setPortletResource(
-			() -> {
-				PortletDisplay portletDisplay =
-					themeDisplay.getPortletDisplay();
-
-				return portletDisplay.getId();
-			}
-		).setParameter(
-			"modelResource", modelResource
-		).setParameter(
-			"portletConfiguration", true
-		).setParameter(
-			"resourceGroupId", resourceGroupId
-		).setWindowState(
-			_getWindowState(windowState, themeDisplay)
-		).buildPortletURL();
+		PortletURL portletURL = _getPorletURL(
+			httpServletRequest, modelResource, resourceGroupId,
+			 windowState);
 
 		if (Validator.isNotNull(redirect)) {
 			portletURL.setParameter("redirect", redirect);
@@ -110,25 +83,17 @@ public class PermissionsURLTag extends TagSupport {
 			HttpServletRequest httpServletRequest)
 		throws Exception {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		resourceGroupId = _getResourceGroupId(resourceGroupId, themeDisplay);
-
 		redirect = _getRedirect(httpServletRequest, redirect, windowState);
 
-		PortletURL portletURL = PortletProviderUtil.getPortletURL(
-			httpServletRequest,
-			PortletConfigurationApplicationType.PortletConfiguration.CLASS_NAME,
-			PortletProvider.Action.VIEW);
-
-		portletURL.setWindowState(_getWindowState(windowState, themeDisplay));
-
-		portletURL.setParameter("mvcPath", "/edit_permissions.jsp");
+		PortletURL portletURL = _getPorletURL(
+			httpServletRequest, modelResource, resourceGroupId, windowState);
 
 		if (Validator.isNotNull(redirect)) {
 			portletURL.setParameter("redirect", redirect);
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
 			if (!themeDisplay.isStateMaximized()) {
 				portletURL.setParameter("returnToFullPageURL", redirect);
@@ -136,17 +101,7 @@ public class PermissionsURLTag extends TagSupport {
 		}
 
 		portletURL.setParameter(
-			"portletConfiguration", Boolean.TRUE.toString());
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		portletURL.setParameter("portletResource", portletDisplay.getId());
-
-		portletURL.setParameter("modelResource", modelResource);
-		portletURL.setParameter(
 			"modelResourceDescription", modelResourceDescription);
-		portletURL.setParameter(
-			"resourceGroupId", String.valueOf(resourceGroupId));
 		portletURL.setParameter("resourcePrimKey", resourcePrimKey);
 
 		if (roleTypes != null) {
@@ -210,6 +165,43 @@ public class PermissionsURLTag extends TagSupport {
 
 	public void setWindowState(String windowState) {
 		_windowState = windowState;
+	}
+
+	private static PortletURL _getPorletURL(
+			HttpServletRequest httpServletRequest, String modelResource,
+			Object resourceGroupId,
+			String windowState)
+		throws Exception {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		return PortletURLBuilder.create(
+			PortletProviderUtil.getPortletURL(
+				httpServletRequest,
+				PortletConfigurationApplicationType.PortletConfiguration.
+					CLASS_NAME,
+				PortletProvider.Action.VIEW)
+		).setMVCPath(
+			"/edit_permissions.jsp"
+		).setPortletResource(
+			() -> {
+				PortletDisplay portletDisplay =
+					themeDisplay.getPortletDisplay();
+
+				return portletDisplay.getId();
+			}
+		).setParameter(
+			"modelResource", modelResource
+		).setParameter(
+			"portletConfiguration", true
+		).setParameter(
+			"resourceGroupId",
+			_getResourceGroupId(resourceGroupId, themeDisplay)
+		).setWindowState(
+			_getWindowState(windowState, themeDisplay)
+		).buildPortletURL();
 	}
 
 	private static String _getRedirect(

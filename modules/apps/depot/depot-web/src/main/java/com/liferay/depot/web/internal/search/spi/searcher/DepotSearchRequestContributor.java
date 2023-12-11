@@ -5,10 +5,12 @@
 
 package com.liferay.depot.web.internal.search.spi.searcher;
 
+import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryGroupRelLocalService;
 import com.liferay.depot.service.DepotEntryLocalService;
-import com.liferay.depot.web.internal.search.DepotSearchUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
@@ -30,18 +32,37 @@ public class DepotSearchRequestContributor implements SearchRequestContributor {
 
 	@Override
 	public SearchRequest contribute(SearchRequest searchRequest) {
-		DepotSearchUtil.addAssetLibraryGroupIdsToSearchContext(
-			_getSearchContext(searchRequest), _depotEntryGroupRelLocalService,
-			_depotEntryLocalService);
-
-		return searchRequest;
-	}
-
-	private SearchContext _getSearchContext(SearchRequest searchRequest) {
 		SearchRequestBuilder searchRequestBuilder =
 			_searchRequestBuilderFactory.builder(searchRequest);
 
-		return searchRequestBuilder.withSearchContextGet(Function.identity());
+		SearchContext searchContext = searchRequestBuilder.withSearchContextGet(
+			Function.identity());
+
+		long[] groupIds = searchContext.getGroupIds();
+
+		if (!ArrayUtil.isEmpty(groupIds)) {
+			for (long groupId : groupIds) {
+				searchContext.setGroupIds(
+					ArrayUtil.append(
+						searchContext.getGroupIds(),
+						TransformUtil.transformToLongArray(
+							_depotEntryGroupRelLocalService.
+								getSearchableDepotEntryGroupRels(
+									groupId, 0,
+									_depotEntryGroupRelLocalService.
+										getSearchableDepotEntryGroupRelsCount(
+											groupId)),
+							depotEntryGroupRel -> {
+								DepotEntry depotEntry =
+									_depotEntryLocalService.fetchDepotEntry(
+										depotEntryGroupRel.getDepotEntryId());
+
+								return depotEntry.getGroupId();
+							})));
+			}
+		}
+
+		return searchRequest;
 	}
 
 	@Reference

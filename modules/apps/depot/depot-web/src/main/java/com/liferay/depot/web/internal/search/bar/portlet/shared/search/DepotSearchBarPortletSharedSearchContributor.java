@@ -5,9 +5,6 @@
 
 package com.liferay.depot.web.internal.search.bar.portlet.shared.search;
 
-import com.liferay.depot.service.DepotEntryGroupRelLocalService;
-import com.liferay.depot.service.DepotEntryLocalService;
-import com.liferay.depot.web.internal.search.DepotSearchUtil;
 import com.liferay.portal.search.web.constants.SearchBarPortletKeys;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchContributor;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchSettings;
@@ -34,10 +31,6 @@ public class DepotSearchBarPortletSharedSearchContributor
 
 		_defaultSearchBarPortletSharedSearchContributor.contribute(
 			portletSharedSearchSettings);
-
-		DepotSearchUtil.addAssetLibraryGroupIdsToSearchContext(
-			portletSharedSearchSettings.getSearchContext(),
-			_depotEntryGroupRelLocalService, _depotEntryLocalService);
 	}
 
 	@Reference(
@@ -45,11 +38,5 @@ public class DepotSearchBarPortletSharedSearchContributor
 	)
 	private PortletSharedSearchContributor
 		_defaultSearchBarPortletSharedSearchContributor;
-
-	@Reference
-	private DepotEntryGroupRelLocalService _depotEntryGroupRelLocalService;
-
-	@Reference
-	private DepotEntryLocalService _depotEntryLocalService;
 
 }

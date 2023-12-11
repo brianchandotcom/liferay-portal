@@ -25,6 +25,468 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-196462. The New Rule Modal allows the user to create conditions and actions via keyboard."
+	@priority = 3
+	test AddConditionsAndActionsViaKeyboard {
+		property custom.properties = "feature.flag.LPS-169837=true";
+
+		task ("Given a page designer has fragments on a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = ${randomSiteName});
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading",
+				targetFragmentName = "Button");
+		}
+
+		task ("When the page designer opens the New Rule modal") {
+			PageEditor.gotoTab(tabName = "Page Rules");
+
+			Button.click(button = "New Rule");
+
+			AssertTextEquals(
+				locator1 = "Modal#HEADER",
+				value1 = "New Rule");
+		}
+
+		task ("Then the page designer could add conditions and actions via keyboard") {
+			AssertAttributeValue(
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_SECTION_TITLE",
+				value1 = "aria-label",
+				value2 = "If all of the following conditions are met:");
+
+			KeyPress(
+				key_text = "Rule Name",
+				locator1 = "TextInput#ANY",
+				value1 = "\TAB");
+
+			KeyPress(
+				key_text = "All",
+				locator1 = "Button#ANY",
+				value1 = "\ENTER");
+
+			KeyPress(
+				key_text = "All",
+				locator1 = "Button#ANY",
+				value1 = "\UP");
+
+			KeyPress(
+				key_text = "All",
+				locator1 = "Button#ANY",
+				value1 = "\ENTER");
+
+			AssertAttributeValue(
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_SECTION_TITLE",
+				value1 = "aria-label",
+				value2 = "If any of the following conditions are met:");
+
+			AssertAttributeValue(
+				index = 1,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION",
+				value1 = "aria-label",
+				value2 = "Incomplete Condition");
+
+			KeyPress(
+				index = 1,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION",
+				value1 = "\TAB");
+
+			AssertAttributeValue(
+				index = 1,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION_ITEM",
+				value1 = "aria-label",
+				value2 = "Select Item for the Condition");
+
+			KeyPress(
+				index = 1,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION_ITEM",
+				value1 = "\ENTER");
+
+			KeyPress(
+				index = 1,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION_ITEM",
+				value1 = "\ENTER");
+
+			AssertAttributeValue(
+				index = 2,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION_ITEM",
+				value1 = "aria-label",
+				value2 = "Select Condition");
+
+			KeyPress(
+				index = 1,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION_ITEM",
+				value1 = "\TAB");
+
+			KeyPress(
+				index = 2,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION_ITEM",
+				value1 = "\ENTER");
+
+			KeyPress(
+				index = 2,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION_ITEM",
+				value1 = "\ENTER");
+
+			AssertAttributeValue(
+				index = 3,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION_ITEM",
+				value1 = "aria-label",
+				value2 = "Select User");
+
+			KeyPress(
+				index = 2,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION_ITEM",
+				value1 = "\TAB");
+
+			KeyPress(
+				index = 3,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION_ITEM",
+				value1 = "\ENTER");
+
+			KeyPress(
+				index = 3,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION_ITEM",
+				value1 = "\ENTER");
+
+			AssertAttributeValue(
+				index = 1,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION",
+				value1 = "aria-label",
+				value2 = "User Is the User test");
+
+			KeyPress(
+				index = 1,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION_DELETE_BUTTON",
+				value1 = "\TAB");
+
+			KeyPress(
+				key_text = "Add Condition",
+				locator1 = "Button#ANY",
+				value1 = "\ENTER");
+
+			AssertElementFocused(
+				index = 2,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION");
+
+			KeyPress(
+				index = 2,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION",
+				value1 = "\TAB");
+
+			KeyPress(
+				index = 1,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION_ITEM",
+				value1 = "\ENTER");
+
+			KeyPress(
+				index = 1,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION_ITEM",
+				value1 = "\ENTER");
+
+			KeyPress(
+				index = 1,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION_ITEM",
+				value1 = "\TAB");
+
+			KeyPress(
+				index = 2,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION_ITEM",
+				value1 = "\ENTER");
+
+			KeyPress(
+				index = 2,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION_ITEM",
+				value1 = "\DOWN");
+
+			KeyPress(
+				index = 2,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION_ITEM",
+				value1 = "\ENTER");
+
+			AssertAttributeValue(
+				index = 3,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION_ITEM",
+				value1 = "aria-label",
+				value2 = "Select Role");
+
+			KeyPress(
+				index = 2,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION_ITEM",
+				value1 = "\TAB");
+
+			KeyPress(
+				index = 3,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION_ITEM",
+				value1 = "\ENTER");
+
+			KeyPress(
+				index = 3,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION_ITEM",
+				value1 = "\ENTER");
+
+			AssertAttributeValue(
+				index = 2,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION",
+				value1 = "aria-label",
+				value2 = "User Has the Role Of Account Manager");
+
+			KeyPress(
+				index = 2,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION_DELETE_BUTTON",
+				value1 = "\TAB");
+
+			KeyPress(
+				key_text = "Add Condition",
+				locator1 = "Button#ANY",
+				value1 = "\ENTER");
+
+			AssertElementFocused(
+				index = 3,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION");
+
+			KeyPress(
+				index = 3,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION",
+				value1 = "\TAB");
+
+			KeyPress(
+				index = 1,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION_ITEM",
+				value1 = "\ENTER");
+
+			KeyPress(
+				index = 1,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION_ITEM",
+				value1 = "\ENTER");
+
+			KeyPress(
+				index = 1,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION_ITEM",
+				value1 = "\TAB");
+
+			KeyPress(
+				index = 2,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION_ITEM",
+				value1 = "\ENTER");
+
+			KeyPress(
+				index = 2,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION_ITEM",
+				value1 = "\DOWN");
+
+			KeyPress(
+				index = 2,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION_ITEM",
+				value1 = "\DOWN");
+
+			KeyPress(
+				index = 2,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION_ITEM",
+				value1 = "\ENTER");
+
+			AssertAttributeValue(
+				index = 3,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION_ITEM",
+				value1 = "aria-label",
+				value2 = "Select Segment");
+
+			KeyPress(
+				index = 2,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION_ITEM",
+				value1 = "\TAB");
+
+			KeyPress(
+				index = 3,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION_ITEM",
+				value1 = "\ENTER");
+
+			KeyPress(
+				index = 3,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION_ITEM",
+				value1 = "\ENTER");
+
+			AssertAttributeValue(
+				index = 3,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION",
+				value1 = "aria-label",
+				value2 = "User Belongs to Segment Anyone");
+
+			AssertAttributeValue(
+				index = 1,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_ACTION",
+				value1 = "aria-label",
+				value2 = "Incomplete Action");
+
+			KeyPress(
+				index = 1,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_ACTION",
+				value1 = "\TAB");
+
+			AssertAttributeValue(
+				index = 1,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_ACTION_ITEM",
+				value1 = "aria-label",
+				value2 = "Select Action");
+
+			KeyPress(
+				index = 1,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_ACTION_ITEM",
+				value1 = "\ENTER");
+
+			KeyPress(
+				index = 1,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_ACTION_ITEM",
+				value1 = "\ENTER");
+
+			AssertAttributeValue(
+				index = 2,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_ACTION_ITEM",
+				value1 = "aria-label",
+				value2 = "Select Item for the Action");
+
+			KeyPress(
+				index = 1,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_ACTION_ITEM",
+				value1 = "\TAB");
+
+			KeyPress(
+				index = 2,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_ACTION_ITEM",
+				value1 = "\ENTER");
+
+			KeyPress(
+				index = 2,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_ACTION_ITEM",
+				value1 = "\ENTER");
+
+			AssertAttributeValue(
+				index = 3,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_ACTION_ITEM",
+				value1 = "aria-label",
+				value2 = "Select Fragment");
+
+			KeyPress(
+				index = 2,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_ACTION_ITEM",
+				value1 = "\TAB");
+
+			KeyPress(
+				index = 3,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_ACTION_ITEM",
+				value1 = "\ENTER");
+
+			KeyPress(
+				index = 3,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_ACTION_ITEM",
+				value1 = "\ENTER");
+
+			AssertAttributeValue(
+				index = 1,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_ACTION",
+				value1 = "aria-label",
+				value2 = "Show Fragment Heading");
+
+			KeyPress(
+				index = 1,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_ACTION_DELETE_BUTTON",
+				value1 = "\TAB");
+
+			KeyPress(
+				key_text = "Add Action",
+				locator1 = "Button#ANY",
+				value1 = "\ENTER");
+
+			AssertElementFocused(
+				index = 2,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_ACTION");
+
+			KeyPress(
+				index = 2,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_ACTION",
+				value1 = "\TAB");
+
+			KeyPress(
+				index = 1,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_ACTION_ITEM",
+				value1 = "\ENTER");
+
+			KeyPress(
+				index = 1,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_ACTION_ITEM",
+				value1 = "\DOWN");
+
+			KeyPress(
+				index = 1,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_ACTION_ITEM",
+				value1 = "\ENTER");
+
+			KeyPress(
+				index = 1,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_ACTION_ITEM",
+				value1 = "\TAB");
+
+			KeyPress(
+				index = 2,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_ACTION_ITEM",
+				value1 = "\ENTER");
+
+			KeyPress(
+				index = 2,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_ACTION_ITEM",
+				value1 = "\ENTER");
+
+			KeyPress(
+				index = 2,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_ACTION_ITEM",
+				value1 = "\TAB");
+
+			KeyPress(
+				index = 3,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_ACTION_ITEM",
+				value1 = "\ENTER");
+
+			KeyPress(
+				index = 3,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_ACTION_ITEM",
+				value1 = "\DOWN");
+
+			KeyPress(
+				index = 3,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_ACTION_ITEM",
+				value1 = "\ENTER");
+
+			AssertAttributeValue(
+				index = 2,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_ACTION",
+				value1 = "aria-label",
+				value2 = "Hide Fragment Button");
+
+			for (var index : list "1,2,3") {
+				AssertVisible(
+					index = ${index},
+					locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION");
+			}
+
+			for (var index : list "1,2") {
+				AssertVisible(
+					index = ${index},
+					locator1 = "PageEditor#PAGE_RULE_BUILDER_ACTION");
+			}
+		}
+	}
+
 	@description = "This is a test for LPS-165776. The page creator could add elements into the Container via keyboard."
 	@priority = 5
 	test AddElementsIntoContainer {

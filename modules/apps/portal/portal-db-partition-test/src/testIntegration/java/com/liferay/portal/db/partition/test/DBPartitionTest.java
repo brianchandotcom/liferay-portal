@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.model.DefaultModelHintsImpl;
 import com.liferay.portal.model.impl.ClassNameImpl;
@@ -44,6 +45,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.CopyOnWriteArraySet;
+
+import javax.sql.DataSource;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -404,6 +407,8 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 
 	@Test
 	public void testUpdateIndexes() throws Exception {
+		DataSource dataSource = InfrastructureUtil.getDataSource();
+
 		try {
 			DBPartitionUtil.forEachCompanyId(
 				companyId -> {
@@ -412,9 +417,11 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 					Assert.assertFalse(
 						dbInspector.hasIndex(TEST_TABLE_NAME, TEST_INDEX_NAME));
 
-					db.updateIndexes(
-						connection, TEST_TABLE_NAME,
-						getCreateIndexSQL(TEST_TABLE_NAME), true);
+					try (Connection connection = dataSource.getConnection()) {
+						db.updateIndexes(
+							connection, TEST_TABLE_NAME,
+							getCreateIndexSQL(TEST_TABLE_NAME), true);
+					}
 
 					Assert.assertTrue(
 						dbInspector.hasIndex(TEST_TABLE_NAME, TEST_INDEX_NAME));

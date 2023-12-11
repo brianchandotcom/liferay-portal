@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.AssumeTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.test.rule.Inject;
@@ -401,7 +402,11 @@ public abstract class BaseDBPartitionTestCase {
 	}
 
 	protected void createAndPopulateTable(String tableName) throws Exception {
-		try (Statement statement = connection.createStatement()) {
+		DataSource dataSource = InfrastructureUtil.getDataSource();
+
+		try (Connection connection = dataSource.getConnection();
+			Statement statement = connection.createStatement()) {
+
 			statement.execute(getCreateTableSQL(tableName));
 
 			statement.execute(

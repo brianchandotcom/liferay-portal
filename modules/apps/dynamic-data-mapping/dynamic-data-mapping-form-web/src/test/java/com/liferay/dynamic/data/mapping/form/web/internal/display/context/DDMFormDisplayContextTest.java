@@ -5,6 +5,7 @@
 
 package com.liferay.dynamic.data.mapping.form.web.internal.display.context;
 
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldOptionsFactory;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesRegistry;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
@@ -227,11 +228,28 @@ public class DDMFormDisplayContextTest {
 
 		_mockDDMFormInstance(ddmFormInstanceSettings);
 
-		DDMFormDisplayContext ddmFormDisplayContext =
-			_createDDMFormDisplayContext();
+		DDMFormDisplayContext ddmFormDisplayContext = Mockito.spy(
+			_createDDMFormDisplayContext());
+
+		Mockito.doReturn(
+			true
+		).when(
+			ddmFormDisplayContext
+		).hasAddFormInstanceRecordPermission();
+
+		DDMFormInstance ddmFormInstance = new DDMFormInstanceImpl();
+
+		Mockito.doReturn(
+			true
+		).when(
+			ddmFormDisplayContext
+		).hasValidStorageType(
+			ddmFormInstance
+		);
 
 		DDMFormRenderingContext ddmFormRenderingContext =
-			ddmFormDisplayContext.createDDMFormRenderingContext(new DDMForm());
+			ddmFormDisplayContext.createDDMFormRenderingContext(
+				new DDMForm(), ddmFormInstance, null);
 
 		Assert.assertFalse(
 			ddmFormRenderingContext.getProperty(
@@ -244,7 +262,8 @@ public class DDMFormDisplayContextTest {
 		);
 
 		ddmFormRenderingContext =
-			ddmFormDisplayContext.createDDMFormRenderingContext(new DDMForm());
+			ddmFormDisplayContext.createDDMFormRenderingContext(
+				new DDMForm(), ddmFormInstance, null);
 
 		Assert.assertTrue(
 			ddmFormRenderingContext.getProperty(
@@ -271,7 +290,8 @@ public class DDMFormDisplayContextTest {
 			"languageId", LocaleUtil.toLanguageId(LocaleUtil.SPAIN));
 
 		DDMFormRenderingContext ddmFormRenderingContext =
-			ddmFormDisplayContext.createDDMFormRenderingContext(ddmForm);
+			ddmFormDisplayContext.createDDMFormRenderingContext(
+				ddmForm, new DDMFormInstanceImpl(), null);
 
 		Assert.assertEquals(
 			LocaleUtil.SPAIN, ddmFormRenderingContext.getLocale());
@@ -733,6 +753,7 @@ public class DDMFormDisplayContextTest {
 		throws PortalException {
 
 		return new DDMFormDisplayContext(
+			Mockito.mock(DDMFormFieldOptionsFactory.class),
 			Mockito.mock(DDMFormFieldTypeServicesRegistry.class),
 			_ddmFormInstanceLocalService,
 			Mockito.mock(DDMFormInstanceRecordService.class),

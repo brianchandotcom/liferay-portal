@@ -175,22 +175,23 @@ definition {
 
 		task ("Then I can see the update schema name and description") {
 			AssertElementPresent(
-				key_schemaValue = "testSchema edited",
-				locator1 = "OpenAPI#SCHEMA_OPTIONS");
+				locator1 = "OpenAPI#SCHEMA_ENTITY",
+				schema = "testSchema edited");
 
 			Click(
-				key_schemaValue = "testSchema edited",
-				locator1 = "OpenAPI#SCHEMA_OPTIONS");
+				locator1 = "OpenAPI#SCHEMA_COLLAPSED",
+				schema = "testSchema edited");
 
 			AssertElementPresent(
-				key_fieldDescription = "Description edited",
-				locator1 = "OpenAPI#SCHEMA_FIELD_DESCRIPTION");
+				field = "Description edited",
+				locator1 = "OpenAPI#SCHEMA_FIELD",
+				schema = "testSchema edited");
 		}
 
 		task ("And Then the original schmea is not present") {
 			AssertElementNotPresent(
-				key_schemaValue = "testSchema",
-				locator1 = "OpenAPI#SCHEMA_OPTIONS");
+				locator1 = "OpenAPI#SCHEMA_ENTITY",
+				schema = "testSchema");
 		}
 	}
 

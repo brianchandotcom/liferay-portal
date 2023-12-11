@@ -782,6 +782,21 @@
 															}
 														},
 														"type": "Widget"
+													},
+													{
+														"definition": {
+															"fragmentStyle": {
+																"hidden": true
+															},
+															"widgetInstance": {
+																"widgetConfig": {
+																	"displayStyle": "default",
+																	"fields": "[{\"field\":\"displayDate-\",\"label\":\"display-date\"}]"
+																},
+																"widgetName": "com_liferay_portal_search_web_internal_sort_portlet_SortPortlet"
+															}
+														},
+														"type": "Widget"
 													}
 												],
 												"type": "Column"

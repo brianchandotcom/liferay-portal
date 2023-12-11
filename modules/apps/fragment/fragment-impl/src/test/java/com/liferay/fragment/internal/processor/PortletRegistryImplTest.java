@@ -7,12 +7,14 @@ package com.liferay.fragment.internal.processor;
 
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.PortletRegistry;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.List;
@@ -49,6 +51,45 @@ public class PortletRegistryImplTest {
 	}
 
 	@Test
+	public void testGetFragmentEntryLinkPortletIdsAliasPortletName() {
+		String portletAlias = StringUtil.toLowerCase(
+			RandomTestUtil.randomString());
+		String portletName = RandomTestUtil.randomString();
+
+		_portletRegistry.registerAlias(portletAlias, portletName);
+
+		Assert.assertEquals(
+			portletName, _portletRegistry.getPortletName(portletAlias));
+
+		String elementId = RandomTestUtil.randomString();
+		String namespace = RandomTestUtil.randomString();
+
+		_assertGetFragmentEntryLinkPortletIds(
+			_getFragmentEntryLink(
+				StringBundler.concat(
+					"<div class=\"fragment_1\">", RandomTestUtil.randomString(),
+					"<lfr-widget-", portletAlias, " id=\"", elementId, "\">",
+					RandomTestUtil.randomString(), "</div>"),
+				namespace),
+			PortletIdCodec.encode(
+				PortletIdCodec.decodePortletName(portletName),
+				PortletIdCodec.decodeUserId(portletName),
+				namespace + elementId));
+	}
+
+	@Test
+	public void testGetFragmentEntryLinkPortletIdsAliasPortletNameUnregistered() {
+		_assertGetFragmentEntryLinkPortletIds(
+			_getFragmentEntryLink(
+				StringBundler.concat(
+					"<div class=\"fragment_1\">", RandomTestUtil.randomString(),
+					"<lfr-widget-", RandomTestUtil.randomString(), " id=\"",
+					RandomTestUtil.randomString(), "\">",
+					RandomTestUtil.randomString(), "</div>"),
+				RandomTestUtil.randomString()));
+	}
+
+	@Test
 	public void testGetFragmentEntryLinkPortletIdsTypePortlet() {
 		String portletId = RandomTestUtil.randomString();
 		String instanceId = RandomTestUtil.randomString();
@@ -58,7 +99,8 @@ public class PortletRegistryImplTest {
 				"instanceId", instanceId
 			).put(
 				"portletId", portletId
-			).toString());
+			).toString(),
+			"<div class=\"fragment_1\"></div>", RandomTestUtil.randomString());
 
 		Mockito.when(
 			fragmentEntryLink.isTypePortlet()
@@ -86,7 +128,15 @@ public class PortletRegistryImplTest {
 		}
 	}
 
-	private FragmentEntryLink _getFragmentEntryLink(String editableValues) {
+	private FragmentEntryLink _getFragmentEntryLink(
+		String html, String namespace) {
+
+		return _getFragmentEntryLink("{}", html, namespace);
+	}
+
+	private FragmentEntryLink _getFragmentEntryLink(
+		String editableValues, String html, String namespace) {
+
 		FragmentEntryLink fragmentEntryLink = Mockito.mock(
 			FragmentEntryLink.class);
 
@@ -94,6 +144,18 @@ public class PortletRegistryImplTest {
 			fragmentEntryLink.getEditableValues()
 		).thenReturn(
 			editableValues
+		);
+
+		Mockito.when(
+			fragmentEntryLink.getHtml()
+		).thenReturn(
+			html
+		);
+
+		Mockito.when(
+			fragmentEntryLink.getNamespace()
+		).thenReturn(
+			namespace
 		);
 
 		return fragmentEntryLink;

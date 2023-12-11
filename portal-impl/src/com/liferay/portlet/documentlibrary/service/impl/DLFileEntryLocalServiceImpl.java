@@ -2673,12 +2673,20 @@ public class DLFileEntryLocalServiceImpl
 					WorkflowConstants.STATUS_ANY);
 
 				for (DLFileVersion fileVersion : fileVersions) {
+					if (fileVersion.isExpired()) {
+						continue;
+					}
+
 					_expireFileVersion(
 						userId, fileEntry, fileVersion, workflowContext,
 						serviceContext);
 				}
 			}
 			else {
+				if (latestFileVersion.isExpired()) {
+					continue;
+				}
+
 				_expireFileVersion(
 					userId, fileEntry, latestFileVersion, workflowContext,
 					serviceContext);

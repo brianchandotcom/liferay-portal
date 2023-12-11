@@ -1,0 +1,20 @@
+import com.liferay.gradle.plugins.patcher.PatchTask
+
+apply plugin: "com.liferay.patcher"
+
+task patch(type: PatchTask)
+
+dependencies {
+	compileOnly group: "javax.servlet", name: "javax.servlet-api", transitive: false, version: "3.0.1"
+	compileOnly group: "org.owasp.esapi", name: "esapi", transitive: false, version: "2.1.0.1"
+}
+
+patch {
+	ext {
+		autoClean = false
+	}
+
+	fileNames "org/owasp/esapi/reference/DefaultValidator.java"
+
+	originalLibModuleName = "esapi"
+}

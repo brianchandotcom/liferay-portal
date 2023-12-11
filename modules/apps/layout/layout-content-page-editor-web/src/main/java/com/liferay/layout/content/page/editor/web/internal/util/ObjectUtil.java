@@ -23,7 +23,7 @@ public class ObjectUtil {
 
 	public static Map<String, List<Map<String, Object>>>
 		getLayoutElementMapsListMap(
-			long companyId, InfoItemServiceRegistry infoItemServiceRegistry,
+			InfoItemServiceRegistry infoItemServiceRegistry,
 			PermissionChecker permissionChecker) {
 
 		Map<String, List<Map<String, Object>>> layoutElementMapsListMap =

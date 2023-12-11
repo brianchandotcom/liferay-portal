@@ -69,8 +69,7 @@ public class FragmentCollectionManager {
 			new ArrayList<>();
 
 		boolean hideInputFragments = ObjectUtil.hideInputFragments(
-			themeDisplay.getCompanyId(), _infoItemServiceRegistry,
-			themeDisplay.getPermissionChecker());
+			_infoItemServiceRegistry, themeDisplay.getPermissionChecker());
 
 		PortalPreferences portalPreferences =
 			_portletPreferencesFactory.getPortalPreferences(httpServletRequest);
@@ -515,8 +514,7 @@ public class FragmentCollectionManager {
 
 		Map<String, List<Map<String, Object>>> layoutElementMapsListMap =
 			ObjectUtil.getLayoutElementMapsListMap(
-				themeDisplay.getCompanyId(), _infoItemServiceRegistry,
-				themeDisplay.getPermissionChecker());
+				_infoItemServiceRegistry, themeDisplay.getPermissionChecker());
 
 		for (Map.Entry<String, List<Map<String, Object>>> entry :
 				layoutElementMapsListMap.entrySet()) {

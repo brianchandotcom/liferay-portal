@@ -237,8 +237,7 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 						"'sxpBlueprintId'")) {
 
 			while (resultSet1.next()) {
-				preparedStatement2.setString(
-					1, resultSet1.getString("smallValue"));
+				preparedStatement2.setLong(1, resultSet1.getLong("smallValue"));
 
 				ResultSet resultSet2 = preparedStatement2.executeQuery();
 

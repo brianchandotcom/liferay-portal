@@ -99,47 +99,41 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "view-at
 				value="<%= modelResource %>"
 			/>
 
+			<%
+			String localizedName = name;
+
+			boolean propertyLocalizeFieldName = GetterUtil.getBoolean(typeSettingsUnicodeProperties.getProperty(ExpandoColumnConstants.PROPERTY_LOCALIZE_FIELD_NAME), true);
+
+			if (propertyLocalizeFieldName) {
+				localizedName = LanguageUtil.get(request, name);
+
+				if (name.equals(localizedName)) {
+					localizedName = TextFormatter.format(name, TextFormatter.J);
+				}
+			}
+			%>
+
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-expand table-cell-minw-200 table-title"
+				href="<%= rowURL %>"
 				name="name"
-			>
-
-				<%
-				String localizedName = name;
-
-				boolean propertyLocalizeFieldName = GetterUtil.getBoolean(typeSettingsUnicodeProperties.getProperty(ExpandoColumnConstants.PROPERTY_LOCALIZE_FIELD_NAME), true);
-
-				if (propertyLocalizeFieldName) {
-					localizedName = LanguageUtil.get(request, name);
-
-					if (name.equals(localizedName)) {
-						localizedName = TextFormatter.format(name, TextFormatter.J);
-					}
-				}
-				%>
-
-				<a href="<%= rowURL %>"><strong><%= HtmlUtil.escape(localizedName) %></strong></a>
-
-				<br />
-			</liferay-ui:search-container-column-text>
+				value="<%= HtmlUtil.escape(localizedName) %>"
+			/>
 
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-expand table-cell-minw-200"
-				href="<%= rowURL %>"
 				name="key"
 				value="<%= HtmlUtil.escape(name) %>"
 			/>
 
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-expand table-cell-minw-200"
-				href="<%= rowURL %>"
 				name="type"
 				value="<%= LanguageUtil.get(request, ExpandoColumnConstants.getTypeLabel(expandoBridge.getAttributeType(name))) %>"
 			/>
 
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-expand-smallest table-cell-ws-nowrap"
-				href="<%= rowURL %>"
 				name="hidden"
 			>
 
@@ -152,7 +146,6 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "view-at
 
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-expand-smallest table-cell-ws-nowrap"
-				href="<%= rowURL %>"
 				name="searchable"
 			>
 
@@ -174,7 +167,6 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "view-at
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-jsp
-				cssClass="autofit-col"
 				path="/expando_action.jsp"
 			/>
 		</liferay-ui:search-container-row>

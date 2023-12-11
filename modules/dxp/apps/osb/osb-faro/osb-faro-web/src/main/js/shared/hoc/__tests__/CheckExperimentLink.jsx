@@ -8,7 +8,7 @@ jest.unmock('react-dom');
 
 const RenderText = () => 'Wrapped component text';
 
-export function mockExperimentRootReq() {
+function mockExperimentRootReq() {
 	return {
 		request: {
 			query: EXPERIMENT_ROOT_QUERY,
@@ -25,7 +25,8 @@ export function mockExperimentRootReq() {
 					name: 'Test 5',
 					pageURL: 'http://172.16.11.12:8090/web/guest/4',
 					publishable: false,
-					status: 'TERMINATED'
+					status: 'TERMINATED',
+					type: 'AB'
 				}
 			}
 		}

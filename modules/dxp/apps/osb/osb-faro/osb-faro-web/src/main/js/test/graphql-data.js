@@ -57,7 +57,7 @@ const METRIC_TYPENAME_MAP = {
 export function mockExperimentReq({
 	publishable = false,
 	publishedDXPVariantId = null,
-	status
+	...experiment
 } = {}) {
 	return {
 		request: {
@@ -204,9 +204,9 @@ export function mockExperimentReq({
 						}
 					],
 					startedDate: '2020-09-30T12:00:00.000Z',
-					status,
 					type: 'AB',
-					winnerDXPVariantId: null
+					winnerDXPVariantId: null,
+					...experiment
 				}
 			}
 		}

@@ -23,30 +23,14 @@ jest.mock('react-router-dom', () => ({
 	})
 }));
 
-const WrappedComponent = ({
-	publishable,
-	publishedDXPVariantId = null,
-	status
-}: {
-	publishable?: boolean;
-	publishedDXPVariantId?: null | string;
-	status: string;
-}) => (
+const WrappedComponent = experiment => (
 	<ApolloProvider client={client}>
 		<Provider store={mockStore()}>
 			<MemoryRouter
 				initialEntries={['/workspace/1000/2000/tests/overview/123']}
 			>
 				<Route path={Routes.TESTS_OVERVIEW}>
-					<MockedProvider
-						mocks={[
-							mockExperimentReq({
-								publishable,
-								publishedDXPVariantId,
-								status
-							})
-						]}
-					>
+					<MockedProvider mocks={[mockExperimentReq(experiment)]}>
 						<ExperimentOverviewPage />
 					</MockedProvider>
 				</Route>
@@ -341,5 +325,29 @@ describe('ExperimentOverviewPage', () => {
 		await waitForLoadingToBeRemoved(container);
 
 		expect(await findByText(/published/i)).toBeInTheDocument();
+	});
+
+	it('renders test sessions card when test type is AB', async () => {
+		const {container, queryByText} = render(
+			<WrappedComponent status='RUNNING' type='AB' />
+		);
+
+		await waitForLoadingToBeRemoved(container);
+
+		expect(queryByText('Test Sessions')).toBeInTheDocument();
+
+		expect(queryByText('Test Traffic')).toBeNull();
+	});
+
+	it('renders test traffic card when test type is MAB', async () => {
+		const {container, queryByText} = render(
+			<WrappedComponent status='RUNNING' type='MAB' />
+		);
+
+		await waitForLoadingToBeRemoved(container);
+
+		expect(queryByText('Test Traffic')).toBeInTheDocument();
+
+		expect(queryByText('Test Sessions')).toBeNull();
 	});
 });

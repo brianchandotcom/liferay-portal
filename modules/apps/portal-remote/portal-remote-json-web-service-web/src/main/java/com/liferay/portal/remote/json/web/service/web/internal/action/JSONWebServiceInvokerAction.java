@@ -12,7 +12,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONSerializable;
 import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceAction;
-import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManager;
 import com.liferay.portal.kernel.util.CamelCaseUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -45,7 +45,11 @@ import jodd.json.JsonSerializer;
  */
 public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 
-	public JSONWebServiceInvokerAction(HttpServletRequest httpServletRequest) {
+	public JSONWebServiceInvokerAction(
+		JSONWebServiceActionsManager jsonWebServiceActionsManager,
+		HttpServletRequest httpServletRequest) {
+
+		_jsonWebServiceActionsManager = jsonWebServiceActionsManager;
 		_httpServletRequest = httpServletRequest;
 
 		String command = httpServletRequest.getParameter(Constants.CMD);
@@ -356,7 +360,7 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 
 	private Object _executeStatement(Statement statement) throws Exception {
 		JSONWebServiceAction jsonWebServiceAction =
-			JSONWebServiceActionsManagerUtil.getJSONWebServiceAction(
+			_jsonWebServiceActionsManager.getJSONWebServiceAction(
 				_httpServletRequest, statement.getMethod(), null,
 				statement.getParameterMap());
 
@@ -639,6 +643,7 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 	private final String _command;
 	private final HttpServletRequest _httpServletRequest;
 	private List<String> _includes;
+	private final JSONWebServiceActionsManager _jsonWebServiceActionsManager;
 	private final List<Statement> _statements = new ArrayList<>();
 
 	private static class Statement {

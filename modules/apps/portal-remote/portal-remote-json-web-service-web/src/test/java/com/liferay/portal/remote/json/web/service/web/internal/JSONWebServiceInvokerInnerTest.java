@@ -6,6 +6,7 @@
 package com.liferay.portal.remote.json.web.service.web.internal;
 
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceAction;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.remote.json.web.service.web.internal.action.JSONWebServiceInvokerAction;
@@ -258,7 +259,9 @@ public class JSONWebServiceInvokerInnerTest extends BaseJSONWebServiceTestCase {
 
 		mockHttpServletRequest.setContent(content.getBytes());
 
-		return new JSONWebServiceInvokerAction(mockHttpServletRequest);
+		return new JSONWebServiceInvokerAction(
+			JSONWebServiceActionsManagerUtil.getJSONWebServiceActionsManager(),
+			mockHttpServletRequest);
 	}
 
 }

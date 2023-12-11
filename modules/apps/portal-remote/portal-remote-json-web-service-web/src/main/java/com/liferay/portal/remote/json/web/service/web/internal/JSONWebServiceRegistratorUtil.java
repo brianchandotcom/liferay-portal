@@ -8,7 +8,7 @@ package com.liferay.portal.remote.json.web.service.web.internal;
 import com.liferay.petra.reflect.AnnotationLocator;
 import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
-import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManager;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -26,6 +26,7 @@ import java.lang.reflect.Method;
 public class JSONWebServiceRegistratorUtil {
 
 	public static void processBean(
+		JSONWebServiceActionsManager jsonWebServiceActionsManager,
 		String contextName, String contextPath, Object bean) {
 
 		if (!PropsValues.JSON_WEB_SERVICE_ENABLED) {
@@ -41,7 +42,8 @@ public class JSONWebServiceRegistratorUtil {
 
 		try {
 			_onJSONWebServiceBean(
-				contextName, contextPath, bean, jsonWebService);
+				jsonWebServiceActionsManager, contextName, contextPath, bean,
+				jsonWebService);
 		}
 		catch (Exception exception) {
 			_log.error(exception);
@@ -88,6 +90,7 @@ public class JSONWebServiceRegistratorUtil {
 	}
 
 	private static void _onJSONWebServiceBean(
+			JSONWebServiceActionsManager jsonWebServiceActionsManager,
 			String contextName, String contextPath, Object serviceBean,
 			JSONWebService jsonWebService)
 		throws Exception {
@@ -139,7 +142,7 @@ public class JSONWebServiceRegistratorUtil {
 			}
 
 			if (JSONWebServiceNamingUtil.isIncludedMethod(method)) {
-				JSONWebServiceActionsManagerUtil.registerJSONWebServiceAction(
+				jsonWebServiceActionsManager.registerJSONWebServiceAction(
 					contextName, contextPath, serviceBean, serviceBeanClass,
 					method, path, httpMethod);
 			}

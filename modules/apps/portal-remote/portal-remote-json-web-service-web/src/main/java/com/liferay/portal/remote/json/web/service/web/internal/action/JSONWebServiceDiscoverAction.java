@@ -14,7 +14,7 @@ import com.liferay.portal.kernel.json.JSONSerializable;
 import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceAction;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionMapping;
-import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -55,7 +55,12 @@ import jodd.util.ClassUtil;
  */
 public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 
-	public JSONWebServiceDiscoverAction(HttpServletRequest httpServletRequest) {
+	public JSONWebServiceDiscoverAction(
+		JSONWebServiceActionsManager jsonWebServiceActionsManager,
+		HttpServletRequest httpServletRequest) {
+
+		_jsonWebServiceActionsManager = jsonWebServiceActionsManager;
+
 		_basePath = httpServletRequest.getServletPath();
 		_baseURL = String.valueOf(httpServletRequest.getRequestURL());
 
@@ -107,7 +112,7 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 
 	private List<Map<String, Object>> _buildJsonWebServiceActionMappingMaps() {
 		List<JSONWebServiceActionMapping> jsonWebServiceActionMappings =
-			JSONWebServiceActionsManagerUtil.getJSONWebServiceActionMappings(
+			_jsonWebServiceActionsManager.getJSONWebServiceActionMappings(
 				_contextName);
 
 		List<Map<String, Object>> jsonWebServiceActionMappingMaps =
@@ -414,6 +419,7 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 	private final String _basePath;
 	private final String _baseURL;
 	private final String _contextName;
+	private final JSONWebServiceActionsManager _jsonWebServiceActionsManager;
 	private final List<Class<?>> _types = new ArrayList<>();
 
 }

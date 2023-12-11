@@ -6,6 +6,7 @@
 package com.liferay.portal.remote.json.web.service.web.internal.servlet;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManager;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.Portal;
@@ -91,7 +92,7 @@ public class JSONWebServiceServlet extends JSONServlet {
 	@Override
 	protected JSONAction getJSONAction(ServletContext servletContext) {
 		JSONWebServiceServiceAction jsonWebServiceServiceAction =
-			new JSONWebServiceServiceAction();
+			new JSONWebServiceServiceAction(_jsonWebServiceActionsManager);
 
 		jsonWebServiceServiceAction.setServletContext(servletContext);
 
@@ -116,6 +117,9 @@ public class JSONWebServiceServlet extends JSONServlet {
 
 	private static final Pattern _pathInfoPattern = Pattern.compile(
 		"/api/jsonws([^\\?]*)");
+
+	@Reference
+	private JSONWebServiceActionsManager _jsonWebServiceActionsManager;
 
 	@Reference
 	private Portal _portal;

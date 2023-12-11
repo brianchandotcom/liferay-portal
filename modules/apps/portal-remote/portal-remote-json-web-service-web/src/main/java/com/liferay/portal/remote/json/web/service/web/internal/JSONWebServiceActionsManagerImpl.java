@@ -194,7 +194,7 @@ public class JSONWebServiceActionsManagerImpl
 		String contextName, String contextPath, Object service) {
 
 		JSONWebServiceRegistratorUtil.processBean(
-			contextName, contextPath, service);
+			this, contextName, contextPath, service);
 
 		int count = _getJSONWebServiceActionsCount(contextPath);
 
@@ -238,7 +238,8 @@ public class JSONWebServiceActionsManagerImpl
 		for (String beanName : beanLocator.getNames()) {
 			try {
 				JSONWebServiceRegistratorUtil.processBean(
-					contextName, contextPath, beanLocator.locate(beanName));
+					this, contextName, contextPath,
+					beanLocator.locate(beanName));
 			}
 			catch (BeanLocatorException beanLocatorException) {
 				if (_log.isDebugEnabled()) {

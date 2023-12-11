@@ -8,6 +8,7 @@ package com.liferay.portal.remote.json.web.service.web.internal;
 import com.liferay.petra.memory.DeleteFileFinalizeAction;
 import com.liferay.petra.memory.FinalizeManager;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceAction;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil;
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.test.FinalizeManagerUtil;
 import com.liferay.portal.kernel.test.GCUtil;
@@ -53,7 +54,8 @@ public class JSONWebServiceServiceActionTest
 	public static void setUpClass() throws Exception {
 		initPortalServices();
 
-		_jsonWebServiceServiceAction = new JSONWebServiceServiceAction();
+		_jsonWebServiceServiceAction = new JSONWebServiceServiceAction(
+			JSONWebServiceActionsManagerUtil.getJSONWebServiceActionsManager());
 	}
 
 	@After

@@ -7,6 +7,7 @@ package com.liferay.portal.remote.json.web.service.web.internal;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceAction;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -971,7 +972,9 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 
 		mockHttpServletRequest.setContent(content.getBytes());
 
-		return new JSONWebServiceInvokerAction(mockHttpServletRequest);
+		return new JSONWebServiceInvokerAction(
+			JSONWebServiceActionsManagerUtil.getJSONWebServiceActionsManager(),
+			mockHttpServletRequest);
 	}
 
 	private final MockedStatic<ServiceContextFactory>

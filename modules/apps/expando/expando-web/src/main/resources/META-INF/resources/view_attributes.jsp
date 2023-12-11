@@ -77,8 +77,6 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "view-at
 		>
 
 			<%
-			int type = expandoBridge.getAttributeType(name);
-
 			ExpandoColumn expandoColumn = ExpandoColumnLocalServiceUtil.getDefaultTableColumn(company.getCompanyId(), modelResource, name);
 
 			UnicodeProperties typeSettingsUnicodeProperties = expandoColumn.getTypeSettingsProperties();
@@ -136,7 +134,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "view-at
 				cssClass="table-cell-expand table-cell-minw-200"
 				href="<%= rowURL %>"
 				name="type"
-				value="<%= LanguageUtil.get(request, ExpandoColumnConstants.getTypeLabel(type)) %>"
+				value="<%= LanguageUtil.get(request, ExpandoColumnConstants.getTypeLabel(expandoBridge.getAttributeType(name))) %>"
 			/>
 
 			<liferay-ui:search-container-column-text

@@ -14,6 +14,8 @@ OAuth2Application oAuth2Application = oAuth2AdminPortletDisplayContext.getOAuth2
 
 long oAuth2ApplicationId = oAuth2Application.getOAuth2ApplicationId();
 
+OAuth2AuthorizationsDisplayContext oAuth2AuthorizationsDisplayContext = new OAuth2AuthorizationsDisplayContext(liferayPortletRequest, liferayPortletResponse, oAuth2ApplicationId);
+
 int oAuth2AuthorizationsCount = OAuth2AuthorizationServiceUtil.getApplicationOAuth2AuthorizationsCount(oAuth2ApplicationId);
 
 OAuth2AuthorizationsManagementToolbarDisplayContext oAuth2AuthorizationsManagementToolbarDisplayContext = new OAuth2AuthorizationsManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, currentURLObj);
@@ -50,16 +52,8 @@ OAuth2AuthorizationsManagementToolbarDisplayContext oAuth2AuthorizationsManageme
 		<aui:input name="oAuth2AuthorizationIds" type="hidden" />
 
 		<liferay-ui:search-container
-			emptyResultsMessage="no-authorizations-were-found"
-			id="oAuth2AuthorizationsSearchContainer"
-			iteratorURL="<%= currentURLObj %>"
-			rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
-			total="<%= oAuth2AuthorizationsCount %>"
+			searchContainer="<%= oAuth2AuthorizationsDisplayContext.getSearchContainer() %>"
 		>
-			<liferay-ui:search-container-results
-				results="<%= OAuth2AuthorizationServiceUtil.getApplicationOAuth2Authorizations(oAuth2ApplicationId, searchContainer.getStart(), searchContainer.getEnd(), oAuth2AuthorizationsManagementToolbarDisplayContext.getOrderByComparator()) %>"
-			/>
-
 			<liferay-ui:search-container-row
 				className="com.liferay.oauth2.provider.model.OAuth2Authorization"
 				escapedModel="<%= true %>"

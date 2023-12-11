@@ -5,7 +5,7 @@ import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayModal from '@clayui/modal';
 import DatePicker from 'shared/components/date-picker';
-import moment from 'moment';
+import moment, {Moment} from 'moment';
 import React, {useState} from 'react';
 import {addAlert} from 'shared/actions/alerts';
 import {Alert} from 'shared/types';
@@ -25,6 +25,7 @@ export enum ReportType {
 
 interface IDownloadReportModal {
 	alertMessage: string;
+	date?: MomentDateRange;
 	descriptionMessage: string;
 	disabled?: boolean;
 	infoMessage: string;
@@ -34,14 +35,22 @@ interface IDownloadReportModal {
 	requiredDateRange?: boolean;
 	showDateRange?: boolean;
 	type?: ReportType;
+	maxDate?: Moment;
+	minDate?: Moment;
 }
 
 export const DownloadReportModal: React.FC<IDownloadReportModal> = ({
 	alertMessage,
 	children,
+	date = {
+		end: null,
+		start: null
+	},
 	descriptionMessage,
 	disabled = false,
 	infoMessage,
+	maxDate = moment().subtract(1, 'days'),
+	minDate = moment().subtract(10, 'years'),
 	observer,
 	onClose,
 	onSubmit,
@@ -52,10 +61,7 @@ export const DownloadReportModal: React.FC<IDownloadReportModal> = ({
 	const dispatch = useDispatch();
 	const history = useHistory();
 	const [openAlert, setOpenAlert] = useState(true);
-	const [dateRange, setDateRange] = useState<MomentDateRange>({
-		end: null,
-		start: null
-	});
+	const [dateRange, setDateRange] = useState<MomentDateRange>(date);
 	const [submitDisabled, setSubmitDisabled] = useState(false);
 
 	return (
@@ -190,9 +196,9 @@ export const DownloadReportModal: React.FC<IDownloadReportModal> = ({
 									className='p-2'
 									date={dateRange}
 									displayLabel={false}
-									maxDate={moment().subtract(1, 'days')}
+									maxDate={maxDate}
 									maxRange={365}
-									minDate={moment().subtract(10, 'years')}
+									minDate={minDate}
 									onSelect={({
 										end,
 										start

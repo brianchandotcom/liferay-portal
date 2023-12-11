@@ -260,7 +260,7 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 			fragmentEntryLink.getCompanyId(), fdsEntryObjectEntryERC,
 			fdsEntryObjectDefinition);
 
-		Set<ObjectEntry> fdsFieldsSet = _getFieldsSet(
+		Set<ObjectEntry> fdsFieldObjectEntries = _getFDSFieldObjectEntries(
 			fdsViewObjectDefinition, fdsViewObjectEntry);
 
 		_reactRenderer.renderReact(
@@ -268,7 +268,8 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 			HashMapBuilder.<String, Object>put(
 				"apiURL",
 				_getAPIURL(
-					fdsEntryObjectEntry, fdsFieldsSet, httpServletRequest)
+					fdsEntryObjectEntry, fdsFieldObjectEntries,
+					httpServletRequest)
 			).put(
 				"creationMenu",
 				_getCreationMenuJSONObject(
@@ -305,7 +306,8 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 						JSONUtil.put(
 							"fields",
 							_getFieldsJSONArray(
-								fragmentEntryLink.getCompanyId(), fdsFieldsSet))
+								fragmentEntryLink.getCompanyId(),
+								fdsFieldObjectEntries))
 					))
 			).build(),
 			httpServletRequest, writer);
@@ -318,7 +320,8 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 	}
 
 	private String _getAPIURL(
-			ObjectEntry fdsEntryObjectEntry, Set<ObjectEntry> fdsFieldsSet,
+			ObjectEntry fdsEntryObjectEntry,
+			Set<ObjectEntry> fdsFieldObjectEntries,
 			HttpServletRequest httpServletRequest)
 		throws Exception {
 
@@ -334,7 +337,8 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 		sb.append(String.valueOf(properties.get("restEndpoint")));
 
 		return _interpolateURL(
-			_getNestedFields(sb.toString(), fdsFieldsSet), httpServletRequest);
+			_getNestedFields(sb.toString(), fdsFieldObjectEntries),
+			httpServletRequest);
 	}
 
 	private JSONObject _getCreationMenuJSONObject(
@@ -406,12 +410,35 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 		);
 	}
 
+	private Set<ObjectEntry> _getFDSFieldObjectEntries(
+			ObjectDefinition fdsViewObjectDefinition,
+			ObjectEntry fdsViewObjectEntry)
+		throws Exception {
+
+		Set<ObjectEntry> objectEntries = new TreeSet<>(
+			new ObjectEntryComparator(
+				ListUtil.toList(
+					ListUtil.fromString(
+						MapUtil.getString(
+							fdsViewObjectEntry.getProperties(),
+							"fdsFieldsOrder"),
+						StringPool.COMMA),
+					Long::parseLong)));
+
+		objectEntries.addAll(
+			_getRelatedObjectEntries(
+				fdsViewObjectDefinition, fdsViewObjectEntry,
+				"fdsViewFDSFieldRelationship"));
+
+		return objectEntries;
+	}
+
 	private JSONArray _getFieldsJSONArray(
-			long companyId, Set<ObjectEntry> fdsFieldsSet)
+			long companyId, Set<ObjectEntry> fdsFieldObjectEntries)
 		throws Exception {
 
 		return JSONUtil.toJSONArray(
-			fdsFieldsSet,
+			fdsFieldObjectEntries,
 			(ObjectEntry objectEntry) -> {
 				Map<String, Object> properties = objectEntry.getProperties();
 
@@ -444,29 +471,6 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 					"default from " + fdsCellRendererCET.getURL()
 				);
 			});
-	}
-
-	private Set<ObjectEntry> _getFieldsSet(
-			ObjectDefinition fdsViewObjectDefinition,
-			ObjectEntry fdsViewObjectEntry)
-		throws Exception {
-
-		Set<ObjectEntry> objectEntries = new TreeSet<>(
-			new ObjectEntryComparator(
-				ListUtil.toList(
-					ListUtil.fromString(
-						MapUtil.getString(
-							fdsViewObjectEntry.getProperties(),
-							"fdsFieldsOrder"),
-						StringPool.COMMA),
-					Long::parseLong)));
-
-		objectEntries.addAll(
-			_getRelatedObjectEntries(
-				fdsViewObjectDefinition, fdsViewObjectEntry,
-				"fdsViewFDSFieldRelationship"));
-
-		return objectEntries;
 	}
 
 	private JSONArray _getFiltersJSONArray(
@@ -702,10 +706,10 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 	}
 
 	private String _getNestedFields(
-			String apiUrl, Set<ObjectEntry> fdsFieldsSet)
+			String apiUrl, Set<ObjectEntry> fdsFieldObjectEntries)
 		throws Exception {
 
-		if (fdsFieldsSet == null) {
+		if (fdsFieldObjectEntries == null) {
 			return apiUrl;
 		}
 
@@ -713,7 +717,7 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 
 		int nestedFieldsDepth = 1;
 
-		for (ObjectEntry fdsField : fdsFieldsSet) {
+		for (ObjectEntry fdsField : fdsFieldObjectEntries) {
 			Map<String, Object> properties = fdsField.getProperties();
 
 			String[] fieldNameList = StringUtil.split(

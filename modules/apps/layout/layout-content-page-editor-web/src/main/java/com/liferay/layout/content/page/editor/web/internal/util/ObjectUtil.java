@@ -5,13 +5,12 @@
 
 package com.liferay.layout.content.page.editor.web.internal.util;
 
+import com.liferay.info.item.InfoItemClassDetails;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.permission.provider.InfoPermissionProvider;
 import com.liferay.layout.content.page.editor.web.internal.constants.ContentPageEditorConstants;
-import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
+import com.liferay.layout.page.template.info.item.capability.EditPageInfoItemCapability;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.HashMap;
 import java.util.List;
@@ -30,9 +29,7 @@ public class ObjectUtil {
 		Map<String, List<Map<String, Object>>> layoutElementMapsListMap =
 			new HashMap<>(ContentPageEditorConstants.layoutElementMapsListMap);
 
-		if (hideInputFragments(
-				companyId, infoItemServiceRegistry, permissionChecker)) {
-
+		if (hideInputFragments(infoItemServiceRegistry, permissionChecker)) {
 			layoutElementMapsListMap.remove("INPUTS");
 		}
 
@@ -40,45 +37,26 @@ public class ObjectUtil {
 	}
 
 	public static Boolean hideInputFragments(
-		long companyId, InfoItemServiceRegistry infoItemServiceRegistry,
+		InfoItemServiceRegistry infoItemServiceRegistry,
 		PermissionChecker permissionChecker) {
 
-		List<ObjectDefinition> objectDefinitions =
-			ObjectDefinitionLocalServiceUtil.getObjectDefinitions(
-				companyId, true, false, WorkflowConstants.STATUS_APPROVED);
+		for (InfoItemClassDetails infoItemClassDetails :
+				infoItemServiceRegistry.getInfoItemClassDetails(
+					EditPageInfoItemCapability.KEY)) {
 
-		if (objectDefinitions.isEmpty()) {
-			return true;
-		}
+			InfoPermissionProvider infoPermissionProvider =
+				infoItemServiceRegistry.getFirstInfoItemService(
+					InfoPermissionProvider.class,
+					infoItemClassDetails.getClassName());
 
-		for (ObjectDefinition objectDefinition : objectDefinitions) {
-			if (_hasPermissions(
-					objectDefinition, infoItemServiceRegistry,
-					permissionChecker)) {
+			if ((infoPermissionProvider == null) ||
+				infoPermissionProvider.hasViewPermission(permissionChecker)) {
 
 				return false;
 			}
 		}
 
 		return true;
-	}
-
-	private static boolean _hasPermissions(
-		ObjectDefinition objectDefinition,
-		InfoItemServiceRegistry infoItemServiceRegistry,
-		PermissionChecker permissionChecker) {
-
-		InfoPermissionProvider infoPermissionProvider =
-			infoItemServiceRegistry.getFirstInfoItemService(
-				InfoPermissionProvider.class, objectDefinition.getClassName());
-
-		if ((infoPermissionProvider == null) ||
-			infoPermissionProvider.hasViewPermission(permissionChecker)) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 }

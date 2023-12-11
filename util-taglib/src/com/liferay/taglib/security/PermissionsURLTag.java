@@ -5,6 +5,7 @@
 
 package com.liferay.taglib.security;
 
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
@@ -39,7 +40,20 @@ public class PermissionsURLTag extends TagSupport {
 		return _getPorletURL(
 			httpServletRequest, modelResource,
 			_getRedirect(httpServletRequest, redirect, windowState),
-			resourceGroupId, windowState
+			resourceGroupId, false, windowState
+		).toString();
+	}
+
+	public static String doTag(
+			String redirect, String modelResource, Object resourceGroupId,
+			String windowState, HttpServletRequest httpServletRequest,
+			boolean showModelResourceSuccessMessage)
+		throws Exception {
+
+		return _getPorletURL(
+			httpServletRequest, modelResource,
+			_getRedirect(httpServletRequest, redirect, windowState),
+			resourceGroupId, showModelResourceSuccessMessage, windowState
 		).toString();
 	}
 
@@ -80,7 +94,7 @@ public class PermissionsURLTag extends TagSupport {
 			_getPorletURL(
 				httpServletRequest, modelResource,
 				_getRedirect(httpServletRequest, redirect, windowState),
-				resourceGroupId, windowState)
+				resourceGroupId, false, windowState)
 		).setParameter(
 			"modelResourceDescription", modelResourceDescription
 		).setParameter(
@@ -155,7 +169,8 @@ public class PermissionsURLTag extends TagSupport {
 
 	private static PortletURL _getPorletURL(
 			HttpServletRequest httpServletRequest, String modelResource,
-			String redirect, Object resourceGroupId, String windowState)
+			String redirect, Object resourceGroupId,
+			boolean showModelResourceSuccessMessage, String windowState)
 		throws Exception {
 
 		ThemeDisplay themeDisplay =
@@ -202,6 +217,15 @@ public class PermissionsURLTag extends TagSupport {
 				}
 
 				return redirect;
+			}
+		).setParameter(
+			"showModelResourceSuccessMessage",
+			() -> {
+				if (!FeatureFlagManagerUtil.isEnabled("LPS-196847")) {
+					return null;
+				}
+
+				return showModelResourceSuccessMessage;
 			}
 		).setWindowState(
 			_getWindowState(windowState, themeDisplay)

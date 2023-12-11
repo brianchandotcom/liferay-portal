@@ -37,14 +37,14 @@ public class DLTrashServiceImpl extends DLTrashServiceBaseImpl {
 			long fileEntryId, long newFolderId, ServiceContext serviceContext)
 		throws PortalException {
 
+		ModelResourcePermission<FileEntry> fileEntryModelResourcePermission =
+			ModelResourcePermissionRegistryUtil.getModelResourcePermission(
+				FileEntry.class.getName());
+
 		Repository repository = RepositoryProviderUtil.getFileEntryRepository(
 			fileEntryId);
 
 		FileEntry fileEntry = repository.getFileEntry(fileEntryId);
-
-		ModelResourcePermission<FileEntry> fileEntryModelResourcePermission =
-			ModelResourcePermissionRegistryUtil.getModelResourcePermission(
-				FileEntry.class.getName());
 
 		fileEntryModelResourcePermission.check(
 			getPermissionChecker(), fileEntry, ActionKeys.UPDATE);
@@ -72,14 +72,14 @@ public class DLTrashServiceImpl extends DLTrashServiceBaseImpl {
 	public FileEntry moveFileEntryToTrash(long fileEntryId)
 		throws PortalException {
 
+		ModelResourcePermission<FileEntry> fileEntryModelResourcePermission =
+			ModelResourcePermissionRegistryUtil.getModelResourcePermission(
+				FileEntry.class.getName());
+
 		Repository repository = RepositoryProviderUtil.getFileEntryRepository(
 			fileEntryId);
 
 		FileEntry fileEntry = repository.getFileEntry(fileEntryId);
-
-		ModelResourcePermission<FileEntry> fileEntryModelResourcePermission =
-			ModelResourcePermissionRegistryUtil.getModelResourcePermission(
-				FileEntry.class.getName());
 
 		fileEntryModelResourcePermission.check(
 			getPermissionChecker(), fileEntry, ActionKeys.DELETE);
@@ -104,15 +104,15 @@ public class DLTrashServiceImpl extends DLTrashServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		Repository repository =
-			RepositoryProviderUtil.getFileShortcutRepository(fileShortcutId);
-
-		FileShortcut fileShortcut = repository.getFileShortcut(fileShortcutId);
-
 		ModelResourcePermission<FileShortcut>
 			fileShortcutModelResourcePermission =
 				ModelResourcePermissionRegistryUtil.getModelResourcePermission(
 					FileShortcut.class.getName());
+
+		Repository repository =
+			RepositoryProviderUtil.getFileShortcutRepository(fileShortcutId);
+
+		FileShortcut fileShortcut = repository.getFileShortcut(fileShortcutId);
 
 		fileShortcutModelResourcePermission.check(
 			getPermissionChecker(), fileShortcut, ActionKeys.UPDATE);
@@ -140,15 +140,15 @@ public class DLTrashServiceImpl extends DLTrashServiceBaseImpl {
 	public FileShortcut moveFileShortcutToTrash(long fileShortcutId)
 		throws PortalException {
 
-		Repository repository =
-			RepositoryProviderUtil.getFileShortcutRepository(fileShortcutId);
-
-		FileShortcut fileShortcut = repository.getFileShortcut(fileShortcutId);
-
 		ModelResourcePermission<FileShortcut>
 			fileShortcutModelResourcePermission =
 				ModelResourcePermissionRegistryUtil.getModelResourcePermission(
 					FileShortcut.class.getName());
+
+		Repository repository =
+			RepositoryProviderUtil.getFileShortcutRepository(fileShortcutId);
+
+		FileShortcut fileShortcut = repository.getFileShortcut(fileShortcutId);
 
 		fileShortcutModelResourcePermission.check(
 			getPermissionChecker(), fileShortcut, ActionKeys.DELETE);
@@ -174,14 +174,14 @@ public class DLTrashServiceImpl extends DLTrashServiceBaseImpl {
 			long folderId, long parentFolderId, ServiceContext serviceContext)
 		throws PortalException {
 
+		ModelResourcePermission<Folder> folderModelResourcePermission =
+			ModelResourcePermissionRegistryUtil.getModelResourcePermission(
+				Folder.class.getName());
+
 		Repository repository = RepositoryProviderUtil.getFolderRepository(
 			folderId);
 
 		Folder folder = repository.getFolder(folderId);
-
-		ModelResourcePermission<Folder> folderModelResourcePermission =
-			ModelResourcePermissionRegistryUtil.getModelResourcePermission(
-				Folder.class.getName());
 
 		folderModelResourcePermission.check(
 			getPermissionChecker(), folder, ActionKeys.UPDATE);
@@ -207,14 +207,14 @@ public class DLTrashServiceImpl extends DLTrashServiceBaseImpl {
 	 */
 	@Override
 	public Folder moveFolderToTrash(long folderId) throws PortalException {
+		ModelResourcePermission<Folder> folderModelResourcePermission =
+			ModelResourcePermissionRegistryUtil.getModelResourcePermission(
+				Folder.class.getName());
+
 		Repository repository = RepositoryProviderUtil.getFolderRepository(
 			folderId);
 
 		Folder folder = repository.getFolder(folderId);
-
-		ModelResourcePermission<Folder> folderModelResourcePermission =
-			ModelResourcePermissionRegistryUtil.getModelResourcePermission(
-				Folder.class.getName());
 
 		folderModelResourcePermission.check(
 			getPermissionChecker(), folder, ActionKeys.DELETE);
@@ -234,14 +234,14 @@ public class DLTrashServiceImpl extends DLTrashServiceBaseImpl {
 	public void restoreFileEntryFromTrash(long fileEntryId)
 		throws PortalException {
 
+		ModelResourcePermission<FileEntry> fileEntryModelResourcePermission =
+			ModelResourcePermissionRegistryUtil.getModelResourcePermission(
+				FileEntry.class.getName());
+
 		Repository repository = RepositoryProviderUtil.getFileEntryRepository(
 			fileEntryId);
 
 		FileEntry fileEntry = repository.getFileEntry(fileEntryId);
-
-		ModelResourcePermission<FileEntry> fileEntryModelResourcePermission =
-			ModelResourcePermissionRegistryUtil.getModelResourcePermission(
-				FileEntry.class.getName());
 
 		fileEntryModelResourcePermission.check(
 			getPermissionChecker(), fileEntry, ActionKeys.DELETE);
@@ -261,15 +261,15 @@ public class DLTrashServiceImpl extends DLTrashServiceBaseImpl {
 	public void restoreFileShortcutFromTrash(long fileShortcutId)
 		throws PortalException {
 
-		Repository repository =
-			RepositoryProviderUtil.getFileShortcutRepository(fileShortcutId);
-
-		FileShortcut fileShortcut = repository.getFileShortcut(fileShortcutId);
-
 		ModelResourcePermission<FileShortcut>
 			fileShortcutModelResourcePermission =
 				ModelResourcePermissionRegistryUtil.getModelResourcePermission(
 					FileShortcut.class.getName());
+
+		Repository repository =
+			RepositoryProviderUtil.getFileShortcutRepository(fileShortcutId);
+
+		FileShortcut fileShortcut = repository.getFileShortcut(fileShortcutId);
 
 		fileShortcutModelResourcePermission.check(
 			getPermissionChecker(), fileShortcut, ActionKeys.DELETE);
@@ -287,14 +287,14 @@ public class DLTrashServiceImpl extends DLTrashServiceBaseImpl {
 	 */
 	@Override
 	public void restoreFolderFromTrash(long folderId) throws PortalException {
+		ModelResourcePermission<Folder> folderModelResourcePermission =
+			ModelResourcePermissionRegistryUtil.getModelResourcePermission(
+				Folder.class.getName());
+
 		Repository repository = RepositoryProviderUtil.getFolderRepository(
 			folderId);
 
 		Folder folder = repository.getFolder(folderId);
-
-		ModelResourcePermission<Folder> folderModelResourcePermission =
-			ModelResourcePermissionRegistryUtil.getModelResourcePermission(
-				Folder.class.getName());
 
 		folderModelResourcePermission.check(
 			getPermissionChecker(), folder, ActionKeys.DELETE);

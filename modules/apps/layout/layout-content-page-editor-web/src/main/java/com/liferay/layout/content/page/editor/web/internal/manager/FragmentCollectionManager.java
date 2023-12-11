@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -40,6 +41,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -200,6 +202,21 @@ public class FragmentCollectionManager {
 		}
 
 		return allFragmentCollectionMapsList;
+	}
+
+	public Map<String, List<Map<String, Object>>> getLayoutElementMapsListMap(
+		PermissionChecker permissionChecker) {
+
+		Map<String, List<Map<String, Object>>> layoutElementMapsListMap =
+			new HashMap<>(ContentPageEditorConstants.layoutElementMapsListMap);
+
+		if (ObjectUtil.hideInputFragments(
+			_infoItemServiceRegistry, permissionChecker)) {
+
+			layoutElementMapsListMap.remove("INPUTS");
+		}
+
+		return layoutElementMapsListMap;
 	}
 
 	public List<String> getSortedFragmentCollectionKeys(
@@ -513,8 +530,7 @@ public class FragmentCollectionManager {
 			masterDropZoneLayoutStructureItem, themeDisplay);
 
 		Map<String, List<Map<String, Object>>> layoutElementMapsListMap =
-			ObjectUtil.getLayoutElementMapsListMap(
-				_infoItemServiceRegistry, themeDisplay.getPermissionChecker());
+			getLayoutElementMapsListMap(themeDisplay.getPermissionChecker());
 
 		for (Map.Entry<String, List<Map<String, Object>>> entry :
 				layoutElementMapsListMap.entrySet()) {

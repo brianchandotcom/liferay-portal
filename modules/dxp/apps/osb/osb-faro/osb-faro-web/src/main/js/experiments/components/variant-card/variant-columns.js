@@ -16,74 +16,86 @@ export default ({
 	metricUnit,
 	publishedDXPVariantId,
 	status,
+	type,
 	winnerDXPVariantId
-}) => [
-	{
-		accessor: 'dxpVariantName',
-		cellRenderer: ({data: {dxpVariantId, dxpVariantName}}) => (
-			<VariantTitleCell
-				labels={getVariantLabels({
-					bestVariant,
-					dxpVariantId,
-					publishedDXPVariantId,
-					status,
-					winnerDXPVariantId
-				})}
-				title={dxpVariantName}
-			/>
-		),
-		label: Liferay.Language.get('variants'),
-		sortable: true
-	},
-	{
-		accessor: 'median',
-		cellRenderer: ({data: {median}}) => (
-			<Cell className='text-right' title={false}>
-				{`${getFormattedMedian(median, metric)}${metricUnit}`}
-			</Cell>
-		),
-		className: 'text-right',
-		label: getFormattedMedianLabel(metric),
-		sortable: true
-	},
-	{
-		accessor: 'confidenceInterval',
-		cellRenderer: ({data: {confidenceInterval}}) => (
-			<Cell className='text-right' title={false}>
-				{`${getFormattedMedian(
-					confidenceInterval[0],
-					metric
-				)}${metricUnit} - ${getFormattedMedian(
-					confidenceInterval[1],
-					metric
-				)}${metricUnit}`}
-			</Cell>
-		),
-		className: 'text-right',
-		label: Liferay.Language.get('confidence-interval'),
-		sortable: true
-	},
-	{
-		accessor: 'improvement',
-		cellRenderer: ({data: {improvement}}) => (
-			<ImprovementCell className='text-right' improvement={improvement} />
-		),
-		className: 'text-right',
-		label: Liferay.Language.get('improvement'),
-		sortable: true
-	},
-	{
-		accessor: 'probabilityToWin',
-		cellRenderer: ({data: {probabilityToWin}}) => (
-			<Cell className='text-right' title={false}>
-				{`${getFormattedProbabilityToWin(probabilityToWin)}%`}
-			</Cell>
-		),
-		className: 'text-right',
-		label: Liferay.Language.get('probability-to-win'),
-		sortable: true
-	},
-	{
+}) => {
+	const arr = [
+		{
+			accessor: 'dxpVariantName',
+			cellRenderer: ({data: {dxpVariantId, dxpVariantName}}) => (
+				<VariantTitleCell
+					labels={getVariantLabels({
+						bestVariant,
+						dxpVariantId,
+						publishedDXPVariantId,
+						status,
+						winnerDXPVariantId
+					})}
+					title={dxpVariantName}
+				/>
+			),
+			label: Liferay.Language.get('variants'),
+			sortable: true
+		},
+		{
+			accessor: 'median',
+			cellRenderer: ({data: {median}}) => (
+				<Cell className='text-right' title={false}>
+					{`${getFormattedMedian(median, metric)}${metricUnit}`}
+				</Cell>
+			),
+			className: 'text-right',
+			label: getFormattedMedianLabel(metric),
+			sortable: true
+		},
+		{
+			accessor: 'confidenceInterval',
+			cellRenderer: ({data: {confidenceInterval}}) => (
+				<Cell className='text-right' title={false}>
+					{`${getFormattedMedian(
+						confidenceInterval[0],
+						metric
+					)}${metricUnit} - ${getFormattedMedian(
+						confidenceInterval[1],
+						metric
+					)}${metricUnit}`}
+				</Cell>
+			),
+			className: 'text-right',
+			label: Liferay.Language.get('confidence-interval'),
+			sortable: true
+		}
+	];
+
+	if (type === 'AB') {
+		arr.push(
+			{
+				accessor: 'improvement',
+				cellRenderer: ({data: {improvement}}) => (
+					<ImprovementCell
+						className='text-right'
+						improvement={improvement}
+					/>
+				),
+				className: 'text-right',
+				label: Liferay.Language.get('improvement'),
+				sortable: true
+			},
+			{
+				accessor: 'probabilityToWin',
+				cellRenderer: ({data: {probabilityToWin}}) => (
+					<Cell className='text-right' title={false}>
+						{`${getFormattedProbabilityToWin(probabilityToWin)}%`}
+					</Cell>
+				),
+				className: 'text-right',
+				label: Liferay.Language.get('probability-to-win'),
+				sortable: true
+			}
+		);
+	}
+
+	arr.push({
 		accessor: 'uniqueVisitors',
 		cellRenderer: ({data: {trafficSplit, uniqueVisitors}}) => (
 			<UniqueVisitorCell
@@ -95,5 +107,7 @@ export default ({
 		className: 'text-right',
 		label: Liferay.Language.get('unique-visitors'),
 		sortable: true
-	}
-];
+	});
+
+	return arr;
+};

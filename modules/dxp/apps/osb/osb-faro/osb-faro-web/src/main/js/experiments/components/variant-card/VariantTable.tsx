@@ -20,6 +20,7 @@ export const VariantTable = ({experiment}) => {
 		metrics: {variantMetrics},
 		publishedDXPVariantId,
 		status,
+		type,
 		winnerDXPVariantId
 	} = experiment;
 
@@ -37,6 +38,7 @@ export const VariantTable = ({experiment}) => {
 					metricUnit,
 					publishedDXPVariantId,
 					status,
+					type,
 					winnerDXPVariantId
 				})}
 				headingNowrap={false}

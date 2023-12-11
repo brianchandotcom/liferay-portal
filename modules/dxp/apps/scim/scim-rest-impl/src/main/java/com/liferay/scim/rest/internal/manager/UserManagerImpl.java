@@ -500,16 +500,19 @@ public class UserManagerImpl implements UserManager {
 			userGroup = _userGroupLocalService.updateUserGroup(userGroup);
 
 			_saveScimClientId(
+				UserGroup.class.getName(), userGroup.getPrimaryKey(),
+				userGroup.getCompanyId(),
 				ScimClientUtil.generateScimClientId(
 					scimClientOAuth2ApplicationConfiguration.
-						oAuth2ApplicationName()),
-				userGroup);
+						oAuth2ApplicationName()));
 		}
 		else {
 			String scimClientId = ScimClientUtil.generateScimClientId(
 				scimClientOAuth2ApplicationConfiguration.
 					oAuth2ApplicationName());
-			String userGroupScimClientId = _getScimClientId(userGroup);
+			String userGroupScimClientId = _getScimClientId(
+				UserGroup.class.getName(), userGroup.getPrimaryKey(),
+				userGroup.getCompanyId());
 
 			if (Validator.isNotNull(userGroupScimClientId) &&
 				!Objects.equals(scimClientId, userGroupScimClientId)) {
@@ -532,7 +535,9 @@ public class UserManagerImpl implements UserManager {
 			}
 
 			if (Validator.isNull(userGroupScimClientId)) {
-				_saveScimClientId(scimClientId, userGroup);
+				_saveScimClientId(
+					UserGroup.class.getName(), userGroup.getPrimaryKey(),
+					userGroup.getCompanyId(), scimClientId);
 			}
 		}
 
@@ -567,10 +572,11 @@ public class UserManagerImpl implements UserManager {
 			portalUser.getUserId(), true);
 
 		_saveScimClientId(
+			com.liferay.portal.kernel.model.User.class.getName(),
+			portalUser.getUserId(), portalUser.getCompanyId(),
 			ScimClientUtil.generateScimClientId(
 				scimClientOAuth2ApplicationConfiguration.
-					oAuth2ApplicationName()),
-			portalUser);
+					oAuth2ApplicationName()));
 
 		return portalUser;
 	}
@@ -621,12 +627,10 @@ public class UserManagerImpl implements UserManager {
 	}
 
 	private String _getScimClientId(
-		com.liferay.portal.kernel.model.User portalUser) {
+		String className, long classPK, long companyId) {
 
 		ExpandoTable expandoTable = _expandoTableLocalService.fetchTable(
-			portalUser.getCompanyId(),
-			_classNameLocalService.getClassNameId(
-				com.liferay.portal.kernel.model.User.class.getName()),
+			companyId, _classNameLocalService.getClassNameId(className),
 			ExpandoTableConstants.DEFAULT_TABLE_NAME);
 
 		if (expandoTable == null) {
@@ -641,70 +645,13 @@ public class UserManagerImpl implements UserManager {
 		}
 
 		ExpandoValue expandoValue = _expandoValueLocalService.getValue(
-			expandoTable.getTableId(), expandoColumn.getColumnId(),
-			portalUser.getUserId());
+			expandoTable.getTableId(), expandoColumn.getColumnId(), classPK);
 
 		if (expandoValue == null) {
 			return StringPool.BLANK;
 		}
 
 		return expandoValue.getData();
-	}
-
-	private String _getScimClientId(UserGroup userGroup) {
-		ExpandoTable expandoTable = _expandoTableLocalService.fetchTable(
-			userGroup.getCompanyId(),
-			_classNameLocalService.getClassNameId(UserGroup.class.getName()),
-			ExpandoTableConstants.DEFAULT_TABLE_NAME);
-
-		if (expandoTable == null) {
-			return StringPool.BLANK;
-		}
-
-		ExpandoColumn expandoColumn = _expandoColumnLocalService.fetchColumn(
-			expandoTable.getTableId(), "scimClientId");
-
-		if (expandoColumn == null) {
-			return StringPool.BLANK;
-		}
-
-		ExpandoValue expandoValue = _expandoValueLocalService.getValue(
-			expandoTable.getTableId(), expandoColumn.getColumnId(),
-			userGroup.getPrimaryKey());
-
-		if (expandoValue == null) {
-			return StringPool.BLANK;
-		}
-
-		return expandoValue.getData();
-	}
-
-	private ExpandoColumn _getScimClientIdExpandoColumn(
-			ExpandoTable expandoTable)
-		throws Exception {
-
-		ExpandoColumn expandoColumn = _expandoColumnLocalService.fetchColumn(
-			expandoTable.getTableId(), "scimClientId");
-
-		if (expandoColumn == null) {
-			expandoColumn = _expandoColumnLocalService.addColumn(
-				expandoTable.getTableId(), "scimClientId",
-				ExpandoColumnConstants.STRING);
-
-			UnicodeProperties unicodeProperties =
-				expandoColumn.getTypeSettingsProperties();
-
-			unicodeProperties.setProperty(
-				ExpandoColumnConstants.INDEX_TYPE,
-				String.valueOf(ExpandoColumnConstants.INDEX_TYPE_KEYWORD));
-
-			expandoColumn.setTypeSettingsProperties(unicodeProperties);
-
-			expandoColumn = _expandoColumnLocalService.updateExpandoColumn(
-				expandoColumn);
-		}
-
-		return expandoColumn;
 	}
 
 	private ScimClientOAuth2ApplicationConfiguration
@@ -770,7 +717,9 @@ public class UserManagerImpl implements UserManager {
 			throw new NotFoundException();
 		}
 
-		String userScimClientId = _getScimClientId(portalUser);
+		String userScimClientId = _getScimClientId(
+			com.liferay.portal.kernel.model.User.class.getName(),
+			portalUser.getUserId(), portalUser.getCompanyId());
 
 		if (Validator.isNull(userScimClientId)) {
 			throw new NotFoundException(
@@ -813,7 +762,9 @@ public class UserManagerImpl implements UserManager {
 				"No group found with group ID " + userGroupId);
 		}
 
-		String groupScimClientId = _getScimClientId(userGroup);
+		String groupScimClientId = _getScimClientId(
+			UserGroup.class.getName(), userGroup.getPrimaryKey(),
+			userGroup.getCompanyId());
 
 		if (Validator.isNull(groupScimClientId)) {
 			throw new NotFoundException(
@@ -836,54 +787,42 @@ public class UserManagerImpl implements UserManager {
 	}
 
 	private void _saveScimClientId(
-			String scimClientId,
-			com.liferay.portal.kernel.model.User portalUser)
+			String className, long classPK, long companyId, String scimClientId)
 		throws Exception {
 
 		ExpandoTable expandoTable = _expandoTableLocalService.fetchTable(
-			portalUser.getCompanyId(),
-			_classNameLocalService.getClassNameId(
-				com.liferay.portal.kernel.model.User.class.getName()),
+			companyId, _classNameLocalService.getClassNameId(className),
 			ExpandoTableConstants.DEFAULT_TABLE_NAME);
 
 		if (expandoTable == null) {
 			expandoTable = _expandoTableLocalService.addTable(
-				portalUser.getCompanyId(),
-				com.liferay.portal.kernel.model.User.class.getName(),
-				ExpandoTableConstants.DEFAULT_TABLE_NAME);
+				companyId, className, ExpandoTableConstants.DEFAULT_TABLE_NAME);
 		}
 
-		ExpandoColumn expandoColumn = _getScimClientIdExpandoColumn(
-			expandoTable);
+		ExpandoColumn expandoColumn = _expandoColumnLocalService.fetchColumn(
+			expandoTable.getTableId(), "scimClientId");
 
-		_expandoValueLocalService.addValue(
-			portalUser.getCompanyId(),
-			com.liferay.portal.kernel.model.User.class.getName(),
-			ExpandoTableConstants.DEFAULT_TABLE_NAME, expandoColumn.getName(),
-			portalUser.getUserId(), scimClientId);
-	}
+		if (expandoColumn == null) {
+			expandoColumn = _expandoColumnLocalService.addColumn(
+				expandoTable.getTableId(), "scimClientId",
+				ExpandoColumnConstants.STRING);
 
-	private void _saveScimClientId(String scimClientId, UserGroup userGroup)
-		throws Exception {
+			UnicodeProperties unicodeProperties =
+				expandoColumn.getTypeSettingsProperties();
 
-		ExpandoTable expandoTable = _expandoTableLocalService.fetchTable(
-			userGroup.getCompanyId(),
-			_classNameLocalService.getClassNameId(UserGroup.class.getName()),
-			ExpandoTableConstants.DEFAULT_TABLE_NAME);
+			unicodeProperties.setProperty(
+				ExpandoColumnConstants.INDEX_TYPE,
+				String.valueOf(ExpandoColumnConstants.INDEX_TYPE_KEYWORD));
 
-		if (expandoTable == null) {
-			expandoTable = _expandoTableLocalService.addTable(
-				userGroup.getCompanyId(), UserGroup.class.getName(),
-				ExpandoTableConstants.DEFAULT_TABLE_NAME);
+			expandoColumn.setTypeSettingsProperties(unicodeProperties);
+
+			expandoColumn = _expandoColumnLocalService.updateExpandoColumn(
+				expandoColumn);
 		}
 
-		ExpandoColumn expandoColumn = _getScimClientIdExpandoColumn(
-			expandoTable);
-
 		_expandoValueLocalService.addValue(
-			userGroup.getCompanyId(), UserGroup.class.getName(),
-			ExpandoTableConstants.DEFAULT_TABLE_NAME, expandoColumn.getName(),
-			userGroup.getPrimaryKey(), scimClientId);
+			companyId, className, ExpandoTableConstants.DEFAULT_TABLE_NAME,
+			expandoColumn.getName(), classPK, scimClientId);
 	}
 
 	private ScimUser _toScimUser(
@@ -931,7 +870,9 @@ public class UserManagerImpl implements UserManager {
 
 		String scimClientId = ScimClientUtil.generateScimClientId(
 			scimClientOAuth2ApplicationConfiguration.oAuth2ApplicationName());
-		String portalUserScimClientId = _getScimClientId(portalUser);
+		String portalUserScimClientId = _getScimClientId(
+			com.liferay.portal.kernel.model.User.class.getName(),
+			portalUser.getUserId(), portalUser.getCompanyId());
 
 		if (Validator.isNotNull(portalUserScimClientId) &&
 			!Objects.equals(scimClientId, portalUserScimClientId)) {
@@ -976,7 +917,10 @@ public class UserManagerImpl implements UserManager {
 		}
 
 		if (Validator.isNull(portalUserScimClientId)) {
-			_saveScimClientId(scimClientId, portalUser);
+			_saveScimClientId(
+				com.liferay.portal.kernel.model.User.class.getName(),
+				portalUser.getUserId(), portalUser.getCompanyId(),
+				scimClientId);
 		}
 
 		return portalUser;

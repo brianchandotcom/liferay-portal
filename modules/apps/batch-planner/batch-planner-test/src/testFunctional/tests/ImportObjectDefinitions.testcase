@@ -1,0 +1,187 @@
+@component-name = "portal-batch-planner"
+definition {
+
+	property custom.properties = "feature.flag.COMMERCE-8087=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Import/Export";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		BatchPlanner.batchPlannerTearDown();
+
+		ObjectAdmin.deleteAllCustomObjectsViaAPI();
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@priority = 4
+	test CanCreateNewObjectDefinitionAndUpdateExistingObjectDefinitionWithImportJSONFile {
+		property portal.acceptance = "true";
+
+		task ("Given a student object with a custom field name") {
+			ObjectDefinitionAPI.createAndPublishObjectDefinition(
+				en_US_label = "Student",
+				en_US_plural_label = "Student",
+				name = "Student",
+				objectDefinitionExternalReferenceCode = "Student",
+				requiredStringFieldName = "name",
+				requiredStringFieldNameExternalReferenceCode = "studentName");
+		}
+
+		task ("When I import the JSON file which contains the student object definition extended by a new field and a new object definition") {
+			ImportExport.importFile(
+				entityType = "ObjectDefinition (v1_0 - Liferay Object Admin REST)",
+				fileName = "multiple_objectDefinitions_import_create_update.json");
+		}
+
+		task ("Then the new object definition is created") {
+			ObjectDefinitionAPI.assertObjectDefinitionInResponse(expectedValue = "Teacher");
+		}
+
+		task ("And Then student object definition is updated") {
+			var response = JSONObject.getObjectDefinition(objectName = "Student");
+
+			var actual = JSONUtil.getWithJSONPath(${response}, "$..name");
+
+			TestUtils.assertContain(
+				actual = ${actual},
+				expected = "additional");
+		}
+	}
+
+	@priority = 4
+	test CanImportJSONFileWithOnlyNewRecordsImportStrategy {
+		property portal.acceptance = "true";
+
+		task ("Given JSON file with an existing object definition valid data and a new object definition valid data") {
+			ObjectDefinitionAPI.createAndPublishObjectDefinition(
+				en_US_label = "Student",
+				en_US_plural_label = "Student",
+				name = "Student",
+				objectDefinitionExternalReferenceCode = "Student",
+				requiredStringFieldName = "name",
+				requiredStringFieldNameExternalReferenceCode = "studentName");
+		}
+
+		task ("When I import with select Only Add New Records in Import Strategy and uncheck Stop the Import on Error") {
+			ImportExport.importFile(
+				entityType = "ObjectDefinition (v1_0 - Liferay Object Admin REST)",
+				fileName = "multiple_objectDefinitions_import_create_update.json",
+				importStrategy = "Only Add New Records",
+				stopImportOnError = "false");
+		}
+
+		task ("Then the new object definition is imported successfully") {
+			ObjectDefinitionAPI.assertObjectDefinitionInResponse(expectedValue = "Teacher");
+		}
+	}
+
+	@priority = 4
+	test CanImportJSONLFile {
+		property portal.acceptance = "true";
+
+		task ("When I use import/export center to import the object definition with JSONL file") {
+			ImportExport.importFile(
+				entityType = "ObjectDefinition (v1_0 - Liferay Object Admin REST)",
+				fileName = "student_objectDefinition_import_create.jsonl");
+		}
+
+		task ("Then the object definition can be imported to the portal successful") {
+			ObjectDefinitionAPI.assertObjectDefinitionInResponse(expectedValue = "Student");
+		}
+	}
+
+	@priority = 4
+	test CanImportObjectDefinitionWithExportedJSONLFile {
+		property portal.acceptance = "true";
+
+		task ("Given a student object with a custom field name") {
+			ObjectDefinitionAPI.createAndPublishObjectDefinition(
+				en_US_label = "Student",
+				en_US_plural_label = "Student",
+				name = "Student",
+				requiredStringFieldName = "name");
+		}
+
+		task ("And Given I export ObjectDefinition to a JSONL format file in Import/Export center") {
+			ImportExport.exportAndUnzipFile(
+				entityType = "ObjectDefinition (v1_0 - Liferay Object Admin REST)",
+				exportFields = "externalReferenceCode,label,name,objectFields,pluralLabel,scope,status",
+				exportFileFormat = "JSONL");
+		}
+
+		task ("And Given delete the student object from the portal") {
+			ObjectAdmin.deleteObjectViaAPI(objectName = "Student");
+		}
+
+		task ("When I import the exported student object with JSONL file") {
+			ImportExport.importFile(
+				entityType = "ObjectDefinition (v1_0 - Liferay Object Admin REST)",
+				tempFile = "export.jsonl");
+		}
+
+		task ("Then the student object can be imported successfully") {
+			ObjectDefinitionAPI.assertObjectDefinitionInResponse(expectedValue = "Student");
+		}
+	}
+
+	@priority = 4
+	test CanMappedAllMandatoryFieldsWithImportFile {
+		property portal.acceptance = "true";
+
+		task ("When importing the object definition with fields externalReferenceCode,name,label,pluralLabel,scope,status and custom text field in the JSON file") {
+			ImportExport.importFile(
+				entityType = "ObjectDefinition (v1_0 - Liferay Object Admin REST)",
+				fileName = "student_additional_objectDefinition_import_create.json",
+				noImport = "true");
+		}
+
+		task ("Then all fields from file are mapped in the import/export center") {
+			ImportExport.assertImportMappings(fieldMappings = "externalReferenceCode:externalReferenceCode,label:label,name:name,objectFields:objectFields,pluralLabel:pluralLabel,scope:scope,status:status");
+		}
+	}
+
+	@priority = 4
+	test CannotUpdateExistingObjectDefinitionWhendSelectingOnlyAddNewRecords {
+		property portal.acceptance = "true";
+
+		task ("Given a student object definition with custom text field name is created") {
+			ObjectDefinitionAPI.createAndPublishObjectDefinition(
+				en_US_label = "Student",
+				en_US_plural_label = "Student",
+				name = "Student",
+				objectDefinitionExternalReferenceCode = "Student",
+				requiredStringFieldName = "name",
+				requiredStringFieldNameExternalReferenceCode = "studentName");
+		}
+
+		task ("When I import a JSONL file with an additional custom field and unchecking Stop the Import on Error and choosing Only Add New Records as Import Strategy") {
+			ImportExport.importFile(
+				entityType = "ObjectDefinition (v1_0 - Liferay Object Admin REST)",
+				fileName = "student_additional_objectDefinition_import_create.jsonl",
+				importStrategy = "Only Add New Records",
+				stopImportOnError = "false");
+		}
+
+		task ("Then the import task successful with the message and no new fields updating in existing object definition") {
+			var response = JSONObject.getObjectDefinition(objectName = "Student");
+
+			var actual = JSONUtil.getWithJSONPath(${response}, "$..name");
+
+			TestUtils.assertNotContain(
+				actual = ${actual},
+				expected = "additional");
+		}
+	}
+
+}

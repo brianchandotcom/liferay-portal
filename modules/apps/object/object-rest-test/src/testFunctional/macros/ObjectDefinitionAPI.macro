@@ -474,17 +474,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertCustomFieldInResponse(objectName = null, expectedValue = null) {
-		var response = JSONObject.getObjectDefinition(objectName = ${objectName});
-
-		var actual = JSONUtil.getWithJSONPath(${response}, "$..name");
-
-		TestUtils.assertContain(
-			actual = ${actual},
-			expected = ${expectedValue});
-	}
-
-	@summary = "Default summary"
 	macro assertEmployeeHasNestedFieldManager(expectedManagerFirstname = null, responseToParse = null, nestedField = null, objectId = null, expectedManagerId = null, expectedEmployeeFirstname = null) {
 		var nestedObjectParameterName = StringUtil.replace(${nestedField}, "Id", "");
 

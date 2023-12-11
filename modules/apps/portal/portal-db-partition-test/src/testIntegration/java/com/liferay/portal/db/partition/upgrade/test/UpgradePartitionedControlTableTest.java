@@ -116,9 +116,10 @@ public class UpgradePartitionedControlTableTest
 
 					statement.execute(
 						StringBundler.concat(
-							"create or replace view ", getSchemaName(companyId),
-							StringPool.PERIOD, viewName, " as select * from ",
-							defaultSchemaName, StringPool.PERIOD, viewName));
+							"create or replace view ",
+							getPartitionName(companyId), StringPool.PERIOD,
+							viewName, " as select * from ", defaultSchemaName,
+							StringPool.PERIOD, viewName));
 				});
 		}
 	}

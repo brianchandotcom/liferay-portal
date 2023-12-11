@@ -172,7 +172,7 @@ public abstract class BaseDBPartitionTestCase {
 	protected static void dropSchemas() throws Exception {
 		for (long companyId : COMPANY_IDS) {
 			db.runSQL(
-				dbPartitionDB.getDropPartitionSQL(getSchemaName(companyId)));
+				dbPartitionDB.getDropPartitionSQL(getPartitionName(companyId)));
 		}
 	}
 
@@ -247,7 +247,7 @@ public abstract class BaseDBPartitionTestCase {
 			" (testColumn bigint primary key, companyId bigint)";
 	}
 
-	protected static String getSchemaName(long companyId) {
+	protected static String getPartitionName(long companyId) {
 		if (_dbPartitionEnabled) {
 			return (String)ReflectionTestUtil.getFieldValue(
 				DBPartitionUtil.class,
@@ -516,11 +516,12 @@ public abstract class BaseDBPartitionTestCase {
 
 					@Override
 					public void close() throws SQLException {
-						String defaultSchemaName =
+						String defaultPartitionName =
 							ReflectionTestUtil.getFieldValue(
-								DBPartitionUtil.class, "_defaultSchemaName");
+								DBPartitionUtil.class, "_defaultPartitionName");
 
-						setCatalog(defaultSchemaName);
+						dbPartitionDB.setPartition(
+							connection, defaultPartitionName);
 
 						super.close();
 					}

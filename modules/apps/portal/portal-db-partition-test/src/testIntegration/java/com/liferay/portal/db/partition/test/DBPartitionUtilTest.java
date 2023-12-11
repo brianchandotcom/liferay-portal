@@ -60,7 +60,7 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 		for (long companyId : COMPANY_IDS) {
 			db.runSQL(
 				dbPartitionDB.getCreatePartitionSQL(
-					connection, getSchemaName(companyId)));
+					connection, getPartitionName(companyId)));
 		}
 	}
 
@@ -110,7 +110,7 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 		try (Statement statement = connection.createStatement()) {
 			for (long companyId : COMPANY_IDS) {
 				statement.execute(
-					"select 1 from " + getSchemaName(companyId) +
+					"select 1 from " + getPartitionName(companyId) +
 						".CompanyInfo");
 			}
 		}
@@ -253,7 +253,7 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 
 				try {
 					String fullTestTableName =
-						getSchemaName(companyId) + "." +
+						getPartitionName(companyId) + "." +
 							TEST_CONTROL_TABLE_NAME;
 
 					createAndPopulateControlTable(TEST_CONTROL_TABLE_NAME);
@@ -330,7 +330,7 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 
 				for (long companyId : COMPANY_IDS) {
 					Assert.assertNotEquals(
-						getSchemaName(companyId), schemaName);
+						getPartitionName(companyId), schemaName);
 				}
 			}
 		}
@@ -350,7 +350,7 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 
 		if (!defaultSchema) {
 			fullTableName =
-				getSchemaName(companyId) + StringPool.PERIOD + tableName;
+				getPartitionName(companyId) + StringPool.PERIOD + tableName;
 		}
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
@@ -386,7 +386,7 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 		List<String> objectNames = new ArrayList<>();
 
 		try (ResultSet resultSet = databaseMetaData.getTables(
-				getSchemaName(companyId), dbInspector.getSchema(), null,
+				getPartitionName(companyId), dbInspector.getSchema(), null,
 				new String[] {objectType})) {
 
 			while (resultSet.next()) {

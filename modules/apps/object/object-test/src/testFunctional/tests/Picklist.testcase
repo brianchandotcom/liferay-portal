@@ -1020,7 +1020,7 @@ definition {
 
 			ObjectAdmin.assertObjectField(
 				fieldLabel = "Lista de itens",
-				fieldType = "Picklist");
+				fieldType = "Lista de seleção");
 		}
 	}
 

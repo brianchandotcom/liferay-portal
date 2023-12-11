@@ -328,7 +328,7 @@ definition {
 		var index = 0;
 		var listLabelOriginal = ListUtil.newListFromString("Custom Field Long Integer,Custom Field Date,Custom Field Integer,Custom Field Precision Decimal,Custom Field Decimal,Custom Field Rich Text,Custom Field Boolean,Custom Field Long Text,Custom Field Picklist");
 		var listLabelUpdated = ListUtil.newListFromString("Custom Field Long Integer Updated,Custom Field Date Updated,Custom Field Integer Updated,Custom Field Precision Decimal Updated,Custom Field Decimal Updated,Custom Field Rich Text Updated,Custom Field Boolean Updated,Custom Field Long Text Updated,Custom Field Picklist Updated");
-		var listFieldType = ListUtil.newListFromString("LongInteger,Date,Integer,PrecisionDecimal,Decimal,RichText,Boolean,LongText,Picklist");
+		var listFieldType = ListUtil.newListFromString("Long Integer,Date,Integer,Precision Decimal,Decimal,Rich Text,Boolean,Long Text,Picklist");
 
 		task ("Given an Custom Object and all fields are present after Upgrade") {
 			ObjectAdmin.openObjectAdmin();

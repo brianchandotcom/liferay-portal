@@ -856,7 +856,7 @@ definition {
 
 		ObjectAdmin.assertObjectField(
 			fieldLabel = "Custom Field",
-			fieldType = "PrecisionDecimal");
+			fieldType = "Precision Decimal");
 	}
 
 	@description = "LPS-135549 - Verify it is possible to create a Boolean field"
@@ -1018,7 +1018,7 @@ definition {
 
 		ObjectAdmin.assertObjectField(
 			fieldLabel = "Custom Field",
-			fieldType = "LongInteger");
+			fieldType = "Long Integer");
 	}
 
 	@description = "LPS-135401 - Verify it is possible to create a Many to Many Relationship"

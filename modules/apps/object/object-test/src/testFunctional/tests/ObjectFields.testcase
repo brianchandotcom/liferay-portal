@@ -293,7 +293,7 @@ definition {
 
 		ObjectAdmin.assertObjectField(
 			fieldLabel = "Custom Field",
-			fieldType = "LongText");
+			fieldType = "Long Text");
 	}
 
 	@description = "LPS-135404 - Verify that it's possible to create new custom fields in a System Object"
@@ -361,7 +361,7 @@ definition {
 
 			ObjectAdmin.assertObjectField(
 				fieldLabel = "Custom Long Integer",
-				fieldType = "LongInteger");
+				fieldType = "Long Integer");
 		}
 
 		task ("Go to Objects, select System Object Commerce Order and click on fields tab") {
@@ -656,7 +656,7 @@ definition {
 
 			ObjectAdmin.assertObjectField(
 				fieldLabel = "Custom Long Integer",
-				fieldType = "LongInteger");
+				fieldType = "Long Integer");
 		}
 
 		task ("Add attachment field") {
@@ -734,7 +734,7 @@ definition {
 
 			ObjectAdmin.assertObjectField(
 				fieldLabel = "Custom Precision Decimal",
-				fieldType = "PrecisionDecimal");
+				fieldType = "Precision Decimal");
 		}
 
 		task ("Add decimal field") {
@@ -760,7 +760,7 @@ definition {
 
 			ObjectAdmin.assertObjectField(
 				fieldLabel = "Custom Rich Text",
-				fieldType = "RichText");
+				fieldType = "Rich Text");
 		}
 
 		task ("Add boolean field") {
@@ -786,7 +786,7 @@ definition {
 
 			ObjectAdmin.assertObjectField(
 				fieldLabel = "Custom Long Text",
-				fieldType = "LongText");
+				fieldType = "Long Text");
 		}
 
 		task ("Publish Custom Object") {

@@ -5,13 +5,10 @@
  */
 --%>
 
-<%@ page import="com.liferay.commerce.constants.CommerceOrderPaymentConstants" %>
-
-<%@ page import="com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil" %>
-
-<%@ page import="com.liferay.portal.kernel.util.PortalUtil" %>
-
-<%@ page import="com.liferay.document.library.util.DLURLHelperUtil" %>
+<%@ page import="com.liferay.commerce.constants.CommerceOrderPaymentConstants" %><%@
+page import="com.liferay.document.library.util.DLURLHelperUtil" %><%@
+page import="com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil" %><%@
+page import="com.liferay.portal.kernel.util.PortalUtil" %>
 
 <%
 CommerceOrderPaymentConstants.STATUS_AUTHORIZED;

@@ -756,6 +756,208 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-196462. The New Rule Modal allows the user to delete conditions and actions via keyboard."
+	@priority = 3
+	test DeleteConditionsAndActionsViaKeyboard {
+		task ("Given a page designer has fragments on a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = ${randomSiteName});
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading",
+				targetFragmentName = "Button");
+		}
+
+		task ("When the page designer adds conditions and actions on the New Rule modal") {
+			PageEditor.gotoTab(tabName = "Page Rules");
+
+			Button.click(button = "New Rule");
+
+			AssertTextEquals(
+				locator1 = "Modal#HEADER",
+				value1 = "New Rule");
+
+			Click(
+				index = 1,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION_ITEM");
+
+			DropdownMenuItem.click(menuItem = "User");
+
+			Click(
+				index = 2,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION_ITEM");
+
+			DropdownMenuItem.click(menuItem = "Is the User");
+
+			Click(
+				index = 3,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION_ITEM");
+
+			DropdownMenuItem.click(menuItem = "test");
+
+			Button.click(button = "Add Condition");
+
+			Click(
+				index = 1,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION_ITEM");
+
+			DropdownMenuItem.click(menuItem = "User");
+
+			Click(
+				index = 2,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION_ITEM");
+
+			DropdownMenuItem.click(menuItem = "Has the Role Of");
+
+			Click(
+				index = 3,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION_ITEM");
+
+			DropdownMenuItem.click(menuItem = "Power User");
+
+			Click(
+				index = 1,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_ACTION_ITEM");
+
+			DropdownMenuItem.click(menuItem = "Hide");
+
+			Click(
+				index = 2,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_ACTION_ITEM");
+
+			DropdownMenuItem.click(menuItem = "Fragment");
+
+			Click(
+				index = 3,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_ACTION_ITEM");
+
+			DropdownMenuItem.click(menuItem = "Button");
+
+			Button.click(button = "Add Action");
+
+			Click(
+				index = 1,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_ACTION_ITEM");
+
+			DropdownMenuItem.click(menuItem = "Hide");
+
+			Click(
+				index = 2,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_ACTION_ITEM");
+
+			DropdownMenuItem.click(menuItem = "Fragment");
+
+			Click(
+				index = 3,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_ACTION_ITEM");
+
+			DropdownMenuItem.click(menuItem = "Heading");
+		}
+
+		task ("Then the page designer could delete conditions and actions") {
+			AssertAttributeValue(
+				index = 2,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_ACTION_DELETE_BUTTON",
+				value1 = "aria-label",
+				value2 = "Delete Action: Hide Fragment Heading");
+
+			KeyPress(
+				index = 6,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_EXISTING_ACTION_ITEM",
+				value1 = "\TAB");
+
+			KeyPress(
+				index = 2,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_ACTION_DELETE_BUTTON",
+				value1 = "\ENTER");
+
+			AssertAttributeValue(
+				index = 1,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_ACTION_DELETE_BUTTON",
+				value1 = "aria-label",
+				value2 = "Delete Action: Hide Fragment Button");
+
+			KeyPress(
+				index = 3,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_EXISTING_ACTION_ITEM",
+				value1 = "\TAB");
+
+			KeyPress(
+				index = 1,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_ACTION_DELETE_BUTTON",
+				value1 = "\ENTER");
+
+			AssertAttributeValue(
+				index = 2,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION_DELETE_BUTTON",
+				value1 = "aria-label",
+				value2 = "Delete Condition: User Has the Role Of Power User");
+
+			KeyPress(
+				index = 6,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_EXISTING_CONDITION_ITEM",
+				value1 = "\TAB");
+
+			KeyPress(
+				index = 2,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION_DELETE_BUTTON",
+				value1 = "\ENTER");
+
+			AssertAttributeValue(
+				index = 1,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION_DELETE_BUTTON",
+				value1 = "aria-label",
+				value2 = "Delete Condition: User Is the User test");
+
+			KeyPress(
+				index = 3,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_EXISTING_CONDITION_ITEM",
+				value1 = "\TAB");
+
+			KeyPress(
+				index = 1,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION_DELETE_BUTTON",
+				value1 = "\ENTER");
+
+			AssertElementNotPresent(
+				index = 2,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION");
+
+			AssertElementNotPresent(
+				index = 2,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_ACTION");
+
+			AssertVisible(
+				index = 1,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION");
+
+			AssertVisible(
+				index = 1,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_ACTION");
+
+			AssertTextEquals(
+				index = 1,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_CONDITION_ITEM",
+				value1 = "Select");
+
+			AssertTextEquals(
+				index = 1,
+				locator1 = "PageEditor#PAGE_RULE_BUILDER_ACTION_ITEM",
+				value1 = "Select");
+		}
+	}
+
 	@description = "This is a test for LPS-194375. Using Keyboard navigation it is possible to access and use the Page Editor filter."
 	@priority = 3
 	test FilterDisplayedAssetsViaKeyboard {

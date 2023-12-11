@@ -7,6 +7,7 @@ package com.liferay.portal.db.partition.sql;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -44,6 +45,17 @@ public class DBPartitionPostgreSQLDB implements DBPartitionDB {
 	@Override
 	public String getDropPartitionSQL(String partitionName) {
 		return "drop schema if exists " + partitionName + " cascade";
+	}
+
+	@Override
+	public String getSafeAlterTable(String alterTableSQL) {
+		if (StringUtil.count(StringUtil.toLowerCase(alterTableSQL), "drop") >
+				0) {
+
+			return alterTableSQL + " cascade";
+		}
+
+		return alterTableSQL;
 	}
 
 	@Override

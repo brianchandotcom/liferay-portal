@@ -14,11 +14,6 @@
 <!--SCHEMA-->
 
 <tr>
-	<td>SCHEMA_FIELD_DESCRIPTION</td>
-	<td>//p[contains(text(),'${key_fieldDescription}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SCHEMA_ENTITY</td>
 	<td>//div[@id='model-${schema}']</td>
 	<td></td>
@@ -46,11 +41,6 @@
 <tr>
 	<td>SCHEMA_PROPERTY</td>
 	<td>//div[(@id='model-${schema}')]//tr[contains(.,'${field}')]//tr[contains(.,'${property}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SCHEMA_OPTIONS</td>
-	<td>//span[contains(@class, 'model-title') and text()='${key_schemaValue}']</td>
 	<td></td>
 </tr>
 

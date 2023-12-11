@@ -23,7 +23,6 @@ import java.util.Set;
 
 /**
  * @author Raymond Augé
- * @author Drew Brokke
  */
 public class SourceFormatterArgs {
 
@@ -77,7 +76,7 @@ public class SourceFormatterArgs {
 		throws IOException {
 
 		for (String fileName : fileNames) {
-			Path path = null;
+			Path path;
 
 			if (baseDirName != null) {
 				path = Paths.get(baseDirName, fileName);

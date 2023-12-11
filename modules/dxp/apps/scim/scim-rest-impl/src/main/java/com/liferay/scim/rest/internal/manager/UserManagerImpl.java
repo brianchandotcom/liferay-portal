@@ -510,6 +510,10 @@ public class UserManagerImpl implements UserManager {
 			portalUser = _userService.getUserById(userId);
 		}
 		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+
 			throw new NotFoundException();
 		}
 

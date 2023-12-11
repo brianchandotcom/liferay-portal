@@ -219,6 +219,14 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 			).setRedirect(
 				_themeDisplay.getURLCurrent()
 			).setParameter(
+				"backURLTitle",
+				() -> {
+					PortletDisplay portletDisplay =
+						_themeDisplay.getPortletDisplay();
+
+					return portletDisplay.getPortletDisplayName();
+				}
+			).setParameter(
 				"layoutPrototypeId",
 				_layoutPageTemplateEntry.getLayoutPrototypeId()
 			).buildPortletURL();

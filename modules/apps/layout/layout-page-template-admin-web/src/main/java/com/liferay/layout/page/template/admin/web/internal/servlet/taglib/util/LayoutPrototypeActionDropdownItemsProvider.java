@@ -118,8 +118,10 @@ public class LayoutPrototypeActionDropdownItemsProvider {
 		return dropdownItem -> {
 			dropdownItem.setHref(
 				_renderResponse.createRenderURL(), "mvcPath",
-				"/edit_layout_prototype.jsp", "layoutPrototypeId",
-				_layoutPrototype.getLayoutPrototypeId());
+				"/edit_layout_prototype.jsp", "backURLTitle",
+				LanguageUtil.get(
+					_themeDisplay.getLocale(), "widget-page-templates"),
+				"layoutPrototypeId", _layoutPrototype.getLayoutPrototypeId());
 			dropdownItem.setIcon("cog");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "configure"));

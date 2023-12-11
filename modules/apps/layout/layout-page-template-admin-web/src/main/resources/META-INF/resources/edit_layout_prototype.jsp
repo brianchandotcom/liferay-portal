@@ -32,7 +32,7 @@ request.setAttribute("edit_layout_prototype.jsp-redirect", redirect);
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
-portletDisplay.setURLBackTitle(portletDisplay.getPortletDisplayName());
+portletDisplay.setURLBackTitle(ParamUtil.getString(request, "backURLTitle"));
 
 renderResponse.setTitle(layoutPrototype.isNew() ? LanguageUtil.get(request, "new-page-template") : layoutPrototype.getName(locale));
 %>

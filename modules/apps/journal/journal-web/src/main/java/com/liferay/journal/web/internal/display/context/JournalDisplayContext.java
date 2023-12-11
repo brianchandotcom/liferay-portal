@@ -1395,6 +1395,30 @@ public class JournalDisplayContext {
 		return true;
 	}
 
+	public boolean isShowVersions() throws PortalException {
+		if ((!FeatureFlagManagerUtil.isEnabled("LPS-196768") &&
+			 isVersionsTabSelected()) ||
+			(FeatureFlagManagerUtil.isEnabled("LPS-196768") &&
+			 isTypeVersions())) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isShowWebContent() throws PortalException {
+		if ((!FeatureFlagManagerUtil.isEnabled("LPS-196768") &&
+			 isWebContentTabSelected()) ||
+			(FeatureFlagManagerUtil.isEnabled("LPS-196768") &&
+			 isTypeWebContent())) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isTypeVersions() {
 		if (Objects.equals(getType(), "versions")) {
 			return true;

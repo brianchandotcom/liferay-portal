@@ -33,6 +33,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.TreeMap;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -169,7 +170,7 @@ public class BatchEngineFileInstaller implements FileInstaller {
 		ZipFile zipFile) {
 
 		Map<String, ZipEntry> batchEngineZipEntries = new HashMap<>();
-		Map<String, BatchEngineUnit> batchEngineUnits = new HashMap<>();
+		Map<String, BatchEngineUnit> batchEngineUnits = new TreeMap<>();
 		Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
 
 		while (enumeration.hasMoreElements()) {

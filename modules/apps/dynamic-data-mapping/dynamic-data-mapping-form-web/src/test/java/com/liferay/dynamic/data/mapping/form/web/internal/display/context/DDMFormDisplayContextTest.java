@@ -7,23 +7,30 @@ package com.liferay.dynamic.data.mapping.form.web.internal.display.context;
 
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldOptionsFactory;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesRegistry;
+import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
 import com.liferay.dynamic.data.mapping.form.web.internal.configuration.DDMFormWebConfiguration;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceSettings;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceVersion;
+import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMFormSuccessPageSettings;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.impl.DDMFormInstanceImpl;
+import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordVersionLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceVersionLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterRegistry;
+import com.liferay.dynamic.data.mapping.storage.constants.FieldConstants;
+import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesMerger;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
@@ -54,6 +61,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -319,6 +327,122 @@ public class DDMFormDisplayContextTest {
 
 		Assert.assertEquals(
 			submitLabel, ddmFormDisplayContext.getSubmitLabel());
+	}
+
+	@Test
+	public void testGetDDMFormContext() throws Exception {
+		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
+
+		Mockito.when(
+			themeDisplay.getUserId()
+		).thenReturn(
+			RandomTestUtil.randomLong()
+		);
+
+		Mockito.when(
+			themeDisplay.isSignedIn()
+		).thenReturn(
+			true
+		);
+
+		_mockHttpServletRequest2.setAttribute(
+			WebKeys.THEME_DISPLAY, themeDisplay);
+
+		DDMFormDisplayContext ddmFormDisplayContext = Mockito.spy(
+			_createDDMFormDisplayContext());
+
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
+
+		DDMFormField ddmFormField = DDMFormTestUtil.createDDMFormField(
+			"Select", RandomTestUtil.randomString(),
+			DDMFormFieldTypeConstants.SELECT, FieldConstants.STRING, true,
+			false, false);
+
+		ddmFormField.setProperty("dataSourceType", "data-provider");
+
+		ddmForm.addDDMFormField(ddmFormField);
+
+		Mockito.doReturn(
+			ddmForm
+		).when(
+			ddmFormDisplayContext
+		).getDDMForm(
+			Mockito.any(DDMFormInstance.class), Mockito.anyBoolean()
+		);
+
+		DDMFormLayout ddmFormLayout = Mockito.mock(DDMFormLayout.class);
+
+		Mockito.doReturn(
+			ddmFormLayout
+		).when(
+			ddmFormDisplayContext
+		).getDDMFormLayout(
+			Mockito.any(DDMFormInstance.class), Mockito.anyBoolean()
+		);
+
+		DDMFormInstance ddmFormInstance = _mockDDMFormInstance(
+			Mockito.mock(DDMFormInstanceSettings.class));
+
+		Mockito.doReturn(
+			ddmFormInstance
+		).when(
+			ddmFormDisplayContext
+		).getFormInstance();
+
+		Mockito.doReturn(
+			themeDisplay
+		).when(
+			ddmFormDisplayContext
+		).getThemeDisplay();
+
+		Mockito.doReturn(
+			true
+		).when(
+			ddmFormDisplayContext
+		).hasAddFormInstanceRecordPermission();
+
+		Mockito.doReturn(
+			true
+		).when(
+			ddmFormDisplayContext
+		).hasValidStorageType(
+			ddmFormInstance
+		);
+
+		DDMFormFieldOptions actualDDMFormFieldOptions =
+			(DDMFormFieldOptions)ddmFormField.getProperty("options");
+
+		Assert.assertTrue(
+			SetUtil.isEmpty(actualDDMFormFieldOptions.getOptionsValues()));
+
+		DDMFormFieldOptions expectedDDMFormFieldOptions =
+			new DDMFormFieldOptions();
+
+		expectedDDMFormFieldOptions.addOptionLabel(
+			RandomTestUtil.randomString(), LocaleUtil.US,
+			RandomTestUtil.randomString());
+		expectedDDMFormFieldOptions.addOptionLabel(
+			RandomTestUtil.randomString(), LocaleUtil.US,
+			RandomTestUtil.randomString());
+
+		Mockito.when(
+			_ddmFormFieldOptionsFactory.create(
+				Mockito.eq(ddmFormField),
+				Mockito.any(DDMFormFieldRenderingContext.class))
+		).thenReturn(
+			expectedDDMFormFieldOptions
+		);
+
+		ddmFormDisplayContext.getDDMFormContext();
+
+		actualDDMFormFieldOptions =
+			(DDMFormFieldOptions)ddmFormField.getProperty("options");
+
+		Assert.assertFalse(
+			SetUtil.isEmpty(actualDDMFormFieldOptions.getOptionsValues()));
+
+		Assert.assertEquals(
+			expectedDDMFormFieldOptions, actualDDMFormFieldOptions);
 	}
 
 	@Test
@@ -753,7 +877,7 @@ public class DDMFormDisplayContextTest {
 		throws PortalException {
 
 		return new DDMFormDisplayContext(
-			Mockito.mock(DDMFormFieldOptionsFactory.class),
+			_ddmFormFieldOptionsFactory,
 			Mockito.mock(DDMFormFieldTypeServicesRegistry.class),
 			_ddmFormInstanceLocalService,
 			Mockito.mock(DDMFormInstanceRecordService.class),
@@ -1072,6 +1196,8 @@ public class DDMFormDisplayContextTest {
 
 	private static final String _DEFAULT_LANGUAGE_ID = "es_ES";
 
+	private final DDMFormFieldOptionsFactory _ddmFormFieldOptionsFactory =
+		Mockito.mock(DDMFormFieldOptionsFactory.class);
 	private final DDMFormInstanceLocalService _ddmFormInstanceLocalService =
 		Mockito.mock(DDMFormInstanceLocalService.class);
 	private final DDMFormInstanceService _ddmFormInstanceService = Mockito.mock(
@@ -1087,7 +1213,7 @@ public class DDMFormDisplayContextTest {
 	private final MockHttpServletRequest _mockHttpServletRequest1 =
 		new MockHttpServletRequest();
 	private final MockHttpServletRequest _mockHttpServletRequest2 =
-		Mockito.mock(MockHttpServletRequest.class);
+		new MockHttpServletRequest();
 	private MockedStatic<PortletPermissionUtil>
 		_portletPermissionUtilMockedStatic;
 	private final WorkflowDefinitionLinkLocalService

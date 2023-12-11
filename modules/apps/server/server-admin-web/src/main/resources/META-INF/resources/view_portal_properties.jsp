@@ -8,16 +8,11 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ViewPortalPropertiesDisplayContext viewPortalPropertiesDisplayContext = new ViewPortalPropertiesDisplayContext(request, liferayPortletRequest, liferayPortletResponse, renderResponse);
+ViewPortalPropertiesDisplayContext viewPortalPropertiesDisplayContext = new ViewPortalPropertiesDisplayContext(request, liferayPortletRequest, renderResponse);
 %>
 
 <clay:management-toolbar
-	clearResultsURL="<%= String.valueOf(viewPortalPropertiesDisplayContext.getClearResultsURL()) %>"
-	itemsTotal="<%= viewPortalPropertiesDisplayContext.getSearchContainerTotal() %>"
-	searchActionURL="<%= String.valueOf(viewPortalPropertiesDisplayContext.getPortletURL()) %>"
-	searchFormName="searchFm"
-	selectable="<%= false %>"
-	showSearch="<%= true %>"
+	managementToolbarDisplayContext="<%= new ViewPortalPropertiesManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, viewPortalPropertiesDisplayContext.getSearchContainer()) %>"
 />
 
 <clay:container-fluid>

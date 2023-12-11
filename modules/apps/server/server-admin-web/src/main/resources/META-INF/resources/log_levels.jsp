@@ -21,14 +21,6 @@ PortletURL searchURL = PortletURLBuilder.createRenderURL(
 	"delta", delta
 ).buildPortletURL();
 
-PortletURL clearResultsURL = PortletURLBuilder.create(
-	PortletURLUtil.clone(searchURL, liferayPortletResponse)
-).setKeywords(
-	StringPool.BLANK
-).setNavigation(
-	(String)null
-).buildPortletURL();
-
 SearchContainer<Map.Entry<String, String>> loggerSearchContainer = new SearchContainer(liferayPortletRequest, searchURL, null, null);
 
 Map<String, String> currentPriorities = new TreeMap<>();
@@ -44,36 +36,10 @@ for (Map.Entry<String, String> entry : priorities.entrySet()) {
 }
 
 loggerSearchContainer.setResultsAndTotal(ListUtil.fromCollection(currentPriorities.entrySet()));
-
-PortletURL addLogCategoryURL = PortletURLBuilder.createRenderURL(
-	renderResponse
-).setMVCRenderCommandName(
-	"/server_admin/add_log_category"
-).setRedirect(
-	currentURL
-).buildPortletURL();
-
-CreationMenu creationMenu =
-	new CreationMenu() {
-		{
-			addPrimaryDropdownItem(
-				dropdownItem -> {
-					dropdownItem.setHref(addLogCategoryURL);
-					dropdownItem.setLabel(LanguageUtil.get(request, "add-category"));
-				});
-		}
-	};
 %>
 
 <clay:management-toolbar
-	clearResultsURL="<%= String.valueOf(clearResultsURL) %>"
-	creationMenu="<%= creationMenu %>"
-	itemsTotal="<%= loggerSearchContainer.getTotal() %>"
-	searchActionURL="<%= String.valueOf(searchURL) %>"
-	searchFormName="searchFm"
-	selectable="<%= false %>"
-	showCreationMenu="<%= true %>"
-	showSearch="<%= true %>"
+	managementToolbarDisplayContext="<%= new LogLevelsManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, loggerSearchContainer) %>"
 />
 
 <clay:container-fluid>

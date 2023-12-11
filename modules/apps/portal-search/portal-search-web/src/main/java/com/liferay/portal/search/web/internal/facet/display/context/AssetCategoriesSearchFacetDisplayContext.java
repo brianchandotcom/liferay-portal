@@ -14,6 +14,7 @@ import com.liferay.portal.search.web.internal.category.facet.configuration.Categ
 
 import java.io.Serializable;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -52,7 +53,14 @@ public class AssetCategoriesSearchFacetDisplayContext
 	public List<BucketDisplayContext> getBucketDisplayContexts(
 		String vocabularyName) {
 
-		return _bucketDisplayContextsMap.get(vocabularyName);
+		List<BucketDisplayContext> bucketDisplayContexts =
+			_bucketDisplayContextsMap.get(vocabularyName);
+
+		if (bucketDisplayContexts == null) {
+			return new ArrayList<>();
+		}
+
+		return bucketDisplayContexts;
 	}
 
 	public CategoryFacetPortletInstanceConfiguration

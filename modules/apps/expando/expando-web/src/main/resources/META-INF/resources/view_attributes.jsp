@@ -30,10 +30,6 @@ portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
 renderResponse.setTitle(ResourceActionsUtil.getModelResource(request, modelResource));
-
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "custom-field"), String.valueOf(renderResponse.createRenderURL()));
-
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "view-attributes"), null);
 %>
 
 <clay:management-toolbar
@@ -47,7 +43,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "view-at
 
 	<clay:container-fluid>
 		<liferay-site-navigation:breadcrumb
-			breadcrumbEntries="<%= BreadcrumbEntriesUtil.getBreadcrumbEntries(request, false, false, false, true, true) %>"
+			breadcrumbEntries="<%= expandoDisplayContext.getBreadcrumbEntries() %>"
 		/>
 	</clay:container-fluid>
 

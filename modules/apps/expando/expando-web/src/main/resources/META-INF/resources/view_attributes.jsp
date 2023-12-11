@@ -16,8 +16,6 @@ String modelResourceName = ResourceActionsUtil.getModelResource(request, modelRe
 
 ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.getCompanyId(), modelResource);
 
-List<String> attributeNames = Collections.list(expandoBridge.getAttributeNames());
-
 ExpandoDisplayContext expandoDisplayContext = new ExpandoDisplayContext(request, renderRequest, renderResponse);
 
 PortletURL portletURL = PortletURLBuilder.createRenderURL(
@@ -45,16 +43,8 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "view-at
 />
 
 <clay:management-toolbar
-	actionDropdownItems="<%= expandoDisplayContext.getActionDropdownItems() %>"
-	additionalProps="<%= expandoDisplayContext.getAdditionalProps() %>"
-	creationMenu="<%= expandoDisplayContext.getCreationMenu() %>"
-	disabled="<%= attributeNames.size() == 0 %>"
-	itemsTotal="<%= attributeNames.size() %>"
+	managementToolbarDisplayContext="<%= new ExpandoManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, expandoDisplayContext.getSearchContainer()) %>"
 	propsTransformer="{ExpandoManagementToolbarPropsTransformer} from expando-web"
-	searchContainerId="customFields"
-	selectable="<%= true %>"
-	showCreationMenu="<%= expandoDisplayContext.showCreationMenu() %>"
-	showSearch="<%= false %>"
 />
 
 <aui:form action="<%= portletURL %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="fm">

@@ -242,12 +242,7 @@ const AppsPanel = ({
 														setActiveTab(index)
 													}
 												>
-													<span
-														className="c-inner"
-														tabIndex="-1"
-													>
-														{label}
-													</span>
+													{label}
 												</ClayTabs.Item>
 											)
 										)}

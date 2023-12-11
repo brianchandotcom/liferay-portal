@@ -32,6 +32,10 @@ public class VersionUtilTest {
 			"7.1.10.fp123-456", VersionUtil.isDXPVersion("7.1.10.fp123-456"));
 		Assert.assertTrue("7.3.10.ep4", VersionUtil.isDXPVersion("7.3.10.ep4"));
 		Assert.assertTrue("7.4.13.u1", VersionUtil.isDXPVersion("7.4.13.u1"));
+
+		Assert.assertTrue("2023.q4.0", VersionUtil.isDXPVersion("2023.q4.0"));
+		Assert.assertTrue("2023.q4.1", VersionUtil.isDXPVersion("2023.q4.1"));
+		Assert.assertTrue("2024.q1.0", VersionUtil.isDXPVersion("2024.q1.0"));
 	}
 
 	@Test
@@ -54,6 +58,16 @@ public class VersionUtilTest {
 		Assert.assertEquals(
 			"7.4.13.u1",
 			VersionUtil.normalizeTargetPlatformVersion("7.4.13.u1"));
+
+		Assert.assertEquals(
+			"2023.q4.0",
+			VersionUtil.normalizeTargetPlatformVersion("2023.q4.0"));
+		Assert.assertEquals(
+			"2023.q4.1",
+			VersionUtil.normalizeTargetPlatformVersion("2023.q4.1"));
+		Assert.assertEquals(
+			"2024.q1.0",
+			VersionUtil.normalizeTargetPlatformVersion("2024.q1.0"));
 	}
 
 }

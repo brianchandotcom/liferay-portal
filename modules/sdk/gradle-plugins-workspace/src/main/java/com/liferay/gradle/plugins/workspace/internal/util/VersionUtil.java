@@ -18,7 +18,14 @@ public class VersionUtil {
 	public static boolean isDXPVersion(String targetPlatformVersion) {
 		Matcher matcher = _dxpVersionPattern.matcher(targetPlatformVersion);
 
-		return matcher.matches();
+		Matcher matcherQuarterMatcher = _externalQuarterVersionPattern.matcher(
+			targetPlatformVersion);
+
+		if (matcher.matches() || matcherQuarterMatcher.matches()) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public static String normalizeTargetPlatformVersion(
@@ -64,12 +71,22 @@ public class VersionUtil {
 
 			normalizedTargetPlatformVersion = sb.toString();
 		}
+		else {
+			Matcher quarterMatcher = _externalQuarterVersionPattern.matcher(
+				targetPlatformVersion);
+
+			if (quarterMatcher.matches()) {
+				normalizedTargetPlatformVersion = targetPlatformVersion;
+			}
+		}
 
 		return normalizedTargetPlatformVersion;
 	}
 
 	private static final Pattern _dxpVersionPattern = Pattern.compile(
-		"^[0-9]\\.[0-9]\\.[1-9][0-9](\\.(((e|f)p)|u)?[0-9]+(-[0-9]+)?)?$");
+		"^[0-9]\\.[0-9]\\.[1-9][0-9](\\.((([ef])p)|u)?[0-9]+(-[0-9]+)?)?$");
+	private static final Pattern _externalQuarterVersionPattern =
+		Pattern.compile("(\\d{4})\\.q[1234]\\.(\\d+)");
 	private static final Pattern _externalVersionPattern = Pattern.compile(
 		"([0-9]+)\\.([0-9]+)-([A-Za-z]+)([0-9]+)");
 

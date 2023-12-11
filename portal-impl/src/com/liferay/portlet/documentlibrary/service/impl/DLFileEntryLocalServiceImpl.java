@@ -2708,10 +2708,6 @@ public class DLFileEntryLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		if (fileVersion.isExpired()) {
-			return;
-		}
-
 		if (_log.isDebugEnabled()) {
 			_log.debug(
 				StringBundler.concat(

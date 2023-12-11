@@ -2712,6 +2712,7 @@ public class DLFileEntryLocalServiceImpl
 			_log.debug(
 				StringBundler.concat(
 					"Expiring file entry ", fileEntry.getFileEntryId(),
+					" on version ", fileVersion.getVersion(),
 					" with expiration date ", fileEntry.getExpirationDate()));
 		}
 

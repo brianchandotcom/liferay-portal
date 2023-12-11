@@ -18,7 +18,7 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 
 List<String> attributeNames = Collections.list(expandoBridge.getAttributeNames());
 
-ExpandoDisplayContext expandoDisplayContext = new ExpandoDisplayContext(request);
+ExpandoDisplayContext expandoDisplayContext = new ExpandoDisplayContext(request, renderRequest, renderResponse);
 
 PortletURL portletURL = PortletURLBuilder.createRenderURL(
 	renderResponse
@@ -68,16 +68,8 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "view-at
 	</clay:container-fluid>
 
 	<liferay-ui:search-container
-		emptyResultsMessage='<%= LanguageUtil.format(request, "no-custom-fields-are-defined-for-x", HtmlUtil.escape(modelResourceName), false) %>'
-		id="customFields"
-		iteratorURL="<%= portletURL %>"
-		rowChecker="<%= new CustomFieldChecker(renderRequest, renderResponse) %>"
-		total="<%= attributeNames.size() %>"
+		searchContainer="<%= expandoDisplayContext.getSearchContainer() %>"
 	>
-		<liferay-ui:search-container-results
-			results="<%= attributeNames %>"
-		/>
-
 		<liferay-ui:search-container-row
 			className="java.lang.String"
 			modelVar="name"

@@ -32,7 +32,6 @@ page import="com.liferay.expando.kernel.service.ExpandoColumnServiceUtil" %><%@
 page import="com.liferay.expando.kernel.service.permission.ExpandoColumnPermissionUtil" %><%@
 page import="com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil" %><%@
 page import="com.liferay.expando.web.internal.display.context.ExpandoDisplayContext" %><%@
-page import="com.liferay.expando.web.internal.search.CustomFieldChecker" %><%@
 page import="com.liferay.expando.web.internal.util.comparator.CustomAttributesDisplayComparator" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@

@@ -7,8 +7,6 @@ package com.liferay.adaptive.media.image.content.transformer.backwards.compatibi
 
 import com.liferay.adaptive.media.content.transformer.BaseRegexStringContentTransformer;
 import com.liferay.adaptive.media.content.transformer.ContentTransformer;
-import com.liferay.adaptive.media.content.transformer.ContentTransformerContentType;
-import com.liferay.adaptive.media.content.transformer.constants.ContentTransformerContentTypes;
 import com.liferay.adaptive.media.image.html.AMImageHTMLTagFactory;
 import com.liferay.adaptive.media.image.html.constants.AMImageHTMLConstants;
 import com.liferay.adaptive.media.image.mime.type.AMImageMimeTypeProvider;
@@ -45,13 +43,6 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = ContentTransformer.class)
 public class AMBackwardsCompatibilityHtmlContentTransformer
 	extends BaseRegexStringContentTransformer {
-
-	@Override
-	public ContentTransformerContentType<String>
-		getContentTransformerContentType() {
-
-		return ContentTransformerContentTypes.HTML;
-	}
 
 	@Override
 	public String transform(String html) throws PortalException {

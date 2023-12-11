@@ -5,7 +5,6 @@
 
 package com.liferay.adaptive.media.content.transformer.internal;
 
-import com.liferay.adaptive.media.content.transformer.constants.ContentTransformerContentTypes;
 import com.liferay.adaptive.media.image.html.AMImageHTMLTagFactory;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.petra.string.CharPool;
@@ -82,13 +81,6 @@ public class HtmlContentTransformerImplTest {
 			_duplicateWithNewLine(expectedSB.toString()),
 			_htmlContentTransformerImpl.transform(
 				_duplicateWithNewLine(originalSB.toString())));
-	}
-
-	@Test
-	public void testContentTypeIsHTML() throws Exception {
-		Assert.assertEquals(
-			ContentTransformerContentTypes.HTML,
-			_htmlContentTransformerImpl.getContentTransformerContentType());
 	}
 
 	@Test

@@ -5,7 +5,6 @@
 
 package com.liferay.adaptive.media.image.content.transformer.backwards.compatibility.internal;
 
-import com.liferay.adaptive.media.content.transformer.constants.ContentTransformerContentTypes;
 import com.liferay.adaptive.media.image.html.AMImageHTMLTagFactory;
 import com.liferay.adaptive.media.image.mime.type.AMImageMimeTypeProvider;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
@@ -93,13 +92,6 @@ public class AMBackwardsCompatibilityHtmlContentTransformerTest {
 			_fileEntryFriendlyURLResolver);
 		ReflectionTestUtil.setFieldValue(
 			_contentTransformer, "_groupLocalService", _groupLocalService);
-	}
-
-	@Test
-	public void testContentTransformerContentTypeIsHTML() throws Exception {
-		Assert.assertEquals(
-			ContentTransformerContentTypes.HTML,
-			_contentTransformer.getContentTransformerContentType());
 	}
 
 	@Test

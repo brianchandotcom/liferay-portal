@@ -6,8 +6,6 @@
 package com.liferay.adaptive.media.content.transformer.internal;
 
 import com.liferay.adaptive.media.content.transformer.BaseRegexStringContentTransformer;
-import com.liferay.adaptive.media.content.transformer.ContentTransformerContentType;
-import com.liferay.adaptive.media.content.transformer.constants.ContentTransformerContentTypes;
 import com.liferay.adaptive.media.image.html.AMImageHTMLTagFactory;
 import com.liferay.adaptive.media.image.html.constants.AMImageHTMLConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
@@ -29,13 +27,6 @@ public class HtmlContentTransformerImpl
 
 		_amImageHTMLTagFactory = amImageHTMLTagFactory;
 		_dlAppLocalService = dlAppLocalService;
-	}
-
-	@Override
-	public ContentTransformerContentType<String>
-		getContentTransformerContentType() {
-
-		return ContentTransformerContentTypes.HTML;
 	}
 
 	@Override

@@ -80,7 +80,10 @@ export default function ContributorsBuilder({
 					/>
 				</div>
 
-				<div className="c-pr-0 criteria-builder-section-main d-flex h-100 w-100">
+				<div
+					className="c-pr-0 criteria-builder-section-main d-flex h-100 w-100"
+					role="application"
+				>
 					<div className="contributor-container h-100 overflow-auto position-absolute w-100">
 						{renderEmptyValuesErrors && (
 							<section className="alert-danger criteria-builder-empty-errors-alert position-sticky top-0">

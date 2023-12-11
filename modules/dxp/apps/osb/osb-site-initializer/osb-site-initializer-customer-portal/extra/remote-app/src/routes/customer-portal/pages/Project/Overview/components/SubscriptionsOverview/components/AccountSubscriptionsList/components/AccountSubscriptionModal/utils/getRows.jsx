@@ -3,6 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import i18n from '~/common/I18n';
+import {getLicenseKeyPermanentStatus} from '~/routes/customer-portal/containers/GenerateNewKey/utils/licenseKeyPermanentStatus';
+import {getPerpetualValidStartDate} from '~/routes/customer-portal/containers/GenerateNewKey/utils/perpetualValidStartDate';
 import {StatusTag} from '../../../../../../../../../../../../common/components';
 import {
 	FORMAT_DATE_TYPES,
@@ -12,13 +15,25 @@ import getDateCustomFormat from '../../../../../../../../../../../../common/util
 
 export default function getRows(orderItems) {
 	return orderItems?.map(({options, quantity, reducedCustomFields}) => {
-		const datesDisplay = `${getDateCustomFormat(
+		const isPermanentLicenseKey = getLicenseKeyPermanentStatus(
 			options?.startDate,
-			FORMAT_DATE_TYPES.day2DMonth2DYearN
-		)} - ${getDateCustomFormat(
-			options?.endDate,
-			FORMAT_DATE_TYPES.day2DMonth2DYearN
-		)}`;
+			options?.endDate
+		);
+
+		const isValidPerpetualStartDate = getPerpetualValidStartDate(
+			options?.startDate
+		);
+
+		const datesDisplay =
+			isPermanentLicenseKey && isValidPerpetualStartDate
+				? i18n.translate('not-applicable')
+				: `${getDateCustomFormat(
+						options?.startDate,
+						FORMAT_DATE_TYPES.day2DMonth2DYearN
+				  )} - ${getDateCustomFormat(
+						options?.endDate,
+						FORMAT_DATE_TYPES.day2DMonth2DYearN
+				  )}`;
 
 		return {
 			'instance-size': options?.instanceSize,

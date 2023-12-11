@@ -12,8 +12,12 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ParamUtil;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Tomas Polesovsky
@@ -23,12 +27,14 @@ public class OAuth2AuthorizationsManagementToolbarDisplayContext
 
 	public OAuth2AuthorizationsManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
+		LiferayPortletResponse liferayPortletResponse, long oAuth2ApplicationId,
 		SearchContainer<?> searchContainer) {
 
 		super(
 			liferayPortletRequest.getHttpServletRequest(),
 			liferayPortletRequest, liferayPortletResponse, searchContainer);
+
+		_oAuth2ApplicationId = oAuth2ApplicationId;
 	}
 
 	@Override
@@ -42,6 +48,26 @@ public class OAuth2AuthorizationsManagementToolbarDisplayContext
 						httpServletRequest, "revoke-authorizations"));
 				dropdownItem.setQuickAction(true);
 			}
+		).build();
+	}
+
+	@Override
+	public Map<String, Object> getAdditionalProps() {
+		return HashMapBuilder.<String, Object>put(
+			"revokeOAuth2AuthorizationsURL",
+			PortletURLBuilder.createActionURL(
+				liferayPortletResponse
+			).setActionName(
+				"/admin/revoke_oauth2_authorizations"
+			).setMVCRenderCommandName(
+				"/oauth2_provider/view_oauth2_authorizations"
+			).setBackURL(
+				ParamUtil.getString(httpServletRequest, "redirect")
+			).setNavigation(
+				"application_authorizations"
+			).setParameter(
+				"oAuth2ApplicationId", _oAuth2ApplicationId
+			).buildString()
 		).build();
 	}
 
@@ -66,10 +92,27 @@ public class OAuth2AuthorizationsManagementToolbarDisplayContext
 		};
 	}
 
+	@Override
+	public String getSearchContainerId() {
+		return "oAuth2AuthorizationsSearchContainer";
+	}
+
+	@Override
+	public Boolean isSelectable() {
+		return true;
+	}
+
+	@Override
+	public Boolean isShowSearch() {
+		return false;
+	}
+
 	private static final String[] _ORDER_BY_COLUMNS = {
 		"createDate", "userId", "userName", "accessTokenCreateDate",
 		"accessTokenExpirationDate", "refreshTokenCreateDate",
 		"refreshTokenExpirationDate", "remoteIPInfo"
 	};
+
+	private final long _oAuth2ApplicationId;
 
 }

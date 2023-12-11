@@ -14,10 +14,6 @@ String backURL = ParamUtil.getString(request, "backURL", redirect);
 
 OAuth2ConnectedApplicationsDisplayContext oAuth2ConnectedApplicationsDisplayContext = new OAuth2ConnectedApplicationsDisplayContext(liferayPortletRequest, liferayPortletResponse);
 
-OAuth2ConnectedApplicationsManagementToolbarDisplayContext oAuth2ConnectedApplicationsManagementToolbarDisplayContext = new OAuth2ConnectedApplicationsManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, currentURLObj);
-
-int userOAuth2AuthorizationsCount = OAuth2AuthorizationServiceUtil.getUserOAuth2AuthorizationsCount();
-
 if (Validator.isNotNull(backURL)) {
 	portletDisplay.setShowBackIcon(true);
 	portletDisplay.setURLBack(backURL);
@@ -25,17 +21,8 @@ if (Validator.isNotNull(backURL)) {
 %>
 
 <clay:management-toolbar
-	actionDropdownItems="<%= oAuth2ConnectedApplicationsManagementToolbarDisplayContext.getActionDropdownItems() %>"
-	additionalProps="<%= oAuth2ConnectedApplicationsManagementToolbarDisplayContext.getAdditionalProps() %>"
-	disabled="<%= userOAuth2AuthorizationsCount == 0 %>"
-	itemsTotal="<%= userOAuth2AuthorizationsCount %>"
-	orderDropdownItems="<%= oAuth2ConnectedApplicationsManagementToolbarDisplayContext.getOrderByDropdownItems() %>"
+	managementToolbarDisplayContext="<%= new OAuth2ConnectedApplicationsManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, oAuth2ConnectedApplicationsDisplayContext.getSearchContainer()) %>"
 	propsTransformer="connected_applications/js/oAuth2ConnectedApplicationsManagementToolbarPropsTransformer"
-	searchContainerId="oAuth2ConnectedApplicationsSearchContainer"
-	selectable="<%= true %>"
-	showSearch="<%= false %>"
-	sortingOrder="<%= oAuth2ConnectedApplicationsManagementToolbarDisplayContext.getOrderByType() %>"
-	sortingURL="<%= String.valueOf(oAuth2ConnectedApplicationsManagementToolbarDisplayContext.getSortingURL()) %>"
 />
 
 <clay:container-fluid>

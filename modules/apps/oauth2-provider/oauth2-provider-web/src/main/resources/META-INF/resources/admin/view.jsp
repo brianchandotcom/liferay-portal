@@ -10,28 +10,14 @@
 <%
 OAuth2ApplicationsDisplayContext oAuth2ApplicationsDisplayContext = new OAuth2ApplicationsDisplayContext(liferayPortletRequest, liferayPortletResponse);
 
-int oAuth2ApplicationsCount = OAuth2ApplicationServiceUtil.getOAuth2ApplicationsCount(themeDisplay.getCompanyId());
-
-OAuth2ApplicationsManagementToolbarDisplayContext oAuth2ApplicationsManagementToolbarDisplayContext = new OAuth2ApplicationsManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, currentURLObj);
+OAuth2ApplicationsManagementToolbarDisplayContext oAuth2ApplicationsManagementToolbarDisplayContext = new OAuth2ApplicationsManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, oAuth2ApplicationsDisplayContext.getSearchContainer());
 
 String displayStyle = oAuth2ApplicationsManagementToolbarDisplayContext.getDisplayStyle();
 %>
 
 <clay:management-toolbar
-	actionDropdownItems="<%= oAuth2ApplicationsManagementToolbarDisplayContext.getActionDropdownItems() %>"
-	additionalProps="<%= oAuth2ApplicationsManagementToolbarDisplayContext.getAdditionalProps() %>"
-	creationMenu="<%= oAuth2ApplicationsManagementToolbarDisplayContext.getCreationMenu() %>"
-	disabled="<%= oAuth2ApplicationsCount == 0 %>"
-	itemsTotal="<%= oAuth2ApplicationsCount %>"
-	orderDropdownItems="<%= oAuth2ApplicationsManagementToolbarDisplayContext.getOrderByDropdownItems() %>"
+	managementToolbarDisplayContext="<%= oAuth2ApplicationsManagementToolbarDisplayContext %>"
 	propsTransformer="admin/js/OAuth2ApplicationsManagementToolbarPropsTransformer"
-	searchContainerId="oAuth2ApplicationsSearchContainer"
-	selectable="<%= true %>"
-	showCreationMenu="<%= oAuth2AdminPortletDisplayContext.hasAddApplicationPermission() %>"
-	showSearch="<%= false %>"
-	sortingOrder="<%= oAuth2ApplicationsManagementToolbarDisplayContext.getOrderByType() %>"
-	sortingURL="<%= String.valueOf(oAuth2ApplicationsManagementToolbarDisplayContext.getSortingURL()) %>"
-	viewTypeItems="<%= oAuth2ApplicationsManagementToolbarDisplayContext.getViewTypes() %>"
 />
 
 <clay:container-fluid

@@ -5,7 +5,6 @@
 
 package com.liferay.adaptive.media.image.content.transformer.test;
 
-import com.liferay.adaptive.media.content.transformer.ContentTransformer;
 import com.liferay.adaptive.media.content.transformer.ContentTransformerHandler;
 import com.liferay.adaptive.media.content.transformer.constants.ContentTransformerContentTypes;
 import com.liferay.adaptive.media.image.configuration.AMImageConfigurationEntry;
@@ -126,12 +125,5 @@ public class AMImageContentTransformerTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
-
-	// See LPS-202810
-
-	@Inject(
-		filter = "component.name=com.liferay.adaptive.media.image.content.transformer.internal.HtmlContentTransformerImpl"
-	)
-	private ContentTransformer<String> _htmlContentTransformer;
 
 }

@@ -212,7 +212,24 @@ const AppsPanel = ({
 				>
 					<ClayLayout.Row>
 						<ClayLayout.Col>
-							<ClayLayout.ContentRow verticalAlign="center">
+							<ClayLayout.ContentRow
+								className="flex-row-reverse"
+								verticalAlign="center"
+							>
+								<ClayLayout.ContentCol>
+									<ClayButtonWithIcon
+										aria-label={Liferay.Language.get(
+											'close'
+										)}
+										className="ml-1"
+										displayType="unstyled"
+										onClick={handleCloseButtonClick}
+										size="sm"
+										symbol="times"
+										title={Liferay.Language.get('close')}
+									/>
+								</ClayLayout.ContentCol>
+
 								<ClayLayout.ContentCol expand>
 									<ClayTabs>
 										{categories.map(
@@ -235,19 +252,6 @@ const AppsPanel = ({
 											)
 										)}
 									</ClayTabs>
-								</ClayLayout.ContentCol>
-
-								<ClayLayout.ContentCol>
-									<ClayButtonWithIcon
-										aria-label={Liferay.Language.get(
-											'close'
-										)}
-										displayType="unstyled"
-										onClick={handleCloseButtonClick}
-										size="sm"
-										symbol="times"
-										title={Liferay.Language.get('close')}
-									/>
 								</ClayLayout.ContentCol>
 							</ClayLayout.ContentRow>
 						</ClayLayout.Col>

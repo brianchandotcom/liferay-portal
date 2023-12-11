@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.DefaultModelHintsImpl;
 import com.liferay.portal.model.impl.ClassNameImpl;
 import com.liferay.portal.model.impl.ResourceActionImpl;
@@ -35,6 +36,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.util.PortalInstances;
 
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -378,20 +380,27 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 				null, null);
 		}
 		catch (Exception exception) {
-			try (Connection connection = DataAccess.getConnection();
-				PreparedStatement preparedStatement =
-					connection.prepareStatement(
-						StringBundler.concat(
-							"select schema_name from ",
-							"information_schema.schemata where schema_name = '",
-							_DB_PARTITION_SCHEMA_NAME_PREFIX + companyId, "'"));
-				ResultSet resultSet = preparedStatement.executeQuery()) {
+			String partitionName = _DB_PARTITION_SCHEMA_NAME_PREFIX + companyId;
 
-				orphanedDBPartition = resultSet.next();
+			try (Connection connection = DataAccess.getConnection()) {
+				DatabaseMetaData databaseMetaData = connection.getMetaData();
 
-				Assert.assertFalse(
-					"The database partition was not removed",
-					orphanedDBPartition);
+				try (ResultSet resultSet = databaseMetaData.getSchemas()) {
+					while (resultSet.next()) {
+						String catalogName = resultSet.getString(
+							"TABLE_CATALOG");
+						String schemaName = resultSet.getString("TABLE_SCHEM");
+
+						Assert.assertFalse(
+							"The database partition was not removed",
+							StringUtil.equalsIgnoreCase(
+								catalogName, partitionName));
+						Assert.assertFalse(
+							"The database partition was not removed",
+							StringUtil.equalsIgnoreCase(
+								schemaName, partitionName));
+					}
+				}
 			}
 		}
 		finally {

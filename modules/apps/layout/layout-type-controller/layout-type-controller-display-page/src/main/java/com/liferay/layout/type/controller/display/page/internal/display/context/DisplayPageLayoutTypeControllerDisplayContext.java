@@ -183,6 +183,14 @@ public class DisplayPageLayoutTypeControllerDisplayContext {
 		return StringPool.BLANK;
 	}
 
+	public boolean hasInfoItem() {
+		if ((_infoItem != null) && (_infoItemDetails != null)) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean hasPermission(
 			PermissionChecker permissionChecker, String actionId)
 		throws Exception {

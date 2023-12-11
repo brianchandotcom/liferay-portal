@@ -37,4 +37,9 @@ public class ViewAccountUserRolesManagementToolbarDisplayContext
 		return null;
 	}
 
+	@Override
+	public Boolean isShowCreationMenu() {
+		return false;
+	}
+
 }

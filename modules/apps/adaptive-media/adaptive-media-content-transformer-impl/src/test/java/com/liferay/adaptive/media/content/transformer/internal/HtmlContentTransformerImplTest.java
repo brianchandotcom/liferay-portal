@@ -12,7 +12,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -37,19 +36,11 @@ public class HtmlContentTransformerImplTest {
 
 	@Before
 	public void setUp() throws PortalException {
-		ReflectionTestUtil.setFieldValue(
-			_htmlContentTransformerImpl, "_amImageHTMLTagFactory",
-			_amImageHTMLTagFactory);
-
 		Mockito.when(
 			_dlAppLocalService.getFileEntry(1989L)
 		).thenReturn(
 			_fileEntry
 		);
-
-		ReflectionTestUtil.setFieldValue(
-			_htmlContentTransformerImpl, "_dlAppLocalService",
-			_dlAppLocalService);
 	}
 
 	@Test
@@ -211,6 +202,7 @@ public class HtmlContentTransformerImplTest {
 		DLAppLocalService.class);
 	private final FileEntry _fileEntry = Mockito.mock(FileEntry.class);
 	private final HtmlContentTransformerImpl _htmlContentTransformerImpl =
-		new HtmlContentTransformerImpl();
+		new HtmlContentTransformerImpl(
+			_amImageHTMLTagFactory, _dlAppLocalService);
 
 }

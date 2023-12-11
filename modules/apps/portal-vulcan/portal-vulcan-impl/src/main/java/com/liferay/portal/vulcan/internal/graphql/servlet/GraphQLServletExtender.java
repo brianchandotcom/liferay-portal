@@ -875,7 +875,7 @@ public class GraphQLServletExtender {
 			Class<?> clazz = object.getClass();
 
 			for (Method method : clazz.getMethods()) {
-				if (!_isMethodEnabled(method, servletData.getPath())) {
+				if (!_isMethodEnabled(method, servletData)) {
 					continue;
 				}
 
@@ -887,7 +887,7 @@ public class GraphQLServletExtender {
 						key -> new TreeMap<>(Comparator.naturalOrder()));
 
 				TreeSet<Method> methodTreeSet = methodSortedMap.computeIfAbsent(
-					servletData.getApplicationName(),
+					_getPath(servletData),
 					key -> new TreeSet<>(
 						Comparator.comparing(
 							this::_getVersion
@@ -900,15 +900,15 @@ public class GraphQLServletExtender {
 		for (SortedMap<String, TreeSet<Method>> methodSortedMap :
 				methods.values()) {
 
-			String firstApplicationName = methodSortedMap.firstKey();
+			String firstPath = methodSortedMap.firstKey();
 
 			for (Map.Entry<String, TreeSet<Method>> entry :
 					methodSortedMap.entrySet()) {
 
-				String applicationName = entry.getKey();
+				String path = entry.getKey();
 				TreeSet<Method> methodTreeSet = entry.getValue();
 
-				if (StringUtil.equals(applicationName, firstApplicationName)) {
+				if (StringUtil.equals(firstPath, path)) {
 					Method firstMethod = methodTreeSet.first();
 
 					for (Method method : methodTreeSet) {
@@ -927,9 +927,8 @@ public class GraphQLServletExtender {
 								StringBundler.concat(
 									"There is already a field called \"",
 									field.getName(),
-									"\" in the same application \"",
-									applicationName,
-									"\". The field of the version \"",
+									"\" in the same application with path \"",
+									path, "\". The field of the version \"",
 									_getVersion(method), "\" will be ignored"));
 						}
 					}
@@ -942,9 +941,9 @@ public class GraphQLServletExtender {
 						StringBundler.concat(
 							"There is already a field called \"",
 							methodNameBuilder.build(),
-							"\" in the application \"", firstApplicationName,
-							"\". The field of the application \"",
-							applicationName, "\" will be ignored."));
+							"\" in the application with the path \"", firstPath,
+							"\". The field of the application with the path \"",
+							path, "\" will be ignored."));
 				}
 			}
 		}
@@ -1002,7 +1001,7 @@ public class GraphQLServletExtender {
 			List<ServletData> servletDatas = new ArrayList<>();
 
 			for (ServletData servletData : _servletDataServiceTrackerList) {
-				if (_isGraphQLEnabled(servletData.getPath())) {
+				if (_isGraphQLEnabled(servletData)) {
 					servletDatas.add(servletData);
 				}
 
@@ -1239,6 +1238,12 @@ public class GraphQLServletExtender {
 		return graphQLObjectTypeBuilder.build();
 	}
 
+	private String _getPath(ServletData servletData) {
+		String path = servletData.getPath();
+
+		return path.substring(0, path.indexOf("-graphql"));
+	}
+
 	private QueryDepthLimitInstrumentation _getQueryDepthLimitInstrumentation(
 		long companyId) {
 
@@ -1267,13 +1272,13 @@ public class GraphQLServletExtender {
 		return GetterUtil.getInteger(version.replaceAll("\\D", ""), 1);
 	}
 
-	private boolean _isGraphQLEnabled(String path) throws Exception {
-		path = path.substring(0, path.indexOf("-graphql"));
+	private boolean _isGraphQLEnabled(ServletData servletData)
+		throws Exception {
 
 		String filterString = String.format(
 			"(&(path=%s)(|(service.factoryPid=%s)" +
 				"(&(service.factoryPid=%s)(%s=%d))))",
-			path, VulcanConfiguration.class.getName(),
+			_getPath(servletData), VulcanConfiguration.class.getName(),
 			VulcanCompanyConfiguration.class.getName(),
 			ExtendedObjectClassDefinition.Scope.COMPANY.getPropertyKey(),
 			_companyId);
@@ -1291,12 +1296,10 @@ public class GraphQLServletExtender {
 		return true;
 	}
 
-	private boolean _isMethodEnabled(Method method, String path) {
-		path = path.substring(0, path.indexOf("-graphql"));
-
+	private boolean _isMethodEnabled(Method method, ServletData servletData) {
 		Set<String> excludedOperationIds =
 			ConfigurationUtil.getExcludedOperationIds(
-				_companyId, _configurationAdmin, path);
+				_companyId, _configurationAdmin, _getPath(servletData));
 
 		if (excludedOperationIds.contains(method.getName())) {
 			return false;
@@ -1674,7 +1677,7 @@ public class GraphQLServletExtender {
 			List<Method> methods = TransformUtil.transformToList(
 				clazz.getMethods(),
 				method -> {
-					if (_isMethodEnabled(method, servletData.getPath())) {
+					if (_isMethodEnabled(method, servletData)) {
 						return method;
 					}
 

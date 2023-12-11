@@ -42,10 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Adolfo Pérez
  */
-@Component(
-	property = "content.transformer.content.type=html",
-	service = ContentTransformer.class
-)
+@Component(service = ContentTransformer.class)
 public class AMBackwardsCompatibilityHtmlContentTransformer
 	extends BaseRegexStringContentTransformer {
 

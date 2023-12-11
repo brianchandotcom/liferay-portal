@@ -8,6 +8,7 @@ package com.liferay.fragment.internal.processor;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
@@ -90,6 +91,70 @@ public class PortletRegistryImplTest {
 	}
 
 	@Test
+	public void testGetFragmentEntryLinkPortletIdsDynamicInstanceId() {
+		String instanceId = RandomTestUtil.randomString();
+		String portletName = RandomTestUtil.randomString();
+		String namespace = RandomTestUtil.randomString();
+
+		_assertGetFragmentEntryLinkPortletIds(
+			_getFragmentEntryLink(
+				StringBundler.concat(
+					"<div class=\"fragment_1\">", RandomTestUtil.randomString(),
+					"[@liferay_portlet[\"runtime\"]",
+					RandomTestUtil.randomString(),
+					" instanceId=\"fragmentEntryLinkNamespace-", instanceId,
+					"\" ", RandomTestUtil.randomString(), " portletName=\"",
+					portletName, "\"", RandomTestUtil.randomString(), "/]",
+					RandomTestUtil.randomString(), "</div>"),
+				namespace),
+			PortletIdCodec.encode(
+				PortletIdCodec.decodePortletName(portletName),
+				PortletIdCodec.decodeUserId(portletName),
+				StringBundler.concat(namespace, StringPool.DASH, instanceId)));
+	}
+
+	@Test
+	public void testGetFragmentEntryLinkPortletIdsFreemarkerRuntimeTag() {
+		String instanceId = RandomTestUtil.randomString();
+		String portletName = RandomTestUtil.randomString();
+
+		_assertGetFragmentEntryLinkPortletIds(
+			_getFragmentEntryLink(
+				StringBundler.concat(
+					"<div class=\"fragment_1\">", RandomTestUtil.randomString(),
+					"[@liferay_portlet[\"runtime\"]",
+					RandomTestUtil.randomString(), " instanceId=\"", instanceId,
+					"\" ", RandomTestUtil.randomString(), " portletName=\"",
+					portletName, "\"", RandomTestUtil.randomString(), "/]",
+					RandomTestUtil.randomString(), "</div>"),
+				RandomTestUtil.randomString()),
+			PortletIdCodec.encode(
+				PortletIdCodec.decodePortletName(portletName),
+				PortletIdCodec.decodeUserId(portletName), instanceId));
+	}
+
+	@Test
+	public void testGetFragmentEntryLinkPortletIdsFreemarkerRuntimeTagPortletNameAttributeFirst() {
+		String instanceId = RandomTestUtil.randomString();
+		String portletName = RandomTestUtil.randomString();
+
+		_assertGetFragmentEntryLinkPortletIds(
+			_getFragmentEntryLink(
+				StringBundler.concat(
+					"<div class=\"fragment_1\">", RandomTestUtil.randomString(),
+					"[@liferay_portlet[\"runtime\"]",
+					RandomTestUtil.randomString(), " portletName=\"",
+					portletName, "\"", RandomTestUtil.randomString(),
+					" instanceId=\"", instanceId, "\" ",
+					RandomTestUtil.randomString(), "/]",
+					RandomTestUtil.randomString(), "</div>"),
+				RandomTestUtil.randomString()),
+			PortletIdCodec.encode(
+				PortletIdCodec.decodePortletName(portletName),
+				PortletIdCodec.decodeUserId(portletName), instanceId));
+	}
+
+	@Test
 	public void testGetFragmentEntryLinkPortletIdsTypePortlet() {
 		String portletId = RandomTestUtil.randomString();
 		String instanceId = RandomTestUtil.randomString();
@@ -110,6 +175,24 @@ public class PortletRegistryImplTest {
 
 		_assertGetFragmentEntryLinkPortletIds(
 			fragmentEntryLink, PortletIdCodec.encode(portletId, instanceId));
+	}
+
+	@Test
+	public void testGetFragmentEntryLinkPortletIdsWithoutInstanceId() {
+		String portletName = RandomTestUtil.randomString();
+
+		_assertGetFragmentEntryLinkPortletIds(
+			_getFragmentEntryLink(
+				StringBundler.concat(
+					"<div class=\"fragment_1\">", RandomTestUtil.randomString(),
+					"[@liferay_portlet[\"runtime\"]",
+					RandomTestUtil.randomString(), " portletName=\"",
+					portletName, "\"", RandomTestUtil.randomString(), "/]",
+					RandomTestUtil.randomString(), "</div>"),
+				RandomTestUtil.randomString()),
+			PortletIdCodec.encode(
+				PortletIdCodec.decodePortletName(portletName),
+				PortletIdCodec.decodeUserId(portletName), null));
 	}
 
 	private void _assertGetFragmentEntryLinkPortletIds(

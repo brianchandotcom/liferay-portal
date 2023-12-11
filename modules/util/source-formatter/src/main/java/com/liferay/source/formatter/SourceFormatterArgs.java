@@ -5,15 +5,7 @@
 
 package com.liferay.source.formatter;
 
-import com.liferay.petra.string.CharPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ToolsUtil;
-
-import java.io.File;
-import java.io.IOException;
-
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -72,28 +64,15 @@ public class SourceFormatterArgs {
 	public static final boolean VALIDATE_COMMIT_MESSAGES = false;
 
 	public void addRecentChangesFileNames(
-			Collection<String> fileNames, String baseDirName)
-		throws IOException {
+		Collection<String> fileNames, String baseDirName) {
 
 		for (String fileName : fileNames) {
-			Path path;
-
 			if (baseDirName != null) {
-				path = Paths.get(baseDirName, fileName);
+				_recentChangesFileNames.add(_baseDirName.concat(fileName));
 			}
 			else {
-				path = Paths.get(fileName);
+				_recentChangesFileNames.add(fileName);
 			}
-
-			File file = path.toFile();
-
-			File canonicalFile = file.getCanonicalFile();
-
-			String canonicalPath = canonicalFile.getPath();
-
-			_recentChangesFileNames.add(
-				StringUtil.replace(
-					canonicalPath, CharPool.BACK_SLASH, CharPool.SLASH));
 		}
 	}
 

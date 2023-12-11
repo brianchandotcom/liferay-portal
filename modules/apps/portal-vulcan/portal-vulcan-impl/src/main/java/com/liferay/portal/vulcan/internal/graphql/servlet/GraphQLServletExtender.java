@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -39,7 +40,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
@@ -1264,13 +1264,7 @@ public class GraphQLServletExtender {
 
 		String version = packageNames[packageNames.length - 1];
 
-		String versionString = version.replaceAll("\\D", "");
-
-		if (Validator.isNull(versionString)) {
-			return 1;
-		}
-
-		return Integer.valueOf(versionString);
+		return GetterUtil.getInteger(version.replaceAll("\\D", ""), 1);
 	}
 
 	private boolean _isGraphQLEnabled(String path) throws Exception {

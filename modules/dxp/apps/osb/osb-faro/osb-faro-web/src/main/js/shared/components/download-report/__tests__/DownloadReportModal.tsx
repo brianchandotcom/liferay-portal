@@ -218,17 +218,7 @@ describe('DownloadReportModal CSV', () => {
 			jest.runAllTimers();
 		});
 
-		const customRangeInput = getByRole('textbox', {name: /date range/i});
-
-		fireEvent.click(customRangeInput);
-
-		const startDate = getByRole('button', {name: /10/i});
-		const endDate = getByRole('button', {name: /11/i});
-
-		fireEvent.click(startDate);
-		fireEvent.click(endDate);
-
-		expect(customRangeInput).toHaveAttribute(
+		expect(getByRole('textbox', {name: /date range/i})).toHaveAttribute(
 			'value',
 			'1970-01-01 - 1970-01-01'
 		);

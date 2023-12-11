@@ -569,7 +569,6 @@ exports[`DownloadReportModal CSV renders component 1`] = `
                                 >
                                   <button
                                     class="button-root day-root btn btn-unstyled"
-                                    disabled=""
                                     type="button"
                                   >
                                     10
@@ -1847,7 +1846,6 @@ exports[`DownloadReportModal PDF renders component 1`] = `
                                 >
                                   <button
                                     class="button-root day-root btn btn-unstyled"
-                                    disabled=""
                                     type="button"
                                   >
                                     10

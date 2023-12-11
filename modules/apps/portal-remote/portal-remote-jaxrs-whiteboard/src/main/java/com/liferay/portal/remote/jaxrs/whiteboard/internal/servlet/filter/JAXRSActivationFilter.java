@@ -56,16 +56,18 @@ public class JAXRSActivationFilter implements Filter {
 				RequestDispatcher.INCLUDE_PATH_INFO),
 			httpServletRequest.getPathInfo());
 
-		int index = key.indexOf('/', 1);
+		if (key != null) {
+			int index = key.indexOf('/', 1);
 
-		if (index != -1) {
-			key = key.substring(0, index);
-		}
+			if (index != -1) {
+				key = key.substring(0, index);
+			}
 
-		if (_serviceTrackerMap.containsKey(key) ||
-			_serviceTrackerMap.containsKey("/")) {
+			if (_serviceTrackerMap.containsKey(key) ||
+				_serviceTrackerMap.containsKey("/")) {
 
-			_jaxrsActivationFilterTracker.setReady();
+				_jaxrsActivationFilterTracker.setReady();
+			}
 		}
 
 		filterChain.doFilter(servletRequest, servletResponse);

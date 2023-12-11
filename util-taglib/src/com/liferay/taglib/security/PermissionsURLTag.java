@@ -76,20 +76,25 @@ public class PermissionsURLTag extends TagSupport {
 			HttpServletRequest httpServletRequest)
 		throws Exception {
 
-		PortletURL portletURL = _getPorletURL(
-			httpServletRequest, modelResource,
-			_getRedirect(httpServletRequest, redirect, windowState),
-			resourceGroupId, windowState);
+		return PortletURLBuilder.create(
+			_getPorletURL(
+				httpServletRequest, modelResource,
+				_getRedirect(httpServletRequest, redirect, windowState),
+				resourceGroupId, windowState)
+		).setParameter(
+			"modelResourceDescription", modelResourceDescription
+		).setParameter(
+			"resourcePrimKey", resourcePrimKey
+		).setParameter(
+			"roleTypes",
+			() -> {
+				if (roleTypes == null) {
+					return null;
+				}
 
-		portletURL.setParameter(
-			"modelResourceDescription", modelResourceDescription);
-		portletURL.setParameter("resourcePrimKey", resourcePrimKey);
-
-		if (roleTypes != null) {
-			portletURL.setParameter("roleTypes", StringUtil.merge(roleTypes));
-		}
-
-		return portletURL.toString();
+				return StringUtil.merge(roleTypes);
+			}
+		).buildString();
 	}
 
 	@Override

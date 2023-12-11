@@ -6,7 +6,7 @@
 package com.liferay.announcements.web.internal.portlet.action;
 
 import com.liferay.announcements.constants.AnnouncementsPortletKeys;
-import com.liferay.announcements.web.internal.display.context.DefaultAnnouncementsDisplayContext;
+import com.liferay.announcements.web.internal.display.context.AnnouncementsDisplayContext;
 import com.liferay.announcements.web.internal.display.context.helper.AnnouncementsRequestHelper;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
@@ -49,7 +49,7 @@ public class AnnouncementsConfigurationAction
 
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
-			new DefaultAnnouncementsDisplayContext(
+			new AnnouncementsDisplayContext(
 				new AnnouncementsRequestHelper(httpServletRequest),
 				httpServletRequest, AnnouncementsPortletKeys.ANNOUNCEMENTS,
 				(RenderRequest)httpServletRequest.getAttribute(

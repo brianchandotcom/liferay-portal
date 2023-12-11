@@ -35,7 +35,6 @@ page import="com.liferay.announcements.web.internal.configuration.AnnouncementsP
 page import="com.liferay.announcements.web.internal.constants.AnnouncementsWebKeys" %><%@
 page import="com.liferay.announcements.web.internal.display.context.AnnouncementsAdminViewManagementToolbarDisplayContext" %><%@
 page import="com.liferay.announcements.web.internal.display.context.AnnouncementsDisplayContext" %><%@
-page import="com.liferay.announcements.web.internal.display.context.DefaultAnnouncementsDisplayContext" %><%@
 page import="com.liferay.announcements.web.internal.display.context.helper.AnnouncementsRequestHelper" %><%@
 page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.JSPNavigationItemList" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
@@ -88,7 +87,7 @@ page import="java.util.List" %>
 <%
 AnnouncementsRequestHelper announcementsRequestHelper = new AnnouncementsRequestHelper(request);
 
-AnnouncementsDisplayContext announcementsDisplayContext = (DefaultAnnouncementsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+AnnouncementsDisplayContext announcementsDisplayContext = (AnnouncementsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 %>
 
 <%@ include file="/init-ext.jsp" %>

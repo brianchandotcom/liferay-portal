@@ -6,7 +6,7 @@
 package com.liferay.announcements.web.internal.portlet;
 
 import com.liferay.announcements.constants.AnnouncementsPortletKeys;
-import com.liferay.announcements.web.internal.display.context.DefaultAnnouncementsDisplayContext;
+import com.liferay.announcements.web.internal.display.context.AnnouncementsDisplayContext;
 import com.liferay.announcements.web.internal.display.context.helper.AnnouncementsRequestHelper;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -66,7 +66,7 @@ public class AnnouncementsAdminPortlet extends MVCPortlet {
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
-			new DefaultAnnouncementsDisplayContext(
+			new AnnouncementsDisplayContext(
 				new AnnouncementsRequestHelper(httpServletRequest),
 				httpServletRequest, AnnouncementsPortletKeys.ANNOUNCEMENTS,
 				renderRequest, renderResponse, _requestContextMapper,

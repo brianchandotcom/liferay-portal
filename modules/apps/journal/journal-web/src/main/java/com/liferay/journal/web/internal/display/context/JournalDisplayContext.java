@@ -1225,6 +1225,16 @@ public class JournalDisplayContext {
 		return articleSearchContainer.getTotal();
 	}
 
+	public String getType() {
+		if (_type != null) {
+			return _type;
+		}
+
+		_type = ParamUtil.getString(_httpServletRequest, "type", "web-content");
+
+		return _type;
+	}
+
 	public int getVersionsTotal() throws PortalException {
 		SearchContainer<JournalArticle> articleSearchContainer =
 			_getVersionsSearchContainer();
@@ -2139,5 +2149,6 @@ public class JournalDisplayContext {
 	private String _tab;
 	private final ThemeDisplay _themeDisplay;
 	private final TrashHelper _trashHelper;
+	private String _type;
 
 }

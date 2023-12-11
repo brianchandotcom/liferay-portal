@@ -13,7 +13,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.dao.jdbc.util.ConnectionWrapper;
 import com.liferay.portal.dao.jdbc.util.DataSourceWrapper;
 import com.liferay.portal.dao.jdbc.util.StatementWrapper;
-import com.liferay.portal.db.partition.sql.DBPartitionSQLUtil;
+import com.liferay.portal.db.partition.sql.DBPartitionMySQL;
+import com.liferay.portal.db.partition.sql.DBPartitionSQL;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -68,7 +69,7 @@ public class DBPartitionUtil {
 			InfrastructureUtil.getDataSource());
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				DBPartitionSQLUtil.getCreateSchemaSQL(
+				_dbPartitionSQL.getCreateSchemaSQL(
 					connection, _getSchemaName(companyId)))) {
 
 			preparedStatement.executeUpdate();
@@ -95,19 +96,19 @@ public class DBPartitionUtil {
 							_getCompanyIds(), tableName)) {
 
 						statement.executeUpdate(
-							DBPartitionSQLUtil.getCreateViewSQL(
+							_dbPartitionSQL.getCreateViewSQL(
 								_defaultSchemaName, _getSchemaName(companyId),
 								tableName));
 					}
 					else {
 						statement.executeUpdate(
-							DBPartitionSQLUtil.getCreateTableSQL(
+							_dbPartitionSQL.getCreateTableSQL(
 								_defaultSchemaName, _getSchemaName(companyId),
 								tableName));
 
 						if (dbInspector.isPartitionedControlTable(tableName)) {
 							statement.executeUpdate(
-								DBPartitionSQLUtil.getCopyDataSQL(
+								_dbPartitionSQL.getCopyDataSQL(
 									_defaultSchemaName,
 									_getSchemaName(companyId), tableName,
 									StringPool.BLANK));
@@ -228,15 +229,15 @@ public class DBPartitionUtil {
 
 		try (Statement statement = connection.createStatement()) {
 			statement.execute(
-				DBPartitionSQLUtil.getDropViewSQL(
+				_dbPartitionSQL.getDropViewSQL(
 					_getSchemaName(companyId), viewName));
 
 			statement.execute(
-				DBPartitionSQLUtil.getCreateTableSQL(
+				_dbPartitionSQL.getCreateTableSQL(
 					_defaultSchemaName, _getSchemaName(companyId), viewName));
 
 			statement.executeUpdate(
-				DBPartitionSQLUtil.getCopyDataSQL(
+				_dbPartitionSQL.getCopyDataSQL(
 					_defaultSchemaName, _getSchemaName(companyId), viewName,
 					StringPool.BLANK));
 		}
@@ -345,7 +346,7 @@ public class DBPartitionUtil {
 				}
 
 				statement.executeUpdate(
-					DBPartitionSQLUtil.getDropSchemaSQL(
+					_dbPartitionSQL.getDropSchemaSQL(
 						_getSchemaName(companyId)));
 			}
 		}
@@ -424,11 +425,11 @@ public class DBPartitionUtil {
 		throws Exception {
 
 		statement.executeUpdate(
-			DBPartitionSQLUtil.getDropViewSQL(
+			_dbPartitionSQL.getDropViewSQL(
 				_getSchemaName(companyId), tableName));
 
 		statement.executeUpdate(
-			DBPartitionSQLUtil.getCreateTableSQL(
+			_dbPartitionSQL.getCreateTableSQL(
 				_defaultSchemaName, _getSchemaName(companyId), tableName));
 
 		if (dbInspector.hasColumn(tableName, "companyId")) {
@@ -438,7 +439,7 @@ public class DBPartitionUtil {
 		}
 		else {
 			statement.executeUpdate(
-				DBPartitionSQLUtil.getCopyDataSQL(
+				_dbPartitionSQL.getCopyDataSQL(
 					_defaultSchemaName, _getSchemaName(companyId), tableName,
 					StringPool.BLANK));
 		}
@@ -670,7 +671,7 @@ public class DBPartitionUtil {
 
 						if (dbInspector.hasColumn(tableName, "companyId")) {
 							statement.executeUpdate(
-								DBPartitionSQLUtil.getCopyDataSQL(
+								_dbPartitionSQL.getCopyDataSQL(
 									_getSchemaName(companyId),
 									_defaultSchemaName, tableName,
 									" where companyId = " + companyId));
@@ -679,11 +680,11 @@ public class DBPartitionUtil {
 						}
 
 						statement.executeUpdate(
-							DBPartitionSQLUtil.getDropTableSQL(
+							_dbPartitionSQL.getDropTableSQL(
 								_getSchemaName(companyId), tableName));
 
 						statement.executeUpdate(
-							DBPartitionSQLUtil.getCreateViewSQL(
+							_dbPartitionSQL.getCreateViewSQL(
 								_defaultSchemaName, _getSchemaName(companyId),
 								tableName));
 					}
@@ -748,10 +749,9 @@ public class DBPartitionUtil {
 			String tableName, Statement statement)
 		throws Exception {
 
-		statement.executeUpdate(
-			DBPartitionSQLUtil.getCopyDataSQL(
-				_defaultSchemaName, toSchemaName, tableName,
-				" where companyId = " + companyId));
+		_dbPartitionSQL.getCopyDataSQL(
+			_defaultSchemaName, toSchemaName, tableName,
+			" where companyId = " + companyId);
 
 		_deleteCompanyData(companyId, tableName, fromSchemaName, statement);
 	}
@@ -768,11 +768,11 @@ public class DBPartitionUtil {
 		}
 
 		statement.executeUpdate(
-			DBPartitionSQLUtil.getDropTableSQL(
+			_dbPartitionSQL.getDropTableSQL(
 				_getSchemaName(companyId), tableName));
 
 		statement.executeUpdate(
-			DBPartitionSQLUtil.getCreateViewSQL(
+			_dbPartitionSQL.getCreateViewSQL(
 				_defaultSchemaName, _getSchemaName(companyId), tableName));
 	}
 
@@ -821,7 +821,7 @@ public class DBPartitionUtil {
 						}
 
 						super.execute(
-							DBPartitionSQLUtil.getCreateViewSQL(
+							_dbPartitionSQL.getCreateViewSQL(
 								_defaultSchemaName, _getSchemaName(companyId),
 								tableName));
 					}
@@ -849,6 +849,8 @@ public class DBPartitionUtil {
 		DBPartitionUtil.class);
 
 	private static final List<Long> _companyIds = new CopyOnWriteArrayList<>();
+	private static final DBPartitionSQL _dbPartitionSQL =
+		new DBPartitionMySQL();
 	private static volatile long _defaultCompanyId;
 	private static String _defaultSchemaName;
 

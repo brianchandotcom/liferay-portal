@@ -18,11 +18,13 @@ import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
 import com.liferay.portal.kernel.concurrent.SystemExecutorServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedInputStream;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.lpkg.StaticLPKGResolver;
 import com.liferay.portal.kernel.module.framework.ThrowableCollector;
 import com.liferay.portal.kernel.service.BaseLocalService;
+import com.liferay.portal.kernel.service.BaseService;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -35,6 +37,7 @@ import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.module.framework.ModuleFramework;
+import com.liferay.portal.spring.context.PortalContextLoaderListener;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
@@ -795,7 +798,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 	}
 
 	private Dictionary<String, Object> _getProperties(
-		OSGiBeanProperties osgiBeanProperties, String beanName) {
+		OSGiBeanProperties osgiBeanProperties, Object bean, String beanName) {
 
 		HashMapDictionary<String, Object> properties =
 			new HashMapDictionary<>();
@@ -808,6 +811,39 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		properties.put(ServicePropsKeys.BEAN_ID, beanName);
 		properties.put(ServicePropsKeys.ORIGINAL_BEAN, Boolean.TRUE);
 		properties.put(ServicePropsKeys.VENDOR, ReleaseInfo.getVendor());
+
+		if (bean instanceof BaseService) {
+			Class<?> beanClass = bean.getClass();
+
+			JSONWebService jsonWebService = beanClass.getAnnotation(
+				JSONWebService.class);
+
+			if (jsonWebService == null) {
+				for (Class<?> interfaceClass : beanClass.getInterfaces()) {
+					if ((interfaceClass == BaseService.class) ||
+						!BaseService.class.isAssignableFrom(interfaceClass)) {
+
+						continue;
+					}
+
+					jsonWebService = interfaceClass.getAnnotation(
+						JSONWebService.class);
+
+					if (jsonWebService != null) {
+						break;
+					}
+				}
+			}
+
+			if (jsonWebService != null) {
+				properties.put(
+					"json.web.service.context.name",
+					PortalContextLoaderListener.getPortalServletContextName());
+				properties.put(
+					"json.web.service.context.path",
+					PortalContextLoaderListener.getPortalServletContextPath());
+			}
+		}
 
 		return properties;
 	}
@@ -1301,7 +1337,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		ServiceRegistration<?> serviceRegistration =
 			bundleContext.registerService(
 				names.toArray(new String[0]), bean,
-				_getProperties(osgiBeanProperties, beanName));
+				_getProperties(osgiBeanProperties, bean, beanName));
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
@@ -1619,9 +1655,11 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		bundleContext.registerService(
 			ProcessExecutor.class, new LocalProcessExecutor(), null);
 
+		Props props = PropsUtil.getProps();
+
 		bundleContext.registerService(
-			Props.class, PropsUtil.getProps(),
-			_getProperties(null, Props.class.getName()));
+			Props.class, props,
+			_getProperties(null, props, Props.class.getName()));
 	}
 
 	private void _startConfigurationBundles(Collection<Bundle> bundles)

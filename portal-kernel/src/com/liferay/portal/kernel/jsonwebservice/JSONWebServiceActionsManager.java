@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -43,10 +42,6 @@ public interface JSONWebServiceActionsManager {
 	public int registerService(
 		String contextName, String contextPath, Object service);
 
-	public int registerServletContext(ServletContext servletContext);
-
 	public int unregisterJSONWebServiceActions(Object actionObject);
-
-	public int unregisterServletContext(ServletContext servletContext);
 
 }

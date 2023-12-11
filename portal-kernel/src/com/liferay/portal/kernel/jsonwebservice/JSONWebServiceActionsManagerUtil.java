@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -89,28 +88,12 @@ public class JSONWebServiceActionsManagerUtil {
 			path, method);
 	}
 
-	public static int registerServletContext(ServletContext servletContext) {
-		JSONWebServiceActionsManager jsonWebServiceActionsManager =
-			_jsonWebServiceActionsManagerSnapshot.get();
-
-		return jsonWebServiceActionsManager.registerServletContext(
-			servletContext);
-	}
-
 	public static int unregisterJSONWebServiceActions(Object actionObject) {
 		JSONWebServiceActionsManager jsonWebServiceActionsManager =
 			_jsonWebServiceActionsManagerSnapshot.get();
 
 		return jsonWebServiceActionsManager.unregisterJSONWebServiceActions(
 			actionObject);
-	}
-
-	public static int unregisterServletContext(ServletContext servletContext) {
-		JSONWebServiceActionsManager jsonWebServiceActionsManager =
-			_jsonWebServiceActionsManagerSnapshot.get();
-
-		return jsonWebServiceActionsManager.unregisterServletContext(
-			servletContext);
 	}
 
 	private static final Snapshot<JSONWebServiceActionsManager>

@@ -8,10 +8,6 @@ package com.liferay.portal.remote.json.web.service.web.internal;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.bean.BeanLocator;
-import com.liferay.portal.kernel.bean.BeanLocatorException;
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceAction;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionMapping;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManager;
@@ -208,58 +204,6 @@ public class JSONWebServiceActionsManagerImpl
 	}
 
 	@Override
-	public int registerServletContext(ServletContext servletContext) {
-		if (!PropsValues.JSON_WEB_SERVICE_ENABLED) {
-			return 0;
-		}
-
-		BeanLocator beanLocator = null;
-
-		String contextName = servletContext.getServletContextName();
-		String contextPath = servletContext.getContextPath();
-
-		if (contextPath.equals(_portal.getPathContext()) ||
-			contextPath.isEmpty()) {
-
-			beanLocator = PortalBeanLocatorUtil.getBeanLocator();
-		}
-		else {
-			beanLocator = PortletBeanLocatorUtil.getBeanLocator(contextName);
-		}
-
-		if (beanLocator == null) {
-			if (_log.isInfoEnabled()) {
-				_log.info("Bean locator not available for " + contextPath);
-			}
-
-			return -1;
-		}
-
-		for (String beanName : beanLocator.getNames()) {
-			try {
-				JSONWebServiceRegistratorUtil.processBean(
-					this, contextName, contextPath,
-					beanLocator.locate(beanName));
-			}
-			catch (BeanLocatorException beanLocatorException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(beanLocatorException);
-				}
-			}
-		}
-
-		int count = _getJSONWebServiceActionsCount(contextPath);
-
-		if (_log.isInfoEnabled()) {
-			_log.info(
-				StringBundler.concat(
-					"Configured ", count, " actions for ", contextPath));
-		}
-
-		return count;
-	}
-
-	@Override
 	public synchronized int unregisterJSONWebServiceActions(
 		Object actionObject) {
 
@@ -270,26 +214,6 @@ public class JSONWebServiceActionsManagerImpl
 
 			if ((actionObject ==
 					jsonWebServiceActionConfig.getActionObject()) &&
-				_removeJSONWebServiceActionConfig(jsonWebServiceActionConfig)) {
-
-				count++;
-			}
-		}
-
-		return count;
-	}
-
-	@Override
-	public int unregisterServletContext(ServletContext servletContext) {
-		String contextPath = servletContext.getContextPath();
-
-		int count = 0;
-
-		for (JSONWebServiceActionConfig jsonWebServiceActionConfig :
-				_signatureIndexedJSONWebServiceActionConfigs.values()) {
-
-			if (contextPath.equals(
-					jsonWebServiceActionConfig.getContextPath()) &&
 				_removeJSONWebServiceActionConfig(jsonWebServiceActionConfig)) {
 
 				count++;

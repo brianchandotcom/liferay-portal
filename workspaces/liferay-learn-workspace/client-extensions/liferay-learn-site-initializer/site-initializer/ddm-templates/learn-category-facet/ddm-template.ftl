@@ -74,8 +74,8 @@
 	name = ""
 	selectable = false
 	selected = false
-	termDisplayContexts = ""
 	termDisplayContextClass = ""
+	termDisplayContexts = ""
 	vocabularyName = ""
 >
 	<li class="treeview-item ${termDisplayContextClass}" role="none">
@@ -191,8 +191,8 @@
 			<div class="collapse show" id="${namespace}treeItem${id}">
 				<ul class="treeview-group" role="group">
 					<#assign
-						termDisplayContextCount = 1
 						hasTermDisplayContextHidden = false
+						termDisplayContextCount = 1
 					/>
 
 					<#list termDisplayContexts as termDisplayContext>
@@ -200,8 +200,8 @@
 
 						<#if termDisplayContextCount gt 8 && !termDisplayContext.isSelected()>
 							<#assign
-								hideClass = "${vocabularyName}-class d-none"
 								hasTermDisplayContextHidden = true
+								hideClass = "${vocabularyName}-class d-none"
 							/>
 						</#if>
 

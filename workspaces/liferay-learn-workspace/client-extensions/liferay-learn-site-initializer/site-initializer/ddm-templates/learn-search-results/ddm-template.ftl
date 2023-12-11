@@ -42,18 +42,6 @@
 		width: 1rem;
 	}
 
-	.pagination-bar .pagination-results {
-		align-items: flex-start;
-		color: var(--neutral-10, #282934);
-		display: flex;
-		font-family: 'Source Sans Pro', sans-serif;
-		font-size: 0.8125rem;
-		font-style: normal;
-		font-weight: 400;
-		gap: 0.25rem;
-		line-height: 1rem;
-	}
-
 	.pagination-bar .pagination {
 		align-items: flex-start;
 		display: flex;
@@ -83,6 +71,18 @@
 		background: var(--action-neutral-active-lighten, #D5D8DB);
 	}
 
+	.pagination-bar .pagination-results {
+		align-items: flex-start;
+		color: var(--neutral-10, #282934);
+		display: flex;
+		font-family: 'Source Sans Pro', sans-serif;
+		font-size: 0.8125rem;
+		font-style: normal;
+		font-weight: 400;
+		gap: 0.25rem;
+		line-height: 1rem;
+	}
+
 	.search-results .search-results-entry {
 		align-items: flex-start;
 		display: flex;
@@ -105,8 +105,13 @@
 		width: 49.75rem;
 	}
 
-	.search-results .search-results-entry .search-results-entry-title:hover {
-		background: var(--action-primary-hover-lighten, #EDF3FE);
+	.search-results .search-results-entry .search-results-entry-title .modified-date {
+		color: var(--neutral-07, #6C6C75);
+		font-family: 'Source Sans Pro', sans-serif;
+		font-size: 0.8125rem;
+		font-style: normal;
+		font-weight: 400;
+		line-height: 1rem;
 	}
 
 	.search-results .search-results-entry .search-results-entry-title .search-results-entry-content {
@@ -118,13 +123,8 @@
 		line-height: 1.5rem;
 	}
 
-	.search-results .search-results-entry .search-results-entry-title .modified-date {
-		color: var(--neutral-07, #6C6C75);
-		font-family: 'Source Sans Pro', sans-serif;
-		font-size: 0.8125rem;
-		font-style: normal;
-		font-weight: 400;
-		line-height: 1rem;
+	.search-results .search-results-entry .search-results-entry-title:hover {
+		background: var(--action-primary-hover-lighten, #EDF3FE);
 	}
 
 	.search-results .solid {
@@ -150,8 +150,8 @@
 
 						<div class="modified-date pt-2">
 							<#assign
-								modifiedDateStringParts = entry.getModifiedDateString()?split(":")
 								finalModifiedDateString = ""
+								modifiedDateStringParts = entry.getModifiedDateString()?split(":")
 							/>
 
 							<#if modifiedDateStringParts[0]?length gt modifiedDateStringParts[1]?length>

@@ -15,4 +15,7 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface LiferayActionResponse
 	extends ActionResponse, LiferayStateAwareResponse {
+
+	public static final String SKIP_ESCAPE_REDIRECT = "skip_escape_redirect";
+
 }

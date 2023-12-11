@@ -37,6 +37,15 @@ renderResponse.setTitle(LanguageUtil.get(request, "edit-blueprint"));
 			).put(
 				"featureFlagLps153813", FeatureFlagManagerUtil.isEnabled("LPS-153813")
 			).put(
+				"fetchSitesURL",
+				ResourceURLBuilder.createResourceURL(
+					renderResponse
+				).setCMD(
+					"getSitesJSONObject"
+				).setResourceID(
+					"/sxp_blueprint_admin/get_sites"
+				).buildString()
+			).put(
 				"isCompanyAdmin", permissionChecker.isCompanyAdmin()
 			).put(
 				"learnMessages", LearnMessageUtil.getJSONObject("search-experiences-web")

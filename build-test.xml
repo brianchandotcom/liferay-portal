@@ -9429,10 +9429,6 @@ go</echo>
 		</if>
 	</target>
 
-	<target name="check-config">
-		<check-config />
-	</target>
-
 	<target name="check-folder-in-lar">
 		<unzip
 			dest="${app.server.tomcat.temp.dir}"
@@ -9465,19 +9461,6 @@ go</echo>
 			<fileset
 				dir="${app.server.deploy.dir}"
 				excludes=",*.dodeploy,*.rar,*.sar/**,*.xml,.autodeploystatus/**,liferay-portal/**,liferay-portal.war/**,marketplace-portlet/**,portal-compat-hook/**,security/**,root/**,ROOT/**,ROOT.war/**,tunnel-web/**,tunnel-web.war/**"
-			/>
-		</delete>
-	</target>
-
-	<target name="clean-up-bundles">
-		<delete file="test.${user.name}.properties" />
-
-		<antcall target="delete-liferay-home" />
-
-		<delete includeemptydirs="true">
-			<fileset
-				dir="${app.server.parent.dir}"
-				excludes="*.zip"
 			/>
 		</delete>
 	</target>
@@ -9984,14 +9967,6 @@ org.apache.catalina.tribes.level = FINE]]>
 		<symlink link="${symbolic.link}" resource="${symbolic.link.resource}" />
 	</target>
 
-	<target name="curl-execute">
-		<fail message="Please set the property ${curl.args}." unless="curl.args" />
-
-		<exec executable="curl">
-			<arg line="${curl.args}" />
-		</exec>
-	</target>
-
 	<target name="delete-dependency-file">
 		<if>
 			<isset property="liferay.dependency.config" />
@@ -10135,63 +10110,8 @@ org.apache.catalina.tribes.level = FINE]]>
 		</if>
 	</target>
 
-	<target name="delete-static-impl-license-jar">
-		<execute>
-			<![CDATA[
-				zip -d '${liferayHome}/osgi/marketplace/Liferay Static - Impl.lpkg' com.liferay.portal.license.enterprise.app.jar
-			]]>
-		</execute>
-	</target>
-
 	<target name="delete-symbolic-link">
 		<symlink action="delete" link="${symbolic.link}" />
-	</target>
-
-	<target name="deploy-commerce-license-xml">
-		<if>
-			<matches pattern="https?://" string="${test.commerce.license.url}" />
-			<then>
-				<mkdir dir="${liferay.home}/deploy" />
-
-				<mirrors-get
-					dest="${liferay.home}/deploy/portal-commerce-license.xml"
-					src="${test.commerce.license.url}"
-				/>
-			</then>
-			<else>
-				<echo>No commerce XML license found to deploy.</echo>
-			</else>
-		</if>
-	</target>
-
-	<target name="deploy-data-guard">
-		<if>
-			<not>
-				<available file="${liferay.home}/osgi/test/com.liferay.portal.test.jar" />
-			</not>
-			<then>
-				<ant dir="portal-test" inheritAll="false" target="deploy" />
-			</then>
-		</if>
-
-		<move
-			file="${liferay.home}/osgi/test/com.liferay.portal.test.jar"
-			tofile="${liferay.home}/osgi/modules/com.liferay.portal.test.jar"
-		/>
-
-		<if>
-			<not>
-				<available file="${liferay.home}/osgi/test/com.liferay.data.guard.connector.jar" />
-			</not>
-			<then>
-				<deploy-osgi-modules osgi.modules="required-dependencies" />
-			</then>
-		</if>
-
-		<move
-			file="${liferay.home}/osgi/test/com.liferay.data.guard.connector.jar"
-			tofile="${liferay.home}/osgi/modules/com.liferay.data.guard.connector.jar"
-		/>
 	</target>
 
 	<target name="deploy-dependency-jars">
@@ -10915,204 +10835,6 @@ send_user $expect_out(buffer)]]></echo>
 		<export-database-mysql-compact database.file.prefix="${database.file.prefix}" database.schema.name="${database.schema.name}" />
 	</target>
 
-	<target name="generate-changelog">
-		<record-git-commit-portal />
-
-		<tstamp>
-			<format pattern="EEEE, d MMMM yyyy, hh:mm aa" property="build.tstamp.value" />
-		</tstamp>
-
-		<property name="changelog.dir" value="${env.JENKINS_HOME}/userContent/jobs/${env.JOB_NAME}/builds/${env.BUILD_NUMBER}" />
-
-		<math
-			datatype="int"
-			operand1="${env.BUILD_NUMBER}"
-			operand2="1"
-			operation="-"
-			result="previous.build.number"
-		/>
-
-		<property name="previous.changelog.dir" value="${env.JENKINS_HOME}/userContent/jobs/${env.JOB_NAME}/builds/${previous.build.number}" />
-
-		<if>
-			<and>
-				<available file="${previous.changelog.dir}/git-build-log.html" />
-				<available file="${previous.changelog.dir}/git-commit-portal" />
-			</and>
-			<then>
-				<loadfile
-					property="previous.git.commit.portal.rev.parse"
-					srcfile="${previous.changelog.dir}/git-commit-portal"
-				/>
-
-				<copy
-					file="${previous.changelog.dir}/git-build-log.html"
-					tofile="${changelog.dir}/git-build-log.html"
-				/>
-
-				<if>
-					<equals arg1="${git.commit.portal.rev.parse}" arg2="${previous.git.commit.portal.rev.parse}" />
-					<then>
-						<property name="git.log.content.portal" value="No Changes" />
-					</then>
-					<else>
-						<execute dir="${project.dir}">
-							<![CDATA[git log --pretty=format:'<a href="https://github.com/liferay/liferay-portal-ee/commit/'%H'" target="_blank">'%H'</a>''<br />'%an'<br />'%s'<br /><br />' ${previous.git.commit.portal.rev.parse}...${git.commit.portal.rev.parse} > ${changelog.dir}/git.log]]>
-						</execute>
-
-						<loadfile
-							property="git.log.content.portal"
-							srcfile="${changelog.dir}/git.log"
-						/>
-					</else>
-				</if>
-
-				<replace
-					file="${changelog.dir}/git-build-log.html"
-				>
-					<replacetoken><![CDATA[<!-- NEXT -->]]></replacetoken>
-					<replacevalue expandproperties="true"><![CDATA[<!-- NEXT -->
-
-		<div id="updateWrapper">
-			<div class="divider"></div>
-			<div id="update">
-				<h2>
-					Build #${env.BUILD_NUMBER} - ${env.JOB_NAME} - ${build.tstamp.value}<br />
-					Portal: ${git.commit.portal.rev.parse}<br />
-				</h2>
-
-				<div id="portal">
-					<h4>
-						Portal Git Log:
-					</h4>
-					<p>
-						${git.log.content.portal}
-					</p>
-				</div>
-			</div>
-		</div>
-				]]></replacevalue>
-				</replace>
-			</then>
-			<else>
-				<echo file="${changelog.dir}/git-build-log.html"><![CDATA[<!DOCTYPE html>
-<html>
-	<head>
-		<title>Git Build Log</title>
-		<style>
-			body {
-				font-family: Helvetica, Arial, sans-serif;
-				margin: 5%;
-				padding: 0;
-			}
-
-			h2 {
-				font-size: 17px;
-				letter-spacing: 0.04em;
-			}
-
-			h4 {
-				border-left: 1px solid #BABABA;
-				color: #555;
-				font-size: 20px;
-				font-weight: 100;
-				line-height: 30px;
-				margin: 20px 20px 0;
-				padding: 0 0 20px 10px;
-			}
-
-			p {
-				font-size: 12px;
-			}
-
-			#updateWrapper:after {
-				clear: both;
-				content: "";
-				display: table;
-			}
-
-			#update h2 {
-				background-color: #4D9CD1;
-				color: #FFF;
-				padding: 15px;
-			}
-
-			.divider {
-				background-color: #999;
-				box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.5);
-				-moz-box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.5);
-				-webkit-box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.5);
-				height: 1px;
-				margin: 15px 0 25px;
-				width: 100%;
-			}
-
-			#portal {
-				float: left;
-			}
-
-			#portal {
-				width: 48%;
-			}
-
-			#portal p {
-				border-radius: 8px;
-				-moz-border-radius: 8px;
-				-webkit-border-radius: 8px;
-				box-shadow: inset 0px 1px 6px -1px rgba(0, 0, 0, 0.5);
-				-moz-box-shadow: inset 0px 1px 6px -1px rgba(0, 0, 0, 0.5);
-				-webkit-box-shadow: inset 0px 1px 6px -1px rgba(0, 0, 0, 0.5);
-				margin-top: 0;
-				padding: 10px;
-				word-wrap: break-word;
-			}
-
-			#portal a {
-				color: #3D7CA6;
-				font-family: Monaco, "Liberation Mono", Courier, monospace;
-				font-weight: bold;
-				text-decoration: none;
-			}
-
-			#portal a:hover {
-				text-decoration: underline;
-			}
-		</style>
-	</head>
-	<body>
-
-		<!-- NEXT -->
-
-		<div id="updateWrapper">
-			<div class="divider"></div>
-
-			<br />
-
-			<div id="update">
-				<h2>
-					Initial Commit<br />
-					Build #${env.BUILD_NUMBER} - ${env.JOB_NAME} - ${build.tstamp.value}<br />
-					Portal: ${git.commit.portal.rev.parse}<br />
-				</h2>
-			</div>
-		</div>
-	</body>
-</html>
-				]]></echo>
-			</else>
-		</if>
-
-		<copy
-			file="${changelog.dir}/git-build-log.html"
-			todir="${basedir}"
-		/>
-
-		<copy
-			file="${changelog.dir}/git-build-log.html"
-			todir="${env.JENKINS_HOME}/userContent/jobs/${env.JOB_NAME}/builds/${env.BUILD_NUMBER}"
-		/>
-	</target>
-
 	<target name="hot-deploy-osgi-apps">
 		<get-testcase-property property.name="hot.deploy.osgi.app.includes" />
 
@@ -11357,22 +11079,6 @@ send_user $expect_out(buffer)]]></echo>
 				<validate-installed-patches patching.tool.dir="${patching.tool.dir}" />
 
 				<delete file="@{patching.tool.dir}/logs/patching-tool.log" />
-			</else>
-		</if>
-	</target>
-
-	<target name="kill-spi">
-		<if>
-			<os family="unix" />
-			<then>
-				<execute>
-					kill -9 pgrep -n java
-				</execute>
-			</then>
-			<else>
-				<execute>
-					taskkill.exe /F /FI "imagename eq java.exe" /FI "memusage lt 700000" /FI "memusage gt 600000"
-				</execute>
 			</else>
 		</if>
 	</target>
@@ -11656,10 +11362,6 @@ ${update.properties}</echo>
 		<prepare-azure-store-configuration />
 	</target>
 
-	<target name="prepare-database-upgrade-properties">
-		<prepare-database-upgrade-properties />
-	</target>
-
 	<target name="prepare-encryption-PCKS12-certificate">
 		<if>
 			<equals arg1="${app.server.type}" arg2="tomcat" />
@@ -11863,10 +11565,6 @@ ${update.properties}</echo>
 </Configuration>]]></echo>
 			</then>
 		</if>
-	</target>
-
-	<target name="prepare-ms-exchange-configuration">
-		<prepare-ms-exchange-configuration />
 	</target>
 
 	<target name="prepare-osgi-module-configurations">
@@ -13804,16 +13502,6 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 		</if>
 	</target>
 
-	<target name="prepare-so-plugins">
-		<set-tomcat-version-number liferay.portal.bundle="${liferay.portal.bundle}" />
-
-		<property file="${lp.plugins.dir}/portlets/so-portlet/docroot/WEB-INF/liferay-releng.properties" />
-
-		<property name="plugins.includes" value="so-portlet,${dependent-apps}" />
-
-		<ant antfile="build-test-plugins.xml" target="deploy-simple-server-plugins" />
-	</target>
-
 	<target name="prepare-system-ext-properties">
 		<echo file="${app.server.classes.portal.dir}/system-ext.properties">com.liferay.portal.kernel.util.ServiceProxyFactory.timeout=300000
 jdbc.data.source.anti.time.drift=true
@@ -13867,24 +13555,6 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 		<ant inheritAll="false" target="deploy" />
 
 		<app-server-properties-reset />
-	</target>
-
-	<target name="prepare-test-build-unit">
-		<record-git-commit-portal />
-
-		<antcall inheritAll="false" target="compile" />
-
-		<prepare-test-bundles unit="true" />
-
-		<antcall inheritAll="false" target="compile-test" />
-
-		<record-test-class-file-names />
-
-		<echo if:set="env.JENKINS_HOME">
-ANT_OPTS=${env.ANT_OPTS}</echo>
-
-		<antcall if:set="env.JENKINS_HOME" inheritAll="false" target="clean-up-db2-processes" />
-		<antcall if:set="env.JENKINS_HOME" inheritAll="false" target="clean-up-java-processes" />
 	</target>
 
 	<target name="prepare-test-bundle">
@@ -14538,25 +14208,6 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 		</trycatch>
 	</target>
 
-	<target name="print-scm-revision">
-		<echo>Portal GIT ID:</echo>
-		<echo />
-
-		<exec dir="${project.dir}" executable="git">
-			<arg line="log -n 1" />
-		</exec>
-
-		<echo />
-		<echo>Plugins GIT ID:</echo>
-		<echo />
-
-		<exec dir="${lp.plugins.dir}" executable="git">
-			<arg line="log -n 1" />
-		</exec>
-
-		<echo />
-	</target>
-
 	<target depends="build-sql-file" name="rebuild-database">
 		<trycatch property="rebuild.database.error">
 			<try>
@@ -15129,179 +14780,6 @@ go</echo>
 		</if>
 	</target>
 
-	<target name="record-database-type">
-		<echo append="true" file="database-type">${database.type},</echo>
-	</target>
-
-	<target name="record-git-commit-bottom-test-jsp">
-		<exec dir="${project.dir}" executable="git" outputproperty="git.commit.portal.rev.parse">
-			<arg line="rev-parse HEAD" />
-		</exec>
-
-		<exec dir="${project.dir}" executable="git" outputproperty="git.commit.portal.current.date">
-			<arg line="log -1 --pretty=format:%cd HEAD" />
-		</exec>
-
-		<loadfile
-			property="copyright.content"
-			srcFile="${project.dir}/copyright.txt"
-		/>
-
-		<if>
-			<available file="${project.dir}/git-commit-portal" />
-			<then>
-				<loadfile
-					property="git.commit.portal.base.branch"
-					srcFile="${project.dir}/git-commit-portal"
-				/>
-
-				<antelope:stringutil property="git.commit.portal.base.branch" string="${git.commit.portal.base.branch}">
-					<antelope:trim />
-				</antelope:stringutil>
-
-				<property name="git.commit.information" value="Commit: &lt;a href=&quot;https://github.com/liferay/liferay-portal/commit/${git.commit.portal.rev.parse}&quot; target=&quot;_blank&quot;&gt;${git.commit.portal.rev.parse}&lt;/a&gt;&lt;br /&gt;Base Branch Commit: &lt;a href=&quot;https://github.com/liferay/liferay-portal/commit/${git.commit.portal.base.branch}&quot; target=&quot;_blank&quot;&gt;${git.commit.portal.base.branch}&lt;/a&gt;&lt;br /&gt;Updated on: ${git.commit.portal.current.date}" />
-			</then>
-			<else>
-				<property name="git.commit.information" value="Commit: &lt;a href=&quot;https://github.com/liferay/liferay-portal/commit/${git.commit.portal.rev.parse}&quot; target=&quot;_blank&quot;&gt;${git.commit.portal.rev.parse}&lt;/a&gt;&lt;br /&gt;Updated on: ${git.commit.portal.current.date}" />
-			</else>
-		</if>
-
-		<echo file="${app.server.dir}/webapps/ROOT/html/common/themes/bottom-test.jsp"><![CDATA[<%--
-${copyright.content}
---%>
-
-<%@ page import="com.liferay.portal.kernel.util.ParamUtil" %>
-
-<%
-String ppstate = ParamUtil.getString(request, "p_p_state", "normal");
-
-if (ppstate.equals("normal")) {
-%>
-
-	<div class="alert alert-info" id="currentHead" style="margin: 2em">
-		${git.commit.information}
-	</div>
-
-<%
-}
-%>]]></echo>
-
-		<echo>Updated ${app.server.dir}/webapps/ROOT/html/common/themes/bottom-test.jsp.</echo>
-	</target>
-
-	<target name="record-git-commit-portal">
-		<record-git-commit-portal />
-	</target>
-
-	<target name="record-job-summary">
-		<fail message="Please set the property ${test.suite.name}." unless="test.suite.name" />
-
-		<beanshell>
-			<![CDATA[
-				import com.liferay.jenkins.results.parser.CIJobSummaryReportUtil;
-				import com.liferay.jenkins.results.parser.GitWorkingDirectory;
-				import com.liferay.jenkins.results.parser.GitWorkingDirectoryFactory;
-				import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
-				import com.liferay.jenkins.results.parser.Job;
-				import com.liferay.jenkins.results.parser.JobFactory;
-				import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
-				import com.liferay.jenkins.results.parser.PortalHotfixRelease;
-
-				public Job.BuildProfile getBuildProfile() {
-					String testPortalBuildProfile = project.getProperty("build.profile");
-
-					if ((testPortalBuildProfile != null) && testPortalBuildProfile.equals("dxp")) {
-						return Job.BuildProfile.DXP;
-					}
-
-					return Job.BuildProfile.PORTAL;
-				}
-
-				public String getJobName() {
-					String jobName = project.getProperty("job.name");
-
-					if (JenkinsResultsParserUtil.isNullOrEmpty(jobName)) {
-						jobName = project.getProperty("env.TOP_LEVEL_JOB_NAME");
-					}
-
-					if (JenkinsResultsParserUtil.isNullOrEmpty(jobName)) {
-						jobName = project.getProperty("env.JOB_NAME");
-					}
-
-					if (JenkinsResultsParserUtil.isNullOrEmpty(jobName)) {
-						jobName = "test-portal-testsuite-upstream(" + getUpstreamBranchName() + ")";
-					}
-
-					return jobName;
-				}
-
-				public GitWorkingDirectory getPortalGitWorkingDirectory() {
-					File gitWorkingDir = JenkinsResultsParserUtil.getGitWorkingDir(new File(project.getProperty("project.dir")));
-
-					GitWorkingDirectory gitWorkingDirectory = GitWorkingDirectoryFactory.newGitWorkingDirectory(getUpstreamBranchName(), gitWorkingDir, getRepositoryName());
-
-					if (gitWorkingDirectory instanceof PortalGitWorkingDirectory) {
-						return (PortalGitWorkingDirectory)gitWorkingDirectory;
-					}
-
-					return null;
-				}
-
-				public PortalHotfixRelease getPortalHotfixRelease() {
-					String portalHotfixURL = project.getProperty("portal.hotfix.url");
-
-					if (!JenkinsResultsParserUtil.isURL(portalHotfixURL)) {
-						return null;
-					}
-
-					return new PortalHotfixRelease(new URL(portalHotfixURL));
-				}
-
-				public String getRepositoryName() {
-					String upstreamBranchName = getUpstreamBranchName();
-
-					if (upstreamBranchName.equals("master")) {
-						return "liferay-portal";
-					}
-
-					return "liferay-portal-ee";
-				}
-
-				public File getSummaryDir() {
-					File summaryDir = new File("job/summary");
-
-					summaryDir.mkdirs();
-
-					return JenkinsResultsParserUtil.getCanonicalFile(summaryDir);
-				}
-
-				public String getTestSuiteName() {
-					return project.getProperty("test.suite.name");
-				}
-
-				public String getUpstreamBranchName() {
-					String upstreamBranchName = project.getProperty("env.TEST_PORTAL_BRANCH_NAME");
-
-					if (JenkinsResultsParserUtil.isNullOrEmpty(upstreamBranchName)) {
-						upstreamBranchName = project.getProperty("liferay.portal.branch");
-					}
-
-					if (JenkinsResultsParserUtil.isNullOrEmpty(upstreamBranchName)) {
-						upstreamBranchName = project.getProperty("git.working.branch.name");
-					}
-
-					return upstreamBranchName.replace("-private", "");
-				}
-
-				Job job = JobFactory.newJob(getBuildProfile(), getJobName(), null, getPortalGitWorkingDirectory(), getPortalHotfixRelease(), getUpstreamBranchName(), null, getRepositoryName(), getTestSuiteName(), getUpstreamBranchName());
-
-				CIJobSummaryReportUtil.writeJobSummaryReport(getSummaryDir(), job);
-
-				System.out.println("Generated job summary file " + new File(getSummaryDir(), "index.html"));
-			]]>
-		</beanshell>
-	</target>
-
 	<target name="record-test-case-method-names">
 		<setup-libs />
 
@@ -15632,34 +15110,6 @@ if (ppstate.equals("normal")) {
 		/>
 	</target>
 
-	<target name="replace-file">
-		<fail message="Please set the property ${file}." unless="file" />
-		<fail message="Please set the property ${token}." unless="token" />
-		<fail message="Please set the property ${value}." unless="value" />
-
-		<fail message="${token} not found in ${file}.">
-			<condition>
-				<not>
-					<resourcecontains
-						resource="${file}"
-						substring="${token}"
-					/>
-				</not>
-			</condition>
-		</fail>
-
-		<echo>Replacing ${token} with ${value} in ${file}.</echo>
-
-		<replace
-			file="${file}"
-		>
-			<replacefilter
-				token="${token}"
-				value="${value}"
-			/>
-		</replace>
-	</target>
-
 	<target name="restart-docker-container">
 		<fail message="Please set the property ${docker.container}." unless="docker.container" />
 
@@ -15684,18 +15134,6 @@ if (ppstate.equals("normal")) {
 		<poshi-execute task="evaluatePoshiConsole" />
 	</target>
 
-	<target name="run-poshi-runner">
-		<if>
-			<equals arg1="${failonerror}" arg2="true" />
-			<then>
-				<poshi-execute failonerror="true" task="runPoshi" />
-			</then>
-			<else>
-				<poshi-execute task="runPoshi" />
-			</else>
-		</if>
-	</target>
-
 	<target name="run-poshi-validation">
 		<delete failonerror="false" file="${test.ext.properties.file}" />
 
@@ -15712,16 +15150,6 @@ if (ppstate.equals("normal")) {
 		</if>
 
 		<poshi-execute failonerror="true" task="validatePoshi" />
-	</target>
-
-	<target name="run-selenium-smoke-test">
-		<antcall target="compile" />
-
-		<ant dir="portal-impl" inheritAll="false" target="compile-test" />
-
-		<ant dir="portal-web" inheritAll="false" target="test-class">
-			<property name="test.class" value="SeleniumSmokeTestSuite" />
-		</ant>
 	</target>
 
 	<target depends="prepare-selenium" name="run-selenium-test">
@@ -16747,10 +16175,6 @@ CATALINA_OPTS="$CATALINA_OPTS -Dcom.sun.management.jmxremote -Dcom.sun.managemen
 		<antcall target="clean-up-web-xml" />
 	</target>
 
-	<target name="set-portal-impl-portal-test-ext-properties">
-		<set-portal-impl-portal-test-ext-properties />
-	</target>
-
 	<target name="set-tomcat-version-number">
 		<set-tomcat-version-number liferay.portal.bundle="${liferay.portal.bundle}" />
 	</target>
@@ -16821,10 +16245,6 @@ CATALINA_OPTS="$CATALINA_OPTS -Dcom.sun.management.jmxremote -Dcom.sun.managemen
 		</trycatch>
 	</target>
 
-	<target name="start-docker-browser">
-		<start-docker-browser />
-	</target>
-
 	<target name="start-docker-containers">
 		<get-database-property property.name="database.docker.image" />
 
@@ -16864,30 +16284,6 @@ CATALINA_OPTS="$CATALINA_OPTS -Dcom.sun.management.jmxremote -Dcom.sun.managemen
 		<start-docker-database />
 	</target>
 
-	<target name="start-docker-os">
-		<start-docker-os />
-	</target>
-
-	<target name="start-test-smtp-server">
-		<exec executable="/bin/bash" outputproperty="output">
-			<arg value="-c" />
-			<arg value="netstat -nlp | grep 8282" />
-		</exec>
-		<echo>output is${output}</echo>
-		<if>
-			<not>
-				<equals arg1="${output}" arg2="" />
-			</not>
-			<then>
-				<stop-test-smtp-server />
-				<start-test-smtp-server />
-			</then>
-			<else>
-				<start-test-smtp-server />
-			</else>
-		</if>
-	</target>
-
 	<target name="stop-app-server">
 		<if>
 			<not>
@@ -16901,10 +16297,6 @@ CATALINA_OPTS="$CATALINA_OPTS -Dcom.sun.management.jmxremote -Dcom.sun.managemen
 		<stop-app-server
 			app.server.bundle.index="${app.server.bundle.index}"
 		/>
-	</target>
-
-	<target name="stop-docker-browser">
-		<stop-docker-browser />
 	</target>
 
 	<target name="stop-docker-containers">
@@ -16938,10 +16330,6 @@ CATALINA_OPTS="$CATALINA_OPTS -Dcom.sun.management.jmxremote -Dcom.sun.managemen
 
 	<target name="stop-docker-database">
 		<stop-docker-database />
-	</target>
-
-	<target name="stop-docker-os">
-		<stop-docker-os />
 	</target>
 
 	<target name="terminate-one-java-process">

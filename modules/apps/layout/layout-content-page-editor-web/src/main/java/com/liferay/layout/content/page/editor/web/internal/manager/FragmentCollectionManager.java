@@ -17,10 +17,12 @@ import com.liferay.fragment.service.FragmentCollectionService;
 import com.liferay.fragment.service.FragmentCompositionService;
 import com.liferay.fragment.service.FragmentEntryService;
 import com.liferay.fragment.util.comparator.FragmentCollectionContributorNameComparator;
+import com.liferay.info.item.InfoItemClassDetails;
 import com.liferay.info.item.InfoItemServiceRegistry;
+import com.liferay.info.permission.provider.InfoPermissionProvider;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.constants.ContentPageEditorConstants;
-import com.liferay.layout.content.page.editor.web.internal.util.ObjectUtil;
+import com.liferay.layout.page.template.info.item.capability.EditPageInfoItemCapability;
 import com.liferay.layout.util.PortalPreferencesUtil;
 import com.liferay.layout.util.structure.DropZoneLayoutStructureItem;
 import com.liferay.petra.string.StringPool;
@@ -70,8 +72,8 @@ public class FragmentCollectionManager {
 		List<Map<String, Object>> allFragmentCollectionMapsList =
 			new ArrayList<>();
 
-		boolean hideInputFragments = ObjectUtil.hideInputFragments(
-			_infoItemServiceRegistry, themeDisplay.getPermissionChecker());
+		boolean hideInputFragments = _hideInputFragments(
+			themeDisplay.getPermissionChecker());
 
 		PortalPreferences portalPreferences =
 			_portletPreferencesFactory.getPortalPreferences(httpServletRequest);
@@ -210,9 +212,7 @@ public class FragmentCollectionManager {
 		Map<String, List<Map<String, Object>>> layoutElementMapsListMap =
 			new HashMap<>(ContentPageEditorConstants.layoutElementMapsListMap);
 
-		if (ObjectUtil.hideInputFragments(
-			_infoItemServiceRegistry, permissionChecker)) {
-
+		if (_hideInputFragments(permissionChecker)) {
 			layoutElementMapsListMap.remove("INPUTS");
 		}
 
@@ -592,6 +592,26 @@ public class FragmentCollectionManager {
 		return _getSortedFragmentCollectionMapsList(
 			fragmentCollectionMaps,
 			ListUtil.fromArray(_SORTED_FRAGMENT_COLLECTION_KEYS));
+	}
+
+	private boolean _hideInputFragments(PermissionChecker permissionChecker) {
+		for (InfoItemClassDetails infoItemClassDetails :
+				_infoItemServiceRegistry.getInfoItemClassDetails(
+					EditPageInfoItemCapability.KEY)) {
+
+			InfoPermissionProvider infoPermissionProvider =
+				_infoItemServiceRegistry.getFirstInfoItemService(
+					InfoPermissionProvider.class,
+					infoItemClassDetails.getClassName());
+
+			if ((infoPermissionProvider == null) ||
+				infoPermissionProvider.hasViewPermission(permissionChecker)) {
+
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	private boolean _isAllowedFragmentEntryKey(

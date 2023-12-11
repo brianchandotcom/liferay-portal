@@ -171,7 +171,8 @@ public abstract class BaseDBPartitionTestCase {
 
 	protected static void dropSchemas() throws Exception {
 		for (long companyId : COMPANY_IDS) {
-			db.runSQL("drop schema if exists " + getSchemaName(companyId));
+			db.runSQL(
+				dbPartitionDB.getDropPartitionSQL(getSchemaName(companyId)));
 		}
 	}
 

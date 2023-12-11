@@ -42,6 +42,11 @@ public class DBPartitionPostgreSQLDB implements DBPartitionDB {
 	}
 
 	@Override
+	public String getDropPartitionSQL(String partitionName) {
+		return "drop schema if exists " + partitionName + " cascade";
+	}
+
+	@Override
 	public String getSchema(Connection connection, String partitionName) {
 		return partitionName;
 	}

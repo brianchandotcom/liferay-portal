@@ -358,7 +358,8 @@ public class DBPartitionUtil {
 				}
 
 				statement.executeUpdate(
-					_getDropPartitionSQL(_getPartitionName(companyId)));
+					_dbPartitionDB.getDropPartitionSQL(
+						_getPartitionName(companyId)));
 			}
 		}
 		catch (Exception exception) {
@@ -673,10 +674,6 @@ public class DBPartitionUtil {
 			"create or replace view ", toPartitionName, StringPool.PERIOD,
 			viewName, " as select * from ", fromPartitionName,
 			StringPool.PERIOD, viewName);
-	}
-
-	private static String _getDropPartitionSQL(String partitionName) {
-		return "drop schema " + partitionName;
 	}
 
 	private static String _getDropTableSQL(

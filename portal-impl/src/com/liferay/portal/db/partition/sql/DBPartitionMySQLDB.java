@@ -53,6 +53,11 @@ public class DBPartitionMySQLDB implements DBPartitionDB {
 	}
 
 	@Override
+	public String getDropPartitionSQL(String partitionName) {
+		return "drop schema if exists " + partitionName;
+	}
+
+	@Override
 	public void setPartition(Connection connection, String partitionName)
 		throws SQLException {
 

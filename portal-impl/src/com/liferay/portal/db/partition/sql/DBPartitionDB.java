@@ -34,6 +34,8 @@ public interface DBPartitionDB {
 	public String getDefaultPartitionName(Connection connection)
 		throws SQLException;
 
+	public String getDropPartitionSQL(String partitionName);
+
 	public default String getSchema(
 		Connection connection, String partitionName) {
 

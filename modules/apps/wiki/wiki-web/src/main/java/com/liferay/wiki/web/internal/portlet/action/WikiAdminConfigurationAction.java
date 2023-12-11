@@ -45,7 +45,10 @@ public class WikiAdminConfigurationAction
 
 		validateEmail(actionRequest, "emailPageAdded");
 		validateEmail(actionRequest, "emailPageUpdated");
-		validateEmailFrom(actionRequest);
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-197692")) {
+			validateEmailFrom(actionRequest);
+		}
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
 	}

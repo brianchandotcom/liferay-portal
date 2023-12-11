@@ -5,33 +5,21 @@
 
 package com.liferay.expando.web.internal.display.context;
 
-import com.liferay.expando.constants.ExpandoPortletKeys;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.expando.web.internal.search.CustomFieldChecker;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
-import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -53,49 +41,6 @@ public class ExpandoDisplayContext {
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
-	}
-
-	public List<DropdownItem> getActionDropdownItems() {
-		return DropdownItemListBuilder.add(
-			dropdownItem -> {
-				dropdownItem.putData("action", "deleteCustomFields");
-				dropdownItem.setIcon("trash");
-				dropdownItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, "delete"));
-				dropdownItem.setQuickAction(true);
-			}
-		).build();
-	}
-
-	public Map<String, Object> getAdditionalProps() {
-		return HashMapBuilder.<String, Object>put(
-			"deleteExpandosURL",
-			() -> PortletURLBuilder.createActionURL(
-				PortalUtil.getLiferayPortletResponse(_renderResponse)
-			).setActionName(
-				"deleteExpandos"
-			).buildString()
-		).build();
-	}
-
-	public CreationMenu getCreationMenu() {
-		return CreationMenuBuilder.addDropdownItem(
-			dropdownItem -> {
-				String modelResource = ParamUtil.getString(
-					_httpServletRequest, "modelResource");
-
-				dropdownItem.setHref(
-					_renderResponse.createRenderURL(), "mvcPath",
-					"/edit/select_field_type.jsp", "redirect",
-					PortalUtil.getCurrentURL(_httpServletRequest),
-					"modelResource", modelResource, "backTitle",
-					ResourceActionsUtil.getModelResource(
-						_httpServletRequest, modelResource));
-
-				dropdownItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, "add-custom-field"));
-			}
-		).build();
 	}
 
 	public List<NavigationItem> getNavigationItems(String label) {
@@ -138,12 +83,6 @@ public class ExpandoDisplayContext {
 		_searchContainer = searchContainer;
 
 		return _searchContainer;
-	}
-
-	public boolean showCreationMenu() throws PortalException {
-		return PortletPermissionUtil.contains(
-			_themeDisplay.getPermissionChecker(), ExpandoPortletKeys.EXPANDO,
-			ActionKeys.ADD_EXPANDO);
 	}
 
 	private final HttpServletRequest _httpServletRequest;

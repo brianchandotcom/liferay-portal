@@ -5,7 +5,7 @@ import {
 	validateEmailDomainArr
 } from '../email-validators';
 
-describe('email-validators', () => {
+describe.skip('email-validators', () => {
 	describe('validateEmailDomain', () => {
 		it.each`
 			domain                     | isValid

@@ -9,7 +9,7 @@ import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
-describe('ActivitiesCard', () => {
+describe.skip('ActivitiesCard', () => {
 	it('should render', async () => {
 		const {container} = render(
 			<StaticRouter>

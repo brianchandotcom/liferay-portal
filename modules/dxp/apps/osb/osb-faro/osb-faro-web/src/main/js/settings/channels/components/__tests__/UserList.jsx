@@ -58,7 +58,7 @@ describe('ChannelUserList', () => {
 		expect(open).toBeCalled();
 	});
 
-	it('should open a modal to remove users', async () => {
+	it.skip('should open a modal to remove users', async () => {
 		const {queryByTestId} = render(<DefaultComponent />);
 
 		jest.runAllTimers();

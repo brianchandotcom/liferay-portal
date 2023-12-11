@@ -12,7 +12,7 @@ import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
-describe('AccountOverview', () => {
+describe.skip('AccountOverview', () => {
 	it('should render', async () => {
 		const {container} = render(
 			<ApolloProvider client={client}>

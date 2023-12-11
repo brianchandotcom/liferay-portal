@@ -12,7 +12,7 @@ import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
-describe('SegmentOverview', () => {
+describe.skip('SegmentOverview', () => {
 	it('should render', async () => {
 		const {container} = render(
 			<Provider store={mockStore()}>

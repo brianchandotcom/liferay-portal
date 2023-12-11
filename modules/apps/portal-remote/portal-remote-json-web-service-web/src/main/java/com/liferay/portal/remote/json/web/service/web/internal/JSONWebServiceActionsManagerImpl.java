@@ -6,6 +6,7 @@
 package com.liferay.portal.remote.json.web.service.web.internal;
 
 import com.liferay.osgi.util.ServiceTrackerFactory;
+import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -59,6 +60,8 @@ public class JSONWebServiceActionsManagerImpl
 
 	@Override
 	public Set<String> getContextNames() {
+		_ensureOpen();
+
 		return new TreeSet<>(
 			_contextNameIndexedJSONWebServiceActionConfigs.keySet());
 	}
@@ -67,6 +70,8 @@ public class JSONWebServiceActionsManagerImpl
 	public JSONWebServiceAction getJSONWebServiceAction(
 			HttpServletRequest httpServletRequest)
 		throws NoSuchJSONWebServiceException {
+
+		_ensureOpen();
 
 		String path = GetterUtil.getString(
 			httpServletRequest.getAttribute(WebKeys.ORIGINAL_PATH_INFO));
@@ -125,6 +130,8 @@ public class JSONWebServiceActionsManagerImpl
 			Map<String, Object> parameterMap)
 		throws NoSuchJSONWebServiceException {
 
+		_ensureOpen();
+
 		JSONWebServiceActionParameters jsonWebServiceActionParameters =
 			new JSONWebServiceActionParameters();
 
@@ -144,12 +151,16 @@ public class JSONWebServiceActionsManagerImpl
 	public JSONWebServiceActionMapping getJSONWebServiceActionMapping(
 		String signature) {
 
+		_ensureOpen();
+
 		return _signatureIndexedJSONWebServiceActionConfigs.get(signature);
 	}
 
 	@Override
 	public List<JSONWebServiceActionMapping> getJSONWebServiceActionMappings(
 		String contextName) {
+
+		_ensureOpen();
 
 		List<JSONWebServiceActionConfig> jsonWebServiceActionConfigs =
 			_contextNameIndexedJSONWebServiceActionConfigs.get(contextName);
@@ -165,6 +176,8 @@ public class JSONWebServiceActionsManagerImpl
 	public synchronized void registerJSONWebServiceAction(
 		String contextName, String contextPath, Object actionObject,
 		Class<?> actionClass, Method actionMethod, String path, String method) {
+
+		_ensureOpen();
 
 		try {
 			if (!_addJSONWebServiceActionConfig(
@@ -195,6 +208,8 @@ public class JSONWebServiceActionsManagerImpl
 	public int registerService(
 		String contextName, String contextPath, Object service) {
 
+		_ensureOpen();
+
 		JSONWebServiceRegistratorUtil.processBean(
 			this, contextName, contextPath, service);
 
@@ -212,6 +227,8 @@ public class JSONWebServiceActionsManagerImpl
 	@Override
 	public synchronized int unregisterJSONWebServiceActions(
 		Object actionObject) {
+
+		_ensureOpen();
 
 		int count = 0;
 
@@ -231,17 +248,18 @@ public class JSONWebServiceActionsManagerImpl
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_serviceTracker = ServiceTrackerFactory.open(
+		_serviceTracker = ServiceTrackerFactory.create(
 			bundleContext,
 			StringBundler.concat(
 				"(&(json.web.service.context.name=*)(json.web.service.context.",
 				"path=*)(!(objectClass=", AopService.class.getName(), ")))"),
-			new JSONWebServiceTrackerCustomizer(this, bundleContext));
+			new JSONWebServiceTrackerCustomizer(
+				JSONWebServiceActionsManagerImpl.this, bundleContext));
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_serviceTracker.close();
+		_openedServiceTrackerDCLSingleton.destroy(ServiceTracker::close);
 	}
 
 	private boolean _addJSONWebServiceActionConfig(
@@ -256,31 +274,17 @@ public class JSONWebServiceActionsManagerImpl
 			return false;
 		}
 
-		String contextName = jsonWebServiceActionConfig.getContextName();
-
 		List<JSONWebServiceActionConfig> jsonWebServiceActionConfigs =
-			_contextNameIndexedJSONWebServiceActionConfigs.get(contextName);
-
-		if (jsonWebServiceActionConfigs == null) {
-			jsonWebServiceActionConfigs = new CopyOnWriteArrayList<>();
-
-			_contextNameIndexedJSONWebServiceActionConfigs.put(
-				contextName, jsonWebServiceActionConfigs);
-		}
+			_contextNameIndexedJSONWebServiceActionConfigs.computeIfAbsent(
+				jsonWebServiceActionConfig.getContextName(),
+				key -> new CopyOnWriteArrayList<>());
 
 		jsonWebServiceActionConfigs.add(jsonWebServiceActionConfig);
 
 		jsonWebServiceActionConfigs =
-			_pathIndexedJSONWebServiceActionConfigs.get(
-				jsonWebServiceActionConfig.getPath());
-
-		if (jsonWebServiceActionConfigs == null) {
-			jsonWebServiceActionConfigs = new CopyOnWriteArrayList<>();
-
-			_pathIndexedJSONWebServiceActionConfigs.put(
+			_pathIndexedJSONWebServiceActionConfigs.computeIfAbsent(
 				jsonWebServiceActionConfig.getPath(),
-				jsonWebServiceActionConfigs);
-		}
+				key -> new CopyOnWriteArrayList<>());
 
 		jsonWebServiceActionConfigs.add(jsonWebServiceActionConfig);
 
@@ -307,6 +311,15 @@ public class JSONWebServiceActionsManagerImpl
 		}
 
 		return matched;
+	}
+
+	private void _ensureOpen() {
+		_openedServiceTrackerDCLSingleton.getSingleton(
+			() -> {
+				_serviceTracker.open();
+
+				return _serviceTracker;
+			});
 	}
 
 	private JSONWebServiceActionConfig _findJSONWebServiceAction(
@@ -557,6 +570,8 @@ public class JSONWebServiceActionsManagerImpl
 	private final Map<String, List<JSONWebServiceActionConfig>>
 		_contextNameIndexedJSONWebServiceActionConfigs =
 			new ConcurrentHashMap<>();
+	private final DCLSingleton<ServiceTracker<?, ?>>
+		_openedServiceTrackerDCLSingleton = new DCLSingleton<>();
 	private final Map<String, List<JSONWebServiceActionConfig>>
 		_pathIndexedJSONWebServiceActionConfigs = new ConcurrentHashMap<>();
 

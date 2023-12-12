@@ -87,6 +87,20 @@ public class PortletConfigurationPortletTest {
 		_assertResourcePermissions(plids, roleIds);
 	}
 
+	@Test
+	public void testUpdateRolePermissionsInBulk() throws Exception {
+		List<String> plids = _addLayouts(100);
+
+		List<Long> roleIds = _addRoles();
+
+		ReflectionTestUtil.invoke(
+			_portlet, "updateRolePermissions",
+			new Class<?>[] {ActionRequest.class, ActionResponse.class},
+			_getMockActionRequest(plids, roleIds), new MockActionResponse());
+
+		_assertResourcePermissions(plids, roleIds);
+	}
+
 	private List<String> _addLayouts(int numberOfItems) throws Exception {
 		List<String> plids = new ArrayList<>();
 

@@ -11554,6 +11554,14 @@ ${update.properties}</echo>
 	</Loggers>
 </Configuration>]]></echo>
 
+		<echo file="${liferay.home}/osgi/log4j/com.liferay.portal.cluster.multiple-log4j-ext.xml"><![CDATA[<?xml version="1.0"?>
+<Configuration strict="true">
+	<Loggers>
+		<Logger level="ERROR" name="com.liferay.portal.cluster.multiple.internal.jgroups.JGroupsClusterChannelFactory" />
+	</Loggers>
+</Configuration>]]>
+		</echo>
+
 		<!-- Temporarily increase Tika log level until LPS-193838 -->
 
 		<get-testcase-property property.name="portal.version" />

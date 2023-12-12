@@ -10165,6 +10165,40 @@ public class CommerceOrderPersistenceImpl
 			commerceOrder.setExternalReferenceCode(commerceOrder.getUuid());
 		}
 		else {
+			if (!Objects.equals(
+					commerceOrderModelImpl.getColumnOriginalValue(
+						"externalReferenceCode"),
+					commerceOrder.getExternalReferenceCode())) {
+
+				long userId = GetterUtil.getLong(
+					PrincipalThreadLocal.getName());
+
+				if (userId > 0) {
+					long companyId = commerceOrder.getCompanyId();
+
+					long groupId = commerceOrder.getGroupId();
+
+					long classPK = 0;
+
+					if (!isNew) {
+						classPK = commerceOrder.getPrimaryKey();
+					}
+
+					try {
+						commerceOrder.setExternalReferenceCode(
+							SanitizerUtil.sanitize(
+								companyId, groupId, userId,
+								CommerceOrder.class.getName(), classPK,
+								ContentTypes.TEXT_HTML, Sanitizer.MODE_ALL,
+								commerceOrder.getExternalReferenceCode(),
+								null));
+					}
+					catch (SanitizerException sanitizerException) {
+						throw new SystemException(sanitizerException);
+					}
+				}
+			}
+
 			CommerceOrder ercCommerceOrder = fetchByERC_C(
 				commerceOrder.getExternalReferenceCode(),
 				commerceOrder.getCompanyId());

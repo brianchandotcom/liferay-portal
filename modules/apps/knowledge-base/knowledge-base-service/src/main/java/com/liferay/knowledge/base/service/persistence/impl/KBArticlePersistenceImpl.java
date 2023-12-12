@@ -56551,6 +56551,40 @@ public class KBArticlePersistenceImpl
 		if (Validator.isNull(kbArticle.getExternalReferenceCode())) {
 			kbArticle.setExternalReferenceCode(kbArticle.getUuid());
 		}
+		else {
+			if (!Objects.equals(
+					kbArticleModelImpl.getColumnOriginalValue(
+						"externalReferenceCode"),
+					kbArticle.getExternalReferenceCode())) {
+
+				long userId = GetterUtil.getLong(
+					PrincipalThreadLocal.getName());
+
+				if (userId > 0) {
+					long companyId = kbArticle.getCompanyId();
+
+					long groupId = kbArticle.getGroupId();
+
+					long classPK = 0;
+
+					if (!isNew) {
+						classPK = kbArticle.getPrimaryKey();
+					}
+
+					try {
+						kbArticle.setExternalReferenceCode(
+							SanitizerUtil.sanitize(
+								companyId, groupId, userId,
+								KBArticle.class.getName(), classPK,
+								ContentTypes.TEXT_HTML, Sanitizer.MODE_ALL,
+								kbArticle.getExternalReferenceCode(), null));
+					}
+					catch (SanitizerException sanitizerException) {
+						throw new SystemException(sanitizerException);
+					}
+				}
+			}
+		}
 
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();

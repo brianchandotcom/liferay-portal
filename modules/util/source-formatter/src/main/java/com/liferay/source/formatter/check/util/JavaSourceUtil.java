@@ -490,6 +490,6 @@ public class JavaSourceUtil extends SourceUtil {
 	private static final Pattern _packagePattern = Pattern.compile(
 		"(\n|^)\\s*package (.*);\n");
 	private static final Pattern _superClassPattern = Pattern.compile(
-		"extends\\s+(\\w+(<.*?>)?)", Pattern.DOTALL);
+		"extends\\s+(\\w+)(<.*?>)?", Pattern.DOTALL);
 
 }

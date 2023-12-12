@@ -1,7 +1,7 @@
 buildscript {
 	dependencies {
 		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.defaults", version: "latest.release"
-		classpath group: "org.springframework.boot", name: "spring-boot-gradle-plugin", version: "2.7.11"
+		classpath group: "org.springframework.boot", name: "spring-boot-gradle-plugin", version: "2.7.18"
 	}
 
 	repositories {
@@ -37,9 +37,9 @@ dependencies {
 	implementation group: "com.liferay.osb.provisioning", name: "com.liferay.osb.provisioning.marketplace.rest.client", version: "latest.release"
 	implementation group: "org.apache.httpcomponents", name: "httpclient", version: "4.5.13"
 	implementation group: "org.json", name: "json", version: "20231013"
-	implementation group: "org.springframework.boot", name: "spring-boot-starter-oauth2-resource-server", version: "2.7.11"
-	implementation group: "org.springframework.boot", name: "spring-boot-starter-web", version: "2.7.11"
-	implementation group: "org.springframework.boot", name: "spring-boot-starter-webflux", version: "2.7.11"
+	implementation group: "org.springframework.boot", name: "spring-boot-starter-oauth2-resource-server", version: "2.7.18"
+	implementation group: "org.springframework.boot", name: "spring-boot-starter-web", version: "2.7.18"
+	implementation group: "org.springframework.boot", name: "spring-boot-starter-webflux", version: "2.7.18"
 }
 
 repositories {

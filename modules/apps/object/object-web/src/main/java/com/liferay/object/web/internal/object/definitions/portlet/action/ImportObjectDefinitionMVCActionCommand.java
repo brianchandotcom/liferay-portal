@@ -83,14 +83,15 @@ public class ImportObjectDefinitionMVCActionCommand
 					"title",
 					_language.get(
 						_portal.getHttpServletRequest(actionRequest),
-						"the-structure-was-imported-without-a-custom-view"));
+						"the-object-definition-was-imported-without-a-custom-" +
+							"view"));
 			}
 			else {
 				jsonObject = JSONUtil.put(
 					"title",
 					_language.get(
 						_portal.getHttpServletRequest(actionRequest),
-						"the-structure-failed-to-import"));
+						"the-object-definition-failed-to-import"));
 			}
 
 			JSONPortletResponseUtil.writeJSON(

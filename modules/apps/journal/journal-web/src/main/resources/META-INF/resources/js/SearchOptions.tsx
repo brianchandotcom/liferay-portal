@@ -48,6 +48,7 @@ type Option = {
 type Props = {
 	portletNamespace: string;
 	searchIn: Key;
+	searchInCommentsURL: string;
 	searchInOptions: Option[];
 	searchLocation: Key;
 	searchLocationOptions: Option[];
@@ -59,6 +60,7 @@ type Props = {
 const SearchOptions = ({
 	portletNamespace: namespace,
 	searchIn: initialSearchIn,
+	searchInCommentsURL,
 	searchInOptions,
 	searchLocation: initialLocation,
 	searchLocationOptions,
@@ -81,7 +83,7 @@ const SearchOptions = ({
 				[`${namespace}searchLocation`]: location || initialLocation,
 				[`${namespace}tab`]: results || initialResults,
 			},
-			searchURL
+			searchIn === 'comments' ? searchInCommentsURL : searchURL
 		);
 
 		navigate(url);

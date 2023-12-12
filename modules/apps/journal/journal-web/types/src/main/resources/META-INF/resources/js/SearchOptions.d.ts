@@ -12,6 +12,7 @@ declare type Option = {
 declare type Props = {
 	portletNamespace: string;
 	searchIn: Key;
+	searchInCommentsURL: string;
 	searchInOptions: Option[];
 	searchLocation: Key;
 	searchLocationOptions: Option[];
@@ -22,6 +23,7 @@ declare type Props = {
 declare const SearchOptions: ({
 	portletNamespace: namespace,
 	searchIn: initialSearchIn,
+	searchInCommentsURL,
 	searchInOptions,
 	searchLocation: initialLocation,
 	searchLocationOptions,

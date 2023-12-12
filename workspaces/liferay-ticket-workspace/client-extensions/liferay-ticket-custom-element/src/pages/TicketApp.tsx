@@ -16,7 +16,6 @@ import '../styles/TicketApp.css';
 import {RecentActivity} from '../components/RecentActivity';
 import {TicketGrid} from '../components/TicketGrid';
 import {Liferay} from '../services/liferay';
-import TicketsByStatusDashboard from './TicketsByStatusDashboard';
 
 const initialFilterState = {
 	field: '',
@@ -99,7 +98,8 @@ const App: React.FC<AppProps> = ({queryClient}) => {
 
 			<main className="p-0 row">
 				<div className="col-md-10 m-0 p-0 pr-3">
-					<input className="form-control mb-3 w-100"
+					<input
+						className="form-control mb-3 w-100"
 						onChange={(event) => {
 							setSearch(event.target.value);
 							setPage(1);
@@ -109,7 +109,7 @@ const App: React.FC<AppProps> = ({queryClient}) => {
 					></input>
 
 					<TicketGrid tickets={tickets} />
-					
+
 					<div className="my-3">
 						<ClayPaginationBarWithBasicItems
 							active={page}

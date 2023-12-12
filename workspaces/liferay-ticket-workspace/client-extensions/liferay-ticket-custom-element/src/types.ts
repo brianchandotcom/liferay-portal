@@ -4,9 +4,11 @@
  */
 
 export type Ticket = {
+	assignee: any;
 	dateCreated: Date;
 	dateModified: Date;
 	description: string;
+	externalReferenceCode: string;
 	id: string;
 	priority: string;
 	region: string;
@@ -18,14 +20,13 @@ export type Ticket = {
 	}[];
 	ticketStatus: string;
 	type: string;
-	assignee: any;
-	externalReferenceCode:string;
 };
 
 export type TicketPayload = {
 	dateCreated: string;
 	dateModified: string;
 	description: string;
+	externalReferenceCode: string;
 	id: string;
 	priority: {name: string};
 	region: {name: string};
@@ -35,5 +36,4 @@ export type TicketPayload = {
 	ticketStatus: {name: string};
 	type: {name: string};
 	userToJ3Y7Ticket: any;
-	externalReferenceCode:string;
 };

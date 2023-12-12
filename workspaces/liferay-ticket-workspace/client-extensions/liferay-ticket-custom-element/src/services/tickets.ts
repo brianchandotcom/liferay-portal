@@ -136,12 +136,10 @@ export async function updateTicketStatus(ticket: Ticket) {
 	const resolutions = listTypeDefinitions[J3Y7_RESOLUTIONS] as any[];
 	const types = listTypeDefinitions[J3Y7_TYPES] as any[];
 
-
-	ticket.priority = priorities.find(p => p.name === ticket.priority);
-	ticket.region = regions.find(p => p.name === ticket.region);
-	ticket.resolution = resolutions.find(p => p.name === ticket.resolution);
-	ticket.type = types.find(p => p.name === ticket.type);
-
+	ticket.priority = priorities.find((p) => p.name === ticket.priority);
+	ticket.region = regions.find((p) => p.name === ticket.region);
+	ticket.resolution = resolutions.find((p) => p.name === ticket.resolution);
+	ticket.type = types.find((p) => p.name === ticket.type);
 
 	return fetch(`/o/c/j3y7tickets/${ticket.id}`, {
 		body: JSON.stringify(ticket),
@@ -154,13 +152,16 @@ export async function updateTicketStatus(ticket: Ticket) {
 	});
 }
 
-export async function assignTicketToMe(ticket:Ticket){
-	return fetch(`/o/c/j3y7tickets/by-external-reference-code/${ticket.externalReferenceCode}/object-actions/AssignTicketToMe`, {
-		headers: {
-			'accept': 'application/json',
-			'content-Type': 'application/json',
-			'x-csrf-token': Liferay.authToken,
-		},
-		method: 'PUT',
-	});
+export async function assignTicketToMe(ticket: Ticket) {
+	return fetch(
+		`/o/c/j3y7tickets/by-external-reference-code/${ticket.externalReferenceCode}/object-actions/AssignTicketToMe`,
+		{
+			headers: {
+				'accept': 'application/json',
+				'content-Type': 'application/json',
+				'x-csrf-token': Liferay.authToken,
+			},
+			method: 'PUT',
+		}
+	);
 }

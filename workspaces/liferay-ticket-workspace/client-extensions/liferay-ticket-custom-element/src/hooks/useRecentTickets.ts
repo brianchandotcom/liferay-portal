@@ -25,9 +25,11 @@ const useRecentTickets = () => {
 				catch (error) {}
 
 				return {
+					assignee: ticket.userToJ3Y7Ticket,
 					dateCreated: new Date(ticket.dateCreated),
 					dateModified: new Date(ticket.dateModified),
 					description: ticket.description,
+					externalReferenceCode: ticket.externalReferenceCode,
 					id: ticket.id,
 					priority: ticket.priority?.name,
 					region: ticket.region?.name,
@@ -36,8 +38,6 @@ const useRecentTickets = () => {
 					suggestions,
 					ticketStatus: ticket.ticketStatus?.name,
 					type: ticket.type?.name,
-					assignee: ticket.userToJ3Y7Ticket,
-					externalReferenceCode: ticket.externalReferenceCode
 				};
 			});
 		}

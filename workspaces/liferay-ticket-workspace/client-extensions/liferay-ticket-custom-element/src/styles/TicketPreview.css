@@ -1,44 +1,44 @@
 .ticket-preview-container {
-    background-color: white;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    border: 1px solid #cccccc00;
+	background-color: white;
+	border: 1px solid #ccc0;
+	border-radius: 5px;
+	margin-bottom: 10px;
 }
 
 .ticket-preview-container .panel {
-    margin-bottom: 0;
+	margin-bottom: 0;
 }
 
 .ticket-preview-container .panel .panel-header .ticket-subject {
-    color: #041515;
-    font-size: 15px;
-    text-transform: none;
-    display: block;
+	color: #041515;
+	display: block;
+	font-size: 15px;
+	text-transform: none;
 }
 
 .ticket-preview-container .panel .show .ticket-subject {
-    overflow: visible;
-    text-overflow: ellipsis;
-    white-space: normal;
+	overflow: visible;
+	text-overflow: ellipsis;
+	white-space: normal;
 }
 
 .ticket-preview-container .panel .collapsed .ticket-subject {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 
-.ticket-preview-container .panel .ticket-assignee{
-    font-size: 10px;
-    color: #000000de;
+.ticket-preview-container .panel .ticket-assignee {
+	color: #000000de;
+	font-size: 10px;
 }
 
 .ticket-preview-container:hover {
-    background-color: #F4F9F9 !important;
+	background-color: #f4f9f9 !important;
 }
 
-.user-icon{
-    height: 25px;
-    width: 25px;
-    border-radius: 25px;
+.user-icon {
+	border-radius: 25px;
+	height: 25px;
+	width: 25px;
 }

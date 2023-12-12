@@ -3,18 +3,16 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import { createRoot } from 'react-dom/client';
-import { QueryClient, QueryClientProvider } from 'react-query';
-
+import {createRoot} from 'react-dom/client';
+import {QueryClient, QueryClientProvider} from 'react-query';
+import {HashRouter, Navigate, Outlet, Route, Routes} from 'react-router-dom';
 import TicketApp from './pages/TicketApp';
-import { Outlet, Link, HashRouter, Routes, Route, Navigate } from 'react-router-dom';
 import TicketsByStatusDashboard from './pages/TicketsByStatusDashboard';
 
 const queryClient = new QueryClient();
 class TicketWebComponent extends HTMLElement {
 	connectedCallback() {
 		const root = createRoot(this);
-
 		root.render(
 			<>
 				<QueryClientProvider client={queryClient}>
@@ -25,12 +23,10 @@ class TicketWebComponent extends HTMLElement {
 									<h6 className="text-uppercase">Site</h6>
 									<ul>
 										<li>
-											<a href="/#/dashboard">Dashboard</a>
+											<a href="/#/dashboard"> {'Dashboard'} </a>
 										</li>
 										<li>
-											<a href="/#/ticketapp">
-												Tickets App
-											</a>
+											<a href="/#/ticketapp"> {'Tickets App'} </a>
 										</li>
 									</ul>
 								</nav>
@@ -38,21 +34,9 @@ class TicketWebComponent extends HTMLElement {
 							<div className="col-lg-10">
 								<HashRouter basename="/">
 									<Routes>
-										<Route path="/dashboard"
-											element={
-												<TicketsByStatusDashboard
-													queryClient={queryClient}
-												/>
-											}
-										/>
-										<Route path="/ticketapp"
-											element={
-												<TicketApp
-													queryClient={queryClient}
-												/>
-											}
-										/>
-										<Route path="/" element={<Navigate replace to="/dashboard" />} />
+										<Route element={ <TicketsByStatusDashboard queryClient={queryClient} />} path="/dashboard" />
+										<Route element={ <TicketApp queryClient={queryClient} />} path="/ticketapp" />
+										<Route element={ <Navigate replace to="/dashboard" />} path="/" />
 									</Routes>
 								</HashRouter>
 								<Outlet />

@@ -82,7 +82,7 @@ public class PoshiDependenciesFileLocationCheck extends BaseFileCheck {
 		}
 	}
 
-	private synchronized void _checkGlobalDependenciesFileReferences(
+	private void _checkGlobalDependenciesFileReferences(
 		String absolutePath, String fileName) {
 
 		for (Map.Entry<String, Set<String>> entry :

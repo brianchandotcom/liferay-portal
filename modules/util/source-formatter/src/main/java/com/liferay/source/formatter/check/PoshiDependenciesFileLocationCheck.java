@@ -157,7 +157,6 @@ public class PoshiDependenciesFileLocationCheck extends BaseFileCheck {
 		File file = null;
 		List<String> fileNames = null;
 		File portalDir = getPortalDir();
-
 		_dependenciesFileReferencesMap = new HashMap<>();
 		_testCaseFileNames = new ArrayList<>();
 

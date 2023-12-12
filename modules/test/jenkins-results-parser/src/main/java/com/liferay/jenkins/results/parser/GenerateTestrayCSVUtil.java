@@ -7,8 +7,14 @@ package com.liferay.jenkins.results.parser;
 
 import java.io.File;
 
+import java.net.URL;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+
+import org.apache.commons.lang3.StringUtils;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -20,79 +26,74 @@ import org.json.JSONObject;
 public class GenerateTestrayCSVUtil {
 
 	public static void generate(
-		String projectBuildDir, String projectTestrayBuildId) {
+			String projectBuildDir, String projectTestrayBuildId)
+		throws Exception {
 
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("Case Name,Component Name,Team Name,");
-		sb.append("Recent Failures Count,Case History URL\n");
+		sb.append("Case Name,Case History URL,Error Message\n");
 
+		StringBuilder didNotRunFailuresStringBuilder = new StringBuilder();
 		StringBuilder uniqueFailuresStringBuilder = new StringBuilder();
 		StringBuilder upstreamFailuresStringBuilder = new StringBuilder();
 
-		for (JSONObject resultJSONObject :
-				_getResultJSONObjects(projectTestrayBuildId)) {
+		List<TestcaseResult> allTestcases = _getTestcaseResults(
+			projectTestrayBuildId);
 
-			int status = resultJSONObject.optInt("status");
+		for (TestcaseResult testcaseResult : allTestcases) {
+			List<TestcaseResult> testcaseHistory = _getTestcaseResultHistory(
+				testcaseResult);
 
-			if (status != 3) {
-				continue;
-			}
+			FailureStatus failureStatus = _getFailureType(
+				testcaseResult, testcaseHistory);
 
-			String testyCaseHistoryURL =
-				resultJSONObject.getString("htmlURL") + "/history";
-
-			int recentFailures1 = _getRecentFailures(resultJSONObject, 25);
-			int recentFailures2 = _getRecentFailures(resultJSONObject, 5);
-
-			StringBuilder recentFailuresMessage = new StringBuilder();
-
-			if (recentFailures2 == 5) {
-				recentFailuresMessage.append("Failed ");
-				recentFailuresMessage.append(recentFailures2);
-				recentFailuresMessage.append(" of last 5");
-			}
-			else {
-				recentFailuresMessage.append("Failed ");
-				recentFailuresMessage.append(recentFailures1);
-				recentFailuresMessage.append(" of last 25");
-			}
-
-			if (_isUniqueFailure(resultJSONObject)) {
-				uniqueFailuresStringBuilder.append(
-					resultJSONObject.getString("testrayCaseName"));
-				uniqueFailuresStringBuilder.append(",");
-				uniqueFailuresStringBuilder.append(
-					resultJSONObject.getString("testrayComponentName"));
-				uniqueFailuresStringBuilder.append(",");
-				uniqueFailuresStringBuilder.append(
-					resultJSONObject.getString("testrayTeamName"));
-				uniqueFailuresStringBuilder.append(",");
-				uniqueFailuresStringBuilder.append(
-					recentFailuresMessage.toString());
-				uniqueFailuresStringBuilder.append(",");
-				uniqueFailuresStringBuilder.append(testyCaseHistoryURL);
-				uniqueFailuresStringBuilder.append("\n");
-			}
-			else {
+			if (failureStatus == FailureStatus.COMMON) {
 				System.out.println(
-					"IGNORED: " + testyCaseHistoryURL + ", " +
-						recentFailuresMessage);
+					"--- We think that " +
+						testcaseResult._getTestrayCaseName() +
+							" is a common failure---");
 
 				upstreamFailuresStringBuilder.append(
-					resultJSONObject.getString("testrayCaseName"));
+					testcaseResult._getTestrayCaseName());
 				upstreamFailuresStringBuilder.append(",");
 				upstreamFailuresStringBuilder.append(
-					resultJSONObject.getString("testrayComponentName"));
+					testcaseResult._getHistoryURL());
 				upstreamFailuresStringBuilder.append(",");
 				upstreamFailuresStringBuilder.append(
-					resultJSONObject.getString("testrayTeamName"));
-				upstreamFailuresStringBuilder.append(",");
-				upstreamFailuresStringBuilder.append(
-					recentFailuresMessage.toString());
-				upstreamFailuresStringBuilder.append(",");
-				upstreamFailuresStringBuilder.append(testyCaseHistoryURL);
+					testcaseResult._getErrorMessage());
 				upstreamFailuresStringBuilder.append("\n");
+			}
+			else if (failureStatus == FailureStatus.DID_NOT_RUN) {
+				System.out.println(
+					"--- We think that " +
+						testcaseResult._getTestrayCaseName() +
+							" failed to run---");
+
+				didNotRunFailuresStringBuilder.append(
+					testcaseResult._getTestrayCaseName());
+				didNotRunFailuresStringBuilder.append(",");
+				didNotRunFailuresStringBuilder.append(
+					testcaseResult._getHistoryURL());
+				didNotRunFailuresStringBuilder.append(",");
+				didNotRunFailuresStringBuilder.append(
+					testcaseResult._getErrorMessage());
+				didNotRunFailuresStringBuilder.append("\n");
+			}
+			else if (failureStatus == FailureStatus.UNIQUE) {
+				System.out.println(
+					"--- We think that " +
+						testcaseResult._getTestrayCaseName() +
+							" is a unique failure---");
+
+				uniqueFailuresStringBuilder.append(
+					testcaseResult._getTestrayCaseName());
+				uniqueFailuresStringBuilder.append(",");
+				uniqueFailuresStringBuilder.append(
+					testcaseResult._getHistoryURL());
+				uniqueFailuresStringBuilder.append(",");
+				uniqueFailuresStringBuilder.append(
+					testcaseResult._getErrorMessage());
+				uniqueFailuresStringBuilder.append("\n");
 			}
 		}
 
@@ -112,62 +113,126 @@ public class GenerateTestrayCSVUtil {
 		}
 	}
 
-	private static int _getRecentFailures(
-		JSONObject resultJSONObject, int casesChecked) {
+	private static boolean _areSimilarErrors(String error1, String error2) {
+		Double distance = StringUtils.getJaroWinklerDistance(error1, error2);
 
-		try {
-			JSONObject historyJSONObject =
-				JenkinsResultsParserUtil.toJSONObject(
-					resultJSONObject.getString("htmlURL") + "/history.json");
-
-			JSONArray resultsJSONArray = historyJSONObject.optJSONArray("data");
-
-			if ((resultsJSONArray == null) ||
-				(resultsJSONArray.length() == 0)) {
-
-				System.out.println("No results found");
-
-				return 0;
-			}
-
-			int failures = 0;
-			int count = 0;
-
-			for (int i = 0; i < resultsJSONArray.length(); i++) {
-				JSONObject jsonObject = resultsJSONArray.optJSONObject(i);
-
-				if (jsonObject == null) {
-					continue;
-				}
-
-				int status = jsonObject.optInt("status");
-
-				if (status == 0) {
-					continue;
-				}
-
-				count++;
-
-				if (status == 3) {
-					failures++;
-				}
-
-				if (count >= casesChecked) {
-					break;
-				}
-			}
-
-			return failures;
+		if (distance > 0.8) {
+			return true;
 		}
-		catch (Exception exception) {
-			throw new RuntimeException(exception);
-		}
+
+		return false;
 	}
 
-	private static List<JSONObject> _getResultJSONObjects(
+	private static FailureStatus _getFailureType(
+		TestcaseResult testcaseResult,
+		List<TestcaseResult> testcaseResultsHistory) {
+
+		if (Objects.equals(
+				testcaseResult._getErrorMessage(),
+				"Failed prior to running test")) {
+
+			return FailureStatus.DID_NOT_RUN;
+		}
+
+		for (TestcaseResult historyTestcaseResult : testcaseResultsHistory) {
+			if (Objects.equals(
+					testcaseResult._getTestrayRunId(),
+					historyTestcaseResult._getTestrayRunId())) {
+
+				continue;
+			}
+
+			if (_areSimilarErrors(
+					testcaseResult._getErrorMessage(),
+					historyTestcaseResult._getErrorMessage()) &&
+				(_getPRAuthor(testcaseResult) != _getPRAuthor(
+					historyTestcaseResult))) {
+
+				return FailureStatus.COMMON;
+			}
+		}
+
+		return FailureStatus.UNIQUE;
+	}
+
+	private static String _getPRAuthor(TestcaseResult testcaseResult) {
+		PullRequest pullRequest = testcaseResult._getPullRequestObject();
+
+		if (pullRequest == null) {
+			return null;
+		}
+
+		return pullRequest._getAuthor();
+	}
+
+	private static PullRequest _getPullRequest(String testrayBuildReportURL)
+		throws Exception {
+
+		String slaveName = "";
+		String batchName = "";
+		String batchNumber = "";
+
+		String[] buildReportText = testrayBuildReportURL.split("/");
+
+		try {
+			slaveName = buildReportText[1];
+			batchName = buildReportText[2];
+			batchNumber = buildReportText[3];
+		}
+		catch (Exception exception) {
+			System.out.println("Exception: " + exception);
+		}
+
+		String tempURL =
+			"https://" + slaveName + ".liferay.com/job/" + batchName + "/" +
+				batchNumber;
+
+		TopLevelBuildReport topLevelBuildReport =
+			BuildReportFactory.newTopLevelBuildReport(new URL(tempURL));
+
+		Map<String, String> buildParameters =
+			topLevelBuildReport.getBuildParameters();
+
+		return new PullRequest(
+			buildParameters.get("GITHUB_SENDER_USERNAME"),
+			buildParameters.get("GITHUB_PULL_REQUEST_NUMBER"));
+	}
+
+	private static List<TestcaseResult> _getTestcaseResultHistory(
+			TestcaseResult testcaseResult)
+		throws Exception {
+
+		JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
+			"https://testray.liferay.com/home/-/testray/case_results/" +
+				testcaseResult._getTestrayCaseResultId() + "/history.json");
+
+		JSONArray resultsJSONArray = jsonObject.optJSONArray("data");
+
+		if ((resultsJSONArray == null) || (resultsJSONArray.length() == 0)) {
+			return null;
+		}
+
+		List<TestcaseResult> testcaseHistory = new ArrayList<>();
+
+		JSONObject resultJSONObject;
+
+		for (int i = 0; i < resultsJSONArray.length(); i++) {
+			resultJSONObject = resultsJSONArray.optJSONObject(i);
+
+			if (resultJSONObject == null) {
+				continue;
+			}
+
+			testcaseHistory.add(new TestcaseResult(resultJSONObject));
+		}
+
+		return testcaseHistory;
+	}
+
+	private static List<TestcaseResult> _getTestcaseResults(
 		String projectTestrayBuildId) {
 
-		List<JSONObject> resultJSONObjects = new ArrayList<>();
+		List<TestcaseResult> resultTestcases = new ArrayList<>();
 
 		int currentPage = 1;
 		long previousTestrayCaseResultId = 0;
@@ -204,7 +269,12 @@ public class GenerateTestrayCSVUtil {
 						continue;
 					}
 
-					resultJSONObjects.add(resultJSONObject);
+					TestcaseResult testcaseResult = new TestcaseResult(
+						resultJSONObject);
+
+					if (_isTestCaseResult(testcaseResult)) {
+						resultTestcases.add(testcaseResult);
+					}
 				}
 
 				currentPage++;
@@ -216,71 +286,121 @@ public class GenerateTestrayCSVUtil {
 			}
 		}
 
-		return resultJSONObjects;
+		return resultTestcases;
 	}
 
-	private static boolean _isPassingFailureThreshold(
-		JSONObject resultJSONObject, int maxFailures, int casesChecked) {
+	private static boolean _isTestCaseResult(TestcaseResult testcaseResult) {
+		String testcaseResultName = testcaseResult._getTestrayCaseName();
 
-		try {
-			JSONObject historyJSONObject =
-				JenkinsResultsParserUtil.toJSONObject(
-					resultJSONObject.getString("htmlURL") + "/history.json");
-
-			JSONArray resultsJSONArray = historyJSONObject.optJSONArray("data");
-
-			if ((resultsJSONArray == null) ||
-				(resultsJSONArray.length() == 0)) {
-
-				return false;
-			}
-
-			int failures = 0;
-			int count = 0;
-
-			for (int i = 0; i < resultsJSONArray.length(); i++) {
-				JSONObject jsonObject = resultsJSONArray.optJSONObject(i);
-
-				if (jsonObject == null) {
-					continue;
-				}
-
-				int status = jsonObject.optInt("status");
-
-				if (status == 0) {
-					continue;
-				}
-
-				count++;
-
-				if (status == 3) {
-					failures++;
-				}
-
-				if (count >= casesChecked) {
-					break;
-				}
-			}
-
-			if (failures >= maxFailures) {
-				return true;
-			}
-		}
-		catch (Exception exception) {
-			throw new RuntimeException(exception);
-		}
-
-		return false;
-	}
-
-	private static boolean _isUniqueFailure(JSONObject resultJSONObject) {
-		if (_isPassingFailureThreshold(resultJSONObject, 5, 5) ||
-			_isPassingFailureThreshold(resultJSONObject, 8, 25)) {
-
+		if (testcaseResultName.contains("Top Level Build")) {
 			return false;
 		}
 
 		return true;
+	}
+
+	private static class PullRequest {
+
+		public String toString() {
+			return "### PullRequest ###\nAuthor: " + _author + "\n" +
+				"PullRequest: " + _pullRequestNumber + "####\n";
+		}
+
+		private PullRequest(String author, String pullRequestNumber) {
+			_author = author;
+			_pullRequestNumber = Integer.valueOf(pullRequestNumber);
+		}
+
+		private String _getAuthor() {
+			return _author;
+		}
+
+		private final String _author;
+		private final int _pullRequestNumber;
+
+	}
+
+	private static class TestcaseResult {
+
+		public String toString() {
+			return "### TestcaseResult ###\nPRINFO: " +
+				_getPullRequestObject() + "\nTestrayCaseName: " +
+					_testrayCaseName + "\nTestrayCaseResultId: " +
+						_testrayCaseResultId + "\nTestrayRunId: " +
+							_testrayRunId + "\n";
+		}
+
+		private TestcaseResult(JSONObject resultJSONObject) {
+			_resultJSONObject = resultJSONObject;
+
+			_testrayCaseName = resultJSONObject.getString("testrayCaseName");
+			_errorMessage = resultJSONObject.getString("errors");
+			_historyURL = resultJSONObject.getString("htmlURL") + "/history";
+			_pullRequest = null;
+
+			String temp = resultJSONObject.getString("testrayCaseResultId");
+
+			temp = temp.replace("\"", "");
+
+			_testrayCaseResultId = Long.parseLong(temp);
+
+			temp = resultJSONObject.getString("testrayRunId");
+			temp = temp.replace("\"", "");
+
+			_testrayRunId = Long.parseLong(temp);
+		}
+
+		private String _getErrorMessage() {
+			return _errorMessage;
+		}
+
+		private String _getHistoryURL() {
+			return _historyURL;
+		}
+
+		private PullRequest _getPullRequestObject() {
+			if (_pullRequest == null) {
+				JSONObject jsonObject = _resultJSONObject.getJSONObject(
+					"attachments");
+
+				try {
+					_pullRequest = _getPullRequest(
+						jsonObject.getString("Build Report (Top Level)"));
+				}
+				catch (Exception exception) {
+					System.out.println(exception);
+				}
+			}
+
+			return _pullRequest;
+		}
+
+		private String _getTestrayCaseName() {
+			return _testrayCaseName;
+		}
+
+		private long _getTestrayCaseResultId() {
+			return _testrayCaseResultId;
+		}
+
+		private long _getTestrayRunId() {
+			return _testrayRunId;
+		}
+
+		private final String _errorMessage;
+		private final String _historyURL;
+		private PullRequest _pullRequest;
+		private final JSONObject _resultJSONObject;
+		private final String _testrayCaseName;
+		private final long _testrayCaseResultId;
+		private final long _testrayRunId;
+
+	}
+
+	private enum FailureStatus {
+
+		COMMON, DID_NOT_RUN, UNIQUE
+
 	}
 
 }

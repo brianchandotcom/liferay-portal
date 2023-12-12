@@ -22,7 +22,7 @@
 </tr>
 <tr>
 	<td>PROFILE_BADGE_COUNT</td>
-	<td>//span[contains(@class,'notifications-count')]</td>
+	<td>//span[contains(@class,'badge-danger')]</td>
 	<td></td>
 </tr>
 <tr>

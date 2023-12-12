@@ -97,6 +97,8 @@
 										</td>
 
 										<%
+										String description = LanguageUtil.get(request, "receive-a-notification-when-someone") + StringPool.SPACE + LanguageUtil.get(request, userNotificationDefinition.getDescription(locale));
+
 										for (Map.Entry<Integer, UserNotificationDeliveryType> userNotificationDeliveryTypeEntry : userNotificationDeliveryTypesMap.entrySet()) {
 											UserNotificationDeliveryType userNotificationDeliveryType = userNotificationDeliveryTypeEntry.getValue();
 
@@ -110,6 +112,7 @@
 											<td class="lfr-<%= userNotificationDeliveryType.getName() %>-column">
 												<div class="checkbox-container">
 													<aui:input
+														aria-describedby="<%= description %>"
 														aria-labelledby="<%= userNotificationDeliveryType.getName() %>"
 														cssClass="notification-delivery"
 														data-userNotificationDeliveryId="<%= String.valueOf(userNotificationDelivery.getUserNotificationDeliveryId()) %>"

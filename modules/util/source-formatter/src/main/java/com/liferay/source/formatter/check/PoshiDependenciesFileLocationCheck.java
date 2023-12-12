@@ -35,11 +35,7 @@ public class PoshiDependenciesFileLocationCheck extends BaseFileCheck {
 			return content;
 		}
 
-		_populateTestCaseDependenciesFileNames();
-		_populateTestCaseFileNames();
-		_populateTestCaseGlobalDependenciesFileNames();
-
-		_getDependenciesFileLocationsMap();
+		_populateTestCaseAndDependenciesFileNames();
 
 		_checkDependenciesFileReferences(absolutePath, fileName);
 		_checkGlobalDependenciesFileReferences(absolutePath, fileName);
@@ -146,11 +142,65 @@ public class PoshiDependenciesFileLocationCheck extends BaseFileCheck {
 		return false;
 	}
 
-	private synchronized void _getDependenciesFileLocationsMap()
+	private synchronized void _populateTestCaseAndDependenciesFileNames()
 		throws IOException {
 
-		if (_dependenciesFileLocationsMapIsReady) {
+		if (_testCaseFileNames != null) {
 			return;
+		}
+
+		File file = null;
+		List<String> fileNames = null;
+		File portalDir = getPortalDir();
+
+		_dependenciesFileLocationsMap = new HashMap<>();
+		_testCaseFileNames = new ArrayList<>();
+
+		for (String testCaseFileLocation : _TEST_FILE_LOCATIONS) {
+			file = new File(portalDir, testCaseFileLocation);
+
+			fileNames = SourceFormatterUtil.scanForFileNames(
+				file.getCanonicalPath(), new String[] {"**/*.testcase"});
+
+			for (String fileName : fileNames) {
+				if (fileName.contains("portal-web") ||
+					fileName.matches(
+						".+/modules/.+-test/src/testFunctional(/.*)?")) {
+
+					_testCaseFileNames.add(fileName);
+				}
+			}
+
+			fileNames = SourceFormatterUtil.scanForFileNames(
+				file.getCanonicalPath(),
+				new String[] {
+					"**/test/**/dependencies/*", "**/tests/**/dependencies/*"
+				});
+
+			for (String fileName : fileNames) {
+				if (!fileName.contains("/poshi/") &&
+					!fileName.contains("/source-formatter/")) {
+
+					_dependenciesFileLocationsMap.put(
+						fileName, new TreeSet<>());
+				}
+			}
+		}
+
+		_dependenciesGlobalFileLocationsMap = new HashMap<>();
+
+		file = new File(portalDir, _GLOBAL_DEPENDENCIES_DIRECTORY);
+
+		fileNames = SourceFormatterUtil.scanForFileNames(
+			file.getCanonicalPath(), new String[0]);
+
+		for (String fileName : fileNames) {
+			if (!fileName.contains(".lar/") && !fileName.contains(".war/") &&
+				!fileName.contains(".zip/")) {
+
+				_dependenciesGlobalFileLocationsMap.put(
+					fileName, new TreeSet<>());
+			}
 		}
 
 		for (String testCaseFileName : _testCaseFileNames) {
@@ -198,86 +248,6 @@ public class PoshiDependenciesFileLocationCheck extends BaseFileCheck {
 				}
 			}
 		}
-
-		_dependenciesFileLocationsMapIsReady = true;
-	}
-
-	private synchronized void _populateTestCaseDependenciesFileNames()
-		throws IOException {
-
-		if (_dependenciesFileLocationsMap != null) {
-			return;
-		}
-
-		_dependenciesFileLocationsMap = new HashMap<>();
-
-		for (String testCaseFileLocation : _TEST_FILE_LOCATIONS) {
-			File directory = new File(getPortalDir(), testCaseFileLocation);
-
-			List<String> fileNames = SourceFormatterUtil.scanForFileNames(
-				directory.getCanonicalPath(),
-				new String[] {
-					"**/test/**/dependencies/*", "**/tests/**/dependencies/*"
-				});
-
-			for (String fileName : fileNames) {
-				if (!fileName.contains("/poshi/") &&
-					!fileName.contains("/source-formatter/")) {
-
-					_dependenciesFileLocationsMap.put(
-						fileName, new TreeSet<>());
-				}
-			}
-		}
-	}
-
-	private synchronized void _populateTestCaseFileNames() throws IOException {
-		if (_testCaseFileNames != null) {
-			return;
-		}
-
-		_testCaseFileNames = new ArrayList<>();
-
-		for (String testCaseFileLocation : _TEST_FILE_LOCATIONS) {
-			File directory = new File(getPortalDir(), testCaseFileLocation);
-
-			List<String> fileNames = SourceFormatterUtil.scanForFileNames(
-				directory.getCanonicalPath(), new String[] {"**/*.testcase"});
-
-			for (String fileName : fileNames) {
-				if (fileName.contains("portal-web") ||
-					fileName.matches(
-						".+/modules/.+-test/src/testFunctional(/.*)?")) {
-
-					_testCaseFileNames.add(fileName);
-				}
-			}
-		}
-	}
-
-	private synchronized void _populateTestCaseGlobalDependenciesFileNames()
-		throws IOException {
-
-		if (_dependenciesGlobalFileLocationsMap != null) {
-			return;
-		}
-
-		_dependenciesGlobalFileLocationsMap = new HashMap<>();
-
-		File directory = new File(
-			getPortalDir(), _GLOBAL_DEPENDENCIES_DIRECTORY);
-
-		List<String> fileNames = SourceFormatterUtil.scanForFileNames(
-			directory.getCanonicalPath(), new String[0]);
-
-		for (String fileName : fileNames) {
-			if (!fileName.contains(".lar/") && !fileName.contains(".war/") &&
-				!fileName.contains(".zip/")) {
-
-				_dependenciesGlobalFileLocationsMap.put(
-					fileName, new TreeSet<>());
-			}
-		}
 	}
 
 	private static final String _GLOBAL_DEPENDENCIES_DIRECTORY =
@@ -286,8 +256,6 @@ public class PoshiDependenciesFileLocationCheck extends BaseFileCheck {
 	private static final String[] _TEST_FILE_LOCATIONS = {
 		"modules", "portal-web/test/functional/com/liferay/portalweb/tests"
 	};
-
-	private static boolean _dependenciesFileLocationsMapIsReady;
 
 	private Map<String, Set<String>> _dependenciesFileLocationsMap;
 	private Map<String, Set<String>> _dependenciesGlobalFileLocationsMap;

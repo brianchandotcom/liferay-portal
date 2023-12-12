@@ -84,6 +84,12 @@ String emailParam = StringPool.BLANK;
 					<liferay-ui:error embed="<%= false %>" key="emailKBArticleExpiredSubject" message="please-enter-a-valid-subject" />
 					<liferay-ui:error embed="<%= false %>" key="emailKBArticleReviewBody" message="please-enter-a-valid-body" />
 					<liferay-ui:error embed="<%= false %>" key="emailKBArticleReviewSubject" message="please-enter-a-valid-subject" />
+					<liferay-ui:error embed="<%= false %>" key="emailKBArticleSuggestionInProgressBody" message="please-enter-a-valid-body" />
+					<liferay-ui:error embed="<%= false %>" key="emailKBArticleSuggestionInProgressSubject" message="please-enter-a-valid-subject" />
+					<liferay-ui:error embed="<%= false %>" key="emailKBArticleSuggestionReceivedBody" message="please-enter-a-valid-body" />
+					<liferay-ui:error embed="<%= false %>" key="emailKBArticleSuggestionReceivedSubject" message="please-enter-a-valid-subject" />
+					<liferay-ui:error embed="<%= false %>" key="emailKBArticleSuggestionResolvedBody" message="please-enter-a-valid-body" />
+					<liferay-ui:error embed="<%= false %>" key="emailKBArticleSuggestionResolvedSubject" message="please-enter-a-valid-subject" />
 					<liferay-ui:error embed="<%= false %>" key="emailKBArticleUpdatedBody" message="please-enter-a-valid-body" />
 					<liferay-ui:error embed="<%= false %>" key="emailKBArticleUpdatedSubject" message="please-enter-a-valid-subject" />
 

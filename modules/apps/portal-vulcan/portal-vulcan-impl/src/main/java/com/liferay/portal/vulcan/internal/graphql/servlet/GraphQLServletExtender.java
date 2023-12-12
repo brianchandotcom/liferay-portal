@@ -929,8 +929,9 @@ public class GraphQLServletExtender {
 									"There is already a field called \"",
 									field.getName(),
 									"\" in the same application with path \"",
-									path, "\". The field of the version \"",
-									_getVersion(method), "\" will be ignored"));
+									path, "\". The field with version \"",
+									_getVersion(method),
+									"\" will be ignored."));
 						}
 					}
 				}
@@ -943,8 +944,8 @@ public class GraphQLServletExtender {
 							"There is already a field called \"",
 							methodNameBuilder.build(),
 							"\" in the application with the path \"", firstPath,
-							"\". The field of the application with the path \"",
-							path, "\" will be ignored."));
+							"\". The field with the path \"", path,
+							"\" will be ignored."));
 				}
 			}
 		}

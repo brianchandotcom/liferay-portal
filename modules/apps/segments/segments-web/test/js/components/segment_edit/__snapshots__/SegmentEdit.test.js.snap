@@ -594,6 +594,7 @@ exports[`SegmentEdit renders with given values 1`] = `
         </div>
         <div
           class="c-pr-0 criteria-builder-section-main d-flex h-100 w-100"
+          role="application"
         >
           <div
             class="contributor-container h-100 overflow-auto position-absolute w-100"

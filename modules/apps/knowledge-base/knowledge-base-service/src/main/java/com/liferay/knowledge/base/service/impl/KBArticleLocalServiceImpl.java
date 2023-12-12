@@ -75,7 +75,7 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.lock.Lock;
-import com.liferay.portal.kernel.lock.LockManagerUtil;
+import com.liferay.portal.kernel.lock.LockManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -1021,7 +1021,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			return null;
 		}
 
-		return LockManagerUtil.lock(
+		return _lockManager.lock(
 			userId, KBArticleConstants.getClassName(), resourcePrimKey,
 			String.valueOf(userId), false,
 			KBArticleConstants.LOCK_EXPIRATION_TIME);
@@ -1202,7 +1202,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			return;
 		}
 
-		LockManagerUtil.unlock(
+		_lockManager.unlock(
 			KBArticleConstants.getClassName(), String.valueOf(resourcePrimKey),
 			String.valueOf(userId));
 	}
@@ -2980,7 +2980,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		}
 		finally {
 			if (lock != null) {
-				LockManagerUtil.unlock(
+				_lockManager.unlock(
 					KBArticleConstants.getClassName(),
 					String.valueOf(resourcePrimKey));
 			}
@@ -3052,6 +3052,9 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 	private KBFolderPersistence _kbFolderPersistence;
 
 	private KBServiceConfiguration _kbServiceConfiguration;
+
+	@Reference
+	private LockManager _lockManager;
 
 	@Reference
 	private MarkdownConverterFactory _markdownConverterFactory;

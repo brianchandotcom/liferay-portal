@@ -347,7 +347,7 @@ public class GenerateTestrayCSVUtil {
 			_pullRequest = null;
 			_testrayCaseName = resultJSONObject.getString("testrayCaseName");
 			_testrayCaseResultId = resultJSONObject.getLong("testrayCaseResultId");
-			_testrayRunId = resultJSONObect.getLong("testrayRunId");
+			_testrayRunId = resultJSONObject.getLong("testrayRunId");
 		}
 
 		private String _getErrorMessage() {

@@ -2869,6 +2869,18 @@ public class ObjectEntryLocalServiceImpl
 			_objectFieldLocalService.fetchObjectField(
 				objectDefinition.getTitleObjectFieldId());
 
+		Table<?> table = _objectFieldLocalService.getTable(
+			objectDefinition.getObjectDefinitionId(),
+			titleObjectField.getName());
+
+		if (Objects.equals(
+				table.getColumn(titleObjectField.getDBColumnName()),
+				ObjectEntryTable.INSTANCE.objectEntryId)) {
+
+			return ObjectEntrySearchUtil.getObjectFieldPredicate(
+				(Column<?, Object>)column, objectField.getDBType(), search);
+		}
+
 		DynamicObjectDefinitionTable dynamicObjectDefinitionTable = null;
 
 		if (Objects.equals(

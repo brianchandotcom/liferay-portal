@@ -19,6 +19,7 @@ export default interface MDFClaimDTO extends MDFClaim {
 	mdfRequestExternalReferenceCode?: string;
 	mdfRequestTotalCostOfExpense?: number;
 	partial?: boolean;
+	paymentDate?: string;
 	r_accToMDFClms_accountEntry?: AccountEntry;
 	r_accToMDFClms_accountEntryId?: number;
 	r_mdfReqToMDFClms_c_mdfRequestId: number;

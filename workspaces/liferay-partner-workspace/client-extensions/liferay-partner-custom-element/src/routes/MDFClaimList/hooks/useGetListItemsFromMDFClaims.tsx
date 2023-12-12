@@ -48,6 +48,12 @@ export default function useGetListItemsFromMDFClaims(
 				[MDFClaimColumnKey.AMOUNT_PAID]: !item.claimPaid
 					? '-'
 					: getIntlNumberFormat(item.currency).format(item.claimPaid),
+				[MDFClaimColumnKey.PAYMENT_DATE]: item.paymentDate
+					? getDateCustomFormat(
+							item.paymentDate,
+							customFormatDateOptions.SHORT_MONTH
+					  )
+					: '-',
 			})),
 		[swrResponse.data?.items]
 	);

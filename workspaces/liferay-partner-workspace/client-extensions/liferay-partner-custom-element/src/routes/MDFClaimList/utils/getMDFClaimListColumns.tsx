@@ -179,6 +179,10 @@ export default function getMDFClaimListColumns(
 			label: 'Amount Paid',
 		},
 		{
+			columnKey: MDFClaimColumnKey.PAYMENT_DATE,
+			label: 'Payment Date',
+		},
+		{
 			columnKey: MDFClaimColumnKey.DATE_SUBMITTED,
 			label: 'Date Submitted',
 		},

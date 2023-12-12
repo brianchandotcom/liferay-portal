@@ -13,12 +13,14 @@ interface Props {
 		translated?: string;
 	};
 	languageId: Liferay.Language.Locale;
+	languageName: string;
 	localeValue: string | null;
 }
 export default function TranslationAdminStatusLabel({
 	defaultLanguageId,
 	labels,
 	languageId,
+	languageName,
 	localeValue,
 }: Props): JSX.Element;
 export {};

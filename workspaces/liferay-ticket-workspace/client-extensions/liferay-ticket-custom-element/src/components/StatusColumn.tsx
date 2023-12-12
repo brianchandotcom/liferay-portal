@@ -4,15 +4,26 @@
  */
 
 import {QueryClient} from 'react-query';
+
 import '../styles/StatusColumn.css';
+
 import {useDroppable} from '@dnd-kit/core';
+
 import TicketPreview from './TicketPreview';
 
-const StatusColumn: React.FC<{queryClient: QueryClient; status: any}> = ({queryClient,status}) => {
+const StatusColumn: React.FC<{queryClient: QueryClient; status: any}> = ({
+	queryClient,
+	status,
+}) => {
 	const {setNodeRef} = useDroppable({id: status.key + '_droppable'});
 
 	return (
-		<div className="status-col" id={status.key + '_droppable'} key={status.key + '_droppable'} ref={setNodeRef} >
+		<div
+			className="status-col"
+			id={status.key + '_droppable'}
+			key={status.key + '_droppable'}
+			ref={setNodeRef}
+		>
 			<h6>{status.name}</h6>
 
 			{status.relatedTickets?.length === 0 && (
@@ -21,7 +32,11 @@ const StatusColumn: React.FC<{queryClient: QueryClient; status: any}> = ({queryC
 
 			{status.relatedTickets?.length > 0 &&
 				status.relatedTickets.map((t: any) => (
-					<TicketPreview key={t.id} queryClient={queryClient} ticket={t} />
+					<TicketPreview
+						key={t.id}
+						queryClient={queryClient}
+						ticket={t}
+					/>
 				))}
 		</div>
 	);

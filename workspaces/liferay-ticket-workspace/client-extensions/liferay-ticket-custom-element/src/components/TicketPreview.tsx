@@ -5,17 +5,22 @@
 
 import ClayButton from '@clayui/button';
 import ClayPanel from '@clayui/panel';
+
 import {Ticket} from '../types';
+
 import '../styles/TicketPreview.css';
+
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useDraggable} from '@dnd-kit/core';
 import {CSS} from '@dnd-kit/utilities';
 import {useState} from 'react';
 import {QueryClient, useMutation} from 'react-query';
+
 import {icons} from '../icons';
 import {Liferay} from '../services/liferay';
 import {assignTicketToMe} from '../services/tickets';
-export const SPRITEMAP = (Liferay as any).ThemeDisplay.getPathThemeImages() + '/clay/icons.svg';
+export const SPRITEMAP =
+	(Liferay as any).ThemeDisplay.getPathThemeImages() + '/clay/icons.svg';
 
 const usersIconsMap: {[key: string]: string} = {
 	'': icons.NONE,
@@ -29,10 +34,12 @@ const getUserIcon = (ticket: Ticket): string => {
 		let icon = usersIconsMap[ticket.assignee.externalReferenceCode];
 		if (!icon) {
 			icon = usersIconsMap[''];
-		} else {
+		}
+		else {
 			return icon;
 		}
 	}
+
 	return usersIconsMap[''];
 };
 
@@ -42,7 +49,13 @@ const TicketPreview: React.FC<{queryClient: QueryClient; ticket: Ticket}> = ({
 }) => {
 	const [isLoading, setIsLoading] = useState(false);
 
-	const { attributes, isDragging, listeners, setNodeRef, transform} = useDraggable({ data: ticket, id: ticket.id + '_draggable'});
+	const {
+		attributes,
+		isDragging,
+		listeners,
+		setNodeRef,
+		transform,
+	} = useDraggable({data: ticket, id: ticket.id + '_draggable'});
 
 	const style: React.CSSProperties = {
 		backgroundColor: isDragging ? '#F4F9F9' : 'white',
@@ -54,6 +67,7 @@ const TicketPreview: React.FC<{queryClient: QueryClient; ticket: Ticket}> = ({
 	const mutation = useMutation({
 		mutationFn: (ticket: Ticket) => {
 			setIsLoading(true);
+
 			return assignToMe(ticket);
 		},
 		onError: () => {
@@ -82,33 +96,63 @@ const TicketPreview: React.FC<{queryClient: QueryClient; ticket: Ticket}> = ({
 	});
 
 	return (
-		<div ref={setNodeRef} {...listeners} {...attributes} className="ticket-preview-container" style={style}>
-			<ClayPanel collapsable displayType="secondary" showCollapseIcon={true}
+		<div
+			ref={setNodeRef}
+			{...listeners}
+			{...attributes}
+			className="ticket-preview-container"
+			style={style}
+		>
+			<ClayPanel
+				collapsable
 				displayTitle={
 					<ClayPanel.Title>
 						<div className="ticket-subject">{ticket.subject}</div>
 						<div className="mt-3">
-							<img className="user-icon" src={getUserIcon(ticket)} />
+							<img
+								className="user-icon"
+								src={getUserIcon(ticket)}
+							/>
 							<div className="d-inline ml-2 ticket-assignee">
-								{ticket.assignee ? <b>{ticket.assignee?.familyName}</b> : <i>{'Not assigned'}</i>}
+								{ticket.assignee ? (
+									<b>{ticket.assignee?.familyName}</b>
+								) : (
+									<i>Not assigned</i>
+								)}
 							</div>
 						</div>
 					</ClayPanel.Title>
-				}>
+				}
+				displayType="secondary"
+				showCollapseIcon={true}
+			>
 				<ClayPanel.Body>
 					<p>
-						{+ticket.description ? ticket.description: 'No description available.'}
+						{+ticket.description
+							? ticket.description
+							: 'No description available.'}
 					</p>
-					{!ticket.assignee ? 
-						<ClayButton displayType="secondary" onClick={() => mutation.mutate(ticket)} size="xs">
-
-							{isLoading ? 
+					{!ticket.assignee ? (
+						<ClayButton
+							displayType="secondary"
+							onClick={() => mutation.mutate(ticket)}
+							size="xs"
+						>
+							{isLoading ? (
 								<span className="inline-item inline-item-before">
-									<ClayLoadingIndicator displayType="secondary" size="sm" />
-								</span> : ''}
-
-							{'Assign to Me'}
-						</ClayButton> : ''}
+									<ClayLoadingIndicator
+										displayType="secondary"
+										size="sm"
+									/>
+								</span>
+							) : (
+								''
+							)}
+							Assign to Me
+						</ClayButton>
+					) : (
+						''
+					)}
 				</ClayPanel.Body>
 			</ClayPanel>
 		</div>

@@ -6,6 +6,7 @@
 import {createRoot} from 'react-dom/client';
 import {QueryClient, QueryClientProvider} from 'react-query';
 import {HashRouter, Navigate, Outlet, Route, Routes} from 'react-router-dom';
+
 import TicketApp from './pages/TicketApp';
 import TicketsByStatusDashboard from './pages/TicketsByStatusDashboard';
 
@@ -23,10 +24,14 @@ class TicketWebComponent extends HTMLElement {
 									<h6 className="text-uppercase">Site</h6>
 									<ul>
 										<li>
-											<a href="/#/dashboard"> {'Dashboard'} </a>
+											<a href="/#/dashboard">
+											Dashboard
+											</a>
 										</li>
 										<li>
-											<a href="/#/ticketapp"> {'Tickets App'} </a>
+											<a href="/#/ticketapp">
+											Tickets App
+											</a>
 										</li>
 									</ul>
 								</nav>
@@ -34,9 +39,31 @@ class TicketWebComponent extends HTMLElement {
 							<div className="col-lg-10">
 								<HashRouter basename="/">
 									<Routes>
-										<Route element={ <TicketsByStatusDashboard queryClient={queryClient} />} path="/dashboard" />
-										<Route element={ <TicketApp queryClient={queryClient} />} path="/ticketapp" />
-										<Route element={ <Navigate replace to="/dashboard" />} path="/" />
+										<Route
+											element={
+												<TicketsByStatusDashboard
+													queryClient={queryClient}
+												/>
+											}
+											path="/dashboard"
+										/>
+										<Route
+											element={
+												<TicketApp
+													queryClient={queryClient}
+												/>
+											}
+											path="/ticketapp"
+										/>
+										<Route
+											element={
+												<Navigate
+													replace
+													to="/dashboard"
+												/>
+											}
+											path="/"
+										/>
 									</Routes>
 								</HashRouter>
 								<Outlet />

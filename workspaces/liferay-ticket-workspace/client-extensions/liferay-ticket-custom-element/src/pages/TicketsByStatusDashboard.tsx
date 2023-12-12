@@ -7,11 +7,16 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {DndContext, PointerSensor, useSensor, useSensors} from '@dnd-kit/core';
 import React, {useEffect, useState} from 'react';
 import {QueryClient, useMutation} from 'react-query';
+
 import StatusColumn from '../components/StatusColumn';
 import {useTickets} from '../hooks/useTickets';
 import {Liferay} from '../services/liferay';
-import {J3Y7_STATUSES, fetchListTypeDefinitions} from '../services/listTypeEntries';
+import {
+	J3Y7_STATUSES,
+	fetchListTypeDefinitions,
+} from '../services/listTypeEntries';
 import {updateTicketStatus} from '../services/tickets';
+
 import '../styles/TicketsByStatusDashboard.css';
 
 const DRAG_RESULT = {
@@ -82,7 +87,12 @@ const TicketsByStatusDashboard: React.FC<{
 			const listTypeDefinitions = await fetchListTypeDefinitions();
 			let statuses = listTypeDefinitions[J3Y7_STATUSES] as any[];
 
-			statuses = statuses.filter((s) => allowedStatusesForDashboard.map((s) => s.key).indexOf(s.key) > -1);
+			statuses = statuses.filter(
+				(s) =>
+					allowedStatusesForDashboard
+						.map((s) => s.key)
+						.indexOf(s.key) > -1
+			);
 
 			statuses.forEach((status) => {
 				status.relatedTickets = tickets.filter(
@@ -97,6 +107,7 @@ const TicketsByStatusDashboard: React.FC<{
 	const mutation = useMutation({
 		mutationFn: (event: any) => {
 			setIsLoading(true);
+
 			return onDragEnd(event, statuses);
 		},
 		onError: () => {
@@ -122,17 +133,38 @@ const TicketsByStatusDashboard: React.FC<{
 	return (
 		<div className="container">
 			<header className="align-items-center bg-light mb-3 p-3 row">
-				{isLoading ?
-					<ClayLoadingIndicator className="loading-indicator" displayType="secondary" size="md" /> : ''}
+				{isLoading ? (
+					<ClayLoadingIndicator
+						className="loading-indicator"
+						displayType="secondary"
+						size="md"
+					/>
+				) : (
+					''
+				)}
 				<h1>Ticket Dashboard by Status</h1>
 			</header>
 			<div className="row">
-				<DndContext sensors={sensors} onDragEnd={(event) => {mutation.mutate(event);}} >
+				<DndContext
+					onDragEnd={(event) => {
+						mutation.mutate(event);
+					}}
+					sensors={sensors}
+				>
 					{!statuses.length && <h1>Loading ...</h1>}
-					{!!statuses.length && statuses?.sort(statusSortFunction)
+					{!!statuses.length &&
+						statuses
+							?.sort(statusSortFunction)
 							.map((status: any) => (
-								<div className="col-3" key={status.key + '_container'} >
-									<StatusColumn key={status.key} queryClient={queryClient} status={status} />
+								<div
+									className="col-3"
+									key={status.key + '_container'}
+								>
+									<StatusColumn
+										key={status.key}
+										queryClient={queryClient}
+										status={status}
+									/>
 								</div>
 							))}
 				</DndContext>
@@ -150,7 +182,10 @@ function onDragEnd(event: any, statuses: any[]) {
 		const ticket = event.active.data.current;
 		const newStatus = event.over.id.replace('_droppable', '');
 
-		if (ticket.ticketStatus.toLowerCase().replaceAll(' ', '') !== newStatus.toLowerCase().replaceAll(' ', '')) {
+		if (
+			ticket.ticketStatus.toLowerCase().replaceAll(' ', '') !==
+			newStatus.toLowerCase().replaceAll(' ', '')
+		) {
 			const ticketCopy = JSON.parse(JSON.stringify(ticket));
 
 			ticketCopy.ticketStatus = statuses.find(

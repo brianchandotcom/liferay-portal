@@ -22,7 +22,6 @@ import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
@@ -53,16 +52,14 @@ public class EditKBArticleMVCRenderCommand implements MVCRenderCommand {
 			KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
 
 		if (kbArticle != null) {
-			HttpServletRequest originalHttpServletRequest =
-				_portal.getOriginalServletRequest(
-					_portal.getHttpServletRequest(renderRequest));
-
 			try {
 				_kbArticleService.lock(kbArticle.getResourcePrimKey());
 			}
 			catch (PortalException portalException) {
 				SessionErrors.add(
-					originalHttpServletRequest, portalException.getClass());
+					_portal.getOriginalServletRequest(
+						_portal.getHttpServletRequest(renderRequest)),
+					portalException.getClass());
 
 				_sendRedirect(renderRequest, renderResponse);
 

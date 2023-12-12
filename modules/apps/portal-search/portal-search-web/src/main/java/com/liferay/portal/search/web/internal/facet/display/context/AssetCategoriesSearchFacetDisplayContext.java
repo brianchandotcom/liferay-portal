@@ -9,7 +9,6 @@ import com.liferay.portal.configuration.module.configuration.ConfigurationProvid
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.search.configuration.CategoryFacetFieldConfiguration;
 import com.liferay.portal.search.web.internal.category.facet.configuration.CategoryFacetPortletInstanceConfiguration;
 
 import java.io.Serializable;
@@ -36,13 +35,6 @@ public class AssetCategoriesSearchFacetDisplayContext
 				CategoryFacetPortletInstanceConfiguration.class,
 				(ThemeDisplay)httpServletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY));
-
-		CategoryFacetFieldConfiguration categoryFacetFieldConfiguration =
-			ConfigurationProviderUtil.getSystemConfiguration(
-				CategoryFacetFieldConfiguration.class);
-
-		_legacyFieldSelected = _isLegacyFieldSelected(
-			categoryFacetFieldConfiguration.categoryFacetField());
 	}
 
 	public List<BucketDisplayContext> getBucketDisplayContexts() {
@@ -104,10 +96,6 @@ public class AssetCategoriesSearchFacetDisplayContext
 		return _cloud;
 	}
 
-	public boolean isLegacyFieldSelected() {
-		return _legacyFieldSelected;
-	}
-
 	public boolean isNothingSelected() {
 		return _nothingSelected;
 	}
@@ -162,14 +150,6 @@ public class AssetCategoriesSearchFacetDisplayContext
 		_vocabularyNames = vocabularyNames;
 	}
 
-	private boolean _isLegacyFieldSelected(String fieldName) {
-		if (fieldName.equals("assetCategoryIds")) {
-			return true;
-		}
-
-		return false;
-	}
-
 	private List<BucketDisplayContext> _bucketDisplayContexts;
 	private Map<String, List<BucketDisplayContext>> _bucketDisplayContextsMap;
 	private final CategoryFacetPortletInstanceConfiguration
@@ -177,7 +157,6 @@ public class AssetCategoriesSearchFacetDisplayContext
 	private boolean _cloud;
 	private long _displayStyleGroupId;
 	private final HttpServletRequest _httpServletRequest;
-	private final boolean _legacyFieldSelected;
 	private boolean _nothingSelected;
 	private String _paginationStartParameterName;
 	private String _parameterName;

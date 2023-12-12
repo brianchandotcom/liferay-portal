@@ -10,7 +10,6 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
@@ -18,7 +17,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.search.configuration.CategoryFacetFieldConfiguration;
 import com.liferay.portal.search.web.internal.BaseFacetDisplayContextTestCase;
 import com.liferay.portal.search.web.internal.facet.display.context.builder.AssetCategoriesSearchFacetDisplayContextBuilder;
 import com.liferay.portal.search.web.internal.facet.display.context.builder.AssetCategoryPermissionChecker;
@@ -96,7 +94,6 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase
 	@Override
 	public void setUp() throws Exception {
 		setUpAssetVocabularyLocalService();
-		setUpConfigurationProvider();
 		setUpFacet();
 	}
 
@@ -402,21 +399,6 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase
 		);
 	}
 
-	protected void setUpConfigurationProvider() throws Exception {
-		Mockito.doReturn(
-			getFacetFieldName()
-		).when(
-			_categoryFacetFieldConfiguration
-		).categoryFacetField();
-
-		configurationProviderUtilMockedStatic.when(
-			() -> ConfigurationProviderUtil.getSystemConfiguration(
-				Mockito.any(Class.class))
-		).thenReturn(
-			_categoryFacetFieldConfiguration
-		);
-	}
-
 	protected void setUpFacet() throws Exception {
 		super.setUp();
 
@@ -579,9 +561,6 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase
 			AssetCategoryPermissionChecker.class);
 	private final AssetVocabularyLocalService _assetVocabularyLocalService =
 		Mockito.mock(AssetVocabularyLocalService.class);
-	private final CategoryFacetFieldConfiguration
-		_categoryFacetFieldConfiguration = Mockito.mock(
-			CategoryFacetFieldConfiguration.class);
 	private long _excludedGroupId;
 	private long _groupId;
 

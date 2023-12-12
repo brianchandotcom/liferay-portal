@@ -5,17 +5,13 @@
  */
 --%>
 
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
-taglib uri="http://liferay.com/tld/learn" prefix="liferay-learn" %><%@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/react" prefix="react" %><%@
-taglib uri="http://liferay.com/tld/template" prefix="liferay-template" %><%@
-taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
+taglib uri="http://liferay.com/tld/template" prefix="liferay-template" %>
 
 <%@ page import="com.liferay.learn.LearnMessageUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
@@ -90,8 +86,6 @@ CategoryFacetPortletPreferences categoryFacetPortletPreferences = new CategoryFa
 					module="js/components/SelectVocabularies"
 					props='<%=
 						HashMapBuilder.<String, Object>put(
-							"disabled", assetCategoriesSearchFacetDisplayContext.isLegacyFieldSelected()
-						).put(
 							"initialSelectedVocabularyIds", StringUtil.merge(categoryFacetPortletPreferences.getVocabularyIds())
 						).put(
 							"learnResources", LearnMessageUtil.getReactDataJSONObject("portal-search-web")
@@ -103,17 +97,6 @@ CategoryFacetPortletPreferences categoryFacetPortletPreferences = new CategoryFa
 					%>'
 				/>
 			</div>
-
-			<c:if test="<%= assetCategoriesSearchFacetDisplayContext.isLegacyFieldSelected() %>">
-				<p class="mt-3 sheet-text">
-					<liferay-ui:message key="select-vocabularies-configuration-disabled-description" />
-
-					<liferay-learn:message
-						key="tag-and-category-facet"
-						resource="portal-search-web"
-					/>
-				</p>
-			</c:if>
 		</liferay-frontend:fieldset>
 	</liferay-frontend:edit-form-body>
 

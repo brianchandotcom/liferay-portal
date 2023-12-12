@@ -472,7 +472,8 @@ public class DefaultSearchResultPermissionFilter
 
 					_updateHits(
 						slidingWindowHelper.getDocumentsAndScoresTuple(), hits,
-						startTime, recalculatedTotalHits);
+						numberOfTotalDocsNeeded, startTime,
+						recalculatedTotalHits);
 
 					_mergeFacets(facetCountHelper, searchContext);
 
@@ -655,7 +656,8 @@ public class DefaultSearchResultPermissionFilter
 		}
 
 		private void _updateHits(
-			Tuple documentsAndScoresTuple, Hits hits, long startTime,
+			Tuple documentsAndScoresTuple, Hits hits,
+			int numberOfTotalDocsNeeded, long startTime,
 			int recalculatedTotalHits) {
 
 			List<Document> documents =
@@ -666,7 +668,15 @@ public class DefaultSearchResultPermissionFilter
 			hits.setScores(
 				ArrayUtil.toFloatArray(
 					(List<Float>)documentsAndScoresTuple.getObject(1)));
-			hits.setLength(Math.max(recalculatedTotalHits, documents.size()));
+
+			int updatedLength = documents.size();
+
+			if (documents.size() >= numberOfTotalDocsNeeded) {
+				updatedLength = Math.max(
+					recalculatedTotalHits, documents.size());
+			}
+
+			hits.setLength(updatedLength);
 			hits.setSearchTime(
 				(float)(System.currentTimeMillis() - startTime) / Time.SECOND);
 		}

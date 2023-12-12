@@ -287,6 +287,8 @@ definition {
 		ImportExport.selectEntity(entityType = ${entityType});
 
 		if (isSet(scope)) {
+			var scope = TestCase.getSiteName();
+
 			Select(
 				locator1 = "Select#SCOPE_CONFIGURATION",
 				value1 = ${scope});

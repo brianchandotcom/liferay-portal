@@ -95,8 +95,6 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("When importing .jsonl file as 'C_Student' Entity Type with default settings") {
-			var scope = TestCase.getSiteName();
-
 			ImportExport.replaceAttachmentIdAndHrefInFile(
 				en_US_plural_label = "students",
 				fileName = "multiple_site_scope_objectEntries_import_create_update.jsonl",
@@ -105,7 +103,7 @@ definition {
 			ImportExport.importFile(
 				entityType = "C_Student (v1_0 - Liferay Object REST)",
 				fileName = "multiple_site_scope_objectEntries_import_create_update.jsonl",
-				scope = ${scope});
+				scope = "true");
 		}
 
 		task ("Then one new Student item is created") {
@@ -142,13 +140,11 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("When importing .json file as 'C_Student' Entity Type with 'Only Add New Records Import Strategy', 'Stop the Import on Error' unchecked") {
-			var scope = TestCase.getSiteName();
-
 			ImportExport.importFile(
 				entityType = "C_Student (v1_0 - Liferay Object REST)",
 				fileName = "multiple_site_scope_objectEntries_import_create.jsonl",
 				importStrategy = "Only Add New Records",
-				scope = ${scope},
+				scope = "true",
 				stopImportOnError = "false");
 		}
 
@@ -170,13 +166,11 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("When importing .json file as 'C_Student' Entity Type with default setting") {
-			var scope = TestCase.getSiteName();
-
 			ImportExport.importFile(
 				entityType = "C_Student (v1_0 - Liferay Object REST)",
 				fileName = "site_scope_objectEntry_import_without_required_fields.json",
 				noImport = "true",
-				scope = ${scope});
+				scope = "true");
 
 			Button.click(button = "Next");
 		}
@@ -216,12 +210,10 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("When importing .jsonl file as 'C_Student' Entity Type with default setting") {
-			var scope = TestCase.getSiteName();
-
 			ImportExport.importFile(
 				entityType = "C_Student (v1_0 - Liferay Object REST)",
 				fileName = "site_scope_objectEntry_import_update.jsonl",
-				scope = ${scope});
+				scope = "true");
 		}
 
 		task ("Then the name of Student is updated") {

@@ -26,6 +26,7 @@ export interface EditObjectFieldProps {
 	forbiddenNames: string[];
 	isApproved: boolean;
 	isDefaultStorageType: boolean;
+	isRootDescendantNode: boolean;
 	learnResources: ObjectWebLearnResources;
 	objectDefinitionExternalReferenceCode: string;
 	objectFieldId: number;
@@ -61,6 +62,7 @@ export default function EditObjectField({
 	forbiddenNames,
 	isApproved,
 	isDefaultStorageType,
+	isRootDescendantNode,
 	learnResources,
 	objectDefinitionExternalReferenceCode,
 	objectFieldId,
@@ -142,6 +144,7 @@ export default function EditObjectField({
 				handleChange={handleChange}
 				isApproved={isApproved}
 				isDefaultStorageType={isDefaultStorageType}
+				isRootDescendantNode={isRootDescendantNode}
 				learnResources={learnResources}
 				objectDefinitionExternalReferenceCode={
 					objectDefinitionExternalReferenceCode

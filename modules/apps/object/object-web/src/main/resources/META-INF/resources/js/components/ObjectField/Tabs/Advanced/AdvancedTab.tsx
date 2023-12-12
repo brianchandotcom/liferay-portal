@@ -15,6 +15,7 @@ interface AdvancedTabProps {
 	creationLanguageId: Liferay.Language.Locale;
 	errors: ObjectFieldErrors;
 	isDefaultStorageType: boolean;
+	isRootDescendantNode: boolean;
 	learnResources: ObjectWebLearnResources;
 	modelBuilder?: boolean;
 	onSubmit?: () => void;
@@ -29,6 +30,7 @@ export function AdvancedTab({
 	creationLanguageId,
 	errors,
 	isDefaultStorageType,
+	isRootDescendantNode,
 	learnResources,
 	modelBuilder = false,
 	onSubmit,
@@ -41,6 +43,7 @@ export function AdvancedTab({
 		values.businessType === 'Aggregation' ||
 		values.businessType === 'AutoIncrement' ||
 		values.businessType === 'Formula' ||
+		(values.businessType === 'Relationship' && isRootDescendantNode) ||
 		values.system;
 
 	return (

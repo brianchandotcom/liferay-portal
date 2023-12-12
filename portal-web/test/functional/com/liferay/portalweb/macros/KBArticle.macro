@@ -800,7 +800,7 @@ definition {
 		}
 
 		if (isSet(editExpiredArticle)) {
-			var expirationDate = DateUtil.getDateOffsetByDays(1, "MM/dd/yyyy");
+			var expirationDate = DateUtil.getDateOffsetByDays(2, "MM/dd/yyyy");
 
 			Panel.expandPanel(panel = "Expiration Date");
 

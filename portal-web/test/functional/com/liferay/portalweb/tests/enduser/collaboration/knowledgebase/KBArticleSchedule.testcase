@@ -44,7 +44,7 @@ definition {
 
 		// We need to wait for the system time to pass by 1 minute in order to verify the scheduled article is published. There is currently no easy way to manipulate the system time in CI for automation. 1 minute is the shortest value we can set while ensuring the stability of the test. See LPS-188060.
 
-		Pause(value1 = 60000);
+		Pause(value1 = 65000);
 
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
@@ -74,7 +74,7 @@ definition {
 
 		// We need to wait for the system time to pass by 1 minute in order to verify the scheduled article is published. There is currently no easy way to manipulate the system time in CI for automation. 1 minute is the shortest value we can set while ensuring the stability of the test. See LPS-188060.
 
-		Pause(value1 = 60000);
+		Pause(value1 = 65000);
 
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
@@ -117,7 +117,7 @@ definition {
 
 		// We need to wait for the system time to pass by 1 minute in order to verify the scheduled article is published. There is currently no easy way to manipulate the system time in CI for automation. 1 minute is the shortest value we can set while ensuring the stability of the test. See LPS-188060.
 
-		Pause(value1 = 60000);
+		Pause(value1 = 65000);
 
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
@@ -204,7 +204,7 @@ definition {
 
 		// We need to wait for the system time to pass by 1 minute in order to verify the scheduled article is published. There is currently no easy way to manipulate the system time in CI for automation. 1 minute is the shortest value we can set while ensuring the stability of the test. See LPS-188060.
 
-		Pause(value1 = 60000);
+		Pause(value1 = 65000);
 
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
@@ -218,9 +218,9 @@ definition {
 	test ChildArticleScheduledAfterParentCanBePublishedOnItsScheduledDate {
 		KBArticle.updateCheckInterval(fieldValue = 1);
 
-		JSONKnowledgeBase.addkBArticle(
-			displayDate = "true",
-			groupName = "Guest",
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.addArticleWithScheduledDate(
 			increaseMinutes = 1,
 			kbArticleContent = "Knowledge Base Article Content",
 			kbArticleTitle = "Knowledge Base Article Title");
@@ -252,9 +252,11 @@ definition {
 
 		// We need to wait for the system time to pass by 1 minute in order to verify the scheduled child article is published. There is currently no easy way to manipulate the system time in CI for automation. 1 minute is the shortest value we can set while ensuring the stability of the test. See LPS-188060.
 
-		Pause(value1 = 60000);
+		Pause(value1 = 65000);
 
-		Refresh();
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.gotoChildArticleDescriptiveDetails(kbArticleTitle = "Knowledge Base Article Title");
 
 		LexiconList.viewListEntryLabel(
 			listEntry = "Knowledge Base Child Article Title",
@@ -295,7 +297,7 @@ definition {
 
 		// We need to wait for the system time to pass by 1 minute in order to verify the scheduled articles are published. There is currently no easy way to manipulate the system time in CI for automation. 1 minute is the shortest value we can set while ensuring the stability of the test. See LPS-188060.
 
-		Pause(value1 = 60000);
+		Pause(value1 = 65000);
 
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
@@ -338,7 +340,7 @@ definition {
 
 		// We need to wait for the system time to pass by 1 minute in order to verify the scheduled article is published. There is currently no easy way to manipulate the system time in CI for automation. 1 minute is the shortest value we can set while ensuring the stability of the test. See LPS-188060.
 
-		Pause(value1 = 60000);
+		Pause(value1 = 65000);
 
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
@@ -384,7 +386,7 @@ definition {
 
 		// We need to wait for the system time to pass by 1 minute in order to verify the scheduled article is published. There is currently no easy way to manipulate the system time in CI for automation. 1 minute is the shortest value we can set while ensuring the stability of the test. See LPS-188060.
 
-		Pause(value1 = 60000);
+		Pause(value1 = 65000);
 
 		KBAdmin.openKBAdmin(siteURLKey = "site-name");
 

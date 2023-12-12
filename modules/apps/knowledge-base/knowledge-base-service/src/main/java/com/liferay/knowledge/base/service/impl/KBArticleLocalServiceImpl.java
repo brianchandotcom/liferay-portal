@@ -1523,9 +1523,27 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			String[] assetTagNames, long[] assetLinkEntryIds)
 		throws PortalException {
 
-		_updateKBArticleAsset(
-			userId, kbArticle, assetCategoryIds, assetTagNames,
-			assetLinkEntryIds);
+		boolean visible = false;
+
+		if (kbArticle.isApproved()) {
+			visible = true;
+		}
+
+		String summary = _htmlParser.extractText(
+			StringUtil.shorten(kbArticle.getContent(), 500));
+
+		AssetEntry assetEntry = _assetEntryLocalService.updateEntry(
+			userId, kbArticle.getGroupId(), kbArticle.getCreateDate(),
+			kbArticle.getModifiedDate(), KBArticle.class.getName(),
+			kbArticle.getClassPK(), kbArticle.getUuid(), 0, assetCategoryIds,
+			assetTagNames, true, visible, null, null, null,
+			kbArticle.getExpirationDate(), ContentTypes.TEXT_HTML,
+			kbArticle.getTitle(), kbArticle.getDescription(), summary, null,
+			null, 0, 0, null);
+
+		_assetLinkLocalService.updateLinks(
+			userId, assetEntry.getEntryId(), assetLinkEntryIds,
+			AssetLinkConstants.TYPE_RELATED);
 	}
 
 	@Override
@@ -1652,7 +1670,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		long[] assetLinkEntryIds = StringUtil.split(
 			ListUtil.toString(assetLinks, AssetLink.ENTRY_ID2_ACCESSOR), 0L);
 
-		_updateKBArticleAsset(
+		updateKBArticleAsset(
 			userId, kbArticle, assetEntry.getCategoryIds(),
 			assetEntry.getTagNames(), assetLinkEntryIds);
 
@@ -2610,34 +2628,6 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			kbArticle.getCompanyId(), kbArticle.getGroupId(), userId,
 			KBArticle.class.getName(), kbArticle.getResourcePrimKey(),
 			kbArticle, serviceContext, Collections.emptyMap());
-	}
-
-	private void _updateKBArticleAsset(
-			long userId, KBArticle kbArticle, long[] assetCategoryIds,
-			String[] assetTagNames, long[] assetLinkEntryIds)
-		throws PortalException {
-
-		boolean visible = false;
-
-		if (kbArticle.isApproved()) {
-			visible = true;
-		}
-
-		String summary = _htmlParser.extractText(
-			StringUtil.shorten(kbArticle.getContent(), 500));
-
-		AssetEntry assetEntry = _assetEntryLocalService.updateEntry(
-			userId, kbArticle.getGroupId(), kbArticle.getCreateDate(),
-			kbArticle.getModifiedDate(), KBArticle.class.getName(),
-			kbArticle.getClassPK(), kbArticle.getUuid(), 0, assetCategoryIds,
-			assetTagNames, true, visible, null, null, null,
-			kbArticle.getExpirationDate(), ContentTypes.TEXT_HTML,
-			kbArticle.getTitle(), kbArticle.getDescription(), summary, null,
-			null, 0, 0, null);
-
-		_assetLinkLocalService.updateLinks(
-			userId, assetEntry.getEntryId(), assetLinkEntryIds,
-			AssetLinkConstants.TYPE_RELATED);
 	}
 
 	private void _updatePermissionFields(

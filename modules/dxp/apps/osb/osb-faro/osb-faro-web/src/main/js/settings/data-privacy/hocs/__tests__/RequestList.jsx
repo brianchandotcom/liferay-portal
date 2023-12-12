@@ -117,7 +117,13 @@ const DefaultComponent = props => (
 				]}
 			>
 				<Route path={Routes.SETTINGS_DATA_PRIVACY_REQUEST_LOG}>
-					<RequestList.default {...defaultProps} {...props} />
+					<RequestList.default
+						currentUser={{
+							isAdmin: () => true
+						}}
+						{...defaultProps}
+						{...props}
+					/>
 				</Route>
 			</MemoryRouter>
 		</Provider>

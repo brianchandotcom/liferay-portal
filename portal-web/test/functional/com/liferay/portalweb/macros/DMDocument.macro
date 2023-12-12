@@ -1692,14 +1692,10 @@ definition {
 			Click(locator1 = "Modal#BODY");
 
 			if (${editAction} == "Append") {
-				FormFields.selectRadioOption(
-					fieldName = "add",
-					radioOption = "Add");
+				Click(locator1 = "Radio#APPEND");
 			}
 			else if (${editAction} == "Replace") {
-				FormFields.selectRadioOption(
-					fieldName = "replace",
-					radioOption = "Replace");
+				Click(locator1 = "Radio#REPLACE");
 			}
 		}
 		else {
@@ -2160,14 +2156,10 @@ definition {
 			Click(locator1 = "Modal#BODY");
 
 			if (${editAction} == "Append") {
-				FormFields.selectRadioOption(
-					fieldName = "add",
-					radioOption = "Add");
+				Click(locator1 = "Radio#APPEND");
 			}
 			else if (${editAction} == "Replace") {
-				FormFields.selectRadioOption(
-					fieldName = "replace",
-					radioOption = "Replace");
+				Click(locator1 = "Radio#REPLACE");
 			}
 		}
 		else {

@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
@@ -47,10 +46,8 @@ import java.io.InputStream;
 public class DLStoreImpl implements DLStore {
 
 	public static void setStore(Store store) {
-		_store = store;
-
 		_wrappedStore = new StoreAreaAwareStoreWrapper(
-			() -> _store, _storeAreaProcessorSnapshot::get);
+			() -> store, _storeAreaProcessorSnapshot::get);
 	}
 
 	@Override
@@ -377,15 +374,14 @@ public class DLStoreImpl implements DLStore {
 		DLValidatorUtil.validateVersionLabel(versionLabel);
 	}
 
-	private static volatile Store _store =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			Store.class, DLStoreImpl.class, "_store", "(default=true)", true);
 	private static final Snapshot<StoreAreaProcessor>
 		_storeAreaProcessorSnapshot = new Snapshot<>(
 			DLStoreImpl.class, StoreAreaProcessor.class,
 			"(store.type=" + PropsValues.DL_STORE_IMPL + ")");
+	private static final Snapshot<Store> _storeSnapshot = new Snapshot<>(
+		DLStoreImpl.class, Store.class, "(default=true)", true);
 	private static Store _wrappedStore = new StoreAreaAwareStoreWrapper(
-		() -> _store, _storeAreaProcessorSnapshot::get);
+		_storeSnapshot::get, _storeAreaProcessorSnapshot::get);
 
 	private static class DLStoreFileProvider implements SafeCloseable {
 

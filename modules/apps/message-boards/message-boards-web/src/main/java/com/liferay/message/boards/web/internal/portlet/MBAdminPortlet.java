@@ -42,7 +42,6 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.use-default-template=true",
 		"javax.portlet.display-name=Message Boards",
 		"javax.portlet.expiration-cache=0",
-		"javax.portlet.init-param.config-template=/message_boards_admin/configuration.jsp",
 		"javax.portlet.init-param.mvc-command-names-default-views=/message_boards/view",
 		"javax.portlet.init-param.portlet-title-based-navigation=true",
 		"javax.portlet.init-param.template-path=/META-INF/resources/",

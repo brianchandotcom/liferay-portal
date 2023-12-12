@@ -95,6 +95,7 @@ page import="com.liferay.message.boards.util.comparator.ThreadModifiedDateCompar
 page import="com.liferay.message.boards.web.internal.dao.search.MBResultRowSplitter" %><%@
 page import="com.liferay.message.boards.web.internal.display.MBCategoryDisplay" %><%@
 page import="com.liferay.message.boards.web.internal.display.context.MBBannedUsersManagementToolbarDisplayContext" %><%@
+page import="com.liferay.message.boards.web.internal.display.context.MBConfigurationDisplayContext" %><%@
 page import="com.liferay.message.boards.web.internal.display.context.MBEditMessageDisplayContext" %><%@
 page import="com.liferay.message.boards.web.internal.display.context.MBEntriesManagementToolbarDisplayContext" %><%@
 page import="com.liferay.message.boards.web.internal.display.context.MBNavigationDisplayContext" %><%@

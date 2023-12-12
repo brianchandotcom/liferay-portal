@@ -8,6 +8,7 @@ package com.liferay.notification.type;
 import com.liferay.notification.constants.NotificationQueueEntryConstants;
 import com.liferay.notification.context.NotificationContext;
 import com.liferay.notification.exception.NotificationQueueEntrySubjectException;
+import com.liferay.notification.exception.NotificationRecipientSettingNameException;
 import com.liferay.notification.exception.NotificationTemplateAttachmentObjectFieldIdException;
 import com.liferay.notification.exception.NotificationTemplateDescriptionException;
 import com.liferay.notification.exception.NotificationTemplateEditorTypeException;
@@ -33,17 +34,21 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -183,6 +188,31 @@ public abstract class BaseNotificationType implements NotificationType {
 	public void validateNotificationTemplate(
 			NotificationContext notificationContext)
 		throws PortalException {
+
+		Set<String> allowedNotificationRecipientSettingsNames =
+			getAllowedNotificationRecipientSettingsNames();
+
+		if (SetUtil.isNotEmpty(allowedNotificationRecipientSettingsNames)) {
+			Set<String> notAllowedNotificationRecipientSettingsNames =
+				new HashSet<>();
+
+			ListUtil.isNotEmptyForEach(
+				notificationContext.getNotificationRecipientSettings(),
+				notificationRecipientSetting -> {
+					if (!allowedNotificationRecipientSettingsNames.contains(
+							notificationRecipientSetting.getName())) {
+
+						notAllowedNotificationRecipientSettingsNames.add(
+							notificationRecipientSetting.getName());
+					}
+				});
+
+			if (!notAllowedNotificationRecipientSettingsNames.isEmpty()) {
+				throw new NotificationRecipientSettingNameException.
+					NotAllowedNames(
+						notAllowedNotificationRecipientSettingsNames);
+			}
+		}
 
 		NotificationTemplate notificationTemplate =
 			notificationContext.getNotificationTemplate();

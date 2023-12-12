@@ -5,28 +5,33 @@
 
 package com.liferay.notification.exception;
 
+import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.Set;
 
 /**
  * @author Gabriel Albuquerque
  */
 public class NotificationRecipientSettingNameException extends PortalException {
 
-	public NotificationRecipientSettingNameException() {
+	public static class NotAllowedNames
+		extends NotificationRecipientSettingNameException {
+
+		public NotAllowedNames(Set<String> notificationRecipientSettingsNames) {
+			super(
+				String.format(
+					"The settings %s are not allowed",
+					StringUtil.merge(
+						notificationRecipientSettingsNames,
+						StringPool.COMMA_AND_SPACE)));
+		}
+
 	}
 
-	public NotificationRecipientSettingNameException(String msg) {
+	private NotificationRecipientSettingNameException(String msg) {
 		super(msg);
-	}
-
-	public NotificationRecipientSettingNameException(
-		String msg, Throwable throwable) {
-
-		super(msg, throwable);
-	}
-
-	public NotificationRecipientSettingNameException(Throwable throwable) {
-		super(throwable);
 	}
 
 }

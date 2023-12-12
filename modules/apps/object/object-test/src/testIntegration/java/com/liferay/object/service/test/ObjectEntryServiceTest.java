@@ -25,7 +25,6 @@ import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
-import com.liferay.object.service.persistence.ObjectEntryPersistence;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.test.util.TreeTestUtil;
 import com.liferay.object.tree.Edge;
@@ -58,15 +57,12 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.PersistenceTestRule;
-import com.liferay.portal.test.rule.TransactionalTestRule;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.io.Serializable;
@@ -94,17 +90,14 @@ import org.junit.runner.RunWith;
 /**
  * @author Marco Leo
  */
-@FeatureFlags("LPS-187142")
+@FeatureFlags({"LPS-187142", "LPS-192957"})
 @RunWith(Arquillian.class)
 public class ObjectEntryServiceTest {
 
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
-			new TransactionalTestRule(
-				Propagation.REQUIRED, "com.liferay.object.service"));
+		new LiferayIntegrationTestRule();
 
 	@Before
 	public void setUp() throws Exception {
@@ -705,20 +698,12 @@ public class ObjectEntryServiceTest {
 		ConfigurationTestUtil.deleteConfiguration(
 			ObjectConfiguration.class.getName());
 
-		HashMapDictionaryBuilder.put(
+		objectConfigurationDictionary.put(
 			"maximumNumberOfGuestUserObjectEntriesPerObjectDefinition", 2);
-		HashMapDictionaryBuilder.put("timeScale", "weeks");
+		objectConfigurationDictionary.put("timeScale", "weeks");
 
 		ConfigurationTestUtil.saveConfiguration(
 			ObjectConfiguration.class.getName(), objectConfigurationDictionary);
-
-		Date createDate = Date.from(
-			LocalDate.now(
-			).minusDays(
-				7
-			).atStartOfDay(
-				ZoneId.systemDefault()
-			).toInstant());
 
 		ObjectEntry objectEntry = _objectEntryService.addObjectEntry(
 			0, _objectDefinition.getObjectDefinitionId(),
@@ -726,9 +711,21 @@ public class ObjectEntryServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				TestPropsValues.getGroupId(), _guestUser.getUserId()));
 
-		objectEntry.setCreateDate(createDate);
+		objectEntry.setCreateDate(
+			Date.from(
+				LocalDate.now(
+				).minusDays(
+					7
+				).atStartOfDay(
+					ZoneId.systemDefault()
+				).toInstant()));
 
-		_objectEntryPersistence.update(objectEntry);
+		_objectEntryLocalService.addOrUpdateObjectEntry(
+			objectEntry.getExternalReferenceCode(), _user.getUserId(),
+			TestPropsValues.getGroupId(),
+			_objectDefinition.getObjectDefinitionId(), objectEntry.getValues(),
+			ServiceContextTestUtil.getServiceContext(
+				TestPropsValues.getGroupId(), _guestUser.getUserId()));
 
 		AssertUtils.assertFailure(
 			ObjectEntryCountException.class,
@@ -800,9 +797,6 @@ public class ObjectEntryServiceTest {
 
 	@Inject
 	private ObjectEntryLocalService _objectEntryLocalService;
-
-	@Inject
-	private ObjectEntryPersistence _objectEntryPersistence;
 
 	@Inject
 	private ObjectEntryService _objectEntryService;

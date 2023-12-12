@@ -13,7 +13,8 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
-page import="com.liferay.site.sitemap.web.internal.display.context.SitemapCompanyConfigurationDisplayContext" %>
+page import="com.liferay.site.sitemap.web.internal.display.context.SitemapCompanyConfigurationDisplayContext" %><%@
+page import="com.liferay.site.sitemap.web.internal.display.context.SitemapGroupConfigurationDisplayContext" %>
 
 <liferay-frontend:defineObjects />
 

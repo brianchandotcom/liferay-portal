@@ -90,13 +90,15 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 
 	@Override
 	public void onBeforeRemove(Layout layout) throws ModelListenerException {
+		if (layout == null) {
+			return;
+		}
+
 		_layoutClassedModelUsageLocalService.
 			deleteLayoutClassedModelUsagesByPlid(layout.getPlid());
 
 		try {
-			if ((layout == null) ||
-				!LayoutStagingUtil.isBranchingLayout(layout)) {
-
+			if (!LayoutStagingUtil.isBranchingLayout(layout)) {
 				return;
 			}
 

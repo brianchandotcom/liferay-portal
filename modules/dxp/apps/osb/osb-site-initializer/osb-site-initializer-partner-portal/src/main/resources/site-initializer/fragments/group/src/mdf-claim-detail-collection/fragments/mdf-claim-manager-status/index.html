@@ -70,7 +70,6 @@
 		});
 
 		if (response.ok) {
-			updateMDFRequestStatusToCompleted(`${mdfRequestIdFromMdfClaim}`);
 			location.reload();
 
 			return;
@@ -81,18 +80,6 @@
 			type: 'danger',
 		});
 	};
-
-		const updateMDFRequestStatusToCompleted = async (mdfRequestId) => {
-			const completedStatus = "completed";
-			const response = await fetch(`/o/c/mdfrequests/` + mdfRequestId, {
-				body: `{"mdfRequestStatus": "` + completedStatus + `"}`,
-				headers: {
-					'content-type': 'application/json',
-					'x-csrf-token': Liferay.authToken,
-				},
-				method: 'PATCH',
-			});
-		}
 
 		const callClaimPaidModal = (status) => {
 		return Liferay.Util.openModal({

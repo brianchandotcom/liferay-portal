@@ -7,7 +7,7 @@ import ClayTable from '@clayui/table';
 import classNames from 'classnames';
 import {throttle} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useContext, useLayoutEffect, useMemo, useRef} from 'react';
+import React, {useContext, useEffect, useMemo, useRef} from 'react';
 
 import ViewsContext from '../../ViewsContext';
 import {VIEWS_ACTION_TYPES} from '../../viewsReducer';
@@ -34,7 +34,7 @@ function Cell({
 	const cellRef = useRef();
 	const clientXRef = useRef({current: null});
 
-	useLayoutEffect(() => {
+	useEffect(() => {
 		if (columnName && heading && !isFixed) {
 			const boundingClientRect = cellRef.current.getBoundingClientRect();
 

@@ -8,9 +8,9 @@ package com.liferay.object.internal.entry.util;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
-import com.liferay.object.petra.sql.dsl.DynamicObjectDefinitionTable;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.sql.dsl.Column;
+import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -54,12 +54,12 @@ public class ObjectEntrySearchUtil {
 	}
 
 	public static Predicate getRelatedModelsPredicate(
-		DynamicObjectDefinitionTable dynamicObjectDefinitionTable,
 		ObjectDefinition objectDefinition,
-		ObjectFieldLocalService objectFieldLocalService, String search) {
+		ObjectFieldLocalService objectFieldLocalService, String search,
+		Table<?> table) {
 
-		if ((dynamicObjectDefinitionTable == null) ||
-			(objectDefinition == null) || Validator.isNull(search)) {
+		if ((objectDefinition == null) || Validator.isNull(search) ||
+			(table == null)) {
 
 			return null;
 		}
@@ -84,11 +84,10 @@ public class ObjectEntrySearchUtil {
 			return objectFieldPredicate;
 		}
 
-		Predicate primaryKeyPredicate =
-			dynamicObjectDefinitionTable.getPrimaryKeyColumn(
-			).eq(
-				searchLong
-			);
+		Column<?, Long> primaryKeyColumn = (Column<?, Long>)table.getColumn(
+			objectDefinition.getPKObjectFieldDBColumnName());
+
+		Predicate primaryKeyPredicate = primaryKeyColumn.eq(searchLong);
 
 		if (objectFieldPredicate == null) {
 			return primaryKeyPredicate;

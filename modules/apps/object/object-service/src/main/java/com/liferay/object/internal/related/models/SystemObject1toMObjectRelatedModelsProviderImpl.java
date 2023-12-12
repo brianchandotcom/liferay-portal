@@ -443,10 +443,10 @@ public class SystemObject1toMObjectRelatedModelsProviderImpl
 				}
 			).and(
 				ObjectEntrySearchUtil.getRelatedModelsPredicate(
-					dynamicObjectDefinitionTable,
 					_objectDefinitionLocalService.fetchObjectDefinition(
 						objectRelationship.getObjectDefinitionId2()),
-					_objectFieldLocalService, search)
+					_objectFieldLocalService, search,
+					dynamicObjectDefinitionTable)
 			)
 		);
 	}

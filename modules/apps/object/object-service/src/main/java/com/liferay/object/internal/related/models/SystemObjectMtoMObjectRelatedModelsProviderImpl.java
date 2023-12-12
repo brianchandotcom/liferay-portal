@@ -284,8 +284,8 @@ public class SystemObjectMtoMObjectRelatedModelsProviderImpl
 				}
 			).and(
 				ObjectEntrySearchUtil.getRelatedModelsPredicate(
-					dynamicObjectDefinitionTable, objectDefinition2,
-					_objectFieldLocalService, search)
+					objectDefinition2, _objectFieldLocalService, search,
+					dynamicObjectDefinitionTable)
 			)
 		);
 	}

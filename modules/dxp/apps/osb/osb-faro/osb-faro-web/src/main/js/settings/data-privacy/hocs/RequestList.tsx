@@ -221,6 +221,8 @@ const RequestList: React.FC<IRequestListProps> = ({
 
 	const {selectedItems} = useSelectionContext();
 
+	const authorized = currentUser.isAdmin();
+
 	const formattedFilterBy = filterBy
 		.filterNot(val => val.isEmpty())
 		.map((val, key) =>
@@ -437,6 +439,7 @@ const RequestList: React.FC<IRequestListProps> = ({
 					);
 
 					return (
+						authorized &&
 						status === GDPRRequestStatuses.Completed && (
 							<a
 								className={classnames}
@@ -479,13 +482,19 @@ const RequestList: React.FC<IRequestListProps> = ({
 									{Liferay.Language.get('download-all')}
 								</a>
 							) : (
-								<ClayButton
-									className='button-root nav-btn'
-									displayType='primary'
-									onClick={handleOpenNewRequestModal}
-								>
-									{Liferay.Language.get('create-request')}
-								</ClayButton>
+								<>
+									{authorized && (
+										<ClayButton
+											className='button-root nav-btn'
+											displayType='primary'
+											onClick={handleOpenNewRequestModal}
+										>
+											{Liferay.Language.get(
+												'create-request'
+											)}
+										</ClayButton>
+									)}
+								</>
 							)}
 						</Nav.Item>
 					</Nav>

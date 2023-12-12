@@ -205,9 +205,8 @@ public class PoshiDependenciesFileLocationCheck extends BaseFileCheck {
 		}
 
 		for (String testCaseFileName : _testCaseFileNames) {
-			File testCaseFile = new File(testCaseFileName);
-
-			String testCaseFileContent = FileUtil.read(testCaseFile);
+			String testCaseFileContent = FileUtil.read(
+				new File(testCaseFileName));
 
 			for (Map.Entry<String, Set<String>> entry :
 					_dependenciesFileReferencesMap.entrySet()) {

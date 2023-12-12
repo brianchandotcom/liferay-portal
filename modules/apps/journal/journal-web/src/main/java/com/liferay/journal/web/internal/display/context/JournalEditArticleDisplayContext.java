@@ -820,19 +820,34 @@ public class JournalEditArticleDisplayContext {
 		return _groupId;
 	}
 
-	public List<Map<String, Object>> getLanguages() {
+	public List<Map<String, Object>> getLocales() {
 		return TransformUtil.transform(
 			getAvailableLocales(),
 			locale -> {
-				String bcp47LanguageId = LanguageUtil.getBCP47LanguageId(
-					locale);
+				String languageId = LanguageUtil.getLanguageId(locale);
+				
+				String label = StringUtil.replace(languageId, '_', '-');
 
 				return HashMapBuilder.<String, Object>put(
-					"icon", StringUtil.toLowerCase(bcp47LanguageId)
+					"displayName",
+					() -> {
+						String name = LanguageUtil.get(
+							_httpServletRequest, "language." + languageId);
+
+						if (name.contains("language.")) {
+							name = LanguageUtil.get(
+								_httpServletRequest,
+								"language." + languageId.substring(0, 2));
+						}
+
+						return name;
+					}
 				).put(
-					"id", LanguageUtil.getLanguageId(locale)
+					"id", languageId
 				).put(
-					"label", bcp47LanguageId
+					"label", label
+				).put(
+					"symbol", StringUtil.toLowerCase(label)
 				).build();
 			});
 	}

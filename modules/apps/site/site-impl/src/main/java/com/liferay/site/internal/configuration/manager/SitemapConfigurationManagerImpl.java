@@ -22,7 +22,7 @@ public class SitemapConfigurationManagerImpl
 	implements SitemapConfigurationManager {
 
 	@Override
-	public boolean includeCategories(long companyId)
+	public boolean includeCategoriesCompanyEnabled(long companyId)
 		throws ConfigurationException {
 
 		SitemapCompanyConfiguration sitemapCompanyConfiguration =
@@ -33,7 +33,9 @@ public class SitemapConfigurationManagerImpl
 	}
 
 	@Override
-	public boolean includePages(long companyId) throws ConfigurationException {
+	public boolean includePagesCompanyEnabled(long companyId)
+		throws ConfigurationException {
+
 		SitemapCompanyConfiguration sitemapCompanyConfiguration =
 			_configurationProvider.getCompanyConfiguration(
 				SitemapCompanyConfiguration.class, companyId);
@@ -42,7 +44,7 @@ public class SitemapConfigurationManagerImpl
 	}
 
 	@Override
-	public boolean includeWebContent(long companyId)
+	public boolean includeWebContentCompanyEnabled(long companyId)
 		throws ConfigurationException {
 
 		SitemapCompanyConfiguration sitemapCompanyConfiguration =

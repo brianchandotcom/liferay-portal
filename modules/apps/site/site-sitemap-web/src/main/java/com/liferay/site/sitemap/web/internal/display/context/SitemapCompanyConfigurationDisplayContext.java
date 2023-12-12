@@ -23,17 +23,17 @@ public class SitemapCompanyConfigurationDisplayContext {
 	}
 
 	public boolean includeCategories() throws ConfigurationException {
-		return _sitemapConfigurationManager.includeCategories(
+		return _sitemapConfigurationManager.includeCategoriesCompanyEnabled(
 			_themeDisplay.getCompanyId());
 	}
 
 	public boolean includePages() throws ConfigurationException {
-		return _sitemapConfigurationManager.includePages(
+		return _sitemapConfigurationManager.includePagesCompanyEnabled(
 			_themeDisplay.getCompanyId());
 	}
 
 	public boolean includeWebContent() throws ConfigurationException {
-		return _sitemapConfigurationManager.includeWebContent(
+		return _sitemapConfigurationManager.includeWebContentCompanyEnabled(
 			_themeDisplay.getCompanyId());
 	}
 

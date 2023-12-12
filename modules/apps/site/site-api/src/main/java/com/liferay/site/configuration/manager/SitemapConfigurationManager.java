@@ -12,12 +12,13 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationException;
  */
 public interface SitemapConfigurationManager {
 
-	public boolean includeCategories(long companyId)
+	public boolean includeCategoriesCompanyEnabled(long companyId)
 		throws ConfigurationException;
 
-	public boolean includePages(long companyId) throws ConfigurationException;
+	public boolean includePagesCompanyEnabled(long companyId)
+		throws ConfigurationException;
 
-	public boolean includeWebContent(long companyId)
+	public boolean includeWebContentCompanyEnabled(long companyId)
 		throws ConfigurationException;
 
 	public void saveSitemapCompanyConfiguration(

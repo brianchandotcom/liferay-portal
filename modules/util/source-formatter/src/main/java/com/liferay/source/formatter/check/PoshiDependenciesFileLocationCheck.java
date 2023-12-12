@@ -52,6 +52,10 @@ public class PoshiDependenciesFileLocationCheck extends BaseFileCheck {
 
 			Set<String> referencesFiles = entry.getValue();
 
+			if (referencesFiles.size() <= 1) {
+				continue;
+			}
+
 			Set<String> removedDuplicatedFilePaths = new HashSet<>();
 
 			for (String referencesFile : referencesFiles) {
@@ -65,18 +69,16 @@ public class PoshiDependenciesFileLocationCheck extends BaseFileCheck {
 				continue;
 			}
 
-			if (referencesFiles.size() > 1) {
-				for (String referencesFile : referencesFiles) {
-					if (referencesFile.equals(absolutePath)) {
-						addMessage(
-							fileName,
-							StringBundler.concat(
-								"Test dependencies file '", entry.getKey(),
-								"' is referenced by multiple modules, move it ",
-								"to global dependencies directory"));
+			for (String referencesFile : referencesFiles) {
+				if (referencesFile.equals(absolutePath)) {
+					addMessage(
+						fileName,
+						StringBundler.concat(
+							"Test dependencies file '", entry.getKey(),
+							"' is referenced by multiple modules, move it to ",
+							"global dependencies directory"));
 
-						break;
-					}
+					break;
 				}
 			}
 		}

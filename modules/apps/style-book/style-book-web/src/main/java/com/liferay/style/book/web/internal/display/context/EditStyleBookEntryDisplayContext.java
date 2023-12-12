@@ -36,13 +36,19 @@ import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.Theme;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
 import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
+import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -401,6 +407,20 @@ public class EditStyleBookEntryDisplayContext {
 					(JSONObject[])TransformUtil.transformToArray(
 						layouts,
 						layout -> JSONUtil.put(
+							"hasGuestViewPermission",
+							() -> {
+								Role role = RoleLocalServiceUtil.getRole(
+									layout.getCompanyId(), RoleConstants.GUEST);
+
+								return ResourcePermissionLocalServiceUtil.
+									hasResourcePermission(
+										layout.getCompanyId(),
+										Layout.class.getName(),
+										ResourceConstants.SCOPE_INDIVIDUAL,
+										String.valueOf(layout.getPlid()),
+										role.getRoleId(), ActionKeys.VIEW);
+							}
+						).put(
 							"name", layout.getName(_themeDisplay.getLocale())
 						).put(
 							"private", layout.isPrivateLayout()

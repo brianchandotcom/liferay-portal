@@ -211,6 +211,17 @@ export function LayoutSelector({layoutType}) {
 									symbol="low-vision"
 								/>
 							)}
+
+							{Liferay.FeatureFlags['LPS-196847'] &&
+								!layout.hasGuestViewPermission && (
+									<ClayIcon
+										className="c-ml-2 lfr-portal-tooltip text-4 text-dark"
+										data-title={Liferay.Language.get(
+											'restricted-page'
+										)}
+										symbol="lock"
+									/>
+								)}
 						</ClayDropDown.Item>
 					))}
 				</ClayDropDown.Group>

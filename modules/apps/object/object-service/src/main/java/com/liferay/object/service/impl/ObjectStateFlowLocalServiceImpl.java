@@ -84,36 +84,8 @@ public class ObjectStateFlowLocalServiceImpl
 		ObjectStateFlow objectStateFlow = _addObjectStateFlow(
 			userId, objectFieldId);
 
-		List<ObjectState> sourceObjectStates = TransformUtil.transform(
-			objectStates,
-			objectState -> {
-				ObjectState sourceObjectState =
-					_objectStateLocalService.addObjectState(
-						userId, objectState.getListTypeEntryId(),
-						objectStateFlow.getObjectStateFlowId());
-
-				sourceObjectState.setObjectStateTransitions(
-					objectState.getObjectStateTransitions());
-
-				return sourceObjectState;
-			});
-
-		for (ObjectState sourceObjectState : sourceObjectStates) {
-			for (ObjectStateTransition objectStateTransition :
-					sourceObjectState.getObjectStateTransitions()) {
-
-				ObjectState targetObjectState =
-					_objectStateLocalService.getObjectStateFlowObjectState(
-						objectStateTransition.
-							getTargetObjectStateListTypeEntryId(),
-						objectStateFlow.getObjectStateFlowId());
-
-				_objectStateTransitionLocalService.addObjectStateTransition(
-					userId, objectStateFlow.getObjectStateFlowId(),
-					sourceObjectState.getObjectStateId(),
-					targetObjectState.getObjectStateId());
-			}
-		}
+		_addObjectStatesAndObjectStateTransitions(
+			userId, objectStateFlow.getObjectStateFlowId(), objectStates);
 
 		_addOrUpdateObjectFieldSetting(
 			userId, objectFieldId, objectStateFlow.getObjectStateFlowId());
@@ -183,6 +155,21 @@ public class ObjectStateFlowLocalServiceImpl
 		return null;
 	}
 
+	@Override
+	public void updateObjectStateFlow(
+			long objectStateFlowId, long userId, List<ObjectState> objectStates)
+		throws PortalException {
+
+		_objectStateTransitionLocalService.
+			deleteObjectStateFlowObjectStateTransitions(objectStateFlowId);
+
+		_objectStateLocalService.deleteObjectStateFlowObjectStates(
+			objectStateFlowId);
+
+		_addObjectStatesAndObjectStateTransitions(
+			userId, objectStateFlowId, objectStates);
+	}
+
 	private ObjectStateFlow _addObjectStateFlow(long userId, long objectFieldId)
 		throws PortalException {
 
@@ -198,6 +185,42 @@ public class ObjectStateFlowLocalServiceImpl
 		objectStateFlow.setObjectFieldId(objectFieldId);
 
 		return objectStateFlowPersistence.update(objectStateFlow);
+	}
+
+	private void _addObjectStatesAndObjectStateTransitions(
+			long userId, long objectStateFlowId, List<ObjectState> objectStates)
+		throws PortalException {
+
+		List<ObjectState> sourceObjectStates = TransformUtil.transform(
+			objectStates,
+			objectState -> {
+				ObjectState sourceObjectState =
+					_objectStateLocalService.addObjectState(
+						userId, objectState.getListTypeEntryId(),
+						objectStateFlowId);
+
+				sourceObjectState.setObjectStateTransitions(
+					objectState.getObjectStateTransitions());
+
+				return sourceObjectState;
+			});
+
+		for (ObjectState sourceObjectState : sourceObjectStates) {
+			for (ObjectStateTransition objectStateTransition :
+					sourceObjectState.getObjectStateTransitions()) {
+
+				ObjectState targetObjectState =
+					_objectStateLocalService.getObjectStateFlowObjectState(
+						objectStateTransition.
+							getTargetObjectStateListTypeEntryId(),
+						objectStateFlowId);
+
+				_objectStateTransitionLocalService.addObjectStateTransition(
+					userId, objectStateFlowId,
+					sourceObjectState.getObjectStateId(),
+					targetObjectState.getObjectStateId());
+			}
+		}
 	}
 
 	private void _addOrUpdateObjectFieldSetting(

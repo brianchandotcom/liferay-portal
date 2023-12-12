@@ -328,125 +328,14 @@ public class SourceFormatterUtil {
 		return suppressionsFiles;
 	}
 
-	public static List<String> git(
-		List<String> args, String baseDirName, PathMatchers pathMatchers,
-		boolean includeSubrepositories) {
-
-		List<String> result = new ArrayList<>();
-
-		git(
-			args, baseDirName, pathMatchers, includeSubrepositories,
-			result::add);
-
-		return result;
-	}
-
-	public static void git(
-		List<String> args, String baseDirName, PathMatchers pathMatchers,
-		boolean includeSubrepositories, Consumer<String> consumer) {
-
-		List<String> allArgs = new ArrayList<>();
-
-		allArgs.add("git");
-
-		allArgs.addAll(args);
-
-		// Path Filtering
-
-		List<String> filters = new ArrayList<>();
-
-		String excludePrefix = ":(exclude,glob)";
-
-		if (pathMatchers != null) {
-			ListUtil.isNotEmptyForEach(
-				pathMatchers.getExcludeDirGlobs(),
-				excludeGlob -> filters.add(excludePrefix + excludeGlob));
-			ListUtil.isNotEmptyForEach(
-				pathMatchers.getExcludeFileGlobs(),
-				excludeGlob -> filters.add(excludePrefix + excludeGlob));
-
-			Map<String, List<String>> excludeDirGlobsMap =
-				pathMatchers.getExcludeDirGlobsMap();
-
-			for (List<String> excludeDirGlobs : excludeDirGlobsMap.values()) {
-				ListUtil.isNotEmptyForEach(
-					excludeDirGlobs,
-					excludeDirGlob -> filters.add(
-						excludePrefix + excludeDirGlob));
-			}
-
-			Map<String, List<String>> excludeFileGlobsMap =
-				pathMatchers.getExcludeFileGlobsMap();
-
-			for (List<String> excludeFileGlobs : excludeFileGlobsMap.values()) {
-				ListUtil.isNotEmptyForEach(
-					excludeFileGlobs,
-					excludeFileGlob -> filters.add(
-						excludePrefix + excludeFileGlob));
-			}
-
-			ListUtil.isNotEmptyForEach(
-				pathMatchers.getIncludeFileGlobs(),
-				includeGlob -> filters.add(":(glob)" + includeGlob));
-		}
-
-		if (_sfIgnoreDirectories != null) {
-			for (String sfIgnoreDirectory : _sfIgnoreDirectories) {
-				filters.add(excludePrefix + sfIgnoreDirectory);
-			}
-		}
-
-		if ((_subrepoIgnoreDirectories != null) && !includeSubrepositories) {
-			for (String subrepoIgnoreDirectory : _subrepoIgnoreDirectories) {
-				filters.add(excludePrefix + subrepoIgnoreDirectory);
-			}
-		}
-
-		if (ListUtil.isNotEmpty(filters)) {
-			allArgs.add("--");
-
-			allArgs.addAll(filters);
-		}
-
-		ProcessBuilder processBuilder = new ProcessBuilder(allArgs);
-
-		if (!Validator.isBlank(baseDirName)) {
-			processBuilder.directory(new File(baseDirName));
-		}
-
-		try {
-			Process process = processBuilder.start();
-
-			Scanner scanner = new Scanner(process.getInputStream());
-
-			if (allArgs.contains("ls-files") && allArgs.contains("-z")) {
-				scanner.useDelimiter("\0");
-			}
-
-			while (scanner.hasNext()) {
-				consumer.accept(scanner.next());
-			}
-
-			scanner.close();
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
-	}
-
 	public static List<String> matchFileContents(
-		List<String> argList, String baseDirName, String[] excludes,
-		String[] includes, SourceFormatterExcludes sourceFormatterExcludes,
-		boolean includeSubrepositories) {
+		List<String> argList, String baseDirName, String[] includes) {
 
 		if (ArrayUtil.isEmpty(includes)) {
 			return new ArrayList<>();
 		}
 
-		return _matchFileContents(
-			argList, baseDirName,
-			_getPathMatchers(excludes, includes, sourceFormatterExcludes),
-			includeSubrepositories);
+		return _matchFileContents(argList, baseDirName, includes);
 	}
 
 	public static void printError(String fileName, File file) {
@@ -753,50 +642,6 @@ public class SourceFormatterUtil {
 		return pathMatchers;
 	}
 
-	private static List<String> _matchFileContents(
-		List<String> argList, String baseDirName, PathMatchers pathMatchers,
-		boolean includeSubrepositories) {
-
-		List<String> args = new ArrayList<>();
-
-		args.add("grep");
-
-		args.addAll(argList);
-
-		try {
-			return git(args, baseDirName, pathMatchers, includeSubrepositories);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-		}
-
-		return null;
-	}
-
-	private static List<String> _matchFileContents(
-		String baseDirName, List<String> argList) {
-
-		List<String> args = new ArrayList<>();
-
-		args.add("grep");
-		args.add(searchContent);
-
-		args.addAll(argList);
-
-		try {
-			return git(args, baseDirName, null, false);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-		}
-
-		return null;
-	}
-
 	private static synchronized List<String> _getUntrackedFileNames() {
 		if (_untrackedFileNames != null) {
 			return _untrackedFileNames;
@@ -819,6 +664,44 @@ public class SourceFormatterUtil {
 			});
 
 		return _untrackedFileNames;
+	}
+
+	private static List<String> _matchFileContents(
+		List<String> argList, String baseDirName, String[] includes) {
+
+		List<String> args = new ArrayList<>();
+
+		args.add("grep");
+
+		args.addAll(argList);
+
+		List<String> allArgs = new ArrayList<>(args);
+
+		List<String> filters = new ArrayList<>();
+
+		ArrayUtil.isNotEmptyForEach(
+			includes, includeGlob -> filters.add(":(glob)" + includeGlob));
+
+		if (ListUtil.isNotEmpty(filters)) {
+			allArgs.add("--");
+
+			allArgs.addAll(filters);
+		}
+
+		List<String> fileNames = new ArrayList<>();
+
+		try {
+			_executeGitCommand(args, baseDirName, fileNames::add);
+
+			return fileNames;
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+		}
+
+		return null;
 	}
 
 	private static List<String> _scanForFileNames(

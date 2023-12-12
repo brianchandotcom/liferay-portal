@@ -87,8 +87,7 @@ public class DocumentLibraryConvertProcessTest {
 		_defaultStore = ReflectionTestUtil.getAndSetFieldValue(
 			_convertProcess, "_store", _fileSystemStore);
 
-		ReflectionTestUtil.setFieldValue(
-			DLStoreImpl.class, "_store", _fileSystemStore);
+		DLStoreImpl.setStore(_fileSystemStore);
 
 		_group = GroupTestUtil.addGroup();
 	}
@@ -97,7 +96,7 @@ public class DocumentLibraryConvertProcessTest {
 	public void tearDown() throws Exception {
 		ReflectionTestUtil.setFieldValue(_convertProcess, "_store", _dbStore);
 
-		ReflectionTestUtil.setFieldValue(DLStoreImpl.class, "_store", _dbStore);
+		DLStoreImpl.setStore(_dbStore);
 
 		_convertProcess.setParameterValues(
 			new String[] {
@@ -113,8 +112,7 @@ public class DocumentLibraryConvertProcessTest {
 			ReflectionTestUtil.setFieldValue(
 				_convertProcess, "_store", _defaultStore);
 
-			ReflectionTestUtil.setFieldValue(
-				DLStoreImpl.class, "_store", _defaultStore);
+			DLStoreImpl.setStore(_defaultStore);
 		}
 	}
 

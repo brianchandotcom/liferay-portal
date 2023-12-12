@@ -1,0 +1,15 @@
+assemble:
+    - from: build/static
+      into: static
+liferay-testray-custom-element:
+    cssURLs:
+        - index.*.css
+    friendlyURLMapping: liferay-testray-custom-element
+    htmlElementName: liferay-testray-custom-element
+    instanceable: false
+    name: Liferay Testray Custom Element
+    portletCategoryName: category.client-extensions
+    type: customElement
+    urls:
+        - index*.js
+    useESM: true

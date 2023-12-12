@@ -1,0 +1,27 @@
+.tr-table {
+	&__row {
+		&--highligth {
+			border-left: 4px solid $color-primary;
+		}
+	}
+}
+
+.tr-qa-table {
+	border-collapse: separate;
+	border-spacing: 0 1em;
+	width: 100%;
+
+	&__header {
+		color: $color-gray;
+		font-size: 11px;
+		font-weight: 500;
+		text-transform: uppercase;
+		width: 150px;
+	}
+}
+
+.pagination-bar {
+	.pagination-root {
+		z-index: 0;
+	}
+}

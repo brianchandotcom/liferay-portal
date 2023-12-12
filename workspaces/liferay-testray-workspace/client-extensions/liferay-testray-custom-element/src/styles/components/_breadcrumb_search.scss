@@ -1,0 +1,124 @@
+.breadcrumb-search-container {
+	margin: 0 8px;
+
+	.build-success {
+		color: green;
+	}
+
+	.build-danger {
+		color: red;
+	}
+
+	.breadcrumb-search-content,
+	.breadcrumb-search-input-edit {
+		background: none !important;
+		display: inline-block;
+		font-size: 1em;
+		font-weight: $font-header-weight;
+		&:focus-visible {
+			border: none !important;
+			outline: none !important;
+		}
+	}
+
+	.breadcrumb-search-input-edit-wrapper {
+		display: inline-block;
+		margin: 0;
+		white-space: nowrap;
+
+		.breadcrumb-search-input-edit {
+			border-width: 0;
+			font-size: 1em;
+			font-weight: $font-header-weight;
+			height: auto;
+			margin-left: 10px;
+			padding: 0;
+
+			&:focus,
+			&:focus-visible {
+				border: none;
+				border-width: 0;
+				box-shadow: none;
+			}
+		}
+
+		&:before {
+			content: '/';
+			display: inline;
+			padding-left: 8px;
+			vertical-align: bottom;
+		}
+	}
+
+	.divider {
+		padding: 0 8px;
+		vertical-align: bottom;
+	}
+
+	.selected-container {
+		.breadcrumb-selected-item,
+		.divider {
+			color: $color-gray;
+			vertical-align: bottom;
+		}
+
+		&.active {
+			.breadcrumb-selected-item,
+			.divider {
+				color: $color-black;
+			}
+		}
+	}
+
+	ul {
+		border-bottom-width: 0;
+		border-left-width: 0;
+		border-right-width: 0;
+		list-style: none;
+		max-height: 500px;
+		overflow-y: scroll;
+	}
+
+	&.breadcrumb-finder-navigator {
+		font-weight: $font-header-weight;
+
+		.breadcrumb-search-content {
+			align-items: flex-end;
+			display: flex;
+			margin: 5px 0;
+			opacity: 0;
+			transform: scale(0.99);
+			transition: opacity 0.1s linear, transform 0.1s linear,
+				visibility 0s linear;
+			white-space: nowrap;
+
+			&,
+			&:active,
+			&:focus {
+				background-color: $color-white;
+				border-width: 0;
+				font-size: 1em;
+			}
+		}
+		.breadcrumb-selected-item {
+			max-width: 300px;
+			overflow: hidden;
+			text-overflow: clip;
+			white-space: nowrap;
+		}
+
+		.selected-container {
+			.breadcrumb-selected-item,
+			.divider {
+				display: inline-block;
+				max-width: 300px;
+			}
+		}
+
+		.breadcrumb-search-content {
+			opacity: 1;
+			transform: scale(1);
+			visibility: visible;
+		}
+	}
+}

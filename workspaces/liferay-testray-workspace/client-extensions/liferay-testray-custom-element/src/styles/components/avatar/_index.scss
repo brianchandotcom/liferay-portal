@@ -1,0 +1,62 @@
+.tr-avatar {
+	align-items: center;
+	display: flex;
+
+	&__sticker {
+		min-height: 28px;
+		min-width: 28px;
+		transform: scale(0.85);
+	}
+}
+
+.tr-avatar-group {
+	align-items: center;
+	display: flex;
+	flex-direction: row-reverse;
+	justify-content: end;
+	padding: 0;
+	position: relative;
+
+	&__item {
+		margin-right: -18px;
+		position: relative;
+
+		&:not(:last-child) {
+			left: 0;
+		}
+
+		&__avatar {
+			border: solid 2px $color-white;
+			box-shadow: var(
+				--box-shadow-lg,
+				0 1rem 3rem rgba(0, 0, 0, 0.175)
+			) !important;
+			cursor: pointer;
+			position: relative;
+
+			&:empty {
+				animation: shine 1s infinite;
+				background: linear-gradient(
+						to right,
+						rgba(255, 255, 255, 0),
+						rgba(255, 255, 255, 0.3) 50%,
+						rgba(255, 255, 255, 0) 80%
+					),
+					lightgray;
+				background-position: 0 0;
+				background-repeat: repeat-y;
+				background-size: 30px 500px;
+				border-radius: 50%;
+				display: block;
+				height: 50px;
+				width: 50px;
+			}
+		}
+	}
+}
+
+@keyframes shine {
+	to {
+		background-position: 420% 0;
+	}
+}

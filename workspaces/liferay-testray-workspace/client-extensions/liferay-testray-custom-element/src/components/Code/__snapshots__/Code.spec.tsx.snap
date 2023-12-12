@@ -1,0 +1,11 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Code > renders code with children 1`] = `
+<DocumentFragment>
+  <code
+    class="bg-light break-text font-italic p-2 text-secondary w-100"
+  >
+    com.liferay.testray.user
+  </code>
+</DocumentFragment>
+`;

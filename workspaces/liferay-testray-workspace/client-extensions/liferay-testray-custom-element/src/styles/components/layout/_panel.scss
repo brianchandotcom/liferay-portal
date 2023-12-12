@@ -1,0 +1,27 @@
+.panel {
+	background-color: #fff !important;
+	color: #000;
+	padding: 0;
+	z-index: 1;
+}
+
+.collapsed {
+	z-index: 1;
+}
+
+.panel-header,
+.panel-body {
+	padding: 0;
+}
+
+.panel-header-link {
+	z-index: 0;
+
+	&:focus {
+		z-index: 0;
+	}
+
+	h5 {
+		z-index: 0;
+	}
+}

@@ -1,0 +1,17 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Avatar > renders with success 1`] = `
+<DocumentFragment>
+  <div
+    class="align-items-center d-flex"
+  >
+    <span
+      class="sticker text-brand-secondary-lighten-6 sticker-circle sticker-lg"
+    >
+      <span
+        class="sticker-overlay"
+      />
+    </span>
+  </div>
+</DocumentFragment>
+`;

@@ -1,5 +1,36 @@
 # Poshi Runner Change Log
 
+## 1.0.481
+
+### Documentation
+
+* [POSHI-652](https://liferay.atlassian.net/browse/POSHI-652) - Update poshi-script.markdown to reflect new major syntax changes
+
+### Other
+
+* [LPS-194474](https://liferay.atlassian.net/browse/LPS-194474) - Refactor Echo case runs over 5 mins
+* [LPS-203216](https://liferay.atlassian.net/browse/LPS-203216) - Investigate failure in LocalFile.WebContentDisplay#ViewAllSettingsEnabled
+* [LPSA-61758](https://liferay.atlassian.net/browse/LPSA-61758) - Add option to override/set custom artifact version for the uploadPoshiRunnerResources task
+* [LRQA-81564](https://liferay.atlassian.net/browse/LRQA-81564) - Deprecated methods "waitForNotPartialText" and "assertNotPartialText" should be replaced
+* [LRQA-81565](https://liferay.atlassian.net/browse/LRQA-81565) - Deprecated methods "waitForTextCaseInsensitive" and "assertTextCaseInsensitive" should be replaced
+* [LRQA-81566](https://liferay.atlassian.net/browse/LRQA-81566) - Deprecated methods "waitForPartialTextCaseInsensitive" and "assertPartialTextCaseInsensitive" should be replaced
+
+### Script
+
+* [POSHI-674](https://liferay.atlassian.net/browse/POSHI-674) - Update poshi-runner-resources to use new signature syntax
+
+### Testing
+
+* [POSHI-660](https://liferay.atlassian.net/browse/POSHI-660) - Exception failure at PoshiElementFactoryTest
+* [POSHI-661](https://liferay.atlassian.net/browse/POSHI-661) - ComparisonFailure at PoshiSourceProcessorTest
+
+### WebDriver
+
+* [POSHI-630](https://liferay.atlassian.net/browse/POSHI-630) - As a test writer, I would like a property to configure browser resolution for a test 
+* [POSHI-670](https://liferay.atlassian.net/browse/POSHI-670) - Add cookie setting support through ProxyUtil
+* [POSHI-675](https://liferay.atlassian.net/browse/POSHI-675) - Make JSONUtil.getWithJSONPath support expression with null
+* [POSHI-685](https://liferay.atlassian.net/browse/POSHI-685) - Modify RegexUtil.escapeRegexChars to support other types
+
 ## 1.0.477
 
 ### Core

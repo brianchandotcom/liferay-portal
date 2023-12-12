@@ -2337,15 +2337,7 @@ public class DLFileEntryLocalServiceImpl
 				_dlFileVersionLocalService.fetchLatestFileVersion(
 					fileEntry.getFileEntryId(), false);
 
-			_notifySubscribers(
-				fileEntry.getUserId(), _EMAIL_TYPE_REVIEW,
-				_buildEntryURL(latestFileVersion), latestFileVersion,
-				new ServiceContext());
-
-			_notifyOwner(
-				fileEntry.getUserId(), _EMAIL_TYPE_REVIEW,
-				_buildEntryURL(latestFileVersion), latestFileVersion,
-				new ServiceContext());
+			_notify(fileEntry.getUserId(), _EMAIL_TYPE_REVIEW, latestFileVersion);
 		}
 	}
 
@@ -2692,14 +2684,20 @@ public class DLFileEntryLocalServiceImpl
 					serviceContext);
 			}
 
-			_notifySubscribers(
-				userId, _EMAIL_TYPE_EXPIRED, _buildEntryURL(latestFileVersion),
-				latestFileVersion, new ServiceContext());
-
-			_notifyOwner(
-				userId, _EMAIL_TYPE_EXPIRED, _buildEntryURL(latestFileVersion),
-				latestFileVersion, new ServiceContext());
+			_notify(userId, _EMAIL_TYPE_EXPIRED, latestFileVersion);
 		}
+	}
+
+	private void _notify(
+		long userId, int emailType, DLFileVersion fileVersion)
+		throws PortalException {
+		_notifySubscribers(
+			userId, emailType, _buildEntryURL(fileVersion),
+			fileVersion, new ServiceContext());
+
+		_notifyOwner(
+			userId, emailType, _buildEntryURL(fileVersion),
+			fileVersion, new ServiceContext());
 	}
 
 	private void _expireFileVersion(

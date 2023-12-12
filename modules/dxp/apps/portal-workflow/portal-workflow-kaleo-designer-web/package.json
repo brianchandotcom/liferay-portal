@@ -1,10 +1,10 @@
 {
 	"dependencies": {
 		"@clayui/alert": "3.106.1",
-		"@clayui/autocomplete": "3.107.1",
+		"@clayui/autocomplete": "3.108.0",
 		"@clayui/button": "3.107.0",
 		"@clayui/data-provider": "3.107.0",
-		"@clayui/drop-down": "3.107.1",
+		"@clayui/drop-down": "3.108.0",
 		"@clayui/form": "3.107.0",
 		"@clayui/icon": "3.106.1",
 		"@clayui/layout": "3.106.1",

@@ -8,7 +8,7 @@
 		"@clayui/layout": "3.106.1",
 		"@clayui/loading-indicator": "3.106.1",
 		"@clayui/modal": "3.107.0",
-		"@clayui/multi-select": "3.107.1",
+		"@clayui/multi-select": "3.108.0",
 		"@clayui/sticker": "3.106.1",
 		"@liferay/frontend-js-react-web": "*",
 		"classnames": "2.3.1",

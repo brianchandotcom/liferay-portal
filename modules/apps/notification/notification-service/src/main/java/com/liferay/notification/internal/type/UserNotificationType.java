@@ -7,6 +7,7 @@ package com.liferay.notification.internal.type;
 
 import com.liferay.notification.constants.NotificationConstants;
 import com.liferay.notification.constants.NotificationQueueEntryConstants;
+import com.liferay.notification.constants.NotificationRecipientSettingConstants;
 import com.liferay.notification.context.NotificationContext;
 import com.liferay.notification.internal.type.users.provider.UsersProvider;
 import com.liferay.notification.model.NotificationQueueEntry;
@@ -27,10 +28,12 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -57,6 +60,14 @@ public class UserNotificationType extends BaseNotificationType {
 			NotificationQueueEntryConstants.STATUS_SENT);
 
 		return notificationQueueEntry;
+	}
+
+	@Override
+	public Set<String> getAllowedNotificationRecipientSettingsNames() {
+		return SetUtil.fromArray(
+			NotificationRecipientSettingConstants.NAME_ROLE_NAME,
+			NotificationRecipientSettingConstants.NAME_TERM,
+			NotificationRecipientSettingConstants.NAME_USER_SCREEN_NAME);
 	}
 
 	@Override

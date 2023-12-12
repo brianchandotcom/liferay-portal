@@ -13,6 +13,7 @@ import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.mail.kernel.model.MailMessage;
 import com.liferay.notification.constants.NotificationConstants;
 import com.liferay.notification.constants.NotificationQueueEntryConstants;
+import com.liferay.notification.constants.NotificationRecipientSettingConstants;
 import com.liferay.notification.constants.NotificationTemplateConstants;
 import com.liferay.notification.context.NotificationContext;
 import com.liferay.notification.exception.NotificationRecipientSettingValueException;
@@ -49,6 +50,7 @@ import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.EmailAddressValidatorFactory;
@@ -81,12 +83,25 @@ import org.osgi.service.component.annotations.Reference;
 public class EmailNotificationType extends BaseNotificationType {
 
 	@Override
+	public Set<String> getAllowedNotificationRecipientSettingsNames() {
+		return SetUtil.fromArray(
+			NotificationRecipientSettingConstants.NAME_BCC,
+			NotificationRecipientSettingConstants.NAME_CC,
+			NotificationRecipientSettingConstants.NAME_FROM,
+			NotificationRecipientSettingConstants.NAME_FROM_NAME,
+			NotificationRecipientSettingConstants.NAME_SINGLE_RECIPIENT,
+			NotificationRecipientSettingConstants.NAME_TO);
+	}
+
+	@Override
 	public String getFromName(NotificationQueueEntry notificationQueueEntry) {
 		Map<String, Object> notificationRecipientSettingsMap =
 			NotificationRecipientSettingUtil.
 				getNotificationRecipientSettingsMap(notificationQueueEntry);
 
-		return String.valueOf(notificationRecipientSettingsMap.get("fromName"));
+		return String.valueOf(
+			notificationRecipientSettingsMap.get(
+				NotificationRecipientSettingConstants.NAME_FROM_NAME));
 	}
 
 	@Override
@@ -97,7 +112,9 @@ public class EmailNotificationType extends BaseNotificationType {
 			NotificationRecipientSettingUtil.
 				getNotificationRecipientSettingsMap(notificationQueueEntry);
 
-		return String.valueOf(notificationRecipientSettingsMap.get("to"));
+		return String.valueOf(
+			notificationRecipientSettingsMap.get(
+				NotificationRecipientSettingConstants.NAME_TO));
 	}
 
 	@Override
@@ -169,43 +186,48 @@ public class EmailNotificationType extends BaseNotificationType {
 
 		Map<String, String> evaluatedNotificationRecipientSettings =
 			HashMapBuilder.put(
-				"bcc",
+				NotificationRecipientSettingConstants.NAME_BCC,
 				formatContent(
-					"bcc", notificationContext,
+					NotificationRecipientSettingConstants.NAME_BCC,
+					notificationContext,
 					notificationRecipient.getNotificationRecipientId())
 			).put(
-				"cc",
+				NotificationRecipientSettingConstants.NAME_CC,
 				formatContent(
-					"cc", notificationContext,
+					NotificationRecipientSettingConstants.NAME_CC,
+					notificationContext,
 					notificationRecipient.getNotificationRecipientId())
 			).put(
-				"from",
+				NotificationRecipientSettingConstants.NAME_FROM,
 				formatContent(
-					"from", notificationContext,
+					NotificationRecipientSettingConstants.NAME_FROM,
+					notificationContext,
 					notificationRecipient.getNotificationRecipientId())
 			).put(
-				"fromName",
+				NotificationRecipientSettingConstants.NAME_FROM_NAME,
 				() -> {
 					NotificationRecipientSetting notificationRecipientSetting =
 						notificationRecipientSettingLocalService.
 							fetchNotificationRecipientSetting(
 								notificationRecipient.
 									getNotificationRecipientId(),
-								"fromName");
+								NotificationRecipientSettingConstants.
+									NAME_FROM_NAME);
 
 					return formatLocalizedContent(
 						notificationRecipientSetting.getValueMap(),
 						notificationContext);
 				}
 			).put(
-				"singleRecipient",
+				NotificationRecipientSettingConstants.NAME_SINGLE_RECIPIENT,
 				() -> {
 					NotificationRecipientSetting notificationRecipientSetting =
 						notificationRecipientSettingLocalService.
 							fetchNotificationRecipientSetting(
 								notificationRecipient.
 									getNotificationRecipientId(),
-								"singleRecipient");
+								NotificationRecipientSettingConstants.
+									NAME_SINGLE_RECIPIENT);
 
 					if (notificationRecipientSetting == null) {
 						return Boolean.TRUE.toString();
@@ -214,14 +236,14 @@ public class EmailNotificationType extends BaseNotificationType {
 					return notificationRecipientSetting.getValue();
 				}
 			).put(
-				"to",
+				NotificationRecipientSettingConstants.NAME_TO,
 				() -> {
 					NotificationRecipientSetting notificationRecipientSetting =
 						notificationRecipientSettingLocalService.
 							fetchNotificationRecipientSetting(
 								notificationRecipient.
 									getNotificationRecipientId(),
-								"to");
+								NotificationRecipientSettingConstants.NAME_TO);
 
 					String to = notificationRecipientSetting.getValue(
 						user.getLocale());
@@ -238,18 +260,21 @@ public class EmailNotificationType extends BaseNotificationType {
 
 		String validEmailAddresses = _getValidEmailAddresses(
 			user.getCompanyId(),
-			evaluatedNotificationRecipientSettings.get("to"));
+			evaluatedNotificationRecipientSettings.get(
+				NotificationRecipientSettingConstants.NAME_TO));
 
 		if (!GetterUtil.getBoolean(
 				evaluatedNotificationRecipientSettings.get(
-					"singleRecipient"))) {
+					NotificationRecipientSettingConstants.
+						NAME_SINGLE_RECIPIENT))) {
 
 			prepareNotificationContext(
 				user, body, notificationContext,
 				HashMapBuilder.putAll(
 					evaluatedNotificationRecipientSettings
 				).put(
-					"to", validEmailAddresses
+					NotificationRecipientSettingConstants.NAME_TO,
+					validEmailAddresses
 				).build(),
 				subject);
 
@@ -274,7 +299,7 @@ public class EmailNotificationType extends BaseNotificationType {
 				HashMapBuilder.putAll(
 					evaluatedNotificationRecipientSettings
 				).put(
-					"to", emailAddress
+					NotificationRecipientSettingConstants.NAME_TO, emailAddress
 				).build(),
 				subject);
 
@@ -299,10 +324,13 @@ public class EmailNotificationType extends BaseNotificationType {
 					MailMessage mailMessage = new MailMessage(
 						new InternetAddress(
 							String.valueOf(
-								notificationRecipientSettingsMap.get("from")),
+								notificationRecipientSettingsMap.get(
+									NotificationRecipientSettingConstants.
+										NAME_FROM)),
 							String.valueOf(
 								notificationRecipientSettingsMap.get(
-									"fromName"))),
+									NotificationRecipientSettingConstants.
+										NAME_FROM_NAME))),
 						notificationQueueEntry.getSubject(),
 						notificationQueueEntry.getBody(), true);
 
@@ -313,15 +341,21 @@ public class EmailNotificationType extends BaseNotificationType {
 					mailMessage.setBCC(
 						_toInternetAddresses(
 							String.valueOf(
-								notificationRecipientSettingsMap.get("bcc"))));
+								notificationRecipientSettingsMap.get(
+									NotificationRecipientSettingConstants.
+										NAME_BCC))));
 					mailMessage.setCC(
 						_toInternetAddresses(
 							String.valueOf(
-								notificationRecipientSettingsMap.get("cc"))));
+								notificationRecipientSettingsMap.get(
+									NotificationRecipientSettingConstants.
+										NAME_CC))));
 					mailMessage.setTo(
 						_toInternetAddresses(
 							String.valueOf(
-								notificationRecipientSettingsMap.get("to"))));
+								notificationRecipientSettingsMap.get(
+									NotificationRecipientSettingConstants.
+										NAME_TO))));
 
 					MessageBusUtil.sendMessage(
 						DestinationNames.MAIL, mailMessage);
@@ -540,19 +574,26 @@ public class EmailNotificationType extends BaseNotificationType {
 			Map<String, Object> notificationRecipientSettingsMap)
 		throws PortalException {
 
-		if (Validator.isNull(notificationRecipientSettingsMap.get("from"))) {
+		if (Validator.isNull(
+				notificationRecipientSettingsMap.get(
+					NotificationRecipientSettingConstants.NAME_FROM))) {
+
 			throw new NotificationRecipientSettingValueException.
 				FromMustNotBeNull();
 		}
 
 		if (Validator.isNull(
-				notificationRecipientSettingsMap.get("fromName"))) {
+				notificationRecipientSettingsMap.get(
+					NotificationRecipientSettingConstants.NAME_FROM_NAME))) {
 
 			throw new NotificationRecipientSettingValueException.
 				FromNameMustNotBeNull();
 		}
 
-		if (Validator.isNull(notificationRecipientSettingsMap.get("to"))) {
+		if (Validator.isNull(
+				notificationRecipientSettingsMap.get(
+					NotificationRecipientSettingConstants.NAME_TO))) {
+
 			throw new NotificationRecipientSettingValueException.
 				ToMustNotBeNull();
 		}

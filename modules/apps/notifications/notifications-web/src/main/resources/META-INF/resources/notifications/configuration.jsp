@@ -110,20 +110,18 @@
 										%>
 
 											<td class="lfr-<%= userNotificationDeliveryType.getName() %>-column">
-												<div class="checkbox-container">
-													<aui:input
-														aria-describedby="<%= description %>"
-														aria-labelledby="<%= userNotificationDeliveryType.getName() %>"
-														cssClass="notification-delivery"
-														data-userNotificationDeliveryId="<%= String.valueOf(userNotificationDelivery.getUserNotificationDeliveryId()) %>"
-														disabled="<%= !userNotificationDeliveryType.isModifiable() %>"
-														inlineLabel="<%= Boolean.TRUE.toString() %>"
-														label=""
-														name="<%= String.valueOf(userNotificationDelivery.getUserNotificationDeliveryId()) %>"
-														type="checkbox"
-														value="<%= userNotificationDelivery.isDeliver() %>"
-													/>
-												</div>
+												<aui:input
+													aria-describedby="<%= description %>"
+													aria-labelledby="<%= userNotificationDeliveryType.getName() %>"
+													cssClass="notification-delivery"
+													data-userNotificationDeliveryId="<%= String.valueOf(userNotificationDelivery.getUserNotificationDeliveryId()) %>"
+													disabled="<%= !userNotificationDeliveryType.isModifiable() %>"
+													inlineLabel="<%= Boolean.TRUE.toString() %>"
+													label=""
+													name="<%= String.valueOf(userNotificationDelivery.getUserNotificationDeliveryId()) %>"
+													type="checkbox"
+													value="<%= userNotificationDelivery.isDeliver() %>"
+												/>
 											</td>
 
 										<%

@@ -27,6 +27,8 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.constraints.NotEmpty;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -36,6 +38,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Generated("")
 @GraphQLName("SimpleCaptcha")
 @JsonFilter("Liferay.Vulcan")
+@Schema(requiredProperties = {"token"})
 @XmlRootElement(name = "SimpleCaptcha")
 public class SimpleCaptcha implements Serializable {
 
@@ -46,6 +49,62 @@ public class SimpleCaptcha implements Serializable {
 	public static SimpleCaptcha unsafeToDTO(String json) {
 		return ObjectMapperUtil.unsafeReadValue(SimpleCaptcha.class, json);
 	}
+
+	@Schema
+	public String getAnswer() {
+		return answer;
+	}
+
+	public void setAnswer(String answer) {
+		this.answer = answer;
+	}
+
+	@JsonIgnore
+	public void setAnswer(
+		UnsafeSupplier<String, Exception> answerUnsafeSupplier) {
+
+		try {
+			answer = answerUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String answer;
+
+	@Schema
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
+	@JsonIgnore
+	public void setImage(
+		UnsafeSupplier<String, Exception> imageUnsafeSupplier) {
+
+		try {
+			image = imageUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String image;
 
 	@Schema
 	public String getToken() {
@@ -73,6 +132,7 @@ public class SimpleCaptcha implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@NotEmpty
 	protected String token;
 
 	@Override
@@ -101,6 +161,34 @@ public class SimpleCaptcha implements Serializable {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		if (answer != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"answer\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(answer));
+
+			sb.append("\"");
+		}
+
+		if (image != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"image\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(image));
+
+			sb.append("\"");
+		}
 
 		if (token != null) {
 			if (sb.length() > 1) {

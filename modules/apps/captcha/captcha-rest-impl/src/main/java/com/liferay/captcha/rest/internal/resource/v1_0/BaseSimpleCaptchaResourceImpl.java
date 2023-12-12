@@ -49,7 +49,7 @@ public abstract class BaseSimpleCaptchaResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/captcha/v1.0/simple-captcha'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/captcha/v1.0/simple-captcha-challenge'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {
@@ -57,11 +57,30 @@ public abstract class BaseSimpleCaptchaResourceImpl
 		}
 	)
 	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/simple-captcha")
+	@javax.ws.rs.Path("/simple-captcha-challenge")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public SimpleCaptcha getSimpleCaptcha() throws Exception {
+	public SimpleCaptcha getSimpleCaptchaChallenge() throws Exception {
 		return new SimpleCaptcha();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/captcha/v1.0/simple-captcha-response' -d $'{"answer": ___, "image": ___, "token": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "SimpleCaptcha")
+		}
+	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.Path("/simple-captcha-response")
+	@javax.ws.rs.POST
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public void postSimpleCaptchaResponse(SimpleCaptcha simpleCaptcha)
+		throws Exception {
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

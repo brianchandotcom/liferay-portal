@@ -43,7 +43,10 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface SimpleCaptchaResource {
 
-	public SimpleCaptcha getSimpleCaptcha() throws Exception;
+	public SimpleCaptcha getSimpleCaptchaChallenge() throws Exception;
+
+	public void postSimpleCaptchaResponse(SimpleCaptcha simpleCaptcha)
+		throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {

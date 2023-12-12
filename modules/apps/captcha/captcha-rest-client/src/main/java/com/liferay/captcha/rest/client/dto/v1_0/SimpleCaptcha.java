@@ -25,6 +25,48 @@ public class SimpleCaptcha implements Cloneable, Serializable {
 		return SimpleCaptchaSerDes.toDTO(json);
 	}
 
+	public String getAnswer() {
+		return answer;
+	}
+
+	public void setAnswer(String answer) {
+		this.answer = answer;
+	}
+
+	public void setAnswer(
+		UnsafeSupplier<String, Exception> answerUnsafeSupplier) {
+
+		try {
+			answer = answerUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String answer;
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
+	public void setImage(
+		UnsafeSupplier<String, Exception> imageUnsafeSupplier) {
+
+		try {
+			image = imageUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String image;
+
 	public String getToken() {
 		return token;
 	}

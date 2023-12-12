@@ -46,6 +46,34 @@ public class SimpleCaptchaSerDes {
 
 		sb.append("{");
 
+		if (simpleCaptcha.getAnswer() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"answer\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(simpleCaptcha.getAnswer()));
+
+			sb.append("\"");
+		}
+
+		if (simpleCaptcha.getImage() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"image\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(simpleCaptcha.getImage()));
+
+			sb.append("\"");
+		}
+
 		if (simpleCaptcha.getToken() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -79,6 +107,20 @@ public class SimpleCaptchaSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
+		if (simpleCaptcha.getAnswer() == null) {
+			map.put("answer", null);
+		}
+		else {
+			map.put("answer", String.valueOf(simpleCaptcha.getAnswer()));
+		}
+
+		if (simpleCaptcha.getImage() == null) {
+			map.put("image", null);
+		}
+		else {
+			map.put("image", String.valueOf(simpleCaptcha.getImage()));
+		}
+
 		if (simpleCaptcha.getToken() == null) {
 			map.put("token", null);
 		}
@@ -107,7 +149,17 @@ public class SimpleCaptchaSerDes {
 			SimpleCaptcha simpleCaptcha, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "token")) {
+			if (Objects.equals(jsonParserFieldName, "answer")) {
+				if (jsonParserFieldValue != null) {
+					simpleCaptcha.setAnswer((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "image")) {
+				if (jsonParserFieldValue != null) {
+					simpleCaptcha.setImage((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "token")) {
 				if (jsonParserFieldValue != null) {
 					simpleCaptcha.setToken((String)jsonParserFieldValue);
 				}

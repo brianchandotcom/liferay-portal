@@ -49,10 +49,16 @@ public abstract class BaseJSONWebServiceTestCase {
 	}
 
 	protected static void initPortalServices() {
+		JSONWebServiceActionsManagerImpl jsonWebServiceActionsManagerImpl =
+			new JSONWebServiceActionsManagerImpl();
+
+		jsonWebServiceActionsManagerImpl.activate(
+			SystemBundleUtil.getBundleContext());
+
 		_jsonWebServiceActionsManagerServiceRegistration =
 			_bundleContext.registerService(
 				JSONWebServiceActionsManager.class,
-				new JSONWebServiceActionsManagerImpl(), null);
+				jsonWebServiceActionsManagerImpl, null);
 	}
 
 	protected static void registerAction(Object action) {

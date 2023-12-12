@@ -5,11 +5,17 @@
 
 package com.liferay.portal.search.admin.web.internal.portlet;
 
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.portlet.BaseControlPanelEntry;
 import com.liferay.portal.kernel.portlet.ControlPanelEntry;
-import com.liferay.portal.kernel.portlet.OmniadminControlPanelEntry;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.search.admin.web.internal.constants.SearchAdminPortletKeys;
+import com.liferay.portal.search.configuration.ReindexConfiguration;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adam Brandizzi
@@ -18,5 +24,34 @@ import org.osgi.service.component.annotations.Component;
 	property = "javax.portlet.name=" + SearchAdminPortletKeys.SEARCH_ADMIN,
 	service = ControlPanelEntry.class
 )
-public class SearchAdminControlPanelEntry extends OmniadminControlPanelEntry {
+public class SearchAdminControlPanelEntry extends BaseControlPanelEntry {
+
+	@Override
+	public boolean hasAccessPermission(
+			PermissionChecker permissionChecker, Group group, Portlet portlet)
+		throws Exception {
+
+		if (permissionChecker.isOmniadmin()) {
+			return true;
+		}
+
+		if (permissionChecker.isCompanyAdmin(group.getCompanyId())) {
+			if (_reindexConfiguration.
+					indexActionsInAllVirtualInstancesEnabled() ||
+				ArrayUtil.contains(
+					_reindexConfiguration.indexActionsVirtualInstance(),
+					group.getCompanyId())) {
+
+				return true;
+			}
+
+			return false;
+		}
+
+		return false;
+	}
+
+	@Reference
+	private ReindexConfiguration _reindexConfiguration;
+
 }

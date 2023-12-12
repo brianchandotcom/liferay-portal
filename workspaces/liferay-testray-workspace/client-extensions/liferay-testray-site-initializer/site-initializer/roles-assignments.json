@@ -1,0 +1,38 @@
+[
+	{
+		"groups": [
+			{
+				"groupName": "administrator.user",
+				"groupType": "User"
+			}
+		],
+		"roleName": "Testray Administrator"
+	},
+	{
+		"groups": [
+			{
+				"groupName": "analyst.user",
+				"groupType": "User"
+			}
+		],
+		"roleName": "Testray Analyst"
+	},
+	{
+		"groups": [
+			{
+				"groupName": "lead.user",
+				"groupType": "User"
+			}
+		],
+		"roleName": "Testray Lead"
+	},
+	{
+		"groups": [
+			{
+				"groupName": "user.user",
+				"groupType": "User"
+			}
+		],
+		"roleName": "Testray User"
+	}
+]

@@ -1,0 +1,310 @@
+{
+	"object-fields": [
+		{
+			"DBType": "String",
+			"businessType": "Aggregation",
+			"externalReferenceCode": "COMPONENT-CASE-RESULTS-BLOCKED",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Case Results Blocked"
+			},
+			"name": "caseResultBlocked",
+			"objectFieldSettings": [
+				{
+					"name": "objectRelationshipName",
+					"value": "componentToCaseResult"
+				},
+				{
+					"name": "filters",
+					"value": [
+						{
+							"filterBy": "dueStatus",
+							"filterType": "includes",
+							"json": {
+								"in": [
+									"BLOCKED"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "function",
+					"value": "COUNT"
+				}
+			],
+			"required": false,
+			"state": false,
+			"system": false
+		},
+		{
+			"DBType": "String",
+			"businessType": "Aggregation",
+			"externalReferenceCode": "COMPONENT-CASE-RESULTS-DID-NOT-RUN",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Case Results Did Not Run"
+			},
+			"name": "caseResultDidNotRun",
+			"objectFieldSettings": [
+				{
+					"name": "objectRelationshipName",
+					"value": "componentToCaseResult"
+				},
+				{
+					"name": "filters",
+					"value": [
+						{
+							"filterBy": "dueStatus",
+							"filterType": "includes",
+							"json": {
+								"in": [
+									"DIDNOTRUN"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "function",
+					"value": "COUNT"
+				}
+			],
+			"required": false,
+			"state": false,
+			"system": false
+		},
+		{
+			"DBType": "String",
+			"businessType": "Aggregation",
+			"externalReferenceCode": "COMPONENT-CASE-RESULTS-FAILED",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Case Results Failed"
+			},
+			"name": "caseResultFailed",
+			"objectFieldSettings": [
+				{
+					"name": "objectRelationshipName",
+					"value": "componentToCaseResult"
+				},
+				{
+					"name": "filters",
+					"value": [
+						{
+							"filterBy": "dueStatus",
+							"filterType": "includes",
+							"json": {
+								"in": [
+									"FAILED"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "function",
+					"value": "COUNT"
+				}
+			],
+			"required": false,
+			"state": false,
+			"system": false
+		},
+		{
+			"DBType": "String",
+			"businessType": "Aggregation",
+			"externalReferenceCode": "COMPONENT-CASE-RESULTS-IN-PROGRESS",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Case Results In Progress"
+			},
+			"name": "caseResultInProgress",
+			"objectFieldSettings": [
+				{
+					"name": "objectRelationshipName",
+					"value": "componentToCaseResult"
+				},
+				{
+					"name": "filters",
+					"value": [
+						{
+							"filterBy": "dueStatus",
+							"filterType": "includes",
+							"json": {
+								"in": [
+									"INPROGRESS"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "function",
+					"value": "COUNT"
+				}
+			],
+			"required": false,
+			"state": false,
+			"system": false
+		},
+		{
+			"DBType": "String",
+			"businessType": "Aggregation",
+			"externalReferenceCode": "COMPONENT-CASE-RESULTS-INCOMPLETE",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Case Results Incomplete"
+			},
+			"name": "caseResultIncomplete",
+			"objectFieldSettings": [
+				{
+					"name": "objectRelationshipName",
+					"value": "componentToCaseResult"
+				},
+				{
+					"name": "filters",
+					"value": [
+						{
+							"filterBy": "dueStatus",
+							"filterType": "includes",
+							"json": {
+								"in": [
+									"INPROGRESS",
+									"UNTESTED"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "function",
+					"value": "COUNT"
+				}
+			],
+			"required": false,
+			"state": false,
+			"system": false
+		},
+		{
+			"DBType": "String",
+			"businessType": "Aggregation",
+			"externalReferenceCode": "COMPONENT-CASE-RESULTS-PASSED",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Case Results Passed"
+			},
+			"name": "caseResultPassed",
+			"objectFieldSettings": [
+				{
+					"name": "objectRelationshipName",
+					"value": "componentToCaseResult"
+				},
+				{
+					"name": "filters",
+					"value": [
+						{
+							"filterBy": "dueStatus",
+							"filterType": "includes",
+							"json": {
+								"in": [
+									"PASSED"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "function",
+					"value": "COUNT"
+				}
+			],
+			"required": false,
+			"state": false,
+			"system": false
+		},
+		{
+			"DBType": "String",
+			"businessType": "Aggregation",
+			"externalReferenceCode": "COMPONENT-CASE-RESULTS-TEST-FIX",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Case Results Test Fix"
+			},
+			"name": "caseResultTestFix",
+			"objectFieldSettings": [
+				{
+					"name": "objectRelationshipName",
+					"value": "componentToCaseResult"
+				},
+				{
+					"name": "filters",
+					"value": [
+						{
+							"filterBy": "dueStatus",
+							"filterType": "includes",
+							"json": {
+								"in": [
+									"TESTFIX"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "function",
+					"value": "COUNT"
+				}
+			],
+			"required": false,
+			"state": false,
+			"system": false
+		},
+		{
+			"DBType": "String",
+			"businessType": "Aggregation",
+			"externalReferenceCode": "COMPONENT-CASE-RESULTS-UNTESTED",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Case Results Untested"
+			},
+			"name": "caseResultUntested",
+			"objectFieldSettings": [
+				{
+					"name": "objectRelationshipName",
+					"value": "componentToCaseResult"
+				},
+				{
+					"name": "filters",
+					"value": [
+						{
+							"filterBy": "dueStatus",
+							"filterType": "includes",
+							"json": {
+								"in": [
+									"UNTESTED"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "function",
+					"value": "COUNT"
+				}
+			],
+			"required": false,
+			"state": false,
+			"system": false
+		}
+	],
+	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:Component$]"
+}

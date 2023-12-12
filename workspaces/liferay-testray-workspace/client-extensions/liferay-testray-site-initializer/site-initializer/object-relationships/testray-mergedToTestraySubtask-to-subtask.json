@@ -1,0 +1,11 @@
+{
+	"deletionType": "cascade",
+	"label": {
+		"en-US": "Merged To Testray Subtask"
+	},
+	"name": "mergedToTestraySubtask",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:Subtask$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:Subtask$]",
+	"objectDefinitionName2": "Subtask",
+	"type": "oneToMany"
+}

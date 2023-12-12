@@ -1,0 +1,118 @@
+{
+	"object-fields": [
+		{
+			"DBType": "String",
+			"businessType": "Aggregation",
+			"externalReferenceCode": "SUBTASK-SCORE-COMPLETED",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Subtask Score Completed"
+			},
+			"name": "subtaskScoreCompleted",
+			"objectFieldSettings": [
+				{
+					"name": "objectRelationshipName",
+					"value": "taskToSubtasks"
+				},
+				{
+					"name": "filters",
+					"value": [
+						{
+							"filterBy": "dueStatus",
+							"filterType": "includes",
+							"json": {
+								"in": [
+									"COMPLETE"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "function",
+					"value": "SUM"
+				},
+				{
+					"name": "objectFieldName",
+					"value": "score"
+				}
+			],
+			"required": false,
+			"state": false,
+			"system": false
+		},
+		{
+			"DBType": "String",
+			"businessType": "Aggregation",
+			"externalReferenceCode": "SUBTASK-SCORE",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Subtask Score"
+			},
+			"name": "subtaskScore",
+			"objectFieldSettings": [
+				{
+					"name": "objectRelationshipName",
+					"value": "taskToSubtasks"
+				},
+				{
+					"name": "function",
+					"value": "SUM"
+				},
+				{
+					"name": "objectFieldName",
+					"value": "score"
+				}
+			],
+			"required": false,
+			"state": false,
+			"system": false
+		},
+		{
+			"DBType": "String",
+			"businessType": "Aggregation",
+			"externalReferenceCode": "SUBTASK-SCORE-SELF-INCOMPLETE",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Subtask Score Self Incomplete"
+			},
+			"name": "subtaskScoreSelfIncomplete",
+			"objectFieldSettings": [
+				{
+					"name": "objectRelationshipName",
+					"value": "taskToSubtasks"
+				},
+				{
+					"name": "filters",
+					"value": [
+						{
+							"filterBy": "dueStatus",
+							"filterType": "includes",
+							"json": {
+								"in": [
+									"OPEN",
+									"INANALYSIS"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "function",
+					"value": "SUM"
+				},
+				{
+					"name": "objectFieldName",
+					"value": "score"
+				}
+			],
+			"required": false,
+			"state": false,
+			"system": false
+		}
+	],
+	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:Task$]"
+}

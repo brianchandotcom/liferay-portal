@@ -1,0 +1,124 @@
+{
+	"label": {
+		"en_US": "Testray Case Result"
+	},
+	"name": "CaseResult",
+	"objectFields": [
+		{
+			"DBType": "Long",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Message Board Message Id"
+			},
+			"name": "mbMessageId",
+			"required": false,
+			"type": "Long"
+		},
+		{
+			"DBType": "Long",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Message Board Thread Id"
+			},
+			"name": "mbThreadId",
+			"required": false,
+			"type": "Long"
+		},
+		{
+			"DBType": "Date",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Start Date"
+			},
+			"name": "startDate",
+			"required": false,
+			"type": "Date"
+		},
+		{
+			"DBType": "Date",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Closed Date"
+			},
+			"name": "closedDate",
+			"required": false,
+			"type": "Date"
+		},
+		{
+			"DBType": "Clob",
+			"indexed": true,
+			"indexedAsKeyword": true,
+			"label": {
+				"en_US": "Errors"
+			},
+			"name": "errors",
+			"required": false,
+			"type": "Clob"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Picklist",
+			"indexed": true,
+			"indexedAsKeyword": true,
+			"label": {
+				"en_US": "Due Status"
+			},
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Case Result Statuses$]",
+			"name": "dueStatus",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": true,
+			"label": {
+				"en_US": "Issues"
+			},
+			"name": "issues",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "Clob",
+			"indexed": true,
+			"indexedAsKeyword": true,
+			"label": {
+				"en_US": "Comment"
+			},
+			"name": "comment",
+			"required": false,
+			"type": "Clob"
+		},
+		{
+			"DBType": "Clob",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Attachments"
+			},
+			"name": "attachments",
+			"required": false,
+			"type": "Clob"
+		},
+		{
+			"DBType": "Integer",
+			"indexed": true,
+			"indexedAsKeyword": true,
+			"label": {
+				"en_US": "Warnings"
+			},
+			"name": "warnings",
+			"required": false,
+			"type": "Integer"
+		}
+	],
+	"pluralLabel": {
+		"en_US": "Testray Cases Results"
+	},
+	"scope": "company"
+}

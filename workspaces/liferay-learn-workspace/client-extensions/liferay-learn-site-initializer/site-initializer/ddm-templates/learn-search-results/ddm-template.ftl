@@ -149,18 +149,7 @@
 						</div>
 
 						<div class="modified-date pt-2">
-							<#assign
-								finalModifiedDateString = ""
-								modifiedDateStringParts = searchEntry.getModifiedDateString()?split(":")
-							/>
-
-							<#if modifiedDateStringParts[0]?length gt modifiedDateStringParts[1]?length>
-								<#assign finalModifiedDateString = modifiedDateStringParts[0] + ":" />
-							<#else>
-								<#assign finalModifiedDateString = ":" + modifiedDateStringParts[1] />
-							</#if>
-
-							${languageUtil.get(locale, "last-modified")}: ${finalModifiedDateString?replace("[0-9]*:[0-9]*", "", "r")}
+							${languageUtil.get(locale, "last-modified")}: ${searchEntry.getModifiedDateString()}
 						</div>
 					</a>
 				</div>

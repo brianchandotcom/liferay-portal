@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Adolfo Pérez
  */
-@Component(property = "supportedMimeTypes=*", service = AMImageScaler.class)
+@Component(property = "mimeTypes=*", service = AMImageScaler.class)
 public class AMDefaultImageScaler implements AMImageScaler {
 
 	@Override

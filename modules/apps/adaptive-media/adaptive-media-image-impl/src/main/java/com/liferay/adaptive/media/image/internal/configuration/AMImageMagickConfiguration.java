@@ -25,6 +25,6 @@ public interface AMImageMagickConfiguration {
 		name = "adaptive-media-imagemagick-supported-mime-type",
 		required = false
 	)
-	public String[] supportedMimeTypes();
+	public String[] mimeTypes();
 
 }

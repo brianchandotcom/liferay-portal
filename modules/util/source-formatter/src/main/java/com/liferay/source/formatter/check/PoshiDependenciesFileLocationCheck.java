@@ -50,17 +50,17 @@ public class PoshiDependenciesFileLocationCheck extends BaseFileCheck {
 		for (Map.Entry<String, Set<String>> entry :
 				_dependenciesFileReferencesMap.entrySet()) {
 
-			Set<String> referencesFiles = entry.getValue();
+			Set<String> referencesFileNames = entry.getValue();
 
-			if (referencesFiles.size() <= 1) {
+			if (referencesFileNames.size() <= 1) {
 				continue;
 			}
 
 			Set<String> removedDuplicatedFilePaths = new HashSet<>();
 
-			for (String referencesFile : referencesFiles) {
-				String referencesFilePath = referencesFile.substring(
-					0, referencesFile.lastIndexOf("/"));
+			for (String referencesFileName : referencesFileNames) {
+				String referencesFilePath = referencesFileName.substring(
+					0, referencesFileName.lastIndexOf("/"));
 
 				removedDuplicatedFilePaths.add(referencesFilePath);
 			}
@@ -69,8 +69,8 @@ public class PoshiDependenciesFileLocationCheck extends BaseFileCheck {
 				continue;
 			}
 
-			for (String referencesFile : referencesFiles) {
-				if (referencesFile.equals(absolutePath)) {
+			for (String referencesFileName : referencesFileNames) {
+				if (referencesFileName.equals(absolutePath)) {
 					addMessage(
 						fileName,
 						StringBundler.concat(
@@ -90,20 +90,22 @@ public class PoshiDependenciesFileLocationCheck extends BaseFileCheck {
 		for (Map.Entry<String, Set<String>> entry :
 				_dependenciesGlobalFileReferencesMap.entrySet()) {
 
-			Set<String> referencesFiles = entry.getValue();
+			Set<String> referencesFileNames = entry.getValue();
 
-			if (referencesFiles.size() == 1) {
-				for (String referencesFile : referencesFiles) {
-					if (referencesFile.equals(absolutePath)) {
-						addMessage(
-							fileName,
-							StringBundler.concat(
-								"Test dependencies file '", entry.getKey(),
-								"' is only referenced by one module, move it ",
-								"to module dependencies directory"));
+			if (referencesFileNames.size() != 1) {
+				continue;
+			}
 
-						break;
-					}
+			for (String referencesFileName : referencesFileNames) {
+				if (referencesFileName.equals(absolutePath)) {
+					addMessage(
+						fileName,
+						StringBundler.concat(
+							"Test dependencies file '", entry.getKey(),
+							"' is only referenced by one module, move it to ",
+							"module dependencies directory"));
+
+					break;
 				}
 			}
 		}

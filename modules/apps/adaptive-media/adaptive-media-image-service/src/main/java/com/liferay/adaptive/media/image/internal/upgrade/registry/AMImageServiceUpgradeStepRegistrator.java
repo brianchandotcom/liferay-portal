@@ -7,6 +7,7 @@ package com.liferay.adaptive.media.image.internal.upgrade.registry;
 
 import com.liferay.adaptive.media.image.internal.upgrade.v2_0_0.util.AMImageEntryTable;
 import com.liferay.adaptive.media.image.internal.upgrade.v2_2_1.AMImageConfigurationUpgradeProcess;
+import com.liferay.adaptive.media.image.internal.upgrade.v2_2_2.AMImageMagickConfigurationUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.BaseSQLServerDatetimeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
@@ -47,6 +48,10 @@ public class AMImageServiceUpgradeStepRegistrator
 		registry.register(
 			"2.2.0", "2.2.1",
 			new AMImageConfigurationUpgradeProcess(_configurationAdmin));
+
+		registry.register(
+			"2.2.1", "2.2.2",
+			new AMImageMagickConfigurationUpgradeProcess(_configurationAdmin));
 	}
 
 	@Reference

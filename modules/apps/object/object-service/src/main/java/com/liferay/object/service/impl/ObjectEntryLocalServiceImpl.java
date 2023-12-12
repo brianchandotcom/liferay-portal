@@ -1958,13 +1958,6 @@ public class ObjectEntryLocalServiceImpl
 			}
 		}
 
-		long searchLong = GetterUtil.getLong(search);
-
-		if (searchLong != 0L) {
-			searchPredicate = searchPredicate.or(
-				ObjectEntryTable.INSTANCE.objectEntryId.eq(searchLong));
-		}
-
 		if (predicate == null) {
 			if (searchPredicate == null) {
 				return null;

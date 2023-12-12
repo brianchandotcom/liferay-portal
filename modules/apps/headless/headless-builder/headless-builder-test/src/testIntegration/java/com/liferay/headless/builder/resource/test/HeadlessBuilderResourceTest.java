@@ -2149,8 +2149,8 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				"status", "BAD_REQUEST"
 			).put(
 				"title",
-				"The Base URL is already in use. " +
-					"Please enter a unique Base URL."
+				"The Base URL is already in use. Please enter a unique Base " +
+					"URL."
 			).toString(),
 			HTTPTestUtil.invokeToJSONObject(
 				JSONUtil.put(

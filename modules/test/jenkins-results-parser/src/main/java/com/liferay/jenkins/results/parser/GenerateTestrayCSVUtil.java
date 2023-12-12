@@ -342,10 +342,10 @@ public class GenerateTestrayCSVUtil {
 		private TestcaseResult(JSONObject resultJSONObject) {
 			_resultJSONObject = resultJSONObject;
 
-			_testrayCaseName = resultJSONObject.getString("testrayCaseName");
 			_errorMessage = resultJSONObject.getString("errors");
 			_historyURL = resultJSONObject.getString("htmlURL") + "/history";
 			_pullRequest = null;
+			_testrayCaseName = resultJSONObject.getString("testrayCaseName");
 			_testrayCaseResultId = resultJSONObject.getLong("testrayCaseResultId");
 			_testrayRunId = resultJSONObect.getLong("testrayRunId");
 		}

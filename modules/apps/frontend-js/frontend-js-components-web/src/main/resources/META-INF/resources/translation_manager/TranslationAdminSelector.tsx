@@ -156,7 +156,7 @@ export default function TranslationAdminSelector({
 				}
 			>
 				<ClayDropDown.ItemList>
-					{activeLocales.map(({id, label, symbol}) => {
+					{activeLocales.map(({displayName, id, label, symbol}) => {
 						return (
 							<ClayDropDown.Item
 								key={id}
@@ -193,6 +193,7 @@ export default function TranslationAdminSelector({
 													ariaLabels.translated,
 											}}
 											languageId={id}
+											languageName={displayName}
 											localeValue={
 												translations
 													? translations[id]

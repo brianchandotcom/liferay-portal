@@ -6,6 +6,7 @@
 import {DisplayType} from '@clayui/alert';
 import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
+import {sub} from 'frontend-js-web';
 import React from 'react';
 
 interface Props {
@@ -16,6 +17,7 @@ interface Props {
 		translated?: string;
 	};
 	languageId: Liferay.Language.Locale;
+	languageName: string;
 	localeValue: string | null;
 }
 
@@ -28,6 +30,7 @@ export default function TranslationAdminStatusLabel({
 	defaultLanguageId,
 	labels,
 	languageId,
+	languageName,
 	localeValue,
 }: Props) {
 	const status = {
@@ -57,8 +60,19 @@ export default function TranslationAdminStatusLabel({
 
 	return (
 		<ClayLayout.ContentCol containerElement="span">
+			<span className="sr-only">
+				{sub(
+					Liferay.Language.get('x-language-x'),
+					languageName,
+					statusLabel.label
+				)}
+			</span>
+
 			<ClayLayout.ContentSection>
-				<ClayLabel displayType={statusLabel.displayType}>
+				<ClayLabel
+					aria-hidden="true"
+					displayType={statusLabel.displayType}
+				>
 					{statusLabel.label}
 				</ClayLabel>
 			</ClayLayout.ContentSection>

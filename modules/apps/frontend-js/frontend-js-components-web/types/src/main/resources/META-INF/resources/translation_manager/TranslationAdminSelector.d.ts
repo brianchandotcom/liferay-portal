@@ -8,6 +8,7 @@
 import {Translations} from './TranslationAdminContent';
 interface IProps extends Translations {
 	adminMode?: boolean;
+	displayType?: 'default' | 'horizontal';
 	onActiveLanguageIdsChange?: (
 		languageIds: Liferay.Language.Locale[]
 	) => void;
@@ -22,6 +23,7 @@ export default function TranslationAdminSelector({
 	ariaLabels,
 	availableLocales,
 	defaultLanguageId,
+	displayType,
 	onActiveLanguageIdsChange,
 	onSelectedLanguageIdChange,
 	selectedLanguageId: initialSelectedLanguageId,

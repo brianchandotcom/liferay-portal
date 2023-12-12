@@ -13,8 +13,14 @@ import React, {useEffect, useMemo, useState} from 'react';
 import {Locale, Translations} from './TranslationAdminContent';
 import TranslationAdminModal from './TranslationAdminModal';
 
+const DISPLAY_TYPE = {
+	default: 'default',
+	horizontal: 'horizontal',
+} as const;
+
 interface IProps extends Translations {
 	adminMode?: boolean;
+	displayType?: 'default' | 'horizontal';
 	onActiveLanguageIdsChange?: (
 		languageIds: Liferay.Language.Locale[]
 	) => void;
@@ -40,6 +46,7 @@ export default function TranslationAdminSelector({
 	},
 	availableLocales = [],
 	defaultLanguageId,
+	displayType = DISPLAY_TYPE.default,
 	onActiveLanguageIdsChange = noop,
 	onSelectedLanguageIdChange = noop,
 	selectedLanguageId: initialSelectedLanguageId,
@@ -118,22 +125,37 @@ export default function TranslationAdminSelector({
 				active={selectorDropdownActive}
 				onActiveChange={setSelectorDropdownActive}
 				trigger={
-					<ClayButton
-						displayType="secondary"
-						monospaced
-						small={small}
-						title={Liferay.Language.get(
-							'select-translation-language'
-						)}
-					>
-						<span className="inline-item">
-							<ClayIcon symbol={selectedLocale.symbol} />
-						</span>
+					Liferay.FeatureFlags['LPS-114700'] &&
+					displayType === DISPLAY_TYPE.horizontal ? (
+						<ClayButton
+							className="btn-block form-control-select"
+							displayType="secondary"
+							size="sm"
+						>
+							<span className="inline-item-before">
+								<ClayIcon symbol={selectedLocale.symbol} />
+							</span>
 
-						<span className="btn-section">
 							{selectedLocale.label}
-						</span>
-					</ClayButton>
+						</ClayButton>
+					) : (
+						<ClayButton
+							displayType="secondary"
+							monospaced
+							small={small}
+							title={Liferay.Language.get(
+								'select-translation-language'
+							)}
+						>
+							<span className="inline-item">
+								<ClayIcon symbol={selectedLocale.symbol} />
+							</span>
+
+							<span className="btn-section">
+								{selectedLocale.label}
+							</span>
+						</ClayButton>
+					)
 				}
 			>
 				<ClayDropDown.ItemList>

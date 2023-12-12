@@ -43,6 +43,7 @@ export function RightSidebarObjectFieldDetails() {
 			forbiddenChars,
 			forbiddenLastChars,
 			forbiddenNames,
+			isRootDescendantNode,
 			objectWebLearnResources,
 			selectedObjectDefinitionNode,
 			selectedObjectField,
@@ -228,6 +229,7 @@ export function RightSidebarObjectFieldDetails() {
 							selectedObjectDefinitionNode?.data?.storageType ===
 								'default' ?? true
 						}
+						isRootDescendantNode={isRootDescendantNode}
 						learnResources={objectWebLearnResources}
 						modelBuilder
 						objectDefinitionExternalReferenceCode={

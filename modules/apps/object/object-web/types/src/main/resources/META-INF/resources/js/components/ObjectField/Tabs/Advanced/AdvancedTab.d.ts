@@ -11,6 +11,7 @@ interface AdvancedTabProps {
 	creationLanguageId: Liferay.Language.Locale;
 	errors: ObjectFieldErrors;
 	isDefaultStorageType: boolean;
+	isRootDescendantNode: boolean;
 	learnResources: ObjectWebLearnResources;
 	modelBuilder?: boolean;
 	onSubmit?: () => void;
@@ -24,6 +25,7 @@ export declare function AdvancedTab({
 	creationLanguageId,
 	errors,
 	isDefaultStorageType,
+	isRootDescendantNode,
 	learnResources,
 	modelBuilder,
 	onSubmit,

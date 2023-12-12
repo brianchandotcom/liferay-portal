@@ -44,6 +44,7 @@ export function EditObjectFieldContent({
 	handleChange,
 	isApproved,
 	isDefaultStorageType,
+	isRootDescendantNode,
 	learnResources,
 	modelBuilder = false,
 	objectDefinitionExternalReferenceCode,
@@ -165,6 +166,7 @@ export function EditObjectFieldContent({
 								creationLanguageId={creationLanguageId}
 								errors={errors}
 								isDefaultStorageType={isDefaultStorageType}
+								isRootDescendantNode={isRootDescendantNode}
 								learnResources={learnResources}
 								modelBuilder={modelBuilder}
 								onSubmit={onSubmit}

@@ -35,6 +35,8 @@ ObjectField objectField = (ObjectField)request.getAttribute(ObjectWebKeys.OBJECT
 		).put(
 			"isDefaultStorageType", objectDefinition.isDefaultStorageType()
 		).put(
+			"isRootDescendantNode", objectDefinition.isRootDescendantNode()
+		).put(
 			"learnResources", LearnMessageUtil.getReactDataJSONObject("object-web")
 		).put(
 			"objectDefinitionExternalReferenceCode", objectDefinition.getExternalReferenceCode()

@@ -212,6 +212,7 @@ export type TState = {
 	forbiddenLastChars: string[];
 	forbiddenNames: string[];
 	isLoadingObjectFolder: boolean;
+	isRootDescendantNode: boolean;
 	leftSidebarItems: LeftSidebarItem[];
 	modelBuilderModals: ModelBuilderModals;
 	objectDefinitionPermissionsURL: string;

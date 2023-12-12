@@ -32,6 +32,7 @@ export declare function EditObjectFieldContent({
 	handleChange,
 	isApproved,
 	isDefaultStorageType,
+	isRootDescendantNode,
 	learnResources,
 	modelBuilder,
 	objectDefinitionExternalReferenceCode,

@@ -189,7 +189,7 @@ public class PoshiDependenciesFileLocationCheck extends BaseFileCheck {
 
 		_dependenciesGlobalFileLocationsMap = new HashMap<>();
 
-		file = new File(portalDir, _GLOBAL_DEPENDENCIES_DIRECTORY);
+		file = new File(portalDir, _GLOBAL_DEPENDENCIES_LOCATION);
 
 		fileNames = SourceFormatterUtil.scanForFileNames(
 			file.getCanonicalPath(), new String[0]);
@@ -250,7 +250,7 @@ public class PoshiDependenciesFileLocationCheck extends BaseFileCheck {
 		}
 	}
 
-	private static final String _GLOBAL_DEPENDENCIES_DIRECTORY =
+	private static final String _GLOBAL_DEPENDENCIES_LOCATION =
 		"portal-web/test/functional/com/liferay/portalweb/dependencies";
 
 	private static final String[] _TEST_FILE_LOCATIONS = {

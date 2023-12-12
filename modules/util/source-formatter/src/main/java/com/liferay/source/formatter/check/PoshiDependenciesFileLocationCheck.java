@@ -116,31 +116,31 @@ public class PoshiDependenciesFileLocationCheck extends BaseFileCheck {
 			x = content.indexOf(dependenciesFileName, x + 1);
 
 			if (x == -1) {
-				break;
+				return false;
 			}
 
-			char previousChar = content.charAt(x - 1);
+			char c = content.charAt(x - 1);
 
-			if ((previousChar != CharPool.QUOTE) &&
-				(previousChar != CharPool.COMMA)) {
+			if ((c != CharPool.QUOTE) && (c != CharPool.COMMA)) {
+				x = x + 1;
 
 				continue;
 			}
 
 			if ((x + dependenciesFileName.length()) >= content.length()) {
-				break;
+				return false;
 			}
 
-			char nextChar = content.charAt(x + dependenciesFileName.length());
+			c = content.charAt(x + dependenciesFileName.length());
 
-			if ((nextChar != CharPool.QUOTE) && (nextChar != CharPool.COMMA)) {
+			if ((c != CharPool.QUOTE) && (c != CharPool.COMMA)) {
+				x = x + 1;
+
 				continue;
 			}
 
 			return true;
 		}
-
-		return false;
 	}
 
 	private synchronized void _populateTestCaseAndDependenciesFileNames()

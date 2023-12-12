@@ -257,82 +257,87 @@ public final class CachedIntrospectionResults {
 			return Introspector.getBeanInfo(beanClass);
 		}
 
-		Map<String, PropertyDescriptor> propertyDescriptors = new HashMap<>();
+		try {
+			Map<String, PropertyDescriptor> propertyDescriptors = new HashMap<>();
 
-		for (Method method : beanClass.getMethods()) {
-			if (Modifier.isStatic(method.getModifiers())) {
-				continue;
-			}
-
-			String name = method.getName();
-
-			if (name.length() <= 3 && !name.startsWith("is")) {
-				continue;
-			}
-
-			int count = method.getParameterCount();
-
-			Class<?> returnType = method.getReturnType();
-
-			if (count > 1) {
-				continue;
-			}
-
-			if (count == 0) {
-				String propertyName = null;
-
-				if (name.startsWith("get")) {
-					propertyName = Introspector.decapitalize(name.substring(3));
-				}
-				else if ((returnType == boolean.class) && name.startsWith("is")) {
-					propertyName = Introspector.decapitalize(name.substring(2));
+			for (Method method : beanClass.getMethods()) {
+				if (Modifier.isStatic(method.getModifiers())) {
+					continue;
 				}
 
-				if (propertyName != null) {
+				String name = method.getName();
+
+				if (name.length() <= 3 && !name.startsWith("is")) {
+					continue;
+				}
+
+				int count = method.getParameterCount();
+
+				Class<?> returnType = method.getReturnType();
+
+				if (count > 1) {
+					continue;
+				}
+
+				if (count == 0) {
+					String propertyName = null;
+
+					if (name.startsWith("get")) {
+						propertyName = Introspector.decapitalize(name.substring(3));
+					}
+					else if ((returnType == boolean.class) && name.startsWith("is")) {
+						propertyName = Introspector.decapitalize(name.substring(2));
+					}
+
+					if (propertyName != null) {
+						PropertyDescriptor propertyDescriptor = propertyDescriptors.get(propertyName);
+
+						if (propertyDescriptor == null) {
+							propertyDescriptor = new PropertyDescriptor(propertyName, method, null);
+
+							propertyDescriptors.put(propertyName, propertyDescriptor);
+						}
+						else {
+							propertyDescriptor.setReadMethod(method);
+						}
+					}
+				}
+				else if ((returnType == void.class) && name.startsWith("set")) {
+					String propertyName = Introspector.decapitalize(name.substring(3));
+
 					PropertyDescriptor propertyDescriptor = propertyDescriptors.get(propertyName);
 
 					if (propertyDescriptor == null) {
-						propertyDescriptor = new PropertyDescriptor(propertyName, method, null);
+						propertyDescriptor = new PropertyDescriptor(propertyName, null, method);
 
 						propertyDescriptors.put(propertyName, propertyDescriptor);
 					}
 					else {
-						propertyDescriptor.setReadMethod(method);
+						propertyDescriptor.setWriteMethod(method);
 					}
 				}
 			}
-			else if ((returnType == void.class) && name.startsWith("set")) {
-				String propertyName = Introspector.decapitalize(name.substring(3));
 
-				PropertyDescriptor propertyDescriptor = propertyDescriptors.get(propertyName);
+			PropertyDescriptor[] propertyDescriptorArray =
+				propertyDescriptors.values().toArray(new PropertyDescriptor[0]);
 
-				if (propertyDescriptor == null) {
-					propertyDescriptor = new PropertyDescriptor(propertyName, null, method);
+			return new SimpleBeanInfo() {
 
-					propertyDescriptors.put(propertyName, propertyDescriptor);
+				@Override
+				public BeanDescriptor getBeanDescriptor() {
+					return new BeanDescriptor(beanClass, null);
 				}
-				else {
-					propertyDescriptor.setWriteMethod(method);
+
+				@Override
+				public PropertyDescriptor[] getPropertyDescriptors() {
+					return propertyDescriptorArray;
 				}
-			}
+
+			};
 		}
-
-		PropertyDescriptor[] propertyDescriptorArray =
-			propertyDescriptors.values().toArray(new PropertyDescriptor[0]);
-
-		return new SimpleBeanInfo() {
-
-			@Override
-			public BeanDescriptor getBeanDescriptor() {
-				return new BeanDescriptor(beanClass, null);
-			}
-
-			@Override
-			public PropertyDescriptor[] getPropertyDescriptors() {
-				return propertyDescriptorArray;
-			}
-
-		};
+		catch (IntrospectionException introspectionException) {
+			return Introspector.getBeanInfo(beanClass, Introspector.IGNORE_ALL_BEANINFO);
+		}
 	}
 
 

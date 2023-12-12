@@ -35,4 +35,19 @@ public interface ReindexConfiguration {
 	)
 	public String[] indexingBatchSizes();
 
+	@Meta.AD(
+		deflt = "true",
+		description = "index-actions-in-all-virtual-instances-enabled-help",
+		name = "index-actions-in-all-virtual-instances-enabled",
+		required = false
+	)
+	public boolean indexActionsInAllVirtualInstancesEnabled();
+
+	@Meta.AD(
+		deflt = "",
+		description = "enable-index-actions-in-a-virtual-instance-help",
+		name = "enable-index-actions-in-a-virtual-instance", required = false
+	)
+	public long[] indexActionsVirtualInstance();
+
 }

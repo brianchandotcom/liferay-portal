@@ -347,6 +347,35 @@ public class DefaultExportImportContentProcessorTest {
 	}
 
 	@Test
+	public void testExportInvalidDLReferencesFriendlyURL() throws Exception {
+		_portletDataContextExport.setZipWriter(new TestReaderWriter());
+
+		_fileEntry = DLAppLocalServiceUtil.updateFileEntry(
+			TestPropsValues.getUserId(), _fileEntry.getFileEntryId(),
+			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
+			_fileEntry.getTitle(), _fileEntry.getTitle(), StringPool.BLANK,
+			StringPool.BLANK, DLVersionNumberIncrease.AUTOMATIC,
+			TestDataConstants.TEST_BYTE_ARRAY, null, null,
+			ServiceContextTestUtil.getServiceContext(
+				_stagingGroup.getGroupId(), TestPropsValues.getUserId()));
+
+		String content = _replaceParameters(
+			_getContent("invalid_dl_references.txt"), _fileEntry);
+
+		List<String> urls = _getURLs(content);
+
+		content = _exportImportContentProcessor.replaceExportContentReferences(
+			_portletDataContextExport, _referrerStagedModel, content, true,
+			true);
+
+		for (String url : urls) {
+			Assert.assertTrue(
+				url + " must be unchanged in :" + content,
+				content.contains(url));
+		}
+	}
+
+	@Test
 	public void testExportLayoutReferencesWithContext() throws Exception {
 		PortalImpl portalImpl = new PortalImpl() {
 

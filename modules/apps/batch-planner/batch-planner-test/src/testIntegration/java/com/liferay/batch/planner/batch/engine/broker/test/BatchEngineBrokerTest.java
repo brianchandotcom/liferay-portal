@@ -1355,8 +1355,8 @@ public class BatchEngineBrokerTest {
 			"dateCreated", "dateModified", "externalReferenceCode", "id",
 			"keywords", "scopeKey", "testDateField", "testDateTimeField",
 			"testDecimalField", "testIntegerField", "testLongIntegerField",
-			"testLongTextField", "testPrecisionDecimalField",
-			"testRichTextField", "testTextField");
+			"testLongTextField", "testPicklistField",
+			"testPrecisionDecimalField", "testRichTextField", "testTextField");
 	private static final List<String> _objectEntryExportFieldNames =
 		Arrays.asList(
 			"actions", "dateCreated", "dateModified", "externalReferenceCode",

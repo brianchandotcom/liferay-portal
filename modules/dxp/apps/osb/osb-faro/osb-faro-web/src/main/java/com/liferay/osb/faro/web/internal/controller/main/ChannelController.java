@@ -27,7 +27,6 @@ import com.liferay.osb.faro.web.internal.model.display.asah.FaroChannelDisplay;
 import com.liferay.osb.faro.web.internal.model.display.contacts.FaroUserDisplay;
 import com.liferay.osb.faro.web.internal.model.preferences.WorkspacePreferences;
 import com.liferay.osb.faro.web.internal.param.FaroParam;
-import com.liferay.osb.faro.web.internal.util.FaroQueryUtil;
 import com.liferay.osb.faro.web.internal.util.JSONUtil;
 import com.liferay.osb.faro.web.internal.util.comparator.FaroChannelComparator;
 import com.liferay.osb.faro.web.internal.util.comparator.FaroUserComparator;
@@ -320,8 +319,6 @@ public class ChannelController extends BaseFaroController {
 			orderByFields = Collections.singletonList(
 				new OrderByField("createTime", "asc"));
 		}
-
-		query = FaroQueryUtil.sanitizeQuery(query);
 
 		List<FaroChannel> faroChannels = _faroChannelLocalService.search(
 			groupId, query, startAndEnd[0], startAndEnd[1],

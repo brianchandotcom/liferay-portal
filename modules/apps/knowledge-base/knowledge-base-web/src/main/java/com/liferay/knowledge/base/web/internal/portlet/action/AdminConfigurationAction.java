@@ -47,19 +47,15 @@ public class AdminConfigurationAction
 			ActionResponse actionResponse)
 		throws Exception {
 
-		if (FeatureFlagManagerUtil.isEnabled("LPS-197692")) {
-			String emailParam = getParameter(actionRequest, "emailParam");
-
-			validateEmail(actionRequest, emailParam);
-		}
-		else {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-197692")) {
 			validateEmailFrom(actionRequest);
-			validateEmail(actionRequest, "emailKBArticleAdded");
-			validateEmail(actionRequest, "emailKBArticleSuggestionInProgress");
-			validateEmail(actionRequest, "emailKBArticleSuggestionReceived");
-			validateEmail(actionRequest, "emailKBArticleSuggestionResolved");
-			validateEmail(actionRequest, "emailKBArticleUpdated");
 		}
+
+		validateEmail(actionRequest, "emailKBArticleAdded");
+		validateEmail(actionRequest, "emailKBArticleSuggestionInProgress");
+		validateEmail(actionRequest, "emailKBArticleSuggestionReceived");
+		validateEmail(actionRequest, "emailKBArticleSuggestionResolved");
+		validateEmail(actionRequest, "emailKBArticleUpdated");
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
 	}

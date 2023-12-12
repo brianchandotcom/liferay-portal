@@ -255,21 +255,19 @@ definition {
 
 		User.logoutPG();
 
-		Navigator.openURL();
+		AssertClick(
+			locator1 = "UserBar#USER_SIGN_IN",
+			value1 = "Sign In");
 
-		Navigator.gotoLoginPage();
-
-		Type(
+		Type.typePause(
 			locator1 = "TextInput#EMAIL_ADDRESS",
 			value1 = "userea@liferay.com");
 
-		Type(
+		Type.typePause(
 			locator1 = "TextInput#PASSWORD",
 			value1 = "test");
 
-		AssertClick(
-			locator1 = "Button#SIGN_IN",
-			value1 = "Sign In");
+		User._clickSignInButton(localization = ${localization});
 
 		AssertElementNotPresent(locator1 = "Button#SIGN_IN");
 
@@ -652,21 +650,19 @@ definition {
 
 		User.logoutPG();
 
-		Navigator.openURL();
+		AssertClick(
+			locator1 = "UserBar#USER_SIGN_IN",
+			value1 = "Sign In");
 
-		Navigator.gotoLoginPage();
-
-		Type(
+		Type.typePause(
 			locator1 = "TextInput#EMAIL_ADDRESS",
 			value1 = "userea@liferay.com");
 
-		Type(
+		Type.typePause(
 			locator1 = "TextInput#PASSWORD",
 			value1 = "test");
 
-		AssertClick(
-			locator1 = "Button#SIGN_IN",
-			value1 = "Sign In");
+		User._clickSignInButton(localization = ${localization});
 
 		AssertElementNotPresent(locator1 = "Button#SIGN_IN");
 

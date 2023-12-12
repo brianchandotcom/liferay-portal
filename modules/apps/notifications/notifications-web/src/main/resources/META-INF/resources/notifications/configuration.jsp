@@ -111,14 +111,14 @@
 
 											<td class="lfr-<%= userNotificationDeliveryType.getName() %>-column">
 												<aui:input
-													aria-describedby="<%= description %>"
-													aria-labelledby="<%= userNotificationDeliveryType.getName() %>"
+													aria-label="<%= description %>"
 													cssClass="notification-delivery"
 													data-userNotificationDeliveryId="<%= String.valueOf(userNotificationDelivery.getUserNotificationDeliveryId()) %>"
 													disabled="<%= !userNotificationDeliveryType.isModifiable() %>"
 													inlineLabel="<%= Boolean.TRUE.toString() %>"
 													label=""
 													name="<%= String.valueOf(userNotificationDelivery.getUserNotificationDeliveryId()) %>"
+													title="<%= userNotificationDeliveryType.getName() %>"
 													type="checkbox"
 													value="<%= userNotificationDelivery.isDeliver() %>"
 												/>

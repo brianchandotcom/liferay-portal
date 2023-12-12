@@ -88,7 +88,7 @@ definition {
 				name = "testSchema");
 
 			SchemaAPI.relateResponseSchemaToEndpointByErc(
-				endpointErc = "testEndpoint",
+				endpointErc = "My-app_testEndpoint",
 				responseSchemaErc = "testSchema");
 
 			PropertyAPI.createAPIProperty(

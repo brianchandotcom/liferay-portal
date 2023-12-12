@@ -66,19 +66,19 @@ definition {
 				title = "My-app");
 
 			SchemaAPI.relateRequestSchemaToEndpointByErc(
-				endpointErc = "testendpoint",
-				requestSchemaErc = "testSchema");
+				endpointErc = "My-app_testendpoint",
+				requestSchemaErc = "My-app_testSchema");
 
 			SchemaAPI.relateResponseSchemaToEndpointByErc(
-				endpointErc = "testendpoint",
-				responseSchemaErc = "testSchema");
+				endpointErc = "My-app_testendpoint",
+				responseSchemaErc = "My-app_testSchema");
 		}
 
 		task ("And Given I create schema a property with erc of name field") {
 			PropertyAPI.createAPIProperty(
 				name = "entryName",
 				objectFieldERC = "studentName",
-				schemaERC = "testSchema");
+				schemaERC = "My-app_testSchema");
 		}
 
 		task ("When execute get{Endpoint}Page with filter={property} eq 'Able' in API Explorer") {
@@ -116,24 +116,24 @@ definition {
 				title = "My-app");
 
 			SchemaAPI.relateRequestSchemaToEndpointByErc(
-				endpointErc = "testendpoint",
-				requestSchemaErc = "testSchema");
+				endpointErc = "My-app_testendpoint",
+				requestSchemaErc = "My-app_testSchema");
 
 			SchemaAPI.relateResponseSchemaToEndpointByErc(
-				endpointErc = "testendpoint",
-				responseSchemaErc = "testSchema");
+				endpointErc = "My-app_testendpoint",
+				responseSchemaErc = "My-app_testSchema");
 		}
 
 		task ("And Given I create schema a property with erc of name field") {
 			PropertyAPI.createAPIProperty(
 				name = "entryName",
 				objectFieldERC = "studentName",
-				schemaERC = "testSchema");
+				schemaERC = "My-app_testSchema");
 		}
 
 		task ("And Given I create endpoint a filter with name ne 'Test'") {
 			FilterAPI.createAPIFilter(
-				endpointERC = "testendpoint",
+				endpointERC = "My-app_testendpoint",
 				filterValue = "name ne '\''Test'\''");
 		}
 
@@ -204,24 +204,24 @@ definition {
 				title = "My-app");
 
 			SchemaAPI.relateRequestSchemaToEndpointByErc(
-				endpointErc = "testendpoint",
-				requestSchemaErc = "testSchema");
+				endpointErc = "My-app_testendpoint",
+				requestSchemaErc = "My-app_testSchema");
 
 			SchemaAPI.relateResponseSchemaToEndpointByErc(
-				endpointErc = "testendpoint",
-				responseSchemaErc = "testSchema");
+				endpointErc = "My-app_testendpoint",
+				responseSchemaErc = "My-app_testSchema");
 		}
 
 		task ("And Given I create schema a property with erc of name field") {
 			PropertyAPI.createAPIProperty(
 				name = "entryName",
 				objectFieldERC = "univeristyName",
-				schemaERC = "testSchema");
+				schemaERC = "My-app_testSchema");
 		}
 
 		task ("And Given I create endpoint a filter with name ne 'Test'") {
 			FilterAPI.createAPIFilter(
-				endpointERC = "testendpoint",
+				endpointERC = "My-app_testendpoint",
 				filterValue = "name ne '\''Test'\''");
 		}
 
@@ -267,19 +267,19 @@ definition {
 				title = "My-app");
 
 			SchemaAPI.relateRequestSchemaToEndpointByErc(
-				endpointErc = "testendpoint",
-				requestSchemaErc = "testSchema");
+				endpointErc = "My-app_testendpoint",
+				requestSchemaErc = "My-app_testSchema");
 
 			SchemaAPI.relateResponseSchemaToEndpointByErc(
-				endpointErc = "testendpoint",
-				responseSchemaErc = "testSchema");
+				endpointErc = "My-app_testendpoint",
+				responseSchemaErc = "My-app_testSchema");
 		}
 
 		task ("And Given I create schema a property with erc of name field") {
 			PropertyAPI.createAPIProperty(
 				name = "entryName",
 				objectFieldERC = "studentName",
-				schemaERC = "testSchema");
+				schemaERC = "My-app_testSchema");
 		}
 
 		task ("When execute get{Endpoint}Page with sort={property}:desc in API Explorer") {
@@ -317,24 +317,24 @@ definition {
 				title = "My-app");
 
 			SchemaAPI.relateRequestSchemaToEndpointByErc(
-				endpointErc = "testendpoint",
-				requestSchemaErc = "testSchema");
+				endpointErc = "My-app_testendpoint",
+				requestSchemaErc = "My-app_testSchema");
 
 			SchemaAPI.relateResponseSchemaToEndpointByErc(
-				endpointErc = "testendpoint",
-				responseSchemaErc = "testSchema");
+				endpointErc = "My-app_testendpoint",
+				responseSchemaErc = "My-app_testSchema");
 		}
 
 		task ("And Given I create schema a property with erc of name field") {
 			PropertyAPI.createAPIProperty(
 				name = "entryName",
 				objectFieldERC = "studentName",
-				schemaERC = "testSchema");
+				schemaERC = "My-app_testSchema");
 		}
 
 		task ("And Given I create endpoint a sort with name:asc") {
 			SortAPI.createAPISort(
-				endpointERC = "testendpoint",
+				endpointERC = "My-app_testendpoint",
 				sortValue = "name:asc");
 		}
 

@@ -229,15 +229,15 @@ public class ObjectFolderResourceImpl extends BaseObjectFolderResourceImpl {
 			contextUser
 		).build();
 
-		List<ObjectFolderItem> nonlinkedObjectFolderItems = ListUtil.filter(
+		List<ObjectFolderItem> unlinkedObjectFolderItems = ListUtil.filter(
 			objectFolderItems,
 			objectFolderItem -> !objectFolderItem.getLinkedObjectDefinition());
 
-		for (ObjectFolderItem nonlinkedObjectFolderItem :
-				nonlinkedObjectFolderItems) {
+		for (ObjectFolderItem unlinkedObjectFolderItem :
+				unlinkedObjectFolderItems) {
 
 			ObjectDefinition objectDefinition =
-				nonlinkedObjectFolderItem.getObjectDefinition();
+				unlinkedObjectFolderItem.getObjectDefinition();
 
 			if (objectDefinition != null) {
 				objectDefinition.setObjectFolderExternalReferenceCode(
@@ -251,8 +251,8 @@ public class ObjectFolderResourceImpl extends BaseObjectFolderResourceImpl {
 
 				_objectFolderItemLocalService.updateObjectFolderItem(
 					objectDefinition.getId(), objectFolderId,
-					nonlinkedObjectFolderItem.getPositionX(),
-					nonlinkedObjectFolderItem.getPositionY());
+					unlinkedObjectFolderItem.getPositionX(),
+					unlinkedObjectFolderItem.getPositionY());
 
 				serviceBuilderObjectDefinitionIds.remove(
 					objectDefinition.getId());
@@ -263,7 +263,7 @@ public class ObjectFolderResourceImpl extends BaseObjectFolderResourceImpl {
 			objectDefinition =
 				objectDefinitionResource.
 					getObjectDefinitionByExternalReferenceCode(
-						nonlinkedObjectFolderItem.
+						unlinkedObjectFolderItem.
 							getObjectDefinitionExternalReferenceCode());
 
 			if (objectDefinition == null) {
@@ -275,8 +275,8 @@ public class ObjectFolderResourceImpl extends BaseObjectFolderResourceImpl {
 
 			_objectFolderItemLocalService.updateObjectFolderItem(
 				objectDefinition.getId(), objectFolderId,
-				nonlinkedObjectFolderItem.getPositionX(),
-				nonlinkedObjectFolderItem.getPositionY());
+				unlinkedObjectFolderItem.getPositionX(),
+				unlinkedObjectFolderItem.getPositionY());
 
 			serviceBuilderObjectDefinitionIds.remove(objectDefinition.getId());
 		}
@@ -300,7 +300,7 @@ public class ObjectFolderResourceImpl extends BaseObjectFolderResourceImpl {
 				uncategorizedObjectFolder.getObjectFolderId());
 		}
 
-		objectFolderItems.removeAll(nonlinkedObjectFolderItems);
+		objectFolderItems.removeAll(unlinkedObjectFolderItems);
 
 		for (ObjectFolderItem objectFolderItem : objectFolderItems) {
 			ObjectDefinition objectDefinition =

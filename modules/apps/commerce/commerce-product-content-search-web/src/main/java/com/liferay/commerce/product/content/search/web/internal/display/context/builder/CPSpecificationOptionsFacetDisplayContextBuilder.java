@@ -202,8 +202,17 @@ public class CPSpecificationOptionsFacetDisplayContextBuilder
 						filledFacet, _portletSharedSearchResponse,
 						_renderRequest);
 
-			cpSpecificationOptionsSearchFacetDisplayContexts.add(
-				cpSpecificationOptionsSearchFacetDisplayContext);
+			List<CPSpecificationOptionsSearchFacetTermDisplayContext>
+				cpSpecificationOptionsSearchFacetTermDisplayContexts =
+					cpSpecificationOptionsSearchFacetDisplayContext.
+						getTermDisplayContexts();
+
+			if (!cpSpecificationOptionsSearchFacetTermDisplayContexts.
+					isEmpty()) {
+
+				cpSpecificationOptionsSearchFacetDisplayContexts.add(
+					cpSpecificationOptionsSearchFacetDisplayContext);
+			}
 		}
 
 		return cpSpecificationOptionsSearchFacetDisplayContexts;

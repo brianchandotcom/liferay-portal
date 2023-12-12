@@ -346,17 +346,8 @@ public class GenerateTestrayCSVUtil {
 			_errorMessage = resultJSONObject.getString("errors");
 			_historyURL = resultJSONObject.getString("htmlURL") + "/history";
 			_pullRequest = null;
-
-			String temp = resultJSONObject.getString("testrayCaseResultId");
-
-			temp = temp.replace("\"", "");
-
-			_testrayCaseResultId = Long.parseLong(temp);
-
-			temp = resultJSONObject.getString("testrayRunId");
-			temp = temp.replace("\"", "");
-
-			_testrayRunId = Long.parseLong(temp);
+			_testrayCaseResultId = resultJSONObject.getLong("testrayCaseResultId");
+			_testrayRunId = resultJSONObect.getLong("testrayRunId");
 		}
 
 		private String _getErrorMessage() {

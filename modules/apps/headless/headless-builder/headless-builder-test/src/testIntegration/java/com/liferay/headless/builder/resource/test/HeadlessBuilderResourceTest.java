@@ -2129,7 +2129,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 	}
 
 	@Test
-	public void testPostWithDuplicatedUniqueField() throws Exception {
+	public void testPostWithDuplicateUniqueField() throws Exception {
 		String title = RandomTestUtil.randomString();
 
 		assertSuccessfulJSONObject(

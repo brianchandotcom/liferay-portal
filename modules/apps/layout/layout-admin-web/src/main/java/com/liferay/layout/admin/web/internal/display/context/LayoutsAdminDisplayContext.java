@@ -2055,7 +2055,7 @@ public class LayoutsAdminDisplayContext {
 				themeDisplay.getPermissionChecker(), layout,
 				ActionKeys.PERMISSIONS)) {
 
-			availableActions.add("permissions");
+			availableActions.add("changePermissions");
 		}
 
 		return availableActions;

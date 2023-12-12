@@ -48,14 +48,14 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 		});
 	};
 
-	const permissions = (itemData) => {
+	const changePermissions = (itemData) => {
 		const keys = Array.from(
 			document.querySelectorAll(
 				`[name=${portletNamespace}rowIds]:checked`
 			)
 		).map(({value}) => value);
 
-		const url = new URL(itemData?.permissionsURL);
+		const url = new URL(itemData?.changePermissionsURL);
 
 		openSelectionModal({
 			title: Liferay.Language.get('permissions'),
@@ -65,7 +65,7 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 						'p_p_id'
 					)}_resourcePrimKey`]: keys.join(','),
 				},
-				itemData?.permissionsURL
+				itemData?.changePermissionsURL
 			),
 		});
 	};
@@ -107,8 +107,8 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 			else if (action === 'exportTranslation') {
 				exportTranslation(data);
 			}
-			else if (action === 'permissions') {
-				permissions(data);
+			else if (action === 'changePermissions') {
+				changePermissions(data);
 			}
 		},
 	};

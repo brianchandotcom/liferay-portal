@@ -116,9 +116,9 @@ public class LayoutsAdminManagementToolbarDisplayContext
 		).add(
 			() -> FeatureFlagManagerUtil.isEnabled("LPS-196847"),
 			dropdownItem -> {
-				dropdownItem.putData("action", "permissions");
+				dropdownItem.putData("action", "changePermissions");
 				dropdownItem.putData(
-					"permissionsURL",
+					"changePermissionsURL",
 					PermissionsURLTag.doTag(
 						StringPool.BLANK, Layout.class.getName(),
 						_themeDisplay.getScopeGroupId(),

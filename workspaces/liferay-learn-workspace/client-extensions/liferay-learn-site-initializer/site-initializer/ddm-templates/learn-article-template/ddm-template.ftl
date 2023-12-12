@@ -19,10 +19,7 @@
 	<#assign breadcrumbLinksJSONArray = jsonFactoryUtil.createJSONArray(breadcrumbLinks.getData()) />
 
 	<#if breadcrumbLinksJSONArray.length() gt 0>
-		<#assign
-			parentLink = breadcrumbLinksJSONArray.getJSONObject(0)?eval
-			topLevelArticle = false
-		/>
+		<#assign topLevelArticle = false />
 	</#if>
 </#if>
 
@@ -64,7 +61,7 @@
 					</div>
 
 					<#if !topLevelArticle>
-						<a class="back-link btn btn-link btn-monospaced d-flex flex-row justify-content-start" href="${parentLink.url}" id="backLink">
+						<a class="back-link btn btn-link btn-monospaced d-flex flex-row justify-content-start" href="${breadcrumbLinksJSONArray.getJSONObject(0).url}" id="backLink">
 							<svg class="lexicon-icon lexicon-icon-angle-left" role="presentation" viewBox="0 0 512 512">
 								<use xlink:href="#angle-left" />
 							</svg>
@@ -79,7 +76,7 @@
 						<ul class="current">
 							<#if !topLevelArticle>
 								<li class="current parent-level toctree-l1">
-									<a class="reference internal" href="${parentLink.url}">${parentLink.title}</a>
+									<a class="reference internal" href="${breadcrumbLinksJSONArray.getJSONObject(0).url}">${breadcrumbLinksJSONArray.getJSONObject(0).title}</a>
 								</li>
 							</#if>
 
@@ -87,10 +84,8 @@
 
 							<#if navigationLinksJSONArray.length() gt 0>
 								<#list 0..navigationLinksJSONArray.length()-1 as i>
-									<#assign navigationLink = navigationLinksJSONArray.getJSONObject(i)?eval />
-
-									<li class="${topLevelArticle?then("toctree-l1", "toctree-l2")} ${(urlTitleLastDirectory == navigationLink.url)?then("current", "")}">
-										<a class="reference internal" href="${navigationLink.url}">${navigationLink.title}</a>
+									<li class="${topLevelArticle?then("toctree-l1", "toctree-l2")} ${(urlTitleLastDirectory == navigationLinksJSONArray.getJSONObject(i).url)?then("current", "")}">
+										<a class="reference internal" href="${navigationLinksJSONArray.getJSONObject(i).url}">${navigationLinksJSONArray.getJSONObject(i).title}</a>
 									</li>
 								</#list>
 							</#if>

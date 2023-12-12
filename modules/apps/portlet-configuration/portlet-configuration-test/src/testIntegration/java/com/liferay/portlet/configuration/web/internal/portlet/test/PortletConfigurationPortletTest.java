@@ -90,7 +90,6 @@ public class PortletConfigurationPortletTest {
 	@Test
 	public void testUpdateRolePermissionsInBulk() throws Exception {
 		List<String> plids = _addLayouts(100);
-
 		List<Long> roleIds = _addRoles();
 
 		ReflectionTestUtil.invoke(
@@ -144,13 +143,6 @@ public class PortletConfigurationPortletTest {
 
 		MockActionRequest mockActionRequest = new MockActionRequest();
 
-		mockActionRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, _getThemeDisplay());
-
-		mockActionRequest.setParameter("modelResource", Layout.class.getName());
-		mockActionRequest.setParameter(
-			"resourceGroupId", String.valueOf(_group.getGroupId()));
-
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
@@ -159,6 +151,13 @@ public class PortletConfigurationPortletTest {
 
 		mockActionRequest.setAttribute(
 			PortletServlet.PORTLET_SERVLET_REQUEST, mockHttpServletRequest);
+
+		mockActionRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, _getThemeDisplay());
+
+		mockActionRequest.setParameter("modelResource", Layout.class.getName());
+		mockActionRequest.setParameter(
+			"resourceGroupId", String.valueOf(_group.getGroupId()));
 
 		String roleSearchContainerPrimaryKeys = StringPool.BLANK;
 

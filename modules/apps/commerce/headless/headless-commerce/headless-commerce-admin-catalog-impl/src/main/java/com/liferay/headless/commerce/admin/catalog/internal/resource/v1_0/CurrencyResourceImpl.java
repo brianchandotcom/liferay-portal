@@ -48,6 +48,7 @@ public class CurrencyResourceImpl extends BaseCurrencyResourceImpl {
 	@Override
 	public void deleteCurrency(Long id) throws Exception {
 		_checkFeatureFlag();
+
 		_commerceCurrencyService.deleteCommerceCurrency(id);
 	}
 

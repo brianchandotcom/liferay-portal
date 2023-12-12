@@ -43,7 +43,7 @@ public class JournalArticleContentEditorConfigContributor
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
 		jsonObject.put(
-			"bodyClass", jsonObject.getString("bodyClass") + " h-100");
+			"bodyClass", jsonObject.getString("bodyClass") + " min-vh-100");
 
 		JSONArray contentsCSSJSONArray = jsonObject.getJSONArray("contentsCss");
 

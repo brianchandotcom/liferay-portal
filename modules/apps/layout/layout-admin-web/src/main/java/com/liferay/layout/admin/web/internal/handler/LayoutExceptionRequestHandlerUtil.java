@@ -66,6 +66,12 @@ public class LayoutExceptionRequestHandlerUtil {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		if (exceptionType == LayoutTypeException.FIRST_LAYOUT_PERMISSION) {
+			return LanguageUtil.get(
+				themeDisplay.getLocale(),
+				"the-first-page-should-be-visible-for-guest-user");
+		}
+
 		String errorMessage = "pages-of-type-x-cannot-be-selected";
 
 		if (exceptionType == LayoutTypeException.FIRST_LAYOUT) {
@@ -164,6 +170,8 @@ public class LayoutExceptionRequestHandlerUtil {
 
 			if ((layoutTypeException.getType() ==
 					LayoutTypeException.FIRST_LAYOUT) ||
+				(layoutTypeException.getType() ==
+					LayoutTypeException.FIRST_LAYOUT_PERMISSION) ||
 				(layoutTypeException.getType() ==
 					LayoutTypeException.NOT_INSTANCEABLE)) {
 

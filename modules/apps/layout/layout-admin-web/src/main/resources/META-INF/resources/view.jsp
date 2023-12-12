@@ -45,6 +45,10 @@ portletDisplay.setShowStagingIcon(false);
 			<c:if test="<%= lte.getType() == LayoutTypeException.FIRST_LAYOUT %>">
 				<liferay-ui:message arguments='<%= "layout.types." + lte.getLayoutType() %>' key="the-first-page-cannot-be-of-type-x" />
 			</c:if>
+
+			<c:if test="<%= lte.getType() == LayoutTypeException.FIRST_LAYOUT_PERMISSION %>">
+				<liferay-ui:message key="the-first-page-should-be-visible-for-guest-user" />
+			</c:if>
 		</liferay-ui:error>
 
 		<liferay-ui:error exception="<%= RequiredSegmentsExperienceException.MustNotDeleteSegmentsExperienceReferencedBySegmentsExperiments.class %>" message="this-page-cannot-be-deleted-because-it-has-ab-tests-in-progress" />

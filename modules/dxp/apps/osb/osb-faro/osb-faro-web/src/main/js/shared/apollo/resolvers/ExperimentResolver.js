@@ -823,7 +823,7 @@ const DXP_VARIANTS = [
 			}
 		],
 		trafficSplit: 50,
-		uniqueVisitors: null
+		uniqueVisitors: 1000
 	},
 	{
 		__typename: 'ExperimentVariant',
@@ -833,7 +833,7 @@ const DXP_VARIANTS = [
 		dxpVariantName: 'var',
 		sessionsHistogram: SESSIONS_HISTOGRAM,
 		trafficSplit: 50,
-		uniqueVisitors: null
+		uniqueVisitors: 500
 	}
 ];
 

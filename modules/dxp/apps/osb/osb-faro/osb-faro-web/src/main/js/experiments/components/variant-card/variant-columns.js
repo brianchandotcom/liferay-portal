@@ -105,7 +105,10 @@ export default ({
 			/>
 		),
 		className: 'text-right',
-		label: Liferay.Language.get('unique-visitors'),
+		label:
+			type === 'AB'
+				? Liferay.Language.get('unique-visitors')
+				: Liferay.Language.get('traffic-split'),
 		sortable: true
 	});
 

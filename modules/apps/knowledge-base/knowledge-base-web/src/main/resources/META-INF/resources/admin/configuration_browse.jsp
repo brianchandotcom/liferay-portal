@@ -11,6 +11,10 @@
 KBConfigurationDisplayContext kbConfigurationDisplayContext = new KBConfigurationDisplayContext(request, renderRequest, renderResponse);
 kbGroupServiceConfiguration = ParameterMapUtil.setParameterMap(KBGroupServiceConfiguration.class, kbGroupServiceConfiguration, request.getParameterMap(), "preferences--", "--");
 
+Map<String, String> emailDefinitionTerms = kbConfigurationDisplayContext.getEmailDefinitionTerms(kbGroupServiceConfiguration, portletDisplay, resourceBundle);
+
+Map<String, String> emailSuggestionDefinitionTerms = kbConfigurationDisplayContext.getEmailSuggestionDefinitionTerms(resourceBundle);
+
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(kbConfigurationDisplayContext.getBackURL());
 portletDisplay.setURLBackTitle("knowledge-base");
@@ -82,68 +86,6 @@ String emailParam = StringPool.BLANK;
 					<liferay-ui:error embed="<%= false %>" key="emailKBArticleReviewSubject" message="please-enter-a-valid-subject" />
 					<liferay-ui:error embed="<%= false %>" key="emailKBArticleUpdatedBody" message="please-enter-a-valid-body" />
 					<liferay-ui:error embed="<%= false %>" key="emailKBArticleUpdatedSubject" message="please-enter-a-valid-subject" />
-
-					<%
-					Map<String, String> emailDefinitionTerms = LinkedHashMapBuilder.put(
-						"[$ARTICLE_ATTACHMENTS$]", LanguageUtil.get(resourceBundle, "the-article-attachments-file-names")
-					).put(
-						"[$ARTICLE_CONTENT$]", LanguageUtil.get(resourceBundle, "the-article-content")
-					).put(
-						"[$ARTICLE_CONTENT_DIFF$]", LanguageUtil.get(resourceBundle, "the-article-content-diff")
-					).put(
-						"[$ARTICLE_TITLE$]", LanguageUtil.get(resourceBundle, "the-article-title")
-					).put(
-						"[$ARTICLE_TITLE_DIFF$]", LanguageUtil.get(resourceBundle, "the-article-title-diff")
-					).put(
-						"[$ARTICLE_URL$]", LanguageUtil.get(resourceBundle, "the-article-url")
-					).put(
-						"[$ARTICLE_USER_ADDRESS$]", LanguageUtil.get(resourceBundle, "the-email-address-of-the-user-who-added-the-article")
-					).put(
-						"[$ARTICLE_USER_NAME$]", LanguageUtil.get(resourceBundle, "the-user-who-added-the-article")
-					).put(
-						"[$ARTICLE_VERSION$]", LanguageUtil.get(resourceBundle, "the-article-version")
-					).put(
-						"[$CATEGORY_TITLE$]", LanguageUtil.get(resourceBundle, "category.kb")
-					).put(
-						"[$COMPANY_ID$]", LanguageUtil.get(resourceBundle, "the-company-id-associated-with-the-article")
-					).put(
-						"[$COMPANY_MX$]", LanguageUtil.get(resourceBundle, "the-company-mx-associated-with-the-article")
-					).put(
-						"[$COMPANY_NAME$]", LanguageUtil.get(resourceBundle, "the-company-name-associated-with-the-article")
-					).put(
-						"[$FROM_ADDRESS$]", HtmlUtil.escape(kbGroupServiceConfiguration.emailFromAddress())
-					).put(
-						"[$FROM_NAME$]", HtmlUtil.escape(kbGroupServiceConfiguration.emailFromName())
-					).put(
-						"[$PORTAL_URL$]", PortalUtil.getPortalURL(themeDisplay)
-					).put(
-						"[$PORTLET_NAME$]", HtmlUtil.escape(portletDisplay.getTitle())
-					).put(
-						"[$SITE_NAME$]", LanguageUtil.get(resourceBundle, "the-site-name-associated-with-the-article")
-					).put(
-						"[$TO_ADDRESS$]", LanguageUtil.get(resourceBundle, "the-address-of-the-email-recipient")
-					).put(
-						"[$TO_NAME$]", LanguageUtil.get(resourceBundle, "the-name-of-the-email-recipient")
-					).build();
-
-					if (Objects.equals(kbConfigurationDisplayContext.getNavigation(), "article-added-email") || Objects.equals(kbConfigurationDisplayContext.getNavigation(), "article-updated-email") || Objects.equals(kbConfigurationDisplayContext.getNavigation(), "article-review-email")) {
-						emailDefinitionTerms = LinkedHashMapBuilder.put(
-							"[$ARTICLE_CONTENT$]", LanguageUtil.get(resourceBundle, "the-article-content")
-						).put(
-							"[$ARTICLE_TITLE$]", LanguageUtil.get(resourceBundle, "the-article-title")
-						).put(
-							"[$ARTICLE_URL$]", LanguageUtil.get(resourceBundle, "the-article-url")
-						).put(
-							"[$COMMENT_CONTENT$]", LanguageUtil.get(resourceBundle, "the-comment-content")
-						).put(
-							"[$COMMENT_CREATE_DATE$]", LanguageUtil.get(resourceBundle, "the-comment-create-date")
-						).put(
-							"[$TO_ADDRESS$]", LanguageUtil.get(resourceBundle, "the-address-of-the-email-recipient")
-						).put(
-							"[$TO_NAME$]", LanguageUtil.get(resourceBundle, "the-name-of-the-email-recipient")
-						).build();
-					}
-					%>
 
 					<c:choose>
 						<c:when test='<%= Objects.equals(kbConfigurationDisplayContext.getNavigation(), "article-added-email") %>'>
@@ -219,7 +161,7 @@ String emailParam = StringPool.BLANK;
 							<div class="c-px-4 panel-group-flush">
 								<liferay-frontend:email-notification-settings
 									emailBody="<%= kbGroupServiceConfiguration.emailKBArticleSuggestionReceivedBody() %>"
-									emailDefinitionTerms="<%= emailDefinitionTerms %>"
+									emailDefinitionTerms="<%= emailSuggestionDefinitionTerms %>"
 									emailEnabled="<%= kbGroupServiceConfiguration.emailKBArticleSuggestionReceivedEnabled() %>"
 									emailParam="<%= emailParam %>"
 									emailSubject="<%= kbGroupServiceConfiguration.emailKBArticleSuggestionReceivedSubject() %>"
@@ -235,7 +177,7 @@ String emailParam = StringPool.BLANK;
 							<div class="c-px-4 panel-group-flush">
 								<liferay-frontend:email-notification-settings
 									emailBody="<%= kbGroupServiceConfiguration.emailKBArticleSuggestionInProgressBody() %>"
-									emailDefinitionTerms="<%= emailDefinitionTerms %>"
+									emailDefinitionTerms="<%= emailSuggestionDefinitionTerms %>"
 									emailEnabled="<%= kbGroupServiceConfiguration.emailKBArticleSuggestionInProgressEnabled() %>"
 									emailParam="<%= emailParam %>"
 									emailSubject="<%= kbGroupServiceConfiguration.emailKBArticleSuggestionInProgressSubject() %>"
@@ -250,7 +192,7 @@ String emailParam = StringPool.BLANK;
 							<div class="c-px-4 panel-group-flush">
 								<liferay-frontend:email-notification-settings
 									emailBody="<%= kbGroupServiceConfiguration.emailKBArticleSuggestionResolvedBody() %>"
-									emailDefinitionTerms="<%= emailDefinitionTerms %>"
+									emailDefinitionTerms="<%= emailSuggestionDefinitionTerms %>"
 									emailEnabled="<%= kbGroupServiceConfiguration.emailKBArticleSuggestionResolvedEnabled() %>"
 									emailParam="<%= emailParam %>"
 									emailSubject="<%= kbGroupServiceConfiguration.emailKBArticleSuggestionResolvedSubject() %>"

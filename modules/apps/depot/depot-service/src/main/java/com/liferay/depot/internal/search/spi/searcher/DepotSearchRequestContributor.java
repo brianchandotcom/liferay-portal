@@ -40,26 +40,28 @@ public class DepotSearchRequestContributor implements SearchRequestContributor {
 
 		long[] groupIds = searchContext.getGroupIds();
 
-		if (!ArrayUtil.isEmpty(groupIds)) {
-			for (long groupId : groupIds) {
-				searchContext.setGroupIds(
-					ArrayUtil.append(
-						searchContext.getGroupIds(),
-						TransformUtil.transformToLongArray(
-							_depotEntryGroupRelLocalService.
-								getSearchableDepotEntryGroupRels(
-									groupId, 0,
-									_depotEntryGroupRelLocalService.
-										getSearchableDepotEntryGroupRelsCount(
-											groupId)),
-							depotEntryGroupRel -> {
-								DepotEntry depotEntry =
-									_depotEntryLocalService.fetchDepotEntry(
-										depotEntryGroupRel.getDepotEntryId());
+		if (ArrayUtil.isEmpty(groupIds)) {
+			return searchRequest;
+		}
 
-								return depotEntry.getGroupId();
-							})));
-			}
+		for (long groupId : groupIds) {
+			searchContext.setGroupIds(
+				ArrayUtil.append(
+					searchContext.getGroupIds(),
+					TransformUtil.transformToLongArray(
+						_depotEntryGroupRelLocalService.
+							getSearchableDepotEntryGroupRels(
+								groupId, 0,
+								_depotEntryGroupRelLocalService.
+									getSearchableDepotEntryGroupRelsCount(
+										groupId)),
+						depotEntryGroupRel -> {
+							DepotEntry depotEntry =
+								_depotEntryLocalService.fetchDepotEntry(
+									depotEntryGroupRel.getDepotEntryId());
+
+							return depotEntry.getGroupId();
+						})));
 		}
 
 		return searchRequest;

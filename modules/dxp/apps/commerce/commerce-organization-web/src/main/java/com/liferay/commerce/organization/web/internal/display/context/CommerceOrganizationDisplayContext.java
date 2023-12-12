@@ -229,6 +229,15 @@ public class CommerceOrganizationDisplayContext {
 			getOrganizationId(), ActionKeys.ADD_ORGANIZATION);
 	}
 
+	public boolean isAdminPortlet() {
+		return _adminPortlet;
+	}
+
+	public void setAdminPortlet(boolean adminPortlet) {
+		_adminPortlet = adminPortlet;
+	}
+
+	private boolean _adminPortlet;
 	private final CommerceOrganizationPortletInstanceConfiguration
 		_commerceOrganizationPortletInstanceConfiguration;
 	private final CommerceOrganizationRequestHelper

@@ -385,3 +385,10 @@ $btn-size: 28px;
 		}
 	}
 }
+
+.admin-portlet {
+	.org-char-info-panel {
+		position: fixed;
+		top: calc(var(--control-menu-container-height) + 48px);
+	}
+}

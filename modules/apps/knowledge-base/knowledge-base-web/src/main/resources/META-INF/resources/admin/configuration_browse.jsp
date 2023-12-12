@@ -231,10 +231,6 @@ String emailParam = StringPool.BLANK;
 					</c:choose>
 				</clay:sheet>
 
-				<%
-				configurationActionURL.setParameter("emailParam", emailParam);
-				%>
-
 				<aui:button-row>
 					<div class="c-gap-1 d-flex">
 						<clay:button

@@ -17,6 +17,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.exportimport.portlet.preferences.processor.Capability;
 import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessor;
@@ -166,36 +167,41 @@ public class DDLDisplayExportImportPortletPreferencesProcessor
 		StagedModelDataHandlerUtil.exportReferenceStagedModel(
 			portletDataContext, portletId, ddlRecordSet);
 
-		try {
-			ActionableDynamicQuery actionableDynamicQuery =
-				_ddlRecordStagedModelRepository.getExportActionableDynamicQuery(
-					portletDataContext);
+		boolean exportModel = _isExportModel(
+			portletDataContext, DDLRecord.class.getName());
 
-			ActionableDynamicQuery.AddCriteriaMethod addCriteriaMethod =
-				actionableDynamicQuery.getAddCriteriaMethod();
+		if (exportModel) {
+			try {
+				ActionableDynamicQuery actionableDynamicQuery =
+					_ddlRecordStagedModelRepository.
+						getExportActionableDynamicQuery(portletDataContext);
 
-			actionableDynamicQuery.setAddCriteriaMethod(
-				dynamicQuery -> {
-					addCriteriaMethod.addCriteria(dynamicQuery);
+				ActionableDynamicQuery.AddCriteriaMethod addCriteriaMethod =
+					actionableDynamicQuery.getAddCriteriaMethod();
 
-					Property property = PropertyFactoryUtil.forName(
-						"recordSetId");
+				actionableDynamicQuery.setAddCriteriaMethod(
+					dynamicQuery -> {
+						addCriteriaMethod.addCriteria(dynamicQuery);
 
-					dynamicQuery.add(
-						property.eq(ddlRecordSet.getRecordSetId()));
-				});
+						Property property = PropertyFactoryUtil.forName(
+							"recordSetId");
 
-			actionableDynamicQuery.setGroupId(ddlRecordSet.getGroupId());
-			actionableDynamicQuery.setPerformActionMethod(
-				(DDLRecord ddlRecord) ->
-					StagedModelDataHandlerUtil.exportReferenceStagedModel(
-						portletDataContext, portletId, ddlRecord));
+						dynamicQuery.add(
+							property.eq(ddlRecordSet.getRecordSetId()));
+					});
 
-			actionableDynamicQuery.performActions();
-		}
-		catch (PortalException portalException) {
-			throw new PortletDataException(
-				"Unable to export referenced records", portalException);
+				actionableDynamicQuery.setGroupId(ddlRecordSet.getGroupId());
+				actionableDynamicQuery.setPerformActionMethod(
+					(DDLRecord ddlRecord) ->
+						StagedModelDataHandlerUtil.exportReferenceStagedModel(
+							portletDataContext, portletId, ddlRecord));
+
+				actionableDynamicQuery.performActions();
+			}
+			catch (PortalException portalException) {
+				throw new PortletDataException(
+					"Unable to export referenced records", portalException);
+			}
 		}
 
 		_exportReferenceDDMTemplate(
@@ -341,6 +347,24 @@ public class DDLDisplayExportImportPortletPreferencesProcessor
 
 		StagedModelDataHandlerUtil.exportReferenceStagedModel(
 			portletDataContext, portletId, ddmTemplate);
+	}
+
+	private boolean _isExportModel(
+		PortletDataContext portletDataContext, String className) {
+
+		Map<String, String[]> parameterMap =
+			portletDataContext.getParameterMap();
+
+		boolean exportModel = MapUtil.getBoolean(parameterMap, className);
+
+		if (exportModel) {
+			return true;
+		}
+
+		return MapUtil.getBoolean(
+			parameterMap,
+			className + StringPool.POUND +
+				StagedModelType.REFERRER_CLASS_NAME_ALL,true);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

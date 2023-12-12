@@ -350,6 +350,17 @@ public class CommercePaymentMethodGroupRelServiceImpl
 
 	@Override
 	public CommercePaymentMethodGroupRel updateCommercePaymentMethodGroupRel(
+			CommercePaymentMethodGroupRel commercePaymentMethodGroupRel)
+		throws PortalException {
+
+		_checkCommerceChannel(commercePaymentMethodGroupRel.getGroupId());
+
+		return commercePaymentMethodGroupRelLocalService.
+			updateCommercePaymentMethodGroupRel(commercePaymentMethodGroupRel);
+	}
+
+	@Override
+	public CommercePaymentMethodGroupRel updateCommercePaymentMethodGroupRel(
 			long commercePaymentMethodGroupRelId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, File imageFile, double priority,
 			boolean active)

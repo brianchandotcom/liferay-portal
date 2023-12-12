@@ -13,12 +13,15 @@ import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.context.CommerceContextFactory;
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.catalog.CPQuery;
+import com.liferay.commerce.product.constants.CommerceChannelAccountEntryRelConstants;
 import com.liferay.commerce.product.data.source.CPDataSourceResult;
 import com.liferay.commerce.product.exception.NoSuchCProductException;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.product.model.CommerceChannelAccountEntryRel;
 import com.liferay.commerce.product.permission.CommerceProductViewPermission;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
+import com.liferay.commerce.product.service.CommerceChannelAccountEntryRelLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.util.CommerceAccountHelper;
@@ -41,6 +44,7 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.MatchAllQuery;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
@@ -51,6 +55,7 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.ws.rs.core.MultivaluedMap;
@@ -88,6 +93,12 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 		Long commerceAccountId = _getCommerceAccountId(
 			accountId, commerceChannel);
 
+		if (!_isAccountEntryEligible(
+				commerceAccountId, commerceChannel.getCommerceChannelId())) {
+
+			return null;
+		}
+
 		_commerceProductViewPermission.check(
 			PermissionThreadLocal.getPermissionChecker(), commerceAccountId,
 			commerceChannel.getGroupId(), cpDefinition.getCPDefinitionId());
@@ -105,13 +116,22 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		SearchContext searchContext = new SearchContext();
-
 		CommerceChannel commerceChannel =
 			_commerceChannelLocalService.getCommerceChannel(channelId);
 
 		Long commerceAccountId = _getCommerceAccountId(
 			accountId, commerceChannel);
+
+		if (!_isAccountEntryEligible(
+				commerceAccountId, commerceChannel.getCommerceChannelId())) {
+
+			return Page.of(
+				Collections.emptyList(),
+				Pagination.of(pagination.getPage(), pagination.getPageSize()),
+				0);
+		}
+
+		SearchContext searchContext = new SearchContext();
 
 		searchContext.setAttributes(
 			HashMapBuilder.<String, Serializable>put(
@@ -186,34 +206,51 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 			Long accountId, CommerceChannel commerceChannel)
 		throws Exception {
 
-		int countUserCommerceAccounts =
-			_commerceAccountHelper.countUserCommerceAccounts(
+		if (accountId == null) {
+			throw new NoSuchEntryException("The account is invalid");
+		}
+
+		long[] commerceAccountIds =
+			_commerceAccountHelper.getUserCommerceAccountIds(
 				contextUser.getUserId(), commerceChannel.getGroupId());
 
-		if (countUserCommerceAccounts > 1) {
-			if (accountId == null) {
-				throw new NoSuchEntryException();
-			}
+		if (commerceAccountIds.length == 0) {
+			AccountEntry accountEntry =
+				_accountEntryLocalService.getGuestAccountEntry(
+					contextCompany.getCompanyId());
+
+			return accountEntry.getAccountEntryId();
 		}
-		else {
-			long[] commerceAccountIds =
-				_commerceAccountHelper.getUserCommerceAccountIds(
-					contextUser.getUserId(), commerceChannel.getGroupId());
-
-			if (commerceAccountIds.length == 0) {
-				AccountEntry accountEntry =
-					_accountEntryLocalService.getGuestAccountEntry(
-						contextCompany.getCompanyId());
-
-				commerceAccountIds = new long[] {
-					accountEntry.getAccountEntryId()
-				};
-			}
-
-			return commerceAccountIds[0];
+		else if (!ArrayUtil.contains(commerceAccountIds, accountId)) {
+			throw new NoSuchEntryException(
+				"The account is not eligible for this channel");
 		}
 
 		return accountId;
+	}
+
+	private boolean _isAccountEntryEligible(
+		long accountEntryId, long commerceChannelId) {
+
+		CommerceChannelAccountEntryRel commerceChannelAccountEntryRel =
+			_commerceChannelAccountEntryRelLocalService.
+				fetchCommerceChannelAccountEntryRel(
+					accountEntryId, commerceChannelId,
+					CommerceChannelAccountEntryRelConstants.TYPE_ELIGIBILITY);
+
+		int commerceChannelAccountEntryRelsCount =
+			_commerceChannelAccountEntryRelLocalService.
+				getCommerceChannelAccountEntryRelsCount(
+					commerceChannelId, null,
+					CommerceChannelAccountEntryRelConstants.TYPE_ELIGIBILITY);
+
+		if ((commerceChannelAccountEntryRel == null) &&
+			(commerceChannelAccountEntryRelsCount > 0)) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	private Product _toProduct(
@@ -257,6 +294,10 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 
 	@Reference
 	private CommerceAccountHelper _commerceAccountHelper;
+
+	@Reference
+	private CommerceChannelAccountEntryRelLocalService
+		_commerceChannelAccountEntryRelLocalService;
 
 	@Reference
 	private CommerceChannelLocalService _commerceChannelLocalService;

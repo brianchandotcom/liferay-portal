@@ -1,0 +1,34 @@
+{
+	"label": {
+		"en_US": "Testray Routine"
+	},
+	"name": "Routine",
+	"objectFields": [
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": true,
+			"label": {
+				"en_US": "Name"
+			},
+			"name": "name",
+			"required": true,
+			"type": "String"
+		},
+		{
+			"DBType": "Boolean",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Autoanalyze"
+			},
+			"name": "autoanalyze",
+			"required": false,
+			"type": "Boolean"
+		}
+	],
+	"pluralLabel": {
+		"en_US": "Testray Routines"
+	},
+	"scope": "company"
+}

@@ -1,0 +1,23 @@
+{
+	"label": {
+		"en_US": "Testray Factor Category"
+	},
+	"name": "FactorCategory",
+	"objectFields": [
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": true,
+			"label": {
+				"en_US": "Name"
+			},
+			"name": "name",
+			"required": true,
+			"type": "String"
+		}
+	],
+	"pluralLabel": {
+		"en_US": "Testray Factor Categories"
+	},
+	"scope": "company"
+}

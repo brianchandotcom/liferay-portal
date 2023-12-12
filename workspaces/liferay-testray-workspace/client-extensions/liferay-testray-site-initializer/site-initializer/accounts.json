@@ -1,0 +1,22 @@
+[
+	{
+		"externalReferenceCode": "TESTRAY-001",
+		"name": "Testray User 001",
+		"type": "person"
+	},
+	{
+		"externalReferenceCode": "TESTRAY-002",
+		"name": "Testray User 002",
+		"type": "person"
+	},
+	{
+		"externalReferenceCode": "TESTRAY-003",
+		"name": "Testray User 003",
+		"type": "person"
+	},
+	{
+		"externalReferenceCode": "TESTRAY-004",
+		"name": "Testray User 004",
+		"type": "person"
+	}
+]

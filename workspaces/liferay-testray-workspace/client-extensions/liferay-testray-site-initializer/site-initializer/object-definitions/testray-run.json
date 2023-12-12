@@ -1,0 +1,89 @@
+{
+	"label": {
+		"en_US": "Testray Run"
+	},
+	"name": "Run",
+	"objectFields": [
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": true,
+			"label": {
+				"en_US": "Name"
+			},
+			"name": "name",
+			"required": true,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Description"
+			},
+			"name": "description",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "External Reference PK"
+			},
+			"name": "externalReferencePK",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "Integer",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "External Reference Type"
+			},
+			"name": "externalReferenceType",
+			"required": false,
+			"type": "Integer"
+		},
+		{
+			"DBType": "Long",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Jenkins Job Key"
+			},
+			"name": "jenkinsJobKey",
+			"required": false,
+			"type": "Long"
+		},
+		{
+			"DBType": "Long",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Number"
+			},
+			"name": "number",
+			"required": false,
+			"type": "Long"
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": true,
+			"label": {
+				"en_US": "Environment Hash"
+			},
+			"name": "environmentHash",
+			"required": false,
+			"type": "String"
+		}
+	],
+	"pluralLabel": {
+		"en_US": "Testray Runs"
+	},
+	"scope": "company"
+}

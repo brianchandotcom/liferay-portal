@@ -1,0 +1,58 @@
+{
+	"label": {
+		"en_US": "Testray Task"
+	},
+	"name": "Task",
+	"objectFields": [
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": true,
+			"label": {
+				"en_US": "Name"
+			},
+			"name": "name",
+			"required": true,
+			"type": "String"
+		},
+		{
+			"DBType": "Long",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Dispatch Trigger ID"
+			},
+			"name": "dispatchTriggerId",
+			"required": false,
+			"type": "Long"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Picklist",
+			"indexed": true,
+			"indexedAsKeyword": true,
+			"label": {
+				"en_US": "Due Status"
+			},
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Task Statuses$]",
+			"name": "dueStatus",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "Date",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Status Update Date"
+			},
+			"name": "statusUpdateDate",
+			"required": false,
+			"type": "Date"
+		}
+	],
+	"pluralLabel": {
+		"en_US": "Testray Tasks"
+	},
+	"scope": "company"
+}

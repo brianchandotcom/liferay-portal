@@ -1,0 +1,102 @@
+{
+	"label": {
+		"en_US": "Testray Subtask"
+	},
+	"name": "Subtask",
+	"objectFields": [
+		{
+			"DBType": "Long",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Message Board Message Id"
+			},
+			"name": "mbMessageId",
+			"required": false,
+			"type": "Long"
+		},
+		{
+			"DBType": "Long",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Message Board Thread Id"
+			},
+			"name": "mbThreadId",
+			"required": false,
+			"type": "Long"
+		},
+		{
+			"DBType": "Clob",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Errors"
+			},
+			"name": "errors",
+			"required": false,
+			"type": "Clob"
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Name"
+			},
+			"name": "name",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "Long",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Number"
+			},
+			"name": "number",
+			"required": false,
+			"type": "Integer"
+		},
+		{
+			"DBType": "Integer",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Score"
+			},
+			"name": "score",
+			"required": false,
+			"type": "Integer"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Picklist",
+			"indexed": true,
+			"indexedAsKeyword": true,
+			"label": {
+				"en_US": "Due Status"
+			},
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:SubTask Statuses$]",
+			"name": "dueStatus",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "Date",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Status Update Date"
+			},
+			"name": "statusUpdateDate",
+			"required": false,
+			"type": "Date"
+		}
+	],
+	"pluralLabel": {
+		"en_US": "Testray Sub Tasks"
+	},
+	"scope": "company"
+}

@@ -1,0 +1,11 @@
+{
+	"deletionType": "cascade",
+	"label": {
+		"en-US": "Testray User to Task"
+	},
+	"name": "userToTasksUsers",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:User$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:TasksUsers$]",
+	"objectDefinitionName2": "TasksUsers",
+	"type": "oneToMany"
+}

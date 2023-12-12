@@ -1,0 +1,58 @@
+<svg height="15.901459mm" id="svg853" inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
+sodipodi:docname="testray-icon-gray.svg" version="1.1" viewBox="0 0 11.90625 15.901459" width="11.90625mm"
+xmlns="http://www.w3.org/2000/svg" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:svg="http://www.w3.org/2000/svg">
+	<sodipodi:namedview
+		bordercolor="#666666"
+		borderopacity="1.0"
+		fit-margin-bottom="0"
+		fit-margin-left="0"
+		fit-margin-right="0"
+		fit-margin-top="0"
+		id="namedview855"
+		inkscape:current-layer="layer1"
+		inkscape:cx="16.864614"
+		inkscape:cy="28.296734"
+		inkscape:document-units="mm"
+		inkscape:pagecheckerboard="0"
+		inkscape:pageopacity="0.0"
+		inkscape:pageshadow="2"
+		inkscape:window-height="1044"
+		inkscape:window-maximized="1"
+		inkscape:window-width="1920"
+		inkscape:window-x="3840"
+		inkscape:window-y="507"
+		inkscape:zoom="16.75105"
+		pagecolor="#ffffff"
+		showgrid="false"
+	/>
+	<defs id="defs850" />
+	<g id="layer1" inkscape:groupmode="layer" inkscape:label="Layer 1" transform="translate(-74.462037,-74.251437)">
+		<g
+			fillRule="nonzero"
+			id="Group"
+			style="fill:#8b8db2;stroke:none;fill-opacity:1"
+			transform="matrix(0.26458333,0,0,0.26458333,74.462037,74.251437)"
+		>
+			<circle cx="22.5" cy="55.700001" fill="#5f65d6" id="Oval" r="4.4000001" style="fill:#8b8db2;fill-opacity:1" />
+			<polygon
+				fill="#373ecc"
+				id="Shape"
+				points="33.3,41.3 45,34.6 45,9 33.3,9 "
+				style="fill:#8b8db2;fill-opacity:1"
+			/>
+			<polygon
+				fill="#1c1f66"
+				id="polygon10"
+				points="11.7,18 0,18 0,34.6 11.7,41.3 "
+				style="fill:#8b8db2;fill-opacity:1"
+			/>
+			<polygon
+				fill="#292f99"
+				id="polygon12"
+				points="28.4,0 16.7,0 16.7,44.2 22.5,47.6 28.4,44.2 "
+				style="fill:#8b8db2;fill-opacity:1"
+			/>
+		</g>
+	</g>
+</svg>

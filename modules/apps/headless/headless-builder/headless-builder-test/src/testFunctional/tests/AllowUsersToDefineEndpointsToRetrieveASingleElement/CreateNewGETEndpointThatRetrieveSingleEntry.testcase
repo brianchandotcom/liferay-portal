@@ -60,19 +60,19 @@ definition {
 				title = "My-app");
 
 			SchemaAPI.relateRequestSchemaToEndpointByErc(
-				endpointErc = "testendpoint",
-				requestSchemaErc = "testSchema");
+				endpointErc = "My-app_testendpoint",
+				requestSchemaErc = "My-app_testSchema");
 
 			SchemaAPI.relateResponseSchemaToEndpointByErc(
-				endpointErc = "testendpoint",
-				responseSchemaErc = "testSchema");
+				endpointErc = "My-app_testendpoint",
+				responseSchemaErc = "My-app_testSchema");
 		}
 
 		task ("And Given I create schema a property with erc of name field") {
 			PropertyAPI.createAPIProperty(
 				name = "entryName",
 				objectFieldERC = "studentName",
-				schemaERC = "testSchema");
+				schemaERC = "My-app_testSchema");
 		}
 
 		task ("When I navigate to API application in API Explorer") {

@@ -36,6 +36,7 @@ const getMDFClaimSummary = async () => {
 			data.currency ? Liferay.Util.escape(data.currency.key) : 'USD'
 		);
 		const type = Liferay.Util.escape(data.partial ? 'Partial' : 'Full');
+		const paymentDate = Liferay.Util.escape(data.paymentDate);
 
 		fragmentElement.querySelector('#mdf-claim-type').innerHTML = type;
 		fragmentElement.querySelector(
@@ -45,6 +46,9 @@ const getMDFClaimSummary = async () => {
 			'#mdf-claim-payment-received'
 		).innerHTML = claimPaid;
 		fragmentElement.querySelector('#mdf-claim-check').innerHTML = check;
+		fragmentElement.querySelector(
+			'#mdf-claim-payment-date'
+		).innerHTML = formatNewDate(Liferay.Util.escape(paymentDate));
 
 		return;
 	}
@@ -60,6 +64,14 @@ const formatCurrency = (value, currencyKey) =>
 		currency: currencyKey ? currencyKey : 'USD',
 		style: 'currency',
 	}).format(value);
+
+const formatNewDate = (value) =>
+	new Intl.DateTimeFormat(Liferay.ThemeDisplay.getBCP47LanguageId(), {
+		day: 'numeric',
+		month: 'short',
+		timeZone: 'UTC',
+		year: 'numeric',
+	}).format(new Date(value));
 
 if (layoutMode !== 'edit' && !isNaN(mdfClaimId)) {
 	getMDFClaimSummary();

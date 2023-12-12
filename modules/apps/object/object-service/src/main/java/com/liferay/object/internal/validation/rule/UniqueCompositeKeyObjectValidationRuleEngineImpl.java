@@ -130,7 +130,7 @@ public class UniqueCompositeKeyObjectValidationRuleEngineImpl
 				continue;
 			}
 
-			String value = null;
+			Object value = entryValues.get(objectField.getName());
 
 			if (StringUtil.equals(
 					objectField.getBusinessType(),
@@ -140,11 +140,11 @@ public class UniqueCompositeKeyObjectValidationRuleEngineImpl
 					(Map<String, Object>)entryValues.get(objectField.getName());
 
 				if (objectFieldProperties != null) {
-					value = String.valueOf(objectFieldProperties.get("key"));
+					value = objectFieldProperties.get("key");
 				}
-			}
-			else {
-				value = String.valueOf(entryValues.get(objectField.getName()));
+				else {
+					value = null;
+				}
 			}
 
 			Predicate uniqueCompositeKeyObjectFieldPredicate =

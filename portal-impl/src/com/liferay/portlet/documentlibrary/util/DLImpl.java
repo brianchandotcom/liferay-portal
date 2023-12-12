@@ -814,6 +814,13 @@ public class DLImpl implements DL {
 			return entryURL;
 		}
 
+		boolean hasAssetDisplayPage = GetterUtil.getBoolean(
+			serviceContext.getAttribute("hasAssetDisplayPage"));
+
+		if (hasAssetDisplayPage) {
+			return StringPool.BLANK;
+		}
+
 		HttpServletRequest httpServletRequest = serviceContext.getRequest();
 		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 

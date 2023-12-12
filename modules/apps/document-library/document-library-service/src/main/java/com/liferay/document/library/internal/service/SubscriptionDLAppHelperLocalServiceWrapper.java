@@ -5,7 +5,6 @@
 
 package com.liferay.document.library.internal.service;
 
-import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
 import com.liferay.document.library.internal.util.DLSubscriptionSender;
@@ -36,8 +35,8 @@ import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.EscapableLocalizableFunction;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Localization;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.SubscriptionSender;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -134,18 +133,6 @@ public class SubscriptionDLAppHelperLocalServiceWrapper
 		}
 	}
 
-	private boolean _hasAssetDisplayPage(ServiceContext serviceContext) {
-		int displayPageType = ParamUtil.getInteger(
-			serviceContext, "displayPageType",
-			AssetDisplayPageConstants.TYPE_DEFAULT);
-
-		if (displayPageType == AssetDisplayPageConstants.TYPE_NONE) {
-			return false;
-		}
-
-		return true;
-	}
-
 	private boolean _isEnabled(FileEntry fileEntry) {
 		if (!DLAppHelperThreadLocal.isEnabled() ||
 			RepositoryUtil.isExternalRepository(fileEntry.getRepositoryId())) {
@@ -178,7 +165,10 @@ public class SubscriptionDLAppHelperLocalServiceWrapper
 
 		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 
-		if ((themeDisplay != null) && _hasAssetDisplayPage(serviceContext)) {
+		boolean hasAssetDisplayPage = GetterUtil.getBoolean(
+			serviceContext.getAttribute("hasAssetDisplayPage"));
+
+		if ((themeDisplay != null) && hasAssetDisplayPage) {
 			String friendlyURL =
 				_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
 					new InfoItemReference(

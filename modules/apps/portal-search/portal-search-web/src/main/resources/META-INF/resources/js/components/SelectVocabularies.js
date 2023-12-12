@@ -37,7 +37,7 @@ const SELECT_OPTIONS = {
 const convertToIDArray = (idsString) =>
 	idsString.split(',').filter((id) => id !== '');
 
-function SiteRow({disabled, name, onSelect, vocabularies}) {
+function SiteRow({name, onSelect, vocabularies}) {
 	const _handleSelect = (select = true) => (event) => {
 		event.preventDefault();
 
@@ -68,13 +68,11 @@ function SiteRow({disabled, name, onSelect, vocabularies}) {
 				</ClayButton>
 			</div>
 
-			<div className={getCN('autofit-col', {'text-muted': disabled})}>
-				{name}
-			</div>
+			<div className={getCN('autofit-col')}>{name}</div>
 
 			<div className="autofit-col autofit-col-expand" />
 
-			{!!vocabularies.length && !disabled && (
+			{!!vocabularies.length && (
 				<div className="autofit-col">
 					<span className="autofit-row">
 						<span className="autofit-col c-mr-1">
@@ -110,7 +108,6 @@ function SiteRow({disabled, name, onSelect, vocabularies}) {
 }
 
 function VocabularyTree({
-	disabled,
 	loading,
 	selectedKeys,
 	setSelectedKeys,
@@ -135,28 +132,6 @@ function VocabularyTree({
 		_handleSelect([{id}], !selectedKeys.has(id));
 	};
 
-	const _renderReadOnlyCheckbox = (checked, name) => (
-
-		// Even if `readOnly` is added to ClayCheckbox, a vocabulary can
-		// still be selected as a child of TreeView item. Instead, use
-		// markup to render the readOnly checkbox.
-
-		<div className="custom-checkbox custom-control">
-			<input
-				aria-disabled="true"
-				checked={checked}
-				className="custom-control-input"
-				disabled={true}
-				readOnly
-				type="checkbox"
-			/>
-
-			<span className="custom-control-label">
-				<span className="custom-control-label-text">{name}</span>
-			</span>
-		</div>
-	);
-
 	if (loading || vocabularyTree === null) {
 		return <ClayLoadingIndicator displayType="secondary" size="sm" />;
 	}
@@ -175,7 +150,6 @@ function VocabularyTree({
 				<TreeView.Item key={item.id}>
 					<div className="treeview-link-site-row">
 						<SiteRow
-							disabled={disabled}
 							name={
 								item.descriptiveName_i18n?.[
 									Liferay.ThemeDisplay.getLanguageId()
@@ -188,28 +162,19 @@ function VocabularyTree({
 
 					{item.children?.length ? (
 						<TreeView.Group items={item.children}>
-							{({id, name}) =>
-								disabled ? (
-									<TreeView.Item key={id}>
-										{_renderReadOnlyCheckbox(
-											selectedKeys.has(id),
-											name
-										)}
-									</TreeView.Item>
-								) : (
-									<TreeView.Item
-										key={id}
-										style={{cursor: 'unset'}}
-									>
-										<ClayCheckbox
-											checked={selectedKeys.has(id)}
-											onChange={() => _handleToggle(id)}
-										/>
+							{({id, name}) => (
+								<TreeView.Item
+									key={id}
+									style={{cursor: 'unset'}}
+								>
+									<ClayCheckbox
+										checked={selectedKeys.has(id)}
+										onChange={() => _handleToggle(id)}
+									/>
 
-										{name}
-									</TreeView.Item>
-								)
-							}
+									{name}
+								</TreeView.Item>
+							)}
 						</TreeView.Group>
 					) : (
 						<TreeView.Group>
@@ -231,7 +196,6 @@ function VocabularyTree({
 }
 
 function SelectVocabularies({
-	disabled = false,
 	initialSelectedVocabularyIds = SELECT_OPTIONS.ALL,
 	namespace = '',
 	vocabularyIdsInputName = '',
@@ -356,9 +320,7 @@ function SelectVocabularies({
 
 	return (
 		<div className="select-vocabularies">
-			<label className={getCN({disabled})}>
-				{Liferay.Language.get('select-vocabularies')}
-			</label>
+			<label>{Liferay.Language.get('select-vocabularies')}</label>
 
 			<input
 				hidden
@@ -373,30 +335,26 @@ function SelectVocabularies({
 			/>
 
 			<div className="c-mb-3 c-mt-2 sheet-text text-3">
-				<span className={getCN({'text-muted': disabled})}>
+				<span>
 					{Liferay.Language.get(
 						'select-vocabularies-configuration-description'
 					)}
 				</span>
 
-				{!disabled && (
-					<LearnMessage
-						className="c-ml-1"
-						resource="portal-search-web"
-						resourceKey="tag-and-category-facet"
-					/>
-				)}
+				<LearnMessage
+					className="c-ml-1"
+					resource="portal-search-web"
+					resourceKey="tag-and-category-facet"
+				/>
 			</div>
 
 			<ClayRadioGroup onChange={_handleSelectionChange} value={selection}>
 				<ClayRadio
-					disabled={disabled}
 					label={Liferay.Language.get('all-vocabularies')}
 					value={SELECT_OPTIONS.ALL}
 				/>
 
 				<ClayRadio
-					disabled={disabled}
 					label={Liferay.Language.get('select-vocabularies')}
 					value={SELECT_OPTIONS.SELECT}
 				/>
@@ -406,7 +364,7 @@ function SelectVocabularies({
 				_isDisplayInfoSelectedVocabulariesHidden() && (
 					<ClayAlert
 						displayType="info"
-						style={{opacity: disabled ? 0.5 : 1}}
+						style={{opacity: 1}}
 						title={`${Liferay.Language.get('info')}:`}
 					>
 						{Liferay.Language.get(
@@ -423,7 +381,6 @@ function SelectVocabularies({
 
 			{selection === SELECT_OPTIONS.SELECT && (
 				<VocabularyTree
-					disabled={disabled}
 					loading={vocabularyTreeLoading}
 					selectedKeys={selectedKeys}
 					setSelectedKeys={setSelectedKeys}
@@ -435,7 +392,6 @@ function SelectVocabularies({
 }
 
 export default function ({
-	disabled,
 	initialSelectedVocabularyIds,
 	learnResources,
 	namespace,
@@ -444,7 +400,6 @@ export default function ({
 	return (
 		<LearnResourcesContext.Provider value={learnResources}>
 			<SelectVocabularies
-				disabled={disabled}
 				initialSelectedVocabularyIds={initialSelectedVocabularyIds}
 				namespace={namespace}
 				vocabularyIdsInputName={vocabularyIdsInputName}

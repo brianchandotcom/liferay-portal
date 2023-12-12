@@ -26,3 +26,4 @@ export {
 } from './translation_manager/state';
 export {default as TranslationAdminModal} from './translation_manager/TranslationAdminModal';
 export {default as TranslationAdminSelector} from './translation_manager/TranslationAdminSelector';
+export {Locale} from './translation_manager/TranslationAdminContent';

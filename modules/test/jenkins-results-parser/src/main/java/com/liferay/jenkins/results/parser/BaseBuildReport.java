@@ -118,16 +118,9 @@ public abstract class BaseBuildReport implements BuildReport {
 			return _startDate;
 		}
 
-		JSONObject buildReportJSONObject = getBuildReportJSONObject();
+		JSONObject buildJSONObject = getBuildJSONObject();
 
-		if (buildReportJSONObject.has("startTime")) {
-			_startDate = new Date(buildReportJSONObject.getLong("startTime"));
-		}
-		else {
-			JSONObject buildJSONObject = getBuildJSONObject();
-
-			_startDate = new Date(buildJSONObject.getLong("timestamp"));
-		}
+		_startDate = new Date(buildJSONObject.getLong("timestamp"));
 
 		return _startDate;
 	}

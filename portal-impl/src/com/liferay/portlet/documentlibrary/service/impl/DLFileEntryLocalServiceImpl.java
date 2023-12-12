@@ -2337,7 +2337,8 @@ public class DLFileEntryLocalServiceImpl
 				_dlFileVersionLocalService.fetchLatestFileVersion(
 					fileEntry.getFileEntryId(), false);
 
-			_notify(fileEntry.getUserId(), _EMAIL_TYPE_REVIEW, latestFileVersion);
+			_notify(
+				fileEntry.getUserId(), _EMAIL_TYPE_REVIEW, latestFileVersion);
 		}
 	}
 
@@ -2688,18 +2689,6 @@ public class DLFileEntryLocalServiceImpl
 		}
 	}
 
-	private void _notify(
-		long userId, int emailType, DLFileVersion fileVersion)
-		throws PortalException {
-		_notifySubscribers(
-			userId, emailType, _buildEntryURL(fileVersion),
-			fileVersion, new ServiceContext());
-
-		_notifyOwner(
-			userId, emailType, _buildEntryURL(fileVersion),
-			fileVersion, new ServiceContext());
-	}
-
 	private void _expireFileVersion(
 			long userId, DLFileEntry fileEntry, DLFileVersion fileVersion,
 			Map<String, Serializable> workflowContext,
@@ -2992,6 +2981,18 @@ public class DLFileEntryLocalServiceImpl
 			dlFileEntry.getDataRepositoryId(), dlFileEntry.getName());
 
 		return dlFileEntry;
+	}
+
+	private void _notify(long userId, int emailType, DLFileVersion fileVersion)
+		throws PortalException {
+
+		_notifySubscribers(
+			userId, emailType, _buildEntryURL(fileVersion), fileVersion,
+			new ServiceContext());
+
+		_notifyOwner(
+			userId, emailType, _buildEntryURL(fileVersion), fileVersion,
+			new ServiceContext());
 	}
 
 	private void _notifyOwner(

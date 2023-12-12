@@ -7,6 +7,7 @@ package com.liferay.source.formatter.check;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 
@@ -211,40 +212,40 @@ public class PoshiDependenciesFileLocationCheck extends BaseFileCheck {
 			for (Map.Entry<String, Set<String>> entry :
 					_dependenciesFileReferencesMap.entrySet()) {
 
-				String dependenciesFileLocation = entry.getKey();
+				String dependenciesFileName = entry.getKey();
 
-				String dependenciesFileName =
-					dependenciesFileLocation.replaceFirst(".*/(.+)", "$1");
+				int pos = dependenciesFileName.lastIndexOf(StringPool.SLASH);
 
-				if (_containsFileName(
-						testCaseFileContent, dependenciesFileName)) {
+				String shortFileName = dependenciesFileName.substring(pos + 1);
 
-					Set<String> referencesFiles = entry.getValue();
+				if (_containsFileName(testCaseFileContent, shortFileName)) {
+					Set<String> referencesFileNames = entry.getValue();
 
-					referencesFiles.add(testCaseFileName);
+					referencesFileNames.add(testCaseFileName);
 
 					_dependenciesFileReferencesMap.put(
-						dependenciesFileLocation, referencesFiles);
+						dependenciesFileName, referencesFileNames);
 				}
 			}
 
 			for (Map.Entry<String, Set<String>> entry :
 					_dependenciesGlobalFileReferencesMap.entrySet()) {
 
-				String dependenciesFileLocation = entry.getKey();
+				String dependenciesGlobalFileName = entry.getKey();
 
-				String dependenciesFileName =
-					dependenciesFileLocation.replaceFirst(".*/(.+)", "$1");
+				int pos = dependenciesGlobalFileName.lastIndexOf(
+					StringPool.SLASH);
 
-				if (_containsFileName(
-						testCaseFileContent, dependenciesFileName)) {
+				String shortFileName = dependenciesGlobalFileName.substring(
+					pos + 1);
 
-					Set<String> referencesFiles = entry.getValue();
+				if (_containsFileName(testCaseFileContent, shortFileName)) {
+					Set<String> referencesFileNames = entry.getValue();
 
-					referencesFiles.add(testCaseFileName);
+					referencesFileNames.add(testCaseFileName);
 
 					_dependenciesGlobalFileReferencesMap.put(
-						dependenciesFileLocation, referencesFiles);
+						dependenciesGlobalFileName, referencesFileNames);
 				}
 			}
 		}

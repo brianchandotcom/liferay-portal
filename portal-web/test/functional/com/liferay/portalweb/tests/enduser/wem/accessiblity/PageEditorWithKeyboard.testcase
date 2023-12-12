@@ -396,7 +396,7 @@ definition {
 				index = 1,
 				locator1 = "PageEditor#PAGE_RULE_BUILDER_ACTION",
 				value1 = "aria-label",
-				value2 = "Show Fragment Heading");
+				value2 = "Show Fragment Button");
 
 			KeyPress(
 				index = 1,
@@ -471,7 +471,7 @@ definition {
 				index = 2,
 				locator1 = "PageEditor#PAGE_RULE_BUILDER_ACTION",
 				value1 = "aria-label",
-				value2 = "Hide Fragment Button");
+				value2 = "Hide Fragment Heading");
 
 			for (var index : list "1,2,3") {
 				AssertVisible(

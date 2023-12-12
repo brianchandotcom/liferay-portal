@@ -62,13 +62,14 @@ const TotalSessionsTooltip = ({dataPoint}) => {
 };
 
 const PerVariantTooltip = ({dataPoint}) => {
+	const control = dataPoint[0];
+	const variant = dataPoint[1];
+
 	const header = [
 		{
 			columns: [
 				{
-					label: d3.utcFormat('%b %-d')(
-						getDate(dataPoint[0].payload.key)
-					),
+					label: d3.utcFormat('%b %-d')(getDate(control.payload.key)),
 					weight: Weights.Semibold,
 					width: 80
 				},
@@ -84,26 +85,28 @@ const PerVariantTooltip = ({dataPoint}) => {
 		{
 			columns: [
 				{
-					color: dataPoint[0].color,
-					label: dataPoint[0].name
+					color: control.color,
+					label: control.name
 				},
 				{
 					align: Alignments.Right,
-					label: toThousandsABTesting(dataPoint[0].value)
+					label: toThousandsABTesting(control.value)
 				}
 			]
 		},
 		{
-			columns: [
-				{
-					color: dataPoint[1].color,
-					label: dataPoint[1].name
-				},
-				{
-					align: Alignments.Right,
-					label: toThousandsABTesting(dataPoint[1].value)
-				}
-			]
+			columns: variant
+				? [
+						{
+							color: dataPoint[1].color,
+							label: dataPoint[1].name
+						},
+						{
+							align: Alignments.Right,
+							label: toThousandsABTesting(dataPoint[1].value)
+						}
+				  ]
+				: []
 		}
 	];
 
@@ -122,7 +125,7 @@ const formatTotalSessionsData = experiment => {
 	control.sessionsHistogram.forEach((session, index) => {
 		chartData.push({
 			data_control:
-				session.value + variant.sessionsHistogram[index].value,
+				session.value + variant.sessionsHistogram?.[index]?.value || 0,
 			key: session.key
 		});
 	});
@@ -146,7 +149,7 @@ const formatPerVariantsData = experiment => {
 	control.sessionsHistogram.forEach((session, index) => {
 		chartData.push({
 			data_control: session.value,
-			data_variant: variant.sessionsHistogram[index].value,
+			data_variant: variant.sessionsHistogram?.[index]?.value || 0,
 			key: session.key
 		});
 	});

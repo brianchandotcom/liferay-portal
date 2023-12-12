@@ -158,7 +158,7 @@ public class DefaultObjectEntryManagerImpl
 			_addOrUpdateNestedObjectEntries(
 				dtoConverterContext, objectDefinition, objectEntry,
 				_getObjectRelationships(objectDefinition, objectEntry),
-				serviceBuilderObjectEntry.getPrimaryKey()));
+				serviceBuilderObjectEntry.getPrimaryKey(), scopeKey));
 	}
 
 	@Override
@@ -798,7 +798,8 @@ public class DefaultObjectEntryManagerImpl
 			_addOrUpdateNestedObjectEntries(
 				dtoConverterContext, objectDefinition, objectEntry,
 				_getObjectRelationships(objectDefinition, objectEntry),
-				serviceBuilderObjectEntry.getPrimaryKey()));
+				serviceBuilderObjectEntry.getPrimaryKey(),
+				objectEntry.getScopeKey()));
 	}
 
 	@Override
@@ -830,7 +831,7 @@ public class DefaultObjectEntryManagerImpl
 			_addOrUpdateNestedObjectEntries(
 				dtoConverterContext, objectDefinition, objectEntry,
 				_getObjectRelationships(objectDefinition, objectEntry),
-				serviceBuilderObjectEntry.getPrimaryKey()));
+				serviceBuilderObjectEntry.getPrimaryKey(), scopeKey));
 	}
 
 	private Map<String, String> _addAction(
@@ -862,7 +863,7 @@ public class DefaultObjectEntryManagerImpl
 				DTOConverterContext dtoConverterContext,
 				ObjectDefinition objectDefinition, ObjectEntry objectEntry,
 				Map<String, ObjectRelationship> objectRelationships,
-				long primaryKey)
+				long primaryKey, String scopeKey)
 		throws Exception {
 
 		Map<String, Object> properties = objectEntry.getProperties();
@@ -945,8 +946,7 @@ public class DefaultObjectEntryManagerImpl
 					nestedObjectEntry = objectEntryManager.updateObjectEntry(
 						objectDefinition.getCompanyId(), dtoConverterContext,
 						nestedObjectEntry.getExternalReferenceCode(),
-						relatedObjectDefinition, nestedObjectEntry,
-						relatedObjectDefinition.getScope());
+						relatedObjectDefinition, nestedObjectEntry, scopeKey);
 
 					if (!manyToOneObjectRelationship) {
 						_relateNestedObjectEntry(

@@ -88,6 +88,8 @@ export function mockExperimentDraftReq() {
 export function mockExperimentReq({
 	publishable = false,
 	publishedDXPVariantId = null,
+	status = 'RUNNING',
+	type = 'AB',
 	...experiment
 } = {}) {
 	return {
@@ -235,7 +237,8 @@ export function mockExperimentReq({
 						}
 					],
 					startedDate: '2020-09-30T12:00:00.000Z',
-					type: 'AB',
+					status,
+					type,
 					winnerDXPVariantId: null,
 					...experiment
 				}

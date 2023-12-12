@@ -411,7 +411,15 @@ describe('ExperimentOverviewPage', () => {
 
 	it('renders test sessions card when test type is AB', async () => {
 		const {container, queryByText} = render(
-			<WrappedComponent status='RUNNING' type='AB' />
+			<WrappedComponent
+				mocks={[
+					mockExperimentStatusReq({status: 'RUNNING'}),
+					mockExperimentReq({
+						status: 'RUNNING',
+						type: 'AB'
+					})
+				]}
+			/>
 		);
 
 		await waitForLoadingToBeRemoved(container);
@@ -423,7 +431,15 @@ describe('ExperimentOverviewPage', () => {
 
 	it('renders test traffic card when test type is MAB', async () => {
 		const {container, queryByText} = render(
-			<WrappedComponent status='RUNNING' type='MAB' />
+			<WrappedComponent
+				mocks={[
+					mockExperimentStatusReq({status: 'RUNNING'}),
+					mockExperimentReq({
+						status: 'RUNNING',
+						type: 'MAB'
+					})
+				]}
+			/>
 		);
 
 		await waitForLoadingToBeRemoved(container);

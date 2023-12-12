@@ -1,6 +1,18 @@
 [
 	{
 		"active": true,
+		"conditionExpression": "submitted == true",
+		"externalReferenceCode": "MDF-REQUEST-NOTIFICATION-2",
+		"label": {
+			"en_US": "Notification MDF Request On Submit"
+		},
+		"name": "notificationMDFRequestOnSubmit",
+		"objectActionExecutorKey": "notification",
+		"objectActionTriggerKey": "onAfterAdd",
+		"objectDefinitionId": "[$OBJECT_DEFINITION_ID:MDFRequest$]"
+	},
+	{
+		"active": true,
 		"conditionExpression": "oldValue('submitted') == false AND submitted == true",
 		"externalReferenceCode": "MDF-REQUEST-NOTIFICATION-1",
 		"label": {
@@ -13,14 +25,14 @@
 	},
 	{
 		"active": true,
-		"conditionExpression": "submitted == true",
-		"externalReferenceCode": "MDF-REQUEST-NOTIFICATION-2",
+		"conditionExpression": "oldValue('mdfRequestStatus') == 'moreInfoRequested' AND mdfRequestStatus == 'pendingMarketingReview'",
+		"externalReferenceCode": "MDF-REQUEST-NOTIFICATION-3",
 		"label": {
-			"en_US": "Notification MDF Request On Submit"
+			"en_US": "Notification MDF Request On Resubmit"
 		},
-		"name": "notificationMDFRequestOnSubmit",
+		"name": "notificationMDFRequestOnResubmit",
 		"objectActionExecutorKey": "notification",
-		"objectActionTriggerKey": "onAfterAdd",
+		"objectActionTriggerKey": "onAfterUpdate",
 		"objectDefinitionId": "[$OBJECT_DEFINITION_ID:MDFRequest$]"
 	}
 ]

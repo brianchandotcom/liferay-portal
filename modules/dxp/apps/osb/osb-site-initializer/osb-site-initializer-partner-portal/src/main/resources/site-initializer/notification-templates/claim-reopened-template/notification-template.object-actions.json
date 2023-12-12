@@ -4,9 +4,9 @@
 		"conditionExpression": "oldValue('mdfClaimStatus') == 'rejected' AND mdfClaimStatus == 'pendingMarketingReview'",
 		"externalReferenceCode": "MDF-CLAIM-REOPENED-1",
 		"label": {
-			"en_US": "Notification MDF Claim Reopened"
+			"en_US": "Notification MDF Claim On Reopen"
 		},
-		"name": "notificationMDFClaimPaid",
+		"name": "notificationMDFClaimReopen",
 		"objectActionExecutorKey": "notification",
 		"objectActionTriggerKey": "onAfterUpdate",
 		"objectDefinitionId": "[$OBJECT_DEFINITION_ID:MDFClaim$]"

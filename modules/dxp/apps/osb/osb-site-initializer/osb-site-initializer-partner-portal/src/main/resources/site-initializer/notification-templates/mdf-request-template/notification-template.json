@@ -1,8 +1,8 @@
 {
 	"description": "",
 	"editorType": "richText",
-	"externalReferenceCode": "PRM-MDF-REQUEST-NOTIFICATION-TEMPLATE",
-	"name": "PRM MDF Request Notification Template",
+	"externalReferenceCode": "MDF-REQUEST-NOTIFICATION-TEMPLATE",
+	"name": "MDF Request Notification Template",
 	"recipientType": "email",
 	"recipients": [
 		{

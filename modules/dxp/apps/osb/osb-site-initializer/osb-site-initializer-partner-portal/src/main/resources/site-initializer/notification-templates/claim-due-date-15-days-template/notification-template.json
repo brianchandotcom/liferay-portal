@@ -1,6 +1,7 @@
 {
 	"description": "",
 	"editorType": "richText",
+	"externalReferenceCode": "CLAIM-DUE-DATE-15-DAYS-NOTIFICATION-TEMPLATE",
 	"name": "Claim Due Date 15 Days Notification Template",
 	"recipientType": "email",
 	"recipients": [
@@ -12,7 +13,7 @@
 				"en-US": "Partner Portal"
 			},
 			"to": {
-				"en-US": "liferay@liferay.com"
+				"en-US": "[%ACTIVITY_AUTHOR_EMAIL_ADDRESS%]"
 			}
 		}
 	],

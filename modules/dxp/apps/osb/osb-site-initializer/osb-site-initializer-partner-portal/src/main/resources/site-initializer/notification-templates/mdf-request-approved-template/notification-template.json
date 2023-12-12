@@ -1,8 +1,8 @@
 {
 	"description": "",
 	"editorType": "richText",
-	"externalReferenceCode": "PRM-REQUEST-APPROVED-TEMPLATE",
-	"name": "PRM Claim Approved Template",
+	"externalReferenceCode": "MDF-REQUEST-APPROVED-TEMPLATE",
+	"name": "MDF Request Approved Notification Template",
 	"recipientType": "email",
 	"recipients": [
 		{
@@ -13,7 +13,7 @@
 				"en-US": "Partner Portal"
 			},
 			"to": {
-				"en-US": "liferay@liferay.com"
+				"en-US": "[%MDFREQUEST_AUTHOR_EMAIL_ADDRESS%]"
 			}
 		}
 	],

@@ -1,8 +1,8 @@
 {
 	"description": "",
 	"editorType": "richText",
-	"externalReferenceCode": "PRM-CLAIM-REOPENED-NOTIFICATION-TEMPLATE",
-	"name": "PRM Claim Reopened Notification Template",
+	"externalReferenceCode": "CLAIM-REOPENED-NOTIFICATION-TEMPLATE",
+	"name": "Claim Reopened Notification Template",
 	"recipientType": "email",
 	"recipients": [
 		{
@@ -13,7 +13,7 @@
 				"en-US": "Partner Portal"
 			},
 			"to": {
-				"en-US": "liferay@liferay.com"
+				"en-US": "[%MDFCLAIM_AUTHOR_EMAIL_ADDRESS%]"
 			}
 		}
 	],

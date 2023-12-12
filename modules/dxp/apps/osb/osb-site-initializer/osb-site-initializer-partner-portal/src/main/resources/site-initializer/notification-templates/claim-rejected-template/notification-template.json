@@ -1,8 +1,8 @@
 {
 	"description": "",
 	"editorType": "richText",
-	"externalReferenceCode": "PRM-CLAIM-REJECTED-TEMPLATE",
-	"name": "PRM Claim Rejected Template",
+	"externalReferenceCode": "CLAIM-REJECTED-TEMPLATE",
+	"name": "Claim Rejected Template",
 	"recipientType": "email",
 	"recipients": [
 		{
@@ -13,7 +13,7 @@
 				"en-US": "Partner Portal"
 			},
 			"to": {
-				"en-US": "liferay@liferay.com"
+				"en-US": "[%MDFCLAIM_AUTHOR_EMAIL_ADDRESS%]"
 			}
 		}
 	],

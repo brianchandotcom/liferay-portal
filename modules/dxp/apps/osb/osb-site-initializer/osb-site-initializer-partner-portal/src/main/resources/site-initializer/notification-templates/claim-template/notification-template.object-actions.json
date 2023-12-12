@@ -22,5 +22,17 @@
 		"objectActionExecutorKey": "notification",
 		"objectActionTriggerKey": "onAfterUpdate",
 		"objectDefinitionId": "[$OBJECT_DEFINITION_ID:MDFClaim$]"
+	},
+	{
+		"active": true,
+		"conditionExpression": "oldValue('mdfClaimStatus') == 'moreInfoRequested' AND mdfClaimStatus == 'pendingMarketingReview'",
+		"externalReferenceCode": "MDF-CLAIM-NOTIFICATION-3",
+		"label": {
+			"en_US": "Notification MDF Claim On Resubmit"
+		},
+		"name": "notificationMDFClaimOnResubmit",
+		"objectActionExecutorKey": "notification",
+		"objectActionTriggerKey": "onAfterUpdate",
+		"objectDefinitionId": "[$OBJECT_DEFINITION_ID:MDFClaim$]"
 	}
 ]

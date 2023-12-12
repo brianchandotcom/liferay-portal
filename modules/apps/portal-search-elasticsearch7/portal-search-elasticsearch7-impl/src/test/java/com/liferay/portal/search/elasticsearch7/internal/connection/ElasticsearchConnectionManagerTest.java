@@ -69,7 +69,8 @@ public class ElasticsearchConnectionManagerTest {
 		ElasticsearchConnectionManager elasticsearchConnectionManager =
 			Mockito.spy(_elasticsearchConnectionManager);
 
-		elasticsearchConnectionManager.activate();
+		elasticsearchConnectionManager.activate(
+			SystemBundleUtil.getBundleContext());
 
 		Mockito.verify(
 			elasticsearchConnectionManager, Mockito.never()
@@ -101,7 +102,8 @@ public class ElasticsearchConnectionManagerTest {
 		ElasticsearchConnectionManager elasticsearchConnectionManager =
 			Mockito.spy(_elasticsearchConnectionManager);
 
-		elasticsearchConnectionManager.activate();
+		elasticsearchConnectionManager.activate(
+			SystemBundleUtil.getBundleContext());
 
 		Mockito.verify(
 			elasticsearchConnectionManager, Mockito.never()
@@ -139,7 +141,8 @@ public class ElasticsearchConnectionManagerTest {
 		ElasticsearchConnectionManager elasticsearchConnectionManager =
 			Mockito.spy(_elasticsearchConnectionManager);
 
-		elasticsearchConnectionManager.activate();
+		elasticsearchConnectionManager.activate(
+			SystemBundleUtil.getBundleContext());
 
 		Mockito.verify(
 			elasticsearchConnectionManager
@@ -594,7 +597,8 @@ public class ElasticsearchConnectionManagerTest {
 		elasticsearchConnectionManager.addElasticsearchConnection(
 			sidecarElasticsearchConnection);
 
-		elasticsearchConnectionManager.activate();
+		elasticsearchConnectionManager.activate(
+			SystemBundleUtil.getBundleContext());
 
 		return elasticsearchConnectionManager;
 	}

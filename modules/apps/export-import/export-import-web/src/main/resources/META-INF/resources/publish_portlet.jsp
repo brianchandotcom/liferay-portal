@@ -54,6 +54,9 @@ if (!layout.isTypeControlPanel()) {
 				errorMessageKey = "this-widget-has-not-been-added-to-the-live-page-publish-the-page-first";
 			}
 		}
+		else if (stagingGroup.isStagedRemotely() && (remoteLayoutPlid == 0)) {
+			errorMessageKey = "this-widget-is-placed-in-a-page-that-does-not-exist-in-the-live-site-publish-the-page-first";
+		}
 	}
 }
 else if (group.isLayout()) {

@@ -17,7 +17,6 @@ import com.liferay.knowledge.base.web.internal.security.permission.resource.Admi
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -116,18 +115,6 @@ public class KBTemplatesManagementToolbarDisplayContext
 					).buildPortletURL());
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "add-template"));
-			}
-		).build();
-	}
-
-	@Override
-	public List<DropdownItem> getFilterDropdownItems() {
-		return DropdownItemListBuilder.addGroup(
-			() -> !FeatureFlagManagerUtil.isEnabled("LPS-144527"),
-			dropdownGroupItem -> {
-				dropdownGroupItem.setDropdownItems(getOrderByDropdownItems());
-				dropdownGroupItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "order-by"));
 			}
 		).build();
 	}

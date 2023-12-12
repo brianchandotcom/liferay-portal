@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
@@ -59,8 +58,6 @@ import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Inácio Nery
@@ -199,24 +196,6 @@ public class KaleoFormsViewRecordsDisplayContext {
 
 	public String getDisplayStyle() {
 		return "list";
-	}
-
-	public List<DropdownItem> getFilterItemsDropdownItems() {
-		if (FeatureFlagManagerUtil.isEnabled("LPS-144527")) {
-			return null;
-		}
-
-		HttpServletRequest httpServletRequest =
-			PortalUtil.getHttpServletRequest(_renderRequest);
-
-		return DropdownItemListBuilder.addGroup(
-			dropdownGroupItem -> {
-				dropdownGroupItem.setDropdownItems(
-					getOrderItemsDropdownItems());
-				dropdownGroupItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "order-by"));
-			}
-		).build();
 	}
 
 	public List<String> getHeaderNames() throws PortalException {

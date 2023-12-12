@@ -18,7 +18,6 @@ OAuthClientASLocalMetadataManagementToolbarDisplayContext oAuthClientASLocalMeta
 	additionalProps="<%= oAuthClientASLocalMetadataManagementToolbarDisplayContext.getAdditionalProps() %>"
 	creationMenu="<%= oAuthClientASLocalMetadataManagementToolbarDisplayContext.getCreationMenu() %>"
 	disabled="<%= oAuthClientASLocalMetadatasCount == 0 %>"
-	filterDropdownItems="<%= oAuthClientASLocalMetadataManagementToolbarDisplayContext.getFilterDropdownItems() %>"
 	itemsTotal="<%= oAuthClientASLocalMetadatasCount %>"
 	orderDropdownItems="<%= oAuthClientASLocalMetadataManagementToolbarDisplayContext.getOrderByDropdownItems() %>"
 	searchContainerId="oAuthClientASLocalMetadataSearchContainer"

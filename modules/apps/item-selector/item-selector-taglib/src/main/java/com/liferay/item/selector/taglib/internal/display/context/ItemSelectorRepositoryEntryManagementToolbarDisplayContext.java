@@ -212,13 +212,6 @@ public class ItemSelectorRepositoryEntryManagementToolbarDisplayContext {
 					LanguageUtil.get(
 						_httpServletRequest, "filter-by-location"));
 			}
-		).addGroup(
-			() -> !FeatureFlagManagerUtil.isEnabled("LPS-144527"),
-			dropdownGroupItem -> {
-				dropdownGroupItem.setDropdownItems(getOrderByDropdownItems());
-				dropdownGroupItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, "order-by"));
-			}
 		).build();
 	}
 

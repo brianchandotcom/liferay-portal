@@ -30,7 +30,6 @@
 	clearResultsURL="<%= ddmFormAdminDisplayContext.getClearResultsURL() %>"
 	creationMenu="<%= ddmFormAdminDisplayContext.getCreationMenu() %>"
 	disabled="<%= ddmFormAdminDisplayContext.isDisabledManagementBar() %>"
-	filterDropdownItems="<%= ddmFormAdminDisplayContext.getFilterItemsDropdownItems() %>"
 	itemsTotal="<%= ddmFormAdminDisplayContext.getTotalItems() %>"
 	orderDropdownItems="<%= ddmFormAdminDisplayContext.getOrderItemsDropdownItems() %>"
 	propsTransformer="admin/js/DDMFormAdminManagementToolbarPropsTransformer"

@@ -9,7 +9,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.oauth2.provider.model.OAuth2Authorization;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -45,20 +44,6 @@ public class OAuth2AuthorizationsManagementToolbarDisplayContext
 					LanguageUtil.get(
 						httpServletRequest, "revoke-authorizations"));
 				dropdownItem.setQuickAction(true);
-			}
-		).build();
-	}
-
-	public List<DropdownItem> getFilterDropdownItems() {
-		if (FeatureFlagManagerUtil.isEnabled("LPS-144527")) {
-			return null;
-		}
-
-		return DropdownItemListBuilder.addGroup(
-			dropdownGroupItem -> {
-				dropdownGroupItem.setDropdownItems(getOrderByDropdownItems());
-				dropdownGroupItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "order-by"));
 			}
 		).build();
 	}

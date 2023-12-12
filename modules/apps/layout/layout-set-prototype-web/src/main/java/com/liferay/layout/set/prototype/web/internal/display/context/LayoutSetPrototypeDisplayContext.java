@@ -16,7 +16,6 @@ import com.liferay.layout.set.prototype.web.internal.servlet.taglib.util.LayoutS
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
@@ -126,13 +125,6 @@ public class LayoutSetPrototypeDisplayContext {
 					_getFilterNavigationDropdownItems());
 				dropdownGroupItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "filter-by-status"));
-			}
-		).addGroup(
-			() -> !FeatureFlagManagerUtil.isEnabled("LPS-144527"),
-			dropdownGroupItem -> {
-				dropdownGroupItem.setDropdownItems(getOrderByDropdownItems());
-				dropdownGroupItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, "order-by"));
 			}
 		).build();
 	}

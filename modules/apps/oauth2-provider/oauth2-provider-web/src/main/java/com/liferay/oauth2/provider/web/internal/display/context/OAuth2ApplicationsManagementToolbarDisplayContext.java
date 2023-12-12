@@ -13,7 +13,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.web.internal.constants.OAuth2ProviderPortletKeys;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -100,20 +99,6 @@ public class OAuth2ApplicationsManagementToolbarDisplayContext
 			"entries-display-style", "list", true);
 
 		return _displayStyle;
-	}
-
-	public List<DropdownItem> getFilterDropdownItems() {
-		if (FeatureFlagManagerUtil.isEnabled("LPS-144527")) {
-			return null;
-		}
-
-		return DropdownItemListBuilder.addGroup(
-			dropdownGroupItem -> {
-				dropdownGroupItem.setDropdownItems(getOrderByDropdownItems());
-				dropdownGroupItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "order-by"));
-			}
-		).build();
 	}
 
 	public OrderByComparator<OAuth2Application> getOrderByComparator() {

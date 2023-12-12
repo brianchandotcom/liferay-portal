@@ -28,7 +28,6 @@ if ((classPK > 0) && (structureClassNameId == classNameId)) {
 	clearResultsURL="<%= ddmDisplayContext.getClearResultsURL() %>"
 	creationMenu="<%= ddmDisplayContext.getTemplateCreationMenu() %>"
 	disabled="<%= ddmDisplayContext.isDisabledManagementBar(DDMWebKeys.DYNAMIC_DATA_MAPPING_TEMPLATE) %>"
-	filterDropdownItems="<%= ddmDisplayContext.getFilterItemsDropdownItems() %>"
 	itemsTotal="<%= ddmDisplayContext.getTotalItems(DDMWebKeys.DYNAMIC_DATA_MAPPING_TEMPLATE) %>"
 	orderDropdownItems="<%= ddmDisplayContext.getOrderItemsDropdownItems() %>"
 	searchActionURL="<%= ddmDisplayContext.getSelectTemplateSearchActionURL() %>"

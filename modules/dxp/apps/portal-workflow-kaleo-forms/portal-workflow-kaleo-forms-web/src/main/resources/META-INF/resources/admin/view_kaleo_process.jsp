@@ -43,7 +43,6 @@ KaleoProcess kaleoProcess = kaleoFormsViewRecordsDisplayContext.getKaleoProcess(
 	%>'
 	clearResultsURL="<%= kaleoFormsViewRecordsDisplayContext.getClearResultsURL() %>"
 	creationMenu="<%= kaleoFormsViewRecordsDisplayContext.getCreationMenu() %>"
-	filterDropdownItems="<%= kaleoFormsViewRecordsDisplayContext.getFilterItemsDropdownItems() %>"
 	itemsTotal="<%= kaleoFormsViewRecordsDisplayContext.getTotalItems() %>"
 	orderDropdownItems="<%= kaleoFormsViewRecordsDisplayContext.getOrderItemsDropdownItems() %>"
 	propsTransformer="admin/js/KaleoFormsViewRecordsManagementToolbarPropsTransformer"

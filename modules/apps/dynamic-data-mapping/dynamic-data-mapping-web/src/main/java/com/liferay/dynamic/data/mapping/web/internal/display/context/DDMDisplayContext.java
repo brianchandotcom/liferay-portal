@@ -38,7 +38,6 @@ import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -294,22 +293,6 @@ public class DDMDisplayContext {
 				searchTerms.getStatus()));
 
 		return templateSearch;
-	}
-
-	public List<DropdownItem> getFilterItemsDropdownItems() {
-		if (FeatureFlagManagerUtil.isEnabled("LPS-144527")) {
-			return null;
-		}
-
-		return DropdownItemListBuilder.addGroup(
-			dropdownGroupItem -> {
-				dropdownGroupItem.setDropdownItems(
-					getOrderItemsDropdownItems());
-				dropdownGroupItem.setLabel(
-					LanguageUtil.get(
-						_ddmWebRequestHelper.getRequest(), "order-by"));
-			}
-		).build();
 	}
 
 	public List<NavigationItem> getNavigationItem() {

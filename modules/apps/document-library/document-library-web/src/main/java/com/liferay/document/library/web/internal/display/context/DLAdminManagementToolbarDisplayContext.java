@@ -46,7 +46,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -345,15 +344,6 @@ public class DLAdminManagementToolbarDisplayContext
 					LanguageUtil.get(_httpServletRequest, "filter-by") +
 						StringPool.TRIPLE_PERIOD);
 			}
-		).addGroup(
-			() ->
-				!FeatureFlagManagerUtil.isEnabled("LPS-144527") &&
-				!_dlAdminDisplayContext.isNavigationRecent(),
-			dropdownGroupItem -> {
-				dropdownGroupItem.setDropdownItems(_getOrderByDropdownItems());
-				dropdownGroupItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, "order-by"));
-			}
 		).build();
 	}
 
@@ -373,10 +363,6 @@ public class DLAdminManagementToolbarDisplayContext
 
 	@Override
 	public List<DropdownItem> getOrderDropdownItems() {
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-144527")) {
-			return null;
-		}
-
 		return _getOrderByDropdownItems();
 	}
 

@@ -25,7 +25,6 @@ import com.liferay.message.boards.web.internal.security.permission.MBMessagePerm
 import com.liferay.message.boards.web.internal.util.MBUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -247,15 +246,6 @@ public class MBEntriesManagementToolbarDisplayContext {
 				dropdownGroupItem.setLabel(
 					LanguageUtil.get(
 						_httpServletRequest, "filter-by-navigation"));
-			}
-		).addGroup(
-			() ->
-				Objects.equals(_getEntriesNavigation(), "all") &&
-				!FeatureFlagManagerUtil.isEnabled("LPS-144527"),
-			dropdownGroupItem -> {
-				dropdownGroupItem.setDropdownItems(getOrderByDropdownItems());
-				dropdownGroupItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, "order-by"));
 			}
 		).build();
 	}

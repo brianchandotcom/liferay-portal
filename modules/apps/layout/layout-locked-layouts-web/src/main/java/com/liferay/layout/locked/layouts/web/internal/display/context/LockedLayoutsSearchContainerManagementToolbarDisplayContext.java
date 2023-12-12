@@ -14,7 +14,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
 import com.liferay.layout.model.LockedLayoutType;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -82,12 +81,6 @@ public class LockedLayoutsSearchContainerManagementToolbarDisplayContext
 				dropdownGroupItem.setDropdownItems(_getFilterDropdownItems());
 				dropdownGroupItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "filter-by-type"));
-			}
-		).addGroup(
-			() -> !FeatureFlagManagerUtil.isEnabled("LPS-144527"),
-			dropdownGroupItem -> {
-				dropdownGroupItem.setDropdownItems(_getOrderDropdownItems());
-				dropdownGroupItem.setLabel(getOrderByDropdownItemsLabel());
 			}
 		).build();
 

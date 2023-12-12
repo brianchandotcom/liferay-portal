@@ -77,7 +77,6 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.editor.configuration.EditorConfiguration;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -660,24 +659,6 @@ public class DDMFormAdminDisplayContext {
 			_getDDMFormBuilderSettingsResponse();
 
 		return ddmFormBuilderSettingsResponse.getFieldSets();
-	}
-
-	public List<DropdownItem> getFilterItemsDropdownItems() {
-		if (FeatureFlagManagerUtil.isEnabled("LPS-144527")) {
-			return null;
-		}
-
-		HttpServletRequest httpServletRequest =
-			ddmFormAdminRequestHelper.getRequest();
-
-		return DropdownItemListBuilder.addGroup(
-			dropdownGroupItem -> {
-				dropdownGroupItem.setDropdownItems(
-					getOrderItemsDropdownItems());
-				dropdownGroupItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "order-by"));
-			}
-		).build();
 	}
 
 	public JSONObject getFormBuilderContextJSONObject() throws PortalException {

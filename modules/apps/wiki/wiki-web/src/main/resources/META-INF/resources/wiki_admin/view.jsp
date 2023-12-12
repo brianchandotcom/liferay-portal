@@ -25,7 +25,6 @@ request.setAttribute("view.jsp-orderByType", wikiNodesManagementToolbarDisplayCo
 	additionalProps="<%= wikiNodesManagementToolbarDisplayContext.getAdditionalProps() %>"
 	creationMenu="<%= wikiNodesManagementToolbarDisplayContext.getCreationMenu() %>"
 	disabled="<%= wikiNodesManagementToolbarDisplayContext.isDisabled() %>"
-	filterDropdownItems="<%= wikiNodesManagementToolbarDisplayContext.getFilterDropdownItems() %>"
 	infoPanelId="infoPanelId"
 	itemsTotal="<%= wikiNodesManagementToolbarDisplayContext.getTotalItems() %>"
 	orderDropdownItems="<%= wikiNodesManagementToolbarDisplayContext.getOrderByDropdownItems() %>"

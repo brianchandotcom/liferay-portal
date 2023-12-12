@@ -18,7 +18,6 @@ OAuthClientEntriesManagementToolbarDisplayContext oAuthClientEntriesManagementTo
 	additionalProps="<%= oAuthClientEntriesManagementToolbarDisplayContext.getAdditionalProps() %>"
 	creationMenu="<%= oAuthClientEntriesManagementToolbarDisplayContext.getCreationMenu() %>"
 	disabled="<%= oAuthClientEntriesCount == 0 %>"
-	filterDropdownItems="<%= oAuthClientEntriesManagementToolbarDisplayContext.getFilterDropdownItems() %>"
 	itemsTotal="<%= oAuthClientEntriesCount %>"
 	orderDropdownItems="<%= oAuthClientEntriesManagementToolbarDisplayContext.getOrderByDropdownItems() %>"
 	searchContainerId="oAuthClientEntrySearchContainer"

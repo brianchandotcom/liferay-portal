@@ -7,10 +7,8 @@ package com.liferay.frontend.taglib.clay.servlet.taglib.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -69,35 +67,7 @@ public class BaseManagementToolbarDisplayContext
 
 	@Override
 	public List<DropdownItem> getFilterDropdownItems() {
-		if (FeatureFlagManagerUtil.isEnabled("LPS-144527")) {
-			return getFilterNavigationDropdownItems();
-		}
-
-		List<DropdownItem> filterNavigationDropdownItems =
-			getFilterNavigationDropdownItems();
-		List<DropdownItem> orderByDropdownItems = getOrderByDropdownItems();
-
-		DropdownItemList filterDropdownItems = DropdownItemListBuilder.addGroup(
-			() -> filterNavigationDropdownItems != null,
-			dropdownGroupItem -> {
-				dropdownGroupItem.setDropdownItems(
-					filterNavigationDropdownItems);
-				dropdownGroupItem.setLabel(
-					getFilterNavigationDropdownItemsLabel());
-			}
-		).addGroup(
-			() -> orderByDropdownItems != null,
-			dropdownGroupItem -> {
-				dropdownGroupItem.setDropdownItems(orderByDropdownItems);
-				dropdownGroupItem.setLabel(getOrderByDropdownItemsLabel());
-			}
-		).build();
-
-		if (filterDropdownItems.isEmpty()) {
-			return null;
-		}
-
-		return filterDropdownItems;
+		return getFilterNavigationDropdownItems();
 	}
 
 	@Override

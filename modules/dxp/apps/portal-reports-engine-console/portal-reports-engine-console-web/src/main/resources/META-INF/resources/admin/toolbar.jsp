@@ -51,7 +51,6 @@ String tabs1 = ParamUtil.getString(renderRequest, "tabs1", "reports");
 	clearResultsURL="<%= reportsEngineDisplayContext.getClearResultsURL() %>"
 	creationMenu="<%= reportsEngineDisplayContext.getCreationMenu() %>"
 	disabled="<%= reportsEngineDisplayContext.isDisabled() %>"
-	filterDropdownItems="<%= reportsEngineDisplayContext.getFilterOptions() %>"
 	itemsTotal="<%= reportsEngineDisplayContext.getTotalItems() %>"
 	searchActionURL="<%= reportsEngineDisplayContext.getSearchURL() %>"
 	searchContainerId="reportsEngine"

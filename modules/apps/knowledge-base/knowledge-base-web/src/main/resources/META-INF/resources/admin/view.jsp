@@ -36,7 +36,6 @@ KBAdminManagementToolbarDisplayContext kbAdminManagementToolbarDisplayContext = 
 		clearResultsURL="<%= String.valueOf(kbAdminManagementToolbarDisplayContext.getSearchURL()) %>"
 		creationMenu="<%= kbAdminManagementToolbarDisplayContext.getCreationMenu() %>"
 		disabled="<%= kbAdminManagementToolbarDisplayContext.isDisabled() %>"
-		filterDropdownItems="<%= kbAdminManagementToolbarDisplayContext.getFilterDropDownItems() %>"
 		infoPanelId="infoPanelId"
 		itemsTotal="<%= kbAdminManagementToolbarDisplayContext.getTotal() %>"
 		orderDropdownItems="<%= kbAdminManagementToolbarDisplayContext.getOrderByDropdownItems() %>"

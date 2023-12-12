@@ -77,7 +77,6 @@ renderResponse.setTitle(role.getTitle(locale));
 		).build()
 	%>'
 	clearResultsURL="<%= editRoleAssignmentsManagementToolbarDisplayContext.getClearResultsURL() %>"
-	filterDropdownItems="<%= editRoleAssignmentsManagementToolbarDisplayContext.getFilterDropdownItems() %>"
 	itemsTotal="<%= searchContainer.getTotal() %>"
 	orderDropdownItems="<%= editRoleAssignmentsManagementToolbarDisplayContext.getOrderByDropDownItems() %>"
 	propsTransformer="js/EditRoleAssignmentsManagementToolbarPropsTransformer"

@@ -32,7 +32,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -180,12 +179,6 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 					_getFilterByReviewDateDropdownItems());
 				dropdownGroupItem.setLabel(
 					_language.get(httpServletRequest, "filter-by-review-date"));
-			}
-		).addGroup(
-			() -> !FeatureFlagManagerUtil.isEnabled("LPS-144527"),
-			dropdownGroupItem -> {
-				dropdownGroupItem.setDropdownItems(getOrderByDropdownItems());
-				dropdownGroupItem.setLabel(getOrderByDropdownItemsLabel());
 			}
 		).build();
 	}

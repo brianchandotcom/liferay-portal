@@ -362,14 +362,6 @@ public class JournalManagementToolbarDisplayContext
 				dropdownGroupItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "filter-by-status"));
 			}
-		).addGroup(
-			() ->
-				!_journalDisplayContext.isNavigationRecent() &&
-				!FeatureFlagManagerUtil.isEnabled("LPS-144527"),
-			dropdownGroupItem -> {
-				dropdownGroupItem.setDropdownItems(getOrderByDropdownItems());
-				dropdownGroupItem.setLabel(getOrderByDropdownItemsLabel());
-			}
 		).build();
 	}
 

@@ -34,7 +34,6 @@ OAuth2AuthorizationsManagementToolbarDisplayContext oAuth2AuthorizationsManageme
 		).build()
 	%>'
 	disabled="<%= oAuth2AuthorizationsCount == 0 %>"
-	filterDropdownItems="<%= oAuth2AuthorizationsManagementToolbarDisplayContext.getFilterDropdownItems() %>"
 	itemsTotal="<%= oAuth2AuthorizationsCount %>"
 	orderDropdownItems="<%= oAuth2AuthorizationsManagementToolbarDisplayContext.getOrderByDropdownItems() %>"
 	propsTransformer="admin/js/OAuth2AuthorizationsManagementToolbarPropsTransformer"

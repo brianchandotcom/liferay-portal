@@ -70,7 +70,6 @@ SearchContainer<?> searchContainer = editPasswordPolicyAssignmentsManagementTool
 	%>'
 	clearResultsURL="<%= editPasswordPolicyAssignmentsManagementToolbarDisplayContext.getClearResultsURL() %>"
 	creationMenu="<%= editPasswordPolicyAssignmentsManagementToolbarDisplayContext.getCreationMenu() %>"
-	filterDropdownItems="<%= editPasswordPolicyAssignmentsManagementToolbarDisplayContext.getFilterDropdownItems() %>"
 	itemsTotal="<%= searchContainer.getTotal() %>"
 	orderDropdownItems="<%= editPasswordPolicyAssignmentsManagementToolbarDisplayContext.getOrderByDropdownItems() %>"
 	propsTransformer="js/EditPasswordPolicyAssignmentsManagementToolbarPropsTransformer"

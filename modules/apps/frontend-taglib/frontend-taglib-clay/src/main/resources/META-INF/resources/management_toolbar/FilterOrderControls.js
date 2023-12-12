@@ -9,9 +9,8 @@ import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import {ManagementToolbar} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
-import React, {useContext} from 'react';
+import React from 'react';
 
-import FeatureFlagContext from './FeatureFlagContext';
 import LinkOrButton from './LinkOrButton';
 
 const FilterOrderControls = ({
@@ -23,8 +22,6 @@ const FilterOrderControls = ({
 	sortingOrder,
 	sortingURL,
 }) => {
-	const {showDesignImprovements} = useContext(FeatureFlagContext);
-
 	const showOrderToggle =
 		!orderDropdownItems || orderDropdownItems.length <= 1;
 
@@ -71,25 +68,17 @@ const FilterOrderControls = ({
 								aria-label={Liferay.Language.get(
 									'filter-and-order'
 								)}
-								className={classNames('nav-link', {
-									'ml-2 mr-2': showDesignImprovements,
-								})}
+								className="ml-2 mr-2 nav-link"
 								disabled={disabled}
 								displayType="unstyled"
 							>
 								<span className="navbar-breakpoint-down-d-none">
-									{showDesignImprovements && (
-										<span className="inline-item inline-item-before">
-											<ClayIcon symbol="filter" />
-										</span>
-									)}
+									<span className="inline-item inline-item-before">
+										<ClayIcon symbol="filter" />
+									</span>
 
 									<span className="navbar-text-truncate">
-										{showDesignImprovements
-											? Liferay.Language.get('filter')
-											: Liferay.Language.get(
-													'filter-and-order'
-											  )}
+										{Liferay.Language.get('filter')}
 									</span>
 
 									<ClayIcon
@@ -100,13 +89,9 @@ const FilterOrderControls = ({
 
 								<span
 									className="navbar-breakpoint-d-none"
-									title={
-										showDesignImprovements
-											? Liferay.Language.get(
-													'show-filter-options'
-											  )
-											: undefined
-									}
+									title={Liferay.Language.get(
+										'show-filter-options'
+									)}
 								>
 									<ClayIcon symbol="filter" />
 								</span>
@@ -116,7 +101,7 @@ const FilterOrderControls = ({
 				</ManagementToolbar.Item>
 			)}
 
-			{showDesignImprovements && !showOrderToggle && (
+			{!showOrderToggle && (
 				<ManagementToolbar.Item>
 					<ClayDropDownWithItems
 						items={addActiveIcons([
@@ -193,18 +178,13 @@ const FilterOrderControls = ({
 				</ManagementToolbar.Item>
 			)}
 
-			{((!showDesignImprovements && sortingURL) ||
-				(showDesignImprovements && sortingURL && showOrderToggle)) && (
+			{sortingURL && showOrderToggle && (
 				<ManagementToolbar.Item>
 					<LinkOrButton
 						aria-label={sub(
-							showDesignImprovements
-								? Liferay.Language.get(
-										'reverse-order-direction-currently-x'
-								  )
-								: Liferay.Language.get(
-										'reverse-sort-direction-currently-x'
-								  ),
+							Liferay.Language.get(
+								'reverse-order-direction-currently-x'
+							),
 							sortingOrder === 'desc'
 								? Liferay.Language.get('descending')
 								: Liferay.Language.get('ascending')
@@ -219,13 +199,7 @@ const FilterOrderControls = ({
 							'order-list-up':
 								sortingOrder === 'asc' || sortingOrder === null,
 						})}
-						title={
-							showDesignImprovements
-								? Liferay.Language.get(
-										'reverse-order-direction'
-								  )
-								: Liferay.Language.get('reverse-sort-direction')
-						}
+						title={Liferay.Language.get('reverse-order-direction')}
 					/>
 				</ManagementToolbar.Item>
 			)}

@@ -20,7 +20,6 @@ String displayStyle = oAuth2ApplicationsManagementToolbarDisplayContext.getDispl
 	additionalProps="<%= oAuth2ApplicationsManagementToolbarDisplayContext.getAdditionalProps() %>"
 	creationMenu="<%= oAuth2ApplicationsManagementToolbarDisplayContext.getCreationMenu() %>"
 	disabled="<%= oAuth2ApplicationsCount == 0 %>"
-	filterDropdownItems="<%= oAuth2ApplicationsManagementToolbarDisplayContext.getFilterDropdownItems() %>"
 	itemsTotal="<%= oAuth2ApplicationsCount %>"
 	orderDropdownItems="<%= oAuth2ApplicationsManagementToolbarDisplayContext.getOrderByDropdownItems() %>"
 	propsTransformer="admin/js/OAuth2ApplicationsManagementToolbarPropsTransformer"

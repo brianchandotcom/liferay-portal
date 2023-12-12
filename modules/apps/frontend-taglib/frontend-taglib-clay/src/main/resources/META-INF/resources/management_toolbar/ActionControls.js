@@ -6,12 +6,10 @@
 import {ClayButtonWithIcon} from '@clayui/button';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
-import classNames from 'classnames';
 import {ManagementToolbar} from 'frontend-js-components-web';
-import React, {useContext, useMemo} from 'react';
+import React, {useMemo} from 'react';
 
 import normalizeDropdownItems from '../normalize_dropdown_items';
-import FeatureFlagContext from './FeatureFlagContext';
 import LinkOrButton from './LinkOrButton';
 
 function addAction(item, onActionButtonClick) {
@@ -41,8 +39,6 @@ const ActionControls = ({
 	disabled,
 	onActionButtonClick,
 }) => {
-	const {showDesignImprovements} = useContext(FeatureFlagContext);
-
 	const items = useMemo(
 		() =>
 			normalizeDropdownItems(
@@ -68,10 +64,7 @@ const ActionControls = ({
 								key={index}
 							>
 								<LinkOrButton
-									className={classNames(
-										{'d-lg-none': showDesignImprovements},
-										'nav-link nav-link-monospaced'
-									)}
+									className="d-lg-none nav-link nav-link-monospaced"
 									disabled={disabled || item.disabled}
 									displayType="unstyled"
 									href={item.href}
@@ -84,26 +77,24 @@ const ActionControls = ({
 									title={item.label}
 								/>
 
-								{showDesignImprovements && (
-									<LinkOrButton
-										className="align-items-center d-lg-inline d-none mr-2 nav-link"
-										disabled={disabled || item.disabled}
-										displayType="unstyled"
-										href={item.href}
-										onClick={(event) => {
-											onActionButtonClick(event, {
-												item,
-											});
-										}}
-										title={item.label}
-									>
-										<span className="inline-item inline-item-before">
-											<ClayIcon symbol={item.icon} />
-										</span>
+								<LinkOrButton
+									className="align-items-center d-lg-inline d-none mr-2 nav-link"
+									disabled={disabled || item.disabled}
+									displayType="unstyled"
+									href={item.href}
+									onClick={(event) => {
+										onActionButtonClick(event, {
+											item,
+										});
+									}}
+									title={item.label}
+								>
+									<span className="inline-item inline-item-before">
+										<ClayIcon symbol={item.icon} />
+									</span>
 
-										<span>{item.label}</span>
-									</LinkOrButton>
-								)}
+									<span>{item.label}</span>
+								</LinkOrButton>
 							</ManagementToolbar.Item>
 						))}
 

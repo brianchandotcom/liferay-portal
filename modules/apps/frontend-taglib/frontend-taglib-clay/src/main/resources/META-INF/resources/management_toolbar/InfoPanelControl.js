@@ -6,12 +6,9 @@
 import {ClayButtonWithIcon} from '@clayui/button';
 import classNames from 'classnames';
 import {ManagementToolbar} from 'frontend-js-components-web';
-import React, {useContext, useEffect, useRef} from 'react';
-
-import FeatureFlagContext from './FeatureFlagContext';
+import React, {useEffect, useRef} from 'react';
 
 const InfoPanelControl = ({infoPanelId, onInfoButtonClick, separator}) => {
-	const {showDesignImprovements} = useContext(FeatureFlagContext);
 	const infoButtonRef = useRef();
 
 	useEffect(() => {
@@ -38,12 +35,9 @@ const InfoPanelControl = ({infoPanelId, onInfoButtonClick, separator}) => {
 
 	return (
 		<ManagementToolbar.Item
-			className={
-				showDesignImprovements &&
-				classNames('d-none d-md-flex', {
-					'management-bar-separator-left': separator,
-				})
-			}
+			className={classNames('d-none d-md-flex', {
+				'management-bar-separator-left': separator,
+			})}
 		>
 			<ClayButtonWithIcon
 				className="nav-link nav-link-monospaced"

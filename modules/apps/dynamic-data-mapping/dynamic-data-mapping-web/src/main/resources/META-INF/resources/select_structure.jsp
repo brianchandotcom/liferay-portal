@@ -20,7 +20,6 @@ SearchContainer<DDMStructure> structureSearchContainer = ddmDisplayContext.getDD
 	clearResultsURL="<%= ddmDisplayContext.getClearResultsURL() %>"
 	creationMenu="<%= ddmDisplayContext.getSelectStructureCreationMenu() %>"
 	disabled="<%= ddmDisplayContext.isDisabledManagementBar(DDMWebKeys.DYNAMIC_DATA_MAPPING_STRUCTURE) %>"
-	filterDropdownItems="<%= ddmDisplayContext.getFilterItemsDropdownItems() %>"
 	itemsTotal="<%= ddmDisplayContext.getTotalItems(DDMWebKeys.DYNAMIC_DATA_MAPPING_STRUCTURE) %>"
 	orderDropdownItems="<%= ddmDisplayContext.getOrderItemsDropdownItems() %>"
 	searchActionURL="<%= ddmDisplayContext.getSelectStructureSearchActionURL() %>"

@@ -738,7 +738,7 @@ java -jar ${app.server.weblogic.dir}/${app.server.weblogic.jar.name} -ignoreSysP
 					<![CDATA[
 if [ "$1" = "glowroot" ]
 then
-	GLOWROOT_OPTS="${glowroot.agent}"
+	GLOWROOT_OPTS="${glowroot.agent} -Dglowroot.enabled=true"
 
 	CATALINA_OPTS="${CATALINA_OPTS} ${GLOWROOT_OPTS}"
 
@@ -747,7 +747,7 @@ fi
 
 if [ "$GLOWROOT_ENABLED" = "true" ]
 then
-	GLOWROOT_OPTS="${glowroot.agent}"
+	GLOWROOT_OPTS="${glowroot.agent} -Dglowroot.enabled=true"
 
 	CATALINA_OPTS="${CATALINA_OPTS} ${GLOWROOT_OPTS}"
 fi

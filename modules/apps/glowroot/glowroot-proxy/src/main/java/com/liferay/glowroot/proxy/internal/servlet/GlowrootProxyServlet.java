@@ -35,6 +35,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Fabian Bouché
  */
 @Component(
+	enabled = false,
 	property = {
 		"osgi.http.whiteboard.context.path=/",
 		"osgi.http.whiteboard.servlet.pattern=/glowroot/*",

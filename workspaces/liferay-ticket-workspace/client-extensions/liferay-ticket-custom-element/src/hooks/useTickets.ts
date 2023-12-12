@@ -23,7 +23,7 @@ const useTickets = ({
 	const tickets = useQuery(
 		['tickets', {filter, page, pageSize, search}],
 		({queryKey}) => fetchTickets({queryKey} as FetchTicketsQueryKey),
-		{refetchInterval: 5000, refetchOnMount: false}
+		{refetchInterval: 5000, refetchOnMount: true}
 	);
 
 	const ticketsMemoized = useMemo(() => {
@@ -37,7 +37,9 @@ const useTickets = ({
 					catch (error) {}
 
 					return {
+						assignee: ticket.userToJ3Y7Ticket,
 						description: ticket.description,
+						externalReferenceCode: ticket.externalReferenceCode,
 						id: ticket.id,
 						priority: ticket.priority?.name,
 						region: ticket.region?.name,
@@ -46,8 +48,6 @@ const useTickets = ({
 						suggestions,
 						ticketStatus: ticket.ticketStatus?.name,
 						type: ticket.type?.name,
-						assignee:ticket.userToJ3Y7Ticket,
-						externalReferenceCode: ticket.externalReferenceCode
 					};
 				}),
 				totalCount: tickets?.data?.totalCount,

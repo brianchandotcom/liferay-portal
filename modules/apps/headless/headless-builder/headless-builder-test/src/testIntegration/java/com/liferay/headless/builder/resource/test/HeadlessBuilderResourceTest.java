@@ -2129,6 +2129,45 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 	}
 
 	@Test
+	public void testPostWithDuplicatedUniqueField() throws Exception {
+		String title = RandomTestUtil.randomString();
+
+		assertSuccessfulJSONObject(
+			JSONUtil.put(
+				"applicationStatus", "unpublished"
+			).put(
+				"baseURL", _BASE_URL_1
+			).put(
+				"externalReferenceCode", _API_APPLICATION_ERC_1
+			).put(
+				"title", title
+			).toString(),
+			"headless-builder/applications", Http.Method.POST);
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"status", "BAD_REQUEST"
+			).put(
+				"title",
+				"The Base URL is already in use. " +
+					"Please enter a unique Base URL."
+			).toString(),
+			HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.put(
+					"applicationStatus", "unpublished"
+				).put(
+					"baseURL", _BASE_URL_1
+				).put(
+					"externalReferenceCode", _API_APPLICATION_ERC_1
+				).put(
+					"title", title
+				).toString(),
+				"headless-builder/applications", Http.Method.POST
+			).toString(),
+			JSONCompareMode.STRICT);
+	}
+
+	@Test
 	public void testPostWithMissingRequiredField() throws Exception {
 		String objectFieldExternalReferenceCode = RandomTestUtil.randomString();
 

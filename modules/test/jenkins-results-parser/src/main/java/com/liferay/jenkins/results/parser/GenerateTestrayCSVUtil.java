@@ -157,7 +157,7 @@ public class GenerateTestrayCSVUtil {
 	}
 
 	private static String _getPRAuthor(TestcaseResult testcaseResult) {
-		PullRequest pullRequest = testcaseResult._getPullRequestObject();
+		PullRequestData pullRequest = testcaseResult._getPullRequestObject();
 
 		if (pullRequest == null) {
 			return null;
@@ -166,7 +166,9 @@ public class GenerateTestrayCSVUtil {
 		return pullRequest._getAuthor();
 	}
 
-	private static PullRequest _getPullRequest(String testrayBuildReportURL) {
+	private static PullRequestData _getPullRequestData(
+		String testrayBuildReportURL) {
+
 		String slaveName = "";
 		String batchName = "";
 		String batchNumber = "";
@@ -194,7 +196,7 @@ public class GenerateTestrayCSVUtil {
 		Map<String, String> buildParameters =
 			topLevelBuildReport.getBuildParameters();
 
-		return new PullRequest(
+		return new PullRequestData(
 			buildParameters.get("GITHUB_SENDER_USERNAME"),
 			buildParameters.get("GITHUB_PULL_REQUEST_NUMBER"));
 	}
@@ -306,14 +308,14 @@ public class GenerateTestrayCSVUtil {
 		return true;
 	}
 
-	private static class PullRequest {
+	private static class PullRequestData {
 
 		public String toString() {
 			return "### PullRequest ###\nAuthor: " + _author + "\n" +
 				"PullRequest: " + _pullRequestNumber + "####\n";
 		}
 
-		private PullRequest(String author, String pullRequestNumber) {
+		private PullRequestData(String author, String pullRequestNumber) {
 			_author = author;
 			_pullRequestNumber = Integer.valueOf(pullRequestNumber);
 		}
@@ -365,13 +367,13 @@ public class GenerateTestrayCSVUtil {
 			return _historyURL;
 		}
 
-		private PullRequest _getPullRequestObject() {
+		private PullRequestData _getPullRequestObject() {
 			if (_pullRequest == null) {
 				JSONObject jsonObject = _resultJSONObject.getJSONObject(
 					"attachments");
 
 				try {
-					_pullRequest = _getPullRequest(
+					_pullRequest = _getPullRequestData(
 						jsonObject.getString("Build Report (Top Level)"));
 				}
 				catch (Exception exception) {
@@ -396,7 +398,7 @@ public class GenerateTestrayCSVUtil {
 
 		private final String _errorMessage;
 		private final String _historyURL;
-		private PullRequest _pullRequest;
+		private PullRequestData _pullRequest;
 		private final JSONObject _resultJSONObject;
 		private final String _testrayCaseName;
 		private final long _testrayCaseResultId;

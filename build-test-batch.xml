@@ -7219,7 +7219,25 @@ ${output.content}</echo>
 
 						<antcall inheritAll="false" target="prepare-log4j-ext-xml" />
 
-						<antcall if:set="env.JENKINS_HOME" inheritAll="false" target="prepare-portal-ext-properties" />
+						<generate-jdbc-properties properties.file="portal-impl/src/portal-ext.properties">
+							<post-action>
+								<echo append="true" file="@{properties.file}">
+									<![CDATA[
+										setup.wizard.enabled=false
+										terms.of.use.required=false
+										passwords.default.policy.change.required=false
+										users.reminder.queries.enabled=false
+										enterprise.product.enterprise.search.enabled=false
+										virtual.hosts.default.site.name=
+										virtual.hosts.valid.hosts=*
+										web.server.http.port=8080
+										browser.launcher.url=
+									]]>
+								</echo>
+							</post-action>
+						</generate-jdbc-properties>
+
+						<apply-portal-ext-properties />
 
 						<antcall inheritall="false" target="start-app-server" />
 

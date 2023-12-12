@@ -17,14 +17,15 @@ import './InformLicensingTermsPage.scss';
 import {LicenseTier} from '../../enums/licenseTier';
 import {TYPES} from '../../manage-app-state/actionTypes';
 import {
-	getPriceEntrieListByPricelistId,
-	getPricelistByCatalogName,
+	getPriceListByCatalogName,
+	getPriceListIdPriceEntries,
 	getProductById,
 	getProductIdSkusPage,
 	patchPriceEntry,
 	patchSKUById,
 	postPriceEntryIdTierPrice,
 } from '../../utils/api';
+import {getSkuPrice} from '../../utils/util';
 import IconButton from './components/IconButton/IconButton';
 import LicensePriceCard from './components/LicensePriceCard';
 interface InformLicensingTermsPricePageProps {
@@ -77,17 +78,19 @@ export function InformLicensingTermsPricePage({
 		});
 
 		const catalogName = product?.catalog?.name;
-		const priceList = await getPricelistByCatalogName(catalogName);
+		const priceList = await getPriceListByCatalogName(catalogName);
 		const priceListId = priceList?.items[0]?.id;
-		const priceEntries = await getPriceEntrieListByPricelistId(priceListId);
+		const priceEntries = await getPriceListIdPriceEntries(priceListId);
 		const priceEntryForUpdate = {
 			bulkPricing: true,
 			hasTierPrice: false,
 		};
 
 		const processTier = async (priceEntry: PriceEntry) => {
-			const skuName = priceEntry?.sku?.name?.toLowerCase();
-			const tiers = appLicensePrice[skuName];
+			const skuName = priceEntry?.sku?.name;
+			const keyAppLicensePrice =
+				skuName === 'STANDARD' ? 'standard' : 'developer';
+			const tiers = appLicensePrice[keyAppLicensePrice];
 
 			for (const {key, value} of tiers || []) {
 				const tierPrice = {
@@ -112,7 +115,9 @@ export function InformLicensingTermsPricePage({
 					);
 				}
 
-				await processTier(priceEntry);
+				if (sku?.sku !== 'TRIAL') {
+					await processTier(priceEntry);
+				}
 			}
 		}
 	};
@@ -187,7 +192,7 @@ export function InformLicensingTermsPricePage({
 						for (const sku of skusJSON?.items) {
 							const skuBody = {
 								...sku,
-								price: parseFloat(appLicensePrice),
+								price: getSkuPrice(appLicensePrice, sku),
 							};
 							handlePostPriceEntryIdTierPrice(sku);
 

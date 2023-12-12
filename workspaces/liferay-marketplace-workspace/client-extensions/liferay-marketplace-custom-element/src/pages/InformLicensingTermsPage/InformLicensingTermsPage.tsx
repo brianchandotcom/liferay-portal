@@ -25,7 +25,7 @@ import {
 	patchSKUById,
 	updateProductSpecification,
 } from '../../utils/api';
-import {createSkuName} from '../../utils/util';
+import {createSkuName, getSkuPrice} from '../../utils/util';
 
 import './InformLicensingTermsPage.scss';
 
@@ -195,8 +195,12 @@ export function InformLicensingTermsPage({
 								neverExpire: true,
 								price:
 									appLicense.value === 'Perpetual'
-										? appLicensePrice
+										? getSkuPrice(
+												appLicensePrice,
+												versionSkuJSON
+										  )
 										: 0,
+
 								published: true,
 								purchasable: true,
 							};

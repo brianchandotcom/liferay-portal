@@ -11,7 +11,6 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
 
 /**
  * @author Marcos Martins
@@ -22,35 +21,35 @@ public class UpgradeFaroProjectUpgradeProcess extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select faroProjectId, createTime, subscription from " +
-					"OSBFaro_FaroProject")) {
+					"OSBFaro_FaroProject");
+			ResultSet resultSet = preparedStatement.executeQuery()) {
 
-			try (Statement statement = connection.createStatement();
-				ResultSet resultSet = preparedStatement.executeQuery()) {
+			while (resultSet.next()) {
+				JSONObject subscriptionJSONObject =
+					JSONFactoryUtil.createJSONObject(
+						resultSet.getString("subscription"));
 
-				while (resultSet.next()) {
-					JSONObject subscriptionJSONObject =
-						JSONFactoryUtil.createJSONObject(
-							resultSet.getString("subscription"));
+				long startDate = subscriptionJSONObject.getLong("startDate", 0);
 
-					long startDate = subscriptionJSONObject.getLong(
-						"startDate", 0);
+				if (startDate != 0) {
+					continue;
+				}
 
-					if (startDate != 0) {
-						continue;
-					}
+				try (PreparedStatement updatePreparedStatement =
+						connection.prepareStatement(
+							"update OSBFaro_FaroProject set subscription = ? " +
+								"where faroProjectId = ?")) {
 
 					subscriptionJSONObject.put(
 						"startDate", resultSet.getLong("createTime"));
 
-					statement.addBatch(
-						String.format(
-							"update OSBFaro_FaroProject set subscription = '" +
-								"%s' where faroProjectId = %s",
-							subscriptionJSONObject.toString(),
-							resultSet.getLong("faroProjectId")));
-				}
+					updatePreparedStatement.setString(
+						1, subscriptionJSONObject.toString());
+					updatePreparedStatement.setLong(
+						2, resultSet.getLong("faroProjectId"));
 
-				statement.executeBatch();
+					updatePreparedStatement.executeUpdate();
+				}
 			}
 		}
 	}

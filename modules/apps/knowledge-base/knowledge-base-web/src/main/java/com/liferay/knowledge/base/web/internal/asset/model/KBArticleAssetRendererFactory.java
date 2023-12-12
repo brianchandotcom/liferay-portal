@@ -68,18 +68,27 @@ public class KBArticleAssetRendererFactory
 	}
 
 	@Override
-	public AssetRenderer<KBArticle> getAssetRenderer(long classPK, int type)
+	public AssetRenderer<KBArticle> getAssetRenderer(
+			KBArticle kbArticle, int type)
 		throws PortalException {
 
 		KBArticleAssetRenderer kbArticleAssetRenderer =
 			new KBArticleAssetRenderer(
-				_assetDisplayPageFriendlyURLProvider, _htmlParser,
-				_getKBArticle(classPK, _getTypeStatus(type)), _trashHelper);
+				_assetDisplayPageFriendlyURLProvider, _htmlParser, kbArticle,
+				_trashHelper);
 
 		kbArticleAssetRenderer.setAssetRendererType(type);
 		kbArticleAssetRenderer.setServletContext(_servletContext);
 
 		return kbArticleAssetRenderer;
+	}
+
+	@Override
+	public AssetRenderer<KBArticle> getAssetRenderer(long classPK, int type)
+		throws PortalException {
+
+		return getAssetRenderer(
+			_getKBArticle(classPK, _getTypeStatus(type)), type);
 	}
 
 	@Override

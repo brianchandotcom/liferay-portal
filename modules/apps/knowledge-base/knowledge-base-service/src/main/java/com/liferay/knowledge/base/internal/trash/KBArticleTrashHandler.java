@@ -5,6 +5,8 @@
 
 package com.liferay.knowledge.base.internal.trash;
 
+import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.knowledge.base.constants.KBActionKeys;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.model.KBArticle;
@@ -20,6 +22,7 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.trash.TrashHandler;
+import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.trash.TrashHelper;
 import com.liferay.trash.constants.TrashActionKeys;
@@ -101,6 +104,17 @@ public class KBArticleTrashHandler extends BaseKBTrashHandler {
 	public TrashedModel getTrashedModel(long classPK) {
 		return kbArticleLocalService.fetchLatestKBArticle(
 			classPK, WorkflowConstants.STATUS_ANY);
+	}
+
+	@Override
+	public TrashRenderer getTrashRenderer(long classPK) throws PortalException {
+		AssetRendererFactory<KBArticle> assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				getClassName());
+
+		return (TrashRenderer)assetRendererFactory.getAssetRenderer(
+			(KBArticle)getTrashedModel(classPK),
+			AssetRendererFactory.TYPE_LATEST_APPROVED);
 	}
 
 	@Override

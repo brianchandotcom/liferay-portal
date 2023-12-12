@@ -40,7 +40,7 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 
 	@Override
 	public void onAfterCreate(Layout layout) {
-		clearCache(layout);
+		_clearCache(layout);
 	}
 
 	@Override
@@ -80,12 +80,12 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 			}
 		}
 
-		clearCache(layout);
+		_clearCache(layout);
 	}
 
 	@Override
 	public void onAfterUpdate(Layout originalLayout, Layout layout) {
-		clearCache(layout);
+		_clearCache(layout);
 	}
 
 	@Override
@@ -120,7 +120,7 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 		}
 	}
 
-	protected void clearCache(Layout layout) {
+	private void _clearCache(Layout layout) {
 		if (layout == null) {
 			return;
 		}

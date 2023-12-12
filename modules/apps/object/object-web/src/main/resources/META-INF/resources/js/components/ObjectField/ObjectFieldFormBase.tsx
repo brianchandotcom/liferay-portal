@@ -201,7 +201,7 @@ export default function ObjectFieldFormBase({
 		oneToManyObjectRelationship,
 		setOneToManyObjectRelationship,
 	] = useState<TObjectRelationship>();
-	const [selectedOutputValue, setSelectedOutputValue] = useState<string>('');
+	const [selectedOutputValue, setSelectedOutputValue] = useState<string>();
 
 	const validListTypeDefinitionId =
 		values.listTypeDefinitionId !== undefined &&
@@ -245,7 +245,7 @@ export default function ObjectFieldFormBase({
 				? values.indexedLanguageId ?? defaultLanguageId
 				: '';
 
-		setSelectedOutputValue('');
+		setSelectedOutputValue(undefined);
 
 		setValues({
 			DBType: selectedObjectFieldType?.dbType,

@@ -229,6 +229,9 @@ public class ElasticsearchConnectionManagerTest {
 		_elasticsearchConnectionManager.addElasticsearchConnection(
 			elasticsearchConnection);
 
+		_elasticsearchConnectionManager.getElasticsearchConnection(
+			elasticsearchConnection.getConnectionId());
+
 		Mockito.verify(
 			elasticsearchConnection
 		).isActive();

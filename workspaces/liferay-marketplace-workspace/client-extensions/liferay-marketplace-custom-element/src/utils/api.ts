@@ -649,6 +649,30 @@ export async function getCustomFieldExpandoValue({
 	return response as string;
 }
 
+export async function getPriceListByCatalogName(catalogName: string) {
+	const response = await fetch(
+		`${baseURL}/o/headless-commerce-admin-pricing/v2.0/price-lists?search=catalogName eq '${catalogName}'`,
+		{
+			headers,
+			method: 'GET',
+		}
+	);
+
+	return await response.json();
+}
+
+export async function getPriceListIdPriceEntries(priceListId: number) {
+	const response = await fetch(
+		`${baseURL}/o/headless-commerce-admin-pricing/v2.0/price-lists/${priceListId}/price-entries?nestedFields=sku`,
+		{
+			headers,
+			method: 'GET',
+		}
+	);
+
+	return await response.json();
+}
+
 export async function getSpecifications() {
 	const response = await fetch(
 		`${baseURL}/o/headless-commerce-admin-catalog/v1.0/specifications`,

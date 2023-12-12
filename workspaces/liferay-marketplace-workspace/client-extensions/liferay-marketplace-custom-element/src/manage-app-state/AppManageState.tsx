@@ -12,6 +12,12 @@ type Specification = {
 	id: number;
 	value: string;
 };
+
+type LicenceTiersPrices = {
+	developer: LicensePrice[];
+	standard: LicensePrice[];
+};
+
 export type LicensePrice = {key: number; value: number};
 
 export type InitialStateProps = {
@@ -23,7 +29,7 @@ export type InitialStateProps = {
 	appId: string;
 	appInstallationGuideURL: Specification;
 	appLicense: Specification;
-	appLicensePrice: any;
+	appLicensePrice: LicenceTiersPrices;
 	appLogo: UploadedFile;
 	appName: string;
 	appNotes: string;
@@ -54,7 +60,7 @@ export type InitialStateProps = {
 	versionName?: string;
 };
 
-export type Sku = {id: number};
+export type Sku = {id: number; sku: string};
 
 export type PriceEntry = {priceEntryId: number; sku: {name: string}};
 

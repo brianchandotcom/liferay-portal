@@ -5,6 +5,7 @@
 
 import accountPlaceholder from '../assets/images/account_placeholder.png';
 import appPlaceholder from '../assets/images/app_placeholder.png';
+import {Sku} from '../manage-app-state/AppManageState';
 import {
 	createProductSpecification,
 	getAccountGroup,
@@ -211,6 +212,26 @@ export function getValueFromDeliverySpecifications(
 
 export function getAccountImage(url?: string) {
 	return url?.includes('img_id=0') || !url ? accountPlaceholder : url;
+}
+
+type LicenceTiersPrices = {
+	developer: {key: number; value: number}[];
+	standard: {key: number; value: number}[];
+};
+
+export function getSkuPrice(
+	appLicensePrice: LicenceTiersPrices,
+	skuObject: Sku
+) {
+	if (skuObject?.sku === 'STANDARD') {
+		return appLicensePrice['standard'][0]?.value;
+	}
+	else if (skuObject?.sku === 'DEVELOPER') {
+		return appLicensePrice['developer'][0]?.value;
+	}
+	else {
+		return 0;
+	}
 }
 
 export function showAppImage(url?: string) {

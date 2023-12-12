@@ -224,11 +224,9 @@ definition {
 
 		AssertElementNotPresent(locator1 = "Blogs#SUBSCRIBE_LINK");
 
-		var key_text = "RSS";
-
-		AssertTextEquals(
-			locator1 = "Button#ANY",
-			value1 = "RSS");
+		AssertElementNotPresent(
+			key_text = "RSS",
+			locator1 = "Button#ANY");
 
 		if (IsElementPresent(locator1 = "Portlet#OPTIONS_ICON")) {
 			Click.mouseOverClick(locator1 = "Portlet#OPTIONS_ICON");

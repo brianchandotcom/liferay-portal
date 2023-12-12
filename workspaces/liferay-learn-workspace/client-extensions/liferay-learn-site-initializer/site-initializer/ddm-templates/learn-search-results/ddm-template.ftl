@@ -134,15 +134,15 @@
 
 <div class="search-results" id="searchResults">
 	<#if entries?has_content>
-		<#list entries as entry>
+		<#list entries as searchEntry>
 			<#assign
-				searchEntryContent = entry.getContent()!languageUtil.get(locale, "no-content-preview", "No content preview")
-				searchEntryTitle = entry.getTitle()!""
+				searchEntryContent = searchEntry.getContent()!languageUtil.get(locale, "no-content-preview", "No content preview")
+				searchEntryTitle = searchEntry.getTitle()!""
 			/>
 
 			<#if searchEntryTitle?has_content>
 				<div class="pb-4 search-results-entry">
-					<a class="font-weight-bold search-results-entry-title text-decoration-none unstyled" href="${entry.getViewURL()}&highlight=${htmlUtil.escape(searchResultsPortletDisplayContext.getKeywords()?url('ISO-8859-1'))}">
+					<a class="font-weight-bold search-results-entry-title text-decoration-none unstyled" href="${searchEntry.getViewURL()}&highlight=${htmlUtil.escape(searchResultsPortletDisplayContext.getKeywords()?url('ISO-8859-1'))}">
 						${searchEntryTitle}
 						<div class="description search-results-entry-content">
 							${searchEntryContent}
@@ -151,7 +151,7 @@
 						<div class="modified-date pt-2">
 							<#assign
 								finalModifiedDateString = ""
-								modifiedDateStringParts = entry.getModifiedDateString()?split(":")
+								modifiedDateStringParts = searchEntry.getModifiedDateString()?split(":")
 							/>
 
 							<#if modifiedDateStringParts[0]?length gt modifiedDateStringParts[1]?length>

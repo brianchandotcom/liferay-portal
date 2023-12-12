@@ -24,7 +24,7 @@
 	}
 
 	.custom-control-label:hover:before {
-	box-shadow: 0px 0px 0px 8px #EDF3FE;
+		box-shadow: 0px 0px 0px 8px #EDF3FE;
 	}
 
 	.custom-control-label .text-truncate-inline {
@@ -304,8 +304,6 @@
 		}
 	}
 
-	load();
-
 	function selectAll(id) {
 		const selections = document.getElementsByClassName(id.split('_')[0]);
 
@@ -331,4 +329,6 @@
 
 		sessionStorage.setItem(id, true);
 	}
+
+	load();
 </@>

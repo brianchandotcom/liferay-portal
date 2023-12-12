@@ -6,12 +6,12 @@
 import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
-import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
 import React, {useEffect, useMemo, useState} from 'react';
 
 import {Locale, Translations} from './TranslationAdminContent';
 import TranslationAdminModal from './TranslationAdminModal';
+import TranslationAdminStatusLabel from './TranslationAdminStatusLabel';
 
 const DISPLAY_TYPE = {
 	default: 'default',
@@ -39,10 +39,7 @@ export default function TranslationAdminSelector({
 	activeLanguageIds: initialActiveLanguageIds = [],
 	adminMode,
 	ariaLabels = {
-		default: Liferay.Language.get('default'),
 		manageTranslations: Liferay.Language.get('manage-translations'),
-		notTranslated: Liferay.Language.get('not-translated'),
-		translated: Liferay.Language.get('translated'),
 	},
 	availableLocales = [],
 	defaultLanguageId,
@@ -159,21 +156,12 @@ export default function TranslationAdminSelector({
 				}
 			>
 				<ClayDropDown.ItemList>
-					{activeLocales.map((activeLocale) => {
-						const label = activeLocale.label;
-
-						const isDefaultLocale =
-							activeLocale.id === defaultLanguageId;
-
-						const localeValue = translations
-							? translations[activeLocale.id]
-							: null;
-
+					{activeLocales.map(({id, label, symbol}) => {
 						return (
 							<ClayDropDown.Item
-								key={activeLocale.id}
+								key={id}
 								onClick={() => {
-									setSelectedLanguageId(activeLocale.id);
+									setSelectedLanguageId(id);
 									setSelectorDropdownActive(false);
 								}}
 							>
@@ -185,33 +173,32 @@ export default function TranslationAdminSelector({
 										<ClayLayout.ContentSection>
 											<ClayIcon
 												className="inline-item inline-item-before"
-												symbol={activeLocale.symbol}
+												symbol={symbol}
 											/>
 
-											{label}
+											<span>{label}</span>
 										</ClayLayout.ContentSection>
 									</ClayLayout.ContentCol>
 
 									{!showOnlyFlags && (
-										<ClayLayout.ContentCol containerElement="span">
-											<ClayLayout.ContentSection>
-												<ClayLabel
-													displayType={
-														isDefaultLocale
-															? 'info'
-															: localeValue
-															? 'success'
-															: 'warning'
-													}
-												>
-													{isDefaultLocale
-														? ariaLabels.default
-														: localeValue
-														? ariaLabels.translated
-														: ariaLabels.notTranslated}
-												</ClayLabel>
-											</ClayLayout.ContentSection>
-										</ClayLayout.ContentCol>
+										<TranslationAdminStatusLabel
+											defaultLanguageId={
+												defaultLanguageId
+											}
+											labels={{
+												default: ariaLabels.default,
+												notTranslated:
+													ariaLabels.notTranslated,
+												translated:
+													ariaLabels.translated,
+											}}
+											languageId={id}
+											localeValue={
+												translations
+													? translations[id]
+													: null
+											}
+										/>
 									)}
 								</ClayLayout.ContentRow>
 							</ClayDropDown.Item>

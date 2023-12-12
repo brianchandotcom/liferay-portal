@@ -1123,6 +1123,20 @@ public class ObjectEntryLocalServiceTest {
 						ObjectField objectField =
 							_objectFieldLocalService.fetchObjectField(
 								_objectDefinition.getObjectDefinitionId(),
+								"listTypeEntryKey");
+
+						return String.valueOf(objectField.getObjectFieldId());
+					}
+				).build(),
+				new ObjectValidationRuleSettingBuilder(
+				).name(
+					ObjectValidationRuleSettingConstants.
+						NAME_COMPOSITE_KEY_OBJECT_FIELD_ID
+				).value(
+					() -> {
+						ObjectField objectField =
+							_objectFieldLocalService.fetchObjectField(
+								_objectDefinition.getObjectDefinitionId(),
 								"listTypeEntryKeyRequired");
 
 						return String.valueOf(objectField.getObjectFieldId());

@@ -15,9 +15,11 @@ import TranslationAdminModal from './TranslationAdminModal';
 
 interface IProps extends Translations {
 	adminMode?: boolean;
-	onActiveLanguageIdsChange?: (languageIds: string[]) => void;
-	onSelectedLanguageIdChange?: (languageId: string) => void;
-	selectedLanguageId: string;
+	onActiveLanguageIdsChange?: (
+		languageIds: Liferay.Language.Locale[]
+	) => void;
+	onSelectedLanguageIdChange?: (languageId: Liferay.Language.Locale) => void;
+	selectedLanguageId: Liferay.Language.Locale;
 	showOnlyFlags?: boolean;
 	small?: boolean;
 }
@@ -43,20 +45,22 @@ export default function TranslationAdminSelector({
 	selectedLanguageId: initialSelectedLanguageId,
 	showOnlyFlags,
 	small = false,
-	translations = {},
+	translations = null,
 }: IProps) {
-	const [activeLanguageIds, setActiveLanguageIds] = useState(
-		initialActiveLanguageIds
-	);
-	const [selectedLanguageId, setSelectedLanguageId] = useState(
-		initialSelectedLanguageId
-	);
+	const [activeLanguageIds, setActiveLanguageIds] = useState<
+		Liferay.Language.Locale[]
+	>(initialActiveLanguageIds);
+	const [selectedLanguageId, setSelectedLanguageId] = useState<
+		Liferay.Language.Locale
+	>(initialSelectedLanguageId);
 	const [selectorDropdownActive, setSelectorDropdownActive] = useState(false);
 	const [translationModalVisible, setTranslationModalVisible] = useState(
 		false
 	);
 
-	const handleCloseTranslationModal = (activeLanguageIds: string[]) => {
+	const handleCloseTranslationModal = (
+		activeLanguageIds: Liferay.Language.Locale[]
+	) => {
 		setActiveLanguageIds(activeLanguageIds);
 
 		if (!activeLanguageIds.includes(selectedLanguageId)) {
@@ -139,7 +143,9 @@ export default function TranslationAdminSelector({
 						const isDefaultLocale =
 							activeLocale.id === defaultLanguageId;
 
-						const localeValue = translations[activeLocale.id];
+						const localeValue = translations
+							? translations[activeLocale.id]
+							: null;
 
 						return (
 							<ClayDropDown.Item

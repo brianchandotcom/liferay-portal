@@ -7,7 +7,7 @@
 
 import {Translations} from './TranslationAdminContent';
 interface IProps extends Translations {
-	onClose: (languageIds: string[]) => void;
+	onClose: (languageIds: Liferay.Language.Locale[]) => void;
 	visible?: boolean;
 }
 export default function TranslationAdminModal({

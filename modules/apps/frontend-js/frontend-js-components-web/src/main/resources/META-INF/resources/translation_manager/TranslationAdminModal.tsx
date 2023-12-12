@@ -9,7 +9,7 @@ import React, {useEffect, useState} from 'react';
 import TranslationAdminContent, {Translations} from './TranslationAdminContent';
 
 interface IProps extends Translations {
-	onClose: (languageIds: string[]) => void;
+	onClose: (languageIds: Liferay.Language.Locale[]) => void;
 	visible?: boolean;
 }
 
@@ -34,7 +34,7 @@ export default function TranslationAdminModal({
 	);
 	const [visible, setVisible] = useState(initialVisible);
 
-	const handleAddLocale = (localeId: string) => {
+	const handleAddLocale = (localeId: Liferay.Language.Locale) => {
 		setActiveLanguageIds([...activeLanguageIds, localeId]);
 	};
 
@@ -49,7 +49,7 @@ export default function TranslationAdminModal({
 		onClose([...activeLanguageIds]);
 	};
 
-	const handleRemoveLocale = (localeId: string) => {
+	const handleRemoveLocale = (localeId: Liferay.Language.Locale) => {
 		const newActiveLanguageIds = [...activeLanguageIds];
 		newActiveLanguageIds.splice(activeLanguageIds.indexOf(localeId), 1);
 		setActiveLanguageIds(newActiveLanguageIds);

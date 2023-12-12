@@ -8,9 +8,11 @@
 import {Translations} from './TranslationAdminContent';
 interface IProps extends Translations {
 	adminMode?: boolean;
-	onActiveLanguageIdsChange?: (languageIds: string[]) => void;
-	onSelectedLanguageIdChange?: (languageId: string) => void;
-	selectedLanguageId: string;
+	onActiveLanguageIdsChange?: (
+		languageIds: Liferay.Language.Locale[]
+	) => void;
+	onSelectedLanguageIdChange?: (languageId: Liferay.Language.Locale) => void;
+	selectedLanguageId: Liferay.Language.Locale;
 	showOnlyFlags?: boolean;
 	small?: boolean;
 }

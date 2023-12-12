@@ -6,12 +6,12 @@
 import React from 'react';
 export interface Locale {
 	displayName: string;
-	id: string;
-	label: string;
+	id: Liferay.Language.Locale;
+	label: Liferay.Language.Locale;
 	symbol: string;
 }
 export interface Translations {
-	activeLanguageIds?: string[];
+	activeLanguageIds?: Liferay.Language.Locale[];
 	ariaLabels?: {
 		default?: string;
 		manageTranslations?: string;
@@ -20,16 +20,14 @@ export interface Translations {
 		translated?: string;
 	};
 	availableLocales: Locale[];
-	defaultLanguageId: string;
-	translations?: {
-		[key: string]: unknown;
-	};
+	defaultLanguageId: Liferay.Language.Locale;
+	translations?: Record<Liferay.Language.Locale, string> | null;
 }
 interface IProps extends Translations {
-	onAddLocale?: (localeId: string) => void;
+	onAddLocale?: (localeId: Liferay.Language.Locale) => void;
 	onCancel?: React.MouseEventHandler<HTMLButtonElement>;
 	onDone?: React.MouseEventHandler<HTMLButtonElement>;
-	onRemoveLocale?: (localeId: string) => void;
+	onRemoveLocale?: (localeId: Liferay.Language.Locale) => void;
 }
 export default function TranslationAdminContent({
 	ariaLabels,

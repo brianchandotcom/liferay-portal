@@ -328,6 +328,15 @@ public class CommerceAccountRoleHelperImpl
 					CPActionKeys.VIEW_COMMERCE_PRODUCT_IMAGES
 				});
 			companyResourceActionIds.put(
+				"com.liferay.commerce.product.model.CPOption",
+				new String[] {ActionKeys.VIEW});
+			companyResourceActionIds.put(
+				"com.liferay.commerce.product.model.CPOptionCategory",
+				new String[] {ActionKeys.VIEW});
+			companyResourceActionIds.put(
+				"com.liferay.commerce.product.model.CPSpecificationOption",
+				new String[] {ActionKeys.VIEW});
+			companyResourceActionIds.put(
 				"com.liferay.commerce.shipment",
 				new String[] {CommerceActionKeys.MANAGE_COMMERCE_SHIPMENTS});
 			companyResourceActionIds.put(
@@ -335,6 +344,13 @@ public class CommerceAccountRoleHelperImpl
 				new String[] {
 					CPActionKeys.VIEW_COMMERCE_PRODUCT_TAX_CATEGORIES
 				});
+
+			companyResourceActionIds.put(
+				"com.liferay.document.library",
+				new String[] {ActionKeys.ADD_DOCUMENT});
+			companyResourceActionIds.put(
+				"com.liferay.expando.kernel.model.ExpandoColumn",
+				new String[] {ActionKeys.VIEW});
 		}
 
 		_setRolePermissions(

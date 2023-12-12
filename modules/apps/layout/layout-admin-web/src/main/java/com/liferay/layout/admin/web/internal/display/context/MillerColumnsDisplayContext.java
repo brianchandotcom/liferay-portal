@@ -23,14 +23,20 @@ import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetBranch;
 import com.liferay.portal.kernel.model.LayoutType;
 import com.liferay.portal.kernel.model.LayoutTypeController;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetBranchLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalServiceUtil;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
+import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -250,6 +256,19 @@ public class MillerColumnsDisplayContext {
 
 					return duplicatedFriendlyURLPlids.contains(
 						layout.getPlid());
+				}
+			).put(
+				"hasGuestViewPermission",
+				() -> {
+					Role role = RoleLocalServiceUtil.getRole(
+						layout.getCompanyId(), RoleConstants.GUEST);
+
+					return ResourcePermissionLocalServiceUtil.
+						hasResourcePermission(
+							layout.getCompanyId(), Layout.class.getName(),
+							ResourceConstants.SCOPE_INDIVIDUAL,
+							String.valueOf(layout.getPlid()), role.getRoleId(),
+							ActionKeys.VIEW);
 				}
 			).put(
 				"parentable", layoutType.isParentable()

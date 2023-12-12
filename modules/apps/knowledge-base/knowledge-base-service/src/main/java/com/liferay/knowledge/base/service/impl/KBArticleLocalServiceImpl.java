@@ -1525,7 +1525,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		_updateKBArticleAsset(
 			userId, kbArticle, assetCategoryIds, assetTagNames,
-			assetLinkEntryIds, WorkflowConstants.STATUS_ANY);
+			assetLinkEntryIds);
 	}
 
 	@Override
@@ -1654,7 +1654,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		_updateKBArticleAsset(
 			userId, kbArticle, assetEntry.getCategoryIds(),
-			assetEntry.getTagNames(), assetLinkEntryIds, status);
+			assetEntry.getTagNames(), assetLinkEntryIds);
 
 		SystemEventHierarchyEntryThreadLocal.push(KBArticle.class);
 
@@ -2614,7 +2614,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 	private void _updateKBArticleAsset(
 			long userId, KBArticle kbArticle, long[] assetCategoryIds,
-			String[] assetTagNames, long[] assetLinkEntryIds, int status)
+			String[] assetTagNames, long[] assetLinkEntryIds)
 		throws PortalException {
 
 		boolean visible = false;
@@ -2626,19 +2626,14 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		String summary = _htmlParser.extractText(
 			StringUtil.shorten(kbArticle.getContent(), 500));
 
-		long classPK = kbArticle.getClassPK();
-
-		if (status == WorkflowConstants.STATUS_EXPIRED) {
-			classPK = kbArticle.getResourcePrimKey();
-		}
-
 		AssetEntry assetEntry = _assetEntryLocalService.updateEntry(
 			userId, kbArticle.getGroupId(), kbArticle.getCreateDate(),
-			kbArticle.getModifiedDate(), KBArticle.class.getName(), classPK,
-			kbArticle.getUuid(), 0, assetCategoryIds, assetTagNames, true,
-			visible, null, null, null, kbArticle.getExpirationDate(),
-			ContentTypes.TEXT_HTML, kbArticle.getTitle(),
-			kbArticle.getDescription(), summary, null, null, 0, 0, null);
+			kbArticle.getModifiedDate(), KBArticle.class.getName(),
+			kbArticle.getClassPK(), kbArticle.getUuid(), 0, assetCategoryIds,
+			assetTagNames, true, visible, null, null, null,
+			kbArticle.getExpirationDate(), ContentTypes.TEXT_HTML,
+			kbArticle.getTitle(), kbArticle.getDescription(), summary, null,
+			null, 0, 0, null);
 
 		_assetLinkLocalService.updateLinks(
 			userId, assetEntry.getEntryId(), assetLinkEntryIds,

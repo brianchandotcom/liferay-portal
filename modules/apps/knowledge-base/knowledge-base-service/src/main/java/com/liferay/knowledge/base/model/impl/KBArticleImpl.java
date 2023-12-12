@@ -167,7 +167,7 @@ public class KBArticleImpl extends KBArticleBaseImpl {
 
 	@Override
 	public long getClassPK() {
-		if (isApproved()) {
+		if (isApproved() || isExpired()) {
 			return getResourcePrimKey();
 		}
 

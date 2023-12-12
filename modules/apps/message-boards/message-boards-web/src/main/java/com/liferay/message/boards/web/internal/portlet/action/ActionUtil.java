@@ -5,6 +5,7 @@
 
 package com.liferay.message.boards.web.internal.portlet.action;
 
+import com.liferay.message.boards.exception.NoSuchCategoryException;
 import com.liferay.message.boards.exception.NoSuchMessageException;
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.model.MBMessage;
@@ -16,6 +17,7 @@ import com.liferay.message.boards.service.MBMessageLocalServiceUtil;
 import com.liferay.message.boards.service.MBMessageServiceUtil;
 import com.liferay.message.boards.service.MBThreadLocalServiceUtil;
 import com.liferay.message.boards.web.internal.security.permission.MBResourcePermission;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -67,6 +69,13 @@ public class ActionUtil {
 
 		if (categoryId > 0) {
 			category = MBCategoryServiceUtil.getCategory(categoryId);
+
+			if (category.getGroupId() != themeDisplay.getScopeGroupId()) {
+				throw new NoSuchCategoryException(
+					StringBundler.concat(
+						"Unable to find Category with Id: ", categoryId,
+						" in group ", themeDisplay.getScopeGroupId()));
+			}
 		}
 		else {
 			MBResourcePermission.check(

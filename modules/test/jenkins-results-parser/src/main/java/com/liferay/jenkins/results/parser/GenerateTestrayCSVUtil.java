@@ -6,7 +6,9 @@
 package com.liferay.jenkins.results.parser;
 
 import java.io.File;
+import java.io.IOException;
 
+import java.net.MalformedURLException;
 import java.net.URL;
 
 import java.util.ArrayList;
@@ -26,8 +28,7 @@ import org.json.JSONObject;
 public class GenerateTestrayCSVUtil {
 
 	public static void generate(
-			String projectBuildDir, String projectTestrayBuildId)
-		throws Exception {
+		String projectBuildDir, String projectTestrayBuildId) {
 
 		StringBuilder sb = new StringBuilder();
 
@@ -165,30 +166,30 @@ public class GenerateTestrayCSVUtil {
 		return pullRequest._getAuthor();
 	}
 
-	private static PullRequest _getPullRequest(String testrayBuildReportURL)
-		throws Exception {
-
+	private static PullRequest _getPullRequest(String testrayBuildReportURL) {
 		String slaveName = "";
 		String batchName = "";
 		String batchNumber = "";
 
 		String[] buildReportText = testrayBuildReportURL.split("/");
 
-		try {
-			slaveName = buildReportText[1];
-			batchName = buildReportText[2];
-			batchNumber = buildReportText[3];
-		}
-		catch (Exception exception) {
-			System.out.println("Exception: " + exception);
-		}
+		slaveName = buildReportText[1];
+		batchName = buildReportText[2];
+		batchNumber = buildReportText[3];
 
 		String tempURL =
 			"https://" + slaveName + ".liferay.com/job/" + batchName + "/" +
 				batchNumber;
 
-		TopLevelBuildReport topLevelBuildReport =
-			BuildReportFactory.newTopLevelBuildReport(new URL(tempURL));
+		TopLevelBuildReport topLevelBuildReport = null;
+
+		try {
+			topLevelBuildReport = BuildReportFactory.newTopLevelBuildReport(
+				new URL(tempURL));
+		}
+		catch (MalformedURLException malformedURLException) {
+			throw new RuntimeException(malformedURLException);
+		}
 
 		Map<String, String> buildParameters =
 			topLevelBuildReport.getBuildParameters();
@@ -199,12 +200,18 @@ public class GenerateTestrayCSVUtil {
 	}
 
 	private static List<TestcaseResult> _getTestcaseResultHistory(
-			TestcaseResult testcaseResult)
-		throws Exception {
+		TestcaseResult testcaseResult) {
 
-		JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
-			"https://testray.liferay.com/home/-/testray/case_results/" +
-				testcaseResult._getTestrayCaseResultId() + "/history.json");
+		JSONObject jsonObject = null;
+
+		try {
+			jsonObject = JenkinsResultsParserUtil.toJSONObject(
+				"https://testray.liferay.com/home/-/testray/case_results/" +
+					testcaseResult._getTestrayCaseResultId() + "/history.json");
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
 
 		JSONArray resultsJSONArray = jsonObject.optJSONArray("data");
 

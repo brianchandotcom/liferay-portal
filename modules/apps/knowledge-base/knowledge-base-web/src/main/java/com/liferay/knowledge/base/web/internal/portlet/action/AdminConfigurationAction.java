@@ -52,6 +52,8 @@ public class AdminConfigurationAction
 		}
 
 		validateEmail(actionRequest, "emailKBArticleAdded");
+		validateEmail(actionRequest, "emailKBArticleExpired");
+		validateEmail(actionRequest, "emailKBArticleReview");
 		validateEmail(actionRequest, "emailKBArticleSuggestionInProgress");
 		validateEmail(actionRequest, "emailKBArticleSuggestionReceived");
 		validateEmail(actionRequest, "emailKBArticleSuggestionResolved");

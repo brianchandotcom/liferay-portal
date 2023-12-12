@@ -881,37 +881,38 @@ public class GraphQLServletExtender {
 
 				_servletDataMap.put(method, servletData);
 
-				SortedMap<String, TreeSet<Method>> methodSortedMap =
+				SortedMap<String, TreeSet<Method>> methodsSortedMap =
 					methods.computeIfAbsent(
 						method.getName(),
 						key -> new TreeMap<>(Comparator.naturalOrder()));
 
-				TreeSet<Method> methodTreeSet = methodSortedMap.computeIfAbsent(
-					_getPath(servletData),
-					key -> new TreeSet<>(
-						Comparator.comparing(
-							this::_getVersion
-						).reversed()));
+				TreeSet<Method> methodsTreeSet =
+					methodsSortedMap.computeIfAbsent(
+						_getPath(servletData),
+						key -> new TreeSet<>(
+							Comparator.comparing(
+								this::_getVersion
+							).reversed()));
 
-				methodTreeSet.add(method);
+				methodsTreeSet.add(method);
 			}
 		}
 
-		for (SortedMap<String, TreeSet<Method>> methodSortedMap :
+		for (SortedMap<String, TreeSet<Method>> methodsSortedMap :
 				methods.values()) {
 
-			String firstPath = methodSortedMap.firstKey();
+			String firstPath = methodsSortedMap.firstKey();
 
 			for (Map.Entry<String, TreeSet<Method>> entry :
-					methodSortedMap.entrySet()) {
+					methodsSortedMap.entrySet()) {
 
 				String path = entry.getKey();
-				TreeSet<Method> methodTreeSet = entry.getValue();
+				TreeSet<Method> methodsTreeSet = entry.getValue();
 
 				if (StringUtil.equals(firstPath, path)) {
-					Method firstMethod = methodTreeSet.first();
+					Method firstMethod = methodsTreeSet.first();
 
-					for (Method method : methodTreeSet) {
+					for (Method method : methodsTreeSet) {
 						Class<?> clazz = method.getDeclaringClass();
 
 						GraphQLFieldDefinition field =
@@ -935,7 +936,7 @@ public class GraphQLServletExtender {
 				}
 				else if (_log.isDebugEnabled()) {
 					MethodNameBuilder methodNameBuilder = new MethodNameBuilder(
-						methodTreeSet.first());
+						methodsTreeSet.first());
 
 					_log.debug(
 						StringBundler.concat(

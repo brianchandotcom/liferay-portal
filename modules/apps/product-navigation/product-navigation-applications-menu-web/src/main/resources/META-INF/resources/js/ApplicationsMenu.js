@@ -17,6 +17,8 @@ import {fetch, navigate, openSelectionModal} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 
+import useKeyboardNavigation from '../js/hooks/useKeyboardNavigation';
+
 import '../css/ApplicationsMenu.scss';
 
 const getOpenMenuTooltip = (keyLabel) => (
@@ -354,28 +356,40 @@ const NavigationSection = ({id, label, panelApps, selectedPortletId}) => {
 			</h2>
 
 			<ul aria-labelledby={id} className="list-unstyled" role="menu">
-				{panelApps.map(({label, portletId, url}) => (
-					<li className="c-mt-2" key={portletId} role="none">
-						<a
-							className={classNames(
-								'component-link applications-menu-nav-link',
-								{
-									active: portletId === selectedPortletId,
-								}
-							)}
-							href={url}
-							role="menuitem"
-						>
-							<span className="c-inner" tabIndex="-1">
-								{label}
-							</span>
-						</a>
-					</li>
+				{panelApps.map((item) => (
+					<ListItem
+						item={item}
+						key={item.portletId}
+						selectedPortletId={selectedPortletId}
+					/>
 				))}
 			</ul>
 		</ClayLayout.Col>
 	);
 };
+
+function ListItem({item, selectedPortletId}) {
+	const {isTarget, setElement} = useKeyboardNavigation();
+
+	return (
+		<li className="c-mt-2" role="none">
+			<a
+				className={classNames(
+					'component-link applications-menu-nav-link',
+					{
+						active: item.portletId === selectedPortletId,
+					}
+				)}
+				href={item.url}
+				ref={setElement}
+				role="menuitem"
+				tabIndex={isTarget ? 0 : -1}
+			>
+				<span tabIndex="-1">{item.label}</span>
+			</a>
+		</li>
+	);
+}
 
 const ApplicationsMenu = ({
 	liferayLogoURL,

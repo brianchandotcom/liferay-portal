@@ -1,0 +1,11 @@
+.empty {
+	margin-top: 4rem;
+	margin-bottom: 4rem;
+}
+.ant-btn-icon-only {
+	display: flex;
+}
+.ant-btn-icon-only > span {
+	margin: auto;
+	font-size: 2rem;
+}

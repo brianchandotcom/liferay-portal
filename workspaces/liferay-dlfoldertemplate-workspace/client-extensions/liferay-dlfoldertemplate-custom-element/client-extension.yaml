@@ -1,0 +1,15 @@
+assemble:
+    - from: build/static
+      into: static
+liferay-dlfoldertemplate-custom-element:
+    cssURLs:
+        - css/main.*.css
+    friendlyURLMapping: liferay-dlfoldertemplate-custom-element
+    htmlElementName: liferay-dlfoldertemplate-custom-element
+    instanceable: true
+    name: Liferay Folder Template
+    portletCategoryName: category.client-extensions
+    type: customElement
+    urls:
+        - js/main.*.js
+    useESM: true

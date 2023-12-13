@@ -338,8 +338,10 @@ public class DBPartitionUtil {
 			DatabaseMetaData databaseMetaData = connection.getMetaData();
 
 			try (ResultSet resultSet = databaseMetaData.getTables(
-					_defaultPartitionName, dbInspector.getSchema(), null,
-					new String[] {"TABLE"});
+					_dbPartitionDB.getCatalog(
+						connection, _defaultPartitionName),
+					_dbPartitionDB.getSchema(connection, _defaultPartitionName),
+					null, new String[] {"TABLE"});
 				Statement statement = connection.createStatement()) {
 
 				while (resultSet.next()) {
@@ -383,8 +385,10 @@ public class DBPartitionUtil {
 			DatabaseMetaData databaseMetaData = connection.getMetaData();
 
 			try (ResultSet resultSet = databaseMetaData.getTables(
-					_defaultPartitionName, dbInspector.getSchema(), null,
-					new String[] {"TABLE"});
+					_dbPartitionDB.getCatalog(
+						connection, _defaultPartitionName),
+					_dbPartitionDB.getSchema(connection, _defaultPartitionName),
+					null, new String[] {"TABLE"});
 				Statement statement = connection.createStatement()) {
 
 				while (resultSet.next()) {
@@ -715,8 +719,10 @@ public class DBPartitionUtil {
 			DatabaseMetaData databaseMetaData = connection.getMetaData();
 
 			try (ResultSet resultSet = databaseMetaData.getTables(
-					_defaultPartitionName, dbInspector.getSchema(), null,
-					new String[] {"TABLE"})) {
+					_dbPartitionDB.getCatalog(
+						connection, _defaultPartitionName),
+					_dbPartitionDB.getSchema(connection, _defaultPartitionName),
+					null, new String[] {"TABLE"})) {
 
 				while (resultSet.next()) {
 					String tableName = resultSet.getString("TABLE_NAME");

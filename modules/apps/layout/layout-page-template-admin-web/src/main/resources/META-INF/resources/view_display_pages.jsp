@@ -49,6 +49,7 @@ DisplayPageManagementToolbarDisplayContext displayPageManagementToolbarDisplayCo
 	</portlet:actionURL>
 
 	<aui:form action="<%= deleteDisplayPageURL %>" cssClass="container-fluid container-fluid-max-xl" name="fm">
+		<liferay-ui:error exception="<%= PortalException.class %>" message="one-or-more-entries-could-not-be-deleted" />
 		<liferay-ui:error exception="<%= RequiredLayoutPageTemplateEntryException.class %>" message="you-cannot-delete-display-page-templates-that-are-used-by-one-or-more-items.-please-view-the-usages-and-try-to-unassign-them" />
 
 		<liferay-ui:success key="displayPageContentTypeChanged" message='<%= GetterUtil.getString(SessionMessages.get(renderRequest, "displayPageContentTypeChanged")) %>' />

@@ -35,11 +35,9 @@ import com.liferay.portal.kernel.service.PortletItemLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -460,19 +458,8 @@ public class PortletCategoryManagerImpl implements PortletCategoryManager {
 			return false;
 		}
 
-		if ((layout.isTypeAssetDisplay() || layout.isTypeContent()) &&
-			ArrayUtil.contains(
-				_UNSUPPORTED_PORTLETS_NAMES, portlet.getPortletName())) {
-
-			return false;
-		}
-
 		return true;
 	}
-
-	private static final String[] _UNSUPPORTED_PORTLETS_NAMES = {
-		PortletKeys.NESTED_PORTLETS
-	};
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortletCategoryManagerImpl.class);

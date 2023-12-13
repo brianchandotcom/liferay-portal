@@ -1507,15 +1507,11 @@ definition {
 
 	@description = "This is a test for LPS-177769. The tooltip of the back button in a new Navigation Menu is Go to Navigation Menus."
 	@priority = 3
-	test ViewBackButtonTooltipInNavigationMenuAdmin {
-		task ("Given the Navigation Menu admin page") {
-			JSONSitenavigation.addSiteNavigationMenu(
-				groupName = ${randomSiteName},
-				siteNavigationMenuName = "Navigation Menu Name");
-
+	test ViewBackButtonTooltipInNavigationMenuEditor {
+		task ("Given access to the navigation menu editor") {
 			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = ${siteURLKey});
 
-			NavigationMenusAdmin.editMenu(navigationMenuName = "Navigation Menu Name");
+			NavigationMenusAdmin.addMenu(menuName = "Navigation Menu Name");
 		}
 
 		task ("When hover over the back button") {

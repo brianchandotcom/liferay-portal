@@ -97,4 +97,34 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-177722. Via Keyboard navigation is possible to access the edit mode of Information Template and the tooltip of the back button is 'Go to Templates'"
+	@priority = 2
+	test ViewBackButtonTooltipInFragmentsAdminViaKeyboard {
+		task ("Given access to the Fragments Admin page") {
+			JSONFragment.addFragmentCollection(
+				groupName = "Test Site Name",
+				name = "Fragment Set Name");
+
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Fragment Set Name");
+
+			FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
+		}
+
+		task ("When hover on the back button via keyboard") {
+			KeyPress(
+				locator1 = "ProductMenu#TOGGLE",
+				value1 = "\TAB");
+
+			AssertElementFocused(locator1 = "Icon#BACK");
+		}
+
+		task ("Then see the tooltip message") {
+			AssertVisible(
+				key_content = "Go to Fragments",
+				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
+		}
+	}
+
 }

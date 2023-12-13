@@ -12,12 +12,14 @@ import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
 import com.liferay.asset.list.exception.AssetListEntryTitleException;
 import com.liferay.asset.list.exception.DuplicateAssetListEntryTitleException;
+import com.liferay.asset.list.exception.RequiredAssetListEntryException;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.model.AssetListEntryAssetEntryRel;
 import com.liferay.asset.list.model.AssetListEntryAssetEntryRelTable;
 import com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel;
 import com.liferay.asset.list.service.AssetListEntryAssetEntryRelLocalService;
 import com.liferay.asset.list.service.AssetListEntrySegmentsEntryRelLocalService;
+import com.liferay.asset.list.service.AssetListEntryUsageLocalService;
 import com.liferay.asset.list.service.base.AssetListEntryLocalServiceBaseImpl;
 import com.liferay.asset.list.service.persistence.AssetListEntryAssetEntryRelPersistence;
 import com.liferay.asset.list.service.persistence.AssetListEntrySegmentsEntryRelPersistence;
@@ -295,6 +297,8 @@ public class AssetListEntryLocalServiceImpl
 	public AssetListEntry deleteAssetListEntry(AssetListEntry assetListEntry)
 		throws PortalException {
 
+		_checkCompanyAssetListEntryUsages(assetListEntry);
+
 		// Asset list entry
 
 		assetListEntryPersistence.remove(assetListEntry);
@@ -489,6 +493,22 @@ public class AssetListEntryLocalServiceImpl
 		_assetListEntrySegmentsEntryRelLocalService.
 			updateAssetListEntrySegmentsEntryRelTypeSettings(
 				assetListEntryId, segmentsEntryId, typeSettings);
+	}
+
+	private void _checkCompanyAssetListEntryUsages(
+			AssetListEntry assetListEntry)
+		throws PortalException {
+
+		int count =
+			_assetListEntryUsageLocalService.
+				getCompanyAssetListEntryUsagesCount(
+					assetListEntry.getCompanyId(),
+					_portal.getClassNameId(AssetListEntry.class),
+					String.valueOf(assetListEntry.getAssetListEntryId()));
+
+		if (count > 0) {
+			throw new RequiredAssetListEntryException();
+		}
 	}
 
 	private String _generateAssetListEntryKey(long groupId, String title) {
@@ -783,6 +803,9 @@ public class AssetListEntryLocalServiceImpl
 	@Reference
 	private AssetListEntrySegmentsEntryRelPersistence
 		_assetListEntrySegmentsEntryRelPersistence;
+
+	@Reference
+	private AssetListEntryUsageLocalService _assetListEntryUsageLocalService;
 
 	@Reference
 	private Portal _portal;

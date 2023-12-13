@@ -7,10 +7,6 @@ definition {
 	property testray.component.names = "Echo Accessibility";
 	property testray.main.component.name = "Navigation";
 
-	static var randomSiteName = StringUtil.randomString(8);
-
-	var siteURLKey = StringUtil.toLowerCase(${randomSiteName});
-
 	setUp {
 		task ("Set up virtual instance") {
 			TestCase.setUpPortalInstance();
@@ -21,21 +17,17 @@ definition {
 		}
 
 		task ("Add a site") {
-			HeadlessSite.addSite(siteName = ${randomSiteName});
+			HeadlessSite.addSite(siteName = "Test Site Name");
 		}
 	}
 
 	@description = "This is a test for LPS-177769. Using Keyboard Navigation it is possible to access the back button of Navigation Menus and the tooltip is Go to Menus."
 	@priority = 3
-	test ViewBackButtonTooltipInNavigationMenuAdminViaKeyboard {
-		task ("Given the Navigation Menu admin page") {
-			JSONSitenavigation.addSiteNavigationMenu(
-				groupName = ${randomSiteName},
-				siteNavigationMenuName = "Navigation Menu Name");
+	test ViewBackButtonTooltipInNavigationMenuEditorViaKeyboard {
+		task ("Given access to the navigation menu editor") {
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
 
-			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = ${siteURLKey});
-
-			NavigationMenusAdmin.editMenu(navigationMenuName = "Navigation Menu Name");
+			NavigationMenusAdmin.addMenu(menuName = "Navigation Menu Name");
 		}
 
 		task ("When hover on the back button via keyboard") {

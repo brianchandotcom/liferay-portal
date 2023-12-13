@@ -62,15 +62,19 @@ public class UserController extends BaseFaroController {
 	@Path("/{id}/accept")
 	@POST
 	@RolesAllowed(RoleConstants.SITE_ADMINISTRATOR)
-	public FaroUserDisplay accept(@PathParam("id") long id)
+	public FaroUserDisplay accept(
+			@PathParam("groupId") long groupId, @PathParam("id") long id)
 		throws PortalException {
 
 		FaroUser faroUser = _faroUserLocalService.getFaroUser(id);
 
 		faroUser.setStatus(FaroUserConstants.STATUS_APPROVED);
 
-		return new FaroUserDisplay(
-			_faroUserLocalService.updateFaroUser(faroUser));
+		faroUser = _faroUserLocalService.updateFaroUser(faroUser);
+
+		_groupLocalService.addUserGroup(faroUser.getLiveUserId(), groupId);
+
+		return new FaroUserDisplay(faroUser);
 	}
 
 	@POST

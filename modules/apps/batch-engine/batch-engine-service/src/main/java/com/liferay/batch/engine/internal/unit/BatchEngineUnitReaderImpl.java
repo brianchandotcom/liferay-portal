@@ -126,7 +126,7 @@ public class BatchEngineUnitReaderImpl implements BatchEngineUnitReader {
 
 			String key = _getBatchEngineBundleEntryKey(url);
 
-			if (_isAdvancedBundleBatchEngineUnit(url.toString())) {
+			if (isBatchEngineTechnical(url.getPath())) {
 				AdvancedBundleBatchEngineUnitImpl
 					advancedBundleBatchEngineUnitImpl =
 						new AdvancedBundleBatchEngineUnitImpl(bundle, url);
@@ -181,11 +181,6 @@ public class BatchEngineUnitReaderImpl implements BatchEngineUnitReader {
 		}
 
 		return GetterUtil.getString(parameters.get("featureFlag"));
-	}
-
-	private boolean _isAdvancedBundleBatchEngineUnit(String url) {
-		return url.endsWith(
-			BatchEngineTaskContentType.JSONT.getFileExtension());
 	}
 
 	private List<BatchEngineUnit> _loadBatchEngineUnits(Bundle bundle) {

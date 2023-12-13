@@ -11,12 +11,18 @@ import com.liferay.portal.kernel.cluster.ClusterNodeResponses;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.cluster.FutureClusterResponses;
 import com.liferay.portal.kernel.concurrent.BaseFutureListener;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
+import com.liferay.portal.kernel.messaging.Destination;
+import com.liferay.portal.kernel.messaging.DestinationConfiguration;
+import com.liferay.portal.kernel.messaging.DestinationFactory;
+import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.messaging.MessageListener;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.liveusers.LiveUsers;
@@ -25,11 +31,40 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Future;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Amos Fong
  */
+@Component(
+	property = "destination.name=" + DestinationNames.LIVE_USERS,
+	service = MessageListener.class
+)
 public class LiveUsersMessageListener extends BaseMessageListener {
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		Destination destination = _destinationFactory.createDestination(
+			new DestinationConfiguration(
+				DestinationConfiguration.DESTINATION_TYPE_SERIAL,
+				DestinationNames.LIVE_USERS));
+
+		_serviceRegistration = bundleContext.registerService(
+			Destination.class, destination,
+			MapUtil.singletonDictionary(
+				"destination.name", destination.getName()));
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceRegistration.unregister();
+	}
 
 	protected void doCommandAddClusterNode(JSONObject jsonObject)
 		throws Exception {
@@ -81,7 +116,7 @@ public class LiveUsersMessageListener extends BaseMessageListener {
 	protected void doReceive(Message message) throws Exception {
 		String payload = (String)message.getPayload();
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(payload);
+		JSONObject jsonObject = _jsonFactory.createJSONObject(payload);
 
 		String command = jsonObject.getString("command");
 
@@ -105,6 +140,14 @@ public class LiveUsersMessageListener extends BaseMessageListener {
 	private static final MethodHandler _getLocalClusterUsersMethodHandler =
 		new MethodHandler(
 			new MethodKey(LiveUsers.class, "getLocalClusterUsers"));
+
+	@Reference
+	private DestinationFactory _destinationFactory;
+
+	@Reference
+	private JSONFactory _jsonFactory;
+
+	private ServiceRegistration<Destination> _serviceRegistration;
 
 	private static class LiveUsersClusterResponseFutureListener
 		extends BaseFutureListener<ClusterNodeResponses> {

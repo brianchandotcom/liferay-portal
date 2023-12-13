@@ -128,7 +128,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-177682. Using Keyboard Navigation it is possible to access the back button of usages and is Go to Fragments."
-	@priority = 3
+	@priority = 2
 	test ViewBackButtonTooltipInViewUsagesViaKeyboard {
 		task ("Given the View Usages page of a fragment") {
 			JSONFragment.addFragmentCollection(

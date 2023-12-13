@@ -51,13 +51,30 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 						<%= HtmlUtil.escape(articleVersion.getTitle(locale)) %>
 					</h5>
 
-					<h6 class="text-default">
-						<liferay-portal-workflow:status
-							showStatusLabel="<%= false %>"
-							status="<%= articleVersion.getStatus() %>"
-							version="<%= String.valueOf(articleVersion.getVersion()) %>"
-						/>
-					</h6>
+					<c:choose>
+						<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPS-196768") %>'>
+							<div>
+								<clay:label
+									displayType="secondary"
+									label='<%= LanguageUtil.format(request, "version-x", articleVersion.getVersion(), false) %>'
+								/>
+							</div>
+
+							<liferay-portal-workflow:status
+								showStatusLabel="<%= false %>"
+								status="<%= articleVersion.getStatus() %>"
+							/>
+						</c:when>
+						<c:otherwise>
+							<h6 class="text-default">
+								<liferay-portal-workflow:status
+									showStatusLabel="<%= false %>"
+									status="<%= articleVersion.getStatus() %>"
+									version="<%= String.valueOf(articleVersion.getVersion()) %>"
+								/>
+							</h6>
+						</c:otherwise>
+					</c:choose>
 				</liferay-ui:search-container-column-text>
 
 				<liferay-ui:search-container-column-text>

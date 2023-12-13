@@ -7,7 +7,7 @@ import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {TreeView as ClayTreeView} from '@clayui/core';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
-import {fetch, navigate, openModal, openToast} from 'frontend-js-web';
+import {fetch, navigate, openModal, openToast, sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useState} from 'react';
 
@@ -15,7 +15,6 @@ const ACTION_COPY_PAGE = 'copy-page';
 const ACTION_DELETE = 'delete';
 const ENTER_KEYCODE = 13;
 const ROOT_ITEM_ID = '0';
-const NOT_DROPPABLE_TYPES = ['url', 'link_to_layout'];
 
 export default function PagesTree({
 	config,
@@ -68,7 +67,16 @@ export default function PagesTree({
 
 	const onItemMove = useCallback(
 		(item, parentItem, {next: priority}) => {
-			if (NOT_DROPPABLE_TYPES.includes(parentItem.type)) {
+			if (parentItem.parentable !== undefined && !parentItem.parentable) {
+				openErrorToast(
+					sub(
+						Liferay.Language.get(
+							'pages-of-type-x-cannot-have-child-pages'
+						),
+						parentItem.typeName
+					)
+				);
+
 				return false;
 			}
 
@@ -419,9 +427,13 @@ function normalizeActions(actions, namespace) {
 	}));
 }
 
-function openErrorToast() {
+function openErrorToast(message) {
+	if (message === undefined) {
+		message = Liferay.Language.get('an-unexpected-error-occurred');
+	}
+
 	openToast({
-		message: Liferay.Language.get('an-unexpected-error-occurred'),
+		message,
 		title: Liferay.Language.get('error'),
 		type: 'danger',
 	});

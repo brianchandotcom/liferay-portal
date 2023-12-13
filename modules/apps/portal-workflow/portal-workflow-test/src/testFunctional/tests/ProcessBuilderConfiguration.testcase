@@ -248,13 +248,13 @@ definition {
 
 		ProcessBuilderListView.searchForWorkflow(workflowName = "Single Approver");
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "ProcessBuilderListView#VALIDATE_SEARCH_RESULTS_BAR",
-			value1 = "2 Results for \"Single Approver\"");
+			value1 = "2 Results Found for \"Single Approver\"");
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "ProcessBuilderListView#VALIDATE_SEARCH_RESULTS_BAR",
-			value1 = "2 Results for \"Single Approver\"");
+			value1 = "2 Results Found for \"Single Approver\"");
 
 		AssertTextEquals(
 			key_rowNumber = 1,

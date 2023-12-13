@@ -44,7 +44,7 @@ public class GitHubClient {
 
 		requestJSONObject.put("state", "closed");
 
-		_requestPatch(gitHubIssue.getPullRequestAPIURL(), requestJSONObject);
+		requestPatch(gitHubIssue.getPullRequestAPIURL(), requestJSONObject);
 	}
 
 	public void closeGitHubPullRequest(GitHubPullRequest gitHubPullRequest) {
@@ -52,7 +52,7 @@ public class GitHubClient {
 
 		requestJSONObject.put("state", "closed");
 
-		_requestPatch(gitHubPullRequest.getAPIURL(), requestJSONObject);
+		requestPatch(gitHubPullRequest.getAPIURL(), requestJSONObject);
 	}
 
 	public GitHubComment createGitHubComment(
@@ -64,7 +64,7 @@ public class GitHubClient {
 
 		return new GitHubComment(
 			new JSONObject(
-				_requestPost(gitHubIssue.getCommentsURL(), requestJSONObject)));
+				requestPost(gitHubIssue.getCommentsURL(), requestJSONObject)));
 	}
 
 	public GitHubComment createGitHubComment(
@@ -76,14 +76,14 @@ public class GitHubClient {
 
 		return new GitHubComment(
 			new JSONObject(
-				_requestPost(
+				requestPost(
 					gitHubPullRequest.getCommentsURL(), requestJSONObject)));
 	}
 
 	public String getFileContent(
 		GitBranchEntity gitBranchEntity, String filePath) {
 
-		return _requestGet(
+		return requestGet(
 			StringUtil.toURL(
 				StringUtil.combine(
 					"https://raw.githubusercontent.com/",
@@ -94,7 +94,7 @@ public class GitHubClient {
 
 	public GitHubPullRequest getGitHubPullRequest(GitHubIssue gitHubIssue) {
 		return new GitHubPullRequest(
-			new JSONObject(_requestGet(gitHubIssue.getPullRequestAPIURL())));
+			new JSONObject(requestGet(gitHubIssue.getPullRequestAPIURL())));
 	}
 
 	public GitHubRef getGitHubRef(URL gitHubRefURL) {
@@ -106,14 +106,10 @@ public class GitHubClient {
 				GitHubRef.getRefName(gitHubRefURL)));
 
 		return new GitHubRef(
-			gitHubRefURL, new JSONObject(_requestGet(gitHubRefAPIURL)));
+			gitHubRefURL, new JSONObject(requestGet(gitHubRefAPIURL)));
 	}
 
-	private String _getAuthorization() {
-		return StringUtil.combine("token ", _gitHubToken);
-	}
-
-	private String _requestGet(URL url) {
+	public String requestGet(URL url) {
 		String urlString = url.toString();
 
 		if (urlString.startsWith("https://raw.githubusercontent.com")) {
@@ -192,7 +188,7 @@ public class GitHubClient {
 		return retryable.executeWithRetries();
 	}
 
-	private String _requestPatch(URL url, JSONObject requestJSONObject) {
+	public String requestPatch(URL url, JSONObject requestJSONObject) {
 		String urlString = url.toString();
 
 		String gitHubURL = urlString.replaceAll(
@@ -237,7 +233,7 @@ public class GitHubClient {
 		return retryable.executeWithRetries();
 	}
 
-	private String _requestPost(URL url, JSONObject requestJSONObject) {
+	public String requestPost(URL url, JSONObject requestJSONObject) {
 		String urlString = url.toString();
 
 		String gitHubURL = urlString.replaceAll(
@@ -280,6 +276,10 @@ public class GitHubClient {
 		};
 
 		return retryable.executeWithRetries();
+	}
+
+	private String _getAuthorization() {
+		return StringUtil.combine("token ", _gitHubToken);
 	}
 
 	private static final Log _log = LogFactory.getLog(GitHubClient.class);

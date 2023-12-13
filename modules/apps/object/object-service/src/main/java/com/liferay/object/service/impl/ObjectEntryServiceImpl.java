@@ -69,6 +69,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Activate;
@@ -580,22 +581,16 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 			accountEntryRestrictedObjectField.getName());
 	}
 
-	private LocalDate _getStartDateInterval() {
-		if (_objectConfiguration.timeScale(
-			).equals(
-				"days"
-			)) {
-
-			return LocalDate.now(
+	private Date _getStartDate() {
+		return Date.from(
+			LocalDate.now(
 			).minusDays(
-				_objectConfiguration.duration()
-			);
-		}
-
-		return LocalDate.now(
-		).minusDays(
-			_objectConfiguration.duration() * 7
-		);
+				Objects.equals(_objectConfiguration.timeScale(), "days") ?
+					_objectConfiguration.duration() :
+						_objectConfiguration.duration() * 7
+			).atStartOfDay(
+				ZoneId.systemDefault()
+			).toInstant());
 	}
 
 	private void _validateSubmissionLimit(long objectDefinitionId, User user)
@@ -626,15 +621,9 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 				throw new RuntimeException(configurationException);
 			}
 
-			LocalDate beginningDate = _getStartDateInterval();
-
 			long count = objectEntryLocalService.getObjectEntriesCount(
 				user.getUserId(), objectDefinition,
-				ObjectEntryTable.INSTANCE.createDate.gte(
-					Date.from(
-						beginningDate.atStartOfDay(
-							ZoneId.systemDefault()
-						).toInstant())));
+				ObjectEntryTable.INSTANCE.createDate.gte(_getStartDate()));
 
 			long maximumNumberOfGuestUserObjectEntriesPerObjectDefinition =
 				_objectConfiguration.

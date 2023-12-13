@@ -1376,12 +1376,8 @@ definition {
 			ContentPerformance.openContentPerformance();
 		}
 
-		task ("Check that publication date is represented at graph") {
-			AssertVisible(locator1 = "ContentPerformance#DOT_GRAPH_TODAY_ZERO");
-		}
-
 		task ("Check that dates before publication date have no dots/0") {
-			for (var index : list "2,3,4,5,6,7") {
+			for (var index : list "1,2,3,4,5,6,7") {
 				AssertElementNotPresent(
 					key_index = ${index},
 					locator1 = "ContentPerformance#DOT_GRAPH_INDEX");

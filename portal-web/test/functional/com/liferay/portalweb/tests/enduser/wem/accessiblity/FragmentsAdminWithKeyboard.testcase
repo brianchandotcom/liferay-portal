@@ -97,7 +97,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-177722. Via Keyboard navigation is possible to access the edit mode of Information Template and the tooltip of the back button is 'Go to Templates'"
+	@description = "This is a use case for LPS-177682. Via Keyboard navigation is possible to access the edit mode of Information Template and the tooltip of the back button is 'Go to Templates'"
 	@priority = 2
 	test ViewBackButtonTooltipInFragmentsAdminViaKeyboard {
 		task ("Given access to the Fragments Admin page") {

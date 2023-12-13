@@ -91,12 +91,6 @@ public class FragmentCollectionFilterCategoryDisplayContext {
 			return _props;
 		}
 
-		String targetCollections =
-			(String)
-				_fragmentEntryConfigurationParser.getConfigurationFieldValue(
-					_fragmentEntryLink.getEditableValues(), "targetCollections",
-					FragmentConfigurationFieldDataType.STRING);
-
 		_props = HashMapBuilder.<String, Object>put(
 			"assetCategories",
 			() -> {
@@ -114,8 +108,6 @@ public class FragmentCollectionFilterCategoryDisplayContext {
 						"label",
 						assetCategory.getTitle(
 							_fragmentRendererContext.getLocale())
-					).put(
-						"targetCollections", targetCollections
 					).build());
 			}
 		).put(
@@ -127,6 +119,11 @@ public class FragmentCollectionFilterCategoryDisplayContext {
 			"showSearch", _isShowSearch()
 		).put(
 			"singleSelection", _isSingleSelection()
+		).put(
+			"targetCollections",
+			_fragmentEntryConfigurationParser.getConfigurationFieldValue(
+				_fragmentEntryLink.getEditableValues(), "targetCollections",
+				FragmentConfigurationFieldDataType.ARRAY)
 		).build();
 
 		return _props;

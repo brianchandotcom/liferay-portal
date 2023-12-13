@@ -68,11 +68,7 @@ export function setCollectionFilterValue(
 				continue;
 			}
 
-			const targetCollectionJSON = JSON.parse(targetCollection);
-
-			for (const targetCollectionValue of targetCollectionJSON) {
-				url.searchParams.delete('page_number_' + targetCollectionValue);
-			}
+			url.searchParams.delete('page_number_' + targetCollection);
 		}
 	}
 	window.location.href = url.toString();

@@ -19,6 +19,7 @@ export default function SelectCategory({
 	fragmentEntryLinkId,
 	showSearch,
 	singleSelection = false,
+	targetCollections,
 }) {
 	const [selectedCategoryIds, setSelectedCategoryIds] = useState(() => {
 		const value = getCollectionFilterValue('category', fragmentEntryLinkId);
@@ -112,15 +113,6 @@ export default function SelectCategory({
 				singleSelection ? null : (
 					<ClayButton
 						onClick={() => {
-							const targetCollections = assetCategories
-								.filter(({id}) =>
-									selectedCategoryIds.includes(id)
-								)
-								.map(
-									(assetCategories) =>
-										assetCategories.targetCollections
-								);
-
 							setCollectionFilterValue(
 								'category',
 								fragmentEntryLinkId,

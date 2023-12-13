@@ -18,24 +18,19 @@ const StatusColumn: React.FC<{queryClient: QueryClient; status: any}> = ({
 	const {setNodeRef} = useDroppable({id: status.key + '_droppable'});
 
 	return (
-		<div
-			className="status-col"
-			id={status.key + '_droppable'}
-			key={status.key + '_droppable'}
-			ref={setNodeRef}
-		>
-			<h6>{status.name}</h6>
+		<div className="status-col" ref={setNodeRef}>
+			<p className="font-weight-bold">{status.name}</p>
 
 			{status.relatedTickets?.length === 0 && (
 				<p>No tickets are available.</p>
 			)}
 
 			{status.relatedTickets?.length > 0 &&
-				status.relatedTickets.map((t: any) => (
+				status.relatedTickets.map((ticket: any) => (
 					<TicketPreview
-						key={t.id}
+						key={ticket.id}
 						queryClient={queryClient}
-						ticket={t}
+						ticket={ticket}
 					/>
 				))}
 		</div>

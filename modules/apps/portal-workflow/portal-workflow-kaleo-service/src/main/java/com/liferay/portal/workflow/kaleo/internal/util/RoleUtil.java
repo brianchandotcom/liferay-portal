@@ -12,6 +12,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.DuplicateRoleException;
 import com.liferay.portal.kernel.exception.NoSuchRoleException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -67,9 +68,24 @@ public class RoleUtil {
 				role = accountRole.getRole();
 			}
 			else {
-				role = roleLocalService.addRole(
-					serviceContext.getUserId(), null, 0, name, null,
-					descriptionMap, roleType, null, null);
+				try {
+					role = roleLocalService.addRole(
+						serviceContext.getUserId(), null, 0, name, null,
+						descriptionMap, roleType, null, null);
+				}
+				catch (SystemException systemException) {
+					role = roleLocalService.fetchRole(
+						serviceContext.getCompanyId(), name);
+
+					if (role == null) {
+						throw systemException;
+					}
+
+					if (role.getType() != roleType) {
+						throw new DuplicateRoleException(
+							"Role already exists with name " + name);
+					}
+				}
 			}
 		}
 		else if (role.getType() != roleType) {

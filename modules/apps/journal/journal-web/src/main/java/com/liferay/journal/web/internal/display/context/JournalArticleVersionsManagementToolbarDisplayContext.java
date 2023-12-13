@@ -39,6 +39,10 @@ public class JournalArticleVersionsManagementToolbarDisplayContext
 
 	@Override
 	public List<DropdownItem> getFilterDropdownItems() {
+		if (FeatureFlagManagerUtil.isEnabled("LPS-196768")) {
+			return super.getFilterDropdownItems();
+		}
+
 		return DropdownItemListBuilder.addGroup(
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(

@@ -210,97 +210,100 @@ public class MillerColumnsDisplayContext {
 				LayoutTypeControllerTracker.getLayoutTypeController(
 					layout.getType());
 
-			JSONObject layoutJSONObject = JSONUtil.put(
-				"active", _layoutsAdminDisplayContext.isActive(layout.getPlid())
-			).put(
-				"bulkActions",
-				StringUtil.merge(
-					_layoutsAdminDisplayContext.getAvailableActions(layout))
-			).put(
-				"description",
-				LanguageUtil.get(
-					_httpServletRequest,
-					ResourceBundleUtil.getBundle(
-						"content.Language", _themeDisplay.getLocale(),
-						layoutTypeController.getClass()),
-					"layout.types." + layout.getType())
-			).put(
-				"draggable", true
-			);
+			layoutsJSONArray.put(
+				JSONUtil.put(
+					"active",
+					_layoutsAdminDisplayContext.isActive(layout.getPlid())
+				).put(
+					"bulkActions",
+					StringUtil.merge(
+						_layoutsAdminDisplayContext.getAvailableActions(layout))
+				).put(
+					"description",
+					LanguageUtil.get(
+						_httpServletRequest,
+						ResourceBundleUtil.getBundle(
+							"content.Language", _themeDisplay.getLocale(),
+							layoutTypeController.getClass()),
+						"layout.types." + layout.getType())
+				).put(
+					"draggable", true
+				).put(
+					"hasChild",
+					() -> {
+						int childLayoutsCount =
+							LayoutServiceUtil.getLayoutsCount(
+								_layoutsAdminDisplayContext.getSelGroupId(),
+								layout.isPrivateLayout(), layout.getLayoutId());
 
-			int childLayoutsCount = LayoutServiceUtil.getLayoutsCount(
-				_layoutsAdminDisplayContext.getSelGroupId(),
-				layout.isPrivateLayout(), layout.getLayoutId());
-
-			layoutJSONObject.put(
-				"hasChild", childLayoutsCount > 0
-			).put(
-				"hasScopeGroup", _hasScopeGroup(layout)
-			).put(
-				"id", layout.getPlid()
-			).put(
-				"key", String.valueOf(layout.getPlid())
-			);
-
-			LayoutType layoutType = layout.getLayoutType();
-
-			layoutJSONObject.put(
-				"hasDuplicatedFriendlyURL",
-				() -> {
-					if (!FeatureFlagManagerUtil.isEnabled("LPS-174417")) {
-						return false;
+						return childLayoutsCount > 0;
 					}
+				).put(
+					"hasDuplicatedFriendlyURL",
+					() -> {
+						if (!FeatureFlagManagerUtil.isEnabled("LPS-174417")) {
+							return false;
+						}
 
-					List<Long> duplicatedFriendlyURLPlids =
-						_getDuplicatedFriendlyURLPlids();
+						List<Long> duplicatedFriendlyURLPlids =
+							_getDuplicatedFriendlyURLPlids();
 
-					return duplicatedFriendlyURLPlids.contains(
-						layout.getPlid());
-				}
-			).put(
-				"hasGuestViewPermission",
-				() -> {
-					Role role = RoleLocalServiceUtil.getRole(
-						layout.getCompanyId(), RoleConstants.GUEST);
+						return duplicatedFriendlyURLPlids.contains(
+							layout.getPlid());
+					}
+				).put(
+					"hasGuestViewPermission",
+					() -> {
+						Role role = RoleLocalServiceUtil.getRole(
+							layout.getCompanyId(), RoleConstants.GUEST);
 
-					return ResourcePermissionLocalServiceUtil.
-						hasResourcePermission(
-							layout.getCompanyId(), Layout.class.getName(),
-							ResourceConstants.SCOPE_INDIVIDUAL,
-							String.valueOf(layout.getPlid()), role.getRoleId(),
-							ActionKeys.VIEW);
-				}
-			).put(
-				"parentable", layoutType.isParentable()
-			).put(
-				"quickActions", _getQuickActionsJSONArray(layout)
-			).put(
-				"selectable", true
-			).put(
-				"states", _getLayoutStatesJSONArray(layout)
-			).put(
-				"target",
-				HtmlUtil.escape(layout.getTypeSettingsProperty("target"))
-			).put(
-				"title", layout.getName(_themeDisplay.getLocale())
-			).put(
-				"url",
-				PortletURLBuilder.create(
-					_layoutsAdminDisplayContext.getPortletURL()
-				).setParameter(
-					"layoutSetBranchId",
-					_layoutsAdminDisplayContext.getActiveLayoutSetBranchId()
-				).setParameter(
-					"privateLayout", layout.isPrivateLayout()
-				).setParameter(
-					"selPlid", layout.getPlid()
-				).buildString()
-			).put(
-				"viewUrl",
-				_layoutsAdminDisplayContext.getEditOrViewLayoutURL(layout)
-			);
+						return ResourcePermissionLocalServiceUtil.
+							hasResourcePermission(
+								layout.getCompanyId(), Layout.class.getName(),
+								ResourceConstants.SCOPE_INDIVIDUAL,
+								String.valueOf(layout.getPlid()),
+								role.getRoleId(), ActionKeys.VIEW);
+					}
+				).put(
+					"hasScopeGroup", _hasScopeGroup(layout)
+				).put(
+					"id", layout.getPlid()
+				).put(
+					"key", String.valueOf(layout.getPlid())
+				).put(
+					"parentable",
+					() -> {
+						LayoutType layoutType = layout.getLayoutType();
 
-			layoutsJSONArray.put(layoutJSONObject);
+						return layoutType.isParentable();
+					}
+				).put(
+					"quickActions", _getQuickActionsJSONArray(layout)
+				).put(
+					"selectable", true
+				).put(
+					"states", _getLayoutStatesJSONArray(layout)
+				).put(
+					"target",
+					HtmlUtil.escape(layout.getTypeSettingsProperty("target"))
+				).put(
+					"title", layout.getName(_themeDisplay.getLocale())
+				).put(
+					"url",
+					PortletURLBuilder.create(
+						_layoutsAdminDisplayContext.getPortletURL()
+					).setParameter(
+						"layoutSetBranchId",
+						_layoutsAdminDisplayContext.getActiveLayoutSetBranchId()
+					).setParameter(
+						"privateLayout", layout.isPrivateLayout()
+					).setParameter(
+						"selPlid", layout.getPlid()
+					).buildString()
+				).put(
+					"viewUrl",
+					_layoutsAdminDisplayContext.getEditOrViewLayoutURL(layout)
+				));
 		}
 
 		return layoutsJSONArray;

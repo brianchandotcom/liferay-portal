@@ -46,8 +46,15 @@ SitemapGroupConfigurationDisplayContext sitemapGroupConfigurationDisplayContext 
 		<clay:content-col
 			expand="<%= true %>"
 		>
+			<c:if test="<%= sitemapGroupConfigurationDisplayContext.isIncludePagesDisabled() %>">
+				<clay:alert
+					message="enabling-the-inclusion-of-page-urls-in-the-xml-sitemap-must-first-be-enabled-from-instance-settings"
+				/>
+			</c:if>
+
 			<clay:checkbox
 				checked="<%= sitemapGroupConfigurationDisplayContext.includePages() %>"
+				disabled="<%= sitemapGroupConfigurationDisplayContext.isIncludePagesDisabled() %>"
 				id='<%= liferayPortletResponse.getNamespace() + "includePages" %>'
 				label='<%= LanguageUtil.get(request, "include-page-urls-in-the-xml-sitemap") %>'
 				name='<%= liferayPortletResponse.getNamespace() + "includePages" %>'
@@ -76,8 +83,15 @@ SitemapGroupConfigurationDisplayContext sitemapGroupConfigurationDisplayContext 
 		<clay:content-col
 			expand="<%= true %>"
 		>
+			<c:if test="<%= sitemapGroupConfigurationDisplayContext.isIncludeWebContentDisabled() %>">
+				<clay:alert
+					message="enabling-the-inclusion-of-web-content-urls-in-the-xml-sitemap-must-first-be-enabled-from-instance-settings"
+				/>
+			</c:if>
+
 			<clay:checkbox
 				checked="<%= sitemapGroupConfigurationDisplayContext.includeWebContent() %>"
+				disabled="<%= sitemapGroupConfigurationDisplayContext.isIncludeWebContentDisabled() %>"
 				id='<%= liferayPortletResponse.getNamespace() + "includeWebContent" %>'
 				label='<%= LanguageUtil.get(request, "include-web-content-urls-in-the-xml-sitemap") %>'
 				name='<%= liferayPortletResponse.getNamespace() + "includeWebContent" %>'
@@ -106,8 +120,15 @@ SitemapGroupConfigurationDisplayContext sitemapGroupConfigurationDisplayContext 
 		<clay:content-col
 			expand="<%= true %>"
 		>
+			<c:if test="<%= sitemapGroupConfigurationDisplayContext.isIncludeCategoriesDisabled() %>">
+				<clay:alert
+					message="enabling-the-inclusion-of-category-urls-in-the-xml-sitemap-must-first-be-enabled-from-instance-settings"
+				/>
+			</c:if>
+
 			<clay:checkbox
 				checked="<%= sitemapGroupConfigurationDisplayContext.includeCategories() %>"
+				disabled="<%= sitemapGroupConfigurationDisplayContext.isIncludeCategoriesDisabled() %>"
 				id='<%= liferayPortletResponse.getNamespace() + "includeCategories" %>'
 				label='<%= LanguageUtil.get(request, "include-category-urls-in-the-xml-sitemap") %>'
 				name='<%= liferayPortletResponse.getNamespace() + "includeCategories" %>'

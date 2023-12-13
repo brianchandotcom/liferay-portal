@@ -37,6 +37,36 @@ public class SitemapGroupConfigurationDisplayContext {
 			_themeDisplay.getCompanyId(), _themeDisplay.getScopeGroupId());
 	}
 
+	public boolean isIncludeCategoriesDisabled() throws ConfigurationException {
+		if (_sitemapConfigurationManager.includeCategoriesCompanyEnabled(
+				_themeDisplay.getCompanyId())) {
+
+			return false;
+		}
+
+		return true;
+	}
+
+	public boolean isIncludePagesDisabled() throws ConfigurationException {
+		if (_sitemapConfigurationManager.includePagesCompanyEnabled(
+				_themeDisplay.getCompanyId())) {
+
+			return false;
+		}
+
+		return true;
+	}
+
+	public boolean isIncludeWebContentDisabled() throws ConfigurationException {
+		if (_sitemapConfigurationManager.includeWebContentCompanyEnabled(
+				_themeDisplay.getCompanyId())) {
+
+			return false;
+		}
+
+		return true;
+	}
+
 	private final SitemapConfigurationManager _sitemapConfigurationManager;
 	private final ThemeDisplay _themeDisplay;
 

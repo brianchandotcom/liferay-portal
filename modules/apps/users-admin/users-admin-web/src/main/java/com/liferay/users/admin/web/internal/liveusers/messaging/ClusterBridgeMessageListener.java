@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.kernel.cluster.messaging;
+package com.liferay.users.admin.web.internal.liveusers.messaging;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.cluster.Address;
@@ -13,16 +13,20 @@ import com.liferay.portal.kernel.cluster.Priority;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
+import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.messaging.MessageListener;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Shuyang Zhou
  */
+@Component(
+	property = "destination.name=" + DestinationNames.LIVE_USERS,
+	service = MessageListener.class
+)
 public class ClusterBridgeMessageListener extends BaseMessageListener {
-
-	public void setPriority(Priority priority) {
-		_priority = priority;
-	}
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
@@ -37,7 +41,7 @@ public class ClusterBridgeMessageListener extends BaseMessageListener {
 				_log.info("Bridging cluster link multicast message " + message);
 			}
 
-			ClusterLinkUtil.sendMulticastMessage(message, _priority);
+			ClusterLinkUtil.sendMulticastMessage(message, Priority.LEVEL5);
 		}
 		else {
 			if (_log.isInfoEnabled()) {
@@ -47,13 +51,12 @@ public class ClusterBridgeMessageListener extends BaseMessageListener {
 						" to ", address));
 			}
 
-			ClusterLinkUtil.sendUnicastMessage(address, message, _priority);
+			ClusterLinkUtil.sendUnicastMessage(
+				address, message, Priority.LEVEL5);
 		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ClusterBridgeMessageListener.class);
-
-	private Priority _priority;
 
 }

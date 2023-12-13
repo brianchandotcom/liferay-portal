@@ -181,6 +181,14 @@
 					],
 					"description": "Description for customElement"
 				},
+				"editorConfigContributor": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/propertySets/properties/url"
+						}
+					],
+					"description": "Description for editorConfigContributor"
+				},
 				"fdsCellRenderer": {
 					"allOf": [
 						{
@@ -427,6 +435,14 @@
 					}
 				},
 				{
+					"$ref": "#/definitions/types/properties/editorConfigContributor",
+					"properties": {
+						"type": {
+							"const": "editorConfigContributor"
+						}
+					}
+				},
+				{
 					"$ref": "#/definitions/types/properties/fdsCellRenderer",
 					"properties": {
 						"type": {
@@ -590,6 +606,7 @@
 					"enum": [
 						"batch",
 						"customElement",
+						"editorConfigContributor",
 						"fdsCellRenderer",
 						"fdsFilter",
 						"globalCSS",

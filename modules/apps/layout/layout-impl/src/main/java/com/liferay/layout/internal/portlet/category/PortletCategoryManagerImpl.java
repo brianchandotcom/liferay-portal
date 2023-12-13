@@ -6,10 +6,12 @@
 package com.liferay.layout.internal.portlet.category;
 
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
+import com.liferay.layout.portlet.PortletManager;
 import com.liferay.layout.portlet.category.PortletCategoryManager;
 import com.liferay.layout.util.PortalPreferencesUtil;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -65,7 +67,10 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -137,6 +142,17 @@ public class PortletCategoryManagerImpl implements PortletCategoryManager {
 			portalPreferences,
 			ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
 			"sortedPortletCategoryKeys", sortedPortletCategoryKeys);
+	}
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, PortletManager.class, "javax.portlet.name");
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerMap.close();
 	}
 
 	private Set<String> _getHighlightedPortletIds(
@@ -437,6 +453,13 @@ public class PortletCategoryManagerImpl implements PortletCategoryManager {
 			return false;
 		}
 
+		PortletManager portletManager = _serviceTrackerMap.getService(
+			portlet.getRootPortletId());
+
+		if ((portletManager != null) && !portletManager.isVisble(layout)) {
+			return false;
+		}
+
 		if ((layout.isTypeAssetDisplay() || layout.isTypeContent()) &&
 			ArrayUtil.contains(
 				_UNSUPPORTED_PORTLETS_NAMES, portlet.getPortletName())) {
@@ -480,5 +503,7 @@ public class PortletCategoryManagerImpl implements PortletCategoryManager {
 
 	@Reference
 	private PortletPreferencesFactory _portletPreferencesFactory;
+
+	private ServiceTrackerMap<String, PortletManager> _serviceTrackerMap;
 
 }

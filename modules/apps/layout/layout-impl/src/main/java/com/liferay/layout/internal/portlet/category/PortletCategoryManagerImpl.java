@@ -467,17 +467,8 @@ public class PortletCategoryManagerImpl implements PortletCategoryManager {
 			return false;
 		}
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-153839") &&
-			Objects.equals(portlet.getPortletId(), _PORTLET_ID)) {
-
-			return false;
-		}
-
 		return true;
 	}
-
-	private static final String _PORTLET_ID =
-		"com_liferay_portal_search_web_date_facet_portlet_DateFacetPortlet";
 
 	private static final String[] _UNSUPPORTED_PORTLETS_NAMES = {
 		PortletKeys.NESTED_PORTLETS

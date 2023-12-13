@@ -2666,34 +2666,30 @@ public class DLFileEntryLocalServiceImpl
 					WorkflowConstants.STATUS_ANY);
 
 				for (DLFileVersion fileVersion : fileVersions) {
-					if (fileVersion.isExpired()) {
-						continue;
-					}
-
 					_expireFileVersion(
-						userId, fileEntry, fileVersion, workflowContext,
-						serviceContext);
+						userId, fileEntry, fileVersion,
+						fileVersion.getFileVersionId() ==
+							latestFileVersion.getFileVersionId(),
+						workflowContext, serviceContext);
 				}
 			}
 			else {
-				if (latestFileVersion.isExpired()) {
-					continue;
-				}
-
 				_expireFileVersion(
-					userId, fileEntry, latestFileVersion, workflowContext,
+					userId, fileEntry, latestFileVersion, true, workflowContext,
 					serviceContext);
 			}
-
-			_notify(userId, _EMAIL_TYPE_EXPIRED, latestFileVersion);
 		}
 	}
 
 	private void _expireFileVersion(
 			long userId, DLFileEntry fileEntry, DLFileVersion fileVersion,
-			Map<String, Serializable> workflowContext,
+			boolean notify, Map<String, Serializable> workflowContext,
 			ServiceContext serviceContext)
 		throws PortalException {
+
+		if (fileVersion.isExpired()) {
+			return;
+		}
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
@@ -2706,6 +2702,10 @@ public class DLFileEntryLocalServiceImpl
 		updateStatus(
 			userId, fileEntry, fileVersion, WorkflowConstants.STATUS_EXPIRED,
 			serviceContext, workflowContext);
+
+		if (notify) {
+			_notify(userId, _EMAIL_TYPE_EXPIRED, fileVersion);
+		}
 	}
 
 	private long _getActiveCompanyAdminUserId(long companyId)

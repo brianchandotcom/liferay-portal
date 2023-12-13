@@ -37,18 +37,12 @@ public class ClassicEditorConfigContributor
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
 		jsonObject.put(
-			"disableNativeSpellChecker", false
-		).put(
-			"extraPlugins", "scayt"
-		).put(
 			"toolbar_liferay",
 			JSONUtil.putAll(
 				toJSONArray("['Undo', 'Redo']"),
 				toJSONArray("['Styles', 'Bold', 'Italic', 'Underline']"),
 				toJSONArray("['NumberedList', 'BulletedList']"),
-				toJSONArray("['Link', Unlink]"), toJSONArray("['Table']"),
-				toJSONArray("['Scayt']"))
-		);
+				toJSONArray("['Link', Unlink]"), toJSONArray("['Table']")));
 	}
 
 }

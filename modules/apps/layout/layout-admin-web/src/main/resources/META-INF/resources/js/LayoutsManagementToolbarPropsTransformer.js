@@ -7,7 +7,9 @@ import {
 	addParams,
 	navigate,
 	openConfirmModal,
+	openModal,
 	openSelectionModal,
+	sub,
 } from 'frontend-js-web';
 
 import openDeleteLayoutModal from './openDeleteLayoutModal';
@@ -55,6 +57,40 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 			)
 		).map(({value}) => value);
 
+		if (keys.length > itemData.maxItemsToShowInfoMessage) {
+			openModal({
+				bodyHTML: sub(
+					Liferay.Language.get(
+						'you-have-selected-more-than-x-x-info-message'
+					),
+					itemData.maxItemsToShowInfoMessage,
+					Liferay.Language.get('pages')
+				),
+				buttons: [
+					{
+						displayType: 'secondary',
+						label: Liferay.Language.get('cancel'),
+						type: 'cancel',
+					},
+					{
+						label: Liferay.Language.get('continue'),
+						onClick: ({processClose}) => {
+							processClose();
+							openChangePermissionsSelectionModal(itemData, keys);
+						},
+						type: 'button',
+					},
+				],
+				status: 'info',
+				title: Liferay.Language.get('bulk-action-performance'),
+			});
+		}
+		else {
+			openChangePermissionsSelectionModal(itemData, keys);
+		}
+	};
+
+	const openChangePermissionsSelectionModal = (itemData, keys) => {
 		const url = new URL(itemData?.changePermissionsURL);
 
 		openSelectionModal({

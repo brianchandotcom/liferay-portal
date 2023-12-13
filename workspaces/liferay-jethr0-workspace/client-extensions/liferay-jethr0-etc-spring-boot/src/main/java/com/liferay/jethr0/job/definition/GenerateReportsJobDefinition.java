@@ -8,6 +8,7 @@ package com.liferay.jethr0.job.definition;
 import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.job.definition.parameter.JenkinsBranchURLJobParameterDefinition;
 import com.liferay.jethr0.job.definition.parameter.JobParameterDefinition;
+import com.liferay.jethr0.job.definition.parameter.ReportNamesJobParameterDefinition;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -23,6 +24,7 @@ public class GenerateReportsJobDefinition extends BaseJobDefinition {
 
 		jobParameterDefinitions.add(
 			new JenkinsBranchURLJobParameterDefinition());
+		jobParameterDefinitions.add(new ReportNamesJobParameterDefinition());
 
 		return jobParameterDefinitions;
 	}

@@ -24,8 +24,8 @@ definition {
 
 	@description = "This is a test for LPS-177721. Using Keyboard Navigation it is possible to access the back button of Style Books view and edit mode and the tooltip is Go to Style Books."
 	@priority = 3
-	test ViewBackButtonTooltipInStyleBooksAdminViaKeyboard {
-		task ("Given the Style Books edit mode page") {
+	test ViewBackButtonTooltipInStyleBookEditorViaKeyboard {
+		task ("Given access to the style book editor") {
 			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-name");
 
 			StyleBooksAdmin.addStyleBooks(styleBookName = "Test Style Book Name");

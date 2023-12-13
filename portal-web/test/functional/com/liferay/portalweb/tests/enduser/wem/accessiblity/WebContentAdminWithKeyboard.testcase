@@ -124,7 +124,7 @@ definition {
 
 		task ("The user can reverse sort direction via the keyboard") {
 			KeyPress(
-				locator1 = "ManagementBar#FILTER_AND_ORDER",
+				locator1 = "ManagementBar#FILTER",
 				value1 = "\TAB");
 
 			AssertElementFocused(locator1 = "ManagementBar#ORDER_ICON_GENERIC");
@@ -144,7 +144,7 @@ definition {
 				value1 = "APAC Guild");
 
 			KeyPress(
-				locator1 = "ManagementBar#FILTER_AND_ORDER",
+				locator1 = "ManagementBar#FILTER",
 				value1 = "\TAB");
 
 			AssertElementFocused(locator1 = "ManagementBar#ORDER_ICON_GENERIC");

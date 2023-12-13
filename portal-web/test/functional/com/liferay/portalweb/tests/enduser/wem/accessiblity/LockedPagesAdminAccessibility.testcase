@@ -53,7 +53,7 @@ definition {
 		task ("Then the filter and order should have correct accessibility") {
 			AssertAccessible();
 
-			Click.waitForMenuToggleJSClick(locator1 = "ManagementBar#FILTER_AND_ORDER");
+			Click.waitForMenuToggleJSClick(locator1 = "ManagementBar#FILTER");
 
 			AssertElementAccessible(locator1 = "//div[contains(@class,'show') and contains(@class,'dropdown')]//li[contains(@class,'dropdown-subheader')][normalize-space()='Filter by Type']");
 

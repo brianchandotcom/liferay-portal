@@ -1436,7 +1436,9 @@ definition {
 	macro viewActiveActionsManagementToolbar(title = null) {
 		AssertElementNotPresent(locator1 = "Checkbox#LEXICON_SELECT_ALL_CONTAINER_DISABLED");
 
-		AssertElementNotPresent(locator1 = "ManagementBar#FILTER_AND_ORDER_DISABLED");
+		AssertElementNotPresent(locator1 = "ManagementBar#FILTER_DISABLED");
+
+		AssertElementNotPresent(locator1 = "ManagementBar#ORDER_DISABLED");
 
 		AssertElementNotPresent(locator1 = "ManagementBar#ORDER_ICON_GENERIC_BUTTON_DISABLED");
 
@@ -1444,7 +1446,7 @@ definition {
 
 		AssertVisible(locator1 = "Checkbox#LEXICON_SELECT_ALL_CONTAINER");
 
-		AssertVisible(locator1 = "ManagementBar#FILTER_AND_ORDER");
+		AssertVisible(locator1 = "ManagementBar#FILTER");
 
 		AssertVisible(locator1 = "ManagementBar#ORDER_ICON_GENERIC_BUTTON");
 

@@ -38,23 +38,31 @@ definition {
 	@summary = "Default summary"
 	macro setFilterAndOrder(orderBy = null, filterBy = null) {
 		if (isSet(filterBy)) {
-			var menuItem = ${filterBy};
+			Click.pauseClickAt(locator1 = "ManagementBar#FILTER");
+
+			if (isSet(active)) {
+				AssertElementPresent(
+					key_item = ${filterBy},
+					locator1 = "ManagementBar#ACTIVE_DROPDOWN_ITEM");
+			}
+
+			WaitForLiferayEvent.initializeLiferayEventLog();
+
+			MenuItem.click(menuItem = ${filterBy});
 		}
 		else if (isSet(orderBy)) {
-			var menuItem = ${orderBy};
+			Click.pauseClickAt(locator1 = "ManagementBar#ORDER");
+
+			if (isSet(active)) {
+				AssertElementPresent(
+					key_item = ${orderBy},
+					locator1 = "ManagementBar#ACTIVE_DROPDOWN_ITEM");
+			}
+
+			WaitForLiferayEvent.initializeLiferayEventLog();
+
+			MenuItem.click(menuItem = ${orderBy});
 		}
-
-		Click.pauseClickAt(locator1 = "ManagementBar#FILTER_AND_ORDER");
-
-		if (isSet(active)) {
-			AssertElementPresent(
-				key_item = ${filterBy},
-				locator1 = "ManagementBar#ACTIVE_DROPDOWN_ITEM");
-		}
-
-		WaitForLiferayEvent.initializeLiferayEventLog();
-
-		MenuItem.click(menuItem = ${menuItem});
 	}
 
 	@summary = "Default summary"
@@ -93,12 +101,12 @@ definition {
 				key_order = ${order},
 				locator1 = "ManagementBar#ORDER_ICON_SPECIFIC");
 
-			MouseOver(locator1 = "ManagementBar#FILTER_AND_ORDER");
+			MouseOver(locator1 = "ManagementBar#FILTER");
 		}
 		else {
 			Click.clickNoMouseOver(locator1 = "ManagementBar#ORDER_ICON_GENERIC");
 
-			MouseOver(locator1 = "ManagementBar#FILTER_AND_ORDER");
+			MouseOver(locator1 = "ManagementBar#FILTER");
 		}
 	}
 
@@ -113,7 +121,7 @@ definition {
 
 	@summary = "Default summary"
 	macro viewFilterAndOrder(menuItem = null) {
-		Click(locator1 = "ManagementBar#FILTER_AND_ORDER");
+		Click(locator1 = "ManagementBar#FILTER");
 
 		AssertElementPresent(
 			key_menuItem = ${menuItem},
@@ -122,7 +130,7 @@ definition {
 
 	@summary = "Default summary"
 	macro viewFilterAndOrderItem(menuItem = null) {
-		Click(locator1 = "ManagementBar#FILTER_AND_ORDER");
+		Click(locator1 = "ManagementBar#FILTER");
 
 		AssertElementPresent(
 			key_menuItem = ${menuItem},
@@ -131,7 +139,7 @@ definition {
 
 	@summary = "Default summary"
 	macro viewFilterAndOrderNoItem(menuItem = null) {
-		Click(locator1 = "ManagementBar#FILTER_AND_ORDER");
+		Click(locator1 = "ManagementBar#FILTER");
 
 		AssertElementNotPresent(
 			key_menuItem = ${menuItem},
@@ -140,7 +148,7 @@ definition {
 
 	@summary = "Default summary"
 	macro viewFilterAndOrderSelectedItem(menuItem = null) {
-		Click(locator1 = "ManagementBar#FILTER_AND_ORDER");
+		Click(locator1 = "ManagementBar#FILTER");
 
 		AssertElementPresent(
 			key_menuItem = ${menuItem},
@@ -167,7 +175,7 @@ definition {
 
 	@summary = "Default summary"
 	macro viewNoSubheaderInFilterAndOrder(subheaderItem = null) {
-		Click(locator1 = "ManagementBar#FILTER_AND_ORDER");
+		Click(locator1 = "ManagementBar#FILTER");
 
 		AssertElementNotPresent(
 			key_subheaderItem = ${subheaderItem},

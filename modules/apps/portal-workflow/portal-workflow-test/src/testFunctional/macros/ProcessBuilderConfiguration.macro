@@ -2,7 +2,7 @@ definition {
 
 	@summary = "Default summary"
 	macro chooseSortOption(key_menuItem = null) {
-		Click(locator1 = "ManagementBar#FILTER_AND_ORDER");
+		Click(locator1 = "ManagementBar#FILTER");
 
 		Click(
 			key_menuItem = ${key_menuItem},

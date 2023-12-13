@@ -418,7 +418,7 @@ definition {
 				locator1 = "Search#SEARCH_INFO",
 				value1 = "2 Results Found for \"Guild\"");
 
-			Click(locator1 = "ManagementBar#FILTER_AND_ORDER");
+			Click(locator1 = "ManagementBar#FILTER");
 
 			AssertVisible(
 				key_menuItem = "Title",

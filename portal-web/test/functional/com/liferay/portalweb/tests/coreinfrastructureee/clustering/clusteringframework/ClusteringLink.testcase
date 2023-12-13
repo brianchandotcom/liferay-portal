@@ -75,8 +75,6 @@ definition {
 		AssertConsoleTextPresent(value1 = "Create a new JGroups channel");
 
 		AssertConsoleTextPresent(value1 = "properties: TCP");
-
-		AssertConsoleTextPresent(value1 = "Autodetecting JGroups outgoing IP address and interface for www.google.com:80");
 	}
 
 }

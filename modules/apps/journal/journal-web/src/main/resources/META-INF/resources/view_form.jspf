@@ -45,18 +45,22 @@
 							</div>
 						</c:if>
 
-						<div class="d-inline-flex form-group">
-							<button class="btn btn-secondary btn-sm form-control-select">
-								<%= journalDisplayContext.getSearchInLabel() %>
-							</button>
-						</div>
+						<c:if test='<%= !FeatureFlagManagerUtil.isEnabled("LPS-196768") || (FeatureFlagManagerUtil.isEnabled("LPS-196768") && journalDisplayContext.isSearch()) %>'>
+							<div class="d-inline-flex form-group">
+								<button class="btn btn-secondary btn-sm form-control-select">
+									<%= journalDisplayContext.getSearchInLabel() %>
+								</button>
+							</div>
+						</c:if>
 					</div>
 				</div>
 
-				<react:component
-					module="js/SearchOptions"
-					props="<%= journalDisplayContext.getSearchProps() %>"
-				/>
+				<c:if test='<%= !FeatureFlagManagerUtil.isEnabled("LPS-196768") || (FeatureFlagManagerUtil.isEnabled("LPS-196768") && journalDisplayContext.isSearch()) %>'>
+					<react:component
+						module="js/SearchOptions"
+						props="<%= journalDisplayContext.getSearchProps() %>"
+					/>
+				</c:if>
 			</div>
 
 			<c:choose>

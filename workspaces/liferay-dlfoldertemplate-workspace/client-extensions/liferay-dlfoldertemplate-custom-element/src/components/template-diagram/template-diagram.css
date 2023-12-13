@@ -1,0 +1,40 @@
+.digram-container {
+	position: relative;
+	height: 500px;
+	width: 100%;
+}
+.digram-container .root {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: sans-serif;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	left: 0;
+}
+.designer {
+	width: 100vw;
+	height: 100vh;
+}
+
+[data-n-id] rect {
+	fill: white !important;
+}
+:host ::ng-deep [data-n-id] rect {
+	filter: drop-shadow(4px 4px 1px #ffca2761);
+}
+[data-n-id] text {
+	fill: black;
+	width: 200px; /* Set your desired width */
+	word-wrap: break-word; /* or overflow-wrap: break-word; */
+	white-space: pre-wrap;
+}
+
+:host ::ng-deep .boc-toolbar-container {
+	top: 10% !important;
+	bottom: unset !important;
+}

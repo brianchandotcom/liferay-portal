@@ -12,6 +12,14 @@ import org.json.JSONObject;
  */
 public class GenerateCISystemHistoryReportJobEntity extends BaseJobEntity {
 
+	public String getSlaveLabel() {
+		return getParameterValue("slaveLabel");
+	}
+
+	public void setSlaveLabel(String slaveLabel) {
+		setParameterValue("slaveLabel", slaveLabel);
+	}
+
 	protected GenerateCISystemHistoryReportJobEntity(JSONObject jsonObject) {
 		super(jsonObject);
 	}

@@ -1801,7 +1801,7 @@ definition {
 		}
 
 		task ("Reverse Sort Direction in Documents and Media") {
-			Click(locator1 = "ManagementBar#ORDER_ICON_GENERIC");
+			ManagementBar.sortAssets(sortDirection = "Ascending");
 		}
 
 		task ("Assert the order of documents in Documents and Media") {

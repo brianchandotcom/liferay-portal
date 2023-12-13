@@ -699,7 +699,7 @@ definition {
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Submissions");
 
-		Click(locator1 = "ManagementBar#ORDER_ICON_GENERIC");
+		ManagementBar.sortAssets(sortDirection = "Descending");
 
 		AssertElementPresent(
 			key_order = 2,
@@ -711,7 +711,7 @@ definition {
 			key_title = "Blogs Entry Title 1",
 			locator1 = "WorkflowSubmissionsTask#TABLE_ORDER_SUBMISSIONS");
 
-		Click(locator1 = "ManagementBar#ORDER_ICON_GENERIC");
+		ManagementBar.sortAssets(sortDirection = "Ascending");
 
 		AssertElementPresent(
 			key_order = 3,

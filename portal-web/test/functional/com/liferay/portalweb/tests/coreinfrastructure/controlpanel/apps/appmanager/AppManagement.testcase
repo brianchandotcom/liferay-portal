@@ -62,7 +62,7 @@ definition {
 			locator1 = "ContentRow#ENTRY_CONTENT_PARTIAL_TEXt",
 			value1 = "Independent");
 
-		ManagementBar.toggleViewOrder(order = "up");
+		ManagementBar.sortAssets(sortDirection = "Ascending");
 
 		ManagementBar.setFilterAndOrder(filterBy = "Communication");
 
@@ -71,7 +71,7 @@ definition {
 			locator1 = "ContentRow#ENTRY_CONTENT_PARTIAL_TEXt",
 			value1 = "Wiki");
 
-		ManagementBar.toggleViewOrder(order = "down");
+		ManagementBar.sortAssets(sortDirection = "Descending");
 
 		ManagementBar.setFilterAndOrder(filterBy = "Utility");
 

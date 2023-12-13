@@ -588,7 +588,7 @@ definition {
 
 		ManagementBar.setFilterAndOrder(orderBy = "Title");
 
-		Click(locator1 = "ManagementBar#ORDER_ICON_GENERIC");
+		ManagementBar.sortAssets(sortDirection = "Descending");
 
 		AssertElementPresent(
 			key_itemName = "User",

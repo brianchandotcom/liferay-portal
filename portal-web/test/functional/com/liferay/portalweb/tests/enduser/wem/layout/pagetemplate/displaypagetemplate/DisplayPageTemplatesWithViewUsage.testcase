@@ -557,7 +557,7 @@ definition {
 				var index = ${index} + 1;
 			}
 
-			Click(locator1 = "ManagementBar#ORDER_ICON_GENERIC");
+			ManagementBar.sortAssets(sortDirection = "Descending");
 
 			var index = 1;
 

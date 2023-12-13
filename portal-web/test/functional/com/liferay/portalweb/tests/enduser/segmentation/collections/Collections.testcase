@@ -3776,7 +3776,7 @@ definition {
 		}
 
 		task ("Sort segments") {
-			ManagementBar.toggleViewOrder(order = "up");
+			ManagementBar.sortAssets(sortDirection = "Ascending");
 
 			AssertTextEquals.assertPartialText(
 				index = 1,

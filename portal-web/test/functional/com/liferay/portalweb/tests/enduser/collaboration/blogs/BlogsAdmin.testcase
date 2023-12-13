@@ -65,7 +65,7 @@ definition {
 
 		ManagementBar.setFilterAndOrder(menuItem = "Display Date");
 
-		Click(locator1 = "ManagementBar#ORDER_ICON_GENERIC");
+		ManagementBar.sortAssets(sortDirection = "Descending");
 
 		Blogs.viewEntryTitle(
 			entryTitle = "Test Title",

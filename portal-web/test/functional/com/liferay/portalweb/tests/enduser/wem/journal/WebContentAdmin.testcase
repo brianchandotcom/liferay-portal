@@ -162,7 +162,7 @@ definition {
 		}
 
 		task ("Then the possibility of changing the order must be disabled") {
-			AssertElementNotPresent(locator1 = "ManagementBar#ORDER_ICON_GENERIC");
+			AssertElementNotPresent(locator1 = "ManagementBar#ORDER");
 		}
 	}
 
@@ -400,7 +400,7 @@ definition {
 		}
 
 		task ("When reverse sort direction") {
-			Click(locator1 = "ManagementBar#ORDER_ICON_GENERIC");
+			ManagementBar.sortAssets(sortDirection = "Ascending");
 		}
 
 		task ("Then the order of web content is reversed") {

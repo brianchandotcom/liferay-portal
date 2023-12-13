@@ -25,10 +25,53 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alejandro Tardín
+ * @author Roberto Díaz
  */
 @Component(service = AssetDisplayPageEntryFormProcessor.class)
 public class AssetDisplayPageFormProcessorImpl
 	implements AssetDisplayPageEntryFormProcessor {
+
+	@Override
+	public void process(
+			long userId, long groupId, String className, long classPK,
+			int displayPageType, String layoutUuid, long assetDisplayPageId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		long classNameId = _portal.getClassNameId(className);
+
+		AssetDisplayPageEntry assetDisplayPageEntry =
+			_assetDisplayPageEntryLocalService.fetchAssetDisplayPageEntry(
+				groupId, classNameId, classPK);
+
+		if ((displayPageType == AssetDisplayPageConstants.TYPE_DEFAULT) ||
+			((displayPageType == AssetDisplayPageConstants.TYPE_SPECIFIC) &&
+			 Validator.isNotNull(layoutUuid))) {
+
+			if (assetDisplayPageEntry != null) {
+				_assetDisplayPageEntryLocalService.deleteAssetDisplayPageEntry(
+					groupId, classNameId, classPK);
+			}
+
+			return;
+		}
+
+		if (displayPageType == AssetDisplayPageConstants.TYPE_NONE) {
+			assetDisplayPageId = 0;
+		}
+
+		if (assetDisplayPageEntry == null) {
+			_assetDisplayPageEntryLocalService.addAssetDisplayPageEntry(
+				userId, groupId, classNameId, classPK, assetDisplayPageId,
+				displayPageType, serviceContext);
+
+			return;
+		}
+
+		_assetDisplayPageEntryLocalService.updateAssetDisplayPageEntry(
+			assetDisplayPageEntry.getAssetDisplayPageEntryId(),
+			assetDisplayPageId, displayPageType);
+	}
 
 	@Override
 	public void process(
@@ -38,29 +81,11 @@ public class AssetDisplayPageFormProcessorImpl
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long classNameId = _portal.getClassNameId(className);
-
-		AssetDisplayPageEntry assetDisplayPageEntry =
-			_assetDisplayPageEntryLocalService.fetchAssetDisplayPageEntry(
-				themeDisplay.getScopeGroupId(), classNameId, classPK);
-
 		int displayPageType = ParamUtil.getInteger(
 			portletRequest, "displayPageType",
 			AssetDisplayPageConstants.TYPE_DEFAULT);
 
 		String layoutUuid = ParamUtil.getString(portletRequest, "layoutUuid");
-
-		if ((displayPageType == AssetDisplayPageConstants.TYPE_DEFAULT) ||
-			((displayPageType == AssetDisplayPageConstants.TYPE_SPECIFIC) &&
-			 Validator.isNotNull(layoutUuid))) {
-
-			if (assetDisplayPageEntry != null) {
-				_assetDisplayPageEntryLocalService.deleteAssetDisplayPageEntry(
-					themeDisplay.getScopeGroupId(), classNameId, classPK);
-			}
-
-			return;
-		}
 
 		long assetDisplayPageId = ParamUtil.getLong(
 			portletRequest, "assetDisplayPageId");
@@ -69,21 +94,37 @@ public class AssetDisplayPageFormProcessorImpl
 			assetDisplayPageId = 0;
 		}
 
-		if (assetDisplayPageEntry == null) {
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				portletRequest);
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			portletRequest);
 
-			_assetDisplayPageEntryLocalService.addAssetDisplayPageEntry(
-				themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),
-				classNameId, classPK, assetDisplayPageId, displayPageType,
-				serviceContext);
+		process(
+			themeDisplay.getUserId(), themeDisplay.getScopeGroupId(), className,
+			classPK, displayPageType, layoutUuid, assetDisplayPageId,
+			serviceContext);
+	}
 
-			return;
+	@Override
+	public void process(
+			String className, long classPK, ServiceContext serviceContext)
+		throws PortalException {
+
+		int displayPageType = ParamUtil.getInteger(
+			serviceContext, "displayPageType",
+			AssetDisplayPageConstants.TYPE_DEFAULT);
+
+		String layoutUuid = ParamUtil.getString(serviceContext, "layoutUuid");
+
+		long assetDisplayPageId = ParamUtil.getLong(
+			serviceContext, "assetDisplayPageId");
+
+		if (displayPageType == AssetDisplayPageConstants.TYPE_NONE) {
+			assetDisplayPageId = 0;
 		}
 
-		_assetDisplayPageEntryLocalService.updateAssetDisplayPageEntry(
-			assetDisplayPageEntry.getAssetDisplayPageEntryId(),
-			assetDisplayPageId, displayPageType);
+		process(
+			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+			className, classPK, displayPageType, layoutUuid, assetDisplayPageId,
+			serviceContext);
 	}
 
 	@Reference

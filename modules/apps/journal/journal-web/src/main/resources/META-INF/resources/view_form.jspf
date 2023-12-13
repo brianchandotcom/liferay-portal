@@ -18,7 +18,7 @@
 	<aui:input name="newFolderId" type="hidden" />
 
 	<c:choose>
-		<c:when test="<%= !journalDisplayContext.isSearch() %>">
+		<c:when test="<%= !journalDisplayContext.isSearch() && !journalDisplayContext.isFilterApplied() %>">
 			<liferay-util:include page="/view_entries.jsp" servletContext="<%= application %>" />
 		</c:when>
 		<c:otherwise>

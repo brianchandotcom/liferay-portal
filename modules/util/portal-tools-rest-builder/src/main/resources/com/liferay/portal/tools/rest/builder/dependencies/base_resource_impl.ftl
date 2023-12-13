@@ -22,7 +22,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.Resource;
 import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -1332,7 +1331,7 @@ public abstract class Base${schemaName}ResourceImpl
 		}
 	</#if>
 
-	protected Map<String, String> addAction(String actionName, GroupedModel groupedModel, String methodName) {
+	protected Map<String, String> addAction(String actionName, com.liferay.portal.kernel.model.GroupedModel groupedModel, String methodName) {
 		return ActionUtil.addAction(actionName, getClass(), groupedModel, methodName, contextScopeChecker, contextUriInfo);
 	}
 

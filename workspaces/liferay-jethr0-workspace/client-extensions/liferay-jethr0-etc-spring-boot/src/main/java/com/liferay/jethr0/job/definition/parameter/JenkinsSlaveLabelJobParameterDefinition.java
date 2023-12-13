@@ -8,21 +8,21 @@ package com.liferay.jethr0.job.definition.parameter;
 /**
  * @author Michael Hashimoto
  */
-public class SlaveLabelJobParameterDefinition
+public class JenkinsSlaveLabelJobParameterDefinition
 	extends BaseJobParameterDefinition {
 
-	public SlaveLabelJobParameterDefinition(String valueDefault) {
+	public JenkinsSlaveLabelJobParameterDefinition(String valueDefault) {
 		_valueDefault = valueDefault;
 	}
 
 	@Override
 	public String getKey() {
-		return "slaveLabel";
+		return "jenkinsSlaveLabel";
 	}
 
 	@Override
 	public String getLabel() {
-		return "Slave Label";
+		return "Jenkins Slave Label";
 	}
 
 	@Override

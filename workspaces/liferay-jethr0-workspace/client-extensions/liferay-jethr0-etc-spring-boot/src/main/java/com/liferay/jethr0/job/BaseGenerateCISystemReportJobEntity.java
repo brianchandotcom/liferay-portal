@@ -15,12 +15,12 @@ import org.json.JSONObject;
 public abstract class BaseGenerateCISystemReportJobEntity
 	extends BaseJobEntity {
 
-	public String getSlaveLabel() {
-		return getParameterValue("slaveLabel");
+	public String getJenkinsSlaveLabel() {
+		return getParameterValue("jenkinsSlaveLabel");
 	}
 
-	public void setSlaveLabel(String slaveLabel) {
-		setParameterValue("slaveLabel", slaveLabel);
+	public void setJenkinsSlaveLabel(String slaveLabel) {
+		setParameterValue("jenkinsSlaveLabel", slaveLabel);
 	}
 
 	protected BaseGenerateCISystemReportJobEntity(JSONObject jsonObject) {
@@ -32,7 +32,7 @@ public abstract class BaseGenerateCISystemReportJobEntity
 		Map<String, String> initialBuildParameters =
 			super.getInitialBuildParameters();
 
-		initialBuildParameters.put("SLAVE_LABEL", getSlaveLabel());
+		initialBuildParameters.put("SLAVE_LABEL", getJenkinsSlaveLabel());
 
 		return initialBuildParameters;
 	}

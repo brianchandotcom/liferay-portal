@@ -5,6 +5,10 @@
 
 package com.liferay.jethr0.job;
 
+import java.net.URL;
+
+import java.util.Map;
+
 import org.json.JSONObject;
 
 /**
@@ -12,8 +16,45 @@ import org.json.JSONObject;
  */
 public class GenerateTestDurationMetricsJobEntity extends BaseJobEntity {
 
+	public String getBatchNames() {
+		return getParameterValue("batchNames");
+	}
+
+	public URL getJenkinsBuildURL() {
+		return getParameterValueURL("jenkinsBuildURL");
+	}
+
+	public String getJenkinsSlaveLabel() {
+		return getParameterValue("jenkinsSlaveLabel");
+	}
+
+	public void setBatchNames(String batchNames) {
+		setParameterValue("batchNames", batchNames);
+	}
+
+	public void setJenkinsBuildURL(URL jenkinsBuildURL) {
+		setParameterValueURL("jenkinsBuildURL", jenkinsBuildURL);
+	}
+
+	public void setJenkinsSlaveLabel(String slaveLabel) {
+		setParameterValue("jenkinsSlaveLabel", slaveLabel);
+	}
+
 	protected GenerateTestDurationMetricsJobEntity(JSONObject jsonObject) {
 		super(jsonObject);
+	}
+
+	@Override
+	protected Map<String, String> getInitialBuildParameters() {
+		Map<String, String> initialBuildParameters =
+			super.getInitialBuildParameters();
+
+		initialBuildParameters.put("BATCH_NAMES", getBatchNames());
+		initialBuildParameters.put(
+			"BUILD_URL", String.valueOf(getJenkinsBuildURL()));
+		initialBuildParameters.put("SLAVE_LABEL", getJenkinsSlaveLabel());
+
+		return initialBuildParameters;
 	}
 
 	@Override

@@ -18,6 +18,7 @@ Export-Package:\
 	com.liferay.layout.list.retriever,\
 	com.liferay.layout.manager,\
 	com.liferay.layout.model,\
+	com.liferay.layout.portlet,\
 	com.liferay.layout.portlet.category,\
 	com.liferay.layout.portlet.preferences.updater,\
 	com.liferay.layout.provider,\

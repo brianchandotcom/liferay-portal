@@ -311,8 +311,8 @@ public class AMImageScalerRegistryImplTest {
 
 		Dictionary<String, Object> properties = new Hashtable<>();
 
-		properties.put("service.ranking", serviceRanking);
 		properties.put("mimeTypes", mimeType);
+		properties.put("service.ranking", serviceRanking);
 
 		return bundleContext.registerService(
 			AMImageScaler.class, amImageScaler, properties);

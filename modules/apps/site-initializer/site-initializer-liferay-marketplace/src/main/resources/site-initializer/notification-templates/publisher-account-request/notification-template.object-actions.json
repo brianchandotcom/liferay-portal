@@ -1,0 +1,17 @@
+[
+	{
+		"active": true,
+		"externalReferenceCode": "MKT-PUBLISHER-ACCOUNT-REQUEST-TRIAL-EMAIL",
+		"label": {
+			"en_US": "Publisher Account RequestEmail Template"
+		},
+		"name": "PublisherAccountRequestEmailMarketPlace",
+		"objectActionExecutorKey": "notification",
+		"objectActionTriggerKey": "onAfterAdd",
+		"objectDefinitionId": "[$OBJECT_DEFINITION_ID:RequestPublisherAccount$]",
+		"parameters": {
+			"notificationTemplateExternalReferenceCode": "MARKETPLACE-ACTION-PUBLISHER-ACCOUNT-REQUEST-EMAIL-TEMPLATE",
+			"type": "email"
+		}
+	}
+]

@@ -24,13 +24,11 @@ class TicketWebComponent extends HTMLElement {
 									<h6 className="text-uppercase">Site</h6>
 									<ul>
 										<li>
-											<a href="/#/dashboard">
-											Dashboard
-											</a>
+											<a href="/#/dashboard">Dashboard</a>
 										</li>
 										<li>
 											<a href="/#/ticketapp">
-											Tickets App
+												Tickets App
 											</a>
 										</li>
 									</ul>

@@ -252,7 +252,7 @@ definition {
 	@priority = 5
 	test RendersIndependentFilterAndOrderButtons {
 		task ("Then 'filter' and 'order' button is not rendered together") {
-			AssertElementNotPresent(locator1 = "ManagementBar#FILTER_AND_ORDER");
+			AssertElementNotPresent(locator1 = "ManagementBar#FILTER");
 		}
 
 		task ("Then 'filter' button is an independent dropdown") {

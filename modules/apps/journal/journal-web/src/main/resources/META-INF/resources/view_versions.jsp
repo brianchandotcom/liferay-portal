@@ -87,7 +87,7 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 				/>
 
 				<liferay-ui:search-container-column-text
-					cssClass="table-cell-expand"
+					cssClass="font-weight-semi-bold table-cell-expand"
 					name="title"
 					value="<%= HtmlUtil.escape(articleVersion.getTitle(locale)) %>"
 				/>

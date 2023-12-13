@@ -1049,16 +1049,7 @@ public class JournalDisplayContext {
 		).put(
 			"searchResultsOptions", _getSearchResultsOptionsJSONArray()
 		).put(
-			"searchURL",
-			PortletURLBuilder.createRenderURL(
-				_liferayPortletResponse
-			).setKeywords(
-				getKeywords()
-			).setParameter(
-				"folderId", getFolderId()
-			).setParameter(
-				"status", getStatus()
-			).buildString()
+			"searchURL", String.valueOf(_getBasePortletURL(getTab()))
 		).build();
 	}
 

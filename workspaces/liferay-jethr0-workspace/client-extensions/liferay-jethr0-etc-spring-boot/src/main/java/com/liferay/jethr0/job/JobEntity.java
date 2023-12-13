@@ -167,6 +167,15 @@ public interface JobEntity extends Entity {
 	public enum Type {
 
 		DEFAULT("default", "Default"),
+		GENERATE_CI_SYSTEM_HISTORY_REPORT(
+			"generateCISystemHistoryReport",
+			"Generate CI System History Report"),
+		GENERATE_CI_SYSTEM_STATUE_REPORT(
+			"generateCISystemStatusReport", "Generate CI System Status Report"),
+		GENERATE_REPORTS("generateReports", "Generate Reports"),
+		GENERATE_TEST_DURATION_METRICS(
+			"generateTestDurationMetrics", "Generate Test Duration Metrics"),
+		GENERATE_TESTRAY_CSV("generateTestrayCSV", "Generate Testray CSV"),
 		PORTAL_APP_RELEASE("portalAppRelease", "Portal App Release"),
 		PORTAL_FIXPACK_RELEASE(
 			"portalFixpackRelease", "Portal Fixpack Release"),

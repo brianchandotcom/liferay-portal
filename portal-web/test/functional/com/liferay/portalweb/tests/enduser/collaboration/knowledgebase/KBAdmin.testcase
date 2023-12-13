@@ -278,8 +278,8 @@ definition {
 
 		KBAdmin.viewEntryInTableView(
 			kbEntryTitle = "KB Folder",
-			tableColumnContents = "KB Folder,,1,1,--,Seconds Ago, ",
-			tableColumnNames = "title,status,num-of-kb-folders,num-of-kb-articles,views,modified-date");
+			tableColumnContents = "KB Folder,,1,1,--,Seconds Ago,--",
+			tableColumnNames = "title,status,num-of-kb-folders,num-of-kb-articles,views,modified-date,status");
 	}
 
 	@description = "This test covers LPS-171314. It ensures that the expiration label is displayed when the Notification Date is reached."

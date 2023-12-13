@@ -364,6 +364,40 @@ public class JournalManagementToolbarDisplayContext
 			}
 		).addGroup(
 			() ->
+				_journalDisplayContext.isIndexAllArticleVersions() &&
+				FeatureFlagManagerUtil.isEnabled("LPS-196768"),
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						dropdownItem -> {
+							dropdownItem.setActive(
+								Objects.equals(
+									_journalDisplayContext.getType(),
+									"web-content"));
+							dropdownItem.setHref(
+								getPortletURL(), "type", "web-content");
+							dropdownItem.setLabel(
+								LanguageUtil.get(
+									httpServletRequest, "web-content"));
+						}
+					).add(
+						dropdownItem -> {
+							dropdownItem.setActive(
+								Objects.equals(
+									_journalDisplayContext.getType(),
+									"versions"));
+							dropdownItem.setHref(
+								getPortletURL(), "type", "versions");
+							dropdownItem.setLabel(
+								LanguageUtil.get(
+									httpServletRequest, "versions"));
+						}
+					).build());
+				dropdownGroupItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "filter-by-type"));
+			}
+		).addGroup(
+			() ->
 				!_journalDisplayContext.isNavigationRecent() &&
 				!FeatureFlagManagerUtil.isEnabled("LPS-144527"),
 			dropdownGroupItem -> {

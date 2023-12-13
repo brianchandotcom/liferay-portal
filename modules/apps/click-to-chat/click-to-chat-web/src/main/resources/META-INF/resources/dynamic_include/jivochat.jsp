@@ -7,15 +7,15 @@
 
 <%@ include file="/dynamic_include/init.jsp" %>
 
-<script async src="//code.jivosite.com/widget/<%= clickToChatChatProviderAccountId %>"></script>
+<aui:script async="<%= true %>" src='<%= "//code.jivosite.com/widget/" + clickToChatChatProviderAccountId %>'></aui:script>
 
 <c:if test="<%= themeDisplay.isSignedIn() %>">
-	<script>
+	<aui:script>
 		function jivo_onOpen() {
 			jivo_api.setContactInfo({
 				email: '<%= user.getEmailAddress() %>',
 				name: '<%= user.getScreenName() %>',
 			});
 		}
-	</script>
+	</aui:script>
 </c:if>

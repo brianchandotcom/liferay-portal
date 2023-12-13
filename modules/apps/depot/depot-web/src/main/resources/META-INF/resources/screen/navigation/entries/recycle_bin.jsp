@@ -31,7 +31,7 @@ int trashEntriesMaxAge = PropertiesParamUtil.getInteger(typeSettingsUnicodePrope
 		</aui:input>
 	</div>
 
-	<script>
+	<aui:script>
 		var trashEnabledCheckbox = document.getElementById(
 			'<portlet:namespace />trashEnabled'
 		);
@@ -78,5 +78,5 @@ int trashEntriesMaxAge = PropertiesParamUtil.getInteger(typeSettingsUnicodePrope
 				}
 			});
 		}
-	</script>
+	</aui:script>
 </liferay-frontend:fieldset>

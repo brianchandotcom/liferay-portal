@@ -114,7 +114,7 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 	</c:if>
 </div>
 
-<script type="text/javascript">
+<aui:script type="text/javascript">
 	CKEDITOR.ADDITIONAL_RESOURCE_PARAMS = {
 		languageId: themeDisplay.getLanguageId(),
 	};
@@ -123,7 +123,7 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 
 	CKEDITOR.dtd.$removeEmpty.i = 0;
 	CKEDITOR.dtd.$removeEmpty.span = 0;
-</script>
+</aui:script>
 
 <%
 name = HtmlUtil.escapeJS(name);

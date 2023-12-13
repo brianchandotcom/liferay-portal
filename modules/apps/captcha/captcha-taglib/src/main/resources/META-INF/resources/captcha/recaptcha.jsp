@@ -12,7 +12,7 @@ String errorMessage = (String)request.getAttribute("liferay-captcha:captcha:erro
 %>
 
 <c:if test="<%= captchaEnabled %>">
-	<script src="<%= HtmlUtil.escapeAttribute(captchaConfiguration.reCaptchaScriptURL()) %>?hl=<%= HtmlUtil.escapeAttribute(locale.getLanguage()) %>" type="text/javascript"></script>
+	<aui:script src='<%= HtmlUtil.escapeAttribute(captchaConfiguration.reCaptchaScriptURL()) + "?hl=" + HtmlUtil.escapeAttribute(locale.getLanguage()) %>' type="text/javascript"></aui:script>
 
 	<div class="g-recaptcha" data-sitekey="<%= HtmlUtil.escapeAttribute(captchaConfiguration.reCaptchaPublicKey()) %>"></div>
 

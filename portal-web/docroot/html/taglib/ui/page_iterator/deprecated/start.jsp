@@ -296,7 +296,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 	</div>
 </c:if>
 
-<script>
+<aui:script>
 	function <portlet:namespace />submitForm(curParam, cur) {
 		var data = {};
 
@@ -309,7 +309,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 			}
 		);
 	}
-</script>
+</aui:script>
 
 <%!
 private String _getHREF(String formName, String curParam, int cur, String jsCall, String url, String urlAnchor) throws Exception {

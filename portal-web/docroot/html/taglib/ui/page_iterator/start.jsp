@@ -115,7 +115,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 				</ul>
 			</div>
 
-			<script data-senna-track="temporary" type="text/javascript">
+			<aui:script senna="temporary" type="text/javascript">
 				(function() {
 					var dropdown = document.getElementById("<%= ariaPagination %>");
 
@@ -188,7 +188,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 
 					Liferay.once('beforeScreenFlip', destroyDropDownPagination);
 				})();
-			</script>
+			</aui:script>
 		</c:if>
 
 		<p aria-hidden="true" class="pagination-results" data-aria-hidden="true" id="<%= ariaPaginationResults %>">
@@ -474,7 +474,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 	</aui:script>
 </c:if>
 
-<script>
+<aui:script>
 	function <portlet:namespace />submitForm(curParam, cur) {
 		var data = {};
 
@@ -487,7 +487,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 			}
 		);
 	}
-</script>
+</aui:script>
 
 <%!
 private String _getHREF(String formName, String curParam, int cur, String jsCall, String url, String urlAnchor) throws Exception {

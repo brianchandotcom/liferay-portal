@@ -15,7 +15,7 @@
 	<aui:input checked="<%= assetPublisherDisplayContext.isSelectionStyleManual() %>" id="selectionStyleManual" label="manual" name="preferences--selectionStyle--" onChange='<%= liferayPortletResponse.getNamespace() + "chooseSelectionStyle();" %>' type="radio" value="<%= AssetPublisherSelectionStyleConstants.TYPE_MANUAL %>" />
 </aui:fieldset>
 
-<script>
+<aui:script>
 	function <portlet:namespace />chooseSelectionStyle() {
 		Liferay.Util.postForm(document.<portlet:namespace />fm, {
 			data: {
@@ -23,4 +23,4 @@
 			},
 		});
 	}
-</script>
+</aui:script>

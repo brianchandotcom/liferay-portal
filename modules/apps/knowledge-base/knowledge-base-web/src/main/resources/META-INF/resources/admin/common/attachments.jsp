@@ -103,7 +103,7 @@ if (kbArticle != null) {
 	});
 </aui:script>
 
-<script>
+<aui:script>
 	window['<portlet:namespace />deleteFileEntry'] = function (fileEntryId) {
 		var removeFileEntryIdsInput = document.getElementById(
 			'<portlet:namespace />removeFileEntryIds'
@@ -127,4 +127,4 @@ if (kbArticle != null) {
 			fileEntryIdWrapper.style.display = 'none';
 		}
 	};
-</script>
+</aui:script>

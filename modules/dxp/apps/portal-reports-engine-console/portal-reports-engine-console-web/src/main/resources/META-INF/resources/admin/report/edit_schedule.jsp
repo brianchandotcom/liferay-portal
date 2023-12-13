@@ -113,7 +113,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "new-report-entry"));
 											<aui:option label="end-date" value="endDate" />
 										</aui:select>
 
-										<script type="text/javascript">
+										<aui:script type="text/javascript">
 											function useVariable<%= keyJSId %>() {
 												const type = document.getElementById(
 													'<%= liferayPortletResponse.getNamespace() %>useVariable<%= HtmlUtil.escapeJS(key) %>'
@@ -147,7 +147,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "new-report-entry"));
 													year.disabled = false;
 												}
 											}
-										</script>
+										</aui:script>
 									</clay:col>
 
 									<clay:col

@@ -188,7 +188,7 @@ if (layout != null) {
 
 </aui:script>
 
-<script type="text/javascript">
+<aui:script type="text/javascript">
 	// <![CDATA[
 
 		<%
@@ -199,7 +199,7 @@ if (layout != null) {
 		Liferay.currentURLEncoded = '<%= HtmlUtil.escapeJS(URLCodec.encodeURL(currentURL)) %>';
 
 	// ]]>
-</script>
+</aui:script>
 
 <c:if test="<%= layout != null %>">
 
@@ -223,7 +223,7 @@ if (layout != null) {
 	UnicodeProperties layoutTypeSettingsUnicodeProperties = layout.getTypeSettingsProperties();
 	%>
 
-	<script type="text/javascript">
+	<aui:script type="text/javascript">
 		// <![CDATA[
 			<c:if test="<%= !layout.isTypeControlPanel() %>">
 				<%= GetterUtil.getString(layoutSetSettingsUnicodeProperties.getProperty("javascript")) %>
@@ -233,5 +233,5 @@ if (layout != null) {
 				<%= GetterUtil.getString(layoutTypeSettingsUnicodeProperties.getProperty("javascript")) %>
 			</c:if>
 		// ]]>
-	</script>
+	</aui:script>
 </c:if>

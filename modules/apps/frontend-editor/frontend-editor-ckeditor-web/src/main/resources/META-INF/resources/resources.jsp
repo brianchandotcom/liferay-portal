@@ -26,15 +26,15 @@ String inlineEditSaveURL = GetterUtil.getString((String)request.getAttribute(CKE
 	long javaScriptLastModified = PortalWebResourcesUtil.getLastModified(PortalWebResourceConstants.RESOURCE_TYPE_EDITOR_CKEDITOR);
 	%>
 
-	<script data-senna-track="temporary" src="<%= HtmlUtil.escapeAttribute(PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNHost() + PortalWebResourcesUtil.getContextPath(PortalWebResourceConstants.RESOURCE_TYPE_EDITOR_CKEDITOR) + "/ckeditor/ckeditor.js", javaScriptLastModified)) %>" type="text/javascript"></script>
+	<aui:script senna="temporary" src='<%= HtmlUtil.escapeAttribute(PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNHost() + PortalWebResourcesUtil.getContextPath(PortalWebResourceConstants.RESOURCE_TYPE_EDITOR_CKEDITOR) + "/ckeditor/ckeditor.js", javaScriptLastModified)) %>' type="text/javascript"></aui:script>
 
 	<c:if test="<%= inlineEdit && Validator.isNotNull(inlineEditSaveURL) %>">
-		<script data-senna-track="temporary" src="<%= HtmlUtil.escapeAttribute(PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNHost() + PortalWebResourcesUtil.getContextPath(PortalWebResourceConstants.RESOURCE_TYPE_EDITOR_CKEDITOR) + "/ckeditor/main.js", javaScriptLastModified)) %>" type="text/javascript"></script>
+		<aui:script senna="temporary" src='<%= HtmlUtil.escapeAttribute(PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNHost() + PortalWebResourcesUtil.getContextPath(PortalWebResourceConstants.RESOURCE_TYPE_EDITOR_CKEDITOR) + "/ckeditor/main.js", javaScriptLastModified)) %>' type="text/javascript"></aui:script>
 	</c:if>
 
 	<liferay-util:dynamic-include key='<%= "com.liferay.frontend.editor.ckeditor.web#" + editorName + "#additionalResources" %>' />
 
-	<script data-senna-track="temporary" type="text/javascript">
+	<aui:script senna="temporary" type="text/javascript">
 		CKEDITOR.scriptLoader.loadScripts = function (scripts, success, failure) {
 			CKEDITOR.scriptLoader.load(scripts, success, failure);
 		};
@@ -82,5 +82,5 @@ String inlineEditSaveURL = GetterUtil.getString((String)request.getAttribute(CKE
 		};
 
 		Liferay.on('beforeScreenFlip', destroyGlobalCkEditor);
-	</script>
+	</aui:script>
 </liferay-util:html-top>

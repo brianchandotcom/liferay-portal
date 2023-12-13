@@ -94,7 +94,7 @@ boolean nodeInGroup = false;
 				</c:otherwise>
 			</c:choose>
 
-			<script>
+			<aui:script>
 				var nodeIdSelect = document.getElementById('<portlet:namespace />nodeId');
 				var pageSelectorContainer = document.getElementById(
 					'<portlet:namespace />pageSelectorContainer'
@@ -126,7 +126,7 @@ boolean nodeInGroup = false;
 						}
 					});
 				}
-			</script>
+			</aui:script>
 		</liferay-frontend:fieldset>
 	</liferay-frontend:edit-form-body>
 

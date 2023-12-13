@@ -26,7 +26,7 @@
 	</li>
 </ul>
 
-<script>
+<aui:script>
 	<portlet:renderURL var="scheduledEventsURL">
 		<portlet:param name="mvcRenderCommandName" value="/export_import/publish_layouts" />
 		<portlet:param name="closeRedirect" value="<%= closeRedirect %>" />
@@ -144,4 +144,4 @@
 			},
 		});
 	}
-</script>
+</aui:script>

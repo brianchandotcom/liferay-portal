@@ -21,7 +21,7 @@
 	</div>
 </div>
 
-<script>
+<aui:script>
 	let enablePrivateLayoutsElement = document.getElementById(
 		'<portlet:namespace />enablePrivateLayouts'
 	);
@@ -64,4 +64,4 @@
 			enablePublicLayoutsAutoCreateElement.removeAttribute('disabled');
 		}
 	}
-</script>
+</aui:script>

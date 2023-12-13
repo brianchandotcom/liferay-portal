@@ -324,23 +324,23 @@ public class AssetCategoriesSearchFacetDisplayContextBuilder
 
 			String assetVocabularyTitle = assetVocabulary.getTitle(_locale);
 
-			List<BucketDisplayContext> bucketDisplayContextList =
+			List<BucketDisplayContext> curBucketDisplayContexts =
 				bucketDisplayContextsMap.get(assetVocabularyTitle);
 
-			if (bucketDisplayContextList == null) {
-				bucketDisplayContextList = new ArrayList<>();
+			if (curBucketDisplayContexts == null) {
+				curBucketDisplayContexts = new ArrayList<>();
 			}
 
-			bucketDisplayContextList.add(bucketDisplayContext);
+			curBucketDisplayContexts.add(bucketDisplayContext);
 
 			if (_order != null) {
-				bucketDisplayContextList.sort(
+				curBucketDisplayContexts.sort(
 					BucketDisplayContextComparatorFactoryUtil.
 						getBucketDisplayContextComparator(_order));
 			}
 
 			bucketDisplayContextsMap.put(
-				assetVocabularyTitle, bucketDisplayContextList);
+				assetVocabularyTitle, curBucketDisplayContexts);
 		}
 
 		return bucketDisplayContextsMap;

@@ -3,11 +3,14 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Option, Picker} from '@clayui/core';
-import {ClayInput} from '@clayui/form';
+import ClayButton from '@clayui/button';
+import {ClayCheckbox, ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import ClayModal, {useModal} from '@clayui/modal';
+import ClayTable from '@clayui/table';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import getCN from 'classnames';
+import {ManagementToolbar} from 'frontend-js-components-web';
 import React, {useState} from 'react';
 
 const CONTENT_TYPES = [
@@ -37,90 +40,239 @@ const CONTENT_TYPES = [
 	},
 ];
 
-export default function ContentTypeInput({onBlur, onChange, touched, value}) {
-	const [activeDropdown, setActiveDropdown] = useState(false);
+function ContentTypeModal({
+	initialSelectedTypes = [],
+	observer,
+	onClose,
+	onChange,
+	onBlur,
+}) {
+	const [selectedTypes, setSelectedTypes] = useState(initialSelectedTypes);
 
-	const _handleActiveDropdownChange = (newValue) => {
-		if (!newValue) {
-			onBlur();
-		}
+	const contentTypesClassNames = CONTENT_TYPES.map(
+		({className}) => className
+	);
 
-		setActiveDropdown(newValue);
+	const _handleCancel = () => {
+		onClose();
+		onBlur();
 	};
 
-	const _handleInputChange = (event) => {
+	const _handleDone = () => {
+		onChange(selectedTypes.toString());
 
-		// To use validation from 'required' field, keep the onChange and value
-		// properties but make its behavior resemble readOnly (input can only be
-		// changed with the selector modal).
-
-		event.preventDefault();
+		_handleCancel();
 	};
 
-	const Trigger = React.forwardRef(({children, ...otherProps}, ref) => (
-		<ClayInput
-			className="form-control-select"
-			onChange={_handleInputChange}
-			placeholder={Liferay.Util.sub(
-				Liferay.Language.get('select-x'),
-				Liferay.Language.get('content-type')
-			)}
-			ref={ref}
-			required
-			style={{
-				caretColor: 'transparent',
-				cursor: 'pointer',
-			}}
-			value={value && children}
-			{...otherProps}
-			tabIndex={0}
-			type="text"
-		/>
-	));
+	const _handleRowCheck = (type) => () => {
+		setSelectedTypes(
+			selectedTypes.includes(type)
+				? selectedTypes.filter((item) => item !== type)
+				: [...selectedTypes, type]
+		);
+	};
 
 	return (
-		<ClayInput.GroupItem
-			className={getCN({
-				'has-error': !value && touched,
-			})}
-		>
-			<label>
-				{Liferay.Language.get('content-type')}
+		<ClayModal className="modal-height-xl" observer={observer} size="lg">
+			<ClayModal.Header>
+				{Liferay.Language.get('select-types')}
+			</ClayModal.Header>
 
-				<span className="reference-mark">
-					<ClayIcon symbol="asterisk" />
-				</span>
+			<ManagementToolbar.Container
+				className={!!selectedTypes.length && 'management-bar-primary'}
+			>
+				<div className="navbar-form navbar-form-autofit navbar-overlay">
+					<ManagementToolbar.ItemList>
+						<ManagementToolbar.Item>
+							<ClayCheckbox
+								checked={!!selectedTypes.length}
+								indeterminate={
+									!!selectedTypes.length &&
+									selectedTypes.length !==
+										CONTENT_TYPES.length
+								}
+								onChange={() =>
+									setSelectedTypes(
+										!selectedTypes.length
+											? contentTypesClassNames
+											: []
+									)
+								}
+							/>
+						</ManagementToolbar.Item>
 
-				<ClayTooltipProvider>
-					<span
-						className="c-ml-2"
-						data-tooltip-align="top"
-						title={Liferay.Language.get('content-type-help')}
-					>
-						<ClayIcon symbol="question-circle-full" />
+						<ManagementToolbar.Item>
+							{selectedTypes.length ? (
+								<>
+									<span className="component-text">
+										{Liferay.Util.sub(
+											Liferay.Language.get(
+												'x-of-x-selected'
+											),
+											selectedTypes.length,
+											CONTENT_TYPES.length
+										)}
+									</span>
+
+									{selectedTypes.length <
+										CONTENT_TYPES.length && (
+										<ClayButton
+											displayType="link"
+											onClick={() => {
+												setSelectedTypes(
+													contentTypesClassNames
+												);
+											}}
+											size="sm"
+										>
+											{Liferay.Language.get('select-all')}
+										</ClayButton>
+									)}
+								</>
+							) : (
+								<span className="component-text">
+									{Liferay.Language.get('select-all')}
+								</span>
+							)}
+						</ManagementToolbar.Item>
+					</ManagementToolbar.ItemList>
+				</div>
+			</ManagementToolbar.Container>
+
+			<ClayModal.Body scrollable>
+				<ClayTable>
+					<ClayTable.Body>
+						{CONTENT_TYPES.map(({className, displayName}) => {
+							const isSelected = selectedTypes.includes(
+								className
+							);
+
+							return (
+								<ClayTable.Row
+									active={isSelected}
+									key={className}
+									onClick={_handleRowCheck(className)}
+								>
+									<ClayTable.Cell>
+										<ClayCheckbox
+											aria-label={Liferay.Util.sub(
+												Liferay.Language.get(
+													'select-x'
+												),
+												[displayName]
+											)}
+											checked={isSelected}
+											onChange={_handleRowCheck(
+												className
+											)}
+										/>
+									</ClayTable.Cell>
+
+									<ClayTable.Cell expanded headingTitle>
+										{displayName}
+									</ClayTable.Cell>
+								</ClayTable.Row>
+							);
+						})}
+					</ClayTable.Body>
+				</ClayTable>
+			</ClayModal.Body>
+
+			<ClayModal.Footer
+				last={
+					<ClayButton.Group spaced>
+						<ClayButton
+							displayType="secondary"
+							onClick={_handleCancel}
+						>
+							{Liferay.Language.get('cancel')}
+						</ClayButton>
+
+						<ClayButton
+							disabled={!selectedTypes.length}
+							onClick={_handleDone}
+						>
+							{Liferay.Language.get('done')}
+						</ClayButton>
+					</ClayButton.Group>
+				}
+			/>
+		</ClayModal>
+	);
+}
+
+export default function ContentTypeInput({onBlur, onChange, touched, value}) {
+	const {observer, onOpenChange, open} = useModal();
+
+	const _getSelectedTypes = (items) => (items === '' ? [] : items.split(','));
+
+	const _handleClose = () => {
+		onOpenChange(false);
+	};
+
+	const _handleOpen = () => {
+		onOpenChange(true);
+
+		onBlur();
+	};
+
+	return (
+		<>
+			{open && (
+				<ContentTypeModal
+					initialSelectedTypes={_getSelectedTypes(value)}
+					observer={observer}
+					onChange={onChange}
+					onClose={_handleClose}
+				/>
+			)}
+
+			<ClayInput.GroupItem
+				className={getCN({
+					'has-error': !value && touched,
+				})}
+			>
+				<label>
+					{Liferay.Language.get('content-type')}
+
+					<span className="reference-mark">
+						<ClayIcon symbol="asterisk" />
 					</span>
-				</ClayTooltipProvider>
-			</label>
 
-			<ClayInput.Group>
+					<ClayTooltipProvider>
+						<span
+							className="c-ml-2"
+							data-tooltip-align="top"
+							title={Liferay.Language.get('content-type-help')}
+						>
+							<ClayIcon symbol="question-circle-full" />
+						</span>
+					</ClayTooltipProvider>
+				</label>
+
 				<ClayInput.Group>
-					<Picker
-						active={activeDropdown}
-						aria-labelledby={Liferay.Language.get('content-type')}
-						as={Trigger}
-						items={CONTENT_TYPES}
-						onActiveChange={_handleActiveDropdownChange}
-						onSelectionChange={onChange}
-						selectedKey={value}
+					<ClayButton
+						displayType="secondary"
+						onClick={_handleOpen}
+						size="sm"
 					>
-						{(item) => (
-							<Option key={item.className}>
-								{item.displayName}
-							</Option>
-						)}
-					</Picker>
+						{!value
+							? Liferay.Language.get('select')
+							: _getSelectedTypes(value).length ===
+							  CONTENT_TYPES.length
+							? Liferay.Util.sub(
+									Liferay.Language.get('all-x-selected'),
+									_getSelectedTypes(value).length,
+									CONTENT_TYPES.length
+							  )
+							: Liferay.Util.sub(
+									Liferay.Language.get('x-of-x-selected'),
+									_getSelectedTypes(value).length,
+									CONTENT_TYPES.length
+							  )}
+					</ClayButton>
 				</ClayInput.Group>
-			</ClayInput.Group>
-		</ClayInput.GroupItem>
+			</ClayInput.GroupItem>
+		</>
 	);
 }

@@ -68,11 +68,11 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 											HashMapBuilder.<String, Object>put(
 												"defaultLanguageId", journalEditArticleDisplayContext.getDefaultArticleLanguageId()
 											).put(
+												"fields", journalEditArticleDisplayContext.getFieldMap()
+											).put(
 												"locales", journalEditArticleDisplayContext.getLocales()
 											).put(
 												"selectedLanguageId", journalEditArticleDisplayContext.getSelectedLanguageId()
-											).put(
-												"translations", journalEditArticleDisplayContext.getFieldMap()
 											).build()
 										%>'
 									/>

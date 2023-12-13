@@ -200,19 +200,7 @@ public class BatchEngineBundleTrackerTest {
 			Thread.sleep(2000);
 
 			Assert.assertEquals(
-				processedDataFileNames.toString(), expectedDataFileNames.length,
-				processedDataFileNames.size());
-			Assert.assertTrue(
-				StringBundler.concat(
-					"Expected ", expectedDataFileNames.length, " was ",
-					processedDataFileNames.size()),
-				expectedDataFileNames.length == processedDataFileNames.size());
-
-			List<String> expectedDataFileNamesList = Arrays.asList(
-				expectedDataFileNames);
-
-			Assert.assertEquals(
-				expectedDataFileNamesList, processedDataFileNames);
+				Arrays.asList(expectedDataFileNames), processedDataFileNames);
 
 			bundle.stop();
 

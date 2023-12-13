@@ -158,13 +158,6 @@ public class PicklistObjectFieldBusinessType
 			List<ObjectFieldSetting> objectFieldSettings)
 		throws PortalException {
 
-		if (oldObjectField != null) {
-			_objectStateFlowLocalService.updateDefaultObjectStateFlow(
-				newObjectField, oldObjectField);
-
-			return;
-		}
-
 		for (ObjectFieldSetting objectFieldSetting : objectFieldSettings) {
 			if (!StringUtil.equals(
 					objectFieldSetting.getName(),
@@ -174,12 +167,29 @@ public class PicklistObjectFieldBusinessType
 				continue;
 			}
 
-			ObjectStateFlow objectStateFlow =
+			ObjectStateFlow newObjectStateFlow =
 				objectFieldSetting.getObjectStateFlow();
 
-			_objectStateFlowLocalService.addObjectStateFlow(
-				newObjectField.getUserId(), newObjectField.getObjectFieldId(),
-				objectStateFlow.getObjectStates());
+			if (oldObjectField != null) {
+				ObjectStateFlow oldObjectStateFlow =
+					_objectStateFlowLocalService.
+						fetchObjectFieldObjectStateFlow(
+							oldObjectField.getObjectFieldId());
+
+				_objectStateFlowLocalService.updateObjectStateFlow(
+					oldObjectStateFlow.getObjectStateFlowId(),
+					newObjectField.getUserId(),
+					newObjectStateFlow.getObjectStates());
+
+				_objectStateFlowLocalService.updateDefaultObjectStateFlow(
+					newObjectField, oldObjectField);
+			}
+			else {
+				_objectStateFlowLocalService.addObjectStateFlow(
+					newObjectField.getUserId(),
+					newObjectField.getObjectFieldId(),
+					newObjectStateFlow.getObjectStates());
+			}
 
 			return;
 		}

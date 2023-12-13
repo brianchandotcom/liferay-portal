@@ -220,6 +220,7 @@ export default function TranslationAdminSelector({
 
 			<ClayDropDown
 				active={selectorDropdownActive}
+				hasLeftSymbols
 				onActiveChange={setSelectorDropdownActive}
 				trigger={
 					<TriggerButton
@@ -231,13 +232,17 @@ export default function TranslationAdminSelector({
 			>
 				<ClayDropDown.ItemList>
 					{activeLocales.map((activeLocale) => {
+						const active = activeLocale.id === selectedLanguageId;
+
 						return (
 							<ClayDropDown.Item
+								active={active}
 								key={activeLocale.id}
 								onClick={() => {
 									setSelectedLanguageId(activeLocale.id);
 									setSelectorDropdownActive(false);
 								}}
+								symbolLeft={active ? 'check-small' : undefined}
 							>
 								<TranslationAdminItem
 									defaultLanguageId={defaultLanguageId}

@@ -617,7 +617,7 @@
 	</tr>
 	<tr>
 		<td>ENTRY_CHOOSE_OPTIONS_MULTIPICKLIST</td>
-		<td>//div[contains(text(),'Choose Options')]</td>
+		<td>//input[@placeholder='Choose Options']</td>
 		<td></td>
 	</tr>
 	<tr>

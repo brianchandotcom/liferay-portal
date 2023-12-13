@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -170,7 +171,8 @@ public class BatchEngineFileInstaller implements FileInstaller {
 		ZipFile zipFile) {
 
 		Map<String, ZipEntry> batchEngineZipEntries = new HashMap<>();
-		Map<String, BatchEngineUnit> batchEngineUnits = new TreeMap<>();
+		Map<String, BatchEngineUnit> batchEngineUnits = new TreeMap<>(
+			new NaturalOrderStringComparator());
 		Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
 
 		while (enumeration.hasMoreElements()) {

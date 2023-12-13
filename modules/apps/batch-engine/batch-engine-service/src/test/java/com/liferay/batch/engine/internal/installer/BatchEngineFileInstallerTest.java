@@ -59,12 +59,17 @@ public class BatchEngineFileInstallerTest {
 
 		File zipFile = _createZipFile(
 			testPath, "test.zip", "batch-engine-data.json",
+			"folder1/-batch-engine-data.json",
 			"folder1/file1-batch-engine-data.json",
 			"folder1/file2-batch-engine-data.json",
+			"folder1/file10-batch-engine-data.json",
+			"folder1/file11-batch-engine-data.json",
 			"folder2/file1-batch-engine-data.json",
 			"folder2/file2-batch-engine-data.json",
 			"folder3/file-batch-engine-data.json",
-			"folder4/file-batch-engine-data.json");
+			"folder4/file-batch-engine-data.json",
+			"folder10/file2-batch-engine-data.json",
+			"folder11/file1-batch-engine-data.json");
 
 		batchEngineFileInstaller.transformURL(zipFile);
 
@@ -76,13 +81,17 @@ public class BatchEngineFileInstallerTest {
 
 		Assert.assertEquals(
 			Arrays.asList(
-				"batch-engine-data.json",
+				"batch-engine-data.json", "folder1/-batch-engine-data.json",
 				"folder1/file1-batch-engine-data.json",
 				"folder1/file2-batch-engine-data.json",
+				"folder1/file10-batch-engine-data.json",
+				"folder1/file11-batch-engine-data.json",
 				"folder2/file1-batch-engine-data.json",
 				"folder2/file2-batch-engine-data.json",
 				"folder3/file-batch-engine-data.json",
-				"folder4/file-batch-engine-data.json"),
+				"folder4/file-batch-engine-data.json",
+				"folder10/file2-batch-engine-data.json",
+				"folder11/file1-batch-engine-data.json"),
 			TransformUtil.transform(
 				argumentCaptor.getValue(), BatchEngineUnit::getDataFileName));
 	}

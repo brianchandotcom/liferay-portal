@@ -76,20 +76,10 @@ public class BatchEngineUnitReaderImpl implements BatchEngineUnitReader {
 		return Collections.emptyList();
 	}
 
-	public boolean isBatchEngineTechnical(String zipEntryName) {
-		if (zipEntryName.endsWith(
-				BatchEngineTaskContentType.JSONT.getFileExtension())) {
-
-			return true;
-		}
-
-		return false;
-	}
-
 	private String _getBatchEngineBundleEntryKey(URL url) {
 		String zipEntryName = url.getPath();
 
-		if (isBatchEngineTechnical(zipEntryName)) {
+		if (_isBatchEngineTechnical(zipEntryName)) {
 			return zipEntryName;
 		}
 
@@ -126,7 +116,7 @@ public class BatchEngineUnitReaderImpl implements BatchEngineUnitReader {
 
 			String key = _getBatchEngineBundleEntryKey(url);
 
-			if (isBatchEngineTechnical(url.getPath())) {
+			if (_isBatchEngineTechnical(url.getPath())) {
 				AdvancedBundleBatchEngineUnitImpl
 					advancedBundleBatchEngineUnitImpl =
 						new AdvancedBundleBatchEngineUnitImpl(bundle, url);
@@ -181,6 +171,16 @@ public class BatchEngineUnitReaderImpl implements BatchEngineUnitReader {
 		}
 
 		return GetterUtil.getString(parameters.get("featureFlag"));
+	}
+
+	private boolean _isBatchEngineTechnical(String zipEntryName) {
+		if (zipEntryName.endsWith(
+				BatchEngineTaskContentType.JSONT.getFileExtension())) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private List<BatchEngineUnit> _loadBatchEngineUnits(Bundle bundle) {

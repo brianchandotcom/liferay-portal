@@ -259,32 +259,43 @@ public class GenerateTestrayCSVUtil {
 		}
 
 		public Type getType() {
+			if (_type != null) {
+				return _type;
+			}
+
 			if (Objects.equals(
 					getErrorMessage(), "Failed prior to running test")) {
 
-				return Type.DID_NOT_RUN;
+				_type = Type.DID_NOT_RUN;
+			}
+			else {
+				for (TestrayCaseResult historyTestrayCaseResult :
+						getTestrayCaseResultHistory()) {
+
+					if (Objects.equals(
+							getTestrayRunId(),
+							historyTestrayCaseResult.getTestrayRunId())) {
+
+						continue;
+					}
+
+					if (isSimilarError(historyTestrayCaseResult) &&
+						!Objects.equals(
+							getPullRequestAuthor(),
+							historyTestrayCaseResult.getPullRequestAuthor())) {
+
+						_type = Type.COMMON;
+
+						break;
+					}
+				}
 			}
 
-			for (TestrayCaseResult historyTestrayCaseResult :
-					getTestrayCaseResultHistory()) {
-
-				if (Objects.equals(
-						getTestrayRunId(),
-						historyTestrayCaseResult.getTestrayRunId())) {
-
-					continue;
-				}
-
-				if (isSimilarError(historyTestrayCaseResult) &&
-					!Objects.equals(
-						getPullRequestAuthor(),
-						historyTestrayCaseResult.getPullRequestAuthor())) {
-
-					return Type.COMMON;
-				}
+			if (_type == null) {
+				_type = Type.UNIQUE;
 			}
 
-			return Type.UNIQUE;
+			return _type;
 		}
 
 		public boolean isSimilarError(
@@ -350,6 +361,7 @@ public class GenerateTestrayCSVUtil {
 
 		private String _pullRequestAuthor;
 		private final JSONObject _resultJSONObject;
+		private Type _type;
 
 	}
 

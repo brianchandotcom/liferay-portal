@@ -97,6 +97,8 @@ public class DeleteLayoutPageTemplateEntryMVCActionCommand
 				SessionErrors.add(actionRequest, clazz);
 			}
 
+			hideDefaultErrorMessage(actionRequest);
+
 			sendRedirect(actionRequest, actionResponse);
 
 			return;

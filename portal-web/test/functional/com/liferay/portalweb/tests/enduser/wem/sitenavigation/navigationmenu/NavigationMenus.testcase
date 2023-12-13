@@ -1505,6 +1505,30 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-177769. The tooltip of the back button in a new Navigation Menu is Go to Navigation Menus."
+	@priority = 3
+	test ViewBackButtonTooltipInNavigationMenuAdmin {
+		task ("Given the Navigation Menu admin page") {
+			JSONSitenavigation.addSiteNavigationMenu(
+				groupName = ${randomSiteName},
+				siteNavigationMenuName = "Navigation Menu Name");
+
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = ${siteURLKey});
+
+			NavigationMenusAdmin.editMenu(navigationMenuName = "Navigation Menu Name");
+		}
+
+		task ("When hover over the back button") {
+			MouseOver(locator1 = "Icon#BACK");
+		}
+
+		task ("Then see the tooltip message") {
+			AssertVisible(
+				key_content = "Go to Navigation Menus",
+				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
+		}
+	}
+
 	@description = "This is a test for LPS-172780. View the new behaviors of navigation menu item creation."
 	@priority = 3
 	test ViewBehaviorsOfNavigationMenuItemCreation {

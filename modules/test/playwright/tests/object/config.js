@@ -5,11 +5,12 @@
 
 import {devices} from '@playwright/test';
 
-export const portalProjectConfig = {
-	name: 'portal',
-	testDir: 'tests/portal-web',
-	timeout: 60 * 1000,
+export const config = {
+	dependencies: ['setup'],
+	name: 'object',
+	testDir: 'tests/object',
 	use: {
 		...devices['Desktop Chrome'],
+		storageState: 'tmp/.auth/user.json',
 	},
 };

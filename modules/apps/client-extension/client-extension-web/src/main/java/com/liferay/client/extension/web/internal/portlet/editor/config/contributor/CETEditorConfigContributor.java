@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -73,15 +73,16 @@ public class CETEditorConfigContributor
 		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
-		JSONArray urlsJSONArray = jsonObject.getJSONArray(
-			"CETConfigurationURLs");
+		JSONArray jsonArray = jsonObject.getJSONArray(
+			"editorConfigTransformerURLs");
 
-		if (urlsJSONArray == null) {
-			urlsJSONArray = JSONFactoryUtil.createJSONArray();
-			jsonObject.put("CETConfigurationURLs", urlsJSONArray);
+		if (jsonArray == null) {
+			jsonArray = JSONFactoryUtil.createJSONArray();
+
+			jsonObject.put("editorConfigTransformerURLs", jsonArray);
 		}
 
-		urlsJSONArray.put("default from " + _url);
+		jsonArray.put(_url);
 	}
 
 	private final String _editorConfigKeys;

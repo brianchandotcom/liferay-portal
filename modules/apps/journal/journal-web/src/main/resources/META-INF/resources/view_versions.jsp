@@ -13,7 +13,7 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 
 <liferay-ui:search-container
 	cssClass='<%= journalDisplayContext.isSearch() ? "pt-0" : StringPool.BLANK %>'
-	emptyResultsMessage="no-web-content-was-found"
+	emptyResultsMessage="<%= journalDisplayContext.getVersionsEmptyResultsMessage() %>"
 	searchContainer="<%= journalDisplayContext.getSearchContainer() %>"
 >
 	<liferay-ui:search-container-row

@@ -1154,6 +1154,14 @@ public class JournalDisplayContext {
 		return _type;
 	}
 
+	public String getVersionsEmptyResultsMessage() {
+		if (FeatureFlagManagerUtil.isEnabled("LPS-196768")) {
+			return "no-version-was-found";
+		}
+
+		return "no-web-content-was-found";
+	}
+
 	public int getVersionsTotal() throws PortalException {
 		SearchContainer<JournalArticle> articleSearchContainer =
 			_getVersionsSearchContainer();

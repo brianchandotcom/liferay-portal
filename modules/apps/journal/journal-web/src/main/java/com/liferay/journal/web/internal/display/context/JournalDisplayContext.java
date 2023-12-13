@@ -1932,6 +1932,23 @@ public class JournalDisplayContext {
 		return _searchIn;
 	}
 
+	private PortletURL _getSearchInCommentsPortletURL() {
+		return PortletURLBuilder.createRenderURL(
+			_liferayPortletResponse
+		).setKeywords(
+			() -> {
+				String keywords = ParamUtil.getString(
+					_httpServletRequest, "keywords");
+
+				if (Validator.isNotNull(keywords)) {
+					return keywords;
+				}
+
+				return null;
+			}
+		).buildPortletURL();
+	}
+
 	private JSONArray _getSearchInOptionsJSONArray() {
 		JSONArray jsonArray = JSONUtil.put(
 			JSONUtil.put(

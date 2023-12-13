@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.File;
@@ -37,9 +38,9 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Dictionary;
 import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import org.osgi.framework.Bundle;
 import org.osgi.service.component.annotations.Component;
@@ -102,8 +103,8 @@ public class BatchEngineUnitReaderImpl implements BatchEngineUnitReader {
 
 		batchEngineUnits = new ArrayList<>();
 
-		Map<String, List<URL>> classicBundleBatchEngineUnitURLs =
-			new HashMap<>();
+		Map<String, List<URL>> bundleBatchEngineUnitURLs = new TreeMap<>(
+			new NaturalOrderStringComparator());
 
 		Enumeration<URL> enumeration = bundle.findEntries(batchPath, "*", true);
 
@@ -114,9 +115,27 @@ public class BatchEngineUnitReaderImpl implements BatchEngineUnitReader {
 				continue;
 			}
 
-			String key = _getBatchEngineBundleEntryKey(url);
+			bundleBatchEngineUnitURLs.compute(
+				_getBatchEngineBundleEntryKey(url),
+				(k, urls) -> {
+					if (urls == null) {
+						urls = new ArrayList<>();
+					}
 
-			if (_isBatchEngineTechnical(url.getPath())) {
+					urls.add(url);
+
+					return urls;
+				});
+		}
+
+		for (Map.Entry<String, List<URL>> entry :
+				bundleBatchEngineUnitURLs.entrySet()) {
+
+			List<URL> urls = entry.getValue();
+
+			if (_isBatchEngineTechnical(entry.getKey())) {
+				URL url = urls.get(0);
+
 				AdvancedBundleBatchEngineUnitImpl
 					advancedBundleBatchEngineUnitImpl =
 						new AdvancedBundleBatchEngineUnitImpl(bundle, url);
@@ -130,28 +149,19 @@ public class BatchEngineUnitReaderImpl implements BatchEngineUnitReader {
 
 					batchEngineUnits.add(advancedBundleBatchEngineUnitImpl);
 				}
-
-				continue;
 			}
+			else {
+				ClassicBundleBatchEngineUnitImpl
+					classicBundleBatchEngineUnitImpl =
+						new ClassicBundleBatchEngineUnitImpl(bundle, urls);
 
-			classicBundleBatchEngineUnitURLs.computeIfAbsent(
-				key, k -> new ArrayList<>());
+				if (classicBundleBatchEngineUnitImpl.isValid()) {
+					classicBundleBatchEngineUnitImpl.setBatchEngineUnitMetaInfo(
+						_toBatchEngineUnitMetaInfo(
+							classicBundleBatchEngineUnitImpl, urls));
 
-			List<URL> urls = classicBundleBatchEngineUnitURLs.get(key);
-
-			urls.add(url);
-		}
-
-		for (List<URL> urls : classicBundleBatchEngineUnitURLs.values()) {
-			ClassicBundleBatchEngineUnitImpl classicBundleBatchEngineUnitImpl =
-				new ClassicBundleBatchEngineUnitImpl(bundle, urls);
-
-			if (classicBundleBatchEngineUnitImpl.isValid()) {
-				classicBundleBatchEngineUnitImpl.setBatchEngineUnitMetaInfo(
-					_toBatchEngineUnitMetaInfo(
-						classicBundleBatchEngineUnitImpl, urls));
-
-				batchEngineUnits.add(classicBundleBatchEngineUnitImpl);
+					batchEngineUnits.add(classicBundleBatchEngineUnitImpl);
+				}
 			}
 		}
 

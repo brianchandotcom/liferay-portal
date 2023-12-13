@@ -13,8 +13,8 @@ import React, {Ref, useEffect, useMemo, useState} from 'react';
 
 import useId from '../hooks/useId';
 import {Locale, Translations} from './TranslationAdminContent';
+import TranslationAdminItem from './TranslationAdminItem';
 import TranslationAdminModal from './TranslationAdminModal';
-import TranslationAdminStatusLabel from './TranslationAdminStatusLabel';
 
 const DISPLAY_TYPE = {
 	default: 'default',
@@ -190,21 +190,16 @@ export default function TranslationAdminSelector({
 			>
 				{(item) => (
 					<Option key={item.id} textValue={item.label}>
-						<ClayLayout.ContentRow containerElement="span">
-							<ClayLayout.ContentCol
-								containerElement="span"
-								expand
-							>
-								<ClayLayout.ContentSection>
-									<ClayIcon
-										className="inline-item-before"
-										symbol={item.symbol}
-									/>
-
-									{item.label}
-								</ClayLayout.ContentSection>
-							</ClayLayout.ContentCol>
-						</ClayLayout.ContentRow>
+						<TranslationAdminItem
+							defaultLanguageId={defaultLanguageId}
+							item={item}
+							labels={ariaLabels}
+							localeValue={
+								translations ? translations[item.id] : null
+							}
+							showOnlyFlags={showOnlyFlags}
+							translationProgress={translationProgress}
+						/>
 					</Option>
 				)}
 			</Picker>
@@ -235,55 +230,27 @@ export default function TranslationAdminSelector({
 				}
 			>
 				<ClayDropDown.ItemList>
-					{activeLocales.map(({displayName, id, label, symbol}) => {
+					{activeLocales.map((activeLocale) => {
 						return (
 							<ClayDropDown.Item
-								key={id}
+								key={activeLocale.id}
 								onClick={() => {
-									setSelectedLanguageId(id);
+									setSelectedLanguageId(activeLocale.id);
 									setSelectorDropdownActive(false);
 								}}
 							>
-								<ClayLayout.ContentRow containerElement="span">
-									<ClayLayout.ContentCol
-										containerElement="span"
-										expand
-									>
-										<ClayLayout.ContentSection>
-											<ClayIcon
-												className="inline-item inline-item-before"
-												symbol={symbol}
-											/>
-
-											<span>{label}</span>
-										</ClayLayout.ContentSection>
-									</ClayLayout.ContentCol>
-
-									{!showOnlyFlags && (
-										<TranslationAdminStatusLabel
-											defaultLanguageId={
-												defaultLanguageId
-											}
-											labels={{
-												default: ariaLabels.default,
-												notTranslated:
-													ariaLabels.notTranslated,
-												translated:
-													ariaLabels.translated,
-											}}
-											languageId={id}
-											languageName={displayName}
-											localeValue={
-												translations
-													? translations[id]
-													: null
-											}
-											translationProgress={
-												translationProgress
-											}
-										/>
-									)}
-								</ClayLayout.ContentRow>
+								<TranslationAdminItem
+									defaultLanguageId={defaultLanguageId}
+									item={activeLocale}
+									labels={ariaLabels}
+									localeValue={
+										translations
+											? translations[activeLocale.id]
+											: null
+									}
+									showOnlyFlags={showOnlyFlags}
+									translationProgress={translationProgress}
+								/>
 							</ClayDropDown.Item>
 						);
 					})}

@@ -5,13 +5,13 @@
 
 package com.liferay.osb.faro.internal.upgrade.v15_0_0;
 
+import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
 
 /**
  * @author Marcos Martins
@@ -24,8 +24,12 @@ public class UpgradeFaroProjectUpgradeProcess extends UpgradeProcess {
 				"select faroProjectId, createTime, subscription from " +
 					"OSBFaro_FaroProject")) {
 
-			try (Statement statement = connection.createStatement();
-				ResultSet resultSet = preparedStatement.executeQuery()) {
+			try (ResultSet resultSet = preparedStatement.executeQuery();
+				PreparedStatement updatePreparedStatement =
+					AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+						connection,
+						"update OSBFaro_FaroProject set subscription = ? " +
+							"where faroProjectId = ?")) {
 
 				while (resultSet.next()) {
 					JSONObject subscriptionJSONObject =
@@ -42,15 +46,15 @@ public class UpgradeFaroProjectUpgradeProcess extends UpgradeProcess {
 					subscriptionJSONObject.put(
 						"startDate", resultSet.getLong("createTime"));
 
-					statement.addBatch(
-						String.format(
-							"update OSBFaro_FaroProject set subscription = '" +
-								"%s' where faroProjectId = %s",
-							subscriptionJSONObject.toString(),
-							resultSet.getLong("faroProjectId")));
+					updatePreparedStatement.setString(
+						1, subscriptionJSONObject.toString());
+					updatePreparedStatement.setLong(
+						2, resultSet.getLong("faroProjectId"));
+
+					updatePreparedStatement.addBatch();
 				}
 
-				statement.executeBatch();
+				updatePreparedStatement.executeBatch();
 			}
 		}
 	}

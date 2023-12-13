@@ -3,39 +3,32 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {
-	Language,
-	TranslationSelector,
-	Translations,
-} from '@liferay/layout-js-components-web';
-import React from 'react';
+import {Locale, TranslationAdminSelector} from 'frontend-js-components-web';
+import React, {useState} from 'react';
 
 interface Props {
 	defaultLanguageId: Liferay.Language.Locale;
-	languages: Language[];
+	locales: Locale[];
 	selectedLanguageId: Liferay.Language.Locale;
-	translations: Translations;
 }
 
 export default function TranslationManager({
 	defaultLanguageId,
-	languages,
-	selectedLanguageId,
-	translations,
+	locales,
+	selectedLanguageId: initialSelectedLanguageId,
 }: Props) {
+	const [selectedLanguageId, setSelectedLanguageId] = useState<
+		Liferay.Language.Locale
+	>(initialSelectedLanguageId);
+
 	return (
-		<TranslationSelector
+		<TranslationAdminSelector
+			activeLanguageIds={locales.map(({id}) => id)}
+			availableLocales={locales}
 			defaultLanguageId={defaultLanguageId}
-			languages={languages}
-			onSelectedLanguageChange={(languageId) => {
-				Liferay.fire('inputLocalized:localeChanged', {
-					item: document.querySelector(
-						`[data-languageid="${languageId}"]`
-					),
-				});
-			}}
+			displayType="HORIZONTAL"
+			onSelectedLanguageIdChange={setSelectedLanguageId}
 			selectedLanguageId={selectedLanguageId}
-			translations={translations}
 		/>
 	);
 }

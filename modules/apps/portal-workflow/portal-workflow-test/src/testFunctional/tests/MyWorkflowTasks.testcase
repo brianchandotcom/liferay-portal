@@ -911,9 +911,9 @@ definition {
 
 		MyWorkflowTasks.searchMyWorkflowTasks(searchTerm = "Blogs Entry Title");
 
-		AssertElementPresent(
-			key_resultBarMessage = "1 Result for \"Blogs Entry Title\"",
-			locator1 = "MyWorkflowTasks#MY_WORKFLOW_TASKS_SEARCH_RESULT_BAR");
+		AssertTextEquals.assertPartialText(
+			locator1 = "ManagementBar#SEARCH_RESULT_SUMMARY",
+			value1 = "1 Result Found for \"Blogs Entry Title\"");
 	}
 
 	@description = "Verify that the user can search for results inside Assigned to My Roles by Asset Type"
@@ -929,9 +929,9 @@ definition {
 
 		MyWorkflowTasks.searchMyWorkflowTasks(searchTerm = "Blogs Entry");
 
-		AssertElementPresent(
-			key_resultBarMessage = "1 Result for \"Blogs Entry\"",
-			locator1 = "MyWorkflowTasks#MY_WORKFLOW_TASKS_SEARCH_RESULT_BAR");
+		AssertTextEquals.assertPartialText(
+			locator1 = "ManagementBar#SEARCH_RESULT_SUMMARY",
+			value1 = "1 Result Found for \"Blogs Entry\"");
 	}
 
 	@description = "Verify that the user can search for Task on Assigned to My Roles page"
@@ -947,9 +947,9 @@ definition {
 
 		MyWorkflowTasks.searchMyWorkflowTasks(searchTerm = "Review");
 
-		AssertElementPresent(
-			key_resultBarMessage = "1 Result for \"Review\"",
-			locator1 = "MyWorkflowTasks#MY_WORKFLOW_TASKS_SEARCH_RESULT_BAR");
+		AssertTextEquals.assertPartialText(
+			locator1 = "ManagementBar#SEARCH_RESULT_SUMMARY",
+			value1 = "1 Result Found for \"Review\"");
 	}
 
 	@description = "Verify that the user can search for results inside Assigned to Me by Task"
@@ -968,9 +968,9 @@ definition {
 
 		MyWorkflowTasks.searchMyWorkflowTasks(searchTerm = "Review");
 
-		AssertElementPresent(
-			key_resultBarMessage = "1 Result for \"Review\"",
-			locator1 = "MyWorkflowTasks#MY_WORKFLOW_TASKS_SEARCH_RESULT_BAR");
+		AssertTextEquals.assertPartialText(
+			locator1 = "ManagementBar#SEARCH_RESULT_SUMMARY",
+			value1 = "1 Result Found for \"Review\"");
 	}
 
 	@description = "Verify that the user can search for results inside Assigned to Me by Asset Title"
@@ -986,9 +986,9 @@ definition {
 
 		MyWorkflowTasks.searchMyWorkflowTasks(searchTerm = "New Blog Title");
 
-		AssertElementPresent(
-			key_resultBarMessage = "1 Result for \"New Blog Title\"",
-			locator1 = "MyWorkflowTasks#MY_WORKFLOW_TASKS_SEARCH_RESULT_BAR");
+		AssertTextEquals.assertPartialText(
+			locator1 = "ManagementBar#SEARCH_RESULT_SUMMARY",
+			value1 = "1 Result Found for \"New Blog Title\"");
 	}
 
 	@description = "Verify that the user can search for results inside Assigned to Me by Asset Type"
@@ -1007,9 +1007,9 @@ definition {
 
 		MyWorkflowTasks.searchMyWorkflowTasks(searchTerm = "Blogs Entry");
 
-		AssertElementPresent(
-			key_resultBarMessage = "1 Result for \"Blogs Entry\"",
-			locator1 = "MyWorkflowTasks#MY_WORKFLOW_TASKS_SEARCH_RESULT_BAR");
+		AssertTextEquals.assertPartialText(
+			locator1 = "ManagementBar#SEARCH_RESULT_SUMMARY",
+			value1 = "1 Result Found for \"Blog Entry\"");
 	}
 
 	@description = "Verify that, in the Assigned to Me table, users can hover over the Last Activity Date and the Due Date row to see the exact time of the action"

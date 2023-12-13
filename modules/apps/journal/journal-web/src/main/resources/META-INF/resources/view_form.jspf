@@ -60,14 +60,11 @@
 			</div>
 
 			<c:choose>
-				<c:when test="<%= journalDisplayContext.isWebContentTabSelected() %>">
-					<liferay-util:include page="/view_entries.jsp" servletContext="<%= application %>" />
-				</c:when>
-				<c:when test="<%= journalDisplayContext.isVersionsTabSelected() %>">
-					<liferay-util:include page="/view_versions.jsp" servletContext="<%= application %>" />
-				</c:when>
-				<c:when test="<%= journalDisplayContext.isCommentsTabSelected() %>">
+				<c:when test="<%= journalDisplayContext.isShowComments() %>">
 					<liferay-util:include page="/view_comments.jsp" servletContext="<%= application %>" />
+				</c:when>
+				<c:when test="<%= journalDisplayContext.isShowVersions() %>">
+					<liferay-util:include page="/view_versions.jsp" servletContext="<%= application %>" />
 				</c:when>
 				<c:otherwise>
 					<liferay-util:include page="/view_entries.jsp" servletContext="<%= application %>" />

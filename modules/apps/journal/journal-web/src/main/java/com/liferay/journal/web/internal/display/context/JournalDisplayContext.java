@@ -1392,6 +1392,18 @@ public class JournalDisplayContext {
 			return true;
 		}
 
+		if ((FeatureFlagManagerUtil.isEnabled("LPS-196768") &&
+			 isTypeWebContent() && !hasResults() && !hasVersionsResults() &&
+			 hasCommentsResults()) ||
+			(FeatureFlagManagerUtil.isEnabled("LPS-196768") &&
+			 isTypeVersions() && !hasVersionsResults() &&
+			 hasCommentsResults())) {
+
+			_searchIn = "comments";
+
+			return true;
+		}
+
 		return false;
 	}
 
@@ -1411,6 +1423,14 @@ public class JournalDisplayContext {
 			 isVersionsTabSelected()) ||
 			(FeatureFlagManagerUtil.isEnabled("LPS-196768") &&
 			 isTypeVersions())) {
+
+			return true;
+		}
+
+		if (FeatureFlagManagerUtil.isEnabled("LPS-196768") &&
+			isTypeWebContent() && !hasResults() && hasVersionsResults()) {
+
+			_type = "versions";
 
 			return true;
 		}

@@ -93,7 +93,7 @@ const SitesPanel = ({portletNamespace, sites, virtualInstance}) => {
 	);
 };
 
-const Site = ({current, label, logoURL, url}) => {
+const Site = ({current, label, logoURL, showDivider = false, url}) => {
 	return (
 		<li className="c-mt-3">
 			<a className="applications-menu-nav-link" href={url}>
@@ -121,6 +121,13 @@ const Site = ({current, label, logoURL, url}) => {
 					)}
 				</ClayLayout.ContentRow>
 			</a>
+
+			{showDivider ? (
+				<div
+					className="applications-menu-nav-divider c-mt-3"
+					role="separator"
+				/>
+			) : null}
 		</li>
 	);
 };
@@ -129,22 +136,21 @@ const Sites = ({mySites, portletNamespace, recentSites, viewAllURL}) => {
 	return (
 		<>
 			{recentSites?.length > 0 &&
-				recentSites.map(({current, key, label, logoURL, url}) => (
-					<Site
-						current={current}
-						key={key}
-						label={label}
-						logoURL={logoURL}
-						url={url}
-					/>
-				))}
-
-			{recentSites?.length > 0 && mySites?.length > 0 && (
-				<li
-					className="applications-menu-nav-divider c-mt-3"
-					role="presentation"
-				></li>
-			)}
+				recentSites.map(
+					({current, key, label, logoURL, url}, index) => (
+						<Site
+							current={current}
+							key={key}
+							label={label}
+							logoURL={logoURL}
+							showDivider={
+								index === recentSites.length - 1 &&
+								mySites?.length
+							}
+							url={url}
+						/>
+					)
+				)}
 
 			{mySites?.length > 0 &&
 				mySites.map(({current, key, label, logoURL, url}) => (

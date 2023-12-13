@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -297,7 +298,9 @@ public class AssetListEntryLocalServiceImpl
 	public AssetListEntry deleteAssetListEntry(AssetListEntry assetListEntry)
 		throws PortalException {
 
-		_checkCompanyAssetListEntryUsages(assetListEntry);
+		if (!GroupThreadLocal.isDeleteInProcess()) {
+			_checkCompanyAssetListEntryUsages(assetListEntry);
+		}
 
 		// Asset list entry
 

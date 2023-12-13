@@ -28,7 +28,7 @@ const TIME_RANGE_TYPES = [
 	},
 	{
 		label: Liferay.Language.get('last-30-days'),
-		value: '20',
+		value: '30',
 	},
 ];
 

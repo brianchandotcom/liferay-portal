@@ -19,6 +19,10 @@ html#{$cadmin-selector} {
 				background-color: rgba($white, 0.06);
 			}
 
+			.icon-tooltip {
+				z-index: 2;
+			}
+
 			.icon-warning {
 				margin: 1px 4px 0 8px;
 				z-index: 2;

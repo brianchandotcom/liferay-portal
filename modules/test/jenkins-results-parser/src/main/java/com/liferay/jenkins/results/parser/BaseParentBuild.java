@@ -589,7 +589,7 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 		return count;
 	}
 
-	protected List<Element> getDownstreamBuildMessages(
+	protected List<Element> getDownstreamBuildMessageElements(
 		List<Build> downstreamBuilds) {
 
 		List<Callable<Element>> callables = new ArrayList<>();

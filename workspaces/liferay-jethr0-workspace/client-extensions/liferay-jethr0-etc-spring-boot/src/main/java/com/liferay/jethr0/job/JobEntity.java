@@ -170,7 +170,7 @@ public interface JobEntity extends Entity {
 		GENERATE_CI_SYSTEM_HISTORY_REPORT(
 			"generateCISystemHistoryReport",
 			"Generate CI System History Report"),
-		GENERATE_CI_SYSTEM_STATUE_REPORT(
+		GENERATE_CI_SYSTEM_STATUS_REPORT(
 			"generateCISystemStatusReport", "Generate CI System Status Report"),
 		GENERATE_REPORTS("generateReports", "Generate Reports"),
 		GENERATE_TEST_DURATION_METRICS(

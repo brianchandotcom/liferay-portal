@@ -24,19 +24,35 @@ public class JobEntityFactory extends BaseEntityFactory<JobEntity> {
 		JobEntity.Type jobEntityType = JobEntity.Type.getByKey(
 			typeJSONObject.getString("key"));
 
-		if (jobEntityType == JobEntity.Type.PORTAL_APP_RELEASE) {
+		if (jobEntityType == JobEntity.Type.GENERATE_CI_SYSTEM_HISTORY_REPORT) {
+			return new GenerateCISystemHistoryReportJobEntity(jsonObject);
+		}
+		else if (jobEntityType ==
+					JobEntity.Type.GENERATE_CI_SYSTEM_STATUS_REPORT) {
+
+			return new GenerateCISystemStatusReportJobEntity(jsonObject);
+		}
+		else if (jobEntityType == JobEntity.Type.GENERATE_REPORTS) {
+			return new GenerateReportsJobEntity(jsonObject);
+		}
+		else if (jobEntityType ==
+					JobEntity.Type.GENERATE_TEST_DURATION_METRICS) {
+
+			return new GenerateTestDurationMetricsJobEntity(jsonObject);
+		}
+		else if (jobEntityType == JobEntity.Type.GENERATE_TESTRAY_CSV) {
+			return new GenerateTestrayCSVJobEntity(jsonObject);
+		}
+		else if (jobEntityType == JobEntity.Type.PORTAL_APP_RELEASE) {
 			return new PortalAppReleaseJobEntity(jsonObject);
 		}
-
-		if (jobEntityType == JobEntity.Type.PORTAL_FIXPACK_RELEASE) {
+		else if (jobEntityType == JobEntity.Type.PORTAL_FIXPACK_RELEASE) {
 			return new PortalFixpackReleaseJobEntity(jsonObject);
 		}
-
-		if (jobEntityType == JobEntity.Type.PORTAL_HOTFIX_RELEASE) {
+		else if (jobEntityType == JobEntity.Type.PORTAL_HOTFIX_RELEASE) {
 			return new PortalHotfixReleaseJobEntity(jsonObject);
 		}
-
-		if (jobEntityType == JobEntity.Type.PORTAL_PULL_REQUEST) {
+		else if (jobEntityType == JobEntity.Type.PORTAL_PULL_REQUEST) {
 			return new DefaultPortalPullRequestJobEntity(jsonObject);
 		}
 		else if (jobEntityType == JobEntity.Type.PORTAL_PULL_REQUEST_SF) {

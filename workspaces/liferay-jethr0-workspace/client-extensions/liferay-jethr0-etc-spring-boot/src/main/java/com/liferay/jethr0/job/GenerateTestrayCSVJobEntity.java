@@ -5,6 +5,8 @@
 
 package com.liferay.jethr0.job;
 
+import java.util.Map;
+
 import org.json.JSONObject;
 
 /**
@@ -12,8 +14,38 @@ import org.json.JSONObject;
  */
 public class GenerateTestrayCSVJobEntity extends BaseJobEntity {
 
+	public String getJenkinsSlaveLabel() {
+		return getParameterValue("jenkinsSlaveLabel");
+	}
+
+	public Long getTestrayBuildID() {
+		return getParameterValueLong("jenkinsSlaveLabel");
+	}
+
+	public void setJenkinsSlaveLabel(String slaveLabel) {
+		setParameterValue("jenkinsSlaveLabel", slaveLabel);
+	}
+
+	public void setTestrayBuildID(Long testrayBuildID) {
+		setParameterValueLong("testrayBuildID", testrayBuildID);
+	}
+
 	protected GenerateTestrayCSVJobEntity(JSONObject jsonObject) {
 		super(jsonObject);
+	}
+
+	@Override
+	protected Map<String, String> getInitialBuildParameters() {
+		Map<String, String> initialBuildParameters =
+			super.getInitialBuildParameters();
+
+		initialBuildParameters.put(
+			"JENKINS_GITHUB_URL", String.valueOf(getJenkinsBranchURL()));
+		initialBuildParameters.put("SLAVE_LABEL", getJenkinsSlaveLabel());
+		initialBuildParameters.put(
+			"TESTRAY_BUILD_ID", String.valueOf(getTestrayBuildID()));
+
+		return initialBuildParameters;
 	}
 
 	@Override

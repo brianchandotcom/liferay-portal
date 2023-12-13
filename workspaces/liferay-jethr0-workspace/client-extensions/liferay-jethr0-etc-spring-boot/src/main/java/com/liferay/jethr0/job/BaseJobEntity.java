@@ -382,6 +382,16 @@ public abstract class BaseJobEntity extends BaseEntity implements JobEntity {
 
 	protected abstract String getJenkinsJobName();
 
+	protected Long getParameterValueLong(String name) {
+		String valueLong = getParameterValue(name);
+
+		if (StringUtil.isNullOrEmpty(valueLong)) {
+			return null;
+		}
+
+		return Long.valueOf(valueLong);
+	}
+
 	protected URL getParameterValueURL(String name) {
 		String urlString = getParameterValue(name);
 
@@ -390,6 +400,10 @@ public abstract class BaseJobEntity extends BaseEntity implements JobEntity {
 		}
 
 		return StringUtil.toURL(urlString);
+	}
+
+	protected void setParameterValueLong(String name, Long valueLong) {
+		setParameterValue(name, String.valueOf(valueLong));
 	}
 
 	protected void setParameterValueURL(String name, URL valueURL) {

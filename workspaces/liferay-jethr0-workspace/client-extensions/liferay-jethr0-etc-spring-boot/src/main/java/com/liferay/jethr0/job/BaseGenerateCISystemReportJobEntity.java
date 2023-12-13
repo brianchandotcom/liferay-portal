@@ -10,7 +10,8 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class GenerateCISystemHistoryReportJobEntity extends BaseJobEntity {
+public abstract class BaseGenerateCISystemReportJobEntity
+	extends BaseJobEntity {
 
 	public String getSlaveLabel() {
 		return getParameterValue("slaveLabel");
@@ -20,13 +21,8 @@ public class GenerateCISystemHistoryReportJobEntity extends BaseJobEntity {
 		setParameterValue("slaveLabel", slaveLabel);
 	}
 
-	protected GenerateCISystemHistoryReportJobEntity(JSONObject jsonObject) {
+	protected BaseGenerateCISystemReportJobEntity(JSONObject jsonObject) {
 		super(jsonObject);
-	}
-
-	@Override
-	protected String getJenkinsJobName() {
-		return "generate-ci-system-history-report";
 	}
 
 }

@@ -10,17 +10,10 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class GenerateCISystemStatusReportJobEntity extends BaseJobEntity {
+public class StatusGenerateCISystemReportJobEntity
+	extends BaseGenerateCISystemReportJobEntity {
 
-	public String getSlaveLabel() {
-		return getParameterValue("slaveLabel");
-	}
-
-	public void setSlaveLabel(String slaveLabel) {
-		setParameterValue("slaveLabel", slaveLabel);
-	}
-
-	protected GenerateCISystemStatusReportJobEntity(JSONObject jsonObject) {
+	protected StatusGenerateCISystemReportJobEntity(JSONObject jsonObject) {
 		super(jsonObject);
 	}
 

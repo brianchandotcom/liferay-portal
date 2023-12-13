@@ -25,12 +25,12 @@ public class JobEntityFactory extends BaseEntityFactory<JobEntity> {
 			typeJSONObject.getString("key"));
 
 		if (jobEntityType == JobEntity.Type.GENERATE_CI_SYSTEM_HISTORY_REPORT) {
-			return new GenerateCISystemHistoryReportJobEntity(jsonObject);
+			return new HistoryGenerateCISystemReportJobEntity(jsonObject);
 		}
 		else if (jobEntityType ==
 					JobEntity.Type.GENERATE_CI_SYSTEM_STATUS_REPORT) {
 
-			return new GenerateCISystemStatusReportJobEntity(jsonObject);
+			return new StatusGenerateCISystemReportJobEntity(jsonObject);
 		}
 		else if (jobEntityType == JobEntity.Type.GENERATE_REPORTS) {
 			return new GenerateReportsJobEntity(jsonObject);

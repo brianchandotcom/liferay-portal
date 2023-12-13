@@ -69,6 +69,7 @@ const PublishedAppsDashboardRouter = () => {
 				};
 
 				// window.location.reload();
+
 			}
 		};
 

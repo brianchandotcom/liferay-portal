@@ -88,7 +88,7 @@ public class DepotSearchRequestContributorTest {
 	}
 
 	@Test
-	public void testContributeWithConnectedGroupIdToSeveralDepotEntries()
+	public void testContributeWithConnectedGroupIdWithSeveralDepotEntries()
 		throws Exception {
 
 		DepotEntry depotEntry1 = _addDepotEntry();
@@ -126,25 +126,7 @@ public class DepotSearchRequestContributorTest {
 	}
 
 	@Test
-	public void testContributeWithNoGroupIds() throws Exception {
-		SearchRequestBuilder searchRequestBuilder =
-			_searchRequestBuilderFactory.builder();
-
-		SearchRequest searchRequest = searchRequestBuilder.build();
-
-		_depotSearchRequestContributor.contribute(searchRequest);
-
-		searchRequestBuilder = _searchRequestBuilderFactory.builder(
-			searchRequest);
-
-		SearchContext searchContext = searchRequestBuilder.withSearchContextGet(
-			Function.identity());
-
-		Assert.assertNull(searchContext.getGroupIds());
-	}
-
-	@Test
-	public void testContributeWithSeveralConnectedGroupIds() throws Exception {
+	public void testContributeWithMultipleConnectedGroupIds() throws Exception {
 		DepotEntry depotEntry1 = _addDepotEntry();
 		DepotEntry depotEntry2 = _addDepotEntry();
 
@@ -181,7 +163,25 @@ public class DepotSearchRequestContributorTest {
 	}
 
 	@Test
-	public void testContributeWithUnconnectedGroupId() throws Exception {
+	public void testContributeWithNoGroupIds() throws Exception {
+		SearchRequestBuilder searchRequestBuilder =
+			_searchRequestBuilderFactory.builder();
+
+		SearchRequest searchRequest = searchRequestBuilder.build();
+
+		_depotSearchRequestContributor.contribute(searchRequest);
+
+		searchRequestBuilder = _searchRequestBuilderFactory.builder(
+			searchRequest);
+
+		SearchContext searchContext = searchRequestBuilder.withSearchContextGet(
+			Function.identity());
+
+		Assert.assertNull(searchContext.getGroupIds());
+	}
+
+	@Test
+	public void testContributeWithNotConnectedGroupId() throws Exception {
 		SearchRequestBuilder searchRequestBuilder =
 			_searchRequestBuilderFactory.builder();
 
@@ -204,7 +204,7 @@ public class DepotSearchRequestContributorTest {
 	}
 
 	@Test
-	public void testContributeWithUnsearchableConnectedGroupId()
+	public void testContributeWithNotSearchableConnectedGroupId()
 		throws Exception {
 
 		DepotEntry depotEntry = _addDepotEntry();

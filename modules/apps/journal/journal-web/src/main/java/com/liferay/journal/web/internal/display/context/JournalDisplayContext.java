@@ -1383,6 +1383,18 @@ public class JournalDisplayContext {
 		return false;
 	}
 
+	public boolean isShowComments() throws PortalException {
+		if ((!FeatureFlagManagerUtil.isEnabled("LPS-196768") &&
+			 isCommentsTabSelected()) ||
+			(FeatureFlagManagerUtil.isEnabled("LPS-196768") &&
+			 Objects.equals(_getSearchIn(), "comments"))) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isShowInfoButton() {
 		if (isNavigationMine() || isNavigationRecent() || isSearch() ||
 			ArrayUtil.isNotEmpty(_getAssetCategoryIds()) ||

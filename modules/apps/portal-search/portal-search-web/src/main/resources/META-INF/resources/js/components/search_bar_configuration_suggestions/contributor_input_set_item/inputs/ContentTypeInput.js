@@ -9,7 +9,6 @@ import ClayIcon from '@clayui/icon';
 import ClayModal, {useModal} from '@clayui/modal';
 import ClayTable from '@clayui/table';
 import {ClayTooltipProvider} from '@clayui/tooltip';
-import getCN from 'classnames';
 import {ManagementToolbar} from 'frontend-js-components-web';
 import React, {useState} from 'react';
 
@@ -59,7 +58,11 @@ function ContentTypeModal({
 	};
 
 	const _handleDone = () => {
-		onChange(selectedTypes.toString());
+		onChange(
+			selectedTypes.length === CONTENT_TYPES.length
+				? ''
+				: selectedTypes.toString()
+		);
 
 		_handleCancel();
 	};
@@ -201,10 +204,13 @@ function ContentTypeModal({
 	);
 }
 
-export default function ContentTypeInput({onBlur, onChange, touched, value}) {
+export default function ContentTypeInput({onBlur, onChange, value}) {
 	const {observer, onOpenChange, open} = useModal();
 
-	const _getSelectedTypes = (items) => (items === '' ? [] : items.split(','));
+	const _getSelectedTypes = (items) =>
+		items
+			? items.split(',')
+			: CONTENT_TYPES.map(({className}) => className);
 
 	const _handleClose = () => {
 		onOpenChange(false);
@@ -227,11 +233,7 @@ export default function ContentTypeInput({onBlur, onChange, touched, value}) {
 				/>
 			)}
 
-			<ClayInput.GroupItem
-				className={getCN({
-					'has-error': !value && touched,
-				})}
-			>
+			<ClayInput.GroupItem>
 				<label>
 					{Liferay.Language.get('content-type')}
 
@@ -257,12 +259,8 @@ export default function ContentTypeInput({onBlur, onChange, touched, value}) {
 						size="sm"
 					>
 						{!value
-							? Liferay.Language.get('select')
-							: _getSelectedTypes(value).length ===
-							  CONTENT_TYPES.length
 							? Liferay.Util.sub(
 									Liferay.Language.get('all-x-selected'),
-									_getSelectedTypes(value).length,
 									CONTENT_TYPES.length
 							  )
 							: Liferay.Util.sub(

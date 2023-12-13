@@ -89,13 +89,13 @@ public class BatchEngineBundleTrackerTest {
 		_testProcessBatchEngineBundle(
 			"batch5", "/batch5/data.batch-engine-data.json");
 		_testProcessBatchEngineBundle(
-			"batch6", "/batch6/data1.batch-engine-data.json",
-			"/batch6/data2.batch-engine-data.json");
+			"batch6", "/batch6/1data.batch-engine-data.json",
+			"/batch6/2data.batch-engine-data.json");
 		_testProcessBatchEngineBundle("batch7", "/batch7/export.json");
 		_testProcessBatchEngineBundle(
-			"batch8", "/batch8/data1.batch-engine-data.json",
-			"/batch8/data2.batch-engine-data.json",
-			"/batch8/data3.batch-engine-data.json");
+			"batch8", "/batch8/1data.batch-engine-data.json",
+			"/batch8/2data.batch-engine-data.json",
+			"/batch8/10data.batch-engine-data.json");
 		_testProcessBatchEngineBundle(
 			"batch9", "/batch9/data.batch-engine-data.json");
 
@@ -211,11 +211,8 @@ public class BatchEngineBundleTrackerTest {
 			List<String> expectedDataFileNamesList = Arrays.asList(
 				expectedDataFileNames);
 
-			Assert.assertTrue(
-				StringBundler.concat(
-					"Expected ", expectedDataFileNames, " was ",
-					processedDataFileNames),
-				expectedDataFileNamesList.containsAll(processedDataFileNames));
+			Assert.assertEquals(
+				expectedDataFileNamesList, processedDataFileNames);
 
 			bundle.stop();
 

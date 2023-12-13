@@ -27,7 +27,7 @@ export class ApiHelpers {
 			headers: await this.getHeader(),
 		});
 
-		return await response.json();
+		return response.json();
 	}
 
 	async getHeader() {

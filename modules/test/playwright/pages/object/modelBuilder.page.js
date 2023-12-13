@@ -83,6 +83,6 @@ export class ModelBuilderPage {
 		await this.saveNewObjectRelationshipButton.click();
 		const response = await responsePromise;
 
-		return await response.json();
+		return response.json();
 	}
 }

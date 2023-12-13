@@ -436,14 +436,14 @@ public class AssetListEntryServiceImpl extends AssetListEntryServiceBaseImpl {
 			AssetListEntry assetListEntry)
 		throws PortalException {
 
-		int companyAssetListEntryUsagesCount =
+		int count =
 			_assetListEntryUsageLocalService.
 				getCompanyAssetListEntryUsagesCount(
 					assetListEntry.getCompanyId(),
 					_portal.getClassNameId(AssetListEntry.class),
 					String.valueOf(assetListEntry.getAssetListEntryId()));
 
-		if (companyAssetListEntryUsagesCount > 0) {
+		if (count > 0) {
 			throw new RequiredAssetListEntryException();
 		}
 	}

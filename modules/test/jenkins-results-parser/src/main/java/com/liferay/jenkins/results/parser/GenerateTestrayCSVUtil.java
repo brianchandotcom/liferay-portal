@@ -154,8 +154,9 @@ public class GenerateTestrayCSVUtil {
 
 		public String generateCSV() {
 			return JenkinsResultsParserUtil.join(
-				_CSV_DELIMITER, getTestrayCaseName(), getHistoryURL(),
-				getErrorMessage());
+				_CSV_DELIMITER, _cleanCSVData(getTestrayCaseName()),
+				_cleanCSVData(getHistoryURL()),
+				_cleanCSVData(getErrorMessage()));
 		}
 
 		public String getErrorMessage() {
@@ -319,6 +320,10 @@ public class GenerateTestrayCSVUtil {
 
 			private final String _description;
 
+		}
+
+		private String _cleanCSVData(String string) {
+			return string.replace(_CSV_DELIMITER, ".");
 		}
 
 		private boolean _isWithinJaroWinklerDistance(

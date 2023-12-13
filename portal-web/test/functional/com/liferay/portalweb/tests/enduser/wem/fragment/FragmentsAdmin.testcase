@@ -887,10 +887,10 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-177682. The tooltip of the back button of fragment sets, fragments entry and usages is Go to Fragments."
+	@description = "This is a test for LPS-177682. The tooltip of the back button of fragments entry is Go to Fragments."
 	@priority = 3
-	test ViewBackButtonTooltipFragmentsAdmin {
-		task ("Given the Fragments Admin page") {
+	test ViewBackButtonTooltipInFragmentEditor {
+		task ("Given access to the Fragment editor page") {
 			JSONFragment.addFragmentCollection(
 				groupName = ${randomSiteName},
 				name = "Fragment Set Name");
@@ -903,7 +903,7 @@ definition {
 		}
 
 		task ("When hover over the back button") {
-			MouseOver(locator1 = "Icon#BACK");
+			MouseOver.javaScriptFocus(locator1 = "Icon#BACK");
 		}
 
 		task ("Then see the tooltip message") {
@@ -911,17 +911,29 @@ definition {
 				key_content = "Go to Fragments",
 				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
 		}
+	}
 
+	@description = "This is a test for LPS-177682. The tooltip of the back button of usages is Go to Fragments."
+	@priority = 3
+	test ViewBackButtonTooltipInViewUsages {
 		task ("Given the View Usages page of a fragment") {
-			PortletEntry.publish();
+			JSONFragment.addFragmentCollection(
+				groupName = ${randomSiteName},
+				name = "Fragment Set Name");
+
+			JSONFragment.addSection(
+				collectionName = "Fragment Set Name",
+				fragmentStatus = "Approved",
+				groupName = ${randomSiteName},
+				name = "Fragment Name");
 
 			JSONLayout.addPublicLayout(
 				groupName = ${randomSiteName},
-				layoutName = "Content Page Name",
+				layoutName = "Test Page Name",
 				type = "content");
 
 			ContentPagesNavigator.openEditContentPage(
-				pageName = "Content Page Name",
+				pageName = "Test Page Name",
 				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(

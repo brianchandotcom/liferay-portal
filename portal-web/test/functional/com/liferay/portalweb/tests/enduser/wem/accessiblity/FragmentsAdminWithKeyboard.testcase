@@ -97,10 +97,10 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-177682. Via Keyboard navigation is possible to access the edit mode of Information Template and the tooltip of the back button is 'Go to Templates'"
+	@description = "This is a use case for LPS-177682. Using Keyboard Navigation it is possible to access the back button of fragments entry and is Go to Fragments."
 	@priority = 2
-	test ViewBackButtonTooltipInFragmentsAdminViaKeyboard {
-		task ("Given access to the Fragments Admin page") {
+	test ViewBackButtonTooltipInFragmentEditorViaKeyboard {
+		task ("Given access to the Fragment editor page") {
 			JSONFragment.addFragmentCollection(
 				groupName = "Test Site Name",
 				name = "Fragment Set Name");
@@ -110,6 +110,57 @@ definition {
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Fragment Set Name");
 
 			FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
+		}
+
+		task ("When hover on the back button via keyboard") {
+			KeyPress(
+				locator1 = "ProductMenu#TOGGLE",
+				value1 = "\TAB");
+
+			AssertElementFocused(locator1 = "Icon#BACK");
+		}
+
+		task ("Then see the tooltip message") {
+			AssertVisible(
+				key_content = "Go to Fragments",
+				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
+		}
+	}
+
+	@description = "This is a test for LPS-177682. Using Keyboard Navigation it is possible to access the back button of usages and is Go to Fragments."
+	@priority = 3
+	test ViewBackButtonTooltipInViewUsagesViaKeyboard {
+		task ("Given the View Usages page of a fragment") {
+			JSONFragment.addFragmentCollection(
+				groupName = "Test Site Name",
+				name = "Fragment Set Name");
+
+			JSONFragment.addSection(
+				collectionName = "Fragment Set Name",
+				fragmentStatus = "Approved",
+				groupName = "Test Site Name",
+				name = "Fragment Name");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Fragment Set Name",
+				fragmentName = "Fragment Name");
+
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Fragment Set Name");
+
+			FragmentsAdminNavigator.gotoEntryEllipsisItem(
+				entry = "Fragment Name",
+				item = "View Usages");
 		}
 
 		task ("When hover on the back button via keyboard") {

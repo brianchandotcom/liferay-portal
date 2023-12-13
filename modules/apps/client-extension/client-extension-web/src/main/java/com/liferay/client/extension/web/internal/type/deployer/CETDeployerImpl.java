@@ -8,7 +8,7 @@ package com.liferay.client.extension.web.internal.type.deployer;
 import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.client.extension.type.CET;
 import com.liferay.client.extension.type.CustomElementCET;
-import com.liferay.client.extension.type.EditorConfigurationCET;
+import com.liferay.client.extension.type.EditorConfigContributorCET;
 import com.liferay.client.extension.type.IFrameCET;
 import com.liferay.client.extension.type.JSImportMapsEntryCET;
 import com.liferay.client.extension.type.deployer.CETDeployer;
@@ -19,7 +19,6 @@ import com.liferay.client.extension.web.internal.portlet.CustomElementCETPortlet
 import com.liferay.client.extension.web.internal.portlet.IFrameCETPortlet;
 import com.liferay.client.extension.web.internal.portlet.action.CETPortletConfigurationAction;
 import com.liferay.client.extension.web.internal.portlet.editor.config.contributor.CETEditorConfigContributor;
-import com.liferay.client.extension.web.internal.util.CETUtil;
 import com.liferay.frontend.js.importmaps.extender.JSImportMapsContributor;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.petra.string.StringBundler;
@@ -61,9 +60,10 @@ public class CETDeployerImpl implements CETDeployer {
 		}
 		else if (Objects.equals(
 					cet.getType(),
-					ClientExtensionEntryConstants.TYPE_EDITOR_CONFIGURATION)) {
+					ClientExtensionEntryConstants.
+						TYPE_EDITOR_CONFIG_CONTRIBUTOR)) {
 
-			return _deploy((EditorConfigurationCET)cet);
+			return _deploy((EditorConfigContributorCET)cet);
 		}
 		else if (Objects.equals(
 					cet.getType(), ClientExtensionEntryConstants.TYPE_IFRAME)) {
@@ -120,16 +120,16 @@ public class CETDeployerImpl implements CETDeployer {
 	}
 
 	private List<ServiceRegistration<?>> _deploy(
-		EditorConfigurationCET editorConfigurationCET) {
+		EditorConfigContributorCET editorConfigContributorCET) {
 
 		return Arrays.asList(
 			_register(
 				EditorConfigContributor.class,
 				new CETEditorConfigContributor(
-					editorConfigurationCET.getEditorConfigKeys(),
-					editorConfigurationCET.getEditorNames(),
-					editorConfigurationCET.getPortletNames(),
-					editorConfigurationCET.getURL())));
+					editorConfigContributorCET.getEditorConfigKeys(),
+					editorConfigContributorCET.getEditorNames(),
+					editorConfigContributorCET.getPortletNames(),
+					editorConfigContributorCET.getURL())));
 	}
 
 	private List<ServiceRegistration<?>> _deploy(IFrameCET iFrameCET) {

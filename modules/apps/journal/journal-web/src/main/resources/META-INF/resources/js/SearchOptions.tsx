@@ -92,26 +92,30 @@ const SearchOptions = ({
 	return (
 		<ClayLayout.Row className="cadmin">
 			<ClayLayout.Col>
-				<ClayForm.Group className="c-mr-2 d-inline-flex">
-					<Picker
-						aria-label={Liferay.Language.get('results')}
-						as={Trigger}
-						id={`${namespace}searchResults`}
-						onSelectionChange={(key: Key) =>
-							onChange({results: key})
-						}
-						selectedKey={initialResults}
-					>
-						<DropDown.Group
-							header={Liferay.Language.get('results')}
-							items={searchResultsOptions}
+				{!Liferay.FeatureFlags['LPS-196768'] && (
+					<ClayForm.Group className="c-mr-2 d-inline-flex">
+						<Picker
+							aria-label={Liferay.Language.get('results')}
+							as={Trigger}
+							id={`${namespace}searchResults`}
+							onSelectionChange={(key: Key) =>
+								onChange({results: key})
+							}
+							selectedKey={initialResults}
 						>
-							{(item) => (
-								<Option key={item.value}>{item.label}</Option>
-							)}
-						</DropDown.Group>
-					</Picker>
-				</ClayForm.Group>
+							<DropDown.Group
+								header={Liferay.Language.get('results')}
+								items={searchResultsOptions}
+							>
+								{(item) => (
+									<Option key={item.value}>
+										{item.label}
+									</Option>
+								)}
+							</DropDown.Group>
+						</Picker>
+					</ClayForm.Group>
+				)}
 
 				{searchLocationOptions ? (
 					<ClayForm.Group className="c-mr-2 d-inline-flex">

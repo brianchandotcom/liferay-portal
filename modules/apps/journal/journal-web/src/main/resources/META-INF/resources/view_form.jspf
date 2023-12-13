@@ -25,11 +25,15 @@
 			<div>
 				<div class="cadmin row">
 					<div class="col d-flex">
-						<div class="c-mr-2 d-inline-flex form-group">
-							<button class="btn btn-secondary btn-sm form-control-select">
-								<%= journalDisplayContext.getSearchResultsLabel() %>
-							</button>
-						</div>
+						<c:choose>
+							<c:when test='<%= !FeatureFlagManagerUtil.isEnabled("LPS-196768") %>'>
+								<div class="c-mr-2 d-inline-flex form-group">
+									<button class="btn btn-secondary btn-sm form-control-select">
+										<%= journalDisplayContext.getSearchResultsLabel() %>
+									</button>
+								</div>
+							</c:when>
+						</c:choose>
 
 						<%
 						String searchLocationLabel = journalDisplayContext.getSearchLocationLabel();

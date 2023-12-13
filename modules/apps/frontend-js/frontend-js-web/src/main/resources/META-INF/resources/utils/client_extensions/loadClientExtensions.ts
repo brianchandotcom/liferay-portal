@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {loadModule} from 'frontend-js-web';
+import {loadModule} from './loadModule';
 
 interface ClientExtensionDefinition<T> {
 	context: T;
@@ -42,6 +42,8 @@ export default function loadClientExtensions(
 			}
 		);
 
-		Promise.all(promises).then(onLoad);
+		Promise.all(promises)
+			.then(onLoad)
+			.catch(() => onLoad([]));
 	}
 }

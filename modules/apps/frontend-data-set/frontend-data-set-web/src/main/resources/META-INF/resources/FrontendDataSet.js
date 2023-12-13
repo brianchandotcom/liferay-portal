@@ -6,7 +6,12 @@
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import {useIsMounted, useThunk} from '@liferay/frontend-js-react-web';
-import {fetch, loadModule, openToast} from 'frontend-js-web';
+import {
+	fetch,
+	loadClientExtensions,
+	loadModule,
+	openToast,
+} from 'frontend-js-web';
 import React, {
 	useCallback,
 	useEffect,
@@ -33,7 +38,6 @@ import {
 	getRandomId,
 	loadData,
 } from './utils/index';
-import loadClientExtensions from './utils/loadClientExtensions';
 import {logError} from './utils/logError';
 import ViewsContext from './views/ViewsContext';
 import getViewComponent from './views/getViewComponent';

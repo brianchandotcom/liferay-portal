@@ -5,6 +5,7 @@
 
 package com.liferay.portal.workflow.kaleo.service.impl;
 
+import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceAction;
@@ -151,7 +152,8 @@ public class KaleoTaskAssignmentLocalServiceImpl
 
 			if (Validator.isNotNull(roleAssignment.getRoleName())) {
 				role = RoleUtil.getRole(
-					roleAssignment.getRoleName(),
+					_accountRoleLocalService, roleAssignment.getRoleName(),
+					_roleLocalService,
 					RoleUtil.getRoleType(roleAssignment.getRoleType()),
 					roleAssignment.isAutoCreate(), serviceContext);
 			}
@@ -207,6 +209,9 @@ public class KaleoTaskAssignmentLocalServiceImpl
 			}
 		}
 	}
+
+	@Reference
+	private AccountRoleLocalService _accountRoleLocalService;
 
 	@Reference
 	private RoleLocalService _roleLocalService;

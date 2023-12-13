@@ -21,6 +21,7 @@ export declare function Conditions({
 	errors,
 	learnResources,
 	objectValidationRuleElements,
+	selectedPartialValidationField,
 	setValues,
 	values,
 }: ConditionsProps): JSX.Element;

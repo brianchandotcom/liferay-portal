@@ -17,6 +17,7 @@ export declare function BasicInfo({
 	customObjectFields,
 	disabled,
 	errors,
+	selectedPartialValidationField,
 	setValues,
 	values,
 }: BasicInfoProps): JSX.Element;

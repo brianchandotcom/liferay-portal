@@ -34,6 +34,7 @@ export function Conditions({
 	errors,
 	learnResources,
 	objectValidationRuleElements,
+	selectedPartialValidationField,
 	setValues,
 	values,
 }: ConditionsProps) {
@@ -68,24 +69,6 @@ export function Conditions({
 			})
 		);
 	}, [creationLanguageId, customObjectFields]);
-
-	const getSelectedPartialValidationField = () => {
-		if (values.objectValidationRuleSettings?.length) {
-			const [
-				partialValidationField,
-			] = values.objectValidationRuleSettings;
-
-			const customObjectField = customObjectFields.find(
-				(currentCustomObjectField) =>
-					currentCustomObjectField.externalReferenceCode ===
-					partialValidationField.value
-			);
-
-			return customObjectField?.externalReferenceCode;
-		}
-
-		return '';
-	};
 
 	return (
 		<>
@@ -143,7 +126,7 @@ export function Conditions({
 						});
 					}}
 					required
-					selectedKey={getSelectedPartialValidationField()}
+					selectedKey={selectedPartialValidationField}
 				/>
 			</ErrorMessage>
 		</>

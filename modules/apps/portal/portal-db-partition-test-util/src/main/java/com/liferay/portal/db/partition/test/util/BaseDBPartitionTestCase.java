@@ -318,7 +318,7 @@ public abstract class BaseDBPartitionTestCase {
 				preparedStatement2.setLong(1, 0);
 				preparedStatement2.setLong(2, 1);
 				preparedStatement2.setLong(3, companyId);
-				preparedStatement2.setInt(4, 1);
+				preparedStatement2.setBoolean(4, true);
 
 				preparedStatement2.executeUpdate();
 

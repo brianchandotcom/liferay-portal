@@ -1604,9 +1604,9 @@ public class JournalDisplayContext {
 			}
 		}
 
-		if (FeatureFlagManagerUtil.isEnabled("LPS-196768") && !isSearch() &&
-			!isNavigationMine() && !isNavigationRecent() &&
-			(getDDMStructureId() <= 0) &&
+		if (FeatureFlagManagerUtil.isEnabled("LPS-196768") &&
+			!isTypeVersions() && !isSearch() && !isNavigationMine() &&
+			!isNavigationRecent() && (getDDMStructureId() <= 0) &&
 			(getHighlightedDDMStructureId() <= 0) &&
 			(getStatus() == WorkflowConstants.STATUS_ANY) &&
 			ArrayUtil.isEmpty(_getAssetCategoryIds()) &&

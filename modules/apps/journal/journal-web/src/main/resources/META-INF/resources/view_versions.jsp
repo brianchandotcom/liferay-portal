@@ -92,10 +92,26 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 					value="<%= HtmlUtil.escape(articleVersion.getTitle(locale)) %>"
 				/>
 
-				<liferay-ui:search-container-column-text
-					name="version"
-					orderable="<%= true %>"
-				/>
+				<c:choose>
+					<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPS-196768") %>'>
+						<liferay-ui:search-container-column-text
+							cssClass="table-cell-minw-150"
+							name="version"
+							orderable="<%= true %>"
+						>
+							<clay:label
+								displayType="secondary"
+								label='<%= LanguageUtil.format(request, "version-x", articleVersion.getVersion(), false) %>'
+							/>
+						</liferay-ui:search-container-column-text>
+					</c:when>
+					<c:otherwise>
+						<liferay-ui:search-container-column-text
+							name="version"
+							orderable="<%= true %>"
+						/>
+					</c:otherwise>
+				</c:choose>
 
 				<liferay-ui:search-container-column-status
 					name="status"

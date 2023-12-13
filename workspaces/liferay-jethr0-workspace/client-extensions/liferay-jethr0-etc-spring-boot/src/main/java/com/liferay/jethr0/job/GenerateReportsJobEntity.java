@@ -5,6 +5,8 @@
 
 package com.liferay.jethr0.job;
 
+import java.util.Map;
+
 import org.json.JSONObject;
 
 /**
@@ -12,8 +14,28 @@ import org.json.JSONObject;
  */
 public class GenerateReportsJobEntity extends BaseJobEntity {
 
+	public String getReportNames() {
+		return getParameterValue("reportNames");
+	}
+
+	public void setReportNames(String reportNames) {
+		setParameterValue("reportNames", reportNames);
+	}
+
 	protected GenerateReportsJobEntity(JSONObject jsonObject) {
 		super(jsonObject);
+	}
+
+	@Override
+	protected Map<String, String> getInitialBuildParameters() {
+		Map<String, String> initialBuildParameters =
+			super.getInitialBuildParameters();
+
+		initialBuildParameters.put(
+			"JENKINS_GITHUB_URL", String.valueOf(getJenkinsBranchURL()));
+		initialBuildParameters.put("REPORT_NAMES", getReportNames());
+
+		return initialBuildParameters;
 	}
 
 	@Override

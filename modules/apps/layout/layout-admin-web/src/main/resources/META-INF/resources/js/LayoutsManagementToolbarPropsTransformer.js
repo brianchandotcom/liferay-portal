@@ -59,13 +59,15 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 
 		if (keys.length > itemData.maxItemsToShowInfoMessage) {
 			openModal({
-				bodyHTML: sub(
-					Liferay.Language.get(
-						'you-have-selected-more-than-x-x-info-message'
-					),
-					itemData.maxItemsToShowInfoMessage,
-					Liferay.Language.get('pages')
-				),
+				bodyHTML: `<p class="text-secondary">
+					${sub(
+						Liferay.Language.get(
+							'you-have-selected-more-than-x-x-info-message'
+						),
+						itemData.maxItemsToShowInfoMessage,
+						Liferay.Language.get('pages')
+					)}
+				</p>`,
 				buttons: [
 					{
 						displayType: 'secondary',

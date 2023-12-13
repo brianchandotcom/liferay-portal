@@ -80,6 +80,19 @@ export default function PagesTree({
 				return false;
 			}
 
+			if (priority === 0 && !item.firstPageable) {
+				openErrorToast(
+					sub(
+						Liferay.Language.get(
+							'the-first-page-cannot-be-of-type-x'
+						),
+						item.typeName
+					)
+				);
+
+				return false;
+			}
+
 			return fetch(moveItemURL, {
 				body: Liferay.Util.objectToURLSearchParams({
 					parentPlid: parentItem.plid,

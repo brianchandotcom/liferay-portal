@@ -5,6 +5,16 @@
 
 package com.liferay.portal.tools.db.partition.virtual.instance.migrator.extractor;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
+
+import com.liferay.portal.tools.db.partition.virtual.instance.migrator.common.InstanceData;
+import com.liferay.portal.tools.db.partition.virtual.instance.migrator.extractor.util.DatabaseUtil;
+
+import java.io.File;
+import java.io.IOException;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -70,7 +80,8 @@ public class DBPartitionVirtualInstanceMigratorExtractor {
 			HelpFormatter helpFormatter = new HelpFormatter();
 
 			helpFormatter.printHelp(
-				"Liferay Portal Tools DB Partition Virtual Instance Migrator",
+				"Liferay Portal Tools DB Partition Virtual Instance Migrator " +
+					"Extractor",
 				options);
 
 			return;
@@ -96,6 +107,8 @@ public class DBPartitionVirtualInstanceMigratorExtractor {
 
 				_exit(_LIFERAY_COMMON_EXIT_CODE_BAD);
 			}
+
+			_writeToFile(DatabaseUtil.extractInstanceData(_connection));
 		}
 		catch (ParseException parseException) {
 			System.err.println("Unable to parse command line properties:");
@@ -105,13 +118,28 @@ public class DBPartitionVirtualInstanceMigratorExtractor {
 			HelpFormatter helpFormatter = new HelpFormatter();
 
 			helpFormatter.printHelp(
-				"Liferay Portal Tools DB Partition Virtual Instance Migrator",
+				"Liferay Portal Tools DB Partition Virtual Instance Migrator " +
+					"Extractor",
 				options);
 
 			_exit(_LIFERAY_COMMON_EXIT_CODE_HELP);
 		}
 
 		_exit(_LIFERAY_COMMON_EXIT_CODE_OK);
+	}
+
+	private static void _writeToFile(InstanceData instanceData)
+		throws IOException {
+
+		ObjectMapper objectMapper = new ObjectMapper() {
+			{
+				enable(SerializationFeature.INDENT_OUTPUT);
+				setDateFormat(new ISO8601DateFormat());
+			}
+		};
+
+		objectMapper.writeValue(
+			new File("./migration_extraction.data"), instanceData);
 	}
 
 	/**

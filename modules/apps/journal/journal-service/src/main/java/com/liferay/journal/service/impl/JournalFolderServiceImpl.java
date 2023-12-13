@@ -6,6 +6,7 @@
 package com.liferay.journal.service.impl;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
@@ -417,22 +418,18 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 				JournalFolderConstants.
 					RESTRICTION_TYPE_DDM_STRUCTURES_AND_WORKFLOW) {
 
-			return _ddmStructureService.search(
-				companyId, groupIds,
+			return _ddmStructureLinkLocalService.getStructureLinkStructures(
 				_classNameLocalService.getClassNameId(JournalFolder.class),
-				folderId, keywords, WorkflowConstants.STATUS_ANY, start, end,
-				orderByComparator);
+				folderId, keywords, start, end);
 		}
 
 		folderId = journalFolderLocalService.getOverridedDDMStructuresFolderId(
 			folderId);
 
 		if (folderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			return _ddmStructureService.search(
-				companyId, groupIds,
+			return _ddmStructureLinkLocalService.getStructureLinkStructures(
 				_classNameLocalService.getClassNameId(JournalFolder.class),
-				folderId, keywords, WorkflowConstants.STATUS_ANY, start, end,
-				orderByComparator);
+				folderId, keywords, start, end);
 		}
 
 		return _ddmStructureService.search(
@@ -552,6 +549,9 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
+	private DDMStructureLinkLocalService _ddmStructureLinkLocalService;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.dynamic.data.mapping.model.DDMStructure)"

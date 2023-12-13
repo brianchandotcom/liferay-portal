@@ -1,0 +1,24 @@
+{
+	"description": "",
+	"editorType": "richText",
+	"externalReferenceCode": "MARKETPLACE-ACTION-PUBLISHER-ACCOUNT-REQUEST-EMAIL-TEMPLATE",
+	"name": "Publisher Account Request",
+	"recipientType": "email",
+	"recipients": [
+		{
+			"bcc": "",
+			"cc": "",
+			"from": "no-reply@liferay.com",
+			"fromName": {
+				"en-US": "Liferay Marketplace"
+			},
+			"to": {
+				"en-US": "marketplace-admin@liferay.com"
+			}
+		}
+	],
+	"subject": {
+		"en_US": "New Publisher Account Request"
+	},
+	"type": "email"
+}

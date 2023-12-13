@@ -5,6 +5,7 @@
 
 package com.liferay.fragment.collection.filter.date.display.context;
 
+import com.liferay.fragment.constants.FragmentConfigurationFieldDataType;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
@@ -42,6 +43,11 @@ public class FragmentCollectionFilterDateDisplayContext {
 			String.valueOf(_fragmentEntryLink.getFragmentEntryLinkId())
 		).put(
 			"isDisabled", isDisabled()
+		).put(
+			"targetCollections",
+			_fragmentEntryConfigurationParser.getConfigurationFieldValue(
+				_fragmentEntryLink.getEditableValues(), "targetCollections",
+				FragmentConfigurationFieldDataType.ARRAY)
 		).build();
 	}
 

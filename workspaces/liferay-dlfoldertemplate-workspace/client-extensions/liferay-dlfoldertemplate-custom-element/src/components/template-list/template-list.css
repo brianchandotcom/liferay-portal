@@ -1,0 +1,28 @@
+.justify-center {
+	justify-content: center;
+	justify-items: center;
+	margin: auto;
+}
+.ant-card-extra > button {
+	margin-right: 0.5rem;
+}
+.template-item {
+	margin-bottom: 1rem;
+	padding: 1rem;
+	border-bottom: solid;
+	border-bottom-width: 1px;
+	border-bottom-color: #efeeee;
+}
+.template-item.header {
+	background-color: #fcf9f9;
+
+	font-weight: bold;
+}
+.template-item > div {
+	display: flex;
+	text-transform: capitalize;
+}
+
+.justify-end {
+	justify-content: end;
+}

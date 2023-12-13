@@ -113,11 +113,11 @@ public class BatchBuild extends BaseParentBuild {
 
 		List<Build> failedDownstreamBuilds = getFailedDownstreamBuilds();
 
-		List<Element> downstreamBuildFailureMessages =
-			getDownstreamBuildMessages(failedDownstreamBuilds);
+		List<Element> downstreamBuildMessageElements =
+			getDownstreamBuildMessageElements(failedDownstreamBuilds);
 
 		if (result.equals("FAILURE") &&
-			downstreamBuildFailureMessages.isEmpty()) {
+			downstreamBuildMessageElements.isEmpty()) {
 
 			_gitHubMessageElement = messageElement;
 

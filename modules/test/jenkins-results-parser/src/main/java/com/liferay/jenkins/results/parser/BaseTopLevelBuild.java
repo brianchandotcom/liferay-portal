@@ -993,11 +993,11 @@ public abstract class BaseTopLevelBuild
 			System.out.println(sb.toString());
 		}
 
-		List<Element> downstreamBuildMessages = getDownstreamBuildMessages(
-			failedDownstreamBuilds);
+		List<Element> downstreamBuildMessageElements =
+			getDownstreamBuildMessageElements(failedDownstreamBuilds);
 
 		System.out.println(
-			"Collected " + downstreamBuildMessages.size() +
+			"Collected " + downstreamBuildMessageElements.size() +
 				" downstream failure messages");
 
 		List<Element> allCurrentBuildFailureElements = new ArrayList<>();

@@ -257,7 +257,7 @@ public class PoshiDependenciesFileLocationCheck extends BaseFileCheck {
 		"portal-web/test/functional/com/liferay/portalweb/dependencies";
 
 	private static final String[] _TEST_FILE_LOCATIONS = {
-		"modules", "portal-web/test/functional/com/liferay/portalweb/tests"
+		"modules", "portal-web/test/functional/com/liferay/portalweb"
 	};
 
 	private Map<String, Set<String>> _dependenciesFileReferencesMap;

@@ -4,7 +4,7 @@
  */
 
 import {Locale, TranslationAdminSelector} from 'frontend-js-components-web';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 
 type Field = Record<Liferay.Language.Locale, string>;
 
@@ -24,7 +24,9 @@ export default function TranslationManager({
 	const [selectedLanguageId, setSelectedLanguageId] = useState<
 		Liferay.Language.Locale
 	>(initialSelectedLanguageId);
-	const [, setTranslations] = useState(fieldToTranslations(fields));
+	const [translations, setTranslations] = useState(
+		fieldToTranslations(fields)
+	);
 
 	useEffect(() => {
 		const updateTranslations = () => {
@@ -70,6 +72,21 @@ export default function TranslationManager({
 		});
 	}, [selectedLanguageId]);
 
+	const translatedItems = useMemo(
+		() =>
+			locales.reduce((acc, locale) => {
+				const translatedItems = translations.filter(({languages}) =>
+					languages.includes(locale.id)
+				).length;
+
+				return {
+					...acc,
+					...(translatedItems && {[locale.id]: translatedItems}),
+				};
+			}, {}),
+		[translations, locales]
+	);
+
 	return (
 		<TranslationAdminSelector
 			activeLanguageIds={locales.map(({id}) => id)}
@@ -78,6 +95,14 @@ export default function TranslationManager({
 			displayType="HORIZONTAL"
 			onSelectedLanguageIdChange={setSelectedLanguageId}
 			selectedLanguageId={selectedLanguageId}
+			translationProgress={
+				Object.keys(translatedItems).length
+					? {
+							totalItems: Object.keys(fields).length,
+							translatedItems,
+					  }
+					: null
+			}
 		/>
 	);
 }

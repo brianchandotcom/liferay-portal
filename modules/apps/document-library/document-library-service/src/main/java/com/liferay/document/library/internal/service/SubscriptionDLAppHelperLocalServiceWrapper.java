@@ -5,6 +5,7 @@
 
 package com.liferay.document.library.internal.service;
 
+import com.liferay.asset.display.page.portlet.AssetDisplayPageEntryFormProcessor;
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
 import com.liferay.document.library.internal.util.DLSubscriptionSender;
@@ -103,6 +104,12 @@ public class SubscriptionDLAppHelperLocalServiceWrapper
 		super.updateStatus(
 			userId, fileEntry, latestFileVersion, oldStatus, newStatus,
 			serviceContext, workflowContext);
+
+		// DisplayPage
+
+		_assetDisplayPageEntryFormProcessor.process(
+			FileEntry.class.getName(), fileEntry.getFileEntryId(),
+			serviceContext);
 
 		if ((newStatus == WorkflowConstants.STATUS_APPROVED) &&
 			(oldStatus != WorkflowConstants.STATUS_IN_TRASH) &&
@@ -332,6 +339,10 @@ public class SubscriptionDLAppHelperLocalServiceWrapper
 
 		subscriptionSender.flushNotificationsAsync();
 	}
+
+	@Reference
+	private AssetDisplayPageEntryFormProcessor
+		_assetDisplayPageEntryFormProcessor;
 
 	@Reference
 	private AssetDisplayPageEntryLocalService

@@ -5,7 +5,6 @@
 
 package com.liferay.document.library.web.internal.portlet.action;
 
-import com.liferay.asset.display.page.portlet.AssetDisplayPageEntryFormProcessor;
 import com.liferay.asset.kernel.exception.AssetCategoryException;
 import com.liferay.asset.kernel.exception.AssetTagException;
 import com.liferay.asset.kernel.model.AssetVocabulary;
@@ -465,16 +464,12 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 				tempFileEntry.getGroupId(), folderId,
 				FileUtil.stripExtension(originalSelectedFileName));
 
-			FileEntry fileEntry = _dlAppService.addFileEntry(
+			_dlAppService.addFileEntry(
 				null, repositoryId, folderId, uniqueFileName,
 				tempFileEntry.getMimeType(), uniqueFileTitle, StringPool.BLANK,
 				description, changeLog, tempFileEntry.getContentStream(),
 				tempFileEntry.getSize(), expirationDate, reviewDate,
 				serviceContext);
-
-			_assetDisplayPageEntryFormProcessor.process(
-				FileEntry.class.getName(), fileEntry.getFileEntryId(),
-				actionRequest);
 
 			validFileNameKVPs.add(
 				new KeyValuePair(uniqueFileName, selectedFileName));
@@ -1378,10 +1373,6 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 				}
 			}
 
-			_assetDisplayPageEntryFormProcessor.process(
-				FileEntry.class.getName(), fileEntry.getFileEntryId(),
-				actionRequest);
-
 			String portletResource = ParamUtil.getString(
 				actionRequest, "portletResource");
 
@@ -1415,10 +1406,6 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditFileEntryMVCActionCommand.class);
-
-	@Reference
-	private AssetDisplayPageEntryFormProcessor
-		_assetDisplayPageEntryFormProcessor;
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;

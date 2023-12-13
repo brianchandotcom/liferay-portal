@@ -134,9 +134,7 @@ public class AssetListEntryServiceImpl extends AssetListEntryServiceBaseImpl {
 			_assetListEntryModelResourcePermission.check(
 				getPermissionChecker(), assetListEntry, ActionKeys.DELETE);
 
-			_checkCompanyAssetListEntryUsages(
-				assetListEntry.getCompanyId(),
-				String.valueOf(assetListEntry.getAssetListEntryId()));
+			_checkCompanyAssetListEntryUsages(assetListEntry);
 
 			assetListEntryLocalService.deleteAssetListEntry(assetListEntry);
 		}
@@ -152,9 +150,7 @@ public class AssetListEntryServiceImpl extends AssetListEntryServiceBaseImpl {
 		_assetListEntryModelResourcePermission.check(
 			getPermissionChecker(), assetListEntry, ActionKeys.DELETE);
 
-		_checkCompanyAssetListEntryUsages(
-			assetListEntry.getCompanyId(),
-			String.valueOf(assetListEntry.getAssetListEntryId()));
+		_checkCompanyAssetListEntryUsages(assetListEntry);
 
 		return assetListEntryLocalService.deleteAssetListEntry(assetListEntry);
 	}
@@ -170,9 +166,7 @@ public class AssetListEntryServiceImpl extends AssetListEntryServiceBaseImpl {
 		_assetListEntryModelResourcePermission.check(
 			getPermissionChecker(), assetListEntry, ActionKeys.UPDATE);
 
-		_checkCompanyAssetListEntryUsages(
-			assetListEntry.getCompanyId(),
-			String.valueOf(assetListEntry.getAssetListEntryId()));
+		_checkCompanyAssetListEntryUsages(assetListEntry);
 
 		assetListEntryLocalService.deleteAssetListEntry(
 			assetListEntryId, segmentsEntryId);
@@ -439,14 +433,15 @@ public class AssetListEntryServiceImpl extends AssetListEntryServiceBaseImpl {
 	}
 
 	private void _checkCompanyAssetListEntryUsages(
-			long companyId, String assetListEntryId)
+			AssetListEntry assetListEntry)
 		throws PortalException {
 
 		int companyAssetListEntryUsagesCount =
 			_assetListEntryUsageLocalService.
 				getCompanyAssetListEntryUsagesCount(
-					companyId, _portal.getClassNameId(AssetListEntry.class),
-					String.valueOf(assetListEntryId));
+					assetListEntry.getCompanyId(),
+					_portal.getClassNameId(AssetListEntry.class),
+					String.valueOf(assetListEntry.getAssetListEntryId()));
 
 		if (companyAssetListEntryUsagesCount > 0) {
 			throw new RequiredAssetListEntryException();

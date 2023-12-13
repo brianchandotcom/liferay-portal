@@ -5,6 +5,8 @@
 
 package com.liferay.jethr0.job;
 
+import java.util.Map;
+
 import org.json.JSONObject;
 
 /**
@@ -23,6 +25,16 @@ public abstract class BaseGenerateCISystemReportJobEntity
 
 	protected BaseGenerateCISystemReportJobEntity(JSONObject jsonObject) {
 		super(jsonObject);
+	}
+
+	@Override
+	protected Map<String, String> getInitialBuildParameters() {
+		Map<String, String> initialBuildParameters =
+			super.getInitialBuildParameters();
+
+		initialBuildParameters.put("SLAVE_LABEL", getSlaveLabel());
+
+		return initialBuildParameters;
 	}
 
 }

@@ -27,9 +27,7 @@ class TicketWebComponent extends HTMLElement {
 											<a href="#dashboard">Dashboard</a>
 										</li>
 										<li>
-											<a href="#ticketapp">
-												Tickets App
-											</a>
+											<a href="#ticketapp">Tickets App</a>
 										</li>
 									</ul>
 								</nav>

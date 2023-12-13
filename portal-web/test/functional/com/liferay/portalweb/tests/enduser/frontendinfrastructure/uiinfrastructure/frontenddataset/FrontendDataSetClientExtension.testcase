@@ -34,9 +34,9 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given a client extension zip file deployed") {
-			FileInstall.deployFileOnServer(jarFile = "liferay-sample-fds-cell-renderer.zip");
+			var clientExtensionSamples = "liferay-sample-fds-cell-renderer";
 
-			WaitForConsoleTextPresent(value1 = "STARTED liferaysamplefdscellrenderer_7.4.13");
+			AntCommands.runCommand("build-test-liferay-sample-workspace.xml", "deploy-workspace-client-extension -Dworkspace.client.extension.name=${clientExtensionSamples}");
 
 			Refresh();
 		}
@@ -101,9 +101,9 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given a client extension zip file deployed") {
-			FileInstall.deployFileOnServer(jarFile = "liferay-sample-fds-cell-renderer.zip");
+			var clientExtensionSamples = "liferay-sample-fds-cell-renderer";
 
-			WaitForConsoleTextPresent(value1 = "STARTED liferaysamplefdscellrenderer_7.4.13");
+			AntCommands.runCommand("build-test-liferay-sample-workspace.xml", "deploy-workspace-client-extension -Dworkspace.client.extension.name=${clientExtensionSamples}");
 
 			Refresh();
 		}
@@ -210,9 +210,9 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given Sample FDS portlet deployed") {
-			FileInstall.deployFileOnServer(jarFile = "liferay-sample-fds-cell-renderer.zip");
+			var clientExtensionSamples = "liferay-sample-fds-cell-renderer";
 
-			WaitForConsoleTextPresent(value1 = "STARTED liferay-sample-fds-cell-renderer_1.0.0");
+			AntCommands.runCommand("build-test-liferay-sample-workspace.xml", "deploy-workspace-client-extension -Dworkspace.client.extension.name=${clientExtensionSamples}");
 		}
 
 		task ("When entering on a page which uses FDS") {
@@ -275,9 +275,9 @@ definition {
 		property test.liferay.virtual.instance = "false";
 
 		task ("Given a new Client Extension Frontend Data Set filter deployed") {
-			FileInstall.deployFileOnServer(jarFile = "liferay-sample-fds-filter.zip");
+			var clientExtensionSamples = "liferay-sample-fds-filter";
 
-			WaitForConsoleTextPresent(value1 = "STARTED liferaysamplefdsfilter_7.4.13");
+			AntCommands.runCommand("build-test-liferay-sample-workspace.xml", "deploy-workspace-client-extension -Dworkspace.client.extension.name=${clientExtensionSamples}");
 		}
 
 		task ("And a new data set entry") {

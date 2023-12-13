@@ -45,12 +45,9 @@ public class TicketAttachmentsInitiateUploadRestController
 		try {
 			JSONObject jsonObject = new JSONObject(json);
 
-			String externalReferenceCode = jsonObject.optString(
-				"externalReferenceCode");
 			String fileName = jsonObject.getString("fileName");
 			String fileSize = jsonObject.getString("fileSize");
 			String md5Checksum = jsonObject.getString("md5Checksum");
-			String type = jsonObject.optString("type");
 			long zendeskTicketId = jsonObject.getLong("zendeskTicketId");
 
 			TicketAttachment ticketAttachment =
@@ -67,6 +64,10 @@ public class TicketAttachmentsInitiateUploadRestController
 				}
 			}
 			else {
+				String externalReferenceCode = jsonObject.optString(
+					"externalReferenceCode");
+				String type = jsonObject.optString("type");
+
 				ticketAttachment =
 					_ticketAttachmentWebService.addTicketAttachment(
 						jwt, _getAccountKey(zendeskTicketId),

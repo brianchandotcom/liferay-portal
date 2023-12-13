@@ -85,11 +85,11 @@ public class BatchEngineUnitReaderImpl implements BatchEngineUnitReader {
 		}
 
 		if (!zipEntryName.contains(StringPool.SLASH)) {
-			return StringPool.BLANK;
+			return StringPool.SLASH;
 		}
 
 		return zipEntryName.substring(
-			0, zipEntryName.lastIndexOf(StringPool.SLASH));
+			0, zipEntryName.lastIndexOf(StringPool.SLASH) + 1);
 	}
 
 	private Collection<BatchEngineUnit> _getBatchEngineBundleUnitsCollection(

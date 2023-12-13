@@ -4,12 +4,14 @@
  */
 
 import ClayButton from '@clayui/button';
+import {Option, Picker} from '@clayui/core';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import {sub} from 'frontend-js-web';
 import React, {Ref, useEffect, useMemo, useState} from 'react';
 
+import useId from '../hooks/useId';
 import {Locale, Translations} from './TranslationAdminContent';
 import TranslationAdminModal from './TranslationAdminModal';
 import TranslationAdminStatusLabel from './TranslationAdminStatusLabel';
@@ -122,6 +124,7 @@ export default function TranslationAdminSelector({
 		Liferay.Language.Locale
 	>(initialSelectedLanguageId);
 	const [selectorDropdownActive, setSelectorDropdownActive] = useState(false);
+	const selectorId = useId();
 	const [translationModalVisible, setTranslationModalVisible] = useState(
 		false
 	);
@@ -169,6 +172,44 @@ export default function TranslationAdminSelector({
 	useEffect(() => {
 		setSelectedLanguageId(initialSelectedLanguageId);
 	}, [initialSelectedLanguageId]);
+
+	if (Liferay.FeatureFlags['LPS-114700'] && !adminMode) {
+		return (
+			<Picker
+				as={TriggerButton}
+				displayType={displayType}
+				id={selectorId}
+				items={activeLocales}
+				onSelectionChange={(id: React.Key) => {
+					setSelectedLanguageId(id as Liferay.Language.Locale);
+				}}
+				selectedItem={activeLocales.find(
+					(locale) => locale.id === selectedLanguageId
+				)}
+				selectedKey={selectedLanguageId}
+			>
+				{(item) => (
+					<Option key={item.id} textValue={item.label}>
+						<ClayLayout.ContentRow containerElement="span">
+							<ClayLayout.ContentCol
+								containerElement="span"
+								expand
+							>
+								<ClayLayout.ContentSection>
+									<ClayIcon
+										className="inline-item-before"
+										symbol={item.symbol}
+									/>
+
+									{item.label}
+								</ClayLayout.ContentSection>
+							</ClayLayout.ContentCol>
+						</ClayLayout.ContentRow>
+					</Option>
+				)}
+			</Picker>
+		);
+	}
 
 	return (
 		<>

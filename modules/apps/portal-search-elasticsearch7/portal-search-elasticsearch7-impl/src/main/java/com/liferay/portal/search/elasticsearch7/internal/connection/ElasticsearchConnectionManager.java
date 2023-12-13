@@ -7,9 +7,6 @@ package com.liferay.portal.search.elasticsearch7.internal.connection;
 
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.cluster.ClusterExecutor;
-import com.liferay.portal.kernel.cluster.ClusterNode;
 import com.liferay.portal.kernel.concurrent.SystemExecutorServiceUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -22,8 +19,6 @@ import com.liferay.portal.search.elasticsearch7.internal.configuration.Elasticse
 import com.liferay.portal.search.elasticsearch7.internal.configuration.OperationModeResolver;
 import com.liferay.portal.search.elasticsearch7.internal.connection.constants.ConnectionConstants;
 import com.liferay.portal.search.elasticsearch7.internal.helper.SearchLogHelperUtil;
-
-import java.net.InetAddress;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -171,46 +166,23 @@ public class ElasticsearchConnectionManager
 	}
 
 	public String getLocalClusterConnectionId() {
-		ClusterNode localClusterNode = _clusterExecutor.getLocalClusterNode();
-
 		CrossClusterReplicationConfigurationHelper
 			currentCrossClusterReplicationConfigurationHelper =
 				_crossClusterReplicationConfigurationHelperSnapshot.get();
 
-		if (localClusterNode == null) {
-			if (currentCrossClusterReplicationConfigurationHelper == null) {
-				return null;
-			}
-
-			List<String> localClusterConnectionIds =
-				currentCrossClusterReplicationConfigurationHelper.
-					getLocalClusterConnectionIds();
-
-			if (localClusterConnectionIds.isEmpty()) {
-				return null;
-			}
-
-			return localClusterConnectionIds.get(0);
-		}
-
-		InetAddress portalInetAddress = localClusterNode.getPortalInetAddress();
-
-		if ((portalInetAddress == null) ||
-			(currentCrossClusterReplicationConfigurationHelper == null)) {
-
+		if (currentCrossClusterReplicationConfigurationHelper == null) {
 			return null;
 		}
 
-		Map<String, String> localClusterConnectionConfigurations =
+		List<String> localClusterConnectionIds =
 			currentCrossClusterReplicationConfigurationHelper.
-				getLocalClusterConnectionIdsMap();
+				getLocalClusterConnectionIds();
 
-		String localClusterNodeHostName =
-			portalInetAddress.getHostName() + StringPool.COLON +
-				localClusterNode.getPortalPort();
+		if (localClusterConnectionIds.isEmpty()) {
+			return null;
+		}
 
-		return localClusterConnectionConfigurations.get(
-			localClusterNodeHostName);
+		return localClusterConnectionIds.get(0);
 	}
 
 	@Override
@@ -470,9 +442,6 @@ public class ElasticsearchConnectionManager
 		_crossClusterReplicationConfigurationHelperSnapshot = new Snapshot<>(
 			ElasticsearchConnectionManager.class,
 			CrossClusterReplicationConfigurationHelper.class, null, true);
-
-	@Reference
-	private ClusterExecutor _clusterExecutor;
 
 	private final Map<String, Supplier<ElasticsearchConnection>>
 		_elasticsearchConnectionSuppliers = new ConcurrentHashMap<>();

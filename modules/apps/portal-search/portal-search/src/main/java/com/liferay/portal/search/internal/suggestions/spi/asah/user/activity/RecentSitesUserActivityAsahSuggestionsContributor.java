@@ -5,6 +5,7 @@
 
 package com.liferay.portal.search.internal.suggestions.spi.asah.user.activity;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -58,16 +59,23 @@ public class RecentSitesUserActivityAsahSuggestionsContributor
 		Group group = _groupLocalService.fetchGroup(
 			itemJSONObject.getLong("groupId"));
 
-		if (group != null) {
-			return group.getDisplayURL(_themeDisplay);
+		if (group == null) {
+			return StringPool.BLANK;
 		}
 
-		return itemJSONObject.getString("url");
+		return group.getDisplayURL(_themeDisplay);
 	}
 
 	@Override
 	protected String getText(JSONObject itemJSONObject) {
-		return itemJSONObject.getString("title");
+		Group group = _groupLocalService.fetchGroup(
+			itemJSONObject.getLong("groupId"));
+
+		if (group == null) {
+			return StringPool.BLANK;
+		}
+
+		return group.getName(_themeDisplay.getLocale());
 	}
 
 	@Reference

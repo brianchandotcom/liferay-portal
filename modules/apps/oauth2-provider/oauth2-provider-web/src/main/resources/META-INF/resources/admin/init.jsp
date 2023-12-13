@@ -7,6 +7,8 @@
 
 <%@ include file="/init.jsp" %>
 
+<%@ taglib uri="http://liferay.com/tld/react" prefix="react" %>
+
 <%@ page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.JSPNavigationItemList" %><%@
 page import="com.liferay.item.selector.ItemSelector" %><%@
 page import="com.liferay.item.selector.criteria.UUIDItemSelectorReturnType" %><%@

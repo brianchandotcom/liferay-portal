@@ -1714,40 +1714,6 @@ app.server.type=@{app.server.type}]]></echo>
 										<if>
 											<equals arg1="@{test.portal.log.assert}" arg2="true" />
 											<then>
-												<gradle-execute dir="modules/core" task="deploy">
-													<arg value="--parallel" />
-													<arg value="-Dbuild.profile=portal-pre" />
-													<arg value="-Pforced.deploy.dir=${project.dir}/tmp/lib-pre" />
-												</gradle-execute>
-
-												<ant dir="portal-kernel" inheritAll="false" target="install-portal-snapshot" />
-
-												<gradle-execute dir="modules/apps" task="deploy">
-													<arg value="--parallel" />
-													<arg value="-Dbuild.profile=portal-pre" />
-													<arg value="-Pforced.deploy.dir=${project.dir}/tmp/lib-pre" />
-												</gradle-execute>
-
-												<get-test-app-server-lib-portal-dir />
-
-												<unzip
-													dest="portal-impl/classes"
-													src="${test.app.server.lib.portal.dir}/portal-impl.jar"
-												/>
-
-												<ant dir="portal-test" inheritAll="false" target="jar" />
-
-												<local name="artifact.version" />
-
-												<property name="artifact.version" value="1.0.0-TEST_ARTIFACT" />
-
-												<copy-artifact-to-local-cache artifact.file="${test.app.server.lib.portal.dir}/portal-impl.jar" artifact.name="com.liferay.portal.impl" artifact.version="${artifact.version}" />
-												<copy-artifact-to-local-cache artifact.file="${test.app.server.lib.portal.dir}/portal-kernel.jar" artifact.name="com.liferay.portal.kernel" artifact.version="${artifact.version}" />
-												<copy-artifact-to-local-cache artifact.file="${project.dir}/portal-test/portal-test.jar" artifact.name="com.liferay.portal.test" artifact.version="${artifact.version}" />
-												<copy-artifact-to-local-cache artifact.file="${test.app.server.lib.portal.dir}/util-bridges.jar" artifact.name="com.liferay.util.bridges" artifact.version="${artifact.version}" />
-												<copy-artifact-to-local-cache artifact.file="${test.app.server.lib.portal.dir}/util-java.jar" artifact.name="com.liferay.util.java" artifact.version="${artifact.version}" />
-												<copy-artifact-to-local-cache artifact.file="${test.app.server.lib.portal.dir}/util-taglib.jar" artifact.name="com.liferay.util.taglib" artifact.version="${artifact.version}" />
-
 												<ant dir="portal-kernel" inheritAll="false" target="test-class">
 													<property name="test.class" value="PortalLogAssertorTest" />
 												</ant>
@@ -1785,6 +1751,40 @@ app.server.type=@{app.server.type}]]></echo>
 									test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
 									test.sql.zip.url="${test.sql.zip.url}"
 								/>
+
+								<gradle-execute dir="modules/core" task="deploy">
+									<arg value="--parallel" />
+									<arg value="-Dbuild.profile=portal-pre" />
+									<arg value="-Pforced.deploy.dir=${project.dir}/tmp/lib-pre" />
+								</gradle-execute>
+
+								<ant dir="portal-kernel" inheritAll="false" target="install-portal-snapshot" />
+
+								<gradle-execute dir="modules/apps" task="deploy">
+									<arg value="--parallel" />
+									<arg value="-Dbuild.profile=portal-pre" />
+									<arg value="-Pforced.deploy.dir=${project.dir}/tmp/lib-pre" />
+								</gradle-execute>
+
+								<get-test-app-server-lib-portal-dir />
+
+								<unzip
+									dest="portal-impl/classes"
+									src="${test.app.server.lib.portal.dir}/portal-impl.jar"
+								/>
+
+								<ant dir="portal-test" inheritAll="false" target="jar" />
+
+								<local name="artifact.version" />
+
+								<property name="artifact.version" value="1.0.0-TEST_ARTIFACT" />
+
+								<copy-artifact-to-local-cache artifact.file="${test.app.server.lib.portal.dir}/portal-impl.jar" artifact.name="com.liferay.portal.impl" artifact.version="${artifact.version}" />
+								<copy-artifact-to-local-cache artifact.file="${test.app.server.lib.portal.dir}/portal-kernel.jar" artifact.name="com.liferay.portal.kernel" artifact.version="${artifact.version}" />
+								<copy-artifact-to-local-cache artifact.file="${project.dir}/portal-test/portal-test.jar" artifact.name="com.liferay.portal.test" artifact.version="${artifact.version}" />
+								<copy-artifact-to-local-cache artifact.file="${test.app.server.lib.portal.dir}/util-bridges.jar" artifact.name="com.liferay.util.bridges" artifact.version="${artifact.version}" />
+								<copy-artifact-to-local-cache artifact.file="${test.app.server.lib.portal.dir}/util-java.jar" artifact.name="com.liferay.util.java" artifact.version="${artifact.version}" />
+								<copy-artifact-to-local-cache artifact.file="${test.app.server.lib.portal.dir}/util-taglib.jar" artifact.name="com.liferay.util.taglib" artifact.version="${artifact.version}" />
 							</then>
 							<elseif>
 								<and>

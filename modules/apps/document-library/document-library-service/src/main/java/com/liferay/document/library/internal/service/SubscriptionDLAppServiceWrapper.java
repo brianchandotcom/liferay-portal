@@ -6,13 +6,17 @@
 package com.liferay.document.library.internal.service;
 
 import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
+import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppServiceWrapper;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 
 import java.io.File;
 import java.io.InputStream;
@@ -20,6 +24,7 @@ import java.io.InputStream;
 import java.util.Date;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Roberto Díaz
@@ -136,11 +141,38 @@ public class SubscriptionDLAppServiceWrapper extends DLAppServiceWrapper {
 			serviceContext, "displayPageType",
 			AssetDisplayPageConstants.TYPE_DEFAULT);
 
-		if (displayPageType == AssetDisplayPageConstants.TYPE_NONE) {
+		if (displayPageType == AssetDisplayPageConstants.TYPE_DEFAULT) {
+			long fileEntryTypeId = ParamUtil.getLong(
+				serviceContext, "fileEntryTypeId",
+				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT);
+
+			LayoutPageTemplateEntry layoutPageTemplateEntry =
+				_layoutPageTemplateEntryService.
+					fetchDefaultLayoutPageTemplateEntry(
+						serviceContext.getScopeGroupId(),
+						_portal.getClassNameId(FileEntry.class),
+						fileEntryTypeId);
+
+			if (layoutPageTemplateEntry == null) {
+				return false;
+			}
+		}
+		else if (displayPageType == AssetDisplayPageConstants.TYPE_NONE) {
 			return false;
+		}
+		else if (displayPageType == AssetDisplayPageConstants.TYPE_SPECIFIC) {
+			if (ParamUtil.getLong(serviceContext, "assetDisplayPageId") == 0) {
+				return false;
+			}
 		}
 
 		return true;
 	}
+
+	@Reference
+	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;
+
+	@Reference
+	private Portal _portal;
 
 }

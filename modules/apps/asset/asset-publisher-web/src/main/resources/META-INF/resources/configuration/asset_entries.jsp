@@ -94,7 +94,7 @@ long[] groupIds = assetPublisherDisplayContext.getGroupIds();
 %>
 
 <c:if test="<%= ArrayUtil.isNotEmpty(groupIds) %>">
-	<div class="d-flex">
+	<div class="d-flex flex-wrap">
 
 		<%
 		for (long groupId : groupIds) {

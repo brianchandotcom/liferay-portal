@@ -518,6 +518,23 @@ public class JournalManagementToolbarDisplayContext
 					LanguageUtil.get(httpServletRequest, "status") + ": " +
 						_getStatusLabel(status));
 			}
+		).add(
+			_journalDisplayContext::isTypeVersions,
+			labelItem -> {
+				labelItem.putData(
+					"removeLabelURL",
+					PortletURLBuilder.create(
+						PortletURLUtil.clone(
+							currentURLObj, liferayPortletResponse)
+					).setParameter(
+						"type", (String)null
+					).buildString());
+
+				labelItem.setCloseable(true);
+				labelItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "type") + ": " +
+						LanguageUtil.get(httpServletRequest, "versions"));
+			}
 		);
 
 		_addAssetCategoriesFilterLabelItems(labelItemListWrapper);

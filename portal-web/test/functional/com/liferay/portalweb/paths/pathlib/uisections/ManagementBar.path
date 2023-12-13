@@ -16,12 +16,22 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FILTER_AND_ORDER</td>
-	<td>//nav[contains(@class,'management-bar')]//*[self::button or self::a][.//*[normalize-space(text())='Filter and Order']]</td>
+	<td>FILTER</td>
+	<td>//nav[contains(@class,'management-bar')]//*[self::button or self::a][.//*[normalize-space(text())='Filter']]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>FILTER_AND_ORDER_DISABLED</td>
+	<td>ORDER</td>
+	<td>//nav[contains(@class,'management-bar')]//*[self::button or self::a][.//*[normalize-space(text())='Order']]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILTER_DISABLED</td>
+	<td>//nav[contains(@class,'management-bar')]//button[@disabled]//*[*[normalize-space(text())='Filter and Order']]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORDER_DISABLED</td>
 	<td>//nav[contains(@class,'management-bar')]//button[@disabled]//*[*[normalize-space(text())='Filter and Order']]</td>
 	<td></td>
 </tr>

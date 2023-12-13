@@ -53,5 +53,6 @@ export const CustomSelect = React.forwardRef<
 interface ICustomSelectProps extends React.HTMLAttributes<HTMLDivElement> {
 	contentRight?: React.ReactNode;
 	disabled?: boolean;
+	placeholder?: string;
 	value?: string;
 }

@@ -88,11 +88,7 @@ export default function AutoComplete<T>({
 					/>
 				}
 			>
-				<ClayDropDown.Search
-					onChange={onChangeQuery}
-					placeholder="search"
-					value={query}
-				/>
+				<ClayDropDown.Search onChange={onChangeQuery} value={query} />
 
 				{!items.length ? (
 					<ClayDropDown.ItemList>

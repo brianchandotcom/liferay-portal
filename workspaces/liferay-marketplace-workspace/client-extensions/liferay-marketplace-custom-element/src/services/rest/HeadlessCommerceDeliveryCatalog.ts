@@ -13,16 +13,6 @@ class HeadlessCommerceDeliveryCatalog {
 	) {
 		return fetcher<DeliveryProduct>(
 			`o/headless-commerce-delivery-catalog/v1.0/channels/${channelId}/products/${productId}?${searchParams.toString()}`,
-			{
-				headers: {
-
-					// As a public API there's no problem to remove the authentication
-					// For some reason authenticated request is throwing an error locally
-					// Removing token for now
-
-					'x-csrf-token': '',
-				},
-			}
 		);
 	}
 

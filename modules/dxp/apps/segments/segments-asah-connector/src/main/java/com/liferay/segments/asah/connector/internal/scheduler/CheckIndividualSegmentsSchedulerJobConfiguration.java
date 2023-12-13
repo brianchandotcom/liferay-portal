@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.segments.asah.connector.internal.cache.AsahSegmentsEntryCache;
 import com.liferay.segments.asah.connector.internal.client.AsahFaroBackendClient;
 import com.liferay.segments.asah.connector.internal.client.AsahFaroBackendClientImpl;
@@ -40,6 +41,7 @@ import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsEntryRelLocalService;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -270,10 +272,21 @@ public class CheckIndividualSegmentsSchedulerJobConfiguration
 					companyId, 1, _DELTA,
 					Collections.singletonList(
 						OrderByField.desc("dateModified")));
+
+			_deleteSegmentEntries(
+				individualSegmentResults,
+				_segmentsEntryLocalService.getSegmentsEntriesBySource(
+					SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND, 0, _DELTA,
+					null));
 		}
 		catch (RuntimeException runtimeException) {
 			_log.error(
 				"Unable to retrieve individual segments", runtimeException);
+
+			return;
+		}
+		catch (PortalException portalException) {
+			_log.error("Unable to delete segment entries", portalException);
 
 			return;
 		}
@@ -304,6 +317,31 @@ public class CheckIndividualSegmentsSchedulerJobConfiguration
 
 		for (SegmentsEntry segmentsEntry : segmentsEntries) {
 			_checkIndividualSegmentMemberships(segmentsEntry);
+		}
+	}
+
+	private void _deleteSegmentEntries(
+			Results<IndividualSegment> individualSegmentResults,
+			List<SegmentsEntry> segmentsEntries)
+		throws PortalException {
+
+		List<SegmentsEntry> segmentsEntriesToDelete = new ArrayList<>();
+
+		if (individualSegmentResults.getTotal() == 0) {
+			segmentsEntriesToDelete = segmentsEntries;
+		}
+		else {
+			segmentsEntriesToDelete = ListUtil.filter(
+				segmentsEntries,
+				segmentsEntry -> !ListUtil.exists(
+					individualSegmentResults.getItems(),
+					individualSegment -> StringUtil.equals(
+						individualSegment.getId(),
+						segmentsEntry.getSegmentsEntryKey())));
+		}
+
+		for (SegmentsEntry segmentsEntry : segmentsEntriesToDelete) {
+			_segmentsEntryLocalService.deleteSegmentsEntry(segmentsEntry);
 		}
 	}
 

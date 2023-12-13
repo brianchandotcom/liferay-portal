@@ -69,29 +69,9 @@ definition {
 	macro sortAssets(sortDirection = null) {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
-		WaitForVisible(
-			key_text = "order-list",
-			locator1 = "ManagementBar#ANY_ICON");
+		Click.pauseClickAt(locator1 = "ManagementBar#ORDER");
 
-		if (${sortDirection} == "Ascending") {
-			Click(
-				key_text = "order-list-down",
-				locator1 = "ManagementBar#ANY_ICON");
-
-			VerifyVisible(
-				key_text = "order-list-up",
-				locator1 = "ManagementBar#ANY_ICON");
-		}
-
-		if (${sortDirection} == "Descending") {
-			Click(
-				key_text = "order-list-up",
-				locator1 = "ManagementBar#ANY_ICON");
-
-			VerifyVisible(
-				key_text = "order-list-down",
-				locator1 = "ManagementBar#ANY_ICON");
-		}
+		MenuItem.click(menuItem = ${sortDirection});
 	}
 
 	@summary = "Default summary"
@@ -121,7 +101,7 @@ definition {
 
 	@summary = "Default summary"
 	macro viewFilterAndOrder(menuItem = null) {
-		Click(locator1 = "ManagementBar#FILTER");
+		Click.pauseClickAt(locator1 = "ManagementBar#ORDER");
 
 		AssertElementPresent(
 			key_menuItem = ${menuItem},
@@ -130,7 +110,7 @@ definition {
 
 	@summary = "Default summary"
 	macro viewFilterAndOrderItem(menuItem = null) {
-		Click(locator1 = "ManagementBar#FILTER");
+		Click.pauseClickAt(locator1 = "ManagementBar#ORDER");
 
 		AssertElementPresent(
 			key_menuItem = ${menuItem},
@@ -139,7 +119,7 @@ definition {
 
 	@summary = "Default summary"
 	macro viewFilterAndOrderNoItem(menuItem = null) {
-		Click(locator1 = "ManagementBar#FILTER");
+		Click.pauseClickAt(locator1 = "ManagementBar#ORDER");
 
 		AssertElementNotPresent(
 			key_menuItem = ${menuItem},
@@ -148,7 +128,7 @@ definition {
 
 	@summary = "Default summary"
 	macro viewFilterAndOrderSelectedItem(menuItem = null) {
-		Click(locator1 = "ManagementBar#FILTER");
+		Click.pauseClickAt(locator1 = "ManagementBar#ORDER");
 
 		AssertElementPresent(
 			key_menuItem = ${menuItem},
@@ -175,7 +155,7 @@ definition {
 
 	@summary = "Default summary"
 	macro viewNoSubheaderInFilterAndOrder(subheaderItem = null) {
-		Click(locator1 = "ManagementBar#FILTER");
+		Click.pauseClickAt(locator1 = "ManagementBar#ORDER");
 
 		AssertElementNotPresent(
 			key_subheaderItem = ${subheaderItem},

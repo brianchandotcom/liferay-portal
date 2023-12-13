@@ -24,10 +24,10 @@ class TicketWebComponent extends HTMLElement {
 									<h6 className="text-uppercase">Site</h6>
 									<ul>
 										<li>
-											<a href="/#/dashboard">Dashboard</a>
+											<a href="#dashboard">Dashboard</a>
 										</li>
 										<li>
-											<a href="/#/ticketapp">
+											<a href="#ticketapp">
 												Tickets App
 											</a>
 										</li>
@@ -35,7 +35,7 @@ class TicketWebComponent extends HTMLElement {
 								</nav>
 							</div>
 							<div className="col-lg-10">
-								<HashRouter basename="/">
+								<HashRouter>
 									<Routes>
 										<Route
 											element={
@@ -43,7 +43,7 @@ class TicketWebComponent extends HTMLElement {
 													queryClient={queryClient}
 												/>
 											}
-											path="/dashboard"
+											path="dashboard"
 										/>
 										<Route
 											element={
@@ -51,16 +51,16 @@ class TicketWebComponent extends HTMLElement {
 													queryClient={queryClient}
 												/>
 											}
-											path="/ticketapp"
+											path="ticketapp"
 										/>
 										<Route
 											element={
 												<Navigate
 													replace
-													to="/dashboard"
+													to="dashboard"
 												/>
 											}
-											path="/"
+											path=""
 										/>
 									</Routes>
 								</HashRouter>

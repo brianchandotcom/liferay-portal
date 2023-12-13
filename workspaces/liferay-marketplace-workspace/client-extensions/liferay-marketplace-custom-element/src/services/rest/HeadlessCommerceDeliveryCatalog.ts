@@ -12,7 +12,7 @@ class HeadlessCommerceDeliveryCatalog {
 		searchParams = new URLSearchParams()
 	) {
 		return fetcher<DeliveryProduct>(
-			`o/headless-commerce-delivery-catalog/v1.0/channels/${channelId}/products/${productId}?${searchParams.toString()}`,
+			`o/headless-commerce-delivery-catalog/v1.0/channels/${channelId}/products/${productId}?${searchParams.toString()}`
 		);
 	}
 

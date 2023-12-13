@@ -16,6 +16,11 @@ interface IProps extends Translations {
 	selectedLanguageId: Liferay.Language.Locale;
 	showOnlyFlags?: boolean;
 	small?: boolean;
+	translationProgress?: TranslationProgress | null;
+}
+export interface TranslationProgress {
+	totalItems: number;
+	translatedItems: Record<string, number>;
 }
 export default function TranslationAdminSelector({
 	activeLanguageIds: initialActiveLanguageIds,
@@ -30,5 +35,6 @@ export default function TranslationAdminSelector({
 	showOnlyFlags,
 	small,
 	translations,
+	translationProgress,
 }: IProps): JSX.Element;
 export {};

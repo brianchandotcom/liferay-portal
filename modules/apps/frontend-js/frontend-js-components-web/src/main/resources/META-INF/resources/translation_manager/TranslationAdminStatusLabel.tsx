@@ -9,6 +9,8 @@ import ClayLayout from '@clayui/layout';
 import {sub} from 'frontend-js-web';
 import React from 'react';
 
+import {TranslationProgress} from './TranslationAdminSelector';
+
 interface Props {
 	defaultLanguageId: Liferay.Language.Locale;
 	labels?: {
@@ -19,6 +21,7 @@ interface Props {
 	languageId: Liferay.Language.Locale;
 	languageName: string;
 	localeValue: string | null;
+	translationProgress: TranslationProgress | null;
 }
 
 interface Status {
@@ -32,6 +35,7 @@ export default function TranslationAdminStatusLabel({
 	languageId,
 	languageName,
 	localeValue,
+	translationProgress = null,
 }: Props) {
 	const status = {
 		default: {
@@ -56,6 +60,23 @@ export default function TranslationAdminStatusLabel({
 	}
 	else if (localeValue) {
 		statusLabel = status.translated;
+	}
+	else if (
+		Liferay.FeatureFlags['LPS-114700'] &&
+		translationProgress?.translatedItems[languageId]
+	) {
+		const {totalItems, translatedItems} = translationProgress;
+
+		statusLabel =
+			totalItems === translatedItems[languageId]
+				? status.translated
+				: {
+						displayType: 'secondary',
+						label: sub(Liferay.Language.get('translating-x-x'), [
+							translatedItems[languageId],
+							totalItems,
+						]),
+				  };
 	}
 
 	return (

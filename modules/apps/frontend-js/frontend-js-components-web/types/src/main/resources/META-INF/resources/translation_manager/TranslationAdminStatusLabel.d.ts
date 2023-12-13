@@ -5,6 +5,7 @@
 
 /// <reference types="react" />
 
+import {TranslationProgress} from './TranslationAdminSelector';
 interface Props {
 	defaultLanguageId: Liferay.Language.Locale;
 	labels?: {
@@ -15,6 +16,7 @@ interface Props {
 	languageId: Liferay.Language.Locale;
 	languageName: string;
 	localeValue: string | null;
+	translationProgress: TranslationProgress | null;
 }
 export default function TranslationAdminStatusLabel({
 	defaultLanguageId,
@@ -22,5 +24,6 @@ export default function TranslationAdminStatusLabel({
 	languageId,
 	languageName,
 	localeValue,
+	translationProgress,
 }: Props): JSX.Element;
 export {};

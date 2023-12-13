@@ -28,6 +28,12 @@ interface IProps extends Translations {
 	selectedLanguageId: Liferay.Language.Locale;
 	showOnlyFlags?: boolean;
 	small?: boolean;
+	translationProgress?: TranslationProgress | null;
+}
+
+export interface TranslationProgress {
+	totalItems: number;
+	translatedItems: Record<string, number>;
 }
 
 // These variables are defined here, out of the component, to avoid
@@ -50,6 +56,7 @@ export default function TranslationAdminSelector({
 	showOnlyFlags,
 	small = false,
 	translations = null,
+	translationProgress = null,
 }: IProps) {
 	const [activeLanguageIds, setActiveLanguageIds] = useState<
 		Liferay.Language.Locale[]
@@ -198,6 +205,9 @@ export default function TranslationAdminSelector({
 												translations
 													? translations[id]
 													: null
+											}
+											translationProgress={
+												translationProgress
 											}
 										/>
 									)}

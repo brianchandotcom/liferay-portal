@@ -6,9 +6,10 @@
 /// <reference types="react" />
 
 import {Translations} from './TranslationAdminContent';
+declare type DisplayType = 'default' | 'horizontal';
 interface IProps extends Translations {
 	adminMode?: boolean;
-	displayType?: 'default' | 'horizontal';
+	displayType?: DisplayType;
 	onActiveLanguageIdsChange?: (
 		languageIds: Liferay.Language.Locale[]
 	) => void;

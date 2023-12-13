@@ -47,6 +47,7 @@ export function BasicInfo({
 	customObjectFields,
 	disabled,
 	errors,
+	selectedPartialValidationField,
 	setValues,
 	values,
 }: BasicInfoProps) {
@@ -58,23 +59,6 @@ export function BasicInfo({
 			})
 		);
 	}, [creationLanguageId, customObjectFields]);
-	const getSelectedPartialValidationField = () => {
-		if (values.objectValidationRuleSettings?.length) {
-			const [
-				partialValidationField,
-			] = values.objectValidationRuleSettings;
-
-			const customObjectField = customObjectFields.find(
-				(currentCustomObjectField) =>
-					currentCustomObjectField.externalReferenceCode ===
-					partialValidationField.value
-			);
-
-			return customObjectField?.externalReferenceCode;
-		}
-
-		return '';
-	};
 
 	return (
 		<>
@@ -178,7 +162,7 @@ export function BasicInfo({
 									});
 								}}
 								required
-								selectedKey={getSelectedPartialValidationField()}
+								selectedKey={selectedPartialValidationField}
 							/>
 						)}
 					</>

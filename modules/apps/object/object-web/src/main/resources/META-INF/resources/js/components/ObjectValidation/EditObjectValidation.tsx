@@ -89,6 +89,10 @@ export default function EditObjectValidation({
 		[]
 	);
 	const [
+		selectedPartialValidationField,
+		setSelectedPartialValidationField,
+	] = useState<string>();
+	const [
 		showUniqueCompositeKeyAlert,
 		setShowUniqueCompositeKeyAlert,
 	] = useState(true);
@@ -192,6 +196,29 @@ export default function EditObjectValidation({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [objectDefinitionId, objectValidationRuleId]);
 
+	useEffect(() => {
+		if (values.objectValidationRuleSettings?.length) {
+			const [
+				partialValidationField,
+			] = values.objectValidationRuleSettings;
+
+			const customObjectField = customObjectFields.find(
+				(currentCustomObjectField) =>
+					currentCustomObjectField.externalReferenceCode ===
+					partialValidationField.value
+			);
+
+			setSelectedPartialValidationField(
+				customObjectField?.externalReferenceCode ?? undefined
+			);
+
+			return;
+		}
+
+		setSelectedPartialValidationField(undefined);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [values.objectValidationRuleSettings]);
+
 	return (
 		<SidePanelForm
 			onSubmit={handleSubmit}
@@ -235,6 +262,9 @@ export default function EditObjectValidation({
 								}
 								objectValidationRuleElements={
 									objectValidationRuleElements
+								}
+								selectedPartialValidationField={
+									selectedPartialValidationField
 								}
 								setShowUniqueCompositeKeyAlert={
 									setShowUniqueCompositeKeyAlert

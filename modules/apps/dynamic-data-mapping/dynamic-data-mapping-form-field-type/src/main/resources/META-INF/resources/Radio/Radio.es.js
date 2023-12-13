@@ -12,6 +12,10 @@ import {setJSONArrayValue} from '../util/setters.es';
 
 import './Radio.scss';
 
+const KEYCODES = {
+	TAB: 9,
+};
+
 const Radio = ({
 	editingLanguageId,
 	inline,
@@ -63,6 +67,14 @@ const Radio = ({
 					onChange={(value) => {
 						setCurrentValue(value);
 						onChange({target: {value}});
+					}}
+					onKeyUp={(event) => {
+						if (!currentValue && event.keyCode === KEYCODES.TAB) {
+							const value = options[0].value;
+
+							setCurrentValue(value);
+							onChange({target: {value}});
+						}
 					}}
 					value={currentValue}
 				>

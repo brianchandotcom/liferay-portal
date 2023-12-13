@@ -887,6 +887,67 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-177682. The tooltip of the back button of fragment sets, fragments entry and usages is Go to Fragments."
+	@priority = 3
+	test ViewBackButtonTooltipFragmentsAdmin {
+		task ("Given the Fragments Admin page") {
+			JSONFragment.addFragmentCollection(
+				groupName = ${randomSiteName},
+				name = "Fragment Set Name");
+
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = ${siteURLKey});
+
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Fragment Set Name");
+
+			FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
+		}
+
+		task ("When hover over the back button") {
+			MouseOver(locator1 = "Icon#BACK");
+		}
+
+		task ("Then see the tooltip message") {
+			AssertVisible(
+				key_content = "Go to Fragments",
+				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
+		}
+
+		task ("Given the View Usages page of a fragment") {
+			PortletEntry.publish();
+
+			JSONLayout.addPublicLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Content Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = ${randomSiteName});
+
+			PageEditor.addFragment(
+				collectionName = "Fragment Set Name",
+				fragmentName = "Fragment Name");
+
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = ${siteURLKey});
+
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Fragment Set Name");
+
+			FragmentsAdminNavigator.gotoEntryEllipsisItem(
+				entry = "Fragment Name",
+				item = "View Usages");
+		}
+
+		task ("When hover over the back button") {
+			MouseOver.javaScriptFocus(locator1 = "Icon#BACK");
+		}
+
+		task ("Then see the tooltip message") {
+			AssertVisible(
+				key_content = "Go to Fragments",
+				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
+		}
+	}
+
 	@description = "This is a test for LPS-89115. Can see contributed fragment collections in fragment administration"
 	@priority = 5
 	@uitest

@@ -584,8 +584,18 @@ public class JournalArticleActionDropdownItemsProvider {
 				_article.getFolderId(), "articleId", _article.getArticleId(),
 				"version", _article.getVersion());
 			dropdownItem.setIcon("pencil");
-			dropdownItem.setLabel(
-				LanguageUtil.get(_httpServletRequest, "edit"));
+
+			String label = "edit";
+
+			if (FeatureFlagManagerUtil.isEnabled("LPS-196768") &&
+				!JournalArticleLocalServiceUtil.isLatestVersion(
+					_article.getGroupId(), _article.getArticleId(),
+					_article.getVersion())) {
+
+				label = "edit-latest-version";
+			}
+
+			dropdownItem.setLabel(LanguageUtil.get(_httpServletRequest, label));
 		};
 	}
 

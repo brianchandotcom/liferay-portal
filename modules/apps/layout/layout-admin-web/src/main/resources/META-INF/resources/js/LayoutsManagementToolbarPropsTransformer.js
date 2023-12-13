@@ -73,6 +73,7 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 						type: 'cancel',
 					},
 					{
+						displayType: 'info',
 						label: Liferay.Language.get('continue'),
 						onClick: ({processClose}) => {
 							processClose();

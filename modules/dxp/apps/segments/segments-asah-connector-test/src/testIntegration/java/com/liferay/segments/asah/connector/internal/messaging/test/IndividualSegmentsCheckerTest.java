@@ -23,10 +23,12 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.MockHttp;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -39,8 +41,10 @@ import com.liferay.segments.provider.SegmentsEntryProvider;
 import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsEntryRelLocalService;
 
+import java.util.Collections;
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -71,6 +75,11 @@ public class IndividualSegmentsCheckerTest {
 	@Before
 	public void setUp() throws Exception {
 		_user = TestPropsValues.getUser();
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		_segmentsEntryLocalService.deleteSegmentsEntries(_company.getGroupId());
 	}
 
 	@Test
@@ -231,6 +240,116 @@ public class IndividualSegmentsCheckerTest {
 		}
 	}
 
+	@Test
+	public void testIndividualSegmentsDeleteSegmentEntries() throws Exception {
+		_segmentsEntryLocalService.addSegmentsEntry(
+			"1234567",
+			Collections.singletonMap(
+				_portal.getSiteDefaultLocale(_company.getGroupId()),
+				"Segment 1"),
+			null, true, null, SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND,
+			User.class.getName(),
+			ServiceContextTestUtil.getServiceContext(_company.getGroupId()));
+
+		_segmentsEntryLocalService.addSegmentsEntry(
+			"2345678",
+			Collections.singletonMap(
+				_portal.getSiteDefaultLocale(_company.getGroupId()),
+				"Segment 2"),
+			null, true, null, SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND,
+			User.class.getName(),
+			ServiceContextTestUtil.getServiceContext(_company.getGroupId()));
+
+		List<SegmentsEntry> segmentsEntries =
+			_segmentsEntryLocalService.getSegmentsEntriesBySource(
+				SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		Assert.assertEquals(
+			segmentsEntries.toString(), 2, segmentsEntries.size());
+
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						TestPropsValues.getCompanyId(),
+						AnalyticsConfiguration.class.getName(),
+						HashMapDictionaryBuilder.<String, Object>put(
+							"liferayAnalyticsDataSourceId", "123456789"
+						).put(
+							"liferayAnalyticsEnableAllGroupIds", true
+						).put(
+							"liferayAnalyticsFaroBackendSecuritySignature",
+							RandomTestUtil.randomString()
+						).put(
+							"liferayAnalyticsFaroBackendURL",
+							"http://localhost:8080"
+						).build());
+			ConfigurationTemporarySwapper configurationTemporarySwapper =
+				new ConfigurationTemporarySwapper(
+					"com.liferay.segments.asah.connector.internal." +
+						"configuration.SegmentsAsahConfiguration",
+					HashMapDictionaryBuilder.<String, Object>put(
+						"anonymousUserSegmentsCacheExpirationTime", "60"
+					).build())) {
+
+			Object asahFaroBackendClient = ReflectionTestUtil.getFieldValue(
+				_checkIndividualSegmentsSchedulerJobConfiguration,
+				"_asahFaroBackendClient");
+
+			ReflectionTestUtil.setFieldValue(
+				asahFaroBackendClient, "_http",
+				new MockHttp(
+					HashMapBuilder.
+						<String, UnsafeSupplier<String, Exception>>put(
+							"/api/1.0/individual-segments",
+							() -> JSONUtil.put(
+								"_embedded",
+								JSONUtil.put(
+									"individual-segments",
+									JSONUtil.putAll(
+										JSONUtil.put(
+											"id", "1234567"
+										).put(
+											"name", "Segment 1"
+										)))
+							).put(
+								"page",
+								JSONUtil.put(
+									"number", 0
+								).put(
+									"size", 100
+								).put(
+									"totalElements", 1
+								).put(
+									"totalPages", 1
+								)
+							).put(
+								"total", 0
+							).toString()
+						).build()));
+
+			UnsafeRunnable<Exception> jobExecutorUnsafeRunnable =
+				_checkIndividualSegmentsSchedulerJobConfiguration.
+					getJobExecutorUnsafeRunnable();
+
+			jobExecutorUnsafeRunnable.run();
+
+			segmentsEntries =
+				_segmentsEntryLocalService.getSegmentsEntriesBySource(
+					SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+			Assert.assertEquals(
+				segmentsEntries.toString(), 1, segmentsEntries.size());
+
+			SegmentsEntry segmentsEntry = segmentsEntries.get(0);
+
+			Assert.assertEquals(
+				"Segment 1",
+				segmentsEntry.getName(LocaleUtil.getSiteDefault()));
+		}
+	}
+
 	private static Company _company;
 
 	@Inject
@@ -241,6 +360,9 @@ public class IndividualSegmentsCheckerTest {
 	)
 	private SchedulerJobConfiguration
 		_checkIndividualSegmentsSchedulerJobConfiguration;
+
+	@Inject
+	private Portal _portal;
 
 	@Inject
 	private SegmentsEntryLocalService _segmentsEntryLocalService;

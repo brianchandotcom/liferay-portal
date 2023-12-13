@@ -4,10 +4,8 @@ Bundle-Version: 1.0.0
 Main-Class: com.liferay.portal.tools.db.partition.virtual.instance.migrator.extractor.DBPartitionVirtualInstanceMigratorExtractor
 -includeresource:\
 	@com.liferay.petra.lang-*.jar!/com/liferay/petra/lang/CentralizedThreadLocal.class,\
-	@com.liferay.petra.lang-*.jar!/com/liferay/petra/lang/HashUtil.class,\
 	@com.liferay.petra.string-*.jar!/com/liferay/petra/string/CharPool.class,\
 	@com.liferay.petra.string-*.jar!/com/liferay/petra/string/StringBundler.class,\
-	@com.liferay.petra.string-*.jar!/com/liferay/petra/string/StringPool.class,\
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/dao/db/DBInspector.class,\
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/io/unsync/UnsyncByteArrayInputStream.class,\
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/io/unsync/UnsyncByteArrayOutputStream.class,\
@@ -26,5 +24,7 @@ Main-Class: com.liferay.portal.tools.db.partition.virtual.instance.migrator.extr
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/util/StringUtil.class,\
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/util/SystemEnv.class,\
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/util/SystemProperties.class,\
-	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/util/Validator.class,\
-	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/version/Version.class
+	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/version/Version.class,\
+	@com.liferay.portal.tools.db.partition.virtual.instance.migrator.common-*.jar!/com/liferay/portal/tools/db/partition/virtual/instance/migrator/common/Company.class,\
+	@com.liferay.portal.tools.db.partition.virtual.instance.migrator.common-*.jar!/com/liferay/portal/tools/db/partition/virtual/instance/migrator/common/InstanceData.class,\
+	@com.liferay.portal.tools.db.partition.virtual.instance.migrator.common-*.jar!/com/liferay/portal/tools/db/partition/virtual/instance/migrator/common/Release.class

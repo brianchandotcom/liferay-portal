@@ -1177,6 +1177,14 @@ public class JournalDisplayContext {
 	}
 
 	public String getTab() throws PortalException {
+		if (FeatureFlagManagerUtil.isEnabled("LPS-196768")) {
+			if (Objects.equals(_getSearchIn(), "comments")) {
+				return "comments";
+			}
+
+			return getType();
+		}
+
 		if (_tab != null) {
 			return _tab;
 		}

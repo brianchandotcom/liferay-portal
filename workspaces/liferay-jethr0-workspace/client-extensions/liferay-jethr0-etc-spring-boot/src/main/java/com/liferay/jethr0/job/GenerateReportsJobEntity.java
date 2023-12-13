@@ -5,6 +5,8 @@
 
 package com.liferay.jethr0.job;
 
+import com.liferay.portal.kernel.util.HashMapBuilder;
+
 import java.util.Map;
 
 import org.json.JSONObject;
@@ -28,14 +30,13 @@ public class GenerateReportsJobEntity extends BaseJobEntity {
 
 	@Override
 	protected Map<String, String> getInitialBuildParameters() {
-		Map<String, String> initialBuildParameters =
-			super.getInitialBuildParameters();
-
-		initialBuildParameters.put(
-			"JENKINS_GITHUB_URL", String.valueOf(getJenkinsBranchURL()));
-		initialBuildParameters.put("REPORT_NAMES", getReportNames());
-
-		return initialBuildParameters;
+		return HashMapBuilder.put(
+			"BUILD_PRIORITY", String.valueOf(getPriority())
+		).put(
+			"JENKINS_GITHUB_URL", String.valueOf(getJenkinsBranchURL())
+		).put(
+			"REPORT_NAMES", getReportNames()
+		).build();
 	}
 
 	@Override

@@ -426,7 +426,9 @@ public abstract class BaseJobEntity extends BaseEntity implements JobEntity {
 			String initialBuildParameterValue =
 				initialBuildParameter.getValue();
 
-			if (StringUtil.isNullOrEmpty(initialBuildParameterValue)) {
+			if (StringUtil.isNullOrEmpty(initialBuildParameterValue) ||
+				initialBuildParameterValue.equals("null")) {
+
 				continue;
 			}
 

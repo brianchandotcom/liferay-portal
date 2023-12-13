@@ -32,227 +32,73 @@ public class GenerateTestrayCSVUtil {
 
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("Case Name,Case History URL,Error Message\n");
+		sb.append(
+			JenkinsResultsParserUtil.join(
+				_CSV_DELIMITER, "Case Name", "Case History URL",
+				"Error Message"));
+		sb.append("\n");
 
-		StringBuilder didNotRunFailuresStringBuilder = new StringBuilder();
-		StringBuilder uniqueFailuresStringBuilder = new StringBuilder();
-		StringBuilder upstreamFailuresStringBuilder = new StringBuilder();
-
-		List<TestcaseResult> allTestcases = _getTestcaseResults(
+		List<TestrayCaseResult> allTestrayCaseResults = _getTestrayCaseResults(
 			projectTestrayBuildId);
 
-		for (TestcaseResult testcaseResult : allTestcases) {
-			List<TestcaseResult> testcaseHistory = _getTestcaseResultHistory(
-				testcaseResult);
+		sb.append(
+			_generate(TestrayCaseResult.Type.UNIQUE, allTestrayCaseResults));
 
-			FailureStatus failureStatus = _getFailureType(
-				testcaseResult, testcaseHistory);
-
-			if (failureStatus == FailureStatus.COMMON) {
-				System.out.println(
-					"--- We think that " +
-						testcaseResult._getTestrayCaseName() +
-							" is a common failure---");
-
-				upstreamFailuresStringBuilder.append(
-					testcaseResult._getTestrayCaseName());
-				upstreamFailuresStringBuilder.append(",");
-				upstreamFailuresStringBuilder.append(
-					testcaseResult._getHistoryURL());
-				upstreamFailuresStringBuilder.append(",");
-				upstreamFailuresStringBuilder.append(
-					testcaseResult._getErrorMessage());
-				upstreamFailuresStringBuilder.append("\n");
-			}
-			else if (failureStatus == FailureStatus.DID_NOT_RUN) {
-				System.out.println(
-					"--- We think that " +
-						testcaseResult._getTestrayCaseName() +
-							" failed to run---");
-
-				didNotRunFailuresStringBuilder.append(
-					testcaseResult._getTestrayCaseName());
-				didNotRunFailuresStringBuilder.append(",");
-				didNotRunFailuresStringBuilder.append(
-					testcaseResult._getHistoryURL());
-				didNotRunFailuresStringBuilder.append(",");
-				didNotRunFailuresStringBuilder.append(
-					testcaseResult._getErrorMessage());
-				didNotRunFailuresStringBuilder.append("\n");
-			}
-			else if (failureStatus == FailureStatus.UNIQUE) {
-				System.out.println(
-					"--- We think that " +
-						testcaseResult._getTestrayCaseName() +
-							" is a unique failure---");
-
-				uniqueFailuresStringBuilder.append(
-					testcaseResult._getTestrayCaseName());
-				uniqueFailuresStringBuilder.append(",");
-				uniqueFailuresStringBuilder.append(
-					testcaseResult._getHistoryURL());
-				uniqueFailuresStringBuilder.append(",");
-				uniqueFailuresStringBuilder.append(
-					testcaseResult._getErrorMessage());
-				uniqueFailuresStringBuilder.append("\n");
-			}
-		}
-
-		sb.append("Unique failures\n");
-		sb.append(uniqueFailuresStringBuilder.toString());
 		sb.append("\n");
-		sb.append("Upstream failures\n");
-		sb.append(upstreamFailuresStringBuilder.toString());
+
+		sb.append(
+			_generate(TestrayCaseResult.Type.COMMON, allTestrayCaseResults));
 
 		try {
 			JenkinsResultsParserUtil.write(
 				new File(projectBuildDir, "testray-results.csv"),
 				sb.toString());
 		}
-		catch (Exception exception) {
-			throw new RuntimeException(exception);
-		}
-	}
-
-	private static boolean _areSimilarErrors(String error1, String error2) {
-		Double distance = StringUtils.getJaroWinklerDistance(error1, error2);
-
-		if (distance > 0.8) {
-			return true;
-		}
-
-		return false;
-	}
-
-	private static FailureStatus _getFailureType(
-		TestcaseResult testcaseResult,
-		List<TestcaseResult> testcaseResultsHistory) {
-
-		if (Objects.equals(
-				testcaseResult._getErrorMessage(),
-				"Failed prior to running test")) {
-
-			return FailureStatus.DID_NOT_RUN;
-		}
-
-		for (TestcaseResult historyTestcaseResult : testcaseResultsHistory) {
-			if (Objects.equals(
-					testcaseResult._getTestrayRunId(),
-					historyTestcaseResult._getTestrayRunId())) {
-
-				continue;
-			}
-
-			if (_areSimilarErrors(
-					testcaseResult._getErrorMessage(),
-					historyTestcaseResult._getErrorMessage()) &&
-				(_getPRAuthor(testcaseResult) != _getPRAuthor(
-					historyTestcaseResult))) {
-
-				return FailureStatus.COMMON;
-			}
-		}
-
-		return FailureStatus.UNIQUE;
-	}
-
-	private static String _getPRAuthor(TestcaseResult testcaseResult) {
-		PullRequestData pullRequest = testcaseResult._getPullRequestObject();
-
-		if (pullRequest == null) {
-			return null;
-		}
-
-		return pullRequest._getAuthor();
-	}
-
-	private static PullRequestData _getPullRequestData(
-		String testrayBuildReportURL) {
-
-		String slaveName = "";
-		String batchName = "";
-		String batchNumber = "";
-
-		String[] buildReportText = testrayBuildReportURL.split("/");
-
-		slaveName = buildReportText[1];
-		batchName = buildReportText[2];
-		batchNumber = buildReportText[3];
-
-		String tempURL =
-			"https://" + slaveName + ".liferay.com/job/" + batchName + "/" +
-				batchNumber;
-
-		TopLevelBuildReport topLevelBuildReport = null;
-
-		try {
-			topLevelBuildReport = BuildReportFactory.newTopLevelBuildReport(
-				new URL(tempURL));
-		}
-		catch (MalformedURLException malformedURLException) {
-			throw new RuntimeException(malformedURLException);
-		}
-
-		Map<String, String> buildParameters =
-			topLevelBuildReport.getBuildParameters();
-
-		return new PullRequestData(
-			buildParameters.get("GITHUB_SENDER_USERNAME"),
-			buildParameters.get("GITHUB_PULL_REQUEST_NUMBER"));
-	}
-
-	private static List<TestcaseResult> _getTestcaseResultHistory(
-		TestcaseResult testcaseResult) {
-
-		JSONObject jsonObject = null;
-
-		try {
-			jsonObject = JenkinsResultsParserUtil.toJSONObject(
-				"https://testray.liferay.com/home/-/testray/case_results/" +
-					testcaseResult._getTestrayCaseResultId() + "/history.json");
-		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
 		}
+	}
 
-		JSONArray resultsJSONArray = jsonObject.optJSONArray("data");
+	private static String _generate(
+		TestrayCaseResult.Type testrayCaseResultType,
+		List<TestrayCaseResult> allTestrayCaseResults) {
 
-		if ((resultsJSONArray == null) || (resultsJSONArray.length() == 0)) {
-			return null;
-		}
+		StringBuilder sb = new StringBuilder();
 
-		List<TestcaseResult> testcaseHistory = new ArrayList<>();
-
-		JSONObject resultJSONObject;
-
-		for (int i = 0; i < resultsJSONArray.length(); i++) {
-			resultJSONObject = resultsJSONArray.optJSONObject(i);
-
-			if (resultJSONObject == null) {
+		for (TestrayCaseResult testrayCaseResult : allTestrayCaseResults) {
+			if (testrayCaseResultType != testrayCaseResult.getType()) {
 				continue;
 			}
 
-			testcaseHistory.add(new TestcaseResult(resultJSONObject));
+			sb.append(testrayCaseResult.generateCSV());
+			sb.append("\n");
 		}
 
-		return testcaseHistory;
+		if (sb.length() > 0) {
+			return JenkinsResultsParserUtil.combine(
+				testrayCaseResultType.toString(), " Failures\n", sb.toString());
+		}
+
+		return "";
 	}
 
-	private static List<TestcaseResult> _getTestcaseResults(
+	private static List<TestrayCaseResult> _getTestrayCaseResults(
 		String projectTestrayBuildId) {
 
-		List<TestcaseResult> resultTestcases = new ArrayList<>();
+		List<TestrayCaseResult> testrayCaseResults = new ArrayList<>();
 
 		int currentPage = 1;
 		long previousTestrayCaseResultId = 0;
 
 		while (true) {
+			String testrayCaseResultsURL = JenkinsResultsParserUtil.combine(
+				"https://testray.liferay.com/home/-/testray",
+				"/case_results.json?cur=", String.valueOf(currentPage),
+				"&testrayBuildId=", projectTestrayBuildId, "&statuses=3");
+
 			try {
 				JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
-					"https://testray.liferay.com/home/-/testray" +
-						"/case_results.json?cur=" + currentPage +
-							"&testrayBuildId=" + projectTestrayBuildId +
-								"&statuses=3");
+					testrayCaseResultsURL);
 
 				JSONArray resultsJSONArray = jsonObject.optJSONArray("data");
 
@@ -278,11 +124,11 @@ public class GenerateTestrayCSVUtil {
 						continue;
 					}
 
-					TestcaseResult testcaseResult = new TestcaseResult(
+					TestrayCaseResult testrayCaseResult = new TestrayCaseResult(
 						resultJSONObject);
 
-					if (_isTestCaseResult(testcaseResult)) {
-						resultTestcases.add(testcaseResult);
+					if (!testrayCaseResult.isTopLevelBuildResult()) {
+						testrayCaseResults.add(testrayCaseResult);
 					}
 				}
 
@@ -295,111 +141,210 @@ public class GenerateTestrayCSVUtil {
 			}
 		}
 
-		return resultTestcases;
+		return testrayCaseResults;
 	}
 
-	private static boolean _isTestCaseResult(TestcaseResult testcaseResult) {
-		String testcaseResultName = testcaseResult._getTestrayCaseName();
+	private static final String _CSV_DELIMITER = ",";
 
-		if (testcaseResultName.contains("Top Level Build")) {
-			return false;
-		}
+	private static class TestrayCaseResult {
 
-		return true;
-	}
-
-	private static class PullRequestData {
-
-		public String toString() {
-			return "### PullRequest ###\nAuthor: " + _author + "\n" +
-				"PullRequest: " + _pullRequestNumber + "####\n";
-		}
-
-		private PullRequestData(String author, String pullRequestNumber) {
-			_author = author;
-			_pullRequestNumber = Integer.valueOf(pullRequestNumber);
-		}
-
-		private String _getAuthor() {
-			return _author;
-		}
-
-		private final String _author;
-		private final int _pullRequestNumber;
-
-	}
-
-	private static class TestcaseResult {
-
-		public String toString() {
-			return "### TestcaseResult ###\nPRINFO: " +
-				_getPullRequestObject() + "\nTestrayCaseName: " +
-					_testrayCaseName + "\nTestrayCaseResultId: " +
-						_testrayCaseResultId + "\nTestrayRunId: " +
-							_testrayRunId + "\n";
-		}
-
-		private TestcaseResult(JSONObject resultJSONObject) {
+		public TestrayCaseResult(JSONObject resultJSONObject) {
 			_resultJSONObject = resultJSONObject;
-
-			_errorMessage = resultJSONObject.getString("errors");
-			_historyURL = resultJSONObject.getString("htmlURL") + "/history";
-			_pullRequest = null;
-			_testrayCaseName = resultJSONObject.getString("testrayCaseName");
-			_testrayCaseResultId = resultJSONObject.getLong("testrayCaseResultId");
-			_testrayRunId = resultJSONObject.getLong("testrayRunId");
 		}
 
-		private String _getErrorMessage() {
-			return _errorMessage;
+		public String generateCSV() {
+			return JenkinsResultsParserUtil.join(
+				_CSV_DELIMITER, getTestrayCaseName(), getHistoryURL(),
+				getErrorMessage());
 		}
 
-		private String _getHistoryURL() {
-			return _historyURL;
+		public String getErrorMessage() {
+			return _resultJSONObject.getString("errors");
 		}
 
-		private PullRequestData _getPullRequestObject() {
-			if (_pullRequest == null) {
-				JSONObject jsonObject = _resultJSONObject.getJSONObject(
-					"attachments");
+		public String getHistoryURL() {
+			return _resultJSONObject.getString("htmlURL") + "/history";
+		}
 
-				try {
-					_pullRequest = _getPullRequestData(
-						jsonObject.getString("Build Report (Top Level)"));
+		public String getPullRequestAuthor() {
+			if (!JenkinsResultsParserUtil.isNullOrEmpty(_pullRequestAuthor)) {
+				return _pullRequestAuthor;
+			}
+
+			String testrayBuildReportURL = getTestrayBuildReportURL();
+
+			String[] buildReportText = testrayBuildReportURL.split("/");
+
+			URL topLevelBuildReportURL = null;
+
+			try {
+				topLevelBuildReportURL = new URL(
+					JenkinsResultsParserUtil.combine(
+						"https://", buildReportText[1], ".liferay.com/job/",
+						buildReportText[2], "/", buildReportText[3]));
+			}
+			catch (MalformedURLException malformedURLException) {
+				throw new RuntimeException(malformedURLException);
+			}
+
+			TopLevelBuildReport topLevelBuildReport =
+				BuildReportFactory.newTopLevelBuildReport(
+					topLevelBuildReportURL);
+
+			Map<String, String> buildParameters =
+				topLevelBuildReport.getBuildParameters();
+
+			_pullRequestAuthor = buildParameters.get("GITHUB_SENDER_USERNAME");
+
+			return _pullRequestAuthor;
+		}
+
+		public String getTestrayBuildReportURL() {
+			JSONObject jsonObject = _resultJSONObject.getJSONObject(
+				"attachments");
+
+			return jsonObject.getString("Build Report (Top Level)");
+		}
+
+		public String getTestrayCaseName() {
+			return _resultJSONObject.getString("testrayCaseName");
+		}
+
+		public List<TestrayCaseResult> getTestrayCaseResultHistory() {
+			JSONObject jsonObject = null;
+
+			try {
+				jsonObject = JenkinsResultsParserUtil.toJSONObject(
+					"https://testray.liferay.com/home/-/testray/case_results/" +
+						getTestrayCaseResultId() + "/history.json");
+			}
+			catch (IOException ioException) {
+				throw new RuntimeException(ioException);
+			}
+
+			JSONArray resultsJSONArray = jsonObject.optJSONArray("data");
+
+			if ((resultsJSONArray == null) ||
+				(resultsJSONArray.length() == 0)) {
+
+				return null;
+			}
+
+			List<TestrayCaseResult> testrayCaseResultHistory =
+				new ArrayList<>();
+
+			JSONObject resultJSONObject;
+
+			for (int i = 0; i < resultsJSONArray.length(); i++) {
+				resultJSONObject = resultsJSONArray.optJSONObject(i);
+
+				if (resultJSONObject == null) {
+					continue;
 				}
-				catch (Exception exception) {
-					System.out.println(exception);
+
+				testrayCaseResultHistory.add(
+					new TestrayCaseResult(resultJSONObject));
+			}
+
+			return testrayCaseResultHistory;
+		}
+
+		public long getTestrayCaseResultId() {
+			return _resultJSONObject.getLong("testrayCaseResultId");
+		}
+
+		public long getTestrayRunId() {
+			return _resultJSONObject.getLong("testrayRunId");
+		}
+
+		public Type getType() {
+			if (Objects.equals(
+					getErrorMessage(), "Failed prior to running test")) {
+
+				return Type.DID_NOT_RUN;
+			}
+
+			for (TestrayCaseResult historyTestrayCaseResult :
+					getTestrayCaseResultHistory()) {
+
+				if (Objects.equals(
+						getTestrayRunId(),
+						historyTestrayCaseResult.getTestrayRunId())) {
+
+					continue;
+				}
+
+				if (isSimilarError(historyTestrayCaseResult) &&
+					!Objects.equals(
+						getPullRequestAuthor(),
+						historyTestrayCaseResult.getPullRequestAuthor())) {
+
+					return Type.COMMON;
 				}
 			}
 
-			return _pullRequest;
+			return Type.UNIQUE;
 		}
 
-		private String _getTestrayCaseName() {
-			return _testrayCaseName;
+		public boolean isSimilarError(
+			TestrayCaseResult otherTestrayCaseResult) {
+
+			return _isWithinJaroWinklerDistance(
+				getErrorMessage(), otherTestrayCaseResult.getErrorMessage(),
+				0.8F);
 		}
 
-		private long _getTestrayCaseResultId() {
-			return _testrayCaseResultId;
+		public boolean isTopLevelBuildResult() {
+			String testrayCaseName = getTestrayCaseName();
+
+			if (testrayCaseName.contains("Top Level Build")) {
+				return true;
+			}
+
+			return false;
 		}
 
-		private long _getTestrayRunId() {
-			return _testrayRunId;
+		public enum Type {
+
+			COMMON("Common"), DID_NOT_RUN("Did not run"), UNIQUE("Unique");
+
+			@Override
+			public String toString() {
+				return _description;
+			}
+
+			private Type(String description) {
+				_description = description;
+			}
+
+			private final String _description;
+
 		}
 
-		private final String _errorMessage;
-		private final String _historyURL;
-		private PullRequestData _pullRequest;
+		private boolean _isWithinJaroWinklerDistance(
+			String string1, String string2, double maxDistance) {
+
+			try {
+				Double distance = StringUtils.getJaroWinklerDistance(
+					string1, string2);
+
+				if (distance <= maxDistance) {
+					return true;
+				}
+
+				return false;
+			}
+			catch (IllegalArgumentException illegalArgumentException) {
+				if (string1 == string2) {
+					return true;
+				}
+
+				return false;
+			}
+		}
+
+		private String _pullRequestAuthor;
 		private final JSONObject _resultJSONObject;
-		private final String _testrayCaseName;
-		private final long _testrayCaseResultId;
-		private final long _testrayRunId;
-
-	}
-
-	private enum FailureStatus {
-
-		COMMON, DID_NOT_RUN, UNIQUE
 
 	}
 

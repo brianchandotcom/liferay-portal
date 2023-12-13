@@ -5,29 +5,19 @@
 
 package com.liferay.portal.security.password.encryptor.internal;
 
-import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.exception.PwdEncryptorException;
 import com.liferay.portal.kernel.io.BigEndianCodec;
 import com.liferay.portal.kernel.security.SecureRandomUtil;
 import com.liferay.portal.kernel.security.pwd.PasswordEncryptor;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.util.PropsUtil;
 
 import java.nio.BufferUnderflowException;
 import java.nio.ByteBuffer;
 
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import javax.crypto.SecretKey;
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.PBEKeySpec;
 
 import org.bouncycastle.crypto.generators.PKCS5S2ParametersGenerator;
 import org.bouncycastle.crypto.params.KeyParameter;
@@ -61,22 +51,21 @@ public class PBKDF2PasswordEncryptor implements PasswordEncryptor {
 			pbkdf2EncryptionConfiguration.configure(
 				algorithm, encryptedPassword);
 
-			byte[] secretKeyBytes;
+			PKCS5S2ParametersGenerator pkcs5S2ParametersGenerator =
+				new PKCS5S2ParametersGenerator();
 
-			if (GetterUtil.getBoolean(
-					PropsUtil.get(
-						PropsKeys.PASSWORDS_ENCRYPTION_BOUNCYCASTLE_ENABLED))) {
+			pkcs5S2ParametersGenerator.init(
+				plainTextPassword.getBytes(),
+				pbkdf2EncryptionConfiguration.getSaltBytes(),
+				pbkdf2EncryptionConfiguration.getRounds());
 
-				secretKeyBytes = _getSecretKeyBytesUsingBouncyCastle(
-					plainTextPassword, pbkdf2EncryptionConfiguration);
-			}
-			else {
-				secretKeyBytes = _getSecretKeyBytesUsingLegacyImpl(
-					algorithm, plainTextPassword,
-					pbkdf2EncryptionConfiguration);
-			}
+			KeyParameter keyParameter =
+				(KeyParameter)
+					pkcs5S2ParametersGenerator.generateDerivedMacParameters(
+						pbkdf2EncryptionConfiguration.getKeySize());
 
 			byte[] saltBytes = pbkdf2EncryptionConfiguration.getSaltBytes();
+			byte[] secretKeyBytes = keyParameter.getKey();
 
 			ByteBuffer byteBuffer = ByteBuffer.allocate(
 				(2 * 4) + saltBytes.length + secretKeyBytes.length);
@@ -91,51 +80,6 @@ public class PBKDF2PasswordEncryptor implements PasswordEncryptor {
 		catch (Exception exception) {
 			throw new PwdEncryptorException(exception.getMessage(), exception);
 		}
-	}
-
-	private byte[] _getSecretKeyBytesUsingBouncyCastle(
-		String plainTextPassword,
-		PBKDF2EncryptionConfiguration pbkdf2EncryptionConfiguration) {
-
-		PKCS5S2ParametersGenerator generator = new PKCS5S2ParametersGenerator();
-
-		generator.init(
-			plainTextPassword.getBytes(),
-			pbkdf2EncryptionConfiguration.getSaltBytes(),
-			pbkdf2EncryptionConfiguration.getRounds());
-
-		KeyParameter keyParameter =
-			(KeyParameter)generator.generateDerivedMacParameters(
-				pbkdf2EncryptionConfiguration.getKeySize());
-
-		return keyParameter.getKey();
-	}
-
-	private byte[] _getSecretKeyBytesUsingLegacyImpl(
-			String algorithm, String plainTextPassword,
-			PBKDF2EncryptionConfiguration pbkdf2EncryptionConfiguration)
-		throws InvalidKeySpecException, NoSuchAlgorithmException {
-
-		PBEKeySpec pbeKeySpec = new PBEKeySpec(
-			plainTextPassword.toCharArray(),
-			pbkdf2EncryptionConfiguration.getSaltBytes(),
-			pbkdf2EncryptionConfiguration.getRounds(),
-			pbkdf2EncryptionConfiguration.getKeySize());
-
-		String algorithmName = algorithm;
-
-		int index = algorithm.indexOf(CharPool.SLASH);
-
-		if (index > -1) {
-			algorithmName = algorithm.substring(0, index);
-		}
-
-		SecretKeyFactory secretKeyFactory = SecretKeyFactory.getInstance(
-			algorithmName);
-
-		SecretKey secretKey = secretKeyFactory.generateSecret(pbeKeySpec);
-
-		return secretKey.getEncoded();
 	}
 
 	private static final int _KEY_SIZE = 160;

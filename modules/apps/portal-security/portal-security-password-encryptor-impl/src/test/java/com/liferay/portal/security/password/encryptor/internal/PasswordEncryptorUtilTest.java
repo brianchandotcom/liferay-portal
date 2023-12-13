@@ -5,7 +5,6 @@
 
 package com.liferay.portal.security.password.encryptor.internal;
 
-import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -69,45 +68,6 @@ public class PasswordEncryptorUtilTest {
 			PasswordEncryptor.class, new TestCustomPasswordEncryptor(),
 			MapUtil.singletonDictionary(
 				"type", _TYPE_CUSTOM_PASSWORD_ENCRYPTOR));
-	}
-
-	@Test
-	public void testBackwardCompatibilityOfPBKDF2Implementations()
-		throws Exception {
-
-		String prependedAlgorithm =
-			PasswordEncryptor.TYPE_PBKDF2 + "WithHmacSHA1";
-
-		String algorithm = prependedAlgorithm + "/128/720000";
-
-		String plainPassword = "password";
-		String expectedPassword;
-
-		try (SafeCloseable safeCloseable =
-				PropsValuesTestUtil.swapWithSafeCloseable(
-					"PASSWORDS_ENCRYPTION_BOUNCYCASTLE_ENABLED", true)) {
-
-			String encryptedPassword =
-				"AAAAoAAB9ADyaBP3fTtsBh8YlRn1CU7VLYR/mnH7ADMNMz2o";
-
-			testEncrypt(
-				plainPassword,
-				StringBundler.concat(
-					CharPool.OPEN_CURLY_BRACE, prependedAlgorithm,
-					CharPool.CLOSE_CURLY_BRACE, encryptedPassword));
-
-			testLegacyEncrypt(algorithm, plainPassword, encryptedPassword);
-
-			expectedPassword = PasswordEncryptorUtil.encrypt(
-				algorithm, plainPassword, (String)null);
-		}
-
-		try (SafeCloseable safeCloseable =
-				PropsValuesTestUtil.swapWithSafeCloseable(
-					"PASSWORDS_ENCRYPTION_BOUNCYCASTLE_ENABLED", false)) {
-
-			testEncrypt(plainPassword, expectedPassword);
-		}
 	}
 
 	@Test
@@ -198,90 +158,34 @@ public class PasswordEncryptorUtilTest {
 
 	@Test
 	public void testEncryptPBKDF2() throws Exception {
-		UnsafeRunnable<Exception> unsafeRunnable = () -> runTests(
+		runTests(
 			PasswordEncryptor.TYPE_PBKDF2 + "WithHmacSHA1", "password",
 			"AAAAoAAB9ADJZ16OuMAPPHe2CUbP0HPyXvagoKHumh7iHU3c",
 			PasswordEncryptor.TYPE_PBKDF2 + "WithHmacSHA1");
-
-		try (SafeCloseable safeCloseable =
-				PropsValuesTestUtil.swapWithSafeCloseable(
-					"PASSWORDS_ENCRYPTION_BOUNCYCASTLE_ENABLED", false)) {
-
-			unsafeRunnable.run();
-		}
-
-		try (SafeCloseable safeCloseable =
-				PropsValuesTestUtil.swapWithSafeCloseable(
-					"PASSWORDS_ENCRYPTION_BOUNCYCASTLE_ENABLED", true)) {
-
-			unsafeRunnable.run();
-		}
 	}
 
 	@Test
 	public void testEncryptPBKDF2With50000Rounds() throws Exception {
-		UnsafeRunnable<Exception> unsafeRunnable = () -> runTests(
+		runTests(
 			PasswordEncryptor.TYPE_PBKDF2 + "WithHmacSHA1/50000", "password",
 			"AAAAoAAAw1B+jxO3UiVsWdBk4B9xGd/Ko3GKHW2afYhuit49",
 			PasswordEncryptor.TYPE_PBKDF2 + "WithHmacSHA1");
-
-		try (SafeCloseable safeCloseable =
-				PropsValuesTestUtil.swapWithSafeCloseable(
-					"PASSWORDS_ENCRYPTION_BOUNCYCASTLE_ENABLED", false)) {
-
-			unsafeRunnable.run();
-		}
-
-		try (SafeCloseable safeCloseable =
-				PropsValuesTestUtil.swapWithSafeCloseable(
-					"PASSWORDS_ENCRYPTION_BOUNCYCASTLE_ENABLED", true)) {
-
-			unsafeRunnable.run();
-		}
 	}
 
 	@Test
 	public void testEncryptPBKDF2With50000RoundsAnd128Key() throws Exception {
-		UnsafeRunnable<Exception> unsafeRunnable = () -> runTests(
+		runTests(
 			PasswordEncryptor.TYPE_PBKDF2 + "WithHmacSHA1/128/50000",
 			"password", "AAAAoAAAw1AbW1e1Str9wSLWIX5X9swLn+j5/5+m6auSPdva",
 			PasswordEncryptor.TYPE_PBKDF2 + "WithHmacSHA1");
-
-		try (SafeCloseable safeCloseable =
-				PropsValuesTestUtil.swapWithSafeCloseable(
-					"PASSWORDS_ENCRYPTION_BOUNCYCASTLE_ENABLED", false)) {
-
-			unsafeRunnable.run();
-		}
-
-		try (SafeCloseable safeCloseable =
-				PropsValuesTestUtil.swapWithSafeCloseable(
-					"PASSWORDS_ENCRYPTION_BOUNCYCASTLE_ENABLED", true)) {
-
-			unsafeRunnable.run();
-		}
 	}
 
 	@Test
 	public void testEncryptPBKDF2With720000RoundsAnd128Key() throws Exception {
-		UnsafeRunnable<Exception> unsafeRunnable = () -> runTests(
+		runTests(
 			PasswordEncryptor.TYPE_PBKDF2 + "WithHmacSHA1/128/720000",
 			"password", "AAAAoAAB9ADyaBP3fTtsBh8YlRn1CU7VLYR/mnH7ADMNMz2o",
 			PasswordEncryptor.TYPE_PBKDF2 + "WithHmacSHA1");
-
-		try (SafeCloseable safeCloseable =
-				PropsValuesTestUtil.swapWithSafeCloseable(
-					"PASSWORDS_ENCRYPTION_BOUNCYCASTLE_ENABLED", false)) {
-
-			unsafeRunnable.run();
-		}
-
-		try (SafeCloseable safeCloseable =
-				PropsValuesTestUtil.swapWithSafeCloseable(
-					"PASSWORDS_ENCRYPTION_BOUNCYCASTLE_ENABLED", true)) {
-
-			unsafeRunnable.run();
-		}
 	}
 
 	@Test

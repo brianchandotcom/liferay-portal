@@ -7,7 +7,8 @@ import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
-import React, {useEffect, useMemo, useState} from 'react';
+import {sub} from 'frontend-js-web';
+import React, {Ref, useEffect, useMemo, useState} from 'react';
 
 import {Locale, Translations} from './TranslationAdminContent';
 import TranslationAdminModal from './TranslationAdminModal';
@@ -18,9 +19,11 @@ const DISPLAY_TYPE = {
 	horizontal: 'horizontal',
 } as const;
 
+type DisplayType = 'default' | 'horizontal';
+
 interface IProps extends Translations {
 	adminMode?: boolean;
-	displayType?: 'default' | 'horizontal';
+	displayType?: DisplayType;
 	onActiveLanguageIdsChange?: (
 		languageIds: Liferay.Language.Locale[]
 	) => void;
@@ -36,10 +39,64 @@ export interface TranslationProgress {
 	translatedItems: Record<string, number>;
 }
 
+interface TriggerButtonProps {
+	displayType: DisplayType;
+	selectedItem: Locale;
+	small: boolean;
+}
+
 // These variables are defined here, out of the component, to avoid
 // unexpected re-renders
 
 const noop = () => {};
+
+const TriggerButton = React.forwardRef(
+	(
+		{displayType, selectedItem, small, ...props}: TriggerButtonProps,
+		ref: Ref<HTMLButtonElement>
+	) => {
+		const ariaLabelButton = sub(
+			Liferay.Language.get('select-a-language.-current-language-x'),
+			selectedItem.displayName
+		);
+
+		return Liferay.FeatureFlags['LPS-114700'] &&
+			displayType === DISPLAY_TYPE.horizontal ? (
+			<ClayButton
+				{...props}
+				aria-label={ariaLabelButton}
+				className="btn-block form-control-select"
+				displayType="secondary"
+				ref={ref}
+				size="sm"
+			>
+				<span className="inline-item-before">
+					<ClayIcon symbol={selectedItem.symbol} />
+				</span>
+
+				<span aria-hidden="true">{selectedItem.label}</span>
+			</ClayButton>
+		) : (
+			<ClayButton
+				{...props}
+				aria-label={ariaLabelButton}
+				displayType="secondary"
+				monospaced
+				ref={ref}
+				small={small}
+				title={Liferay.Language.get('select-language')}
+			>
+				<span className="inline-item">
+					<ClayIcon symbol={selectedItem.symbol} />
+				</span>
+
+				<span aria-hidden="true" className="btn-section">
+					{selectedItem.label}
+				</span>
+			</ClayButton>
+		);
+	}
+);
 
 export default function TranslationAdminSelector({
 	activeLanguageIds: initialActiveLanguageIds = [],
@@ -129,37 +186,11 @@ export default function TranslationAdminSelector({
 				active={selectorDropdownActive}
 				onActiveChange={setSelectorDropdownActive}
 				trigger={
-					Liferay.FeatureFlags['LPS-114700'] &&
-					displayType === DISPLAY_TYPE.horizontal ? (
-						<ClayButton
-							className="btn-block form-control-select"
-							displayType="secondary"
-							size="sm"
-						>
-							<span className="inline-item-before">
-								<ClayIcon symbol={selectedLocale.symbol} />
-							</span>
-
-							{selectedLocale.label}
-						</ClayButton>
-					) : (
-						<ClayButton
-							displayType="secondary"
-							monospaced
-							small={small}
-							title={Liferay.Language.get(
-								'select-translation-language'
-							)}
-						>
-							<span className="inline-item">
-								<ClayIcon symbol={selectedLocale.symbol} />
-							</span>
-
-							<span className="btn-section">
-								{selectedLocale.label}
-							</span>
-						</ClayButton>
-					)
+					<TriggerButton
+						displayType={displayType}
+						selectedItem={selectedLocale}
+						small={small}
+					/>
 				}
 			>
 				<ClayDropDown.ItemList>

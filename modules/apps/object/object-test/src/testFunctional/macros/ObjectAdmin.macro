@@ -1290,7 +1290,7 @@ definition {
 
 			if (${thenAction} == "Notification") {
 				Click(
-					key_currentOption = "Select an option",
+					key_currentOption = "Select an Option",
 					locator1 = "ObjectAdmin#CLAY_GENERIC_SELECT_OPTION");
 
 				Click(

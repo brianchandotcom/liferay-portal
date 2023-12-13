@@ -10,7 +10,7 @@
 	"taxonomyCategoryProperties": [
 		{
 			"key": "icon",
-			"value": "[$DOCUMENT_URL:/site-initializer/documents/group/icon_cloud.svg$]"
+			"value": "[$DOCUMENT_URL:/site-initializer/documents/group/icon/cloud.svg$]"
 		}
 	],
 	"viewableBy": "Anyone"

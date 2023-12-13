@@ -1083,20 +1083,7 @@ public class JournalDisplayContext {
 		return HashMapBuilder.<String, Object>put(
 			"searchIn", _getSearchIn()
 		).put(
-			"searchInOptions",
-			JSONUtil.putAll(
-				JSONUtil.put(
-					"label",
-					LanguageUtil.get(_themeDisplay.getLocale(), "all-fields")
-				).put(
-					"value", "all-fields"
-				),
-				JSONUtil.put(
-					"label",
-					LanguageUtil.get(_themeDisplay.getLocale(), "title-only")
-				).put(
-					"value", "title"
-				))
+			"searchInOptions", _getSearchInOptionsJSONArray()
 		).put(
 			"searchLocation", _getSearchLocation()
 		).put(
@@ -1905,6 +1892,36 @@ public class JournalDisplayContext {
 			_httpServletRequest, "searchIn", "all-fields");
 
 		return _searchIn;
+	}
+
+	private JSONArray _getSearchInOptionsJSONArray() {
+		JSONArray jsonArray = JSONUtil.put(
+			JSONUtil.put(
+				"label",
+				LanguageUtil.get(_themeDisplay.getLocale(), "all-fields")
+			).put(
+				"value", "all-fields"
+			));
+
+		jsonArray.put(
+			JSONUtil.put(
+				"label",
+				LanguageUtil.get(_themeDisplay.getLocale(), "title-only")
+			).put(
+				"value", "title"
+			));
+
+		if (FeatureFlagManagerUtil.isEnabled("LPS-196768")) {
+			jsonArray.put(
+				JSONUtil.put(
+					"label",
+					LanguageUtil.get(_themeDisplay.getLocale(), "comments")
+				).put(
+					"value", "comments"
+				));
+		}
+
+		return jsonArray;
 	}
 
 	private String _getSearchLocation() {

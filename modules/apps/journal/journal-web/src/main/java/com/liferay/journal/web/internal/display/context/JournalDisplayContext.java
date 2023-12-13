@@ -1081,6 +1081,9 @@ public class JournalDisplayContext {
 		return HashMapBuilder.<String, Object>put(
 			"searchIn", _getSearchIn()
 		).put(
+			"searchInCommentsURL",
+			String.valueOf(_getSearchInCommentsPortletURL())
+		).put(
 			"searchInOptions", _getSearchInOptionsJSONArray()
 		).put(
 			"searchLocation", _getSearchLocation()

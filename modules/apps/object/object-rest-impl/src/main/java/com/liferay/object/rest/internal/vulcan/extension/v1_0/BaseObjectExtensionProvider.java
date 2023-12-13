@@ -7,11 +7,11 @@ package com.liferay.object.rest.internal.vulcan.extension.v1_0;
 
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOMapper;
 import com.liferay.portal.vulcan.extension.ExtensionProvider;
+
+import java.lang.reflect.Method;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -62,18 +62,16 @@ public abstract class BaseObjectExtensionProvider implements ExtensionProvider {
 			companyId, internalDTOClassName);
 	}
 
-	protected long getPrimaryKey(Object entity) throws PortalException {
-		JSONObject jsonObject = jsonFactory.createJSONObject(
-			jsonFactory.looseSerializeDeep(entity));
+	protected long getPrimaryKey(Object entity) throws Exception {
+		Class<?> clazz = entity.getClass();
 
-		return jsonObject.getLong("id");
+		Method method = clazz.getMethod("getId");
+
+		return GetterUtil.getLong(method.invoke(entity));
 	}
 
 	@Reference
 	protected DTOMapper dtoMapper;
-
-	@Reference
-	protected JSONFactory jsonFactory;
 
 	@Reference
 	protected ObjectDefinitionLocalService objectDefinitionLocalService;

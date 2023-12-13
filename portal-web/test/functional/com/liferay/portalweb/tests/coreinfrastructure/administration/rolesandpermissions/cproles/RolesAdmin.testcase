@@ -209,7 +209,7 @@ definition {
 		task ("Then only one result is displayed and the result is the newly created role") {
 			AssertTextEquals(
 				locator1 = "Search#SEARCH_INFO",
-				value1 = "1 Result for \"Role1 Name\"");
+				value1 = "1 Result Found for \"Role1 Name\"");
 
 			LexiconEntry.viewEntryName(rowEntry = "Role1 Name");
 		}
@@ -223,7 +223,7 @@ definition {
 		task ("Then only one result is displayed and the result is the newly created role") {
 			AssertTextEquals(
 				locator1 = "Search#SEARCH_INFO",
-				value1 = "1 Result for \"Role2 Key\"");
+				value1 = "1 Result Found for \"Role2 Key\"");
 
 			LexiconEntry.viewEntryName(rowEntry = "Role1 Name");
 		}

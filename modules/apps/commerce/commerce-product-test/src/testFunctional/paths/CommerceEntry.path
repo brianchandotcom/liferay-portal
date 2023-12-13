@@ -977,7 +977,7 @@
 </tr>
 <tr>
 	<td>ANY_FRAGMENT_DROP_TARGET_N</td>
-	<td>//div[@aria-label='${key_targetFragmentName}'][${key_index}]/div[contains(@class,'page-editor__topper__content')]</td>
+	<td>//div[@data-name='${key_targetFragmentName}'][${key_index}]/div[contains(@class,'page-editor__topper__content')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -45,6 +45,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -198,12 +199,20 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 		</#if>
 
 		public ${propertyType} get${capitalizedPropertyName}() {
+			if (_${propertyName}Supplier != null) {
+				${propertyName} = _${propertyName}Supplier.get();
+
+				_${propertyName}Supplier = null;
+			}
+
 			return ${propertyName};
 		}
 
 		<#if enumSchemas?keys?seq_contains(propertyType)>
 			@JsonIgnore
 			public String get${capitalizedPropertyName}AsString() {
+				${propertyType} ${propertyName} = get${capitalizedPropertyName}();
+
 				if (${propertyName} == null) {
 					return null;
 				}
@@ -214,19 +223,23 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 
 		public void set${capitalizedPropertyName}(${propertyType} ${propertyName}) {
 			this.${propertyName} = ${propertyName};
+
+			_${propertyName}Supplier = null;
 		}
 
 		@JsonIgnore
 		public void set${capitalizedPropertyName}(UnsafeSupplier<${propertyType}, Exception> ${propertyName}UnsafeSupplier) {
-			try {
-				${propertyName} = ${propertyName}UnsafeSupplier.get();
-			}
-			catch (RuntimeException re) {
-				throw re;
-			}
-			catch (Exception e) {
-				throw new RuntimeException(e);
-			}
+			_${propertyName}Supplier = () -> {
+				try {
+					return ${propertyName}UnsafeSupplier.get();
+				}
+				catch (RuntimeException re) {
+					throw re;
+				}
+				catch (Exception e) {
+					throw new RuntimeException(e);
+				}
+			};
 		}
 
 		<#if propertySchema.deprecated>
@@ -267,6 +280,8 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 			</#if>
 		</#if>
 		protected ${propertyType} ${propertyName}<#if propertySchema.jsonMap> = new HashMap<>()</#if>;
+
+		private Supplier<${propertyType}> _${propertyName}Supplier;
 	</#list>
 
 	@Override
@@ -291,21 +306,28 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 					<#continue>
 				</#if>
 
+				<#assign capitalizedPropertyName = propertyName?cap_first />
+
+				<#if enumSchemas?keys?seq_contains(propertyType)>
+					<#assign capitalizedPropertyName = propertyType />
+				</#if>
+
 				if (Objects.equals(propertyName, "${propertyName}")) {
-					return ${propertyName};
+					return get${capitalizedPropertyName}();
 				}
 				else
 			</#list>
 
+			{
 			<#list jsonMapPropertyNames as propertyName>
+				Map<String, Object> ${propertyName} = get${propertyName?cap_first}();
+
 				if (${propertyName}.containsKey(propertyName)) {
 					return ${propertyName}.get(propertyName);
 				}
 
-				<#sep>
-					else
-				</#sep>
 			</#list>
+			}
 
 			return null;
 		}

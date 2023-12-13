@@ -1034,20 +1034,14 @@ public class JournalDisplayContext {
 			return _searchContainer;
 		}
 
-		if (!isSearch() || isWebContentTabSelected()) {
-			_searchContainer = _getArticlesSearchContainer();
-
-			return _searchContainer;
-		}
-
-		if (isIndexAllArticleVersions() && isVersionsTabSelected()) {
-			_searchContainer = _getVersionsSearchContainer();
-
-			return _searchContainer;
-		}
-
-		if (isCommentsTabSelected()) {
+		if (isShowComments()) {
 			_searchContainer = _getCommentsSearchContainer();
+
+			return _searchContainer;
+		}
+
+		if (isIndexAllArticleVersions() && isShowVersions()) {
+			_searchContainer = _getVersionsSearchContainer();
 
 			return _searchContainer;
 		}

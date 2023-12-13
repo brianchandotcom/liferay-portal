@@ -125,11 +125,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>MY_WORKFLOW_TASKS_SEARCH_RESULT_BAR</td>
-	<td>//span[contains(@class, 'text-truncate') and contains(., '${key_resultBarMessage}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ASSIGNED_TO_MY_ROLES_TABLE_TASK</td>
 	<td>//tr[contains(.,'${key_workflowTask}') and contains(.,'${key_workflowAssetTitle}')]/td[4]//a</td>
 	<td></td>

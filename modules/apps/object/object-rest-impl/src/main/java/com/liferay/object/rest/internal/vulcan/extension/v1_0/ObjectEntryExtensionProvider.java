@@ -15,7 +15,6 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.rest.internal.util.ObjectEntryValuesUtil;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -68,9 +67,9 @@ public class ObjectEntryExtensionProvider extends BaseObjectExtensionProvider {
 
 			return values;
 		}
-		catch (PortalException portalException) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(portalException);
+				_log.debug(exception);
 			}
 
 			return Collections.emptyMap();
@@ -161,9 +160,9 @@ public class ObjectEntryExtensionProvider extends BaseObjectExtensionProvider {
 						}
 					});
 		}
-		catch (PortalException portalException) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(portalException);
+				_log.debug(exception);
 			}
 		}
 	}

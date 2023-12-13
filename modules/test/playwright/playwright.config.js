@@ -5,9 +5,9 @@
 
 import {defineConfig} from '@playwright/test';
 
-import {globalSetupProjectConfig as setup} from './tests/global.setup.config';
-import {objectProjectConfig as object} from './tests/object/project.config';
-import {portalProjectConfig as portalWeb} from './tests/portal-web/project.config';
+import {config as setup} from './tests/global.setup.config';
+import {config as object} from './tests/object/config';
+import {config as portalWeb} from './tests/portal-web/config';
 
 export default defineConfig({
 	forbidOnly: !!process.env.CI,

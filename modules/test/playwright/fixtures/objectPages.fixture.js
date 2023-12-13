@@ -5,8 +5,8 @@
 
 import {test} from '@playwright/test';
 
-import {ModelBuilderPage} from '../pages/objects/modelBuilder.page';
-import {ObjectDefinitionsPage} from '../pages/objects/objectDefinitions.page';
+import {ModelBuilderPage} from '../pages/object/modelBuilder.page';
+import {ObjectDefinitionsPage} from '../pages/object/objectDefinitions.page';
 
 exports.test = test.extend({
 	_modelBuilderPage: async ({page}, use) => {

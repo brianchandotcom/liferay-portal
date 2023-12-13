@@ -10,6 +10,8 @@ import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Hits;
@@ -87,7 +89,7 @@ public class CategoryFacetTest extends BaseFacetedSearcherTestCase {
 		Hits hits = search(searchContext);
 
 		Map<String, Integer> frequencies = Collections.singletonMap(
-			String.valueOf(categoryId), 1);
+			_getAssetVocabularyCategoryId(assetCategory), 1);
 
 		FacetsAssert.assertFrequencies(
 			facet.getFieldName(), searchContext, hits, frequencies);
@@ -120,7 +122,7 @@ public class CategoryFacetTest extends BaseFacetedSearcherTestCase {
 		Hits hits = search(searchContext);
 
 		Map<String, Integer> frequencies = Collections.singletonMap(
-			String.valueOf(categoryId), 1);
+			_getAssetVocabularyCategoryId(assetCategory), 1);
 
 		FacetsAssert.assertFrequencies(
 			facet.getFieldName(), searchContext, hits, frequencies);
@@ -158,6 +160,12 @@ public class CategoryFacetTest extends BaseFacetedSearcherTestCase {
 
 	@Inject
 	protected CategoryFacetFactory categoryFacetFactory;
+
+	private String _getAssetVocabularyCategoryId(AssetCategory assetCategory) {
+		return StringBundler.concat(
+			assetCategory.getVocabularyId(), StringPool.DASH,
+			assetCategory.getCategoryId());
+	}
 
 	@DeleteAfterTestRun
 	private AssetCategory _assetCategory;

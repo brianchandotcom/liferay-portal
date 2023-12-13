@@ -7,6 +7,7 @@ package com.liferay.layout.page.template.admin.web.internal.portlet.action;
 
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -92,6 +93,8 @@ public class DeleteLayoutPageTemplateEntryMVCActionCommand
 
 		if (deleteLayoutPageTemplateEntryIds.length ==
 				deleteLayoutPageTemplateEntryIdsList.size()) {
+
+			SessionErrors.add(actionRequest, PortalException.class);
 
 			for (Class<?> clazz : exceptionClasses) {
 				SessionErrors.add(actionRequest, clazz);

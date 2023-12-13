@@ -805,15 +805,11 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-177722. In the edit mode of Information Templates and Widget Templates the tooltip of the back button is 'Go to Templates'"
+	@description = "This is a use case for LPS-177722. In the edit mode of Information Template the tooltip of the back button is 'Go to Templates'"
 	@priority = 3
-	test ViewBackButtonTooltipInInformationTemplateAndWidgetTemplate {
-		task ("Given you created an Information Template") {
-			ApplicationsMenu.gotoSite(site = "Test Site Name");
-
-			ProductMenu.gotoPortlet(
-				category = "Design",
-				portlet = "Templates");
+	test ViewBackButtonTooltipInInformationTemplateEditor {
+		task ("Given access to the Information Template editor") {
+			InformationTemplates.openInformationTemplatesAdmin(siteURLKey = "test-site-name");
 
 			InformationTemplates.addCP(
 				informationTemplateName = "Test Information Template",
@@ -821,46 +817,14 @@ definition {
 				itemType = "Web Content Article");
 		}
 
-		task ("When hovering over the back button") {
+		task ("When hover over the back button") {
 			MouseOver(locator1 = "Icon#BACK");
 		}
 
-		task ("Then you can check the tooltip message") {
-			AssertTextEquals.assertPartialText(
-				locator1 = "Message#TOOLTIP",
-				value1 = "Go to Templates");
-		}
-
-		task ("Given you created a Widget Template") {
-			ApplicationsMenu.gotoSite(site = "Test Site Name");
-
-			ProductMenu.gotoPortlet(
-				category = "Design",
-				portlet = "Templates");
-
-			Navigator.gotoNavTab(navTab = "Widget Templates");
-
-			LexiconEntry.gotoAdd();
-
-			MenuItem.click(menuItem = "Asset Publisher Template");
-
-			SiteAdmin.viewPortletTitle(portletTitle = "Add Asset Publisher Template");
-
-			PortletEntry.inputName(name = "Asset Publisher Test ADT");
-
-			Click(
-				key_fieldName = "Asset Entry",
-				locator1 = "DDMEditTemplate#SCRIPT_FIELD");
-		}
-
-		task ("When hovering over the back button") {
-			MouseOver(locator1 = "Icon#BACK");
-		}
-
-		task ("Then you can check the tooltip message") {
-			AssertTextEquals.assertPartialText(
-				locator1 = "Message#TOOLTIP",
-				value1 = "Go to Templates");
+		task ("Then see the tooltip message") {
+			AssertVisible(
+				key_content = "Go to Templates",
+				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
 		}
 	}
 

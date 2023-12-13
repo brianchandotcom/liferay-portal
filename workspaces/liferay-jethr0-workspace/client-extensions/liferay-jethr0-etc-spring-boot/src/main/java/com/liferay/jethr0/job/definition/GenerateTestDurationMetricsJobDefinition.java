@@ -6,7 +6,10 @@
 package com.liferay.jethr0.job.definition;
 
 import com.liferay.jethr0.job.JobEntity;
+import com.liferay.jethr0.job.definition.parameter.BatchNamesJobParameterDefinition;
 import com.liferay.jethr0.job.definition.parameter.JenkinsBranchURLJobParameterDefinition;
+import com.liferay.jethr0.job.definition.parameter.JenkinsBuildURLJobParameterDefinition;
+import com.liferay.jethr0.job.definition.parameter.JenkinsSlaveLabelJobParameterDefinition;
 import com.liferay.jethr0.job.definition.parameter.JobParameterDefinition;
 
 import java.util.HashSet;
@@ -22,8 +25,13 @@ public class GenerateTestDurationMetricsJobDefinition
 	public Set<JobParameterDefinition> getJobParameterDefinitions() {
 		Set<JobParameterDefinition> jobParameterDefinitions = new HashSet<>();
 
+		jobParameterDefinitions.add(new BatchNamesJobParameterDefinition());
 		jobParameterDefinitions.add(
 			new JenkinsBranchURLJobParameterDefinition());
+		jobParameterDefinitions.add(
+			new JenkinsBuildURLJobParameterDefinition());
+		jobParameterDefinitions.add(
+			new JenkinsSlaveLabelJobParameterDefinition("!master"));
 
 		return jobParameterDefinitions;
 	}

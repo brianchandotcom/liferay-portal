@@ -1294,7 +1294,7 @@ public class JournalDisplayContext {
 
 	public boolean isFilterApplied() {
 		if ((getStatus() != WorkflowConstants.STATUS_ANY) ||
-			isNavigationMine() || isNavigationRecent()) {
+			isNavigationMine() || isNavigationRecent() || isTypeVersions()) {
 
 			return true;
 		}

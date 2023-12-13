@@ -1399,7 +1399,6 @@ public class UsersAdminUtil {
 		for (Address address : addresses) {
 			long addressId = address.getAddressId();
 
-			String externalReferenceCode = address.getExternalReferenceCode();
 			String name = address.getName();
 			String description = address.getDescription();
 			String street1 = address.getStreet1();
@@ -1416,10 +1415,10 @@ public class UsersAdminUtil {
 
 			if (addressId <= 0) {
 				address = AddressServiceUtil.addAddress(
-					externalReferenceCode, className, classPK, name,
-					description, street1, street2, street3, city, zip, regionId,
-					countryId, listTypeId, mailing, primary, phoneNumber,
-					new ServiceContext());
+					address.getExternalReferenceCode(), className, classPK,
+					name, description, street1, street2, street3, city, zip,
+					regionId, countryId, listTypeId, mailing, primary,
+					phoneNumber, new ServiceContext());
 
 				addressId = address.getAddressId();
 			}

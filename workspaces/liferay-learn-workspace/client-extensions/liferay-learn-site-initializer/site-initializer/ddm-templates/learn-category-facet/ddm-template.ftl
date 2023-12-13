@@ -168,7 +168,7 @@
 					cssClass="btn-unstyled facet-clear-btn"
 					displayType="link"
 					id="${vocabularyName + '_facetAssetCategoriesSelectAll'}"
-					onClick="selectAll(id)"
+					onClick="${namespace}selectAll(id)"
 				>
 					<strong>${languageUtil.get(locale, "select-all")}</strong>
 				</@clay.button>
@@ -179,7 +179,7 @@
 							cssClass="btn-unstyled facet-clear-btn"
 							displayType="link"
 							id="${vocabularyName + '_facetAssetCategoriesClear'}"
-							onClick="clearSelections(id)"
+							onClick="${namespace}clearSelections(id)"
 						>
 							<strong>${languageUtil.get(locale, "clear")}</strong>
 						</@clay.button>
@@ -225,7 +225,7 @@
 							cssClass="btn-unstyled facet-clear-btn view-all-btn"
 							displayType="link"
 							id="${vocabularyName + '_facetAssetCategoriesViewAll'}"
-							onClick="viewAll(id)"
+							onClick="${namespace}viewAll(id)"
 						>
 							<strong>${languageUtil.get(locale, "view-all")}</strong>
 						</@clay.button>
@@ -282,7 +282,7 @@
 		}
 	}
 
-	function clearSelections(id) {
+	function ${namespace}clearSelections(id) {
 		const selections = document.getElementsByClassName(id.split('_')[0]);
 
 		for (selection of selections) {
@@ -294,7 +294,7 @@
 		Liferay.Search.FacetUtil.changeSelection(event);
 	}
 
-	function load() {
+	function ${namespace}load() {
 		const viewAllBtns = document.getElementsByClassName('view-all-btn');
 
 		for (viewAllBtn of viewAllBtns) {
@@ -304,7 +304,7 @@
 		}
 	}
 
-	function selectAll(id) {
+	function ${namespace}selectAll(id) {
 		const selections = document.getElementsByClassName(id.split('_')[0]);
 
 		for (selection of selections) {
@@ -316,7 +316,7 @@
 		Liferay.Search.FacetUtil.changeSelection(event);
 	}
 
-	function viewAll(id) {
+	function ${namespace}viewAll(id) {
 		const selections = document.getElementsByClassName(id.split('_')[0]+'-class');
 
 		for (selection of selections) {
@@ -330,5 +330,5 @@
 		sessionStorage.setItem(id, true);
 	}
 
-	load();
+	${namespace}load();
 </@>

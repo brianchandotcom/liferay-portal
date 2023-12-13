@@ -7,7 +7,7 @@
 
 <%@ include file="/dynamic_include/init.jsp" %>
 
-<script type="text/javascript">
+<aui:script type="text/javascript">
 	(window.lpTag = window.lpTag || {}),
 		'undefined' == typeof window.lpTag._tagCount
 			? ((window.lpTag = {
@@ -134,4 +134,4 @@
 		},
 		type: 'ctmrinfo',
 	});
-</script>
+</aui:script>

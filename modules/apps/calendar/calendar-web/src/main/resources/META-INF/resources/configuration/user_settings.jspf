@@ -37,7 +37,7 @@
 	<aui:input label="use-global-timezone" name="usePortalTimeZone" type="checkbox" value="<%= usePortalTimeZone %>" />
 </aui:fieldset>
 
-<script>
+<aui:script>
 	const usePortalTimeZoneCheckbox = document.getElementById(
 		'<portlet:namespace />usePortalTimeZone'
 	);
@@ -57,4 +57,4 @@
 			}
 		});
 	}
-</script>
+</aui:script>

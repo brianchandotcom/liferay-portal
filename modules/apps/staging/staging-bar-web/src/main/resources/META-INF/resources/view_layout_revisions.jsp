@@ -161,7 +161,7 @@ List<LayoutRevision> rootLayoutRevisions = LayoutRevisionLocalServiceUtil.getChi
 	</c:if>
 </clay:container-fluid>
 
-<script>
+<aui:script>
 	function <portlet:namespace />selectRevision(
 		layoutRevisionId,
 		layoutSetBranchId
@@ -225,4 +225,4 @@ List<LayoutRevision> rootLayoutRevisions = LayoutRevisionLocalServiceUtil.getChi
 			});
 		}
 	})();
-</script>
+</aui:script>

@@ -5,7 +5,7 @@
  */
 --%>
 
-<script data-senna-track="temporary" type="text/javascript">
+<aui:script senna="temporary" type="text/javascript">
 	// <![CDATA[
 		var Liferay = Liferay || {};
 
@@ -408,11 +408,19 @@
 		Liferay.currentURL = '<%= HtmlUtil.escapeJS(currentURL) %>';
 		Liferay.currentURLEncoded = '<%= HtmlUtil.escapeJS(URLCodec.encodeURL(currentURL)) %>';
 	// ]]>
-</script>
+</aui:script>
 
 <liferay-util:dynamic-include key="/html/common/themes/top_js.jspf#resources" />
 
-<script data-senna-track="temporary" type="text/javascript">
+<%
+Group group = null;
+
+if (layout != null) {
+	group = layout.getGroup();
+}
+%>
+
+<aui:script senna="temporary" type="text/javascript">
 	// <![CDATA[
 		<c:if test="<%= layoutTypePortlet != null %>">
 			<c:choose>
@@ -425,14 +433,6 @@
 			</c:choose>
 		</c:if>
 
-		<%
-		Group group = null;
-
-		if (layout != null) {
-			group = layout.getGroup();
-		}
-		%>
-
 		<c:if test="<%= themeDisplay.isSignedIn() %>">
 			<c:choose>
 				<c:when test="<%= (group != null) && group.isControlPanel() && !LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.UPDATE) && !(layoutTypePortlet.isCustomizable() && layoutTypePortlet.isCustomizedView() && LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.CUSTOMIZE)) %>">
@@ -444,7 +444,7 @@
 			</c:choose>
 		</c:if>
 	// ]]>
-</script>
+</aui:script>
 
 <%-- Analytics --%>
 
@@ -464,7 +464,7 @@ for (String analyticsType : analyticsTypes) {
 			%>
 
 			<c:if test="<%= Validator.isNotNull(googleAnalyticsId) %>">
-				<script data-senna-track="permanent" id="googleAnalyticsScript" type="text/javascript">
+				<aui:script id="googleAnalyticsScript" senna="permanent" type="text/javascript">
 					(function(i, s, o, g, r, a, m) {
 						i['GoogleAnalyticsObject'] = r;
 
@@ -519,7 +519,7 @@ for (String analyticsType : analyticsTypes) {
 							}
 						);
 					</c:if>
-				</script>
+				</aui:script>
 			</c:if>
 		</c:when>
 		<c:when test='<%= StringUtil.equalsIgnoreCase(analyticsType, "googleAnalytics4") %>'>
@@ -529,9 +529,9 @@ for (String analyticsType : analyticsTypes) {
 			%>
 
 			<c:if test="<%= Validator.isNotNull(googleAnalytics4Id) %>">
-				<script async src="https://www.googletagmanager.com/gtag/js?id=<%= HtmlUtil.escapeJS(googleAnalytics4Id) %>"></script>
+				<aui:script async="<%= true %>" src='<%= "https://www.googletagmanager.com/gtag/js?id=" + HtmlUtil.escapeJS(googleAnalytics4Id) %>'></aui:script>
 
-				<script>
+				<aui:script>
 					window.dataLayer = window.dataLayer || [];
 					function gtag(){dataLayer.push(arguments);}
 					gtag('js', new Date());
@@ -544,7 +544,7 @@ for (String analyticsType : analyticsTypes) {
 					<c:if test="<%= Validator.isNotNull(googleAnalytics4CustomConfiguration) %>">
 						<%= googleAnalytics4CustomConfiguration %>
 					</c:if>
-				</script>
+				</aui:script>
 			</c:if>
 		</c:when>
 		<c:otherwise>

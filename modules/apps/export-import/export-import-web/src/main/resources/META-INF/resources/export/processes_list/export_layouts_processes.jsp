@@ -292,7 +292,7 @@ int incompleteBackgroundTasksCount = BackgroundTaskManagerUtil.getBackgroundTask
 	</liferay-util:include>
 </div>
 
-<script>
+<aui:script>
 	function <portlet:namespace />viewBackgroundTaskDetails(backgroundTaskId) {
 		var title = '';
 
@@ -309,4 +309,4 @@ int incompleteBackgroundTasksCount = BackgroundTaskManagerUtil.getBackgroundTask
 			title: title,
 		});
 	}
-</script>
+</aui:script>

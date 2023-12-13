@@ -134,7 +134,7 @@ if (Validator.isNotNull(replyTo) && !replyTo.startsWith(PortalUtil.getPortalURL(
 
 								<aui:button id="cancel" type="submit" value="cancel" />
 
-								<script>
+								<aui:script>
 									var allowButton = document.getElementById('<portlet:namespace />allow');
 
 									if (allowButton) {
@@ -152,7 +152,7 @@ if (Validator.isNotNull(replyTo) && !replyTo.startsWith(PortalUtil.getPortalURL(
 											Liferay.Util.postForm(document.<portlet:namespace />fm);
 										});
 									}
-								</script>
+								</aui:script>
 							</div>
 						</c:otherwise>
 					</c:choose>

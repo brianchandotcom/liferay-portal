@@ -97,7 +97,7 @@
 	</c:if>
 </div>
 
-<script>
+<aui:script>
 	function <portlet:namespace />searchKeywords(newKeywords) {
 		Liferay.Util.postForm(document.<portlet:namespace />fm, {
 			data: {
@@ -105,4 +105,4 @@
 			},
 		});
 	}
-</script>
+</aui:script>

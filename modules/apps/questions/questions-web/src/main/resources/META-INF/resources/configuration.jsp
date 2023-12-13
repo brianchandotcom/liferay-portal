@@ -132,7 +132,7 @@ catch (Exception exception) {
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
 
-<script>
+<aui:script>
 	var selectRootTopicButton = document.getElementById(
 		'<portlet:namespace />selectRootTopicButton'
 	);
@@ -175,7 +175,7 @@ catch (Exception exception) {
 			});
 		});
 	}
-</script>
+</aui:script>
 
 <%!
 private static final Log _log = LogFactoryUtil.getLog("com_liferay_questions_web.configuarion_jsp");

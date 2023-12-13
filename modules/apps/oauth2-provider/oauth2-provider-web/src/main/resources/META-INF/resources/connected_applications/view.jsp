@@ -103,6 +103,6 @@ if (Validator.isNotNull(backURL)) {
 	</aui:form>
 </clay:container-fluid>
 
-<script>
+<aui:script>
 	function <portlet:namespace />removeAccess() {}
-</script>
+</aui:script>

@@ -55,7 +55,7 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList<>
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
 
-<script>
+<aui:script>
 	function <portlet:namespace />saveSelectBoxes() {
 		var form = document.<portlet:namespace />fm;
 
@@ -111,4 +111,4 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList<>
 			submitForm(form);
 		}
 	}
-</script>
+</aui:script>

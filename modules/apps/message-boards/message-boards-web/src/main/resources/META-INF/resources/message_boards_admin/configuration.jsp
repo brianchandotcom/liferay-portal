@@ -395,7 +395,7 @@ mbGroupServiceSettings = MBGroupServiceSettings.getInstance(themeDisplay.getSite
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
 
-<script>
+<aui:script>
 	var <portlet:namespace />ranksChanged = false;
 	var <portlet:namespace />ranksLastLanguageId = '<%= currentLanguageId %>';
 
@@ -660,4 +660,4 @@ mbGroupServiceSettings = MBGroupServiceSettings.getInstance(themeDisplay.getSite
 			});
 		}
 	}
-</script>
+</aui:script>

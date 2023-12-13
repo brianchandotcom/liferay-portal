@@ -46,29 +46,29 @@ if (themeDisplay.isSignedIn() && (parts.length > 1)) {
 }
 %>
 
-<script async defer id="hs-script-loader" src="//js-na1.hs-scripts.com/<%= parts[0] %>.js" type="text/javascript"></script>
+<aui:script async="<%= true %>" defer="<%= true %>" id="hs-script-loader" src='<%= "//js-na1.hs-scripts.com/" + parts[0] + ".js" %>' type="text/javascript"></aui:script>
 
 <c:choose>
 	<c:when test="<%= themeDisplay.isSignedIn() && (parts.length > 1) %>">
 		<c:choose>
 			<c:when test="<%= Validator.isNull(identificationToken) %>">
-				<script>
+				<aui:script>
 					Liferay.Util.openToast({
 						message:
 							'<%= (errorMessage != null) ? errorMessage : LanguageUtil.get(resourceBundle, "unable-to-connect-to-hubspot") %>',
 						type: 'danger',
 					});
-				</script>
+				</aui:script>
 			</c:when>
 			<c:otherwise>
-				<script type="text/javascript">
+				<aui:script type="text/javascript">
 					window.hsConversationsSettings = {
 						identificationEmail: '<%= user.getEmailAddress() %>',
 						identificationToken: '<%= identificationToken %>',
 					};
 
 					window.HubSpotConversations.widget.load();
-				</script>
+				</aui:script>
 			</c:otherwise>
 		</c:choose>
 	</c:when>

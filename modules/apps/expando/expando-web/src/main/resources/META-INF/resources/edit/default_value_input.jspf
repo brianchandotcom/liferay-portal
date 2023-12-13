@@ -199,7 +199,7 @@
 	}
 </aui:script>
 
-<script>
+<aui:script>
 	function setDataType(selectionType) {
 		var dataTypeElement = document.getElementById(
 			'<portlet:namespace />dataType'
@@ -311,4 +311,4 @@
 			}
 		});
 	}
-</script>
+</aui:script>

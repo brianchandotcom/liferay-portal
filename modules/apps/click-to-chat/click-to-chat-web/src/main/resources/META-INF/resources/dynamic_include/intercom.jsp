@@ -7,7 +7,7 @@
 
 <%@ include file="/dynamic_include/init.jsp" %>
 
-<script>
+<aui:script>
 	var APP_ID = '<%= clickToChatChatProviderAccountId %>';
 
 	let intercomSettings = {
@@ -67,4 +67,4 @@
 			}
 		}
 	})();
-</script>
+</aui:script>

@@ -97,7 +97,7 @@ ClickToChatConfiguration clickToChatConfiguration = (ClickToChatConfiguration)re
 	</div>
 </div>
 
-<script>
+<aui:script>
 	document.addEventListener('DOMContentLoaded', () => {
 		<portlet:namespace />toggleClickToChatZendeskWebWidgetFields();
 	});
@@ -205,4 +205,4 @@ ClickToChatConfiguration clickToChatConfiguration = (ClickToChatConfiguration)re
 		document.getElementById('<portlet:namespace />chatProviderId').value,
 		true
 	);
-</script>
+</aui:script>

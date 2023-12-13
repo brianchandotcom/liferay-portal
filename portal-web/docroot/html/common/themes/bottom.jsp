@@ -51,7 +51,7 @@ com.liferay.petra.string.StringBundler pageBottomSB = OutputTag.getDataSB(reques
 
 <%-- Theme JavaScript --%>
 
-<script src="<%= HtmlUtil.escape(themeDisplay.getMainJSURL()) %>" type="text/javascript"></script>
+<aui:script src="<%= HtmlUtil.escape(themeDisplay.getMainJSURL()) %>" type="text/javascript"></aui:script>
 
 <liferay-util:include page="/html/common/themes/bottom-ext.jsp" />
 <liferay-util:include page="/html/common/themes/bottom-test.jsp" />

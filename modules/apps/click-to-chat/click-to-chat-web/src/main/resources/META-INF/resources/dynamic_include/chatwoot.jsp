@@ -7,7 +7,7 @@
 
 <%@ include file="/dynamic_include/init.jsp" %>
 
-<script>
+<aui:script>
 	if (!(window.$chatwoot && window.$chatwoot.hasLoaded)) {
 		(function (d, t) {
 			var BASE_URL = 'https://app.chatwoot.com';
@@ -36,4 +36,4 @@
 			});
 		};
 	</c:if>
-</script>
+</aui:script>

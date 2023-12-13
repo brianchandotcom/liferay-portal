@@ -94,7 +94,7 @@ IGConfigurationDisplayContext igConfigurationDisplayContext = (IGConfigurationDi
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
 
-<script>
+<aui:script>
 	var openFolderSelectorButton = document.getElementById(
 		'<portlet:namespace />openFolderSelectorButton'
 	);
@@ -157,4 +157,4 @@ IGConfigurationDisplayContext igConfigurationDisplayContext = (IGConfigurationDi
 			},
 		});
 	}
-</script>
+</aui:script>

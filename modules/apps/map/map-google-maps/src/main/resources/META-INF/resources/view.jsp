@@ -23,7 +23,7 @@ name = AUIUtil.getNamespace(liferayPortletRequest, liferayPortletResponse) + nam
 <liferay-util:html-top
 	outputKey="js_maps_google_skip_map_loading"
 >
-	<script>
+	<aui:script>
 		Liferay.namespace('Maps').onGMapsReady = function (event) {
 			Liferay.Maps.gmapsReady = true;
 
@@ -47,7 +47,7 @@ name = AUIUtil.getNamespace(liferayPortletRequest, liferayPortletResponse) + nam
 
 			script = null;
 		}
-	</script>
+	</aui:script>
 </liferay-util:html-top>
 
 <aui:script require="<%= bootstrapRequire %>">

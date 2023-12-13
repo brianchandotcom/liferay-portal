@@ -56,7 +56,7 @@ if (editorOptions != null) {
 	/>
 </c:if>
 
-<script data-senna-track="temporary" type="text/javascript">
+<aui:script senna="temporary" type="text/javascript">
 	CKEDITOR.ADDITIONAL_RESOURCE_PARAMS = {
 		languageId: themeDisplay.getLanguageId(),
 	};
@@ -67,7 +67,7 @@ if (editorOptions != null) {
 	CKEDITOR.dtd.$removeEmpty.span = 0;
 
 	CKEDITOR.env.isCompatible = true;
-</script>
+</aui:script>
 
 <liferay-util:html-top>
 	<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathProxy() + application.getContextPath() + "/css/main.css") %>" rel="stylesheet" type="text/css" />

@@ -20,6 +20,6 @@ String signOutURL = themeDisplay.getURLSignOut();
 	<liferay-ui:message arguments="${redirectLink}" key="the-punch-out-cart-transfer-process-has-been-initiated.-you-should-be-redirected-automatically.-if-the-page-does-not-reload-within-a-few-seconds-please-click-this-link-x" />
 </div>
 
-<script>
+<aui:script>
 	window.location.href = '<%= HtmlUtil.escapeJS(signOutURL) %>';
-</script>
+</aui:script>

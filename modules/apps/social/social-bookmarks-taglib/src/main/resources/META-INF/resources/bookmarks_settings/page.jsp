@@ -76,7 +76,7 @@ rightList = ListUtil.sort(rightList, new KeyValuePairComparator(false, true));
 
 </div>
 
-<script>
+<aui:script>
 	(function () {
 		var Util = Liferay.Util;
 
@@ -95,4 +95,4 @@ rightList = ListUtil.sort(rightList, new KeyValuePairComparator(false, true));
 			socialBookmarksTypes.value = Util.getSelectedOptionValues(currentTypes);
 		});
 	})();
-</script>
+</aui:script>

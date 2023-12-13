@@ -155,13 +155,13 @@ for (Portlet portlet : portletTreeSet) {
 %>
 
 <c:if test="<%= portletHubRequired %>">
-	<script type="text/javascript">
+	<aui:script type="text/javascript">
 		var portlet = portlet || {};
 
 		portlet.data = portlet.data || {};
 
 		portlet.data.pageRenderState = <%= RenderStateUtil.generateJSON(request, themeDisplay) %>;
-	</script>
+	</aui:script>
 </c:if>
 
 <%-- Theme CSS --%>

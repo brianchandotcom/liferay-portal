@@ -54,7 +54,7 @@ for (AssetRendererFactory<?> assetRendererFactory : assetEntriesSearchFacet.getA
 	rightTitle="available"
 />
 
-<script>
+<aui:script>
 	function <portlet:namespace />saveConfiguration() {
 		var form = document.<portlet:namespace />fm;
 
@@ -73,4 +73,4 @@ for (AssetRendererFactory<?> assetRendererFactory : assetEntriesSearchFacet.getA
 
 		Liferay.Util.postForm(form, {data: data});
 	}
-</script>
+</aui:script>

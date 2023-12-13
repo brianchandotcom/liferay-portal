@@ -141,7 +141,7 @@ renderResponse.setTitle(oAuth2Application.getName());
 	</aui:form>
 </clay:container-fluid>
 
-<script>
+<aui:script>
 	var removeAccessButton = document.getElementById(
 		'<portlet:namespace />removeAccess'
 	);
@@ -159,4 +159,4 @@ renderResponse.setTitle(oAuth2Application.getName());
 			});
 		});
 	}
-</script>
+</aui:script>

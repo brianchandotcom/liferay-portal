@@ -1062,6 +1062,10 @@ public class JournalDisplayContext {
 			return LanguageUtil.get(_themeDisplay.getLocale(), "title-only");
 		}
 
+		if (Objects.equals(_getSearchIn(), "comments")) {
+			return LanguageUtil.get(_themeDisplay.getLocale(), "comments");
+		}
+
 		return LanguageUtil.get(_themeDisplay.getLocale(), "all-fields");
 	}
 

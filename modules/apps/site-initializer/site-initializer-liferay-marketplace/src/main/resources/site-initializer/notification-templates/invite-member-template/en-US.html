@@ -1,26 +1,34 @@
 <!DOCTYPE html>
 
 <html lang="en">
-	<head>
-		<link href="styles.css" rel="stylesheet" />
 
-		<title>Invite Members</title>
-	</head>
+<head>
+	<link href="styles.css" rel="stylesheet" />
 
-	<body>
-		<div style="align-items: center; background-image: url('[$PORTAL_URL$]/documents/d/[$GROUP_KEY$]/backgroud-png'); background-position: left; display: flex; flex-direction: column; justify-content: center;">
-			<div style="background-color: #fff; border-radius: 4px; border: 1px solid #6b6c7e; height: 50rem; margin-top: 6.25rem; padding: 3rem; width: 43.375rem;">
-				<div style="align-items: center; display: flex; justify-content: center;">
-					<img alt="Liferay Logo" src="[$PORTAL_URL$]/documents/d/[$GROUP_KEY$]/liferay_inc-png" style="margin-top: 5px;" />
+	<title>Invite Members</title>
+</head>
 
-					<h1>Marketplace</h1>
-				</div>
+<body>
 
-				<div style="background-color: #6b6c7e; height: 1px; margin-top: 1.813rem; width: 42rem;">
+	<!-- style="align-items: center; background-image: url('[$PORTAL_URL$]/documents/d/[$GROUP_KEY$]/backgroud-png'); background-position: left; display: flex; flex-direction: column; justify-content: center;"> -->
+
+	<div
+		style="align-items: center; background-image: url('../../documents/group/email-resources/backgroud.png'); background-position: left; display: flex; flex-direction: column; justify-content: center;">
+		<div
+			style="background-color: #fff; border-radius: 4px; border: 1px solid #6b6c7e; height: 50rem; margin-top: 6.25rem; padding: 3rem; width: 43.375rem;">
+			<div style="align-items: center; display: flex; justify-content: center;">
+				<img alt="Liferay Logo" src="[$PORTAL_URL$]/documents/d/[$GROUP_KEY$]/liferay_inc-png"
+					style="margin-top: 5px;" />
+
+				<h1>Marketplace</h1>
+			</div>
+
+			<div style="background-color: #6b6c7e; height: 1px; margin-top: 1.813rem; width: 42rem;">
 
 				<main>
 					<div>
-						<h2 style="font-size: 2rem">Dear <span style="color: #0b5fff">[%USERADDITIONALINFO_USERFIRSTNAME%]</span></h2>
+						<h2 style="font-size: 2rem">Dear <span
+								style="color: #0b5fff">[%USERADDITIONALINFO_USERFIRSTNAME%]</span></h2>
 					</div>
 
 					<p>
@@ -28,7 +36,8 @@
 						has invited you to become a member of
 						<b>[%USERADDITIONALINFO_ACCOUNTNAME%]</b> so you can
 						participate in the Liferay Marketplace. Here is your
-						password: <span data-userPassword="[%USERADDITIONALINFO_MOTHERSNAME%]">[%USERADDITIONALINFO_MOTHERSNAME%]</span>
+						password: <span
+							data-userPassword="[%USERADDITIONALINFO_MOTHERSNAME%]">[%USERADDITIONALINFO_MOTHERSNAME%]</span>
 					</p>
 
 					<p>Your role(s) are:</p>
@@ -39,27 +48,33 @@
 						</li>
 					</ul>
 
-					<a href="[%USERADDITIONALINFO_INVITEURL%]" style="background-color: #0b5fff; border-radius: 8px; border: none; color: #fff; height: 2.5rem; margin-top: 2.5rem; padding: 0.5rem 1.5rem; text-decoration: none; width: 10.938rem;">Accept invitation</a>
+					<a href="[%USERADDITIONALINFO_INVITEURL%]"
+						style="background-color: #0b5fff; border-radius: 8px; border: none; color: #fff; height: 2.5rem; margin-top: 2.5rem; padding: 0.5rem 1.5rem; text-decoration: none; width: 10.938rem;">Accept
+						invitation</a>
 
 					<p style="color: #6b6c7e">
 						Or copy and paste the link below into you browser
 					</p>
 
-					<a href="[%USERADDITIONALINFO_INVITEURL%]" style="color: #6b6c7e">[%USERADDITIONALINFO_INVITEURL%]</a>
+					<a href="[%USERADDITIONALINFO_INVITEURL%]"
+						style="color: #6b6c7e">[%USERADDITIONALINFO_INVITEURL%]</a>
 				</main>
 
 				<footer>
-					<div style="background-color: #eef2fa; display: flex; flex-direction: column; justify-content: center; margin-top: 3.5rem; padding: 2.5rem; width: 37rem;">
+					<div
+						style="background-color: #eef2fa; display: flex; flex-direction: column; justify-content: center; margin-top: 3.5rem; padding: 2.5rem; width: 37rem;">
 						<p>
 							Contacts that don't exist in the system will receive
 							a separate email to activate their account. You
 							should expect an email from us in your inbox soon.
 						</p>
 
-						<p>If you don't receive the email please <a href="https://help.liferay.com/hc/en-us/articles/360017784212">contact support.</a></p>
+						<p>If you don't receive the email please <a
+								href="https://help.liferay.com/hc/en-us/articles/360017784212">contact support.</a></p>
 					</div>
 				</footer>
 			</div>
 		</div>
-	</body>
+</body>
+
 </html>

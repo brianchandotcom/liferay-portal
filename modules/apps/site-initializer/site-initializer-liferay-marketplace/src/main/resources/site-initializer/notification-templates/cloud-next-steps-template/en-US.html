@@ -1,54 +1,61 @@
 <!DOCTYPE html>
 
 <html lang="en">
-	<head>
-		<title>Cloud App Template</title>
-	</head>
 
-	<body>
-		<div style="align-items: center; background-image: url('[$PORTAL_URL$]/documents/d/[$GROUP_KEY$]/backgroud-png'); background-position: left; display: flex; flex-direction: column; font-family: 'Source Sans Pro', sans-serif; justify-content: center;">
-			<div style="background-color: #fff; border-radius: 16px; border: 1px solid #6b6c7e; height: 600px; margin-bottom: 4rem; margin-top: 4rem; padding: 3rem; width: 925px;">
-				<div style="align-items: center; display: flex; justify-content: center;">
-					<img alt="Liferay Logo" src="[$PORTAL_URL$]/documents/d/[$GROUP_KEY$]/liferay_inc-png" style="margin-top: 7px;" />
+<head>
+	<title>Cloud App Template</title>
+</head>
 
-					<h1 style="font-size: 55px; font-weight: lighter;">
-						Liferay
-					</h1>
-				</div>
+<body>
+	<div
+		style="background-image: url('[$PORTAL_URL$]/documents/d/[$GROUP_KEY$]/backgroud-png');background-size: cover; background-position: left; display: flex; font-family: 'Source Sans Pro', sans-serif;">
+		<div
+			style="background-color: #fff; border-radius: 16px; border: 1px solid #6b6c7e; height: 710px; margin-bottom: 4rem; margin-top: 4rem;margin-left: auto; margin-right: auto; padding: 3rem; width: 925px;">
+			<div style="display: flex; margin-left: auto; margin-right: auto; width: fit-content"><img
+					alt="Liferay Logo" height="58" src="[$PORTAL_URL$]/documents/d/[$GROUP_KEY$]/liferay_logo-png"
+					style="margin-top:35px; margin-bottom: 35px;" /></div>
 
-				<div>
-					<main>
-						<div style="align-items: center; display: flex; gap: 0.75rem; justify-content: center;">
-							<h2 style="font-size: 30px; font-weight: bolder; margin-bottom: 1rem; margin-top: 2.5rem;">
-								Next Steps
-							</h2>
-						</div>
+			<div>
+				<main>
+					<div
+						style=" display: flex; gap: 0.75rem; margin-left:auto ;margin-right: auto; width: fit-content;">
+						<h2 style="font-size: 30px; font-weight: bolder; margin-bottom: 1rem; margin-top: 2.5rem;">
+							Next Steps
+						</h2>
+					</div>
 
-						<div style="color: #54555f; margin: 1rem 11rem; text-align: center;">
-							<p>
-								Congratulations on the purchase of
-								<b>[%GETAPPINFORMATION_PRODUCTNAME%]</b>. You
-								will need to deploy the app to your project in
-								the Cloud Console. To access the Cloud Console,
-								click the button below and provide your Order ID
-								when prompted.
-							</p>
+					<div style="color: #54555f; margin: 1rem 11rem; text-align: center;">
+						<p>
+							Congratulations on the purchase of
+							<b>[%GETAPPINFORMATION_PRODUCTNAME%]</b>. You
+							will need to deploy the app to your project in
+							the Cloud Console. To access the Cloud Console,
+							click the button below and provide your Order ID
+							when prompted.
+						</p>
 
-							<p> Your Order ID is: <b style="color: #000">[%GETAPPINFORMATION_ORDERID%]</b>
-							</p>
-						</div>
+						<p> Your Order ID is: <b style="color: #000">[%GETAPPINFORMATION_ORDERID%]</b>
+						</p>
+					</div>
 
-						<div style="margin: 2.5rem; padding: 10px; text-align: center;">
-							<a href="[%GETAPPINFORMATION_DASHBOARDLINK%]" style="background-color: #ffffff; border-radius: 8px; border: #000 1px solid; color: #000; font-weight: bold; height: 2.5rem; margin-right: 1rem; padding: 0.5rem 1.5rem; text-decoration: none; width: 10rem;">Go to Dashboard</a>
-							<a href="https://console.marketplacedemo.liferay.sh/projects" style="background-color: #0b5fff; border-radius: 8px; color: #ffffff; font-weight: bold; height: 2.5rem; padding: 0.5rem 1.5rem; text-decoration: none; width: 10rem;">Go to Cloud Console</a>
-						</div>
-					</main>
-				</div>
-
-				<footer style="margin: 1rem 7rem; padding: 5px; text-align: center;">
-					<a href="https://learn.liferay.com" style="color: #0b5fff; font-size: 20px; font-weight: bold; text-decoration: none;">Learn more about App Configuration</a>
-				</footer>
+					<div style="margin: 2.5rem; padding: 10px; text-align: center;">
+						<a href="[%GETAPPINFORMATION_DASHBOARDLINK%]"
+							style="background-color: #ffffff; border-radius: 8px; border: #000 1px solid; color: #000; font-weight: bold; height: 2.5rem; margin-right: 1rem; padding: 0.5rem 1.5rem; text-decoration: none; width: 10rem;">Go
+							to Dashboard</a>
+						<a href="https://console.marketplacedemo.liferay.sh/projects"
+							style="background-color: #0b5fff; border-radius: 8px; color: #ffffff; font-weight: bold; height: 2.5rem; padding: 0.5rem 1.5rem; text-decoration: none; width: 10rem;">Go
+							to Cloud Console</a>
+					</div>
+				</main>
 			</div>
+
+			<footer style="margin: 1rem 7rem; padding: 5px; text-align: center;">
+				<a href="https://learn.liferay.com"
+					style="color: #0b5fff; font-size: 20px; font-weight: bold; text-decoration: none;">Learn more about
+					App Configuration</a>
+			</footer>
 		</div>
-	</body>
+	</div>
+</body>
+
 </html>

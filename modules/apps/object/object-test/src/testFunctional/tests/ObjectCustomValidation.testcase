@@ -1894,7 +1894,7 @@ definition {
 
 		var iterator = 0;
 		var types = "Boolean,Date,Double,Integer,Long,BigDecimal,Clob,String";
-		var entries = "true,01/01/2023,5.1,8,12345,0.100,Rich Text Entry,Text Entry,option1,2023-01-01T01:00:00.000Z";
+		var entries = "true,2023-01-01,5.1,8,12345,0.100,Rich Text Entry,Text Entry,option1,2023-01-01T01:00:00.000Z";
 		var typeList = ListUtil.newListFromString(${types});
 		var entriesList = ListUtil.newListFromString(${entries});
 
@@ -1973,6 +1973,11 @@ definition {
 				fieldType = "String",
 				isRequired = "false",
 				objectName = "Foo");
+
+			JSONObject.updateObject(
+				configKey = "titleObjectFieldName",
+				configValue = "fooField",
+				objectName = "Foo");
 		}
 
 		task ("and Given a validation with a composite key") {
@@ -2001,7 +2006,7 @@ definition {
 		}
 
 		task ("Then only the integer, picklist, relationship, and text are listed") {
-			for (var nonListedFields : list "Custom Field0,Custom Field1,Custom Field2,Custom Field4,Custom Field5,Custom Field6,Custom Field10") {
+			for (var nonListedFields : list "Custom Field0,Custom Field1,Custom Field2,Custom Field4,Custom Field5,Custom Field6,Custom Field9,Custom Field10") {
 				AssertElementNotPresent(
 					key_columnOption = ${nonListedFields},
 					locator1 = "ObjectCustomViews#CHECKBOX_COLUMN_OPTION");
@@ -2030,18 +2035,24 @@ definition {
 					value = "FooEntry${values1}");
 			}
 
-			for (var values2 : list "0,1,2,3,4,5,6,7,8,10") {
-				var entryValue = ListUtil.get(${entriesList}, ${values2});
+			JSONObject.addObjectEntryViaJSONAPI(
+				fieldList = "customField0/true,customField1/2023-01-01,customField2/5.1,customField3/8,customField4/12345,customField5/0.100,customField6/Rich Text Entry,customField7/Text Entry,customField8/option1,customField10/2023-01-01T01:00:00.000Z",
+				objectName = "CustomObject202722");
 
-				ObjectAdmin.addObjectSingleFieldEntryViaAPI(
-					fieldName = "customField${values2}",
-					objectName = "CustomObject202722",
-					value = ${entryValue});
-			}
+			var fooObjectEntryId = JSONObject.getObjectEntryId(
+				entryValue = "FooEntry1",
+				fieldName = "fooField",
+				objectName = "Foo");
+			var customObject202722EntryId = JSONObject.getObjectEntryId(
+				entryValue = "Text Entry",
+				fieldName = "customField7",
+				objectName = "customobject202722");
 
-			ObjectPortlet.selectRelationshipFieldEntry(
-				entry = "",
-				newEntry = "FooEntry1");
+			ObjectDefinitionAPI.relateObjectEntries(
+				en_US_plural_label = "Foos",
+				objectEntry1 = ${fooObjectEntryId},
+				objectEntry2 = ${customObject202722EntryId},
+				relationshipName = "relationship");
 		}
 
 		task ("When the user attempts to add a duplicate object entry") {
@@ -2081,13 +2092,11 @@ definition {
 
 			ObjectAdmin.selectDropdownItem(
 				labelName = "Custom Field8",
-				optionName = "option1");
+				optionName = "Option1");
 
 			Click(locator1 = "ObjectAdmin#ENTRY_CHOOSE_OPTIONS_MULTIPICKLIST");
 
-			for (var picklistOption : list "option1,option2") {
-				MenuItem.clickNoError(menuItem = ${picklistOption});
-			}
+			MenuItem.clickNoError(menuItem = "Option1");
 
 			Type(
 				locator1 = "ObjectPortlet#VIEW_EMPTY_LABEL_IN_DATE_TIME_ENTRY",
@@ -2105,13 +2114,15 @@ definition {
 		}
 
 		task ("and When the user adds a unique object entry") {
-			ObjectPortlet.selectRelationshipFieldEntry(
-				entry = "",
-				newEntry = "FooEntry2");
+			Click(locator1 = "ObjectPortlet#SEARCH_RELATIONSHIP_ENTRY");
+
+			Click(
+				key_entry = "FooEntry2",
+				locator1 = "CreateObject#ENTRY_RELATIONSHIP_FIELD_OPTION");
 
 			ObjectAdmin.selectDropdownItem(
 				labelName = "Custom Field8",
-				optionName = "option2");
+				optionName = "Option2");
 
 			ObjectPortlet.typeCustomField(
 				customField = "Custom Field7",
@@ -2125,7 +2136,7 @@ definition {
 
 			ObjectAdmin.goToCustomObject(objectName = "CustomObject162140");
 
-			for (var asserts : list "FooEntry2,option2,Unique Text Entry") {
+			for (var asserts : list "FooEntry2,Option2,Unique Text Entry") {
 				ObjectPortlet.viewEntry(entry = ${asserts});
 			}
 		}

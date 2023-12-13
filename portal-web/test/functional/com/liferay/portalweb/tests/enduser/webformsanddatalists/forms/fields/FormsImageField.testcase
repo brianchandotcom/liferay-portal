@@ -528,7 +528,7 @@ definition {
 		}
 
 		task ("When the user changes the value of the "Guest Upload Maximum File Size" setting to 5 in the Instance Settings") {
-			PortalSettings.openInstanceSettingsAdmin(baseURL = "http://www.able.com:8080");
+			PortalSettings.openInstanceSettingsAdmin();
 
 			SystemSettings.gotoConfiguration(
 				configurationCategory = "Forms",

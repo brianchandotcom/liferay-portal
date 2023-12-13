@@ -5,6 +5,7 @@
 
 package com.liferay.fragment.collection.filter.tags.display.context;
 
+import com.liferay.fragment.constants.FragmentConfigurationFieldDataType;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
@@ -80,6 +81,11 @@ public class FragmentCollectionFilterTagsDisplayContext {
 			"label", getLabel()
 		).put(
 			"showLabel", isShowLabel()
+		).put(
+			"targetCollections",
+			_fragmentEntryConfigurationParser.getConfigurationFieldValue(
+				_fragmentEntryLink.getEditableValues(), "targetCollections",
+				FragmentConfigurationFieldDataType.ARRAY)
 		).build();
 
 		return _props;

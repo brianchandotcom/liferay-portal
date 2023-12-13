@@ -14,6 +14,7 @@ export default function FragmentCollectionFilterDate({
 	date,
 	fragmentEntryLinkId,
 	isDisabled,
+	targetCollections,
 }) {
 	const value = getCollectionFilterValue(date, fragmentEntryLinkId);
 
@@ -21,7 +22,12 @@ export default function FragmentCollectionFilterDate({
 		<ClayDatePicker
 			disabled={isDisabled}
 			onValueChange={(value) =>
-				setCollectionFilterValue(date, fragmentEntryLinkId, value)
+				setCollectionFilterValue(
+					date,
+					fragmentEntryLinkId,
+					value,
+					targetCollections
+				)
 			}
 			placeholder="YYYY-MM-DD"
 			value={value}

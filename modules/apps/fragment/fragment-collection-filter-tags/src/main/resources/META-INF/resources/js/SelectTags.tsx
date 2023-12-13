@@ -16,6 +16,7 @@ interface IProps {
 	helpText: string;
 	label: string;
 	showLabel: boolean;
+	targetCollections: Array<string>;
 }
 
 export default function SelectTags({
@@ -24,6 +25,7 @@ export default function SelectTags({
 	helpText,
 	label,
 	showLabel,
+	targetCollections,
 }: IProps) {
 	const [inputValue, setInputValue] = useState('');
 
@@ -47,10 +49,11 @@ export default function SelectTags({
 			setCollectionFilterValue(
 				'tags',
 				fragmentEntryLinkId,
-				nextItems.map((tag) => tag.value)
+				nextItems.map((tag) => tag.value),
+				targetCollections
 			);
 		},
-		[fragmentEntryLinkId]
+		[fragmentEntryLinkId, targetCollections]
 	);
 
 	return (

@@ -14,6 +14,7 @@ export default function FragmentCollectionFilterKeyword({
 	fragmentEntryLinkId,
 	fragmentEntryLinkNamespace,
 	isDisabled,
+	targetCollections,
 }) {
 	const keywordsInput = document.getElementById(
 		`${fragmentEntryLinkNamespace}keywordsInput`
@@ -46,7 +47,8 @@ export default function FragmentCollectionFilterKeyword({
 		setCollectionFilterValue(
 			'keywords',
 			fragmentEntryLinkId,
-			keywordsInput.value
+			keywordsInput.value,
+			targetCollections
 		);
 	};
 

@@ -26,7 +26,7 @@
 
 ### WebDriver
 
-* [POSHI-630](https://liferay.atlassian.net/browse/POSHI-630) - As a test writer, I would like a property to configure browser resolution for a test 
+* [POSHI-630](https://liferay.atlassian.net/browse/POSHI-630) - As a test writer, I would like a property to configure browser resolution for a test
 * [POSHI-670](https://liferay.atlassian.net/browse/POSHI-670) - Add cookie setting support through ProxyUtil
 * [POSHI-675](https://liferay.atlassian.net/browse/POSHI-675) - Make JSONUtil.getWithJSONPath support expression with null
 * [POSHI-685](https://liferay.atlassian.net/browse/POSHI-685) - Modify RegexUtil.escapeRegexChars to support other types

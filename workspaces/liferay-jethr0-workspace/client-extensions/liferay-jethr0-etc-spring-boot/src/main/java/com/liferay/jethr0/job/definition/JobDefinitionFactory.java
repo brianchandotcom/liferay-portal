@@ -26,7 +26,22 @@ public class JobDefinitionFactory {
 	}
 
 	public static JobDefinition newJobDefinition(JobEntity.Type type) {
-		if (type == JobEntity.Type.PORTAL_PULL_REQUEST) {
+		if (type == JobEntity.Type.GENERATE_CI_SYSTEM_HISTORY_REPORT) {
+			return new GenerateCISystemHistoryReportJobDefinition(type);
+		}
+		else if (type == JobEntity.Type.GENERATE_CI_SYSTEM_STATUS_REPORT) {
+			return new GenerateCISystemStatusReportJobDefinition(type);
+		}
+		else if (type == JobEntity.Type.GENERATE_REPORTS) {
+			return new GenerateReportsJobDefinition(type);
+		}
+		else if (type == JobEntity.Type.GENERATE_TEST_DURATION_METRICS) {
+			return new GenerateTestDurationMetricsJobDefinition(type);
+		}
+		else if (type == JobEntity.Type.GENERATE_TESTRAY_CSV) {
+			return new GenerateTestrayCSVJobDefinition(type);
+		}
+		else if (type == JobEntity.Type.PORTAL_PULL_REQUEST) {
 			return new PortalPullRequestJobDefinition(type);
 		}
 		else if (type == JobEntity.Type.PORTAL_PULL_REQUEST_SF) {

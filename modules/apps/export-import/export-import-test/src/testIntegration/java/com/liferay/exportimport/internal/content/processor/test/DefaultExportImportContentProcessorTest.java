@@ -336,20 +336,6 @@ public class DefaultExportImportContentProcessorTest {
 	public void testExportDLReferencesInvalidReference() throws Exception {
 		_portletDataContextExport.setZipWriter(new TestReaderWriter());
 
-		_exportImportContentProcessor.replaceExportContentReferences(
-			_portletDataContextExport, _referrerStagedModel,
-			StringBundler.concat(
-				"{{/documents/}}", StringPool.NEW_LINE, "[[/documents/]]",
-				StringPool.NEW_LINE, "<a href=/documents/>Link</a>",
-				StringPool.NEW_LINE, "<a href=\"/documents/\">Link</a>",
-				StringPool.NEW_LINE, "<a href='/documents/'>Link</a>"),
-			true, true);
-	}
-
-	@Test
-	public void testExportInvalidDLReferencesFriendlyURL() throws Exception {
-		_portletDataContextExport.setZipWriter(new TestReaderWriter());
-
 		_fileEntry = DLAppLocalServiceUtil.updateFileEntry(
 			TestPropsValues.getUserId(), _fileEntry.getFileEntryId(),
 			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,

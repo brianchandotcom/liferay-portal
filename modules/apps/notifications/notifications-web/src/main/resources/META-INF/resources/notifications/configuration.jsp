@@ -97,7 +97,7 @@
 										</td>
 
 										<%
-										String description = LanguageUtil.get(request, "receive-a-notification-when-someone") + StringPool.SPACE + LanguageUtil.get(request, userNotificationDefinition.getDescription(locale));
+										String description = LanguageUtil.get(request, "receive-a-notification-when-someone") + LanguageUtil.get(request, userNotificationDefinition.getDescription(locale));
 
 										for (Map.Entry<Integer, UserNotificationDeliveryType> userNotificationDeliveryTypeEntry : userNotificationDeliveryTypesMap.entrySet()) {
 											UserNotificationDeliveryType userNotificationDeliveryType = userNotificationDeliveryTypeEntry.getValue();

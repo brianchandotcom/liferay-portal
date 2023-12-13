@@ -322,7 +322,11 @@ public class JournalManagementToolbarDisplayContext
 		).setParameter(
 			"orderByType", StringPool.BLANK
 		).setParameter(
+			"searchIn", StringPool.BLANK
+		).setParameter(
 			"status", WorkflowConstants.STATUS_ANY
+		).setParameter(
+			"type", (String)null
 		).buildString();
 	}
 

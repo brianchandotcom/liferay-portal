@@ -337,37 +337,17 @@ public class ObjectFieldResourceTest extends BaseObjectFieldResourceTestCase {
 	public void testPatchObjectField() throws Exception {
 		super.testPatchObjectField();
 
-		// Unique
+		// Not unique to unique
 
-		ObjectField postObjectField = _addUniqueObjectField();
+		_testPatchObjectField(_addObjectField(), true);
 
-		ObjectField randomObjectField1 = randomObjectField();
+		// Unique to unique
 
-		ObjectField patchObjectField = objectFieldResource.patchObjectField(
-			postObjectField.getId(), randomObjectField1);
-
-		assertEquals(randomObjectField1, patchObjectField);
-		Assert.assertTrue(patchObjectField.getUnique());
+		_testPatchObjectField(_addUniqueObjectField(), true);
 
 		// Unique to not unique
 
-		ObjectField randomObjectField2 = randomObjectField();
-
-		randomObjectField2.setObjectFieldSettings(
-			new ObjectFieldSetting[] {
-				new ObjectFieldSetting() {
-					{
-						name = ObjectFieldSettingConstants.NAME_UNIQUE_VALUES;
-						value = "false";
-					}
-				}
-			});
-
-		patchObjectField = objectFieldResource.patchObjectField(
-			postObjectField.getId(), randomObjectField2);
-
-		assertEquals(randomObjectField2, patchObjectField);
-		Assert.assertFalse(patchObjectField.getUnique());
+		_testPatchObjectField(_addUniqueObjectField(), false);
 	}
 
 	@Override
@@ -491,6 +471,41 @@ public class ObjectFieldResourceTest extends BaseObjectFieldResourceTestCase {
 
 		return objectFieldResource.postObjectDefinitionObjectField(
 			_objectDefinition.getObjectDefinitionId(), objectField);
+	}
+
+	private void _testPatchObjectField(ObjectField objectField, boolean unique)
+		throws Exception {
+
+		ObjectField randomObjectField = randomObjectField();
+
+		ObjectFieldSetting objectFieldSetting = null;
+
+		if (unique) {
+			objectFieldSetting = new ObjectFieldSetting() {
+				{
+					name = ObjectFieldSettingConstants.NAME_UNIQUE_VALUES;
+					value = "true";
+				}
+			};
+		}
+		else {
+			objectFieldSetting = new ObjectFieldSetting() {
+				{
+					name = ObjectFieldSettingConstants.NAME_UNIQUE_VALUES;
+					value = "false";
+				}
+			};
+		}
+
+		randomObjectField.setObjectFieldSettings(
+			new ObjectFieldSetting[] {objectFieldSetting});
+
+		ObjectField patchObjectField = objectFieldResource.patchObjectField(
+			objectField.getId(), randomObjectField);
+
+		assertEquals(randomObjectField, patchObjectField);
+
+		Assert.assertEquals(unique, patchObjectField.getUnique());
 	}
 
 	private ObjectDefinition _objectDefinition;

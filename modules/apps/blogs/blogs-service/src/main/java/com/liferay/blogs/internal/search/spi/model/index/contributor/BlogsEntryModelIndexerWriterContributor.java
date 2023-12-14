@@ -13,18 +13,21 @@ import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterC
 import com.liferay.portal.search.spi.model.index.contributor.helper.IndexerWriterMode;
 import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexerWriterDocumentHelper;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Luan Maoski
  */
-@Component(
-	property = "indexer.class.name=com.liferay.blogs.model.BlogsEntry",
-	service = ModelIndexerWriterContributor.class
-)
 public class BlogsEntryModelIndexerWriterContributor
 	implements ModelIndexerWriterContributor<BlogsEntry> {
+
+	public BlogsEntryModelIndexerWriterContributor(
+		BlogsEntryLocalService blogsEntryLocalService,
+		DynamicQueryBatchIndexingActionableFactory
+			dynamicQueryBatchIndexingActionableFactory) {
+
+		_blogsEntryLocalService = blogsEntryLocalService;
+		_dynamicQueryBatchIndexingActionableFactory =
+			dynamicQueryBatchIndexingActionableFactory;
+	}
 
 	@Override
 	public void customize(
@@ -64,11 +67,8 @@ public class BlogsEntryModelIndexerWriterContributor
 		return IndexerWriterMode.DELETE;
 	}
 
-	@Reference
-	private BlogsEntryLocalService _blogsEntryLocalService;
-
-	@Reference
-	private DynamicQueryBatchIndexingActionableFactory
+	private final BlogsEntryLocalService _blogsEntryLocalService;
+	private final DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;
 
 }

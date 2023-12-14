@@ -12,18 +12,21 @@ import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactor
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexerWriterDocumentHelper;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Carolina Barbosa
  */
-@Component(
-	property = "indexer.class.name=com.liferay.list.type.model.ListTypeDefinition",
-	service = ModelIndexerWriterContributor.class
-)
 public class ListTypeDefinitionModelIndexerWriterContributor
 	implements ModelIndexerWriterContributor<ListTypeDefinition> {
+
+	public ListTypeDefinitionModelIndexerWriterContributor(
+		DynamicQueryBatchIndexingActionableFactory
+			dynamicQueryBatchIndexingActionableFactory,
+		ListTypeDefinitionLocalService listTypeDefinitionLocalService) {
+
+		_dynamicQueryBatchIndexingActionableFactory =
+			dynamicQueryBatchIndexingActionableFactory;
+		_listTypeDefinitionLocalService = listTypeDefinitionLocalService;
+	}
 
 	@Override
 	public void customize(
@@ -50,11 +53,9 @@ public class ListTypeDefinitionModelIndexerWriterContributor
 		return listTypeDefinition.getCompanyId();
 	}
 
-	@Reference
-	private DynamicQueryBatchIndexingActionableFactory
+	private final DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;
-
-	@Reference
-	private ListTypeDefinitionLocalService _listTypeDefinitionLocalService;
+	private final ListTypeDefinitionLocalService
+		_listTypeDefinitionLocalService;
 
 }

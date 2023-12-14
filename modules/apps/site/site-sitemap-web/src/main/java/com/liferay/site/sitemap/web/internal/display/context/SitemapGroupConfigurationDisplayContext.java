@@ -38,35 +38,44 @@ public class SitemapGroupConfigurationDisplayContext {
 	}
 
 	public boolean isIncludeCategoriesDisabled() throws ConfigurationException {
-		if (_sitemapConfigurationManager.includeCategoriesCompanyEnabled(
-				_themeDisplay.getCompanyId())) {
-
-			return false;
+		if (_includeCategoriesDisabled != null) {
+			return _includeCategoriesDisabled;
 		}
 
-		return true;
+		_includeCategoriesDisabled =
+			_sitemapConfigurationManager.includeCategoriesCompanyEnabled(
+				_themeDisplay.getCompanyId());
+
+		return _includeCategoriesDisabled;
 	}
 
 	public boolean isIncludePagesDisabled() throws ConfigurationException {
-		if (_sitemapConfigurationManager.includePagesCompanyEnabled(
-				_themeDisplay.getCompanyId())) {
-
-			return false;
+		if (_includePagesDisabled != null) {
+			return _includePagesDisabled;
 		}
 
-		return true;
+		_includePagesDisabled =
+			_sitemapConfigurationManager.includePagesCompanyEnabled(
+				_themeDisplay.getCompanyId());
+
+		return _includePagesDisabled;
 	}
 
 	public boolean isIncludeWebContentDisabled() throws ConfigurationException {
-		if (_sitemapConfigurationManager.includeWebContentCompanyEnabled(
-				_themeDisplay.getCompanyId())) {
-
-			return false;
+		if (_includeWebContentDisabled != null) {
+			return _includeWebContentDisabled;
 		}
 
-		return true;
+		_includeWebContentDisabled =
+			_sitemapConfigurationManager.includeWebContentCompanyEnabled(
+				_themeDisplay.getCompanyId());
+
+		return _includeWebContentDisabled;
 	}
 
+	private Boolean _includeCategoriesDisabled;
+	private Boolean _includePagesDisabled;
+	private Boolean _includeWebContentDisabled;
 	private final SitemapConfigurationManager _sitemapConfigurationManager;
 	private final ThemeDisplay _themeDisplay;
 

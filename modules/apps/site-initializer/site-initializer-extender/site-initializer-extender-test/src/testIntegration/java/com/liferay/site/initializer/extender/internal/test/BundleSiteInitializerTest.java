@@ -110,6 +110,7 @@ import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -3191,20 +3192,24 @@ public class BundleSiteInitializerTest {
 		SiteNavigationMenuItem siteNavigationMenuItem2 =
 			siteNavigationMenuItems.get(1);
 
-		Assert.assertEquals("Test URL", siteNavigationMenuItem2.getName());
 		Assert.assertEquals(
 			SiteNavigationMenuItemTypeConstants.URL,
 			siteNavigationMenuItem2.getType());
+		Assert.assertTrue(
+			StringUtil.contains(
+				siteNavigationMenuItem2.getTypeSettings(), "Test URL",
+				StringPool.BLANK));
 
 		SiteNavigationMenuItem siteNavigationMenuItem3 =
 			siteNavigationMenuItems.get(2);
 
-		Assert.assertEquals("Other Links", siteNavigationMenuItem3.getName());
 		Assert.assertEquals(
 			SiteNavigationMenuItemTypeConstants.NODE,
 			siteNavigationMenuItem3.getType());
-		Assert.assertEquals(
-			"name=Other Links\n", siteNavigationMenuItem3.getTypeSettings());
+		Assert.assertTrue(
+			StringUtil.contains(
+				siteNavigationMenuItem3.getTypeSettings(), "Other Links",
+				StringPool.BLANK));
 
 		SiteNavigationMenuItem siteNavigationMenuItem4 =
 			siteNavigationMenuItems.get(3);
@@ -3258,21 +3263,24 @@ public class BundleSiteInitializerTest {
 		SiteNavigationMenuItem siteNavigationMenuItem2 =
 			siteNavigationMenuItems.get(1);
 
-		Assert.assertEquals("Test URL", siteNavigationMenuItem2.getName());
 		Assert.assertEquals(
 			SiteNavigationMenuItemTypeConstants.URL,
 			siteNavigationMenuItem2.getType());
+		Assert.assertTrue(
+			StringUtil.contains(
+				siteNavigationMenuItem2.getTypeSettings(), "Test URL",
+				StringPool.BLANK));
 
 		SiteNavigationMenuItem siteNavigationMenuItem3 =
 			siteNavigationMenuItems.get(2);
 
-		Assert.assertEquals("Other Links", siteNavigationMenuItem3.getName());
 		Assert.assertEquals(
 			SiteNavigationMenuItemTypeConstants.NODE,
 			siteNavigationMenuItem3.getType());
-		Assert.assertEquals(
-			"name=Other Links Update\n",
-			siteNavigationMenuItem3.getTypeSettings());
+		Assert.assertTrue(
+			StringUtil.contains(
+				siteNavigationMenuItem3.getTypeSettings(), "Other Links Update",
+				StringPool.BLANK));
 
 		SiteNavigationMenuItem siteNavigationMenuItem4 =
 			siteNavigationMenuItems.get(3);

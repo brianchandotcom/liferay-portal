@@ -39,7 +39,7 @@ const CONTENT_TYPES = [
 	},
 ];
 
-function ContentTypeModal({
+function ContentTypesModal({
 	initialSelectedTypes = [],
 	observer,
 	onClose,
@@ -204,7 +204,7 @@ function ContentTypeModal({
 	);
 }
 
-export default function ContentTypeInput({onBlur, onChange, value}) {
+export default function ContentTypesInput({onBlur, onChange, value}) {
 	const {observer, onOpenChange, open} = useModal();
 
 	const _getSelectedTypes = (items) =>
@@ -225,7 +225,7 @@ export default function ContentTypeInput({onBlur, onChange, value}) {
 	return (
 		<>
 			{open && (
-				<ContentTypeModal
+				<ContentTypesModal
 					initialSelectedTypes={_getSelectedTypes(value)}
 					observer={observer}
 					onChange={onChange}
@@ -235,7 +235,7 @@ export default function ContentTypeInput({onBlur, onChange, value}) {
 
 			<ClayInput.GroupItem>
 				<label>
-					{Liferay.Language.get('content-type')}
+					{Liferay.Language.get('content-types')}
 
 					<span className="reference-mark">
 						<ClayIcon symbol="asterisk" />
@@ -245,7 +245,7 @@ export default function ContentTypeInput({onBlur, onChange, value}) {
 						<span
 							className="c-ml-2"
 							data-tooltip-align="top"
-							title={Liferay.Language.get('content-type-help')}
+							title={Liferay.Language.get('content-types-help')}
 						>
 							<ClayIcon symbol="question-circle-full" />
 						</span>

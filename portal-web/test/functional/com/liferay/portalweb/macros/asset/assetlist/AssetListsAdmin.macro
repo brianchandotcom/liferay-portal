@@ -145,7 +145,7 @@ definition {
 
 	@summary = "Default summary"
 	macro addSelection(menuItem = null, collectionName = null, selectedAsset = null) {
-		Click(locator1 = "Button#NEW");
+		Click(locator1 = "Button#PLUS");
 
 		MenuItem.click(menuItem = ${menuItem});
 

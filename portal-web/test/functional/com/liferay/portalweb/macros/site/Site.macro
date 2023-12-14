@@ -687,7 +687,9 @@ definition {
 	macro deleteAllCP() {
 		PortletEntry.selectAll();
 
-		Click(locator1 = "Icon#DELETE");
+		Click(
+			key_text = "trash",
+			locator1 = "ManagementBar#ANY_ICON");
 
 		AssertTextEquals(
 			locator1 = "Modal#BODY",
@@ -1297,7 +1299,9 @@ definition {
 		if (IsElementNotPresent(locator1 = "Message#EMPTY_INFO")) {
 			PortletEntry.selectAll();
 
-			Click(locator1 = "Icon#DELETE");
+			Click(
+				key_text = "trash",
+				locator1 = "ManagementBar#ANY_ICON");
 
 			AssertTextEquals(
 				locator1 = "Modal#BODY",

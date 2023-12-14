@@ -12,19 +12,21 @@ import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexer
 import com.liferay.search.experiences.model.SXPBlueprint;
 import com.liferay.search.experiences.service.SXPBlueprintLocalService;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Petteri Karttunen
  */
-@Component(
-	enabled = false,
-	property = "indexer.class.name=com.liferay.search.experiences.model.SXPBlueprint",
-	service = ModelIndexerWriterContributor.class
-)
 public class SXPBlueprintModelIndexerWriterContributor
 	implements ModelIndexerWriterContributor<SXPBlueprint> {
+
+	public SXPBlueprintModelIndexerWriterContributor(
+		DynamicQueryBatchIndexingActionableFactory
+			dynamicQueryBatchIndexingActionableFactory,
+		SXPBlueprintLocalService sxpBlueprintLocalService) {
+
+		_dynamicQueryBatchIndexingActionableFactory =
+			dynamicQueryBatchIndexingActionableFactory;
+		_sxpBlueprintLocalService = sxpBlueprintLocalService;
+	}
 
 	@Override
 	public void customize(
@@ -38,9 +40,9 @@ public class SXPBlueprintModelIndexerWriterContributor
 
 	@Override
 	public BatchIndexingActionable getBatchIndexingActionable() {
-		return dynamicQueryBatchIndexingActionableFactory.
+		return _dynamicQueryBatchIndexingActionableFactory.
 			getBatchIndexingActionable(
-				sxpBlueprintLocalService.getIndexableActionableDynamicQuery());
+				_sxpBlueprintLocalService.getIndexableActionableDynamicQuery());
 	}
 
 	@Override
@@ -48,11 +50,8 @@ public class SXPBlueprintModelIndexerWriterContributor
 		return sxpBlueprint.getCompanyId();
 	}
 
-	@Reference
-	protected DynamicQueryBatchIndexingActionableFactory
-		dynamicQueryBatchIndexingActionableFactory;
-
-	@Reference
-	protected SXPBlueprintLocalService sxpBlueprintLocalService;
+	private final DynamicQueryBatchIndexingActionableFactory
+		_dynamicQueryBatchIndexingActionableFactory;
+	private final SXPBlueprintLocalService _sxpBlueprintLocalService;
 
 }

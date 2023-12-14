@@ -6,11 +6,15 @@
 package com.liferay.search.experiences.internal.search;
 
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContributor;
+import com.liferay.search.experiences.internal.search.spi.model.index.contributor.SXPBlueprintModelIndexerWriterContributor;
 import com.liferay.search.experiences.model.SXPBlueprint;
+import com.liferay.search.experiences.service.SXPBlueprintLocalService;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -52,9 +56,18 @@ public class SXPBlueprintModelSearchConfigurator
 		return _modelSummaryContributor;
 	}
 
-	@Reference(
-		target = "(indexer.class.name=com.liferay.search.experiences.model.SXPBlueprint)"
-	)
+	@Activate
+	protected void activate() {
+		_modelIndexWriterContributor =
+			new SXPBlueprintModelIndexerWriterContributor(
+				_dynamicQueryBatchIndexingActionableFactory,
+				_sxpBlueprintLocalService);
+	}
+
+	@Reference
+	private DynamicQueryBatchIndexingActionableFactory
+		_dynamicQueryBatchIndexingActionableFactory;
+
 	private ModelIndexerWriterContributor<SXPBlueprint>
 		_modelIndexWriterContributor;
 
@@ -62,5 +75,8 @@ public class SXPBlueprintModelSearchConfigurator
 		target = "(indexer.class.name=com.liferay.search.experiences.model.SXPBlueprint)"
 	)
 	private ModelSummaryContributor _modelSummaryContributor;
+
+	@Reference
+	private SXPBlueprintLocalService _sxpBlueprintLocalService;
 
 }

@@ -12,18 +12,21 @@ import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactor
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexerWriterDocumentHelper;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Drew Brokke
  */
-@Component(
-	property = "indexer.class.name=com.liferay.account.model.AccountEntry",
-	service = ModelIndexerWriterContributor.class
-)
 public class AccountEntryModelIndexerWriterContributor
 	implements ModelIndexerWriterContributor<AccountEntry> {
+
+	public AccountEntryModelIndexerWriterContributor(
+		AccountEntryLocalService accountEntryLocalService,
+		DynamicQueryBatchIndexingActionableFactory
+			dynamicQueryBatchIndexingActionableFactory) {
+
+		_accountEntryLocalService = accountEntryLocalService;
+		_dynamicQueryBatchIndexingActionableFactory =
+			dynamicQueryBatchIndexingActionableFactory;
+	}
 
 	@Override
 	public void customize(
@@ -37,7 +40,7 @@ public class AccountEntryModelIndexerWriterContributor
 
 	@Override
 	public BatchIndexingActionable getBatchIndexingActionable() {
-		return dynamicQueryBatchIndexingActionableFactory.
+		return _dynamicQueryBatchIndexingActionableFactory.
 			getBatchIndexingActionable(
 				_accountEntryLocalService.getIndexableActionableDynamicQuery());
 	}
@@ -47,11 +50,8 @@ public class AccountEntryModelIndexerWriterContributor
 		return accountEntry.getCompanyId();
 	}
 
-	@Reference
-	protected DynamicQueryBatchIndexingActionableFactory
-		dynamicQueryBatchIndexingActionableFactory;
-
-	@Reference
-	private AccountEntryLocalService _accountEntryLocalService;
+	private final AccountEntryLocalService _accountEntryLocalService;
+	private final DynamicQueryBatchIndexingActionableFactory
+		_dynamicQueryBatchIndexingActionableFactory;
 
 }

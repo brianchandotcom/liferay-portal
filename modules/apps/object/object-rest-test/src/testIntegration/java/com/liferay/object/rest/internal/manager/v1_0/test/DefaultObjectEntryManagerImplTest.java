@@ -2062,7 +2062,47 @@ public class DefaultObjectEntryManagerImplTest
 				"sort", "textObjectFieldName:desc"
 			).build(),
 			childObjectEntry2, childObjectEntry1);
-		_testSearchByRelatedObjectEntry(childObjectEntry1, parentObjectEntry1);
+
+		// Search
+
+		testGetObjectEntries(
+			HashMapBuilder.put(
+				"search", String.valueOf(parentObjectEntry1.getId())
+			).build(),
+			childObjectEntry1);
+
+		ObjectField objectField = objectFieldLocalService.fetchObjectField(
+			_objectDefinition1.getObjectDefinitionId(), "textObjectFieldName");
+
+		_objectDefinition1.setTitleObjectFieldId(
+			objectField.getObjectFieldId());
+
+		_objectDefinition1 =
+			objectDefinitionLocalService.updateObjectDefinition(
+				_objectDefinition1);
+
+		testGetObjectEntries(
+			HashMapBuilder.put(
+				"search", "Able"
+			).build(),
+			childObjectEntry1);
+
+		objectField = objectFieldLocalService.fetchObjectField(
+			_objectDefinition1.getObjectDefinitionId(),
+			"textObjectFieldNameExtension");
+
+		_objectDefinition1.setTitleObjectFieldId(
+			objectField.getObjectFieldId());
+
+		_objectDefinition1 =
+			objectDefinitionLocalService.updateObjectDefinition(
+				_objectDefinition1);
+
+		testGetObjectEntries(
+			HashMapBuilder.put(
+				"search", "Baker"
+			).build(),
+			childObjectEntry1);
 	}
 
 	@Test
@@ -3714,50 +3754,6 @@ public class DefaultObjectEntryManagerImplTest
 
 		_removeResourcePermission(
 			ObjectActionKeys.ADD_OBJECT_ENTRY, _buyerRole);
-	}
-
-	private void _testSearchByRelatedObjectEntry(
-			ObjectEntry childObjectEntry, ObjectEntry parentObjectEntry)
-		throws Exception {
-
-		testGetObjectEntries(
-			HashMapBuilder.put(
-				"search", String.valueOf(parentObjectEntry.getId())
-			).build(),
-			childObjectEntry);
-
-		ObjectField objectField = objectFieldLocalService.fetchObjectField(
-			_objectDefinition1.getObjectDefinitionId(), "textObjectFieldName");
-
-		_objectDefinition1.setTitleObjectFieldId(
-			objectField.getObjectFieldId());
-
-		_objectDefinition1 =
-			objectDefinitionLocalService.updateObjectDefinition(
-				_objectDefinition1);
-
-		testGetObjectEntries(
-			HashMapBuilder.put(
-				"search", "Able"
-			).build(),
-			childObjectEntry);
-
-		objectField = objectFieldLocalService.fetchObjectField(
-			_objectDefinition1.getObjectDefinitionId(),
-			"textObjectFieldNameExtension");
-
-		_objectDefinition1.setTitleObjectFieldId(
-			objectField.getObjectFieldId());
-
-		_objectDefinition1 =
-			objectDefinitionLocalService.updateObjectDefinition(
-				_objectDefinition1);
-
-		testGetObjectEntries(
-			HashMapBuilder.put(
-				"search", "Baker"
-			).build(),
-			childObjectEntry);
 	}
 
 	private void _updateLocalizedObjectEntryValues(

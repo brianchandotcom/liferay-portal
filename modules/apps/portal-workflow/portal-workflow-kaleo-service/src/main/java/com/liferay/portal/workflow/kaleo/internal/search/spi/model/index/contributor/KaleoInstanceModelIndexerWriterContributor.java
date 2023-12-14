@@ -12,18 +12,21 @@ import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexer
 import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
 import com.liferay.portal.workflow.kaleo.service.KaleoInstanceLocalService;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Inácio Nery
  */
-@Component(
-	property = "indexer.class.name=com.liferay.portal.workflow.kaleo.model.KaleoInstance",
-	service = ModelIndexerWriterContributor.class
-)
 public class KaleoInstanceModelIndexerWriterContributor
 	implements ModelIndexerWriterContributor<KaleoInstance> {
+
+	public KaleoInstanceModelIndexerWriterContributor(
+		DynamicQueryBatchIndexingActionableFactory
+			dynamicQueryBatchIndexingActionableFactory,
+		KaleoInstanceLocalService kaleoInstanceLocalService) {
+
+		_dynamicQueryBatchIndexingActionableFactory =
+			dynamicQueryBatchIndexingActionableFactory;
+		_kaleoInstanceLocalService = kaleoInstanceLocalService;
+	}
 
 	@Override
 	public void customize(
@@ -39,9 +42,10 @@ public class KaleoInstanceModelIndexerWriterContributor
 
 	@Override
 	public BatchIndexingActionable getBatchIndexingActionable() {
-		return dynamicQueryBatchIndexingActionableFactory.
+		return _dynamicQueryBatchIndexingActionableFactory.
 			getBatchIndexingActionable(
-				kaleoInstanceLocalService.getIndexableActionableDynamicQuery());
+				_kaleoInstanceLocalService.
+					getIndexableActionableDynamicQuery());
 	}
 
 	@Override
@@ -49,11 +53,8 @@ public class KaleoInstanceModelIndexerWriterContributor
 		return kaleoInstance.getCompanyId();
 	}
 
-	@Reference
-	protected DynamicQueryBatchIndexingActionableFactory
-		dynamicQueryBatchIndexingActionableFactory;
-
-	@Reference
-	protected KaleoInstanceLocalService kaleoInstanceLocalService;
+	private final DynamicQueryBatchIndexingActionableFactory
+		_dynamicQueryBatchIndexingActionableFactory;
+	private final KaleoInstanceLocalService _kaleoInstanceLocalService;
 
 }

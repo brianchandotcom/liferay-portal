@@ -19,18 +19,23 @@ import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
 import com.liferay.portal.workflow.kaleo.service.KaleoInstanceLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoInstanceTokenLocalService;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author István András Dézsi
  */
-@Component(
-	property = "indexer.class.name=com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken",
-	service = ModelIndexerWriterContributor.class
-)
 public class KaleoInstanceTokenModelIndexerWriterContributor
 	implements ModelIndexerWriterContributor<KaleoInstanceToken> {
+
+	public KaleoInstanceTokenModelIndexerWriterContributor(
+		DynamicQueryBatchIndexingActionableFactory
+			dynamicQueryBatchIndexingActionableFactory,
+		KaleoInstanceLocalService kaleoInstanceLocalService,
+		KaleoInstanceTokenLocalService kaleoInstanceTokenLocalService) {
+
+		_dynamicQueryBatchIndexingActionableFactory =
+			dynamicQueryBatchIndexingActionableFactory;
+		_kaleoInstanceLocalService = kaleoInstanceLocalService;
+		_kaleoInstanceTokenLocalService = kaleoInstanceTokenLocalService;
+	}
 
 	@Override
 	public void customize(
@@ -46,9 +51,9 @@ public class KaleoInstanceTokenModelIndexerWriterContributor
 
 	@Override
 	public BatchIndexingActionable getBatchIndexingActionable() {
-		return dynamicQueryBatchIndexingActionableFactory.
+		return _dynamicQueryBatchIndexingActionableFactory.
 			getBatchIndexingActionable(
-				kaleoInstanceTokenLocalService.
+				_kaleoInstanceTokenLocalService.
 					getIndexableActionableDynamicQuery());
 	}
 
@@ -64,7 +69,7 @@ public class KaleoInstanceTokenModelIndexerWriterContributor
 
 		try {
 			indexer.reindex(
-				kaleoInstanceLocalService.getKaleoInstance(
+				_kaleoInstanceLocalService.getKaleoInstance(
 					kaleoInstanceToken.getKaleoInstanceId()));
 		}
 		catch (SearchException searchException) {
@@ -75,14 +80,10 @@ public class KaleoInstanceTokenModelIndexerWriterContributor
 		}
 	}
 
-	@Reference
-	protected DynamicQueryBatchIndexingActionableFactory
-		dynamicQueryBatchIndexingActionableFactory;
-
-	@Reference
-	protected KaleoInstanceLocalService kaleoInstanceLocalService;
-
-	@Reference
-	protected KaleoInstanceTokenLocalService kaleoInstanceTokenLocalService;
+	private final DynamicQueryBatchIndexingActionableFactory
+		_dynamicQueryBatchIndexingActionableFactory;
+	private final KaleoInstanceLocalService _kaleoInstanceLocalService;
+	private final KaleoInstanceTokenLocalService
+		_kaleoInstanceTokenLocalService;
 
 }

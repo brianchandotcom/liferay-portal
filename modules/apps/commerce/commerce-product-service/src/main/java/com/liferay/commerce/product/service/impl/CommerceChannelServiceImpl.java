@@ -155,6 +155,15 @@ public class CommerceChannelServiceImpl extends CommerceChannelServiceBaseImpl {
 	}
 
 	@Override
+	public List<CommerceChannel> getEligibleCommerceChannels(
+			long accountEntryId, String name, int start, int end)
+		throws PortalException {
+
+		return commerceChannelLocalService.getEligibleCommerceChannels(
+			accountEntryId, name, start, end);
+	}
+
+	@Override
 	public List<CommerceChannel> search(long companyId) throws PortalException {
 		return commerceChannelLocalService.search(companyId);
 	}

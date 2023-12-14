@@ -867,9 +867,7 @@ definition {
 
 		User.openUsersAdmin();
 
-		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
-
-		MenuItem.click(menuItem = "Account Users");
+		ManagementBar.setFilterAndOrder(filterBy = "Account Users");
 
 		CommerceLogin.editPasswordCP(
 			newPassword = "ttest",
@@ -946,9 +944,7 @@ definition {
 
 		User.openUsersAdmin();
 
-		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
-
-		MenuItem.click(menuItem = "Account Users");
+		ManagementBar.setFilterAndOrder(filterBy = "Account Users");
 
 		CommerceLogin.editPasswordCP(
 			newPassword = "ttest",
@@ -1189,9 +1185,7 @@ definition {
 
 		User.openUsersAdmin();
 
-		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
-
-		MenuItem.click(menuItem = "Account Users");
+		ManagementBar.setFilterAndOrder(filterBy = "Account Users");
 
 		CommerceLogin.editPasswordCP(
 			newPassword = "ttest",
@@ -1321,9 +1315,7 @@ definition {
 
 		User.openUsersAdmin();
 
-		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
-
-		MenuItem.click(menuItem = "Account Users");
+		ManagementBar.setFilterAndOrder(filterBy = "Account Users");
 
 		CommerceLogin.editPasswordCP(
 			newPassword = "ttest",

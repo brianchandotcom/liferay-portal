@@ -1421,9 +1421,7 @@ definition {
 
 		User.openUsersAdmin();
 
-		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
-
-		MenuItem.click(menuItem = "Inactive");
+		ManagementBar.setFilterAndOrder(filterBy = "Inactive");
 
 		User.searchCP(searchTerm = "usersn");
 

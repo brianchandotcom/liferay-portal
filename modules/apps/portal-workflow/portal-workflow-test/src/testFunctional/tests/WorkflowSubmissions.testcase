@@ -124,9 +124,7 @@ definition {
 
 		ObjectAdmin.openSubmissions();
 
-		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
-
-		MenuItem.click(menuItem = "Pending");
+		ManagementBar.setFilterAndOrder(filterBy = "Pending");
 
 		AssertElementPresent(
 			key_taskName = "Blogs Entry Title 2",
@@ -138,9 +136,7 @@ definition {
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Submissions");
 
-		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
-
-		MenuItem.click(menuItem = "Pending");
+		ManagementBar.setFilterAndOrder(filterBy = "Pending");
 
 		AssertElementPresent(
 			key_taskName = "Blogs Entry Title 2",

@@ -860,9 +860,7 @@ definition {
 			ignoreURL = "${portalURL}/web/test-site-name/test-destination-page1",
 			skipNavigation = "true");
 
-		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
-
-		MenuItem.click(menuItem = "Ignored URLs");
+		ManagementBar.setFilterAndOrder(filterBy = "Ignored URLs");
 
 		Redirect.view404URLs(
 			ignoreURL = "${portalURL}/web/test-site-name/test-destination-page1",
@@ -1391,9 +1389,7 @@ definition {
 
 		Redirect.view404URLsDefault();
 
-		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
-
-		MenuItem.click(menuItem = "Ignored URLs");
+		ManagementBar.setFilterAndOrder(filterBy = "Ignored URLs");
 
 		Redirect.view404URLs(
 			ignoreURL = "${portalURL}/web/test-site-name/test-destination-page1",

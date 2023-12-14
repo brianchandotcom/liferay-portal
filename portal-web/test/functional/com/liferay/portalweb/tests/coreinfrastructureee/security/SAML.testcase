@@ -3077,9 +3077,7 @@ definition {
 
 			User.singleDeactivateCP(userFirstName = "first");
 
-			Click(locator1 = "Dropdown#FILTER_AND_ORDER");
-
-			MenuItem.click(menuItem = "Inactive");
+			ManagementBar.setFilterAndOrder(filterBy = "Inactive");
 
 			User.singleDeleteCP(userFirstName = "first");
 		}

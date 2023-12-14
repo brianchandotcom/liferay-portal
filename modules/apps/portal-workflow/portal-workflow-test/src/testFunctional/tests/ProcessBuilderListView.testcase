@@ -116,9 +116,7 @@ definition {
 
 		Workflow.unpublishWorkflowDefinition(workflowDefinitionTitle = "Copy of Single Approver");
 
-		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
-
-		MenuItem.click(menuItem = "Published");
+		ManagementBar.setFilterAndOrder(filterBy = "Published");
 
 		AssertElementPresent(
 			key_workflowDefinitionTitle = "Single Approver",

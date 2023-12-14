@@ -5076,9 +5076,7 @@ definition {
 
 			NavItem.click(navItem = "Collection Providers");
 
-			Click(locator1 = "Dropdown#FILTER_AND_ORDER");
-
-			MenuItem.click(menuItem = "Web Content Article");
+			ManagementBar.setFilterAndOrder(filterBy = "Web Content Article");
 
 			LexiconCard.clickCard(card = "Test Blueprint");
 

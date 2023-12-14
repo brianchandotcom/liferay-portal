@@ -5129,7 +5129,7 @@ definition {
 		}
 
 		task ("Then the site designer sees the list styles of collections") {
-			AssertElementNotPresent(locator1 = "Dropdown#FILTER_AND_ORDER");
+			AssertElementNotPresent(locator1 = "ManagementBar#ORDER");
 
 			for (var collectionName : list "Dynamic Collection,Manual Collection") {
 				LexiconList.viewListEntryTitle(listEntry = ${collectionName});

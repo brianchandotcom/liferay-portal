@@ -350,7 +350,7 @@ public class GenerateTestrayCSVUtil {
 				Double distance = StringUtils.getJaroWinklerDistance(
 					string1, string2);
 
-				if (distance <= maxDistance) {
+				if (distance > maxDistance) {
 					return true;
 				}
 

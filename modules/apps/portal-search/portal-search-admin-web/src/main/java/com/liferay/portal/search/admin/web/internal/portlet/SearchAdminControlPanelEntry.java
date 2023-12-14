@@ -40,16 +40,7 @@ public class SearchAdminControlPanelEntry extends BaseControlPanelEntry {
 			return true;
 		}
 
-		if (permissionChecker.isCompanyAdmin(group.getCompanyId())) {
-			if (_reindexConfiguration.
-					indexActionsInAllVirtualInstancesEnabled() ||
-				ArrayUtil.contains(
-					_reindexConfiguration.indexActionsVirtualInstance(),
-					group.getCompanyId())) {
-
-				return true;
-			}
-
+		if (!_isSystemSettingsEnabledForCompany(group)) {
 			return false;
 		}
 
@@ -61,6 +52,18 @@ public class SearchAdminControlPanelEntry extends BaseControlPanelEntry {
 	protected void activate(Map<String, Object> properties) {
 		_reindexConfiguration = ConfigurableUtil.createConfigurable(
 			ReindexConfiguration.class, properties);
+	}
+
+	private boolean _isSystemSettingsEnabledForCompany(Group group) {
+		if (_reindexConfiguration.indexActionsInAllVirtualInstancesEnabled() ||
+			ArrayUtil.contains(
+				_reindexConfiguration.indexActionsVirtualInstance(),
+				group.getCompanyId())) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private volatile ReindexConfiguration _reindexConfiguration;

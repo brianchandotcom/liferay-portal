@@ -12,6 +12,7 @@ import com.liferay.jethr0.event.github.issue.GitHubIssue;
 import com.liferay.jethr0.event.github.pullrequest.GitHubPullRequest;
 import com.liferay.jethr0.event.github.ref.GitHubRef;
 import com.liferay.jethr0.event.github.repository.GitHubRepository;
+import com.liferay.jethr0.event.github.user.GitHubUser;
 import com.liferay.jethr0.util.StringUtil;
 
 import java.net.URL;
@@ -63,6 +64,10 @@ public class GitHubFactory {
 
 	public GitHubRepository newGitHubRepository(JSONObject jsonObject) {
 		return new GitHubRepository(this, jsonObject);
+	}
+
+	public GitHubUser newGitHubUser(JSONObject jsonObject) {
+		return new GitHubUser(this, jsonObject);
 	}
 
 	@Autowired

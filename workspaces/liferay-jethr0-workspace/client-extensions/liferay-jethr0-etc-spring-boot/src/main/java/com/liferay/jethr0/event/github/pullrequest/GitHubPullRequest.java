@@ -42,13 +42,14 @@ public class GitHubPullRequest {
 		_headGitHubRepository = _gitHubFactory.newGitHubRepository(
 			headJSONObject.getJSONObject("repo"));
 
-		_originGitHubUser = new GitHubUser(
+		_originGitHubUser = _gitHubFactory.newGitHubUser(
 			headJSONObject.getJSONObject("user"));
 
-		_receiverGitHubUser = new GitHubUser(
+		_receiverGitHubUser = _gitHubFactory.newGitHubUser(
 			baseJSONObject.getJSONObject("user"));
 
-		_senderGitHubUser = new GitHubUser(jsonObject.getJSONObject("user"));
+		_senderGitHubUser = _gitHubFactory.newGitHubUser(
+			jsonObject.getJSONObject("user"));
 	}
 
 	public void close() {

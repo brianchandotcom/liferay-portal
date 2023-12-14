@@ -5,6 +5,9 @@
 
 package com.liferay.jethr0.event.github.user;
 
+import com.liferay.jethr0.event.github.GitHubFactory;
+import com.liferay.jethr0.event.github.client.GitHubClient;
+
 import org.json.JSONObject;
 
 /**
@@ -12,14 +15,20 @@ import org.json.JSONObject;
  */
 public class GitHubUser {
 
-	public GitHubUser(JSONObject jsonObject) {
+	public GitHubUser(GitHubFactory gitHubFactory, JSONObject jsonObject) {
+		_gitHubFactory = gitHubFactory;
 		_jsonObject = jsonObject;
+	}
+
+	public GitHubClient getGitHubClient() {
+		return _gitHubFactory.getGitHubClient();
 	}
 
 	public String getName() {
 		return _jsonObject.getString("login");
 	}
 
+	private final GitHubFactory _gitHubFactory;
 	private final JSONObject _jsonObject;
 
 }

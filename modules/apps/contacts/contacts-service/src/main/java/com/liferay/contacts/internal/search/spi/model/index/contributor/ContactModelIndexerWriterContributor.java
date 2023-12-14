@@ -14,18 +14,21 @@ import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexer
 
 import java.util.function.Consumer;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Lucas Marques de Paula
  */
-@Component(
-	property = "indexer.class.name=com.liferay.portal.kernel.model.Contact",
-	service = ModelIndexerWriterContributor.class
-)
 public class ContactModelIndexerWriterContributor
 	implements ModelIndexerWriterContributor<Contact> {
+
+	public ContactModelIndexerWriterContributor(
+		ContactLocalService contactLocalService,
+		DynamicQueryBatchIndexingActionableFactory
+			dynamicQueryBatchIndexingActionableFactory) {
+
+		_contactLocalService = contactLocalService;
+		_dynamicQueryBatchIndexingActionableFactory =
+			dynamicQueryBatchIndexingActionableFactory;
+	}
 
 	@Override
 	public void customize(
@@ -47,9 +50,9 @@ public class ContactModelIndexerWriterContributor
 
 	@Override
 	public BatchIndexingActionable getBatchIndexingActionable() {
-		return dynamicQueryBatchIndexingActionableFactory.
+		return _dynamicQueryBatchIndexingActionableFactory.
 			getBatchIndexingActionable(
-				contactLocalService.getIndexableActionableDynamicQuery());
+				_contactLocalService.getIndexableActionableDynamicQuery());
 	}
 
 	@Override
@@ -57,11 +60,8 @@ public class ContactModelIndexerWriterContributor
 		return contact.getCompanyId();
 	}
 
-	@Reference
-	protected ContactLocalService contactLocalService;
-
-	@Reference
-	protected DynamicQueryBatchIndexingActionableFactory
-		dynamicQueryBatchIndexingActionableFactory;
+	private final ContactLocalService _contactLocalService;
+	private final DynamicQueryBatchIndexingActionableFactory
+		_dynamicQueryBatchIndexingActionableFactory;
 
 }

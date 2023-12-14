@@ -60,7 +60,7 @@ public class LiferayOAuth2AccessTokenManager {
 			Instant expiresAtInstant = oAuth2AccessToken.getExpiresAt();
 
 			if ((expiresAtInstant == null) ||
-				expiresAtInstant.isBefore(instant.minusSeconds(300))) {
+				expiresAtInstant.isBefore(instant.plusSeconds(60))) {
 
 				oAuth2AccessToken = _getOAuth2AccessToken(
 					externalReferenceCode);

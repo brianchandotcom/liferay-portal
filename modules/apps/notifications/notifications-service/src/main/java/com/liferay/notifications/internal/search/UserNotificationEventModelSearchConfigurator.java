@@ -5,11 +5,15 @@
 
 package com.liferay.notifications.internal.search;
 
+import com.liferay.notifications.internal.search.spi.model.index.contributor.UserNotificationEventModelIndexerWriterContributor;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
+import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -40,10 +44,23 @@ public class UserNotificationEventModelSearchConfigurator
 		return _modelIndexWriterContributor;
 	}
 
-	@Reference(
-		target = "(indexer.class.name=com.liferay.portal.kernel.model.UserNotificationEvent)"
-	)
+	@Activate
+	protected void activate() {
+		_modelIndexWriterContributor =
+			new UserNotificationEventModelIndexerWriterContributor(
+				_dynamicQueryBatchIndexingActionableFactory,
+				_userNotificationEventLocalService);
+	}
+
+	@Reference
+	private DynamicQueryBatchIndexingActionableFactory
+		_dynamicQueryBatchIndexingActionableFactory;
+
 	private ModelIndexerWriterContributor<UserNotificationEvent>
 		_modelIndexWriterContributor;
+
+	@Reference
+	private UserNotificationEventLocalService
+		_userNotificationEventLocalService;
 
 }

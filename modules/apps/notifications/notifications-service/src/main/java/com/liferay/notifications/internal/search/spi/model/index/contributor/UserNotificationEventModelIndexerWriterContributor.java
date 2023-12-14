@@ -12,18 +12,21 @@ import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactor
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexerWriterDocumentHelper;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Carlos Correa
  */
-@Component(
-	property = "indexer.class.name=com.liferay.portal.kernel.model.UserNotificationEvent",
-	service = ModelIndexerWriterContributor.class
-)
 public class UserNotificationEventModelIndexerWriterContributor
 	implements ModelIndexerWriterContributor<UserNotificationEvent> {
+
+	public UserNotificationEventModelIndexerWriterContributor(
+		DynamicQueryBatchIndexingActionableFactory
+			dynamicQueryBatchIndexingActionableFactory,
+		UserNotificationEventLocalService userNotificationEventLocalService) {
+
+		_dynamicQueryBatchIndexingActionableFactory =
+			dynamicQueryBatchIndexingActionableFactory;
+		_userNotificationEventLocalService = userNotificationEventLocalService;
+	}
 
 	@Override
 	public void customize(
@@ -50,12 +53,9 @@ public class UserNotificationEventModelIndexerWriterContributor
 		return userNotificationEvent.getCompanyId();
 	}
 
-	@Reference
-	private DynamicQueryBatchIndexingActionableFactory
+	private final DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;
-
-	@Reference
-	private UserNotificationEventLocalService
+	private final UserNotificationEventLocalService
 		_userNotificationEventLocalService;
 
 }

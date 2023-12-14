@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -54,26 +55,36 @@ public class HoursAvailable implements Serializable {
 		description = "The organization's closing time (in `HH:MM` format)."
 	)
 	public String getCloses() {
+		if (_closesSupplier != null) {
+			closes = _closesSupplier.get();
+
+			_closesSupplier = null;
+		}
+
 		return closes;
 	}
 
 	public void setCloses(String closes) {
 		this.closes = closes;
+
+		_closesSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setCloses(
 		UnsafeSupplier<String, Exception> closesUnsafeSupplier) {
 
-		try {
-			closes = closesUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_closesSupplier = () -> {
+			try {
+				return closesUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -82,58 +93,82 @@ public class HoursAvailable implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String closes;
 
+	private Supplier<String> _closesSupplier;
+
 	@Schema(description = "The day of the week.")
 	public String getDayOfWeek() {
+		if (_dayOfWeekSupplier != null) {
+			dayOfWeek = _dayOfWeekSupplier.get();
+
+			_dayOfWeekSupplier = null;
+		}
+
 		return dayOfWeek;
 	}
 
 	public void setDayOfWeek(String dayOfWeek) {
 		this.dayOfWeek = dayOfWeek;
+
+		_dayOfWeekSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDayOfWeek(
 		UnsafeSupplier<String, Exception> dayOfWeekUnsafeSupplier) {
 
-		try {
-			dayOfWeek = dayOfWeekUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_dayOfWeekSupplier = () -> {
+			try {
+				return dayOfWeekUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The day of the week.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String dayOfWeek;
 
+	private Supplier<String> _dayOfWeekSupplier;
+
 	@Schema(
 		description = "The organization's opening time (in `HH:MM` format)."
 	)
 	public String getOpens() {
+		if (_opensSupplier != null) {
+			opens = _opensSupplier.get();
+
+			_opensSupplier = null;
+		}
+
 		return opens;
 	}
 
 	public void setOpens(String opens) {
 		this.opens = opens;
+
+		_opensSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setOpens(
 		UnsafeSupplier<String, Exception> opensUnsafeSupplier) {
 
-		try {
-			opens = opensUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_opensSupplier = () -> {
+			try {
+				return opensUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -141,6 +176,8 @@ public class HoursAvailable implements Serializable {
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String opens;
+
+	private Supplier<String> _opensSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -169,6 +206,8 @@ public class HoursAvailable implements Serializable {
 
 		sb.append("{");
 
+		String closes = getCloses();
+
 		if (closes != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -183,6 +222,8 @@ public class HoursAvailable implements Serializable {
 			sb.append("\"");
 		}
 
+		String dayOfWeek = getDayOfWeek();
+
 		if (dayOfWeek != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -196,6 +237,8 @@ public class HoursAvailable implements Serializable {
 
 			sb.append("\"");
 		}
+
+		String opens = getOpens();
 
 		if (opens != null) {
 			if (sb.length() > 1) {

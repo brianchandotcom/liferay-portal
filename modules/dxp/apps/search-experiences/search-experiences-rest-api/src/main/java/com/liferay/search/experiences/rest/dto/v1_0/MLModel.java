@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -49,31 +50,43 @@ public class MLModel implements Serializable {
 
 	@Schema
 	public String getModelId() {
+		if (_modelIdSupplier != null) {
+			modelId = _modelIdSupplier.get();
+
+			_modelIdSupplier = null;
+		}
+
 		return modelId;
 	}
 
 	public void setModelId(String modelId) {
 		this.modelId = modelId;
+
+		_modelIdSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setModelId(
 		UnsafeSupplier<String, Exception> modelIdUnsafeSupplier) {
 
-		try {
-			modelId = modelIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_modelIdSupplier = () -> {
+			try {
+				return modelIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String modelId;
+
+	private Supplier<String> _modelIdSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -101,6 +114,8 @@ public class MLModel implements Serializable {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		String modelId = getModelId();
 
 		if (modelId != null) {
 			if (sb.length() > 1) {

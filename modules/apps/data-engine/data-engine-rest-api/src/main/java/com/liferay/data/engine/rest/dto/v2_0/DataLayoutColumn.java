@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -49,59 +50,83 @@ public class DataLayoutColumn implements Serializable {
 
 	@Schema
 	public Integer getColumnSize() {
+		if (_columnSizeSupplier != null) {
+			columnSize = _columnSizeSupplier.get();
+
+			_columnSizeSupplier = null;
+		}
+
 		return columnSize;
 	}
 
 	public void setColumnSize(Integer columnSize) {
 		this.columnSize = columnSize;
+
+		_columnSizeSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setColumnSize(
 		UnsafeSupplier<Integer, Exception> columnSizeUnsafeSupplier) {
 
-		try {
-			columnSize = columnSizeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_columnSizeSupplier = () -> {
+			try {
+				return columnSizeUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer columnSize;
 
+	private Supplier<Integer> _columnSizeSupplier;
+
 	@Schema
 	public String[] getFieldNames() {
+		if (_fieldNamesSupplier != null) {
+			fieldNames = _fieldNamesSupplier.get();
+
+			_fieldNamesSupplier = null;
+		}
+
 		return fieldNames;
 	}
 
 	public void setFieldNames(String[] fieldNames) {
 		this.fieldNames = fieldNames;
+
+		_fieldNamesSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setFieldNames(
 		UnsafeSupplier<String[], Exception> fieldNamesUnsafeSupplier) {
 
-		try {
-			fieldNames = fieldNamesUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_fieldNamesSupplier = () -> {
+			try {
+				return fieldNamesUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] fieldNames;
+
+	private Supplier<String[]> _fieldNamesSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -130,6 +155,8 @@ public class DataLayoutColumn implements Serializable {
 
 		sb.append("{");
 
+		Integer columnSize = getColumnSize();
+
 		if (columnSize != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -139,6 +166,8 @@ public class DataLayoutColumn implements Serializable {
 
 			sb.append(columnSize);
 		}
+
+		String[] fieldNames = getFieldNames();
 
 		if (fieldNames != null) {
 			if (sb.length() > 1) {

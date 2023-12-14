@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -52,56 +53,78 @@ public class AdaptedImage implements Serializable {
 
 	@Schema(description = "The image's relative URL.")
 	public String getContentUrl() {
+		if (_contentUrlSupplier != null) {
+			contentUrl = _contentUrlSupplier.get();
+
+			_contentUrlSupplier = null;
+		}
+
 		return contentUrl;
 	}
 
 	public void setContentUrl(String contentUrl) {
 		this.contentUrl = contentUrl;
+
+		_contentUrlSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setContentUrl(
 		UnsafeSupplier<String, Exception> contentUrlUnsafeSupplier) {
 
-		try {
-			contentUrl = contentUrlUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_contentUrlSupplier = () -> {
+			try {
+				return contentUrlUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The image's relative URL.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String contentUrl;
 
+	private Supplier<String> _contentUrlSupplier;
+
 	@Schema(
 		description = "Optional field with the content of the image in Base64, can be embedded with nestedFields."
 	)
 	public String getContentValue() {
+		if (_contentValueSupplier != null) {
+			contentValue = _contentValueSupplier.get();
+
+			_contentValueSupplier = null;
+		}
+
 		return contentValue;
 	}
 
 	public void setContentValue(String contentValue) {
 		this.contentValue = contentValue;
+
+		_contentValueSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setContentValue(
 		UnsafeSupplier<String, Exception> contentValueUnsafeSupplier) {
 
-		try {
-			contentValue = contentValueUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_contentValueSupplier = () -> {
+			try {
+				return contentValueUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -110,58 +133,82 @@ public class AdaptedImage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String contentValue;
 
+	private Supplier<String> _contentValueSupplier;
+
 	@Schema(description = "The image's height in pixels.")
 	public Integer getHeight() {
+		if (_heightSupplier != null) {
+			height = _heightSupplier.get();
+
+			_heightSupplier = null;
+		}
+
 		return height;
 	}
 
 	public void setHeight(Integer height) {
 		this.height = height;
+
+		_heightSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setHeight(
 		UnsafeSupplier<Integer, Exception> heightUnsafeSupplier) {
 
-		try {
-			height = heightUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_heightSupplier = () -> {
+			try {
+				return heightUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The image's height in pixels.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer height;
 
+	private Supplier<Integer> _heightSupplier;
+
 	@Schema(
 		description = "The name of the image's Adaptive Media image resolution."
 	)
 	public String getResolutionName() {
+		if (_resolutionNameSupplier != null) {
+			resolutionName = _resolutionNameSupplier.get();
+
+			_resolutionNameSupplier = null;
+		}
+
 		return resolutionName;
 	}
 
 	public void setResolutionName(String resolutionName) {
 		this.resolutionName = resolutionName;
+
+		_resolutionNameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setResolutionName(
 		UnsafeSupplier<String, Exception> resolutionNameUnsafeSupplier) {
 
-		try {
-			resolutionName = resolutionNameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_resolutionNameSupplier = () -> {
+			try {
+				return resolutionNameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -170,61 +217,87 @@ public class AdaptedImage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String resolutionName;
 
+	private Supplier<String> _resolutionNameSupplier;
+
 	@Schema(description = "The image's size in bytes.")
 	public Long getSizeInBytes() {
+		if (_sizeInBytesSupplier != null) {
+			sizeInBytes = _sizeInBytesSupplier.get();
+
+			_sizeInBytesSupplier = null;
+		}
+
 		return sizeInBytes;
 	}
 
 	public void setSizeInBytes(Long sizeInBytes) {
 		this.sizeInBytes = sizeInBytes;
+
+		_sizeInBytesSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setSizeInBytes(
 		UnsafeSupplier<Long, Exception> sizeInBytesUnsafeSupplier) {
 
-		try {
-			sizeInBytes = sizeInBytesUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_sizeInBytesSupplier = () -> {
+			try {
+				return sizeInBytesUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The image's size in bytes.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long sizeInBytes;
 
+	private Supplier<Long> _sizeInBytesSupplier;
+
 	@Schema(description = "The image's width in pixels.")
 	public Integer getWidth() {
+		if (_widthSupplier != null) {
+			width = _widthSupplier.get();
+
+			_widthSupplier = null;
+		}
+
 		return width;
 	}
 
 	public void setWidth(Integer width) {
 		this.width = width;
+
+		_widthSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setWidth(
 		UnsafeSupplier<Integer, Exception> widthUnsafeSupplier) {
 
-		try {
-			width = widthUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_widthSupplier = () -> {
+			try {
+				return widthUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The image's width in pixels.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer width;
+
+	private Supplier<Integer> _widthSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -253,6 +326,8 @@ public class AdaptedImage implements Serializable {
 
 		sb.append("{");
 
+		String contentUrl = getContentUrl();
+
 		if (contentUrl != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -266,6 +341,8 @@ public class AdaptedImage implements Serializable {
 
 			sb.append("\"");
 		}
+
+		String contentValue = getContentValue();
 
 		if (contentValue != null) {
 			if (sb.length() > 1) {
@@ -281,6 +358,8 @@ public class AdaptedImage implements Serializable {
 			sb.append("\"");
 		}
 
+		Integer height = getHeight();
+
 		if (height != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -290,6 +369,8 @@ public class AdaptedImage implements Serializable {
 
 			sb.append(height);
 		}
+
+		String resolutionName = getResolutionName();
 
 		if (resolutionName != null) {
 			if (sb.length() > 1) {
@@ -305,6 +386,8 @@ public class AdaptedImage implements Serializable {
 			sb.append("\"");
 		}
 
+		Long sizeInBytes = getSizeInBytes();
+
 		if (sizeInBytes != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -314,6 +397,8 @@ public class AdaptedImage implements Serializable {
 
 			sb.append(sizeInBytes);
 		}
+
+		Integer width = getWidth();
 
 		if (width != null) {
 			if (sb.length() > 1) {

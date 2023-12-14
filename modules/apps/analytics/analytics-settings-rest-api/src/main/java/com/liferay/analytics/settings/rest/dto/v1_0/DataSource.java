@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -49,87 +50,123 @@ public class DataSource implements Serializable {
 
 	@Schema
 	public Long[] getCommerceChannelIds() {
+		if (_commerceChannelIdsSupplier != null) {
+			commerceChannelIds = _commerceChannelIdsSupplier.get();
+
+			_commerceChannelIdsSupplier = null;
+		}
+
 		return commerceChannelIds;
 	}
 
 	public void setCommerceChannelIds(Long[] commerceChannelIds) {
 		this.commerceChannelIds = commerceChannelIds;
+
+		_commerceChannelIdsSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setCommerceChannelIds(
 		UnsafeSupplier<Long[], Exception> commerceChannelIdsUnsafeSupplier) {
 
-		try {
-			commerceChannelIds = commerceChannelIdsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_commerceChannelIdsSupplier = () -> {
+			try {
+				return commerceChannelIdsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long[] commerceChannelIds;
 
+	private Supplier<Long[]> _commerceChannelIdsSupplier;
+
 	@Schema
 	public String getDataSourceId() {
+		if (_dataSourceIdSupplier != null) {
+			dataSourceId = _dataSourceIdSupplier.get();
+
+			_dataSourceIdSupplier = null;
+		}
+
 		return dataSourceId;
 	}
 
 	public void setDataSourceId(String dataSourceId) {
 		this.dataSourceId = dataSourceId;
+
+		_dataSourceIdSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDataSourceId(
 		UnsafeSupplier<String, Exception> dataSourceIdUnsafeSupplier) {
 
-		try {
-			dataSourceId = dataSourceIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_dataSourceIdSupplier = () -> {
+			try {
+				return dataSourceIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String dataSourceId;
 
+	private Supplier<String> _dataSourceIdSupplier;
+
 	@Schema
 	public Long[] getSiteIds() {
+		if (_siteIdsSupplier != null) {
+			siteIds = _siteIdsSupplier.get();
+
+			_siteIdsSupplier = null;
+		}
+
 		return siteIds;
 	}
 
 	public void setSiteIds(Long[] siteIds) {
 		this.siteIds = siteIds;
+
+		_siteIdsSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setSiteIds(
 		UnsafeSupplier<Long[], Exception> siteIdsUnsafeSupplier) {
 
-		try {
-			siteIds = siteIdsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_siteIdsSupplier = () -> {
+			try {
+				return siteIdsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long[] siteIds;
+
+	private Supplier<Long[]> _siteIdsSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -158,6 +195,8 @@ public class DataSource implements Serializable {
 
 		sb.append("{");
 
+		Long[] commerceChannelIds = getCommerceChannelIds();
+
 		if (commerceChannelIds != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -178,6 +217,8 @@ public class DataSource implements Serializable {
 			sb.append("]");
 		}
 
+		String dataSourceId = getDataSourceId();
+
 		if (dataSourceId != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -191,6 +232,8 @@ public class DataSource implements Serializable {
 
 			sb.append("\"");
 		}
+
+		Long[] siteIds = getSiteIds();
 
 		if (siteIds != null) {
 			if (sb.length() > 1) {

@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -52,59 +53,83 @@ public class ExperimentVariant implements Serializable {
 
 	@Schema
 	public String getId() {
+		if (_idSupplier != null) {
+			id = _idSupplier.get();
+
+			_idSupplier = null;
+		}
+
 		return id;
 	}
 
 	public void setId(String id) {
 		this.id = id;
+
+		_idSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setId(UnsafeSupplier<String, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_idSupplier = () -> {
+			try {
+				return idUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String id;
 
+	private Supplier<String> _idSupplier;
+
 	@DecimalMax("99")
 	@DecimalMin("1")
 	@Schema
 	public Double getTrafficSplit() {
+		if (_trafficSplitSupplier != null) {
+			trafficSplit = _trafficSplitSupplier.get();
+
+			_trafficSplitSupplier = null;
+		}
+
 		return trafficSplit;
 	}
 
 	public void setTrafficSplit(Double trafficSplit) {
 		this.trafficSplit = trafficSplit;
+
+		_trafficSplitSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setTrafficSplit(
 		UnsafeSupplier<Double, Exception> trafficSplitUnsafeSupplier) {
 
-		try {
-			trafficSplit = trafficSplitUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_trafficSplitSupplier = () -> {
+			try {
+				return trafficSplitUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double trafficSplit;
+
+	private Supplier<Double> _trafficSplitSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -133,6 +158,8 @@ public class ExperimentVariant implements Serializable {
 
 		sb.append("{");
 
+		String id = getId();
+
 		if (id != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -146,6 +173,8 @@ public class ExperimentVariant implements Serializable {
 
 			sb.append("\"");
 		}
+
+		Double trafficSplit = getTrafficSplit();
 
 		if (trafficSplit != null) {
 			if (sb.length() > 1) {

@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -54,26 +55,36 @@ public class CollectionViewportDefinition implements Serializable {
 
 	@Schema(description = "The number of columns of the collection viewport.")
 	public Integer getNumberOfColumns() {
+		if (_numberOfColumnsSupplier != null) {
+			numberOfColumns = _numberOfColumnsSupplier.get();
+
+			_numberOfColumnsSupplier = null;
+		}
+
 		return numberOfColumns;
 	}
 
 	public void setNumberOfColumns(Integer numberOfColumns) {
 		this.numberOfColumns = numberOfColumns;
+
+		_numberOfColumnsSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setNumberOfColumns(
 		UnsafeSupplier<Integer, Exception> numberOfColumnsUnsafeSupplier) {
 
-		try {
-			numberOfColumns = numberOfColumnsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_numberOfColumnsSupplier = () -> {
+			try {
+				return numberOfColumnsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -81,6 +92,8 @@ public class CollectionViewportDefinition implements Serializable {
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer numberOfColumns;
+
+	private Supplier<Integer> _numberOfColumnsSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -110,6 +123,8 @@ public class CollectionViewportDefinition implements Serializable {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		Integer numberOfColumns = getNumberOfColumns();
 
 		if (numberOfColumns != null) {
 			if (sb.length() > 1) {

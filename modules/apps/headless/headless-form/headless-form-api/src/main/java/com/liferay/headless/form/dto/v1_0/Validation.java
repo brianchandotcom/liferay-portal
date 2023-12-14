@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -54,40 +55,60 @@ public class Validation implements Serializable {
 
 	@Schema
 	public String getErrorMessage() {
+		if (_errorMessageSupplier != null) {
+			errorMessage = _errorMessageSupplier.get();
+
+			_errorMessageSupplier = null;
+		}
+
 		return errorMessage;
 	}
 
 	public void setErrorMessage(String errorMessage) {
 		this.errorMessage = errorMessage;
+
+		_errorMessageSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setErrorMessage(
 		UnsafeSupplier<String, Exception> errorMessageUnsafeSupplier) {
 
-		try {
-			errorMessage = errorMessageUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_errorMessageSupplier = () -> {
+			try {
+				return errorMessageUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String errorMessage;
 
+	private Supplier<String> _errorMessageSupplier;
+
 	@Schema
 	@Valid
 	public Map<String, String> getErrorMessage_i18n() {
+		if (_errorMessage_i18nSupplier != null) {
+			errorMessage_i18n = _errorMessage_i18nSupplier.get();
+
+			_errorMessage_i18nSupplier = null;
+		}
+
 		return errorMessage_i18n;
 	}
 
 	public void setErrorMessage_i18n(Map<String, String> errorMessage_i18n) {
 		this.errorMessage_i18n = errorMessage_i18n;
+
+		_errorMessage_i18nSupplier = null;
 	}
 
 	@JsonIgnore
@@ -95,74 +116,102 @@ public class Validation implements Serializable {
 		UnsafeSupplier<Map<String, String>, Exception>
 			errorMessage_i18nUnsafeSupplier) {
 
-		try {
-			errorMessage_i18n = errorMessage_i18nUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_errorMessage_i18nSupplier = () -> {
+			try {
+				return errorMessage_i18nUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> errorMessage_i18n;
 
+	private Supplier<Map<String, String>> _errorMessage_i18nSupplier;
+
 	@Schema
 	public String getExpression() {
+		if (_expressionSupplier != null) {
+			expression = _expressionSupplier.get();
+
+			_expressionSupplier = null;
+		}
+
 		return expression;
 	}
 
 	public void setExpression(String expression) {
 		this.expression = expression;
+
+		_expressionSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setExpression(
 		UnsafeSupplier<String, Exception> expressionUnsafeSupplier) {
 
-		try {
-			expression = expressionUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_expressionSupplier = () -> {
+			try {
+				return expressionUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String expression;
 
+	private Supplier<String> _expressionSupplier;
+
 	@Schema
 	public Long getId() {
+		if (_idSupplier != null) {
+			id = _idSupplier.get();
+
+			_idSupplier = null;
+		}
+
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
+
+		_idSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_idSupplier = () -> {
+			try {
+				return idUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
+
+	private Supplier<Long> _idSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -191,6 +240,8 @@ public class Validation implements Serializable {
 
 		sb.append("{");
 
+		String errorMessage = getErrorMessage();
+
 		if (errorMessage != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -205,6 +256,8 @@ public class Validation implements Serializable {
 			sb.append("\"");
 		}
 
+		Map<String, String> errorMessage_i18n = getErrorMessage_i18n();
+
 		if (errorMessage_i18n != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -214,6 +267,8 @@ public class Validation implements Serializable {
 
 			sb.append(_toJSON(errorMessage_i18n));
 		}
+
+		String expression = getExpression();
 
 		if (expression != null) {
 			if (sb.length() > 1) {
@@ -228,6 +283,8 @@ public class Validation implements Serializable {
 
 			sb.append("\"");
 		}
+
+		Long id = getId();
 
 		if (id != null) {
 			if (sb.length() > 1) {

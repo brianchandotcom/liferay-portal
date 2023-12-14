@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -53,11 +54,19 @@ public class DataDefinitionFieldLink implements Serializable {
 	@Schema
 	@Valid
 	public DataDefinition getDataDefinition() {
+		if (_dataDefinitionSupplier != null) {
+			dataDefinition = _dataDefinitionSupplier.get();
+
+			_dataDefinitionSupplier = null;
+		}
+
 		return dataDefinition;
 	}
 
 	public void setDataDefinition(DataDefinition dataDefinition) {
 		this.dataDefinition = dataDefinition;
+
+		_dataDefinitionSupplier = null;
 	}
 
 	@JsonIgnore
@@ -65,78 +74,106 @@ public class DataDefinitionFieldLink implements Serializable {
 		UnsafeSupplier<DataDefinition, Exception>
 			dataDefinitionUnsafeSupplier) {
 
-		try {
-			dataDefinition = dataDefinitionUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_dataDefinitionSupplier = () -> {
+			try {
+				return dataDefinitionUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected DataDefinition dataDefinition;
 
+	private Supplier<DataDefinition> _dataDefinitionSupplier;
+
 	@Schema
 	@Valid
 	public DataLayout[] getDataLayouts() {
+		if (_dataLayoutsSupplier != null) {
+			dataLayouts = _dataLayoutsSupplier.get();
+
+			_dataLayoutsSupplier = null;
+		}
+
 		return dataLayouts;
 	}
 
 	public void setDataLayouts(DataLayout[] dataLayouts) {
 		this.dataLayouts = dataLayouts;
+
+		_dataLayoutsSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDataLayouts(
 		UnsafeSupplier<DataLayout[], Exception> dataLayoutsUnsafeSupplier) {
 
-		try {
-			dataLayouts = dataLayoutsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_dataLayoutsSupplier = () -> {
+			try {
+				return dataLayoutsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected DataLayout[] dataLayouts;
 
+	private Supplier<DataLayout[]> _dataLayoutsSupplier;
+
 	@Schema
 	@Valid
 	public DataListView[] getDataListViews() {
+		if (_dataListViewsSupplier != null) {
+			dataListViews = _dataListViewsSupplier.get();
+
+			_dataListViewsSupplier = null;
+		}
+
 		return dataListViews;
 	}
 
 	public void setDataListViews(DataListView[] dataListViews) {
 		this.dataListViews = dataListViews;
+
+		_dataListViewsSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDataListViews(
 		UnsafeSupplier<DataListView[], Exception> dataListViewsUnsafeSupplier) {
 
-		try {
-			dataListViews = dataListViewsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_dataListViewsSupplier = () -> {
+			try {
+				return dataListViewsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected DataListView[] dataListViews;
+
+	private Supplier<DataListView[]> _dataListViewsSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -166,6 +203,8 @@ public class DataDefinitionFieldLink implements Serializable {
 
 		sb.append("{");
 
+		DataDefinition dataDefinition = getDataDefinition();
+
 		if (dataDefinition != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -175,6 +214,8 @@ public class DataDefinitionFieldLink implements Serializable {
 
 			sb.append(String.valueOf(dataDefinition));
 		}
+
+		DataLayout[] dataLayouts = getDataLayouts();
 
 		if (dataLayouts != null) {
 			if (sb.length() > 1) {
@@ -195,6 +236,8 @@ public class DataDefinitionFieldLink implements Serializable {
 
 			sb.append("]");
 		}
+
+		DataListView[] dataListViews = getDataListViews();
 
 		if (dataListViews != null) {
 			if (sb.length() > 1) {

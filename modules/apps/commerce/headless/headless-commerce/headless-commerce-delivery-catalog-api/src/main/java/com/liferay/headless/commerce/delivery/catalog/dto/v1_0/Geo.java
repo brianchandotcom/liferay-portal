@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -51,59 +52,83 @@ public class Geo implements Serializable {
 
 	@Schema(description = "The latitude of a point in space.")
 	public Double getLatitude() {
+		if (_latitudeSupplier != null) {
+			latitude = _latitudeSupplier.get();
+
+			_latitudeSupplier = null;
+		}
+
 		return latitude;
 	}
 
 	public void setLatitude(Double latitude) {
 		this.latitude = latitude;
+
+		_latitudeSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setLatitude(
 		UnsafeSupplier<Double, Exception> latitudeUnsafeSupplier) {
 
-		try {
-			latitude = latitudeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_latitudeSupplier = () -> {
+			try {
+				return latitudeUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The latitude of a point in space.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Double latitude;
 
+	private Supplier<Double> _latitudeSupplier;
+
 	@Schema(description = "The longitude of a point in space.")
 	public Double getLongitude() {
+		if (_longitudeSupplier != null) {
+			longitude = _longitudeSupplier.get();
+
+			_longitudeSupplier = null;
+		}
+
 		return longitude;
 	}
 
 	public void setLongitude(Double longitude) {
 		this.longitude = longitude;
+
+		_longitudeSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setLongitude(
 		UnsafeSupplier<Double, Exception> longitudeUnsafeSupplier) {
 
-		try {
-			longitude = longitudeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_longitudeSupplier = () -> {
+			try {
+				return longitudeUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The longitude of a point in space.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Double longitude;
+
+	private Supplier<Double> _longitudeSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -132,6 +157,8 @@ public class Geo implements Serializable {
 
 		sb.append("{");
 
+		Double latitude = getLatitude();
+
 		if (latitude != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -141,6 +168,8 @@ public class Geo implements Serializable {
 
 			sb.append(latitude);
 		}
+
+		Double longitude = getLongitude();
 
 		if (longitude != null) {
 			if (sb.length() > 1) {

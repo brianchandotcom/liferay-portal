@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -53,26 +54,36 @@ public class FileEntry implements Serializable {
 		description = "optional field with the content of the document in Base64, can be embedded with nestedFields (the format of the nested field must be `<attachment field name>.fileBase64`)"
 	)
 	public String getFileBase64() {
+		if (_fileBase64Supplier != null) {
+			fileBase64 = _fileBase64Supplier.get();
+
+			_fileBase64Supplier = null;
+		}
+
 		return fileBase64;
 	}
 
 	public void setFileBase64(String fileBase64) {
 		this.fileBase64 = fileBase64;
+
+		_fileBase64Supplier = null;
 	}
 
 	@JsonIgnore
 	public void setFileBase64(
 		UnsafeSupplier<String, Exception> fileBase64UnsafeSupplier) {
 
-		try {
-			fileBase64 = fileBase64UnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_fileBase64Supplier = () -> {
+			try {
+				return fileBase64UnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -81,113 +92,163 @@ public class FileEntry implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String fileBase64;
 
+	private Supplier<String> _fileBase64Supplier;
+
 	@Schema
 	@Valid
 	public Folder getFolder() {
+		if (_folderSupplier != null) {
+			folder = _folderSupplier.get();
+
+			_folderSupplier = null;
+		}
+
 		return folder;
 	}
 
 	public void setFolder(Folder folder) {
 		this.folder = folder;
+
+		_folderSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setFolder(
 		UnsafeSupplier<Folder, Exception> folderUnsafeSupplier) {
 
-		try {
-			folder = folderUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_folderSupplier = () -> {
+			try {
+				return folderUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Folder folder;
 
+	private Supplier<Folder> _folderSupplier;
+
 	@Schema
 	public Long getId() {
+		if (_idSupplier != null) {
+			id = _idSupplier.get();
+
+			_idSupplier = null;
+		}
+
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
+
+		_idSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_idSupplier = () -> {
+			try {
+				return idUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	private Supplier<Long> _idSupplier;
+
 	@Schema
 	@Valid
 	public Link getLink() {
+		if (_linkSupplier != null) {
+			link = _linkSupplier.get();
+
+			_linkSupplier = null;
+		}
+
 		return link;
 	}
 
 	public void setLink(Link link) {
 		this.link = link;
+
+		_linkSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setLink(UnsafeSupplier<Link, Exception> linkUnsafeSupplier) {
-		try {
-			link = linkUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_linkSupplier = () -> {
+			try {
+				return linkUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Link link;
 
+	private Supplier<Link> _linkSupplier;
+
 	@Schema
 	public String getName() {
+		if (_nameSupplier != null) {
+			name = _nameSupplier.get();
+
+			_nameSupplier = null;
+		}
+
 		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
+
+		_nameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
-		try {
-			name = nameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_nameSupplier = () -> {
+			try {
+				return nameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
+
+	private Supplier<String> _nameSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -216,6 +277,8 @@ public class FileEntry implements Serializable {
 
 		sb.append("{");
 
+		String fileBase64 = getFileBase64();
+
 		if (fileBase64 != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -230,6 +293,8 @@ public class FileEntry implements Serializable {
 			sb.append("\"");
 		}
 
+		Folder folder = getFolder();
+
 		if (folder != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -239,6 +304,8 @@ public class FileEntry implements Serializable {
 
 			sb.append(String.valueOf(folder));
 		}
+
+		Long id = getId();
 
 		if (id != null) {
 			if (sb.length() > 1) {
@@ -250,6 +317,8 @@ public class FileEntry implements Serializable {
 			sb.append(id);
 		}
 
+		Link link = getLink();
+
 		if (link != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -259,6 +328,8 @@ public class FileEntry implements Serializable {
 
 			sb.append(String.valueOf(link));
 		}
+
+		String name = getName();
 
 		if (name != null) {
 			if (sb.length() > 1) {

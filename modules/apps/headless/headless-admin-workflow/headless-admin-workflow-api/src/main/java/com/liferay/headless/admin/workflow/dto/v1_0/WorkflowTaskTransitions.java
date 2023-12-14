@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -53,6 +54,12 @@ public class WorkflowTaskTransitions implements Serializable {
 	@Schema
 	@Valid
 	public WorkflowTaskTransition[] getWorkflowTaskTransitions() {
+		if (_workflowTaskTransitionsSupplier != null) {
+			workflowTaskTransitions = _workflowTaskTransitionsSupplier.get();
+
+			_workflowTaskTransitionsSupplier = null;
+		}
+
 		return workflowTaskTransitions;
 	}
 
@@ -60,6 +67,8 @@ public class WorkflowTaskTransitions implements Serializable {
 		WorkflowTaskTransition[] workflowTaskTransitions) {
 
 		this.workflowTaskTransitions = workflowTaskTransitions;
+
+		_workflowTaskTransitionsSupplier = null;
 	}
 
 	@JsonIgnore
@@ -67,21 +76,24 @@ public class WorkflowTaskTransitions implements Serializable {
 		UnsafeSupplier<WorkflowTaskTransition[], Exception>
 			workflowTaskTransitionsUnsafeSupplier) {
 
-		try {
-			workflowTaskTransitions =
-				workflowTaskTransitionsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_workflowTaskTransitionsSupplier = () -> {
+			try {
+				return workflowTaskTransitionsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected WorkflowTaskTransition[] workflowTaskTransitions;
+
+	private Supplier<WorkflowTaskTransition[]> _workflowTaskTransitionsSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -110,6 +122,9 @@ public class WorkflowTaskTransitions implements Serializable {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		WorkflowTaskTransition[] workflowTaskTransitions =
+			getWorkflowTaskTransitions();
 
 		if (workflowTaskTransitions != null) {
 			if (sb.length() > 1) {

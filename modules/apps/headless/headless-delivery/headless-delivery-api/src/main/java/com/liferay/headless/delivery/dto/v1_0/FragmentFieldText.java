@@ -25,6 +25,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -56,58 +57,82 @@ public class FragmentFieldText implements Serializable {
 	@Schema(description = "A link to a fragment.")
 	@Valid
 	public FragmentLink getFragmentLink() {
+		if (_fragmentLinkSupplier != null) {
+			fragmentLink = _fragmentLinkSupplier.get();
+
+			_fragmentLinkSupplier = null;
+		}
+
 		return fragmentLink;
 	}
 
 	public void setFragmentLink(FragmentLink fragmentLink) {
 		this.fragmentLink = fragmentLink;
+
+		_fragmentLinkSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setFragmentLink(
 		UnsafeSupplier<FragmentLink, Exception> fragmentLinkUnsafeSupplier) {
 
-		try {
-			fragmentLink = fragmentLinkUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_fragmentLinkSupplier = () -> {
+			try {
+				return fragmentLinkUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "A link to a fragment.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentLink fragmentLink;
 
+	private Supplier<FragmentLink> _fragmentLinkSupplier;
+
 	@Schema(description = "The fragment field's text.")
 	@Valid
 	public Object getText() {
+		if (_textSupplier != null) {
+			text = _textSupplier.get();
+
+			_textSupplier = null;
+		}
+
 		return text;
 	}
 
 	public void setText(Object text) {
 		this.text = text;
+
+		_textSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setText(UnsafeSupplier<Object, Exception> textUnsafeSupplier) {
-		try {
-			text = textUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_textSupplier = () -> {
+			try {
+				return textUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The fragment field's text.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object text;
+
+	private Supplier<Object> _textSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -136,6 +161,8 @@ public class FragmentFieldText implements Serializable {
 
 		sb.append("{");
 
+		FragmentLink fragmentLink = getFragmentLink();
+
 		if (fragmentLink != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -145,6 +172,8 @@ public class FragmentFieldText implements Serializable {
 
 			sb.append(String.valueOf(fragmentLink));
 		}
+
+		Object text = getText();
 
 		if (text != null) {
 			if (sb.length() > 1) {

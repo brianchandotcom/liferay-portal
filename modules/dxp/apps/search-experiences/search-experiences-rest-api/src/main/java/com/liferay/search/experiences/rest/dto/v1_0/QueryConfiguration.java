@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -51,60 +52,84 @@ public class QueryConfiguration implements Serializable {
 
 	@Schema
 	public Boolean getApplyIndexerClauses() {
+		if (_applyIndexerClausesSupplier != null) {
+			applyIndexerClauses = _applyIndexerClausesSupplier.get();
+
+			_applyIndexerClausesSupplier = null;
+		}
+
 		return applyIndexerClauses;
 	}
 
 	public void setApplyIndexerClauses(Boolean applyIndexerClauses) {
 		this.applyIndexerClauses = applyIndexerClauses;
+
+		_applyIndexerClausesSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setApplyIndexerClauses(
 		UnsafeSupplier<Boolean, Exception> applyIndexerClausesUnsafeSupplier) {
 
-		try {
-			applyIndexerClauses = applyIndexerClausesUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_applyIndexerClausesSupplier = () -> {
+			try {
+				return applyIndexerClausesUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean applyIndexerClauses;
 
+	private Supplier<Boolean> _applyIndexerClausesSupplier;
+
 	@Schema
 	@Valid
 	public QueryEntry[] getQueryEntries() {
+		if (_queryEntriesSupplier != null) {
+			queryEntries = _queryEntriesSupplier.get();
+
+			_queryEntriesSupplier = null;
+		}
+
 		return queryEntries;
 	}
 
 	public void setQueryEntries(QueryEntry[] queryEntries) {
 		this.queryEntries = queryEntries;
+
+		_queryEntriesSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setQueryEntries(
 		UnsafeSupplier<QueryEntry[], Exception> queryEntriesUnsafeSupplier) {
 
-		try {
-			queryEntries = queryEntriesUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_queryEntriesSupplier = () -> {
+			try {
+				return queryEntriesUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected QueryEntry[] queryEntries;
+
+	private Supplier<QueryEntry[]> _queryEntriesSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -133,6 +158,8 @@ public class QueryConfiguration implements Serializable {
 
 		sb.append("{");
 
+		Boolean applyIndexerClauses = getApplyIndexerClauses();
+
 		if (applyIndexerClauses != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -142,6 +169,8 @@ public class QueryConfiguration implements Serializable {
 
 			sb.append(applyIndexerClauses);
 		}
+
+		QueryEntry[] queryEntries = getQueryEntries();
 
 		if (queryEntries != null) {
 			if (sb.length() > 1) {

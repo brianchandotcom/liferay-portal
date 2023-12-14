@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -60,26 +61,36 @@ public class TaxonomyCategoryReference implements Serializable {
 
 	@Schema(description = "The taxonomy category's external reference code.")
 	public String getExternalReferenceCode() {
+		if (_externalReferenceCodeSupplier != null) {
+			externalReferenceCode = _externalReferenceCodeSupplier.get();
+
+			_externalReferenceCodeSupplier = null;
+		}
+
 		return externalReferenceCode;
 	}
 
 	public void setExternalReferenceCode(String externalReferenceCode) {
 		this.externalReferenceCode = externalReferenceCode;
+
+		_externalReferenceCodeSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setExternalReferenceCode(
 		UnsafeSupplier<String, Exception> externalReferenceCodeUnsafeSupplier) {
 
-		try {
-			externalReferenceCode = externalReferenceCodeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_externalReferenceCodeSupplier = () -> {
+			try {
+				return externalReferenceCodeUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -89,30 +100,42 @@ public class TaxonomyCategoryReference implements Serializable {
 	@NotEmpty
 	protected String externalReferenceCode;
 
+	private Supplier<String> _externalReferenceCodeSupplier;
+
 	@Schema(
 		description = "The key of the site or asset library where the taxonomy category is located. It can be left out if the taxonomy category is in the same site as the page."
 	)
 	public String getSiteKey() {
+		if (_siteKeySupplier != null) {
+			siteKey = _siteKeySupplier.get();
+
+			_siteKeySupplier = null;
+		}
+
 		return siteKey;
 	}
 
 	public void setSiteKey(String siteKey) {
 		this.siteKey = siteKey;
+
+		_siteKeySupplier = null;
 	}
 
 	@JsonIgnore
 	public void setSiteKey(
 		UnsafeSupplier<String, Exception> siteKeyUnsafeSupplier) {
 
-		try {
-			siteKey = siteKeyUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_siteKeySupplier = () -> {
+			try {
+				return siteKeyUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -120,6 +143,8 @@ public class TaxonomyCategoryReference implements Serializable {
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String siteKey;
+
+	private Supplier<String> _siteKeySupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -149,6 +174,8 @@ public class TaxonomyCategoryReference implements Serializable {
 
 		sb.append("{");
 
+		String externalReferenceCode = getExternalReferenceCode();
+
 		if (externalReferenceCode != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -162,6 +189,8 @@ public class TaxonomyCategoryReference implements Serializable {
 
 			sb.append("\"");
 		}
+
+		String siteKey = getSiteKey();
 
 		if (siteKey != null) {
 			if (sb.length() > 1) {

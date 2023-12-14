@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -49,87 +50,123 @@ public class Admin implements Serializable {
 
 	@Schema(description = "Administrator's email address.")
 	public String getEmailAddress() {
+		if (_emailAddressSupplier != null) {
+			emailAddress = _emailAddressSupplier.get();
+
+			_emailAddressSupplier = null;
+		}
+
 		return emailAddress;
 	}
 
 	public void setEmailAddress(String emailAddress) {
 		this.emailAddress = emailAddress;
+
+		_emailAddressSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setEmailAddress(
 		UnsafeSupplier<String, Exception> emailAddressUnsafeSupplier) {
 
-		try {
-			emailAddress = emailAddressUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_emailAddressSupplier = () -> {
+			try {
+				return emailAddressUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "Administrator's email address.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String emailAddress;
 
+	private Supplier<String> _emailAddressSupplier;
+
 	@Schema(description = "The admin's surname (last name).")
 	public String getFamilyName() {
+		if (_familyNameSupplier != null) {
+			familyName = _familyNameSupplier.get();
+
+			_familyNameSupplier = null;
+		}
+
 		return familyName;
 	}
 
 	public void setFamilyName(String familyName) {
 		this.familyName = familyName;
+
+		_familyNameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setFamilyName(
 		UnsafeSupplier<String, Exception> familyNameUnsafeSupplier) {
 
-		try {
-			familyName = familyNameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_familyNameSupplier = () -> {
+			try {
+				return familyNameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The admin's surname (last name).")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String familyName;
 
+	private Supplier<String> _familyNameSupplier;
+
 	@Schema(description = "The admin's first name.")
 	public String getGivenName() {
+		if (_givenNameSupplier != null) {
+			givenName = _givenNameSupplier.get();
+
+			_givenNameSupplier = null;
+		}
+
 		return givenName;
 	}
 
 	public void setGivenName(String givenName) {
 		this.givenName = givenName;
+
+		_givenNameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setGivenName(
 		UnsafeSupplier<String, Exception> givenNameUnsafeSupplier) {
 
-		try {
-			givenName = givenNameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_givenNameSupplier = () -> {
+			try {
+				return givenNameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The admin's first name.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String givenName;
+
+	private Supplier<String> _givenNameSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -158,6 +195,8 @@ public class Admin implements Serializable {
 
 		sb.append("{");
 
+		String emailAddress = getEmailAddress();
+
 		if (emailAddress != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -172,6 +211,8 @@ public class Admin implements Serializable {
 			sb.append("\"");
 		}
 
+		String familyName = getFamilyName();
+
 		if (familyName != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -185,6 +226,8 @@ public class Admin implements Serializable {
 
 			sb.append("\"");
 		}
+
+		String givenName = getGivenName();
 
 		if (givenName != null) {
 			if (sb.length() > 1) {

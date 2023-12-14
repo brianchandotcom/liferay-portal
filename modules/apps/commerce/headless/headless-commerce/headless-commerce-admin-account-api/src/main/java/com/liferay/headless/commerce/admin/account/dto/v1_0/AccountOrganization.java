@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -53,60 +54,91 @@ public class AccountOrganization implements Serializable {
 	@DecimalMin("0")
 	@Schema(example = "30130")
 	public Long getAccountId() {
+		if (_accountIdSupplier != null) {
+			accountId = _accountIdSupplier.get();
+
+			_accountIdSupplier = null;
+		}
+
 		return accountId;
 	}
 
 	public void setAccountId(Long accountId) {
 		this.accountId = accountId;
+
+		_accountIdSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setAccountId(
 		UnsafeSupplier<Long, Exception> accountIdUnsafeSupplier) {
 
-		try {
-			accountId = accountIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_accountIdSupplier = () -> {
+			try {
+				return accountIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long accountId;
 
+	private Supplier<Long> _accountIdSupplier;
+
 	@Schema(example = "Organization Name")
 	public String getName() {
+		if (_nameSupplier != null) {
+			name = _nameSupplier.get();
+
+			_nameSupplier = null;
+		}
+
 		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
+
+		_nameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
-		try {
-			name = nameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_nameSupplier = () -> {
+			try {
+				return nameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	private Supplier<String> _nameSupplier;
+
 	@Schema(example = "UAB-34098-789-N")
 	public String getOrganizationExternalReferenceCode() {
+		if (_organizationExternalReferenceCodeSupplier != null) {
+			organizationExternalReferenceCode =
+				_organizationExternalReferenceCodeSupplier.get();
+
+			_organizationExternalReferenceCodeSupplier = null;
+		}
+
 		return organizationExternalReferenceCode;
 	}
 
@@ -115,6 +147,8 @@ public class AccountOrganization implements Serializable {
 
 		this.organizationExternalReferenceCode =
 			organizationExternalReferenceCode;
+
+		_organizationExternalReferenceCodeSupplier = null;
 	}
 
 	@JsonIgnore
@@ -122,78 +156,105 @@ public class AccountOrganization implements Serializable {
 		UnsafeSupplier<String, Exception>
 			organizationExternalReferenceCodeUnsafeSupplier) {
 
-		try {
-			organizationExternalReferenceCode =
-				organizationExternalReferenceCodeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_organizationExternalReferenceCodeSupplier = () -> {
+			try {
+				return organizationExternalReferenceCodeUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String organizationExternalReferenceCode;
 
+	private Supplier<String> _organizationExternalReferenceCodeSupplier;
+
 	@DecimalMin("0")
 	@Schema(example = "30002")
 	public Long getOrganizationId() {
+		if (_organizationIdSupplier != null) {
+			organizationId = _organizationIdSupplier.get();
+
+			_organizationIdSupplier = null;
+		}
+
 		return organizationId;
 	}
 
 	public void setOrganizationId(Long organizationId) {
 		this.organizationId = organizationId;
+
+		_organizationIdSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setOrganizationId(
 		UnsafeSupplier<Long, Exception> organizationIdUnsafeSupplier) {
 
-		try {
-			organizationId = organizationIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_organizationIdSupplier = () -> {
+			try {
+				return organizationIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long organizationId;
 
+	private Supplier<Long> _organizationIdSupplier;
+
 	@Schema(example = "/Parent Organization/Organization Name")
 	public String getTreePath() {
+		if (_treePathSupplier != null) {
+			treePath = _treePathSupplier.get();
+
+			_treePathSupplier = null;
+		}
+
 		return treePath;
 	}
 
 	public void setTreePath(String treePath) {
 		this.treePath = treePath;
+
+		_treePathSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setTreePath(
 		UnsafeSupplier<String, Exception> treePathUnsafeSupplier) {
 
-		try {
-			treePath = treePathUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_treePathSupplier = () -> {
+			try {
+				return treePathUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String treePath;
+
+	private Supplier<String> _treePathSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -222,6 +283,8 @@ public class AccountOrganization implements Serializable {
 
 		sb.append("{");
 
+		Long accountId = getAccountId();
+
 		if (accountId != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -231,6 +294,8 @@ public class AccountOrganization implements Serializable {
 
 			sb.append(accountId);
 		}
+
+		String name = getName();
 
 		if (name != null) {
 			if (sb.length() > 1) {
@@ -246,6 +311,9 @@ public class AccountOrganization implements Serializable {
 			sb.append("\"");
 		}
 
+		String organizationExternalReferenceCode =
+			getOrganizationExternalReferenceCode();
+
 		if (organizationExternalReferenceCode != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -260,6 +328,8 @@ public class AccountOrganization implements Serializable {
 			sb.append("\"");
 		}
 
+		Long organizationId = getOrganizationId();
+
 		if (organizationId != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -269,6 +339,8 @@ public class AccountOrganization implements Serializable {
 
 			sb.append(organizationId);
 		}
+
+		String treePath = getTreePath();
 
 		if (treePath != null) {
 			if (sb.length() > 1) {

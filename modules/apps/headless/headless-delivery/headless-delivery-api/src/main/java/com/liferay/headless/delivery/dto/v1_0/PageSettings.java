@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -54,11 +55,19 @@ public class PageSettings implements Serializable {
 	@Schema(description = "A list of custom metatags this page has.")
 	@Valid
 	public CustomMetaTag[] getCustomMetaTags() {
+		if (_customMetaTagsSupplier != null) {
+			customMetaTags = _customMetaTagsSupplier.get();
+
+			_customMetaTagsSupplier = null;
+		}
+
 		return customMetaTags;
 	}
 
 	public void setCustomMetaTags(CustomMetaTag[] customMetaTags) {
 		this.customMetaTags = customMetaTags;
+
+		_customMetaTagsSupplier = null;
 	}
 
 	@JsonIgnore
@@ -66,45 +75,59 @@ public class PageSettings implements Serializable {
 		UnsafeSupplier<CustomMetaTag[], Exception>
 			customMetaTagsUnsafeSupplier) {
 
-		try {
-			customMetaTags = customMetaTagsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_customMetaTagsSupplier = () -> {
+			try {
+				return customMetaTagsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "A list of custom metatags this page has.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected CustomMetaTag[] customMetaTags;
 
+	private Supplier<CustomMetaTag[]> _customMetaTagsSupplier;
+
 	@Schema(
 		description = "A flag that indicates whether the page is hidden from navigation."
 	)
 	public Boolean getHiddenFromNavigation() {
+		if (_hiddenFromNavigationSupplier != null) {
+			hiddenFromNavigation = _hiddenFromNavigationSupplier.get();
+
+			_hiddenFromNavigationSupplier = null;
+		}
+
 		return hiddenFromNavigation;
 	}
 
 	public void setHiddenFromNavigation(Boolean hiddenFromNavigation) {
 		this.hiddenFromNavigation = hiddenFromNavigation;
+
+		_hiddenFromNavigationSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setHiddenFromNavigation(
 		UnsafeSupplier<Boolean, Exception> hiddenFromNavigationUnsafeSupplier) {
 
-		try {
-			hiddenFromNavigation = hiddenFromNavigationUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_hiddenFromNavigationSupplier = () -> {
+			try {
+				return hiddenFromNavigationUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -113,14 +136,24 @@ public class PageSettings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean hiddenFromNavigation;
 
+	private Supplier<Boolean> _hiddenFromNavigationSupplier;
+
 	@Schema(description = "The page's Open Graph settings.")
 	@Valid
 	public OpenGraphSettings getOpenGraphSettings() {
+		if (_openGraphSettingsSupplier != null) {
+			openGraphSettings = _openGraphSettingsSupplier.get();
+
+			_openGraphSettingsSupplier = null;
+		}
+
 		return openGraphSettings;
 	}
 
 	public void setOpenGraphSettings(OpenGraphSettings openGraphSettings) {
 		this.openGraphSettings = openGraphSettings;
+
+		_openGraphSettingsSupplier = null;
 	}
 
 	@JsonIgnore
@@ -128,53 +161,76 @@ public class PageSettings implements Serializable {
 		UnsafeSupplier<OpenGraphSettings, Exception>
 			openGraphSettingsUnsafeSupplier) {
 
-		try {
-			openGraphSettings = openGraphSettingsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_openGraphSettingsSupplier = () -> {
+			try {
+				return openGraphSettingsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The page's Open Graph settings.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected OpenGraphSettings openGraphSettings;
 
+	private Supplier<OpenGraphSettings> _openGraphSettingsSupplier;
+
 	@Schema(description = "The page's SEO settings.")
 	@Valid
 	public SEOSettings getSeoSettings() {
+		if (_seoSettingsSupplier != null) {
+			seoSettings = _seoSettingsSupplier.get();
+
+			_seoSettingsSupplier = null;
+		}
+
 		return seoSettings;
 	}
 
 	public void setSeoSettings(SEOSettings seoSettings) {
 		this.seoSettings = seoSettings;
+
+		_seoSettingsSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setSeoSettings(
 		UnsafeSupplier<SEOSettings, Exception> seoSettingsUnsafeSupplier) {
 
-		try {
-			seoSettings = seoSettingsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_seoSettingsSupplier = () -> {
+			try {
+				return seoSettingsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The page's SEO settings.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected SEOSettings seoSettings;
 
+	private Supplier<SEOSettings> _seoSettingsSupplier;
+
 	@Schema(description = "The page's site navigation menu settings.")
 	@Valid
 	public SitePageNavigationMenuSettings getSitePageNavigationMenuSettings() {
+		if (_sitePageNavigationMenuSettingsSupplier != null) {
+			sitePageNavigationMenuSettings =
+				_sitePageNavigationMenuSettingsSupplier.get();
+
+			_sitePageNavigationMenuSettingsSupplier = null;
+		}
+
 		return sitePageNavigationMenuSettings;
 	}
 
@@ -182,6 +238,8 @@ public class PageSettings implements Serializable {
 		SitePageNavigationMenuSettings sitePageNavigationMenuSettings) {
 
 		this.sitePageNavigationMenuSettings = sitePageNavigationMenuSettings;
+
+		_sitePageNavigationMenuSettingsSupplier = null;
 	}
 
 	@JsonIgnore
@@ -189,21 +247,25 @@ public class PageSettings implements Serializable {
 		UnsafeSupplier<SitePageNavigationMenuSettings, Exception>
 			sitePageNavigationMenuSettingsUnsafeSupplier) {
 
-		try {
-			sitePageNavigationMenuSettings =
-				sitePageNavigationMenuSettingsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_sitePageNavigationMenuSettingsSupplier = () -> {
+			try {
+				return sitePageNavigationMenuSettingsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The page's site navigation menu settings.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected SitePageNavigationMenuSettings sitePageNavigationMenuSettings;
+
+	private Supplier<SitePageNavigationMenuSettings>
+		_sitePageNavigationMenuSettingsSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -232,6 +294,8 @@ public class PageSettings implements Serializable {
 
 		sb.append("{");
 
+		CustomMetaTag[] customMetaTags = getCustomMetaTags();
+
 		if (customMetaTags != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -252,6 +316,8 @@ public class PageSettings implements Serializable {
 			sb.append("]");
 		}
 
+		Boolean hiddenFromNavigation = getHiddenFromNavigation();
+
 		if (hiddenFromNavigation != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -261,6 +327,8 @@ public class PageSettings implements Serializable {
 
 			sb.append(hiddenFromNavigation);
 		}
+
+		OpenGraphSettings openGraphSettings = getOpenGraphSettings();
 
 		if (openGraphSettings != null) {
 			if (sb.length() > 1) {
@@ -272,6 +340,8 @@ public class PageSettings implements Serializable {
 			sb.append(String.valueOf(openGraphSettings));
 		}
 
+		SEOSettings seoSettings = getSeoSettings();
+
 		if (seoSettings != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -281,6 +351,9 @@ public class PageSettings implements Serializable {
 
 			sb.append(String.valueOf(seoSettings));
 		}
+
+		SitePageNavigationMenuSettings sitePageNavigationMenuSettings =
+			getSitePageNavigationMenuSettings();
 
 		if (sitePageNavigationMenuSettings != null) {
 			if (sb.length() > 1) {

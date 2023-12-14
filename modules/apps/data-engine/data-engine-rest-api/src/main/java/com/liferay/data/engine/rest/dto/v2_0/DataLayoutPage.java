@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -52,11 +53,19 @@ public class DataLayoutPage implements Serializable {
 	@Schema
 	@Valid
 	public DataLayoutRow[] getDataLayoutRows() {
+		if (_dataLayoutRowsSupplier != null) {
+			dataLayoutRows = _dataLayoutRowsSupplier.get();
+
+			_dataLayoutRowsSupplier = null;
+		}
+
 		return dataLayoutRows;
 	}
 
 	public void setDataLayoutRows(DataLayoutRow[] dataLayoutRows) {
 		this.dataLayoutRows = dataLayoutRows;
+
+		_dataLayoutRowsSupplier = null;
 	}
 
 	@JsonIgnore
@@ -64,29 +73,41 @@ public class DataLayoutPage implements Serializable {
 		UnsafeSupplier<DataLayoutRow[], Exception>
 			dataLayoutRowsUnsafeSupplier) {
 
-		try {
-			dataLayoutRows = dataLayoutRowsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_dataLayoutRowsSupplier = () -> {
+			try {
+				return dataLayoutRowsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected DataLayoutRow[] dataLayoutRows;
 
+	private Supplier<DataLayoutRow[]> _dataLayoutRowsSupplier;
+
 	@Schema
 	@Valid
 	public Map<String, Object> getDescription() {
+		if (_descriptionSupplier != null) {
+			description = _descriptionSupplier.get();
+
+			_descriptionSupplier = null;
+		}
+
 		return description;
 	}
 
 	public void setDescription(Map<String, Object> description) {
 		this.description = description;
+
+		_descriptionSupplier = null;
 	}
 
 	@JsonIgnore
@@ -94,49 +115,65 @@ public class DataLayoutPage implements Serializable {
 		UnsafeSupplier<Map<String, Object>, Exception>
 			descriptionUnsafeSupplier) {
 
-		try {
-			description = descriptionUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_descriptionSupplier = () -> {
+			try {
+				return descriptionUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, Object> description;
 
+	private Supplier<Map<String, Object>> _descriptionSupplier;
+
 	@Schema
 	@Valid
 	public Map<String, Object> getTitle() {
+		if (_titleSupplier != null) {
+			title = _titleSupplier.get();
+
+			_titleSupplier = null;
+		}
+
 		return title;
 	}
 
 	public void setTitle(Map<String, Object> title) {
 		this.title = title;
+
+		_titleSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setTitle(
 		UnsafeSupplier<Map<String, Object>, Exception> titleUnsafeSupplier) {
 
-		try {
-			title = titleUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_titleSupplier = () -> {
+			try {
+				return titleUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, Object> title;
+
+	private Supplier<Map<String, Object>> _titleSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -165,6 +202,8 @@ public class DataLayoutPage implements Serializable {
 
 		sb.append("{");
 
+		DataLayoutRow[] dataLayoutRows = getDataLayoutRows();
+
 		if (dataLayoutRows != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -185,6 +224,8 @@ public class DataLayoutPage implements Serializable {
 			sb.append("]");
 		}
 
+		Map<String, Object> description = getDescription();
+
 		if (description != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -194,6 +235,8 @@ public class DataLayoutPage implements Serializable {
 
 			sb.append(_toJSON(description));
 		}
+
+		Map<String, Object> title = getTitle();
 
 		if (title != null) {
 			if (sb.length() > 1) {

@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -53,31 +54,43 @@ public class AssigneeBulkSelection implements Serializable {
 
 	@Schema
 	public Long[] getInstanceIds() {
+		if (_instanceIdsSupplier != null) {
+			instanceIds = _instanceIdsSupplier.get();
+
+			_instanceIdsSupplier = null;
+		}
+
 		return instanceIds;
 	}
 
 	public void setInstanceIds(Long[] instanceIds) {
 		this.instanceIds = instanceIds;
+
+		_instanceIdsSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setInstanceIds(
 		UnsafeSupplier<Long[], Exception> instanceIdsUnsafeSupplier) {
 
-		try {
-			instanceIds = instanceIdsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_instanceIdsSupplier = () -> {
+			try {
+				return instanceIdsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long[] instanceIds;
+
+	private Supplier<Long[]> _instanceIdsSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -106,6 +119,8 @@ public class AssigneeBulkSelection implements Serializable {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		Long[] instanceIds = getInstanceIds();
 
 		if (instanceIds != null) {
 			if (sb.length() > 1) {

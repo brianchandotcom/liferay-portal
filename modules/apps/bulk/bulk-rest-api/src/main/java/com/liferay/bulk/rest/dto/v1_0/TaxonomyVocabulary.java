@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -51,94 +52,138 @@ public class TaxonomyVocabulary implements Serializable {
 
 	@Schema
 	public Boolean getMultiValued() {
+		if (_multiValuedSupplier != null) {
+			multiValued = _multiValuedSupplier.get();
+
+			_multiValuedSupplier = null;
+		}
+
 		return multiValued;
 	}
 
 	public void setMultiValued(Boolean multiValued) {
 		this.multiValued = multiValued;
+
+		_multiValuedSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setMultiValued(
 		UnsafeSupplier<Boolean, Exception> multiValuedUnsafeSupplier) {
 
-		try {
-			multiValued = multiValuedUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_multiValuedSupplier = () -> {
+			try {
+				return multiValuedUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean multiValued;
 
+	private Supplier<Boolean> _multiValuedSupplier;
+
 	@Schema
 	public String getName() {
+		if (_nameSupplier != null) {
+			name = _nameSupplier.get();
+
+			_nameSupplier = null;
+		}
+
 		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
+
+		_nameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
-		try {
-			name = nameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_nameSupplier = () -> {
+			try {
+				return nameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	private Supplier<String> _nameSupplier;
+
 	@Schema
 	public Boolean getRequired() {
+		if (_requiredSupplier != null) {
+			required = _requiredSupplier.get();
+
+			_requiredSupplier = null;
+		}
+
 		return required;
 	}
 
 	public void setRequired(Boolean required) {
 		this.required = required;
+
+		_requiredSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setRequired(
 		UnsafeSupplier<Boolean, Exception> requiredUnsafeSupplier) {
 
-		try {
-			required = requiredUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_requiredSupplier = () -> {
+			try {
+				return requiredUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean required;
 
+	private Supplier<Boolean> _requiredSupplier;
+
 	@Schema
 	@Valid
 	public TaxonomyCategory[] getTaxonomyCategories() {
+		if (_taxonomyCategoriesSupplier != null) {
+			taxonomyCategories = _taxonomyCategoriesSupplier.get();
+
+			_taxonomyCategoriesSupplier = null;
+		}
+
 		return taxonomyCategories;
 	}
 
 	public void setTaxonomyCategories(TaxonomyCategory[] taxonomyCategories) {
 		this.taxonomyCategories = taxonomyCategories;
+
+		_taxonomyCategoriesSupplier = null;
 	}
 
 	@JsonIgnore
@@ -146,48 +191,64 @@ public class TaxonomyVocabulary implements Serializable {
 		UnsafeSupplier<TaxonomyCategory[], Exception>
 			taxonomyCategoriesUnsafeSupplier) {
 
-		try {
-			taxonomyCategories = taxonomyCategoriesUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_taxonomyCategoriesSupplier = () -> {
+			try {
+				return taxonomyCategoriesUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected TaxonomyCategory[] taxonomyCategories;
 
+	private Supplier<TaxonomyCategory[]> _taxonomyCategoriesSupplier;
+
 	@Schema
 	public Long getTaxonomyVocabularyId() {
+		if (_taxonomyVocabularyIdSupplier != null) {
+			taxonomyVocabularyId = _taxonomyVocabularyIdSupplier.get();
+
+			_taxonomyVocabularyIdSupplier = null;
+		}
+
 		return taxonomyVocabularyId;
 	}
 
 	public void setTaxonomyVocabularyId(Long taxonomyVocabularyId) {
 		this.taxonomyVocabularyId = taxonomyVocabularyId;
+
+		_taxonomyVocabularyIdSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setTaxonomyVocabularyId(
 		UnsafeSupplier<Long, Exception> taxonomyVocabularyIdUnsafeSupplier) {
 
-		try {
-			taxonomyVocabularyId = taxonomyVocabularyIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_taxonomyVocabularyIdSupplier = () -> {
+			try {
+				return taxonomyVocabularyIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long taxonomyVocabularyId;
+
+	private Supplier<Long> _taxonomyVocabularyIdSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -216,6 +277,8 @@ public class TaxonomyVocabulary implements Serializable {
 
 		sb.append("{");
 
+		Boolean multiValued = getMultiValued();
+
 		if (multiValued != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -225,6 +288,8 @@ public class TaxonomyVocabulary implements Serializable {
 
 			sb.append(multiValued);
 		}
+
+		String name = getName();
 
 		if (name != null) {
 			if (sb.length() > 1) {
@@ -240,6 +305,8 @@ public class TaxonomyVocabulary implements Serializable {
 			sb.append("\"");
 		}
 
+		Boolean required = getRequired();
+
 		if (required != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -249,6 +316,8 @@ public class TaxonomyVocabulary implements Serializable {
 
 			sb.append(required);
 		}
+
+		TaxonomyCategory[] taxonomyCategories = getTaxonomyCategories();
 
 		if (taxonomyCategories != null) {
 			if (sb.length() > 1) {
@@ -269,6 +338,8 @@ public class TaxonomyVocabulary implements Serializable {
 
 			sb.append("]");
 		}
+
+		Long taxonomyVocabularyId = getTaxonomyVocabularyId();
 
 		if (taxonomyVocabularyId != null) {
 			if (sb.length() > 1) {

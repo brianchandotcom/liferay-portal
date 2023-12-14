@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -49,57 +50,81 @@ public class SearchIndex implements Serializable {
 
 	@Schema
 	public Boolean getExternal() {
+		if (_externalSupplier != null) {
+			external = _externalSupplier.get();
+
+			_externalSupplier = null;
+		}
+
 		return external;
 	}
 
 	public void setExternal(Boolean external) {
 		this.external = external;
+
+		_externalSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setExternal(
 		UnsafeSupplier<Boolean, Exception> externalUnsafeSupplier) {
 
-		try {
-			external = externalUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_externalSupplier = () -> {
+			try {
+				return externalUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean external;
 
+	private Supplier<Boolean> _externalSupplier;
+
 	@Schema
 	public String getName() {
+		if (_nameSupplier != null) {
+			name = _nameSupplier.get();
+
+			_nameSupplier = null;
+		}
+
 		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
+
+		_nameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
-		try {
-			name = nameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_nameSupplier = () -> {
+			try {
+				return nameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
+
+	private Supplier<String> _nameSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -128,6 +153,8 @@ public class SearchIndex implements Serializable {
 
 		sb.append("{");
 
+		Boolean external = getExternal();
+
 		if (external != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -137,6 +164,8 @@ public class SearchIndex implements Serializable {
 
 			sb.append(external);
 		}
+
+		String name = getName();
 
 		if (name != null) {
 			if (sb.length() > 1) {

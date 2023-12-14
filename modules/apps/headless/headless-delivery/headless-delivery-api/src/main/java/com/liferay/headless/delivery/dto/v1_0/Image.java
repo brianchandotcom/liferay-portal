@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -49,84 +50,118 @@ public class Image implements Serializable {
 
 	@Schema(description = "The text describing the image.")
 	public String getCaption() {
+		if (_captionSupplier != null) {
+			caption = _captionSupplier.get();
+
+			_captionSupplier = null;
+		}
+
 		return caption;
 	}
 
 	public void setCaption(String caption) {
 		this.caption = caption;
+
+		_captionSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setCaption(
 		UnsafeSupplier<String, Exception> captionUnsafeSupplier) {
 
-		try {
-			caption = captionUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_captionSupplier = () -> {
+			try {
+				return captionUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The text describing the image.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String caption;
 
+	private Supplier<String> _captionSupplier;
+
 	@Schema(description = "The image's relative URL.")
 	public String getContentUrl() {
+		if (_contentUrlSupplier != null) {
+			contentUrl = _contentUrlSupplier.get();
+
+			_contentUrlSupplier = null;
+		}
+
 		return contentUrl;
 	}
 
 	public void setContentUrl(String contentUrl) {
 		this.contentUrl = contentUrl;
+
+		_contentUrlSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setContentUrl(
 		UnsafeSupplier<String, Exception> contentUrlUnsafeSupplier) {
 
-		try {
-			contentUrl = contentUrlUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_contentUrlSupplier = () -> {
+			try {
+				return contentUrlUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The image's relative URL.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String contentUrl;
 
+	private Supplier<String> _contentUrlSupplier;
+
 	@Schema(
 		description = "optional field with the content of the image in Base64, can be embedded with nestedFields"
 	)
 	public String getContentValue() {
+		if (_contentValueSupplier != null) {
+			contentValue = _contentValueSupplier.get();
+
+			_contentValueSupplier = null;
+		}
+
 		return contentValue;
 	}
 
 	public void setContentValue(String contentValue) {
 		this.contentValue = contentValue;
+
+		_contentValueSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setContentValue(
 		UnsafeSupplier<String, Exception> contentValueUnsafeSupplier) {
 
-		try {
-			contentValue = contentValueUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_contentValueSupplier = () -> {
+			try {
+				return contentValueUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -135,30 +170,42 @@ public class Image implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String contentValue;
 
+	private Supplier<String> _contentValueSupplier;
+
 	@Schema(
 		description = "The image's ID. This can be used to retrieve more information in the `Document` API."
 	)
 	public Long getImageId() {
+		if (_imageIdSupplier != null) {
+			imageId = _imageIdSupplier.get();
+
+			_imageIdSupplier = null;
+		}
+
 		return imageId;
 	}
 
 	public void setImageId(Long imageId) {
 		this.imageId = imageId;
+
+		_imageIdSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setImageId(
 		UnsafeSupplier<Long, Exception> imageIdUnsafeSupplier) {
 
-		try {
-			imageId = imageIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_imageIdSupplier = () -> {
+			try {
+				return imageIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -166,6 +213,8 @@ public class Image implements Serializable {
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long imageId;
+
+	private Supplier<Long> _imageIdSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -194,6 +243,8 @@ public class Image implements Serializable {
 
 		sb.append("{");
 
+		String caption = getCaption();
+
 		if (caption != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -207,6 +258,8 @@ public class Image implements Serializable {
 
 			sb.append("\"");
 		}
+
+		String contentUrl = getContentUrl();
 
 		if (contentUrl != null) {
 			if (sb.length() > 1) {
@@ -222,6 +275,8 @@ public class Image implements Serializable {
 			sb.append("\"");
 		}
 
+		String contentValue = getContentValue();
+
 		if (contentValue != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -235,6 +290,8 @@ public class Image implements Serializable {
 
 			sb.append("\"");
 		}
+
+		Long imageId = getImageId();
 
 		if (imageId != null) {
 			if (sb.length() > 1) {

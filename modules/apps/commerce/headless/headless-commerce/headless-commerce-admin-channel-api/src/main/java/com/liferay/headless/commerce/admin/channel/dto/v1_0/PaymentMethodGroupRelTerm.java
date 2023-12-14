@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -57,11 +58,19 @@ public class PaymentMethodGroupRelTerm implements Serializable {
 	@Schema
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
+		if (_actionsSupplier != null) {
+			actions = _actionsSupplier.get();
+
+			_actionsSupplier = null;
+		}
+
 		return actions;
 	}
 
 	public void setActions(Map<String, Map<String, String>> actions) {
 		this.actions = actions;
+
+		_actionsSupplier = null;
 	}
 
 	@JsonIgnore
@@ -69,45 +78,58 @@ public class PaymentMethodGroupRelTerm implements Serializable {
 		UnsafeSupplier<Map<String, Map<String, String>>, Exception>
 			actionsUnsafeSupplier) {
 
-		try {
-			actions = actionsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_actionsSupplier = () -> {
+			try {
+				return actionsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
+	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
+
 	@DecimalMin("0")
 	@Schema(example = "30324")
 	public Long getPaymentMethodGroupRelId() {
+		if (_paymentMethodGroupRelIdSupplier != null) {
+			paymentMethodGroupRelId = _paymentMethodGroupRelIdSupplier.get();
+
+			_paymentMethodGroupRelIdSupplier = null;
+		}
+
 		return paymentMethodGroupRelId;
 	}
 
 	public void setPaymentMethodGroupRelId(Long paymentMethodGroupRelId) {
 		this.paymentMethodGroupRelId = paymentMethodGroupRelId;
+
+		_paymentMethodGroupRelIdSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setPaymentMethodGroupRelId(
 		UnsafeSupplier<Long, Exception> paymentMethodGroupRelIdUnsafeSupplier) {
 
-		try {
-			paymentMethodGroupRelId =
-				paymentMethodGroupRelIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_paymentMethodGroupRelIdSupplier = () -> {
+			try {
+				return paymentMethodGroupRelIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
@@ -115,9 +137,18 @@ public class PaymentMethodGroupRelTerm implements Serializable {
 	@NotNull
 	protected Long paymentMethodGroupRelId;
 
+	private Supplier<Long> _paymentMethodGroupRelIdSupplier;
+
 	@DecimalMin("0")
 	@Schema(example = "30643")
 	public Long getPaymentMethodGroupRelTermId() {
+		if (_paymentMethodGroupRelTermIdSupplier != null) {
+			paymentMethodGroupRelTermId =
+				_paymentMethodGroupRelTermIdSupplier.get();
+
+			_paymentMethodGroupRelTermIdSupplier = null;
+		}
+
 		return paymentMethodGroupRelTermId;
 	}
 
@@ -125,6 +156,8 @@ public class PaymentMethodGroupRelTerm implements Serializable {
 		Long paymentMethodGroupRelTermId) {
 
 		this.paymentMethodGroupRelTermId = paymentMethodGroupRelTermId;
+
+		_paymentMethodGroupRelTermIdSupplier = null;
 	}
 
 	@JsonIgnore
@@ -132,56 +165,80 @@ public class PaymentMethodGroupRelTerm implements Serializable {
 		UnsafeSupplier<Long, Exception>
 			paymentMethodGroupRelTermIdUnsafeSupplier) {
 
-		try {
-			paymentMethodGroupRelTermId =
-				paymentMethodGroupRelTermIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_paymentMethodGroupRelTermIdSupplier = () -> {
+			try {
+				return paymentMethodGroupRelTermIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long paymentMethodGroupRelTermId;
 
+	private Supplier<Long> _paymentMethodGroupRelTermIdSupplier;
+
 	@Schema
 	@Valid
 	public Term getTerm() {
+		if (_termSupplier != null) {
+			term = _termSupplier.get();
+
+			_termSupplier = null;
+		}
+
 		return term;
 	}
 
 	public void setTerm(Term term) {
 		this.term = term;
+
+		_termSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setTerm(UnsafeSupplier<Term, Exception> termUnsafeSupplier) {
-		try {
-			term = termUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_termSupplier = () -> {
+			try {
+				return termUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Term term;
 
+	private Supplier<Term> _termSupplier;
+
 	@Schema(example = "PAB-34098-789-N")
 	public String getTermExternalReferenceCode() {
+		if (_termExternalReferenceCodeSupplier != null) {
+			termExternalReferenceCode =
+				_termExternalReferenceCodeSupplier.get();
+
+			_termExternalReferenceCodeSupplier = null;
+		}
+
 		return termExternalReferenceCode;
 	}
 
 	public void setTermExternalReferenceCode(String termExternalReferenceCode) {
 		this.termExternalReferenceCode = termExternalReferenceCode;
+
+		_termExternalReferenceCodeSupplier = null;
 	}
 
 	@JsonIgnore
@@ -189,51 +246,66 @@ public class PaymentMethodGroupRelTerm implements Serializable {
 		UnsafeSupplier<String, Exception>
 			termExternalReferenceCodeUnsafeSupplier) {
 
-		try {
-			termExternalReferenceCode =
-				termExternalReferenceCodeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_termExternalReferenceCodeSupplier = () -> {
+			try {
+				return termExternalReferenceCodeUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String termExternalReferenceCode;
 
+	private Supplier<String> _termExternalReferenceCodeSupplier;
+
 	@DecimalMin("0")
 	@Schema(example = "30130")
 	public Long getTermId() {
+		if (_termIdSupplier != null) {
+			termId = _termIdSupplier.get();
+
+			_termIdSupplier = null;
+		}
+
 		return termId;
 	}
 
 	public void setTermId(Long termId) {
 		this.termId = termId;
+
+		_termIdSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setTermId(
 		UnsafeSupplier<Long, Exception> termIdUnsafeSupplier) {
 
-		try {
-			termId = termIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_termIdSupplier = () -> {
+			try {
+				return termIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotNull
 	protected Long termId;
+
+	private Supplier<Long> _termIdSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -263,6 +335,8 @@ public class PaymentMethodGroupRelTerm implements Serializable {
 
 		sb.append("{");
 
+		Map<String, Map<String, String>> actions = getActions();
+
 		if (actions != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -272,6 +346,8 @@ public class PaymentMethodGroupRelTerm implements Serializable {
 
 			sb.append(_toJSON(actions));
 		}
+
+		Long paymentMethodGroupRelId = getPaymentMethodGroupRelId();
 
 		if (paymentMethodGroupRelId != null) {
 			if (sb.length() > 1) {
@@ -283,6 +359,8 @@ public class PaymentMethodGroupRelTerm implements Serializable {
 			sb.append(paymentMethodGroupRelId);
 		}
 
+		Long paymentMethodGroupRelTermId = getPaymentMethodGroupRelTermId();
+
 		if (paymentMethodGroupRelTermId != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -293,6 +371,8 @@ public class PaymentMethodGroupRelTerm implements Serializable {
 			sb.append(paymentMethodGroupRelTermId);
 		}
 
+		Term term = getTerm();
+
 		if (term != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -302,6 +382,8 @@ public class PaymentMethodGroupRelTerm implements Serializable {
 
 			sb.append(String.valueOf(term));
 		}
+
+		String termExternalReferenceCode = getTermExternalReferenceCode();
 
 		if (termExternalReferenceCode != null) {
 			if (sb.length() > 1) {
@@ -316,6 +398,8 @@ public class PaymentMethodGroupRelTerm implements Serializable {
 
 			sb.append("\"");
 		}
+
+		Long termId = getTermId();
 
 		if (termId != null) {
 			if (sb.length() > 1) {

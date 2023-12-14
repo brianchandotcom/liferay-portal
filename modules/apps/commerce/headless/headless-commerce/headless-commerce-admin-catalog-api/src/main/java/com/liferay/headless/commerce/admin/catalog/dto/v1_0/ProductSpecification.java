@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -57,199 +58,281 @@ public class ProductSpecification implements Serializable {
 	@DecimalMin("0")
 	@Schema(example = "31130")
 	public Long getId() {
+		if (_idSupplier != null) {
+			id = _idSupplier.get();
+
+			_idSupplier = null;
+		}
+
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
+
+		_idSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_idSupplier = () -> {
+			try {
+				return idUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	private Supplier<Long> _idSupplier;
+
 	@Schema(
 		example = "{en_US=Hand Saw, hr_HR=Product Name HR, hu_HU=Product Name HU}"
 	)
 	@Valid
 	public Map<String, String> getLabel() {
+		if (_labelSupplier != null) {
+			label = _labelSupplier.get();
+
+			_labelSupplier = null;
+		}
+
 		return label;
 	}
 
 	public void setLabel(Map<String, String> label) {
 		this.label = label;
+
+		_labelSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setLabel(
 		UnsafeSupplier<Map<String, String>, Exception> labelUnsafeSupplier) {
 
-		try {
-			label = labelUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_labelSupplier = () -> {
+			try {
+				return labelUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> label;
 
+	private Supplier<Map<String, String>> _labelSupplier;
+
 	@DecimalMin("0")
 	@Schema(example = "30129")
 	public Long getOptionCategoryId() {
+		if (_optionCategoryIdSupplier != null) {
+			optionCategoryId = _optionCategoryIdSupplier.get();
+
+			_optionCategoryIdSupplier = null;
+		}
+
 		return optionCategoryId;
 	}
 
 	public void setOptionCategoryId(Long optionCategoryId) {
 		this.optionCategoryId = optionCategoryId;
+
+		_optionCategoryIdSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setOptionCategoryId(
 		UnsafeSupplier<Long, Exception> optionCategoryIdUnsafeSupplier) {
 
-		try {
-			optionCategoryId = optionCategoryIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_optionCategoryIdSupplier = () -> {
+			try {
+				return optionCategoryIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long optionCategoryId;
 
+	private Supplier<Long> _optionCategoryIdSupplier;
+
 	@DecimalMin("0")
 	@Schema(example = "1.2")
 	public Double getPriority() {
+		if (_prioritySupplier != null) {
+			priority = _prioritySupplier.get();
+
+			_prioritySupplier = null;
+		}
+
 		return priority;
 	}
 
 	public void setPriority(Double priority) {
 		this.priority = priority;
+
+		_prioritySupplier = null;
 	}
 
 	@JsonIgnore
 	public void setPriority(
 		UnsafeSupplier<Double, Exception> priorityUnsafeSupplier) {
 
-		try {
-			priority = priorityUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_prioritySupplier = () -> {
+			try {
+				return priorityUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double priority;
 
+	private Supplier<Double> _prioritySupplier;
+
 	@DecimalMin("0")
 	@Schema(example = "30129")
 	public Long getProductId() {
+		if (_productIdSupplier != null) {
+			productId = _productIdSupplier.get();
+
+			_productIdSupplier = null;
+		}
+
 		return productId;
 	}
 
 	public void setProductId(Long productId) {
 		this.productId = productId;
+
+		_productIdSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setProductId(
 		UnsafeSupplier<Long, Exception> productIdUnsafeSupplier) {
 
-		try {
-			productId = productIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_productIdSupplier = () -> {
+			try {
+				return productIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long productId;
 
+	private Supplier<Long> _productIdSupplier;
+
 	@DecimalMin("0")
 	@Schema(example = "30129")
 	public Long getSpecificationId() {
+		if (_specificationIdSupplier != null) {
+			specificationId = _specificationIdSupplier.get();
+
+			_specificationIdSupplier = null;
+		}
+
 		return specificationId;
 	}
 
 	public void setSpecificationId(Long specificationId) {
 		this.specificationId = specificationId;
+
+		_specificationIdSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setSpecificationId(
 		UnsafeSupplier<Long, Exception> specificationIdUnsafeSupplier) {
 
-		try {
-			specificationId = specificationIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_specificationIdSupplier = () -> {
+			try {
+				return specificationIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long specificationId;
 
+	private Supplier<Long> _specificationIdSupplier;
+
 	@Schema(example = "specification-key")
 	public String getSpecificationKey() {
+		if (_specificationKeySupplier != null) {
+			specificationKey = _specificationKeySupplier.get();
+
+			_specificationKeySupplier = null;
+		}
+
 		return specificationKey;
 	}
 
 	public void setSpecificationKey(String specificationKey) {
 		this.specificationKey = specificationKey;
+
+		_specificationKeySupplier = null;
 	}
 
 	@JsonIgnore
 	public void setSpecificationKey(
 		UnsafeSupplier<String, Exception> specificationKeyUnsafeSupplier) {
 
-		try {
-			specificationKey = specificationKeyUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_specificationKeySupplier = () -> {
+			try {
+				return specificationKeyUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
@@ -257,35 +340,49 @@ public class ProductSpecification implements Serializable {
 	@NotEmpty
 	protected String specificationKey;
 
+	private Supplier<String> _specificationKeySupplier;
+
 	@Schema(example = "{en_US=Croatia, hr_HR=Hrvatska, hu_HU=Horvatorszag}")
 	@Valid
 	public Map<String, String> getValue() {
+		if (_valueSupplier != null) {
+			value = _valueSupplier.get();
+
+			_valueSupplier = null;
+		}
+
 		return value;
 	}
 
 	public void setValue(Map<String, String> value) {
 		this.value = value;
+
+		_valueSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setValue(
 		UnsafeSupplier<Map<String, String>, Exception> valueUnsafeSupplier) {
 
-		try {
-			value = valueUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_valueSupplier = () -> {
+			try {
+				return valueUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotNull
 	protected Map<String, String> value;
+
+	private Supplier<Map<String, String>> _valueSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -315,6 +412,8 @@ public class ProductSpecification implements Serializable {
 
 		sb.append("{");
 
+		Long id = getId();
+
 		if (id != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -324,6 +423,8 @@ public class ProductSpecification implements Serializable {
 
 			sb.append(id);
 		}
+
+		Map<String, String> label = getLabel();
 
 		if (label != null) {
 			if (sb.length() > 1) {
@@ -335,6 +436,8 @@ public class ProductSpecification implements Serializable {
 			sb.append(_toJSON(label));
 		}
 
+		Long optionCategoryId = getOptionCategoryId();
+
 		if (optionCategoryId != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -344,6 +447,8 @@ public class ProductSpecification implements Serializable {
 
 			sb.append(optionCategoryId);
 		}
+
+		Double priority = getPriority();
 
 		if (priority != null) {
 			if (sb.length() > 1) {
@@ -355,6 +460,8 @@ public class ProductSpecification implements Serializable {
 			sb.append(priority);
 		}
 
+		Long productId = getProductId();
+
 		if (productId != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -365,6 +472,8 @@ public class ProductSpecification implements Serializable {
 			sb.append(productId);
 		}
 
+		Long specificationId = getSpecificationId();
+
 		if (specificationId != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -374,6 +483,8 @@ public class ProductSpecification implements Serializable {
 
 			sb.append(specificationId);
 		}
+
+		String specificationKey = getSpecificationKey();
 
 		if (specificationKey != null) {
 			if (sb.length() > 1) {
@@ -388,6 +499,8 @@ public class ProductSpecification implements Serializable {
 
 			sb.append("\"");
 		}
+
+		Map<String, String> value = getValue();
 
 		if (value != null) {
 			if (sb.length() > 1) {

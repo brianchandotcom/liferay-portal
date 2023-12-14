@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -52,6 +53,13 @@ public class Idp implements Serializable {
 
 	@Schema
 	public Boolean getAuthnRequestSignatureRequired() {
+		if (_authnRequestSignatureRequiredSupplier != null) {
+			authnRequestSignatureRequired =
+				_authnRequestSignatureRequiredSupplier.get();
+
+			_authnRequestSignatureRequiredSupplier = null;
+		}
+
 		return authnRequestSignatureRequired;
 	}
 
@@ -59,6 +67,8 @@ public class Idp implements Serializable {
 		Boolean authnRequestSignatureRequired) {
 
 		this.authnRequestSignatureRequired = authnRequestSignatureRequired;
+
+		_authnRequestSignatureRequiredSupplier = null;
 	}
 
 	@JsonIgnore
@@ -66,29 +76,40 @@ public class Idp implements Serializable {
 		UnsafeSupplier<Boolean, Exception>
 			authnRequestSignatureRequiredUnsafeSupplier) {
 
-		try {
-			authnRequestSignatureRequired =
-				authnRequestSignatureRequiredUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_authnRequestSignatureRequiredSupplier = () -> {
+			try {
+				return authnRequestSignatureRequiredUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean authnRequestSignatureRequired;
 
+	private Supplier<Boolean> _authnRequestSignatureRequiredSupplier;
+
 	@Schema
 	public Integer getDefaultAssertionLifetime() {
+		if (_defaultAssertionLifetimeSupplier != null) {
+			defaultAssertionLifetime = _defaultAssertionLifetimeSupplier.get();
+
+			_defaultAssertionLifetimeSupplier = null;
+		}
+
 		return defaultAssertionLifetime;
 	}
 
 	public void setDefaultAssertionLifetime(Integer defaultAssertionLifetime) {
 		this.defaultAssertionLifetime = defaultAssertionLifetime;
+
+		_defaultAssertionLifetimeSupplier = null;
 	}
 
 	@JsonIgnore
@@ -96,77 +117,104 @@ public class Idp implements Serializable {
 		UnsafeSupplier<Integer, Exception>
 			defaultAssertionLifetimeUnsafeSupplier) {
 
-		try {
-			defaultAssertionLifetime =
-				defaultAssertionLifetimeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_defaultAssertionLifetimeSupplier = () -> {
+			try {
+				return defaultAssertionLifetimeUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer defaultAssertionLifetime;
 
+	private Supplier<Integer> _defaultAssertionLifetimeSupplier;
+
 	@Schema
 	public Long getSessionMaximumAge() {
+		if (_sessionMaximumAgeSupplier != null) {
+			sessionMaximumAge = _sessionMaximumAgeSupplier.get();
+
+			_sessionMaximumAgeSupplier = null;
+		}
+
 		return sessionMaximumAge;
 	}
 
 	public void setSessionMaximumAge(Long sessionMaximumAge) {
 		this.sessionMaximumAge = sessionMaximumAge;
+
+		_sessionMaximumAgeSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setSessionMaximumAge(
 		UnsafeSupplier<Long, Exception> sessionMaximumAgeUnsafeSupplier) {
 
-		try {
-			sessionMaximumAge = sessionMaximumAgeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_sessionMaximumAgeSupplier = () -> {
+			try {
+				return sessionMaximumAgeUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long sessionMaximumAge;
 
+	private Supplier<Long> _sessionMaximumAgeSupplier;
+
 	@Schema
 	public Long getSessionTimeout() {
+		if (_sessionTimeoutSupplier != null) {
+			sessionTimeout = _sessionTimeoutSupplier.get();
+
+			_sessionTimeoutSupplier = null;
+		}
+
 		return sessionTimeout;
 	}
 
 	public void setSessionTimeout(Long sessionTimeout) {
 		this.sessionTimeout = sessionTimeout;
+
+		_sessionTimeoutSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setSessionTimeout(
 		UnsafeSupplier<Long, Exception> sessionTimeoutUnsafeSupplier) {
 
-		try {
-			sessionTimeout = sessionTimeoutUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_sessionTimeoutSupplier = () -> {
+			try {
+				return sessionTimeoutUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long sessionTimeout;
+
+	private Supplier<Long> _sessionTimeoutSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -195,6 +243,9 @@ public class Idp implements Serializable {
 
 		sb.append("{");
 
+		Boolean authnRequestSignatureRequired =
+			getAuthnRequestSignatureRequired();
+
 		if (authnRequestSignatureRequired != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -204,6 +255,8 @@ public class Idp implements Serializable {
 
 			sb.append(authnRequestSignatureRequired);
 		}
+
+		Integer defaultAssertionLifetime = getDefaultAssertionLifetime();
 
 		if (defaultAssertionLifetime != null) {
 			if (sb.length() > 1) {
@@ -215,6 +268,8 @@ public class Idp implements Serializable {
 			sb.append(defaultAssertionLifetime);
 		}
 
+		Long sessionMaximumAge = getSessionMaximumAge();
+
 		if (sessionMaximumAge != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -224,6 +279,8 @@ public class Idp implements Serializable {
 
 			sb.append(sessionMaximumAge);
 		}
+
+		Long sessionTimeout = getSessionTimeout();
 
 		if (sessionTimeout != null) {
 			if (sb.length() > 1) {

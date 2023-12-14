@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -52,228 +53,324 @@ public class Condition implements Serializable {
 	@Schema
 	@Valid
 	public Condition[] getAllConditions() {
+		if (_allConditionsSupplier != null) {
+			allConditions = _allConditionsSupplier.get();
+
+			_allConditionsSupplier = null;
+		}
+
 		return allConditions;
 	}
 
 	public void setAllConditions(Condition[] allConditions) {
 		this.allConditions = allConditions;
+
+		_allConditionsSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setAllConditions(
 		UnsafeSupplier<Condition[], Exception> allConditionsUnsafeSupplier) {
 
-		try {
-			allConditions = allConditionsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_allConditionsSupplier = () -> {
+			try {
+				return allConditionsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Condition[] allConditions;
 
+	private Supplier<Condition[]> _allConditionsSupplier;
+
 	@Schema
 	@Valid
 	public Condition[] getAnyConditions() {
+		if (_anyConditionsSupplier != null) {
+			anyConditions = _anyConditionsSupplier.get();
+
+			_anyConditionsSupplier = null;
+		}
+
 		return anyConditions;
 	}
 
 	public void setAnyConditions(Condition[] anyConditions) {
 		this.anyConditions = anyConditions;
+
+		_anyConditionsSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setAnyConditions(
 		UnsafeSupplier<Condition[], Exception> anyConditionsUnsafeSupplier) {
 
-		try {
-			anyConditions = anyConditionsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_anyConditionsSupplier = () -> {
+			try {
+				return anyConditionsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Condition[] anyConditions;
 
+	private Supplier<Condition[]> _anyConditionsSupplier;
+
 	@Schema
 	@Valid
 	public Contains getContains() {
+		if (_containsSupplier != null) {
+			contains = _containsSupplier.get();
+
+			_containsSupplier = null;
+		}
+
 		return contains;
 	}
 
 	public void setContains(Contains contains) {
 		this.contains = contains;
+
+		_containsSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setContains(
 		UnsafeSupplier<Contains, Exception> containsUnsafeSupplier) {
 
-		try {
-			contains = containsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_containsSupplier = () -> {
+			try {
+				return containsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Contains contains;
 
+	private Supplier<Contains> _containsSupplier;
+
 	@Schema
 	@Valid
 	public Equals getEquals() {
+		if (_equalsSupplier != null) {
+			equals = _equalsSupplier.get();
+
+			_equalsSupplier = null;
+		}
+
 		return equals;
 	}
 
 	public void setEquals(Equals equals) {
 		this.equals = equals;
+
+		_equalsSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setEquals(
 		UnsafeSupplier<Equals, Exception> equalsUnsafeSupplier) {
 
-		try {
-			equals = equalsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_equalsSupplier = () -> {
+			try {
+				return equalsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Equals equals;
 
+	private Supplier<Equals> _equalsSupplier;
+
 	@Schema
 	@Valid
 	public Exists getExists() {
+		if (_existsSupplier != null) {
+			exists = _existsSupplier.get();
+
+			_existsSupplier = null;
+		}
+
 		return exists;
 	}
 
 	public void setExists(Exists exists) {
 		this.exists = exists;
+
+		_existsSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setExists(
 		UnsafeSupplier<Exists, Exception> existsUnsafeSupplier) {
 
-		try {
-			exists = existsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_existsSupplier = () -> {
+			try {
+				return existsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Exists exists;
 
+	private Supplier<Exists> _existsSupplier;
+
 	@Schema
 	@Valid
 	public In getIn() {
+		if (_inSupplier != null) {
+			in = _inSupplier.get();
+
+			_inSupplier = null;
+		}
+
 		return in;
 	}
 
 	public void setIn(In in) {
 		this.in = in;
+
+		_inSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setIn(UnsafeSupplier<In, Exception> inUnsafeSupplier) {
-		try {
-			in = inUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_inSupplier = () -> {
+			try {
+				return inUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected In in;
 
+	private Supplier<In> _inSupplier;
+
 	@Schema
 	@Valid
 	public Condition getNot() {
+		if (_notSupplier != null) {
+			not = _notSupplier.get();
+
+			_notSupplier = null;
+		}
+
 		return not;
 	}
 
 	public void setNot(Condition not) {
 		this.not = not;
+
+		_notSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setNot(UnsafeSupplier<Condition, Exception> notUnsafeSupplier) {
-		try {
-			not = notUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_notSupplier = () -> {
+			try {
+				return notUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Condition not;
 
+	private Supplier<Condition> _notSupplier;
+
 	@Schema
 	@Valid
 	public Range getRange() {
+		if (_rangeSupplier != null) {
+			range = _rangeSupplier.get();
+
+			_rangeSupplier = null;
+		}
+
 		return range;
 	}
 
 	public void setRange(Range range) {
 		this.range = range;
+
+		_rangeSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setRange(UnsafeSupplier<Range, Exception> rangeUnsafeSupplier) {
-		try {
-			range = rangeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_rangeSupplier = () -> {
+			try {
+				return rangeUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Range range;
+
+	private Supplier<Range> _rangeSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -302,6 +399,8 @@ public class Condition implements Serializable {
 
 		sb.append("{");
 
+		Condition[] allConditions = getAllConditions();
+
 		if (allConditions != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -321,6 +420,8 @@ public class Condition implements Serializable {
 
 			sb.append("]");
 		}
+
+		Condition[] anyConditions = getAnyConditions();
 
 		if (anyConditions != null) {
 			if (sb.length() > 1) {
@@ -342,6 +443,8 @@ public class Condition implements Serializable {
 			sb.append("]");
 		}
 
+		Contains contains = getContains();
+
 		if (contains != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -351,6 +454,8 @@ public class Condition implements Serializable {
 
 			sb.append(String.valueOf(contains));
 		}
+
+		Equals equals = getEquals();
 
 		if (equals != null) {
 			if (sb.length() > 1) {
@@ -362,6 +467,8 @@ public class Condition implements Serializable {
 			sb.append(String.valueOf(equals));
 		}
 
+		Exists exists = getExists();
+
 		if (exists != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -371,6 +478,8 @@ public class Condition implements Serializable {
 
 			sb.append(String.valueOf(exists));
 		}
+
+		In in = getIn();
 
 		if (in != null) {
 			if (sb.length() > 1) {
@@ -382,6 +491,8 @@ public class Condition implements Serializable {
 			sb.append(String.valueOf(in));
 		}
 
+		Condition not = getNot();
+
 		if (not != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -391,6 +502,8 @@ public class Condition implements Serializable {
 
 			sb.append(String.valueOf(not));
 		}
+
+		Range range = getRange();
 
 		if (range != null) {
 			if (sb.length() > 1) {

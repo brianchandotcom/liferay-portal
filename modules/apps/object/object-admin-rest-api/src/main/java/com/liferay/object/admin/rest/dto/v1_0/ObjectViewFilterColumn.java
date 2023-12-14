@@ -26,6 +26,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -55,11 +56,19 @@ public class ObjectViewFilterColumn implements Serializable {
 	@Schema
 	@Valid
 	public FilterType getFilterType() {
+		if (_filterTypeSupplier != null) {
+			filterType = _filterTypeSupplier.get();
+
+			_filterTypeSupplier = null;
+		}
+
 		return filterType;
 	}
 
 	@JsonIgnore
 	public String getFilterTypeAsString() {
+		FilterType filterType = getFilterType();
+
 		if (filterType == null) {
 			return null;
 		}
@@ -69,134 +78,188 @@ public class ObjectViewFilterColumn implements Serializable {
 
 	public void setFilterType(FilterType filterType) {
 		this.filterType = filterType;
+
+		_filterTypeSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setFilterType(
 		UnsafeSupplier<FilterType, Exception> filterTypeUnsafeSupplier) {
 
-		try {
-			filterType = filterTypeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_filterTypeSupplier = () -> {
+			try {
+				return filterTypeUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FilterType filterType;
 
+	private Supplier<FilterType> _filterTypeSupplier;
+
 	@Schema
 	public Long getId() {
+		if (_idSupplier != null) {
+			id = _idSupplier.get();
+
+			_idSupplier = null;
+		}
+
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
+
+		_idSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_idSupplier = () -> {
+			try {
+				return idUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	private Supplier<Long> _idSupplier;
+
 	@Schema
 	public String getJson() {
+		if (_jsonSupplier != null) {
+			json = _jsonSupplier.get();
+
+			_jsonSupplier = null;
+		}
+
 		return json;
 	}
 
 	public void setJson(String json) {
 		this.json = json;
+
+		_jsonSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setJson(UnsafeSupplier<String, Exception> jsonUnsafeSupplier) {
-		try {
-			json = jsonUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_jsonSupplier = () -> {
+			try {
+				return jsonUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String json;
 
+	private Supplier<String> _jsonSupplier;
+
 	@Schema
 	public String getObjectFieldName() {
+		if (_objectFieldNameSupplier != null) {
+			objectFieldName = _objectFieldNameSupplier.get();
+
+			_objectFieldNameSupplier = null;
+		}
+
 		return objectFieldName;
 	}
 
 	public void setObjectFieldName(String objectFieldName) {
 		this.objectFieldName = objectFieldName;
+
+		_objectFieldNameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setObjectFieldName(
 		UnsafeSupplier<String, Exception> objectFieldNameUnsafeSupplier) {
 
-		try {
-			objectFieldName = objectFieldNameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_objectFieldNameSupplier = () -> {
+			try {
+				return objectFieldNameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String objectFieldName;
 
+	private Supplier<String> _objectFieldNameSupplier;
+
 	@Schema
 	public String getValueSummary() {
+		if (_valueSummarySupplier != null) {
+			valueSummary = _valueSummarySupplier.get();
+
+			_valueSummarySupplier = null;
+		}
+
 		return valueSummary;
 	}
 
 	public void setValueSummary(String valueSummary) {
 		this.valueSummary = valueSummary;
+
+		_valueSummarySupplier = null;
 	}
 
 	@JsonIgnore
 	public void setValueSummary(
 		UnsafeSupplier<String, Exception> valueSummaryUnsafeSupplier) {
 
-		try {
-			valueSummary = valueSummaryUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_valueSummarySupplier = () -> {
+			try {
+				return valueSummaryUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String valueSummary;
+
+	private Supplier<String> _valueSummarySupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -226,6 +289,8 @@ public class ObjectViewFilterColumn implements Serializable {
 
 		sb.append("{");
 
+		FilterType filterType = getFilterType();
+
 		if (filterType != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -240,6 +305,8 @@ public class ObjectViewFilterColumn implements Serializable {
 			sb.append("\"");
 		}
 
+		Long id = getId();
+
 		if (id != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -249,6 +316,8 @@ public class ObjectViewFilterColumn implements Serializable {
 
 			sb.append(id);
 		}
+
+		String json = getJson();
 
 		if (json != null) {
 			if (sb.length() > 1) {
@@ -264,6 +333,8 @@ public class ObjectViewFilterColumn implements Serializable {
 			sb.append("\"");
 		}
 
+		String objectFieldName = getObjectFieldName();
+
 		if (objectFieldName != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -277,6 +348,8 @@ public class ObjectViewFilterColumn implements Serializable {
 
 			sb.append("\"");
 		}
+
+		String valueSummary = getValueSummary();
 
 		if (valueSummary != null) {
 			if (sb.length() > 1) {

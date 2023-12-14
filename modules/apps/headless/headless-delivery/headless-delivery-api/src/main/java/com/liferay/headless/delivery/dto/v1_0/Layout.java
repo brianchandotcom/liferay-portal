@@ -26,6 +26,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -54,11 +55,19 @@ public class Layout implements Serializable {
 	@Schema(deprecated = true)
 	@Valid
 	public Align getAlign() {
+		if (_alignSupplier != null) {
+			align = _alignSupplier.get();
+
+			_alignSupplier = null;
+		}
+
 		return align;
 	}
 
 	@JsonIgnore
 	public String getAlignAsString() {
+		Align align = getAlign();
+
 		if (align == null) {
 			return null;
 		}
@@ -68,19 +77,23 @@ public class Layout implements Serializable {
 
 	public void setAlign(Align align) {
 		this.align = align;
+
+		_alignSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setAlign(UnsafeSupplier<Align, Exception> alignUnsafeSupplier) {
-		try {
-			align = alignUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_alignSupplier = () -> {
+			try {
+				return alignUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@Deprecated
@@ -88,28 +101,40 @@ public class Layout implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Align align;
 
+	private Supplier<Align> _alignSupplier;
+
 	@Schema(deprecated = true)
 	public String getBorderColor() {
+		if (_borderColorSupplier != null) {
+			borderColor = _borderColorSupplier.get();
+
+			_borderColorSupplier = null;
+		}
+
 		return borderColor;
 	}
 
 	public void setBorderColor(String borderColor) {
 		this.borderColor = borderColor;
+
+		_borderColorSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setBorderColor(
 		UnsafeSupplier<String, Exception> borderColorUnsafeSupplier) {
 
-		try {
-			borderColor = borderColorUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_borderColorSupplier = () -> {
+			try {
+				return borderColorUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@Deprecated
@@ -117,14 +142,24 @@ public class Layout implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String borderColor;
 
+	private Supplier<String> _borderColorSupplier;
+
 	@Schema(deprecated = true)
 	@Valid
 	public BorderRadius getBorderRadius() {
+		if (_borderRadiusSupplier != null) {
+			borderRadius = _borderRadiusSupplier.get();
+
+			_borderRadiusSupplier = null;
+		}
+
 		return borderRadius;
 	}
 
 	@JsonIgnore
 	public String getBorderRadiusAsString() {
+		BorderRadius borderRadius = getBorderRadius();
+
 		if (borderRadius == null) {
 			return null;
 		}
@@ -134,21 +169,25 @@ public class Layout implements Serializable {
 
 	public void setBorderRadius(BorderRadius borderRadius) {
 		this.borderRadius = borderRadius;
+
+		_borderRadiusSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setBorderRadius(
 		UnsafeSupplier<BorderRadius, Exception> borderRadiusUnsafeSupplier) {
 
-		try {
-			borderRadius = borderRadiusUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_borderRadiusSupplier = () -> {
+			try {
+				return borderRadiusUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@Deprecated
@@ -156,28 +195,40 @@ public class Layout implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BorderRadius borderRadius;
 
+	private Supplier<BorderRadius> _borderRadiusSupplier;
+
 	@Schema(deprecated = true)
 	public Integer getBorderWidth() {
+		if (_borderWidthSupplier != null) {
+			borderWidth = _borderWidthSupplier.get();
+
+			_borderWidthSupplier = null;
+		}
+
 		return borderWidth;
 	}
 
 	public void setBorderWidth(Integer borderWidth) {
 		this.borderWidth = borderWidth;
+
+		_borderWidthSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setBorderWidth(
 		UnsafeSupplier<Integer, Exception> borderWidthUnsafeSupplier) {
 
-		try {
-			borderWidth = borderWidthUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_borderWidthSupplier = () -> {
+			try {
+				return borderWidthUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@Deprecated
@@ -185,14 +236,24 @@ public class Layout implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer borderWidth;
 
+	private Supplier<Integer> _borderWidthSupplier;
+
 	@Schema(description = "The container's type (fixed or fluid).")
 	@Valid
 	public ContainerType getContainerType() {
+		if (_containerTypeSupplier != null) {
+			containerType = _containerTypeSupplier.get();
+
+			_containerTypeSupplier = null;
+		}
+
 		return containerType;
 	}
 
 	@JsonIgnore
 	public String getContainerTypeAsString() {
+		ContainerType containerType = getContainerType();
+
 		if (containerType == null) {
 			return null;
 		}
@@ -202,35 +263,49 @@ public class Layout implements Serializable {
 
 	public void setContainerType(ContainerType containerType) {
 		this.containerType = containerType;
+
+		_containerTypeSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setContainerType(
 		UnsafeSupplier<ContainerType, Exception> containerTypeUnsafeSupplier) {
 
-		try {
-			containerType = containerTypeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_containerTypeSupplier = () -> {
+			try {
+				return containerTypeUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The container's type (fixed or fluid).")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ContainerType containerType;
 
+	private Supplier<ContainerType> _containerTypeSupplier;
+
 	@Schema(deprecated = true)
 	@Valid
 	public ContentDisplay getContentDisplay() {
+		if (_contentDisplaySupplier != null) {
+			contentDisplay = _contentDisplaySupplier.get();
+
+			_contentDisplaySupplier = null;
+		}
+
 		return contentDisplay;
 	}
 
 	@JsonIgnore
 	public String getContentDisplayAsString() {
+		ContentDisplay contentDisplay = getContentDisplay();
+
 		if (contentDisplay == null) {
 			return null;
 		}
@@ -240,6 +315,8 @@ public class Layout implements Serializable {
 
 	public void setContentDisplay(ContentDisplay contentDisplay) {
 		this.contentDisplay = contentDisplay;
+
+		_contentDisplaySupplier = null;
 	}
 
 	@JsonIgnore
@@ -247,15 +324,17 @@ public class Layout implements Serializable {
 		UnsafeSupplier<ContentDisplay, Exception>
 			contentDisplayUnsafeSupplier) {
 
-		try {
-			contentDisplay = contentDisplayUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_contentDisplaySupplier = () -> {
+			try {
+				return contentDisplayUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@Deprecated
@@ -263,14 +342,24 @@ public class Layout implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ContentDisplay contentDisplay;
 
+	private Supplier<ContentDisplay> _contentDisplaySupplier;
+
 	@Schema
 	@Valid
 	public FlexWrap getFlexWrap() {
+		if (_flexWrapSupplier != null) {
+			flexWrap = _flexWrapSupplier.get();
+
+			_flexWrapSupplier = null;
+		}
+
 		return flexWrap;
 	}
 
 	@JsonIgnore
 	public String getFlexWrapAsString() {
+		FlexWrap flexWrap = getFlexWrap();
+
 		if (flexWrap == null) {
 			return null;
 		}
@@ -280,35 +369,49 @@ public class Layout implements Serializable {
 
 	public void setFlexWrap(FlexWrap flexWrap) {
 		this.flexWrap = flexWrap;
+
+		_flexWrapSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setFlexWrap(
 		UnsafeSupplier<FlexWrap, Exception> flexWrapUnsafeSupplier) {
 
-		try {
-			flexWrap = flexWrapUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_flexWrapSupplier = () -> {
+			try {
+				return flexWrapUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FlexWrap flexWrap;
 
+	private Supplier<FlexWrap> _flexWrapSupplier;
+
 	@Schema(deprecated = true)
 	@Valid
 	public Justify getJustify() {
+		if (_justifySupplier != null) {
+			justify = _justifySupplier.get();
+
+			_justifySupplier = null;
+		}
+
 		return justify;
 	}
 
 	@JsonIgnore
 	public String getJustifyAsString() {
+		Justify justify = getJustify();
+
 		if (justify == null) {
 			return null;
 		}
@@ -318,21 +421,25 @@ public class Layout implements Serializable {
 
 	public void setJustify(Justify justify) {
 		this.justify = justify;
+
+		_justifySupplier = null;
 	}
 
 	@JsonIgnore
 	public void setJustify(
 		UnsafeSupplier<Justify, Exception> justifyUnsafeSupplier) {
 
-		try {
-			justify = justifyUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_justifySupplier = () -> {
+			try {
+				return justifyUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@Deprecated
@@ -340,28 +447,40 @@ public class Layout implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Justify justify;
 
+	private Supplier<Justify> _justifySupplier;
+
 	@Schema(deprecated = true)
 	public Integer getMarginBottom() {
+		if (_marginBottomSupplier != null) {
+			marginBottom = _marginBottomSupplier.get();
+
+			_marginBottomSupplier = null;
+		}
+
 		return marginBottom;
 	}
 
 	public void setMarginBottom(Integer marginBottom) {
 		this.marginBottom = marginBottom;
+
+		_marginBottomSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setMarginBottom(
 		UnsafeSupplier<Integer, Exception> marginBottomUnsafeSupplier) {
 
-		try {
-			marginBottom = marginBottomUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_marginBottomSupplier = () -> {
+			try {
+				return marginBottomUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@Deprecated
@@ -369,28 +488,40 @@ public class Layout implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer marginBottom;
 
+	private Supplier<Integer> _marginBottomSupplier;
+
 	@Schema(deprecated = true)
 	public Integer getMarginLeft() {
+		if (_marginLeftSupplier != null) {
+			marginLeft = _marginLeftSupplier.get();
+
+			_marginLeftSupplier = null;
+		}
+
 		return marginLeft;
 	}
 
 	public void setMarginLeft(Integer marginLeft) {
 		this.marginLeft = marginLeft;
+
+		_marginLeftSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setMarginLeft(
 		UnsafeSupplier<Integer, Exception> marginLeftUnsafeSupplier) {
 
-		try {
-			marginLeft = marginLeftUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_marginLeftSupplier = () -> {
+			try {
+				return marginLeftUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@Deprecated
@@ -398,28 +529,40 @@ public class Layout implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer marginLeft;
 
+	private Supplier<Integer> _marginLeftSupplier;
+
 	@Schema(deprecated = true)
 	public Integer getMarginRight() {
+		if (_marginRightSupplier != null) {
+			marginRight = _marginRightSupplier.get();
+
+			_marginRightSupplier = null;
+		}
+
 		return marginRight;
 	}
 
 	public void setMarginRight(Integer marginRight) {
 		this.marginRight = marginRight;
+
+		_marginRightSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setMarginRight(
 		UnsafeSupplier<Integer, Exception> marginRightUnsafeSupplier) {
 
-		try {
-			marginRight = marginRightUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_marginRightSupplier = () -> {
+			try {
+				return marginRightUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@Deprecated
@@ -427,28 +570,40 @@ public class Layout implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer marginRight;
 
+	private Supplier<Integer> _marginRightSupplier;
+
 	@Schema(deprecated = true)
 	public Integer getMarginTop() {
+		if (_marginTopSupplier != null) {
+			marginTop = _marginTopSupplier.get();
+
+			_marginTopSupplier = null;
+		}
+
 		return marginTop;
 	}
 
 	public void setMarginTop(Integer marginTop) {
 		this.marginTop = marginTop;
+
+		_marginTopSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setMarginTop(
 		UnsafeSupplier<Integer, Exception> marginTopUnsafeSupplier) {
 
-		try {
-			marginTop = marginTopUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_marginTopSupplier = () -> {
+			try {
+				return marginTopUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@Deprecated
@@ -456,28 +611,40 @@ public class Layout implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer marginTop;
 
+	private Supplier<Integer> _marginTopSupplier;
+
 	@Schema(deprecated = true)
 	public Integer getOpacity() {
+		if (_opacitySupplier != null) {
+			opacity = _opacitySupplier.get();
+
+			_opacitySupplier = null;
+		}
+
 		return opacity;
 	}
 
 	public void setOpacity(Integer opacity) {
 		this.opacity = opacity;
+
+		_opacitySupplier = null;
 	}
 
 	@JsonIgnore
 	public void setOpacity(
 		UnsafeSupplier<Integer, Exception> opacityUnsafeSupplier) {
 
-		try {
-			opacity = opacityUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_opacitySupplier = () -> {
+			try {
+				return opacityUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@Deprecated
@@ -485,28 +652,40 @@ public class Layout implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer opacity;
 
+	private Supplier<Integer> _opacitySupplier;
+
 	@Schema(deprecated = true)
 	public Integer getPaddingBottom() {
+		if (_paddingBottomSupplier != null) {
+			paddingBottom = _paddingBottomSupplier.get();
+
+			_paddingBottomSupplier = null;
+		}
+
 		return paddingBottom;
 	}
 
 	public void setPaddingBottom(Integer paddingBottom) {
 		this.paddingBottom = paddingBottom;
+
+		_paddingBottomSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setPaddingBottom(
 		UnsafeSupplier<Integer, Exception> paddingBottomUnsafeSupplier) {
 
-		try {
-			paddingBottom = paddingBottomUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_paddingBottomSupplier = () -> {
+			try {
+				return paddingBottomUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@Deprecated
@@ -514,28 +693,40 @@ public class Layout implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer paddingBottom;
 
+	private Supplier<Integer> _paddingBottomSupplier;
+
 	@Schema(deprecated = true)
 	public Integer getPaddingHorizontal() {
+		if (_paddingHorizontalSupplier != null) {
+			paddingHorizontal = _paddingHorizontalSupplier.get();
+
+			_paddingHorizontalSupplier = null;
+		}
+
 		return paddingHorizontal;
 	}
 
 	public void setPaddingHorizontal(Integer paddingHorizontal) {
 		this.paddingHorizontal = paddingHorizontal;
+
+		_paddingHorizontalSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setPaddingHorizontal(
 		UnsafeSupplier<Integer, Exception> paddingHorizontalUnsafeSupplier) {
 
-		try {
-			paddingHorizontal = paddingHorizontalUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_paddingHorizontalSupplier = () -> {
+			try {
+				return paddingHorizontalUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@Deprecated
@@ -543,28 +734,40 @@ public class Layout implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer paddingHorizontal;
 
+	private Supplier<Integer> _paddingHorizontalSupplier;
+
 	@Schema(deprecated = true)
 	public Integer getPaddingLeft() {
+		if (_paddingLeftSupplier != null) {
+			paddingLeft = _paddingLeftSupplier.get();
+
+			_paddingLeftSupplier = null;
+		}
+
 		return paddingLeft;
 	}
 
 	public void setPaddingLeft(Integer paddingLeft) {
 		this.paddingLeft = paddingLeft;
+
+		_paddingLeftSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setPaddingLeft(
 		UnsafeSupplier<Integer, Exception> paddingLeftUnsafeSupplier) {
 
-		try {
-			paddingLeft = paddingLeftUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_paddingLeftSupplier = () -> {
+			try {
+				return paddingLeftUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@Deprecated
@@ -572,28 +775,40 @@ public class Layout implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer paddingLeft;
 
+	private Supplier<Integer> _paddingLeftSupplier;
+
 	@Schema(deprecated = true)
 	public Integer getPaddingRight() {
+		if (_paddingRightSupplier != null) {
+			paddingRight = _paddingRightSupplier.get();
+
+			_paddingRightSupplier = null;
+		}
+
 		return paddingRight;
 	}
 
 	public void setPaddingRight(Integer paddingRight) {
 		this.paddingRight = paddingRight;
+
+		_paddingRightSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setPaddingRight(
 		UnsafeSupplier<Integer, Exception> paddingRightUnsafeSupplier) {
 
-		try {
-			paddingRight = paddingRightUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_paddingRightSupplier = () -> {
+			try {
+				return paddingRightUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@Deprecated
@@ -601,28 +816,40 @@ public class Layout implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer paddingRight;
 
+	private Supplier<Integer> _paddingRightSupplier;
+
 	@Schema(deprecated = true)
 	public Integer getPaddingTop() {
+		if (_paddingTopSupplier != null) {
+			paddingTop = _paddingTopSupplier.get();
+
+			_paddingTopSupplier = null;
+		}
+
 		return paddingTop;
 	}
 
 	public void setPaddingTop(Integer paddingTop) {
 		this.paddingTop = paddingTop;
+
+		_paddingTopSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setPaddingTop(
 		UnsafeSupplier<Integer, Exception> paddingTopUnsafeSupplier) {
 
-		try {
-			paddingTop = paddingTopUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_paddingTopSupplier = () -> {
+			try {
+				return paddingTopUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@Deprecated
@@ -630,14 +857,24 @@ public class Layout implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer paddingTop;
 
+	private Supplier<Integer> _paddingTopSupplier;
+
 	@Schema(deprecated = true)
 	@Valid
 	public Shadow getShadow() {
+		if (_shadowSupplier != null) {
+			shadow = _shadowSupplier.get();
+
+			_shadowSupplier = null;
+		}
+
 		return shadow;
 	}
 
 	@JsonIgnore
 	public String getShadowAsString() {
+		Shadow shadow = getShadow();
+
 		if (shadow == null) {
 			return null;
 		}
@@ -647,21 +884,25 @@ public class Layout implements Serializable {
 
 	public void setShadow(Shadow shadow) {
 		this.shadow = shadow;
+
+		_shadowSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setShadow(
 		UnsafeSupplier<Shadow, Exception> shadowUnsafeSupplier) {
 
-		try {
-			shadow = shadowUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_shadowSupplier = () -> {
+			try {
+				return shadowUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@Deprecated
@@ -669,14 +910,24 @@ public class Layout implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Shadow shadow;
 
+	private Supplier<Shadow> _shadowSupplier;
+
 	@Schema(description = "The width's type (fixed or fluid).")
 	@Valid
 	public WidthType getWidthType() {
+		if (_widthTypeSupplier != null) {
+			widthType = _widthTypeSupplier.get();
+
+			_widthTypeSupplier = null;
+		}
+
 		return widthType;
 	}
 
 	@JsonIgnore
 	public String getWidthTypeAsString() {
+		WidthType widthType = getWidthType();
+
 		if (widthType == null) {
 			return null;
 		}
@@ -686,26 +937,32 @@ public class Layout implements Serializable {
 
 	public void setWidthType(WidthType widthType) {
 		this.widthType = widthType;
+
+		_widthTypeSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setWidthType(
 		UnsafeSupplier<WidthType, Exception> widthTypeUnsafeSupplier) {
 
-		try {
-			widthType = widthTypeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_widthTypeSupplier = () -> {
+			try {
+				return widthTypeUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The width's type (fixed or fluid).")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected WidthType widthType;
+
+	private Supplier<WidthType> _widthTypeSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -734,6 +991,8 @@ public class Layout implements Serializable {
 
 		sb.append("{");
 
+		Align align = getAlign();
+
 		if (align != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -747,6 +1006,8 @@ public class Layout implements Serializable {
 
 			sb.append("\"");
 		}
+
+		String borderColor = getBorderColor();
 
 		if (borderColor != null) {
 			if (sb.length() > 1) {
@@ -762,6 +1023,8 @@ public class Layout implements Serializable {
 			sb.append("\"");
 		}
 
+		BorderRadius borderRadius = getBorderRadius();
+
 		if (borderRadius != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -776,6 +1039,8 @@ public class Layout implements Serializable {
 			sb.append("\"");
 		}
 
+		Integer borderWidth = getBorderWidth();
+
 		if (borderWidth != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -785,6 +1050,8 @@ public class Layout implements Serializable {
 
 			sb.append(borderWidth);
 		}
+
+		ContainerType containerType = getContainerType();
 
 		if (containerType != null) {
 			if (sb.length() > 1) {
@@ -800,6 +1067,8 @@ public class Layout implements Serializable {
 			sb.append("\"");
 		}
 
+		ContentDisplay contentDisplay = getContentDisplay();
+
 		if (contentDisplay != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -813,6 +1082,8 @@ public class Layout implements Serializable {
 
 			sb.append("\"");
 		}
+
+		FlexWrap flexWrap = getFlexWrap();
 
 		if (flexWrap != null) {
 			if (sb.length() > 1) {
@@ -828,6 +1099,8 @@ public class Layout implements Serializable {
 			sb.append("\"");
 		}
 
+		Justify justify = getJustify();
+
 		if (justify != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -842,6 +1115,8 @@ public class Layout implements Serializable {
 			sb.append("\"");
 		}
 
+		Integer marginBottom = getMarginBottom();
+
 		if (marginBottom != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -851,6 +1126,8 @@ public class Layout implements Serializable {
 
 			sb.append(marginBottom);
 		}
+
+		Integer marginLeft = getMarginLeft();
 
 		if (marginLeft != null) {
 			if (sb.length() > 1) {
@@ -862,6 +1139,8 @@ public class Layout implements Serializable {
 			sb.append(marginLeft);
 		}
 
+		Integer marginRight = getMarginRight();
+
 		if (marginRight != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -871,6 +1150,8 @@ public class Layout implements Serializable {
 
 			sb.append(marginRight);
 		}
+
+		Integer marginTop = getMarginTop();
 
 		if (marginTop != null) {
 			if (sb.length() > 1) {
@@ -882,6 +1163,8 @@ public class Layout implements Serializable {
 			sb.append(marginTop);
 		}
 
+		Integer opacity = getOpacity();
+
 		if (opacity != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -891,6 +1174,8 @@ public class Layout implements Serializable {
 
 			sb.append(opacity);
 		}
+
+		Integer paddingBottom = getPaddingBottom();
 
 		if (paddingBottom != null) {
 			if (sb.length() > 1) {
@@ -902,6 +1187,8 @@ public class Layout implements Serializable {
 			sb.append(paddingBottom);
 		}
 
+		Integer paddingHorizontal = getPaddingHorizontal();
+
 		if (paddingHorizontal != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -911,6 +1198,8 @@ public class Layout implements Serializable {
 
 			sb.append(paddingHorizontal);
 		}
+
+		Integer paddingLeft = getPaddingLeft();
 
 		if (paddingLeft != null) {
 			if (sb.length() > 1) {
@@ -922,6 +1211,8 @@ public class Layout implements Serializable {
 			sb.append(paddingLeft);
 		}
 
+		Integer paddingRight = getPaddingRight();
+
 		if (paddingRight != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -932,6 +1223,8 @@ public class Layout implements Serializable {
 			sb.append(paddingRight);
 		}
 
+		Integer paddingTop = getPaddingTop();
+
 		if (paddingTop != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -941,6 +1234,8 @@ public class Layout implements Serializable {
 
 			sb.append(paddingTop);
 		}
+
+		Shadow shadow = getShadow();
 
 		if (shadow != null) {
 			if (sb.length() > 1) {
@@ -955,6 +1250,8 @@ public class Layout implements Serializable {
 
 			sb.append("\"");
 		}
+
+		WidthType widthType = getWidthType();
 
 		if (widthType != null) {
 			if (sb.length() > 1) {

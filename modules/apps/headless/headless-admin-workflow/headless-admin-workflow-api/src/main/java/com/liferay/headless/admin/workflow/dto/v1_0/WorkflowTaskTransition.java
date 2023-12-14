@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -53,39 +54,60 @@ public class WorkflowTaskTransition implements Serializable {
 	@Schema
 	@Valid
 	public Transition[] getTransitions() {
+		if (_transitionsSupplier != null) {
+			transitions = _transitionsSupplier.get();
+
+			_transitionsSupplier = null;
+		}
+
 		return transitions;
 	}
 
 	public void setTransitions(Transition[] transitions) {
 		this.transitions = transitions;
+
+		_transitionsSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setTransitions(
 		UnsafeSupplier<Transition[], Exception> transitionsUnsafeSupplier) {
 
-		try {
-			transitions = transitionsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_transitionsSupplier = () -> {
+			try {
+				return transitionsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Transition[] transitions;
 
+	private Supplier<Transition[]> _transitionsSupplier;
+
 	@Schema
 	public String getWorkflowDefinitionVersion() {
+		if (_workflowDefinitionVersionSupplier != null) {
+			workflowDefinitionVersion =
+				_workflowDefinitionVersionSupplier.get();
+
+			_workflowDefinitionVersionSupplier = null;
+		}
+
 		return workflowDefinitionVersion;
 	}
 
 	public void setWorkflowDefinitionVersion(String workflowDefinitionVersion) {
 		this.workflowDefinitionVersion = workflowDefinitionVersion;
+
+		_workflowDefinitionVersionSupplier = null;
 	}
 
 	@JsonIgnore
@@ -93,77 +115,104 @@ public class WorkflowTaskTransition implements Serializable {
 		UnsafeSupplier<String, Exception>
 			workflowDefinitionVersionUnsafeSupplier) {
 
-		try {
-			workflowDefinitionVersion =
-				workflowDefinitionVersionUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_workflowDefinitionVersionSupplier = () -> {
+			try {
+				return workflowDefinitionVersionUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String workflowDefinitionVersion;
 
+	private Supplier<String> _workflowDefinitionVersionSupplier;
+
 	@Schema
 	public String getWorkflowTaskLabel() {
+		if (_workflowTaskLabelSupplier != null) {
+			workflowTaskLabel = _workflowTaskLabelSupplier.get();
+
+			_workflowTaskLabelSupplier = null;
+		}
+
 		return workflowTaskLabel;
 	}
 
 	public void setWorkflowTaskLabel(String workflowTaskLabel) {
 		this.workflowTaskLabel = workflowTaskLabel;
+
+		_workflowTaskLabelSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setWorkflowTaskLabel(
 		UnsafeSupplier<String, Exception> workflowTaskLabelUnsafeSupplier) {
 
-		try {
-			workflowTaskLabel = workflowTaskLabelUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_workflowTaskLabelSupplier = () -> {
+			try {
+				return workflowTaskLabelUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String workflowTaskLabel;
 
+	private Supplier<String> _workflowTaskLabelSupplier;
+
 	@Schema
 	public String getWorkflowTaskName() {
+		if (_workflowTaskNameSupplier != null) {
+			workflowTaskName = _workflowTaskNameSupplier.get();
+
+			_workflowTaskNameSupplier = null;
+		}
+
 		return workflowTaskName;
 	}
 
 	public void setWorkflowTaskName(String workflowTaskName) {
 		this.workflowTaskName = workflowTaskName;
+
+		_workflowTaskNameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setWorkflowTaskName(
 		UnsafeSupplier<String, Exception> workflowTaskNameUnsafeSupplier) {
 
-		try {
-			workflowTaskName = workflowTaskNameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_workflowTaskNameSupplier = () -> {
+			try {
+				return workflowTaskNameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String workflowTaskName;
+
+	private Supplier<String> _workflowTaskNameSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -193,6 +242,8 @@ public class WorkflowTaskTransition implements Serializable {
 
 		sb.append("{");
 
+		Transition[] transitions = getTransitions();
+
 		if (transitions != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -213,6 +264,8 @@ public class WorkflowTaskTransition implements Serializable {
 			sb.append("]");
 		}
 
+		String workflowDefinitionVersion = getWorkflowDefinitionVersion();
+
 		if (workflowDefinitionVersion != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -227,6 +280,8 @@ public class WorkflowTaskTransition implements Serializable {
 			sb.append("\"");
 		}
 
+		String workflowTaskLabel = getWorkflowTaskLabel();
+
 		if (workflowTaskLabel != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -240,6 +295,8 @@ public class WorkflowTaskTransition implements Serializable {
 
 			sb.append("\"");
 		}
+
+		String workflowTaskName = getWorkflowTaskName();
 
 		if (workflowTaskName != null) {
 			if (sb.length() > 1) {

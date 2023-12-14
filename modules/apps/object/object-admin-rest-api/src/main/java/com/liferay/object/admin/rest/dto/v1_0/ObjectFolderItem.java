@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -51,11 +52,19 @@ public class ObjectFolderItem implements Serializable {
 
 	@Schema
 	public Boolean getLinkedObjectDefinition() {
+		if (_linkedObjectDefinitionSupplier != null) {
+			linkedObjectDefinition = _linkedObjectDefinitionSupplier.get();
+
+			_linkedObjectDefinitionSupplier = null;
+		}
+
 		return linkedObjectDefinition;
 	}
 
 	public void setLinkedObjectDefinition(Boolean linkedObjectDefinition) {
 		this.linkedObjectDefinition = linkedObjectDefinition;
+
+		_linkedObjectDefinitionSupplier = null;
 	}
 
 	@JsonIgnore
@@ -63,29 +72,41 @@ public class ObjectFolderItem implements Serializable {
 		UnsafeSupplier<Boolean, Exception>
 			linkedObjectDefinitionUnsafeSupplier) {
 
-		try {
-			linkedObjectDefinition = linkedObjectDefinitionUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_linkedObjectDefinitionSupplier = () -> {
+			try {
+				return linkedObjectDefinitionUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean linkedObjectDefinition;
 
+	private Supplier<Boolean> _linkedObjectDefinitionSupplier;
+
 	@Schema
 	@Valid
 	public ObjectDefinition getObjectDefinition() {
+		if (_objectDefinitionSupplier != null) {
+			objectDefinition = _objectDefinitionSupplier.get();
+
+			_objectDefinitionSupplier = null;
+		}
+
 		return objectDefinition;
 	}
 
 	public void setObjectDefinition(ObjectDefinition objectDefinition) {
 		this.objectDefinition = objectDefinition;
+
+		_objectDefinitionSupplier = null;
 	}
 
 	@JsonIgnore
@@ -93,23 +114,34 @@ public class ObjectFolderItem implements Serializable {
 		UnsafeSupplier<ObjectDefinition, Exception>
 			objectDefinitionUnsafeSupplier) {
 
-		try {
-			objectDefinition = objectDefinitionUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_objectDefinitionSupplier = () -> {
+			try {
+				return objectDefinitionUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ObjectDefinition objectDefinition;
 
+	private Supplier<ObjectDefinition> _objectDefinitionSupplier;
+
 	@Schema
 	public String getObjectDefinitionExternalReferenceCode() {
+		if (_objectDefinitionExternalReferenceCodeSupplier != null) {
+			objectDefinitionExternalReferenceCode =
+				_objectDefinitionExternalReferenceCodeSupplier.get();
+
+			_objectDefinitionExternalReferenceCodeSupplier = null;
+		}
+
 		return objectDefinitionExternalReferenceCode;
 	}
 
@@ -118,6 +150,8 @@ public class ObjectFolderItem implements Serializable {
 
 		this.objectDefinitionExternalReferenceCode =
 			objectDefinitionExternalReferenceCode;
+
+		_objectDefinitionExternalReferenceCodeSupplier = null;
 	}
 
 	@JsonIgnore
@@ -125,77 +159,105 @@ public class ObjectFolderItem implements Serializable {
 		UnsafeSupplier<String, Exception>
 			objectDefinitionExternalReferenceCodeUnsafeSupplier) {
 
-		try {
-			objectDefinitionExternalReferenceCode =
-				objectDefinitionExternalReferenceCodeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_objectDefinitionExternalReferenceCodeSupplier = () -> {
+			try {
+				return objectDefinitionExternalReferenceCodeUnsafeSupplier.
+					get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String objectDefinitionExternalReferenceCode;
 
+	private Supplier<String> _objectDefinitionExternalReferenceCodeSupplier;
+
 	@Schema
 	public Integer getPositionX() {
+		if (_positionXSupplier != null) {
+			positionX = _positionXSupplier.get();
+
+			_positionXSupplier = null;
+		}
+
 		return positionX;
 	}
 
 	public void setPositionX(Integer positionX) {
 		this.positionX = positionX;
+
+		_positionXSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setPositionX(
 		UnsafeSupplier<Integer, Exception> positionXUnsafeSupplier) {
 
-		try {
-			positionX = positionXUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_positionXSupplier = () -> {
+			try {
+				return positionXUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer positionX;
 
+	private Supplier<Integer> _positionXSupplier;
+
 	@Schema
 	public Integer getPositionY() {
+		if (_positionYSupplier != null) {
+			positionY = _positionYSupplier.get();
+
+			_positionYSupplier = null;
+		}
+
 		return positionY;
 	}
 
 	public void setPositionY(Integer positionY) {
 		this.positionY = positionY;
+
+		_positionYSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setPositionY(
 		UnsafeSupplier<Integer, Exception> positionYUnsafeSupplier) {
 
-		try {
-			positionY = positionYUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_positionYSupplier = () -> {
+			try {
+				return positionYUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer positionY;
+
+	private Supplier<Integer> _positionYSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -224,6 +286,8 @@ public class ObjectFolderItem implements Serializable {
 
 		sb.append("{");
 
+		Boolean linkedObjectDefinition = getLinkedObjectDefinition();
+
 		if (linkedObjectDefinition != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -234,6 +298,8 @@ public class ObjectFolderItem implements Serializable {
 			sb.append(linkedObjectDefinition);
 		}
 
+		ObjectDefinition objectDefinition = getObjectDefinition();
+
 		if (objectDefinition != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -243,6 +309,9 @@ public class ObjectFolderItem implements Serializable {
 
 			sb.append(String.valueOf(objectDefinition));
 		}
+
+		String objectDefinitionExternalReferenceCode =
+			getObjectDefinitionExternalReferenceCode();
 
 		if (objectDefinitionExternalReferenceCode != null) {
 			if (sb.length() > 1) {
@@ -258,6 +327,8 @@ public class ObjectFolderItem implements Serializable {
 			sb.append("\"");
 		}
 
+		Integer positionX = getPositionX();
+
 		if (positionX != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -267,6 +338,8 @@ public class ObjectFolderItem implements Serializable {
 
 			sb.append(positionX);
 		}
+
+		Integer positionY = getPositionY();
 
 		if (positionY != null) {
 			if (sb.length() > 1) {

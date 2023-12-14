@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -54,40 +55,60 @@ public class DefaultValue implements Serializable {
 
 	@Schema
 	public String getValue() {
+		if (_valueSupplier != null) {
+			value = _valueSupplier.get();
+
+			_valueSupplier = null;
+		}
+
 		return value;
 	}
 
 	public void setValue(String value) {
 		this.value = value;
+
+		_valueSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setValue(
 		UnsafeSupplier<String, Exception> valueUnsafeSupplier) {
 
-		try {
-			value = valueUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_valueSupplier = () -> {
+			try {
+				return valueUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String value;
 
+	private Supplier<String> _valueSupplier;
+
 	@Schema
 	@Valid
 	public Map<String, String> getValue_i18n() {
+		if (_value_i18nSupplier != null) {
+			value_i18n = _value_i18nSupplier.get();
+
+			_value_i18nSupplier = null;
+		}
+
 		return value_i18n;
 	}
 
 	public void setValue_i18n(Map<String, String> value_i18n) {
 		this.value_i18n = value_i18n;
+
+		_value_i18nSupplier = null;
 	}
 
 	@JsonIgnore
@@ -95,20 +116,24 @@ public class DefaultValue implements Serializable {
 		UnsafeSupplier<Map<String, String>, Exception>
 			value_i18nUnsafeSupplier) {
 
-		try {
-			value_i18n = value_i18nUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_value_i18nSupplier = () -> {
+			try {
+				return value_i18nUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> value_i18n;
+
+	private Supplier<Map<String, String>> _value_i18nSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -137,6 +162,8 @@ public class DefaultValue implements Serializable {
 
 		sb.append("{");
 
+		String value = getValue();
+
 		if (value != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -150,6 +177,8 @@ public class DefaultValue implements Serializable {
 
 			sb.append("\"");
 		}
+
+		Map<String, String> value_i18n = getValue_i18n();
 
 		if (value_i18n != null) {
 			if (sb.length() > 1) {

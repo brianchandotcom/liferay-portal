@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -52,88 +53,124 @@ public class Captcha implements Serializable {
 
 	@Schema
 	public String getAnswer() {
+		if (_answerSupplier != null) {
+			answer = _answerSupplier.get();
+
+			_answerSupplier = null;
+		}
+
 		return answer;
 	}
 
 	public void setAnswer(String answer) {
 		this.answer = answer;
+
+		_answerSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setAnswer(
 		UnsafeSupplier<String, Exception> answerUnsafeSupplier) {
 
-		try {
-			answer = answerUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_answerSupplier = () -> {
+			try {
+				return answerUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String answer;
 
+	private Supplier<String> _answerSupplier;
+
 	@Schema
 	public String getImage() {
+		if (_imageSupplier != null) {
+			image = _imageSupplier.get();
+
+			_imageSupplier = null;
+		}
+
 		return image;
 	}
 
 	public void setImage(String image) {
 		this.image = image;
+
+		_imageSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setImage(
 		UnsafeSupplier<String, Exception> imageUnsafeSupplier) {
 
-		try {
-			image = imageUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_imageSupplier = () -> {
+			try {
+				return imageUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String image;
 
+	private Supplier<String> _imageSupplier;
+
 	@Schema
 	public String getToken() {
+		if (_tokenSupplier != null) {
+			token = _tokenSupplier.get();
+
+			_tokenSupplier = null;
+		}
+
 		return token;
 	}
 
 	public void setToken(String token) {
 		this.token = token;
+
+		_tokenSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setToken(
 		UnsafeSupplier<String, Exception> tokenUnsafeSupplier) {
 
-		try {
-			token = tokenUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_tokenSupplier = () -> {
+			try {
+				return tokenUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotEmpty
 	protected String token;
+
+	private Supplier<String> _tokenSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -162,6 +199,8 @@ public class Captcha implements Serializable {
 
 		sb.append("{");
 
+		String answer = getAnswer();
+
 		if (answer != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -176,6 +215,8 @@ public class Captcha implements Serializable {
 			sb.append("\"");
 		}
 
+		String image = getImage();
+
 		if (image != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -189,6 +230,8 @@ public class Captcha implements Serializable {
 
 			sb.append("\"");
 		}
+
+		String token = getToken();
 
 		if (token != null) {
 			if (sb.length() > 1) {

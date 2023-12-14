@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -55,60 +56,84 @@ public class FragmentFieldImage implements Serializable {
 	@Schema(description = "The fragment field's image.")
 	@Valid
 	public FragmentImage getFragmentImage() {
+		if (_fragmentImageSupplier != null) {
+			fragmentImage = _fragmentImageSupplier.get();
+
+			_fragmentImageSupplier = null;
+		}
+
 		return fragmentImage;
 	}
 
 	public void setFragmentImage(FragmentImage fragmentImage) {
 		this.fragmentImage = fragmentImage;
+
+		_fragmentImageSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setFragmentImage(
 		UnsafeSupplier<FragmentImage, Exception> fragmentImageUnsafeSupplier) {
 
-		try {
-			fragmentImage = fragmentImageUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_fragmentImageSupplier = () -> {
+			try {
+				return fragmentImageUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The fragment field's image.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentImage fragmentImage;
 
+	private Supplier<FragmentImage> _fragmentImageSupplier;
+
 	@Schema(description = "A link to a fragment.")
 	@Valid
 	public FragmentLink getFragmentLink() {
+		if (_fragmentLinkSupplier != null) {
+			fragmentLink = _fragmentLinkSupplier.get();
+
+			_fragmentLinkSupplier = null;
+		}
+
 		return fragmentLink;
 	}
 
 	public void setFragmentLink(FragmentLink fragmentLink) {
 		this.fragmentLink = fragmentLink;
+
+		_fragmentLinkSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setFragmentLink(
 		UnsafeSupplier<FragmentLink, Exception> fragmentLinkUnsafeSupplier) {
 
-		try {
-			fragmentLink = fragmentLinkUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_fragmentLinkSupplier = () -> {
+			try {
+				return fragmentLinkUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "A link to a fragment.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentLink fragmentLink;
+
+	private Supplier<FragmentLink> _fragmentLinkSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -137,6 +162,8 @@ public class FragmentFieldImage implements Serializable {
 
 		sb.append("{");
 
+		FragmentImage fragmentImage = getFragmentImage();
+
 		if (fragmentImage != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -146,6 +173,8 @@ public class FragmentFieldImage implements Serializable {
 
 			sb.append(String.valueOf(fragmentImage));
 		}
+
+		FragmentLink fragmentLink = getFragmentLink();
 
 		if (fragmentLink != null) {
 			if (sb.length() > 1) {

@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -55,11 +56,19 @@ public class WarehouseOrderType implements Serializable {
 	@Schema
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
+		if (_actionsSupplier != null) {
+			actions = _actionsSupplier.get();
+
+			_actionsSupplier = null;
+		}
+
 		return actions;
 	}
 
 	public void setActions(Map<String, Map<String, String>> actions) {
 		this.actions = actions;
+
+		_actionsSupplier = null;
 	}
 
 	@JsonIgnore
@@ -67,52 +76,75 @@ public class WarehouseOrderType implements Serializable {
 		UnsafeSupplier<Map<String, Map<String, String>>, Exception>
 			actionsUnsafeSupplier) {
 
-		try {
-			actions = actionsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_actionsSupplier = () -> {
+			try {
+				return actionsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
+	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
+
 	@Schema
 	@Valid
 	public OrderType getOrderType() {
+		if (_orderTypeSupplier != null) {
+			orderType = _orderTypeSupplier.get();
+
+			_orderTypeSupplier = null;
+		}
+
 		return orderType;
 	}
 
 	public void setOrderType(OrderType orderType) {
 		this.orderType = orderType;
+
+		_orderTypeSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setOrderType(
 		UnsafeSupplier<OrderType, Exception> orderTypeUnsafeSupplier) {
 
-		try {
-			orderType = orderTypeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_orderTypeSupplier = () -> {
+			try {
+				return orderTypeUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected OrderType orderType;
 
+	private Supplier<OrderType> _orderTypeSupplier;
+
 	@Schema(example = "DAB-34098-789-N")
 	public String getOrderTypeExternalReferenceCode() {
+		if (_orderTypeExternalReferenceCodeSupplier != null) {
+			orderTypeExternalReferenceCode =
+				_orderTypeExternalReferenceCodeSupplier.get();
+
+			_orderTypeExternalReferenceCodeSupplier = null;
+		}
+
 		return orderTypeExternalReferenceCode;
 	}
 
@@ -120,6 +152,8 @@ public class WarehouseOrderType implements Serializable {
 		String orderTypeExternalReferenceCode) {
 
 		this.orderTypeExternalReferenceCode = orderTypeExternalReferenceCode;
+
+		_orderTypeExternalReferenceCodeSupplier = null;
 	}
 
 	@JsonIgnore
@@ -127,45 +161,58 @@ public class WarehouseOrderType implements Serializable {
 		UnsafeSupplier<String, Exception>
 			orderTypeExternalReferenceCodeUnsafeSupplier) {
 
-		try {
-			orderTypeExternalReferenceCode =
-				orderTypeExternalReferenceCodeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_orderTypeExternalReferenceCodeSupplier = () -> {
+			try {
+				return orderTypeExternalReferenceCodeUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String orderTypeExternalReferenceCode;
 
+	private Supplier<String> _orderTypeExternalReferenceCodeSupplier;
+
 	@DecimalMin("0")
 	@Schema(example = "30324")
 	public Long getOrderTypeId() {
+		if (_orderTypeIdSupplier != null) {
+			orderTypeId = _orderTypeIdSupplier.get();
+
+			_orderTypeIdSupplier = null;
+		}
+
 		return orderTypeId;
 	}
 
 	public void setOrderTypeId(Long orderTypeId) {
 		this.orderTypeId = orderTypeId;
+
+		_orderTypeIdSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setOrderTypeId(
 		UnsafeSupplier<Long, Exception> orderTypeIdUnsafeSupplier) {
 
-		try {
-			orderTypeId = orderTypeIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_orderTypeIdSupplier = () -> {
+			try {
+				return orderTypeIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
@@ -173,37 +220,58 @@ public class WarehouseOrderType implements Serializable {
 	@NotNull
 	protected Long orderTypeId;
 
+	private Supplier<Long> _orderTypeIdSupplier;
+
 	@DecimalMin("0")
 	@Schema(example = "1")
 	public Integer getPriority() {
+		if (_prioritySupplier != null) {
+			priority = _prioritySupplier.get();
+
+			_prioritySupplier = null;
+		}
+
 		return priority;
 	}
 
 	public void setPriority(Integer priority) {
 		this.priority = priority;
+
+		_prioritySupplier = null;
 	}
 
 	@JsonIgnore
 	public void setPriority(
 		UnsafeSupplier<Integer, Exception> priorityUnsafeSupplier) {
 
-		try {
-			priority = priorityUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_prioritySupplier = () -> {
+			try {
+				return priorityUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer priority;
 
+	private Supplier<Integer> _prioritySupplier;
+
 	@Schema(example = "PAB-34098-789-N")
 	public String getWarehouseExternalReferenceCode() {
+		if (_warehouseExternalReferenceCodeSupplier != null) {
+			warehouseExternalReferenceCode =
+				_warehouseExternalReferenceCodeSupplier.get();
+
+			_warehouseExternalReferenceCodeSupplier = null;
+		}
+
 		return warehouseExternalReferenceCode;
 	}
 
@@ -211,6 +279,8 @@ public class WarehouseOrderType implements Serializable {
 		String warehouseExternalReferenceCode) {
 
 		this.warehouseExternalReferenceCode = warehouseExternalReferenceCode;
+
+		_warehouseExternalReferenceCodeSupplier = null;
 	}
 
 	@JsonIgnore
@@ -218,45 +288,58 @@ public class WarehouseOrderType implements Serializable {
 		UnsafeSupplier<String, Exception>
 			warehouseExternalReferenceCodeUnsafeSupplier) {
 
-		try {
-			warehouseExternalReferenceCode =
-				warehouseExternalReferenceCodeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_warehouseExternalReferenceCodeSupplier = () -> {
+			try {
+				return warehouseExternalReferenceCodeUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String warehouseExternalReferenceCode;
 
+	private Supplier<String> _warehouseExternalReferenceCodeSupplier;
+
 	@DecimalMin("0")
 	@Schema(example = "30130")
 	public Long getWarehouseId() {
+		if (_warehouseIdSupplier != null) {
+			warehouseId = _warehouseIdSupplier.get();
+
+			_warehouseIdSupplier = null;
+		}
+
 		return warehouseId;
 	}
 
 	public void setWarehouseId(Long warehouseId) {
 		this.warehouseId = warehouseId;
+
+		_warehouseIdSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setWarehouseId(
 		UnsafeSupplier<Long, Exception> warehouseIdUnsafeSupplier) {
 
-		try {
-			warehouseId = warehouseIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_warehouseIdSupplier = () -> {
+			try {
+				return warehouseIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
@@ -264,34 +347,48 @@ public class WarehouseOrderType implements Serializable {
 	@NotNull
 	protected Long warehouseId;
 
+	private Supplier<Long> _warehouseIdSupplier;
+
 	@DecimalMin("0")
 	@Schema(example = "30643")
 	public Long getWarehouseOrderTypeId() {
+		if (_warehouseOrderTypeIdSupplier != null) {
+			warehouseOrderTypeId = _warehouseOrderTypeIdSupplier.get();
+
+			_warehouseOrderTypeIdSupplier = null;
+		}
+
 		return warehouseOrderTypeId;
 	}
 
 	public void setWarehouseOrderTypeId(Long warehouseOrderTypeId) {
 		this.warehouseOrderTypeId = warehouseOrderTypeId;
+
+		_warehouseOrderTypeIdSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setWarehouseOrderTypeId(
 		UnsafeSupplier<Long, Exception> warehouseOrderTypeIdUnsafeSupplier) {
 
-		try {
-			warehouseOrderTypeId = warehouseOrderTypeIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_warehouseOrderTypeIdSupplier = () -> {
+			try {
+				return warehouseOrderTypeIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long warehouseOrderTypeId;
+
+	private Supplier<Long> _warehouseOrderTypeIdSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -320,6 +417,8 @@ public class WarehouseOrderType implements Serializable {
 
 		sb.append("{");
 
+		Map<String, Map<String, String>> actions = getActions();
+
 		if (actions != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -330,6 +429,8 @@ public class WarehouseOrderType implements Serializable {
 			sb.append(_toJSON(actions));
 		}
 
+		OrderType orderType = getOrderType();
+
 		if (orderType != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -339,6 +440,9 @@ public class WarehouseOrderType implements Serializable {
 
 			sb.append(String.valueOf(orderType));
 		}
+
+		String orderTypeExternalReferenceCode =
+			getOrderTypeExternalReferenceCode();
 
 		if (orderTypeExternalReferenceCode != null) {
 			if (sb.length() > 1) {
@@ -354,6 +458,8 @@ public class WarehouseOrderType implements Serializable {
 			sb.append("\"");
 		}
 
+		Long orderTypeId = getOrderTypeId();
+
 		if (orderTypeId != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -364,6 +470,8 @@ public class WarehouseOrderType implements Serializable {
 			sb.append(orderTypeId);
 		}
 
+		Integer priority = getPriority();
+
 		if (priority != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -373,6 +481,9 @@ public class WarehouseOrderType implements Serializable {
 
 			sb.append(priority);
 		}
+
+		String warehouseExternalReferenceCode =
+			getWarehouseExternalReferenceCode();
 
 		if (warehouseExternalReferenceCode != null) {
 			if (sb.length() > 1) {
@@ -388,6 +499,8 @@ public class WarehouseOrderType implements Serializable {
 			sb.append("\"");
 		}
 
+		Long warehouseId = getWarehouseId();
+
 		if (warehouseId != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -397,6 +510,8 @@ public class WarehouseOrderType implements Serializable {
 
 			sb.append(warehouseId);
 		}
+
+		Long warehouseOrderTypeId = getWarehouseOrderTypeId();
 
 		if (warehouseOrderTypeId != null) {
 			if (sb.length() > 1) {

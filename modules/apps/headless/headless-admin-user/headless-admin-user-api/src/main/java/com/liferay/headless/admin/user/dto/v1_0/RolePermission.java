@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -49,195 +50,279 @@ public class RolePermission implements Serializable {
 
 	@Schema
 	public String[] getActionIds() {
+		if (_actionIdsSupplier != null) {
+			actionIds = _actionIdsSupplier.get();
+
+			_actionIdsSupplier = null;
+		}
+
 		return actionIds;
 	}
 
 	public void setActionIds(String[] actionIds) {
 		this.actionIds = actionIds;
+
+		_actionIdsSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setActionIds(
 		UnsafeSupplier<String[], Exception> actionIdsUnsafeSupplier) {
 
-		try {
-			actionIds = actionIdsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_actionIdsSupplier = () -> {
+			try {
+				return actionIdsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] actionIds;
 
+	private Supplier<String[]> _actionIdsSupplier;
+
 	@Schema
 	public Long getId() {
+		if (_idSupplier != null) {
+			id = _idSupplier.get();
+
+			_idSupplier = null;
+		}
+
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
+
+		_idSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_idSupplier = () -> {
+			try {
+				return idUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	private Supplier<Long> _idSupplier;
+
 	@Schema
 	public String getLabel() {
+		if (_labelSupplier != null) {
+			label = _labelSupplier.get();
+
+			_labelSupplier = null;
+		}
+
 		return label;
 	}
 
 	public void setLabel(String label) {
 		this.label = label;
+
+		_labelSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setLabel(
 		UnsafeSupplier<String, Exception> labelUnsafeSupplier) {
 
-		try {
-			label = labelUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_labelSupplier = () -> {
+			try {
+				return labelUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String label;
 
+	private Supplier<String> _labelSupplier;
+
 	@Schema
 	public String getPrimaryKey() {
+		if (_primaryKeySupplier != null) {
+			primaryKey = _primaryKeySupplier.get();
+
+			_primaryKeySupplier = null;
+		}
+
 		return primaryKey;
 	}
 
 	public void setPrimaryKey(String primaryKey) {
 		this.primaryKey = primaryKey;
+
+		_primaryKeySupplier = null;
 	}
 
 	@JsonIgnore
 	public void setPrimaryKey(
 		UnsafeSupplier<String, Exception> primaryKeyUnsafeSupplier) {
 
-		try {
-			primaryKey = primaryKeyUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_primaryKeySupplier = () -> {
+			try {
+				return primaryKeyUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String primaryKey;
 
+	private Supplier<String> _primaryKeySupplier;
+
 	@Schema
 	public String getResourceName() {
+		if (_resourceNameSupplier != null) {
+			resourceName = _resourceNameSupplier.get();
+
+			_resourceNameSupplier = null;
+		}
+
 		return resourceName;
 	}
 
 	public void setResourceName(String resourceName) {
 		this.resourceName = resourceName;
+
+		_resourceNameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setResourceName(
 		UnsafeSupplier<String, Exception> resourceNameUnsafeSupplier) {
 
-		try {
-			resourceName = resourceNameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_resourceNameSupplier = () -> {
+			try {
+				return resourceNameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String resourceName;
 
+	private Supplier<String> _resourceNameSupplier;
+
 	@Schema
 	public Long getRoleId() {
+		if (_roleIdSupplier != null) {
+			roleId = _roleIdSupplier.get();
+
+			_roleIdSupplier = null;
+		}
+
 		return roleId;
 	}
 
 	public void setRoleId(Long roleId) {
 		this.roleId = roleId;
+
+		_roleIdSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setRoleId(
 		UnsafeSupplier<Long, Exception> roleIdUnsafeSupplier) {
 
-		try {
-			roleId = roleIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_roleIdSupplier = () -> {
+			try {
+				return roleIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long roleId;
 
+	private Supplier<Long> _roleIdSupplier;
+
 	@Schema
 	public Long getScope() {
+		if (_scopeSupplier != null) {
+			scope = _scopeSupplier.get();
+
+			_scopeSupplier = null;
+		}
+
 		return scope;
 	}
 
 	public void setScope(Long scope) {
 		this.scope = scope;
+
+		_scopeSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setScope(UnsafeSupplier<Long, Exception> scopeUnsafeSupplier) {
-		try {
-			scope = scopeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_scopeSupplier = () -> {
+			try {
+				return scopeUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long scope;
+
+	private Supplier<Long> _scopeSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -266,6 +351,8 @@ public class RolePermission implements Serializable {
 
 		sb.append("{");
 
+		String[] actionIds = getActionIds();
+
 		if (actionIds != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -290,6 +377,8 @@ public class RolePermission implements Serializable {
 			sb.append("]");
 		}
 
+		Long id = getId();
+
 		if (id != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -299,6 +388,8 @@ public class RolePermission implements Serializable {
 
 			sb.append(id);
 		}
+
+		String label = getLabel();
 
 		if (label != null) {
 			if (sb.length() > 1) {
@@ -314,6 +405,8 @@ public class RolePermission implements Serializable {
 			sb.append("\"");
 		}
 
+		String primaryKey = getPrimaryKey();
+
 		if (primaryKey != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -327,6 +420,8 @@ public class RolePermission implements Serializable {
 
 			sb.append("\"");
 		}
+
+		String resourceName = getResourceName();
 
 		if (resourceName != null) {
 			if (sb.length() > 1) {
@@ -342,6 +437,8 @@ public class RolePermission implements Serializable {
 			sb.append("\"");
 		}
 
+		Long roleId = getRoleId();
+
 		if (roleId != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -351,6 +448,8 @@ public class RolePermission implements Serializable {
 
 			sb.append(roleId);
 		}
+
+		Long scope = getScope();
 
 		if (scope != null) {
 			if (sb.length() > 1) {

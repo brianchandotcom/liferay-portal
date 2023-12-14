@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -53,6 +54,12 @@ public class KeywordBulkSelection implements Serializable {
 	@Schema
 	@Valid
 	public DocumentBulkSelection getDocumentBulkSelection() {
+		if (_documentBulkSelectionSupplier != null) {
+			documentBulkSelection = _documentBulkSelectionSupplier.get();
+
+			_documentBulkSelectionSupplier = null;
+		}
+
 		return documentBulkSelection;
 	}
 
@@ -60,6 +67,8 @@ public class KeywordBulkSelection implements Serializable {
 		DocumentBulkSelection documentBulkSelection) {
 
 		this.documentBulkSelection = documentBulkSelection;
+
+		_documentBulkSelectionSupplier = null;
 	}
 
 	@JsonIgnore
@@ -67,76 +76,104 @@ public class KeywordBulkSelection implements Serializable {
 		UnsafeSupplier<DocumentBulkSelection, Exception>
 			documentBulkSelectionUnsafeSupplier) {
 
-		try {
-			documentBulkSelection = documentBulkSelectionUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_documentBulkSelectionSupplier = () -> {
+			try {
+				return documentBulkSelectionUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected DocumentBulkSelection documentBulkSelection;
 
+	private Supplier<DocumentBulkSelection> _documentBulkSelectionSupplier;
+
 	@Schema
 	public String[] getKeywordsToAdd() {
+		if (_keywordsToAddSupplier != null) {
+			keywordsToAdd = _keywordsToAddSupplier.get();
+
+			_keywordsToAddSupplier = null;
+		}
+
 		return keywordsToAdd;
 	}
 
 	public void setKeywordsToAdd(String[] keywordsToAdd) {
 		this.keywordsToAdd = keywordsToAdd;
+
+		_keywordsToAddSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setKeywordsToAdd(
 		UnsafeSupplier<String[], Exception> keywordsToAddUnsafeSupplier) {
 
-		try {
-			keywordsToAdd = keywordsToAddUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_keywordsToAddSupplier = () -> {
+			try {
+				return keywordsToAddUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] keywordsToAdd;
 
+	private Supplier<String[]> _keywordsToAddSupplier;
+
 	@Schema
 	public String[] getKeywordsToRemove() {
+		if (_keywordsToRemoveSupplier != null) {
+			keywordsToRemove = _keywordsToRemoveSupplier.get();
+
+			_keywordsToRemoveSupplier = null;
+		}
+
 		return keywordsToRemove;
 	}
 
 	public void setKeywordsToRemove(String[] keywordsToRemove) {
 		this.keywordsToRemove = keywordsToRemove;
+
+		_keywordsToRemoveSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setKeywordsToRemove(
 		UnsafeSupplier<String[], Exception> keywordsToRemoveUnsafeSupplier) {
 
-		try {
-			keywordsToRemove = keywordsToRemoveUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_keywordsToRemoveSupplier = () -> {
+			try {
+				return keywordsToRemoveUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] keywordsToRemove;
+
+	private Supplier<String[]> _keywordsToRemoveSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -166,6 +203,9 @@ public class KeywordBulkSelection implements Serializable {
 
 		sb.append("{");
 
+		DocumentBulkSelection documentBulkSelection =
+			getDocumentBulkSelection();
+
 		if (documentBulkSelection != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -175,6 +215,8 @@ public class KeywordBulkSelection implements Serializable {
 
 			sb.append(String.valueOf(documentBulkSelection));
 		}
+
+		String[] keywordsToAdd = getKeywordsToAdd();
 
 		if (keywordsToAdd != null) {
 			if (sb.length() > 1) {
@@ -199,6 +241,8 @@ public class KeywordBulkSelection implements Serializable {
 
 			sb.append("]");
 		}
+
+		String[] keywordsToRemove = getKeywordsToRemove();
 
 		if (keywordsToRemove != null) {
 			if (sb.length() > 1) {

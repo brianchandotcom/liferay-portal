@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -53,26 +54,36 @@ public class ClassFieldReference implements Serializable {
 
 	@Schema
 	public String getClassName() {
+		if (_classNameSupplier != null) {
+			className = _classNameSupplier.get();
+
+			_classNameSupplier = null;
+		}
+
 		return className;
 	}
 
 	public void setClassName(String className) {
 		this.className = className;
+
+		_classNameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setClassName(
 		UnsafeSupplier<String, Exception> classNameUnsafeSupplier) {
 
-		try {
-			className = classNameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_classNameSupplier = () -> {
+			try {
+				return classNameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
@@ -80,28 +91,40 @@ public class ClassFieldReference implements Serializable {
 	@NotEmpty
 	protected String className;
 
+	private Supplier<String> _classNameSupplier;
+
 	@Schema
 	public String getFieldName() {
+		if (_fieldNameSupplier != null) {
+			fieldName = _fieldNameSupplier.get();
+
+			_fieldNameSupplier = null;
+		}
+
 		return fieldName;
 	}
 
 	public void setFieldName(String fieldName) {
 		this.fieldName = fieldName;
+
+		_fieldNameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setFieldName(
 		UnsafeSupplier<String, Exception> fieldNameUnsafeSupplier) {
 
-		try {
-			fieldName = fieldNameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_fieldNameSupplier = () -> {
+			try {
+				return fieldNameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
@@ -109,34 +132,48 @@ public class ClassFieldReference implements Serializable {
 	@NotEmpty
 	protected String fieldName;
 
+	private Supplier<String> _fieldNameSupplier;
+
 	@Schema
 	public String getFieldValue() {
+		if (_fieldValueSupplier != null) {
+			fieldValue = _fieldValueSupplier.get();
+
+			_fieldValueSupplier = null;
+		}
+
 		return fieldValue;
 	}
 
 	public void setFieldValue(String fieldValue) {
 		this.fieldValue = fieldValue;
+
+		_fieldValueSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setFieldValue(
 		UnsafeSupplier<String, Exception> fieldValueUnsafeSupplier) {
 
-		try {
-			fieldValue = fieldValueUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_fieldValueSupplier = () -> {
+			try {
+				return fieldValueUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotEmpty
 	protected String fieldValue;
+
+	private Supplier<String> _fieldValueSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -165,6 +202,8 @@ public class ClassFieldReference implements Serializable {
 
 		sb.append("{");
 
+		String className = getClassName();
+
 		if (className != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -179,6 +218,8 @@ public class ClassFieldReference implements Serializable {
 			sb.append("\"");
 		}
 
+		String fieldName = getFieldName();
+
 		if (fieldName != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -192,6 +233,8 @@ public class ClassFieldReference implements Serializable {
 
 			sb.append("\"");
 		}
+
+		String fieldValue = getFieldValue();
 
 		if (fieldValue != null) {
 			if (sb.length() > 1) {

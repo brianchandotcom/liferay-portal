@@ -26,6 +26,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -56,89 +57,132 @@ public class SamlProvider implements Serializable {
 
 	@Schema
 	public Boolean getEnabled() {
+		if (_enabledSupplier != null) {
+			enabled = _enabledSupplier.get();
+
+			_enabledSupplier = null;
+		}
+
 		return enabled;
 	}
 
 	public void setEnabled(Boolean enabled) {
 		this.enabled = enabled;
+
+		_enabledSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setEnabled(
 		UnsafeSupplier<Boolean, Exception> enabledUnsafeSupplier) {
 
-		try {
-			enabled = enabledUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_enabledSupplier = () -> {
+			try {
+				return enabledUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean enabled;
 
+	private Supplier<Boolean> _enabledSupplier;
+
 	@Schema
 	public String getEntityId() {
+		if (_entityIdSupplier != null) {
+			entityId = _entityIdSupplier.get();
+
+			_entityIdSupplier = null;
+		}
+
 		return entityId;
 	}
 
 	public void setEntityId(String entityId) {
 		this.entityId = entityId;
+
+		_entityIdSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setEntityId(
 		UnsafeSupplier<String, Exception> entityIdUnsafeSupplier) {
 
-		try {
-			entityId = entityIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_entityIdSupplier = () -> {
+			try {
+				return entityIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String entityId;
 
+	private Supplier<String> _entityIdSupplier;
+
 	@Schema
 	@Valid
 	public Idp getIdp() {
+		if (_idpSupplier != null) {
+			idp = _idpSupplier.get();
+
+			_idpSupplier = null;
+		}
+
 		return idp;
 	}
 
 	public void setIdp(Idp idp) {
 		this.idp = idp;
+
+		_idpSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setIdp(UnsafeSupplier<Idp, Exception> idpUnsafeSupplier) {
-		try {
-			idp = idpUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_idpSupplier = () -> {
+			try {
+				return idpUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Idp idp;
 
+	private Supplier<Idp> _idpSupplier;
+
 	@Schema
 	public String getKeyStoreCredentialPassword() {
+		if (_keyStoreCredentialPasswordSupplier != null) {
+			keyStoreCredentialPassword =
+				_keyStoreCredentialPasswordSupplier.get();
+
+			_keyStoreCredentialPasswordSupplier = null;
+		}
+
 		return keyStoreCredentialPassword;
 	}
 
@@ -146,6 +190,8 @@ public class SamlProvider implements Serializable {
 		String keyStoreCredentialPassword) {
 
 		this.keyStoreCredentialPassword = keyStoreCredentialPassword;
+
+		_keyStoreCredentialPasswordSupplier = null;
 	}
 
 	@JsonIgnore
@@ -153,30 +199,41 @@ public class SamlProvider implements Serializable {
 		UnsafeSupplier<String, Exception>
 			keyStoreCredentialPasswordUnsafeSupplier) {
 
-		try {
-			keyStoreCredentialPassword =
-				keyStoreCredentialPasswordUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_keyStoreCredentialPasswordSupplier = () -> {
+			try {
+				return keyStoreCredentialPasswordUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected String keyStoreCredentialPassword;
 
+	private Supplier<String> _keyStoreCredentialPasswordSupplier;
+
 	@Schema
 	@Valid
 	public Role getRole() {
+		if (_roleSupplier != null) {
+			role = _roleSupplier.get();
+
+			_roleSupplier = null;
+		}
+
 		return role;
 	}
 
 	@JsonIgnore
 	public String getRoleAsString() {
+		Role role = getRole();
+
 		if (role == null) {
 			return null;
 		}
@@ -186,107 +243,149 @@ public class SamlProvider implements Serializable {
 
 	public void setRole(Role role) {
 		this.role = role;
+
+		_roleSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setRole(UnsafeSupplier<Role, Exception> roleUnsafeSupplier) {
-		try {
-			role = roleUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_roleSupplier = () -> {
+			try {
+				return roleUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Role role;
 
+	private Supplier<Role> _roleSupplier;
+
 	@Schema
 	public Boolean getSignMetadata() {
+		if (_signMetadataSupplier != null) {
+			signMetadata = _signMetadataSupplier.get();
+
+			_signMetadataSupplier = null;
+		}
+
 		return signMetadata;
 	}
 
 	public void setSignMetadata(Boolean signMetadata) {
 		this.signMetadata = signMetadata;
+
+		_signMetadataSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setSignMetadata(
 		UnsafeSupplier<Boolean, Exception> signMetadataUnsafeSupplier) {
 
-		try {
-			signMetadata = signMetadataUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_signMetadataSupplier = () -> {
+			try {
+				return signMetadataUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean signMetadata;
 
+	private Supplier<Boolean> _signMetadataSupplier;
+
 	@Schema
 	@Valid
 	public Sp getSp() {
+		if (_spSupplier != null) {
+			sp = _spSupplier.get();
+
+			_spSupplier = null;
+		}
+
 		return sp;
 	}
 
 	public void setSp(Sp sp) {
 		this.sp = sp;
+
+		_spSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setSp(UnsafeSupplier<Sp, Exception> spUnsafeSupplier) {
-		try {
-			sp = spUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_spSupplier = () -> {
+			try {
+				return spUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Sp sp;
 
+	private Supplier<Sp> _spSupplier;
+
 	@Schema
 	public Boolean getSslRequired() {
+		if (_sslRequiredSupplier != null) {
+			sslRequired = _sslRequiredSupplier.get();
+
+			_sslRequiredSupplier = null;
+		}
+
 		return sslRequired;
 	}
 
 	public void setSslRequired(Boolean sslRequired) {
 		this.sslRequired = sslRequired;
+
+		_sslRequiredSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setSslRequired(
 		UnsafeSupplier<Boolean, Exception> sslRequiredUnsafeSupplier) {
 
-		try {
-			sslRequired = sslRequiredUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_sslRequiredSupplier = () -> {
+			try {
+				return sslRequiredUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean sslRequired;
+
+	private Supplier<Boolean> _sslRequiredSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -315,6 +414,8 @@ public class SamlProvider implements Serializable {
 
 		sb.append("{");
 
+		Boolean enabled = getEnabled();
+
 		if (enabled != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -324,6 +425,8 @@ public class SamlProvider implements Serializable {
 
 			sb.append(enabled);
 		}
+
+		String entityId = getEntityId();
 
 		if (entityId != null) {
 			if (sb.length() > 1) {
@@ -339,6 +442,8 @@ public class SamlProvider implements Serializable {
 			sb.append("\"");
 		}
 
+		Idp idp = getIdp();
+
 		if (idp != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -348,6 +453,8 @@ public class SamlProvider implements Serializable {
 
 			sb.append(String.valueOf(idp));
 		}
+
+		String keyStoreCredentialPassword = getKeyStoreCredentialPassword();
 
 		if (keyStoreCredentialPassword != null) {
 			if (sb.length() > 1) {
@@ -363,6 +470,8 @@ public class SamlProvider implements Serializable {
 			sb.append("\"");
 		}
 
+		Role role = getRole();
+
 		if (role != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -377,6 +486,8 @@ public class SamlProvider implements Serializable {
 			sb.append("\"");
 		}
 
+		Boolean signMetadata = getSignMetadata();
+
 		if (signMetadata != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -387,6 +498,8 @@ public class SamlProvider implements Serializable {
 			sb.append(signMetadata);
 		}
 
+		Sp sp = getSp();
+
 		if (sp != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -396,6 +509,8 @@ public class SamlProvider implements Serializable {
 
 			sb.append(String.valueOf(sp));
 		}
+
+		Boolean sslRequired = getSslRequired();
 
 		if (sslRequired != null) {
 			if (sb.length() > 1) {

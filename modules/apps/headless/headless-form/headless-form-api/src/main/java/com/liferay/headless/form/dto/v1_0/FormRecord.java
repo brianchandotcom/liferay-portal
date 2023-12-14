@@ -28,6 +28,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -58,152 +59,220 @@ public class FormRecord implements Serializable {
 	@Schema
 	@Valid
 	public Creator getCreator() {
+		if (_creatorSupplier != null) {
+			creator = _creatorSupplier.get();
+
+			_creatorSupplier = null;
+		}
+
 		return creator;
 	}
 
 	public void setCreator(Creator creator) {
 		this.creator = creator;
+
+		_creatorSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setCreator(
 		UnsafeSupplier<Creator, Exception> creatorUnsafeSupplier) {
 
-		try {
-			creator = creatorUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_creatorSupplier = () -> {
+			try {
+				return creatorUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Creator creator;
 
+	private Supplier<Creator> _creatorSupplier;
+
 	@Schema
 	public Date getDateCreated() {
+		if (_dateCreatedSupplier != null) {
+			dateCreated = _dateCreatedSupplier.get();
+
+			_dateCreatedSupplier = null;
+		}
+
 		return dateCreated;
 	}
 
 	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
+
+		_dateCreatedSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDateCreated(
 		UnsafeSupplier<Date, Exception> dateCreatedUnsafeSupplier) {
 
-		try {
-			dateCreated = dateCreatedUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_dateCreatedSupplier = () -> {
+			try {
+				return dateCreatedUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
+	private Supplier<Date> _dateCreatedSupplier;
+
 	@Schema
 	public Date getDateModified() {
+		if (_dateModifiedSupplier != null) {
+			dateModified = _dateModifiedSupplier.get();
+
+			_dateModifiedSupplier = null;
+		}
+
 		return dateModified;
 	}
 
 	public void setDateModified(Date dateModified) {
 		this.dateModified = dateModified;
+
+		_dateModifiedSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDateModified(
 		UnsafeSupplier<Date, Exception> dateModifiedUnsafeSupplier) {
 
-		try {
-			dateModified = dateModifiedUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_dateModifiedSupplier = () -> {
+			try {
+				return dateModifiedUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
+	private Supplier<Date> _dateModifiedSupplier;
+
 	@Schema
 	public Date getDatePublished() {
+		if (_datePublishedSupplier != null) {
+			datePublished = _datePublishedSupplier.get();
+
+			_datePublishedSupplier = null;
+		}
+
 		return datePublished;
 	}
 
 	public void setDatePublished(Date datePublished) {
 		this.datePublished = datePublished;
+
+		_datePublishedSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDatePublished(
 		UnsafeSupplier<Date, Exception> datePublishedUnsafeSupplier) {
 
-		try {
-			datePublished = datePublishedUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_datePublishedSupplier = () -> {
+			try {
+				return datePublishedUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date datePublished;
 
+	private Supplier<Date> _datePublishedSupplier;
+
 	@Schema
 	public Boolean getDraft() {
+		if (_draftSupplier != null) {
+			draft = _draftSupplier.get();
+
+			_draftSupplier = null;
+		}
+
 		return draft;
 	}
 
 	public void setDraft(Boolean draft) {
 		this.draft = draft;
+
+		_draftSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDraft(
 		UnsafeSupplier<Boolean, Exception> draftUnsafeSupplier) {
 
-		try {
-			draft = draftUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_draftSupplier = () -> {
+			try {
+				return draftUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean draft;
 
+	private Supplier<Boolean> _draftSupplier;
+
 	@Schema
 	@Valid
 	public FormFieldValue[] getFormFieldValues() {
+		if (_formFieldValuesSupplier != null) {
+			formFieldValues = _formFieldValuesSupplier.get();
+
+			_formFieldValuesSupplier = null;
+		}
+
 		return formFieldValues;
 	}
 
 	public void setFormFieldValues(FormFieldValue[] formFieldValues) {
 		this.formFieldValues = formFieldValues;
+
+		_formFieldValuesSupplier = null;
 	}
 
 	@JsonIgnore
@@ -211,74 +280,102 @@ public class FormRecord implements Serializable {
 		UnsafeSupplier<FormFieldValue[], Exception>
 			formFieldValuesUnsafeSupplier) {
 
-		try {
-			formFieldValues = formFieldValuesUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_formFieldValuesSupplier = () -> {
+			try {
+				return formFieldValuesUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FormFieldValue[] formFieldValues;
 
+	private Supplier<FormFieldValue[]> _formFieldValuesSupplier;
+
 	@Schema
 	public Long getFormId() {
+		if (_formIdSupplier != null) {
+			formId = _formIdSupplier.get();
+
+			_formIdSupplier = null;
+		}
+
 		return formId;
 	}
 
 	public void setFormId(Long formId) {
 		this.formId = formId;
+
+		_formIdSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setFormId(
 		UnsafeSupplier<Long, Exception> formIdUnsafeSupplier) {
 
-		try {
-			formId = formIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_formIdSupplier = () -> {
+			try {
+				return formIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected Long formId;
 
+	private Supplier<Long> _formIdSupplier;
+
 	@Schema
 	public Long getId() {
+		if (_idSupplier != null) {
+			id = _idSupplier.get();
+
+			_idSupplier = null;
+		}
+
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
+
+		_idSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_idSupplier = () -> {
+			try {
+				return idUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
+
+	private Supplier<Long> _idSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -310,6 +407,8 @@ public class FormRecord implements Serializable {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+		Creator creator = getCreator();
+
 		if (creator != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -319,6 +418,8 @@ public class FormRecord implements Serializable {
 
 			sb.append(String.valueOf(creator));
 		}
+
+		Date dateCreated = getDateCreated();
 
 		if (dateCreated != null) {
 			if (sb.length() > 1) {
@@ -334,6 +435,8 @@ public class FormRecord implements Serializable {
 			sb.append("\"");
 		}
 
+		Date dateModified = getDateModified();
+
 		if (dateModified != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -347,6 +450,8 @@ public class FormRecord implements Serializable {
 
 			sb.append("\"");
 		}
+
+		Date datePublished = getDatePublished();
 
 		if (datePublished != null) {
 			if (sb.length() > 1) {
@@ -362,6 +467,8 @@ public class FormRecord implements Serializable {
 			sb.append("\"");
 		}
 
+		Boolean draft = getDraft();
+
 		if (draft != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -371,6 +478,8 @@ public class FormRecord implements Serializable {
 
 			sb.append(draft);
 		}
+
+		FormFieldValue[] formFieldValues = getFormFieldValues();
 
 		if (formFieldValues != null) {
 			if (sb.length() > 1) {
@@ -392,6 +501,8 @@ public class FormRecord implements Serializable {
 			sb.append("]");
 		}
 
+		Long formId = getFormId();
+
 		if (formId != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -401,6 +512,8 @@ public class FormRecord implements Serializable {
 
 			sb.append(formId);
 		}
+
+		Long id = getId();
 
 		if (id != null) {
 			if (sb.length() > 1) {

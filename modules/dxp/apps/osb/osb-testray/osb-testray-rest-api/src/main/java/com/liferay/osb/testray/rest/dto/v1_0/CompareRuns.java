@@ -25,6 +25,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -52,60 +53,84 @@ public class CompareRuns implements Serializable {
 
 	@Schema(description = "A list of status of runs.")
 	public String[] getDueStatuses() {
+		if (_dueStatusesSupplier != null) {
+			dueStatuses = _dueStatusesSupplier.get();
+
+			_dueStatusesSupplier = null;
+		}
+
 		return dueStatuses;
 	}
 
 	public void setDueStatuses(String[] dueStatuses) {
 		this.dueStatuses = dueStatuses;
+
+		_dueStatusesSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDueStatuses(
 		UnsafeSupplier<String[], Exception> dueStatusesUnsafeSupplier) {
 
-		try {
-			dueStatuses = dueStatusesUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_dueStatusesSupplier = () -> {
+			try {
+				return dueStatusesUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "A list of status of runs.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] dueStatuses;
 
+	private Supplier<String[]> _dueStatusesSupplier;
+
 	@Schema
 	@Valid
 	public Object getValues() {
+		if (_valuesSupplier != null) {
+			values = _valuesSupplier.get();
+
+			_valuesSupplier = null;
+		}
+
 		return values;
 	}
 
 	public void setValues(Object values) {
 		this.values = values;
+
+		_valuesSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setValues(
 		UnsafeSupplier<Object, Exception> valuesUnsafeSupplier) {
 
-		try {
-			values = valuesUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_valuesSupplier = () -> {
+			try {
+				return valuesUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object values;
+
+	private Supplier<Object> _valuesSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -134,6 +159,8 @@ public class CompareRuns implements Serializable {
 
 		sb.append("{");
 
+		String[] dueStatuses = getDueStatuses();
+
 		if (dueStatuses != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -157,6 +184,8 @@ public class CompareRuns implements Serializable {
 
 			sb.append("]");
 		}
+
+		Object values = getValues();
 
 		if (values != null) {
 			if (sb.length() > 1) {

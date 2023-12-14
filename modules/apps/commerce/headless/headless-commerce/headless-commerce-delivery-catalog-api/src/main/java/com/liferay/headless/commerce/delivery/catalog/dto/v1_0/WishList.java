@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -51,112 +52,160 @@ public class WishList implements Serializable {
 
 	@Schema
 	public Boolean getDefaultWishList() {
+		if (_defaultWishListSupplier != null) {
+			defaultWishList = _defaultWishListSupplier.get();
+
+			_defaultWishListSupplier = null;
+		}
+
 		return defaultWishList;
 	}
 
 	public void setDefaultWishList(Boolean defaultWishList) {
 		this.defaultWishList = defaultWishList;
+
+		_defaultWishListSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDefaultWishList(
 		UnsafeSupplier<Boolean, Exception> defaultWishListUnsafeSupplier) {
 
-		try {
-			defaultWishList = defaultWishListUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_defaultWishListSupplier = () -> {
+			try {
+				return defaultWishListUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean defaultWishList;
 
+	private Supplier<Boolean> _defaultWishListSupplier;
+
 	@Schema
 	public Long getId() {
+		if (_idSupplier != null) {
+			id = _idSupplier.get();
+
+			_idSupplier = null;
+		}
+
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
+
+		_idSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_idSupplier = () -> {
+			try {
+				return idUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	private Supplier<Long> _idSupplier;
+
 	@Schema
 	public String getName() {
+		if (_nameSupplier != null) {
+			name = _nameSupplier.get();
+
+			_nameSupplier = null;
+		}
+
 		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
+
+		_nameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
-		try {
-			name = nameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_nameSupplier = () -> {
+			try {
+				return nameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	private Supplier<String> _nameSupplier;
+
 	@Schema
 	@Valid
 	public WishListItem[] getWishListItems() {
+		if (_wishListItemsSupplier != null) {
+			wishListItems = _wishListItemsSupplier.get();
+
+			_wishListItemsSupplier = null;
+		}
+
 		return wishListItems;
 	}
 
 	public void setWishListItems(WishListItem[] wishListItems) {
 		this.wishListItems = wishListItems;
+
+		_wishListItemsSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setWishListItems(
 		UnsafeSupplier<WishListItem[], Exception> wishListItemsUnsafeSupplier) {
 
-		try {
-			wishListItems = wishListItemsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_wishListItemsSupplier = () -> {
+			try {
+				return wishListItemsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected WishListItem[] wishListItems;
+
+	private Supplier<WishListItem[]> _wishListItemsSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -185,6 +234,8 @@ public class WishList implements Serializable {
 
 		sb.append("{");
 
+		Boolean defaultWishList = getDefaultWishList();
+
 		if (defaultWishList != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -195,6 +246,8 @@ public class WishList implements Serializable {
 			sb.append(defaultWishList);
 		}
 
+		Long id = getId();
+
 		if (id != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -204,6 +257,8 @@ public class WishList implements Serializable {
 
 			sb.append(id);
 		}
+
+		String name = getName();
 
 		if (name != null) {
 			if (sb.length() > 1) {
@@ -218,6 +273,8 @@ public class WishList implements Serializable {
 
 			sb.append("\"");
 		}
+
+		WishListItem[] wishListItems = getWishListItems();
 
 		if (wishListItems != null) {
 			if (sb.length() > 1) {

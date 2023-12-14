@@ -25,6 +25,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -52,307 +53,439 @@ public class Clause implements Serializable {
 
 	@Schema
 	public Boolean getAdditive() {
+		if (_additiveSupplier != null) {
+			additive = _additiveSupplier.get();
+
+			_additiveSupplier = null;
+		}
+
 		return additive;
 	}
 
 	public void setAdditive(Boolean additive) {
 		this.additive = additive;
+
+		_additiveSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setAdditive(
 		UnsafeSupplier<Boolean, Exception> additiveUnsafeSupplier) {
 
-		try {
-			additive = additiveUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_additiveSupplier = () -> {
+			try {
+				return additiveUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean additive;
 
+	private Supplier<Boolean> _additiveSupplier;
+
 	@Schema
 	@Valid
 	public Float getBoost() {
+		if (_boostSupplier != null) {
+			boost = _boostSupplier.get();
+
+			_boostSupplier = null;
+		}
+
 		return boost;
 	}
 
 	public void setBoost(Float boost) {
 		this.boost = boost;
+
+		_boostSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setBoost(UnsafeSupplier<Float, Exception> boostUnsafeSupplier) {
-		try {
-			boost = boostUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_boostSupplier = () -> {
+			try {
+				return boostUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Float boost;
 
+	private Supplier<Float> _boostSupplier;
+
 	@Schema
 	public String getContext() {
+		if (_contextSupplier != null) {
+			context = _contextSupplier.get();
+
+			_contextSupplier = null;
+		}
+
 		return context;
 	}
 
 	public void setContext(String context) {
 		this.context = context;
+
+		_contextSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setContext(
 		UnsafeSupplier<String, Exception> contextUnsafeSupplier) {
 
-		try {
-			context = contextUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_contextSupplier = () -> {
+			try {
+				return contextUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String context;
 
+	private Supplier<String> _contextSupplier;
+
 	@Schema
 	public Boolean getDisabled() {
+		if (_disabledSupplier != null) {
+			disabled = _disabledSupplier.get();
+
+			_disabledSupplier = null;
+		}
+
 		return disabled;
 	}
 
 	public void setDisabled(Boolean disabled) {
 		this.disabled = disabled;
+
+		_disabledSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDisabled(
 		UnsafeSupplier<Boolean, Exception> disabledUnsafeSupplier) {
 
-		try {
-			disabled = disabledUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_disabledSupplier = () -> {
+			try {
+				return disabledUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean disabled;
 
+	private Supplier<Boolean> _disabledSupplier;
+
 	@Schema
 	public String getField() {
+		if (_fieldSupplier != null) {
+			field = _fieldSupplier.get();
+
+			_fieldSupplier = null;
+		}
+
 		return field;
 	}
 
 	public void setField(String field) {
 		this.field = field;
+
+		_fieldSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setField(
 		UnsafeSupplier<String, Exception> fieldUnsafeSupplier) {
 
-		try {
-			field = fieldUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_fieldSupplier = () -> {
+			try {
+				return fieldUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String field;
 
+	private Supplier<String> _fieldSupplier;
+
 	@Schema
 	public String getName() {
+		if (_nameSupplier != null) {
+			name = _nameSupplier.get();
+
+			_nameSupplier = null;
+		}
+
 		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
+
+		_nameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
-		try {
-			name = nameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_nameSupplier = () -> {
+			try {
+				return nameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	private Supplier<String> _nameSupplier;
+
 	@Schema
 	public String getOccur() {
+		if (_occurSupplier != null) {
+			occur = _occurSupplier.get();
+
+			_occurSupplier = null;
+		}
+
 		return occur;
 	}
 
 	public void setOccur(String occur) {
 		this.occur = occur;
+
+		_occurSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setOccur(
 		UnsafeSupplier<String, Exception> occurUnsafeSupplier) {
 
-		try {
-			occur = occurUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_occurSupplier = () -> {
+			try {
+				return occurUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String occur;
 
+	private Supplier<String> _occurSupplier;
+
 	@Schema
 	public String getParent() {
+		if (_parentSupplier != null) {
+			parent = _parentSupplier.get();
+
+			_parentSupplier = null;
+		}
+
 		return parent;
 	}
 
 	public void setParent(String parent) {
 		this.parent = parent;
+
+		_parentSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setParent(
 		UnsafeSupplier<String, Exception> parentUnsafeSupplier) {
 
-		try {
-			parent = parentUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_parentSupplier = () -> {
+			try {
+				return parentUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String parent;
 
+	private Supplier<String> _parentSupplier;
+
 	@Schema
 	@Valid
 	public Object getQuery() {
+		if (_querySupplier != null) {
+			query = _querySupplier.get();
+
+			_querySupplier = null;
+		}
+
 		return query;
 	}
 
 	public void setQuery(Object query) {
 		this.query = query;
+
+		_querySupplier = null;
 	}
 
 	@JsonIgnore
 	public void setQuery(
 		UnsafeSupplier<Object, Exception> queryUnsafeSupplier) {
 
-		try {
-			query = queryUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_querySupplier = () -> {
+			try {
+				return queryUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object query;
 
+	private Supplier<Object> _querySupplier;
+
 	@Schema
 	public String getType() {
+		if (_typeSupplier != null) {
+			type = _typeSupplier.get();
+
+			_typeSupplier = null;
+		}
+
 		return type;
 	}
 
 	public void setType(String type) {
 		this.type = type;
+
+		_typeSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setType(UnsafeSupplier<String, Exception> typeUnsafeSupplier) {
-		try {
-			type = typeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_typeSupplier = () -> {
+			try {
+				return typeUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String type;
 
+	private Supplier<String> _typeSupplier;
+
 	@Schema
 	public String getValue() {
+		if (_valueSupplier != null) {
+			value = _valueSupplier.get();
+
+			_valueSupplier = null;
+		}
+
 		return value;
 	}
 
 	public void setValue(String value) {
 		this.value = value;
+
+		_valueSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setValue(
 		UnsafeSupplier<String, Exception> valueUnsafeSupplier) {
 
-		try {
-			value = valueUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_valueSupplier = () -> {
+			try {
+				return valueUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String value;
+
+	private Supplier<String> _valueSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -381,6 +514,8 @@ public class Clause implements Serializable {
 
 		sb.append("{");
 
+		Boolean additive = getAdditive();
+
 		if (additive != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -391,6 +526,8 @@ public class Clause implements Serializable {
 			sb.append(additive);
 		}
 
+		Float boost = getBoost();
+
 		if (boost != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -400,6 +537,8 @@ public class Clause implements Serializable {
 
 			sb.append(boost);
 		}
+
+		String context = getContext();
 
 		if (context != null) {
 			if (sb.length() > 1) {
@@ -415,6 +554,8 @@ public class Clause implements Serializable {
 			sb.append("\"");
 		}
 
+		Boolean disabled = getDisabled();
+
 		if (disabled != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -424,6 +565,8 @@ public class Clause implements Serializable {
 
 			sb.append(disabled);
 		}
+
+		String field = getField();
 
 		if (field != null) {
 			if (sb.length() > 1) {
@@ -439,6 +582,8 @@ public class Clause implements Serializable {
 			sb.append("\"");
 		}
 
+		String name = getName();
+
 		if (name != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -452,6 +597,8 @@ public class Clause implements Serializable {
 
 			sb.append("\"");
 		}
+
+		String occur = getOccur();
 
 		if (occur != null) {
 			if (sb.length() > 1) {
@@ -467,6 +614,8 @@ public class Clause implements Serializable {
 			sb.append("\"");
 		}
 
+		String parent = getParent();
+
 		if (parent != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -480,6 +629,8 @@ public class Clause implements Serializable {
 
 			sb.append("\"");
 		}
+
+		Object query = getQuery();
 
 		if (query != null) {
 			if (sb.length() > 1) {
@@ -501,6 +652,8 @@ public class Clause implements Serializable {
 			}
 		}
 
+		String type = getType();
+
 		if (type != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -514,6 +667,8 @@ public class Clause implements Serializable {
 
 			sb.append("\"");
 		}
+
+		String value = getValue();
 
 		if (value != null) {
 			if (sb.length() > 1) {

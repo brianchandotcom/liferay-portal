@@ -28,6 +28,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -56,143 +57,203 @@ public class Channel implements Serializable {
 
 	@Schema
 	public String getChannelId() {
+		if (_channelIdSupplier != null) {
+			channelId = _channelIdSupplier.get();
+
+			_channelIdSupplier = null;
+		}
+
 		return channelId;
 	}
 
 	public void setChannelId(String channelId) {
 		this.channelId = channelId;
+
+		_channelIdSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setChannelId(
 		UnsafeSupplier<String, Exception> channelIdUnsafeSupplier) {
 
-		try {
-			channelId = channelIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_channelIdSupplier = () -> {
+			try {
+				return channelIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String channelId;
 
+	private Supplier<String> _channelIdSupplier;
+
 	@Schema
 	public Boolean getCommerceSyncEnabled() {
+		if (_commerceSyncEnabledSupplier != null) {
+			commerceSyncEnabled = _commerceSyncEnabledSupplier.get();
+
+			_commerceSyncEnabledSupplier = null;
+		}
+
 		return commerceSyncEnabled;
 	}
 
 	public void setCommerceSyncEnabled(Boolean commerceSyncEnabled) {
 		this.commerceSyncEnabled = commerceSyncEnabled;
+
+		_commerceSyncEnabledSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setCommerceSyncEnabled(
 		UnsafeSupplier<Boolean, Exception> commerceSyncEnabledUnsafeSupplier) {
 
-		try {
-			commerceSyncEnabled = commerceSyncEnabledUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_commerceSyncEnabledSupplier = () -> {
+			try {
+				return commerceSyncEnabledUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean commerceSyncEnabled;
 
+	private Supplier<Boolean> _commerceSyncEnabledSupplier;
+
 	@Schema
 	public Date getCreateDate() {
+		if (_createDateSupplier != null) {
+			createDate = _createDateSupplier.get();
+
+			_createDateSupplier = null;
+		}
+
 		return createDate;
 	}
 
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
+
+		_createDateSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setCreateDate(
 		UnsafeSupplier<Date, Exception> createDateUnsafeSupplier) {
 
-		try {
-			createDate = createDateUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_createDateSupplier = () -> {
+			try {
+				return createDateUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date createDate;
 
+	private Supplier<Date> _createDateSupplier;
+
 	@Schema
 	@Valid
 	public DataSource[] getDataSources() {
+		if (_dataSourcesSupplier != null) {
+			dataSources = _dataSourcesSupplier.get();
+
+			_dataSourcesSupplier = null;
+		}
+
 		return dataSources;
 	}
 
 	public void setDataSources(DataSource[] dataSources) {
 		this.dataSources = dataSources;
+
+		_dataSourcesSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDataSources(
 		UnsafeSupplier<DataSource[], Exception> dataSourcesUnsafeSupplier) {
 
-		try {
-			dataSources = dataSourcesUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_dataSourcesSupplier = () -> {
+			try {
+				return dataSourcesUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected DataSource[] dataSources;
 
+	private Supplier<DataSource[]> _dataSourcesSupplier;
+
 	@Schema
 	@Size(min = 3)
 	public String getName() {
+		if (_nameSupplier != null) {
+			name = _nameSupplier.get();
+
+			_nameSupplier = null;
+		}
+
 		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
+
+		_nameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
-		try {
-			name = nameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_nameSupplier = () -> {
+			try {
+				return nameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
+
+	private Supplier<String> _nameSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -224,6 +285,8 @@ public class Channel implements Serializable {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+		String channelId = getChannelId();
+
 		if (channelId != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -238,6 +301,8 @@ public class Channel implements Serializable {
 			sb.append("\"");
 		}
 
+		Boolean commerceSyncEnabled = getCommerceSyncEnabled();
+
 		if (commerceSyncEnabled != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -247,6 +312,8 @@ public class Channel implements Serializable {
 
 			sb.append(commerceSyncEnabled);
 		}
+
+		Date createDate = getCreateDate();
 
 		if (createDate != null) {
 			if (sb.length() > 1) {
@@ -261,6 +328,8 @@ public class Channel implements Serializable {
 
 			sb.append("\"");
 		}
+
+		DataSource[] dataSources = getDataSources();
 
 		if (dataSources != null) {
 			if (sb.length() > 1) {
@@ -281,6 +350,8 @@ public class Channel implements Serializable {
 
 			sb.append("]");
 		}
+
+		String name = getName();
 
 		if (name != null) {
 			if (sb.length() > 1) {

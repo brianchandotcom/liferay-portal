@@ -27,6 +27,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -55,81 +56,115 @@ public class PageElement implements Serializable {
 	@Schema(description = "The page element's definition.")
 	@Valid
 	public Object getDefinition() {
+		if (_definitionSupplier != null) {
+			definition = _definitionSupplier.get();
+
+			_definitionSupplier = null;
+		}
+
 		return definition;
 	}
 
 	public void setDefinition(Object definition) {
 		this.definition = definition;
+
+		_definitionSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDefinition(
 		UnsafeSupplier<Object, Exception> definitionUnsafeSupplier) {
 
-		try {
-			definition = definitionUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_definitionSupplier = () -> {
+			try {
+				return definitionUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The page element's definition.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object definition;
 
+	private Supplier<Object> _definitionSupplier;
+
 	@Schema(description = "The page element's ID.")
 	public String getId() {
+		if (_idSupplier != null) {
+			id = _idSupplier.get();
+
+			_idSupplier = null;
+		}
+
 		return id;
 	}
 
 	public void setId(String id) {
 		this.id = id;
+
+		_idSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setId(UnsafeSupplier<String, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_idSupplier = () -> {
+			try {
+				return idUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The page element's ID.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String id;
 
+	private Supplier<String> _idSupplier;
+
 	@Schema(description = "A list of the page elements this page element has.")
 	@Valid
 	public PageElement[] getPageElements() {
+		if (_pageElementsSupplier != null) {
+			pageElements = _pageElementsSupplier.get();
+
+			_pageElementsSupplier = null;
+		}
+
 		return pageElements;
 	}
 
 	public void setPageElements(PageElement[] pageElements) {
 		this.pageElements = pageElements;
+
+		_pageElementsSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setPageElements(
 		UnsafeSupplier<PageElement[], Exception> pageElementsUnsafeSupplier) {
 
-		try {
-			pageElements = pageElementsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_pageElementsSupplier = () -> {
+			try {
+				return pageElementsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -138,16 +173,26 @@ public class PageElement implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected PageElement[] pageElements;
 
+	private Supplier<PageElement[]> _pageElementsSupplier;
+
 	@Schema(
 		description = "The page element's type (collection, collection item, column, drop zone, form, fragment, fragment drop zone, root, row, section or widget)."
 	)
 	@Valid
 	public Type getType() {
+		if (_typeSupplier != null) {
+			type = _typeSupplier.get();
+
+			_typeSupplier = null;
+		}
+
 		return type;
 	}
 
 	@JsonIgnore
 	public String getTypeAsString() {
+		Type type = getType();
+
 		if (type == null) {
 			return null;
 		}
@@ -157,19 +202,23 @@ public class PageElement implements Serializable {
 
 	public void setType(Type type) {
 		this.type = type;
+
+		_typeSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setType(UnsafeSupplier<Type, Exception> typeUnsafeSupplier) {
-		try {
-			type = typeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_typeSupplier = () -> {
+			try {
+				return typeUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -177,6 +226,8 @@ public class PageElement implements Serializable {
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Type type;
+
+	private Supplier<Type> _typeSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -205,6 +256,8 @@ public class PageElement implements Serializable {
 
 		sb.append("{");
 
+		Object definition = getDefinition();
+
 		if (definition != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -226,6 +279,8 @@ public class PageElement implements Serializable {
 			}
 		}
 
+		String id = getId();
+
 		if (id != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -239,6 +294,8 @@ public class PageElement implements Serializable {
 
 			sb.append("\"");
 		}
+
+		PageElement[] pageElements = getPageElements();
 
 		if (pageElements != null) {
 			if (sb.length() > 1) {
@@ -259,6 +316,8 @@ public class PageElement implements Serializable {
 
 			sb.append("]");
 		}
+
+		Type type = getType();
 
 		if (type != null) {
 			if (sb.length() > 1) {

@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -58,26 +59,36 @@ public class CustomCSSViewport implements Serializable {
 
 	@Schema(description = "The definition of the custom CSS viewport.")
 	public String getCustomCSS() {
+		if (_customCSSSupplier != null) {
+			customCSS = _customCSSSupplier.get();
+
+			_customCSSSupplier = null;
+		}
+
 		return customCSS;
 	}
 
 	public void setCustomCSS(String customCSS) {
 		this.customCSS = customCSS;
+
+		_customCSSSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setCustomCSS(
 		UnsafeSupplier<String, Exception> customCSSUnsafeSupplier) {
 
-		try {
-			customCSS = customCSSUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_customCSSSupplier = () -> {
+			try {
+				return customCSSUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The definition of the custom CSS viewport.")
@@ -85,32 +96,46 @@ public class CustomCSSViewport implements Serializable {
 	@NotEmpty
 	protected String customCSS;
 
+	private Supplier<String> _customCSSSupplier;
+
 	@Schema(description = "The custom CSS viewport's ID.")
 	public String getId() {
+		if (_idSupplier != null) {
+			id = _idSupplier.get();
+
+			_idSupplier = null;
+		}
+
 		return id;
 	}
 
 	public void setId(String id) {
 		this.id = id;
+
+		_idSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setId(UnsafeSupplier<String, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_idSupplier = () -> {
+			try {
+				return idUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The custom CSS viewport's ID.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotEmpty
 	protected String id;
+
+	private Supplier<String> _idSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -139,6 +164,8 @@ public class CustomCSSViewport implements Serializable {
 
 		sb.append("{");
 
+		String customCSS = getCustomCSS();
+
 		if (customCSS != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -152,6 +179,8 @@ public class CustomCSSViewport implements Serializable {
 
 			sb.append("\"");
 		}
+
+		String id = getId();
 
 		if (id != null) {
 			if (sb.length() > 1) {

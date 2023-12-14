@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -49,31 +50,43 @@ public class WorkflowTaskIds implements Serializable {
 
 	@Schema
 	public Long[] getWorkflowTaskIds() {
+		if (_workflowTaskIdsSupplier != null) {
+			workflowTaskIds = _workflowTaskIdsSupplier.get();
+
+			_workflowTaskIdsSupplier = null;
+		}
+
 		return workflowTaskIds;
 	}
 
 	public void setWorkflowTaskIds(Long[] workflowTaskIds) {
 		this.workflowTaskIds = workflowTaskIds;
+
+		_workflowTaskIdsSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setWorkflowTaskIds(
 		UnsafeSupplier<Long[], Exception> workflowTaskIdsUnsafeSupplier) {
 
-		try {
-			workflowTaskIds = workflowTaskIdsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_workflowTaskIdsSupplier = () -> {
+			try {
+				return workflowTaskIdsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long[] workflowTaskIds;
+
+	private Supplier<Long[]> _workflowTaskIdsSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -101,6 +114,8 @@ public class WorkflowTaskIds implements Serializable {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		Long[] workflowTaskIds = getWorkflowTaskIds();
 
 		if (workflowTaskIds != null) {
 			if (sb.length() > 1) {

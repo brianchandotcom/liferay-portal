@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -52,6 +53,12 @@ public class Configuration implements Serializable {
 	@Schema
 	@Valid
 	public AdvancedConfiguration getAdvancedConfiguration() {
+		if (_advancedConfigurationSupplier != null) {
+			advancedConfiguration = _advancedConfigurationSupplier.get();
+
+			_advancedConfigurationSupplier = null;
+		}
+
 		return advancedConfiguration;
 	}
 
@@ -59,6 +66,8 @@ public class Configuration implements Serializable {
 		AdvancedConfiguration advancedConfiguration) {
 
 		this.advancedConfiguration = advancedConfiguration;
+
+		_advancedConfigurationSupplier = null;
 	}
 
 	@JsonIgnore
@@ -66,24 +75,34 @@ public class Configuration implements Serializable {
 		UnsafeSupplier<AdvancedConfiguration, Exception>
 			advancedConfigurationUnsafeSupplier) {
 
-		try {
-			advancedConfiguration = advancedConfigurationUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_advancedConfigurationSupplier = () -> {
+			try {
+				return advancedConfigurationUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected AdvancedConfiguration advancedConfiguration;
 
+	private Supplier<AdvancedConfiguration> _advancedConfigurationSupplier;
+
 	@Schema
 	@Valid
 	public AggregationConfiguration getAggregationConfiguration() {
+		if (_aggregationConfigurationSupplier != null) {
+			aggregationConfiguration = _aggregationConfigurationSupplier.get();
+
+			_aggregationConfigurationSupplier = null;
+		}
+
 		return aggregationConfiguration;
 	}
 
@@ -91,6 +110,8 @@ public class Configuration implements Serializable {
 		AggregationConfiguration aggregationConfiguration) {
 
 		this.aggregationConfiguration = aggregationConfiguration;
+
+		_aggregationConfigurationSupplier = null;
 	}
 
 	@JsonIgnore
@@ -98,25 +119,35 @@ public class Configuration implements Serializable {
 		UnsafeSupplier<AggregationConfiguration, Exception>
 			aggregationConfigurationUnsafeSupplier) {
 
-		try {
-			aggregationConfiguration =
-				aggregationConfigurationUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_aggregationConfigurationSupplier = () -> {
+			try {
+				return aggregationConfigurationUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected AggregationConfiguration aggregationConfiguration;
 
+	private Supplier<AggregationConfiguration>
+		_aggregationConfigurationSupplier;
+
 	@Schema
 	@Valid
 	public GeneralConfiguration getGeneralConfiguration() {
+		if (_generalConfigurationSupplier != null) {
+			generalConfiguration = _generalConfigurationSupplier.get();
+
+			_generalConfigurationSupplier = null;
+		}
+
 		return generalConfiguration;
 	}
 
@@ -124,6 +155,8 @@ public class Configuration implements Serializable {
 		GeneralConfiguration generalConfiguration) {
 
 		this.generalConfiguration = generalConfiguration;
+
+		_generalConfigurationSupplier = null;
 	}
 
 	@JsonIgnore
@@ -131,24 +164,34 @@ public class Configuration implements Serializable {
 		UnsafeSupplier<GeneralConfiguration, Exception>
 			generalConfigurationUnsafeSupplier) {
 
-		try {
-			generalConfiguration = generalConfigurationUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_generalConfigurationSupplier = () -> {
+			try {
+				return generalConfigurationUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected GeneralConfiguration generalConfiguration;
 
+	private Supplier<GeneralConfiguration> _generalConfigurationSupplier;
+
 	@Schema
 	@Valid
 	public HighlightConfiguration getHighlightConfiguration() {
+		if (_highlightConfigurationSupplier != null) {
+			highlightConfiguration = _highlightConfigurationSupplier.get();
+
+			_highlightConfigurationSupplier = null;
+		}
+
 		return highlightConfiguration;
 	}
 
@@ -156,6 +199,8 @@ public class Configuration implements Serializable {
 		HighlightConfiguration highlightConfiguration) {
 
 		this.highlightConfiguration = highlightConfiguration;
+
+		_highlightConfigurationSupplier = null;
 	}
 
 	@JsonIgnore
@@ -163,29 +208,41 @@ public class Configuration implements Serializable {
 		UnsafeSupplier<HighlightConfiguration, Exception>
 			highlightConfigurationUnsafeSupplier) {
 
-		try {
-			highlightConfiguration = highlightConfigurationUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_highlightConfigurationSupplier = () -> {
+			try {
+				return highlightConfigurationUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected HighlightConfiguration highlightConfiguration;
 
+	private Supplier<HighlightConfiguration> _highlightConfigurationSupplier;
+
 	@Schema
 	@Valid
 	public IndexConfiguration getIndexConfiguration() {
+		if (_indexConfigurationSupplier != null) {
+			indexConfiguration = _indexConfigurationSupplier.get();
+
+			_indexConfigurationSupplier = null;
+		}
+
 		return indexConfiguration;
 	}
 
 	public void setIndexConfiguration(IndexConfiguration indexConfiguration) {
 		this.indexConfiguration = indexConfiguration;
+
+		_indexConfigurationSupplier = null;
 	}
 
 	@JsonIgnore
@@ -193,24 +250,34 @@ public class Configuration implements Serializable {
 		UnsafeSupplier<IndexConfiguration, Exception>
 			indexConfigurationUnsafeSupplier) {
 
-		try {
-			indexConfiguration = indexConfigurationUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_indexConfigurationSupplier = () -> {
+			try {
+				return indexConfigurationUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected IndexConfiguration indexConfiguration;
 
+	private Supplier<IndexConfiguration> _indexConfigurationSupplier;
+
 	@Schema
 	@Valid
 	public ParameterConfiguration getParameterConfiguration() {
+		if (_parameterConfigurationSupplier != null) {
+			parameterConfiguration = _parameterConfigurationSupplier.get();
+
+			_parameterConfigurationSupplier = null;
+		}
+
 		return parameterConfiguration;
 	}
 
@@ -218,6 +285,8 @@ public class Configuration implements Serializable {
 		ParameterConfiguration parameterConfiguration) {
 
 		this.parameterConfiguration = parameterConfiguration;
+
+		_parameterConfigurationSupplier = null;
 	}
 
 	@JsonIgnore
@@ -225,29 +294,41 @@ public class Configuration implements Serializable {
 		UnsafeSupplier<ParameterConfiguration, Exception>
 			parameterConfigurationUnsafeSupplier) {
 
-		try {
-			parameterConfiguration = parameterConfigurationUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_parameterConfigurationSupplier = () -> {
+			try {
+				return parameterConfigurationUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ParameterConfiguration parameterConfiguration;
 
+	private Supplier<ParameterConfiguration> _parameterConfigurationSupplier;
+
 	@Schema
 	@Valid
 	public QueryConfiguration getQueryConfiguration() {
+		if (_queryConfigurationSupplier != null) {
+			queryConfiguration = _queryConfigurationSupplier.get();
+
+			_queryConfigurationSupplier = null;
+		}
+
 		return queryConfiguration;
 	}
 
 	public void setQueryConfiguration(QueryConfiguration queryConfiguration) {
 		this.queryConfiguration = queryConfiguration;
+
+		_queryConfigurationSupplier = null;
 	}
 
 	@JsonIgnore
@@ -255,24 +336,34 @@ public class Configuration implements Serializable {
 		UnsafeSupplier<QueryConfiguration, Exception>
 			queryConfigurationUnsafeSupplier) {
 
-		try {
-			queryConfiguration = queryConfigurationUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_queryConfigurationSupplier = () -> {
+			try {
+				return queryConfigurationUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected QueryConfiguration queryConfiguration;
 
+	private Supplier<QueryConfiguration> _queryConfigurationSupplier;
+
 	@Schema
 	@Valid
 	public Map<String, Object> getSearchContextAttributes() {
+		if (_searchContextAttributesSupplier != null) {
+			searchContextAttributes = _searchContextAttributesSupplier.get();
+
+			_searchContextAttributesSupplier = null;
+		}
+
 		return searchContextAttributes;
 	}
 
@@ -280,6 +371,8 @@ public class Configuration implements Serializable {
 		Map<String, Object> searchContextAttributes) {
 
 		this.searchContextAttributes = searchContextAttributes;
+
+		_searchContextAttributesSupplier = null;
 	}
 
 	@JsonIgnore
@@ -287,30 +380,41 @@ public class Configuration implements Serializable {
 		UnsafeSupplier<Map<String, Object>, Exception>
 			searchContextAttributesUnsafeSupplier) {
 
-		try {
-			searchContextAttributes =
-				searchContextAttributesUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_searchContextAttributesSupplier = () -> {
+			try {
+				return searchContextAttributesUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, Object> searchContextAttributes;
 
+	private Supplier<Map<String, Object>> _searchContextAttributesSupplier;
+
 	@Schema
 	@Valid
 	public SortConfiguration getSortConfiguration() {
+		if (_sortConfigurationSupplier != null) {
+			sortConfiguration = _sortConfigurationSupplier.get();
+
+			_sortConfigurationSupplier = null;
+		}
+
 		return sortConfiguration;
 	}
 
 	public void setSortConfiguration(SortConfiguration sortConfiguration) {
 		this.sortConfiguration = sortConfiguration;
+
+		_sortConfigurationSupplier = null;
 	}
 
 	@JsonIgnore
@@ -318,20 +422,24 @@ public class Configuration implements Serializable {
 		UnsafeSupplier<SortConfiguration, Exception>
 			sortConfigurationUnsafeSupplier) {
 
-		try {
-			sortConfiguration = sortConfigurationUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_sortConfigurationSupplier = () -> {
+			try {
+				return sortConfigurationUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected SortConfiguration sortConfiguration;
+
+	private Supplier<SortConfiguration> _sortConfigurationSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -360,6 +468,9 @@ public class Configuration implements Serializable {
 
 		sb.append("{");
 
+		AdvancedConfiguration advancedConfiguration =
+			getAdvancedConfiguration();
+
 		if (advancedConfiguration != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -369,6 +480,9 @@ public class Configuration implements Serializable {
 
 			sb.append(String.valueOf(advancedConfiguration));
 		}
+
+		AggregationConfiguration aggregationConfiguration =
+			getAggregationConfiguration();
 
 		if (aggregationConfiguration != null) {
 			if (sb.length() > 1) {
@@ -380,6 +494,8 @@ public class Configuration implements Serializable {
 			sb.append(String.valueOf(aggregationConfiguration));
 		}
 
+		GeneralConfiguration generalConfiguration = getGeneralConfiguration();
+
 		if (generalConfiguration != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -389,6 +505,9 @@ public class Configuration implements Serializable {
 
 			sb.append(String.valueOf(generalConfiguration));
 		}
+
+		HighlightConfiguration highlightConfiguration =
+			getHighlightConfiguration();
 
 		if (highlightConfiguration != null) {
 			if (sb.length() > 1) {
@@ -400,6 +519,8 @@ public class Configuration implements Serializable {
 			sb.append(String.valueOf(highlightConfiguration));
 		}
 
+		IndexConfiguration indexConfiguration = getIndexConfiguration();
+
 		if (indexConfiguration != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -409,6 +530,9 @@ public class Configuration implements Serializable {
 
 			sb.append(String.valueOf(indexConfiguration));
 		}
+
+		ParameterConfiguration parameterConfiguration =
+			getParameterConfiguration();
 
 		if (parameterConfiguration != null) {
 			if (sb.length() > 1) {
@@ -420,6 +544,8 @@ public class Configuration implements Serializable {
 			sb.append(String.valueOf(parameterConfiguration));
 		}
 
+		QueryConfiguration queryConfiguration = getQueryConfiguration();
+
 		if (queryConfiguration != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -430,6 +556,9 @@ public class Configuration implements Serializable {
 			sb.append(String.valueOf(queryConfiguration));
 		}
 
+		Map<String, Object> searchContextAttributes =
+			getSearchContextAttributes();
+
 		if (searchContextAttributes != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -439,6 +568,8 @@ public class Configuration implements Serializable {
 
 			sb.append(_toJSON(searchContextAttributes));
 		}
+
+		SortConfiguration sortConfiguration = getSortConfiguration();
 
 		if (sortConfiguration != null) {
 			if (sb.length() > 1) {

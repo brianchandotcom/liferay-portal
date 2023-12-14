@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -49,11 +50,20 @@ public class DSDocument implements Serializable {
 
 	@Schema
 	public String getAssignTabsToDSRecipientId() {
+		if (_assignTabsToDSRecipientIdSupplier != null) {
+			assignTabsToDSRecipientId =
+				_assignTabsToDSRecipientIdSupplier.get();
+
+			_assignTabsToDSRecipientIdSupplier = null;
+		}
+
 		return assignTabsToDSRecipientId;
 	}
 
 	public void setAssignTabsToDSRecipientId(String assignTabsToDSRecipientId) {
 		this.assignTabsToDSRecipientId = assignTabsToDSRecipientId;
+
+		_assignTabsToDSRecipientIdSupplier = null;
 	}
 
 	@JsonIgnore
@@ -61,50 +71,72 @@ public class DSDocument implements Serializable {
 		UnsafeSupplier<String, Exception>
 			assignTabsToDSRecipientIdUnsafeSupplier) {
 
-		try {
-			assignTabsToDSRecipientId =
-				assignTabsToDSRecipientIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_assignTabsToDSRecipientIdSupplier = () -> {
+			try {
+				return assignTabsToDSRecipientIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String assignTabsToDSRecipientId;
 
+	private Supplier<String> _assignTabsToDSRecipientIdSupplier;
+
 	@Schema
 	public String getData() {
+		if (_dataSupplier != null) {
+			data = _dataSupplier.get();
+
+			_dataSupplier = null;
+		}
+
 		return data;
 	}
 
 	public void setData(String data) {
 		this.data = data;
+
+		_dataSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setData(UnsafeSupplier<String, Exception> dataUnsafeSupplier) {
-		try {
-			data = dataUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_dataSupplier = () -> {
+			try {
+				return dataUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String data;
 
+	private Supplier<String> _dataSupplier;
+
 	@Schema
 	public String getFileEntryExternalReferenceCode() {
+		if (_fileEntryExternalReferenceCodeSupplier != null) {
+			fileEntryExternalReferenceCode =
+				_fileEntryExternalReferenceCodeSupplier.get();
+
+			_fileEntryExternalReferenceCodeSupplier = null;
+		}
+
 		return fileEntryExternalReferenceCode;
 	}
 
@@ -112,6 +144,8 @@ public class DSDocument implements Serializable {
 		String fileEntryExternalReferenceCode) {
 
 		this.fileEntryExternalReferenceCode = fileEntryExternalReferenceCode;
+
+		_fileEntryExternalReferenceCodeSupplier = null;
 	}
 
 	@JsonIgnore
@@ -119,155 +153,218 @@ public class DSDocument implements Serializable {
 		UnsafeSupplier<String, Exception>
 			fileEntryExternalReferenceCodeUnsafeSupplier) {
 
-		try {
-			fileEntryExternalReferenceCode =
-				fileEntryExternalReferenceCodeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_fileEntryExternalReferenceCodeSupplier = () -> {
+			try {
+				return fileEntryExternalReferenceCodeUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String fileEntryExternalReferenceCode;
 
+	private Supplier<String> _fileEntryExternalReferenceCodeSupplier;
+
 	@Schema
 	public String getFileExtension() {
+		if (_fileExtensionSupplier != null) {
+			fileExtension = _fileExtensionSupplier.get();
+
+			_fileExtensionSupplier = null;
+		}
+
 		return fileExtension;
 	}
 
 	public void setFileExtension(String fileExtension) {
 		this.fileExtension = fileExtension;
+
+		_fileExtensionSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setFileExtension(
 		UnsafeSupplier<String, Exception> fileExtensionUnsafeSupplier) {
 
-		try {
-			fileExtension = fileExtensionUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_fileExtensionSupplier = () -> {
+			try {
+				return fileExtensionUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String fileExtension;
 
+	private Supplier<String> _fileExtensionSupplier;
+
 	@Schema
 	public String getId() {
+		if (_idSupplier != null) {
+			id = _idSupplier.get();
+
+			_idSupplier = null;
+		}
+
 		return id;
 	}
 
 	public void setId(String id) {
 		this.id = id;
+
+		_idSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setId(UnsafeSupplier<String, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_idSupplier = () -> {
+			try {
+				return idUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String id;
 
+	private Supplier<String> _idSupplier;
+
 	@Schema
 	public String getName() {
+		if (_nameSupplier != null) {
+			name = _nameSupplier.get();
+
+			_nameSupplier = null;
+		}
+
 		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
+
+		_nameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
-		try {
-			name = nameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_nameSupplier = () -> {
+			try {
+				return nameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	private Supplier<String> _nameSupplier;
+
 	@Schema
 	public Boolean getTransformPDFFields() {
+		if (_transformPDFFieldsSupplier != null) {
+			transformPDFFields = _transformPDFFieldsSupplier.get();
+
+			_transformPDFFieldsSupplier = null;
+		}
+
 		return transformPDFFields;
 	}
 
 	public void setTransformPDFFields(Boolean transformPDFFields) {
 		this.transformPDFFields = transformPDFFields;
+
+		_transformPDFFieldsSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setTransformPDFFields(
 		UnsafeSupplier<Boolean, Exception> transformPDFFieldsUnsafeSupplier) {
 
-		try {
-			transformPDFFields = transformPDFFieldsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_transformPDFFieldsSupplier = () -> {
+			try {
+				return transformPDFFieldsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean transformPDFFields;
 
+	private Supplier<Boolean> _transformPDFFieldsSupplier;
+
 	@Schema
 	public String getUri() {
+		if (_uriSupplier != null) {
+			uri = _uriSupplier.get();
+
+			_uriSupplier = null;
+		}
+
 		return uri;
 	}
 
 	public void setUri(String uri) {
 		this.uri = uri;
+
+		_uriSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setUri(UnsafeSupplier<String, Exception> uriUnsafeSupplier) {
-		try {
-			uri = uriUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_uriSupplier = () -> {
+			try {
+				return uriUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String uri;
+
+	private Supplier<String> _uriSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -296,6 +393,8 @@ public class DSDocument implements Serializable {
 
 		sb.append("{");
 
+		String assignTabsToDSRecipientId = getAssignTabsToDSRecipientId();
+
 		if (assignTabsToDSRecipientId != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -309,6 +408,8 @@ public class DSDocument implements Serializable {
 
 			sb.append("\"");
 		}
+
+		String data = getData();
 
 		if (data != null) {
 			if (sb.length() > 1) {
@@ -324,6 +425,9 @@ public class DSDocument implements Serializable {
 			sb.append("\"");
 		}
 
+		String fileEntryExternalReferenceCode =
+			getFileEntryExternalReferenceCode();
+
 		if (fileEntryExternalReferenceCode != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -337,6 +441,8 @@ public class DSDocument implements Serializable {
 
 			sb.append("\"");
 		}
+
+		String fileExtension = getFileExtension();
 
 		if (fileExtension != null) {
 			if (sb.length() > 1) {
@@ -352,6 +458,8 @@ public class DSDocument implements Serializable {
 			sb.append("\"");
 		}
 
+		String id = getId();
+
 		if (id != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -365,6 +473,8 @@ public class DSDocument implements Serializable {
 
 			sb.append("\"");
 		}
+
+		String name = getName();
 
 		if (name != null) {
 			if (sb.length() > 1) {
@@ -380,6 +490,8 @@ public class DSDocument implements Serializable {
 			sb.append("\"");
 		}
 
+		Boolean transformPDFFields = getTransformPDFFields();
+
 		if (transformPDFFields != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -389,6 +501,8 @@ public class DSDocument implements Serializable {
 
 			sb.append(transformPDFFields);
 		}
+
+		String uri = getUri();
 
 		if (uri != null) {
 			if (sb.length() > 1) {

@@ -26,6 +26,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -58,127 +59,183 @@ public class ProductShippingConfiguration implements Serializable {
 	@Schema(example = "202")
 	@Valid
 	public BigDecimal getDepth() {
+		if (_depthSupplier != null) {
+			depth = _depthSupplier.get();
+
+			_depthSupplier = null;
+		}
+
 		return depth;
 	}
 
 	public void setDepth(BigDecimal depth) {
 		this.depth = depth;
+
+		_depthSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDepth(
 		UnsafeSupplier<BigDecimal, Exception> depthUnsafeSupplier) {
 
-		try {
-			depth = depthUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_depthSupplier = () -> {
+			try {
+				return depthUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal depth;
 
+	private Supplier<BigDecimal> _depthSupplier;
+
 	@Schema(example = "true")
 	public Boolean getFreeShipping() {
+		if (_freeShippingSupplier != null) {
+			freeShipping = _freeShippingSupplier.get();
+
+			_freeShippingSupplier = null;
+		}
+
 		return freeShipping;
 	}
 
 	public void setFreeShipping(Boolean freeShipping) {
 		this.freeShipping = freeShipping;
+
+		_freeShippingSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setFreeShipping(
 		UnsafeSupplier<Boolean, Exception> freeShippingUnsafeSupplier) {
 
-		try {
-			freeShipping = freeShippingUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_freeShippingSupplier = () -> {
+			try {
+				return freeShippingUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean freeShipping;
 
+	private Supplier<Boolean> _freeShippingSupplier;
+
 	@DecimalMin("0")
 	@Schema(example = "202")
 	@Valid
 	public BigDecimal getHeight() {
+		if (_heightSupplier != null) {
+			height = _heightSupplier.get();
+
+			_heightSupplier = null;
+		}
+
 		return height;
 	}
 
 	public void setHeight(BigDecimal height) {
 		this.height = height;
+
+		_heightSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setHeight(
 		UnsafeSupplier<BigDecimal, Exception> heightUnsafeSupplier) {
 
-		try {
-			height = heightUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_heightSupplier = () -> {
+			try {
+				return heightUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal height;
 
+	private Supplier<BigDecimal> _heightSupplier;
+
 	@Schema(example = "true")
 	public Boolean getShippable() {
+		if (_shippableSupplier != null) {
+			shippable = _shippableSupplier.get();
+
+			_shippableSupplier = null;
+		}
+
 		return shippable;
 	}
 
 	public void setShippable(Boolean shippable) {
 		this.shippable = shippable;
+
+		_shippableSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setShippable(
 		UnsafeSupplier<Boolean, Exception> shippableUnsafeSupplier) {
 
-		try {
-			shippable = shippableUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_shippableSupplier = () -> {
+			try {
+				return shippableUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean shippable;
 
+	private Supplier<Boolean> _shippableSupplier;
+
 	@DecimalMin("0")
 	@Schema(example = "202")
 	@Valid
 	public BigDecimal getShippingExtraPrice() {
+		if (_shippingExtraPriceSupplier != null) {
+			shippingExtraPrice = _shippingExtraPriceSupplier.get();
+
+			_shippingExtraPriceSupplier = null;
+		}
+
 		return shippingExtraPrice;
 	}
 
 	public void setShippingExtraPrice(BigDecimal shippingExtraPrice) {
 		this.shippingExtraPrice = shippingExtraPrice;
+
+		_shippingExtraPriceSupplier = null;
 	}
 
 	@JsonIgnore
@@ -186,108 +243,148 @@ public class ProductShippingConfiguration implements Serializable {
 		UnsafeSupplier<BigDecimal, Exception>
 			shippingExtraPriceUnsafeSupplier) {
 
-		try {
-			shippingExtraPrice = shippingExtraPriceUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_shippingExtraPriceSupplier = () -> {
+			try {
+				return shippingExtraPriceUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal shippingExtraPrice;
 
+	private Supplier<BigDecimal> _shippingExtraPriceSupplier;
+
 	@Schema(example = "true")
 	public Boolean getShippingSeparately() {
+		if (_shippingSeparatelySupplier != null) {
+			shippingSeparately = _shippingSeparatelySupplier.get();
+
+			_shippingSeparatelySupplier = null;
+		}
+
 		return shippingSeparately;
 	}
 
 	public void setShippingSeparately(Boolean shippingSeparately) {
 		this.shippingSeparately = shippingSeparately;
+
+		_shippingSeparatelySupplier = null;
 	}
 
 	@JsonIgnore
 	public void setShippingSeparately(
 		UnsafeSupplier<Boolean, Exception> shippingSeparatelyUnsafeSupplier) {
 
-		try {
-			shippingSeparately = shippingSeparatelyUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_shippingSeparatelySupplier = () -> {
+			try {
+				return shippingSeparatelyUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean shippingSeparately;
 
+	private Supplier<Boolean> _shippingSeparatelySupplier;
+
 	@DecimalMin("0")
 	@Schema(example = "202")
 	@Valid
 	public BigDecimal getWeight() {
+		if (_weightSupplier != null) {
+			weight = _weightSupplier.get();
+
+			_weightSupplier = null;
+		}
+
 		return weight;
 	}
 
 	public void setWeight(BigDecimal weight) {
 		this.weight = weight;
+
+		_weightSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setWeight(
 		UnsafeSupplier<BigDecimal, Exception> weightUnsafeSupplier) {
 
-		try {
-			weight = weightUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_weightSupplier = () -> {
+			try {
+				return weightUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal weight;
 
+	private Supplier<BigDecimal> _weightSupplier;
+
 	@DecimalMin("0")
 	@Schema(example = "202")
 	@Valid
 	public BigDecimal getWidth() {
+		if (_widthSupplier != null) {
+			width = _widthSupplier.get();
+
+			_widthSupplier = null;
+		}
+
 		return width;
 	}
 
 	public void setWidth(BigDecimal width) {
 		this.width = width;
+
+		_widthSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setWidth(
 		UnsafeSupplier<BigDecimal, Exception> widthUnsafeSupplier) {
 
-		try {
-			width = widthUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_widthSupplier = () -> {
+			try {
+				return widthUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal width;
+
+	private Supplier<BigDecimal> _widthSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -318,6 +415,8 @@ public class ProductShippingConfiguration implements Serializable {
 
 		sb.append("{");
 
+		BigDecimal depth = getDepth();
+
 		if (depth != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -327,6 +426,8 @@ public class ProductShippingConfiguration implements Serializable {
 
 			sb.append(depth);
 		}
+
+		Boolean freeShipping = getFreeShipping();
 
 		if (freeShipping != null) {
 			if (sb.length() > 1) {
@@ -338,6 +439,8 @@ public class ProductShippingConfiguration implements Serializable {
 			sb.append(freeShipping);
 		}
 
+		BigDecimal height = getHeight();
+
 		if (height != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -347,6 +450,8 @@ public class ProductShippingConfiguration implements Serializable {
 
 			sb.append(height);
 		}
+
+		Boolean shippable = getShippable();
 
 		if (shippable != null) {
 			if (sb.length() > 1) {
@@ -358,6 +463,8 @@ public class ProductShippingConfiguration implements Serializable {
 			sb.append(shippable);
 		}
 
+		BigDecimal shippingExtraPrice = getShippingExtraPrice();
+
 		if (shippingExtraPrice != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -367,6 +474,8 @@ public class ProductShippingConfiguration implements Serializable {
 
 			sb.append(shippingExtraPrice);
 		}
+
+		Boolean shippingSeparately = getShippingSeparately();
 
 		if (shippingSeparately != null) {
 			if (sb.length() > 1) {
@@ -378,6 +487,8 @@ public class ProductShippingConfiguration implements Serializable {
 			sb.append(shippingSeparately);
 		}
 
+		BigDecimal weight = getWeight();
+
 		if (weight != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -387,6 +498,8 @@ public class ProductShippingConfiguration implements Serializable {
 
 			sb.append(weight);
 		}
+
+		BigDecimal width = getWidth();
 
 		if (width != null) {
 			if (sb.length() > 1) {

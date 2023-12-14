@@ -30,6 +30,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -57,176 +58,256 @@ public class SLAResult implements Serializable {
 
 	@Schema
 	public Date getDateModified() {
+		if (_dateModifiedSupplier != null) {
+			dateModified = _dateModifiedSupplier.get();
+
+			_dateModifiedSupplier = null;
+		}
+
 		return dateModified;
 	}
 
 	public void setDateModified(Date dateModified) {
 		this.dateModified = dateModified;
+
+		_dateModifiedSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDateModified(
 		UnsafeSupplier<Date, Exception> dateModifiedUnsafeSupplier) {
 
-		try {
-			dateModified = dateModifiedUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_dateModifiedSupplier = () -> {
+			try {
+				return dateModifiedUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateModified;
 
+	private Supplier<Date> _dateModifiedSupplier;
+
 	@Schema
 	public Date getDateOverdue() {
+		if (_dateOverdueSupplier != null) {
+			dateOverdue = _dateOverdueSupplier.get();
+
+			_dateOverdueSupplier = null;
+		}
+
 		return dateOverdue;
 	}
 
 	public void setDateOverdue(Date dateOverdue) {
 		this.dateOverdue = dateOverdue;
+
+		_dateOverdueSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDateOverdue(
 		UnsafeSupplier<Date, Exception> dateOverdueUnsafeSupplier) {
 
-		try {
-			dateOverdue = dateOverdueUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_dateOverdueSupplier = () -> {
+			try {
+				return dateOverdueUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateOverdue;
 
+	private Supplier<Date> _dateOverdueSupplier;
+
 	@Schema
 	public Long getId() {
+		if (_idSupplier != null) {
+			id = _idSupplier.get();
+
+			_idSupplier = null;
+		}
+
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
+
+		_idSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_idSupplier = () -> {
+			try {
+				return idUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	private Supplier<Long> _idSupplier;
+
 	@Schema
 	public String getName() {
+		if (_nameSupplier != null) {
+			name = _nameSupplier.get();
+
+			_nameSupplier = null;
+		}
+
 		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
+
+		_nameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
-		try {
-			name = nameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_nameSupplier = () -> {
+			try {
+				return nameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	private Supplier<String> _nameSupplier;
+
 	@Schema
 	public Boolean getOnTime() {
+		if (_onTimeSupplier != null) {
+			onTime = _onTimeSupplier.get();
+
+			_onTimeSupplier = null;
+		}
+
 		return onTime;
 	}
 
 	public void setOnTime(Boolean onTime) {
 		this.onTime = onTime;
+
+		_onTimeSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setOnTime(
 		UnsafeSupplier<Boolean, Exception> onTimeUnsafeSupplier) {
 
-		try {
-			onTime = onTimeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_onTimeSupplier = () -> {
+			try {
+				return onTimeUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean onTime;
 
+	private Supplier<Boolean> _onTimeSupplier;
+
 	@Schema
 	public Long getRemainingTime() {
+		if (_remainingTimeSupplier != null) {
+			remainingTime = _remainingTimeSupplier.get();
+
+			_remainingTimeSupplier = null;
+		}
+
 		return remainingTime;
 	}
 
 	public void setRemainingTime(Long remainingTime) {
 		this.remainingTime = remainingTime;
+
+		_remainingTimeSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setRemainingTime(
 		UnsafeSupplier<Long, Exception> remainingTimeUnsafeSupplier) {
 
-		try {
-			remainingTime = remainingTimeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_remainingTimeSupplier = () -> {
+			try {
+				return remainingTimeUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long remainingTime;
 
+	private Supplier<Long> _remainingTimeSupplier;
+
 	@Schema
 	@Valid
 	public Status getStatus() {
+		if (_statusSupplier != null) {
+			status = _statusSupplier.get();
+
+			_statusSupplier = null;
+		}
+
 		return status;
 	}
 
 	@JsonIgnore
 	public String getStatusAsString() {
+		Status status = getStatus();
+
 		if (status == null) {
 			return null;
 		}
@@ -236,26 +317,32 @@ public class SLAResult implements Serializable {
 
 	public void setStatus(Status status) {
 		this.status = status;
+
+		_statusSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setStatus(
 		UnsafeSupplier<Status, Exception> statusUnsafeSupplier) {
 
-		try {
-			status = statusUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_statusSupplier = () -> {
+			try {
+				return statusUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Status status;
+
+	private Supplier<Status> _statusSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -287,6 +374,8 @@ public class SLAResult implements Serializable {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+		Date dateModified = getDateModified();
+
 		if (dateModified != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -300,6 +389,8 @@ public class SLAResult implements Serializable {
 
 			sb.append("\"");
 		}
+
+		Date dateOverdue = getDateOverdue();
 
 		if (dateOverdue != null) {
 			if (sb.length() > 1) {
@@ -315,6 +406,8 @@ public class SLAResult implements Serializable {
 			sb.append("\"");
 		}
 
+		Long id = getId();
+
 		if (id != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -324,6 +417,8 @@ public class SLAResult implements Serializable {
 
 			sb.append(id);
 		}
+
+		String name = getName();
 
 		if (name != null) {
 			if (sb.length() > 1) {
@@ -339,6 +434,8 @@ public class SLAResult implements Serializable {
 			sb.append("\"");
 		}
 
+		Boolean onTime = getOnTime();
+
 		if (onTime != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -349,6 +446,8 @@ public class SLAResult implements Serializable {
 			sb.append(onTime);
 		}
 
+		Long remainingTime = getRemainingTime();
+
 		if (remainingTime != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -358,6 +457,8 @@ public class SLAResult implements Serializable {
 
 			sb.append(remainingTime);
 		}
+
+		Status status = getStatus();
 
 		if (status != null) {
 			if (sb.length() > 1) {

@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -53,40 +54,60 @@ public class DataLayoutRenderingContext implements Serializable {
 
 	@Schema
 	public String getContainerId() {
+		if (_containerIdSupplier != null) {
+			containerId = _containerIdSupplier.get();
+
+			_containerIdSupplier = null;
+		}
+
 		return containerId;
 	}
 
 	public void setContainerId(String containerId) {
 		this.containerId = containerId;
+
+		_containerIdSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setContainerId(
 		UnsafeSupplier<String, Exception> containerIdUnsafeSupplier) {
 
-		try {
-			containerId = containerIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_containerIdSupplier = () -> {
+			try {
+				return containerIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String containerId;
 
+	private Supplier<String> _containerIdSupplier;
+
 	@Schema
 	@Valid
 	public Map<String, Object> getDataRecordValues() {
+		if (_dataRecordValuesSupplier != null) {
+			dataRecordValues = _dataRecordValuesSupplier.get();
+
+			_dataRecordValuesSupplier = null;
+		}
+
 		return dataRecordValues;
 	}
 
 	public void setDataRecordValues(Map<String, Object> dataRecordValues) {
 		this.dataRecordValues = dataRecordValues;
+
+		_dataRecordValuesSupplier = null;
 	}
 
 	@JsonIgnore
@@ -94,160 +115,224 @@ public class DataLayoutRenderingContext implements Serializable {
 		UnsafeSupplier<Map<String, Object>, Exception>
 			dataRecordValuesUnsafeSupplier) {
 
-		try {
-			dataRecordValues = dataRecordValuesUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_dataRecordValuesSupplier = () -> {
+			try {
+				return dataRecordValuesUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, Object> dataRecordValues;
 
+	private Supplier<Map<String, Object>> _dataRecordValuesSupplier;
+
 	@Schema
 	public String getNamespace() {
+		if (_namespaceSupplier != null) {
+			namespace = _namespaceSupplier.get();
+
+			_namespaceSupplier = null;
+		}
+
 		return namespace;
 	}
 
 	public void setNamespace(String namespace) {
 		this.namespace = namespace;
+
+		_namespaceSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setNamespace(
 		UnsafeSupplier<String, Exception> namespaceUnsafeSupplier) {
 
-		try {
-			namespace = namespaceUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_namespaceSupplier = () -> {
+			try {
+				return namespaceUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String namespace;
 
+	private Supplier<String> _namespaceSupplier;
+
 	@Schema
 	public String getPathThemeImages() {
+		if (_pathThemeImagesSupplier != null) {
+			pathThemeImages = _pathThemeImagesSupplier.get();
+
+			_pathThemeImagesSupplier = null;
+		}
+
 		return pathThemeImages;
 	}
 
 	public void setPathThemeImages(String pathThemeImages) {
 		this.pathThemeImages = pathThemeImages;
+
+		_pathThemeImagesSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setPathThemeImages(
 		UnsafeSupplier<String, Exception> pathThemeImagesUnsafeSupplier) {
 
-		try {
-			pathThemeImages = pathThemeImagesUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_pathThemeImagesSupplier = () -> {
+			try {
+				return pathThemeImagesUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String pathThemeImages;
 
+	private Supplier<String> _pathThemeImagesSupplier;
+
 	@Schema
 	public Boolean getReadOnly() {
+		if (_readOnlySupplier != null) {
+			readOnly = _readOnlySupplier.get();
+
+			_readOnlySupplier = null;
+		}
+
 		return readOnly;
 	}
 
 	public void setReadOnly(Boolean readOnly) {
 		this.readOnly = readOnly;
+
+		_readOnlySupplier = null;
 	}
 
 	@JsonIgnore
 	public void setReadOnly(
 		UnsafeSupplier<Boolean, Exception> readOnlyUnsafeSupplier) {
 
-		try {
-			readOnly = readOnlyUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_readOnlySupplier = () -> {
+			try {
+				return readOnlyUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean readOnly;
 
+	private Supplier<Boolean> _readOnlySupplier;
+
 	@Schema
 	public Long getScopeGroupId() {
+		if (_scopeGroupIdSupplier != null) {
+			scopeGroupId = _scopeGroupIdSupplier.get();
+
+			_scopeGroupIdSupplier = null;
+		}
+
 		return scopeGroupId;
 	}
 
 	public void setScopeGroupId(Long scopeGroupId) {
 		this.scopeGroupId = scopeGroupId;
+
+		_scopeGroupIdSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setScopeGroupId(
 		UnsafeSupplier<Long, Exception> scopeGroupIdUnsafeSupplier) {
 
-		try {
-			scopeGroupId = scopeGroupIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_scopeGroupIdSupplier = () -> {
+			try {
+				return scopeGroupIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long scopeGroupId;
 
+	private Supplier<Long> _scopeGroupIdSupplier;
+
 	@Schema
 	public Long getSiteGroupId() {
+		if (_siteGroupIdSupplier != null) {
+			siteGroupId = _siteGroupIdSupplier.get();
+
+			_siteGroupIdSupplier = null;
+		}
+
 		return siteGroupId;
 	}
 
 	public void setSiteGroupId(Long siteGroupId) {
 		this.siteGroupId = siteGroupId;
+
+		_siteGroupIdSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setSiteGroupId(
 		UnsafeSupplier<Long, Exception> siteGroupIdUnsafeSupplier) {
 
-		try {
-			siteGroupId = siteGroupIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_siteGroupIdSupplier = () -> {
+			try {
+				return siteGroupIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long siteGroupId;
+
+	private Supplier<Long> _siteGroupIdSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -278,6 +363,8 @@ public class DataLayoutRenderingContext implements Serializable {
 
 		sb.append("{");
 
+		String containerId = getContainerId();
+
 		if (containerId != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -292,6 +379,8 @@ public class DataLayoutRenderingContext implements Serializable {
 			sb.append("\"");
 		}
 
+		Map<String, Object> dataRecordValues = getDataRecordValues();
+
 		if (dataRecordValues != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -301,6 +390,8 @@ public class DataLayoutRenderingContext implements Serializable {
 
 			sb.append(_toJSON(dataRecordValues));
 		}
+
+		String namespace = getNamespace();
 
 		if (namespace != null) {
 			if (sb.length() > 1) {
@@ -316,6 +407,8 @@ public class DataLayoutRenderingContext implements Serializable {
 			sb.append("\"");
 		}
 
+		String pathThemeImages = getPathThemeImages();
+
 		if (pathThemeImages != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -330,6 +423,8 @@ public class DataLayoutRenderingContext implements Serializable {
 			sb.append("\"");
 		}
 
+		Boolean readOnly = getReadOnly();
+
 		if (readOnly != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -340,6 +435,8 @@ public class DataLayoutRenderingContext implements Serializable {
 			sb.append(readOnly);
 		}
 
+		Long scopeGroupId = getScopeGroupId();
+
 		if (scopeGroupId != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -349,6 +446,8 @@ public class DataLayoutRenderingContext implements Serializable {
 
 			sb.append(scopeGroupId);
 		}
+
+		Long siteGroupId = getSiteGroupId();
 
 		if (siteGroupId != null) {
 			if (sb.length() > 1) {

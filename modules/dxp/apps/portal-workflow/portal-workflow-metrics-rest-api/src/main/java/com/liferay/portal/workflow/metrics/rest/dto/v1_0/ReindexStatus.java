@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -52,57 +53,81 @@ public class ReindexStatus implements Serializable {
 
 	@Schema
 	public Long getCompletionPercentage() {
+		if (_completionPercentageSupplier != null) {
+			completionPercentage = _completionPercentageSupplier.get();
+
+			_completionPercentageSupplier = null;
+		}
+
 		return completionPercentage;
 	}
 
 	public void setCompletionPercentage(Long completionPercentage) {
 		this.completionPercentage = completionPercentage;
+
+		_completionPercentageSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setCompletionPercentage(
 		UnsafeSupplier<Long, Exception> completionPercentageUnsafeSupplier) {
 
-		try {
-			completionPercentage = completionPercentageUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_completionPercentageSupplier = () -> {
+			try {
+				return completionPercentageUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long completionPercentage;
 
+	private Supplier<Long> _completionPercentageSupplier;
+
 	@Schema
 	public String getKey() {
+		if (_keySupplier != null) {
+			key = _keySupplier.get();
+
+			_keySupplier = null;
+		}
+
 		return key;
 	}
 
 	public void setKey(String key) {
 		this.key = key;
+
+		_keySupplier = null;
 	}
 
 	@JsonIgnore
 	public void setKey(UnsafeSupplier<String, Exception> keyUnsafeSupplier) {
-		try {
-			key = keyUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_keySupplier = () -> {
+			try {
+				return keyUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String key;
+
+	private Supplier<String> _keySupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -131,6 +156,8 @@ public class ReindexStatus implements Serializable {
 
 		sb.append("{");
 
+		Long completionPercentage = getCompletionPercentage();
+
 		if (completionPercentage != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -140,6 +167,8 @@ public class ReindexStatus implements Serializable {
 
 			sb.append(completionPercentage);
 		}
+
+		String key = getKey();
 
 		if (key != null) {
 			if (sb.length() > 1) {

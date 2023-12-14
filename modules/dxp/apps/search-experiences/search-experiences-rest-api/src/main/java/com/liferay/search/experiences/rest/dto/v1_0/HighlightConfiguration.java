@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -53,11 +54,19 @@ public class HighlightConfiguration implements Serializable {
 	@Schema
 	@Valid
 	public Map<String, HighlightField> getFields() {
+		if (_fieldsSupplier != null) {
+			fields = _fieldsSupplier.get();
+
+			_fieldsSupplier = null;
+		}
+
 		return fields;
 	}
 
 	public void setFields(Map<String, HighlightField> fields) {
 		this.fields = fields;
+
+		_fieldsSupplier = null;
 	}
 
 	@JsonIgnore
@@ -65,186 +74,262 @@ public class HighlightConfiguration implements Serializable {
 		UnsafeSupplier<Map<String, HighlightField>, Exception>
 			fieldsUnsafeSupplier) {
 
-		try {
-			fields = fieldsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_fieldsSupplier = () -> {
+			try {
+				return fieldsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, HighlightField> fields;
 
+	private Supplier<Map<String, HighlightField>> _fieldsSupplier;
+
 	@Schema
 	public Integer getFragment_size() {
+		if (_fragment_sizeSupplier != null) {
+			fragment_size = _fragment_sizeSupplier.get();
+
+			_fragment_sizeSupplier = null;
+		}
+
 		return fragment_size;
 	}
 
 	public void setFragment_size(Integer fragment_size) {
 		this.fragment_size = fragment_size;
+
+		_fragment_sizeSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setFragment_size(
 		UnsafeSupplier<Integer, Exception> fragment_sizeUnsafeSupplier) {
 
-		try {
-			fragment_size = fragment_sizeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_fragment_sizeSupplier = () -> {
+			try {
+				return fragment_sizeUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer fragment_size;
 
+	private Supplier<Integer> _fragment_sizeSupplier;
+
 	@Schema
 	public Integer getNumber_of_fragments() {
+		if (_number_of_fragmentsSupplier != null) {
+			number_of_fragments = _number_of_fragmentsSupplier.get();
+
+			_number_of_fragmentsSupplier = null;
+		}
+
 		return number_of_fragments;
 	}
 
 	public void setNumber_of_fragments(Integer number_of_fragments) {
 		this.number_of_fragments = number_of_fragments;
+
+		_number_of_fragmentsSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setNumber_of_fragments(
 		UnsafeSupplier<Integer, Exception> number_of_fragmentsUnsafeSupplier) {
 
-		try {
-			number_of_fragments = number_of_fragmentsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_number_of_fragmentsSupplier = () -> {
+			try {
+				return number_of_fragmentsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer number_of_fragments;
 
+	private Supplier<Integer> _number_of_fragmentsSupplier;
+
 	@Schema
 	public String[] getPost_tags() {
+		if (_post_tagsSupplier != null) {
+			post_tags = _post_tagsSupplier.get();
+
+			_post_tagsSupplier = null;
+		}
+
 		return post_tags;
 	}
 
 	public void setPost_tags(String[] post_tags) {
 		this.post_tags = post_tags;
+
+		_post_tagsSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setPost_tags(
 		UnsafeSupplier<String[], Exception> post_tagsUnsafeSupplier) {
 
-		try {
-			post_tags = post_tagsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_post_tagsSupplier = () -> {
+			try {
+				return post_tagsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] post_tags;
 
+	private Supplier<String[]> _post_tagsSupplier;
+
 	@Schema
 	public String[] getPre_tags() {
+		if (_pre_tagsSupplier != null) {
+			pre_tags = _pre_tagsSupplier.get();
+
+			_pre_tagsSupplier = null;
+		}
+
 		return pre_tags;
 	}
 
 	public void setPre_tags(String[] pre_tags) {
 		this.pre_tags = pre_tags;
+
+		_pre_tagsSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setPre_tags(
 		UnsafeSupplier<String[], Exception> pre_tagsUnsafeSupplier) {
 
-		try {
-			pre_tags = pre_tagsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_pre_tagsSupplier = () -> {
+			try {
+				return pre_tagsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] pre_tags;
 
+	private Supplier<String[]> _pre_tagsSupplier;
+
 	@Schema
 	public Boolean getRequire_field_match() {
+		if (_require_field_matchSupplier != null) {
+			require_field_match = _require_field_matchSupplier.get();
+
+			_require_field_matchSupplier = null;
+		}
+
 		return require_field_match;
 	}
 
 	public void setRequire_field_match(Boolean require_field_match) {
 		this.require_field_match = require_field_match;
+
+		_require_field_matchSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setRequire_field_match(
 		UnsafeSupplier<Boolean, Exception> require_field_matchUnsafeSupplier) {
 
-		try {
-			require_field_match = require_field_matchUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_require_field_matchSupplier = () -> {
+			try {
+				return require_field_matchUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean require_field_match;
 
+	private Supplier<Boolean> _require_field_matchSupplier;
+
 	@Schema
 	public String getType() {
+		if (_typeSupplier != null) {
+			type = _typeSupplier.get();
+
+			_typeSupplier = null;
+		}
+
 		return type;
 	}
 
 	public void setType(String type) {
 		this.type = type;
+
+		_typeSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setType(UnsafeSupplier<String, Exception> typeUnsafeSupplier) {
-		try {
-			type = typeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_typeSupplier = () -> {
+			try {
+				return typeUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String type;
+
+	private Supplier<String> _typeSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -274,6 +359,8 @@ public class HighlightConfiguration implements Serializable {
 
 		sb.append("{");
 
+		Map<String, HighlightField> fields = getFields();
+
 		if (fields != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -283,6 +370,8 @@ public class HighlightConfiguration implements Serializable {
 
 			sb.append(_toJSON(fields));
 		}
+
+		Integer fragment_size = getFragment_size();
 
 		if (fragment_size != null) {
 			if (sb.length() > 1) {
@@ -294,6 +383,8 @@ public class HighlightConfiguration implements Serializable {
 			sb.append(fragment_size);
 		}
 
+		Integer number_of_fragments = getNumber_of_fragments();
+
 		if (number_of_fragments != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -303,6 +394,8 @@ public class HighlightConfiguration implements Serializable {
 
 			sb.append(number_of_fragments);
 		}
+
+		String[] post_tags = getPost_tags();
 
 		if (post_tags != null) {
 			if (sb.length() > 1) {
@@ -328,6 +421,8 @@ public class HighlightConfiguration implements Serializable {
 			sb.append("]");
 		}
 
+		String[] pre_tags = getPre_tags();
+
 		if (pre_tags != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -352,6 +447,8 @@ public class HighlightConfiguration implements Serializable {
 			sb.append("]");
 		}
 
+		Boolean require_field_match = getRequire_field_match();
+
 		if (require_field_match != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -361,6 +458,8 @@ public class HighlightConfiguration implements Serializable {
 
 			sb.append(require_field_match);
 		}
+
+		String type = getType();
 
 		if (type != null) {
 			if (sb.length() > 1) {

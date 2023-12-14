@@ -25,6 +25,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -58,24 +59,34 @@ public class FragmentFieldHTML implements Serializable {
 	)
 	@Valid
 	public Object getHtml() {
+		if (_htmlSupplier != null) {
+			html = _htmlSupplier.get();
+
+			_htmlSupplier = null;
+		}
+
 		return html;
 	}
 
 	public void setHtml(Object html) {
 		this.html = html;
+
+		_htmlSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setHtml(UnsafeSupplier<Object, Exception> htmlUnsafeSupplier) {
-		try {
-			html = htmlUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_htmlSupplier = () -> {
+			try {
+				return htmlUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -83,6 +94,8 @@ public class FragmentFieldHTML implements Serializable {
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object html;
+
+	private Supplier<Object> _htmlSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -110,6 +123,8 @@ public class FragmentFieldHTML implements Serializable {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		Object html = getHtml();
 
 		if (html != null) {
 			if (sb.length() > 1) {

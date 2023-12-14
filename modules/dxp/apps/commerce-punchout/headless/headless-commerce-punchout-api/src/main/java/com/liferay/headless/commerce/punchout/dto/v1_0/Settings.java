@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -49,115 +50,163 @@ public class Settings implements Serializable {
 
 	@Schema
 	public Integer[] getAllowedQuantities() {
+		if (_allowedQuantitiesSupplier != null) {
+			allowedQuantities = _allowedQuantitiesSupplier.get();
+
+			_allowedQuantitiesSupplier = null;
+		}
+
 		return allowedQuantities;
 	}
 
 	public void setAllowedQuantities(Integer[] allowedQuantities) {
 		this.allowedQuantities = allowedQuantities;
+
+		_allowedQuantitiesSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setAllowedQuantities(
 		UnsafeSupplier<Integer[], Exception> allowedQuantitiesUnsafeSupplier) {
 
-		try {
-			allowedQuantities = allowedQuantitiesUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_allowedQuantitiesSupplier = () -> {
+			try {
+				return allowedQuantitiesUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer[] allowedQuantities;
 
+	private Supplier<Integer[]> _allowedQuantitiesSupplier;
+
 	@Schema
 	public Integer getMaxQuantity() {
+		if (_maxQuantitySupplier != null) {
+			maxQuantity = _maxQuantitySupplier.get();
+
+			_maxQuantitySupplier = null;
+		}
+
 		return maxQuantity;
 	}
 
 	public void setMaxQuantity(Integer maxQuantity) {
 		this.maxQuantity = maxQuantity;
+
+		_maxQuantitySupplier = null;
 	}
 
 	@JsonIgnore
 	public void setMaxQuantity(
 		UnsafeSupplier<Integer, Exception> maxQuantityUnsafeSupplier) {
 
-		try {
-			maxQuantity = maxQuantityUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_maxQuantitySupplier = () -> {
+			try {
+				return maxQuantityUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer maxQuantity;
 
+	private Supplier<Integer> _maxQuantitySupplier;
+
 	@Schema
 	public Integer getMinQuantity() {
+		if (_minQuantitySupplier != null) {
+			minQuantity = _minQuantitySupplier.get();
+
+			_minQuantitySupplier = null;
+		}
+
 		return minQuantity;
 	}
 
 	public void setMinQuantity(Integer minQuantity) {
 		this.minQuantity = minQuantity;
+
+		_minQuantitySupplier = null;
 	}
 
 	@JsonIgnore
 	public void setMinQuantity(
 		UnsafeSupplier<Integer, Exception> minQuantityUnsafeSupplier) {
 
-		try {
-			minQuantity = minQuantityUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_minQuantitySupplier = () -> {
+			try {
+				return minQuantityUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer minQuantity;
 
+	private Supplier<Integer> _minQuantitySupplier;
+
 	@Schema
 	public Integer getMultipleQuantity() {
+		if (_multipleQuantitySupplier != null) {
+			multipleQuantity = _multipleQuantitySupplier.get();
+
+			_multipleQuantitySupplier = null;
+		}
+
 		return multipleQuantity;
 	}
 
 	public void setMultipleQuantity(Integer multipleQuantity) {
 		this.multipleQuantity = multipleQuantity;
+
+		_multipleQuantitySupplier = null;
 	}
 
 	@JsonIgnore
 	public void setMultipleQuantity(
 		UnsafeSupplier<Integer, Exception> multipleQuantityUnsafeSupplier) {
 
-		try {
-			multipleQuantity = multipleQuantityUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_multipleQuantitySupplier = () -> {
+			try {
+				return multipleQuantityUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer multipleQuantity;
+
+	private Supplier<Integer> _multipleQuantitySupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -186,6 +235,8 @@ public class Settings implements Serializable {
 
 		sb.append("{");
 
+		Integer[] allowedQuantities = getAllowedQuantities();
+
 		if (allowedQuantities != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -206,6 +257,8 @@ public class Settings implements Serializable {
 			sb.append("]");
 		}
 
+		Integer maxQuantity = getMaxQuantity();
+
 		if (maxQuantity != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -216,6 +269,8 @@ public class Settings implements Serializable {
 			sb.append(maxQuantity);
 		}
 
+		Integer minQuantity = getMinQuantity();
+
 		if (minQuantity != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -225,6 +280,8 @@ public class Settings implements Serializable {
 
 			sb.append(minQuantity);
 		}
+
+		Integer multipleQuantity = getMultipleQuantity();
 
 		if (multipleQuantity != null) {
 			if (sb.length() > 1) {

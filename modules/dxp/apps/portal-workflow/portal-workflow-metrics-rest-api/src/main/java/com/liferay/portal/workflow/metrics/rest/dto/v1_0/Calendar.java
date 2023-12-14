@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -51,85 +52,121 @@ public class Calendar implements Serializable {
 
 	@Schema
 	public Boolean getDefaultCalendar() {
+		if (_defaultCalendarSupplier != null) {
+			defaultCalendar = _defaultCalendarSupplier.get();
+
+			_defaultCalendarSupplier = null;
+		}
+
 		return defaultCalendar;
 	}
 
 	public void setDefaultCalendar(Boolean defaultCalendar) {
 		this.defaultCalendar = defaultCalendar;
+
+		_defaultCalendarSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDefaultCalendar(
 		UnsafeSupplier<Boolean, Exception> defaultCalendarUnsafeSupplier) {
 
-		try {
-			defaultCalendar = defaultCalendarUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_defaultCalendarSupplier = () -> {
+			try {
+				return defaultCalendarUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean defaultCalendar;
 
+	private Supplier<Boolean> _defaultCalendarSupplier;
+
 	@Schema
 	public String getKey() {
+		if (_keySupplier != null) {
+			key = _keySupplier.get();
+
+			_keySupplier = null;
+		}
+
 		return key;
 	}
 
 	public void setKey(String key) {
 		this.key = key;
+
+		_keySupplier = null;
 	}
 
 	@JsonIgnore
 	public void setKey(UnsafeSupplier<String, Exception> keyUnsafeSupplier) {
-		try {
-			key = keyUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_keySupplier = () -> {
+			try {
+				return keyUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String key;
 
+	private Supplier<String> _keySupplier;
+
 	@Schema
 	public String getTitle() {
+		if (_titleSupplier != null) {
+			title = _titleSupplier.get();
+
+			_titleSupplier = null;
+		}
+
 		return title;
 	}
 
 	public void setTitle(String title) {
 		this.title = title;
+
+		_titleSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setTitle(
 		UnsafeSupplier<String, Exception> titleUnsafeSupplier) {
 
-		try {
-			title = titleUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_titleSupplier = () -> {
+			try {
+				return titleUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String title;
+
+	private Supplier<String> _titleSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -158,6 +195,8 @@ public class Calendar implements Serializable {
 
 		sb.append("{");
 
+		Boolean defaultCalendar = getDefaultCalendar();
+
 		if (defaultCalendar != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -167,6 +206,8 @@ public class Calendar implements Serializable {
 
 			sb.append(defaultCalendar);
 		}
+
+		String key = getKey();
 
 		if (key != null) {
 			if (sb.length() > 1) {
@@ -181,6 +222,8 @@ public class Calendar implements Serializable {
 
 			sb.append("\"");
 		}
+
+		String title = getTitle();
 
 		if (title != null) {
 			if (sb.length() > 1) {

@@ -28,6 +28,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -56,11 +57,19 @@ public class DataListView implements Serializable {
 	@Schema
 	@Valid
 	public Map<String, Object> getAppliedFilters() {
+		if (_appliedFiltersSupplier != null) {
+			appliedFilters = _appliedFiltersSupplier.get();
+
+			_appliedFiltersSupplier = null;
+		}
+
 		return appliedFilters;
 	}
 
 	public void setAppliedFilters(Map<String, Object> appliedFilters) {
 		this.appliedFilters = appliedFilters;
+
+		_appliedFiltersSupplier = null;
 	}
 
 	@JsonIgnore
@@ -68,271 +77,383 @@ public class DataListView implements Serializable {
 		UnsafeSupplier<Map<String, Object>, Exception>
 			appliedFiltersUnsafeSupplier) {
 
-		try {
-			appliedFilters = appliedFiltersUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_appliedFiltersSupplier = () -> {
+			try {
+				return appliedFiltersUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, Object> appliedFilters;
 
+	private Supplier<Map<String, Object>> _appliedFiltersSupplier;
+
 	@Schema
 	public Long getDataDefinitionId() {
+		if (_dataDefinitionIdSupplier != null) {
+			dataDefinitionId = _dataDefinitionIdSupplier.get();
+
+			_dataDefinitionIdSupplier = null;
+		}
+
 		return dataDefinitionId;
 	}
 
 	public void setDataDefinitionId(Long dataDefinitionId) {
 		this.dataDefinitionId = dataDefinitionId;
+
+		_dataDefinitionIdSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDataDefinitionId(
 		UnsafeSupplier<Long, Exception> dataDefinitionIdUnsafeSupplier) {
 
-		try {
-			dataDefinitionId = dataDefinitionIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_dataDefinitionIdSupplier = () -> {
+			try {
+				return dataDefinitionIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long dataDefinitionId;
 
+	private Supplier<Long> _dataDefinitionIdSupplier;
+
 	@Schema
 	public Date getDateCreated() {
+		if (_dateCreatedSupplier != null) {
+			dateCreated = _dateCreatedSupplier.get();
+
+			_dateCreatedSupplier = null;
+		}
+
 		return dateCreated;
 	}
 
 	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
+
+		_dateCreatedSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDateCreated(
 		UnsafeSupplier<Date, Exception> dateCreatedUnsafeSupplier) {
 
-		try {
-			dateCreated = dateCreatedUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_dateCreatedSupplier = () -> {
+			try {
+				return dateCreatedUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateCreated;
 
+	private Supplier<Date> _dateCreatedSupplier;
+
 	@Schema
 	public Date getDateModified() {
+		if (_dateModifiedSupplier != null) {
+			dateModified = _dateModifiedSupplier.get();
+
+			_dateModifiedSupplier = null;
+		}
+
 		return dateModified;
 	}
 
 	public void setDateModified(Date dateModified) {
 		this.dateModified = dateModified;
+
+		_dateModifiedSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDateModified(
 		UnsafeSupplier<Date, Exception> dateModifiedUnsafeSupplier) {
 
-		try {
-			dateModified = dateModifiedUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_dateModifiedSupplier = () -> {
+			try {
+				return dateModifiedUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateModified;
 
+	private Supplier<Date> _dateModifiedSupplier;
+
 	@Schema
 	public String[] getFieldNames() {
+		if (_fieldNamesSupplier != null) {
+			fieldNames = _fieldNamesSupplier.get();
+
+			_fieldNamesSupplier = null;
+		}
+
 		return fieldNames;
 	}
 
 	public void setFieldNames(String[] fieldNames) {
 		this.fieldNames = fieldNames;
+
+		_fieldNamesSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setFieldNames(
 		UnsafeSupplier<String[], Exception> fieldNamesUnsafeSupplier) {
 
-		try {
-			fieldNames = fieldNamesUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_fieldNamesSupplier = () -> {
+			try {
+				return fieldNamesUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] fieldNames;
 
+	private Supplier<String[]> _fieldNamesSupplier;
+
 	@Schema
 	public Long getId() {
+		if (_idSupplier != null) {
+			id = _idSupplier.get();
+
+			_idSupplier = null;
+		}
+
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
+
+		_idSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_idSupplier = () -> {
+			try {
+				return idUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	private Supplier<Long> _idSupplier;
+
 	@Schema
 	@Valid
 	public Map<String, Object> getName() {
+		if (_nameSupplier != null) {
+			name = _nameSupplier.get();
+
+			_nameSupplier = null;
+		}
+
 		return name;
 	}
 
 	public void setName(Map<String, Object> name) {
 		this.name = name;
+
+		_nameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setName(
 		UnsafeSupplier<Map<String, Object>, Exception> nameUnsafeSupplier) {
 
-		try {
-			name = nameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_nameSupplier = () -> {
+			try {
+				return nameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, Object> name;
 
+	private Supplier<Map<String, Object>> _nameSupplier;
+
 	@Schema
 	public Long getSiteId() {
+		if (_siteIdSupplier != null) {
+			siteId = _siteIdSupplier.get();
+
+			_siteIdSupplier = null;
+		}
+
 		return siteId;
 	}
 
 	public void setSiteId(Long siteId) {
 		this.siteId = siteId;
+
+		_siteIdSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setSiteId(
 		UnsafeSupplier<Long, Exception> siteIdUnsafeSupplier) {
 
-		try {
-			siteId = siteIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_siteIdSupplier = () -> {
+			try {
+				return siteIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long siteId;
 
+	private Supplier<Long> _siteIdSupplier;
+
 	@Schema
 	public String getSortField() {
+		if (_sortFieldSupplier != null) {
+			sortField = _sortFieldSupplier.get();
+
+			_sortFieldSupplier = null;
+		}
+
 		return sortField;
 	}
 
 	public void setSortField(String sortField) {
 		this.sortField = sortField;
+
+		_sortFieldSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setSortField(
 		UnsafeSupplier<String, Exception> sortFieldUnsafeSupplier) {
 
-		try {
-			sortField = sortFieldUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_sortFieldSupplier = () -> {
+			try {
+				return sortFieldUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String sortField;
 
+	private Supplier<String> _sortFieldSupplier;
+
 	@Schema
 	public Long getUserId() {
+		if (_userIdSupplier != null) {
+			userId = _userIdSupplier.get();
+
+			_userIdSupplier = null;
+		}
+
 		return userId;
 	}
 
 	public void setUserId(Long userId) {
 		this.userId = userId;
+
+		_userIdSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setUserId(
 		UnsafeSupplier<Long, Exception> userIdUnsafeSupplier) {
 
-		try {
-			userId = userIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_userIdSupplier = () -> {
+			try {
+				return userIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long userId;
+
+	private Supplier<Long> _userIdSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -364,6 +485,8 @@ public class DataListView implements Serializable {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+		Map<String, Object> appliedFilters = getAppliedFilters();
+
 		if (appliedFilters != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -374,6 +497,8 @@ public class DataListView implements Serializable {
 			sb.append(_toJSON(appliedFilters));
 		}
 
+		Long dataDefinitionId = getDataDefinitionId();
+
 		if (dataDefinitionId != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -383,6 +508,8 @@ public class DataListView implements Serializable {
 
 			sb.append(dataDefinitionId);
 		}
+
+		Date dateCreated = getDateCreated();
 
 		if (dateCreated != null) {
 			if (sb.length() > 1) {
@@ -398,6 +525,8 @@ public class DataListView implements Serializable {
 			sb.append("\"");
 		}
 
+		Date dateModified = getDateModified();
+
 		if (dateModified != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -411,6 +540,8 @@ public class DataListView implements Serializable {
 
 			sb.append("\"");
 		}
+
+		String[] fieldNames = getFieldNames();
 
 		if (fieldNames != null) {
 			if (sb.length() > 1) {
@@ -436,6 +567,8 @@ public class DataListView implements Serializable {
 			sb.append("]");
 		}
 
+		Long id = getId();
+
 		if (id != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -445,6 +578,8 @@ public class DataListView implements Serializable {
 
 			sb.append(id);
 		}
+
+		Map<String, Object> name = getName();
 
 		if (name != null) {
 			if (sb.length() > 1) {
@@ -456,6 +591,8 @@ public class DataListView implements Serializable {
 			sb.append(_toJSON(name));
 		}
 
+		Long siteId = getSiteId();
+
 		if (siteId != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -465,6 +602,8 @@ public class DataListView implements Serializable {
 
 			sb.append(siteId);
 		}
+
+		String sortField = getSortField();
 
 		if (sortField != null) {
 			if (sb.length() > 1) {
@@ -479,6 +618,8 @@ public class DataListView implements Serializable {
 
 			sb.append("\"");
 		}
+
+		Long userId = getUserId();
 
 		if (userId != null) {
 			if (sb.length() > 1) {

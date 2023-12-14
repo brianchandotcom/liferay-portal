@@ -25,6 +25,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -55,26 +56,36 @@ public class QueryResponse implements Serializable {
 	)
 	@Valid
 	public Object getResources() {
+		if (_ResourcesSupplier != null) {
+			Resources = _ResourcesSupplier.get();
+
+			_ResourcesSupplier = null;
+		}
+
 		return Resources;
 	}
 
 	public void setResources(Object Resources) {
 		this.Resources = Resources;
+
+		_ResourcesSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setResources(
 		UnsafeSupplier<Object, Exception> ResourcesUnsafeSupplier) {
 
-		try {
-			Resources = ResourcesUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_ResourcesSupplier = () -> {
+			try {
+				return ResourcesUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -83,30 +94,42 @@ public class QueryResponse implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object Resources;
 
+	private Supplier<Object> _ResourcesSupplier;
+
 	@Schema(
 		description = "The number of resources returned in a list response page."
 	)
 	public Integer getItemsPerPage() {
+		if (_itemsPerPageSupplier != null) {
+			itemsPerPage = _itemsPerPageSupplier.get();
+
+			_itemsPerPageSupplier = null;
+		}
+
 		return itemsPerPage;
 	}
 
 	public void setItemsPerPage(Integer itemsPerPage) {
 		this.itemsPerPage = itemsPerPage;
+
+		_itemsPerPageSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setItemsPerPage(
 		UnsafeSupplier<Integer, Exception> itemsPerPageUnsafeSupplier) {
 
-		try {
-			itemsPerPage = itemsPerPageUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_itemsPerPageSupplier = () -> {
+			try {
+				return itemsPerPageUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -115,30 +138,42 @@ public class QueryResponse implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer itemsPerPage;
 
+	private Supplier<Integer> _itemsPerPageSupplier;
+
 	@Schema(
 		description = "The 1-based index of the first result in the current set of list results."
 	)
 	public Integer getStartIndex() {
+		if (_startIndexSupplier != null) {
+			startIndex = _startIndexSupplier.get();
+
+			_startIndexSupplier = null;
+		}
+
 		return startIndex;
 	}
 
 	public void setStartIndex(Integer startIndex) {
 		this.startIndex = startIndex;
+
+		_startIndexSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setStartIndex(
 		UnsafeSupplier<Integer, Exception> startIndexUnsafeSupplier) {
 
-		try {
-			startIndex = startIndexUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_startIndexSupplier = () -> {
+			try {
+				return startIndexUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -147,30 +182,42 @@ public class QueryResponse implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer startIndex;
 
+	private Supplier<Integer> _startIndexSupplier;
+
 	@Schema(
 		description = "The total number of results returned by the list or query operation."
 	)
 	public Integer getTotalResults() {
+		if (_totalResultsSupplier != null) {
+			totalResults = _totalResultsSupplier.get();
+
+			_totalResultsSupplier = null;
+		}
+
 		return totalResults;
 	}
 
 	public void setTotalResults(Integer totalResults) {
 		this.totalResults = totalResults;
+
+		_totalResultsSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setTotalResults(
 		UnsafeSupplier<Integer, Exception> totalResultsUnsafeSupplier) {
 
-		try {
-			totalResults = totalResultsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_totalResultsSupplier = () -> {
+			try {
+				return totalResultsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -178,6 +225,8 @@ public class QueryResponse implements Serializable {
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer totalResults;
+
+	private Supplier<Integer> _totalResultsSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -206,6 +255,8 @@ public class QueryResponse implements Serializable {
 
 		sb.append("{");
 
+		Object Resources = getResources();
+
 		if (Resources != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -227,6 +278,8 @@ public class QueryResponse implements Serializable {
 			}
 		}
 
+		Integer itemsPerPage = getItemsPerPage();
+
 		if (itemsPerPage != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -237,6 +290,8 @@ public class QueryResponse implements Serializable {
 			sb.append(itemsPerPage);
 		}
 
+		Integer startIndex = getStartIndex();
+
 		if (startIndex != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -246,6 +301,8 @@ public class QueryResponse implements Serializable {
 
 			sb.append(startIndex);
 		}
+
+		Integer totalResults = getTotalResults();
 
 		if (totalResults != null) {
 			if (sb.length() > 1) {

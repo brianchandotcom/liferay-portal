@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -57,81 +58,115 @@ public class ProductSpecification implements Serializable {
 	@DecimalMin("0")
 	@Schema(example = "31130")
 	public Long getId() {
+		if (_idSupplier != null) {
+			id = _idSupplier.get();
+
+			_idSupplier = null;
+		}
+
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
+
+		_idSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_idSupplier = () -> {
+			try {
+				return idUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	private Supplier<Long> _idSupplier;
+
 	@DecimalMin("0")
 	@Schema(example = "30129")
 	public Long getOptionCategoryId() {
+		if (_optionCategoryIdSupplier != null) {
+			optionCategoryId = _optionCategoryIdSupplier.get();
+
+			_optionCategoryIdSupplier = null;
+		}
+
 		return optionCategoryId;
 	}
 
 	public void setOptionCategoryId(Long optionCategoryId) {
 		this.optionCategoryId = optionCategoryId;
+
+		_optionCategoryIdSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setOptionCategoryId(
 		UnsafeSupplier<Long, Exception> optionCategoryIdUnsafeSupplier) {
 
-		try {
-			optionCategoryId = optionCategoryIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_optionCategoryIdSupplier = () -> {
+			try {
+				return optionCategoryIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long optionCategoryId;
 
+	private Supplier<Long> _optionCategoryIdSupplier;
+
 	@Schema(example = "specification-key")
 	public String getSpecificationKey() {
+		if (_specificationKeySupplier != null) {
+			specificationKey = _specificationKeySupplier.get();
+
+			_specificationKeySupplier = null;
+		}
+
 		return specificationKey;
 	}
 
 	public void setSpecificationKey(String specificationKey) {
 		this.specificationKey = specificationKey;
+
+		_specificationKeySupplier = null;
 	}
 
 	@JsonIgnore
 	public void setSpecificationKey(
 		UnsafeSupplier<String, Exception> specificationKeyUnsafeSupplier) {
 
-		try {
-			specificationKey = specificationKeyUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_specificationKeySupplier = () -> {
+			try {
+				return specificationKeyUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
@@ -139,35 +174,49 @@ public class ProductSpecification implements Serializable {
 	@NotEmpty
 	protected String specificationKey;
 
+	private Supplier<String> _specificationKeySupplier;
+
 	@Schema
 	@Valid
 	public Map<String, String> getValue() {
+		if (_valueSupplier != null) {
+			value = _valueSupplier.get();
+
+			_valueSupplier = null;
+		}
+
 		return value;
 	}
 
 	public void setValue(Map<String, String> value) {
 		this.value = value;
+
+		_valueSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setValue(
 		UnsafeSupplier<Map<String, String>, Exception> valueUnsafeSupplier) {
 
-		try {
-			value = valueUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_valueSupplier = () -> {
+			try {
+				return valueUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotNull
 	protected Map<String, String> value;
+
+	private Supplier<Map<String, String>> _valueSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -197,6 +246,8 @@ public class ProductSpecification implements Serializable {
 
 		sb.append("{");
 
+		Long id = getId();
+
 		if (id != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -207,6 +258,8 @@ public class ProductSpecification implements Serializable {
 			sb.append(id);
 		}
 
+		Long optionCategoryId = getOptionCategoryId();
+
 		if (optionCategoryId != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -216,6 +269,8 @@ public class ProductSpecification implements Serializable {
 
 			sb.append(optionCategoryId);
 		}
+
+		String specificationKey = getSpecificationKey();
 
 		if (specificationKey != null) {
 			if (sb.length() > 1) {
@@ -230,6 +285,8 @@ public class ProductSpecification implements Serializable {
 
 			sb.append("\"");
 		}
+
+		Map<String, String> value = getValue();
 
 		if (value != null) {
 			if (sb.length() > 1) {

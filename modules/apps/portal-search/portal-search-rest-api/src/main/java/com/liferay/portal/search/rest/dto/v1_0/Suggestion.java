@@ -25,6 +25,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -53,84 +54,120 @@ public class Suggestion implements Serializable {
 	@Schema
 	@Valid
 	public Object getAttributes() {
+		if (_attributesSupplier != null) {
+			attributes = _attributesSupplier.get();
+
+			_attributesSupplier = null;
+		}
+
 		return attributes;
 	}
 
 	public void setAttributes(Object attributes) {
 		this.attributes = attributes;
+
+		_attributesSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setAttributes(
 		UnsafeSupplier<Object, Exception> attributesUnsafeSupplier) {
 
-		try {
-			attributes = attributesUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_attributesSupplier = () -> {
+			try {
+				return attributesUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object attributes;
 
+	private Supplier<Object> _attributesSupplier;
+
 	@Schema
 	@Valid
 	public Float getScore() {
+		if (_scoreSupplier != null) {
+			score = _scoreSupplier.get();
+
+			_scoreSupplier = null;
+		}
+
 		return score;
 	}
 
 	public void setScore(Float score) {
 		this.score = score;
+
+		_scoreSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setScore(UnsafeSupplier<Float, Exception> scoreUnsafeSupplier) {
-		try {
-			score = scoreUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_scoreSupplier = () -> {
+			try {
+				return scoreUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Float score;
 
+	private Supplier<Float> _scoreSupplier;
+
 	@Schema
 	public String getText() {
+		if (_textSupplier != null) {
+			text = _textSupplier.get();
+
+			_textSupplier = null;
+		}
+
 		return text;
 	}
 
 	public void setText(String text) {
 		this.text = text;
+
+		_textSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setText(UnsafeSupplier<String, Exception> textUnsafeSupplier) {
-		try {
-			text = textUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_textSupplier = () -> {
+			try {
+				return textUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String text;
+
+	private Supplier<String> _textSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -159,6 +196,8 @@ public class Suggestion implements Serializable {
 
 		sb.append("{");
 
+		Object attributes = getAttributes();
+
 		if (attributes != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -180,6 +219,8 @@ public class Suggestion implements Serializable {
 			}
 		}
 
+		Float score = getScore();
+
 		if (score != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -189,6 +230,8 @@ public class Suggestion implements Serializable {
 
 			sb.append(score);
 		}
+
+		String text = getText();
 
 		if (text != null) {
 			if (sb.length() > 1) {

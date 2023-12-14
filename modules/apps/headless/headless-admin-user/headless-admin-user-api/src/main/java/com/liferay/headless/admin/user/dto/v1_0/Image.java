@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -49,31 +50,43 @@ public class Image implements Serializable {
 
 	@Schema
 	public String getImage() {
+		if (_imageSupplier != null) {
+			image = _imageSupplier.get();
+
+			_imageSupplier = null;
+		}
+
 		return image;
 	}
 
 	public void setImage(String image) {
 		this.image = image;
+
+		_imageSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setImage(
 		UnsafeSupplier<String, Exception> imageUnsafeSupplier) {
 
-		try {
-			image = imageUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_imageSupplier = () -> {
+			try {
+				return imageUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String image;
+
+	private Supplier<String> _imageSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -101,6 +114,8 @@ public class Image implements Serializable {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		String image = getImage();
 
 		if (image != null) {
 			if (sb.length() > 1) {

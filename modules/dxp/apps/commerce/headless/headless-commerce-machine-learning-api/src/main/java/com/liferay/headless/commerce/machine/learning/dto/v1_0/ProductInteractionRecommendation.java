@@ -28,6 +28,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -57,168 +58,240 @@ public class ProductInteractionRecommendation implements Serializable {
 
 	@Schema(example = "2017-07-21")
 	public Date getCreateDate() {
+		if (_createDateSupplier != null) {
+			createDate = _createDateSupplier.get();
+
+			_createDateSupplier = null;
+		}
+
 		return createDate;
 	}
 
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
+
+		_createDateSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setCreateDate(
 		UnsafeSupplier<Date, Exception> createDateUnsafeSupplier) {
 
-		try {
-			createDate = createDateUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_createDateSupplier = () -> {
+			try {
+				return createDateUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date createDate;
 
+	private Supplier<Date> _createDateSupplier;
+
 	@Schema
 	public String getJobId() {
+		if (_jobIdSupplier != null) {
+			jobId = _jobIdSupplier.get();
+
+			_jobIdSupplier = null;
+		}
+
 		return jobId;
 	}
 
 	public void setJobId(String jobId) {
 		this.jobId = jobId;
+
+		_jobIdSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setJobId(
 		UnsafeSupplier<String, Exception> jobIdUnsafeSupplier) {
 
-		try {
-			jobId = jobIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_jobIdSupplier = () -> {
+			try {
+				return jobIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String jobId;
 
+	private Supplier<String> _jobIdSupplier;
+
 	@Schema(description = "The product identifier.")
 	public Long getProductId() {
+		if (_productIdSupplier != null) {
+			productId = _productIdSupplier.get();
+
+			_productIdSupplier = null;
+		}
+
 		return productId;
 	}
 
 	public void setProductId(Long productId) {
 		this.productId = productId;
+
+		_productIdSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setProductId(
 		UnsafeSupplier<Long, Exception> productIdUnsafeSupplier) {
 
-		try {
-			productId = productIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_productIdSupplier = () -> {
+			try {
+				return productIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The product identifier.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long productId;
 
+	private Supplier<Long> _productIdSupplier;
+
 	@Schema(description = "The recommendation rank.")
 	public Integer getRank() {
+		if (_rankSupplier != null) {
+			rank = _rankSupplier.get();
+
+			_rankSupplier = null;
+		}
+
 		return rank;
 	}
 
 	public void setRank(Integer rank) {
 		this.rank = rank;
+
+		_rankSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setRank(UnsafeSupplier<Integer, Exception> rankUnsafeSupplier) {
-		try {
-			rank = rankUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_rankSupplier = () -> {
+			try {
+				return rankUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The recommendation rank.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer rank;
 
+	private Supplier<Integer> _rankSupplier;
+
 	@Schema(description = "The recommended product identifier.")
 	public Long getRecommendedProductId() {
+		if (_recommendedProductIdSupplier != null) {
+			recommendedProductId = _recommendedProductIdSupplier.get();
+
+			_recommendedProductIdSupplier = null;
+		}
+
 		return recommendedProductId;
 	}
 
 	public void setRecommendedProductId(Long recommendedProductId) {
 		this.recommendedProductId = recommendedProductId;
+
+		_recommendedProductIdSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setRecommendedProductId(
 		UnsafeSupplier<Long, Exception> recommendedProductIdUnsafeSupplier) {
 
-		try {
-			recommendedProductId = recommendedProductIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_recommendedProductIdSupplier = () -> {
+			try {
+				return recommendedProductIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The recommended product identifier.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long recommendedProductId;
 
+	private Supplier<Long> _recommendedProductIdSupplier;
+
 	@Schema(description = "The recommendation score.")
 	@Valid
 	public Float getScore() {
+		if (_scoreSupplier != null) {
+			score = _scoreSupplier.get();
+
+			_scoreSupplier = null;
+		}
+
 		return score;
 	}
 
 	public void setScore(Float score) {
 		this.score = score;
+
+		_scoreSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setScore(UnsafeSupplier<Float, Exception> scoreUnsafeSupplier) {
-		try {
-			score = scoreUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_scoreSupplier = () -> {
+			try {
+				return scoreUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The recommendation score.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Float score;
+
+	private Supplier<Float> _scoreSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -252,6 +325,8 @@ public class ProductInteractionRecommendation implements Serializable {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+		Date createDate = getCreateDate();
+
 		if (createDate != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -265,6 +340,8 @@ public class ProductInteractionRecommendation implements Serializable {
 
 			sb.append("\"");
 		}
+
+		String jobId = getJobId();
 
 		if (jobId != null) {
 			if (sb.length() > 1) {
@@ -280,6 +357,8 @@ public class ProductInteractionRecommendation implements Serializable {
 			sb.append("\"");
 		}
 
+		Long productId = getProductId();
+
 		if (productId != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -289,6 +368,8 @@ public class ProductInteractionRecommendation implements Serializable {
 
 			sb.append(productId);
 		}
+
+		Integer rank = getRank();
 
 		if (rank != null) {
 			if (sb.length() > 1) {
@@ -300,6 +381,8 @@ public class ProductInteractionRecommendation implements Serializable {
 			sb.append(rank);
 		}
 
+		Long recommendedProductId = getRecommendedProductId();
+
 		if (recommendedProductId != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -309,6 +392,8 @@ public class ProductInteractionRecommendation implements Serializable {
 
 			sb.append(recommendedProductId);
 		}
+
+		Float score = getScore();
 
 		if (score != null) {
 			if (sb.length() > 1) {

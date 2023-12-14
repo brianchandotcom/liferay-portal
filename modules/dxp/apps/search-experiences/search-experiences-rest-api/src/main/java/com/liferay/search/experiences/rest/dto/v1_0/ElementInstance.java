@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -52,11 +53,19 @@ public class ElementInstance implements Serializable {
 	@Schema
 	@Valid
 	public Configuration getConfigurationEntry() {
+		if (_configurationEntrySupplier != null) {
+			configurationEntry = _configurationEntrySupplier.get();
+
+			_configurationEntrySupplier = null;
+		}
+
 		return configurationEntry;
 	}
 
 	public void setConfigurationEntry(Configuration configurationEntry) {
 		this.configurationEntry = configurationEntry;
+
+		_configurationEntrySupplier = null;
 	}
 
 	@JsonIgnore
@@ -64,107 +73,153 @@ public class ElementInstance implements Serializable {
 		UnsafeSupplier<Configuration, Exception>
 			configurationEntryUnsafeSupplier) {
 
-		try {
-			configurationEntry = configurationEntryUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_configurationEntrySupplier = () -> {
+			try {
+				return configurationEntryUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Configuration configurationEntry;
 
+	private Supplier<Configuration> _configurationEntrySupplier;
+
 	@Schema
 	@Valid
 	public SXPElement getSxpElement() {
+		if (_sxpElementSupplier != null) {
+			sxpElement = _sxpElementSupplier.get();
+
+			_sxpElementSupplier = null;
+		}
+
 		return sxpElement;
 	}
 
 	public void setSxpElement(SXPElement sxpElement) {
 		this.sxpElement = sxpElement;
+
+		_sxpElementSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setSxpElement(
 		UnsafeSupplier<SXPElement, Exception> sxpElementUnsafeSupplier) {
 
-		try {
-			sxpElement = sxpElementUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_sxpElementSupplier = () -> {
+			try {
+				return sxpElementUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected SXPElement sxpElement;
 
+	private Supplier<SXPElement> _sxpElementSupplier;
+
 	@Schema
 	public Long getSxpElementId() {
+		if (_sxpElementIdSupplier != null) {
+			sxpElementId = _sxpElementIdSupplier.get();
+
+			_sxpElementIdSupplier = null;
+		}
+
 		return sxpElementId;
 	}
 
 	public void setSxpElementId(Long sxpElementId) {
 		this.sxpElementId = sxpElementId;
+
+		_sxpElementIdSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setSxpElementId(
 		UnsafeSupplier<Long, Exception> sxpElementIdUnsafeSupplier) {
 
-		try {
-			sxpElementId = sxpElementIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_sxpElementIdSupplier = () -> {
+			try {
+				return sxpElementIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long sxpElementId;
 
+	private Supplier<Long> _sxpElementIdSupplier;
+
 	@Schema
 	public Integer getType() {
+		if (_typeSupplier != null) {
+			type = _typeSupplier.get();
+
+			_typeSupplier = null;
+		}
+
 		return type;
 	}
 
 	public void setType(Integer type) {
 		this.type = type;
+
+		_typeSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setType(UnsafeSupplier<Integer, Exception> typeUnsafeSupplier) {
-		try {
-			type = typeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_typeSupplier = () -> {
+			try {
+				return typeUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer type;
 
+	private Supplier<Integer> _typeSupplier;
+
 	@Schema
 	@Valid
 	public Map<String, Object> getUiConfigurationValues() {
+		if (_uiConfigurationValuesSupplier != null) {
+			uiConfigurationValues = _uiConfigurationValuesSupplier.get();
+
+			_uiConfigurationValuesSupplier = null;
+		}
+
 		return uiConfigurationValues;
 	}
 
@@ -172,6 +227,8 @@ public class ElementInstance implements Serializable {
 		Map<String, Object> uiConfigurationValues) {
 
 		this.uiConfigurationValues = uiConfigurationValues;
+
+		_uiConfigurationValuesSupplier = null;
 	}
 
 	@JsonIgnore
@@ -179,20 +236,24 @@ public class ElementInstance implements Serializable {
 		UnsafeSupplier<Map<String, Object>, Exception>
 			uiConfigurationValuesUnsafeSupplier) {
 
-		try {
-			uiConfigurationValues = uiConfigurationValuesUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_uiConfigurationValuesSupplier = () -> {
+			try {
+				return uiConfigurationValuesUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, Object> uiConfigurationValues;
+
+	private Supplier<Map<String, Object>> _uiConfigurationValuesSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -221,6 +282,8 @@ public class ElementInstance implements Serializable {
 
 		sb.append("{");
 
+		Configuration configurationEntry = getConfigurationEntry();
+
 		if (configurationEntry != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -230,6 +293,8 @@ public class ElementInstance implements Serializable {
 
 			sb.append(String.valueOf(configurationEntry));
 		}
+
+		SXPElement sxpElement = getSxpElement();
 
 		if (sxpElement != null) {
 			if (sb.length() > 1) {
@@ -241,6 +306,8 @@ public class ElementInstance implements Serializable {
 			sb.append(String.valueOf(sxpElement));
 		}
 
+		Long sxpElementId = getSxpElementId();
+
 		if (sxpElementId != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -251,6 +318,8 @@ public class ElementInstance implements Serializable {
 			sb.append(sxpElementId);
 		}
 
+		Integer type = getType();
+
 		if (type != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -260,6 +329,8 @@ public class ElementInstance implements Serializable {
 
 			sb.append(type);
 		}
+
+		Map<String, Object> uiConfigurationValues = getUiConfigurationValues();
 
 		if (uiConfigurationValues != null) {
 			if (sb.length() > 1) {

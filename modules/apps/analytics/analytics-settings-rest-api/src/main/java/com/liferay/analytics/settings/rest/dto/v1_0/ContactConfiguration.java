@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -50,67 +51,99 @@ public class ContactConfiguration implements Serializable {
 
 	@Schema
 	public Boolean getSyncAllAccounts() {
+		if (_syncAllAccountsSupplier != null) {
+			syncAllAccounts = _syncAllAccountsSupplier.get();
+
+			_syncAllAccountsSupplier = null;
+		}
+
 		return syncAllAccounts;
 	}
 
 	public void setSyncAllAccounts(Boolean syncAllAccounts) {
 		this.syncAllAccounts = syncAllAccounts;
+
+		_syncAllAccountsSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setSyncAllAccounts(
 		UnsafeSupplier<Boolean, Exception> syncAllAccountsUnsafeSupplier) {
 
-		try {
-			syncAllAccounts = syncAllAccountsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_syncAllAccountsSupplier = () -> {
+			try {
+				return syncAllAccountsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean syncAllAccounts;
 
+	private Supplier<Boolean> _syncAllAccountsSupplier;
+
 	@Schema
 	public Boolean getSyncAllContacts() {
+		if (_syncAllContactsSupplier != null) {
+			syncAllContacts = _syncAllContactsSupplier.get();
+
+			_syncAllContactsSupplier = null;
+		}
+
 		return syncAllContacts;
 	}
 
 	public void setSyncAllContacts(Boolean syncAllContacts) {
 		this.syncAllContacts = syncAllContacts;
+
+		_syncAllContactsSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setSyncAllContacts(
 		UnsafeSupplier<Boolean, Exception> syncAllContactsUnsafeSupplier) {
 
-		try {
-			syncAllContacts = syncAllContactsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_syncAllContactsSupplier = () -> {
+			try {
+				return syncAllContactsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean syncAllContacts;
 
+	private Supplier<Boolean> _syncAllContactsSupplier;
+
 	@Schema
 	public String[] getSyncedAccountGroupIds() {
+		if (_syncedAccountGroupIdsSupplier != null) {
+			syncedAccountGroupIds = _syncedAccountGroupIdsSupplier.get();
+
+			_syncedAccountGroupIdsSupplier = null;
+		}
+
 		return syncedAccountGroupIds;
 	}
 
 	public void setSyncedAccountGroupIds(String[] syncedAccountGroupIds) {
 		this.syncedAccountGroupIds = syncedAccountGroupIds;
+
+		_syncedAccountGroupIdsSupplier = null;
 	}
 
 	@JsonIgnore
@@ -118,28 +151,40 @@ public class ContactConfiguration implements Serializable {
 		UnsafeSupplier<String[], Exception>
 			syncedAccountGroupIdsUnsafeSupplier) {
 
-		try {
-			syncedAccountGroupIds = syncedAccountGroupIdsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_syncedAccountGroupIdsSupplier = () -> {
+			try {
+				return syncedAccountGroupIdsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] syncedAccountGroupIds;
 
+	private Supplier<String[]> _syncedAccountGroupIdsSupplier;
+
 	@Schema
 	public String[] getSyncedOrganizationIds() {
+		if (_syncedOrganizationIdsSupplier != null) {
+			syncedOrganizationIds = _syncedOrganizationIdsSupplier.get();
+
+			_syncedOrganizationIdsSupplier = null;
+		}
+
 		return syncedOrganizationIds;
 	}
 
 	public void setSyncedOrganizationIds(String[] syncedOrganizationIds) {
 		this.syncedOrganizationIds = syncedOrganizationIds;
+
+		_syncedOrganizationIdsSupplier = null;
 	}
 
 	@JsonIgnore
@@ -147,48 +192,64 @@ public class ContactConfiguration implements Serializable {
 		UnsafeSupplier<String[], Exception>
 			syncedOrganizationIdsUnsafeSupplier) {
 
-		try {
-			syncedOrganizationIds = syncedOrganizationIdsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_syncedOrganizationIdsSupplier = () -> {
+			try {
+				return syncedOrganizationIdsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] syncedOrganizationIds;
 
+	private Supplier<String[]> _syncedOrganizationIdsSupplier;
+
 	@Schema
 	public String[] getSyncedUserGroupIds() {
+		if (_syncedUserGroupIdsSupplier != null) {
+			syncedUserGroupIds = _syncedUserGroupIdsSupplier.get();
+
+			_syncedUserGroupIdsSupplier = null;
+		}
+
 		return syncedUserGroupIds;
 	}
 
 	public void setSyncedUserGroupIds(String[] syncedUserGroupIds) {
 		this.syncedUserGroupIds = syncedUserGroupIds;
+
+		_syncedUserGroupIdsSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setSyncedUserGroupIds(
 		UnsafeSupplier<String[], Exception> syncedUserGroupIdsUnsafeSupplier) {
 
-		try {
-			syncedUserGroupIds = syncedUserGroupIdsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_syncedUserGroupIdsSupplier = () -> {
+			try {
+				return syncedUserGroupIdsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] syncedUserGroupIds;
+
+	private Supplier<String[]> _syncedUserGroupIdsSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -218,6 +279,8 @@ public class ContactConfiguration implements Serializable {
 
 		sb.append("{");
 
+		Boolean syncAllAccounts = getSyncAllAccounts();
+
 		if (syncAllAccounts != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -228,6 +291,8 @@ public class ContactConfiguration implements Serializable {
 			sb.append(syncAllAccounts);
 		}
 
+		Boolean syncAllContacts = getSyncAllContacts();
+
 		if (syncAllContacts != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -237,6 +302,8 @@ public class ContactConfiguration implements Serializable {
 
 			sb.append(syncAllContacts);
 		}
+
+		String[] syncedAccountGroupIds = getSyncedAccountGroupIds();
 
 		if (syncedAccountGroupIds != null) {
 			if (sb.length() > 1) {
@@ -262,6 +329,8 @@ public class ContactConfiguration implements Serializable {
 			sb.append("]");
 		}
 
+		String[] syncedOrganizationIds = getSyncedOrganizationIds();
+
 		if (syncedOrganizationIds != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -285,6 +354,8 @@ public class ContactConfiguration implements Serializable {
 
 			sb.append("]");
 		}
+
+		String[] syncedUserGroupIds = getSyncedUserGroupIds();
 
 		if (syncedUserGroupIds != null) {
 			if (sb.length() > 1) {

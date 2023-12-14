@@ -26,6 +26,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -55,148 +56,215 @@ public class TierPrice implements Serializable {
 	@Schema
 	@Valid
 	public Map<String, ?> getCustomFields() {
+		if (_customFieldsSupplier != null) {
+			customFields = _customFieldsSupplier.get();
+
+			_customFieldsSupplier = null;
+		}
+
 		return customFields;
 	}
 
 	public void setCustomFields(Map<String, ?> customFields) {
 		this.customFields = customFields;
+
+		_customFieldsSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setCustomFields(
 		UnsafeSupplier<Map<String, ?>, Exception> customFieldsUnsafeSupplier) {
 
-		try {
-			customFields = customFieldsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_customFieldsSupplier = () -> {
+			try {
+				return customFieldsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, ?> customFields;
 
+	private Supplier<Map<String, ?>> _customFieldsSupplier;
+
 	@Schema(example = "AB-34098-789-N")
 	public String getExternalReferenceCode() {
+		if (_externalReferenceCodeSupplier != null) {
+			externalReferenceCode = _externalReferenceCodeSupplier.get();
+
+			_externalReferenceCodeSupplier = null;
+		}
+
 		return externalReferenceCode;
 	}
 
 	public void setExternalReferenceCode(String externalReferenceCode) {
 		this.externalReferenceCode = externalReferenceCode;
+
+		_externalReferenceCodeSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setExternalReferenceCode(
 		UnsafeSupplier<String, Exception> externalReferenceCodeUnsafeSupplier) {
 
-		try {
-			externalReferenceCode = externalReferenceCodeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_externalReferenceCodeSupplier = () -> {
+			try {
+				return externalReferenceCodeUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 
+	private Supplier<String> _externalReferenceCodeSupplier;
+
 	@DecimalMin("0")
 	@Schema(example = "31130")
 	public Long getId() {
+		if (_idSupplier != null) {
+			id = _idSupplier.get();
+
+			_idSupplier = null;
+		}
+
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
+
+		_idSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_idSupplier = () -> {
+			try {
+				return idUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	private Supplier<Long> _idSupplier;
+
 	@DecimalMin("0")
 	@Schema(example = "5")
 	public Integer getMinimumQuantity() {
+		if (_minimumQuantitySupplier != null) {
+			minimumQuantity = _minimumQuantitySupplier.get();
+
+			_minimumQuantitySupplier = null;
+		}
+
 		return minimumQuantity;
 	}
 
 	public void setMinimumQuantity(Integer minimumQuantity) {
 		this.minimumQuantity = minimumQuantity;
+
+		_minimumQuantitySupplier = null;
 	}
 
 	@JsonIgnore
 	public void setMinimumQuantity(
 		UnsafeSupplier<Integer, Exception> minimumQuantityUnsafeSupplier) {
 
-		try {
-			minimumQuantity = minimumQuantityUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_minimumQuantitySupplier = () -> {
+			try {
+				return minimumQuantityUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer minimumQuantity;
 
+	private Supplier<Integer> _minimumQuantitySupplier;
+
 	@DecimalMin("0")
 	@Schema(example = "25")
 	@Valid
 	public BigDecimal getPrice() {
+		if (_priceSupplier != null) {
+			price = _priceSupplier.get();
+
+			_priceSupplier = null;
+		}
+
 		return price;
 	}
 
 	public void setPrice(BigDecimal price) {
 		this.price = price;
+
+		_priceSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setPrice(
 		UnsafeSupplier<BigDecimal, Exception> priceUnsafeSupplier) {
 
-		try {
-			price = priceUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_priceSupplier = () -> {
+			try {
+				return priceUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal price;
 
+	private Supplier<BigDecimal> _priceSupplier;
+
 	@Schema(example = "CAB-34098-789-N")
 	public String getPriceEntryExternalReferenceCode() {
+		if (_priceEntryExternalReferenceCodeSupplier != null) {
+			priceEntryExternalReferenceCode =
+				_priceEntryExternalReferenceCodeSupplier.get();
+
+			_priceEntryExternalReferenceCodeSupplier = null;
+		}
+
 		return priceEntryExternalReferenceCode;
 	}
 
@@ -204,6 +272,8 @@ public class TierPrice implements Serializable {
 		String priceEntryExternalReferenceCode) {
 
 		this.priceEntryExternalReferenceCode = priceEntryExternalReferenceCode;
+
+		_priceEntryExternalReferenceCodeSupplier = null;
 	}
 
 	@JsonIgnore
@@ -211,80 +281,107 @@ public class TierPrice implements Serializable {
 		UnsafeSupplier<String, Exception>
 			priceEntryExternalReferenceCodeUnsafeSupplier) {
 
-		try {
-			priceEntryExternalReferenceCode =
-				priceEntryExternalReferenceCodeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_priceEntryExternalReferenceCodeSupplier = () -> {
+			try {
+				return priceEntryExternalReferenceCodeUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String priceEntryExternalReferenceCode;
 
+	private Supplier<String> _priceEntryExternalReferenceCodeSupplier;
+
 	@DecimalMin("0")
 	@Schema(example = "30130")
 	public Long getPriceEntryId() {
+		if (_priceEntryIdSupplier != null) {
+			priceEntryId = _priceEntryIdSupplier.get();
+
+			_priceEntryIdSupplier = null;
+		}
+
 		return priceEntryId;
 	}
 
 	public void setPriceEntryId(Long priceEntryId) {
 		this.priceEntryId = priceEntryId;
+
+		_priceEntryIdSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setPriceEntryId(
 		UnsafeSupplier<Long, Exception> priceEntryIdUnsafeSupplier) {
 
-		try {
-			priceEntryId = priceEntryIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_priceEntryIdSupplier = () -> {
+			try {
+				return priceEntryIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long priceEntryId;
 
+	private Supplier<Long> _priceEntryIdSupplier;
+
 	@DecimalMin("0")
 	@Schema(example = "20")
 	@Valid
 	public BigDecimal getPromoPrice() {
+		if (_promoPriceSupplier != null) {
+			promoPrice = _promoPriceSupplier.get();
+
+			_promoPriceSupplier = null;
+		}
+
 		return promoPrice;
 	}
 
 	public void setPromoPrice(BigDecimal promoPrice) {
 		this.promoPrice = promoPrice;
+
+		_promoPriceSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setPromoPrice(
 		UnsafeSupplier<BigDecimal, Exception> promoPriceUnsafeSupplier) {
 
-		try {
-			promoPrice = promoPriceUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_promoPriceSupplier = () -> {
+			try {
+				return promoPriceUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal promoPrice;
+
+	private Supplier<BigDecimal> _promoPriceSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -313,6 +410,8 @@ public class TierPrice implements Serializable {
 
 		sb.append("{");
 
+		Map<String, ?> customFields = getCustomFields();
+
 		if (customFields != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -322,6 +421,8 @@ public class TierPrice implements Serializable {
 
 			sb.append(_toJSON(customFields));
 		}
+
+		String externalReferenceCode = getExternalReferenceCode();
 
 		if (externalReferenceCode != null) {
 			if (sb.length() > 1) {
@@ -337,6 +438,8 @@ public class TierPrice implements Serializable {
 			sb.append("\"");
 		}
 
+		Long id = getId();
+
 		if (id != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -346,6 +449,8 @@ public class TierPrice implements Serializable {
 
 			sb.append(id);
 		}
+
+		Integer minimumQuantity = getMinimumQuantity();
 
 		if (minimumQuantity != null) {
 			if (sb.length() > 1) {
@@ -357,6 +462,8 @@ public class TierPrice implements Serializable {
 			sb.append(minimumQuantity);
 		}
 
+		BigDecimal price = getPrice();
+
 		if (price != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -366,6 +473,9 @@ public class TierPrice implements Serializable {
 
 			sb.append(price);
 		}
+
+		String priceEntryExternalReferenceCode =
+			getPriceEntryExternalReferenceCode();
 
 		if (priceEntryExternalReferenceCode != null) {
 			if (sb.length() > 1) {
@@ -381,6 +491,8 @@ public class TierPrice implements Serializable {
 			sb.append("\"");
 		}
 
+		Long priceEntryId = getPriceEntryId();
+
 		if (priceEntryId != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -390,6 +502,8 @@ public class TierPrice implements Serializable {
 
 			sb.append(priceEntryId);
 		}
+
+		BigDecimal promoPrice = getPromoPrice();
 
 		if (promoPrice != null) {
 			if (sb.length() > 1) {

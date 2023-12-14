@@ -28,6 +28,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -55,310 +56,442 @@ public class SLA implements Serializable {
 
 	@Schema
 	public String getCalendarKey() {
+		if (_calendarKeySupplier != null) {
+			calendarKey = _calendarKeySupplier.get();
+
+			_calendarKeySupplier = null;
+		}
+
 		return calendarKey;
 	}
 
 	public void setCalendarKey(String calendarKey) {
 		this.calendarKey = calendarKey;
+
+		_calendarKeySupplier = null;
 	}
 
 	@JsonIgnore
 	public void setCalendarKey(
 		UnsafeSupplier<String, Exception> calendarKeyUnsafeSupplier) {
 
-		try {
-			calendarKey = calendarKeyUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_calendarKeySupplier = () -> {
+			try {
+				return calendarKeyUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String calendarKey;
 
+	private Supplier<String> _calendarKeySupplier;
+
 	@Schema
 	public Date getDateModified() {
+		if (_dateModifiedSupplier != null) {
+			dateModified = _dateModifiedSupplier.get();
+
+			_dateModifiedSupplier = null;
+		}
+
 		return dateModified;
 	}
 
 	public void setDateModified(Date dateModified) {
 		this.dateModified = dateModified;
+
+		_dateModifiedSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDateModified(
 		UnsafeSupplier<Date, Exception> dateModifiedUnsafeSupplier) {
 
-		try {
-			dateModified = dateModifiedUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_dateModifiedSupplier = () -> {
+			try {
+				return dateModifiedUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateModified;
 
+	private Supplier<Date> _dateModifiedSupplier;
+
 	@Schema
 	public String getDescription() {
+		if (_descriptionSupplier != null) {
+			description = _descriptionSupplier.get();
+
+			_descriptionSupplier = null;
+		}
+
 		return description;
 	}
 
 	public void setDescription(String description) {
 		this.description = description;
+
+		_descriptionSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDescription(
 		UnsafeSupplier<String, Exception> descriptionUnsafeSupplier) {
 
-		try {
-			description = descriptionUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_descriptionSupplier = () -> {
+			try {
+				return descriptionUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
+	private Supplier<String> _descriptionSupplier;
+
 	@Schema
 	public Long getDuration() {
+		if (_durationSupplier != null) {
+			duration = _durationSupplier.get();
+
+			_durationSupplier = null;
+		}
+
 		return duration;
 	}
 
 	public void setDuration(Long duration) {
 		this.duration = duration;
+
+		_durationSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDuration(
 		UnsafeSupplier<Long, Exception> durationUnsafeSupplier) {
 
-		try {
-			duration = durationUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_durationSupplier = () -> {
+			try {
+				return durationUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long duration;
 
+	private Supplier<Long> _durationSupplier;
+
 	@Schema
 	public Long getId() {
+		if (_idSupplier != null) {
+			id = _idSupplier.get();
+
+			_idSupplier = null;
+		}
+
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
+
+		_idSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_idSupplier = () -> {
+			try {
+				return idUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	private Supplier<Long> _idSupplier;
+
 	@Schema
 	public String getName() {
+		if (_nameSupplier != null) {
+			name = _nameSupplier.get();
+
+			_nameSupplier = null;
+		}
+
 		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
+
+		_nameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
-		try {
-			name = nameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_nameSupplier = () -> {
+			try {
+				return nameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	private Supplier<String> _nameSupplier;
+
 	@Schema
 	@Valid
 	public PauseNodeKeys getPauseNodeKeys() {
+		if (_pauseNodeKeysSupplier != null) {
+			pauseNodeKeys = _pauseNodeKeysSupplier.get();
+
+			_pauseNodeKeysSupplier = null;
+		}
+
 		return pauseNodeKeys;
 	}
 
 	public void setPauseNodeKeys(PauseNodeKeys pauseNodeKeys) {
 		this.pauseNodeKeys = pauseNodeKeys;
+
+		_pauseNodeKeysSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setPauseNodeKeys(
 		UnsafeSupplier<PauseNodeKeys, Exception> pauseNodeKeysUnsafeSupplier) {
 
-		try {
-			pauseNodeKeys = pauseNodeKeysUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_pauseNodeKeysSupplier = () -> {
+			try {
+				return pauseNodeKeysUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected PauseNodeKeys pauseNodeKeys;
 
+	private Supplier<PauseNodeKeys> _pauseNodeKeysSupplier;
+
 	@Schema
 	public Long getProcessId() {
+		if (_processIdSupplier != null) {
+			processId = _processIdSupplier.get();
+
+			_processIdSupplier = null;
+		}
+
 		return processId;
 	}
 
 	public void setProcessId(Long processId) {
 		this.processId = processId;
+
+		_processIdSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setProcessId(
 		UnsafeSupplier<Long, Exception> processIdUnsafeSupplier) {
 
-		try {
-			processId = processIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_processIdSupplier = () -> {
+			try {
+				return processIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long processId;
 
+	private Supplier<Long> _processIdSupplier;
+
 	@Schema
 	@Valid
 	public StartNodeKeys getStartNodeKeys() {
+		if (_startNodeKeysSupplier != null) {
+			startNodeKeys = _startNodeKeysSupplier.get();
+
+			_startNodeKeysSupplier = null;
+		}
+
 		return startNodeKeys;
 	}
 
 	public void setStartNodeKeys(StartNodeKeys startNodeKeys) {
 		this.startNodeKeys = startNodeKeys;
+
+		_startNodeKeysSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setStartNodeKeys(
 		UnsafeSupplier<StartNodeKeys, Exception> startNodeKeysUnsafeSupplier) {
 
-		try {
-			startNodeKeys = startNodeKeysUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_startNodeKeysSupplier = () -> {
+			try {
+				return startNodeKeysUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected StartNodeKeys startNodeKeys;
 
+	private Supplier<StartNodeKeys> _startNodeKeysSupplier;
+
 	@Schema
 	public Integer getStatus() {
+		if (_statusSupplier != null) {
+			status = _statusSupplier.get();
+
+			_statusSupplier = null;
+		}
+
 		return status;
 	}
 
 	public void setStatus(Integer status) {
 		this.status = status;
+
+		_statusSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setStatus(
 		UnsafeSupplier<Integer, Exception> statusUnsafeSupplier) {
 
-		try {
-			status = statusUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_statusSupplier = () -> {
+			try {
+				return statusUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer status;
 
+	private Supplier<Integer> _statusSupplier;
+
 	@Schema
 	@Valid
 	public StopNodeKeys getStopNodeKeys() {
+		if (_stopNodeKeysSupplier != null) {
+			stopNodeKeys = _stopNodeKeysSupplier.get();
+
+			_stopNodeKeysSupplier = null;
+		}
+
 		return stopNodeKeys;
 	}
 
 	public void setStopNodeKeys(StopNodeKeys stopNodeKeys) {
 		this.stopNodeKeys = stopNodeKeys;
+
+		_stopNodeKeysSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setStopNodeKeys(
 		UnsafeSupplier<StopNodeKeys, Exception> stopNodeKeysUnsafeSupplier) {
 
-		try {
-			stopNodeKeys = stopNodeKeysUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_stopNodeKeysSupplier = () -> {
+			try {
+				return stopNodeKeysUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected StopNodeKeys stopNodeKeys;
+
+	private Supplier<StopNodeKeys> _stopNodeKeysSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -390,6 +523,8 @@ public class SLA implements Serializable {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+		String calendarKey = getCalendarKey();
+
 		if (calendarKey != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -403,6 +538,8 @@ public class SLA implements Serializable {
 
 			sb.append("\"");
 		}
+
+		Date dateModified = getDateModified();
 
 		if (dateModified != null) {
 			if (sb.length() > 1) {
@@ -418,6 +555,8 @@ public class SLA implements Serializable {
 			sb.append("\"");
 		}
 
+		String description = getDescription();
+
 		if (description != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -432,6 +571,8 @@ public class SLA implements Serializable {
 			sb.append("\"");
 		}
 
+		Long duration = getDuration();
+
 		if (duration != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -442,6 +583,8 @@ public class SLA implements Serializable {
 			sb.append(duration);
 		}
 
+		Long id = getId();
+
 		if (id != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -451,6 +594,8 @@ public class SLA implements Serializable {
 
 			sb.append(id);
 		}
+
+		String name = getName();
 
 		if (name != null) {
 			if (sb.length() > 1) {
@@ -466,6 +611,8 @@ public class SLA implements Serializable {
 			sb.append("\"");
 		}
 
+		PauseNodeKeys pauseNodeKeys = getPauseNodeKeys();
+
 		if (pauseNodeKeys != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -475,6 +622,8 @@ public class SLA implements Serializable {
 
 			sb.append(String.valueOf(pauseNodeKeys));
 		}
+
+		Long processId = getProcessId();
 
 		if (processId != null) {
 			if (sb.length() > 1) {
@@ -486,6 +635,8 @@ public class SLA implements Serializable {
 			sb.append(processId);
 		}
 
+		StartNodeKeys startNodeKeys = getStartNodeKeys();
+
 		if (startNodeKeys != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -496,6 +647,8 @@ public class SLA implements Serializable {
 			sb.append(String.valueOf(startNodeKeys));
 		}
 
+		Integer status = getStatus();
+
 		if (status != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -505,6 +658,8 @@ public class SLA implements Serializable {
 
 			sb.append(status);
 		}
+
+		StopNodeKeys stopNodeKeys = getStopNodeKeys();
 
 		if (stopNodeKeys != null) {
 			if (sb.length() > 1) {

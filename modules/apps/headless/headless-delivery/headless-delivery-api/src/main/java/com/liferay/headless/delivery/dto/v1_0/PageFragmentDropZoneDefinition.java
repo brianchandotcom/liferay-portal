@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -54,31 +55,43 @@ public class PageFragmentDropZoneDefinition implements Serializable {
 
 	@Schema(description = "The id of the fragment dropzone")
 	public String getFragmentDropZoneId() {
+		if (_fragmentDropZoneIdSupplier != null) {
+			fragmentDropZoneId = _fragmentDropZoneIdSupplier.get();
+
+			_fragmentDropZoneIdSupplier = null;
+		}
+
 		return fragmentDropZoneId;
 	}
 
 	public void setFragmentDropZoneId(String fragmentDropZoneId) {
 		this.fragmentDropZoneId = fragmentDropZoneId;
+
+		_fragmentDropZoneIdSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setFragmentDropZoneId(
 		UnsafeSupplier<String, Exception> fragmentDropZoneIdUnsafeSupplier) {
 
-		try {
-			fragmentDropZoneId = fragmentDropZoneIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_fragmentDropZoneIdSupplier = () -> {
+			try {
+				return fragmentDropZoneIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The id of the fragment dropzone")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String fragmentDropZoneId;
+
+	private Supplier<String> _fragmentDropZoneIdSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -108,6 +121,8 @@ public class PageFragmentDropZoneDefinition implements Serializable {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		String fragmentDropZoneId = getFragmentDropZoneId();
 
 		if (fragmentDropZoneId != null) {
 			if (sb.length() > 1) {

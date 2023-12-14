@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -54,40 +55,60 @@ public class FormSuccessPage implements Serializable {
 
 	@Schema
 	public String getDescription() {
+		if (_descriptionSupplier != null) {
+			description = _descriptionSupplier.get();
+
+			_descriptionSupplier = null;
+		}
+
 		return description;
 	}
 
 	public void setDescription(String description) {
 		this.description = description;
+
+		_descriptionSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDescription(
 		UnsafeSupplier<String, Exception> descriptionUnsafeSupplier) {
 
-		try {
-			description = descriptionUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_descriptionSupplier = () -> {
+			try {
+				return descriptionUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
+	private Supplier<String> _descriptionSupplier;
+
 	@Schema
 	@Valid
 	public Map<String, String> getDescription_i18n() {
+		if (_description_i18nSupplier != null) {
+			description_i18n = _description_i18nSupplier.get();
+
+			_description_i18nSupplier = null;
+		}
+
 		return description_i18n;
 	}
 
 	public void setDescription_i18n(Map<String, String> description_i18n) {
 		this.description_i18n = description_i18n;
+
+		_description_i18nSupplier = null;
 	}
 
 	@JsonIgnore
@@ -95,57 +116,81 @@ public class FormSuccessPage implements Serializable {
 		UnsafeSupplier<Map<String, String>, Exception>
 			description_i18nUnsafeSupplier) {
 
-		try {
-			description_i18n = description_i18nUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_description_i18nSupplier = () -> {
+			try {
+				return description_i18nUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> description_i18n;
 
+	private Supplier<Map<String, String>> _description_i18nSupplier;
+
 	@Schema
 	public String getHeadline() {
+		if (_headlineSupplier != null) {
+			headline = _headlineSupplier.get();
+
+			_headlineSupplier = null;
+		}
+
 		return headline;
 	}
 
 	public void setHeadline(String headline) {
 		this.headline = headline;
+
+		_headlineSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setHeadline(
 		UnsafeSupplier<String, Exception> headlineUnsafeSupplier) {
 
-		try {
-			headline = headlineUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_headlineSupplier = () -> {
+			try {
+				return headlineUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String headline;
 
+	private Supplier<String> _headlineSupplier;
+
 	@Schema
 	@Valid
 	public Map<String, String> getHeadline_i18n() {
+		if (_headline_i18nSupplier != null) {
+			headline_i18n = _headline_i18nSupplier.get();
+
+			_headline_i18nSupplier = null;
+		}
+
 		return headline_i18n;
 	}
 
 	public void setHeadline_i18n(Map<String, String> headline_i18n) {
 		this.headline_i18n = headline_i18n;
+
+		_headline_i18nSupplier = null;
 	}
 
 	@JsonIgnore
@@ -153,46 +198,62 @@ public class FormSuccessPage implements Serializable {
 		UnsafeSupplier<Map<String, String>, Exception>
 			headline_i18nUnsafeSupplier) {
 
-		try {
-			headline_i18n = headline_i18nUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_headline_i18nSupplier = () -> {
+			try {
+				return headline_i18nUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> headline_i18n;
 
+	private Supplier<Map<String, String>> _headline_i18nSupplier;
+
 	@Schema
 	public Long getId() {
+		if (_idSupplier != null) {
+			id = _idSupplier.get();
+
+			_idSupplier = null;
+		}
+
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
+
+		_idSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_idSupplier = () -> {
+			try {
+				return idUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
+
+	private Supplier<Long> _idSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -221,6 +282,8 @@ public class FormSuccessPage implements Serializable {
 
 		sb.append("{");
 
+		String description = getDescription();
+
 		if (description != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -235,6 +298,8 @@ public class FormSuccessPage implements Serializable {
 			sb.append("\"");
 		}
 
+		Map<String, String> description_i18n = getDescription_i18n();
+
 		if (description_i18n != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -244,6 +309,8 @@ public class FormSuccessPage implements Serializable {
 
 			sb.append(_toJSON(description_i18n));
 		}
+
+		String headline = getHeadline();
 
 		if (headline != null) {
 			if (sb.length() > 1) {
@@ -259,6 +326,8 @@ public class FormSuccessPage implements Serializable {
 			sb.append("\"");
 		}
 
+		Map<String, String> headline_i18n = getHeadline_i18n();
+
 		if (headline_i18n != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -268,6 +337,8 @@ public class FormSuccessPage implements Serializable {
 
 			sb.append(_toJSON(headline_i18n));
 		}
+
+		Long id = getId();
 
 		if (id != null) {
 			if (sb.length() > 1) {

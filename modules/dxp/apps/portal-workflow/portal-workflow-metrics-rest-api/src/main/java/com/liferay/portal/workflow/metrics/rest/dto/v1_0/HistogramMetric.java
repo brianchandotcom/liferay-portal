@@ -26,6 +26,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -57,40 +58,60 @@ public class HistogramMetric implements Serializable {
 	@Schema
 	@Valid
 	public Histogram[] getHistograms() {
+		if (_histogramsSupplier != null) {
+			histograms = _histogramsSupplier.get();
+
+			_histogramsSupplier = null;
+		}
+
 		return histograms;
 	}
 
 	public void setHistograms(Histogram[] histograms) {
 		this.histograms = histograms;
+
+		_histogramsSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setHistograms(
 		UnsafeSupplier<Histogram[], Exception> histogramsUnsafeSupplier) {
 
-		try {
-			histograms = histogramsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_histogramsSupplier = () -> {
+			try {
+				return histogramsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Histogram[] histograms;
 
+	private Supplier<Histogram[]> _histogramsSupplier;
+
 	@Schema
 	@Valid
 	public Unit getUnit() {
+		if (_unitSupplier != null) {
+			unit = _unitSupplier.get();
+
+			_unitSupplier = null;
+		}
+
 		return unit;
 	}
 
 	@JsonIgnore
 	public String getUnitAsString() {
+		Unit unit = getUnit();
+
 		if (unit == null) {
 			return null;
 		}
@@ -100,52 +121,70 @@ public class HistogramMetric implements Serializable {
 
 	public void setUnit(Unit unit) {
 		this.unit = unit;
+
+		_unitSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setUnit(UnsafeSupplier<Unit, Exception> unitUnsafeSupplier) {
-		try {
-			unit = unitUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_unitSupplier = () -> {
+			try {
+				return unitUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Unit unit;
 
+	private Supplier<Unit> _unitSupplier;
+
 	@Schema
 	public Double getValue() {
+		if (_valueSupplier != null) {
+			value = _valueSupplier.get();
+
+			_valueSupplier = null;
+		}
+
 		return value;
 	}
 
 	public void setValue(Double value) {
 		this.value = value;
+
+		_valueSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setValue(
 		UnsafeSupplier<Double, Exception> valueUnsafeSupplier) {
 
-		try {
-			value = valueUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_valueSupplier = () -> {
+			try {
+				return valueUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double value;
+
+	private Supplier<Double> _valueSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -174,6 +213,8 @@ public class HistogramMetric implements Serializable {
 
 		sb.append("{");
 
+		Histogram[] histograms = getHistograms();
+
 		if (histograms != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -194,6 +235,8 @@ public class HistogramMetric implements Serializable {
 			sb.append("]");
 		}
 
+		Unit unit = getUnit();
+
 		if (unit != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -207,6 +250,8 @@ public class HistogramMetric implements Serializable {
 
 			sb.append("\"");
 		}
+
+		Double value = getValue();
 
 		if (value != null) {
 			if (sb.length() > 1) {

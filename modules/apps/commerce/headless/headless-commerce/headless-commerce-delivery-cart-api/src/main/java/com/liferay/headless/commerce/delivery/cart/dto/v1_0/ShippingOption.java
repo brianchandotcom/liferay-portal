@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -49,113 +50,161 @@ public class ShippingOption implements Serializable {
 
 	@Schema
 	public Double getAmount() {
+		if (_amountSupplier != null) {
+			amount = _amountSupplier.get();
+
+			_amountSupplier = null;
+		}
+
 		return amount;
 	}
 
 	public void setAmount(Double amount) {
 		this.amount = amount;
+
+		_amountSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setAmount(
 		UnsafeSupplier<Double, Exception> amountUnsafeSupplier) {
 
-		try {
-			amount = amountUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_amountSupplier = () -> {
+			try {
+				return amountUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double amount;
 
+	private Supplier<Double> _amountSupplier;
+
 	@Schema
 	public String getAmountFormatted() {
+		if (_amountFormattedSupplier != null) {
+			amountFormatted = _amountFormattedSupplier.get();
+
+			_amountFormattedSupplier = null;
+		}
+
 		return amountFormatted;
 	}
 
 	public void setAmountFormatted(String amountFormatted) {
 		this.amountFormatted = amountFormatted;
+
+		_amountFormattedSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setAmountFormatted(
 		UnsafeSupplier<String, Exception> amountFormattedUnsafeSupplier) {
 
-		try {
-			amountFormatted = amountFormattedUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_amountFormattedSupplier = () -> {
+			try {
+				return amountFormattedUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String amountFormatted;
 
+	private Supplier<String> _amountFormattedSupplier;
+
 	@Schema
 	public String getLabel() {
+		if (_labelSupplier != null) {
+			label = _labelSupplier.get();
+
+			_labelSupplier = null;
+		}
+
 		return label;
 	}
 
 	public void setLabel(String label) {
 		this.label = label;
+
+		_labelSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setLabel(
 		UnsafeSupplier<String, Exception> labelUnsafeSupplier) {
 
-		try {
-			label = labelUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_labelSupplier = () -> {
+			try {
+				return labelUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String label;
 
+	private Supplier<String> _labelSupplier;
+
 	@Schema
 	public String getName() {
+		if (_nameSupplier != null) {
+			name = _nameSupplier.get();
+
+			_nameSupplier = null;
+		}
+
 		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
+
+		_nameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
-		try {
-			name = nameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_nameSupplier = () -> {
+			try {
+				return nameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
+
+	private Supplier<String> _nameSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -184,6 +233,8 @@ public class ShippingOption implements Serializable {
 
 		sb.append("{");
 
+		Double amount = getAmount();
+
 		if (amount != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -193,6 +244,8 @@ public class ShippingOption implements Serializable {
 
 			sb.append(amount);
 		}
+
+		String amountFormatted = getAmountFormatted();
 
 		if (amountFormatted != null) {
 			if (sb.length() > 1) {
@@ -208,6 +261,8 @@ public class ShippingOption implements Serializable {
 			sb.append("\"");
 		}
 
+		String label = getLabel();
+
 		if (label != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -221,6 +276,8 @@ public class ShippingOption implements Serializable {
 
 			sb.append("\"");
 		}
+
+		String name = getName();
 
 		if (name != null) {
 			if (sb.length() > 1) {

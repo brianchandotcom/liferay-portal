@@ -12,20 +12,25 @@ import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactor
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexerWriterDocumentHelper;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Máté Thurzó
  * @author Akos Thurzo
  * @author Luan Maoski
  */
-@Component(
-	property = "indexer.class.name=com.liferay.exportimport.kernel.model.ExportImportConfiguration",
-	service = ModelIndexerWriterContributor.class
-)
 public class ExportImportConfigurationModelIndexerWriterContributor
 	implements ModelIndexerWriterContributor<ExportImportConfiguration> {
+
+	public ExportImportConfigurationModelIndexerWriterContributor(
+		DynamicQueryBatchIndexingActionableFactory
+			dynamicQueryBatchIndexingActionableFactory,
+		ExportImportConfigurationLocalService
+			exportImportConfigurationLocalService) {
+
+		_dynamicQueryBatchIndexingActionableFactory =
+			dynamicQueryBatchIndexingActionableFactory;
+		_exportImportConfigurationLocalService =
+			exportImportConfigurationLocalService;
+	}
 
 	@Override
 	public void customize(
@@ -54,12 +59,9 @@ public class ExportImportConfigurationModelIndexerWriterContributor
 		return exportImportConfiguration.getCompanyId();
 	}
 
-	@Reference
-	private DynamicQueryBatchIndexingActionableFactory
+	private final DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;
-
-	@Reference
-	private ExportImportConfigurationLocalService
+	private final ExportImportConfigurationLocalService
 		_exportImportConfigurationLocalService;
 
 }

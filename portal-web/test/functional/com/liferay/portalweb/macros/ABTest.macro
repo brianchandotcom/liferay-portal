@@ -117,18 +117,13 @@ definition {
 
 	@summary = "Default summary"
 	macro deleteABTest() {
-		if (IsElementNotPresent(locator1 = "Modal#MODAL_CONTENT")) {
-			if (IsElementPresent(locator1 = "ABTest#KEBAB_AB_TEST")) {
-				Click(locator1 = "ABTest#KEBAB_AB_TEST");
+		Click(locator1 = "ABTest#KEBAB_AB_TEST");
 
-				MenuItem.clickNoError(menuItem = "Delete");
-			}
-			else {
-				Click(locator1 = "Button#TRASH_ENABLED");
-			}
-		}
+		MenuItem.click(menuItem = "Delete");
 
-		Click(locator1 = "ACSettings#CONFIRMATION_BUTTON");
+		Click(
+			key_text = "Delete",
+			locator1 = "Modal#MODAL_FOOTER_BUTTON");
 
 		Alert.viewSuccessMessageText(successMessage = "Success:Your request completed successfully.");
 	}

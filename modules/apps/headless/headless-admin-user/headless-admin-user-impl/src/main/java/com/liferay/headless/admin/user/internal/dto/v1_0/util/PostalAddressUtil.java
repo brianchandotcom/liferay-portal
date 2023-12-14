@@ -30,17 +30,6 @@ public class PostalAddressUtil {
 
 		return new PostalAddress() {
 			{
-				addressLocality = address.getCity();
-				addressType = listType.getName();
-				id = address.getAddressId();
-				name = address.getName();
-				phoneNumber = address.getPhoneNumber();
-				postalCode = address.getZip();
-				primary = address.isPrimary();
-				streetAddressLine1 = address.getStreet1();
-				streetAddressLine2 = address.getStreet2();
-				streetAddressLine3 = address.getStreet3();
-
 				setAddressCountry(
 					() -> {
 						if (address.getCountryId() <= 0) {
@@ -72,6 +61,7 @@ public class PostalAddressUtil {
 
 						return countryNames;
 					});
+				setAddressLocality(address::getCity);
 				setAddressRegion(
 					() -> {
 						if (address.getRegionId() <= 0) {
@@ -82,6 +72,15 @@ public class PostalAddressUtil {
 
 						return region.getName();
 					});
+				setAddressType(listType::getName);
+				setId(address::getAddressId);
+				setName(address::getName);
+				setPhoneNumber(address::getPhoneNumber);
+				setPostalCode(address::getZip);
+				setPrimary(address::isPrimary);
+				setStreetAddressLine1(address::getStreet1);
+				setStreetAddressLine2(address::getStreet2);
+				setStreetAddressLine3(address::getStreet3);
 			}
 		};
 	}

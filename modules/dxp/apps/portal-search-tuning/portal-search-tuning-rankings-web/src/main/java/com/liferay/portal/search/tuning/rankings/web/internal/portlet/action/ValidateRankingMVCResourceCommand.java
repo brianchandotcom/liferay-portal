@@ -83,7 +83,7 @@ public class ValidateRankingMVCResourceCommand implements MVCResourceCommand {
 		if (ListUtil.isNotEmpty(duplicateQueryStrings) &&
 			Objects.equals(
 				validateRankingMVCResourceRequest.getStatus(),
-				ResultRankingsConstants.ACTIVE)) {
+				ResultRankingsConstants.STATUS_ACTIVE)) {
 
 			jsonArray.put(
 				_language.format(

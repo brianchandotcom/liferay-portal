@@ -61,7 +61,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "new-ranking"));
 	name="<%= formName %>"
 >
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="status" type="hidden" value="<%= ResultRankingsConstants.ACTIVE %>" />
+	<aui:input name="status" type="hidden" value="<%= ResultRankingsConstants.STATUS_ACTIVE %>" />
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
 	<aui:input name="resultActionCmd" type="hidden" value="<%= resultActionCmd %>" />
 	<aui:input name="resultActionUid" type="hidden" value="<%= resultActionUid %>" />

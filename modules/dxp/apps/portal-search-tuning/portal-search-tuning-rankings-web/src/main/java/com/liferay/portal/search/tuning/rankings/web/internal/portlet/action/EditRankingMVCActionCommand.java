@@ -91,14 +91,14 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 
 			_updateStatus(
 				actionRequest, actionResponse, editRankingMVCActionRequest,
-				ResultRankingsConstants.INACTIVE);
+				ResultRankingsConstants.STATUS_INACTIVE);
 		}
 		else if (editRankingMVCActionRequest.isCmd(
 					ResultRankingsConstants.ACTIVATE)) {
 
 			_updateStatus(
 				actionRequest, actionResponse, editRankingMVCActionRequest,
-				ResultRankingsConstants.ACTIVE);
+				ResultRankingsConstants.STATUS_ACTIVE);
 		}
 	}
 
@@ -401,7 +401,7 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 
 		if (Objects.equals(
 				editRankingMVCActionRequest.getStatus(),
-				ResultRankingsConstants.ACTIVE)) {
+				ResultRankingsConstants.STATUS_ACTIVE)) {
 
 			return false;
 		}
@@ -464,7 +464,8 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		if (Objects.equals(
-				ranking.getStatus(), ResultRankingsConstants.NOT_APPLICABLE)) {
+				ranking.getStatus(),
+				ResultRankingsConstants.STATUS_NOT_APPLICABLE)) {
 
 			throw new NotApplicableStatusException();
 		}
@@ -583,7 +584,7 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 		List<Ranking> rankings = _getRankings(
 			actionRequest, editRankingMVCActionRequest);
 
-		if (status.equals(ResultRankingsConstants.ACTIVE)) {
+		if (status.equals(ResultRankingsConstants.STATUS_ACTIVE)) {
 			_guardDuplicateQueryStrings(editRankingMVCActionRequest, rankings);
 		}
 
@@ -592,7 +593,7 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 		for (Ranking ranking : rankings) {
 			if (Objects.equals(
 					ranking.getStatus(),
-					ResultRankingsConstants.NOT_APPLICABLE)) {
+					ResultRankingsConstants.STATUS_NOT_APPLICABLE)) {
 
 				notApplicableStatus = true;
 

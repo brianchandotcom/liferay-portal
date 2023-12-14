@@ -195,7 +195,7 @@ RankingPortletDisplayContext rankingPortletDisplayContext = (RankingPortletDispl
 				name="status"
 			>
 				<c:choose>
-					<c:when test="<%= Objects.equals(rankingEntryDisplayContext.getStatus(), ResultRankingsConstants.NOT_APPLICABLE) %>">
+					<c:when test="<%= Objects.equals(rankingEntryDisplayContext.getStatus(), ResultRankingsConstants.STATUS_NOT_APPLICABLE) %>">
 						<div class="label label-warning">
 							<span class="label-item label-item-expand">
 								<liferay-ui:message key="<%= rankingEntryDisplayContext.getStatus() %>" />
@@ -203,7 +203,7 @@ RankingPortletDisplayContext rankingPortletDisplayContext = (RankingPortletDispl
 						</div>
 					</c:when>
 					<c:otherwise>
-						<div class="label <%= Objects.equals(rankingEntryDisplayContext.getStatus(), ResultRankingsConstants.ACTIVE) ? "label-success" : "label-secondary" %>">
+						<div class="label <%= Objects.equals(rankingEntryDisplayContext.getStatus(), ResultRankingsConstants.STATUS_ACTIVE) ? "label-success" : "label-secondary" %>">
 							<span class="label-item label-item-expand">
 								<liferay-ui:message key="<%= rankingEntryDisplayContext.getStatus() %>" />
 							</span>

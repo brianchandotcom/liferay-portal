@@ -78,7 +78,7 @@ public class EditRankingDisplayBuilderTest extends BaseRankingsWebTestCase {
 			"resultsRankingUid",
 			editRankingDisplayContext.getResultsRankingUid());
 		Assert.assertEquals(
-			ResultRankingsConstants.ACTIVE,
+			ResultRankingsConstants.STATUS_ACTIVE,
 			editRankingDisplayContext.getStatus());
 
 		Assert.assertNotNull(editRankingDisplayContext.getData());

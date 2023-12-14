@@ -226,7 +226,7 @@ public class EditRankingDisplayBuilder {
 			return _ranking.getStatus();
 		}
 
-		return ResultRankingsConstants.ACTIVE;
+		return ResultRankingsConstants.STATUS_ACTIVE;
 	}
 
 	private String _getSXPBlueprintExternalReferenceCode() {

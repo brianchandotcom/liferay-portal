@@ -46,7 +46,8 @@ public class SXPBlueprintModelListener extends BaseModelListener<SXPBlueprint> {
 				Ranking.RankingBuilder rankingBuilder =
 					new Ranking.RankingBuilder(ranking);
 
-				rankingBuilder.status(ResultRankingsConstants.NOT_APPLICABLE);
+				rankingBuilder.status(
+					ResultRankingsConstants.STATUS_NOT_APPLICABLE);
 
 				_rankingStorageAdapter.update(
 					rankingBuilder.build(), rankingIndexName);

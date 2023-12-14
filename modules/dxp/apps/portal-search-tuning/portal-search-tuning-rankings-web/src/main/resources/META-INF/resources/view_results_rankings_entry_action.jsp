@@ -39,7 +39,7 @@ RankingEntryDisplayContext rankingEntryDisplayContext = (RankingEntryDisplayCont
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
 >
-	<c:if test="<%= !Objects.equals(rankingEntryDisplayContext.getStatus(), ResultRankingsConstants.NOT_APPLICABLE) %>">
+	<c:if test="<%= !Objects.equals(rankingEntryDisplayContext.getStatus(), ResultRankingsConstants.STATUS_NOT_APPLICABLE) %>">
 		<portlet:renderURL var="editURL">
 			<portlet:param name="mvcRenderCommandName" value="/result_rankings/edit_results_rankings" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -56,13 +56,13 @@ RankingEntryDisplayContext rankingEntryDisplayContext = (RankingEntryDisplayCont
 		/>
 
 		<portlet:actionURL name="/result_rankings/edit_ranking" var="deactivateURL">
-			<portlet:param name="<%= Constants.CMD %>" value="<%= Objects.equals(rankingEntryDisplayContext.getStatus(), ResultRankingsConstants.ACTIVE) ? ResultRankingsConstants.DEACTIVATE : ResultRankingsConstants.ACTIVATE %>" />
+			<portlet:param name="<%= Constants.CMD %>" value="<%= Objects.equals(rankingEntryDisplayContext.getStatus(), ResultRankingsConstants.STATUS_ACTIVE) ? ResultRankingsConstants.DEACTIVATE : ResultRankingsConstants.ACTIVATE %>" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="resultsRankingUid" value="<%= rankingEntryDisplayContext.getUid() %>" />
 		</portlet:actionURL>
 
 		<liferay-ui:icon
-			message="<%= Objects.equals(rankingEntryDisplayContext.getStatus(), ResultRankingsConstants.ACTIVE) ? ResultRankingsConstants.DEACTIVATE : ResultRankingsConstants.ACTIVATE %>"
+			message="<%= Objects.equals(rankingEntryDisplayContext.getStatus(), ResultRankingsConstants.STATUS_ACTIVE) ? ResultRankingsConstants.DEACTIVATE : ResultRankingsConstants.ACTIVATE %>"
 			url="<%= deactivateURL %>"
 		/>
 	</c:if>

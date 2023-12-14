@@ -227,9 +227,10 @@ public class DuplicateQueryStringsDetectorImpl
 		_addQueryClauses(
 			booleanQuery::addMustNotQueryClauses,
 			queries.term(
-				RankingFields.STATUS, ResultRankingsConstants.INACTIVE),
+				RankingFields.STATUS, ResultRankingsConstants.STATUS_INACTIVE),
 			queries.term(
-				RankingFields.STATUS, ResultRankingsConstants.NOT_APPLICABLE),
+				RankingFields.STATUS,
+				ResultRankingsConstants.STATUS_NOT_APPLICABLE),
 			_getUnlessRankingIdQuery(criteria));
 
 		return booleanQuery;

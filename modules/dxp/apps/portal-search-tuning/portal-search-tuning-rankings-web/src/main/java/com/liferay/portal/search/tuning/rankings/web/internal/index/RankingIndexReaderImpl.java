@@ -184,12 +184,14 @@ public class RankingIndexReaderImpl implements RankingIndexReader {
 		if (excludeInactiveStatus) {
 			booleanQuery.addMustNotQueryClauses(
 				_queries.term(
-					RankingFields.STATUS, ResultRankingsConstants.INACTIVE));
+					RankingFields.STATUS,
+					ResultRankingsConstants.STATUS_INACTIVE));
 		}
 
 		booleanQuery.addMustNotQueryClauses(
 			_queries.term(
-				RankingFields.STATUS, ResultRankingsConstants.NOT_APPLICABLE));
+				RankingFields.STATUS,
+				ResultRankingsConstants.STATUS_NOT_APPLICABLE));
 
 		return booleanQuery;
 	}

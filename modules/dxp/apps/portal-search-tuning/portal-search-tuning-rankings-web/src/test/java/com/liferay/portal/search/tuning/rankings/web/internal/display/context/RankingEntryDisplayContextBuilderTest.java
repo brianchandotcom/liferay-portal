@@ -109,7 +109,7 @@ public class RankingEntryDisplayContextBuilderTest {
 		Assert.assertEquals(
 			"1", rankingEntryDisplayContext.getPinnedResultsCount());
 		Assert.assertEquals(
-			ResultRankingsConstants.ACTIVE,
+			ResultRankingsConstants.STATUS_ACTIVE,
 			rankingEntryDisplayContext.getStatus());
 		Assert.assertEquals(
 			"rankingDocumentId", rankingEntryDisplayContext.getUid());

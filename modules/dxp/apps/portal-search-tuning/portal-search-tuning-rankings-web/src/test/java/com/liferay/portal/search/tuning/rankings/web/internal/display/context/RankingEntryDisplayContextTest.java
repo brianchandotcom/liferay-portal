@@ -34,7 +34,8 @@ public class RankingEntryDisplayContextTest {
 		_rankingEntryDisplayContext.setIndex("index");
 		_rankingEntryDisplayContext.setKeywords("keywords");
 		_rankingEntryDisplayContext.setPinnedResultsCount("pinnedResultsCount");
-		_rankingEntryDisplayContext.setStatus(ResultRankingsConstants.ACTIVE);
+		_rankingEntryDisplayContext.setStatus(
+			ResultRankingsConstants.STATUS_ACTIVE);
 		_rankingEntryDisplayContext.setSXPBlueprintExternalReferenceCode(
 			"sxpBlueprintExternalReferenceCode");
 		_rankingEntryDisplayContext.setUid("uid");
@@ -54,7 +55,7 @@ public class RankingEntryDisplayContextTest {
 			"pinnedResultsCount",
 			_rankingEntryDisplayContext.getPinnedResultsCount());
 		Assert.assertEquals(
-			ResultRankingsConstants.ACTIVE,
+			ResultRankingsConstants.STATUS_ACTIVE,
 			_rankingEntryDisplayContext.getStatus());
 		Assert.assertEquals(
 			"sxpBlueprintExternalReferenceCode",

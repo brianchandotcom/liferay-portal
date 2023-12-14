@@ -13,18 +13,21 @@ import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterC
 import com.liferay.portal.search.spi.model.index.contributor.helper.IndexerWriterMode;
 import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexerWriterDocumentHelper;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Alessio Antonio Rendina
  */
-@Component(
-	property = "indexer.class.name=com.liferay.commerce.term.model.CommerceTermEntry",
-	service = ModelIndexerWriterContributor.class
-)
 public class CommerceTermEntryModelIndexerWriterContributor
 	implements ModelIndexerWriterContributor<CommerceTermEntry> {
+
+	public CommerceTermEntryModelIndexerWriterContributor(
+		CommerceTermEntryLocalService commerceTermEntryLocalService,
+		DynamicQueryBatchIndexingActionableFactory
+			dynamicQueryBatchIndexingActionableFactory) {
+
+		_commerceTermEntryLocalService = commerceTermEntryLocalService;
+		_dynamicQueryBatchIndexingActionableFactory =
+			dynamicQueryBatchIndexingActionableFactory;
+	}
 
 	@Override
 	public void customize(
@@ -58,11 +61,8 @@ public class CommerceTermEntryModelIndexerWriterContributor
 		return IndexerWriterMode.UPDATE;
 	}
 
-	@Reference
-	private CommerceTermEntryLocalService _commerceTermEntryLocalService;
-
-	@Reference
-	private DynamicQueryBatchIndexingActionableFactory
+	private final CommerceTermEntryLocalService _commerceTermEntryLocalService;
+	private final DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;
 
 }

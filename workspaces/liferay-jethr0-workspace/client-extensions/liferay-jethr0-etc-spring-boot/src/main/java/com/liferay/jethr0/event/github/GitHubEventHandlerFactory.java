@@ -58,6 +58,15 @@ public class GitHubEventHandlerFactory extends BaseEventHandlerFactory {
 						eventHandlerContext, messageJSONObject);
 				}
 			}
+			else if (action.equals("synchronize")) {
+				JSONObject pullRequestJSONObject =
+					messageJSONObject.optJSONObject("pull_request");
+
+				if (pullRequestJSONObject != null) {
+					return new SynchronizeGitHubPullRequestEventHandler(
+						eventHandlerContext, messageJSONObject);
+				}
+			}
 
 			throw new IllegalArgumentException(
 				"Invalid \"action\" from message JSON");

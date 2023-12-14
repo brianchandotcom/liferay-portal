@@ -203,6 +203,51 @@ public class GitHubClient {
 		return retryable.executeWithRetries();
 	}
 
+	public String requestPut(URL url, JSONObject requestJSONObject) {
+		String urlString = url.toString();
+
+		String gitHubURL = urlString.replaceAll(
+			"https://api\\.github\\.com", _gitHubProxyURL);
+
+		Retryable<String> retryable = new BaseRetryable<String>() {
+
+			@Override
+			public String execute() {
+				String response = WebClient.create(
+					gitHubURL
+				).put(
+				).accept(
+					MediaType.APPLICATION_JSON
+				).contentType(
+					MediaType.APPLICATION_JSON
+				).header(
+					"Authorization", _getAuthorization()
+				).body(
+					BodyInserters.fromValue(requestJSONObject.toString())
+				).retrieve(
+				).bodyToMono(
+					String.class
+				).block();
+
+				if (response == null) {
+					throw new RuntimeException("No response");
+				}
+
+				return response;
+			}
+
+			@Override
+			protected String getRetryMessage(int retryCount) {
+				return StringUtil.combine(
+					"Unable to post to ", url, ". Retry attempt ", retryCount,
+					" of ", maxRetries);
+			}
+
+		};
+
+		return retryable.executeWithRetries();
+	}
+
 	private String _getAuthorization() {
 		return StringUtil.combine("token ", _gitHubToken);
 	}

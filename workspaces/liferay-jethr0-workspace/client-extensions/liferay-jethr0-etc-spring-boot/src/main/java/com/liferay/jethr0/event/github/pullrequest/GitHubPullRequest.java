@@ -62,7 +62,7 @@ public class GitHubPullRequest {
 		gitHubClient.requestPatch(getAPIURL(), requestJSONObject);
 	}
 
-	public GitHubComment createGitHubComment(String body) {
+	public GitHubComment comment(String body) {
 		JSONObject requestJSONObject = new JSONObject();
 
 		requestJSONObject.put("body", body);
@@ -118,6 +118,14 @@ public class GitHubPullRequest {
 		return StringUtil.toURL(_jsonObject.getString("html_url"));
 	}
 
+	public URL getIssueLockURL() {
+		return StringUtil.toURL(getIssueURL() + "/lock");
+	}
+
+	public URL getIssueURL() {
+		return StringUtil.toURL(_jsonObject.getString("issue_url"));
+	}
+
 	public GitHubUser getOriginGitHubUser() {
 		return _originGitHubUser;
 	}
@@ -135,6 +143,12 @@ public class GitHubPullRequest {
 			StringUtil.combine(
 				"https://github.com/liferay/", getBaseRepositoryName(),
 				"/tree/", getBaseBranchName()));
+	}
+
+	public void lock() {
+		GitHubClient gitHubClient = getGitHubClient();
+
+		gitHubClient.requestPut(getIssueLockURL(), null);
 	}
 
 	private final String _baseBranchName;

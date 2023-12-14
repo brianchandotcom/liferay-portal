@@ -72,7 +72,7 @@ public abstract class BaseGitHubIssueEventHandler
 		GitHubPullRequest gitHubPullRequest = getGitHubPullRequest();
 
 		if (gitHubPullRequest != null) {
-			gitHubPullRequest.createGitHubComment(body);
+			gitHubPullRequest.comment(body);
 
 			gitHubPullRequest.close();
 		}

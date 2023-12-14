@@ -12,18 +12,21 @@ import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactor
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexerWriterDocumentHelper;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Jeyvison Nascimento
  */
-@Component(
-	property = "indexer.class.name=com.liferay.data.engine.model.DEDataListView",
-	service = ModelIndexerWriterContributor.class
-)
 public class DEDataListViewModelIndexerWriterContributor
 	implements ModelIndexerWriterContributor<DEDataListView> {
+
+	public DEDataListViewModelIndexerWriterContributor(
+		DEDataListViewLocalService deDataListViewLocalService,
+		DynamicQueryBatchIndexingActionableFactory
+			dynamicQueryBatchIndexingActionableFactory) {
+
+		_deDataListViewLocalService = deDataListViewLocalService;
+		_dynamicQueryBatchIndexingActionableFactory =
+			dynamicQueryBatchIndexingActionableFactory;
+	}
 
 	@Override
 	public void customize(
@@ -50,11 +53,8 @@ public class DEDataListViewModelIndexerWriterContributor
 		return deDataListView.getCompanyId();
 	}
 
-	@Reference
-	private DEDataListViewLocalService _deDataListViewLocalService;
-
-	@Reference
-	private DynamicQueryBatchIndexingActionableFactory
+	private final DEDataListViewLocalService _deDataListViewLocalService;
+	private final DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;
 
 }

@@ -99,25 +99,6 @@ public class JavaAccessModifierCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private static String _getSuperClassNameWithPackageName(String content) {
-		String superClassName = JavaSourceUtil.getSuperClassName(content);
-
-		if (superClassName == null) {
-			return null;
-		}
-
-		Pattern superClassImportPattern = Pattern.compile(
-			"import\\s+([\\w.]+" + superClassName + ")\\s*;", Pattern.DOTALL);
-
-		Matcher matcher = superClassImportPattern.matcher(content);
-
-		if (matcher.find()) {
-			return matcher.group(1);
-		}
-
-		return JavaSourceUtil.getPackageName(content) + "." + superClassName;
-	}
-
 	private Map<String, List<String>> _getCommponentJavaFileMap() {
 		if (_componentJavaFileMap != null) {
 			return _componentJavaFileMap;
@@ -190,16 +171,31 @@ public class JavaAccessModifierCheck extends BaseFileCheck {
 		return _componentJavaFileMap;
 	}
 
+	private String _getSuperClassNameWithPackageName(String content) {
+		String superClassName = JavaSourceUtil.getSuperClassName(content);
+
+		if (superClassName == null) {
+			return null;
+		}
+
+		Pattern superClassImportPattern = Pattern.compile(
+			"import\\s+([\\w.]+" + superClassName + ")\\s*;", Pattern.DOTALL);
+
+		Matcher matcher = superClassImportPattern.matcher(content);
+
+		if (matcher.find()) {
+			return matcher.group(1);
+		}
+
+		return JavaSourceUtil.getPackageName(content) + "." + superClassName;
+	}
+
 	private boolean _hasSubclasses(JavaClass javaClass) {
 		Map<String, List<String>> componentJavaFileMap =
 			_getCommponentJavaFileMap();
 
-		String className = javaClass.getName();
-
-		String packageName = javaClass.getPackageName();
-
 		List<String> subclassNames = componentJavaFileMap.get(
-			packageName + "." + className);
+			javaClass.getPackageName() + "." + javaClass.getName());
 
 		if (ListUtil.isEmpty(subclassNames)) {
 			return false;

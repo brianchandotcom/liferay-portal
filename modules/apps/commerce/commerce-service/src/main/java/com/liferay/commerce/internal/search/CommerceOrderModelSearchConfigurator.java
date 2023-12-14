@@ -5,11 +5,15 @@
 
 package com.liferay.commerce.internal.search;
 
+import com.liferay.commerce.internal.search.spi.model.index.contributor.CommerceOrderModelIndexerWriterContributor;
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.service.CommerceOrderLocalService;
+import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContributor;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -42,9 +46,21 @@ public class CommerceOrderModelSearchConfigurator
 		return true;
 	}
 
-	@Reference(
-		target = "(indexer.class.name=com.liferay.commerce.model.CommerceOrder)"
-	)
+	@Activate
+	protected void activate() {
+		_modelIndexWriterContributor =
+			new CommerceOrderModelIndexerWriterContributor(
+				_commerceOrderLocalService,
+				_dynamicQueryBatchIndexingActionableFactory);
+	}
+
+	@Reference
+	private CommerceOrderLocalService _commerceOrderLocalService;
+
+	@Reference
+	private DynamicQueryBatchIndexingActionableFactory
+		_dynamicQueryBatchIndexingActionableFactory;
+
 	private ModelIndexerWriterContributor<CommerceOrder>
 		_modelIndexWriterContributor;
 

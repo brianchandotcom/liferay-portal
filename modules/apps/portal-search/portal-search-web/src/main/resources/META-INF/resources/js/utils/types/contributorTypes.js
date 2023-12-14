@@ -60,7 +60,7 @@ export const CONTRIBUTOR_TYPES_DEFAULT_ATTRIBUTES = {
 	},
 	[CONTRIBUTOR_TYPES.ASAH_RECENT_ASSETS_USER_ACTIVITY]: {
 		characterThreshold: '0',
-		contentType: '',
+		contentTypes: '',
 		rangeKey: '0',
 	},
 };

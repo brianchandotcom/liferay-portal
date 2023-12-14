@@ -626,7 +626,7 @@ definition {
 			LAR.openExportAdmin(siteScopeName = ${siteScopeName});
 		}
 
-		Click(locator1 = "Icon#PLUS");
+		Click(locator1 = "Button#PLUS");
 
 		Alert.viewWarningSpecific(warningMessage = "Export process and export LAR file will be deleted after 30 days.");
 

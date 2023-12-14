@@ -20,6 +20,8 @@ RenderLayoutUtilityPageEntryDisplayContext renderLayoutUtilityPageEntryDisplayCo
 
 	<%
 	try {
+		request.setAttribute(WebKeys.OUTPUT_DATA, new OutputData());
+
 		request.setAttribute(WebKeys.SHOW_PORTLET_TOPPER, Boolean.FALSE);
 	%>
 

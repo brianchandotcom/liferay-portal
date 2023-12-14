@@ -12,7 +12,9 @@ definition {
 				locator1 = "RecycleBin#RECYCLE_BIN_ASSET_CHECKBOX");
 		}
 
-		Click(locator1 = "Icon#RESTORE");
+		Click(
+			key_text = "restore",
+			locator1 = "ManagementBar#ANY_ICON");
 
 		Alert.viewSuccessMessage();
 	}

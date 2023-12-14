@@ -1611,7 +1611,9 @@ definition {
 				locator1 = "WC#ENTRY_LIST_CHECKBOX");
 		}
 
-		Click(locator1 = "Icon#MOVE");
+		Click(
+			key_text = "move",
+			locator1 = "ManagementBar#ANY_ICON");
 
 		AssertTextEquals(
 			locator1 = "Portlet#HEADER",

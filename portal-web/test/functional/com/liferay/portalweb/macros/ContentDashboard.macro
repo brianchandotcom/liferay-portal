@@ -225,14 +225,14 @@ definition {
 
 	@summary = "Default summary"
 	macro filterByAuthorAll() {
-		ContentDashboard.openFilterAndOrder();
+		Click(locator1 = "ManagementBar#FILTER");
 
 		Click(locator1 = "ContentDashboard#FILTER_BY_OPTION");
 	}
 
 	@summary = "Default summary"
 	macro filterByAuthorMe() {
-		ContentDashboard.openFilterAndOrder();
+		Click(locator1 = "ManagementBar#FILTER");
 
 		Click(locator1 = "ContentDashboard#FILTER_BY_OPTION");
 	}
@@ -283,7 +283,7 @@ definition {
 
 	@summary = "Default summary"
 	macro filterByStatus() {
-		ContentDashboard.openFilterAndOrder();
+		Click(locator1 = "ManagementBar#FILTER");
 
 		Click(locator1 = "ContentDashboard#FILTER_BY_OPTION");
 	}
@@ -305,7 +305,7 @@ definition {
 
 	@summary = "Default summary"
 	macro filterByToBeReviewed() {
-		ContentDashboard.openFilterAndOrder();
+		Click(locator1 = "ManagementBar#FILTER");
 
 		Click(locator1 = "ContentDashboard#FILTER_BY_OPTION");
 	}
@@ -424,7 +424,7 @@ definition {
 
 	@summary = "Default summary"
 	macro openFilterModal() {
-		ContentDashboard.openFilterAndOrder();
+		Click(locator1 = "ManagementBar#FILTER");
 
 		Click(locator1 = "ContentDashboard#FILTER_BY_OPTION");
 
@@ -448,21 +448,21 @@ definition {
 
 	@summary = "Default summary"
 	macro orderByModificationDate() {
-		ContentDashboard.openFilterAndOrder();
+		Click(locator1 = "ManagementBar#ORDER");
 
 		Click(locator1 = "ContentDashboard#FILTER_BY_OPTION");
 	}
 
 	@summary = "Default summary"
 	macro orderByReviewDate() {
-		ContentDashboard.openFilterAndOrder();
+		Click(locator1 = "ManagementBar#ORDER");
 
 		Click(locator1 = "ContentDashboard#FILTER_BY_OPTION");
 	}
 
 	@summary = "Default summary"
 	macro orderByTitle() {
-		ContentDashboard.openFilterAndOrder();
+		Click(locator1 = "ManagementBar#ORDER");
 
 		Click(locator1 = "ContentDashboard#FILTER_BY_OPTION");
 	}

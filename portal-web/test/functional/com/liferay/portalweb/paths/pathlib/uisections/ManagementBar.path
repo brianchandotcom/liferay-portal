@@ -16,6 +16,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ELLIPSIS</td>
+	<td>//nav[contains(@class,'management-bar')]//button[contains(@class,'monospaced')][.//*[name()='svg'][contains(@class,'icon-ellipsis-v')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FILTER</td>
 	<td>//nav[contains(@class,'management-bar')]//*[self::button or self::a][.//*[normalize-space(text())='Filter']]</td>
 	<td></td>

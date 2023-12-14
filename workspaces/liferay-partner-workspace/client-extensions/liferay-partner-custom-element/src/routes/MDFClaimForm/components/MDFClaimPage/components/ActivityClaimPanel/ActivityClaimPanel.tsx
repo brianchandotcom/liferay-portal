@@ -32,6 +32,7 @@ import useBudgetsAmount from './hooks/useBudgetsAmount';
 interface IProps {
 	activity: MDFClaimActivity;
 	activityIndex: number;
+	hasPermissionEditClaimActivity: boolean;
 	overallCampaignDescription: string;
 }
 
@@ -63,6 +64,7 @@ const activityClaimStatusClassName = {
 const ActivityClaimPanel = ({
 	activity,
 	activityIndex,
+	hasPermissionEditClaimActivity,
 	overallCampaignDescription,
 	setFieldValue,
 }: IProps & Pick<FormikContextType<MDFClaim>, 'setFieldValue'>) => {
@@ -91,8 +93,9 @@ const ActivityClaimPanel = ({
 
 	const editableClaimActivityByStatus = activity.id && !activity.selected;
 
-	const displayActivityClaimCheckbox =
-		claimableActivityByStatus || editableClaimActivityByStatus;
+	const displayActivityClaimCheckbox = activity.id
+		? hasPermissionEditClaimActivity
+		: claimableActivityByStatus || editableClaimActivityByStatus;
 
 	const typeActivityComponents: TypeActivityComponent = {
 		[TypeActivityKey.DIGITAL_MARKETING]: (
@@ -135,7 +138,10 @@ const ActivityClaimPanel = ({
 				<PanelHeader
 					expanded={activity.selected && expanded}
 					onClick={() => {
-						if (activity.selected && !activity.claimed) {
+						if (
+							(activity.selected && !activity.claimed) ||
+							hasPermissionEditClaimActivity
+						) {
 							setExpanded(
 								(previousExpanded) => !previousExpanded
 							);

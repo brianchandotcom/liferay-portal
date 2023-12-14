@@ -60,10 +60,7 @@ const getInitialFormValues = (
 					.includes(true),
 				name: activity.name,
 				r_actToMDFClmActs_c_activityId: activity.id,
-				selected:
-					mdfClaim?.mdfClaimStatus.key === Status.DRAFT.key
-						? false
-						: mdfClaimActivity.selected,
+				selected: mdfClaimActivity.selected,
 			};
 		}
 

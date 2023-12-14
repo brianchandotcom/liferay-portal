@@ -166,6 +166,7 @@ const MDFClaimForm = () => {
 			}
 		>
 			<MDFClaimPage
+				hasPermissionShowForm={hasPermissionShowForm}
 				mdfRequest={mdfRequest}
 				onCancel={onCancel}
 				onSaveAsDraft={(values, formikHelpers) =>

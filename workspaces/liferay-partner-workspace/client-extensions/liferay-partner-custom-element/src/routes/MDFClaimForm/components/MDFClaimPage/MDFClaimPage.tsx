@@ -25,10 +25,12 @@ import ActivityClaimPanel from './components/ActivityClaimPanel';
 import useActivitiesAmount from './hooks/useActivitiesAmount';
 
 interface IProps {
+	hasPermissionShowForm: boolean;
 	mdfRequest: MDFRequestDTO;
 }
 
 const MDFClaimPage = ({
+	hasPermissionShowForm,
 	mdfRequest,
 	onCancel,
 	onSaveAsDraft,
@@ -146,6 +148,9 @@ const MDFClaimPage = ({
 						<ActivityClaimPanel
 							activity={activity}
 							activityIndex={index}
+							hasPermissionEditClaimActivity={
+								hasPermissionShowForm
+							}
 							key={`${activity.id}-${index}`}
 							overallCampaignDescription={
 								mdfRequest.overallCampaignDescription

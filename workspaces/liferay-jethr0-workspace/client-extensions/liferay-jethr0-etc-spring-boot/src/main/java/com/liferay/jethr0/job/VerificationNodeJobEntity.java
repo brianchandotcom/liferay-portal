@@ -5,6 +5,10 @@
 
 package com.liferay.jethr0.job;
 
+import com.liferay.portal.kernel.util.HashMapBuilder;
+
+import java.util.Map;
+
 import org.json.JSONObject;
 
 /**
@@ -17,8 +21,25 @@ public class VerificationNodeJobEntity extends BaseJobEntity {
 		return "verification-node";
 	}
 
+	public String getJenkinsSlaveLabel() {
+		return getParameterValue("jenkinsSlaveLabel");
+	}
+
+	public void setJenkinsSlaveLabel(String slaveLabel) {
+		setParameterValue("jenkinsSlaveLabel", slaveLabel);
+	}
+
 	protected VerificationNodeJobEntity(JSONObject jsonObject) {
 		super(jsonObject);
+	}
+
+	@Override
+	protected Map<String, String> getInitialBuildParameters() {
+		return HashMapBuilder.put(
+			"BUILD_PRIORITY", String.valueOf(getPriority())
+		).put(
+			"SLAVE_LABEL", getJenkinsSlaveLabel()
+		).build();
 	}
 
 }

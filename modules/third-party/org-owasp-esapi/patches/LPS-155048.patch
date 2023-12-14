@@ -1,0 +1,53 @@
+diff --git a/org/owasp/esapi/reference/DefaultValidator.java b/org/owasp/esapi/reference/DefaultValidator.java
+index 4924442..b8b335c 100644
+--- a/org/owasp/esapi/reference/DefaultValidator.java
++++ b/org/owasp/esapi/reference/DefaultValidator.java
+@@ -436,41 +436,7 @@ public class DefaultValidator implements org.owasp.esapi.Validator {
+ 	 * {@inheritDoc}
+ 	 */
+ 	public String getValidDirectoryPath(String context, String input, File parent, boolean allowNull) throws ValidationException, IntrusionException {
+-		try {
+-			if (isEmpty(input)) {
+-				if (allowNull) return null;
+-       			throw new ValidationException( context + ": Input directory path required", "Input directory path required: context=" + context + ", input=" + input, context );
+-			}
+-
+-			File dir = new File( input );
+-
+-			// check dir exists and parent exists and dir is inside parent
+-			if ( !dir.exists() ) {
+-				throw new ValidationException( context + ": Invalid directory name", "Invalid directory, does not exist: context=" + context + ", input=" + input );
+-			}
+-			if ( !dir.isDirectory() ) {
+-				throw new ValidationException( context + ": Invalid directory name", "Invalid directory, not a directory: context=" + context + ", input=" + input );
+-			}
+-			if ( !parent.exists() ) {
+-				throw new ValidationException( context + ": Invalid directory name", "Invalid directory, specified parent does not exist: context=" + context + ", input=" + input + ", parent=" + parent );
+-			}
+-			if ( !parent.isDirectory() ) {
+-				throw new ValidationException( context + ": Invalid directory name", "Invalid directory, specified parent is not a directory: context=" + context + ", input=" + input + ", parent=" + parent );
+-			}
+-			if ( !dir.getCanonicalPath().startsWith(parent.getCanonicalPath() ) ) {
+-				throw new ValidationException( context + ": Invalid directory name", "Invalid directory, not inside specified parent: context=" + context + ", input=" + input + ", parent=" + parent );
+-			}
+-
+-			// check canonical form matches input
+-			String canonicalPath = dir.getCanonicalPath();
+-			String canonical = fileValidator.getValidInput( context, canonicalPath, "DirectoryName", 255, false);
+-			if ( !canonical.equals( input ) ) {
+-				throw new ValidationException( context + ": Invalid directory name", "Invalid directory name does not match the canonical path: context=" + context + ", input=" + input + ", canonical=" + canonical, context );
+-			}
+-			return canonical;
+-		} catch (Exception e) {
+-			throw new ValidationException( context + ": Invalid directory name", "Failure to validate directory path: context=" + context + ", input=" + input, e, context );
+-		}
++		throw new RuntimeException("Method not implemented");
+ 	}
+ 
+ 	/**
+@@ -1192,3 +1158,4 @@ public class DefaultValidator implements org.owasp.esapi.Validator {
+ 		return (input==null || input.length == 0);
+ 	}
+ }
++/* @generated */
+\ No newline at end of file

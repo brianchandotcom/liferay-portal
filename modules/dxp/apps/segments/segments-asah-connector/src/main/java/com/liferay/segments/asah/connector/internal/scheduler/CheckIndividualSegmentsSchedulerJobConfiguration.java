@@ -41,7 +41,6 @@ import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsEntryRelLocalService;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -273,11 +272,7 @@ public class CheckIndividualSegmentsSchedulerJobConfiguration
 					Collections.singletonList(
 						OrderByField.desc("dateModified")));
 
-			_deleteSegmentEntries(
-				individualSegmentResults,
-				_segmentsEntryLocalService.getSegmentsEntriesBySource(
-					SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND, 0, _DELTA,
-					null));
+			_deleteSegmentEntries(individualSegmentResults);
 		}
 		catch (RuntimeException runtimeException) {
 			_log.error(
@@ -321,17 +316,16 @@ public class CheckIndividualSegmentsSchedulerJobConfiguration
 	}
 
 	private void _deleteSegmentEntries(
-			Results<IndividualSegment> individualSegmentResults,
-			List<SegmentsEntry> segmentsEntries)
+			Results<IndividualSegment> individualSegmentResults)
 		throws PortalException {
 
-		List<SegmentsEntry> segmentsEntriesToDelete = new ArrayList<>();
+		List<SegmentsEntry> segmentsEntries =
+			_segmentsEntryLocalService.getSegmentsEntriesBySource(
+				SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND, 0, _DELTA,
+				null);
 
-		if (individualSegmentResults.getTotal() == 0) {
-			segmentsEntriesToDelete = segmentsEntries;
-		}
-		else {
-			segmentsEntriesToDelete = ListUtil.filter(
+		if (individualSegmentResults.getTotal() > 0) {
+			segmentsEntries = ListUtil.filter(
 				segmentsEntries,
 				segmentsEntry -> !ListUtil.exists(
 					individualSegmentResults.getItems(),
@@ -340,7 +334,7 @@ public class CheckIndividualSegmentsSchedulerJobConfiguration
 						segmentsEntry.getSegmentsEntryKey())));
 		}
 
-		for (SegmentsEntry segmentsEntry : segmentsEntriesToDelete) {
+		for (SegmentsEntry segmentsEntry : segmentsEntries) {
 			_segmentsEntryLocalService.deleteSegmentsEntry(segmentsEntry);
 		}
 	}

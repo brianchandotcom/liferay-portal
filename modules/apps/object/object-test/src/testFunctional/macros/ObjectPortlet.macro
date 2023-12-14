@@ -254,6 +254,10 @@ definition {
 		ClickNoError(locator1 = "ObjectPortlet#DELETE_ENTRY_BUTTON");
 
 		Button.click(button = "Delete");
+
+		WaitForElementNotPresent(
+			key_entry = ${entry},
+			locator1 = "ObjectPortlet#ENTRY_VALUE");
 	}
 
 	@summary = "Default summary"

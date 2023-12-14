@@ -154,7 +154,6 @@ definition {
 	}
 
 	@description = "LPS-151765 - Verify if Cascade deletion type of Relationship One to Many can delete and you also will delete the child related entry (if you also have permissions for it)"
-	@ignore = "true"
 	@priority = 4
 	test CanDeleteRelationshipWhenDeletionTypeIsCascade {
 		Account.openAccountsAdmin();
@@ -195,7 +194,7 @@ definition {
 		ObjectAdmin.goToLayoutsTab();
 
 		ObjectAdmin.selectSpecificKebabMenuOption(
-			kebabOption = "View",
+			kebabOption = "Edit",
 			objectLabel = "Layout Test");
 
 		ObjectAdmin.markLayoutAsDefault();
@@ -235,7 +234,11 @@ definition {
 
 		Account.openAccountsAdmin();
 
-		Search.searchCP(searchTerm = "Accounts for Test");
+		if (IsElementPresent(key_rowEntry = "Accounts for Test", locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME")) {
+			Refresh();
+
+			WaitForSPARefresh();
+		}
 
 		LexiconEntry.viewNoEntry(rowEntry = "Accounts for Test");
 	}
@@ -261,7 +264,6 @@ definition {
 	}
 
 	@description = "LPS-151765 - Verify it's not possible to delete an entry if the relationship is one to many with prevent deletion type"
-	@ignore = "true"
 	@priority = 4
 	test CannotDeleteEntryWhenDeletionTypeIsPrevent {
 		Account.openAccountsAdmin();
@@ -301,7 +303,7 @@ definition {
 		ObjectAdmin.goToLayoutsTab();
 
 		ObjectAdmin.selectSpecificKebabMenuOption(
-			kebabOption = "View",
+			kebabOption = "Edit",
 			objectLabel = "Layout 153532");
 
 		ObjectAdmin.markLayoutAsDefault();
@@ -339,11 +341,24 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject153532");
 
-		ObjectPortlet.assertDeleteEntryButtonNotPresent(entry = "Entry A");
+		Click(
+			key_entry = "Entry A",
+			locator1 = "ObjectPortlet#ENTRY_KEBAB_MENU");
+
+		ClickNoError(locator1 = "ObjectPortlet#DELETE_ENTRY_BUTTON");
+
+		Button.click(button = "Delete");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Modal#MODAL_CONTENT",
+			value1 = "Deletion Not Possible The prevent deletion type in the object relationship Relationship with object definition AccountEntry is preventing this object entry from being deleted");
+
+		Button.click(button = "Close");
+
+		ObjectPortlet.viewEntry(entry = "Entry A");
 	}
 
 	@description = "LPS-151765 - Verify if Disassociate deletion type of Relationship One to Many can delete normally and nothing happens with the child"
-	@ignore = "true"
 	@priority = 4
 	test CannotDeleteRelationshipWhenDeletionTypeIsDisassociate {
 		Account.openAccountsAdmin();
@@ -384,7 +399,7 @@ definition {
 		ObjectAdmin.goToLayoutsTab();
 
 		ObjectAdmin.selectSpecificKebabMenuOption(
-			kebabOption = "View",
+			kebabOption = "Edit",
 			objectLabel = "Layout Test");
 
 		ObjectAdmin.markLayoutAsDefault();

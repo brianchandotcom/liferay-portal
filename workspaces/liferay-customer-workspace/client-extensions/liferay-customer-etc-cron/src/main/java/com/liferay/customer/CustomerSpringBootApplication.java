@@ -6,16 +6,11 @@
 package com.liferay.customer;
 
 import com.liferay.client.extension.util.spring.boot.ClientExtensionUtilSpringBootComponentScan;
-import com.liferay.client.extension.util.spring.boot.LiferayOAuth2Util;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
-import org.springframework.security.oauth2.client.AuthorizedClientServiceOAuth2AuthorizedClientManager;
-import org.springframework.security.oauth2.core.OAuth2AccessToken;
 
 /**
  * @author Amos Fong
@@ -33,35 +28,5 @@ public class CustomerSpringBootApplication {
 			args
 		);
 	}
-
-	@Bean(name = "etcCronOAuth2AccessToken")
-	public OAuth2AccessToken getEtcCronOAuth2AccessToken(
-		AuthorizedClientServiceOAuth2AuthorizedClientManager
-			authorizedClientServiceOAuth2AuthorizedClientManager) {
-
-		return LiferayOAuth2Util.getOAuth2AccessToken(
-			authorizedClientServiceOAuth2AuthorizedClientManager,
-			_liferayEtcCronOAuthApplicationExternalReferenceCode);
-	}
-
-	@Bean(name = "etcSpringBootOAuth2AccessToken")
-	public OAuth2AccessToken getEtcSpringBootOAuth2AccessToken(
-		AuthorizedClientServiceOAuth2AuthorizedClientManager
-			authorizedClientServiceOAuth2AuthorizedClientManager) {
-
-		return LiferayOAuth2Util.getOAuth2AccessToken(
-			authorizedClientServiceOAuth2AuthorizedClientManager,
-			_liferayEtcSpringBootOAuthApplicationExternalReferenceCode);
-	}
-
-	@Value(
-		"${liferay.customer.etc.cron.headless.server.oauth.application.external.reference.code}"
-	)
-	private String _liferayEtcCronOAuthApplicationExternalReferenceCode;
-
-	@Value(
-		"${liferay.customer.etc.spring.boot.headless.server.oauth.application.external.reference.code}"
-	)
-	private String _liferayEtcSpringBootOAuthApplicationExternalReferenceCode;
 
 }

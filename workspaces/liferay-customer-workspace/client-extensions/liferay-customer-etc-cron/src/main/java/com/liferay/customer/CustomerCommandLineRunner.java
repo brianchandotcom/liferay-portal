@@ -5,6 +5,7 @@
 
 package com.liferay.customer;
 
+import com.liferay.client.extension.util.spring.boot.LiferayOAuth2AccessTokenManager;
 import com.liferay.osb.spring.boot.client.zendesk.model.ZendeskTicket;
 import com.liferay.osb.spring.boot.client.zendesk.search.SearchHits;
 import com.liferay.osb.spring.boot.client.zendesk.search.ZendeskTicketQuery;
@@ -21,13 +22,11 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -92,7 +91,8 @@ public class CustomerCommandLineRunner implements CommandLineRunner {
 				MediaType.APPLICATION_JSON
 			).header(
 				HttpHeaders.AUTHORIZATION,
-				"Bearer " + _cronOAuth2AccessToken.getTokenValue()
+				_liferayOAuth2AccessTokenManager.getAuthorization(
+					_liferayEtcCronOAuthApplicationExternalReferenceCode)
 			).retrieve(
 			).bodyToMono(
 				String.class
@@ -118,7 +118,8 @@ public class CustomerCommandLineRunner implements CommandLineRunner {
 				MediaType.APPLICATION_JSON
 			).header(
 				HttpHeaders.AUTHORIZATION,
-				"Bearer " + _etcSpringBootOAuth2AccessToken.getTokenValue()
+				_liferayOAuth2AccessTokenManager.getAuthorization(
+					_liferayEtcSpringBootOAuthApplicationExternalReferenceCode)
 			).retrieve(
 			).bodyToMono(
 				String.class
@@ -129,16 +130,21 @@ public class CustomerCommandLineRunner implements CommandLineRunner {
 	private static final Log _log = LogFactory.getLog(
 		CustomerCommandLineRunner.class);
 
-	@Autowired
-	@Qualifier("etcCronOAuth2AccessToken")
-	private OAuth2AccessToken _cronOAuth2AccessToken;
-
 	@Value("${liferay.customer.etc.spring.boot.client.extension.url}")
 	private String _etcSpringBootClientExtensionURL;
 
+	@Value(
+		"${liferay.customer.etc.cron.headless.server.oauth.application.external.reference.code}"
+	)
+	private String _liferayEtcCronOAuthApplicationExternalReferenceCode;
+
+	@Value(
+		"${liferay.customer.etc.spring.boot.headless.server.oauth.application.external.reference.code}"
+	)
+	private String _liferayEtcSpringBootOAuthApplicationExternalReferenceCode;
+
 	@Autowired
-	@Qualifier("etcSpringBootOAuth2AccessToken")
-	private OAuth2AccessToken _etcSpringBootOAuth2AccessToken;
+	private LiferayOAuth2AccessTokenManager _liferayOAuth2AccessTokenManager;
 
 	@Value("${com.liferay.lxc.dxp.mainDomain}")
 	private String _lxcDXPMainDomain;

@@ -4,7 +4,14 @@ definition {
 	macro assertDatabaseCount(databaseSubstring = null, databaseFilter = null, expectedCount = null) {
 		Variables.assertDefined(parameterList = "${databaseFilter},${databaseSubstring},${expectedCount}");
 
-		var sqlStatement = "SHOW DATABASES LIKE '${databaseFilter}';";
+		var databaseType = PropsUtil.get("database.type");
+
+		if (${databaseType} == "mysql") {
+			var sqlStatement = "SHOW DATABASES LIKE '${databaseFilter}';";
+		}
+		else if (${databaseType} == "postgresql") {
+			var sqlStatement = "SELECT datname FROM pg_catalog.pg_database WHERE datname LIKE '${databaseFilter}';";
+		}
 
 		var sqlResults = SQL.executeSQLStatement(sqlStatement = ${sqlStatement});
 

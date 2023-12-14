@@ -292,26 +292,7 @@ export function appReducer(state: InitialStateProps, action: TAction) {
 		}
 
 		case TYPES.UPDATE_PRODUCT_OPTION_VALUES_ID: {
-			const noOptionId = action.payload.noOptionId;
-			const yesOptionId = action.payload.yesOptionId;
-
-			const optionValuesId = {noOptionId, yesOptionId};
-
-			return {...state, optionValuesId};
-		}
-
-		case TYPES.UPDATE_DXP_PRODUCT_OPTION_VALUES_ID: {
-			const developerOptionId = action.payload.developerOptionId;
-			const standardOptionId = action.payload.standardOptionId;
-			const trialOptionId = action.payload.trialOptionId;
-
-			const dxpOptionValuesId = {
-				developerOptionId,
-				standardOptionId,
-				trialOptionId,
-			};
-
-			return {...state, dxpOptionValuesId};
+			return {...state, optionValuesId: action.payload};
 		}
 
 		case TYPES.UPDATE_SKU_TRIAL_ID: {

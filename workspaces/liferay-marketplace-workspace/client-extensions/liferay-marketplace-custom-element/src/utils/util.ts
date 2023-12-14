@@ -5,7 +5,6 @@
 
 import accountPlaceholder from '../assets/images/account_placeholder.png';
 import appPlaceholder from '../assets/images/app_placeholder.png';
-import {Sku} from '../manage-app-state/AppManageState';
 import {
 	createProductSpecification,
 	getAccountGroup,
@@ -65,9 +64,9 @@ export function getDxpProductOptionBody(newOptionId: number) {
 
 export function getLicenceTypesObject() {
 	return [
-		{key: 'developer', name: 'DEVELOPER'},
-		{key: 'standard', name: 'STANDARD'},
-		{key: 'trial', name: ' TRIAL'},
+		{code: 'd', key: 'developer', name: 'DEVELOPER'},
+		{code: 's', key: 'standard', name: 'STANDARD'},
+		{code: 'ts', key: 'trial', name: 'TRIAL'},
 	];
 }
 
@@ -219,17 +218,30 @@ type LicenceTiersPrices = {
 	standard: {key: number; value: number}[];
 };
 
-export function getSkuPrice(
-	appLicensePrice: LicenceTiersPrices,
-	skuObject: Sku
-) {
-	if (skuObject?.sku === 'STANDARD') {
+export function getSkuPrice(appLicensePrice: LicenceTiersPrices, sku: SKU) {
+	const dxpLicenseUsageType = sku.skuOptions.find(
+		({key}) => key === 'dxp-license-usage-type'
+	);
+
+	if (!dxpLicenseUsageType) {
+		if (sku.sku.endsWith('ts')) {
+			return 0;
+		}
+
+		if (sku?.sku.endsWith('d')) {
+			appLicensePrice.developer[0]?.value ?? 0;
+		}
+
+		return appLicensePrice.standard[0]?.value ?? 0;
+	}
+
+	const dxpLicenseUsageTypeValue = dxpLicenseUsageType.value;
+
+	if (dxpLicenseUsageTypeValue === 'standard') {
 		return appLicensePrice['standard'][0]?.value;
-	}
-	else if (skuObject?.sku === 'DEVELOPER') {
+	} else if (dxpLicenseUsageTypeValue === 'developer') {
 		return appLicensePrice['developer'][0]?.value;
-	}
-	else {
+	} else {
 		return 0;
 	}
 }
@@ -274,8 +286,7 @@ async function submitSpecification(
 		});
 
 		return -1;
-	}
-	else {
+	} else {
 		const {id} = await createProductSpecification({
 			appId,
 			body: {
@@ -348,17 +359,14 @@ export async function submitBase64EncodedFile({
 
 				if (result?.includes('application/zip')) {
 					result = result?.substring(28);
-				}
-				else if (
+				} else if (
 					result?.includes('image/gif') ||
 					result?.includes('image/png')
 				) {
 					result = result?.substring(22);
-				}
-				else if (result?.includes('image/jpeg')) {
+				} else if (result?.includes('image/jpeg')) {
 					result = result?.substring(23);
-				}
-				else if (
+				} else if (
 					result?.includes('application/octet-stream') ||
 					result?.includes('application/java-archive')
 				) {

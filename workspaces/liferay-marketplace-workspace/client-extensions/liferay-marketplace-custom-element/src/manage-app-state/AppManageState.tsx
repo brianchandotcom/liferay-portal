@@ -43,11 +43,6 @@ export type InitialStateProps = {
 	buildAppPackages: {[key: string]: UploadedFile[]};
 	catalogId: number;
 	dayTrial: string;
-	dxpOptionValuesId: {
-		developerOptionId: number;
-		standardOptionId: number;
-		trialOptionId: number;
-	};
 	gravatarAPI: string;
 	optionId: number;
 	optionValuesId: {noOptionId: number; yesOptionId: number};
@@ -74,6 +69,7 @@ const initialState = ({
 	appType: {value: 'cloud'},
 	buildAppPackages: {},
 	dayTrial: 'no',
+	optionValuesId: {},
 	priceModel: {value: 'Paid'},
 } as unknown) as InitialStateProps;
 

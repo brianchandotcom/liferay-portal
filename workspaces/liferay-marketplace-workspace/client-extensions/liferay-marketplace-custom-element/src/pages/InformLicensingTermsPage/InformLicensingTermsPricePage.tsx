@@ -9,7 +9,6 @@ import {Section} from '../../components/Section/Section';
 import {
 	LicensePrice,
 	PriceEntry,
-	Sku,
 	useAppContext,
 } from '../../manage-app-state/AppManageState';
 
@@ -39,14 +38,13 @@ export function InformLicensingTermsPricePage({
 }: InformLicensingTermsPricePageProps) {
 	const [{appLicensePrice, appProductId}, dispatch] = useAppContext();
 
-	const handleAddPriceTier = (licenseTier: LicenseTier) => {
+	const handleAddPriceTier = (licenseTier: LicenseTier) =>
 		dispatch({
 			payload: {licenseTier},
 			type: TYPES.ADD_APP_LICENSE_PRICE,
 		});
-	};
 
-	const handleDeletePriceTier = (licenseTier: LicenseTier, key: number) => {
+	const handleDeletePriceTier = (licenseTier: LicenseTier, key: number) =>
 		dispatch({
 			payload: {
 				key,
@@ -54,13 +52,12 @@ export function InformLicensingTermsPricePage({
 			},
 			type: TYPES.DELETE_APP_LICENSE_PRICE,
 		});
-	};
 
 	const handleEditPriceTier = (
 		licenseTier: LicenseTier,
 		index: number,
 		price: LicensePrice
-	) => {
+	) =>
 		dispatch({
 			payload: {
 				index,
@@ -69,56 +66,74 @@ export function InformLicensingTermsPricePage({
 			},
 			type: TYPES.UPDATE_APP_LICENSE_PRICES,
 		});
+
+	const processTier = async (priceEntry: PriceEntry) => {
+		const skuName = priceEntry?.sku?.name;
+
+		const keyAppLicensePrice = skuName.endsWith('d')
+			? 'developer'
+			: 'standard';
+
+		const tiers = appLicensePrice[keyAppLicensePrice];
+
+		for (const {key, value} of tiers || []) {
+			const tierPrice = {
+				minimumQuantity: key,
+				price: value,
+				priceEntryId: priceEntry?.priceEntryId,
+			};
+
+			await postPriceEntryIdTierPrice(
+				priceEntry?.priceEntryId,
+				tierPrice
+			);
+		}
 	};
 
-	const handlePostPriceEntryIdTierPrice = async (sku: Sku) => {
+	const handlePostPriceEntryIdTierPrice = async (sku: SKU) => {
 		const product = await getProductById({
 			nestedFields: 'catalog',
 			productId: appProductId,
 		});
 
-		const catalogName = product?.catalog?.name;
-		const priceList = await getPriceListByCatalogName(catalogName);
-		const priceListId = priceList?.items[0]?.id;
-		const priceEntries = await getPriceListIdPriceEntries(priceListId);
-		const priceEntryForUpdate = {
-			bulkPricing: true,
-			hasTierPrice: false,
-		};
+		const priceList = await getPriceListByCatalogName(
+			product?.catalog?.name
+		);
 
-		const processTier = async (priceEntry: PriceEntry) => {
-			const skuName = priceEntry?.sku?.name;
-			const keyAppLicensePrice =
-				skuName === 'STANDARD' ? 'standard' : 'developer';
-			const tiers = appLicensePrice[keyAppLicensePrice];
-
-			for (const {key, value} of tiers || []) {
-				const tierPrice = {
-					minimumQuantity: key,
-					price: value,
-					priceEntryId: priceEntry?.priceEntryId,
-				};
-
-				await postPriceEntryIdTierPrice(
-					priceEntry?.priceEntryId,
-					tierPrice
-				);
-			}
-		};
+		const priceEntries = await getPriceListIdPriceEntries(
+			priceList?.items[0]?.id
+		);
 
 		for (const priceEntry of priceEntries?.items || []) {
-			if (priceEntry?.sku?.id === sku?.id) {
-				if (!priceEntry?.bulkPricing || priceEntry?.hasTierPrice) {
-					await patchPriceEntry(
-						priceEntryForUpdate,
-						priceEntry?.priceEntryId
-					);
-				}
-
-				if (sku?.sku !== 'TRIAL') {
-					await processTier(priceEntry);
-				}
+			if (priceEntry?.sku?.id !== sku?.id) {
+				continue;
 			}
+
+			if (!priceEntry?.bulkPricing || priceEntry?.hasTierPrice) {
+				await patchPriceEntry(
+					{
+						bulkPricing: true,
+						hasTierPrice: false,
+					},
+					priceEntry?.priceEntryId
+				);
+			}
+
+			if (sku?.sku !== 'TRIAL' || sku?.sku.endsWith('ts')) {
+				await processTier(priceEntry);
+			}
+		}
+	};
+
+	const submitLicensePrice = async () => {
+		const skusJSON = await getProductIdSkusPage(appProductId);
+
+		for (const sku of skusJSON?.items) {
+			await handlePostPriceEntryIdTierPrice(sku);
+			await patchSKUById(sku?.id, {
+				...sku,
+				price: getSkuPrice(appLicensePrice, sku),
+			});
 		}
 	};
 
@@ -183,24 +198,8 @@ export function InformLicensingTermsPricePage({
 			<NewAppPageFooterButtons
 				disableContinueButton={!appLicensePrice}
 				onClickBack={() => onClickBack()}
-				onClickContinue={() => {
-					const submitLicensePrice = async () => {
-						const skusJSON = await getProductIdSkusPage(
-							appProductId
-						);
-
-						for (const sku of skusJSON?.items) {
-							const skuBody = {
-								...sku,
-								price: getSkuPrice(appLicensePrice, sku),
-							};
-							handlePostPriceEntryIdTierPrice(sku);
-
-							await patchSKUById(sku?.id, skuBody);
-						}
-					};
-
-					submitLicensePrice();
+				onClickContinue={async () => {
+					await submitLicensePrice();
 
 					onClickContinue();
 				}}

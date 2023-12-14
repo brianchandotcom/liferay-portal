@@ -67,6 +67,12 @@ class HeadlessCommerceAdminCatalog {
 		);
 	}
 
+	async getProductSkus(productId: string | number) {
+		return fetcher<APIResponse<SKU>>(
+			`/o/headless-commerce-admin-catalog/v1.0/products/${productId}/skus`
+		);
+	}
+
 	async updateProductByExternalReferenceCode(
 		externalReferenceCode: string,
 		{

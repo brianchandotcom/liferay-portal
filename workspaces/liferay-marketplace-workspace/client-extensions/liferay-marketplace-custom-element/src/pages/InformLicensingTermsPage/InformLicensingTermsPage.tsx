@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {useState} from 'react';
+
 import cancelIcon from '../../assets/icons/cancel_icon.svg';
 import pendingActionsIcon from '../../assets/icons/pending_actions_icon.svg';
 import scheduleIcon from '../../assets/icons/schedule_icon.svg';
@@ -14,13 +16,13 @@ import {Section} from '../../components/Section/Section';
 import {getCompanyId} from '../../liferay/constants';
 import {useAppContext} from '../../manage-app-state/AppManageState';
 import {TYPES} from '../../manage-app-state/actionTypes';
+import HeadlessCommerceAdminCatalogImpl from '../../services/rest/HeadlessCommerceAdminCatalog';
 import {
 	addExpandoValue,
 	createAppSKU,
 	createProductSpecification,
 	deleteTrialSKU,
 	getProductSKU,
-	getSKUById,
 	getSpecification,
 	patchSKUById,
 	updateProductSpecification,
@@ -29,10 +31,10 @@ import {createSkuName, getSkuPrice} from '../../utils/util';
 
 import './InformLicensingTermsPage.scss';
 
-interface InformLicensingTermsPageProps {
+type InformLicensingTermsPageProps = {
 	onClickBack: () => void;
 	onClickContinue: () => void;
-}
+};
 
 export function InformLicensingTermsPage({
 	onClickBack,
@@ -45,16 +47,139 @@ export function InformLicensingTermsPage({
 			appLicensePrice,
 			appNotes,
 			appProductId,
+			appType,
 			appVersion,
 			dayTrial,
 			optionValuesId,
 			priceModel,
 			productOptionId,
 			skuTrialId,
-			skuVersionId,
 		},
 		dispatch,
 	] = useAppContext();
+
+	const [isProcessing, setProcessing] = useState(false);
+
+	const isDXP = appType.value === 'dxp';
+
+	const upsertProductSpecification = async () => {
+		const value =
+			appLicense.value === 'Perpetual'
+				? {en_US: 'Perpetual'}
+				: {en_US: 'Subscription'};
+
+		if (appLicense.id) {
+			return updateProductSpecification({
+				body: {
+					specificationKey: 'license-type',
+					value,
+				},
+				id: appLicense.id,
+			});
+		}
+
+		const dataSpecification = await getSpecification('license-type');
+
+		const {id} = await createProductSpecification({
+			appId,
+			body: {
+				productId: appProductId,
+				specificationId: dataSpecification.id,
+				specificationKey: dataSpecification.key,
+				value,
+			},
+		});
+
+		dispatch({
+			payload: {id, value: appLicense.value},
+			type: TYPES.UPDATE_APP_LICENSE,
+		});
+	};
+
+	const submitLicenseTermsPage = async () => {
+		const {
+			items: skus,
+		} = await HeadlessCommerceAdminCatalogImpl.getProductSkus(appProductId);
+
+		for (const sku of skus) {
+			const freeOrPerpertual =
+				priceModel.value === 'Free' || appLicense.value === 'Perpetual';
+
+			await patchSKUById(sku.id, {
+				neverExpire: freeOrPerpertual,
+				price:
+					priceModel.value === 'Free'
+						? 0
+						: getSkuPrice(appLicensePrice, sku),
+			});
+		}
+
+		await upsertProductSpecification();
+
+		if (dayTrial !== 'yes' && skuTrialId) {
+			return deleteTrialSKU(skuTrialId);
+		}
+
+		const skuResponse = await getProductSKU({
+			appProductId,
+		});
+
+		const trialSku = skuResponse.items.find(
+			({sku}) =>
+				sku === createSkuName(appProductId, appVersion, 'ts') ||
+				sku === 'TRIAL'
+		);
+
+		let _skuTrialId;
+
+		if (trialSku) {
+			_skuTrialId = trialSku.id;
+		} else if (!isDXP) {
+			const response = await createAppSKU({
+				appProductId,
+				body: {
+					neverExpire: false,
+					price: 0,
+					published: true,
+					purchasable: true,
+					sku: createSkuName(appProductId, appVersion, 'ts'),
+					skuOptions: [
+						{
+							key: productOptionId,
+							value: optionValuesId.yesOptionId,
+						},
+					],
+					skuSubscriptionConfiguration: {
+						enable: true,
+						length: 30,
+						numberOfLength: 1,
+						overrideSubscriptionInfo: true,
+						subscriptionType: 'daily',
+					},
+				},
+			});
+
+			_skuTrialId = response.id;
+		}
+
+		dispatch({
+			payload: {
+				value: _skuTrialId,
+			},
+			type: TYPES.UPDATE_SKU_TRIAL_ID,
+		});
+
+		addExpandoValue({
+			attributeValues: {
+				'Version': appVersion,
+				'Version Description': appNotes,
+			},
+			className: 'com.liferay.commerce.product.model.CPInstance',
+			classPK: skuTrialId,
+			companyId: getCompanyId(),
+			tableName: 'CUSTOM_FIELDS',
+		});
+	};
 
 	return (
 		<div className="informing-licensing-terms-page-container">
@@ -118,12 +243,12 @@ export function InformLicensingTermsPage({
 						description="Offer a 30-day free trial for this app."
 						disabled={priceModel.value === 'Free'}
 						icon={taskCheckedIcon}
-						onChange={() => {
+						onChange={() =>
 							dispatch({
 								payload: {value: 'yes'},
 								type: TYPES.UPDATE_APP_TRIAL_INFO,
-							});
-						}}
+							})
+						}
 						selected={dayTrial === 'yes'}
 						title="Yes"
 						tooltip="Offer a 30-day free trial for this app."
@@ -146,164 +271,14 @@ export function InformLicensingTermsPage({
 			</Section>
 
 			<NewAppPageFooterButtons
+				disableContinueButton={isProcessing}
 				onClickBack={() => onClickBack()}
-				onClickContinue={() => {
-					const submitLicenseTermsPage = async () => {
-						const versionSkuJSON = await getSKUById(skuVersionId);
-						if (appLicense.id) {
-							updateProductSpecification({
-								body: {
-									specificationKey: 'license-type',
-									value:
-										appLicense.value === 'Perpetual'
-											? {en_US: 'Perpetual'}
-											: {en_US: 'Subscription'},
-								},
-								id: appLicense.id,
-							});
-						}
-						else {
-							const dataSpecification = await getSpecification(
-								'license-type'
-							);
+				onClickContinue={async () => {
+					setProcessing(true);
 
-							const {id} = await createProductSpecification({
-								appId,
-								body: {
-									productId: appProductId,
-									specificationId: dataSpecification.id,
-									specificationKey: dataSpecification.key,
-									value:
-										appLicense.value === 'Perpetual'
-											? {en_US: 'Perpetual'}
-											: {en_US: 'Subscription'},
-								},
-							});
+					await submitLicenseTermsPage();
 
-							dispatch({
-								payload: {id, value: appLicense.value},
-								type: TYPES.UPDATE_APP_LICENSE,
-							});
-						}
-
-						if (
-							priceModel.value === 'Free' ||
-							appLicense.value === 'Perpetual'
-						) {
-							const skuBody = {
-								...versionSkuJSON,
-								neverExpire: true,
-								price:
-									appLicense.value === 'Perpetual'
-										? getSkuPrice(
-												appLicensePrice,
-												versionSkuJSON
-										  )
-										: 0,
-
-								published: true,
-								purchasable: true,
-							};
-
-							await patchSKUById(skuVersionId, skuBody);
-						}
-						else if (appLicense.value === 'non-perpetual') {
-							const skuBody = {
-								...versionSkuJSON,
-								neverExpire: false,
-								skuSubscriptionConfiguration: {
-									enable: true,
-									length: 1,
-									numberOfLength: 1,
-									overrideSubscriptionInfo: true,
-									subscriptionType: 'yearly',
-									subscriptionTypeSettings: {yearlyMode: 0},
-								},
-							};
-
-							await patchSKUById(skuVersionId, skuBody);
-						}
-
-						if (dayTrial === 'yes') {
-							const skuResponse = await getProductSKU({
-								appProductId,
-							});
-
-							const trialSku = skuResponse.items.find(
-								({sku}) =>
-									sku ===
-									createSkuName(
-										appProductId,
-										appVersion,
-										'ts'
-									)
-							);
-
-							let skuTrialId;
-
-							if (trialSku) {
-								skuTrialId = trialSku.id;
-							}
-							else {
-								const response = await createAppSKU({
-									appProductId,
-									body: {
-										neverExpire: false,
-										price: 0,
-										published: true,
-										purchasable: true,
-										sku: createSkuName(
-											appProductId,
-											appVersion,
-											'ts'
-										),
-
-										skuOptions: [
-											{
-												key: productOptionId,
-												value:
-													optionValuesId.yesOptionId,
-											},
-										],
-
-										skuSubscriptionConfiguration: {
-											enable: true,
-											length: 30,
-											numberOfLength: 1,
-											overrideSubscriptionInfo: true,
-											subscriptionType: 'daily',
-										},
-									},
-								});
-
-								skuTrialId = response.id;
-
-								dispatch({
-									payload: {
-										value: response.id,
-									},
-									type: TYPES.UPDATE_SKU_TRIAL_ID,
-								});
-							}
-
-							addExpandoValue({
-								attributeValues: {
-									'Version': appVersion,
-									'Version Description': appNotes,
-								},
-								className:
-									'com.liferay.commerce.product.model.CPInstance',
-								classPK: skuTrialId,
-								companyId: getCompanyId(),
-								tableName: 'CUSTOM_FIELDS',
-							});
-						}
-						else if (skuTrialId) {
-							deleteTrialSKU(skuTrialId);
-						}
-					};
-
-					submitLicenseTermsPage();
+					setProcessing(true);
 
 					onClickContinue();
 				}}

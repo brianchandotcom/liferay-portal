@@ -13,18 +13,21 @@ import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterC
 import com.liferay.portal.search.spi.model.index.contributor.helper.IndexerWriterMode;
 import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexerWriterDocumentHelper;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Alejandro Tardín
  */
-@Component(
-	property = "indexer.class.name=com.liferay.depot.model.DepotEntry",
-	service = ModelIndexerWriterContributor.class
-)
 public class DepotEntryModelIndexerWriterContributor
 	implements ModelIndexerWriterContributor<DepotEntry> {
+
+	public DepotEntryModelIndexerWriterContributor(
+		DepotEntryLocalService depotEntryLocalService,
+		DynamicQueryBatchIndexingActionableFactory
+			dynamicQueryBatchIndexingActionableFactory) {
+
+		_depotEntryLocalService = depotEntryLocalService;
+		_dynamicQueryBatchIndexingActionableFactory =
+			dynamicQueryBatchIndexingActionableFactory;
+	}
 
 	@Override
 	public void customize(
@@ -53,11 +56,8 @@ public class DepotEntryModelIndexerWriterContributor
 		return IndexerWriterMode.UPDATE;
 	}
 
-	@Reference
-	private DepotEntryLocalService _depotEntryLocalService;
-
-	@Reference
-	private DynamicQueryBatchIndexingActionableFactory
+	private final DepotEntryLocalService _depotEntryLocalService;
+	private final DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;
 
 }

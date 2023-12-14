@@ -23,21 +23,9 @@ public class PusherGitHubEventHandler extends BaseGitHubEventHandler {
 
 	@Override
 	public String process() throws InvalidJSONException {
-		GitBranchEntity gitBranchEntity = _getGitBranchEntity();
+		_updateUpstreamGitBranchEntity();
 
-		if (gitBranchEntity.getType() == GitBranchEntity.Type.UPSTREAM) {
-			GitHubCommit headGitHubCommit = _getHeadGitHubCommit();
-
-			gitBranchEntity.setBranchSHA(headGitHubCommit.getSHA());
-			gitBranchEntity.setUpstreamBranchSHA(headGitHubCommit.getSHA());
-
-			GitBranchEntityRepository gitBranchEntityRepository =
-				getGitBranchEntityRepository();
-
-			gitBranchEntityRepository.update(gitBranchEntity);
-		}
-
-		return gitBranchEntity.toString();
+		return null;
 	}
 
 	protected PusherGitHubEventHandler(
@@ -81,6 +69,24 @@ public class PusherGitHubEventHandler extends BaseGitHubEventHandler {
 		GitHubFactory gitHubFactory = getGitHubFactory();
 
 		return gitHubFactory.newGitHubCommit(headCommitJSONObject);
+	}
+
+	private void _updateUpstreamGitBranchEntity() throws InvalidJSONException {
+		GitBranchEntity gitBranchEntity = _getGitBranchEntity();
+
+		if (gitBranchEntity.getType() != GitBranchEntity.Type.UPSTREAM) {
+			return;
+		}
+
+		GitHubCommit headGitHubCommit = _getHeadGitHubCommit();
+
+		gitBranchEntity.setBranchSHA(headGitHubCommit.getSHA());
+		gitBranchEntity.setUpstreamBranchSHA(headGitHubCommit.getSHA());
+
+		GitBranchEntityRepository gitBranchEntityRepository =
+			getGitBranchEntityRepository();
+
+		gitBranchEntityRepository.update(gitBranchEntity);
 	}
 
 }

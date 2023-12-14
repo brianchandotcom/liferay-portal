@@ -3,7 +3,7 @@ definition {
 
 	property app.server.types = "tomcat";
 	property ci.retries.disabled = "true";
-	property database.types = "mysql";
+	property database.types = "mysql, postgresql";
 	property liferay.online.properties = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
@@ -449,6 +449,7 @@ definition {
 	@priority = 4
 	test ExecuteSchemaValidator {
 		property custom.properties = "database.partition.schema.name.prefix=testPartition${line.separator}virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com,www.baker.com";
+		property database.types = "mysql";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -563,6 +564,7 @@ definition {
 	@priority = 3
 	test NewCompanyStillAccessibleAfterRestartWithCaseInsensitiveDatabase {
 		property database.lowercase.enabled = "true";
+		property database.types = "mysql";
 		property test.assert.warning.exceptions = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";

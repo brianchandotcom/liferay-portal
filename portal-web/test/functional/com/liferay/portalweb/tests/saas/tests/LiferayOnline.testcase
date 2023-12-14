@@ -1,7 +1,7 @@
 @component-name = "portal-liferay-online"
 definition {
 
-	property database.types = "mysql";
+	property database.types = "mysql, postgresql";
 	property liferay.online.properties = "true";
 	property osgi.modules.includes = "site-initializer-team-extranet";
 	property portal.release = "true";

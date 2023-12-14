@@ -2,7 +2,7 @@
 definition {
 
 	property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
-	property database.types = "mysql";
+	property database.types = "mysql, postgresql";
 	property liferay.online.properties = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";

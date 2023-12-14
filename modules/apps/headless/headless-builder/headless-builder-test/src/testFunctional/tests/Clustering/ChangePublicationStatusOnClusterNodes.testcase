@@ -71,6 +71,7 @@ definition {
 	test CanAddAPIApplicationWithCluster {
 		property app.server.bundles.size = "1";
 		property cluster.enabled = "true";
+		property database.types = "mysql, postgresql";
 		property minimum.slave.ram = "24";
 		property portal.acceptance = "true";
 		property remote.elasticsearch.enabled = "true";

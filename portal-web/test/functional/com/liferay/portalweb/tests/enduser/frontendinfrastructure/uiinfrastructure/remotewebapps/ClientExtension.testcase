@@ -176,7 +176,7 @@ definition {
 	@priority = 5
 	test CanBeDisplayedWithDBPartitioning {
 		property database.partition.enabled = "true";
-		property database.types = "mysql";
+		property database.types = "mysql, postgresql";
 		property portal.acceptance = "true";
 
 		task ("Given Client Extension admin page") {

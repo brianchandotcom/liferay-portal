@@ -30,7 +30,7 @@ definition {
 	@priority = 5
 	test CanCreatePartitionedVirtualInstanceViaConfig {
 		property app.server.types = "tomcat";
-		property database.types = "mysql";
+		property database.types = "mysql, postgresql";
 		property liferay.online.properties = "true";
 		property osgi.module.configuration.file.names = "com.liferay.portal.instances.internal.configuration.PortalInstancesConfiguration~www.able.com.config";
 		property osgi.module.configurations = "mx=\"www.able.com\"${line.separator}virtualHostname=\"www.able.com\"";

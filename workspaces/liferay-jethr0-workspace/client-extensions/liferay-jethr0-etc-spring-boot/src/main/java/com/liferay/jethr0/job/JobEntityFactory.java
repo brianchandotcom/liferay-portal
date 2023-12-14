@@ -43,6 +43,21 @@ public class JobEntityFactory extends BaseEntityFactory<JobEntity> {
 		else if (jobEntityType == JobEntity.Type.GENERATE_TESTRAY_CSV) {
 			return new GenerateTestrayCSVJobEntity(jsonObject);
 		}
+		else if (jobEntityType == JobEntity.Type.MAINTENANCE_DAILY) {
+			return new MaintenanceDailyJobEntity(jsonObject);
+		}
+		else if (jobEntityType == JobEntity.Type.MAINTENANCE_MATRIX_JOBS) {
+			return new MaintenanceMatrixJobsJobEntity(jsonObject);
+		}
+		else if (jobEntityType == JobEntity.Type.MAINTENANCE_STALE_ARTIFACTS) {
+			return new MaintenanceStaleArtifactsJobEntity(jsonObject);
+		}
+		else if (jobEntityType == JobEntity.Type.MAINTENANCE_WEEKLY) {
+			return new MaintenanceWeeklyJobEntity(jsonObject);
+		}
+		else if (jobEntityType == JobEntity.Type.MAINTENANCE_WEEKLY_NODE) {
+			return new MaintenanceWeeklyNodeJobEntity(jsonObject);
+		}
 		else if (jobEntityType == JobEntity.Type.PORTAL_APP_RELEASE) {
 			return new PortalAppReleaseJobEntity(jsonObject);
 		}
@@ -78,6 +93,12 @@ public class JobEntityFactory extends BaseEntityFactory<JobEntity> {
 		}
 		else if (jobEntityType == JobEntity.Type.QA_WEBSITES_WEEKLY) {
 			return new WeeklyQAWebsitesJobEntity(jsonObject);
+		}
+		else if (jobEntityType == JobEntity.Type.VERIFICATION) {
+			return new VerificationJobEntity(jsonObject);
+		}
+		else if (jobEntityType == JobEntity.Type.VERIFICATION_NODE) {
+			return new VerificationNodeJobEntity(jsonObject);
 		}
 
 		return new DefaultJobEntity(jsonObject);

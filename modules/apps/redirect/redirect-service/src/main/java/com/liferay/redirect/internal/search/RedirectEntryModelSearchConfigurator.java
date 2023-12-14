@@ -6,10 +6,14 @@
 package com.liferay.redirect.internal.search;
 
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
+import com.liferay.redirect.internal.search.spi.model.index.contributor.RedirectEntryModelIndexerWriterContributor;
 import com.liferay.redirect.model.RedirectEntry;
+import com.liferay.redirect.service.RedirectEntryLocalService;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -40,10 +44,22 @@ public class RedirectEntryModelSearchConfigurator
 		return _modelIndexWriterContributor;
 	}
 
-	@Reference(
-		target = "(indexer.class.name=com.liferay.redirect.model.RedirectEntry)"
-	)
+	@Activate
+	protected void activate() {
+		_modelIndexWriterContributor =
+			new RedirectEntryModelIndexerWriterContributor(
+				_dynamicQueryBatchIndexingActionableFactory,
+				_redirectEntryLocalService);
+	}
+
+	@Reference
+	private DynamicQueryBatchIndexingActionableFactory
+		_dynamicQueryBatchIndexingActionableFactory;
+
 	private ModelIndexerWriterContributor<RedirectEntry>
 		_modelIndexWriterContributor;
+
+	@Reference
+	private RedirectEntryLocalService _redirectEntryLocalService;
 
 }

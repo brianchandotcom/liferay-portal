@@ -13,18 +13,21 @@ import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexer
 import com.liferay.redirect.model.RedirectNotFoundEntry;
 import com.liferay.redirect.service.RedirectNotFoundEntryLocalService;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Alejandro Tardín
  */
-@Component(
-	property = "indexer.class.name=com.liferay.redirect.model.RedirectNotFoundEntry",
-	service = ModelIndexerWriterContributor.class
-)
 public class RedirectNotFoundEntryModelIndexerWriterContributor
 	implements ModelIndexerWriterContributor<RedirectNotFoundEntry> {
+
+	public RedirectNotFoundEntryModelIndexerWriterContributor(
+		DynamicQueryBatchIndexingActionableFactory
+			dynamicQueryBatchIndexingActionableFactory,
+		RedirectNotFoundEntryLocalService redirectNotFoundEntryLocalService) {
+
+		_dynamicQueryBatchIndexingActionableFactory =
+			dynamicQueryBatchIndexingActionableFactory;
+		_redirectNotFoundEntryLocalService = redirectNotFoundEntryLocalService;
+	}
 
 	@Override
 	public void customize(
@@ -58,12 +61,9 @@ public class RedirectNotFoundEntryModelIndexerWriterContributor
 		return IndexerWriterMode.UPDATE;
 	}
 
-	@Reference
-	private DynamicQueryBatchIndexingActionableFactory
+	private final DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;
-
-	@Reference
-	private RedirectNotFoundEntryLocalService
+	private final RedirectNotFoundEntryLocalService
 		_redirectNotFoundEntryLocalService;
 
 }

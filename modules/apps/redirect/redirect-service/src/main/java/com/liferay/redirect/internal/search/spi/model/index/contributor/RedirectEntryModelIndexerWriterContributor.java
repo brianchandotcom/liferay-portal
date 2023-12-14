@@ -13,18 +13,21 @@ import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexer
 import com.liferay.redirect.model.RedirectEntry;
 import com.liferay.redirect.service.RedirectEntryLocalService;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Alejandro Tardín
  */
-@Component(
-	property = "indexer.class.name=com.liferay.redirect.model.RedirectEntry",
-	service = ModelIndexerWriterContributor.class
-)
 public class RedirectEntryModelIndexerWriterContributor
 	implements ModelIndexerWriterContributor<RedirectEntry> {
+
+	public RedirectEntryModelIndexerWriterContributor(
+		DynamicQueryBatchIndexingActionableFactory
+			dynamicQueryBatchIndexingActionableFactory,
+		RedirectEntryLocalService redirectEntryLocalService) {
+
+		_dynamicQueryBatchIndexingActionableFactory =
+			dynamicQueryBatchIndexingActionableFactory;
+		_redirectEntryLocalService = redirectEntryLocalService;
+	}
 
 	@Override
 	public void customize(
@@ -56,11 +59,8 @@ public class RedirectEntryModelIndexerWriterContributor
 		return IndexerWriterMode.UPDATE;
 	}
 
-	@Reference
-	private DynamicQueryBatchIndexingActionableFactory
+	private final DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;
-
-	@Reference
-	private RedirectEntryLocalService _redirectEntryLocalService;
+	private final RedirectEntryLocalService _redirectEntryLocalService;
 
 }

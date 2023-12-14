@@ -6,10 +6,14 @@
 package com.liferay.redirect.internal.search;
 
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
+import com.liferay.redirect.internal.search.spi.model.index.contributor.RedirectNotFoundEntryModelIndexerWriterContributor;
 import com.liferay.redirect.model.RedirectNotFoundEntry;
+import com.liferay.redirect.service.RedirectNotFoundEntryLocalService;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -40,10 +44,23 @@ public class RedirectNotFoundEntryModelSearchConfigurator
 		return _modelIndexWriterContributor;
 	}
 
-	@Reference(
-		target = "(indexer.class.name=com.liferay.redirect.model.RedirectNotFoundEntry)"
-	)
+	@Activate
+	protected void activate() {
+		_modelIndexWriterContributor =
+			new RedirectNotFoundEntryModelIndexerWriterContributor(
+				_dynamicQueryBatchIndexingActionableFactory,
+				_redirectNotFoundEntryLocalService);
+	}
+
+	@Reference
+	private DynamicQueryBatchIndexingActionableFactory
+		_dynamicQueryBatchIndexingActionableFactory;
+
 	private ModelIndexerWriterContributor<RedirectNotFoundEntry>
 		_modelIndexWriterContributor;
+
+	@Reference
+	private RedirectNotFoundEntryLocalService
+		_redirectNotFoundEntryLocalService;
 
 }

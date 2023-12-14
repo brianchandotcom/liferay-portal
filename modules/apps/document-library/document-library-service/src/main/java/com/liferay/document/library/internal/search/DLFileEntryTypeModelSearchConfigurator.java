@@ -5,11 +5,15 @@
 
 package com.liferay.document.library.internal.search;
 
+import com.liferay.document.library.internal.search.spi.model.index.contributor.DLFileEntryTypeModelIndexerWriterContributor;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
+import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -41,9 +45,21 @@ public class DLFileEntryTypeModelSearchConfigurator
 		return _modelIndexWriterContributor;
 	}
 
-	@Reference(
-		target = "(indexer.class.name=com.liferay.document.library.kernel.model.DLFileEntryType)"
-	)
+	@Activate
+	protected void activate() {
+		_modelIndexWriterContributor =
+			new DLFileEntryTypeModelIndexerWriterContributor(
+				_dlFileEntryTypeLocalService,
+				_dynamicQueryBatchIndexingActionableFactory);
+	}
+
+	@Reference
+	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
+
+	@Reference
+	private DynamicQueryBatchIndexingActionableFactory
+		_dynamicQueryBatchIndexingActionableFactory;
+
 	private ModelIndexerWriterContributor<DLFileEntryType>
 		_modelIndexWriterContributor;
 

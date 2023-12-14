@@ -14,18 +14,21 @@ import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactor
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexerWriterDocumentHelper;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Michael C. Han
  */
-@Component(
-	property = "indexer.class.name=com.liferay.document.library.kernel.model.DLFolder",
-	service = ModelIndexerWriterContributor.class
-)
 public class DLFolderModelIndexerWriterContributor
 	implements ModelIndexerWriterContributor<DLFolder> {
+
+	public DLFolderModelIndexerWriterContributor(
+		DLFolderLocalService dlFolderLocalService,
+		DynamicQueryBatchIndexingActionableFactory
+			dynamicQueryBatchIndexingActionableFactory) {
+
+		_dlFolderLocalService = dlFolderLocalService;
+		_dynamicQueryBatchIndexingActionableFactory =
+			dynamicQueryBatchIndexingActionableFactory;
+	}
 
 	@Override
 	public void customize(
@@ -45,9 +48,9 @@ public class DLFolderModelIndexerWriterContributor
 
 	@Override
 	public BatchIndexingActionable getBatchIndexingActionable() {
-		return dynamicQueryBatchIndexingActionableFactory.
+		return _dynamicQueryBatchIndexingActionableFactory.
 			getBatchIndexingActionable(
-				dlFolderLocalService.getIndexableActionableDynamicQuery());
+				_dlFolderLocalService.getIndexableActionableDynamicQuery());
 	}
 
 	@Override
@@ -55,11 +58,8 @@ public class DLFolderModelIndexerWriterContributor
 		return dlFolder.getCompanyId();
 	}
 
-	@Reference
-	protected DLFolderLocalService dlFolderLocalService;
-
-	@Reference
-	protected DynamicQueryBatchIndexingActionableFactory
-		dynamicQueryBatchIndexingActionableFactory;
+	private final DLFolderLocalService _dlFolderLocalService;
+	private final DynamicQueryBatchIndexingActionableFactory
+		_dynamicQueryBatchIndexingActionableFactory;
 
 }

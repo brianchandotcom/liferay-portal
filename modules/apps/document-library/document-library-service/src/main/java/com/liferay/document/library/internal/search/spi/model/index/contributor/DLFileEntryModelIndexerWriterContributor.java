@@ -19,18 +19,21 @@ import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterC
 import com.liferay.portal.search.spi.model.index.contributor.helper.IndexerWriterMode;
 import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexerWriterDocumentHelper;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Michael C. Han
  */
-@Component(
-	property = "indexer.class.name=com.liferay.document.library.kernel.model.DLFileEntry",
-	service = ModelIndexerWriterContributor.class
-)
 public class DLFileEntryModelIndexerWriterContributor
 	implements ModelIndexerWriterContributor<DLFileEntry> {
+
+	public DLFileEntryModelIndexerWriterContributor(
+		DLFileEntryLocalService dlFileEntryLocalService,
+		DynamicQueryBatchIndexingActionableFactory
+			dynamicQueryBatchIndexingActionableFactory) {
+
+		_dlFileEntryLocalService = dlFileEntryLocalService;
+		_dynamicQueryBatchIndexingActionableFactory =
+			dynamicQueryBatchIndexingActionableFactory;
+	}
 
 	@Override
 	public void customize(
@@ -44,9 +47,9 @@ public class DLFileEntryModelIndexerWriterContributor
 
 	@Override
 	public BatchIndexingActionable getBatchIndexingActionable() {
-		return dynamicQueryBatchIndexingActionableFactory.
+		return _dynamicQueryBatchIndexingActionableFactory.
 			getBatchIndexingActionable(
-				dlFileEntryLocalService.getIndexableActionableDynamicQuery());
+				_dlFileEntryLocalService.getIndexableActionableDynamicQuery());
 	}
 
 	@Override
@@ -84,14 +87,11 @@ public class DLFileEntryModelIndexerWriterContributor
 		return IndexerWriterMode.UPDATE;
 	}
 
-	@Reference
-	protected DLFileEntryLocalService dlFileEntryLocalService;
-
-	@Reference
-	protected DynamicQueryBatchIndexingActionableFactory
-		dynamicQueryBatchIndexingActionableFactory;
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLFileEntryModelIndexerWriterContributor.class);
+
+	private final DLFileEntryLocalService _dlFileEntryLocalService;
+	private final DynamicQueryBatchIndexingActionableFactory
+		_dynamicQueryBatchIndexingActionableFactory;
 
 }

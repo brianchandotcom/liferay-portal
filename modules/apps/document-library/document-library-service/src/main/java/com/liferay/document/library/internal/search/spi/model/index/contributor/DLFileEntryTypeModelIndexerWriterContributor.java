@@ -13,18 +13,21 @@ import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterC
 import com.liferay.portal.search.spi.model.index.contributor.helper.IndexerWriterMode;
 import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexerWriterDocumentHelper;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Alejandro Tardín
  */
-@Component(
-	property = "indexer.class.name=com.liferay.document.library.kernel.model.DLFileEntryType",
-	service = ModelIndexerWriterContributor.class
-)
 public class DLFileEntryTypeModelIndexerWriterContributor
 	implements ModelIndexerWriterContributor<DLFileEntryType> {
+
+	public DLFileEntryTypeModelIndexerWriterContributor(
+		DLFileEntryTypeLocalService dlFileEntryTypeLocalService,
+		DynamicQueryBatchIndexingActionableFactory
+			dynamicQueryBatchIndexingActionableFactory) {
+
+		_dlFileEntryTypeLocalService = dlFileEntryTypeLocalService;
+		_dynamicQueryBatchIndexingActionableFactory =
+			dynamicQueryBatchIndexingActionableFactory;
+	}
 
 	@Override
 	public void customize(
@@ -58,11 +61,8 @@ public class DLFileEntryTypeModelIndexerWriterContributor
 		return IndexerWriterMode.UPDATE;
 	}
 
-	@Reference
-	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
-
-	@Reference
-	private DynamicQueryBatchIndexingActionableFactory
+	private final DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
+	private final DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;
 
 }

@@ -12,18 +12,21 @@ import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexer
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.service.SegmentsEntryLocalService;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Eduardo García
  */
-@Component(
-	property = "indexer.class.name=com.liferay.segments.model.SegmentsEntry",
-	service = ModelIndexerWriterContributor.class
-)
 public class SegmentsEntryModelIndexerWriterContributor
 	implements ModelIndexerWriterContributor<SegmentsEntry> {
+
+	public SegmentsEntryModelIndexerWriterContributor(
+		DynamicQueryBatchIndexingActionableFactory
+			dynamicQueryBatchIndexingActionableFactory,
+		SegmentsEntryLocalService segmentsEntryLocalService) {
+
+		_dynamicQueryBatchIndexingActionableFactory =
+			dynamicQueryBatchIndexingActionableFactory;
+		_segmentsEntryLocalService = segmentsEntryLocalService;
+	}
 
 	@Override
 	public void customize(
@@ -39,9 +42,10 @@ public class SegmentsEntryModelIndexerWriterContributor
 
 	@Override
 	public BatchIndexingActionable getBatchIndexingActionable() {
-		return dynamicQueryBatchIndexingActionableFactory.
+		return _dynamicQueryBatchIndexingActionableFactory.
 			getBatchIndexingActionable(
-				segmentsEntryLocalService.getIndexableActionableDynamicQuery());
+				_segmentsEntryLocalService.
+					getIndexableActionableDynamicQuery());
 	}
 
 	@Override
@@ -49,11 +53,8 @@ public class SegmentsEntryModelIndexerWriterContributor
 		return segmentsEntry.getCompanyId();
 	}
 
-	@Reference
-	protected DynamicQueryBatchIndexingActionableFactory
-		dynamicQueryBatchIndexingActionableFactory;
-
-	@Reference
-	protected SegmentsEntryLocalService segmentsEntryLocalService;
+	private final DynamicQueryBatchIndexingActionableFactory
+		_dynamicQueryBatchIndexingActionableFactory;
+	private final SegmentsEntryLocalService _segmentsEntryLocalService;
 
 }

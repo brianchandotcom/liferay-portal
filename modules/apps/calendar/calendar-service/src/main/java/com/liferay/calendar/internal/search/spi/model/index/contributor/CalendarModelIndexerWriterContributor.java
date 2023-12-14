@@ -13,18 +13,23 @@ import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactor
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexerWriterDocumentHelper;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Michael C. Han
  */
-@Component(
-	property = "indexer.class.name=com.liferay.calendar.model.Calendar",
-	service = ModelIndexerWriterContributor.class
-)
 public class CalendarModelIndexerWriterContributor
 	implements ModelIndexerWriterContributor<Calendar> {
+
+	public CalendarModelIndexerWriterContributor(
+		CalendarBookingBatchReindexer calendarBookingBatchReindexer,
+		CalendarLocalService calendarLocalService,
+		DynamicQueryBatchIndexingActionableFactory
+			dynamicQueryBatchIndexingActionableFactory) {
+
+		_calendarBookingBatchReindexer = calendarBookingBatchReindexer;
+		_calendarLocalService = calendarLocalService;
+		_dynamicQueryBatchIndexingActionableFactory =
+			dynamicQueryBatchIndexingActionableFactory;
+	}
 
 	@Override
 	public void customize(
@@ -38,9 +43,9 @@ public class CalendarModelIndexerWriterContributor
 
 	@Override
 	public BatchIndexingActionable getBatchIndexingActionable() {
-		return dynamicQueryBatchIndexingActionableFactory.
+		return _dynamicQueryBatchIndexingActionableFactory.
 			getBatchIndexingActionable(
-				calendarLocalService.getIndexableActionableDynamicQuery());
+				_calendarLocalService.getIndexableActionableDynamicQuery());
 	}
 
 	@Override
@@ -50,18 +55,13 @@ public class CalendarModelIndexerWriterContributor
 
 	@Override
 	public void modelIndexed(Calendar calendar) {
-		calendarBookingBatchReindexer.reindex(
+		_calendarBookingBatchReindexer.reindex(
 			calendar.getCalendarId(), calendar.getCompanyId());
 	}
 
-	@Reference
-	protected CalendarBookingBatchReindexer calendarBookingBatchReindexer;
-
-	@Reference
-	protected CalendarLocalService calendarLocalService;
-
-	@Reference
-	protected DynamicQueryBatchIndexingActionableFactory
-		dynamicQueryBatchIndexingActionableFactory;
+	private final CalendarBookingBatchReindexer _calendarBookingBatchReindexer;
+	private final CalendarLocalService _calendarLocalService;
+	private final DynamicQueryBatchIndexingActionableFactory
+		_dynamicQueryBatchIndexingActionableFactory;
 
 }

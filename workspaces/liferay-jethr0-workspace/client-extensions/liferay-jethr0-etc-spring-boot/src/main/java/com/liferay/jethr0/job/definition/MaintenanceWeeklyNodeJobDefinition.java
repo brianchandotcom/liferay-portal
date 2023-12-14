@@ -6,7 +6,7 @@
 package com.liferay.jethr0.job.definition;
 
 import com.liferay.jethr0.job.JobEntity;
-import com.liferay.jethr0.job.definition.parameter.JenkinsBranchURLJobParameterDefinition;
+import com.liferay.jethr0.job.definition.parameter.JenkinsSlaveLabelJobParameterDefinition;
 import com.liferay.jethr0.job.definition.parameter.JobParameterDefinition;
 
 import java.util.Collections;
@@ -20,7 +20,7 @@ public class MaintenanceWeeklyNodeJobDefinition extends BaseJobDefinition {
 	@Override
 	public Set<JobParameterDefinition> getJobParameterDefinitions() {
 		return Collections.singleton(
-			new JenkinsBranchURLJobParameterDefinition());
+			new JenkinsSlaveLabelJobParameterDefinition("master"));
 	}
 
 	protected MaintenanceWeeklyNodeJobDefinition(JobEntity.Type type) {

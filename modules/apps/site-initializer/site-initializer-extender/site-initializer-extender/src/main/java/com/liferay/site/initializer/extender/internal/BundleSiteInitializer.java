@@ -3512,17 +3512,19 @@ public class BundleSiteInitializer implements SiteInitializer {
 			String typeSettings = null;
 
 			if (type.equals(SiteNavigationMenuItemTypeConstants.LAYOUT)) {
-				boolean privateLayout = menuItemJSONObject.getBoolean(
-					"privateLayout");
-				String friendlyURL = menuItemJSONObject.getString(
-					"friendlyURL");
-
 				Layout layout = _layoutLocalService.fetchLayoutByFriendlyURL(
-					serviceContext.getScopeGroupId(), privateLayout,
-					friendlyURL);
+					serviceContext.getScopeGroupId(),
+					menuItemJSONObject.getBoolean("privateLayout"),
+					menuItemJSONObject.getString("friendlyURL"));
 
 				if (layout == null) {
-					return;
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"No layout found with friendlyURL " +
+								menuItemJSONObject.getString("friendlyURL"));
+					}
+
+					continue;
 				}
 
 				SiteNavigationMenuItemType siteNavigationMenuItemType =
@@ -3535,14 +3537,30 @@ public class BundleSiteInitializer implements SiteInitializer {
 						layout);
 			}
 			else if (type.equals(SiteNavigationMenuItemTypeConstants.NODE)) {
-				typeSettings = UnicodePropertiesBuilder.put(
-					"name", menuItemJSONObject.getString("name")
+				UnicodePropertiesBuilder.UnicodePropertiesWrapper
+					unicodePropertiesWrapper =
+						_getNavigationMenuItemUnicodePropertiesWrapper(
+							menuItemJSONObject);
+
+				if (unicodePropertiesWrapper == null) {
+					continue;
+				}
+
+				typeSettings = unicodePropertiesWrapper.put(
+					"title", menuItemJSONObject.getString("title")
 				).buildString();
 			}
 			else if (type.equals(SiteNavigationMenuItemTypeConstants.URL)) {
-				typeSettings = UnicodePropertiesBuilder.put(
-					"name", menuItemJSONObject.getString("name")
-				).put(
+				UnicodePropertiesBuilder.UnicodePropertiesWrapper
+					unicodePropertiesWrapper =
+						_getNavigationMenuItemUnicodePropertiesWrapper(
+							menuItemJSONObject);
+
+				if (unicodePropertiesWrapper == null) {
+					continue;
+				}
+
+				typeSettings = unicodePropertiesWrapper.put(
 					"url", menuItemJSONObject.getString("url")
 				).put(
 					"useNewTab", menuItemJSONObject.getString("useNewTab")
@@ -4664,6 +4682,34 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 
 		return (Serializable)jsonObject.get("defaultValue");
+	}
+
+	private UnicodePropertiesBuilder.UnicodePropertiesWrapper
+		_getNavigationMenuItemUnicodePropertiesWrapper(
+			JSONObject menuItemJSONObject) {
+
+		JSONObject nameI18nJSONObject = menuItemJSONObject.getJSONObject(
+			"name_i18n");
+
+		if (nameI18nJSONObject == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("No name_i18n found in " + menuItemJSONObject);
+			}
+
+			return null;
+		}
+
+		UnicodePropertiesBuilder.UnicodePropertiesWrapper
+			unicodePropertiesWrapper = UnicodePropertiesBuilder.put(
+				"defaultLanguageId",
+				LocaleUtil.toLanguageId(LocaleUtil.getDefault()));
+
+		for (String key : nameI18nJSONObject.keySet()) {
+			unicodePropertiesWrapper.put(
+				"name_" + key, nameI18nJSONObject.getString(key));
+		}
+
+		return unicodePropertiesWrapper;
 	}
 
 	private Map<String, String> _getReleaseInfoStringUtilReplaceValues() {

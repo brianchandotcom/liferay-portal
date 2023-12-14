@@ -13,18 +13,23 @@ import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterC
 import com.liferay.portal.search.spi.model.index.contributor.helper.IndexerWriterMode;
 import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexerWriterDocumentHelper;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Brian I. Kim
  */
-@Component(
-	property = "indexer.class.name=com.liferay.commerce.inventory.model.CommerceInventoryBookedQuantity",
-	service = ModelIndexerWriterContributor.class
-)
 public class CommerceInventoryBookedQuantityModelIndexerWriterContributor
 	implements ModelIndexerWriterContributor<CommerceInventoryBookedQuantity> {
+
+	public CommerceInventoryBookedQuantityModelIndexerWriterContributor(
+		CommerceInventoryBookedQuantityLocalService
+			commerceInventoryBookedQuantityLocalService,
+		DynamicQueryBatchIndexingActionableFactory
+			dynamicQueryBatchIndexingActionableFactory) {
+
+		_commerceInventoryBookedQuantityLocalService =
+			commerceInventoryBookedQuantityLocalService;
+		_dynamicQueryBatchIndexingActionableFactory =
+			dynamicQueryBatchIndexingActionableFactory;
+	}
 
 	@Override
 	public void customize(
@@ -60,12 +65,9 @@ public class CommerceInventoryBookedQuantityModelIndexerWriterContributor
 		return IndexerWriterMode.UPDATE;
 	}
 
-	@Reference
-	private CommerceInventoryBookedQuantityLocalService
+	private final CommerceInventoryBookedQuantityLocalService
 		_commerceInventoryBookedQuantityLocalService;
-
-	@Reference
-	private DynamicQueryBatchIndexingActionableFactory
+	private final DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;
 
 }

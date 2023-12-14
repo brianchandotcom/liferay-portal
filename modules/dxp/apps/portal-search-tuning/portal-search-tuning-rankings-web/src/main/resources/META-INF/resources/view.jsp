@@ -41,7 +41,7 @@ page import="com.liferay.search.experiences.service.SXPBlueprintLocalServiceUtil
 
 <portlet:defineObjects />
 
-<liferay-ui:error embed="<%= false %>" exception="<%= DuplicateQueryStringException.class %>" message="active-search-queries-and-aliases-must-be-unique-across-all-rankings" />
+<liferay-ui:error embed="<%= false %>" exception="<%= DuplicateQueryStringException.class %>" message="active-search-queries-and-aliases-with-a-given-scope-must-be-unique-across-all-rankings" />
 
 <c:if test="<%= SessionErrors.contains(renderRequest, NotApplicableStatusException.class) %>">
 	<aui:script>

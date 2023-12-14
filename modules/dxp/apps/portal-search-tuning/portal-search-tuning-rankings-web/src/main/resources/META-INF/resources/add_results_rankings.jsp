@@ -47,7 +47,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "new-ranking"));
 
 <c:if test="<%= !SessionErrors.isEmpty(renderRequest) %>">
 	<div class="result-rankings-alert-container">
-		<liferay-ui:error exception="<%= DuplicateQueryStringException.class %>" message="ranking-with-that-search-query-already-exists" />
+		<liferay-ui:error exception="<%= DuplicateQueryStringException.class %>" message="ranking-with-the-same-search-query-and-scope-already-exists" />
 		<liferay-ui:error exception="<%= Exception.class %>" message="an-unexpected-error-occurred" />
 
 		<liferay-ui:error-principal />

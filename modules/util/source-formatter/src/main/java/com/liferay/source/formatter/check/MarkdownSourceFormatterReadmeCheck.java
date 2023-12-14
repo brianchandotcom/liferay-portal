@@ -28,7 +28,6 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -694,21 +693,13 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 		Map<String, CheckInfo> checkInfoMap) {
 
 		Set<String> sourceProcessorNames = new TreeSet<>(
-			new Comparator<String>() {
+			(sourceProcessorName1, sourceProcessorName2) -> {
+				String fileExtensionsString1 = _getFileExtensionsString(
+					ListUtil.fromArray(sourceProcessorName1));
+				String fileExtensionsString2 = _getFileExtensionsString(
+					ListUtil.fromArray(sourceProcessorName2));
 
-				@Override
-				public int compare(
-					String sourceProcessorName1, String sourceProcessorName2) {
-
-					String fileExtensionsString1 = _getFileExtensionsString(
-						ListUtil.fromArray(sourceProcessorName1));
-					String fileExtensionsString2 = _getFileExtensionsString(
-						ListUtil.fromArray(sourceProcessorName2));
-
-					return fileExtensionsString1.compareTo(
-						fileExtensionsString2);
-				}
-
+				return fileExtensionsString1.compareTo(fileExtensionsString2);
 			});
 
 		for (CheckInfo checkInfo : checkInfoMap.values()) {

@@ -5,11 +5,15 @@
 
 package com.liferay.change.tracking.internal.search;
 
+import com.liferay.change.tracking.internal.search.spi.model.index.contributor.CTCollectionModelIndexerWriterContributor;
 import com.liferay.change.tracking.model.CTCollection;
+import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -45,9 +49,21 @@ public class CTCollectionModelSearchConfigurator
 		return true;
 	}
 
-	@Reference(
-		target = "(indexer.class.name=com.liferay.change.tracking.model.CTCollection)"
-	)
+	@Activate
+	protected void activate() {
+		_modelIndexWriterContributor =
+			new CTCollectionModelIndexerWriterContributor(
+				_ctCollectionLocalService,
+				_dynamicQueryBatchIndexingActionableFactory);
+	}
+
+	@Reference
+	private CTCollectionLocalService _ctCollectionLocalService;
+
+	@Reference
+	private DynamicQueryBatchIndexingActionableFactory
+		_dynamicQueryBatchIndexingActionableFactory;
+
 	private ModelIndexerWriterContributor<CTCollection>
 		_modelIndexWriterContributor;
 

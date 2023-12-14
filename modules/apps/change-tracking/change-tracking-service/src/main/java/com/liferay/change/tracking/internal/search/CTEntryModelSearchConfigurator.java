@@ -5,11 +5,15 @@
 
 package com.liferay.change.tracking.internal.search;
 
+import com.liferay.change.tracking.internal.search.spi.model.index.contributor.CTEntryModelIndexerWriterContributor;
 import com.liferay.change.tracking.model.CTEntry;
+import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -45,9 +49,19 @@ public class CTEntryModelSearchConfigurator
 		return true;
 	}
 
-	@Reference(
-		target = "(indexer.class.name=com.liferay.change.tracking.model.CTEntry)"
-	)
+	@Activate
+	protected void activate() {
+		_modelIndexWriterContributor = new CTEntryModelIndexerWriterContributor(
+			_ctEntryLocalService, _dynamicQueryBatchIndexingActionableFactory);
+	}
+
+	@Reference
+	private CTEntryLocalService _ctEntryLocalService;
+
+	@Reference
+	private DynamicQueryBatchIndexingActionableFactory
+		_dynamicQueryBatchIndexingActionableFactory;
+
 	private ModelIndexerWriterContributor<CTEntry> _modelIndexWriterContributor;
 
 }

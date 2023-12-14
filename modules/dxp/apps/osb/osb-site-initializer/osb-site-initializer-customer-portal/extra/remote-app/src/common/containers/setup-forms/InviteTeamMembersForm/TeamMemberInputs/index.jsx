@@ -91,7 +91,7 @@ const TeamMemberInputs = ({
 		onSelectRole(isAdministratorOrRequestorRoleSelected);
 	}, [onSelectRole, isAdministratorOrRequestorRoleSelected]);
 
-	const optionsFormated = useMemo(
+	const optionsFormatted = useMemo(
 		() =>
 			options.map((option) => {
 				const isAdministratorOrRequestorRole =
@@ -162,7 +162,7 @@ const TeamMemberInputs = ({
 						label={i18n.translate('role')}
 						name={`invites[${id}].role.id`}
 						onChange={(event) => selectOnChange(event.target.value)}
-						options={optionsFormated}
+						options={optionsFormatted}
 						required
 					/>
 				</ClayInput.GroupItem>

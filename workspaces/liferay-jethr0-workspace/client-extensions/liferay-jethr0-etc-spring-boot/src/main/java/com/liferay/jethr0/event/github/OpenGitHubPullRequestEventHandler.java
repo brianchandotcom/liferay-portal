@@ -34,6 +34,7 @@ public class OpenGitHubPullRequestEventHandler
 			return null;
 		}
 
+		_commentAutoCommentMessage();
 		_commentBroadcastMessage();
 
 		_invokeJobEntities();
@@ -45,6 +46,30 @@ public class OpenGitHubPullRequestEventHandler
 		EventHandlerContext eventHandlerContext, JSONObject messageJSONObject) {
 
 		super(eventHandlerContext, messageJSONObject);
+	}
+
+	private void _commentAutoCommentMessage()
+		throws InvalidJSONException, IOException {
+
+		GitHubPullRequest gitHubPullRequest = getGitHubPullRequest();
+
+		GitHubUser receiverGitHubUser =
+			gitHubPullRequest.getReceiverGitHubUser();
+
+		String autoCommentMessage = getCIProperty(
+			StringUtil.combine(
+				"ci.pull.request.auto.comment[", receiverGitHubUser.getName(),
+				"]"));
+
+		if (StringUtil.isNullOrEmpty(autoCommentMessage)) {
+			return;
+		}
+
+		gitHubPullRequest.comment(
+			StringUtil.combine(
+				"The following guidelines have been set by the owner of this ",
+				"repository: \n- &nbsp;&nbsp;&nbsp;&nbsp;", autoCommentMessage,
+				"\n"));
 	}
 
 	private void _commentBroadcastMessage()

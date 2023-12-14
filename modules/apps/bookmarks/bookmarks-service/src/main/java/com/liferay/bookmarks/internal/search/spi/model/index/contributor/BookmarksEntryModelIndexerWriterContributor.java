@@ -16,18 +16,23 @@ import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactor
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexerWriterDocumentHelper;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Luan Maoski
  */
-@Component(
-	property = "indexer.class.name=com.liferay.bookmarks.model.BookmarksEntry",
-	service = ModelIndexerWriterContributor.class
-)
 public class BookmarksEntryModelIndexerWriterContributor
 	implements ModelIndexerWriterContributor<BookmarksEntry> {
+
+	public BookmarksEntryModelIndexerWriterContributor(
+		BookmarksEntryLocalService bookmarksEntryLocalService,
+		BookmarksFolderBatchReindexer bookmarksFolderBatchReindexer,
+		DynamicQueryBatchIndexingActionableFactory
+			dynamicQueryBatchIndexingActionableFactory) {
+
+		_bookmarksEntryLocalService = bookmarksEntryLocalService;
+		_bookmarksFolderBatchReindexer = bookmarksFolderBatchReindexer;
+		_dynamicQueryBatchIndexingActionableFactory =
+			dynamicQueryBatchIndexingActionableFactory;
+	}
 
 	@Override
 	public void customize(
@@ -51,7 +56,7 @@ public class BookmarksEntryModelIndexerWriterContributor
 					modelIndexerWriterDocumentHelper.getDocument(
 						bookmarksEntry));
 
-				bookmarksFolderBatchReindexer.reindex(
+				_bookmarksFolderBatchReindexer.reindex(
 					bookmarksEntry.getFolderId(),
 					bookmarksEntry.getCompanyId());
 			});
@@ -59,9 +64,9 @@ public class BookmarksEntryModelIndexerWriterContributor
 
 	@Override
 	public BatchIndexingActionable getBatchIndexingActionable() {
-		return dynamicQueryBatchIndexingActionableFactory.
+		return _dynamicQueryBatchIndexingActionableFactory.
 			getBatchIndexingActionable(
-				bookmarksEntryLocalService.
+				_bookmarksEntryLocalService.
 					getIndexableActionableDynamicQuery());
 	}
 
@@ -72,18 +77,13 @@ public class BookmarksEntryModelIndexerWriterContributor
 
 	@Override
 	public void modelIndexed(BookmarksEntry bookmarksEntry) {
-		bookmarksFolderBatchReindexer.reindex(
+		_bookmarksFolderBatchReindexer.reindex(
 			bookmarksEntry.getFolderId(), bookmarksEntry.getCompanyId());
 	}
 
-	@Reference
-	protected BookmarksEntryLocalService bookmarksEntryLocalService;
-
-	@Reference
-	protected BookmarksFolderBatchReindexer bookmarksFolderBatchReindexer;
-
-	@Reference
-	protected DynamicQueryBatchIndexingActionableFactory
-		dynamicQueryBatchIndexingActionableFactory;
+	private final BookmarksEntryLocalService _bookmarksEntryLocalService;
+	private final BookmarksFolderBatchReindexer _bookmarksFolderBatchReindexer;
+	private final DynamicQueryBatchIndexingActionableFactory
+		_dynamicQueryBatchIndexingActionableFactory;
 
 }

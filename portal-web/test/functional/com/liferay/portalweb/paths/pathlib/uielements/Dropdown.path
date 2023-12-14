@@ -104,11 +104,6 @@
 <!--FILTER-->
 
 <tr>
-	<td>FILTER_AND_ORDER</td>
-	<td>//button[contains(.,'Filter and Order') or contains(@class,'Filter and Order')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>FILTER</td>
 	<td>//span[contains(text(), 'Filter')]</td>
 	<td></td>

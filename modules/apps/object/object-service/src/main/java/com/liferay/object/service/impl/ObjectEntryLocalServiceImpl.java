@@ -2286,7 +2286,10 @@ public class ObjectEntryLocalServiceImpl
 			GetterUtil.getString(prefix), sb, GetterUtil.getString(suffix));
 	}
 
-	private Map<String, Object> _getColumns(ObjectDefinition objectDefinition) {
+	private Map<String, Object> _getColumns(
+		DynamicObjectDefinitionTable dynamicObjectDefinitionTable,
+		ObjectDefinition objectDefinition) {
+
 		Map<String, Object> columns = new HashMap<>();
 
 		List<ObjectField> objectFields =
@@ -2306,6 +2309,14 @@ public class ObjectEntryLocalServiceImpl
 				Objects.equals(
 					objectField.getBusinessType(),
 					ObjectFieldConstants.BUSINESS_TYPE_RICH_TEXT)) {
+
+				continue;
+			}
+
+			if (Objects.equals(objectField.getName(), "id")) {
+				columns.put(
+					objectField.getName(),
+					dynamicObjectDefinitionTable.getPrimaryKeyColumn());
 
 				continue;
 			}
@@ -3054,7 +3065,8 @@ public class ObjectEntryLocalServiceImpl
 				}
 
 				if (columns == null) {
-					columns = _getColumns(objectDefinition);
+					columns = _getColumns(
+						dynamicObjectDefinitionTable, objectDefinition);
 				}
 
 				DDMExpression<Expression<?>> ddmExpression =

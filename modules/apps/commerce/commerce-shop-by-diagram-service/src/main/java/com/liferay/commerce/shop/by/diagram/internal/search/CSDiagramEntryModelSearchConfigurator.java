@@ -5,13 +5,17 @@
 
 package com.liferay.commerce.shop.by.diagram.internal.search;
 
+import com.liferay.commerce.shop.by.diagram.internal.search.spi.model.index.contributor.CSDiagramEntryModelIndexerWriterContributor;
 import com.liferay.commerce.shop.by.diagram.model.CSDiagramEntry;
+import com.liferay.commerce.shop.by.diagram.service.CSDiagramEntryLocalService;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContributor;
 import com.liferay.portal.search.spi.model.result.contributor.ModelVisibilityContributor;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -52,9 +56,21 @@ public class CSDiagramEntryModelSearchConfigurator
 		return _modelVisibilityContributor;
 	}
 
-	@Reference(
-		target = "(indexer.class.name=com.liferay.commerce.shop.by.diagram.model.CSDiagramEntry)"
-	)
+	@Activate
+	protected void activate() {
+		_modelIndexWriterContributor =
+			new CSDiagramEntryModelIndexerWriterContributor(
+				_csDiagramEntryLocalService,
+				_dynamicQueryBatchIndexingActionableFactory);
+	}
+
+	@Reference
+	private CSDiagramEntryLocalService _csDiagramEntryLocalService;
+
+	@Reference
+	private DynamicQueryBatchIndexingActionableFactory
+		_dynamicQueryBatchIndexingActionableFactory;
+
 	private ModelIndexerWriterContributor<CSDiagramEntry>
 		_modelIndexWriterContributor;
 

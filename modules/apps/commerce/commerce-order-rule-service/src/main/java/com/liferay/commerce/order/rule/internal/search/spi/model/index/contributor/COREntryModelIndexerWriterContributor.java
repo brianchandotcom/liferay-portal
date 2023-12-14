@@ -13,18 +13,21 @@ import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterC
 import com.liferay.portal.search.spi.model.index.contributor.helper.IndexerWriterMode;
 import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexerWriterDocumentHelper;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Alessio Antonio Rendina
  */
-@Component(
-	property = "indexer.class.name=com.liferay.commerce.order.rule.model.COREntry",
-	service = ModelIndexerWriterContributor.class
-)
 public class COREntryModelIndexerWriterContributor
 	implements ModelIndexerWriterContributor<COREntry> {
+
+	public COREntryModelIndexerWriterContributor(
+		COREntryLocalService corEntryLocalService,
+		DynamicQueryBatchIndexingActionableFactory
+			dynamicQueryBatchIndexingActionableFactory) {
+
+		_corEntryLocalService = corEntryLocalService;
+		_dynamicQueryBatchIndexingActionableFactory =
+			dynamicQueryBatchIndexingActionableFactory;
+	}
 
 	@Override
 	public void customize(
@@ -53,11 +56,8 @@ public class COREntryModelIndexerWriterContributor
 		return IndexerWriterMode.UPDATE;
 	}
 
-	@Reference
-	private COREntryLocalService _corEntryLocalService;
-
-	@Reference
-	private DynamicQueryBatchIndexingActionableFactory
+	private final COREntryLocalService _corEntryLocalService;
+	private final DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;
 
 }

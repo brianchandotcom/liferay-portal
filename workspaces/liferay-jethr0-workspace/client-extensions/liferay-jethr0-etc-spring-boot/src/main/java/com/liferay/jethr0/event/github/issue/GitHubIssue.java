@@ -7,6 +7,7 @@ package com.liferay.jethr0.event.github.issue;
 
 import com.liferay.jethr0.event.github.GitHubFactory;
 import com.liferay.jethr0.event.github.client.GitHubClient;
+import com.liferay.jethr0.event.github.comment.GitHubComment;
 import com.liferay.jethr0.event.github.pullrequest.GitHubPullRequest;
 import com.liferay.jethr0.util.StringUtil;
 
@@ -24,6 +25,29 @@ public class GitHubIssue {
 		_jsonObject = jsonObject;
 	}
 
+	public void close() {
+		JSONObject requestJSONObject = new JSONObject();
+
+		requestJSONObject.put("state", "closed");
+
+		GitHubClient gitHubClient = getGitHubClient();
+
+		gitHubClient.requestPatch(getPullRequestAPIURL(), requestJSONObject);
+	}
+
+	public GitHubComment createGitHubComment(String body) {
+		JSONObject requestJSONObject = new JSONObject();
+
+		requestJSONObject.put("body", body);
+
+		GitHubClient gitHubClient = getGitHubClient();
+
+		JSONObject responseJSONObject = new JSONObject(
+			gitHubClient.requestPost(getCommentsURL(), requestJSONObject));
+
+		return _gitHubFactory.newGitHubComment(responseJSONObject);
+	}
+
 	public URL getCommentsURL() {
 		return StringUtil.toURL(_jsonObject.getString("comments_url"));
 	}
@@ -39,10 +63,11 @@ public class GitHubIssue {
 
 		GitHubClient gitHubClient = getGitHubClient();
 
-		JSONObject jsonObject = new JSONObject(
+		JSONObject responseJSONObject = new JSONObject(
 			gitHubClient.requestGet(getPullRequestAPIURL()));
 
-		_gitHubPullRequest = _gitHubFactory.newGitHubPullRequest(jsonObject);
+		_gitHubPullRequest = _gitHubFactory.newGitHubPullRequest(
+			responseJSONObject);
 
 		return _gitHubPullRequest;
 	}

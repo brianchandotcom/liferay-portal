@@ -5,6 +5,9 @@
 
 package com.liferay.jethr0.event.github.comment;
 
+import com.liferay.jethr0.event.github.GitHubFactory;
+import com.liferay.jethr0.event.github.client.GitHubClient;
+
 import org.json.JSONObject;
 
 /**
@@ -12,7 +15,8 @@ import org.json.JSONObject;
  */
 public class GitHubComment {
 
-	public GitHubComment(JSONObject jsonObject) {
+	public GitHubComment(GitHubFactory gitHubFactory, JSONObject jsonObject) {
+		_gitHubFactory = gitHubFactory;
 		_jsonObject = jsonObject;
 	}
 
@@ -20,6 +24,11 @@ public class GitHubComment {
 		return _jsonObject.getString("body");
 	}
 
+	public GitHubClient getGitHubClient() {
+		return _gitHubFactory.getGitHubClient();
+	}
+
+	private final GitHubFactory _gitHubFactory;
 	private final JSONObject _jsonObject;
 
 }

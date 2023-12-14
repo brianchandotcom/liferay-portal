@@ -6,8 +6,8 @@
 package com.liferay.jethr0.event.github;
 
 import com.liferay.jethr0.event.EventHandlerContext;
-import com.liferay.jethr0.event.github.client.GitHubClient;
 import com.liferay.jethr0.event.github.comment.GitHubComment;
+import com.liferay.jethr0.event.github.issue.GitHubIssue;
 import com.liferay.jethr0.git.branch.GitBranchEntity;
 import com.liferay.jethr0.git.branch.repository.GitBranchEntityRepository;
 import com.liferay.jethr0.util.PropertiesUtil;
@@ -37,10 +37,10 @@ public class HelpGitHubIssueEventHandler extends BaseGitHubIssueEventHandler {
 			return null;
 		}
 
-		GitHubClient gitHubClient = getGitHubClient();
+		GitHubIssue gitHubIssue = getGitHubIssue();
 
-		GitHubComment gitHubComment = gitHubClient.createGitHubComment(
-			getGitHubIssue(), _getMessage());
+		GitHubComment gitHubComment = gitHubIssue.createGitHubComment(
+			_getMessage());
 
 		return gitHubComment.getBody();
 	}

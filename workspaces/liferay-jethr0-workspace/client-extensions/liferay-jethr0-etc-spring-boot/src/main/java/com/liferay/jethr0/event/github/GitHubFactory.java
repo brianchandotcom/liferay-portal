@@ -6,6 +6,7 @@
 package com.liferay.jethr0.event.github;
 
 import com.liferay.jethr0.event.github.client.GitHubClient;
+import com.liferay.jethr0.event.github.comment.GitHubComment;
 import com.liferay.jethr0.event.github.issue.GitHubIssue;
 import com.liferay.jethr0.event.github.pullrequest.GitHubPullRequest;
 
@@ -22,6 +23,10 @@ public class GitHubFactory {
 
 	public GitHubClient getGitHubClient() {
 		return _gitHubClient;
+	}
+
+	public GitHubComment newGitHubComment(JSONObject jsonObject) {
+		return new GitHubComment(this, jsonObject);
 	}
 
 	public GitHubIssue newGitHubIssue(JSONObject jsonObject) {

@@ -62,9 +62,9 @@ public abstract class BaseGitHubIssueEventHandler
 		GitHubIssue gitHubIssue = getGitHubIssue();
 
 		if (gitHubIssue != null) {
-			gitHubClient.createGitHubComment(gitHubIssue, body);
+			gitHubIssue.createGitHubComment(body);
 
-			gitHubClient.closeGitHubIssue(gitHubIssue);
+			gitHubIssue.close();
 
 			return;
 		}
@@ -72,9 +72,9 @@ public abstract class BaseGitHubIssueEventHandler
 		GitHubPullRequest gitHubPullRequest = getGitHubPullRequest();
 
 		if (gitHubPullRequest != null) {
-			gitHubClient.createGitHubComment(gitHubPullRequest, body);
+			gitHubPullRequest.createGitHubComment(body);
 
-			gitHubClient.closeGitHubPullRequest(gitHubPullRequest);
+			gitHubPullRequest.close();
 		}
 	}
 
@@ -226,7 +226,9 @@ public abstract class BaseGitHubIssueEventHandler
 				"Missing \"comment\" from message JSON");
 		}
 
-		return new GitHubComment(commentJSONObject);
+		GitHubFactory gitHubFactory = getGitHubFactory();
+
+		return gitHubFactory.newGitHubComment(commentJSONObject);
 	}
 
 	protected GitHubIssue getGitHubIssue() throws InvalidJSONException {

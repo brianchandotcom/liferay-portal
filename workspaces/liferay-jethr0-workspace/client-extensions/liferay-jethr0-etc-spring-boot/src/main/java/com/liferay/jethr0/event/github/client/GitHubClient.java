@@ -5,9 +5,6 @@
 
 package com.liferay.jethr0.event.github.client;
 
-import com.liferay.jethr0.event.github.comment.GitHubComment;
-import com.liferay.jethr0.event.github.issue.GitHubIssue;
-import com.liferay.jethr0.event.github.pullrequest.GitHubPullRequest;
 import com.liferay.jethr0.event.github.ref.GitHubRef;
 import com.liferay.jethr0.git.branch.GitBranchEntity;
 import com.liferay.jethr0.util.BaseRetryable;
@@ -38,47 +35,6 @@ import org.springframework.web.reactive.function.client.WebClient;
  */
 @Configuration
 public class GitHubClient {
-
-	public void closeGitHubIssue(GitHubIssue gitHubIssue) {
-		JSONObject requestJSONObject = new JSONObject();
-
-		requestJSONObject.put("state", "closed");
-
-		requestPatch(gitHubIssue.getPullRequestAPIURL(), requestJSONObject);
-	}
-
-	public void closeGitHubPullRequest(GitHubPullRequest gitHubPullRequest) {
-		JSONObject requestJSONObject = new JSONObject();
-
-		requestJSONObject.put("state", "closed");
-
-		requestPatch(gitHubPullRequest.getAPIURL(), requestJSONObject);
-	}
-
-	public GitHubComment createGitHubComment(
-		GitHubIssue gitHubIssue, String body) {
-
-		JSONObject requestJSONObject = new JSONObject();
-
-		requestJSONObject.put("body", body);
-
-		return new GitHubComment(
-			new JSONObject(
-				requestPost(gitHubIssue.getCommentsURL(), requestJSONObject)));
-	}
-
-	public GitHubComment createGitHubComment(
-		GitHubPullRequest gitHubPullRequest, String body) {
-
-		JSONObject requestJSONObject = new JSONObject();
-
-		requestJSONObject.put("body", body);
-
-		return new GitHubComment(
-			new JSONObject(
-				requestPost(
-					gitHubPullRequest.getCommentsURL(), requestJSONObject)));
-	}
 
 	public String getFileContent(
 		GitBranchEntity gitBranchEntity, String filePath) {

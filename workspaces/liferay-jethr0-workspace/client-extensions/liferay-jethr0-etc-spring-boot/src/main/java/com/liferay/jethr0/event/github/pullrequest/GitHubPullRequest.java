@@ -6,6 +6,8 @@
 package com.liferay.jethr0.event.github.pullrequest;
 
 import com.liferay.jethr0.event.github.GitHubFactory;
+import com.liferay.jethr0.event.github.client.GitHubClient;
+import com.liferay.jethr0.event.github.comment.GitHubComment;
 import com.liferay.jethr0.event.github.commit.GitHubCommit;
 import com.liferay.jethr0.event.github.repository.GitHubRepository;
 import com.liferay.jethr0.event.github.user.GitHubUser;
@@ -49,6 +51,29 @@ public class GitHubPullRequest {
 		_senderGitHubUser = new GitHubUser(jsonObject.getJSONObject("user"));
 	}
 
+	public void close() {
+		JSONObject requestJSONObject = new JSONObject();
+
+		requestJSONObject.put("state", "closed");
+
+		GitHubClient gitHubClient = getGitHubClient();
+
+		gitHubClient.requestPatch(getAPIURL(), requestJSONObject);
+	}
+
+	public GitHubComment createGitHubComment(String body) {
+		JSONObject requestJSONObject = new JSONObject();
+
+		requestJSONObject.put("body", body);
+
+		GitHubClient gitHubClient = getGitHubClient();
+
+		JSONObject responseJSONObject = new JSONObject(
+			gitHubClient.requestPost(getCommentsURL(), requestJSONObject));
+
+		return _gitHubFactory.newGitHubComment(responseJSONObject);
+	}
+
 	public URL getAPIURL() {
 		return StringUtil.toURL(_jsonObject.getString("url"));
 	}
@@ -67,6 +92,10 @@ public class GitHubPullRequest {
 
 	public URL getCommentsURL() {
 		return StringUtil.toURL(_jsonObject.getString("comments_url"));
+	}
+
+	public GitHubClient getGitHubClient() {
+		return _gitHubFactory.getGitHubClient();
 	}
 
 	public String getHeadBranchName() {

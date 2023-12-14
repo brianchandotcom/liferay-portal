@@ -6,7 +6,6 @@
 package com.liferay.jethr0.event.github.client;
 
 import com.liferay.jethr0.event.github.ref.GitHubRef;
-import com.liferay.jethr0.git.branch.GitBranchEntity;
 import com.liferay.jethr0.util.BaseRetryable;
 import com.liferay.jethr0.util.Retryable;
 import com.liferay.jethr0.util.StringUtil;
@@ -35,18 +34,6 @@ import org.springframework.web.reactive.function.client.WebClient;
  */
 @Configuration
 public class GitHubClient {
-
-	public String getFileContent(
-		GitBranchEntity gitBranchEntity, String filePath) {
-
-		return requestGet(
-			StringUtil.toURL(
-				StringUtil.combine(
-					"https://raw.githubusercontent.com/",
-					gitBranchEntity.getBranchUserName(), "/",
-					gitBranchEntity.getRepositoryName(), "/",
-					gitBranchEntity.getBranchName(), "/", filePath)));
-	}
 
 	public GitHubRef getGitHubRef(URL gitHubRefURL) {
 		URL gitHubRefAPIURL = StringUtil.toURL(

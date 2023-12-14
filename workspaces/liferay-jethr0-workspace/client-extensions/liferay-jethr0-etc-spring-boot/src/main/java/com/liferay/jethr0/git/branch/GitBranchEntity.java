@@ -37,6 +37,8 @@ public interface GitBranchEntity extends Entity {
 
 	public String getBranchUserName();
 
+	public String getFileContent(String filePath);
+
 	public Set<JobEntity> getJobEntities();
 
 	public Properties getProperties(String propertiesFilePath)

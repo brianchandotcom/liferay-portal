@@ -159,7 +159,7 @@ public class DLImpl implements DL {
 
 		Collections.reverse(folders);
 
-		StringBundler sb = new StringBundler((folders.size() * 3) + 5);
+		StringBundler sb = new StringBundler((folders.size() * 4) + 5);
 
 		sb.append(themeDisplay.translate("home"));
 

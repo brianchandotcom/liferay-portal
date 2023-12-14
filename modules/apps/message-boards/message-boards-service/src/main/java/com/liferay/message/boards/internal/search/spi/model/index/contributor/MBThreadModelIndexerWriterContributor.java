@@ -18,18 +18,21 @@ import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactor
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexerWriterDocumentHelper;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Luan Maoski
  */
-@Component(
-	property = "indexer.class.name=com.liferay.message.boards.model.MBThread",
-	service = ModelIndexerWriterContributor.class
-)
 public class MBThreadModelIndexerWriterContributor
 	implements ModelIndexerWriterContributor<MBThread> {
+
+	public MBThreadModelIndexerWriterContributor(
+		DynamicQueryBatchIndexingActionableFactory
+			dynamicQueryBatchIndexingActionableFactory,
+		MBThreadLocalService mbThreadLocalService) {
+
+		_dynamicQueryBatchIndexingActionableFactory =
+			dynamicQueryBatchIndexingActionableFactory;
+		_mbThreadLocalService = mbThreadLocalService;
+	}
 
 	@Override
 	public void customize(
@@ -73,11 +76,8 @@ public class MBThreadModelIndexerWriterContributor
 	private static final Log _log = LogFactoryUtil.getLog(
 		MBThreadModelIndexerWriterContributor.class);
 
-	@Reference
-	private DynamicQueryBatchIndexingActionableFactory
+	private final DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;
-
-	@Reference
-	private MBThreadLocalService _mbThreadLocalService;
+	private final MBThreadLocalService _mbThreadLocalService;
 
 }

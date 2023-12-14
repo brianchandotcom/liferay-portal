@@ -16,21 +16,23 @@ import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectFilterLocalService;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.Collections;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -72,10 +74,50 @@ public class ObjectFieldUtil {
 					userId, objectField.getSystem());
 		}
 
-		if (objectField.getObjectFieldSettings() != null) {
-			_addOrDeleteListTypeEntries(
-				listTypeDefinition, listTypeEntryLocalService, objectField,
-				userId);
+		ObjectFieldSetting[] objectFieldSettings = ArrayUtil.filter(
+			objectField.getObjectFieldSettings(),
+			objectFieldSetting -> StringUtil.equals(
+				objectFieldSetting.getName(),
+				ObjectFieldSettingConstants.NAME_STATE_FLOW));
+
+		if (ArrayUtil.isEmpty(objectFieldSettings)) {
+			return listTypeDefinition.getListTypeDefinitionId();
+		}
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			JSONFactoryUtil.looseSerializeDeep(
+				objectFieldSettings[0].getValue()));
+
+		JSONArray objectStatesJSONArray = jsonObject.getJSONArray(
+			"objectStates");
+
+		Map<String, ListTypeEntry> listTypeEntries = new HashMap<>();
+
+		ListUtil.isNotEmptyForEach(
+			listTypeEntryLocalService.getListTypeEntries(
+				listTypeDefinition.getListTypeDefinitionId()),
+			listTypeEntry -> listTypeEntries.put(
+				listTypeEntry.getKey(), listTypeEntry));
+
+		for (int i = 0; i < objectStatesJSONArray.length(); i++) {
+			JSONObject objectStateJSONObject =
+				objectStatesJSONArray.getJSONObject(i);
+
+			String key = objectStateJSONObject.getString("key");
+
+			if (listTypeEntries.containsKey(key)) {
+				listTypeEntries.remove(key);
+
+				continue;
+			}
+
+			listTypeEntryLocalService.addListTypeEntry(
+				null, userId, listTypeDefinition.getListTypeDefinitionId(), key,
+				Collections.singletonMap(LocaleUtil.getDefault(), key));
+		}
+
+		for (ListTypeEntry listTypeEntry : listTypeEntries.values()) {
+			listTypeEntryLocalService.deleteListTypeEntry(listTypeEntry);
 		}
 
 		return listTypeDefinition.getListTypeDefinitionId();
@@ -202,60 +244,6 @@ public class ObjectFieldUtil {
 			GetterUtil.getBoolean(objectField.getSystem()));
 
 		return serviceBuilderObjectField;
-	}
-
-	private static void _addOrDeleteListTypeEntries(
-			ListTypeDefinition listTypeDefinition,
-			ListTypeEntryLocalService listTypeEntryLocalService,
-			ObjectField objectField, long userId)
-		throws Exception {
-
-		for (ObjectFieldSetting objectFieldSetting :
-				objectField.getObjectFieldSettings()) {
-
-			if (!StringUtil.equals(
-					objectFieldSetting.getName(),
-					ObjectFieldSettingConstants.NAME_STATE_FLOW)) {
-
-				continue;
-			}
-
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-				JSONFactoryUtil.looseSerializeDeep(
-					objectFieldSetting.getValue()));
-
-			JSONArray objectStatesJSONArray = jsonObject.getJSONArray(
-				"objectStates");
-
-			List<String> serviceBuilderListTypeEntryKeys =
-				TransformUtil.transform(
-					listTypeEntryLocalService.getListTypeEntries(
-						listTypeDefinition.getListTypeDefinitionId()),
-					ListTypeEntry::getKey);
-
-			for (int i = 0; i < objectStatesJSONArray.length(); i++) {
-				JSONObject objectStateJSONObject =
-					objectStatesJSONArray.getJSONObject(i);
-
-				String key = objectStateJSONObject.getString("key");
-
-				if (serviceBuilderListTypeEntryKeys.contains(key)) {
-					serviceBuilderListTypeEntryKeys.remove(key);
-
-					continue;
-				}
-
-				listTypeEntryLocalService.addListTypeEntry(
-					null, userId, listTypeDefinition.getListTypeDefinitionId(),
-					key,
-					Collections.singletonMap(LocaleUtil.getDefault(), key));
-			}
-
-			for (String key : serviceBuilderListTypeEntryKeys) {
-				listTypeEntryLocalService.deleteListTypeEntryByKey(
-					listTypeDefinition.getListTypeDefinitionId(), key);
-			}
-		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

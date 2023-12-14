@@ -106,13 +106,13 @@
 						"externalReferenceCode": "LEARNSITENAVIGATIONMENUITEM16",
 						"name": "DXP/Portal",
 						"type": "url",
-						"url": "/w/dxp-portal/index"
+						"url": "/w/dxp/index"
 					},
 					{
 						"externalReferenceCode": "LEARNSITENAVIGATIONMENUITEM17",
 						"name": "DXP Cloud",
 						"type": "url",
-						"url": "/w/dxp-cloud/index"
+						"url": "/w/liferay-cloud/index"
 					},
 					{
 						"externalReferenceCode": "LEARNSITENAVIGATIONMENUITEM18",

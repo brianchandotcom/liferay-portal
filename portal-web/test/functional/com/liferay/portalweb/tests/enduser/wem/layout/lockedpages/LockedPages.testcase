@@ -391,7 +391,7 @@ definition {
 				category = "Configuration",
 				portlet = "Locked Pages");
 
-			Click.waitForMenuToggleJSClick(locator1 = "ManagementBar#FILTER");
+			Click.waitForMenuToggleJSClick(locator1 = "ManagementBar#ORDER");
 		}
 
 		task ("Then the order by options should be in alphabetical order") {

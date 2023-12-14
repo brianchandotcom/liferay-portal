@@ -13,18 +13,23 @@ import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterC
 import com.liferay.portal.search.spi.model.index.contributor.helper.IndexerWriterMode;
 import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexerWriterDocumentHelper;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Brian I. Kim
  */
-@Component(
-	property = "indexer.class.name=com.liferay.commerce.product.type.grouped.model.CPDefinitionGroupedEntry",
-	service = ModelIndexerWriterContributor.class
-)
 public class CPDefinitionGroupedEntryModelIndexerWriterContributor
 	implements ModelIndexerWriterContributor<CPDefinitionGroupedEntry> {
+
+	public CPDefinitionGroupedEntryModelIndexerWriterContributor(
+		CPDefinitionGroupedEntryLocalService
+			cpDefinitionGroupedEntryLocalService,
+		DynamicQueryBatchIndexingActionableFactory
+			dynamicQueryBatchIndexingActionableFactory) {
+
+		_cpDefinitionGroupedEntryLocalService =
+			cpDefinitionGroupedEntryLocalService;
+		_dynamicQueryBatchIndexingActionableFactory =
+			dynamicQueryBatchIndexingActionableFactory;
+	}
 
 	@Override
 	public void customize(
@@ -60,12 +65,9 @@ public class CPDefinitionGroupedEntryModelIndexerWriterContributor
 		return IndexerWriterMode.UPDATE;
 	}
 
-	@Reference
-	private CPDefinitionGroupedEntryLocalService
+	private final CPDefinitionGroupedEntryLocalService
 		_cpDefinitionGroupedEntryLocalService;
-
-	@Reference
-	private DynamicQueryBatchIndexingActionableFactory
+	private final DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;
 
 }

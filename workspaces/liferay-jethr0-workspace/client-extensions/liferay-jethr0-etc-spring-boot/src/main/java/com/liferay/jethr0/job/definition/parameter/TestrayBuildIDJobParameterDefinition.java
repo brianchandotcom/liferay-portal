@@ -33,7 +33,7 @@ public class TestrayBuildIDJobParameterDefinition
 
 	@Override
 	public String getValueDescription() {
-		return "Insert your Testray build id here";
+		return "Insert your Testray build ID here";
 	}
 
 	@Override

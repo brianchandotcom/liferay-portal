@@ -33,7 +33,7 @@ public class ReportNamesJobParameterDefinition
 
 	@Override
 	public String getValueDescription() {
-		return "Insert your Report names here in a comma-delimited list";
+		return "Insert your report names here in a comma delimited list";
 	}
 
 	@Override

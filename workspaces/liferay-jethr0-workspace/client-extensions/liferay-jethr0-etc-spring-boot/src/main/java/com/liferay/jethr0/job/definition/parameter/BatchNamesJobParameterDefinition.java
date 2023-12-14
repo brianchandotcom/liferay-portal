@@ -33,7 +33,7 @@ public class BatchNamesJobParameterDefinition
 
 	@Override
 	public String getValueDescription() {
-		return "Insert your Batch names here in a comma-delimited list";
+		return "Insert your batch names here in a comma delimited list";
 	}
 
 	@Override

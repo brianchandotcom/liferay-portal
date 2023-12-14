@@ -63,19 +63,16 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
           class="c-p-4 overflow-y-auto position-relative sidebar-collapse"
         >
           <div
-            aria-orientation="vertical"
             class="panel-group"
-            role="tablist"
           >
             <div
               class="panel panel-unstyled"
               id="user"
-              role="tablist"
             >
               <button
+                aria-controls="clay-id-1"
                 aria-expanded="true"
                 class="panel-header panel-header-link collapse-icon collapse-icon-middle show btn btn-unstyled"
-                role="tab"
                 tabindex="0"
                 type="button"
               >
@@ -115,8 +112,10 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                 </span>
               </button>
               <div
+                aria-labelledby="clay-id-1"
                 class="panel-collapse"
-                role="tabpanel"
+                id="clay-id-1"
+                role="region"
               >
                 <div
                   class="panel-body c-px-0"
@@ -731,12 +730,11 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
             <div
               class="panel panel-unstyled"
               id="user-organization"
-              role="tablist"
             >
               <button
+                aria-controls="clay-id-2"
                 aria-expanded="false"
                 class="panel-header panel-header-link collapse-icon collapse-icon-middle collapsed btn btn-unstyled"
-                role="tab"
                 tabindex="-1"
                 type="button"
               >
@@ -776,8 +774,10 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                 </span>
               </button>
               <div
+                aria-labelledby="clay-id-2"
                 class="panel-collapse collapse"
-                role="tabpanel"
+                id="clay-id-2"
+                role="region"
               >
                 <div
                   class="panel-body c-px-0"
@@ -1188,19 +1188,16 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
           class="c-p-4 overflow-y-auto position-relative sidebar-collapse"
         >
           <div
-            aria-orientation="vertical"
             class="panel-group"
-            role="tablist"
           >
             <div
               class="panel panel-unstyled"
               id="user"
-              role="tablist"
             >
               <button
+                aria-controls="clay-id-3"
                 aria-expanded="true"
                 class="panel-header panel-header-link collapse-icon collapse-icon-middle show btn btn-unstyled"
-                role="tab"
                 tabindex="0"
                 type="button"
               >
@@ -1240,8 +1237,10 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                 </span>
               </button>
               <div
+                aria-labelledby="clay-id-3"
                 class="panel-collapse"
-                role="tabpanel"
+                id="clay-id-3"
+                role="region"
               >
                 <div
                   class="panel-body c-px-0"
@@ -1856,12 +1855,11 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
             <div
               class="panel panel-unstyled"
               id="user-organization"
-              role="tablist"
             >
               <button
+                aria-controls="clay-id-4"
                 aria-expanded="false"
                 class="panel-header panel-header-link collapse-icon collapse-icon-middle collapsed btn btn-unstyled"
-                role="tab"
                 tabindex="-1"
                 type="button"
               >
@@ -1901,8 +1899,10 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                 </span>
               </button>
               <div
+                aria-labelledby="clay-id-4"
                 class="panel-collapse collapse"
-                role="tabpanel"
+                id="clay-id-4"
+                role="region"
               >
                 <div
                   class="panel-body c-px-0"

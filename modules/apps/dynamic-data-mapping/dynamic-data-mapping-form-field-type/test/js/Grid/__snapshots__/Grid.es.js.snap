@@ -22,7 +22,7 @@ exports[`Grid has a label 1`] = `
         class="table-responsive"
       >
         <table
-          class="table table-autofit show-quick-actions-on-hover table-hover table-list table-striped"
+          class="table table-autofit show-quick-actions-on-hover table-hover table-list table-head-bordered table-striped"
         >
           <thead>
             <tr
@@ -107,7 +107,7 @@ exports[`Grid has a tip 1`] = `
         class="table-responsive"
       >
         <table
-          class="table table-autofit show-quick-actions-on-hover table-hover table-list table-striped"
+          class="table table-autofit show-quick-actions-on-hover table-hover table-list table-head-bordered table-striped"
         >
           <thead>
             <tr
@@ -202,7 +202,7 @@ exports[`Grid has an id 1`] = `
         class="table-responsive"
       >
         <table
-          class="table table-autofit show-quick-actions-on-hover table-hover table-list table-striped"
+          class="table table-autofit show-quick-actions-on-hover table-hover table-list table-head-bordered table-striped"
         >
           <thead>
             <tr
@@ -277,7 +277,7 @@ exports[`Grid is not editable 1`] = `
         class="table-responsive"
       >
         <table
-          class="table table-autofit show-quick-actions-on-hover table-hover table-list table-striped"
+          class="table table-autofit show-quick-actions-on-hover table-hover table-list table-head-bordered table-striped"
         >
           <thead>
             <tr
@@ -358,7 +358,7 @@ exports[`Grid is not required 1`] = `
       >
         <table
           aria-required="false"
-          class="table table-autofit show-quick-actions-on-hover table-hover table-list table-striped"
+          class="table table-autofit show-quick-actions-on-hover table-hover table-list table-head-bordered table-striped"
         >
           <thead>
             <tr
@@ -442,7 +442,7 @@ exports[`Grid renders Label if showLabel is true 1`] = `
         class="table-responsive"
       >
         <table
-          class="table table-autofit show-quick-actions-on-hover table-hover table-list table-striped"
+          class="table table-autofit show-quick-actions-on-hover table-hover table-list table-head-bordered table-striped"
         >
           <thead>
             <tr
@@ -527,7 +527,7 @@ exports[`Grid renders columns 1`] = `
         class="table-responsive"
       >
         <table
-          class="table table-autofit show-quick-actions-on-hover table-hover table-list table-striped"
+          class="table table-autofit show-quick-actions-on-hover table-hover table-list table-head-bordered table-striped"
         >
           <thead>
             <tr
@@ -633,7 +633,7 @@ exports[`Grid renders no columns when columns comes empty 1`] = `
         class="table-responsive"
       >
         <table
-          class="table table-autofit show-quick-actions-on-hover table-hover table-list table-striped"
+          class="table table-autofit show-quick-actions-on-hover table-hover table-list table-head-bordered table-striped"
         >
           <thead>
             <tr
@@ -681,7 +681,7 @@ exports[`Grid renders no rows when row comes empty 1`] = `
         class="table-responsive"
       >
         <table
-          class="table table-autofit show-quick-actions-on-hover table-hover table-list table-striped"
+          class="table table-autofit show-quick-actions-on-hover table-hover table-list table-head-bordered table-striped"
         >
           <thead>
             <tr
@@ -731,7 +731,7 @@ exports[`Grid renders rows 1`] = `
         class="table-responsive"
       >
         <table
-          class="table table-autofit show-quick-actions-on-hover table-hover table-list table-striped"
+          class="table table-autofit show-quick-actions-on-hover table-hover table-list table-head-bordered table-striped"
         >
           <thead>
             <tr

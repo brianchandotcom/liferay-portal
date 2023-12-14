@@ -2898,11 +2898,16 @@ s3Region=&quot;us-east&quot;</echo>
 			<echo append="true" file="portal-impl/src/portal-ext.properties">
 include-and-override=portal-liferay-online.properties</echo>
 
-			<replace
-				file="portal-impl/src/portal-ext.properties"
-				token="${database.mysql.driver}"
-				value="${database.mariadb.driver}"
-			/>
+			<if>
+				<equals arg1="${database.type}" arg2="mysql" />
+				<then>
+					<replace
+						file="portal-impl/src/portal-ext.properties"
+						token="${database.mysql.driver}"
+						value="${database.mariadb.driver}"
+					/>
+				</then>
+			</if>
 
 			<replace
 				file="${app.server.tomcat.classes.portal.dir}/portal-liferay-online-config.properties"
@@ -5121,11 +5126,16 @@ database.partition.enabled=true</echo>
 					<echo append="true" file="${liferay.home}/tools/portal-tools-db-upgrade-client/portal-upgrade-ext.properties">
 include-and-override=portal-liferay-online.properties</echo>
 
-					<replace
-						file="${liferay.home}/tools/portal-tools-db-upgrade-client/portal-upgrade-database.properties"
-						token="${database.mysql.driver}"
-						value="${database.mariadb.driver}"
-					/>
+					<if>
+						<equals arg1="${database.type}" arg2="mysql" />
+						<then>
+							<replace
+								file="${liferay.home}/tools/portal-tools-db-upgrade-client/portal-upgrade-database.properties"
+								token="${database.mysql.driver}"
+								value="${database.mariadb.driver}"
+							/>
+						</then>
+					</if>
 
 					<get-testcase-property property.name="data.archive.type" />
 

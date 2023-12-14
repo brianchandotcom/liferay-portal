@@ -12,18 +12,21 @@ import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactor
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexerWriterDocumentHelper;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author David Truong
  */
-@Component(
-	property = "indexer.class.name=com.liferay.change.tracking.model.CTCollection",
-	service = ModelIndexerWriterContributor.class
-)
 public class CTCollectionModelIndexerWriterContributor
 	implements ModelIndexerWriterContributor<CTCollection> {
+
+	public CTCollectionModelIndexerWriterContributor(
+		CTCollectionLocalService ctCollectionLocalService,
+		DynamicQueryBatchIndexingActionableFactory
+			dynamicQueryBatchIndexingActionableFactory) {
+
+		_ctCollectionLocalService = ctCollectionLocalService;
+		_dynamicQueryBatchIndexingActionableFactory =
+			dynamicQueryBatchIndexingActionableFactory;
+	}
 
 	@Override
 	public void customize(
@@ -37,7 +40,7 @@ public class CTCollectionModelIndexerWriterContributor
 
 	@Override
 	public BatchIndexingActionable getBatchIndexingActionable() {
-		return dynamicQueryBatchIndexingActionableFactory.
+		return _dynamicQueryBatchIndexingActionableFactory.
 			getBatchIndexingActionable(
 				_ctCollectionLocalService.getIndexableActionableDynamicQuery());
 	}
@@ -47,11 +50,8 @@ public class CTCollectionModelIndexerWriterContributor
 		return ctCollection.getCompanyId();
 	}
 
-	@Reference
-	protected DynamicQueryBatchIndexingActionableFactory
-		dynamicQueryBatchIndexingActionableFactory;
-
-	@Reference
-	private CTCollectionLocalService _ctCollectionLocalService;
+	private final CTCollectionLocalService _ctCollectionLocalService;
+	private final DynamicQueryBatchIndexingActionableFactory
+		_dynamicQueryBatchIndexingActionableFactory;
 
 }

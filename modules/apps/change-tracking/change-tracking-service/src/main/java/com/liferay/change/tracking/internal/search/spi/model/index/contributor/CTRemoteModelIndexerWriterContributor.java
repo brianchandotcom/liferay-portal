@@ -12,18 +12,21 @@ import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactor
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexerWriterDocumentHelper;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author David Truong
  */
-@Component(
-	property = "indexer.class.name=com.liferay.change.tracking.model.CTRemote",
-	service = ModelIndexerWriterContributor.class
-)
 public class CTRemoteModelIndexerWriterContributor
 	implements ModelIndexerWriterContributor<CTRemote> {
+
+	public CTRemoteModelIndexerWriterContributor(
+		CTRemoteLocalService ctRemoteLocalService,
+		DynamicQueryBatchIndexingActionableFactory
+			dynamicQueryBatchIndexingActionableFactory) {
+
+		_ctRemoteLocalService = ctRemoteLocalService;
+		_dynamicQueryBatchIndexingActionableFactory =
+			dynamicQueryBatchIndexingActionableFactory;
+	}
 
 	@Override
 	public void customize(
@@ -37,7 +40,7 @@ public class CTRemoteModelIndexerWriterContributor
 
 	@Override
 	public BatchIndexingActionable getBatchIndexingActionable() {
-		return dynamicQueryBatchIndexingActionableFactory.
+		return _dynamicQueryBatchIndexingActionableFactory.
 			getBatchIndexingActionable(
 				_ctRemoteLocalService.getIndexableActionableDynamicQuery());
 	}
@@ -47,11 +50,8 @@ public class CTRemoteModelIndexerWriterContributor
 		return ctRemote.getCompanyId();
 	}
 
-	@Reference
-	protected DynamicQueryBatchIndexingActionableFactory
-		dynamicQueryBatchIndexingActionableFactory;
-
-	@Reference
-	private CTRemoteLocalService _ctRemoteLocalService;
+	private final CTRemoteLocalService _ctRemoteLocalService;
+	private final DynamicQueryBatchIndexingActionableFactory
+		_dynamicQueryBatchIndexingActionableFactory;
 
 }

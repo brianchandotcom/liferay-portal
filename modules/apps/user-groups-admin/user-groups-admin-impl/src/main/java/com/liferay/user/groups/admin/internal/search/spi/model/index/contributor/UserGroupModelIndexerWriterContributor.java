@@ -12,18 +12,21 @@ import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactor
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexerWriterDocumentHelper;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Luan Maoski
  */
-@Component(
-	property = "indexer.class.name=com.liferay.portal.kernel.model.UserGroup",
-	service = ModelIndexerWriterContributor.class
-)
 public class UserGroupModelIndexerWriterContributor
 	implements ModelIndexerWriterContributor<UserGroup> {
+
+	public UserGroupModelIndexerWriterContributor(
+		DynamicQueryBatchIndexingActionableFactory
+			dynamicQueryBatchIndexingActionableFactory,
+		UserGroupLocalService userGroupLocalService) {
+
+		_dynamicQueryBatchIndexingActionableFactory =
+			dynamicQueryBatchIndexingActionableFactory;
+		_userGroupLocalService = userGroupLocalService;
+	}
 
 	@Override
 	public void customize(
@@ -47,11 +50,8 @@ public class UserGroupModelIndexerWriterContributor
 		return userGroup.getCompanyId();
 	}
 
-	@Reference
-	private DynamicQueryBatchIndexingActionableFactory
+	private final DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;
-
-	@Reference
-	private UserGroupLocalService _userGroupLocalService;
+	private final UserGroupLocalService _userGroupLocalService;
 
 }

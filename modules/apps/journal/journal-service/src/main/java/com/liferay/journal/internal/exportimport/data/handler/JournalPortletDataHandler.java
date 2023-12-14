@@ -6,6 +6,7 @@
 package com.liferay.journal.internal.exportimport.data.handler;
 
 import com.liferay.changeset.model.ChangesetCollection;
+import com.liferay.changeset.model.ChangesetEntry;
 import com.liferay.changeset.service.ChangesetCollectionLocalService;
 import com.liferay.changeset.service.ChangesetEntryLocalService;
 import com.liferay.data.engine.model.DEDataDefinitionFieldLink;
@@ -33,6 +34,8 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.exportimport.kernel.staging.constants.StagingConstants;
+import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
+import com.liferay.exportimport.staged.model.repository.StagedModelRepositoryRegistryUtil;
 import com.liferay.journal.configuration.JournalServiceConfiguration;
 import com.liferay.journal.constants.JournalConstants;
 import com.liferay.journal.constants.JournalPortletKeys;
@@ -63,6 +66,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.portlet.PortletPreferences;
 
@@ -475,13 +479,11 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 					new StagedModelType(
 						DDMStructure.class.getName(),
 						JournalArticle.class.getName()),
-					new StagedModelType(
-						DDMTemplate.class.getName(),
-						DDMStructure.class.getName()),
 					new StagedModelType(JournalFeed.class.getName()),
 					new StagedModelType(JournalFolder.class.getName())
 				});
 
+			_populateDDMTemplateLastPublishDateCounts(portletDataContext);
 			_populateJournalArticleLastPublishDateCounts(portletDataContext);
 
 			return;
@@ -689,6 +691,68 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 		}
 
 		return true;
+	}
+
+	private void _populateDDMTemplateLastPublishDateCounts(
+			PortletDataContext portletDataContext)
+		throws Exception {
+
+		ManifestSummary manifestSummary =
+			portletDataContext.getManifestSummary();
+
+		StagedModelType stagedModelType = new StagedModelType(
+			DDMTemplate.class.getName(), DDMStructure.class.getName());
+
+		long modelAdditionCount = manifestSummary.getModelAdditionCount(
+			stagedModelType);
+
+		if (modelAdditionCount > -1) {
+			return;
+		}
+
+		ChangesetCollection changesetCollection =
+			_changesetCollectionLocalService.fetchChangesetCollection(
+				portletDataContext.getScopeGroupId(),
+				StagingConstants.RANGE_FROM_LAST_PUBLISH_DATE_CHANGESET_NAME);
+
+		if (changesetCollection != null) {
+			StagedModelRepository<?> stagedModelRepository =
+				StagedModelRepositoryRegistryUtil.getStagedModelRepository(
+					stagedModelType.getClassName());
+
+			if (stagedModelRepository != null) {
+				modelAdditionCount = 0;
+
+				for (ChangesetEntry changesetEntry :
+						_changesetEntryLocalService.getChangesetEntries(
+							changesetCollection.getChangesetCollectionId(),
+							stagedModelType.getClassNameId())) {
+
+					DDMTemplate ddmTemplate =
+						(DDMTemplate)stagedModelRepository.getStagedModel(
+							changesetEntry.getClassPK());
+
+					if (Objects.equals(
+							ddmTemplate.getClassName(),
+							stagedModelType.getReferrerClassName()) &&
+						Objects.equals(
+							ddmTemplate.getResourceClassName(),
+							JournalArticle.class.getName())) {
+
+						modelAdditionCount++;
+					}
+				}
+			}
+
+			manifestSummary.addModelAdditionCount(
+				stagedModelType, modelAdditionCount);
+		}
+
+		long modelDeletionCount = _exportImportHelper.getModelDeletionCount(
+			portletDataContext, stagedModelType);
+
+		manifestSummary.addModelDeletionCount(
+			stagedModelType, modelDeletionCount);
 	}
 
 	private void _populateJournalArticleLastPublishDateCounts(

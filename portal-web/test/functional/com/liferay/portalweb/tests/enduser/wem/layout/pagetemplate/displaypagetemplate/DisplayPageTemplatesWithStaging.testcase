@@ -258,13 +258,11 @@ definition {
 		task ("View cannot bulk assign categories to associated display page template in live site") {
 			PortletEntry.selectAll();
 
-			AssertVisible(
+			AssertElementPresent(
 				key_title = "Assign Display Page Template",
 				locator1 = "Button#ANY_TITLE_DISABLED");
 
-			Click(
-				key_text = "ellipsis",
-				locator1 = "ManagementBar#ANY_ICON");
+			Click(locator1 = "ManagementBar#ELLIPSIS");
 
 			AssertVisible(
 				key_menuItem = "Assign Display Page Template",
@@ -286,9 +284,7 @@ definition {
 		}
 
 		task ("Bulk assign all categories to the Default via action") {
-			Click(
-				key_text = "ellipsis",
-				locator1 = "ManagementBar#ANY_ICON");
+			Click(locator1 = "ManagementBar#ELLIPSIS");
 
 			MenuItem.click(menuItem = "Assign Display Page Template");
 

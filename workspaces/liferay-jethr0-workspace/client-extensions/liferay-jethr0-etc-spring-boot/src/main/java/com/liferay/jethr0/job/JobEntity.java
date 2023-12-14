@@ -176,6 +176,14 @@ public interface JobEntity extends Entity {
 		GENERATE_TEST_DURATION_METRICS(
 			"generateTestDurationMetrics", "Generate Test Duration Metrics"),
 		GENERATE_TESTRAY_CSV("generateTestrayCSV", "Generate Testray CSV"),
+		MAINTENANCE_DAILY("maintenanceDaily", "Maintenance Daily"),
+		MAINTENANCE_MATRIX_JOBS(
+			"maintenanceMatrixJobs", "Maintenance Matrix Jobs"),
+		MAINTENANCE_STALE_ARTIFACTS(
+			"maintenanceStaleArtifacts", "Maintenance Stale Artifacts"),
+		MAINTENANCE_WEEKLY("maintenanceWeekly", "Maintenance Weekly"),
+		MAINTENANCE_WEEKLY_NODE(
+			"maintenanceWeeklyNode", "Maintenance Weekly Node"),
 		PORTAL_APP_RELEASE("portalAppRelease", "Portal App Release"),
 		PORTAL_FIXPACK_RELEASE(
 			"portalFixpackRelease", "Portal Fixpack Release"),
@@ -191,7 +199,9 @@ public interface JobEntity extends Entity {
 		QA_WEBSITES_DAILY("qaWebsitesDaily", "QA Websites Daily"),
 		QA_WEBSITES_PULL_REQUEST_SF(
 			"qaWebsitesPullRequestSF", "QA Websites Pull Request SF"),
-		QA_WEBSITES_WEEKLY("qaWebsitesWeekly", "QA Websites Weekly");
+		QA_WEBSITES_WEEKLY("qaWebsitesWeekly", "QA Websites Weekly"),
+		VERIFICATION("verification", "Verification"),
+		VERIFICATION_NODE("verificationNode", "Verification Node");
 
 		public static Type get(JSONObject jsonObject) {
 			return getByKey(jsonObject.getString("key"));

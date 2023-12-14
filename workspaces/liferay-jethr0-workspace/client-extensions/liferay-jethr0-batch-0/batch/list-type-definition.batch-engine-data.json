@@ -316,6 +316,46 @@
 					}
 				},
 				{
+					"externalReferenceCode": "maintenanceDaily",
+					"key": "maintenanceDaily",
+					"name": "Maintenance Daily",
+					"name_i18n": {
+						"en-US": "Maintenance Daily"
+					}
+				},
+				{
+					"externalReferenceCode": "maintenanceMatrixJobs",
+					"key": "maintenanceMatrixJobs",
+					"name": "Maintenance Matrix Jobs",
+					"name_i18n": {
+						"en-US": "Maintenance Matrix Jobs"
+					}
+				},
+				{
+					"externalReferenceCode": "maintenanceStaleArtifacts",
+					"key": "maintenanceStaleArtifacts",
+					"name": "Maintenance Stale Artifacts",
+					"name_i18n": {
+						"en-US": "Maintenance Stale Artifacts"
+					}
+				},
+				{
+					"externalReferenceCode": "maintenanceWeekly",
+					"key": "maintenanceWeekly",
+					"name": "Maintenance Weekly",
+					"name_i18n": {
+						"en-US": "Maintenance Weekly"
+					}
+				},
+				{
+					"externalReferenceCode": "maintenanceWeeklyNode",
+					"key": "maintenanceWeeklyNode",
+					"name": "Maintenance Weekly Node",
+					"name_i18n": {
+						"en-US": "Maintenance Weekly Node"
+					}
+				},
+				{
 					"externalReferenceCode": "portalAppRelease",
 					"key": "portalAppRelease",
 					"name": "Portal App Release",
@@ -409,6 +449,22 @@
 					"name": "QA Websites Weekly",
 					"name_i18n": {
 						"en-US": "QA Websites Weekly"
+					}
+				},
+				{
+					"externalReferenceCode": "verification",
+					"key": "verification",
+					"name": "Verification",
+					"name_i18n": {
+						"en-US": "Verification"
+					}
+				},
+				{
+					"externalReferenceCode": "verificationNode",
+					"key": "verificationNode",
+					"name": "Verification Node",
+					"name_i18n": {
+						"en-US": "Verification Node"
 					}
 				}
 			],

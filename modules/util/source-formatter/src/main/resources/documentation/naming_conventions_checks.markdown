@@ -14,18 +14,18 @@ JavaClassNameCheck | .java | Checks if class names follow naming conventions. |
 JavaExceptionCheck | .java | Checks that variable names of exceptions in `catch` statements follow naming conventions. |
 [JavaHelperUtilCheck](check/java_helper_util_check.markdown#javahelperutilcheck) | .java | Finds incorrect use of `*Helper` or `*Util` classes. |
 [JavaTestMethodAnnotationsCheck](check/java_test_method_annotations_check.markdown#javatestmethodannotationscheck) | .java | Checks if methods with test annotations follow the naming conventions. |
-[LocalFinalVariableNameCheck](https://checkstyle.sourceforge.io/config_naming.html#LocalFinalVariableName) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks that local final variable names conform to a specified pattern. |
-[LocalVariableNameCheck](https://checkstyle.sourceforge.io/config_naming.html#LocalVariableName) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks that local, non-final variable names conform to a specified pattern. |
+[LocalFinalVariableNameCheck](https://checkstyle.sourceforge.io/checks/naming/localfinalvariablename.html) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks that local final variable names conform to a specified pattern. |
+[LocalVariableNameCheck](https://checkstyle.sourceforge.io/checks/naming/localvariablename.html) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks that local, non-final variable names conform to a specified pattern. |
 [MVCCommandNameCheck](check/mvc_command_name_check.markdown#mvccommandnamecheck) | .java | Checks for consistent naming for values of `mvc.command.name`. |
-[MemberNameCheck](https://checkstyle.sourceforge.io/config_naming.html#MemberName) | .java, .java, .jsp, .jsp, .jspf, .jspf, .jspx, .jspx, .tag, .tag, .tpl, .tpl, .vm or .vm | Checks that instance variable names conform to a specified pattern. |
-[MethodNameCheck](https://checkstyle.sourceforge.io/config_naming.html#MethodName) | .java, .java, .jsp, .jsp, .jspf, .jspf, .jspx, .jspx, .tag, .tag, .tpl, .tpl, .vm or .vm | Checks that method names conform to a specified pattern. |
+[MemberNameCheck](https://checkstyle.sourceforge.io/checks/naming/membername.html) | .java, .java, .jsp, .jsp, .jspf, .jspf, .jspx, .jspx, .tag, .tag, .tpl, .tpl, .vm or .vm | Checks that instance variable names conform to a specified pattern. |
+[MethodNameCheck](https://checkstyle.sourceforge.io/checks/naming/methodname.html) | .java, .java, .jsp, .jsp, .jspf, .jspf, .jspx, .jspx, .tag, .tag, .tpl, .tpl, .vm or .vm | Checks that method names conform to a specified pattern. |
 MethodNamingCheck | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks that method names follow naming conventions. |
-[PackageNameCheck](https://checkstyle.sourceforge.io/config_naming.html#PackageName) | .java | Checks that package names conform to a specified pattern. |
-[ParameterNameCheck](https://checkstyle.sourceforge.io/config_naming.html#ParameterName) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks that method parameter names conform to a specified pattern. |
+[PackageNameCheck](https://checkstyle.sourceforge.io/checks/naming/packagename.html) | .java | Checks that package names conform to a specified pattern. |
+[ParameterNameCheck](https://checkstyle.sourceforge.io/checks/naming/parametername.html) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks that method parameter names conform to a specified pattern. |
 SessionKeysCheck | .java | Checks that messages send to `SessionsErrors` or `SessionMessages` follow naming conventions. |
-[StaticVariableNameCheck](https://checkstyle.sourceforge.io/config_naming.html#StaticVariableName) | .java, .java, .jsp, .jsp, .jspf, .jspf, .jspx, .jspx, .tag, .tag, .tpl, .tpl, .vm or .vm | Checks that static, non-final variable names conform to a specified pattern. |
+[StaticVariableNameCheck](https://checkstyle.sourceforge.io/checks/naming/staticvariablename.html) | .java, .java, .jsp, .jsp, .jspf, .jspf, .jspx, .jspx, .tag, .tag, .tpl, .tpl, .vm or .vm | Checks that static, non-final variable names conform to a specified pattern. |
 StringBundlerNamingCheck | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks for consistent naming on variables of type 'StringBundler'. |
 TestClassCheck | .java | Checks that names of test classes follow naming conventions. |
 ThreadNameCheck | .java | Checks that names of threads follow naming conventions. |
-[TypeNameCheck](https://checkstyle.sourceforge.io/config_naming.html#TypeName) | .java | Checks that type names conform to a specified pattern. |
+[TypeNameCheck](https://checkstyle.sourceforge.io/checks/naming/typename.html) | .java | Checks that type names conform to a specified pattern. |
 VariableNameCheck | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks that variable names follow naming conventions. |

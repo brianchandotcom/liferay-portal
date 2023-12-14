@@ -9,7 +9,9 @@
 			},
 			{
 				"externalReferenceCode": "TESTSITENAVIGATIONMENUITEM2",
-				"name": "Test URL",
+				"name_i18n": {
+					"en_US": "Test URL"
+				},
 				"type": "url",
 				"url": "https://test.com/",
 				"useNewTab": false
@@ -19,13 +21,17 @@
 				"menuItems": [
 					{
 						"externalReferenceCode": "TESTSITENAVIGATIONMENUITEM4",
-						"name": "Other Test URL",
+						"name_i18n": {
+							"en_US": "Other Test URL"
+						},
 						"type": "url",
 						"url": "https://other.test.com",
 						"useNewTab": false
 					}
 				],
-				"name": "Other Links Update",
+				"name_i18n": {
+					"en_US": "Other Links Update"
+				},
 				"type": "node"
 			},
 			{

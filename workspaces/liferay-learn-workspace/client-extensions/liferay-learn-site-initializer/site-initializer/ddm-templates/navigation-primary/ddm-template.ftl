@@ -3,54 +3,54 @@
 		background-color: rgba(0, 0, 0, 0);
 		border: none;
 	}
-	
+
 	.dropdown-full .adt-nav-item:focus {
 		border-bottom: 1px solid white;
 		border-radius: 2px;
 	}
-	
+
 	.dropdown-full .adt-nav-item:focus .adt-nav-text .lexicon-icon {
 		transform: rotate(180deg);
 	}
-	
+
 	.dropdown-full .adt-nav-item .adt-nav-text {
 		display: flex;
-    	align-items: center;
-    	justify-content: flex-start;
+		align-items: center;
+		justify-content: flex-start;
 	}
-	
+
 	.dropdown-menu {
 		border: none;
 		border-radius: 0px 0px 8px 8px;
 		box-shadow: 0px 10px 5px rgba(0, 0, 0, 0.15);
 	}
-	
+
 	.dropdown-menu .row {
 		margin: 25px!important;
 	}
-	
+
 	.dropdown-menu .row .dropdown-item-div {
 		padding: 25px;
 	}
-	
+
 	.dropdown-menu .row .dropdown-item-div .dropdown-item {
 		border-radius: 10px;
 		height: 150px;
 	}
-	
+
 	.dropdown-menu .row .dropdown-item-div .dropdown-item:hover {
 		background: var(--action-primary-hover-7, #EDF3FE);
 	}
-	
+
 	.dropdown-menu .row .dropdown-item-div .dropdown-item:hover .title {
 		color: var(--action-primary-hover, #0053F0);
 	}
-	
+
 	.dropdown-menu .row .dropdown-item-div .dropdown-item .icon {
 		height: 32px;
 		width: 32px;
 	}
-	
+
 	.dropdown-menu .row .dropdown-item-div .dropdown-item .subtitle {
 		color: var(--neutral-08, #54555F);
 		font-family: 'Source Sans Pro', sans-serif;
@@ -59,7 +59,7 @@
 		font-weight: 400;
 		line-height: 16px;
 	}
-	
+
 	.dropdown-menu .row .dropdown-item-div .dropdown-item .title {
 		color: var(--neutral-10, #282934);
 		font-family: 'Source Sans Pro', sans-serif;
@@ -81,9 +81,9 @@
 			taxonomyCategory.name:
 				{
 					"description": taxonomyCategory.description,
-					"icon": taxonomyCategory.taxonomyCategoryProperties?filter(property -> property.key == "icon")[0].value!"",
+					"icon": taxonomyCategory.taxonomyCategoryProperties?filter(property -> stringUtil.equals(property.key, "icon"))[0].value!"",
 					"id": taxonomyCategory.id
- 				}
+				}
 		}
 	/>
 </#list>
@@ -102,7 +102,7 @@
 					columns = "3"
 				/>
 			</#if>
-			
+
 			<div class="dropdown-full nav-item">
 				<button
 					class="adt-nav-item w-100"
@@ -134,13 +134,13 @@
 								<#if capabilityVocabulary?has_content && stringUtil.equals(navItemType, "CAPABILITIES")>
 									<#assign capabilityFields = capabilityVocabulary[navSecondaryItem.getName()] />
 
-									<a class="dropdown-item d-flex p-3 text-decoration-none" href="/search?category=${capabilityFields['id']}" tabindex="4">
+									<a class="d-flex dropdown-item p-3 text-decoration-none" href="/search?category=${capabilityFields['id']}" tabindex="4">
 										<img
 											alt="${navSecondaryItem.getName()} icon"
 											class="icon mr-3"
 											src="${capabilityFields["icon"]}"
 										/>
-										
+
 										<div>
 											<h5 class="title">
 												${navSecondaryItem.getName()}
@@ -160,7 +160,7 @@
 										navItemIcon = customFields["Icon URL"]!""
 									/>
 
-									<a class="dropdown-item d-flex p-3 text-decoration-none" href="${navSecondaryItem.getRegularURL()}" tabindex="4">
+									<a class="d-flex dropdown-item p-3 text-decoration-none" href="${navSecondaryItem.getRegularURL()}" tabindex="4">
 										<img
 											alt="${navSecondaryItem.getName()} icon"
 											class="icon mr-3"

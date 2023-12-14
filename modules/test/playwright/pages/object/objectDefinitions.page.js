@@ -13,21 +13,17 @@ export class ObjectDefinitionsPage {
 			name: 'Create Folder',
 		});
 		this.objectFolderActionsLink = page.getByLabel('folder-actions');
-
 		this.objectFolderDeleteFolderOption = page.getByRole('menuitem', {
 			name: 'Delete Folder',
 		});
-		this.objectFolderEditLabelAndERCOption = page.getByRole(
-			'menuitem',
-			{name: 'Edit Label and ERC'}
-		);
+		this.objectFolderEditLabelAndERCOption = page.getByRole('menuitem', {
+			name: 'Edit Label and ERC',
+		});
 		this.objectFolderLabel = page.locator('input[name="label"]');
-
 		this.page = page;
 		this.uncategorizedObjectFolderLink = page
 			.locator('li')
 			.filter({hasText: 'Uncategorized'});
-
 		this.viewInModelBuilderButton = page.getByLabel(
 			'View in Model Builder'
 		);

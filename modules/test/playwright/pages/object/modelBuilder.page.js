@@ -13,20 +13,14 @@ export class ModelBuilderPage {
 			.locator('div.form-group')
 			.filter({hasText: /^LabelMandatory$/})
 			.getByRole('textbox');
-
 		this.newObjectRelationshipTitle = page.getByRole('heading', {
 			name: 'New Relationship',
 		});
 		this.newObjectRelationshipType = page.getByText('Many to Many');
-
 		this.objectDefinitionsPage = new ObjectDefinitionsPage(page);
-
 		this.objectDefinitionNodes = page.locator('.react-flow__node');
-
 		this.objectRelationshipEdges = page.locator('.react-flow__edge');
-
 		this.page = page;
-
 		this.saveNewObjectRelationshipButton = page.getByRole('button', {
 			name: 'Save',
 		});

@@ -10,7 +10,6 @@ export class FeatureFlagApiHelper {
 
 	async updateFeatureFlag(key, enabled) {
 		await this.page.goto('/');
-
 		await this.page.evaluate(
 			({enabled, key}) =>
 				Liferay.Util.fetch(

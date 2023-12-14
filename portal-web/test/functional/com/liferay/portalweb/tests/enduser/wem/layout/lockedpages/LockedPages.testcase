@@ -401,8 +401,7 @@ definition {
 				AssertVisible(
 					index = ${index},
 					key_menuItem = ${menuItem},
-					key_subheader = "Order By",
-					locator1 = "MenuItem#GROUPED_DROPDOWN_MENU_ITEM_BY_INDEX");
+					locator1 = "MenuItem#MENU_ITEM_BY_INDEX");
 
 				var index = ${index} + 1;
 			}

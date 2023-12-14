@@ -160,8 +160,7 @@ definition {
 				value1 = "\TAB");
 
 			KeyPress(
-				ariaLabel = "Filter and Order",
-				locator1 = "Button#ANY_WITH_ARIA_LABEL",
+				locator1 = "ManagementBar#FILTER",
 				value1 = "\ENTER");
 
 			KeyPress(
@@ -179,8 +178,7 @@ definition {
 			LexiconTable.viewTableEntryNotPresent(tableEntry = "404 Error Utility Page");
 
 			KeyPress(
-				ariaLabel = "Filter and Order",
-				locator1 = "Button#ANY_WITH_ARIA_LABEL",
+				locator1 = "ManagementBar#FILTER",
 				value1 = "\ENTER");
 
 			KeyPress(
@@ -194,8 +192,7 @@ definition {
 				value1 = "\ENTER");
 
 			KeyPress(
-				ariaLabel = "Filter and Order",
-				locator1 = "Button#ANY_WITH_ARIA_LABEL",
+				locator1 = "ManagementBar#ORDER",
 				value1 = "\ENTER");
 
 			KeyPress(
@@ -219,13 +216,21 @@ definition {
 				locator1 = "LexiconTable#TABLE_ENTRY_TITLE_INDEXED");
 
 			KeyPress(
-				ariaLabel = "Filter and Order",
-				locator1 = "Button#ANY_WITH_ARIA_LABEL",
+				locator1 = "ManagementBar#FILTER",
 				value1 = "\TAB");
 
 			KeyPress(
-				key_text = "order-list-down",
-				locator1 = "Icon#ANY",
+				locator1 = "ManagementBar#ORDER",
+				value1 = "\ENTER");
+
+			KeyPress(
+				key_menuItem = "Descending",
+				locator1 = "MenuItem#ANY_MENU_ITEM",
+				value1 = "\UP");
+
+			KeyPress(
+				key_menuItem = "Ascending",
+				locator1 = "MenuItem#ANY_MENU_ITEM",
 				value1 = "\ENTER");
 
 			AssertElementPresent(

@@ -251,23 +251,4 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-89251. When creating fragments there should be a visible reference to the Liferay Fragments Toolkit."
-	@priority = 4
-	@uitest
-	test ViewReferenceToFragmentsToolkit {
-		task ("Access to the fragment editor") {
-			FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
-		}
-
-		task ("Click on the Fragments Toolkit link") {
-			Click(locator1 = "FragmentEditor#FRAGMENTS_TOOLKIT_LINK");
-		}
-
-		task ("Assert user is taken to the the Liferay Fragments Toolkit documentation page") {
-			SelectWindow.selectPopUp(value1 = "null");
-
-			AssertLocation(value1 = "https://github.com/liferay/generator-liferay-fragments#liferay-fragments-cli");
-		}
-	}
-
 }

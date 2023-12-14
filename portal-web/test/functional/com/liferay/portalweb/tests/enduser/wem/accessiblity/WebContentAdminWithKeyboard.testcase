@@ -132,12 +132,12 @@ definition {
 				value1 = "\ENTER");
 
 			KeyPress(
-				key_menuItem = "Descending",
+				key_menuItem = "Ascending",
 				locator1 = "MenuItem#ANY_MENU_ITEM",
-				value1 = "\UP");
+				value1 = "\DOWN");
 
 			KeyPress(
-				key_menuItem = "Ascending",
+				key_menuItem = "Descending",
 				locator1 = "MenuItem#ANY_MENU_ITEM",
 				value1 = "\ENTER");
 
@@ -160,12 +160,12 @@ definition {
 				value1 = "\ENTER");
 
 			KeyPress(
-				key_menuItem = "Ascending",
+				key_menuItem = "Descending",
 				locator1 = "MenuItem#ANY_MENU_ITEM",
-				value1 = "\DOWN");
+				value1 = "\UP");
 
 			KeyPress(
-				key_menuItem = "Descending",
+				key_menuItem = "Ascending",
 				locator1 = "MenuItem#ANY_MENU_ITEM",
 				value1 = "\ENTER");
 

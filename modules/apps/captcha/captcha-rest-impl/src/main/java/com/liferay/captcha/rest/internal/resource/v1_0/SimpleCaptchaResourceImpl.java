@@ -5,9 +5,27 @@
 
 package com.liferay.captcha.rest.internal.resource.v1_0;
 
+import com.liferay.captcha.configuration.CaptchaConfiguration;
+import com.liferay.captcha.rest.dto.v1_0.SimpleCaptcha;
+import com.liferay.captcha.rest.internal.util.CaptchaTokenUtil;
 import com.liferay.captcha.rest.resource.v1_0.SimpleCaptchaResource;
+import com.liferay.captcha.simplecaptcha.SimpleCaptchaImpl;
+import com.liferay.captcha.util.CaptchaUtil;
+import com.liferay.petra.string.StringUtil;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.captcha.Captcha;
+import com.liferay.portal.kernel.captcha.CaptchaTextException;
+import com.liferay.portal.kernel.util.Base64;
+
+import java.io.ByteArrayOutputStream;
+
+import javax.ws.rs.BadRequestException;
+import javax.ws.rs.ForbiddenException;
+import javax.ws.rs.NotAcceptableException;
+import javax.ws.rs.core.Response;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 
 /**
@@ -18,4 +36,74 @@ import org.osgi.service.component.annotations.ServiceScope;
 	scope = ServiceScope.PROTOTYPE, service = SimpleCaptchaResource.class
 )
 public class SimpleCaptchaResourceImpl extends BaseSimpleCaptchaResourceImpl {
+
+	@Override
+	public SimpleCaptcha getSimpleCaptchaChallenge() throws Exception {
+		_checkSimpleCaptchaConfiguration();
+
+		Captcha captcha = CaptchaUtil.getCaptcha();
+
+		ByteArrayOutputStream imageByteArrayOutputStream =
+			new ByteArrayOutputStream();
+
+		String expectedAnswer = captcha.serveImage(imageByteArrayOutputStream);
+
+		String base64CaptchaImage =
+			"data:image/png;base64," +
+				Base64.encode(imageByteArrayOutputStream.toByteArray());
+
+		imageByteArrayOutputStream.close();
+
+		return new SimpleCaptcha() {
+			{
+				image = base64CaptchaImage;
+
+				token = CaptchaTokenUtil.generateCaptchaToken(
+					contextCompany, expectedAnswer);
+			}
+		};
+	}
+
+	@Override
+	public void postSimpleCaptchaResponse(SimpleCaptcha simpleCaptcha)
+		throws Exception {
+
+		_checkSimpleCaptchaConfiguration();
+
+		try {
+			CaptchaTokenUtil.checkAnswer(
+				contextCompany, simpleCaptcha.getToken(),
+				simpleCaptcha.getAnswer());
+		}
+		catch (CaptchaTextException captchaTextException) {
+			throw new NotAcceptableException(
+				captchaTextException.getMessage(),
+				Response.status(
+					Response.Status.NOT_ACCEPTABLE
+				).entity(
+					getSimpleCaptchaChallenge()
+				).build());
+		}
+		catch (Exception exception) {
+			throw new BadRequestException(exception.getMessage());
+		}
+	}
+
+	private void _checkSimpleCaptchaConfiguration() throws Exception {
+		CaptchaConfiguration captchaConfiguration =
+			_configurationProvider.getSystemConfiguration(
+				CaptchaConfiguration.class);
+
+		if (!StringUtil.equalsIgnoreCase(
+				captchaConfiguration.captchaEngine(),
+				SimpleCaptchaImpl.class.getName())) {
+
+			throw new ForbiddenException(
+				"Simple Captcha Headless API is not enabled");
+		}
+	}
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
+
 }

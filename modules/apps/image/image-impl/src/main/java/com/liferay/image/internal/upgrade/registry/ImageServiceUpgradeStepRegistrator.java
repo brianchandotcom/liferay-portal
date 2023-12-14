@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetBranch;
+import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ImageLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -75,6 +76,11 @@ public class ImageServiceUpgradeStepRegistrator
 
 	@Reference
 	private LayoutSetLocalService _layoutSetLocalService;
+
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.journal.service)(release.schema.version>=1.1.0))"
+	)
+	private Release _release;
 
 	@Reference(target = "(default=true)")
 	private Store _store;

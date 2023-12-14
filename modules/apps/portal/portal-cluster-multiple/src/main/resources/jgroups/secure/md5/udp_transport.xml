@@ -33,6 +33,8 @@
 	<ASYM_ENCRYPT
 		asym_algorithm="RSA"
 		asym_keylength="512"
+		change_key_on_coord_leave="false"
+		change_key_on_leave="false"
 		sym_algorithm="AES/CBC/PKCS5Padding"
 		sym_iv_length="16"
 		sym_keylength="128"

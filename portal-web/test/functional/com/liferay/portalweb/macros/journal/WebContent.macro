@@ -333,8 +333,6 @@ definition {
 			webContentTitle = ${webContentTitle});
 
 		Button.clickPublish();
-
-		WaitForPageLoad();
 	}
 
 	@summary = "Default summary"

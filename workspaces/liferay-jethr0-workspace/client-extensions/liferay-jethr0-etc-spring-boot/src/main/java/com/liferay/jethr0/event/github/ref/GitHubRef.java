@@ -58,7 +58,8 @@ public class GitHubRef {
 		_gitHubRefURL = gitHubRefURL;
 		_jsonObject = jsonObject;
 
-		_gitHubCommit = new GitHubCommit(jsonObject.getJSONObject("commit"));
+		_gitHubCommit = _gitHubFactory.newGitHubCommit(
+			jsonObject.getJSONObject("commit"));
 	}
 
 	public GitHubClient getGitHubClient() {

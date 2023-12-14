@@ -5,6 +5,8 @@
 
 package com.liferay.jethr0.event.github.commit;
 
+import com.liferay.jethr0.event.github.GitHubFactory;
+import com.liferay.jethr0.event.github.client.GitHubClient;
 import com.liferay.jethr0.util.StringUtil;
 
 import org.json.JSONObject;
@@ -14,8 +16,13 @@ import org.json.JSONObject;
  */
 public class GitHubCommit {
 
-	public GitHubCommit(JSONObject jsonObject) {
+	public GitHubCommit(GitHubFactory gitHubFactory, JSONObject jsonObject) {
+		_gitHubFactory = gitHubFactory;
 		_jsonObject = jsonObject;
+	}
+
+	public GitHubClient getGitHubClient() {
+		return _gitHubFactory.getGitHubClient();
 	}
 
 	public String getSHA() {
@@ -28,6 +35,7 @@ public class GitHubCommit {
 		return sha;
 	}
 
+	private final GitHubFactory _gitHubFactory;
 	private final JSONObject _jsonObject;
 
 }

@@ -78,7 +78,9 @@ public class PusherGitHubEventHandler extends BaseGitHubEventHandler {
 				"Missing \"head_commit\" from message JSON");
 		}
 
-		return new GitHubCommit(headCommitJSONObject);
+		GitHubFactory gitHubFactory = getGitHubFactory();
+
+		return gitHubFactory.newGitHubCommit(headCommitJSONObject);
 	}
 
 }

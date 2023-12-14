@@ -539,17 +539,11 @@ definition {
 
 			ObjectAdmin.publishObjectViaAPI(objectName = "PurchaseOrder");
 
-			ObjectAdmin.goToCustomObject(objectName = "PurchaseOrder");
-
-			ObjectAdmin.addObjectMultiPicklistFieldEntryViaUI(picklistOptionList = "Apple,Peach");
-
-			PortletEntry.save();
-
-			Navigator.gotoBack();
-
-			ObjectPortlet.viewEntry(entry = "Apple, Peach");
-
-			var objectEntryId = selenium.getText("ObjectPortlet#ENTRY_ID");
+			var objectEntryId = ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "favorite",
+				fieldType = "MultiselectPicklist",
+				objectName = "PurchaseOrder",
+				valueList = "Apple,Peach");
 
 			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = ${siteURLKey});
 

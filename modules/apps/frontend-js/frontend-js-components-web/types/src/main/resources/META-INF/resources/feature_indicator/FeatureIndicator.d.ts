@@ -6,16 +6,7 @@
 /// <reference types="react" />
 
 import {ALIGN_POSITIONS} from '@clayui/popover';
-export declare type DisplayType =
-	| 'primary'
-	| 'secondary'
-	| 'success'
-	| 'warning'
-	| 'danger'
-	| 'info'
-	| 'beta'
-	| 'beta-dark'
-	| 'deprecated';
+export declare type DisplayType = 'beta' | 'info' | 'warning' | 'deprecated';
 export default function FeatureIndicator({
 	dark,
 	interactive,

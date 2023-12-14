@@ -30,17 +30,6 @@ definition {
 		}
 	}
 
-	tearDown {
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
-		if (${testLiferayVirtualInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
-		}
-	}
-
 	@description = "This is a test for LPS-80503 and LPS-108566. Assert that when lfr is typed within a tag, a list of choices to autocomplete the fragment are presented. Assert the available variables and taglibs are shown in the IntelliSense and autocomplete works."
 	@priority = 5
 	@uitest

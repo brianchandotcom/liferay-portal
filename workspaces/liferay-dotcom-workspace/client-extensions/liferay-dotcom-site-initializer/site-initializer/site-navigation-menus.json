@@ -37,7 +37,10 @@
 						"type": "layout"
 					}
 				],
-				"name": "Platform",
+				"name_i18n": {
+					"en_US": "Platform"
+				},
+				"title": "Platform",
 				"type": "node"
 			},
 			{
@@ -74,7 +77,10 @@
 						"type": "layout"
 					}
 				],
-				"name": "Company",
+				"name_i18n": {
+					"en_US": "Company"
+				},
+				"title": "Company",
 				"type": "node"
 			},
 			{
@@ -82,27 +88,36 @@
 				"menuItems": [
 					{
 						"externalReferenceCode": "SITE-NAVIGATION-EXPAND-CONNECT-1",
-						"name": "Community",
+						"name_i18n": {
+							"en_US": "Community"
+						},
 						"type": "url",
 						"url": "https://liferay.dev",
 						"useNewTab": false
 					},
 					{
 						"externalReferenceCode": "SITE-NAVIGATION-EXPAND-CONNECT-2",
-						"name": "Developer Network",
+						"name_i18n": {
+							"en_US": "Developer Network"
+						},
 						"type": "url",
 						"url": "https://portal.liferay.dev",
 						"useNewTab": false
 					},
 					{
 						"externalReferenceCode": "SITE-NAVIGATION-EXPAND-CONNECT-3",
-						"name": "Marketplace",
+						"name_i18n": {
+							"en_US": "Marketplace"
+						},
 						"type": "url",
 						"url": "https://marketplace.liferay.com",
 						"useNewTab": false
 					}
 				],
-				"name": "Expand & Connect",
+				"name_i18n": {
+					"en_US": "Expand & Connect"
+				},
+				"title": "Expand & Connect",
 				"type": "node"
 			}
 		],

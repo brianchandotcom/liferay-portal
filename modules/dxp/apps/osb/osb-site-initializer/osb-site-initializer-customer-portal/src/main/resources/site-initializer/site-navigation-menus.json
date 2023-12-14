@@ -13,20 +13,27 @@
 						"menuItems": [
 							{
 								"externalReferenceCode": "knowledgeBaseMenuItem",
-								"name": "Knowledge Base",
+								"name_i18n": {
+									"en_US": "Knowledge Base"
+								},
 								"type": "url",
 								"url": "/knowledge-base",
 								"useNewTab": false
 							},
 							{
 								"externalReferenceCode": "documentationMenuItem",
-								"name": "Documentation",
+								"name_i18n": {
+									"en_US": "Documentation"
+								},
 								"type": "url",
 								"url": "/documentation",
 								"useNewTab": false
 							}
 						],
-						"name": "Products Documentation",
+						"name_i18n": {
+							"en_US": "Products Documentation"
+						},
+						"title": "Products Documentation",
 						"type": "node"
 					},
 					{
@@ -34,20 +41,27 @@
 						"menuItems": [
 							{
 								"externalReferenceCode": "dxpReleaseNotesMenuItem",
-								"name": "DXP Release Notes",
+								"name_i18n": {
+									"en_US": "DXP Release Notes"
+								},
 								"type": "url",
 								"url": "/dxp-release-notes",
 								"useNewTab": false
 							},
 							{
 								"externalReferenceCode": "downloadsMenuItem",
-								"name": "Downloads",
+								"name_i18n": {
+									"en_US": "Downloads"
+								},
 								"type": "url",
 								"url": "/downloads",
 								"useNewTab": false
 							}
 						],
-						"name": "Tools",
+						"name_i18n": {
+							"en_US": "Tools"
+						},
+						"title": "Tools",
 						"type": "node"
 					},
 					{
@@ -55,24 +69,34 @@
 						"menuItems": [
 							{
 								"externalReferenceCode": "securityOverviewMenuItem",
-								"name": "Security Overview",
+								"name_i18n": {
+									"en_US": "Security Overview"
+								},
 								"type": "url",
 								"url": "/security-overview",
 								"useNewTab": false
 							},
 							{
 								"externalReferenceCode": "securityAdvisoriesMenuItem",
-								"name": "Security Advisories",
+								"name_i18n": {
+									"en_US": "Security Advisories"
+								},
 								"type": "url",
 								"url": "/security-advisories",
 								"useNewTab": false
 							}
 						],
-						"name": "Securities & Policies",
+						"name_i18n": {
+							"en_US": "Securities & Policies"
+						},
+						"title": "Securities & Policies",
 						"type": "node"
 					}
 				],
-				"name": "Resources",
+				"name_i18n": {
+					"en_US": "Resources"
+				},
+				"title": "Resources",
 				"type": "node"
 			},
 			{
@@ -82,20 +106,27 @@
 						"menuItems": [
 							{
 								"externalReferenceCode": "productSupportMenuItem",
-								"name": "Product Support",
+								"name_i18n": {
+									"en_US": "Product Support"
+								},
 								"type": "url",
 								"url": "/product-support",
 								"useNewTab": false
 							},
 							{
 								"externalReferenceCode": "accountSupportMenuItem",
-								"name": "Account Support",
+								"name_i18n": {
+									"en_US": "Account Support"
+								},
 								"type": "url",
 								"url": "/account-support",
 								"useNewTab": false
 							}
 						],
-						"name": "Support Documentation",
+						"name_i18n": {
+							"en_US": "Support Documentation"
+						},
+						"title": "Support Documentation",
 						"type": "node"
 					},
 					{
@@ -103,20 +134,27 @@
 						"menuItems": [
 							{
 								"externalReferenceCode": "supportFaqMenuItem",
-								"name": "Support FAQ",
+								"name_i18n": {
+									"en_US": "Support FAQ"
+								},
 								"type": "url",
 								"url": "/support-faq",
 								"useNewTab": false
 							},
 							{
 								"externalReferenceCode": "contactUsMenuItem",
-								"name": "Contact Us",
+								"name_i18n": {
+									"en_US": "Contact Us"
+								},
 								"type": "url",
 								"url": "/contact-us",
 								"useNewTab": false
 							}
 						],
-						"name": "Support Assistance",
+						"name_i18n": {
+							"en_US": "Support Assistance"
+						},
+						"title": "Support Assistance",
 						"type": "node"
 					},
 					{
@@ -124,31 +162,43 @@
 						"menuItems": [
 							{
 								"externalReferenceCode": "submitATicketMenuItem",
-								"name": "Submit a Ticket",
+								"name_i18n": {
+									"en_US": "Submit a Ticket"
+								},
 								"type": "url",
 								"url": "/submit-a-ticket",
 								"useNewTab": false
 							},
 							{
 								"externalReferenceCode": "myTicketsMenuItem",
-								"name": "My Tickets",
+								"name_i18n": {
+									"en_US": "My Tickets"
+								},
 								"type": "url",
 								"url": "/my-tickets",
 								"useNewTab": false
 							},
 							{
 								"externalReferenceCode": "myTeamsTicketsMenuItem",
-								"name": "My Team's Tickets",
+								"name_i18n": {
+									"en_US": "My Team's Tickets"
+								},
 								"type": "url",
 								"url": "/my-teams-tickets",
 								"useNewTab": false
 							}
 						],
-						"name": "Support Tickets",
+						"name_i18n": {
+							"en_US": "Support Tickets"
+						},
+						"title": "Support Tickets",
 						"type": "node"
 					}
 				],
-				"name": "Support",
+				"name_i18n": {
+					"en_US": "Support"
+				},
+				"title": "Support",
 				"type": "node"
 			}
 		],

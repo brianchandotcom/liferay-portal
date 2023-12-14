@@ -16,7 +16,10 @@
 						"type": "display-page"
 					}
 				],
-				"name": "Courses",
+				"name_i18n": {
+					"en_US": "Courses"
+				},
+				"title": "Courses",
 				"type": "node"
 			},
 			{

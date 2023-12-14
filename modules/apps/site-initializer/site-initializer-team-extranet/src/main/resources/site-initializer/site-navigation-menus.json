@@ -37,7 +37,9 @@
 				"type": "layout"
 			},
 			{
-				"name": "Github",
+				"name_i18n": {
+					"en_US": "Github"
+				},
 				"type": "url",
 				"url": "https://github.com",
 				"useNewTab": false

@@ -27,13 +27,17 @@
 				"type": "layout"
 			},
 			{
-				"name": "Privacy Policy",
+				"name_i18n": {
+					"en_US": "Privacy Policy"
+				},
 				"type": "url",
 				"url": "https://www.liferay.com/privacy-policy",
 				"useNewTab": true
 			},
 			{
-				"name": "Manage Account",
+				"name_i18n": {
+					"en_US": "Manage Account"
+				},
 				"type": "url",
 				"url": "https://login.liferay.com/",
 				"useNewTab": true

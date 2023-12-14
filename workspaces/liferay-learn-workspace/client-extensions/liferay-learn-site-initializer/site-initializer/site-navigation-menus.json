@@ -3,7 +3,9 @@
 		"menuItems": [
 			{
 				"externalReferenceCode": "LEARNSITENAVIGATIONMENUITEM2",
-				"name": "Liferay.com",
+				"name_i18n": {
+					"en_US": "Liferay.com"
+				},
 				"privateLayout": false,
 				"type": "url",
 				"url": "https://www.liferay.com",
@@ -11,7 +13,9 @@
 			},
 			{
 				"externalReferenceCode": "LEARNSITENAVIGATIONMENUITEM3",
-				"name": "Videos",
+				"name_i18n": {
+					"en_US": "Videos"
+				},
 				"privateLayout": false,
 				"type": "url",
 				"url": "https://www.youtube.com/@liferaylearn222",
@@ -19,7 +23,9 @@
 			},
 			{
 				"externalReferenceCode": "LEARNSITENAVIGATIONMENUITEM4",
-				"name": "Community",
+				"name_i18n": {
+					"en_US": "Community"
+				},
 				"privateLayout": false,
 				"type": "url",
 				"url": "https://liferay.dev/",
@@ -27,7 +33,9 @@
 			},
 			{
 				"externalReferenceCode": "LEARNSITENAVIGATIONMENUITEM5",
-				"name": "Help Center",
+				"name_i18n": {
+					"en_US": "Help Center"
+				},
 				"privateLayout": false,
 				"type": "url",
 				"url": "https://help.liferay.com/hc",
@@ -41,14 +49,18 @@
 		"menuItems": [
 			{
 				"externalReferenceCode": "LEARNSITENAVIGATIONMENUITEM6",
-				"name": "Analytics Cloud",
+				"name_i18n": {
+					"en_US": "Analytics Cloud"
+				},
 				"privateLayout": false,
 				"type": "url",
 				"url": "/w/analytics-cloud/index"
 			},
 			{
 				"externalReferenceCode": "LEARNSITENAVIGATIONMENUITEM7",
-				"name": "Commerce",
+				"name_i18n": {
+					"en_US": "Commerce"
+				},
 				"privateLayout": false,
 				"searchable": true,
 				"type": "url",
@@ -56,21 +68,27 @@
 			},
 			{
 				"externalReferenceCode": "LEARNSITENAVIGATIONMENUITEM8",
-				"name": "DXP",
+				"name_i18n": {
+					"en_US": "DXP"
+				},
 				"privateLayout": false,
 				"type": "url",
 				"url": "/w/dxp/index"
 			},
 			{
 				"externalReferenceCode": "LEARNSITENAVIGATIONMENUITEM9",
-				"name": "Liferay Cloud",
+				"name_i18n": {
+					"en_US": "Liferay Cloud"
+				},
 				"privateLayout": false,
 				"type": "url",
 				"url": "/w/liferay-cloud/index"
 			},
 			{
 				"externalReferenceCode": "LEARNSITENAVIGATIONMENUITEM10",
-				"name": "Reference",
+				"name_i18n": {
+					"en_US": "Reference"
+				},
 				"privateLayout": false,
 				"type": "url",
 				"url": "/w/reference/index"
@@ -84,7 +102,10 @@
 		"menuItems": [
 			{
 				"externalReferenceCode": "LEARNSITENAVIGATIONMENUITEM12",
-				"name": "Capabilities",
+				"name_i18n": {
+					"en_US": "Capabilities"
+				},
+				"title": "Capabilities",
 				"type": "node"
 			},
 			{
@@ -92,13 +113,17 @@
 				"menuItems": [
 					{
 						"externalReferenceCode": "LEARNSITENAVIGATIONMENUITEM14",
-						"name": "Analytics Cloud",
+						"name_i18n": {
+							"en_US": "Analytics Cloud"
+						},
 						"type": "url",
 						"url": "/w/analytics-cloud/index"
 					},
 					{
 						"externalReferenceCode": "LEARNSITENAVIGATIONMENUITEM15",
-						"name": "Commerce",
+						"name_i18n": {
+							"en_US": "Commerce"
+						},
 						"type": "url",
 						"url": "/w/commerce/index"
 					},
@@ -110,23 +135,32 @@
 					},
 					{
 						"externalReferenceCode": "LEARNSITENAVIGATIONMENUITEM17",
-						"name": "DXP Cloud",
+						"name_i18n": {
+							"en_US": "DXP Cloud"
+						},
 						"type": "url",
 						"url": "/w/liferay-cloud/index"
 					},
 					{
 						"externalReferenceCode": "LEARNSITENAVIGATIONMENUITEM18",
-						"name": "Reference",
+						"name_i18n": {
+							"en_US": "Reference"
+						},
 						"type": "url",
 						"url": "/w/reference/index"
 					}
 				],
-				"name": "Products",
+				"name_i18n": {
+					"en_US": "Products"
+				},
+				"title": "Products",
 				"type": "node"
 			},
 			{
 				"externalReferenceCode": "LEARNSITENAVIGATIONMENUITEM19",
-				"name": "Courses",
+				"name_i18n": {
+					"en_US": "Courses"
+				},
 				"type": "url",
 				"url": "/w/courses/index"
 			}

@@ -5,6 +5,8 @@
 
 package com.liferay.gradle.plugins.workspace.internal.util;
 
+import java.util.Arrays;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -15,59 +17,46 @@ public class VersionUtilTest {
 
 	@Test
 	public void testIsDXPVersion() throws Exception {
-		Assert.assertFalse("x", VersionUtil.isDXPVersion("x"));
-		Assert.assertFalse("7.1.0", VersionUtil.isDXPVersion("7.1.0"));
-		Assert.assertFalse("7.1.1", VersionUtil.isDXPVersion("7.1.1"));
-		Assert.assertTrue("7.0.10", VersionUtil.isDXPVersion("7.0.10"));
-		Assert.assertTrue("7.0.10.1", VersionUtil.isDXPVersion("7.0.10.1"));
-		Assert.assertTrue(
-			"7.0.10.fp21", VersionUtil.isDXPVersion("7.0.10.fp21"));
-		Assert.assertTrue("7.1.10", VersionUtil.isDXPVersion("7.1.10"));
-		Assert.assertTrue("7.1.10.1", VersionUtil.isDXPVersion("7.1.10.1"));
-		Assert.assertTrue(
-			"7.1.10.fp21", VersionUtil.isDXPVersion("7.1.10.fp21"));
-		Assert.assertTrue(
-			"7.1.10.fp1-1", VersionUtil.isDXPVersion("7.1.10.fp1-1"));
-		Assert.assertTrue(
-			"7.1.10.fp123-456", VersionUtil.isDXPVersion("7.1.10.fp123-456"));
-		Assert.assertTrue("7.3.10.ep4", VersionUtil.isDXPVersion("7.3.10.ep4"));
-		Assert.assertTrue("7.4.13.u1", VersionUtil.isDXPVersion("7.4.13.u1"));
+		for (String nondxpVersionString :
+				Arrays.asList("x", "7.1.0", "7.1.1")) {
 
-		Assert.assertTrue("2023.q4.0", VersionUtil.isDXPVersion("2023.q4.0"));
-		Assert.assertTrue("2023.q4.1", VersionUtil.isDXPVersion("2023.q4.1"));
-		Assert.assertTrue("2024.q1.0", VersionUtil.isDXPVersion("2024.q1.0"));
+			Assert.assertFalse(
+				nondxpVersionString,
+				VersionUtil.isDXPVersion(nondxpVersionString));
+		}
+
+		for (String dxpVersionString :
+				Arrays.asList(
+					"7.0.10", "7.0.10.1", "7.0.10.fp21", "7.1.10", "7.1.10.1",
+					"7.1.10.fp21", "7.1.10.fp1-1", "7.1.10.fp123-456",
+					"7.3.10.ep4", "7.4.13.u1", "2023.q4.0", "2023.q4.1",
+					"2024.q1.0")) {
+
+			Assert.assertTrue(
+				dxpVersionString, VersionUtil.isDXPVersion(dxpVersionString));
+		}
 	}
 
 	@Test
 	public void testNormalizeTargetPlatformVersion() throws Exception {
-		Assert.assertEquals(
-			"7.0.0", VersionUtil.normalizeTargetPlatformVersion("7.0.0"));
-		Assert.assertEquals(
-			"7.0.0", VersionUtil.normalizeTargetPlatformVersion("7.0-GA1"));
-		Assert.assertEquals(
-			"7.0.0", VersionUtil.normalizeTargetPlatformVersion("7.0-ga1"));
-		Assert.assertEquals(
-			"7.0.6", VersionUtil.normalizeTargetPlatformVersion("7.0-GA7"));
-		Assert.assertEquals(
-			"7.0.6", VersionUtil.normalizeTargetPlatformVersion("7.0-ga7"));
-		Assert.assertEquals(
-			"7.0.10.1", VersionUtil.normalizeTargetPlatformVersion("7.0.10.1"));
-		Assert.assertEquals(
-			"7.0.10.fp1",
-			VersionUtil.normalizeTargetPlatformVersion("7.0.10.fp1"));
-		Assert.assertEquals(
-			"7.4.13.u1",
-			VersionUtil.normalizeTargetPlatformVersion("7.4.13.u1"));
+		_testNormalizeTargetPlatformVersion("7.0.0", "7.0.0");
+		_testNormalizeTargetPlatformVersion("7.0.0", "7.0-GA1");
+		_testNormalizeTargetPlatformVersion("7.0.0", "7.0-ga1");
+		_testNormalizeTargetPlatformVersion("7.0.6", "7.0-GA7");
+		_testNormalizeTargetPlatformVersion("7.0.6", "7.0-ga7");
+		_testNormalizeTargetPlatformVersion("7.0.10.1", "7.0.10.1");
+		_testNormalizeTargetPlatformVersion("7.0.10.fp1", "7.0.10.fp1");
+		_testNormalizeTargetPlatformVersion("7.4.13.u1", "7.4.13.u1");
+		_testNormalizeTargetPlatformVersion("2023.q4.0", "2023.q4.0");
+		_testNormalizeTargetPlatformVersion("2023.q4.1", "2023.q4.1");
+		_testNormalizeTargetPlatformVersion("2024.q1.0", "2024.q1.0");
+	}
+
+	private void _testNormalizeTargetPlatformVersion(
+		String expected, String input) {
 
 		Assert.assertEquals(
-			"2023.q4.0",
-			VersionUtil.normalizeTargetPlatformVersion("2023.q4.0"));
-		Assert.assertEquals(
-			"2023.q4.1",
-			VersionUtil.normalizeTargetPlatformVersion("2023.q4.1"));
-		Assert.assertEquals(
-			"2024.q1.0",
-			VersionUtil.normalizeTargetPlatformVersion("2024.q1.0"));
+			expected, VersionUtil.normalizeTargetPlatformVersion(input));
 	}
 
 }

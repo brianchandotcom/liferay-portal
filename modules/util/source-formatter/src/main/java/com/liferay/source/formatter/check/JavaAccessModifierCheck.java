@@ -81,9 +81,8 @@ public class JavaAccessModifierCheck extends BaseFileCheck {
 			if (childJavaTerm instanceof JavaVariable) {
 				JavaVariable javaVariable = (JavaVariable)childJavaTerm;
 
-				String javaTermContent = javaVariable.getContent();
-
 				String accessModifier = javaVariable.getAccessModifier();
+				String javaTermContent = javaVariable.getContent();
 
 				if (javaTermContent.contains("@Reference") &&
 					accessModifier.equals("private")) {

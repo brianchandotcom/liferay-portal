@@ -34,6 +34,8 @@ public class OpenGitHubPullRequestEventHandler
 			return null;
 		}
 
+		_commentBroadcastMessage();
+
 		_invokeJobEntities();
 
 		return String.valueOf(getMessageJSONObject());
@@ -43,6 +45,21 @@ public class OpenGitHubPullRequestEventHandler
 		EventHandlerContext eventHandlerContext, JSONObject messageJSONObject) {
 
 		super(eventHandlerContext, messageJSONObject);
+	}
+
+	private void _commentBroadcastMessage()
+		throws InvalidJSONException, IOException {
+
+		String broadcastMessage = getCIProperty(
+			"pull.request.broadcast.message");
+
+		if (StringUtil.isNullOrEmpty(broadcastMessage)) {
+			return;
+		}
+
+		GitHubPullRequest gitHubPullRequest = getGitHubPullRequest();
+
+		gitHubPullRequest.comment(broadcastMessage);
 	}
 
 	private Set<JobEntity> _createJobEntities()

@@ -34,13 +34,9 @@ public class OpenGitHubPullRequestEventHandler
 			return null;
 		}
 
-		Set<JobEntity> jobEntities = _createJobEntities();
+		_invokeJobEntities();
 
-		for (JobEntity jobEntity : jobEntities) {
-			invokeJobEntity(jobEntity);
-		}
-
-		return jobEntities.toString();
+		return String.valueOf(getMessageJSONObject());
 	}
 
 	protected OpenGitHubPullRequestEventHandler(
@@ -106,6 +102,14 @@ public class OpenGitHubPullRequestEventHandler
 		}
 
 		return testSuites;
+	}
+
+	private void _invokeJobEntities() throws InvalidJSONException, IOException {
+		Set<JobEntity> jobEntities = _createJobEntities();
+
+		for (JobEntity jobEntity : jobEntities) {
+			invokeJobEntity(jobEntity);
+		}
 	}
 
 	private static final Pattern _ciTestAutoRecipientPattern = Pattern.compile(

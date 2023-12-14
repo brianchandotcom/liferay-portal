@@ -12,19 +12,22 @@ import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactor
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexerWriterDocumentHelper;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Luan Maoski
  * @author Lucas Marques
  */
-@Component(
-	property = "indexer.class.name=com.liferay.asset.kernel.model.AssetTag",
-	service = ModelIndexerWriterContributor.class
-)
 public class AssetTagModelIndexerWriterContributor
 	implements ModelIndexerWriterContributor<AssetTag> {
+
+	public AssetTagModelIndexerWriterContributor(
+		AssetTagLocalService assetTagLocalService,
+		DynamicQueryBatchIndexingActionableFactory
+			dynamicQueryBatchIndexingActionableFactory) {
+
+		_assetTagLocalService = assetTagLocalService;
+		_dynamicQueryBatchIndexingActionableFactory =
+			dynamicQueryBatchIndexingActionableFactory;
+	}
 
 	@Override
 	public void customize(
@@ -38,9 +41,9 @@ public class AssetTagModelIndexerWriterContributor
 
 	@Override
 	public BatchIndexingActionable getBatchIndexingActionable() {
-		return dynamicQueryBatchIndexingActionableFactory.
+		return _dynamicQueryBatchIndexingActionableFactory.
 			getBatchIndexingActionable(
-				assetTagLocalService.getIndexableActionableDynamicQuery());
+				_assetTagLocalService.getIndexableActionableDynamicQuery());
 	}
 
 	@Override
@@ -48,11 +51,8 @@ public class AssetTagModelIndexerWriterContributor
 		return assetTag.getCompanyId();
 	}
 
-	@Reference
-	protected AssetTagLocalService assetTagLocalService;
-
-	@Reference
-	protected DynamicQueryBatchIndexingActionableFactory
-		dynamicQueryBatchIndexingActionableFactory;
+	private final AssetTagLocalService _assetTagLocalService;
+	private final DynamicQueryBatchIndexingActionableFactory
+		_dynamicQueryBatchIndexingActionableFactory;
 
 }

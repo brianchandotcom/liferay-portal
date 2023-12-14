@@ -722,12 +722,8 @@ definition {
 	}
 
 	@description = "LPS-151676 - Verify that it's possible to delete a relationship between a Custom Object entry and Native Object entry (One-to-Many)"
-	@ignore = "true"
 	@priority = 4
 	test CanDeleteOneToManyRelationshipBetweenCustomObjectEntryAndNativeObjectEntry {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Add 2 users entries to relate to custom object entries") {
 			JSONUser.addUser(
 				userEmailAddress = "user1@liferay.com",
@@ -818,12 +814,14 @@ definition {
 
 			CreateObject.addRelationshipAndSelectEntry(titleFieldName = "userfn_1");
 
-			CreateObject.addRelationshipAndSelectEntry(titleFieldName = "userfn_2");
+			Refresh();
 
-			Navigator.gotoBack();
+			CreateObject.addRelationshipAndSelectEntry(titleFieldName = "userfn_2");
 		}
 
 		task ("Delete relationship between a custom object entry to native object entry") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
 			ObjectPortlet.viewEntryDetails(entry = "Entry A");
 
 			CreateObject.deleteEntryInRelationshipTab(entryName = "userfn_1");

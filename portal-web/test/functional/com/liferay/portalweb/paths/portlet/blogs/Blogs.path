@@ -12,7 +12,7 @@
 <tbody>
 <tr>
 	<td>ADD_BLOGS_ENTRY</td>
-	<td>//a[contains(@class,'nav-btn') and *[contains(@class,'icon-plus')]][*[name()='svg'][contains(@class,'lexicon-icon-plus')]]</td>
+	<td>//*[self::a or self::button][contains(@class,'btn-primary')][normalize-space()='New']</td>
 	<td></td>
 </tr>
 <tr>

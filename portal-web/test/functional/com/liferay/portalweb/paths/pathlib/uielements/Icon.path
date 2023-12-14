@@ -307,7 +307,7 @@
 </tr>
 <tr>
 	<td>MOVE_TO_RECYCLE_BIN</td>
-	<td>//*[*[name()='svg'][contains(@class,'icon-trash')]]</td>
+	<td>//button[contains(@class,'inline')][.//*[name()='svg'][contains(@class,'icon-trash')]]</td>
 	<td></td>
 </tr>
 <tr>

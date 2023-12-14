@@ -12,7 +12,7 @@
 <tbody>
 <tr>
 	<td>ANY_ICON</td>
-	<td>//nav[contains(@class,'management-bar')]//*[*[name()='svg'][contains(@class,'icon-${key_text}')]]</td>
+	<td>//nav[contains(@class,'management-bar')]//button[contains(@class,'inline')][.//*[name()='svg'][contains(@class,'icon-${key_text}')]]</td>
 	<td></td>
 </tr>
 <tr>

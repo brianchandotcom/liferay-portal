@@ -338,6 +338,9 @@ public class PropsValues {
 		GetterUtil.getLong(
 			PropsUtil.get(PropsKeys.COMBO_CHECK_TIMESTAMP_INTERVAL));
 
+	public static final int COMBO_MAX_FILES = GetterUtil.getInteger(
+		PropsUtil.get(PropsKeys.COMBO_MAX_FILES), -1);
+
 	public static final String COMPANY_DEFAULT_HOME_URL = PropsUtil.get(
 		PropsKeys.COMPANY_DEFAULT_HOME_URL);
 

@@ -410,6 +410,8 @@ public interface PropsKeys {
 	public static final String COMBO_CHECK_TIMESTAMP_INTERVAL =
 		"combo.check.timestamp.interval";
 
+	public static final String COMBO_MAX_FILES = "combo.max.files";
+
 	public static final String COMMUNITIES_CONTROL_PANEL_MEMBERS_VISIBLE =
 		"communities.control.panel.members.visible";
 

@@ -396,10 +396,6 @@
 			<category name="Bug Prevention" />
 			<description name="Finds incorrect `abstract` methods in `interface`." />
 		</check>
-		<check name="JavaAccessModifierCheck">
-			<category name="Bug Prevention" />
-			<description name="Finds incorrect Java access modifier usage." />
-		</check>
 		<check name="JavaAggregateTestRuleParameterOrderCheck">
 			<category name="Styling" />
 			<description name="Checks the order of parameters in `new AggregateTestRule` calls." />
@@ -906,6 +902,10 @@
 
 		<!-- Module Source Checks -->
 
+		<check name="JavaAccessModifierCheck">
+			<category name="Bug Prevention" />
+			<description name="Finds incorrect Java access modifier usage." />
+		</check>
 		<check name="JavaLocalServiceImplErcUsageCheck">
 			<category name="Productivity" />
 			<description name="Automatically generates and ensures that `externalReferenceCode` is properly used in local `*ServiceImpl` add method." />

@@ -5,11 +5,15 @@
 
 package com.liferay.commerce.inventory.internal.search;
 
+import com.liferay.commerce.inventory.internal.search.spi.model.index.contributor.CommerceInventoryBookedQuantityModelIndexerWriterContributor;
 import com.liferay.commerce.inventory.model.CommerceInventoryBookedQuantity;
+import com.liferay.commerce.inventory.service.CommerceInventoryBookedQuantityLocalService;
+import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContributor;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -42,9 +46,22 @@ public class CommerceInventoryBookedQuantityModelSearchConfigurator
 		return true;
 	}
 
-	@Reference(
-		target = "(indexer.class.name=com.liferay.commerce.inventory.model.CommerceInventoryBookedQuantity)"
-	)
+	@Activate
+	protected void activate() {
+		_modelIndexWriterContributor =
+			new CommerceInventoryBookedQuantityModelIndexerWriterContributor(
+				_commerceInventoryBookedQuantityLocalService,
+				_dynamicQueryBatchIndexingActionableFactory);
+	}
+
+	@Reference
+	private CommerceInventoryBookedQuantityLocalService
+		_commerceInventoryBookedQuantityLocalService;
+
+	@Reference
+	private DynamicQueryBatchIndexingActionableFactory
+		_dynamicQueryBatchIndexingActionableFactory;
+
 	private ModelIndexerWriterContributor<CommerceInventoryBookedQuantity>
 		_modelIndexWriterContributor;
 

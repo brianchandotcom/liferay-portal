@@ -13,18 +13,21 @@ import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterC
 import com.liferay.portal.search.spi.model.index.contributor.helper.IndexerWriterMode;
 import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexerWriterDocumentHelper;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Mahmoud Azzam
  */
-@Component(
-	property = "indexer.class.name=com.liferay.commerce.currency.model.CommerceCurrency",
-	service = ModelIndexerWriterContributor.class
-)
 public class CommerceCurrencyModelIndexerWriterContributor
 	implements ModelIndexerWriterContributor<CommerceCurrency> {
+
+	public CommerceCurrencyModelIndexerWriterContributor(
+		CommerceCurrencyLocalService commerceCurrencyLocalService,
+		DynamicQueryBatchIndexingActionableFactory
+			dynamicQueryBatchIndexingActionableFactory) {
+
+		_commerceCurrencyLocalService = commerceCurrencyLocalService;
+		_dynamicQueryBatchIndexingActionableFactory =
+			dynamicQueryBatchIndexingActionableFactory;
+	}
 
 	@Override
 	public void customize(
@@ -58,11 +61,8 @@ public class CommerceCurrencyModelIndexerWriterContributor
 		return IndexerWriterMode.UPDATE;
 	}
 
-	@Reference
-	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
-
-	@Reference
-	private DynamicQueryBatchIndexingActionableFactory
+	private final CommerceCurrencyLocalService _commerceCurrencyLocalService;
+	private final DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;
 
 }

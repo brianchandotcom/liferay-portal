@@ -5,11 +5,15 @@
 
 package com.liferay.account.internal.search;
 
+import com.liferay.account.internal.search.spi.model.index.contributor.AccountEntryModelIndexerWriterContributor;
 import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -45,9 +49,21 @@ public class AccountEntryModelSearchConfigurator
 		return true;
 	}
 
-	@Reference(
-		target = "(indexer.class.name=com.liferay.account.model.AccountEntry)"
-	)
+	@Activate
+	protected void activate() {
+		_modelIndexWriterContributor =
+			new AccountEntryModelIndexerWriterContributor(
+				_accountEntryLocalService,
+				_dynamicQueryBatchIndexingActionableFactory);
+	}
+
+	@Reference
+	private AccountEntryLocalService _accountEntryLocalService;
+
+	@Reference
+	private DynamicQueryBatchIndexingActionableFactory
+		_dynamicQueryBatchIndexingActionableFactory;
+
 	private ModelIndexerWriterContributor<AccountEntry>
 		_modelIndexWriterContributor;
 

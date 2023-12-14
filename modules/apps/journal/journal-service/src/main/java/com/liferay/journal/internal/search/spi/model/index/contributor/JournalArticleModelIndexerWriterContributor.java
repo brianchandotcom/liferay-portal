@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.batch.BatchIndexingActionable;
 import com.liferay.portal.search.batch.BatchIndexingHelper;
@@ -36,18 +36,28 @@ import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexer
 import java.util.List;
 import java.util.Objects;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Lourdes Fernández Besada
  */
-@Component(
-	property = "indexer.class.name=com.liferay.journal.model.JournalArticle",
-	service = ModelIndexerWriterContributor.class
-)
 public class JournalArticleModelIndexerWriterContributor
 	implements ModelIndexerWriterContributor<JournalArticle> {
+
+	public JournalArticleModelIndexerWriterContributor(
+		BatchIndexingHelper batchIndexingHelper,
+		ConfigurationProvider configurationProvider,
+		DynamicQueryBatchIndexingActionableFactory
+			dynamicQueryBatchIndexingActionableFactory,
+		JournalArticleLocalService journalArticleLocalService,
+		JournalArticleResourceLocalService journalArticleResourceLocalService) {
+
+		_batchIndexingHelper = batchIndexingHelper;
+		_configurationProvider = configurationProvider;
+		_dynamicQueryBatchIndexingActionableFactory =
+			dynamicQueryBatchIndexingActionableFactory;
+		_journalArticleLocalService = journalArticleLocalService;
+		_journalArticleResourceLocalService =
+			journalArticleResourceLocalService;
+	}
 
 	@Override
 	public void customize(
@@ -62,7 +72,7 @@ public class JournalArticleModelIndexerWriterContributor
 
 					dynamicQuery.add(
 						property.ne(
-							_portal.getClassNameId(DDMStructure.class)));
+							PortalUtil.getClassNameId(DDMStructure.class)));
 				});
 			batchIndexingActionable.setInterval(
 				_batchIndexingHelper.getBulkSize(
@@ -118,7 +128,7 @@ public class JournalArticleModelIndexerWriterContributor
 	public IndexerWriterMode getIndexerWriterMode(
 		JournalArticle journalArticle) {
 
-		if (_portal.getClassNameId(DDMStructure.class) ==
+		if (PortalUtil.getClassNameId(DDMStructure.class) ==
 				journalArticle.getClassNameId()) {
 
 			return IndexerWriterMode.DELETE;
@@ -199,7 +209,7 @@ public class JournalArticleModelIndexerWriterContributor
 	}
 
 	private void _reindexOtherArticleVersions(JournalArticle journalArticle) {
-		if (_portal.getClassNameId(DDMStructure.class) ==
+		if (PortalUtil.getClassNameId(DDMStructure.class) ==
 				journalArticle.getClassNameId()) {
 
 			return;
@@ -233,24 +243,12 @@ public class JournalArticleModelIndexerWriterContributor
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalArticleModelIndexerWriterContributor.class);
 
-	@Reference
-	private BatchIndexingHelper _batchIndexingHelper;
-
-	@Reference
-	private ConfigurationProvider _configurationProvider;
-
-	@Reference
-	private DynamicQueryBatchIndexingActionableFactory
+	private final BatchIndexingHelper _batchIndexingHelper;
+	private final ConfigurationProvider _configurationProvider;
+	private final DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;
-
-	@Reference
-	private JournalArticleLocalService _journalArticleLocalService;
-
-	@Reference
-	private JournalArticleResourceLocalService
+	private final JournalArticleLocalService _journalArticleLocalService;
+	private final JournalArticleResourceLocalService
 		_journalArticleResourceLocalService;
-
-	@Reference
-	private Portal _portal;
 
 }

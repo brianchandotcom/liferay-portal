@@ -12,18 +12,21 @@ import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactor
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexerWriterDocumentHelper;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Lourdes Fernández Besada
  */
-@Component(
-	property = "indexer.class.name=com.liferay.journal.model.JournalFolder",
-	service = ModelIndexerWriterContributor.class
-)
 public class JournalFolderModelIndexerWriterContributor
 	implements ModelIndexerWriterContributor<JournalFolder> {
+
+	public JournalFolderModelIndexerWriterContributor(
+		DynamicQueryBatchIndexingActionableFactory
+			dynamicQueryBatchIndexingActionableFactory,
+		JournalFolderLocalService journalFolderLocalService) {
+
+		_dynamicQueryBatchIndexingActionableFactory =
+			dynamicQueryBatchIndexingActionableFactory;
+		_journalFolderLocalService = journalFolderLocalService;
+	}
 
 	@Override
 	public void customize(
@@ -50,11 +53,8 @@ public class JournalFolderModelIndexerWriterContributor
 		return journalFolder.getCompanyId();
 	}
 
-	@Reference
-	private DynamicQueryBatchIndexingActionableFactory
+	private final DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;
-
-	@Reference
-	private JournalFolderLocalService _journalFolderLocalService;
+	private final JournalFolderLocalService _journalFolderLocalService;
 
 }

@@ -5,12 +5,16 @@
 
 package com.liferay.journal.internal.search;
 
+import com.liferay.journal.internal.search.spi.model.index.contributor.JournalFolderModelIndexerWriterContributor;
 import com.liferay.journal.model.JournalFolder;
+import com.liferay.journal.service.JournalFolderLocalService;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContributor;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -56,9 +60,21 @@ public class JournalFolderModelSearchConfigurator
 		return true;
 	}
 
-	@Reference(
-		target = "(indexer.class.name=com.liferay.journal.model.JournalFolder)"
-	)
+	@Activate
+	protected void activate() {
+		_modelIndexWriterContributor =
+			new JournalFolderModelIndexerWriterContributor(
+				_dynamicQueryBatchIndexingActionableFactory,
+				_journalFolderLocalService);
+	}
+
+	@Reference
+	private DynamicQueryBatchIndexingActionableFactory
+		_dynamicQueryBatchIndexingActionableFactory;
+
+	@Reference
+	private JournalFolderLocalService _journalFolderLocalService;
+
 	private ModelIndexerWriterContributor<JournalFolder>
 		_modelIndexWriterContributor;
 

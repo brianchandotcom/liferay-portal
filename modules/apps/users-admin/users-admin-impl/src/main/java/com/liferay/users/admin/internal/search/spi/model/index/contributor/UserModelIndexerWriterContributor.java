@@ -13,18 +13,23 @@ import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterC
 import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexerWriterDocumentHelper;
 import com.liferay.users.admin.internal.search.ContactBatchReindexer;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Luan Maoski
  */
-@Component(
-	property = "indexer.class.name=com.liferay.portal.kernel.model.User",
-	service = ModelIndexerWriterContributor.class
-)
 public class UserModelIndexerWriterContributor
 	implements ModelIndexerWriterContributor<User> {
+
+	public UserModelIndexerWriterContributor(
+		ContactBatchReindexer contactBatchReindexer,
+		DynamicQueryBatchIndexingActionableFactory
+			dynamicQueryBatchIndexingActionableFactory,
+		UserLocalService userLocalService) {
+
+		_contactBatchReindexer = contactBatchReindexer;
+		_dynamicQueryBatchIndexingActionableFactory =
+			dynamicQueryBatchIndexingActionableFactory;
+		_userLocalService = userLocalService;
+	}
 
 	@Override
 	public void customize(
@@ -42,9 +47,9 @@ public class UserModelIndexerWriterContributor
 
 	@Override
 	public BatchIndexingActionable getBatchIndexingActionable() {
-		return dynamicQueryBatchIndexingActionableFactory.
+		return _dynamicQueryBatchIndexingActionableFactory.
 			getBatchIndexingActionable(
-				userLocalService.getIndexableActionableDynamicQuery());
+				_userLocalService.getIndexableActionableDynamicQuery());
 	}
 
 	@Override
@@ -54,17 +59,12 @@ public class UserModelIndexerWriterContributor
 
 	@Override
 	public void modelIndexed(User user) {
-		contactBatchReindexer.reindex(user.getUserId(), user.getCompanyId());
+		_contactBatchReindexer.reindex(user.getUserId(), user.getCompanyId());
 	}
 
-	@Reference
-	protected ContactBatchReindexer contactBatchReindexer;
-
-	@Reference
-	protected DynamicQueryBatchIndexingActionableFactory
-		dynamicQueryBatchIndexingActionableFactory;
-
-	@Reference
-	protected UserLocalService userLocalService;
+	private final ContactBatchReindexer _contactBatchReindexer;
+	private final DynamicQueryBatchIndexingActionableFactory
+		_dynamicQueryBatchIndexingActionableFactory;
+	private final UserLocalService _userLocalService;
 
 }

@@ -7,10 +7,14 @@ package com.liferay.users.admin.internal.search;
 
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContributor;
+import com.liferay.users.admin.internal.search.spi.model.index.contributor.UserModelIndexerWriterContributor;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -52,14 +56,28 @@ public class UserModelSearchConfigurator
 		return true;
 	}
 
-	@Reference(
-		target = "(indexer.class.name=com.liferay.portal.kernel.model.User)"
-	)
+	@Activate
+	protected void activate() {
+		_modelIndexWriterContributor = new UserModelIndexerWriterContributor(
+			_contactBatchReindexer, _dynamicQueryBatchIndexingActionableFactory,
+			_userLocalService);
+	}
+
+	@Reference
+	private ContactBatchReindexer _contactBatchReindexer;
+
+	@Reference
+	private DynamicQueryBatchIndexingActionableFactory
+		_dynamicQueryBatchIndexingActionableFactory;
+
 	private ModelIndexerWriterContributor<User> _modelIndexWriterContributor;
 
 	@Reference(
 		target = "(indexer.class.name=com.liferay.portal.kernel.model.User)"
 	)
 	private ModelSummaryContributor _modelSummaryContributor;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

@@ -8,11 +8,20 @@ package com.liferay.jethr0.event.github;
 import com.liferay.jethr0.event.EventHandlerContext;
 import com.liferay.jethr0.event.github.commit.GitHubCommit;
 import com.liferay.jethr0.event.github.repository.GitHubRepository;
+import com.liferay.jethr0.event.github.user.GitHubUser;
 import com.liferay.jethr0.git.branch.GitBranchEntity;
 import com.liferay.jethr0.git.branch.repository.GitBranchEntityRepository;
+import com.liferay.jethr0.job.JobEntity;
+import com.liferay.jethr0.job.RepositoryArchiveJobEntity;
+import com.liferay.jethr0.job.repository.JobEntityRepository;
+import com.liferay.jethr0.util.StringUtil;
+
+import java.io.IOException;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+
+import java.util.Date;
 
 import org.json.JSONObject;
 
@@ -22,8 +31,9 @@ import org.json.JSONObject;
 public class PusherGitHubEventHandler extends BaseGitHubEventHandler {
 
 	@Override
-	public String process() throws InvalidJSONException {
+	public String process() throws InvalidJSONException, IOException {
 		_updateUpstreamGitBranchEntity();
+		_updateUpstreamGitBranchMirror();
 
 		return null;
 	}
@@ -71,12 +81,50 @@ public class PusherGitHubEventHandler extends BaseGitHubEventHandler {
 		return gitHubFactory.newGitHubCommit(headCommitJSONObject);
 	}
 
-	private void _updateUpstreamGitBranchEntity() throws InvalidJSONException {
+	private boolean _isGitHubRepositoryMirrorCandidate()
+		throws InvalidJSONException {
+
+		GitHubRepository gitHubRepository = getGitHubRepository();
+
+		String gitHubRepositoryName = gitHubRepository.getName();
+
+		if (!gitHubRepositoryName.equals("liferay-jenkins-ee")) {
+			return false;
+		}
+
+		return true;
+	}
+
+	private boolean _isGitHubUserMirrorCandidate() throws InvalidJSONException {
+		GitHubRepository gitHubRepository = getGitHubRepository();
+
+		GitHubUser gitHubUser = gitHubRepository.getGitHubUser();
+
+		String gitHubUserName = gitHubUser.getName();
+
+		if (!gitHubUserName.equals("liferay")) {
+			return false;
+		}
+
+		return true;
+	}
+
+	private boolean _isUpstreamGitBranchEntity() throws InvalidJSONException {
 		GitBranchEntity gitBranchEntity = _getGitBranchEntity();
 
 		if (gitBranchEntity.getType() != GitBranchEntity.Type.UPSTREAM) {
+			return false;
+		}
+
+		return true;
+	}
+
+	private void _updateUpstreamGitBranchEntity() throws InvalidJSONException {
+		if (!_isUpstreamGitBranchEntity()) {
 			return;
 		}
+
+		GitBranchEntity gitBranchEntity = _getGitBranchEntity();
 
 		GitHubCommit headGitHubCommit = _getHeadGitHubCommit();
 
@@ -87,6 +135,38 @@ public class PusherGitHubEventHandler extends BaseGitHubEventHandler {
 			getGitBranchEntityRepository();
 
 		gitBranchEntityRepository.update(gitBranchEntity);
+	}
+
+	private void _updateUpstreamGitBranchMirror() throws InvalidJSONException {
+		if (!_isUpstreamGitBranchEntity() ||
+			!_isGitHubRepositoryMirrorCandidate() ||
+			!_isGitHubUserMirrorCandidate()) {
+
+			return;
+		}
+
+		GitBranchEntity gitBranchEntity = _getGitBranchEntity();
+
+		JobEntityRepository jobEntityRepository = getJobEntityRepository();
+
+		JobEntity jobEntity = jobEntityRepository.create(
+			StringUtil.combine(
+				"Repository Archive (", gitBranchEntity.getRepositoryName(),
+				"/", gitBranchEntity.getBranchName(), ")"),
+			1, new Date(), JobEntity.State.OPENED,
+			JobEntity.Type.REPOSITORY_ARCHIVE);
+
+		if (!(jobEntity instanceof RepositoryArchiveJobEntity)) {
+			return;
+		}
+
+		RepositoryArchiveJobEntity repositoryArchiveJobEntity =
+			(RepositoryArchiveJobEntity)jobEntity;
+
+		repositoryArchiveJobEntity.setRepositoryNames(
+			gitBranchEntity.getRepositoryName());
+
+		invokeJobEntity(repositoryArchiveJobEntity);
 	}
 
 }

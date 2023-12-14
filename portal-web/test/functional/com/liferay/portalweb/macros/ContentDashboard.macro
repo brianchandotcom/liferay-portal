@@ -414,15 +414,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro openFilterAndOrder() {
-		if (IsElementPresent(locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN")) {
-			AssertClickNoError(
-				locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN",
-				value1 = "Filter and Order");
-		}
-	}
-
-	@summary = "Default summary"
 	macro openFilterModal() {
 		Click(locator1 = "ManagementBar#FILTER");
 

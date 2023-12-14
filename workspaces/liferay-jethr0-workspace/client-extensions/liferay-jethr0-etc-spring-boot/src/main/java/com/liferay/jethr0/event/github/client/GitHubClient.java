@@ -5,7 +5,6 @@
 
 package com.liferay.jethr0.event.github.client;
 
-import com.liferay.jethr0.event.github.ref.GitHubRef;
 import com.liferay.jethr0.util.BaseRetryable;
 import com.liferay.jethr0.util.Retryable;
 import com.liferay.jethr0.util.StringUtil;
@@ -34,18 +33,6 @@ import org.springframework.web.reactive.function.client.WebClient;
  */
 @Configuration
 public class GitHubClient {
-
-	public GitHubRef getGitHubRef(URL gitHubRefURL) {
-		URL gitHubRefAPIURL = StringUtil.toURL(
-			StringUtil.combine(
-				"https://api.github.com/repos/",
-				GitHubRef.getUserName(gitHubRefURL), "/",
-				GitHubRef.getRepositoryName(gitHubRefURL), "/branches/",
-				GitHubRef.getRefName(gitHubRefURL)));
-
-		return new GitHubRef(
-			gitHubRefURL, new JSONObject(requestGet(gitHubRefAPIURL)));
-	}
 
 	public String requestGet(URL url) {
 		String urlString = url.toString();

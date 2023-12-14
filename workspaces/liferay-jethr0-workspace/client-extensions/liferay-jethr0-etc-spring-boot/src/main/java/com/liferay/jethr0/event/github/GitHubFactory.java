@@ -9,6 +9,10 @@ import com.liferay.jethr0.event.github.client.GitHubClient;
 import com.liferay.jethr0.event.github.comment.GitHubComment;
 import com.liferay.jethr0.event.github.issue.GitHubIssue;
 import com.liferay.jethr0.event.github.pullrequest.GitHubPullRequest;
+import com.liferay.jethr0.event.github.ref.GitHubRef;
+import com.liferay.jethr0.util.StringUtil;
+
+import java.net.URL;
 
 import org.json.JSONObject;
 
@@ -35,6 +39,20 @@ public class GitHubFactory {
 
 	public GitHubPullRequest newGitHubPullRequest(JSONObject jsonObject) {
 		return new GitHubPullRequest(this, jsonObject);
+	}
+
+	public GitHubRef newGitHubRef(URL gitHubRefURL) {
+		URL gitHubRefAPIURL = StringUtil.toURL(
+			StringUtil.combine(
+				"https://api.github.com/repos/",
+				GitHubRef.getUserName(gitHubRefURL), "/",
+				GitHubRef.getRepositoryName(gitHubRefURL), "/branches/",
+				GitHubRef.getRefName(gitHubRefURL)));
+
+		JSONObject requestJSONObject = new JSONObject(
+			_gitHubClient.requestGet(gitHubRefAPIURL));
+
+		return new GitHubRef(this, gitHubRefURL, requestJSONObject);
 	}
 
 	@Autowired

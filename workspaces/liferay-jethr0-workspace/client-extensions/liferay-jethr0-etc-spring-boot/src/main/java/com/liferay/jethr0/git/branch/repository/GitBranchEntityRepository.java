@@ -6,6 +6,7 @@
 package com.liferay.jethr0.git.branch.repository;
 
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
+import com.liferay.jethr0.event.github.GitHubFactory;
 import com.liferay.jethr0.event.github.client.GitHubClient;
 import com.liferay.jethr0.event.github.commit.GitHubCommit;
 import com.liferay.jethr0.event.github.ref.GitHubRef;
@@ -157,7 +158,7 @@ public class GitBranchEntityRepository
 			return gitBranchEntity;
 		}
 
-		GitHubRef gitHubRef = _gitHubClient.getGitHubRef(gitHubRefURL);
+		GitHubRef gitHubRef = _gitHubFactory.newGitHubRef(gitHubRefURL);
 
 		GitHubCommit gitHubCommit = gitHubRef.getGitHubCommit();
 
@@ -193,6 +194,9 @@ public class GitBranchEntityRepository
 
 	@Autowired
 	private GitHubClient _gitHubClient;
+
+	@Autowired
+	private GitHubFactory _gitHubFactory;
 
 	@Value("${liferay.jethr0.github.upstream.branch.urls}")
 	private String _gitHubUpstreamBranchURLs;

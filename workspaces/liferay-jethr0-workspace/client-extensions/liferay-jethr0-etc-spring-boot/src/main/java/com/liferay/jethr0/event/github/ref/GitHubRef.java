@@ -5,6 +5,8 @@
 
 package com.liferay.jethr0.event.github.ref;
 
+import com.liferay.jethr0.event.github.GitHubFactory;
+import com.liferay.jethr0.event.github.client.GitHubClient;
 import com.liferay.jethr0.event.github.commit.GitHubCommit;
 
 import java.net.URL;
@@ -49,11 +51,18 @@ public class GitHubRef {
 		return matcher.group("userName");
 	}
 
-	public GitHubRef(URL gitHubRefURL, JSONObject jsonObject) {
+	public GitHubRef(
+		GitHubFactory gitHubFactory, URL gitHubRefURL, JSONObject jsonObject) {
+
+		_gitHubFactory = gitHubFactory;
 		_gitHubRefURL = gitHubRefURL;
 		_jsonObject = jsonObject;
 
 		_gitHubCommit = new GitHubCommit(jsonObject.getJSONObject("commit"));
+	}
+
+	public GitHubClient getGitHubClient() {
+		return _gitHubFactory.getGitHubClient();
 	}
 
 	public GitHubCommit getGitHubCommit() {
@@ -81,6 +90,7 @@ public class GitHubRef {
 			"(commits|tree)/(?<refName>[^/]+)");
 
 	private final GitHubCommit _gitHubCommit;
+	private final GitHubFactory _gitHubFactory;
 	private final URL _gitHubRefURL;
 	private final JSONObject _jsonObject;
 

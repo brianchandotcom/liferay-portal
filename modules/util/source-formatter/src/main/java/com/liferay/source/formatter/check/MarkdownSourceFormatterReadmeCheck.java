@@ -485,9 +485,8 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 	}
 
 	private String _getDocumentationLink(
-			String rootFolderLocation, File documentationChecksDir,
-			CheckInfo checkInfo)
-		throws IOException {
+		String rootFolderLocation, File documentationChecksDir,
+		CheckInfo checkInfo) {
 
 		String documentationLocation = checkInfo.getDocumentationLocation();
 

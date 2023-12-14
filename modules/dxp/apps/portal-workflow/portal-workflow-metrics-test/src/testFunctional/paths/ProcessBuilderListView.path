@@ -22,7 +22,7 @@
 </tr>
 <tr>
 	<td>FILTER_AND_ORDER</td>
-	<td>//div[contains(@class,'dropdown-menu show')]//a[contains(.,'${key_filterOption}')]</td>
+	<td>//div[contains(@class,'dropdown-menu')]//descendant::a[text()='${key_filterOption}']</td>
 	<td></td>
 </tr>
 <tr>

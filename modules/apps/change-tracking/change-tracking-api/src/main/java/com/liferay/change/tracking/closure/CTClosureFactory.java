@@ -12,6 +12,8 @@ import java.util.Set;
  */
 public interface CTClosureFactory {
 
+	public void clearCache(long ctCollectionId);
+
 	public CTClosure create(long ctCollectionId);
 
 	public CTClosure create(long ctCollectionId, long classNameId);

@@ -19,6 +19,7 @@ import com.liferay.change.tracking.service.CTSchemaVersionLocalService;
 import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
 import com.liferay.change.tracking.spi.display.CTDisplayRendererRegistry;
 import com.liferay.change.tracking.web.internal.display.BasePersistenceRegistry;
+import com.liferay.change.tracking.web.internal.display.CTClosureUtil;
 import com.liferay.change.tracking.web.internal.display.CTModelDisplayRendererAdapter;
 import com.liferay.change.tracking.web.internal.frontend.data.set.filter.ChangeTypeSelectionFDSFilter;
 import com.liferay.change.tracking.web.internal.frontend.data.set.filter.SiteSelectionFDSFilter;
@@ -304,8 +305,7 @@ public class ViewChangesDisplayContext {
 			try {
 				if (!_user.isOnDemandUser()) {
 					ctClosure = _ctClosureFactory.create(
-						_ctCollection.getCtCollectionId(),
-						_portal.getClassNameId(Group.class));
+						_ctCollection.getCtCollectionId());
 				}
 				else {
 					ctClosure = _ctClosureFactory.create(
@@ -357,10 +357,9 @@ public class ViewChangesDisplayContext {
 		}
 		else {
 			Map.Entry<Long, List<Long>> entry = null;
-			boolean foundSelectedEntry = false;
 			int[] modelKeyCounterHolder = {1};
 
-			Map<Long, List<Long>> rootPKsMap = ctClosure.getRootPKsMap();
+			Map<Long, List<Long>> rootPKsMap = _getRootPKsMap(ctClosure);
 
 			Queue<Map.Entry<Long, List<Long>>> queue = new LinkedList<>(
 				rootPKsMap.entrySet());
@@ -368,12 +367,10 @@ public class ViewChangesDisplayContext {
 			while ((entry = queue.poll()) != null) {
 				long classNameId = entry.getKey();
 
-				if (!foundSelectedEntry) {
-					Set<Long> classPKs = classNameIdClassPKsMap.computeIfAbsent(
-						classNameId, key -> new HashSet<>());
+				Set<Long> classPKs = classNameIdClassPKsMap.computeIfAbsent(
+					classNameId, key -> new HashSet<>());
 
-					classPKs.addAll(entry.getValue());
-				}
+				classPKs.addAll(entry.getValue());
 
 				for (long classPK : entry.getValue()) {
 					ModelInfoKey modelInfoKey = new ModelInfoKey(
@@ -383,34 +380,7 @@ public class ViewChangesDisplayContext {
 						modelInfoMap.put(
 							modelInfoKey,
 							new ModelInfo(modelKeyCounterHolder[0]++));
-
-						Map<Long, List<Long>> childPKsMap =
-							ctClosure.getChildPKsMap(classNameId, classPK);
-
-						if (!childPKsMap.isEmpty()) {
-							queue.addAll(childPKsMap.entrySet());
-						}
 					}
-
-					if ((classNameId == _modelClassNameId) &&
-						(classPK == _modelClassPK)) {
-
-						foundSelectedEntry = true;
-					}
-				}
-			}
-
-			if (foundSelectedEntry) {
-				Map<Long, List<Long>> childPKsMap = ctClosure.getChildPKsMap(
-					_modelClassNameId, _modelClassPK);
-
-				for (Map.Entry<Long, List<Long>> childPKEntry :
-						childPKsMap.entrySet()) {
-
-					Set<Long> classPKs = classNameIdClassPKsMap.computeIfAbsent(
-						childPKEntry.getKey(), key -> new HashSet<>());
-
-					classPKs.addAll(childPKEntry.getValue());
 				}
 			}
 		}
@@ -1010,7 +980,7 @@ public class ViewChangesDisplayContext {
 		Queue<ParentModel> queue = new LinkedList<>();
 
 		queue.add(
-			new ParentModel(everythingJSONObject, ctClosure.getRootPKsMap()));
+			new ParentModel(everythingJSONObject, _getRootPKsMap(ctClosure)));
 
 		ParentModel parentModel = null;
 
@@ -1029,6 +999,10 @@ public class ViewChangesDisplayContext {
 				for (long modelClassPK : entry.getValue()) {
 					ModelInfo modelInfo = modelInfoMap.get(
 						new ModelInfoKey(modelClassNameId, modelClassPK));
+
+					if (modelInfo == null) {
+						continue;
+					}
 
 					int modelKey = modelInfo._modelKey;
 
@@ -1228,6 +1202,15 @@ public class ViewChangesDisplayContext {
 			"Missing model from ", _ctCollection.getName(), ": {classPK=",
 			classPK, ", ctCollectionId=", _ctCollection.getCtCollectionId(),
 			", modelClassNameId=", modelClassNameId, "}");
+	}
+
+	private Map<Long, List<Long>> _getRootPKsMap(CTClosure ctClosure) {
+		if ((_modelClassNameId > 0) && (_modelClassPK > 0)) {
+			return CTClosureUtil.getFamilyPKsMap(
+				ctClosure, _modelClassNameId, _modelClassPK);
+		}
+
+		return ctClosure.getRootPKsMap();
 	}
 
 	private <T extends BaseModel<T>> String _getTitle(
@@ -1498,6 +1481,10 @@ public class ViewChangesDisplayContext {
 			for (long classPK : entry.getValue()) {
 				ModelInfo modelInfo = modelInfoMap.get(
 					new ModelInfoKey(classNameId, classPK));
+
+				if (modelInfo == null) {
+					continue;
+				}
 
 				if (modelInfo._jsonObject != null) {
 					modelInfo._jsonObject.put("groupId", groupId);

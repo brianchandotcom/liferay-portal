@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.dao.orm.ORMException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.util.LRUMap;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.sql.Connection;
@@ -65,6 +66,11 @@ import org.osgi.service.component.annotations.Reference;
 public class CTClosureFactoryImpl implements CTClosureFactory {
 
 	@Override
+	public void clearCache(long ctCollectionId) {
+		_ctClosureCache.remove(ctCollectionId);
+	}
+
+	@Override
 	public CTClosure create(long ctCollectionId) {
 		return create(ctCollectionId, Collections.emptySet());
 	}
@@ -76,28 +82,38 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 
 	@Override
 	public CTClosure create(long ctCollectionId, Set<Long> classNameIds) {
-		Map<Long, TableReferenceInfo<?>> combinedTableReferenceInfos;
+		Map<Set<Long>, CTClosure> ctClosures = _ctClosureCache.getOrDefault(
+			ctCollectionId, new LRUMap<>(5));
+
+		CTClosure ctClosure = ctClosures.get(classNameIds);
+
+		if (ctClosure != null) {
+			return ctClosure;
+		}
+
+		Map<Long, TableReferenceInfo<?>> combinedTableReferenceInfos = null;
 
 		if (classNameIds.isEmpty()) {
 			combinedTableReferenceInfos =
 				_tableReferenceDefinitionManager.
 					getCombinedTableReferenceInfos();
-
-			return new CTClosureImpl(
-				ctCollectionId,
-				_buildClosureMap(
-					ctCollectionId, Collections.emptySet(),
-					combinedTableReferenceInfos));
+		}
+		else {
+			combinedTableReferenceInfos =
+				_tableReferenceDefinitionManager.getCombinedTableReferenceInfos(
+					classNameIds);
 		}
 
-		combinedTableReferenceInfos =
-			_tableReferenceDefinitionManager.getCombinedTableReferenceInfos(
-				classNameIds);
-
-		return new CTClosureImpl(
+		ctClosure = new CTClosureImpl(
 			ctCollectionId,
 			_buildClosureMap(
 				ctCollectionId, classNameIds, combinedTableReferenceInfos));
+
+		ctClosures.put(classNameIds, ctClosure);
+
+		_ctClosureCache.putIfAbsent(ctCollectionId, ctClosures);
+
+		return ctClosure;
 	}
 
 	private Map<Node, Collection<Node>> _buildClosureMap(
@@ -494,6 +510,9 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CTClosureFactoryImpl.class);
+
+	private final Map<Long, Map<Set<Long>, CTClosure>> _ctClosureCache =
+		new LRUMap<>(10);
 
 	@Reference
 	private CTCollectionPersistence _ctCollectionPersistence;

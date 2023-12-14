@@ -13,18 +13,24 @@ import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactor
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexerWriterDocumentHelper;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Rafael Praxedes
  */
-@Component(
-	property = "indexer.class.name=com.liferay.dynamic.data.mapping.model.DDMFormInstance",
-	service = ModelIndexerWriterContributor.class
-)
 public class DDMFormInstanceModelIndexerWriterContributor
 	implements ModelIndexerWriterContributor<DDMFormInstance> {
+
+	public DDMFormInstanceModelIndexerWriterContributor(
+		DDMFormInstanceLocalService ddmFormInstanceLocalService,
+		DDMFormInstanceRecordBatchReindexer ddmFormInstanceRecordBatchReindexer,
+		DynamicQueryBatchIndexingActionableFactory
+			dynamicQueryBatchIndexingActionableFactory) {
+
+		_ddmFormInstanceLocalService = ddmFormInstanceLocalService;
+		_ddmFormInstanceRecordBatchReindexer =
+			ddmFormInstanceRecordBatchReindexer;
+		_dynamicQueryBatchIndexingActionableFactory =
+			dynamicQueryBatchIndexingActionableFactory;
+	}
 
 	@Override
 	public void customize(
@@ -40,9 +46,9 @@ public class DDMFormInstanceModelIndexerWriterContributor
 
 	@Override
 	public BatchIndexingActionable getBatchIndexingActionable() {
-		return dynamicQueryBatchIndexingActionableFactory.
+		return _dynamicQueryBatchIndexingActionableFactory.
 			getBatchIndexingActionable(
-				ddmFormInstanceLocalService.
+				_ddmFormInstanceLocalService.
 					getIndexableActionableDynamicQuery());
 	}
 
@@ -53,20 +59,15 @@ public class DDMFormInstanceModelIndexerWriterContributor
 
 	@Override
 	public void modelIndexed(DDMFormInstance ddmFormInstance) {
-		ddmFormInstanceRecordBatchReindexer.reindex(
+		_ddmFormInstanceRecordBatchReindexer.reindex(
 			ddmFormInstance.getFormInstanceId(),
 			ddmFormInstance.getCompanyId());
 	}
 
-	@Reference
-	protected DDMFormInstanceLocalService ddmFormInstanceLocalService;
-
-	@Reference
-	protected DDMFormInstanceRecordBatchReindexer
-		ddmFormInstanceRecordBatchReindexer;
-
-	@Reference
-	protected DynamicQueryBatchIndexingActionableFactory
-		dynamicQueryBatchIndexingActionableFactory;
+	private final DDMFormInstanceLocalService _ddmFormInstanceLocalService;
+	private final DDMFormInstanceRecordBatchReindexer
+		_ddmFormInstanceRecordBatchReindexer;
+	private final DynamicQueryBatchIndexingActionableFactory
+		_dynamicQueryBatchIndexingActionableFactory;
 
 }

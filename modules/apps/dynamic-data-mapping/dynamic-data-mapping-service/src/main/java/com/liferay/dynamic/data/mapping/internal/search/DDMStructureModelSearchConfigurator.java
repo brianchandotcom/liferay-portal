@@ -5,11 +5,15 @@
 
 package com.liferay.dynamic.data.mapping.internal.search;
 
+import com.liferay.dynamic.data.mapping.internal.search.spi.model.index.contributor.DDMStructureModelIndexerWriterContributor;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -45,9 +49,21 @@ public class DDMStructureModelSearchConfigurator
 		return _modelIndexWriterContributor;
 	}
 
-	@Reference(
-		target = "(indexer.class.name=com.liferay.dynamic.data.mapping.model.DDMStructure)"
-	)
+	@Activate
+	protected void activate() {
+		_modelIndexWriterContributor =
+			new DDMStructureModelIndexerWriterContributor(
+				_ddmStructureLocalService,
+				_dynamicQueryBatchIndexingActionableFactory);
+	}
+
+	@Reference
+	private DDMStructureLocalService _ddmStructureLocalService;
+
+	@Reference
+	private DynamicQueryBatchIndexingActionableFactory
+		_dynamicQueryBatchIndexingActionableFactory;
+
 	private ModelIndexerWriterContributor<DDMStructure>
 		_modelIndexWriterContributor;
 

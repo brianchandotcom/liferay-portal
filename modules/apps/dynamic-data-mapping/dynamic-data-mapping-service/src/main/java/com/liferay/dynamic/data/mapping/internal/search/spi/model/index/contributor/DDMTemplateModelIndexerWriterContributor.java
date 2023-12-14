@@ -12,18 +12,21 @@ import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactor
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexerWriterDocumentHelper;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Rafael Praxedes
  */
-@Component(
-	property = "indexer.class.name=com.liferay.dynamic.data.mapping.model.DDMTemplate",
-	service = ModelIndexerWriterContributor.class
-)
 public class DDMTemplateModelIndexerWriterContributor
 	implements ModelIndexerWriterContributor<DDMTemplate> {
+
+	public DDMTemplateModelIndexerWriterContributor(
+		DDMTemplateLocalService ddmTemplateLocalService,
+		DynamicQueryBatchIndexingActionableFactory
+			dynamicQueryBatchIndexingActionableFactory) {
+
+		_ddmTemplateLocalService = ddmTemplateLocalService;
+		_dynamicQueryBatchIndexingActionableFactory =
+			dynamicQueryBatchIndexingActionableFactory;
+	}
 
 	@Override
 	public void customize(
@@ -37,9 +40,9 @@ public class DDMTemplateModelIndexerWriterContributor
 
 	@Override
 	public BatchIndexingActionable getBatchIndexingActionable() {
-		return dynamicQueryBatchIndexingActionableFactory.
+		return _dynamicQueryBatchIndexingActionableFactory.
 			getBatchIndexingActionable(
-				ddmTemplateLocalService.getIndexableActionableDynamicQuery());
+				_ddmTemplateLocalService.getIndexableActionableDynamicQuery());
 	}
 
 	@Override
@@ -47,11 +50,8 @@ public class DDMTemplateModelIndexerWriterContributor
 		return ddmTemplate.getCompanyId();
 	}
 
-	@Reference
-	protected DDMTemplateLocalService ddmTemplateLocalService;
-
-	@Reference
-	protected DynamicQueryBatchIndexingActionableFactory
-		dynamicQueryBatchIndexingActionableFactory;
+	private final DDMTemplateLocalService _ddmTemplateLocalService;
+	private final DynamicQueryBatchIndexingActionableFactory
+		_dynamicQueryBatchIndexingActionableFactory;
 
 }

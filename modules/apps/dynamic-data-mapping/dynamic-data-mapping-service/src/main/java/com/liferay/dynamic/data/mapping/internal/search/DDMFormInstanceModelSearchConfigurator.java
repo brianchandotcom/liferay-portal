@@ -5,11 +5,15 @@
 
 package com.liferay.dynamic.data.mapping.internal.search;
 
+import com.liferay.dynamic.data.mapping.internal.search.spi.model.index.contributor.DDMFormInstanceModelIndexerWriterContributor;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
+import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalService;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -45,9 +49,26 @@ public class DDMFormInstanceModelSearchConfigurator
 		return _modelIndexWriterContributor;
 	}
 
-	@Reference(
-		target = "(indexer.class.name=com.liferay.dynamic.data.mapping.model.DDMFormInstance)"
-	)
+	@Activate
+	protected void activate() {
+		_modelIndexWriterContributor =
+			new DDMFormInstanceModelIndexerWriterContributor(
+				_ddmFormInstanceLocalService,
+				_ddmFormInstanceRecordBatchReindexer,
+				_dynamicQueryBatchIndexingActionableFactory);
+	}
+
+	@Reference
+	private DDMFormInstanceLocalService _ddmFormInstanceLocalService;
+
+	@Reference
+	private DDMFormInstanceRecordBatchReindexer
+		_ddmFormInstanceRecordBatchReindexer;
+
+	@Reference
+	private DynamicQueryBatchIndexingActionableFactory
+		_dynamicQueryBatchIndexingActionableFactory;
+
 	private ModelIndexerWriterContributor<DDMFormInstance>
 		_modelIndexWriterContributor;
 

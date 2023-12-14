@@ -12,18 +12,21 @@ import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactor
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexerWriterDocumentHelper;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Pei-Jung Lan
  */
-@Component(
-	property = "indexer.class.name=com.liferay.portal.kernel.model.Address",
-	service = ModelIndexerWriterContributor.class
-)
 public class AddressModelIndexerWriterContributor
 	implements ModelIndexerWriterContributor<Address> {
+
+	public AddressModelIndexerWriterContributor(
+		AddressLocalService addressLocalService,
+		DynamicQueryBatchIndexingActionableFactory
+			dynamicQueryBatchIndexingActionableFactory) {
+
+		_addressLocalService = addressLocalService;
+		_dynamicQueryBatchIndexingActionableFactory =
+			dynamicQueryBatchIndexingActionableFactory;
+	}
 
 	@Override
 	public void customize(
@@ -37,7 +40,7 @@ public class AddressModelIndexerWriterContributor
 
 	@Override
 	public BatchIndexingActionable getBatchIndexingActionable() {
-		return dynamicQueryBatchIndexingActionableFactory.
+		return _dynamicQueryBatchIndexingActionableFactory.
 			getBatchIndexingActionable(
 				_addressLocalService.getIndexableActionableDynamicQuery());
 	}
@@ -47,11 +50,8 @@ public class AddressModelIndexerWriterContributor
 		return address.getCompanyId();
 	}
 
-	@Reference
-	protected DynamicQueryBatchIndexingActionableFactory
-		dynamicQueryBatchIndexingActionableFactory;
-
-	@Reference
-	private AddressLocalService _addressLocalService;
+	private final AddressLocalService _addressLocalService;
+	private final DynamicQueryBatchIndexingActionableFactory
+		_dynamicQueryBatchIndexingActionableFactory;
 
 }

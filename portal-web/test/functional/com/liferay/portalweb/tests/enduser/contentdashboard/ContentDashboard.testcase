@@ -5732,7 +5732,7 @@ definition {
 		}
 
 		task ("Change the order of assets") {
-			ManagementBar.sortAssets(sortDirection = "Descending");
+			ManagementBar.sortAssets(sortDirection = "Ascending");
 
 			AssertTextEquals(
 				locator1 = "ContentDashboard#LAST_ELEMENT_LISTED",

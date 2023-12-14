@@ -13,18 +13,23 @@ import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactor
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexerWriterDocumentHelper;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Marcela Cunha
  */
-@Component(
-	property = "indexer.class.name=com.liferay.dynamic.data.lists.model.DDLRecordSet",
-	service = ModelIndexerWriterContributor.class
-)
 public class DDLRecordSetModelIndexerWriterContributor
 	implements ModelIndexerWriterContributor<DDLRecordSet> {
+
+	public DDLRecordSetModelIndexerWriterContributor(
+		DDLRecordBatchReindexer ddlRecordBatchReindexer,
+		DDLRecordSetLocalService ddlRecordSetLocalService,
+		DynamicQueryBatchIndexingActionableFactory
+			dynamicQueryBatchIndexingActionableFactory) {
+
+		_ddlRecordBatchReindexer = ddlRecordBatchReindexer;
+		_ddlRecordSetLocalService = ddlRecordSetLocalService;
+		_dynamicQueryBatchIndexingActionableFactory =
+			dynamicQueryBatchIndexingActionableFactory;
+	}
 
 	@Override
 	public void customize(
@@ -38,9 +43,9 @@ public class DDLRecordSetModelIndexerWriterContributor
 
 	@Override
 	public BatchIndexingActionable getBatchIndexingActionable() {
-		return dynamicQueryBatchIndexingActionableFactory.
+		return _dynamicQueryBatchIndexingActionableFactory.
 			getBatchIndexingActionable(
-				ddlRecordSetLocalService.getIndexableActionableDynamicQuery());
+				_ddlRecordSetLocalService.getIndexableActionableDynamicQuery());
 	}
 
 	@Override
@@ -50,18 +55,13 @@ public class DDLRecordSetModelIndexerWriterContributor
 
 	@Override
 	public void modelIndexed(DDLRecordSet ddlRecordSet) {
-		ddlRecordBatchReindexer.reindex(
+		_ddlRecordBatchReindexer.reindex(
 			ddlRecordSet.getRecordSetId(), ddlRecordSet.getCompanyId());
 	}
 
-	@Reference
-	protected DDLRecordBatchReindexer ddlRecordBatchReindexer;
-
-	@Reference
-	protected DDLRecordSetLocalService ddlRecordSetLocalService;
-
-	@Reference
-	protected DynamicQueryBatchIndexingActionableFactory
-		dynamicQueryBatchIndexingActionableFactory;
+	private final DDLRecordBatchReindexer _ddlRecordBatchReindexer;
+	private final DDLRecordSetLocalService _ddlRecordSetLocalService;
+	private final DynamicQueryBatchIndexingActionableFactory
+		_dynamicQueryBatchIndexingActionableFactory;
 
 }

@@ -19,18 +19,25 @@ import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactor
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexerWriterDocumentHelper;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Marcela Cunha
  */
-@Component(
-	property = "indexer.class.name=com.liferay.dynamic.data.lists.model.DDLRecord",
-	service = ModelIndexerWriterContributor.class
-)
 public class DDLRecordModelIndexerWriterContributor
 	implements ModelIndexerWriterContributor<DDLRecord> {
+
+	public DDLRecordModelIndexerWriterContributor(
+		DDLRecordLocalService ddlRecordLocalService,
+		DDLRecordSetLocalService ddlRecordSetLocalService,
+		DDLRecordVersionLocalService ddlRecordVersionLocalService,
+		DynamicQueryBatchIndexingActionableFactory
+			dynamicQueryBatchIndexingActionableFactory) {
+
+		_ddlRecordLocalService = ddlRecordLocalService;
+		_ddlRecordSetLocalService = ddlRecordSetLocalService;
+		_ddlRecordVersionLocalService = ddlRecordVersionLocalService;
+		_dynamicQueryBatchIndexingActionableFactory =
+			dynamicQueryBatchIndexingActionableFactory;
+	}
 
 	@Override
 	public void customize(
@@ -43,7 +50,7 @@ public class DDLRecordModelIndexerWriterContributor
 					"recordId");
 
 				DynamicQuery recordVersionDynamicQuery =
-					ddlRecordVersionLocalService.dynamicQuery();
+					_ddlRecordVersionLocalService.dynamicQuery();
 
 				recordVersionDynamicQuery.setProjection(
 					ProjectionFactoryUtil.property("recordId"));
@@ -55,7 +62,7 @@ public class DDLRecordModelIndexerWriterContributor
 					"recordSetId");
 
 				DynamicQuery recordSetDynamicQuery =
-					ddlRecordSetLocalService.dynamicQuery();
+					_ddlRecordSetLocalService.dynamicQuery();
 
 				recordSetDynamicQuery.setProjection(
 					ProjectionFactoryUtil.property("recordSetId"));
@@ -73,9 +80,9 @@ public class DDLRecordModelIndexerWriterContributor
 
 	@Override
 	public BatchIndexingActionable getBatchIndexingActionable() {
-		return dynamicQueryBatchIndexingActionableFactory.
+		return _dynamicQueryBatchIndexingActionableFactory.
 			getBatchIndexingActionable(
-				ddlRecordLocalService.getIndexableActionableDynamicQuery());
+				_ddlRecordLocalService.getIndexableActionableDynamicQuery());
 	}
 
 	@Override
@@ -83,24 +90,17 @@ public class DDLRecordModelIndexerWriterContributor
 		return ddlRecord.getCompanyId();
 	}
 
-	@Reference
-	protected DDLRecordLocalService ddlRecordLocalService;
-
-	@Reference
-	protected DDLRecordSetLocalService ddlRecordSetLocalService;
-
-	@Reference
-	protected DDLRecordVersionLocalService ddlRecordVersionLocalService;
-
-	@Reference
-	protected DynamicQueryBatchIndexingActionableFactory
-		dynamicQueryBatchIndexingActionableFactory;
-
 	private static final int[] _SCOPES = {
 		DDLRecordSetConstants.SCOPE_DATA_ENGINE,
 		DDLRecordSetConstants.SCOPE_DYNAMIC_DATA_LISTS,
 		DDLRecordSetConstants.SCOPE_FORMS,
 		DDLRecordSetConstants.SCOPE_KALEO_FORMS
 	};
+
+	private final DDLRecordLocalService _ddlRecordLocalService;
+	private final DDLRecordSetLocalService _ddlRecordSetLocalService;
+	private final DDLRecordVersionLocalService _ddlRecordVersionLocalService;
+	private final DynamicQueryBatchIndexingActionableFactory
+		_dynamicQueryBatchIndexingActionableFactory;
 
 }

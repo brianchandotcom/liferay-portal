@@ -12,18 +12,23 @@ import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactor
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexerWriterDocumentHelper;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Gleice Lisbino
  */
-@Component(
-	property = "indexer.class.name=com.liferay.object.model.ObjectRelationship",
-	service = ModelIndexerWriterContributor.class
-)
 public class ObjectRelationshipModelIndexerWriterContributor
 	implements ModelIndexerWriterContributor<ObjectRelationship> {
+
+	public ObjectRelationshipModelIndexerWriterContributor(
+		DynamicQueryBatchIndexingActionableFactory
+			dynamicQueryBatchIndexingActionableFactory,
+		ObjectRelationshipLocalService
+			objectRelationshipLocalServiceLocalService) {
+
+		_dynamicQueryBatchIndexingActionableFactory =
+			dynamicQueryBatchIndexingActionableFactory;
+		_objectRelationshipLocalServiceLocalService =
+			objectRelationshipLocalServiceLocalService;
+	}
 
 	@Override
 	public void customize(
@@ -39,7 +44,7 @@ public class ObjectRelationshipModelIndexerWriterContributor
 
 	@Override
 	public BatchIndexingActionable getBatchIndexingActionable() {
-		return dynamicQueryBatchIndexingActionableFactory.
+		return _dynamicQueryBatchIndexingActionableFactory.
 			getBatchIndexingActionable(
 				_objectRelationshipLocalServiceLocalService.
 					getIndexableActionableDynamicQuery());
@@ -50,12 +55,9 @@ public class ObjectRelationshipModelIndexerWriterContributor
 		return objectRelationship.getCompanyId();
 	}
 
-	@Reference
-	protected DynamicQueryBatchIndexingActionableFactory
-		dynamicQueryBatchIndexingActionableFactory;
-
-	@Reference
-	private ObjectRelationshipLocalService
+	private final DynamicQueryBatchIndexingActionableFactory
+		_dynamicQueryBatchIndexingActionableFactory;
+	private final ObjectRelationshipLocalService
 		_objectRelationshipLocalServiceLocalService;
 
 }

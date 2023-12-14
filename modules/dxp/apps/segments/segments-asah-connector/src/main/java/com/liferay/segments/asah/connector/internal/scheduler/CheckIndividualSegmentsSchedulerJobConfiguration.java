@@ -281,7 +281,7 @@ public class CheckIndividualSegmentsSchedulerJobConfiguration
 			return;
 		}
 		catch (PortalException portalException) {
-			_log.error("Unable to delete segment entries", portalException);
+			_log.error("Unable to delete segments", portalException);
 
 			return;
 		}

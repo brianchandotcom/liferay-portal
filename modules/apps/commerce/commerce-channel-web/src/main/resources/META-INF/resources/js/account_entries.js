@@ -39,7 +39,8 @@ export default function ({
 	}
 
 	itemFinder('itemFinder', 'item-finder-root-account', {
-		apiUrl: '/o/headless-commerce-admin-account/v1.0/accounts',
+		apiUrl:
+			"/o/headless-admin-user/v1.0/accounts?filter=type in ('business', 'supplier')",
 		getSelectedItems: () => Promise.resolve([]),
 		inputPlaceholder: Liferay.Language.get('find-an-account'),
 		itemCreation: false,

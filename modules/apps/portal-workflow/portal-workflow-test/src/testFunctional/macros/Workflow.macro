@@ -2,9 +2,7 @@ definition {
 
 	@summary = "Default summary"
 	macro _gotoPendingFilter() {
-		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
-
-		MenuItem.click(menuItem = "Pending");
+		ManagementBar.setFilterAndOrder(filterBy = "Pending");
 	}
 
 	@summary = "Default summary"

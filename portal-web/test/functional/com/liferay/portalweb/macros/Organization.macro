@@ -239,7 +239,7 @@ definition {
 	macro addWithLocalizedCountryCP(navItem = null, localizedOption = null, orgName = null, countryName = null, saveButton = null) {
 		Navigator.gotoNavItem(navItem = ${navItem});
 
-		LexiconEntry.gotoAdd();
+		Button.click(button = ${newButton});
 
 		if (IsElementPresent(key_menuItem = ${localizedOption}, locator1 = "MenuItem#ANY_MENU_ITEM")) {
 			MenuItem.click(menuItem = ${localizedOption});

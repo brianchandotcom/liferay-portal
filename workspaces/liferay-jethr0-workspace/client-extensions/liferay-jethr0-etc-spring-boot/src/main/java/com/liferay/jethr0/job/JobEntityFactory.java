@@ -94,6 +94,9 @@ public class JobEntityFactory extends BaseEntityFactory<JobEntity> {
 		else if (jobEntityType == JobEntity.Type.QA_WEBSITES_WEEKLY) {
 			return new WeeklyQAWebsitesJobEntity(jsonObject);
 		}
+		else if (jobEntityType == JobEntity.Type.REPOSITORY_ARCHIVE) {
+			return new RepositoryArchiveJobEntity(jsonObject);
+		}
 		else if (jobEntityType == JobEntity.Type.VERIFICATION) {
 			return new VerificationJobEntity(jsonObject);
 		}

@@ -5,12 +5,16 @@
 
 package com.liferay.calendar.internal.search;
 
+import com.liferay.calendar.internal.search.spi.model.index.contributor.CalendarBookingModelIndexerWriterContributor;
 import com.liferay.calendar.model.CalendarBooking;
+import com.liferay.calendar.service.CalendarBookingLocalService;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContributor;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -51,9 +55,21 @@ public class CalendarBookingModelSearchConfigurator
 		return _modelSummaryContributor;
 	}
 
-	@Reference(
-		target = "(indexer.class.name=com.liferay.calendar.model.CalendarBooking)"
-	)
+	@Activate
+	protected void activate() {
+		_modelIndexWriterContributor =
+			new CalendarBookingModelIndexerWriterContributor(
+				_calendarBookingLocalService,
+				_dynamicQueryBatchIndexingActionableFactory);
+	}
+
+	@Reference
+	private CalendarBookingLocalService _calendarBookingLocalService;
+
+	@Reference
+	private DynamicQueryBatchIndexingActionableFactory
+		_dynamicQueryBatchIndexingActionableFactory;
+
 	private ModelIndexerWriterContributor<CalendarBooking>
 		_modelIndexWriterContributor;
 

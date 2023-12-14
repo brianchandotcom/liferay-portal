@@ -17,18 +17,21 @@ import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterC
 import com.liferay.portal.search.spi.model.index.contributor.helper.IndexerWriterMode;
 import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexerWriterDocumentHelper;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Michael C. Han
  */
-@Component(
-	property = "indexer.class.name=com.liferay.calendar.model.CalendarBooking",
-	service = ModelIndexerWriterContributor.class
-)
 public class CalendarBookingModelIndexerWriterContributor
 	implements ModelIndexerWriterContributor<CalendarBooking> {
+
+	public CalendarBookingModelIndexerWriterContributor(
+		CalendarBookingLocalService calendarBookingLocalService,
+		DynamicQueryBatchIndexingActionableFactory
+			dynamicQueryBatchIndexingActionableFactory) {
+
+		_calendarBookingLocalService = calendarBookingLocalService;
+		_dynamicQueryBatchIndexingActionableFactory =
+			dynamicQueryBatchIndexingActionableFactory;
+	}
 
 	@Override
 	public void customize(
@@ -55,9 +58,9 @@ public class CalendarBookingModelIndexerWriterContributor
 
 	@Override
 	public BatchIndexingActionable getBatchIndexingActionable() {
-		return dynamicQueryBatchIndexingActionableFactory.
+		return _dynamicQueryBatchIndexingActionableFactory.
 			getBatchIndexingActionable(
-				calendarBookingLocalService.
+				_calendarBookingLocalService.
 					getIndexableActionableDynamicQuery());
 	}
 
@@ -82,11 +85,8 @@ public class CalendarBookingModelIndexerWriterContributor
 		return IndexerWriterMode.DELETE;
 	}
 
-	@Reference
-	protected CalendarBookingLocalService calendarBookingLocalService;
-
-	@Reference
-	protected DynamicQueryBatchIndexingActionableFactory
-		dynamicQueryBatchIndexingActionableFactory;
+	private final CalendarBookingLocalService _calendarBookingLocalService;
+	private final DynamicQueryBatchIndexingActionableFactory
+		_dynamicQueryBatchIndexingActionableFactory;
 
 }

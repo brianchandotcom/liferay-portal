@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -52,112 +53,160 @@ public class InnerHit implements Serializable {
 	@Schema
 	@Valid
 	public InnerCollapse getInnerCollapse() {
+		if (_innerCollapseSupplier != null) {
+			innerCollapse = _innerCollapseSupplier.get();
+
+			_innerCollapseSupplier = null;
+		}
+
 		return innerCollapse;
 	}
 
 	public void setInnerCollapse(InnerCollapse innerCollapse) {
 		this.innerCollapse = innerCollapse;
+
+		_innerCollapseSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setInnerCollapse(
 		UnsafeSupplier<InnerCollapse, Exception> innerCollapseUnsafeSupplier) {
 
-		try {
-			innerCollapse = innerCollapseUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_innerCollapseSupplier = () -> {
+			try {
+				return innerCollapseUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected InnerCollapse innerCollapse;
 
+	private Supplier<InnerCollapse> _innerCollapseSupplier;
+
 	@Schema
 	public String getName() {
+		if (_nameSupplier != null) {
+			name = _nameSupplier.get();
+
+			_nameSupplier = null;
+		}
+
 		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
+
+		_nameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
-		try {
-			name = nameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_nameSupplier = () -> {
+			try {
+				return nameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	private Supplier<String> _nameSupplier;
+
 	@Schema
 	public Integer getSize() {
+		if (_sizeSupplier != null) {
+			size = _sizeSupplier.get();
+
+			_sizeSupplier = null;
+		}
+
 		return size;
 	}
 
 	public void setSize(Integer size) {
 		this.size = size;
+
+		_sizeSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setSize(UnsafeSupplier<Integer, Exception> sizeUnsafeSupplier) {
-		try {
-			size = sizeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_sizeSupplier = () -> {
+			try {
+				return sizeUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer size;
 
+	private Supplier<Integer> _sizeSupplier;
+
 	@Schema
 	@Valid
 	public Object[] getSorts() {
+		if (_sortsSupplier != null) {
+			sorts = _sortsSupplier.get();
+
+			_sortsSupplier = null;
+		}
+
 		return sorts;
 	}
 
 	public void setSorts(Object[] sorts) {
 		this.sorts = sorts;
+
+		_sortsSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setSorts(
 		UnsafeSupplier<Object[], Exception> sortsUnsafeSupplier) {
 
-		try {
-			sorts = sortsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_sortsSupplier = () -> {
+			try {
+				return sortsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object[] sorts;
+
+	private Supplier<Object[]> _sortsSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -186,6 +235,8 @@ public class InnerHit implements Serializable {
 
 		sb.append("{");
 
+		InnerCollapse innerCollapse = getInnerCollapse();
+
 		if (innerCollapse != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -195,6 +246,8 @@ public class InnerHit implements Serializable {
 
 			sb.append(String.valueOf(innerCollapse));
 		}
+
+		String name = getName();
 
 		if (name != null) {
 			if (sb.length() > 1) {
@@ -210,6 +263,8 @@ public class InnerHit implements Serializable {
 			sb.append("\"");
 		}
 
+		Integer size = getSize();
+
 		if (size != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -219,6 +274,8 @@ public class InnerHit implements Serializable {
 
 			sb.append(size);
 		}
+
+		Object[] sorts = getSorts();
 
 		if (sorts != null) {
 			if (sb.length() > 1) {

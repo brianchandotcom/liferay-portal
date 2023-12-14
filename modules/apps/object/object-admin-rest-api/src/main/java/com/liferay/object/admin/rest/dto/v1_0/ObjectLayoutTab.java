@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -51,67 +52,99 @@ public class ObjectLayoutTab implements Serializable {
 
 	@Schema
 	public Long getId() {
+		if (_idSupplier != null) {
+			id = _idSupplier.get();
+
+			_idSupplier = null;
+		}
+
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
+
+		_idSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_idSupplier = () -> {
+			try {
+				return idUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	private Supplier<Long> _idSupplier;
+
 	@Schema
 	@Valid
 	public Map<String, String> getName() {
+		if (_nameSupplier != null) {
+			name = _nameSupplier.get();
+
+			_nameSupplier = null;
+		}
+
 		return name;
 	}
 
 	public void setName(Map<String, String> name) {
 		this.name = name;
+
+		_nameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setName(
 		UnsafeSupplier<Map<String, String>, Exception> nameUnsafeSupplier) {
 
-		try {
-			name = nameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_nameSupplier = () -> {
+			try {
+				return nameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> name;
 
+	private Supplier<Map<String, String>> _nameSupplier;
+
 	@Schema
 	@Valid
 	public ObjectLayoutBox[] getObjectLayoutBoxes() {
+		if (_objectLayoutBoxesSupplier != null) {
+			objectLayoutBoxes = _objectLayoutBoxesSupplier.get();
+
+			_objectLayoutBoxesSupplier = null;
+		}
+
 		return objectLayoutBoxes;
 	}
 
 	public void setObjectLayoutBoxes(ObjectLayoutBox[] objectLayoutBoxes) {
 		this.objectLayoutBoxes = objectLayoutBoxes;
+
+		_objectLayoutBoxesSupplier = null;
 	}
 
 	@JsonIgnore
@@ -119,23 +152,34 @@ public class ObjectLayoutTab implements Serializable {
 		UnsafeSupplier<ObjectLayoutBox[], Exception>
 			objectLayoutBoxesUnsafeSupplier) {
 
-		try {
-			objectLayoutBoxes = objectLayoutBoxesUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_objectLayoutBoxesSupplier = () -> {
+			try {
+				return objectLayoutBoxesUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ObjectLayoutBox[] objectLayoutBoxes;
 
+	private Supplier<ObjectLayoutBox[]> _objectLayoutBoxesSupplier;
+
 	@Schema
 	public String getObjectRelationshipExternalReferenceCode() {
+		if (_objectRelationshipExternalReferenceCodeSupplier != null) {
+			objectRelationshipExternalReferenceCode =
+				_objectRelationshipExternalReferenceCodeSupplier.get();
+
+			_objectRelationshipExternalReferenceCodeSupplier = null;
+		}
+
 		return objectRelationshipExternalReferenceCode;
 	}
 
@@ -144,6 +188,8 @@ public class ObjectLayoutTab implements Serializable {
 
 		this.objectRelationshipExternalReferenceCode =
 			objectRelationshipExternalReferenceCode;
+
+		_objectRelationshipExternalReferenceCodeSupplier = null;
 	}
 
 	@JsonIgnore
@@ -151,77 +197,105 @@ public class ObjectLayoutTab implements Serializable {
 		UnsafeSupplier<String, Exception>
 			objectRelationshipExternalReferenceCodeUnsafeSupplier) {
 
-		try {
-			objectRelationshipExternalReferenceCode =
-				objectRelationshipExternalReferenceCodeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_objectRelationshipExternalReferenceCodeSupplier = () -> {
+			try {
+				return objectRelationshipExternalReferenceCodeUnsafeSupplier.
+					get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String objectRelationshipExternalReferenceCode;
 
+	private Supplier<String> _objectRelationshipExternalReferenceCodeSupplier;
+
 	@Schema
 	public Long getObjectRelationshipId() {
+		if (_objectRelationshipIdSupplier != null) {
+			objectRelationshipId = _objectRelationshipIdSupplier.get();
+
+			_objectRelationshipIdSupplier = null;
+		}
+
 		return objectRelationshipId;
 	}
 
 	public void setObjectRelationshipId(Long objectRelationshipId) {
 		this.objectRelationshipId = objectRelationshipId;
+
+		_objectRelationshipIdSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setObjectRelationshipId(
 		UnsafeSupplier<Long, Exception> objectRelationshipIdUnsafeSupplier) {
 
-		try {
-			objectRelationshipId = objectRelationshipIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_objectRelationshipIdSupplier = () -> {
+			try {
+				return objectRelationshipIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long objectRelationshipId;
 
+	private Supplier<Long> _objectRelationshipIdSupplier;
+
 	@Schema
 	public Integer getPriority() {
+		if (_prioritySupplier != null) {
+			priority = _prioritySupplier.get();
+
+			_prioritySupplier = null;
+		}
+
 		return priority;
 	}
 
 	public void setPriority(Integer priority) {
 		this.priority = priority;
+
+		_prioritySupplier = null;
 	}
 
 	@JsonIgnore
 	public void setPriority(
 		UnsafeSupplier<Integer, Exception> priorityUnsafeSupplier) {
 
-		try {
-			priority = priorityUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_prioritySupplier = () -> {
+			try {
+				return priorityUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer priority;
+
+	private Supplier<Integer> _prioritySupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -250,6 +324,8 @@ public class ObjectLayoutTab implements Serializable {
 
 		sb.append("{");
 
+		Long id = getId();
+
 		if (id != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -260,6 +336,8 @@ public class ObjectLayoutTab implements Serializable {
 			sb.append(id);
 		}
 
+		Map<String, String> name = getName();
+
 		if (name != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -269,6 +347,8 @@ public class ObjectLayoutTab implements Serializable {
 
 			sb.append(_toJSON(name));
 		}
+
+		ObjectLayoutBox[] objectLayoutBoxes = getObjectLayoutBoxes();
 
 		if (objectLayoutBoxes != null) {
 			if (sb.length() > 1) {
@@ -290,6 +370,9 @@ public class ObjectLayoutTab implements Serializable {
 			sb.append("]");
 		}
 
+		String objectRelationshipExternalReferenceCode =
+			getObjectRelationshipExternalReferenceCode();
+
 		if (objectRelationshipExternalReferenceCode != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -304,6 +387,8 @@ public class ObjectLayoutTab implements Serializable {
 			sb.append("\"");
 		}
 
+		Long objectRelationshipId = getObjectRelationshipId();
+
 		if (objectRelationshipId != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -313,6 +398,8 @@ public class ObjectLayoutTab implements Serializable {
 
 			sb.append(objectRelationshipId);
 		}
+
+		Integer priority = getPriority();
 
 		if (priority != null) {
 			if (sb.length() > 1) {

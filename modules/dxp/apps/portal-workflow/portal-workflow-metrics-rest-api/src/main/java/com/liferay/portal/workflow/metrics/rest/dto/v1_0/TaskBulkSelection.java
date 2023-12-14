@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -52,143 +53,203 @@ public class TaskBulkSelection implements Serializable {
 
 	@Schema
 	public Long[] getAssigneeIds() {
+		if (_assigneeIdsSupplier != null) {
+			assigneeIds = _assigneeIdsSupplier.get();
+
+			_assigneeIdsSupplier = null;
+		}
+
 		return assigneeIds;
 	}
 
 	public void setAssigneeIds(Long[] assigneeIds) {
 		this.assigneeIds = assigneeIds;
+
+		_assigneeIdsSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setAssigneeIds(
 		UnsafeSupplier<Long[], Exception> assigneeIdsUnsafeSupplier) {
 
-		try {
-			assigneeIds = assigneeIdsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_assigneeIdsSupplier = () -> {
+			try {
+				return assigneeIdsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long[] assigneeIds;
 
+	private Supplier<Long[]> _assigneeIdsSupplier;
+
 	@Schema
 	public Long[] getInstanceIds() {
+		if (_instanceIdsSupplier != null) {
+			instanceIds = _instanceIdsSupplier.get();
+
+			_instanceIdsSupplier = null;
+		}
+
 		return instanceIds;
 	}
 
 	public void setInstanceIds(Long[] instanceIds) {
 		this.instanceIds = instanceIds;
+
+		_instanceIdsSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setInstanceIds(
 		UnsafeSupplier<Long[], Exception> instanceIdsUnsafeSupplier) {
 
-		try {
-			instanceIds = instanceIdsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_instanceIdsSupplier = () -> {
+			try {
+				return instanceIdsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long[] instanceIds;
 
+	private Supplier<Long[]> _instanceIdsSupplier;
+
 	@Schema
 	public Long getProcessId() {
+		if (_processIdSupplier != null) {
+			processId = _processIdSupplier.get();
+
+			_processIdSupplier = null;
+		}
+
 		return processId;
 	}
 
 	public void setProcessId(Long processId) {
 		this.processId = processId;
+
+		_processIdSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setProcessId(
 		UnsafeSupplier<Long, Exception> processIdUnsafeSupplier) {
 
-		try {
-			processId = processIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_processIdSupplier = () -> {
+			try {
+				return processIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long processId;
 
+	private Supplier<Long> _processIdSupplier;
+
 	@Schema
 	public String[] getSlaStatuses() {
+		if (_slaStatusesSupplier != null) {
+			slaStatuses = _slaStatusesSupplier.get();
+
+			_slaStatusesSupplier = null;
+		}
+
 		return slaStatuses;
 	}
 
 	public void setSlaStatuses(String[] slaStatuses) {
 		this.slaStatuses = slaStatuses;
+
+		_slaStatusesSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setSlaStatuses(
 		UnsafeSupplier<String[], Exception> slaStatusesUnsafeSupplier) {
 
-		try {
-			slaStatuses = slaStatusesUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_slaStatusesSupplier = () -> {
+			try {
+				return slaStatusesUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] slaStatuses;
 
+	private Supplier<String[]> _slaStatusesSupplier;
+
 	@Schema
 	public String[] getTaskNames() {
+		if (_taskNamesSupplier != null) {
+			taskNames = _taskNamesSupplier.get();
+
+			_taskNamesSupplier = null;
+		}
+
 		return taskNames;
 	}
 
 	public void setTaskNames(String[] taskNames) {
 		this.taskNames = taskNames;
+
+		_taskNamesSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setTaskNames(
 		UnsafeSupplier<String[], Exception> taskNamesUnsafeSupplier) {
 
-		try {
-			taskNames = taskNamesUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_taskNamesSupplier = () -> {
+			try {
+				return taskNamesUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] taskNames;
+
+	private Supplier<String[]> _taskNamesSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -217,6 +278,8 @@ public class TaskBulkSelection implements Serializable {
 
 		sb.append("{");
 
+		Long[] assigneeIds = getAssigneeIds();
+
 		if (assigneeIds != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -236,6 +299,8 @@ public class TaskBulkSelection implements Serializable {
 
 			sb.append("]");
 		}
+
+		Long[] instanceIds = getInstanceIds();
 
 		if (instanceIds != null) {
 			if (sb.length() > 1) {
@@ -257,6 +322,8 @@ public class TaskBulkSelection implements Serializable {
 			sb.append("]");
 		}
 
+		Long processId = getProcessId();
+
 		if (processId != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -266,6 +333,8 @@ public class TaskBulkSelection implements Serializable {
 
 			sb.append(processId);
 		}
+
+		String[] slaStatuses = getSlaStatuses();
 
 		if (slaStatuses != null) {
 			if (sb.length() > 1) {
@@ -290,6 +359,8 @@ public class TaskBulkSelection implements Serializable {
 
 			sb.append("]");
 		}
+
+		String[] taskNames = getTaskNames();
 
 		if (taskNames != null) {
 			if (sb.length() > 1) {

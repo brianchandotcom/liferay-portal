@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -53,85 +54,121 @@ public class ProductTaxConfiguration implements Serializable {
 	@DecimalMin("0")
 	@Schema(example = "30130")
 	public Long getId() {
+		if (_idSupplier != null) {
+			id = _idSupplier.get();
+
+			_idSupplier = null;
+		}
+
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
+
+		_idSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_idSupplier = () -> {
+			try {
+				return idUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	private Supplier<Long> _idSupplier;
+
 	@Schema(example = "taxCategoryName")
 	public String getTaxCategory() {
+		if (_taxCategorySupplier != null) {
+			taxCategory = _taxCategorySupplier.get();
+
+			_taxCategorySupplier = null;
+		}
+
 		return taxCategory;
 	}
 
 	public void setTaxCategory(String taxCategory) {
 		this.taxCategory = taxCategory;
+
+		_taxCategorySupplier = null;
 	}
 
 	@JsonIgnore
 	public void setTaxCategory(
 		UnsafeSupplier<String, Exception> taxCategoryUnsafeSupplier) {
 
-		try {
-			taxCategory = taxCategoryUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_taxCategorySupplier = () -> {
+			try {
+				return taxCategoryUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String taxCategory;
 
+	private Supplier<String> _taxCategorySupplier;
+
 	@Schema(example = "true")
 	public Boolean getTaxable() {
+		if (_taxableSupplier != null) {
+			taxable = _taxableSupplier.get();
+
+			_taxableSupplier = null;
+		}
+
 		return taxable;
 	}
 
 	public void setTaxable(Boolean taxable) {
 		this.taxable = taxable;
+
+		_taxableSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setTaxable(
 		UnsafeSupplier<Boolean, Exception> taxableUnsafeSupplier) {
 
-		try {
-			taxable = taxableUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_taxableSupplier = () -> {
+			try {
+				return taxableUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean taxable;
+
+	private Supplier<Boolean> _taxableSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -161,6 +198,8 @@ public class ProductTaxConfiguration implements Serializable {
 
 		sb.append("{");
 
+		Long id = getId();
+
 		if (id != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -170,6 +209,8 @@ public class ProductTaxConfiguration implements Serializable {
 
 			sb.append(id);
 		}
+
+		String taxCategory = getTaxCategory();
 
 		if (taxCategory != null) {
 			if (sb.length() > 1) {
@@ -184,6 +225,8 @@ public class ProductTaxConfiguration implements Serializable {
 
 			sb.append("\"");
 		}
+
+		Boolean taxable = getTaxable();
 
 		if (taxable != null) {
 			if (sb.length() > 1) {

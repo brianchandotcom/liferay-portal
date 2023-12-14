@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -53,11 +54,19 @@ public class ParameterConfiguration implements Serializable {
 	@Schema
 	@Valid
 	public Map<String, Parameter> getParameters() {
+		if (_parametersSupplier != null) {
+			parameters = _parametersSupplier.get();
+
+			_parametersSupplier = null;
+		}
+
 		return parameters;
 	}
 
 	public void setParameters(Map<String, Parameter> parameters) {
 		this.parameters = parameters;
+
+		_parametersSupplier = null;
 	}
 
 	@JsonIgnore
@@ -65,20 +74,24 @@ public class ParameterConfiguration implements Serializable {
 		UnsafeSupplier<Map<String, Parameter>, Exception>
 			parametersUnsafeSupplier) {
 
-		try {
-			parameters = parametersUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_parametersSupplier = () -> {
+			try {
+				return parametersUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, Parameter> parameters;
+
+	private Supplier<Map<String, Parameter>> _parametersSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -107,6 +120,8 @@ public class ParameterConfiguration implements Serializable {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		Map<String, Parameter> parameters = getParameters();
 
 		if (parameters != null) {
 			if (sb.length() > 1) {

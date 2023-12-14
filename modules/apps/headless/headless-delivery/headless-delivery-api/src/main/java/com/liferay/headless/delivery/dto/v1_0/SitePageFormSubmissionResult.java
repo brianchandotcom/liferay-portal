@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -57,11 +58,19 @@ public class SitePageFormSubmissionResult implements Serializable {
 	@Schema(description = "The localized submission of page type.")
 	@Valid
 	public ClassFieldsReference getItemReference() {
+		if (_itemReferenceSupplier != null) {
+			itemReference = _itemReferenceSupplier.get();
+
+			_itemReferenceSupplier = null;
+		}
+
 		return itemReference;
 	}
 
 	public void setItemReference(ClassFieldsReference itemReference) {
 		this.itemReference = itemReference;
+
+		_itemReferenceSupplier = null;
 	}
 
 	@JsonIgnore
@@ -69,20 +78,24 @@ public class SitePageFormSubmissionResult implements Serializable {
 		UnsafeSupplier<ClassFieldsReference, Exception>
 			itemReferenceUnsafeSupplier) {
 
-		try {
-			itemReference = itemReferenceUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_itemReferenceSupplier = () -> {
+			try {
+				return itemReferenceUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The localized submission of page type.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ClassFieldsReference itemReference;
+
+	private Supplier<ClassFieldsReference> _itemReferenceSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -112,6 +125,8 @@ public class SitePageFormSubmissionResult implements Serializable {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		ClassFieldsReference itemReference = getItemReference();
 
 		if (itemReference != null) {
 			if (sb.length() > 1) {

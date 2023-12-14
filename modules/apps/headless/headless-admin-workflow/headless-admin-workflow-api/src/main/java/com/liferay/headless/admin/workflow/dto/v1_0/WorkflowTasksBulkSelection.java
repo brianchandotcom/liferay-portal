@@ -28,6 +28,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -55,367 +56,523 @@ public class WorkflowTasksBulkSelection implements Serializable {
 
 	@Schema
 	public Boolean getAndOperator() {
+		if (_andOperatorSupplier != null) {
+			andOperator = _andOperatorSupplier.get();
+
+			_andOperatorSupplier = null;
+		}
+
 		return andOperator;
 	}
 
 	public void setAndOperator(Boolean andOperator) {
 		this.andOperator = andOperator;
+
+		_andOperatorSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setAndOperator(
 		UnsafeSupplier<Boolean, Exception> andOperatorUnsafeSupplier) {
 
-		try {
-			andOperator = andOperatorUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_andOperatorSupplier = () -> {
+			try {
+				return andOperatorUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean andOperator;
 
+	private Supplier<Boolean> _andOperatorSupplier;
+
 	@Schema
 	public Long[] getAssetPrimaryKeys() {
+		if (_assetPrimaryKeysSupplier != null) {
+			assetPrimaryKeys = _assetPrimaryKeysSupplier.get();
+
+			_assetPrimaryKeysSupplier = null;
+		}
+
 		return assetPrimaryKeys;
 	}
 
 	public void setAssetPrimaryKeys(Long[] assetPrimaryKeys) {
 		this.assetPrimaryKeys = assetPrimaryKeys;
+
+		_assetPrimaryKeysSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setAssetPrimaryKeys(
 		UnsafeSupplier<Long[], Exception> assetPrimaryKeysUnsafeSupplier) {
 
-		try {
-			assetPrimaryKeys = assetPrimaryKeysUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_assetPrimaryKeysSupplier = () -> {
+			try {
+				return assetPrimaryKeysUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long[] assetPrimaryKeys;
 
+	private Supplier<Long[]> _assetPrimaryKeysSupplier;
+
 	@Schema
 	public String getAssetTitle() {
+		if (_assetTitleSupplier != null) {
+			assetTitle = _assetTitleSupplier.get();
+
+			_assetTitleSupplier = null;
+		}
+
 		return assetTitle;
 	}
 
 	public void setAssetTitle(String assetTitle) {
 		this.assetTitle = assetTitle;
+
+		_assetTitleSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setAssetTitle(
 		UnsafeSupplier<String, Exception> assetTitleUnsafeSupplier) {
 
-		try {
-			assetTitle = assetTitleUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_assetTitleSupplier = () -> {
+			try {
+				return assetTitleUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String assetTitle;
 
+	private Supplier<String> _assetTitleSupplier;
+
 	@Schema
 	public String[] getAssetTypes() {
+		if (_assetTypesSupplier != null) {
+			assetTypes = _assetTypesSupplier.get();
+
+			_assetTypesSupplier = null;
+		}
+
 		return assetTypes;
 	}
 
 	public void setAssetTypes(String[] assetTypes) {
 		this.assetTypes = assetTypes;
+
+		_assetTypesSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setAssetTypes(
 		UnsafeSupplier<String[], Exception> assetTypesUnsafeSupplier) {
 
-		try {
-			assetTypes = assetTypesUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_assetTypesSupplier = () -> {
+			try {
+				return assetTypesUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] assetTypes;
 
+	private Supplier<String[]> _assetTypesSupplier;
+
 	@Schema
 	public Long[] getAssigneeIds() {
+		if (_assigneeIdsSupplier != null) {
+			assigneeIds = _assigneeIdsSupplier.get();
+
+			_assigneeIdsSupplier = null;
+		}
+
 		return assigneeIds;
 	}
 
 	public void setAssigneeIds(Long[] assigneeIds) {
 		this.assigneeIds = assigneeIds;
+
+		_assigneeIdsSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setAssigneeIds(
 		UnsafeSupplier<Long[], Exception> assigneeIdsUnsafeSupplier) {
 
-		try {
-			assigneeIds = assigneeIdsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_assigneeIdsSupplier = () -> {
+			try {
+				return assigneeIdsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long[] assigneeIds;
 
+	private Supplier<Long[]> _assigneeIdsSupplier;
+
 	@Schema
 	public Boolean getCompleted() {
+		if (_completedSupplier != null) {
+			completed = _completedSupplier.get();
+
+			_completedSupplier = null;
+		}
+
 		return completed;
 	}
 
 	public void setCompleted(Boolean completed) {
 		this.completed = completed;
+
+		_completedSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setCompleted(
 		UnsafeSupplier<Boolean, Exception> completedUnsafeSupplier) {
 
-		try {
-			completed = completedUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_completedSupplier = () -> {
+			try {
+				return completedUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean completed;
 
+	private Supplier<Boolean> _completedSupplier;
+
 	@Schema
 	public Date getDateDueEnd() {
+		if (_dateDueEndSupplier != null) {
+			dateDueEnd = _dateDueEndSupplier.get();
+
+			_dateDueEndSupplier = null;
+		}
+
 		return dateDueEnd;
 	}
 
 	public void setDateDueEnd(Date dateDueEnd) {
 		this.dateDueEnd = dateDueEnd;
+
+		_dateDueEndSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDateDueEnd(
 		UnsafeSupplier<Date, Exception> dateDueEndUnsafeSupplier) {
 
-		try {
-			dateDueEnd = dateDueEndUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_dateDueEndSupplier = () -> {
+			try {
+				return dateDueEndUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateDueEnd;
 
+	private Supplier<Date> _dateDueEndSupplier;
+
 	@Schema
 	public Date getDateDueStart() {
+		if (_dateDueStartSupplier != null) {
+			dateDueStart = _dateDueStartSupplier.get();
+
+			_dateDueStartSupplier = null;
+		}
+
 		return dateDueStart;
 	}
 
 	public void setDateDueStart(Date dateDueStart) {
 		this.dateDueStart = dateDueStart;
+
+		_dateDueStartSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDateDueStart(
 		UnsafeSupplier<Date, Exception> dateDueStartUnsafeSupplier) {
 
-		try {
-			dateDueStart = dateDueStartUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_dateDueStartSupplier = () -> {
+			try {
+				return dateDueStartUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateDueStart;
 
+	private Supplier<Date> _dateDueStartSupplier;
+
 	@Schema
 	public Boolean getSearchByRoles() {
+		if (_searchByRolesSupplier != null) {
+			searchByRoles = _searchByRolesSupplier.get();
+
+			_searchByRolesSupplier = null;
+		}
+
 		return searchByRoles;
 	}
 
 	public void setSearchByRoles(Boolean searchByRoles) {
 		this.searchByRoles = searchByRoles;
+
+		_searchByRolesSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setSearchByRoles(
 		UnsafeSupplier<Boolean, Exception> searchByRolesUnsafeSupplier) {
 
-		try {
-			searchByRoles = searchByRolesUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_searchByRolesSupplier = () -> {
+			try {
+				return searchByRolesUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean searchByRoles;
 
+	private Supplier<Boolean> _searchByRolesSupplier;
+
 	@Schema
 	public Boolean getSearchByUserRoles() {
+		if (_searchByUserRolesSupplier != null) {
+			searchByUserRoles = _searchByUserRolesSupplier.get();
+
+			_searchByUserRolesSupplier = null;
+		}
+
 		return searchByUserRoles;
 	}
 
 	public void setSearchByUserRoles(Boolean searchByUserRoles) {
 		this.searchByUserRoles = searchByUserRoles;
+
+		_searchByUserRolesSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setSearchByUserRoles(
 		UnsafeSupplier<Boolean, Exception> searchByUserRolesUnsafeSupplier) {
 
-		try {
-			searchByUserRoles = searchByUserRolesUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_searchByUserRolesSupplier = () -> {
+			try {
+				return searchByUserRolesUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean searchByUserRoles;
 
+	private Supplier<Boolean> _searchByUserRolesSupplier;
+
 	@Schema
 	public Long getWorkflowDefinitionId() {
+		if (_workflowDefinitionIdSupplier != null) {
+			workflowDefinitionId = _workflowDefinitionIdSupplier.get();
+
+			_workflowDefinitionIdSupplier = null;
+		}
+
 		return workflowDefinitionId;
 	}
 
 	public void setWorkflowDefinitionId(Long workflowDefinitionId) {
 		this.workflowDefinitionId = workflowDefinitionId;
+
+		_workflowDefinitionIdSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setWorkflowDefinitionId(
 		UnsafeSupplier<Long, Exception> workflowDefinitionIdUnsafeSupplier) {
 
-		try {
-			workflowDefinitionId = workflowDefinitionIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_workflowDefinitionIdSupplier = () -> {
+			try {
+				return workflowDefinitionIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long workflowDefinitionId;
 
+	private Supplier<Long> _workflowDefinitionIdSupplier;
+
 	@Schema
 	public Long[] getWorkflowInstanceIds() {
+		if (_workflowInstanceIdsSupplier != null) {
+			workflowInstanceIds = _workflowInstanceIdsSupplier.get();
+
+			_workflowInstanceIdsSupplier = null;
+		}
+
 		return workflowInstanceIds;
 	}
 
 	public void setWorkflowInstanceIds(Long[] workflowInstanceIds) {
 		this.workflowInstanceIds = workflowInstanceIds;
+
+		_workflowInstanceIdsSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setWorkflowInstanceIds(
 		UnsafeSupplier<Long[], Exception> workflowInstanceIdsUnsafeSupplier) {
 
-		try {
-			workflowInstanceIds = workflowInstanceIdsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_workflowInstanceIdsSupplier = () -> {
+			try {
+				return workflowInstanceIdsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long[] workflowInstanceIds;
 
+	private Supplier<Long[]> _workflowInstanceIdsSupplier;
+
 	@Schema
 	public String[] getWorkflowTaskNames() {
+		if (_workflowTaskNamesSupplier != null) {
+			workflowTaskNames = _workflowTaskNamesSupplier.get();
+
+			_workflowTaskNamesSupplier = null;
+		}
+
 		return workflowTaskNames;
 	}
 
 	public void setWorkflowTaskNames(String[] workflowTaskNames) {
 		this.workflowTaskNames = workflowTaskNames;
+
+		_workflowTaskNamesSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setWorkflowTaskNames(
 		UnsafeSupplier<String[], Exception> workflowTaskNamesUnsafeSupplier) {
 
-		try {
-			workflowTaskNames = workflowTaskNamesUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_workflowTaskNamesSupplier = () -> {
+			try {
+				return workflowTaskNamesUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] workflowTaskNames;
+
+	private Supplier<String[]> _workflowTaskNamesSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -449,6 +606,8 @@ public class WorkflowTasksBulkSelection implements Serializable {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+		Boolean andOperator = getAndOperator();
+
 		if (andOperator != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -458,6 +617,8 @@ public class WorkflowTasksBulkSelection implements Serializable {
 
 			sb.append(andOperator);
 		}
+
+		Long[] assetPrimaryKeys = getAssetPrimaryKeys();
 
 		if (assetPrimaryKeys != null) {
 			if (sb.length() > 1) {
@@ -479,6 +640,8 @@ public class WorkflowTasksBulkSelection implements Serializable {
 			sb.append("]");
 		}
 
+		String assetTitle = getAssetTitle();
+
 		if (assetTitle != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -492,6 +655,8 @@ public class WorkflowTasksBulkSelection implements Serializable {
 
 			sb.append("\"");
 		}
+
+		String[] assetTypes = getAssetTypes();
 
 		if (assetTypes != null) {
 			if (sb.length() > 1) {
@@ -517,6 +682,8 @@ public class WorkflowTasksBulkSelection implements Serializable {
 			sb.append("]");
 		}
 
+		Long[] assigneeIds = getAssigneeIds();
+
 		if (assigneeIds != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -537,6 +704,8 @@ public class WorkflowTasksBulkSelection implements Serializable {
 			sb.append("]");
 		}
 
+		Boolean completed = getCompleted();
+
 		if (completed != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -546,6 +715,8 @@ public class WorkflowTasksBulkSelection implements Serializable {
 
 			sb.append(completed);
 		}
+
+		Date dateDueEnd = getDateDueEnd();
 
 		if (dateDueEnd != null) {
 			if (sb.length() > 1) {
@@ -561,6 +732,8 @@ public class WorkflowTasksBulkSelection implements Serializable {
 			sb.append("\"");
 		}
 
+		Date dateDueStart = getDateDueStart();
+
 		if (dateDueStart != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -575,6 +748,8 @@ public class WorkflowTasksBulkSelection implements Serializable {
 			sb.append("\"");
 		}
 
+		Boolean searchByRoles = getSearchByRoles();
+
 		if (searchByRoles != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -584,6 +759,8 @@ public class WorkflowTasksBulkSelection implements Serializable {
 
 			sb.append(searchByRoles);
 		}
+
+		Boolean searchByUserRoles = getSearchByUserRoles();
 
 		if (searchByUserRoles != null) {
 			if (sb.length() > 1) {
@@ -595,6 +772,8 @@ public class WorkflowTasksBulkSelection implements Serializable {
 			sb.append(searchByUserRoles);
 		}
 
+		Long workflowDefinitionId = getWorkflowDefinitionId();
+
 		if (workflowDefinitionId != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -604,6 +783,8 @@ public class WorkflowTasksBulkSelection implements Serializable {
 
 			sb.append(workflowDefinitionId);
 		}
+
+		Long[] workflowInstanceIds = getWorkflowInstanceIds();
 
 		if (workflowInstanceIds != null) {
 			if (sb.length() > 1) {
@@ -624,6 +805,8 @@ public class WorkflowTasksBulkSelection implements Serializable {
 
 			sb.append("]");
 		}
+
+		String[] workflowTaskNames = getWorkflowTaskNames();
 
 		if (workflowTaskNames != null) {
 			if (sb.length() > 1) {

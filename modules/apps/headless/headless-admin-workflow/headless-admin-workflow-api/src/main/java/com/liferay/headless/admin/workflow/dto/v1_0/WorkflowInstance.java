@@ -28,6 +28,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -59,11 +60,19 @@ public class WorkflowInstance implements Serializable {
 	@Schema
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
+		if (_actionsSupplier != null) {
+			actions = _actionsSupplier.get();
+
+			_actionsSupplier = null;
+		}
+
 		return actions;
 	}
 
 	public void setActions(Map<String, Map<String, String>> actions) {
 		this.actions = actions;
+
+		_actionsSupplier = null;
 	}
 
 	@JsonIgnore
@@ -71,45 +80,59 @@ public class WorkflowInstance implements Serializable {
 		UnsafeSupplier<Map<String, Map<String, String>>, Exception>
 			actionsUnsafeSupplier) {
 
-		try {
-			actions = actionsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_actionsSupplier = () -> {
+			try {
+				return actionsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
+	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
+
 	@Schema(
 		description = "A flag that indicates whether the instance is complete."
 	)
 	public Boolean getCompleted() {
+		if (_completedSupplier != null) {
+			completed = _completedSupplier.get();
+
+			_completedSupplier = null;
+		}
+
 		return completed;
 	}
 
 	public void setCompleted(Boolean completed) {
 		this.completed = completed;
+
+		_completedSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setCompleted(
 		UnsafeSupplier<Boolean, Exception> completedUnsafeSupplier) {
 
-		try {
-			completed = completedUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_completedSupplier = () -> {
+			try {
+				return completedUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -118,126 +141,184 @@ public class WorkflowInstance implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean completed;
 
+	private Supplier<Boolean> _completedSupplier;
+
 	@Schema(description = "The instance's current node names.")
 	public String[] getCurrentNodeNames() {
+		if (_currentNodeNamesSupplier != null) {
+			currentNodeNames = _currentNodeNamesSupplier.get();
+
+			_currentNodeNamesSupplier = null;
+		}
+
 		return currentNodeNames;
 	}
 
 	public void setCurrentNodeNames(String[] currentNodeNames) {
 		this.currentNodeNames = currentNodeNames;
+
+		_currentNodeNamesSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setCurrentNodeNames(
 		UnsafeSupplier<String[], Exception> currentNodeNamesUnsafeSupplier) {
 
-		try {
-			currentNodeNames = currentNodeNamesUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_currentNodeNamesSupplier = () -> {
+			try {
+				return currentNodeNamesUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The instance's current node names.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String[] currentNodeNames;
 
+	private Supplier<String[]> _currentNodeNamesSupplier;
+
 	@Schema(description = "The instance's completion date.")
 	public Date getDateCompletion() {
+		if (_dateCompletionSupplier != null) {
+			dateCompletion = _dateCompletionSupplier.get();
+
+			_dateCompletionSupplier = null;
+		}
+
 		return dateCompletion;
 	}
 
 	public void setDateCompletion(Date dateCompletion) {
 		this.dateCompletion = dateCompletion;
+
+		_dateCompletionSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDateCompletion(
 		UnsafeSupplier<Date, Exception> dateCompletionUnsafeSupplier) {
 
-		try {
-			dateCompletion = dateCompletionUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_dateCompletionSupplier = () -> {
+			try {
+				return dateCompletionUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The instance's completion date.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCompletion;
 
+	private Supplier<Date> _dateCompletionSupplier;
+
 	@Schema(description = "The instance's creation date.")
 	public Date getDateCreated() {
+		if (_dateCreatedSupplier != null) {
+			dateCreated = _dateCreatedSupplier.get();
+
+			_dateCreatedSupplier = null;
+		}
+
 		return dateCreated;
 	}
 
 	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
+
+		_dateCreatedSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDateCreated(
 		UnsafeSupplier<Date, Exception> dateCreatedUnsafeSupplier) {
 
-		try {
-			dateCreated = dateCreatedUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_dateCreatedSupplier = () -> {
+			try {
+				return dateCreatedUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The instance's creation date.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
+	private Supplier<Date> _dateCreatedSupplier;
+
 	@Schema(description = "The instance's ID.")
 	public Long getId() {
+		if (_idSupplier != null) {
+			id = _idSupplier.get();
+
+			_idSupplier = null;
+		}
+
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
+
+		_idSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_idSupplier = () -> {
+			try {
+				return idUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The instance's ID.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	private Supplier<Long> _idSupplier;
+
 	@Schema(
 		description = "The object/asset that the instance's workflow is managing."
 	)
 	@Valid
 	public ObjectReviewed getObjectReviewed() {
+		if (_objectReviewedSupplier != null) {
+			objectReviewed = _objectReviewedSupplier.get();
+
+			_objectReviewedSupplier = null;
+		}
+
 		return objectReviewed;
 	}
 
 	public void setObjectReviewed(ObjectReviewed objectReviewed) {
 		this.objectReviewed = objectReviewed;
+
+		_objectReviewedSupplier = null;
 	}
 
 	@JsonIgnore
@@ -245,15 +326,17 @@ public class WorkflowInstance implements Serializable {
 		UnsafeSupplier<ObjectReviewed, Exception>
 			objectReviewedUnsafeSupplier) {
 
-		try {
-			objectReviewed = objectReviewedUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_objectReviewedSupplier = () -> {
+			try {
+				return objectReviewedUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -262,13 +345,23 @@ public class WorkflowInstance implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected ObjectReviewed objectReviewed;
 
+	private Supplier<ObjectReviewed> _objectReviewedSupplier;
+
 	@Schema(description = "The name of the instance's workflow definition.")
 	public String getWorkflowDefinitionName() {
+		if (_workflowDefinitionNameSupplier != null) {
+			workflowDefinitionName = _workflowDefinitionNameSupplier.get();
+
+			_workflowDefinitionNameSupplier = null;
+		}
+
 		return workflowDefinitionName;
 	}
 
 	public void setWorkflowDefinitionName(String workflowDefinitionName) {
 		this.workflowDefinitionName = workflowDefinitionName;
+
+		_workflowDefinitionNameSupplier = null;
 	}
 
 	@JsonIgnore
@@ -276,15 +369,17 @@ public class WorkflowInstance implements Serializable {
 		UnsafeSupplier<String, Exception>
 			workflowDefinitionNameUnsafeSupplier) {
 
-		try {
-			workflowDefinitionName = workflowDefinitionNameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_workflowDefinitionNameSupplier = () -> {
+			try {
+				return workflowDefinitionNameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -293,13 +388,24 @@ public class WorkflowInstance implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String workflowDefinitionName;
 
+	private Supplier<String> _workflowDefinitionNameSupplier;
+
 	@Schema
 	public String getWorkflowDefinitionVersion() {
+		if (_workflowDefinitionVersionSupplier != null) {
+			workflowDefinitionVersion =
+				_workflowDefinitionVersionSupplier.get();
+
+			_workflowDefinitionVersionSupplier = null;
+		}
+
 		return workflowDefinitionVersion;
 	}
 
 	public void setWorkflowDefinitionVersion(String workflowDefinitionVersion) {
 		this.workflowDefinitionVersion = workflowDefinitionVersion;
+
+		_workflowDefinitionVersionSupplier = null;
 	}
 
 	@JsonIgnore
@@ -307,21 +413,24 @@ public class WorkflowInstance implements Serializable {
 		UnsafeSupplier<String, Exception>
 			workflowDefinitionVersionUnsafeSupplier) {
 
-		try {
-			workflowDefinitionVersion =
-				workflowDefinitionVersionUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_workflowDefinitionVersionSupplier = () -> {
+			try {
+				return workflowDefinitionVersionUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String workflowDefinitionVersion;
+
+	private Supplier<String> _workflowDefinitionVersionSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -353,6 +462,8 @@ public class WorkflowInstance implements Serializable {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+		Map<String, Map<String, String>> actions = getActions();
+
 		if (actions != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -363,6 +474,8 @@ public class WorkflowInstance implements Serializable {
 			sb.append(_toJSON(actions));
 		}
 
+		Boolean completed = getCompleted();
+
 		if (completed != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -372,6 +485,8 @@ public class WorkflowInstance implements Serializable {
 
 			sb.append(completed);
 		}
+
+		String[] currentNodeNames = getCurrentNodeNames();
 
 		if (currentNodeNames != null) {
 			if (sb.length() > 1) {
@@ -397,6 +512,8 @@ public class WorkflowInstance implements Serializable {
 			sb.append("]");
 		}
 
+		Date dateCompletion = getDateCompletion();
+
 		if (dateCompletion != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -410,6 +527,8 @@ public class WorkflowInstance implements Serializable {
 
 			sb.append("\"");
 		}
+
+		Date dateCreated = getDateCreated();
 
 		if (dateCreated != null) {
 			if (sb.length() > 1) {
@@ -425,6 +544,8 @@ public class WorkflowInstance implements Serializable {
 			sb.append("\"");
 		}
 
+		Long id = getId();
+
 		if (id != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -435,6 +556,8 @@ public class WorkflowInstance implements Serializable {
 			sb.append(id);
 		}
 
+		ObjectReviewed objectReviewed = getObjectReviewed();
+
 		if (objectReviewed != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -444,6 +567,8 @@ public class WorkflowInstance implements Serializable {
 
 			sb.append(String.valueOf(objectReviewed));
 		}
+
+		String workflowDefinitionName = getWorkflowDefinitionName();
 
 		if (workflowDefinitionName != null) {
 			if (sb.length() > 1) {
@@ -458,6 +583,8 @@ public class WorkflowInstance implements Serializable {
 
 			sb.append("\"");
 		}
+
+		String workflowDefinitionVersion = getWorkflowDefinitionVersion();
 
 		if (workflowDefinitionVersion != null) {
 			if (sb.length() > 1) {

@@ -26,6 +26,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -53,95 +54,139 @@ public class ObjectLayoutBox implements Serializable {
 
 	@Schema
 	public Boolean getCollapsable() {
+		if (_collapsableSupplier != null) {
+			collapsable = _collapsableSupplier.get();
+
+			_collapsableSupplier = null;
+		}
+
 		return collapsable;
 	}
 
 	public void setCollapsable(Boolean collapsable) {
 		this.collapsable = collapsable;
+
+		_collapsableSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setCollapsable(
 		UnsafeSupplier<Boolean, Exception> collapsableUnsafeSupplier) {
 
-		try {
-			collapsable = collapsableUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_collapsableSupplier = () -> {
+			try {
+				return collapsableUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean collapsable;
 
+	private Supplier<Boolean> _collapsableSupplier;
+
 	@Schema
 	public Long getId() {
+		if (_idSupplier != null) {
+			id = _idSupplier.get();
+
+			_idSupplier = null;
+		}
+
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
+
+		_idSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_idSupplier = () -> {
+			try {
+				return idUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	private Supplier<Long> _idSupplier;
+
 	@Schema
 	@Valid
 	public Map<String, String> getName() {
+		if (_nameSupplier != null) {
+			name = _nameSupplier.get();
+
+			_nameSupplier = null;
+		}
+
 		return name;
 	}
 
 	public void setName(Map<String, String> name) {
 		this.name = name;
+
+		_nameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setName(
 		UnsafeSupplier<Map<String, String>, Exception> nameUnsafeSupplier) {
 
-		try {
-			name = nameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_nameSupplier = () -> {
+			try {
+				return nameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> name;
 
+	private Supplier<Map<String, String>> _nameSupplier;
+
 	@Schema
 	@Valid
 	public ObjectLayoutRow[] getObjectLayoutRows() {
+		if (_objectLayoutRowsSupplier != null) {
+			objectLayoutRows = _objectLayoutRowsSupplier.get();
+
+			_objectLayoutRowsSupplier = null;
+		}
+
 		return objectLayoutRows;
 	}
 
 	public void setObjectLayoutRows(ObjectLayoutRow[] objectLayoutRows) {
 		this.objectLayoutRows = objectLayoutRows;
+
+		_objectLayoutRowsSupplier = null;
 	}
 
 	@JsonIgnore
@@ -149,57 +194,81 @@ public class ObjectLayoutBox implements Serializable {
 		UnsafeSupplier<ObjectLayoutRow[], Exception>
 			objectLayoutRowsUnsafeSupplier) {
 
-		try {
-			objectLayoutRows = objectLayoutRowsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_objectLayoutRowsSupplier = () -> {
+			try {
+				return objectLayoutRowsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ObjectLayoutRow[] objectLayoutRows;
 
+	private Supplier<ObjectLayoutRow[]> _objectLayoutRowsSupplier;
+
 	@Schema
 	public Integer getPriority() {
+		if (_prioritySupplier != null) {
+			priority = _prioritySupplier.get();
+
+			_prioritySupplier = null;
+		}
+
 		return priority;
 	}
 
 	public void setPriority(Integer priority) {
 		this.priority = priority;
+
+		_prioritySupplier = null;
 	}
 
 	@JsonIgnore
 	public void setPriority(
 		UnsafeSupplier<Integer, Exception> priorityUnsafeSupplier) {
 
-		try {
-			priority = priorityUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_prioritySupplier = () -> {
+			try {
+				return priorityUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer priority;
 
+	private Supplier<Integer> _prioritySupplier;
+
 	@Schema
 	@Valid
 	public Type getType() {
+		if (_typeSupplier != null) {
+			type = _typeSupplier.get();
+
+			_typeSupplier = null;
+		}
+
 		return type;
 	}
 
 	@JsonIgnore
 	public String getTypeAsString() {
+		Type type = getType();
+
 		if (type == null) {
 			return null;
 		}
@@ -209,24 +278,30 @@ public class ObjectLayoutBox implements Serializable {
 
 	public void setType(Type type) {
 		this.type = type;
+
+		_typeSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setType(UnsafeSupplier<Type, Exception> typeUnsafeSupplier) {
-		try {
-			type = typeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_typeSupplier = () -> {
+			try {
+				return typeUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Type type;
+
+	private Supplier<Type> _typeSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -255,6 +330,8 @@ public class ObjectLayoutBox implements Serializable {
 
 		sb.append("{");
 
+		Boolean collapsable = getCollapsable();
+
 		if (collapsable != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -264,6 +341,8 @@ public class ObjectLayoutBox implements Serializable {
 
 			sb.append(collapsable);
 		}
+
+		Long id = getId();
 
 		if (id != null) {
 			if (sb.length() > 1) {
@@ -275,6 +354,8 @@ public class ObjectLayoutBox implements Serializable {
 			sb.append(id);
 		}
 
+		Map<String, String> name = getName();
+
 		if (name != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -284,6 +365,8 @@ public class ObjectLayoutBox implements Serializable {
 
 			sb.append(_toJSON(name));
 		}
+
+		ObjectLayoutRow[] objectLayoutRows = getObjectLayoutRows();
 
 		if (objectLayoutRows != null) {
 			if (sb.length() > 1) {
@@ -305,6 +388,8 @@ public class ObjectLayoutBox implements Serializable {
 			sb.append("]");
 		}
 
+		Integer priority = getPriority();
+
 		if (priority != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -314,6 +399,8 @@ public class ObjectLayoutBox implements Serializable {
 
 			sb.append(priority);
 		}
+
+		Type type = getType();
 
 		if (type != null) {
 			if (sb.length() > 1) {

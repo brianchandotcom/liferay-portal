@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -51,58 +52,82 @@ public class ObjectStateFlow implements Serializable {
 
 	@Schema
 	public Long getId() {
+		if (_idSupplier != null) {
+			id = _idSupplier.get();
+
+			_idSupplier = null;
+		}
+
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
+
+		_idSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_idSupplier = () -> {
+			try {
+				return idUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	private Supplier<Long> _idSupplier;
+
 	@Schema
 	@Valid
 	public ObjectState[] getObjectStates() {
+		if (_objectStatesSupplier != null) {
+			objectStates = _objectStatesSupplier.get();
+
+			_objectStatesSupplier = null;
+		}
+
 		return objectStates;
 	}
 
 	public void setObjectStates(ObjectState[] objectStates) {
 		this.objectStates = objectStates;
+
+		_objectStatesSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setObjectStates(
 		UnsafeSupplier<ObjectState[], Exception> objectStatesUnsafeSupplier) {
 
-		try {
-			objectStates = objectStatesUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_objectStatesSupplier = () -> {
+			try {
+				return objectStatesUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ObjectState[] objectStates;
+
+	private Supplier<ObjectState[]> _objectStatesSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -131,6 +156,8 @@ public class ObjectStateFlow implements Serializable {
 
 		sb.append("{");
 
+		Long id = getId();
+
 		if (id != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -140,6 +167,8 @@ public class ObjectStateFlow implements Serializable {
 
 			sb.append(id);
 		}
+
+		ObjectState[] objectStates = getObjectStates();
 
 		if (objectStates != null) {
 			if (sb.length() > 1) {

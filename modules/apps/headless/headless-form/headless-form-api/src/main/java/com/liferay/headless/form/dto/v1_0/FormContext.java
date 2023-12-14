@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -54,11 +55,19 @@ public class FormContext implements Serializable {
 	@Schema(description = "https://www.schema.org/FormFieldValue")
 	@Valid
 	public FormFieldValue[] getFormFieldValues() {
+		if (_formFieldValuesSupplier != null) {
+			formFieldValues = _formFieldValuesSupplier.get();
+
+			_formFieldValuesSupplier = null;
+		}
+
 		return formFieldValues;
 	}
 
 	public void setFormFieldValues(FormFieldValue[] formFieldValues) {
 		this.formFieldValues = formFieldValues;
+
+		_formFieldValuesSupplier = null;
 	}
 
 	@JsonIgnore
@@ -66,29 +75,41 @@ public class FormContext implements Serializable {
 		UnsafeSupplier<FormFieldValue[], Exception>
 			formFieldValuesUnsafeSupplier) {
 
-		try {
-			formFieldValues = formFieldValuesUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_formFieldValuesSupplier = () -> {
+			try {
+				return formFieldValuesUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "https://www.schema.org/FormFieldValue")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FormFieldValue[] formFieldValues;
 
+	private Supplier<FormFieldValue[]> _formFieldValuesSupplier;
+
 	@Schema(description = "https://www.schema.org/FormPageContext")
 	@Valid
 	public FormPageContext[] getFormPageContexts() {
+		if (_formPageContextsSupplier != null) {
+			formPageContexts = _formPageContextsSupplier.get();
+
+			_formPageContextsSupplier = null;
+		}
+
 		return formPageContexts;
 	}
 
 	public void setFormPageContexts(FormPageContext[] formPageContexts) {
 		this.formPageContexts = formPageContexts;
+
+		_formPageContextsSupplier = null;
 	}
 
 	@JsonIgnore
@@ -96,51 +117,74 @@ public class FormContext implements Serializable {
 		UnsafeSupplier<FormPageContext[], Exception>
 			formPageContextsUnsafeSupplier) {
 
-		try {
-			formPageContexts = formPageContextsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_formPageContextsSupplier = () -> {
+			try {
+				return formPageContextsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "https://www.schema.org/FormPageContext")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FormPageContext[] formPageContexts;
 
+	private Supplier<FormPageContext[]> _formPageContextsSupplier;
+
 	@Schema
 	public Boolean getReadOnly() {
+		if (_readOnlySupplier != null) {
+			readOnly = _readOnlySupplier.get();
+
+			_readOnlySupplier = null;
+		}
+
 		return readOnly;
 	}
 
 	public void setReadOnly(Boolean readOnly) {
 		this.readOnly = readOnly;
+
+		_readOnlySupplier = null;
 	}
 
 	@JsonIgnore
 	public void setReadOnly(
 		UnsafeSupplier<Boolean, Exception> readOnlyUnsafeSupplier) {
 
-		try {
-			readOnly = readOnlyUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_readOnlySupplier = () -> {
+			try {
+				return readOnlyUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean readOnly;
 
+	private Supplier<Boolean> _readOnlySupplier;
+
 	@Schema
 	public Boolean getShowRequiredFieldsWarning() {
+		if (_showRequiredFieldsWarningSupplier != null) {
+			showRequiredFieldsWarning =
+				_showRequiredFieldsWarningSupplier.get();
+
+			_showRequiredFieldsWarningSupplier = null;
+		}
+
 		return showRequiredFieldsWarning;
 	}
 
@@ -148,6 +192,8 @@ public class FormContext implements Serializable {
 		Boolean showRequiredFieldsWarning) {
 
 		this.showRequiredFieldsWarning = showRequiredFieldsWarning;
+
+		_showRequiredFieldsWarningSupplier = null;
 	}
 
 	@JsonIgnore
@@ -155,49 +201,64 @@ public class FormContext implements Serializable {
 		UnsafeSupplier<Boolean, Exception>
 			showRequiredFieldsWarningUnsafeSupplier) {
 
-		try {
-			showRequiredFieldsWarning =
-				showRequiredFieldsWarningUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_showRequiredFieldsWarningSupplier = () -> {
+			try {
+				return showRequiredFieldsWarningUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean showRequiredFieldsWarning;
 
+	private Supplier<Boolean> _showRequiredFieldsWarningSupplier;
+
 	@Schema
 	public Boolean getShowSubmitButton() {
+		if (_showSubmitButtonSupplier != null) {
+			showSubmitButton = _showSubmitButtonSupplier.get();
+
+			_showSubmitButtonSupplier = null;
+		}
+
 		return showSubmitButton;
 	}
 
 	public void setShowSubmitButton(Boolean showSubmitButton) {
 		this.showSubmitButton = showSubmitButton;
+
+		_showSubmitButtonSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setShowSubmitButton(
 		UnsafeSupplier<Boolean, Exception> showSubmitButtonUnsafeSupplier) {
 
-		try {
-			showSubmitButton = showSubmitButtonUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_showSubmitButtonSupplier = () -> {
+			try {
+				return showSubmitButtonUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean showSubmitButton;
+
+	private Supplier<Boolean> _showSubmitButtonSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -226,6 +287,8 @@ public class FormContext implements Serializable {
 
 		sb.append("{");
 
+		FormFieldValue[] formFieldValues = getFormFieldValues();
+
 		if (formFieldValues != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -245,6 +308,8 @@ public class FormContext implements Serializable {
 
 			sb.append("]");
 		}
+
+		FormPageContext[] formPageContexts = getFormPageContexts();
 
 		if (formPageContexts != null) {
 			if (sb.length() > 1) {
@@ -266,6 +331,8 @@ public class FormContext implements Serializable {
 			sb.append("]");
 		}
 
+		Boolean readOnly = getReadOnly();
+
 		if (readOnly != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -276,6 +343,8 @@ public class FormContext implements Serializable {
 			sb.append(readOnly);
 		}
 
+		Boolean showRequiredFieldsWarning = getShowRequiredFieldsWarning();
+
 		if (showRequiredFieldsWarning != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -285,6 +354,8 @@ public class FormContext implements Serializable {
 
 			sb.append(showRequiredFieldsWarning);
 		}
+
+		Boolean showSubmitButton = getShowSubmitButton();
 
 		if (showSubmitButton != null) {
 			if (sb.length() > 1) {

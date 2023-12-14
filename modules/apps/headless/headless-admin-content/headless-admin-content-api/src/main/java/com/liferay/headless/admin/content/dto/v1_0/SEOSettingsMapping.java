@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -56,6 +57,13 @@ public class SEOSettingsMapping implements Serializable {
 		description = "Field of the content type that will be used as the description"
 	)
 	public String getDescriptionMappingFieldKey() {
+		if (_descriptionMappingFieldKeySupplier != null) {
+			descriptionMappingFieldKey =
+				_descriptionMappingFieldKeySupplier.get();
+
+			_descriptionMappingFieldKeySupplier = null;
+		}
+
 		return descriptionMappingFieldKey;
 	}
 
@@ -63,6 +71,8 @@ public class SEOSettingsMapping implements Serializable {
 		String descriptionMappingFieldKey) {
 
 		this.descriptionMappingFieldKey = descriptionMappingFieldKey;
+
+		_descriptionMappingFieldKeySupplier = null;
 	}
 
 	@JsonIgnore
@@ -70,16 +80,17 @@ public class SEOSettingsMapping implements Serializable {
 		UnsafeSupplier<String, Exception>
 			descriptionMappingFieldKeyUnsafeSupplier) {
 
-		try {
-			descriptionMappingFieldKey =
-				descriptionMappingFieldKeyUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_descriptionMappingFieldKeySupplier = () -> {
+			try {
+				return descriptionMappingFieldKeyUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -88,15 +99,25 @@ public class SEOSettingsMapping implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String descriptionMappingFieldKey;
 
+	private Supplier<String> _descriptionMappingFieldKeySupplier;
+
 	@Schema(
 		description = "Field of the content type that will be used as the HTML title"
 	)
 	public String getHtmlTitleMappingFieldKey() {
+		if (_htmlTitleMappingFieldKeySupplier != null) {
+			htmlTitleMappingFieldKey = _htmlTitleMappingFieldKeySupplier.get();
+
+			_htmlTitleMappingFieldKeySupplier = null;
+		}
+
 		return htmlTitleMappingFieldKey;
 	}
 
 	public void setHtmlTitleMappingFieldKey(String htmlTitleMappingFieldKey) {
 		this.htmlTitleMappingFieldKey = htmlTitleMappingFieldKey;
+
+		_htmlTitleMappingFieldKeySupplier = null;
 	}
 
 	@JsonIgnore
@@ -104,16 +125,17 @@ public class SEOSettingsMapping implements Serializable {
 		UnsafeSupplier<String, Exception>
 			htmlTitleMappingFieldKeyUnsafeSupplier) {
 
-		try {
-			htmlTitleMappingFieldKey =
-				htmlTitleMappingFieldKeyUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_htmlTitleMappingFieldKeySupplier = () -> {
+			try {
+				return htmlTitleMappingFieldKeyUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -122,30 +144,42 @@ public class SEOSettingsMapping implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String htmlTitleMappingFieldKey;
 
+	private Supplier<String> _htmlTitleMappingFieldKeySupplier;
+
 	@Schema(
 		description = "Robots of the page that renders the Display Page Template"
 	)
 	public String getRobots() {
+		if (_robotsSupplier != null) {
+			robots = _robotsSupplier.get();
+
+			_robotsSupplier = null;
+		}
+
 		return robots;
 	}
 
 	public void setRobots(String robots) {
 		this.robots = robots;
+
+		_robotsSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setRobots(
 		UnsafeSupplier<String, Exception> robotsUnsafeSupplier) {
 
-		try {
-			robots = robotsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_robotsSupplier = () -> {
+			try {
+				return robotsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -154,16 +188,26 @@ public class SEOSettingsMapping implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String robots;
 
+	private Supplier<String> _robotsSupplier;
+
 	@Schema(
 		description = "Internationalized field of the robots of the page that renders the Display Page Template"
 	)
 	@Valid
 	public Map<String, String> getRobots_i18n() {
+		if (_robots_i18nSupplier != null) {
+			robots_i18n = _robots_i18nSupplier.get();
+
+			_robots_i18nSupplier = null;
+		}
+
 		return robots_i18n;
 	}
 
 	public void setRobots_i18n(Map<String, String> robots_i18n) {
 		this.robots_i18n = robots_i18n;
+
+		_robots_i18nSupplier = null;
 	}
 
 	@JsonIgnore
@@ -171,15 +215,17 @@ public class SEOSettingsMapping implements Serializable {
 		UnsafeSupplier<Map<String, String>, Exception>
 			robots_i18nUnsafeSupplier) {
 
-		try {
-			robots_i18n = robots_i18nUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_robots_i18nSupplier = () -> {
+			try {
+				return robots_i18nUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -187,6 +233,8 @@ public class SEOSettingsMapping implements Serializable {
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> robots_i18n;
+
+	private Supplier<Map<String, String>> _robots_i18nSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -215,6 +263,8 @@ public class SEOSettingsMapping implements Serializable {
 
 		sb.append("{");
 
+		String descriptionMappingFieldKey = getDescriptionMappingFieldKey();
+
 		if (descriptionMappingFieldKey != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -228,6 +278,8 @@ public class SEOSettingsMapping implements Serializable {
 
 			sb.append("\"");
 		}
+
+		String htmlTitleMappingFieldKey = getHtmlTitleMappingFieldKey();
 
 		if (htmlTitleMappingFieldKey != null) {
 			if (sb.length() > 1) {
@@ -243,6 +295,8 @@ public class SEOSettingsMapping implements Serializable {
 			sb.append("\"");
 		}
 
+		String robots = getRobots();
+
 		if (robots != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -256,6 +310,8 @@ public class SEOSettingsMapping implements Serializable {
 
 			sb.append("\"");
 		}
+
+		Map<String, String> robots_i18n = getRobots_i18n();
 
 		if (robots_i18n != null) {
 			if (sb.length() > 1) {

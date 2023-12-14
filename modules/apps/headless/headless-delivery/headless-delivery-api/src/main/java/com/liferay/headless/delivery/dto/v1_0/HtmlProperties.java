@@ -26,6 +26,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -56,11 +57,19 @@ public class HtmlProperties implements Serializable {
 	@Schema
 	@Valid
 	public HtmlTag getHtmlTag() {
+		if (_htmlTagSupplier != null) {
+			htmlTag = _htmlTagSupplier.get();
+
+			_htmlTagSupplier = null;
+		}
+
 		return htmlTag;
 	}
 
 	@JsonIgnore
 	public String getHtmlTagAsString() {
+		HtmlTag htmlTag = getHtmlTag();
+
 		if (htmlTag == null) {
 			return null;
 		}
@@ -70,26 +79,32 @@ public class HtmlProperties implements Serializable {
 
 	public void setHtmlTag(HtmlTag htmlTag) {
 		this.htmlTag = htmlTag;
+
+		_htmlTagSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setHtmlTag(
 		UnsafeSupplier<HtmlTag, Exception> htmlTagUnsafeSupplier) {
 
-		try {
-			htmlTag = htmlTagUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_htmlTagSupplier = () -> {
+			try {
+				return htmlTagUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected HtmlTag htmlTag;
+
+	private Supplier<HtmlTag> _htmlTagSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -117,6 +132,8 @@ public class HtmlProperties implements Serializable {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		HtmlTag htmlTag = getHtmlTag();
 
 		if (htmlTag != null) {
 			if (sb.length() > 1) {

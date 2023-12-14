@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -57,26 +58,36 @@ public class ExperimentRun implements Serializable {
 	@DecimalMin("80")
 	@Schema
 	public Double getConfidenceLevel() {
+		if (_confidenceLevelSupplier != null) {
+			confidenceLevel = _confidenceLevelSupplier.get();
+
+			_confidenceLevelSupplier = null;
+		}
+
 		return confidenceLevel;
 	}
 
 	public void setConfidenceLevel(Double confidenceLevel) {
 		this.confidenceLevel = confidenceLevel;
+
+		_confidenceLevelSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setConfidenceLevel(
 		UnsafeSupplier<Double, Exception> confidenceLevelUnsafeSupplier) {
 
-		try {
-			confidenceLevel = confidenceLevelUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_confidenceLevelSupplier = () -> {
+			try {
+				return confidenceLevelUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
@@ -84,14 +95,24 @@ public class ExperimentRun implements Serializable {
 	@NotNull
 	protected Double confidenceLevel;
 
+	private Supplier<Double> _confidenceLevelSupplier;
+
 	@Schema
 	@Valid
 	public ExperimentVariant[] getExperimentVariants() {
+		if (_experimentVariantsSupplier != null) {
+			experimentVariants = _experimentVariantsSupplier.get();
+
+			_experimentVariantsSupplier = null;
+		}
+
 		return experimentVariants;
 	}
 
 	public void setExperimentVariants(ExperimentVariant[] experimentVariants) {
 		this.experimentVariants = experimentVariants;
+
+		_experimentVariantsSupplier = null;
 	}
 
 	@JsonIgnore
@@ -99,15 +120,17 @@ public class ExperimentRun implements Serializable {
 		UnsafeSupplier<ExperimentVariant[], Exception>
 			experimentVariantsUnsafeSupplier) {
 
-		try {
-			experimentVariants = experimentVariantsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_experimentVariantsSupplier = () -> {
+			try {
+				return experimentVariantsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
@@ -115,33 +138,47 @@ public class ExperimentRun implements Serializable {
 	@NotNull
 	protected ExperimentVariant[] experimentVariants;
 
+	private Supplier<ExperimentVariant[]> _experimentVariantsSupplier;
+
 	@Schema
 	public String getStatus() {
+		if (_statusSupplier != null) {
+			status = _statusSupplier.get();
+
+			_statusSupplier = null;
+		}
+
 		return status;
 	}
 
 	public void setStatus(String status) {
 		this.status = status;
+
+		_statusSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setStatus(
 		UnsafeSupplier<String, Exception> statusUnsafeSupplier) {
 
-		try {
-			status = statusUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_statusSupplier = () -> {
+			try {
+				return statusUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String status;
+
+	private Supplier<String> _statusSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -170,6 +207,8 @@ public class ExperimentRun implements Serializable {
 
 		sb.append("{");
 
+		Double confidenceLevel = getConfidenceLevel();
+
 		if (confidenceLevel != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -179,6 +218,8 @@ public class ExperimentRun implements Serializable {
 
 			sb.append(confidenceLevel);
 		}
+
+		ExperimentVariant[] experimentVariants = getExperimentVariants();
 
 		if (experimentVariants != null) {
 			if (sb.length() > 1) {
@@ -199,6 +240,8 @@ public class ExperimentRun implements Serializable {
 
 			sb.append("]");
 		}
+
+		String status = getStatus();
 
 		if (status != null) {
 			if (sb.length() > 1) {

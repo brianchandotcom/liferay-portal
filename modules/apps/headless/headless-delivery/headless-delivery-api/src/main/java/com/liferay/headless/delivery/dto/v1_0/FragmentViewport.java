@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -60,6 +61,12 @@ public class FragmentViewport implements Serializable {
 	@Schema(description = "The fragment's viewport style.")
 	@Valid
 	public FragmentViewportStyle getFragmentViewportStyle() {
+		if (_fragmentViewportStyleSupplier != null) {
+			fragmentViewportStyle = _fragmentViewportStyleSupplier.get();
+
+			_fragmentViewportStyleSupplier = null;
+		}
+
 		return fragmentViewportStyle;
 	}
 
@@ -67,6 +74,8 @@ public class FragmentViewport implements Serializable {
 		FragmentViewportStyle fragmentViewportStyle) {
 
 		this.fragmentViewportStyle = fragmentViewportStyle;
+
+		_fragmentViewportStyleSupplier = null;
 	}
 
 	@JsonIgnore
@@ -74,15 +83,17 @@ public class FragmentViewport implements Serializable {
 		UnsafeSupplier<FragmentViewportStyle, Exception>
 			fragmentViewportStyleUnsafeSupplier) {
 
-		try {
-			fragmentViewportStyle = fragmentViewportStyleUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_fragmentViewportStyleSupplier = () -> {
+			try {
+				return fragmentViewportStyleUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The fragment's viewport style.")
@@ -90,32 +101,46 @@ public class FragmentViewport implements Serializable {
 	@NotNull
 	protected FragmentViewportStyle fragmentViewportStyle;
 
+	private Supplier<FragmentViewportStyle> _fragmentViewportStyleSupplier;
+
 	@Schema(description = "The fragment viewport's ID.")
 	public String getId() {
+		if (_idSupplier != null) {
+			id = _idSupplier.get();
+
+			_idSupplier = null;
+		}
+
 		return id;
 	}
 
 	public void setId(String id) {
 		this.id = id;
+
+		_idSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setId(UnsafeSupplier<String, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_idSupplier = () -> {
+			try {
+				return idUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The fragment viewport's ID.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotEmpty
 	protected String id;
+
+	private Supplier<String> _idSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -144,6 +169,9 @@ public class FragmentViewport implements Serializable {
 
 		sb.append("{");
 
+		FragmentViewportStyle fragmentViewportStyle =
+			getFragmentViewportStyle();
+
 		if (fragmentViewportStyle != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -153,6 +181,8 @@ public class FragmentViewport implements Serializable {
 
 			sb.append(String.valueOf(fragmentViewportStyle));
 		}
+
+		String id = getId();
 
 		if (id != null) {
 			if (sb.length() > 1) {

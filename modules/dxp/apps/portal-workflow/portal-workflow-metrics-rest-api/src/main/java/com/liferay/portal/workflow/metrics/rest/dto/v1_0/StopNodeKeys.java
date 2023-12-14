@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -52,59 +53,83 @@ public class StopNodeKeys implements Serializable {
 	@Schema
 	@Valid
 	public NodeKey[] getNodeKeys() {
+		if (_nodeKeysSupplier != null) {
+			nodeKeys = _nodeKeysSupplier.get();
+
+			_nodeKeysSupplier = null;
+		}
+
 		return nodeKeys;
 	}
 
 	public void setNodeKeys(NodeKey[] nodeKeys) {
 		this.nodeKeys = nodeKeys;
+
+		_nodeKeysSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setNodeKeys(
 		UnsafeSupplier<NodeKey[], Exception> nodeKeysUnsafeSupplier) {
 
-		try {
-			nodeKeys = nodeKeysUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_nodeKeysSupplier = () -> {
+			try {
+				return nodeKeysUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected NodeKey[] nodeKeys;
 
+	private Supplier<NodeKey[]> _nodeKeysSupplier;
+
 	@Schema
 	public Integer getStatus() {
+		if (_statusSupplier != null) {
+			status = _statusSupplier.get();
+
+			_statusSupplier = null;
+		}
+
 		return status;
 	}
 
 	public void setStatus(Integer status) {
 		this.status = status;
+
+		_statusSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setStatus(
 		UnsafeSupplier<Integer, Exception> statusUnsafeSupplier) {
 
-		try {
-			status = statusUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_statusSupplier = () -> {
+			try {
+				return statusUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer status;
+
+	private Supplier<Integer> _statusSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -133,6 +158,8 @@ public class StopNodeKeys implements Serializable {
 
 		sb.append("{");
 
+		NodeKey[] nodeKeys = getNodeKeys();
+
 		if (nodeKeys != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -152,6 +179,8 @@ public class StopNodeKeys implements Serializable {
 
 			sb.append("]");
 		}
+
+		Integer status = getStatus();
 
 		if (status != null) {
 			if (sb.length() > 1) {

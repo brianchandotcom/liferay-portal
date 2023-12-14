@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -52,11 +53,19 @@ public class Hit implements Serializable {
 	@Schema
 	@Valid
 	public Map<String, DocumentField> getDocumentFields() {
+		if (_documentFieldsSupplier != null) {
+			documentFields = _documentFieldsSupplier.get();
+
+			_documentFieldsSupplier = null;
+		}
+
 		return documentFields;
 	}
 
 	public void setDocumentFields(Map<String, DocumentField> documentFields) {
 		this.documentFields = documentFields;
+
+		_documentFieldsSupplier = null;
 	}
 
 	@JsonIgnore
@@ -64,129 +73,181 @@ public class Hit implements Serializable {
 		UnsafeSupplier<Map<String, DocumentField>, Exception>
 			documentFieldsUnsafeSupplier) {
 
-		try {
-			documentFields = documentFieldsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_documentFieldsSupplier = () -> {
+			try {
+				return documentFieldsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, DocumentField> documentFields;
 
+	private Supplier<Map<String, DocumentField>> _documentFieldsSupplier;
+
 	@Schema
 	public String getExplanation() {
+		if (_explanationSupplier != null) {
+			explanation = _explanationSupplier.get();
+
+			_explanationSupplier = null;
+		}
+
 		return explanation;
 	}
 
 	public void setExplanation(String explanation) {
 		this.explanation = explanation;
+
+		_explanationSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setExplanation(
 		UnsafeSupplier<String, Exception> explanationUnsafeSupplier) {
 
-		try {
-			explanation = explanationUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_explanationSupplier = () -> {
+			try {
+				return explanationUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String explanation;
 
+	private Supplier<String> _explanationSupplier;
+
 	@Schema
 	public String getId() {
+		if (_idSupplier != null) {
+			id = _idSupplier.get();
+
+			_idSupplier = null;
+		}
+
 		return id;
 	}
 
 	public void setId(String id) {
 		this.id = id;
+
+		_idSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setId(UnsafeSupplier<String, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_idSupplier = () -> {
+			try {
+				return idUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String id;
 
+	private Supplier<String> _idSupplier;
+
 	@Schema
 	@Valid
 	public Float getScore() {
+		if (_scoreSupplier != null) {
+			score = _scoreSupplier.get();
+
+			_scoreSupplier = null;
+		}
+
 		return score;
 	}
 
 	public void setScore(Float score) {
 		this.score = score;
+
+		_scoreSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setScore(UnsafeSupplier<Float, Exception> scoreUnsafeSupplier) {
-		try {
-			score = scoreUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_scoreSupplier = () -> {
+			try {
+				return scoreUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Float score;
 
+	private Supplier<Float> _scoreSupplier;
+
 	@Schema
 	public Long getVersion() {
+		if (_versionSupplier != null) {
+			version = _versionSupplier.get();
+
+			_versionSupplier = null;
+		}
+
 		return version;
 	}
 
 	public void setVersion(Long version) {
 		this.version = version;
+
+		_versionSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setVersion(
 		UnsafeSupplier<Long, Exception> versionUnsafeSupplier) {
 
-		try {
-			version = versionUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_versionSupplier = () -> {
+			try {
+				return versionUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long version;
+
+	private Supplier<Long> _versionSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -215,6 +276,8 @@ public class Hit implements Serializable {
 
 		sb.append("{");
 
+		Map<String, DocumentField> documentFields = getDocumentFields();
+
 		if (documentFields != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -224,6 +287,8 @@ public class Hit implements Serializable {
 
 			sb.append(_toJSON(documentFields));
 		}
+
+		String explanation = getExplanation();
 
 		if (explanation != null) {
 			if (sb.length() > 1) {
@@ -239,6 +304,8 @@ public class Hit implements Serializable {
 			sb.append("\"");
 		}
 
+		String id = getId();
+
 		if (id != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -253,6 +320,8 @@ public class Hit implements Serializable {
 			sb.append("\"");
 		}
 
+		Float score = getScore();
+
 		if (score != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -262,6 +331,8 @@ public class Hit implements Serializable {
 
 			sb.append(score);
 		}
+
+		Long version = getVersion();
 
 		if (version != null) {
 			if (sb.length() > 1) {

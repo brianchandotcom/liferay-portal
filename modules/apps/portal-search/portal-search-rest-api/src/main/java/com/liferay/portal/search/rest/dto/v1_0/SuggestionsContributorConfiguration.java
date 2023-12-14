@@ -25,6 +25,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -55,113 +56,161 @@ public class SuggestionsContributorConfiguration implements Serializable {
 	@Schema
 	@Valid
 	public Object getAttributes() {
+		if (_attributesSupplier != null) {
+			attributes = _attributesSupplier.get();
+
+			_attributesSupplier = null;
+		}
+
 		return attributes;
 	}
 
 	public void setAttributes(Object attributes) {
 		this.attributes = attributes;
+
+		_attributesSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setAttributes(
 		UnsafeSupplier<Object, Exception> attributesUnsafeSupplier) {
 
-		try {
-			attributes = attributesUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_attributesSupplier = () -> {
+			try {
+				return attributesUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object attributes;
 
+	private Supplier<Object> _attributesSupplier;
+
 	@Schema
 	public String getContributorName() {
+		if (_contributorNameSupplier != null) {
+			contributorName = _contributorNameSupplier.get();
+
+			_contributorNameSupplier = null;
+		}
+
 		return contributorName;
 	}
 
 	public void setContributorName(String contributorName) {
 		this.contributorName = contributorName;
+
+		_contributorNameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setContributorName(
 		UnsafeSupplier<String, Exception> contributorNameUnsafeSupplier) {
 
-		try {
-			contributorName = contributorNameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_contributorNameSupplier = () -> {
+			try {
+				return contributorNameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String contributorName;
 
+	private Supplier<String> _contributorNameSupplier;
+
 	@Schema
 	public String getDisplayGroupName() {
+		if (_displayGroupNameSupplier != null) {
+			displayGroupName = _displayGroupNameSupplier.get();
+
+			_displayGroupNameSupplier = null;
+		}
+
 		return displayGroupName;
 	}
 
 	public void setDisplayGroupName(String displayGroupName) {
 		this.displayGroupName = displayGroupName;
+
+		_displayGroupNameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDisplayGroupName(
 		UnsafeSupplier<String, Exception> displayGroupNameUnsafeSupplier) {
 
-		try {
-			displayGroupName = displayGroupNameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_displayGroupNameSupplier = () -> {
+			try {
+				return displayGroupNameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String displayGroupName;
 
+	private Supplier<String> _displayGroupNameSupplier;
+
 	@Schema
 	public Integer getSize() {
+		if (_sizeSupplier != null) {
+			size = _sizeSupplier.get();
+
+			_sizeSupplier = null;
+		}
+
 		return size;
 	}
 
 	public void setSize(Integer size) {
 		this.size = size;
+
+		_sizeSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setSize(UnsafeSupplier<Integer, Exception> sizeUnsafeSupplier) {
-		try {
-			size = sizeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_sizeSupplier = () -> {
+			try {
+				return sizeUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer size;
+
+	private Supplier<Integer> _sizeSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -193,6 +242,8 @@ public class SuggestionsContributorConfiguration implements Serializable {
 
 		sb.append("{");
 
+		Object attributes = getAttributes();
+
 		if (attributes != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -214,6 +265,8 @@ public class SuggestionsContributorConfiguration implements Serializable {
 			}
 		}
 
+		String contributorName = getContributorName();
+
 		if (contributorName != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -228,6 +281,8 @@ public class SuggestionsContributorConfiguration implements Serializable {
 			sb.append("\"");
 		}
 
+		String displayGroupName = getDisplayGroupName();
+
 		if (displayGroupName != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -241,6 +296,8 @@ public class SuggestionsContributorConfiguration implements Serializable {
 
 			sb.append("\"");
 		}
+
+		Integer size = getSize();
 
 		if (size != null) {
 			if (sb.length() > 1) {

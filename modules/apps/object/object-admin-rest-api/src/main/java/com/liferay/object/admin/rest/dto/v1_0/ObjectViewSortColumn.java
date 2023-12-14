@@ -26,6 +26,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -54,94 +55,138 @@ public class ObjectViewSortColumn implements Serializable {
 
 	@Schema
 	public Long getId() {
+		if (_idSupplier != null) {
+			id = _idSupplier.get();
+
+			_idSupplier = null;
+		}
+
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
+
+		_idSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_idSupplier = () -> {
+			try {
+				return idUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	private Supplier<Long> _idSupplier;
+
 	@Schema
 	public String getObjectFieldName() {
+		if (_objectFieldNameSupplier != null) {
+			objectFieldName = _objectFieldNameSupplier.get();
+
+			_objectFieldNameSupplier = null;
+		}
+
 		return objectFieldName;
 	}
 
 	public void setObjectFieldName(String objectFieldName) {
 		this.objectFieldName = objectFieldName;
+
+		_objectFieldNameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setObjectFieldName(
 		UnsafeSupplier<String, Exception> objectFieldNameUnsafeSupplier) {
 
-		try {
-			objectFieldName = objectFieldNameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_objectFieldNameSupplier = () -> {
+			try {
+				return objectFieldNameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String objectFieldName;
 
+	private Supplier<String> _objectFieldNameSupplier;
+
 	@Schema
 	public Integer getPriority() {
+		if (_prioritySupplier != null) {
+			priority = _prioritySupplier.get();
+
+			_prioritySupplier = null;
+		}
+
 		return priority;
 	}
 
 	public void setPriority(Integer priority) {
 		this.priority = priority;
+
+		_prioritySupplier = null;
 	}
 
 	@JsonIgnore
 	public void setPriority(
 		UnsafeSupplier<Integer, Exception> priorityUnsafeSupplier) {
 
-		try {
-			priority = priorityUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_prioritySupplier = () -> {
+			try {
+				return priorityUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer priority;
 
+	private Supplier<Integer> _prioritySupplier;
+
 	@Schema
 	@Valid
 	public SortOrder getSortOrder() {
+		if (_sortOrderSupplier != null) {
+			sortOrder = _sortOrderSupplier.get();
+
+			_sortOrderSupplier = null;
+		}
+
 		return sortOrder;
 	}
 
 	@JsonIgnore
 	public String getSortOrderAsString() {
+		SortOrder sortOrder = getSortOrder();
+
 		if (sortOrder == null) {
 			return null;
 		}
@@ -151,26 +196,32 @@ public class ObjectViewSortColumn implements Serializable {
 
 	public void setSortOrder(SortOrder sortOrder) {
 		this.sortOrder = sortOrder;
+
+		_sortOrderSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setSortOrder(
 		UnsafeSupplier<SortOrder, Exception> sortOrderUnsafeSupplier) {
 
-		try {
-			sortOrder = sortOrderUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_sortOrderSupplier = () -> {
+			try {
+				return sortOrderUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected SortOrder sortOrder;
+
+	private Supplier<SortOrder> _sortOrderSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -200,6 +251,8 @@ public class ObjectViewSortColumn implements Serializable {
 
 		sb.append("{");
 
+		Long id = getId();
+
 		if (id != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -209,6 +262,8 @@ public class ObjectViewSortColumn implements Serializable {
 
 			sb.append(id);
 		}
+
+		String objectFieldName = getObjectFieldName();
 
 		if (objectFieldName != null) {
 			if (sb.length() > 1) {
@@ -224,6 +279,8 @@ public class ObjectViewSortColumn implements Serializable {
 			sb.append("\"");
 		}
 
+		Integer priority = getPriority();
+
 		if (priority != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -233,6 +290,8 @@ public class ObjectViewSortColumn implements Serializable {
 
 			sb.append(priority);
 		}
+
+		SortOrder sortOrder = getSortOrder();
 
 		if (sortOrder != null) {
 			if (sb.length() > 1) {

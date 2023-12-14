@@ -25,6 +25,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -55,88 +56,124 @@ public class SuggestionsContributorResults implements Serializable {
 	@Schema
 	@Valid
 	public Object getAttributes() {
+		if (_attributesSupplier != null) {
+			attributes = _attributesSupplier.get();
+
+			_attributesSupplier = null;
+		}
+
 		return attributes;
 	}
 
 	public void setAttributes(Object attributes) {
 		this.attributes = attributes;
+
+		_attributesSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setAttributes(
 		UnsafeSupplier<Object, Exception> attributesUnsafeSupplier) {
 
-		try {
-			attributes = attributesUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_attributesSupplier = () -> {
+			try {
+				return attributesUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object attributes;
 
+	private Supplier<Object> _attributesSupplier;
+
 	@Schema
 	public String getDisplayGroupName() {
+		if (_displayGroupNameSupplier != null) {
+			displayGroupName = _displayGroupNameSupplier.get();
+
+			_displayGroupNameSupplier = null;
+		}
+
 		return displayGroupName;
 	}
 
 	public void setDisplayGroupName(String displayGroupName) {
 		this.displayGroupName = displayGroupName;
+
+		_displayGroupNameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDisplayGroupName(
 		UnsafeSupplier<String, Exception> displayGroupNameUnsafeSupplier) {
 
-		try {
-			displayGroupName = displayGroupNameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_displayGroupNameSupplier = () -> {
+			try {
+				return displayGroupNameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String displayGroupName;
 
+	private Supplier<String> _displayGroupNameSupplier;
+
 	@Schema
 	@Valid
 	public Suggestion[] getSuggestions() {
+		if (_suggestionsSupplier != null) {
+			suggestions = _suggestionsSupplier.get();
+
+			_suggestionsSupplier = null;
+		}
+
 		return suggestions;
 	}
 
 	public void setSuggestions(Suggestion[] suggestions) {
 		this.suggestions = suggestions;
+
+		_suggestionsSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setSuggestions(
 		UnsafeSupplier<Suggestion[], Exception> suggestionsUnsafeSupplier) {
 
-		try {
-			suggestions = suggestionsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_suggestionsSupplier = () -> {
+			try {
+				return suggestionsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Suggestion[] suggestions;
+
+	private Supplier<Suggestion[]> _suggestionsSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -167,6 +204,8 @@ public class SuggestionsContributorResults implements Serializable {
 
 		sb.append("{");
 
+		Object attributes = getAttributes();
+
 		if (attributes != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -188,6 +227,8 @@ public class SuggestionsContributorResults implements Serializable {
 			}
 		}
 
+		String displayGroupName = getDisplayGroupName();
+
 		if (displayGroupName != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -201,6 +242,8 @@ public class SuggestionsContributorResults implements Serializable {
 
 			sb.append("\"");
 		}
+
+		Suggestion[] suggestions = getSuggestions();
 
 		if (suggestions != null) {
 			if (sb.length() > 1) {

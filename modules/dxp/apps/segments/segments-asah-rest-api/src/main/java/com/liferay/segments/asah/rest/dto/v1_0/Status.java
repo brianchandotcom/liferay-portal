@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -52,26 +53,36 @@ public class Status implements Serializable {
 
 	@Schema
 	public String getStatus() {
+		if (_statusSupplier != null) {
+			status = _statusSupplier.get();
+
+			_statusSupplier = null;
+		}
+
 		return status;
 	}
 
 	public void setStatus(String status) {
 		this.status = status;
+
+		_statusSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setStatus(
 		UnsafeSupplier<String, Exception> statusUnsafeSupplier) {
 
-		try {
-			status = statusUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_statusSupplier = () -> {
+			try {
+				return statusUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
@@ -79,33 +90,47 @@ public class Status implements Serializable {
 	@NotEmpty
 	protected String status;
 
+	private Supplier<String> _statusSupplier;
+
 	@Schema
 	public String getWinnerVariantId() {
+		if (_winnerVariantIdSupplier != null) {
+			winnerVariantId = _winnerVariantIdSupplier.get();
+
+			_winnerVariantIdSupplier = null;
+		}
+
 		return winnerVariantId;
 	}
 
 	public void setWinnerVariantId(String winnerVariantId) {
 		this.winnerVariantId = winnerVariantId;
+
+		_winnerVariantIdSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setWinnerVariantId(
 		UnsafeSupplier<String, Exception> winnerVariantIdUnsafeSupplier) {
 
-		try {
-			winnerVariantId = winnerVariantIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_winnerVariantIdSupplier = () -> {
+			try {
+				return winnerVariantIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String winnerVariantId;
+
+	private Supplier<String> _winnerVariantIdSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -134,6 +159,8 @@ public class Status implements Serializable {
 
 		sb.append("{");
 
+		String status = getStatus();
+
 		if (status != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -147,6 +174,8 @@ public class Status implements Serializable {
 
 			sb.append("\"");
 		}
+
+		String winnerVariantId = getWinnerVariantId();
 
 		if (winnerVariantId != null) {
 			if (sb.length() > 1) {

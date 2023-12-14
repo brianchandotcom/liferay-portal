@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -59,11 +60,19 @@ public class UserAccountContactInformation implements Serializable {
 	)
 	@Valid
 	public EmailAddress[] getEmailAddresses() {
+		if (_emailAddressesSupplier != null) {
+			emailAddresses = _emailAddressesSupplier.get();
+
+			_emailAddressesSupplier = null;
+		}
+
 		return emailAddresses;
 	}
 
 	public void setEmailAddresses(EmailAddress[] emailAddresses) {
 		this.emailAddresses = emailAddresses;
+
+		_emailAddressesSupplier = null;
 	}
 
 	@JsonIgnore
@@ -71,15 +80,17 @@ public class UserAccountContactInformation implements Serializable {
 		UnsafeSupplier<EmailAddress[], Exception>
 			emailAddressesUnsafeSupplier) {
 
-		try {
-			emailAddresses = emailAddressesUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_emailAddressesSupplier = () -> {
+			try {
+				return emailAddressesUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -88,98 +99,144 @@ public class UserAccountContactInformation implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected EmailAddress[] emailAddresses;
 
+	private Supplier<EmailAddress[]> _emailAddressesSupplier;
+
 	@Schema(description = "The user's Facebook account.")
 	public String getFacebook() {
+		if (_facebookSupplier != null) {
+			facebook = _facebookSupplier.get();
+
+			_facebookSupplier = null;
+		}
+
 		return facebook;
 	}
 
 	public void setFacebook(String facebook) {
 		this.facebook = facebook;
+
+		_facebookSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setFacebook(
 		UnsafeSupplier<String, Exception> facebookUnsafeSupplier) {
 
-		try {
-			facebook = facebookUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_facebookSupplier = () -> {
+			try {
+				return facebookUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The user's Facebook account.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String facebook;
 
+	private Supplier<String> _facebookSupplier;
+
 	@Schema(description = "The ID of the `contactInformation`.")
 	public Long getId() {
+		if (_idSupplier != null) {
+			id = _idSupplier.get();
+
+			_idSupplier = null;
+		}
+
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
+
+		_idSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_idSupplier = () -> {
+			try {
+				return idUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The ID of the `contactInformation`.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	private Supplier<Long> _idSupplier;
+
 	@Schema(description = "The user's Jabber handle.")
 	public String getJabber() {
+		if (_jabberSupplier != null) {
+			jabber = _jabberSupplier.get();
+
+			_jabberSupplier = null;
+		}
+
 		return jabber;
 	}
 
 	public void setJabber(String jabber) {
 		this.jabber = jabber;
+
+		_jabberSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setJabber(
 		UnsafeSupplier<String, Exception> jabberUnsafeSupplier) {
 
-		try {
-			jabber = jabberUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_jabberSupplier = () -> {
+			try {
+				return jabberUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The user's Jabber handle.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String jabber;
 
+	private Supplier<String> _jabberSupplier;
+
 	@Schema(
 		description = "A list of user's postal addresses, with one optionally marked as primary."
 	)
 	@Valid
 	public PostalAddress[] getPostalAddresses() {
+		if (_postalAddressesSupplier != null) {
+			postalAddresses = _postalAddressesSupplier.get();
+
+			_postalAddressesSupplier = null;
+		}
+
 		return postalAddresses;
 	}
 
 	public void setPostalAddresses(PostalAddress[] postalAddresses) {
 		this.postalAddresses = postalAddresses;
+
+		_postalAddressesSupplier = null;
 	}
 
 	@JsonIgnore
@@ -187,15 +244,17 @@ public class UserAccountContactInformation implements Serializable {
 		UnsafeSupplier<PostalAddress[], Exception>
 			postalAddressesUnsafeSupplier) {
 
-		try {
-			postalAddresses = postalAddressesUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_postalAddressesSupplier = () -> {
+			try {
+				return postalAddressesUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -204,85 +263,121 @@ public class UserAccountContactInformation implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected PostalAddress[] postalAddresses;
 
+	private Supplier<PostalAddress[]> _postalAddressesSupplier;
+
 	@Schema(description = "The user's Skype handle.")
 	public String getSkype() {
+		if (_skypeSupplier != null) {
+			skype = _skypeSupplier.get();
+
+			_skypeSupplier = null;
+		}
+
 		return skype;
 	}
 
 	public void setSkype(String skype) {
 		this.skype = skype;
+
+		_skypeSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setSkype(
 		UnsafeSupplier<String, Exception> skypeUnsafeSupplier) {
 
-		try {
-			skype = skypeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_skypeSupplier = () -> {
+			try {
+				return skypeUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The user's Skype handle.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String skype;
 
+	private Supplier<String> _skypeSupplier;
+
 	@Schema(description = "The user's SMS number.")
 	public String getSms() {
+		if (_smsSupplier != null) {
+			sms = _smsSupplier.get();
+
+			_smsSupplier = null;
+		}
+
 		return sms;
 	}
 
 	public void setSms(String sms) {
 		this.sms = sms;
+
+		_smsSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setSms(UnsafeSupplier<String, Exception> smsUnsafeSupplier) {
-		try {
-			sms = smsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_smsSupplier = () -> {
+			try {
+				return smsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The user's SMS number.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String sms;
 
+	private Supplier<String> _smsSupplier;
+
 	@Schema(
 		description = "A list of the user's phone numbers, with one optionally marked as primary."
 	)
 	@Valid
 	public Phone[] getTelephones() {
+		if (_telephonesSupplier != null) {
+			telephones = _telephonesSupplier.get();
+
+			_telephonesSupplier = null;
+		}
+
 		return telephones;
 	}
 
 	public void setTelephones(Phone[] telephones) {
 		this.telephones = telephones;
+
+		_telephonesSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setTelephones(
 		UnsafeSupplier<Phone[], Exception> telephonesUnsafeSupplier) {
 
-		try {
-			telephones = telephonesUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_telephonesSupplier = () -> {
+			try {
+				return telephonesUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -291,59 +386,83 @@ public class UserAccountContactInformation implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Phone[] telephones;
 
+	private Supplier<Phone[]> _telephonesSupplier;
+
 	@Schema(description = "The user's Twitter handle.")
 	public String getTwitter() {
+		if (_twitterSupplier != null) {
+			twitter = _twitterSupplier.get();
+
+			_twitterSupplier = null;
+		}
+
 		return twitter;
 	}
 
 	public void setTwitter(String twitter) {
 		this.twitter = twitter;
+
+		_twitterSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setTwitter(
 		UnsafeSupplier<String, Exception> twitterUnsafeSupplier) {
 
-		try {
-			twitter = twitterUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_twitterSupplier = () -> {
+			try {
+				return twitterUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The user's Twitter handle.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String twitter;
 
+	private Supplier<String> _twitterSupplier;
+
 	@Schema(
 		description = "A list of the user's web URLs, with one optionally marked as primary."
 	)
 	@Valid
 	public WebUrl[] getWebUrls() {
+		if (_webUrlsSupplier != null) {
+			webUrls = _webUrlsSupplier.get();
+
+			_webUrlsSupplier = null;
+		}
+
 		return webUrls;
 	}
 
 	public void setWebUrls(WebUrl[] webUrls) {
 		this.webUrls = webUrls;
+
+		_webUrlsSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setWebUrls(
 		UnsafeSupplier<WebUrl[], Exception> webUrlsUnsafeSupplier) {
 
-		try {
-			webUrls = webUrlsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_webUrlsSupplier = () -> {
+			try {
+				return webUrlsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -351,6 +470,8 @@ public class UserAccountContactInformation implements Serializable {
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected WebUrl[] webUrls;
+
+	private Supplier<WebUrl[]> _webUrlsSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -381,6 +502,8 @@ public class UserAccountContactInformation implements Serializable {
 
 		sb.append("{");
 
+		EmailAddress[] emailAddresses = getEmailAddresses();
+
 		if (emailAddresses != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -401,6 +524,8 @@ public class UserAccountContactInformation implements Serializable {
 			sb.append("]");
 		}
 
+		String facebook = getFacebook();
+
 		if (facebook != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -415,6 +540,8 @@ public class UserAccountContactInformation implements Serializable {
 			sb.append("\"");
 		}
 
+		Long id = getId();
+
 		if (id != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -424,6 +551,8 @@ public class UserAccountContactInformation implements Serializable {
 
 			sb.append(id);
 		}
+
+		String jabber = getJabber();
 
 		if (jabber != null) {
 			if (sb.length() > 1) {
@@ -438,6 +567,8 @@ public class UserAccountContactInformation implements Serializable {
 
 			sb.append("\"");
 		}
+
+		PostalAddress[] postalAddresses = getPostalAddresses();
 
 		if (postalAddresses != null) {
 			if (sb.length() > 1) {
@@ -459,6 +590,8 @@ public class UserAccountContactInformation implements Serializable {
 			sb.append("]");
 		}
 
+		String skype = getSkype();
+
 		if (skype != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -473,6 +606,8 @@ public class UserAccountContactInformation implements Serializable {
 			sb.append("\"");
 		}
 
+		String sms = getSms();
+
 		if (sms != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -486,6 +621,8 @@ public class UserAccountContactInformation implements Serializable {
 
 			sb.append("\"");
 		}
+
+		Phone[] telephones = getTelephones();
 
 		if (telephones != null) {
 			if (sb.length() > 1) {
@@ -507,6 +644,8 @@ public class UserAccountContactInformation implements Serializable {
 			sb.append("]");
 		}
 
+		String twitter = getTwitter();
+
 		if (twitter != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -520,6 +659,8 @@ public class UserAccountContactInformation implements Serializable {
 
 			sb.append("\"");
 		}
+
+		WebUrl[] webUrls = getWebUrls();
 
 		if (webUrls != null) {
 			if (sb.length() > 1) {

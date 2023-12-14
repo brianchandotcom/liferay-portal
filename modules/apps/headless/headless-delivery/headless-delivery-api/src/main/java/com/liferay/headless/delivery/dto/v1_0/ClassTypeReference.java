@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -52,26 +53,36 @@ public class ClassTypeReference implements Serializable {
 
 	@Schema
 	public String getClassName() {
+		if (_classNameSupplier != null) {
+			className = _classNameSupplier.get();
+
+			_classNameSupplier = null;
+		}
+
 		return className;
 	}
 
 	public void setClassName(String className) {
 		this.className = className;
+
+		_classNameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setClassName(
 		UnsafeSupplier<String, Exception> classNameUnsafeSupplier) {
 
-		try {
-			className = classNameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_classNameSupplier = () -> {
+			try {
+				return classNameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
@@ -79,33 +90,47 @@ public class ClassTypeReference implements Serializable {
 	@NotEmpty
 	protected String className;
 
+	private Supplier<String> _classNameSupplier;
+
 	@Schema
 	public Long getClassType() {
+		if (_classTypeSupplier != null) {
+			classType = _classTypeSupplier.get();
+
+			_classTypeSupplier = null;
+		}
+
 		return classType;
 	}
 
 	public void setClassType(Long classType) {
 		this.classType = classType;
+
+		_classTypeSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setClassType(
 		UnsafeSupplier<Long, Exception> classTypeUnsafeSupplier) {
 
-		try {
-			classType = classTypeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_classTypeSupplier = () -> {
+			try {
+				return classTypeUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long classType;
+
+	private Supplier<Long> _classTypeSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -134,6 +159,8 @@ public class ClassTypeReference implements Serializable {
 
 		sb.append("{");
 
+		String className = getClassName();
+
 		if (className != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -147,6 +174,8 @@ public class ClassTypeReference implements Serializable {
 
 			sb.append("\"");
 		}
+
+		Long classType = getClassType();
 
 		if (classType != null) {
 			if (sb.length() > 1) {

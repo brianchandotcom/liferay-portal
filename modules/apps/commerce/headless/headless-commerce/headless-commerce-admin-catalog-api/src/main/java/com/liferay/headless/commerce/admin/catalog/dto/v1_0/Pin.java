@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -53,142 +54,202 @@ public class Pin implements Serializable {
 	@DecimalMin("0")
 	@Schema(example = "33130")
 	public Long getId() {
+		if (_idSupplier != null) {
+			id = _idSupplier.get();
+
+			_idSupplier = null;
+		}
+
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
+
+		_idSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_idSupplier = () -> {
+			try {
+				return idUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	private Supplier<Long> _idSupplier;
+
 	@Schema
 	@Valid
 	public MappedProduct getMappedProduct() {
+		if (_mappedProductSupplier != null) {
+			mappedProduct = _mappedProductSupplier.get();
+
+			_mappedProductSupplier = null;
+		}
+
 		return mappedProduct;
 	}
 
 	public void setMappedProduct(MappedProduct mappedProduct) {
 		this.mappedProduct = mappedProduct;
+
+		_mappedProductSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setMappedProduct(
 		UnsafeSupplier<MappedProduct, Exception> mappedProductUnsafeSupplier) {
 
-		try {
-			mappedProduct = mappedProductUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_mappedProductSupplier = () -> {
+			try {
+				return mappedProductUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected MappedProduct mappedProduct;
 
+	private Supplier<MappedProduct> _mappedProductSupplier;
+
 	@Schema(example = "33.54")
 	public Double getPositionX() {
+		if (_positionXSupplier != null) {
+			positionX = _positionXSupplier.get();
+
+			_positionXSupplier = null;
+		}
+
 		return positionX;
 	}
 
 	public void setPositionX(Double positionX) {
 		this.positionX = positionX;
+
+		_positionXSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setPositionX(
 		UnsafeSupplier<Double, Exception> positionXUnsafeSupplier) {
 
-		try {
-			positionX = positionXUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_positionXSupplier = () -> {
+			try {
+				return positionXUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double positionX;
 
+	private Supplier<Double> _positionXSupplier;
+
 	@Schema(example = "33.54")
 	public Double getPositionY() {
+		if (_positionYSupplier != null) {
+			positionY = _positionYSupplier.get();
+
+			_positionYSupplier = null;
+		}
+
 		return positionY;
 	}
 
 	public void setPositionY(Double positionY) {
 		this.positionY = positionY;
+
+		_positionYSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setPositionY(
 		UnsafeSupplier<Double, Exception> positionYUnsafeSupplier) {
 
-		try {
-			positionY = positionYUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_positionYSupplier = () -> {
+			try {
+				return positionYUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double positionY;
 
+	private Supplier<Double> _positionYSupplier;
+
 	@Schema(example = "1")
 	public String getSequence() {
+		if (_sequenceSupplier != null) {
+			sequence = _sequenceSupplier.get();
+
+			_sequenceSupplier = null;
+		}
+
 		return sequence;
 	}
 
 	public void setSequence(String sequence) {
 		this.sequence = sequence;
+
+		_sequenceSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setSequence(
 		UnsafeSupplier<String, Exception> sequenceUnsafeSupplier) {
 
-		try {
-			sequence = sequenceUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_sequenceSupplier = () -> {
+			try {
+				return sequenceUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String sequence;
+
+	private Supplier<String> _sequenceSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -217,6 +278,8 @@ public class Pin implements Serializable {
 
 		sb.append("{");
 
+		Long id = getId();
+
 		if (id != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -226,6 +289,8 @@ public class Pin implements Serializable {
 
 			sb.append(id);
 		}
+
+		MappedProduct mappedProduct = getMappedProduct();
 
 		if (mappedProduct != null) {
 			if (sb.length() > 1) {
@@ -237,6 +302,8 @@ public class Pin implements Serializable {
 			sb.append(String.valueOf(mappedProduct));
 		}
 
+		Double positionX = getPositionX();
+
 		if (positionX != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -247,6 +314,8 @@ public class Pin implements Serializable {
 			sb.append(positionX);
 		}
 
+		Double positionY = getPositionY();
+
 		if (positionY != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -256,6 +325,8 @@ public class Pin implements Serializable {
 
 			sb.append(positionY);
 		}
+
+		String sequence = getSequence();
 
 		if (sequence != null) {
 			if (sb.length() > 1) {

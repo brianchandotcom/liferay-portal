@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -54,111 +55,157 @@ public class ContentFieldValue implements Serializable {
 
 	@Schema(description = "The field's content for simple types.")
 	public String getData() {
+		if (_dataSupplier != null) {
+			data = _dataSupplier.get();
+
+			_dataSupplier = null;
+		}
+
 		return data;
 	}
 
 	public void setData(String data) {
 		this.data = data;
+
+		_dataSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setData(UnsafeSupplier<String, Exception> dataUnsafeSupplier) {
-		try {
-			data = dataUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_dataSupplier = () -> {
+			try {
+				return dataUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The field's content for simple types.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String data;
 
+	private Supplier<String> _dataSupplier;
+
 	@Schema(description = "A content document element.")
 	@Valid
 	public ContentDocument getDocument() {
+		if (_documentSupplier != null) {
+			document = _documentSupplier.get();
+
+			_documentSupplier = null;
+		}
+
 		return document;
 	}
 
 	public void setDocument(ContentDocument document) {
 		this.document = document;
+
+		_documentSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDocument(
 		UnsafeSupplier<ContentDocument, Exception> documentUnsafeSupplier) {
 
-		try {
-			document = documentUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_documentSupplier = () -> {
+			try {
+				return documentUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "A content document element.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ContentDocument document;
 
+	private Supplier<ContentDocument> _documentSupplier;
+
 	@Schema(description = "A point determined by latitude and longitude.")
 	@Valid
 	public Geo getGeo() {
+		if (_geoSupplier != null) {
+			geo = _geoSupplier.get();
+
+			_geoSupplier = null;
+		}
+
 		return geo;
 	}
 
 	public void setGeo(Geo geo) {
 		this.geo = geo;
+
+		_geoSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setGeo(UnsafeSupplier<Geo, Exception> geoUnsafeSupplier) {
-		try {
-			geo = geoUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_geoSupplier = () -> {
+			try {
+				return geoUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "A point determined by latitude and longitude.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Geo geo;
 
+	private Supplier<Geo> _geoSupplier;
+
 	@Schema(
 		description = "A content document element that stores an image file."
 	)
 	@Valid
 	public ContentDocument getImage() {
+		if (_imageSupplier != null) {
+			image = _imageSupplier.get();
+
+			_imageSupplier = null;
+		}
+
 		return image;
 	}
 
 	public void setImage(ContentDocument image) {
 		this.image = image;
+
+		_imageSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setImage(
 		UnsafeSupplier<ContentDocument, Exception> imageUnsafeSupplier) {
 
-		try {
-			image = imageUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_imageSupplier = () -> {
+			try {
+				return imageUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -167,35 +214,55 @@ public class ContentFieldValue implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ContentDocument image;
 
+	private Supplier<ContentDocument> _imageSupplier;
+
 	@Schema(description = "A link to a page on the server.")
 	public String getLink() {
+		if (_linkSupplier != null) {
+			link = _linkSupplier.get();
+
+			_linkSupplier = null;
+		}
+
 		return link;
 	}
 
 	public void setLink(String link) {
 		this.link = link;
+
+		_linkSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setLink(UnsafeSupplier<String, Exception> linkUnsafeSupplier) {
-		try {
-			link = linkUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_linkSupplier = () -> {
+			try {
+				return linkUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "A link to a page on the server.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String link;
 
+	private Supplier<String> _linkSupplier;
+
 	@Schema(description = "A link to structured content on the server.")
 	@Valid
 	public StructuredContentLink getStructuredContentLink() {
+		if (_structuredContentLinkSupplier != null) {
+			structuredContentLink = _structuredContentLinkSupplier.get();
+
+			_structuredContentLinkSupplier = null;
+		}
+
 		return structuredContentLink;
 	}
 
@@ -203,6 +270,8 @@ public class ContentFieldValue implements Serializable {
 		StructuredContentLink structuredContentLink) {
 
 		this.structuredContentLink = structuredContentLink;
+
+		_structuredContentLinkSupplier = null;
 	}
 
 	@JsonIgnore
@@ -210,48 +279,64 @@ public class ContentFieldValue implements Serializable {
 		UnsafeSupplier<StructuredContentLink, Exception>
 			structuredContentLinkUnsafeSupplier) {
 
-		try {
-			structuredContentLink = structuredContentLinkUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_structuredContentLinkSupplier = () -> {
+			try {
+				return structuredContentLinkUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "A link to structured content on the server.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected StructuredContentLink structuredContentLink;
 
+	private Supplier<StructuredContentLink> _structuredContentLinkSupplier;
+
 	@Schema(description = "The field's visible value")
 	public String getValue() {
+		if (_valueSupplier != null) {
+			value = _valueSupplier.get();
+
+			_valueSupplier = null;
+		}
+
 		return value;
 	}
 
 	public void setValue(String value) {
 		this.value = value;
+
+		_valueSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setValue(
 		UnsafeSupplier<String, Exception> valueUnsafeSupplier) {
 
-		try {
-			value = valueUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_valueSupplier = () -> {
+			try {
+				return valueUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The field's visible value")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String value;
+
+	private Supplier<String> _valueSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -280,6 +365,8 @@ public class ContentFieldValue implements Serializable {
 
 		sb.append("{");
 
+		String data = getData();
+
 		if (data != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -294,6 +381,8 @@ public class ContentFieldValue implements Serializable {
 			sb.append("\"");
 		}
 
+		ContentDocument document = getDocument();
+
 		if (document != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -303,6 +392,8 @@ public class ContentFieldValue implements Serializable {
 
 			sb.append(String.valueOf(document));
 		}
+
+		Geo geo = getGeo();
 
 		if (geo != null) {
 			if (sb.length() > 1) {
@@ -314,6 +405,8 @@ public class ContentFieldValue implements Serializable {
 			sb.append(String.valueOf(geo));
 		}
 
+		ContentDocument image = getImage();
+
 		if (image != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -323,6 +416,8 @@ public class ContentFieldValue implements Serializable {
 
 			sb.append(String.valueOf(image));
 		}
+
+		String link = getLink();
 
 		if (link != null) {
 			if (sb.length() > 1) {
@@ -338,6 +433,9 @@ public class ContentFieldValue implements Serializable {
 			sb.append("\"");
 		}
 
+		StructuredContentLink structuredContentLink =
+			getStructuredContentLink();
+
 		if (structuredContentLink != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -347,6 +445,8 @@ public class ContentFieldValue implements Serializable {
 
 			sb.append(String.valueOf(structuredContentLink));
 		}
+
+		String value = getValue();
 
 		if (value != null) {
 			if (sb.length() > 1) {

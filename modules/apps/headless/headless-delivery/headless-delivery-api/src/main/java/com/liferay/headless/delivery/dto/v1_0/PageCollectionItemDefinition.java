@@ -25,6 +25,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -58,31 +59,43 @@ public class PageCollectionItemDefinition implements Serializable {
 	@Schema(description = "The page collection item's configuration.")
 	@Valid
 	public Object getCollectionItemConfig() {
+		if (_collectionItemConfigSupplier != null) {
+			collectionItemConfig = _collectionItemConfigSupplier.get();
+
+			_collectionItemConfigSupplier = null;
+		}
+
 		return collectionItemConfig;
 	}
 
 	public void setCollectionItemConfig(Object collectionItemConfig) {
 		this.collectionItemConfig = collectionItemConfig;
+
+		_collectionItemConfigSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setCollectionItemConfig(
 		UnsafeSupplier<Object, Exception> collectionItemConfigUnsafeSupplier) {
 
-		try {
-			collectionItemConfig = collectionItemConfigUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_collectionItemConfigSupplier = () -> {
+			try {
+				return collectionItemConfigUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The page collection item's configuration.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object collectionItemConfig;
+
+	private Supplier<Object> _collectionItemConfigSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -112,6 +125,8 @@ public class PageCollectionItemDefinition implements Serializable {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		Object collectionItemConfig = getCollectionItemConfig();
 
 		if (collectionItemConfig != null) {
 			if (sb.length() > 1) {

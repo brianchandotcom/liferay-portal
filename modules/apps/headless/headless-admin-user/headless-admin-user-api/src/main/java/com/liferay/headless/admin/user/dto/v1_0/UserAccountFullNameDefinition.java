@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -59,6 +60,13 @@ public class UserAccountFullNameDefinition implements Serializable {
 	public UserAccountFullNameDefinitionField[]
 		getUserAccountFullNameDefinitionFields() {
 
+		if (_userAccountFullNameDefinitionFieldsSupplier != null) {
+			userAccountFullNameDefinitionFields =
+				_userAccountFullNameDefinitionFieldsSupplier.get();
+
+			_userAccountFullNameDefinitionFieldsSupplier = null;
+		}
+
 		return userAccountFullNameDefinitionFields;
 	}
 
@@ -68,6 +76,8 @@ public class UserAccountFullNameDefinition implements Serializable {
 
 		this.userAccountFullNameDefinitionFields =
 			userAccountFullNameDefinitionFields;
+
+		_userAccountFullNameDefinitionFieldsSupplier = null;
 	}
 
 	@JsonIgnore
@@ -75,22 +85,26 @@ public class UserAccountFullNameDefinition implements Serializable {
 		UnsafeSupplier<UserAccountFullNameDefinitionField[], Exception>
 			userAccountFullNameDefinitionFieldsUnsafeSupplier) {
 
-		try {
-			userAccountFullNameDefinitionFields =
-				userAccountFullNameDefinitionFieldsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_userAccountFullNameDefinitionFieldsSupplier = () -> {
+			try {
+				return userAccountFullNameDefinitionFieldsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "A list of the user's account.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected UserAccountFullNameDefinitionField[]
 		userAccountFullNameDefinitionFields;
+
+	private Supplier<UserAccountFullNameDefinitionField[]>
+		_userAccountFullNameDefinitionFieldsSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -120,6 +134,10 @@ public class UserAccountFullNameDefinition implements Serializable {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		UserAccountFullNameDefinitionField[]
+			userAccountFullNameDefinitionFields =
+				getUserAccountFullNameDefinitionFields();
 
 		if (userAccountFullNameDefinitionFields != null) {
 			if (sb.length() > 1) {

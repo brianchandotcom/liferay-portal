@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -56,26 +57,36 @@ public class NoneActionExecutionResult implements Serializable {
 		description = "Whether to reload the page after the action is executed."
 	)
 	public Boolean getReload() {
+		if (_reloadSupplier != null) {
+			reload = _reloadSupplier.get();
+
+			_reloadSupplier = null;
+		}
+
 		return reload;
 	}
 
 	public void setReload(Boolean reload) {
 		this.reload = reload;
+
+		_reloadSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setReload(
 		UnsafeSupplier<Boolean, Exception> reloadUnsafeSupplier) {
 
-		try {
-			reload = reloadUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_reloadSupplier = () -> {
+			try {
+				return reloadUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -83,6 +94,8 @@ public class NoneActionExecutionResult implements Serializable {
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean reload;
+
+	private Supplier<Boolean> _reloadSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -111,6 +124,8 @@ public class NoneActionExecutionResult implements Serializable {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		Boolean reload = getReload();
 
 		if (reload != null) {
 			if (sb.length() > 1) {

@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -56,26 +57,36 @@ public class Location implements Serializable {
 		description = "The organization's country. This follows the [`addressCountry`](https://schema.org/addressCountry) specification."
 	)
 	public String getAddressCountry() {
+		if (_addressCountrySupplier != null) {
+			addressCountry = _addressCountrySupplier.get();
+
+			_addressCountrySupplier = null;
+		}
+
 		return addressCountry;
 	}
 
 	public void setAddressCountry(String addressCountry) {
 		this.addressCountry = addressCountry;
+
+		_addressCountrySupplier = null;
 	}
 
 	@JsonIgnore
 	public void setAddressCountry(
 		UnsafeSupplier<String, Exception> addressCountryUnsafeSupplier) {
 
-		try {
-			addressCountry = addressCountryUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_addressCountrySupplier = () -> {
+			try {
+				return addressCountryUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -84,9 +95,17 @@ public class Location implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String addressCountry;
 
+	private Supplier<String> _addressCountrySupplier;
+
 	@Schema
 	@Valid
 	public Map<String, String> getAddressCountry_i18n() {
+		if (_addressCountry_i18nSupplier != null) {
+			addressCountry_i18n = _addressCountry_i18nSupplier.get();
+
+			_addressCountry_i18nSupplier = null;
+		}
+
 		return addressCountry_i18n;
 	}
 
@@ -94,6 +113,8 @@ public class Location implements Serializable {
 		Map<String, String> addressCountry_i18n) {
 
 		this.addressCountry_i18n = addressCountry_i18n;
+
+		_addressCountry_i18nSupplier = null;
 	}
 
 	@JsonIgnore
@@ -101,45 +122,59 @@ public class Location implements Serializable {
 		UnsafeSupplier<Map<String, String>, Exception>
 			addressCountry_i18nUnsafeSupplier) {
 
-		try {
-			addressCountry_i18n = addressCountry_i18nUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_addressCountry_i18nSupplier = () -> {
+			try {
+				return addressCountry_i18nUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> addressCountry_i18n;
 
+	private Supplier<Map<String, String>> _addressCountry_i18nSupplier;
+
 	@Schema(
 		description = "The organization's region. This follows the [`addressRegion`](https://schema.org/addressRegion) specification."
 	)
 	public String getAddressRegion() {
+		if (_addressRegionSupplier != null) {
+			addressRegion = _addressRegionSupplier.get();
+
+			_addressRegionSupplier = null;
+		}
+
 		return addressRegion;
 	}
 
 	public void setAddressRegion(String addressRegion) {
 		this.addressRegion = addressRegion;
+
+		_addressRegionSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setAddressRegion(
 		UnsafeSupplier<String, Exception> addressRegionUnsafeSupplier) {
 
-		try {
-			addressRegion = addressRegionUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_addressRegionSupplier = () -> {
+			try {
+				return addressRegionUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -148,31 +183,45 @@ public class Location implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String addressRegion;
 
+	private Supplier<String> _addressRegionSupplier;
+
 	@Schema(description = "The location's ID.")
 	public Long getId() {
+		if (_idSupplier != null) {
+			id = _idSupplier.get();
+
+			_idSupplier = null;
+		}
+
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
+
+		_idSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_idSupplier = () -> {
+			try {
+				return idUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The location's ID.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
+
+	private Supplier<Long> _idSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -201,6 +250,8 @@ public class Location implements Serializable {
 
 		sb.append("{");
 
+		String addressCountry = getAddressCountry();
+
 		if (addressCountry != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -215,6 +266,8 @@ public class Location implements Serializable {
 			sb.append("\"");
 		}
 
+		Map<String, String> addressCountry_i18n = getAddressCountry_i18n();
+
 		if (addressCountry_i18n != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -224,6 +277,8 @@ public class Location implements Serializable {
 
 			sb.append(_toJSON(addressCountry_i18n));
 		}
+
+		String addressRegion = getAddressRegion();
 
 		if (addressRegion != null) {
 			if (sb.length() > 1) {
@@ -238,6 +293,8 @@ public class Location implements Serializable {
 
 			sb.append("\"");
 		}
+
+		Long id = getId();
 
 		if (id != null) {
 			if (sb.length() > 1) {

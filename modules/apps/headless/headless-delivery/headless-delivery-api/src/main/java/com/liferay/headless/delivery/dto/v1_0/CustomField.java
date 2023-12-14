@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -55,82 +56,116 @@ public class CustomField implements Serializable {
 	@Schema(description = "The field's value.")
 	@Valid
 	public CustomValue getCustomValue() {
+		if (_customValueSupplier != null) {
+			customValue = _customValueSupplier.get();
+
+			_customValueSupplier = null;
+		}
+
 		return customValue;
 	}
 
 	public void setCustomValue(CustomValue customValue) {
 		this.customValue = customValue;
+
+		_customValueSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setCustomValue(
 		UnsafeSupplier<CustomValue, Exception> customValueUnsafeSupplier) {
 
-		try {
-			customValue = customValueUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_customValueSupplier = () -> {
+			try {
+				return customValueUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The field's value.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected CustomValue customValue;
 
+	private Supplier<CustomValue> _customValueSupplier;
+
 	@Schema(description = "The field type (e.g., image, text, etc.).")
 	public String getDataType() {
+		if (_dataTypeSupplier != null) {
+			dataType = _dataTypeSupplier.get();
+
+			_dataTypeSupplier = null;
+		}
+
 		return dataType;
 	}
 
 	public void setDataType(String dataType) {
 		this.dataType = dataType;
+
+		_dataTypeSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDataType(
 		UnsafeSupplier<String, Exception> dataTypeUnsafeSupplier) {
 
-		try {
-			dataType = dataTypeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_dataTypeSupplier = () -> {
+			try {
+				return dataTypeUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The field type (e.g., image, text, etc.).")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String dataType;
 
+	private Supplier<String> _dataTypeSupplier;
+
 	@Schema(
 		description = "The field's internal name. This is valid for comparisons and unique in the structured content."
 	)
 	public String getName() {
+		if (_nameSupplier != null) {
+			name = _nameSupplier.get();
+
+			_nameSupplier = null;
+		}
+
 		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
+
+		_nameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
-		try {
-			name = nameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_nameSupplier = () -> {
+			try {
+				return nameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -138,6 +173,8 @@ public class CustomField implements Serializable {
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
+
+	private Supplier<String> _nameSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -166,6 +203,8 @@ public class CustomField implements Serializable {
 
 		sb.append("{");
 
+		CustomValue customValue = getCustomValue();
+
 		if (customValue != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -175,6 +214,8 @@ public class CustomField implements Serializable {
 
 			sb.append(String.valueOf(customValue));
 		}
+
+		String dataType = getDataType();
 
 		if (dataType != null) {
 			if (sb.length() > 1) {
@@ -189,6 +230,8 @@ public class CustomField implements Serializable {
 
 			sb.append("\"");
 		}
+
+		String name = getName();
 
 		if (name != null) {
 			if (sb.length() > 1) {

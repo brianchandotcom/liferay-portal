@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -51,40 +52,60 @@ public class FacetConfiguration implements Serializable {
 
 	@Schema(description = "The name of the aggregation.")
 	public String getAggregationName() {
+		if (_aggregationNameSupplier != null) {
+			aggregationName = _aggregationNameSupplier.get();
+
+			_aggregationNameSupplier = null;
+		}
+
 		return aggregationName;
 	}
 
 	public void setAggregationName(String aggregationName) {
 		this.aggregationName = aggregationName;
+
+		_aggregationNameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setAggregationName(
 		UnsafeSupplier<String, Exception> aggregationNameUnsafeSupplier) {
 
-		try {
-			aggregationName = aggregationNameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_aggregationNameSupplier = () -> {
+			try {
+				return aggregationNameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The name of the aggregation.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String aggregationName;
 
+	private Supplier<String> _aggregationNameSupplier;
+
 	@Schema(description = "Additional attributes for the facet.")
 	@Valid
 	public Map<String, Object> getAttributes() {
+		if (_attributesSupplier != null) {
+			attributes = _attributesSupplier.get();
+
+			_attributesSupplier = null;
+		}
+
 		return attributes;
 	}
 
 	public void setAttributes(Map<String, Object> attributes) {
 		this.attributes = attributes;
+
+		_attributesSupplier = null;
 	}
 
 	@JsonIgnore
@@ -92,131 +113,183 @@ public class FacetConfiguration implements Serializable {
 		UnsafeSupplier<Map<String, Object>, Exception>
 			attributesUnsafeSupplier) {
 
-		try {
-			attributes = attributesUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_attributesSupplier = () -> {
+			try {
+				return attributesUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "Additional attributes for the facet.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, Object> attributes;
 
+	private Supplier<Map<String, Object>> _attributesSupplier;
+
 	@Schema(description = "Frequency threshold for showing the terms.")
 	public Integer getFrequencyThreshold() {
+		if (_frequencyThresholdSupplier != null) {
+			frequencyThreshold = _frequencyThresholdSupplier.get();
+
+			_frequencyThresholdSupplier = null;
+		}
+
 		return frequencyThreshold;
 	}
 
 	public void setFrequencyThreshold(Integer frequencyThreshold) {
 		this.frequencyThreshold = frequencyThreshold;
+
+		_frequencyThresholdSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setFrequencyThreshold(
 		UnsafeSupplier<Integer, Exception> frequencyThresholdUnsafeSupplier) {
 
-		try {
-			frequencyThreshold = frequencyThresholdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_frequencyThresholdSupplier = () -> {
+			try {
+				return frequencyThresholdUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "Frequency threshold for showing the terms.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer frequencyThreshold;
 
+	private Supplier<Integer> _frequencyThresholdSupplier;
+
 	@Schema(description = "Maximum number of terms to be shown.")
 	public Integer getMaxTerms() {
+		if (_maxTermsSupplier != null) {
+			maxTerms = _maxTermsSupplier.get();
+
+			_maxTermsSupplier = null;
+		}
+
 		return maxTerms;
 	}
 
 	public void setMaxTerms(Integer maxTerms) {
 		this.maxTerms = maxTerms;
+
+		_maxTermsSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setMaxTerms(
 		UnsafeSupplier<Integer, Exception> maxTermsUnsafeSupplier) {
 
-		try {
-			maxTerms = maxTermsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_maxTermsSupplier = () -> {
+			try {
+				return maxTermsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "Maximum number of terms to be shown.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer maxTerms;
 
+	private Supplier<Integer> _maxTermsSupplier;
+
 	@Schema(description = "The name of the facet.")
 	public String getName() {
+		if (_nameSupplier != null) {
+			name = _nameSupplier.get();
+
+			_nameSupplier = null;
+		}
+
 		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
+
+		_nameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
-		try {
-			name = nameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_nameSupplier = () -> {
+			try {
+				return nameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The name of the facet.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	private Supplier<String> _nameSupplier;
+
 	@Schema(description = "The values / selections to be filtered by.")
 	@Valid
 	public Object[] getValues() {
+		if (_valuesSupplier != null) {
+			values = _valuesSupplier.get();
+
+			_valuesSupplier = null;
+		}
+
 		return values;
 	}
 
 	public void setValues(Object[] values) {
 		this.values = values;
+
+		_valuesSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setValues(
 		UnsafeSupplier<Object[], Exception> valuesUnsafeSupplier) {
 
-		try {
-			values = valuesUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_valuesSupplier = () -> {
+			try {
+				return valuesUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The values / selections to be filtered by.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object[] values;
+
+	private Supplier<Object[]> _valuesSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -245,6 +318,8 @@ public class FacetConfiguration implements Serializable {
 
 		sb.append("{");
 
+		String aggregationName = getAggregationName();
+
 		if (aggregationName != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -259,6 +334,8 @@ public class FacetConfiguration implements Serializable {
 			sb.append("\"");
 		}
 
+		Map<String, Object> attributes = getAttributes();
+
 		if (attributes != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -268,6 +345,8 @@ public class FacetConfiguration implements Serializable {
 
 			sb.append(_toJSON(attributes));
 		}
+
+		Integer frequencyThreshold = getFrequencyThreshold();
 
 		if (frequencyThreshold != null) {
 			if (sb.length() > 1) {
@@ -279,6 +358,8 @@ public class FacetConfiguration implements Serializable {
 			sb.append(frequencyThreshold);
 		}
 
+		Integer maxTerms = getMaxTerms();
+
 		if (maxTerms != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -288,6 +369,8 @@ public class FacetConfiguration implements Serializable {
 
 			sb.append(maxTerms);
 		}
+
+		String name = getName();
 
 		if (name != null) {
 			if (sb.length() > 1) {
@@ -302,6 +385,8 @@ public class FacetConfiguration implements Serializable {
 
 			sb.append("\"");
 		}
+
+		Object[] values = getValues();
 
 		if (values != null) {
 			if (sb.length() > 1) {

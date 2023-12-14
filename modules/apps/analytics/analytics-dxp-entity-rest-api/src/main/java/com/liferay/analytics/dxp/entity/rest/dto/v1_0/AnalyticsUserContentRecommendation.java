@@ -28,6 +28,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -57,197 +58,280 @@ public class AnalyticsUserContentRecommendation implements Serializable {
 
 	@Schema
 	public Long[] getAssetCategoryIds() {
+		if (_assetCategoryIdsSupplier != null) {
+			assetCategoryIds = _assetCategoryIdsSupplier.get();
+
+			_assetCategoryIdsSupplier = null;
+		}
+
 		return assetCategoryIds;
 	}
 
 	public void setAssetCategoryIds(Long[] assetCategoryIds) {
 		this.assetCategoryIds = assetCategoryIds;
+
+		_assetCategoryIdsSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setAssetCategoryIds(
 		UnsafeSupplier<Long[], Exception> assetCategoryIdsUnsafeSupplier) {
 
-		try {
-			assetCategoryIds = assetCategoryIdsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_assetCategoryIdsSupplier = () -> {
+			try {
+				return assetCategoryIdsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long[] assetCategoryIds;
 
+	private Supplier<Long[]> _assetCategoryIdsSupplier;
+
 	@Schema
 	public Date getCreateDate() {
+		if (_createDateSupplier != null) {
+			createDate = _createDateSupplier.get();
+
+			_createDateSupplier = null;
+		}
+
 		return createDate;
 	}
 
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
+
+		_createDateSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setCreateDate(
 		UnsafeSupplier<Date, Exception> createDateUnsafeSupplier) {
 
-		try {
-			createDate = createDateUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_createDateSupplier = () -> {
+			try {
+				return createDateUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date createDate;
 
+	private Supplier<Date> _createDateSupplier;
+
 	@Schema
 	public String getJobId() {
+		if (_jobIdSupplier != null) {
+			jobId = _jobIdSupplier.get();
+
+			_jobIdSupplier = null;
+		}
+
 		return jobId;
 	}
 
 	public void setJobId(String jobId) {
 		this.jobId = jobId;
+
+		_jobIdSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setJobId(
 		UnsafeSupplier<String, Exception> jobIdUnsafeSupplier) {
 
-		try {
-			jobId = jobIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_jobIdSupplier = () -> {
+			try {
+				return jobIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String jobId;
 
+	private Supplier<String> _jobIdSupplier;
+
 	@Schema
 	public Integer getRank() {
+		if (_rankSupplier != null) {
+			rank = _rankSupplier.get();
+
+			_rankSupplier = null;
+		}
+
 		return rank;
 	}
 
 	public void setRank(Integer rank) {
 		this.rank = rank;
+
+		_rankSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setRank(UnsafeSupplier<Integer, Exception> rankUnsafeSupplier) {
-		try {
-			rank = rankUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_rankSupplier = () -> {
+			try {
+				return rankUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer rank;
 
+	private Supplier<Integer> _rankSupplier;
+
 	@Schema
 	public Long getRecommendedAssetEntryId() {
+		if (_recommendedAssetEntryIdSupplier != null) {
+			recommendedAssetEntryId = _recommendedAssetEntryIdSupplier.get();
+
+			_recommendedAssetEntryIdSupplier = null;
+		}
+
 		return recommendedAssetEntryId;
 	}
 
 	public void setRecommendedAssetEntryId(Long recommendedAssetEntryId) {
 		this.recommendedAssetEntryId = recommendedAssetEntryId;
+
+		_recommendedAssetEntryIdSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setRecommendedAssetEntryId(
 		UnsafeSupplier<Long, Exception> recommendedAssetEntryIdUnsafeSupplier) {
 
-		try {
-			recommendedAssetEntryId =
-				recommendedAssetEntryIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_recommendedAssetEntryIdSupplier = () -> {
+			try {
+				return recommendedAssetEntryIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long recommendedAssetEntryId;
 
+	private Supplier<Long> _recommendedAssetEntryIdSupplier;
+
 	@Schema
 	@Valid
 	public Float getScore() {
+		if (_scoreSupplier != null) {
+			score = _scoreSupplier.get();
+
+			_scoreSupplier = null;
+		}
+
 		return score;
 	}
 
 	public void setScore(Float score) {
 		this.score = score;
+
+		_scoreSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setScore(UnsafeSupplier<Float, Exception> scoreUnsafeSupplier) {
-		try {
-			score = scoreUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_scoreSupplier = () -> {
+			try {
+				return scoreUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Float score;
 
+	private Supplier<Float> _scoreSupplier;
+
 	@Schema
 	public Long getUserId() {
+		if (_userIdSupplier != null) {
+			userId = _userIdSupplier.get();
+
+			_userIdSupplier = null;
+		}
+
 		return userId;
 	}
 
 	public void setUserId(Long userId) {
 		this.userId = userId;
+
+		_userIdSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setUserId(
 		UnsafeSupplier<Long, Exception> userIdUnsafeSupplier) {
 
-		try {
-			userId = userIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_userIdSupplier = () -> {
+			try {
+				return userIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long userId;
+
+	private Supplier<Long> _userIdSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -281,6 +365,8 @@ public class AnalyticsUserContentRecommendation implements Serializable {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+		Long[] assetCategoryIds = getAssetCategoryIds();
+
 		if (assetCategoryIds != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -301,6 +387,8 @@ public class AnalyticsUserContentRecommendation implements Serializable {
 			sb.append("]");
 		}
 
+		Date createDate = getCreateDate();
+
 		if (createDate != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -314,6 +402,8 @@ public class AnalyticsUserContentRecommendation implements Serializable {
 
 			sb.append("\"");
 		}
+
+		String jobId = getJobId();
 
 		if (jobId != null) {
 			if (sb.length() > 1) {
@@ -329,6 +419,8 @@ public class AnalyticsUserContentRecommendation implements Serializable {
 			sb.append("\"");
 		}
 
+		Integer rank = getRank();
+
 		if (rank != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -338,6 +430,8 @@ public class AnalyticsUserContentRecommendation implements Serializable {
 
 			sb.append(rank);
 		}
+
+		Long recommendedAssetEntryId = getRecommendedAssetEntryId();
 
 		if (recommendedAssetEntryId != null) {
 			if (sb.length() > 1) {
@@ -349,6 +443,8 @@ public class AnalyticsUserContentRecommendation implements Serializable {
 			sb.append(recommendedAssetEntryId);
 		}
 
+		Float score = getScore();
+
 		if (score != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -358,6 +454,8 @@ public class AnalyticsUserContentRecommendation implements Serializable {
 
 			sb.append(score);
 		}
+
+		Long userId = getUserId();
 
 		if (userId != null) {
 			if (sb.length() > 1) {

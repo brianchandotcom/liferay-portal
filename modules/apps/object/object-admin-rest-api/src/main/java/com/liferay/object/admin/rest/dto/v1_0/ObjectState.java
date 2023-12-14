@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -51,59 +52,89 @@ public class ObjectState implements Serializable {
 
 	@Schema
 	public Long getId() {
+		if (_idSupplier != null) {
+			id = _idSupplier.get();
+
+			_idSupplier = null;
+		}
+
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
+
+		_idSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_idSupplier = () -> {
+			try {
+				return idUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	private Supplier<Long> _idSupplier;
+
 	@Schema
 	public String getKey() {
+		if (_keySupplier != null) {
+			key = _keySupplier.get();
+
+			_keySupplier = null;
+		}
+
 		return key;
 	}
 
 	public void setKey(String key) {
 		this.key = key;
+
+		_keySupplier = null;
 	}
 
 	@JsonIgnore
 	public void setKey(UnsafeSupplier<String, Exception> keyUnsafeSupplier) {
-		try {
-			key = keyUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_keySupplier = () -> {
+			try {
+				return keyUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String key;
 
+	private Supplier<String> _keySupplier;
+
 	@Schema
 	@Valid
 	public ObjectStateTransition[] getObjectStateTransitions() {
+		if (_objectStateTransitionsSupplier != null) {
+			objectStateTransitions = _objectStateTransitionsSupplier.get();
+
+			_objectStateTransitionsSupplier = null;
+		}
+
 		return objectStateTransitions;
 	}
 
@@ -111,6 +142,8 @@ public class ObjectState implements Serializable {
 		ObjectStateTransition[] objectStateTransitions) {
 
 		this.objectStateTransitions = objectStateTransitions;
+
+		_objectStateTransitionsSupplier = null;
 	}
 
 	@JsonIgnore
@@ -118,20 +151,24 @@ public class ObjectState implements Serializable {
 		UnsafeSupplier<ObjectStateTransition[], Exception>
 			objectStateTransitionsUnsafeSupplier) {
 
-		try {
-			objectStateTransitions = objectStateTransitionsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_objectStateTransitionsSupplier = () -> {
+			try {
+				return objectStateTransitionsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ObjectStateTransition[] objectStateTransitions;
+
+	private Supplier<ObjectStateTransition[]> _objectStateTransitionsSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -160,6 +197,8 @@ public class ObjectState implements Serializable {
 
 		sb.append("{");
 
+		Long id = getId();
+
 		if (id != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -169,6 +208,8 @@ public class ObjectState implements Serializable {
 
 			sb.append(id);
 		}
+
+		String key = getKey();
 
 		if (key != null) {
 			if (sb.length() > 1) {
@@ -183,6 +224,9 @@ public class ObjectState implements Serializable {
 
 			sb.append("\"");
 		}
+
+		ObjectStateTransition[] objectStateTransitions =
+			getObjectStateTransitions();
 
 		if (objectStateTransitions != null) {
 			if (sb.length() > 1) {

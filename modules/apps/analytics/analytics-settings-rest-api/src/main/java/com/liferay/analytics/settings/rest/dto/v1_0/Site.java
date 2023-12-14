@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -49,111 +50,159 @@ public class Site implements Serializable {
 
 	@Schema
 	public String getChannelName() {
+		if (_channelNameSupplier != null) {
+			channelName = _channelNameSupplier.get();
+
+			_channelNameSupplier = null;
+		}
+
 		return channelName;
 	}
 
 	public void setChannelName(String channelName) {
 		this.channelName = channelName;
+
+		_channelNameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setChannelName(
 		UnsafeSupplier<String, Exception> channelNameUnsafeSupplier) {
 
-		try {
-			channelName = channelNameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_channelNameSupplier = () -> {
+			try {
+				return channelNameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String channelName;
 
+	private Supplier<String> _channelNameSupplier;
+
 	@Schema
 	public String getFriendlyURL() {
+		if (_friendlyURLSupplier != null) {
+			friendlyURL = _friendlyURLSupplier.get();
+
+			_friendlyURLSupplier = null;
+		}
+
 		return friendlyURL;
 	}
 
 	public void setFriendlyURL(String friendlyURL) {
 		this.friendlyURL = friendlyURL;
+
+		_friendlyURLSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setFriendlyURL(
 		UnsafeSupplier<String, Exception> friendlyURLUnsafeSupplier) {
 
-		try {
-			friendlyURL = friendlyURLUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_friendlyURLSupplier = () -> {
+			try {
+				return friendlyURLUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String friendlyURL;
 
+	private Supplier<String> _friendlyURLSupplier;
+
 	@Schema
 	public Long getId() {
+		if (_idSupplier != null) {
+			id = _idSupplier.get();
+
+			_idSupplier = null;
+		}
+
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
+
+		_idSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_idSupplier = () -> {
+			try {
+				return idUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	private Supplier<Long> _idSupplier;
+
 	@Schema
 	public String getName() {
+		if (_nameSupplier != null) {
+			name = _nameSupplier.get();
+
+			_nameSupplier = null;
+		}
+
 		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
+
+		_nameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
-		try {
-			name = nameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_nameSupplier = () -> {
+			try {
+				return nameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
+
+	private Supplier<String> _nameSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -182,6 +231,8 @@ public class Site implements Serializable {
 
 		sb.append("{");
 
+		String channelName = getChannelName();
+
 		if (channelName != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -195,6 +246,8 @@ public class Site implements Serializable {
 
 			sb.append("\"");
 		}
+
+		String friendlyURL = getFriendlyURL();
 
 		if (friendlyURL != null) {
 			if (sb.length() > 1) {
@@ -210,6 +263,8 @@ public class Site implements Serializable {
 			sb.append("\"");
 		}
 
+		Long id = getId();
+
 		if (id != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -219,6 +274,8 @@ public class Site implements Serializable {
 
 			sb.append(id);
 		}
+
+		String name = getName();
 
 		if (name != null) {
 			if (sb.length() > 1) {

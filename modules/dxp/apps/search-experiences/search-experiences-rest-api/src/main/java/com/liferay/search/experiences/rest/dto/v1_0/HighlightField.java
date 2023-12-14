@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -49,87 +50,123 @@ public class HighlightField implements Serializable {
 
 	@Schema
 	public Integer getFragment_offset() {
+		if (_fragment_offsetSupplier != null) {
+			fragment_offset = _fragment_offsetSupplier.get();
+
+			_fragment_offsetSupplier = null;
+		}
+
 		return fragment_offset;
 	}
 
 	public void setFragment_offset(Integer fragment_offset) {
 		this.fragment_offset = fragment_offset;
+
+		_fragment_offsetSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setFragment_offset(
 		UnsafeSupplier<Integer, Exception> fragment_offsetUnsafeSupplier) {
 
-		try {
-			fragment_offset = fragment_offsetUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_fragment_offsetSupplier = () -> {
+			try {
+				return fragment_offsetUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer fragment_offset;
 
+	private Supplier<Integer> _fragment_offsetSupplier;
+
 	@Schema
 	public Integer getFragment_size() {
+		if (_fragment_sizeSupplier != null) {
+			fragment_size = _fragment_sizeSupplier.get();
+
+			_fragment_sizeSupplier = null;
+		}
+
 		return fragment_size;
 	}
 
 	public void setFragment_size(Integer fragment_size) {
 		this.fragment_size = fragment_size;
+
+		_fragment_sizeSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setFragment_size(
 		UnsafeSupplier<Integer, Exception> fragment_sizeUnsafeSupplier) {
 
-		try {
-			fragment_size = fragment_sizeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_fragment_sizeSupplier = () -> {
+			try {
+				return fragment_sizeUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer fragment_size;
 
+	private Supplier<Integer> _fragment_sizeSupplier;
+
 	@Schema
 	public Integer getNumber_of_fragments() {
+		if (_number_of_fragmentsSupplier != null) {
+			number_of_fragments = _number_of_fragmentsSupplier.get();
+
+			_number_of_fragmentsSupplier = null;
+		}
+
 		return number_of_fragments;
 	}
 
 	public void setNumber_of_fragments(Integer number_of_fragments) {
 		this.number_of_fragments = number_of_fragments;
+
+		_number_of_fragmentsSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setNumber_of_fragments(
 		UnsafeSupplier<Integer, Exception> number_of_fragmentsUnsafeSupplier) {
 
-		try {
-			number_of_fragments = number_of_fragmentsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_number_of_fragmentsSupplier = () -> {
+			try {
+				return number_of_fragmentsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer number_of_fragments;
+
+	private Supplier<Integer> _number_of_fragmentsSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -158,6 +195,8 @@ public class HighlightField implements Serializable {
 
 		sb.append("{");
 
+		Integer fragment_offset = getFragment_offset();
+
 		if (fragment_offset != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -168,6 +207,8 @@ public class HighlightField implements Serializable {
 			sb.append(fragment_offset);
 		}
 
+		Integer fragment_size = getFragment_size();
+
 		if (fragment_size != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -177,6 +218,8 @@ public class HighlightField implements Serializable {
 
 			sb.append(fragment_size);
 		}
+
+		Integer number_of_fragments = getNumber_of_fragments();
 
 		if (number_of_fragments != null) {
 			if (sb.length() > 1) {

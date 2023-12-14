@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -55,39 +56,59 @@ public class DataRecordCollection implements Serializable {
 
 	@Schema
 	public Long getDataDefinitionId() {
+		if (_dataDefinitionIdSupplier != null) {
+			dataDefinitionId = _dataDefinitionIdSupplier.get();
+
+			_dataDefinitionIdSupplier = null;
+		}
+
 		return dataDefinitionId;
 	}
 
 	public void setDataDefinitionId(Long dataDefinitionId) {
 		this.dataDefinitionId = dataDefinitionId;
+
+		_dataDefinitionIdSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDataDefinitionId(
 		UnsafeSupplier<Long, Exception> dataDefinitionIdUnsafeSupplier) {
 
-		try {
-			dataDefinitionId = dataDefinitionIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_dataDefinitionIdSupplier = () -> {
+			try {
+				return dataDefinitionIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long dataDefinitionId;
 
+	private Supplier<Long> _dataDefinitionIdSupplier;
+
 	@Schema
 	public String getDataRecordCollectionKey() {
+		if (_dataRecordCollectionKeySupplier != null) {
+			dataRecordCollectionKey = _dataRecordCollectionKeySupplier.get();
+
+			_dataRecordCollectionKeySupplier = null;
+		}
+
 		return dataRecordCollectionKey;
 	}
 
 	public void setDataRecordCollectionKey(String dataRecordCollectionKey) {
 		this.dataRecordCollectionKey = dataRecordCollectionKey;
+
+		_dataRecordCollectionKeySupplier = null;
 	}
 
 	@JsonIgnore
@@ -95,30 +116,41 @@ public class DataRecordCollection implements Serializable {
 		UnsafeSupplier<String, Exception>
 			dataRecordCollectionKeyUnsafeSupplier) {
 
-		try {
-			dataRecordCollectionKey =
-				dataRecordCollectionKeyUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_dataRecordCollectionKeySupplier = () -> {
+			try {
+				return dataRecordCollectionKeyUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String dataRecordCollectionKey;
 
+	private Supplier<String> _dataRecordCollectionKeySupplier;
+
 	@Schema
 	@Valid
 	public Map<String, Object> getDescription() {
+		if (_descriptionSupplier != null) {
+			description = _descriptionSupplier.get();
+
+			_descriptionSupplier = null;
+		}
+
 		return description;
 	}
 
 	public void setDescription(Map<String, Object> description) {
 		this.description = description;
+
+		_descriptionSupplier = null;
 	}
 
 	@JsonIgnore
@@ -126,103 +158,143 @@ public class DataRecordCollection implements Serializable {
 		UnsafeSupplier<Map<String, Object>, Exception>
 			descriptionUnsafeSupplier) {
 
-		try {
-			description = descriptionUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_descriptionSupplier = () -> {
+			try {
+				return descriptionUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, Object> description;
 
+	private Supplier<Map<String, Object>> _descriptionSupplier;
+
 	@Schema
 	public Long getId() {
+		if (_idSupplier != null) {
+			id = _idSupplier.get();
+
+			_idSupplier = null;
+		}
+
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
+
+		_idSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_idSupplier = () -> {
+			try {
+				return idUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	private Supplier<Long> _idSupplier;
+
 	@Schema
 	@Valid
 	public Map<String, Object> getName() {
+		if (_nameSupplier != null) {
+			name = _nameSupplier.get();
+
+			_nameSupplier = null;
+		}
+
 		return name;
 	}
 
 	public void setName(Map<String, Object> name) {
 		this.name = name;
+
+		_nameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setName(
 		UnsafeSupplier<Map<String, Object>, Exception> nameUnsafeSupplier) {
 
-		try {
-			name = nameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_nameSupplier = () -> {
+			try {
+				return nameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, Object> name;
 
+	private Supplier<Map<String, Object>> _nameSupplier;
+
 	@Schema
 	public Long getSiteId() {
+		if (_siteIdSupplier != null) {
+			siteId = _siteIdSupplier.get();
+
+			_siteIdSupplier = null;
+		}
+
 		return siteId;
 	}
 
 	public void setSiteId(Long siteId) {
 		this.siteId = siteId;
+
+		_siteIdSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setSiteId(
 		UnsafeSupplier<Long, Exception> siteIdUnsafeSupplier) {
 
-		try {
-			siteId = siteIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_siteIdSupplier = () -> {
+			try {
+				return siteIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long siteId;
+
+	private Supplier<Long> _siteIdSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -252,6 +324,8 @@ public class DataRecordCollection implements Serializable {
 
 		sb.append("{");
 
+		Long dataDefinitionId = getDataDefinitionId();
+
 		if (dataDefinitionId != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -261,6 +335,8 @@ public class DataRecordCollection implements Serializable {
 
 			sb.append(dataDefinitionId);
 		}
+
+		String dataRecordCollectionKey = getDataRecordCollectionKey();
 
 		if (dataRecordCollectionKey != null) {
 			if (sb.length() > 1) {
@@ -276,6 +352,8 @@ public class DataRecordCollection implements Serializable {
 			sb.append("\"");
 		}
 
+		Map<String, Object> description = getDescription();
+
 		if (description != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -285,6 +363,8 @@ public class DataRecordCollection implements Serializable {
 
 			sb.append(_toJSON(description));
 		}
+
+		Long id = getId();
 
 		if (id != null) {
 			if (sb.length() > 1) {
@@ -296,6 +376,8 @@ public class DataRecordCollection implements Serializable {
 			sb.append(id);
 		}
 
+		Map<String, Object> name = getName();
+
 		if (name != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -305,6 +387,8 @@ public class DataRecordCollection implements Serializable {
 
 			sb.append(_toJSON(name));
 		}
+
+		Long siteId = getSiteId();
 
 		if (siteId != null) {
 			if (sb.length() > 1) {

@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -55,37 +56,56 @@ public class StructuredContentLink implements Serializable {
 
 	@Schema(description = "The type of content.")
 	public String getContentType() {
+		if (_contentTypeSupplier != null) {
+			contentType = _contentTypeSupplier.get();
+
+			_contentTypeSupplier = null;
+		}
+
 		return contentType;
 	}
 
 	public void setContentType(String contentType) {
 		this.contentType = contentType;
+
+		_contentTypeSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setContentType(
 		UnsafeSupplier<String, Exception> contentTypeUnsafeSupplier) {
 
-		try {
-			contentType = contentTypeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_contentTypeSupplier = () -> {
+			try {
+				return contentTypeUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The type of content.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String contentType;
 
+	private Supplier<String> _contentTypeSupplier;
+
 	@Schema(
 		description = "Optional field with the structured content, can be embedded with nestedFields."
 	)
 	@Valid
 	public StructuredContent getEmbeddedStructuredContent() {
+		if (_embeddedStructuredContentSupplier != null) {
+			embeddedStructuredContent =
+				_embeddedStructuredContentSupplier.get();
+
+			_embeddedStructuredContentSupplier = null;
+		}
+
 		return embeddedStructuredContent;
 	}
 
@@ -93,6 +113,8 @@ public class StructuredContentLink implements Serializable {
 		StructuredContent embeddedStructuredContent) {
 
 		this.embeddedStructuredContent = embeddedStructuredContent;
+
+		_embeddedStructuredContentSupplier = null;
 	}
 
 	@JsonIgnore
@@ -100,16 +122,17 @@ public class StructuredContentLink implements Serializable {
 		UnsafeSupplier<StructuredContent, Exception>
 			embeddedStructuredContentUnsafeSupplier) {
 
-		try {
-			embeddedStructuredContent =
-				embeddedStructuredContentUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_embeddedStructuredContentSupplier = () -> {
+			try {
+				return embeddedStructuredContentUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -118,59 +141,85 @@ public class StructuredContentLink implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected StructuredContent embeddedStructuredContent;
 
+	private Supplier<StructuredContent> _embeddedStructuredContentSupplier;
+
 	@Schema(description = "The resource's ID.")
 	public Long getId() {
+		if (_idSupplier != null) {
+			id = _idSupplier.get();
+
+			_idSupplier = null;
+		}
+
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
+
+		_idSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_idSupplier = () -> {
+			try {
+				return idUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The resource's ID.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	private Supplier<Long> _idSupplier;
+
 	@Schema(description = "The resource's title.")
 	public String getTitle() {
+		if (_titleSupplier != null) {
+			title = _titleSupplier.get();
+
+			_titleSupplier = null;
+		}
+
 		return title;
 	}
 
 	public void setTitle(String title) {
 		this.title = title;
+
+		_titleSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setTitle(
 		UnsafeSupplier<String, Exception> titleUnsafeSupplier) {
 
-		try {
-			title = titleUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_titleSupplier = () -> {
+			try {
+				return titleUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The resource's title.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String title;
+
+	private Supplier<String> _titleSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -200,6 +249,8 @@ public class StructuredContentLink implements Serializable {
 
 		sb.append("{");
 
+		String contentType = getContentType();
+
 		if (contentType != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -214,6 +265,9 @@ public class StructuredContentLink implements Serializable {
 			sb.append("\"");
 		}
 
+		StructuredContent embeddedStructuredContent =
+			getEmbeddedStructuredContent();
+
 		if (embeddedStructuredContent != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -224,6 +278,8 @@ public class StructuredContentLink implements Serializable {
 			sb.append(String.valueOf(embeddedStructuredContent));
 		}
 
+		Long id = getId();
+
 		if (id != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -233,6 +289,8 @@ public class StructuredContentLink implements Serializable {
 
 			sb.append(id);
 		}
+
+		String title = getTitle();
 
 		if (title != null) {
 			if (sb.length() > 1) {

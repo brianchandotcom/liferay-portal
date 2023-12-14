@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -51,26 +52,36 @@ public class QueryAttributes implements Serializable {
 		description = "A multi-valued list of strings indicating the names of resource attributes to return in the response, overriding the set of attributes that would be returned by default."
 	)
 	public String[] getAttributes() {
+		if (_attributesSupplier != null) {
+			attributes = _attributesSupplier.get();
+
+			_attributesSupplier = null;
+		}
+
 		return attributes;
 	}
 
 	public void setAttributes(String[] attributes) {
 		this.attributes = attributes;
+
+		_attributesSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setAttributes(
 		UnsafeSupplier<String[], Exception> attributesUnsafeSupplier) {
 
-		try {
-			attributes = attributesUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_attributesSupplier = () -> {
+			try {
+				return attributesUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -79,30 +90,42 @@ public class QueryAttributes implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] attributes;
 
+	private Supplier<String[]> _attributesSupplier;
+
 	@Schema(
 		description = "An integer indicating the desired maximum number of query results per page."
 	)
 	public Integer getCount() {
+		if (_countSupplier != null) {
+			count = _countSupplier.get();
+
+			_countSupplier = null;
+		}
+
 		return count;
 	}
 
 	public void setCount(Integer count) {
 		this.count = count;
+
+		_countSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setCount(
 		UnsafeSupplier<Integer, Exception> countUnsafeSupplier) {
 
-		try {
-			count = countUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_countSupplier = () -> {
+			try {
+				return countUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -111,30 +134,42 @@ public class QueryAttributes implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer count;
 
+	private Supplier<Integer> _countSupplier;
+
 	@Schema(
 		description = "A multi-valued list of strings indicating the names of resource attributes to be removed from the default set of attributes to return."
 	)
 	public String[] getExcludedAttributes() {
+		if (_excludedAttributesSupplier != null) {
+			excludedAttributes = _excludedAttributesSupplier.get();
+
+			_excludedAttributesSupplier = null;
+		}
+
 		return excludedAttributes;
 	}
 
 	public void setExcludedAttributes(String[] excludedAttributes) {
 		this.excludedAttributes = excludedAttributes;
+
+		_excludedAttributesSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setExcludedAttributes(
 		UnsafeSupplier<String[], Exception> excludedAttributesUnsafeSupplier) {
 
-		try {
-			excludedAttributes = excludedAttributesUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_excludedAttributesSupplier = () -> {
+			try {
+				return excludedAttributesUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -143,30 +178,42 @@ public class QueryAttributes implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] excludedAttributes;
 
+	private Supplier<String[]> _excludedAttributesSupplier;
+
 	@Schema(
 		description = "The filter string used to request a subset of resources."
 	)
 	public String getFilter() {
+		if (_filterSupplier != null) {
+			filter = _filterSupplier.get();
+
+			_filterSupplier = null;
+		}
+
 		return filter;
 	}
 
 	public void setFilter(String filter) {
 		this.filter = filter;
+
+		_filterSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setFilter(
 		UnsafeSupplier<String, Exception> filterUnsafeSupplier) {
 
-		try {
-			filter = filterUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_filterSupplier = () -> {
+			try {
+				return filterUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -175,30 +222,42 @@ public class QueryAttributes implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String filter;
 
+	private Supplier<String> _filterSupplier;
+
 	@Schema(
 		description = "A string indicating the attribute whose value SHALL be used to order the returned responses."
 	)
 	public String getSortBy() {
+		if (_sortBySupplier != null) {
+			sortBy = _sortBySupplier.get();
+
+			_sortBySupplier = null;
+		}
+
 		return sortBy;
 	}
 
 	public void setSortBy(String sortBy) {
 		this.sortBy = sortBy;
+
+		_sortBySupplier = null;
 	}
 
 	@JsonIgnore
 	public void setSortBy(
 		UnsafeSupplier<String, Exception> sortByUnsafeSupplier) {
 
-		try {
-			sortBy = sortByUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_sortBySupplier = () -> {
+			try {
+				return sortByUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -207,30 +266,42 @@ public class QueryAttributes implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String sortBy;
 
+	private Supplier<String> _sortBySupplier;
+
 	@Schema(
 		description = "A string indicating the order in which the \"sortBy\" parameter is applied."
 	)
 	public String getSortOrder() {
+		if (_sortOrderSupplier != null) {
+			sortOrder = _sortOrderSupplier.get();
+
+			_sortOrderSupplier = null;
+		}
+
 		return sortOrder;
 	}
 
 	public void setSortOrder(String sortOrder) {
 		this.sortOrder = sortOrder;
+
+		_sortOrderSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setSortOrder(
 		UnsafeSupplier<String, Exception> sortOrderUnsafeSupplier) {
 
-		try {
-			sortOrder = sortOrderUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_sortOrderSupplier = () -> {
+			try {
+				return sortOrderUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -239,30 +310,42 @@ public class QueryAttributes implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String sortOrder;
 
+	private Supplier<String> _sortOrderSupplier;
+
 	@Schema(
 		description = "An integer indicating the 1-based index of the first query result."
 	)
 	public Integer getStartIndex() {
+		if (_startIndexSupplier != null) {
+			startIndex = _startIndexSupplier.get();
+
+			_startIndexSupplier = null;
+		}
+
 		return startIndex;
 	}
 
 	public void setStartIndex(Integer startIndex) {
 		this.startIndex = startIndex;
+
+		_startIndexSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setStartIndex(
 		UnsafeSupplier<Integer, Exception> startIndexUnsafeSupplier) {
 
-		try {
-			startIndex = startIndexUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_startIndexSupplier = () -> {
+			try {
+				return startIndexUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -270,6 +353,8 @@ public class QueryAttributes implements Serializable {
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer startIndex;
+
+	private Supplier<Integer> _startIndexSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -298,6 +383,8 @@ public class QueryAttributes implements Serializable {
 
 		sb.append("{");
 
+		String[] attributes = getAttributes();
+
 		if (attributes != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -322,6 +409,8 @@ public class QueryAttributes implements Serializable {
 			sb.append("]");
 		}
 
+		Integer count = getCount();
+
 		if (count != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -331,6 +420,8 @@ public class QueryAttributes implements Serializable {
 
 			sb.append(count);
 		}
+
+		String[] excludedAttributes = getExcludedAttributes();
 
 		if (excludedAttributes != null) {
 			if (sb.length() > 1) {
@@ -356,6 +447,8 @@ public class QueryAttributes implements Serializable {
 			sb.append("]");
 		}
 
+		String filter = getFilter();
+
 		if (filter != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -369,6 +462,8 @@ public class QueryAttributes implements Serializable {
 
 			sb.append("\"");
 		}
+
+		String sortBy = getSortBy();
 
 		if (sortBy != null) {
 			if (sb.length() > 1) {
@@ -384,6 +479,8 @@ public class QueryAttributes implements Serializable {
 			sb.append("\"");
 		}
 
+		String sortOrder = getSortOrder();
+
 		if (sortOrder != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -397,6 +494,8 @@ public class QueryAttributes implements Serializable {
 
 			sb.append("\"");
 		}
+
+		Integer startIndex = getStartIndex();
 
 		if (startIndex != null) {
 			if (sb.length() > 1) {

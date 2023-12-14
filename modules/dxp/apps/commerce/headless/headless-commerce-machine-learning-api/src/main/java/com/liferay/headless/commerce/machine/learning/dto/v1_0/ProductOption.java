@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -51,86 +52,122 @@ public class ProductOption implements Serializable {
 
 	@Schema
 	public String getKey() {
+		if (_keySupplier != null) {
+			key = _keySupplier.get();
+
+			_keySupplier = null;
+		}
+
 		return key;
 	}
 
 	public void setKey(String key) {
 		this.key = key;
+
+		_keySupplier = null;
 	}
 
 	@JsonIgnore
 	public void setKey(UnsafeSupplier<String, Exception> keyUnsafeSupplier) {
-		try {
-			key = keyUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_keySupplier = () -> {
+			try {
+				return keyUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String key;
 
+	private Supplier<String> _keySupplier;
+
 	@Schema(example = "option-key")
 	public String getOptionKey() {
+		if (_optionKeySupplier != null) {
+			optionKey = _optionKeySupplier.get();
+
+			_optionKeySupplier = null;
+		}
+
 		return optionKey;
 	}
 
 	public void setOptionKey(String optionKey) {
 		this.optionKey = optionKey;
+
+		_optionKeySupplier = null;
 	}
 
 	@JsonIgnore
 	public void setOptionKey(
 		UnsafeSupplier<String, Exception> optionKeyUnsafeSupplier) {
 
-		try {
-			optionKey = optionKeyUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_optionKeySupplier = () -> {
+			try {
+				return optionKeyUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String optionKey;
 
+	private Supplier<String> _optionKeySupplier;
+
 	@Schema
 	@Valid
 	public Map[] getValues() {
+		if (_valuesSupplier != null) {
+			values = _valuesSupplier.get();
+
+			_valuesSupplier = null;
+		}
+
 		return values;
 	}
 
 	public void setValues(Map[] values) {
 		this.values = values;
+
+		_valuesSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setValues(
 		UnsafeSupplier<Map[], Exception> valuesUnsafeSupplier) {
 
-		try {
-			values = valuesUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_valuesSupplier = () -> {
+			try {
+				return valuesUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map[] values;
+
+	private Supplier<Map[]> _valuesSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -159,6 +196,8 @@ public class ProductOption implements Serializable {
 
 		sb.append("{");
 
+		String key = getKey();
+
 		if (key != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -173,6 +212,8 @@ public class ProductOption implements Serializable {
 			sb.append("\"");
 		}
 
+		String optionKey = getOptionKey();
+
 		if (optionKey != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -186,6 +227,8 @@ public class ProductOption implements Serializable {
 
 			sb.append("\"");
 		}
+
+		Map[] values = getValues();
 
 		if (values != null) {
 			if (sb.length() > 1) {

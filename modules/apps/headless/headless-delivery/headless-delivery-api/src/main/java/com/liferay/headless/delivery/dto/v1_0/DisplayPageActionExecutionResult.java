@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -57,26 +58,36 @@ public class DisplayPageActionExecutionResult implements Serializable {
 	@Schema(description = "The mapping of the display page action result.")
 	@Valid
 	public Mapping getMapping() {
+		if (_mappingSupplier != null) {
+			mapping = _mappingSupplier.get();
+
+			_mappingSupplier = null;
+		}
+
 		return mapping;
 	}
 
 	public void setMapping(Mapping mapping) {
 		this.mapping = mapping;
+
+		_mappingSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setMapping(
 		UnsafeSupplier<Mapping, Exception> mappingUnsafeSupplier) {
 
-		try {
-			mapping = mappingUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_mappingSupplier = () -> {
+			try {
+				return mappingUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -84,6 +95,8 @@ public class DisplayPageActionExecutionResult implements Serializable {
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Mapping mapping;
+
+	private Supplier<Mapping> _mappingSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -113,6 +126,8 @@ public class DisplayPageActionExecutionResult implements Serializable {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		Mapping mapping = getMapping();
 
 		if (mapping != null) {
 			if (sb.length() > 1) {

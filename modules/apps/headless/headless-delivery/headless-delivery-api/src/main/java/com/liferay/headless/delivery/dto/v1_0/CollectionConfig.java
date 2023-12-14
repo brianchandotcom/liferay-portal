@@ -27,6 +27,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -57,26 +58,36 @@ public class CollectionConfig implements Serializable {
 	@Schema(description = "The page collection's reference.")
 	@Valid
 	public Object getCollectionReference() {
+		if (_collectionReferenceSupplier != null) {
+			collectionReference = _collectionReferenceSupplier.get();
+
+			_collectionReferenceSupplier = null;
+		}
+
 		return collectionReference;
 	}
 
 	public void setCollectionReference(Object collectionReference) {
 		this.collectionReference = collectionReference;
+
+		_collectionReferenceSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setCollectionReference(
 		UnsafeSupplier<Object, Exception> collectionReferenceUnsafeSupplier) {
 
-		try {
-			collectionReference = collectionReferenceUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_collectionReferenceSupplier = () -> {
+			try {
+				return collectionReferenceUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The page collection's reference.")
@@ -84,16 +95,26 @@ public class CollectionConfig implements Serializable {
 	@NotNull
 	protected Object collectionReference;
 
+	private Supplier<Object> _collectionReferenceSupplier;
+
 	@Schema(
 		description = "The page collection's type (Collection, CollectionProvider)."
 	)
 	@Valid
 	public CollectionType getCollectionType() {
+		if (_collectionTypeSupplier != null) {
+			collectionType = _collectionTypeSupplier.get();
+
+			_collectionTypeSupplier = null;
+		}
+
 		return collectionType;
 	}
 
 	@JsonIgnore
 	public String getCollectionTypeAsString() {
+		CollectionType collectionType = getCollectionType();
+
 		if (collectionType == null) {
 			return null;
 		}
@@ -103,6 +124,8 @@ public class CollectionConfig implements Serializable {
 
 	public void setCollectionType(CollectionType collectionType) {
 		this.collectionType = collectionType;
+
+		_collectionTypeSupplier = null;
 	}
 
 	@JsonIgnore
@@ -110,15 +133,17 @@ public class CollectionConfig implements Serializable {
 		UnsafeSupplier<CollectionType, Exception>
 			collectionTypeUnsafeSupplier) {
 
-		try {
-			collectionType = collectionTypeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_collectionTypeSupplier = () -> {
+			try {
+				return collectionTypeUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -127,6 +152,8 @@ public class CollectionConfig implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotNull
 	protected CollectionType collectionType;
+
+	private Supplier<CollectionType> _collectionTypeSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -155,6 +182,8 @@ public class CollectionConfig implements Serializable {
 
 		sb.append("{");
 
+		Object collectionReference = getCollectionReference();
+
 		if (collectionReference != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -176,6 +205,8 @@ public class CollectionConfig implements Serializable {
 				sb.append(collectionReference);
 			}
 		}
+
+		CollectionType collectionType = getCollectionType();
 
 		if (collectionType != null) {
 			if (sb.length() > 1) {

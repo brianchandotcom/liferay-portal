@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -54,26 +55,36 @@ public class Creator implements Serializable {
 
 	@Schema(description = "The author's additional name (e.g., middle name).")
 	public String getAdditionalName() {
+		if (_additionalNameSupplier != null) {
+			additionalName = _additionalNameSupplier.get();
+
+			_additionalNameSupplier = null;
+		}
+
 		return additionalName;
 	}
 
 	public void setAdditionalName(String additionalName) {
 		this.additionalName = additionalName;
+
+		_additionalNameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setAdditionalName(
 		UnsafeSupplier<String, Exception> additionalNameUnsafeSupplier) {
 
-		try {
-			additionalName = additionalNameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_additionalNameSupplier = () -> {
+			try {
+				return additionalNameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -82,194 +93,278 @@ public class Creator implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String additionalName;
 
+	private Supplier<String> _additionalNameSupplier;
+
 	@Schema(description = "The type of the content.")
 	public String getContentType() {
+		if (_contentTypeSupplier != null) {
+			contentType = _contentTypeSupplier.get();
+
+			_contentTypeSupplier = null;
+		}
+
 		return contentType;
 	}
 
 	public void setContentType(String contentType) {
 		this.contentType = contentType;
+
+		_contentTypeSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setContentType(
 		UnsafeSupplier<String, Exception> contentTypeUnsafeSupplier) {
 
-		try {
-			contentType = contentTypeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_contentTypeSupplier = () -> {
+			try {
+				return contentTypeUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The type of the content.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String contentType;
 
+	private Supplier<String> _contentTypeSupplier;
+
 	@Schema(description = "The author's surname.")
 	public String getFamilyName() {
+		if (_familyNameSupplier != null) {
+			familyName = _familyNameSupplier.get();
+
+			_familyNameSupplier = null;
+		}
+
 		return familyName;
 	}
 
 	public void setFamilyName(String familyName) {
 		this.familyName = familyName;
+
+		_familyNameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setFamilyName(
 		UnsafeSupplier<String, Exception> familyNameUnsafeSupplier) {
 
-		try {
-			familyName = familyNameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_familyNameSupplier = () -> {
+			try {
+				return familyNameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The author's surname.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String familyName;
 
+	private Supplier<String> _familyNameSupplier;
+
 	@Schema(description = "The author's first name.")
 	public String getGivenName() {
+		if (_givenNameSupplier != null) {
+			givenName = _givenNameSupplier.get();
+
+			_givenNameSupplier = null;
+		}
+
 		return givenName;
 	}
 
 	public void setGivenName(String givenName) {
 		this.givenName = givenName;
+
+		_givenNameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setGivenName(
 		UnsafeSupplier<String, Exception> givenNameUnsafeSupplier) {
 
-		try {
-			givenName = givenNameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_givenNameSupplier = () -> {
+			try {
+				return givenNameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The author's first name.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String givenName;
 
+	private Supplier<String> _givenNameSupplier;
+
 	@Schema(description = "The author's ID.")
 	public Long getId() {
+		if (_idSupplier != null) {
+			id = _idSupplier.get();
+
+			_idSupplier = null;
+		}
+
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
+
+		_idSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_idSupplier = () -> {
+			try {
+				return idUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The author's ID.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	private Supplier<Long> _idSupplier;
+
 	@Schema(description = "A relative URL to the author's profile image.")
 	public String getImage() {
+		if (_imageSupplier != null) {
+			image = _imageSupplier.get();
+
+			_imageSupplier = null;
+		}
+
 		return image;
 	}
 
 	public void setImage(String image) {
 		this.image = image;
+
+		_imageSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setImage(
 		UnsafeSupplier<String, Exception> imageUnsafeSupplier) {
 
-		try {
-			image = imageUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_imageSupplier = () -> {
+			try {
+				return imageUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "A relative URL to the author's profile image.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String image;
 
+	private Supplier<String> _imageSupplier;
+
 	@Schema(description = "The author's full name.")
 	public String getName() {
+		if (_nameSupplier != null) {
+			name = _nameSupplier.get();
+
+			_nameSupplier = null;
+		}
+
 		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
+
+		_nameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
-		try {
-			name = nameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_nameSupplier = () -> {
+			try {
+				return nameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The author's full name.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String name;
 
+	private Supplier<String> _nameSupplier;
+
 	@Schema(
 		description = "A relative URL to the author's user profile. Optional field, can be embedded with nestedFields."
 	)
 	public String getProfileURL() {
+		if (_profileURLSupplier != null) {
+			profileURL = _profileURLSupplier.get();
+
+			_profileURLSupplier = null;
+		}
+
 		return profileURL;
 	}
 
 	public void setProfileURL(String profileURL) {
 		this.profileURL = profileURL;
+
+		_profileURLSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setProfileURL(
 		UnsafeSupplier<String, Exception> profileURLUnsafeSupplier) {
 
-		try {
-			profileURL = profileURLUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_profileURLSupplier = () -> {
+			try {
+				return profileURLUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -278,14 +373,24 @@ public class Creator implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String profileURL;
 
+	private Supplier<String> _profileURLSupplier;
+
 	@Schema(description = "A list of userGroups information.")
 	@Valid
 	public UserGroupBrief[] getUserGroupBriefs() {
+		if (_userGroupBriefsSupplier != null) {
+			userGroupBriefs = _userGroupBriefsSupplier.get();
+
+			_userGroupBriefsSupplier = null;
+		}
+
 		return userGroupBriefs;
 	}
 
 	public void setUserGroupBriefs(UserGroupBrief[] userGroupBriefs) {
 		this.userGroupBriefs = userGroupBriefs;
+
+		_userGroupBriefsSupplier = null;
 	}
 
 	@JsonIgnore
@@ -293,20 +398,24 @@ public class Creator implements Serializable {
 		UnsafeSupplier<UserGroupBrief[], Exception>
 			userGroupBriefsUnsafeSupplier) {
 
-		try {
-			userGroupBriefs = userGroupBriefsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_userGroupBriefsSupplier = () -> {
+			try {
+				return userGroupBriefsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "A list of userGroups information.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected UserGroupBrief[] userGroupBriefs;
+
+	private Supplier<UserGroupBrief[]> _userGroupBriefsSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -335,6 +444,8 @@ public class Creator implements Serializable {
 
 		sb.append("{");
 
+		String additionalName = getAdditionalName();
+
 		if (additionalName != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -348,6 +459,8 @@ public class Creator implements Serializable {
 
 			sb.append("\"");
 		}
+
+		String contentType = getContentType();
 
 		if (contentType != null) {
 			if (sb.length() > 1) {
@@ -363,6 +476,8 @@ public class Creator implements Serializable {
 			sb.append("\"");
 		}
 
+		String familyName = getFamilyName();
+
 		if (familyName != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -376,6 +491,8 @@ public class Creator implements Serializable {
 
 			sb.append("\"");
 		}
+
+		String givenName = getGivenName();
 
 		if (givenName != null) {
 			if (sb.length() > 1) {
@@ -391,6 +508,8 @@ public class Creator implements Serializable {
 			sb.append("\"");
 		}
 
+		Long id = getId();
+
 		if (id != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -400,6 +519,8 @@ public class Creator implements Serializable {
 
 			sb.append(id);
 		}
+
+		String image = getImage();
 
 		if (image != null) {
 			if (sb.length() > 1) {
@@ -415,6 +536,8 @@ public class Creator implements Serializable {
 			sb.append("\"");
 		}
 
+		String name = getName();
+
 		if (name != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -429,6 +552,8 @@ public class Creator implements Serializable {
 			sb.append("\"");
 		}
 
+		String profileURL = getProfileURL();
+
 		if (profileURL != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -442,6 +567,8 @@ public class Creator implements Serializable {
 
 			sb.append("\"");
 		}
+
+		UserGroupBrief[] userGroupBriefs = getUserGroupBriefs();
 
 		if (userGroupBriefs != null) {
 			if (sb.length() > 1) {

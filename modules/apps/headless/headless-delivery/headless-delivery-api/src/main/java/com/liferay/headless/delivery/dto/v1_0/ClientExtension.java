@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -54,6 +55,12 @@ public class ClientExtension implements Serializable {
 	@Schema
 	@Valid
 	public Map<String, String> getClientExtensionConfig() {
+		if (_clientExtensionConfigSupplier != null) {
+			clientExtensionConfig = _clientExtensionConfigSupplier.get();
+
+			_clientExtensionConfigSupplier = null;
+		}
+
 		return clientExtensionConfig;
 	}
 
@@ -61,6 +68,8 @@ public class ClientExtension implements Serializable {
 		Map<String, String> clientExtensionConfig) {
 
 		this.clientExtensionConfig = clientExtensionConfig;
+
+		_clientExtensionConfigSupplier = null;
 	}
 
 	@JsonIgnore
@@ -68,43 +77,57 @@ public class ClientExtension implements Serializable {
 		UnsafeSupplier<Map<String, String>, Exception>
 			clientExtensionConfigUnsafeSupplier) {
 
-		try {
-			clientExtensionConfig = clientExtensionConfigUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_clientExtensionConfigSupplier = () -> {
+			try {
+				return clientExtensionConfigUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> clientExtensionConfig;
 
+	private Supplier<Map<String, String>> _clientExtensionConfigSupplier;
+
 	@Schema(description = "The client extension's external reference code.")
 	public String getExternalReferenceCode() {
+		if (_externalReferenceCodeSupplier != null) {
+			externalReferenceCode = _externalReferenceCodeSupplier.get();
+
+			_externalReferenceCodeSupplier = null;
+		}
+
 		return externalReferenceCode;
 	}
 
 	public void setExternalReferenceCode(String externalReferenceCode) {
 		this.externalReferenceCode = externalReferenceCode;
+
+		_externalReferenceCodeSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setExternalReferenceCode(
 		UnsafeSupplier<String, Exception> externalReferenceCodeUnsafeSupplier) {
 
-		try {
-			externalReferenceCode = externalReferenceCodeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_externalReferenceCodeSupplier = () -> {
+			try {
+				return externalReferenceCodeUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -113,31 +136,45 @@ public class ClientExtension implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 
+	private Supplier<String> _externalReferenceCodeSupplier;
+
 	@Schema(description = "The client extension's name.")
 	public String getName() {
+		if (_nameSupplier != null) {
+			name = _nameSupplier.get();
+
+			_nameSupplier = null;
+		}
+
 		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
+
+		_nameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
-		try {
-			name = nameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_nameSupplier = () -> {
+			try {
+				return nameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The client extension's name.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String name;
+
+	private Supplier<String> _nameSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -166,6 +203,8 @@ public class ClientExtension implements Serializable {
 
 		sb.append("{");
 
+		Map<String, String> clientExtensionConfig = getClientExtensionConfig();
+
 		if (clientExtensionConfig != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -175,6 +214,8 @@ public class ClientExtension implements Serializable {
 
 			sb.append(_toJSON(clientExtensionConfig));
 		}
+
+		String externalReferenceCode = getExternalReferenceCode();
 
 		if (externalReferenceCode != null) {
 			if (sb.length() > 1) {
@@ -189,6 +230,8 @@ public class ClientExtension implements Serializable {
 
 			sb.append("\"");
 		}
+
+		String name = getName();
 
 		if (name != null) {
 			if (sb.length() > 1) {

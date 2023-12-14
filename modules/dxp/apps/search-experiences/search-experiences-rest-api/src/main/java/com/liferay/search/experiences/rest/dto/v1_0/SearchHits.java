@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -52,86 +53,122 @@ public class SearchHits implements Serializable {
 	@Schema
 	@Valid
 	public Hit[] getHits() {
+		if (_hitsSupplier != null) {
+			hits = _hitsSupplier.get();
+
+			_hitsSupplier = null;
+		}
+
 		return hits;
 	}
 
 	public void setHits(Hit[] hits) {
 		this.hits = hits;
+
+		_hitsSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setHits(UnsafeSupplier<Hit[], Exception> hitsUnsafeSupplier) {
-		try {
-			hits = hitsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_hitsSupplier = () -> {
+			try {
+				return hitsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Hit[] hits;
 
+	private Supplier<Hit[]> _hitsSupplier;
+
 	@Schema
 	@Valid
 	public Float getMaxScore() {
+		if (_maxScoreSupplier != null) {
+			maxScore = _maxScoreSupplier.get();
+
+			_maxScoreSupplier = null;
+		}
+
 		return maxScore;
 	}
 
 	public void setMaxScore(Float maxScore) {
 		this.maxScore = maxScore;
+
+		_maxScoreSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setMaxScore(
 		UnsafeSupplier<Float, Exception> maxScoreUnsafeSupplier) {
 
-		try {
-			maxScore = maxScoreUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_maxScoreSupplier = () -> {
+			try {
+				return maxScoreUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Float maxScore;
 
+	private Supplier<Float> _maxScoreSupplier;
+
 	@Schema
 	public Long getTotalHits() {
+		if (_totalHitsSupplier != null) {
+			totalHits = _totalHitsSupplier.get();
+
+			_totalHitsSupplier = null;
+		}
+
 		return totalHits;
 	}
 
 	public void setTotalHits(Long totalHits) {
 		this.totalHits = totalHits;
+
+		_totalHitsSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setTotalHits(
 		UnsafeSupplier<Long, Exception> totalHitsUnsafeSupplier) {
 
-		try {
-			totalHits = totalHitsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_totalHitsSupplier = () -> {
+			try {
+				return totalHitsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long totalHits;
+
+	private Supplier<Long> _totalHitsSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -160,6 +197,8 @@ public class SearchHits implements Serializable {
 
 		sb.append("{");
 
+		Hit[] hits = getHits();
+
 		if (hits != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -180,6 +219,8 @@ public class SearchHits implements Serializable {
 			sb.append("]");
 		}
 
+		Float maxScore = getMaxScore();
+
 		if (maxScore != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -189,6 +230,8 @@ public class SearchHits implements Serializable {
 
 			sb.append(maxScore);
 		}
+
+		Long totalHits = getTotalHits();
 
 		if (totalHits != null) {
 			if (sb.length() > 1) {

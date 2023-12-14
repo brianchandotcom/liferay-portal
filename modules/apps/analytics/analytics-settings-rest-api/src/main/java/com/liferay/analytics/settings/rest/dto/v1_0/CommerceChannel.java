@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -49,111 +50,159 @@ public class CommerceChannel implements Serializable {
 
 	@Schema
 	public String getChannelName() {
+		if (_channelNameSupplier != null) {
+			channelName = _channelNameSupplier.get();
+
+			_channelNameSupplier = null;
+		}
+
 		return channelName;
 	}
 
 	public void setChannelName(String channelName) {
 		this.channelName = channelName;
+
+		_channelNameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setChannelName(
 		UnsafeSupplier<String, Exception> channelNameUnsafeSupplier) {
 
-		try {
-			channelName = channelNameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_channelNameSupplier = () -> {
+			try {
+				return channelNameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String channelName;
 
+	private Supplier<String> _channelNameSupplier;
+
 	@Schema
 	public Long getId() {
+		if (_idSupplier != null) {
+			id = _idSupplier.get();
+
+			_idSupplier = null;
+		}
+
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
+
+		_idSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_idSupplier = () -> {
+			try {
+				return idUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	private Supplier<Long> _idSupplier;
+
 	@Schema
 	public String getName() {
+		if (_nameSupplier != null) {
+			name = _nameSupplier.get();
+
+			_nameSupplier = null;
+		}
+
 		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
+
+		_nameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
-		try {
-			name = nameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_nameSupplier = () -> {
+			try {
+				return nameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	private Supplier<String> _nameSupplier;
+
 	@Schema
 	public String getSiteName() {
+		if (_siteNameSupplier != null) {
+			siteName = _siteNameSupplier.get();
+
+			_siteNameSupplier = null;
+		}
+
 		return siteName;
 	}
 
 	public void setSiteName(String siteName) {
 		this.siteName = siteName;
+
+		_siteNameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setSiteName(
 		UnsafeSupplier<String, Exception> siteNameUnsafeSupplier) {
 
-		try {
-			siteName = siteNameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_siteNameSupplier = () -> {
+			try {
+				return siteNameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String siteName;
+
+	private Supplier<String> _siteNameSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -182,6 +231,8 @@ public class CommerceChannel implements Serializable {
 
 		sb.append("{");
 
+		String channelName = getChannelName();
+
 		if (channelName != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -196,6 +247,8 @@ public class CommerceChannel implements Serializable {
 			sb.append("\"");
 		}
 
+		Long id = getId();
+
 		if (id != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -205,6 +258,8 @@ public class CommerceChannel implements Serializable {
 
 			sb.append(id);
 		}
+
+		String name = getName();
 
 		if (name != null) {
 			if (sb.length() > 1) {
@@ -219,6 +274,8 @@ public class CommerceChannel implements Serializable {
 
 			sb.append("\"");
 		}
+
+		String siteName = getSiteName();
 
 		if (siteName != null) {
 			if (sb.length() > 1) {

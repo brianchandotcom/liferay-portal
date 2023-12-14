@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -49,115 +50,163 @@ public class FieldSummary implements Serializable {
 
 	@Schema
 	public Integer getAccount() {
+		if (_accountSupplier != null) {
+			account = _accountSupplier.get();
+
+			_accountSupplier = null;
+		}
+
 		return account;
 	}
 
 	public void setAccount(Integer account) {
 		this.account = account;
+
+		_accountSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setAccount(
 		UnsafeSupplier<Integer, Exception> accountUnsafeSupplier) {
 
-		try {
-			account = accountUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_accountSupplier = () -> {
+			try {
+				return accountUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer account;
 
+	private Supplier<Integer> _accountSupplier;
+
 	@Schema
 	public Integer getOrder() {
+		if (_orderSupplier != null) {
+			order = _orderSupplier.get();
+
+			_orderSupplier = null;
+		}
+
 		return order;
 	}
 
 	public void setOrder(Integer order) {
 		this.order = order;
+
+		_orderSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setOrder(
 		UnsafeSupplier<Integer, Exception> orderUnsafeSupplier) {
 
-		try {
-			order = orderUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_orderSupplier = () -> {
+			try {
+				return orderUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer order;
 
+	private Supplier<Integer> _orderSupplier;
+
 	@Schema
 	public Integer getPeople() {
+		if (_peopleSupplier != null) {
+			people = _peopleSupplier.get();
+
+			_peopleSupplier = null;
+		}
+
 		return people;
 	}
 
 	public void setPeople(Integer people) {
 		this.people = people;
+
+		_peopleSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setPeople(
 		UnsafeSupplier<Integer, Exception> peopleUnsafeSupplier) {
 
-		try {
-			people = peopleUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_peopleSupplier = () -> {
+			try {
+				return peopleUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer people;
 
+	private Supplier<Integer> _peopleSupplier;
+
 	@Schema
 	public Integer getProduct() {
+		if (_productSupplier != null) {
+			product = _productSupplier.get();
+
+			_productSupplier = null;
+		}
+
 		return product;
 	}
 
 	public void setProduct(Integer product) {
 		this.product = product;
+
+		_productSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setProduct(
 		UnsafeSupplier<Integer, Exception> productUnsafeSupplier) {
 
-		try {
-			product = productUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_productSupplier = () -> {
+			try {
+				return productUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer product;
+
+	private Supplier<Integer> _productSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -186,6 +235,8 @@ public class FieldSummary implements Serializable {
 
 		sb.append("{");
 
+		Integer account = getAccount();
+
 		if (account != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -195,6 +246,8 @@ public class FieldSummary implements Serializable {
 
 			sb.append(account);
 		}
+
+		Integer order = getOrder();
 
 		if (order != null) {
 			if (sb.length() > 1) {
@@ -206,6 +259,8 @@ public class FieldSummary implements Serializable {
 			sb.append(order);
 		}
 
+		Integer people = getPeople();
+
 		if (people != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -215,6 +270,8 @@ public class FieldSummary implements Serializable {
 
 			sb.append(people);
 		}
+
+		Integer product = getProduct();
 
 		if (product != null) {
 			if (sb.length() > 1) {

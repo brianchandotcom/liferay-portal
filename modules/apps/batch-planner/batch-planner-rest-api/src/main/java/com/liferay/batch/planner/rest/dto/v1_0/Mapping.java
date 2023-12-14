@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -49,197 +50,281 @@ public class Mapping implements Serializable {
 
 	@Schema
 	public String getExternalFieldName() {
+		if (_externalFieldNameSupplier != null) {
+			externalFieldName = _externalFieldNameSupplier.get();
+
+			_externalFieldNameSupplier = null;
+		}
+
 		return externalFieldName;
 	}
 
 	public void setExternalFieldName(String externalFieldName) {
 		this.externalFieldName = externalFieldName;
+
+		_externalFieldNameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setExternalFieldName(
 		UnsafeSupplier<String, Exception> externalFieldNameUnsafeSupplier) {
 
-		try {
-			externalFieldName = externalFieldNameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_externalFieldNameSupplier = () -> {
+			try {
+				return externalFieldNameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalFieldName;
 
+	private Supplier<String> _externalFieldNameSupplier;
+
 	@Schema
 	public String getExternalFieldType() {
+		if (_externalFieldTypeSupplier != null) {
+			externalFieldType = _externalFieldTypeSupplier.get();
+
+			_externalFieldTypeSupplier = null;
+		}
+
 		return externalFieldType;
 	}
 
 	public void setExternalFieldType(String externalFieldType) {
 		this.externalFieldType = externalFieldType;
+
+		_externalFieldTypeSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setExternalFieldType(
 		UnsafeSupplier<String, Exception> externalFieldTypeUnsafeSupplier) {
 
-		try {
-			externalFieldType = externalFieldTypeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_externalFieldTypeSupplier = () -> {
+			try {
+				return externalFieldTypeUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalFieldType;
 
+	private Supplier<String> _externalFieldTypeSupplier;
+
 	@Schema
 	public Long getId() {
+		if (_idSupplier != null) {
+			id = _idSupplier.get();
+
+			_idSupplier = null;
+		}
+
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
+
+		_idSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_idSupplier = () -> {
+			try {
+				return idUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	private Supplier<Long> _idSupplier;
+
 	@Schema
 	public String getInternalFieldName() {
+		if (_internalFieldNameSupplier != null) {
+			internalFieldName = _internalFieldNameSupplier.get();
+
+			_internalFieldNameSupplier = null;
+		}
+
 		return internalFieldName;
 	}
 
 	public void setInternalFieldName(String internalFieldName) {
 		this.internalFieldName = internalFieldName;
+
+		_internalFieldNameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setInternalFieldName(
 		UnsafeSupplier<String, Exception> internalFieldNameUnsafeSupplier) {
 
-		try {
-			internalFieldName = internalFieldNameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_internalFieldNameSupplier = () -> {
+			try {
+				return internalFieldNameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String internalFieldName;
 
+	private Supplier<String> _internalFieldNameSupplier;
+
 	@Schema
 	public String getInternalFieldType() {
+		if (_internalFieldTypeSupplier != null) {
+			internalFieldType = _internalFieldTypeSupplier.get();
+
+			_internalFieldTypeSupplier = null;
+		}
+
 		return internalFieldType;
 	}
 
 	public void setInternalFieldType(String internalFieldType) {
 		this.internalFieldType = internalFieldType;
+
+		_internalFieldTypeSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setInternalFieldType(
 		UnsafeSupplier<String, Exception> internalFieldTypeUnsafeSupplier) {
 
-		try {
-			internalFieldType = internalFieldTypeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_internalFieldTypeSupplier = () -> {
+			try {
+				return internalFieldTypeUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String internalFieldType;
 
+	private Supplier<String> _internalFieldTypeSupplier;
+
 	@Schema
 	public Long getPlanId() {
+		if (_planIdSupplier != null) {
+			planId = _planIdSupplier.get();
+
+			_planIdSupplier = null;
+		}
+
 		return planId;
 	}
 
 	public void setPlanId(Long planId) {
 		this.planId = planId;
+
+		_planIdSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setPlanId(
 		UnsafeSupplier<Long, Exception> planIdUnsafeSupplier) {
 
-		try {
-			planId = planIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_planIdSupplier = () -> {
+			try {
+				return planIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long planId;
 
+	private Supplier<Long> _planIdSupplier;
+
 	@Schema
 	public String getScript() {
+		if (_scriptSupplier != null) {
+			script = _scriptSupplier.get();
+
+			_scriptSupplier = null;
+		}
+
 		return script;
 	}
 
 	public void setScript(String script) {
 		this.script = script;
+
+		_scriptSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setScript(
 		UnsafeSupplier<String, Exception> scriptUnsafeSupplier) {
 
-		try {
-			script = scriptUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_scriptSupplier = () -> {
+			try {
+				return scriptUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String script;
+
+	private Supplier<String> _scriptSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -268,6 +353,8 @@ public class Mapping implements Serializable {
 
 		sb.append("{");
 
+		String externalFieldName = getExternalFieldName();
+
 		if (externalFieldName != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -281,6 +368,8 @@ public class Mapping implements Serializable {
 
 			sb.append("\"");
 		}
+
+		String externalFieldType = getExternalFieldType();
 
 		if (externalFieldType != null) {
 			if (sb.length() > 1) {
@@ -296,6 +385,8 @@ public class Mapping implements Serializable {
 			sb.append("\"");
 		}
 
+		Long id = getId();
+
 		if (id != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -305,6 +396,8 @@ public class Mapping implements Serializable {
 
 			sb.append(id);
 		}
+
+		String internalFieldName = getInternalFieldName();
 
 		if (internalFieldName != null) {
 			if (sb.length() > 1) {
@@ -320,6 +413,8 @@ public class Mapping implements Serializable {
 			sb.append("\"");
 		}
 
+		String internalFieldType = getInternalFieldType();
+
 		if (internalFieldType != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -334,6 +429,8 @@ public class Mapping implements Serializable {
 			sb.append("\"");
 		}
 
+		Long planId = getPlanId();
+
 		if (planId != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -343,6 +440,8 @@ public class Mapping implements Serializable {
 
 			sb.append(planId);
 		}
+
+		String script = getScript();
 
 		if (script != null) {
 			if (sb.length() > 1) {

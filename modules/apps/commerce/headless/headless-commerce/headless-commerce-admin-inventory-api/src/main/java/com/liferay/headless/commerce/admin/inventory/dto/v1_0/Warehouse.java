@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -53,11 +54,19 @@ public class Warehouse implements Serializable {
 	@Schema
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
+		if (_actionsSupplier != null) {
+			actions = _actionsSupplier.get();
+
+			_actionsSupplier = null;
+		}
+
 		return actions;
 	}
 
 	public void setActions(Map<String, Map<String, String>> actions) {
 		this.actions = actions;
+
+		_actionsSupplier = null;
 	}
 
 	@JsonIgnore
@@ -65,113 +74,161 @@ public class Warehouse implements Serializable {
 		UnsafeSupplier<Map<String, Map<String, String>>, Exception>
 			actionsUnsafeSupplier) {
 
-		try {
-			actions = actionsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_actionsSupplier = () -> {
+			try {
+				return actionsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
+	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
+
 	@Schema(example = "true")
 	public Boolean getActive() {
+		if (_activeSupplier != null) {
+			active = _activeSupplier.get();
+
+			_activeSupplier = null;
+		}
+
 		return active;
 	}
 
 	public void setActive(Boolean active) {
 		this.active = active;
+
+		_activeSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setActive(
 		UnsafeSupplier<Boolean, Exception> activeUnsafeSupplier) {
 
-		try {
-			active = activeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_activeSupplier = () -> {
+			try {
+				return activeUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean active;
 
+	private Supplier<Boolean> _activeSupplier;
+
 	@Schema(example = "Diamond Bar")
 	public String getCity() {
+		if (_citySupplier != null) {
+			city = _citySupplier.get();
+
+			_citySupplier = null;
+		}
+
 		return city;
 	}
 
 	public void setCity(String city) {
 		this.city = city;
+
+		_citySupplier = null;
 	}
 
 	@JsonIgnore
 	public void setCity(UnsafeSupplier<String, Exception> cityUnsafeSupplier) {
-		try {
-			city = cityUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_citySupplier = () -> {
+			try {
+				return cityUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String city;
 
+	private Supplier<String> _citySupplier;
+
 	@Schema(example = "US")
 	public String getCountryISOCode() {
+		if (_countryISOCodeSupplier != null) {
+			countryISOCode = _countryISOCodeSupplier.get();
+
+			_countryISOCodeSupplier = null;
+		}
+
 		return countryISOCode;
 	}
 
 	public void setCountryISOCode(String countryISOCode) {
 		this.countryISOCode = countryISOCode;
+
+		_countryISOCodeSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setCountryISOCode(
 		UnsafeSupplier<String, Exception> countryISOCodeUnsafeSupplier) {
 
-		try {
-			countryISOCode = countryISOCodeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_countryISOCodeSupplier = () -> {
+			try {
+				return countryISOCodeUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String countryISOCode;
 
+	private Supplier<String> _countryISOCodeSupplier;
+
 	@Schema(
 		example = "{en_US=Warehouse Description US, hr_HR=Warehouse Description HR, hu_HU=Warehouse Description HU}"
 	)
 	@Valid
 	public Map<String, String> getDescription() {
+		if (_descriptionSupplier != null) {
+			description = _descriptionSupplier.get();
+
+			_descriptionSupplier = null;
+		}
+
 		return description;
 	}
 
 	public void setDescription(Map<String, String> description) {
 		this.description = description;
+
+		_descriptionSupplier = null;
 	}
 
 	@JsonIgnore
@@ -179,309 +236,441 @@ public class Warehouse implements Serializable {
 		UnsafeSupplier<Map<String, String>, Exception>
 			descriptionUnsafeSupplier) {
 
-		try {
-			description = descriptionUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_descriptionSupplier = () -> {
+			try {
+				return descriptionUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> description;
 
+	private Supplier<Map<String, String>> _descriptionSupplier;
+
 	@Schema(example = "AB-34098-789-N")
 	public String getExternalReferenceCode() {
+		if (_externalReferenceCodeSupplier != null) {
+			externalReferenceCode = _externalReferenceCodeSupplier.get();
+
+			_externalReferenceCodeSupplier = null;
+		}
+
 		return externalReferenceCode;
 	}
 
 	public void setExternalReferenceCode(String externalReferenceCode) {
 		this.externalReferenceCode = externalReferenceCode;
+
+		_externalReferenceCodeSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setExternalReferenceCode(
 		UnsafeSupplier<String, Exception> externalReferenceCodeUnsafeSupplier) {
 
-		try {
-			externalReferenceCode = externalReferenceCodeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_externalReferenceCodeSupplier = () -> {
+			try {
+				return externalReferenceCodeUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 
+	private Supplier<String> _externalReferenceCodeSupplier;
+
 	@DecimalMin("0")
 	@Schema(example = "30130")
 	public Long getId() {
+		if (_idSupplier != null) {
+			id = _idSupplier.get();
+
+			_idSupplier = null;
+		}
+
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
+
+		_idSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_idSupplier = () -> {
+			try {
+				return idUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	private Supplier<Long> _idSupplier;
+
 	@Schema(example = "33.9976884")
 	public Double getLatitude() {
+		if (_latitudeSupplier != null) {
+			latitude = _latitudeSupplier.get();
+
+			_latitudeSupplier = null;
+		}
+
 		return latitude;
 	}
 
 	public void setLatitude(Double latitude) {
 		this.latitude = latitude;
+
+		_latitudeSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setLatitude(
 		UnsafeSupplier<Double, Exception> latitudeUnsafeSupplier) {
 
-		try {
-			latitude = latitudeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_latitudeSupplier = () -> {
+			try {
+				return latitudeUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double latitude;
 
+	private Supplier<Double> _latitudeSupplier;
+
 	@Schema(example = "-117.8144595")
 	public Double getLongitude() {
+		if (_longitudeSupplier != null) {
+			longitude = _longitudeSupplier.get();
+
+			_longitudeSupplier = null;
+		}
+
 		return longitude;
 	}
 
 	public void setLongitude(Double longitude) {
 		this.longitude = longitude;
+
+		_longitudeSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setLongitude(
 		UnsafeSupplier<Double, Exception> longitudeUnsafeSupplier) {
 
-		try {
-			longitude = longitudeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_longitudeSupplier = () -> {
+			try {
+				return longitudeUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double longitude;
 
+	private Supplier<Double> _longitudeSupplier;
+
 	@Schema(
 		example = "{en_US=Warehouse Name US, hr_HR=Warehouse Name HR, hu_HU=Warehouse Name HU}"
 	)
 	@Valid
 	public Map<String, String> getName() {
+		if (_nameSupplier != null) {
+			name = _nameSupplier.get();
+
+			_nameSupplier = null;
+		}
+
 		return name;
 	}
 
 	public void setName(Map<String, String> name) {
 		this.name = name;
+
+		_nameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setName(
 		UnsafeSupplier<Map<String, String>, Exception> nameUnsafeSupplier) {
 
-		try {
-			name = nameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_nameSupplier = () -> {
+			try {
+				return nameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> name;
 
+	private Supplier<Map<String, String>> _nameSupplier;
+
 	@Schema(example = "CA")
 	public String getRegionISOCode() {
+		if (_regionISOCodeSupplier != null) {
+			regionISOCode = _regionISOCodeSupplier.get();
+
+			_regionISOCodeSupplier = null;
+		}
+
 		return regionISOCode;
 	}
 
 	public void setRegionISOCode(String regionISOCode) {
 		this.regionISOCode = regionISOCode;
+
+		_regionISOCodeSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setRegionISOCode(
 		UnsafeSupplier<String, Exception> regionISOCodeUnsafeSupplier) {
 
-		try {
-			regionISOCode = regionISOCodeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_regionISOCodeSupplier = () -> {
+			try {
+				return regionISOCodeUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String regionISOCode;
 
+	private Supplier<String> _regionISOCodeSupplier;
+
 	@Schema(example = "1400 Montefino Ave")
 	public String getStreet1() {
+		if (_street1Supplier != null) {
+			street1 = _street1Supplier.get();
+
+			_street1Supplier = null;
+		}
+
 		return street1;
 	}
 
 	public void setStreet1(String street1) {
 		this.street1 = street1;
+
+		_street1Supplier = null;
 	}
 
 	@JsonIgnore
 	public void setStreet1(
 		UnsafeSupplier<String, Exception> street1UnsafeSupplier) {
 
-		try {
-			street1 = street1UnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_street1Supplier = () -> {
+			try {
+				return street1UnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String street1;
 
+	private Supplier<String> _street1Supplier;
+
 	@Schema(example = "1st floor")
 	public String getStreet2() {
+		if (_street2Supplier != null) {
+			street2 = _street2Supplier.get();
+
+			_street2Supplier = null;
+		}
+
 		return street2;
 	}
 
 	public void setStreet2(String street2) {
 		this.street2 = street2;
+
+		_street2Supplier = null;
 	}
 
 	@JsonIgnore
 	public void setStreet2(
 		UnsafeSupplier<String, Exception> street2UnsafeSupplier) {
 
-		try {
-			street2 = street2UnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_street2Supplier = () -> {
+			try {
+				return street2UnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String street2;
 
+	private Supplier<String> _street2Supplier;
+
 	@Schema(example = "suite 200")
 	public String getStreet3() {
+		if (_street3Supplier != null) {
+			street3 = _street3Supplier.get();
+
+			_street3Supplier = null;
+		}
+
 		return street3;
 	}
 
 	public void setStreet3(String street3) {
 		this.street3 = street3;
+
+		_street3Supplier = null;
 	}
 
 	@JsonIgnore
 	public void setStreet3(
 		UnsafeSupplier<String, Exception> street3UnsafeSupplier) {
 
-		try {
-			street3 = street3UnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_street3Supplier = () -> {
+			try {
+				return street3UnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String street3;
 
+	private Supplier<String> _street3Supplier;
+
 	@Schema
 	public String getType() {
+		if (_typeSupplier != null) {
+			type = _typeSupplier.get();
+
+			_typeSupplier = null;
+		}
+
 		return type;
 	}
 
 	public void setType(String type) {
 		this.type = type;
+
+		_typeSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setType(UnsafeSupplier<String, Exception> typeUnsafeSupplier) {
-		try {
-			type = typeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_typeSupplier = () -> {
+			try {
+				return typeUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String type;
 
+	private Supplier<String> _typeSupplier;
+
 	@Schema
 	@Valid
 	public WarehouseItem[] getWarehouseItems() {
+		if (_warehouseItemsSupplier != null) {
+			warehouseItems = _warehouseItemsSupplier.get();
+
+			_warehouseItemsSupplier = null;
+		}
+
 		return warehouseItems;
 	}
 
 	public void setWarehouseItems(WarehouseItem[] warehouseItems) {
 		this.warehouseItems = warehouseItems;
+
+		_warehouseItemsSupplier = null;
 	}
 
 	@JsonIgnore
@@ -489,46 +678,62 @@ public class Warehouse implements Serializable {
 		UnsafeSupplier<WarehouseItem[], Exception>
 			warehouseItemsUnsafeSupplier) {
 
-		try {
-			warehouseItems = warehouseItemsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_warehouseItemsSupplier = () -> {
+			try {
+				return warehouseItemsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected WarehouseItem[] warehouseItems;
 
+	private Supplier<WarehouseItem[]> _warehouseItemsSupplier;
+
 	@Schema(example = "91765")
 	public String getZip() {
+		if (_zipSupplier != null) {
+			zip = _zipSupplier.get();
+
+			_zipSupplier = null;
+		}
+
 		return zip;
 	}
 
 	public void setZip(String zip) {
 		this.zip = zip;
+
+		_zipSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setZip(UnsafeSupplier<String, Exception> zipUnsafeSupplier) {
-		try {
-			zip = zipUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_zipSupplier = () -> {
+			try {
+				return zipUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String zip;
+
+	private Supplier<String> _zipSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -557,6 +762,8 @@ public class Warehouse implements Serializable {
 
 		sb.append("{");
 
+		Map<String, Map<String, String>> actions = getActions();
+
 		if (actions != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -567,6 +774,8 @@ public class Warehouse implements Serializable {
 			sb.append(_toJSON(actions));
 		}
 
+		Boolean active = getActive();
+
 		if (active != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -576,6 +785,8 @@ public class Warehouse implements Serializable {
 
 			sb.append(active);
 		}
+
+		String city = getCity();
 
 		if (city != null) {
 			if (sb.length() > 1) {
@@ -591,6 +802,8 @@ public class Warehouse implements Serializable {
 			sb.append("\"");
 		}
 
+		String countryISOCode = getCountryISOCode();
+
 		if (countryISOCode != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -605,6 +818,8 @@ public class Warehouse implements Serializable {
 			sb.append("\"");
 		}
 
+		Map<String, String> description = getDescription();
+
 		if (description != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -614,6 +829,8 @@ public class Warehouse implements Serializable {
 
 			sb.append(_toJSON(description));
 		}
+
+		String externalReferenceCode = getExternalReferenceCode();
 
 		if (externalReferenceCode != null) {
 			if (sb.length() > 1) {
@@ -629,6 +846,8 @@ public class Warehouse implements Serializable {
 			sb.append("\"");
 		}
 
+		Long id = getId();
+
 		if (id != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -638,6 +857,8 @@ public class Warehouse implements Serializable {
 
 			sb.append(id);
 		}
+
+		Double latitude = getLatitude();
 
 		if (latitude != null) {
 			if (sb.length() > 1) {
@@ -649,6 +870,8 @@ public class Warehouse implements Serializable {
 			sb.append(latitude);
 		}
 
+		Double longitude = getLongitude();
+
 		if (longitude != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -659,6 +882,8 @@ public class Warehouse implements Serializable {
 			sb.append(longitude);
 		}
 
+		Map<String, String> name = getName();
+
 		if (name != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -668,6 +893,8 @@ public class Warehouse implements Serializable {
 
 			sb.append(_toJSON(name));
 		}
+
+		String regionISOCode = getRegionISOCode();
 
 		if (regionISOCode != null) {
 			if (sb.length() > 1) {
@@ -683,6 +910,8 @@ public class Warehouse implements Serializable {
 			sb.append("\"");
 		}
 
+		String street1 = getStreet1();
+
 		if (street1 != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -696,6 +925,8 @@ public class Warehouse implements Serializable {
 
 			sb.append("\"");
 		}
+
+		String street2 = getStreet2();
 
 		if (street2 != null) {
 			if (sb.length() > 1) {
@@ -711,6 +942,8 @@ public class Warehouse implements Serializable {
 			sb.append("\"");
 		}
 
+		String street3 = getStreet3();
+
 		if (street3 != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -725,6 +958,8 @@ public class Warehouse implements Serializable {
 			sb.append("\"");
 		}
 
+		String type = getType();
+
 		if (type != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -738,6 +973,8 @@ public class Warehouse implements Serializable {
 
 			sb.append("\"");
 		}
+
+		WarehouseItem[] warehouseItems = getWarehouseItems();
 
 		if (warehouseItems != null) {
 			if (sb.length() > 1) {
@@ -758,6 +995,8 @@ public class Warehouse implements Serializable {
 
 			sb.append("]");
 		}
+
+		String zip = getZip();
 
 		if (zip != null) {
 			if (sb.length() > 1) {

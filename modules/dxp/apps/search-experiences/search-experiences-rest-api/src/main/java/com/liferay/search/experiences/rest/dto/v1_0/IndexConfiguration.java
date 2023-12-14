@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -49,59 +50,83 @@ public class IndexConfiguration implements Serializable {
 
 	@Schema
 	public Boolean getExternal() {
+		if (_externalSupplier != null) {
+			external = _externalSupplier.get();
+
+			_externalSupplier = null;
+		}
+
 		return external;
 	}
 
 	public void setExternal(Boolean external) {
 		this.external = external;
+
+		_externalSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setExternal(
 		UnsafeSupplier<Boolean, Exception> externalUnsafeSupplier) {
 
-		try {
-			external = externalUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_externalSupplier = () -> {
+			try {
+				return externalUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean external;
 
+	private Supplier<Boolean> _externalSupplier;
+
 	@Schema
 	public String getIndexName() {
+		if (_indexNameSupplier != null) {
+			indexName = _indexNameSupplier.get();
+
+			_indexNameSupplier = null;
+		}
+
 		return indexName;
 	}
 
 	public void setIndexName(String indexName) {
 		this.indexName = indexName;
+
+		_indexNameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setIndexName(
 		UnsafeSupplier<String, Exception> indexNameUnsafeSupplier) {
 
-		try {
-			indexName = indexNameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_indexNameSupplier = () -> {
+			try {
+				return indexNameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String indexName;
+
+	private Supplier<String> _indexNameSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -130,6 +155,8 @@ public class IndexConfiguration implements Serializable {
 
 		sb.append("{");
 
+		Boolean external = getExternal();
+
 		if (external != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -139,6 +166,8 @@ public class IndexConfiguration implements Serializable {
 
 			sb.append(external);
 		}
+
+		String indexName = getIndexName();
 
 		if (indexName != null) {
 			if (sb.length() > 1) {

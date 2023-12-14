@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -57,11 +58,19 @@ public class FragmentSettingsUnallowed implements Serializable {
 	@Schema
 	@Valid
 	public Fragment[] getUnallowedFragments() {
+		if (_unallowedFragmentsSupplier != null) {
+			unallowedFragments = _unallowedFragmentsSupplier.get();
+
+			_unallowedFragmentsSupplier = null;
+		}
+
 		return unallowedFragments;
 	}
 
 	public void setUnallowedFragments(Fragment[] unallowedFragments) {
 		this.unallowedFragments = unallowedFragments;
+
+		_unallowedFragmentsSupplier = null;
 	}
 
 	@JsonIgnore
@@ -69,20 +78,24 @@ public class FragmentSettingsUnallowed implements Serializable {
 		UnsafeSupplier<Fragment[], Exception>
 			unallowedFragmentsUnsafeSupplier) {
 
-		try {
-			unallowedFragments = unallowedFragmentsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_unallowedFragmentsSupplier = () -> {
+			try {
+				return unallowedFragmentsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Fragment[] unallowedFragments;
+
+	private Supplier<Fragment[]> _unallowedFragmentsSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -111,6 +124,8 @@ public class FragmentSettingsUnallowed implements Serializable {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		Fragment[] unallowedFragments = getUnallowedFragments();
 
 		if (unallowedFragments != null) {
 			if (sb.length() > 1) {

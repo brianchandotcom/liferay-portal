@@ -27,6 +27,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -57,24 +58,34 @@ public class FragmentLink implements Serializable {
 	@Schema(deprecated = true)
 	@Valid
 	public Object getHref() {
+		if (_hrefSupplier != null) {
+			href = _hrefSupplier.get();
+
+			_hrefSupplier = null;
+		}
+
 		return href;
 	}
 
 	public void setHref(Object href) {
 		this.href = href;
+
+		_hrefSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setHref(UnsafeSupplier<Object, Exception> hrefUnsafeSupplier) {
-		try {
-			href = hrefUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_hrefSupplier = () -> {
+			try {
+				return hrefUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@Deprecated
@@ -82,14 +93,24 @@ public class FragmentLink implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object href;
 
+	private Supplier<Object> _hrefSupplier;
+
 	@Schema(deprecated = true)
 	@Valid
 	public Target getTarget() {
+		if (_targetSupplier != null) {
+			target = _targetSupplier.get();
+
+			_targetSupplier = null;
+		}
+
 		return target;
 	}
 
 	@JsonIgnore
 	public String getTargetAsString() {
+		Target target = getTarget();
+
 		if (target == null) {
 			return null;
 		}
@@ -99,21 +120,25 @@ public class FragmentLink implements Serializable {
 
 	public void setTarget(Target target) {
 		this.target = target;
+
+		_targetSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setTarget(
 		UnsafeSupplier<Target, Exception> targetUnsafeSupplier) {
 
-		try {
-			target = targetUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_targetSupplier = () -> {
+			try {
+				return targetUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@Deprecated
@@ -121,43 +146,65 @@ public class FragmentLink implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Target target;
 
+	private Supplier<Target> _targetSupplier;
+
 	@Schema(description = "The fragment link's value.")
 	@Valid
 	public FragmentLinkValue getValue() {
+		if (_valueSupplier != null) {
+			value = _valueSupplier.get();
+
+			_valueSupplier = null;
+		}
+
 		return value;
 	}
 
 	public void setValue(FragmentLinkValue value) {
 		this.value = value;
+
+		_valueSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setValue(
 		UnsafeSupplier<FragmentLinkValue, Exception> valueUnsafeSupplier) {
 
-		try {
-			value = valueUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_valueSupplier = () -> {
+			try {
+				return valueUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The fragment link's value.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentLinkValue value;
 
+	private Supplier<FragmentLinkValue> _valueSupplier;
+
 	@Schema(description = "The localized fragment link's values.")
 	@Valid
 	public Map<String, FragmentLinkValue> getValue_i18n() {
+		if (_value_i18nSupplier != null) {
+			value_i18n = _value_i18nSupplier.get();
+
+			_value_i18nSupplier = null;
+		}
+
 		return value_i18n;
 	}
 
 	public void setValue_i18n(Map<String, FragmentLinkValue> value_i18n) {
 		this.value_i18n = value_i18n;
+
+		_value_i18nSupplier = null;
 	}
 
 	@JsonIgnore
@@ -165,20 +212,24 @@ public class FragmentLink implements Serializable {
 		UnsafeSupplier<Map<String, FragmentLinkValue>, Exception>
 			value_i18nUnsafeSupplier) {
 
-		try {
-			value_i18n = value_i18nUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_value_i18nSupplier = () -> {
+			try {
+				return value_i18nUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The localized fragment link's values.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, FragmentLinkValue> value_i18n;
+
+	private Supplier<Map<String, FragmentLinkValue>> _value_i18nSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -207,6 +258,8 @@ public class FragmentLink implements Serializable {
 
 		sb.append("{");
 
+		Object href = getHref();
+
 		if (href != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -227,6 +280,8 @@ public class FragmentLink implements Serializable {
 			}
 		}
 
+		Target target = getTarget();
+
 		if (target != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -241,6 +296,8 @@ public class FragmentLink implements Serializable {
 			sb.append("\"");
 		}
 
+		FragmentLinkValue value = getValue();
+
 		if (value != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -250,6 +307,8 @@ public class FragmentLink implements Serializable {
 
 			sb.append(String.valueOf(value));
 		}
+
+		Map<String, FragmentLinkValue> value_i18n = getValue_i18n();
 
 		if (value_i18n != null) {
 			if (sb.length() > 1) {

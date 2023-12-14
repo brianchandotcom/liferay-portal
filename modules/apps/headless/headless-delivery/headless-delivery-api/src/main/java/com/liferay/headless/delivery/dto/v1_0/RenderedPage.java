@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -54,26 +55,36 @@ public class RenderedPage implements Serializable {
 		description = "The ID of the master page used to render the content."
 	)
 	public String getMasterPageId() {
+		if (_masterPageIdSupplier != null) {
+			masterPageId = _masterPageIdSupplier.get();
+
+			_masterPageIdSupplier = null;
+		}
+
 		return masterPageId;
 	}
 
 	public void setMasterPageId(String masterPageId) {
 		this.masterPageId = masterPageId;
+
+		_masterPageIdSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setMasterPageId(
 		UnsafeSupplier<String, Exception> masterPageIdUnsafeSupplier) {
 
-		try {
-			masterPageId = masterPageIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_masterPageIdSupplier = () -> {
+			try {
+				return masterPageIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -82,30 +93,42 @@ public class RenderedPage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String masterPageId;
 
+	private Supplier<String> _masterPageIdSupplier;
+
 	@Schema(
 		description = "The name of the master page used to render the content."
 	)
 	public String getMasterPageName() {
+		if (_masterPageNameSupplier != null) {
+			masterPageName = _masterPageNameSupplier.get();
+
+			_masterPageNameSupplier = null;
+		}
+
 		return masterPageName;
 	}
 
 	public void setMasterPageName(String masterPageName) {
 		this.masterPageName = masterPageName;
+
+		_masterPageNameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setMasterPageName(
 		UnsafeSupplier<String, Exception> masterPageNameUnsafeSupplier) {
 
-		try {
-			masterPageName = masterPageNameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_masterPageNameSupplier = () -> {
+			try {
+				return masterPageNameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -114,28 +137,40 @@ public class RenderedPage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String masterPageName;
 
+	private Supplier<String> _masterPageNameSupplier;
+
 	@Schema(description = "The ID of the template used to render the content.")
 	public String getPageTemplateId() {
+		if (_pageTemplateIdSupplier != null) {
+			pageTemplateId = _pageTemplateIdSupplier.get();
+
+			_pageTemplateIdSupplier = null;
+		}
+
 		return pageTemplateId;
 	}
 
 	public void setPageTemplateId(String pageTemplateId) {
 		this.pageTemplateId = pageTemplateId;
+
+		_pageTemplateIdSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setPageTemplateId(
 		UnsafeSupplier<String, Exception> pageTemplateIdUnsafeSupplier) {
 
-		try {
-			pageTemplateId = pageTemplateIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_pageTemplateIdSupplier = () -> {
+			try {
+				return pageTemplateIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -144,30 +179,42 @@ public class RenderedPage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String pageTemplateId;
 
+	private Supplier<String> _pageTemplateIdSupplier;
+
 	@Schema(
 		description = "The name of the template used to render the content."
 	)
 	public String getPageTemplateName() {
+		if (_pageTemplateNameSupplier != null) {
+			pageTemplateName = _pageTemplateNameSupplier.get();
+
+			_pageTemplateNameSupplier = null;
+		}
+
 		return pageTemplateName;
 	}
 
 	public void setPageTemplateName(String pageTemplateName) {
 		this.pageTemplateName = pageTemplateName;
+
+		_pageTemplateNameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setPageTemplateName(
 		UnsafeSupplier<String, Exception> pageTemplateNameUnsafeSupplier) {
 
-		try {
-			pageTemplateName = pageTemplateNameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_pageTemplateNameSupplier = () -> {
+			try {
+				return pageTemplateNameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -176,33 +223,47 @@ public class RenderedPage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String pageTemplateName;
 
+	private Supplier<String> _pageTemplateNameSupplier;
+
 	@Schema(description = "An absolute URL to the rendered page.")
 	public String getRenderedPageURL() {
+		if (_renderedPageURLSupplier != null) {
+			renderedPageURL = _renderedPageURLSupplier.get();
+
+			_renderedPageURLSupplier = null;
+		}
+
 		return renderedPageURL;
 	}
 
 	public void setRenderedPageURL(String renderedPageURL) {
 		this.renderedPageURL = renderedPageURL;
+
+		_renderedPageURLSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setRenderedPageURL(
 		UnsafeSupplier<String, Exception> renderedPageURLUnsafeSupplier) {
 
-		try {
-			renderedPageURL = renderedPageURLUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_renderedPageURLSupplier = () -> {
+			try {
+				return renderedPageURLUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "An absolute URL to the rendered page.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String renderedPageURL;
+
+	private Supplier<String> _renderedPageURLSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -231,6 +292,8 @@ public class RenderedPage implements Serializable {
 
 		sb.append("{");
 
+		String masterPageId = getMasterPageId();
+
 		if (masterPageId != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -244,6 +307,8 @@ public class RenderedPage implements Serializable {
 
 			sb.append("\"");
 		}
+
+		String masterPageName = getMasterPageName();
 
 		if (masterPageName != null) {
 			if (sb.length() > 1) {
@@ -259,6 +324,8 @@ public class RenderedPage implements Serializable {
 			sb.append("\"");
 		}
 
+		String pageTemplateId = getPageTemplateId();
+
 		if (pageTemplateId != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -273,6 +340,8 @@ public class RenderedPage implements Serializable {
 			sb.append("\"");
 		}
 
+		String pageTemplateName = getPageTemplateName();
+
 		if (pageTemplateName != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -286,6 +355,8 @@ public class RenderedPage implements Serializable {
 
 			sb.append("\"");
 		}
+
+		String renderedPageURL = getRenderedPageURL();
 
 		if (renderedPageURL != null) {
 			if (sb.length() > 1) {

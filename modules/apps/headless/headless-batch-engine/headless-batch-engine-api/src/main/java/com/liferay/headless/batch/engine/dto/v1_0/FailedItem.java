@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -49,54 +50,76 @@ public class FailedItem implements Serializable {
 
 	@Schema(description = "The item which failed to be imported.")
 	public String getItem() {
+		if (_itemSupplier != null) {
+			item = _itemSupplier.get();
+
+			_itemSupplier = null;
+		}
+
 		return item;
 	}
 
 	public void setItem(String item) {
 		this.item = item;
+
+		_itemSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setItem(UnsafeSupplier<String, Exception> itemUnsafeSupplier) {
-		try {
-			item = itemUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_itemSupplier = () -> {
+			try {
+				return itemUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The item which failed to be imported.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String item;
 
+	private Supplier<String> _itemSupplier;
+
 	@Schema(
 		description = "Position of the item in the import file. For CSV file it will represent a line number, for JSON file it will represent an array index etc."
 	)
 	public Integer getItemIndex() {
+		if (_itemIndexSupplier != null) {
+			itemIndex = _itemIndexSupplier.get();
+
+			_itemIndexSupplier = null;
+		}
+
 		return itemIndex;
 	}
 
 	public void setItemIndex(Integer itemIndex) {
 		this.itemIndex = itemIndex;
+
+		_itemIndexSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setItemIndex(
 		UnsafeSupplier<Integer, Exception> itemIndexUnsafeSupplier) {
 
-		try {
-			itemIndex = itemIndexUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_itemIndexSupplier = () -> {
+			try {
+				return itemIndexUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -105,28 +128,40 @@ public class FailedItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer itemIndex;
 
+	private Supplier<Integer> _itemIndexSupplier;
+
 	@Schema(description = "Message describing the reason of import failure.")
 	public String getMessage() {
+		if (_messageSupplier != null) {
+			message = _messageSupplier.get();
+
+			_messageSupplier = null;
+		}
+
 		return message;
 	}
 
 	public void setMessage(String message) {
 		this.message = message;
+
+		_messageSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setMessage(
 		UnsafeSupplier<String, Exception> messageUnsafeSupplier) {
 
-		try {
-			message = messageUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_messageSupplier = () -> {
+			try {
+				return messageUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -134,6 +169,8 @@ public class FailedItem implements Serializable {
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String message;
+
+	private Supplier<String> _messageSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -162,6 +199,8 @@ public class FailedItem implements Serializable {
 
 		sb.append("{");
 
+		String item = getItem();
+
 		if (item != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -176,6 +215,8 @@ public class FailedItem implements Serializable {
 			sb.append("\"");
 		}
 
+		Integer itemIndex = getItemIndex();
+
 		if (itemIndex != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -185,6 +226,8 @@ public class FailedItem implements Serializable {
 
 			sb.append(itemIndex);
 		}
+
+		String message = getMessage();
 
 		if (message != null) {
 			if (sb.length() > 1) {

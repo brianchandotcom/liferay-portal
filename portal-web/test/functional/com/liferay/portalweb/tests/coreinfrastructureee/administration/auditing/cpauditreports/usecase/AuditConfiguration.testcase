@@ -137,7 +137,7 @@ definition {
 
 		SignOut.signOut();
 
-		var auditTablePersistenceDisabled = SQL.executeMySQLStatement(mysqlStatement = "SELECT COUNT(*) FROM Audit_AuditEvent;");
+		var auditTablePersistenceDisabled = SQL.executeSQLStatement(sqlStatement = "SELECT COUNT(*) FROM Audit_AuditEvent;");
 
 		echo("Audit table: ${auditTablePersistenceDisabled}");
 
@@ -169,7 +169,7 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		var auditTablePersistenceEnabled = SQL.executeMySQLStatement(mysqlStatement = "SELECT COUNT(*) FROM Audit_AuditEvent;");
+		var auditTablePersistenceEnabled = SQL.executeSQLStatement(sqlStatement = "SELECT COUNT(*) FROM Audit_AuditEvent;");
 
 		echo("Audit table: ${auditTablePersistenceEnabled}");
 

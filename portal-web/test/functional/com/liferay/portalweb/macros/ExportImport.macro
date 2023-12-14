@@ -57,14 +57,14 @@ definition {
 		if (${type} == "Export") {
 			var mysqlStatement = "SELECT backgroundTaskId FROM BackgroundTask WHERE taskExecutorClassName in ('com.liferay.exportimport.internal.background.task.LayoutExportBackgroundTaskExecutor', 'com.liferay.exportimport.internal.background.task.PortletExportBackgroundTaskExecutor') AND STATUS IN (3, 5);";
 
-			var sqlResults = SQL.executeMySQLStatement(mysqlStatement = ${mysqlStatement});
+			var sqlResults = SQL.executeSQLStatement(sqlStatement = ${mysqlStatement});
 
 			var getRecord = StringUtil.regexReplaceAll(${sqlResults}, "[backgroundTaskId\n]", "");
 		}
 		else if (${type} == "Import") {
 			var mysqlStatement = "SELECT backgroundTaskId FROM BackgroundTask WHERE taskExecutorClassName in ('com.liferay.exportimport.internal.background.task.LayoutImportBackgroundTaskExecutor', 'com.liferay.exportimport.internal.background.task.PortletImportBackgroundTaskExecutor') AND STATUS IN (3, 5);";
 
-			var sqlResults = SQL.executeMySQLStatement(mysqlStatement = ${mysqlStatement});
+			var sqlResults = SQL.executeSQLStatement(sqlStatement = ${mysqlStatement});
 
 			var getRecord = StringUtil.regexReplaceAll(${sqlResults}, "[backgroundTaskId\n]", "");
 		}
@@ -81,7 +81,7 @@ definition {
 	macro getLARFileStatus() {
 		var mysqlStatement = "SELECT title FROM DLFileEntry WHERE title LIKE '%.lar';";
 
-		var sqlResults = SQL.executeMySQLStatement(mysqlStatement = ${mysqlStatement});
+		var sqlResults = SQL.executeSQLStatement(sqlStatement = ${mysqlStatement});
 
 		var getRecord = StringUtil.regexReplaceAll(${sqlResults}, "[title\n]", "");
 
@@ -98,7 +98,7 @@ definition {
 		if (${type} == "Export") {
 			var mysqlStatement = "SELECT backgroundTaskId FROM BackgroundTask WHERE taskExecutorClassName in ('com.liferay.exportimport.internal.background.task.LayoutExportBackgroundTaskExecutor') AND STATUS IN (3, 5);";
 
-			var sqlResults = SQL.executeMySQLStatement(mysqlStatement = ${mysqlStatement});
+			var sqlResults = SQL.executeSQLStatement(sqlStatement = ${mysqlStatement});
 
 			var backgroundTaskId = StringUtil.regexReplaceAll(${sqlResults}, "[backgroundTaskId\n]", "");
 
@@ -107,7 +107,7 @@ definition {
 		else if (${type} == "Import") {
 			var mysqlStatement = "SELECT backgroundTaskId FROM BackgroundTask WHERE taskExecutorClassName in ('com.liferay.exportimport.internal.background.task.LayoutImportBackgroundTaskExecutor') AND STATUS IN (3, 5);";
 
-			var sqlResults = SQL.executeMySQLStatement(mysqlStatement = ${mysqlStatement});
+			var sqlResults = SQL.executeSQLStatement(sqlStatement = ${mysqlStatement});
 
 			var backgroundTaskId = StringUtil.regexReplaceAll(${sqlResults}, "[backgroundTaskId\n]", "");
 
@@ -116,7 +116,7 @@ definition {
 
 		var mysqlStatement = "UPDATE BackgroundTask SET modifiedDate = '2023-03-20 04:20:24.321000' WHERE (backgroundTaskId = ${backgroundTaskId});";
 
-		var sqlResults = SQL.executeMySQLStatement(mysqlStatement = ${mysqlStatement});
+		var sqlResults = SQL.executeSQLStatement(sqlStatement = ${mysqlStatement});
 
 		var queryResult = StringUtil.regexReplaceAll(${sqlResults}, "[\r\n]", "");
 
@@ -130,7 +130,7 @@ definition {
 		if (${type} == "Export") {
 			var mysqlStatement = "SELECT backgroundTaskId FROM BackgroundTask WHERE taskExecutorClassName in ('com.liferay.exportimport.internal.background.task.PortletExportBackgroundTaskExecutor') AND STATUS IN (3, 5);";
 
-			var sqlResults = SQL.executeMySQLStatement(mysqlStatement = ${mysqlStatement});
+			var sqlResults = SQL.executeSQLStatement(sqlStatement = ${mysqlStatement});
 
 			var backgroundTaskId = StringUtil.regexReplaceAll(${sqlResults}, "[backgroundTaskId\n]", "");
 
@@ -139,7 +139,7 @@ definition {
 		else if (${type} == "Import") {
 			var mysqlStatement = "SELECT backgroundTaskId FROM BackgroundTask WHERE taskExecutorClassName in ('com.liferay.exportimport.internal.background.task.PortletImportBackgroundTaskExecutor') AND STATUS IN (3, 5);";
 
-			var sqlResults = SQL.executeMySQLStatement(mysqlStatement = ${mysqlStatement});
+			var sqlResults = SQL.executeSQLStatement(sqlStatement = ${mysqlStatement});
 
 			var backgroundTaskId = StringUtil.regexReplaceAll(${sqlResults}, "[backgroundTaskId\n]", "");
 
@@ -148,7 +148,7 @@ definition {
 
 		var mysqlStatement = "UPDATE BackgroundTask SET modifiedDate = '2023-03-20 04:20:24.321000' WHERE (backgroundTaskId = ${backgroundTaskId});";
 
-		var sqlResults = SQL.executeMySQLStatement(mysqlStatement = ${mysqlStatement});
+		var sqlResults = SQL.executeSQLStatement(sqlStatement = ${mysqlStatement});
 
 		var queryResult = StringUtil.regexReplaceAll(${sqlResults}, "[\r\n]", "");
 

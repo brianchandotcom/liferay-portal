@@ -21,7 +21,7 @@ definition {
 
 	@summary = "Create and configure the target schema"
 	macro prepareTargetSchema() {
-		SQL.executeMySQLStatement(mysqlStatement = "CREATE DATABASE lportal_target character set utf8;");
+		SQL.executeSQLStatement(sqlStatement = "CREATE DATABASE lportal_target character set utf8;");
 
 		var liferayPortalWeb = PropsUtil.get("liferay.app.server.classes.portal.dir");
 

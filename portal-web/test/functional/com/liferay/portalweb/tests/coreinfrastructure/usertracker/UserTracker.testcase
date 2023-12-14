@@ -138,11 +138,11 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		var emptyTable = SQL.executeMySQLStatement(mysqlStatement = "SELECT * FROM lportal.UserTracker;");
+		var emptyTable = SQL.executeSQLStatement(sqlStatement = "SELECT * FROM lportal.UserTracker;");
 
 		SignOut.signOut();
 
-		var afterLoginUserTrackerTable = SQL.executeMySQLStatement(mysqlStatement = "SELECT * FROM lportal.UserTracker;");
+		var afterLoginUserTrackerTable = SQL.executeSQLStatement(sqlStatement = "SELECT * FROM lportal.UserTracker;");
 		var companyId = JSONCompany.getCompanyId();
 
 		echo("UserTracker table: ${afterLoginUserTrackerTable}");
@@ -175,7 +175,7 @@ definition {
 
 		UserBar.signOut();
 
-		var afterVirutalInstanceUserTrackerTable = SQL.executeMySQLStatement(mysqlStatement = "SELECT * FROM lportal.UserTracker;");
+		var afterVirutalInstanceUserTrackerTable = SQL.executeSQLStatement(sqlStatement = "SELECT * FROM lportal.UserTracker;");
 		var virutalInstanceCompanyId = JSONCompany.getCompanyId(portalInstanceName = "www.able.com");
 
 		echo("UserTracker table: ${afterVirutalInstanceUserTrackerTable}");

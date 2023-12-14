@@ -97,7 +97,7 @@ definition {
 		task ("And: Verify the propagation background task is deleted") {
 			var mysqlStatement = "SELECT * FROM BackgroundTask WHERE taskExecutorClassName = 'com.liferay.exportimport.internal.background.task.LayoutSetPrototypeImportBackgroundTaskExecutor' AND STATUS NOT IN (0, 1, 4);";
 
-			var sqlResults = SQL.executeMySQLStatement(mysqlStatement = ${mysqlStatement});
+			var sqlResults = SQL.executeSQLStatement(sqlStatement = ${mysqlStatement});
 
 			var getHeader = StringUtil.regexReplaceAll(${sqlResults}, "[\r\n]", "");
 
@@ -274,7 +274,7 @@ definition {
 		}
 
 		task ("Then: The propagation will be triggered and the page on the Site will be present in the SQL database") {
-			var sqlResults = SQL.executeMySQLStatement(mysqlStatement = ${sQLStatement});
+			var sqlResults = SQL.executeSQLStatement(sqlStatement = ${sQLStatement});
 
 			TestUtils.assertPartialEquals(
 				actual = ${sqlResults},
@@ -672,7 +672,7 @@ definition {
 				pageName = "Home",
 				siteTemplateName = "Site Template Name");
 
-			var sqlResults = SQL.executeMySQLStatement(mysqlStatement = ${sQLStatement});
+			var sqlResults = SQL.executeSQLStatement(sqlStatement = ${sQLStatement});
 
 			TestUtils.assertNotEquals(
 				actual = ${sqlResults},
@@ -688,7 +688,7 @@ definition {
 		task ("Then: The page will not be visible on the website but it is present in the database") {
 			Page.viewNoPG(pageName = "Test");
 
-			var sqlResults = SQL.executeMySQLStatement(mysqlStatement = ${sQLStatement});
+			var sqlResults = SQL.executeSQLStatement(sqlStatement = ${sQLStatement});
 
 			TestUtils.assertPartialEquals(
 				actual = ${sqlResults},

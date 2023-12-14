@@ -23,7 +23,7 @@ definition {
 	macro getBuildNumber() {
 		var mysqlStatement = "SELECT buildNumber FROM Release_ WHERE servletContextName='portal';";
 
-		var sqlResults = SQL.executeMySQLStatement(mysqlStatement = ${mysqlStatement});
+		var sqlResults = SQL.executeSQLStatement(sqlStatement = ${mysqlStatement});
 
 		var portalBuildNumber = StringUtil.regexReplaceAll(${sqlResults}, "[buildNumber\n]", "");
 
@@ -36,7 +36,7 @@ definition {
 	macro getSchemaVersion() {
 		var mysqlStatement = ${mysqlStatement};
 
-		var sqlResults = SQL.executeMySQLStatement(mysqlStatement = ${mysqlStatement});
+		var sqlResults = SQL.executeSQLStatement(sqlStatement = ${mysqlStatement});
 
 		var portalSchemaVersion = StringUtil.regexReplaceAll(${sqlResults}, "[schemaVersion\n]", "");
 

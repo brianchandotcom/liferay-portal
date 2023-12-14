@@ -1542,7 +1542,7 @@ definition {
 		task ("When: Get the value of the application externalReferenceCode and look up clientId") {
 			var mysqlStatement = "SELECT externalReferenceCode FROM OAuth2Application WHERE name = 'OAuth2 Application';";
 
-			var sqlResults = SQL.executeMySQLStatement(mysqlStatement = ${mysqlStatement});
+			var sqlResults = SQL.executeSQLStatement(sqlStatement = ${mysqlStatement});
 
 			var externalReferenceCode = StringUtil.regexReplaceAll(${sqlResults}, "[\n]", "");
 

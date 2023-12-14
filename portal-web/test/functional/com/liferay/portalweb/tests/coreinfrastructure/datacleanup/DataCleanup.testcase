@@ -31,9 +31,9 @@ definition {
 
 		AssertConsoleTextNotPresent(value1 = "Completed upgrade process com.liferay.data.cleanup.internal.upgrade.UpgradeHelloWorld");
 
-		var classNameTable = SQL.executeMySQLStatement(mysqlStatement = ${classNameQuery});
-		var releaseTable = SQL.executeMySQLStatement(mysqlStatement = ${releaseQuery});
-		var resourceActionTable = SQL.executeMySQLStatement(mysqlStatement = ${resourceActionQuery});
+		var classNameTable = SQL.executeSQLStatement(sqlStatement = ${classNameQuery});
+		var releaseTable = SQL.executeSQLStatement(sqlStatement = ${releaseQuery});
+		var resourceActionTable = SQL.executeSQLStatement(sqlStatement = ${resourceActionQuery});
 
 		if (!(contains(${classNameTable}, "com.liferay.hello.world.web"))) {
 			echo("${classNameTable} - Failed to find Hello World in ClassName_ table.");
@@ -65,9 +65,9 @@ definition {
 
 		AssertConsoleTextPresent(value1 = "Completed upgrade process com.liferay.data.cleanup.internal.upgrade.UpgradeHelloWorld");
 
-		var classNameTable = SQL.executeMySQLStatement(mysqlStatement = ${classNameQuery});
-		var releaseTable = SQL.executeMySQLStatement(mysqlStatement = ${releaseQuery});
-		var resourceActionTable = SQL.executeMySQLStatement(mysqlStatement = ${resourceActionQuery});
+		var classNameTable = SQL.executeSQLStatement(sqlStatement = ${classNameQuery});
+		var releaseTable = SQL.executeSQLStatement(sqlStatement = ${releaseQuery});
+		var resourceActionTable = SQL.executeSQLStatement(sqlStatement = ${resourceActionQuery});
 
 		if (contains(${classNameTable}, "com.liferay.hello.world.web")) {
 			echo(${classNameTable});
@@ -101,10 +101,10 @@ definition {
 
 		AssertConsoleTextNotPresent(value1 = "Completed upgrade process com.liferay.data.cleanup.internal.upgrade.OpenSocialUpgradeProcess");
 
-		var classNameTable = SQL.executeMySQLStatement(mysqlStatement = ${classNameQuery});
-		var releaseTable = SQL.executeMySQLStatement(mysqlStatement = ${releaseQuery});
-		var resourceActionTable = SQL.executeMySQLStatement(mysqlStatement = ${resourceActionQuery});
-		var expandoTable = SQL.executeMySQLStatement(mysqlStatement = ${expandoTableQuery});
+		var classNameTable = SQL.executeSQLStatement(sqlStatement = ${classNameQuery});
+		var releaseTable = SQL.executeSQLStatement(sqlStatement = ${releaseQuery});
+		var resourceActionTable = SQL.executeSQLStatement(sqlStatement = ${resourceActionQuery});
+		var expandoTable = SQL.executeSQLStatement(sqlStatement = ${expandoTableQuery});
 
 		if (!(contains(${classNameTable}, "com.liferay.opensocial.model."))) {
 			echo(${classNameTable});
@@ -145,10 +145,10 @@ definition {
 
 		AssertConsoleTextPresent(value1 = "Completed upgrade process com.liferay.data.cleanup.internal.upgrade.OpenSocialUpgradeProcess");
 
-		var classNameTable = SQL.executeMySQLStatement(mysqlStatement = ${classNameQuery});
-		var releaseTable = SQL.executeMySQLStatement(mysqlStatement = ${releaseQuery});
-		var resourceActionTable = SQL.executeMySQLStatement(mysqlStatement = ${resourceActionQuery});
-		var expandoTable = SQL.executeMySQLStatement(mysqlStatement = ${expandoTableQuery});
+		var classNameTable = SQL.executeSQLStatement(sqlStatement = ${classNameQuery});
+		var releaseTable = SQL.executeSQLStatement(sqlStatement = ${releaseQuery});
+		var resourceActionTable = SQL.executeSQLStatement(sqlStatement = ${resourceActionQuery});
+		var expandoTable = SQL.executeSQLStatement(sqlStatement = ${expandoTableQuery});
 
 		if (contains(${classNameTable}, "com.liferay.opensocial.model.")) {
 			echo(${classNameTable});
@@ -186,9 +186,9 @@ definition {
 
 		AssertConsoleTextNotPresent(value1 = "Completed upgrade process com.liferay.data.cleanup.internal.upgrade.ShoppingUpgradeProcess");
 
-		var classNameTable = SQL.executeMySQLStatement(mysqlStatement = ${classNameQuery});
-		var releaseTable = SQL.executeMySQLStatement(mysqlStatement = ${releaseQuery});
-		var resourceActionTable = SQL.executeMySQLStatement(mysqlStatement = ${resourceActionQuery});
+		var classNameTable = SQL.executeSQLStatement(sqlStatement = ${classNameQuery});
+		var releaseTable = SQL.executeSQLStatement(sqlStatement = ${releaseQuery});
+		var resourceActionTable = SQL.executeSQLStatement(sqlStatement = ${resourceActionQuery});
 
 		if (!(contains(${classNameTable}, "com.liferay.portlet.shopping"))) {
 			echo(${classNameTable});
@@ -224,9 +224,9 @@ definition {
 
 		AssertConsoleTextPresent(value1 = "Completed upgrade process com.liferay.data.cleanup.internal.upgrade.ShoppingUpgradeProcess");
 
-		var classNameTable = SQL.executeMySQLStatement(mysqlStatement = ${classNameQuery});
-		var releaseTable = SQL.executeMySQLStatement(mysqlStatement = ${releaseQuery});
-		var resourceActionTable = SQL.executeMySQLStatement(mysqlStatement = ${resourceActionQuery});
+		var classNameTable = SQL.executeSQLStatement(sqlStatement = ${classNameQuery});
+		var releaseTable = SQL.executeSQLStatement(sqlStatement = ${releaseQuery});
+		var resourceActionTable = SQL.executeSQLStatement(sqlStatement = ${resourceActionQuery});
 
 		if (contains(${classNameTable}, "com.liferay.portlet.shopping")) {
 			echo(${classNameTable});
@@ -259,9 +259,9 @@ definition {
 
 		AssertConsoleTextNotPresent(value1 = "Completed upgrade process com.liferay.data.cleanup.internal.upgrade.SoftwareCatalogUpgradeProcess");
 
-		var classNameTable = SQL.executeMySQLStatement(mysqlStatement = ${classNameQuery});
-		var releaseTable = SQL.executeMySQLStatement(mysqlStatement = ${releaseQuery});
-		var resourceActionTable = SQL.executeMySQLStatement(mysqlStatement = ${resourceActionQuery});
+		var classNameTable = SQL.executeSQLStatement(sqlStatement = ${classNameQuery});
+		var releaseTable = SQL.executeSQLStatement(sqlStatement = ${releaseQuery});
+		var resourceActionTable = SQL.executeSQLStatement(sqlStatement = ${resourceActionQuery});
 
 		if (!(contains(${classNameTable}, "com.liferay.portlet.softwarecatalog"))) {
 			echo(${classNameTable});
@@ -297,9 +297,9 @@ definition {
 
 		AssertConsoleTextPresent(value1 = "Completed upgrade process com.liferay.data.cleanup.internal.upgrade.SoftwareCatalogUpgradeProcess");
 
-		var classNameTable = SQL.executeMySQLStatement(mysqlStatement = ${classNameQuery});
-		var releaseTable = SQL.executeMySQLStatement(mysqlStatement = ${releaseQuery});
-		var resourceActionTable = SQL.executeMySQLStatement(mysqlStatement = ${resourceActionQuery});
+		var classNameTable = SQL.executeSQLStatement(sqlStatement = ${classNameQuery});
+		var releaseTable = SQL.executeSQLStatement(sqlStatement = ${releaseQuery});
+		var resourceActionTable = SQL.executeSQLStatement(sqlStatement = ${resourceActionQuery});
 
 		if (contains(${classNameTable}, "com.liferay.portlet.softwarecatalog")) {
 			echo(${classNameTable});
@@ -342,7 +342,7 @@ definition {
 			webContentStatus = "Expired",
 			webContentTitle = "WC WebContent Title");
 
-		var journalArticleTable = SQL.executeMySQLStatement(mysqlStatement = ${journalArticleQuery});
+		var journalArticleTable = SQL.executeSQLStatement(sqlStatement = ${journalArticleQuery});
 
 		if (!(contains(${journalArticleTable}, "wc-webcontent-title"))) {
 			echo(${journalArticleTable});
@@ -374,7 +374,7 @@ definition {
 
 		WebContent.viewNotPresentCP(webContentTitle = "WC WebContent Title");
 
-		var journalArticleTable = SQL.executeMySQLStatement(mysqlStatement = ${journalArticleQuery});
+		var journalArticleTable = SQL.executeSQLStatement(sqlStatement = ${journalArticleQuery});
 
 		if (contains(${journalArticleTable}, "wc-webcontent-title")) {
 			echo(${journalArticleTable});

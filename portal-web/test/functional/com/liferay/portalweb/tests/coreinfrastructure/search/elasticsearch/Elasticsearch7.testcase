@@ -1037,13 +1037,13 @@ definition {
 			mimeType = "text/txt",
 			sourceFileName = "Document_1.txt");
 
-		SQL.executeMySQLStatement(mysqlStatement = "SELECT * FROM DLFileEntry WHERE filename='Document_1.txt';");
+		SQL.executeSQLStatement(sqlStatement = "SELECT * FROM DLFileEntry WHERE filename='Document_1.txt';");
 
 		var fileEntryId = JSONDocument.getFileEntryId(
 			dmDocumentTitle = "DM Document",
 			groupName = "Guest");
 
-		SQL.executeMySQLStatement(mysqlStatement = "delete from DLFileEntry where fileEntryId = ${fileEntryId};");
+		SQL.executeSQLStatement(sqlStatement = "delete from DLFileEntry where fileEntryId = ${fileEntryId};");
 
 		ServerAdministration.openServerAdmin();
 

@@ -568,7 +568,7 @@ definition {
 		property test.run.type = "single";
 
 		task ("Verify if the lower_case_table_names is enabled") {
-			var variableQueryResult = SQL.executeMySQLStatement(mysqlStatement = "show variables where Variable_name='lower_case_table_names';");
+			var variableQueryResult = SQL.executeSQLStatement(sqlStatement = "show variables where Variable_name='lower_case_table_names';");
 
 			if (!(contains(${variableQueryResult}, "lower_case_table_names,1"))) {
 				echo(${variableQueryResult});

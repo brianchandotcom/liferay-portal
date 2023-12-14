@@ -915,7 +915,7 @@ definition {
 
 		Portlet.shutdownServer();
 
-		SQL.executeMySQLStatement(mysqlStatement = "drop database if exists lportal;");
+		SQL.executeSQLStatement(sqlStatement = "drop database if exists lportal;");
 
 		AntCommands.runCommand("build-test.xml", "rebuild-database -Ddatabase.type=mysql -Dkeep.osgi.state=true -Dsql.dir=sql/create-bare/ -Dsql.file=create-bare-mysql.sql");
 
@@ -1026,7 +1026,7 @@ definition {
 
 		Portlet.shutdownServer();
 
-		SQL.executeMySQLStatement(mysqlStatement = "drop database if exists lportal;");
+		SQL.executeSQLStatement(sqlStatement = "drop database if exists lportal;");
 
 		AntCommands.runCommand("build-test.xml", "rebuild-database -Ddatabase.type=mysql -Dkeep.osgi.state=true -Dsql.dir=sql/create-bare/ -Dsql.file=create-bare-mysql.sql");
 

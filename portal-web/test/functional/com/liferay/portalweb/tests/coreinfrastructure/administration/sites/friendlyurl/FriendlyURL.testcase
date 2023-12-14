@@ -167,7 +167,7 @@ definition {
 		}
 
 		task ("Then the virtual host gets converted to lowercase in the database") {
-			var virtualHostQueryResult = SQL.executeMySQLStatement(mysqlStatement = "SELECT * FROM lportal.VirtualHost;");
+			var virtualHostQueryResult = SQL.executeSQLStatement(sqlStatement = "SELECT * FROM lportal.VirtualHost;");
 
 			if (contains(${virtualHostQueryResult}, "LIFERAY-UPPER") || !(contains(${virtualHostQueryResult}, "liferay-upper"))) {
 				echo(${virtualHostQueryResult});

@@ -4,9 +4,9 @@ definition {
 	macro assertDatabaseCount(databaseSubstring = null, databaseFilter = null, expectedCount = null) {
 		Variables.assertDefined(parameterList = "${databaseFilter},${databaseSubstring},${expectedCount}");
 
-		var mysqlStatement = "SHOW DATABASES LIKE '${databaseFilter}';";
+		var sqlStatement = "SHOW DATABASES LIKE '${databaseFilter}';";
 
-		var sqlResults = SQL.executeMySQLStatement(mysqlStatement = ${mysqlStatement});
+		var sqlResults = SQL.executeSQLStatement(sqlStatement = ${sqlStatement});
 
 		var matches = StringUtil.count(${sqlResults}, ${databaseSubstring});
 
@@ -17,7 +17,7 @@ definition {
 
 	@summary = "Assert the ${text} in MySQL Statement Result"
 	macro assertTextInMySQLStatementResult(text = null, mysqlStatement = null) {
-		var sqlResults = SQL.executeMySQLStatement(mysqlStatement = ${mysqlStatement});
+		var sqlResults = SQL.executeSQLStatement(sqlStatement = ${mysqlStatement});
 
 		if (!(contains(${sqlResults}, ${text}))) {
 			fail("The MySql query result does not contain text: ${text}");
@@ -26,7 +26,7 @@ definition {
 
 	@summary = "Assert the ${text} is not in MySQL Statement Result"
 	macro assertTextNotInMySQLStatementResult(text = null, mysqlStatement = null) {
-		var sqlResults = SQL.executeMySQLStatement(mysqlStatement = ${mysqlStatement});
+		var sqlResults = SQL.executeSQLStatement(sqlStatement = ${mysqlStatement});
 
 		if (contains(${sqlResults}, ${text})) {
 			fail("The MySql query result contains text: ${text}");
@@ -37,7 +37,7 @@ definition {
 	macro dropMySQLIndex(indexName = null, tableName = null) {
 		Variables.assertDefined(parameterList = "${indexName},${tableName}");
 
-		SQL.executeMySQLStatement(mysqlStatement = "drop index ${indexName} on ${tableName};");
+		SQL.executeSQLStatement(sqlStatement = "drop index ${indexName} on ${tableName};");
 
 		var hasMySQLIndex = SQL.hasMySQLIndex(indexName = ${indexName});
 
@@ -46,17 +46,17 @@ definition {
 		}
 	}
 
-	@summary = "Execute ${mysqlStatement}"
-	macro executeMySQLStatement(mysqlStatement = null) {
-		Variables.assertDefined(parameterList = ${mysqlStatement});
+	@summary = "Execute ${sqlStatement}"
+	macro executeSQLStatement(sqlStatement = null) {
+		Variables.assertDefined(parameterList = ${sqlStatement});
 
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
-		var inputFile = "mysqltemp.sql";
-		var outputFile = "mysqltemp.txt";
+		var inputFile = "sqltemp.sql";
+		var outputFile = "sqltemp.txt";
 
-		FileUtil.write("${liferayHome}/${inputFile}", ${mysqlStatement});
+		FileUtil.write("${liferayHome}/${inputFile}", ${sqlStatement});
 
-		AntCommands.runCommand("build-test.xml", "execute-mysql -Dmysql.input.file=${liferayHome}/${inputFile} -Dmysql.output.file=${liferayHome}/${outputFile}");
+		AntCommands.runCommand("build-test.xml", "execute-sql -Dsql.input.file=${liferayHome}/${inputFile} -Dsql.output.file=${liferayHome}/${outputFile}");
 
 		var output = FileUtil.read("${liferayHome}/${outputFile}");
 
@@ -69,7 +69,7 @@ definition {
 
 		var indexQuery = "SELECT COUNT(DISTINCT(index_name)) FROM information_schema.statistics WHERE index_schema = database() AND index_name = '${indexName}';";
 
-		var index = SQL.executeMySQLStatement(mysqlStatement = ${indexQuery});
+		var index = SQL.executeSQLStatement(sqlStatement = ${indexQuery});
 
 		if (contains(${index}, 1)) {
 			return "true";

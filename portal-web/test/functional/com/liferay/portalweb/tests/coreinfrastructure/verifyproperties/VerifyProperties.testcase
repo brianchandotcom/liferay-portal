@@ -67,7 +67,7 @@ definition {
 
 		Portlet.shutdownServer();
 
-		SQL.executeMySQLStatement(mysqlStatement = "UPDATE LayoutFriendlyURL SET friendlyURL = '/abc' WHERE friendlyURL = '/a';");
+		SQL.executeSQLStatement(sqlStatement = "UPDATE LayoutFriendlyURL SET friendlyURL = '/abc' WHERE friendlyURL = '/a';");
 
 		Portlet.startServer(deleteLiferayHome = "false");
 

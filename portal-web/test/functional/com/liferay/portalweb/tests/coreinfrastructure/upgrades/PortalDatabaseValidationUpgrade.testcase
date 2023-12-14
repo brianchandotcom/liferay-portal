@@ -56,7 +56,7 @@ definition {
 				newProperty = "upgrade.database.auto.run=false",
 				oldProperty = "upgrade.database.auto.run=true");
 
-			SQL.executeMySQLStatement(mysqlStatement = "DROP DATABASE lpartition_${upgradedCompanyId};");
+			SQL.executeSQLStatement(sqlStatement = "DROP DATABASE lpartition_${upgradedCompanyId};");
 
 			Portlet.startServer();
 
@@ -119,9 +119,9 @@ definition {
 		task ("When the user rebuild the database And clean the missing partitions") {
 			AntCommands.runCommand("build-test.xml", "rebuild-database -Ddatabase.type=mysql -Dsql.dir=sql/create-bare/ -Dsql.file=create-bare-mysql.sql");
 
-			SQL.executeMySQLStatement(mysqlStatement = "DROP DATABASE lpartition_42638;");
+			SQL.executeSQLStatement(sqlStatement = "DROP DATABASE lpartition_42638;");
 
-			SQL.executeMySQLStatement(mysqlStatement = "DROP DATABASE lpartition_44913;");
+			SQL.executeSQLStatement(sqlStatement = "DROP DATABASE lpartition_44913;");
 		}
 
 		task ("And the user start the server again to have a fresh and clean base") {

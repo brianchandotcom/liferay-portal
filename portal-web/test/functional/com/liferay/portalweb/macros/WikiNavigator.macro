@@ -9,7 +9,7 @@ definition {
 
 	@summary = "Default summary"
 	macro gotoAllPagesCP() {
-		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
+		Click(locator1 = "ManagementBar#FILTER");
 
 		MenuItem.click(menuItem = "All Pages");
 	}
@@ -67,7 +67,7 @@ definition {
 
 	@summary = "Default summary"
 	macro gotoCP(isOrphanPage = null, wikiPageTitle = null) {
-		Click.clickAt(locator1 = "Dropdown#FILTER_AND_ORDER");
+		Click(locator1 = "ManagementBar#FILTER");
 
 		if (${isOrphanPage} == "true") {
 			MenuItem.click(menuItem = "Orphan Pages");
@@ -153,7 +153,7 @@ definition {
 			locator1 = "Wiki#NODE_TABLE_WIKI_NAME",
 			value1 = ${wikiNodeName});
 
-		AssertElementPresent(locator1 = "Dropdown#FILTER_AND_ORDER");
+		AssertElementPresent(locator1 = "ManagementBar#ORDER");
 	}
 
 	@summary = "Default summary"

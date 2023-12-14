@@ -237,10 +237,6 @@ export default function ContentTypesInput({onBlur, onChange, value}) {
 				<label>
 					{Liferay.Language.get('content-types')}
 
-					<span className="reference-mark">
-						<ClayIcon symbol="asterisk" />
-					</span>
-
 					<ClayTooltipProvider>
 						<span
 							className="c-ml-2"

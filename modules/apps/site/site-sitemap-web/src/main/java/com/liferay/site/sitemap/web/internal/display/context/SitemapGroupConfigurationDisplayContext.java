@@ -38,35 +38,59 @@ public class SitemapGroupConfigurationDisplayContext {
 	}
 
 	public boolean isIncludeCategoriesDisabled() throws ConfigurationException {
+		if (_includeCategoriesDisabled != null) {
+			return _includeCategoriesDisabled;
+		}
+
 		if (_sitemapConfigurationManager.includeCategoriesCompanyEnabled(
 				_themeDisplay.getCompanyId())) {
 
-			return false;
+			_includeCategoriesDisabled = false;
+		}
+		else {
+			_includeCategoriesDisabled = true;
 		}
 
-		return true;
+		return _includeCategoriesDisabled;
 	}
 
 	public boolean isIncludePagesDisabled() throws ConfigurationException {
+		if (_includePagesDisabled != null) {
+			return _includePagesDisabled;
+		}
+
 		if (_sitemapConfigurationManager.includePagesCompanyEnabled(
 				_themeDisplay.getCompanyId())) {
 
-			return false;
+			_includePagesDisabled = false;
+		}
+		else {
+			_includePagesDisabled = true;
 		}
 
-		return true;
+		return _includePagesDisabled;
 	}
 
 	public boolean isIncludeWebContentDisabled() throws ConfigurationException {
+		if (_includeWebContentDisabled != null) {
+			return _includeWebContentDisabled;
+		}
+
 		if (_sitemapConfigurationManager.includeWebContentCompanyEnabled(
 				_themeDisplay.getCompanyId())) {
 
-			return false;
+			_includeWebContentDisabled = false;
+		}
+		else {
+			_includeWebContentDisabled = true;
 		}
 
-		return true;
+		return _includeWebContentDisabled;
 	}
 
+	private Boolean _includeCategoriesDisabled;
+	private Boolean _includePagesDisabled;
+	private Boolean _includeWebContentDisabled;
 	private final SitemapConfigurationManager _sitemapConfigurationManager;
 	private final ThemeDisplay _themeDisplay;
 

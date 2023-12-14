@@ -10,6 +10,7 @@ import com.liferay.jethr0.bui1d.queue.BuildQueue;
 import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
 import com.liferay.jethr0.bui1d.repository.BuildRunEntityRepository;
 import com.liferay.jethr0.bui1d.run.BuildRunEntity;
+import com.liferay.jethr0.event.github.GitHubFactory;
 import com.liferay.jethr0.event.github.client.GitHubClient;
 import com.liferay.jethr0.event.jenkins.JenkinsEventProcessor;
 import com.liferay.jethr0.event.jrp.JRPEventProcessor;
@@ -57,6 +58,10 @@ public abstract class BaseEventHandler implements EventHandler {
 
 	protected GitHubClient getGitHubClient() {
 		return _eventHandlerContext.getGitHubClient();
+	}
+
+	protected GitHubFactory getGitHubFactory() {
+		return _eventHandlerContext.getGitHubFactory();
 	}
 
 	protected JenkinsCohortEntityRepository getJenkinsCohortEntityRepository() {

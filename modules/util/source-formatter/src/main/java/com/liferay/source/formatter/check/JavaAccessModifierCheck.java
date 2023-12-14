@@ -18,7 +18,6 @@ import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 
 import java.io.File;
-import java.io.IOException;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -99,7 +98,9 @@ public class JavaAccessModifierCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private Map<String, List<String>> _getCommponentJavaFileMap() {
+	private Map<String, List<String>> _getCommponentJavaFileMap()
+		throws Exception {
+
 		if (_componentJavaFileMap != null) {
 			return _componentJavaFileMap;
 		}
@@ -110,7 +111,7 @@ public class JavaAccessModifierCheck extends BaseFileCheck {
 
 		List<String> lines = new ArrayList<>();
 
-		for (int i = 0; i < 6; i++) {
+		for (int i = 0; i < getMaxDirLevel(); i++) {
 			File file = new File(getBaseDirName() + moduleRootDirLocation);
 
 			if (file.exists()) {
@@ -122,48 +123,41 @@ public class JavaAccessModifierCheck extends BaseFileCheck {
 			moduleRootDirLocation = "../" + moduleRootDirLocation;
 		}
 
-		if (!lines.isEmpty()) {
-			for (String line : lines) {
-				if (line.contains("/src/test/java/") ||
-					line.contains("/test/unit/")) {
+		for (String line : lines) {
+			if (line.contains("/src/test/java/") ||
+				line.contains("/test/unit/")) {
 
-					continue;
-				}
+				continue;
+			}
 
-				Path baseDirPath = Paths.get(getBaseDirName());
+			Path baseDirPath = Paths.get(getBaseDirName());
 
-				Path filePath = baseDirPath.resolve(line);
+			Path filePath = baseDirPath.resolve(line);
 
-				if (Files.exists(filePath)) {
-					String fileName = filePath.toString();
+			if (Files.exists(filePath)) {
+				String fileName = filePath.toString();
 
-					fileName = StringUtil.replace(
-						fileName, CharPool.BACK_SLASH, CharPool.SLASH);
+				fileName = StringUtil.replace(
+					fileName, CharPool.BACK_SLASH, CharPool.SLASH);
 
+				String content = FileUtil.read(filePath.toFile());
+
+				String superClassName = _getSuperClassNameWithPackageName(
+					content);
+
+				if (superClassName != null) {
 					String className = JavaSourceUtil.getClassName(fileName);
 
-					try {
-						String content = FileUtil.read(filePath.toFile());
+					List<String> subclassList = _componentJavaFileMap.get(
+						superClassName);
 
-						String superClassName =
-							_getSuperClassNameWithPackageName(content);
-
-						if (superClassName != null) {
-							List<String> subclassList =
-								_componentJavaFileMap.get(superClassName);
-
-							if (subclassList == null) {
-								subclassList = new ArrayList<>();
-							}
-
-							subclassList.add(className);
-
-							_componentJavaFileMap.put(
-								superClassName, subclassList);
-						}
+					if (subclassList == null) {
+						subclassList = new ArrayList<>();
 					}
-					catch (IOException ioException) {
-					}
+
+					subclassList.add(className);
+
+					_componentJavaFileMap.put(superClassName, subclassList);
 				}
 			}
 		}
@@ -190,7 +184,7 @@ public class JavaAccessModifierCheck extends BaseFileCheck {
 		return JavaSourceUtil.getPackageName(content) + "." + superClassName;
 	}
 
-	private boolean _hasSubclasses(JavaClass javaClass) {
+	private boolean _hasSubclasses(JavaClass javaClass) throws Exception {
 		Map<String, List<String>> componentJavaFileMap =
 			_getCommponentJavaFileMap();
 

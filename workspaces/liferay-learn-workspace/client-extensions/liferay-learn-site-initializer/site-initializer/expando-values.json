@@ -15,7 +15,7 @@
 		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
 		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LEARNSITENAVIGATIONMENUITEM14#]",
 		"columnName": "Icon URL",
-		"data": "[$DOCUMENT_URL:/site-initializer/documents/group/icon/analitics_c.svg$]"
+		"data": "[$DOCUMENT_URL:/site-initializer/documents/group/icons/analitics_c.svg$]"
 	},
 	{
 		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
@@ -27,7 +27,7 @@
 		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
 		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LEARNSITENAVIGATIONMENUITEM15#]",
 		"columnName": "Icon URL",
-		"data": "[$DOCUMENT_URL:/site-initializer/documents/group/icon/commerce_product.svg$]"
+		"data": "[$DOCUMENT_URL:/site-initializer/documents/group/icons/commerce_product.svg$]"
 	},
 	{
 		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
@@ -39,7 +39,7 @@
 		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
 		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LEARNSITENAVIGATIONMENUITEM16#]",
 		"columnName": "Icon URL",
-		"data": "[$DOCUMENT_URL:/site-initializer/documents/group/icon/dxp_p.svg$]"
+		"data": "[$DOCUMENT_URL:/site-initializer/documents/group/icons/dxp_p.svg$]"
 	},
 	{
 		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
@@ -51,7 +51,7 @@
 		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
 		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LEARNSITENAVIGATIONMENUITEM17#]",
 		"columnName": "Icon URL",
-		"data": "[$DOCUMENT_URL:/site-initializer/documents/group/icon/dxp_c.svg$]"
+		"data": "[$DOCUMENT_URL:/site-initializer/documents/group/icons/dxp_c.svg$]"
 	},
 	{
 		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
@@ -63,6 +63,6 @@
 		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
 		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LEARNSITENAVIGATIONMENUITEM18#]",
 		"columnName": "Icon URL",
-		"data": "[$DOCUMENT_URL:/site-initializer/documents/group/icon/reference.svg$]"
+		"data": "[$DOCUMENT_URL:/site-initializer/documents/group/icons/reference.svg$]"
 	}
 ]

@@ -452,7 +452,7 @@ definition {
 
 			WaitForPageLoad();
 
-			Click(locator1 = "Dropdown#FILTER_AND_ORDER");
+			Click(locator1 = "ManagementBar#FILTER");
 
 			MenuItem.viewVisible(menuItem = "Filter by Status");
 		}
@@ -568,7 +568,7 @@ definition {
 
 			WaitForPageLoad();
 
-			Click(locator1 = "Dropdown#FILTER_AND_ORDER");
+			Click(locator1 = "ManagementBar#FILTER");
 
 			for (var filterName : list "Draft,With Scheduled Versions,With Approved Versions,With Expired Versions") {
 				MenuItem.viewVisible(menuItem = ${filterName});
@@ -592,7 +592,7 @@ definition {
 
 			WaitForPageLoad();
 
-			Click(locator1 = "Dropdown#FILTER_AND_ORDER");
+			Click(locator1 = "ManagementBar#FILTER");
 
 			for (var filterName : list "Draft,Denied,Pending,With Scheduled Versions,With Approved Versions,With Expired Versions") {
 				MenuItem.viewVisible(menuItem = ${filterName});

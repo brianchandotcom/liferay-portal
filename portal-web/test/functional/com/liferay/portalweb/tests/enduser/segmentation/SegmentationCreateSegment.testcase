@@ -2946,7 +2946,7 @@ definition {
 		}
 
 		task ("Create a Segment") {
-			LexiconEntry.gotoAdd();
+			Button.click(button = "Nuevo");
 
 			Segmentation.addProperties(propertyOption = "Apellido");
 

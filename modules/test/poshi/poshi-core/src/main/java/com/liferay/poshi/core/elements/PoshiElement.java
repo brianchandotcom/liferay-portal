@@ -99,14 +99,6 @@ public abstract class PoshiElement
 		return poshiScriptLineNumber;
 	}
 
-	public boolean isPoshiProse() {
-		URL filePathURL = getFilePathURL();
-
-		String filePath = filePathURL.getPath();
-
-		return filePath.endsWith(".prose");
-	}
-
 	public boolean isPoshiScriptComment(String poshiScript) {
 		Matcher matcher = _poshiScriptCommentPattern.matcher(poshiScript);
 

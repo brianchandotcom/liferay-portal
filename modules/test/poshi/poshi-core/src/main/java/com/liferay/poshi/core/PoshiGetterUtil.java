@@ -10,7 +10,6 @@ import com.google.common.reflect.ClassPath;
 import com.liferay.poshi.core.elements.PoshiElement;
 import com.liferay.poshi.core.elements.PoshiNode;
 import com.liferay.poshi.core.elements.PoshiNodeFactory;
-import com.liferay.poshi.core.prose.PoshiProseDefinition;
 import com.liferay.poshi.core.util.Dom4JUtil;
 import com.liferay.poshi.core.util.ExternalMethod;
 import com.liferay.poshi.core.util.FileUtil;
@@ -137,7 +136,7 @@ public class PoshiGetterUtil {
 	public static String getClassTypeFromFileExtension(String fileExtension) {
 		String classType = fileExtension;
 
-		if (fileExtension.equals("testcase") || fileExtension.equals("prose")) {
+		if (fileExtension.equals("testcase")) {
 			classType = "test-case";
 		}
 
@@ -221,9 +220,7 @@ public class PoshiGetterUtil {
 		if (element instanceof PoshiElement) {
 			PoshiElement poshiElement = (PoshiElement)element;
 
-			if (!poshiElement.isPoshiProse()) {
 				return poshiElement.getPoshiScriptLineNumber();
-			}
 		}
 
 		String lineNumber = element.attributeValue("line-number");
@@ -391,21 +388,6 @@ public class PoshiGetterUtil {
 			}
 		}
 
-		if (filePath.endsWith(".prose")) {
-			PoshiProseDefinition poshiProseDefinition =
-				new PoshiProseDefinition(url);
-
-			PoshiElement poshiElement =
-				(PoshiElement)PoshiNodeFactory.newPoshiNode(
-					_preparePoshiXMLElement(
-						url, Dom4JUtil.format(poshiProseDefinition.toElement()),
-						addLineNumbers));
-
-			poshiElement.setFilePathURL(url);
-
-			return poshiElement;
-		}
-
 		throw new Exception("Unable to parse Poshi file: " + filePath);
 	}
 
@@ -550,7 +532,7 @@ public class PoshiGetterUtil {
 		"and", "arg", "body", "case", "command", "condition", "contains",
 		"default", "definition", "description", "echo", "else", "elseif",
 		"equals", "execute", "fail", "for", "if", "head", "html", "isset",
-		"not", "off", "on", "or", "property", "prose", "return", "set-up",
+		"not", "off", "on", "or", "property", "return", "set-up",
 		"table", "take-screenshot", "task", "tbody", "td", "tear-down", "thead",
 		"then", "title", "tr", "var", "while");
 	private static final Pattern _tagPattern = Pattern.compile("<[a-z\\-]+");

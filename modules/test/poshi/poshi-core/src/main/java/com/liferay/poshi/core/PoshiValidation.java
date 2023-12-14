@@ -273,7 +273,7 @@ public class PoshiValidation {
 		String filePath = _getFilePath(poshiElement);
 
 		List<String> possibleAttributeNames = Arrays.asList(
-			"arguments", "line-number", "name", "prose", "return", "summary",
+			"arguments", "line-number", "name", "return", "summary",
 			"summary-ignore");
 
 		validatePossibleAttributeNames(poshiElement, possibleAttributeNames);
@@ -705,7 +705,7 @@ public class PoshiValidation {
 				poshiElement, primaryAttributeNames);
 
 			List<String> possibleChildElementNames = Arrays.asList(
-				"arg", "prose", "return", "var");
+				"arg", "return", "var");
 
 			for (PoshiElement childPoshiElement : childPoshiElements) {
 				String childPoshiElementName = childPoshiElement.getName();

@@ -266,11 +266,7 @@ public class PoshiLogger {
 			classCommandName, namespace);
 
 		if (commandElement instanceof PoshiElement) {
-			PoshiElement poshiCommandElement = (PoshiElement)commandElement;
-
-			if (!poshiCommandElement.isPoshiProse()) {
 				return new PoshiScriptSyntaxLogger(namespacedClassCommandName);
-			}
 		}
 
 		return new XMLSyntaxLogger(namespacedClassCommandName);

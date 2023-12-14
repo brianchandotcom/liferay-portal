@@ -1014,7 +1014,7 @@ public class ObjectEntryLocalServiceTest {
 		ObjectField objectField1 = _addCustomObjectField(
 			new FormulaObjectFieldBuilder(
 			).labelMap(
-				LocalizedMapUtil.getLocalizedMap("Id sum")
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
 			).name(
 				"idSum"
 			).objectDefinitionId(
@@ -1037,7 +1037,7 @@ public class ObjectEntryLocalServiceTest {
 		ObjectField objectField2 = _addCustomObjectField(
 			new FormulaObjectFieldBuilder(
 			).labelMap(
-				LocalizedMapUtil.getLocalizedMap("Overweight")
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
 			).name(
 				"overweight"
 			).objectDefinitionId(

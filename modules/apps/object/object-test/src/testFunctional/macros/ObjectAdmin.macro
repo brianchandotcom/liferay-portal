@@ -450,10 +450,12 @@ definition {
 		var objectEntryId = JSONObject.addObjectSingleFieldEntry(
 			ercName = ${ercName},
 			fieldName = ${fieldName},
+			fieldType = ${fieldType},
 			objectName = ${objectName},
 			userEmailAddress = ${userEmailAddress},
 			userPassword = ${userPassword},
-			value = ${value});
+			value = ${value},
+			valueList = ${valueList});
 
 		return ${objectEntryId};
 

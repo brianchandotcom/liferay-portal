@@ -9,7 +9,6 @@ import ClayForm from '@clayui/form';
 import ClayModal, {ClayModalProvider, useModal} from '@clayui/modal';
 import {
 	API,
-	BetaButton,
 	FormError,
 	Input,
 	REQUIRED_MSG,
@@ -17,6 +16,7 @@ import {
 	openToast,
 	useForm,
 } from '@liferay/object-js-components-web';
+import {FeatureIndicator} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
@@ -213,7 +213,7 @@ export function ModalAddObjectDefinition({
 								/>
 
 								<div className="lfr__object-web-modal-add-object-definition-storage-type-beta">
-									<BetaButton />
+									<FeatureIndicator interactive type="beta" />
 								</div>
 							</div>
 						)}

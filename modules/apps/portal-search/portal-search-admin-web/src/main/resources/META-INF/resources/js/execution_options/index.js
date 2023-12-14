@@ -3,13 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayBadge from '@clayui/badge';
 import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import {ClayRadio, ClayRadioGroup} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClaySticker from '@clayui/sticker';
 import {ClayTooltipProvider} from '@clayui/tooltip';
+import FeatureIndicator from 'frontend-js-components-web';
 import React, {useRef, useState} from 'react';
 
 import {EXECUTION_MODES, SCOPES} from '../constants';
@@ -132,11 +132,9 @@ function ExecutionOptions({
 															{label}
 
 															{showBetaBadge && (
-																<ClayBadge
-																	className="c-ml-1"
-																	displayType="beta"
-																	label="beta"
-																/>
+																<div className="c-ml-1">
+																	<FeatureIndicator type="beta" />
+																</div>
 															)}
 														</div>
 

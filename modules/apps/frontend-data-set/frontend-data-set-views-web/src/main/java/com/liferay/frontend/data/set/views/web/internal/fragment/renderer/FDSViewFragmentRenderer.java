@@ -195,7 +195,7 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 
 				ComponentDescriptor componentDescriptor =
 					new ComponentDescriptor(
-						"{BetaBadge} from frontend-js-components-web",
+						"{FeatureIndicator} from frontend-js-components-web",
 						betaBadgeComponentId, null, true);
 
 				_reactRenderer.renderReact(

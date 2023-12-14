@@ -5,6 +5,7 @@
 
 package com.liferay.portal.search.admin.web.internal.portlet;
 
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.BaseControlPanelEntry;
@@ -14,13 +15,17 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.search.admin.web.internal.constants.SearchAdminPortletKeys;
 import com.liferay.portal.search.configuration.ReindexConfiguration;
 
+import java.util.Map;
+
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Adam Brandizzi
  */
 @Component(
+	configurationPid = "com.liferay.portal.search.configuration.ReindexConfiguration",
 	property = "javax.portlet.name=" + SearchAdminPortletKeys.SEARCH_ADMIN,
 	service = ControlPanelEntry.class
 )
@@ -48,10 +53,16 @@ public class SearchAdminControlPanelEntry extends BaseControlPanelEntry {
 			return false;
 		}
 
-		return false;
+		return super.hasAccessPermission(permissionChecker, group, portlet);
 	}
 
-	@Reference
-	private ReindexConfiguration _reindexConfiguration;
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_reindexConfiguration = ConfigurableUtil.createConfigurable(
+			ReindexConfiguration.class, properties);
+	}
+
+	private volatile ReindexConfiguration _reindexConfiguration;
 
 }

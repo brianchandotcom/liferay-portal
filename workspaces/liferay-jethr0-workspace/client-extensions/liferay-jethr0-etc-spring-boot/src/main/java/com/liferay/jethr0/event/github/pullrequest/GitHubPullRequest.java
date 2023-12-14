@@ -5,6 +5,7 @@
 
 package com.liferay.jethr0.event.github.pullrequest;
 
+import com.liferay.jethr0.event.github.GitHubFactory;
 import com.liferay.jethr0.event.github.commit.GitHubCommit;
 import com.liferay.jethr0.event.github.repository.GitHubRepository;
 import com.liferay.jethr0.event.github.user.GitHubUser;
@@ -19,7 +20,10 @@ import org.json.JSONObject;
  */
 public class GitHubPullRequest {
 
-	public GitHubPullRequest(JSONObject jsonObject) {
+	public GitHubPullRequest(
+		GitHubFactory gitHubFactory, JSONObject jsonObject) {
+
+		_gitHubFactory = gitHubFactory;
 		_jsonObject = jsonObject;
 
 		JSONObject baseJSONObject = jsonObject.getJSONObject("base");
@@ -106,6 +110,7 @@ public class GitHubPullRequest {
 	private final String _baseBranchName;
 	private final GitHubCommit _baseGitHubCommit;
 	private final GitHubRepository _baseGitHubRepository;
+	private final GitHubFactory _gitHubFactory;
 	private final String _headBranchName;
 	private final GitHubCommit _headGitHubCommit;
 	private final GitHubRepository _headGitHubRepository;

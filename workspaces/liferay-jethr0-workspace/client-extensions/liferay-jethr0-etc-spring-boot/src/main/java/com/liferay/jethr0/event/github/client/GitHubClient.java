@@ -92,11 +92,6 @@ public class GitHubClient {
 					gitBranchEntity.getBranchName(), "/", filePath)));
 	}
 
-	public GitHubPullRequest getGitHubPullRequest(GitHubIssue gitHubIssue) {
-		return new GitHubPullRequest(
-			new JSONObject(requestGet(gitHubIssue.getPullRequestAPIURL())));
-	}
-
 	public GitHubRef getGitHubRef(URL gitHubRefURL) {
 		URL gitHubRefAPIURL = StringUtil.toURL(
 			StringUtil.combine(

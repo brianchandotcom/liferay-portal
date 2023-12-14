@@ -239,7 +239,9 @@ public abstract class BaseGitHubIssueEventHandler
 				"Missing \"issue\" from message JSON");
 		}
 
-		return new GitHubIssue(issueJSONObject);
+		GitHubFactory gitHubFactory = getGitHubFactory();
+
+		return gitHubFactory.newGitHubIssue(issueJSONObject);
 	}
 
 	protected GitHubPullRequest getGitHubPullRequest()
@@ -251,9 +253,7 @@ public abstract class BaseGitHubIssueEventHandler
 
 		GitHubIssue gitHubIssue = getGitHubIssue();
 
-		GitHubClient gitHubClient = getGitHubClient();
-
-		_gitHubPullRequest = gitHubClient.getGitHubPullRequest(gitHubIssue);
+		_gitHubPullRequest = gitHubIssue.getGitHubPullRequest();
 
 		return _gitHubPullRequest;
 	}

@@ -5,10 +5,13 @@
 
 package com.liferay.jethr0.event.github;
 
+import com.liferay.jethr0.event.github.client.GitHubClient;
+import com.liferay.jethr0.event.github.issue.GitHubIssue;
 import com.liferay.jethr0.event.github.pullrequest.GitHubPullRequest;
 
 import org.json.JSONObject;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -17,8 +20,19 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class GitHubFactory {
 
-	public GitHubPullRequest newGitHubPullRequest(JSONObject jsonObject) {
-		return new GitHubPullRequest(jsonObject);
+	public GitHubClient getGitHubClient() {
+		return _gitHubClient;
 	}
+
+	public GitHubIssue newGitHubIssue(JSONObject jsonObject) {
+		return new GitHubIssue(this, jsonObject);
+	}
+
+	public GitHubPullRequest newGitHubPullRequest(JSONObject jsonObject) {
+		return new GitHubPullRequest(this, jsonObject);
+	}
+
+	@Autowired
+	private GitHubClient _gitHubClient;
 
 }

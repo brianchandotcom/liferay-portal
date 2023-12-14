@@ -43,7 +43,10 @@ public abstract class BaseGitHubPullRequestEventHandler
 				"Missing \"pull_request\" from message JSON");
 		}
 
-		_gitHubPullRequest = new GitHubPullRequest(pullRequestJSONObject);
+		GitHubFactory gitHubFactory = getGitHubFactory();
+
+		_gitHubPullRequest = gitHubFactory.newGitHubPullRequest(
+			pullRequestJSONObject);
 
 		return _gitHubPullRequest;
 	}

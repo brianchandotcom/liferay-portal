@@ -5,6 +5,9 @@
 
 package com.liferay.jethr0.event.github.issue;
 
+import com.liferay.jethr0.event.github.GitHubFactory;
+import com.liferay.jethr0.event.github.client.GitHubClient;
+import com.liferay.jethr0.event.github.pullrequest.GitHubPullRequest;
 import com.liferay.jethr0.util.StringUtil;
 
 import java.net.URL;
@@ -16,12 +19,32 @@ import org.json.JSONObject;
  */
 public class GitHubIssue {
 
-	public GitHubIssue(JSONObject jsonObject) {
+	public GitHubIssue(GitHubFactory gitHubFactory, JSONObject jsonObject) {
+		_gitHubFactory = gitHubFactory;
 		_jsonObject = jsonObject;
 	}
 
 	public URL getCommentsURL() {
 		return StringUtil.toURL(_jsonObject.getString("comments_url"));
+	}
+
+	public GitHubClient getGitHubClient() {
+		return _gitHubFactory.getGitHubClient();
+	}
+
+	public GitHubPullRequest getGitHubPullRequest() {
+		if (_gitHubPullRequest != null) {
+			return _gitHubPullRequest;
+		}
+
+		GitHubClient gitHubClient = getGitHubClient();
+
+		JSONObject jsonObject = new JSONObject(
+			gitHubClient.requestGet(getPullRequestAPIURL()));
+
+		_gitHubPullRequest = _gitHubFactory.newGitHubPullRequest(jsonObject);
+
+		return _gitHubPullRequest;
 	}
 
 	public URL getHTMLURL() {
@@ -34,6 +57,8 @@ public class GitHubIssue {
 		return StringUtil.toURL(jsonObject.getString("url"));
 	}
 
+	private final GitHubFactory _gitHubFactory;
+	private GitHubPullRequest _gitHubPullRequest;
 	private final JSONObject _jsonObject;
 
 }

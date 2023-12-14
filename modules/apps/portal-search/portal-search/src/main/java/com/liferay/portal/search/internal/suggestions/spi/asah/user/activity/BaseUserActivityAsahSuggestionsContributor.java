@@ -78,8 +78,11 @@ public abstract class BaseUserActivityAsahSuggestionsContributor
 				StringBundler.concat(
 					basePath, StringPool.FORWARD_SLASH,
 					_getHashedEmailAddress(searchContext.getUserId())),
-				contentTypes, displayLanguageId, groupId, minCounts, page, path,
-				rangeKey, size, sort),
+				contentTypes,
+				GetterUtil.getLong(
+					analyticsConfiguration.liferayAnalyticsDataSourceId()),
+				displayLanguageId, groupId, minCounts, page, path, rangeKey,
+				size, sort),
 			StringBundler.concat(
 				StringPool.POUND, searchContext.getCompanyId(),
 				StringPool.POUND, contentTypes, StringPool.POUND,
@@ -161,11 +164,11 @@ public abstract class BaseUserActivityAsahSuggestionsContributor
 
 	private String _getURL(
 		AnalyticsConfiguration analyticsConfiguration, String basePath,
-		String contentTypes, String displayLanguageId, long groupId,
-		long minCounts, int page, String path, int rangeKey, int size,
-		String sort) {
+		String contentTypes, long dataSourceId, String displayLanguageId,
+		long groupId, long minCounts, int page, String path, int rangeKey,
+		int size, String sort) {
 
-		StringBundler sb = new StringBundler(28);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append(analyticsConfiguration.liferayAnalyticsFaroBackendURL());
 		sb.append("/api/1.0/");
@@ -179,6 +182,10 @@ public abstract class BaseUserActivityAsahSuggestionsContributor
 			sb.append(contentTypes);
 			sb.append("&");
 		}
+
+		sb.append("dataSourceId=");
+		sb.append(dataSourceId);
+		sb.append("&");
 
 		if (!Validator.isBlank(displayLanguageId)) {
 			sb.append("displayLanguageId=");

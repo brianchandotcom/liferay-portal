@@ -27,7 +27,4 @@ Main-Class: com.liferay.portal.tools.db.partition.virtual.instance.migrator.vali
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/util/SystemEnv.class,\
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/util/SystemProperties.class,\
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/util/Validator.class,\
-	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/version/Version.class,\
-	@com.liferay.portal.tools.db.partition.virtual.instance.migrator.common-*.jar!/com/liferay/portal/tools/db/partition/virtual/instance/migrator/common/Company.class,\
-	@com.liferay.portal.tools.db.partition.virtual.instance.migrator.common-*.jar!/com/liferay/portal/tools/db/partition/virtual/instance/migrator/common/InstanceData.class,\
-	@com.liferay.portal.tools.db.partition.virtual.instance.migrator.common-*.jar!/com/liferay/portal/tools/db/partition/virtual/instance/migrator/common/Release.class
+	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/version/Version.class

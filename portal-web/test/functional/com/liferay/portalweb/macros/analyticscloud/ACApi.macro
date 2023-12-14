@@ -307,7 +307,7 @@ definition {
 	@summary = "Default summary"
 	macro viewApiResponseForRootEndpoint(typeList = null, apiResponse = null) {
 		for (var type : list ${typeList}) {
-			if (contains(${apiResponse}, "http://osbfarofrontend:8080/api/reports/${type}")) {
+			if (contains(${apiResponse}, "http://osbfarofrontend/api/reports/${type}")) {
 				echo("${type} - PASSED");
 			}
 			else {

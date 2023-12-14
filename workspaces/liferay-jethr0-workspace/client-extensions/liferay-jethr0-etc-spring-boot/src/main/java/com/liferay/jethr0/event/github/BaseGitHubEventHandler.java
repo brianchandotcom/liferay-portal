@@ -45,7 +45,9 @@ public abstract class BaseGitHubEventHandler extends BaseEventHandler {
 				"Missing \"repository\" from message JSON");
 		}
 
-		return new GitHubRepository(repositoryJSONObject);
+		GitHubFactory gitHubFactory = getGitHubFactory();
+
+		return gitHubFactory.newGitHubRepository(repositoryJSONObject);
 	}
 
 	protected String getJenkinsBranchBuildPropertyValue(String propertyName)

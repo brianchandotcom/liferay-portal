@@ -32,14 +32,14 @@ public class GitHubPullRequest {
 
 		_baseBranchName = baseJSONObject.getString("ref");
 		_baseGitHubCommit = _gitHubFactory.newGitHubCommit(baseJSONObject);
-		_baseGitHubRepository = new GitHubRepository(
+		_baseGitHubRepository = _gitHubFactory.newGitHubRepository(
 			baseJSONObject.getJSONObject("repo"));
 
 		JSONObject headJSONObject = jsonObject.getJSONObject("head");
 
 		_headBranchName = headJSONObject.getString("ref");
 		_headGitHubCommit = _gitHubFactory.newGitHubCommit(headJSONObject);
-		_headGitHubRepository = new GitHubRepository(
+		_headGitHubRepository = _gitHubFactory.newGitHubRepository(
 			headJSONObject.getJSONObject("repo"));
 
 		_originGitHubUser = new GitHubUser(

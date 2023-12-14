@@ -12,11 +12,13 @@ import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.commerce.pricing.constants.CommercePricingConstants;
 import com.liferay.commerce.product.channel.CommerceChannelTypeRegistry;
+import com.liferay.commerce.product.constants.CommerceChannelAccountEntryRelConstants;
 import com.liferay.commerce.product.constants.CommerceChannelConstants;
 import com.liferay.commerce.product.exception.CommerceChannelTypeException;
 import com.liferay.commerce.product.exception.DuplicateCommerceChannelAccountEntryIdException;
 import com.liferay.commerce.product.exception.DuplicateCommerceChannelException;
 import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.product.model.CommerceChannelAccountEntryRelTable;
 import com.liferay.commerce.product.model.CommerceChannelTable;
 import com.liferay.commerce.product.service.CommerceChannelAccountEntryRelLocalService;
 import com.liferay.commerce.product.service.CommerceChannelRelLocalService;
@@ -375,6 +377,48 @@ public class CommerceChannelLocalServiceImpl
 					CommerceChannelTable.INSTANCE
 				),
 				companyId, keywords, CommerceChannelTable.INSTANCE.name));
+	}
+
+	@Override
+	public List<CommerceChannel> getEligibleCommerceChannels(
+			long accountEntryId, String name, int start, int end)
+		throws PortalException {
+
+		return dslQuery(
+			DSLQueryFactoryUtil.selectDistinct(
+				CommerceChannelTable.INSTANCE
+			).from(
+				CommerceChannelTable.INSTANCE
+			).leftJoinOn(
+				CommerceChannelAccountEntryRelTable.INSTANCE,
+				CommerceChannelTable.INSTANCE.commerceChannelId.eq(
+					CommerceChannelAccountEntryRelTable.INSTANCE.
+						commerceChannelId)
+			).where(
+				() -> {
+					Predicate predicate =
+						CommerceChannelAccountEntryRelTable.INSTANCE.
+							accountEntryId.eq(accountEntryId);
+
+					predicate = predicate.and(
+						CommerceChannelAccountEntryRelTable.INSTANCE.type.eq(
+							CommerceChannelAccountEntryRelConstants.
+								TYPE_ELIGIBILITY));
+
+					predicate = predicate.or(
+						CommerceChannelAccountEntryRelTable.INSTANCE.
+							commerceChannelAccountEntryRelId.isNull());
+
+					if (!Validator.isBlank(name)) {
+						predicate = CommerceChannelTable.INSTANCE.name.like(
+							name);
+					}
+
+					return predicate;
+				}
+			).limit(
+				start, end
+			));
 	}
 
 	@Override

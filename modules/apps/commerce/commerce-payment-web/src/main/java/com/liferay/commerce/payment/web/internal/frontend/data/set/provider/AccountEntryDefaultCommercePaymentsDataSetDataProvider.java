@@ -55,14 +55,13 @@ public class AccountEntryDefaultCommercePaymentsDataSetDataProvider
 
 		long accountEntryId = ParamUtil.getLong(
 			httpServletRequest, "accountEntryId");
-		long companyId = _portal.getCompanyId(httpServletRequest);
 		Locale locale = _portal.getLocale(httpServletRequest);
 
 		return TransformUtil.transform(
-			_commerceChannelService.search(
-				companyId, fdsKeywords.getKeywords(),
+			_commerceChannelService.getEligibleCommerceChannels(
+				accountEntryId, fdsKeywords.getKeywords(),
 				fdsPagination.getStartPosition(),
-				fdsPagination.getEndPosition(), sort),
+				fdsPagination.getEndPosition()),
 			commerceChannel -> {
 				String active = StringPool.BLANK;
 

@@ -62,9 +62,12 @@ int type = commerceChannelAccountEntryRelDisplayContext.getType();
 				}
 
 				Liferay.Service(
-					'/commerce.commercechannel/get-commerce-channels',
+					'/commerce.commercechannel/get-eligible-commerce-channels',
 					{
-						companyId: '<%= company.getCompanyId() %>',
+						accountEntryId: '<%= accountEntry.getAccountEntryId() %>',
+						name: '',
+						start: '-1',
+						end: '-1',
 					},
 					injectCountryPlaceholder
 				);

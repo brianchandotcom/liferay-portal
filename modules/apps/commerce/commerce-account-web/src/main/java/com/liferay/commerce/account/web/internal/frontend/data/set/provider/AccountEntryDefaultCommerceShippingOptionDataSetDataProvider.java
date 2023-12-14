@@ -60,10 +60,10 @@ public class AccountEntryDefaultCommerceShippingOptionDataSetDataProvider
 		Locale locale = _portal.getLocale(httpServletRequest);
 
 		return TransformUtil.transform(
-			_commerceChannelService.search(
-				companyId, fdsKeywords.getKeywords(),
+			_commerceChannelService.getEligibleCommerceChannels(
+				accountEntryId, fdsKeywords.getKeywords(),
 				fdsPagination.getStartPosition(),
-				fdsPagination.getEndPosition(), sort),
+				fdsPagination.getEndPosition()),
 			commerceChannel -> {
 				String active = StringPool.BLANK;
 				String commerceShippingMethodName = _language.get(

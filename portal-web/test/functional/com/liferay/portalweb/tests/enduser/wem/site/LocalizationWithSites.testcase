@@ -245,6 +245,7 @@ definition {
 				countryName = "Estados Unidos",
 				localizedOption = "Organización",
 				navItem = "Organizaciones",
+				newButton = "Nuevo",
 				orgName = "Organization Name",
 				saveButton = "Guardar");
 		}

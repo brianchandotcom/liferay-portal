@@ -1415,7 +1415,7 @@ definition {
 		task ("Search for all three pages and order by Create Date") {
 			Search.searchCP(searchTerm = "page");
 
-			ManagementBar.setFilterAndOrder(filterBy = "Create Date");
+			ManagementBar.setFilterAndOrder(orderBy = "Create Date");
 
 			var i = 1;
 
@@ -1430,7 +1430,7 @@ definition {
 		}
 
 		task ("Order by Relevance") {
-			ManagementBar.setFilterAndOrder(filterBy = "Relevance");
+			ManagementBar.setFilterAndOrder(orderBy = "Relevance");
 		}
 
 		task ("View redirect to Pages admin after clear search results") {

@@ -5732,7 +5732,7 @@ definition {
 		}
 
 		task ("Change the order of assets") {
-			Click(locator1 = "ContentDashboard#REVERSE_SORT_DIRECTION_BUTTON");
+			ManagementBar.sortAssets(sortDirection = "Descending");
 
 			AssertTextEquals(
 				locator1 = "ContentDashboard#LAST_ELEMENT_LISTED",
@@ -5779,7 +5779,7 @@ definition {
 				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
 				value1 = "WC Title 2");
 
-			Click(locator1 = "ContentDashboard#REVERSE_SORT_DIRECTION_BUTTON");
+			ManagementBar.sortAssets(sortDirection = "Ascending");
 
 			AssertTextPresent(
 				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
@@ -5814,7 +5814,7 @@ definition {
 		}
 
 		task ("Change de order of assets") {
-			Click(locator1 = "ContentDashboard#REVERSE_SORT_DIRECTION_BUTTON");
+			ManagementBar.sortAssets(sortDirection = "Descending");
 
 			AssertTextEquals(
 				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",

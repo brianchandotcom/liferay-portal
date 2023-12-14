@@ -12,18 +12,22 @@ import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexer
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
 import com.liferay.portal.workflow.kaleo.service.KaleoTaskInstanceTokenLocalService;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Rafael Praxedes
  */
-@Component(
-	property = "indexer.class.name=com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken",
-	service = ModelIndexerWriterContributor.class
-)
 public class KaleoTaskInstanceTokenModelIndexerWriterContributor
 	implements ModelIndexerWriterContributor<KaleoTaskInstanceToken> {
+
+	public KaleoTaskInstanceTokenModelIndexerWriterContributor(
+		DynamicQueryBatchIndexingActionableFactory
+			dynamicQueryBatchIndexingActionableFactory,
+		KaleoTaskInstanceTokenLocalService kaleoTaskInstanceTokenLocalService) {
+
+		_dynamicQueryBatchIndexingActionableFactory =
+			dynamicQueryBatchIndexingActionableFactory;
+		_kaleoTaskInstanceTokenLocalService =
+			kaleoTaskInstanceTokenLocalService;
+	}
 
 	@Override
 	public void customize(
@@ -39,9 +43,9 @@ public class KaleoTaskInstanceTokenModelIndexerWriterContributor
 
 	@Override
 	public BatchIndexingActionable getBatchIndexingActionable() {
-		return dynamicQueryBatchIndexingActionableFactory.
+		return _dynamicQueryBatchIndexingActionableFactory.
 			getBatchIndexingActionable(
-				kaleoTaskInstanceTokenLocalService.
+				_kaleoTaskInstanceTokenLocalService.
 					getIndexableActionableDynamicQuery());
 	}
 
@@ -50,12 +54,9 @@ public class KaleoTaskInstanceTokenModelIndexerWriterContributor
 		return kaleoTaskInstanceToken.getCompanyId();
 	}
 
-	@Reference
-	protected DynamicQueryBatchIndexingActionableFactory
-		dynamicQueryBatchIndexingActionableFactory;
-
-	@Reference
-	protected KaleoTaskInstanceTokenLocalService
-		kaleoTaskInstanceTokenLocalService;
+	private final DynamicQueryBatchIndexingActionableFactory
+		_dynamicQueryBatchIndexingActionableFactory;
+	private final KaleoTaskInstanceTokenLocalService
+		_kaleoTaskInstanceTokenLocalService;
 
 }

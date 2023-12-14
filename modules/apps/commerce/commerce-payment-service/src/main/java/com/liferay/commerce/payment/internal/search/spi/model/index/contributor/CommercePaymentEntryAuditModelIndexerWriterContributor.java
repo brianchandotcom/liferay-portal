@@ -13,18 +13,23 @@ import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterC
 import com.liferay.portal.search.spi.model.index.contributor.helper.IndexerWriterMode;
 import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexerWriterDocumentHelper;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Luca Pellizzon
  */
-@Component(
-	property = "indexer.class.name=com.liferay.commerce.payment.model.CommercePaymentEntryAudit",
-	service = ModelIndexerWriterContributor.class
-)
 public class CommercePaymentEntryAuditModelIndexerWriterContributor
 	implements ModelIndexerWriterContributor<CommercePaymentEntryAudit> {
+
+	public CommercePaymentEntryAuditModelIndexerWriterContributor(
+		CommercePaymentEntryAuditLocalService
+			commercePaymentEntryAuditLocalService,
+		DynamicQueryBatchIndexingActionableFactory
+			dynamicQueryBatchIndexingActionableFactory) {
+
+		_commercePaymentEntryAuditLocalService =
+			commercePaymentEntryAuditLocalService;
+		_dynamicQueryBatchIndexingActionableFactory =
+			dynamicQueryBatchIndexingActionableFactory;
+	}
 
 	@Override
 	public void customize(
@@ -60,12 +65,9 @@ public class CommercePaymentEntryAuditModelIndexerWriterContributor
 		return IndexerWriterMode.UPDATE;
 	}
 
-	@Reference
-	private CommercePaymentEntryAuditLocalService
+	private final CommercePaymentEntryAuditLocalService
 		_commercePaymentEntryAuditLocalService;
-
-	@Reference
-	private DynamicQueryBatchIndexingActionableFactory
+	private final DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;
 
 }

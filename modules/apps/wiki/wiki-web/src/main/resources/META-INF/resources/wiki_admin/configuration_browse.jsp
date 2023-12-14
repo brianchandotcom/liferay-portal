@@ -72,7 +72,6 @@ portletDisplay.setURLBackTitle("wiki");
 					</h3>
 
 					<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-					<aui:input name="redirect" type="hidden" value="<%= configurationActionURL %>" />
 
 					<liferay-ui:error embed="<%= false %>" key="emailPageAddedBody" message="please-enter-a-valid-body" />
 					<liferay-ui:error embed="<%= false %>" key="emailPageAddedSubject" message="please-enter-a-valid-subject" />

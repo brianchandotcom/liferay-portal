@@ -9,12 +9,16 @@
 
 <div>
 	<react:component
-		module="{BetaButton} from frontend-js-components-web"
+		module="{FeatureIndicator} from frontend-js-components-web"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
+				"interactive", "true"
+			).put(
 				"learnResourceContext", LearnMessageUtil.getReactDataJSONObject("frontend-js-components-web")
 			).put(
 				"tooltipAlign", "bottom"
+			).put(
+				"type", "beta"
 			).build()
 		%>'
 	/>

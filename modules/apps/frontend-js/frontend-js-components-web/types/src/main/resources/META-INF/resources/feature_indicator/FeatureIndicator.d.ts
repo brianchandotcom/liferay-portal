@@ -33,11 +33,11 @@ export default function FeatureIndicator({
 	interactive?: boolean;
 	label?: string;
 	learnMessageResourceKey?: string;
-	learnResourceContext: object;
+	learnResourceContext?: any;
 	popoverText?: string;
 	popoverTitle?: string;
 	symbol?: string;
-	tooltipAlign: typeof ALIGN_POSITIONS[number];
+	tooltipAlign?: typeof ALIGN_POSITIONS[number];
 	tooltipTitle?: string;
 	type?: DisplayType;
 }): JSX.Element;

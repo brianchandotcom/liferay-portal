@@ -3,8 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-export {default as BetaBadge} from './beta_indicator/BetaBadge';
-export {default as BetaButton} from './beta_indicator/BetaButton';
 export {default as FeatureIndicator} from './feature_indicator/FeatureIndicator';
 export {
 	default as ClientExtension,

@@ -1644,7 +1644,9 @@ definition {
 				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_CHECKBOX");
 		}
 
-		Click(locator1 = "Icon#MOVE");
+		Click(
+			key_text = "move",
+			locator1 = "ManagementBar#ANY_ICON");
 
 		AssertClick(
 			locator1 = "Button#SELECT",

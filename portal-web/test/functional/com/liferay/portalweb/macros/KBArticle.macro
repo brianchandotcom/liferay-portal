@@ -1205,7 +1205,9 @@ definition {
 	macro selectAllCP() {
 		PortletEntry.selectAll();
 
-		AssertElementPresent(locator1 = "Icon#DELETE");
+		AssertElementPresent(
+			key_text = "trash",
+			locator1 = "ManagementBar#ANY_ICON");
 	}
 
 	@summary = "Default summary"
@@ -1214,7 +1216,9 @@ definition {
 			key_kbArticleTitle = ${kbArticleTitle},
 			locator1 = "KnowledgeBase#ARTICLE_DESCRIPTIVE_ARTICLE_CHECKBOX");
 
-		AssertVisible(locator1 = "Icon#DELETE");
+		AssertVisible(
+			key_text = "trash",
+			locator1 = "ManagementBar#ANY_ICON");
 	}
 
 	@summary = "Default summary"
@@ -1377,7 +1381,9 @@ definition {
 		if (IsElementPresent(locator1 = "KnowledgeBase#ARTICLE_DESCRIPTIVE_ARTICLE_TITLE_GENERIC")) {
 			Check.checkAll(locator1 = "KnowledgeBase#ARTICLE_TABLE_SELECT_ALL_CHECKBOX");
 
-			Click(locator1 = "Icon#DELETE");
+			Click(
+				key_text = "trash",
+				locator1 = "ManagementBar#ANY_ICON");
 
 			AssertConfirm(value1 = "Are you sure you want to delete the selected entries? They will be deleted immediately.");
 

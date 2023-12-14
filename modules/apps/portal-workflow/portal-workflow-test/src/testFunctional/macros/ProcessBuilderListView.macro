@@ -2,11 +2,7 @@ definition {
 
 	@summary = "Default summary"
 	macro filterAndOrder(filterOption = null) {
-		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
-
-		Click(
-			key_filterOption = ${filterOption},
-			locator1 = "ProcessBuilderListView#FILTER_AND_ORDER");
+		ManagementBar.setFilterAndOrder(filterBy = ${filterOption});
 	}
 
 	@summary = "Default summary"

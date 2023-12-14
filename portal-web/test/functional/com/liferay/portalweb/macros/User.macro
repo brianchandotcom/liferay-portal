@@ -175,9 +175,7 @@ definition {
 
 	@summary = "Default summary"
 	macro activateCP(userScreenName = null, userName = null) {
-		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
-
-		MenuItem.click(menuItem = "Inactive");
+		ManagementBar.setFilterAndOrder(filterBy = "Inactive");
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Activate",
@@ -2722,9 +2720,7 @@ definition {
 	macro tearDownCP() {
 		User.openUsersAdmin();
 
-		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
-
-		MenuItem.click(menuItem = "Active");
+		ManagementBar.setFilterAndOrder(filterBy = "Active");
 
 		while (IsElementPresent(key_rowNumber = 2, locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER")) {
 			Click.waitForMenuToggleJSClick(
@@ -2736,9 +2732,7 @@ definition {
 			AssertConfirm(value1 = "Are you sure you want to deactivate this?");
 		}
 
-		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
-
-		MenuItem.click(menuItem = "Inactive");
+		ManagementBar.setFilterAndOrder(filterBy = "Inactive");
 
 		if (IsElementPresent(locator1 = "ContentRow#ENTRY_CONTENT_ROW_1")) {
 			PortletEntry.selectAll();
@@ -2757,9 +2751,7 @@ definition {
 	macro tearDownSpecificUser(userScreenName = null) {
 		User.openUsersAdmin();
 
-		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
-
-		MenuItem.click(menuItem = "Active");
+		ManagementBar.setFilterAndOrder(filterBy = "Active");
 
 		User.searchCP(searchTerm = ${userScreenName});
 
@@ -2773,9 +2765,7 @@ definition {
 			Alert.viewSuccessMessage();
 		}
 
-		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
-
-		MenuItem.click(menuItem = "Inactive");
+		ManagementBar.setFilterAndOrder(filterBy = "Inactive");
 
 		if (IsElementPresent(locator1 = "ContentRow#ENTRY_CONTENT_ROW_1")) {
 			PortletEntry.selectAll();

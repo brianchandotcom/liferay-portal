@@ -675,9 +675,7 @@ definition {
 	macro filterCompletedProcesses() {
 		WaitForElementPresent(locator1 = "Staging#PROCESS_SUCCESSFUL");
 
-		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
-
-		MenuItem.click(menuItem = "Completed");
+		ManagementBar.setFilterAndOrder(filterBy = "Completed");
 	}
 
 	@summary = "Default summary"

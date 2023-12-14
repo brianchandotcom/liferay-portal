@@ -11,7 +11,7 @@ definition {
 
 	@summary = "Default summary"
 	macro viewSubmissionStatus(submissionStatus = null, submissionTitle = null) {
-		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
+		Click(locator1 = "ManagementBar#FILTER");
 
 		MenuItem.click(menuItem = ${submissionStatus});
 

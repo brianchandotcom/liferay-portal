@@ -58,9 +58,7 @@ definition {
 			locator1 = "IFrame#MODAL_ANY");
 
 		if (isSet(scopeSite)) {
-			Click(locator1 = "Dropdown#FILTER_AND_ORDER");
-
-			MenuItem.click(menuItem = ${scopeSite});
+			ManagementBar.setFilterAndOrder(filterBy = ${scopeSite});
 		}
 
 		if (isSet(assetAll)) {

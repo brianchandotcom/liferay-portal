@@ -62,7 +62,7 @@ definition {
 	macro gotoAdd() {
 		WaitForPageLoad();
 
-		Click(locator1 = "Button#PLUS");
+		Click.waitForMenuToggleJSClick(locator1 = "Button#PLUS");
 
 		SelectFrameTop();
 	}

@@ -100,7 +100,7 @@ definition {
 				value1 = "404 URLs");
 		}
 
-		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
+		Click(locator1 = "ManagementBar#FILTER");
 
 		if (isSet(ignoredURL)) {
 			MenuItem.click(menuItem = "Ignored URLs");
@@ -408,7 +408,7 @@ definition {
 				value1 = "404 URLs");
 		}
 
-		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
+		Click(locator1 = "ManagementBar#FILTER");
 
 		if (${unignore} == "true") {
 			MenuItem.click(menuItem = "Ignored URLs");

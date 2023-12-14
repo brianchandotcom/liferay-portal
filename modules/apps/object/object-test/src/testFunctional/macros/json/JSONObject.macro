@@ -664,16 +664,51 @@ definition {
 
 		var objectName = StringUtil.toLowerCase(${objectName});
 
-		var curl = '''
-			${portalURL}/o/c/${objectName}s \
-				-H 'accept: application/json' \
-				-H 'Content-Type: application/json' \
-				-u ${userEmailAddress}:${userPassword} \
-				-d '{
-					"externalReferenceCode": "${ercName}",
-					"${fieldName}": "${value}"
-				}'
-		''';
+		if (${fieldType} == "MultiselectPicklist") {
+			var fieldValue = "";
+			var list = ListUtil.newListFromString(${valueList});
+
+			var size = ListUtil.size(${list});
+			var i = 0;
+
+			while (${i} != ${size}) {
+				var value = ListUtil.get(${list}, ${i});
+
+				var key = StringUtil.replace(${value}, " ", "");
+
+				if (${i} != 0) {
+					var fieldValue = StringUtil.add(${fieldValue}, ",{\"key\": \"${key}\", \"name\": \"${value}\"}", "");
+				}
+				else {
+					var fieldValue = StringUtil.add(${fieldValue}, "{\"key\": \"${key}\", \"name\": \"${value}\"}", "");
+				}
+
+				var i = ${i} + 1;
+			}
+
+			var curl = '''
+				${portalURL}/o/c/${objectName}s \
+					-H 'accept: application/json' \
+					-H 'Content-Type: application/json' \
+					-u ${userEmailAddress}:${userPassword} \
+					-d '{
+						"externalReferenceCode": "${ercName}",
+						"${fieldName}": [${fieldValue}]
+						}'
+			''';
+		}
+		else {
+			var curl = '''
+				${portalURL}/o/c/${objectName}s \
+					-H 'accept: application/json' \
+					-H 'Content-Type: application/json' \
+					-u ${userEmailAddress}:${userPassword} \
+					-d '{
+						"externalReferenceCode": "${ercName}",
+						"${fieldName}": "${value}"
+					}'
+			''';
+		}
 
 		var objectEntryId = JSONCurlUtil.post(${curl}, "$.id");
 

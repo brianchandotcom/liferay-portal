@@ -5,11 +5,15 @@
 
 package com.liferay.notification.internal.search;
 
+import com.liferay.notification.internal.search.spi.model.index.contributor.NotificationQueueEntryModelIndexerWriterContributor;
 import com.liferay.notification.model.NotificationQueueEntry;
+import com.liferay.notification.service.NotificationQueueEntryLocalService;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -40,10 +44,23 @@ public class NotificationQueueEntryModelSearchConfigurator
 		return _modelIndexWriterContributor;
 	}
 
-	@Reference(
-		target = "(indexer.class.name=com.liferay.notification.model.NotificationQueueEntry)"
-	)
+	@Activate
+	protected void activate() {
+		_modelIndexWriterContributor =
+			new NotificationQueueEntryModelIndexerWriterContributor(
+				_dynamicQueryBatchIndexingActionableFactory,
+				_notificationQueueEntryLocalService);
+	}
+
+	@Reference
+	private DynamicQueryBatchIndexingActionableFactory
+		_dynamicQueryBatchIndexingActionableFactory;
+
 	private ModelIndexerWriterContributor<NotificationQueueEntry>
 		_modelIndexWriterContributor;
+
+	@Reference
+	private NotificationQueueEntryLocalService
+		_notificationQueueEntryLocalService;
 
 }

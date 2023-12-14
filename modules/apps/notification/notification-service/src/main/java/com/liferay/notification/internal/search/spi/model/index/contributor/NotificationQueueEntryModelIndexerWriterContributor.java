@@ -12,18 +12,22 @@ import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactor
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexerWriterDocumentHelper;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Paulo Albuquerque
  */
-@Component(
-	property = "indexer.class.name=com.liferay.notification.model.NotificationQueueEntry",
-	service = ModelIndexerWriterContributor.class
-)
 public class NotificationQueueEntryModelIndexerWriterContributor
 	implements ModelIndexerWriterContributor<NotificationQueueEntry> {
+
+	public NotificationQueueEntryModelIndexerWriterContributor(
+		DynamicQueryBatchIndexingActionableFactory
+			dynamicQueryBatchIndexingActionableFactory,
+		NotificationQueueEntryLocalService notificationQueueEntryLocalService) {
+
+		_dynamicQueryBatchIndexingActionableFactory =
+			dynamicQueryBatchIndexingActionableFactory;
+		_notificationQueueEntryLocalService =
+			notificationQueueEntryLocalService;
+	}
 
 	@Override
 	public void customize(
@@ -50,12 +54,9 @@ public class NotificationQueueEntryModelIndexerWriterContributor
 		return notificationQueueEntry.getCompanyId();
 	}
 
-	@Reference
-	private DynamicQueryBatchIndexingActionableFactory
+	private final DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;
-
-	@Reference
-	private NotificationQueueEntryLocalService
+	private final NotificationQueueEntryLocalService
 		_notificationQueueEntryLocalService;
 
 }

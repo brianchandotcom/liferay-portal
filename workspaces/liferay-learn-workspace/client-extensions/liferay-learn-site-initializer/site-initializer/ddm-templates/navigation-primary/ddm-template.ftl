@@ -14,8 +14,8 @@
 	}
 
 	.dropdown-full .adt-nav-item .adt-nav-text {
-		display: flex;
 		align-items: center;
+		display: flex;
 		justify-content: flex-start;
 	}
 
@@ -71,12 +71,12 @@
 </style>
 
 <#assign
-	capabilityId = restClient.get("/headless-admin-taxonomy/v1.0/sites/${themeDisplay.getSiteGroupId()}/taxonomy-vocabularies/by-external-reference-code/CAPABILITY?fields=id").id
-	capabilityVocabulary = {}
+	taxonomyVocabularyId = restClient.get("/headless-admin-taxonomy/v1.0/sites/${themeDisplay.getSiteGroupId()}/taxonomy-vocabularies/by-external-reference-code/CAPABILITY?fields=id").id
+	taxonomyVocabulary = {}
 />
 
-<#list restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/${capabilityId}/taxonomy-categories?fields=description%2Cid%2Cname%2CtaxonomyCategoryProperties").items as taxonomyCategory>
-	<#assign capabilityVocabulary = capabilityVocabulary +
+<#list restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/${taxonomyVocabularyId}/taxonomy-categories?fields=description%2Cid%2Cname%2CtaxonomyCategoryProperties").items as taxonomyCategory>
+	<#assign taxonomyVocabulary = taxonomyVocabulary +
 		{
 			taxonomyCategory.name:
 				{
@@ -131,8 +131,8 @@
 					<div class="row">
 						<#list navPrimaryItem.getChildren() as navSecondaryItem>
 							<div class="dropdown-item-div col-${columns}">
-								<#if capabilityVocabulary?has_content && stringUtil.equals(navItemType, "CAPABILITIES")>
-									<#assign capabilityFields = capabilityVocabulary[navSecondaryItem.getName()] />
+								<#if taxonomyVocabulary?has_content && stringUtil.equals(navItemType, "CAPABILITIES")>
+									<#assign capabilityFields = taxonomyVocabulary[navSecondaryItem.getName()] />
 
 									<a class="d-flex dropdown-item p-3 text-decoration-none" href="/search?category=${capabilityFields['id']}" tabindex="4">
 										<img

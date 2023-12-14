@@ -6,10 +6,14 @@
 package com.liferay.translation.internal.search;
 
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
+import com.liferay.translation.internal.search.spi.model.index.contributor.TranslationEntryModelIndexerWriterContributor;
 import com.liferay.translation.model.TranslationEntry;
+import com.liferay.translation.service.TranslationEntryLocalService;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -40,10 +44,22 @@ public class TranslationEntryModelSearchConfigurator
 		return _modelIndexWriterContributor;
 	}
 
-	@Reference(
-		target = "(indexer.class.name=com.liferay.translation.model.TranslationEntry)"
-	)
+	@Activate
+	protected void activate() {
+		_modelIndexWriterContributor =
+			new TranslationEntryModelIndexerWriterContributor(
+				_dynamicQueryBatchIndexingActionableFactory,
+				_translationEntryLocalService);
+	}
+
+	@Reference
+	private DynamicQueryBatchIndexingActionableFactory
+		_dynamicQueryBatchIndexingActionableFactory;
+
 	private ModelIndexerWriterContributor<TranslationEntry>
 		_modelIndexWriterContributor;
+
+	@Reference
+	private TranslationEntryLocalService _translationEntryLocalService;
 
 }

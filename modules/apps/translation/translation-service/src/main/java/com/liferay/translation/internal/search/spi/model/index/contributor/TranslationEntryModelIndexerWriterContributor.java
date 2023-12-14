@@ -12,18 +12,21 @@ import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexer
 import com.liferay.translation.model.TranslationEntry;
 import com.liferay.translation.service.TranslationEntryLocalService;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Adolfo Pérez
  */
-@Component(
-	property = "indexer.class.name=com.liferay.translation.model.TranslationEntry",
-	service = ModelIndexerWriterContributor.class
-)
 public class TranslationEntryModelIndexerWriterContributor
 	implements ModelIndexerWriterContributor<TranslationEntry> {
+
+	public TranslationEntryModelIndexerWriterContributor(
+		DynamicQueryBatchIndexingActionableFactory
+			dynamicQueryBatchIndexingActionableFactory,
+		TranslationEntryLocalService translationEntryLocalService) {
+
+		_dynamicQueryBatchIndexingActionableFactory =
+			dynamicQueryBatchIndexingActionableFactory;
+		_translationEntryLocalService = translationEntryLocalService;
+	}
 
 	@Override
 	public void customize(
@@ -50,11 +53,8 @@ public class TranslationEntryModelIndexerWriterContributor
 		return translationEntry.getCompanyId();
 	}
 
-	@Reference
-	private DynamicQueryBatchIndexingActionableFactory
+	private final DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;
-
-	@Reference
-	private TranslationEntryLocalService _translationEntryLocalService;
+	private final TranslationEntryLocalService _translationEntryLocalService;
 
 }

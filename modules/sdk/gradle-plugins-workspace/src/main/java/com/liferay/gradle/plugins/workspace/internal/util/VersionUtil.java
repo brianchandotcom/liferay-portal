@@ -36,13 +36,6 @@ public class VersionUtil {
 	public static String normalizeTargetPlatformVersion(
 		String targetPlatformVersion) {
 
-		Matcher quarterMatcher = _dxpQuarterlyVersionPattern.matcher(
-			targetPlatformVersion);
-
-		if (quarterMatcher.matches()) {
-			return targetPlatformVersion;
-		}
-
 		Matcher matcher = _externalVersionPattern.matcher(
 			targetPlatformVersion);
 

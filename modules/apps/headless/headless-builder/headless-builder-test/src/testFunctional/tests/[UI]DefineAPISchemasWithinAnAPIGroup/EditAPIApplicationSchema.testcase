@@ -72,38 +72,6 @@ definition {
 	}
 
 	@priority = 4
-	test CanEditSchemaNameAndDescripindtionInUnpublishedAPIApplication {
-		property portal.acceptance = "true";
-
-		task ("When I save changed name and description") {
-			APIBuilderUI.updateSchemaNameAndDescription(
-				entity = "Schemas",
-				name = "testSchema",
-				schemaDescription = "Description edited",
-				schemaName = "testSchema edited",
-				tabEntity = "Info",
-				title = "My-app2");
-
-			Button.clickSave();
-		}
-
-		task ("Then I can see success alert message about API schema changes were saved") {
-			Alert.viewSuccessMessageText(successMessage = "API schema changes were saved.");
-		}
-
-		task ("And Then I can see updated name and description in Info tab") {
-			AssertElementPresent(
-				locator1 = "TextInput#NAME",
-				value1 = "testSchema edited");
-
-			AssertElementPresent(
-				key_fieldId = "Description",
-				locator1 = "TextArea#ANY_ID",
-				value1 = "Description edited");
-		}
-	}
-
-	@priority = 4
 	test CanEditSchemaNameAndDescriptionInPublishedAPIApplication {
 		property portal.acceptance = "true";
 
@@ -120,6 +88,38 @@ definition {
 
 		task ("Then I can see success alert message about API schema changes were published") {
 			Alert.viewSuccessMessage();
+		}
+
+		task ("And Then I can see updated name and description in Info tab") {
+			AssertElementPresent(
+				locator1 = "TextInput#NAME",
+				value1 = "testSchema edited");
+
+			AssertElementPresent(
+				key_fieldId = "Description",
+				locator1 = "TextArea#ANY_ID",
+				value1 = "Description edited");
+		}
+	}
+
+	@priority = 4
+	test CanEditSchemaNameAndDescriptionInUnpublishedAPIApplication {
+		property portal.acceptance = "true";
+
+		task ("When I save changed name and description") {
+			APIBuilderUI.updateSchemaNameAndDescription(
+				entity = "Schemas",
+				name = "testSchema",
+				schemaDescription = "Description edited",
+				schemaName = "testSchema edited",
+				tabEntity = "Info",
+				title = "My-app2");
+
+			Button.clickSave();
+		}
+
+		task ("Then I can see success alert message about API schema changes were saved") {
+			Alert.viewSuccessMessageText(successMessage = "API schema changes were saved.");
 		}
 
 		task ("And Then I can see updated name and description in Info tab") {

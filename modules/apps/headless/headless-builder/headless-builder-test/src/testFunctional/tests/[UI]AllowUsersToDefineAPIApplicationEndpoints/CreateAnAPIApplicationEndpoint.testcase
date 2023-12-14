@@ -258,8 +258,6 @@ definition {
 		}
 	}
 
-	@description = "Ignored due to LPS-203459"
-	@ignore = "true"
 	@priority = 3
 	test CanValidateMaximumDescription {
 		task ("When I create an endpoint with description Field contains 281 characters") {
@@ -272,9 +270,7 @@ definition {
 		}
 
 		task ("Then I can see error message about maximum length of 280 characters blocks endpoint from being created") {
-			AssertTextEquals(
-				locator1 = "Message#ERROR",
-				value1 = "Object entry value exceeds the maximum length of 280 characters for object field \"description\"");
+			Alert.viewErrorMessage(errorMessage = "Error:Object entry value exceeds the maximum length of 280 characters for object field \"description\"");
 		}
 	}
 

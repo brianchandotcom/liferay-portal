@@ -40,8 +40,8 @@ import com.liferay.segments.model.SegmentsEntryRel;
 import com.liferay.segments.provider.SegmentsEntryProvider;
 import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsEntryRelLocalService;
+import com.liferay.segments.test.util.SegmentsTestUtil;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.junit.After;
@@ -242,21 +242,14 @@ public class IndividualSegmentsCheckerTest {
 
 	@Test
 	public void testIndividualSegmentsDeleteSegmentEntries() throws Exception {
-		_segmentsEntryLocalService.addSegmentsEntry(
-			"1234567",
-			Collections.singletonMap(
-				_portal.getSiteDefaultLocale(_company.getGroupId()),
-				"Segment 1"),
-			null, true, null, SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND,
+		SegmentsTestUtil.addSegmentsEntry(
+			"1234567", "Segment 1", null, null,
+			SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND,
 			User.class.getName(),
 			ServiceContextTestUtil.getServiceContext(_company.getGroupId()));
-
-		_segmentsEntryLocalService.addSegmentsEntry(
-			"2345678",
-			Collections.singletonMap(
-				_portal.getSiteDefaultLocale(_company.getGroupId()),
-				"Segment 2"),
-			null, true, null, SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND,
+		SegmentsTestUtil.addSegmentsEntry(
+			"2345678", "Segment 2", null, null,
+			SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND,
 			User.class.getName(),
 			ServiceContextTestUtil.getServiceContext(_company.getGroupId()));
 

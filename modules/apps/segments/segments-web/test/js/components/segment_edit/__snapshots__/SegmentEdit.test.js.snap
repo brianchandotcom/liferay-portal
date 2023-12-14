@@ -484,19 +484,16 @@ exports[`SegmentEdit renders with given values 1`] = `
               class="c-p-4 overflow-y-auto position-relative sidebar-collapse"
             >
               <div
-                aria-orientation="vertical"
                 class="panel-group"
-                role="tablist"
               >
                 <div
                   class="panel panel-unstyled"
                   id="first-test-values-group"
-                  role="tablist"
                 >
                   <button
+                    aria-controls="clay-id-5"
                     aria-expanded="true"
                     class="panel-header panel-header-link collapse-icon collapse-icon-middle show btn btn-unstyled"
-                    role="tab"
                     tabindex="0"
                     type="button"
                   >
@@ -536,8 +533,10 @@ exports[`SegmentEdit renders with given values 1`] = `
                     </span>
                   </button>
                   <div
+                    aria-labelledby="clay-id-5"
                     class="panel-collapse"
-                    role="tabpanel"
+                    id="clay-id-5"
+                    role="region"
                   >
                     <div
                       class="panel-body c-px-0"

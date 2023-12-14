@@ -53,7 +53,7 @@ describe('ImportResults', () => {
 		expect(getByText('fragment 1')).toBeInTheDocument();
 
 		expect(getByText('x-item-was-imported')).toBeInTheDocument();
-		expect(getByRole('tab').classList.contains('collapsed')).toBe(false);
+		expect(getByRole('button').classList.contains('collapsed')).toBe(false);
 	});
 
 	it('renders success imported results collapsed when there are nt imported draft or invalid', () => {
@@ -67,7 +67,7 @@ describe('ImportResults', () => {
 		expect(getByText('fragment 1')).toBeInTheDocument();
 
 		expect(getByText('x-item-was-imported')).toBeInTheDocument();
-		expect(getByRole('tab').classList.contains('collapsed')).toBe(true);
+		expect(getByRole('button').classList.contains('collapsed')).toBe(true);
 	});
 
 	it('renders warning and invalid results', () => {

@@ -1143,9 +1143,7 @@ definition {
 				webContentContent = "Web Content Content Edit",
 				webContentTitle = "Web Content Title Edit");
 
-			Button.clickSubmitForWorkflow();
-
-			Alert.viewSuccessMessage();
+			PortletEntry.submitForWorkflow();
 		}
 
 		task ("View the usages of the Web Content article") {

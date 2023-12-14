@@ -12,19 +12,22 @@ import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactor
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexerWriterDocumentHelper;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Luan Maoski
  * @author Lucas Marques
  */
-@Component(
-	property = "indexer.class.name=com.liferay.asset.kernel.model.AssetVocabulary",
-	service = ModelIndexerWriterContributor.class
-)
 public class AssetVocabularyModelIndexerWriterContributor
 	implements ModelIndexerWriterContributor<AssetVocabulary> {
+
+	public AssetVocabularyModelIndexerWriterContributor(
+		AssetVocabularyLocalService assetVocabularyLocalService,
+		DynamicQueryBatchIndexingActionableFactory
+			dynamicQueryBatchIndexingActionableFactory) {
+
+		_assetVocabularyLocalService = assetVocabularyLocalService;
+		_dynamicQueryBatchIndexingActionableFactory =
+			dynamicQueryBatchIndexingActionableFactory;
+	}
 
 	@Override
 	public void customize(
@@ -40,9 +43,9 @@ public class AssetVocabularyModelIndexerWriterContributor
 
 	@Override
 	public BatchIndexingActionable getBatchIndexingActionable() {
-		return dynamicQueryBatchIndexingActionableFactory.
+		return _dynamicQueryBatchIndexingActionableFactory.
 			getBatchIndexingActionable(
-				assetVocabularyLocalService.
+				_assetVocabularyLocalService.
 					getIndexableActionableDynamicQuery());
 	}
 
@@ -51,11 +54,8 @@ public class AssetVocabularyModelIndexerWriterContributor
 		return assetVocabulary.getCompanyId();
 	}
 
-	@Reference
-	protected AssetVocabularyLocalService assetVocabularyLocalService;
-
-	@Reference
-	protected DynamicQueryBatchIndexingActionableFactory
-		dynamicQueryBatchIndexingActionableFactory;
+	private final AssetVocabularyLocalService _assetVocabularyLocalService;
+	private final DynamicQueryBatchIndexingActionableFactory
+		_dynamicQueryBatchIndexingActionableFactory;
 
 }

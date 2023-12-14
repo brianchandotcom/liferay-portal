@@ -12,19 +12,22 @@ import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactor
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexerWriterDocumentHelper;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Luan Maoski
  * @author Lucas Marques
  */
-@Component(
-	property = "indexer.class.name=com.liferay.asset.kernel.model.AssetCategory",
-	service = ModelIndexerWriterContributor.class
-)
 public class AssetCategoryModelIndexerWriterContributor
 	implements ModelIndexerWriterContributor<AssetCategory> {
+
+	public AssetCategoryModelIndexerWriterContributor(
+		AssetCategoryLocalService assetCategoryLocalService,
+		DynamicQueryBatchIndexingActionableFactory
+			dynamicQueryBatchIndexingActionableFactory) {
+
+		_assetCategoryLocalService = assetCategoryLocalService;
+		_dynamicQueryBatchIndexingActionableFactory =
+			dynamicQueryBatchIndexingActionableFactory;
+	}
 
 	@Override
 	public void customize(
@@ -40,9 +43,10 @@ public class AssetCategoryModelIndexerWriterContributor
 
 	@Override
 	public BatchIndexingActionable getBatchIndexingActionable() {
-		return dynamicQueryBatchIndexingActionableFactory.
+		return _dynamicQueryBatchIndexingActionableFactory.
 			getBatchIndexingActionable(
-				assetCategoryLocalService.getIndexableActionableDynamicQuery());
+				_assetCategoryLocalService.
+					getIndexableActionableDynamicQuery());
 	}
 
 	@Override
@@ -50,11 +54,8 @@ public class AssetCategoryModelIndexerWriterContributor
 		return assetCategory.getCompanyId();
 	}
 
-	@Reference
-	protected AssetCategoryLocalService assetCategoryLocalService;
-
-	@Reference
-	protected DynamicQueryBatchIndexingActionableFactory
-		dynamicQueryBatchIndexingActionableFactory;
+	private final AssetCategoryLocalService _assetCategoryLocalService;
+	private final DynamicQueryBatchIndexingActionableFactory
+		_dynamicQueryBatchIndexingActionableFactory;
 
 }

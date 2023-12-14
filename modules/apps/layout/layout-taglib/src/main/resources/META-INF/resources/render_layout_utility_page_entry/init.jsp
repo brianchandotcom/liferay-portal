@@ -14,4 +14,5 @@ page import="com.liferay.layout.taglib.internal.display.context.RenderLayoutUtil
 page import="com.liferay.layout.taglib.internal.servlet.ServletContextUtil" %><%@
 page import="com.liferay.layout.util.structure.LayoutStructure" %><%@
 page import="com.liferay.layout.utility.page.model.LayoutUtilityPageEntry" %><%@
+page import="com.liferay.portal.kernel.servlet.taglib.util.OutputData" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %>

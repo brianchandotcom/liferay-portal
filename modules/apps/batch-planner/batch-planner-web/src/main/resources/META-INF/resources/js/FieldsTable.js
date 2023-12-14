@@ -16,6 +16,7 @@ import {
 	CSV_FORMAT,
 	DISALLOWED_CSV_ENTITY_TYPES,
 	EXPORT_FILE_FORMAT_SELECTED_EVENT,
+	FORBIDDEN_CSV_FIELDS_ENTITY_NAMES,
 	FORBIDDEN_CSV_FIELDS_ENTITY_TYPES,
 	SCHEMA_SELECTED_EVENT,
 	TEMPLATE_SELECTED_EVENT,
@@ -35,13 +36,17 @@ function FieldsTable({portletNamespace}) {
 	const getForbiddenValues = (part, o) =>
 		Object.entries(o).find(([k]) => part.startsWith(k))?.[1];
 
-	const isForbidden = (fieldType) => {
+	const isForbidden = (field) => {
 		return (
 			selectedExportFileFormat === CSV_FORMAT.toUpperCase() &&
-			getForbiddenValues(
+			(getForbiddenValues(
 				selectedSchemaName,
 				FORBIDDEN_CSV_FIELDS_ENTITY_TYPES
-			).includes(fieldType)
+			).includes(field.type) ||
+				getForbiddenValues(
+					selectedSchemaName,
+					FORBIDDEN_CSV_FIELDS_ENTITY_NAMES
+				).includes(field.name))
 		);
 	};
 
@@ -190,7 +195,7 @@ function FieldsTable({portletNamespace}) {
 					<ClayTable.Body id="fieldsTableBody">
 						{fields.map((field) => {
 							const included =
-								!isForbidden(field.type) &&
+								!isForbidden(field) &&
 								selectedFields.some(
 									(selectedField) =>
 										selectedField.name === field.name
@@ -207,7 +212,7 @@ function FieldsTable({portletNamespace}) {
 												field.name
 											)}
 											checked={included}
-											disabled={isForbidden(field.type)}
+											disabled={isForbidden(field)}
 											id={`${portletNamespace}fieldName_${field.name}`}
 											name={`${portletNamespace}fieldName`}
 											onChange={() => {
@@ -238,7 +243,7 @@ function FieldsTable({portletNamespace}) {
 									<ClayTable.Cell>
 										<label
 											className={
-												isForbidden(field.type)
+												isForbidden(field)
 													? 'disabled'
 													: ''
 											}
@@ -249,7 +254,7 @@ function FieldsTable({portletNamespace}) {
 									</ClayTable.Cell>
 
 									<ClayTable.Cell className="pr-5 text-right">
-										{isForbidden(field.type) && (
+										{isForbidden(field) && (
 											<>
 												<ClayLabel displayType="info">
 													{Liferay.Language.get(

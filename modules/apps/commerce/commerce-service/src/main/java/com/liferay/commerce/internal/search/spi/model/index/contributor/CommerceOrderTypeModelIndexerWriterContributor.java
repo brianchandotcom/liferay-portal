@@ -13,18 +13,21 @@ import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterC
 import com.liferay.portal.search.spi.model.index.contributor.helper.IndexerWriterMode;
 import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexerWriterDocumentHelper;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Alessio Antonio Rendina
  */
-@Component(
-	property = "indexer.class.name=com.liferay.commerce.model.CommerceOrderType",
-	service = ModelIndexerWriterContributor.class
-)
 public class CommerceOrderTypeModelIndexerWriterContributor
 	implements ModelIndexerWriterContributor<CommerceOrderType> {
+
+	public CommerceOrderTypeModelIndexerWriterContributor(
+		CommerceOrderTypeLocalService commerceOrderTypeLocalService,
+		DynamicQueryBatchIndexingActionableFactory
+			dynamicQueryBatchIndexingActionableFactory) {
+
+		_commerceOrderTypeLocalService = commerceOrderTypeLocalService;
+		_dynamicQueryBatchIndexingActionableFactory =
+			dynamicQueryBatchIndexingActionableFactory;
+	}
 
 	@Override
 	public void customize(
@@ -58,11 +61,8 @@ public class CommerceOrderTypeModelIndexerWriterContributor
 		return IndexerWriterMode.UPDATE;
 	}
 
-	@Reference
-	private CommerceOrderTypeLocalService _commerceOrderTypeLocalService;
-
-	@Reference
-	private DynamicQueryBatchIndexingActionableFactory
+	private final CommerceOrderTypeLocalService _commerceOrderTypeLocalService;
+	private final DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;
 
 }

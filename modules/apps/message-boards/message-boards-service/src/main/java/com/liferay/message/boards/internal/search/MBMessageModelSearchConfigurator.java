@@ -5,13 +5,18 @@
 
 package com.liferay.message.boards.internal.search;
 
+import com.liferay.message.boards.internal.search.spi.model.index.contributor.MBMessageModelIndexerWriterContributor;
 import com.liferay.message.boards.model.MBMessage;
+import com.liferay.message.boards.service.MBMessageLocalService;
+import com.liferay.message.boards.service.MBThreadLocalService;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContributor;
 import com.liferay.portal.search.spi.model.result.contributor.ModelVisibilityContributor;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -58,9 +63,24 @@ public class MBMessageModelSearchConfigurator
 		return _modelVisibilityContributor;
 	}
 
-	@Reference(
-		target = "(indexer.class.name=com.liferay.message.boards.model.MBMessage)"
-	)
+	@Activate
+	protected void activate() {
+		_modelIndexWriterContributor =
+			new MBMessageModelIndexerWriterContributor(
+				_dynamicQueryBatchIndexingActionableFactory,
+				_mbMessageLocalService, _mbThreadLocalService);
+	}
+
+	@Reference
+	private DynamicQueryBatchIndexingActionableFactory
+		_dynamicQueryBatchIndexingActionableFactory;
+
+	@Reference
+	private MBMessageLocalService _mbMessageLocalService;
+
+	@Reference
+	private MBThreadLocalService _mbThreadLocalService;
+
 	private ModelIndexerWriterContributor<MBMessage>
 		_modelIndexWriterContributor;
 

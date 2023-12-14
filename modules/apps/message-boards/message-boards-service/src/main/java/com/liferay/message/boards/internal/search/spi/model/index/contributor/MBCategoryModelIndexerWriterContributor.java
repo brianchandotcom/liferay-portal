@@ -19,18 +19,21 @@ import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterC
 import com.liferay.portal.search.spi.model.index.contributor.helper.IndexerWriterMode;
 import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexerWriterDocumentHelper;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Javier Gamarra
  */
-@Component(
-	property = "indexer.class.name=com.liferay.message.boards.model.MBCategory",
-	service = ModelIndexerWriterContributor.class
-)
 public class MBCategoryModelIndexerWriterContributor
 	implements ModelIndexerWriterContributor<MBCategory> {
+
+	public MBCategoryModelIndexerWriterContributor(
+		DynamicQueryBatchIndexingActionableFactory
+			dynamicQueryBatchIndexingActionableFactory,
+		MBCategoryLocalService mbCategoryLocalService) {
+
+		_dynamicQueryBatchIndexingActionableFactory =
+			dynamicQueryBatchIndexingActionableFactory;
+		_mbCategoryLocalService = mbCategoryLocalService;
+	}
 
 	@Override
 	public void customize(
@@ -91,11 +94,8 @@ public class MBCategoryModelIndexerWriterContributor
 	private static final Log _log = LogFactoryUtil.getLog(
 		MBCategoryModelIndexerWriterContributor.class);
 
-	@Reference
-	private DynamicQueryBatchIndexingActionableFactory
+	private final DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;
-
-	@Reference
-	private MBCategoryLocalService _mbCategoryLocalService;
+	private final MBCategoryLocalService _mbCategoryLocalService;
 
 }

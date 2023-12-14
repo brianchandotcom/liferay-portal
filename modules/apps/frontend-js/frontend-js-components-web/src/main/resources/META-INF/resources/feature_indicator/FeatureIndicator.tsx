@@ -15,16 +15,7 @@ import LearnMessage, {
 	LearnResourcesContext,
 } from '../learn_message/LearnMessage';
 
-export type DisplayType =
-	| 'primary'
-	| 'secondary'
-	| 'success'
-	| 'warning'
-	| 'danger'
-	| 'info'
-	| 'beta'
-	| 'beta-dark'
-	| 'deprecated';
+export type DisplayType = 'beta' | 'info' | 'warning' | 'deprecated';
 
 export default function FeatureIndicator({
 	dark,

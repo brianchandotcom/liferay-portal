@@ -82,6 +82,21 @@ public class RankingSearchRequestContributorTest
 	}
 
 	@Test
+	public void testContributeRankingApplied() {
+		_setUpSearchContext(true, false);
+
+		SearchRequest searchRequest = Mockito.mock(SearchRequest.class);
+
+		_rankingSearchRequestContributor.contribute(searchRequest);
+
+		Mockito.verify(
+			searchRequestBuilderFactory, Mockito.times(3)
+		).builder(
+			searchRequest
+		);
+	}
+
+	@Test
 	public void testContributeRankingIndexReaderIsExistsFalse() {
 		_setUpContributorMocks(false);
 
@@ -134,6 +149,36 @@ public class RankingSearchRequestContributorTest
 			_rankingSearchRequestContributor.contribute(searchRequest));
 	}
 
+	@Test
+	public void testContributeRankingNotApplied() {
+		_setUpSearchContext(false, false);
+
+		SearchRequest searchRequest = Mockito.mock(SearchRequest.class);
+
+		_rankingSearchRequestContributor.contribute(searchRequest);
+
+		Mockito.verify(
+			searchRequestBuilderFactory, Mockito.times(2)
+		).builder(
+			searchRequest
+		);
+	}
+
+	@Test
+	public void testContributeRankingWithAdmin() {
+		_setUpSearchContext(true, false);
+
+		SearchRequest searchRequest = Mockito.mock(SearchRequest.class);
+
+		_rankingSearchRequestContributor.contribute(searchRequest);
+
+		Mockito.verify(
+			searchRequestBuilderFactory, Mockito.times(3)
+		).builder(
+			searchRequest
+		);
+	}
+
 	@SuppressWarnings("unchecked")
 	private SearchRequestBuilder _setUpContributorMocks(
 		boolean rankingIndexNameExist) {
@@ -162,6 +207,39 @@ public class RankingSearchRequestContributorTest
 		);
 
 		return searchRequestBuilder;
+	}
+
+	private void _setUpSearchContext(
+		Boolean applyRanking, Boolean rankingAdmin) {
+
+		SearchContext searchContext = Mockito.mock(SearchContext.class);
+
+		SearchRequestBuilder searchRequestBuilder = _setUpContributorMocks(
+			true);
+
+		Mockito.doReturn(
+			searchContext
+		).when(
+			searchRequestBuilder
+		).withSearchContextGet(
+			Function.identity()
+		);
+
+		Mockito.doReturn(
+			applyRanking
+		).when(
+			searchContext
+		).getAttribute(
+			"search.tunning.rankings.apply"
+		);
+
+		Mockito.doReturn(
+			rankingAdmin
+		).when(
+			searchContext
+		).getAttribute(
+			"rankings.admin.search"
+		);
 	}
 
 	private void _setUpSearchEngineHelper() {

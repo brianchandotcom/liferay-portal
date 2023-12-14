@@ -13,18 +13,21 @@ import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterC
 import com.liferay.portal.search.spi.model.index.contributor.helper.IndexerWriterMode;
 import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexerWriterDocumentHelper;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Brian I. Kim
  */
-@Component(
-	property = "indexer.class.name=com.liferay.commerce.product.model.CPInstance",
-	service = ModelIndexerWriterContributor.class
-)
 public class CPInstanceModelIndexerWriterContributor
 	implements ModelIndexerWriterContributor<CPInstance> {
+
+	public CPInstanceModelIndexerWriterContributor(
+		CPInstanceLocalService cpInstanceLocalService,
+		DynamicQueryBatchIndexingActionableFactory
+			dynamicQueryBatchIndexingActionableFactory) {
+
+		_cpInstanceLocalService = cpInstanceLocalService;
+		_dynamicQueryBatchIndexingActionableFactory =
+			dynamicQueryBatchIndexingActionableFactory;
+	}
 
 	@Override
 	public void customize(
@@ -53,11 +56,8 @@ public class CPInstanceModelIndexerWriterContributor
 		return IndexerWriterMode.UPDATE;
 	}
 
-	@Reference
-	private CPInstanceLocalService _cpInstanceLocalService;
-
-	@Reference
-	private DynamicQueryBatchIndexingActionableFactory
+	private final CPInstanceLocalService _cpInstanceLocalService;
+	private final DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;
 
 }

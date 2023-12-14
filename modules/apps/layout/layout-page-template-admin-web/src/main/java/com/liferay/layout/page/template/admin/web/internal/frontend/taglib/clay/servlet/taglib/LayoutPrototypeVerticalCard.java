@@ -86,10 +86,10 @@ public class LayoutPrototypeVerticalCard
 				_themeDisplay, true);
 
 			return HttpComponentsUtil.addParameters(
-				layoutFullURL, "p_l_back_url_title",
+				layoutFullURL, "p_l_back_url", _themeDisplay.getURLCurrent(),
+				"p_l_back_url_title",
 				LanguageUtil.get(
-					_themeDisplay.getLocale(), "widget-page-templates"),
-				"p_l_back_url", _themeDisplay.getURLCurrent());
+					_themeDisplay.getLocale(), "widget-page-templates"));
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

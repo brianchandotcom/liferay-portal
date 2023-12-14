@@ -200,6 +200,7 @@ public interface JobEntity extends Entity {
 		QA_WEBSITES_PULL_REQUEST_SF(
 			"qaWebsitesPullRequestSF", "QA Websites Pull Request SF"),
 		QA_WEBSITES_WEEKLY("qaWebsitesWeekly", "QA Websites Weekly"),
+		REPOSITORY_ARCHIVE("repositoryArchive", "Repository Archive"),
 		VERIFICATION("verification", "Verification"),
 		VERIFICATION_NODE("verificationNode", "Verification Node");
 

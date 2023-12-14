@@ -452,6 +452,14 @@
 					}
 				},
 				{
+					"externalReferenceCode": "repositoryArchive",
+					"key": "repositoryArchive",
+					"name": "Repository Archive",
+					"name_i18n": {
+						"en-US": "Repository Archive"
+					}
+				},
+				{
 					"externalReferenceCode": "verification",
 					"key": "verification",
 					"name": "Verification",

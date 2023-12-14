@@ -6,12 +6,16 @@
 package com.liferay.commerce.product.internal.search;
 
 import com.liferay.commerce.product.constants.CPField;
+import com.liferay.commerce.product.internal.search.spi.model.index.contributor.CPInstanceModelIndexerWriterContributor;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContributor;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -53,9 +57,21 @@ public class CPInstanceModelSearchConfigurator
 		return true;
 	}
 
-	@Reference(
-		target = "(indexer.class.name=com.liferay.commerce.product.model.CPInstance)"
-	)
+	@Activate
+	protected void activate() {
+		_modelIndexWriterContributor =
+			new CPInstanceModelIndexerWriterContributor(
+				_cpInstanceLocalService,
+				_dynamicQueryBatchIndexingActionableFactory);
+	}
+
+	@Reference
+	private CPInstanceLocalService _cpInstanceLocalService;
+
+	@Reference
+	private DynamicQueryBatchIndexingActionableFactory
+		_dynamicQueryBatchIndexingActionableFactory;
+
 	private ModelIndexerWriterContributor<CPInstance>
 		_modelIndexWriterContributor;
 

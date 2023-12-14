@@ -13,18 +13,21 @@ import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterC
 import com.liferay.portal.search.spi.model.index.contributor.helper.IndexerWriterMode;
 import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexerWriterDocumentHelper;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Mahmoud Azzam
  */
-@Component(
-	property = "indexer.class.name=com.liferay.commerce.product.model.CPTaxCategory",
-	service = ModelIndexerWriterContributor.class
-)
 public class CPTaxCategoryModelIndexerWriterContributor
 	implements ModelIndexerWriterContributor<CPTaxCategory> {
+
+	public CPTaxCategoryModelIndexerWriterContributor(
+		CPTaxCategoryLocalService cpTaxCategoryLocalService,
+		DynamicQueryBatchIndexingActionableFactory
+			dynamicQueryBatchIndexingActionableFactory) {
+
+		_cpTaxCategoryLocalService = cpTaxCategoryLocalService;
+		_dynamicQueryBatchIndexingActionableFactory =
+			dynamicQueryBatchIndexingActionableFactory;
+	}
 
 	@Override
 	public void customize(
@@ -56,11 +59,8 @@ public class CPTaxCategoryModelIndexerWriterContributor
 		return IndexerWriterMode.UPDATE;
 	}
 
-	@Reference
-	private CPTaxCategoryLocalService _cpTaxCategoryLocalService;
-
-	@Reference
-	private DynamicQueryBatchIndexingActionableFactory
+	private final CPTaxCategoryLocalService _cpTaxCategoryLocalService;
+	private final DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;
 
 }

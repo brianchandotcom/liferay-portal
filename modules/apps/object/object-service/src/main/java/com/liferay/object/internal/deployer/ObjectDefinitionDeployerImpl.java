@@ -191,12 +191,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			return ReflectionUtil.throwException(exception);
 		}
 
-		ObjectEntryModelIndexerWriterContributor
-			objectEntryModelIndexerWriterContributor =
-				new ObjectEntryModelIndexerWriterContributor(
-					_dynamicQueryBatchIndexingActionableFactory,
-					objectDefinition.getObjectDefinitionId(),
-					_objectEntryLocalService);
 		ObjectEntryModelSummaryContributor objectEntryModelSummaryContributor =
 			new ObjectEntryModelSummaryContributor();
 
@@ -217,12 +211,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					objectDefinition.getClassName(),
 					_objectDefinitionLocalService, _objectEntryLocalService,
 					_objectFieldLocalService),
-				HashMapDictionaryBuilder.<String, Object>put(
-					"indexer.class.name", objectDefinition.getClassName()
-				).build()),
-			_bundleContext.registerService(
-				ModelIndexerWriterContributor.class,
-				objectEntryModelIndexerWriterContributor,
 				HashMapDictionaryBuilder.<String, Object>put(
 					"indexer.class.name", objectDefinition.getClassName()
 				).build()),
@@ -311,7 +299,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					public ModelIndexerWriterContributor<ObjectEntry>
 						getModelIndexerWriterContributor() {
 
-						return objectEntryModelIndexerWriterContributor;
+						return _objectEntryModelIndexerWriterContributor;
 					}
 
 					@Override
@@ -320,6 +308,13 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 						return objectEntryModelSummaryContributor;
 					}
+
+					private final ObjectEntryModelIndexerWriterContributor
+						_objectEntryModelIndexerWriterContributor =
+							new ObjectEntryModelIndexerWriterContributor(
+								_dynamicQueryBatchIndexingActionableFactory,
+								objectDefinition.getObjectDefinitionId(),
+								_objectEntryLocalService);
 
 				},
 				null),

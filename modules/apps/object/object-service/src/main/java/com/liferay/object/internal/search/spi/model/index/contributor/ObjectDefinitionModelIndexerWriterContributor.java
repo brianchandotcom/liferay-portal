@@ -12,18 +12,21 @@ import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactor
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexerWriterDocumentHelper;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Carolina Barbosa
  */
-@Component(
-	property = "indexer.class.name=com.liferay.object.model.ObjectDefinition",
-	service = ModelIndexerWriterContributor.class
-)
 public class ObjectDefinitionModelIndexerWriterContributor
 	implements ModelIndexerWriterContributor<ObjectDefinition> {
+
+	public ObjectDefinitionModelIndexerWriterContributor(
+		DynamicQueryBatchIndexingActionableFactory
+			dynamicQueryBatchIndexingActionableFactory,
+		ObjectDefinitionLocalService objectDefinitionLocalService) {
+
+		_dynamicQueryBatchIndexingActionableFactory =
+			dynamicQueryBatchIndexingActionableFactory;
+		_objectDefinitionLocalService = objectDefinitionLocalService;
+	}
 
 	@Override
 	public void customize(
@@ -39,7 +42,7 @@ public class ObjectDefinitionModelIndexerWriterContributor
 
 	@Override
 	public BatchIndexingActionable getBatchIndexingActionable() {
-		return dynamicQueryBatchIndexingActionableFactory.
+		return _dynamicQueryBatchIndexingActionableFactory.
 			getBatchIndexingActionable(
 				_objectDefinitionLocalService.
 					getIndexableActionableDynamicQuery());
@@ -50,11 +53,8 @@ public class ObjectDefinitionModelIndexerWriterContributor
 		return objectDefinition.getCompanyId();
 	}
 
-	@Reference
-	protected DynamicQueryBatchIndexingActionableFactory
-		dynamicQueryBatchIndexingActionableFactory;
-
-	@Reference
-	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+	private final DynamicQueryBatchIndexingActionableFactory
+		_dynamicQueryBatchIndexingActionableFactory;
+	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 }

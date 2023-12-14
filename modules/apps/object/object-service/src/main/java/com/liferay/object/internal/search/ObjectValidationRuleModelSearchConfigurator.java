@@ -5,11 +5,15 @@
 
 package com.liferay.object.internal.search;
 
+import com.liferay.object.internal.search.spi.model.index.contributor.ObjectValidationRuleModelIndexerWriterContributor;
 import com.liferay.object.model.ObjectValidationRule;
+import com.liferay.object.service.ObjectValidationRuleLocalService;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -45,10 +49,22 @@ public class ObjectValidationRuleModelSearchConfigurator
 		return _modelIndexWriterContributor;
 	}
 
-	@Reference(
-		target = "(indexer.class.name=com.liferay.object.model.ObjectValidationRule)"
-	)
+	@Activate
+	protected void activate() {
+		_modelIndexWriterContributor =
+			new ObjectValidationRuleModelIndexerWriterContributor(
+				_dynamicQueryBatchIndexingActionableFactory,
+				_objectValidationRuleLocalService);
+	}
+
+	@Reference
+	private DynamicQueryBatchIndexingActionableFactory
+		_dynamicQueryBatchIndexingActionableFactory;
+
 	private ModelIndexerWriterContributor<ObjectValidationRule>
 		_modelIndexWriterContributor;
+
+	@Reference
+	private ObjectValidationRuleLocalService _objectValidationRuleLocalService;
 
 }

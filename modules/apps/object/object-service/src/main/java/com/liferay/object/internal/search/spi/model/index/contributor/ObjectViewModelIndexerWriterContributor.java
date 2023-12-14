@@ -12,18 +12,21 @@ import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactor
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexerWriterDocumentHelper;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Gabriel Albuquerque
  */
-@Component(
-	property = "indexer.class.name=com.liferay.object.model.ObjectView",
-	service = ModelIndexerWriterContributor.class
-)
 public class ObjectViewModelIndexerWriterContributor
 	implements ModelIndexerWriterContributor<ObjectView> {
+
+	public ObjectViewModelIndexerWriterContributor(
+		DynamicQueryBatchIndexingActionableFactory
+			dynamicQueryBatchIndexingActionableFactory,
+		ObjectViewLocalService objectViewLocalService) {
+
+		_dynamicQueryBatchIndexingActionableFactory =
+			dynamicQueryBatchIndexingActionableFactory;
+		_objectViewLocalService = objectViewLocalService;
+	}
 
 	@Override
 	public void customize(
@@ -47,11 +50,8 @@ public class ObjectViewModelIndexerWriterContributor
 		return objectView.getCompanyId();
 	}
 
-	@Reference
-	private DynamicQueryBatchIndexingActionableFactory
+	private final DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;
-
-	@Reference
-	private ObjectViewLocalService _objectViewLocalService;
+	private final ObjectViewLocalService _objectViewLocalService;
 
 }

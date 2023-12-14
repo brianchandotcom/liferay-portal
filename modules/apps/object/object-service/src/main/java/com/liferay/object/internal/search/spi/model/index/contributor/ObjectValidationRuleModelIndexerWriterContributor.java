@@ -12,18 +12,21 @@ import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactor
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexerWriterDocumentHelper;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Marcela Cunha
  */
-@Component(
-	property = "indexer.class.name=com.liferay.object.model.ObjectValidationRule",
-	service = ModelIndexerWriterContributor.class
-)
 public class ObjectValidationRuleModelIndexerWriterContributor
 	implements ModelIndexerWriterContributor<ObjectValidationRule> {
+
+	public ObjectValidationRuleModelIndexerWriterContributor(
+		DynamicQueryBatchIndexingActionableFactory
+			dynamicQueryBatchIndexingActionableFactory,
+		ObjectValidationRuleLocalService objectValidationRuleLocalService) {
+
+		_dynamicQueryBatchIndexingActionableFactory =
+			dynamicQueryBatchIndexingActionableFactory;
+		_objectValidationRuleLocalService = objectValidationRuleLocalService;
+	}
 
 	@Override
 	public void customize(
@@ -39,7 +42,7 @@ public class ObjectValidationRuleModelIndexerWriterContributor
 
 	@Override
 	public BatchIndexingActionable getBatchIndexingActionable() {
-		return dynamicQueryBatchIndexingActionableFactory.
+		return _dynamicQueryBatchIndexingActionableFactory.
 			getBatchIndexingActionable(
 				_objectValidationRuleLocalService.
 					getIndexableActionableDynamicQuery());
@@ -50,11 +53,9 @@ public class ObjectValidationRuleModelIndexerWriterContributor
 		return objectValidationRule.getCompanyId();
 	}
 
-	@Reference
-	protected DynamicQueryBatchIndexingActionableFactory
-		dynamicQueryBatchIndexingActionableFactory;
-
-	@Reference
-	private ObjectValidationRuleLocalService _objectValidationRuleLocalService;
+	private final DynamicQueryBatchIndexingActionableFactory
+		_dynamicQueryBatchIndexingActionableFactory;
+	private final ObjectValidationRuleLocalService
+		_objectValidationRuleLocalService;
 
 }

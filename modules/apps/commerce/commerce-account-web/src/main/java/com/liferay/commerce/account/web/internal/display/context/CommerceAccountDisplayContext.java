@@ -281,8 +281,9 @@ public class CommerceAccountDisplayContext {
 			});
 
 		return ListUtil.filter(
-			_commerceChannelService.getCommerceChannels(
-				_commerceAccountRelRequestHelper.getCompanyId()),
+			_commerceChannelService.getEligibleCommerceChannels(
+				_accountEntry.getAccountEntryId(), null, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS),
 			commerceChannel -> !commerceChannelIds.contains(
 				commerceChannel.getCommerceChannelId()));
 	}

@@ -5,6 +5,9 @@
 
 package com.liferay.headless.commerce.admin.channel.internal.resource.v1_0;
 
+import com.liferay.account.exception.AccountEntryTypeException;
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.commerce.product.constants.CommerceChannelAccountEntryRelConstants;
 import com.liferay.commerce.product.exception.NoSuchChannelException;
 import com.liferay.commerce.product.model.CommerceChannel;
@@ -161,6 +164,13 @@ public class ChannelAccountResourceImpl extends BaseChannelAccountResourceImpl {
 			long commerceChannelId, ChannelAccount channelAccount)
 		throws Exception {
 
+		AccountEntry accountEntry = _accountEntryLocalService.getAccountEntry(
+			channelAccount.getAccountId());
+
+		if (accountEntry.isGuestAccount()) {
+			throw new AccountEntryTypeException();
+		}
+
 		CommerceChannel commerceChannel;
 
 		if (Validator.isNull(
@@ -250,6 +260,9 @@ public class ChannelAccountResourceImpl extends BaseChannelAccountResourceImpl {
 
 		return channelAccounts;
 	}
+
+	@Reference
+	private AccountEntryLocalService _accountEntryLocalService;
 
 	@Reference(
 		target = "(component.name=com.liferay.headless.commerce.admin.channel.internal.dto.v1_0.converter.ChannelAccountDTOConverter)"

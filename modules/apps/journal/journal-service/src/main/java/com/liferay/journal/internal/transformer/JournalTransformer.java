@@ -253,6 +253,19 @@ public class JournalTransformer {
 			themeDisplay, tokens, String.valueOf(article.getVersion()));
 
 		_addReservedEl(
+			JournalStructureConstants.RESERVED_ARTICLE_ID_, templateNodes,
+			themeDisplay, tokens, String.valueOf(article.getId()));
+
+		_addReservedEl(
+			JournalStructureConstants.RESERVED_ARTICLE_EXTERNAL_REFERENCE_CODE,
+			templateNodes, themeDisplay, tokens, article.getUuid());
+
+		_addReservedEl(
+			JournalStructureConstants.RESERVED_ARTICLE_RESOURCE_PRIM_KEY,
+			templateNodes, themeDisplay, tokens,
+			String.valueOf(article.getResourcePrimKey()));
+
+		_addReservedEl(
 			JournalStructureConstants.RESERVED_ARTICLE_TITLE, templateNodes,
 			themeDisplay, tokens, article.getTitle(languageId));
 

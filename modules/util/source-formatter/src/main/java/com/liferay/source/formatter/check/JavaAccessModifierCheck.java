@@ -6,7 +6,6 @@
 package com.liferay.source.formatter.check;
 
 import com.liferay.petra.string.CharPool;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.BNDSettings;
 import com.liferay.source.formatter.check.util.JavaSourceUtil;
@@ -27,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -46,33 +46,24 @@ public class JavaAccessModifierCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
-		if (!content.contains("@Component")) {
-			return content;
-		}
-
 		String packageName = JavaSourceUtil.getPackageName(content);
 
 		if (!packageName.startsWith("com.liferay")) {
 			return content;
 		}
 
-		BNDSettings bndSettings = getBNDSettings(fileName);
+		Map<String, List<String>> componentJavaFileMap =
+			_getCommponentJavaFileMap();
 
-		if (bndSettings == null) {
-			return content;
-		}
+		Set<String> superClassNames = componentJavaFileMap.keySet();
 
-		String bndSettingsContent = bndSettings.getContent();
+		if (!superClassNames.contains(
+				packageName + "." + JavaSourceUtil.getClassName(fileName))) {
 
-		if (!bndSettingsContent.contains("-dsannotations-options: inherit")) {
 			return content;
 		}
 
 		JavaClass javaClass = JavaClassParser.parseJavaClass(fileName, content);
-
-		if (!_hasSubclasses(javaClass)) {
-			return content;
-		}
 
 		List<JavaTerm> childJavaTerms = javaClass.getChildJavaTerms();
 
@@ -140,6 +131,20 @@ public class JavaAccessModifierCheck extends BaseFileCheck {
 				fileName = StringUtil.replace(
 					fileName, CharPool.BACK_SLASH, CharPool.SLASH);
 
+				BNDSettings bndSettings = getBNDSettings(fileName);
+
+				if (bndSettings == null) {
+					continue;
+				}
+
+				String bndSettingsContent = bndSettings.getContent();
+
+				if (!bndSettingsContent.contains(
+						"-dsannotations-options: inherit")) {
+
+					continue;
+				}
+
 				String content = FileUtil.read(filePath.toFile());
 
 				String superClassName = _getSuperClassNameWithPackageName(
@@ -182,20 +187,6 @@ public class JavaAccessModifierCheck extends BaseFileCheck {
 		}
 
 		return JavaSourceUtil.getPackageName(content) + "." + superClassName;
-	}
-
-	private boolean _hasSubclasses(JavaClass javaClass) throws Exception {
-		Map<String, List<String>> componentJavaFileMap =
-			_getCommponentJavaFileMap();
-
-		List<String> subclassNames = componentJavaFileMap.get(
-			javaClass.getPackageName() + "." + javaClass.getName());
-
-		if (ListUtil.isEmpty(subclassNames)) {
-			return false;
-		}
-
-		return true;
 	}
 
 	private Map<String, List<String>> _componentJavaFileMap;

@@ -161,7 +161,7 @@ public class DisplayPageLayoutTypeControllerTest {
 			layoutSet.getTheme(), layoutSet.getColorScheme());
 
 		themeDisplay.setPermissionChecker(
-			PermissionThreadLocal.getPermissionChecker());
+			_permissionCheckerFactory.create(user));
 		themeDisplay.setPlid(layout.getPlid());
 		themeDisplay.setPortalDomain(_company.getVirtualHostname());
 		themeDisplay.setPortalURL(_company.getPortalURL(_group.getGroupId()));

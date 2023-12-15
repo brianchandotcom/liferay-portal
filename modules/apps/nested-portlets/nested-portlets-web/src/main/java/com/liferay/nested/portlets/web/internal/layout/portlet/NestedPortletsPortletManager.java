@@ -21,7 +21,7 @@ import org.osgi.service.component.annotations.Component;
 public class NestedPortletsPortletManager implements PortletManager {
 
 	@Override
-	public boolean isVisble(Layout layout) {
+	public boolean isVisible(Layout layout) {
 		if (layout.isTypeAssetDisplay() || layout.isTypeContent()) {
 			return false;
 		}

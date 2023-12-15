@@ -22,7 +22,7 @@ import org.osgi.service.component.annotations.Component;
 public class DateFacetPortletManager implements PortletManager {
 
 	@Override
-	public boolean isVisble(Layout layout) {
+	public boolean isVisible(Layout layout) {
 		if (FeatureFlagManagerUtil.isEnabled("LPS-153839")) {
 			return true;
 		}

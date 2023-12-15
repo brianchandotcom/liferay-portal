@@ -196,7 +196,7 @@ definition {
 			reportsDefinitionName = "Reports Definition Name",
 			templateFile = "reports_admin_template_source_sample_class_name.jrxml");
 
-		ManagementBar.setFilterAndOrder(filterBy = "All");
+		Click(locator1 = "ManagementBar#ORDER_ICON_GENERIC");
 
 		ReportsAdmin.assertReportEntryPresent(reportsDefinitionName = "Reports Definition Name");
 	}

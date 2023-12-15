@@ -532,8 +532,6 @@ definition {
 				locator1 = "ControlMenu#HEADING",
 				value1 = "Web Content Display Page");
 
-			ManagementBar.viewFilterAndOrder(menuItem = "Modified Date");
-
 			var index = 1;
 
 			for (var webContentTitle : list "The First Web Content,The Second Web Content,The Third Web Content") {
@@ -545,7 +543,7 @@ definition {
 				var index = ${index} + 1;
 			}
 
-			ManagementBar.sortAssets(sortDirection = "Descending");
+			Click(locator1 = "ManagementBar#ORDER_ICON_GENERIC");
 
 			var index = 1;
 
@@ -683,8 +681,6 @@ definition {
 				AssertTextEquals(
 					locator1 = "ControlMenu#HEADING",
 					value1 = "${assetType} Display Page");
-
-				ManagementBar.viewFilterAndOrder(menuItem = "Modified Date");
 
 				AssertElementNotPresent(locator1 = "TextInput#SEARCH");
 

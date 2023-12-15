@@ -113,6 +113,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -300,7 +301,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			_bundleContext.registerService(
 				InfoItemFieldValuesProvider.class,
 				new ObjectEntryInfoItemFieldValuesProvider(
-					_assetDisplayPageFriendlyURLProvider,
+					_assetDisplayPageFriendlyURLProvider, _companyLocalService,
 					_displayPageInfoItemFieldSetProvider, _dlAppLocalService,
 					_dlURLHelper, _infoItemFieldReaderFieldSetProvider,
 					_jsonFactory, _objectActionLocalService, objectDefinition,
@@ -606,6 +607,9 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		_attachmentUploadResponseHandler =
 			new AttachmentUploadResponseHandler();
 	private BundleContext _bundleContext;
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
 
 	@Reference(target = "(upload.response.handler.system.default=true)")
 	private UploadResponseHandler _defaultUploadResponseHandler;

@@ -143,6 +143,9 @@ public class DisplayPageLayoutTypeControllerTest {
 				mockHttpServletRequest, mockHttpServletResponse, layout);
 
 			Assert.assertFalse(noSuchLayoutExceptionExpected);
+
+			Assert.assertEquals(
+				HttpServletResponse.SC_OK, mockHttpServletResponse.getStatus());
 		}
 		catch (NoSuchLayoutException noSuchLayoutException) {
 			Assert.assertTrue(noSuchLayoutExceptionExpected);

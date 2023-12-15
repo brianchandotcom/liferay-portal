@@ -181,7 +181,9 @@ public class GenerateTestrayCSVUtil {
 			String testrayBuildReportURL = getTestrayBuildReportURL();
 
 			if (testrayBuildReportURL.isEmpty()) {
-				return "";
+				_pullRequestAuthor = "Unknown";
+
+				return _pullRequestAuthor;
 			}
 
 			String[] buildReportText = testrayBuildReportURL.split("/");

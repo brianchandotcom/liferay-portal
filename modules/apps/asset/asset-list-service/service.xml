@@ -238,5 +238,6 @@
 		<exception>AssetListEntryAssetEntryRelPostion</exception>
 		<exception>AssetListEntryTitle</exception>
 		<exception>DuplicateAssetListEntryTitle</exception>
+		<exception>RequiredAssetListEntry</exception>
 	</exceptions>
 </service-builder>

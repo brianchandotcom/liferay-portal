@@ -1,6 +1,89 @@
 [
 	{
 		"description": "This is a description.",
+		"name": "customCheckoutStep",
+		"properties": [
+			{
+				"name": "description",
+				"type": "CETProperty.Type.String"
+			},
+			{
+				"name": "name",
+				"type": "CETProperty.Type.String"
+			},
+			{
+				"default": "https://www.liferay.com",
+				"name": "sourceCodeURL",
+				"type": "CETProperty.Type.String"
+			},
+			{
+				"name": "type",
+				"type": "CETProperty.Type.String"
+			},
+			{
+				"default": "",
+				"name": "actionURL",
+				"type": "CETProperty.Type.String"
+			},
+			{
+				"default": "",
+				"name": "active",
+				"type": "CETProperty.Type.Boolean"
+			},
+			{
+				"default": "",
+				"name": "checkoutStepLabel",
+				"type": "CETProperty.Type.String"
+			},
+			{
+				"default": "",
+				"name": "checkoutStepName",
+				"type": "CETProperty.Type.String"
+			},
+			{
+				"default": "",
+				"name": "checkoutStepOrder",
+				"type": "CETProperty.Type.String"
+			},
+			{
+				"default": "",
+				"name": "oAuth2ApplicationExternalReferenceCode",
+				"type": "CETProperty.Type.String"
+			},
+			{
+				"default": "",
+				"name": "order",
+				"type": "CETProperty.Type.Boolean"
+			},
+			{
+				"default": "",
+				"name": "readyURL",
+				"type": "CETProperty.Type.String"
+			},
+			{
+				"default": "",
+				"name": "renderURL",
+				"type": "CETProperty.Type.URL"
+			},
+			{
+				"default": "",
+				"name": "sennaDisabled",
+				"type": "CETProperty.Type.Boolean"
+			},
+			{
+				"default": "",
+				"name": "showControls",
+				"type": "CETProperty.Type.Boolean"
+			},
+			{
+				"default": "",
+				"name": "visible",
+				"type": "CETProperty.Type.Boolean"
+			}
+		]
+	},
+	{
+		"description": "This is a description.",
 		"name": "customElement",
 		"properties": [
 			{

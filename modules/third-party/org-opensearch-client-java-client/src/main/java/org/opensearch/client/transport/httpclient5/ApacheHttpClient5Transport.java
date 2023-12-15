@@ -12,6 +12,7 @@ import jakarta.json.stream.JsonGenerator;
 import jakarta.json.stream.JsonParser;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -934,7 +935,11 @@ public class ApacheHttpClient5Transport implements OpenSearchTransport {
                 } else {
                     long size;
                     try (InputStream is = getContent()) {
-                        size = is.readAllBytes().length;
+                        is.reset();
+                        byte[] bytes = new byte[is.available()];
+                        DataInputStream dataInputStream = new DataInputStream(is);
+                        dataInputStream.readFully(bytes);
+                        size = is.available();
                     } catch (IOException ex) {
                         size = -1L;
                     }
@@ -1014,3 +1019,4 @@ public class ApacheHttpClient5Transport implements OpenSearchTransport {
         }
     }
 }
+/* @generated */

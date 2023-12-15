@@ -22,18 +22,19 @@ import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContri
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Rafael Praxedes
  */
-@Component(
-	property = "indexer.class.name=com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord",
-	service = ModelSummaryContributor.class
-)
 public class DDMFormInstanceRecordModelSummaryContributor
 	implements ModelSummaryContributor {
+
+	public DDMFormInstanceRecordModelSummaryContributor(
+		DDMFormInstanceLocalService ddmFormInstanceLocalService,
+		Language language) {
+
+		_ddmFormInstanceLocalService = ddmFormInstanceLocalService;
+		_language = language;
+	}
 
 	@Override
 	public Summary getSummary(
@@ -55,9 +56,6 @@ public class DDMFormInstanceRecordModelSummaryContributor
 		return summary;
 	}
 
-	@Reference
-	protected DDMFormInstanceLocalService ddmFormInstanceLocalService;
-
 	private ResourceBundle _getResourceBundle(Locale defaultLocale) {
 		ResourceBundleLoader portalResourceBundleLoader =
 			ResourceBundleLoaderUtil.getPortalResourceBundleLoader();
@@ -68,7 +66,7 @@ public class DDMFormInstanceRecordModelSummaryContributor
 	private String _getTitle(long ddmFormInstanceId, Locale locale) {
 		try {
 			DDMFormInstance ddmFormInstance =
-				ddmFormInstanceLocalService.getFormInstance(ddmFormInstanceId);
+				_ddmFormInstanceLocalService.getFormInstance(ddmFormInstanceId);
 
 			String ddmFormInstanceName = ddmFormInstance.getName(locale);
 
@@ -86,7 +84,7 @@ public class DDMFormInstanceRecordModelSummaryContributor
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMFormInstanceRecordModelSummaryContributor.class);
 
-	@Reference
-	private Language _language;
+	private final DDMFormInstanceLocalService _ddmFormInstanceLocalService;
+	private final Language _language;
 
 }

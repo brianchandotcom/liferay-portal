@@ -6,10 +6,12 @@
 package com.liferay.dynamic.data.mapping.internal.search;
 
 import com.liferay.dynamic.data.mapping.internal.search.spi.model.index.contributor.DDMFormInstanceRecordModelIndexerWriterContributor;
+import com.liferay.dynamic.data.mapping.internal.search.spi.model.result.contributor.DDMFormInstanceRecordModelSummaryContributor;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordVersionLocalService;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
@@ -65,6 +67,10 @@ public class DDMFormInstanceRecordModelSearchConfigurator
 				_ddmFormInstanceRecordLocalService,
 				_ddmFormInstanceRecordVersionLocalService,
 				_dynamicQueryBatchIndexingActionableFactory);
+
+		_modelSummaryContributor =
+			new DDMFormInstanceRecordModelSummaryContributor(
+				_ddmFormInstanceLocalService, _language);
 	}
 
 	@Reference
@@ -82,12 +88,11 @@ public class DDMFormInstanceRecordModelSearchConfigurator
 	private DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;
 
+	@Reference
+	private Language _language;
+
 	private ModelIndexerWriterContributor<DDMFormInstanceRecord>
 		_modelIndexWriterContributor;
-
-	@Reference(
-		target = "(indexer.class.name=com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord)"
-	)
 	private ModelSummaryContributor _modelSummaryContributor;
 
 }

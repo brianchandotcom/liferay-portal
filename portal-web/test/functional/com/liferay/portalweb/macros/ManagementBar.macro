@@ -154,15 +154,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewNoSubheaderInFilterAndOrder(subheaderItem = null) {
-		Click.pauseClickAt(locator1 = "ManagementBar#ORDER");
-
-		AssertElementNotPresent(
-			key_subheaderItem = ${subheaderItem},
-			locator1 = "ManagementBar#FILTER_AND_ORDER_SUBHEADER");
-	}
-
-	@summary = "Default summary"
 	macro viewNumberOfSelectedItems(text = null) {
 		AssertTextEquals(
 			locator1 = "ManagementBar#NAVBAR_TEXT",

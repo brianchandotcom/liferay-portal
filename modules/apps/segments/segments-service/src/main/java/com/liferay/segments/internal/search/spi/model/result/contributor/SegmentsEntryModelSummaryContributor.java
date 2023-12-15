@@ -14,15 +14,9 @@ import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContri
 
 import java.util.Locale;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Eduardo García
  */
-@Component(
-	property = "indexer.class.name=com.liferay.segments.model.SegmentsEntry",
-	service = ModelSummaryContributor.class
-)
 public class SegmentsEntryModelSummaryContributor
 	implements ModelSummaryContributor {
 

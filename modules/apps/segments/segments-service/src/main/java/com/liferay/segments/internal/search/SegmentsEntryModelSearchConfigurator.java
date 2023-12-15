@@ -11,6 +11,7 @@ import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterC
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContributor;
 import com.liferay.segments.internal.search.spi.model.index.contributor.SegmentsEntryModelIndexerWriterContributor;
+import com.liferay.segments.internal.search.spi.model.result.contributor.SegmentsEntryModelSummaryContributor;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.service.SegmentsEntryLocalService;
 
@@ -62,6 +63,8 @@ public class SegmentsEntryModelSearchConfigurator
 			new SegmentsEntryModelIndexerWriterContributor(
 				_dynamicQueryBatchIndexingActionableFactory,
 				_segmentsEntryLocalService);
+
+		_modelSummaryContributor = new SegmentsEntryModelSummaryContributor();
 	}
 
 	@Reference
@@ -70,10 +73,6 @@ public class SegmentsEntryModelSearchConfigurator
 
 	private ModelIndexerWriterContributor<SegmentsEntry>
 		_modelIndexWriterContributor;
-
-	@Reference(
-		target = "(indexer.class.name=com.liferay.segments.model.SegmentsEntry)"
-	)
 	private ModelSummaryContributor _modelSummaryContributor;
 
 	@Reference

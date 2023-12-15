@@ -7,10 +7,29 @@ package com.liferay.layout.type.controller.display.page.internal.layout.type.con
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
+import com.liferay.asset.test.util.AssetTestUtil;
+import com.liferay.fragment.constants.FragmentConstants;
+import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
+import com.liferay.fragment.model.FragmentCollection;
+import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.service.FragmentCollectionLocalService;
+import com.liferay.fragment.service.FragmentEntryLocalService;
+import com.liferay.info.constants.InfoDisplayWebKeys;
+import com.liferay.info.item.InfoItemDetails;
+import com.liferay.info.item.InfoItemServiceRegistry;
+import com.liferay.info.item.provider.InfoItemDetailsProvider;
+import com.liferay.info.item.provider.InfoItemPermissionProvider;
+import com.liferay.layout.display.page.LayoutDisplayPageProvider;
+import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -19,7 +38,8 @@ import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutTypeController;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -34,12 +54,18 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.util.LayoutTypeControllerTracker;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
+
+import java.util.Collections;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -70,6 +96,10 @@ public class DisplayPageLayoutTypeControllerTest {
 
 		_company = _companyLocalService.getCompany(_group.getCompanyId());
 
+		_assetCategory = null;
+		_guestUser = _userLocalService.getGuestUser(_group.getCompanyId());
+		_infoItemDetails = null;
+
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			_group.getGroupId(), TestPropsValues.getUserId());
 
@@ -79,6 +109,33 @@ public class DisplayPageLayoutTypeControllerTest {
 	@After
 	public void tearDown() throws Exception {
 		ServiceContextThreadLocal.popServiceContext();
+	}
+
+	@Test
+	public void testDisplayPageTypeControllerWithInfoItem() throws Exception {
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
+				_group.getGroupId(), 0,
+				_portal.getClassNameId(AssetCategory.class.getName()), 0,
+				RandomTestUtil.randomString(), 0,
+				WorkflowConstants.STATUS_DRAFT, _serviceContext);
+
+		Layout layout = _layoutLocalService.getLayout(
+			layoutPageTemplateEntry.getPlid());
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		Assert.assertNotNull(draftLayout);
+
+		_setUpInfoItem();
+
+		_addFragmentEntryLink(draftLayout);
+
+		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
+
+		Assert.assertTrue(layout.isPublished());
+
+		_assertIncludeLayoutContent(false, layout.getPlid(), _guestUser);
 	}
 
 	@Test
@@ -107,11 +164,42 @@ public class DisplayPageLayoutTypeControllerTest {
 			false, draftLayout.getPlid(), TestPropsValues.getUser());
 		_assertIncludeLayoutContent(
 			false, layout.getPlid(), TestPropsValues.getUser());
+		_assertIncludeLayoutContent(true, draftLayout.getPlid(), _guestUser);
+		_assertIncludeLayoutContent(true, layout.getPlid(), _guestUser);
+	}
 
-		User guestUser = _userLocalService.getGuestUser(_group.getCompanyId());
+	private void _addFragmentEntryLink(Layout layout) throws Exception {
+		FragmentCollection fragmentCollection =
+			_fragmentCollectionLocalService.addFragmentCollection(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				StringUtil.randomString(), StringPool.BLANK, _serviceContext);
 
-		_assertIncludeLayoutContent(true, draftLayout.getPlid(), guestUser);
-		_assertIncludeLayoutContent(true, layout.getPlid(), guestUser);
+		FragmentEntry fragmentEntry =
+			_fragmentEntryLocalService.addFragmentEntry(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				fragmentCollection.getFragmentCollectionId(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				StringPool.BLANK,
+				"<h1 data-lfr-editable-id=\"element-text\" " +
+					"data-lfr-editable-type=\"text\">Heading Example</h1>",
+				StringPool.BLANK, false, StringPool.BLANK, null, 0,
+				FragmentConstants.TYPE_COMPONENT, null,
+				WorkflowConstants.STATUS_APPROVED, _serviceContext);
+
+		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+				JSONUtil.put(
+					"element-text",
+					JSONUtil.put("mappedField", "AssetCategory_name"))
+			).toString(),
+			fragmentEntry.getCss(), fragmentEntry.getConfiguration(),
+			fragmentEntry.getFragmentEntryId(), fragmentEntry.getHtml(),
+			fragmentEntry.getJs(), layout, fragmentEntry.getFragmentEntryKey(),
+			fragmentEntry.getType(), null, 0,
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				layout.getPlid()));
 	}
 
 	private void _assertIncludeLayoutContent(
@@ -163,8 +251,20 @@ public class DisplayPageLayoutTypeControllerTest {
 			new MockHttpServletRequest();
 
 		mockHttpServletRequest.setAttribute(
+			InfoDisplayWebKeys.INFO_ITEM, _assetCategory);
+		mockHttpServletRequest.setAttribute(
+			InfoDisplayWebKeys.INFO_ITEM_DETAILS, _infoItemDetails);
+		mockHttpServletRequest.setAttribute(
 			WebKeys.CURRENT_URL, _portal.getLayoutActualURL(layout));
 		mockHttpServletRequest.setAttribute(WebKeys.LAYOUT, layout);
+
+		if (_assetCategory != null) {
+			mockHttpServletRequest.setAttribute(
+				LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER,
+				_layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
+					_group.getGroupId(),
+					String.valueOf(_assetCategory.getCategoryId())));
+		}
 
 		mockHttpServletRequest.setMethod(HttpMethods.GET);
 
@@ -200,13 +300,68 @@ public class DisplayPageLayoutTypeControllerTest {
 		return mockHttpServletRequest;
 	}
 
+	private void _setUpInfoItem() throws Exception {
+		AssetVocabulary assetVocabulary =
+			_assetVocabularyLocalService.addVocabulary(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomLocaleStringMap(), Collections.emptyMap(),
+				StringPool.BLANK, _serviceContext);
+
+		_assetCategory = AssetTestUtil.addCategory(
+			_group.getGroupId(), assetVocabulary.getVocabularyId());
+
+		InfoItemDetailsProvider infoItemDetailsProvider =
+			_infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemDetailsProvider.class, AssetCategory.class.getName());
+
+		_infoItemDetails = infoItemDetailsProvider.getInfoItemDetails(
+			_assetCategory);
+
+		Assert.assertTrue(
+			_infoItemPermissionProvider.hasPermission(
+				_permissionCheckerFactory.create(_guestUser), _assetCategory,
+				ActionKeys.VIEW));
+	}
+
+	private AssetCategory _assetCategory;
+
+	@Inject
+	private AssetCategoryLocalService _assetCategoryLocalService;
+
+	@Inject
+	private AssetVocabularyLocalService _assetVocabularyLocalService;
+
 	private Company _company;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
+	@Inject
+	private FragmentCollectionLocalService _fragmentCollectionLocalService;
+
+	@Inject
+	private FragmentEntryLocalService _fragmentEntryLocalService;
+
 	@DeleteAfterTestRun
 	private Group _group;
+
+	private User _guestUser;
+	private InfoItemDetails _infoItemDetails;
+
+	@Inject(
+		filter = "component.name=com.liferay.asset.categories.admin.web.internal.info.item.provider.AssetCategoryInfoItemPermissionProvider"
+	)
+	private InfoItemPermissionProvider<AssetCategory>
+		_infoItemPermissionProvider;
+
+	@Inject
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
+
+	@Inject(
+		filter = "component.name=com.liferay.asset.categories.internal.layout.display.page.AssetCategoryLayoutDisplayPageProvider"
+	)
+	private LayoutDisplayPageProvider<AssetCategory> _layoutDisplayPageProvider;
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;
@@ -215,7 +370,13 @@ public class DisplayPageLayoutTypeControllerTest {
 	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;
 
 	@Inject
+	private PermissionCheckerFactory _permissionCheckerFactory;
+
+	@Inject
 	private Portal _portal;
+
+	@Inject
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 	private ServiceContext _serviceContext;
 

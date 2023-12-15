@@ -43,7 +43,7 @@ public abstract class BalancedListSplitter<T> {
 
 		int minNumberOfLists = (int)(totalWeight / _maxListWeight);
 
-		if ((totalWeight % _maxListWeight) > 0) {
+		if ((totalWeight % _maxListWeight) >= 0) {
 			minNumberOfLists++;
 		}
 

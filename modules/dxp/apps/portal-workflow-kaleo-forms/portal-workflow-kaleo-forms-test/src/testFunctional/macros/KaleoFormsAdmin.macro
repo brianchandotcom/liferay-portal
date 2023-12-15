@@ -26,6 +26,8 @@ definition {
 
 	@summary = "Default summary"
 	macro addForm(kfFormName = null) {
+		SetWindowSize.maximizeWindow();
+
 		SelectFrame(locator1 = "DDMEditStructure#IFRAME");
 
 		LexiconEntry.gotoAddNoSelectFrame();

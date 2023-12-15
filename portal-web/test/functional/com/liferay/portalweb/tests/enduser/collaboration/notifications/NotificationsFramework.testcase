@@ -161,7 +161,9 @@ definition {
 
 		PortletEntry.selectAll();
 
-		Click(locator1 = "Icon#MARK_AS_UNREAD");
+		Click(
+			key_text = "envelope-closed",
+			locator1 = "ManagementBar#ANY_ICON");
 
 		Notifications.viewBadgeCount(notificationCount = 2);
 	}

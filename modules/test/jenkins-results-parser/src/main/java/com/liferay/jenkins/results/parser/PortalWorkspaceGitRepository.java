@@ -108,7 +108,7 @@ public class PortalWorkspaceGitRepository extends BaseWorkspaceGitRepository {
 		String upstreamBranchName = getUpstreamBranchName();
 
 		if (!upstreamBranchName.equals("master") &&
-			!upstreamBranchName.matches("7\\.\\d+\\.x")) {
+			!upstreamBranchName.matches("7\\.\\d+\\.x|release-.*")) {
 
 			return;
 		}

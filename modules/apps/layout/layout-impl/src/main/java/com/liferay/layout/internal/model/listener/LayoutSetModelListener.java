@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.servlet.filters.cache.CacheUtil;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -22,12 +23,38 @@ import org.osgi.service.component.annotations.Reference;
 public class LayoutSetModelListener extends BaseModelListener<LayoutSet> {
 
 	@Override
+	public void onAfterRemove(LayoutSet layoutSet) {
+		if (layoutSet == null) {
+			return;
+		}
+
+		clearCache(layoutSet);
+	}
+
+	@Override
+	public void onAfterUpdate(
+		LayoutSet originalLayoutSet, LayoutSet layoutSet) {
+
+		if (layoutSet == null) {
+			return;
+		}
+
+		clearCache(layoutSet);
+	}
+
+	@Override
 	public void onBeforeRemove(LayoutSet layoutSet)
 		throws ModelListenerException {
 
 		_clientExtensionEntryRelLocalService.deleteClientExtensionEntryRels(
 			_portal.getClassNameId(LayoutSet.class),
 			layoutSet.getLayoutSetId());
+	}
+
+	protected void clearCache(LayoutSet layoutSet) {
+		if (!layoutSet.isPrivateLayout()) {
+			CacheUtil.clearCache(layoutSet.getCompanyId());
+		}
 	}
 
 	@Reference

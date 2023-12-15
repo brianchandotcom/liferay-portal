@@ -15,19 +15,15 @@ import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContri
 
 import java.util.Locale;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Petteri Karttunen
  */
-@Component(
-	enabled = false,
-	property = "indexer.class.name=com.liferay.search.experiences.model.SXPBlueprint",
-	service = ModelSummaryContributor.class
-)
 public class SXPBlueprintModelSummaryContributor
 	implements ModelSummaryContributor {
+
+	public SXPBlueprintModelSummaryContributor(Localization localization) {
+		_localization = localization;
+	}
 
 	@Override
 	public Summary getSummary(
@@ -51,7 +47,6 @@ public class SXPBlueprintModelSummaryContributor
 			document.get(prefix + descriptionField, descriptionField));
 	}
 
-	@Reference
-	private Localization _localization;
+	private final Localization _localization;
 
 }

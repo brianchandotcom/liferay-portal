@@ -17,24 +17,25 @@ import com.liferay.portal.search.summary.SummaryHelper;
 
 import java.util.Locale;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Michael C. Han
  */
-@Component(
-	property = "indexer.class.name=com.liferay.calendar.model.CalendarBooking",
-	service = ModelSummaryContributor.class
-)
 public class CalendarBookingModelSummaryContributor
 	implements ModelSummaryContributor {
+
+	public CalendarBookingModelSummaryContributor(
+		SummaryHelper summaryHelper, HtmlParser htmlParser) {
+
+		_summaryHelper = summaryHelper;
+		_htmlParser = htmlParser;
+	}
 
 	@Override
 	public Summary getSummary(
 		Document document, Locale locale, String snippet) {
 
-		Locale snippetLocale = summaryHelper.getSnippetLocale(document, locale);
+		Locale snippetLocale = _summaryHelper.getSnippetLocale(
+			document, locale);
 
 		Locale defaultLocale = LocaleUtil.fromLanguageId(
 			document.get("defaultLanguageId"));
@@ -79,10 +80,7 @@ public class CalendarBookingModelSummaryContributor
 		return summary;
 	}
 
-	@Reference
-	protected SummaryHelper summaryHelper;
-
-	@Reference
-	private HtmlParser _htmlParser;
+	private final HtmlParser _htmlParser;
+	private final SummaryHelper _summaryHelper;
 
 }

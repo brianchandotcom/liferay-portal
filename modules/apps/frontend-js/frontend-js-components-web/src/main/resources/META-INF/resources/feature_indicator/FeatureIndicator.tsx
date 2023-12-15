@@ -15,48 +15,56 @@ import LearnMessage, {
 	LearnResourcesContext,
 } from '../learn_message/LearnMessage';
 
-export type DisplayType = 'beta' | 'info' | 'warning' | 'deprecated';
+export type Type = 'beta' | 'deprecated';
+
+type DisplayType = 'info' | 'warning';
+
+type featureIndicatorNoninteractiveProps = {
+	interactive?: false;
+	learnResourceContext?: any;
+};
+
+type featureIndicatorInteractiveProps = {
+	interactive: true;
+	learnResourceContext: any;
+};
+
+type featureIndicatorProps = (
+	| featureIndicatorNoninteractiveProps
+	| featureIndicatorInteractiveProps
+) & {
+	dark?: boolean;
+	tooltipAlign?: typeof ALIGN_POSITIONS[number];
+	type?: Type;
+};
 
 export default function FeatureIndicator({
 	dark,
 	interactive,
-	label = Liferay.Language.get('beta'),
-	learnMessageResourceKey = 'beta-features',
 	learnResourceContext,
-	popoverText = Liferay.Language.get('this-feature-is-in-testing'),
-	popoverTitle = Liferay.Language.get('beta-feature'),
-	symbol = 'info-panel-open',
 	tooltipAlign = 'top',
-	tooltipTitle = Liferay.Language.get('open-beta-definition'),
 	type = 'beta',
-}: {
-	dark?: boolean;
-	interactive?: boolean;
-	label?: string;
-	learnMessageResourceKey?: string;
-	learnResourceContext?: any;
-	popoverText?: string;
-	popoverTitle?: string;
-	symbol?: string;
-	tooltipAlign?: typeof ALIGN_POSITIONS[number];
-	tooltipTitle?: string;
-	type?: DisplayType;
-}) {
+}: featureIndicatorProps) {
 	const ariaControlsId = useId();
 
 	const [show, setShow] = useState(false);
 
-	if (type === 'beta') {
-		type = 'info';
-	}
-	else if (type === 'deprecated') {
+	let displayType: DisplayType = 'info';
+	let label = Liferay.Language.get('beta');
+	let learnMessageResourceKey = 'beta-features';
+	let popoverText = Liferay.Language.get('this-feature-is-in-testing');
+	let popoverTitle = Liferay.Language.get('beta-feature');
+	let symbol = 'info-panel-open';
+	let tooltipTitle = Liferay.Language.get('open-beta-definition');
+
+	if (type === 'deprecated') {
+		displayType = 'warning';
 		label = Liferay.Language.get('deprecated');
 		learnMessageResourceKey = 'deprecated-features';
 		popoverText = Liferay.Language.get('this-feature-is-deprecated');
 		popoverTitle = Liferay.Language.get('deprecated-feature');
 		symbol = 'warning-full';
 		tooltipTitle = Liferay.Language.get('open-deprecated-definition');
-		type = 'warning';
 	}
 
 	return (
@@ -78,7 +86,7 @@ export default function FeatureIndicator({
 								aria-haspopup="dialog"
 								dark={dark}
 								data-tooltip-align={tooltipAlign}
-								displayType={type}
+								displayType={displayType}
 								rounded
 								size="xs"
 								title={tooltipTitle}
@@ -107,7 +115,7 @@ export default function FeatureIndicator({
 				<ClayBadge
 					className="text-uppercase"
 					dark={dark}
-					displayType={type}
+					displayType={displayType}
 					label={label}
 					translucent
 				/>

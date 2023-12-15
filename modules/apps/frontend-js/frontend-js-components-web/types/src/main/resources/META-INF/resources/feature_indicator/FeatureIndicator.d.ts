@@ -6,29 +6,28 @@
 /// <reference types="react" />
 
 import {ALIGN_POSITIONS} from '@clayui/popover';
-export declare type DisplayType = 'beta' | 'info' | 'warning' | 'deprecated';
+export declare type Type = 'beta' | 'deprecated';
+declare type featureIndicatorNoninteractiveProps = {
+	interactive?: false;
+	learnResourceContext?: any;
+};
+declare type featureIndicatorInteractiveProps = {
+	interactive: true;
+	learnResourceContext: any;
+};
+declare type featureIndicatorProps = (
+	| featureIndicatorNoninteractiveProps
+	| featureIndicatorInteractiveProps
+) & {
+	dark?: boolean;
+	tooltipAlign?: typeof ALIGN_POSITIONS[number];
+	type?: Type;
+};
 export default function FeatureIndicator({
 	dark,
 	interactive,
-	label,
-	learnMessageResourceKey,
 	learnResourceContext,
-	popoverText,
-	popoverTitle,
-	symbol,
 	tooltipAlign,
-	tooltipTitle,
 	type,
-}: {
-	dark?: boolean;
-	interactive?: boolean;
-	label?: string;
-	learnMessageResourceKey?: string;
-	learnResourceContext?: any;
-	popoverText?: string;
-	popoverTitle?: string;
-	symbol?: string;
-	tooltipAlign?: typeof ALIGN_POSITIONS[number];
-	tooltipTitle?: string;
-	type?: DisplayType;
-}): JSX.Element;
+}: featureIndicatorProps): JSX.Element;
+export {};

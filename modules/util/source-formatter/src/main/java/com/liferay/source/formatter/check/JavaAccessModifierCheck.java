@@ -121,43 +121,44 @@ public class JavaAccessModifierCheck extends BaseFileCheck {
 
 			File file = new File(fileName);
 
-			if (file.exists()) {
-				fileName = StringUtil.replace(
-					fileName, CharPool.BACK_SLASH, CharPool.SLASH);
+			if (!file.exists()) {
+				continue;
+			}
 
-				BNDSettings bndSettings = getBNDSettings(fileName);
+			fileName = StringUtil.replace(
+				fileName, CharPool.BACK_SLASH, CharPool.SLASH);
 
-				if (bndSettings == null) {
-					continue;
+			BNDSettings bndSettings = getBNDSettings(fileName);
+
+			if (bndSettings == null) {
+				continue;
+			}
+
+			String bndSettingsContent = bndSettings.getContent();
+
+			if (!bndSettingsContent.contains(
+					"-dsannotations-options: inherit")) {
+
+				continue;
+			}
+
+			String content = FileUtil.read(file);
+
+			String superClassName = _getSuperClassNameWithPackageName(content);
+
+			if (superClassName != null) {
+				String className = JavaSourceUtil.getClassName(fileName);
+
+				List<String> subclassList = _componentJavaFileMap.get(
+					superClassName);
+
+				if (subclassList == null) {
+					subclassList = new ArrayList<>();
 				}
 
-				String bndSettingsContent = bndSettings.getContent();
+				subclassList.add(className);
 
-				if (!bndSettingsContent.contains(
-						"-dsannotations-options: inherit")) {
-
-					continue;
-				}
-
-				String content = FileUtil.read(file);
-
-				String superClassName = _getSuperClassNameWithPackageName(
-					content);
-
-				if (superClassName != null) {
-					String className = JavaSourceUtil.getClassName(fileName);
-
-					List<String> subclassList = _componentJavaFileMap.get(
-						superClassName);
-
-					if (subclassList == null) {
-						subclassList = new ArrayList<>();
-					}
-
-					subclassList.add(className);
-
-					_componentJavaFileMap.put(superClassName, subclassList);
-				}
+				_componentJavaFileMap.put(superClassName, subclassList);
 			}
 		}
 

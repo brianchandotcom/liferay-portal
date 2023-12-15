@@ -454,7 +454,7 @@ public class PortletCategoryManagerImpl implements PortletCategoryManager {
 		PortletManager portletManager = _serviceTrackerMap.getService(
 			portlet.getRootPortletId());
 
-		if ((portletManager != null) && !portletManager.isVisble(layout)) {
+		if ((portletManager != null) && !portletManager.isVisible(layout)) {
 			return false;
 		}
 

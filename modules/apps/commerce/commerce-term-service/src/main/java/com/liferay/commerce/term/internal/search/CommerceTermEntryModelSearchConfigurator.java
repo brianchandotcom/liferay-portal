@@ -6,6 +6,7 @@
 package com.liferay.commerce.term.internal.search;
 
 import com.liferay.commerce.term.internal.search.spi.model.index.contributor.CommerceTermEntryModelIndexerWriterContributor;
+import com.liferay.commerce.term.internal.search.spi.model.result.contributor.CommerceTermEntryModelSummaryContributor;
 import com.liferay.commerce.term.model.CommerceTermEntry;
 import com.liferay.commerce.term.service.CommerceTermEntryLocalService;
 import com.liferay.portal.kernel.search.Field;
@@ -62,6 +63,9 @@ public class CommerceTermEntryModelSearchConfigurator
 			new CommerceTermEntryModelIndexerWriterContributor(
 				_commerceTermEntryLocalService,
 				_dynamicQueryBatchIndexingActionableFactory);
+
+		_modelSummaryContributor =
+			new CommerceTermEntryModelSummaryContributor();
 	}
 
 	@Reference
@@ -73,10 +77,6 @@ public class CommerceTermEntryModelSearchConfigurator
 
 	private ModelIndexerWriterContributor<CommerceTermEntry>
 		_modelIndexWriterContributor;
-
-	@Reference(
-		target = "(indexer.class.name=com.liferay.commerce.term.model.CommerceTermEntry)"
-	)
 	private ModelSummaryContributor _modelSummaryContributor;
 
 	@Reference(

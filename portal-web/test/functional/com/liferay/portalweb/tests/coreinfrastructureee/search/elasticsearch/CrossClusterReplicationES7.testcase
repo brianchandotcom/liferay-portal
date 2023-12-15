@@ -669,4 +669,103 @@ definition {
 		SearchResults.viewSearchResultNotPresent(searchTerm = "DM");
 	}
 
+	@priority = 5
+	test SmokeWithPortalClusteringEnabled {
+		property app.server.bundles.size = "1";
+		property cluster.enabled = "true";
+		property osgi.module.configuration.file.names = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config";
+		property osgi.module.configurations = "blacklistBundleSymbolicNames=\"com.liferay.portal.search.tuning.rankings.web\"";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		JSONDocument.addFile(
+			dmDocumentDescription = "DM Description",
+			dmDocumentTitle = "DM Title 1",
+			groupName = "Guest");
+
+		CrossClusterReplication.setupCrossClusterReplication();
+
+		SearchAdministration.openSearchAdmin();
+
+		AssertTextEquals(
+			locator1 = "Portlet#HEADER",
+			value1 = "Search");
+
+		AssertTextEquals.assertPartialText(
+			key_connectionId = "__REMOTE__",
+			locator1 = "SearchAdmin#CLUSTER_NAME",
+			value1 = "LiferayElasticsearchCluster");
+
+		AssertTextEquals.assertPartialText(
+			key_connectionId = "localcluster",
+			locator1 = "SearchAdmin#CLUSTER_NAME",
+			value1 = "LiferayElasticsearchClusterTwo");
+
+		Navigator.openURL();
+
+		SearchPage.searchEmbedded(searchTerm = "DM");
+
+		SearchResults.viewSearchResults(
+			searchAssetTitle = "DM Title 1",
+			searchAssetType = "Document");
+
+		AntCommands.runCommand("build-test-elasticsearch7.xml", "stop-elasticsearch -Delasticsearch.bundle.number=1");
+
+		SearchAdministration.openSearchAdmin();
+
+		AssertTextEquals(
+			locator1 = "Portlet#HEADER",
+			value1 = "Search");
+
+		AssertTextEquals.assertPartialText(
+			key_connectionId = "localcluster",
+			locator1 = "SearchAdmin#CLUSTER_NAME",
+			value1 = "LiferayElasticsearchClusterTwo");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#ERROR",
+			value1 = "Connection refused");
+
+		AssertElementNotPresent(
+			key_connectionId = "__REMOTE__",
+			locator1 = "SearchAdmin#CLUSTER_NAME");
+
+		Navigator.openURL();
+
+		SearchPage.searchEmbedded(searchTerm = "DM");
+
+		SearchResults.viewSearchResults(
+			searchAssetTitle = "DM Title 1",
+			searchAssetType = "Document");
+
+		AntCommands.runCommand("build-test-elasticsearch7.xml", "start-elasticsearch-node -Delasticsearch.bundle.number=1");
+
+		AntCommands.runCommand("build-test-elasticsearch7.xml", "stop-elasticsearch -Delasticsearch.bundle.number=2");
+
+		SearchAdministration.openSearchAdmin();
+
+		AssertTextEquals(
+			locator1 = "Portlet#HEADER",
+			value1 = "Search");
+
+		AssertTextEquals.assertPartialText(
+			key_connectionId = "__REMOTE__",
+			locator1 = "SearchAdmin#CLUSTER_NAME",
+			value1 = "LiferayElasticsearchCluster");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#ERROR",
+			value1 = "Connection refused");
+
+		AssertElementNotPresent(
+			key_connectionId = "localcluster",
+			locator1 = "SearchAdmin#CLUSTER_NAME");
+
+		Navigator.openURL();
+
+		SearchPage.searchEmbedded(searchTerm = "DM");
+
+		SearchResults.viewSearchResultNotPresent(searchTerm = "DM");
+	}
+
 }

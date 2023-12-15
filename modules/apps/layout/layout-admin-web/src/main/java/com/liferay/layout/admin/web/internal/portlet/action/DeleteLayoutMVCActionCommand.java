@@ -6,6 +6,7 @@
 package com.liferay.layout.admin.web.internal.portlet.action;
 
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
+import com.liferay.layout.admin.web.internal.handler.LayoutExceptionRequestHandlerUtil;
 import com.liferay.portal.events.EventsProcessorUtil;
 import com.liferay.portal.kernel.exception.GroupInheritContentException;
 import com.liferay.portal.kernel.exception.RequiredLayoutException;
@@ -162,7 +163,10 @@ public class DeleteLayoutMVCActionCommand extends BaseMVCActionCommand {
 				SessionErrors.add(actionRequest, throwable.getClass());
 			}
 			else {
-				throw exception;
+				hideDefaultErrorMessage(actionRequest);
+
+				LayoutExceptionRequestHandlerUtil.handleException(
+					actionRequest, actionResponse, exception);
 			}
 		}
 	}

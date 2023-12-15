@@ -14,8 +14,12 @@ export default function ({namespace}) {
 		`${namespace}canonicalURLEnabled`
 	);
 
+	const includeSitemapField = document.getElementById(
+		`${namespace}sitemap-include`
+	);
+
 	const sitemapFields = [
-		document.getElementById(`${namespace}sitemap-include`),
+		includeSitemapField,
 		document.getElementById(`${namespace}sitemap-priority`),
 		document.getElementById(`${namespace}sitemap-changefreq`),
 	].filter((field) => !field.disabled);

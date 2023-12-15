@@ -97,7 +97,7 @@ public class DisplayPageDisplayContext {
 		if (!FeatureFlagManagerUtil.isEnabled("LPS-189856")) {
 			SearchContainer<LayoutPageTemplateEntry>
 				displayPagesSearchContainer = new SearchContainer<>(
-				_liferayPortletRequest, getPortletURL(), null,
+					_liferayPortletRequest, getPortletURL(), null,
 					"there-are-no-display-page-templates");
 
 			displayPagesSearchContainer.setOrderByCol(getOrderByCol());
@@ -624,11 +624,11 @@ public class DisplayPageDisplayContext {
 	private String _keywords;
 	private Long _layoutPageTemplateCollectionId;
 	private Long _layoutPageTemplateEntryId;
+	private final LiferayPortletRequest _liferayPortletRequest;
+	private final LiferayPortletResponse _liferayPortletResponse;
 	private JSONArray _mappingTypesJSONArray;
 	private String _orderByCol;
 	private String _orderByType;
-	private final LiferayPortletRequest _liferayPortletRequest;
-	private final LiferayPortletResponse _liferayPortletResponse;
 	private final ThemeDisplay _themeDisplay;
 
 }

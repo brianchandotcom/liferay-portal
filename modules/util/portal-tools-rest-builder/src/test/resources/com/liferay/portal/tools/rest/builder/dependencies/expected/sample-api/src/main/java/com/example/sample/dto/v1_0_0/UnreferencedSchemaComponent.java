@@ -26,6 +26,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -55,35 +56,54 @@ public class UnreferencedSchemaComponent implements Serializable {
 
 	@Schema
 	public String getDescription() {
+		if (_descriptionSupplier != null) {
+			description = _descriptionSupplier.get();
+
+			_descriptionSupplier = null;
+		}
+
 		return description;
 	}
 
 	public void setDescription(String description) {
 		this.description = description;
+
+		_descriptionSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDescription(
 		UnsafeSupplier<String, Exception> descriptionUnsafeSupplier) {
 
-		try {
-			description = descriptionUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_descriptionSupplier = () -> {
+			try {
+				return descriptionUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
+	private Supplier<String> _descriptionSupplier;
+
 	@Schema
 	@Valid
 	public ExternalReferenceElement2[] getExternalReferenceElement2s() {
+		if (_externalReferenceElement2sSupplier != null) {
+			externalReferenceElement2s =
+				_externalReferenceElement2sSupplier.get();
+
+			_externalReferenceElement2sSupplier = null;
+		}
+
 		return externalReferenceElement2s;
 	}
 
@@ -91,6 +111,8 @@ public class UnreferencedSchemaComponent implements Serializable {
 		ExternalReferenceElement2[] externalReferenceElement2s) {
 
 		this.externalReferenceElement2s = externalReferenceElement2s;
+
+		_externalReferenceElement2sSupplier = null;
 	}
 
 	@JsonIgnore
@@ -98,47 +120,63 @@ public class UnreferencedSchemaComponent implements Serializable {
 		UnsafeSupplier<ExternalReferenceElement2[], Exception>
 			externalReferenceElement2sUnsafeSupplier) {
 
-		try {
-			externalReferenceElement2s =
-				externalReferenceElement2sUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_externalReferenceElement2sSupplier = () -> {
+			try {
+				return externalReferenceElement2sUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ExternalReferenceElement2[] externalReferenceElement2s;
 
+	private Supplier<ExternalReferenceElement2[]>
+		_externalReferenceElement2sSupplier;
+
 	@Schema
 	public Long getId() {
+		if (_idSupplier != null) {
+			id = _idSupplier.get();
+
+			_idSupplier = null;
+		}
+
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
+
+		_idSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_idSupplier = () -> {
+			try {
+				return idUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
+
+	private Supplier<Long> _idSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -169,6 +207,8 @@ public class UnreferencedSchemaComponent implements Serializable {
 
 		sb.append("{");
 
+		String description = getDescription();
+
 		if (description != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -182,6 +222,9 @@ public class UnreferencedSchemaComponent implements Serializable {
 
 			sb.append("\"");
 		}
+
+		ExternalReferenceElement2[] externalReferenceElement2s =
+			getExternalReferenceElement2s();
 
 		if (externalReferenceElement2s != null) {
 			if (sb.length() > 1) {
@@ -202,6 +245,8 @@ public class UnreferencedSchemaComponent implements Serializable {
 
 			sb.append("]");
 		}
+
+		Long id = getId();
 
 		if (id != null) {
 			if (sb.length() > 1) {

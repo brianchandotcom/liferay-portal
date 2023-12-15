@@ -27,6 +27,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -58,67 +59,99 @@ public class TestJSONMapAttribute implements Serializable {
 
 	@Schema
 	public String getDescription() {
+		if (_descriptionSupplier != null) {
+			description = _descriptionSupplier.get();
+
+			_descriptionSupplier = null;
+		}
+
 		return description;
 	}
 
 	public void setDescription(String description) {
 		this.description = description;
+
+		_descriptionSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDescription(
 		UnsafeSupplier<String, Exception> descriptionUnsafeSupplier) {
 
-		try {
-			description = descriptionUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_descriptionSupplier = () -> {
+			try {
+				return descriptionUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
+	private Supplier<String> _descriptionSupplier;
+
 	@Schema
 	public String getName() {
+		if (_nameSupplier != null) {
+			name = _nameSupplier.get();
+
+			_nameSupplier = null;
+		}
+
 		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
+
+		_nameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
-		try {
-			name = nameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_nameSupplier = () -> {
+			try {
+				return nameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	private Supplier<String> _nameSupplier;
+
 	@JsonAnyGetter
 	@Schema
 	@Valid
 	public Map<String, Object> getProperties1() {
+		if (_properties1Supplier != null) {
+			properties1 = _properties1Supplier.get();
+
+			_properties1Supplier = null;
+		}
+
 		return properties1;
 	}
 
 	public void setProperties1(Map<String, Object> properties1) {
 		this.properties1 = properties1;
+
+		_properties1Supplier = null;
 	}
 
 	@JsonIgnore
@@ -126,15 +159,17 @@ public class TestJSONMapAttribute implements Serializable {
 		UnsafeSupplier<Map<String, Object>, Exception>
 			properties1UnsafeSupplier) {
 
-		try {
-			properties1 = properties1UnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_properties1Supplier = () -> {
+			try {
+				return properties1UnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
@@ -142,15 +177,25 @@ public class TestJSONMapAttribute implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, Object> properties1 = new HashMap<>();
 
+	private Supplier<Map<String, Object>> _properties1Supplier;
+
 	@JsonAnyGetter
 	@Schema
 	@Valid
 	public Map<String, Object> getProperties2() {
+		if (_properties2Supplier != null) {
+			properties2 = _properties2Supplier.get();
+
+			_properties2Supplier = null;
+		}
+
 		return properties2;
 	}
 
 	public void setProperties2(Map<String, Object> properties2) {
 		this.properties2 = properties2;
+
+		_properties2Supplier = null;
 	}
 
 	@JsonIgnore
@@ -158,21 +203,25 @@ public class TestJSONMapAttribute implements Serializable {
 		UnsafeSupplier<Map<String, Object>, Exception>
 			properties2UnsafeSupplier) {
 
-		try {
-			properties2 = properties2UnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_properties2Supplier = () -> {
+			try {
+				return properties2UnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonAnySetter
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, Object> properties2 = new HashMap<>();
+
+	private Supplier<Map<String, Object>> _properties2Supplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -192,16 +241,23 @@ public class TestJSONMapAttribute implements Serializable {
 
 	public Object getPropertyValue(String propertyName) {
 		if (Objects.equals(propertyName, "description")) {
-			return description;
+			return getDescription();
 		}
 		else if (Objects.equals(propertyName, "name")) {
-			return name;
+			return getName();
 		}
-		else if (properties1.containsKey(propertyName)) {
-			return properties1.get(propertyName);
-		}
-		else if (properties2.containsKey(propertyName)) {
-			return properties2.get(propertyName);
+		else {
+			Map<String, Object> properties1 = getProperties1();
+
+			if (properties1.containsKey(propertyName)) {
+				return properties1.get(propertyName);
+			}
+
+			Map<String, Object> properties2 = getProperties2();
+
+			if (properties2.containsKey(propertyName)) {
+				return properties2.get(propertyName);
+			}
 		}
 
 		return null;
@@ -219,6 +275,8 @@ public class TestJSONMapAttribute implements Serializable {
 
 		sb.append("{");
 
+		String description = getDescription();
+
 		if (description != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -232,6 +290,8 @@ public class TestJSONMapAttribute implements Serializable {
 
 			sb.append("\"");
 		}
+
+		String name = getName();
 
 		if (name != null) {
 			if (sb.length() > 1) {
@@ -247,6 +307,8 @@ public class TestJSONMapAttribute implements Serializable {
 			sb.append("\"");
 		}
 
+		Map<String, Object> properties1 = getProperties1();
+
 		if (properties1 != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -256,6 +318,8 @@ public class TestJSONMapAttribute implements Serializable {
 
 			sb.append(_toJSON(properties1));
 		}
+
+		Map<String, Object> properties2 = getProperties2();
 
 		if (properties2 != null) {
 			if (sb.length() > 1) {

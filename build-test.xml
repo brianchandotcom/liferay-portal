@@ -1400,6 +1400,41 @@ jdbc.default.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 		</sequential>
 	</macrodef>
 
+	<macrodef name="get-playwright-docker-image">
+		<sequential>
+			<local name="playwright.docker.image.default" />
+
+			<if>
+				<isset property="playwright.docker.image" />
+				<then>
+					<propertycopy from="playwright.docker.image" name="playwright.docker.image.default" />
+
+					<var name="playwright.docker.image" unset="true" />
+				</then>
+			</if>
+
+			<propertycopy from="playwright.docker.image[${playwright.version}]" name="playwright.docker.image" silent="true" />
+
+			<if>
+				<not>
+					<isset property="playwright.docker.image" />
+				</not>
+				<then>
+					<propertycopy from="playwright.docker.image.default" name="playwright.docker.image" />
+				</then>
+			</if>
+
+			<if>
+				<not>
+					<isset property="playwright.docker.image" />
+				</not>
+				<then>
+					<fail>Unable to get playwright.docker.image property for Playwright ${playwright.version}</fail>
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="get-poshi-class-name">
 		<sequential>
 			<fail message="Please set the property ${test.class}." unless="test.class" />
@@ -7690,6 +7725,8 @@ ${docker.start.error}</fail>
 			<condition else="" property="env.portal.url.arg" value="--env=PORTAL_URL=http://${env.HOSTNAME}:8080">
 				<isset property="env.HOSTNAME" />
 			</condition>
+
+			<get-playwright-docker-image />
 
 			<start-docker-container image="${playwright.docker.image}" name="${playwright.docker.host}">\
 				${docker.add.host.hostname.arg} \

@@ -9,7 +9,7 @@ import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import {sub} from 'frontend-js-web';
-import React, {Ref, useEffect, useMemo, useState} from 'react';
+import React, {Ref, useEffect, useMemo, useRef, useState} from 'react';
 
 import useId from '../hooks/useId';
 import {Locale, Translations} from './TranslationAdminContent';
@@ -128,6 +128,7 @@ export default function TranslationAdminSelector({
 	const [translationModalVisible, setTranslationModalVisible] = useState(
 		false
 	);
+	const triggerRef = useRef<HTMLButtonElement | null>(null);
 
 	const handleCloseTranslationModal = (
 		activeLanguageIds: Liferay.Language.Locale[]
@@ -225,6 +226,9 @@ export default function TranslationAdminSelector({
 				trigger={
 					<TriggerButton
 						displayType={displayType}
+						ref={(node) => {
+							triggerRef.current = node;
+						}}
 						selectedItem={selectedLocale}
 						small={small}
 					/>
@@ -241,6 +245,8 @@ export default function TranslationAdminSelector({
 								onClick={() => {
 									setSelectedLanguageId(activeLocale.id);
 									setSelectorDropdownActive(false);
+
+									triggerRef.current?.focus();
 								}}
 								symbolLeft={active ? 'check-small' : undefined}
 							>

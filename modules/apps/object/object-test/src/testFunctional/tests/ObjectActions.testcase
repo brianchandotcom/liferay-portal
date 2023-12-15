@@ -1112,18 +1112,6 @@ definition {
 				actionActive = "Yes",
 				actionLabel = "Action Label",
 				status = "Success");
-
-			// Workaround for LPS-193383
-
-			CommerceOrders.openOrdersAdmin();
-
-			Click.clickNoMouseOverNoWaitForVisible(locator1 = "CommerceNavigation#SELECT_ALL_CHECKBOX");
-
-			ClickNoError(locator1 = "Button#TRASH_ENABLED");
-
-			AssertConfirm.assertPartialConfirmation(value1 = "Are you sure you want to delete all selected orders?");
-
-			CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
 		}
 	}
 

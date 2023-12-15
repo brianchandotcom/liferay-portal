@@ -13,15 +13,9 @@ import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContri
 
 import java.util.Locale;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Drew Brokke
  */
-@Component(
-	property = "indexer.class.name=com.liferay.account.model.AccountGroup",
-	service = ModelSummaryContributor.class
-)
 public class AccountGroupModelSummaryContributor
 	implements ModelSummaryContributor {
 

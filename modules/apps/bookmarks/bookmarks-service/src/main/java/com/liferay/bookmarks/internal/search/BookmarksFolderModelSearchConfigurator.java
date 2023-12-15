@@ -6,6 +6,7 @@
 package com.liferay.bookmarks.internal.search;
 
 import com.liferay.bookmarks.internal.search.spi.model.index.contributor.BookmarksFolderModelIndexerWriterContributor;
+import com.liferay.bookmarks.internal.search.spi.model.result.contributor.BookmarksFolderModelSummaryContributor;
 import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.service.BookmarksFolderLocalService;
 import com.liferay.portal.kernel.search.Field;
@@ -56,6 +57,8 @@ public class BookmarksFolderModelSearchConfigurator
 			new BookmarksFolderModelIndexerWriterContributor(
 				_bookmarksFolderLocalService,
 				_dynamicQueryBatchIndexingActionableFactory);
+
+		_modelSummaryContributor = new BookmarksFolderModelSummaryContributor();
 	}
 
 	@Reference
@@ -67,10 +70,6 @@ public class BookmarksFolderModelSearchConfigurator
 
 	private ModelIndexerWriterContributor<BookmarksFolder>
 		_modelIndexWriterContributor;
-
-	@Reference(
-		target = "(indexer.class.name=com.liferay.bookmarks.model.BookmarksFolder)"
-	)
 	private ModelSummaryContributor _modelSummaryContributor;
 
 }

@@ -46,6 +46,10 @@ public class LayoutSetModelListener extends BaseModelListener<LayoutSet> {
 	public void onBeforeRemove(LayoutSet layoutSet)
 		throws ModelListenerException {
 
+		if (layoutSet == null) {
+			return;
+		}
+
 		_clientExtensionEntryRelLocalService.deleteClientExtensionEntryRels(
 			_portal.getClassNameId(LayoutSet.class),
 			layoutSet.getLayoutSetId());

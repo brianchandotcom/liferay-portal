@@ -16,7 +16,7 @@ import {
 	TAction,
 	TState,
 } from '../types';
-import {updateURLParam} from '../utils';
+import {getObjectFolderDiagramCenter, updateURLParam} from '../utils';
 import {
 	convertAllObjectFieldsToUnselected,
 	getNonOverlappingEdges,
@@ -29,15 +29,17 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 		case TYPES.ADD_OBJECT_DEFINITION_TO_OBJECT_FOLDER: {
 			const {
 				dbTableName,
+				elements,
+				leftSidebarItems,
 				newObjectDefinition,
-				objectDefinitionNodes,
-				selectedObjectFolderName,
+				objectFolders,
+				selectedObjectFolder,
 			} = action.payload;
-			const {elements, leftSidebarItems} = state;
-			let newPosition = {
-				x: 2 * 300,
-				y: 2 * 400,
-			};
+
+			const objectDefinitionNodes = elements.filter((element) =>
+				isNode(element)
+			) as Node<ObjectDefinitionNodeData>[];
+			let newPosition = getObjectFolderDiagramCenter();
 
 			if (objectDefinitionNodes.length) {
 				const yPositions = objectDefinitionNodes.map(
@@ -57,7 +59,7 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 						objectDefinitionNode.position.x === maximumX
 				)!.position;
 				newPosition = {
-					x: mostBottomRightNodePosition!.x + 300,
+					x: mostBottomRightNodePosition!.x + 380,
 					y: mostBottomRightNodePosition!.y,
 				};
 			}
@@ -68,7 +70,7 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 
 					if (
 						leftSidebarItem.objectFolderName ===
-						selectedObjectFolderName
+						selectedObjectFolder.name
 					) {
 						newLeftSidebarObjectDefinitionItem = {
 							id: newObjectDefinition.id,
@@ -110,6 +112,7 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 					}
 				}
 			) as LeftSidebarItem[];
+
 			const objectFields = newObjectDefinition.objectFields.map(
 				(objectField) => {
 					return {
@@ -125,17 +128,35 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 					} as ObjectFieldNodeRow;
 				}
 			);
-			const updatedObjectDefinitionsNodes = elements.map((node) => {
+
+			selectedObjectFolder.objectFolderItems.push({
+				linkedObjectDefinition:
+					selectedObjectFolder.externalReferenceCode !==
+					newObjectDefinition.objectFolderExternalReferenceCode,
+				objectDefinitionExternalReferenceCode:
+					newObjectDefinition.externalReferenceCode,
+				positionX: newPosition.x,
+				positionY: newPosition.y,
+			});
+
+			const updatedObjectFolders = objectFolders.filter(
+				(objectFolder) => {
+					objectFolder.externalReferenceCode !==
+						selectedObjectFolder.externalReferenceCode;
+				}
+			);
+
+			updatedObjectFolders.push(selectedObjectFolder);
+
+			const updatedElements = elements.map((element) => {
 				return {
-					...node,
+					...element,
 					data: {
-						...node.data,
+						...element.data,
 						selected: false,
 					},
 				};
 			});
-
-			let newObjectDefinitionNodes = [];
 
 			const newObjectDefinitionNode = {
 				data: {
@@ -158,16 +179,15 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 				type: 'objectDefinitionNode',
 			} as Node<ObjectDefinitionNodeData>;
 
-			newObjectDefinitionNodes = [
-				...updatedObjectDefinitionsNodes,
-				newObjectDefinitionNode,
-			] as Node<ObjectDefinitionNodeData>[];
-
 			return {
 				...state,
-				elements: [...newObjectDefinitionNodes],
+				elements: [...updatedElements, newObjectDefinitionNode] as Node<
+					ObjectDefinitionNodeData | ObjectRelationshipEdgeData
+				>[],
 				leftSidebarItems: newLeftSidebarItems,
+				objectFolders: updatedObjectFolders,
 				selectedObjectDefinitionNode: newObjectDefinitionNode,
+				selectedObjectFolder,
 				showChangesSaved: true,
 			};
 		}
@@ -552,7 +572,7 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 						} = objectFolderItem as ObjectFolderItem;
 
 						if (positionX === 0 && positionY === 0) {
-							positionX = positionColumn.positionX * 380 + 50;
+							positionX = positionColumn.positionX * 380 + 360;
 							positionY = positionColumn.positionY * 450 + 100;
 
 							positionColumn.positionX++;

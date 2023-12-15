@@ -34,6 +34,10 @@ public class GitWorkingDirectoryFactory {
 				gitRepositoryName += "-ee";
 
 				gitRepositoryDirName = "liferay-portal-" + upstreamBranchName;
+
+				if (upstreamBranchName.contains("release")) {
+					gitRepositoryDirName = "liferay-portal-ee";
+				}
 			}
 
 			if (gitRepositoryName.startsWith("com-liferay-") &&

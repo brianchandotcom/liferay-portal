@@ -2669,6 +2669,9 @@ definition {
 	@priority = 3
 	test TaskReassignedToMultipleUsers {
 		task ("Given a primary user who creates a secondary Power user with a membership") {
+			property test.liferay.virtual.instance = "false";
+			property test.run.type = "single";
+
 			Site.openSiteSettingsAdmin(siteURLKey = "guest");
 
 			Site.manageMembershipOptions(allowManualMembershipManagement = "true");

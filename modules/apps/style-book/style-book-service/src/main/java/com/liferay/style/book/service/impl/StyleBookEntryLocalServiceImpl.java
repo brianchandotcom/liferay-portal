@@ -49,19 +49,9 @@ public class StyleBookEntryLocalServiceImpl
 
 	@Override
 	public StyleBookEntry addStyleBookEntry(
-			long userId, long groupId, String name, String styleBookEntryKey,
+			long userId, long groupId, boolean defaultStyleBookEntry,
+			String frontendTokensValues, String name, String styleBookEntryKey,
 			ServiceContext serviceContext)
-		throws PortalException {
-
-		return addStyleBookEntry(
-			userId, groupId, StringPool.BLANK, name, styleBookEntryKey,
-			serviceContext);
-	}
-
-	@Override
-	public StyleBookEntry addStyleBookEntry(
-			long userId, long groupId, String frontendTokensValues, String name,
-			String styleBookEntryKey, ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = _userLocalService.getUser(userId);
@@ -99,12 +89,34 @@ public class StyleBookEntryLocalServiceImpl
 		styleBookEntry.setUserId(user.getUserId());
 		styleBookEntry.setUserName(user.getFullName());
 		styleBookEntry.setCreateDate(serviceContext.getCreateDate(new Date()));
-		styleBookEntry.setDefaultStyleBookEntry(false);
+		styleBookEntry.setDefaultStyleBookEntry(defaultStyleBookEntry);
 		styleBookEntry.setFrontendTokensValues(frontendTokensValues);
 		styleBookEntry.setName(name);
 		styleBookEntry.setStyleBookEntryKey(styleBookEntryKey);
 
 		return publishDraft(styleBookEntry);
+	}
+
+	@Override
+	public StyleBookEntry addStyleBookEntry(
+			long userId, long groupId, String name, String styleBookEntryKey,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return addStyleBookEntry(
+			userId, groupId, StringPool.BLANK, name, styleBookEntryKey,
+			serviceContext);
+	}
+
+	@Override
+	public StyleBookEntry addStyleBookEntry(
+			long userId, long groupId, String frontendTokensValues, String name,
+			String styleBookEntryKey, ServiceContext serviceContext)
+		throws PortalException {
+
+		return addStyleBookEntry(
+			userId, groupId, false, frontendTokensValues, name,
+			styleBookEntryKey, serviceContext);
 	}
 
 	@Override

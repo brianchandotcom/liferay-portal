@@ -87,6 +87,7 @@ definition {
 				title = "My-app");
 
 			APIBuilderUI.createAPIEndpoint(
+				addByPlus = "true",
 				method = "GET",
 				path = "testendpoint2",
 				retrieveType = "Collection",

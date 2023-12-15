@@ -6,9 +6,11 @@
 package com.liferay.blogs.internal.search;
 
 import com.liferay.blogs.internal.search.spi.model.index.contributor.BlogsEntryModelIndexerWriterContributor;
+import com.liferay.blogs.internal.search.spi.model.result.contributor.BlogsEntryModelSummaryContributor;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
@@ -68,6 +70,9 @@ public class BlogsEntryModelSearchConfigurator
 			new BlogsEntryModelIndexerWriterContributor(
 				_blogsEntryLocalService,
 				_dynamicQueryBatchIndexingActionableFactory);
+
+		_modelSummaryContributor = new BlogsEntryModelSummaryContributor(
+			_localization);
 	}
 
 	@Reference
@@ -77,12 +82,11 @@ public class BlogsEntryModelSearchConfigurator
 	private DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;
 
+	@Reference
+	private Localization _localization;
+
 	private ModelIndexerWriterContributor<BlogsEntry>
 		_modelIndexWriterContributor;
-
-	@Reference(
-		target = "(indexer.class.name=com.liferay.blogs.model.BlogsEntry)"
-	)
 	private ModelSummaryContributor _modelSummaryContributor;
 
 	@Reference(

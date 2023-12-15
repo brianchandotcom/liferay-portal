@@ -15,19 +15,16 @@ import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContri
 
 import java.util.Locale;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Igor Fabiano Nazar
  * @author Luan Maoski
  */
-@Component(
-	property = "indexer.class.name=com.liferay.blogs.model.BlogsEntry",
-	service = ModelSummaryContributor.class
-)
 public class BlogsEntryModelSummaryContributor
 	implements ModelSummaryContributor {
+
+	public BlogsEntryModelSummaryContributor(Localization localization) {
+		_localization = localization;
+	}
 
 	@Override
 	public Summary getSummary(
@@ -54,7 +51,6 @@ public class BlogsEntryModelSummaryContributor
 		return summary;
 	}
 
-	@Reference
-	private Localization _localization;
+	private final Localization _localization;
 
 }

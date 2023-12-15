@@ -7,6 +7,7 @@ package com.liferay.commerce.product.internal.search;
 
 import com.liferay.commerce.product.constants.CPField;
 import com.liferay.commerce.product.internal.search.spi.model.index.contributor.CPInstanceModelIndexerWriterContributor;
+import com.liferay.commerce.product.internal.search.spi.model.result.contributor.CPInstanceModelSummaryContributor;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.portal.kernel.search.Field;
@@ -63,6 +64,8 @@ public class CPInstanceModelSearchConfigurator
 			new CPInstanceModelIndexerWriterContributor(
 				_cpInstanceLocalService,
 				_dynamicQueryBatchIndexingActionableFactory);
+
+		_modelSummaryContributor = new CPInstanceModelSummaryContributor();
 	}
 
 	@Reference
@@ -74,10 +77,6 @@ public class CPInstanceModelSearchConfigurator
 
 	private ModelIndexerWriterContributor<CPInstance>
 		_modelIndexWriterContributor;
-
-	@Reference(
-		target = "(indexer.class.name=com.liferay.commerce.product.model.CPInstance)"
-	)
 	private ModelSummaryContributor _modelSummaryContributor;
 
 }

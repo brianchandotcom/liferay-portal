@@ -13,15 +13,9 @@ import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContri
 
 import java.util.Locale;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Mahmoud Azzam
  */
-@Component(
-	property = "indexer.class.name=com.liferay.commerce.product.model.CPTaxCategory",
-	service = ModelSummaryContributor.class
-)
 public class CPTaxCategoryModelSummaryContributor
 	implements ModelSummaryContributor {
 

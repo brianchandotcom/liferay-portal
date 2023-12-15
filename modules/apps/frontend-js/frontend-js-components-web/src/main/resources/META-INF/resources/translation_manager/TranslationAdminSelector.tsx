@@ -85,7 +85,7 @@ const TriggerButton = React.forwardRef(
 				displayType="secondary"
 				monospaced
 				ref={ref}
-				small={small}
+				size={small ? 'sm' : undefined}
 				title={Liferay.Language.get('select-language')}
 			>
 				<span className="inline-item">

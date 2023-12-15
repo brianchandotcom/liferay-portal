@@ -108,7 +108,7 @@ public class JavaAccessModifierCheck extends BaseFileCheck {
 			if (file.exists()) {
 				lines = SourceFormatterUtil.matchFileContents(
 					Arrays.asList("--untracked", "-E", "-l", "@Component"),
-					getBaseDirName(), new String[] {"**/*.java"});
+					file.getCanonicalPath(), new String[] {"**/*.java"});
 			}
 
 			moduleRootDirLocation = "../" + moduleRootDirLocation;

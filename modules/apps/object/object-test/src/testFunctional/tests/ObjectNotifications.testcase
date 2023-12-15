@@ -363,7 +363,9 @@ definition {
 		}
 
 		task ("Then the attachment shouldn't be present in the notification template") {
-			AssertElementNotPresent(locator1 = "ObjectNotifications#FIELD_ATTACHMENTS_OBJECT");
+			AssertElementPresent(
+				key_placeHolder = "Select a Field",
+				locator1 = "TextInput#ANY_PLACEHOLDER");
 		}
 	}
 

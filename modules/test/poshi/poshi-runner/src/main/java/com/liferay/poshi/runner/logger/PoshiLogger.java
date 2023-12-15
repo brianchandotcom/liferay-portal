@@ -266,7 +266,7 @@ public class PoshiLogger {
 			classCommandName, namespace);
 
 		if (commandElement instanceof PoshiElement) {
-				return new PoshiScriptSyntaxLogger(namespacedClassCommandName);
+			return new PoshiScriptSyntaxLogger(namespacedClassCommandName);
 		}
 
 		return new XMLSyntaxLogger(namespacedClassCommandName);

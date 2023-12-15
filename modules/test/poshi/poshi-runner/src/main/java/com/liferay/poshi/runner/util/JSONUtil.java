@@ -162,7 +162,8 @@ public class JSONUtil {
 
 		Configuration configuration = Configuration.defaultConfiguration();
 
-		configuration.addOptions(Option.DEFAULT_PATH_LEAF_TO_NULL);
+		configuration = configuration.addOptions(
+			Option.DEFAULT_PATH_LEAF_TO_NULL);
 
 		ParseContext parseContext = JsonPath.using(configuration);
 

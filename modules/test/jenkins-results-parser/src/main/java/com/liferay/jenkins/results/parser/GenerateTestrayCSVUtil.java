@@ -102,49 +102,51 @@ public class GenerateTestrayCSVUtil {
 				"/case_results.json?cur=", String.valueOf(currentPage),
 				"&testrayBuildId=", projectTestrayBuildId, "&statuses=3");
 
+			JSONObject jsonObject = null;
+
 			try {
-				JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
+				jsonObject = JenkinsResultsParserUtil.toJSONObject(
 					testrayCaseResultsURL);
-
-				JSONArray resultsJSONArray = jsonObject.optJSONArray("data");
-
-				if ((resultsJSONArray == null) ||
-					(resultsJSONArray.length() == 0)) {
-
-					break;
-				}
-
-				JSONObject resultJSONObject = resultsJSONArray.getJSONObject(0);
-
-				long currentTestrayCaseResultId = Long.valueOf(
-					resultJSONObject.getString("testrayCaseResultId"));
-
-				if (currentTestrayCaseResultId == previousTestrayCaseResultId) {
-					break;
-				}
-
-				for (int i = 0; i < resultsJSONArray.length(); i++) {
-					resultJSONObject = resultsJSONArray.optJSONObject(i);
-
-					if (resultJSONObject == null) {
-						continue;
-					}
-
-					TestrayCaseResult testrayCaseResult = new TestrayCaseResult(
-						resultJSONObject);
-
-					if (!testrayCaseResult.isTopLevelBuildResult()) {
-						testrayCaseResults.add(testrayCaseResult);
-					}
-				}
-
-				currentPage++;
-
-				previousTestrayCaseResultId = currentTestrayCaseResultId;
 			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
+			catch (IOException ioException) {
+				throw new RuntimeException(ioException);
 			}
+
+			JSONArray resultsJSONArray = jsonObject.optJSONArray("data");
+
+			if ((resultsJSONArray == null) ||
+				(resultsJSONArray.length() == 0)) {
+
+				break;
+			}
+
+			JSONObject resultJSONObject = resultsJSONArray.getJSONObject(0);
+
+			long currentTestrayCaseResultId = Long.valueOf(
+				resultJSONObject.getString("testrayCaseResultId"));
+
+			if (currentTestrayCaseResultId == previousTestrayCaseResultId) {
+				break;
+			}
+
+			for (int i = 0; i < resultsJSONArray.length(); i++) {
+				resultJSONObject = resultsJSONArray.optJSONObject(i);
+
+				if (resultJSONObject == null) {
+					continue;
+				}
+
+				TestrayCaseResult testrayCaseResult = new TestrayCaseResult(
+					resultJSONObject);
+
+				if (!testrayCaseResult.isTopLevelBuildResult()) {
+					testrayCaseResults.add(testrayCaseResult);
+				}
+			}
+
+			currentPage++;
+
+			previousTestrayCaseResultId = currentTestrayCaseResultId;
 		}
 
 		return testrayCaseResults;

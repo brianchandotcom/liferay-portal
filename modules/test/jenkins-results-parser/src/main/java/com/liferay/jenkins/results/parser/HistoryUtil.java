@@ -20,6 +20,10 @@ public class HistoryUtil {
 	public static JobHistory getJobHistory(Job job) {
 		URL ciHistoryURL = _getCIHistoryURL(job);
 
+		if (ciHistoryURL == null) {
+			return null;
+		}
+
 		JobHistory jobHistory = _jobHistories.get(ciHistoryURL);
 
 		if (jobHistory == null) {
@@ -57,11 +61,16 @@ public class HistoryUtil {
 		}
 
 		try {
-			return new URL(
-				JenkinsResultsParserUtil.getProperty(
-					JenkinsResultsParserUtil.getBuildProperties(),
-					"ci.history.json.url", jobName, testSuiteName,
-					upstreamBranchName));
+			String ciHistoryJSONURL = JenkinsResultsParserUtil.getProperty(
+				JenkinsResultsParserUtil.getBuildProperties(),
+				"ci.history.json.url", jobName, testSuiteName,
+				upstreamBranchName);
+
+			if (JenkinsResultsParserUtil.isNullOrEmpty(ciHistoryJSONURL)) {
+				return null;
+			}
+
+			return new URL(ciHistoryJSONURL);
 		}
 		catch (IOException ioException) {
 			ioException.printStackTrace();

@@ -68,6 +68,9 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 				averageTestDuration = testHistory.getAverageDuration();
 			}
 		}
+		else {
+			averageTestDuration = 0;
+		}
 
 		_averageTestDurations.put(testName, averageTestDuration);
 
@@ -90,6 +93,9 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 				averageTestOverheadDuration =
 					testHistory.getAverageOverheadDuration();
 			}
+		}
+		else {
+			averageTestOverheadDuration = 0;
 		}
 
 		_averageTestOverheadDurations.put(
@@ -145,6 +151,10 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		Job job = getJob();
 
 		JobHistory jobHistory = job.getJobHistory();
+
+		if (jobHistory == null) {
+			return null;
+		}
 
 		_batchHistory = jobHistory.getBatchHistory(getBatchName());
 

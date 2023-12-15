@@ -6,6 +6,7 @@
 package com.liferay.jenkins.results.parser.test.clazz.group;
 
 import com.liferay.jenkins.results.parser.PortalTestClassJob;
+import com.liferay.jenkins.results.parser.job.property.JobProperty;
 import com.liferay.jenkins.results.parser.test.clazz.TestClassFactory;
 
 import java.io.File;
@@ -31,6 +32,15 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 		if (ignore()) {
 			return;
 		}
+
+		JobProperty jobProperty = getJobProperty(
+			"playwright.test.project", testSuiteName, batchName);
+
+		if (jobProperty.getValue() == null) {
+			return;
+		}
+
+		recordJobProperty(jobProperty);
 
 		File buildTestBatchFile = new File(
 			portalGitWorkingDirectory.getWorkingDirectory(),

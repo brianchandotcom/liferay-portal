@@ -48,6 +48,6 @@ public interface ReindexConfiguration {
 		description = "enable-index-actions-in-a-virtual-instance-help",
 		name = "enable-index-actions-in-a-virtual-instance", required = false
 	)
-	public long[] indexActionsVirtualInstance();
+	public String[] indexActionsVirtualInstance();
 
 }

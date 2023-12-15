@@ -11,15 +11,9 @@ import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContri
 
 import java.util.Locale;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Igor Fabiano Nazar
  */
-@Component(
-	property = "indexer.class.name=com.liferay.portal.kernel.model.Organization",
-	service = ModelSummaryContributor.class
-)
 public class OrganizationModelSummaryContributor
 	implements ModelSummaryContributor {
 

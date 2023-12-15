@@ -691,7 +691,7 @@ public class SourceFormatterUtil {
 		List<String> fileNames = new ArrayList<>();
 
 		try {
-			_executeGitCommand(args, baseDirName, fileNames::add);
+			_executeGitCommand(allArgs, baseDirName, fileNames::add);
 
 			return fileNames;
 		}

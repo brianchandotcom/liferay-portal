@@ -1044,7 +1044,7 @@ definition {
 
 		Alert.viewErrorMessage(errorMessage = "You do not have the required permissions.");
 
-		Navigator.openSpecificURL(url = "${portalURL}/group/control_panel/manage?p_p_id=com_liferay_users_admin_web_portlet_MyOrganizationsPortlet&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_com_liferay_users_admin_web_portlet_UsersAdminPortlet_toolbarItem=view-all-organizations&_com_liferay_users_admin_web_portlet_UsersAdminPortlet_usersListView=flat-organizations");
+		Navigator.openSpecificURL(url = "${portalURL}/group/control_panel/manage?p_p_id=com_liferay_users_admin_web_portlet_MyOrganizationsPortlet&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_com_liferay_users_admin_web_portlet_UsersAdminPortlet_screenNavigationCategoryKey=organizations&_com_liferay_users_admin_web_portlet_UsersAdminPortlet_usersListView=flat-organizations");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#INFO",

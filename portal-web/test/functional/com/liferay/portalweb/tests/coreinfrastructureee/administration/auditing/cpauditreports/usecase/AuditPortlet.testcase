@@ -165,7 +165,7 @@ definition {
 
 		Close.closeWindow(locator1 = "title=Home - ${siteName}");
 
-		Navigator.selectSpecificWindow(windowTitle = "Users and Organizations - Liferay DXP");
+		Navigator.selectSpecificWindow(windowTitle = "Users - Users - Users and Organizations - Liferay DXP");
 
 		Audit.openAuditAdmin();
 

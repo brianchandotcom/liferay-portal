@@ -254,7 +254,7 @@ definition {
 				key_userName = "Administrator Administrator",
 				locator1 = "CommerceAccelerators#MINIUM_SIDEBAR_USER_NAME");
 
-			Close.closeWindow(locator1 = "title=Users and Organizations - ${siteName}");
+			Close.closeWindow(locator1 = "title=Users - Users - Users and Organizations - ${siteName}");
 		}
 	}
 

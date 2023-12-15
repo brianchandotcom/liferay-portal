@@ -54,6 +54,17 @@ else {
 	<c:when test="<%= portletName.equals(UsersAdminPortletKeys.MY_ORGANIZATIONS) %>">
 		<liferay-util:include page="/view_flat_organizations.jsp" servletContext="<%= application %>" />
 	</c:when>
+	<c:when test="<%= portletName.equals(UsersAdminPortletKeys.SERVICE_ACCOUNTS) %>">
+
+		<%
+		request.setAttribute("view.jsp-backURL", backURL);
+		request.setAttribute("view.jsp-status", ParamUtil.getInteger(request, "status", WorkflowConstants.STATUS_APPROVED));
+		request.setAttribute("view.jsp-usersListView", usersListView);
+		request.setAttribute("view.jsp-viewUsersRedirect", viewUsersRedirect);
+		%>
+
+		<liferay-util:include page="/view_flat_users.jsp" servletContext="<%= application %>" />
+	</c:when>
 	<c:otherwise>
 		<c:if test="<%= !portletName.equals(UsersAdminPortletKeys.SERVICE_ACCOUNTS) && !usersListView.equals(UserConstants.LIST_VIEW_TREE) %>">
 			<liferay-frontend:screen-navigation

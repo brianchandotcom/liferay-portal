@@ -576,8 +576,7 @@ public class ObjectEntryInfoItemFieldValuesProvider
 		throws Exception {
 
 		Object value = ObjectEntryUtil.getValue(
-			themeDisplay.getLocale(), objectField, themeDisplay.getTimeZone(),
-			objectEntry.getProperties());
+			themeDisplay.getLocale(), objectField, objectEntry.getProperties());
 
 		if (value == null) {
 			return StringPool.BLANK;

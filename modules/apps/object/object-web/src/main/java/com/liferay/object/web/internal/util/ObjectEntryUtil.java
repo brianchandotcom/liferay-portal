@@ -44,7 +44,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.TimeZone;
 
 /**
  * @author Eudaldo Alonso
@@ -73,8 +72,7 @@ public class ObjectEntryUtil {
 	}
 
 	public static Object getValue(
-			Locale locale, ObjectField objectField, TimeZone timeZone,
-			Map<String, Object> values)
+			Locale locale, ObjectField objectField, Map<String, Object> values)
 		throws Exception {
 
 		Object value = values.get(objectField.getName());

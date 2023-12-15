@@ -41,6 +41,7 @@ const WrappedComponent = props => (
 			>
 				<Route path={Routes.SETTINGS_DATA_PRIVACY_SUPPRESSED_USERS}>
 					<SuppressedUserList
+						currentUser={{isAdmin: () => true}}
 						router={{
 							params: {groupId: '23'},
 							query: {delta: '5', page: '1'}

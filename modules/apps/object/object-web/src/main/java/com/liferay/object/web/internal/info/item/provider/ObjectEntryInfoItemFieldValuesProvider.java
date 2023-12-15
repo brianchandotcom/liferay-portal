@@ -5,7 +5,6 @@
 
 package com.liferay.object.web.internal.info.item.provider;
 
-import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.info.field.InfoField;
@@ -79,7 +78,6 @@ public class ObjectEntryInfoItemFieldValuesProvider
 	implements InfoItemFieldValuesProvider<ObjectEntry> {
 
 	public ObjectEntryInfoItemFieldValuesProvider(
-		AssetDisplayPageFriendlyURLProvider assetDisplayPageFriendlyURLProvider,
 		CompanyLocalService companyLocalService,
 		DisplayPageInfoItemFieldSetProvider displayPageInfoItemFieldSetProvider,
 		DLAppLocalService dlAppLocalService, DLURLHelper dlURLHelper,
@@ -96,8 +94,6 @@ public class ObjectEntryInfoItemFieldValuesProvider
 		TemplateInfoItemFieldSetProvider templateInfoItemFieldSetProvider,
 		UserLocalService userLocalService) {
 
-		_assetDisplayPageFriendlyURLProvider =
-			assetDisplayPageFriendlyURLProvider;
 		_companyLocalService = companyLocalService;
 		_displayPageInfoItemFieldSetProvider =
 			displayPageInfoItemFieldSetProvider;
@@ -655,8 +651,6 @@ public class ObjectEntryInfoItemFieldValuesProvider
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectEntryInfoItemFieldValuesProvider.class);
 
-	private final AssetDisplayPageFriendlyURLProvider
-		_assetDisplayPageFriendlyURLProvider;
 	private final CompanyLocalService _companyLocalService;
 	private final DisplayPageInfoItemFieldSetProvider
 		_displayPageInfoItemFieldSetProvider;

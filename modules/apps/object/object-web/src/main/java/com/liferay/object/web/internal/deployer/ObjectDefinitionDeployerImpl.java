@@ -301,10 +301,10 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			_bundleContext.registerService(
 				InfoItemFieldValuesProvider.class,
 				new ObjectEntryInfoItemFieldValuesProvider(
-					_assetDisplayPageFriendlyURLProvider, _companyLocalService,
-					_displayPageInfoItemFieldSetProvider, _dlAppLocalService,
-					_dlURLHelper, _infoItemFieldReaderFieldSetProvider,
-					_jsonFactory, _objectActionLocalService, objectDefinition,
+					_companyLocalService, _displayPageInfoItemFieldSetProvider,
+					_dlAppLocalService, _dlURLHelper,
+					_infoItemFieldReaderFieldSetProvider, _jsonFactory,
+					_objectActionLocalService, objectDefinition,
 					_objectDefinitionLocalService, _objectEntryLocalService,
 					_objectEntryManagerRegistry, _objectFieldLocalService,
 					_objectRelationshipLocalService,

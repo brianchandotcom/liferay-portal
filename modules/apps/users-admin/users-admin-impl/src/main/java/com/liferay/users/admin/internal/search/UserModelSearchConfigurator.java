@@ -13,6 +13,7 @@ import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterC
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContributor;
 import com.liferay.users.admin.internal.search.spi.model.index.contributor.UserModelIndexerWriterContributor;
+import com.liferay.users.admin.internal.search.spi.model.result.contributor.UserModelSummaryContributor;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -61,6 +62,8 @@ public class UserModelSearchConfigurator
 		_modelIndexWriterContributor = new UserModelIndexerWriterContributor(
 			_contactBatchReindexer, _dynamicQueryBatchIndexingActionableFactory,
 			_userLocalService);
+
+		_modelSummaryContributor = new UserModelSummaryContributor();
 	}
 
 	@Reference
@@ -71,10 +74,6 @@ public class UserModelSearchConfigurator
 		_dynamicQueryBatchIndexingActionableFactory;
 
 	private ModelIndexerWriterContributor<User> _modelIndexWriterContributor;
-
-	@Reference(
-		target = "(indexer.class.name=com.liferay.portal.kernel.model.User)"
-	)
 	private ModelSummaryContributor _modelSummaryContributor;
 
 	@Reference

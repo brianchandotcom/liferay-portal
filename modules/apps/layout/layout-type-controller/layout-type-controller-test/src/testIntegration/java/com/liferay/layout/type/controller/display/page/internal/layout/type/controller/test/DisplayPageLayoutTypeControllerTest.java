@@ -125,14 +125,30 @@ public class DisplayPageLayoutTypeControllerTest {
 				LayoutConstants.TYPE_ASSET_DISPLAY);
 
 		try {
+			MockHttpServletRequest mockHttpServletRequest =
+				_getMockHttpServletRequest(layout, user);
+
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext(
+					_group.getGroupId(), user.getUserId());
+
+			serviceContext.setRequest(mockHttpServletRequest);
+
+			ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+			MockHttpServletResponse mockHttpServletResponse =
+				new MockHttpServletResponse();
+
 			layoutTypeController.includeLayoutContent(
-				_getMockHttpServletRequest(layout, user),
-				new MockHttpServletResponse(), layout);
+				mockHttpServletRequest, mockHttpServletResponse, layout);
 
 			Assert.assertFalse(noSuchLayoutExceptionExpected);
 		}
 		catch (NoSuchLayoutException noSuchLayoutException) {
 			Assert.assertTrue(noSuchLayoutExceptionExpected);
+		}
+		finally {
+			ServiceContextThreadLocal.pushServiceContext(_serviceContext);
 		}
 	}
 

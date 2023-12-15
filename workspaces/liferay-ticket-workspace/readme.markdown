@@ -1,7 +1,4 @@
-
 # Liferay Ticket Workspace
-
-
 
 ## Deployment
 
@@ -17,7 +14,6 @@ Then install the below client extensions in the exact order below :
     3.liferay-ticket-batch-object-relationship
     4.liferay-ticket-batch-object-entry
     5.liferay-ticket-custom-element
-
 
 ## Generating Tickets
 

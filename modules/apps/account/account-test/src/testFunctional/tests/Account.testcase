@@ -352,7 +352,7 @@ definition {
 				key_title = "Set Default Billing Address",
 				locator1 = "IFrame#MODAL_ANY");
 
-			ManagementBar.viewNoSubheaderInFilterAndOrder(subheadItem = "Filter by Type");
+			AssertElementNotPresent(locator1 = "ManagementBar#FILTER");
 
 			LexiconEntry.viewEntryName(rowEntry = "Liferay, Inc.");
 
@@ -368,7 +368,7 @@ definition {
 				key_title = "Set Default Shipping Address",
 				locator1 = "IFrame#MODAL_ANY");
 
-			ManagementBar.viewNoSubheaderInFilterAndOrder(subheadItem = "Filter by Type");
+			AssertElementNotPresent(locator1 = "ManagementBar#FILTER");
 
 			LexiconEntry.viewEntryName(rowEntry = "Liferay Dalian Software Co., Ltd.");
 
@@ -4240,7 +4240,7 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#ASSIGN_USER");
 
-		ManagementBar.viewNoSubheaderInFilterAndOrder(subheaderItem = "Filter by Navigation");
+		AssertElementNotPresent(locator1 = "ManagementBar#FILTER");
 	}
 
 	@description = "This test sets a valid domain for a business account. It adds a user with a same domain and asserts no warning displays."

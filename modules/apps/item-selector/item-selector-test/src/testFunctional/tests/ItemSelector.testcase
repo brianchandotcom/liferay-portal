@@ -536,9 +536,7 @@ definition {
 
 		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
 
-		for (var subheaderItem : list "Everywhere,Current Site") {
-			ManagementBar.viewNoSubheaderInFilterAndOrder(subheaderItem = ${subheaderItem});
-		}
+		AssertElementNotPresent(locator1 = "ManagementBar#FILTER");
 	}
 
 	@description = "It ensures that the web content draft in an Asset Library cannot be found when searching in an Item Selector in that Library."

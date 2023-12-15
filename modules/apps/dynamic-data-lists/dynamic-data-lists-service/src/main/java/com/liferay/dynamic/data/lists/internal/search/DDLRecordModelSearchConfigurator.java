@@ -6,10 +6,12 @@
 package com.liferay.dynamic.data.lists.internal.search;
 
 import com.liferay.dynamic.data.lists.internal.search.spi.model.index.contributor.DDLRecordModelIndexerWriterContributor;
+import com.liferay.dynamic.data.lists.internal.search.spi.model.result.contributor.DDLRecordModelSummaryContributor;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.dynamic.data.lists.service.DDLRecordVersionLocalService;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
@@ -64,6 +66,9 @@ public class DDLRecordModelSearchConfigurator
 				_ddlRecordLocalService, _ddlRecordSetLocalService,
 				_ddlRecordVersionLocalService,
 				_dynamicQueryBatchIndexingActionableFactory);
+
+		_modelSummaryContributor = new DDLRecordModelSummaryContributor(
+			_ddlRecordSetLocalService, _language);
 	}
 
 	@Reference
@@ -79,12 +84,11 @@ public class DDLRecordModelSearchConfigurator
 	private DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;
 
+	@Reference
+	private Language _language;
+
 	private ModelIndexerWriterContributor<DDLRecord>
 		_modelIndexWriterContributor;
-
-	@Reference(
-		target = "(indexer.class.name=com.liferay.dynamic.data.lists.model.DDLRecord)"
-	)
 	private ModelSummaryContributor _modelSummaryContributor;
 
 }

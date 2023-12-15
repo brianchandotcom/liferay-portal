@@ -24,18 +24,18 @@ import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContri
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Marcela Cunha
  */
-@Component(
-	property = "indexer.class.name=com.liferay.dynamic.data.lists.model.DDLRecord",
-	service = ModelSummaryContributor.class
-)
 public class DDLRecordModelSummaryContributor
 	implements ModelSummaryContributor {
+
+	public DDLRecordModelSummaryContributor(
+		DDLRecordSetLocalService ddlRecordSetLocalService, Language language) {
+
+		_ddlRecordSetLocalService = ddlRecordSetLocalService;
+		_language = language;
+	}
 
 	@Override
 	public Summary getSummary(
@@ -53,9 +53,6 @@ public class DDLRecordModelSummaryContributor
 
 		return summary;
 	}
-
-	@Reference
-	protected DDLRecordSetLocalService ddlRecordSetLocalService;
 
 	private String _getLanguageKey(DDLRecordSet ddlRecordSet) {
 		if (ddlRecordSet.getScope() ==
@@ -76,7 +73,7 @@ public class DDLRecordModelSummaryContributor
 
 	private String _getTitle(long ddlRecordSetId, Locale locale) {
 		try {
-			DDLRecordSet ddlRecordSet = ddlRecordSetLocalService.getRecordSet(
+			DDLRecordSet ddlRecordSet = _ddlRecordSetLocalService.getRecordSet(
 				ddlRecordSetId);
 
 			String recordSetName = ddlRecordSet.getName(locale);
@@ -95,7 +92,7 @@ public class DDLRecordModelSummaryContributor
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDLRecordModelSummaryContributor.class);
 
-	@Reference
-	private Language _language;
+	private final DDLRecordSetLocalService _ddlRecordSetLocalService;
+	private final Language _language;
 
 }

@@ -71,9 +71,7 @@ public class PoshiContext {
 		"**/*.action", "**/*.function", "**/*.macro", "**/*.path"
 	};
 
-	public static final String[] POSHI_TEST_FILE_INCLUDES = {
-		 "**/*.testcase"
-	};
+	public static final String[] POSHI_TEST_FILE_INCLUDES = {"**/*.testcase"};
 
 	public static void addPoshiPropertyNames(Set<String> poshiPropertyNames) {
 		_poshiPropertyNames.addAll(poshiPropertyNames);

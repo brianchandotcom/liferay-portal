@@ -220,7 +220,7 @@ public class PoshiGetterUtil {
 		if (element instanceof PoshiElement) {
 			PoshiElement poshiElement = (PoshiElement)element;
 
-				return poshiElement.getPoshiScriptLineNumber();
+			return poshiElement.getPoshiScriptLineNumber();
 		}
 
 		String lineNumber = element.attributeValue("line-number");
@@ -532,9 +532,9 @@ public class PoshiGetterUtil {
 		"and", "arg", "body", "case", "command", "condition", "contains",
 		"default", "definition", "description", "echo", "else", "elseif",
 		"equals", "execute", "fail", "for", "if", "head", "html", "isset",
-		"not", "off", "on", "or", "property", "return", "set-up",
-		"table", "take-screenshot", "task", "tbody", "td", "tear-down", "thead",
-		"then", "title", "tr", "var", "while");
+		"not", "off", "on", "or", "property", "return", "set-up", "table",
+		"take-screenshot", "task", "tbody", "td", "tear-down", "thead", "then",
+		"title", "tr", "var", "while");
 	private static final Pattern _tagPattern = Pattern.compile("<[a-z\\-]+");
 
 	private static final Map<String, String> _utilityClassMap =

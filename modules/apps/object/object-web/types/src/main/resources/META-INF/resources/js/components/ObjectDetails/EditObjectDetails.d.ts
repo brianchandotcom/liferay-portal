@@ -19,6 +19,7 @@ interface EditObjectDetailsProps {
 	isApproved: boolean;
 	isRootDescendantNode: boolean;
 	label: LocalizedValue<string>;
+	learnResourceContext: any;
 	nonRelationshipObjectFieldsInfo: {
 		label: LocalizedValue<string>;
 		name: string;
@@ -40,6 +41,7 @@ export default function EditObjectDetails({
 	isApproved,
 	isRootDescendantNode,
 	label,
+	learnResourceContext,
 	nonRelationshipObjectFieldsInfo,
 	objectDefinitionExternalReferenceCode,
 	objectDefinitionId,

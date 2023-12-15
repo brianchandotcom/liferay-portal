@@ -38,6 +38,7 @@ interface EditObjectDetailsProps {
 	isApproved: boolean;
 	isRootDescendantNode: boolean;
 	label: LocalizedValue<string>;
+	learnResourceContext: any;
 	nonRelationshipObjectFieldsInfo: {
 		label: LocalizedValue<string>;
 		name: string;
@@ -82,6 +83,7 @@ export default function EditObjectDetails({
 	isApproved,
 	isRootDescendantNode,
 	label,
+	learnResourceContext,
 	nonRelationshipObjectFieldsInfo,
 	objectDefinitionExternalReferenceCode,
 	objectDefinitionId,
@@ -283,6 +285,9 @@ export default function EditObjectDetails({
 										<div className="lfr__object-web-edit-object-details-external-data-source-panel-container-beta">
 											<FeatureIndicator
 												interactive
+												learnResourceContext={
+													learnResourceContext
+												}
 												type="beta"
 											/>
 										</div>

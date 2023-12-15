@@ -27,6 +27,7 @@ import {normalizeName} from './objectDefinitionUtil';
 
 interface ModalAddObjectDefinitionProps {
 	handleOnClose: () => void;
+	learnResourceContext: any;
 	objectDefinitionsStorageTypes: LabelValueObject[];
 	objectFolderExternalReferenceCode?: string;
 	onAfterSubmit?: (value: ObjectDefinition) => void;
@@ -42,6 +43,7 @@ type TInitialValues = {
 
 export function ModalAddObjectDefinition({
 	handleOnClose,
+	learnResourceContext,
 	objectDefinitionsStorageTypes,
 	objectFolderExternalReferenceCode,
 	onAfterSubmit,
@@ -213,7 +215,13 @@ export function ModalAddObjectDefinition({
 								/>
 
 								<div className="lfr__object-web-modal-add-object-definition-storage-type-beta">
-									<FeatureIndicator interactive type="beta" />
+									<FeatureIndicator
+										interactive
+										learnResourceContext={
+											learnResourceContext
+										}
+										type="beta"
+									/>
 								</div>
 							</div>
 						)}

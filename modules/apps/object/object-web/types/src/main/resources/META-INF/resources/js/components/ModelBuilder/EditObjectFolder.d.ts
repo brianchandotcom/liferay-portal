@@ -9,11 +9,13 @@ import {Scope} from '../ObjectDetails/EditObjectDetails';
 import './EditObjectFolder.scss';
 interface EditObjectFolder {
 	companies: Scope[];
+	learnResourceContext: any;
 	objectRelationshipDeletionTypes: LabelValueObject[];
 	sites: Scope[];
 }
 export default function EditObjectFolder({
 	companies,
+	learnResourceContext,
 	objectRelationshipDeletionTypes,
 	sites,
 }: EditObjectFolder): JSX.Element;

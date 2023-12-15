@@ -47,12 +47,14 @@ import {ObjectRelationshipEdgeData} from './types';
 
 interface EditObjectFolder {
 	companies: Scope[];
+	learnResourceContext: any;
 	objectRelationshipDeletionTypes: LabelValueObject[];
 	sites: Scope[];
 }
 
 export default function EditObjectFolder({
 	companies,
+	learnResourceContext,
 	objectRelationshipDeletionTypes,
 	sites,
 }: EditObjectFolder) {
@@ -203,6 +205,7 @@ export default function EditObjectFolder({
 							type: TYPES.UPDATE_VISIBILITY_MODEL_BUILDER_MODALS,
 						})
 					}
+					learnResourceContext={learnResourceContext}
 					objectDefinitionsStorageTypes={
 						objectDefinitionsStorageTypes
 					}

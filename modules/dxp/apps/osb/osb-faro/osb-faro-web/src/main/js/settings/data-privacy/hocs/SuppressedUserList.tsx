@@ -52,12 +52,16 @@ const withQueryOptions = Component => ({
 	refetch: () => Promise<any>;
 }) => {
 	const [unsuppressUser] = useMutation(DataControlRequest);
+
+	const authorized = currentUser.isAdmin();
+
 	return (
 		<Component
 			{...otherProps}
 			renderInlineRowActions={({
 				data: {dataControlTaskStatus, emailAddress}
 			}) =>
+				authorized &&
 				dataControlTaskStatus !== GDPRRequestStatuses.Pending && (
 					<ClayButton
 						className='button-root unsuppress'

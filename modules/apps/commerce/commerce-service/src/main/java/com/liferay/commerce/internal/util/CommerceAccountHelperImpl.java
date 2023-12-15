@@ -340,22 +340,26 @@ public class CommerceAccountHelperImpl implements CommerceAccountHelper {
 		}
 
 		if (accountEntry != null) {
-			if (_isChannelAccountEntry(
-					accountEntry, commerceChannel.getCommerceChannelId())) {
+			List<AccountEntry> commerceChannelAccountEntries =
+				_getCommerceChannelAccountEntries(
+					userId, commerceChannel.getCommerceChannelId());
 
-				setCurrentCommerceAccount(
-					httpServletRequest, commerceChannelGroupId,
-					accountEntry.getAccountEntryId());
+			for (AccountEntry commerceChannelAccountEntry :
+					commerceChannelAccountEntries) {
 
-				return accountEntry;
+				if (accountEntry.getAccountEntryId() ==
+						commerceChannelAccountEntry.getAccountEntryId()) {
+
+					setCurrentCommerceAccount(
+						httpServletRequest, commerceChannelGroupId,
+						accountEntry.getAccountEntryId());
+
+					return accountEntry;
+				}
 			}
 
-			List<AccountEntry> accountEntries =
-				_getCommerceChannelAccountEntries(
-					commerceChannel.getCommerceChannelId());
-
-			if (!accountEntries.isEmpty()) {
-				accountEntry = accountEntries.get(0);
+			if (!commerceChannelAccountEntries.isEmpty()) {
+				accountEntry = commerceChannelAccountEntries.get(0);
 
 				setCurrentCommerceAccount(
 					httpServletRequest, commerceChannelGroupId,
@@ -373,6 +377,8 @@ public class CommerceAccountHelperImpl implements CommerceAccountHelper {
 			setCurrentCommerceAccount(
 				httpServletRequest, commerceChannelGroupId,
 				AccountConstants.ACCOUNT_ENTRY_ID_GUEST);
+
+			return null;
 		}
 
 		return accountEntry;
@@ -491,7 +497,7 @@ public class CommerceAccountHelperImpl implements CommerceAccountHelper {
 	}
 
 	private List<AccountEntry> _getCommerceChannelAccountEntries(
-			long commerceChannelId)
+			long userId, long commerceChannelId)
 		throws PortalException {
 
 		List<AccountEntry> userAccountEntries = new ArrayList<>();
@@ -500,10 +506,14 @@ public class CommerceAccountHelperImpl implements CommerceAccountHelper {
 			_commerceChannelLocalService.getCommerceChannel(commerceChannelId);
 
 		List<AccountEntry> accountEntries =
-			_accountEntryLocalService.getAccountEntries(
-				commerceChannel.getCompanyId(),
-				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null);
+			_accountEntryLocalService.getUserAccountEntries(
+				userId, AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT, null,
+				new String[] {
+					AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
+					AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON,
+					AccountConstants.ACCOUNT_ENTRY_TYPE_SUPPLIER
+				},
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		for (AccountEntry accountEntry : accountEntries) {
 			if (_isChannelAccountEntry(

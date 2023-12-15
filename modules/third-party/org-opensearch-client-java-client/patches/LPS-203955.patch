@@ -1,0 +1,980 @@
+diff --git a/org/opensearch/client/opensearch/_types/mapping/IcuCollationKeywordProperty.java b/org/opensearch/client/opensearch/_types/mapping/IcuCollationKeywordProperty.java
+new file mode 100644
+index 0000000000000..a9372e812ba0a
+--- /dev/null
++++ b/org/opensearch/client/opensearch/_types/mapping/IcuCollationKeywordProperty.java
+@@ -0,0 +1,360 @@
++/*
++ * SPDX-License-Identifier: Apache-2.0
++ *
++ * The OpenSearch Contributors require contributions made to
++ * this file be licensed under the Apache-2.0 license or a
++ * compatible open source license.
++ */
++
++package org.opensearch.client.opensearch._types.mapping;
++
++import jakarta.json.stream.JsonGenerator;
++import java.util.function.Function;
++import javax.annotation.Nullable;
++import org.opensearch.client.json.*;
++import org.opensearch.client.opensearch._types.analysis.IcuCollationAlternate;
++import org.opensearch.client.opensearch._types.analysis.IcuCollationCaseFirst;
++import org.opensearch.client.opensearch._types.analysis.IcuCollationDecomposition;
++import org.opensearch.client.opensearch._types.analysis.IcuCollationStrength;
++import org.opensearch.client.util.ObjectBuilder;
++
++// typedef: _types.mapping.ICUCollationKeywordProperty
++
++@JsonpDeserializable
++public class IcuCollationKeywordProperty extends DocValuesPropertyBase implements PropertyVariant {
++
++	@Nullable
++	private final Boolean index;
++
++	@Nullable
++	private final String nullValue;
++
++	// Collation Options
++
++	@Nullable
++	private final IcuCollationAlternate alternate;
++
++	@Nullable
++	private final Boolean caseLevel;
++
++	@Nullable
++	private final IcuCollationCaseFirst caseFirst;
++
++	@Nullable
++	private final IcuCollationDecomposition decomposition;
++
++	@Nullable
++	private final Boolean hiraganaQuaternaryMode;
++
++	@Nullable
++	private final Boolean numeric;
++
++	@Nullable
++	private final IcuCollationStrength strength;
++
++	@Nullable
++	private final String variableTop;
++
++	// ---------------------------------------------------------------------------------------------
++
++	private IcuCollationKeywordProperty(Builder builder) {
++		super(builder);
++		this.index = builder.index;
++		this.nullValue = builder.nullValue;
++		this.alternate = builder.alternate;
++		this.caseLevel = builder.caseLevel;
++		this.caseFirst = builder.caseFirst;
++		this.decomposition = builder.decomposition;
++		this.hiraganaQuaternaryMode = builder.hiraganaQuaternaryMode;
++		this.numeric = builder.numeric;
++		this.strength = builder.strength;
++		this.variableTop = builder.variableTop;
++	}
++
++	public static IcuCollationKeywordProperty of(Function<Builder, ObjectBuilder<IcuCollationKeywordProperty>> fn) {
++		return fn.apply(new Builder()).build();
++	}
++
++	@Override
++	public Property.Kind _propertyKind() {
++		return Property.Kind.IcuCollationKeyword;
++	}
++
++	/**
++	 * API name: {@code index}
++	 */
++	@Nullable
++	public final Boolean index() {
++		return this.index;
++	}
++
++	/**
++	 * API name: {@code null_value}
++	 */
++	@Nullable
++	public final String nullValue() {
++		return this.nullValue;
++	}
++
++	/**
++	 * API name: {@code alternate}
++	 */
++	public final IcuCollationAlternate alternate() {
++		return this.alternate;
++	}
++
++	/**
++	 * API name: {@code case_level}
++	 */
++	public final Boolean caseLevel() {
++		return this.caseLevel;
++	}
++
++	/**
++	 * API name: {@code case_first}
++	 */
++	public final IcuCollationCaseFirst caseFirst() {
++		return this.caseFirst;
++	}
++
++	/**
++	 * API name: {@code decomposition}
++	 */
++	public final IcuCollationDecomposition decomposition() {
++		return this.decomposition;
++	}
++
++	/**
++	 * API name: {@code hiragana_quaternary_mode}
++	 */
++	public final Boolean hiraganaQuaternaryMode() {
++		return this.hiraganaQuaternaryMode;
++	}
++
++	/**
++	 * API name: {@code numeric}
++	 */
++	public final Boolean numeric() {
++		return this.numeric;
++	}
++
++	/**
++	 * API name: {@code strength}
++	 */
++	public final IcuCollationStrength strength() {
++		return this.strength;
++	}
++
++	/**
++	 * API name: {@code variable_top}
++	 */
++	public final String variableTop() {
++		return this.variableTop;
++	}
++
++	protected void serializeInternal(JsonGenerator generator, JsonpMapper mapper) {
++		generator.write("type", "icu_collation_keyword");
++		super.serializeInternal(generator, mapper);
++		if (this.index != null) {
++			generator.writeKey("index");
++			generator.write(this.index);
++		}
++		if (this.nullValue != null) {
++			generator.writeKey("null_value");
++			generator.write(this.nullValue);
++		}
++		if (this.alternate != null) {
++			generator.writeKey("alternate");
++			generator.write(this.alternate.jsonValue());
++		}
++		if (this.caseLevel != null) {
++			generator.writeKey("case_level");
++			generator.write(this.caseLevel);
++		}
++		if (this.caseFirst != null) {
++			generator.writeKey("case_first");
++			generator.write(this.caseFirst.jsonValue());
++		}
++		if (this.decomposition != null) {
++			generator.writeKey("decomposition");
++			generator.write(this.decomposition.jsonValue());
++		}
++		if (this.hiraganaQuaternaryMode != null) {
++			generator.writeKey("hiragana_quaternary_mode");
++			generator.write(this.hiraganaQuaternaryMode);
++		}
++		if (this.numeric != null) {
++			generator.writeKey("numeric");
++			generator.write(this.numeric);
++		}
++		if (this.strength != null) {
++			generator.writeKey("strength");
++			generator.write(this.strength.jsonValue());
++		}
++		if (this.variableTop != null) {
++			generator.writeKey("variable_top");
++			generator.write(this.variableTop);
++		}
++	}
++
++	// ---------------------------------------------------------------------------------------------
++
++	/**
++	 * Builder for {@link IcuCollationKeywordProperty}.
++	 */
++
++	public static class Builder extends DocValuesPropertyBase.AbstractBuilder<Builder>
++		implements
++		ObjectBuilder<IcuCollationKeywordProperty> {
++		@Nullable
++		private Boolean index;
++
++		@Nullable
++		private String nullValue;
++
++		@Nullable
++		private IcuCollationAlternate alternate;
++
++		@Nullable
++		private Boolean caseLevel;
++
++		@Nullable
++		private IcuCollationCaseFirst caseFirst;
++
++		@Nullable
++		private IcuCollationDecomposition decomposition;
++
++		@Nullable
++		private Boolean hiraganaQuaternaryMode;
++
++		@Nullable
++		private Boolean numeric;
++
++		@Nullable
++		private IcuCollationStrength strength;
++
++		@Nullable
++		private String variableTop;
++
++		/**
++		 * API name: {@code index}
++		 */
++		public final Builder index(@Nullable Boolean value) {
++			this.index = value;
++			return this;
++		}
++
++		/**
++		 * API name: {@code null_value}
++		 */
++		public final Builder nullValue(@Nullable String value) {
++			this.nullValue = value;
++			return this;
++		}
++
++		/**
++		 * API name: {@code alternate}
++		 */
++		public final Builder alternate(@Nullable IcuCollationAlternate value) {
++			this.alternate = value;
++			return this;
++		}
++
++		/**
++		 * API name: {@code case_level}
++		 */
++		public final Builder caseLevel(@Nullable Boolean value) {
++			this.caseLevel = value;
++			return this;
++		}
++
++		/**
++		 * API name: {@code case_first}
++		 */
++		public final Builder caseFirst(@Nullable IcuCollationCaseFirst value) {
++			this.caseFirst = value;
++			return this;
++		}
++
++		/**
++		 * API name: {@code decomposition}
++		 */
++		public final Builder decomposition(@Nullable IcuCollationDecomposition value) {
++			this.decomposition = value;
++			return this;
++		}
++
++		/**
++		 * API name: {@code hiragana_quaternary_mode}
++		 */
++		public final Builder hiraganaQuaternaryMode(@Nullable Boolean value) {
++			this.hiraganaQuaternaryMode = value;
++			return this;
++		}
++
++		/**
++		 * API name: {@code numeric}
++		 */
++		public final Builder numeric(@Nullable Boolean value) {
++			this.numeric = value;
++			return this;
++		}
++
++		/**
++		 * API name: {@code strength}
++		 */
++		public final Builder strength(@Nullable IcuCollationStrength value) {
++			this.strength = value;
++			return this;
++		}
++
++		/**
++		 * API name: {@code variable_top}
++		 */
++		public final Builder variableTop(@Nullable String value) {
++			this.variableTop = value;
++			return this;
++		}
++
++		@Override
++		protected Builder self() {
++			return this;
++		}
++
++		/**
++		 * Builds a {@link IcuCollationKeywordProperty}.
++		 *
++		 * @throws NullPointerException
++		 *             if some of the required fields are null.
++		 */
++		public IcuCollationKeywordProperty build() {
++			_checkSingleUse();
++			return new IcuCollationKeywordProperty(this);
++		}
++	}
++
++	// ---------------------------------------------------------------------------------------------
++
++	/**
++	 * Json deserializer for {@link IcuCollationKeywordProperty}
++	 */
++	public static final JsonpDeserializer<IcuCollationKeywordProperty> _DESERIALIZER = ObjectBuilderDeserializer.lazy(
++		Builder::new,
++		IcuCollationKeywordProperty::setupIcuCollationKeywordPropertyDeserializer
++	);
++
++	protected static void setupIcuCollationKeywordPropertyDeserializer(ObjectDeserializer<IcuCollationKeywordProperty.Builder> op) {
++		DocValuesPropertyBase.setupDocValuesPropertyBaseDeserializer(op);
++		op.add(Builder::index, JsonpDeserializer.booleanDeserializer(), "index");
++		op.add(Builder::nullValue, JsonpDeserializer.stringDeserializer(), "null_value");
++		op.add(Builder::alternate, IcuCollationAlternate._DESERIALIZER, "alternate");
++		op.add(Builder::caseLevel, JsonpDeserializer.booleanDeserializer(), "case_level");
++		op.add(Builder::caseFirst, IcuCollationCaseFirst._DESERIALIZER, "case_first");
++		op.add(Builder::decomposition, IcuCollationDecomposition._DESERIALIZER, "decomposition");
++		op.add(Builder::hiraganaQuaternaryMode, JsonpDeserializer.booleanDeserializer(), "hiragana_quaternary_mode");
++		op.add(Builder::numeric, JsonpDeserializer.booleanDeserializer(), "numeric");
++		op.add(Builder::strength, IcuCollationStrength._DESERIALIZER, "strength");
++		op.add(Builder::variableTop, JsonpDeserializer.stringDeserializer(), "variable_top");
++	}
++}
++/* @generated */
+\ No newline at end of file
+diff --git a/org/opensearch/client/opensearch/_types/mapping/Property.java b/org/opensearch/client/opensearch/_types/mapping/Property.java
+index 827c0551f0500..c79e40b810b35 100644
+--- a/org/opensearch/client/opensearch/_types/mapping/Property.java
++++ b/org/opensearch/client/opensearch/_types/mapping/Property.java
+@@ -98,6 +98,8 @@ public class Property implements TaggedUnion<Property.Kind, PropertyVariant>, Js
+ 
+         Histogram("histogram"),
+ 
++        IcuCollationKeyword("icu_collation_keyword"),
++
+         Integer("integer"),
+ 
+         IntegerRange("integer_range"),
+@@ -518,6 +520,23 @@ public class Property implements TaggedUnion<Property.Kind, PropertyVariant>, Js
+         return TaggedUnionUtils.get(this, Kind.Histogram);
+     }
+ 
++    /**
++     * Is this variant instance of kind {@code icu_collation_keyword}?
++     */
++    public boolean isIcuCollationKeyword() {
++        return _kind == Kind.IcuCollationKeyword;
++    }
++
++    /**
++     * Get the {@code icu_collation_keyword} variant value.
++     *
++     * @throws IllegalStateException
++     *             if the current variant is not of the {@code icu_collation_keyword} kind.
++     */
++    public IcuCollationKeywordProperty icuCollationKeyword() {
++        return TaggedUnionUtils.get(this, Kind.IcuCollationKeyword);
++    }
++
+     /**
+      * Is this variant instance of kind {@code integer}?
+      */
+@@ -1149,6 +1168,18 @@ public class Property implements TaggedUnion<Property.Kind, PropertyVariant>, Js
+             return this.histogram(fn.apply(new HistogramProperty.Builder()).build());
+         }
+ 
++        public ObjectBuilder<Property> icuCollationKeyword(IcuCollationKeywordProperty v) {
++            this._kind = Kind.IcuCollationKeyword;
++            this._value = v;
++            return this;
++        }
++
++        public ObjectBuilder<Property> icuCollationKeyword(
++            Function<IcuCollationKeywordProperty.Builder, ObjectBuilder<IcuCollationKeywordProperty>> fn
++        ) {
++            return this.icuCollationKeyword(fn.apply(new IcuCollationKeywordProperty.Builder()).build());
++        }
++
+         public ObjectBuilder<Property> integer(IntegerNumberProperty v) {
+             this._kind = Kind.Integer;
+             this._value = v;
+@@ -1433,6 +1464,7 @@ public class Property implements TaggedUnion<Property.Kind, PropertyVariant>, Js
+         op.add(Builder::geoShape, GeoShapeProperty._DESERIALIZER, "geo_shape");
+         op.add(Builder::halfFloat, HalfFloatNumberProperty._DESERIALIZER, "half_float");
+         op.add(Builder::histogram, HistogramProperty._DESERIALIZER, "histogram");
++        op.add(Builder::icuCollationKeyword, IcuCollationKeywordProperty._DESERIALIZER, "icu_collation_keyword");
+         op.add(Builder::integer, IntegerNumberProperty._DESERIALIZER, "integer");
+         op.add(Builder::integerRange, IntegerRangeProperty._DESERIALIZER, "integer_range");
+         op.add(Builder::ip, IpProperty._DESERIALIZER, "ip");
+@@ -1469,3 +1501,4 @@ public class Property implements TaggedUnion<Property.Kind, PropertyVariant>, Js
+         Builder::build
+     );
+ }
++/* @generated */
+diff --git a/org/opensearch/client/opensearch/cat/CatRequestBase.java b/org/opensearch/client/opensearch/cat/CatRequestBase.java
+index 92372d2693f35..94e97847529a7 100644
+--- a/org/opensearch/client/opensearch/cat/CatRequestBase.java
++++ b/org/opensearch/client/opensearch/cat/CatRequestBase.java
+@@ -61,10 +61,10 @@ public abstract class CatRequestBase extends RequestBase {
+ 
+     protected final Map<String, String> queryParameters() {
+         Map<String, String> params = new HashMap<>();
+-        if (headers != null && !headers.isBlank()) {
++        if (headers != null && !headers.isEmpty()) {
+             params.put("h", headers);
+         }
+-        if (sort != null && !sort.isBlank()) {
++        if (sort != null && !sort.isEmpty()) {
+             params.put("s", sort);
+         }
+         params.put("format", "json");
+@@ -127,3 +127,4 @@ public abstract class CatRequestBase extends RequestBase {
+     }
+ 
+ }
++/* @generated */
+diff --git a/org/opensearch/client/opensearch/cluster/stats/ClusterNodeCount.java b/org/opensearch/client/opensearch/cluster/stats/ClusterNodeCount.java
+index 17f9a8d370ed0..2aeed89087c96 100644
+--- a/org/opensearch/client/opensearch/cluster/stats/ClusterNodeCount.java
++++ b/org/opensearch/client/opensearch/cluster/stats/ClusterNodeCount.java
+@@ -59,24 +59,32 @@ public class ClusterNodeCount implements JsonpSerializable {
+ 
+     private final int total;
+ 
+-    private final int votingOnly;
+ 
+-    private final int dataCold;
++    @Nullable
++    private Integer votingOnly;
+ 
+     @Nullable
+-    private final Integer dataFrozen;
++    private Integer dataCold;
+ 
+-    private final int dataContent;
++    @Nullable
++    private Integer dataFrozen;
+ 
+-    private final int dataWarm;
++    @Nullable
++    private Integer dataContent;
+ 
+-    private final int dataHot;
++    @Nullable
++    private Integer dataWarm;
+ 
+-    private final int ml;
++    @Nullable
++    private Integer dataHot;
++
++    @Nullable
++    private Integer ml;
+ 
+     private final int remoteClusterClient;
+ 
+-    private final int transform;
++    @Nullable
++    private Integer transform;
+ 
+     // ---------------------------------------------------------------------------------------------
+ 
+@@ -87,15 +95,15 @@ public class ClusterNodeCount implements JsonpSerializable {
+         this.ingest = ApiTypeHelper.requireNonNull(builder.ingest, this, "ingest");
+         this.clusterManager = ApiTypeHelper.requireNonNull(builder.clusterManager, this, "clusterManager");
+         this.total = ApiTypeHelper.requireNonNull(builder.total, this, "total");
+-        this.votingOnly = ApiTypeHelper.requireNonNull(builder.votingOnly, this, "votingOnly");
+-        this.dataCold = ApiTypeHelper.requireNonNull(builder.dataCold, this, "dataCold");
++        this.votingOnly = builder.votingOnly;
++        this.dataCold = builder.dataCold;
+         this.dataFrozen = builder.dataFrozen;
+-        this.dataContent = ApiTypeHelper.requireNonNull(builder.dataContent, this, "dataContent");
+-        this.dataWarm = ApiTypeHelper.requireNonNull(builder.dataWarm, this, "dataWarm");
+-        this.dataHot = ApiTypeHelper.requireNonNull(builder.dataHot, this, "dataHot");
+-        this.ml = ApiTypeHelper.requireNonNull(builder.ml, this, "ml");
++        this.dataContent = builder.dataContent;
++        this.dataWarm = builder.dataWarm;
++        this.dataHot = builder.dataHot;
++        this.ml = builder.ml;
+         this.remoteClusterClient = ApiTypeHelper.requireNonNull(builder.remoteClusterClient, this, "remoteClusterClient");
+-        this.transform = ApiTypeHelper.requireNonNull(builder.transform, this, "transform");
++        this.transform = builder.transform;
+ 
+     }
+ 
+@@ -139,16 +147,18 @@ public class ClusterNodeCount implements JsonpSerializable {
+     }
+ 
+     /**
+-     * Required - API name: {@code voting_only}
++     * API name: {@code voting_only}
+      */
+-    public final int votingOnly() {
++    @Nullable
++    public final Integer votingOnly() {
+         return this.votingOnly;
+     }
+ 
+     /**
+-     * Required - API name: {@code data_cold}
++     * API name: {@code data_cold}
+      */
+-    public final int dataCold() {
++    @Nullable
++    public final Integer dataCold() {
+         return this.dataCold;
+     }
+ 
+@@ -161,30 +171,34 @@ public class ClusterNodeCount implements JsonpSerializable {
+     }
+ 
+     /**
+-     * Required - API name: {@code data_content}
++     * API name: {@code data_content}
+      */
+-    public final int dataContent() {
++    @Nullable
++    public final Integer dataContent() {
+         return this.dataContent;
+     }
+ 
+     /**
+-     * Required - API name: {@code data_warm}
++     * API name: {@code data_warm}
+      */
+-    public final int dataWarm() {
++    @Nullable
++    public final Integer dataWarm() {
+         return this.dataWarm;
+     }
+ 
+     /**
+-     * Required - API name: {@code data_hot}
++     * API name: {@code data_hot}
+      */
+-    public final int dataHot() {
++    @Nullable
++    public final Integer dataHot() {
+         return this.dataHot;
+     }
+ 
+     /**
+-     * Required - API name: {@code ml}
++     * API name: {@code ml}
+      */
+-    public final int ml() {
++    @Nullable
++    public final Integer ml() {
+         return this.ml;
+     }
+ 
+@@ -196,9 +210,10 @@ public class ClusterNodeCount implements JsonpSerializable {
+     }
+ 
+     /**
+-     * Required - API name: {@code transform}
++     * API name: {@code transform}
+      */
+-    public final int transform() {
++    @Nullable
++    public final Integer transform() {
+         return this.transform;
+     }
+ 
+@@ -228,34 +243,48 @@ public class ClusterNodeCount implements JsonpSerializable {
+         generator.writeKey("total");
+         generator.write(this.total);
+ 
+-        generator.writeKey("voting_only");
+-        generator.write(this.votingOnly);
++        if (this.votingOnly != null) {
++            generator.writeKey("voting_only");
++            generator.write(this.votingOnly);
++        }
+ 
+-        generator.writeKey("data_cold");
+-        generator.write(this.dataCold);
++        if (this.dataCold != null) {
++            generator.writeKey("data_cold");
++            generator.write(this.dataCold);
++        }
+ 
+         if (this.dataFrozen != null) {
+             generator.writeKey("data_frozen");
+             generator.write(this.dataFrozen);
++        }
+ 
++        if (this.dataFrozen != null) {
++            generator.writeKey("data_content");
++            generator.write(this.dataContent);
+         }
+-        generator.writeKey("data_content");
+-        generator.write(this.dataContent);
+ 
+-        generator.writeKey("data_warm");
+-        generator.write(this.dataWarm);
++        if (this.dataFrozen != null) {
++            generator.writeKey("data_warm");
++            generator.write(this.dataWarm);
++        }
+ 
+-        generator.writeKey("data_hot");
+-        generator.write(this.dataHot);
++        if (this.dataFrozen != null) {
++            generator.writeKey("data_hot");
++            generator.write(this.dataHot);
++        }
+ 
+-        generator.writeKey("ml");
+-        generator.write(this.ml);
++        if (this.dataFrozen != null) {
++            generator.writeKey("ml");
++            generator.write(this.ml);
++        }
+ 
+         generator.writeKey("remote_cluster_client");
+         generator.write(this.remoteClusterClient);
+ 
+-        generator.writeKey("transform");
+-        generator.write(this.transform);
++        if (this.transform != null) {
++            generator.writeKey("transform");
++            generator.write(this.transform);
++        }
+ 
+     }
+ 
+@@ -276,23 +305,30 @@ public class ClusterNodeCount implements JsonpSerializable {
+ 
+         private Integer total;
+ 
++        @Nullable
+         private Integer votingOnly;
+ 
++        @Nullable
+         private Integer dataCold;
+ 
+         @Nullable
+         private Integer dataFrozen;
+ 
++        @Nullable
+         private Integer dataContent;
+ 
++        @Nullable
+         private Integer dataWarm;
+ 
++        @Nullable
+         private Integer dataHot;
+ 
++        @Nullable
+         private Integer ml;
+ 
+         private Integer remoteClusterClient;
+ 
++        @Nullable
+         private Integer transform;
+ 
+         /**
+@@ -338,7 +374,7 @@ public class ClusterNodeCount implements JsonpSerializable {
+         /**
+          * Required - API name: {@code voting_only}
+          */
+-        public final Builder votingOnly(int value) {
++        public final Builder votingOnly(@Nullable Integer value) {
+             this.votingOnly = value;
+             return this;
+         }
+@@ -362,7 +398,7 @@ public class ClusterNodeCount implements JsonpSerializable {
+         /**
+          * Required - API name: {@code data_content}
+          */
+-        public final Builder dataContent(int value) {
++        public final Builder dataContent(@Nullable Integer value) {
+             this.dataContent = value;
+             return this;
+         }
+@@ -370,7 +406,7 @@ public class ClusterNodeCount implements JsonpSerializable {
+         /**
+          * Required - API name: {@code data_warm}
+          */
+-        public final Builder dataWarm(int value) {
++        public final Builder dataWarm(@Nullable Integer value) {
+             this.dataWarm = value;
+             return this;
+         }
+@@ -378,7 +414,7 @@ public class ClusterNodeCount implements JsonpSerializable {
+         /**
+          * Required - API name: {@code data_hot}
+          */
+-        public final Builder dataHot(int value) {
++        public final Builder dataHot(@Nullable Integer value) {
+             this.dataHot = value;
+             return this;
+         }
+@@ -386,7 +422,7 @@ public class ClusterNodeCount implements JsonpSerializable {
+         /**
+          * Required - API name: {@code ml}
+          */
+-        public final Builder ml(int value) {
++        public final Builder ml(@Nullable Integer value) {
+             this.ml = value;
+             return this;
+         }
+@@ -402,7 +438,7 @@ public class ClusterNodeCount implements JsonpSerializable {
+         /**
+          * Required - API name: {@code transform}
+          */
+-        public final Builder transform(int value) {
++        public final Builder transform(@Nullable Integer value) {
+             this.transform = value;
+             return this;
+         }
+@@ -450,3 +486,4 @@ public class ClusterNodeCount implements JsonpSerializable {
+     }
+ 
+ }
++/* @generated */
+diff --git a/org/opensearch/client/opensearch/cluster/stats/NodePackagingType.java b/org/opensearch/client/opensearch/cluster/stats/NodePackagingType.java
+index 6cbc2359c00a8..d256834613c5f 100644
+--- a/org/opensearch/client/opensearch/cluster/stats/NodePackagingType.java
++++ b/org/opensearch/client/opensearch/cluster/stats/NodePackagingType.java
+@@ -59,7 +59,7 @@ public class NodePackagingType implements JsonpSerializable {
+     private NodePackagingType(Builder builder) {
+ 
+         this.count = ApiTypeHelper.requireNonNull(builder.count, this, "count");
+-        this.flavor = ApiTypeHelper.requireNonNull(builder.flavor, this, "flavor");
++        this.flavor = builder.flavor;
+         this.type = ApiTypeHelper.requireNonNull(builder.type, this, "type");
+ 
+     }
+@@ -103,8 +103,10 @@ public class NodePackagingType implements JsonpSerializable {
+         generator.writeKey("count");
+         generator.write(this.count);
+ 
+-        generator.writeKey("flavor");
+-        generator.write(this.flavor);
++        if (this.flavor != null) {
++            generator.writeKey("flavor");
++            generator.write(this.flavor);
++        }
+ 
+         generator.writeKey("type");
+         generator.write(this.type);
+@@ -180,3 +182,4 @@ public class NodePackagingType implements JsonpSerializable {
+     }
+ 
+ }
++/* @generated */
+\ No newline at end of file
+diff --git a/org/opensearch/client/transport/TransportOptions.java b/org/opensearch/client/transport/TransportOptions.java
+index 18c9d51065472..d0cd1212a911b 100644
+--- a/org/opensearch/client/transport/TransportOptions.java
++++ b/org/opensearch/client/transport/TransportOptions.java
+@@ -32,6 +32,7 @@
+ 
+ package org.opensearch.client.transport;
+ 
++import java.util.AbstractMap;
+ import java.util.ArrayList;
+ import java.util.Collection;
+ import java.util.Collections;
+@@ -40,6 +41,8 @@ import java.util.List;
+ import java.util.Map;
+ import java.util.function.Consumer;
+ import java.util.function.Function;
++import java.util.stream.Collectors;
++
+ import org.opensearch.client.util.ObjectBuilder;
+ 
+ /**
+@@ -98,7 +101,7 @@ public interface TransportOptions {
+             if (headers.isEmpty()) {
+                 headers = new ArrayList<>();
+             }
+-            headers.add(Map.entry(name, value));
++            headers.add(new AbstractMap.SimpleEntry<>(name, value));
+             return this;
+         }
+ 
+@@ -135,8 +138,10 @@ public interface TransportOptions {
+         private final Function<List<String>, Boolean> onWarnings;
+ 
+         protected DefaultImpl(BuilderImpl builder) {
+-            this.headers = builder.headers.isEmpty() ? Collections.emptyList() : List.copyOf(builder.headers);
+-            this.params = builder.queryParameters.isEmpty() ? Collections.emptyMap() : Map.copyOf(builder.queryParameters);
++            this.headers = builder.headers.isEmpty() ? Collections.emptyList() : builder.headers.stream()
++                .collect(Collectors.toList());
++            this.params = builder.queryParameters.isEmpty() ? Collections.emptyMap() : Collections.unmodifiableMap(
++                new HashMap<>(builder.queryParameters));
+             this.onWarnings = builder.onWarnings;
+         }
+ 
+@@ -161,3 +166,4 @@ public interface TransportOptions {
+         }
+     }
+ }
++/* @generated */
+\ No newline at end of file
+diff --git a/org/opensearch/client/transport/aws/AwsSdk2Transport.java b/org/opensearch/client/transport/aws/AwsSdk2Transport.java
+index 2e4145f3bba1e..341a5257f3b76 100644
+--- a/org/opensearch/client/transport/aws/AwsSdk2Transport.java
++++ b/org/opensearch/client/transport/aws/AwsSdk2Transport.java
+@@ -13,6 +13,7 @@ import jakarta.json.stream.JsonParser;
+ import java.io.ByteArrayInputStream;
+ import java.io.IOException;
+ import java.io.InputStream;
++import java.io.UnsupportedEncodingException;
+ import java.net.URI;
+ import java.net.URISyntaxException;
+ import java.net.URLEncoder;
+@@ -261,11 +262,15 @@ public class AwsSdk2Transport implements OpenSearchTransport {
+                 .map(o -> o instanceof AwsSdk2TransportOptions ? ((AwsSdk2TransportOptions) o) : null)
+                 .map(AwsSdk2TransportOptions::mapper)
+                 .orElse(defaultMapper);
+-            final int maxUncompressedSize = Optional.ofNullable(options)
+-                .map(o -> o instanceof AwsSdk2TransportOptions ? ((AwsSdk2TransportOptions) o) : null)
+-                .map(AwsSdk2TransportOptions::requestCompressionSize)
+-                .or(() -> Optional.ofNullable(transportOptions.requestCompressionSize()))
+-                .orElse(DEFAULT_REQUEST_COMPRESSION_SIZE);
++            final int maxUncompressedSize;
++            if (options != null &&  options instanceof AwsSdk2TransportOptions) {
++                AwsSdk2TransportOptions awsSdk2TransportOptions = (AwsSdk2TransportOptions) options;
++                maxUncompressedSize = awsSdk2TransportOptions.requestCompressionSize();
++            } else if (transportOptions != null) {
++                maxUncompressedSize = transportOptions.requestCompressionSize();
++            } else {
++                maxUncompressedSize  = DEFAULT_REQUEST_COMPRESSION_SIZE;
++            }
+ 
+             OpenSearchRequestBodyBuffer buffer = new OpenSearchRequestBodyBuffer(mapper, maxUncompressedSize);
+             buffer.addContent(request);
+@@ -293,9 +298,13 @@ public class AwsSdk2Transport implements OpenSearchTransport {
+         Map<String, String> params = endpoint.queryParameters(request);
+         if (params != null && !params.isEmpty()) {
+             char sep = '?';
+-            for (var ent : params.entrySet()) {
++            for (Map.Entry<String, String> ent : params.entrySet()) {
+                 url.append(sep).append(ent.getKey()).append('=');
+-                url.append(URLEncoder.encode(ent.getValue(), StandardCharsets.UTF_8));
++                try {
++                    url.append(URLEncoder.encode(ent.getValue(), StandardCharsets.UTF_8.name()));
++                } catch (UnsupportedEncodingException e) {
++                    throw new IllegalArgumentException("Unsupported encoding UTF_8");
++                }
+                 sep = '&';
+             }
+         }
+@@ -321,22 +330,31 @@ public class AwsSdk2Transport implements OpenSearchTransport {
+             req.putHeader("x-amz-content-sha256", "required");
+         }
+ 
+-        boolean responseCompression = Optional.ofNullable(options)
+-            .map(o -> o instanceof AwsSdk2TransportOptions ? ((AwsSdk2TransportOptions) o) : null)
+-            .map(AwsSdk2TransportOptions::responseCompression)
+-            .or(() -> Optional.ofNullable(transportOptions.responseCompression()))
+-            .orElse(Boolean.TRUE);
++        boolean responseCompression;
++        if (options != null &&  options instanceof AwsSdk2TransportOptions) {
++            AwsSdk2TransportOptions awsSdk2TransportOptions = (AwsSdk2TransportOptions) options;
++            responseCompression = awsSdk2TransportOptions.responseCompression();
++        } else if (transportOptions != null) {
++            responseCompression = transportOptions.responseCompression();
++        } else {
++            responseCompression = true;
++        }
++
+         if (responseCompression) {
+             req.putHeader("Accept-Encoding", "gzip");
+         } else {
+             req.removeHeader("Accept-Encoding");
+         }
+ 
+-        final AwsCredentialsProvider credentials = Optional.ofNullable(options)
+-            .map(o -> o instanceof AwsSdk2TransportOptions ? ((AwsSdk2TransportOptions) o) : null)
+-            .map(AwsSdk2TransportOptions::credentials)
+-            .or(() -> Optional.ofNullable(transportOptions.credentials()))
+-            .orElse(DefaultCredentialsProvider.create());
++        final AwsCredentialsProvider credentials;
++        if (options != null &&  options instanceof AwsSdk2TransportOptions) {
++            AwsSdk2TransportOptions awsSdk2TransportOptions = (AwsSdk2TransportOptions) options;
++            credentials = awsSdk2TransportOptions.credentials();
++        } else if (transportOptions != null) {
++            credentials = transportOptions.credentials();
++        } else {
++            credentials = DefaultCredentialsProvider.create();
++        }
+ 
+         Aws4SignerParams signerParams = Aws4SignerParams.builder()
+             .awsCredentials(credentials.resolveCredentials())
+@@ -355,7 +373,11 @@ public class AwsSdk2Transport implements OpenSearchTransport {
+             char sep = url.indexOf("?") < 0 ? '?' : '&';
+             for (Map.Entry<String, String> param : params.entrySet()) {
+                 url.append(sep).append(param.getKey()).append('=');
+-                url.append(URLEncoder.encode(param.getValue(), StandardCharsets.UTF_8));
++                try {
++                    url.append(URLEncoder.encode(param.getValue(), StandardCharsets.UTF_8.name()));
++                } catch (UnsupportedEncodingException e) {
++                    throw new IllegalArgumentException("Unsupported encoding UTF_8");
++                }
+                 sep = '?';
+             }
+         }
+@@ -525,3 +547,4 @@ public class AwsSdk2Transport implements OpenSearchTransport {
+         }
+     }
+ }
++/* @generated */
+\ No newline at end of file
+diff --git a/org/opensearch/client/transport/httpclient5/ApacheHttpClient5Transport.java b/org/opensearch/client/transport/httpclient5/ApacheHttpClient5Transport.java
+index c4142d7f853cc..68b473ca88c34 100644
+--- a/org/opensearch/client/transport/httpclient5/ApacheHttpClient5Transport.java
++++ b/org/opensearch/client/transport/httpclient5/ApacheHttpClient5Transport.java
+@@ -12,6 +12,7 @@ import jakarta.json.stream.JsonGenerator;
+ import jakarta.json.stream.JsonParser;
+ import java.io.ByteArrayInputStream;
+ import java.io.ByteArrayOutputStream;
++import java.io.DataInputStream;
+ import java.io.IOException;
+ import java.io.InputStream;
+ import java.io.OutputStream;
+@@ -934,7 +935,11 @@ public class ApacheHttpClient5Transport implements OpenSearchTransport {
+                 } else {
+                     long size;
+                     try (InputStream is = getContent()) {
+-                        size = is.readAllBytes().length;
++                        is.reset();
++                        byte[] bytes = new byte[is.available()];
++                        DataInputStream dataInputStream = new DataInputStream(is);
++                        dataInputStream.readFully(bytes);
++                        size = is.available();
+                     } catch (IOException ex) {
+                         size = -1L;
+                     }
+@@ -1014,3 +1019,4 @@ public class ApacheHttpClient5Transport implements OpenSearchTransport {
+         }
+     }
+ }
++/* @generated */
+\ No newline at end of file

@@ -39,6 +39,7 @@ describe('SuppressedUsers', () => {
 							path={Routes.SETTINGS_DATA_PRIVACY_SUPPRESSED_USERS}
 						>
 							<SuppressedUsers
+								currentUser={{isAdmin: () => true}}
 								router={{
 									params: {groupId: '23'},
 									query: {delta: '5', page: '1'}

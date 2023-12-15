@@ -29,6 +29,7 @@ import com.liferay.notification.util.NotificationRecipientSettingUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
@@ -39,7 +40,10 @@ import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.EmailAddressValidator;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
@@ -178,7 +182,7 @@ public class EmailNotificationType extends BaseNotificationType {
 			notificationContext.getNotificationTemplate();
 
 		String body = _formatBody(
-			notificationTemplate.getBodyMap(), notificationContext);
+			notificationTemplate.getBodyMap(), notificationContext, groupId);
 		NotificationRecipient notificationRecipient =
 			notificationTemplate.getNotificationRecipient();
 		String subject = formatLocalizedContent(
@@ -444,7 +448,7 @@ public class EmailNotificationType extends BaseNotificationType {
 
 	private String _formatBody(
 			Map<Locale, String> bodyMap,
-			NotificationContext notificationContext)
+			NotificationContext notificationContext, long groupId)
 		throws PortalException {
 
 		NotificationTemplate notificationTemplate =
@@ -486,28 +490,39 @@ public class EmailNotificationType extends BaseNotificationType {
 				getPersistedModelLocalService(
 					notificationContext.getClassName());
 
-		InfoItemFieldValues infoItemFieldValues =
-			infoItemFieldValuesProvider.getInfoItemFieldValues(
-				persistedModelLocalService.getPersistedModel(
-					notificationContext.getClassPK()));
+		ServiceContextThreadLocal.pushServiceContext(
+			_getServiceContext(
+				_groupLocalService.getGroup(groupId),
+				notificationContext.getUserId()));
 
-		for (InfoFieldValue<Object> infoFieldValue :
-				infoItemFieldValues.getInfoFieldValues()) {
+		try {
+			InfoItemFieldValues infoItemFieldValues =
+				infoItemFieldValuesProvider.getInfoItemFieldValues(
+					persistedModelLocalService.getPersistedModel(
+						notificationContext.getClassPK()));
 
-			InfoField<?> infoField = infoFieldValue.getInfoField();
+			for (InfoFieldValue<Object> infoFieldValue :
+					infoItemFieldValues.getInfoFieldValues()) {
 
-			if (StringUtil.startsWith(
-					infoField.getName(),
-					PortletDisplayTemplate.DISPLAY_STYLE_PREFIX)) {
+				InfoField<?> infoField = infoFieldValue.getInfoField();
 
-				continue;
+				if (StringUtil.startsWith(
+						infoField.getName(),
+						PortletDisplayTemplate.DISPLAY_STYLE_PREFIX)) {
+
+					continue;
+				}
+
+				TemplateNode templateNode =
+					_templateNodeFactory.createTemplateNode(
+						infoFieldValue, themeDisplay);
+
+				template.put(infoField.getName(), templateNode);
+				template.put(infoField.getUniqueId(), templateNode);
 			}
-
-			TemplateNode templateNode = _templateNodeFactory.createTemplateNode(
-				infoFieldValue, themeDisplay);
-
-			template.put(infoField.getName(), templateNode);
-			template.put(infoField.getUniqueId(), templateNode);
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
 		}
 
 		template.processTemplate(stringWriter);
@@ -529,6 +544,27 @@ public class EmailNotificationType extends BaseNotificationType {
 		}
 
 		return StringUtil.merge(emailAddresses);
+	}
+
+	private ServiceContext _getServiceContext(Group group, long userId) {
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		if (serviceContext == null) {
+			serviceContext = new ServiceContext();
+
+			ServiceContextThreadLocal.pushServiceContext(serviceContext);
+		}
+
+		serviceContext = (ServiceContext)serviceContext.clone();
+
+		serviceContext.setCompanyId(group.getCompanyId());
+		serviceContext.setLanguageId(
+			_language.getLanguageId(siteDefaultLocale));
+		serviceContext.setScopeGroupId(group.getGroupId());
+		serviceContext.setUserId(userId);
+
+		return serviceContext;
 	}
 
 	private String _getValidEmailAddresses(
@@ -607,7 +643,13 @@ public class EmailNotificationType extends BaseNotificationType {
 			"(?:\\w(?:[\\w-]*\\w)?\\.)+(\\w(?:[\\w-]*\\w))");
 
 	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference
 	private InfoItemServiceRegistry _infoItemServiceRegistry;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private NotificationQueueEntryAttachmentLocalService

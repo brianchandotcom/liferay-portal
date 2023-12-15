@@ -7,11 +7,13 @@ package com.liferay.client.extension.web.internal.type.deployer;
 
 import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.client.extension.type.CET;
+import com.liferay.client.extension.type.CustomCheckoutStepCET;
 import com.liferay.client.extension.type.CustomElementCET;
 import com.liferay.client.extension.type.EditorConfigContributorCET;
 import com.liferay.client.extension.type.IFrameCET;
 import com.liferay.client.extension.type.JSImportMapsEntryCET;
 import com.liferay.client.extension.type.deployer.CETDeployer;
+import com.liferay.client.extension.type.deployer.CommerceCETDeployer;
 import com.liferay.client.extension.util.CETUtil;
 import com.liferay.client.extension.web.internal.frontend.js.importmaps.extender.ClientExtensionJSImportMapsContributor;
 import com.liferay.client.extension.web.internal.portlet.CETPortletFriendlyURLMapper;
@@ -26,6 +28,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.model.Release;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
 import com.liferay.portal.kernel.util.Validator;
@@ -54,7 +57,13 @@ public class CETDeployerImpl implements CETDeployer {
 	public List<ServiceRegistration<?>> deploy(CET cet) {
 		if (Objects.equals(
 				cet.getType(),
-				ClientExtensionEntryConstants.TYPE_CUSTOM_ELEMENT)) {
+				ClientExtensionEntryConstants.TYPE_CUSTOM_CHECKOUT_STEP)) {
+
+			return _deploy((CustomCheckoutStepCET)cet);
+		}
+		else if (Objects.equals(
+					cet.getType(),
+					ClientExtensionEntryConstants.TYPE_CUSTOM_ELEMENT)) {
 
 			return _deploy((CustomElementCET)cet);
 		}
@@ -83,6 +92,19 @@ public class CETDeployerImpl implements CETDeployer {
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
+	}
+
+	private List<ServiceRegistration<?>> _deploy(
+		CustomCheckoutStepCET customCheckoutStepCET) {
+
+		CommerceCETDeployer commerceCETDeployer =
+			_commerceCETDeployerSnapshot.get();
+
+		if (commerceCETDeployer == null) {
+			return Collections.emptyList();
+		}
+
+		return commerceCETDeployer.deploy(customCheckoutStepCET);
 	}
 
 	private List<ServiceRegistration<?>> _deploy(
@@ -189,6 +211,10 @@ public class CETDeployerImpl implements CETDeployer {
 		return _bundleContext.registerService(
 			clazz, registrable, registrable.getDictionary());
 	}
+
+	private static final Snapshot<CommerceCETDeployer>
+		_commerceCETDeployerSnapshot = new Snapshot<>(
+			CETDeployer.class, CommerceCETDeployer.class);
 
 	private BundleContext _bundleContext;
 

@@ -100,26 +100,28 @@ const TicketPreview: React.FC<{queryClient: QueryClient; ticket: Ticket}> = ({
 			ref={setNodeRef}
 			{...listeners}
 			{...attributes}
-			className="ticket-preview-container"
+			className="bg-white border-light mb-3 rounded ticket-preview-container"
 			style={style}
 		>
 			<ClayPanel
 				collapsable
 				displayTitle={
 					<ClayPanel.Title>
-						<div className="ticket-subject">{ticket.subject}</div>
+						<h5 className="text-dark ticket-subject">
+							{ticket.subject}
+						</h5>
 						<div className="mt-3">
 							<img
-								className="user-icon"
+								className="rounded-circle"
+								height={25}
 								src={getUserIcon(ticket)}
+								width={25}
 							/>
-							<div className="d-inline ml-2 ticket-assignee">
-								{ticket.assignee ? (
-									<b>{ticket.assignee?.familyName}</b>
-								) : (
-									<i>Not assigned</i>
-								)}
-							</div>
+							<i className="ml-2">
+								{ticket.assignee
+									? ticket.assignee?.familyName
+									: 'Not assigned'}
+							</i>
 						</div>
 					</ClayPanel.Title>
 				}

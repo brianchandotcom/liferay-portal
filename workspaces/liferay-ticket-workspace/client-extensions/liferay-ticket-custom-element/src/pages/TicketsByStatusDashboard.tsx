@@ -131,7 +131,7 @@ const TicketsByStatusDashboard: React.FC<{
 	});
 
 	return (
-		<div className="container">
+		<div className="container-fluid">
 			<header className="align-items-center bg-light mb-3 p-3 row">
 				{isLoading ? (
 					<ClayLoadingIndicator

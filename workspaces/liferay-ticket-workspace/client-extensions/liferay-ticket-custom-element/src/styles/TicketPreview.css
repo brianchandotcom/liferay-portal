@@ -1,19 +1,5 @@
-.ticket-preview-container {
-	background-color: white;
-	border: 1px solid #ccc0;
-	border-radius: 5px;
-	margin-bottom: 10px;
-}
-
 .ticket-preview-container .panel {
 	margin-bottom: 0;
-}
-
-.ticket-preview-container .panel .panel-header .ticket-subject {
-	color: #041515;
-	display: block;
-	font-size: 15px;
-	text-transform: none;
 }
 
 .ticket-preview-container .panel .show .ticket-subject {
@@ -28,17 +14,6 @@
 	white-space: nowrap;
 }
 
-.ticket-preview-container .panel .ticket-assignee {
-	color: #000000de;
-	font-size: 10px;
-}
-
 .ticket-preview-container:hover {
 	background-color: #f4f9f9 !important;
-}
-
-.user-icon {
-	border-radius: 25px;
-	height: 25px;
-	width: 25px;
 }

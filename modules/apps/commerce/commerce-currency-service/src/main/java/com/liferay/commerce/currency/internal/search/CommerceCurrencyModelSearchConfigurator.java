@@ -6,6 +6,7 @@
 package com.liferay.commerce.currency.internal.search;
 
 import com.liferay.commerce.currency.internal.search.spi.model.index.contributor.CommerceCurrencyModelIndexerWriterContributor;
+import com.liferay.commerce.currency.internal.search.spi.model.result.contributor.CommerceCurrencyModelSummaryContributor;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
@@ -52,6 +53,9 @@ public class CommerceCurrencyModelSearchConfigurator
 			new CommerceCurrencyModelIndexerWriterContributor(
 				_commerceCurrencyLocalService,
 				_dynamicQueryBatchIndexingActionableFactory);
+
+		_modelSummaryContributor =
+			new CommerceCurrencyModelSummaryContributor();
 	}
 
 	@Reference
@@ -63,10 +67,6 @@ public class CommerceCurrencyModelSearchConfigurator
 
 	private ModelIndexerWriterContributor<CommerceCurrency>
 		_modelIndexWriterContributor;
-
-	@Reference(
-		target = "(indexer.class.name=com.liferay.commerce.currency.model.CommerceCurrency)"
-	)
 	private ModelSummaryContributor _modelSummaryContributor;
 
 }

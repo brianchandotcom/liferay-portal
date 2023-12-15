@@ -272,7 +272,7 @@ public class CheckIndividualSegmentsSchedulerJobConfiguration
 					Collections.singletonList(
 						OrderByField.desc("dateModified")));
 
-			_deleteSegmentEntries(individualSegmentResults);
+			_deleteSegmentsEntries(individualSegmentResults);
 		}
 		catch (RuntimeException runtimeException) {
 			_log.error(
@@ -315,7 +315,7 @@ public class CheckIndividualSegmentsSchedulerJobConfiguration
 		}
 	}
 
-	private void _deleteSegmentEntries(
+	private void _deleteSegmentsEntries(
 			Results<IndividualSegment> individualSegmentResults)
 		throws PortalException {
 

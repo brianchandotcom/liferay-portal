@@ -83,7 +83,7 @@ public class IndividualSegmentsCheckerTest {
 	}
 
 	@Test
-	public void testCheckIndividualSegments() throws Exception {
+	public void testCheckIndividualSegmentsEntries() throws Exception {
 		try (CompanyConfigurationTemporarySwapper
 				companyConfigurationTemporarySwapper =
 					new CompanyConfigurationTemporarySwapper(
@@ -241,14 +241,14 @@ public class IndividualSegmentsCheckerTest {
 	}
 
 	@Test
-	public void testIndividualSegmentsDeleteSegmentEntries() throws Exception {
+	public void testIndividualSegmentsDeleteSegmentsEntries() throws Exception {
 		SegmentsTestUtil.addSegmentsEntry(
-			"1234567", "Segment 1", null, null,
+			"1234567", "Segments Entry 1", null, null,
 			SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND,
 			User.class.getName(),
 			ServiceContextTestUtil.getServiceContext(_company.getGroupId()));
 		SegmentsTestUtil.addSegmentsEntry(
-			"2345678", "Segment 2", null, null,
+			"2345678", "Segments Entry 2", null, null,
 			SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND,
 			User.class.getName(),
 			ServiceContextTestUtil.getServiceContext(_company.getGroupId()));
@@ -303,7 +303,7 @@ public class IndividualSegmentsCheckerTest {
 										JSONUtil.put(
 											"id", "1234567"
 										).put(
-											"name", "Segment 1"
+											"name", "Segments Entry 1"
 										)))
 							).put(
 								"page",
@@ -338,7 +338,7 @@ public class IndividualSegmentsCheckerTest {
 			SegmentsEntry segmentsEntry = segmentsEntries.get(0);
 
 			Assert.assertEquals(
-				"Segment 1",
+				"Segments Entry 1",
 				segmentsEntry.getName(LocaleUtil.getSiteDefault()));
 		}
 	}

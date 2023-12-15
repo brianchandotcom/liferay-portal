@@ -145,7 +145,10 @@ describe('DownloadReportModal CSV', () => {
 
 	it('renders component', () => {
 		const {container, getByRole, getByTestId, getByText} = render(
-			<WrapperCSVComponent />
+			<WrapperCSVComponent
+				date={{end: moment(0), start: moment(0)}}
+				minDate={moment(0)}
+			/>
 		);
 
 		fireEvent.click(

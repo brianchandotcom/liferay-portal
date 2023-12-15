@@ -7,6 +7,7 @@ import {getLocalizableLabel} from '@liferay/object-js-components-web';
 import {Edge, Node, isEdge, isNode} from 'react-flow-renderer';
 
 import {defaultLanguageId} from '../../../utils/constants';
+import {getObjectDefinitionNodeActions} from '../../ViewObjectDefinitions/objectDefinitionUtil';
 import {manyMarkerId} from '../Edges/ManyMarker';
 import {oneMarkerId} from '../Edges/OneMarker';
 import {
@@ -34,6 +35,7 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 		case TYPES.ADD_OBJECT_DEFINITION_TO_OBJECT_FOLDER: {
 			const {
 				dbTableName,
+				dispatch,
 				elements,
 				leftSidebarItems,
 				newObjectDefinition,
@@ -44,6 +46,11 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 			const objectDefinitionNodes = elements.filter((element) =>
 				isNode(element)
 			) as Node<ObjectDefinitionNodeData>[];
+
+			const {
+				baseResourceURL,
+				objectDefinitionPermissionsURL,
+			} = state;
 
 			let objectDefinitionNodePosition;
 
@@ -64,8 +71,22 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 						leftSidebarItem.objectFolderName ===
 						selectedObjectFolder.name
 					) {
+						const kebabOptions = getObjectDefinitionNodeActions({
+							baseResourceURL,
+							dispatch,
+							hasObjectDefinitionDeleteResourcePermission: !!newObjectDefinition
+								.actions.delete,
+							hasObjectDefinitionManagePermissionsResourcePermission: !!newObjectDefinition
+								.actions.permissions,
+							objectDefinitionId: newObjectDefinition.id,
+							objectDefinitionName: newObjectDefinition.name,
+							objectDefinitionPermissionsURL,
+							status: newObjectDefinition.status,
+						});
+
 						newLeftSidebarObjectDefinitionItem = {
 							id: newObjectDefinition.id,
+							kebabOptions,
 							label: getLocalizableLabel(
 								newObjectDefinition.defaultLanguageId,
 								newObjectDefinition.label,
@@ -424,21 +445,36 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 
 		case TYPES.UPDATE_MODEL_BUILDER_STRUCTURE: {
 			const {
+				dispatch,
 				objectFolders,
 				rightSidebarType,
 				selectedObjectFolderName,
 				selectedObjectRelationshipId,
 			} = action.payload;
-
+			const {baseResourceURL, objectDefinitionPermissionsURL} = state;
 			const newLeftSidebarItems = objectFolders.map((objectFolder) => {
 				const leftSidebarObjectDefinitionItems = objectFolder.objectDefinitions?.map(
 					(objectDefinition) => {
+						const kebabOptions = getObjectDefinitionNodeActions({
+							baseResourceURL,
+							dispatch,
+							hasObjectDefinitionDeleteResourcePermission:
+								objectDefinition.hasObjectDefinitionDeleteResourcePermission,
+							hasObjectDefinitionManagePermissionsResourcePermission:
+								objectDefinition.hasObjectDefinitionManagePermissionsResourcePermission,
+							objectDefinitionId: objectDefinition.id,
+							objectDefinitionName: objectDefinition.name,
+							objectDefinitionPermissionsURL,
+							status: objectDefinition.status,
+						});
+
 						return {
 							dbTableName: objectDefinition.dbTableName,
 							externalReferenceCode:
 								objectDefinition.externalReferenceCode,
 							hiddenObjectDefinitionNode: false,
 							id: objectDefinition.id,
+							kebabOptions,
 							label: getLocalizableLabel(
 								objectDefinition.defaultLanguageId,
 								objectDefinition.label,
@@ -1169,11 +1205,16 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 		}
 
 		case TYPES.UPDATE_VISIBILITY_MODEL_BUILDER_MODALS: {
-			const {modelBuilderModals} = action.payload;
+			const {updatedModelBuilderModals} = action.payload;
+
+			const {modelBuilderModals} = state;
 
 			return {
 				...state,
-				modelBuilderModals,
+				modelBuilderModals: {
+					...modelBuilderModals,
+					...updatedModelBuilderModals,
+				},
 			};
 		}
 

@@ -49,27 +49,6 @@ export default function LeftSidebarTreeView({
 
 	const {edges, nodes} = useStoreState((state) => state);
 
-	const changeObjectDefinitionNodeViewButton = (
-		hiddenObjectDefinitionNode: boolean,
-		dispatch: Function
-	) => (
-		<div className="lfr-objects__model-builder-left-sidebar-show-folders-button">
-			<ClayButtonWithIcon
-				aria-label={
-					hiddenObjectDefinitionNode
-						? Liferay.Language.get('hidden')
-						: Liferay.Language.get('show')
-				}
-				displayType="unstyled"
-				onClick={(event) => {
-					event.stopPropagation();
-					dispatch();
-				}}
-				symbol={hiddenObjectDefinitionNode ? 'hidden' : 'view'}
-			/>
-		</div>
-	);
-
 	const handleMove = async ({
 		objectDefinitionId,
 		objectFolderName,
@@ -114,7 +93,7 @@ export default function LeftSidebarTreeView({
 					);
 
 					dispatch({
-						payload,
+						payload: {...payload, dispatch},
 						type: TYPES.UPDATE_MODEL_BUILDER_STRUCTURE,
 					});
 				}, 200);
@@ -280,21 +259,37 @@ export default function LeftSidebarTreeView({
 								)}
 							</div>
 
-							{!showActions &&
-								changeObjectDefinitionNodeViewButton(
-									leftSidebarItem.hiddenObjectFolderObjectDefinitionNodes,
-									() =>
-										dispatch({
-											payload: {
-												hiddenObjectFolderObjectDefinitionNodes:
-													leftSidebarItem.hiddenObjectFolderObjectDefinitionNodes,
-												leftSidebarItem,
-												objectDefinitionNodes: nodes,
-												objectRelationshipEdges: edges,
-											},
-											type: TYPES.BULK_CHANGE_NODE_VIEW,
-										})
-								)}
+							{!showActions && (
+								<div className="lfr-objects__model-builder-left-sidebar-show-folders-button">
+									<ClayButtonWithIcon
+										aria-label={
+											leftSidebarItem.hiddenObjectFolderObjectDefinitionNodes
+												? Liferay.Language.get('hidden')
+												: Liferay.Language.get('show')
+										}
+										displayType="unstyled"
+										onClick={(event) => {
+											event.stopPropagation();
+											dispatch({
+												payload: {
+													hiddenObjectFolderObjectDefinitionNodes:
+														leftSidebarItem.hiddenObjectFolderObjectDefinitionNodes,
+													leftSidebarItem,
+													objectDefinitionNodes: nodes,
+													objectRelationshipEdges: edges,
+												},
+												type:
+													TYPES.BULK_CHANGE_NODE_VIEW,
+											});
+										}}
+										symbol={
+											leftSidebarItem.hiddenObjectFolderObjectDefinitionNodes
+												? 'hidden'
+												: 'view'
+										}
+									/>
+								</div>
+							)}
 						</div>
 					</TreeView.ItemStack>
 
@@ -304,6 +299,7 @@ export default function LeftSidebarTreeView({
 						{({
 							hiddenObjectDefinitionNode,
 							id,
+							kebabOptions,
 							label,
 							linked,
 							name,
@@ -358,22 +354,60 @@ export default function LeftSidebarTreeView({
 												</>
 											)
 										) : (
-											changeObjectDefinitionNodeViewButton(
-												hiddenObjectDefinitionNode,
-												() =>
-													dispatch({
-														payload: {
-															hiddenObjectDefinitionNode,
-															objectDefinitionId: id,
-															objectDefinitionName: name,
-															objectDefinitionNodes: nodes,
-															objectRelationshipEdges: edges,
-															selectedSidebarItem: leftSidebarItem,
-														},
-														type:
-															TYPES.CHANGE_NODE_VIEW,
-													})
-											)
+											<div className="lfr-objects__model-builder-left-sidebar-show-folders-button">
+												<ClayButtonWithIcon
+													aria-label={
+														hiddenObjectDefinitionNode
+															? Liferay.Language.get(
+																	'hidden'
+															  )
+															: Liferay.Language.get(
+																	'show'
+															  )
+													}
+													displayType="unstyled"
+													onClick={(event) => {
+														event.stopPropagation();
+														dispatch({
+															payload: {
+																hiddenObjectDefinitionNode,
+																objectDefinitionId: id,
+																objectDefinitionName: name,
+																objectDefinitionNodes: nodes,
+																objectRelationshipEdges: edges,
+																selectedSidebarItem: leftSidebarItem,
+															},
+															type:
+																TYPES.CHANGE_NODE_VIEW,
+														});
+													}}
+													symbol={
+														hiddenObjectDefinitionNode
+															? 'hidden'
+															: 'view'
+													}
+												/>
+
+												<ClayDropDownWithItems
+													items={kebabOptions}
+													menuElementAttrs={{
+														className:
+															'lfr-objects__model-builder-left-sidebar-dropdown',
+													}}
+													trigger={
+														<ClayButton
+															aria-label={Liferay.Language.get(
+																'actions'
+															)}
+															displayType={null}
+															monospaced
+															size="sm"
+														>
+															<Icon symbol="ellipsis-v" />
+														</ClayButton>
+													}
+												/>
+											</div>
 										)
 									}
 									active={selected}

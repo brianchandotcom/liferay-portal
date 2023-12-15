@@ -41,7 +41,7 @@ export function ObjectDefinitionNode({
 	},
 }: NodeProps<ObjectDefinitionNodeData>) {
 	const [
-		{baseResourceURL, modelBuilderModals, objectDefinitionPermissionsURL},
+		{baseResourceURL, objectDefinitionPermissionsURL},
 		dispatch,
 	] = useObjectFolderContext();
 
@@ -75,17 +75,6 @@ export function ObjectDefinitionNode({
 		}
 	};
 
-	const handleDeleteObjectDefinition = (
-		deleteObjectDefinition: DeletedObjectDefinition
-	) => {
-		dispatch({
-			payload: {
-				newDeleteObjectDefinition: deleteObjectDefinition,
-			},
-			type: TYPES.SET_DELETE_OBJECT_DEFINITION,
-		});
-	};
-
 	const handleSelectObjectDefinitionNode = () => {
 		const {edges, nodes} = store.getState();
 
@@ -96,42 +85,6 @@ export function ObjectDefinitionNode({
 				selectedObjectDefinitionId: id.toString(),
 			},
 			type: TYPES.SET_SELECTED_OBJECT_DEFINITION_NODE,
-		});
-	};
-
-	const handleShowDeleteObjectDefinitionModal = () => {
-		dispatch({
-			payload: {
-				modelBuilderModals: {
-					...modelBuilderModals,
-					deleteObjectDefinition: true,
-				},
-			},
-			type: TYPES.UPDATE_VISIBILITY_MODEL_BUILDER_MODALS,
-		});
-	};
-
-	const handleShowEditObjectDefinitionExternalReferenceCodeModal = () => {
-		dispatch({
-			payload: {
-				modelBuilderModals: {
-					...modelBuilderModals,
-					editObjectDefinitionExternalReferenceCode: true,
-				},
-			},
-			type: TYPES.UPDATE_VISIBILITY_MODEL_BUILDER_MODALS,
-		});
-	};
-
-	const handleShowRedirectObjectDefinitionModal = () => {
-		dispatch({
-			payload: {
-				modelBuilderModals: {
-					...modelBuilderModals,
-					redirectToEditObjectDefinitionDetails: true,
-				},
-			},
-			type: TYPES.UPDATE_VISIBILITY_MODEL_BUILDER_MODALS,
 		});
 	};
 
@@ -156,10 +109,7 @@ export function ObjectDefinitionNode({
 					dbTableName={dbTableName}
 					dropDownItems={getObjectDefinitionNodeActions({
 						baseResourceURL,
-						handleDeleteObjectDefinition,
-						handleShowDeleteObjectDefinitionModal,
-						handleShowEditObjectDefinitionExternalReferenceCodeModal,
-						handleShowRedirectObjectDefinitionModal,
+						dispatch,
 						hasObjectDefinitionDeleteResourcePermission,
 						hasObjectDefinitionManagePermissionsResourcePermission,
 						objectDefinitionId: id,

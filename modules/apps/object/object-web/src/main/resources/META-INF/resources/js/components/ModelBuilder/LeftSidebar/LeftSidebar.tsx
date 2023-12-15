@@ -27,7 +27,6 @@ export default function LeftSidebar() {
 		{
 			isLoadingObjectFolder,
 			leftSidebarItems,
-			modelBuilderModals,
 			selectedObjectFolder,
 			showSidebars,
 		},
@@ -112,8 +111,7 @@ export default function LeftSidebar() {
 					onClick={() =>
 						dispatch({
 							payload: {
-								modelBuilderModals: {
-									...modelBuilderModals,
+								updatedModelBuilderModals: {
 									addObjectDefinition: true,
 								},
 							},

@@ -253,7 +253,7 @@ export function RightSidebarObjectRelationshipDetails({
 		);
 
 		dispatch({
-			payload: {...payload, rightSidebarType: 'empty'},
+			payload: {...payload, dispatch, rightSidebarType: 'empty'},
 			type: TYPES.UPDATE_MODEL_BUILDER_STRUCTURE,
 		});
 	};

@@ -26,7 +26,7 @@ export default function EditObjectFolderHeader({
 	selectedObjectFolder,
 }: EditObjectFolderHeaderProps) {
 	const [
-		{modelBuilderModals, showChangesSaved, showSidebars},
+		{showChangesSaved, showSidebars},
 		dispatch,
 	] = useObjectFolderContext();
 
@@ -108,8 +108,7 @@ export default function EditObjectFolderHeader({
 								onClick={() =>
 									dispatch({
 										payload: {
-											modelBuilderModals: {
-												...modelBuilderModals,
+											updatedModelBuilderModals: {
 												editObjectFolder: true,
 											},
 										},
@@ -152,8 +151,7 @@ export default function EditObjectFolderHeader({
 						onClick={() => {
 							dispatch({
 								payload: {
-									modelBuilderModals: {
-										...modelBuilderModals,
+									updatedModelBuilderModals: {
 										publishObjectDefinitions: true,
 									},
 								},

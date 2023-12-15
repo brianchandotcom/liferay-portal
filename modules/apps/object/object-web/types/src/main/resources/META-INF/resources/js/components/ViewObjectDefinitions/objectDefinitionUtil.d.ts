@@ -4,22 +4,19 @@
  */
 
 import {SetStateAction} from 'react';
-import {DropDownItems} from '../ModelBuilder/types';
+import {DropDownItems, TAction} from '../ModelBuilder/types';
 import {ModalImportProperties} from './ViewObjectDefinitions';
 declare type DeleteObjectDefinitionProps = {
 	baseResourceURL: string;
-	handleDeleteObjectDefinition: (value: DeletedObjectDefinition) => void;
-	handleShowDeleteObjectDefinitionModal: () => void;
+	handleDeleteObjectDefinition?: (value: DeletedObjectDefinition) => void;
+	handleShowDeleteObjectDefinitionModal?: () => void;
 	objectDefinitionId: number;
 	objectDefinitionName: string;
 	onAfterDeleteObjectDefinition?: () => void;
 };
 declare type ObjectDefinitionNodeActionsProps = {
 	baseResourceURL: string;
-	handleDeleteObjectDefinition: (value: DeletedObjectDefinition) => void;
-	handleShowDeleteObjectDefinitionModal: () => void;
-	handleShowEditObjectDefinitionExternalReferenceCodeModal: () => void;
-	handleShowRedirectObjectDefinitionModal: () => void;
+	dispatch: React.Dispatch<TAction>;
 	hasObjectDefinitionDeleteResourcePermission: boolean;
 	hasObjectDefinitionManagePermissionsResourcePermission: boolean;
 	objectDefinitionId: number;
@@ -46,7 +43,15 @@ export declare function deleteObjectDefinition({
 	objectDefinitionId,
 	objectDefinitionName,
 	onAfterDeleteObjectDefinition,
-}: DeleteObjectDefinitionProps): Promise<void>;
+}: DeleteObjectDefinitionProps): Promise<
+	| {
+			hasObjectRelationship: boolean;
+			id: number;
+			name: string;
+			objectEntriesCount: number;
+	  }
+	| undefined
+>;
 export declare function deleteRelationship(
 	id: number,
 	reloadAfterDeletion?: boolean
@@ -60,10 +65,7 @@ export declare function getDbTableName({
 }): Promise<string>;
 export declare function getObjectDefinitionNodeActions({
 	baseResourceURL,
-	handleDeleteObjectDefinition,
-	handleShowDeleteObjectDefinitionModal,
-	handleShowEditObjectDefinitionExternalReferenceCodeModal,
-	handleShowRedirectObjectDefinitionModal,
+	dispatch,
 	hasObjectDefinitionDeleteResourcePermission,
 	hasObjectDefinitionManagePermissionsResourcePermission,
 	objectDefinitionId,

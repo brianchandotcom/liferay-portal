@@ -26,7 +26,7 @@ export default function ObjectDefinitionNodeFooter({
 	isLinkedObjectDefinition,
 	showAllObjectFields,
 }: ObjectDefinitionNodeFooterProps) {
-	const [{modelBuilderModals}, dispatch] = useObjectFolderContext();
+	const [_, dispatch] = useObjectFolderContext();
 
 	return (
 		<>
@@ -62,8 +62,7 @@ export default function ObjectDefinitionNodeFooter({
 								onClick={() =>
 									dispatch({
 										payload: {
-											modelBuilderModals: {
-												...modelBuilderModals,
+											updatedModelBuilderModals: {
 												addObjectField: true,
 											},
 										},
@@ -84,8 +83,7 @@ export default function ObjectDefinitionNodeFooter({
 								onClick={() => {
 									dispatch({
 										payload: {
-											modelBuilderModals: {
-												...modelBuilderModals,
+											updatedModelBuilderModals: {
 												addObjectRelationship: true,
 											},
 										},

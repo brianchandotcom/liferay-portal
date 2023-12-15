@@ -12,7 +12,7 @@ import {useObjectFolderContext} from '../ModelBuilderContext/objectFolderContext
 import {TYPES} from '../ModelBuilderContext/typesEnum';
 
 export default function EmptyObjectFolderCard() {
-	const [{modelBuilderModals}, dispatch] = useObjectFolderContext();
+	const [_, dispatch] = useObjectFolderContext();
 
 	return (
 		<ClayCard className="lfr-objects__model-builder-empty-object-folder-card-container">
@@ -38,8 +38,7 @@ export default function EmptyObjectFolderCard() {
 					onClick={() =>
 						dispatch({
 							payload: {
-								modelBuilderModals: {
-									...modelBuilderModals,
+								updatedModelBuilderModals: {
 									addObjectDefinition: true,
 								},
 							},

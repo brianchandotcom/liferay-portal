@@ -13,13 +13,14 @@ import {
 	firstLetterUppercase,
 	removeAllSpecialCharacters,
 } from '../../utils/string';
-import {DropDownItems} from '../ModelBuilder/types';
+import {TYPES} from '../ModelBuilder/ModelBuilderContext/typesEnum';
+import {DropDownItems, TAction} from '../ModelBuilder/types';
 import {ModalImportProperties} from './ViewObjectDefinitions';
 
 type DeleteObjectDefinitionProps = {
 	baseResourceURL: string;
-	handleDeleteObjectDefinition: (value: DeletedObjectDefinition) => void;
-	handleShowDeleteObjectDefinitionModal: () => void;
+	handleDeleteObjectDefinition?: (value: DeletedObjectDefinition) => void;
+	handleShowDeleteObjectDefinitionModal?: () => void;
 	objectDefinitionId: number;
 	objectDefinitionName: string;
 	onAfterDeleteObjectDefinition?: () => void;
@@ -27,10 +28,7 @@ type DeleteObjectDefinitionProps = {
 
 type ObjectDefinitionNodeActionsProps = {
 	baseResourceURL: string;
-	handleDeleteObjectDefinition: (value: DeletedObjectDefinition) => void;
-	handleShowDeleteObjectDefinitionModal: () => void;
-	handleShowEditObjectDefinitionExternalReferenceCodeModal: () => void;
-	handleShowRedirectObjectDefinitionModal: () => void;
+	dispatch: React.Dispatch<TAction>;
 	hasObjectDefinitionDeleteResourcePermission: boolean;
 	hasObjectDefinitionManagePermissionsResourcePermission: boolean;
 	objectDefinitionId: number;
@@ -113,13 +111,22 @@ export async function deleteObjectDefinition({
 		return;
 	}
 
-	handleDeleteObjectDefinition({
-		...{id: objectDefinitionId, name: objectDefinitionName},
+	const newDeleteObjectDefinition = {
 		hasObjectRelationship,
+		id: objectDefinitionId,
+		name: objectDefinitionName,
 		objectEntriesCount,
-	});
+	};
 
-	handleShowDeleteObjectDefinitionModal();
+	if (handleDeleteObjectDefinition) {
+		handleDeleteObjectDefinition(newDeleteObjectDefinition);
+	}
+
+	if (handleShowDeleteObjectDefinitionModal) {
+		handleShowDeleteObjectDefinitionModal();
+	}
+
+	return newDeleteObjectDefinition;
 }
 
 export async function deleteRelationship(
@@ -181,10 +188,7 @@ export async function getDbTableName({
 
 export function getObjectDefinitionNodeActions({
 	baseResourceURL,
-	handleDeleteObjectDefinition,
-	handleShowDeleteObjectDefinitionModal,
-	handleShowEditObjectDefinitionExternalReferenceCodeModal,
-	handleShowRedirectObjectDefinitionModal,
+	dispatch,
 	hasObjectDefinitionDeleteResourcePermission,
 	hasObjectDefinitionManagePermissionsResourcePermission,
 	objectDefinitionId,
@@ -196,24 +200,6 @@ export function getObjectDefinitionNodeActions({
 		objectDefinitionId
 	);
 
-	const handleClickDeleteObjectDefinition = () => {
-		deleteObjectDefinition({
-			baseResourceURL,
-			handleDeleteObjectDefinition,
-			handleShowDeleteObjectDefinitionModal,
-			objectDefinitionId,
-			objectDefinitionName,
-		});
-	};
-
-	const handleClickManagePermissions = (event: React.MouseEvent) => {
-		event.stopPropagation();
-		openModal({
-			title: Liferay.Language.get('permissions'),
-			url: PermissionUrl,
-		});
-	};
-
 	const kebabOptions = [
 		{
 			label: sub(
@@ -221,7 +207,14 @@ export function getObjectDefinitionNodeActions({
 				Liferay.Language.get('page view')
 			),
 			onClick: () => {
-				handleShowRedirectObjectDefinitionModal();
+				dispatch({
+					payload: {
+						updatedModelBuilderModals: {
+							redirectToEditObjectDefinitionDetails: true,
+						},
+					},
+					type: TYPES.UPDATE_VISIBILITY_MODEL_BUILDER_MODALS,
+				});
 			},
 			symbolRight: 'shortcut',
 		},
@@ -231,7 +224,14 @@ export function getObjectDefinitionNodeActions({
 				Liferay.Language.get('erc')
 			),
 			onClick: () => {
-				handleShowEditObjectDefinitionExternalReferenceCodeModal();
+				dispatch({
+					payload: {
+						updatedModelBuilderModals: {
+							editObjectDefinitionExternalReferenceCode: true,
+						},
+					},
+					type: TYPES.UPDATE_VISIBILITY_MODEL_BUILDER_MODALS,
+				});
 			},
 			symbolLeft: 'info-panel-closed',
 		},
@@ -244,7 +244,13 @@ export function getObjectDefinitionNodeActions({
 				Liferay.Language.get('manage-x'),
 				Liferay.Language.get('permissions')
 			),
-			onClick: handleClickManagePermissions,
+			onClick: (event: React.MouseEvent) => {
+				event.stopPropagation();
+				openModal({
+					title: Liferay.Language.get('permissions'),
+					url: PermissionUrl,
+				});
+			},
 			symbolLeft: 'users',
 		});
 	}
@@ -256,7 +262,30 @@ export function getObjectDefinitionNodeActions({
 				Liferay.Language.get('delete-x'),
 				Liferay.Language.get('object')
 			),
-			onClick: handleClickDeleteObjectDefinition,
+			onClick: async () => {
+				const newDeleteObjectDefinition = await deleteObjectDefinition({
+					baseResourceURL,
+					objectDefinitionId,
+					objectDefinitionName,
+				});
+
+				if (newDeleteObjectDefinition) {
+					dispatch({
+						payload: {
+							newDeleteObjectDefinition,
+						},
+						type: TYPES.SET_DELETE_OBJECT_DEFINITION,
+					});
+					dispatch({
+						payload: {
+							updatedModelBuilderModals: {
+								deleteObjectDefinition: true,
+							},
+						},
+						type: TYPES.UPDATE_VISIBILITY_MODEL_BUILDER_MODALS,
+					});
+				}
+			},
 			symbolLeft: 'trash',
 		});
 	}

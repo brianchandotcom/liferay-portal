@@ -32,7 +32,6 @@
 		&:hover {
 			.lfr-objects__model-builder-left-sidebar-go-to-folder-button {
 				visibility: visible;
-
 				button {
 					padding-left: 0;
 					padding-right: 0;
@@ -42,6 +41,10 @@
 	}
 
 	&-current-object-folder-group {
+		.lfr-objects__model-builder-left-sidebar-show-folders-button {
+			display: flex;
+			visibility: hidden;
+		}
 		&:hover {
 			.lfr-objects__model-builder-left-sidebar-show-folders-button {
 				visibility: visible;

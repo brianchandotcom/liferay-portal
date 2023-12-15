@@ -152,12 +152,6 @@ export default function ViewObjectDefinitions({
 		unbindFromRootObjectDefinition: false,
 	});
 
-	const handleDeleteObjectDefinition = (
-		deleteObjectDefinition: DeletedObjectDefinition
-	) => {
-		setDeletedObjectDefinition(deleteObjectDefinition);
-	};
-
 	function handleShowDeleteObjectDefinitionModal() {
 		setShowModal((previousState: ViewObjectDefinitionsModals) => ({
 			...previousState,
@@ -238,7 +232,7 @@ export default function ViewObjectDefinitions({
 			if (action.data.id === 'deleteObjectDefinition') {
 				deleteObjectDefinition({
 					baseResourceURL,
-					handleDeleteObjectDefinition,
+					handleDeleteObjectDefinition: setDeletedObjectDefinition,
 					handleShowDeleteObjectDefinitionModal,
 					objectDefinitionId: itemData.id,
 					objectDefinitionName: itemData.name,
@@ -545,7 +539,7 @@ export default function ViewObjectDefinitions({
 			{showModal.deleteObjectDefinition && (
 				<ModalDeleteObjectDefinition
 					handleDeleteObjectDefinition={() =>
-						handleDeleteObjectDefinition
+						setDeletedObjectDefinition
 					}
 					handleOnClose={() => {
 						setShowModal(

@@ -208,11 +208,13 @@ definition {
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
 				value1 = "Entry");
 
-			PortletEntry.save();
+			Button.clickSave();
 		}
 
 		task ("Then an error is displayed and the object entry isn't created") {
-			AssertElementPresent(locator1 = "Message#ERROR");
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR",
+				value1 = "The Text Field is already in use. Please enter a unique Text Field.");
 
 			ObjectAdmin.goToCustomObject(objectName = "CustomObject198382");
 

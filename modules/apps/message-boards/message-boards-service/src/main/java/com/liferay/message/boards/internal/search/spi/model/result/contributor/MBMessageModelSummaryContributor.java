@@ -15,18 +15,15 @@ import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContri
 
 import java.util.Locale;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Luan Maoski
  */
-@Component(
-	property = "indexer.class.name=com.liferay.message.boards.model.MBMessage",
-	service = ModelSummaryContributor.class
-)
 public class MBMessageModelSummaryContributor
 	implements ModelSummaryContributor {
+
+	public MBMessageModelSummaryContributor(Localization localization) {
+		_localization = localization;
+	}
 
 	@Override
 	public Summary getSummary(
@@ -56,7 +53,6 @@ public class MBMessageModelSummaryContributor
 		return new Summary(title, content);
 	}
 
-	@Reference
-	private Localization _localization;
+	private final Localization _localization;
 
 }

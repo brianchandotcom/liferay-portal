@@ -6,10 +6,12 @@
 package com.liferay.message.boards.internal.search;
 
 import com.liferay.message.boards.internal.search.spi.model.index.contributor.MBMessageModelIndexerWriterContributor;
+import com.liferay.message.boards.internal.search.spi.model.result.contributor.MBMessageModelSummaryContributor;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.message.boards.service.MBThreadLocalService;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
@@ -69,11 +71,17 @@ public class MBMessageModelSearchConfigurator
 			new MBMessageModelIndexerWriterContributor(
 				_dynamicQueryBatchIndexingActionableFactory,
 				_mbMessageLocalService, _mbThreadLocalService);
+
+		_modelSummaryContributor = new MBMessageModelSummaryContributor(
+			_localization);
 	}
 
 	@Reference
 	private DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;
+
+	@Reference
+	private Localization _localization;
 
 	@Reference
 	private MBMessageLocalService _mbMessageLocalService;
@@ -83,10 +91,6 @@ public class MBMessageModelSearchConfigurator
 
 	private ModelIndexerWriterContributor<MBMessage>
 		_modelIndexWriterContributor;
-
-	@Reference(
-		target = "(indexer.class.name=com.liferay.message.boards.model.MBMessage)"
-	)
 	private ModelSummaryContributor _modelSummaryContributor;
 
 	@Reference(

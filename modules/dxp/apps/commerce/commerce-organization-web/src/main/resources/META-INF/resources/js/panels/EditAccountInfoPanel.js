@@ -9,10 +9,11 @@ import ClayIcon from '@clayui/icon';
 import classnames from 'classnames';
 import {openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useCallback, useContext, useState} from 'react';
+import React, {useCallback, useContext, useEffect, useState} from 'react';
 
 import ChartContext from '../ChartContext';
-import {updateAccount} from '../data/accounts';
+import {getAccount, updateAccount} from '../data/accounts';
+import FieldsWrapper from '../objects/FieldsWrapper';
 import LogoSelector from '../utils/LogoSelector';
 import {
 	ACTION_KEYS,
@@ -38,7 +39,40 @@ function EditAccountInfoPanel({
 		isValid: true,
 	});
 	const [isLoading, setIsLoading] = useState(false);
+	const [accountObjectDefinition, setAccountObjectDefinition] = useState([]);
 	const {chartInstanceRef} = useContext(ChartContext);
+
+	useEffect(() => {
+		if (!accountData.id || accountData.fullLoaded) {
+			return;
+		}
+
+		getAccount(accountData.id)
+			.then((newData) => {
+				newData = Object.assign(accountData, newData);
+				newData.fullLoaded = true;
+				newData.modelType = newData.type;
+				newData.type = type;
+
+				chartInstanceRef.current.updateNodeContent(newData);
+
+				setAccountData((prevState) => ({
+					...prevState,
+					...newData,
+				}));
+			})
+			.catch((error) => {
+				openToast({
+					message:
+						error.message ||
+						error.title ||
+						Liferay.Language.get('an-error-occurred'),
+					title: Liferay.Language.get('error'),
+					type: 'danger',
+				});
+			});
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [accountData.id]);
 
 	const onChangeHandler = ({target}) => {
 		const errors = accountData.errors;
@@ -61,6 +95,31 @@ function EditAccountInfoPanel({
 		}));
 	};
 
+	const onObjectFieldsChangeHandler = useCallback(
+		({data, hasError, name}) => {
+			const errors = accountData.errors;
+
+			if (hasError) {
+				errors[name] = true;
+			}
+			else {
+				delete errors[name];
+			}
+
+			setAccountData((prevState) => ({
+				...prevState,
+				...data,
+				errors,
+				isValid: !Object.keys(errors).length,
+			}));
+		},
+		[accountData]
+	);
+
+	const onObjectDefinitionLoadHandler = useCallback(({data}) => {
+		setAccountObjectDefinition(data);
+	}, []);
+
 	const onSaveHandler = useCallback(() => {
 		if (
 			!accountData.isValid ||
@@ -78,6 +137,17 @@ function EditAccountInfoPanel({
 			name: accountData.name,
 			taxId: accountData.taxId,
 		};
+
+		accountObjectDefinition.forEach((objectDefinition) => {
+			const objectDefinitionName = objectDefinition.name;
+
+			if (
+				objectDefinitionName in accountData &&
+				accountData[objectDefinitionName] !== null
+			) {
+				data[objectDefinitionName] = accountData[objectDefinitionName];
+			}
+		});
 
 		updateAccount(accountData.id, data)
 			.then((newData) => {
@@ -111,7 +181,13 @@ function EditAccountInfoPanel({
 			});
 
 		setIsLoading(false);
-	}, [accountData, chartInstanceRef, type, updatePanelViewHandler]);
+	}, [
+		accountData,
+		accountObjectDefinition,
+		chartInstanceRef,
+		type,
+		updatePanelViewHandler,
+	]);
 
 	const onCancelHandler = useCallback(() => {
 		updatePanelViewHandler({
@@ -271,7 +347,22 @@ function EditAccountInfoPanel({
 						name="description"
 					/>
 				</ClayForm.Group>
+
+				{Liferay.FeatureFlags['COMMERCE-13024'] &&
+				accountData.fullLoaded ? (
+					<FieldsWrapper
+						mode="edit"
+						namespace={namespace}
+						objectData={accountData}
+						objectExternalReferenceCode="L_ACCOUNT"
+						onObjectDataChange={onObjectFieldsChangeHandler}
+						onObjectDefinitionLoad={onObjectDefinitionLoadHandler}
+					></FieldsWrapper>
+				) : (
+					<></>
+				)}
 			</div>
+
 			<div className="sidebar-footer">
 				<ClayButton
 					disabled={!accountData.isValid || isLoading}

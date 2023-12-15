@@ -17,7 +17,8 @@ import React, {
 } from 'react';
 
 import ChartContext from '../ChartContext';
-import {deleteUser, getUserFullNameDefinition} from '../data/users';
+import {deleteUser, getUser, getUserFullNameDefinition} from '../data/users';
+import FieldsWrapper from '../objects/FieldsWrapper';
 import {
 	ACTION_KEYS,
 	DEFAULT_USER_ACCOUNT_FULL_NAME_DEFINITION_FIELDS,
@@ -30,10 +31,12 @@ import {hasPermission} from '../utils/index';
 function ViewUserInfoPanel({
 	closePanelViewHandler,
 	data,
+	namespace,
 	spritemap,
 	type,
 	updatePanelViewHandler,
 }) {
+	const [userData, setUserData] = useState(data);
 	const {chartInstanceRef} = useContext(ChartContext);
 	const [userLanguageId] = useState(data.languageId);
 	const [fullNameDefinition, setFullNameDefinition] = useState([]);
@@ -54,14 +57,56 @@ function ViewUserInfoPanel({
 		});
 	}, [userLanguageId]);
 
+	useEffect(() => {
+		setUserData(data);
+	}, [data]);
+
+	useEffect(() => {
+		if (!userData.id || userData.fullLoaded) {
+			return;
+		}
+
+		getUser(userData.id)
+			.then((newData) => {
+				newData = Object.assign(userData, newData);
+				newData.fullLoaded = true;
+				newData.modelType = newData.type;
+				newData.type = type;
+
+				chartInstanceRef.current.updateNodeContent(newData);
+
+				setUserData((prevState) => ({
+					...prevState,
+					...newData,
+				}));
+			})
+			.catch((error) => {
+				openToast({
+					message:
+						error.message ||
+						error.title ||
+						Liferay.Language.get('an-error-occurred'),
+					title: Liferay.Language.get('error'),
+					type: 'danger',
+				});
+			});
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [userData.id]);
+
 	const deleteHandler = useCallback(() => {
 		openConfirmModal({
-			message: sub(Liferay.Language.get('x-will-be-deleted'), data.name),
+			message: sub(
+				Liferay.Language.get('x-will-be-deleted'),
+				userData.name
+			),
 			onConfirm: (isConfirmed) => {
 				if (isConfirmed) {
-					deleteUser(data.id)
+					deleteUser(userData.id)
 						.then(() => {
-							chartInstanceRef.current.deleteNodes([data], true);
+							chartInstanceRef.current.deleteNodes(
+								[userData],
+								true
+							);
 
 							openToast({
 								message: Liferay.Language.get(
@@ -85,15 +130,15 @@ function ViewUserInfoPanel({
 				}
 			},
 		});
-	}, [chartInstanceRef, closePanelViewHandler, data]);
+	}, [chartInstanceRef, closePanelViewHandler, userData]);
 
 	const editHandler = useCallback(() => {
 		updatePanelViewHandler({
-			data,
+			data: userData,
 			mode: INFO_PANEL_MODE_MAP.edit,
 			type,
 		});
-	}, [data, type, updatePanelViewHandler]);
+	}, [userData, type, updatePanelViewHandler]);
 
 	const isFieldVisible = (key) => {
 		return !!fullNameDefinition.find((item) => {
@@ -107,7 +152,7 @@ function ViewUserInfoPanel({
 				<div className="autofit-row sidebar-section">
 					<div className="autofit-col autofit-col-expand">
 						<h1 className="component-title">
-							{data.alternateName}
+							{userData.alternateName}
 						</h1>
 
 						<h2 className="component-subtitle">
@@ -115,8 +160,8 @@ function ViewUserInfoPanel({
 						</h2>
 					</div>
 
-					{(hasPermission(data, ACTION_KEYS.user.UPDATE) ||
-						hasPermission(data, ACTION_KEYS.user.DELETE)) && (
+					{(hasPermission(userData, ACTION_KEYS.user.UPDATE) ||
+						hasPermission(userData, ACTION_KEYS.user.DELETE)) && (
 						<div className="autofit-col">
 							<ul className="autofit-padded-no-gutters autofit-row">
 								<li className="autofit-col">
@@ -134,7 +179,7 @@ function ViewUserInfoPanel({
 									>
 										<ClayDropDown.ItemList>
 											{hasPermission(
-												data,
+												userData,
 												ACTION_KEYS.user.UPDATE
 											) && (
 												<ClayDropDown.Item
@@ -147,7 +192,7 @@ function ViewUserInfoPanel({
 											)}
 
 											{hasPermission(
-												data,
+												userData,
 												ACTION_KEYS.user.DELETE
 											) && (
 												<ClayDropDown.Item
@@ -173,11 +218,11 @@ function ViewUserInfoPanel({
 					</div>
 
 					<div>
-						{data.imageId ? (
+						{userData.imageId ? (
 							<img
 								alt={Liferay.Language.get('image')}
 								className="logo-selector-img mb-3"
-								src={data.image}
+								src={userData.image}
 							/>
 						) : (
 							<svg className="logo-selector-default-img mb-3">
@@ -194,7 +239,7 @@ function ViewUserInfoPanel({
 						</div>
 
 						<div className="sidebar-dd">
-							{!data.imageId
+							{!userData.imageId
 								? Liferay.Language.get('default')
 								: sub(
 										Liferay.Language.get('custom-x'),
@@ -209,7 +254,7 @@ function ViewUserInfoPanel({
 						</div>
 
 						<div className="sidebar-dd">
-							{data.alternateName || '-'}
+							{userData.alternateName || '-'}
 						</div>
 					</div>
 
@@ -219,7 +264,7 @@ function ViewUserInfoPanel({
 						</div>
 
 						<div className="sidebar-dd">
-							{data.emailAddress || '-'}
+							{userData.emailAddress || '-'}
 						</div>
 					</div>
 
@@ -228,7 +273,7 @@ function ViewUserInfoPanel({
 							{Liferay.Language.get('user-id')}
 						</div>
 
-						<div className="sidebar-dd">{data.id || '-'}</div>
+						<div className="sidebar-dd">{userData.id || '-'}</div>
 					</div>
 				</div>
 
@@ -243,7 +288,7 @@ function ViewUserInfoPanel({
 						</div>
 
 						<div className="sidebar-dd">
-							{data.languageDisplayName || '-'}
+							{userData.languageDisplayName || '-'}
 						</div>
 					</div>
 
@@ -254,7 +299,7 @@ function ViewUserInfoPanel({
 							</div>
 
 							<div className="sidebar-dd">
-								{data.honorificPrefix || '-'}
+								{userData.honorificPrefix || '-'}
 							</div>
 						</div>
 					)}
@@ -266,7 +311,7 @@ function ViewUserInfoPanel({
 							</div>
 
 							<div className="sidebar-dd">
-								{data.givenName || '-'}
+								{userData.givenName || '-'}
 							</div>
 						</div>
 					)}
@@ -278,7 +323,7 @@ function ViewUserInfoPanel({
 							</div>
 
 							<div className="sidebar-dd">
-								{data.additionalName || '-'}
+								{userData.additionalName || '-'}
 							</div>
 						</div>
 					)}
@@ -290,7 +335,7 @@ function ViewUserInfoPanel({
 							</div>
 
 							<div className="sidebar-dd">
-								{data.familyName || '-'}
+								{userData.familyName || '-'}
 							</div>
 						</div>
 					)}
@@ -302,7 +347,7 @@ function ViewUserInfoPanel({
 							</div>
 
 							<div className="sidebar-dd">
-								{data.honorificSuffix || '-'}
+								{userData.honorificSuffix || '-'}
 							</div>
 						</div>
 					)}
@@ -312,7 +357,9 @@ function ViewUserInfoPanel({
 							{Liferay.Language.get('job-title')}
 						</div>
 
-						<div className="sidebar-dd">{data.jobTitle || '-'}</div>
+						<div className="sidebar-dd">
+							{userData.jobTitle || '-'}
+						</div>
 					</div>
 
 					<div>
@@ -321,12 +368,24 @@ function ViewUserInfoPanel({
 						</div>
 
 						<div className="sidebar-dd">
-							{moment(data.birthDate).format(
+							{moment(userData.birthDate).format(
 								momentLocaleFormatRef.current
 							) || '-'}
 						</div>
 					</div>
 				</div>
+
+				{Liferay.FeatureFlags['COMMERCE-13024'] &&
+				userData.fullLoaded ? (
+					<FieldsWrapper
+						mode="view"
+						namespace={namespace}
+						objectData={userData}
+						objectExternalReferenceCode="L_USER"
+					></FieldsWrapper>
+				) : (
+					<></>
+				)}
 			</div>
 		</>
 	);
@@ -339,6 +398,7 @@ ViewUserInfoPanel.defaultProps = {
 ViewUserInfoPanel.propTypes = {
 	closePanelViewHandler: PropTypes.func.isRequired,
 	data: PropTypes.object.isRequired,
+	namespace: PropTypes.string,
 	spritemap: PropTypes.string.isRequired,
 	type: PropTypes.string.isRequired,
 	updatePanelViewHandler: PropTypes.func.isRequired,

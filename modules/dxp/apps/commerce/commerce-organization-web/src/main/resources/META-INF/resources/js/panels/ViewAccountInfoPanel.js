@@ -7,10 +7,11 @@ import {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import {openConfirmModal, openToast, sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useCallback, useContext} from 'react';
+import React, {useCallback, useContext, useEffect, useState} from 'react';
 
 import ChartContext from '../ChartContext';
-import {deleteAccount} from '../data/accounts';
+import {deleteAccount, getAccount} from '../data/accounts';
+import FieldsWrapper from '../objects/FieldsWrapper';
 import {
 	ACTION_KEYS,
 	INFO_PANEL_MODE_MAP,
@@ -22,20 +23,64 @@ import {hasPermission, localizeModelType} from '../utils/index';
 function ViewAccountInfoPanel({
 	closePanelViewHandler,
 	data,
+	namespace,
 	spritemap,
 	type,
 	updatePanelViewHandler,
 }) {
+	const [accountData, setAccountData] = useState(data);
 	const {chartInstanceRef} = useContext(ChartContext);
+
+	useEffect(() => {
+		if (!accountData.id || accountData.fullLoaded) {
+			return;
+		}
+
+		getAccount(accountData.id)
+			.then((newData) => {
+				newData = Object.assign(accountData, newData);
+				newData.fullLoaded = true;
+				newData.modelType = newData.type;
+				newData.type = type;
+
+				chartInstanceRef.current.updateNodeContent(newData);
+
+				setAccountData((prevState) => ({
+					...prevState,
+					...newData,
+				}));
+			})
+			.catch((error) => {
+				openToast({
+					message:
+						error.message ||
+						error.title ||
+						Liferay.Language.get('an-error-occurred'),
+					title: Liferay.Language.get('error'),
+					type: 'danger',
+				});
+			});
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [accountData.id]);
+
+	useEffect(() => {
+		setAccountData(data);
+	}, [data]);
 
 	const deleteHandler = useCallback(() => {
 		openConfirmModal({
-			message: sub(Liferay.Language.get('x-will-be-deleted'), data.name),
+			message: sub(
+				Liferay.Language.get('x-will-be-deleted'),
+				accountData.name
+			),
 			onConfirm: (isConfirmed) => {
 				if (isConfirmed) {
-					deleteAccount(data.id)
+					deleteAccount(accountData.id)
 						.then(() => {
-							chartInstanceRef.current.deleteNodes([data], true);
+							chartInstanceRef.current.deleteNodes(
+								[accountData],
+								true
+							);
 
 							openToast({
 								message: Liferay.Language.get(
@@ -59,30 +104,33 @@ function ViewAccountInfoPanel({
 				}
 			},
 		});
-	}, [chartInstanceRef, closePanelViewHandler, data]);
+	}, [accountData, chartInstanceRef, closePanelViewHandler]);
 
 	const editHandler = useCallback(() => {
 		updatePanelViewHandler({
-			data,
+			data: accountData,
 			mode: INFO_PANEL_MODE_MAP.edit,
 			type,
 		});
-	}, [data, type, updatePanelViewHandler]);
+	}, [accountData, type, updatePanelViewHandler]);
 
 	return (
 		<>
 			<div className="sidebar-header">
 				<div className="autofit-row sidebar-section">
 					<div className="autofit-col autofit-col-expand">
-						<h1 className="component-title">{data.name}</h1>
+						<h1 className="component-title">{accountData.name}</h1>
 
 						<h2 className="component-subtitle">
 							{Liferay.Language.get('account')}
 						</h2>
 					</div>
 
-					{(hasPermission(data, ACTION_KEYS.account.DELETE) ||
-						hasPermission(data, ACTION_KEYS.account.UPDATE)) && (
+					{(hasPermission(accountData, ACTION_KEYS.account.DELETE) ||
+						hasPermission(
+							accountData,
+							ACTION_KEYS.account.UPDATE
+						)) && (
 						<div className="autofit-col">
 							<ul className="autofit-padded-no-gutters autofit-row">
 								<li className="autofit-col">
@@ -100,7 +148,7 @@ function ViewAccountInfoPanel({
 									>
 										<ClayDropDown.ItemList>
 											{hasPermission(
-												data,
+												accountData,
 												ACTION_KEYS.account.UPDATE
 											) && (
 												<ClayDropDown.Item
@@ -113,7 +161,7 @@ function ViewAccountInfoPanel({
 											)}
 
 											{hasPermission(
-												data,
+												accountData,
 												ACTION_KEYS.account.DELETE
 											) && (
 												<ClayDropDown.Item
@@ -134,11 +182,11 @@ function ViewAccountInfoPanel({
 			</div>
 			<div className="sidebar-body">
 				<div>
-					{data.logoId ? (
+					{accountData.logoId ? (
 						<img
 							alt={Liferay.Language.get('image')}
 							className="logo-selector-img mb-3"
-							src={data.logoURL}
+							src={accountData.logoURL}
 						/>
 					) : (
 						<svg className="logo-selector-default-img mb-3">
@@ -155,7 +203,7 @@ function ViewAccountInfoPanel({
 					</div>
 
 					<div className="sidebar-dd">
-						{!data.logoId
+						{!accountData.logoId
 							? Liferay.Language.get('default')
 							: sub(
 									Liferay.Language.get('custom-x'),
@@ -169,7 +217,7 @@ function ViewAccountInfoPanel({
 						{Liferay.Language.get('account-name')}
 					</div>
 
-					<div className="sidebar-dd">{data.name || '-'}</div>
+					<div className="sidebar-dd">{accountData.name || '-'}</div>
 				</div>
 
 				<div>
@@ -178,7 +226,7 @@ function ViewAccountInfoPanel({
 					</div>
 
 					<div className="sidebar-dd">
-						{localizeModelType(data.modelType)}
+						{localizeModelType(accountData.modelType)}
 					</div>
 				</div>
 
@@ -187,7 +235,7 @@ function ViewAccountInfoPanel({
 						{Liferay.Language.get('tax-id')}
 					</div>
 
-					<div className="sidebar-dd">{data.taxId || '-'}</div>
+					<div className="sidebar-dd">{accountData.taxId || '-'}</div>
 				</div>
 
 				<div>
@@ -196,7 +244,7 @@ function ViewAccountInfoPanel({
 					</div>
 
 					<div className="sidebar-dd">
-						{data.externalReferenceCode || '-'}
+						{accountData.externalReferenceCode || '-'}
 					</div>
 				</div>
 
@@ -205,7 +253,7 @@ function ViewAccountInfoPanel({
 						{Liferay.Language.get('account-id')}
 					</div>
 
-					<div className="sidebar-dd">{data.id}</div>
+					<div className="sidebar-dd">{accountData.id}</div>
 				</div>
 
 				<div>
@@ -213,8 +261,22 @@ function ViewAccountInfoPanel({
 						{Liferay.Language.get('description')}
 					</div>
 
-					<div className="sidebar-dd">{data.description || '-'}</div>
+					<div className="sidebar-dd">
+						{accountData.description || '-'}
+					</div>
 				</div>
+
+				{Liferay.FeatureFlags['COMMERCE-13024'] &&
+				accountData.fullLoaded ? (
+					<FieldsWrapper
+						mode="view"
+						namespace={namespace}
+						objectData={accountData}
+						objectExternalReferenceCode="L_ACCOUNT"
+					></FieldsWrapper>
+				) : (
+					<></>
+				)}
 			</div>
 		</>
 	);
@@ -227,6 +289,7 @@ ViewAccountInfoPanel.defaultProps = {
 ViewAccountInfoPanel.propTypes = {
 	closePanelViewHandler: PropTypes.func.isRequired,
 	data: PropTypes.object.isRequired,
+	namespace: PropTypes.string,
 	spritemap: PropTypes.string.isRequired,
 	type: PropTypes.string.isRequired,
 	updatePanelViewHandler: PropTypes.func.isRequired,

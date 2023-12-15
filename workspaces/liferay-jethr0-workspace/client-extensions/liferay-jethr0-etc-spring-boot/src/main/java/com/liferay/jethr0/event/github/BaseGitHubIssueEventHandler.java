@@ -42,10 +42,64 @@ import org.json.JSONObject;
 public abstract class BaseGitHubIssueEventHandler
 	extends BaseGitHubEventHandler {
 
+	public boolean isReceiverLiferayGitHubUser() throws InvalidJSONException {
+		GitHubPullRequest gitHubPullRequest = getGitHubPullRequest();
+
+		if (gitHubPullRequest == null) {
+			return false;
+		}
+
+		GitHubUser receiverGitHubUser =
+			gitHubPullRequest.getReceiverGitHubUser();
+
+		if (!receiverGitHubUser.isLiferayUser()) {
+			return false;
+		}
+
+		return true;
+	}
+
+	public boolean isSenderLiferayGitHubUser() throws InvalidJSONException {
+		GitHubPullRequest gitHubPullRequest = getGitHubPullRequest();
+
+		if (gitHubPullRequest == null) {
+			return false;
+		}
+
+		GitHubUser senderGitHubUser = gitHubPullRequest.getSenderGitHubUser();
+
+		if (!senderGitHubUser.isLiferayUser()) {
+			return false;
+		}
+
+		return true;
+	}
+
 	protected BaseGitHubIssueEventHandler(
 		EventHandlerContext eventHandlerContext, JSONObject messageJSONObject) {
 
 		super(eventHandlerContext, messageJSONObject);
+	}
+
+	protected boolean checkLiferayGitHubUser() throws InvalidJSONException {
+		if (isReceiverLiferayGitHubUser() && isSenderLiferayGitHubUser()) {
+			return false;
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("You cannot perform that action because you are not a ");
+		sb.append("member of the Liferay organization. Please make sure that ");
+		sb.append("you have been added and that your organization membership ");
+		sb.append("is set as Public. See https://help.github.com/articles");
+		sb.append("/publicizing-or-hiding-organization-membership for more ");
+		sb.append("information.");
+
+		GitHubPullRequest gitHubPullRequest = getGitHubPullRequest();
+
+		gitHubPullRequest.comment(sb.toString());
+
+		return true;
 	}
 
 	protected void closeGitHubPullRequest(String body)

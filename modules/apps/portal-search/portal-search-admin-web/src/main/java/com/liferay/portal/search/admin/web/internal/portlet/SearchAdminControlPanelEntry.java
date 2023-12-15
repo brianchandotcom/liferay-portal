@@ -58,7 +58,7 @@ public class SearchAdminControlPanelEntry extends BaseControlPanelEntry {
 		if (_reindexConfiguration.indexActionsInAllVirtualInstancesEnabled() ||
 			ArrayUtil.contains(
 				_reindexConfiguration.indexActionsVirtualInstance(),
-				group.getCompanyId())) {
+				String.valueOf(group.getCompanyId()))) {
 
 			return true;
 		}

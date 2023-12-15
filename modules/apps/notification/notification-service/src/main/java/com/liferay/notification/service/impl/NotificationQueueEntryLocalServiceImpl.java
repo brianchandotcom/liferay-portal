@@ -276,6 +276,10 @@ public class NotificationQueueEntryLocalServiceImpl
 		NotificationTemplate notificationTemplate =
 			notificationContext.getNotificationTemplate();
 
+		if (notificationTemplate == null) {
+			return;
+		}
+
 		List<NotificationTemplateAttachment> notificationTemplateAttachments =
 			_notificationTemplateAttachmentLocalService.
 				getNotificationTemplateAttachments(

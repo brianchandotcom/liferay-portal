@@ -143,47 +143,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createAPIApplication(baseURL = null, description = null, title = null) {
-		Variables.assertDefined(parameterList = ${title});
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Object",
-			panel = "Control Panel",
-			portlet = "API Builder");
-
-		if (isSet(addByPlus)) {
-			Click(locator1 = "Button#PLUS");
-		}
-		else {
-			Click(locator1 = "APIBuilder#ADD_NEW_API_APPLICATION");
-		}
-
-		Type(
-			key_fieldLabel = "Title",
-			locator1 = "Modal#INPUT_WITH_LABEL",
-			value1 = ${title});
-
-		if (isSet(baseURL)) {
-			Type(
-				key_fieldLabel = "URL",
-				locator1 = "Modal#INPUT_WITH_LABEL",
-				value1 = ${baseURL});
-		}
-
-		if (isSet(description)) {
-			Type(
-				key_value = "API",
-				locator1 = "APIBuilder#DESCRIPTION",
-				value1 = ${description});
-		}
-
-		Click(locator1 = "APIBuilder#CREATE_BUTTON");
-	}
-
-	@summary = "Default summary"
-	macro createAPIEndpoint(path = null, method = null, scope = null, name = null, retrieveType = null, applicationId = null) {
-		Variables.assertDefined(parameterList = ${path});
-
+	macro configureAPIEndpoint(path = null, method = null, scope = null, name = null, retrieveType = null, applicationId = null) {
 		if (isSet(addByPlus)) {
 			Click(locator1 = "Button#PLUS");
 		}
@@ -234,10 +194,19 @@ definition {
 				value1 = ${description});
 		}
 
-		Type(
-			key_fieldLabel = "Path",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = ${path});
+		if (isSet(path)) {
+			Type(
+				key_placeHolder = "Enter Path",
+				locator1 = "TextInput#ANY_PLACEHOLDER",
+				value1 = ${path});
+		}
+
+		if (isSet(parameter)) {
+			Type(
+				key_placeHolder = "Enter Parameter",
+				locator1 = "TextInput#ANY_PLACEHOLDER",
+				value1 = ${parameter});
+		}
 
 		if (isSet(applicationId)) {
 			Click.pauseClickAt(
@@ -248,6 +217,58 @@ definition {
 				applicationId = ${applicationId},
 				locator1 = "APIBuilder#API_APPLICATION_TO_API_ENDPOINTS");
 		}
+	}
+
+	@summary = "Default summary"
+	macro createAPIApplication(baseURL = null, description = null, title = null) {
+		Variables.assertDefined(parameterList = ${title});
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Object",
+			panel = "Control Panel",
+			portlet = "API Builder");
+
+		if (isSet(addByPlus)) {
+			Click(locator1 = "Button#PLUS");
+		}
+		else {
+			Click(locator1 = "APIBuilder#ADD_NEW_API_APPLICATION");
+		}
+
+		Type(
+			key_fieldLabel = "Title",
+			locator1 = "Modal#INPUT_WITH_LABEL",
+			value1 = ${title});
+
+		if (isSet(baseURL)) {
+			Type(
+				key_fieldLabel = "URL",
+				locator1 = "Modal#INPUT_WITH_LABEL",
+				value1 = ${baseURL});
+		}
+
+		if (isSet(description)) {
+			Type(
+				key_value = "API",
+				locator1 = "APIBuilder#DESCRIPTION",
+				value1 = ${description});
+		}
+
+		Click(locator1 = "APIBuilder#CREATE_BUTTON");
+	}
+
+	@summary = "Default summary"
+	macro createAPIEndpoint(path = null, method = null, scope = null, name = null, retrieveType = null, applicationId = null) {
+		APIBuilderUI.configureAPIEndpoint(
+			addByPlus = ${addByPlus},
+			applicationId = ${applicationId},
+			description = ${description},
+			method = ${method},
+			name = ${name},
+			parameter = ${parameter},
+			path = ${path},
+			retrieveType = ${retrieveType},
+			scope = ${scope});
 
 		if (IsElementPresent(locator1 = "Button#SAVE")) {
 			AssertClick(

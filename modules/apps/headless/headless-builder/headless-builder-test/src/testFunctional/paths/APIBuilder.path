@@ -26,6 +26,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ALERT_INDICATOR</td>
+	<td>//span[contains(@class,'alert-indicator')]/../strong</td>
+	<td></td>
+</tr>
+<tr>
 	<td>API_APPLICATION_TO_API_ENDPOINTS</td>
 	<td>//button[@class='dropdown-item' and text()='${applicationId}']</td>
 	<td></td>

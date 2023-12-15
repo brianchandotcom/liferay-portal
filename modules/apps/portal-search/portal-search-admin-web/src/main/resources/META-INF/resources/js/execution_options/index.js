@@ -9,7 +9,7 @@ import {ClayRadio, ClayRadioGroup} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClaySticker from '@clayui/sticker';
 import {ClayTooltipProvider} from '@clayui/tooltip';
-import FeatureIndicator from 'frontend-js-components-web';
+import {FeatureIndicator} from 'frontend-js-components-web';
 import React, {useRef, useState} from 'react';
 
 import {EXECUTION_MODES, SCOPES} from '../constants';
@@ -132,9 +132,9 @@ function ExecutionOptions({
 															{label}
 
 															{showBetaBadge && (
-																<div className="c-ml-1">
+																<span className="c-ml-1">
 																	<FeatureIndicator type="beta" />
-																</div>
+																</span>
 															)}
 														</div>
 

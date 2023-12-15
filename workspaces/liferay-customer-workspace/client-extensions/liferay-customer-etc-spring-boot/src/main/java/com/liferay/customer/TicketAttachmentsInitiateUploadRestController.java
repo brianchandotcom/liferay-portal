@@ -46,7 +46,6 @@ public class TicketAttachmentsInitiateUploadRestController
 			JSONObject jsonObject = new JSONObject(json);
 
 			String fileName = jsonObject.getString("fileName");
-
 			String md5Checksum = jsonObject.getString("md5Checksum");
 			long zendeskTicketId = jsonObject.getLong("zendeskTicketId");
 
@@ -64,9 +63,9 @@ public class TicketAttachmentsInitiateUploadRestController
 				}
 			}
 			else {
-				String fileSize = jsonObject.getString("fileSize");
 				String externalReferenceCode = jsonObject.optString(
 					"externalReferenceCode");
+				String fileSize = jsonObject.getString("fileSize");
 				String type = jsonObject.optString("type");
 
 				ticketAttachment =

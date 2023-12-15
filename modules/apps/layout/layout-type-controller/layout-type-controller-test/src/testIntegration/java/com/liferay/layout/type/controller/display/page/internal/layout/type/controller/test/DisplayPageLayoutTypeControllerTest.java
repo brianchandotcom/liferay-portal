@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -143,8 +144,10 @@ public class DisplayPageLayoutTypeControllerTest {
 			new MockHttpServletRequest();
 
 		mockHttpServletRequest.setAttribute(
-			WebKeys.CURRENT_URL, "http://www.liferay.com");
+			WebKeys.CURRENT_URL, _portal.getLayoutActualURL(layout));
 		mockHttpServletRequest.setAttribute(WebKeys.LAYOUT, layout);
+
+		mockHttpServletRequest.setMethod(HttpMethods.GET);
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 

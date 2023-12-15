@@ -598,8 +598,8 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 			LocalDate.now(
 			).minusDays(
 				Objects.equals(_objectConfiguration.timeScale(), "days") ?
-					_objectConfiguration.duration() :
-						_objectConfiguration.duration() * 7
+					_objectConfiguration.duration() - 1 :
+						(_objectConfiguration.duration() * 7) - 1
 			).atStartOfDay(
 				ZoneId.systemDefault()
 			).toInstant());

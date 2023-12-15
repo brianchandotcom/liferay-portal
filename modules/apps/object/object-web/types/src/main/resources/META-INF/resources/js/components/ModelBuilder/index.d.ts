@@ -14,6 +14,7 @@ interface CustomObjectFolderWrapperProps {
 	forbiddenChars: string[];
 	forbiddenLastChars: string[];
 	forbiddenNames: string[];
+	learnResourceContext: any;
 	objectDefinitionPermissionsURL: string;
 	objectDefinitionsStorageTypes: LabelValueObject[];
 	objectRelationshipDeletionTypes: LabelValueObject[];
@@ -29,6 +30,7 @@ export default function CustomObjectFolderWrapper({
 	forbiddenChars,
 	forbiddenLastChars,
 	forbiddenNames,
+	learnResourceContext,
 	objectDefinitionPermissionsURL,
 	objectDefinitionsStorageTypes,
 	objectRelationshipDeletionTypes,

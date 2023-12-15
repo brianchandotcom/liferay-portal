@@ -5,15 +5,18 @@
 
 package com.liferay.portal.search.tuning.rankings.web.internal.request;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchContextFactory;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.hits.SearchHits;
+import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.sort.Sort;
 import com.liferay.portal.search.sort.SortOrder;
@@ -53,11 +56,10 @@ public class SearchRankingRequest {
 	public SearchRankingResponse search() {
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
-		String keywords = _searchContext.getKeywords();
+		BooleanQuery query = _getQuery();
 
-		if (!Validator.isBlank(keywords)) {
-			searchSearchRequest.setQuery(
-				_queries.match(RankingFields.NAME, keywords));
+		if (query.hasClauses()) {
+			searchSearchRequest.setQuery(query);
 		}
 		else {
 			searchSearchRequest.setQuery(_queries.matchAll());
@@ -93,6 +95,55 @@ public class SearchRankingRequest {
 		return SearchOrderByUtil.getOrderByType(
 			_httpServletRequest, ResultRankingsPortletKeys.RESULT_RANKINGS,
 			"search-ranking-order-by-type", "asc");
+	}
+
+	private BooleanQuery _getQuery() {
+		BooleanQuery booleanQuery = _queries.booleanQuery();
+		String keywords = _searchContext.getKeywords();
+		String scope = GetterUtil.getString(
+			_httpServletRequest.getParameter("scope"), "all");
+		String status = GetterUtil.getString(
+			_httpServletRequest.getParameter("status"), "all");
+
+		if (!Validator.isBlank(keywords)) {
+			booleanQuery.addMustQueryClauses(
+				_queries.booleanQuery(
+				).addShouldQueryClauses(
+					_queries.term(RankingFields.NAME, keywords),
+					_queries.term(RankingFields.ALIASES, keywords)
+				));
+		}
+
+		if (!Objects.equals(scope, "all")) {
+			if (Objects.equals(scope, "blueprint")) {
+				booleanQuery.addMustNotQueryClauses(
+					_queries.term(
+						RankingFields.SXP_BLUEPRINT_EXTERNAL_REFERENCE_CODE,
+						StringPool.BLANK));
+			}
+			else if (Objects.equals(scope, "site")) {
+				booleanQuery.addMustNotQueryClauses(
+					_queries.term(
+						RankingFields.GROUP_EXTERNAL_REFERENCE_CODE,
+						StringPool.BLANK));
+			}
+			else {
+				booleanQuery.addFilterQueryClauses(
+					_queries.term(
+						RankingFields.SXP_BLUEPRINT_EXTERNAL_REFERENCE_CODE,
+						StringPool.BLANK),
+					_queries.term(
+						RankingFields.GROUP_EXTERNAL_REFERENCE_CODE,
+						StringPool.BLANK));
+			}
+		}
+
+		if (!Objects.equals(status, "all")) {
+			booleanQuery.addFilterQueryClauses(
+				_queries.term(RankingFields.STATUS, status));
+		}
+
+		return booleanQuery;
 	}
 
 	private Collection<Sort> _getSorts() {

@@ -68,6 +68,7 @@ export default function RenderTimes({
 		<>
 			<div className="c-mb-3">
 				<FeatureIndicator
+					interactive
 					learnResourceContext={learnResources}
 					tooltipAlign="top-left"
 					type="beta"

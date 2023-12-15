@@ -82,7 +82,9 @@ definition {
 		if (${removeType} == "Toolbar Remove Icon") {
 			LexiconEntry.selectEntry(key_rowEntry = ${accountGroupName});
 
-			ClickNoError.clickNoMouseOver(locator1 = "ManagementBar#REMOVE");
+			ClickNoError(
+				key_text = "times-circle",
+				locator1 = "ManagementBar#ANY_ICON");
 
 			AssertConfirm(value1 = "Are you sure you want to remove the selected accounts?");
 
@@ -91,7 +93,7 @@ definition {
 		else if (${removeType} == "Management Toolbar") {
 			LexiconEntry.selectEntry(key_rowEntry = ${accountGroupName});
 
-			Click(locator1 = "Icon#TOOLBAR_ELLIPSIS");
+			Click(locator1 = "ManagementBar#ELLIPSIS");
 
 			MenuItem.clickNoError(menuItem = "Remove");
 

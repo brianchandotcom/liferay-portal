@@ -261,12 +261,14 @@ definition {
 		}
 
 		if (isSet(options)) {
-			Click(locator1 = "Icon#TOOLBAR_ELLIPSIS");
+			Click(locator1 = "ManagementBar#ELLIPSIS");
 
 			MenuItem.clickNoError(menuItem = "Export for Translations");
 		}
 		else {
-			Click(locator1 = "Icon#EXPORT_FOR_TRANSLATION");
+			Click(
+				key_text = "upload",
+				locator1 = "ManagementBar#ANY_ICON");
 		}
 	}
 

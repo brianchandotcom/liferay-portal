@@ -14,15 +14,9 @@ import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContri
 
 import java.util.Locale;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Lourdes Fernández Besada
  */
-@Component(
-	property = "indexer.class.name=com.liferay.journal.model.JournalFolder",
-	service = ModelSummaryContributor.class
-)
 public class JournalFolderModelSummaryContributor
 	implements ModelSummaryContributor {
 

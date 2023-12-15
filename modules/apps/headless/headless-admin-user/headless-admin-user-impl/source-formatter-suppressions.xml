@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<checkstyle>
+		<suppress checks="InstanceInitializerCheck" files="src/main/java/com/liferay/headless/admin/user/internal/dto/v1_0/converter/UserResourceDTOConverter\.java" />
+		<suppress checks="InstanceInitializerCheck" files="src/main/java/com/liferay/headless/admin/user/internal/dto/v1_0/util/CustomFieldsUtil\.java" />
+		<suppress checks="InstanceInitializerCheck" files="src/main/java/com/liferay/headless/admin/user/internal/dto/v1_0/util/PostalAddressUtil\.java" />
+	</checkstyle>
+</suppressions>

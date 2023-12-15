@@ -30,6 +30,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -57,120 +58,175 @@ public class Folder implements Serializable {
 
 	@Schema
 	public Date getDateCreated() {
+		if (_dateCreatedSupplier != null) {
+			dateCreated = _dateCreatedSupplier.get();
+
+			_dateCreatedSupplier = null;
+		}
+
 		return dateCreated;
 	}
 
 	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
+
+		_dateCreatedSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDateCreated(
 		UnsafeSupplier<Date, Exception> dateCreatedUnsafeSupplier) {
 
-		try {
-			dateCreated = dateCreatedUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_dateCreatedSupplier = () -> {
+			try {
+				return dateCreatedUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateCreated;
 
+	private Supplier<Date> _dateCreatedSupplier;
+
 	@Schema
 	public Date getDateModified() {
+		if (_dateModifiedSupplier != null) {
+			dateModified = _dateModifiedSupplier.get();
+
+			_dateModifiedSupplier = null;
+		}
+
 		return dateModified;
 	}
 
 	public void setDateModified(Date dateModified) {
 		this.dateModified = dateModified;
+
+		_dateModifiedSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDateModified(
 		UnsafeSupplier<Date, Exception> dateModifiedUnsafeSupplier) {
 
-		try {
-			dateModified = dateModifiedUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_dateModifiedSupplier = () -> {
+			try {
+				return dateModifiedUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateModified;
 
+	private Supplier<Date> _dateModifiedSupplier;
+
 	@Schema
 	public String getDescription() {
+		if (_descriptionSupplier != null) {
+			description = _descriptionSupplier.get();
+
+			_descriptionSupplier = null;
+		}
+
 		return description;
 	}
 
 	public void setDescription(String description) {
 		this.description = description;
+
+		_descriptionSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDescription(
 		UnsafeSupplier<String, Exception> descriptionUnsafeSupplier) {
 
-		try {
-			description = descriptionUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_descriptionSupplier = () -> {
+			try {
+				return descriptionUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
+	private Supplier<String> _descriptionSupplier;
+
 	@Schema
 	@Valid
 	public Folder getDocumentsRepository() {
+		if (_documentsRepositorySupplier != null) {
+			documentsRepository = _documentsRepositorySupplier.get();
+
+			_documentsRepositorySupplier = null;
+		}
+
 		return documentsRepository;
 	}
 
 	public void setDocumentsRepository(Folder documentsRepository) {
 		this.documentsRepository = documentsRepository;
+
+		_documentsRepositorySupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDocumentsRepository(
 		UnsafeSupplier<Folder, Exception> documentsRepositoryUnsafeSupplier) {
 
-		try {
-			documentsRepository = documentsRepositoryUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_documentsRepositorySupplier = () -> {
+			try {
+				return documentsRepositoryUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Folder documentsRepository;
 
+	private Supplier<Folder> _documentsRepositorySupplier;
+
 	@Schema
 	@Valid
 	public ExternalReferenceElement1[] getExternalReferenceElement1s() {
+		if (_externalReferenceElement1sSupplier != null) {
+			externalReferenceElement1s =
+				_externalReferenceElement1sSupplier.get();
+
+			_externalReferenceElement1sSupplier = null;
+		}
+
 		return externalReferenceElement1s;
 	}
 
@@ -178,6 +234,8 @@ public class Folder implements Serializable {
 		ExternalReferenceElement1[] externalReferenceElement1s) {
 
 		this.externalReferenceElement1s = externalReferenceElement1s;
+
+		_externalReferenceElement1sSupplier = null;
 	}
 
 	@JsonIgnore
@@ -185,128 +243,180 @@ public class Folder implements Serializable {
 		UnsafeSupplier<ExternalReferenceElement1[], Exception>
 			externalReferenceElement1sUnsafeSupplier) {
 
-		try {
-			externalReferenceElement1s =
-				externalReferenceElement1sUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_externalReferenceElement1sSupplier = () -> {
+			try {
+				return externalReferenceElement1sUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ExternalReferenceElement1[] externalReferenceElement1s;
 
+	private Supplier<ExternalReferenceElement1[]>
+		_externalReferenceElement1sSupplier;
+
 	@Schema
 	public Long getId() {
+		if (_idSupplier != null) {
+			id = _idSupplier.get();
+
+			_idSupplier = null;
+		}
+
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
+
+		_idSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_idSupplier = () -> {
+			try {
+				return idUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	private Supplier<Long> _idSupplier;
+
 	@Schema
 	public String getName() {
+		if (_nameSupplier != null) {
+			name = _nameSupplier.get();
+
+			_nameSupplier = null;
+		}
+
 		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
+
+		_nameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
-		try {
-			name = nameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_nameSupplier = () -> {
+			try {
+				return nameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	private Supplier<String> _nameSupplier;
+
 	@Schema
 	public String getSelf() {
+		if (_selfSupplier != null) {
+			self = _selfSupplier.get();
+
+			_selfSupplier = null;
+		}
+
 		return self;
 	}
 
 	public void setSelf(String self) {
 		this.self = self;
+
+		_selfSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setSelf(UnsafeSupplier<String, Exception> selfUnsafeSupplier) {
-		try {
-			self = selfUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_selfSupplier = () -> {
+			try {
+				return selfUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String self;
 
+	private Supplier<String> _selfSupplier;
+
 	@Schema
 	@Valid
 	public Folder getSubFolders() {
+		if (_subFoldersSupplier != null) {
+			subFolders = _subFoldersSupplier.get();
+
+			_subFoldersSupplier = null;
+		}
+
 		return subFolders;
 	}
 
 	public void setSubFolders(Folder subFolders) {
 		this.subFolders = subFolders;
+
+		_subFoldersSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setSubFolders(
 		UnsafeSupplier<Folder, Exception> subFoldersUnsafeSupplier) {
 
-		try {
-			subFolders = subFoldersUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_subFoldersSupplier = () -> {
+			try {
+				return subFoldersUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Folder subFolders;
+
+	private Supplier<Folder> _subFoldersSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -338,6 +448,8 @@ public class Folder implements Serializable {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+		Date dateCreated = getDateCreated();
+
 		if (dateCreated != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -351,6 +463,8 @@ public class Folder implements Serializable {
 
 			sb.append("\"");
 		}
+
+		Date dateModified = getDateModified();
 
 		if (dateModified != null) {
 			if (sb.length() > 1) {
@@ -366,6 +480,8 @@ public class Folder implements Serializable {
 			sb.append("\"");
 		}
 
+		String description = getDescription();
+
 		if (description != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -380,6 +496,8 @@ public class Folder implements Serializable {
 			sb.append("\"");
 		}
 
+		Folder documentsRepository = getDocumentsRepository();
+
 		if (documentsRepository != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -389,6 +507,9 @@ public class Folder implements Serializable {
 
 			sb.append(String.valueOf(documentsRepository));
 		}
+
+		ExternalReferenceElement1[] externalReferenceElement1s =
+			getExternalReferenceElement1s();
 
 		if (externalReferenceElement1s != null) {
 			if (sb.length() > 1) {
@@ -410,6 +531,8 @@ public class Folder implements Serializable {
 			sb.append("]");
 		}
 
+		Long id = getId();
+
 		if (id != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -419,6 +542,8 @@ public class Folder implements Serializable {
 
 			sb.append(id);
 		}
+
+		String name = getName();
 
 		if (name != null) {
 			if (sb.length() > 1) {
@@ -434,6 +559,8 @@ public class Folder implements Serializable {
 			sb.append("\"");
 		}
 
+		String self = getSelf();
+
 		if (self != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -447,6 +574,8 @@ public class Folder implements Serializable {
 
 			sb.append("\"");
 		}
+
+		Folder subFolders = getSubFolders();
 
 		if (subFolders != null) {
 			if (sb.length() > 1) {

@@ -12,6 +12,6 @@ import com.liferay.portal.kernel.model.Layout;
  */
 public interface PortletManager {
 
-	public boolean isVisble(Layout layout);
+	public boolean isVisible(Layout layout);
 
 }

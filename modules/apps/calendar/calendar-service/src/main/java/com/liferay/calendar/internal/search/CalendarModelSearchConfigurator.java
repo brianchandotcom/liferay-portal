@@ -6,6 +6,7 @@
 package com.liferay.calendar.internal.search;
 
 import com.liferay.calendar.internal.search.spi.model.index.contributor.CalendarModelIndexerWriterContributor;
+import com.liferay.calendar.internal.search.spi.model.result.contributor.CalendarModelSummaryContributor;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.service.CalendarLocalService;
 import com.liferay.portal.kernel.search.Field;
@@ -68,6 +69,8 @@ public class CalendarModelSearchConfigurator
 			new CalendarModelIndexerWriterContributor(
 				_calendarBookingBatchReindexer, _calendarLocalService,
 				_dynamicQueryBatchIndexingActionableFactory);
+
+		_modelSummaryContributor = new CalendarModelSummaryContributor();
 	}
 
 	@Reference
@@ -82,10 +85,6 @@ public class CalendarModelSearchConfigurator
 
 	private ModelIndexerWriterContributor<Calendar>
 		_modelIndexWriterContributor;
-
-	@Reference(
-		target = "(indexer.class.name=com.liferay.calendar.model.Calendar)"
-	)
 	private ModelSummaryContributor _modelSummaryContributor;
 
 }

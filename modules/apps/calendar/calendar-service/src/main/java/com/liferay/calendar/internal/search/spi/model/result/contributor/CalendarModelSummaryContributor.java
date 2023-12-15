@@ -13,15 +13,9 @@ import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContri
 
 import java.util.Locale;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Michael C. Han
  */
-@Component(
-	property = "indexer.class.name=com.liferay.calendar.model.Calendar",
-	service = ModelSummaryContributor.class
-)
 public class CalendarModelSummaryContributor
 	implements ModelSummaryContributor {
 

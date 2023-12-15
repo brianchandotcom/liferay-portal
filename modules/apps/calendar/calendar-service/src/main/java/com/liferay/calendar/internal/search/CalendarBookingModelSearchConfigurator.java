@@ -6,13 +6,16 @@
 package com.liferay.calendar.internal.search;
 
 import com.liferay.calendar.internal.search.spi.model.index.contributor.CalendarBookingModelIndexerWriterContributor;
+import com.liferay.calendar.internal.search.spi.model.result.contributor.CalendarBookingModelSummaryContributor;
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.service.CalendarBookingLocalService;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.util.HtmlParser;
 import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContributor;
+import com.liferay.portal.search.summary.SummaryHelper;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -61,6 +64,9 @@ public class CalendarBookingModelSearchConfigurator
 			new CalendarBookingModelIndexerWriterContributor(
 				_calendarBookingLocalService,
 				_dynamicQueryBatchIndexingActionableFactory);
+
+		_modelSummaryContributor = new CalendarBookingModelSummaryContributor(
+			_summaryHelper, _htmlParser);
 	}
 
 	@Reference
@@ -70,12 +76,14 @@ public class CalendarBookingModelSearchConfigurator
 	private DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;
 
+	@Reference
+	private HtmlParser _htmlParser;
+
 	private ModelIndexerWriterContributor<CalendarBooking>
 		_modelIndexWriterContributor;
-
-	@Reference(
-		target = "(indexer.class.name=com.liferay.calendar.model.CalendarBooking)"
-	)
 	private ModelSummaryContributor _modelSummaryContributor;
+
+	@Reference
+	private SummaryHelper _summaryHelper;
 
 }

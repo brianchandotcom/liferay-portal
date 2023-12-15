@@ -9,6 +9,7 @@ import com.liferay.jethr0.event.github.client.GitHubClient;
 import com.liferay.jethr0.event.github.comment.GitHubComment;
 import com.liferay.jethr0.event.github.commit.GitHubCommit;
 import com.liferay.jethr0.event.github.issue.GitHubIssue;
+import com.liferay.jethr0.event.github.organization.GitHubOrganization;
 import com.liferay.jethr0.event.github.pullrequest.GitHubPullRequest;
 import com.liferay.jethr0.event.github.ref.GitHubRef;
 import com.liferay.jethr0.event.github.repository.GitHubRepository;
@@ -42,6 +43,10 @@ public class GitHubFactory {
 
 	public GitHubIssue newGitHubIssue(JSONObject jsonObject) {
 		return new GitHubIssue(this, jsonObject);
+	}
+
+	public GitHubOrganization newGitHubOrganization(JSONObject jsonObject) {
+		return new GitHubOrganization(this, jsonObject);
 	}
 
 	public GitHubPullRequest newGitHubPullRequest(JSONObject jsonObject) {

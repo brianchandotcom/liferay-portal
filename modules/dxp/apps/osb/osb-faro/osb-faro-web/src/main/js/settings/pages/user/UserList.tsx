@@ -169,6 +169,7 @@ const UserList: React.FC<IUserListProps> = ({
 							timeout: false
 						})
 					),
+			submitButtonDisplay: 'warning',
 			title: Liferay.Language.get('delete-user'),
 			titleIcon: 'warning-full'
 		});

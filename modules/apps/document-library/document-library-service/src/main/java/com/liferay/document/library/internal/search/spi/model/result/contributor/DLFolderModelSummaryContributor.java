@@ -13,15 +13,9 @@ import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContri
 
 import java.util.Locale;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Michael C. Han
  */
-@Component(
-	property = "indexer.class.name=com.liferay.document.library.kernel.model.DLFolder",
-	service = ModelSummaryContributor.class
-)
 public class DLFolderModelSummaryContributor
 	implements ModelSummaryContributor {
 

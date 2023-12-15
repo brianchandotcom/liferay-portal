@@ -6,6 +6,7 @@
 package com.liferay.document.library.internal.search;
 
 import com.liferay.document.library.internal.search.spi.model.index.contributor.DLFileEntryModelIndexerWriterContributor;
+import com.liferay.document.library.internal.search.spi.model.result.contributor.DLFileEntryModelSummaryContributor;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.portal.kernel.search.Field;
@@ -63,6 +64,8 @@ public class DLFileEntryModelSearchConfigurator
 			new DLFileEntryModelIndexerWriterContributor(
 				_dlFileEntryLocalService,
 				_dynamicQueryBatchIndexingActionableFactory);
+
+		_modelSummaryContributor = new DLFileEntryModelSummaryContributor();
 	}
 
 	@Reference
@@ -74,10 +77,6 @@ public class DLFileEntryModelSearchConfigurator
 
 	private ModelIndexerWriterContributor<DLFileEntry>
 		_modelIndexWriterContributor;
-
-	@Reference(
-		target = "(indexer.class.name=com.liferay.document.library.kernel.model.DLFileEntry)"
-	)
 	private ModelSummaryContributor _modelSummaryContributor;
 
 	@Reference(

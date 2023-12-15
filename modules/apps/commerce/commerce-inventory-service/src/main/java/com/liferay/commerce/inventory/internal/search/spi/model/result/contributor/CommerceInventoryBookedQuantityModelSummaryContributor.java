@@ -12,15 +12,9 @@ import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContri
 
 import java.util.Locale;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Brian I. Kim
  */
-@Component(
-	property = "indexer.class.name=com.liferay.commerce.inventory.model.CommerceInventoryBookedQuantity",
-	service = ModelSummaryContributor.class
-)
 public class CommerceInventoryBookedQuantityModelSummaryContributor
 	implements ModelSummaryContributor {
 

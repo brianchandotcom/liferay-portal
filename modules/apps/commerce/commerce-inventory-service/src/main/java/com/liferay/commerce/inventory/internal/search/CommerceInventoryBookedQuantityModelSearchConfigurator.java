@@ -6,6 +6,7 @@
 package com.liferay.commerce.inventory.internal.search;
 
 import com.liferay.commerce.inventory.internal.search.spi.model.index.contributor.CommerceInventoryBookedQuantityModelIndexerWriterContributor;
+import com.liferay.commerce.inventory.internal.search.spi.model.result.contributor.CommerceInventoryBookedQuantityModelSummaryContributor;
 import com.liferay.commerce.inventory.model.CommerceInventoryBookedQuantity;
 import com.liferay.commerce.inventory.service.CommerceInventoryBookedQuantityLocalService;
 import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
@@ -52,6 +53,9 @@ public class CommerceInventoryBookedQuantityModelSearchConfigurator
 			new CommerceInventoryBookedQuantityModelIndexerWriterContributor(
 				_commerceInventoryBookedQuantityLocalService,
 				_dynamicQueryBatchIndexingActionableFactory);
+
+		_modelSummaryContributor =
+			new CommerceInventoryBookedQuantityModelSummaryContributor();
 	}
 
 	@Reference
@@ -64,10 +68,6 @@ public class CommerceInventoryBookedQuantityModelSearchConfigurator
 
 	private ModelIndexerWriterContributor<CommerceInventoryBookedQuantity>
 		_modelIndexWriterContributor;
-
-	@Reference(
-		target = "(indexer.class.name=com.liferay.commerce.inventory.model.CommerceInventoryBookedQuantity)"
-	)
 	private ModelSummaryContributor _modelSummaryContributor;
 
 }

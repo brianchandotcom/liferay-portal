@@ -9,6 +9,7 @@ import com.liferay.asset.auto.tagger.configuration.AssetAutoTaggerConfiguration;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryServiceUtil;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
+import com.liferay.depot.util.SiteConnectedGroupGroupProviderUtil;
 import com.liferay.document.library.configuration.DLFileOrderConfigurationProvider;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
@@ -731,9 +732,25 @@ public class DLAdminDisplayContext {
 		dlSearchContainer.setOrderByCol(getOrderByCol());
 		dlSearchContainer.setOrderByType(getOrderByType());
 
+		long repositoryId = getRepositoryId();
+
 		if (hasFilterParameters()) {
 			SearchContext searchContext = _getSearchContext(
 				dlSearchContainer, "none");
+
+			Repository repository = RepositoryLocalServiceUtil.fetchRepository(
+				repositoryId);
+
+			if ((repository == null) &&
+				(_themeDisplay.getScopeGroupId() != repositoryId) &&
+				ArrayUtil.contains(
+					SiteConnectedGroupGroupProviderUtil.
+						getCurrentAndAncestorSiteAndDepotGroupIds(
+							_themeDisplay.getScopeGroupId()),
+					repositoryId)) {
+
+				searchContext.setGroupIds(new long[] {repositoryId});
+			}
 
 			_initializeFilterSearchContext(searchContext);
 
@@ -753,7 +770,6 @@ public class DLAdminDisplayContext {
 				getOrderByCol(), getOrderByType(), true));
 
 		long folderId = getFolderId();
-		long repositoryId = getRepositoryId();
 
 		long categoryId = ParamUtil.getLong(_httpServletRequest, "categoryId");
 		String tagName = ParamUtil.getString(_httpServletRequest, "tag");

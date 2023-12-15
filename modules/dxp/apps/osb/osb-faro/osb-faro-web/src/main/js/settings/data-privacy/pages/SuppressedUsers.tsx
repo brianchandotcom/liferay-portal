@@ -7,7 +7,7 @@ import {getDataPrivacy} from 'shared/util/breadcrumbs';
 import {RootState} from 'shared/store';
 import {Router} from 'shared/types';
 import {User} from 'shared/util/records';
-import {withAdminPermission} from 'shared/hoc';
+import {withCurrentUser} from 'shared/hoc';
 
 const connector = connect((store: RootState, {groupId}: {groupId: string}) => ({
 	timeZoneId: store.getIn([
@@ -57,4 +57,4 @@ export const SuppressedUsers: React.FC<ISuppressedUsersProps> = ({
 	);
 };
 
-export default compose<any>(withAdminPermission, connector)(SuppressedUsers);
+export default compose<any>(withCurrentUser, connector)(SuppressedUsers);

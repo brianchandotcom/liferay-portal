@@ -176,8 +176,6 @@ export const Overview: React.FC<IOverviewProps> = ({
 			title: Liferay.Language.get('export-suppression-list')
 		});
 
-	const authorized = currentUser.isAdmin();
-
 	return (
 		<BasePage
 			className='data-privacy-overview-root'
@@ -293,14 +291,10 @@ export const Overview: React.FC<IOverviewProps> = ({
 											button
 											className='button-root mb-2'
 											displayType='secondary'
-											href={
-												authorized
-													? toRoute(
-															Routes.SETTINGS_DATA_PRIVACY_SUPPRESSED_USERS,
-															{groupId}
-													  )
-													: undefined
-											}
+											href={toRoute(
+												Routes.SETTINGS_DATA_PRIVACY_SUPPRESSED_USERS,
+												{groupId}
+											)}
 										>
 											{Liferay.Language.get('manage')}
 										</ClayLink>

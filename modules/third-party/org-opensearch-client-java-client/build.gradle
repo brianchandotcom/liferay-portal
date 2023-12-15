@@ -112,6 +112,16 @@ unzip {
 
 	doLast {
 		srcTmpDir.eachFileRecurse(FileType.FILES) {
+			if (it.name == "CatRequestBase.java"
+					|| it.name == "ClusterNodeCount.java"
+					|| it.name == "NodePackagingType.java"
+					|| it.name == "TransportOptions.java"
+					|| it.name == "AwsSdk2Transport.java"
+					|| it.name == "ApacheHttpClient5Transport.java"
+					|| it.name == "Property.java") {
+				return
+			}
+
 			if (it.name.endsWith(".java")) {
 				File destFile = new File(file("src/main/java"), FileUtil.relativize(it, srcTmpDir))
 

@@ -44,6 +44,9 @@
 		.lfr-objects__model-builder-left-sidebar-show-folders-button {
 			display: flex;
 			visibility: hidden;
+			&-disabled {
+				visibility: visible;
+			}
 		}
 		&:hover {
 			.lfr-objects__model-builder-left-sidebar-show-folders-button {

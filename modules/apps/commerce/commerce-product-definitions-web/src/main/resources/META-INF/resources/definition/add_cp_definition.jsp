@@ -22,54 +22,44 @@
 		<portlet:param name="mvcRenderCommandName" value="/cp_definitions/edit_cp_definition" />
 	</portlet:renderURL>
 
-	<aui:script require="commerce-frontend-js/components/autocomplete/entry as autocomplete, commerce-frontend-js/utilities/eventsDefinitions as events, commerce-frontend-js/utilities/modals/index as ModalUtils, commerce-frontend-js/ServiceProvider/index as ServiceProvider">
-		var <portlet:namespace />defaultLanguageId = null;
-		var <portlet:namespace />productData = {
+	<aui:script require="commerce-frontend-js/components/autocomplete/entry as autocomplete, commerce-frontend-js/utilities/eventsDefinitions as events, commerce-frontend-js/utilities/modals/index as ModalUtils, commerce-frontend-js/ServiceProvider/index as ServiceProvider, frontend-js-web/index as frontendJsWeb">
+		const {createPortletURL} = frontendJsWeb;
+
+		let defaultLanguageId = null;
+		const productData = {
 			active: true,
 			productStatus: <%= WorkflowConstants.STATUS_DRAFT %>,
 			productType: '<%= ParamUtil.getString(request, "productTypeName") %>',
 		};
 
-		var AdminCatalogResource = ServiceProvider.default.AdminCatalogAPI('v1');
+		const AdminCatalogResource = ServiceProvider.default.AdminCatalogAPI('v1');
 
-		Liferay.provide(
-			window,
-			'<portlet:namespace />apiSubmit',
-			() => {
-				ModalUtils.isSubmitting();
+		Liferay.provide(window, '<portlet:namespace />apiSubmit', () => {
+			ModalUtils.isSubmitting();
 
-				var formattedData = Object.assign(
-					{},
-					<portlet:namespace />productData,
-					{
-						defaultSku: '<%= CPInstanceConstants.DEFAULT_SKU %>',
-						name: {},
-					}
-				);
+			const formattedData = Object.assign({}, productData, {
+				defaultSku: '<%= CPInstanceConstants.DEFAULT_SKU %>',
+				name: {},
+			});
 
-				formattedData.name[
-					<portlet:namespace />defaultLanguageId
-				] = document.getElementById('<portlet:namespace />name').value;
+			formattedData.name[defaultLanguageId] = document.getElementById(
+				'<portlet:namespace />name'
+			).value;
 
-				AdminCatalogResource.createProduct(formattedData)
-					.then((cpDefinition) => {
-						var redirectURL = new Liferay.PortletURL.createURL(
-							'<%= editProductDefinitionURL %>'
-						);
+			AdminCatalogResource.createProduct(formattedData)
+				.then((cpDefinition) => {
+					const redirectURL = createPortletURL(
+						'<%= editProductDefinitionURL %>',
+						{
+							cpDefinitionId: cpDefinition.id,
+							p_p_state: '<%= LiferayWindowState.MAXIMIZED.toString() %>',
+						}
+					);
 
-						redirectURL.setParameter(
-							'p_p_state',
-							'<%= LiferayWindowState.MAXIMIZED.toString() %>'
-						);
-
-						redirectURL.setParameter('cpDefinitionId', cpDefinition.id);
-
-						ModalUtils.closeAndRedirect(redirectURL);
-					})
-					.catch(ModalUtils.onSubmitFail);
-			},
-			['liferay-portlet-url']
-		);
+					ModalUtils.closeAndRedirect(redirectURL);
+				})
+				.catch(ModalUtils.onSubmitFail);
+		});
 
 		autocomplete.default('autocomplete', 'autocomplete-root', {
 			apiUrl: '/o/headless-commerce-admin-catalog/v1.0/catalogs',
@@ -79,9 +69,8 @@
 			itemsLabel: 'name',
 			onValueUpdated: function (value, catalogData) {
 				if (value) {
-					<portlet:namespace />productData.catalogId = catalogData.id;
-					<portlet:namespace />defaultLanguageId =
-						catalogData.defaultLanguageId;
+					productData.catalogId = catalogData.id;
+					defaultLanguageId = catalogData.defaultLanguageId;
 				}
 			},
 			required: true,

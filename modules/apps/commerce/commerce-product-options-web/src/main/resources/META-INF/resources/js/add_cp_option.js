@@ -41,8 +41,8 @@ export default function ({
 		AdminCatalogResource.createOption(formattedData)
 			.then((cpOption) => {
 				const redirectURL = createPortletURL(editOptionURL, {
-					p_p_state: windowState,
 					cpOptionId: cpOption.id,
+					p_p_state: windowState,
 				});
 
 				modalUtils.closeAndRedirect(redirectURL);

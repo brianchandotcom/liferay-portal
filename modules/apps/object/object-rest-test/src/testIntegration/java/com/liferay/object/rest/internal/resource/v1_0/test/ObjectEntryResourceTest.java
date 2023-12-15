@@ -4945,12 +4945,20 @@ public class ObjectEntryResourceTest {
 
 		Assert.assertEquals(2, nestedObjectEntriesJSONArray.length());
 
-		_assertObjectEntryField(
-			(JSONObject)nestedObjectEntriesJSONArray.get(0),
-			_OBJECT_FIELD_NAME_2, _NEW_OBJECT_FIELD_VALUE_1);
-		_assertObjectEntryField(
-			(JSONObject)nestedObjectEntriesJSONArray.get(1),
-			_OBJECT_FIELD_NAME_2, _NEW_OBJECT_FIELD_VALUE_2);
+		JSONAssert.assertEquals(
+			JSONUtil.putAll(
+				JSONUtil.put(
+					_OBJECT_FIELD_NAME_2, _NEW_OBJECT_FIELD_VALUE_1
+				).put(
+					"externalReferenceCode", _ERC_VALUE_1
+				),
+				JSONUtil.put(
+					_OBJECT_FIELD_NAME_2, _NEW_OBJECT_FIELD_VALUE_2
+				).put(
+					"externalReferenceCode", _ERC_VALUE_2
+				)
+			).toString(),
+			nestedObjectEntriesJSONArray.toString(), JSONCompareMode.LENIENT);
 
 		objectEntryId = jsonObject.getString("id");
 
@@ -4967,12 +4975,20 @@ public class ObjectEntryResourceTest {
 
 		Assert.assertEquals(2, nestedObjectEntriesJSONArray.length());
 
-		_assertObjectEntryField(
-			(JSONObject)nestedObjectEntriesJSONArray.get(0),
-			_OBJECT_FIELD_NAME_2, _NEW_OBJECT_FIELD_VALUE_1);
-		_assertObjectEntryField(
-			(JSONObject)nestedObjectEntriesJSONArray.get(1),
-			_OBJECT_FIELD_NAME_2, _NEW_OBJECT_FIELD_VALUE_2);
+		JSONAssert.assertEquals(
+			JSONUtil.putAll(
+				JSONUtil.put(
+					_OBJECT_FIELD_NAME_2, _NEW_OBJECT_FIELD_VALUE_1
+				).put(
+					"externalReferenceCode", _ERC_VALUE_1
+				),
+				JSONUtil.put(
+					_OBJECT_FIELD_NAME_2, _NEW_OBJECT_FIELD_VALUE_2
+				).put(
+					"externalReferenceCode", _ERC_VALUE_2
+				)
+			).toString(),
+			nestedObjectEntriesJSONArray.toString(), JSONCompareMode.LENIENT);
 	}
 
 	@Test

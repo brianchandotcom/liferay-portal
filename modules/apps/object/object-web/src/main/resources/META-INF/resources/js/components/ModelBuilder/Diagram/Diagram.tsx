@@ -130,7 +130,13 @@ function DiagramBuilder() {
 			objectFolderItems: updatedObjectFolderItems,
 		};
 
-		await API.putObjectFolderByExternalReferenceCode(updatedObjectFolder);
+		await API.putObjectFolderByExternalReferenceCode({
+			externalReferenceCode: updatedObjectFolder.externalReferenceCode,
+			id: updatedObjectFolder.id,
+			label: updatedObjectFolder.label,
+			name: updatedObjectFolder.name,
+			objectFolderItems: updatedObjectFolder.objectFolderItems,
+		});
 
 		const {edges, nodes} = store.getState();
 

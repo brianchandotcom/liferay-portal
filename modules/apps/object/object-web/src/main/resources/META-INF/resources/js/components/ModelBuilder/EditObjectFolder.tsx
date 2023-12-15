@@ -3,6 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {
+	API,
+	ModalEditObjectDefinitionExternalReferenceCode,
+	openToast,
+} from '@liferay/object-js-components-web';
+import {createResourceURL} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 import {
 	Edge,
@@ -13,8 +19,12 @@ import {
 	isNode,
 } from 'react-flow-renderer';
 
+import {formatActionURL} from '../../utils/fds';
 import {Scope} from '../ObjectDetails/EditObjectDetails';
+import {ModalAddObjectField} from '../ObjectField/ModalAddObjectField';
+import {ModalAddObjectRelationship} from '../ObjectRelationship/ModalAddObjectRelationship';
 import {ModalAddObjectDefinition} from '../ViewObjectDefinitions/ModalAddObjectDefinition';
+import {ModalDeleteObjectDefinition} from '../ViewObjectDefinitions/ModalDeleteObjectDefinition';
 import {ModalEditObjectFolder} from '../ViewObjectDefinitions/ModalEditObjectFolder';
 import {
 	getDbTableName,
@@ -27,23 +37,11 @@ import EmptyObjectFolderCard from './EmptyObjectFolderCard/EmptyObjectFolderCard
 import LeftSidebar from './LeftSidebar/LeftSidebar';
 import {useObjectFolderContext} from './ModelBuilderContext/objectFolderContext';
 import {TYPES} from './ModelBuilderContext/typesEnum';
+import {RedirectToEditObjectDetailsModal} from './ObjectDefinitionNode/RedirectToEditObjectDetailsModal';
 import {RightSideBar} from './RightSidebar/index';
+import {ObjectRelationshipEdgeData} from './types';
 
 import './EditObjectFolder.scss';
-
-import {
-	API,
-	ModalEditObjectDefinitionExternalReferenceCode,
-	openToast,
-} from '@liferay/object-js-components-web';
-import {createResourceURL} from 'frontend-js-web';
-
-import {formatActionURL} from '../../utils/fds';
-import {ModalAddObjectField} from '../ObjectField/ModalAddObjectField';
-import {ModalAddObjectRelationship} from '../ObjectRelationship/ModalAddObjectRelationship';
-import {ModalDeleteObjectDefinition} from '../ViewObjectDefinitions/ModalDeleteObjectDefinition';
-import {RedirectToEditObjectDetailsModal} from './ObjectDefinitionNode/RedirectToEditObjectDetailsModal';
-import {ObjectRelationshipEdgeData} from './types';
 
 interface EditObjectFolder {
 	companies: Scope[];
@@ -65,9 +63,11 @@ export default function EditObjectFolder({
 			editObjectDefinitionURL,
 			elements,
 			isLoadingObjectFolder,
+			leftSidebarItems,
 			modelBuilderModals,
 			objectDefinitionsStorageTypes,
 			objectFolderName,
+			objectFolders,
 			rightSidebarType,
 			selectedObjectDefinitionNode,
 			selectedObjectFolder,
@@ -190,6 +190,24 @@ export default function EditObjectFolder({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [showChangesSaved]);
 
+	useEffect(() => {
+		if (Object.keys(selectedObjectFolder).length) {
+			const makeFetch = async () =>
+				await API.putObjectFolderByExternalReferenceCode({
+					externalReferenceCode:
+						selectedObjectFolder.externalReferenceCode,
+					id: selectedObjectFolder.id,
+					label: selectedObjectFolder.label,
+					name: selectedObjectFolder.name,
+					objectFolderItems: selectedObjectFolder.objectFolderItems,
+				});
+
+			makeFetch();
+		}
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [selectedObjectFolder.objectFolderItems?.length]);
+
 	return (
 		<>
 			{modelBuilderModals.addObjectDefinition && (
@@ -224,10 +242,11 @@ export default function EditObjectFolder({
 						dispatch({
 							payload: {
 								dbTableName,
+								elements,
+								leftSidebarItems,
 								newObjectDefinition,
-								objectDefinitionNodes: nodes,
-								selectedObjectFolderName:
-									selectedObjectFolder.name,
+								objectFolders,
+								selectedObjectFolder,
 							},
 							type: TYPES.ADD_OBJECT_DEFINITION_TO_OBJECT_FOLDER,
 						});

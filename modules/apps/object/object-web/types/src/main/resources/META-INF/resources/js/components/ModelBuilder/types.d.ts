@@ -34,9 +34,13 @@ export declare type TAction =
 	| {
 			payload: {
 				dbTableName: string;
+				elements: Elements<
+					ObjectDefinitionNodeData | ObjectRelationshipEdgeData
+				>;
+				leftSidebarItems: LeftSidebarItem[];
 				newObjectDefinition: ObjectDefinition;
-				objectDefinitionNodes: Node<ObjectDefinitionNodeData>[];
-				selectedObjectFolderName: string;
+				objectFolders: ObjectFolder[];
+				selectedObjectFolder: ObjectFolder;
 			};
 			type: TYPES.ADD_OBJECT_DEFINITION_TO_OBJECT_FOLDER;
 	  }

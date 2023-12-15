@@ -180,6 +180,10 @@ public class GenerateTestrayCSVUtil {
 
 			String testrayBuildReportURL = getTestrayBuildReportURL();
 
+			if (testrayBuildReportURL.isEmpty()) {
+				return "";
+			}
+
 			String[] buildReportText = testrayBuildReportURL.split("/");
 
 			URL topLevelBuildReportURL = null;
@@ -209,6 +213,10 @@ public class GenerateTestrayCSVUtil {
 		public String getTestrayBuildReportURL() {
 			JSONObject jsonObject = _resultJSONObject.getJSONObject(
 				"attachments");
+
+			if (jsonObject.isNull("Build Report (Top Level)")) {
+				return "";
+			}
 
 			return jsonObject.getString("Build Report (Top Level)");
 		}

@@ -6,9 +6,11 @@
 package com.liferay.layout.internal.search;
 
 import com.liferay.layout.internal.search.spi.model.index.contributor.LayoutModelIndexerWriterContributor;
+import com.liferay.layout.internal.search.spi.model.result.contributor.LayoutModelSummaryContributor;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.util.HtmlParser;
 import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
@@ -60,6 +62,9 @@ public class LayoutModelSearchConfigurator
 	protected void activate() {
 		_modelIndexWriterContributor = new LayoutModelIndexerWriterContributor(
 			_dynamicQueryBatchIndexingActionableFactory, _layoutLocalService);
+
+		_modelSummaryContributor = new LayoutModelSummaryContributor(
+			_htmlParser);
 	}
 
 	@Reference
@@ -67,13 +72,12 @@ public class LayoutModelSearchConfigurator
 		_dynamicQueryBatchIndexingActionableFactory;
 
 	@Reference
+	private HtmlParser _htmlParser;
+
+	@Reference
 	private LayoutLocalService _layoutLocalService;
 
 	private ModelIndexerWriterContributor<Layout> _modelIndexWriterContributor;
-
-	@Reference(
-		target = "(indexer.class.name=com.liferay.portal.kernel.model.Layout)"
-	)
 	private ModelSummaryContributor _modelSummaryContributor;
 
 }

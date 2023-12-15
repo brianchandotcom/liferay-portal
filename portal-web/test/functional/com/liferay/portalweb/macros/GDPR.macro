@@ -69,7 +69,7 @@ definition {
 
 		PortletEntry.selectAll();
 
-		Click(locator1 = "Icon#TOOLBAR_ELLIPSIS");
+		Click(locator1 = "ManagementBar#ELLIPSIS");
 
 		MenuItem.clickNoError(menuItem = "Anonymize");
 
@@ -95,7 +95,7 @@ definition {
 		if (isSet(allApplications)) {
 			PortletEntry.selectAll();
 
-			Click(locator1 = "Icon#TOOLBAR_ELLIPSIS");
+			Click(locator1 = "ManagementBar#ELLIPSIS");
 
 			MenuItem.clickNoError(menuItem = "Anonymize");
 
@@ -121,7 +121,7 @@ definition {
 			LexiconEntry.selectEntry(rowEntry = ${rowEntry});
 		}
 
-		Click(locator1 = "Icon#TOOLBAR_ELLIPSIS");
+		Click(locator1 = "ManagementBar#ELLIPSIS");
 
 		MenuItem.clickNoError(menuItem = "Anonymize");
 
@@ -175,7 +175,7 @@ definition {
 	macro deleteAllEntriesCP() {
 		PortletEntry.selectAll();
 
-		Click(locator1 = "Icon#TOOLBAR_ELLIPSIS");
+		Click(locator1 = "ManagementBar#ELLIPSIS");
 
 		MenuItem.clickNoError(menuItem = "Delete");
 
@@ -235,7 +235,7 @@ definition {
 			LexiconEntry.selectEntry(rowEntry = ${rowEntry});
 		}
 
-		Click(locator1 = "Icon#TOOLBAR_ELLIPSIS");
+		Click(locator1 = "ManagementBar#ELLIPSIS");
 
 		MenuItem.clickNoError(menuItem = "Delete");
 

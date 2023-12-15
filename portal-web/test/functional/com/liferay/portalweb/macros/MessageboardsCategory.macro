@@ -66,7 +66,9 @@ definition {
 		if (IsElementPresent(locator1 = "Checkbox#LEXICON_SELECT_ALL_CONTAINER")) {
 			PortletEntry.selectAll();
 
-			Click(locator1 = "Icon#DELETE");
+			Click(
+				key_text = "trash",
+				locator1 = "ManagementBar#ANY_ICON");
 
 			VerifyElementPresent(locator1 = "Message#SUCCESS");
 		}

@@ -219,10 +219,10 @@ definition {
 			key_text = "pencil",
 			locator1 = "Icon#ANY");
 
-		AssertVisible(locator1 = "Icon#TOOLBAR_ELLIPSIS");
+		AssertVisible(locator1 = "ManagementBar#ELLIPSIS");
 
 		if (isSet(moreActions)) {
-			Click(locator1 = "Icon#TOOLBAR_ELLIPSIS");
+			Click(locator1 = "ManagementBar#ELLIPSIS");
 
 			MenuItem.viewVisible(menuItem = "Edit");
 

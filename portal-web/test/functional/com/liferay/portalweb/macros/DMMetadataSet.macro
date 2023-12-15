@@ -41,7 +41,9 @@ definition {
 		if (isSet(deleteViaManagementBar)) {
 			LexiconEntry.selectEntry(rowEntry = ${metadataSetName});
 
-			ClickNoError(locator1 = "Icon#DELETE");
+			ClickNoError(
+				key_text = "trash",
+				locator1 = "ManagementBar#ANY_ICON");
 		}
 		else {
 			LexiconEntry.openEntryMenu(rowEntry = ${metadataSetName});
@@ -61,7 +63,9 @@ definition {
 		else if (${deleteViaManagementBar} == "true") {
 			Alert.viewSuccessMessage();
 
-			AssertElementNotPresent(locator1 = "Icon#DELETE");
+			AssertElementNotPresent(
+				key_text = "trash",
+				locator1 = "ManagementBar#ANY_ICON");
 
 			LexiconEntry.viewNoEntry(rowEntry = ${metadataSetName});
 		}

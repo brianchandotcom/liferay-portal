@@ -1226,7 +1226,9 @@ definition {
 
 		ManagementBar.clickSelectAllCheckbox();
 
-		Click(locator1 = "Icon#DELETE");
+		Click(
+			key_text = "trash",
+			locator1 = "ManagementBar#ANY_ICON");
 
 		VerifyElementPresent(locator1 = "Message#SUCCESS");
 

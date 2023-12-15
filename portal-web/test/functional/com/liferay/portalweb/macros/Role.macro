@@ -284,7 +284,9 @@ definition {
 
 		LexiconEntry.selectEntry(key_rowEntry = ${assigneeName});
 
-		ClickNoError(locator1 = "Icon#DELETE");
+		ClickNoError(
+			key_text = "times-circle",
+			locator1 = "ManagementBar#ANY_ICON");
 	}
 
 	@summary = "Default summary"

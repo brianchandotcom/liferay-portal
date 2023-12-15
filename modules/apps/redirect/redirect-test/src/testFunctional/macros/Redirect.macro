@@ -290,7 +290,9 @@ definition {
 	@summary = "Default summary"
 	macro deleteEntry(sourceURL = null) {
 		if (isSet(deletions)) {
-			ClickNoError(locator1 = "Icon#DELETE");
+			ClickNoError(
+				key_text = "trash",
+				locator1 = "ManagementBar#ANY_ICON");
 		}
 		else {
 			Redirect.gotoEntryMenuItem(
@@ -416,7 +418,9 @@ definition {
 			if (${unignoreAllEntries} == "true") {
 				PortletEntry.selectAll();
 
-				Click(locator1 = "Button#UNIGNORE_REDIRECT_URLS");
+				Click(
+					key_text = "view",
+					locator1 = "ManagementBar#ANY_ICON");
 			}
 			else {
 				Redirect.gotoEntryMenuItem(
@@ -432,7 +436,9 @@ definition {
 			if (${ignoreAllEntries} == "true") {
 				PortletEntry.selectAll();
 
-				Click(locator1 = "Button#IGNORE_REDIRECT_URLS");
+				Click(
+					key_text = "view",
+					locator1 = "ManagementBar#ANY_ICON");
 			}
 			else {
 				Redirect.gotoEntryMenuItem(

@@ -142,7 +142,7 @@ definition {
 				LexiconEntry.selectEntry(rowEntry = ${tagName});
 			}
 
-			Click(locator1 = "Icon#TOOLBAR_ELLIPSIS");
+			Click(locator1 = "ManagementBar#ELLIPSIS");
 
 			Click(locator1 = "Button#MERGE");
 		}

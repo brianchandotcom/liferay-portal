@@ -1140,7 +1140,9 @@ definition {
 					locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
 			}
 
-			ClickNoError(locator1 = "Icon#DELETE");
+			ClickNoError(
+				key_text = "trash",
+				locator1 = "ManagementBar#ANY_ICON");
 		}
 		else {
 			Search.searchCP(searchTerm = ${orgName});

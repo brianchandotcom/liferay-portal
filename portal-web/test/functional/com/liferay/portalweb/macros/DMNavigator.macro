@@ -349,9 +349,9 @@ definition {
 
 	@summary = "Default summary"
 	macro gotoVerticalEllipsisMenuItem(menuItem = null) {
-		WaitForVisible(locator1 = "Icon#TOOLBAR_ELLIPSIS");
+		WaitForVisible(locator1 = "ManagementBar#ELLIPSIS");
 
-		Click(locator1 = "Icon#TOOLBAR_ELLIPSIS");
+		Click(locator1 = "ManagementBar#ELLIPSIS");
 
 		MenuItem.click(menuItem = ${menuItem});
 	}

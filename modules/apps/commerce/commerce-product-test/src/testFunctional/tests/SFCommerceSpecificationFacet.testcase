@@ -181,11 +181,9 @@ definition {
 				key_entry = "Warranty",
 				locator1 = "CommerceNavigation#ANY_ENTRY_NAME");
 
-			AssertElementPresent(
+			AssertElementNotPresent(
 				key_entry = "Material",
 				locator1 = "CommerceNavigation#ANY_ENTRY_NAME");
-
-			// We need to remove this check after an issue is fixed
 
 			CommerceWidget.assertOptionFacetsCount(
 				expectedLabels = 1,

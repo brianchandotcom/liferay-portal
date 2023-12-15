@@ -5,6 +5,8 @@
 
 import {debounce, toggleDisabled} from 'frontend-js-web';
 
+const INCLUDE_SITEMAP_FIELD_DISABLED_VALUE = '0';
+
 export default function ({namespace}) {
 	let disposed = false;
 	let robotsInputChangeEventHandler;
@@ -24,9 +26,15 @@ export default function ({namespace}) {
 		document.getElementById(`${namespace}sitemap-changefreq`),
 	].filter((field) => !field.disabled);
 
+	const disableSitemapFields = () => {
+		includeSitemapField.value = INCLUDE_SITEMAP_FIELD_DISABLED_VALUE;
+
+		toggleDisabled(sitemapFields, true);
+	};
+
 	const toggleSitemapFields = () => {
 		if (canonicalURLEnabledCheck?.checked) {
-			toggleDisabled(sitemapFields, true);
+			disableSitemapFields();
 
 			return;
 		}
@@ -43,10 +51,12 @@ export default function ({namespace}) {
 			.map((languageId) => robotsInputLocalized.getValue(languageId))
 			.join('\n');
 
-		toggleDisabled(
-			sitemapFields,
-			/(noindex)|(nofollow)/i.test(robotsInputValue)
-		);
+		if (/(noindex)|(nofollow)/i.test(robotsInputValue)) {
+			disableSitemapFields();
+		}
+		else {
+			toggleDisabled(sitemapFields, false);
+		}
 	};
 
 	canonicalURLEnabledCheck?.addEventListener('change', toggleSitemapFields);

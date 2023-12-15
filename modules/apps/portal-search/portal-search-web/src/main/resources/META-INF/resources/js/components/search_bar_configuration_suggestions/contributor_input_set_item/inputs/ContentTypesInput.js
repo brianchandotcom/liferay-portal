@@ -42,9 +42,9 @@ const CONTENT_TYPES = [
 function ContentTypesModal({
 	initialSelectedTypes = [],
 	observer,
-	onClose,
-	onChange,
 	onBlur,
+	onChange,
+	onClose,
 }) {
 	const [selectedTypes, setSelectedTypes] = useState(initialSelectedTypes);
 
@@ -207,10 +207,11 @@ function ContentTypesModal({
 export default function ContentTypesInput({onBlur, onChange, value}) {
 	const {observer, onOpenChange, open} = useModal();
 
-	const _getSelectedTypes = (items) =>
-		items
+	const _getSelectedTypes = (items) => {
+		return items
 			? items.split(',')
 			: CONTENT_TYPES.map(({className}) => className);
+	};
 
 	const _handleClose = () => {
 		onOpenChange(false);

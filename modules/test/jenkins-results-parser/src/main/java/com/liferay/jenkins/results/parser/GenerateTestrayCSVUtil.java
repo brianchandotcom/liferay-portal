@@ -214,11 +214,7 @@ public class GenerateTestrayCSVUtil {
 			JSONObject jsonObject = _resultJSONObject.getJSONObject(
 				"attachments");
 
-			if (jsonObject.isNull("Build Report (Top Level)")) {
-				return "";
-			}
-
-			return jsonObject.getString("Build Report (Top Level)");
+			return jsonObject.optString("Build Report (Top Level)");
 		}
 
 		public String getTestrayCaseName() {

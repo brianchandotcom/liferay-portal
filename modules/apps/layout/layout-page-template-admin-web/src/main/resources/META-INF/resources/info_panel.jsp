@@ -8,7 +8,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-DisplayPageTemplateInfoPanelDisplayContext displayPageTemplateInfoPanelDisplayContext = new DisplayPageTemplateInfoPanelDisplayContext(request, renderRequest, renderResponse);
+DisplayPageTemplateInfoPanelDisplayContext displayPageTemplateInfoPanelDisplayContext = new DisplayPageTemplateInfoPanelDisplayContext(request, liferayPortletRequest, liferayPortletResponse);
 
 List<LayoutPageTemplateCollection> layoutPageTemplateCollections = displayPageTemplateInfoPanelDisplayContext.getLayoutPageTemplateCollections();
 List<LayoutPageTemplateEntry> layoutPageTemplateEntries = displayPageTemplateInfoPanelDisplayContext.getLayoutPageTemplateEntries();

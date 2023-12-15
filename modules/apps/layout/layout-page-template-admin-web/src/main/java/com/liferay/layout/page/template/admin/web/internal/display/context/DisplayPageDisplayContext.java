@@ -32,6 +32,8 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
@@ -56,8 +58,6 @@ import java.util.Map;
 import java.util.Objects;
 
 import javax.portlet.PortletURL;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -67,12 +67,13 @@ import javax.servlet.http.HttpServletRequest;
 public class DisplayPageDisplayContext {
 
 	public DisplayPageDisplayContext(
-		HttpServletRequest httpServletRequest, RenderRequest renderRequest,
-		RenderResponse renderResponse) {
+		HttpServletRequest httpServletRequest,
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse) {
 
 		_httpServletRequest = httpServletRequest;
-		_renderRequest = renderRequest;
-		_renderResponse = renderResponse;
+		_liferayPortletRequest = liferayPortletRequest;
+		_liferayPortletResponse = liferayPortletResponse;
 
 		_infoItemServiceRegistry =
 			(InfoItemServiceRegistry)httpServletRequest.getAttribute(
@@ -96,7 +97,7 @@ public class DisplayPageDisplayContext {
 		if (!FeatureFlagManagerUtil.isEnabled("LPS-189856")) {
 			SearchContainer<LayoutPageTemplateEntry>
 				displayPagesSearchContainer = new SearchContainer<>(
-					_renderRequest, getPortletURL(), null,
+				_liferayPortletRequest, getPortletURL(), null,
 					"there-are-no-display-page-templates");
 
 			displayPagesSearchContainer.setOrderByCol(getOrderByCol());
@@ -142,7 +143,7 @@ public class DisplayPageDisplayContext {
 			}
 
 			displayPagesSearchContainer.setRowChecker(
-				new EmptyOnClickRowChecker(_renderResponse));
+				new EmptyOnClickRowChecker(_liferayPortletResponse));
 
 			_displayPagesSearchContainer = displayPagesSearchContainer;
 
@@ -152,7 +153,7 @@ public class DisplayPageDisplayContext {
 		if (isSearch()) {
 			SearchContainer<Object> displayPagesSearchContainer =
 				new SearchContainer<>(
-					_renderRequest, getPortletURL(), null,
+					_liferayPortletRequest, getPortletURL(), null,
 					"there-are-no-display-page-templates");
 
 			displayPagesSearchContainer.setOrderByCol(getOrderByCol());
@@ -179,7 +180,7 @@ public class DisplayPageDisplayContext {
 						LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, -1));
 
 			displayPagesSearchContainer.setRowChecker(
-				new EmptyOnClickRowChecker(_renderResponse));
+				new EmptyOnClickRowChecker(_liferayPortletResponse));
 
 			_displayPagesSearchContainer = displayPagesSearchContainer;
 
@@ -188,7 +189,7 @@ public class DisplayPageDisplayContext {
 
 		SearchContainer<Object> displayPagesSearchContainer =
 			new SearchContainer<>(
-				_renderRequest, getPortletURL(), null,
+				_liferayPortletRequest, getPortletURL(), null,
 				"there-are-no-display-page-templates");
 
 		displayPagesSearchContainer.setOrderByCol(getOrderByCol());
@@ -213,7 +214,7 @@ public class DisplayPageDisplayContext {
 					LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE));
 
 		displayPagesSearchContainer.setRowChecker(
-			new EmptyOnClickRowChecker(_renderResponse));
+			new EmptyOnClickRowChecker(_liferayPortletResponse));
 
 		_displayPagesSearchContainer = displayPagesSearchContainer;
 
@@ -242,7 +243,7 @@ public class DisplayPageDisplayContext {
 					LanguageUtil.get(_httpServletRequest, "home"));
 				breadcrumbEntry.setURL(
 					PortletURLBuilder.createRenderURL(
-						_renderResponse
+						_liferayPortletResponse
 					).setTabs1(
 						"display-page-templates"
 					).setParameter(
@@ -267,7 +268,7 @@ public class DisplayPageDisplayContext {
 							curLayoutPageTemplateCollection.getName()
 						).setURL(
 							PortletURLBuilder.createRenderURL(
-								_renderResponse
+								_liferayPortletResponse
 							).setTabs1(
 								"display-page-templates"
 							).setParameter(
@@ -352,7 +353,7 @@ public class DisplayPageDisplayContext {
 
 	public PortletURL getPortletURL() {
 		return PortletURLBuilder.createRenderURL(
-			_renderResponse
+			_liferayPortletResponse
 		).setMVCPath(
 			"/view_display_pages.jsp"
 		).setRedirect(
@@ -626,8 +627,8 @@ public class DisplayPageDisplayContext {
 	private JSONArray _mappingTypesJSONArray;
 	private String _orderByCol;
 	private String _orderByType;
-	private final RenderRequest _renderRequest;
-	private final RenderResponse _renderResponse;
+	private final LiferayPortletRequest _liferayPortletRequest;
+	private final LiferayPortletResponse _liferayPortletResponse;
 	private final ThemeDisplay _themeDisplay;
 
 }

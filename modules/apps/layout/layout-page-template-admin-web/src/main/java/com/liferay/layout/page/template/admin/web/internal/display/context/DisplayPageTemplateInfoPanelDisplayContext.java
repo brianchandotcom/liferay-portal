@@ -20,6 +20,8 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUt
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -30,9 +32,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -41,12 +40,13 @@ import javax.servlet.http.HttpServletRequest;
 public class DisplayPageTemplateInfoPanelDisplayContext {
 
 	public DisplayPageTemplateInfoPanelDisplayContext(
-		HttpServletRequest httpServletRequest, RenderRequest renderRequest,
-		RenderResponse renderResponse) {
+		HttpServletRequest httpServletRequest,
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse) {
 
 		_httpServletRequest = httpServletRequest;
-		_renderRequest = renderRequest;
-		_renderResponse = renderResponse;
+		_liferayPortletRequest = liferayPortletRequest;
+		_liferayPortletResponse = liferayPortletResponse;
 
 		_infoItemServiceRegistry =
 			(InfoItemServiceRegistry)httpServletRequest.getAttribute(
@@ -93,7 +93,8 @@ public class DisplayPageTemplateInfoPanelDisplayContext {
 		if (layoutPageTemplateCollection != null) {
 			DisplayPageDisplayContext displayPageDisplayContext =
 				new DisplayPageDisplayContext(
-					_httpServletRequest, _renderRequest, _renderResponse);
+					_httpServletRequest, _liferayPortletRequest,
+					_liferayPortletResponse);
 
 			paths = TransformUtil.transform(
 				displayPageDisplayContext.
@@ -200,8 +201,8 @@ public class DisplayPageTemplateInfoPanelDisplayContext {
 	private final HttpServletRequest _httpServletRequest;
 	private final InfoItemServiceRegistry _infoItemServiceRegistry;
 	private List<LayoutPageTemplateEntry> _layoutPageTemplateEntries;
-	private final RenderRequest _renderRequest;
-	private final RenderResponse _renderResponse;
+	private final LiferayPortletRequest _liferayPortletRequest;
+	private final LiferayPortletResponse _liferayPortletResponse;
 	private final ThemeDisplay _themeDisplay;
 
 }

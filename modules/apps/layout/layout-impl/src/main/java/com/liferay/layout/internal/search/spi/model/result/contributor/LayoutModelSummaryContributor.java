@@ -21,17 +21,14 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Vagner B.C
  */
-@Component(
-	property = "indexer.class.name=com.liferay.portal.kernel.model.Layout",
-	service = ModelSummaryContributor.class
-)
 public class LayoutModelSummaryContributor implements ModelSummaryContributor {
+
+	public LayoutModelSummaryContributor(HtmlParser htmlParser) {
+		_htmlParser = htmlParser;
+	}
 
 	@Override
 	public Summary getSummary(
@@ -92,7 +89,6 @@ public class LayoutModelSummaryContributor implements ModelSummaryContributor {
 		HighlightUtil.HIGHLIGHT_TAG_OPEN, HighlightUtil.HIGHLIGHT_TAG_CLOSE
 	};
 
-	@Reference
-	private HtmlParser _htmlParser;
+	private final HtmlParser _htmlParser;
 
 }

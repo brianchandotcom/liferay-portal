@@ -52,7 +52,9 @@ definition {
 		}
 
 		task ("When an attachment is added to the notification template") {
-			ObjectNotifications.addNotificationTemplateAttachment(objectLabel = "Custom Object 161924");
+			ObjectNotifications.addNotificationTemplateAttachment(
+				fieldLabel = "From Computer And Show Files In DM",
+				objectLabel = "Custom Object 161924");
 
 			PortletEntry.save();
 		}
@@ -172,7 +174,9 @@ definition {
 				name = "Notification Template",
 				subject = "[%USER_AUTHOR_LAST_NAME%]");
 
-			ObjectNotifications.addNotificationTemplateAttachment(objectLabel = "Custom Object A 183441");
+			ObjectNotifications.addNotificationTemplateAttachment(
+				fieldLabel = "Custom Attachment Field A",
+				objectLabel = "Custom Object A 183441");
 
 			PortletEntry.save();
 		}
@@ -193,8 +197,8 @@ definition {
 
 		task ("Then the attachment field from Object B can be selected") {
 			AssertElementPresent(
-				locator1 = "ObjectNotifications#FIELD_ATTACHMENTS_OBJECT_SELECT_FIELD",
-				value1 = "Custom Attachment Field B");
+				key_fieldLabel = "Custom Attachment Field B",
+				locator1 = "ObjectNotifications#FIELD_ATTACHMENTS_OBJECT_SELECT_FIELD");
 		}
 	}
 
@@ -341,7 +345,9 @@ definition {
 		}
 
 		task ("And given an attachment is added to the notification template") {
-			ObjectNotifications.addNotificationTemplateAttachment(objectLabel = "Custom Object 161928");
+			ObjectNotifications.addNotificationTemplateAttachment(
+				fieldLabel = "From Computer And Show Files In DM",
+				objectLabel = "Custom Object 161928");
 
 			PortletEntry.save();
 		}

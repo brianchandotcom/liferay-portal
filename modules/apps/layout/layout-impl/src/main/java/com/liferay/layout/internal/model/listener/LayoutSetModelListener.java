@@ -28,7 +28,7 @@ public class LayoutSetModelListener extends BaseModelListener<LayoutSet> {
 			return;
 		}
 
-		clearCache(layoutSet);
+		_clearCache(layoutSet);
 	}
 
 	@Override
@@ -39,7 +39,7 @@ public class LayoutSetModelListener extends BaseModelListener<LayoutSet> {
 			return;
 		}
 
-		clearCache(layoutSet);
+		_clearCache(layoutSet);
 	}
 
 	@Override
@@ -51,7 +51,7 @@ public class LayoutSetModelListener extends BaseModelListener<LayoutSet> {
 			layoutSet.getLayoutSetId());
 	}
 
-	protected void clearCache(LayoutSet layoutSet) {
+	private void _clearCache(LayoutSet layoutSet) {
 		if (!layoutSet.isPrivateLayout()) {
 			CacheUtil.clearCache(layoutSet.getCompanyId());
 		}

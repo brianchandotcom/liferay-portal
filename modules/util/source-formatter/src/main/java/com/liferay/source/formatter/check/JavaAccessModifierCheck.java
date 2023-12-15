@@ -18,10 +18,6 @@ import com.liferay.source.formatter.util.SourceFormatterUtil;
 
 import java.io.File;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -100,13 +96,13 @@ public class JavaAccessModifierCheck extends BaseFileCheck {
 
 		String moduleRootDirLocation = "modules/";
 
-		List<String> lines = new ArrayList<>();
+		List<String> fileNames = new ArrayList<>();
 
 		for (int i = 0; i < getMaxDirLevel(); i++) {
 			File file = new File(getBaseDirName() + moduleRootDirLocation);
 
 			if (file.exists()) {
-				lines = SourceFormatterUtil.matchFileContents(
+				fileNames = SourceFormatterUtil.matchFileContents(
 					Arrays.asList("--untracked", "-E", "-l", "@Component"),
 					file.getCanonicalPath(), new String[] {"**/*.java"});
 
@@ -116,20 +112,16 @@ public class JavaAccessModifierCheck extends BaseFileCheck {
 			moduleRootDirLocation = "../" + moduleRootDirLocation;
 		}
 
-		for (String line : lines) {
-			if (line.contains("/src/test/java/") ||
-				line.contains("/test/unit/")) {
+		for (String fileName : fileNames) {
+			if (fileName.contains("/src/test/java/") ||
+				fileName.contains("/test/unit/")) {
 
 				continue;
 			}
 
-			Path baseDirPath = Paths.get(getBaseDirName());
+			File file = new File(fileName);
 
-			Path filePath = baseDirPath.resolve(line);
-
-			if (Files.exists(filePath)) {
-				String fileName = filePath.toString();
-
+			if (file.exists()) {
 				fileName = StringUtil.replace(
 					fileName, CharPool.BACK_SLASH, CharPool.SLASH);
 
@@ -147,7 +139,7 @@ public class JavaAccessModifierCheck extends BaseFileCheck {
 					continue;
 				}
 
-				String content = FileUtil.read(filePath.toFile());
+				String content = FileUtil.read(file);
 
 				String superClassName = _getSuperClassNameWithPackageName(
 					content);

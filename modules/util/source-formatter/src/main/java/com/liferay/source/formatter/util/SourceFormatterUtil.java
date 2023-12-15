@@ -690,18 +690,11 @@ public class SourceFormatterUtil {
 
 		List<String> fileNames = new ArrayList<>();
 
-		try {
-			_executeGitCommand(allArgs, baseDirName, fileNames::add);
+		_executeGitCommand(
+			allArgs, baseDirName,
+			line -> fileNames.add(baseDirName + StringPool.SLASH + line));
 
-			return fileNames;
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-		}
-
-		return null;
+		return fileNames;
 	}
 
 	private static List<String> _scanForFileNames(

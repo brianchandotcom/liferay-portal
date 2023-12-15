@@ -12,15 +12,9 @@ import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContri
 
 import java.util.Locale;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Luca Pellizzon
  */
-@Component(
-	property = "indexer.class.name=com.liferay.commerce.payment.model.CommercePaymentEntry",
-	service = ModelSummaryContributor.class
-)
 public class CommercePaymentEntryModelSummaryContributor
 	implements ModelSummaryContributor {
 

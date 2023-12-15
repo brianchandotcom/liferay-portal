@@ -6,6 +6,7 @@
 package com.liferay.commerce.payment.internal.search;
 
 import com.liferay.commerce.payment.internal.search.spi.model.index.contributor.CommercePaymentEntryAuditModelIndexerWriterContributor;
+import com.liferay.commerce.payment.internal.search.spi.model.result.contributor.CommercePaymentEntryAuditModelSummaryContributor;
 import com.liferay.commerce.payment.model.CommercePaymentEntryAudit;
 import com.liferay.commerce.payment.service.CommercePaymentEntryAuditLocalService;
 import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
@@ -47,6 +48,9 @@ public class CommercePaymentEntryAuditModelSearchConfigurator
 			new CommercePaymentEntryAuditModelIndexerWriterContributor(
 				_commercePaymentEntryAuditLocalService,
 				_dynamicQueryBatchIndexingActionableFactory);
+
+		_modelSummaryContributor =
+			new CommercePaymentEntryAuditModelSummaryContributor();
 	}
 
 	@Reference
@@ -59,10 +63,6 @@ public class CommercePaymentEntryAuditModelSearchConfigurator
 
 	private ModelIndexerWriterContributor<CommercePaymentEntryAudit>
 		_modelIndexWriterContributor;
-
-	@Reference(
-		target = "(indexer.class.name=com.liferay.commerce.payment.model.CommercePaymentEntryAudit)"
-	)
 	private ModelSummaryContributor _modelSummaryContributor;
 
 }

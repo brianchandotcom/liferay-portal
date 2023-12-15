@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -16,6 +16,7 @@ import com.liferay.oauth2.provider.service.OAuth2ApplicationScopeAliasesLocalSer
 import com.liferay.oauth2.provider.service.OAuth2AuthorizationLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -24,6 +25,7 @@ import com.liferay.portal.kernel.security.auth.AuthException;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifier;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifierResult;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
+import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -100,6 +102,18 @@ public class OAuth2RESTAuthVerifier implements AuthVerifier {
 
 				httpServletResponse.setStatus(
 					HttpServletResponse.SC_UNAUTHORIZED);
+
+				ServletResponseUtil.write(
+					httpServletResponse,
+					JSONUtil.put(
+						"message",
+						_language.get(
+							accessControlContext.getRequest(),
+							"your-access-token-has-expired.-please-generate-" +
+								"a-new-one-and-try-again")
+					).put(
+						"status", "ERROR"
+					).toString());
 
 				authVerifierResult.setState(
 					AuthVerifierResult.State.INVALID_CREDENTIALS);

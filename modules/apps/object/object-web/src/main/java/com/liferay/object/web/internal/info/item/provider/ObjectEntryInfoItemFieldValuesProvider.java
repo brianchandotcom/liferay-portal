@@ -53,6 +53,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -79,6 +80,7 @@ public class ObjectEntryInfoItemFieldValuesProvider
 
 	public ObjectEntryInfoItemFieldValuesProvider(
 		AssetDisplayPageFriendlyURLProvider assetDisplayPageFriendlyURLProvider,
+		CompanyLocalService companyLocalService,
 		DisplayPageInfoItemFieldSetProvider displayPageInfoItemFieldSetProvider,
 		DLAppLocalService dlAppLocalService, DLURLHelper dlURLHelper,
 		InfoItemFieldReaderFieldSetProvider infoItemFieldReaderFieldSetProvider,
@@ -96,6 +98,7 @@ public class ObjectEntryInfoItemFieldValuesProvider
 
 		_assetDisplayPageFriendlyURLProvider =
 			assetDisplayPageFriendlyURLProvider;
+		_companyLocalService = companyLocalService;
 		_displayPageInfoItemFieldSetProvider =
 			displayPageInfoItemFieldSetProvider;
 		_dlAppLocalService = dlAppLocalService;
@@ -299,16 +302,33 @@ public class ObjectEntryInfoItemFieldValuesProvider
 
 		ThemeDisplay themeDisplay = _getThemeDisplay();
 
-		if (themeDisplay != null) {
-			objectEntryFieldValues.addAll(
-				_getObjectFieldsInfoFieldValues(
-					_getObjectEntry(
-						objectEntry.getExternalReferenceCode(),
-						_objectDefinition, themeDisplay),
-					_objectFieldLocalService.getObjectFields(
-						objectEntry.getObjectDefinitionId(), false),
-					themeDisplay));
+		if (themeDisplay == null) {
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
+
+			themeDisplay = new ThemeDisplay() {
+				{
+					setCompany(
+						_companyLocalService.getCompany(
+							serviceContext.getCompanyId()));
+					setLocale(
+						LocaleUtil.fromLanguageId(
+							serviceContext.getLanguageId()));
+					setSiteGroupId(serviceContext.getScopeGroupId());
+					setUser(
+						_userLocalService.getUser(serviceContext.getUserId()));
+				}
+			};
 		}
+
+		objectEntryFieldValues.addAll(
+			_getObjectFieldsInfoFieldValues(
+				_getObjectEntry(
+					objectEntry.getExternalReferenceCode(), _objectDefinition,
+					themeDisplay),
+				_objectFieldLocalService.getObjectFields(
+					objectEntry.getObjectDefinitionId(), false),
+				themeDisplay));
 
 		objectEntryFieldValues.addAll(
 			TransformUtil.transform(
@@ -637,6 +657,7 @@ public class ObjectEntryInfoItemFieldValuesProvider
 
 	private final AssetDisplayPageFriendlyURLProvider
 		_assetDisplayPageFriendlyURLProvider;
+	private final CompanyLocalService _companyLocalService;
 	private final DisplayPageInfoItemFieldSetProvider
 		_displayPageInfoItemFieldSetProvider;
 	private final DLAppLocalService _dlAppLocalService;

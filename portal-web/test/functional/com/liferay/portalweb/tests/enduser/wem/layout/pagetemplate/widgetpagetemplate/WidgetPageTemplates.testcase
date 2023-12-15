@@ -13,19 +13,6 @@ definition {
 		User.firstLoginPG();
 	}
 
-	tearDown {
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
-		if (${testLiferayVirtualInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			Site.tearDownCP();
-
-			PageTemplatesAdminGlobalSite.tearDownCP();
-		}
-	}
-
 	@description = "Add a page template in global site."
 	@priority = 4
 	@uitest

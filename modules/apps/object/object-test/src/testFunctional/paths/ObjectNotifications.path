@@ -27,7 +27,7 @@
 	</tr>
 	<tr>
 		<td>FIELD_ATTACHMENTS_OBJECT_SELECT_FIELD</td>
-		<td>//span[@class='custom-control-label']//span[@class="custom-control-label-text"]</td>
+		<td>//span[@class='custom-control-label']//span[@class="custom-control-label-text" and contains(text(),'${key_fieldLabel}')]</td>
 		<td></td>
 	</tr>
 	<tr>

@@ -1,0 +1,231 @@
+@component-name = "portal-headless"
+definition {
+
+	property custom.properties = "feature.flag.LPS-178642=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Object";
+	property testray.main.component.name = "Headless Builder";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		task ("Given the API Application is created") {
+			ApplicationAPI.createAPIApplication(
+				baseURL = "my-app",
+				title = "My-app");
+		}
+
+		task ("And Given I go to 'Endpoints' tab in 'Edit API Application'") {
+			APIBuilderUI.switchToRelatedEntryInEditApplication(
+				entity = "Endpoints",
+				title = "My-app");
+		}
+	}
+
+	tearDown {
+		ApplicationAPI.deleteAllAPIApplication();
+
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@priority = 4
+	test CanCreateEndpointWithAddedCurlyBraces {
+		property portal.acceptance = "true";
+
+		task ("When I create site scoped singleElement endpoint with test as parameter in Add API Endpoint") {
+			APIBuilderUI.createAPIEndpoint(
+				method = "GET",
+				parameter = '''{test}''',
+				path = "gettest",
+				retrieveType = "Single Element",
+				scope = "Site");
+		}
+
+		task ("Then the endpoint with {test} parameter in path is created successfully") {
+			Alert.viewSuccessMessage();
+
+			APIBuilderUI.switchToRelatedEntryInEditApplication(
+				entity = "Endpoints",
+				title = "My-app");
+
+			AssertElementPresent(
+				key_name = '''{test}''',
+				locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
+		}
+	}
+
+	@priority = 4
+	test CannotCreateSingleElementEndpointWithoutPathParameter {
+		property portal.acceptance = "true";
+
+		task ("When I create an endpoint with Single Element, Company Scope and Path") {
+			APIBuilderUI.createAPIEndpoint(
+				method = "GET",
+				path = "gettest",
+				retrieveType = "Single Element",
+				scope = "Company");
+		}
+
+		task ("Then I can see error about path parameter is required") {
+			AssertTextEquals(
+				locator1 = "APIBuilder#ALERT_INDICATOR",
+				value1 = "Please enter a parameter.");
+		}
+
+		task ("And Then the endpoint is not being created") {
+			var response = ApplicationAPI.getAPIApplications();
+
+			var totalCount = JSONUtil.getWithJSONPath(${response}, "$..totalCount");
+
+			TestUtils.assertEquals(
+				actual = ${totalCount},
+				expected = 0);
+		}
+	}
+
+	@priority = 4
+	test CannotSeeParameterTextBox {
+		property portal.acceptance = "true";
+
+		task ("When I select Site Scope and Collection type in Add API Endpoint") {
+			APIBuilderUI.configureAPIEndpoint(
+				method = "GET",
+				retrieveType = "Collection",
+				scope = "Site");
+		}
+
+		task ("Then 'Enter Paramater' is not present") {
+			AssertElementNotPresent(
+				key_placeHolder = "Enter Parameter",
+				locator1 = "TextInput#ANY_PLACEHOLDER");
+		}
+	}
+
+	@priority = 4
+	test CanSeeAvailableRetrieveTypes {
+		property portal.acceptance = "true";
+
+		task ("When I select Get method") {
+			APIBuilderUI.configureAPIEndpoint(method = "GET");
+		}
+
+		task ("Then I can see Collection and Single Element are the available retrieve types") {
+			AssertElementPresent(
+				key_optionName = "Collection",
+				locator1 = "ObjectAdmin#LAYOUT_ADD_FIELD_OPTION");
+
+			AssertElementPresent(
+				key_optionName = "Single Element",
+				locator1 = "ObjectAdmin#LAYOUT_ADD_FIELD_OPTION");
+		}
+	}
+
+	@priority = 4
+	test CanSeeAvailableScopes {
+		property portal.acceptance = "true";
+
+		task ("When I click 'Add API Endpoint' button") {
+			APIBuilderUI.configureAPIEndpoint();
+		}
+
+		task ("Then I can see Site and Company are the available scopes") {
+			AssertElementPresent(
+				key_optionName = "Company",
+				locator1 = "ObjectAdmin#LAYOUT_ADD_FIELD_OPTION");
+
+			AssertElementPresent(
+				key_optionName = "Site",
+				locator1 = "ObjectAdmin#LAYOUT_ADD_FIELD_OPTION");
+		}
+	}
+
+	@priority = 4
+	test CanSeeCorrectPathParameterAndParameterDescription {
+		property portal.acceptance = "true";
+
+		task ("And Given create an singleElement endpoint with id pathParameter and path parameter description ") {
+			APIBuilderUI.createAPIEndpoint(
+				description = "Description default",
+				method = "GET",
+				parameter = "id",
+				path = "gettest",
+				retrieveType = "Single Element",
+				scope = "Site");
+		}
+
+		task ("When go to configuration tab of the endpoint in edit api application") {
+			APIBuilderUI.goToEditRelatedEntryInEditApplication(
+				entity = "Endpoints",
+				name = "/gettest/{id}/",
+				tabEntity = "Info",
+				title = "My-app");
+		}
+
+		task ("Then I can see Path Parameter Property ID and correct Path Parameter Description") {
+			AssertTextEquals(
+				key_value = "endpoint",
+				locator1 = "APIBuilder#DESCRIPTION",
+				value1 = "Description default");
+		}
+	}
+
+	@priority = 4
+	test CanSeeRequiredPathAndParameterTextBox {
+		property portal.acceptance = "true";
+
+		task ("When I select Site Scope and Single Element in Add API Endpoint") {
+			APIBuilderUI.configureAPIEndpoint(
+				method = "GET",
+				retrieveType = "Single Element",
+				scope = "Site");
+		}
+
+		task ("Then Enter Path and {Enter Paramater} are visible in Path") {
+			AssertElementPresent(
+				key_placeHolder = "Enter Path",
+				locator1 = "TextInput#ANY_PLACEHOLDER");
+
+			AssertElementPresent(
+				key_placeHolder = "Enter Parameter",
+				locator1 = "TextInput#ANY_PLACEHOLDER");
+		}
+	}
+
+	@priority = 4
+	test CanUpdatePathParameterPropertyAndDescription {
+		property portal.acceptance = "true";
+
+		task ("And Given create an singleElement endpoint with id pathParameter and path parameter description") {
+			APIBuilderUI.createAPIEndpoint(
+				description = "Description default",
+				method = "GET",
+				parameter = "id",
+				path = "gettest",
+				retrieveType = "Single Element",
+				scope = "Site");
+		}
+
+		task ("When I update the path parameter property and path parameter description in edit api application > Endpoints > configuration") {
+			APIBuilderUI.addAndPublishEndpointInfo(
+				description = "This is an updated endpoint",
+				entity = "Endpoints",
+				name = "/gettest/{id}/",
+				title = "My-app");
+		}
+
+		task ("Then the path parameter property and parameter description are updated") {
+			AssertTextEquals(
+				key_value = "endpoint",
+				locator1 = "APIBuilder#DESCRIPTION",
+				value1 = "This is an updated endpoint");
+		}
+	}
+
+}

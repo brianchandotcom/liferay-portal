@@ -37,10 +37,18 @@ public class JournalStructureConstants {
 	public static final String RESERVED_ARTICLE_DISPLAY_DATE =
 		"reserved-article-display-date";
 
+	public static final String RESERVED_ARTICLE_EXTERNAL_REFERENCE_CODE =
+		"reserved-article-external-reference-code";
+
 	public static final String RESERVED_ARTICLE_ID = "reserved-article-id";
+
+	public static final String RESERVED_ARTICLE_ID_ = "reserved-article-id_";
 
 	public static final String RESERVED_ARTICLE_MODIFIED_DATE =
 		"reserved-article-modified-date";
+
+	public static final String RESERVED_ARTICLE_RESOURCE_PRIM_KEY =
+		"reserved-article-resource-prim-key";
 
 	public static final String RESERVED_ARTICLE_SMALL_IMAGE_URL =
 		"reserved-article-small-image-url";

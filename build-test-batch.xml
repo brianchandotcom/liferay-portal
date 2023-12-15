@@ -7272,10 +7272,16 @@ ${output.content}</echo>
 									</else>
 								</if>
 
+								<local name="playwright.command" />
+
+								<property name="playwright.command" value="npx playwright test ${playwright.test.project} ${playwright.test.shard}" />
+
+								<echo>Running "${playwright.command}" from ${playwright.dir}</echo>
+
 								<docker-execute container="${playwright.docker.host}">
 									cd ${playwright.dir}
 
-									npx playwright test ${playwright.test.project} ${playwright.test.shard}
+									${playwright.command}
 								</docker-execute>
 							</try>
 							<finally>

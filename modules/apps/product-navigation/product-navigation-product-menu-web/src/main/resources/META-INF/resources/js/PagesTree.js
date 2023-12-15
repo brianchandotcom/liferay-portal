@@ -398,21 +398,31 @@ function normalizeActions(actions, namespace) {
 										fetch(item.data.url, {
 											method: 'post',
 										})
-											.then((response) => {
-												if (response.redirected) {
-													navigate(response.url);
+											.then((response) => response.json())
+											.then(
+												({
+													errorMessage,
+													redirectURL,
+												}) => {
+													if (errorMessage) {
+														openErrorToast(
+															errorMessage
+														);
+													}
+													else {
+														openToast({
+															message: Liferay.Language.get(
+																'your-request-processed-successfully'
+															),
+															toastProps: {
+																autoClose: 5000,
+															},
+															type: 'success',
+														});
+														navigate(redirectURL);
+													}
 												}
-
-												openToast({
-													message: Liferay.Language.get(
-														'your-request-processed-successfully'
-													),
-													toastProps: {
-														autoClose: 5000,
-													},
-													type: 'success',
-												});
-											})
+											)
 											.catch(() => openErrorToast());
 									},
 								},

@@ -195,8 +195,7 @@ public class JournalUtil {
 			title = String.valueOf(id);
 		}
 		else {
-			title = FriendlyURLNormalizerUtil.normalizeWithPeriodsAndSlashes(
-				title);
+			title = FriendlyURLNormalizerUtil.normalizeWithEncoding(title);
 		}
 
 		return ModelHintsUtil.trimString(

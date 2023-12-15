@@ -32,6 +32,8 @@ export default function ({namespace}) {
 		}
 
 		if (!robotsInputLocalized) {
+			toggleDisabled(sitemapFields, false);
+
 			return;
 		}
 

@@ -153,7 +153,7 @@ public class ObjectEntryRowInfoItemRenderer
 
 			Object value = ObjectEntryUtil.getValue(
 				themeDisplay.getLocale(), objectField,
-				themeDisplay.getTimeZone(), objectEntry.getProperties());
+				objectEntry.getProperties());
 
 			if (value == null) {
 				values.put(objectField.getName(), StringPool.BLANK);

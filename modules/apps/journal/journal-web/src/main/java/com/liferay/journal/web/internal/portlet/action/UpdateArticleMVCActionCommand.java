@@ -29,6 +29,7 @@ import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -470,6 +471,19 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 				httpServletRequest,
 				_portal.getPortletId(actionRequest) +
 					SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_SUCCESS_MESSAGE);
+		}
+
+		if (FeatureFlagManagerUtil.isEnabled("LPS-196768")) {
+			hideDefaultSuccessMessage(actionRequest);
+
+			if (actionName.equals("/journal/add_article")) {
+				MultiSessionMessages.add(
+					actionRequest, "articleCreated", article.getId());
+			}
+			else {
+				MultiSessionMessages.add(
+					actionRequest, "articleUpdated", article.getId());
+			}
 		}
 	}
 

@@ -36,6 +36,17 @@ public class StyleBookEntryLocalServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.style.book.service.impl.StyleBookEntryLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static StyleBookEntry addStyleBookEntry(
+			long userId, long groupId, boolean defaultStyleBookEntry,
+			String frontendTokensValues, String name, String styleBookEntryKey,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addStyleBookEntry(
+			userId, groupId, defaultStyleBookEntry, frontendTokensValues, name,
+			styleBookEntryKey, serviceContext);
+	}
+
+	public static StyleBookEntry addStyleBookEntry(
 			long userId, long groupId, String name, String styleBookEntryKey,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {

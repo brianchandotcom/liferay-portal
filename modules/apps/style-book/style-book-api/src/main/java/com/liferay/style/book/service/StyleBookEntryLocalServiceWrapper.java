@@ -34,6 +34,18 @@ public class StyleBookEntryLocalServiceWrapper
 
 	@Override
 	public StyleBookEntry addStyleBookEntry(
+			long userId, long groupId, boolean defaultStyleBookEntry,
+			String frontendTokensValues, String name, String styleBookEntryKey,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _styleBookEntryLocalService.addStyleBookEntry(
+			userId, groupId, defaultStyleBookEntry, frontendTokensValues, name,
+			styleBookEntryKey, serviceContext);
+	}
+
+	@Override
+	public StyleBookEntry addStyleBookEntry(
 			long userId, long groupId, String name, String styleBookEntryKey,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {

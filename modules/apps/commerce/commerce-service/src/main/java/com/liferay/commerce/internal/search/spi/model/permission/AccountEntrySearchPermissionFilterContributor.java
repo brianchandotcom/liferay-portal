@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.BooleanClauseFactory;
+import com.liferay.portal.kernel.search.BooleanClauseFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
@@ -52,7 +54,7 @@ public class AccountEntrySearchPermissionFilterContributor
 		}
 
 		try {
-			_addCommerceChannelIdsFilter(booleanFilter);
+			 _addCommerceChannelIdsFilter(booleanFilter, userId);
 
 			if (_accountEntryModelResourcePermission.contains(
 					permissionChecker, 0,
@@ -103,7 +105,7 @@ public class AccountEntrySearchPermissionFilterContributor
 		}
 	}
 
-	private void _addCommerceChannelIdsFilter(BooleanFilter booleanFilter)
+	private void _addCommerceChannelIdsFilter(BooleanFilter booleanFilter, long userId)
 		throws PortalException {
 
 		long commerceChannelId = AccountEntryUtil.getCommerceChannelId(
@@ -117,6 +119,12 @@ public class AccountEntrySearchPermissionFilterContributor
 
 		if ((commerceChannelId > 0) &&
 			(commerceChannelAccountEntryRelCounts > 0)) {
+			TermsFilter accountUserIdsTermsFilter = new TermsFilter(
+				"accountUserIds");
+
+			accountUserIdsTermsFilter.addValue(String.valueOf(userId));
+
+			booleanFilter.add(accountUserIdsTermsFilter, BooleanClauseOccur.MUST);
 
 			TermsFilter termsFilter = new TermsFilter("commerceChannelIds");
 

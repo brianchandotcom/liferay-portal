@@ -9,7 +9,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.workflow.kaleo.model.KaleoCondition;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.condition.ConditionEvaluator;
-import com.liferay.portal.workflow.kaleo.runtime.scripting.internal.util.BaseKaleoScriptingEvaluator;
+import com.liferay.portal.workflow.kaleo.runtime.scripting.internal.evaluator.BaseKaleoScriptingEvaluator;
 import com.liferay.portal.workflow.kaleo.runtime.util.WorkflowContextUtil;
 
 import java.util.Arrays;

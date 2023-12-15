@@ -10,7 +10,7 @@ import com.liferay.portal.workflow.kaleo.model.KaleoNotificationRecipient;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.notification.recipient.script.NotificationRecipientEvaluator;
 import com.liferay.portal.workflow.kaleo.runtime.notification.recipient.script.constants.ScriptingNotificationRecipientConstants;
-import com.liferay.portal.workflow.kaleo.runtime.scripting.internal.util.BaseKaleoScriptingEvaluator;
+import com.liferay.portal.workflow.kaleo.runtime.scripting.internal.evaluator.BaseKaleoScriptingEvaluator;
 import com.liferay.portal.workflow.kaleo.runtime.util.WorkflowContextUtil;
 
 import java.util.Arrays;

@@ -20,9 +20,15 @@ definition {
 			labelName = "Data Source",
 			optionName = ${objectLabel});
 
+		if (!(isSet(fieldLabel))) {
+			var fieldLabel = "";
+		}
+
 		Click(locator1 = "ObjectNotifications#FIELD_ATTACHMENTS_OBJECT");
 
-		Click(locator1 = "ObjectNotifications#FIELD_ATTACHMENTS_OBJECT_SELECT_FIELD");
+		Click(
+			key_fieldLabel = ${fieldLabel},
+			locator1 = "ObjectNotifications#FIELD_ATTACHMENTS_OBJECT_SELECT_FIELD");
 	}
 
 	@summary = "Default summary"

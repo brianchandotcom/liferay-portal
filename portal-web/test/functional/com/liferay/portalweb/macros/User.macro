@@ -1167,7 +1167,7 @@ definition {
 		}
 		else {
 			ClickNoError(
-				key_text = "trash",
+				key_text = "times-circle",
 				locator1 = "ManagementBar#ANY_ICON");
 		}
 

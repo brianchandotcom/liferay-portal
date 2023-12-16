@@ -13,6 +13,7 @@ import com.liferay.headless.discovery.internal.dto.Resource;
 import com.liferay.headless.discovery.internal.dto.Resources;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.module.util.BundleUtil;
 import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -243,7 +244,10 @@ public class HeadlessDiscoveryAPIApplication extends Application {
 
 		String serverURL = StringUtil.removeSubstring(absolutePath, "/api/");
 
-		RuntimeDTO runtimeDTO = _jaxrsServiceRuntime.getRuntimeDTO();
+		JaxrsServiceRuntime jaxrsServiceRuntime =
+			_jaxrsServiceRuntimeSnapshot.get();
+
+		RuntimeDTO runtimeDTO = jaxrsServiceRuntime.getRuntimeDTO();
 
 		for (ApplicationDTO applicationDTO : runtimeDTO.applicationDTOs) {
 			for (ResourceDTO resourceDTO : applicationDTO.resourceDTOs) {
@@ -283,12 +287,13 @@ public class HeadlessDiscoveryAPIApplication extends Application {
 		return bundle.getEntry("META-INF/resources/" + parameter);
 	}
 
+	private static final Snapshot<JaxrsServiceRuntime>
+		_jaxrsServiceRuntimeSnapshot = new Snapshot<>(
+			HeadlessDiscoveryAPIApplication.class, JaxrsServiceRuntime.class);
+
 	private volatile BundleContext _bundleContext;
 	private volatile HeadlessDiscoveryConfiguration
 		_headlessDiscoveryConfiguration;
-
-	@Reference
-	private JaxrsServiceRuntime _jaxrsServiceRuntime;
 
 	@Reference
 	private Portal _portal;

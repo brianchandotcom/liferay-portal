@@ -23,9 +23,7 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
-import org.osgi.service.jaxrs.runtime.JaxrsServiceRuntime;
 
 /**
  * @author Carlos Sierra Andrés
@@ -190,10 +188,6 @@ public class RESTExtender {
 
 	private org.apache.felix.dm.Component _component;
 	private DependencyManager _dependencyManager;
-
-	@Reference
-	private JaxrsServiceRuntime _jaxrsServiceRuntime;
-
 	private RestExtenderConfiguration _restExtenderConfiguration;
 
 }

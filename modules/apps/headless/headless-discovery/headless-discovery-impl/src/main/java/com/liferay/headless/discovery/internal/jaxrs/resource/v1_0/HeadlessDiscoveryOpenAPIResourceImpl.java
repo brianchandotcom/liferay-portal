@@ -15,6 +15,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -243,7 +244,10 @@ public class HeadlessDiscoveryOpenAPIResourceImpl {
 			_portal.getPortalURL(_httpServletRequest) +
 				_portal.getPathContext() + Portal.PATH_MODULE;
 
-		RuntimeDTO runtimeDTO = _jaxrsServiceRuntime.getRuntimeDTO();
+		JaxrsServiceRuntime jaxrsServiceRuntime =
+			_jaxrsServiceRuntimeSnapshot.get();
+
+		RuntimeDTO runtimeDTO = jaxrsServiceRuntime.getRuntimeDTO();
 
 		for (ApplicationDTO applicationDTO :
 				_getApplicationDTOs(runtimeDTO.applicationDTOs)) {
@@ -460,6 +464,10 @@ public class HeadlessDiscoveryOpenAPIResourceImpl {
 	private static final Log _log = LogFactoryUtil.getLog(
 		HeadlessDiscoveryOpenAPIResourceImpl.class);
 
+	private static final Snapshot<JaxrsServiceRuntime>
+		_jaxrsServiceRuntimeSnapshot = new Snapshot<>(
+			HeadlessDiscoveryOpenAPIResourceImpl.class,
+			JaxrsServiceRuntime.class);
 	private static final Pattern _versionPattern = Pattern.compile(
 		"v[0-9]+\\.[0-9]+");
 
@@ -472,9 +480,6 @@ public class HeadlessDiscoveryOpenAPIResourceImpl {
 
 	@Context
 	private HttpServletRequest _httpServletRequest;
-
-	@Reference
-	private JaxrsServiceRuntime _jaxrsServiceRuntime;
 
 	@Reference
 	private OpenAPIResource _openAPIResource;

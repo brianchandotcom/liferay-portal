@@ -471,9 +471,8 @@ public class DefaultSearchResultPermissionFilter
 						slidingWindowStopWatch)) {
 
 					_updateHits(
-						slidingWindowHelper.getDocumentsAndScoresTuple(), hits,
-						numberOfTotalDocsNeeded, startTime,
-						recalculatedTotalHits);
+						hits, numberOfTotalDocsNeeded, recalculatedTotalHits,
+						slidingWindowHelper, slidingWindowStopWatch, startTime);
 
 					_mergeFacets(facetCountHelper, searchContext);
 
@@ -646,8 +645,17 @@ public class DefaultSearchResultPermissionFilter
 
 			if ((numberOfDocsCollected == numberOfTotalDocsNeeded) ||
 				(slidingWindowEnd == PropsValues.INDEX_SEARCH_LIMIT) ||
-				((_timeLimit > 0) &&
-				 (slidingWindowStopWatch.getTime() > _timeLimit))) {
+				_timeLimitReached(slidingWindowStopWatch)) {
+
+				return true;
+			}
+
+			return false;
+		}
+
+		private boolean _timeLimitReached(StopWatch slidingWindowStopWatch) {
+			if ((_timeLimit > 0) &&
+				(slidingWindowStopWatch.getTime() > _timeLimit)) {
 
 				return true;
 			}
@@ -656,9 +664,12 @@ public class DefaultSearchResultPermissionFilter
 		}
 
 		private void _updateHits(
-			Tuple documentsAndScoresTuple, Hits hits,
-			int numberOfTotalDocsNeeded, long startTime,
-			int recalculatedTotalHits) {
+			Hits hits, int numberOfTotalDocsNeeded, int recalculatedTotalHits,
+			SlidingWindowHelper slidingWindowHelper,
+			StopWatch slidingWindowStopWatch, long startTime) {
+
+			Tuple documentsAndScoresTuple =
+				slidingWindowHelper.getDocumentsAndScoresTuple();
 
 			List<Document> documents =
 				(List<Document>)documentsAndScoresTuple.getObject(0);
@@ -669,11 +680,14 @@ public class DefaultSearchResultPermissionFilter
 				ArrayUtil.toFloatArray(
 					(List<Float>)documentsAndScoresTuple.getObject(1)));
 
-			int updatedLength = documents.size();
+			int updatedLength = Math.max(
+				recalculatedTotalHits, documents.size());
 
-			if (documents.size() >= numberOfTotalDocsNeeded) {
-				updatedLength = Math.max(
-					recalculatedTotalHits, documents.size());
+			if (_timeLimitReached(slidingWindowStopWatch) &&
+				(slidingWindowHelper.getTotalDocs() <
+					numberOfTotalDocsNeeded)) {
+
+				updatedLength = slidingWindowHelper.getTotalDocs();
 			}
 
 			hits.setLength(updatedLength);

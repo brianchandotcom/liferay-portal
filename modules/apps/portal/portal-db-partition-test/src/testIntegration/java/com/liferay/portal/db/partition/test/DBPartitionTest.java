@@ -323,6 +323,25 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 		}
 	}
 
+	@Test(expected = PortalException.class)
+	public void testIllegalDatabasePartitionSchemaNamePrefix()
+		throws Exception {
+
+		String databasePartitionSchemaNamePrefix =
+			ReflectionTestUtil.getAndSetFieldValue(
+				DBPartitionUtil.class, "_DATABASE_PARTITION_SCHEMA_NAME_PREFIX",
+				"VeryLongIdentifier");
+
+		try {
+			DBPartitionUtil.checkDatabasePartitionSchemaNamePrefix();
+		}
+		finally {
+			ReflectionTestUtil.setFieldValue(
+				DBPartitionUtil.class, "_DATABASE_PARTITION_SCHEMA_NAME_PREFIX",
+				databasePartitionSchemaNamePrefix);
+		}
+	}
+
 	@Test
 	public void testRegenerateViews() throws Exception {
 		try {

@@ -160,6 +160,18 @@ public class DBPartitionUtil {
 		return true;
 	}
 
+	public static void checkDatabasePartitionSchemaNamePrefix()
+		throws PortalException {
+
+		if (DBPartition.isPartitionEnabled() &&
+			(_DATABASE_PARTITION_SCHEMA_NAME_PREFIX.length() > 11)) {
+
+			throw new PortalException(
+				"database.partition.schema.name.prefix length must not be " +
+					"greater than 11 characters");
+		}
+	}
+
 	public static boolean extractDBPartition(long companyId)
 		throws PortalException {
 

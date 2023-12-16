@@ -131,8 +131,7 @@ public class DispatchTriggerLocalServiceImpl
 				dispatchTrigger.getDispatchTaskClusterMode());
 
 		_dispatchTriggerHelper.deleteSchedulerJob(
-			dispatchTrigger.getDispatchTriggerId(),
-			dispatchTaskClusterMode.getStorageType());
+			dispatchTrigger, dispatchTaskClusterMode.getStorageType());
 
 		return dispatchTrigger;
 	}
@@ -185,7 +184,7 @@ public class DispatchTriggerLocalServiceImpl
 
 		try {
 			return _dispatchTriggerHelper.getPreviousFireDate(
-				dispatchTriggerId, dispatchTaskClusterMode.getStorageType());
+				dispatchTrigger, dispatchTaskClusterMode.getStorageType());
 		}
 		catch (SchedulerException schedulerException) {
 			if (_log.isWarnEnabled()) {
@@ -238,7 +237,7 @@ public class DispatchTriggerLocalServiceImpl
 				dispatchTrigger.getDispatchTaskClusterMode());
 
 		return _dispatchTriggerHelper.getNextFireDate(
-			dispatchTriggerId, dispatchTaskClusterMode.getStorageType());
+			dispatchTrigger, dispatchTaskClusterMode.getStorageType());
 	}
 
 	@Override
@@ -253,7 +252,7 @@ public class DispatchTriggerLocalServiceImpl
 				dispatchTrigger.getDispatchTaskClusterMode());
 
 		return _dispatchTriggerHelper.getPreviousFireDate(
-			dispatchTriggerId, dispatchTaskClusterMode.getStorageType());
+			dispatchTrigger, dispatchTaskClusterMode.getStorageType());
 	}
 
 	@Override
@@ -323,7 +322,7 @@ public class DispatchTriggerLocalServiceImpl
 		dispatchTrigger = dispatchTriggerPersistence.update(dispatchTrigger);
 
 		_dispatchTriggerHelper.deleteSchedulerJob(
-			dispatchTriggerId, oldDispatchTaskClusterMode.getStorageType());
+			dispatchTrigger, oldDispatchTaskClusterMode.getStorageType());
 
 		if (active) {
 			_dispatchTriggerHelper.addSchedulerJob(

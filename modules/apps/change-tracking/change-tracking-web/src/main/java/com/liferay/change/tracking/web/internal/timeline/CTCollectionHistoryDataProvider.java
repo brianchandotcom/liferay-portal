@@ -84,7 +84,9 @@ public class CTCollectionHistoryDataProvider {
 			try {
 				SchedulerResponse schedulerResponse =
 					SchedulerEngineHelperUtil.getScheduledJob(
-						String.valueOf(_ctCollection.getCtCollectionId()),
+						StringBundler.concat(
+							_ctCollection.getCtCollectionId(), StringPool.AT,
+							_ctCollection.getCompanyId()),
 						CTDestinationNames.CT_COLLECTION_SCHEDULED_PUBLISH,
 						StorageType.PERSISTED);
 

@@ -5,7 +5,6 @@
 
 package com.liferay.portal.workflow.kaleo.runtime.internal.timer.messaging;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
@@ -40,22 +39,19 @@ public class TimerMessageListener extends BaseMessageListener {
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		long kaleoTimerInstanceTokenId = message.getLong(
-			"kaleoTimerInstanceTokenId");
+		KaleoTimerInstanceToken kaleoTimerInstanceToken =
+			_getKaleoTimerInstanceToken(message);
+
+		Map<String, Serializable> workflowContext = WorkflowContextUtil.convert(
+			kaleoTimerInstanceToken.getWorkflowContext());
+
+		ServiceContext serviceContext = (ServiceContext)workflowContext.get(
+			WorkflowConstants.CONTEXT_SERVICE_CONTEXT);
 
 		try {
-			KaleoTimerInstanceToken kaleoTimerInstanceToken =
-				_getKaleoTimerInstanceToken(message);
-
-			Map<String, Serializable> workflowContext =
-				WorkflowContextUtil.convert(
-					kaleoTimerInstanceToken.getWorkflowContext());
-
-			ServiceContext serviceContext = (ServiceContext)workflowContext.get(
-				WorkflowConstants.CONTEXT_SERVICE_CONTEXT);
-
 			_workflowEngine.executeTimerWorkflowInstance(
-				kaleoTimerInstanceTokenId, serviceContext, workflowContext);
+				kaleoTimerInstanceToken.getKaleoTimerInstanceTokenId(),
+				serviceContext, workflowContext);
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
@@ -66,13 +62,15 @@ public class TimerMessageListener extends BaseMessageListener {
 			}
 
 			SchedulerEngineHelperUtil.delete(
-				SchedulerUtil.getGroupName(kaleoTimerInstanceTokenId),
+				SchedulerUtil.getGroupName(
+					kaleoTimerInstanceToken.getCompanyId(),
+					kaleoTimerInstanceToken.getKaleoTimerInstanceTokenId()),
 				StorageType.PERSISTED);
 		}
 	}
 
 	private KaleoTimerInstanceToken _getKaleoTimerInstanceToken(Message message)
-		throws PortalException {
+		throws Exception {
 
 		long kaleoTimerInstanceTokenId = message.getLong(
 			"kaleoTimerInstanceTokenId");

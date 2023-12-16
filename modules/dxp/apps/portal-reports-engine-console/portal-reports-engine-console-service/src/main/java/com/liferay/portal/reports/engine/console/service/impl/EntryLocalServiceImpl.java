@@ -200,7 +200,7 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 
 		if (entry.isRepeating()) {
 			_schedulerEngineHelper.delete(
-				entry.getJobName(), entry.getSchedulerRequestName(),
+				_getSchedulerJobName(entry), entry.getSchedulerRequestName(),
 				StorageType.PERSISTED);
 		}
 
@@ -356,7 +356,7 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 		entry = entryPersistence.update(entry);
 
 		_schedulerEngineHelper.delete(
-			entry.getJobName(), entry.getSchedulerRequestName(),
+			_getSchedulerJobName(entry), entry.getSchedulerRequestName(),
 			StorageType.PERSISTED);
 	}
 
@@ -433,6 +433,11 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 			ReportsGroupServiceEmailConfiguration.class,
 			new GroupServiceSettingsLocator(
 				groupId, ReportsEngineConsoleConstants.SERVICE_NAME));
+	}
+
+	private String _getSchedulerJobName(Entry entry) {
+		return StringBundler.concat(
+			entry.getJobName(), StringPool.AT, entry.getCompanyId());
 	}
 
 	private byte[] _getTemplateFileBytes(
@@ -561,7 +566,7 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 		throws PortalException {
 
 		Trigger trigger = _triggerFactory.createTrigger(
-			entry.getJobName(), entry.getSchedulerRequestName(),
+			_getSchedulerJobName(entry), entry.getSchedulerRequestName(),
 			entry.getStartDate(), entry.getEndDate(), entry.getRecurrence());
 
 		Message message = new Message();

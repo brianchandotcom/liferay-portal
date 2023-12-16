@@ -8,6 +8,7 @@ package com.liferay.change.tracking.rest.internal.dto.v1_0.converter;
 import com.liferay.change.tracking.constants.CTDestinationNames;
 import com.liferay.change.tracking.rest.dto.v1_0.CTCollection;
 import com.liferay.change.tracking.rest.dto.v1_0.Status;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
@@ -76,7 +77,9 @@ public class CTCollectionDTOConverter
 
 		SchedulerResponse schedulerResponse =
 			_schedulerEngineHelper.getScheduledJob(
-				String.valueOf(ctCollection.getCtCollectionId()),
+				StringBundler.concat(
+					ctCollection.getCtCollectionId(), StringPool.AT,
+					ctCollection.getCompanyId()),
 				CTDestinationNames.CT_COLLECTION_SCHEDULED_PUBLISH,
 				StorageType.PERSISTED);
 

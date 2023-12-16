@@ -279,6 +279,7 @@ public class KaleoTimerInstanceTokenLocalServiceImpl
 		KaleoTimerInstanceToken kaleoTimerInstanceToken) {
 
 		return SchedulerUtil.getGroupName(
+			kaleoTimerInstanceToken.getCompanyId(),
 			kaleoTimerInstanceToken.getKaleoTimerInstanceTokenId());
 	}
 

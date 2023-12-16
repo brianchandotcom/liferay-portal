@@ -273,7 +273,7 @@ public class DispatchTriggerLocalServiceTest {
 
 			Assert.assertNull(
 				_schedulerEngineHelper.getScheduledJob(
-					_getJobName(dispatchTrigger.getDispatchTriggerId()),
+					_getJobName(dispatchTrigger),
 					_getGroupName(dispatchTrigger.getDispatchTriggerId()),
 					dispatchTaskClusterMode.getStorageType()));
 		}
@@ -392,13 +392,13 @@ public class DispatchTriggerLocalServiceTest {
 
 		Assert.assertNull(
 			_schedulerEngineHelper.getScheduledJob(
-				_getJobName(dispatchTrigger.getDispatchTriggerId()),
+				_getJobName(dispatchTrigger),
 				_getGroupName(dispatchTrigger.getDispatchTriggerId()),
 				dispatchTaskClusterMode.getStorageType()));
 
 		Assert.assertNotNull(
 			_schedulerEngineHelper.getScheduledJob(
-				_getJobName(updateDispatchTrigger.getDispatchTriggerId()),
+				_getJobName(updateDispatchTrigger),
 				_getGroupName(updateDispatchTrigger.getDispatchTriggerId()),
 				updateDispatchTaskClusterMode.getStorageType()));
 	}
@@ -488,8 +488,8 @@ public class DispatchTriggerLocalServiceTest {
 		return String.format("DISPATCH_GROUP_%07d", dispatchTriggerId);
 	}
 
-	private String _getJobName(long dispatchTriggerId) {
-		return String.format("DISPATCH_JOB_%07d", dispatchTriggerId);
+	private String _getJobName(DispatchTrigger dispatchTrigger) {
+		return String.format("DISPATCH_JOB_%07d", dispatchTrigger.getDispatchTriggerId(), dispatchTrigger.getCompanyId());
 	}
 
 	private String _getRandomDispatchExecutorType() {

@@ -14,10 +14,12 @@ import com.liferay.portal.workflow.kaleo.runtime.constants.KaleoRuntimeDestinati
  */
 public class SchedulerUtil {
 
-	public static String getGroupName(long kaleoTimerInstanceTokenId) {
+	public static String getGroupName(
+		long companyId, long kaleoTimerInstanceTokenId) {
+
 		return StringBundler.concat(
 			KaleoRuntimeDestinationNames.WORKFLOW_TIMER, StringPool.SLASH,
-			kaleoTimerInstanceTokenId);
+			kaleoTimerInstanceTokenId, StringPool.AT, companyId);
 	}
 
 }

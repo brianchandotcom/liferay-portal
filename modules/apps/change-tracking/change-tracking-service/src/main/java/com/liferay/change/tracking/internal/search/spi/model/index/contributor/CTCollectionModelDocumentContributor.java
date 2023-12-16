@@ -7,6 +7,8 @@ package com.liferay.change.tracking.internal.search.spi.model.index.contributor;
 
 import com.liferay.change.tracking.constants.CTDestinationNames;
 import com.liferay.change.tracking.model.CTCollection;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
@@ -62,7 +64,9 @@ public class CTCollectionModelDocumentContributor
 		try {
 			SchedulerResponse schedulerResponse =
 				_schedulerEngineHelper.getScheduledJob(
-					String.valueOf(ctCollection.getCtCollectionId()),
+					StringBundler.concat(
+						ctCollection.getCtCollectionId(), StringPool.AT,
+						ctCollection.getCompanyId()),
 					CTDestinationNames.CT_COLLECTION_SCHEDULED_PUBLISH,
 					StorageType.PERSISTED);
 

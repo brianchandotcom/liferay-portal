@@ -10,6 +10,8 @@ import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.messaging.Message;
@@ -63,7 +65,7 @@ public class PublishUtil {
 
 					schedulerEngineHelper.schedule(
 						triggerFactory.createTrigger(
-							String.valueOf(ctCollectionId),
+							_getSchedulerJobName(ctCollection),
 							_CT_COLLECTION_SCHEDULED_PUBLISH, startDate, null,
 							0, null),
 						StorageType.PERSISTED, String.valueOf(ctCollectionId),
@@ -86,7 +88,16 @@ public class PublishUtil {
 			SchedulerEngineHelper schedulerEngineHelper)
 		throws PortalException {
 
-		String jobName = String.valueOf(ctCollectionId);
+		CTCollection ctCollection = ctCollectionLocalService.fetchCTCollection(
+			ctCollectionId);
+
+		if ((ctCollection == null) ||
+			(ctCollection.getStatus() == WorkflowConstants.STATUS_APPROVED)) {
+
+			return;
+		}
+
+		String jobName = _getSchedulerJobName(ctCollection);
 
 		SchedulerResponse schedulerResponse =
 			schedulerEngineHelper.getScheduledJob(
@@ -97,23 +108,18 @@ public class PublishUtil {
 			return;
 		}
 
-		Message message = schedulerResponse.getMessage();
-
-		CTCollection ctCollection = ctCollectionLocalService.fetchCTCollection(
-			message.getLong("ctCollectionId"));
-
-		if ((ctCollection == null) ||
-			(ctCollection.getStatus() == WorkflowConstants.STATUS_APPROVED)) {
-
-			return;
-		}
-
 		ctCollection.setStatus(WorkflowConstants.STATUS_DRAFT);
 
 		ctCollectionLocalService.updateCTCollection(ctCollection);
 
 		schedulerEngineHelper.delete(
 			jobName, _CT_COLLECTION_SCHEDULED_PUBLISH, StorageType.PERSISTED);
+	}
+
+	private static String _getSchedulerJobName(CTCollection ctCollection) {
+		return StringBundler.concat(
+			ctCollection.getCtCollectionId(), StringPool.AT,
+			ctCollection.getCompanyId());
 	}
 
 	private static final String _CT_COLLECTION_SCHEDULED_PUBLISH =

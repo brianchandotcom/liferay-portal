@@ -12,6 +12,8 @@ import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.messaging.Message;
@@ -47,7 +49,7 @@ public class PublishScheduler {
 
 		SchedulerResponse schedulerResponse =
 			_schedulerEngineHelper.getScheduledJob(
-				String.valueOf(ctCollection.getCtCollectionId()),
+				_getSchedulerJobName(ctCollection),
 				CTDestinationNames.CT_COLLECTION_SCHEDULED_PUBLISH,
 				StorageType.PERSISTED);
 
@@ -122,7 +124,16 @@ public class PublishScheduler {
 	}
 
 	public void unschedulePublish(long ctCollectionId) throws PortalException {
-		String jobName = String.valueOf(ctCollectionId);
+		CTCollection ctCollection = _ctCollectionLocalService.fetchCTCollection(
+			ctCollectionId);
+
+		if ((ctCollection == null) ||
+			(ctCollection.getStatus() == WorkflowConstants.STATUS_APPROVED)) {
+
+			return;
+		}
+
+		String jobName = _getSchedulerJobName(ctCollection);
 
 		SchedulerResponse schedulerResponse =
 			_schedulerEngineHelper.getScheduledJob(
@@ -130,17 +141,6 @@ public class PublishScheduler {
 				StorageType.PERSISTED);
 
 		if (schedulerResponse == null) {
-			return;
-		}
-
-		Message message = schedulerResponse.getMessage();
-
-		CTCollection ctCollection = _ctCollectionLocalService.fetchCTCollection(
-			message.getLong("ctCollectionId"));
-
-		if ((ctCollection == null) ||
-			(ctCollection.getStatus() == WorkflowConstants.STATUS_APPROVED)) {
-
 			return;
 		}
 
@@ -157,6 +157,12 @@ public class PublishScheduler {
 			StorageType.PERSISTED);
 	}
 
+	private String _getSchedulerJobName(CTCollection ctCollection) {
+		return StringBundler.concat(
+			ctCollection.getCtCollectionId(), StringPool.AT,
+			ctCollection.getCompanyId());
+	}
+
 	private Void _schedulePublish(
 			long ctCollectionId, long userId, Date startDate)
 		throws PortalException {
@@ -170,7 +176,8 @@ public class PublishScheduler {
 
 		ctCollection.setStatus(WorkflowConstants.STATUS_SCHEDULED);
 
-		_ctCollectionLocalService.updateCTCollection(ctCollection);
+		ctCollection = _ctCollectionLocalService.updateCTCollection(
+			ctCollection);
 
 		_ctPreferencesLocalService.resetCTPreferences(ctCollectionId);
 
@@ -182,7 +189,7 @@ public class PublishScheduler {
 
 		_schedulerEngineHelper.schedule(
 			_triggerFactory.createTrigger(
-				String.valueOf(ctCollectionId),
+				_getSchedulerJobName(ctCollection),
 				CTDestinationNames.CT_COLLECTION_SCHEDULED_PUBLISH, startDate,
 				null, 0, null),
 			StorageType.PERSISTED, String.valueOf(ctCollectionId),

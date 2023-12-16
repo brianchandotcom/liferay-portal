@@ -107,8 +107,7 @@ public class DispatchConfigurator {
 					true, dispatchTaskClusterMode)) {
 
 			_dispatchTriggerHelper.deleteSchedulerJob(
-				dispatchTrigger.getDispatchTriggerId(),
-				dispatchTaskClusterMode.getStorageType());
+				dispatchTrigger, dispatchTaskClusterMode.getStorageType());
 		}
 
 		_serviceRegistration.unregister();

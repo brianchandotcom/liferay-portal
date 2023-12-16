@@ -38,7 +38,7 @@ public class DispatchTriggerHelper {
 		long dispatchTriggerId = dispatchTrigger.getDispatchTriggerId();
 
 		Trigger trigger = _triggerFactory.createTrigger(
-			_getJobName(dispatchTriggerId), _getGroupName(dispatchTriggerId),
+			_getJobName(dispatchTrigger), _getGroupName(dispatchTrigger),
 			dispatchTrigger.getStartDate(), dispatchTrigger.getEndDate(),
 			dispatchTrigger.getCronExpression(),
 			TimeZone.getTimeZone(timeZoneId));
@@ -52,8 +52,7 @@ public class DispatchTriggerHelper {
 		try {
 			_schedulerEngineHelper.schedule(
 				trigger, storageType, null,
-				DispatchConstants.EXECUTOR_DESTINATION_NAME,
-				_getPayload(dispatchTriggerId));
+				DispatchConstants.EXECUTOR_DESTINATION_NAME, message);
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(
@@ -70,11 +69,11 @@ public class DispatchTriggerHelper {
 	}
 
 	public void deleteSchedulerJob(
-		long dispatchTriggerId, StorageType storageType) {
+		DispatchTrigger dispatchTrigger, StorageType storageType) {
 
 		try {
-			String jobName = _getJobName(dispatchTriggerId);
-			String groupName = _getGroupName(dispatchTriggerId);
+			String jobName = _getJobName(dispatchTrigger);
+			String groupName = _getGroupName(dispatchTrigger);
 
 			_schedulerEngineHelper.delete(jobName, groupName, storageType);
 
@@ -90,18 +89,19 @@ public class DispatchTriggerHelper {
 		catch (SchedulerException schedulerException) {
 			_log.error(
 				"Unable to delete scheduler entry for dispatch trigger " +
-					dispatchTriggerId,
+					dispatchTrigger.getDispatchTriggerId(),
 				schedulerException);
 		}
 	}
 
-	public Date getNextFireDate(long dispatchTriggerId, StorageType storageType)
+	public Date getNextFireDate(
+			DispatchTrigger dispatchTrigger, StorageType storageType)
 		throws SchedulerException {
 
 		SchedulerResponse schedulerResponse =
 			_schedulerEngineHelper.getScheduledJob(
-				_getJobName(dispatchTriggerId),
-				_getGroupName(dispatchTriggerId), storageType);
+				_getJobName(dispatchTrigger), _getGroupName(dispatchTrigger),
+				storageType);
 
 		if (schedulerResponse == null) {
 			return null;
@@ -111,13 +111,13 @@ public class DispatchTriggerHelper {
 	}
 
 	public Date getPreviousFireDate(
-			long dispatchTriggerId, StorageType storageType)
+			DispatchTrigger dispatchTrigger, StorageType storageType)
 		throws SchedulerException {
 
 		SchedulerResponse schedulerResponse =
 			_schedulerEngineHelper.getScheduledJob(
-				_getJobName(dispatchTriggerId),
-				_getGroupName(dispatchTriggerId), storageType);
+				_getJobName(dispatchTrigger), _getGroupName(dispatchTrigger),
+				storageType);
 
 		if (schedulerResponse == null) {
 			return null;
@@ -126,12 +126,15 @@ public class DispatchTriggerHelper {
 		return _schedulerEngineHelper.getPreviousFireTime(schedulerResponse);
 	}
 
-	private String _getGroupName(long dispatchTriggerId) {
-		return String.format("DISPATCH_GROUP_%07d", dispatchTriggerId);
+	private String _getGroupName(DispatchTrigger dispatchTrigger) {
+		return String.format(
+			"DISPATCH_GROUP_%07d@%d", dispatchTrigger.getDispatchTriggerId());
 	}
 
-	private String _getJobName(long dispatchTriggerId) {
-		return String.format("DISPATCH_JOB_%07d", dispatchTriggerId);
+	private String _getJobName(DispatchTrigger dispatchTrigger) {
+		return String.format(
+			"DISPATCH_JOB_%07d@%d", dispatchTrigger.getDispatchTriggerId(),
+			dispatchTrigger.getCompanyId());
 	}
 
 	private String _getPayload(long dispatchTriggerId) {

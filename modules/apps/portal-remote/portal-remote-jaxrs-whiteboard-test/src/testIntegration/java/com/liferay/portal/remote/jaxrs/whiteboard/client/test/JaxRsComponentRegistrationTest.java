@@ -9,6 +9,8 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.URLUtil;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.net.URL;
@@ -124,7 +126,11 @@ public class JaxRsComponentRegistrationTest {
 	public void testServiceListIsUnavailable() throws Exception {
 		URL url = new URL("http://localhost:8080/o/soap-test/services");
 
-		URLUtil.toString(url);
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"portal_web.docroot.errors.code_jsp", LoggerTestUtil.OFF)) {
+
+			URLUtil.toString(url);
+		}
 	}
 
 	public static class Addon {

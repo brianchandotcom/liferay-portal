@@ -327,9 +327,8 @@ public class DispatchTriggerLocalServiceImpl
 
 		if (active) {
 			_dispatchTriggerHelper.addSchedulerJob(
-				dispatchTriggerId, cronExpression,
-				dispatchTrigger.getStartDate(), dispatchTrigger.getEndDate(),
-				dispatchTaskClusterMode.getStorageType(), timeZoneId);
+				dispatchTrigger, dispatchTaskClusterMode.getStorageType(),
+				timeZoneId);
 		}
 
 		return dispatchTrigger;

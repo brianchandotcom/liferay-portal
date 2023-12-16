@@ -7,8 +7,10 @@ package com.liferay.dispatch.internal.helper;
 
 import com.liferay.dispatch.constants.DispatchConstants;
 import com.liferay.dispatch.exception.DispatchTriggerSchedulerException;
+import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.SchedulerException;
 import com.liferay.portal.kernel.scheduler.StorageType;
@@ -29,14 +31,23 @@ import org.osgi.service.component.annotations.Reference;
 public class DispatchTriggerHelper {
 
 	public void addSchedulerJob(
-			long dispatchTriggerId, String cronExpression, Date startDate,
-			Date endDate, StorageType storageType, String timeZoneId)
+			DispatchTrigger dispatchTrigger, StorageType storageType,
+			String timeZoneId)
 		throws DispatchTriggerSchedulerException {
+
+		long dispatchTriggerId = dispatchTrigger.getDispatchTriggerId();
 
 		Trigger trigger = _triggerFactory.createTrigger(
 			_getJobName(dispatchTriggerId), _getGroupName(dispatchTriggerId),
-			startDate, endDate, cronExpression,
+			dispatchTrigger.getStartDate(), dispatchTrigger.getEndDate(),
+			dispatchTrigger.getCronExpression(),
 			TimeZone.getTimeZone(timeZoneId));
+
+		Message message = new Message();
+
+		message.put("companyId", dispatchTrigger.getCompanyId());
+
+		message.setPayload(_getPayload(dispatchTriggerId));
 
 		try {
 			_schedulerEngineHelper.schedule(

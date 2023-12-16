@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
+import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
@@ -1085,10 +1086,16 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 						TYPE_SCHEDULED_PUBLISH_LAYOUT_LOCAL,
 					publishLayoutLocalSettingsMap);
 
+		Message message = new Message();
+
+		message.put("companyId", exportImportConfiguration.getCompanyId());
+
+		message.setPayload(
+			exportImportConfiguration.getExportImportConfigurationId());
+
 		SchedulerEngineHelperUtil.schedule(
 			trigger, StorageType.PERSISTED, description,
-			DestinationNames.LAYOUTS_LOCAL_PUBLISHER,
-			exportImportConfiguration.getExportImportConfigurationId());
+			DestinationNames.LAYOUTS_LOCAL_PUBLISHER, message);
 	}
 
 	/**
@@ -1157,10 +1164,16 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 						TYPE_SCHEDULED_PUBLISH_LAYOUT_REMOTE,
 					publishLayoutRemoteSettingsMap);
 
+		Message message = new Message();
+
+		message.put("companyId", exportImportConfiguration.getCompanyId());
+
+		message.setPayload(
+			exportImportConfiguration.getExportImportConfigurationId());
+
 		SchedulerEngineHelperUtil.schedule(
 			trigger, StorageType.PERSISTED, description,
-			DestinationNames.LAYOUTS_REMOTE_PUBLISHER,
-			exportImportConfiguration.getExportImportConfigurationId());
+			DestinationNames.LAYOUTS_REMOTE_PUBLISHER, message);
 	}
 
 	/**

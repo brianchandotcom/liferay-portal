@@ -49,13 +49,15 @@ public class PublishUtil {
 
 					ctCollection.setStatus(WorkflowConstants.STATUS_SCHEDULED);
 
-					ctCollectionLocalService.updateCTCollection(ctCollection);
+					ctCollection = ctCollectionLocalService.updateCTCollection(
+						ctCollection);
 
 					ctPreferencesLocalService.resetCTPreferences(
 						ctCollectionId);
 
 					Message message = new Message();
 
+					message.put("companyId", ctCollection.getCompanyId());
 					message.put("ctCollectionId", ctCollectionId);
 					message.put("userId", userId);
 

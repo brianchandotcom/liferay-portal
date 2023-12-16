@@ -176,6 +176,7 @@ public class PublishScheduler {
 
 		Message message = new Message();
 
+		message.put("companyId", ctCollection.getCompanyId());
 		message.put("ctCollectionId", ctCollectionId);
 		message.put("userId", userId);
 

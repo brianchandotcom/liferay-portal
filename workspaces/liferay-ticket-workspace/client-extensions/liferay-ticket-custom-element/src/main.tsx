@@ -12,6 +12,8 @@ import {HashRouter, Route, Routes} from 'react-router-dom';
 import TicketApp from './pages/TicketApp';
 import TicketsByStatusDashboard from './pages/TicketsByStatusDashboard';
 import {Liferay} from './services/liferay';
+
+import './styles/Main.css';
 export const SPRITEMAP =
 	(Liferay as any).ThemeDisplay.getPathThemeImages() + '/clay/icons.svg';
 

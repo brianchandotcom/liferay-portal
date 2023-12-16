@@ -12,6 +12,7 @@ import com.liferay.portal.db.partition.test.util.BaseDBPartitionTestCase;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -502,8 +503,7 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 
 	private static final String _CLASS_NAME_VALUE = "class.name.test";
 
-	private static final String _DB_PARTITION_SCHEMA_NAME_PREFIX =
-		"lpartitiontest_";
+	private static final String _DB_PARTITION_SCHEMA_NAME_PREFIX = "lparttest_";
 
 	@Inject
 	private static ResourceActionLocalService _resourceActionLocalService;

@@ -8,6 +8,8 @@ package com.liferay.portal.remote.jaxrs.whiteboard.lifecycle;
 import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.portal.kernel.util.MapUtil;
 
+import org.apache.aries.jax.rs.whiteboard.WhiteboardUtil;
+
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
@@ -28,10 +30,14 @@ public class JAXRSLifecycle {
 		_jaxrsReady = true;
 
 		_serviceRegistrationDCLSingleton.getSingleton(
-			() -> _bundleContext.registerService(
-				Object.class, new Object(),
-				MapUtil.singletonDictionary(
-					"liferay.jaxrs.whiteboard.ready", true)));
+			() -> {
+				WhiteboardUtil.start();
+
+				return _bundleContext.registerService(
+					Object.class, new Object(),
+					MapUtil.singletonDictionary(
+						"liferay.jaxrs.whiteboard.ready", true));
+			});
 	}
 
 	@Activate
@@ -42,7 +48,11 @@ public class JAXRSLifecycle {
 	@Deactivate
 	protected void deactivate() {
 		_serviceRegistrationDCLSingleton.destroy(
-			ServiceRegistration::unregister);
+			serviceRegistration -> {
+				serviceRegistration.unregister();
+
+				WhiteboardUtil.stop();
+			});
 	}
 
 	private BundleContext _bundleContext;

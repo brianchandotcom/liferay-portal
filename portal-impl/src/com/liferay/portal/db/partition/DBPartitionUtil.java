@@ -88,7 +88,7 @@ public class DBPartitionUtil {
 				while (resultSet.next()) {
 					String tableName = resultSet.getString("TABLE_NAME");
 
-					if (dbInspector.isObjectTable(
+					if (DBInspector.isObjectTable(
 							_getCompanyIds(), tableName)) {
 
 						continue;

@@ -87,7 +87,8 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 			String variableName = matcher.group(1);
 
 			String variableTypeName = getVariableTypeName(
-				content, javaTerm, fileContent, fileName, variableName);
+				content, javaTerm, fileContent, fileName, variableName, false,
+				true);
 
 			if (variableTypeName == null) {
 				continue;
@@ -137,7 +138,8 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 					previousVariableName = variableName;
 
 					variableTypeName = getVariableTypeName(
-						content, javaTerm, fileContent, fileName, variableName);
+						content, javaTerm, fileContent, fileName, variableName,
+						false, true);
 
 					if (variableTypeName == null) {
 						continue outerLoop;
@@ -177,6 +179,12 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 					continue outerLoop;
 				}
 
+				int x = variableTypeName.lastIndexOf(StringPool.PERIOD);
+
+				if (x != -1) {
+					variableTypeName = variableTypeName.substring(x + 1);
+				}
+
 				String tableName = _getTableName(
 					variableTypeName, serviceXMLElement);
 
@@ -186,7 +194,7 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 					tablesSQLContent, tableName, setterObjectName);
 
 				if ((index2 != -1) && (index1 > index2)) {
-					int x = matcher2.start();
+					x = matcher2.start();
 
 					int y = content.lastIndexOf(previousMatch, x);
 
@@ -254,6 +262,20 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 	private String _getPackageName(
 		String variableTypeName, List<String> importNames) {
 
+		int x = variableTypeName.lastIndexOf(StringPool.PERIOD);
+
+		if (x != -1) {
+			String packageName = variableTypeName.substring(0, x);
+
+			if (packageName.startsWith("com.liferay.") &&
+				packageName.endsWith(".model")) {
+
+				return packageName;
+			}
+
+			return StringPool.BLANK;
+		}
+
 		for (String importName : importNames) {
 			if (importName.startsWith("com.liferay.") &&
 				importName.endsWith(".model." + variableTypeName)) {
@@ -316,6 +338,12 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 
 		if (modelInformation == null) {
 			return false;
+		}
+
+		int x = variableTypeName.lastIndexOf(StringPool.PERIOD);
+
+		if (x != -1) {
+			variableTypeName = variableTypeName.substring(x + 1);
 		}
 
 		Element serviceXMLElement = (Element)modelInformation[0];

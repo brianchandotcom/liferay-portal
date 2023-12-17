@@ -573,7 +573,7 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 
 				String variableTypeName = getVariableTypeName(
 					javaMethodContent, null, newContent, fileName,
-					parameterName.trim(), true);
+					parameterName.trim(), true, false);
 
 				if (variableTypeName == null) {
 					sendMessage = true;

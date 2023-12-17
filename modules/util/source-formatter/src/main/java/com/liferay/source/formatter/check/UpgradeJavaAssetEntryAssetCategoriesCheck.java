@@ -78,7 +78,8 @@ public class UpgradeJavaAssetEntryAssetCategoriesCheck
 			String secondParameter = matcher.group(2);
 
 			String variableTypeName = getVariableTypeName(
-				newContent, null, newContent, fileName, secondParameter, true);
+				newContent, null, newContent, fileName, secondParameter, true,
+				false);
 
 			if (variableTypeName == null) {
 				continue;

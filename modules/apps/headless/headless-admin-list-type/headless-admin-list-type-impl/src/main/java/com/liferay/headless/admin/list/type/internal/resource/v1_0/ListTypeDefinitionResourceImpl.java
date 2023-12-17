@@ -265,7 +265,7 @@ public class ListTypeDefinitionResourceImpl
 				name = serviceBuilderListTypeDefinition.getName(locale);
 				name_i18n = LocalizedMapUtil.getI18nMap(
 					serviceBuilderListTypeDefinition.getNameMap());
-				system = serviceBuilderListTypeDefinition.getSystem();
+				system = serviceBuilderListTypeDefinition.isSystem();
 			}
 		};
 	}

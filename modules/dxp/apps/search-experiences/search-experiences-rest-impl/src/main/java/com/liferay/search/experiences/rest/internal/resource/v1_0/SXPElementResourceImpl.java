@@ -363,7 +363,7 @@ public class SXPElementResourceImpl extends BaseSXPElementResourceImpl {
 			return postSXPElement(sxpElement);
 		}
 
-		if (!serviceBuilderSXPElement.getReadOnly()) {
+		if (!serviceBuilderSXPElement.isReadOnly()) {
 			return _updateSXPElement(
 				serviceBuilderSXPElement.getSXPElementId(), sxpElement);
 		}

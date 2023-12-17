@@ -22,7 +22,7 @@ public class DispatchTriggerUtil {
 
 		return new DispatchTrigger() {
 			{
-				active = dispatchTrigger.getActive();
+				active = dispatchTrigger.isActive();
 				companyId = dispatchTrigger.getCompanyId();
 				cronExpression = dispatchTrigger.getCronExpression();
 				dispatchTaskClusterMode =
@@ -36,9 +36,9 @@ public class DispatchTriggerUtil {
 					dispatchTrigger.getExternalReferenceCode();
 				id = dispatchTrigger.getDispatchTriggerId();
 				name = dispatchTrigger.getName();
-				overlapAllowed = dispatchTrigger.getOverlapAllowed();
+				overlapAllowed = dispatchTrigger.isOverlapAllowed();
 				startDate = dispatchTrigger.getStartDate();
-				system = dispatchTrigger.getSystem();
+				system = dispatchTrigger.isSystem();
 				timeZoneId = dispatchTrigger.getTimeZoneId();
 				userId = dispatchTrigger.getUserId();
 			}

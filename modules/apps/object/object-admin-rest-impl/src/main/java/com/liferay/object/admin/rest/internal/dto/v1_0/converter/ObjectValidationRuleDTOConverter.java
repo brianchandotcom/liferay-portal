@@ -82,7 +82,7 @@ public class ObjectValidationRuleDTOConverter
 				objectDefinitionId =
 					serviceBuilderObjectValidationRule.getObjectDefinitionId();
 				script = serviceBuilderObjectValidationRule.getScript();
-				system = serviceBuilderObjectValidationRule.getSystem();
+				system = serviceBuilderObjectValidationRule.isSystem();
 
 				setObjectValidationRuleSettings(
 					() -> TransformUtil.transformToArray(

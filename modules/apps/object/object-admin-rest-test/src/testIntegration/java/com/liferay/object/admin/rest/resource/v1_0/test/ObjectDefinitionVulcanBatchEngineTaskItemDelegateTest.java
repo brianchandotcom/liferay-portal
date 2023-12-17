@@ -147,7 +147,7 @@ public class ObjectDefinitionVulcanBatchEngineTaskItemDelegateTest {
 						_company.getCompanyId());
 
 		Assert.assertNotNull(serviceBuilderObjectDefinition);
-		Assert.assertTrue(serviceBuilderObjectDefinition.getActive());
+		Assert.assertTrue(serviceBuilderObjectDefinition.isActive());
 
 		serviceBuilderObjectDefinition =
 			_objectDefinitionLocalService.
@@ -156,7 +156,7 @@ public class ObjectDefinitionVulcanBatchEngineTaskItemDelegateTest {
 					_company.getCompanyId());
 
 		Assert.assertNotNull(serviceBuilderObjectDefinition);
-		Assert.assertFalse(serviceBuilderObjectDefinition.getActive());
+		Assert.assertFalse(serviceBuilderObjectDefinition.isActive());
 	}
 
 	private ObjectDefinition _createObjectDefinition(String name) {

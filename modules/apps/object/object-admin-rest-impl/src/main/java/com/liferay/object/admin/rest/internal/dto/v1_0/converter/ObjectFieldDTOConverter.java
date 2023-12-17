@@ -61,13 +61,13 @@ public class ObjectFieldDTOConverter
 							_objectFieldSettingLocalService, null);
 				externalReferenceCode = objectField.getExternalReferenceCode();
 				id = objectField.getObjectFieldId();
-				indexed = objectField.getIndexed();
-				indexedAsKeyword = objectField.getIndexedAsKeyword();
+				indexed = objectField.isIndexed();
+				indexedAsKeyword = objectField.isIndexedAsKeyword();
 				indexedLanguageId = objectField.getIndexedLanguageId();
 				label = LocalizedMapUtil.getLanguageIdMap(
 					objectField.getLabelMap());
 				listTypeDefinitionId = objectField.getListTypeDefinitionId();
-				localized = objectField.getLocalized();
+				localized = objectField.isLocalized();
 				name = objectField.getName();
 				objectFieldSettings = TransformUtil.transformToArray(
 					objectField.getObjectFieldSettings(),
@@ -82,7 +82,7 @@ public class ObjectFieldDTOConverter
 					objectField.getRelationshipType());
 				required = objectField.isRequired();
 				state = objectField.isState();
-				system = objectField.getSystem();
+				system = objectField.isSystem();
 				type = ObjectField.Type.create(objectField.getDBType());
 				unique =
 					com.liferay.object.field.setting.util.

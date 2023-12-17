@@ -59,7 +59,7 @@ public class ObjectViewDTOConverter
 				actions = dtoConverterContext.getActions();
 				dateCreated = objectView.getCreateDate();
 				dateModified = objectView.getModifiedDate();
-				defaultObjectView = objectView.getDefaultObjectView();
+				defaultObjectView = objectView.isDefaultObjectView();
 				id = objectView.getObjectViewId();
 				name = LocalizedMapUtil.getLanguageIdMap(
 					objectView.getNameMap());

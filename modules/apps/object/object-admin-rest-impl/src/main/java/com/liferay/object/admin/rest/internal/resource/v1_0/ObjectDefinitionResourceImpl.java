@@ -413,7 +413,7 @@ public class ObjectDefinitionResourceImpl
 				_objectDefinitionService.getObjectDefinition(
 					objectDefinitionId);
 
-		if (GetterUtil.getBoolean(serviceBuilderObjectDefinition.getSystem())) {
+		if (GetterUtil.getBoolean(serviceBuilderObjectDefinition.isSystem())) {
 			return _toObjectDefinition(
 				_objectDefinitionService.publishSystemObjectDefinition(
 					objectDefinitionId));
@@ -507,7 +507,7 @@ public class ObjectDefinitionResourceImpl
 						objectDefinition.getAccountEntryRestricted()),
 					GetterUtil.getBoolean(
 						objectDefinition.getActive(),
-						serviceBuilderObjectDefinition.getActive()),
+						serviceBuilderObjectDefinition.isActive()),
 					GetterUtil.getBoolean(
 						objectDefinition.getEnableCategorization(), true),
 					GetterUtil.getBoolean(objectDefinition.getEnableComments()),
@@ -976,7 +976,7 @@ public class ObjectDefinitionResourceImpl
 					objectRelationship.getObjectDefinitionId2());
 
 			if ((objectDefinition2 == null) ||
-				!objectDefinition2.getAccountEntryRestricted()) {
+				!objectDefinition2.isAccountEntryRestricted()) {
 
 				continue;
 			}
@@ -1144,17 +1144,17 @@ public class ObjectDefinitionResourceImpl
 				defaultLanguageId = _localization.getDefaultLanguageId(
 					objectDefinition.getLabel());
 				enableCategorization =
-					objectDefinition.getEnableCategorization();
-				enableComments = objectDefinition.getEnableComments();
-				enableLocalization = objectDefinition.getEnableLocalization();
+					objectDefinition.isEnableCategorization();
+				enableComments = objectDefinition.isEnableComments();
+				enableLocalization = objectDefinition.isEnableLocalization();
 				enableObjectEntryHistory =
-					objectDefinition.getEnableObjectEntryHistory();
+					objectDefinition.isEnableObjectEntryHistory();
 				externalReferenceCode =
 					objectDefinition.getExternalReferenceCode();
 				id = objectDefinition.getObjectDefinitionId();
 				label = LocalizedMapUtil.getLanguageIdMap(
 					objectDefinition.getLabelMap());
-				modifiable = objectDefinition.getModifiable();
+				modifiable = objectDefinition.isModifiable();
 				name = objectDefinition.getShortName();
 				objectActions = transformToArray(
 					_objectActionLocalService.getObjectActions(
@@ -1221,7 +1221,7 @@ public class ObjectDefinitionResourceImpl
 					".*/\\{\\w+}/.*");
 				pluralLabel = LocalizedMapUtil.getLanguageIdMap(
 					objectDefinition.getPluralLabelMap());
-				portlet = objectDefinition.getPortlet();
+				portlet = objectDefinition.isPortlet();
 				restContextPath = finalRESTContextPath;
 				scope = objectDefinition.getScope();
 				status = new Status() {
@@ -1258,7 +1258,7 @@ public class ObjectDefinitionResourceImpl
 							return null;
 						}
 
-						return objectDefinition.getEnableObjectEntryDraft();
+						return objectDefinition.isEnableObjectEntryDraft();
 					});
 				setObjectFolderExternalReferenceCode(
 					() -> {

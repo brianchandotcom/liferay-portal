@@ -66,7 +66,7 @@ public class SXPElementDTOConverter
 				externalReferenceCode = sxpElement.getExternalReferenceCode();
 				id = sxpElement.getSXPElementId();
 				modifiedDate = sxpElement.getModifiedDate();
-				readOnly = sxpElement.getReadOnly();
+				readOnly = sxpElement.isReadOnly();
 				schemaVersion = sxpElement.getSchemaVersion();
 				title = SXPDTOConverterUtil.translate(
 					sxpElement.getFallbackTitle(), _language,

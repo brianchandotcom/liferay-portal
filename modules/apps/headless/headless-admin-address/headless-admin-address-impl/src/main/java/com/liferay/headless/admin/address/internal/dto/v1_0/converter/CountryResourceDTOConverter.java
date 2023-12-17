@@ -53,10 +53,10 @@ public class CountryResourceDTOConverter
 			{
 				a2 = serviceBuilderCountry.getA2();
 				a3 = serviceBuilderCountry.getA3();
-				active = serviceBuilderCountry.getActive();
-				billingAllowed = serviceBuilderCountry.getBillingAllowed();
+				active = serviceBuilderCountry.isActive();
+				billingAllowed = serviceBuilderCountry.isBillingAllowed();
 				groupFilterEnabled =
-					serviceBuilderCountry.getGroupFilterEnabled();
+					serviceBuilderCountry.isGroupFilterEnabled();
 				id = serviceBuilderCountry.getCountryId();
 				name = serviceBuilderCountry.getName();
 				number = Integer.valueOf(serviceBuilderCountry.getNumber());
@@ -67,10 +67,10 @@ public class CountryResourceDTOConverter
 					serviceBuilderRegion -> _regionResourceDTOConverter.toDTO(
 						serviceBuilderRegion),
 					Region.class);
-				shippingAllowed = serviceBuilderCountry.getShippingAllowed();
-				subjectToVAT = serviceBuilderCountry.getSubjectToVAT();
+				shippingAllowed = serviceBuilderCountry.isShippingAllowed();
+				subjectToVAT = serviceBuilderCountry.isSubjectToVAT();
 				title_i18n = serviceBuilderCountry.getLanguageIdToTitleMap();
-				zipRequired = serviceBuilderCountry.getZipRequired();
+				zipRequired = serviceBuilderCountry.isZipRequired();
 
 				setIdd(
 					() -> {

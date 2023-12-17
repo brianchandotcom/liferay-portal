@@ -60,7 +60,7 @@ public class LockImpl implements Lock {
 
 	@Override
 	public boolean getInheritable() {
-		return _lock.getInheritable();
+		return _lock.isInheritable();
 	}
 
 	@Override

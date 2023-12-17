@@ -55,9 +55,9 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 				com.liferay.search.experiences.model.SXPElement sxpElement =
 					new SXPElementImpl();
 
-				sxpElement.setSXPElementId(resultSet.getLong("sxpElementId"));
 				sxpElement.setExternalReferenceCode(
 					resultSet.getString("externalReferenceCode"));
+				sxpElement.setSXPElementId(resultSet.getLong("sxpElementId"));
 				sxpElement.setReadOnly(resultSet.getBoolean("readOnly"));
 				sxpElement.setVersion(resultSet.getString("version"));
 

@@ -61,7 +61,7 @@ public class DDMTemplateImpl implements DDMTemplate {
 
 	@Override
 	public boolean getCacheable() {
-		return _ddmTemplate.getCacheable();
+		return _ddmTemplate.isCacheable();
 	}
 
 	@Override
@@ -231,7 +231,7 @@ public class DDMTemplateImpl implements DDMTemplate {
 
 	@Override
 	public boolean getSmallImage() {
-		return _ddmTemplate.getSmallImage();
+		return _ddmTemplate.isSmallImage();
 	}
 
 	@Override

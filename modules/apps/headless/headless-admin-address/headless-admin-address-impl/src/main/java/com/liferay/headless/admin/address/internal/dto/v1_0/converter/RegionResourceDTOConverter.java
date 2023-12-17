@@ -36,7 +36,7 @@ public class RegionResourceDTOConverter
 
 		return new Region() {
 			{
-				active = serviceBuilderRegion.getActive();
+				active = serviceBuilderRegion.isActive();
 				countryId = serviceBuilderRegion.getCountryId();
 				id = serviceBuilderRegion.getRegionId();
 				name = serviceBuilderRegion.getName();

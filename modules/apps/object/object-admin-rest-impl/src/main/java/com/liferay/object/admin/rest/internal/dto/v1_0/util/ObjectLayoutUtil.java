@@ -48,7 +48,7 @@ public class ObjectLayoutUtil {
 				dateCreated = serviceBuilderObjectLayout.getCreateDate();
 				dateModified = serviceBuilderObjectLayout.getModifiedDate();
 				defaultObjectLayout =
-					serviceBuilderObjectLayout.getDefaultObjectLayout();
+					serviceBuilderObjectLayout.isDefaultObjectLayout();
 				id = serviceBuilderObjectLayout.getObjectLayoutId();
 				name = LocalizedMapUtil.getLanguageIdMap(
 					serviceBuilderObjectLayout.getNameMap());
@@ -120,7 +120,7 @@ public class ObjectLayoutUtil {
 
 		return new ObjectLayoutBox() {
 			{
-				collapsable = objectLayoutBox.getCollapsable();
+				collapsable = objectLayoutBox.isCollapsable();
 				id = objectLayoutBox.getObjectLayoutBoxId();
 				name = LocalizedMapUtil.getLanguageIdMap(
 					objectLayoutBox.getNameMap());

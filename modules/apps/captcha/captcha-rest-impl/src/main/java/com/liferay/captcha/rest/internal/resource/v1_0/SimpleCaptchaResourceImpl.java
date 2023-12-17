@@ -14,13 +14,11 @@ import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.captcha.Captcha;
 import com.liferay.portal.kernel.captcha.CaptchaTextException;
-import com.liferay.portal.kernel.encryptor.EncryptorException;
 import com.liferay.portal.kernel.encryptor.EncryptorUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.servlet.filters.secure.NonceUtil;
@@ -60,11 +58,20 @@ public class SimpleCaptchaResourceImpl extends BaseSimpleCaptchaResourceImpl {
 					image =
 						"data:image/png;base64," +
 							Base64.encode(byteArrayOutputStream.toByteArray());
-					token = _generateCaptchaToken(
-						contextCompany, answer,
-						NonceUtil.generate(
-							contextCompany.getCompanyId(),
-							contextHttpServletRequest.getRemoteAddr()));
+					token = EncryptorUtil.encrypt(
+						contextCompany.getKeyObj(),
+						JSONUtil.put(
+							"answer", answer
+						).put(
+							"expiryTime",
+							System.currentTimeMillis() +
+								_CAPTCHA_TOKEN_EXPIRY_DURATION
+						).put(
+							"nonce",
+							NonceUtil.generate(
+								contextCompany.getCompanyId(),
+								contextHttpServletRequest.getRemoteAddr())
+						).toString());
 				}
 			};
 		}
@@ -76,17 +83,8 @@ public class SimpleCaptchaResourceImpl extends BaseSimpleCaptchaResourceImpl {
 
 		_checkSimpleCaptchaConfiguration();
 
-		_checkAnswer(
-			contextCompany, simpleCaptcha.getToken(),
-			simpleCaptcha.getAnswer());
-	}
-
-	private void _checkAnswer(
-			Company company, String captchaToken, String answer)
-		throws Exception {
-
 		String captchaJSONString = EncryptorUtil.decrypt(
-			company.getKeyObj(), captchaToken);
+			contextCompany.getKeyObj(), simpleCaptcha.getToken());
 
 		JSONObject captchaJSONObject = _jsonFactory.createJSONObject(
 			captchaJSONString);
@@ -95,14 +93,15 @@ public class SimpleCaptchaResourceImpl extends BaseSimpleCaptchaResourceImpl {
 			!NonceUtil.verify(captchaJSONObject.getString("nonce"))) {
 
 			throw new IllegalArgumentException(
-				"Illegal captcha token: " + captchaToken);
+				"Illegal captcha token: " + simpleCaptcha.getToken());
 		}
 
 		Date expiryDate = new Date(captchaJSONObject.getLong("expiryTime"));
 
 		if (expiryDate.before(new Date()) ||
 			!StringUtil.equalsIgnoreCase(
-				captchaJSONObject.getString("answer"), answer)) {
+				captchaJSONObject.getString("answer"),
+				simpleCaptcha.getAnswer())) {
 
 			throw new CaptchaTextException("Invalid answer");
 		}
@@ -124,22 +123,6 @@ public class SimpleCaptchaResourceImpl extends BaseSimpleCaptchaResourceImpl {
 			throw new ForbiddenException(
 				"Simple Captcha Headless API is not enabled");
 		}
-	}
-
-	private String _generateCaptchaToken(
-			Company company, String answer, String nonce)
-		throws EncryptorException {
-
-		return EncryptorUtil.encrypt(
-			company.getKeyObj(),
-			JSONUtil.put(
-				"answer", answer
-			).put(
-				"expiryTime",
-				System.currentTimeMillis() + _CAPTCHA_TOKEN_EXPIRY_DURATION
-			).put(
-				"nonce", nonce
-			).toString());
 	}
 
 	private boolean _isValidCaptchaToken(JSONObject captchaJSONObject) {

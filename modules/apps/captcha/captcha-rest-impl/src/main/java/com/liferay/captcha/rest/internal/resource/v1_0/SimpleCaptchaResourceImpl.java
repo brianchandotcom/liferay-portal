@@ -41,28 +41,24 @@ public class SimpleCaptchaResourceImpl extends BaseSimpleCaptchaResourceImpl {
 
 		Captcha captcha = CaptchaUtil.getCaptcha();
 
-		ByteArrayOutputStream imageByteArrayOutputStream =
-			new ByteArrayOutputStream();
+		try (ByteArrayOutputStream byteArrayOutputStream =
+				new ByteArrayOutputStream()) {
 
-		String expectedAnswer = captcha.serveImage(imageByteArrayOutputStream);
+			String answer = captcha.serveImage(byteArrayOutputStream);
 
-		String base64CaptchaImage =
-			"data:image/png;base64," +
-				Base64.encode(imageByteArrayOutputStream.toByteArray());
-
-		imageByteArrayOutputStream.close();
-
-		return new SimpleCaptcha() {
-			{
-				image = base64CaptchaImage;
-
-				token = CaptchaTokenUtil.generateCaptchaToken(
-					contextCompany, expectedAnswer,
-					NonceUtil.generate(
-						contextCompany.getCompanyId(),
-						contextHttpServletRequest.getRemoteAddr()));
-			}
-		};
+			return new SimpleCaptcha() {
+				{
+					image =
+						"data:image/png;base64," +
+							Base64.encode(byteArrayOutputStream.toByteArray());
+					token = CaptchaTokenUtil.generateCaptchaToken(
+						contextCompany, answer,
+						NonceUtil.generate(
+							contextCompany.getCompanyId(),
+							contextHttpServletRequest.getRemoteAddr()));
+				}
+			};
+		}
 	}
 
 	@Override

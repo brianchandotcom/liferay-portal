@@ -27,17 +27,24 @@ const EditNode = ({
 	updateParent,
 }) => {
 	const [form] = Form.useForm();
+
 	const [isLoading, setIsLoading] = useState(false);
+
 	const handleSubmit = async (values) => {
 		try {
 			setIsLoading(true);
+
 			values['root'] = root;
+
 			await updateFolderTemplate(nodeId, values);
+
 			setIsLoading(false);
+
 			updateParent(chart, values);
 		}
 		catch (error) {
 			setIsLoading(false);
+
 			ApplicationUtil.ShowError(error.message);
 		}
 	};
@@ -128,27 +135,24 @@ const EditNode = ({
 				</Form.Item>
 				<Form.Item>
 					<Flex gap={6}>
-						{!isLoading && (
-							<Button htmlType="submit" icon={<SaveTwoTone />}>
-								Save
-							</Button>
-						)}
-						{isLoading && (
-							<Button
-								disabled={true}
-								htmlType="submit"
-								icon={
+						<Button
+							disabled={isLoading}
+							htmlType="submit"
+							icon={
+								isLoading ? (
 									<LoadingOutlined
 										spin
 										style={{fontSize: 14}}
 									/>
-								}
-							>
-								Saving
-							</Button>
-						)}
+								) : (
+									<SaveTwoTone />
+								)
+							}
+						>
+							{isLoading ? 'Saving' : 'Save'}
+						</Button>
 						<Button icon={<CloseCircleTwoTone />} onClick={close}>
-							Close
+							Cancel
 						</Button>
 					</Flex>
 				</Form.Item>

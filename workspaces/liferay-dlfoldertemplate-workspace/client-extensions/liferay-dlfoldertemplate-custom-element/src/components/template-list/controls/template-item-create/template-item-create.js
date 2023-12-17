@@ -9,39 +9,55 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {Flex, Form} from 'antd';
 import React, {useState} from 'react';
 
-import './template-item-create.css';
 import {postFolderTemplateInformation} from '../../../../services/template-list.service';
 import {ApplicationUtil} from '../../../../utils/appUtil';
 
 const NewTemplateItem = ({onClose}) => {
+
 	const [isLoading, setIsLoading] = useState(false);
+
 	const [form] = Form.useForm();
 
 	const handleSubmit = async () => {
+
 		form.validateFields()
 			.then(
 				async (values) => {
 					try {
+
 						setIsLoading(true);
+
 						await postFolderTemplateInformation(values);
+
 						ApplicationUtil.ShowSuccess('Template created!');
+
 						onClose(true);
+
 					}
 					catch (error) {
+
 						ApplicationUtil.ShowError(error.message);
+
 						onClose(false);
+
 					}
 					finally {
+
 						form.resetFields();
+
 						setIsLoading(false);
+
 					}
 				},
 				(error) => {
+
 					ApplicationUtil.ShowError(error);
 				}
 			)
 			.catch((error) => {
+
 				ApplicationUtil.ShowError(error);
+
 			});
 	};
 

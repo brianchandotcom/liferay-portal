@@ -19,16 +19,21 @@ import {ApplicationUtil} from '../../../../utils/appUtil';
 import './template-item-create-folder.css';
 
 const TemplateItemCreateFolder = ({templateID}) => {
+
 	const [folderTree, setFolderTree] = useState(null);
+
 	const [isLoading, setIsLoading] = useState(false);
+
 	const [isSubmitting, setIsSubmitting] = useState(false);
+
 	const [form] = Form.useForm();
 
 	const loadFolderTree = async () => {
+
 		const loadSubFolder = async (folder) => {
-			const subFolders = await getDocumentFolderDocumentFoldersPage(
-				folder
-			);
+
+			const subFolders = await getDocumentFolderDocumentFoldersPage(folder);
+
 			const normalizedFolders = subFolders.items.map((folder) => ({
 				childrenCount: folder.numberOfDocumentFolders,
 				icon: 'folder',
@@ -46,6 +51,7 @@ const TemplateItemCreateFolder = ({templateID}) => {
 
 			return normalizedFolders;
 		};
+
 		const root = (
 			await getSiteDocumentFoldersPage(
 				ApplicationUtil.getLiferay().ThemeDisplay.getScopeGroupId()
@@ -60,10 +66,13 @@ const TemplateItemCreateFolder = ({templateID}) => {
 			title: folder.name,
 			value: folder.id,
 		}));
+
 		const loadFolderRec = async (folder) => {
+
 			const children = await loadSubFolder(folder.key);
 
 			return Promise.all(
+
 				children.map(async (subfolder) => ({
 					...subfolder,
 					children:
@@ -75,6 +84,7 @@ const TemplateItemCreateFolder = ({templateID}) => {
 		};
 
 		return Promise.all(
+
 			root.map(async (folder) => ({
 				...folder,
 				children:
@@ -87,23 +97,33 @@ const TemplateItemCreateFolder = ({templateID}) => {
 
 	const prepareComponentCallback = useCallback(async () => {
 		try {
+
 			setIsLoading(true);
+
 			setFolderTree(await loadFolderTree());
+
 		}
 		catch (error) {
+
 			ApplicationUtil.ShowError(error.message);
 		}
 		finally {
+
 			setIsLoading(false);
+
 		}
 	}, []);
 
 	useEffect(() => {
+
 		const fetchData = async () => {
+
 			await prepareComponentCallback();
+
 		};
 
 		fetchData();
+
 	}, [prepareComponentCallback]);
 
 	const handleSubmit = () => {
@@ -111,28 +131,41 @@ const TemplateItemCreateFolder = ({templateID}) => {
 			.then(
 				async (values) => {
 					try {
+
 						setIsSubmitting(true);
+
 						await createFolder(
 							templateID,
 							values.parentFolder,
 							values.name
 						);
+
 						ApplicationUtil.ShowSuccess('Folder created!');
+
 					}
 					catch (error) {
+
 						ApplicationUtil.ShowError(error.message);
+
 					}
 					finally {
+
 						form.resetFields();
+
 						setIsSubmitting(false);
+
 					}
 				},
 				(error) => {
+
 					ApplicationUtil.ShowError(error);
+
 				}
 			)
 			.catch((error) => {
+
 				ApplicationUtil.ShowError(error);
+
 			});
 	};
 

@@ -23,13 +23,25 @@ import {
 	deleteFolderTemplateInformation,
 	getAvailableTemplatesPage,
 } from '../../services/template-list.service';
+
 const spritemap = ApplicationUtil.getDefaultSpriteMap();
+
 const TemplateList = () => {
+
 	const [data, setData] = useState([]);
+
 	const [totalItems, setTotalItems] = useState(0);
+
 	const [pageIndex, setPageIndex] = useState(1);
+
 	const [delta, setDelta] = useState(5);
+
 	const deltas = [{label: 5}, {label: 10}, {label: 20}, {label: 40}];
+
+	const [state, dispatch] = useContext(Context);
+
+	const [isDeletingLoading, setIsDeletingLoading] = useState(false);
+
 	const Headers = [
 		{
 			expanded: false,
@@ -56,8 +68,7 @@ const TemplateList = () => {
 			wrap: false,
 		},
 	];
-	const [state, dispatch] = useContext(Context);
-	const [isDeletingLoading, setIsDeletingLoading] = useState(false);
+
 	const openDesignerModal = (template) => {
 		dispatch({
 			payload: {
@@ -70,6 +81,7 @@ const TemplateList = () => {
 			type: 1,
 		});
 	};
+
 	const openCreateFolderModal = (template) => {
 		try {
 			dispatch({
@@ -88,6 +100,7 @@ const TemplateList = () => {
 			ApplicationUtil.ShowError(exp);
 		}
 	};
+
 	const openNewItemModal = () => {
 		dispatch({
 			payload: {
@@ -101,14 +114,20 @@ const TemplateList = () => {
 			type: 1,
 		});
 	};
+
 	const confirmDeleteItemModal = (template) => {
 		const deleteTemplate = async () => {
 			setIsDeletingLoading(true);
+
 			await deleteFolderTemplateInformation(template.id);
+
 			setIsDeletingLoading(false);
+
 			reload();
+
 			state.onClose();
 		};
+
 		dispatch({
 			payload: {
 				body:
@@ -145,10 +164,13 @@ const TemplateList = () => {
 		if (closeAndReload) {
 			reload();
 		}
+
 		state.onClose(true);
 	};
 	const reload = () => {
+
 		setTotalItems(0);
+
 		if (pageIndex === 1) {
 			loadPage();
 		}
@@ -157,20 +179,30 @@ const TemplateList = () => {
 		}
 	};
 	const loadPage = async () => {
+
 		const results = await getAvailableTemplatesPage(pageIndex, delta);
+
 		setData(results.items);
+
 		setTotalItems(results.totalCount);
 	};
 
 	const loadPageCallback = useCallback(async () => {
+
 		const results = await getAvailableTemplatesPage(pageIndex, delta);
+
 		setData(results.items);
+
 		setTotalItems(results.totalCount);
+
 	}, [pageIndex, delta]);
 
 	useEffect(() => {
+
 		const fetchData = async () => {
+
 			await loadPageCallback();
+
 		};
 
 		fetchData();

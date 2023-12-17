@@ -24,6 +24,7 @@ function getConfig() {
 }
 async function getOAuthToken() {
 	const prom = new Promise((resolve, reject) => {
+
 		getLiferay()
 			.OAuth2Client.FromUserAgentApplication(getConfig().agentOauthAppId)
 			._getOrRequestToken()

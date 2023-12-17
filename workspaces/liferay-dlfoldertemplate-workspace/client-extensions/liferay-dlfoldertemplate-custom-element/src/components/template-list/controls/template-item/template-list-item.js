@@ -2,9 +2,6 @@
  * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
-
-import './template-list-item.css';
-
 import ClayLayout from '@clayui/layout';
 import ClayList from '@clayui/list';
 import moment from 'moment/moment';
@@ -12,22 +9,35 @@ import React, {useState} from 'react';
 
 import {deleteFolderTemplateInformation} from '../../../../services/template-list.service';
 import {ApplicationUtil} from '../../../../utils/appUtil';
+
 const spritemap = ApplicationUtil.getDefaultSpriteMap();
+
 const TemplateItem = (props) => {
+
 	const item = props.item;
+
 	const onDeleteSuccess = props.onDelete;
+
 	const openDesigner = props.openDesigner;
+
 	const openCreateFolder = props.openCreateFolder;
+
 	const [isLoading, setIsLoading] = useState(false);
 
 	const deleteTemplateAction = async () => {
+
 		setIsLoading(true);
+
 		try {
+
 			await deleteFolderTemplateInformation(item.id);
+
 			setIsLoading(false);
+
 			onDeleteSuccess();
 		}
 		catch (error) {
+
 			setIsLoading(false);
 		}
 	};

@@ -25,8 +25,6 @@ import com.liferay.portal.servlet.filters.secure.NonceUtil;
 
 import java.io.ByteArrayOutputStream;
 
-import java.util.Date;
-
 import javax.ws.rs.ForbiddenException;
 
 import org.osgi.service.component.annotations.Component;
@@ -64,7 +62,7 @@ public class SimpleCaptchaResourceImpl extends BaseSimpleCaptchaResourceImpl {
 							"answer", answer
 						).put(
 							"expiryTime",
-							System.currentTimeMillis() + Time.MINUTE * 5
+							System.currentTimeMillis() + (Time.MINUTE * 5)
 						).put(
 							"nonce",
 							NonceUtil.generate(
@@ -90,13 +88,16 @@ public class SimpleCaptchaResourceImpl extends BaseSimpleCaptchaResourceImpl {
 			!NonceUtil.verify(jsonObject.getString("nonce"))) {
 
 			throw new IllegalArgumentException(
-				"Illegal captcha token: " + simpleCaptcha.getToken());
+				"Token: " + simpleCaptcha.getToken());
 		}
 
-		Date expiryDate = new Date(jsonObject.getLong("expiryTime"));
+		long expiryTime = jsonObject.getLong("expiryTime");
 
-		if (expiryDate.before(new Date()) ||
-			!StringUtil.equalsIgnoreCase(
+		if (expiryTime < System.currentTimeMillis()) {
+			throw new CaptchaTextException("Expired captcha");
+		}
+
+		if (!StringUtil.equalsIgnoreCase(
 				jsonObject.getString("answer"), simpleCaptcha.getAnswer())) {
 
 			throw new CaptchaTextException("Invalid answer");

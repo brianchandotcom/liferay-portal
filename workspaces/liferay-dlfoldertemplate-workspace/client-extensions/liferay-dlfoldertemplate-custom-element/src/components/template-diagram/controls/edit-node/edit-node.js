@@ -17,14 +17,14 @@ import {ApplicationUtil} from '../../../../utils/appUtil';
 
 const EditNode = ({
 	chart,
-	close,
+	onClose,
 	description,
 	name,
 	nodeId,
 	parentID,
 	root,
 	templateID,
-	updateParent,
+	onNodeUpdate,
 }) => {
 	const [form] = Form.useForm();
 
@@ -40,7 +40,7 @@ const EditNode = ({
 
 			setIsLoading(false);
 
-			updateParent(chart, values);
+			onNodeUpdate(chart, values);
 		}
 		catch (error) {
 			setIsLoading(false);
@@ -63,7 +63,7 @@ const EditNode = ({
 					name="name"
 					rules={[
 						{
-							message: 'Please provide a template name',
+							message: 'Please provide node name.',
 							required: true,
 						},
 					]}
@@ -84,7 +84,7 @@ const EditNode = ({
 					name="parentID"
 					rules={[
 						{
-							message: 'Please provide a template name',
+							message: 'Please provide node parent id.',
 							required: true,
 						},
 					]}
@@ -98,7 +98,7 @@ const EditNode = ({
 					name="templateID"
 					rules={[
 						{
-							message: 'Please provide a template name',
+							message: 'Please provide a template id.',
 							required: true,
 						},
 					]}
@@ -112,7 +112,6 @@ const EditNode = ({
 					name="root"
 					rules={[
 						{
-							message: 'Please provide a template name',
 							required: true,
 						},
 					]}
@@ -126,7 +125,6 @@ const EditNode = ({
 					name="id"
 					rules={[
 						{
-							message: 'Please provide a template name',
 							required: true,
 						},
 					]}
@@ -151,7 +149,7 @@ const EditNode = ({
 						>
 							{isLoading ? 'Saving' : 'Save'}
 						</Button>
-						<Button icon={<CloseCircleTwoTone />} onClick={close}>
+						<Button icon={<CloseCircleTwoTone />} onClick={onClose}>
 							Cancel
 						</Button>
 					</Flex>

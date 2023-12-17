@@ -83,25 +83,22 @@ public class SimpleCaptchaResourceImpl extends BaseSimpleCaptchaResourceImpl {
 
 		_checkSimpleCaptchaConfiguration();
 
-		String captchaJSONString = EncryptorUtil.decrypt(
-			contextCompany.getKeyObj(), simpleCaptcha.getToken());
+		JSONObject jsonObject = _jsonFactory.createJSONObject(
+			EncryptorUtil.decrypt(
+				contextCompany.getKeyObj(), simpleCaptcha.getToken()));
 
-		JSONObject captchaJSONObject = _jsonFactory.createJSONObject(
-			captchaJSONString);
-
-		if (!_isValidCaptchaToken(captchaJSONObject) ||
-			!NonceUtil.verify(captchaJSONObject.getString("nonce"))) {
+		if (!_isValidCaptchaToken(jsonObject) ||
+			!NonceUtil.verify(jsonObject.getString("nonce"))) {
 
 			throw new IllegalArgumentException(
 				"Illegal captcha token: " + simpleCaptcha.getToken());
 		}
 
-		Date expiryDate = new Date(captchaJSONObject.getLong("expiryTime"));
+		Date expiryDate = new Date(jsonObject.getLong("expiryTime"));
 
 		if (expiryDate.before(new Date()) ||
 			!StringUtil.equalsIgnoreCase(
-				captchaJSONObject.getString("answer"),
-				simpleCaptcha.getAnswer())) {
+				jsonObject.getString("answer"), simpleCaptcha.getAnswer())) {
 
 			throw new CaptchaTextException("Invalid answer");
 		}
@@ -125,10 +122,9 @@ public class SimpleCaptchaResourceImpl extends BaseSimpleCaptchaResourceImpl {
 		}
 	}
 
-	private boolean _isValidCaptchaToken(JSONObject captchaJSONObject) {
-		if ((captchaJSONObject == null) ||
-			(captchaJSONObject.getString("answer") == null) ||
-			(captchaJSONObject.get("expiryTime") == null)) {
+	private boolean _isValidCaptchaToken(JSONObject jsonObject) {
+		if ((jsonObject == null) || (jsonObject.getString("answer") == null) ||
+			(jsonObject.get("expiryTime") == null)) {
 
 			return false;
 		}

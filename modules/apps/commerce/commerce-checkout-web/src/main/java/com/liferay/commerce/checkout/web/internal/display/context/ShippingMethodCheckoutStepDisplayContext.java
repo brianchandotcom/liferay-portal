@@ -164,32 +164,31 @@ public class ShippingMethodCheckoutStepDisplayContext {
 		List<CommerceShippingOption> commerceShippingOptions =
 			getCommerceShippingOptions(commerceShippingMethod);
 
-		if (Objects.equals(
-				commerceShippingMethod.getEngineKey(), "by-weight") ||
-			Objects.equals(commerceShippingMethod.getEngineKey(), "fixed")) {
+		if (!Objects.equals(
+				commerceShippingMethod.getEngineKey(), "by-weight") &&
+			!Objects.equals(commerceShippingMethod.getEngineKey(), "fixed")) {
 
-			List<CommerceShippingOption> filteredCommerceShippingOptions =
-				new ArrayList<>();
-
-			for (CommerceShippingFixedOption commerceShippingFixedOption :
-					getFilteredCommerceShippingFixedOptions()) {
-
-				for (CommerceShippingOption commerceShippingOption :
-						commerceShippingOptions) {
-
-					String key = commerceShippingFixedOption.getKey();
-
-					if (key.equals(commerceShippingOption.getKey())) {
-						filteredCommerceShippingOptions.add(
-							commerceShippingOption);
-					}
-				}
-			}
-
-			return filteredCommerceShippingOptions;
+			return commerceShippingOptions;
 		}
 
-		return commerceShippingOptions;
+		List<CommerceShippingOption> filteredCommerceShippingOptions =
+			new ArrayList<>();
+
+		for (CommerceShippingFixedOption commerceShippingFixedOption :
+				getFilteredCommerceShippingFixedOptions()) {
+
+			for (CommerceShippingOption commerceShippingOption :
+					commerceShippingOptions) {
+
+				String key = commerceShippingFixedOption.getKey();
+
+				if (key.equals(commerceShippingOption.getKey())) {
+					filteredCommerceShippingOptions.add(commerceShippingOption);
+				}
+			}
+		}
+
+		return filteredCommerceShippingOptions;
 	}
 
 	public boolean isHideShippingPriceZero() throws PortalException {

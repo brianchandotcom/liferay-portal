@@ -64,8 +64,7 @@ public class SimpleCaptchaResourceImpl extends BaseSimpleCaptchaResourceImpl {
 							"answer", answer
 						).put(
 							"expiryTime",
-							System.currentTimeMillis() +
-								_CAPTCHA_TOKEN_EXPIRY_DURATION
+							System.currentTimeMillis() + Time.MINUTE * 5
 						).put(
 							"nonce",
 							NonceUtil.generate(
@@ -121,8 +120,6 @@ public class SimpleCaptchaResourceImpl extends BaseSimpleCaptchaResourceImpl {
 				"Simple Captcha Headless API is not enabled");
 		}
 	}
-
-	private static final long _CAPTCHA_TOKEN_EXPIRY_DURATION = Time.MINUTE * 5;
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

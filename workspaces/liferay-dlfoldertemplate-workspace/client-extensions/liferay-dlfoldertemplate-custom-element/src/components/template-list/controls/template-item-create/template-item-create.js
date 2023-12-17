@@ -67,7 +67,7 @@ const NewTemplateItem = ({onClose}) => {
 				label="Title"
 				name="templateName"
 				rules={[
-					{message: 'Please provide a template name', required: true},
+					{message: 'Please provide a template name.', required: true},
 				]}
 			>
 				<ClayInput />

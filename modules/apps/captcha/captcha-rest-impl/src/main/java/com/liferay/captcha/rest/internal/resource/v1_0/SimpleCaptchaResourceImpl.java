@@ -87,7 +87,7 @@ public class SimpleCaptchaResourceImpl extends BaseSimpleCaptchaResourceImpl {
 			EncryptorUtil.decrypt(
 				contextCompany.getKeyObj(), simpleCaptcha.getToken()));
 
-		if (!_isValidCaptchaToken(jsonObject) ||
+		if (!jsonObject.has("answer") || !jsonObject.has("expiryTime") ||
 			!NonceUtil.verify(jsonObject.getString("nonce"))) {
 
 			throw new IllegalArgumentException(
@@ -120,16 +120,6 @@ public class SimpleCaptchaResourceImpl extends BaseSimpleCaptchaResourceImpl {
 			throw new ForbiddenException(
 				"Simple Captcha Headless API is not enabled");
 		}
-	}
-
-	private boolean _isValidCaptchaToken(JSONObject jsonObject) {
-		if ((jsonObject.get("answer") == null) ||
-			(jsonObject.get("expiryTime") == null)) {
-
-			return false;
-		}
-
-		return true;
 	}
 
 	private static final long _CAPTCHA_TOKEN_EXPIRY_DURATION = Time.MINUTE * 5;

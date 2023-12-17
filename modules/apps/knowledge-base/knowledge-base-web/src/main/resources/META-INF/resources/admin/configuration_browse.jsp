@@ -9,17 +9,12 @@
 
 <%
 KBConfigurationDisplayContext kbConfigurationDisplayContext = new KBConfigurationDisplayContext(request, renderRequest, renderResponse);
+
 kbGroupServiceConfiguration = ParameterMapUtil.setParameterMap(KBGroupServiceConfiguration.class, kbGroupServiceConfiguration, request.getParameterMap(), "preferences--", "--");
-
-Map<String, String> emailDefinitionTerms = kbConfigurationDisplayContext.getEmailDefinitionTerms(kbGroupServiceConfiguration, portletDisplay, resourceBundle);
-
-Map<String, String> emailSuggestionDefinitionTerms = kbConfigurationDisplayContext.getEmailSuggestionDefinitionTerms(resourceBundle);
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(kbConfigurationDisplayContext.getBackURL());
 portletDisplay.setURLBackTitle("knowledge-base");
-
-String emailParam = StringPool.BLANK;
 %>
 
 <clay:container-fluid
@@ -62,6 +57,11 @@ String emailParam = StringPool.BLANK;
 			</liferay-portlet:actionURL>
 
 			<aui:form action="<%= configurationActionURL %>" method="post" name="fm">
+
+				<%
+				String emailParam = StringPool.BLANK;
+				%>
+
 				<clay:sheet
 					cssClass="c-mb-4 c-mt-4 c-p-0"
 					size="full"
@@ -92,6 +92,11 @@ String emailParam = StringPool.BLANK;
 					<liferay-ui:error embed="<%= false %>" key="emailKBArticleSuggestionResolvedSubject" message="please-enter-a-valid-subject" />
 					<liferay-ui:error embed="<%= false %>" key="emailKBArticleUpdatedBody" message="please-enter-a-valid-body" />
 					<liferay-ui:error embed="<%= false %>" key="emailKBArticleUpdatedSubject" message="please-enter-a-valid-subject" />
+
+					<%
+					Map<String, String> emailDefinitionTerms = kbConfigurationDisplayContext.getEmailDefinitionTerms(kbGroupServiceConfiguration, portletDisplay, resourceBundle);
+					Map<String, String> emailSuggestionDefinitionTerms = kbConfigurationDisplayContext.getEmailSuggestionDefinitionTerms(resourceBundle);
+					%>
 
 					<c:choose>
 						<c:when test='<%= Objects.equals(kbConfigurationDisplayContext.getNavigation(), "article-added-email") %>'>

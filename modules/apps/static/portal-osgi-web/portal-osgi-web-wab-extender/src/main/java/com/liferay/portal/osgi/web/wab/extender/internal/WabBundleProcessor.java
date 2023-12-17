@@ -156,9 +156,7 @@ public class WabBundleProcessor {
 			_initServletContainerInitializers(
 				_bundle, servletContext, allClasses, annotatedClasses);
 
-			if (!allClasses.equals(annotatedClasses)) {
-				_saveScannedAnnotatedClasses(annotatedClasses);
-			}
+			_saveScannedAnnotatedClasses(annotatedClasses);
 
 			ModifiableServletContext modifiableServletContext =
 				(ModifiableServletContext)servletContext;

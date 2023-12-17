@@ -177,7 +177,7 @@ const TemplateItemCreateFolder = ({templateID}) => {
 					name="name"
 					rules={[
 						{
-							message: 'Please provide a folder name',
+							message: 'Please provide a folder name.',
 							required: true,
 						},
 					]}
@@ -189,7 +189,7 @@ const TemplateItemCreateFolder = ({templateID}) => {
 					name="parentFolder"
 					rules={[
 						{
-							message: 'Please provide a folder name',
+							message: 'Please select folder parent.',
 							required: true,
 						},
 					]}

@@ -65,14 +65,14 @@ const FolderStructureDesigner = ({templateId}) => {
 				content: (
 					<EditNode
 						chart={newChart}
-						close={closeNodeEditor}
+						onClose={closeNodeEditor}
 						description={description}
 						name={name}
 						nodeId={nodeId}
 						parentID={parentID}
 						root={root}
 						templateID={templateID}
-						updateParent={updateChartNode}
+						onNodeUpdate={updateChartNode}
 					></EditNode>
 				),
 				footer: null,

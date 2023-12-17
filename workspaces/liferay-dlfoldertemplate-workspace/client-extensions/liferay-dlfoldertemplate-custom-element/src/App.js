@@ -13,11 +13,9 @@ const spritemap = ApplicationUtil.getDefaultSpriteMap();
 
 function App() {
 	return (
-		<>
 			<ClayModalProvider spritemap={spritemap}>
 				<TemplateList></TemplateList>
 			</ClayModalProvider>
-		</>
 	);
 }
 

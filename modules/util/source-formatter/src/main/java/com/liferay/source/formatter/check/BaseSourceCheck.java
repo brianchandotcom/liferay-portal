@@ -617,19 +617,22 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		String variableName) {
 
 		return getVariableTypeName(
-			content, javaTerm, fileContent, fileName, variableName, false);
+			content, javaTerm, fileContent, fileName, variableName, false,
+			false);
 	}
 
 	protected String getVariableTypeName(
 		String content, JavaTerm javaTerm, String fileContent, String fileName,
-		String variableName, boolean includeArrayOrCollectionTypes) {
+		String variableName, boolean includeArrayOrCollectionTypes,
+		boolean includeFullyQualifiedName) {
 
 		if (variableName == null) {
 			return null;
 		}
 
 		String variableTypeName = _getVariableTypeName(
-			content, variableName, includeArrayOrCollectionTypes);
+			content, variableName, includeArrayOrCollectionTypes,
+			includeFullyQualifiedName);
 
 		if ((variableTypeName != null) || content.equals(fileContent)) {
 			return variableTypeName;
@@ -652,7 +655,8 @@ public abstract class BaseSourceCheck implements SourceCheck {
 
 					variableTypeName = _getVariableTypeName(
 						variableContent, variableName,
-						includeArrayOrCollectionTypes);
+						includeArrayOrCollectionTypes,
+						includeFullyQualifiedName);
 
 					if (variableTypeName != null) {
 						return variableTypeName;
@@ -678,7 +682,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		}
 
 		String variableTypeName = getVariableTypeName(
-			content, null, fileContent, fileName, variable.trim(), true);
+			content, null, fileContent, fileName, variable.trim(), true, false);
 
 		if ((variableTypeName != null) &&
 			variableTypeName.startsWith(className)) {
@@ -854,10 +858,19 @@ public abstract class BaseSourceCheck implements SourceCheck {
 
 	private String _getVariableTypeName(
 		String content, String variableName,
-		boolean includeArrayOrCollectionTypes) {
+		boolean includeArrayOrCollectionTypes,
+		boolean includeFullyQualifiedName) {
 
-		Pattern pattern = Pattern.compile(
-			"\\W(\\w+)\\s+" + variableName + "\\s*[;=),:]");
+		Pattern pattern = null;
+
+		if (includeFullyQualifiedName) {
+			pattern = Pattern.compile(
+				"\\W((\\w+\\.)*\\w+)\\s+" + variableName + "\\s*[;=),:]");
+		}
+		else {
+			pattern = Pattern.compile(
+				"\\W(\\w+)\\s+" + variableName + "\\s*[;=),:]");
+		}
 
 		Matcher matcher = pattern.matcher(content);
 

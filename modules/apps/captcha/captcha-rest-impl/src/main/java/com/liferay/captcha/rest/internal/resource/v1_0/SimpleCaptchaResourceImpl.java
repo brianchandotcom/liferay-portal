@@ -123,7 +123,7 @@ public class SimpleCaptchaResourceImpl extends BaseSimpleCaptchaResourceImpl {
 	}
 
 	private boolean _isValidCaptchaToken(JSONObject jsonObject) {
-		if ((jsonObject == null) || (jsonObject.getString("answer") == null) ||
+		if ((jsonObject.getString("answer") == null) ||
 			(jsonObject.get("expiryTime") == null)) {
 
 			return false;

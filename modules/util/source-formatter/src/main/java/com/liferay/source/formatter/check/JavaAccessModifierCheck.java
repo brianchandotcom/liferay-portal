@@ -24,8 +24,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @author Seiphon Wang
@@ -172,13 +170,12 @@ public class JavaAccessModifierCheck extends BaseFileCheck {
 			return null;
 		}
 
-		Pattern superClassImportPattern = Pattern.compile(
-			"import\\s+([\\w.]+" + superClassName + ")\\s*;", Pattern.DOTALL);
+		List<String> importNames = JavaSourceUtil.getImportNames(content);
 
-		Matcher matcher = superClassImportPattern.matcher(content);
-
-		if (matcher.find()) {
-			return matcher.group(1);
+		for (String importName : importNames) {
+			if (importName.endsWith("." + superClassName)) {
+				return importName;
+			}
 		}
 
 		return JavaSourceUtil.getPackageName(content) + "." + superClassName;

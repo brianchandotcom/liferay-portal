@@ -287,9 +287,7 @@ public class CommerceChannelLocalServiceWrapper
 	}
 
 	@Override
-	public CommerceChannel fetchCommerceChannelByGroupClassPK(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public CommerceChannel fetchCommerceChannelByGroupClassPK(long groupId) {
 		return _commerceChannelLocalService.fetchCommerceChannelByGroupClassPK(
 			groupId);
 	}
@@ -462,6 +460,15 @@ public class CommerceChannelLocalServiceWrapper
 
 		return _commerceChannelLocalService.getCommerceChannelsCount(
 			companyId, keywords);
+	}
+
+	@Override
+	public java.util.List<CommerceChannel> getEligibleCommerceChannels(
+			long accountEntryId, String name, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceChannelLocalService.getEligibleCommerceChannels(
+			accountEntryId, name, start, end);
 	}
 
 	@Override

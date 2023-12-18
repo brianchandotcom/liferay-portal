@@ -312,6 +312,44 @@ public class CommerceChannelAccountEntryRelServiceHttp {
 	public static java.util.List
 		<com.liferay.commerce.product.model.CommerceChannelAccountEntryRel>
 			getCommerceChannelAccountEntryRels(
+				HttpPrincipal httpPrincipal, long commerceChannelId,
+				String name, int type, int start, int end) {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CommerceChannelAccountEntryRelServiceUtil.class,
+				"getCommerceChannelAccountEntryRels",
+				_getCommerceChannelAccountEntryRelsParameterTypes6);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, commerceChannelId, name, type, start, end);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (java.util.List
+				<com.liferay.commerce.product.model.
+					CommerceChannelAccountEntryRel>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static java.util.List
+		<com.liferay.commerce.product.model.CommerceChannelAccountEntryRel>
+			getCommerceChannelAccountEntryRels(
 				HttpPrincipal httpPrincipal, String className, long classPK,
 				long commerceChannelId, int type) {
 
@@ -319,7 +357,7 @@ public class CommerceChannelAccountEntryRelServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CommerceChannelAccountEntryRelServiceUtil.class,
 				"getCommerceChannelAccountEntryRels",
-				_getCommerceChannelAccountEntryRelsParameterTypes6);
+				_getCommerceChannelAccountEntryRelsParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, className, classPK, commerceChannelId, type);
@@ -355,7 +393,7 @@ public class CommerceChannelAccountEntryRelServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CommerceChannelAccountEntryRelServiceUtil.class,
 				"getCommerceChannelAccountEntryRelsCount",
-				_getCommerceChannelAccountEntryRelsCountParameterTypes7);
+				_getCommerceChannelAccountEntryRelsCountParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, accountEntryId, type);
@@ -388,6 +426,40 @@ public class CommerceChannelAccountEntryRelServiceHttp {
 		}
 	}
 
+	public static int getCommerceChannelAccountEntryRelsCount(
+		HttpPrincipal httpPrincipal, long commerceChannelId, String name,
+		int type) {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CommerceChannelAccountEntryRelServiceUtil.class,
+				"getCommerceChannelAccountEntryRelsCount",
+				_getCommerceChannelAccountEntryRelsCountParameterTypes9);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, commerceChannelId, name, type);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return ((Integer)returnObj).intValue();
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static
 		com.liferay.commerce.product.model.CommerceChannelAccountEntryRel
 				updateCommerceChannelAccountEntryRel(
@@ -401,7 +473,7 @@ public class CommerceChannelAccountEntryRelServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CommerceChannelAccountEntryRelServiceUtil.class,
 				"updateCommerceChannelAccountEntryRel",
-				_updateCommerceChannelAccountEntryRelParameterTypes8);
+				_updateCommerceChannelAccountEntryRelParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commerceChannelAccountEntryRelId, commerceChannelId,
@@ -467,14 +539,22 @@ public class CommerceChannelAccountEntryRelServiceHttp {
 		};
 	private static final Class<?>[]
 		_getCommerceChannelAccountEntryRelsParameterTypes6 = new Class[] {
+			long.class, String.class, int.class, int.class, int.class
+		};
+	private static final Class<?>[]
+		_getCommerceChannelAccountEntryRelsParameterTypes7 = new Class[] {
 			String.class, long.class, long.class, int.class
 		};
 	private static final Class<?>[]
-		_getCommerceChannelAccountEntryRelsCountParameterTypes7 = new Class[] {
+		_getCommerceChannelAccountEntryRelsCountParameterTypes8 = new Class[] {
 			long.class, int.class
 		};
 	private static final Class<?>[]
-		_updateCommerceChannelAccountEntryRelParameterTypes8 = new Class[] {
+		_getCommerceChannelAccountEntryRelsCountParameterTypes9 = new Class[] {
+			long.class, String.class, int.class
+		};
+	private static final Class<?>[]
+		_updateCommerceChannelAccountEntryRelParameterTypes10 = new Class[] {
 			long.class, long.class, long.class, boolean.class, double.class
 		};
 

@@ -7,8 +7,13 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+CommercePaymentEntryDisplayContext commercePaymentEntryDisplayContext = (CommercePaymentEntryDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+%>
+
 <frontend-data-set:headless-display
 	apiURL="/o/headless-commerce-admin-payment/v1.0/payments"
+	fdsActionDropdownItems="<%= commercePaymentEntryDisplayContext.getFDSActionDropdownItems() %>"
 	formName="fm"
 	id="<%= CommercePaymentsFDSNames.PAYMENTS %>"
 	style="fluid"

@@ -80,6 +80,13 @@ public class CommercePaymentEntryServiceUtil {
 			externalReferenceCode, companyId);
 	}
 
+	public static CommercePaymentEntry fetchCommercePaymentEntry(
+			long commercePaymentEntryId)
+		throws PortalException {
+
+		return getService().fetchCommercePaymentEntry(commercePaymentEntryId);
+	}
+
 	public static List<CommercePaymentEntry> getCommercePaymentEntries(
 			long companyId, long classNameId, long classPK, int type, int start,
 			int end, OrderByComparator<CommercePaymentEntry> orderByComparator)
@@ -119,14 +126,14 @@ public class CommercePaymentEntryServiceUtil {
 			long companyId, long[] classNameIds, long[] classPKs,
 			String[] currencyCodes, String keywords,
 			String[] paymentMethodNames, int[] paymentStatuses,
-			boolean excludeStatuses, int start, int end, String orderByField,
-			boolean reverse)
+			boolean excludeStatuses, int start, int end,
+			com.liferay.portal.kernel.search.Sort sort)
 		throws PortalException {
 
 		return getService().search(
 			companyId, classNameIds, classPKs, currencyCodes, keywords,
 			paymentMethodNames, paymentStatuses, excludeStatuses, start, end,
-			orderByField, reverse);
+			sort);
 	}
 
 	public static CommercePaymentEntry updateCommercePaymentEntry(
@@ -144,6 +151,15 @@ public class CommercePaymentEntryServiceUtil {
 			amount, callbackURL, cancelURL, currencyCode, errorMessages,
 			languageId, note, paymentIntegrationKey, paymentIntegrationType,
 			paymentStatus, reasonKey, redirectURL, transactionCode, type);
+	}
+
+	public static CommercePaymentEntry
+			updateCommercePaymentEntryExternalReferenceCode(
+				String externalReferenceCode, long commercePaymentEntryId)
+		throws PortalException {
+
+		return getService().updateCommercePaymentEntryExternalReferenceCode(
+			externalReferenceCode, commercePaymentEntryId);
 	}
 
 	public static CommercePaymentEntry updateCommercePaymentEntryNote(

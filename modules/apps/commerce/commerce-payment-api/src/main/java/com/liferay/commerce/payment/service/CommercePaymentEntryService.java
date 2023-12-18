@@ -9,6 +9,7 @@ import com.liferay.commerce.payment.model.CommercePaymentEntry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -75,6 +76,11 @@ public interface CommercePaymentEntryService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommercePaymentEntry fetchCommercePaymentEntry(
+			long commercePaymentEntryId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommercePaymentEntry> getCommercePaymentEntries(
 			long companyId, long classNameId, long classPK, int type, int start,
 			int end, OrderByComparator<CommercePaymentEntry> orderByComparator)
@@ -103,8 +109,7 @@ public interface CommercePaymentEntryService extends BaseService {
 			long companyId, long[] classNameIds, long[] classPKs,
 			String[] currencyCodes, String keywords,
 			String[] paymentMethodNames, int[] paymentStatuses,
-			boolean excludeStatuses, int start, int end, String orderByField,
-			boolean reverse)
+			boolean excludeStatuses, int start, int end, Sort sort)
 		throws PortalException;
 
 	public CommercePaymentEntry updateCommercePaymentEntry(
@@ -114,6 +119,10 @@ public interface CommercePaymentEntryService extends BaseService {
 			String languageId, String note, String paymentIntegrationKey,
 			int paymentIntegrationType, int paymentStatus, String reasonKey,
 			String redirectURL, String transactionCode, int type)
+		throws PortalException;
+
+	public CommercePaymentEntry updateCommercePaymentEntryExternalReferenceCode(
+			String externalReferenceCode, long commercePaymentEntryId)
 		throws PortalException;
 
 	public CommercePaymentEntry updateCommercePaymentEntryNote(

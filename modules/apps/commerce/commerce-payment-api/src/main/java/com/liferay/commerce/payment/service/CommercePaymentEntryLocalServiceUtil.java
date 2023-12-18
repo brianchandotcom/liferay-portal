@@ -382,10 +382,10 @@ public class CommercePaymentEntryLocalServiceUtil {
 		<CommercePaymentEntry> searchCommercePaymentEntries(
 			long companyId, String keywords,
 			java.util.LinkedHashMap<String, Object> params, int start, int end,
-			String orderByField, boolean reverse) {
+			com.liferay.portal.kernel.search.Sort sort) {
 
 		return getService().searchCommercePaymentEntries(
-			companyId, keywords, params, start, end, orderByField, reverse);
+			companyId, keywords, params, start, end, sort);
 	}
 
 	/**
@@ -419,6 +419,15 @@ public class CommercePaymentEntryLocalServiceUtil {
 			amount, callbackURL, cancelURL, currencyCode, errorMessages,
 			languageId, note, paymentIntegrationKey, paymentIntegrationType,
 			paymentStatus, reasonKey, redirectURL, transactionCode, type);
+	}
+
+	public static CommercePaymentEntry
+			updateCommercePaymentEntryExternalReferenceCode(
+				String externalReferenceCode, long commercePaymentEntryId)
+		throws PortalException {
+
+		return getService().updateCommercePaymentEntryExternalReferenceCode(
+			externalReferenceCode, commercePaymentEntryId);
 	}
 
 	public static CommercePaymentEntry updateCommercePaymentEntryNote(

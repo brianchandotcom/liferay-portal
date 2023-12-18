@@ -142,28 +142,28 @@ public class JavaAccessModifierCheck extends BaseFileCheck {
 
 			String content = FileUtil.read(file);
 
-			String superClassName = _getSuperClassNameWithPackageName(content);
+			String superClassName = _getSuperClassFullyQualifiedName(content);
 
 			if (superClassName != null) {
 				String className = JavaSourceUtil.getClassName(fileName);
 
-				List<String> subclassList = _componentJavaFileMap.get(
+				List<String> subclassNames = _componentJavaFileMap.get(
 					superClassName);
 
-				if (subclassList == null) {
-					subclassList = new ArrayList<>();
+				if (subclassNames == null) {
+					subclassNames = new ArrayList<>();
 				}
 
-				subclassList.add(className);
+				subclassNames.add(className);
 
-				_componentJavaFileMap.put(superClassName, subclassList);
+				_componentJavaFileMap.put(superClassName, subclassNames);
 			}
 		}
 
 		return _componentJavaFileMap;
 	}
 
-	private String _getSuperClassNameWithPackageName(String content) {
+	private String _getSuperClassFullyQualifiedName(String content) {
 		String superClassName = JavaSourceUtil.getSuperClassName(content);
 
 		if (superClassName == null) {

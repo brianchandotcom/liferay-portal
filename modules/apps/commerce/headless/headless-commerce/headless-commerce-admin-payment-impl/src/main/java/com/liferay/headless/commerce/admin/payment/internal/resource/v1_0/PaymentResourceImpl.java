@@ -7,6 +7,7 @@ package com.liferay.headless.commerce.admin.payment.internal.resource.v1_0;
 
 import com.liferay.commerce.constants.CommerceOrderPaymentConstants;
 import com.liferay.commerce.constants.CommercePaymentEntryConstants;
+import com.liferay.commerce.payment.constants.CommercePaymentEntryActionKeys;
 import com.liferay.commerce.payment.exception.NoSuchPaymentEntryException;
 import com.liferay.commerce.payment.gateway.CommercePaymentGateway;
 import com.liferay.commerce.payment.model.CommercePaymentEntry;
@@ -23,6 +24,7 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -259,13 +261,49 @@ public class PaymentResourceImpl extends BasePaymentResourceImpl {
 	}
 
 	private Map<String, String> _addAction(
-			String actionId, long commercePaymentId, UriInfo uriInfo,
-			String methodName, Class<?> clazz)
+			Class<?> clazz, CommercePaymentEntry commercePaymentEntry,
+			String methodName, UriInfo uriInfo)
+		throws NoSuchMethodException, PortalException {
+
+		if (!_portletResourcePermission.contains(
+				PermissionThreadLocal.getPermissionChecker(),
+				contextCompany.getGroupId(),
+				CommercePaymentEntryActionKeys.ADD_REFUND) ||
+			(commercePaymentEntry.getPaymentStatus() !=
+				CommercePaymentEntryConstants.STATUS_COMPLETED) ||
+			(commercePaymentEntry.getType() !=
+				CommercePaymentEntryConstants.TYPE_PAYMENT)) {
+
+			return null;
+		}
+
+		return HashMapBuilder.put(
+			"href",
+			() -> {
+				UriBuilder uriBuilder = uriInfo.getBaseUriBuilder();
+
+				return uriBuilder.path(
+					_getVersion(uriInfo)
+				).path(
+					clazz.getSuperclass(), methodName
+				).toTemplate();
+			}
+		).put(
+			"method", _getHttpMethodName(clazz, _getMethod(clazz, methodName))
+		).build();
+	}
+
+	private Map<String, String> _addAction(
+			String actionId, Class<?> clazz,
+			CommercePaymentEntry commercePaymentEntry, String methodName,
+			UriInfo uriInfo)
 		throws NoSuchMethodException, PortalException {
 
 		if (!_commercePaymentEntryModelResourcePermission.contains(
-				PermissionThreadLocal.getPermissionChecker(), commercePaymentId,
-				actionId)) {
+				PermissionThreadLocal.getPermissionChecker(),
+				commercePaymentEntry, actionId) ||
+			(commercePaymentEntry.getType() !=
+				CommercePaymentEntryConstants.TYPE_REFUND)) {
 
 			return null;
 		}
@@ -320,23 +358,24 @@ public class PaymentResourceImpl extends BasePaymentResourceImpl {
 		}
 
 		return HashMapBuilder.<String, Map<String, String>>put(
+			"create",
+			_addAction(
+				getClass(), commercePaymentEntry, "postPayment", contextUriInfo)
+		).put(
 			"delete",
 			_addAction(
-				ActionKeys.DELETE,
-				commercePaymentEntry.getCommercePaymentEntryId(),
-				contextUriInfo, "deletePayment", getClass())
+				ActionKeys.DELETE, getClass(), commercePaymentEntry,
+				"deletePayment", contextUriInfo)
 		).put(
 			"get",
 			_addAction(
-				ActionKeys.VIEW,
-				commercePaymentEntry.getCommercePaymentEntryId(),
-				contextUriInfo, "getPayment", getClass())
+				ActionKeys.VIEW, getClass(), commercePaymentEntry, "getPayment",
+				contextUriInfo)
 		).put(
 			"update",
 			_addAction(
-				ActionKeys.UPDATE,
-				commercePaymentEntry.getCommercePaymentEntryId(),
-				contextUriInfo, "patchPayment", getClass())
+				ActionKeys.UPDATE, getClass(), commercePaymentEntry,
+				"patchPayment", contextUriInfo)
 		).build();
 	}
 
@@ -471,6 +510,11 @@ public class PaymentResourceImpl extends BasePaymentResourceImpl {
 		target = "(component.name=com.liferay.headless.commerce.admin.payment.internal.dto.v1_0.converter.PaymentDTOConverter)"
 	)
 	private DTOConverter<CommercePaymentEntry, Payment> _paymentDTOConverter;
+
+	@Reference(
+		target = "(resource.name=" + CommercePaymentEntryConstants.RESOURCE_NAME + ")"
+	)
+	private PortletResourcePermission _portletResourcePermission;
 
 	@Reference
 	private ServiceContextHelper _serviceContextHelper;

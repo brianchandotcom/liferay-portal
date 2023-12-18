@@ -16,6 +16,7 @@ import com.liferay.commerce.product.service.CommerceChannelAccountEntryRelLocalS
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Account;
 import com.liferay.headless.commerce.delivery.catalog.internal.dto.v1_0.util.CustomFieldsUtil;
+import com.liferay.headless.commerce.delivery.catalog.internal.odata.entity.v1_0.AccountEntityModel;
 import com.liferay.headless.commerce.delivery.catalog.resource.v1_0.AccountResource;
 import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -34,6 +35,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -41,6 +43,8 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.util.Map;
+
+import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -105,6 +109,13 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 			document -> _toAccount(
 				_accountEntryLocalService.getAccountEntry(
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
+
+		return _entityModel;
 	}
 
 	@Override
@@ -285,6 +296,8 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;
+
+	private final EntityModel _entityModel = new AccountEntityModel();
 
 	@Reference
 	private File _file;

@@ -19,6 +19,14 @@ const WrappedComponent = props => (
 describe('BasePage.Header', () => {
 	afterEach(cleanup);
 
+	beforeAll(() => {
+		delete window.location;
+
+		window.location = {
+			pathname: '/workspace/123/sites/contacts/accounts/321'
+		};
+	});
+
 	it('renders Header', () => {
 		const {container} = render(
 			<WrappedComponent>{'Test Test'}</WrappedComponent>
@@ -54,7 +62,10 @@ describe('BasePage.Header', () => {
 								route: Routes.CONTACTS_ACCOUNT
 							}
 						]}
-						routeParams={{groupId: '123', id: '321'}}
+						routeParams={{
+							groupId: '123',
+							id: '321'
+						}}
 						routeQueries={{rangeKey: '30'}}
 					/>
 				</BrowserRouter>

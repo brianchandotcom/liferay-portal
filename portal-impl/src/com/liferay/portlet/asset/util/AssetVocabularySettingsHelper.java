@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -94,12 +95,26 @@ public class AssetVocabularySettingsHelper {
 	public void setClassNameIdsAndClassTypePKs(
 		long[] classNameIds, long[] classTypePKs, boolean[] requireds) {
 
+		boolean[] depotRequireds = new boolean[requireds.length];
+
+		Arrays.fill(depotRequireds, false);
+
+		setClassNameIdsAndClassTypePKs(
+			classNameIds, classTypePKs, depotRequireds, requireds);
+	}
+
+	public void setClassNameIdsAndClassTypePKs(
+		long[] classNameIds, long[] classTypePKs, boolean[] depotRequireds,
+		boolean[] requireds) {
+
+		Set<String> depotRequiredClassNameIds = new LinkedHashSet<>();
 		Set<String> requiredClassNameIds = new LinkedHashSet<>();
 		Set<String> selectedClassNameIds = new LinkedHashSet<>();
 
 		for (int i = 0; i < classNameIds.length; ++i) {
 			long classNameId = classNameIds[i];
 			long classTypePK = classTypePKs[i];
+			boolean depotRequired = depotRequireds[i];
 			boolean required = requireds[i];
 
 			String classNameIdAndClassTypePK = getClassNameIdAndClassTypePK(
@@ -108,17 +123,29 @@ public class AssetVocabularySettingsHelper {
 			if (classNameIdAndClassTypePK.equals(
 					AssetCategoryConstants.
 						ALL_CLASS_NAME_IDS_AND_CLASS_TYPE_PKS) &&
-				required) {
+				(required || depotRequired)) {
 
-				requiredClassNameIds.clear();
+				if (required) {
+					requiredClassNameIds.clear();
 
-				requiredClassNameIds.add(classNameIdAndClassTypePK);
+					requiredClassNameIds.add(classNameIdAndClassTypePK);
+				}
+
+				if (depotRequired) {
+					depotRequiredClassNameIds.clear();
+
+					depotRequiredClassNameIds.add(classNameIdAndClassTypePK);
+				}
 
 				selectedClassNameIds.clear();
 
 				selectedClassNameIds.add(classNameIdAndClassTypePK);
 
 				break;
+			}
+
+			if (depotRequired) {
+				depotRequiredClassNameIds.add(classNameIdAndClassTypePK);
 			}
 
 			if (required) {
@@ -142,6 +169,9 @@ public class AssetVocabularySettingsHelper {
 		_unicodeProperties.setProperty(
 			_KEY_REQUIRED_CLASS_NAME_IDS_AND_CLASS_TYPE_PKS,
 			StringUtil.merge(requiredClassNameIds));
+		_unicodeProperties.setProperty(
+			_KEY_REQUIRED_DEPOT_CLASS_NAME_IDS_AND_CLASS_TYPE_PKS,
+			StringUtil.merge(depotRequiredClassNameIds));
 		_unicodeProperties.setProperty(
 			_KEY_SELECTED_CLASS_NAME_IDS_AND_CLASS_TYPE_PKS,
 			StringUtil.merge(selectedClassNameIds));

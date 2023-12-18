@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.search.constants.SearchContextAttributes;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.Searcher;
@@ -137,7 +138,9 @@ public abstract class SXPBlueprintInfoCollectionProvider<T>
 
 					if (!Validator.isBlank(keywords)) {
 						searchContext.setAttribute(
-							"search.tunning.rankings.apply", Boolean.TRUE);
+							SearchContextAttributes.
+								ATTRIBUTE_KEY_CONTRIBUTE_TUNING_RANKINGS,
+							Boolean.TRUE);
 					}
 				}
 

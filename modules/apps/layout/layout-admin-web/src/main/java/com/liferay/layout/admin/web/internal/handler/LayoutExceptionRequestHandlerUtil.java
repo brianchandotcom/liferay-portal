@@ -68,7 +68,7 @@ public class LayoutExceptionRequestHandlerUtil {
 		if (exceptionType == LayoutTypeException.FIRST_LAYOUT_PERMISSION) {
 			return LanguageUtil.get(
 				themeDisplay.getLocale(),
-				"the-first-page-should-be-visible-for-guest-user");
+				"the-first-page-should-be-visible-for-guest-users");
 		}
 
 		String errorMessage = "pages-of-type-x-cannot-be-selected";

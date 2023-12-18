@@ -91,6 +91,10 @@ public class TextEmbeddingFieldCreationPortalInstanceLifecycleListener
 	}
 
 	private boolean _hasTextEmbeddingDynamicTemplates(JSONArray jsonArray) {
+		if (jsonArray == null) {
+			return false;
+		}
+
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 

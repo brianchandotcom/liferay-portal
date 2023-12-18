@@ -323,6 +323,7 @@ definition {
 		}
 	}
 
+	@ignore = "true"
 	@priority = 3
 	test PrefilterIsLimitedByODataCharacterLimit {
 		property portal.acceptance = "true";

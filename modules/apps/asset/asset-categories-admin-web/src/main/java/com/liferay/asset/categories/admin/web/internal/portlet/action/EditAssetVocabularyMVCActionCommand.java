@@ -17,6 +17,7 @@ import com.liferay.asset.kernel.service.AssetVocabularyService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
@@ -32,6 +33,7 @@ import com.liferay.portlet.asset.util.AssetVocabularySettingsHelper;
 
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -115,6 +117,7 @@ public class EditAssetVocabularyMVCActionCommand extends BaseMVCActionCommand {
 
 		long[] classNameIds = new long[indexes.length];
 		long[] classTypePKs = new long[indexes.length];
+		boolean[] depotRequireds = new boolean[indexes.length];
 		boolean[] requireds = new boolean[indexes.length];
 
 		for (int i = 0; i < indexes.length; i++) {
@@ -146,15 +149,39 @@ public class EditAssetVocabularyMVCActionCommand extends BaseMVCActionCommand {
 				}
 			}
 
-			requireds[i] = ParamUtil.getBoolean(
-				actionRequest, "required" + index);
+			Group scopeGroup = themeDisplay.getScopeGroup();
+
+			if (scopeGroup.isDepot()) {
+				String required = ParamUtil.getString(
+					actionRequest, "required" + index);
+
+				if (Objects.equals(required, "depot-required")) {
+					depotRequireds[i] = true;
+					requireds[i] = false;
+				}
+				else if (Objects.equals(required, "required")) {
+					depotRequireds[i] = false;
+					requireds[i] = true;
+				}
+				else {
+					depotRequireds[i] = false;
+					requireds[i] = false;
+				}
+			}
+			else {
+				boolean required = ParamUtil.getBoolean(
+					actionRequest, "required" + index);
+
+				depotRequireds[i] = false;
+				requireds[i] = required;
+			}
 		}
 
 		AssetVocabularySettingsHelper vocabularySettingsHelper =
 			new AssetVocabularySettingsHelper();
 
 		vocabularySettingsHelper.setClassNameIdsAndClassTypePKs(
-			classNameIds, classTypePKs, requireds);
+			classNameIds, classTypePKs, depotRequireds, requireds);
 		vocabularySettingsHelper.setMultiValued(
 			ParamUtil.getBoolean(actionRequest, "multiValued"));
 

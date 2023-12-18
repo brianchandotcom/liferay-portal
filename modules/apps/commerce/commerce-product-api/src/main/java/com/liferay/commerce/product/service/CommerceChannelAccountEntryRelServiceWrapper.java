@@ -99,6 +99,16 @@ public class CommerceChannelAccountEntryRelServiceWrapper
 	@Override
 	public java.util.List<CommerceChannelAccountEntryRel>
 		getCommerceChannelAccountEntryRels(
+			long commerceChannelId, String name, int type, int start, int end) {
+
+		return _commerceChannelAccountEntryRelService.
+			getCommerceChannelAccountEntryRels(
+				commerceChannelId, name, type, start, end);
+	}
+
+	@Override
+	public java.util.List<CommerceChannelAccountEntryRel>
+		getCommerceChannelAccountEntryRels(
 			String className, long classPK, long commerceChannelId, int type) {
 
 		return _commerceChannelAccountEntryRelService.
@@ -113,6 +123,15 @@ public class CommerceChannelAccountEntryRelServiceWrapper
 
 		return _commerceChannelAccountEntryRelService.
 			getCommerceChannelAccountEntryRelsCount(accountEntryId, type);
+	}
+
+	@Override
+	public int getCommerceChannelAccountEntryRelsCount(
+		long commerceChannelId, String name, int type) {
+
+		return _commerceChannelAccountEntryRelService.
+			getCommerceChannelAccountEntryRelsCount(
+				commerceChannelId, name, type);
 	}
 
 	/**

@@ -90,6 +90,14 @@ public class CommerceChannelAccountEntryRelServiceUtil {
 
 	public static List<CommerceChannelAccountEntryRel>
 		getCommerceChannelAccountEntryRels(
+			long commerceChannelId, String name, int type, int start, int end) {
+
+		return getService().getCommerceChannelAccountEntryRels(
+			commerceChannelId, name, type, start, end);
+	}
+
+	public static List<CommerceChannelAccountEntryRel>
+		getCommerceChannelAccountEntryRels(
 			String className, long classPK, long commerceChannelId, int type) {
 
 		return getService().getCommerceChannelAccountEntryRels(
@@ -102,6 +110,13 @@ public class CommerceChannelAccountEntryRelServiceUtil {
 
 		return getService().getCommerceChannelAccountEntryRelsCount(
 			accountEntryId, type);
+	}
+
+	public static int getCommerceChannelAccountEntryRelsCount(
+		long commerceChannelId, String name, int type) {
+
+		return getService().getCommerceChannelAccountEntryRelsCount(
+			commerceChannelId, name, type);
 	}
 
 	/**

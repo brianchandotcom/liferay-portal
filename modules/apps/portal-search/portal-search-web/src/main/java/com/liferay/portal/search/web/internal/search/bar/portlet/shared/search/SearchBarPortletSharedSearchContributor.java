@@ -62,7 +62,9 @@ public class SearchBarPortletSharedSearchContributor
 		searchRequestBuilder.withSearchContext(
 			searchContext -> {
 				searchContext.setAttribute(
-					"search.tunning.rankings.apply", Boolean.TRUE);
+					SearchContextAttributes.
+						ATTRIBUTE_KEY_CONTRIBUTE_TUNING_RANKINGS,
+					Boolean.TRUE);
 
 				searchContext.setIncludeInternalAssetCategories(false);
 			});

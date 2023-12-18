@@ -86,6 +86,11 @@
 	border: 0;
 }
 
+.carousel-control:focus-visible .carousel-control-icon {
+	border-radius: 4px;
+	box-shadow: 0 0 0 2px #fff, 0 0 0 4px #528eff;
+}
+
 .component-slider .carousel-navigation {
 	bottom: 10px;
 	display: flex;
@@ -112,6 +117,11 @@
 .component-slider .carousel-navigation button:focus {
 	outline: 0;
 	text-decoration: none;
+}
+
+.component-slider .carousel-navigation button:focus-visible {
+	border-radius: 4px;
+	box-shadow: 0 0 0 2px #fff, 0 0 0 4px #528eff;
 }
 
 .component-slider .carousel-navigation button.active {

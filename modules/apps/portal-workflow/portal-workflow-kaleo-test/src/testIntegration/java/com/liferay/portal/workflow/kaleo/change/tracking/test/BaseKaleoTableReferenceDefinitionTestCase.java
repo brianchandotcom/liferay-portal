@@ -20,11 +20,14 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.portal.workflow.kaleo.definition.DelayDuration;
+import com.liferay.portal.workflow.kaleo.definition.DurationScale;
 import com.liferay.portal.workflow.kaleo.definition.Node;
 import com.liferay.portal.workflow.kaleo.definition.Notification;
 import com.liferay.portal.workflow.kaleo.definition.Task;
 import com.liferay.portal.workflow.kaleo.definition.TaskForm;
 import com.liferay.portal.workflow.kaleo.definition.TaskFormReference;
+import com.liferay.portal.workflow.kaleo.definition.Timer;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
@@ -33,6 +36,7 @@ import com.liferay.portal.workflow.kaleo.model.KaleoNotification;
 import com.liferay.portal.workflow.kaleo.model.KaleoTask;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskForm;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
+import com.liferay.portal.workflow.kaleo.model.KaleoTimer;
 import com.liferay.portal.workflow.kaleo.runtime.util.WorkflowContextUtil;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoInstanceLocalService;
@@ -42,6 +46,7 @@ import com.liferay.portal.workflow.kaleo.service.KaleoNotificationLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoTaskFormLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoTaskInstanceTokenLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoTaskLocalService;
+import com.liferay.portal.workflow.kaleo.service.KaleoTimerLocalService;
 import com.liferay.portal.workflow.kaleo.service.test.BaseKaleoLocalServiceTestCase;
 
 import java.io.InputStream;
@@ -192,6 +197,24 @@ public abstract class BaseKaleoTableReferenceDefinitionTestCase
 			serviceContext);
 	}
 
+	protected KaleoTimer addKaleoTimer(KaleoInstance kaleoInstance)
+		throws Exception {
+
+		Timer timer = new Timer(
+			RandomTestUtil.randomString(), StringPool.BLANK,
+			RandomTestUtil.randomBoolean());
+
+		DelayDuration delayDuration = new DelayDuration(
+			1, DurationScale.parse("second"));
+
+		timer.setDelayDuration(delayDuration);
+
+		return _kaleoTimerLocalService.addKaleoTimer(
+			KaleoNode.class.getName(), kaleoInstance.getClassPK(),
+			kaleoInstance.getKaleoDefinitionId(),
+			kaleoInstance.getKaleoDefinitionVersionId(), timer, serviceContext);
+	}
+
 	protected ServiceContext serviceContext;
 
 	private String _read(String name) throws Exception {
@@ -232,5 +255,8 @@ public abstract class BaseKaleoTableReferenceDefinitionTestCase
 
 	@Inject
 	private KaleoTaskLocalService _kaleoTaskLocalService;
+
+	@Inject
+	private KaleoTimerLocalService _kaleoTimerLocalService;
 
 }

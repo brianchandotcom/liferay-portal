@@ -470,24 +470,12 @@ public class ObjectFieldResourceTest extends BaseObjectFieldResourceTestCase {
 
 		ObjectField randomObjectField = randomObjectField();
 
-		ObjectFieldSetting objectFieldSetting = null;
-
-		if (unique) {
-			objectFieldSetting = new ObjectFieldSetting() {
-				{
-					name = ObjectFieldSettingConstants.NAME_UNIQUE_VALUES;
-					value = "true";
-				}
-			};
-		}
-		else {
-			objectFieldSetting = new ObjectFieldSetting() {
-				{
-					name = ObjectFieldSettingConstants.NAME_UNIQUE_VALUES;
-					value = "false";
-				}
-			};
-		}
+		ObjectFieldSetting objectFieldSetting = new ObjectFieldSetting() {
+			{
+				name = ObjectFieldSettingConstants.NAME_UNIQUE_VALUES;
+				value = String.valueOf(unique);
+			}
+		};
 
 		randomObjectField.setObjectFieldSettings(
 			new ObjectFieldSetting[] {objectFieldSetting});

@@ -1,0 +1,103 @@
+{
+	"analysis": {
+		"analyzer": {
+			"1_10_ngram": {
+				"filter": [
+					"lowercase",
+					"1_10_ngram"
+				],
+				"tokenizer": "keyword",
+				"type": "custom"
+			},
+			"keyword_lowercase": {
+				"filter": "lowercase",
+				"tokenizer": "keyword",
+				"type": "custom"
+			},
+			"liferay_analyzer_en": {
+				"filter": [
+					"english_possessive_stemmer",
+					"lowercase",
+					"liferay_filter_synonym_en",
+					"english_stop",
+					"english_stemmer"
+				],
+				"tokenizer": "standard",
+				"type": "custom"
+			},
+			"liferay_analyzer_es": {
+				"filter": [
+					"lowercase",
+					"spanish_stop",
+					"liferay_filter_synonym_es",
+					"spanish_stemmer"
+				],
+				"tokenizer": "standard",
+				"type": "custom"
+			},
+			"reverse_keyword_lowercase": {
+				"filter": [
+					"lowercase",
+					"reverse"
+				],
+				"tokenizer": "keyword",
+				"type": "custom"
+			},
+			"text_whitespace_lowercase": {
+				"filter": "lowercase",
+				"tokenizer": "whitespace",
+				"type": "custom"
+			}
+		},
+		"filter": {
+			"1_10_ngram": {
+				"max_gram": 10,
+				"min_gram": 1,
+				"type": "ngram"
+			},
+			"english_possessive_stemmer": {
+				"language": "possessive_english",
+				"type": "stemmer"
+			},
+			"english_stemmer": {
+				"language": "english",
+				"type": "stemmer"
+			},
+			"english_stop": {
+				"stopwords": "_english_",
+				"type": "stop"
+			},
+			"liferay_filter_synonym_en": {
+				"lenient": true,
+				"synonyms": [
+				],
+				"type": "synonym_graph"
+			},
+			"liferay_filter_synonym_es": {
+				"lenient": true,
+				"synonyms": [
+				],
+				"type": "synonym_graph"
+			},
+			"spanish_stemmer": {
+				"language": "light_spanish",
+				"type": "stemmer"
+			},
+			"spanish_stop": {
+				"stopwords": "_spanish_",
+				"type": "stop"
+			}
+		}
+	},
+	"index": {
+		"auto_expand_replicas": "0-all",
+		"default_pipeline": "timestamp",
+		"mapping": {
+			"total_fields": {
+				"limit": "1500"
+			}
+		},
+		"max_ngram_diff": 9,
+		"number_of_shards": 1
+	}
+}

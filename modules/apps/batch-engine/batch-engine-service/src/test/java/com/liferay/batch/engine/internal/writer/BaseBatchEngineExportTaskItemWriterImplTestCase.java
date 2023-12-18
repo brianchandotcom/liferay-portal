@@ -10,8 +10,10 @@ import com.fasterxml.jackson.annotation.JsonFilter;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -245,8 +247,8 @@ public abstract class BaseBatchEngineExportTaskItemWriterImplTestCase {
 	protected static final List<String> jsonFieldNames = Arrays.asList(
 		"childItem", "createDate", "description", "id", "name");
 
-	protected Map<String, Field> fieldsMap = ItemClassIndexUtil.index(
-		Item.class);
+	protected Map<String, ObjectValuePair<Field, Method>> fieldMethodPairsMap =
+		ItemClassIndexUtil.index(Item.class);
 
 	private String _formatJSONValue(Object value) {
 		if (value == null) {

@@ -11,11 +11,13 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.util.CSVUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -121,10 +123,14 @@ public class CSVBatchEngineExportTaskItemWriterImplTest
 			for (int i = 0; i < fieldNames.size(); i++) {
 				String fieldName = fieldNames.get(i);
 
-				Field field = fieldsMap.get(fieldName);
+				ObjectValuePair<Field, Method> objectValuePair =
+					fieldMethodPairsMap.get(fieldName);
+
+				Field field = objectValuePair.getKey();
+				Method method = objectValuePair.getValue();
 
 				if (Objects.equals(field.getType(), Map.class)) {
-					Map<?, ?> map = (Map<?, ?>)field.get(item);
+					Map<?, ?> map = (Map<?, ?>)method.invoke(item);
 
 					Set<? extends Map.Entry<?, ?>> entries = map.entrySet();
 
@@ -158,7 +164,7 @@ public class CSVBatchEngineExportTaskItemWriterImplTest
 					}
 				}
 				else {
-					sb.append(_formatValue(field.get(item), i));
+					sb.append(_formatValue(method.invoke(item), i));
 				}
 
 				sb.append(StringPool.COMMA);
@@ -186,7 +192,7 @@ public class CSVBatchEngineExportTaskItemWriterImplTest
 		try (CSVBatchEngineExportTaskItemWriterImpl
 				csvBatchEngineExportTaskItemWriterImpl =
 					new CSVBatchEngineExportTaskItemWriterImpl(
-						StringPool.COMMA, fieldsMap, fieldNames,
+						StringPool.COMMA, fieldMethodPairsMap, fieldNames,
 						unsyncByteArrayOutputStream, parameters)) {
 
 			for (Item[] items : getItemGroups()) {

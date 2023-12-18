@@ -10,12 +10,14 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.CSVUtil;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -103,15 +105,21 @@ public class XLSBatchEngineExportTaskItemWriterImplTest
 					int index = fieldName.indexOf(CharPool.UNDERLINE);
 
 					if (index == -1) {
-						Field field = fieldsMap.get(fieldName);
+						ObjectValuePair<Field, Method> objectValuePair =
+							fieldMethodPairsMap.get(fieldName);
 
-						values.add(field.get(item));
+						Method method = objectValuePair.getValue();
+
+						values.add(method.invoke(item));
 					}
 					else {
-						Field field = fieldsMap.get(
-							fieldName.substring(0, index));
+						ObjectValuePair<Field, Method> objectValuePair =
+							fieldMethodPairsMap.get(
+								fieldName.substring(0, index));
 
-						Map<?, ?> valueMap = (Map<?, ?>)field.get(item);
+						Method method = objectValuePair.getValue();
+
+						Map<?, ?> valueMap = (Map<?, ?>)method.invoke(item);
 
 						values.add(
 							valueMap.get(fieldName.substring(index + 1)));
@@ -220,7 +228,8 @@ public class XLSBatchEngineExportTaskItemWriterImplTest
 		try (XLSBatchEngineExportTaskItemWriterImpl
 				xlsBatchEngineExportTaskItemWriterImpl =
 					new XLSBatchEngineExportTaskItemWriterImpl(
-						fieldsMap, fieldNames, unsyncByteArrayOutputStream)) {
+						fieldMethodPairsMap, fieldNames,
+						unsyncByteArrayOutputStream)) {
 
 			for (Item[] items : getItemGroups()) {
 				xlsBatchEngineExportTaskItemWriterImpl.write(

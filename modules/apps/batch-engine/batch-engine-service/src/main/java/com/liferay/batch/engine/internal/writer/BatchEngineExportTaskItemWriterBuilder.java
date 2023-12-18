@@ -7,11 +7,13 @@ package com.liferay.batch.engine.internal.writer;
 
 import com.liferay.batch.engine.BatchEngineTaskContentType;
 import com.liferay.batch.engine.unit.BatchEngineUnitConfiguration;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 
 import java.io.OutputStream;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 
 import java.util.HashMap;
 import java.util.List;
@@ -32,12 +34,13 @@ public class BatchEngineExportTaskItemWriterBuilder {
 	}
 
 	public BatchEngineExportTaskItemWriter build() throws Exception {
-		Map<String, Field> fieldsMap = ItemClassIndexUtil.index(_itemClass);
+		Map<String, ObjectValuePair<Field, Method>> fieldMethodPairsMap =
+			ItemClassIndexUtil.index(_itemClass);
 
 		if (_batchEngineTaskContentType == BatchEngineTaskContentType.CSV) {
 			return new CSVBatchEngineExportTaskItemWriterImpl(
-				_csvFileColumnDelimiter, fieldsMap, _fieldNames, _outputStream,
-				_parameters);
+				_csvFileColumnDelimiter, fieldMethodPairsMap, _fieldNames,
+				_outputStream, _parameters);
 		}
 
 		if (_batchEngineTaskContentType == BatchEngineTaskContentType.JSON) {
@@ -54,7 +57,7 @@ public class BatchEngineExportTaskItemWriterBuilder {
 			(_batchEngineTaskContentType == BatchEngineTaskContentType.XLSX)) {
 
 			return new XLSBatchEngineExportTaskItemWriterImpl(
-				fieldsMap, _fieldNames, _outputStream);
+				fieldMethodPairsMap, _fieldNames, _outputStream);
 		}
 
 		if (_batchEngineTaskContentType == BatchEngineTaskContentType.JSONT) {

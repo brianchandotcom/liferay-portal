@@ -167,6 +167,8 @@ public interface JobEntity extends Entity {
 	public enum Type {
 
 		DEFAULT("default", "Default"),
+		FIXPACK_BUILDER_PULL_REQUEST(
+			"fixpackBuilderPullRequest", "Fixpack Builder Pull Request"),
 		GENERATE_CI_SYSTEM_HISTORY_REPORT(
 			"generateCISystemHistoryReport",
 			"Generate CI System History Report"),
@@ -176,6 +178,7 @@ public interface JobEntity extends Entity {
 		GENERATE_TEST_DURATION_METRICS(
 			"generateTestDurationMetrics", "Generate Test Duration Metrics"),
 		GENERATE_TESTRAY_CSV("generateTestrayCSV", "Generate Testray CSV"),
+		JENKINS_PULL_REQUEST("jenkinsPullRequest", "Jenkins Pull Request"),
 		MAINTENANCE_DAILY("maintenanceDaily", "Maintenance Daily"),
 		MAINTENANCE_MATRIX_JOBS(
 			"maintenanceMatrixJobs", "Maintenance Matrix Jobs"),
@@ -201,6 +204,8 @@ public interface JobEntity extends Entity {
 			"qaWebsitesPullRequestSF", "QA Websites Pull Request SF"),
 		QA_WEBSITES_WEEKLY("qaWebsitesWeekly", "QA Websites Weekly"),
 		REPOSITORY_ARCHIVE("repositoryArchive", "Repository Archive"),
+		SUBREPOSITORY_PULL_REQUEST(
+			"subrepositoryPullRequest", "Subrepository Pull Request"),
 		VERIFICATION("verification", "Verification"),
 		VERIFICATION_NODE("verificationNode", "Verification Node");
 

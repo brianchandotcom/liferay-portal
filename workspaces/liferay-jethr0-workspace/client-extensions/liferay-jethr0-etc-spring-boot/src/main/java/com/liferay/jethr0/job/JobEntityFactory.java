@@ -24,7 +24,10 @@ public class JobEntityFactory extends BaseEntityFactory<JobEntity> {
 		JobEntity.Type type = JobEntity.Type.getByKey(
 			typeJSONObject.getString("key"));
 
-		if (type == JobEntity.Type.GENERATE_CI_SYSTEM_HISTORY_REPORT) {
+		if (type == JobEntity.Type.FIXPACK_BUILDER_PULL_REQUEST) {
+			return new FixpackBuilderPullRequestJobEntity(jsonObject);
+		}
+		else if (type == JobEntity.Type.GENERATE_CI_SYSTEM_HISTORY_REPORT) {
 			return new HistoryGenerateCISystemReportJobEntity(jsonObject);
 		}
 		else if (type == JobEntity.Type.GENERATE_CI_SYSTEM_STATUS_REPORT) {
@@ -38,6 +41,9 @@ public class JobEntityFactory extends BaseEntityFactory<JobEntity> {
 		}
 		else if (type == JobEntity.Type.GENERATE_TESTRAY_CSV) {
 			return new GenerateTestrayCSVJobEntity(jsonObject);
+		}
+		else if (type == JobEntity.Type.JENKINS_PULL_REQUEST) {
+			return new JenkinsPullRequestJobEntity(jsonObject);
 		}
 		else if (type == JobEntity.Type.MAINTENANCE_DAILY) {
 			return new MaintenanceDailyJobEntity(jsonObject);
@@ -92,6 +98,9 @@ public class JobEntityFactory extends BaseEntityFactory<JobEntity> {
 		}
 		else if (type == JobEntity.Type.REPOSITORY_ARCHIVE) {
 			return new RepositoryArchiveJobEntity(jsonObject);
+		}
+		else if (type == JobEntity.Type.SUBREPOSITORY_PULL_REQUEST) {
+			return new SubrepositoryPullRequestJobEntity(jsonObject);
 		}
 		else if (type == JobEntity.Type.VERIFICATION) {
 			return new VerificationJobEntity(jsonObject);

@@ -44,7 +44,7 @@ long[] selectedClassTypePKs = editVocabularySettingsDisplayContext.getSelectedCl
 				for (AssetRendererFactory<?> assetRendererFactory : editVocabularySettingsDisplayContext.getClassTypedAssetRenderFactories()) {
 				%>
 
-					<div class="<%= (classNameId != assetRendererFactory.getClassNameId())? "hide " : "") %>subtype-select">
+					<div class="<%= (classNameId != assetRendererFactory.getClassNameId()) ? "hide " : "" %>subtype-select">
 						<clay:select
 							label=""
 							name='<%= "subtype" + assetRendererFactory.getClassNameId() + "-classNameId" + index %>'
@@ -64,7 +64,39 @@ long[] selectedClassTypePKs = editVocabularySettingsDisplayContext.getSelectedCl
 					</div>
 				</c:if>
 
-				<aui:input inlineLabel="right" label="required" labelCssClass="simple-toggle-switch" name='<%= "required" + index %>' type="toggle-switch" value="<%= (vocabulary != null) ? vocabulary.isRequired(classNameId, classTypePK, scopeGroupId) : false %>" />
+				<%
+				Group scopeGroup = themeDisplay.getScopeGroup();
+				%>
+
+				<c:choose>
+					<c:when test="<%= scopeGroup.isDepot() %>">
+						<div class="form-group">
+							<clay:radio
+								checked="<%= editVocabularySettingsDisplayContext.isNotRequiredChecked(classNameId, classTypePK) %>"
+								label='<%= LanguageUtil.get(request, "not-required") %>'
+								name='<%= liferayPortletResponse.getNamespace() + "required" + index %>'
+								value="not-required"
+							/>
+
+							<clay:radio
+								checked="<%= editVocabularySettingsDisplayContext.isRequiredChecked(classNameId, classTypePK) %>"
+								label='<%= LanguageUtil.get(request, "only-required-in-this-asset-library") %>'
+								name='<%= liferayPortletResponse.getNamespace() + "required" + index %>'
+								value="required"
+							/>
+
+							<clay:radio
+								checked="<%= editVocabularySettingsDisplayContext.isDepotRequiredChecked(classNameId, classTypePK) %>"
+								label='<%= LanguageUtil.get(request, "required-in-this-asset-library-and-its-connected-sites") %>'
+								name='<%= liferayPortletResponse.getNamespace() + "required" + index %>'
+								value="depot-required"
+							/>
+						</div>
+					</c:when>
+					<c:otherwise>
+						<aui:input inlineLabel="right" label="required" labelCssClass="simple-toggle-switch" name='<%= "required" + index %>' type="toggle-switch" value="<%= (vocabulary != null) ? vocabulary.isRequired(classNameId, classTypePK, scopeGroupId) : false %>" />
+					</c:otherwise>
+				</c:choose>
 			</div>
 		</div>
 

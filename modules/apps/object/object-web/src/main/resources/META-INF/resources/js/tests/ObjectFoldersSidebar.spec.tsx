@@ -44,7 +44,6 @@ describe('The ObjectFoldersSidebar component should', () => {
 				objectDefinitionsActions={{create: {href: '', method: 'POST'}}}
 				objectFoldersRequestInfo={objectFoldersRequestInfo}
 				selectedObjectFolder={uncategorizedObjectFolder}
-				setModalImportObjectDefinitionInfo={() => {}}
 				setSelectedObjectFolder={() => {}}
 				setShowModal={() => {}}
 			></ObjectFoldersSideBar>

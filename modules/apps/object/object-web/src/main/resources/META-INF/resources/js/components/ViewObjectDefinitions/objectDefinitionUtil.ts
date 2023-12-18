@@ -14,7 +14,7 @@ import {
 	removeAllSpecialCharacters,
 } from '../../utils/string';
 import {DropDownItems} from '../ModelBuilder/types';
-import {ModalImportObjectDefinitionInfo} from './ViewObjectDefinitions';
+import {ModalImportProperties} from './ViewObjectDefinitions';
 
 type DeleteObjectDefinitionProps = {
 	baseResourceURL: string;
@@ -240,10 +240,13 @@ interface GetObjectFolderActionsProps {
 		objectFolderActions: Actions;
 	};
 	baseResourceURL: string;
+	importObjectDefinitionURL: string;
+	objectFolderExternalReferenceCode: string;
 	objectFolderId: number;
 	objectFolderPermissionsURL: string;
-	setModalImportObjectDefinitionInfo: (
-		value: ModalImportObjectDefinitionInfo
+	portletNamespace: string;
+	setModalImportProperties: (
+		value: SetStateAction<ModalImportProperties>
 	) => void;
 	setShowModal: (value: SetStateAction<ViewObjectDefinitionsModals>) => void;
 }
@@ -251,9 +254,12 @@ interface GetObjectFolderActionsProps {
 export function getObjectFolderActions({
 	actions,
 	baseResourceURL,
+	importObjectDefinitionURL,
+	objectFolderExternalReferenceCode,
 	objectFolderId,
 	objectFolderPermissionsURL,
-	setModalImportObjectDefinitionInfo,
+	portletNamespace,
+	setModalImportProperties,
 	setShowModal,
 }: GetObjectFolderActionsProps) {
 	const url = formatActionURL(objectFolderPermissionsURL, objectFolderId);
@@ -293,13 +299,26 @@ export function getObjectFolderActions({
 				Liferay.Language.get('object-definition')
 			),
 			onClick: () => {
-				setModalImportObjectDefinitionInfo({
+				setModalImportProperties({
+					JSONInputId: 'objectDefinitionJSON',
+					apiURL:
+						'/o/object-admin/v1.0/object-definitions/by-external-reference-code/',
+					importExtendedInfo: {
+						key: `${portletNamespace}objectFolderExternalReferenceCode`,
+						value: objectFolderExternalReferenceCode,
+					},
+					importURL: importObjectDefinitionURL,
+					label: Liferay.Language.get('object-definition'),
 					title: sub(
 						Liferay.Language.get('import-x'),
 						Liferay.Language.get('object-definition')
 					),
-					visible: true,
 				});
+
+				setShowModal((previousState: ViewObjectDefinitionsModals) => ({
+					...previousState,
+					importModal: true,
+				}));
 			},
 			symbolLeft: 'import',
 			value: 'importObjectDefinition',

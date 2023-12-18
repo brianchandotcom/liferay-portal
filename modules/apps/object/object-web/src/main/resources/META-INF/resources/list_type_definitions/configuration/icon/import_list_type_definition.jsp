@@ -9,10 +9,12 @@
 
 <div>
 	<react:component
-		module="js/components/ModalImportListTypeDefinition"
+		module="js/components/ModalImport/ModalImport"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
-				"importListTypeDefinitionURL",
+				"apiURL", "/o/headless-admin-list-type/v1.0/list-type-definitions/by-external-reference-code/"
+			).put(
+				"importURL",
 				PortletURLBuilder.createActionURL(
 					renderResponse
 				).setActionName(
@@ -21,23 +23,31 @@
 					currentURL
 				).buildString()
 			).put(
+				"JSONInputId", "listTypeDefinitionJSON"
+			).put(
+				"label", LanguageUtil.get(request, "picklist")
+			).put(
 				"nameMaxLength", ModelHintsConstants.TEXT_MAX_LENGTH
+			).put(
+				"portletNamespace", liferayPortletResponse.getNamespace()
+			).put(
+				"title", LanguageUtil.format(request, "import-x", "picklist")
 			).build()
 		%>'
 	/>
 </div>
 
 <aui:script>
-	function <portlet:namespace />openImportListTypeDefinitionModal() {}
+	function <portlet:namespace />openImportModal() {}
 
 	Liferay.Util.setPortletConfigurationIconAction(
 		'<portlet:namespace />importListTypeDefinition',
 		() => {
-			Liferay.componentReady(
-				'<portlet:namespace />importListTypeDefinitionModal'
-			).then((importListTypeDefinitionModal) => {
-				importListTypeDefinitionModal.open();
-			});
+			Liferay.componentReady('<portlet:namespace />importModal').then(
+				(importModal) => {
+					importModal.open();
+				}
+			);
 		}
 	);
 </aui:script>

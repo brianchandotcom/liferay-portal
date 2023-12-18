@@ -7,9 +7,16 @@
 
 import {IFDSTableProps} from '../../utils/fds';
 import './ViewObjectDefinitions.scss';
-export interface ModalImportObjectDefinitionInfo {
+export interface ModalImportProperties {
+	JSONInputId: string;
+	apiURL: string;
+	importExtendedInfo?: {
+		key: string;
+		value: string;
+	};
+	importURL: string;
+	label: string;
 	title: string;
-	visible: boolean;
 }
 interface ViewObjectDefinitionsProps extends IFDSTableProps {
 	baseResourceURL: string;

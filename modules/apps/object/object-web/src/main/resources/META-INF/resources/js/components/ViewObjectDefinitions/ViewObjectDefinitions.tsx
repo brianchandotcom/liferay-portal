@@ -22,6 +22,7 @@ import {
 } from '../../utils/fds';
 import statusDataRenderer from '../FDSPropsTransformer/FDSDataRenderers/StatusDataRenderer';
 import LabelRenderer from '../LabelRenderer';
+import ModalImport from '../ModalImport/ModalImport';
 import ModalObjectFieldDeletionNotAllowed from '../ModalObjectFieldDeletionNotAllowed';
 import objectDefinitionModifiedDateDataRenderer from './FDSDataRenderers/ObjectDefinitionModifiedDateDataRenderer';
 import objectDefinitionSystemDataRenderer from './FDSDataRenderers/ObjectDefinitionSystemDataRenderer';
@@ -41,11 +42,14 @@ import {
 } from './objectDefinitionUtil';
 
 import './ViewObjectDefinitions.scss';
-import ModalImportObjectDefinition from '../ModalImportObjectDefinition';
 
-export interface ModalImportObjectDefinitionInfo {
+export interface ModalImportProperties {
+	JSONInputId: string;
+	apiURL: string;
+	importExtendedInfo?: {key: string; value: string};
+	importURL: string;
+	label: string;
 	title: string;
-	visible: boolean;
 }
 
 interface ViewObjectDefinitionsProps extends IFDSTableProps {
@@ -99,12 +103,14 @@ export default function ViewObjectDefinitions({
 
 	const [loading, setLoading] = useState(true);
 
-	const [
-		modalImportObjectDefinitionInfo,
-		setModalImportObjectDefinitionInfo,
-	] = useState<ModalImportObjectDefinitionInfo>({
+	const [modalImportProperties, setModalImportProperties] = useState<
+		ModalImportProperties
+	>({
+		JSONInputId: '',
+		apiURL: '',
+		importURL: '',
+		label: '',
 		title: '',
-		visible: false,
 	});
 
 	const [
@@ -138,6 +144,7 @@ export default function ViewObjectDefinitions({
 		deleteObjectDefinition: false,
 		deleteObjectFolder: false,
 		editObjectFolder: false,
+		importModal: false,
 		moveObjectDefinition: false,
 		objectFieldDeletionNotAllowed: false,
 		unbindFromRootObjectDefinition: false,
@@ -374,9 +381,6 @@ export default function ViewObjectDefinitions({
 								selectedObjectFolder={
 									selectedObjectFolder as ObjectFolder
 								}
-								setModalImportObjectDefinitionInfo={
-									setModalImportObjectDefinitionInfo
-								}
 								setSelectedObjectFolder={
 									setSelectedObjectFolder
 								}
@@ -396,9 +400,12 @@ export default function ViewObjectDefinitions({
 													objectFolderActions: selectedObjectFolder.actions as Actions,
 												},
 												baseResourceURL,
+												importObjectDefinitionURL,
+												objectFolderExternalReferenceCode: selectedObjectFolder.externalReferenceCode as string,
 												objectFolderId: selectedObjectFolder.id as number,
 												objectFolderPermissionsURL,
-												setModalImportObjectDefinitionInfo,
+												portletNamespace,
+												setModalImportProperties,
 												setShowModal,
 											}) as IItem[]
 										}
@@ -456,20 +463,27 @@ export default function ViewObjectDefinitions({
 				/>
 			)}
 
-			{modalImportObjectDefinitionInfo.visible && (
-				<ModalImportObjectDefinition
-					importObjectDefinitionURL={importObjectDefinitionURL}
-					modalImportObjectDefinitionInfo={
-						modalImportObjectDefinitionInfo
+			{showModal.importModal && (
+				<ModalImport
+					JSONInputId={modalImportProperties.JSONInputId}
+					apiURL={modalImportProperties.apiURL}
+					handleOnClose={() => {
+						setShowModal(
+							(previousState: ViewObjectDefinitionsModals) => ({
+								...previousState,
+								importModal: false,
+							})
+						);
+					}}
+					importExtendedInfo={
+						modalImportProperties.importExtendedInfo
 					}
+					importURL={modalImportProperties.importURL}
+					label={modalImportProperties.label}
 					nameMaxLength={nameMaxLength}
-					objectFolderExternalReferenceCode={
-						selectedObjectFolder.externalReferenceCode as string
-					}
 					portletNamespace={portletNamespace}
-					setModalImportObjectDefinitionInfo={
-						setModalImportObjectDefinitionInfo
-					}
+					showModal={showModal.importModal}
+					title={modalImportProperties.title}
 				/>
 			)}
 

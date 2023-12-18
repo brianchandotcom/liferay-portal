@@ -5,37 +5,52 @@
 
 import ClayButton from '@clayui/button';
 import {Text} from '@clayui/core';
-import ClayModal, {useModal} from '@clayui/modal';
+import ClayModal from '@clayui/modal';
+import {sub} from 'frontend-js-web';
 import React from 'react';
 
 interface ModalImportWarningProps {
 	handleImport: () => void;
-	handleOnClose: (value: boolean) => void;
-	header: string;
-	paragraphs: string[];
+	handleOnClose: () => void;
+	label: string;
 }
 
 export function ModalImportWarning({
 	handleImport,
 	handleOnClose,
-	header,
-	paragraphs,
+	label,
 }: ModalImportWarningProps) {
-	const {observer, onClose} = useModal({
-		onClose: () => handleOnClose(false),
-	});
-
 	return (
-		<ClayModal center observer={observer} status="warning">
-			<ClayModal.Header>{header}</ClayModal.Header>
+		<>
+			<ClayModal.Header>
+				{sub(Liferay.Language.get('update-existing-x'), label)}
+			</ClayModal.Header>
 
 			<ClayModal.Body>
 				<div className="text-secondary">
-					{paragraphs.map((paragraph, index) => (
-						<Text as="p" color="secondary" key={index}>
-							{paragraph}
-						</Text>
-					))}
+					<Text as="p" color="secondary">
+						{sub(
+							Liferay.Language.get(
+								'another-x-has-the-same-external-reference-code'
+							),
+							label.toLowerCase()
+						)}
+					</Text>
+
+					<Text as="p" color="secondary">
+						{sub(
+							Liferay.Language.get(
+								'before-importing-the-new-x-you-may-want-to-back-up-its-entries-to-prevent-data-loss'
+							),
+							label.toLowerCase()
+						)}
+					</Text>
+
+					<Text as="p" color="secondary">
+						{Liferay.Language.get(
+							'do-you-want-to-proceed-with-the-import-process'
+						)}
+					</Text>
 				</div>
 			</ClayModal.Body>
 
@@ -44,7 +59,7 @@ export function ModalImportWarning({
 					<ClayButton.Group spaced>
 						<ClayButton
 							displayType="secondary"
-							onClick={() => onClose()}
+							onClick={handleOnClose}
 						>
 							{Liferay.Language.get('cancel')}
 						</ClayButton>
@@ -53,7 +68,6 @@ export function ModalImportWarning({
 							displayType="warning"
 							onClick={() => {
 								handleImport();
-								onClose();
 							}}
 							type="button"
 						>
@@ -62,6 +76,6 @@ export function ModalImportWarning({
 					</ClayButton.Group>
 				}
 			/>
-		</ClayModal>
+		</>
 	);
 }

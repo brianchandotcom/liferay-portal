@@ -13,7 +13,9 @@
 		<field name="classNameId" type="long" />
 		<field name="classPK" type="long" />
 		<field name="commerceChannelId" type="long" />
-		<field name="amount" type="BigDecimal" />
+		<field name="amount" type="BigDecimal">
+			<validator name="required" />
+		</field>
 		<field name="callbackURL" type="String">
 			<hint-collection name="CLOB" />
 		</field>

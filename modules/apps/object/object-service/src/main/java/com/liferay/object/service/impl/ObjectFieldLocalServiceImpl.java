@@ -71,6 +71,7 @@ import com.liferay.portal.kernel.dao.jdbc.CurrentConnection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.SystemEventConstants;
@@ -823,7 +824,10 @@ public class ObjectFieldLocalServiceImpl
 		objectField.setDBTableName(dbTableName);
 		objectField.setIndexed(indexed);
 		objectField.setIndexedAsKeyword(indexedAsKeyword);
-		objectField.setIndexedLanguageId(indexedLanguageId);
+		objectField.setIndexedLanguageId(
+			_getIndexedLanguageId(
+				businessType, dbType, indexed, indexedAsKeyword,
+				indexedLanguageId));
 		objectField.setLocalized(localized);
 		objectField.setLabelMap(labelMap, LocaleUtil.getSiteDefault());
 		objectField.setName(name);
@@ -1163,6 +1167,23 @@ public class ObjectFieldLocalServiceImpl
 		return objectField;
 	}
 
+	private String _getIndexedLanguageId(
+		String businessType, String dbType, boolean indexed,
+		boolean indexedAsKeyword, String indexedLanguageId) {
+
+		if (indexed && !indexedAsKeyword &&
+			(Objects.equals(
+				businessType, ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT) ||
+			 Objects.equals(dbType, ObjectFieldConstants.DB_TYPE_CLOB) ||
+			 Objects.equals(dbType, ObjectFieldConstants.DB_TYPE_STRING)) &&
+			Validator.isBlank(indexedLanguageId)) {
+
+			return _language.getLanguageId(LocaleUtil.getDefault());
+		}
+
+		return indexedLanguageId;
+	}
+
 	private ObjectField _getObjectField(ObjectField objectField) {
 		if (objectField == null) {
 			return null;
@@ -1345,7 +1366,10 @@ public class ObjectFieldLocalServiceImpl
 		newObjectField.setExternalReferenceCode(externalReferenceCode);
 		newObjectField.setIndexed(indexed);
 		newObjectField.setIndexedAsKeyword(indexedAsKeyword);
-		newObjectField.setIndexedLanguageId(indexedLanguageId);
+		newObjectField.setIndexedLanguageId(
+			_getIndexedLanguageId(
+				businessType, dbType, indexed, indexedAsKeyword,
+				indexedLanguageId));
 		newObjectField.setLabelMap(labelMap, LocaleUtil.getSiteDefault());
 		newObjectField.setReadOnly(
 			_getReadOnly(
@@ -1706,6 +1730,9 @@ public class ObjectFieldLocalServiceImpl
 
 	@Reference
 	private DLFileEntryLocalService _dlFileEntryLocalService;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private ObjectDefinitionPersistence _objectDefinitionPersistence;

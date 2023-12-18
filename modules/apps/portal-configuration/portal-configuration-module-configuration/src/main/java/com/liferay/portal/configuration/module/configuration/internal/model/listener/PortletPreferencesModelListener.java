@@ -17,9 +17,9 @@ import com.liferay.portal.kernel.model.LayoutRevision;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.PortletPreferences;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
-import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalServiceUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.LayoutRevisionUtil;
@@ -117,7 +117,7 @@ public class PortletPreferencesModelListener
 					PortletKeys.PREFS_OWNER_TYPE_GROUP) &&
 				(portletPreferences.getOwnerId() > 0)) {
 
-				Group group = GroupLocalServiceUtil.fetchGroup(
+				Group group = _groupLocalService.fetchGroup(
 					portletPreferences.getOwnerId());
 
 				if (group == null) {
@@ -131,7 +131,7 @@ public class PortletPreferencesModelListener
 				}
 
 				LayoutSetPrototype layoutSetPrototype =
-					LayoutSetPrototypeLocalServiceUtil.fetchLayoutSetPrototype(
+					_layoutSetPrototypeLocalService.fetchLayoutSetPrototype(
 						group.getClassPK());
 
 				if (layoutSetPrototype == null) {
@@ -140,14 +140,14 @@ public class PortletPreferencesModelListener
 
 				layoutSetPrototype.setModifiedDate(new Date());
 
-				LayoutSetPrototypeLocalServiceUtil.updateLayoutSetPrototype(
+				_layoutSetPrototypeLocalService.updateLayoutSetPrototype(
 					layoutSetPrototype);
 			}
 			else if ((portletPreferences.getOwnerType() ==
 						PortletKeys.PREFS_OWNER_TYPE_LAYOUT) &&
 					 (portletPreferences.getPlid() > 0)) {
 
-				Layout layout = LayoutLocalServiceUtil.fetchLayout(
+				Layout layout = _layoutLocalService.fetchLayout(
 					portletPreferences.getPlid());
 
 				if ((layout == null) ||
@@ -161,14 +161,14 @@ public class PortletPreferencesModelListener
 					ServiceContext serviceContext =
 						ServiceContextThreadLocal.getServiceContext();
 
-					LayoutLocalServiceUtil.updateStatus(
+					_layoutLocalService.updateStatus(
 						serviceContext.getUserId(), layout.getPlid(),
 						WorkflowConstants.STATUS_DRAFT, serviceContext);
 				}
 				else {
 					layout.setModifiedDate(new Date());
 
-					LayoutLocalServiceUtil.updateLayout(
+					_layoutLocalService.updateLayout(
 						layout.getGroupId(), layout.isPrivateLayout(),
 						layout.getLayoutId(), layout.getTypeSettings());
 				}
@@ -221,6 +221,15 @@ public class PortletPreferencesModelListener
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortletPreferencesModelListener.class);
+
+	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;
 
 	@Reference
 	private SettingsLocatorHelper _settingsLocatorHelper;

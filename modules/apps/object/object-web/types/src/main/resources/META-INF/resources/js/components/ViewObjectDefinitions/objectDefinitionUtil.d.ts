@@ -5,7 +5,7 @@
 
 import {SetStateAction} from 'react';
 import {DropDownItems} from '../ModelBuilder/types';
-import {ModalImportObjectDefinitionInfo} from './ViewObjectDefinitions';
+import {ModalImportProperties} from './ViewObjectDefinitions';
 declare type DeleteObjectDefinitionProps = {
 	baseResourceURL: string;
 	handleDeleteObjectDefinition: (value: DeletedObjectDefinition) => void;
@@ -67,19 +67,25 @@ interface GetObjectFolderActionsProps {
 		objectFolderActions: Actions;
 	};
 	baseResourceURL: string;
+	importObjectDefinitionURL: string;
+	objectFolderExternalReferenceCode: string;
 	objectFolderId: number;
 	objectFolderPermissionsURL: string;
-	setModalImportObjectDefinitionInfo: (
-		value: ModalImportObjectDefinitionInfo
+	portletNamespace: string;
+	setModalImportProperties: (
+		value: SetStateAction<ModalImportProperties>
 	) => void;
 	setShowModal: (value: SetStateAction<ViewObjectDefinitionsModals>) => void;
 }
 export declare function getObjectFolderActions({
 	actions,
 	baseResourceURL,
+	importObjectDefinitionURL,
+	objectFolderExternalReferenceCode,
 	objectFolderId,
 	objectFolderPermissionsURL,
-	setModalImportObjectDefinitionInfo,
+	portletNamespace,
+	setModalImportProperties,
 	setShowModal,
 }: GetObjectFolderActionsProps): (
 	| {

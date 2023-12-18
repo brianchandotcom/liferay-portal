@@ -12,12 +12,24 @@ public class UpdateDocumentResponse implements DocumentResponse {
 
 	public UpdateDocumentResponse(int status) {
 		_status = status;
+
+		_statusString = null;
+	}
+
+	public UpdateDocumentResponse(int status, String statusString) {
+		_status = status;
+		_statusString = statusString;
 	}
 
 	public int getStatus() {
 		return _status;
 	}
 
+	public String getStatusString() {
+		return _statusString;
+	}
+
 	private final int _status;
+	private final String _statusString;
 
 }

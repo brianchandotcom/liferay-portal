@@ -7,11 +7,20 @@ package com.liferay.portal.search.engine.adapter.document;
 
 /**
  * @author Dylan Rebelak
+ * @author Petteri Karttunen
  */
 public class IndexDocumentResponse implements DocumentResponse {
 
 	public IndexDocumentResponse(int status, String uid) {
 		_status = status;
+		_uid = uid;
+
+		_statusString = null;
+	}
+
+	public IndexDocumentResponse(int status, String statusString, String uid) {
+		_status = status;
+		_statusString = statusString;
 		_uid = uid;
 	}
 
@@ -19,11 +28,16 @@ public class IndexDocumentResponse implements DocumentResponse {
 		return _status;
 	}
 
+	public String getStatusString() {
+		return _statusString;
+	}
+
 	public String getUid() {
 		return _uid;
 	}
 
 	private final int _status;
+	private final String _statusString;
 	private final String _uid;
 
 }

@@ -7,17 +7,30 @@ package com.liferay.portal.search.engine.adapter.document;
 
 /**
  * @author Dylan Rebelak
+ * @author Petteri Karttunen
  */
 public class DeleteDocumentResponse implements DocumentResponse {
 
 	public DeleteDocumentResponse(int status) {
 		_status = status;
+
+		_statusString = null;
+	}
+
+	public DeleteDocumentResponse(int status, String statusString) {
+		_status = status;
+		_statusString = statusString;
 	}
 
 	public int getStatus() {
 		return _status;
 	}
 
+	public String getStatusString() {
+		return _statusString;
+	}
+
 	private final int _status;
+	private final String _statusString;
 
 }

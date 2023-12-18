@@ -284,6 +284,143 @@
 			"visibilityExpression": ""
 		},
 		{
+			"collapsible": false,
+			"ddmStructureId": "",
+			"ddmStructureLayoutId": "",
+			"fieldReference": "Fieldset39810423",
+			"label": {
+				"en_US": "Fields Group"
+			},
+			"labelAtStructureLevel": true,
+			"localizable": false,
+			"name": "Fieldset39810423",
+			"nestedFields": [
+				{
+					"confirmationErrorMessage": {
+						"en_US": ""
+					},
+					"confirmationLabel": {
+						"en_US": ""
+					},
+					"dataType": "string",
+					"direction": [
+						"vertical"
+					],
+					"displayStyle": "singleline",
+					"fieldNamespace": "",
+					"fieldReference": "Text97681688",
+					"hideField": false,
+					"indexType": "keyword",
+					"label": {
+						"en_US": "Text"
+					},
+					"labelAtStructureLevel": true,
+					"localizable": true,
+					"name": "Text97681688",
+					"nativeField": false,
+					"objectFieldName": "",
+					"placeholder": {
+						"en_US": ""
+					},
+					"predefinedValue": {
+						"en_US": ""
+					},
+					"readOnly": false,
+					"repeatable": false,
+					"requireConfirmation": false,
+					"required": false,
+					"requiredErrorMessage": {
+						"en_US": ""
+					},
+					"showLabel": true,
+					"tip": {
+						"en_US": ""
+					},
+					"tooltip": {
+						"en_US": ""
+					},
+					"type": "text",
+					"visibilityExpression": ""
+				},
+				{
+					"confirmationErrorMessage": {
+						"en_US": ""
+					},
+					"confirmationLabel": {
+						"en_US": ""
+					},
+					"dataType": "string",
+					"direction": [
+						"vertical"
+					],
+					"displayStyle": "singleline",
+					"fieldNamespace": "",
+					"fieldReference": "Text60420360",
+					"hideField": false,
+					"indexType": "keyword",
+					"label": {
+						"en_US": "Text"
+					},
+					"labelAtStructureLevel": true,
+					"localizable": true,
+					"name": "Text60420360",
+					"nativeField": false,
+					"objectFieldName": "",
+					"placeholder": {
+						"en_US": ""
+					},
+					"predefinedValue": {
+						"en_US": ""
+					},
+					"readOnly": false,
+					"repeatable": false,
+					"requireConfirmation": false,
+					"required": false,
+					"requiredErrorMessage": {
+						"en_US": ""
+					},
+					"showLabel": true,
+					"tip": {
+						"en_US": ""
+					},
+					"tooltip": {
+						"en_US": ""
+					},
+					"type": "text",
+					"visibilityExpression": ""
+				}
+			],
+			"normalizedStructure": false,
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"rows": [
+				{
+					"columns": [
+						{
+							"fields": [
+								"Text97681688"
+							],
+							"size": 12
+						}
+					]
+				},
+				{
+					"columns": [
+						{
+							"fields": [
+								"Text60420360"
+							],
+							"size": 12
+						}
+					]
+				}
+			],
+			"showLabel": true,
+			"type": "fieldset",
+			"upgradedStructure": false
+		},
+		{
 			"dataType": "integer",
 			"fieldNamespace": "",
 			"fieldReference": "Numeric",

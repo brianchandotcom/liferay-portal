@@ -589,14 +589,6 @@ public class ObjectValidationRuleLocalServiceImpl
 			throw new ObjectValidationRuleEngineException.MustNotBeNull();
 		}
 
-		ObjectValidationRuleEngine objectValidationRuleEngine =
-			_objectValidationRuleEngineRegistry.getObjectValidationRuleEngine(
-				companyId, engine);
-
-		if (objectValidationRuleEngine == null) {
-			throw new ObjectValidationRuleEngineException.NoSuchEngine(engine);
-		}
-
 		Locale locale = LocaleUtil.getSiteDefault();
 
 		if ((nameMap == null) || Validator.isNull(nameMap.get(locale))) {
@@ -614,6 +606,10 @@ public class ObjectValidationRuleLocalServiceImpl
 			throw new ObjectValidationRuleOutputTypeException(
 				"Invalid output type " + outputType);
 		}
+
+		ObjectValidationRuleEngine objectValidationRuleEngine =
+			_objectValidationRuleEngineRegistry.getObjectValidationRuleEngine(
+				companyId, engine);
 
 		if (Validator.isNull(script) &&
 			!(objectValidationRuleEngine instanceof

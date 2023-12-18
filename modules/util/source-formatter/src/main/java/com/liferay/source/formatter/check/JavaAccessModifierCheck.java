@@ -10,7 +10,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.BNDSettings;
 import com.liferay.source.formatter.check.util.JavaSourceUtil;
 import com.liferay.source.formatter.parser.JavaClass;
-import com.liferay.source.formatter.parser.JavaClassParser;
 import com.liferay.source.formatter.parser.JavaTerm;
 import com.liferay.source.formatter.parser.JavaVariable;
 import com.liferay.source.formatter.util.FileUtil;
@@ -28,7 +27,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * @author Seiphon Wang
  */
-public class JavaAccessModifierCheck extends BaseFileCheck {
+public class JavaAccessModifierCheck extends BaseJavaTermCheck {
 
 	@Override
 	public boolean isModuleSourceCheck() {
@@ -37,13 +36,20 @@ public class JavaAccessModifierCheck extends BaseFileCheck {
 
 	@Override
 	protected String doProcess(
-			String fileName, String absolutePath, String content)
+			String fileName, String absolutePath, JavaTerm javaTerm,
+			String fileContent)
 		throws Exception {
 
-		String packageName = JavaSourceUtil.getPackageName(content);
+		if (javaTerm.getParentJavaClass() != null) {
+			return javaTerm.getContent();
+		}
+
+		JavaClass javaClass = (JavaClass)javaTerm;
+
+		String packageName = javaClass.getPackageName();
 
 		if (!packageName.startsWith("com.liferay")) {
-			return content;
+			return javaTerm.getContent();
 		}
 
 		Map<String, List<String>> componentJavaFileMap =
@@ -54,21 +60,19 @@ public class JavaAccessModifierCheck extends BaseFileCheck {
 		if (!superClassNames.contains(
 				packageName + "." + JavaSourceUtil.getClassName(fileName))) {
 
-			return content;
+			return javaTerm.getContent();
 		}
-
-		JavaClass javaClass = JavaClassParser.parseJavaClass(fileName, content);
 
 		List<JavaTerm> childJavaTerms = javaClass.getChildJavaTerms();
 
 		for (JavaTerm childJavaTerm : childJavaTerms) {
-			if (childJavaTerm instanceof JavaVariable) {
+			if (childJavaTerm.isJavaVariable()) {
 				JavaVariable javaVariable = (JavaVariable)childJavaTerm;
 
 				String accessModifier = javaVariable.getAccessModifier();
-				String javaTermContent = javaVariable.getContent();
+				String variableContent = javaVariable.getContent();
 
-				if (javaTermContent.contains("@Reference") &&
+				if (variableContent.contains("@Reference") &&
 					accessModifier.equals("private")) {
 
 					addMessage(
@@ -80,7 +84,12 @@ public class JavaAccessModifierCheck extends BaseFileCheck {
 			}
 		}
 
-		return content;
+		return javaTerm.getContent();
+	}
+
+	@Override
+	protected String[] getCheckableJavaTermNames() {
+		return new String[] {JAVA_CLASS};
 	}
 
 	private Map<String, List<String>> _getCommponentJavaFileMap()

@@ -246,13 +246,6 @@ public class CommercePaymentEntryLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static CommercePaymentEntry fetchByExternalReferenceCode(
-		String externalReferenceCode, long companyId) {
-
-		return getService().fetchByExternalReferenceCode(
-			externalReferenceCode, companyId);
-	}
-
 	public static CommercePaymentEntry fetchCommercePaymentEntry(
 		long commercePaymentEntryId) {
 
@@ -382,10 +375,10 @@ public class CommercePaymentEntryLocalServiceUtil {
 		<CommercePaymentEntry> searchCommercePaymentEntries(
 			long companyId, String keywords,
 			java.util.LinkedHashMap<String, Object> params, int start, int end,
-			String orderByField, boolean reverse) {
+			com.liferay.portal.kernel.search.Sort sort) {
 
 		return getService().searchCommercePaymentEntries(
-			companyId, keywords, params, start, end, orderByField, reverse);
+			companyId, keywords, params, start, end, sort);
 	}
 
 	/**
@@ -421,20 +414,26 @@ public class CommercePaymentEntryLocalServiceUtil {
 			paymentStatus, reasonKey, redirectURL, transactionCode, type);
 	}
 
-	public static CommercePaymentEntry updateCommercePaymentEntryNote(
+	public static CommercePaymentEntry updateExternalReferenceCode(
+			long commercePaymentEntryId, String externalReferenceCode)
+		throws PortalException {
+
+		return getService().updateExternalReferenceCode(
+			commercePaymentEntryId, externalReferenceCode);
+	}
+
+	public static CommercePaymentEntry updateNote(
 			long commercePaymentEntryId, String note)
 		throws PortalException {
 
-		return getService().updateCommercePaymentEntryNote(
-			commercePaymentEntryId, note);
+		return getService().updateNote(commercePaymentEntryId, note);
 	}
 
-	public static CommercePaymentEntry updateCommercePaymentEntryReasonKey(
+	public static CommercePaymentEntry updateReasonKey(
 			long commercePaymentEntryId, String reasonKey)
 		throws PortalException {
 
-		return getService().updateCommercePaymentEntryReasonKey(
-			commercePaymentEntryId, reasonKey);
+		return getService().updateReasonKey(commercePaymentEntryId, reasonKey);
 	}
 
 	public static CommercePaymentEntryLocalService getService() {

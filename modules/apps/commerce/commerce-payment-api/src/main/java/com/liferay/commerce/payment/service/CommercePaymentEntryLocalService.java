@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -226,10 +227,6 @@ public interface CommercePaymentEntryLocalService
 		DynamicQuery dynamicQuery, Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommercePaymentEntry fetchByExternalReferenceCode(
-		String externalReferenceCode, long companyId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommercePaymentEntry fetchCommercePaymentEntry(
 		long commercePaymentEntryId);
 
@@ -322,7 +319,7 @@ public interface CommercePaymentEntryLocalService
 		searchCommercePaymentEntries(
 			long companyId, String keywords,
 			LinkedHashMap<String, Object> params, int start, int end,
-			String orderByField, boolean reverse);
+			Sort sort);
 
 	/**
 	 * Updates the commerce payment entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -349,12 +346,17 @@ public interface CommercePaymentEntryLocalService
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
-	public CommercePaymentEntry updateCommercePaymentEntryNote(
+	public CommercePaymentEntry updateExternalReferenceCode(
+			long commercePaymentEntryId, String externalReferenceCode)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public CommercePaymentEntry updateNote(
 			long commercePaymentEntryId, String note)
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
-	public CommercePaymentEntry updateCommercePaymentEntryReasonKey(
+	public CommercePaymentEntry updateReasonKey(
 			long commercePaymentEntryId, String reasonKey)
 		throws PortalException;
 

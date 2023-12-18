@@ -1166,6 +1166,15 @@
   resolved "https://registry.npmjs.org/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
+"@clayui/button@^3.107.0":
+  version "3.107.0"
+  resolved "https://registry.yarnpkg.com/@clayui/button/-/button-3.107.0.tgz#26d74b80476bf18a5d145e2fb7e91a1036c62b71"
+  integrity sha512-Lf1FaA+aJdnanmcWxxpY+Een4adVQLAH4WA/VILTAgM7QxKp4/7VcGgJzQVkUYCmTvKM+x1EWOEMm6jXfZ8NPA==
+  dependencies:
+    "@clayui/icon" "^3.106.1"
+    classnames "^2.2.6"
+    warning "^4.0.3"
+
 "@clayui/button@^3.40.0":
   version "3.40.0"
   resolved "https://registry.npmjs.org/@clayui/button/-/button-3.40.0.tgz"
@@ -1392,6 +1401,14 @@
     "@clayui/shared" "^3.92.0"
     classnames "^2.2.6"
 
+"@clayui/icon@^3.106.1":
+  version "3.106.1"
+  resolved "https://registry.yarnpkg.com/@clayui/icon/-/icon-3.106.1.tgz#2a1f9ec91bf37a3c64dee54f1800519aacc73a7d"
+  integrity sha512-ZSs63L28GLqAkpovQEABzrf4+bP1wptIQ6+Jebl58xEbfCl8FIg1x/tgN/8F7W1/sNSNZs3no5vRcIZGnW6m1Q==
+  dependencies:
+    classnames "^2.2.6"
+    warning "^4.0.3"
+
 "@clayui/icon@^3.40.0":
   version "3.40.0"
   resolved "https://registry.npmjs.org/@clayui/icon/-/icon-3.40.0.tgz"
@@ -1407,6 +1424,15 @@
   dependencies:
     classnames "^2.2.6"
     warning "^4.0.3"
+
+"@clayui/label@*":
+  version "3.106.1"
+  resolved "https://registry.yarnpkg.com/@clayui/label/-/label-3.106.1.tgz#768ec2053e37e335c04547d2e19bf7f17a185d64"
+  integrity sha512-bq1+Ty7Oh6vfDo4ib0hhtIua/kcUvPKyZTwjhubgXNWw/J6fnybA8Ux8eCFF5bgtlz2eKAi9QkdftmWPsLu/ow==
+  dependencies:
+    "@clayui/icon" "^3.106.1"
+    "@clayui/link" "^3.106.1"
+    classnames "^2.2.6"
 
 "@clayui/label@^3.56.0":
   version "3.56.0"
@@ -1432,6 +1458,13 @@
   dependencies:
     classnames "^2.2.6"
     warning "^4.0.3"
+
+"@clayui/link@^3.106.1":
+  version "3.106.1"
+  resolved "https://registry.yarnpkg.com/@clayui/link/-/link-3.106.1.tgz#f19d76be51d2e8c68688f7052484f76f1fe33967"
+  integrity sha512-EONK320iyup83oWP2owqCR+fFmbOfDAbSjJDAuj7DB+v9d9aeHTU0BqRxdtD+Ktfr54mmv4VvlFmARHYNPqNjQ==
+  dependencies:
+    classnames "^2.2.6"
 
 "@clayui/link@^3.45.0":
   version "3.45.0"
@@ -1467,6 +1500,18 @@
   integrity sha512-UpPwjJqex0tX+asB4hDRe50qJop6hvAyvDjfE6P6ivYxpuLjdTqhk7CN9QKLWSesPh8DFvmG32BYnuW9OZ59XQ==
   dependencies:
     classnames "^2.2.6"
+
+"@clayui/modal@*":
+  version "3.107.0"
+  resolved "https://registry.yarnpkg.com/@clayui/modal/-/modal-3.107.0.tgz#2bb1b4fe1d214983c6df348b461622765240ce01"
+  integrity sha512-cTCkb/k9OfjVMP1R3iyq0xV7xhYlTTJ6ImqarwqyI3k6QJCjf70WqQ8TY2PxWPGjuRkCJewp2bxbLyWvCpZLlA==
+  dependencies:
+    "@clayui/button" "^3.107.0"
+    "@clayui/icon" "^3.106.1"
+    "@clayui/shared" "^3.107.0"
+    aria-hidden "^1.2.2"
+    classnames "^2.2.6"
+    warning "^4.0.3"
 
 "@clayui/modal@^3.45.0":
   version "3.45.0"
@@ -1526,6 +1571,13 @@
     "@clayui/shared" "^3.92.0"
     classnames "^2.2.6"
 
+"@clayui/provider@^3.106.1":
+  version "3.106.1"
+  resolved "https://registry.yarnpkg.com/@clayui/provider/-/provider-3.106.1.tgz#423779ec8c129d32da9bc8028e9d10cfffdc45dd"
+  integrity sha512-ouHtbc9XJ7tg31aCTnSZyYjg/2Yl3b8apkNiAnt07BUW1tkodCZql5srehETISpwclTGcSeMVBDZX2SPScSYgA==
+  dependencies:
+    "@clayui/icon" "^3.106.1"
+
 "@clayui/provider@^3.40.0":
   version "3.40.0"
   resolved "https://registry.npmjs.org/@clayui/provider/-/provider-3.40.0.tgz"
@@ -1546,6 +1598,19 @@
   integrity sha512-KT0Iwexi632Bf/fbIZxoZg5X9B1HW/I3ISW9Lq+VfXmi26KA97Qtv4U96WbRjOgARLT89gye5GGsB2FqHBrIhw==
   dependencies:
     "@clayui/icon" "^3.56.0"
+
+"@clayui/shared@^3.107.0":
+  version "3.107.0"
+  resolved "https://registry.yarnpkg.com/@clayui/shared/-/shared-3.107.0.tgz#5bceb9a706dd457d462bbda2757fc87a7bafb488"
+  integrity sha512-FODBz48/kru4DhkscNnRmyMvCkyjHUDtQ06GUlPIXx9JkuMPP4KQ5Ys+xfTbr0i41s82Jv2g1D0rEW0aj8VdaA==
+  dependencies:
+    "@clayui/button" "^3.107.0"
+    "@clayui/link" "^3.106.1"
+    "@clayui/provider" "^3.106.1"
+    aria-hidden "^1.2.2"
+    classnames "^2.2.6"
+    dom-align "^1.12.2"
+    warning "^4.0.3"
 
 "@clayui/shared@^3.45.0":
   version "3.45.0"
@@ -1599,6 +1664,13 @@
   version "3.65.0"
   resolved "https://registry.npmjs.org/@clayui/sticker/-/sticker-3.65.0.tgz"
   integrity sha512-wmdIUcMcFZMsIu2jbViflWYEF0pFPhbVK5Xc8gD6Dha+sEpTRjhsXMU5amvk5Ruu3TnguIzaAzrcv8AwVi2Ohg==
+  dependencies:
+    classnames "^2.2.6"
+
+"@clayui/table@*":
+  version "3.108.0"
+  resolved "https://registry.yarnpkg.com/@clayui/table/-/table-3.108.0.tgz#c1999b21282737f56605ec253c4f42b0e06c12ca"
+  integrity sha512-iiRYJ6ZToHlGrPCysdJgSH/ifwogxQWbGKeO08K6Y7Wuq/2TP/QNT61xJvkmJeANK6bnrkJbpAaRZDxEt5QKfQ==
   dependencies:
     classnames "^2.2.6"
 
@@ -3003,6 +3075,15 @@ axe-core@^4.3.5:
   version "4.3.5"
   resolved "https://registry.npmjs.org/axe-core/-/axe-core-4.3.5.tgz"
   integrity sha512-WKTW1+xAzhMS5dJsxWkliixlO/PqC4VhmO9T4juNYcaTg9jzWiJsou6m5pxWYGfigWbwzJWeFY6z47a+4neRXA==
+
+axios@1.6.2:
+  version "1.6.2"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-1.6.2.tgz#de67d42c755b571d3e698df1b6504cde9b0ee9f2"
+  integrity sha512-7i24Ri4pmDRfJTR7LDBhsOTtcm+9kjX5WiY1X3wIisx6G9So3pfMkEiU7emUBe46oceVImccTEM3k6C5dbVW8A==
+  dependencies:
+    follow-redirects "^1.15.0"
+    form-data "^4.0.0"
+    proxy-from-env "^1.1.0"
 
 axobject-query@^2.2.0:
   version "2.2.0"
@@ -5785,6 +5866,11 @@ follow-redirects@^1.0.0:
   resolved "https://registry.npmjs.org/follow-redirects/-/follow-redirects-1.14.7.tgz"
   integrity sha512-+hbxoLbFMbRKDwohX8GkTataGqO6Jb7jGwpAlwgy2bIz25XtRm7KEzJM76R1WiNT5SwZkX4Y75SwBolkpmE7iQ==
 
+follow-redirects@^1.15.0:
+  version "1.15.3"
+  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.15.3.tgz#fe2f3ef2690afce7e82ed0b44db08165b207123a"
+  integrity sha512-1VzOtuEM8pC9SFU1E+8KfTjZyMztRsgEfwQl44z8A25uy13jSzTj6dyK2Df52iV0vgHCfBwLhDWevLn95w5v6Q==
+
 for-in@^1.0.2:
   version "1.0.2"
   resolved "https://registry.npmjs.org/for-in/-/for-in-1.0.2.tgz"
@@ -5807,6 +5893,15 @@ form-data@^3.0.0:
   version "3.0.1"
   resolved "https://registry.npmjs.org/form-data/-/form-data-3.0.1.tgz"
   integrity sha512-RHkBKtLWUVwd7SqRIvCZMEvAMoGUp0XU+seQiZejj0COz3RI3hWP4sCv3gZWWLjJTd7rGwcsF5eKZGii0r/hbg==
+  dependencies:
+    asynckit "^0.4.0"
+    combined-stream "^1.0.8"
+    mime-types "^2.1.12"
+
+form-data@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/form-data/-/form-data-4.0.0.tgz#93919daeaf361ee529584b9b31664dc12c9fa452"
+  integrity sha512-ETEklSGi5t0QMZuiXoA/Q6vcnxcLQP5vdugSpuAyi6SVGi2clPPp+xgEhuMaHC+zGgn31Kd235W35f7Hykkaww==
   dependencies:
     asynckit "^0.4.0"
     combined-stream "^1.0.8"
@@ -9565,6 +9660,11 @@ proxy-addr@~2.0.7:
   dependencies:
     forwarded "0.2.0"
     ipaddr.js "1.9.1"
+
+proxy-from-env@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/proxy-from-env/-/proxy-from-env-1.1.0.tgz#e102f16ca355424865755d2c9e8ea4f24d58c3e2"
+  integrity sha512-D+zkORCbA9f1tdWRK0RaCR3GPv50cMxcrz4X8k5LTSUD1Dkw47mKJEZQNunItRTkWwgtaUSo1RVFRIG9ZXiFYg==
 
 prr@~1.0.1:
   version "1.0.1"

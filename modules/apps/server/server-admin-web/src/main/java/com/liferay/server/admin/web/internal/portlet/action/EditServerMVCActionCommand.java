@@ -95,7 +95,6 @@ import com.liferay.portal.kernel.util.ThreadUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.log4j.Log4JUtil;
 import com.liferay.portal.security.membershippolicy.RoleMembershipPolicyFactoryUtil;
@@ -792,51 +791,37 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 			PropsKeys.MAIL_SESSION_MAIL_ADVANCED_PROPERTIES,
 			advancedProperties);
 
-		if (!Validator.isBlank(pop3Host)) {
-			portletPreferences.setValue(
-				PropsKeys.MAIL_SESSION_MAIL_POP3_HOST, pop3Host);
-		}
+		portletPreferences.setValue(
+			PropsKeys.MAIL_SESSION_MAIL_POP3_HOST, pop3Host);
 
 		if (!pop3Password.equals(Portal.TEMP_OBFUSCATION_VALUE)) {
 			portletPreferences.setValue(
 				PropsKeys.MAIL_SESSION_MAIL_POP3_PASSWORD, pop3Password);
 		}
 
-		if (pop3Port > 0) {
-			portletPreferences.setValue(
-				PropsKeys.MAIL_SESSION_MAIL_POP3_PORT,
-				String.valueOf(pop3Port));
-		}
+		portletPreferences.setValue(
+			PropsKeys.MAIL_SESSION_MAIL_POP3_PORT, String.valueOf(pop3Port));
 
-		if (!Validator.isBlank(pop3User)) {
-			portletPreferences.setValue(
-				PropsKeys.MAIL_SESSION_MAIL_POP3_USER, pop3User);
-		}
+		portletPreferences.setValue(
+			PropsKeys.MAIL_SESSION_MAIL_POP3_USER, pop3User);
 
-		if (!Validator.isBlank(smtpHost)) {
-			portletPreferences.setValue(
-				PropsKeys.MAIL_SESSION_MAIL_SMTP_HOST, smtpHost);
-		}
+		portletPreferences.setValue(
+			PropsKeys.MAIL_SESSION_MAIL_SMTP_HOST, smtpHost);
 
 		if (!smtpPassword.equals(Portal.TEMP_OBFUSCATION_VALUE)) {
 			portletPreferences.setValue(
 				PropsKeys.MAIL_SESSION_MAIL_SMTP_PASSWORD, smtpPassword);
 		}
 
-		if (smtpPort > 0) {
-			portletPreferences.setValue(
-				PropsKeys.MAIL_SESSION_MAIL_SMTP_PORT,
-				String.valueOf(smtpPort));
-		}
+		portletPreferences.setValue(
+			PropsKeys.MAIL_SESSION_MAIL_SMTP_PORT, String.valueOf(smtpPort));
 
 		portletPreferences.setValue(
 			PropsKeys.MAIL_SESSION_MAIL_SMTP_STARTTLS_ENABLE,
 			String.valueOf(smtpStartTLSEnable));
 
-		if (!Validator.isBlank(smtpUser)) {
-			portletPreferences.setValue(
-				PropsKeys.MAIL_SESSION_MAIL_SMTP_USER, smtpUser);
-		}
+		portletPreferences.setValue(
+			PropsKeys.MAIL_SESSION_MAIL_SMTP_USER, smtpUser);
 
 		portletPreferences.setValue(
 			PropsKeys.MAIL_SESSION_MAIL_STORE_PROTOCOL, storeProtocol);

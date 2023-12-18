@@ -13,11 +13,14 @@ import com.liferay.object.admin.rest.resource.v1_0.ObjectFolderResource;
 import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.constants.ObjectConstants;
 import com.liferay.object.constants.ObjectFolderConstants;
+import com.liferay.object.exception.ObjectFolderItemObjectDefinitionIdException;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFolderItemLocalService;
 import com.liferay.object.service.ObjectFolderLocalService;
 import com.liferay.object.service.ObjectFolderService;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -233,6 +236,8 @@ public class ObjectFolderResourceImpl extends BaseObjectFolderResourceImpl {
 			objectFolderItems,
 			objectFolderItem -> !objectFolderItem.getLinkedObjectDefinition());
 
+		List<String> failedObjectDefinitionNames = new ArrayList<>();
+
 		for (ObjectFolderItem unlinkedObjectFolderItem :
 				unlinkedObjectFolderItems) {
 
@@ -243,19 +248,35 @@ public class ObjectFolderResourceImpl extends BaseObjectFolderResourceImpl {
 				objectDefinition.setObjectFolderExternalReferenceCode(
 					objectFolderExternalReferenceCode);
 
-				objectDefinition =
-					objectDefinitionResource.
-						putObjectDefinitionByExternalReferenceCode(
-							objectDefinition.getExternalReferenceCode(),
-							objectDefinition);
+				try {
+					objectDefinition =
+						objectDefinitionResource.
+							putObjectDefinitionByExternalReferenceCode(
+								objectDefinition.getExternalReferenceCode(),
+								objectDefinition);
 
-				_objectFolderItemLocalService.updateObjectFolderItem(
-					objectDefinition.getId(), objectFolderId,
-					unlinkedObjectFolderItem.getPositionX(),
-					unlinkedObjectFolderItem.getPositionY());
+					_objectFolderItemLocalService.updateObjectFolderItem(
+						objectDefinition.getId(), objectFolderId,
+						unlinkedObjectFolderItem.getPositionX(),
+						unlinkedObjectFolderItem.getPositionY());
+				}
+				catch (Exception exception) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(exception);
+					}
 
-				serviceBuilderObjectDefinitionIds.remove(
-					objectDefinition.getId());
+					failedObjectDefinitionNames.add(objectDefinition.getName());
+
+					objectDefinition =
+						objectDefinitionResource.
+							getObjectDefinitionByExternalReferenceCode(
+								objectDefinition.getExternalReferenceCode());
+				}
+
+				if (objectDefinition != null) {
+					serviceBuilderObjectDefinitionIds.remove(
+						objectDefinition.getId());
+				}
 
 				continue;
 			}
@@ -317,6 +338,11 @@ public class ObjectFolderResourceImpl extends BaseObjectFolderResourceImpl {
 				objectDefinition.getId(), objectFolderId,
 				objectFolderItem.getPositionX(),
 				objectFolderItem.getPositionY());
+		}
+
+		if (!failedObjectDefinitionNames.isEmpty()) {
+			throw new ObjectFolderItemObjectDefinitionIdException(
+				failedObjectDefinitionNames);
 		}
 	}
 
@@ -421,6 +447,9 @@ public class ObjectFolderResourceImpl extends BaseObjectFolderResourceImpl {
 			}
 		};
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ObjectFolderResourceImpl.class);
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

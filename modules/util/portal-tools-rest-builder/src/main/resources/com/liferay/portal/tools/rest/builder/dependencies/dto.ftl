@@ -357,9 +357,16 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 
 		<#list properties?keys as propertyName>
 			<#assign
+				capitalizedPropertyName = propertyName?cap_first
 				propertySchema = freeMarkerTool.getDTOPropertySchema(configYAML, propertyName, schema, allSchemas)
 				propertyType = properties[propertyName]
 			/>
+
+			<#if enumSchemas?keys?seq_contains(propertyType)>
+				<#assign capitalizedPropertyName = propertyType />
+			</#if>
+
+			${propertyType} ${propertyName} = get${capitalizedPropertyName}();
 
 			if (${propertyName} != null) {
 				if (sb.length() > 1) {

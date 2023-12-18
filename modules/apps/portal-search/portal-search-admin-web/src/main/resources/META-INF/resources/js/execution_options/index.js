@@ -27,6 +27,7 @@ function ExecutionOptions({
 	concurrentModeSupported,
 	executionMode,
 	executionScope,
+	omniAdmin,
 	onExecutionModeChange,
 	onExecutionScopeChange,
 	onSelectedCompanyIdsChange,
@@ -163,60 +164,64 @@ function ExecutionOptions({
 				</div>
 			)}
 
-			<div className="sheet-section">
-				<div
-					className="sheet-subtitle text-secondary"
-					style={{textTransform: 'none'}}
-				>
-					<span>{Liferay.Language.get('reindex-scope')}</span>
+			{omniAdmin && (
+				<div className="sheet-section">
+					<div
+						className="sheet-subtitle text-secondary"
+						style={{textTransform: 'none'}}
+					>
+						<span>{Liferay.Language.get('reindex-scope')}</span>
 
-					<ClayTooltipProvider>
-						<ClaySticker
-							data-tooltip-align="bottom-left"
-							displayType="secondary"
-							size="sm"
-							title={Liferay.Language.get('execution-scope-help')}
-						>
-							<ClayIcon symbol="question-circle-full" />
-						</ClaySticker>
-					</ClayTooltipProvider>
+						<ClayTooltipProvider>
+							<ClaySticker
+								data-tooltip-align="bottom-left"
+								displayType="secondary"
+								size="sm"
+								title={Liferay.Language.get(
+									'execution-scope-help'
+								)}
+							>
+								<ClayIcon symbol="question-circle-full" />
+							</ClaySticker>
+						</ClayTooltipProvider>
+					</div>
+
+					<ClayRadioGroup
+						className="c-pb-2"
+						name={`${portletNamespace}scope`}
+						onChange={onExecutionScopeChange}
+						value={executionScope}
+					>
+						<ClayRadio
+							label={Liferay.Language.get('all-instances')}
+							value={SCOPES.ALL}
+						/>
+
+						<ClayRadio
+							label={Liferay.Language.get('selected-instances')}
+							value={SCOPES.SELECTED}
+						/>
+					</ClayRadioGroup>
+
+					{executionScope === SCOPES.SELECTED && (
+						<InstanceSelector
+							onSelectedChange={onSelectedCompanyIdsChange}
+							selected={selectedCompanyIds}
+							virtualInstances={virtualInstances}
+						/>
+					)}
+
+					<input
+						name={`${portletNamespace}companyIds`}
+						type="hidden"
+						value={
+							executionScope === SCOPES.ALL
+								? virtualInstances.map(({id}) => id)?.toString()
+								: selectedCompanyIds.toString()
+						}
+					/>
 				</div>
-
-				<ClayRadioGroup
-					className="c-pb-2"
-					name={`${portletNamespace}scope`}
-					onChange={onExecutionScopeChange}
-					value={executionScope}
-				>
-					<ClayRadio
-						label={Liferay.Language.get('all-instances')}
-						value={SCOPES.ALL}
-					/>
-
-					<ClayRadio
-						label={Liferay.Language.get('selected-instances')}
-						value={SCOPES.SELECTED}
-					/>
-				</ClayRadioGroup>
-
-				{executionScope === SCOPES.SELECTED && (
-					<InstanceSelector
-						onSelectedChange={onSelectedCompanyIdsChange}
-						selected={selectedCompanyIds}
-						virtualInstances={virtualInstances}
-					/>
-				)}
-
-				<input
-					name={`${portletNamespace}companyIds`}
-					type="hidden"
-					value={
-						executionScope === SCOPES.ALL
-							? virtualInstances.map(({id}) => id)?.toString()
-							: selectedCompanyIds.toString()
-					}
-				/>
-			</div>
+			)}
 		</div>
 	);
 }

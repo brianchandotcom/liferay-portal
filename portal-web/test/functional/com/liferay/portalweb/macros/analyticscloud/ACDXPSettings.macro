@@ -80,6 +80,22 @@ definition {
 		WaitForElementNotPresent(locator1 = "ACDXPSettings#CONNECT_BUTTON_DISABLED");
 
 		Click(locator1 = "ACDXPSettings#CONNECT_BUTTON");
+
+		WaitForVisible(
+			key_text = "Next",
+			locator1 = "Button#ANY");
+
+		WaitForElementNotPresent(locator1 = "ACSettings#LOADING_ANIMATION");
+
+		while (IsElementPresent(key_text = "Try Again", locator1 = "Button#ANY")) {
+			Click(
+				key_text = "Next",
+				locator1 = "Button#ANY");
+
+			Click(
+				key_text = "Previous",
+				locator1 = "Button#ANY");
+		}
 	}
 
 	@summary = "Default summary"
@@ -270,16 +286,6 @@ definition {
 
 	@summary = "Default summary"
 	macro getAssignedPropertyName() {
-		while (IsElementPresent(key_text = "Try Again", locator1 = "Button#ANY")) {
-			Click(
-				key_text = "Next",
-				locator1 = "Button#ANY");
-
-			Click(
-				key_text = "Previous",
-				locator1 = "Button#ANY");
-		}
-
 		WaitForVisible(
 			key_text = "Assign",
 			locator1 = "Button#ANY");

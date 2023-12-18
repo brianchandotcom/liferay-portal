@@ -758,22 +758,24 @@ definition {
 		}
 
 		task ("Validade if the categories are shown in order of creation") {
+			SetWindowSize.maximizeWindow();
+
 			ContentDashboard.goToContentDashboard();
 
 			AssertTextEquals(
 				categoryIndex = 1,
 				locator1 = "ContentDashboard#X_AXIS_CATEGORIES_NAME",
-				value1 = "C_Subaudien…");
+				value1 = "C_Subaudienc…");
 
 			AssertTextEquals(
 				categoryIndex = 2,
 				locator1 = "ContentDashboard#X_AXIS_CATEGORIES_NAME",
-				value1 = "B_Subaudien…");
+				value1 = "B_Subaudienc…");
 
 			AssertTextEquals(
 				categoryIndex = 3,
 				locator1 = "ContentDashboard#X_AXIS_CATEGORIES_NAME",
-				value1 = "A_Subaudien…");
+				value1 = "A_Subaudienc…");
 		}
 	}
 
@@ -5668,6 +5670,8 @@ definition {
 		}
 
 		task ("Go to Content Dashboard and set graph to only one vocabulary") {
+			SetWindowSize.maximizeWindow();
+
 			ContentDashboard.goToContentDashboard();
 
 			ContentDashboard.moveVocabularyDisplayConfiguration(vocabularyName = "Stage");
@@ -5691,17 +5695,17 @@ definition {
 			AssertTextEquals(
 				categoryIndex = 1,
 				locator1 = "ContentDashboard#X_AXIS_CATEGORIES_NAME",
-				value1 = "C_Subaudien…");
+				value1 = "C_Subaudienc…");
 
 			AssertTextEquals(
 				categoryIndex = 2,
 				locator1 = "ContentDashboard#X_AXIS_CATEGORIES_NAME",
-				value1 = "B_Subaudien…");
+				value1 = "B_Subaudienc…");
 
 			AssertTextEquals(
 				categoryIndex = 3,
 				locator1 = "ContentDashboard#X_AXIS_CATEGORIES_NAME",
-				value1 = "A_Subaudien…");
+				value1 = "A_Subaudienc…");
 		}
 	}
 

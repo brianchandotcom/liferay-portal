@@ -176,7 +176,7 @@ public class AggregationWrapperConverter {
 			).put(
 				"scripted_metric", this::_toScriptedMetricAggregation
 			).put(
-				"scripted_metric", this::_toStatsAggregation
+				"stats", this::_toStatsAggregation
 			).put(
 				"sum", this::_toSumAggregation
 			).put(

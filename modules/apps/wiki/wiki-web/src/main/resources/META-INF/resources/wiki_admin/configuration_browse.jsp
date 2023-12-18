@@ -8,8 +8,6 @@
 <%@ include file="/wiki/init.jsp" %>
 
 <%
-MailTemplatesHelper mailTemplatesHelper = new MailTemplatesHelper(wikiRequestHelper);
-
 WikiConfigurationDisplayContext wikiConfigurationDisplayContext = new WikiConfigurationDisplayContext(request, renderRequest, renderResponse);
 
 portletDisplay.setShowBackIcon(true);
@@ -79,6 +77,8 @@ portletDisplay.setURLBackTitle("wiki");
 					<liferay-ui:error embed="<%= false %>" key="emailPageUpdatedSubject" message="please-enter-a-valid-subject" />
 
 					<%
+					MailTemplatesHelper mailTemplatesHelper = new MailTemplatesHelper(wikiRequestHelper);
+
 					Map<String, String> definitionTerms = mailTemplatesHelper.getEmailNotificationDefinitionTerms();
 					%>
 

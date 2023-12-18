@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -30,6 +31,7 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
+import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
 /**
@@ -105,6 +107,7 @@ public class GetSitesMVCResourceCommandTest
 		ResourceRequest resourceRequest = Mockito.mock(ResourceRequest.class);
 
 		_setUpThemeDisplay(resourceRequest);
+		_setUpPages(resourceRequest, 10, 1);
 
 		Group childrenGroup = _createGroup(
 			RandomTestUtil.randomString(), true, new ArrayList<>());
@@ -125,6 +128,8 @@ public class GetSitesMVCResourceCommandTest
 
 		Assert.assertEquals(
 			sitesJSONArray.toString(), 2, sitesJSONArray.length());
+
+		_paramUtilMockedStatic.close();
 	}
 
 	@Test
@@ -154,6 +159,7 @@ public class GetSitesMVCResourceCommandTest
 		ResourceRequest resourceRequest = Mockito.mock(ResourceRequest.class);
 
 		_setUpThemeDisplay(resourceRequest);
+		_setUpPages(resourceRequest, 10, 1);
 
 		_setUpGroups(true, 3, new ArrayList<>());
 
@@ -165,6 +171,8 @@ public class GetSitesMVCResourceCommandTest
 
 		Assert.assertEquals(
 			sitesJSONArray.toString(), 3, sitesJSONArray.length());
+
+		_paramUtilMockedStatic.close();
 	}
 
 	@Test
@@ -256,6 +264,24 @@ public class GetSitesMVCResourceCommandTest
 		);
 	}
 
+	private void _setUpPages(
+		ResourceRequest resourceRequest, int pageSize, int page) {
+
+		_paramUtilMockedStatic = Mockito.mockStatic(ParamUtil.class);
+
+		_paramUtilMockedStatic.when(
+			() -> ParamUtil.getInteger(resourceRequest, "pageSize")
+		).thenReturn(
+			pageSize
+		);
+
+		_paramUtilMockedStatic.when(
+			() -> ParamUtil.getInteger(resourceRequest, "page")
+		).thenReturn(
+			page
+		);
+	}
+
 	private void _setUpThemeDisplay(ResourceRequest resourceRequest) {
 		Mockito.when(
 			resourceRequest.getAttribute(WebKeys.THEME_DISPLAY)
@@ -288,6 +314,7 @@ public class GetSitesMVCResourceCommandTest
 
 	private GetSitesMVCResourceCommand _getSitesMVCResourceCommand;
 	private final GroupService _groupService = Mockito.mock(GroupService.class);
+	private MockedStatic<ParamUtil> _paramUtilMockedStatic;
 	private final ThemeDisplay _themeDisplay = Mockito.mock(ThemeDisplay.class);
 
 }

@@ -155,8 +155,13 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8301 | Test Summary: Assert Sites Top Pages Card Visited Pages Highest Views"
+	@ignore = "true"
 	@priority = 3
 	test AssertSitesTopPagesCardVisitedPagesHighestViews {
+
+		// AC Bug: The list of pages that appear in the Top Pages card and in the Page tab appear in different positions when the main sorting metric has the same number for more than one page
+		// AC Bug ticket: LRAC-15263
+
 		var num = "1,2";
 		var usernameList = "ac,liferay";
 		var emailList = "ac@liferay.com,liferay@liferay.com";

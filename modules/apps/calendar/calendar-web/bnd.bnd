@@ -3,3 +3,4 @@ Bundle-SymbolicName: com.liferay.calendar.web
 Bundle-Version: 5.0.86
 Liferay-JS-Config: /META-INF/resources/js/config.js
 Web-ContextPath: /calendar-web
+-dsannotations-options: inherit

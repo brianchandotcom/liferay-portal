@@ -6,7 +6,7 @@
 package com.liferay.jethr0.job.definition;
 
 import com.liferay.jethr0.job.JobEntity;
-import com.liferay.jethr0.job.definition.parameter.JenkinsBranchURLJobParameterDefinition;
+import com.liferay.jethr0.job.definition.parameter.JenkinsPullRequestURLJobParameterDefinition;
 import com.liferay.jethr0.job.definition.parameter.JobParameterDefinition;
 
 import java.util.HashSet;
@@ -22,7 +22,7 @@ public class JenkinsPullRequestJobDefinition extends BaseJobDefinition {
 		Set<JobParameterDefinition> jobParameterDefinitions = new HashSet<>();
 
 		jobParameterDefinitions.add(
-			new JenkinsBranchURLJobParameterDefinition());
+			new JenkinsPullRequestURLJobParameterDefinition());
 
 		return jobParameterDefinitions;
 	}

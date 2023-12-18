@@ -61,9 +61,9 @@ public class SimpleCaptchaSAPEntryPortalInstanceLifecycleListener
 			_userLocalService.getGuestUserId(companyId),
 			StringBundler.concat(
 				"com.liferay.captcha.rest.internal.resource.v1_0.",
-				"SimpleCaptchaResourceImpl#getSimpleCaptcha\n",
+				"SimpleCaptchaResourceImpl#getSimpleCaptchaChallenge\n",
 				"com.liferay.captcha.rest.internal.resource.v1_0.",
-				"SimpleCaptchaResourceImpl#postSimpleCaptcha"),
+				"SimpleCaptchaResourceImpl#postSimpleCaptchaResponse"),
 			true, true, "CAPTCHA_DEFAULT", map, new ServiceContext());
 	}
 

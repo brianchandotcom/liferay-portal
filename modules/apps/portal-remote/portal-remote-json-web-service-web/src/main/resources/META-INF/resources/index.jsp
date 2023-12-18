@@ -49,7 +49,7 @@
 			</div>
 		</div>
 
-		<footer class="card fixed-bottom m-0 p-2 rounded-0" id="footer" role="contentinfo">
+		<footer class="card fixed-bottom m-0 p-2 rounded-0" id="footer">
 			<p class="m-0 powered-by">
 				<liferay-util:buffer
 					var="poweredByLiferay"

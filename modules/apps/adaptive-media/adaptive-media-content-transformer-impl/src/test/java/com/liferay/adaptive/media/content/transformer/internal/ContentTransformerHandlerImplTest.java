@@ -110,11 +110,11 @@ public class ContentTransformerHandlerImplTest {
 			_contentTransformerHandlerImpl.transform(_ORIGINAL_CONTENT));
 	}
 
-	private ContentTransformer<String> _registerContentTransformer(
+	private ContentTransformer _registerContentTransformer(
 			String originalContent, String transformedContent)
 		throws Exception {
 
-		ContentTransformer<String> contentTransformer = Mockito.mock(
+		ContentTransformer contentTransformer = Mockito.mock(
 			ContentTransformer.class);
 
 		Mockito.when(
@@ -131,7 +131,7 @@ public class ContentTransformerHandlerImplTest {
 	private void _registerInvalidContentTransformer(String originalContent)
 		throws Exception {
 
-		ContentTransformer<String> invalidContentTransformer =
+		ContentTransformer invalidContentTransformer =
 			_registerContentTransformer(originalContent, "");
 
 		Mockito.when(
@@ -150,7 +150,7 @@ public class ContentTransformerHandlerImplTest {
 		new MockServiceTrackerList();
 
 	private final class MockServiceTrackerList
-		implements ServiceTrackerList<ContentTransformer<?>> {
+		implements ServiceTrackerList<ContentTransformer> {
 
 		@Override
 		public void close() {
@@ -158,11 +158,11 @@ public class ContentTransformerHandlerImplTest {
 		}
 
 		@Override
-		public Iterator<ContentTransformer<?>> iterator() {
+		public Iterator<ContentTransformer> iterator() {
 			return _contentTransformers.iterator();
 		}
 
-		public void register(ContentTransformer<?> contentTransformer) {
+		public void register(ContentTransformer contentTransformer) {
 			_contentTransformers.add(contentTransformer);
 		}
 
@@ -177,11 +177,11 @@ public class ContentTransformerHandlerImplTest {
 		}
 
 		@Override
-		public List<ContentTransformer<?>> toList() {
+		public List<ContentTransformer> toList() {
 			return new ArrayList<>(_contentTransformers);
 		}
 
-		private final List<ContentTransformer<?>> _contentTransformers =
+		private final List<ContentTransformer> _contentTransformers =
 			new ArrayList<>();
 
 	}

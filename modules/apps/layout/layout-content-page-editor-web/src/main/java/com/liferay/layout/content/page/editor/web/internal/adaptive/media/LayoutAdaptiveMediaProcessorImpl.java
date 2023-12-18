@@ -6,7 +6,6 @@
 package com.liferay.layout.content.page.editor.web.internal.adaptive.media;
 
 import com.liferay.adaptive.media.content.transformer.ContentTransformerHandler;
-import com.liferay.adaptive.media.content.transformer.constants.ContentTransformerContentTypes;
 import com.liferay.adaptive.media.image.configuration.AMImageConfigurationEntry;
 import com.liferay.adaptive.media.image.configuration.AMImageConfigurationHelper;
 import com.liferay.adaptive.media.image.html.constants.AMImageHTMLConstants;
@@ -50,8 +49,7 @@ public class LayoutAdaptiveMediaProcessorImpl
 
 	@Override
 	public String processAdaptiveMediaContent(String content) {
-		String processedContent = _contentTransformerHandler.transform(
-			ContentTransformerContentTypes.HTML, content);
+		String processedContent = _contentTransformerHandler.transform(content);
 
 		Document document = Jsoup.parse(processedContent);
 

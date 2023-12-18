@@ -6,7 +6,6 @@
 package com.liferay.adaptive.media.image.content.transformer.test;
 
 import com.liferay.adaptive.media.content.transformer.ContentTransformerHandler;
-import com.liferay.adaptive.media.content.transformer.constants.ContentTransformerContentTypes;
 import com.liferay.adaptive.media.image.configuration.AMImageConfigurationEntry;
 import com.liferay.adaptive.media.image.configuration.AMImageConfigurationHelper;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
@@ -91,8 +90,7 @@ public class AMImageContentTransformerTest {
 			"srcset=\".+\" \\/><img data-fileentryid=\".+\" src=\".+\" \\/>",
 			"<\\/picture>");
 
-		String transformedHTML = _contentTransformerHandler.transform(
-			ContentTransformerContentTypes.HTML, rawHTML);
+		String transformedHTML = _contentTransformerHandler.transform(rawHTML);
 
 		Assert.assertTrue(transformedHTML.matches(regex));
 	}

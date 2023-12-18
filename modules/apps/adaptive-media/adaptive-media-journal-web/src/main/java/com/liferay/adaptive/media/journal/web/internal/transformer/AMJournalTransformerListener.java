@@ -6,7 +6,6 @@
 package com.liferay.adaptive.media.journal.web.internal.transformer;
 
 import com.liferay.adaptive.media.content.transformer.ContentTransformerHandler;
-import com.liferay.adaptive.media.content.transformer.constants.ContentTransformerContentTypes;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.util.JournalContent;
 import com.liferay.portal.kernel.templateparser.BaseTransformerListener;
@@ -32,8 +31,7 @@ public class AMJournalTransformerListener extends BaseTransformerListener {
 	public String onOutput(
 		String output, String languageId, Map<String, String> tokens) {
 
-		return _contentTransformerHandler.transform(
-			ContentTransformerContentTypes.HTML, output);
+		return _contentTransformerHandler.transform(output);
 	}
 
 	@Activate

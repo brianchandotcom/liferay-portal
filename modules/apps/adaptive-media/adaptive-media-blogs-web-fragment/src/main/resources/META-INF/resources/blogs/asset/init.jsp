@@ -8,5 +8,4 @@
 <%@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.adaptive.media.blogs.web.fragment.internal.content.transformer.ContentTransformerUtil" %><%@
-page import="com.liferay.adaptive.media.content.transformer.ContentTransformerHandler" %><%@
-page import="com.liferay.adaptive.media.content.transformer.constants.ContentTransformerContentTypes" %>
+page import="com.liferay.adaptive.media.content.transformer.ContentTransformerHandler" %>

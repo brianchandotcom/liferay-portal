@@ -148,7 +148,7 @@ export default function LeftSidebar() {
 										}
 										setExpandedKeys={setExpandedKeys}
 									/>
-
+									<hr className="lfr-objects__model-builder-left-sidebar-body-separator" />
 									<ClayPanel
 										className="lfr-objects__model-builder-left-sidebar-body-panel"
 										collapsable

@@ -1327,10 +1327,10 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			resourcePrimKey, SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
 			extraDataJSONObject.toString(), 0);
 
+		restoreDependentKBArticlesFromTrash(resourcePrimKey);
+
 		_trashEntryLocalService.deleteEntry(
 			KBArticle.class.getName(), resourcePrimKey);
-
-		restoreDependentKBArticlesFromTrash(resourcePrimKey);
 	}
 
 	@Override

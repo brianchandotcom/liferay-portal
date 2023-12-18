@@ -68,9 +68,6 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 				averageTestDuration = testHistory.getAverageDuration();
 			}
 		}
-		else {
-			averageTestDuration = 0;
-		}
 
 		_averageTestDurations.put(testName, averageTestDuration);
 
@@ -93,9 +90,6 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 				averageTestOverheadDuration =
 					testHistory.getAverageOverheadDuration();
 			}
-		}
-		else {
-			averageTestOverheadDuration = 0;
 		}
 
 		_averageTestOverheadDurations.put(

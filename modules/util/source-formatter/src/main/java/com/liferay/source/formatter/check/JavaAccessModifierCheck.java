@@ -66,21 +66,22 @@ public class JavaAccessModifierCheck extends BaseJavaTermCheck {
 		List<JavaTerm> childJavaTerms = javaClass.getChildJavaTerms();
 
 		for (JavaTerm childJavaTerm : childJavaTerms) {
-			if (childJavaTerm.isJavaVariable()) {
-				JavaVariable javaVariable = (JavaVariable)childJavaTerm;
+			if (!childJavaTerm.isJavaVariable()) {
+				continue;
+			}
 
-				String accessModifier = javaVariable.getAccessModifier();
-				String variableContent = javaVariable.getContent();
+			JavaVariable javaVariable = (JavaVariable)childJavaTerm;
 
-				if (variableContent.contains("@Reference") &&
-					accessModifier.equals("private")) {
+			String accessModifier = javaVariable.getAccessModifier();
+			String variableContent = javaVariable.getContent();
 
-					addMessage(
-						fileName,
-						"The access modifier of variable '" +
-							javaVariable.getName() +
-								"' should be 'protected'.");
-				}
+			if (variableContent.contains("@Reference") &&
+				accessModifier.equals("private")) {
+
+				addMessage(
+					fileName,
+					"The access modifier of variable '" +
+						javaVariable.getName() + "' should be 'protected'.");
 			}
 		}
 

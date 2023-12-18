@@ -91,6 +91,8 @@ definition {
 
 		Click(locator1 = "Button#SUBMIT");
 
+		WaitForElementPresent(locator1 = "Message#ERROR");
+
 		Alert.viewErrorMessage(errorMessage = "Staging is enabled for at least one site or asset library in the current virtual instance. Publications and staging cannot be used together.");
 	}
 

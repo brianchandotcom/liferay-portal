@@ -127,7 +127,7 @@ public class DisplayPageLayoutTypeControllerTest {
 
 		Assert.assertNotNull(draftLayout);
 
-		_setUpInfoItem();
+		_setUpInfoItem(true);
 
 		_addFragmentEntryLink(draftLayout);
 
@@ -136,6 +136,35 @@ public class DisplayPageLayoutTypeControllerTest {
 		Assert.assertTrue(layout.isPublished());
 
 		_assertIncludeLayoutContent(false, layout.getPlid(), _guestUser);
+	}
+
+	@Test
+	public void testDisplayPageTypeControllerWithInfoItemWithoutGuestPermissions()
+		throws Exception {
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
+				_group.getGroupId(), 0,
+				_portal.getClassNameId(AssetCategory.class.getName()), 0,
+				RandomTestUtil.randomString(), 0,
+				WorkflowConstants.STATUS_DRAFT, _serviceContext);
+
+		Layout layout = _layoutLocalService.getLayout(
+			layoutPageTemplateEntry.getPlid());
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		Assert.assertNotNull(draftLayout);
+
+		_setUpInfoItem(false);
+
+		_addFragmentEntryLink(draftLayout);
+
+		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
+
+		Assert.assertTrue(layout.isPublished());
+
+		_assertIncludeLayoutContent(true, layout.getPlid(), _guestUser);
 	}
 
 	@Test
@@ -300,13 +329,18 @@ public class DisplayPageLayoutTypeControllerTest {
 		return mockHttpServletRequest;
 	}
 
-	private void _setUpInfoItem() throws Exception {
+	private void _setUpInfoItem(boolean addGuestPermissions) throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		serviceContext.setAddGuestPermissions(addGuestPermissions);
+
 		AssetVocabulary assetVocabulary =
 			_assetVocabularyLocalService.addVocabulary(
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomLocaleStringMap(), Collections.emptyMap(),
-				StringPool.BLANK, _serviceContext);
+				StringPool.BLANK, serviceContext);
 
 		_assetCategory = AssetTestUtil.addCategory(
 			_group.getGroupId(), assetVocabulary.getVocabularyId());
@@ -318,7 +352,8 @@ public class DisplayPageLayoutTypeControllerTest {
 		_infoItemDetails = infoItemDetailsProvider.getInfoItemDetails(
 			_assetCategory);
 
-		Assert.assertTrue(
+		Assert.assertEquals(
+			addGuestPermissions,
 			_infoItemPermissionProvider.hasPermission(
 				_permissionCheckerFactory.create(_guestUser), _assetCategory,
 				ActionKeys.VIEW));

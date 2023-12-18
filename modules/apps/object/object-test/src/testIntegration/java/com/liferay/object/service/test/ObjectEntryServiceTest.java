@@ -706,11 +706,11 @@ public class ObjectEntryServiceTest {
 			adminRole.getRoleId());
 
 		for (long adminUserId : adminUserIds) {
-			Assert.assertFalse(
+			int numberOfNotifications =
 				_userNotificationLocalService.
-					getDeliveredUserNotificationEvents(
-						adminUserId, true
-					).isEmpty());
+					getDeliveredUserNotificationEventsCount(adminUserId, true);
+
+			Assert.assertTrue(numberOfNotifications > 0);
 		}
 
 		ConfigurationTestUtil.deleteConfiguration(
@@ -795,6 +795,13 @@ public class ObjectEntryServiceTest {
 				Collections.emptyMap(),
 				ServiceContextTestUtil.getServiceContext(
 					TestPropsValues.getGroupId(), _guestUser.getUserId())));
+
+		for (long adminUserId : adminUserIds) {
+			Assert.assertEquals(
+				1,
+				_userNotificationLocalService.
+					getDeliveredUserNotificationEventsCount(adminUserId, true));
+		}
 
 		_objectEntryLocalService.deleteObjectEntry(
 			objectEntry.getObjectEntryId());

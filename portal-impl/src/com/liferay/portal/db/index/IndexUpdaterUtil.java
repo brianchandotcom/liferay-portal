@@ -5,6 +5,7 @@
 
 package com.liferay.portal.db.index;
 
+import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.portal.db.DBResourceUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -18,10 +19,15 @@ import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.concurrent.FutureTask;
 
 import org.osgi.framework.Bundle;
@@ -33,6 +39,24 @@ import org.osgi.util.tracker.BundleTrackerCustomizer;
  * @author Ricardo Couso
  */
 public class IndexUpdaterUtil {
+
+	public static void destroy() {
+		_executorServiceDCLSingleton.destroy(
+			executorService -> {
+				executorService.shutdown();
+
+				for (Future<?> future : _futures) {
+					try {
+						future.get();
+					}
+					catch (Exception exception) {
+						_log.error(exception);
+					}
+				}
+
+				_futures.clear();
+			});
+	}
 
 	public static void updateAllIndexes() {
 		if (!_updatedBundleSymbolicNames.contains("portal")) {
@@ -102,22 +126,34 @@ public class IndexUpdaterUtil {
 
 		DB db = DBManagerUtil.getDB();
 
+		ExecutorService executorService = _getExecutorService();
+
 		db.process(
-			companyId -> {
-				String message = new String(
-					"Updating database indexes for " +
-						bundle.getSymbolicName());
+			companyId -> _futures.add(
+				executorService.submit(
+					() -> {
+						String message = new String(
+							"Updating database indexes for " +
+								bundle.getSymbolicName());
 
-				if (Validator.isNotNull(companyId)) {
-					message += " and company " + companyId;
-				}
+						if (Validator.isNotNull(companyId)) {
+							message += " and company " + companyId;
+						}
 
-				try (Connection connection = DataAccess.getConnection();
-					LoggingTimer loggingTimer = new LoggingTimer(message)) {
+						try {
+							try (Connection connection =
+									DataAccess.getConnection();
+								LoggingTimer loggingTimer = new LoggingTimer(
+									message)) {
 
-					db.updateIndexes(connection, tablesSQL, indexesSQL, true);
-				}
-			});
+								db.updateIndexes(
+									connection, tablesSQL, indexesSQL, true);
+							}
+						}
+						catch (Exception exception) {
+							_log.error(exception);
+						}
+					})));
 
 		_updatedBundleSymbolicNames.add(bundle.getSymbolicName());
 	}
@@ -125,27 +161,31 @@ public class IndexUpdaterUtil {
 	public static void updatePortalIndexes() {
 		DB db = DBManagerUtil.getDB();
 
+		ExecutorService executorService = _getExecutorService();
+
 		try {
 			db.process(
-				companyId -> {
-					String message = new String(
-						"Updating portal database indexes");
+				companyId -> _futures.add(
+					executorService.submit(
+						() -> {
+							String message = new String(
+								"Updating portal database indexes");
 
-					if (Validator.isNotNull(companyId)) {
-						message += " for company " + companyId;
-					}
+							if (Validator.isNotNull(companyId)) {
+								message += " for company " + companyId;
+							}
 
-					try (Connection connection = DataAccess.getConnection();
-						LoggingTimer loggingTimer = new LoggingTimer(message)) {
+							try (Connection connection =
+									DataAccess.getConnection();
+								LoggingTimer loggingTimer = new LoggingTimer(
+									message)) {
 
-						_updatePortalIndexes(db, connection);
-					}
-					catch (SQLException sqlException) {
-						if (_log.isWarnEnabled()) {
-							_log.warn(sqlException);
-						}
-					}
-				});
+								_updatePortalIndexes(db, connection);
+							}
+							catch (Exception exception) {
+								_log.error(exception);
+							}
+						})));
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
@@ -154,6 +194,11 @@ public class IndexUpdaterUtil {
 		}
 
 		_updatedBundleSymbolicNames.add("portal");
+	}
+
+	private static ExecutorService _getExecutorService() {
+		return _executorServiceDCLSingleton.getSingleton(
+			Executors::newWorkStealingPool);
 	}
 
 	private static void _updatePortalIndexes(DB db, Connection connection)
@@ -167,6 +212,10 @@ public class IndexUpdaterUtil {
 	private static final Log _log = LogFactoryUtil.getLog(
 		IndexUpdaterUtil.class);
 
+	private static final DCLSingleton<ExecutorService>
+		_executorServiceDCLSingleton = new DCLSingleton<>();
+	private static final List<Future<?>> _futures =
+		Collections.synchronizedList(new ArrayList<Future<?>>());
 	private static final Set<String> _updatedBundleSymbolicNames =
 		new HashSet<>();
 

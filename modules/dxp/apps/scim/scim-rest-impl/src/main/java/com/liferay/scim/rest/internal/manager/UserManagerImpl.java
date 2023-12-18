@@ -56,7 +56,9 @@ import com.liferay.scim.rest.internal.util.ScimUserUtil;
 import com.liferay.scim.rest.util.ScimClientUtil;
 
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -181,10 +183,14 @@ public class UserManagerImpl implements UserManager {
 		String groupId, Map<String, Boolean> requiredAttributes) {
 
 		try {
+			UserGroup userGroup = _getUserGroup(
+				CompanyThreadLocal.getCompanyId(), GetterUtil.getLong(groupId));
+
 			return ScimGroupUtil.toGroup(
-				_getUserGroup(
+				_getScimUsers(
 					CompanyThreadLocal.getCompanyId(),
-					GetterUtil.getLong(groupId)));
+					userGroup.getUserGroupId()),
+				userGroup);
 		}
 		catch (AbstractCharonException abstractCharonException) {
 			return ReflectionUtil.throwException(abstractCharonException);
@@ -214,7 +220,11 @@ public class UserManagerImpl implements UserManager {
 					"No user found with user ID " + userId);
 			}
 
-			return ScimUserUtil.toUser(scimUser);
+			return ScimUserUtil.toUser(
+				_getGroups(
+					CompanyThreadLocal.getCompanyId(),
+					GetterUtil.getLong(scimUser.getId())),
+				scimUser);
 		}
 		catch (AbstractCharonException abstractCharonException) {
 			return ReflectionUtil.throwException(abstractCharonException);
@@ -282,10 +292,14 @@ public class UserManagerImpl implements UserManager {
 				searchHit -> {
 					Document document = searchHit.getDocument();
 
-					long userGroupId = document.getLong(Field.ENTRY_CLASS_PK);
+					UserGroup userGroup = _userGroupService.getUserGroup(
+						document.getLong(Field.ENTRY_CLASS_PK));
 
 					return ScimGroupUtil.toGroup(
-						_userGroupService.getUserGroup(userGroupId));
+						_getScimUsers(
+							userGroup.getCompanyId(),
+							userGroup.getUserGroupId()),
+						userGroup);
 				}));
 	}
 
@@ -358,10 +372,11 @@ public class UserManagerImpl implements UserManager {
 				searchHit -> {
 					Document document = searchHit.getDocument();
 
+					long userId = document.getLong(Field.ENTRY_CLASS_PK);
+
 					return ScimUserUtil.toUser(
-						_toScimUser(
-							_userService.getUserById(
-								document.getLong(Field.ENTRY_CLASS_PK))));
+						_getGroups(serviceContext.getCompanyId(), userId),
+						_toScimUser(_userService.getUserById(userId)));
 				}));
 	}
 
@@ -407,7 +422,10 @@ public class UserManagerImpl implements UserManager {
 				_transactionConfig,
 				() -> _addOrUpdateUserGroup(company, group));
 
-			return ScimGroupUtil.toGroup(userGroup);
+			return ScimGroupUtil.toGroup(
+				_getScimUsers(
+					userGroup.getCompanyId(), userGroup.getUserGroupId()),
+				userGroup);
 		}
 		catch (AbstractCharonException abstractCharonException) {
 			return ReflectionUtil.throwException(abstractCharonException);
@@ -465,7 +483,10 @@ public class UserManagerImpl implements UserManager {
 					ScimUserUtil.toScimUser(
 						company.getCompanyId(), company.getLocale(), user)));
 
-			return ScimUserUtil.toUser(scimUser);
+			long userId = GetterUtil.getLong(scimUser.getId());
+
+			return ScimUserUtil.toUser(
+				_getGroups(company.getCompanyId(), userId), scimUser);
 		}
 		catch (AbstractCharonException abstractCharonException) {
 			return ReflectionUtil.throwException(abstractCharonException);
@@ -625,6 +646,27 @@ public class UserManagerImpl implements UserManager {
 		return _userGroupLocalService.fetchUserGroup(userGroupId);
 	}
 
+	private List<Group> _getGroups(long companyId, long userId) {
+		String userScimClientId = _getScimClientId(
+			com.liferay.portal.kernel.model.User.class.getName(), userId,
+			companyId);
+
+		return TransformUtil.transform(
+			_userGroupLocalService.getUserUserGroups(userId),
+			userGroup -> {
+				String userGroupScimClientId = _getScimClientId(
+					UserGroup.class.getName(), userGroup.getUserGroupId(),
+					userGroup.getCompanyId());
+
+				if (!Objects.equals(userGroupScimClientId, userScimClientId)) {
+					return null;
+				}
+
+				return ScimGroupUtil.toGroup(
+					Collections.emptyList(), userGroup);
+			});
+	}
+
 	private String _getScimClientId(
 		String className, long classPK, long companyId) {
 
@@ -726,6 +768,25 @@ public class UserManagerImpl implements UserManager {
 		}
 
 		return _toScimUser(portalUser);
+	}
+
+	private List<ScimUser> _getScimUsers(long companyId, long userGroupId) {
+		String userGroupScimClientId = _getScimClientId(
+			UserGroup.class.getName(), userGroupId, companyId);
+
+		return TransformUtil.transform(
+			_userLocalService.getUserGroupUsers(userGroupId),
+			user -> {
+				String userScimClientId = _getScimClientId(
+					com.liferay.portal.kernel.model.User.class.getName(),
+					user.getUserId(), user.getCompanyId());
+
+				if (!Objects.equals(userGroupScimClientId, userScimClientId)) {
+					return null;
+				}
+
+				return _toScimUser(user);
+			});
 	}
 
 	private UserGroup _getUserGroup(long companyId, long userGroupId)

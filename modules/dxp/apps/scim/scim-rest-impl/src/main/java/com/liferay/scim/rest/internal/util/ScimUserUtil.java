@@ -39,6 +39,7 @@ import org.wso2.charon3.core.attributes.ComplexAttribute;
 import org.wso2.charon3.core.attributes.DefaultAttributeFactory;
 import org.wso2.charon3.core.attributes.SimpleAttribute;
 import org.wso2.charon3.core.config.SCIMUserSchemaExtensionBuilder;
+import org.wso2.charon3.core.objects.Group;
 import org.wso2.charon3.core.objects.User;
 import org.wso2.charon3.core.objects.plainobjects.MultiValuedComplexType;
 import org.wso2.charon3.core.objects.plainobjects.ScimName;
@@ -89,7 +90,9 @@ public class ScimUserUtil {
 		return scimUser;
 	}
 
-	public static User toUser(ScimUser scimUser) throws Exception {
+	public static User toUser(List<Group> groups, ScimUser scimUser)
+		throws Exception {
+
 		User user = new User();
 
 		user.replaceActive(scimUser.isActive());
@@ -120,6 +123,11 @@ public class ScimUserUtil {
 		user.setCreatedInstant(createDate.toInstant());
 
 		user.setExternalId(scimUser.getExternalReferenceCode());
+
+		for (Group group : groups) {
+			user.setGroup("direct", group);
+		}
+
 		user.setId(scimUser.getId());
 
 		Date modifiedDate = scimUser.getModifiedDate();

@@ -85,9 +85,13 @@ public class OpenAPIResourceImpl {
 
 	private final Set<Class<?>> _resourceClasses = new HashSet<Class<?>>() {
 		{
+			add(AccountResourceImpl.class);
+
 			add(AccountAddressChannelResourceImpl.class);
 
 			add(ChannelResourceImpl.class);
+
+			add(ChannelAccountResourceImpl.class);
 
 			add(OrderTypeResourceImpl.class);
 

@@ -97,6 +97,14 @@ public class CommerceChannelServiceUtil {
 		return getService().getCommerceChannels(companyId);
 	}
 
+	public static List<CommerceChannel> getEligibleCommerceChannels(
+			long accountEntryId, String name, int start, int end)
+		throws PortalException {
+
+		return getService().getEligibleCommerceChannels(
+			accountEntryId, name, start, end);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

@@ -3,8 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.scheduler.quartz.internal.upgrade.v2_0_0;
+package com.liferay.portal.scheduler.quartz.internal.upgrade.v1_0_1;
 
+import com.liferay.petra.io.ProtectedObjectInputStream;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
@@ -16,7 +17,6 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 import java.io.InputStream;
-import java.io.ObjectInputStream;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -88,10 +88,10 @@ public class QuartzUpgradeProcess extends UpgradeProcess {
 	private JobDataMap _deserializeJobData(InputStream inputStream)
 		throws Exception {
 
-		try (ObjectInputStream objectInputStream = new ObjectInputStream(
-				inputStream)) {
+		try (ProtectedObjectInputStream protectedObjectInputStream =
+				new ProtectedObjectInputStream(inputStream)) {
 
-			return (JobDataMap)objectInputStream.readObject();
+			return (JobDataMap)protectedObjectInputStream.readObject();
 		}
 	}
 

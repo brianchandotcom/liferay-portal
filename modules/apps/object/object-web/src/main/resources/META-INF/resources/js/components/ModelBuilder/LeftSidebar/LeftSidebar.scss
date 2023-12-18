@@ -6,6 +6,10 @@
 	padding: 1rem;
 	position: inherit;
 
+	&-body-separator {
+		margin: 6px 0;
+	}
+
 	&-current-object-folder-container {
 		align-items: center;
 		display: flex;

@@ -25,6 +25,7 @@ import java.util.Locale;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -51,18 +52,25 @@ public class GetSitesMVCResourceCommandTest
 
 		ReflectionTestUtil.setFieldValue(
 			_getSitesMVCResourceCommand, "_groupService", _groupService);
+
+		_paramUtilMockedStatic = Mockito.mockStatic(ParamUtil.class);
+	}
+
+	@After
+	public void tearDown() {
+		_paramUtilMockedStatic.close();
 	}
 
 	@Test
 	public void testGetSiteByExternalReferenceCodeJSONObject()
 		throws Exception {
 
-		ResourceRequest resourceRequest = Mockito.mock(ResourceRequest.class);
-
 		_setUpThemeDisplay(resourceRequest);
 
 		Group childrenGroup = _createGroup(
 			RandomTestUtil.randomString(), true, new ArrayList<>());
+
+		_setUpParamUtil("externalReferenceCode", RandomTestUtil.randomString());
 
 		Mockito.doReturn(
 			childrenGroup
@@ -104,8 +112,6 @@ public class GetSitesMVCResourceCommandTest
 
 	@Test
 	public void testGetSitesJSONObjectWithChildrenGroups() throws Exception {
-		ResourceRequest resourceRequest = Mockito.mock(ResourceRequest.class);
-
 		_setUpThemeDisplay(resourceRequest);
 		_setUpPages(resourceRequest, 10, 1);
 
@@ -128,15 +134,11 @@ public class GetSitesMVCResourceCommandTest
 
 		Assert.assertEquals(
 			sitesJSONArray.toString(), 2, sitesJSONArray.length());
-
-		_paramUtilMockedStatic.close();
 	}
 
 	@Test
 	public void testGetSitesJSONObjectWithDifferentCompanyGroupId()
 		throws Exception {
-
-		ResourceRequest resourceRequest = Mockito.mock(ResourceRequest.class);
 
 		_setUpThemeDisplay(resourceRequest);
 
@@ -156,8 +158,6 @@ public class GetSitesMVCResourceCommandTest
 	public void testGetSitesJSONObjectWithSameCompanyGroupId()
 		throws Exception {
 
-		ResourceRequest resourceRequest = Mockito.mock(ResourceRequest.class);
-
 		_setUpThemeDisplay(resourceRequest);
 		_setUpPages(resourceRequest, 10, 1);
 
@@ -171,8 +171,6 @@ public class GetSitesMVCResourceCommandTest
 
 		Assert.assertEquals(
 			sitesJSONArray.toString(), 3, sitesJSONArray.length());
-
-		_paramUtilMockedStatic.close();
 	}
 
 	@Test
@@ -180,8 +178,7 @@ public class GetSitesMVCResourceCommandTest
 		setUpResourceRequest();
 		setUpResourceResponse();
 
-		setUpPortletRequestParamValue(
-			resourceRequest, "getSitesJSONObject", Constants.CMD);
+		_setUpParamUtil(Constants.CMD, "getSitesJSONObject");
 
 		_getSitesMVCResourceCommand.serveResource(
 			resourceRequest, resourceResponse);
@@ -207,8 +204,6 @@ public class GetSitesMVCResourceCommandTest
 
 		Assert.assertEquals(
 			sitesJSONArray.toString(), 3, sitesJSONArray.length());
-
-		_paramUtilMockedStatic.close();
 	}
 
 	@Test
@@ -221,15 +216,12 @@ public class GetSitesMVCResourceCommandTest
 			_getSitesMVCResourceCommand.getSitesJSONObject(
 				resourceRequest, Mockito.mock(ResourceResponse.class));
 
-		int lastPage = sitesJSONObject.getInt("lastPage");
-		JSONArray sitesJSONArray = sitesJSONObject.getJSONArray("items");
+		Assert.assertEquals(1, sitesJSONObject.getInt("lastPage"));
 
-		Assert.assertEquals(1, lastPage);
+		JSONArray sitesJSONArray = sitesJSONObject.getJSONArray("items");
 
 		Assert.assertEquals(
 			sitesJSONArray.toString(), 8, sitesJSONArray.length());
-
-		_paramUtilMockedStatic.close();
 	}
 
 	@Test
@@ -242,15 +234,12 @@ public class GetSitesMVCResourceCommandTest
 			_getSitesMVCResourceCommand.getSitesJSONObject(
 				resourceRequest, Mockito.mock(ResourceResponse.class));
 
-		int lastPage = sitesJSONObject.getInt("lastPage");
-		JSONArray sitesJSONArray = sitesJSONObject.getJSONArray("items");
+		Assert.assertEquals(2, sitesJSONObject.getInt("lastPage"));
 
-		Assert.assertEquals(2, lastPage);
+		JSONArray sitesJSONArray = sitesJSONObject.getJSONArray("items");
 
 		Assert.assertEquals(
 			sitesJSONArray.toString(), 5, sitesJSONArray.length());
-
-		_paramUtilMockedStatic.close();
 	}
 
 	private Group _createGroup(
@@ -329,8 +318,6 @@ public class GetSitesMVCResourceCommandTest
 	private void _setUpPages(
 		ResourceRequest resourceRequest, int pageSize, int page) {
 
-		_paramUtilMockedStatic = Mockito.mockStatic(ParamUtil.class);
-
 		_paramUtilMockedStatic.when(
 			() -> ParamUtil.getInteger(resourceRequest, "pageSize")
 		).thenReturn(
@@ -341,6 +328,14 @@ public class GetSitesMVCResourceCommandTest
 			() -> ParamUtil.getInteger(resourceRequest, "page")
 		).thenReturn(
 			page
+		);
+	}
+
+	private void _setUpParamUtil(String key, String value) {
+		_paramUtilMockedStatic.when(
+			() -> ParamUtil.getString(resourceRequest, key)
+		).thenReturn(
+			value
 		);
 	}
 

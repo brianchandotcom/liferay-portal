@@ -2678,25 +2678,30 @@ AUI.add(
 						.getInputNode()
 						.all('option')
 						.val();
-					const predefinedValues = JSON.parse(
-						instance.getFieldByNameInFieldDefinition(
-							instance.get('name')
-						).predefinedValue[instance.get('displayLocale')]
-					);
 
-					if (Lang.isString(values)) {
-						if (values !== '') {
-							values = JSON.parse(values);
+					const parseValues = (values) => {
+						if (values) {
+							return JSON.parse(values);
 						}
 						else {
-							values = [''];
+							return [''];
 						}
-					}
+					};
 
 					let resultValues = [];
 
+					if (Lang.isString(values)) {
+						values = parseValues(values);
+					}
+
 					values.forEach((value) => {
 						if (!currentlyAvailableValues.includes(value)) {
+							const predefinedValues = parseValues(
+								instance.getFieldByNameInFieldDefinition(
+									instance.get('name')
+								).predefinedValue[instance.get('displayLocale')]
+							);
+
 							resultValues.push(...predefinedValues);
 						}
 						else {

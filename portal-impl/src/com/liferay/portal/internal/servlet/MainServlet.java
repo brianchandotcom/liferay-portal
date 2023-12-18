@@ -147,6 +147,8 @@ public class MainServlet extends HttpServlet {
 			listIterator.remove();
 		}
 
+		IndexUpdaterUtil.destroy();
+
 		PortalLifecycleUtil.flushDestroys();
 
 		List<Portlet> portlets = PortletLocalServiceUtil.getPortlets();

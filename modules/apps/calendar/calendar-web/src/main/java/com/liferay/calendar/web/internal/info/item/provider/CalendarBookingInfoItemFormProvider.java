@@ -6,7 +6,7 @@
 package com.liferay.calendar.web.internal.info.item.provider;
 
 import com.liferay.calendar.model.CalendarBooking;
-import com.liferay.calendar.web.internal.info.CalendarBookingInfoItemFields;
+import com.liferay.calendar.web.internal.info.item.CalendarBookingInfoItemFields;
 import com.liferay.info.field.InfoFieldSet;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.provider.InfoItemFormProvider;
@@ -41,6 +41,16 @@ public class CalendarBookingInfoItemFormProvider
 		return InfoFieldSet.builder(
 		).infoFieldSetEntry(
 			CalendarBookingInfoItemFields.titleInfoField
+		).infoFieldSetEntry(
+			CalendarBookingInfoItemFields.descriptionInfoField
+		).infoFieldSetEntry(
+			CalendarBookingInfoItemFields.locationInfoField
+		).infoFieldSetEntry(
+			CalendarBookingInfoItemFields.startDateInfoField
+		).infoFieldSetEntry(
+			CalendarBookingInfoItemFields.endDateInfoField
+		).infoFieldSetEntry(
+			CalendarBookingInfoItemFields.allDayInfoField
 		).labelInfoLocalizedValue(
 			InfoLocalizedValue.localize(getClass(), "basic-information")
 		).name(

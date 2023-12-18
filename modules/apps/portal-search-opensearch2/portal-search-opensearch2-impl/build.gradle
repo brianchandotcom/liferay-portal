@@ -1,0 +1,79 @@
+import com.liferay.gradle.util.FileUtil
+import com.liferay.gradle.util.StringUtil
+
+apply plugin: 'java'
+
+compileJava {
+}
+
+dependencies {
+	compileInclude group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.13.4.2"
+	compileInclude group: "com.liferay", name: "org.apache.commons.logging", version: "1.2.LIFERAY-PATCHED-2"
+	compileInclude group: "com.liferay", name: "org.opensearch.java.client", version: "2.8.0.LIFERAY-PATCHED-1"
+	compileInclude group: "commons-lang", name: "commons-lang", version: "2.6"
+	compileInclude group: "jakarta.json", name: "jakarta.json-api", version: "2.0.1"
+	compileInclude group: "jakarta.json.bind", name: "jakarta.json.bind-api", version: "2.0.0"
+	compileInclude group: "org.apache.httpcomponents.client5", name: "httpclient5", version: "5.2.1"
+	compileInclude group: "org.apache.httpcomponents.core5", name: "httpcore5", version: "5.2.2"
+	compileInclude group: "org.apache.httpcomponents.core5", name: "httpcore5-h2", version: "5.2.2"
+	compileInclude group: "org.eclipse", name: "yasson", version: "2.0.4"
+	compileInclude group: "org.glassfish", name: "jakarta.json", version: "2.0.1"
+	compileInclude group: "org.reactivestreams", name: "reactive-streams", version: "1.0.0"
+
+	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.13.4"
+	compileOnly group: "com.liferay", name: "biz.aQute.bnd.annotation", version: "4.2.0.LIFERAY-PATCHED-2"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	compileOnly group: "org.osgi", name: "org.osgi.annotation.versioning", version: "1.1.0"
+	compileOnly group: "org.osgi", name: "org.osgi.service.cm", version: "1.6.0"
+	compileOnly group: "org.osgi", name: "org.osgi.service.component", version: "1.4.0"
+	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
+	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
+	compileOnly project(":apps:configuration-admin:configuration-admin-api")
+	compileOnly project(":apps:portal-configuration:portal-configuration-module-configuration-api")
+	compileOnly project(":apps:portal-search-opensearch2:portal-search-opensearch2-api")
+	compileOnly project(":apps:portal-search:portal-search-api")
+	compileOnly project(":apps:portal-search:portal-search-engine-adapter-api")
+	compileOnly project(":apps:portal-search:portal-search-spi")
+	compileOnly project(":apps:static:osgi:osgi-util")
+	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")
+	compileOnly project(":apps:static:portal-configuration:portal-configuration-persistence-api")
+	compileOnly project(":apps:static:portal:portal-upgrade-api")
+	compileOnly project(":core:osgi-service-tracker-collections")
+	compileOnly project(":core:petra:petra-function")
+	compileOnly project(":core:petra:petra-lang")
+	compileOnly project(":core:petra:petra-reflect")
+	compileOnly project(":core:petra:petra-string")
+
+	testImplementation group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"
+	testImplementation project(":apps:portal-search:portal-search")
+	testImplementation project(":apps:portal-search:portal-search-test-util")
+	testImplementation project(":core:petra:petra-sql-dsl-api")
+}
+
+test {
+	dependsOn {
+		configurations.compileOnly
+	}
+
+	forkEvery = 0
+
+	doFirst {
+		File libProcessExecutorDir = file("tmp/lib-process-executor")
+
+		if (!libProcessExecutorDir.exists()) {
+			libProcessExecutorDir.mkdir()
+		}
+
+		project.copy {
+			include "com.liferay.petra.*.jar"
+
+			configurations.compileOnly.allDependencies.each {
+				rename "-${it.version}", ""
+			}
+
+			into libProcessExecutorDir.getPath()
+			from configurations.compileOnly
+		}
+	}
+}

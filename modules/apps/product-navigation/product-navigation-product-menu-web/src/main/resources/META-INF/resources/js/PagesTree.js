@@ -212,6 +212,15 @@ function TreeItem({
 									symbol="lock"
 								/>
 							) : null}
+
+							{Liferay.FeatureFlags['LPS-174417'] &&
+							item.hasDuplicatedFriendlyURL ? (
+								<ClayIcon
+									className="align-self-center c-mt-0 flex-shrink-0 icon-tooltip icon-warning lfr-portal-tooltip"
+									data-title={warningMessage}
+									symbol="warning-full"
+								/>
+							) : null}
 						</a>
 					) : (
 						<span title={item.name}>{item.name}</span>

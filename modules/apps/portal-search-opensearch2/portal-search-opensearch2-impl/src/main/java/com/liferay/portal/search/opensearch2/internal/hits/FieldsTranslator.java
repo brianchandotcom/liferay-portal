@@ -1,0 +1,231 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.portal.search.opensearch2.internal.hits;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.search.document.DocumentBuilder;
+import com.liferay.portal.search.geolocation.GeoBuilders;
+import com.liferay.portal.search.opensearch2.internal.util.JsonpUtil;
+
+import jakarta.json.JsonArray;
+import jakarta.json.JsonNumber;
+import jakarta.json.JsonObject;
+import jakarta.json.JsonString;
+import jakarta.json.JsonValue;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.opensearch.client.json.JsonData;
+import org.opensearch.client.opensearch._types.GeoHashLocation;
+import org.opensearch.client.opensearch._types.GeoLocation;
+import org.opensearch.client.opensearch._types.LatLonGeoLocation;
+
+/**
+ * @author Bryan Engler
+ * @author Petteri Karttunen
+ */
+public class FieldsTranslator {
+
+	public FieldsTranslator(GeoBuilders geoBuilders) {
+		_geoBuilders = geoBuilders;
+	}
+
+	public void populateAlternateUID(
+		String alternateUidFieldName, DocumentBuilder documentBuilder,
+		Map<String, JsonData> documentFieldsMap) {
+
+		if (MapUtil.isEmpty(documentFieldsMap) ||
+			documentFieldsMap.containsKey(_UID_FIELD_NAME) ||
+			Validator.isBlank(alternateUidFieldName)) {
+
+			return;
+		}
+
+		JsonData jsonData = documentFieldsMap.get(alternateUidFieldName);
+
+		if (jsonData != null) {
+			documentBuilder.setValues(
+				_UID_FIELD_NAME,
+				_toCollectionValue(
+					jsonData.toJson(JsonpUtil.getJsonpMapper())));
+		}
+	}
+
+	public void translateFields(
+		DocumentBuilder documentBuilder, Map<String, JsonData> fields) {
+
+		if (MapUtil.isEmpty(fields)) {
+			return;
+		}
+
+		fields.forEach(
+			(fieldName, jsonData) -> translateField(
+				documentBuilder, fieldName, fields, jsonData));
+	}
+
+	public void translateSource(
+		DocumentBuilder documentBuilder, JsonData jsonData) {
+
+		if (jsonData == null) {
+			return;
+		}
+
+		JsonValue jsonValue = jsonData.toJson(JsonpUtil.getJsonpMapper());
+
+		JsonObject jsonObject = jsonValue.asJsonObject();
+
+		jsonObject.forEach(
+			(fieldName, value) -> translateSourceField(
+				documentBuilder, fieldName, value));
+	}
+
+	protected void translateField(
+		DocumentBuilder documentBuilder, String fieldName,
+		Map<String, JsonData> fields, JsonData jsonData) {
+
+		if (fieldName.endsWith(_GEOPOINT_SUFFIX)) {
+			return;
+		}
+
+		JsonData geoPointJsonData = fields.get(
+			fieldName.concat(_GEOPOINT_SUFFIX));
+
+		if (geoPointJsonData != null) {
+			_translateGeoPoint(documentBuilder, fieldName, geoPointJsonData);
+		}
+		else {
+			documentBuilder.setValues(
+				fieldName,
+				_toCollectionValue(
+					jsonData.toJson(JsonpUtil.getJsonpMapper())));
+		}
+	}
+
+	protected void translateSourceField(
+		DocumentBuilder documentBuilder, String fieldName,
+		JsonValue jsonValue) {
+
+		if (fieldName.endsWith(_GEOPOINT_SUFFIX)) {
+			documentBuilder.setGeoLocationPoint(
+				fieldName, _geoBuilders.geoLocationPoint(jsonValue.toString()));
+		}
+		else {
+			JsonValue.ValueType valueType = jsonValue.getValueType();
+
+			if ((valueType == JsonValue.ValueType.ARRAY) ||
+				(valueType == JsonValue.ValueType.OBJECT)) {
+
+				documentBuilder.setValues(
+					fieldName, _toCollectionValue(jsonValue));
+			}
+			else {
+				documentBuilder.setValue(fieldName, _toSingleValue(jsonValue));
+			}
+		}
+	}
+
+	private Collection<Object> _toCollectionValue(JsonValue jsonValue) {
+		List<Object> values = new ArrayList<>();
+
+		JsonValue.ValueType valueType = jsonValue.getValueType();
+
+		if (valueType == JsonValue.ValueType.ARRAY) {
+			JsonArray jsonArray = jsonValue.asJsonArray();
+
+			jsonArray.forEach(value -> values.add(_toSingleValue(value)));
+		}
+		else {
+			values.add(_toSingleValue(jsonValue));
+		}
+
+		return values;
+	}
+
+	private Map<String, String> _toMap(JsonObject jsonObject) {
+		try {
+			ObjectMapper objectMapper = new ObjectMapper();
+
+			TypeReference<HashMap<String, String>> typeReference =
+				new TypeReference<HashMap<String, String>>() {
+				};
+
+			return objectMapper.readValue(jsonObject.toString(), typeReference);
+		}
+		catch (JsonProcessingException jsonProcessingException) {
+			throw new RuntimeException(jsonProcessingException);
+		}
+	}
+
+	private Object _toSingleValue(JsonValue jsonValue) {
+		JsonValue.ValueType valueType = jsonValue.getValueType();
+
+		if ((valueType == JsonValue.ValueType.FALSE) ||
+			(valueType == JsonValue.ValueType.TRUE)) {
+
+			return Boolean.valueOf(jsonValue.toString());
+		}
+		else if (valueType == JsonValue.ValueType.OBJECT) {
+			return _toMap((JsonObject)jsonValue);
+		}
+		else if (valueType == JsonValue.ValueType.NUMBER) {
+			JsonNumber jsonNumber = (JsonNumber)jsonValue;
+
+			return jsonNumber.numberValue();
+		}
+		else if (valueType == JsonValue.ValueType.NULL) {
+			return null;
+		}
+		else if (valueType == JsonValue.ValueType.STRING) {
+			JsonString jsonString = (JsonString)jsonValue;
+
+			return jsonString.getString();
+		}
+
+		return jsonValue.toString();
+	}
+
+	private void _translateGeoPoint(
+		DocumentBuilder documentBuilder, String fieldName, JsonData jsonData) {
+
+		GeoLocation geoLocation = GeoLocation.of(
+			openSearchGeoLocation -> openSearchGeoLocation.geohash(
+				GeoHashLocation.of(
+					geoHashLocation -> geoHashLocation.geohash(
+						jsonData.toString()))));
+
+		if (geoLocation.isGeohash()) {
+			GeoHashLocation geoHashLocation = geoLocation.geohash();
+
+			documentBuilder.setGeoLocationPoint(
+				fieldName,
+				_geoBuilders.geoLocationPoint(geoHashLocation.geohash()));
+		}
+		else if (geoLocation.isLatlon()) {
+			LatLonGeoLocation latLonGeoLocation = geoLocation.latlon();
+
+			documentBuilder.setGeoLocationPoint(
+				fieldName,
+				_geoBuilders.geoLocationPoint(
+					latLonGeoLocation.lat(), latLonGeoLocation.lon()));
+		}
+	}
+
+	private static final String _GEOPOINT_SUFFIX = ".geopoint";
+
+	private static final String _UID_FIELD_NAME = "uid";
+
+	private final GeoBuilders _geoBuilders;
+
+}

@@ -6,17 +6,10 @@
 --%>
 
 <%
-List<AssetRendererFactory<?>> availableAssetRendererFactories = ListUtil.filter(AssetRendererFactoryRegistryUtil.getAssetRendererFactories(company.getCompanyId()), AssetRendererFactory::isCategorizable);
+EditVocabularySettingsDisplayContext editVocabularySettingsDisplayContext = new EditVocabularySettingsDisplayContext(request, vocabulary);
 
-List<AssetRendererFactory<?>> classTypedAssetRendererFactories = ListUtil.filter(availableAssetRendererFactories, AssetRendererFactory::isSupportsClassTypes);
-
-long[] selectedClassNameIds = AssetVocabularySettingsHelper.DEFAULT_SELECTED_CLASS_NAME_IDS;
-long[] selectedClassTypePKs = AssetVocabularySettingsHelper.DEFAULT_SELECTED_CLASS_TYPE_PKS;
-
-if (vocabulary != null) {
-	selectedClassNameIds = vocabulary.getSelectedClassNameIds();
-	selectedClassTypePKs = vocabulary.getSelectedClassTypePKs();
-}
+long[] selectedClassNameIds = editVocabularySettingsDisplayContext.getSelectedClassNameIds();
+long[] selectedClassTypePKs = editVocabularySettingsDisplayContext.getSelectedClassTypePKs();
 %>
 
 <liferay-ui:error exception="<%= NoSuchClassTypeException.class %>" message="one-of-your-associated-asset-types-contains-an-invalid-value.-please-configure-it-again-or-remove-it" />
@@ -29,81 +22,41 @@ if (vocabulary != null) {
 >
 
 	<%
-	List<String> indexes = new ArrayList<String>();
+	List<String> indexes = new ArrayList<>();
 
 	for (int index = 0; index < selectedClassNameIds.length; index++) {
 		indexes.add(String.valueOf(index));
 
 		long classNameId = selectedClassNameIds[index];
 		final long classTypePK = selectedClassTypePKs[index];
-
-		boolean exist = true;
-
-		if ((classNameId > 0) && (classTypePK != AssetCategoryConstants.ALL_CLASS_TYPE_PK)) {
-			AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassNameId(classNameId);
-
-			ClassTypeReader classTypeReader = assetRendererFactory.getClassTypeReader();
-
-			List<ClassType> classTypes = classTypeReader.getAvailableClassTypes(new long[] {themeDisplay.getCompanyGroupId(), scopeGroupId}, themeDisplay.getLocale());
-
-			if (!classTypes.isEmpty()) {
-				exist = ListUtil.exists(classTypes, classType -> classType.getClassTypeId() == classTypePK);
-			}
-		}
 	%>
 
 		<div class="lfr-form-row lfr-form-row-inline">
 			<div class="row-fields">
-				<aui:select cssClass="vocabulary-asset-type-select" inlineField="<%= true %>" label="choose-asset-type" name='<%= "classNameId" + index %>'>
-					<aui:option label="all-asset-types" value="<%= AssetCategoryConstants.ALL_CLASS_NAME_ID %>" />
-
-					<%
-					for (AssetRendererFactory<?> assetRendererFactory : availableAssetRendererFactories) {
-					%>
-
-						<aui:option label="<%= ResourceActionsUtil.getModelResource(locale, assetRendererFactory.getClassName()) %>" selected="<%= classNameId == assetRendererFactory.getClassNameId() %>" value="<%= assetRendererFactory.getClassNameId() %>" />
-
-					<%
-					}
-					%>
-
-				</aui:select>
+				<clay:select
+					cssClass="vocabulary-asset-type-select"
+					label="choose-asset-type"
+					name='<%= "classNameId" + index %>'
+					options="<%= editVocabularySettingsDisplayContext.getClassNameIdOptions(classNameId) %>"
+				/>
 
 				<%
-				for (AssetRendererFactory<?> assetRendererFactory : classTypedAssetRendererFactories) {
-					ClassTypeReader classTypeReader = assetRendererFactory.getClassTypeReader();
-
-					List<ClassType> classTypes = classTypeReader.getAvailableClassTypes(new long[] {themeDisplay.getCompanyGroupId(), scopeGroupId}, themeDisplay.getLocale());
-
-					if (classTypes.isEmpty()) {
-						continue;
-					}
+				for (AssetRendererFactory<?> assetRendererFactory : editVocabularySettingsDisplayContext.getClassTypedAssetRenderFactories()) {
 				%>
 
-					<aui:select inlineField="<%= true %>" label="" name='<%= "subtype" + assetRendererFactory.getClassNameId() + "-classNameId" + index %>' wrapperCssClass='<%= ((classNameId != assetRendererFactory.getClassNameId()) ? "hide " : "") + "subtype-select" %>'>
-						<c:if test="<%= !exist %>">
-							<aui:option label="none" selected="<%= true %>" value="<%= classTypePK %>" />
-						</c:if>
-
-						<aui:option label="all-asset-subtypes" selected="<%= false %>" value="<%= AssetCategoryConstants.ALL_CLASS_TYPE_PK %>" />
-
-						<%
-						for (ClassType classType : classTypes) {
-						%>
-
-							<aui:option label="<%= HtmlUtil.escape(classType.getName()) %>" selected="<%= (classNameId == assetRendererFactory.getClassNameId()) && (classTypePK == classType.getClassTypeId()) %>" value="<%= classType.getClassTypeId() %>" />
-
-						<%
-						}
-						%>
-
-					</aui:select>
+					<div class="<%= (classNameId != assetRendererFactory.getClassNameId())? "hide " : "") %>subtype-select">
+						<clay:select
+							label=""
+							name='<%= "subtype" + assetRendererFactory.getClassNameId() + "-classNameId" + index %>'
+							options="<%= editVocabularySettingsDisplayContext.getClassTypePKOptions(assetRendererFactory, classNameId, classTypePK) %>"
+						/>
+					</div>
 
 				<%
 				}
 				%>
 
-				<c:if test="<%= !exist %>">
+				<c:if test="<%= !editVocabularySettingsDisplayContext.classTypePKExists(classNameId, classTypePK) %>">
 					<div class="has-warning">
 						<div class="form-feedback-item">
 							<liferay-ui:message key="the-asset-subtype-no-longer-exists" />

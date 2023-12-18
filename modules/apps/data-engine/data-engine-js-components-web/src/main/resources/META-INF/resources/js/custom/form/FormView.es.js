@@ -188,11 +188,20 @@ const useFormSubmit = ({apiRef, containerRef}) => {
 	}, []);
 
 	useEffect(() => {
-		if (containerRef.current) {
-			const form = getFormNode(containerRef.current);
+		const container = containerRef.current;
 
-			if (form) {
-				const onHandle = Liferay.on(
+		if (!container) {
+			return;
+		}
+
+		let form;
+		let formSubmitHandler;
+
+		const waitForElementHandler = waitForElement(
+			container,
+			getFormNode,
+			(form) => {
+				formSubmitHandler = Liferay.on(
 					'submitForm',
 					(event) => {
 						if (event.form && event.form.getDOM() === form) {
@@ -203,14 +212,14 @@ const useFormSubmit = ({apiRef, containerRef}) => {
 				);
 
 				form.addEventListener('submit', handleFormSubmitted);
-
-				return () => {
-					onHandle.detach();
-
-					form.removeEventListener('submit', handleFormSubmitted);
-				};
 			}
-		}
+		);
+
+		return () => {
+			form?.removeEventListener('submit', handleFormSubmitted);
+			formSubmitHandler?.detach();
+			waitForElementHandler.dispose();
+		};
 	}, [containerRef, handleFormSubmitted]);
 };
 
@@ -447,5 +456,38 @@ export const FormView = React.forwardRef((props, ref) => {
 });
 
 FormView.displayName = 'FormView';
+
+function waitForElement(container, getElement, callback) {
+	const element = getElement(container);
+
+	if (element) {
+		callback(element);
+
+		return {
+			dispose() {},
+		};
+	}
+
+	const mutationObserver = new MutationObserver(() => {
+		const element = getElement(container);
+
+		if (element) {
+			mutationObserver.disconnect();
+			callback(element);
+		}
+	});
+
+	mutationObserver.observe(container, {
+		attributes: false,
+		childList: true,
+		subtree: true,
+	});
+
+	return {
+		dispose() {
+			mutationObserver.disconnect();
+		},
+	};
+}
 
 export default FormView;

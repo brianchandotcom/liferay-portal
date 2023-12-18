@@ -190,7 +190,7 @@ public abstract class BaseAsahSuggestionsContributor {
 				searchContext, sort, suggestionsContributorConfiguration),
 			"JSONObject/_embedded", "JSONArray/" + path);
 
-		if ((jsonArray == null) || (jsonArray.length() == 0)) {
+		if (JSONUtil.isEmpty(jsonArray)) {
 			return null;
 		}
 

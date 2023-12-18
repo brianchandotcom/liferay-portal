@@ -683,8 +683,23 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 				long[] adminUserIds = _userLocalService.getRoleUserIds(
 					role.getRoleId());
 
+				long timestamp = LocalDate.now(
+				).atStartOfDay(
+					ZoneId.systemDefault()
+				).toInstant(
+				).getEpochSecond();
+
 				for (long adminUserId : adminUserIds) {
 					try {
+						int notificationsCount =
+							_userNotificationEventLocalService.
+								getUserNotificationEventsCount(
+									adminUserId, portletId, true, timestamp);
+
+						if (notificationsCount > 0) {
+							continue;
+						}
+
 						_sendNotificationToAdminUsers(
 							adminUserId, portletId, objectDefinition);
 					}

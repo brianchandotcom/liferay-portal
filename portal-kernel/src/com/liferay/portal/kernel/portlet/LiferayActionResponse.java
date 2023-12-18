@@ -17,6 +17,6 @@ public interface LiferayActionResponse
 	extends ActionResponse, LiferayStateAwareResponse {
 
 	public static final String SKIP_ESCAPE_REDIRECT =
-        "LIFERAY_SKIP_ESCAPE_REDIRECT";
+		"LIFERAY_SKIP_ESCAPE_REDIRECT";
 
 }

@@ -15,7 +15,7 @@ import ThemeContext from '../ThemeContext';
 
 const SITES_LOCATOR = {
 	label: 'descriptiveName',
-	total: 'total',
+	total: 'totalCount',
 	value: 'groupId',
 };
 

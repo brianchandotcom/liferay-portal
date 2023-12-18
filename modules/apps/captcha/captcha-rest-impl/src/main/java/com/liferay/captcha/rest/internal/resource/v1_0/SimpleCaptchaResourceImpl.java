@@ -49,7 +49,7 @@ public class SimpleCaptchaResourceImpl extends BaseSimpleCaptchaResourceImpl {
 		try (ByteArrayOutputStream byteArrayOutputStream =
 				new ByteArrayOutputStream()) {
 
-			String answer = captcha.serveImage(byteArrayOutputStream);
+			String expectedAnswer = captcha.serveImage(byteArrayOutputStream);
 
 			return new SimpleCaptcha() {
 				{
@@ -59,7 +59,7 @@ public class SimpleCaptchaResourceImpl extends BaseSimpleCaptchaResourceImpl {
 					token = EncryptorUtil.encrypt(
 						contextCompany.getKeyObj(),
 						JSONUtil.put(
-							"answer", answer
+							"answer", expectedAnswer
 						).put(
 							"expiryTime",
 							System.currentTimeMillis() + (Time.MINUTE * 5)

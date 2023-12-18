@@ -2,7 +2,8 @@
 	"analysis": {
 		"normalizer": {
 			"keyword_lowercase": {
-				"filter": "lowercase"
+				"filter": "lowercase",
+				"type": "custom"
 			}
 		}
 	},

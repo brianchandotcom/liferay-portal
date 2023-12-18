@@ -274,6 +274,11 @@ public interface CommerceChannelAccountEntryRelLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceChannelAccountEntryRel>
 		getCommerceChannelAccountEntryRels(
+			long commerceChannelId, String name, int type, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceChannelAccountEntryRel>
+		getCommerceChannelAccountEntryRels(
 			String className, long classPK, long commerceChannelId, int type);
 
 	/**
@@ -287,6 +292,10 @@ public interface CommerceChannelAccountEntryRelLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommerceChannelAccountEntryRelsCount(
 		long accountEntryId, int type);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceChannelAccountEntryRelsCount(
+		long commerceChannelId, String name, int type);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();

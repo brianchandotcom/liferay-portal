@@ -259,8 +259,7 @@ public class CommerceChannelLocalServiceUtil {
 	}
 
 	public static CommerceChannel fetchCommerceChannelByGroupClassPK(
-			long groupId)
-		throws PortalException {
+		long groupId) {
 
 		return getService().fetchCommerceChannelByGroupClassPK(groupId);
 	}
@@ -409,6 +408,14 @@ public class CommerceChannelLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getCommerceChannelsCount(companyId, keywords);
+	}
+
+	public static List<CommerceChannel> getEligibleCommerceChannels(
+			long accountEntryId, String name, int start, int end)
+		throws PortalException {
+
+		return getService().getEligibleCommerceChannels(
+			accountEntryId, name, start, end);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery

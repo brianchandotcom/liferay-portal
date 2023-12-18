@@ -233,6 +233,10 @@ public class JournalTemplateHandler extends BaseDDMTemplateHandler {
 			new TemplateVariableGroup("journal", restrictedVariables);
 
 		journalReservedTemplateVariableGroup.addVariable(
+			"article-id", String.class, "reserved-article",
+			JournalStructureConstants.RESERVED_ARTICLE_ID, "data",
+			StringPool.BLANK);
+		journalReservedTemplateVariableGroup.addVariable(
 			"author-email-address", String.class, "reserved-article",
 			JournalStructureConstants.RESERVED_ARTICLE_AUTHOR_EMAIL_ADDRESS,
 			"data", StringPool.BLANK);
@@ -263,10 +267,6 @@ public class JournalTemplateHandler extends BaseDDMTemplateHandler {
 		journalReservedTemplateVariableGroup.addVariable(
 			"display-date", Date.class, "reserved-article",
 			JournalStructureConstants.RESERVED_ARTICLE_DISPLAY_DATE, "data",
-			StringPool.BLANK);
-		journalReservedTemplateVariableGroup.addVariable(
-			"id", String.class, "reserved-article",
-			JournalStructureConstants.RESERVED_ARTICLE_ID, "data",
 			StringPool.BLANK);
 		journalReservedTemplateVariableGroup.addVariable(
 			"modified-date", Date.class, "reserved-article",

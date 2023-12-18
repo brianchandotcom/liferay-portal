@@ -3,16 +3,17 @@ import EmptySankey from './EmptySankey';
 import ErrorDisplay from 'shared/components/ErrorDisplay';
 import NoResultsDisplay from 'shared/components/NoResultsDisplay';
 import PagePathQuery from 'shared/queries/PagePathQuery';
-import React from 'react';
+import React, {useRef} from 'react';
 import Sankey from './Sankey';
 import StatesRenderer from 'shared/components/states-renderer/StatesRenderer';
 import URLConstants from 'shared/util/url-constants';
 import {getSafeRangeSelectors} from 'shared/util/util';
 import {RangeSelectors} from 'shared/types';
-import {SECONDARY_NODE_COLOR} from './utils';
+import {SANKEY_WIDTH, SECONDARY_NODE_COLOR} from './utils';
 import {TitleKey, Type} from './types';
 import {useParams} from 'react-router-dom';
 import {useQuery} from '@apollo/react-hooks';
+import {useResize} from 'shared/hooks';
 import {v4 as uuidv4} from 'uuid';
 
 type pagePathNode = {
@@ -98,6 +99,7 @@ const PagePathCard: React.FC<IPagePathCardProps> = ({
 	rangeSelectors,
 	selectedSegment
 }) => {
+	const cardRef = useRef(null);
 	const {channelId, title, touchpoint} = useParams();
 	const {data, error, loading} = useQuery(PagePathQuery, {
 		variables: {
@@ -115,65 +117,77 @@ const PagePathCard: React.FC<IPagePathCardProps> = ({
 	const emptyState =
 		!formattedData?.links.length && formattedData?.nodes.length === 1;
 
+	const [width] = useResize(cardRef);
+
+	const sankeyWidth = width - 60;
+
 	return (
 		<Card minHeight={600}>
 			<Card.Header>
 				<Card.Title>{Liferay.Language.get('path-analysis')}</Card.Title>
 			</Card.Header>
-			<Card.Body className='d-flex align-items-center justify-content-center'>
-				<StatesRenderer
-					empty={emptyState}
-					error={!!error}
-					loading={loading}
-				>
-					<StatesRenderer.Loading />
 
-					<StatesRenderer.Error apolloError={error}>
-						<ErrorDisplay />
-					</StatesRenderer.Error>
+			<div ref={cardRef}>
+				<Card.Body className='d-flex align-items-center justify-content-center'>
+					<StatesRenderer
+						empty={emptyState}
+						error={!!error}
+						loading={loading}
+					>
+						<StatesRenderer.Loading />
 
-					<StatesRenderer.Success>
-						<Sankey data={formattedData} />
-					</StatesRenderer.Success>
+						<StatesRenderer.Error apolloError={error}>
+							<ErrorDisplay />
+						</StatesRenderer.Error>
 
-					<StatesRenderer.Empty>
-						<>
-							<EmptySankey
+						<StatesRenderer.Success>
+							<Sankey
 								data={formattedData}
-								emptyState={emptyState}
-							/>
-
-							<NoResultsDisplay
-								className='mt-4'
-								description={
-									<>
-										{Liferay.Language.get(
-											'check-back-later-to-verify-if-data-has-been-received-from-your-data-sources'
-										)}
-
-										<a
-											className='d-block mb-3'
-											href={
-												URLConstants.SitesDashboardPagesPath
-											}
-											key='DOCUMENTATION'
-											target='_blank'
-										>
-											{Liferay.Language.get(
-												'learn-more-about-path'
-											)}
-										</a>
-									</>
+								width={
+									sankeyWidth > 0 ? sankeyWidth : SANKEY_WIDTH
 								}
-								flexGrow={false}
-								title={Liferay.Language.get(
-									'there-are-no-data-found'
-								)}
 							/>
-						</>
-					</StatesRenderer.Empty>
-				</StatesRenderer>
-			</Card.Body>
+						</StatesRenderer.Success>
+
+						<StatesRenderer.Empty>
+							<>
+								<EmptySankey
+									data={formattedData}
+									emptyState={emptyState}
+								/>
+
+								<NoResultsDisplay
+									className='mt-4'
+									description={
+										<>
+											{Liferay.Language.get(
+												'check-back-later-to-verify-if-data-has-been-received-from-your-data-sources'
+											)}
+
+											<a
+												className='d-block mb-3'
+												href={
+													URLConstants.SitesDashboardPagesPath
+												}
+												key='DOCUMENTATION'
+												target='_blank'
+											>
+												{Liferay.Language.get(
+													'learn-more-about-path'
+												)}
+											</a>
+										</>
+									}
+									flexGrow={false}
+									title={Liferay.Language.get(
+										'there-are-no-data-found'
+									)}
+								/>
+							</>
+						</StatesRenderer.Empty>
+					</StatesRenderer>
+				</Card.Body>
+			</div>
 		</Card>
 	);
 };

@@ -191,6 +191,68 @@ public class GetSitesMVCResourceCommandTest
 		).isCommitted();
 	}
 
+	@Test
+	public void testSitesJSONObjectPaginationConditions() throws Exception {
+		_setUpThemeDisplay(resourceRequest);
+		_setUpPages(resourceRequest, 5, 3);
+		_setUpGroups(true, 8, new ArrayList<>());
+
+		JSONObject sitesJSONObject =
+			_getSitesMVCResourceCommand.getSitesJSONObject(
+				resourceRequest, Mockito.mock(ResourceResponse.class));
+
+		Assert.assertEquals(2, sitesJSONObject.getInt("lastPage"));
+
+		JSONArray sitesJSONArray = sitesJSONObject.getJSONArray("items");
+
+		Assert.assertEquals(
+			sitesJSONArray.toString(), 3, sitesJSONArray.length());
+
+		_paramUtilMockedStatic.close();
+	}
+
+	@Test
+	public void testSitesJSONObjectPaginationOnePage() throws Exception {
+		_setUpThemeDisplay(resourceRequest);
+		_setUpPages(resourceRequest, 10, 1);
+		_setUpGroups(true, 8, new ArrayList<>());
+
+		JSONObject sitesJSONObject =
+			_getSitesMVCResourceCommand.getSitesJSONObject(
+				resourceRequest, Mockito.mock(ResourceResponse.class));
+
+		int lastPage = sitesJSONObject.getInt("lastPage");
+		JSONArray sitesJSONArray = sitesJSONObject.getJSONArray("items");
+
+		Assert.assertEquals(1, lastPage);
+
+		Assert.assertEquals(
+			sitesJSONArray.toString(), 8, sitesJSONArray.length());
+
+		_paramUtilMockedStatic.close();
+	}
+
+	@Test
+	public void testSitesJSONObjectPaginationTwoPages() throws Exception {
+		_setUpThemeDisplay(resourceRequest);
+		_setUpPages(resourceRequest, 5, 2);
+		_setUpGroups(true, 10, new ArrayList<>());
+
+		JSONObject sitesJSONObject =
+			_getSitesMVCResourceCommand.getSitesJSONObject(
+				resourceRequest, Mockito.mock(ResourceResponse.class));
+
+		int lastPage = sitesJSONObject.getInt("lastPage");
+		JSONArray sitesJSONArray = sitesJSONObject.getJSONArray("items");
+
+		Assert.assertEquals(2, lastPage);
+
+		Assert.assertEquals(
+			sitesJSONArray.toString(), 5, sitesJSONArray.length());
+
+		_paramUtilMockedStatic.close();
+	}
+
 	private Group _createGroup(
 			String descriptiveName, boolean fromCompanyGroupId,
 			List<Group> childrenGroups)

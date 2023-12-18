@@ -55,7 +55,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "merge-tags"));
 				for (String tagName : assetTagsDisplayContext.getMergeTagNames()) {
 				%>
 
-					<aui:option label="<%= tagName %>" />
+					<aui:option label="<%= tagName %>" localizeLabel="<%= false %>" />
 
 				<%
 				}

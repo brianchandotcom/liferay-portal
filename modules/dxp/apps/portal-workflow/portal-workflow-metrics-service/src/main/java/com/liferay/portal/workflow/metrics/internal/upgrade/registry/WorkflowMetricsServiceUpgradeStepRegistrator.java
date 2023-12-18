@@ -23,6 +23,11 @@ public class WorkflowMetricsServiceUpgradeStepRegistrator
 	public void register(Registry registry) {
 		registry.register(
 			"1.0.0", "2.0.0", new SchemaUpgradeProcess(_counterLocalService));
+
+		registry.register(
+			"2.0.0", "2.0.1",
+			new com.liferay.portal.workflow.metrics.internal.upgrade.v2_0_1.
+				SchemaUpgradeProcess());
 	}
 
 	@Reference

@@ -878,7 +878,7 @@ public class ManagementToolbarTag extends BaseContainerTag {
 			}
 		}
 
-		if (!active && (getFilterDropdownItems() != null)) {
+		if (!active && ListUtil.isNotEmpty(getFilterDropdownItems())) {
 			jspWriter.write("<li class=\"nav-item\"><div class=\"dropdown\">");
 			jspWriter.write("<button class=\"btn btn-unstyled ");
 			jspWriter.write("dropdown-toggle ml-2 mr-2 nav-link\"");

@@ -113,6 +113,9 @@ public class JavaAccessModifierCheck extends BaseFileCheck {
 		}
 
 		for (String fileName : fileNames) {
+			fileName = StringUtil.replace(
+				fileName, CharPool.BACK_SLASH, CharPool.SLASH);
+
 			if (fileName.contains("/src/test/java/") ||
 				fileName.contains("/test/unit/")) {
 
@@ -124,9 +127,6 @@ public class JavaAccessModifierCheck extends BaseFileCheck {
 			if (!file.exists()) {
 				continue;
 			}
-
-			fileName = StringUtil.replace(
-				fileName, CharPool.BACK_SLASH, CharPool.SLASH);
 
 			BNDSettings bndSettings = getBNDSettings(fileName);
 

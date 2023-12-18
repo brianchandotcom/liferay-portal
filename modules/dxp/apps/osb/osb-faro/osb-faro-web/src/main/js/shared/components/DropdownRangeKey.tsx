@@ -5,11 +5,12 @@ import DatePicker from './date-picker';
 import getCN from 'classnames';
 import moment from 'moment';
 import React, {useEffect, useState} from 'react';
-import {DEFAULT_DATE_FORMAT} from 'shared/util/date';
+import {applyTimeZone, DEFAULT_DATE_FORMAT} from 'shared/util/date';
 import {MomentDateRange} from 'shared/components/DateRangeInput';
 import {RangeKeyTimeRanges} from 'shared/util/constants';
 import {RangeSelectors} from 'shared/types';
 import {useHistory} from 'react-router-dom';
+import {useTimeZoneId} from 'shared/hooks';
 
 const {
 	Last7Days,
@@ -71,6 +72,7 @@ const DropdownRangeKey: React.FC<DropdownRangeKeyIProps> = ({
 	const [seeMore, setSeeMore] = useState(false);
 	const [showDatePicker, setShowDatePicker] = useState(false);
 	const history = useHistory();
+	const timeZoneId = useTimeZoneId();
 
 	useEffect(() => {
 		const unlisten = history.listen(location => {
@@ -200,9 +202,15 @@ const DropdownRangeKey: React.FC<DropdownRangeKeyIProps> = ({
 			{showDatePicker ? (
 				<DatePicker
 					date={customDateRange}
-					maxDate={moment().subtract(1, 'days')}
+					maxDate={applyTimeZone(undefined, timeZoneId).subtract(
+						1,
+						'days'
+					)}
 					maxRange={365}
-					minDate={moment().subtract(10, 'years')}
+					minDate={applyTimeZone(undefined, timeZoneId).subtract(
+						10,
+						'years'
+					)}
 					onSelect={({end, start}: MomentDateRange) => {
 						setCustomDateRange({
 							end,

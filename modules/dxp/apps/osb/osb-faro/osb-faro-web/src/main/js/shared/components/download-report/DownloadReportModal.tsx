@@ -5,11 +5,12 @@ import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayModal from '@clayui/modal';
 import DatePicker from 'shared/components/date-picker';
-import moment, {Moment} from 'moment';
 import React, {useState} from 'react';
 import {addAlert} from 'shared/actions/alerts';
 import {Alert} from 'shared/types';
+import {applyTimeZone} from 'shared/util/date';
 import {formatDate} from './utils';
+import {Moment} from 'moment';
 import {MomentDateRange} from '../DateRangeInput';
 import {pickBy} from 'lodash';
 import {RangeKeyTimeRanges} from 'shared/util/constants';
@@ -17,6 +18,7 @@ import {removeUriQueryParam, setUriQueryValues} from 'shared/util/router';
 import {spritemap} from 'shared/util/constants';
 import {useDispatch} from 'react-redux';
 import {useHistory} from 'react-router-dom';
+import {useTimeZoneId} from 'shared/hooks';
 
 export enum ReportType {
 	CSV = 'CSV',
@@ -49,8 +51,8 @@ export const DownloadReportModal: React.FC<IDownloadReportModal> = ({
 	descriptionMessage,
 	disabled = false,
 	infoMessage,
-	maxDate = moment().subtract(1, 'days'),
-	minDate = moment().subtract(10, 'years'),
+	maxDate: initialMaxDate,
+	minDate: initialMinDate,
 	observer,
 	onClose,
 	onSubmit,
@@ -63,6 +65,15 @@ export const DownloadReportModal: React.FC<IDownloadReportModal> = ({
 	const [openAlert, setOpenAlert] = useState(true);
 	const [dateRange, setDateRange] = useState<MomentDateRange>(date);
 	const [submitDisabled, setSubmitDisabled] = useState(false);
+
+	const timeZoneId = useTimeZoneId();
+
+	const maxDate =
+		initialMaxDate ||
+		applyTimeZone(undefined, timeZoneId).subtract(1, 'days');
+	const minDate =
+		initialMinDate ||
+		applyTimeZone(undefined, timeZoneId).subtract(10, 'years');
 
 	return (
 		<ClayModal observer={observer}>

@@ -10,3 +10,4 @@ export {useRequest} from './useRequest';
 export {useResize} from './useResize';
 export {useSelectedPoint} from './useSelectedPoint';
 export {useStatefulPagination} from './useStatefulPagination';
+export {useTimeZoneId} from './useTimeZoneId';

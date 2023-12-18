@@ -10,7 +10,6 @@ import React, {useEffect, useState} from 'react';
 import parseFile from '../FileParsers';
 import {
 	CSV_ENCLOSING_CHARACTERS,
-	CSV_FORMAT,
 	FILE_EXTENSION_EVENT,
 	FILE_EXTENSION_INPUT_PARTIAL_NAME,
 	FILE_SCHEMA_EVENT,
@@ -38,13 +37,6 @@ function updateNameInput(namespace, fileName) {
 function getAcceptedExtensions() {
 	let acceptedExtensions = '';
 	for (const i in IMPORT_FILE_FORMATS) {
-		if (
-			IMPORT_FILE_FORMATS[i] === CSV_FORMAT &&
-			!Liferay.FeatureFlags['LPS-173135']
-		) {
-			continue;
-		}
-
 		acceptedExtensions += ', .' + IMPORT_FILE_FORMATS[i];
 	}
 

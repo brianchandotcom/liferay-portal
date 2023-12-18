@@ -177,6 +177,48 @@ public class EditVocabularySettingsDisplayContext {
 		return AssetVocabularySettingsHelper.DEFAULT_SELECTED_CLASS_TYPE_PKS;
 	}
 
+	public boolean isDepotRequiredChecked(long classNameId, long classTypePK) {
+		AssetVocabularySettingsHelper assetVocabularySettingsHelper =
+			_getAssetVocabularySettingsHelper();
+
+		return assetVocabularySettingsHelper.
+			isClassNameIdAndClassTypePKDepotRequired(classNameId, classTypePK);
+	}
+
+	public boolean isNotRequiredChecked(long classNameId, long classTypePK) {
+		if (!isDepotRequiredChecked(classNameId, classTypePK) &&
+			!isRequiredChecked(classNameId, classTypePK)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isRequiredChecked(long classNameId, long classTypePK) {
+		AssetVocabularySettingsHelper assetVocabularySettingsHelper =
+			_getAssetVocabularySettingsHelper();
+
+		return assetVocabularySettingsHelper.
+			isClassNameIdAndClassTypePKRequired(classNameId, classTypePK);
+	}
+
+	private AssetVocabularySettingsHelper _getAssetVocabularySettingsHelper() {
+		if (_assetVocabularySettingsHelper != null) {
+			return _assetVocabularySettingsHelper;
+		}
+
+		if (_vocabulary == null) {
+			return new AssetVocabularySettingsHelper();
+		}
+
+		_assetVocabularySettingsHelper = new AssetVocabularySettingsHelper(
+			_vocabulary.getSettings());
+
+		return _assetVocabularySettingsHelper;
+	}
+
+	private AssetVocabularySettingsHelper _assetVocabularySettingsHelper;
 	private final ThemeDisplay _themeDisplay;
 	private final AssetVocabulary _vocabulary;
 

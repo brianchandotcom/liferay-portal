@@ -98,28 +98,6 @@ public class StyleBookEntryLocalServiceImpl
 	}
 
 	@Override
-	public StyleBookEntry addStyleBookEntry(
-			long userId, long groupId, String name, String styleBookEntryKey,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		return addStyleBookEntry(
-			userId, groupId, StringPool.BLANK, name, styleBookEntryKey,
-			serviceContext);
-	}
-
-	@Override
-	public StyleBookEntry addStyleBookEntry(
-			long userId, long groupId, String frontendTokensValues, String name,
-			String styleBookEntryKey, ServiceContext serviceContext)
-		throws PortalException {
-
-		return addStyleBookEntry(
-			userId, groupId, false, frontendTokensValues, name,
-			styleBookEntryKey, serviceContext);
-	}
-
-	@Override
 	public StyleBookEntry copyStyleBookEntry(
 			long userId, long groupId, long sourceStyleBookEntryId,
 			ServiceContext serviceContext)

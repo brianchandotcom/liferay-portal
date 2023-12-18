@@ -5,7 +5,7 @@
 
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
-import {ClayCheckbox, ClayInput} from '@clayui/form';
+import ClayForm, {ClayCheckbox, ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayModal, {useModal} from '@clayui/modal';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
@@ -63,6 +63,18 @@ const SimpleInputModal = ({
 	const _handleSubmit = (event) => {
 		event.preventDefault();
 
+		const error = inputValue
+			? ''
+			: Liferay.Language.get('this-field-is-required');
+
+		if (error && required) {
+			setErrorMessage(error);
+
+			return;
+		}
+
+		setLoadingResponse(true);
+
 		const formData = new FormData(
 			document.querySelector(`#${namespace}form`)
 		);
@@ -102,8 +114,6 @@ const SimpleInputModal = ({
 			.catch((response) => {
 				handleFormError(response);
 			});
-
-		setLoadingResponse(true);
 	};
 
 	const {observer, onClose} = useModal({
@@ -119,7 +129,11 @@ const SimpleInputModal = ({
 			<ClayModal center={center} observer={observer} size={size}>
 				<ClayModal.Header>{dialogTitle}</ClayModal.Header>
 
-				<form id={`${namespace}form`} onSubmit={_handleSubmit}>
+				<ClayForm
+					id={`${namespace}form`}
+					noValidate
+					onSubmit={_handleSubmit}
+				>
 					<ClayModal.Body>
 						{alert && alert.message && alert.title && (
 							<ClayAlert
@@ -161,9 +175,19 @@ const SimpleInputModal = ({
 								disabled={loadingResponse}
 								id={`${namespace}${mainFieldName}`}
 								name={`${namespace}${mainFieldName}`}
-								onChange={(event) =>
-									setInputValue(event.target.value)
-								}
+								onChange={(event) => {
+									if (required) {
+										setErrorMessage(
+											event.target.value
+												? ''
+												: Liferay.Language.get(
+														'this-field-is-required'
+												  )
+										);
+									}
+
+									setInputValue(event.target.value);
+								}}
 								placeholder={placeholder}
 								ref={handleMainFieldRef}
 								required={required}
@@ -172,7 +196,10 @@ const SimpleInputModal = ({
 							/>
 
 							{errorMessage && (
-								<div className="form-feedback-item">
+								<div
+									className="form-feedback-item"
+									role="alert"
+								>
 									<ClayIcon
 										className="inline-item inline-item-before"
 										symbol="exclamation-full"
@@ -228,7 +255,7 @@ const SimpleInputModal = ({
 							</ClayButton.Group>
 						}
 					/>
-				</form>
+				</ClayForm>
 			</ClayModal>
 		)
 	);

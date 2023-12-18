@@ -8,6 +8,9 @@ package com.liferay.object.web.internal.object.definitions.portlet.action;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectFolder;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectFolderResource;
 import com.liferay.object.constants.ObjectPortletKeys;
+import com.liferay.object.exception.ObjectFolderItemObjectDefinitionIdException;
+import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -68,11 +71,32 @@ public class ImportObjectFolderMVCActionCommand extends BaseMVCActionCommand {
 
 			httpServletResponse.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 
-			JSONObject jsonObject = JSONUtil.put(
-				"title",
-				_language.get(
-					_portal.getHttpServletRequest(actionRequest),
-					"the-object-folder-failed-to-import"));
+			JSONObject jsonObject = null;
+
+			if (exception instanceof
+					ObjectFolderItemObjectDefinitionIdException) {
+
+				ObjectFolderItemObjectDefinitionIdException
+					objectFolderItemObjectDefinitionIdException =
+						(ObjectFolderItemObjectDefinitionIdException)exception;
+
+				jsonObject = JSONUtil.put(
+					"title",
+					_language.format(
+						_portal.getHttpServletRequest(actionRequest),
+						"failed-to-import-the-following-object-definitions-x",
+						StringUtil.merge(
+							objectFolderItemObjectDefinitionIdException.
+								getObjectDefinitionNames(),
+							StringPool.COMMA_AND_SPACE)));
+			}
+			else {
+				jsonObject = JSONUtil.put(
+					"title",
+					_language.get(
+						_portal.getHttpServletRequest(actionRequest),
+						"the-object-folder-failed-to-import"));
+			}
 
 			JSONPortletResponseUtil.writeJSON(
 				actionRequest, actionResponse, jsonObject);

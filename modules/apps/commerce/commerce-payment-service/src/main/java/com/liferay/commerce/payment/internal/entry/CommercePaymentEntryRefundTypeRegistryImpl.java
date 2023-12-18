@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -65,10 +66,20 @@ public class CommercePaymentEntryRefundTypeRegistryImpl
 		}
 
 		List<CommercePaymentEntryRefundType> commercePaymentEntryRefundTypes =
-			ListUtil.fromCollection(_serviceTrackerMap.values());
+			new ArrayList<>();
 
-		commercePaymentEntryRefundTypes.sort(
-			_commercePaymentEntryRefundTypeOrderComparator);
+		try {
+			commercePaymentEntryRefundTypes = ListUtil.fromCollection(
+				_serviceTrackerMap.values());
+
+			commercePaymentEntryRefundTypes.sort(
+				_commercePaymentEntryRefundTypeOrderComparator);
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+		}
 
 		return Collections.unmodifiableList(commercePaymentEntryRefundTypes);
 	}

@@ -53,7 +53,7 @@ public class PortletPreferencesModelListener
 	public void onAfterRemove(PortletPreferences portletPreferences)
 		throws ModelListenerException {
 
-		clearCache(portletPreferences);
+		_clearCache(portletPreferences);
 
 		_clearConfigurationOverrideInstance(portletPreferences);
 	}
@@ -64,14 +64,14 @@ public class PortletPreferencesModelListener
 			PortletPreferences portletPreferences)
 		throws ModelListenerException {
 
-		clearCache(portletPreferences);
+		_clearCache(portletPreferences);
 
-		updateLayout(portletPreferences);
+		_updateLayout(portletPreferences);
 
 		_clearConfigurationOverrideInstance(portletPreferences);
 	}
 
-	protected void clearCache(PortletPreferences portletPreferences) {
+	private void _clearCache(PortletPreferences portletPreferences) {
 		if (portletPreferences == null) {
 			return;
 		}
@@ -110,7 +110,46 @@ public class PortletPreferencesModelListener
 		}
 	}
 
-	protected void updateLayout(PortletPreferences portletPreferences) {
+	private void _clearConfigurationOverrideInstance(
+		PortletPreferences portletPreferences) {
+
+		if ((portletPreferences == null) ||
+			(portletPreferences.getPortletId() == null)) {
+
+			return;
+		}
+
+		ConfigurationPidMapping configurationPidMapping =
+			_getConfigurationPidMapping(portletPreferences.getPortletId());
+
+		if (configurationPidMapping == null) {
+			return;
+		}
+
+		ConfigurationOverrideInstance.clearConfigurationOverrideInstance(
+			configurationPidMapping.getConfigurationBeanClass());
+	}
+
+	private ConfigurationPidMapping _getConfigurationPidMapping(
+		String configurationId) {
+
+		ConfigurationPidMapping configurationPidMapping =
+			_settingsLocatorHelper.getConfigurationPidMapping(configurationId);
+
+		if (configurationPidMapping == null) {
+			return null;
+		}
+
+		Class<?> clazz = configurationPidMapping.getConfigurationBeanClass();
+
+		if (clazz.getAnnotation(Settings.Config.class) == null) {
+			return configurationPidMapping;
+		}
+
+		return null;
+	}
+
+	private void _updateLayout(PortletPreferences portletPreferences) {
 		try {
 			if ((portletPreferences.getOwnerType() ==
 					PortletKeys.PREFS_OWNER_TYPE_GROUP) &&
@@ -177,45 +216,6 @@ public class PortletPreferencesModelListener
 			_log.error(
 				"Unable to update the layout's modified date", exception);
 		}
-	}
-
-	private void _clearConfigurationOverrideInstance(
-		PortletPreferences portletPreferences) {
-
-		if ((portletPreferences == null) ||
-			(portletPreferences.getPortletId() == null)) {
-
-			return;
-		}
-
-		ConfigurationPidMapping configurationPidMapping =
-			_getConfigurationPidMapping(portletPreferences.getPortletId());
-
-		if (configurationPidMapping == null) {
-			return;
-		}
-
-		ConfigurationOverrideInstance.clearConfigurationOverrideInstance(
-			configurationPidMapping.getConfigurationBeanClass());
-	}
-
-	private ConfigurationPidMapping _getConfigurationPidMapping(
-		String configurationId) {
-
-		ConfigurationPidMapping configurationPidMapping =
-			_settingsLocatorHelper.getConfigurationPidMapping(configurationId);
-
-		if (configurationPidMapping == null) {
-			return null;
-		}
-
-		Class<?> clazz = configurationPidMapping.getConfigurationBeanClass();
-
-		if (clazz.getAnnotation(Settings.Config.class) == null) {
-			return configurationPidMapping;
-		}
-
-		return null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

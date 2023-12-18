@@ -10,6 +10,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.document.Document;
+import com.liferay.portal.search.tuning.rankings.web.internal.constants.ResultRankingsConstants;
 
 import java.util.Collections;
 import java.util.List;
@@ -44,7 +45,7 @@ public class DocumentToRankingTranslatorImpl
 		).rankingDocumentId(
 			rankingDocumentId
 		).status(
-			document.getString(RankingFields.STATUS)
+			_getStatus(document)
 		).sxpBlueprintExternalReferenceCode(
 			document.getString(
 				RankingFields.SXP_BLUEPRINT_EXTERNAL_REFERENCE_CODE)
@@ -100,6 +101,20 @@ public class DocumentToRankingTranslatorImpl
 			if (ListUtil.isNotEmpty(strings)) {
 				return strings.get(0);
 			}
+		}
+
+		return string;
+	}
+
+	private String _getStatus(Document document) {
+		String string = document.getString(RankingFields.STATUS);
+
+		if (Validator.isBlank(string)) {
+			if (document.getBoolean("inactive")) {
+				return ResultRankingsConstants.STATUS_INACTIVE;
+			}
+
+			return ResultRankingsConstants.STATUS_ACTIVE;
 		}
 
 		return string;

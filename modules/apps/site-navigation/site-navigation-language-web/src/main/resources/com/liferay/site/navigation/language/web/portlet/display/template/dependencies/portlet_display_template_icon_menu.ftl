@@ -3,6 +3,8 @@
 		normalizedDefaultLanguageId = stringUtil.replace(languageId, "_", "-")
 
 		triggerAriaLabel = languageUtil.format(locale, "select-a-language.-current-language-x", normalizedDefaultLanguageId, false)
+
+		triggerTitle = languageUtil.get(locale, "select-a-language")
 	/>
 
 	<div class="text-truncate">
@@ -10,6 +12,7 @@
 			direction="left-side"
 			icon=stringUtil.toLowerCase(normalizedDefaultLanguageId)
 			markupView="lexicon"
+			message=triggerTitle
 			showWhenSingleIcon=true
 			triggerAriaLabel=triggerAriaLabel
 			triggerLabel=normalizedDefaultLanguageId

@@ -6,6 +6,8 @@ definition {
 			kebabOption = "Export as JSON",
 			objectLabel = ${objectLabel});
 
+		DownloadTempFile();
+
 		var tempFileName = TestCase.getDownloadedTempFileName(fileNamePattern = "Object_Definition_${objectName}*.json");
 		var tempFileDirectory = selenium.getOutputDirName();
 

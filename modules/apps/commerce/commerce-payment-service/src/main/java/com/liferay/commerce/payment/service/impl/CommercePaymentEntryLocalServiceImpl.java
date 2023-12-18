@@ -11,6 +11,8 @@ import com.liferay.commerce.payment.entry.CommercePaymentEntryRefundTypeRegistry
 import com.liferay.commerce.payment.exception.CommercePaymentEntryAmountException;
 import com.liferay.commerce.payment.exception.CommercePaymentEntryClassNameIdException;
 import com.liferay.commerce.payment.exception.CommercePaymentEntryClassPKException;
+import com.liferay.commerce.payment.exception.CommercePaymentEntryPaymentIntegrationTypeException;
+import com.liferay.commerce.payment.exception.CommercePaymentEntryPaymentStatusException;
 import com.liferay.commerce.payment.exception.CommercePaymentEntryReasonKeyException;
 import com.liferay.commerce.payment.model.CommercePaymentEntry;
 import com.liferay.commerce.payment.service.CommercePaymentEntryAuditLocalService;
@@ -29,6 +31,8 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -46,10 +50,6 @@ import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.searcher.Searcher;
-import com.liferay.portal.search.sort.FieldSort;
-import com.liferay.portal.search.sort.SortFieldBuilder;
-import com.liferay.portal.search.sort.SortOrder;
-import com.liferay.portal.search.sort.Sorts;
 
 import java.math.BigDecimal;
 
@@ -87,7 +87,8 @@ public class CommercePaymentEntryLocalServiceImpl
 
 		_validate(
 			commercePaymentEntryRefundType, classNameId, classPK, amount,
-			reasonKey, type);
+			paymentIntegrationType,
+			CommercePaymentEntryConstants.STATUS_PENDING, reasonKey, type);
 
 		CommercePaymentEntry commercePaymentEntry =
 			commercePaymentEntryPersistence.create(
@@ -272,12 +273,10 @@ public class CommercePaymentEntryLocalServiceImpl
 		searchCommercePaymentEntries(
 			long companyId, String keywords,
 			LinkedHashMap<String, Object> params, int start, int end,
-			String orderByField, boolean reverse) {
+			Sort sort) {
 
 		SearchResponse searchResponse = _searcher.search(
-			_getSearchRequest(
-				companyId, keywords, params, start, end, orderByField,
-				reverse));
+			_getSearchRequest(companyId, keywords, params, start, end, sort));
 
 		SearchHits searchHits = searchResponse.getSearchHits();
 
@@ -337,7 +336,8 @@ public class CommercePaymentEntryLocalServiceImpl
 		_validate(
 			commercePaymentEntryRefundType,
 			commercePaymentEntry.getClassNameId(),
-			commercePaymentEntry.getClassPK(), amount, reasonKey, type);
+			commercePaymentEntry.getClassPK(), amount, paymentIntegrationType,
+			commercePaymentEntry.getPaymentStatus(), reasonKey, type);
 
 		commercePaymentEntry.setExternalReferenceCode(externalReferenceCode);
 		commercePaymentEntry.setCommerceChannelId(commerceChannelId);
@@ -375,6 +375,21 @@ public class CommercePaymentEntryLocalServiceImpl
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
+	public CommercePaymentEntry updateCommercePaymentEntryExternalReferenceCode(
+			String externalReferenceCode, long commercePaymentEntryId)
+		throws PortalException {
+
+		CommercePaymentEntry commercePaymentEntry =
+			commercePaymentEntryPersistence.findByPrimaryKey(
+				commercePaymentEntryId);
+
+		commercePaymentEntry.setExternalReferenceCode(externalReferenceCode);
+
+		return commercePaymentEntryPersistence.update(commercePaymentEntry);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
 	public CommercePaymentEntry updateCommercePaymentEntryNote(
 			long commercePaymentEntryId, String note)
 		throws PortalException {
@@ -406,7 +421,9 @@ public class CommercePaymentEntryLocalServiceImpl
 			commercePaymentEntryRefundType,
 			commercePaymentEntry.getClassNameId(),
 			commercePaymentEntry.getClassPK(), commercePaymentEntry.getAmount(),
-			reasonKey, commercePaymentEntry.getType());
+			commercePaymentEntry.getPaymentIntegrationType(),
+			commercePaymentEntry.getPaymentStatus(), reasonKey,
+			commercePaymentEntry.getType());
 
 		if (Validator.isNull(reasonKey)) {
 			commercePaymentEntry.setReasonKey(null);
@@ -423,7 +440,7 @@ public class CommercePaymentEntryLocalServiceImpl
 
 	private SearchRequest _getSearchRequest(
 		long companyId, String keywords, LinkedHashMap<String, Object> params,
-		int start, int end, String orderByField, boolean reverse) {
+		int start, int end, Sort sort) {
 
 		SearchRequestBuilder searchRequestBuilder =
 			_searchRequestBuilderFactory.builder();
@@ -436,7 +453,7 @@ public class CommercePaymentEntryLocalServiceImpl
 			false
 		).withSearchContext(
 			searchContext -> _populateSearchContext(
-				searchContext, companyId, keywords, params)
+				searchContext, companyId, keywords, params, sort)
 		);
 
 		if (start != QueryUtil.ALL_POS) {
@@ -444,27 +461,12 @@ public class CommercePaymentEntryLocalServiceImpl
 			searchRequestBuilder.size(end);
 		}
 
-		if (Validator.isNotNull(orderByField)) {
-			SortOrder sortOrder = SortOrder.ASC;
-
-			if (reverse) {
-				sortOrder = SortOrder.DESC;
-			}
-
-			FieldSort fieldSort = _sorts.field(
-				_sortFieldBuilder.getSortField(
-					CommercePaymentEntry.class, orderByField),
-				sortOrder);
-
-			searchRequestBuilder.sorts(fieldSort);
-		}
-
 		return searchRequestBuilder.build();
 	}
 
 	private void _populateSearchContext(
 		SearchContext searchContext, long companyId, String keywords,
-		LinkedHashMap<String, Object> params) {
+		LinkedHashMap<String, Object> params, Sort sort) {
 
 		searchContext.setCompanyId(companyId);
 
@@ -525,11 +527,24 @@ public class CommercePaymentEntryLocalServiceImpl
 		if (type != null) {
 			searchContext.setAttribute("type", type);
 		}
+
+		if (sort == null) {
+			sort = SortFactoryUtil.getSort(
+				CommercePaymentEntry.class, Sort.LONG_TYPE, Field.CREATE_DATE,
+				"DESC");
+		}
+		else {
+			sort.setFieldName(Field.CREATE_DATE);
+			sort.setType(Sort.LONG_TYPE);
+		}
+
+		searchContext.setSorts(sort);
 	}
 
 	private void _validate(
 			CommercePaymentEntryRefundType commercePaymentEntryRefundType,
-			long classNameId, long classPK, BigDecimal amount, String reasonKey,
+			long classNameId, long classPK, BigDecimal amount,
+			int paymentIntegrationType, int paymentStatus, String reasonKey,
 			int type)
 		throws PortalException {
 
@@ -559,6 +574,14 @@ public class CommercePaymentEntryLocalServiceImpl
 			throw new CommercePaymentEntryAmountException();
 		}
 
+		if (paymentIntegrationType < 0) {
+			throw new CommercePaymentEntryPaymentIntegrationTypeException();
+		}
+
+		if (paymentStatus == CommercePaymentEntryConstants.STATUS_REFUNDED) {
+			throw new CommercePaymentEntryPaymentStatusException();
+		}
+
 		if (Validator.isNotNull(reasonKey) &&
 			((commercePaymentEntryRefundType == null) ||
 			 (type != CommercePaymentEntryConstants.TYPE_REFUND))) {
@@ -586,12 +609,6 @@ public class CommercePaymentEntryLocalServiceImpl
 
 	@Reference
 	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
-
-	@Reference
-	private SortFieldBuilder _sortFieldBuilder;
-
-	@Reference
-	private Sorts _sorts;
 
 	@Reference
 	private UserLocalService _userLocalService;

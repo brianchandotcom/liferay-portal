@@ -215,7 +215,7 @@ AUI.add(
 								oldName = item.attr('id');
 
 								item.attr('checked', '');
-								item.attr('value', guid);
+								item.attr('name', newName);
 								item.attr('id', newName);
 							}
 							else if (

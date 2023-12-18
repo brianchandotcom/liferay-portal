@@ -18,7 +18,9 @@ exports[`BasePage.Header NavBar renders NavBar 1`] = `
         >
           <span
             class="navbar-text-truncate"
-          />
+          >
+            Test
+          </span>
           <svg
             class="lexicon-icon lexicon-icon-caret-bottom"
             role="presentation"
@@ -78,7 +80,9 @@ exports[`BasePage.Header NavBar renders NavBar w/o routeQueries 1`] = `
         >
           <span
             class="navbar-text-truncate"
-          />
+          >
+            Test
+          </span>
           <svg
             class="lexicon-icon lexicon-icon-caret-bottom"
             role="presentation"

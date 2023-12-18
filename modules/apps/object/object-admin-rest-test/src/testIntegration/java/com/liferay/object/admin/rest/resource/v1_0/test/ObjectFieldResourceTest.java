@@ -337,16 +337,8 @@ public class ObjectFieldResourceTest extends BaseObjectFieldResourceTestCase {
 	public void testPatchObjectField() throws Exception {
 		super.testPatchObjectField();
 
-		// Not unique to unique
-
 		_testPatchObjectField(_addObjectField(), true);
-
-		// Unique to unique
-
 		_testPatchObjectField(_addUniqueObjectField(), true);
-
-		// Unique to not unique
-
 		_testPatchObjectField(_addUniqueObjectField(), false);
 	}
 

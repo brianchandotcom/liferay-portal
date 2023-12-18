@@ -9,6 +9,7 @@ import {FDS_UPDATE_DISPLAY} from 'commerce-frontend-js/utilities/eventsDefinitio
 import {openToast} from 'frontend-js-web';
 
 export default function ({
+	accountEntryTypes,
 	channelExternalReferenceCode,
 	channelId,
 	dataSetId,
@@ -40,7 +41,11 @@ export default function ({
 
 	itemFinder('itemFinder', 'item-finder-root-account', {
 		apiUrl:
-			"/o/headless-admin-user/v1.0/accounts?filter=type in ('business', 'supplier')",
+			'/o/headless-admin-user/v1.0/accounts?filter=type in (' +
+			accountEntryTypes.map(
+				(accountEntryType) => "'" + accountEntryType.toString() + "'"
+			) +
+			')',
 		getSelectedItems: () => Promise.resolve([]),
 		inputPlaceholder: Liferay.Language.get('find-an-account'),
 		itemCreation: false,

@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.security.permission.resource.PortletResourcePer
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -159,8 +160,20 @@ public class CommerceChannelServiceImpl extends CommerceChannelServiceBaseImpl {
 			long accountEntryId, String name, int start, int end)
 		throws PortalException {
 
-		return commerceChannelLocalService.getEligibleCommerceChannels(
-			accountEntryId, name, start, end);
+		List<CommerceChannel> commerceChannels = new ArrayList<>();
+
+		for (CommerceChannel commerceChannel :
+				commerceChannelLocalService.getEligibleCommerceChannels(
+					accountEntryId, name, start, end)) {
+
+			if (_commerceChannelModelResourcePermission.contains(
+					getPermissionChecker(), commerceChannel, ActionKeys.VIEW)) {
+
+				commerceChannels.add(commerceChannel);
+			}
+		}
+
+		return commerceChannels;
 	}
 
 	@Override

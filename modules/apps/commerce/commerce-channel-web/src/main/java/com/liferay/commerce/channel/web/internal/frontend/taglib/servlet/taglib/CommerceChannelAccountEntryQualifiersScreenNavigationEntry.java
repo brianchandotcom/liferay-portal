@@ -11,6 +11,7 @@ import com.liferay.commerce.product.service.CommerceChannelAccountEntryRelServic
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
@@ -47,7 +48,8 @@ public class CommerceChannelAccountEntryQualifiersScreenNavigationEntry
 			commerceChannelAccountEntryQualifiersDisplayContext =
 				new CommerceChannelAccountEntryQualifiersDisplayContext(
 					_commerceChannelAccountEntryRelService,
-					_commerceChannelLocalService, httpServletRequest);
+					_commerceChannelLocalService, _configurationProvider,
+					httpServletRequest);
 
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -64,6 +66,9 @@ public class CommerceChannelAccountEntryQualifiersScreenNavigationEntry
 
 	@Reference
 	private CommerceChannelLocalService _commerceChannelLocalService;
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private JSPRenderer _jspRenderer;

@@ -340,6 +340,22 @@ public class CommerceAccountHelperImpl implements CommerceAccountHelper {
 		}
 
 		if (accountEntry != null) {
+			CommerceChannelAccountEntryRel commerceChannelAccountEntryRel =
+				_commerceChannelAccountEntryRelLocalService.
+					fetchCommerceChannelAccountEntryRel(
+						accountEntry.getAccountEntryId(),
+						commerceChannel.getCommerceChannelId(),
+						CommerceChannelAccountEntryRelConstants.TYPE_USER);
+
+			if (commerceChannelAccountEntryRel != null) {
+				setCurrentCommerceAccount(
+					httpServletRequest, commerceChannelGroupId,
+					commerceChannelAccountEntryRel.getAccountEntryId());
+
+				return _accountEntryLocalService.getAccountEntry(
+					commerceChannelAccountEntryRel.getAccountEntryId());
+			}
+
 			List<AccountEntry> commerceChannelAccountEntries =
 				_getCommerceChannelAccountEntries(
 					userId, commerceChannel.getCommerceChannelId());
@@ -370,7 +386,9 @@ public class CommerceAccountHelperImpl implements CommerceAccountHelper {
 					httpServletRequest, commerceChannelGroupId,
 					AccountConstants.ACCOUNT_ENTRY_ID_GUEST);
 
-				return null;
+				if (!accountEntry.isGuestAccount()) {
+					return null;
+				}
 			}
 		}
 		else {
@@ -510,6 +528,7 @@ public class CommerceAccountHelperImpl implements CommerceAccountHelper {
 				userId, AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT, null,
 				new String[] {
 					AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
+					AccountConstants.ACCOUNT_ENTRY_TYPE_GUEST,
 					AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON,
 					AccountConstants.ACCOUNT_ENTRY_TYPE_SUPPLIER
 				},

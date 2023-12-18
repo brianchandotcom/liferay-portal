@@ -44,7 +44,6 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.MatchAllQuery;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
@@ -137,6 +136,8 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 			HashMapBuilder.<String, Serializable>put(
 				Field.STATUS, WorkflowConstants.STATUS_APPROVED
 			).put(
+				"accountEntryId", commerceAccountId
+			).put(
 				"commerceAccountGroupIds",
 				_accountGroupLocalService.getAccountGroupIds(commerceAccountId)
 			).put(
@@ -206,24 +207,31 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 			Long accountId, CommerceChannel commerceChannel)
 		throws Exception {
 
-		if (accountId == null) {
-			throw new NoSuchEntryException("The account is invalid");
-		}
-
-		long[] commerceAccountIds =
-			_commerceAccountHelper.getUserCommerceAccountIds(
+		int countUserCommerceAccounts =
+			_commerceAccountHelper.countUserCommerceAccounts(
 				contextUser.getUserId(), commerceChannel.getGroupId());
 
-		if (commerceAccountIds.length == 0) {
-			AccountEntry accountEntry =
-				_accountEntryLocalService.getGuestAccountEntry(
-					contextCompany.getCompanyId());
-
-			return accountEntry.getAccountEntryId();
+		if (countUserCommerceAccounts > 1) {
+			if (accountId == null) {
+				throw new NoSuchEntryException();
+			}
 		}
-		else if (!ArrayUtil.contains(commerceAccountIds, accountId)) {
-			throw new NoSuchEntryException(
-				"The account is not eligible for this channel");
+		else {
+			long[] commerceAccountIds =
+				_commerceAccountHelper.getUserCommerceAccountIds(
+					contextUser.getUserId(), commerceChannel.getGroupId());
+
+			if (commerceAccountIds.length == 0) {
+				AccountEntry accountEntry =
+					_accountEntryLocalService.getGuestAccountEntry(
+						contextCompany.getCompanyId());
+
+				commerceAccountIds = new long[] {
+					accountEntry.getAccountEntryId()
+				};
+			}
+
+			return commerceAccountIds[0];
 		}
 
 		return accountId;

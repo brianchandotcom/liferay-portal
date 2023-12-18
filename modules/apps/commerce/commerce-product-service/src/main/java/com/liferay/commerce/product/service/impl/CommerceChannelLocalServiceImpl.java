@@ -262,10 +262,12 @@ public class CommerceChannelLocalServiceImpl
 	}
 
 	@Override
-	public CommerceChannel fetchCommerceChannelByGroupClassPK(long groupId)
-		throws PortalException {
+	public CommerceChannel fetchCommerceChannelByGroupClassPK(long groupId) {
+		Group group = _groupLocalService.fetchGroup(groupId);
 
-		Group group = _groupLocalService.getGroup(groupId);
+		if (group == null) {
+			return null;
+		}
 
 		return commerceChannelLocalService.fetchCommerceChannel(
 			group.getClassPK());
@@ -393,21 +395,21 @@ public class CommerceChannelLocalServiceImpl
 				CommerceChannelAccountEntryRelTable.INSTANCE,
 				CommerceChannelTable.INSTANCE.commerceChannelId.eq(
 					CommerceChannelAccountEntryRelTable.INSTANCE.
-						commerceChannelId)
+						commerceChannelId
+				).and(
+					CommerceChannelAccountEntryRelTable.INSTANCE.type.eq(
+						CommerceChannelAccountEntryRelConstants.
+							TYPE_ELIGIBILITY)
+				)
 			).where(
 				() -> {
 					Predicate predicate =
 						CommerceChannelAccountEntryRelTable.INSTANCE.
 							accountEntryId.eq(accountEntryId);
 
-					predicate = predicate.and(
-						CommerceChannelAccountEntryRelTable.INSTANCE.type.eq(
-							CommerceChannelAccountEntryRelConstants.
-								TYPE_ELIGIBILITY));
-
 					predicate = predicate.or(
 						CommerceChannelAccountEntryRelTable.INSTANCE.
-							commerceChannelAccountEntryRelId.isNull());
+							accountEntryId.isNull());
 
 					if (!Validator.isBlank(name)) {
 						predicate = CommerceChannelTable.INSTANCE.name.like(

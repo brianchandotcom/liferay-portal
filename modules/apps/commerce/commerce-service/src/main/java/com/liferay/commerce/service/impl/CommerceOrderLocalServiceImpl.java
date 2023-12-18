@@ -40,6 +40,7 @@ import com.liferay.commerce.order.CommerceOrderThreadLocal;
 import com.liferay.commerce.price.CommerceOrderPrice;
 import com.liferay.commerce.price.CommerceOrderPriceCalculation;
 import com.liferay.commerce.product.constants.CommerceChannelAccountEntryRelConstants;
+import com.liferay.commerce.product.exception.NoSuchChannelAccountEntryRelException;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.model.CommerceChannelAccountEntryRel;
 import com.liferay.commerce.product.service.CommerceChannelAccountEntryRelLocalService;
@@ -2795,7 +2796,7 @@ public class CommerceOrderLocalServiceImpl
 		if ((commerceChannelAccountEntryRel == null) &&
 			(commerceChannelAccountEntryRelsCount != 0)) {
 
-			throw new PortalException(
+			throw new NoSuchChannelAccountEntryRelException(
 				"This account is not eligible for this channel");
 		}
 	}

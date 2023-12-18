@@ -1,11 +1,3 @@
-import com.liferay.gradle.util.FileUtil
-import com.liferay.gradle.util.StringUtil
-
-apply plugin: 'java'
-
-compileJava {
-}
-
 dependencies {
 	compileInclude group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.13.4.2"
 	compileInclude group: "com.liferay", name: "org.apache.commons.logging", version: "1.2.LIFERAY-PATCHED-2"
@@ -44,36 +36,4 @@ dependencies {
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-reflect")
 	compileOnly project(":core:petra:petra-string")
-
-	testImplementation group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"
-	testImplementation project(":apps:portal-search:portal-search")
-	testImplementation project(":apps:portal-search:portal-search-test-util")
-	testImplementation project(":core:petra:petra-sql-dsl-api")
-}
-
-test {
-	dependsOn {
-		configurations.compileOnly
-	}
-
-	forkEvery = 0
-
-	doFirst {
-		File libProcessExecutorDir = file("tmp/lib-process-executor")
-
-		if (!libProcessExecutorDir.exists()) {
-			libProcessExecutorDir.mkdir()
-		}
-
-		project.copy {
-			include "com.liferay.petra.*.jar"
-
-			configurations.compileOnly.allDependencies.each {
-				rename "-${it.version}", ""
-			}
-
-			into libProcessExecutorDir.getPath()
-			from configurations.compileOnly
-		}
-	}
 }

@@ -1291,7 +1291,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		throws PortalException {
 
 		List<KBArticle> allDescendantKBArticles = getAllDescendantKBArticles(
-			parentResourcePrimKey, WorkflowConstants.STATUS_ANY, null);
+			parentResourcePrimKey, WorkflowConstants.STATUS_IN_TRASH, null);
 
 		for (KBArticle descendantKBArticle : allDescendantKBArticles) {
 			_restoreDependentKBArticleFromTrash(descendantKBArticle);

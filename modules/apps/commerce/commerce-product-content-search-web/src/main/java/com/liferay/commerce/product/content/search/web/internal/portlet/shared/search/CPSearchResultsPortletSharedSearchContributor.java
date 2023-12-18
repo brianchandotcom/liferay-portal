@@ -132,6 +132,9 @@ public class CPSearchResultsPortletSharedSearchContributor
 
 			if (accountEntry != null) {
 				searchContext.setAttribute(
+					"accountEntryId", accountEntry.getAccountEntryId());
+
+				searchContext.setAttribute(
 					"commerceAccountGroupIds",
 					_accountGroupLocalService.getAccountGroupIds(
 						accountEntry.getAccountEntryId()));

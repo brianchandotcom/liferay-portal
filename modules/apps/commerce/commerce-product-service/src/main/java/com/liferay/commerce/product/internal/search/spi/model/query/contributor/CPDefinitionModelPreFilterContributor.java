@@ -6,8 +6,13 @@
 package com.liferay.commerce.product.internal.search.spi.model.query.contributor;
 
 import com.liferay.commerce.product.constants.CPField;
+import com.liferay.commerce.product.constants.CommerceChannelAccountEntryRelConstants;
 import com.liferay.commerce.product.model.CommerceCatalog;
+import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.product.model.CommerceChannelAccountEntryRel;
 import com.liferay.commerce.product.service.CommerceCatalogService;
+import com.liferay.commerce.product.service.CommerceChannelAccountEntryRelLocalService;
+import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
@@ -177,6 +182,9 @@ public class CPDefinitionModelPreFilterContributor
 			CPField.CHANNEL_FILTER_ENABLED, Boolean.TRUE.toString(),
 			BooleanClauseOccur.MUST);
 
+		long accountEntryId = GetterUtil.getLong(
+			searchContext.getAttribute("accountEntryId"));
+
 		long commerceChannelGroupId = GetterUtil.getLong(
 			searchContext.getAttribute("commerceChannelGroupId"));
 
@@ -186,9 +194,45 @@ public class CPDefinitionModelPreFilterContributor
 
 		for (long groupId : commerceChannelGroupIds) {
 			if (groupId > 0) {
-				commerceChannelFilterEnableBooleanFilter.addTerm(
-					CPField.COMMERCE_CHANNEL_GROUP_IDS, String.valueOf(groupId),
-					BooleanClauseOccur.MUST);
+				CommerceChannel commerceChannel =
+					_commerceChannelLocalService.
+						fetchCommerceChannelByGroupClassPK(groupId);
+
+				if (commerceChannel == null) {
+					commerceChannelFilterEnableBooleanFilter.addTerm(
+						CPField.COMMERCE_CHANNEL_GROUP_IDS, "-1",
+						BooleanClauseOccur.MUST);
+
+					continue;
+				}
+
+				int commerceChannelAccountEntryRelsCount =
+					_commerceChannelAccountEntryRelLocalService.
+						getCommerceChannelAccountEntryRelsCount(
+							commerceChannel.getCommerceChannelId(), null,
+							CommerceChannelAccountEntryRelConstants.
+								TYPE_ELIGIBILITY);
+
+				CommerceChannelAccountEntryRel commerceChannelAccountEntryRel =
+					_commerceChannelAccountEntryRelLocalService.
+						fetchCommerceChannelAccountEntryRel(
+							accountEntryId,
+							commerceChannel.getCommerceChannelId(),
+							CommerceChannelAccountEntryRelConstants.
+								TYPE_ELIGIBILITY);
+
+				if ((commerceChannelAccountEntryRelsCount == 0) ||
+					(commerceChannelAccountEntryRel != null)) {
+
+					commerceChannelFilterEnableBooleanFilter.addTerm(
+						CPField.COMMERCE_CHANNEL_GROUP_IDS,
+						String.valueOf(groupId), BooleanClauseOccur.MUST);
+				}
+				else {
+					commerceChannelFilterEnableBooleanFilter.addTerm(
+						CPField.COMMERCE_CHANNEL_GROUP_IDS, "-1",
+						BooleanClauseOccur.MUST);
+				}
 			}
 			else {
 				commerceChannelFilterEnableBooleanFilter.addTerm(
@@ -302,5 +346,12 @@ public class CPDefinitionModelPreFilterContributor
 
 	@Reference
 	private CommerceCatalogService _commerceCatalogService;
+
+	@Reference
+	private CommerceChannelAccountEntryRelLocalService
+		_commerceChannelAccountEntryRelLocalService;
+
+	@Reference
+	private CommerceChannelLocalService _commerceChannelLocalService;
 
 }

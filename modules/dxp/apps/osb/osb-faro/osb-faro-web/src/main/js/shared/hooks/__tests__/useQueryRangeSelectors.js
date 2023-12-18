@@ -1,7 +1,7 @@
 import React from 'react';
-import useQueryRangeSelectors from '../useQueryRangeSelectors';
 import {MemoryRouter} from 'react-router-dom';
 import {render} from '@testing-library/react';
+import {useQueryRangeSelectors} from 'shared/hooks';
 
 jest.unmock('react-dom');
 

@@ -3,7 +3,6 @@ import * as data from 'test/data';
 import mockStore from 'test/mock-store';
 import ModalRenderer from 'shared/components/ModalRenderer';
 import React from 'react';
-import useModalNotifications from '../useModalNotifications';
 import {close, open} from 'shared/actions/modals';
 import {connect} from 'react-redux';
 import {fireEvent, render} from '@testing-library/react';
@@ -14,6 +13,7 @@ import {
 } from 'shared/util/records/Notification';
 import {Provider} from 'react-redux';
 import {range} from 'lodash';
+import {useModalNotifications} from 'shared/hooks';
 import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');

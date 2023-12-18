@@ -1,7 +1,7 @@
 import {isNull} from 'lodash';
 import {useState} from 'react';
 
-export default function useSelectedPoint(): {
+export function useSelectedPoint(): {
 	hasSelectedPoint: boolean;
 	onPointSelect: (any) => void;
 	selectedPoint: number;

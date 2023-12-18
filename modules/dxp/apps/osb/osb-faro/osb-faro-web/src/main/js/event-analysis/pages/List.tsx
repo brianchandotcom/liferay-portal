@@ -6,7 +6,7 @@ import React from 'react';
 import StatesRenderer from 'shared/components/states-renderer/StatesRenderer';
 import URLConstants from 'shared/util/url-constants';
 import {Routes, toRoute} from 'shared/util/router';
-import {useDataSource} from 'shared/hooks/useDataSource';
+import {useDataSource} from 'shared/hooks';
 import {useParams} from 'react-router-dom';
 import {User} from 'shared/util/records';
 import {withCurrentUser} from 'shared/hoc';

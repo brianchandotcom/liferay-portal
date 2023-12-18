@@ -1,5 +1,5 @@
-import useRequest from '../useRequest';
 import {renderHook} from '@testing-library/react-hooks';
+import {useRequest} from 'shared/hooks';
 import {waitFor} from '@testing-library/react';
 
 const mockRequest = jest.fn(() => Promise.resolve('passed'));

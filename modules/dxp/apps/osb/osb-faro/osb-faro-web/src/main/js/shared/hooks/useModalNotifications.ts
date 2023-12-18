@@ -39,7 +39,7 @@ const modalNotificationStrategies = new Map<string, Function>([
 	]
 ]);
 
-function useModalNotifications(
+export function useModalNotifications(
 	close: Modal.close,
 	groupId: string,
 	open: Modal.open
@@ -75,5 +75,3 @@ function useModalNotifications(
 			.then(handleRender);
 	}, []);
 }
-
-export default useModalNotifications;

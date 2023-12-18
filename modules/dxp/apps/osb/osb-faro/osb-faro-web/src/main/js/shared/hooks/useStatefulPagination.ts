@@ -88,7 +88,7 @@ const statefulPaginationReducer = (state: State, {payload, type}: Action) => {
 	}
 };
 
-export default function useStatefulPagination(
+export function useStatefulPagination(
 	mapPropsFn = undefined,
 	initialPaginationProps = {}
 ): StatefulPaginationResult {

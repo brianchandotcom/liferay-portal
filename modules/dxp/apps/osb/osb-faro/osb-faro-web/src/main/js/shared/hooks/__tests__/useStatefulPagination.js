@@ -1,8 +1,8 @@
 import Constants from 'shared/util/constants';
-import useStatefulPagination from '../useStatefulPagination';
 import {createOrderIOMap} from 'shared/util/pagination';
 import {Map, Set} from 'immutable';
 import {renderHook} from '@testing-library/react-hooks';
+import {useStatefulPagination} from 'shared/hooks';
 
 const {cur: DEFAULT_PAGE, delta: DEFAULT_DELTA} = Constants.pagination;
 

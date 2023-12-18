@@ -11,8 +11,6 @@ function useUpdateValueOnChange(value) {
 	return ref.current;
 }
 
-function useDeepEqualEffect(callback, args) {
+export function useDeepEqualEffect(callback, args) {
 	React.useEffect(callback, useUpdateValueOnChange(args));
 }
-
-export default useDeepEqualEffect;

@@ -18,7 +18,7 @@ import {IBasePageContext, Router} from 'shared/types';
 import {RootState} from 'shared/store';
 import {Routes, toRoute} from 'shared/util/router';
 import {useChannelContext} from 'shared/context/channel';
-import {useDataSource} from 'shared/hooks/useDataSource';
+import {useDataSource} from 'shared/hooks';
 import {useParams} from 'react-router-dom';
 import {useQuery} from '@apollo/react-hooks';
 import {useQueryPagination} from 'shared/hooks';

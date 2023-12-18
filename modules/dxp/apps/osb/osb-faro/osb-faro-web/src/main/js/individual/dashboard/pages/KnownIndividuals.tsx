@@ -36,7 +36,7 @@ import {RootState} from 'shared/store';
 import {Routes, toRoute} from 'shared/util/router';
 import {Segment, User} from 'shared/util/records';
 import {sub} from 'shared/util/lang';
-import {useDataSource} from 'shared/hooks/useDataSource';
+import {useDataSource} from 'shared/hooks';
 import {useParams} from 'react-router-dom';
 import {useQueryPagination, useRequest} from 'shared/hooks';
 

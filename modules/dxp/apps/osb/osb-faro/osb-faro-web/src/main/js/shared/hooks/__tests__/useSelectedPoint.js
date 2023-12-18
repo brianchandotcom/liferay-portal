@@ -1,5 +1,5 @@
-import useSelectedPoint from '../useSelectedPoint';
 import {renderHook} from '@testing-library/react-hooks';
+import {useSelectedPoint} from 'shared/hooks';
 
 describe('useSelectedPoint', () => {
 	it('should not have value on the first render', () => {

@@ -1,8 +1,8 @@
-import useQueryParams from './useQueryParams';
 import {RangeKeyTimeRanges} from 'shared/util/constants';
 import {RangeSelectors} from 'shared/types';
+import {useQueryParams} from 'shared/hooks';
 
-const useQueryRangeSelectors = (
+export const useQueryRangeSelectors = (
 	initialRangeSelectors: RangeSelectors = {
 		rangeEnd: null,
 		rangeKey: RangeKeyTimeRanges.Last30Days,

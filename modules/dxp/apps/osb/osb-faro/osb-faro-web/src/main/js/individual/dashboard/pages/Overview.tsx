@@ -13,7 +13,7 @@ import URLConstants from 'shared/util/url-constants';
 import {DataSource, User} from 'shared/util/records';
 import {fromJS} from 'immutable';
 import {Routes, toRoute} from 'shared/util/router';
-import {useDataSource} from 'shared/hooks/useDataSource';
+import {useDataSource} from 'shared/hooks';
 import {useParams} from 'react-router-dom';
 import {withCurrentUser} from 'shared/hoc';
 

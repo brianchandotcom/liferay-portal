@@ -1,8 +1,8 @@
 import React from 'react';
-import useQueryPagination from '../useQueryPagination';
 import {createOrderIOMap, getSortFromOrderIOMap} from 'shared/util/pagination';
 import {MemoryRouter} from 'react-router-dom';
 import {render} from '@testing-library/react';
+import {useQueryPagination} from 'shared/hooks';
 
 jest.unmock('react-dom');
 

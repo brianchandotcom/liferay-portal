@@ -17,7 +17,6 @@ import UserSessionQuery, {
 	UserSessionData,
 	UserSessionVariables
 } from 'shared/queries/UserSessionQuery';
-import useSelectedPoint from 'shared/hooks/useSelectedPoint';
 import VerticalTimeline from 'shared/components/VerticalTimeline';
 import {compose, withPaginationBar} from 'shared/hoc';
 import {
@@ -38,6 +37,7 @@ import {mapListResultsToProps} from 'shared/util/mappers';
 import {RangeKeyTimeRanges, SessionEntityTypes} from 'shared/util/constants';
 import {sub} from 'shared/util/lang';
 import {useQuery} from '@apollo/react-hooks';
+import {useSelectedPoint} from 'shared/hooks';
 import {useStatefulPagination} from 'shared/hooks';
 import {withEmpty} from 'cerebro-shared/hocs/utils';
 import {withError, withLoading, WrapSafeResults} from 'shared/hoc/util';

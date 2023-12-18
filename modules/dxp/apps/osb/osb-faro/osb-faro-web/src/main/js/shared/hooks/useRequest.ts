@@ -1,8 +1,8 @@
-import useDeepEqualEffect from './useDeepEqualEffect';
 import {debounce} from 'lodash/fp';
 import {useCallback, useRef, useState} from 'react';
+import {useDeepEqualEffect} from 'shared/hooks';
 
-const useRequest = ({
+export const useRequest = ({
 	dataSourceFn,
 	debounceDelay = 0,
 	initialState = {
@@ -81,5 +81,3 @@ const useRequest = ({
 
 	return state;
 };
-
-export default useRequest;

@@ -1,7 +1,6 @@
 import BundleRouter from 'route-middleware/BundleRouter';
 import Loading from 'shared/components/Loading';
 import React, {lazy, Suspense, useEffect} from 'react';
-import useModalNotifications from 'shared/hooks/useModalNotifications';
 import {close, open} from 'shared/actions/modals';
 import {compose} from 'redux';
 import {connect, ConnectedProps} from 'react-redux';
@@ -10,6 +9,7 @@ import {Project} from 'shared/util/records';
 import {RootState} from 'shared/store';
 import {Routes} from 'shared/util/router';
 import {Switch} from 'react-router-dom';
+import {useModalNotifications} from 'shared/hooks';
 import {withHelpWidget} from 'shared/hoc';
 
 // App Routes with Sidebar

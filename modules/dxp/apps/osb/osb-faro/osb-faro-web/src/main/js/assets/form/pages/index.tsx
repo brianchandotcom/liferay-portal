@@ -18,7 +18,7 @@ import {Router} from 'shared/types';
 import {sub} from 'shared/util/lang';
 import {Switch} from 'react-router-dom';
 import {useChannelContext} from 'shared/context/channel';
-import {useDataSource} from 'shared/hooks/useDataSource';
+import {useDataSource} from 'shared/hooks';
 
 const Overview = lazy(
 	() => import(/* webpackChunkName: "FormsOverview" */ './Overview')

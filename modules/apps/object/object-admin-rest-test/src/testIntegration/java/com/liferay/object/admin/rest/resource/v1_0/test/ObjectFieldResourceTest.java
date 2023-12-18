@@ -451,25 +451,13 @@ public class ObjectFieldResourceTest extends BaseObjectFieldResourceTestCase {
 	private ObjectField _addUniqueObjectField() throws Exception {
 		ObjectField objectField = randomObjectField();
 
-		objectField.setObjectFieldSettings(
-			new ObjectFieldSetting[] {
-				new ObjectFieldSetting() {
-					{
-						name = ObjectFieldSettingConstants.NAME_UNIQUE_VALUES;
-						value = "true";
-					}
-				}
-			});
+		_setUnique(objectField, true);
 
 		return objectFieldResource.postObjectDefinitionObjectField(
 			_objectDefinition.getObjectDefinitionId(), objectField);
 	}
 
-	private void _testPatchObjectField(ObjectField objectField, boolean unique)
-		throws Exception {
-
-		ObjectField randomObjectField = randomObjectField();
-
+	private void _setUnique(ObjectField randomObjectField, boolean unique) {
 		randomObjectField.setObjectFieldSettings(
 			new ObjectFieldSetting[] {
 				new ObjectFieldSetting() {
@@ -479,6 +467,14 @@ public class ObjectFieldResourceTest extends BaseObjectFieldResourceTestCase {
 					}
 				}
 			});
+	}
+
+	private void _testPatchObjectField(ObjectField objectField, boolean unique)
+		throws Exception {
+
+		ObjectField randomObjectField = randomObjectField();
+
+		_setUnique(randomObjectField, unique);
 
 		ObjectField patchObjectField = objectFieldResource.patchObjectField(
 			objectField.getId(), randomObjectField);

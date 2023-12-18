@@ -26,7 +26,10 @@ public class JobDefinitionFactory {
 	}
 
 	public static JobDefinition newJobDefinition(JobEntity.Type type) {
-		if (type == JobEntity.Type.GENERATE_CI_SYSTEM_HISTORY_REPORT) {
+		if (type == JobEntity.Type.FIXPACK_BUILDER_PULL_REQUEST) {
+			return new FixpackBuilderPullRequestJobDefinition(type);
+		}
+		else if (type == JobEntity.Type.GENERATE_CI_SYSTEM_HISTORY_REPORT) {
 			return new GenerateCISystemHistoryReportJobDefinition(type);
 		}
 		else if (type == JobEntity.Type.GENERATE_CI_SYSTEM_STATUS_REPORT) {
@@ -40,6 +43,9 @@ public class JobDefinitionFactory {
 		}
 		else if (type == JobEntity.Type.GENERATE_TESTRAY_CSV) {
 			return new GenerateTestrayCSVJobDefinition(type);
+		}
+		else if (type == JobEntity.Type.JENKINS_PULL_REQUEST) {
+			return new JenkinsPullRequestJobDefinition(type);
 		}
 		else if (type == JobEntity.Type.PORTAL_PULL_REQUEST) {
 			return new PortalPullRequestJobDefinition(type);
@@ -91,6 +97,9 @@ public class JobDefinitionFactory {
 		}
 		else if (type == JobEntity.Type.REPOSITORY_ARCHIVE) {
 			return new RepositoryArchiveJobDefinition(type);
+		}
+		else if (type == JobEntity.Type.SUBREPOSITORY_PULL_REQUEST) {
+			return new SubrepositoryPullRequestJobDefinition(type);
 		}
 		else if (type == JobEntity.Type.VERIFICATION) {
 			return new VerificationJobDefinition(type);

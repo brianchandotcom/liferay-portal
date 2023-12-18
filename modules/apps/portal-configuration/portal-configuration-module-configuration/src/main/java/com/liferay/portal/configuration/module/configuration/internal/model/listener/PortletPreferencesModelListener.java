@@ -19,11 +19,10 @@ import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.LayoutRevisionLocalService;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.service.persistence.LayoutRevisionUtil;
-import com.liferay.portal.kernel.service.persistence.LayoutUtil;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsLocatorHelper;
 import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
@@ -80,7 +79,7 @@ public class PortletPreferencesModelListener
 		try {
 			long companyId = 0;
 
-			Layout layout = LayoutUtil.fetchByPrimaryKey(
+			Layout layout = _layoutLocalService.fetchLayout(
 				portletPreferences.getPlid());
 
 			if ((layout != null) && !layout.isPrivateLayout()) {
@@ -88,7 +87,7 @@ public class PortletPreferencesModelListener
 			}
 			else {
 				LayoutRevision layoutRevision =
-					LayoutRevisionUtil.fetchByPrimaryKey(
+					_layoutRevisionLocalService.fetchLayoutRevision(
 						portletPreferences.getPlid());
 
 				if ((layoutRevision != null) &&
@@ -227,6 +226,9 @@ public class PortletPreferencesModelListener
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutRevisionLocalService _layoutRevisionLocalService;
 
 	@Reference
 	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;

@@ -17,7 +17,7 @@
 ContentTransformerHandler contentTransformerHandler = ContentTransformerUtil.getContentTransformerHandler();
 
 if (contentTransformerHandler != null) {
-	html = contentTransformerHandler.transform(ContentTransformerContentTypes.HTML, html);
+	html = contentTransformerHandler.transform(html);
 }
 %>
 

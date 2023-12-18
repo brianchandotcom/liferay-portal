@@ -6,7 +6,6 @@
 package com.liferay.adaptive.media.content.transformer.internal;
 
 import com.liferay.adaptive.media.content.transformer.ContentTransformer;
-import com.liferay.adaptive.media.content.transformer.ContentTransformerContentType;
 import com.liferay.adaptive.media.content.transformer.ContentTransformerHandler;
 import com.liferay.adaptive.media.image.html.AMImageHTMLTagFactory;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
@@ -22,28 +21,15 @@ import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * Transforms the content by invoking the {@link ContentTransformer} available
- * for a specific {@link ContentTransformerContentType}. There can be more than
- * one content transformer available for a particular content type, and they
- * will all be executed, but the order is not guaranteed.
+ * Transforms the content by invoking all available {@link ContentTransformer}.
+ * There can be more than one content transformer available, and they will all
+ * be executed, but the order is not guaranteed.
  *
  * @author Alejandro Tardín
  */
 @Component(service = ContentTransformerHandler.class)
 public class ContentTransformerHandlerImpl
 	implements ContentTransformerHandler {
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #transform(String)}
-	 */
-	@Deprecated
-	@Override
-	public <T> T transform(
-		ContentTransformerContentType<T> contentTransformerContentType,
-		T originalContent) {
-
-		return (T)transform((String)originalContent);
-	}
 
 	@Override
 	public String transform(String originalContent) {
@@ -59,13 +45,8 @@ public class ContentTransformerHandlerImpl
 			}
 		}
 
-		for (ContentTransformer<?> curContentTransformer :
-				_serviceTrackerList) {
-
+		for (ContentTransformer contentTransformer : _serviceTrackerList) {
 			try {
-				ContentTransformer<String> contentTransformer =
-					(ContentTransformer<String>)curContentTransformer;
-
 				transformedContent = contentTransformer.transform(
 					transformedContent);
 			}
@@ -82,8 +63,7 @@ public class ContentTransformerHandlerImpl
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerList = ServiceTrackerListFactory.open(
-			bundleContext,
-			(Class<ContentTransformer<?>>)(Class<?>)ContentTransformer.class);
+			bundleContext, ContentTransformer.class);
 
 		_htmlContentTransformer = new HtmlContentTransformerImpl(
 			_amImageHTMLTagFactory, _dlAppLocalService);
@@ -95,7 +75,7 @@ public class ContentTransformerHandlerImpl
 	}
 
 	protected final void setServiceTrackerList(
-		ServiceTrackerList<ContentTransformer<?>> serviceTrackerList) {
+		ServiceTrackerList<ContentTransformer> serviceTrackerList) {
 
 		_serviceTrackerList = serviceTrackerList;
 	}
@@ -109,7 +89,7 @@ public class ContentTransformerHandlerImpl
 	@Reference
 	private DLAppLocalService _dlAppLocalService;
 
-	private ContentTransformer<String> _htmlContentTransformer;
-	private ServiceTrackerList<ContentTransformer<?>> _serviceTrackerList;
+	private ContentTransformer _htmlContentTransformer;
+	private ServiceTrackerList<ContentTransformer> _serviceTrackerList;
 
 }

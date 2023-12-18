@@ -10,14 +10,6 @@ package com.liferay.adaptive.media.content.transformer;
  */
 public interface ContentTransformerHandler {
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #transform(String)}
-	 */
-	@Deprecated
-	public <T> T transform(
-		ContentTransformerContentType<T> contentTransformerContentType,
-		T originalContent);
-
 	public String transform(String originalContent);
 
 }

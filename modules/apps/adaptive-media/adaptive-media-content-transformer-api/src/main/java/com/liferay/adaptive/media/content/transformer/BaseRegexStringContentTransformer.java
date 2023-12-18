@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
  * @author Adolfo Pérez
  */
 public abstract class BaseRegexStringContentTransformer
-	implements ContentTransformer<String> {
+	implements ContentTransformer {
 
 	@Override
 	public String transform(String content) throws PortalException {

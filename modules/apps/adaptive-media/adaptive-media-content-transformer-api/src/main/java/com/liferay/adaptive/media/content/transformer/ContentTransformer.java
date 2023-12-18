@@ -5,7 +5,6 @@
 
 package com.liferay.adaptive.media.content.transformer;
 
-import com.liferay.adaptive.media.content.transformer.constants.ContentTransformerContentTypes;
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
@@ -20,19 +19,8 @@ import com.liferay.portal.kernel.exception.PortalException;
  *
  * @author Alejandro Tardín
  */
-public interface ContentTransformer<T> {
+public interface ContentTransformer {
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
-	 */
-	@Deprecated
-	public default ContentTransformerContentType<T>
-		getContentTransformerContentType() {
-
-		return (ContentTransformerContentType<T>)
-			ContentTransformerContentTypes.HTML;
-	}
-
-	public T transform(T content) throws PortalException;
+	public String transform(String content) throws PortalException;
 
 }

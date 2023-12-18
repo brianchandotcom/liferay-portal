@@ -11,7 +11,7 @@ import com.liferay.commerce.payment.method.CommercePaymentMethod;
 import com.liferay.commerce.payment.method.CommercePaymentMethodRegistry;
 import com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel;
 import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelService;
-import com.liferay.commerce.payment.web.internal.display.context.helper.CommercePaymentMethodRequestHelper;
+import com.liferay.commerce.payment.web.internal.display.context.helper.CommercePaymentRequestHelper;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.petra.string.StringPool;
@@ -44,8 +44,8 @@ public class CommercePaymentMethodGroupRelsDisplayContext {
 			commercePaymentIntegrationRegistry;
 		_countryService = countryService;
 
-		commercePaymentMethodRequestHelper =
-			new CommercePaymentMethodRequestHelper(httpServletRequest);
+		commercePaymentRequestHelper = new CommercePaymentRequestHelper(
+			httpServletRequest);
 	}
 
 	public long getCommerceChannelId() throws PortalException {
@@ -58,8 +58,7 @@ public class CommercePaymentMethodGroupRelsDisplayContext {
 		}
 
 		return ParamUtil.getLong(
-			commercePaymentMethodRequestHelper.getRequest(),
-			"commerceChannelId");
+			commercePaymentRequestHelper.getRequest(), "commerceChannelId");
 	}
 
 	public String getCommercePaymentMethodEngineDescription(Locale locale) {
@@ -80,7 +79,7 @@ public class CommercePaymentMethodGroupRelsDisplayContext {
 		}
 
 		return ParamUtil.getString(
-			commercePaymentMethodRequestHelper.getRequest(),
+			commercePaymentRequestHelper.getRequest(),
 			"commercePaymentMethodEngineKey");
 	}
 
@@ -135,11 +134,10 @@ public class CommercePaymentMethodGroupRelsDisplayContext {
 
 	public int getCountriesCount() throws PortalException {
 		return _countryService.getCompanyCountriesCount(
-			commercePaymentMethodRequestHelper.getCompanyId());
+			commercePaymentRequestHelper.getCompanyId());
 	}
 
-	protected final CommercePaymentMethodRequestHelper
-		commercePaymentMethodRequestHelper;
+	protected final CommercePaymentRequestHelper commercePaymentRequestHelper;
 
 	private final CommerceChannelLocalService _commerceChannelLocalService;
 	private final CommercePaymentIntegrationRegistry

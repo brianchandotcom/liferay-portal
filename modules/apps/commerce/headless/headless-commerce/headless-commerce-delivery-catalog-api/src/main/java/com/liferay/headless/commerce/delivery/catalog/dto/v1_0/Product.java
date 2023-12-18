@@ -253,7 +253,7 @@ public class Product implements Serializable {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected CustomField[] customFields;
 
 	private Supplier<CustomField[]> _customFieldsSupplier;

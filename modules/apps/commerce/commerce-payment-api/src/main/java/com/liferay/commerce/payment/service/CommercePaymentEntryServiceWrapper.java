@@ -88,6 +88,15 @@ public class CommercePaymentEntryServiceWrapper
 	}
 
 	@Override
+	public com.liferay.commerce.payment.model.CommercePaymentEntry
+			fetchCommercePaymentEntry(long commercePaymentEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commercePaymentEntryService.fetchCommercePaymentEntry(
+			commercePaymentEntryId);
+	}
+
+	@Override
 	public java.util.List
 		<com.liferay.commerce.payment.model.CommercePaymentEntry>
 				getCommercePaymentEntries(
@@ -144,13 +153,13 @@ public class CommercePaymentEntryServiceWrapper
 				String[] currencyCodes, String keywords,
 				String[] paymentMethodNames, int[] paymentStatuses,
 				boolean excludeStatuses, int start, int end,
-				String orderByField, boolean reverse)
+				com.liferay.portal.kernel.search.Sort sort)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commercePaymentEntryService.search(
 			companyId, classNameIds, classPKs, currencyCodes, keywords,
 			paymentMethodNames, paymentStatuses, excludeStatuses, start, end,
-			orderByField, reverse);
+			sort);
 	}
 
 	@Override
@@ -170,6 +179,17 @@ public class CommercePaymentEntryServiceWrapper
 			amount, callbackURL, cancelURL, currencyCode, errorMessages,
 			languageId, note, paymentIntegrationKey, paymentIntegrationType,
 			paymentStatus, reasonKey, redirectURL, transactionCode, type);
+	}
+
+	@Override
+	public com.liferay.commerce.payment.model.CommercePaymentEntry
+			updateCommercePaymentEntryExternalReferenceCode(
+				String externalReferenceCode, long commercePaymentEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commercePaymentEntryService.
+			updateCommercePaymentEntryExternalReferenceCode(
+				externalReferenceCode, commercePaymentEntryId);
 	}
 
 	@Override

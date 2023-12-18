@@ -455,10 +455,10 @@ public class CommercePaymentEntryLocalServiceWrapper
 			searchCommercePaymentEntries(
 				long companyId, String keywords,
 				java.util.LinkedHashMap<String, Object> params, int start,
-				int end, String orderByField, boolean reverse) {
+				int end, com.liferay.portal.kernel.search.Sort sort) {
 
 		return _commercePaymentEntryLocalService.searchCommercePaymentEntries(
-			companyId, keywords, params, start, end, orderByField, reverse);
+			companyId, keywords, params, start, end, sort);
 	}
 
 	/**
@@ -498,6 +498,17 @@ public class CommercePaymentEntryLocalServiceWrapper
 			amount, callbackURL, cancelURL, currencyCode, errorMessages,
 			languageId, note, paymentIntegrationKey, paymentIntegrationType,
 			paymentStatus, reasonKey, redirectURL, transactionCode, type);
+	}
+
+	@Override
+	public com.liferay.commerce.payment.model.CommercePaymentEntry
+			updateCommercePaymentEntryExternalReferenceCode(
+				String externalReferenceCode, long commercePaymentEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commercePaymentEntryLocalService.
+			updateCommercePaymentEntryExternalReferenceCode(
+				externalReferenceCode, commercePaymentEntryId);
 	}
 
 	@Override

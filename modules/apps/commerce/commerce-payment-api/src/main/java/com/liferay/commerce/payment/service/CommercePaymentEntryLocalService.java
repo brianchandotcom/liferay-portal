@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -322,7 +323,7 @@ public interface CommercePaymentEntryLocalService
 		searchCommercePaymentEntries(
 			long companyId, String keywords,
 			LinkedHashMap<String, Object> params, int start, int end,
-			String orderByField, boolean reverse);
+			Sort sort);
 
 	/**
 	 * Updates the commerce payment entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -346,6 +347,11 @@ public interface CommercePaymentEntryLocalService
 			String languageId, String note, String paymentIntegrationKey,
 			int paymentIntegrationType, int paymentStatus, String reasonKey,
 			String redirectURL, String transactionCode, int type)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public CommercePaymentEntry updateCommercePaymentEntryExternalReferenceCode(
+			String externalReferenceCode, long commercePaymentEntryId)
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)

@@ -16,6 +16,8 @@ public class FriendlyURLResolverConstants {
 
 	public static final String URL_SEPARATOR_BLOGS_ENTRY = "/b/";
 
+	public static final String URL_SEPARATOR_CALENDAR_BOOKING = "/g/";
+
 	public static final String URL_SEPARATOR_FILE_ENTRY = "/d/";
 
 	public static final String URL_SEPARATOR_JOURNAL_ARTICLE = "/w/";

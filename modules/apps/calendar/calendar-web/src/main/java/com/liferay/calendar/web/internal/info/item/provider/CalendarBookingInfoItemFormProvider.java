@@ -46,6 +46,8 @@ public class CalendarBookingInfoItemFormProvider
 		).infoFieldSetEntry(
 			CalendarBookingInfoItemFields.locationInfoField
 		).infoFieldSetEntry(
+			CalendarBookingInfoItemFields.eventURLInfoField
+		).infoFieldSetEntry(
 			CalendarBookingInfoItemFields.startDateInfoField
 		).infoFieldSetEntry(
 			CalendarBookingInfoItemFields.endDateInfoField

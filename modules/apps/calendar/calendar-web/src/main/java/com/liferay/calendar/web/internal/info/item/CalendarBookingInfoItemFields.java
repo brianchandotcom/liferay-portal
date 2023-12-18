@@ -11,6 +11,7 @@ import com.liferay.info.field.type.BooleanInfoFieldType;
 import com.liferay.info.field.type.DateInfoFieldType;
 import com.liferay.info.field.type.HTMLInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
+import com.liferay.info.field.type.URLInfoFieldType;
 import com.liferay.info.localized.InfoLocalizedValue;
 
 /**
@@ -44,6 +45,15 @@ public class CalendarBookingInfoItemFields {
 		).labelInfoLocalizedValue(
 			InfoLocalizedValue.localize(
 				CalendarBookingInfoItemFields.class, "end-date")
+		).build();
+	public static final InfoField<URLInfoFieldType> eventURLInfoField =
+		BuilderHolder._builder.infoFieldType(
+			URLInfoFieldType.INSTANCE
+		).name(
+			"eventURL"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				CalendarBookingInfoItemFields.class, "event-url")
 		).build();
 	public static final InfoField<TextInfoFieldType> locationInfoField =
 		BuilderHolder._builder.infoFieldType(

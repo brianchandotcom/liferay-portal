@@ -90,6 +90,7 @@ function IndexActions({
 	concurrentModeSupported = true,
 	virtualInstances = [],
 	indexReindexerNames = [],
+	omniAdmin,
 	portletNamespace,
 	redirectURL = '',
 	reindexURL = '',
@@ -114,6 +115,10 @@ function IndexActions({
 	 * `executionScope` and `selectedCompanyIds`.
 	 */
 	const _getCompanyIds = () => {
+		if (!omniAdmin) {
+			return [Liferay.ThemeDisplay.getCompanyId()];
+		}
+
 		return executionScope === SCOPES.ALL
 			? virtualInstances.map(({id}) => id)
 			: selectedCompanyIds;
@@ -497,6 +502,7 @@ function IndexActions({
 							concurrentModeSupported={concurrentModeSupported}
 							executionMode={executionMode}
 							executionScope={executionScope}
+							omniAdmin={omniAdmin}
 							onExecutionModeChange={_handleExecutionModeChange}
 							onExecutionScopeChange={_handleExecutionScopeChange}
 							onSelectedCompanyIdsChange={
@@ -650,6 +656,7 @@ export default function ({
 		initialCompanyIds,
 		initialExecutionMode,
 		initialScope,
+		omniAdmin,
 		virtualInstances,
 	} = data;
 
@@ -664,6 +671,7 @@ export default function ({
 				initialCompanyIds={initialCompanyIds}
 				initialExecutionMode={initialExecutionMode}
 				initialScope={initialScope}
+				omniAdmin={omniAdmin}
 				portletNamespace={portletNamespace}
 				redirectURL={redirectURL}
 				reindexURL={reindexURL}

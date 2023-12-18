@@ -109,8 +109,9 @@ public class StyleBookEntryLocalServiceImpl
 		String name = _getUniqueCopyName(sourceStyleBookEntry);
 
 		StyleBookEntry targetStyleBookEntry = addStyleBookEntry(
-			userId, groupId, sourceStyleBookEntry.getFrontendTokensValues(),
-			name, StringPool.BLANK, serviceContext);
+			userId, groupId, false,
+			sourceStyleBookEntry.getFrontendTokensValues(), name,
+			StringPool.BLANK, serviceContext);
 
 		long previewFileEntryId = _copyStyleBookEntryPreviewFileEntry(
 			userId, groupId, sourceStyleBookEntry, targetStyleBookEntry);

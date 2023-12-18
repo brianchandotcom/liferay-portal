@@ -46,7 +46,7 @@ public class StylebookEntryStagedModelRepository
 		}
 
 		return _styleBookEntryLocalService.addStyleBookEntry(
-			userId, styleBookEntry.getGroupId(),
+			userId, styleBookEntry.getGroupId(), false,
 			styleBookEntry.getFrontendTokensValues(), styleBookEntry.getName(),
 			styleBookEntry.getStyleBookEntryKey(), serviceContext);
 	}

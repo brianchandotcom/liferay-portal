@@ -5,6 +5,7 @@
 
 package com.liferay.style.book.service.impl;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
@@ -41,7 +42,8 @@ public class StyleBookEntryServiceImpl extends StyleBookEntryServiceBaseImpl {
 			StyleBookActionKeys.MANAGE_STYLE_BOOK_ENTRIES);
 
 		return styleBookEntryLocalService.addStyleBookEntry(
-			getUserId(), groupId, name, styleBookEntryKey, serviceContext);
+			getUserId(), groupId, false, StringPool.BLANK, name,
+			styleBookEntryKey, serviceContext);
 	}
 
 	@Override
@@ -55,8 +57,8 @@ public class StyleBookEntryServiceImpl extends StyleBookEntryServiceBaseImpl {
 			StyleBookActionKeys.MANAGE_STYLE_BOOK_ENTRIES);
 
 		return styleBookEntryLocalService.addStyleBookEntry(
-			getUserId(), groupId, frontendTokensValues, name, styleBookEntryKey,
-			serviceContext);
+			getUserId(), groupId, false, frontendTokensValues, name,
+			styleBookEntryKey, serviceContext);
 	}
 
 	@Override

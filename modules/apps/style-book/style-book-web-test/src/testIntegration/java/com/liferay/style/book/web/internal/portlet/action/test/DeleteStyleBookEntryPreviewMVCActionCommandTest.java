@@ -62,9 +62,9 @@ public class DeleteStyleBookEntryPreviewMVCActionCommandTest {
 	public void testDeleteStyleBookEntryPreviewFileEntry() throws Exception {
 		StyleBookEntry styleBookEntry =
 			_styleBookEntryLocalService.addStyleBookEntry(
-				TestPropsValues.getUserId(), _group.getGroupId(),
-				RandomTestUtil.randomString(), StringPool.BLANK,
-				_serviceContext);
+				TestPropsValues.getUserId(), _group.getGroupId(), false,
+				StringPool.BLANK, RandomTestUtil.randomString(),
+				StringPool.BLANK, _serviceContext);
 
 		FileEntry fileEntry = _addFileEntry(styleBookEntry);
 

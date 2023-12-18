@@ -22,7 +22,6 @@ const SELECTED_PURPOSE_OTHER = 'Other, please specify';
 
 const ComplimentaryDate = ({
 	accountKey,
-	deactivateKeysConfirm,
 	infoSelectedKey,
 	purposeDescription,
 	sessionId,
@@ -207,15 +206,6 @@ const ComplimentaryDate = ({
 		urlPreviousPage,
 	]);
 
-	const handleSubmit = async () => {
-		const submitResult = await submitKey();
-
-		if (submitResult) {
-			deactivateKeysConfirm();
-			setIsLoadingGenerateKey(false);
-		}
-	};
-
 	return (
 		<div>
 			<Layout
@@ -258,7 +248,7 @@ const ComplimentaryDate = ({
 								isLoading={isLoadingGenerateKey}
 								onClick={() => {
 									if (state.id === 'renew') {
-										handleSubmit();
+										submitKey();
 									} else {
 										setInfoSelectedKey(
 											(previousInfoSelectedKey) => ({

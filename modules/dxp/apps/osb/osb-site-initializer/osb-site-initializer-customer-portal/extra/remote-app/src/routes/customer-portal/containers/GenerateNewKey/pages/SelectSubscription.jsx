@@ -28,7 +28,6 @@ import {getLicenseKeyEndDatesByLicenseType} from '../utils/licenseKeyEndDate';
 
 const SelectSubscription = ({
 	accountKey,
-	deactivateKeysConfirm,
 	hasKeyComplimentary,
 	infoSelectedKey,
 	productGroupName,
@@ -434,15 +433,6 @@ const SelectSubscription = ({
 		urlPreviousPage,
 	]);
 
-	const handleSubmit = async () => {
-		const submitResult = await submitKey();
-
-		if (submitResult) {
-			deactivateKeysConfirm();
-			setIsLoadingGenerateKey(false);
-		}
-	};
-
 	const CustomComplimentaryKeyAlert = () => {
 		return (
 			<ClayAlert className="px-4 py-3" displayType="info">
@@ -555,32 +545,22 @@ const SelectSubscription = ({
 						displayType="primary"
 						isLoading={isLoadingGenerateKey}
 						onClick={() => {
-							if (!hasKeyComplimentary && state.id === 'renew') {
-								handleSubmit();
+							const updatedInfoSelectedKey = {
+								doesNotAllowPermanentLicense,
+								hasNotPermanentLicence,
+								selectedSubscription: {...selectedSubscription},
+							};
 
-								setInfoSelectedKey(
-									(previousInfoSelectedKey) => ({
-										...previousInfoSelectedKey,
-										doesNotAllowPermanentLicense,
-										hasNotPermanentLicence,
-										selectedSubscription: {
-											...selectedSubscription,
-										},
-									})
-								);
+							if (!hasKeyComplimentary && state.id === 'renew') {
+								submitKey();
 							} else {
-								setInfoSelectedKey(
-									(previousInfoSelectedKey) => ({
-										...previousInfoSelectedKey,
-										doesNotAllowPermanentLicense,
-										hasNotPermanentLicence,
-										selectedSubscription: {
-											...selectedSubscription,
-										},
-									})
-								);
 								setStep(hasKeyComplimentary ? 1 : 2);
 							}
+
+							setInfoSelectedKey((previousInfoSelectedKey) => ({
+								...previousInfoSelectedKey,
+								...updatedInfoSelectedKey,
+							}));
 						}}
 					>
 						{!hasKeyComplimentary && state.id === 'renew'

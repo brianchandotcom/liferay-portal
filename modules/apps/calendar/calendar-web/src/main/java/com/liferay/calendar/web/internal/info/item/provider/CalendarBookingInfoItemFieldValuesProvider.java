@@ -6,7 +6,7 @@
 package com.liferay.calendar.web.internal.info.item.provider;
 
 import com.liferay.calendar.model.CalendarBooking;
-import com.liferay.calendar.web.internal.info.CalendarBookingInfoItemFields;
+import com.liferay.calendar.web.internal.info.item.CalendarBookingInfoItemFields;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
@@ -14,7 +14,8 @@ import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
-import java.util.Collections;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -48,7 +49,7 @@ public class CalendarBookingInfoItemFieldValuesProvider
 	private List<InfoFieldValue<Object>> _getCalendarBookingInfoFieldValues(
 		CalendarBooking calendarBooking) {
 
-		return Collections.singletonList(
+		return Arrays.asList(
 			new InfoFieldValue<>(
 				CalendarBookingInfoItemFields.titleInfoField,
 				InfoLocalizedValue.<String>builder(
@@ -57,7 +58,28 @@ public class CalendarBookingInfoItemFieldValuesProvider
 						calendarBooking.getDefaultLanguageId())
 				).values(
 					calendarBooking.getTitleMap()
-				).build()));
+				).build()),
+			new InfoFieldValue<>(
+				CalendarBookingInfoItemFields.descriptionInfoField,
+				InfoLocalizedValue.<String>builder(
+				).defaultLocale(
+					LocaleUtil.fromLanguageId(
+						calendarBooking.getDefaultLanguageId())
+				).values(
+					calendarBooking.getDescriptionMap()
+				).build()),
+			new InfoFieldValue<>(
+				CalendarBookingInfoItemFields.locationInfoField,
+				calendarBooking.getLocation()),
+			new InfoFieldValue<>(
+				CalendarBookingInfoItemFields.startDateInfoField,
+				new Date(calendarBooking.getStartTime())),
+			new InfoFieldValue<>(
+				CalendarBookingInfoItemFields.endDateInfoField,
+				new Date(calendarBooking.getEndTime())),
+			new InfoFieldValue<>(
+				CalendarBookingInfoItemFields.allDayInfoField,
+				calendarBooking.isAllDay()));
 	}
 
 }

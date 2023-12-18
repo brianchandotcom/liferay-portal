@@ -9,6 +9,7 @@ import com.liferay.commerce.payment.model.CommercePaymentEntry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -70,8 +71,14 @@ public interface CommercePaymentEntryService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommercePaymentEntry fetchByExternalReferenceCode(
-			String externalReferenceCode, long companyId)
+	public CommercePaymentEntry fetchCommercePaymentEntry(
+			long commercePaymentEntryId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommercePaymentEntry
+			fetchCommercePaymentEntryByExternalReferenceCode(
+				String externalReferenceCode, long companyId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -103,8 +110,7 @@ public interface CommercePaymentEntryService extends BaseService {
 			long companyId, long[] classNameIds, long[] classPKs,
 			String[] currencyCodes, String keywords,
 			String[] paymentMethodNames, int[] paymentStatuses,
-			boolean excludeStatuses, int start, int end, String orderByField,
-			boolean reverse)
+			boolean excludeStatuses, int start, int end, Sort sort)
 		throws PortalException;
 
 	public CommercePaymentEntry updateCommercePaymentEntry(
@@ -116,11 +122,15 @@ public interface CommercePaymentEntryService extends BaseService {
 			String redirectURL, String transactionCode, int type)
 		throws PortalException;
 
-	public CommercePaymentEntry updateCommercePaymentEntryNote(
+	public CommercePaymentEntry updateExternalReferenceCode(
+			long commercePaymentEntryId, String externalReferenceCode)
+		throws PortalException;
+
+	public CommercePaymentEntry updateNote(
 			long commercePaymentEntryId, String note)
 		throws PortalException;
 
-	public CommercePaymentEntry updateCommercePaymentEntryReasonKey(
+	public CommercePaymentEntry updateReasonKey(
 			long commercePaymentEntryId, String reasonKey)
 		throws PortalException;
 

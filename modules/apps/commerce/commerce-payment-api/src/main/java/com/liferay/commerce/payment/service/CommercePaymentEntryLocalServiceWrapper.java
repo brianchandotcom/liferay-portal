@@ -284,15 +284,6 @@ public class CommercePaymentEntryLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.payment.model.CommercePaymentEntry
-		fetchByExternalReferenceCode(
-			String externalReferenceCode, long companyId) {
-
-		return _commercePaymentEntryLocalService.fetchByExternalReferenceCode(
-			externalReferenceCode, companyId);
-	}
-
-	@Override
-	public com.liferay.commerce.payment.model.CommercePaymentEntry
 		fetchCommercePaymentEntry(long commercePaymentEntryId) {
 
 		return _commercePaymentEntryLocalService.fetchCommercePaymentEntry(
@@ -455,10 +446,10 @@ public class CommercePaymentEntryLocalServiceWrapper
 			searchCommercePaymentEntries(
 				long companyId, String keywords,
 				java.util.LinkedHashMap<String, Object> params, int start,
-				int end, String orderByField, boolean reverse) {
+				int end, com.liferay.portal.kernel.search.Sort sort) {
 
 		return _commercePaymentEntryLocalService.searchCommercePaymentEntries(
-			companyId, keywords, params, start, end, orderByField, reverse);
+			companyId, keywords, params, start, end, sort);
 	}
 
 	/**
@@ -502,23 +493,30 @@ public class CommercePaymentEntryLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.payment.model.CommercePaymentEntry
-			updateCommercePaymentEntryNote(
-				long commercePaymentEntryId, String note)
+			updateExternalReferenceCode(
+				long commercePaymentEntryId, String externalReferenceCode)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commercePaymentEntryLocalService.updateCommercePaymentEntryNote(
+		return _commercePaymentEntryLocalService.updateExternalReferenceCode(
+			commercePaymentEntryId, externalReferenceCode);
+	}
+
+	@Override
+	public com.liferay.commerce.payment.model.CommercePaymentEntry updateNote(
+			long commercePaymentEntryId, String note)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commercePaymentEntryLocalService.updateNote(
 			commercePaymentEntryId, note);
 	}
 
 	@Override
 	public com.liferay.commerce.payment.model.CommercePaymentEntry
-			updateCommercePaymentEntryReasonKey(
-				long commercePaymentEntryId, String reasonKey)
+			updateReasonKey(long commercePaymentEntryId, String reasonKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commercePaymentEntryLocalService.
-			updateCommercePaymentEntryReasonKey(
-				commercePaymentEntryId, reasonKey);
+		return _commercePaymentEntryLocalService.updateReasonKey(
+			commercePaymentEntryId, reasonKey);
 	}
 
 	@Override

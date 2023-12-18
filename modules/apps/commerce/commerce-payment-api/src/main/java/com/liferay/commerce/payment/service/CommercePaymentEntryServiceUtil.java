@@ -72,11 +72,19 @@ public class CommercePaymentEntryServiceUtil {
 		return getService().deleteCommercePaymentEntry(commercePaymentEntryId);
 	}
 
-	public static CommercePaymentEntry fetchByExternalReferenceCode(
-			String externalReferenceCode, long companyId)
+	public static CommercePaymentEntry fetchCommercePaymentEntry(
+			long commercePaymentEntryId)
 		throws PortalException {
 
-		return getService().fetchByExternalReferenceCode(
+		return getService().fetchCommercePaymentEntry(commercePaymentEntryId);
+	}
+
+	public static CommercePaymentEntry
+			fetchCommercePaymentEntryByExternalReferenceCode(
+				String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return getService().fetchCommercePaymentEntryByExternalReferenceCode(
 			externalReferenceCode, companyId);
 	}
 
@@ -119,14 +127,14 @@ public class CommercePaymentEntryServiceUtil {
 			long companyId, long[] classNameIds, long[] classPKs,
 			String[] currencyCodes, String keywords,
 			String[] paymentMethodNames, int[] paymentStatuses,
-			boolean excludeStatuses, int start, int end, String orderByField,
-			boolean reverse)
+			boolean excludeStatuses, int start, int end,
+			com.liferay.portal.kernel.search.Sort sort)
 		throws PortalException {
 
 		return getService().search(
 			companyId, classNameIds, classPKs, currencyCodes, keywords,
 			paymentMethodNames, paymentStatuses, excludeStatuses, start, end,
-			orderByField, reverse);
+			sort);
 	}
 
 	public static CommercePaymentEntry updateCommercePaymentEntry(
@@ -146,20 +154,26 @@ public class CommercePaymentEntryServiceUtil {
 			paymentStatus, reasonKey, redirectURL, transactionCode, type);
 	}
 
-	public static CommercePaymentEntry updateCommercePaymentEntryNote(
+	public static CommercePaymentEntry updateExternalReferenceCode(
+			long commercePaymentEntryId, String externalReferenceCode)
+		throws PortalException {
+
+		return getService().updateExternalReferenceCode(
+			commercePaymentEntryId, externalReferenceCode);
+	}
+
+	public static CommercePaymentEntry updateNote(
 			long commercePaymentEntryId, String note)
 		throws PortalException {
 
-		return getService().updateCommercePaymentEntryNote(
-			commercePaymentEntryId, note);
+		return getService().updateNote(commercePaymentEntryId, note);
 	}
 
-	public static CommercePaymentEntry updateCommercePaymentEntryReasonKey(
+	public static CommercePaymentEntry updateReasonKey(
 			long commercePaymentEntryId, String reasonKey)
 		throws PortalException {
 
-		return getService().updateCommercePaymentEntryReasonKey(
-			commercePaymentEntryId, reasonKey);
+		return getService().updateReasonKey(commercePaymentEntryId, reasonKey);
 	}
 
 	public static CommercePaymentEntryService getService() {

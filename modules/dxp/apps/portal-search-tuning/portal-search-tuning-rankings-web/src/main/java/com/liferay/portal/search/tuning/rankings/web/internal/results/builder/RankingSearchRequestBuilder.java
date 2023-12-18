@@ -10,6 +10,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.search.constants.SearchContextAttributes;
 import com.liferay.portal.search.filter.ComplexQueryPartBuilderFactory;
 import com.liferay.portal.search.query.IdsQuery;
 import com.liferay.portal.search.query.Queries;
@@ -59,8 +60,13 @@ public class RankingSearchRequestBuilder {
 			_size
 		).withSearchContext(
 			searchContext -> {
-				searchContext.setAttribute(
-					"rankings.admin.search", _adminSearch);
+				if (!_adminSearch) {
+					searchContext.setAttribute(
+						SearchContextAttributes.
+							ATTRIBUTE_KEY_CONTRIBUTE_TUNING_RANKINGS,
+						Boolean.TRUE);
+				}
+
 				searchContext.setCompanyId(_companyId);
 
 				if (!Validator.isBlank(_sxpBlueprintExternalReferenceCode)) {

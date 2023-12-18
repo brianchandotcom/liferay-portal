@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.search.constants.SearchContextAttributes;
 import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
@@ -52,10 +53,10 @@ public class RankingSearchRequestContributor
 
 		SearchContext searchContext = _getSearchContext(searchRequest);
 
-		if (GetterUtil.getBoolean(
-				searchContext.getAttribute("rankings.admin.search")) ||
-			!GetterUtil.getBoolean(
-				searchContext.getAttribute("search.tunning.rankings.apply"))) {
+		if (!GetterUtil.getBoolean(
+				searchContext.getAttribute(
+					SearchContextAttributes.
+						ATTRIBUTE_KEY_CONTRIBUTE_TUNING_RANKINGS))) {
 
 			return searchRequest;
 		}

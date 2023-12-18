@@ -1038,6 +1038,7 @@
 		<exception>ObjectFieldState</exception>
 		<exception>ObjectFieldSystem</exception>
 		<exception>ObjectFilter</exception>
+		<exception>ObjectFolderItemObjectDefinitionId</exception>
 		<exception>ObjectFolderLabel</exception>
 		<exception>ObjectFolderName</exception>
 		<exception>ObjectLayoutBoxCategorizationType</exception>

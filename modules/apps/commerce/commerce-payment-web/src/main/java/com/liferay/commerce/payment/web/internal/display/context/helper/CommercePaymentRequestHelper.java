@@ -12,11 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Marco Leo
  */
-public class CommercePaymentMethodRequestHelper extends BaseRequestHelper {
+public class CommercePaymentRequestHelper extends BaseRequestHelper {
 
-	public CommercePaymentMethodRequestHelper(
-		HttpServletRequest httpServletRequest) {
-
+	public CommercePaymentRequestHelper(HttpServletRequest httpServletRequest) {
 		super(httpServletRequest);
 	}
 

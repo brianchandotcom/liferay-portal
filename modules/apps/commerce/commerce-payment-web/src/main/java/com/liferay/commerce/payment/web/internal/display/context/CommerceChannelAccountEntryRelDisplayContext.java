@@ -10,7 +10,7 @@ import com.liferay.account.service.AccountEntryService;
 import com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel;
 import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelService;
 import com.liferay.commerce.payment.util.comparator.CommercePaymentMethodGroupRelNameOrderByComparator;
-import com.liferay.commerce.payment.web.internal.display.context.helper.CommercePaymentMethodRequestHelper;
+import com.liferay.commerce.payment.web.internal.display.context.helper.CommercePaymentRequestHelper;
 import com.liferay.commerce.product.constants.CommerceChannelAccountEntryRelConstants;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.model.CommerceChannelAccountEntryRel;
@@ -61,8 +61,8 @@ public class CommerceChannelAccountEntryRelDisplayContext {
 		_commerceChannel = _commerceChannelService.fetchCommerceChannel(
 			commerceChannelId);
 
-		commercePaymentMethodRequestHelper =
-			new CommercePaymentMethodRequestHelper(httpServletRequest);
+		commercePaymentRequestHelper = new CommercePaymentRequestHelper(
+			httpServletRequest);
 
 		_locale = portal.getLocale(httpServletRequest);
 	}
@@ -138,8 +138,7 @@ public class CommerceChannelAccountEntryRelDisplayContext {
 		return false;
 	}
 
-	protected final CommercePaymentMethodRequestHelper
-		commercePaymentMethodRequestHelper;
+	protected final CommercePaymentRequestHelper commercePaymentRequestHelper;
 
 	private final AccountEntry _accountEntry;
 	private final AccountEntryService _accountEntryService;

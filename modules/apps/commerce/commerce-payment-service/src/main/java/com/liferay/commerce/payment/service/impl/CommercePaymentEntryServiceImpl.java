@@ -12,6 +12,7 @@ import com.liferay.commerce.payment.service.base.CommercePaymentEntryServiceBase
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -30,6 +31,7 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Luca Pellizzon
+ * @author Alessio Antonio Rendina
  */
 @Component(
 	property = {
@@ -137,6 +139,23 @@ public class CommercePaymentEntryServiceImpl
 	}
 
 	@Override
+	public CommercePaymentEntry fetchCommercePaymentEntry(
+			long commercePaymentEntryId)
+		throws PortalException {
+
+		CommercePaymentEntry commercePaymentEntry =
+			commercePaymentEntryLocalService.fetchCommercePaymentEntry(
+				commercePaymentEntryId);
+
+		if (commercePaymentEntry != null) {
+			_commercePaymentEntryModelResourcePermission.check(
+				getPermissionChecker(), commercePaymentEntry, ActionKeys.VIEW);
+		}
+
+		return commercePaymentEntry;
+	}
+
+	@Override
 	public List<CommercePaymentEntry> getCommercePaymentEntries(
 			long companyId, long classNameId, long classPK, int type, int start,
 			int end, OrderByComparator<CommercePaymentEntry> orderByComparator)
@@ -196,8 +215,7 @@ public class CommercePaymentEntryServiceImpl
 			long companyId, long[] classNameIds, long[] classPKs,
 			String[] currencyCodes, String keywords,
 			String[] paymentMethodNames, int[] paymentStatuses,
-			boolean excludeStatuses, int start, int end, String orderByField,
-			boolean reverse)
+			boolean excludeStatuses, int start, int end, Sort sort)
 		throws PortalException {
 
 		BaseModelSearchResult<CommercePaymentEntry> baseModelSearchResult =
@@ -218,7 +236,7 @@ public class CommercePaymentEntryServiceImpl
 				).put(
 					"excludeStatuses", excludeStatuses
 				).build(),
-				start, end, orderByField, reverse);
+				start, end, sort);
 
 		return baseModelSearchResult.getBaseModels();
 	}
@@ -241,6 +259,19 @@ public class CommercePaymentEntryServiceImpl
 			amount, callbackURL, cancelURL, currencyCode, errorMessages,
 			languageId, note, paymentIntegrationKey, paymentIntegrationType,
 			paymentStatus, reasonKey, redirectURL, transactionCode, type);
+	}
+
+	@Override
+	public CommercePaymentEntry updateCommercePaymentEntryExternalReferenceCode(
+			String externalReferenceCode, long commercePaymentEntryId)
+		throws PortalException {
+
+		_commercePaymentEntryModelResourcePermission.check(
+			getPermissionChecker(), commercePaymentEntryId, ActionKeys.UPDATE);
+
+		return commercePaymentEntryLocalService.
+			updateCommercePaymentEntryExternalReferenceCode(
+				externalReferenceCode, commercePaymentEntryId);
 	}
 
 	@Override

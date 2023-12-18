@@ -140,7 +140,6 @@ definition {
 	@ignore = "true"
 	@priority = 3
 	test CanExcludeCSVFieldsFromExport {
-		property custom.properties = "feature.flag.LPS-173135=true";
 		property portal.acceptance = "true";
 
 		task ("Given several channels") {
@@ -298,7 +297,6 @@ definition {
 	@ignore = "true"
 	@priority = 3
 	test CanExportCSVFiles {
-		property custom.properties = "feature.flag.LPS-173135=true";
 		property portal.acceptance = "true";
 
 		task ("Given several accounts") {
@@ -339,7 +337,6 @@ definition {
 	@ignore = "true"
 	@priority = 3
 	test CanExportCSVFileWithoutHeaders {
-		property custom.properties = "feature.flag.LPS-173135=true";
 		property portal.acceptance = "true";
 
 		task ("Given several accounts") {

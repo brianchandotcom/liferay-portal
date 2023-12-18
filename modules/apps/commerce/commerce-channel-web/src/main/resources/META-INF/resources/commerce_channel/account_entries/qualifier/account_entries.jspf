@@ -7,9 +7,15 @@
 
 <div id="item-finder-root-account"></div>
 
+<%
+int commerceSiteType = commerceChannelAccountEntryQualifiersDisplayContext.getCommerceSiteType();
+%>
+
 <liferay-frontend:component
 	context='<%=
 		HashMapBuilder.<String, Object>put(
+			"accountEntryTypes", (commerceSiteType == 0) ? new String[] {AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON} : ((commerceSiteType == 1) ? new String[] {AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS, AccountConstants.ACCOUNT_ENTRY_TYPE_SUPPLIER} : new String[] {AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS, AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON, AccountConstants.ACCOUNT_ENTRY_TYPE_SUPPLIER})
+		).put(
 			"channelExternalReferenceCode", HtmlUtil.escapeJS(commerceChannel.getExternalReferenceCode())
 		).put(
 			"channelId", commerceChannelId

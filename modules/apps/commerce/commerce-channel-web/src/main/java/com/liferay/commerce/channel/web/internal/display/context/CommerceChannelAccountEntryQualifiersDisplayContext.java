@@ -5,14 +5,18 @@
 
 package com.liferay.commerce.channel.web.internal.display.context;
 
+import com.liferay.commerce.configuration.CommerceAccountGroupServiceConfiguration;
+import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.product.constants.CommerceChannelAccountEntryRelConstants;
 import com.liferay.commerce.product.display.context.helper.CPRequestHelper;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelAccountEntryRelService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.util.ParamUtil;
 
 import java.util.ArrayList;
@@ -29,11 +33,13 @@ public class CommerceChannelAccountEntryQualifiersDisplayContext {
 		CommerceChannelAccountEntryRelService
 			commerceChannelAccountEntryRelService,
 		CommerceChannelLocalService commerceChannelLocalService,
+		ConfigurationProvider configurationProvider,
 		HttpServletRequest httpServletRequest) {
 
 		_commerceChannelAccountEntryRelService =
 			commerceChannelAccountEntryRelService;
 		_commerceChannelLocalService = commerceChannelLocalService;
+		_configurationProvider = configurationProvider;
 		_httpServletRequest = httpServletRequest;
 
 		_cpRequestHelper = new CPRequestHelper(httpServletRequest);
@@ -93,6 +99,14 @@ public class CommerceChannelAccountEntryQualifiersDisplayContext {
 		return commerceChannel.getCommerceChannelId();
 	}
 
+	public int getCommerceSiteType() throws PortalException {
+		CommerceAccountGroupServiceConfiguration
+			commerceAccountGroupServiceConfiguration =
+				_getCommerceAccountGroupServiceConfiguration();
+
+		return commerceAccountGroupServiceConfiguration.commerceSiteType();
+	}
+
 	protected List<FDSActionDropdownItem> getFDSActionTemplates(
 		boolean sidePanel) {
 
@@ -112,10 +126,33 @@ public class CommerceChannelAccountEntryQualifiersDisplayContext {
 		return fdsActionDropdownItems;
 	}
 
+	private CommerceAccountGroupServiceConfiguration
+			_getCommerceAccountGroupServiceConfiguration()
+		throws PortalException {
+
+		if (_commerceAccountGroupServiceConfiguration != null) {
+			return _commerceAccountGroupServiceConfiguration;
+		}
+
+		CommerceChannel commerceChannel = getCommerceChannel();
+
+		_commerceAccountGroupServiceConfiguration =
+			_configurationProvider.getConfiguration(
+				CommerceAccountGroupServiceConfiguration.class,
+				new GroupServiceSettingsLocator(
+					commerceChannel.getGroupId(),
+					CommerceConstants.SERVICE_NAME_COMMERCE_ACCOUNT));
+
+		return _commerceAccountGroupServiceConfiguration;
+	}
+
+	private CommerceAccountGroupServiceConfiguration
+		_commerceAccountGroupServiceConfiguration;
 	private CommerceChannel _commerceChannel;
 	private final CommerceChannelAccountEntryRelService
 		_commerceChannelAccountEntryRelService;
 	private final CommerceChannelLocalService _commerceChannelLocalService;
+	private final ConfigurationProvider _configurationProvider;
 	private final CPRequestHelper _cpRequestHelper;
 	private final HttpServletRequest _httpServletRequest;
 

@@ -77,6 +77,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.ZoneId;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -709,12 +710,15 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 				}
 
 				throw new ObjectEntryCountException(
+					Collections.singletonList(objectDefinition.getLabel()),
 					StringBundler.concat(
 						"The limit of guest entries for ",
 						objectDefinition.getLabel(),
 						" has been reached and will no longer be accepted. ",
 						"Please contact the administrator for further ",
-						"assistance."));
+						"assistance."),
+					"the-limit-of-guest-entries-for-object-definition-has-" +
+						"been-reached-and-will-no-longer-be-accepted");
 			}
 		}
 		else {

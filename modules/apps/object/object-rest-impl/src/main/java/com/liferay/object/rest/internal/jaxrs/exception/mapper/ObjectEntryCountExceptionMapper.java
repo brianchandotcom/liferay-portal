@@ -6,12 +6,19 @@
 package com.liferay.object.rest.internal.jaxrs.exception.mapper;
 
 import com.liferay.object.exception.ObjectEntryCountException;
+import com.liferay.object.jaxrs.exception.mapper.util.ObjectExceptionMapperUtil;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Thalles Montenegro
@@ -31,7 +38,27 @@ public class ObjectEntryCountExceptionMapper
 	protected Problem getProblem(
 		ObjectEntryCountException objectEntryCountException) {
 
-		return new Problem(objectEntryCountException);
+		return new Problem(
+			JSONUtil.putAll(
+				JSONUtil.put(
+					"fieldName", "name"
+				).put(
+					"message",
+					ObjectExceptionMapperUtil.getTitle(
+						_acceptLanguage,
+						objectEntryCountException.getArguments(), _language,
+						objectEntryCountException.getMessage(),
+						objectEntryCountException.getMessageKey())
+				)
+			).toString(),
+			Response.Status.BAD_REQUEST, null,
+			ObjectEntryCountException.class.getName());
 	}
+
+	@Context
+	private AcceptLanguage _acceptLanguage;
+
+	@Reference
+	private Language _language;
 
 }

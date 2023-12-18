@@ -96,17 +96,15 @@ renderResponse.setTitle(editable ? LanguageUtil.get(request, "edit-template") : 
 								/>
 							</clay:alert>
 
-							<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPS-173135") %>'>
-								<div class="mt-2">
-									<clay:checkbox
-										checked="<%= false %>"
-										disabled="<%= true %>"
-										id='<%= liferayPortletResponse.getNamespace() + "detectCategoryNames" %>'
-										label='<%= LanguageUtil.get(request, "detect-category-names-from-CSV-file") %>'
-										name='<%= liferayPortletResponse.getNamespace() + "detectCategoryNames" %>'
-									/>
-								</div>
-							</c:if>
+							<div class="mt-2">
+								<clay:checkbox
+									checked="<%= false %>"
+									disabled="<%= true %>"
+									id='<%= liferayPortletResponse.getNamespace() + "detectCategoryNames" %>'
+									label='<%= LanguageUtil.get(request, "detect-category-names-from-CSV-file") %>'
+									name='<%= liferayPortletResponse.getNamespace() + "detectCategoryNames" %>'
+								/>
+							</div>
 
 							<div class="mt-2">
 								<clay:checkbox

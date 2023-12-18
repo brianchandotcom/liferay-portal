@@ -1,5 +1,4 @@
 import cache from './cache';
-import Uri from 'metal-uri';
 import {ApolloClient} from 'apollo-client';
 import {DEVELOPER_MODE} from 'shared/util/constants';
 import {get} from 'lodash';
@@ -16,10 +15,9 @@ const groupIdRegex = /^\/workspace\/([a-z0-9._-]+)/;
  * @param {object} options
  */
 const fetchWithGroupId = (uri, options) => {
-	const currentUri = new Uri(window.location.href);
+	const currentUri = new URL(window.location.href);
 	const {operationName} = JSON.parse(options.body);
-	const pathname = currentUri.getPathname();
-	const matches = pathname.match(groupIdRegex);
+	const matches = currentUri.pathname.match(groupIdRegex);
 
 	if (matches !== null && matches.length > 1) {
 		const groupId = matches[1];

@@ -1,0 +1,386 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.commerce.payment.web.internal.display.context;
+
+import com.liferay.commerce.constants.CommercePaymentEntryConstants;
+import com.liferay.commerce.frontend.model.HeaderActionModel;
+import com.liferay.commerce.payment.entry.CommercePaymentEntryRefundType;
+import com.liferay.commerce.payment.entry.CommercePaymentEntryRefundTypeRegistry;
+import com.liferay.commerce.payment.model.CommercePaymentEntry;
+import com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel;
+import com.liferay.commerce.payment.service.CommercePaymentEntryService;
+import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelService;
+import com.liferay.commerce.payment.web.internal.display.context.helper.CommercePaymentRequestHelper;
+import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.product.service.CommerceChannelService;
+import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
+
+import java.math.BigDecimal;
+
+import java.text.DateFormat;
+import java.text.Format;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
+/**
+ * @author Alessio Antonio Rendina
+ */
+public class CommercePaymentEntryDisplayContext {
+
+	public CommercePaymentEntryDisplayContext(
+			CommerceChannelService commerceChannelService,
+			ModelResourcePermission<CommercePaymentEntry>
+				commercePaymentEntryModelResourcePermission,
+			CommercePaymentEntryRefundTypeRegistry
+				commercePaymentEntryRefundTypeRegistry,
+			CommercePaymentEntryService commercePaymentEntryService,
+			CommercePaymentMethodGroupRelService
+				commercePaymentMethodGroupRelService,
+			HttpServletRequest httpServletRequest, Language language,
+			Portal portal)
+		throws PortalException {
+
+		_commerceChannelService = commerceChannelService;
+		_commercePaymentEntryModelResourcePermission =
+			commercePaymentEntryModelResourcePermission;
+		_commercePaymentEntryRefundTypeRegistry =
+			commercePaymentEntryRefundTypeRegistry;
+		_commercePaymentEntryService = commercePaymentEntryService;
+		_commercePaymentMethodGroupRelService =
+			commercePaymentMethodGroupRelService;
+		_language = language;
+		_portal = portal;
+
+		long commercePaymentEntryId = ParamUtil.getLong(
+			httpServletRequest, "commercePaymentEntryId");
+
+		_commercePaymentEntry =
+			_commercePaymentEntryService.fetchCommercePaymentEntry(
+				commercePaymentEntryId);
+
+		long classPK = ParamUtil.getLong(httpServletRequest, "classPK");
+
+		if (_commercePaymentEntry != null) {
+			classPK = _commercePaymentEntry.getClassPK();
+		}
+
+		_relatedCommercePaymentEntry =
+			_commercePaymentEntryService.fetchCommercePaymentEntry(classPK);
+
+		_commercePaymentRequestHelper = new CommercePaymentRequestHelper(
+			httpServletRequest);
+	}
+
+	public String getAmount() {
+		BigDecimal amount = BigDecimal.ZERO;
+
+		if (_commercePaymentEntry != null) {
+			amount = _commercePaymentEntry.getAmount();
+
+			return String.valueOf(amount.stripTrailingZeros());
+		}
+
+		if (_relatedCommercePaymentEntry != null) {
+			amount = _relatedCommercePaymentEntry.getAmount();
+		}
+
+		return String.valueOf(amount.stripTrailingZeros());
+	}
+
+	public String getClassName() {
+		if (_relatedCommercePaymentEntry == null) {
+			return StringPool.BLANK;
+		}
+
+		return _relatedCommercePaymentEntry.getModelClassName();
+	}
+
+	public long getClassPK() {
+		if (_relatedCommercePaymentEntry == null) {
+			return 0;
+		}
+
+		return _relatedCommercePaymentEntry.getCommercePaymentEntryId();
+	}
+
+	public long getCommerceChannelId() {
+		if (_relatedCommercePaymentEntry == null) {
+			return 0;
+		}
+
+		return _relatedCommercePaymentEntry.getCommerceChannelId();
+	}
+
+	public CommercePaymentEntry getCommercePaymentEntry() {
+		return _commercePaymentEntry;
+	}
+
+	public long getCommercePaymentEntryId() {
+		if (_commercePaymentEntry == null) {
+			return 0;
+		}
+
+		return _commercePaymentEntry.getCommercePaymentEntryId();
+	}
+
+	public List<CommercePaymentEntryRefundType>
+		getCommercePaymentEntryRefundTypes() {
+
+		return _commercePaymentEntryRefundTypeRegistry.
+			getCommercePaymentEntryRefundTypes();
+	}
+
+	public String getCurrencyCode() {
+		if (_relatedCommercePaymentEntry == null) {
+			return StringPool.BLANK;
+		}
+
+		return _relatedCommercePaymentEntry.getCurrencyCode();
+	}
+
+	public List<FDSActionDropdownItem> getFDSActionDropdownItems()
+		throws PortalException {
+
+		HttpServletRequest httpServletRequest =
+			_commercePaymentRequestHelper.getRequest();
+
+		return ListUtil.fromArray(
+			new FDSActionDropdownItem(
+				PortletURLBuilder.create(
+					PortletProviderUtil.getPortletURL(
+						httpServletRequest,
+						CommercePaymentEntry.class.getName(),
+						PortletProvider.Action.MANAGE)
+				).setMVCRenderCommandName(
+					"/commerce_payment/edit_commerce_payment_entry"
+				).setParameter(
+					"commercePaymentEntryId", "{id}"
+				).buildString(),
+				null, "view", LanguageUtil.get(httpServletRequest, "view"),
+				"get", "get", null),
+			new FDSActionDropdownItem(
+				PortletURLBuilder.create(
+					PortletProviderUtil.getPortletURL(
+						httpServletRequest,
+						CommercePaymentEntry.class.getName(),
+						PortletProvider.Action.MANAGE)
+				).setMVCRenderCommandName(
+					"/commerce_payment/edit_commerce_payment_entry"
+				).setParameter(
+					"className", CommercePaymentEntry.class.getName()
+				).setParameter(
+					"classPK", "{id}"
+				).buildString(),
+				null, "makeRefund",
+				LanguageUtil.get(httpServletRequest, "make-a-refund"), "get",
+				"create", null));
+	}
+
+	public List<HeaderActionModel> getHeaderActionModels() throws Exception {
+		List<HeaderActionModel> headerActionModels = new ArrayList<>();
+
+		if ((_commercePaymentEntry != null) &&
+			(_commercePaymentEntry.getType() ==
+				CommercePaymentEntryConstants.TYPE_REFUND) &&
+			(_commercePaymentEntry.getPaymentStatus() !=
+				CommercePaymentEntryConstants.STATUS_PENDING)) {
+
+			return headerActionModels;
+		}
+
+		LiferayPortletResponse liferayPortletResponse =
+			_commercePaymentRequestHelper.getLiferayPortletResponse();
+
+		String additionalClasses = StringPool.BLANK;
+
+		if (_commercePaymentEntry == null) {
+			additionalClasses = "btn-primary";
+		}
+
+		HeaderActionModel saveHeaderActionModel = new HeaderActionModel(
+			additionalClasses, liferayPortletResponse.getNamespace() + "fm",
+			PortletURLBuilder.createActionURL(
+				liferayPortletResponse
+			).setActionName(
+				"/commerce_payment/edit_commerce_payment_entry"
+			).setCMD(
+				Constants.UPDATE
+			).buildString(),
+			null, "save");
+
+		headerActionModels.add(saveHeaderActionModel);
+
+		if (_commercePaymentEntry == null) {
+			return headerActionModels;
+		}
+
+		HeaderActionModel submitHeaderActionModel = new HeaderActionModel(
+			"btn-primary", liferayPortletResponse.getNamespace() + "fm",
+			PortletURLBuilder.createActionURL(
+				liferayPortletResponse
+			).setActionName(
+				"/commerce_payment/edit_commerce_payment_entry"
+			).setCMD(
+				Constants.PUBLISH
+			).buildString(),
+			liferayPortletResponse.getNamespace() + "submitButton", "submit");
+
+		headerActionModels.add(submitHeaderActionModel);
+
+		return headerActionModels;
+	}
+
+	public String getLanguageId() {
+		if (_relatedCommercePaymentEntry == null) {
+			return StringPool.BLANK;
+		}
+
+		return _relatedCommercePaymentEntry.getLanguageId();
+	}
+
+	public String getPaymentDate() {
+		if (_relatedCommercePaymentEntry == null) {
+			return StringPool.BLANK;
+		}
+
+		ThemeDisplay themeDisplay =
+			_commercePaymentRequestHelper.getThemeDisplay();
+
+		Format dateTimeFormat = FastDateFormatFactoryUtil.getDateTime(
+			DateFormat.MEDIUM, DateFormat.MEDIUM, themeDisplay.getLocale(),
+			themeDisplay.getTimeZone());
+
+		return dateTimeFormat.format(
+			_relatedCommercePaymentEntry.getCreateDate());
+	}
+
+	public String getPaymentIntegrationKey() {
+		if (_relatedCommercePaymentEntry == null) {
+			return StringPool.BLANK;
+		}
+
+		return _relatedCommercePaymentEntry.getPaymentIntegrationKey();
+	}
+
+	public int getPaymentIntegrationType() {
+		if (_relatedCommercePaymentEntry == null) {
+			return -1;
+		}
+
+		return _relatedCommercePaymentEntry.getPaymentIntegrationType();
+	}
+
+	public String getPaymentMethod() throws PortalException {
+		if (_relatedCommercePaymentEntry == null) {
+			return StringPool.BLANK;
+		}
+
+		CommerceChannel commerceChannel =
+			_commerceChannelService.fetchCommerceChannel(
+				_relatedCommercePaymentEntry.getCommerceChannelId());
+
+		if (commerceChannel == null) {
+			return StringPool.BLANK;
+		}
+
+		CommercePaymentMethodGroupRel commercePaymentMethodGroupRel =
+			_commercePaymentMethodGroupRelService.
+				fetchCommercePaymentMethodGroupRel(
+					commerceChannel.getGroupId(),
+					_relatedCommercePaymentEntry.getPaymentIntegrationKey());
+
+		if (commercePaymentMethodGroupRel == null) {
+			return StringPool.BLANK;
+		}
+
+		return commercePaymentMethodGroupRel.getName(
+			_commercePaymentRequestHelper.getLocale());
+	}
+
+	public String getRelatedToClassName() {
+		if (_relatedCommercePaymentEntry == null) {
+			return StringPool.BLANK;
+		}
+
+		return _language.get(
+			_commercePaymentRequestHelper.getLocale(),
+			"model.resource." + _relatedCommercePaymentEntry.getClassName());
+	}
+
+	public String getRelatedToClassPK() {
+		if (_relatedCommercePaymentEntry == null) {
+			return StringPool.BLANK;
+		}
+
+		return String.valueOf(_relatedCommercePaymentEntry.getClassPK());
+	}
+
+	public String getTransactionCode() {
+		if (_relatedCommercePaymentEntry == null) {
+			return StringPool.BLANK;
+		}
+
+		return _relatedCommercePaymentEntry.getTransactionCode();
+	}
+
+	public boolean hasCommercePaymentEntryModelPermission(String actionId)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay =
+			_commercePaymentRequestHelper.getThemeDisplay();
+
+		return _commercePaymentEntryModelResourcePermission.contains(
+			themeDisplay.getPermissionChecker(), _commercePaymentEntry,
+			actionId);
+	}
+
+	public boolean isDisabled() {
+		if (_commercePaymentEntry == null) {
+			return false;
+		}
+
+		if (_commercePaymentEntry.getPaymentStatus() ==
+				CommercePaymentEntryConstants.STATUS_REFUNDED) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private final CommerceChannelService _commerceChannelService;
+	private final CommercePaymentEntry _commercePaymentEntry;
+	private final ModelResourcePermission<CommercePaymentEntry>
+		_commercePaymentEntryModelResourcePermission;
+	private final CommercePaymentEntryRefundTypeRegistry
+		_commercePaymentEntryRefundTypeRegistry;
+	private final CommercePaymentEntryService _commercePaymentEntryService;
+	private final CommercePaymentMethodGroupRelService
+		_commercePaymentMethodGroupRelService;
+	private final CommercePaymentRequestHelper _commercePaymentRequestHelper;
+	private final Language _language;
+	private final Portal _portal;
+	private final CommercePaymentEntry _relatedCommercePaymentEntry;
+
+}

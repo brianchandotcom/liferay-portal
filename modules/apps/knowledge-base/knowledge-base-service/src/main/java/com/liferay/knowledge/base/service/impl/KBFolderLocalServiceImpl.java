@@ -549,7 +549,8 @@ public class KBFolderLocalServiceImpl extends KBFolderLocalServiceBaseImpl {
 		throws PortalException {
 
 		List<Object> objects = getKBFoldersAndKBArticles(
-			parentKBFolder.getGroupId(), parentKBFolder.getKbFolderId());
+			parentKBFolder.getGroupId(), parentKBFolder.getKbFolderId(),
+			WorkflowConstants.STATUS_ANY);
 
 		for (Object object : objects) {
 			if (object instanceof KBArticle) {

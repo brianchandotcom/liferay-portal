@@ -5,6 +5,8 @@
 
 package com.liferay.jenkins.results.parser.test.clazz.group;
 
+import com.liferay.jenkins.results.parser.job.property.JobProperty;
+
 import org.json.JSONObject;
 
 /**
@@ -17,6 +19,19 @@ public class PlaywrightSegmentTestClassGroup extends SegmentTestClassGroup {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append(super.getTestCasePropertiesContent());
+
+		BatchTestClassGroup batchTestClassGroup = getBatchTestClassGroup();
+
+		JobProperty jobProperty = batchTestClassGroup.getJobProperty(
+			"playwright.test.project", batchTestClassGroup.testSuiteName,
+			batchTestClassGroup.batchName);
+
+		if (jobProperty.getValue() != null) {
+			sb.append(jobProperty.getBasePropertyName());
+			sb.append("=");
+			sb.append(jobProperty.getValue());
+			sb.append("\n");
+		}
 
 		int axisCount = getAxisCount();
 

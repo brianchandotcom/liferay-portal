@@ -230,7 +230,6 @@ const BaseSelect: React.FC<IBaseSelectProps> = ({
 			alignment='bottomLeft'
 			containerClass={getCN('base-select-container', containerClass)}
 			onOutsideClick={handleOutsideClick}
-			usePortal={false}
 		>
 			<Input.Group
 				className={getCN(

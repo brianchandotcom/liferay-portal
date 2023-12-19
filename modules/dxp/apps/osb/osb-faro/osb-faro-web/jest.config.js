@@ -400,6 +400,27 @@ module.exports = {
 					pageViewsLimit: 5000000,
 					price: 250
 				},
+				['LXC Business']: {
+					baseSubscriptionPlan: null,
+					individualsLimit: 10000,
+					name: 'LXC Business',
+					pageViewsLimit: 5000000,
+					price: 7500
+				},
+				['LXC Enterprise']: {
+					baseSubscriptionPlan: null,
+					individualsLimit: 100000,
+					name: 'LXC Enterprise',
+					pageViewsLimit: 60000000,
+					price: 20000
+				},
+				['LXC Pro']: {
+					baseSubscriptionPlan: null,
+					individualsLimit: 1000,
+					name: 'LXC Pro',
+					pageViewsLimit: 300000,
+					price: 0
+				},
 				['LXC Subscription - Engage Site']: {
 					baseSubscriptionPlan: null,
 					individualsLimit: 0,

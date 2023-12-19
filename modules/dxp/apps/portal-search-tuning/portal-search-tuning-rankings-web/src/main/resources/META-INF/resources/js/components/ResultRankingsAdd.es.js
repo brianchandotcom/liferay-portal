@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayBadge from '@clayui/badge';
 import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayForm, {ClayInput} from '@clayui/form';
@@ -27,12 +28,14 @@ const SCOPE_INFO = {
 	[SCOPE_TYPES.SITE]: {
 		description: Liferay.Language.get('result-rankings-scope-site-help'),
 		label: Liferay.Language.get('site'),
+		showBetaBadge: true,
 	},
 	[SCOPE_TYPES.SXP_BLUEPRINT]: {
 		description: Liferay.Language.get(
 			'result-rankings-scope-blueprint-help'
 		),
 		label: Liferay.Language.get('blueprint'),
+		showBetaBadge: true,
 	},
 };
 
@@ -204,8 +207,17 @@ function ResultRankingsAdd({cancelURL, fetchSitesURL, formName}) {
 								}}
 							>
 								<div className="autofit-col-expand">
-									<div className="list-group-text text-dark">
+									<div className="align-items-center d-flex list-group-text text-dark">
 										{SCOPE_INFO[item].label}
+
+										{SCOPE_INFO[item].showBetaBadge && (
+											<ClayBadge
+												className="c-ml-1 text-uppercase"
+												displayType="info"
+												label="beta"
+												translucent
+											/>
+										)}
 									</div>
 
 									<div className="c-mt-0 list-group-subtext text-2">

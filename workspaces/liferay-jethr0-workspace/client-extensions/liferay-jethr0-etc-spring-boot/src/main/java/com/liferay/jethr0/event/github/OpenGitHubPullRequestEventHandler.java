@@ -6,8 +6,10 @@
 package com.liferay.jethr0.event.github;
 
 import com.liferay.jethr0.event.EventHandlerContext;
+import com.liferay.jethr0.event.github.file.GitHubFile;
 import com.liferay.jethr0.event.github.pullrequest.GitHubPullRequest;
 import com.liferay.jethr0.event.github.user.GitHubUser;
+import com.liferay.jethr0.git.branch.GitBranchEntity;
 import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.util.StringUtil;
 
@@ -39,7 +41,9 @@ public class OpenGitHubPullRequestEventHandler
 		_commentAutoCommentMessage();
 		_commentBroadcastMessage();
 
-		if (_checkForwardedPullRequest()) {
+		if (_checkForwardedPullRequest() ||
+			_checkMergeSubrepositoryPullRequest()) {
+
 			return null;
 		}
 
@@ -86,6 +90,66 @@ public class OpenGitHubPullRequestEventHandler
 		}
 
 		return false;
+	}
+
+	private boolean _checkMergeSubrepositoryPullRequest()
+		throws InvalidJSONException, IOException {
+
+		GitHubPullRequest gitHubPullRequest = getGitHubPullRequest();
+
+		if (gitHubPullRequest == null) {
+			return false;
+		}
+
+		GitBranchEntity upstreamGitBranchEntity = getUpstreamGitBranchEntity();
+
+		GitHubUser receiverGitHubUser =
+			gitHubPullRequest.getReceiverGitHubUser();
+
+		String subrepositoryMergeReceiverUserName =
+			getJenkinsBranchBuildPropertyValue(
+				StringUtil.combine(
+					"subrepo.merge.receiver.name[",
+					upstreamGitBranchEntity.getBranchName(), "]"));
+
+		if (!gitHubPullRequest.isMergeSubrepositoryPullRequest() ||
+			!Objects.equals(
+				receiverGitHubUser.getName(),
+				subrepositoryMergeReceiverUserName)) {
+
+			return false;
+		}
+
+		GitRepo gitRepo = new GitRepo(
+			upstreamGitBranchEntity.getFileContent(
+				gitHubPullRequest.getGitRepoFilePath()));
+
+		GitHubFile ciMergeGitHubFile = gitHubPullRequest.getCIMergeGitHubFile();
+
+		Matcher matcher = _branchSHAPattern.matcher(
+			ciMergeGitHubFile.getPatch());
+
+		String ciMergeBranchSHA = "";
+
+		if (matcher.find()) {
+			ciMergeBranchSHA = matcher.group("branchSHA");
+		}
+
+		String compareURL = StringUtil.combine(
+			"https://github.com/liferay/", gitRepo.getRepositoryName(),
+			"/compare/", gitRepo.getRepositorySHA(), "..." + ciMergeBranchSHA);
+
+		gitHubPullRequest.comment(
+			StringUtil.combine(
+				"Subrepo changes: ", compareURL, "\n\nci:test:sf and ",
+				"ci:test:relevant must pass in order for auto-merge to ",
+				"initiate."));
+
+		invokeJobEntity(createJobEntity("relevant"));
+
+		invokeJobEntity(createJobEntity("sf"));
+
+		return true;
 	}
 
 	private void _commentAutoCommentMessage()
@@ -194,7 +258,45 @@ public class OpenGitHubPullRequestEventHandler
 		}
 	}
 
+	private static final Pattern _branchSHAPattern = Pattern.compile(
+		"\\+(?<branchSHA>[0-9a-f]{40})");
 	private static final Pattern _ciTestAutoRecipientPattern = Pattern.compile(
 		"(?<userName>[^\\]]+)\\[(?<testSuites>[^\\]]+)\\]");
+
+	private static class GitRepo {
+
+		public String getRepositoryName() {
+			Matcher matcher = _gitRepoRepositoryNamePattern.matcher(
+				_gitRepoFileContent);
+
+			if (!matcher.find()) {
+				return null;
+			}
+
+			return matcher.group("repositoryName");
+		}
+
+		public String getRepositorySHA() {
+			Matcher matcher = _gitRepoSHAPattern.matcher(_gitRepoFileContent);
+
+			if (!matcher.find()) {
+				return null;
+			}
+
+			return matcher.group("repositorySHA");
+		}
+
+		private GitRepo(String gitRepoFileContent) {
+			_gitRepoFileContent = gitRepoFileContent;
+		}
+
+		private static final Pattern _gitRepoRepositoryNamePattern =
+			Pattern.compile("remote = .*/(?<repositoryName>[^\\.]*)\\.git");
+		private static final Pattern _gitRepoSHAPattern = Pattern.compile(
+			"commit = (?<repositorySHA>[0-9a-f]{40})");
+
+		private final String _gitRepoFileContent;
+
+	}
 
 }

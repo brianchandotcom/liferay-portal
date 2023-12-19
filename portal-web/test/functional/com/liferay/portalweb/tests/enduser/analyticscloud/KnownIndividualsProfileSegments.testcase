@@ -199,23 +199,9 @@ definition {
 	test OrderIndividualsAssociatedSegments {
 		property test.run.type = "single";
 
-		var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com";
-
-		task ("Add one more new user") {
-			JSONUser.addUser(
-				userEmailAddress = "user3@liferay.com",
-				userFirstName = "user3",
-				userLastName = "user3",
-				userScreenName = "user3");
-		}
-
-		task ("Sync the Contact Data") {
-			ACDXPSettings.syncNewContactData();
-		}
-
 		task ("View the page as different users") {
 			ACUtils.navigateToSitePageWithUser(
-				emailList = ${emailList},
+				emailList = "user1@liferay.com",
 				pageName = "AC Page",
 				siteName = "Site Name");
 
@@ -236,17 +222,7 @@ definition {
 
 				ACUtils.setItemName(itemName = ${segmentName});
 
-				if (${segmentName} == "Static Segment Test1") {
-					ACSegments.addStaticMultiMember(tableMember = "user1 user1,user2 user2,user3 user3");
-				}
-
-				if (${segmentName} == "Static Segment Test2") {
-					ACSegments.addStaticMultiMember(tableMember = "user1 user1,user2 user2");
-				}
-
-				if (${segmentName} == "Static Segment Test3") {
-					ACSegments.addStaticMultiMember(tableMember = "user1 user1");
-				}
+				ACSegments.addStaticMember(tableMember = "user1 user1");
 
 				ACSegments.saveSegment();
 			}

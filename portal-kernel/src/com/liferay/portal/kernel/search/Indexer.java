@@ -30,6 +30,10 @@ public interface Indexer<T> {
 
 	public String getClassName();
 
+	public default long getCompanyId() {
+		return 0;
+	}
+
 	public Document getDocument(T object) throws SearchException;
 
 	public BooleanFilter getFacetBooleanFilter(

@@ -296,6 +296,11 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					}
 
 					@Override
+					public long getCompanyId() {
+						return objectDefinition.getCompanyId();
+					}
+
+					@Override
 					public ModelIndexerWriterContributor<ObjectEntry>
 						getModelIndexerWriterContributor() {
 

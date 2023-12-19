@@ -103,6 +103,11 @@ public class DefaultIndexer<T extends BaseModel<?>> implements Indexer<T> {
 	}
 
 	@Override
+	public long getCompanyId() {
+		return _modelSearchSettings.getCompanyId();
+	}
+
+	@Override
 	public Document getDocument(T baseModel) throws SearchException {
 		return _indexerDocumentBuilder.getDocument(baseModel);
 	}

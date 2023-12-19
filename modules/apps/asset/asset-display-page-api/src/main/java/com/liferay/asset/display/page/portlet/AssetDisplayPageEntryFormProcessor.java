@@ -17,12 +17,6 @@ import javax.portlet.PortletRequest;
 public interface AssetDisplayPageEntryFormProcessor {
 
 	public void process(
-			long userId, long groupId, String className, long classPK,
-			int displayPageType, String layoutUuid, long assetDisplayPageId,
-			ServiceContext serviceContext)
-		throws PortalException;
-
-	public void process(
 			String className, long classPK, PortletRequest portletRequest)
 		throws PortalException;
 

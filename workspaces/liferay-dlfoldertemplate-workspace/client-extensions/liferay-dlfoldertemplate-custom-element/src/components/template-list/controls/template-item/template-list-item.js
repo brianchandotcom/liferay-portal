@@ -64,6 +64,7 @@ const TemplateItem = (props) => {
 				<ClayList.QuickActionMenu>
 					<ClayList.QuickActionMenu.Item
 						aria-label="Delete"
+						className="lfr-portal-tooltip"
 						disabled={isLoading}
 						onClick={() => {
 							openCreateFolder(item);
@@ -74,6 +75,7 @@ const TemplateItem = (props) => {
 					/>
 					<ClayList.QuickActionMenu.Item
 						aria-label="Delete"
+						className="lfr-portal-tooltip"
 						disabled={isLoading}
 						onClick={() => {
 							openDesigner(item);
@@ -84,6 +86,7 @@ const TemplateItem = (props) => {
 					/>
 					<ClayList.QuickActionMenu.Item
 						aria-label="Settings"
+						className="lfr-portal-tooltip"
 						disabled={isLoading}
 						onClick={deleteTemplateAction}
 						spritemap={spritemap}

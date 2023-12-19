@@ -229,7 +229,7 @@ public class FragmentEntryProcessorHelperImpl
 			infoDisplaysFieldValues.put(infoItemReference, infoItemFieldValues);
 		}
 
-		return _getMappedInfoItemFieldValue(
+		return getMappedInfoItemFieldValue(
 			editableValueJSONObject, fieldName, infoItemFieldValues,
 			fragmentEntryProcessorContext.getLocale());
 	}
@@ -307,6 +307,155 @@ public class FragmentEntryProcessorHelperImpl
 			(ClassPKInfoItemIdentifier)fileEntryInfoItemIdentifier;
 
 		return classPKInfoItemIdentifier.getClassPK();
+	}
+
+	@Override
+	public Object getMappedInfoItemFieldValue(
+		JSONObject editableValueJSONObject, String fieldName,
+		InfoItemFieldValues infoItemFieldValues, Locale locale) {
+
+		InfoFieldValue<Object> infoFieldValue =
+			infoItemFieldValues.getInfoFieldValue(fieldName);
+
+		if (infoFieldValue == null) {
+			return null;
+		}
+
+		Object value = infoFieldValue.getValue(locale);
+
+		if (value == null) {
+			return null;
+		}
+
+		if (value instanceof WebImage) {
+			WebImage webImage = (WebImage)value;
+
+			JSONObject valueJSONObject = webImage.toJSONObject();
+
+			long fileEntryId = getFileEntryId(webImage);
+
+			if (fileEntryId != 0) {
+				valueJSONObject.put("fileEntryId", String.valueOf(fileEntryId));
+			}
+
+			return valueJSONObject;
+		}
+
+		if (value instanceof WebURL) {
+			WebURL webURL = (WebURL)value;
+
+			return webURL.toJSONObject();
+		}
+
+		if (value instanceof Collection) {
+			Collection<Object> collection = (Collection<Object>)value;
+
+			if (collection.isEmpty()) {
+				return StringPool.BLANK;
+			}
+
+			Iterator<Object> iterator = collection.iterator();
+
+			Object firstItem = iterator.next();
+
+			Class<?> firstItemClass = firstItem.getClass();
+
+			InfoCollectionTextFormatter<Object> infoCollectionTextFormatter =
+				_getInfoCollectionTextFormatter(firstItemClass.getName());
+
+			return infoCollectionTextFormatter.format(collection, locale);
+		}
+
+		if (value instanceof String) {
+			InfoField infoField = infoFieldValue.getInfoField();
+
+			if (infoField.getInfoFieldType() instanceof DateInfoFieldType) {
+				Locale dateLocale = LocaleUtil.getSiteDefault();
+
+				if (infoField.isLocalizable()) {
+					InfoLocalizedValue<String> infoLocalizedValue =
+						(InfoLocalizedValue<String>)infoFieldValue.getValue();
+
+					dateLocale = infoLocalizedValue.getDefaultLocale();
+
+					Set<Locale> availableLocales =
+						infoLocalizedValue.getAvailableLocales();
+
+					if (availableLocales.contains(locale)) {
+						dateLocale = locale;
+					}
+				}
+
+				try {
+					DateFormat dateFormat =
+						DateFormatFactoryUtil.getSimpleDateFormat(
+							_getShortTimeStylePattern(dateLocale), dateLocale);
+
+					Date date = dateFormat.parse(value.toString());
+
+					return _getDateValue(
+						editableValueJSONObject, date,
+						_getShortTimeStylePattern(locale), locale);
+				}
+				catch (ParseException parseException1) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(parseException1);
+					}
+
+					try {
+						DateFormat dateFormat =
+							DateFormatFactoryUtil.getSimpleDateFormat(
+								_getDefaultPattern(dateLocale), dateLocale);
+
+						return _getDateValue(
+							editableValueJSONObject,
+							dateFormat.parse(value.toString()),
+							_getDefaultPattern(locale), locale);
+					}
+					catch (ParseException parseException2) {
+						if (_log.isDebugEnabled()) {
+							_log.debug(parseException2);
+						}
+
+						return value;
+					}
+				}
+			}
+			else if (infoField.getInfoFieldType() instanceof
+						TextInfoFieldType) {
+
+				return HtmlUtil.escape((String)value);
+			}
+
+			return (String)value;
+		}
+
+		if (value instanceof Labeled) {
+			Labeled labeledFieldValue = (Labeled)value;
+
+			return labeledFieldValue.getLabel(locale);
+		}
+
+		if (value instanceof Date) {
+			Date date = (Date)value;
+
+			return _getDateValue(
+				editableValueJSONObject, date,
+				_getShortTimeStylePattern(locale), locale);
+		}
+
+		Class<?> fieldValueClass = value.getClass();
+
+		InfoTextFormatter<Object> infoTextFormatter =
+			(InfoTextFormatter<Object>)
+				_infoItemServiceRegistry.getFirstInfoItemService(
+					InfoTextFormatter.class, fieldValueClass.getName());
+
+		if (infoTextFormatter != null) {
+			return infoTextFormatter.format(value, locale);
+		}
+
+		return value.toString();
 	}
 
 	@Override
@@ -518,154 +667,6 @@ public class FragmentEntryProcessorHelperImpl
 		}
 
 		return infoItemFieldValuesProvider;
-	}
-
-	private Object _getMappedInfoItemFieldValue(
-		JSONObject editableValueJSONObject, String fieldName,
-		InfoItemFieldValues infoItemFieldValues, Locale locale) {
-
-		InfoFieldValue<Object> infoFieldValue =
-			infoItemFieldValues.getInfoFieldValue(fieldName);
-
-		if (infoFieldValue == null) {
-			return null;
-		}
-
-		Object value = infoFieldValue.getValue(locale);
-
-		if (value == null) {
-			return null;
-		}
-
-		if (value instanceof WebImage) {
-			WebImage webImage = (WebImage)value;
-
-			JSONObject valueJSONObject = webImage.toJSONObject();
-
-			long fileEntryId = getFileEntryId(webImage);
-
-			if (fileEntryId != 0) {
-				valueJSONObject.put("fileEntryId", String.valueOf(fileEntryId));
-			}
-
-			return valueJSONObject;
-		}
-
-		if (value instanceof WebURL) {
-			WebURL webURL = (WebURL)value;
-
-			return webURL.toJSONObject();
-		}
-
-		if (value instanceof Collection) {
-			Collection<Object> collection = (Collection<Object>)value;
-
-			if (collection.isEmpty()) {
-				return StringPool.BLANK;
-			}
-
-			Iterator<Object> iterator = collection.iterator();
-
-			Object firstItem = iterator.next();
-
-			Class<?> firstItemClass = firstItem.getClass();
-
-			InfoCollectionTextFormatter<Object> infoCollectionTextFormatter =
-				_getInfoCollectionTextFormatter(firstItemClass.getName());
-
-			return infoCollectionTextFormatter.format(collection, locale);
-		}
-
-		if (value instanceof String) {
-			InfoField infoField = infoFieldValue.getInfoField();
-
-			if (infoField.getInfoFieldType() instanceof DateInfoFieldType) {
-				Locale dateLocale = LocaleUtil.getSiteDefault();
-
-				if (infoField.isLocalizable()) {
-					InfoLocalizedValue<String> infoLocalizedValue =
-						(InfoLocalizedValue<String>)infoFieldValue.getValue();
-
-					dateLocale = infoLocalizedValue.getDefaultLocale();
-
-					Set<Locale> availableLocales =
-						infoLocalizedValue.getAvailableLocales();
-
-					if (availableLocales.contains(locale)) {
-						dateLocale = locale;
-					}
-				}
-
-				try {
-					DateFormat dateFormat =
-						DateFormatFactoryUtil.getSimpleDateFormat(
-							_getShortTimeStylePattern(dateLocale), dateLocale);
-
-					Date date = dateFormat.parse(value.toString());
-
-					return _getDateValue(
-						editableValueJSONObject, date,
-						_getShortTimeStylePattern(locale), locale);
-				}
-				catch (ParseException parseException1) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(parseException1);
-					}
-
-					try {
-						DateFormat dateFormat =
-							DateFormatFactoryUtil.getSimpleDateFormat(
-								_getDefaultPattern(dateLocale), dateLocale);
-
-						return _getDateValue(
-							editableValueJSONObject,
-							dateFormat.parse(value.toString()),
-							_getDefaultPattern(locale), locale);
-					}
-					catch (ParseException parseException2) {
-						if (_log.isDebugEnabled()) {
-							_log.debug(parseException2);
-						}
-
-						return value;
-					}
-				}
-			}
-			else if (infoField.getInfoFieldType() instanceof
-						TextInfoFieldType) {
-
-				return HtmlUtil.escape((String)value);
-			}
-
-			return (String)value;
-		}
-
-		if (value instanceof Labeled) {
-			Labeled labeledFieldValue = (Labeled)value;
-
-			return labeledFieldValue.getLabel(locale);
-		}
-
-		if (value instanceof Date) {
-			Date date = (Date)value;
-
-			return _getDateValue(
-				editableValueJSONObject, date,
-				_getShortTimeStylePattern(locale), locale);
-		}
-
-		Class<?> fieldValueClass = value.getClass();
-
-		InfoTextFormatter<Object> infoTextFormatter =
-			(InfoTextFormatter<Object>)
-				_infoItemServiceRegistry.getFirstInfoItemService(
-					InfoTextFormatter.class, fieldValueClass.getName());
-
-		if (infoTextFormatter != null) {
-			return infoTextFormatter.format(value, locale);
-		}
-
-		return value.toString();
 	}
 
 	private String _getShortTimeStylePattern(Locale locale) {

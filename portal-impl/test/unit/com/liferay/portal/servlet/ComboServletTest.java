@@ -274,6 +274,39 @@ public class ComboServletTest {
 	}
 
 	@Test
+	public void testTooManyComboServletRequests() throws Exception {
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		StringBuilder sb = new StringBuilder();
+
+		for (int i = 0; i < 101; i++) {
+			sb.append("/js/javascript");
+			sb.append(i);
+			sb.append(".js");
+
+			if (i != 100) {
+				sb.append(StringPool.AMPERSAND);
+			}
+		}
+
+		mockHttpServletRequest.setQueryString(sb.toString());
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		_comboServlet.service(mockHttpServletRequest, mockHttpServletResponse);
+
+		Assert.assertEquals(
+			HttpServletResponse.SC_BAD_REQUEST,
+			mockHttpServletResponse.getStatus());
+
+		Assert.assertEquals(
+			"ComboServlet request exceeded maximum file count",
+			mockHttpServletResponse.getErrorMessage());
+	}
+
+	@Test
 	public void testValidateInValidModuleExtension() throws Exception {
 		boolean valid = _comboServlet.validateModuleExtension(
 			_TEST_PORTLET_ID +

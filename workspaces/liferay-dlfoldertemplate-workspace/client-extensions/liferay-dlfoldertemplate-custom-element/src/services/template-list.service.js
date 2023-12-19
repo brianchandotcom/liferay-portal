@@ -11,33 +11,6 @@ import {
 	getAvailableTemplatesNodesPage,
 } from './template-diagram.service';
 
-export async function getAvailableTemplatesPage(page, pageSize) {
-	return request({
-		url: `${getHostUrl()}/${
-			config.templateInfoApi
-		}?page=${page}&pageSize=${pageSize}`,
-	});
-}
-
-export async function postFolderTemplateInformation(folderTemplateInformation) {
-	return request({
-		data: folderTemplateInformation,
-		method: 'post',
-		url: `${getHostUrl()}/${config.templateInfoApi}`,
-	});
-}
-
-export async function deleteFolderTemplateInformationItem(
-	folderTemplateInformationId
-) {
-	return request({
-		method: 'delete',
-		url: `${getHostUrl()}/${
-			config.templateInfoApi
-		}/${folderTemplateInformationId}`,
-	});
-}
-
 export async function deleteFolderTemplateInformation(
 	FolderTemplateInformationId
 ) {
@@ -59,4 +32,31 @@ export async function deleteFolderTemplateInformation(
 	catch (error) {
 		showError(error.message);
 	}
+}
+
+export async function deleteFolderTemplateInformationItem(
+	folderTemplateInformationId
+) {
+	return request({
+		method: 'delete',
+		url: `${getHostUrl()}/${
+			config.templateInfoApi
+		}/${folderTemplateInformationId}`,
+	});
+}
+
+export async function getAvailableTemplatesPage(page, pageSize) {
+	return request({
+		url: `${getHostUrl()}/${
+			config.templateInfoApi
+		}?page=${page}&pageSize=${pageSize}`,
+	});
+}
+
+export async function postFolderTemplateInformation(folderTemplateInformation) {
+	return request({
+		data: folderTemplateInformation,
+		method: 'post',
+		url: `${getHostUrl()}/${config.templateInfoApi}`,
+	});
 }

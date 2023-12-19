@@ -83,7 +83,7 @@ public class PaymentResourceImpl extends BasePaymentResourceImpl {
 
 		if (commercePaymentEntry == null) {
 			throw new NoSuchPaymentEntryException(
-				"Unable to find payment entry with external reference code " +
+				"Unable to find payment with external reference code " +
 					externalReferenceCode);
 		}
 
@@ -122,7 +122,7 @@ public class PaymentResourceImpl extends BasePaymentResourceImpl {
 
 		if (commercePaymentEntry == null) {
 			throw new NoSuchPaymentEntryException(
-				"Unable to find payment entry with external reference code " +
+				"Unable to find payment with external reference code " +
 					externalReferenceCode);
 		}
 
@@ -181,7 +181,7 @@ public class PaymentResourceImpl extends BasePaymentResourceImpl {
 
 		if (commercePaymentEntry == null) {
 			throw new NoSuchPaymentEntryException(
-				"Unable to find payment entry with external reference code " +
+				"Unable to find payment with external reference code " +
 					externalReferenceCode);
 		}
 
@@ -217,7 +217,7 @@ public class PaymentResourceImpl extends BasePaymentResourceImpl {
 
 		if (commercePaymentEntry == null) {
 			throw new NoSuchPaymentEntryException(
-				"Unable to find payment entry with external reference code " +
+				"Unable to find payment with external reference code " +
 					externalReferenceCode);
 		}
 

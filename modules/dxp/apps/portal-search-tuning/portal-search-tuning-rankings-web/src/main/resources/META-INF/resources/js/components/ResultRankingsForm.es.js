@@ -826,23 +826,18 @@ class ResultRankingsForm extends Component {
 						<h2 className="c-mb-1 sheet-title">{`${searchQuery}`}</h2>
 
 						<div className="c-mb-3">
-							{(Liferay.FeatureFlags['LPS-157988'] ||
-								Liferay.FeatureFlags['LPS-159650']) && (
-								<span className="text-3">
-									{`${Liferay.Language.get('scope')}: ${
-										this.props
-											.initialGroupExternalReferenceCode
-											? Liferay.Language.get('site')
-											: this.props
-													.initialSXPBlueprintExternalReferenceCode
-											? Liferay.Language.get('blueprint')
-											: Liferay.Language.get('everything')
-									}`}
+							<span className="text-3">
+								{`${Liferay.Language.get('scope')}: ${
+									this.props.initialGroupExternalReferenceCode
+										? Liferay.Language.get('site')
+										: this.props
+												.initialSXPBlueprintExternalReferenceCode
+										? Liferay.Language.get('blueprint')
+										: Liferay.Language.get('everything')
+								}`}
 
-									{!!scopeDisplayName &&
-										` (${scopeDisplayName})`}
-								</span>
-							)}
+								{!!scopeDisplayName && ` (${scopeDisplayName})`}
+							</span>
 						</div>
 
 						<ErrorBoundary

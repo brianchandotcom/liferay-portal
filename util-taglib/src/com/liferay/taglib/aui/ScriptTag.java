@@ -114,7 +114,7 @@ public class ScriptTag extends BaseScriptTag {
 				(Validator.isNotNull(getType()) &&
 				 !Objects.equals(getType(), "text/javascript"))) {
 
-				return _endTagDirect();
+				return _endTag();
 			}
 
 			String portletId = null;
@@ -234,7 +234,7 @@ public class ScriptTag extends BaseScriptTag {
 		setUse(null);
 	}
 
-	private int _endTagDirect() throws IOException, JspException {
+	private int _endTag() throws IOException, JspException {
 		if (Validator.isNotNull(getRequire())) {
 			throw new JspException(
 				"Attribute require may not be used when using direct " +

@@ -233,7 +233,11 @@ public class SystemObjectEntryItemSelectorView
 				"title",
 				StringBundler.concat(
 					objectDefinition.getLabel(themeDisplay.getLocale()),
-					StringPool.SPACE, _baseModel.getPrimaryKeyObj())
+					StringPool.SPACE,
+					_getTitleFieldValue(
+						_objectFieldLocalService.fetchObjectField(
+							objectDefinition.getTitleObjectFieldId()),
+						themeDisplay.getUser()))
 			).toString();
 		}
 
@@ -255,22 +259,9 @@ public class SystemObjectEntryItemSelectorView
 				return StringPool.BLANK;
 			}
 
-			User user = _userLocalService.fetchUser(
-				PrincipalThreadLocal.getUserId());
-
-			Object titleFieldValue = ObjectEntryValuesUtil.getTitleFieldValue(
-				objectField.getBusinessType(), _baseModel.getModelAttributes(),
-				objectField, user,
-				ObjectEntryDTOConverterUtil.toValues(
-					_baseModel, _dtoConverterRegistry,
-					_objectDefinition.getName(),
-					_systemObjectDefinitionManagerRegistry, user));
-
-			if (titleFieldValue == null) {
-				return StringPool.BLANK;
-			}
-
-			return titleFieldValue.toString();
+			return _getTitleFieldValue(
+				objectField,
+				_userLocalService.fetchUser(PrincipalThreadLocal.getUserId()));
 		}
 
 		@Override
@@ -288,6 +279,22 @@ public class SystemObjectEntryItemSelectorView
 
 			return _portal.getUserName(
 				(Long)modelAttributes.get("userId"), StringPool.BLANK);
+		}
+
+		private String _getTitleFieldValue(ObjectField objectField, User user) {
+			Object titleFieldValue = ObjectEntryValuesUtil.getTitleFieldValue(
+				objectField.getBusinessType(), _baseModel.getModelAttributes(),
+				objectField, user,
+				ObjectEntryDTOConverterUtil.toValues(
+					_baseModel, _dtoConverterRegistry,
+					_objectDefinition.getName(),
+					_systemObjectDefinitionManagerRegistry, user));
+
+			if (titleFieldValue == null) {
+				return StringPool.BLANK;
+			}
+
+			return titleFieldValue.toString();
 		}
 
 		private final BaseModel<?> _baseModel;

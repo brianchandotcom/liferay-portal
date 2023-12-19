@@ -7,7 +7,6 @@ package com.liferay.asset.categories.internal.layout.display.page;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.util.Locale;
@@ -19,8 +18,7 @@ public class AssetCategoryLayoutDisplayPageObjectProvider
 	implements LayoutDisplayPageObjectProvider<AssetCategory> {
 
 	public AssetCategoryLayoutDisplayPageObjectProvider(
-			AssetCategory assetCategory, Portal portal)
-		throws PortalException {
+		AssetCategory assetCategory, Portal portal) {
 
 		_assetCategory = assetCategory;
 		_portal = portal;

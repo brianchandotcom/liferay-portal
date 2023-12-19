@@ -79,17 +79,17 @@ public class OpenSearchSortFieldTranslator
 		org.opensearch.client.opensearch._types.GeoDistanceSort.Builder
 			builder = SortOptionsBuilders.geoDistance();
 
-		builder.field(geoDistanceSort.getField());
-		builder.location(
-			TransformUtil.transform(
-				geoDistanceSort.getGeoLocationPoints(),
-				_geoTranslator::translateGeoLocationPoint));
-
 		if (geoDistanceSort.getGeoDistanceType() != null) {
 			builder.distanceType(
 				_geoTranslator.translateGeoDistanceType(
 					geoDistanceSort.getGeoDistanceType()));
 		}
+
+		builder.field(geoDistanceSort.getField());
+		builder.location(
+			TransformUtil.transform(
+				geoDistanceSort.getGeoLocationPoints(),
+				_geoTranslator::translateGeoLocationPoint));
 
 		if (geoDistanceSort.getSortMode() != null) {
 			builder.mode(translateSortMode(geoDistanceSort.getSortMode()));

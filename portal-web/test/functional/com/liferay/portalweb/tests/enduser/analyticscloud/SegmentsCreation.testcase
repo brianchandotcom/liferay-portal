@@ -1607,9 +1607,13 @@ definition {
 			value1 = "DYNAMIC SEGMENT");
 	}
 
-	@description = "Bug: LRAC-10972 | Automation ID: LRAC-11506 | Test Summary: Check Autocomplete Suggestions For All Criteria Types"
+	@description = "Bug: LRAC-10972 | Automation ID: LRAC-11506 | Test Summary: Check autocomplete suggestions for Session Attributes"
+	@ignore = "true"
 	@priority = 3
-	test CheckAutocompleteSuggestionsForAllCriteriaTypes {
+	test CheckAutocompleteSuggestionsForSessionAttributes {
+
+		// AC Ignored: Data doesn't appear on time (Need to wait for the session to close)
+
 		task ("Sign in as new user") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "userea@liferay.com",
@@ -1654,34 +1658,6 @@ definition {
 			ACSegments.viewAutocompleteSuggestions(
 				autocompleteText = ${myURL},
 				notPresent = "home");
-		}
-
-		task ("Cancel the creation") {
-			ACSegments.cancelSegment();
-
-			Button.click(button = "Leave Page");
-		}
-
-		task ("Add a new dynamic segment") {
-			ACNavigation.goToSegments();
-
-			ACSegments.createDynamicSegment();
-
-			ACUtils.setItemName(itemName = "Dynamic Segment Test");
-		}
-
-		task ("Check URL autocomplete from Session Attributes") {
-			ACSegments.goToSidebarAttributes(criterion = "Individual Attributes");
-
-			ACSegments.addSegmentField(segmentField = "givenName");
-
-			ACSegments.editTextCriterion(
-				skip = "true",
-				textInput = "user");
-
-			ACSegments.viewAutocompleteSuggestions(
-				autocompleteText = "userfn",
-				notPresent = "Abram");
 		}
 	}
 

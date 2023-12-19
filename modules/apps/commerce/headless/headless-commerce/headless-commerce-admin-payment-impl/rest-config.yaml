@@ -7,5 +7,5 @@ application:
 author: "Alessio Antonio Rendina"
 clientDir: "../headless-commerce-admin-payment-client/src/main/java"
 compatibilityVersion: 4
-forcePredictableSchemaPropertyName: false
+forcePredictableSchemaPropertyName: true
 testDir: "../headless-commerce-admin-payment-test/src/testIntegration/java"

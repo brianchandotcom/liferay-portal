@@ -28,6 +28,10 @@ public class GitHubFile {
 		return _jsonObject.getString("filename");
 	}
 
+	public String getPatch() {
+		return _jsonObject.getString("patch");
+	}
+
 	private final GitHubFactory _gitHubFactory;
 	private final JSONObject _jsonObject;
 

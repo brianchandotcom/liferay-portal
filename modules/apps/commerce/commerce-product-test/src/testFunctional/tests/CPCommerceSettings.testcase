@@ -28,7 +28,7 @@ definition {
 		}
 
 		task ("And verifies if the Trash icon is not present in the header") {
-			AssertElementNotPresent(locator1 = "Button#TRASH_ENABLED");
+			AssertElementNotPresent(locator1 = "Icon#MOVE_TO_RECYCLE_BIN");
 		}
 
 		task ("And the admin selects one country using the checkbox and verifies if the Trash icon is now present in the header") {
@@ -38,11 +38,11 @@ definition {
 				key_productName = "Qatar",
 				locator1 = "CommerceEntry#PRODUCT_ENTRY_CHECKBOX");
 
-			AssertElementPresent(locator1 = "Button#TRASH_ENABLED");
+			AssertElementPresent(locator1 = "Icon#MOVE_TO_RECYCLE_BIN");
 		}
 
 		task ("Then the admin can remove the country by clicking on the Trash icon") {
-			ClickNoError(locator1 = "Button#TRASH_ENABLED");
+			ClickNoError(locator1 = "Icon#MOVE_TO_RECYCLE_BIN");
 
 			AssertConfirm(value1 = "Are you sure you want to delete the selected countries?");
 		}

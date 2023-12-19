@@ -67,7 +67,7 @@
 </tr>
 <tr>
 	<td>ACCOUNT_MANAGEMENT_REVERSE_SORT_DIRECTION_BUTTON_ICON</td>
-	<td>//nav[contains(@class,'management-bar')]//*[*[name()='svg'][contains(@class,'${key_icon}')] and contains(@title,'Reverse Sort Direction')]</td>
+	<td>//nav[contains(@class,'management-bar')]//*[*[name()='svg'][contains(@class,'${key_icon}')] and contains(@title,'Reverse Order Direction')]</td>
 	<td></td>
 </tr>
 <tr>

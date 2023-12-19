@@ -11,10 +11,10 @@
 
 <aui:form action="<%= editFunctionCommerceShippingMethodActionURL %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
+	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="commerceChannelId" type="hidden" value='<%= ParamUtil.getLong(request, "commerceChannelId") %>' />
 	<aui:input name="commerceShippingMethodEngineKey" type="hidden" value='<%= ParamUtil.getString(request, "commerceShippingMethodEngineKey") %>' />
 	<aui:input name="commerceShippingMethodId" type="hidden" value='<%= ParamUtil.getLong(request, "commerceShippingMethodId") %>' />
-	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
 	<c:if test='<%= (boolean)request.getAttribute("isDefaultValue") %>'>
 		<div class="alert alert-info">

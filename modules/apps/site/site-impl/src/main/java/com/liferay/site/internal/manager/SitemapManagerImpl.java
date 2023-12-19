@@ -268,6 +268,13 @@ public class SitemapManagerImpl implements SitemapManager {
 		for (SitemapURLProvider sitemapURLProvider :
 				_getSitemapURLProviders()) {
 
+			if (!sitemapURLProvider.isInclude(
+					themeDisplay.getCompanyId(),
+					themeDisplay.getScopeGroupId())) {
+
+				continue;
+			}
+
 			if (Validator.isNull(layoutUuid)) {
 				sitemapURLProvider.visitLayoutSet(
 					rootElement, layoutSet, themeDisplay);

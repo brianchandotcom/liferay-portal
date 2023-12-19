@@ -232,9 +232,7 @@ public class AggregationFilteringFacetProcessorContext
 	private BoolQuery _getRelatedSelectionsFilterQuery(String aggregationName) {
 		BoolQuery.Builder boolQueryBuilder = QueryBuilders.bool();
 
-		for (Map.Entry<String, List<Query>> entry :
-				_queriesMap.entrySet()) {
-
+		for (Map.Entry<String, List<Query>> entry : _queriesMap.entrySet()) {
 			String filterAggregationName = entry.getKey();
 
 			if (filterAggregationName.equals(aggregationName)) {

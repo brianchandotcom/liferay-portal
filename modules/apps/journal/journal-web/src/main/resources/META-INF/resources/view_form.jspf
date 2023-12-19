@@ -59,7 +59,7 @@
 					</div>
 				</div>
 
-				<c:if test='<%= !FeatureFlagManagerUtil.isEnabled("LPS-196768") || (FeatureFlagManagerUtil.isEnabled("LPS-196768") && journalDisplayContext.isSearch()) %>'>
+				<c:if test='<%= !FeatureFlagManagerUtil.isEnabled("LPS-196768") || (FeatureFlagManagerUtil.isEnabled("LPS-196768") && (journalDisplayContext.isSearch() || journalDisplayContext.isFilterApplied())) %>'>
 					<react:component
 						module="js/SearchOptions"
 						props="<%= journalDisplayContext.getSearchProps() %>"

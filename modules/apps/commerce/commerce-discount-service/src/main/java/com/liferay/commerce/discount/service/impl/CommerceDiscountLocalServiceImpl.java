@@ -58,7 +58,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -1902,9 +1901,7 @@ public class CommerceDiscountLocalServiceImpl
 					CPInstance.class.getName()))
 		);
 
-		if (FeatureFlagManagerUtil.isEnabled("COMMERCE-11287") &&
-			!Validator.isBlank(unitOfMeasureKey)) {
-
+		if (!Validator.isBlank(unitOfMeasureKey)) {
 			andPredicate = andPredicate.and(
 				CommerceDiscountRelTable.INSTANCE.typeSettings.like(
 					StringBundler.concat(

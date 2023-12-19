@@ -14,7 +14,6 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManager;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -54,10 +53,6 @@ public class SplitOrderByCatalogHealthStatus implements CommerceHealthStatus {
 	@Override
 	public void fixIssue(HttpServletRequest httpServletRequest)
 		throws PortalException {
-
-		if (!_featureFlagManager.isEnabled("COMMERCE-11026")) {
-			throw new UnsupportedOperationException();
-		}
 
 		try {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
@@ -110,16 +105,12 @@ public class SplitOrderByCatalogHealthStatus implements CommerceHealthStatus {
 
 	@Override
 	public boolean isActive() {
-		return _featureFlagManager.isEnabled("COMMERCE-11026");
+		return true;
 	}
 
 	@Override
 	public boolean isFixed(long companyId, long commerceChannelId)
 		throws PortalException {
-
-		if (!_featureFlagManager.isEnabled("COMMERCE-11026")) {
-			return true;
-		}
 
 		ObjectDefinition commerceOrderObjectDefinition =
 			_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
@@ -146,9 +137,6 @@ public class SplitOrderByCatalogHealthStatus implements CommerceHealthStatus {
 	private static final TransactionConfig _transactionConfig =
 		TransactionConfig.Factory.create(
 			Propagation.REQUIRED, new Class<?>[] {Exception.class});
-
-	@Reference
-	private FeatureFlagManager _featureFlagManager;
 
 	@Reference
 	private Language _language;

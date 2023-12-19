@@ -11,7 +11,6 @@ import com.liferay.frontend.data.set.view.table.BaseTableFDSView;
 import com.liferay.frontend.data.set.view.table.FDSTableSchema;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilder;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilderFactory;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 
 import java.util.Locale;
 
@@ -34,7 +33,7 @@ public class ProcessingCommerceShipmentItemTableFDSView
 		FDSTableSchemaBuilder fdsTableSchemaBuilder =
 			_fdsTableSchemaBuilderFactory.create();
 
-		fdsTableSchemaBuilder.add(
+		return fdsTableSchemaBuilder.add(
 			"sku", "sku",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
 				"actionLink")
@@ -48,13 +47,9 @@ public class ProcessingCommerceShipmentItemTableFDSView
 			"orderedQuantity", "outstanding-quantity"
 		).add(
 			"toSendQuantity", "quantity-in-shipment"
-		);
-
-		if (FeatureFlagManagerUtil.isEnabled("COMMERCE-11287")) {
-			fdsTableSchemaBuilder.add("unitOfMeasureKey", "uom");
-		}
-
-		return fdsTableSchemaBuilder.build();
+		).add(
+			"unitOfMeasureKey", "uom"
+		).build();
 	}
 
 	@Reference

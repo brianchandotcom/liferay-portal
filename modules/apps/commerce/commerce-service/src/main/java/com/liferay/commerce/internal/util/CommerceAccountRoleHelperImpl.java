@@ -23,7 +23,6 @@ import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.util.CommerceAccountRoleHelper;
 import com.liferay.portal.db.partition.util.DBPartitionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
@@ -70,17 +69,11 @@ public class CommerceAccountRoleHelperImpl
 		_checkAccountRole(
 			AccountRoleConstants.ROLE_NAME_ACCOUNT_ORDER_MANAGER,
 			serviceContext);
-
-		if (FeatureFlagManagerUtil.isEnabled(
-				serviceContext.getCompanyId(), "COMMERCE-10890")) {
-
-			_checkAccountRole(
-				AccountRoleConstants.ROLE_NAME_ACCOUNT_SUPPLIER,
-				serviceContext);
-			_checkRole(
-				AccountRoleConstants.ROLE_NAME_SUPPLIER,
-				RoleConstants.TYPE_REGULAR, serviceContext);
-		}
+		_checkAccountRole(
+			AccountRoleConstants.ROLE_NAME_ACCOUNT_SUPPLIER, serviceContext);
+		_checkRole(
+			AccountRoleConstants.ROLE_NAME_SUPPLIER, RoleConstants.TYPE_REGULAR,
+			serviceContext);
 	}
 
 	private void _checkAccountRole(String name, ServiceContext serviceContext)

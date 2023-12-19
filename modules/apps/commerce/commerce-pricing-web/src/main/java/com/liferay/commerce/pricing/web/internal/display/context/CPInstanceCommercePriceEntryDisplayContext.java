@@ -26,11 +26,9 @@ import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.petra.function.transform.TransformUtil;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
@@ -153,65 +151,20 @@ public class CPInstanceCommercePriceEntryDisplayContext
 	}
 
 	public CreationMenu getCreationMenu() throws PortalException {
-		if (FeatureFlagManagerUtil.isEnabled("COMMERCE-11287")) {
-			CPInstance cpInstance = getCPInstance();
+		CPInstance cpInstance = getCPInstance();
 
-			return CreationMenuBuilder.addDropdownItem(
-				dropdownItem -> {
-					dropdownItem.setHref(
-						liferayPortletResponse.getNamespace() +
-							"addCommercePriceEntry");
-					dropdownItem.setLabel(
-						LanguageUtil.format(
-							httpServletRequest, "add-x-to-price-list",
-							HtmlUtil.escape(cpInstance.getSku()), false));
-					dropdownItem.setTarget("event");
-				}
-			).build();
-		}
-
-		CreationMenu creationMenu = new CreationMenu();
-
-		List<CPInstanceUnitOfMeasure> cpInstanceUnitOfMeasures =
-			getCPInstanceUnitOfMeasures();
-
-		if (cpInstanceUnitOfMeasures.isEmpty()) {
-			CPInstance cpInstance = getCPInstance();
-
-			return creationMenu.addDropdownItem(
-				dropdownItem -> {
-					dropdownItem.setHref(
-						liferayPortletResponse.getNamespace() +
-							"addCommercePriceEntry");
-					dropdownItem.setLabel(
-						LanguageUtil.format(
-							httpServletRequest, "add-x-to-price-list",
-							HtmlUtil.escape(cpInstance.getSku()), false));
-					dropdownItem.setTarget("event");
-				});
-		}
-
-		for (CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure :
-				cpInstanceUnitOfMeasures) {
-
-			creationMenu.addDropdownItem(
-				dropdownItem -> {
-					dropdownItem.setHref(
-						StringBundler.concat(
-							liferayPortletResponse.getNamespace(),
-							"addCommercePriceEntry",
-							HtmlUtil.escapeJS(
-								cpInstanceUnitOfMeasure.getKey())));
-					dropdownItem.setLabel(
-						LanguageUtil.format(
-							httpServletRequest, "add-x-to-price-list",
-							HtmlUtil.escape(cpInstanceUnitOfMeasure.getKey()),
-							false));
-					dropdownItem.setTarget("event");
-				});
-		}
-
-		return creationMenu;
+		return CreationMenuBuilder.addDropdownItem(
+			dropdownItem -> {
+				dropdownItem.setHref(
+					liferayPortletResponse.getNamespace() +
+						"addCommercePriceEntry");
+				dropdownItem.setLabel(
+					LanguageUtil.format(
+						httpServletRequest, "add-x-to-price-list",
+						HtmlUtil.escape(cpInstance.getSku()), false));
+				dropdownItem.setTarget("event");
+			}
+		).build();
 	}
 
 	public String getItemSelectorUrl(String unitOfMeasureKey)
@@ -242,64 +195,17 @@ public class CPInstanceCommercePriceEntryDisplayContext
 	public HashMap<String, Object> getJSContext() throws PortalException {
 		CPInstance cpInstance = getCPInstance();
 
-		if (FeatureFlagManagerUtil.isEnabled("COMMERCE-11287")) {
-			return HashMapBuilder.<String, Object>put(
-				"url",
-				PortletURLBuilder.createRenderURL(
-					liferayPortletResponse
-				).setMVCRenderCommandName(
-					"/cp_definitions/add_cp_instance_commerce_price_entry"
-				).setRedirect(
-					cpRequestHelper.getCurrentURL()
-				).setParameter(
-					"cpInstanceId", cpInstance.getCPInstanceId()
-				).buildString()
-			).build();
-		}
-
-		List<String> eventNames = new ArrayList<>();
-		List<String> keys = new ArrayList<>();
-		List<String> titles = new ArrayList<>();
-		List<String> urls = new ArrayList<>();
-
-		List<CPInstanceUnitOfMeasure> cpInstanceUnitOfMeasures =
-			getCPInstanceUnitOfMeasures();
-
-		if (cpInstanceUnitOfMeasures.isEmpty()) {
-			eventNames.add("addCommercePriceEntry");
-			keys.add(StringPool.BLANK);
-			titles.add(
-				LanguageUtil.format(
-					httpServletRequest, "add-x-to-price-list",
-					HtmlUtil.escape(cpInstance.getSku()), false));
-			urls.add(getItemSelectorUrl(null));
-		}
-		else {
-			for (CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure :
-					cpInstanceUnitOfMeasures) {
-
-				String key = cpInstanceUnitOfMeasure.getKey();
-
-				eventNames.add(
-					"addCommercePriceEntry" + HtmlUtil.escapeJS(key));
-				keys.add(key);
-				titles.add(
-					LanguageUtil.format(
-						httpServletRequest, "add-x-to-price-list",
-						HtmlUtil.escape(cpInstance.getSku() + " " + key),
-						false));
-				urls.add(getItemSelectorUrl(key));
-			}
-		}
-
 		return HashMapBuilder.<String, Object>put(
-			"eventNames", eventNames.toArray(new String[0])
-		).put(
-			"keys", keys.toArray(new String[0])
-		).put(
-			"titles", titles.toArray(new String[0])
-		).put(
-			"urls", urls.toArray(new String[0])
+			"url",
+			PortletURLBuilder.createRenderURL(
+				liferayPortletResponse
+			).setMVCRenderCommandName(
+				"/cp_definitions/add_cp_instance_commerce_price_entry"
+			).setRedirect(
+				cpRequestHelper.getCurrentURL()
+			).setParameter(
+				"cpInstanceId", cpInstance.getCPInstanceId()
+			).buildString()
 		).build();
 	}
 

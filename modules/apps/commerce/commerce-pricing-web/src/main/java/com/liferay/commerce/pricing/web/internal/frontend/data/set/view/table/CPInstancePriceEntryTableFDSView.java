@@ -11,7 +11,6 @@ import com.liferay.frontend.data.set.view.table.BaseTableFDSView;
 import com.liferay.frontend.data.set.view.table.FDSTableSchema;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilder;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilderFactory;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 
 import java.util.Locale;
 
@@ -32,20 +31,15 @@ public class CPInstancePriceEntryTableFDSView extends BaseTableFDSView {
 		FDSTableSchemaBuilder fdsTableSchemaBuilder =
 			_fdsTableSchemaBuilderFactory.create();
 
-		fdsTableSchemaBuilder.add(
+		return fdsTableSchemaBuilder.add(
 			"name", "name",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"actionLink"));
-
-		if (FeatureFlagManagerUtil.isEnabled("COMMERCE-11287")) {
-			fdsTableSchemaBuilder.add(
-				"unitOfMeasure", "uom"
-			).add(
-				"quantity", "base-quantity"
-			);
-		}
-
-		fdsTableSchemaBuilder.add(
+				"actionLink")
+		).add(
+			"unitOfMeasure", "uom"
+		).add(
+			"quantity", "base-quantity"
+		).add(
 			"unitPrice", "unit-price"
 		).add(
 			"priceOnApplication", "price-on-application",
@@ -53,9 +47,7 @@ public class CPInstancePriceEntryTableFDSView extends BaseTableFDSView {
 				"boolean")
 		).add(
 			"createDateString", "create-date"
-		);
-
-		return fdsTableSchemaBuilder.build();
+		).build();
 	}
 
 	@Reference

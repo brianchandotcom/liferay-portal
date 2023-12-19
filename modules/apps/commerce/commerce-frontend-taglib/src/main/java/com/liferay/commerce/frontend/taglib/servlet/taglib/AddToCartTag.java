@@ -35,7 +35,6 @@ import com.liferay.commerce.service.CommerceOrderTypeLocalService;
 import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -142,15 +141,12 @@ public class AddToCartTag extends IncludeTag {
 					}
 				}
 
-				if (FeatureFlagManagerUtil.isEnabled("COMMERCE-11287")) {
-					List<CPInstanceUnitOfMeasure> cpInstanceUnitOfMeasures =
-						_cpInstanceUnitOfMeasureLocalService.
-							getActiveCPInstanceUnitOfMeasures(_cpInstanceId);
+				List<CPInstanceUnitOfMeasure> cpInstanceUnitOfMeasures =
+					_cpInstanceUnitOfMeasureLocalService.
+						getActiveCPInstanceUnitOfMeasures(_cpInstanceId);
 
-					if (!cpInstanceUnitOfMeasures.isEmpty()) {
-						_cpInstanceUnitOfMeasure = cpInstanceUnitOfMeasures.get(
-							0);
-					}
+				if (!cpInstanceUnitOfMeasures.isEmpty()) {
+					_cpInstanceUnitOfMeasure = cpInstanceUnitOfMeasures.get(0);
 				}
 			}
 

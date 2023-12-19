@@ -10,7 +10,6 @@ import com.liferay.commerce.constants.CommerceHealthStatusConstants;
 import com.liferay.commerce.health.status.CommerceHealthStatus;
 import com.liferay.commerce.util.CommerceAccountRoleHelper;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -105,16 +104,14 @@ public class AccountsCommerceHealthStatus implements CommerceHealthStatus {
 	public boolean isFixed(long companyId, long commerceChannelId)
 		throws PortalException {
 
-		if (FeatureFlagManagerUtil.isEnabled(companyId, "COMMERCE-10890")) {
-			Role accountSupplierRole = _roleLocalService.fetchRole(
-				companyId, AccountRoleConstants.ROLE_NAME_ACCOUNT_SUPPLIER);
+		Role accountSupplierRole = _roleLocalService.fetchRole(
+			companyId, AccountRoleConstants.ROLE_NAME_ACCOUNT_SUPPLIER);
 
-			Role supplierRole = _roleLocalService.fetchRole(
-				companyId, AccountRoleConstants.ROLE_NAME_SUPPLIER);
+		Role supplierRole = _roleLocalService.fetchRole(
+			companyId, AccountRoleConstants.ROLE_NAME_SUPPLIER);
 
-			if ((accountSupplierRole == null) || (supplierRole == null)) {
-				return false;
-			}
+		if ((accountSupplierRole == null) || (supplierRole == null)) {
+			return false;
 		}
 
 		Role role = _roleLocalService.fetchRole(

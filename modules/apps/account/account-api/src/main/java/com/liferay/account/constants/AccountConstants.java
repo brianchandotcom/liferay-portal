@@ -5,8 +5,6 @@
 
 package com.liferay.account.constants;
 
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
-
 /**
  * @author Pei-Jung Lan
  */
@@ -50,16 +48,9 @@ public class AccountConstants {
 	public static final String RESOURCE_NAME = "com.liferay.account";
 
 	public static String[] getAccountEntryTypes(long companyId) {
-		if (FeatureFlagManagerUtil.isEnabled(companyId, "COMMERCE-10890")) {
-			return new String[] {
-				ACCOUNT_ENTRY_TYPE_BUSINESS, ACCOUNT_ENTRY_TYPE_GUEST,
-				ACCOUNT_ENTRY_TYPE_PERSON, ACCOUNT_ENTRY_TYPE_SUPPLIER
-			};
-		}
-
 		return new String[] {
 			ACCOUNT_ENTRY_TYPE_BUSINESS, ACCOUNT_ENTRY_TYPE_GUEST,
-			ACCOUNT_ENTRY_TYPE_PERSON
+			ACCOUNT_ENTRY_TYPE_PERSON, ACCOUNT_ENTRY_TYPE_SUPPLIER
 		};
 	}
 

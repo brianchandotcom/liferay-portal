@@ -141,18 +141,28 @@ public class ReportController extends BaseFaroController {
 				Map.class);
 		}
 		catch (InvalidFilterException invalidFilterException) {
-			JSONObject jsonObject = _jsonFactory.createJSONObject(
-				invalidFilterException.getMessage());
-
 			Response.ResponseBuilder responseBuilder = Response.status(
 				Response.Status.BAD_REQUEST);
 
+			JSONObject jsonObject = _jsonFactory.createJSONObject(
+				invalidFilterException.getMessage());
+
+			String description = "";
+
+			JSONObject errorAttributesJSONObject =
+				jsonObject.getJSONObject("errorAttributes");
+
+			if (errorAttributesJSONObject != null) {
+				description = errorAttributesJSONObject.getString(
+					"message", "");
+			}
+
 			return responseBuilder.entity(
 				HashMapBuilder.put(
-					"description", jsonObject.getString("message")
+					"description", description
 				).put(
 					"message", "Bad Request"
-				)
+				).build()
 			).build();
 		}
 		catch (Exception exception) {

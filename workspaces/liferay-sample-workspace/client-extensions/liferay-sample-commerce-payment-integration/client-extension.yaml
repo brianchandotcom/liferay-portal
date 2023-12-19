@@ -1,0 +1,26 @@
+assemble:
+    - fromTask: bootJar
+liferay-sample-commerce-payment-integration:
+    authorizePath: /authorize
+    cancelPath: /cancel
+    capturePath: /capture
+    key: liferay-sample-commerce-payment-integration
+    name: Liferay Sample Commerce Payment Integration
+    oAuth2ApplicationExternalReferenceCode: liferay-sample-commerce-payment-integration-oauth-application-user-agent
+    paymentIntegrationType: 3
+    paymentIntegrationTypeSettings:
+        key1: value1
+        key2: value2
+        key3: value3
+        key4: value4
+        key5: value5
+    refundPath: /refund
+    setUpPaymentPath: /setuppayment
+    type: commercePaymentIntegration
+liferay-sample-commerce-payment-integration-oauth-application-user-agent:
+    .serviceAddress: localhost:58081
+    .serviceScheme: http
+    name: Liferay Sample Commerce Payment Integration OAuth Application User Agent
+    scopes:
+        - Liferay.Headless.Admin.Workflow.everything
+    type: oAuthApplicationUserAgent

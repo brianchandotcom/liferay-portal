@@ -24,7 +24,7 @@ List<CommerceCurrency> commerceCurrencies = commerceCatalogDisplayContext.getCom
 		<aui:input bean="<%= commerceCatalog %>" model="<%= CommerceCatalog.class %>" name="name" required="<%= true %>" />
 
 		<%
-		boolean hasManageLinkSupplierPermission = FeatureFlagManagerUtil.isEnabled(themeDisplay.getCompanyId(), "COMMERCE-10890") && commerceCatalogDisplayContext.hasManageLinkSupplierPermission(Constants.ADD);
+		boolean hasManageLinkSupplierPermission = commerceCatalogDisplayContext.hasManageLinkSupplierPermission(Constants.ADD);
 		%>
 
 		<div class="row">

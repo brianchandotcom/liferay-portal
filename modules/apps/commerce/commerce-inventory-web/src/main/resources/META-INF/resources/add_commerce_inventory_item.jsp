@@ -24,20 +24,14 @@ CommerceInventoryDisplayContext commerceInventoryDisplayContext = (CommerceInven
 		<liferay-ui:error exception="<%= DuplicateCommerceInventoryWarehouseItemException.class %>" message="inventory-item-with-this-sku-already-exists-in-the-selected-warehouse" />
 		<liferay-ui:error exception="<%= NoSuchCPInstanceUnitOfMeasureException.class %>" message="no-such-uom-exists-with-this-sku" />
 
-		<%
-		boolean featureFlagEnabled = FeatureFlagManagerUtil.isEnabled("COMMERCE-11287");
-		%>
-
 		<div class="row">
-			<div class="col-<%= featureFlagEnabled ? "6" : "12" %>">
+			<div class="col-6">
 				<aui:input name="sku" required="<%= true %>" type="text" />
 			</div>
 
-			<c:if test="<%= featureFlagEnabled %>">
-				<div class="col-6">
-					<aui:input name="unitOfMeasure" type="text" />
-				</div>
-			</c:if>
+			<div class="col-6">
+				<aui:input name="unitOfMeasure" type="text" />
+			</div>
 		</div>
 
 		<div class="row">

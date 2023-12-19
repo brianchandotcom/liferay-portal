@@ -12,31 +12,27 @@ boolean priceOnApplication = BeanParamUtil.getBoolean(commercePriceEntry, reques
 <commerce-ui:panel
 	title='<%= LanguageUtil.get(request, "details") %>'
 >
-	<c:if test='<%= FeatureFlagManagerUtil.isEnabled("COMMERCE-11028") %>'>
-		<div class="row">
-			<div class="col-12">
-				<aui:input checked="<%= priceOnApplication %>" helpMessage="do-not-set-a-base-price-for-this-product" inlineLabel="right" label="price-on-application" name="priceOnApplication" type="toggle-switch" />
-			</div>
+	<div class="row">
+		<div class="col-12">
+			<aui:input checked="<%= priceOnApplication %>" helpMessage="do-not-set-a-base-price-for-this-product" inlineLabel="right" label="price-on-application" name="priceOnApplication" type="toggle-switch" />
 		</div>
-	</c:if>
+	</div>
 
-	<c:if test='<%= FeatureFlagManagerUtil.isEnabled("COMMERCE-11287") %>'>
-		<aui:select disabled="<%= true %>" label="unit-of-measure" name="unitOfMeasureKey" showEmptyOption="<%= true %>">
+	<aui:select disabled="<%= true %>" label="unit-of-measure" name="unitOfMeasureKey" showEmptyOption="<%= true %>">
 
-			<%
-			String unitOfMeasureKey = commercePriceEntry.getUnitOfMeasureKey();
+		<%
+		String unitOfMeasureKey = commercePriceEntry.getUnitOfMeasureKey();
 
-			for (CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure : commercePriceEntryDisplayContext.getCPInstanceUnitOfMeasures()) {
-			%>
+		for (CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure : commercePriceEntryDisplayContext.getCPInstanceUnitOfMeasures()) {
+		%>
 
-				<aui:option label="<%= cpInstanceUnitOfMeasure.getKey() %>" selected="<%= unitOfMeasureKey.equals(cpInstanceUnitOfMeasure.getKey()) %>" value="<%= cpInstanceUnitOfMeasure.getKey() %>" />
+			<aui:option label="<%= cpInstanceUnitOfMeasure.getKey() %>" selected="<%= unitOfMeasureKey.equals(cpInstanceUnitOfMeasure.getKey()) %>" value="<%= cpInstanceUnitOfMeasure.getKey() %>" />
 
-			<%
-			}
-			%>
+		<%
+		}
+		%>
 
-		</aui:select>
-	</c:if>
+	</aui:select>
 
 	<aui:fieldset collapsible="<%= false %>" cssClass='<%= "price-entry-price-settings " + (priceOnApplication ? "disabled" : StringPool.BLANK) %>' id='<%= liferayPortletResponse.getNamespace() + "price-entry-price-settings" %>'>
 		<liferay-ui:error exception="<%= CommercePriceListMaxPriceValueException.class %>">

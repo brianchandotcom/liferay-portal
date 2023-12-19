@@ -49,9 +49,7 @@ if (Validator.isNotNull(backURL)) {
 						<tr>
 							<th class="table-cell-expand"><liferay-ui:message key="warehouse" /></th>
 
-							<c:if test='<%= FeatureFlagManagerUtil.isEnabled("COMMERCE-11287") %>'>
-								<th><liferay-ui:message key="uom" /></th>
-							</c:if>
+							<th><liferay-ui:message key="uom" /></th>
 
 							<th><liferay-ui:message key="quantity" /></th>
 							<th></th>
@@ -90,13 +88,9 @@ if (Validator.isNotNull(backURL)) {
 									<td>
 										<%= HtmlUtil.escape(commerceInventoryWarehouse.getName(locale)) %>
 									</td>
-
-									<c:if test='<%= FeatureFlagManagerUtil.isEnabled("COMMERCE-11287") %>'>
-										<td>
-											<%= HtmlUtil.escape(cpInstanceUnitOfMeasureKey) %>
-										</td>
-									</c:if>
-
+									<td>
+										<%= HtmlUtil.escape(cpInstanceUnitOfMeasureKey) %>
+									</td>
 									<td>
 										<aui:input id='<%= "commerceInventoryWarehouseItemQuantity" + curIndex %>' label="" min="0" name="commerceInventoryWarehouseItemQuantity" type="text" value="<%= commerceInventoryWarehouseItemsDisplayContext.getFormattedQuantity(commerceInventoryWarehouseItem) %>" wrapperCssClass="mb-0" />
 									</td>

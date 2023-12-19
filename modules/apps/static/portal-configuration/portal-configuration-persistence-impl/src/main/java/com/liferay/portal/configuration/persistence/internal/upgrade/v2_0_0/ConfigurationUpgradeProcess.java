@@ -11,12 +11,12 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.db.partition.DBPartitionUtil;
 import com.liferay.portal.kernel.db.partition.DBPartition;
+import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.util.PortalInstances;
 
 import java.io.Serializable;
 
@@ -37,7 +37,7 @@ public class ConfigurationUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (PortalInstances.getDefaultCompanyId() ==
+		if (PortalInstancePool.getDefaultCompanyId() ==
 				CompanyThreadLocal.getCompanyId()) {
 
 			try (PreparedStatement preparedStatement =
@@ -64,7 +64,7 @@ public class ConfigurationUpgradeProcess extends UpgradeProcess {
 
 						if (!_isApplicable(
 								scopeConfiguration,
-								PortalInstances.getDefaultCompanyId())) {
+								PortalInstancePool.getDefaultCompanyId())) {
 
 							_scopeConfigurations.add(scopeConfiguration);
 
@@ -75,7 +75,7 @@ public class ConfigurationUpgradeProcess extends UpgradeProcess {
 				}
 			}
 
-			long[] companyIds = PortalInstances.getCompanyIds();
+			long[] companyIds = PortalInstancePool.getCompanyIds();
 
 			_atomicInteger.set(companyIds.length - 1);
 

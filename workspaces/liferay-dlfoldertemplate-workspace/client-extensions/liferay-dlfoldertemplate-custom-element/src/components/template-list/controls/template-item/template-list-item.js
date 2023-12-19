@@ -10,15 +10,7 @@ import React, {useState} from 'react';
 
 import {deleteFolderTemplateInformation} from '../../../../services/template-list.service';
 
-const TemplateItem = (props) => {
-	const item = props.item;
-
-	const onDeleteSuccess = props.onDelete;
-
-	const openDesigner = props.openDesigner;
-
-	const openCreateFolder = props.openCreateFolder;
-
+const TemplateItem = ({item, onDelete, openCreateFolder, openDesigner}) => {
 	const [isLoading, setIsLoading] = useState(false);
 
 	const deleteTemplateAction = async () => {
@@ -29,7 +21,7 @@ const TemplateItem = (props) => {
 
 			setIsLoading(false);
 
-			onDeleteSuccess();
+			onDelete();
 		}
 		catch (error) {
 			setIsLoading(false);
@@ -92,4 +84,5 @@ const TemplateItem = (props) => {
 		</ClayList.Item>
 	);
 };
+
 export default TemplateItem;

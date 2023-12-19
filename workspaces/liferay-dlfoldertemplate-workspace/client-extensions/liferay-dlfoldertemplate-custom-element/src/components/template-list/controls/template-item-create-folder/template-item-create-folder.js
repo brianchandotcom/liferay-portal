@@ -20,9 +20,7 @@ import './template-item-create-folder.css';
 
 const TemplateItemCreateFolder = ({templateID}) => {
 	const [folderTree, setFolderTree] = useState(null);
-
 	const [isLoading, setIsLoading] = useState(false);
-
 	const [isSubmitting, setIsSubmitting] = useState(false);
 
 	const [form] = Form.useForm();
@@ -147,58 +145,56 @@ const TemplateItemCreateFolder = ({templateID}) => {
 	};
 
 	return (
-		<>
-			<Form autoComplete="off" form={form} layout="vertical">
-				<Form.Item
-					label="Name"
-					name="name"
-					rules={[
-						{
-							message: 'Please provide a folder name.',
-							required: true,
-						},
-					]}
-				>
-					<ClayInput></ClayInput>
-				</Form.Item>
-				<Form.Item
-					label="Parent Folder"
-					name="parentFolder"
-					rules={[
-						{
-							message: 'Please select folder parent.',
-							required: true,
-						},
-					]}
-				>
-					{isLoading && (
-						<ClayLoadingIndicator size="sm"></ClayLoadingIndicator>
+		<Form autoComplete="off" form={form} layout="vertical">
+			<Form.Item
+				label="Name"
+				name="name"
+				rules={[
+					{
+						message: 'Please provide a folder name.',
+						required: true,
+					},
+				]}
+			>
+				<ClayInput></ClayInput>
+			</Form.Item>
+			<Form.Item
+				label="Parent Folder"
+				name="parentFolder"
+				rules={[
+					{
+						message: 'Please select a folder parent.',
+						required: true,
+					},
+				]}
+			>
+				{isLoading && (
+					<ClayLoadingIndicator size="sm"></ClayLoadingIndicator>
+				)}
+
+				{folderTree && (
+					<TreeSelect multiple={false} treeData={folderTree} />
+				)}
+			</Form.Item>
+			<Form.Item>
+				<Flex gap={6}>
+					{!isSubmitting ? (
+						<ClayButton
+							onClick={() => {
+								handleSubmit();
+							}}
+						>
+							Submit
+						</ClayButton>
+					) : (
+						<ClayLoadingIndicator
+							displayType="secondary"
+							size="sm"
+						/>
 					)}
-					{folderTree && (
-						<TreeSelect multiple={false} treeData={folderTree} />
-					)}
-				</Form.Item>
-				<Form.Item>
-					<Flex gap={6}>
-						{!isSubmitting && (
-							<ClayButton
-								onClick={() => {
-									handleSubmit();
-								}}
-							>
-								Submit
-							</ClayButton>
-						)}
-						{isSubmitting && (
-							<ClayLoadingIndicator
-								displayType="secondary"
-								size="sm"
-							/>
-						)}
-					</Flex>
-				</Form.Item>
-			</Form>
-		</>
+				</Flex>
+			</Form.Item>
+		</Form>
 	);
 };
 

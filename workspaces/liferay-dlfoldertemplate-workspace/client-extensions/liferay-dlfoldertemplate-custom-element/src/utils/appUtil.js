@@ -24,7 +24,6 @@ function getConfig() {
 }
 async function getOAuthToken() {
 	const prom = new Promise((resolve, reject) => {
-
 		getLiferay()
 			.OAuth2Client.FromUserAgentApplication(getConfig().agentOauthAppId)
 			._getOrRequestToken()
@@ -33,12 +32,14 @@ async function getOAuthToken() {
 					resolve(token.access_token);
 				},
 				(error) => {
-					ShowError(error);
+					showError(error);
+
 					reject(error);
 				}
 			)
 			.catch((error) => {
-				ShowError(error);
+				showError(error);
+
 				reject(error);
 			});
 	});
@@ -48,10 +49,10 @@ async function getOAuthToken() {
 function getHostUrl() {
 	return getConfig().external ? getConfig().apiHost : '';
 }
-function ShowSuccess(message) {
+function showSuccess(message) {
 	getLiferay().Util.openToast({title: message, type: 'success'});
 }
-function ShowError(message) {
+function showError(message) {
 	getLiferay().Util.openToast({title: message, type: 'danger'});
 }
 function getDefaultSpriteMap() {
@@ -67,12 +68,12 @@ function getLiferay() {
 }
 
 export const ApplicationUtil = {
-	ShowError,
-	ShowSuccess,
 	getConfig,
 	getDefaultSpriteMap,
 	getHostUrl,
 	getLiferay,
 	getOAuthToken,
+	showError,
+	showSuccess,
 	suggestServerUrl,
 };

@@ -45,6 +45,7 @@ export async function addNode(
 			root,
 			templateID: template,
 		});
+
 		const node = {
 			description: result.description,
 			id: result.id,
@@ -57,7 +58,7 @@ export async function addNode(
 		return node;
 	}
 	catch (error) {
-		ApplicationUtil.ShowError(error);
+		ApplicationUtil.showError(error);
 	}
 }
 export async function updateFolderTemplate(nodeId, FolderTemplate) {

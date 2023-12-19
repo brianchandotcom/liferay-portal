@@ -13,6 +13,9 @@ import EditNode from './controls/edit-node/edit-node';
 import './template-diagram.css';
 import {
 	addIcon,
+	diagramNodeBox,
+	diagramNodeContent,
+	diagramNodeMenuButton,
 	editIcon,
 	removeIcon,
 } from '../../assets/svg-icons/diagram-icons';
@@ -50,29 +53,22 @@ const FolderStructureDesigner = ({templateId}) => {
 			closeNodeEditor();
 		}
 	}, []);
+
 	const editNode = useCallback(
-		async (
-			newChart,
-			nodeId,
-			templateID,
-			name,
-			description,
-			parentID,
-			root
-		) => {
+		async (data) => {
 			editModalRef.current = Modal.warn({
 				closeIcon: <CloseCircleTwoTone />,
 				content: (
 					<EditNode
-						chart={newChart}
+						chart={data.chart}
+						description={data.description}
+						name={data.name}
+						nodeId={data.nodeId}
 						onClose={closeNodeEditor}
-						description={description}
-						name={name}
-						nodeId={nodeId}
-						parentID={parentID}
-						root={root}
-						templateID={templateID}
 						onNodeUpdate={updateChartNode}
+						parentID={data.parentID}
+						root={data.root}
+						templateID={data.templateID}
 					></EditNode>
 				),
 				footer: null,
@@ -81,6 +77,7 @@ const FolderStructureDesigner = ({templateId}) => {
 		},
 		[updateChartNode]
 	);
+
 	const loadTemplateNodes = useCallback(
 		async (newOrgChart) => {
 			setIsLoading(true);
@@ -120,12 +117,7 @@ const FolderStructureDesigner = ({templateId}) => {
 
 		OrgChart.templates['white'].size = [300, 100];
 
-		OrgChart.templates['white'].node =
-			'<rect x="0" y="0" height="80" width="300" fill="#039BE5" stroke-width="1" stroke="#ffca2761" rx="0" ry="0"></rect>' +
-			`<svg width="64px" height="64px" x="20" y="10" viewBox="0 0 1024 1024" class="icon"  version="1.1" xmlns="http://www.w3.org/2000/svg">
-            <path d="M853.333333 256H469.333333l-85.333333-85.333333H170.666667c-46.933333 0-85.333333 38.4-85.333334 85.333333v170.666667h853.333334v-85.333334c0-46.933333-38.4-85.333333-85.333334-85.333333z" fill="#FFA000" />
-            <path d="M853.333333 256H170.666667c-46.933333 0-85.333333 38.4-85.333334 85.333333v426.666667c0 46.933333 38.4 85.333333 85.333334 85.333333h682.666666c46.933333 0 85.333333-38.4 85.333334-85.333333V341.333333c0-46.933333-38.4-85.333333-85.333334-85.333333z" fill="#FFCA28" />
-            </svg>`;
+		OrgChart.templates['white'].node = diagramNodeBox;
 
 		OrgChart.templates['white'].ripple = {
 			color: '#0890D3',
@@ -133,50 +125,56 @@ const FolderStructureDesigner = ({templateId}) => {
 			rect: {height: 80, rx: 0, ry: 0, width: 300, x: 0, y: 0},
 		};
 
-		OrgChart.templates['white'].nodeMenuButton =
-			'<g style="cursor:pointer;" transform="matrix(1,0,0,1,285,33)" data-ctrl-n-menu-id="{id}"><rect x="-4" y="-10" fill="#000000" fill-opacity="0" width="22" height="22"></rect><circle cx="0" cy="0" r="2" fill="black"></circle><circle cx="0" cy="7" r="2" fill="black"></circle><circle cx="0" cy="14" r="2" fill="black"></circle></g>';
+		OrgChart.templates['white'].nodeMenuButton = diagramNodeMenuButton;
 
-		OrgChart.templates['white'][
-			'field_0'
-		] = `<svg x="100" width="200" height="60" xmlns="http://www.w3.org/2000/svg"><text x="10" y="20" font-family="Arial" font-size="14"><tspan x="10" dy="2.2em">{val}</tspan></text></svg>`;
+		OrgChart.templates['white']['field_0'] = diagramNodeContent;
 
-		const newChart = new OrgChart(myElementRef.current, {
+		const chart = new OrgChart(myElementRef.current, {
 			enableDragDrop: true,
+
 			enableSearch: false,
+
 			nodeBinding: {
 				field_0: 'name',
 			},
+
 			nodeContent: 'title',
+
 			nodeMenu: {
 				addCustom: {
 					icon: addIcon,
+
 					onClick: async (node) => {
 						const newNode = await addNode(
 							node,
+
 							false,
+
 							'New Node',
+
 							templateId
 						);
-						newChart.addNode(newNode);
 
-						newChart.draw(OrgChart.action.init);
+						chart.addNode(newNode);
 
-						setOrgChart((prev) =>
-							prev === newChart ? prev : newChart
-						);
+						chart.draw(OrgChart.action.init);
+
+						setOrgChart((prev) => (prev === chart ? prev : chart));
 
 						return false;
 					},
+
 					text: 'Add',
 				},
 				deleteNode: {
 					icon: removeIcon,
+
 					onClick: async (nodeId) => {
 						const deleteNodeAndChilds = async (nodeId) => {
 							const nodesToBeDeleted = [];
 
 							const deleteNode = (id) => {
-								const node = newChart.getNode(id);
+								const node = chart.getNode(id);
 
 								nodesToBeDeleted.push(node);
 
@@ -185,6 +183,7 @@ const FolderStructureDesigner = ({templateId}) => {
 								) {
 									return;
 								}
+
 								for (
 									let index = 0;
 									index < node.childrenIds.length;
@@ -193,27 +192,30 @@ const FolderStructureDesigner = ({templateId}) => {
 									deleteNode(node.childrenIds[index]);
 								}
 							};
+
 							deleteNode(nodeId);
 
-							const lrNodes = [];
+							const liferayNodes = [];
 
 							nodesToBeDeleted.forEach((item) => {
-								lrNodes.push(newChart.get(item.id));
+								liferayNodes.push(chart.get(item.id));
 
-								newChart.remove(item.id);
+								chart.remove(item.id);
 							});
-							await deleteFolderTemplateBatch(lrNodes);
 
-							newChart.draw(OrgChart.action.init);
+							await deleteFolderTemplateBatch(liferayNodes);
+
+							chart.draw(OrgChart.action.init);
 
 							setOrgChart((prev) =>
-								prev === newChart ? prev : newChart
+								prev === chart ? prev : chart
 							);
 						};
-						if (newChart) {
+
+						if (chart) {
 							if (
 								nodeId.toString() ===
-								newChart.roots[0].id.toString()
+								chart.roots[0].id.toString()
 							) {
 								return false;
 							}
@@ -231,20 +233,28 @@ const FolderStructureDesigner = ({templateId}) => {
 				edit: {
 					icon: editIcon,
 					onClick: (node) => {
-						if (newChart) {
-							const selectedNode = newChart.get(node);
+						if (chart) {
+							const selectedNode = chart.get(node);
 
 							selectedNode.templateID = templateId;
 
-							editNode(
-								newChart,
-								node,
-								templateId,
-								selectedNode.name,
-								selectedNode.description,
-								selectedNode.pid,
-								selectedNode.root
-							);
+							const data = {
+								chart,
+
+								description: selectedNode.description,
+
+								name: selectedNode.name,
+
+								nodeId: node,
+
+								parentID: selectedNode.pid,
+
+								root: selectedNode.root,
+
+								templateID: templateId,
+							};
+
+							editNode(data);
 
 							return true;
 						}
@@ -252,40 +262,53 @@ const FolderStructureDesigner = ({templateId}) => {
 					text: 'Edit',
 				},
 			},
+
 			nodeMouseClick: OrgChart.action.expand,
+
 			template: 'white',
+
 			toolbar: {
 				expandAll: true,
+
 				fit: true,
+
 				layout: false,
+
 				zoom: true,
 			},
 		});
-		newChart.on('drop', (sender, draggedNodeId, droppedNodeId) => {
+		chart.on('drop', (sender, draggedNodeId, droppedNodeId) => {
 			if (draggedNodeId.toString() === '1') {
 				return false;
 			}
-			const node = newChart.get(draggedNodeId);
+			const node = chart.get(draggedNodeId);
 
-			const newParentNode = newChart.get(droppedNodeId);
+			const newParentNode = chart.get(droppedNodeId);
 
-			const lrNode = {
+			const liferayNode = {
 				description: node.description,
+
 				id: node.id,
+
 				name: node.name,
+
 				parentID: newParentNode.id,
+
 				root: node.root,
+
 				templateID: node.templateID,
 			};
-			updateFolderTemplate(node.id, lrNode);
 
-			updateChartNode(newChart, lrNode, false);
+			updateFolderTemplate(node.id, liferayNode);
+
+			updateChartNode(chart, liferayNode, false);
 
 			return false;
 		});
-		setOrgChart((prev) => (prev ? prev : newChart));
 
-		loadTemplateNodes(newChart);
+		setOrgChart((prev) => (prev ? prev : chart));
+
+		loadTemplateNodes(chart);
 	}, [editNode, templateId, loadTemplateNodes, updateChartNode]);
 
 	const editModalRef = useRef();

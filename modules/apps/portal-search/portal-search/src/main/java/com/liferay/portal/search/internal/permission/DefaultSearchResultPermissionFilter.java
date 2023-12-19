@@ -680,14 +680,14 @@ public class DefaultSearchResultPermissionFilter
 				ArrayUtil.toFloatArray(
 					(List<Float>)documentsAndScoresTuple.getObject(1)));
 
-			int updatedLength = Math.max(
-				recalculatedTotalHits, documents.size());
+			int updatedLength = slidingWindowHelper.getTotalDocs();
 
-			if (_timeLimitReached(slidingWindowStopWatch) &&
-				(slidingWindowHelper.getTotalDocs() <
+			if (!_timeLimitReached(slidingWindowStopWatch) ||
+				(slidingWindowHelper.getTotalDocs() >=
 					numberOfTotalDocsNeeded)) {
 
-				updatedLength = slidingWindowHelper.getTotalDocs();
+				updatedLength = Math.max(
+					recalculatedTotalHits, documents.size());
 			}
 
 			hits.setLength(updatedLength);

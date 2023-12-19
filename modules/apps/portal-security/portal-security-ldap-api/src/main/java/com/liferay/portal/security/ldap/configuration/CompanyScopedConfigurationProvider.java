@@ -76,18 +76,17 @@ public abstract class CompanyScopedConfigurationProvider
 
 	@Override
 	public T getConfiguration(long companyId) {
-		ObjectValuePair<Configuration, T> objectValuePair = _configurations.get(
-			companyId);
+		T configurable = _getConfigurationFactoryId(companyId);
 
-		if (objectValuePair == null) {
-			objectValuePair = _configurations.get(CompanyConstants.SYSTEM);
+		if (configurable == null) {
+			configurable = _getConfigurationSystem();
 		}
 
-		if (objectValuePair == null) {
+		if (configurable == null) {
 			return _defaultConfiguration;
 		}
 
-		return objectValuePair.getValue();
+		return configurable;
 	}
 
 	@Override
@@ -256,6 +255,39 @@ public abstract class CompanyScopedConfigurationProvider
 	}
 
 	protected abstract ConfigurationAdmin getConfigurationAdmin();
+
+	private T _getConfigurationFactoryId(long companyId) {
+		ObjectValuePair<Configuration, T> objectValuePair = _configurations.get(
+			companyId);
+
+		T configurable = null;
+
+		if (objectValuePair != null) {
+			configurable = objectValuePair.getValue();
+		}
+
+		return configurable;
+	}
+
+	private T _getConfigurationSystem() {
+		try {
+			Configuration configuration =
+				getConfigurationAdmin().getConfiguration(getMetatypeId(), "?");
+
+			return ConfigurableUtil.createConfigurable(
+				getMetatype(), configuration.getProperties());
+		}
+		catch (IOException ioException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to get configuration for company " +
+						getMetatypeId(),
+					ioException);
+			}
+		}
+
+		return null;
+	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CompanyScopedConfigurationProvider.class);

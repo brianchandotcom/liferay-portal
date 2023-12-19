@@ -186,11 +186,11 @@
 									},
 									{
 										"definition": {
-											"customCSS": ".[$FRAGMENT_CLASS$] { }\n@media screen and (max-width: 991px) {\n.learn-search {\nmargin:0px!important;\n}\n}",
 											"cssClasses": [
 												"learn-search",
 												"pb-5"
 											],
+											"customCSS": ".[$FRAGMENT_CLASS$] { }\n@media screen and (max-width: 991px) {\n.learn-search {\nmargin:0px!important;\n}\n}",
 											"fragmentStyle": {
 												"marginLeft": "9",
 												"marginRight": "9",
@@ -347,7 +347,7 @@
 								"pageElements": [
 									{
 										"definition": {
-											"customCSS": ".component-tabs .navigation-bar-light {\n\tbackground-color: #FFF;\n}\n\n.component-tabs .navigation-bar-light .nav-link.active {\n\tbackground-color: #E6EDFB;\n\tborder-radius: 10px;\n\tmargin: 5px;\n}\n\n.component-tabs .navigation-bar-light .nav-link.active::after {\n\tbackground-color: rgba(0, 0, 0, 0)!important;\n}\n\ndiv.collapse.navbar-collapse {\n\tjustify-content: center;\n\tmargin-bottom: 2rem;\n}\n\nul.navbar-nav {\n\tbackground-color: #F7F7F8;\n\tborder-radius: 10px\n}",
+											"customCSS": ".component-tabs .navigation-bar-light {\nbackground-color: #FFF;\njustify-content: center;\nmargin-bottom: 2rem;\n}\n.component-tabs .navigation-bar-light .nav-link.active {\nbackground-color: #E6EDFB;\nborder-radius: 10px;\nmargin: 5px;\n}\n.component-tabs .navigation-bar-light .nav-link.active::after {\nbackground-color: rgba(0, 0, 0, 0)!important;\n}\ndiv.collapse.navbar-collapse {\njustify-content: center;\n}\ndiv.collapse.navbar-collapse.show {\nalign-items: center;\nbackground-color: rgba(0, 0, 0, 0);\ndisplay: flex;\njustify-content: center;\nmargin-bottom: 2rem;\n}\nul.navbar-nav {\nalign-items: center;\nbackground-color: #F7F7F8;\nborder-radius: 10px;\nwidth: fit-content;\n}",
 											"fragment": {
 												"key": "BASIC_COMPONENT-tabs"
 											},

@@ -1,6 +1,7 @@
 <style>
 	.card-container {
 		height: 150px;
+		min-width: auto!important;
 	}
 
 	.home-card {
@@ -20,6 +21,14 @@
 		min-width: 100%;
 	}
 
+	.responsive-text {
+		display: -webkit-box;
+    	overflow: hidden;
+    	text-overflow: ellipsis;
+    	-webkit-box-orient: vertical;
+    	-webkit-line-clamp: 2;
+	}
+
 	.subtitle {
 		color: #54555F;
 		font-size: small;
@@ -30,7 +39,7 @@
 	}
 </style>
 
-<div class="col-12 m-0 product-cards row">
+<div class="m-0 product-cards row">
 	<#if entries?has_content>
 		<#list entries as navigationEntry>
 			<#assign
@@ -50,11 +59,11 @@
 					</#if>
 
 					<div>
-						<h6 class="title">
+						<h6 class="responsive-text title">
 							${navigationEntry.getName()}
 						</h6>
 
-						<p class="pt-2 subtitle">
+						<p class="pt-2 responsive-text subtitle">
 							${navItemDescription}
 						</p>
 					</div>

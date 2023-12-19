@@ -116,18 +116,7 @@ function AddToCart({
 			}
 
 			if (cart.id) {
-				if (!Liferay.FeatureFlags['COMMERCE-11287']) {
-					CartResource.getItemsByCartId(cart.id).then(({items}) => {
-						const inCart = items.some(
-							({skuId}) => incomingCpInstance.skuId === skuId
-						);
-
-						updateInCartState(inCart);
-					});
-				}
-				else {
-					updateInCartState(cpInstance.inCart);
-				}
+				updateInCartState(cpInstance.inCart);
 			}
 			else {
 				updateInCartState(false);
@@ -216,22 +205,14 @@ function AddToCart({
 	}, [cart.id, cpInstance.skuId, handleCPInstanceReplaced, settings]);
 
 	const spaceDirection = settings.inline ? 'ml' : 'mt';
-	let spacer = settings.size === 'sm' ? 1 : 3;
-
-	if (Liferay.FeatureFlags['COMMERCE-11287']) {
-		spacer = 0;
-	}
+	const spacer = 0;
 
 	return (
 		<div
 			className={classnames({
 				'add-to-cart-wrapper': true,
-				'align-items-center':
-					(settings.alignment === 'full-width' ||
-						settings.alignment === 'center') &&
-					!Liferay.FeatureFlags['COMMERCE-11287'],
-				'align-items-end': Liferay.FeatureFlags['COMMERCE-11287'],
-				'd-flex': !Liferay.FeatureFlags['COMMERCE-11287'],
+				'align-items-end': true,
+				'd-flex': false,
 				'flex-column': !settings.inline,
 			})}
 		>
@@ -239,7 +220,7 @@ function AddToCart({
 				className={classnames({
 					'd-flex': true,
 					'justify-content-center': !settings.showUnitOfMeasureSelector,
-					'mb-3': Liferay.FeatureFlags['COMMERCE-11287'],
+					'mb-3': true,
 				})}
 			>
 				<QuantitySelector
@@ -268,18 +249,17 @@ function AddToCart({
 					unitOfMeasure={cpInstance.skuUnitOfMeasure}
 				/>
 
-				{Liferay.FeatureFlags['COMMERCE-11287'] &&
-					settings.showUnitOfMeasureSelector && (
-						<UnitOfMeasureSelector
-							accountId={account.id}
-							channelId={channel.id}
-							cpInstanceId={cpInstance.skuId}
-							namespace={settings.namespace}
-							productConfiguration={settings.productConfiguration}
-							productId={productId}
-							size={settings.size}
-						/>
-					)}
+				{settings.showUnitOfMeasureSelector && (
+					<UnitOfMeasureSelector
+						accountId={account.id}
+						channelId={channel.id}
+						cpInstanceId={cpInstance.skuId}
+						namespace={settings.namespace}
+						productConfiguration={settings.productConfiguration}
+						productId={productId}
+						size={settings.size}
+					/>
+				)}
 			</div>
 
 			<AddToCartButton

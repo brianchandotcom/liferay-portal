@@ -171,9 +171,7 @@ function CartItem({
 
 	const getClassName = (className) => {
 		return classnames(className, {
-			'mini-cart-item-alignment':
-				Liferay.FeatureFlags['COMMERCE-9599'] ||
-				Liferay.FeatureFlags['COMMERCE-11287'],
+			'mini-cart-item-alignment': true,
 		});
 	};
 
@@ -185,75 +183,40 @@ function CartItem({
 				'is-removed': isRemoved,
 			})}
 		>
-			{Liferay.FeatureFlags['COMMERCE-9599'] ||
-			Liferay.FeatureFlags['COMMERCE-11287'] ? (
-				<div className="mini-cart-item-details position-relative">
-					<a
-						className="h-100 mini-cart-item-anchor position-absolute w-100"
-						data-senna-off="true"
-						href={productPageUrl}
-					>
-						<span className="sr-only">
-							{sub(Liferay.Language.get('go-to-x'), name)}
-						</span>
-					</a>
-
-					{!!adaptiveMediaImageHTMLTag && (
-						<div
-							className="mini-cart-item-thumbnail"
-							dangerouslySetInnerHTML={{
-								__html: adaptiveMediaImageHTMLTag,
-							}}
-						/>
-					)}
-
-					<div
-						className={classnames(
-							'mini-cart-item-info ml-3 w-100',
-							{
-								options: Boolean(options),
-							}
-						)}
-					>
-						<ItemInfoView
-							childItems={childItems}
-							name={name}
-							options={options}
-							replacedSku={replacedSku}
-							sku={sku}
-						/>
-					</div>
-				</div>
-			) : (
+			<div className="mini-cart-item-details position-relative">
 				<a
-					className="mini-cart-item-details"
+					className="h-100 mini-cart-item-anchor position-absolute w-100"
 					data-senna-off="true"
 					href={productPageUrl}
 				>
-					{!!adaptiveMediaImageHTMLTag && (
-						<div
-							className="mini-cart-item-thumbnail"
-							dangerouslySetInnerHTML={{
-								__html: adaptiveMediaImageHTMLTag,
-							}}
-						/>
-					)}
-
-					<div
-						className={classnames('mini-cart-item-info ml-3', {
-							options: Boolean(options),
-						})}
-					>
-						<ItemInfoView
-							childItems={childItems}
-							name={name}
-							options={options}
-							replacedSku={replacedSku}
-							sku={sku}
-						/>
-					</div>
+					<span className="sr-only">
+						{sub(Liferay.Language.get('go-to-x'), name)}
+					</span>
 				</a>
-			)}
+
+				{!!adaptiveMediaImageHTMLTag && (
+					<div
+						className="mini-cart-item-thumbnail"
+						dangerouslySetInnerHTML={{
+							__html: adaptiveMediaImageHTMLTag,
+						}}
+					/>
+				)}
+
+				<div
+					className={classnames('mini-cart-item-info ml-3 w-100', {
+						options: Boolean(options),
+					})}
+				>
+					<ItemInfoView
+						childItems={childItems}
+						name={name}
+						options={options}
+						replacedSku={replacedSku}
+						sku={sku}
+					/>
+				</div>
+			</div>
 
 			<div
 				className={getClassName(
@@ -322,8 +285,7 @@ function CartItem({
 			<div className={getClassName('mini-cart-item-actions')}>
 				{(Liferay.FeatureFlags['COMMERCE-9599'] &&
 					hasOptions(rawOptions)) ||
-				(Liferay.FeatureFlags['COMMERCE-11287'] &&
-					hasSkuUnitOfMeasure) ? (
+				hasSkuUnitOfMeasure ? (
 					<ClayDropDown
 						closeOnClick
 						trigger={

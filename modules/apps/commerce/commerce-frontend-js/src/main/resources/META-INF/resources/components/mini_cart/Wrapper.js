@@ -24,9 +24,7 @@ function Wrapper() {
 		<div className="mini-cart-wrapper">
 			<CartViews.Header />
 
-			{(Liferay.FeatureFlags['COMMERCE-9599'] ||
-				Liferay.FeatureFlags['COMMERCE-11287']) &&
-			editedItem ? (
+			{editedItem ? (
 				<>
 					{editedItem.type === 'uom' ? (
 						<CartViews.EditItemUnitOfMeasure

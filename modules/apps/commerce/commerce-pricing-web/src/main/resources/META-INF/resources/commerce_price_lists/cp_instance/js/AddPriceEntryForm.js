@@ -33,10 +33,7 @@ function AddPriceEntryForm({
 		},
 	]);
 	const inputGroupCounterRef = useRef(0);
-	const hasUnitOfMeasuresRef = useRef(
-		Liferay.FeatureFlags['COMMERCE-11287'] &&
-			!!(unitOfMeasures || []).length
-	);
+	const hasUnitOfMeasuresRef = useRef(!!(unitOfMeasures || []).length);
 
 	const AdminPricingResource = useMemo(
 		() => ServiceProvider.AdminPricingAPI('v2'),

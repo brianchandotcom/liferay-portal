@@ -374,8 +374,11 @@ $btn-size: 28px;
 
 		.logo-selector-default-img,
 		img {
+			height: 100px;
 			max-height: 100px;
 			max-width: 100px;
+			object-fit: cover;
+			width: 100px;
 		}
 
 		.logo-selector-default-img {

@@ -8,8 +8,10 @@ import React from 'react';
 
 import {INFO_PANEL_MODE_MAP} from '../utils/constants';
 import EditAccountInfoPanel from './EditAccountInfoPanel';
+import EditOrganizationInfoPanel from './EditOrganizationInfoPanel';
 import EditUserInfoPanel from './EditUserInfoPanel';
 import ViewAccountInfoPanel from './ViewAccountInfoPanel';
+import ViewOrganizationInfoPanel from './ViewOrganizationInfoPanel';
 import ViewUserInfoPanel from './ViewUserInfoPanel';
 
 function GenericInfoPanel(props) {
@@ -17,6 +19,10 @@ function GenericInfoPanel(props) {
 		account: {
 			edit: EditAccountInfoPanel,
 			view: ViewAccountInfoPanel,
+		},
+		organization: {
+			edit: EditOrganizationInfoPanel,
+			view: ViewOrganizationInfoPanel,
 		},
 		user: {
 			edit: EditUserInfoPanel,

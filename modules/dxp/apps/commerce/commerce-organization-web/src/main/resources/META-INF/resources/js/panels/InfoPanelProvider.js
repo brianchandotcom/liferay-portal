@@ -8,11 +8,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useState} from 'react';
 
-import {
-	INFO_PANEL_MODE_MAP,
-	INFO_PANEL_OPEN_EVENT,
-	MODEL_TYPE_MAP,
-} from '../utils/constants';
+import {INFO_PANEL_MODE_MAP, INFO_PANEL_OPEN_EVENT} from '../utils/constants';
 import GenericInfoPanel from './GenericInfoPanel';
 
 function InfoPanelProvider({namespace, pathImage, selectLogoURL, spritemap}) {
@@ -30,7 +26,7 @@ function InfoPanelProvider({namespace, pathImage, selectLogoURL, spritemap}) {
 	const updatePanelView = useCallback(
 		({data, mode, type}) => {
 			if (mode === INFO_PANEL_MODE_MAP.click) {
-				if (!active || type === MODEL_TYPE_MAP.organization) {
+				if (!active) {
 					return;
 				}
 				mode = INFO_PANEL_MODE_MAP.view;

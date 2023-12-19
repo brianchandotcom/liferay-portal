@@ -19,6 +19,8 @@ export const ACTION_KEYS = {
 		DELETE: 'delete',
 		MOVE: 'update',
 		REMOVE: 'update',
+		UPDATE: 'update',
+		VIEW: 'get',
 	},
 	user: {
 		ADD_ENTITIES: 'update',
@@ -40,6 +42,7 @@ export const COUNTER_KEYS_MAP = {
 };
 export const DEFAULT_IMAGE_PATHS_MAP = {
 	account: '/organization_logo?img_id=0',
+	organization: '/user_portrait?img_id=0',
 	user: '/user_portrait?img_id=0',
 };
 export const DEFAULT_USER_ACCOUNT_FULL_NAME_DEFINITION_FIELDS = [

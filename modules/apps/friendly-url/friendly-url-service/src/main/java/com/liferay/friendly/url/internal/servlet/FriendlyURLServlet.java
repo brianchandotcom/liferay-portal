@@ -354,8 +354,7 @@ public class FriendlyURLServlet extends HttpServlet {
 				}
 				else {
 					List<Layout> layouts = layoutLocalService.getLayouts(
-						group.getGroupId(), _private,
-						LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+						group.getGroupId(), _private);
 
 					for (Layout layout : layouts) {
 						if (layout.matches(

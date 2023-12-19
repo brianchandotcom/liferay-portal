@@ -107,42 +107,50 @@ long[] selectedClassTypePKs = editVocabularySettingsDisplayContext.getSelectedCl
 	<aui:input name="indexes" type="hidden" value="<%= StringUtil.merge(indexes) %>" />
 </liferay-frontend:fieldset>
 
-<aui:script use="liferay-auto-fields">
-	var extraFields = A.one('#<portlet:namespace />extraFields');
+<aui:script require="frontend-js-web/index as frontendJsWeb">
+	let autoFields = null;
 
-	var autoFields = new Liferay.AutoFields({
-		contentBox: '#<portlet:namespace />extraFields',
-		fieldIndexes: '<portlet:namespace />indexes',
-		minimumRows: 1,
-		namespace: '<portlet:namespace />',
-		on: {
-			clone: function (event) {
-				event.row.all('.subtype-select').hide();
+	AUI().use('liferay-auto-fields', (A) => {
+		const extraFields = A.one('#<portlet:namespace />extraFields');
+
+		autoFields = new Liferay.AutoFields({
+			contentBox: '#<portlet:namespace />extraFields',
+			fieldIndexes: '<portlet:namespace />indexes',
+			minimumRows: 1,
+			namespace: '<portlet:namespace />',
+			on: {
+				clone: function (event) {
+					const row = event.row.getDOM();
+
+					row.querySelectorAll('.subtype-select').forEach((child) => {
+						child.classList.add('hide');
+					});
+				},
 			},
-		},
-	}).render();
+		}).render();
 
-	extraFields.setData('autoFieldsInstance', autoFields);
+		extraFields.setData('autoFieldsInstance', autoFields);
+	});
 
-	var form = A.one('#<portlet:namespace />fm');
+	const {delegate} = frontendJsWeb;
 
-	form.delegate(
-		'change',
-		(event) => {
-			var target = event.currentTarget;
+	const form = document.getElementById('<portlet:namespace />fm');
 
-			var row = target.ancestor('.lfr-form-row');
+	delegate(form, 'change', '.vocabulary-asset-type-select', (event) => {
+		const target = event.delegateTarget;
 
-			row.all('.subtype-select').hide();
+		const row = target.closest('.lfr-form-row');
 
-			var select = row.one('[name*=subtype' + target.val() + ']');
+		row.querySelectorAll('.subtype-select').forEach((child) => {
+			child.classList.add('hide');
+		});
 
-			if (select) {
-				select.ancestor('.subtype-select').show();
-			}
+		const select = row.querySelector('[name*=subtype' + target.value + ']');
 
-			autoFields.save(form);
-		},
-		'.vocabulary-asset-type-select'
-	);
+		if (select) {
+			select.closest('.subtype-select').classList.remove('hide');
+		}
+
+		autoFields.save(A.one('#<portlet:namespace />fm'));
+	});
 </aui:script>

@@ -2,7 +2,7 @@ definition {
 
 	@summary = "Default summary"
 	macro addColumnsViaUI(addColumns = null) {
-		LexiconEntry.gotoAdd();
+		Click(locator1 = "Button#PLUS");
 
 		SelectFrame(locator1 = "ObjectCustomViews#VIEW_MODAL_CONTENT");
 

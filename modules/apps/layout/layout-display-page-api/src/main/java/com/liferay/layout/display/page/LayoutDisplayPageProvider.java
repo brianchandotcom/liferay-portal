@@ -28,6 +28,12 @@ public interface LayoutDisplayPageProvider<T> {
 	}
 
 	public default LayoutDisplayPageObjectProvider<T>
+		getLayoutDisplayPageObjectProvider(T t) {
+
+		return null;
+	}
+
+	public default LayoutDisplayPageObjectProvider<T>
 		getParentLayoutDisplayPageObjectProvider(
 			InfoItemReference infoItemReference) {
 

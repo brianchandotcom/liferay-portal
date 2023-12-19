@@ -5,17 +5,17 @@
 
 import {ClayModalProvider} from '@clayui/modal';
 import React from 'react';
+import {ClayIconSpriteContext} from '@clayui/icon';
 
 import TemplateList from './components/template-list/template-list';
-import {ApplicationUtil} from './utils/appUtil';
-
-const spritemap = ApplicationUtil.getDefaultSpriteMap();
 
 function App() {
 	return (
-		<ClayModalProvider spritemap={spritemap}>
-			<TemplateList></TemplateList>
-		</ClayModalProvider>
+		<ClayIconSpriteContext.Provider value={Liferay.Icons.spritemap}>
+			<ClayModalProvider>
+				<TemplateList></TemplateList>
+			</ClayModalProvider>
+		</ClayIconSpriteContext.Provider>
 	);
 }
 

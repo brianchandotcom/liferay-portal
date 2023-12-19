@@ -666,17 +666,17 @@ definition {
 		task ("When I go to the Import/Export Center and order by create date") {
 			ImportExport.openImportExportAdmin();
 
-			ManagementBar.setFilterAndOrder(orderBy = "Create Date");
+			Click(locator1 = "ManagementBar#ORDER_ICON_GENERIC");
 		}
 
-		task ("Then the executions should be ordered by create date in descending order") {
+		task ("Then the executions should be ordered by create date in ascending order") {
 			AssertTextEquals.assertPartialText(
-				key_rowNumber = 1,
+				key_rowNumber = 2,
 				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
 				value1 = "ObjectDefinition Plan Execution");
 
 			AssertTextEquals.assertPartialText(
-				key_rowNumber = 2,
+				key_rowNumber = 1,
 				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
 				value1 = "json_objectDefinition_import_approved");
 		}
@@ -685,12 +685,12 @@ definition {
 			ManagementBar.toggleViewOrder();
 
 			AssertTextEquals.assertPartialText(
-				key_rowNumber = 1,
+				key_rowNumber = 2,
 				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
 				value1 = "json_objectDefinition_import_approved");
 
 			AssertTextEquals.assertPartialText(
-				key_rowNumber = 2,
+				key_rowNumber = 1,
 				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
 				value1 = "ObjectDefinition Plan Execution");
 		}

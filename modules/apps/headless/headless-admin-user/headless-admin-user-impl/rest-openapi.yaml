@@ -362,6 +362,11 @@ components:
                     format: uri
                     readOnly: true
                     type: string
+                imageId:
+                    description:
+                        The organization's image id.
+                    format: int64
+                    type: integer
                 keywords:
                     description:
                         A list of keywords describing the organization.
@@ -378,6 +383,11 @@ components:
                                 The organization's country. This follows the
                                 [`addressCountry`](https://schema.org/addressCountry) specification.
                             type: string
+                        addressCountryCode:
+                            description:
+                                The organization's country isocode.
+                            readOnly: true
+                            type: string
                         addressCountry_i18n:
                             additionalProperties:
                                 type: string
@@ -386,6 +396,11 @@ components:
                             description:
                                 The organization's region. This follows the
                                 [`addressRegion`](https://schema.org/addressRegion) specification.
+                            type: string
+                        addressRegionCode:
+                            description:
+                                The organization's region code.
+                            readOnly: true
                             type: string
                         id:
                             description:

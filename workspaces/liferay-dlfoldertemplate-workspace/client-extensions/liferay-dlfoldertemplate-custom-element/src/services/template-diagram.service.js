@@ -6,16 +6,17 @@
 import axios from 'axios';
 
 import {ApplicationUtil} from '../utils/appUtil';
+import {config} from '../utils/constants';
 
 export async function getAvailableTemplatesNodesPage(templateID) {
 	const requestConfig = {
 		headers: {
-			'x-csrf-token': ApplicationUtil.getLiferay().authToken,
+			'x-csrf-token': Liferay.authToken,
 		},
 		maxBodyLength: Infinity,
 		method: 'get',
 		url: `${ApplicationUtil.getHostUrl()}/${
-			ApplicationUtil.getConfig().templateNodeApi
+			config.templateNodeApi
 		}?page=0&filter=templateID eq ${templateID}`,
 	};
 	const prom = new Promise((resolve, reject) => {
@@ -65,12 +66,12 @@ export async function updateFolderTemplate(nodeId, FolderTemplate) {
 	const requestConfig = {
 		data: FolderTemplate,
 		headers: {
-			'x-csrf-token': ApplicationUtil.getLiferay().authToken,
+			'x-csrf-token': Liferay.authToken,
 		},
 		maxBodyLength: Infinity,
 		method: 'patch',
 		url: `${ApplicationUtil.getHostUrl()}/${
-			ApplicationUtil.getConfig().templateNodeApi
+			config.templateNodeApi
 		}/${nodeId}`,
 	};
 	const prom = new Promise((resolve, reject) => {
@@ -90,13 +91,11 @@ export async function postFolderTemplate(FolderTemplate) {
 	const requestConfig = {
 		data: FolderTemplate,
 		headers: {
-			'x-csrf-token': ApplicationUtil.getLiferay().authToken,
+			'x-csrf-token': Liferay.authToken,
 		},
 		maxBodyLength: Infinity,
 		method: 'post',
-		url: `${ApplicationUtil.getHostUrl()}/${
-			ApplicationUtil.getConfig().templateNodeApi
-		}`,
+		url: `${ApplicationUtil.getHostUrl()}/${config.templateNodeApi}`,
 	};
 	const prom = new Promise((resolve, reject) => {
 		axios
@@ -115,13 +114,11 @@ export async function deleteFolderTemplateBatch(data) {
 	const requestConfig = {
 		data,
 		headers: {
-			'x-csrf-token': ApplicationUtil.getLiferay().authToken,
+			'x-csrf-token': Liferay.authToken,
 		},
 		maxBodyLength: Infinity,
 		method: 'delete',
-		url: `${ApplicationUtil.getHostUrl()}/${
-			ApplicationUtil.getConfig().templateNodeApi
-		}/batch`,
+		url: `${ApplicationUtil.getHostUrl()}/${config.templateNodeApi}/batch`,
 	};
 	const prom = new Promise((resolve, reject) => {
 		axios
@@ -139,12 +136,12 @@ export async function deleteFolderTemplateBatch(data) {
 export async function deleteFolderTemplate(nodeId) {
 	const requestConfig = {
 		headers: {
-			'x-csrf-token': ApplicationUtil.getLiferay().authToken,
+			'x-csrf-token': Liferay.authToken,
 		},
 		maxBodyLength: Infinity,
 		method: 'delete',
 		url: `${ApplicationUtil.getHostUrl()}/${
-			ApplicationUtil.getConfig().templateNodeApi
+			config.templateNodeApi
 		}/${nodeId}`,
 	};
 	const prom = new Promise((resolve, reject) => {

@@ -22,7 +22,7 @@ definition {
 
 	@summary = "Add a Job Scheduler Trigger"
 	macro addScheduleTrigger(triggerName = null, triggerProperties = null, taskExecutorType = null) {
-		Click(locator1 = "Button#NEW");
+		Click(locator1 = "Button#PLUS");
 
 		MenuItem.click(menuItem = ${taskExecutorType});
 

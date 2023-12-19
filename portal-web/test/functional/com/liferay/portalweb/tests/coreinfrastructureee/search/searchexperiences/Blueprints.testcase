@@ -5544,7 +5544,7 @@ definition {
 				{
 					"fields": [
 						{
-							"defaultValue": [
+							"fieldMappings": [
 								{
 									"field": "localized_title",
 									"locale": "hu_HU"
@@ -5632,7 +5632,7 @@ definition {
 				{
 					"fields": [
 						{
-							"defaultValue": [
+							"fieldMappings": [
 								{
 									"field": "localized_title",
 									"locale": "hu_HU"

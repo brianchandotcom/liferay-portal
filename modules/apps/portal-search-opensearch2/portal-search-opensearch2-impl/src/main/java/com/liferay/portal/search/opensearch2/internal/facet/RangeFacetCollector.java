@@ -43,13 +43,14 @@ public class RangeFacetCollector implements FacetCollector {
 	protected TermCollectorHolder getTermCollectorHolder(
 		Buckets<RangeBucket> buckets) {
 
-		List<RangeBucket> bucketsList = buckets.array();
+		List<RangeBucket> rangeBuckets = buckets.array();
 
 		TermCollectorHolder termCollectorHolder = new TermCollectorHolder(
-			bucketsList.size());
+			rangeBuckets.size());
 
-		for (RangeBucket bucket : bucketsList) {
-			termCollectorHolder.add(bucket.key(), (int)bucket.docCount());
+		for (RangeBucket rangeBucket : rangeBuckets) {
+			termCollectorHolder.add(
+				rangeBucket.key(), (int)rangeBucket.docCount());
 		}
 
 		return termCollectorHolder;

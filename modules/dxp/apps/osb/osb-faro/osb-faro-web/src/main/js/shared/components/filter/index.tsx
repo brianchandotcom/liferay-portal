@@ -1,7 +1,6 @@
 import AppliedFilters from 'shared/components/filter/AppliedFilters';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
-import dom from 'metal-dom';
 import DropdownMenu from 'shared/components/filter/DropdownMenu';
 import React, {useEffect, useRef, useState} from 'react';
 import remove from 'lodash/remove';
@@ -35,12 +34,10 @@ const Filter: React.FC<IFilterProps> = ({
 	const _elementRef = useRef(null);
 
 	useEffect(() => {
-		const documentClickHandler = dom.on(document, 'click', handleDocClick);
+		document.addEventListener('click', handleDocClick);
 
 		return () => {
-			if (documentClickHandler) {
-				documentClickHandler.removeListener();
-			}
+			document.removeEventListener('click', handleDocClick);
 		};
 	}, []);
 

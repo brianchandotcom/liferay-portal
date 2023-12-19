@@ -39,6 +39,10 @@ public class OpenGitHubPullRequestEventHandler
 		_commentAutoCommentMessage();
 		_commentBroadcastMessage();
 
+		if (_checkForwardedPullRequest()) {
+			return null;
+		}
+
 		_invokeJobEntities();
 
 		return String.valueOf(getMessageJSONObject());
@@ -48,6 +52,40 @@ public class OpenGitHubPullRequestEventHandler
 		EventHandlerContext eventHandlerContext, JSONObject messageJSONObject) {
 
 		super(eventHandlerContext, messageJSONObject);
+	}
+
+	private boolean _checkForwardedPullRequest()
+		throws InvalidJSONException, IOException {
+
+		GitHubPullRequest gitHubPullRequest = getGitHubPullRequest();
+
+		if (gitHubPullRequest == null) {
+			return false;
+		}
+
+		String body = gitHubPullRequest.getBody();
+		GitHubUser receiverGitHubUser =
+			gitHubPullRequest.getReceiverGitHubUser();
+		GitHubUser senderGitHubUser = gitHubPullRequest.getSenderGitHubUser();
+
+		if (body.startsWith("Forwarded from:") &&
+			Objects.equals(
+				receiverGitHubUser.getName(),
+				getJenkinsBranchBuildPropertyValue(
+					"ci.forward.default.receiver.username")) &&
+			Objects.equals(
+				senderGitHubUser.getName(),
+				getJenkinsBranchBuildPropertyValue("github.ci.username"))) {
+
+			gitHubPullRequest.comment(
+				StringUtil.combine(
+					"To conserve resources, the PR Tester does not ",
+					"automatically run for forwarded pull requests."));
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private void _commentAutoCommentMessage()

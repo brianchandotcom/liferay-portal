@@ -91,6 +91,10 @@ public class GitHubPullRequest {
 		return _baseGitHubRepository.getName();
 	}
 
+	public String getBody() {
+		return _jsonObject.getString("body");
+	}
+
 	public URL getCommentsURL() {
 		return StringUtil.toURL(_jsonObject.getString("comments_url"));
 	}

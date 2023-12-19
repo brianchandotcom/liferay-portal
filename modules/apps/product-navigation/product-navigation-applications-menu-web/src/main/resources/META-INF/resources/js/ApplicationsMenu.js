@@ -51,8 +51,11 @@ const SitesPanel = ({portletNamespace, sites, virtualInstance}) => {
 						className="applications-menu-nav-link applications-menu-virtual-instance d-inline-flex"
 						href={virtualInstance.url}
 					>
-						<ClayLayout.ContentRow verticalAlign="center">
-							<ClayLayout.ContentCol>
+						<ClayLayout.ContentRow
+							containerElement="span"
+							verticalAlign="center"
+						>
+							<ClayLayout.ContentCol containerElement="span">
 								<ClaySticker>
 									<img
 										alt=""
@@ -62,7 +65,10 @@ const SitesPanel = ({portletNamespace, sites, virtualInstance}) => {
 								</ClaySticker>
 							</ClayLayout.ContentCol>
 
-							<ClayLayout.ContentCol className="applications-menu-shrink c-ml-2">
+							<ClayLayout.ContentCol
+								className="applications-menu-shrink c-ml-2"
+								containerElement="span"
+							>
 								<span className="text-truncate">
 									{virtualInstance.label}
 								</span>
@@ -97,8 +103,11 @@ const Site = ({current, label, logoURL, showDivider = false, url}) => {
 	return (
 		<li className="c-mt-3">
 			<a className="applications-menu-nav-link d-inline-flex" href={url}>
-				<ClayLayout.ContentRow verticalAlign="center">
-					<ClayLayout.ContentCol>
+				<ClayLayout.ContentRow
+					containerElement="span"
+					verticalAlign="center"
+				>
+					<ClayLayout.ContentCol containerElement="span">
 						<ClaySticker size="sm">
 							{logoURL ? (
 								<img alt="" height="20px" src={logoURL} />
@@ -108,12 +117,18 @@ const Site = ({current, label, logoURL, showDivider = false, url}) => {
 						</ClaySticker>
 					</ClayLayout.ContentCol>
 
-					<ClayLayout.ContentCol className="applications-menu-shrink c-ml-2">
+					<ClayLayout.ContentCol
+						className="applications-menu-shrink c-ml-2"
+						containerElement="span"
+					>
 						<span className="text-truncate">{label}</span>
 					</ClayLayout.ContentCol>
 
 					{current && (
-						<ClayLayout.ContentCol className="c-ml-2">
+						<ClayLayout.ContentCol
+							className="c-ml-2"
+							containerElement="span"
+						>
 							<ClayLabel displayType="info">
 								{Liferay.Language.get('current')}
 							</ClayLabel>

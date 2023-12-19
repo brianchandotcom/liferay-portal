@@ -48,7 +48,7 @@ const SitesPanel = ({portletNamespace, sites, virtualInstance}) => {
 			<div className="c-mt-2">
 				{virtualInstance && (
 					<a
-						className="applications-menu-nav-link applications-menu-virtual-instance"
+						className="applications-menu-nav-link applications-menu-virtual-instance d-inline-flex"
 						href={virtualInstance.url}
 					>
 						<ClayLayout.ContentRow verticalAlign="center">
@@ -72,7 +72,7 @@ const SitesPanel = ({portletNamespace, sites, virtualInstance}) => {
 				)}
 			</div>
 
-			<div className="applications-menu-nav-divider c-my-3"></div>
+			<div className="applications-menu-nav-divider c-my-2"></div>
 
 			<div className="applications-menu-sites c-my-2">
 				<ul
@@ -96,7 +96,7 @@ const SitesPanel = ({portletNamespace, sites, virtualInstance}) => {
 const Site = ({current, label, logoURL, showDivider = false, url}) => {
 	return (
 		<li className="c-mt-3">
-			<a className="applications-menu-nav-link" href={url}>
+			<a className="applications-menu-nav-link d-inline-flex" href={url}>
 				<ClayLayout.ContentRow verticalAlign="center">
 					<ClayLayout.ContentCol>
 						<ClaySticker size="sm">
@@ -124,7 +124,7 @@ const Site = ({current, label, logoURL, showDivider = false, url}) => {
 
 			{showDivider ? (
 				<div
-					className="applications-menu-nav-divider c-mt-3"
+					className="applications-menu-nav-divider c-mt-2"
 					role="separator"
 				/>
 			) : null}

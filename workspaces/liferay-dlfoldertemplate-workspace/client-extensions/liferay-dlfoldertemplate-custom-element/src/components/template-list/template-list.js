@@ -217,6 +217,7 @@ const TemplateList = () => {
 							<ClayButtonGroup spaced={true}>
 								<ClayButtonWithIcon
 									aria-label="Reload"
+									className="lfr-portal-tooltip"
 									displayType="secondary"
 									onClick={() => {
 										reload();
@@ -227,6 +228,7 @@ const TemplateList = () => {
 								/>
 								<ClayButtonWithIcon
 									aria-label="Create New"
+									className="lfr-portal-tooltip"
 									displayType="primary"
 									onClick={() => {
 										openNewItemModal();
@@ -275,6 +277,7 @@ const TemplateList = () => {
 											>
 												<ClayButtonWithIcon
 													aria-label="Create Folder Structure"
+													className="lfr-portal-tooltip"
 													displayType="default"
 													onClick={() => {
 														openCreateFolderModal(
@@ -291,6 +294,7 @@ const TemplateList = () => {
 												</ClayButtonWithIcon>
 												<ClayButtonWithIcon
 													aria-label="Design Template"
+													className="lfr-portal-tooltip"
 													displayType="default"
 													onClick={() => {
 														openDesignerModal(row);
@@ -305,6 +309,7 @@ const TemplateList = () => {
 												</ClayButtonWithIcon>
 												<ClayButtonWithIcon
 													aria-label="Delete Template"
+													className="lfr-portal-tooltip"
 													displayType="default"
 													onClick={() => {
 														confirmDeleteItemModal(

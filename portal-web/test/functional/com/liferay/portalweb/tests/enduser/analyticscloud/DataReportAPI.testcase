@@ -936,6 +936,8 @@ definition {
 	@description = "Feature ID: LRAC-12919 | Automation ID: LRAC-13492 | Test Summary: Check that you can access the activities of a specific individual"
 	@priority = 3
 	test RequestToAccessDataForSpecificIndividual {
+		property test.run.type = "single";
+
 		var type = "individuals";
 		var usernameList = "analytics,cloud";
 		var emailList = "analytics@liferay.com,cloud@liferay.com";

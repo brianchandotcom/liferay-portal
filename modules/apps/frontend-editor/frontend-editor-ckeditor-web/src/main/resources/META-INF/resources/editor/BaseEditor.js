@@ -64,25 +64,34 @@ const BaseEditor = forwardRef(
 		}, []);
 
 		useEffect(() => {
-			if (!config.editorConfigTransformerURLs) {
+			if (!initialConfig.editorConfigTransformerURLs) {
 				return;
 			}
 
 			loadClientExtensions([
 				{
-					clientExtensionDefinitions: config.editorConfigTransformerURLs.map(
+					clientExtensionDefinitions: initialConfig.editorConfigTransformerURLs.map(
 						(url) => ({
 							importDeclaration: `default from ${url}`,
 						})
 					),
 					onLoad: (bindingContexts) => {
-						let transformedConfig = config;
+						let transformedConfig = initialConfig;
 
 						bindingContexts.forEach(
-							({binding: editorConfigTransformer}) => {
-								transformedConfig = editorConfigTransformer(
-									transformedConfig
-								);
+							({binding: editorConfigTransformer, error}) => {
+								if (
+									process.env.NODE_ENV === 'development' &&
+									error
+								) {
+									console.error(error);
+								}
+
+								if (editorConfigTransformer) {
+									transformedConfig = editorConfigTransformer(
+										transformedConfig
+									);
+								}
 							}
 						);
 
@@ -92,7 +101,7 @@ const BaseEditor = forwardRef(
 					},
 				},
 			]);
-		}, [config]);
+		}, [initialConfig]);
 
 		const getHTML = useCallback(() => {
 			let data = contents;

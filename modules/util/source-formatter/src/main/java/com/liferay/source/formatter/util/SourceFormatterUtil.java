@@ -328,14 +328,17 @@ public class SourceFormatterUtil {
 		return suppressionsFiles;
 	}
 
-	public static List<String> matchFileContents(
-		List<String> argList, String baseDirName, String[] includes) {
+	public static List<String> matchFileContentsForFileNames(
+		List<String> args, String baseDirName, String[] includes) {
 
-		if (ArrayUtil.isEmpty(includes)) {
-			return new ArrayList<>();
-		}
+		List<String> allArgs = new ArrayList<>();
 
-		return _matchFileContents(argList, baseDirName, includes);
+		allArgs.add("grep");
+		allArgs.add("--untracked");
+		allArgs.add("-l");
+		allArgs.addAll(args);
+
+		return _matchFileContentsForFileNames(allArgs, baseDirName, includes);
 	}
 
 	public static void printError(String fileName, File file) {
@@ -666,14 +669,8 @@ public class SourceFormatterUtil {
 		return _untrackedFileNames;
 	}
 
-	private static List<String> _matchFileContents(
-		List<String> argList, String baseDirName, String[] includes) {
-
-		List<String> args = new ArrayList<>();
-
-		args.add("grep");
-
-		args.addAll(argList);
+	private static List<String> _matchFileContentsForFileNames(
+		List<String> args, String baseDirName, String[] includes) {
 
 		List<String> allArgs = new ArrayList<>(args);
 

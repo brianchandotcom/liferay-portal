@@ -54,20 +54,21 @@ public class OpenSearchSortFieldTranslator
 			SortOptionsBuilders.field();
 
 		builder.field(fieldSort.getField());
-		builder.order(translateSortOrder(fieldSort.getSortOrder()));
-		builder.unmappedType(FieldType.Keyword);
 
 		if (fieldSort.getMissing() != null) {
 			builder.missing(FieldValue.of((long)fieldSort.getMissing()));
+		}
+
+		if (fieldSort.getSortMode() != null) {
+			builder.mode(translateSortMode(fieldSort.getSortMode()));
 		}
 
 		if (fieldSort.getNestedSort() != null) {
 			builder.nested(translateNestedSort(fieldSort.getNestedSort()));
 		}
 
-		if (fieldSort.getSortMode() != null) {
-			builder.mode(translateSortMode(fieldSort.getSortMode()));
-		}
+		builder.order(translateSortOrder(fieldSort.getSortOrder()));
+		builder.unmappedType(FieldType.Keyword);
 
 		return SortOptions.of(
 			sortOptions -> sortOptions.field(builder.build()));

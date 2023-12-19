@@ -857,6 +857,7 @@ public class UserManagerImpl implements UserManager {
 		Calendar calendar = Calendar.getInstance();
 
 		calendar.setTime(date);
+
 		calendar.set(Calendar.MILLISECOND, 0);
 
 		return calendar.getTime();

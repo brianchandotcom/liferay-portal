@@ -144,7 +144,7 @@ public class UserResourceTest extends BaseUserResourceTestCase {
 		assertEquals(
 			postUser1, _getUser(String.valueOf(portalUser1.getUserId())));
 
-		// Provision an existent User with no Scim Client Id set
+		// Provision an existing user with no SCIM client ID set
 
 		com.liferay.portal.kernel.model.User portalUser2 =
 			UserTestUtil.addUser();
@@ -166,7 +166,7 @@ public class UserResourceTest extends BaseUserResourceTestCase {
 			postUser2.getExternalId(),
 			updatedPortalUser2.getExternalReferenceCode());
 
-		// Provision an existent inactive User with no Scim Client Id set
+		// Provision an existing inactive user with no SCIM client ID set
 
 		updatedPortalUser2 = _userLocalService.updateStatus(
 			updatedPortalUser2.getUserId(), WorkflowConstants.STATUS_INACTIVE,
@@ -183,7 +183,7 @@ public class UserResourceTest extends BaseUserResourceTestCase {
 
 		Assert.assertTrue(updatedPortalUser2.isActive());
 
-		// Provision an existent User provided by another Scim Client
+		// Provision an existing user provided by another SCIM client
 
 		com.liferay.portal.kernel.model.User portalUser3 =
 			UserTestUtil.addUser();
@@ -338,11 +338,12 @@ public class UserResourceTest extends BaseUserResourceTestCase {
 		return User.toDTO(userObject.toString());
 	}
 
-	private void _saveSCIMClientId(com.liferay.portal.kernel.model.User user)
+	private void _saveSCIMClientId(
+			com.liferay.portal.kernel.model.User portalUser)
 		throws Exception {
 
 		ExpandoTable expandoTable = _expandoTableLocalService.getTable(
-			user.getCompanyId(),
+			portalUser.getCompanyId(),
 			_classNameLocalService.getClassNameId(
 				com.liferay.portal.kernel.model.User.class.getName()),
 			ExpandoTableConstants.DEFAULT_TABLE_NAME);
@@ -351,10 +352,10 @@ public class UserResourceTest extends BaseUserResourceTestCase {
 			expandoTable.getTableId(), "scimClientId");
 
 		_expandoValueLocalService.addValue(
-			user.getCompanyId(),
+			portalUser.getCompanyId(),
 			com.liferay.portal.kernel.model.User.class.getName(),
 			ExpandoTableConstants.DEFAULT_TABLE_NAME, expandoColumn.getName(),
-			user.getUserId(), RandomTestUtil.randomString());
+			portalUser.getUserId(), RandomTestUtil.randomString());
 	}
 
 	private static String _pid;

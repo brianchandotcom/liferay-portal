@@ -14,7 +14,6 @@ import com.liferay.jethr0.event.github.repository.GitHubRepository;
 import com.liferay.jethr0.event.github.user.GitHubUser;
 import com.liferay.jethr0.util.StringUtil;
 
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import java.util.ArrayList;
@@ -101,6 +100,18 @@ public class GitHubPullRequest {
 		return _jsonObject.getString("body");
 	}
 
+	public GitHubFile getCIMergeGitHubFile() {
+		for (GitHubFile gitHubFile : getGitHubFiles()) {
+			String gitHubFileName = gitHubFile.getName();
+
+			if (gitHubFileName.endsWith("/ci-merge")) {
+				return gitHubFile;
+			}
+		}
+
+		return null;
+	}
+
 	public URL getCommentsURL() {
 		return StringUtil.toURL(_jsonObject.getString("comments_url"));
 	}
@@ -113,7 +124,7 @@ public class GitHubPullRequest {
 		return _gitHubFactory.getGitHubClient();
 	}
 
-	public List<GitHubFile> getGitHubFiles() throws MalformedURLException {
+	public List<GitHubFile> getGitHubFiles() {
 		if (_gitHubFiles != null) {
 			return _gitHubFiles;
 		}
@@ -131,6 +142,18 @@ public class GitHubPullRequest {
 		}
 
 		return _gitHubFiles;
+	}
+
+	public String getGitRepoFilePath() {
+		GitHubFile ciMergeGitHubFile = getCIMergeGitHubFile();
+
+		if (ciMergeGitHubFile == null) {
+			return null;
+		}
+
+		String ciMergeGitHubFileName = ciMergeGitHubFile.getName();
+
+		return ciMergeGitHubFileName.replaceAll("/ci-merge", ".gitrepo");
 	}
 
 	public String getHeadBranchName() {
@@ -177,6 +200,16 @@ public class GitHubPullRequest {
 			StringUtil.combine(
 				"https://github.com/liferay/", getBaseRepositoryName(),
 				"/tree/", getBaseBranchName()));
+	}
+
+	public boolean isMergeSubrepositoryPullRequest() {
+		GitHubFile ciMergeGitHubFile = getCIMergeGitHubFile();
+
+		if (ciMergeGitHubFile != null) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public void lock() {

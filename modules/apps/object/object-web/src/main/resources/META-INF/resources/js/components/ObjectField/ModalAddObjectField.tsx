@@ -46,7 +46,7 @@ export function ModalAddObjectField({
 		[]
 	);
 	const {observer, onClose} = useModal({onClose: () => setVisibility(false)});
-
+	const formId = 'modalAddObjectField';
 	const initialValues: Partial<ObjectField> = {
 		indexed: true,
 		indexedAsKeyword: false,
@@ -149,12 +149,12 @@ export function ModalAddObjectField({
 		<ClayModalProvider>
 			<ClayTooltipProvider>
 				<ClayModal center observer={observer}>
-					<ClayForm onSubmit={handleSubmit}>
-						<ClayModal.Header>
-							{Liferay.Language.get('new-field')}
-						</ClayModal.Header>
+					<ClayModal.Header>
+						{Liferay.Language.get('new-field')}
+					</ClayModal.Header>
 
-						<ClayModal.Body>
+					<ClayModal.Body>
+						<ClayForm id={formId} onSubmit={handleSubmit}>
 							{error && (
 								<ClayAlert displayType="danger">
 									{error}
@@ -236,25 +236,25 @@ export function ModalAddObjectField({
 									values={values}
 								/>
 							)}
-						</ClayModal.Body>
+						</ClayForm>
+					</ClayModal.Body>
 
-						<ClayModal.Footer
-							last={
-								<ClayButton.Group spaced>
-									<ClayButton
-										displayType="secondary"
-										onClick={() => onClose()}
-									>
-										{Liferay.Language.get('cancel')}
-									</ClayButton>
+					<ClayModal.Footer
+						last={
+							<ClayButton.Group spaced>
+								<ClayButton
+									displayType="secondary"
+									onClick={() => onClose()}
+								>
+									{Liferay.Language.get('cancel')}
+								</ClayButton>
 
-									<ClayButton type="submit">
-										{Liferay.Language.get('save')}
-									</ClayButton>
-								</ClayButton.Group>
-							}
-						/>
-					</ClayForm>
+								<ClayButton form={formId} type="submit">
+									{Liferay.Language.get('save')}
+								</ClayButton>
+							</ClayButton.Group>
+						}
+					/>
 				</ClayModal>
 			</ClayTooltipProvider>
 		</ClayModalProvider>

@@ -476,7 +476,7 @@
 </tr>
 <tr>
 	<td>ADD_MEMBERS_SORT_BUTTON</td>
-	<td>//button[contains(@class,'button-root btn btn-unstyled nav-link')]</td>
+	<td>//button[contains(@class,'nav-link-monospaced')]</td>
 	<td></td>
 </tr>
 <tr>

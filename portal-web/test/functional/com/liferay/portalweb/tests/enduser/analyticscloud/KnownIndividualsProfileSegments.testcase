@@ -300,16 +300,16 @@ definition {
 				name = "Static Segment Test1");
 		}
 
-		task ("Go to Segments and filter by "Membership"") {
+		task ("Go to Segments and filter by "Date Created"") {
 			ACSegments.filterAndOrderForSegLists(
-				filterName = "Members",
+				filterName = "Date Created",
 				key_dropdownName = "Order");
 		}
 
-		task ("Assert 3 segments in order filter by membership display") {
+		task ("Assert 3 segments in order filter by date created display") {
 			ACUtils.viewNameListInOrder(
 				index = 1,
-				name = "Static Segment Test1");
+				name = "Static Segment Test3");
 
 			ACUtils.viewNameListInOrder(
 				index = 2,
@@ -317,17 +317,17 @@ definition {
 
 			ACUtils.viewNameListInOrder(
 				index = 3,
-				name = "Static Segment Test3");
+				name = "Static Segment Test1");
 		}
 
-		task ("Check descending arrow descending of table title of Membership") {
+		task ("Check descending arrow descending of the Date Created column") {
 			ACUtils.orderTableTitleArrow(type = "up");
 		}
 
-		task ("Assert 3 segments in order filter by membership display") {
+		task ("Assert 3 segments in order filter by date created display") {
 			ACUtils.viewNameListInOrder(
 				index = 1,
-				name = "Static Segment Test3");
+				name = "Static Segment Test1");
 
 			ACUtils.viewNameListInOrder(
 				index = 2,
@@ -335,7 +335,7 @@ definition {
 
 			ACUtils.viewNameListInOrder(
 				index = 3,
-				name = "Static Segment Test1");
+				name = "Static Segment Test3");
 		}
 	}
 

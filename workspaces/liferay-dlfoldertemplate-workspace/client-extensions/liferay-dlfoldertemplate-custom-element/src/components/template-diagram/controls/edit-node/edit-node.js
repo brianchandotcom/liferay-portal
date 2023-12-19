@@ -17,14 +17,14 @@ import {ApplicationUtil} from '../../../../utils/appUtil';
 
 const EditNode = ({
 	chart,
-	onClose,
 	description,
 	name,
 	nodeId,
+	onClose,
+	onNodeUpdate,
 	parentID,
 	root,
 	templateID,
-	onNodeUpdate,
 }) => {
 	const [form] = Form.useForm();
 

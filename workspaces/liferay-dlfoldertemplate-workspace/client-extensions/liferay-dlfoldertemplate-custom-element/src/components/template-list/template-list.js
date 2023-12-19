@@ -7,7 +7,7 @@ import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayButtonGroup from '@clayui/button/lib/Group';
 import {Body, Cell, Head, Row, Table} from '@clayui/core';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import {Context} from '@clayui/modal';
+import {Context as ModalContext} from '@clayui/modal';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import ClayToolbar from '@clayui/toolbar';
 import moment from 'moment';
@@ -24,73 +24,68 @@ import {
 	getAvailableTemplatesPage,
 } from '../../services/template-list.service';
 
+const DELTAS = [{label: 5}, {label: 10}, {label: 20}, {label: 40}];
+
+const MODAL_OPEN = 'OPEN';
+
+const HEADERS = [
+	{
+		expanded: false,
+		key: 'id',
+		label: 'ID',
+		wrap: false,
+	},
+	{
+		expanded: true,
+		key: 'templateName',
+		label: 'Template Name',
+		wrap: false,
+	},
+	{
+		expanded: false,
+		key: 'dateCreated',
+		label: 'Created Date',
+		wrap: false,
+	},
+	{
+		expanded: false,
+		key: 'actions',
+		label: '',
+		wrap: false,
+	},
+];
+
 const TemplateList = () => {
 	const [data, setData] = useState([]);
-
 	const [totalItems, setTotalItems] = useState(0);
-
 	const [pageIndex, setPageIndex] = useState(1);
-
 	const [delta, setDelta] = useState(5);
 
-	const deltas = [{label: 5}, {label: 10}, {label: 20}, {label: 40}];
-
-	const [state, dispatch] = useContext(Context);
+	const [modalState, dispatchModal] = useContext(ModalContext);
 
 	const [isDeletingLoading, setIsDeletingLoading] = useState(false);
 
-	const Headers = [
-		{
-			expanded: false,
-			key: 'id',
-			label: 'ID',
-			wrap: false,
-		},
-		{
-			expanded: true,
-			key: 'templateName',
-			label: 'Template Name',
-			wrap: false,
-		},
-		{
-			expanded: false,
-			key: 'dateCreated',
-			label: 'Created Date',
-			wrap: false,
-		},
-		{
-			expanded: false,
-			key: 'actions',
-			label: '',
-			wrap: false,
-		},
-	];
-
 	const openDesignerModal = (template) => {
-		dispatch({
+		dispatchModal({
 			payload: {
 				body: <FolderStructureDesigner templateId={template.id} />,
-				footer: [],
 				header: 'Design Template',
 				size: 'full-screen',
-				status: 'info',
 			},
-			type: 1,
+			type: MODAL_OPEN,
 		});
 	};
 
 	const openCreateFolderModal = (template) => {
 		try {
-			dispatch({
+			dispatchModal({
 				payload: {
 					body: <TemplateItemCreateFolder templateID={template.id} />,
-					center: 'middle',
-					footer: [],
+					center: true,
 					header: 'Create Folder Structure',
 					size: 'lg',
-					status: 'info',
 				},
-				type: 1,
+				type: MODAL_OPEN,
 			});
 		}
 		catch (exp) {
@@ -99,16 +94,14 @@ const TemplateList = () => {
 	};
 
 	const openNewItemModal = () => {
-		dispatch({
+		dispatchModal({
 			payload: {
 				body: <NewTemplateItem onClose={closeNewItemModal} />,
-				center: 'middle',
-				footer: [],
+				center: true,
 				header: 'Create Folder Template',
 				size: 'lg',
-				status: 'info',
 			},
-			type: 1,
+			type: MODAL_OPEN,
 		});
 	};
 
@@ -122,21 +115,20 @@ const TemplateList = () => {
 
 			reload();
 
-			state.onClose();
+			modalState.onClose();
 		};
 
-		dispatch({
+		dispatchModal({
 			payload: {
 				body:
 					'Deleting an Template also removes its entries. This action is permanent and cannot be undone.',
-				center: 'middle',
+				center: true,
 				footer: [
-					'',
-					'',
+					,
+					,
 					<ClayButton
 						disabled={isDeletingLoading}
 						displayType="danger"
-						key={3}
 						onClick={() => {
 							deleteTemplate();
 						}}
@@ -154,16 +146,18 @@ const TemplateList = () => {
 				size: 'lg',
 				status: 'danger',
 			},
-			type: 1,
+			type: 'OPEN',
 		});
 	};
+
 	const closeNewItemModal = (closeAndReload) => {
 		if (closeAndReload) {
 			reload();
 		}
 
-		state.onClose(true);
+		modalState.onClose(true);
 	};
+
 	const reload = () => {
 		setTotalItems(0);
 
@@ -174,6 +168,7 @@ const TemplateList = () => {
 			setPageIndex(1);
 		}
 	};
+
 	const loadPage = async () => {
 		const results = await getAvailableTemplatesPage(pageIndex, delta);
 
@@ -238,10 +233,11 @@ const TemplateList = () => {
 					</ClayToolbar.Item>
 				</ClayToolbar.Nav>
 			</ClayToolbar>
+
 			{totalItems > 0 && (
 				<>
 					<Table>
-						<Head items={Headers}>
+						<Head items={HEADERS}>
 							{(column) => (
 								<Cell
 									expanded={column.expanded}
@@ -323,10 +319,11 @@ const TemplateList = () => {
 								))}
 						</Body>
 					</Table>
+
 					<ClayPaginationBarWithBasicItems
 						activeDelta={delta}
 						defaultActive={1}
-						deltas={deltas}
+						deltas={DELTAS}
 						ellipsisBuffer={3}
 						ellipsisProps={{'aria-label': 'More', 'title': 'More'}}
 						onActiveChange={(page) => {

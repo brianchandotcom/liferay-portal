@@ -185,7 +185,11 @@ const TopPagesCardWithData: React.FC<ITopPageCardWithData> = ({
 						className='button-root'
 						displayType='secondary'
 						href={setUriQueryValues(
-							pickBy({...rangeSelectors}),
+							pickBy({
+								...rangeSelectors,
+								field: activeTabId,
+								sortOrder: OrderByDirections.Descending
+							}),
 							footer.href
 						)}
 						small

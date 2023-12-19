@@ -1018,7 +1018,7 @@ definition {
 
 			ClickNoError(
 				key_text = "times-circle",
-				locator1 = "Icon#ANY");
+				locator1 = "ManagementBar#ANY_ICON");
 
 			AssertConfirm.waitForConfirmation(value1 = "Are you sure you want to remove the selected users?");
 
@@ -1546,7 +1546,7 @@ definition {
 
 		ClickNoError(
 			key_text = "hidden",
-			locator1 = "Icon#ANY");
+			locator1 = "ManagementBar#ANY_ICON");
 
 		AssertConfirm.waitForConfirmation(value1 = "Are you sure you want to deactivate this?");
 
@@ -1572,7 +1572,7 @@ definition {
 
 		ClickNoError(
 			key_text = "undo",
-			locator1 = "Icon#ANY");
+			locator1 = "ManagementBar#ANY_ICON");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#EMPTY_INFO",
@@ -1773,7 +1773,7 @@ definition {
 
 		ClickNoError(
 			key_text = "times-circle",
-			locator1 = "Icon#ANY");
+			locator1 = "ManagementBar#ANY_ICON");
 
 		AssertConfirm.waitForConfirmation(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
 
@@ -1904,7 +1904,7 @@ definition {
 
 		ClickNoError(
 			key_text = "times-circle",
-			locator1 = "Icon#ANY");
+			locator1 = "ManagementBar#ANY_ICON");
 
 		AssertConfirm.waitForConfirmation(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
 
@@ -2978,7 +2978,7 @@ definition {
 
 		ClickNoError(
 			key_text = "times-circle",
-			locator1 = "Icon#ANY");
+			locator1 = "ManagementBar#ANY_ICON");
 
 		AssertConfirm.waitForConfirmation(value1 = "Are you sure you want to remove the selected users?");
 

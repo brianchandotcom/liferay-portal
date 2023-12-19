@@ -24,8 +24,6 @@ import {
 	getAvailableTemplatesPage,
 } from '../../services/template-list.service';
 
-const spritemap = ApplicationUtil.getDefaultSpriteMap();
-
 const TemplateList = () => {
 	const [data, setData] = useState([]);
 
@@ -222,7 +220,6 @@ const TemplateList = () => {
 									onClick={() => {
 										reload();
 									}}
-									spritemap={spritemap}
 									symbol="reload"
 									title="Reload"
 								/>
@@ -233,7 +230,6 @@ const TemplateList = () => {
 									onClick={() => {
 										openNewItemModal();
 									}}
-									spritemap={spritemap}
 									symbol="plus"
 									title="Create New"
 								/>
@@ -285,7 +281,6 @@ const TemplateList = () => {
 														);
 													}}
 													size="sm"
-													spritemap={spritemap}
 													symbol="folder"
 													title="Create Folder Structure"
 													translucent
@@ -300,7 +295,6 @@ const TemplateList = () => {
 														openDesignerModal(row);
 													}}
 													size="sm"
-													spritemap={spritemap}
 													symbol="diagram"
 													title="Design Template"
 													translucent
@@ -317,7 +311,6 @@ const TemplateList = () => {
 														);
 													}}
 													size="sm"
-													spritemap={spritemap}
 													symbol="trash"
 													title="Delete Template"
 													translucent
@@ -342,7 +335,6 @@ const TemplateList = () => {
 						onDeltaChange={(delta) => {
 							setDelta(delta);
 						}}
-						spritemap={spritemap}
 						totalItems={totalItems}
 					/>
 				</>

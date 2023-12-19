@@ -55,21 +55,12 @@ function showSuccess(message) {
 function showError(message) {
 	getLiferay().Util.openToast({title: message, type: 'danger'});
 }
-function getDefaultSpriteMap() {
-	if (getLiferay()) {
-		return getLiferay().Icons.spritemap;
-	}
-	else {
-		return '';
-	}
-}
 function getLiferay() {
 	return window.Liferay || null;
 }
 
 export const ApplicationUtil = {
 	getConfig,
-	getDefaultSpriteMap,
 	getHostUrl,
 	getLiferay,
 	getOAuthToken,

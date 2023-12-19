@@ -208,6 +208,9 @@ public class FacetTranslatorImpl implements FacetTranslator {
 			public Aggregation.Builder.ContainerBuilder processFacet(
 				Facet facet) {
 
+				Aggregation.Builder aggregationBuilder =
+					new Aggregation.Builder();
+
 				TermsAggregation.Builder builder = AggregationBuilders.terms();
 
 				builder.field(facet.getFieldName());
@@ -242,9 +245,6 @@ public class FacetTranslatorImpl implements FacetTranslator {
 				if (size > 0) {
 					builder.size(size);
 				}
-
-				Aggregation.Builder aggregationBuilder =
-					new Aggregation.Builder();
 
 				return aggregationBuilder.terms(builder.build());
 			}

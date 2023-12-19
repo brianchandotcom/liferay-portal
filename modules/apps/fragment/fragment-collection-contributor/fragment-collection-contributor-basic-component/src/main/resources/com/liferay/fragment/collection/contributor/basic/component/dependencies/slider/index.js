@@ -3,6 +3,8 @@ const MOVE_LEFT = 'move-left';
 const MOVE_RIGHT = 'move-right';
 
 const editMode = layoutMode === 'edit';
+
+const carouselInner = fragmentElement.querySelector('.carousel-inner');
 const indicators = [].slice.call(
 	fragmentElement.querySelectorAll('.carousel-item-button')
 );
@@ -98,6 +100,8 @@ function startCarousel() {
 		}
 	}, INTERVAL);
 
+	carouselInner.setAttribute('aria-live', 'off');
+
 	toggleButton.classList.add('playing');
 	toggleButton.classList.remove('stopped');
 	toggleButtonIconStart.classList.add('d-none');
@@ -112,7 +116,8 @@ function stopCarousel() {
 
 		intervalId = null;
 
-		toggleButton.classList.remove('stopped');
+		carouselInner.setAttribute('aria-live', 'polite');
+
 		toggleButton.classList.remove('playing');
 		toggleButton.classList.add('stopped');
 		toggleButtonIconStart.classList.remove('d-none');

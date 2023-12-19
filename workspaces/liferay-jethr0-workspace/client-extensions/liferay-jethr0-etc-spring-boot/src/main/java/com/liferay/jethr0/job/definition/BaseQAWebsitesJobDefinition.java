@@ -8,10 +8,10 @@ package com.liferay.jethr0.job.definition;
 import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.job.definition.parameter.JenkinsBranchURLJobParameterDefinition;
 import com.liferay.jethr0.job.definition.parameter.JobParameterDefinition;
+import com.liferay.jethr0.job.definition.parameter.PoshiQueryJobParameterDefinition;
 import com.liferay.jethr0.job.definition.parameter.QAWebsitesBranchSHAJobParameterDefinition;
 import com.liferay.jethr0.job.definition.parameter.QAWebsitesBranchURLJobParameterDefinition;
 import com.liferay.jethr0.job.definition.parameter.QAWebsitesProjectNameJobParameterDefinition;
-import com.liferay.jethr0.job.definition.parameter.QAWebsitesQueryJobParameterDefinition;
 import com.liferay.jethr0.job.definition.parameter.TestSuiteNameJobParameterDefinition;
 import com.liferay.jethr0.job.definition.parameter.TestrayProjectNameParameterDefinition;
 import com.liferay.jethr0.job.definition.parameter.TestrayRoutineNameParameterDefinition;
@@ -30,6 +30,7 @@ public class BaseQAWebsitesJobDefinition extends BaseJobDefinition {
 
 		jobParameterDefinitions.add(
 			new JenkinsBranchURLJobParameterDefinition());
+		jobParameterDefinitions.add(new PoshiQueryJobParameterDefinition());
 		jobParameterDefinitions.add(
 			new QAWebsitesBranchSHAJobParameterDefinition());
 		jobParameterDefinitions.add(
@@ -38,8 +39,6 @@ public class BaseQAWebsitesJobDefinition extends BaseJobDefinition {
 			new QAWebsitesBranchSHAJobParameterDefinition());
 		jobParameterDefinitions.add(
 			new QAWebsitesProjectNameJobParameterDefinition());
-		jobParameterDefinitions.add(
-			new QAWebsitesQueryJobParameterDefinition());
 		jobParameterDefinitions.add(
 			new TestrayProjectNameParameterDefinition());
 		jobParameterDefinitions.add(

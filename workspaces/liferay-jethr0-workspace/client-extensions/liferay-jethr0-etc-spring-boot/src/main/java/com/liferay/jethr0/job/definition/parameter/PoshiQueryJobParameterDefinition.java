@@ -8,17 +8,17 @@ package com.liferay.jethr0.job.definition.parameter;
 /**
  * @author Michael Hashimoto
  */
-public class QAWebsitesQueryJobParameterDefinition
+public class PoshiQueryJobParameterDefinition
 	extends BaseJobParameterDefinition {
 
 	@Override
 	public String getKey() {
-		return "qaWebsitesQuery";
+		return "poshiQuery";
 	}
 
 	@Override
 	public String getLabel() {
-		return "QA Websites Query";
+		return "Poshi Query";
 	}
 
 	@Override

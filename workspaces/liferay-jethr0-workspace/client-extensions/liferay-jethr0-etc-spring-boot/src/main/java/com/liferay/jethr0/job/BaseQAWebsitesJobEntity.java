@@ -16,6 +16,10 @@ import org.json.JSONObject;
  */
 public class BaseQAWebsitesJobEntity extends BaseJobEntity {
 
+	public String getPoshiQuery() {
+		return getParameterValue("poshiQuery");
+	}
+
 	public String getQAWebsitesBranchSHA() {
 		return getParameterValue("qaWebsitesBranchSHA");
 	}
@@ -26,10 +30,6 @@ public class BaseQAWebsitesJobEntity extends BaseJobEntity {
 
 	public String getQAWebsitesProjectName() {
 		return getParameterValue("qaWebsitesProjectName");
-	}
-
-	public String getQAWebsitesQuery() {
-		return getParameterValue("qaWebsitesQuery");
 	}
 
 	public String getTestrayProjectName() {
@@ -44,6 +44,10 @@ public class BaseQAWebsitesJobEntity extends BaseJobEntity {
 		return getParameterValue("testSuiteName");
 	}
 
+	public void setPoshiQuery(String poshiQuery) {
+		setParameterValue("poshiQuery", poshiQuery);
+	}
+
 	public void setQAWebsitesBranchSHA(String qaWebsitesBranchSHA) {
 		setParameterValue("qaWebsitesBranchSHA", qaWebsitesBranchSHA);
 	}
@@ -54,10 +58,6 @@ public class BaseQAWebsitesJobEntity extends BaseJobEntity {
 
 	public void setQAWebsitesProjectName(String qaWebsitesProjectName) {
 		setParameterValue("qaWebsitesProjectName", qaWebsitesProjectName);
-	}
-
-	public void setQAWebsitesQuery(String qaWebsitesQuery) {
-		setParameterValue("qaWebsitesQuery", qaWebsitesQuery);
 	}
 
 	public void setTestrayProjectName(String testrayProjectName) {
@@ -90,7 +90,7 @@ public class BaseQAWebsitesJobEntity extends BaseJobEntity {
 		initialBuildParameters.put(
 			"TEST_QA_WEBSITES_GIT_ID", getQAWebsitesBranchSHA());
 		initialBuildParameters.put(
-			"TEST_QA_WEBSITES_PROPERTY_QUERY", getQAWebsitesQuery());
+			"TEST_QA_WEBSITES_PROPERTY_QUERY", getPoshiQuery());
 
 		return initialBuildParameters;
 	}

@@ -56,7 +56,7 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 							<div>
 								<clay:label
 									displayType="secondary"
-									label='<%= LanguageUtil.format(request, "version-x", articleVersion.getVersion(), false) %>'
+									label='<%= LanguageUtil.format(request, "version-x", String.valueOf(articleVersion.getVersion()), false) %>'
 								/>
 							</div>
 
@@ -118,7 +118,7 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 						>
 							<clay:label
 								displayType="secondary"
-								label='<%= LanguageUtil.format(request, "version-x", articleVersion.getVersion(), false) %>'
+								label='<%= LanguageUtil.format(request, "version-x", String.valueOf(articleVersion.getVersion()), false) %>'
 							/>
 						</liferay-ui:search-container-column-text>
 					</c:when>

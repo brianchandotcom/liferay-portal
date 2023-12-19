@@ -12,7 +12,6 @@ import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -52,13 +51,8 @@ public class AssetCategoryLayoutDisplayPageProvider
 			return null;
 		}
 
-		try {
-			return new AssetCategoryLayoutDisplayPageObjectProvider(
-				assetCategory, _portal);
-		}
-		catch (PortalException portalException) {
-			throw new RuntimeException(portalException);
-		}
+		return new AssetCategoryLayoutDisplayPageObjectProvider(
+			assetCategory, _portal);
 	}
 
 	@Override
@@ -73,13 +67,8 @@ public class AssetCategoryLayoutDisplayPageProvider
 			return null;
 		}
 
-		try {
-			return new AssetCategoryLayoutDisplayPageObjectProvider(
-				assetCategory, _portal);
-		}
-		catch (PortalException portalException) {
-			throw new RuntimeException(portalException);
-		}
+		return new AssetCategoryLayoutDisplayPageObjectProvider(
+			assetCategory, _portal);
 	}
 
 	@Override
@@ -108,13 +97,8 @@ public class AssetCategoryLayoutDisplayPageProvider
 			return null;
 		}
 
-		try {
-			return new AssetCategoryLayoutDisplayPageObjectProvider(
-				parentCategory, _portal);
-		}
-		catch (PortalException portalException) {
-			throw new RuntimeException(portalException);
-		}
+		return new AssetCategoryLayoutDisplayPageObjectProvider(
+			parentCategory, _portal);
 	}
 
 	@Override

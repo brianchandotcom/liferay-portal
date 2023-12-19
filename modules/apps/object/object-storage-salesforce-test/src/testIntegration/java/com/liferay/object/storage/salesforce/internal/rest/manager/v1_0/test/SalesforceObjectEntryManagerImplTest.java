@@ -76,8 +76,6 @@ public class SalesforceObjectEntryManagerImplTest
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		BaseObjectEntryManagerImplTestCase.setUpClass();
-
 		adminUser = TestPropsValues.getUser();
 
 		companyId = TestPropsValues.getCompanyId();
@@ -107,8 +105,6 @@ public class SalesforceObjectEntryManagerImplTest
 
 	@AfterClass
 	public static void tearDownClass() throws Exception {
-		BaseObjectEntryManagerImplTestCase.tearDownClass();
-
 		_configurationProvider.saveCompanyConfiguration(
 			SalesforceConfiguration.class, companyId,
 			HashMapDictionaryBuilder.<String, Object>put(
@@ -217,8 +213,6 @@ public class SalesforceObjectEntryManagerImplTest
 
 	@After
 	public void tearDown() throws Exception {
-		super.tearDown();
-
 		for (ObjectEntry objectEntry : _objectEntries) {
 			_objectEntryManager.deleteObjectEntry(
 				companyId, dtoConverterContext,

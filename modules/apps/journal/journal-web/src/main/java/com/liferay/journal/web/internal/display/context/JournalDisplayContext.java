@@ -1351,9 +1351,9 @@ public class JournalDisplayContext {
 		return false;
 	}
 
-	public boolean isShowInfoButton() {
+	public boolean isShowInfoButton() throws PortalException {
 		if (isNavigationMine() || isNavigationRecent() || isSearch() ||
-			ArrayUtil.isNotEmpty(_getAssetCategoryIds()) ||
+			isTypeVersions() || ArrayUtil.isNotEmpty(_getAssetCategoryIds()) ||
 			ArrayUtil.isNotEmpty(_getAssetTagNames())) {
 
 			return false;

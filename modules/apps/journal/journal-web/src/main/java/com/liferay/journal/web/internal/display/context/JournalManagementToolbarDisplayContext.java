@@ -636,7 +636,16 @@ public class JournalManagementToolbarDisplayContext
 
 	@Override
 	public Boolean isShowInfoButton() {
-		return _journalDisplayContext.isShowInfoButton();
+		try {
+			return _journalDisplayContext.isShowInfoButton();
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+		}
+
+		return false;
 	}
 
 	@Override

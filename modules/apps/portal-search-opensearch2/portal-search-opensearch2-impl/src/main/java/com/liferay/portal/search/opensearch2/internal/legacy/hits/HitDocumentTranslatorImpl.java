@@ -37,11 +37,11 @@ public class HitDocumentTranslatorImpl implements HitDocumentTranslator {
 	public Document translate(Hit<JsonData> hit) {
 		Document document = new DocumentImpl();
 
-		Map<String, JsonData> fields = hit.fields();
+		Map<String, JsonData> jsonDatas = hit.fields();
 
-		if (MapUtil.isNotEmpty(fields)) {
-			for (String fieldName : fields.keySet()) {
-				_addField(document, fieldName, fields);
+		if (MapUtil.isNotEmpty(jsonDatas)) {
+			for (String fieldName : jsonDatas.keySet()) {
+				_addField(document, fieldName, jsonDatas);
 			}
 		}
 
@@ -81,9 +81,9 @@ public class HitDocumentTranslatorImpl implements HitDocumentTranslator {
 	}
 
 	private void _addField(
-		Document document, String fieldName, Map<String, JsonData> fields) {
+		Document document, String fieldName, Map<String, JsonData> jsonDatas) {
 
-		Field field = _getField(fieldName, fields);
+		Field field = _getField(fieldName, jsonDatas);
 
 		if (field != null) {
 			document.add(field);
@@ -100,16 +100,16 @@ public class HitDocumentTranslatorImpl implements HitDocumentTranslator {
 		}
 	}
 
-	private Field _getField(String fieldName, Map<String, JsonData> fields) {
+	private Field _getField(String fieldName, Map<String, JsonData> jsonDatas) {
 		if (_isInvalidFieldName(fieldName)) {
 			return null;
 		}
 
-		JsonData jsonData = fields.get(fieldName);
+		JsonData jsonData = jsonDatas.get(fieldName);
 
 		JsonValue jsonValue = jsonData.toJson(JsonpUtil.getJsonpMapper());
 
-		if (fields.containsKey(fieldName.concat(".geopoint"))) {
+		if (jsonDatas.containsKey(fieldName.concat(".geopoint"))) {
 			return _translateGeoPoint(fieldName, jsonValue);
 		}
 

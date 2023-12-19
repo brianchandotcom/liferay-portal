@@ -13,7 +13,7 @@ import ClayToolbar from '@clayui/toolbar';
 import moment from 'moment';
 import React, {useCallback, useContext, useEffect, useState} from 'react';
 
-import {ApplicationUtil} from '../../utils/util';
+import {showError} from '../../utils/util';
 import FolderStructureDesigner from '../template-diagram/template-diagram';
 import TemplateItemCreateFolder from './controls/template-item-create-folder/template-item-create-folder';
 import NewTemplateItem from './controls/template-item-create/template-item-create';
@@ -94,7 +94,7 @@ const TemplateList = () => {
 			});
 		}
 		catch (exp) {
-			ApplicationUtil.showError(exp);
+			showError(exp);
 		}
 	};
 

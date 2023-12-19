@@ -5,17 +5,17 @@
 
 import axios from 'axios';
 
-import {ApplicationUtil} from '../utils/util';
 import {config} from '../utils/constants';
+import {getOAuthToken, getServerUrl} from '../utils/util';
 
 export async function createFolder(templateId, containerId, rootName) {
 	const requestConfig = {
 		headers: {
-			Authorization: `Bearer ${await ApplicationUtil.getOAuthToken()}`,
+			Authorization: `Bearer ${await getOAuthToken()}`,
 		},
 		maxBodyLength: Infinity,
 		method: 'post',
-		url: `${ApplicationUtil.suggestServerUrl()}/${
+		url: `${getServerUrl()}/${
 			config['folder.generate.service.url']
 		}/${templateId}/${containerId}/${rootName}`,
 	};

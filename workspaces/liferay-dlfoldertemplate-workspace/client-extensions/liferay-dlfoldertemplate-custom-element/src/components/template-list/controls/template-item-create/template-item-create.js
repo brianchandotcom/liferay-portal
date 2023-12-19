@@ -13,51 +13,40 @@ import {postFolderTemplateInformation} from '../../../../services/template-list.
 import {ApplicationUtil} from '../../../../utils/appUtil';
 
 const NewTemplateItem = ({onClose}) => {
-
 	const [isLoading, setIsLoading] = useState(false);
 
 	const [form] = Form.useForm();
 
 	const handleSubmit = async () => {
-
 		form.validateFields()
 			.then(
 				async (values) => {
 					try {
-
 						setIsLoading(true);
 
 						await postFolderTemplateInformation(values);
 
-						ApplicationUtil.ShowSuccess('Template created!');
+						ApplicationUtil.showSuccess('Template created!');
 
 						onClose(true);
-
 					}
 					catch (error) {
-
-						ApplicationUtil.ShowError(error.message);
+						ApplicationUtil.showError(error.message);
 
 						onClose(false);
-
 					}
 					finally {
-
 						form.resetFields();
 
 						setIsLoading(false);
-
 					}
 				},
 				(error) => {
-
-					ApplicationUtil.ShowError(error);
+					ApplicationUtil.showError(error);
 				}
 			)
 			.catch((error) => {
-
-				ApplicationUtil.ShowError(error);
-
+				ApplicationUtil.showError(error);
 			});
 	};
 
@@ -67,7 +56,10 @@ const NewTemplateItem = ({onClose}) => {
 				label="Title"
 				name="templateName"
 				rules={[
-					{message: 'Please provide a template name.', required: true},
+					{
+						message: 'Please provide a template name.',
+						required: true,
+					},
 				]}
 			>
 				<ClayInput />

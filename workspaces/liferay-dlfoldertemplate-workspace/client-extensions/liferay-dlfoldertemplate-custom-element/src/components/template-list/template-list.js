@@ -27,7 +27,6 @@ import {
 const spritemap = ApplicationUtil.getDefaultSpriteMap();
 
 const TemplateList = () => {
-
 	const [data, setData] = useState([]);
 
 	const [totalItems, setTotalItems] = useState(0);
@@ -97,7 +96,7 @@ const TemplateList = () => {
 			});
 		}
 		catch (exp) {
-			ApplicationUtil.ShowError(exp);
+			ApplicationUtil.showError(exp);
 		}
 	};
 
@@ -168,7 +167,6 @@ const TemplateList = () => {
 		state.onClose(true);
 	};
 	const reload = () => {
-
 		setTotalItems(0);
 
 		if (pageIndex === 1) {
@@ -179,7 +177,6 @@ const TemplateList = () => {
 		}
 	};
 	const loadPage = async () => {
-
 		const results = await getAvailableTemplatesPage(pageIndex, delta);
 
 		setData(results.items);
@@ -188,21 +185,16 @@ const TemplateList = () => {
 	};
 
 	const loadPageCallback = useCallback(async () => {
-
 		const results = await getAvailableTemplatesPage(pageIndex, delta);
 
 		setData(results.items);
 
 		setTotalItems(results.totalCount);
-
 	}, [pageIndex, delta]);
 
 	useEffect(() => {
-
 		const fetchData = async () => {
-
 			await loadPageCallback();
-
 		};
 
 		fetchData();

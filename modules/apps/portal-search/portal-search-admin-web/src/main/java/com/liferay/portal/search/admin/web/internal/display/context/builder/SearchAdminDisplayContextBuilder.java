@@ -7,8 +7,11 @@ package com.liferay.portal.search.admin.web.internal.display.context.builder;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.admin.web.internal.display.context.SearchAdminDisplayContext;
 import com.liferay.portal.search.index.IndexInformation;
 
@@ -41,14 +44,25 @@ public class SearchAdminDisplayContextBuilder {
 			_indexReindexerClassNames);
 
 		NavigationItemList navigationItemList = new NavigationItemList();
-		String selectedTab = getSelectedTab();
+		String selectedTab = "index-actions";
 
-		_addNavigationItemList(navigationItemList, "connections", selectedTab);
+		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PermissionChecker permissionChecker =
+			themeDisplay.getPermissionChecker();
+
+		if (permissionChecker.isOmniadmin()) {
+			selectedTab = getSelectedTab();
+
+			_addNavigationItemList(
+				navigationItemList, "connections", selectedTab);
+		}
 
 		_addNavigationItemList(
 			navigationItemList, "index-actions", selectedTab);
 
-		if (_isIndexInformationAvailable()) {
+		if (_isIndexInformationAvailable() && permissionChecker.isOmniadmin()) {
 			_addNavigationItemList(
 				navigationItemList, "field-mappings", selectedTab);
 		}

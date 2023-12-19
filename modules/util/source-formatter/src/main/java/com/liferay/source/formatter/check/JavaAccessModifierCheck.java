@@ -52,10 +52,10 @@ public class JavaAccessModifierCheck extends BaseJavaTermCheck {
 			return javaTerm.getContent();
 		}
 
-		Map<String, List<String>> componentJavaFileMap =
-			_getCommponentJavaFileMap();
+		Map<String, List<String>> osgiComponentFileNamesMap =
+			_getOSGiComponentFileNamesMap();
 
-		Set<String> superClassNames = componentJavaFileMap.keySet();
+		Set<String> superClassNames = osgiComponentFileNamesMap.keySet();
 
 		if (!superClassNames.contains(
 				packageName + "." + JavaSourceUtil.getClassName(fileName))) {
@@ -93,14 +93,14 @@ public class JavaAccessModifierCheck extends BaseJavaTermCheck {
 		return new String[] {JAVA_CLASS};
 	}
 
-	private Map<String, List<String>> _getCommponentJavaFileMap()
+	private Map<String, List<String>> _getOSGiComponentFileNamesMap()
 		throws Exception {
 
-		if (_componentJavaFileMap != null) {
-			return _componentJavaFileMap;
+		if (_osgiComponentFileNamesMap != null) {
+			return _osgiComponentFileNamesMap;
 		}
 
-		_componentJavaFileMap = new ConcurrentHashMap<>();
+		_osgiComponentFileNamesMap = new ConcurrentHashMap<>();
 
 		String moduleRootDirLocation = "modules/";
 
@@ -150,11 +150,10 @@ public class JavaAccessModifierCheck extends BaseJavaTermCheck {
 				continue;
 			}
 
-			String superClassName = _getSuperClassFullyQualifiedName(
-				FileUtil.read(file));
+			String superClassName = _getSuperClassName(FileUtil.read(file));
 
 			if (superClassName != null) {
-				List<String> subclassNames = _componentJavaFileMap.get(
+				List<String> subclassNames = _osgiComponentFileNamesMap.get(
 					superClassName);
 
 				if (subclassNames == null) {
@@ -163,14 +162,14 @@ public class JavaAccessModifierCheck extends BaseJavaTermCheck {
 
 				subclassNames.add(JavaSourceUtil.getClassName(fileName));
 
-				_componentJavaFileMap.put(superClassName, subclassNames);
+				_osgiComponentFileNamesMap.put(superClassName, subclassNames);
 			}
 		}
 
-		return _componentJavaFileMap;
+		return _osgiComponentFileNamesMap;
 	}
 
-	private String _getSuperClassFullyQualifiedName(String content) {
+	private String _getSuperClassName(String content) {
 		String superClassName = JavaSourceUtil.getSuperClassName(content);
 
 		if (superClassName == null) {
@@ -188,6 +187,6 @@ public class JavaAccessModifierCheck extends BaseJavaTermCheck {
 		return JavaSourceUtil.getPackageName(content) + "." + superClassName;
 	}
 
-	private Map<String, List<String>> _componentJavaFileMap;
+	private Map<String, List<String>> _osgiComponentFileNamesMap;
 
 }

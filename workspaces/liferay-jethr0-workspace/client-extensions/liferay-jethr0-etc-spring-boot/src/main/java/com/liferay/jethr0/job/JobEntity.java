@@ -187,6 +187,12 @@ public interface JobEntity extends Entity {
 		MAINTENANCE_WEEKLY("maintenanceWeekly", "Maintenance Weekly"),
 		MAINTENANCE_WEEKLY_NODE(
 			"maintenanceWeeklyNode", "Maintenance Weekly Node"),
+		PLUGINS_EXTRA_APPS("pluginsExtraApps", "Plugins Extra Apps"),
+		PLUGINS_MARKETPLACE_APP(
+			"pluginsMarketplaceApp", "Plugins Marketplace App"),
+		PLUGINS_PULL_REQUEST("pluginsPullRequest", "Plugins Pull Request"),
+		PLUGINS_RELEASE("pluginsRelease", "Plugins Release"),
+		PLUGINS_UPSTREAM("pluginsUpstream", "Plugins Upstream"),
 		PORTAL_APP_RELEASE("portalAppRelease", "Portal App Release"),
 		PORTAL_FIXPACK_RELEASE(
 			"portalFixpackRelease", "Portal Fixpack Release"),

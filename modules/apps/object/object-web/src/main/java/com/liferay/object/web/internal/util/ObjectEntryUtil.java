@@ -171,7 +171,7 @@ public class ObjectEntryUtil {
 			GetterUtil.getLong(objectEntry.getId()));
 		serviceBuilderObjectEntry.setObjectDefinitionId(objectDefinitionId);
 
-		return serviceBuilderObjectEntry;
+		return new ProxyObjectEntry(serviceBuilderObjectEntry, objectEntry);
 	}
 
 	public static Map<String, Object> toProperties(

@@ -42,6 +42,7 @@ import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.web.internal.info.item.ObjectEntryInfoItemFields;
 import com.liferay.object.web.internal.util.ObjectEntryUtil;
 import com.liferay.object.web.internal.util.ObjectFieldDBTypeUtil;
+import com.liferay.object.web.internal.util.ProxyObjectEntry;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -321,8 +322,7 @@ public class ObjectEntryInfoItemFieldValuesProvider
 		objectEntryFieldValues.addAll(
 			_getObjectFieldsInfoFieldValues(
 				_getObjectEntry(
-					objectEntry.getExternalReferenceCode(), _objectDefinition,
-					themeDisplay),
+					_objectDefinition, objectEntry, themeDisplay),
 				_objectFieldLocalService.getObjectFields(
 					objectEntry.getObjectDefinitionId(), false),
 				themeDisplay));
@@ -374,8 +374,7 @@ public class ObjectEntryInfoItemFieldValuesProvider
 
 		com.liferay.object.rest.dto.v1_0.ObjectEntry objectEntry =
 			_getObjectEntry(
-				serviceBuilderObjectEntry.getExternalReferenceCode(),
-				_objectDefinition, themeDisplay);
+				_objectDefinition, serviceBuilderObjectEntry, themeDisplay);
 
 		objectEntryFieldValues.add(
 			new InfoFieldValue<>(
@@ -425,8 +424,19 @@ public class ObjectEntryInfoItemFieldValuesProvider
 	}
 
 	private com.liferay.object.rest.dto.v1_0.ObjectEntry _getObjectEntry(
-		String externalReferenceCode, ObjectDefinition objectDefinition,
+		ObjectDefinition objectDefinition, ObjectEntry objectEntry,
 		ThemeDisplay themeDisplay) {
+
+		if (objectEntry instanceof ProxyObjectEntry) {
+			ProxyObjectEntry proxyObjectEntry = (ProxyObjectEntry)objectEntry;
+
+			com.liferay.object.rest.dto.v1_0.ObjectEntry dtoObjectEntry =
+				proxyObjectEntry.getDTOObjectEntry();
+
+			if (dtoObjectEntry != null) {
+				return dtoObjectEntry;
+			}
+		}
 
 		ObjectEntryManager objectEntryManager =
 			_objectEntryManagerRegistry.getObjectEntryManager(
@@ -438,7 +448,7 @@ public class ObjectEntryInfoItemFieldValuesProvider
 				new DefaultDTOConverterContext(
 					false, null, null, null, null, themeDisplay.getLocale(),
 					null, themeDisplay.getUser()),
-				externalReferenceCode, objectDefinition,
+				objectEntry.getExternalReferenceCode(), objectDefinition,
 				ObjectEntryUtil.getScopeKey(
 					themeDisplay.getScopeGroupId(), objectDefinition,
 					_objectScopeProviderRegistry));
@@ -522,8 +532,7 @@ public class ObjectEntryInfoItemFieldValuesProvider
 
 		com.liferay.object.rest.dto.v1_0.ObjectEntry objectEntry =
 			_getObjectEntry(
-				serviceBuilderObjectEntry.getExternalReferenceCode(),
-				objectDefinition, themeDisplay);
+				objectDefinition, serviceBuilderObjectEntry, themeDisplay);
 
 		if (objectEntry == null) {
 			return Collections.emptyList();

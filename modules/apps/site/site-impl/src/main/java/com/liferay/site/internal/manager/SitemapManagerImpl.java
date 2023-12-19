@@ -11,6 +11,7 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -268,7 +269,8 @@ public class SitemapManagerImpl implements SitemapManager {
 		for (SitemapURLProvider sitemapURLProvider :
 				_getSitemapURLProviders()) {
 
-			if (!sitemapURLProvider.isInclude(
+			if (FeatureFlagManagerUtil.isEnabled("LPS-187793") &&
+				!sitemapURLProvider.isInclude(
 					themeDisplay.getCompanyId(),
 					themeDisplay.getScopeGroupId())) {
 

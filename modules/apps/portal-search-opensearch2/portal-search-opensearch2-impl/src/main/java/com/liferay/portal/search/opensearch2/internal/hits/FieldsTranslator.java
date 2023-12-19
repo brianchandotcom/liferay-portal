@@ -176,16 +176,16 @@ public class FieldsTranslator {
 
 			return Boolean.valueOf(jsonValue.toString());
 		}
-		else if (valueType == JsonValue.ValueType.OBJECT) {
-			return _toMap((JsonObject)jsonValue);
+		else if (valueType == JsonValue.ValueType.NULL) {
+			return null;
 		}
 		else if (valueType == JsonValue.ValueType.NUMBER) {
 			JsonNumber jsonNumber = (JsonNumber)jsonValue;
 
 			return jsonNumber.numberValue();
 		}
-		else if (valueType == JsonValue.ValueType.NULL) {
-			return null;
+		else if (valueType == JsonValue.ValueType.OBJECT) {
+			return _toMap((JsonObject)jsonValue);
 		}
 		else if (valueType == JsonValue.ValueType.STRING) {
 			JsonString jsonString = (JsonString)jsonValue;

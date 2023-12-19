@@ -193,16 +193,16 @@ public class ConversionUtil {
 	}
 
 	public static Map<String, JsonData> toJsonDataMap(Map<String, Object> map) {
-		Map<String, JsonData> jsonDataMap = new HashMap<>();
+		Map<String, JsonData> jsonDatas = new HashMap<>();
 
 		if (map == null) {
-			return jsonDataMap;
+			return jsonDatas;
 		}
 
 		MapUtil.isNotEmptyForEach(
-			map, (key, value) -> jsonDataMap.put(key, JsonData.of(value)));
+			map, (key, value) -> jsonDatas.put(key, JsonData.of(value)));
 
-		return jsonDataMap;
+		return jsonDatas;
 	}
 
 	private static String _getClassName(Object object) {

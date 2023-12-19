@@ -5,7 +5,7 @@
 
 import axios from 'axios';
 
-import {ApplicationUtil} from '../utils/appUtil';
+import {ApplicationUtil} from '../utils/util';
 import {config} from '../utils/constants';
 
 export async function getAvailableTemplatesNodesPage(templateID) {

@@ -5,12 +5,12 @@
 
 import {config} from './constants';
 
-function suggestServerUrl() {
+export function getServerUrl() {
 	return Liferay.OAuth2Client.FromUserAgentApplication(config.agentOauthAppId)
 		.homePageURL;
 }
 
-async function getOAuthToken() {
+export async function getOAuthToken() {
 	const prom = new Promise((resolve, reject) => {
 		Liferay.OAuth2Client.FromUserAgentApplication(config.agentOauthAppId)
 			._getOrRequestToken()
@@ -34,22 +34,14 @@ async function getOAuthToken() {
 	return prom;
 }
 
-function getHostUrl() {
+export function getHostUrl() {
 	return config.external ? config.apiHost : '';
 }
 
-function showSuccess(message) {
+export function showSuccess(message) {
 	Liferay.Util.openToast({title: message, type: 'success'});
 }
 
-function showError(message) {
+export function showError(message) {
 	Liferay.Util.openToast({title: message, type: 'danger'});
 }
-
-export const ApplicationUtil = {
-	getHostUrl,
-	getOAuthToken,
-	showError,
-	showSuccess,
-	suggestServerUrl,
-};

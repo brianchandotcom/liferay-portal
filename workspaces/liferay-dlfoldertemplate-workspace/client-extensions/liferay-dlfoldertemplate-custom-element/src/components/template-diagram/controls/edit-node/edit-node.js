@@ -13,7 +13,7 @@ import {Button, Flex, Form, Input} from 'antd';
 import React, {useState} from 'react';
 
 import {updateFolderTemplate} from '../../../../services/template-diagram.service';
-import {ApplicationUtil} from '../../../../utils/appUtil';
+import {ApplicationUtil} from '../../../../utils/util';
 
 const EditNode = ({
 	chart,

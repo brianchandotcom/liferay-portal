@@ -77,10 +77,8 @@ import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import javax.portlet.PortletURL;
 import javax.portlet.ResourceRequest;
@@ -505,9 +503,6 @@ public class GetCollectionFieldMVCResourceCommand
 				httpServletRequest, httpServletResponse,
 				FragmentEntryLinkConstants.EDIT, locale);
 
-		Map<InfoItemReference, InfoItemFieldValues> infoDisplaysFieldValues =
-			Collections.singletonMap(infoItemReference, infoItemFieldValues);
-
 		for (InfoFieldValue<Object> infoFieldValue :
 				infoItemFieldValues.getInfoFieldValues()) {
 
@@ -515,22 +510,17 @@ public class GetCollectionFieldMVCResourceCommand
 
 			displayObjectJSONObject.put("fieldId", infoField.getUniqueId());
 
-			try {
-				Object value = _fragmentEntryProcessorHelper.getFieldValue(
-					displayObjectJSONObject, infoDisplaysFieldValues,
-					fragmentEntryProcessorContext);
+			Object value =
+				_fragmentEntryProcessorHelper.getMappedInfoItemFieldValue(
+					displayObjectJSONObject, infoField.getUniqueId(),
+					infoItemFieldValues,
+					fragmentEntryProcessorContext.getLocale());
 
-				displayObjectJSONObject.put(
-					infoField.getName(), value
-				).put(
-					infoField.getUniqueId(), value
-				);
-			}
-			catch (PortalException portalException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(portalException);
-				}
-			}
+			displayObjectJSONObject.put(
+				infoField.getName(), value
+			).put(
+				infoField.getUniqueId(), value
+			);
 		}
 
 		return displayObjectJSONObject;

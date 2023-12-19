@@ -14,7 +14,7 @@ import {
 	getSiteDocumentFoldersPage,
 } from '../../../../services/folder-selector.service';
 import {createFolder} from '../../../../services/template-item-create-folder.service';
-import {ApplicationUtil} from '../../../../utils/appUtil';
+import {ApplicationUtil} from '../../../../utils/util';
 
 import './template-item-create-folder.css';
 

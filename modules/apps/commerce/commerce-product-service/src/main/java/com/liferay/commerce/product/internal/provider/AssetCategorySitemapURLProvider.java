@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.site.configuration.manager.SitemapConfigurationManager;
 import com.liferay.site.manager.SitemapManager;
 import com.liferay.site.provider.SitemapURLProvider;
 import com.liferay.site.provider.helper.SitemapURLProviderHelper;
@@ -48,6 +49,19 @@ public class AssetCategorySitemapURLProvider implements SitemapURLProvider {
 	@Override
 	public String getClassName() {
 		return AssetCategory.class.getName();
+	}
+
+	@Override
+	public boolean isInclude(long companyId, long groupId)
+		throws PortalException {
+
+		if (_sitemapConfigurationManager.includeCategoriesGroupEnabled(
+				companyId, groupId)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override
@@ -170,6 +184,9 @@ public class AssetCategorySitemapURLProvider implements SitemapURLProvider {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private SitemapConfigurationManager _sitemapConfigurationManager;
 
 	@Reference
 	private SitemapManager _sitemapManager;

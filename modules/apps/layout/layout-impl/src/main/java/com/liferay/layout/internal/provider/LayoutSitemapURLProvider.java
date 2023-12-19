@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.util.LayoutTypeControllerTracker;
+import com.liferay.site.configuration.manager.SitemapConfigurationManager;
 import com.liferay.site.manager.SitemapManager;
 import com.liferay.site.provider.SitemapURLProvider;
 import com.liferay.site.provider.helper.SitemapURLProviderHelper;
@@ -43,6 +44,19 @@ public class LayoutSitemapURLProvider implements SitemapURLProvider {
 	@Override
 	public String getClassName() {
 		return Layout.class.getName();
+	}
+
+	@Override
+	public boolean isInclude(long companyId, long groupId)
+		throws PortalException {
+
+		if (_sitemapConfigurationManager.includePagesGroupEnabled(
+				companyId, groupId)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override
@@ -160,6 +174,9 @@ public class LayoutSitemapURLProvider implements SitemapURLProvider {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private SitemapConfigurationManager _sitemapConfigurationManager;
 
 	@Reference
 	private SitemapManager _sitemapManager;

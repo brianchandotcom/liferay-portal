@@ -111,8 +111,9 @@ public class JavaAccessModifierCheck extends BaseJavaTermCheck {
 
 			if (file.exists()) {
 				fileNames = SourceFormatterUtil.matchFileContents(
-					Arrays.asList("--untracked", "-E", "-l", "@Component"),
-					file.getCanonicalPath(), new String[] {"**/*.java"});
+					Arrays.asList("--untracked", "-E", "-l", "@Component\\("),
+					file.getCanonicalPath(),
+					new String[] {"apps/**/*.java", "dxp/apps/**/*.java"});
 
 				break;
 			}

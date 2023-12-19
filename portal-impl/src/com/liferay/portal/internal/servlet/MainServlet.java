@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dependency.manager.DependencyManagerSyncUtil;
 import com.liferay.portal.kernel.deploy.hot.HotDeployUtil;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -788,6 +789,8 @@ public class MainServlet extends HttpServlet {
 			throw new RuntimeException("Company default web ID is null");
 		}
 
+		List<Company> companies = new ArrayList<>();
+
 		CompanyLocalServiceUtil.forEachCompany(
 			company -> {
 				if (StartupHelperUtil.isDBNew() &&
@@ -800,7 +803,11 @@ public class MainServlet extends HttpServlet {
 				else {
 					PortalInstances.initCompany(company, false);
 				}
+
+				companies.add(company);
 			});
+
+		PortalInstancePool.set(companies);
 	}
 
 	private void _initLayoutTemplates(PluginPackage pluginPackage) {

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import {ApplicationUtil} from '../utils/appUtil';
+import {ApplicationUtil} from '../utils/util';
 
 /**
  * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com

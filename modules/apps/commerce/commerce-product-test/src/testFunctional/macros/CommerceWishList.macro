@@ -17,7 +17,7 @@ definition {
 
 	@summary = "Default summary"
 	macro addWishList(wishListName = null) {
-		Click(locator1 = "Button#PLUS");
+		Click(locator1 = "CommerceEntry#PLUS_BUTTON");
 
 		Click(locator1 = "Button#EDIT");
 

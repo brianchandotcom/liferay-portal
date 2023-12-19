@@ -406,6 +406,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PLUS_BUTTON</td>
+	<td>//a[contains(@class,'btn')][contains(@href,'new') or contains(@href,'redirect') or contains(@href,'mvc') or contains(@href,'javascript')][.//*[name()='svg'][contains(@class,'icon-plus')]][not(contains(@class,'borderless'))] | //button[not(contains(@class,'borderless'))][not(contains(@class,'btn-unstyled'))][*[contains(@class,'icon-plus')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PLUS_MENU</td>
 	<td>//div[contains (@class, 'dropdown')]//li/a[contains (.,'${key_plusMenu}')]</td>
 	<td></td>

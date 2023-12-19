@@ -1052,6 +1052,8 @@ public class JournalManagementToolbarDisplayContext
 								"/edit_article.jsp"
 							).setRedirect(
 								_journalDisplayContext.getRedirect()
+							).setBackURL(
+								_themeDisplay.getURLCurrent()
 							).setParameter(
 								"backURLTitle",
 								() -> {

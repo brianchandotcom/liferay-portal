@@ -11,8 +11,9 @@ interface ClientExtensionDefinition<T> {
 }
 
 interface ClientExtensionDefinitionsHandlerItem<T> {
-	binding: any;
+	binding?: any;
 	context: T;
+	error?: Error;
 }
 
 interface ClientExtensionDefinitionsHandler<T> {
@@ -35,15 +36,18 @@ export default function loadClientExtensions(
 
 		const promises = clientExtensionDefinitions.map(
 			({context, importDeclaration}) => {
-				return loadModule(importDeclaration).then((binding) => ({
-					binding,
-					context,
-				}));
+				return loadModule(importDeclaration)
+					.then((binding) => ({
+						binding,
+						context,
+					}))
+					.catch((error: Error) => ({
+						context,
+						error,
+					}));
 			}
 		);
 
-		Promise.all(promises)
-			.then(onLoad)
-			.catch(() => onLoad([]));
+		Promise.all(promises).then(onLoad);
 	}
 }

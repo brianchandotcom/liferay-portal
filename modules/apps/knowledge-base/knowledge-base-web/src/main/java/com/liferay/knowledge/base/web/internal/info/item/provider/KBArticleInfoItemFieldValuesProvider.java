@@ -58,7 +58,7 @@ public class KBArticleInfoItemFieldValuesProvider
 						KBArticle.class.getName(),
 						kbArticle.getResourcePrimKey()),
 					StringPool.BLANK, KBArticle.class.getSimpleName(),
-					_getThemeDisplay())
+					kbArticle, _getThemeDisplay())
 			).infoFieldValues(
 				_expandoInfoItemFieldSetProvider.getInfoFieldValues(
 					KBArticle.class.getName(), kbArticle)

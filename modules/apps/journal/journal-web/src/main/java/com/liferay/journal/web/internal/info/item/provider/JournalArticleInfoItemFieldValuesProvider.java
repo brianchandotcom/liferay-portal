@@ -90,7 +90,8 @@ public class JournalArticleInfoItemFieldValuesProvider
 						JournalArticle.class.getName(),
 						journalArticle.getResourcePrimKey()),
 					String.valueOf(journalArticle.getDDMStructureId()),
-					JournalArticle.class.getSimpleName(), _getThemeDisplay())
+					JournalArticle.class.getSimpleName(), journalArticle,
+					_getThemeDisplay())
 			).infoFieldValues(
 				_expandoInfoItemFieldSetProvider.getInfoFieldValues(
 					JournalArticle.class.getName(), journalArticle)

@@ -147,6 +147,14 @@ public class ObjectEntryLayoutDisplayPageProvider
 	}
 
 	@Override
+	public LayoutDisplayPageObjectProvider<ObjectEntry>
+		getLayoutDisplayPageObjectProvider(ObjectEntry objectEntry) {
+
+		return new ObjectEntryLayoutDisplayPageObjectProvider(
+			_objectDefinition, objectEntry);
+	}
+
+	@Override
 	public String getURLSeparator() {
 		return FriendlyURLResolverConstants.URL_SEPARATOR_OBJECT_ENTRY;
 	}

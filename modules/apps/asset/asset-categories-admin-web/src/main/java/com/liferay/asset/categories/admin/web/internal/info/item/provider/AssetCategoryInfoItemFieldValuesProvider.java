@@ -52,7 +52,7 @@ public class AssetCategoryInfoItemFieldValuesProvider
 						AssetCategory.class.getName(),
 						assetCategory.getCategoryId()),
 					StringPool.BLANK, AssetCategory.class.getSimpleName(),
-					_getThemeDisplay())
+					assetCategory, _getThemeDisplay())
 			).infoFieldValues(
 				_infoItemFieldReaderFieldSetProvider.getInfoFieldValues(
 					AssetCategory.class.getName(), assetCategory)

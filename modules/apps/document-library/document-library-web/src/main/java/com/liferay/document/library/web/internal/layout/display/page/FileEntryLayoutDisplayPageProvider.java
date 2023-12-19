@@ -43,6 +43,18 @@ public class FileEntryLayoutDisplayPageProvider
 
 	@Override
 	public LayoutDisplayPageObjectProvider<FileEntry>
+		getLayoutDisplayPageObjectProvider(FileEntry fileEntry) {
+
+		if (fileEntry.isInTrash()) {
+			return null;
+		}
+
+		return new FileEntryLayoutDisplayPageObjectProvider(
+			fileEntry, _infoItemFriendlyURLProvider, _language);
+	}
+
+	@Override
+	public LayoutDisplayPageObjectProvider<FileEntry>
 		getLayoutDisplayPageObjectProvider(
 			InfoItemReference infoItemReference) {
 

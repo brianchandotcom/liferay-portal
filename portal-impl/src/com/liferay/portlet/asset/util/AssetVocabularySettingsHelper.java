@@ -167,11 +167,11 @@ public class AssetVocabularySettingsHelper {
 		}
 
 		_unicodeProperties.setProperty(
+			_KEY_DEPOT_REQUIRED_CLASS_NAME_IDS_AND_CLASS_TYPE_PKS,
+			StringUtil.merge(depotRequiredClassNameIds));
+		_unicodeProperties.setProperty(
 			_KEY_REQUIRED_CLASS_NAME_IDS_AND_CLASS_TYPE_PKS,
 			StringUtil.merge(requiredClassNameIds));
-		_unicodeProperties.setProperty(
-			_KEY_REQUIRED_DEPOT_CLASS_NAME_IDS_AND_CLASS_TYPE_PKS,
-			StringUtil.merge(depotRequiredClassNameIds));
 		_unicodeProperties.setProperty(
 			_KEY_SELECTED_CLASS_NAME_IDS_AND_CLASS_TYPE_PKS,
 			StringUtil.merge(selectedClassNameIds));
@@ -252,7 +252,7 @@ public class AssetVocabularySettingsHelper {
 
 	protected String[] getDepotRequiredClassNameIdsAndClassTypePKs() {
 		String value = _unicodeProperties.getProperty(
-			_KEY_REQUIRED_DEPOT_CLASS_NAME_IDS_AND_CLASS_TYPE_PKS);
+			_KEY_DEPOT_REQUIRED_CLASS_NAME_IDS_AND_CLASS_TYPE_PKS);
 
 		if (Validator.isNull(value)) {
 			return new String[0];
@@ -296,15 +296,15 @@ public class AssetVocabularySettingsHelper {
 			classNameIdsAndClassTypePKs, classNameIdAndAllClassTypePK);
 	}
 
+	private static final String
+		_KEY_DEPOT_REQUIRED_CLASS_NAME_IDS_AND_CLASS_TYPE_PKS =
+			"depotRequiredClassNameIds";
+
 	private static final String _KEY_MULTI_VALUED = "multiValued";
 
 	private static final String
 		_KEY_REQUIRED_CLASS_NAME_IDS_AND_CLASS_TYPE_PKS =
 			"requiredClassNameIds";
-
-	private static final String
-		_KEY_REQUIRED_DEPOT_CLASS_NAME_IDS_AND_CLASS_TYPE_PKS =
-			"requiredDepotClassNameIds";
 
 	private static final String
 		_KEY_SELECTED_CLASS_NAME_IDS_AND_CLASS_TYPE_PKS =

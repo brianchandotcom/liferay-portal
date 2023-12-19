@@ -902,9 +902,9 @@
 
 		<!-- Module Source Checks -->
 
-		<check name="JavaAccessModifierCheck">
+		<check name="JavaInheritableVariableAccessModifierCheck">
 			<category name="Bug Prevention" />
-			<description name="Finds incorrect Java access modifier usage." />
+			<description name="Checks for cases where visibility of variable can be increased." />
 		</check>
 		<check name="JavaLocalServiceImplErcUsageCheck">
 			<category name="Productivity" />

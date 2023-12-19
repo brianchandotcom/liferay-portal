@@ -28,7 +28,8 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * @author Seiphon Wang
  */
-public class JavaAccessModifierCheck extends BaseJavaTermCheck {
+public class JavaInheritableVariableAccessModifierCheck
+	extends BaseJavaTermCheck {
 
 	@Override
 	public boolean isModuleSourceCheck() {

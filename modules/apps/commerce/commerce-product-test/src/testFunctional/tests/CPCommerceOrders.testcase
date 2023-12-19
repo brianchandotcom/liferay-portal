@@ -2950,7 +2950,7 @@ definition {
 	@description = "This is a test for COMMERCE-11815. Admin can view an order's quote label border is grey"
 	@priority = 3
 	test CanViewOrderQuoteLabelBorderIsGrey {
-		property custom.properties = "company.security.strangers.verify=false${line.separator}feature.flag.COMMERCE-11028=true${line.separator}jsonws.web.service.paths.excludes=";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "false";
 
 		task ("Given a Minium site with a buyer user") {

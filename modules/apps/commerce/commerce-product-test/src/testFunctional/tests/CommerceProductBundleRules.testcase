@@ -2675,7 +2675,7 @@ definition {
 	@description = "COMMERCE-12797. As a buyer, I want to be able to view the Products Limit rule applied to decimal UOM quantity"
 	@priority = 5
 	test CanVerifyProductsLimitRuleWithDecimalUOMQuantity {
-		property custom.properties = "feature.flag.COMMERCE-9599=true${line.separator}feature.flag.COMMERCE-11287=true${line.separator}feature.flag.COMMERCE-11922=true${line.separator}jsonws.web.service.paths.excludes=";
+		property custom.properties = "feature.flag.COMMERCE-9599=true${line.separator}feature.flag.COMMERCE-11922=true${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		task ("Given an access token is generated to enable Show Unselectable Options from Instance Settings") {

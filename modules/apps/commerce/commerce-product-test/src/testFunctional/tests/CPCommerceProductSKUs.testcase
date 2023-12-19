@@ -115,7 +115,6 @@ definition {
 	@description = "This is a test for COMMERCE-12290. The admin can add multiple price entries for different UOMs using the new price modal."
 	@priority = 5
 	test CanAddMultiplePriceEntriesUsingNewPriceModal {
-		property custom.properties = "feature.flag.COMMERCE-11287=true";
 		property portal.acceptance = "true";
 
 		task ("Given a Minium site is created") {
@@ -608,7 +607,6 @@ definition {
 	@description = "This is a test for COMMERCE-12289. The admin can view entry fields correctly on the new price modal"
 	@priority = 5
 	test CanModalShowEntryFieldsCorrectly {
-		property custom.properties = "feature.flag.COMMERCE-11287=true";
 		property portal.acceptance = "true";
 
 		task ("Given a Minium site is created") {

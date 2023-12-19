@@ -1860,7 +1860,7 @@ definition {
 	@description = "This is a test for COMMERCE-12036. Discontinued SKU is replaced successfully when the replacement SKU is price on application."
 	@priority = 3
 	test CanPriceOnApplicationBeAppliedCorrectlyOnReplacementSKU {
-		property custom.properties = "company.security.strangers.verify=false${line.separator}feature.flag.COMMERCE-11028=true${line.separator}jsonws.web.service.paths.excludes=";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "false";
 
 		task ("Given an account with a buyer user is created") {

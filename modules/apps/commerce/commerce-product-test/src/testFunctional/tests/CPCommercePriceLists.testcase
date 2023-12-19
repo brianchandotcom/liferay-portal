@@ -1866,7 +1866,6 @@ definition {
 	@description = "COMMERCE-12301 | Verify that is possible to see the created UOMs in the item finder for Price List"
 	@priority = 4
 	test CanItemFinderShowsUOMPriceList {
-		property custom.properties = "feature.flag.COMMERCE-11287=true";
 		property portal.acceptance = "false";
 
 		task ("Given a Minium site with 2 UOMs is created") {

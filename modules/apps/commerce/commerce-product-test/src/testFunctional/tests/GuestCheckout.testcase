@@ -600,7 +600,6 @@ definition {
 	@description = "COMMERCE-12938. As a guest user, I want to be able to create a quote request order that must work with email populated and submit the quote request without notes on Minium site"
 	@priority = 5
 	test CanGuestUserCreateQuoteRequestOnMinium {
-		property custom.properties = "feature.flag.COMMERCE-11028=true";
 		property portal.acceptance = "true";
 
 		task ("Given a Minium site is created") {
@@ -746,7 +745,6 @@ definition {
 	@description = "COMMERCE-11277. As a Guest User, I can create a Quote Request in the Cart Summary by entering a personal message."
 	@priority = 5
 	test CanGuestUserCreateQuoteRequestOnSpeedwell {
-		property custom.properties = "feature.flag.COMMERCE-11028=true";
 		property portal.acceptance = "true";
 
 		task ("Given a Speedwell site is created") {

@@ -862,7 +862,7 @@ definition {
 	@description = "COMMERCE-12492. As a buyer, I can verify the order items are split on the Mini Cart for an SKU/UOM that applied to the Price On Application when the 'Show Separate Order Items' toggle is enabled"
 	@priority = 3
 	test CanVerifySplitOrderItemsWorksWhenSKUHasUOMAndPOA {
-		property custom.properties = "company.security.strangers.verify=false${line.separator}feature.flag.COMMERCE-11028=true${line.separator}feature.flag.COMMERCE-11287=true${line.separator}jsonws.web.service.paths.excludes=";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "false";
 
 		task ("Given the admin enables the toggle 'Show Separate Order Items' for Minium Portal channel") {

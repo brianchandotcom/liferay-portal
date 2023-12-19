@@ -1,7 +1,7 @@
 @component-name = "portal-commerce"
 definition {
 
-	property custom.properties = "company.security.strangers.verify=false${line.separator}feature.flag.COMMERCE-11287=true${line.separator}jsonws.web.service.paths.excludes=";
+	property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Product Info Management";
@@ -1202,7 +1202,6 @@ definition {
 	@description = "This is a test for COMMERCE-12461. If the feature flags for UOM and POA are set, then the admin can view the pricing section in the SKU details frame has been removed, including the POA switch"
 	@priority = 4
 	test CannotViewPricingInformationFromSKUDetails {
-		property custom.properties = "feature.flag.COMMERCE-11028=true${line.separator}feature.flag.COMMERCE-11287=true";
 		property portal.acceptance = "false";
 
 		task ("Given a Minium site is created") {
@@ -2438,79 +2437,6 @@ definition {
 					locator1 = "CommerceEntry#TABLE_ENTRY_ROW_FIELD_GENERIC",
 					value1 = "$ 2.00");
 			}
-		}
-	}
-
-	@description = "This is a test for COMMERCE-12462. If the feature flag for UOM is removed, for POA is set, then the admin can view the pricing section in the SKU's details frame, including the POA switch"
-	@priority = 4
-	test CanViewPricingInformationFromSKUDetailsWithoutFeatureFlag {
-		property custom.properties = "feature.flag.COMMERCE-11028=true${line.separator}feature.flag.COMMERCE-11287=false";
-		property portal.acceptance = "false";
-
-		task ("Given a Minium site is created") {
-			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
-		}
-
-		task ("When the admin navigates to Commerce → Products → ABS Sensor → SKUs → MIN93015 → Details tab") {
-			CommerceProducts.openProductsAdmin();
-
-			CommerceProducts.searchAndGoToProductEntry(entryProductName = "ABS Sensor");
-
-			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
-
-			CommerceNavigator.gotoEntry(entryName = "MIN93015");
-
-			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
-
-			CommerceEntry.gotoMenuTab(menuTab = "Details");
-		}
-
-		task ("Then the whole pricing section is not removed from the details, including the Price on Application switch") {
-			AssertVisible(
-				key_title = "Pricing",
-				locator1 = "Header#H4_TITLE");
-
-			for (var pricingEntry : list "Base Price,Promotion Price,Cost") {
-				AssertVisible(
-					key_text = ${pricingEntry},
-					locator1 = "TextInput#ANY");
-			}
-
-			AssertNotChecked.assertNotCheckedNotVisible(
-				key_toggleSwitchLabel = "Price on Application",
-				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
-		}
-
-		task ("And the Units of Measure tab is not present on the side panel") {
-			AssertElementNotPresent(
-				key_menuTab = "Units of Measure (UOM)",
-				locator1 = "CommerceEntry#MENU_TAB");
-		}
-
-		task ("When the admin clicks the plus button for creating a new SKU") {
-			Click(locator1 = "Icon#CLOSE");
-
-			SelectFrame.selectFrameTop();
-
-			Click(locator1 = "Button#PLUS");
-
-			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
-		}
-
-		task ("Then the whole pricing section is not removed from the side panel, including the Price on Application switch") {
-			AssertVisible(
-				key_title = "Pricing",
-				locator1 = "Header#H4_TITLE");
-
-			for (var pricingEntry : list "Base Price,Promotion Price,Cost") {
-				AssertVisible(
-					key_text = ${pricingEntry},
-					locator1 = "TextInput#ANY");
-			}
-
-			AssertNotChecked.assertNotCheckedNotVisible(
-				key_toggleSwitchLabel = "Price on Application",
-				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 		}
 	}
 

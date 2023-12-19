@@ -261,7 +261,6 @@ definition {
 	@description = "This is a test case for COMMERCE-10840. The all types of accounts can be created via API"
 	@priority = 3
 	test CanCreateAllTypesOfAccountsViaAPI {
-		property custom.properties = "feature.flag.COMMERCE-10890=true";
 		property portal.acceptance = "false";
 
 		task ("When a 'Guest' type of account is post and passed via API") {

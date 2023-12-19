@@ -13,7 +13,7 @@ import {Button, Flex, Form, Input} from 'antd';
 import React, {useState} from 'react';
 
 import {updateFolderTemplate} from '../../../../services/template-diagram.service';
-import {ApplicationUtil} from '../../../../utils/util';
+import {showError} from '../../../../utils/util';
 
 const EditNode = ({
 	chart,
@@ -45,7 +45,7 @@ const EditNode = ({
 		catch (error) {
 			setIsLoading(false);
 
-			ApplicationUtil.ShowError(error.message);
+			showError(error.message);
 		}
 	};
 

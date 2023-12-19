@@ -14,7 +14,7 @@ import {
 	getSiteDocumentFoldersPage,
 } from '../../../../services/folder-selector.service';
 import {createFolder} from '../../../../services/template-item-create-folder.service';
-import {ApplicationUtil} from '../../../../utils/util';
+import {showError, showSuccess} from '../../../../utils/util';
 
 import './template-item-create-folder.css';
 
@@ -98,7 +98,7 @@ const TemplateItemCreateFolder = ({templateID}) => {
 			setFolderTree(await loadFolderTree());
 		}
 		catch (error) {
-			ApplicationUtil.showError(error.message);
+			showError(error.message);
 		}
 		finally {
 			setIsLoading(false);
@@ -126,10 +126,10 @@ const TemplateItemCreateFolder = ({templateID}) => {
 							values.name
 						);
 
-						ApplicationUtil.showSuccess('Folder created!');
+						showSuccess('Folder created!');
 					}
 					catch (error) {
-						ApplicationUtil.showError(error.message);
+						showError(error.message);
 					}
 					finally {
 						form.resetFields();
@@ -138,11 +138,11 @@ const TemplateItemCreateFolder = ({templateID}) => {
 					}
 				},
 				(error) => {
-					ApplicationUtil.showError(error);
+					showError(error);
 				}
 			)
 			.catch((error) => {
-				ApplicationUtil.showError(error);
+				showError(error);
 			});
 	};
 

@@ -9,10 +9,20 @@ import React, {useContext} from 'react';
 
 import ChartContext from '../ChartContext';
 import {deleteOrganization, updateOrganization} from '../data/organizations';
-import {ACTION_KEYS} from '../utils/constants';
+import {
+	ACTION_KEYS,
+	INFO_PANEL_MODE_MAP,
+	INFO_PANEL_OPEN_EVENT,
+	MODEL_TYPE_MAP,
+} from '../utils/constants';
 import {hasPermission} from '../utils/index';
 
-export default function OrganizationMenuContent({closeMenu, data, parentData}) {
+export default function OrganizationMenuContent({
+	closeMenu,
+	data,
+	namespace,
+	parentData,
+}) {
 	const {chartInstanceRef} = useContext(ChartContext);
 
 	function handleDelete() {
@@ -30,6 +40,16 @@ export default function OrganizationMenuContent({closeMenu, data, parentData}) {
 		});
 	}
 
+	function handleEdit() {
+		Liferay.fire(`${namespace}${INFO_PANEL_OPEN_EVENT}`, {
+			data,
+			mode: INFO_PANEL_MODE_MAP.edit,
+			type: MODEL_TYPE_MAP.organization,
+		});
+
+		closeMenu();
+	}
+
 	function handleRemove() {
 		openConfirmModal({
 			message: sub(
@@ -40,7 +60,9 @@ export default function OrganizationMenuContent({closeMenu, data, parentData}) {
 			onConfirm: (isConfirmed) => {
 				if (isConfirmed) {
 					updateOrganization(data.id, {
-						parentOrganization: {},
+						parentOrganization: {
+							id: 0,
+						},
 					}).then(() => {
 						chartInstanceRef.current.deleteNodes([data], false);
 
@@ -51,9 +73,31 @@ export default function OrganizationMenuContent({closeMenu, data, parentData}) {
 		});
 	}
 
+	function handleView() {
+		Liferay.fire(`${namespace}${INFO_PANEL_OPEN_EVENT}`, {
+			data,
+			mode: INFO_PANEL_MODE_MAP.view,
+			type: MODEL_TYPE_MAP.organization,
+		});
+
+		closeMenu();
+	}
+
 	const actions = [];
 
-	if (hasPermission(data, ACTION_KEYS.organization.REMOVE)) {
+	if (Liferay.FeatureFlags['COMMERCE-12192']) {
+		actions.push(
+			<ClayDropDown.Item key="view" onClick={handleView}>
+				{Liferay.Language.get('view')}
+			</ClayDropDown.Item>
+		);
+	}
+
+	if (
+		parentData &&
+		parentData.type !== 'fakeRoot' &&
+		hasPermission(data, ACTION_KEYS.organization.REMOVE)
+	) {
 		actions.push(
 			<ClayDropDown.Item key="remove" onClick={handleRemove}>
 				{Liferay.Language.get('remove')}
@@ -61,10 +105,25 @@ export default function OrganizationMenuContent({closeMenu, data, parentData}) {
 		);
 	}
 
-	if (hasPermission(data, ACTION_KEYS.organization.DELETE)) {
+	if (
+		parentData &&
+		parentData.type !== 'fakeRoot' &&
+		hasPermission(data, ACTION_KEYS.organization.DELETE)
+	) {
 		actions.push(
 			<ClayDropDown.Item key="delete" onClick={handleDelete}>
 				{Liferay.Language.get('delete')}
+			</ClayDropDown.Item>
+		);
+	}
+
+	if (
+		Liferay.FeatureFlags['COMMERCE-12192'] &&
+		hasPermission(data, ACTION_KEYS.organization.UPDATE)
+	) {
+		actions.push(
+			<ClayDropDown.Item key="edit" onClick={handleEdit}>
+				{Liferay.Language.get('edit')}
 			</ClayDropDown.Item>
 		);
 	}

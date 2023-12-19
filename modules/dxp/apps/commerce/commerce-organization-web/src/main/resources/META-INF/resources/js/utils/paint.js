@@ -225,15 +225,30 @@ export function fillEntityNode(nodeEnter, spritemap, openMenu) {
 
 	const nodesWithMenu = nodeEnter.filter((chartItem) => {
 		if (!chartItem.parent || chartItem.parent.data.type === 'fakeRoot') {
-			return false;
+			chartItem.data.isRootNode = true;
+
+			return (
+				Liferay.FeatureFlags['COMMERCE-12192'] &&
+				hasPermissions(chartItem.data, [
+					ACTION_KEYS[chartItem.data.type].UPDATE,
+					ACTION_KEYS[chartItem.data.type].VIEW,
+				])
+			);
 		}
 
-		return hasPermissions(chartItem.data, [
-			ACTION_KEYS[chartItem.data.type].DELETE,
-			ACTION_KEYS[chartItem.data.type].REMOVE,
-			ACTION_KEYS[chartItem.data.type].UPDATE,
-			ACTION_KEYS[chartItem.data.type].VIEW,
-		]);
+		chartItem.data.isRootNode = false;
+
+		return (
+			hasPermissions(chartItem.data, [
+				ACTION_KEYS[chartItem.data.type].DELETE,
+				ACTION_KEYS[chartItem.data.type].REMOVE,
+			]) ||
+			(Liferay.FeatureFlags['COMMERCE-12192'] &&
+				hasPermissions(chartItem.data, [
+					ACTION_KEYS[chartItem.data.type].UPDATE,
+					ACTION_KEYS[chartItem.data.type].VIEW,
+				]))
+		);
 	});
 
 	const menuWrapper = nodesWithMenu

@@ -5,21 +5,17 @@
 
 package com.liferay.document.library.internal.service;
 
-import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
+import com.liferay.document.library.internal.DLAssetDisplayPageUtil;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceWrapper;
-import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
-import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceWrapper;
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.subscription.service.SubscriptionLocalService;
 
 import java.io.File;
@@ -45,7 +41,8 @@ public class SubscriptionDLAppLocalServiceWrapper
 		throws PortalException {
 
 		serviceContext.setAttribute(
-			"hasAssetDisplayPage", _hasAssetDisplayPage(serviceContext));
+			"hasAssetDisplayPage",
+			DLAssetDisplayPageUtil.hasAssetDisplayPage(serviceContext));
 
 		return super.addFileEntry(
 			externalReferenceCode, userId, repositoryId, folderId,
@@ -62,7 +59,8 @@ public class SubscriptionDLAppLocalServiceWrapper
 		throws PortalException {
 
 		serviceContext.setAttribute(
-			"hasAssetDisplayPage", _hasAssetDisplayPage(serviceContext));
+			"hasAssetDisplayPage",
+			DLAssetDisplayPageUtil.hasAssetDisplayPage(serviceContext));
 
 		return super.addFileEntry(
 			externalReferenceCode, userId, repositoryId, folderId,
@@ -79,7 +77,8 @@ public class SubscriptionDLAppLocalServiceWrapper
 		throws PortalException {
 
 		serviceContext.setAttribute(
-			"hasAssetDisplayPage", _hasAssetDisplayPage(serviceContext));
+			"hasAssetDisplayPage",
+			DLAssetDisplayPageUtil.hasAssetDisplayPage(serviceContext));
 
 		return super.addFileEntry(
 			externalReferenceCode, userId, repositoryId, folderId,
@@ -97,7 +96,8 @@ public class SubscriptionDLAppLocalServiceWrapper
 		throws PortalException {
 
 		serviceContext.setAttribute(
-			"hasAssetDisplayPage", _hasAssetDisplayPage(serviceContext));
+			"hasAssetDisplayPage",
+			DLAssetDisplayPageUtil.hasAssetDisplayPage(serviceContext));
 
 		return super.addFileEntry(
 			externalReferenceCode, userId, repositoryId, folderId,
@@ -177,7 +177,8 @@ public class SubscriptionDLAppLocalServiceWrapper
 		throws PortalException {
 
 		serviceContext.setAttribute(
-			"hasAssetDisplayPage", _hasAssetDisplayPage(serviceContext));
+			"hasAssetDisplayPage",
+			DLAssetDisplayPageUtil.hasAssetDisplayPage(serviceContext));
 
 		return super.updateFileEntry(
 			userId, fileEntryId, sourceFileName, mimeType, title, urlTitle,
@@ -195,7 +196,8 @@ public class SubscriptionDLAppLocalServiceWrapper
 		throws PortalException {
 
 		serviceContext.setAttribute(
-			"hasAssetDisplayPage", _hasAssetDisplayPage(serviceContext));
+			"hasAssetDisplayPage",
+			DLAssetDisplayPageUtil.hasAssetDisplayPage(serviceContext));
 
 		return super.updateFileEntry(
 			userId, fileEntryId, sourceFileName, mimeType, title, urlTitle,
@@ -213,52 +215,14 @@ public class SubscriptionDLAppLocalServiceWrapper
 		throws PortalException {
 
 		serviceContext.setAttribute(
-			"hasAssetDisplayPage", _hasAssetDisplayPage(serviceContext));
+			"hasAssetDisplayPage",
+			DLAssetDisplayPageUtil.hasAssetDisplayPage(serviceContext));
 
 		return super.updateFileEntry(
 			userId, fileEntryId, sourceFileName, mimeType, title, urlTitle,
 			description, changeLog, dlVersionNumberIncrease, inputStream, size,
 			expirationDate, reviewDate, serviceContext);
 	}
-
-	private boolean _hasAssetDisplayPage(ServiceContext serviceContext) {
-		int displayPageType = ParamUtil.getInteger(
-			serviceContext, "displayPageType",
-			AssetDisplayPageConstants.TYPE_DEFAULT);
-
-		if (displayPageType == AssetDisplayPageConstants.TYPE_DEFAULT) {
-			long fileEntryTypeId = ParamUtil.getLong(
-				serviceContext, "fileEntryTypeId",
-				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT);
-
-			LayoutPageTemplateEntry layoutPageTemplateEntry =
-				_layoutPageTemplateEntryService.
-					fetchDefaultLayoutPageTemplateEntry(
-						serviceContext.getScopeGroupId(),
-						_portal.getClassNameId(FileEntry.class),
-						fileEntryTypeId);
-
-			if (layoutPageTemplateEntry == null) {
-				return false;
-			}
-		}
-		else if (displayPageType == AssetDisplayPageConstants.TYPE_NONE) {
-			return false;
-		}
-		else if (displayPageType == AssetDisplayPageConstants.TYPE_SPECIFIC) {
-			if (ParamUtil.getLong(serviceContext, "assetDisplayPageId") == 0) {
-				return false;
-			}
-		}
-
-		return true;
-	}
-
-	@Reference
-	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;
-
-	@Reference
-	private Portal _portal;
 
 	@Reference
 	private SubscriptionLocalService _subscriptionLocalService;

@@ -6,6 +6,7 @@
 package com.liferay.source.formatter.check;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.BNDSettings;
 import com.liferay.source.formatter.check.util.JavaSourceUtil;
@@ -75,13 +76,17 @@ public class JavaAccessModifierCheck extends BaseJavaTermCheck {
 			String accessModifier = javaVariable.getAccessModifier();
 			String variableContent = javaVariable.getContent();
 
-			if (variableContent.contains("@Reference") &&
-				accessModifier.equals("private")) {
+			if (accessModifier.equals("private") &&
+				variableContent.contains("@Reference")) {
 
 				addMessage(
 					fileName,
-					"The access modifier of variable '" +
-						javaVariable.getName() + "' should be 'protected'.");
+					StringBundler.concat(
+						"The access modifier of variable '",
+						javaVariable.getName(),
+						"' should be protected as the subclass has ",
+						"'-dsannotations-options: inherit' in bnd.bnd"),
+					javaVariable.getLineNumber());
 			}
 		}
 

@@ -30,17 +30,12 @@ function LogoSelector({
 	});
 
 	const onChangeLogo = () => {
-		Liferay.Util.openWindow({
-			cache: false,
-			dialog: {
-				destroyOnHide: true,
-			},
-			dialogIframe: {
-				bodyCssClass: 'dialog-with-footer',
-			},
+		Liferay.Util.openModal({
 			id: `${namespace}changeLogo`,
+			iframeBodyCssClass: 'dialog-with-footer',
+			size: 'full-screen',
 			title: sub(Liferay.Language.get('upload-x'), label),
-			uri: selectLogoURL.replace(
+			url: selectLogoURL.replace(
 				escape('[$CURRENT_LOGO_URL$]'),
 				escape(logoURL)
 			),

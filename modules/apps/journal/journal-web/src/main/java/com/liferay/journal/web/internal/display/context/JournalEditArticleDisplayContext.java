@@ -1570,8 +1570,8 @@ public class JournalEditArticleDisplayContext {
 		portletDisplay.setURLBackTitle(
 			ParamUtil.getString(_httpServletRequest, "backURLTitle"));
 
-		if (Validator.isNotNull(getRedirect())) {
-			portletDisplay.setURLBack(getRedirect());
+		if (Validator.isNotNull(getBackURL())) {
+			portletDisplay.setURLBack(getBackURL());
 		}
 		else if ((getClassNameId() ==
 					JournalArticleConstants.CLASS_NAME_ID_DEFAULT) &&

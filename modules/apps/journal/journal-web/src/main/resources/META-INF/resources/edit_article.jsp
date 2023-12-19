@@ -111,7 +111,7 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 								<clay:link
 									borderless="<%= true %>"
 									displayType="secondary"
-									href="<%= journalEditArticleDisplayContext.getRedirect() %>"
+									href="<%= journalEditArticleDisplayContext.getBackURL() %>"
 									label="cancel"
 									type="button"
 								/>

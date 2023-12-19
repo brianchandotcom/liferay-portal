@@ -84,6 +84,11 @@ public class FaroSubscriptionConstants {
 					ProductConstants.ENTERPRISE_TRACKED_PAGES_PRODUCT_NAME, 0,
 					5000000, 250)
 			).put(
+				ProductConstants.LXC_BUSINESS_PRODUCT_NAME,
+				new FaroSubscriptionPlan(
+					null, ProductConstants.LXC_BUSINESS_PRODUCT_NAME, 10000,
+					5000000, 7500)
+			).put(
 				ProductConstants.LXC_CSP_1K_USERS_EXTRA_USER_PRODUCT_NAME,
 				new FaroSubscriptionPlan(
 					ProductConstants.LXC_CSP_1K_USERS_PRODUCT_NAME,
@@ -153,6 +158,16 @@ public class FaroSubscriptionConstants {
 				ProductConstants.LXC_CSP_CUSTOM_PRODUCT_NAME,
 				new FaroSubscriptionPlan(
 					null, ProductConstants.LXC_CSP_CUSTOM_PRODUCT_NAME, -1, -1,
+					0)
+			).put(
+				ProductConstants.LXC_ENTERPRISE_PRODUCT_NAME,
+				new FaroSubscriptionPlan(
+					null, ProductConstants.LXC_ENTERPRISE_PRODUCT_NAME, 100000,
+					60000000, 20000)
+			).put(
+				ProductConstants.LXC_PRO_PRODUCT_NAME,
+				new FaroSubscriptionPlan(
+					null, ProductConstants.LXC_PRO_PRODUCT_NAME, 1000, 300000,
 					0)
 			).put(
 				ProductConstants.LXC_SUBSCRIPTION_ENGAGE_SITE_PRODUCT_NAME,

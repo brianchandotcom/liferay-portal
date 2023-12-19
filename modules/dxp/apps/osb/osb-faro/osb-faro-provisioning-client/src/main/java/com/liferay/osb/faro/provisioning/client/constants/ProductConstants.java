@@ -55,6 +55,10 @@ public class ProductConstants {
 	public static final String ENTERPRISE_TRACKED_PAGES_PRODUCT_NAME =
 		"Liferay Analytics Cloud Enterprise Tracked Pages";
 
+	public static final String LXC_BUSINESS_PRODUCT_ENTRY_ID = "KOR-6218822";
+
+	public static final String LXC_BUSINESS_PRODUCT_NAME = "LXC Business";
+
 	public static final String LXC_CSP_1K_USERS_ENTRY_ID = "KOR-4891509";
 
 	public static final String LXC_CSP_1K_USERS_EXTRA_USER_ENTRY_ID =
@@ -132,6 +136,14 @@ public class ProductConstants {
 	public static final String LXC_CSP_CUSTOM_PRODUCT_NAME =
 		"LXC - CSP - Custom User Tier";
 
+	public static final String LXC_ENTERPRISE_PRODUCT_ENTRY_ID = "KOR-6218594";
+
+	public static final String LXC_ENTERPRISE_PRODUCT_NAME = "LXC Enterprise";
+
+	public static final String LXC_PRO_PRODUCT_ENTRY_ID = "KOR-6218566";
+
+	public static final String LXC_PRO_PRODUCT_NAME = "LXC Pro";
+
 	public static final String LXC_SUBSCRIPTION_ENGAGE_SITE_ENTRY_ID =
 		"KOR-4891133";
 
@@ -192,6 +204,8 @@ public class ProductConstants {
 		ENTERPRISE_TRACKED_PAGES_PRODUCT_ENTRY_ID,
 		ENTERPRISE_TRACKED_PAGES_PRODUCT_NAME
 	).put(
+		LXC_BUSINESS_PRODUCT_ENTRY_ID, LXC_BUSINESS_PRODUCT_NAME
+	).put(
 		LXC_CSP_1K_USERS_ENTRY_ID, LXC_CSP_1K_USERS_PRODUCT_NAME
 	).put(
 		LXC_CSP_1K_USERS_EXTRA_USER_ENTRY_ID,
@@ -226,6 +240,10 @@ public class ProductConstants {
 	).put(
 		LXC_CSP_CUSTOM_EXTRA_USER_ENTRY_ID,
 		LXC_CSP_CUSTOM_EXTRA_USER_PRODUCT_NAME
+	).put(
+		LXC_ENTERPRISE_PRODUCT_ENTRY_ID, LXC_ENTERPRISE_PRODUCT_NAME
+	).put(
+		LXC_PRO_PRODUCT_ENTRY_ID, LXC_PRO_PRODUCT_NAME
 	).put(
 		LXC_SUBSCRIPTION_ENGAGE_SITE_ENTRY_ID,
 		LXC_SUBSCRIPTION_ENGAGE_SITE_PRODUCT_NAME

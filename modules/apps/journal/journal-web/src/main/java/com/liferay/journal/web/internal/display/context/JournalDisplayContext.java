@@ -944,22 +944,6 @@ public class JournalDisplayContext {
 		return portletURL;
 	}
 
-	public String getRedirect() {
-		if (_redirect != null) {
-			return _redirect;
-		}
-
-		_redirect = _themeDisplay.getURLCurrent();
-
-		if (FeatureFlagManagerUtil.isEnabled("LPS-196768")) {
-			_redirect = PortletURLBuilder.createRenderURL(
-				_liferayPortletResponse
-			).buildString();
-		}
-
-		return _redirect;
-	}
-
 	public int getRestrictionType() {
 		if (_restrictionType != null) {
 			return _restrictionType;
@@ -2299,7 +2283,6 @@ public class JournalDisplayContext {
 	private String _orderByType;
 	private Long _parentFolderId;
 	private final PortalPreferences _portalPreferences;
-	private String _redirect;
 	private Integer _restrictionType;
 	private SearchContainer<?> _searchContainer;
 	private String _searchIn;

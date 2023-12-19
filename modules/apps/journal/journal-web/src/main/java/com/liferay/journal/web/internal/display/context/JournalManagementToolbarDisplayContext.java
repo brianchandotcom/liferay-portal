@@ -1060,7 +1060,22 @@ public class JournalManagementToolbarDisplayContext
 							).setMVCPath(
 								"/edit_article.jsp"
 							).setRedirect(
-								_journalDisplayContext.getRedirect()
+								() -> {
+									if (FeatureFlagManagerUtil.isEnabled(
+											"LPS-196768") &&
+										(_journalDisplayContext.isSearch() ||
+										 _journalDisplayContext.
+											 isFilterApplied())) {
+
+										return PortletURLBuilder.
+											createRenderURL(
+												liferayPortletResponse
+											).buildString();
+									}
+
+									return PortalUtil.getCurrentURL(
+										httpServletRequest);
+								}
 							).setBackURL(
 								_themeDisplay.getURLCurrent()
 							).setParameter(

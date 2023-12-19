@@ -3,7 +3,7 @@ import dom from 'metal-dom';
 import getCN from 'classnames';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Align} from 'metal-position';
+import {align, POSITIONS} from 'shared/util/align';
 import {debounce, isNil, noop, uniqueId} from 'lodash';
 import {PropTypes} from 'prop-types';
 
@@ -19,14 +19,14 @@ export const ALIGNMENTS = [
 ];
 
 const ALIGNMENTS_MAP = {
-	bottomCenter: Align.BottomCenter,
-	bottomLeft: Align.BottomLeft,
-	bottomRight: Align.BottomRight,
-	leftCenter: Align.LeftCenter,
-	rightCenter: Align.RightCenter,
-	topCenter: Align.TopCenter,
-	topLeft: Align.TopLeft,
-	topRight: Align.TopRight
+	bottomCenter: POSITIONS.BottomCenter,
+	bottomLeft: POSITIONS.BottomLeft,
+	bottomRight: POSITIONS.BottomRight,
+	leftCenter: POSITIONS.LeftCenter,
+	rightCenter: POSITIONS.RightCenter,
+	topCenter: POSITIONS.TopCenter,
+	topLeft: POSITIONS.TopLeft,
+	topRight: POSITIONS.TopRight
 };
 
 /**
@@ -187,7 +187,7 @@ export default class Overlay extends React.Component {
 		);
 
 		if (contentNode) {
-			const position = Align.align(
+			const position = align(
 				contentNode,
 				elementNode,
 				ALIGNMENTS_MAP[alignment],
@@ -294,20 +294,20 @@ export default class Overlay extends React.Component {
 
 	setOffset(node, position, offset) {
 		switch (position) {
-			case Align.BottomCenter:
-			case Align.BottomLeft:
-			case Align.BottomRight:
+			case POSITIONS.BottomCenter:
+			case POSITIONS.BottomLeft:
+			case POSITIONS.BottomRight:
 				node.style.transform = `translateY(${offset}px)`;
 				break;
-			case Align.LeftCenter:
+			case POSITIONS.LeftCenter:
 				node.style.transform = `translateX(-${offset}px)`;
 				break;
-			case Align.RightCenter:
+			case POSITIONS.RightCenter:
 				node.style.transform = `translateX(${offset}px)`;
 				break;
-			case Align.TopCenter:
-			case Align.TopLeft:
-			case Align.TopRight:
+			case POSITIONS.TopCenter:
+			case POSITIONS.TopLeft:
+			case POSITIONS.TopRight:
 				node.style.transform = `translateY(-${offset}px)`;
 				break;
 			default:
@@ -381,5 +381,3 @@ export default class Overlay extends React.Component {
 		);
 	}
 }
-
-export {Align} from 'metal-position';

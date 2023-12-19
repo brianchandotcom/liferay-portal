@@ -1,4 +1,4 @@
-import {Align} from 'metal-position';
+import {POSITIONS as ALIGN_POSITIONS} from './align';
 
 export const DEVELOPER_MODE = FARO_DEV_MODE;
 
@@ -69,17 +69,17 @@ export const LANGUAGES = [
 ];
 
 /**
- * Metal-Position Alignments
+ * Alignments
  */
 export const ALIGNMENTS_MAP = {
-	bottom: Align.Bottom,
-	'bottom-left': Align.BottomLeft,
-	'bottom-right': Align.BottomRight,
-	left: Align.Left,
-	right: Align.Right,
-	top: Align.Top,
-	'top-left': Align.TopLeft,
-	'top-right': Align.TopRight
+	bottom: ALIGN_POSITIONS.BottomCenter,
+	'bottom-left': ALIGN_POSITIONS.BottomLeft,
+	'bottom-right': ALIGN_POSITIONS.BottomRight,
+	left: ALIGN_POSITIONS.LeftCenter,
+	right: ALIGN_POSITIONS.RightCenter,
+	top: ALIGN_POSITIONS.TopCenter,
+	'top-left': ALIGN_POSITIONS.TopLeft,
+	'top-right': ALIGN_POSITIONS.TopRight
 };
 
 export const POSITIONS = [

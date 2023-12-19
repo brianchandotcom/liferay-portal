@@ -1,4 +1,4 @@
-import {Align} from 'metal-position';
+import {align} from './align';
 import {
 	ALIGNMENTS_MAP,
 	POSITIONS,
@@ -180,11 +180,7 @@ export const getAlignPosition = (source, target, suggestedPosition) => {
 		suggestedPosition = 'top';
 	}
 
-	const position = Align.align(
-		source,
-		target,
-		ALIGNMENTS_MAP[suggestedPosition]
-	);
+	const position = align(source, target, ALIGNMENTS_MAP[suggestedPosition]);
 
 	return POSITIONS[position];
 };

@@ -24,6 +24,10 @@ public interface AssetDisplayPageFriendlyURLProvider {
 			ThemeDisplay themeDisplay)
 		throws PortalException;
 
+	public <T> String getFriendlyURL(
+			InfoItemReference infoItemReference, T t, ThemeDisplay themeDisplay)
+		throws PortalException;
+
 	public String getFriendlyURL(
 			InfoItemReference infoItemReference, ThemeDisplay themeDisplay)
 		throws PortalException;

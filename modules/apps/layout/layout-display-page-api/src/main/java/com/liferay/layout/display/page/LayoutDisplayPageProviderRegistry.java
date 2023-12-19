@@ -12,8 +12,8 @@ import java.util.List;
  */
 public interface LayoutDisplayPageProviderRegistry {
 
-	public LayoutDisplayPageProvider<?> getLayoutDisplayPageProviderByClassName(
-		String className);
+	public <T> LayoutDisplayPageProvider<T>
+		getLayoutDisplayPageProviderByClassName(String className);
 
 	public LayoutDisplayPageProvider<?>
 		getLayoutDisplayPageProviderByURLSeparator(String urlSeparator);

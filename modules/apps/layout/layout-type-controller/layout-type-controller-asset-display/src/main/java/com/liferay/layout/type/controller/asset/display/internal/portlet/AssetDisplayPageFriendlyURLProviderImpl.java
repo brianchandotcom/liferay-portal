@@ -49,6 +49,43 @@ public class AssetDisplayPageFriendlyURLProviderImpl
 	}
 
 	@Override
+	public <T> String getFriendlyURL(
+			InfoItemReference infoItemReference, T t, ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		if (t == null) {
+			return getFriendlyURL(infoItemReference, themeDisplay);
+		}
+
+		LayoutDisplayPageProvider<T> layoutDisplayPageProvider =
+			_layoutDisplayPageProviderRegistry.
+				getLayoutDisplayPageProviderByClassName(
+					_infoSearchClassMapperRegistry.getClassName(
+						infoItemReference.getClassName()));
+
+		if (layoutDisplayPageProvider == null) {
+			return null;
+		}
+
+		LayoutDisplayPageObjectProvider<T> layoutDisplayPageObjectProvider =
+			layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(t);
+
+		if (layoutDisplayPageObjectProvider == null) {
+			layoutDisplayPageObjectProvider =
+				layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
+					infoItemReference);
+		}
+
+		if (layoutDisplayPageObjectProvider == null) {
+			return null;
+		}
+
+		return _getFriendlyURL(
+			layoutDisplayPageProvider, layoutDisplayPageObjectProvider,
+			themeDisplay.getLocale(), themeDisplay);
+	}
+
+	@Override
 	public String getFriendlyURL(
 			InfoItemReference infoItemReference, ThemeDisplay themeDisplay)
 		throws PortalException {
@@ -79,6 +116,17 @@ public class AssetDisplayPageFriendlyURLProviderImpl
 		if (layoutDisplayPageObjectProvider == null) {
 			return null;
 		}
+
+		return _getFriendlyURL(
+			layoutDisplayPageProvider, layoutDisplayPageObjectProvider, locale,
+			themeDisplay);
+	}
+
+	private String _getFriendlyURL(
+			LayoutDisplayPageProvider<?> layoutDisplayPageProvider,
+			LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider,
+			Locale locale, ThemeDisplay themeDisplay)
+		throws PortalException {
 
 		long groupId = themeDisplay.getScopeGroupId();
 

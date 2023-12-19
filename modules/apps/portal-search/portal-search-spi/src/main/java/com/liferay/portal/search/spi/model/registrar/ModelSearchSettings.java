@@ -15,6 +15,8 @@ public interface ModelSearchSettings {
 
 	public String getClassName();
 
+	public long getCompanyId();
+
 	public String[] getDefaultSelectedFieldNames();
 
 	public String[] getDefaultSelectedLocalizedFieldNames();

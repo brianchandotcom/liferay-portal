@@ -1495,7 +1495,7 @@ definition {
 
 		ClickNoError(
 			key_text = "times-circle",
-			locator1 = "Icon#ANY");
+			locator1 = "ManagementBar#ANY_ICON");
 
 		AssertConfirm.waitForConfirmation(value1 = "Are you sure you want to remove the selected organizations?");
 

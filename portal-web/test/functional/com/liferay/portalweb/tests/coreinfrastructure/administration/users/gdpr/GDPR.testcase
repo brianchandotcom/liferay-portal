@@ -1649,7 +1649,7 @@ definition {
 		}
 
 		task ("Filter by Successful and assert that only succesful exports are listed") {
-			ManagementBar.setFilterAndOrder(orderBy = "Successful");
+			ManagementBar.setFilterAndOrder(filterBy = "Successful");
 
 			AssertElementPresent(
 				key_status = "Successful",
@@ -1665,7 +1665,7 @@ definition {
 		}
 
 		task ("Filter by name and assert that data exports are listed alphabetically") {
-			ManagementBar.sortAssets(sortDirection = "Ascending");
+			ManagementBar.sortAssets(sortDirection = "Descending");
 
 			ManagementBar.setFilterAndOrder(orderBy = "Name");
 
@@ -1850,7 +1850,7 @@ definition {
 		for (var orderBy : list "Name,Description") {
 			ManagementBar.setFilterAndOrder(orderBy = ${orderBy});
 
-			ManagementBar.sortAssets(sortDirection = "Ascending");
+			ManagementBar.sortAssets(sortDirection = "Descending");
 
 			AssertTextEquals.assertPartialText(
 				key_rowNumber = 1,
@@ -1862,7 +1862,7 @@ definition {
 				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
 				value1 = "Document_1.jpeg");
 
-			ManagementBar.sortAssets(sortDirection = "Descending");
+			ManagementBar.sortAssets(sortDirection = "Ascending");
 
 			AssertTextEquals.assertPartialText(
 				key_rowNumber = 1,

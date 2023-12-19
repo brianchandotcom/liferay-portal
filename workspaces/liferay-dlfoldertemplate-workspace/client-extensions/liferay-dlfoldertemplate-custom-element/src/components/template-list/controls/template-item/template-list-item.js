@@ -9,9 +9,6 @@ import moment from 'moment/moment';
 import React, {useState} from 'react';
 
 import {deleteFolderTemplateInformation} from '../../../../services/template-list.service';
-import {ApplicationUtil} from '../../../../utils/appUtil';
-
-const spritemap = ApplicationUtil.getDefaultSpriteMap();
 
 const TemplateItem = (props) => {
 	const item = props.item;
@@ -69,7 +66,6 @@ const TemplateItem = (props) => {
 						onClick={() => {
 							openCreateFolder(item);
 						}}
-						spritemap={spritemap}
 						symbol="folder"
 						title="Delete"
 					/>
@@ -80,7 +76,6 @@ const TemplateItem = (props) => {
 						onClick={() => {
 							openDesigner(item);
 						}}
-						spritemap={spritemap}
 						symbol="diagram"
 						title="Delete"
 					/>
@@ -89,7 +84,6 @@ const TemplateItem = (props) => {
 						className="lfr-portal-tooltip"
 						disabled={isLoading}
 						onClick={deleteTemplateAction}
-						spritemap={spritemap}
 						symbol="trash"
 						title="Settings"
 					/>

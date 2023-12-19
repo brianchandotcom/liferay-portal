@@ -51,7 +51,7 @@ const TemplateItemCreateFolder = ({templateID}) => {
 			return normalizedFolders;
 		};
 
-		const scopeGroupId = ApplicationUtil.getLiferay().ThemeDisplay.getScopeGroupId();
+		const scopeGroupId = Liferay.ThemeDisplay.getScopeGroupId();
 
 		const root = (await getSiteDocumentFoldersPage(scopeGroupId)).items.map(
 			(folder) => ({

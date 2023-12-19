@@ -52,7 +52,7 @@ public class CommercePaymentTableFDSView extends BaseTableFDSView {
 		).add(
 			"relatedItemId", "related-id"
 		).add(
-			"paymentStatusInfo", "status",
+			"paymentStatusStatus", "status",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
 				"label")
 		).build();

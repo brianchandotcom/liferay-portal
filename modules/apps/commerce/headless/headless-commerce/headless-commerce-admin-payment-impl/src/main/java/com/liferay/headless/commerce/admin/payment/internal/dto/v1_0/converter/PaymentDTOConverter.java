@@ -87,7 +87,7 @@ public class PaymentDTOConverter
 				paymentIntegrationType =
 					commercePaymentEntry.getPaymentIntegrationType();
 				paymentStatus = commercePaymentEntry.getPaymentStatus();
-				paymentStatusInfo = _toPaymentStatusInfo(
+				paymentStatusStatus = _toPaymentStatusStatus(
 					commercePaymentEntry.getPaymentStatus(),
 					CommercePaymentEntryConstants.getPaymentStatusLabel(
 						commercePaymentEntry.getPaymentStatus()),
@@ -125,15 +125,15 @@ public class PaymentDTOConverter
 		return _commercePriceFormatter.format(commerceCurrency, amount, locale);
 	}
 
-	private Status _toPaymentStatusInfo(
-		int paymentStatus, String commercePaymentEntryWorkflowStatusLabel,
-		String commercePaymentEntryWorkflowStatusLabelI18n) {
+	private Status _toPaymentStatusStatus(
+		int paymentStatus, String commercePaymentEntryPaymentStatusLabel,
+		String commercePaymentEntryPaymentStatusLabelI18n) {
 
 		return new Status() {
 			{
 				code = paymentStatus;
-				label = commercePaymentEntryWorkflowStatusLabel;
-				label_i18n = commercePaymentEntryWorkflowStatusLabelI18n;
+				label = commercePaymentEntryPaymentStatusLabel;
+				label_i18n = commercePaymentEntryPaymentStatusLabelI18n;
 			}
 		};
 	}

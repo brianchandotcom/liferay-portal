@@ -25,10 +25,6 @@ definition {
 			ACUtils.addSiteAndPage();
 		}
 
-		task ("Connect the DXP to AC") {
-			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
-		}
-
 		task ("Add 2 new users") {
 			for (var n : list "1,2") {
 				JSONUser.addUser(
@@ -39,8 +35,8 @@ definition {
 			}
 		}
 
-		task ("Sync the Contact Data") {
-			ACDXPSettings.syncNewContactData();
+		task ("Connect the DXP to AC") {
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
 	}
 

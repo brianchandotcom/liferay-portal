@@ -195,7 +195,7 @@ exports[`TopPagesCard renders 1`] = `
     >
       <a
         class="button-root btn btn-outline-borderless btn-sm btn-outline-secondary"
-        href="/?rangeKey=30"
+        href="/link-to-the-next-page?rangeKey=30"
       >
         view pages
         <svg

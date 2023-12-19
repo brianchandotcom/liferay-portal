@@ -6,10 +6,13 @@
 package com.liferay.osb.faro.web.internal.controller.api;
 
 import com.liferay.oauth2.provider.scope.RequiresNoScope;
+import com.liferay.osb.faro.engine.client.exception.InvalidFilterException;
 import com.liferay.osb.faro.model.FaroProject;
 import com.liferay.osb.faro.util.FaroThreadLocal;
 import com.liferay.osb.faro.web.internal.context.GroupInfo;
 import com.liferay.osb.faro.web.internal.controller.BaseFaroController;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -42,6 +45,7 @@ import javax.ws.rs.core.StreamingOutput;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marcellus Tavares
@@ -136,6 +140,21 @@ public class ReportController extends BaseFaroController {
 				faroProject, Collections.emptyMap(), path, queryParameters,
 				Map.class);
 		}
+		catch (InvalidFilterException invalidFilterException) {
+			JSONObject jsonObject = _jsonFactory.createJSONObject(
+				invalidFilterException.getMessage());
+
+			Response.ResponseBuilder responseBuilder = Response.status(
+				Response.Status.BAD_REQUEST);
+
+			return responseBuilder.entity(
+				HashMapBuilder.put(
+					"description", jsonObject.getString("message")
+				).put(
+					"message", "Bad Request"
+				)
+			).build();
+		}
 		catch (Exception exception) {
 			_log.error(exception);
 
@@ -216,5 +235,8 @@ public class ReportController extends BaseFaroController {
 	private static final ReportControllerResponseFactory
 		_reportControllerResponseFactory =
 			new ReportControllerResponseFactory();
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 }

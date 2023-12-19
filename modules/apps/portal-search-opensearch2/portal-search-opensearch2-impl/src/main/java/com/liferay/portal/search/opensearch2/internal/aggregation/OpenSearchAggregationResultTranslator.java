@@ -523,7 +523,7 @@ public class OpenSearchAggregationResultTranslator
 	public PercentileRanksAggregationResult visit(
 		PercentileRanksAggregation percentileRanksAggregation) {
 
-		Percentiles percentiles;
+		Percentiles percentiles = null;
 
 		if (_aggregate.isHdrPercentileRanks()) {
 			HdrPercentileRanksAggregate hdrPercentileRanksAggregate =

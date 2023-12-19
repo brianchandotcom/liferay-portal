@@ -125,7 +125,7 @@ public class PortalInstances {
 		}
 
 		if (companyId <= 0) {
-			companyId = getDefaultCompanyId();
+			companyId = PortalInstancePool.getDefaultCompanyId();
 
 			if (_log.isDebugEnabled()) {
 				_log.debug("Default company ID " + companyId);

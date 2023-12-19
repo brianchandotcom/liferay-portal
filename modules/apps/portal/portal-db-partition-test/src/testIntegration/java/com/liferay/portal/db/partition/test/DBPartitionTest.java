@@ -12,6 +12,7 @@ import com.liferay.portal.db.partition.util.DBPartitionUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -28,7 +29,6 @@ import com.liferay.portal.model.impl.ResourceActionImpl;
 import com.liferay.portal.service.impl.ClassNameLocalServiceImpl;
 import com.liferay.portal.service.impl.ResourceActionLocalServiceImpl;
 import com.liferay.portal.test.rule.Inject;
-import com.liferay.portal.util.PortalInstances;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -398,7 +398,7 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 
 		dbPartitionUpgradeProcess.upgrade();
 
-		long[] expectedCompanyIds = PortalInstances.getCompanyIdsBySQL();
+		long[] expectedCompanyIds = PortalInstancePool.getCompanyIds();
 
 		Arrays.sort(expectedCompanyIds);
 

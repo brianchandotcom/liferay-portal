@@ -9,6 +9,7 @@ import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -33,7 +34,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.service.impl.GroupLocalServiceImpl;
-import com.liferay.portal.util.PortalInstances;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -342,7 +342,7 @@ public class VerifyGroup extends VerifyProcess {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			CompanyLocalServiceUtil.forEachCompanyId(
 				companyId -> GroupLocalServiceUtil.rebuildTree(companyId),
-				PortalInstances.getCompanyIdsBySQL());
+				PortalInstancePool.getCompanyIds());
 		}
 	}
 

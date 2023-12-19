@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.CurrentConnectionUtil;
 import com.liferay.portal.kernel.db.partition.DBPartition;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
@@ -34,7 +35,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.spring.hibernate.DialectDetector;
-import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PropsValues;
 
 import java.sql.Connection;
@@ -585,7 +585,7 @@ public class DBPartitionUtil {
 
 	private static List<Long> _getCompanyIds() throws SQLException {
 		if (_companyIds.isEmpty()) {
-			for (long companyId : PortalInstances.getCompanyIdsBySQL()) {
+			for (long companyId : PortalInstancePool.getCompanyIds()) {
 				_companyIds.add(companyId);
 			}
 		}

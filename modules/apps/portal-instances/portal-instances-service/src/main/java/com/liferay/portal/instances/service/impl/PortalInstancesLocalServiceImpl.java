@@ -10,6 +10,7 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.instances.service.base.PortalInstancesLocalServiceBaseImpl;
 import com.liferay.portal.kernel.cluster.Clusterable;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -84,12 +85,12 @@ public class PortalInstancesLocalServiceImpl
 
 	@Override
 	public long[] getCompanyIds() {
-		return PortalInstances.getCompanyIds();
+		return PortalInstancePool.getCompanyIds();
 	}
 
 	@Override
 	public long getDefaultCompanyId() {
-		return PortalInstances.getDefaultCompanyId();
+		return PortalInstancePool.getDefaultCompanyId();
 	}
 
 	@Override

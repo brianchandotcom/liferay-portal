@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.exception.NoSuchVirtualHostException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.RequiredCompanyException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.instance.lifecycle.PortalInstanceLifecycleManager;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -353,7 +354,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 				"Database partition must be enabled");
 		}
 
-		if (companyId == PortalInstances.getDefaultCompanyId()) {
+		if (companyId == PortalInstancePool.getDefaultCompanyId()) {
 			throw new IllegalArgumentException(
 				"Company ID " + companyId + " is the default company ID");
 		}
@@ -496,7 +497,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 	@Override
 	public Company deleteCompany(long companyId) throws PortalException {
-		if (companyId == PortalInstances.getDefaultCompanyId()) {
+		if (companyId == PortalInstancePool.getDefaultCompanyId()) {
 			throw new RequiredCompanyException(
 				"Select another default company before deleting company " +
 					companyId);
@@ -541,7 +542,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 				"Database partition must be enabled");
 		}
 
-		if (companyId == PortalInstances.getDefaultCompanyId()) {
+		if (companyId == PortalInstancePool.getDefaultCompanyId()) {
 			throw new RequiredCompanyException(
 				"Select another default company before extracting company " +
 					companyId);
@@ -802,7 +803,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	 */
 	@Override
 	public long getCompanyIdByUserId(long userId) throws Exception {
-		long[] companyIds = PortalInstances.getCompanyIds();
+		long[] companyIds = PortalInstancePool.getCompanyIds();
 
 		long companyId = 0;
 
@@ -944,7 +945,9 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		virtualHostname = StringUtil.toLowerCase(
 			StringUtil.trim(virtualHostname));
 
-		if (!active && (companyId == PortalInstances.getDefaultCompanyId())) {
+		if (!active &&
+			(companyId == PortalInstancePool.getDefaultCompanyId())) {
+
 			throw new RequiredCompanyException(
 				"Select another default company before deactivating company " +
 					companyId);
@@ -2275,7 +2278,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		ThreadLocalRandom threadLocalRandom = ThreadLocalRandom.current();
 
 		while ((nextLong == 0) ||
-			   ArrayUtil.contains(PortalInstances.getCompanyIds(), nextLong)) {
+			   ArrayUtil.contains(
+				   PortalInstancePool.getCompanyIds(), nextLong)) {
 
 			nextLong = threadLocalRandom.nextLong(
 				(long)Math.pow(10, 13), (long)Math.pow(10, 14));

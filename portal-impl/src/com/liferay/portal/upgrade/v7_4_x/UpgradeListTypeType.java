@@ -6,9 +6,9 @@
 package com.liferay.portal.upgrade.v7_4_x;
 
 import com.liferay.portal.kernel.db.partition.DBPartition;
+import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.util.PortalInstances;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -27,7 +27,7 @@ public class UpgradeListTypeType extends UpgradeProcess {
 			return;
 		}
 
-		long[] companyIds = PortalInstances.getCompanyIdsBySQL();
+		long[] companyIds = PortalInstancePool.getCompanyIds();
 
 		for (long companyId : companyIds) {
 			_updateListType(companyId, "intranet");

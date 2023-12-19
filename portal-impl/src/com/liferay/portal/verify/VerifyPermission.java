@@ -10,6 +10,7 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -33,7 +34,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.util.PortalInstances;
 
 import java.util.HashMap;
 import java.util.List;
@@ -173,7 +173,7 @@ public class VerifyPermission extends VerifyProcess {
 			CompanyLocalServiceUtil.forEachCompanyId(
 				companyId -> fixUserDefaultRolePermissions(
 					userClassNameId, userGroupClassNameId, companyId),
-				PortalInstances.getCompanyIdsBySQL());
+				PortalInstancePool.getCompanyIds());
 		}
 		finally {
 			EntityCacheUtil.clearCache();

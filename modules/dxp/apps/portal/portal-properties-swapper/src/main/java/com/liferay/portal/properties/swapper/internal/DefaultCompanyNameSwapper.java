@@ -6,6 +6,7 @@
 package com.liferay.portal.properties.swapper.internal;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -13,7 +14,6 @@ import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.Objects;
@@ -40,7 +40,7 @@ public class DefaultCompanyNameSwapper {
 
 		try {
 			Company defaultCompany = _companyLocalService.getCompany(
-				PortalInstances.getDefaultCompanyId());
+				PortalInstancePool.getDefaultCompanyId());
 
 			if (!_hasCustomCompanyName(
 					defaultCompany, originalCompanyDefaultName)) {

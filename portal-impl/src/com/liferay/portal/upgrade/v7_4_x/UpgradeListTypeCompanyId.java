@@ -7,6 +7,7 @@ package com.liferay.portal.upgrade.v7_4_x;
 
 import com.liferay.portal.db.partition.util.DBPartitionUtil;
 import com.liferay.portal.kernel.db.partition.DBPartition;
+import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -14,7 +15,6 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.util.PortalInstances;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -34,7 +34,7 @@ public class UpgradeListTypeCompanyId extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		long defaultCompanyId = PortalInstances.getDefaultCompanyIdBySQL();
+		long defaultCompanyId = PortalInstancePool.getDefaultCompanyId();
 
 		_resetCounter(defaultCompanyId);
 
@@ -167,7 +167,7 @@ public class UpgradeListTypeCompanyId extends UpgradeProcess {
 
 		runSQL("update ListType set companyId = " + defaultCompanyId);
 
-		long[] companyIds = PortalInstances.getCompanyIdsBySQL();
+		long[] companyIds = PortalInstancePool.getCompanyIds();
 
 		List<ListTypeEntry> listTypeEntries = _getListTypes();
 

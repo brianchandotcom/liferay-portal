@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.dao.jdbc.CurrentConnectionUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.db.partition.DBPartition;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.module.util.BundleUtil;
@@ -38,7 +39,6 @@ import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PropsUtil;
 
 import java.sql.Connection;
@@ -182,7 +182,8 @@ public abstract class BaseDBPartitionTestCase {
 	}
 
 	protected static void enableDBPartition() throws Exception {
-		CompanyThreadLocal.setCompanyId(PortalInstances.getDefaultCompanyId());
+		CompanyThreadLocal.setCompanyId(
+			PortalInstancePool.getDefaultCompanyId());
 
 		_dbPartitionEnabled = DBPartition.isPartitionEnabled();
 
@@ -254,7 +255,7 @@ public abstract class BaseDBPartitionTestCase {
 	}
 
 	protected static String getPartitionName(long companyId) {
-		if (companyId == PortalInstances.getDefaultCompanyId()) {
+		if (companyId == PortalInstancePool.getDefaultCompanyId()) {
 			return defaultPartitionName;
 		}
 

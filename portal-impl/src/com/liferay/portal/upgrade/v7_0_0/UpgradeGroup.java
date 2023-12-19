@@ -10,6 +10,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
+import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
@@ -27,7 +28,6 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.language.LanguageResources;
-import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.PortalPreferencesImpl;
 import com.liferay.portlet.PortalPreferencesWrapper;
@@ -59,7 +59,7 @@ public class UpgradeGroup extends UpgradeProcess {
 	}
 
 	protected void updateGlobalGroupName() throws Exception {
-		for (Long companyId : PortalInstances.getCompanyIdsBySQL()) {
+		for (Long companyId : PortalInstancePool.getCompanyIds()) {
 			LocalizedValuesMap localizedValuesMap = new LocalizedValuesMap();
 
 			for (String languageId : PropsValues.LOCALES_ENABLED) {

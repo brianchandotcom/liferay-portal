@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
@@ -169,7 +170,8 @@ public class PortalInstancesTest {
 	public void testGetWebIdsAfterInitCompany() {
 		PortalInstances.initCompany(_company);
 
-		List<String> webIds = ListUtil.fromArray(PortalInstances.getWebIds());
+		List<String> webIds = ListUtil.fromArray(
+			PortalInstancePool.getWebIds());
 
 		Assert.assertTrue(webIds.contains(_company.getWebId()));
 
@@ -178,7 +180,7 @@ public class PortalInstancesTest {
 		PortalInstances.initCompany(
 			_companyLocalService.updateCompany(_company));
 
-		webIds = ListUtil.fromArray(PortalInstances.getWebIds());
+		webIds = ListUtil.fromArray(PortalInstancePool.getWebIds());
 
 		Assert.assertTrue(webIds.contains(_company.getWebId()));
 	}

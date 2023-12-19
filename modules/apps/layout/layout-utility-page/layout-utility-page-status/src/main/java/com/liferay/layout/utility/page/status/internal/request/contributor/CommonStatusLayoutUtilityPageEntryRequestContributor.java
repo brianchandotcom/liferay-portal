@@ -10,6 +10,7 @@ import com.liferay.layout.utility.page.kernel.request.contributor.StatusLayoutUt
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -32,7 +33,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.servlet.I18nServlet;
-import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.Set;
@@ -151,7 +151,7 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributor
 			companyId = virtualHost.getCompanyId();
 		}
 		else {
-			companyId = PortalInstances.getDefaultCompanyId();
+			companyId = PortalInstancePool.getDefaultCompanyId();
 		}
 
 		Group group = _groupLocalService.fetchFriendlyURLGroup(

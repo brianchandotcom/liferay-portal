@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.NoSuchPasswordPolicyException;
 import com.liferay.portal.kernel.exception.NoSuchVirtualHostException;
 import com.liferay.portal.kernel.exception.RequiredCompanyException;
+import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -184,7 +185,7 @@ public class CompanyLocalServiceTest {
 
 		_companyLocalService.deleteCompany(company.getCompanyId());
 
-		for (String webId : PortalInstances.getWebIds()) {
+		for (String webId : PortalInstancePool.getWebIds()) {
 			Assert.assertNotEquals(company.getWebId(), webId);
 		}
 	}
@@ -773,7 +774,7 @@ public class CompanyLocalServiceTest {
 
 	@Test(expected = RequiredCompanyException.class)
 	public void testDeleteDefaultCompany() throws Exception {
-		long companyId = PortalInstances.getDefaultCompanyId();
+		long companyId = PortalInstancePool.getDefaultCompanyId();
 
 		_companyLocalService.deleteCompany(companyId);
 	}
@@ -799,7 +800,7 @@ public class CompanyLocalServiceTest {
 	public void testExtractDBPartitionCompanyDefaultCompany() {
 		try {
 			_companyLocalService.extractDBPartitionCompany(
-				PortalInstances.getDefaultCompanyId());
+				PortalInstancePool.getDefaultCompanyId());
 
 			Assert.fail();
 		}

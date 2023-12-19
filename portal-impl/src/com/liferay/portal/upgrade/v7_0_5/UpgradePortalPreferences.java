@@ -6,6 +6,7 @@
 package com.liferay.portal.upgrade.v7_0_5;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -17,7 +18,6 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.XPath;
-import com.liferay.portal.util.PortalInstances;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -34,7 +34,7 @@ public class UpgradePortalPreferences extends UpgradeProcess {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			upgradePortalPreferences(PortletKeys.PREFS_OWNER_ID_DEFAULT);
 
-			for (long companyId : PortalInstances.getCompanyIdsBySQL()) {
+			for (long companyId : PortalInstancePool.getCompanyIds()) {
 				upgradePortalPreferences(companyId);
 			}
 		}

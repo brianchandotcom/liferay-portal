@@ -11,6 +11,7 @@ import com.liferay.fragment.service.FragmentCollectionServiceUtil;
 import com.liferay.fragment.web.internal.util.FragmentPortletUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
@@ -20,7 +21,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.util.PortalInstances;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -97,7 +97,7 @@ public class FragmentCollectionsDisplayContext {
 		Group scopeGroup = themeDisplay.getScopeGroup();
 
 		if ((themeDisplay.getCompanyId() ==
-				PortalInstances.getDefaultCompanyId()) &&
+				PortalInstancePool.getDefaultCompanyId()) &&
 			scopeGroup.isCompany()) {
 
 			groupIds = ArrayUtil.append(groupIds, CompanyConstants.SYSTEM);

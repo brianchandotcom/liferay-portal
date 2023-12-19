@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -51,7 +52,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.util.PortalInstances;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -734,7 +734,7 @@ public class FragmentDisplayContext {
 
 		if ((fragmentCollection.getGroupId() == CompanyConstants.SYSTEM) &&
 			((_themeDisplay.getCompanyId() !=
-				PortalInstances.getDefaultCompanyId()) ||
+				PortalInstancePool.getDefaultCompanyId()) ||
 			 !scopeGroup.isCompany())) {
 
 			return true;

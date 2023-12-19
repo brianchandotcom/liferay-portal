@@ -6,6 +6,7 @@
 package com.liferay.portal.verify;
 
 import com.liferay.portal.kernel.exception.NoSuchRoleException;
+import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -19,7 +20,6 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
-import com.liferay.portal.util.PortalInstances;
 
 /**
  * @author Brian Wing Shun Chan
@@ -56,7 +56,7 @@ public class VerifyRole extends VerifyProcess {
 	protected void doVerify() throws Exception {
 		CompanyLocalServiceUtil.forEachCompanyId(
 			companyId -> verifyRoles(companyId),
-			PortalInstances.getCompanyIdsBySQL());
+			PortalInstancePool.getCompanyIds());
 	}
 
 	protected void verifyRoles(long companyId) throws Exception {

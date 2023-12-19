@@ -6,9 +6,9 @@
 package com.liferay.portal.upgrade.v7_4_x;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.upgrade.BaseCompanyIdUpgradeProcess;
 import com.liferay.portal.kernel.util.PortletKeys;
-import com.liferay.portal.util.PortalInstances;
 
 import java.io.IOException;
 
@@ -56,7 +56,7 @@ public class UpgradeCompanyId extends BaseCompanyIdUpgradeProcess {
 		public void update(Connection connection)
 			throws IOException, SQLException {
 
-			long[] companyIds = PortalInstances.getCompanyIdsBySQL();
+			long[] companyIds = PortalInstancePool.getCompanyIds();
 
 			if (companyIds.length == 1) {
 				runSQL(connection, getUpdateSQL(String.valueOf(companyIds[0])));

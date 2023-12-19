@@ -1023,7 +1023,7 @@ public class LayoutStructureRenderer {
 
 		JspWriter jspWriter = _pageContext.getOut();
 
-		jspWriter.write("<div class=\"font-weight-semi-bold bg-white");
+		jspWriter.write("<div class=\"font-weight-semi-bold bg-white ");
 		jspWriter.write("text-secondary text-center text-3 p-5\">");
 		jspWriter.write(
 			_renderLayoutStructureDisplayContext.getSuccessMessage(

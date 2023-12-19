@@ -45,8 +45,6 @@ public class CommercePaymentEntryModelDocumentContributor
 				"paymentIntegrationKey",
 				commercePaymentEntry.getPaymentIntegrationKey());
 			document.addKeyword(
-				"transactionCode", commercePaymentEntry.getTransactionCode());
-			document.addKeyword(
 				"paymentStatus", commercePaymentEntry.getPaymentStatus());
 			document.addKeyword(
 				"reasonKey", commercePaymentEntry.getReasonKey());
@@ -61,6 +59,8 @@ public class CommercePaymentEntryModelDocumentContributor
 					commercePaymentEntry.getReasonName(languageId));
 			}
 
+			document.addKeyword(
+				"transactionCode", commercePaymentEntry.getTransactionCode());
 			document.addNumber("type", commercePaymentEntry.getType());
 		}
 		catch (Exception exception) {

@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.util.BundleUtil;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.sql.Connection;
@@ -59,8 +60,17 @@ public class IndexUpdaterUtil {
 	}
 
 	public static void updateAllIndexes() {
-		if (!_updatedBundleSymbolicNames.contains("portal")) {
-			updatePortalIndexes();
+		if (!_updatedServletContextNames.contains("portal")) {
+			try {
+				_updateIndexes(
+					"portal", DBResourceUtil.getPortalTablesSQL(),
+					DBResourceUtil.getPortalIndexesSQL());
+			}
+			catch (Exception exception) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(exception);
+				}
+			}
 		}
 
 		BundleTracker<Void> bundleTracker = new BundleTracker<>(
@@ -73,10 +83,13 @@ public class IndexUpdaterUtil {
 
 					if (BundleUtil.isLiferayServiceBundle(bundle)) {
 						try {
-							if (!_updatedBundleSymbolicNames.contains(
+							if (!_updatedServletContextNames.contains(
 									bundle.getSymbolicName())) {
 
-								updateIndexes(bundle);
+								_updateIndexes(
+									bundle.getSymbolicName(),
+									DBResourceUtil.getModuleTablesSQL(bundle),
+									DBResourceUtil.getModuleIndexesSQL(bundle));
 							}
 						}
 						catch (Exception exception) {
@@ -117,8 +130,32 @@ public class IndexUpdaterUtil {
 	}
 
 	public static void updateIndexes(Bundle bundle) throws Exception {
-		String indexesSQL = DBResourceUtil.getModuleIndexesSQL(bundle);
-		String tablesSQL = DBResourceUtil.getModuleTablesSQL(bundle);
+		_updateIndexes(
+			bundle.getSymbolicName(), DBResourceUtil.getModuleTablesSQL(bundle),
+			DBResourceUtil.getModuleIndexesSQL(bundle));
+	}
+
+	public static void updatePortalIndexes() {
+		try {
+			_updateIndexes(
+				"portal", DBResourceUtil.getPortalTablesSQL(),
+				DBResourceUtil.getPortalIndexesSQL());
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(exception);
+			}
+		}
+	}
+
+	private static ExecutorService _getExecutorService() {
+		return _executorServiceDCLSingleton.getSingleton(
+			Executors::newWorkStealingPool);
+	}
+
+	private static void _updateIndexes(
+			String servletContextName, String tablesSQL, String indexesSQL)
+		throws Exception {
 
 		if ((indexesSQL == null) || (tablesSQL == null)) {
 			return;
@@ -132,15 +169,20 @@ public class IndexUpdaterUtil {
 			companyId -> _futures.add(
 				executorService.submit(
 					() -> {
-						String message = new String(
-							"Updating database indexes for " +
-								bundle.getSymbolicName());
-
-						if (Validator.isNotNull(companyId)) {
-							message += " and company " + companyId;
-						}
-
 						try {
+							String message = new String(
+								"Updating portal database indexes");
+
+							if (!servletContextName.equals("portal")) {
+								message = new String(
+									"Updating database indexes for " +
+										servletContextName);
+							}
+
+							if (Validator.isNotNull(companyId)) {
+								message += " and company " + companyId;
+							}
+
 							try (Connection connection =
 									DataAccess.getConnection();
 								LoggingTimer loggingTimer = new LoggingTimer(
@@ -151,62 +193,15 @@ public class IndexUpdaterUtil {
 							}
 						}
 						catch (Exception exception) {
-							_log.error(exception);
+							_log.error(
+								StringBundler.concat(
+									"Unable to update database indexes for ",
+									servletContextName, " due to ",
+									exception.getMessage()));
 						}
 					})));
 
-		_updatedBundleSymbolicNames.add(bundle.getSymbolicName());
-	}
-
-	public static void updatePortalIndexes() {
-		DB db = DBManagerUtil.getDB();
-
-		ExecutorService executorService = _getExecutorService();
-
-		try {
-			db.process(
-				companyId -> _futures.add(
-					executorService.submit(
-						() -> {
-							String message = new String(
-								"Updating portal database indexes");
-
-							if (Validator.isNotNull(companyId)) {
-								message += " for company " + companyId;
-							}
-
-							try (Connection connection =
-									DataAccess.getConnection();
-								LoggingTimer loggingTimer = new LoggingTimer(
-									message)) {
-
-								_updatePortalIndexes(db, connection);
-							}
-							catch (Exception exception) {
-								_log.error(exception);
-							}
-						})));
-		}
-		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(exception);
-			}
-		}
-
-		_updatedBundleSymbolicNames.add("portal");
-	}
-
-	private static ExecutorService _getExecutorService() {
-		return _executorServiceDCLSingleton.getSingleton(
-			Executors::newWorkStealingPool);
-	}
-
-	private static void _updatePortalIndexes(DB db, Connection connection)
-		throws Exception {
-
-		db.updateIndexes(
-			connection, DBResourceUtil.getPortalTablesSQL(),
-			DBResourceUtil.getPortalIndexesSQL(), true);
+		_updatedServletContextNames.add(servletContextName);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -216,7 +211,7 @@ public class IndexUpdaterUtil {
 		_executorServiceDCLSingleton = new DCLSingleton<>();
 	private static final List<Future<?>> _futures =
 		Collections.synchronizedList(new ArrayList<Future<?>>());
-	private static final Set<String> _updatedBundleSymbolicNames =
+	private static final Set<String> _updatedServletContextNames =
 		new HashSet<>();
 
 }

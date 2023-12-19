@@ -1,4 +1,3 @@
-import dom from 'metal-dom';
 import {
 	formatStringToLowercase,
 	getAlignPosition,
@@ -23,39 +22,17 @@ describe('util', () => {
 	});
 
 	describe('getAlignPosition', () => {
-		let source;
-		let target;
-
-		afterEach(function () {
-			dom.exitDocument(source);
-			dom.exitDocument(target);
-		});
-
-		beforeEach(function () {
-			dom.enterDocument(
-				`<div id="source" class="popover clay-popover-top hide analytics-popover no-content">
-				<div class="arrow"></div>
-				<div class="popover-header">popover header</div>
-			</div>`
-			);
-
-			dom.enterDocument(
-				`<a id="target" data-title="https://www.liferay.com/products/" data-touchpoint="https://www.liferay.com/products/" href="/project/35317/pages/overview/https%3A%2F%2Fwww.liferay.com%2Fproducts" class="table-title">
-				<h5 class="mb-1 text-truncate" ref="title">
-					https://www.liferay.com/products/
-				</h5>
-			</a>`
-			);
-
-			source = dom.toElement('#source');
-			target = dom.toElement('#target');
-		});
-
 		it('should return an align position top when it dont have a suggested position', () => {
+			const source = document.createElement('div');
+			const target = document.createElement('div');
+
 			expect(getAlignPosition(source, target)).toEqual('top');
 		});
 
 		it('should return an align position bottom when it have a suggested position', () => {
+			const source = document.createElement('div');
+			const target = document.createElement('div');
+
 			expect(getAlignPosition(source, target, 'bottom')).toEqual(
 				'bottom'
 			);

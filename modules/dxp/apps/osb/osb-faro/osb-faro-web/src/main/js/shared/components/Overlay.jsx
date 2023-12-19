@@ -1,5 +1,4 @@
 import autobind from 'autobind-decorator';
-import dom from 'metal-dom';
 import getCN from 'classnames';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -143,25 +142,25 @@ export default class Overlay extends React.Component {
 		this.hide.cancel();
 		this.show.cancel();
 
-		if (this._bodyHandler) {
-			this._bodyHandler.removeListener();
-		}
-
-		if (this._mousedownHandler) {
-			this._mousedownHandler.removeListener();
-		}
+		document.body.removeEventListener('click', this._onClick);
+		document.body.removeEventListener(
+			'mousedown',
+			this.checkForInitialClickOnInput
+		);
 
 		this.withParent(parent => parent.removeChildOverlay(this));
 	}
 
-	addBodyListener() {
-		if (!this._bodyHandler && !this.context.parentOverlay) {
-			this._bodyHandler = dom.on(document.body, 'click', event =>
-				visitChildren(event, [this])
-			);
+	@autobind
+	_onClick(event) {
+		visitChildren(event, [this]);
+	}
 
-			this._mousedownHandler = dom.on(
-				document.body,
+	addBodyListener() {
+		if (!this.context.parentOverlay) {
+			document.body.addEventListener('click', this._onClick);
+
+			document.body.addEventListener(
 				'mousedown',
 				this.checkForInitialClickOnInput
 			);
@@ -205,13 +204,13 @@ export default class Overlay extends React.Component {
 		);
 
 		const eventOutsideContent =
-			(contentNode && !dom.contains(contentNode, event.target)) ||
+			(contentNode && !contentNode.contains(event.target)) ||
 			!contentNode;
 
 		return (
 			eventOutsideContent &&
 			elementNode &&
-			!dom.contains(elementNode, event.target)
+			!elementNode.contains(event.target)
 		);
 	}
 

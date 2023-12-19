@@ -5,9 +5,8 @@
 
 import {config} from './constants';
 
-export function getServerUrl() {
-	return Liferay.OAuth2Client.FromUserAgentApplication(config.agentOauthAppId)
-		.homePageURL;
+export function getHostUrl() {
+	return config.external ? config.apiHost : '';
 }
 
 export async function getOAuthToken() {
@@ -34,14 +33,15 @@ export async function getOAuthToken() {
 	return prom;
 }
 
-export function getHostUrl() {
-	return config.external ? config.apiHost : '';
-}
-
-export function showSuccess(message) {
-	Liferay.Util.openToast({title: message, type: 'success'});
+export function getServerUrl() {
+	return Liferay.OAuth2Client.FromUserAgentApplication(config.agentOauthAppId)
+		.homePageURL;
 }
 
 export function showError(message) {
 	Liferay.Util.openToast({title: message, type: 'danger'});
+}
+
+export function showSuccess(message) {
+	Liferay.Util.openToast({title: message, type: 'success'});
 }

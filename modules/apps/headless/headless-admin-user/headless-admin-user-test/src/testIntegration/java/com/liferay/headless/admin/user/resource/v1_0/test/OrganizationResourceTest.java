@@ -351,6 +351,15 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 	}
 
 	@Override
+	protected Organization randomOrganization() throws Exception {
+		Organization organization = super.randomOrganization();
+
+		organization.setImageId(0L);
+
+		return organization;
+	}
+
+	@Override
 	protected Organization
 			testDeleteAccountByExternalReferenceCodeOrganization_addOrganization()
 		throws Exception {

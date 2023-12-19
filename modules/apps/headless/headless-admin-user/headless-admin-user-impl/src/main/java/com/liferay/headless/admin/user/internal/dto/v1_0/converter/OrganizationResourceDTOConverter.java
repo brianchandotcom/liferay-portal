@@ -105,6 +105,11 @@ public class OrganizationResourceDTOConverter
 		OrganizationResourceDTOConverter organizationResourceDTOConverter =
 			this;
 
+		Country country = _countryService.fetchCountry(
+			organization.getCountryId());
+
+		Region region = _regionService.fetchRegion(organization.getRegionId());
+
 		return new Organization() {
 			{
 				actions = dtoConverterContext.getActions();
@@ -120,6 +125,7 @@ public class OrganizationResourceDTOConverter
 				dateModified = organization.getModifiedDate();
 				externalReferenceCode = organization.getExternalReferenceCode();
 				id = String.valueOf(organization.getOrganizationId());
+				imageId = organization.getLogoId();
 				keywords = ListUtil.toArray(
 					_assetTagLocalService.getTags(
 						organization.getModelClassName(),
@@ -129,12 +135,9 @@ public class OrganizationResourceDTOConverter
 					{
 						setAddressCountry(
 							() -> {
-								if (organization.getCountryId() <= 0) {
+								if (country == null) {
 									return null;
 								}
-
-								Country country = _countryService.getCountry(
-									organization.getCountryId());
 
 								return country.getName(
 									dtoConverterContext.getLocale());
@@ -142,16 +145,14 @@ public class OrganizationResourceDTOConverter
 						setAddressCountry_i18n(
 							() -> {
 								if (!dtoConverterContext.
-										isAcceptAllLanguages()) {
+										isAcceptAllLanguages() ||
+									(country == null)) {
 
 									return null;
 								}
 
 								Map<String, String> countryNames =
 									new HashMap<>();
-
-								Country country = _countryService.getCountry(
-									organization.getCountryId());
 
 								for (Locale locale :
 										_language.getCompanyAvailableLocales(
@@ -164,16 +165,29 @@ public class OrganizationResourceDTOConverter
 
 								return countryNames;
 							});
-						setAddressRegion(
+						setAddressCountryCode(
 							() -> {
-								if (organization.getRegionId() <= 0) {
+								if (country == null) {
 									return null;
 								}
 
-								Region region = _regionService.getRegion(
-									organization.getRegionId());
+								return country.getA2();
+							});
+						setAddressRegion(
+							() -> {
+								if (region == null) {
+									return null;
+								}
 
 								return region.getName();
+							});
+						setAddressRegionCode(
+							() -> {
+								if (region == null) {
+									return null;
+								}
+
+								return region.getRegionCode();
 							});
 					}
 				};

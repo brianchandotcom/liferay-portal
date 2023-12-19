@@ -133,6 +133,8 @@ public class TestrayImporter {
 
 			String testrayBuildTitle = "Testray Build";
 
+			String testrayBuildIDTitle = "Testray Build ID";
+
 			if (i > 0) {
 				testrayBuildTitle = JenkinsResultsParserUtil.combine(
 					testrayBuildTitle, " (", String.valueOf(i), ")");
@@ -156,7 +158,9 @@ public class TestrayImporter {
 					String.valueOf(testrayRoutine.getURL())),
 				_getJenkinsBuildDescriptionElement(
 					testrayBuildTitle, testrayBuild.getName(),
-					String.valueOf(testrayBuild.getURL())));
+					String.valueOf(testrayBuild.getURL())),
+				_getJenkinsBuildDescriptionElement(
+					testrayBuildIDTitle, String.valueOf(testrayBuild.getID())));
 
 			i++;
 		}

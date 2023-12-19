@@ -20,6 +20,12 @@ public interface SitemapURLProvider {
 
 	public String getClassName();
 
+	public default boolean isInclude(long companyId, long groupId)
+		throws PortalException {
+
+		return true;
+	}
+
 	public void visitLayout(
 			Element element, String layoutUuid, LayoutSet layoutSet,
 			ThemeDisplay themeDisplay)

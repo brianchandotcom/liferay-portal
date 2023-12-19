@@ -3520,7 +3520,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				if (layout == null) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
-							"No layout found with friendlyURL " +
+							"No layout found with friendly URL " +
 								menuItemJSONObject.getString("friendlyURL"));
 					}
 
@@ -4693,7 +4693,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		if (nameI18nJSONObject == null) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("No name_i18n found in " + menuItemJSONObject);
+				_log.warn("Missing \"name_i18n\" in " + menuItemJSONObject);
 			}
 
 			return null;

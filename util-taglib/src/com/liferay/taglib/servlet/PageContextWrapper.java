@@ -18,6 +18,7 @@ import java.util.Enumeration;
 
 import javax.el.ELContext;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.Servlet;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -85,7 +86,23 @@ public class PageContextWrapper extends PageContext {
 
 	@Override
 	public ErrorData getErrorData() {
-		return super.getErrorData();
+		int status = 0;
+
+		Integer status_code = (Integer)getRequest().getAttribute(
+			RequestDispatcher.ERROR_STATUS_CODE);
+
+		if (status_code != null) {
+			status = status_code.intValue();
+		}
+
+		return new ErrorData(
+			(Throwable)getRequest().getAttribute(
+				RequestDispatcher.ERROR_EXCEPTION),
+			status,
+			(String)getRequest().getAttribute(
+				RequestDispatcher.ERROR_REQUEST_URI),
+			(String)getRequest().getAttribute(
+				RequestDispatcher.ERROR_SERVLET_NAME));
 	}
 
 	@Override

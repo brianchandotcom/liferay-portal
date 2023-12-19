@@ -49,7 +49,6 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -72,7 +71,6 @@ import org.junit.runner.RunWith;
 /**
  * @author Luca Pellizzon
  */
-@FeatureFlags("COMMERCE-11287")
 @RunWith(Arquillian.class)
 public class CommerceOrderDiscountV2Test {
 

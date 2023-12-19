@@ -32,6 +32,7 @@ import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.sort.Sorts;
+import com.liferay.portal.search.tuning.rankings.web.internal.constants.ResultRankingsConstants;
 import com.liferay.portal.search.tuning.rankings.web.internal.constants.ResultRankingsPortletKeys;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.DocumentToRankingTranslator;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.RankingFields;
@@ -374,19 +375,40 @@ public class RankingPortletDisplayBuilder {
 			}
 		).add(
 			dropdownItem -> {
-				dropdownItem.setActive(status.equals("active"));
+				dropdownItem.setActive(
+					status.equals(ResultRankingsConstants.STATUS_ACTIVE));
 				dropdownItem.setHref(
-					_getPortletURL(getKeywords()), "status", "active");
+					_getPortletURL(getKeywords()), "status",
+					ResultRankingsConstants.STATUS_ACTIVE);
 				dropdownItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, "active"));
+					LanguageUtil.get(
+						_httpServletRequest,
+						ResultRankingsConstants.STATUS_ACTIVE));
 			}
 		).add(
 			dropdownItem -> {
-				dropdownItem.setActive(status.equals("inactive"));
+				dropdownItem.setActive(
+					status.equals(ResultRankingsConstants.STATUS_INACTIVE));
 				dropdownItem.setHref(
-					_getPortletURL(getKeywords()), "status", "inactive");
+					_getPortletURL(getKeywords()), "status",
+					ResultRankingsConstants.STATUS_INACTIVE);
 				dropdownItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, "inactive"));
+					LanguageUtil.get(
+						_httpServletRequest,
+						ResultRankingsConstants.STATUS_INACTIVE));
+			}
+		).add(
+			dropdownItem -> {
+				dropdownItem.setActive(
+					status.equals(
+						ResultRankingsConstants.STATUS_NOT_APPLICABLE));
+				dropdownItem.setHref(
+					_getPortletURL(getKeywords()), "status",
+					ResultRankingsConstants.STATUS_NOT_APPLICABLE);
+				dropdownItem.setLabel(
+					LanguageUtil.get(
+						_httpServletRequest,
+						ResultRankingsConstants.STATUS_NOT_APPLICABLE));
 			}
 		).build();
 	}

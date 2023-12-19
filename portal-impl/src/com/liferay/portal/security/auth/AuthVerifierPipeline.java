@@ -328,7 +328,9 @@ public class AuthVerifierPipeline {
 				authVerifierResult.getUserId());
 
 			if ((user != null) &&
-				(!user.isActive() || user.isPasswordReset())) {
+				(!user.isActive() ||
+				 !user.isEmailAddressVerificationComplete() ||
+				 user.isPasswordReset())) {
 
 				long userId = authVerifierResult.getUserId();
 
@@ -341,13 +343,19 @@ public class AuthVerifierPipeline {
 								"Auth verifier ", authVerifierClass.getName(),
 								" returned inactive user ", userId));
 					}
-
-					if (user.isPasswordReset()) {
+					else if (!user.isEmailAddressVerificationComplete()) {
 						_log.debug(
 							StringBundler.concat(
 								"Auth verifier ", authVerifierClass.getName(),
-								" returned user required to reset password ",
-								userId));
+								" returned user ", userId,
+								" who must verify his e-mail address"));
+					}
+					else {
+						_log.debug(
+							StringBundler.concat(
+								"Auth verifier ", authVerifierClass.getName(),
+								" returned user ", userId,
+								" who must reset his password"));
 					}
 				}
 

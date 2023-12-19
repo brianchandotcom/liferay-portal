@@ -3,6 +3,7 @@
 		"pageElements": [
 			{
 				"definition": {
+					"customCSS": "@media screen and (max-width: 991px) {\ndiv.[$FRAGMENT_CLASS$] {\npadding: 0px!important;\n}\n}\ndiv.[$FRAGMENT_CLASS$] {\nmin-width: 300px;\n}",
 					"fragmentStyle": {
 						"backgroundColor": "#ffffff",
 						"borderWidth": "0",
@@ -185,6 +186,7 @@
 									},
 									{
 										"definition": {
+											"customCSS": ".[$FRAGMENT_CLASS$] { }\n@media screen and (max-width: 991px) {\n.learn-search {\nmargin:0px!important;\n}\n}",
 											"cssClasses": [
 												"learn-search",
 												"pb-5"

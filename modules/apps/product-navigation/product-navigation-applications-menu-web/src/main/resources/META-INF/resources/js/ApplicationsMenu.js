@@ -102,7 +102,11 @@ const SitesPanel = ({portletNamespace, sites, virtualInstance}) => {
 const Site = ({current, label, logoURL, showDivider = false, url}) => {
 	return (
 		<li className="c-mt-3">
-			<a className="applications-menu-nav-link d-inline-flex" href={url}>
+			<a
+				aria-current={current}
+				className="applications-menu-nav-link d-inline-flex"
+				href={url}
+			>
 				<ClayLayout.ContentRow
 					containerElement="span"
 					verticalAlign="center"

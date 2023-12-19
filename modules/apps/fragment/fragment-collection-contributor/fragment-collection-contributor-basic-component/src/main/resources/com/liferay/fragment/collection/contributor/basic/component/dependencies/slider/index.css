@@ -34,6 +34,12 @@
 	}
 }
 
+.component-slider {
+	--footer-gap: 8px;
+	--item-button-height: 3px;
+	--toggle-button-width: 24px;
+}
+
 .component-slider .carousel {
 	position: relative;
 }
@@ -94,17 +100,19 @@
 .component-slider .carousel-footer {
 	bottom: 10px;
 	display: flex;
+	gap: var(--footer-gap);
 	justify-content: center;
 	left: 0;
 	padding-left: 0;
 	position: absolute;
 	right: 0;
+	width: calc(100% - var(--toggle-button-width) - var(--footer-gap));
 	z-index: 15;
 }
 
 .component-slider .carousel-navigation {
 	display: flex;
-	gap: 8px;
+	gap: var(--footer-gap);
 	justify-content: center;
 	list-style: none;
 	margin: 0;
@@ -116,7 +124,7 @@
 	border: 0;
 	display: block;
 	outline: 0;
-	padding: 8px 0;
+	padding: calc((var(--toggle-button-width) - var(--item-button-height)) / 2) 0;
 	text-decoration: none;
 }
 
@@ -128,10 +136,35 @@
 .component-slider .carousel-item-button-icon {
 	background-color: rgba(255, 255, 255, 0.5);
 	display: block;
-	height: 3px;
+	height: var(--item-button-height);
 	width: 30px;
 }
 
 .component-slider .carousel-item-button.active .carousel-item-button-icon {
 	background-color: rgba(255, 255, 255, 1);
+}
+
+.component-slider .carousel-toggle-button {
+	aspect-ratio: 1 / 1;
+	background: transparent;
+	border: none;
+	color: rgba(255, 255, 255, 1);
+	display: block;
+	height: var(--toggle-button-width);
+	opacity: 0;
+	transition: opacity ease 0.6s;
+	width: var(--toggle-button-width);
+}
+
+.component-slider .carousel-toggle-button.stopped,
+.component-slider .carousel-toggle-button:focus-visible,
+.component-slider:hover .carousel-toggle-button {
+	opacity: 1;
+}
+
+.component-slider .carousel-toggle-button:focus-visible {
+	border-radius: 4px;
+	box-shadow: 0 0 0 2px #fff, 0 0 0 4px #528eff;
+	opacity: 1;
+	outline: none;
 }

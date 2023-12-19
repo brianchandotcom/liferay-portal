@@ -39,6 +39,18 @@
 		</button>
 
 		<div class="carousel-footer">
+			<button class="carousel-toggle-button stopped" type="button">
+				<span aria-hidden="true" class="carousel-toggle-icon-stop d-none">
+					[@clay["icon"] symbol="pause" /]
+				</span>
+				<span aria-hidden="true" class="carousel-toggle-icon-start">
+					[@clay["icon"] symbol="play" /]
+				</span>
+				<span class="carousel-toggle-text sr-only">
+					Start slide rotation
+				</span>
+			</button>
+
 			<ol class="carousel-navigation">
 				[#list 0..configuration.numberOfSlides-1 as i]
 				<li>

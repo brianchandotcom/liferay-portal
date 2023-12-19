@@ -19,7 +19,6 @@ import {ApplicationUtil} from '../../../../utils/appUtil';
 import './template-item-create-folder.css';
 
 const TemplateItemCreateFolder = ({templateID}) => {
-
 	const [folderTree, setFolderTree] = useState(null);
 
 	const [isLoading, setIsLoading] = useState(false);
@@ -29,12 +28,12 @@ const TemplateItemCreateFolder = ({templateID}) => {
 	const [form] = Form.useForm();
 
 	const loadFolderTree = async () => {
+		const loadSubfolder = async (folder) => {
+			const subfolders = await getDocumentFolderDocumentFoldersPage(
+				folder
+			);
 
-		const loadSubFolder = async (folder) => {
-
-			const subFolders = await getDocumentFolderDocumentFoldersPage(folder);
-
-			const normalizedFolders = subFolders.items.map((folder) => ({
+			const normalizedFolders = subfolders.items.map((folder) => ({
 				childrenCount: folder.numberOfDocumentFolders,
 				icon: 'folder',
 				id: Number(folder.id),
@@ -52,44 +51,41 @@ const TemplateItemCreateFolder = ({templateID}) => {
 			return normalizedFolders;
 		};
 
-		const root = (
-			await getSiteDocumentFoldersPage(
-				ApplicationUtil.getLiferay().ThemeDisplay.getScopeGroupId()
-			)
-		).items.map((folder) => ({
-			childrenCount: folder.numberOfDocumentFolders,
-			id: Number(folder.id),
-			isLeaf: folder.childrenCount <= 0,
-			key: folder.id,
-			label: folder.name,
-			selected: false,
-			title: folder.name,
-			value: folder.id,
-		}));
+		const scopeGroupId = ApplicationUtil.getLiferay().ThemeDisplay.getScopeGroupId();
 
-		const loadFolderRec = async (folder) => {
+		const root = (await getSiteDocumentFoldersPage(scopeGroupId)).items.map(
+			(folder) => ({
+				childrenCount: folder.numberOfDocumentFolders,
+				id: Number(folder.id),
+				isLeaf: folder.childrenCount <= 0,
+				key: folder.id,
+				label: folder.name,
+				selected: false,
+				title: folder.name,
+				value: folder.id,
+			})
+		);
 
-			const children = await loadSubFolder(folder.key);
+		const loadFolderRecursively = async (folder) => {
+			const children = await loadSubfolder(folder.key);
 
 			return Promise.all(
-
 				children.map(async (subfolder) => ({
 					...subfolder,
 					children:
 						subfolder.childrenCount > 0
-							? await loadFolderRec(subfolder)
+							? await loadFolderRecursively(subfolder)
 							: null,
 				}))
 			);
 		};
 
 		return Promise.all(
-
 			root.map(async (folder) => ({
 				...folder,
 				children:
 					folder.childrenCount > 0
-						? await loadFolderRec(folder)
+						? await loadFolderRecursively(folder)
 						: null,
 			}))
 		);
@@ -97,33 +93,24 @@ const TemplateItemCreateFolder = ({templateID}) => {
 
 	const prepareComponentCallback = useCallback(async () => {
 		try {
-
 			setIsLoading(true);
 
 			setFolderTree(await loadFolderTree());
-
 		}
 		catch (error) {
-
-			ApplicationUtil.ShowError(error.message);
+			ApplicationUtil.showError(error.message);
 		}
 		finally {
-
 			setIsLoading(false);
-
 		}
 	}, []);
 
 	useEffect(() => {
-
 		const fetchData = async () => {
-
 			await prepareComponentCallback();
-
 		};
 
 		fetchData();
-
 	}, [prepareComponentCallback]);
 
 	const handleSubmit = () => {
@@ -131,7 +118,6 @@ const TemplateItemCreateFolder = ({templateID}) => {
 			.then(
 				async (values) => {
 					try {
-
 						setIsSubmitting(true);
 
 						await createFolder(
@@ -140,32 +126,23 @@ const TemplateItemCreateFolder = ({templateID}) => {
 							values.name
 						);
 
-						ApplicationUtil.ShowSuccess('Folder created!');
-
+						ApplicationUtil.showSuccess('Folder created!');
 					}
 					catch (error) {
-
-						ApplicationUtil.ShowError(error.message);
-
+						ApplicationUtil.showError(error.message);
 					}
 					finally {
-
 						form.resetFields();
 
 						setIsSubmitting(false);
-
 					}
 				},
 				(error) => {
-
-					ApplicationUtil.ShowError(error);
-
+					ApplicationUtil.showError(error);
 				}
 			)
 			.catch((error) => {
-
-				ApplicationUtil.ShowError(error);
-
+				ApplicationUtil.showError(error);
 			});
 	};
 

@@ -11,8 +11,8 @@ import com.liferay.frontend.data.set.constants.FDSEntityFieldTypes;
 import com.liferay.frontend.data.set.filter.BaseSelectionFDSFilter;
 import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.frontend.data.set.filter.SelectionFDSFilterItem;
+import com.liferay.petra.function.transform.TransformUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -47,18 +47,12 @@ public class CommercePaymentTypeSelectionFDSFilter
 	public List<SelectionFDSFilterItem> getSelectionFDSFilterItems(
 		Locale locale) {
 
-		List<SelectionFDSFilterItem> selectionFDSFilterItems =
-			new ArrayList<>();
-
-		for (int paymentStatus : CommercePaymentEntryConstants.STATUSES) {
-			selectionFDSFilterItems.add(
-				new SelectionFDSFilterItem(
-					CommercePaymentEntryConstants.getPaymentStatusLabel(
-						paymentStatus),
-					paymentStatus));
-		}
-
-		return selectionFDSFilterItems;
+		return TransformUtil.transformToList(
+			CommercePaymentEntryConstants.STATUSES,
+			paymentStatus -> new SelectionFDSFilterItem(
+				CommercePaymentEntryConstants.getPaymentStatusLabel(
+					paymentStatus),
+				paymentStatus));
 	}
 
 }

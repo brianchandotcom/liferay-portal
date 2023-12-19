@@ -127,6 +127,10 @@ public class OpenSearchSortFieldTranslator
 		org.opensearch.client.opensearch._types.ScriptSort.Builder builder =
 			SortOptionsBuilders.script();
 
+		if (scriptSort.getSortMode() != null) {
+			builder.mode(translateSortMode(scriptSort.getSortMode()));
+		}
+
 		if (scriptSort.getNestedSort() != null) {
 			builder.nested(translateNestedSort(scriptSort.getNestedSort()));
 		}
@@ -141,10 +145,6 @@ public class OpenSearchSortFieldTranslator
 		}
 		else {
 			builder.type(ScriptSortType.String);
-		}
-
-		if (scriptSort.getSortMode() != null) {
-			builder.mode(translateSortMode(scriptSort.getSortMode()));
 		}
 
 		return SortOptions.of(

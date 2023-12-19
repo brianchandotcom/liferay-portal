@@ -589,14 +589,6 @@ public class ObjectValidationRuleLocalServiceImpl
 			throw new ObjectValidationRuleEngineException.MustNotBeNull();
 		}
 
-		ObjectValidationRuleEngine objectValidationRuleEngine =
-			_objectValidationRuleEngineRegistry.getObjectValidationRuleEngine(
-				companyId, engine);
-
-		if (objectValidationRuleEngine == null) {
-			throw new ObjectValidationRuleEngineException.NoSuchEngine(engine);
-		}
-
 		Locale locale = LocaleUtil.getSiteDefault();
 
 		if ((nameMap == null) || Validator.isNull(nameMap.get(locale))) {
@@ -614,6 +606,10 @@ public class ObjectValidationRuleLocalServiceImpl
 			throw new ObjectValidationRuleOutputTypeException(
 				"Invalid output type " + outputType);
 		}
+
+		ObjectValidationRuleEngine objectValidationRuleEngine =
+			_objectValidationRuleEngineRegistry.getObjectValidationRuleEngine(
+				companyId, engine);
 
 		if (Validator.isNull(script) &&
 			!(objectValidationRuleEngine instanceof
@@ -670,8 +666,11 @@ public class ObjectValidationRuleLocalServiceImpl
 						NAME_OUTPUT_OBJECT_FIELD_ID);
 		}
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-187854")) {
-			_allowedObjectValidationRuleSettingNames.remove(
+		Set<String> allowedObjectValidationRuleSettingNames = SetUtil.fromArray(
+			ObjectValidationRuleSettingConstants.NAME_OUTPUT_OBJECT_FIELD_ID);
+
+		if (FeatureFlagManagerUtil.isEnabled("LPS-187854")) {
+			allowedObjectValidationRuleSettingNames.add(
 				ObjectValidationRuleSettingConstants.
 					NAME_COMPOSITE_KEY_OBJECT_FIELD_ID);
 		}
@@ -681,7 +680,7 @@ public class ObjectValidationRuleLocalServiceImpl
 		for (ObjectValidationRuleSetting objectValidationRuleSetting :
 				objectValidationRuleSettings) {
 
-			if (!_allowedObjectValidationRuleSettingNames.contains(
+			if (!allowedObjectValidationRuleSettingNames.contains(
 					objectValidationRuleSetting.getName()) ||
 				(objectValidationRuleSetting.compareName(
 					ObjectValidationRuleSettingConstants.
@@ -784,11 +783,6 @@ public class ObjectValidationRuleLocalServiceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectValidationRuleLocalServiceImpl.class);
 
-	private static final Set<String> _allowedObjectValidationRuleSettingNames =
-		SetUtil.fromArray(
-			ObjectValidationRuleSettingConstants.
-				NAME_COMPOSITE_KEY_OBJECT_FIELD_ID,
-			ObjectValidationRuleSettingConstants.NAME_OUTPUT_OBJECT_FIELD_ID);
 	private static final List<String> _compositeKeyObjectFieldBusinessTypes =
 		Arrays.asList(
 			ObjectFieldConstants.BUSINESS_TYPE_INTEGER,

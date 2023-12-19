@@ -168,7 +168,7 @@ public class ImageMagickImpl implements ImageMagick {
 					"Liferay is not configured to use ImageMagick and ",
 					"Ghostscript. For better quality document and image ",
 					"previews, install ImageMagick and Ghostscript. Enable ",
-					"ImageMagick in portal-ext.properties or in the Server ",
+					"ImageMagick in portal.properties or in the Server ",
 					"Administration section of the Control Panel at: ",
 					"http://<server>/group/control_panel/manage/-/server",
 					"/external-services."));

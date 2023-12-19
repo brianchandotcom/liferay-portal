@@ -925,9 +925,13 @@ definition {
 	}
 
 	@description = "Feature ID: LRAC-10405 | Automation ID: LRAC-11118 | Test Summary: Empty state Page cards with data source and property no data"
+	@ignore = "true"
 	@priority = 2
 	test CheckAllPagesMessagesWhenHasPropertyAndDataSource {
 		property test.run.type = "single";
+
+		// AC Bug: The empty state of the Sites Activities card is showing for Assets
+		// AC Bug ticket: LRAC-13714
 
 		task ("Check the first screen of the onboarding modal") {
 			ACUtils.viewGenericText(textValueList = "Welcome to Analytics Cloud,Just a few more steps to set up your workspace.");

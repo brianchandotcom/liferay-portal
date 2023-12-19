@@ -7251,22 +7251,37 @@ ${output.content}</echo>
 
 								<gradle-execute dir="${playwright.dir}" task="npmInstall" />
 
-								<local name="playwright.args" />
+								<if>
+									<not>
+										<isset property="playwright.test.project" />
+									</not>
+									<then>
+										<property name="playwright.test.project" value="" />
+									</then>
+								</if>
+
+								<local name="playwright.test.shard" />
 
 								<if>
 									<isset property="PLAYWRIGHT_ARGS_${axis.variable}" />
 									<then>
-										<propertycopy from="PLAYWRIGHT_ARGS_${axis.variable}" name="playwright.args" />
+										<propertycopy from="PLAYWRIGHT_ARGS_${axis.variable}" name="playwright.test.shard" />
 									</then>
 									<else>
-										<property name="playwright.args" value="" />
+										<property name="playwright.test.shard" value="" />
 									</else>
 								</if>
+
+								<local name="playwright.command" />
+
+								<property name="playwright.command" value="npx playwright test ${playwright.test.project} ${playwright.test.shard}" />
+
+								<echo>Running "${playwright.command}" from ${playwright.dir}</echo>
 
 								<docker-execute container="${playwright.docker.host}">
 									cd ${playwright.dir}
 
-									npx playwright test ${playwright.args}
+									${playwright.command}
 								</docker-execute>
 							</try>
 							<finally>

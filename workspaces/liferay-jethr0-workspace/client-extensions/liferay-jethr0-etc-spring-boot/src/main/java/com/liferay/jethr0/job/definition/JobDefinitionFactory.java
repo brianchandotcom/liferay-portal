@@ -89,6 +89,9 @@ public class JobDefinitionFactory {
 		else if (type == JobEntity.Type.QA_WEBSITES_WEEKLY) {
 			return new WeeklyQAWebsitesJobDefinition(type);
 		}
+		else if (type == JobEntity.Type.REPOSITORY_ARCHIVE) {
+			return new RepositoryArchiveJobDefinition(type);
+		}
 		else if (type == JobEntity.Type.VERIFICATION) {
 			return new VerificationJobDefinition(type);
 		}

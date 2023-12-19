@@ -8,9 +8,14 @@ package com.liferay.osb.spring.boot.client.zendesk.service;
 import com.liferay.osb.spring.boot.client.zendesk.model.ZendeskOrganization;
 import com.liferay.osb.spring.boot.client.zendesk.model.ZendeskTicket;
 import com.liferay.osb.spring.boot.client.zendesk.model.ZendeskUser;
+import com.liferay.osb.spring.boot.client.zendesk.search.SearchHits;
+import com.liferay.osb.spring.boot.client.zendesk.search.ZendeskTicketQuery;
 import com.liferay.petra.string.StringPool;
 
+import java.util.ArrayList;
 import java.util.Base64;
+import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
@@ -180,6 +185,65 @@ public class ZendeskWebService {
 		_zendeskAuthorization = _getAuthorization(_zendeskAPIEmailAddress);
 	}
 
+	public SearchHits<ZendeskTicket> search(
+			ZendeskTicketQuery zendeskTicketQuery)
+		throws Exception {
+
+		JSONObject jsonObject = new JSONObject(
+			WebClient.create(
+				_zendeskURL + "/api/v2/search.json"
+			).get(
+			).uri(
+				uriBuilder -> {
+					Map<String, String> parameters =
+						zendeskTicketQuery.getParameters();
+
+					for (Map.Entry<String, String> entry :
+							parameters.entrySet()) {
+
+						uriBuilder.queryParam(entry.getKey(), entry.getValue());
+					}
+
+					return uriBuilder.build();
+				}
+			).accept(
+				MediaType.APPLICATION_JSON
+			).header(
+				HttpHeaders.AUTHORIZATION, _zendeskAuthorization
+			).retrieve(
+			).bodyToMono(
+				String.class
+			).block());
+
+		return toSearchHits(jsonObject);
+	}
+
+	protected SearchHits<ZendeskTicket> toSearchHits(JSONObject jsonObject) {
+		SearchHits<ZendeskTicket> searchHits = new SearchHits<>();
+
+		searchHits.setCount(jsonObject.getInt("count"));
+
+		String nextPageURL = jsonObject.optString("next_page");
+
+		if (!nextPageURL.equals(StringPool.BLANK)) {
+			String page = _getParameter(nextPageURL, "page");
+
+			searchHits.setNextPage(Integer.valueOf(page));
+		}
+
+		List<ZendeskTicket> zendeskTickets = new ArrayList<>();
+
+		JSONArray jsonArray = jsonObject.getJSONArray("results");
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			zendeskTickets.add(new ZendeskTicket(jsonArray.getJSONObject(i)));
+		}
+
+		searchHits.setResults(zendeskTickets);
+
+		return searchHits;
+	}
+
 	private String _getAuthorization(String emailAddress) throws Exception {
 		Base64.Encoder encoder = Base64.getEncoder();
 
@@ -190,6 +254,24 @@ public class ZendeskWebService {
 			StringPool.UTF8);
 
 		return "Basic " + encodedZendeskCredentials;
+	}
+
+	private String _getParameter(String url, String name) {
+		int x = url.indexOf(StringPool.QUESTION);
+
+		int y = url.indexOf(name + StringPool.EQUAL, x);
+
+		if (y < 0) {
+			return StringPool.BLANK;
+		}
+
+		int z = url.indexOf(StringPool.AMPERSAND, y);
+
+		if (z < 0) {
+			return url.substring(y + name.length() + 1);
+		}
+
+		return url.substring(y + name.length() + 1, z);
 	}
 
 	@Value("${liferay.osb.spring.boot.client.zendesk.api.email.address}")

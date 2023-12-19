@@ -5,6 +5,8 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
 import com.liferay.portal.kernel.jndi.JNDIUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -38,16 +40,34 @@ public class InfrastructureUtil {
 		return _mailSession;
 	}
 
-	public static Object getTransactionManager() {
-		return _transactionManager;
+	public static Object getSessionFactory() {
+		try {
+			return _sessionFactoryDefaultNoticeableFuture.get();
+		}
+		catch (Exception exception) {
+			return ReflectionUtil.throwException(exception);
+		}
 	}
 
-	public void setDataSource(DataSource dataSource) {
+	public static Object getTransactionManager() {
+		try {
+			return _transactionManagerDefaultNoticeableFuture.get();
+		}
+		catch (Exception exception) {
+			return ReflectionUtil.throwException(exception);
+		}
+	}
+
+	public static void setDataSource(DataSource dataSource) {
 		_dataSource = dataSource;
 	}
 
-	public void setTransactionManager(Object transactionManager) {
-		_transactionManager = transactionManager;
+	public static void setSessionFactory(Object sessionFactory) {
+		_sessionFactoryDefaultNoticeableFuture.set(sessionFactory);
+	}
+
+	public static void setTransactionManager(Object transactionManager) {
+		_transactionManagerDefaultNoticeableFuture.set(transactionManager);
 	}
 
 	private static Session _createMailSession() {
@@ -77,6 +97,11 @@ public class InfrastructureUtil {
 
 	private static DataSource _dataSource;
 	private static Session _mailSession;
-	private static Object _transactionManager;
+	private static final DefaultNoticeableFuture<Object>
+		_sessionFactoryDefaultNoticeableFuture =
+			new DefaultNoticeableFuture<>();
+	private static final DefaultNoticeableFuture<Object>
+		_transactionManagerDefaultNoticeableFuture =
+			new DefaultNoticeableFuture<>();
 
 }

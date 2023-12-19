@@ -25,26 +25,10 @@ public class FacetCollectorFactory {
 	public FacetCollector getFacetCollector(Aggregate aggregate, String name) {
 		Object object = TaggedUnionUtils.get(aggregate, aggregate._kind());
 
-		if (object instanceof SingleBucketAggregateBase) {
-			SingleBucketAggregateBase singleBucketAggregateBase =
-				(SingleBucketAggregateBase)object;
-
-			Map<String, Aggregate> aggregations =
-				singleBucketAggregateBase.aggregations();
-
-			return getFacetCollector(aggregations.get(name), name);
-		}
-
 		if (object instanceof DateRangeAggregate) {
 			DateRangeAggregate dateRangeAggregate = aggregate.dateRange();
 
 			return new RangeFacetCollector(name, dateRangeAggregate.buckets());
-		}
-
-		if (object instanceof RangeAggregate) {
-			RangeAggregate rangeAggregate = aggregate.range();
-
-			return new RangeFacetCollector(name, rangeAggregate.buckets());
 		}
 
 		if (object instanceof MultiBucketAggregateBase) {
@@ -53,6 +37,22 @@ public class FacetCollectorFactory {
 
 			return new MultiBucketsAggregationFacetCollector(
 				multiBucketAggregateBase, name);
+		}
+
+		if (object instanceof RangeAggregate) {
+			RangeAggregate rangeAggregate = aggregate.range();
+
+			return new RangeFacetCollector(name, rangeAggregate.buckets());
+		}
+
+		if (object instanceof SingleBucketAggregateBase) {
+			SingleBucketAggregateBase singleBucketAggregateBase =
+				(SingleBucketAggregateBase)object;
+
+			Map<String, Aggregate> aggregations =
+				singleBucketAggregateBase.aggregations();
+
+			return getFacetCollector(aggregations.get(name), name);
 		}
 
 		return new OpenSearchFacetFieldCollector(aggregate, name);

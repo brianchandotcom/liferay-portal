@@ -33,6 +33,8 @@ import java.util.Properties;
 
 import javax.sql.DataSource;
 
+import org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy;
+
 /**
  * @author Preston Crary
  */
@@ -66,6 +68,8 @@ public class DBInitUtil {
 
 			DBPartitionUtil.setDefaultCompanyId(connection);
 		}
+
+		_dataSource = new LazyConnectionDataSourceProxy(_dataSource);
 	}
 
 	private static boolean _checkDefaultRelease(Connection connection) {

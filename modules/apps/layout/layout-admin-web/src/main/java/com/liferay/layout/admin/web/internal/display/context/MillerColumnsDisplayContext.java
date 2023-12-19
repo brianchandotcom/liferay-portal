@@ -23,14 +23,20 @@ import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetBranch;
 import com.liferay.portal.kernel.model.LayoutType;
 import com.liferay.portal.kernel.model.LayoutTypeController;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetBranchLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalServiceUtil;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
+import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -204,84 +210,100 @@ public class MillerColumnsDisplayContext {
 				LayoutTypeControllerTracker.getLayoutTypeController(
 					layout.getType());
 
-			JSONObject layoutJSONObject = JSONUtil.put(
-				"active", _layoutsAdminDisplayContext.isActive(layout.getPlid())
-			).put(
-				"bulkActions",
-				StringUtil.merge(
-					_layoutsAdminDisplayContext.getAvailableActions(layout))
-			).put(
-				"description",
-				LanguageUtil.get(
-					_httpServletRequest,
-					ResourceBundleUtil.getBundle(
-						"content.Language", _themeDisplay.getLocale(),
-						layoutTypeController.getClass()),
-					"layout.types." + layout.getType())
-			).put(
-				"draggable", true
-			);
+			layoutsJSONArray.put(
+				JSONUtil.put(
+					"active",
+					_layoutsAdminDisplayContext.isActive(layout.getPlid())
+				).put(
+					"bulkActions",
+					StringUtil.merge(
+						_layoutsAdminDisplayContext.getAvailableActions(layout))
+				).put(
+					"description",
+					LanguageUtil.get(
+						_httpServletRequest,
+						ResourceBundleUtil.getBundle(
+							"content.Language", _themeDisplay.getLocale(),
+							layoutTypeController.getClass()),
+						"layout.types." + layout.getType())
+				).put(
+					"draggable", true
+				).put(
+					"hasChild",
+					() -> {
+						int childLayoutsCount =
+							LayoutServiceUtil.getLayoutsCount(
+								_layoutsAdminDisplayContext.getSelGroupId(),
+								layout.isPrivateLayout(), layout.getLayoutId());
 
-			int childLayoutsCount = LayoutServiceUtil.getLayoutsCount(
-				_layoutsAdminDisplayContext.getSelGroupId(),
-				layout.isPrivateLayout(), layout.getLayoutId());
-
-			layoutJSONObject.put(
-				"hasChild", childLayoutsCount > 0
-			).put(
-				"hasScopeGroup", _hasScopeGroup(layout)
-			).put(
-				"id", layout.getPlid()
-			).put(
-				"key", String.valueOf(layout.getPlid())
-			);
-
-			LayoutType layoutType = layout.getLayoutType();
-
-			layoutJSONObject.put(
-				"hasDuplicatedFriendlyURL",
-				() -> {
-					if (!FeatureFlagManagerUtil.isEnabled("LPS-174417")) {
-						return false;
+						return childLayoutsCount > 0;
 					}
+				).put(
+					"hasDuplicatedFriendlyURL",
+					() -> {
+						if (!FeatureFlagManagerUtil.isEnabled("LPS-174417")) {
+							return false;
+						}
 
-					List<Long> duplicatedFriendlyURLPlids =
-						_getDuplicatedFriendlyURLPlids();
+						List<Long> duplicatedFriendlyURLPlids =
+							_getDuplicatedFriendlyURLPlids();
 
-					return duplicatedFriendlyURLPlids.contains(
-						layout.getPlid());
-				}
-			).put(
-				"parentable", layoutType.isParentable()
-			).put(
-				"quickActions", _getQuickActionsJSONArray(layout)
-			).put(
-				"selectable", true
-			).put(
-				"states", _getLayoutStatesJSONArray(layout)
-			).put(
-				"target",
-				HtmlUtil.escape(layout.getTypeSettingsProperty("target"))
-			).put(
-				"title", layout.getName(_themeDisplay.getLocale())
-			).put(
-				"url",
-				PortletURLBuilder.create(
-					_layoutsAdminDisplayContext.getPortletURL()
-				).setParameter(
-					"layoutSetBranchId",
-					_layoutsAdminDisplayContext.getActiveLayoutSetBranchId()
-				).setParameter(
-					"privateLayout", layout.isPrivateLayout()
-				).setParameter(
-					"selPlid", layout.getPlid()
-				).buildString()
-			).put(
-				"viewUrl",
-				_layoutsAdminDisplayContext.getEditOrViewLayoutURL(layout)
-			);
+						return duplicatedFriendlyURLPlids.contains(
+							layout.getPlid());
+					}
+				).put(
+					"hasGuestViewPermission",
+					() -> {
+						Role role = RoleLocalServiceUtil.getRole(
+							layout.getCompanyId(), RoleConstants.GUEST);
 
-			layoutsJSONArray.put(layoutJSONObject);
+						return ResourcePermissionLocalServiceUtil.
+							hasResourcePermission(
+								layout.getCompanyId(), Layout.class.getName(),
+								ResourceConstants.SCOPE_INDIVIDUAL,
+								String.valueOf(layout.getPlid()),
+								role.getRoleId(), ActionKeys.VIEW);
+					}
+				).put(
+					"hasScopeGroup", _hasScopeGroup(layout)
+				).put(
+					"id", layout.getPlid()
+				).put(
+					"key", String.valueOf(layout.getPlid())
+				).put(
+					"parentable",
+					() -> {
+						LayoutType layoutType = layout.getLayoutType();
+
+						return layoutType.isParentable();
+					}
+				).put(
+					"quickActions", _getQuickActionsJSONArray(layout)
+				).put(
+					"selectable", true
+				).put(
+					"states", _getLayoutStatesJSONArray(layout)
+				).put(
+					"target",
+					HtmlUtil.escape(layout.getTypeSettingsProperty("target"))
+				).put(
+					"title", layout.getName(_themeDisplay.getLocale())
+				).put(
+					"url",
+					PortletURLBuilder.create(
+						_layoutsAdminDisplayContext.getPortletURL()
+					).setParameter(
+						"layoutSetBranchId",
+						_layoutsAdminDisplayContext.getActiveLayoutSetBranchId()
+					).setParameter(
+						"privateLayout", layout.isPrivateLayout()
+					).setParameter(
+						"selPlid", layout.getPlid()
+					).buildString()
+				).put(
+					"viewUrl",
+					_layoutsAdminDisplayContext.getEditOrViewLayoutURL(layout)
+				));
 		}
 
 		return layoutsJSONArray;

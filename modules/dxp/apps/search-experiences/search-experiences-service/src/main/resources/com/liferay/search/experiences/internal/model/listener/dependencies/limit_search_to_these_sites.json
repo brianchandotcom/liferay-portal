@@ -29,6 +29,7 @@
 				{
 					"fields": [
 						{
+							"helpText": "group-ids-help",
 							"label": "group-ids",
 							"name": "scope_group_ids",
 							"type": "multiselect"

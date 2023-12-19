@@ -5,8 +5,6 @@
 
 package com.liferay.jethr0.event.github;
 
-import com.liferay.jethr0.bui1d.queue.BuildQueue;
-import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
 import com.liferay.jethr0.event.EventHandlerContext;
 import com.liferay.jethr0.event.github.client.GitHubClient;
 import com.liferay.jethr0.event.github.comment.GitHubComment;
@@ -16,7 +14,6 @@ import com.liferay.jethr0.event.github.repository.GitHubRepository;
 import com.liferay.jethr0.event.github.user.GitHubUser;
 import com.liferay.jethr0.git.branch.GitBranchEntity;
 import com.liferay.jethr0.git.branch.repository.GitBranchEntityRepository;
-import com.liferay.jethr0.jenkins.JenkinsQueue;
 import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.job.PortalPullRequestJobEntity;
 import com.liferay.jethr0.job.repository.JobEntityRepository;
@@ -384,24 +381,6 @@ public abstract class BaseGitHubIssueEventHandler
 			gitHubPullRequest.getUpstreamBranchURL());
 
 		return _upstreamGitBranchEntity;
-	}
-
-	protected void invokeJobEntity(JobEntity jobEntity) {
-		BuildEntityRepository buildEntityRepository = getBuildRepository();
-
-		for (JSONObject initialBuildJSONObject :
-				jobEntity.getInitialBuildJSONObjects()) {
-
-			buildEntityRepository.create(jobEntity, initialBuildJSONObject);
-		}
-
-		BuildQueue buildQueue = getBuildQueue();
-
-		buildQueue.addJobEntity(jobEntity);
-
-		JenkinsQueue jenkinsQueue = getJenkinsQueue();
-
-		jenkinsQueue.invoke();
 	}
 
 	private boolean _isGitHubCIEnabledBranchNames()

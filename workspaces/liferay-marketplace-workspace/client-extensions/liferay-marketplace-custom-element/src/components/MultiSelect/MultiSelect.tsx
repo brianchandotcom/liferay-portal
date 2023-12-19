@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import Select, {StylesConfig} from 'react-select';
+import Select, {MultiValue, StylesConfig} from 'react-select';
 import makeAnimated from 'react-select/animated';
 
 import './MultiSelect.scss';
@@ -23,6 +23,7 @@ type MultiSelectProps<T> = {
 	placeholder?: string;
 	required?: boolean;
 	tooltip?: string;
+	value?: MultiValue<any>;
 };
 
 const colourStyles: StylesConfig<any, true> = {
@@ -60,6 +61,7 @@ export function MultiSelect<T>({
 	placeholder,
 	required,
 	tooltip,
+	value,
 }: MultiSelectProps<T>) {
 	const animatedComponents = makeAnimated();
 
@@ -80,6 +82,7 @@ export function MultiSelect<T>({
 				options={items}
 				placeholder={placeholder}
 				styles={colourStyles}
+				value={value}
 			/>
 		</FieldBase>
 	);

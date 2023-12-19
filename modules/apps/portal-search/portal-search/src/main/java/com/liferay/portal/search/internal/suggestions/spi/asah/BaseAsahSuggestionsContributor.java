@@ -135,6 +135,12 @@ public abstract class BaseAsahSuggestionsContributor {
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject itemJSONObject = jsonArray.getJSONObject(i);
 
+			String text = getText(itemJSONObject);
+
+			if (Validator.isBlank(text)) {
+				continue;
+			}
+
 			suggestions.add(
 				suggestionBuilderFactory.builder(
 				).attribute(
@@ -142,7 +148,7 @@ public abstract class BaseAsahSuggestionsContributor {
 				).score(
 					1.0F
 				).text(
-					getText(itemJSONObject)
+					text
 				).build());
 		}
 
@@ -184,7 +190,7 @@ public abstract class BaseAsahSuggestionsContributor {
 				searchContext, sort, suggestionsContributorConfiguration),
 			"JSONObject/_embedded", "JSONArray/" + path);
 
-		if (jsonArray.length() == 0) {
+		if (JSONUtil.isEmpty(jsonArray)) {
 			return null;
 		}
 

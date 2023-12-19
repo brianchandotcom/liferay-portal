@@ -5,80 +5,52 @@
 
 package com.liferay.portal.dao.orm.hibernate.jmx;
 
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
+import com.liferay.portal.kernel.util.InfrastructureUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.util.PropsValues;
 
-import javax.management.Attribute;
-import javax.management.AttributeList;
-import javax.management.AttributeNotFoundException;
 import javax.management.DynamicMBean;
-import javax.management.InvalidAttributeValueException;
-import javax.management.MBeanException;
-import javax.management.MBeanInfo;
 import javax.management.NotCompliantMBeanException;
-import javax.management.ReflectionException;
 import javax.management.StandardMBean;
 
 import org.hibernate.engine.spi.SessionFactoryImplementor;
 import org.hibernate.stat.Statistics;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
+
 /**
  * @author Shuyang Zhou
  */
-@OSGiBeanProperties(property = "jmx.objectname=Hibernate:name=statistics")
-public class HibernateStatisticsService implements DynamicMBean {
+public class HibernateStatisticsService {
 
 	public void afterPropertiesSet() throws NotCompliantMBeanException {
-		_dynamicMBean = new StandardMBean(_statistics, Statistics.class);
+		if (PropsValues.HIBERNATE_GENERATE_STATISTICS) {
+			SessionFactoryImplementor sessionFactoryImplementor =
+				(SessionFactoryImplementor)
+					InfrastructureUtil.getSessionFactory();
+
+			Statistics statistics = sessionFactoryImplementor.getStatistics();
+
+			statistics.setStatisticsEnabled(true);
+
+			BundleContext bundleContext = SystemBundleUtil.getBundleContext();
+
+			_serviceRegistration = bundleContext.registerService(
+				DynamicMBean.class,
+				new StandardMBean(statistics, Statistics.class),
+				MapUtil.singletonDictionary(
+					"jmx.objectname", "Hibernate:name=statistics"));
+		}
 	}
 
-	@Override
-	public Object getAttribute(String attribute)
-		throws AttributeNotFoundException, MBeanException, ReflectionException {
-
-		return _dynamicMBean.getAttribute(attribute);
+	public void destroy() {
+		if (_serviceRegistration != null) {
+			_serviceRegistration.unregister();
+		}
 	}
 
-	@Override
-	public AttributeList getAttributes(String[] attributes) {
-		return _dynamicMBean.getAttributes(attributes);
-	}
-
-	@Override
-	public MBeanInfo getMBeanInfo() {
-		return _dynamicMBean.getMBeanInfo();
-	}
-
-	@Override
-	public Object invoke(String actionName, Object[] params, String[] signature)
-		throws MBeanException, ReflectionException {
-
-		return _dynamicMBean.invoke(actionName, params, signature);
-	}
-
-	@Override
-	public void setAttribute(Attribute attribute)
-		throws AttributeNotFoundException, InvalidAttributeValueException,
-			   MBeanException, ReflectionException {
-
-		_dynamicMBean.setAttribute(attribute);
-	}
-
-	@Override
-	public AttributeList setAttributes(AttributeList attributes) {
-		return _dynamicMBean.setAttributes(attributes);
-	}
-
-	public void setSessionFactoryImplementor(
-		SessionFactoryImplementor sessionFactoryImplementor) {
-
-		_statistics = sessionFactoryImplementor.getStatistics();
-
-		_statistics.setStatisticsEnabled(
-			PropsValues.HIBERNATE_GENERATE_STATISTICS);
-	}
-
-	private DynamicMBean _dynamicMBean;
-	private Statistics _statistics;
+	private ServiceRegistration<?> _serviceRegistration;
 
 }

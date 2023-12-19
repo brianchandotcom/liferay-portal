@@ -3,9 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayButton from '@clayui/button';
 import {TreeView as ClayTreeView} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
-import {navigate} from 'frontend-js-web';
+import {navigate, sub} from 'frontend-js-web';
 import React from 'react';
 
 const AssetCategoriesNavigationTreeView = ({
@@ -67,6 +68,22 @@ const AssetCategoriesNavigationTreeView = ({
 					<ClayTreeView.Group items={item.children}>
 						{(item) => (
 							<ClayTreeView.Item
+								actions={
+									selectedCategoryId === item.id ? (
+										<ClayButton
+											aria-label={sub(
+												Liferay.Language.get(
+													'remove-x-filter'
+												),
+												item.name
+											)}
+											monospaced
+											onClick={() => navigate(item.url)}
+										>
+											<ClayIcon symbol="times" />
+										</ClayButton>
+									) : null
+								}
 								onClick={(event) => onClick(event, item)}
 								onKeyUp={(event) => onKeyUp(event, item)}
 							>

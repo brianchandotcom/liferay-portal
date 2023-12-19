@@ -339,6 +339,7 @@ export function DefineAppProfilePage({
 							placeholder="Select categories"
 							required
 							tooltip="Choose the Marketplace category that most accurately describes what your app does. Users looking for specific types of apps will often browse categories by searching on a specific category name in the main Marketplace home page. Having your app listed under the appropriate category will help them find your app."
+							value={appCategories}
 						/>
 
 						<MultiSelect<VocabDropdownItem>
@@ -355,6 +356,7 @@ export function DefineAppProfilePage({
 							placeholder="Select tags"
 							required
 							tooltip="Tags help to describe your app in the Marketplace. Select the tags most relevant to your app. They can be changed if needed."
+							value={appTags}
 						/>
 					</div>
 				</Section>

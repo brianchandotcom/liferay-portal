@@ -17,7 +17,7 @@ import {
 } from '../../../utils/types/contributorTypes';
 import InputSetItemHeader from './InputSetItemHeader';
 import CharacterThresholdInput from './inputs/CharacterThresholdInput';
-import ContentTypeInput from './inputs/ContentTypeInput';
+import ContentTypesInput from './inputs/ContentTypesInput';
 import DisplayGroupNameInput from './inputs/DisplayGroupNameInput';
 import MatchDisplayLanguageInput from './inputs/MatchDisplayLanguageInput';
 import MinimumSearchesInput from './inputs/MinimumSearchesInput';
@@ -306,13 +306,13 @@ function SiteActivities({index, onBlur, onInputSetItemChange, touched, value}) {
 
 						{value.contributorName ===
 							CONTRIBUTOR_TYPES.ASAH_RECENT_ASSETS_USER_ACTIVITY && (
-							<ContentTypeInput
-								onBlur={onBlur('attributes.contentType')}
+							<ContentTypesInput
+								onBlur={onBlur('attributes.contentTypes')}
 								onChange={_handleChangeAttributeValue(
-									'contentType'
+									'contentTypes'
 								)}
-								touched={touched['attributes.contentType']}
-								value={value.attributes?.contentType}
+								touched={touched['attributes.contentTypes']}
+								value={value.attributes?.contentTypes}
 							/>
 						)}
 					</div>

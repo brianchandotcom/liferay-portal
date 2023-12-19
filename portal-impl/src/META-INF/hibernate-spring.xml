@@ -8,9 +8,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd"
 >
-	<bean class="com.liferay.portal.dao.orm.hibernate.jmx.HibernateStatisticsService" id="com.liferay.portal.dao.orm.hibernate.jmx.HibernateStatisticsService">
-		<property name="sessionFactoryImplementor" ref="liferayHibernateSessionFactory" />
-	</bean>
+	<bean class="com.liferay.portal.dao.orm.hibernate.jmx.HibernateStatisticsService" />
 	<bean class="com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil">
 		<property name="dynamicQueryFactory">
 			<bean class="com.liferay.portal.dao.orm.hibernate.DynamicQueryFactoryImpl" />
@@ -36,6 +34,8 @@
 			<bean class="com.liferay.portal.dao.orm.hibernate.RestrictionsFactoryImpl" />
 		</property>
 	</bean>
+	<bean class="com.liferay.portal.kernel.util.InfrastructureUtil" factory-method="getSessionFactory" id="liferayHibernateSessionFactory"/>
+	<bean class="com.liferay.portal.kernel.util.InfrastructureUtil" factory-method="getTransactionManager" id="liferayTransactionManager" />
 	<bean class="com.liferay.portal.spring.hibernate.PortalHibernateConfiguration" id="counterHibernateSessionFactory">
 		<property name="configurationResources">
 			<array>
@@ -49,12 +49,5 @@
 			</props>
 		</property>
 		<property name="mvccEnabled" value="false" />
-	</bean>
-	<bean class="com.liferay.portal.spring.hibernate.PortalHibernateConfiguration" id="liferayHibernateSessionFactory">
-		<property name="dataSource" ref="liferayDataSource" />
-	</bean>
-	<bean class="com.liferay.portal.spring.transaction.TransactionManagerFactory" factory-method="createTransactionManager" id="liferayTransactionManager">
-		<constructor-arg ref="liferayDataSource" />
-		<constructor-arg ref="liferayHibernateSessionFactory" />
 	</bean>
 </beans>

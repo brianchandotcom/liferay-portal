@@ -189,17 +189,41 @@ function TreeItem({
 				<div className="align-items-center d-flex pl-2">
 					{item.regularURL ? (
 						<a
-							className="flex-grow-1 text-decoration-none text-truncate w-100"
+							className="align-items-center d-flex flex-grow-1 text-decoration-none text-truncate w-100"
 							data-tooltip-floating="true"
 							href={item.regularURL}
 							tabIndex="-1"
 							target={item.target}
-							title={item.name}
 						>
-							{item.name}
+							<span
+								className="icon-tooltip lfr-portal-tooltip text-truncate"
+								data-title={item.name}
+							>
+								{item.name}
+							</span>
+
+							{Liferay.FeatureFlags['LPS-196847'] &&
+							!item.hasGuestViewPermission ? (
+								<ClayIcon
+									className="c-ml-2 c-mt-0 flex-shrink-0 icon-tooltip lfr-portal-tooltip text-4"
+									data-title={Liferay.Language.get(
+										'restricted-page'
+									)}
+									symbol="lock"
+								/>
+							) : null}
+
+							{Liferay.FeatureFlags['LPS-174417'] &&
+							item.hasDuplicatedFriendlyURL ? (
+								<ClayIcon
+									className="align-self-center c-mt-0 flex-shrink-0 icon-tooltip icon-warning lfr-portal-tooltip"
+									data-title={warningMessage}
+									symbol="warning-full"
+								/>
+							) : null}
 						</a>
 					) : (
-						<span>{item.name}</span>
+						<span title={item.name}>{item.name}</span>
 					)}
 				</div>
 			</ClayTreeView.ItemStack>
@@ -249,29 +273,40 @@ function TreeItem({
 											? `${item.name}. ${warningMessage}`
 											: item.name
 									}
-									className="flex-grow-1 text-decoration-none text-truncate-inline"
+									className="align-items-center d-flex flex-grow-1 text-decoration-none text-truncate-inline"
 									href={item.regularURL}
 									tabIndex="-1"
 									target={item.target}
 								>
 									<span
-										className="text-truncate"
+										className="icon-tooltip lfr-portal-tooltip text-truncate"
 										data-title={item.name}
 									>
 										{item.name}
 									</span>
 
+									{Liferay.FeatureFlags['LPS-196847'] &&
+									!item.hasGuestViewPermission ? (
+										<ClayIcon
+											className="c-ml-2 c-mt-0 flex-shrink-0 icon-tooltip lfr-portal-tooltip text-4"
+											data-title={Liferay.Language.get(
+												'restricted-page'
+											)}
+											symbol="lock"
+										/>
+									) : null}
+
 									{Liferay.FeatureFlags['LPS-174417'] &&
 									item.hasDuplicatedFriendlyURL ? (
 										<ClayIcon
-											className="align-self-center flex-shrink-0 icon-warning lfr-portal-tooltip"
+											className="align-self-center flex-shrink-0 icon-tooltip icon-warning lfr-portal-tooltip"
 											data-title={warningMessage}
 											symbol="warning-full"
 										/>
 									) : null}
 								</a>
 							) : (
-								<span>{item.name}</span>
+								<span title={item.name}>{item.name}</span>
 							)}
 						</div>
 					</ClayTreeView.Item>

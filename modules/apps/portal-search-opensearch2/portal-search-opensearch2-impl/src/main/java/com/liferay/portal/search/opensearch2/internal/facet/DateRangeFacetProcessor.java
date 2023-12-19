@@ -67,7 +67,7 @@ public class DateRangeFacetProcessor
 			}
 
 			dateRangeAggregationBuilder.ranges(
-				_createAggregationRange(
+				_createDateRangeExpression(
 					label,
 					RangeParserUtil.parserRange(
 						rangeJSONObject.getString("range"))));
@@ -79,7 +79,7 @@ public class DateRangeFacetProcessor
 			dateRangeAggregationBuilder.build());
 	}
 
-	private DateRangeExpression _createAggregationRange(
+	private DateRangeExpression _createDateRangeExpression(
 		String key, String[] rangeParts) {
 
 		return DateRangeExpression.of(

@@ -370,6 +370,9 @@ public interface PropsKeys {
 
 	public static final String CDN_HOST_HTTPS = "cdn.host.https";
 
+	public static final String CLUSTER_LINK_AUTH_VALUE =
+		"cluster.link.auth.value";
+
 	public static final String CLUSTER_LINK_AUTODETECT_ADDRESS =
 		"cluster.link.autodetect.address";
 
@@ -2526,9 +2529,6 @@ public interface PropsKeys {
 
 	public static final String SPRING_HIBERNATE_SESSION_FACTORY_VERIFY =
 		"spring.hibernate.session.factory.verify";
-
-	public static final String SPRING_INFRASTRUCTURE_CONFIGS =
-		"spring.infrastructure.configs";
 
 	public static final String
 		STAGING_DRAFT_EXPORT_IMPORT_CONFIGURATION_CHECK_INTERVAL =

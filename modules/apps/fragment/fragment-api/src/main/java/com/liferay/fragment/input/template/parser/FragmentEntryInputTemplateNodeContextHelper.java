@@ -693,7 +693,7 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 				layoutDisplayPageObjectProvider.getDisplayObject());
 
 		InfoFieldValue<?> infoFieldValue =
-			infoItemFieldValues.getInfoFieldValue(infoField.getName());
+			infoItemFieldValues.getInfoFieldValue(infoField.getUniqueId());
 
 		if (infoFieldValue == null) {
 			return defaultValue;

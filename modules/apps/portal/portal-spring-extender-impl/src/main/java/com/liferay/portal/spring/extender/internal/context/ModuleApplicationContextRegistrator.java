@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.util.AggregateClassLoader;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.spring.aop.AopConfigurableApplicationContextConfigurator;
 import com.liferay.portal.spring.configurator.ConfigurableApplicationContextConfigurator;
 import com.liferay.portal.spring.extender.internal.bean.ApplicationContextServicePublisherUtil;
 import com.liferay.portal.spring.extender.internal.loader.ModuleAggregareClassLoader;
@@ -41,12 +42,8 @@ import org.springframework.beans.CachedIntrospectionResults;
 public class ModuleApplicationContextRegistrator {
 
 	public ModuleApplicationContextRegistrator(
-		ConfigurableApplicationContextConfigurator
-			configurableApplicationContextConfigurator,
 		Bundle extendeeBundle, Bundle extenderBundle) {
 
-		_configurableApplicationContextConfigurator =
-			configurableApplicationContextConfigurator;
 		_extendeeBundle = extendeeBundle;
 		_extenderBundle = extenderBundle;
 
@@ -176,7 +173,8 @@ public class ModuleApplicationContextRegistrator {
 
 	private final ClassLoader _classLoader;
 	private final ConfigurableApplicationContextConfigurator
-		_configurableApplicationContextConfigurator;
+		_configurableApplicationContextConfigurator =
+			new AopConfigurableApplicationContextConfigurator();
 	private volatile ServiceRegistration<DataSource>
 		_dataSourceServiceRegistration;
 	private final Bundle _extendeeBundle;

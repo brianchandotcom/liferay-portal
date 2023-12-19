@@ -1400,6 +1400,41 @@ jdbc.default.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 		</sequential>
 	</macrodef>
 
+	<macrodef name="get-playwright-docker-image">
+		<sequential>
+			<local name="playwright.docker.image.default" />
+
+			<if>
+				<isset property="playwright.docker.image" />
+				<then>
+					<propertycopy from="playwright.docker.image" name="playwright.docker.image.default" />
+
+					<var name="playwright.docker.image" unset="true" />
+				</then>
+			</if>
+
+			<propertycopy from="playwright.docker.image[${playwright.version}]" name="playwright.docker.image" silent="true" />
+
+			<if>
+				<not>
+					<isset property="playwright.docker.image" />
+				</not>
+				<then>
+					<propertycopy from="playwright.docker.image.default" name="playwright.docker.image" />
+				</then>
+			</if>
+
+			<if>
+				<not>
+					<isset property="playwright.docker.image" />
+				</not>
+				<then>
+					<fail>Unable to get the property "playwright.docker.image" for Playwright ${playwright.version}</fail>
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="get-poshi-class-name">
 		<sequential>
 			<fail message="Please set the property ${test.class}." unless="test.class" />
@@ -7691,6 +7726,8 @@ ${docker.start.error}</fail>
 				<isset property="env.HOSTNAME" />
 			</condition>
 
+			<get-playwright-docker-image />
+
 			<start-docker-container image="${playwright.docker.image}" name="${playwright.docker.host}">\
 				${docker.add.host.hostname.arg} \
 				${docker.add.host.node.name.arg} \
@@ -11553,6 +11590,14 @@ ${update.properties}</echo>
 		<Logger level="DEBUG" name="com.liferay.portal.cache.ehcache.internal.event.PortalCacheCacheEventListener.test.cache" />
 	</Loggers>
 </Configuration>]]></echo>
+
+		<echo file="${liferay.home}/osgi/log4j/com.liferay.portal.cluster.multiple-log4j-ext.xml"><![CDATA[<?xml version="1.0"?>
+<Configuration strict="true">
+	<Loggers>
+		<Logger level="ERROR" name="com.liferay.portal.cluster.multiple.internal.jgroups.JGroupsClusterChannelFactory" />
+	</Loggers>
+</Configuration>]]>
+		</echo>
 
 		<!-- Temporarily increase Tika log level until LPS-193838 -->
 

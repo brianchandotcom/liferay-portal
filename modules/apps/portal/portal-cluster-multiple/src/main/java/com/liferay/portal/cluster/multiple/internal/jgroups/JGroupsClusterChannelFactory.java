@@ -218,6 +218,20 @@ public class JGroupsClusterChannelFactory implements ClusterChannelFactory {
 			String channelPropertiesLocation)
 		throws Exception {
 
+		if (channelPropertiesLocation.startsWith("jgroups/secure/md5/") &&
+			_log.isWarnEnabled() && _defaultMD5Warning) {
+
+			_log.warn(
+				StringBundler.concat(
+					"Clustering authentication is using MD5 default ",
+					"implementation. Please note that this implementation is ",
+					"not secure enough to be used in production. Refer to the ",
+					"documentation for details on configuring secure JGroups ",
+					"connections."));
+
+			_defaultMD5Warning = false;
+		}
+
 		try (InputStream inputStream = _getInputStream(
 				channelPropertiesLocation)) {
 
@@ -249,6 +263,21 @@ public class JGroupsClusterChannelFactory implements ClusterChannelFactory {
 					StringUtil.replace(
 						propertyKey, _ENCODED_CHARACTERS,
 						_ORIGINAL_CHARACTERS));
+
+				if (propertyKey.equals(PropsKeys.CLUSTER_LINK_AUTH_VALUE) &&
+					value.equals("liferay-cluster") && _log.isWarnEnabled() &&
+					_defaultSecretWarning) {
+
+					_log.warn(
+						StringBundler.concat(
+							"Clustering authentication is using default ",
+							"cluster link authentication value. Please ",
+							"configure the property \"",
+							PropsKeys.CLUSTER_LINK_AUTH_VALUE,
+							"\" in portal.properties."));
+
+					_defaultSecretWarning = false;
+				}
 
 				if (value instanceof String) {
 					sb.append(configXML.substring(index, startIndex));
@@ -290,6 +319,9 @@ public class JGroupsClusterChannelFactory implements ClusterChannelFactory {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		JGroupsClusterChannelFactory.class);
+
+	private static boolean _defaultMD5Warning = true;
+	private static boolean _defaultSecretWarning = true;
 
 	private InetAddress _bindInetAddress;
 	private NetworkInterface _bindNetworkInterface;

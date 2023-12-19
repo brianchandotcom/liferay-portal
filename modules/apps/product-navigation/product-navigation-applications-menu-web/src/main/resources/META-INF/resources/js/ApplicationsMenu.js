@@ -17,6 +17,8 @@ import {fetch, navigate, openSelectionModal} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 
+import useKeyboardNavigation from '../js/hooks/useKeyboardNavigation';
+
 import '../css/ApplicationsMenu.scss';
 
 const getOpenMenuTooltip = (keyLabel) => (
@@ -91,7 +93,7 @@ const SitesPanel = ({portletNamespace, sites, virtualInstance}) => {
 	);
 };
 
-const Site = ({current, label, logoURL, url}) => {
+const Site = ({current, label, logoURL, showDivider = false, url}) => {
 	return (
 		<li className="c-mt-3">
 			<a className="applications-menu-nav-link" href={url}>
@@ -119,6 +121,13 @@ const Site = ({current, label, logoURL, url}) => {
 					)}
 				</ClayLayout.ContentRow>
 			</a>
+
+			{showDivider ? (
+				<div
+					className="applications-menu-nav-divider c-mt-3"
+					role="separator"
+				/>
+			) : null}
 		</li>
 	);
 };
@@ -127,22 +136,21 @@ const Sites = ({mySites, portletNamespace, recentSites, viewAllURL}) => {
 	return (
 		<>
 			{recentSites?.length > 0 &&
-				recentSites.map(({current, key, label, logoURL, url}) => (
-					<Site
-						current={current}
-						key={key}
-						label={label}
-						logoURL={logoURL}
-						url={url}
-					/>
-				))}
-
-			{recentSites?.length > 0 && mySites?.length > 0 && (
-				<li
-					className="applications-menu-nav-divider c-mt-3"
-					role="presentation"
-				></li>
-			)}
+				recentSites.map(
+					({current, key, label, logoURL, url}, index) => (
+						<Site
+							current={current}
+							key={key}
+							label={label}
+							logoURL={logoURL}
+							showDivider={
+								index === recentSites.length - 1 &&
+								mySites?.length
+							}
+							url={url}
+						/>
+					)
+				)}
 
 			{mySites?.length > 0 &&
 				mySites.map(({current, key, label, logoURL, url}) => (
@@ -205,7 +213,10 @@ const AppsPanel = ({
 	const [activeTab, setActiveTab] = useState(index);
 
 	return (
-		<div className="applications-menu-wrapper">
+		<nav
+			aria-label={Liferay.Language.get('applications-menu')}
+			className="applications-menu-wrapper"
+		>
 			<div className="applications-menu-header">
 				<ClayLayout.ContainerFluid
 					size={Liferay?.FeatureFlags?.['LPS-184404'] ? false : 'xl'}
@@ -262,15 +273,15 @@ const AppsPanel = ({
 						<ClayLayout.Col className="pr-0" md="9" xl="8">
 							<ClayTabs.Content activeIndex={activeTab}>
 								{categories.map(({childCategories}, index) => (
-									<ClayTabs.TabPane
-										aria-labelledby={`${portletNamespace}tab_${index}`}
-										key={`tabPane-${index}`}
-									>
-										<div className="applications-menu-nav-columns c-pt-md-3 c-py-2">
+									<ClayTabs.TabPane key={`tabPane-${index}`}>
+										<div
+											aria-labelledby={`${portletNamespace}tab_${index}`}
+											className="applications-menu-nav-columns c-pt-md-3 c-py-2"
+										>
 											{childCategories.map(
 												({key, label, panelApps}) => (
 													<NavigationSection
-														id={`nav_${key}`}
+														id={key}
 														key={key}
 														label={label}
 														panelApps={panelApps}
@@ -339,41 +350,52 @@ const AppsPanel = ({
 					</ClayLayout.Row>
 				</ClayLayout.ContainerFluid>
 			</div>
-		</div>
+		</nav>
 	);
 };
 
 const NavigationSection = ({id, label, panelApps, selectedPortletId}) => {
 	return (
 		<ClayLayout.Col md>
-			<nav aria-labelledby={id}>
-				<h2 className="applications-menu-nav-header c-my-3" id={id}>
-					{label}
-				</h2>
+			<h2 className="applications-menu-nav-header c-my-3" id={id}>
+				{label}
+			</h2>
 
-				<ul className="list-unstyled">
-					{panelApps.map(({label, portletId, url}) => (
-						<li className="c-mt-2" key={portletId}>
-							<a
-								className={classNames(
-									'component-link applications-menu-nav-link',
-									{
-										active: portletId === selectedPortletId,
-									}
-								)}
-								href={url}
-							>
-								<span className="c-inner" tabIndex="-1">
-									{label}
-								</span>
-							</a>
-						</li>
-					))}
-				</ul>
-			</nav>
+			<ul aria-labelledby={id} className="list-unstyled" role="menu">
+				{panelApps.map((item) => (
+					<ListItem
+						item={item}
+						key={item.portletId}
+						selectedPortletId={selectedPortletId}
+					/>
+				))}
+			</ul>
 		</ClayLayout.Col>
 	);
 };
+
+function ListItem({item, selectedPortletId}) {
+	const {isTarget, setElement} = useKeyboardNavigation();
+
+	return (
+		<li className="c-mt-2" role="none">
+			<a
+				className={classNames(
+					'component-link applications-menu-nav-link',
+					{
+						active: item.portletId === selectedPortletId,
+					}
+				)}
+				href={item.url}
+				ref={setElement}
+				role="menuitem"
+				tabIndex={isTarget ? 0 : -1}
+			>
+				<span tabIndex="-1">{item.label}</span>
+			</a>
+		</li>
+	);
+}
 
 const ApplicationsMenu = ({
 	liferayLogoURL,

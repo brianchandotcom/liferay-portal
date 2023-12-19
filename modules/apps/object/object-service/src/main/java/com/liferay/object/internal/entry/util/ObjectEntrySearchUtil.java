@@ -99,7 +99,7 @@ public class ObjectEntrySearchUtil {
 	}
 
 	public static Predicate getUniqueCompositeKeyObjectFieldPredicate(
-		Column<?, Object> column, String dbType, String value) {
+		Column<?, Object> column, String dbType, Object value) {
 
 		if (dbType.equals(ObjectFieldConstants.DB_TYPE_INTEGER) ||
 			dbType.equals(ObjectFieldConstants.DB_TYPE_LONG)) {
@@ -107,7 +107,11 @@ public class ObjectEntrySearchUtil {
 			return column.eq(GetterUtil.getLong(value));
 		}
 		else if (dbType.equals(ObjectFieldConstants.DB_TYPE_STRING)) {
-			return column.eq(value);
+			if (value == null) {
+				return column.isNull();
+			}
+
+			return column.eq(String.valueOf(value));
 		}
 
 		return null;

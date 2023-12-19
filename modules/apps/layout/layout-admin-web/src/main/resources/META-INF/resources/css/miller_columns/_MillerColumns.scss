@@ -42,6 +42,10 @@
 		background-color: $light;
 	}
 
+	&--restricted__icon {
+		z-index: 2;
+	}
+
 	&.dragging {
 		opacity: 0.4;
 	}

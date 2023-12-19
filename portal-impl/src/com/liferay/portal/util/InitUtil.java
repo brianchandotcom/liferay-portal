@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.BasePortalLifecycle;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.JavaDetector;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OSDetector;
@@ -41,9 +42,11 @@ import com.liferay.portal.log.Log4jLogFactoryImpl;
 import com.liferay.portal.log4j.Log4JUtil;
 import com.liferay.portal.module.framework.ModuleFrameworkUtil;
 import com.liferay.portal.security.xml.SecureXMLFactoryProviderImpl;
+import com.liferay.portal.spring.aop.AopConfigurableApplicationContextConfigurator;
 import com.liferay.portal.spring.bean.LiferayBeanFactory;
 import com.liferay.portal.spring.configurator.ConfigurableApplicationContextConfigurator;
-import com.liferay.portal.spring.context.ArrayApplicationContext;
+import com.liferay.portal.spring.hibernate.PortalHibernateConfiguration;
+import com.liferay.portal.spring.transaction.TransactionManagerFactory;
 import com.liferay.portal.xml.SAXReaderImpl;
 
 import java.lang.reflect.Field;
@@ -51,7 +54,11 @@ import java.lang.reflect.Field;
 import java.util.List;
 import java.util.zip.ZipFile;
 
+import javax.sql.DataSource;
+
 import org.apache.commons.lang.time.StopWatch;
+
+import org.hibernate.SessionFactory;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
@@ -215,21 +222,33 @@ public class InitUtil {
 
 			DBInitUtil.init();
 
-			ApplicationContext infrastructureApplicationContext =
-				new ArrayApplicationContext(
-					PropsValues.SPRING_INFRASTRUCTURE_CONFIGS);
+			DataSource dataSource = DBInitUtil.getDataSource();
+
+			InfrastructureUtil.setDataSource(dataSource);
+
+			PortalHibernateConfiguration portalHibernateConfiguration =
+				new PortalHibernateConfiguration();
+
+			portalHibernateConfiguration.setDataSource(dataSource);
+
+			portalHibernateConfiguration.afterPropertiesSet();
+
+			SessionFactory sessionFactory =
+				portalHibernateConfiguration.getObject();
+
+			InfrastructureUtil.setSessionFactory(sessionFactory);
+
+			InfrastructureUtil.setTransactionManager(
+				TransactionManagerFactory.createTransactionManager(
+					dataSource, sessionFactory));
 
 			if (initModuleFramework) {
-				ModuleFrameworkUtil.registerContext(
-					infrastructureApplicationContext);
-
 				ModuleFrameworkUtil.startFramework();
 			}
 
 			ConfigurableApplicationContext configurableApplicationContext =
 				new ClassPathXmlApplicationContext(
-					configLocations.toArray(new String[0]), false,
-					infrastructureApplicationContext) {
+					configLocations.toArray(new String[0]), false) {
 
 					@Override
 					protected DefaultListableBeanFactory createBeanFactory() {
@@ -239,18 +258,12 @@ public class InitUtil {
 
 				};
 
-			if (infrastructureApplicationContext.containsBean(
-					"configurableApplicationContextConfigurator")) {
+			ConfigurableApplicationContextConfigurator
+				configurableApplicationContextConfigurator =
+					new AopConfigurableApplicationContextConfigurator();
 
-				ConfigurableApplicationContextConfigurator
-					configurableApplicationContextConfigurator =
-						infrastructureApplicationContext.getBean(
-							"configurableApplicationContextConfigurator",
-							ConfigurableApplicationContextConfigurator.class);
-
-				configurableApplicationContextConfigurator.configure(
-					configurableApplicationContext);
-			}
+			configurableApplicationContextConfigurator.configure(
+				configurableApplicationContext);
 
 			configurableApplicationContext.refresh();
 

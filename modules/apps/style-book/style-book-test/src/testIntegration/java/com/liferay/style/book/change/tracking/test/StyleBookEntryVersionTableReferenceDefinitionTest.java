@@ -7,6 +7,7 @@ package com.liferay.style.book.change.tracking.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.change.tracking.test.util.BaseTableReferenceDefinitionTestCase;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -43,8 +44,9 @@ public class StyleBookEntryVersionTableReferenceDefinitionTest
 		super.setUp();
 
 		_styleBookEntry = _styleBookEntryLocalService.addStyleBookEntry(
-			TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			TestPropsValues.getUserId(), TestPropsValues.getGroupId(), false,
+			StringPool.BLANK, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(),
 			ServiceContextTestUtil.getServiceContext());
 	}
 

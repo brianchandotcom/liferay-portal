@@ -7,7 +7,6 @@ package com.liferay.portal.osgi.web.wab.extender.internal;
 
 import com.liferay.portal.bean.BeanLocatorImpl;
 import com.liferay.portal.kernel.bean.BeanLocator;
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -18,6 +17,7 @@ import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.ModuleFrameworkPropsValues;
+import com.liferay.portal.spring.aop.AopConfigurableApplicationContextConfigurator;
 import com.liferay.portal.spring.configurator.ConfigurableApplicationContextConfigurator;
 
 import java.lang.reflect.Method;
@@ -190,9 +190,7 @@ public class PortletContextLoaderListener extends ContextLoaderListener {
 
 		ConfigurableApplicationContextConfigurator
 			configurableApplicationContextConfigurator =
-				(ConfigurableApplicationContextConfigurator)
-					PortalBeanLocatorUtil.locate(
-						"configurableApplicationContextConfigurator");
+				new AopConfigurableApplicationContextConfigurator();
 
 		configurableApplicationContextConfigurator.configure(
 			configurableWebApplicationContext);

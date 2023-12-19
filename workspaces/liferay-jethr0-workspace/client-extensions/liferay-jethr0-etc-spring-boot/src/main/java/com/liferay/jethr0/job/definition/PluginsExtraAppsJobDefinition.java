@@ -6,9 +6,14 @@
 package com.liferay.jethr0.job.definition;
 
 import com.liferay.jethr0.job.JobEntity;
+import com.liferay.jethr0.job.definition.parameter.JenkinsBranchURLJobParameterDefinition;
 import com.liferay.jethr0.job.definition.parameter.JobParameterDefinition;
+import com.liferay.jethr0.job.definition.parameter.PluginsExtraAppsURLJobParameterDefinition;
+import com.liferay.jethr0.job.definition.parameter.PortalReleaseVersionParameterDefinition;
+import com.liferay.jethr0.job.definition.parameter.PortalUpstreamBranchNameJobParameterDefinition;
+import com.liferay.jethr0.job.definition.parameter.PoshiQueryJobParameterDefinition;
 
-import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -18,7 +23,19 @@ public class PluginsExtraAppsJobDefinition extends BaseJobDefinition {
 
 	@Override
 	public Set<JobParameterDefinition> getJobParameterDefinitions() {
-		return Collections.emptySet();
+		Set<JobParameterDefinition> jobParameterDefinitions = new HashSet<>();
+
+		jobParameterDefinitions.add(
+			new JenkinsBranchURLJobParameterDefinition());
+		jobParameterDefinitions.add(
+			new PluginsExtraAppsURLJobParameterDefinition());
+		jobParameterDefinitions.add(
+			new PortalUpstreamBranchNameJobParameterDefinition());
+		jobParameterDefinitions.add(
+			new PortalReleaseVersionParameterDefinition());
+		jobParameterDefinitions.add(new PoshiQueryJobParameterDefinition());
+
+		return jobParameterDefinitions;
 	}
 
 	protected PluginsExtraAppsJobDefinition(JobEntity.Type type) {

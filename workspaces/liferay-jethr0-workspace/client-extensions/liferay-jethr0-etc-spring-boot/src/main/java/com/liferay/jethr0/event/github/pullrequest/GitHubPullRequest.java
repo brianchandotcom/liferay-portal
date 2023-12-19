@@ -9,12 +9,18 @@ import com.liferay.jethr0.event.github.GitHubFactory;
 import com.liferay.jethr0.event.github.client.GitHubClient;
 import com.liferay.jethr0.event.github.comment.GitHubComment;
 import com.liferay.jethr0.event.github.commit.GitHubCommit;
+import com.liferay.jethr0.event.github.file.GitHubFile;
 import com.liferay.jethr0.event.github.repository.GitHubRepository;
 import com.liferay.jethr0.event.github.user.GitHubUser;
 import com.liferay.jethr0.util.StringUtil;
 
+import java.net.MalformedURLException;
 import java.net.URL;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
@@ -99,8 +105,32 @@ public class GitHubPullRequest {
 		return StringUtil.toURL(_jsonObject.getString("comments_url"));
 	}
 
+	public URL getFilesURL() {
+		return StringUtil.toURL(_jsonObject.getString("url") + "/files");
+	}
+
 	public GitHubClient getGitHubClient() {
 		return _gitHubFactory.getGitHubClient();
+	}
+
+	public List<GitHubFile> getGitHubFiles() throws MalformedURLException {
+		if (_gitHubFiles != null) {
+			return _gitHubFiles;
+		}
+
+		_gitHubFiles = new ArrayList<>();
+
+		GitHubClient gitHubClient = getGitHubClient();
+
+		JSONArray filesJSONArray = new JSONArray(
+			gitHubClient.requestGet(getFilesURL()));
+
+		for (int i = 0; i < filesJSONArray.length(); i++) {
+			_gitHubFiles.add(
+				_gitHubFactory.newGitHubFile(filesJSONArray.getJSONObject(i)));
+		}
+
+		return _gitHubFiles;
 	}
 
 	public String getHeadBranchName() {
@@ -159,6 +189,7 @@ public class GitHubPullRequest {
 	private final GitHubCommit _baseGitHubCommit;
 	private final GitHubRepository _baseGitHubRepository;
 	private final GitHubFactory _gitHubFactory;
+	private List<GitHubFile> _gitHubFiles;
 	private final String _headBranchName;
 	private final GitHubCommit _headGitHubCommit;
 	private final GitHubRepository _headGitHubRepository;

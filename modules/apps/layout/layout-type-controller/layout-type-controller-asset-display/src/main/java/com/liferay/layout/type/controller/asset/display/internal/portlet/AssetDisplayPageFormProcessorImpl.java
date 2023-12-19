@@ -33,6 +33,59 @@ public class AssetDisplayPageFormProcessorImpl
 
 	@Override
 	public void process(
+			String className, long classPK, PortletRequest portletRequest)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		int displayPageType = ParamUtil.getInteger(
+			portletRequest, "displayPageType",
+			AssetDisplayPageConstants.TYPE_DEFAULT);
+
+		String layoutUuid = ParamUtil.getString(portletRequest, "layoutUuid");
+
+		long assetDisplayPageId = ParamUtil.getLong(
+			portletRequest, "assetDisplayPageId");
+
+		if (displayPageType == AssetDisplayPageConstants.TYPE_NONE) {
+			assetDisplayPageId = 0;
+		}
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			portletRequest);
+
+		_process(
+			themeDisplay.getUserId(), themeDisplay.getScopeGroupId(), className,
+			classPK, displayPageType, layoutUuid, assetDisplayPageId,
+			serviceContext);
+	}
+
+	@Override
+	public void process(
+			String className, long classPK, ServiceContext serviceContext)
+		throws PortalException {
+
+		int displayPageType = ParamUtil.getInteger(
+			serviceContext, "displayPageType",
+			AssetDisplayPageConstants.TYPE_DEFAULT);
+
+		String layoutUuid = ParamUtil.getString(serviceContext, "layoutUuid");
+
+		long assetDisplayPageId = ParamUtil.getLong(
+			serviceContext, "assetDisplayPageId");
+
+		if (displayPageType == AssetDisplayPageConstants.TYPE_NONE) {
+			assetDisplayPageId = 0;
+		}
+
+		_process(
+			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+			className, classPK, displayPageType, layoutUuid, assetDisplayPageId,
+			serviceContext);
+	}
+
+	private void _process(
 			long userId, long groupId, String className, long classPK,
 			int displayPageType, String layoutUuid, long assetDisplayPageId,
 			ServiceContext serviceContext)
@@ -71,60 +124,6 @@ public class AssetDisplayPageFormProcessorImpl
 		_assetDisplayPageEntryLocalService.updateAssetDisplayPageEntry(
 			assetDisplayPageEntry.getAssetDisplayPageEntryId(),
 			assetDisplayPageId, displayPageType);
-	}
-
-	@Override
-	public void process(
-			String className, long classPK, PortletRequest portletRequest)
-		throws PortalException {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		int displayPageType = ParamUtil.getInteger(
-			portletRequest, "displayPageType",
-			AssetDisplayPageConstants.TYPE_DEFAULT);
-
-		String layoutUuid = ParamUtil.getString(portletRequest, "layoutUuid");
-
-		long assetDisplayPageId = ParamUtil.getLong(
-			portletRequest, "assetDisplayPageId");
-
-		if (displayPageType == AssetDisplayPageConstants.TYPE_NONE) {
-			assetDisplayPageId = 0;
-		}
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			portletRequest);
-
-		process(
-			themeDisplay.getUserId(), themeDisplay.getScopeGroupId(), className,
-			classPK, displayPageType, layoutUuid, assetDisplayPageId,
-			serviceContext);
-	}
-
-	@Override
-	public void process(
-			String className, long classPK, ServiceContext serviceContext)
-		throws PortalException {
-
-		int displayPageType = ParamUtil.getInteger(
-			serviceContext, "displayPageType",
-			AssetDisplayPageConstants.TYPE_DEFAULT);
-
-		String layoutUuid = ParamUtil.getString(serviceContext, "layoutUuid");
-
-		long assetDisplayPageId = ParamUtil.getLong(
-			serviceContext, "assetDisplayPageId");
-
-		if (displayPageType == AssetDisplayPageConstants.TYPE_NONE) {
-			assetDisplayPageId = 0;
-		}
-
-		process(
-			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
-			className, classPK, displayPageType, layoutUuid, assetDisplayPageId,
-			serviceContext);
 	}
 
 	@Reference

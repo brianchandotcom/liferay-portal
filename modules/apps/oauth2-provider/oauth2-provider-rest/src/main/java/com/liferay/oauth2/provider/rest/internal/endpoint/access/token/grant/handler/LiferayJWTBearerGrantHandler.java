@@ -271,6 +271,10 @@ public class LiferayJWTBearerGrantHandler extends BaseAccessTokenGrantHandler {
 						multivaluedMap.getFirst(OAuthConstants.SCOPE)));
 			}
 			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug("Failed to create access token", exception);
+				}
+
 				throw new OAuthServiceException(exception);
 			}
 		}

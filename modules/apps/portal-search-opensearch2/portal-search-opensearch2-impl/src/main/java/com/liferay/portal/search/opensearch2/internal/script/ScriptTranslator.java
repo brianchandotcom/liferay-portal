@@ -65,13 +65,12 @@ public class ScriptTranslator {
 	}
 
 	private Map<String, JsonData> _translateParams(Map<String, Object> params) {
-		Map<String, JsonData> openSearchParams = new HashMap<>();
+		Map<String, JsonData> jsonDatas = new HashMap<>();
 
 		MapUtil.isNotEmptyForEach(
-			params,
-			(key, value) -> openSearchParams.put(key, JsonData.of(value)));
+			params, (key, value) -> jsonDatas.put(key, JsonData.of(value)));
 
-		return openSearchParams;
+		return jsonDatas;
 	}
 
 }

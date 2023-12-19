@@ -133,12 +133,12 @@ public class HitsMetadataTranslator {
 
 		fieldsTranslator.translateSource(documentBuilder, hit.source());
 
-		Map<String, JsonData> fields = hit.fields();
+		Map<String, JsonData> jsonDatas = hit.fields();
 
-		fieldsTranslator.translateFields(documentBuilder, fields);
+		fieldsTranslator.translateFields(documentBuilder, jsonDatas);
 
 		fieldsTranslator.populateAlternateUID(
-			alternateUidFieldName, documentBuilder, fields);
+			alternateUidFieldName, documentBuilder, jsonDatas);
 
 		return documentBuilder.build();
 	}

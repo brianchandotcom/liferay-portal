@@ -44,16 +44,16 @@ public class FieldsTranslator {
 
 	public void populateAlternateUID(
 		String alternateUidFieldName, DocumentBuilder documentBuilder,
-		Map<String, JsonData> documentFieldsMap) {
+		Map<String, JsonData> jsonDatas) {
 
-		if (MapUtil.isEmpty(documentFieldsMap) ||
-			documentFieldsMap.containsKey(_UID_FIELD_NAME) ||
+		if (MapUtil.isEmpty(jsonDatas) ||
+			jsonDatas.containsKey(_UID_FIELD_NAME) ||
 			Validator.isBlank(alternateUidFieldName)) {
 
 			return;
 		}
 
-		JsonData jsonData = documentFieldsMap.get(alternateUidFieldName);
+		JsonData jsonData = jsonDatas.get(alternateUidFieldName);
 
 		if (jsonData != null) {
 			documentBuilder.setValues(
@@ -64,15 +64,15 @@ public class FieldsTranslator {
 	}
 
 	public void translateFields(
-		DocumentBuilder documentBuilder, Map<String, JsonData> fields) {
+		DocumentBuilder documentBuilder, Map<String, JsonData> jsonDatas) {
 
-		if (MapUtil.isEmpty(fields)) {
+		if (MapUtil.isEmpty(jsonDatas)) {
 			return;
 		}
 
-		fields.forEach(
+		jsonDatas.forEach(
 			(fieldName, jsonData) -> translateField(
-				documentBuilder, fieldName, fields, jsonData));
+				documentBuilder, fieldName, jsonData, jsonDatas));
 	}
 
 	public void translateSource(
@@ -92,14 +92,14 @@ public class FieldsTranslator {
 	}
 
 	protected void translateField(
-		DocumentBuilder documentBuilder, String fieldName,
-		Map<String, JsonData> fields, JsonData jsonData) {
+		DocumentBuilder documentBuilder, String fieldName, JsonData jsonData,
+		Map<String, JsonData> jsonDatas) {
 
 		if (fieldName.endsWith(_GEOPOINT_SUFFIX)) {
 			return;
 		}
 
-		JsonData geoPointJsonData = fields.get(
+		JsonData geoPointJsonData = jsonDatas.get(
 			fieldName.concat(_GEOPOINT_SUFFIX));
 
 		if (geoPointJsonData != null) {

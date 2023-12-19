@@ -46,7 +46,3 @@ page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %>
 <liferay-theme:defineObjects />
 
 <portlet:defineObjects />
-
-<%
-String redirect = ParamUtil.getString(request, "redirect");
-%>

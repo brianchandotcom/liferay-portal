@@ -7,6 +7,10 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+String redirect = ParamUtil.getString(request, "redirect");
+%>
+
 <portlet:actionURL name="/commerce_payment/edit_function_commerce_payment_integration_configuration" var="editFunctionCommercePaymentIntegrationActionURL" />
 
 <aui:form action="<%= editFunctionCommercePaymentIntegrationActionURL %>" method="post" name="fm">

@@ -23,35 +23,16 @@ function ExportSettings({
 	internalClassNameKeyInitialOptions,
 	internalClassNameKeyLabel,
 	internalClassNameKeyName,
-	portletNamespace,
 }) {
 	const [
 		selectedExternalTypeOption,
 		setSelectedExternalTypeOption,
 	] = useState(externalTypeInitialOptions[0].value);
 	const [
-		selectedinternalClassNameKeyName,
-		setSelectedinternalClassNameKeyName,
+		selectedInternalClassNameKeyName,
+		setSelectedInternalClassNameKeyName,
 	] = useState();
 	const templateRef = useRef(false);
-
-	useEffect(() => {
-		const handleTemplateSelectedEvent = ({template}) => {
-			templateRef.current = true;
-			setSelectedinternalClassNameKeyName(template.internalClassNameKey);
-			dispatchInternalClassNameKeyOptions('update');
-			setSelectedExternalTypeOption(template.entityType);
-		};
-
-		Liferay.on(TEMPLATE_SELECTED_EVENT, handleTemplateSelectedEvent);
-
-		return () => {
-			Liferay.detach(
-				TEMPLATE_SELECTED_EVENT,
-				handleTemplateSelectedEvent
-			);
-		};
-	}, [portletNamespace]);
 
 	const [
 		internalClassNameKeyOptions,
@@ -74,14 +55,41 @@ function ExportSettings({
 	}, [selectedExternalTypeOption]);
 
 	useEffect(() => {
+		const handleTemplateSelectedEvent = ({template}) => {
+			templateRef.current = true;
+			if (
+				template.internalClassNameKey !==
+				selectedInternalClassNameKeyName
+			) {
+				templateRef.current = true;
+				setSelectedInternalClassNameKeyName(
+					template.internalClassNameKey
+				);
+			}
+			dispatchInternalClassNameKeyOptions('update');
+			if (template.entityType !== selectedExternalTypeOption) {
+				templateRef.current = true;
+				setSelectedExternalTypeOption(template.entityType);
+			}
+		};
+
+		Liferay.on(TEMPLATE_SELECTED_EVENT, handleTemplateSelectedEvent);
+
 		if (!templateRef.current) {
 			Liferay.fire(EXPORT_FILE_FORMAT_SELECTED_EVENT, {
 				selectedExportFileFormat: selectedExternalTypeOption,
-				selectedSchema: selectedinternalClassNameKeyName,
+				selectedSchema: selectedInternalClassNameKeyName,
 			});
 		}
 		templateRef.current = false;
-	}, [selectedExternalTypeOption, selectedinternalClassNameKeyName]);
+
+		return () => {
+			Liferay.detach(
+				TEMPLATE_SELECTED_EVENT,
+				handleTemplateSelectedEvent
+			);
+		};
+	}, [selectedExternalTypeOption, selectedInternalClassNameKeyName]);
 
 	return (
 		<>
@@ -96,7 +104,7 @@ function ExportSettings({
 						id={internalClassNameKeyId}
 						name={internalClassNameKeyName}
 						onChange={(event) =>
-							setSelectedinternalClassNameKeyName(
+							setSelectedInternalClassNameKeyName(
 								event.target.value
 							)
 						}

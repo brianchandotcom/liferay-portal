@@ -95,10 +95,7 @@ public class DisplayPageLayoutTypeControllerTest {
 		_group = GroupTestUtil.addGroup();
 
 		_company = _companyLocalService.getCompany(_group.getCompanyId());
-
-		_assetCategory = null;
 		_guestUser = _userLocalService.getGuestUser(_group.getCompanyId());
-		_infoItemDetails = null;
 
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			_group.getGroupId(), TestPropsValues.getUserId());

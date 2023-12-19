@@ -86,6 +86,7 @@ import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Supplier;
 
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Application;
@@ -517,7 +518,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 							objectDefinition.getRESTContextPath() + "/" +
 								objectDefinition.getShortName()
 						).build())),
-				_registerExceptionMappers(osgiJaxRsName, objectDefinition)));
+				_registerExceptionMappers(osgiJaxRsName)));
 	}
 
 	private void _initSystemObjectDefinition(
@@ -580,44 +581,55 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		_serviceRegistrationsMap.computeIfAbsent(
 			jaxRsApplicationDescriptor.getRESTContextPath(),
 			key -> _registerExceptionMappers(
-				jaxRsApplicationDescriptor.getApplicationName(),
-				objectDefinition));
+				jaxRsApplicationDescriptor.getApplicationName()));
 	}
 
 	private List<ServiceRegistration<?>> _registerExceptionMappers(
-		String jaxRsApplicationName, ObjectDefinition objectDefinition) {
+		String jaxRsApplicationName) {
 
 		return TransformUtil.transform(
-			Arrays.asList(
-				new ObjectAssetCategoryExceptionMapper(),
-				new ObjectEntryCountExceptionMapper(),
-				new ObjectEntryManagerHttpExceptionMapper(),
-				new ObjectEntryStatusExceptionMapper(_language),
-				new ObjectEntryValuesExceptionMapper(_language),
-				new ObjectRelationshipDeletionTypeExceptionMapper(_language),
-				new ObjectValidationRuleEngineExceptionMapper(
+			Arrays.<Supplier<ExceptionMapper<?>>>asList(
+				ObjectAssetCategoryExceptionMapper::new,
+				ObjectEntryCountExceptionMapper::new,
+				ObjectEntryManagerHttpExceptionMapper::new,
+				() -> new ObjectEntryStatusExceptionMapper(_language),
+				() -> new ObjectEntryValuesExceptionMapper(_language),
+				() -> new ObjectRelationshipDeletionTypeExceptionMapper(
+					_language),
+				() -> new ObjectValidationRuleEngineExceptionMapper(
 					_jsonFactory, _language),
-				new RequiredObjectRelationshipExceptionMapper(_language),
-				new UnsupportedOperationExceptionMapper()),
-			exceptionMapper -> {
-				Class<? extends ExceptionMapper> clazz =
-					exceptionMapper.getClass();
+				() -> new RequiredObjectRelationshipExceptionMapper(_language),
+				UnsupportedOperationExceptionMapper::new),
+			exceptionMapperSupplier -> _bundleContext.registerService(
+				(Class<ExceptionMapper<?>>)(Class<?>)ExceptionMapper.class,
+				new PrototypeServiceFactory<ExceptionMapper<?>>() {
 
-				return _bundleContext.registerService(
-					(Class<ExceptionMapper<?>>)(Class<?>)ExceptionMapper.class,
-					exceptionMapper,
-					HashMapDictionaryBuilder.<String, Object>put(
-						"osgi.jaxrs.application.select",
-						StringBundler.concat(
-							"(|(liferay.objects.exception.mapper=true)",
-							"(osgi.jaxrs.name=", jaxRsApplicationName, "))")
-					).put(
-						"osgi.jaxrs.extension", "true"
-					).put(
-						"osgi.jaxrs.name",
-						objectDefinition.getOSGiJaxRsName(clazz.getSimpleName())
-					).build());
-			});
+					@Override
+					public ExceptionMapper<?> getService(
+						Bundle bundle,
+						ServiceRegistration<ExceptionMapper<?>>
+							serviceRegistration) {
+
+						return exceptionMapperSupplier.get();
+					}
+
+					@Override
+					public void ungetService(
+						Bundle bundle,
+						ServiceRegistration<ExceptionMapper<?>>
+							serviceRegistration,
+						ExceptionMapper<?> exceptionMapper) {
+					}
+
+				},
+				HashMapDictionaryBuilder.<String, Object>put(
+					"osgi.jaxrs.application.select",
+					StringBundler.concat(
+						"(|(liferay.objects.exception.mapper=true)",
+						"(osgi.jaxrs.name=", jaxRsApplicationName, "))")
+				).put(
+					"osgi.jaxrs.extension", "true"
+				).build()));
 	}
 
 	private boolean _shouldUnregisterApplication(String restContextPath) {

@@ -113,6 +113,8 @@ definition {
 		Click(
 			key_name = "Save",
 			locator1 = "Button#GENERAL_BUTTON_MODAL_FOOTER");
+
+		WaitForElementNotPresent(locator1 = "Modal#MODAL_CONTENT");
 	}
 
 	@summary = "Default summary"

@@ -1157,9 +1157,12 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 						subject, new ServiceContext());
 				}
 				else {
+					Group group = _groupLocalService.fetchGroup(groupId);
+
 					try (SafeCloseable safeCloseable =
 							CTCollectionThreadLocal.
-								setProductionModeWithSafeCloseable()) {
+								setCTCollectionIdWithSafeCloseable(
+									group.getCtCollectionId())) {
 
 						message = mbMessageLocalService.addDiscussionMessage(
 							null, userId, null, groupId, className, classPK, 0,

@@ -93,7 +93,7 @@ components:
                     format: int32
                     minimum: 0
                     type: integer
-                paymentStatusInfo:
+                paymentStatusStatus:
                     $ref: "#/components/schemas/Status"
                     readOnly: true
                 reasonKey:

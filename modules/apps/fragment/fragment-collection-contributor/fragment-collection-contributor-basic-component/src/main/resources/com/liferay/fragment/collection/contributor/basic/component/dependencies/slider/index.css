@@ -91,39 +91,47 @@
 	box-shadow: 0 0 0 2px #fff, 0 0 0 4px #528eff;
 }
 
-.component-slider .carousel-navigation {
+.component-slider .carousel-footer {
 	bottom: 10px;
 	display: flex;
 	justify-content: center;
 	left: 0;
-	list-style: none;
 	padding-left: 0;
 	position: absolute;
 	right: 0;
 	z-index: 15;
 }
 
-.component-slider .carousel-navigation button {
-	background-color: rgba(255, 255, 255, 0.5);
-	border: 0;
-	flex: 0 1 auto;
-	height: 3px;
-	margin-left: 3px;
-	margin-right: 3px;
-	position: relative;
-	width: 30px;
+.component-slider .carousel-navigation {
+	display: flex;
+	gap: 8px;
+	justify-content: center;
+	list-style: none;
+	margin: 0;
+	padding: 0;
 }
 
-.component-slider .carousel-navigation button:focus {
+.component-slider .carousel-item-button {
+	background: transparent;
+	border: 0;
+	display: block;
 	outline: 0;
+	padding: 8px 0;
 	text-decoration: none;
 }
 
-.component-slider .carousel-navigation button:focus-visible {
+.component-slider .carousel-item-button:focus-visible {
 	border-radius: 4px;
 	box-shadow: 0 0 0 2px #fff, 0 0 0 4px #528eff;
 }
 
-.component-slider .carousel-navigation button.active {
+.component-slider .carousel-item-button-icon {
+	background-color: rgba(255, 255, 255, 0.5);
+	display: block;
+	height: 3px;
+	width: 30px;
+}
+
+.component-slider .carousel-item-button.active .carousel-item-button-icon {
 	background-color: rgba(255, 255, 255, 1);
 }

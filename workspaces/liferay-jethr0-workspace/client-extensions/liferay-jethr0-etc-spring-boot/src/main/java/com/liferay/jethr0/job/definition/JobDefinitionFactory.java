@@ -47,6 +47,21 @@ public class JobDefinitionFactory {
 		else if (type == JobEntity.Type.JENKINS_PULL_REQUEST) {
 			return new JenkinsPullRequestJobDefinition(type);
 		}
+		else if (type == JobEntity.Type.PLUGINS_EXTRA_APPS) {
+			return new PluginsExtraAppsJobDefinition(type);
+		}
+		else if (type == JobEntity.Type.PLUGINS_MARKETPLACE_APP) {
+			return new PluginsMarketplaceAppsJobDefinition(type);
+		}
+		else if (type == JobEntity.Type.PLUGINS_PULL_REQUEST) {
+			return new PluginsPullRequestJobDefinition(type);
+		}
+		else if (type == JobEntity.Type.PLUGINS_RELEASE) {
+			return new PluginsReleaseJobDefinition(type);
+		}
+		else if (type == JobEntity.Type.PLUGINS_UPSTREAM) {
+			return new PluginsUpstreamJobDefinition(type);
+		}
 		else if (type == JobEntity.Type.PORTAL_PULL_REQUEST) {
 			return new PortalPullRequestJobDefinition(type);
 		}

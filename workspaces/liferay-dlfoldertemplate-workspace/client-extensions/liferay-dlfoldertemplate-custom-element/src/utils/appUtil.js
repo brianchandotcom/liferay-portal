@@ -2,30 +2,17 @@
  * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
+
+import {config} from './constants';
+
 function suggestServerUrl() {
-	const OAuthApp = getLiferay().OAuth2Client.FromUserAgentApplication(
-		getConfig().agentOauthAppId
-	).homePageURL;
-
-	return OAuthApp;
+	return Liferay.OAuth2Client.FromUserAgentApplication(config.agentOauthAppId)
+		.homePageURL;
 }
-function getConfig() {
-	const config = {
-		'agentOauthAppId':
-			'liferay-dlfoldertemplate-oauth-application-user-agent',
-		'apiHost': 'http://localhost:8080',
-		'external': false,
-		'folder.generate.service.url': 'jobs/create/folder/direct',
-		'templateInfoApi': 'o/c/t4t14foldertemplates',
-		'templateNodeApi': 'o/c/t4t14foldertemplatenodes',
-	};
 
-	return config;
-}
 async function getOAuthToken() {
 	const prom = new Promise((resolve, reject) => {
-		getLiferay()
-			.OAuth2Client.FromUserAgentApplication(getConfig().agentOauthAppId)
+		Liferay.OAuth2Client.FromUserAgentApplication(config.agentOauthAppId)
 			._getOrRequestToken()
 			.then(
 				(token) => {
@@ -46,23 +33,21 @@ async function getOAuthToken() {
 
 	return prom;
 }
+
 function getHostUrl() {
-	return getConfig().external ? getConfig().apiHost : '';
+	return config.external ? config.apiHost : '';
 }
+
 function showSuccess(message) {
-	getLiferay().Util.openToast({title: message, type: 'success'});
+	Liferay.Util.openToast({title: message, type: 'success'});
 }
+
 function showError(message) {
-	getLiferay().Util.openToast({title: message, type: 'danger'});
-}
-function getLiferay() {
-	return window.Liferay || null;
+	Liferay.Util.openToast({title: message, type: 'danger'});
 }
 
 export const ApplicationUtil = {
-	getConfig,
 	getHostUrl,
-	getLiferay,
 	getOAuthToken,
 	showError,
 	showSuccess,

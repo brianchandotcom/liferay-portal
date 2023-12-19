@@ -9,7 +9,7 @@ import {ApplicationUtil} from '../utils/appUtil';
 export async function getSiteDocumentFoldersPage(siteId) {
 	const requestConfig = {
 		headers: {
-			'x-csrf-token': ApplicationUtil.getLiferay().authToken,
+			'x-csrf-token': Liferay.authToken,
 		},
 		maxBodyLength: Infinity,
 		method: 'get',
@@ -31,7 +31,7 @@ export async function getSiteDocumentFoldersPage(siteId) {
 export async function getDocumentFolderDocumentFoldersPage(parentFolderId) {
 	const requestConfig = {
 		headers: {
-			'x-csrf-token': ApplicationUtil.getLiferay().authToken,
+			'x-csrf-token': Liferay.authToken,
 		},
 		maxBodyLength: Infinity,
 		method: 'get',

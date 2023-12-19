@@ -372,6 +372,46 @@
 					}
 				},
 				{
+					"externalReferenceCode": "pluginsExtraApps",
+					"key": "pluginsExtraApps",
+					"name": "Plugins Extra Apps",
+					"name_i18n": {
+						"en-US": "Plugins Extra Apps"
+					}
+				},
+				{
+					"externalReferenceCode": "pluginsMarketplaceApp",
+					"key": "pluginsMarketplaceApp",
+					"name": "Plugins Marketplace App",
+					"name_i18n": {
+						"en-US": "Plugins Marketplace App"
+					}
+				},
+				{
+					"externalReferenceCode": "pluginsPullRequest",
+					"key": "pluginsPullRequest",
+					"name": "Plugins Pull Request",
+					"name_i18n": {
+						"en-US": "Plugins Pull Request"
+					}
+				},
+				{
+					"externalReferenceCode": "pluginsRelease",
+					"key": "pluginsRelease",
+					"name": "Plugins Release",
+					"name_i18n": {
+						"en-US": "Plugins Release"
+					}
+				},
+				{
+					"externalReferenceCode": "pluginsUpstream",
+					"key": "pluginsUpstream",
+					"name": "Plugins Upstream",
+					"name_i18n": {
+						"en-US": "Plugins Upstream"
+					}
+				},
+				{
 					"externalReferenceCode": "portalAppRelease",
 					"key": "portalAppRelease",
 					"name": "Portal App Release",

@@ -47,7 +47,7 @@ const BaseEditor = forwardRef(
 	) => {
 		const [config, setConfig] = useState(initialConfig);
 		const [loading, setLoading] = useState(
-			Boolean(initialConfig.editorConfigTransformerURLs)
+			Boolean(initialConfig.editorTransformerURLs)
 		);
 
 		const editorRef = useRef();
@@ -64,13 +64,13 @@ const BaseEditor = forwardRef(
 		}, []);
 
 		useEffect(() => {
-			if (!initialConfig.editorConfigTransformerURLs) {
+			if (!initialConfig.editorTransformerURLs) {
 				return;
 			}
 
 			loadClientExtensions([
 				{
-					clientExtensionDefinitions: initialConfig.editorConfigTransformerURLs.map(
+					clientExtensionDefinitions: initialConfig.editorTransformerURLs.map(
 						(url) => ({
 							importDeclaration: `default from ${url}`,
 						})
@@ -79,13 +79,16 @@ const BaseEditor = forwardRef(
 						let transformedConfig = initialConfig;
 
 						bindingContexts.forEach(
-							({binding: editorConfigTransformer, error}) => {
+							({binding: editorTransformer, error}) => {
 								if (
 									process.env.NODE_ENV === 'development' &&
 									error
 								) {
 									console.error(error);
 								}
+
+								const editorConfigTransformer =
+									editorTransformer?.editorConfigTransformer;
 
 								if (editorConfigTransformer) {
 									transformedConfig = editorConfigTransformer(

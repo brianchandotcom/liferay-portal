@@ -73,13 +73,12 @@ public class CETEditorConfigContributor
 		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
-		JSONArray jsonArray = jsonObject.getJSONArray(
-			"editorConfigTransformerURLs");
+		JSONArray jsonArray = jsonObject.getJSONArray("editorTransformerURLs");
 
 		if (jsonArray == null) {
 			jsonArray = JSONFactoryUtil.createJSONArray();
 
-			jsonObject.put("editorConfigTransformerURLs", jsonArray);
+			jsonObject.put("editorTransformerURLs", jsonArray);
 		}
 
 		jsonArray.put(_url);

@@ -69,7 +69,7 @@ const NewTemplateItem = ({onClose}) => {
 			</Form.Item>
 			<Form.Item>
 				<Flex gap={6}>
-					{!isLoading && (
+					{!isLoading ? (
 						<ClayButton
 							onClick={() => {
 								handleSubmit();
@@ -77,8 +77,7 @@ const NewTemplateItem = ({onClose}) => {
 						>
 							Submit
 						</ClayButton>
-					)}
-					{isLoading && (
+					) : (
 						<ClayLoadingIndicator
 							displayType="secondary"
 							size="sm"

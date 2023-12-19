@@ -7,14 +7,6 @@ import {config} from '../utils/constants';
 import {request} from '../utils/request';
 import {getHostUrl, showError} from '../utils/util';
 
-export async function getAvailableTemplatesNodesPage(templateID) {
-	return request({
-		url: `${getHostUrl()}/${
-			config.templateNodeApi
-		}?page=0&filter=templateID eq ${templateID}`,
-	});
-}
-
 export async function addNode(
 	parentNode,
 	root = false,
@@ -46,19 +38,10 @@ export async function addNode(
 	}
 }
 
-export async function updateFolderTemplate(nodeId, FolderTemplate) {
+export async function deleteFolderTemplate(nodeId) {
 	return request({
-		data: FolderTemplate,
-		method: 'patch',
+		method: 'delete',
 		url: `${getHostUrl()}/${config.templateNodeApi}/${nodeId}`,
-	});
-}
-
-export async function postFolderTemplate(FolderTemplate) {
-	return request({
-		data: FolderTemplate,
-		method: 'post',
-		url: `${getHostUrl()}/${config.templateNodeApi}`,
 	});
 }
 
@@ -70,9 +53,26 @@ export async function deleteFolderTemplateBatch(data) {
 	});
 }
 
-export async function deleteFolderTemplate(nodeId) {
+export async function getAvailableTemplatesNodesPage(templateID) {
 	return request({
-		method: 'delete',
+		url: `${getHostUrl()}/${
+			config.templateNodeApi
+		}?page=0&filter=templateID eq ${templateID}`,
+	});
+}
+
+export async function postFolderTemplate(FolderTemplate) {
+	return request({
+		data: FolderTemplate,
+		method: 'post',
+		url: `${getHostUrl()}/${config.templateNodeApi}`,
+	});
+}
+
+export async function updateFolderTemplate(nodeId, FolderTemplate) {
+	return request({
+		data: FolderTemplate,
+		method: 'patch',
 		url: `${getHostUrl()}/${config.templateNodeApi}/${nodeId}`,
 	});
 }

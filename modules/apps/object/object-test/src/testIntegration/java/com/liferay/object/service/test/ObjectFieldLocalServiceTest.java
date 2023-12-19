@@ -756,6 +756,31 @@ public class ObjectFieldLocalServiceTest {
 			defaultLocale.getLanguage(), defaultLocale.getCountry(),
 			defaultLocale.getVariant());
 
+		// Object field indexed language id
+
+		objectField1 = _addCustomObjectField(
+			new TextObjectFieldBuilder(
+			).indexed(
+				false
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).name(
+				"a" + RandomTestUtil.randomString()
+			).objectDefinitionId(
+				objectDefinition.getObjectDefinitionId()
+			).build());
+
+		Assert.assertEquals(
+			StringPool.BLANK, objectField1.getIndexedLanguageId());
+
+		objectField1.setIndexed(true);
+
+		objectField1 = _addOrUpdateCustomObjectField(objectField1);
+
+		Assert.assertEquals(
+			LanguageUtil.getLanguageId(LocaleUtil.getDefault()),
+			objectField1.getIndexedLanguageId());
+
 		// Object field read only
 
 		objectDefinition = ObjectDefinitionTestUtil.addCustomObjectDefinition(

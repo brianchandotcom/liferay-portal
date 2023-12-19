@@ -60,6 +60,21 @@ public class JobEntityFactory extends BaseEntityFactory<JobEntity> {
 		else if (type == JobEntity.Type.MAINTENANCE_WEEKLY_NODE) {
 			return new MaintenanceWeeklyNodeJobEntity(jsonObject);
 		}
+		else if (type == JobEntity.Type.PLUGINS_EXTRA_APPS) {
+			return new PluginsExtraAppsJobEntity(jsonObject);
+		}
+		else if (type == JobEntity.Type.PLUGINS_MARKETPLACE_APP) {
+			return new PluginsMarketplaceAppsJobEntity(jsonObject);
+		}
+		else if (type == JobEntity.Type.PLUGINS_PULL_REQUEST) {
+			return new PluginsPullRequestJobEntity(jsonObject);
+		}
+		else if (type == JobEntity.Type.PLUGINS_RELEASE) {
+			return new PluginsReleaseJobEntity(jsonObject);
+		}
+		else if (type == JobEntity.Type.PLUGINS_UPSTREAM) {
+			return new PluginsUpstreamJobEntity(jsonObject);
+		}
 		else if (type == JobEntity.Type.PORTAL_APP_RELEASE) {
 			return new PortalAppReleaseJobEntity(jsonObject);
 		}

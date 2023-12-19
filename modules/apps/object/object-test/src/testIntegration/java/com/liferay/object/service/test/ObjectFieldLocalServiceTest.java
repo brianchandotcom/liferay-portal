@@ -735,6 +735,31 @@ public class ObjectFieldLocalServiceTest {
 		Assert.assertEquals("baker", objectField1.getName());
 		Assert.assertTrue(objectField1.isRequired());
 
+		// Object field indexed language id
+
+		objectField1 = _addCustomObjectField(
+			new TextObjectFieldBuilder(
+			).indexed(
+				false
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).name(
+				"a" + RandomTestUtil.randomString()
+			).objectDefinitionId(
+				objectDefinition.getObjectDefinitionId()
+			).build());
+
+		Assert.assertEquals(
+			StringPool.BLANK, objectField1.getIndexedLanguageId());
+
+		objectField1.setIndexed(true);
+
+		objectField1 = _addOrUpdateCustomObjectField(objectField1);
+
+		Assert.assertEquals(
+			LanguageUtil.getLanguageId(LocaleUtil.getDefault()),
+			objectField1.getIndexedLanguageId());
+
 		// Object field label needs to be replicated when there is an update
 		// with another default language
 

@@ -77,9 +77,10 @@ import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.portlet.PortletURL;
 import javax.portlet.ResourceRequest;
@@ -504,6 +505,9 @@ public class GetCollectionFieldMVCResourceCommand
 				httpServletRequest, httpServletResponse,
 				FragmentEntryLinkConstants.EDIT, locale);
 
+		Map<InfoItemReference, InfoItemFieldValues> infoDisplaysFieldValues =
+			Collections.singletonMap(infoItemReference, infoItemFieldValues);
+
 		for (InfoFieldValue<Object> infoFieldValue :
 				infoItemFieldValues.getInfoFieldValues()) {
 
@@ -513,7 +517,7 @@ public class GetCollectionFieldMVCResourceCommand
 
 			try {
 				Object value = _fragmentEntryProcessorHelper.getFieldValue(
-					displayObjectJSONObject, new HashMap<>(),
+					displayObjectJSONObject, infoDisplaysFieldValues,
 					fragmentEntryProcessorContext);
 
 				displayObjectJSONObject.put(

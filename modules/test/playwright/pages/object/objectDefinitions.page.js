@@ -12,7 +12,9 @@ export class ObjectDefinitionsPage {
 		this.createObjectFolderButton = page.getByRole('button', {
 			name: 'Create Folder',
 		});
-		this.objectFolderActionsLink = page.getByLabel('Object Folder Actions');
+		this.objectFolderActionsLink = page
+			.locator('div.lfr__object-web-view-object-definitions-title-kebab')
+			.getByLabel('Object Folder Actions');
 		this.objectFolderDeleteFolderOption = page.getByRole('menuitem', {
 			name: 'Delete Folder',
 		});

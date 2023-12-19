@@ -8,8 +8,9 @@ interface ClientExtensionDefinition<T> {
 	importDeclaration: string;
 }
 interface ClientExtensionDefinitionsHandlerItem<T> {
-	binding: any;
+	binding?: any;
 	context: T;
+	error?: Error;
 }
 interface ClientExtensionDefinitionsHandler<T> {
 	onLoad(items: ClientExtensionDefinitionsHandlerItem<T>[]): void;

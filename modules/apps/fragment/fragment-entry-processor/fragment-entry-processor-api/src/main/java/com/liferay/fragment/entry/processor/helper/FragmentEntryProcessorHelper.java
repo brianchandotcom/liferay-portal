@@ -42,6 +42,10 @@ public interface FragmentEntryProcessorHelper {
 
 	public long getFileEntryId(WebImage webImage);
 
+	public Object getMappedInfoItemFieldValue(
+		JSONObject editableValueJSONObject, String fieldName,
+		InfoItemFieldValues infoItemFieldValues, Locale locale);
+
 	public boolean isMapped(JSONObject jsonObject);
 
 	public boolean isMappedCollection(JSONObject jsonObject);

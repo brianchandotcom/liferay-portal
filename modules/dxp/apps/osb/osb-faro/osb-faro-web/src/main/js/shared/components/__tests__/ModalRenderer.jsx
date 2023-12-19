@@ -1,7 +1,6 @@
 jest.mock('../../actions/modals');
 
 import * as modalActions from '../../actions/modals';
-import dom from 'metal-dom';
 import React from 'react';
 import {cleanup, fireEvent, render} from '@testing-library/react';
 import {fromJS} from 'immutable';
@@ -11,7 +10,9 @@ jest.unmock('react-dom');
 
 const {modalTypes} = modalActions;
 
-dom.match = jest.fn(() => true);
+jest.mock('shared/util/dom', () => ({
+	matches: jest.fn(() => true)
+}));
 
 describe('ModalRenderer', () => {
 	afterEach(() => {

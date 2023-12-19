@@ -85,7 +85,7 @@ definition {
 		}
 
 		task ("Click on the new tab open and delete the created AB test") {
-			SelectWindow(locator1 = "title=AC Page - Site Name - ${dataSource}");
+			SelectWindow(value1 = "title=AC Page - Site Name - ${dataSource}");
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Modal#MODAL_CONTENT",
@@ -136,7 +136,7 @@ definition {
 
 		task ("See the redirection to the review and run test modal in DXP") {
 			task ("Go to the new tab open") {
-				SelectWindow(locator1 = "title=AC Page - Site Name - ${dataSource}");
+				SelectWindow(value1 = "title=AC Page - Site Name - ${dataSource}");
 			}
 
 			task ("Assert the review and run modal is open") {
@@ -173,7 +173,7 @@ definition {
 		}
 
 		task ("Click on the new tab open and terminate the created AB test") {
-			SelectWindow(locator1 = "title=AC Page - Site Name - ${dataSource}");
+			SelectWindow(value1 = "title=AC Page - Site Name - ${dataSource}");
 
 			ABTest.assertTerminateTest();
 		}

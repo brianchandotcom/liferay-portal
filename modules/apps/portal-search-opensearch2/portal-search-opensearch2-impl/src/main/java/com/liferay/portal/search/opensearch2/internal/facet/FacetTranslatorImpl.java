@@ -108,7 +108,8 @@ public class FacetTranslatorImpl implements FacetTranslator {
 		}
 
 		if (ListUtil.isNotEmpty(postFilterQueries)) {
-			searchRequestBuilder.postFilter(_getPostFilter(postFilterQueries));
+			searchRequestBuilder.postFilter(
+				_getPostFilterQuery(postFilterQueries));
 		}
 	}
 
@@ -155,7 +156,7 @@ public class FacetTranslatorImpl implements FacetTranslator {
 	}
 
 	private org.opensearch.client.opensearch._types.query_dsl.Query
-		_getPostFilter(
+		_getPostFilterQuery(
 			List<org.opensearch.client.opensearch._types.query_dsl.Query>
 				queries) {
 

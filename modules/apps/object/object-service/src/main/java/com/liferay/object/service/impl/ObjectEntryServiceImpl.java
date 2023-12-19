@@ -77,6 +77,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.ZoneId;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
@@ -606,32 +607,42 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 			).toInstant());
 	}
 
-	private void _sendNotificationToAdminUsers(
-			long adminUserId, String portletId,
-			ObjectDefinition objectDefinition)
+	private void _sendNotificationToInstanceAdministrators(
+			List<Long> adminUserIdList, ObjectDefinition objectDefinition,
+			String portletId)
 		throws Throwable {
 
 		TransactionInvokerUtil.invoke(
 			_transactionConfig,
-			() -> _userNotificationEventLocalService.sendUserNotificationEvents(
-				adminUserId, portletId,
-				UserNotificationDeliveryConstants.TYPE_WEBSITE, true, false,
-				JSONUtil.put(
-					"className", objectDefinition.getClassName()
-				).put(
-					"externalReferenceCode",
-					objectDefinition.getExternalReferenceCode()
-				).put(
-					"notificationMessage",
-					StringBundler.concat(
-						"The limit of guest entries for ",
-						objectDefinition.getLabel(
-							objectDefinition.getDefaultLanguageId()),
-						" has been reached and will no longer be accepted. Go ",
-						"to Instance Settings to change this.")
-				).put(
-					"portletId", portletId
-				)));
+			() -> {
+				for (long adminUserId : adminUserIdList) {
+					_userNotificationEventLocalService.
+						sendUserNotificationEvents(
+							adminUserId, portletId,
+							UserNotificationDeliveryConstants.TYPE_WEBSITE,
+							true, false,
+							JSONUtil.put(
+								"className", objectDefinition.getClassName()
+							).put(
+								"externalReferenceCode",
+								objectDefinition.getExternalReferenceCode()
+							).put(
+								"notificationMessage",
+								StringBundler.concat(
+									"The limit of guest entries for ",
+									objectDefinition.getLabel(
+										objectDefinition.
+											getDefaultLanguageId()),
+									" has been reached and will no longer be ",
+									"accepted. Go to Instance Settings to ",
+									"change this.")
+							).put(
+								"portletId", portletId
+							));
+				}
+
+				return null;
+			});
 	}
 
 	private void _validateSubmissionLimit(long objectDefinitionId, User user)
@@ -690,23 +701,26 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 				).toInstant(
 				).getEpochSecond();
 
+				List<Long> adminUserIdNotDeliveredList = new ArrayList<>();
+
 				for (long adminUserId : adminUserIds) {
-					try {
-						int notificationsCount =
-							_userNotificationEventLocalService.
-								getUserNotificationEventsCount(
-									adminUserId, portletId, true, timestamp);
+					int notificationsCount =
+						_userNotificationEventLocalService.
+							getUserNotificationEventsCount(
+								adminUserId, portletId, true, timestamp);
 
-						if (notificationsCount > 0) {
-							continue;
-						}
+					if (notificationsCount <= 0) {
+						adminUserIdNotDeliveredList.add(adminUserId);
+					}
+				}
 
-						_sendNotificationToAdminUsers(
-							adminUserId, portletId, objectDefinition);
-					}
-					catch (Throwable throwable) {
-						ReflectionUtil.throwException(throwable);
-					}
+				try {
+					_sendNotificationToInstanceAdministrators(
+						adminUserIdNotDeliveredList, objectDefinition,
+						portletId);
+				}
+				catch (Throwable throwable) {
+					ReflectionUtil.throwException(throwable);
 				}
 
 				throw new ObjectEntryCountException(

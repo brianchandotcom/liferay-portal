@@ -3,9 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import axios from 'axios';
-
 import {config} from '../utils/constants';
+import {request} from '../utils/request';
 import {getHostUrl, showError, showSuccess} from '../utils/util';
 import {
 	deleteFolderTemplateBatch,
@@ -13,78 +12,32 @@ import {
 } from './template-diagram.service';
 
 export async function getAvailableTemplatesPage(page, pageSize) {
-	const requestConfig = {
-		headers: {
-			'x-csrf-token': Liferay.authToken,
-		},
-		maxBodyLength: Infinity,
-		method: 'get',
+	return request({
 		url: `${getHostUrl()}/${
 			config.templateInfoApi
 		}?page=${page}&pageSize=${pageSize}`,
-	};
-	const prom = new Promise((resolve, reject) => {
-		axios
-			.request(requestConfig)
-			.then((response) => {
-				resolve(response.data);
-			})
-			.catch((error) => {
-				reject(error);
-			});
 	});
-
-	return prom;
 }
-export async function postFolderTemplateInformation(FolderTemplateInformation) {
-	const requestConfig = {
-		data: FolderTemplateInformation,
-		headers: {
-			'x-csrf-token': Liferay.authToken,
-		},
-		maxBodyLength: Infinity,
+
+export async function postFolderTemplateInformation(folderTemplateInformation) {
+	return request({
+		data: folderTemplateInformation,
 		method: 'post',
 		url: `${getHostUrl()}/${config.templateInfoApi}`,
-	};
-	const prom = new Promise((resolve, reject) => {
-		axios
-			.request(requestConfig)
-			.then((response) => {
-				resolve(response.data);
-			})
-			.catch((error) => {
-				reject(error);
-			});
 	});
-
-	return prom;
 }
+
 export async function deleteFolderTemplateInformationItem(
-	FolderTemplateInformationId
+	folderTemplateInformationId
 ) {
-	const requestConfig = {
-		headers: {
-			'x-csrf-token': Liferay.authToken,
-		},
-		maxBodyLength: Infinity,
+	return request({
 		method: 'delete',
 		url: `${getHostUrl()}/${
 			config.templateInfoApi
-		}/${FolderTemplateInformationId}`,
-	};
-	const prom = new Promise((resolve, reject) => {
-		axios
-			.request(requestConfig)
-			.then((response) => {
-				resolve(response.data);
-			})
-			.catch((error) => {
-				reject(error);
-			});
+		}/${folderTemplateInformationId}`,
 	});
-
-	return prom;
 }
+
 export async function deleteFolderTemplateInformation(
 	FolderTemplateInformationId
 ) {

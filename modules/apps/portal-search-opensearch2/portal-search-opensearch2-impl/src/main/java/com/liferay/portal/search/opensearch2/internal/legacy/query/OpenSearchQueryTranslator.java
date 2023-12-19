@@ -398,8 +398,8 @@ public class OpenSearchQueryTranslator
 		builder.from(JsonData.of(termRangeQuery.getLowerTerm()));
 
 		QueryUtil.setRanges(
-			termRangeQuery.includesLower(), termRangeQuery.includesUpper(),
-			termRangeQuery.getLowerTerm(), builder,
+			builder, termRangeQuery.includesLower(),
+			termRangeQuery.includesUpper(), termRangeQuery.getLowerTerm(),
 			termRangeQuery.getUpperTerm());
 
 		return builder.build();

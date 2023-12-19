@@ -37,24 +37,24 @@ public class QueryUtil {
 	}
 
 	public static void setRanges(
-		boolean includesLower, boolean includesUpper, Object lowerTerm,
-		RangeQuery.Builder rangeQueryBuilder, Object upperTerm) {
+		RangeQuery.Builder builder, boolean includesLower,
+		boolean includesUpper, Object lowerTerm, Object upperTerm) {
 
 		if (lowerTerm != null) {
 			if (includesLower) {
-				rangeQueryBuilder.gte(JsonData.of(lowerTerm));
+				builder.gte(JsonData.of(lowerTerm));
 			}
 			else {
-				rangeQueryBuilder.gt(JsonData.of(lowerTerm));
+				builder.gt(JsonData.of(lowerTerm));
 			}
 		}
 
 		if (upperTerm != null) {
 			if (includesUpper) {
-				rangeQueryBuilder.lte(JsonData.of(upperTerm));
+				builder.lte(JsonData.of(upperTerm));
 			}
 			else {
-				rangeQueryBuilder.lt(JsonData.of(upperTerm));
+				builder.lt(JsonData.of(upperTerm));
 			}
 		}
 	}

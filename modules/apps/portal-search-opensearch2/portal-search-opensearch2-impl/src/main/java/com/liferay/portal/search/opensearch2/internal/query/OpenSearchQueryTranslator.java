@@ -236,9 +236,9 @@ public class OpenSearchQueryTranslator
 			builder::format, dateRangeTermQuery.getDateFormat());
 
 		QueryUtil.setRanges(
-			dateRangeTermQuery.isIncludesLower(),
+			builder, dateRangeTermQuery.isIncludesLower(),
 			dateRangeTermQuery.isIncludesUpper(),
-			dateRangeTermQuery.getLowerBound(), builder,
+			dateRangeTermQuery.getLowerBound(),
 			dateRangeTermQuery.getUpperBound());
 
 		TimeZone timeZone = dateRangeTermQuery.getTimeZone();
@@ -428,10 +428,9 @@ public class OpenSearchQueryTranslator
 			geoDistanceRangeQuery.getUpperBoundGeoDistance();
 
 		QueryUtil.setRanges(
-			geoDistanceRangeQuery.isIncludesLower(),
+			builder, geoDistanceRangeQuery.isIncludesLower(),
 			geoDistanceRangeQuery.isIncludesUpper(),
-			geoDistanceLowerBound.toString(), builder,
-			geoDistanceUpperBound.toString());
+			geoDistanceLowerBound.toString(), geoDistanceUpperBound.toString());
 
 		if (geoDistanceRangeQuery.getShapeRelation() != null) {
 			ShapeRelation shapeRelation =
@@ -812,8 +811,8 @@ public class OpenSearchQueryTranslator
 		builder.field(rangeTermQuery.getField());
 
 		QueryUtil.setRanges(
-			rangeTermQuery.isIncludesLower(), rangeTermQuery.isIncludesUpper(),
-			rangeTermQuery.getLowerBound(), builder,
+			builder, rangeTermQuery.isIncludesLower(),
+			rangeTermQuery.isIncludesUpper(), rangeTermQuery.getLowerBound(),
 			rangeTermQuery.getUpperBound());
 
 		return builder.build();

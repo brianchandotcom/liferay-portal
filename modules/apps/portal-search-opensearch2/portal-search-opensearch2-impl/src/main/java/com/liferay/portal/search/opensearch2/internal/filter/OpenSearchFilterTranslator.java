@@ -112,8 +112,9 @@ public class OpenSearchFilterTranslator
 			builder::format, dateRangeFilter.getFormat());
 
 		QueryUtil.setRanges(
-			dateRangeFilter.isIncludeLower(), dateRangeFilter.isIncludeUpper(),
-			dateRangeFilter.getFrom(), builder, dateRangeFilter.getTo());
+			builder, dateRangeFilter.isIncludeLower(),
+			dateRangeFilter.isIncludeUpper(), dateRangeFilter.getFrom(),
+			dateRangeFilter.getTo());
 
 		SetterUtil.setNotBlankString(
 			builder::timeZone, dateRangeFilter.getTimeZoneId());
@@ -133,10 +134,9 @@ public class OpenSearchFilterTranslator
 
 		try {
 			QueryUtil.setRanges(
-				dateRangeTermFilter.isIncludesLower(),
+				builder, dateRangeTermFilter.isIncludesLower(),
 				dateRangeTermFilter.isIncludesUpper(),
 				format.parseObject(dateRangeTermFilter.getLowerBound()),
-				builder,
 				format.parseObject(dateRangeTermFilter.getUpperBound()));
 		}
 		catch (ParseException parseException) {
@@ -257,8 +257,8 @@ public class OpenSearchFilterTranslator
 		SetterUtil.setNotBlankString(builder::format, rangeFilter.getFormat());
 
 		QueryUtil.setRanges(
-			rangeFilter.isIncludeLower(), rangeFilter.isIncludeUpper(),
-			rangeFilter.getFrom(), builder, rangeFilter.getTo());
+			builder, rangeFilter.isIncludeLower(), rangeFilter.isIncludeUpper(),
+			rangeFilter.getFrom(), rangeFilter.getTo());
 
 		SetterUtil.setNotBlankString(
 			builder::timeZone, rangeFilter.getTimeZoneId());
@@ -273,9 +273,9 @@ public class OpenSearchFilterTranslator
 		builder.field(rangeTermFilter.getField());
 
 		QueryUtil.setRanges(
-			rangeTermFilter.isIncludesLower(),
+			builder, rangeTermFilter.isIncludesLower(),
 			rangeTermFilter.isIncludesUpper(), rangeTermFilter.getLowerBound(),
-			builder, rangeTermFilter.getUpperBound());
+			rangeTermFilter.getUpperBound());
 
 		return builder.build();
 	}

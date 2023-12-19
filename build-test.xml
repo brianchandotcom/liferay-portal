@@ -7201,6 +7201,12 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 			/>
 
 			<lstopwatch action="total" name="start.app.server.@{app.server.bundle.index}" />
+
+			<execute>
+				<![CDATA[
+					docker stats --no-stream
+				]]>
+			</execute>
 		</sequential>
 	</macrodef>
 
@@ -16667,6 +16673,8 @@ CATALINA_OPTS="$CATALINA_OPTS -Dcom.sun.management.jmxremote -Dcom.sun.managemen
 	</target>
 
 	<target name="upgrade-legacy-database">
+		<lstopwatch action="start" name="upgrade-legacy-database" />
+
 		<prepare-database-upgrade-properties />
 
 		<get-java-jdk-bundle-version test.batch.name="${test.batch.name}" />
@@ -16737,6 +16745,15 @@ CATALINA_OPTS="$CATALINA_OPTS -Dcom.sun.management.jmxremote -Dcom.sun.managemen
 					</else>
 				</if>
 			</catch>
+			<finally>
+				<lstopwatch action="total" name="upgrade-legacy-database" />
+
+				<execute>
+					<![CDATA[
+						docker stats --no-stream
+					]]>
+				</execute>
+			</finally>
 		</trycatch>
 	</target>
 

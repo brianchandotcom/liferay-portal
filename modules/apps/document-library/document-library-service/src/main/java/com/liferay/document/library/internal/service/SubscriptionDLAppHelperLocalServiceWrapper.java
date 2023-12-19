@@ -105,7 +105,7 @@ public class SubscriptionDLAppHelperLocalServiceWrapper
 			userId, fileEntry, latestFileVersion, oldStatus, newStatus,
 			serviceContext, workflowContext);
 
-		// DisplayPage
+		// Asset display page
 
 		_assetDisplayPageEntryFormProcessor.process(
 			FileEntry.class.getName(), fileEntry.getFileEntryId(),

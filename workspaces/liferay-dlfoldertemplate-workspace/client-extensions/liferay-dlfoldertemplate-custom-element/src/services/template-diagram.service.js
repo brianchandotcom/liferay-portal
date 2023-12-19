@@ -3,35 +3,18 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import axios from 'axios';
-
 import {config} from '../utils/constants';
+import {request} from '../utils/request';
 import {getHostUrl, showError} from '../utils/util';
 
 export async function getAvailableTemplatesNodesPage(templateID) {
-	const requestConfig = {
-		headers: {
-			'x-csrf-token': Liferay.authToken,
-		},
-		maxBodyLength: Infinity,
-		method: 'get',
+	return request({
 		url: `${getHostUrl()}/${
 			config.templateNodeApi
 		}?page=0&filter=templateID eq ${templateID}`,
-	};
-	const prom = new Promise((resolve, reject) => {
-		axios
-			.request(requestConfig)
-			.then((response) => {
-				resolve(response.data);
-			})
-			.catch((error) => {
-				reject(error);
-			});
 	});
-
-	return prom;
 }
+
 export async function addNode(
 	parentNode,
 	root = false,
@@ -62,94 +45,34 @@ export async function addNode(
 		showError(error);
 	}
 }
+
 export async function updateFolderTemplate(nodeId, FolderTemplate) {
-	const requestConfig = {
+	return request({
 		data: FolderTemplate,
-		headers: {
-			'x-csrf-token': Liferay.authToken,
-		},
-		maxBodyLength: Infinity,
 		method: 'patch',
 		url: `${getHostUrl()}/${config.templateNodeApi}/${nodeId}`,
-	};
-	const prom = new Promise((resolve, reject) => {
-		axios
-			.request(requestConfig)
-			.then((response) => {
-				resolve(response.data);
-			})
-			.catch((error) => {
-				reject(error);
-			});
 	});
-
-	return prom;
 }
+
 export async function postFolderTemplate(FolderTemplate) {
-	const requestConfig = {
+	return request({
 		data: FolderTemplate,
-		headers: {
-			'x-csrf-token': Liferay.authToken,
-		},
-		maxBodyLength: Infinity,
 		method: 'post',
 		url: `${getHostUrl()}/${config.templateNodeApi}`,
-	};
-	const prom = new Promise((resolve, reject) => {
-		axios
-			.request(requestConfig)
-			.then((response) => {
-				resolve(response.data);
-			})
-			.catch((error) => {
-				reject(error);
-			});
 	});
-
-	return prom;
 }
+
 export async function deleteFolderTemplateBatch(data) {
-	const requestConfig = {
+	return request({
 		data,
-		headers: {
-			'x-csrf-token': Liferay.authToken,
-		},
-		maxBodyLength: Infinity,
 		method: 'delete',
 		url: `${getHostUrl()}/${config.templateNodeApi}/batch`,
-	};
-	const prom = new Promise((resolve, reject) => {
-		axios
-			.request(requestConfig)
-			.then((response) => {
-				resolve(response.data);
-			})
-			.catch((error) => {
-				reject(error);
-			});
 	});
-
-	return prom;
 }
+
 export async function deleteFolderTemplate(nodeId) {
-	const requestConfig = {
-		headers: {
-			'x-csrf-token': Liferay.authToken,
-		},
-		maxBodyLength: Infinity,
+	return request({
 		method: 'delete',
 		url: `${getHostUrl()}/${config.templateNodeApi}/${nodeId}`,
-	};
-	const prom = new Promise((resolve, reject) => {
-		axios
-			.request(requestConfig)
-			.then((response) => {
-				resolve(response.data);
-			})
-			.catch((error) => {
-				reject(error);
-			});
 	});
-
-	return prom;
 }

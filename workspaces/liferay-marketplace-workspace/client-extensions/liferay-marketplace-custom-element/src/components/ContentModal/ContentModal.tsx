@@ -5,19 +5,28 @@
 
 import ClayButton from '@clayui/button';
 import ClayModal, {useModal} from '@clayui/modal';
-import './ContentModal.scss';
+import DOMPurify from 'isomorphic-dompurify';
 
-type EulaKeysModalProps = ReturnType<typeof useModal>;
+type EulaKeysModalProps = ReturnType<typeof useModal> & {
+	description: string;
+	header: string;
+};
 
-export const ContentModal: React.FC<EulaKeysModalProps> = ({
+export function ContentModal({
+	description,
+	header,
 	observer,
 	onOpenChange,
-}) => {
+}: EulaKeysModalProps) {
 	return (
 		<ClayModal observer={observer} size="lg">
-			<ClayModal.Header>End User License Agreement</ClayModal.Header>
+			<ClayModal.Header>{header}</ClayModal.Header>
 			<ClayModal.Body>
-				<p>Do you want to save your documents?</p>
+				<div
+					dangerouslySetInnerHTML={{
+						__html: DOMPurify.sanitize(description),
+					}}
+				/>
 			</ClayModal.Body>
 			<ClayModal.Footer
 				first={
@@ -33,4 +42,4 @@ export const ContentModal: React.FC<EulaKeysModalProps> = ({
 			/>
 		</ClayModal>
 	);
-};
+}

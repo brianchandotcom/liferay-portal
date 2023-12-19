@@ -186,6 +186,7 @@ type Channel = {
 
 type DefaultProperties = {
 	cloudBaseURL: string;
+	eulaBaseURL: string;
 };
 
 interface CommerceAccount extends Omit<Account, 'description'> {

@@ -1070,3 +1070,14 @@ export async function postEmailAppInformation(
 		method: 'POST',
 	});
 }
+
+export async function getSiteStructuredContentByKey(key: string) {
+	const response = await fetch(
+		`${baseURL}/o/headless-delivery/v1.0/sites/${Liferay.ThemeDisplay.getScopeGroupId()}/structured-contents/by-key/${key}`,
+		{
+			headers,
+		}
+	);
+
+	return await response.json();
+}

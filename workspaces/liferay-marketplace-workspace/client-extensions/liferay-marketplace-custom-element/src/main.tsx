@@ -23,6 +23,7 @@ class WebComponent extends HTMLElement {
 	connectedCallback() {
 		const properties = {
 			cloudBaseURL: this.getAttribute('cloudBaseURL') || '',
+			eulaBaseURL: this.getAttribute('eulaBaseURL') || '',
 		};
 
 		if (!this.root) {

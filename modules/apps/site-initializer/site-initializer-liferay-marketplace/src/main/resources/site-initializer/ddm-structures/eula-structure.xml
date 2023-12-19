@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+
+<root>
+	<structure>
+		<name>Eula</name>
+		<description></description>
+		<definition>
+			<![CDATA[
+				{
+					"availableLanguageIds": [
+						"en_US"
+					],
+					"defaultLanguageId": "en_US",
+					"fields": [
+						{
+							"dataType": "html",
+							"fieldNamespace": "ddm",
+							"indexType": "text",
+							"label": {
+								"en_US": "Description"
+							},
+							"localizable": true,
+							"name": "description",
+							"predefinedValue": {
+								"en_US": ""
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"showLabel": true,
+							"tip": {
+								"en_US": ""
+							},
+							"type": "ddm-text-html"
+						}
+					],
+					"predefinedValue": {
+						"en_US": "[]"
+					},
+					"readOnly": false,
+					"repeatable": false,
+					"required": false,
+					"showAsSwitcher": false,
+					"showLabel": true,
+					"tip": {
+						"en_US": ""
+					},
+					"type": "checkbox_multiple",
+					"visibilityExpression": ""
+				}
+			]]>
+		</definition>
+		<layout>
+			<![CDATA[
+				{
+					"defaultLanguageId": "[$LOCALE_DEFAULT$]",
+					"pages": [
+						{
+							"rows": [
+								{
+									"columns": [
+										{
+											"fieldNames": [
+												"description"
+											],
+											"size": 12
+										}
+									]
+								}
+							],
+							"title": {
+								"[$LOCALE_DEFAULT$]": "Eula Structure"
+							}
+						}
+					]
+				}
+			]]>
+		</layout>
+	</structure>
+</root>

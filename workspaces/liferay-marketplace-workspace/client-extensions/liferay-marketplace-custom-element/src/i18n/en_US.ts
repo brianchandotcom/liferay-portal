@@ -49,6 +49,7 @@ export default {
 	'dxp-module-based-apps-are-not-supported-on-liferay-experience-cloud-lxc':
 		'DXP module-based apps are not supported on Liferay Experience Cloud (LXC).',
 	'email': 'Email',
+	'end-user-license-agreement': 'End User License Agreement',
 	'enter-email-address': 'Enter email address',
 	'enter-first-name': 'Enter first name',
 	'enter-last-name': 'Enter last name',

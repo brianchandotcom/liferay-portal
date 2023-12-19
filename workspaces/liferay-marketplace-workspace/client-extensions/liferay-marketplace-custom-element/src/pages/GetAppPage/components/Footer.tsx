@@ -4,16 +4,19 @@
  */
 
 import ClayButton from '@clayui/button';
-
-import {getSiteURL} from '../../../components/InviteMemberModal/services';
-import useCart from '../../../hooks/useCart';
-import {Liferay} from '../../../liferay/liferay';
-import {PaymentMethod} from '../enums/paymentMethod';
-import {StepType} from '../enums/stepType';
+import {useModal} from '@clayui/modal';
 import {useState} from 'react';
+
 import {Checkbox} from '../../../components/Checkbox/Checkbox';
 import {ContentModal} from '../../../components/ContentModal/ContentModal';
-import {useModal} from '@clayui/modal';
+import {getSiteURL} from '../../../components/InviteMemberModal/services';
+import {useMarketplaceContext} from '../../../context/MarketplaceContext';
+import useCart from '../../../hooks/useCart';
+import i18n from '../../../i18n';
+import {Liferay} from '../../../liferay/liferay';
+import {getSiteStructuredContentByKey} from '../../../utils/api';
+import {PaymentMethod} from '../enums/paymentMethod';
+import {StepType} from '../enums/stepType';
 
 interface ProductFooterProps {
 	addresses: BillingAddress[];
@@ -57,6 +60,8 @@ const ProductFooter = ({
 	step,
 	stepsNavigation,
 }: ProductFooterProps) => {
+	const {properties} = useMarketplaceContext();
+
 	const getButtonText = () => {
 		if (isFreeApp) {
 			return 'Get App';
@@ -108,7 +113,18 @@ const ProductFooter = ({
 
 	const [eulaCheckbox, setEulaCheckbox] = useState<boolean>(false);
 
+	const [eulaDescription, setEulaDescription] = useState<string>('');
+
 	const eulaModal = useModal();
+
+	const getEulaDescription = async () => {
+		const keyEula = 'EULA';
+		const response = await getSiteStructuredContentByKey(keyEula);
+
+		setEulaDescription(response?.contentFields[0]?.contentFieldValue?.data);
+
+		return response?.contentFields[0]?.contentFieldValue?.data;
+	};
 
 	return (
 		<>
@@ -116,7 +132,7 @@ const ProductFooter = ({
 				{!isFreeApp &&
 					step === StepType.PAYMENT &&
 					selectedPaymentMethod === PaymentMethod.PAY && (
-						<div className="d-flex align-items-start mt-4">
+						<div className="align-items-start d-flex mt-4">
 							<Checkbox
 								checked={eulaCheckbox}
 								onChange={() =>
@@ -126,21 +142,35 @@ const ProductFooter = ({
 								}
 							/>
 							<div>
-								<span>I have read and agree to the</span>
+								<span>I have read and agree to the </span>
 								<a
-									onClick={() => {
+									onClick={async () => {
 										eulaModal.onOpenChange(true);
+										await getEulaDescription();
 									}}
 								>
 									End User License Agreement
 								</a>
-								<span>and the</span>
-								<a>Terms</a>
-								<span>of Service.</span>
+								<span> and the</span>
+								<a
+									onClick={() => {
+										window.open(properties.eulaBaseURL);
+									}}
+								>
+									{' '}
+									Terms
+								</a>
+								<span> of Service.</span>
 							</div>
 						</div>
 					)}
-				{eulaModal.open && <ContentModal {...eulaModal} />}
+				{eulaModal.open && (
+					<ContentModal
+						description={eulaDescription}
+						header={i18n.translate('end-user-license-agreement')}
+						{...eulaModal}
+					/>
+				)}
 			</div>
 			<div className="mt-5 pt-2 text-black-50">
 				<div className="d-flex justify-content-between">

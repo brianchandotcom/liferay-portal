@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -210,14 +211,24 @@ public class IndexActionsDisplayContextBuilder {
 			List<Object> indexersData = new ArrayList<>();
 
 			for (Indexer<?> indexer : indexers) {
+				String className = indexer.getClassName();
+
+				if (className.contains(
+						"com.liferay.object.model.ObjectDefinition") &&
+					!_permissionChecker.isOmniadmin() &&
+					(indexer.getCompanyId() !=
+						CompanyThreadLocal.getCompanyId())) {
+
+					continue;
+				}
+
 				indexersData.add(
 					HashMapBuilder.<String, Object>put(
-						"className", indexer.getClassName()
+						"className", className
 					).put(
 						"displayName",
 						_language.get(
-							_httpServletRequest,
-							"model.resource." + indexer.getClassName())
+							_httpServletRequest, "model.resource." + className)
 					).put(
 						"enabled", indexer.isIndexerEnabled()
 					).build());

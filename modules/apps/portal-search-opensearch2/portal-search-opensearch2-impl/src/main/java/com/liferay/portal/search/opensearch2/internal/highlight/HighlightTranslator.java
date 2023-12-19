@@ -69,11 +69,6 @@ public class HighlightTranslator {
 		SetterUtil.setNotNullInteger(
 			builder::fragmentSize, highlight.getFragmentSize());
 
-		if (highlight.getHighlighterType() != null) {
-			builder.type(
-				_translateHighlighterType(highlight.getHighlighterType()));
-		}
-
 		if (highlight.getHighlightQuery() != null) {
 			builder.highlightQuery(
 				new Query(
@@ -90,14 +85,19 @@ public class HighlightTranslator {
 		}
 
 		SetterUtil.setNotNullEmptyStringArrayAsList(
-			builder::preTags, highlight.getPreTags());
-		SetterUtil.setNotNullEmptyStringArrayAsList(
 			builder::postTags, highlight.getPostTags());
+		SetterUtil.setNotNullEmptyStringArrayAsList(
+			builder::preTags, highlight.getPreTags());
 		SetterUtil.setNotNullBoolean(
 			builder::requireFieldMatch, highlight.getRequireFieldMatch());
 
 		if (highlight.getTagsSchema() != null) {
 			builder.tagsSchema(_translateTagsSchema(highlight.getTagsSchema()));
+		}
+
+		if (highlight.getHighlighterType() != null) {
+			builder.type(
+				_translateHighlighterType(highlight.getHighlighterType()));
 		}
 
 		return builder.build();
@@ -172,78 +172,72 @@ public class HighlightTranslator {
 		FieldConfig fieldConfig,
 		QueryTranslator<QueryVariant> queryTranslator) {
 
-		HighlightField.Builder highlightFieldBuilder =
-			new HighlightField.Builder();
+		HighlightField.Builder builder = new HighlightField.Builder();
 
 		if (ArrayUtil.isNotEmpty(fieldConfig.getBoundaryChars())) {
-			highlightFieldBuilder.boundaryChars(
+			builder.boundaryChars(
 				String.valueOf(fieldConfig.getBoundaryChars()));
 		}
 
 		SetterUtil.setNotNullInteger(
-			highlightFieldBuilder::boundaryMaxScan,
-			fieldConfig.getBoundaryMaxScan());
-		SetterUtil.setNotBlankString(
-			highlightFieldBuilder::boundaryScannerLocale,
-			fieldConfig.getBoundaryScannerLocale());
+			builder::boundaryMaxScan, fieldConfig.getBoundaryMaxScan());
 
 		if (fieldConfig.getBoundaryScannerType() != null) {
-			highlightFieldBuilder.boundaryScanner(
+			builder.boundaryScanner(
 				_translateBoundaryScannerType(
 					fieldConfig.getBoundaryScannerType()));
 		}
 
+		SetterUtil.setNotBlankString(
+			builder::boundaryScannerLocale,
+			fieldConfig.getBoundaryScannerLocale());
+
 		SetterUtil.setNotNullBoolean(
-			highlightFieldBuilder::forceSource, fieldConfig.getForceSource());
+			builder::forceSource, fieldConfig.getForceSource());
 
 		if (fieldConfig.getFragmenter() != null) {
-			highlightFieldBuilder.fragmenter(
+			builder.fragmenter(
 				_translateFragmenter(fieldConfig.getFragmenter()));
 		}
 
 		SetterUtil.setNotNullInteger(
-			highlightFieldBuilder::fragmentOffset,
-			fieldConfig.getFragmentOffset());
+			builder::fragmentOffset, fieldConfig.getFragmentOffset());
 		SetterUtil.setNotNullInteger(
-			highlightFieldBuilder::fragmentSize, fieldConfig.getFragmentSize());
-
-		if (fieldConfig.getHighlighterType() != null) {
-			highlightFieldBuilder.type(
-				_translateHighlighterType(fieldConfig.getHighlighterType()));
-		}
+			builder::fragmentSize, fieldConfig.getFragmentSize());
 
 		if (fieldConfig.getHighlightQuery() != null) {
-			highlightFieldBuilder.highlightQuery(
+			builder.highlightQuery(
 				new Query(
 					queryTranslator.translate(
 						fieldConfig.getHighlightQuery())));
 		}
 
 		SetterUtil.setNotNullEmptyStringArrayAsList(
-			highlightFieldBuilder::matchedFields,
-			fieldConfig.getMatchedFields());
+			builder::matchedFields, fieldConfig.getMatchedFields());
 		SetterUtil.setNotNullInteger(
-			highlightFieldBuilder::noMatchSize, fieldConfig.getNoMatchSize());
+			builder::noMatchSize, fieldConfig.getNoMatchSize());
 		SetterUtil.setNotNullInteger(
-			highlightFieldBuilder::numberOfFragments,
-			fieldConfig.getNumFragments());
+			builder::numberOfFragments, fieldConfig.getNumFragments());
 
 		if (fieldConfig.getOrder() != null) {
-			highlightFieldBuilder.order(
-				_translateOrder(fieldConfig.getOrder()));
+			builder.order(_translateOrder(fieldConfig.getOrder()));
 		}
 
 		SetterUtil.setNotNullInteger(
-			highlightFieldBuilder::phraseLimit, fieldConfig.getPhraseLimit());
+			builder::phraseLimit, fieldConfig.getPhraseLimit());
 		SetterUtil.setNotNullEmptyStringArrayAsList(
-			highlightFieldBuilder::postTags, fieldConfig.getPostTags());
+			builder::postTags, fieldConfig.getPostTags());
 		SetterUtil.setNotNullEmptyStringArrayAsList(
-			highlightFieldBuilder::preTags, fieldConfig.getPreTags());
+			builder::preTags, fieldConfig.getPreTags());
 		SetterUtil.setNotNullBoolean(
-			highlightFieldBuilder::requireFieldMatch,
-			fieldConfig.getRequireFieldMatch());
+			builder::requireFieldMatch, fieldConfig.getRequireFieldMatch());
 
-		return highlightFieldBuilder.build();
+		if (fieldConfig.getHighlighterType() != null) {
+			builder.type(
+				_translateHighlighterType(fieldConfig.getHighlighterType()));
+		}
+
+		return builder.build();
 	}
 
 	private HighlighterFragmenter _translateFragmenter(String fragmenter) {

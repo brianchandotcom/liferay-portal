@@ -214,30 +214,30 @@ public class OpenSearchAggregationTranslator
 			DateHistogramAggregation.Builder dateHistogramAggregationBuilder =
 				AggregationBuilders.dateHistogram();
 
-		dateHistogramAggregationBuilder.field(
-			dateHistogramAggregation.getField());
-
 		if (dateHistogramAggregation.getDateHistogramInterval() != null) {
 			dateHistogramAggregationBuilder.calendarInterval(
 				_translateCalendarInterval(
 					dateHistogramAggregation.getDateHistogramInterval()));
 		}
 
+		dateHistogramAggregationBuilder.field(
+			dateHistogramAggregation.getField());
+
 		if ((dateHistogramAggregation.getMaxBound() != null) &&
 			(dateHistogramAggregation.getMinBound() != null)) {
 
 			dateHistogramAggregationBuilder.extendedBounds(
 				ExtendedBounds.of(
-					openSearchExtendedBounds -> openSearchExtendedBounds.min(
-						ConversionUtil.toFieldDateMath(
-							null,
-							ConversionUtil.toDouble(
-								dateHistogramAggregation.getMinBound()))
-					).max(
+					openSearchExtendedBounds -> openSearchExtendedBounds.max(
 						ConversionUtil.toFieldDateMath(
 							null,
 							ConversionUtil.toDouble(
 								dateHistogramAggregation.getMaxBound()))
+					).min(
+						ConversionUtil.toFieldDateMath(
+							null,
+							ConversionUtil.toDouble(
+								dateHistogramAggregation.getMinBound()))
 					)));
 		}
 
@@ -304,14 +304,14 @@ public class OpenSearchAggregationTranslator
 				diversifiedSamplerAggregationBuilder =
 					AggregationBuilders.diversifiedSampler();
 
-		diversifiedSamplerAggregationBuilder.field(
-			diversifiedSamplerAggregation.getField());
-
 		if (diversifiedSamplerAggregation.getExecutionHint() != null) {
 			diversifiedSamplerAggregationBuilder.executionHint(
 				SamplerAggregationExecutionHint.valueOf(
 					diversifiedSamplerAggregation.getExecutionHint()));
 		}
+
+		diversifiedSamplerAggregationBuilder.field(
+			diversifiedSamplerAggregation.getField());
 
 		SetterUtil.setNotNullInteger(
 			diversifiedSamplerAggregationBuilder::maxDocsPerValue,
@@ -492,13 +492,13 @@ public class OpenSearchAggregationTranslator
 			GeoDistanceAggregation.Builder geoDistanceAggregationBuilder =
 				AggregationBuilders.geoDistance();
 
-		geoDistanceAggregationBuilder.field(geoDistanceAggregation.getField());
-
 		if (geoDistanceAggregation.getGeoDistanceType() != null) {
 			geoDistanceAggregationBuilder.distanceType(
 				_geoTranslator.translateGeoDistanceType(
 					geoDistanceAggregation.getGeoDistanceType()));
 		}
+
+		geoDistanceAggregationBuilder.field(geoDistanceAggregation.getField());
 
 		geoDistanceAggregationBuilder.origin(
 			_geoTranslator.translateGeoLocationPoint(
@@ -601,10 +601,10 @@ public class OpenSearchAggregationTranslator
 
 			histogramAggregationBuilder.extendedBounds(
 				ExtendedBounds.of(
-					openSearchExtendedBounds -> openSearchExtendedBounds.min(
-						histogramAggregation.getMinBound()
-					).max(
+					openSearchExtendedBounds -> openSearchExtendedBounds.max(
 						histogramAggregation.getMaxBound()
+					).min(
+						histogramAggregation.getMinBound()
 					)));
 		}
 
@@ -932,10 +932,6 @@ public class OpenSearchAggregationTranslator
 			ScriptedMetricAggregation.Builder scriptedMetricAggregationBuilder =
 				AggregationBuilders.scriptedMetric();
 
-		scriptedMetricAggregationBuilder.params(
-			ConversionUtil.toJsonDataMap(
-				scriptedMetricAggregation.getParameters()));
-
 		SetterUtil.setNotNullScript(
 			scriptedMetricAggregationBuilder::combineScript,
 			scriptedMetricAggregation.getCombineScript());
@@ -945,6 +941,11 @@ public class OpenSearchAggregationTranslator
 		SetterUtil.setNotNullScript(
 			scriptedMetricAggregationBuilder::mapScript,
 			scriptedMetricAggregation.getMapScript());
+
+		scriptedMetricAggregationBuilder.params(
+			ConversionUtil.toJsonDataMap(
+				scriptedMetricAggregation.getParameters()));
+
 		SetterUtil.setNotNullScript(
 			scriptedMetricAggregationBuilder::reduceScript,
 			scriptedMetricAggregation.getReduceScript());
@@ -969,9 +970,6 @@ public class OpenSearchAggregationTranslator
 				significantTermsAggregationBuilder =
 					AggregationBuilders.significantTerms();
 
-		significantTermsAggregationBuilder.field(
-			significantTermsAggregation.getField());
-
 		setNotNullQuery(
 			significantTermsAggregationBuilder::backgroundFilter,
 			significantTermsAggregation.getBackgroundFilterQuery());
@@ -982,14 +980,12 @@ public class OpenSearchAggregationTranslator
 					significantTermsAggregation.getExecutionHint()));
 		}
 
+		significantTermsAggregationBuilder.field(
+			significantTermsAggregation.getField());
+
 		if (significantTermsAggregation.getIncludeExcludeClause() != null) {
 			IncludeExcludeClause includeExcludeClause =
 				significantTermsAggregation.getIncludeExcludeClause();
-
-			if (includeExcludeClause.getIncludedValues() != null) {
-				significantTermsAggregationBuilder.include(
-					Arrays.asList(includeExcludeClause.getIncludedValues()));
-			}
 
 			if (includeExcludeClause.getExcludeRegex() != null) {
 				significantTermsAggregationBuilder.exclude(
@@ -1003,6 +999,11 @@ public class OpenSearchAggregationTranslator
 						termsExclude -> termsExclude.terms(
 							Arrays.asList(
 								includeExcludeClause.getExcludedValues()))));
+			}
+
+			if (includeExcludeClause.getIncludedValues() != null) {
+				significantTermsAggregationBuilder.include(
+					Arrays.asList(includeExcludeClause.getIncludedValues()));
 			}
 		}
 
@@ -1081,9 +1082,6 @@ public class OpenSearchAggregationTranslator
 				significantTextAggregationBuilder =
 					AggregationBuilders.significantText();
 
-		significantTextAggregationBuilder.field(
-			significantTextAggregation.getField());
-
 		setNotNullQuery(
 			significantTextAggregationBuilder::backgroundFilter,
 			significantTextAggregation.getBackgroundFilterQuery());
@@ -1094,14 +1092,16 @@ public class OpenSearchAggregationTranslator
 					significantTextAggregation.getExecutionHint()));
 		}
 
+		significantTextAggregationBuilder.field(
+			significantTextAggregation.getField());
+
+		SetterUtil.setNotNullBoolean(
+			significantTextAggregationBuilder::filterDuplicateText,
+			significantTextAggregation.getFilterDuplicateText());
+
 		if (significantTextAggregation.getIncludeExcludeClause() != null) {
 			IncludeExcludeClause includeExcludeClause =
 				significantTextAggregation.getIncludeExcludeClause();
-
-			if (includeExcludeClause.getIncludedValues() != null) {
-				significantTextAggregationBuilder.include(
-					Arrays.asList(includeExcludeClause.getIncludedValues()));
-			}
 
 			if (includeExcludeClause.getExcludeRegex() != null) {
 				significantTextAggregationBuilder.exclude(
@@ -1115,6 +1115,11 @@ public class OpenSearchAggregationTranslator
 						termsExclude -> termsExclude.terms(
 							Arrays.asList(
 								includeExcludeClause.getExcludedValues()))));
+			}
+
+			if (includeExcludeClause.getIncludedValues() != null) {
+				significantTextAggregationBuilder.include(
+					Arrays.asList(includeExcludeClause.getIncludedValues()));
 			}
 		}
 
@@ -1169,9 +1174,6 @@ public class OpenSearchAggregationTranslator
 			}
 		}
 
-		SetterUtil.setNotNullBoolean(
-			significantTextAggregationBuilder::filterDuplicateText,
-			significantTextAggregation.getFilterDuplicateText());
 		SetterUtil.setNotNullInteger(
 			significantTextAggregationBuilder::size,
 			significantTextAggregation.getSize());
@@ -1247,8 +1249,6 @@ public class OpenSearchAggregationTranslator
 				new org.opensearch.client.opensearch._types.aggregations.
 					TermsAggregation.Builder();
 
-		termsAggregationBuilder.field(termsAggregation.getField());
-
 		if (termsAggregation.getCollectionMode() != null) {
 			termsAggregationBuilder.collectMode(
 				_translateCollectMode(termsAggregation.getCollectionMode()));
@@ -1259,6 +1259,8 @@ public class OpenSearchAggregationTranslator
 				_translateExecutionHint(termsAggregation.getExecutionHint()));
 		}
 
+		termsAggregationBuilder.field(termsAggregation.getField());
+
 		SetterUtil.setNotNullInteger(
 			termsAggregationBuilder::minDocCount,
 			termsAggregation.getMinDocCount());
@@ -1268,20 +1270,6 @@ public class OpenSearchAggregationTranslator
 		if (termsAggregation.getIncludeExcludeClause() != null) {
 			IncludeExcludeClause includeExcludeClause =
 				termsAggregation.getIncludeExcludeClause();
-
-			if (includeExcludeClause.getIncludeRegex() != null) {
-				termsAggregationBuilder.include(
-					TermsInclude.of(
-						termsInclude -> termsInclude.regexp(
-							includeExcludeClause.getIncludeRegex())));
-			}
-			else if (includeExcludeClause.getIncludedValues() != null) {
-				termsAggregationBuilder.include(
-					TermsInclude.of(
-						termsInclude -> termsInclude.terms(
-							Arrays.asList(
-								includeExcludeClause.getIncludedValues()))));
-			}
 
 			if (includeExcludeClause.getExcludeRegex() != null) {
 				termsAggregationBuilder.exclude(
@@ -1295,6 +1283,20 @@ public class OpenSearchAggregationTranslator
 						termsInclude -> termsInclude.terms(
 							Arrays.asList(
 								includeExcludeClause.getExcludedValues()))));
+			}
+
+			if (includeExcludeClause.getIncludeRegex() != null) {
+				termsAggregationBuilder.include(
+					TermsInclude.of(
+						termsInclude -> termsInclude.regexp(
+							includeExcludeClause.getIncludeRegex())));
+			}
+			else if (includeExcludeClause.getIncludedValues() != null) {
+				termsAggregationBuilder.include(
+					TermsInclude.of(
+						termsInclude -> termsInclude.terms(
+							Arrays.asList(
+								includeExcludeClause.getIncludedValues()))));
 			}
 		}
 
@@ -1346,14 +1348,20 @@ public class OpenSearchAggregationTranslator
 					topHitsAggregation.getHighlight(), _queryTranslator));
 		}
 
+		ListUtil.isNotEmptyForEach(
+			topHitsAggregation.getScriptFields(),
+			scriptField -> topHitsAggregationBuilder.scriptFields(
+				scriptField.getField(),
+				org.opensearch.client.opensearch._types.ScriptField.of(
+					openSearchScriptField ->
+						openSearchScriptField.ignoreFailure(
+							scriptField.isIgnoreFailure()
+						).script(
+							scriptTranslator.translate(scriptField.getScript())
+						))));
+
 		SetterUtil.setNotNullInteger(
 			topHitsAggregationBuilder::size, topHitsAggregation.getSize());
-		SetterUtil.setNotNullBoolean(
-			topHitsAggregationBuilder::trackScores,
-			topHitsAggregation.getTrackScores());
-		SetterUtil.setNotNullBoolean(
-			topHitsAggregationBuilder::version,
-			topHitsAggregation.getVersion());
 
 		if (topHitsAggregation.getFetchSource() != null) {
 			SourceConfig.Builder sourceConfigBuilder =
@@ -1380,21 +1388,16 @@ public class OpenSearchAggregationTranslator
 		}
 
 		ListUtil.isNotEmptyForEach(
-			topHitsAggregation.getScriptFields(),
-			scriptField -> topHitsAggregationBuilder.scriptFields(
-				scriptField.getField(),
-				org.opensearch.client.opensearch._types.ScriptField.of(
-					openSearchScriptField ->
-						openSearchScriptField.ignoreFailure(
-							scriptField.isIgnoreFailure()
-						).script(
-							scriptTranslator.translate(scriptField.getScript())
-						))));
-
-		ListUtil.isNotEmptyForEach(
 			topHitsAggregation.getSortFields(),
 			sortField -> topHitsAggregationBuilder.sort(
 				_sortFieldTranslator.translate(sortField)));
+
+		SetterUtil.setNotNullBoolean(
+			topHitsAggregationBuilder::trackScores,
+			topHitsAggregation.getTrackScores());
+		SetterUtil.setNotNullBoolean(
+			topHitsAggregationBuilder::version,
+			topHitsAggregation.getVersion());
 
 		org.opensearch.client.opensearch._types.aggregations.Aggregation.Builder
 			aggregationBuilder =
@@ -1443,25 +1446,26 @@ public class OpenSearchAggregationTranslator
 				weightedAverageAggregationBuilder =
 					AggregationBuilders.weightedAvg();
 
+		SetterUtil.setNotBlankString(
+			weightedAverageAggregationBuilder::format,
+			weightedAvgAggregation.getFormat());
+
 		weightedAverageAggregationBuilder.value(
 			_getWeightedAverageValue(
 				weightedAvgAggregation.getValueField(),
 				weightedAvgAggregation.getValueMissing(),
 				weightedAvgAggregation.getValueScript()));
-		weightedAverageAggregationBuilder.weight(
-			_getWeightedAverageValue(
-				weightedAvgAggregation.getWeightField(),
-				weightedAvgAggregation.getWeightMissing(),
-				weightedAvgAggregation.getWeightScript()));
-
-		SetterUtil.setNotBlankString(
-			weightedAverageAggregationBuilder::format,
-			weightedAvgAggregation.getFormat());
 
 		if (weightedAvgAggregation.getValueType() != null) {
 			weightedAverageAggregationBuilder.valueType(
 				translateValueType(weightedAvgAggregation.getValueType()));
 		}
+
+		weightedAverageAggregationBuilder.weight(
+			_getWeightedAverageValue(
+				weightedAvgAggregation.getWeightField(),
+				weightedAvgAggregation.getWeightMissing(),
+				weightedAvgAggregation.getWeightScript()));
 
 		org.opensearch.client.opensearch._types.aggregations.Aggregation.Builder
 			aggregationBuilder =
@@ -1565,22 +1569,21 @@ public class OpenSearchAggregationTranslator
 	private AggregationRange _createAggregationRange(
 		String from, String key, String to) {
 
-		AggregationRange.Builder aggregationRangeBuilder =
-			new AggregationRange.Builder();
+		AggregationRange.Builder builder = new AggregationRange.Builder();
 
 		if (!Validator.isBlank(from)) {
-			aggregationRangeBuilder.from(from);
+			builder.from(from);
 		}
 
 		if (!Validator.isBlank(key)) {
-			aggregationRangeBuilder.key(key);
+			builder.key(key);
 		}
 
 		if (!Validator.isBlank(to)) {
-			aggregationRangeBuilder.to(to);
+			builder.to(to);
 		}
 
-		return aggregationRangeBuilder.build();
+		return builder.build();
 	}
 
 	private WeightedAverageValue _getWeightedAverageValue(

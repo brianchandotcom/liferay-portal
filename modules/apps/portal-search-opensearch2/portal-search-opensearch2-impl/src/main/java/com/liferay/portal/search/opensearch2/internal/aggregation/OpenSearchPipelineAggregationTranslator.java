@@ -256,10 +256,6 @@ public class OpenSearchPipelineAggregationTranslator
 		MovingFunctionAggregation.Builder builder =
 			AggregationBuilders.movingFn();
 
-		Script script = movingFunctionPipelineAggregation.getScript();
-
-		builder.script(script.getIdOrCode());
-
 		_setNotBlankBucketsPath(
 			builder::bucketsPath,
 			movingFunctionPipelineAggregation.getBucketsPath());
@@ -268,6 +264,11 @@ public class OpenSearchPipelineAggregationTranslator
 		_setNotNullGapPolicy(
 			builder::gapPolicy,
 			movingFunctionPipelineAggregation.getGapPolicy());
+
+		Script script = movingFunctionPipelineAggregation.getScript();
+
+		builder.script(script.getIdOrCode());
+
 		SetterUtil.setNotNullInteger(
 			builder::window, movingFunctionPipelineAggregation.getWindow());
 

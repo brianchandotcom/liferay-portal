@@ -73,11 +73,12 @@ public class SortTranslatorImpl implements SortTranslator {
 			SortOptionsBuilders.field();
 
 		builder.field(fieldName);
-		builder.unmappedType(FieldType.Keyword);
 
 		if (sort.isReverse()) {
 			builder.order(SortOrder.Desc);
 		}
+
+		builder.unmappedType(FieldType.Keyword);
 
 		return SortOptions.of(
 			sortOptions -> sortOptions.field(builder.build()));

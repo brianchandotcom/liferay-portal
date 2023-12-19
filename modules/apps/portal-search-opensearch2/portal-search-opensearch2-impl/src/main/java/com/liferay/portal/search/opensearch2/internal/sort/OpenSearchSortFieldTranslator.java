@@ -127,16 +127,12 @@ public class OpenSearchSortFieldTranslator
 		org.opensearch.client.opensearch._types.ScriptSort.Builder builder =
 			SortOptionsBuilders.script();
 
-		builder.order(translateSortOrder(scriptSort.getSortOrder()));
-		builder.script(_scriptTranslator.translate(scriptSort.getScript()));
-
 		if (scriptSort.getNestedSort() != null) {
 			builder.nested(translateNestedSort(scriptSort.getNestedSort()));
 		}
 
-		if (scriptSort.getSortMode() != null) {
-			builder.mode(translateSortMode(scriptSort.getSortMode()));
-		}
+		builder.order(translateSortOrder(scriptSort.getSortOrder()));
+		builder.script(_scriptTranslator.translate(scriptSort.getScript()));
 
 		if (scriptSort.getScriptSortType() ==
 				ScriptSort.ScriptSortType.NUMBER) {
@@ -147,6 +143,10 @@ public class OpenSearchSortFieldTranslator
 			builder.type(ScriptSortType.String);
 		}
 
+		if (scriptSort.getSortMode() != null) {
+			builder.mode(translateSortMode(scriptSort.getSortMode()));
+		}
+
 		return SortOptions.of(
 			sortOptions -> sortOptions.script(builder.build()));
 	}
@@ -154,18 +154,19 @@ public class OpenSearchSortFieldTranslator
 	protected NestedSortValue translateNestedSort(NestedSort nestedSort) {
 		NestedSortValue.Builder builder = new NestedSortValue.Builder();
 
-		builder.maxChildren(nestedSort.getMaxChildren());
-		builder.path(nestedSort.getPath());
-
 		if (nestedSort.getFilterQuery() != null) {
 			builder.filter(
 				new Query(
 					_queryTranslator.translate(nestedSort.getFilterQuery())));
 		}
 
+		builder.maxChildren(nestedSort.getMaxChildren());
+
 		if (nestedSort.getNestedSort() != null) {
 			builder.nested(translateNestedSort(nestedSort.getNestedSort()));
 		}
+
+		builder.path(nestedSort.getPath());
 
 		return builder.build();
 	}

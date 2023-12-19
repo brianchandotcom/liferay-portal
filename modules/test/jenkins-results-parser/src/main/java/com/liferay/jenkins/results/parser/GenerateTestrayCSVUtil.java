@@ -202,14 +202,20 @@ public class GenerateTestrayCSVUtil {
 				throw new RuntimeException(malformedURLException);
 			}
 
-			TopLevelBuildReport topLevelBuildReport =
-				BuildReportFactory.newTopLevelBuildReport(
-					topLevelBuildReportURL);
+			try {
+				TopLevelBuildReport topLevelBuildReport =
+					BuildReportFactory.newTopLevelBuildReport(
+						topLevelBuildReportURL);
 
-			Map<String, String> buildParameters =
-				topLevelBuildReport.getBuildParameters();
+				Map<String, String> buildParameters =
+					topLevelBuildReport.getBuildParameters();
 
-			_pullRequestAuthor = buildParameters.get("GITHUB_SENDER_USERNAME");
+				_pullRequestAuthor = buildParameters.get(
+					"GITHUB_SENDER_USERNAME");
+			}
+			catch (Exception exception) {
+				_pullRequestAuthor = "Unknown";
+			}
 
 			return _pullRequestAuthor;
 		}

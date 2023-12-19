@@ -6,6 +6,7 @@
 import axios from 'axios';
 
 import {ApplicationUtil} from '../utils/appUtil';
+import {config} from '../utils/constants';
 
 export async function createFolder(templateId, containerId, rootName) {
 	const requestConfig = {
@@ -15,7 +16,7 @@ export async function createFolder(templateId, containerId, rootName) {
 		maxBodyLength: Infinity,
 		method: 'post',
 		url: `${ApplicationUtil.suggestServerUrl()}/${
-			ApplicationUtil.getConfig()['folder.generate.service.url']
+			config['folder.generate.service.url']
 		}/${templateId}/${containerId}/${rootName}`,
 	};
 	const prom = new Promise((resolve, reject) => {

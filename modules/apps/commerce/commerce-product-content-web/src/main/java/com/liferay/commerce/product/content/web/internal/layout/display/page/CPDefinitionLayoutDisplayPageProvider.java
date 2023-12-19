@@ -44,6 +44,27 @@ public class CPDefinitionLayoutDisplayPageProvider
 
 	@Override
 	public LayoutDisplayPageObjectProvider<CPDefinition>
+		getLayoutDisplayPageObjectProvider(CPDefinition cpDefinition) {
+
+		if (cpDefinition.getStatus() == WorkflowConstants.STATUS_IN_TRASH) {
+			return null;
+		}
+
+		long groupId = cpDefinition.getGroupId();
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		if (serviceContext != null) {
+			groupId = serviceContext.getScopeGroupId();
+		}
+
+		return new CPDefinitionLayoutDisplayPageObjectProvider(
+			cpDefinition, groupId);
+	}
+
+	@Override
+	public LayoutDisplayPageObjectProvider<CPDefinition>
 		getLayoutDisplayPageObjectProvider(
 			InfoItemReference infoItemReference) {
 

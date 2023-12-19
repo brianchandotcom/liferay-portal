@@ -33,6 +33,14 @@ public class AssetCategoryLayoutDisplayPageProvider
 
 	@Override
 	public LayoutDisplayPageObjectProvider<AssetCategory>
+		getLayoutDisplayPageObjectProvider(AssetCategory assetCategory) {
+
+		return new AssetCategoryLayoutDisplayPageObjectProvider(
+			assetCategory, _portal);
+	}
+
+	@Override
+	public LayoutDisplayPageObjectProvider<AssetCategory>
 		getLayoutDisplayPageObjectProvider(
 			InfoItemReference infoItemReference) {
 

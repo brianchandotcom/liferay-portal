@@ -73,6 +73,23 @@ public class JournalArticleLayoutDisplayPageProvider
 
 	@Override
 	public LayoutDisplayPageObjectProvider<JournalArticle>
+		getLayoutDisplayPageObjectProvider(JournalArticle article) {
+
+		try {
+			if (!_isShow(article)) {
+				return null;
+			}
+
+			return new JournalArticleLayoutDisplayPageObjectProvider(
+				article, assetHelper);
+		}
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
+		}
+	}
+
+	@Override
+	public LayoutDisplayPageObjectProvider<JournalArticle>
 		getLayoutDisplayPageObjectProvider(long groupId, String urlTitle) {
 
 		try {

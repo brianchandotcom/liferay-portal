@@ -77,6 +77,27 @@ public class KBArticleLayoutDisplayPageProvider
 
 	@Override
 	public LayoutDisplayPageObjectProvider<KBArticle>
+		getLayoutDisplayPageObjectProvider(KBArticle kbArticle) {
+
+		try {
+			KBArticle latestKBArticle =
+				_kbArticleLocalService.fetchLatestKBArticle(
+					kbArticle.getResourcePrimKey(), kbArticle.getGroupId());
+
+			if ((latestKBArticle == null) || latestKBArticle.isExpired()) {
+				return null;
+			}
+
+			return new KBArticleLayoutDisplayPageObjectProvider(
+				kbArticle, _assetHelper);
+		}
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
+		}
+	}
+
+	@Override
+	public LayoutDisplayPageObjectProvider<KBArticle>
 		getLayoutDisplayPageObjectProvider(long groupId, String urlTitle) {
 
 		try {

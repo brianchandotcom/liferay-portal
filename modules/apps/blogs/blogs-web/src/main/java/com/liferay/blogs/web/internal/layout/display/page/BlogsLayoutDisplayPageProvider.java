@@ -38,6 +38,20 @@ public class BlogsLayoutDisplayPageProvider
 
 	@Override
 	public LayoutDisplayPageObjectProvider<BlogsEntry>
+		getLayoutDisplayPageObjectProvider(BlogsEntry blogsEntry) {
+
+		if ((blogsEntry == null) || blogsEntry.isDraft() ||
+			blogsEntry.isInTrash()) {
+
+			return null;
+		}
+
+		return new BlogsLayoutDisplayPageObjectProvider(
+			_assetHelper, blogsEntry, _infoItemFriendlyURLProvider, _language);
+	}
+
+	@Override
+	public LayoutDisplayPageObjectProvider<BlogsEntry>
 		getLayoutDisplayPageObjectProvider(
 			InfoItemReference infoItemReference) {
 

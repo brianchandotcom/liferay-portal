@@ -82,7 +82,7 @@ public class CPDefinitionInfoItemFieldValuesProvider
 						CPDefinition.class.getName(),
 						cpDefinition.getCPDefinitionId()),
 					StringPool.BLANK, CPDefinition.class.getSimpleName(),
-					_getThemeDisplay())
+					cpDefinition, _getThemeDisplay())
 			).infoFieldValues(
 				_templateInfoItemFieldSetProvider.getInfoFieldValues(
 					CPDefinition.class.getName(), cpDefinition)

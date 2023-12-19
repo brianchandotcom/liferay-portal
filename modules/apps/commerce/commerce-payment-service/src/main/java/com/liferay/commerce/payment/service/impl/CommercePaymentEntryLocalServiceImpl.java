@@ -146,8 +146,6 @@ public class CommercePaymentEntryLocalServiceImpl
 			externalReferenceCode = null;
 		}
 
-		// Update
-
 		CommercePaymentEntry commercePaymentEntry = null;
 
 		if (Validator.isNotNull(externalReferenceCode)) {
@@ -163,8 +161,6 @@ public class CommercePaymentEntryLocalServiceImpl
 				note, paymentIntegrationKey, paymentIntegrationType,
 				paymentStatus, reasonKey, redirectURL, transactionCode, type);
 		}
-
-		// Add
 
 		commercePaymentEntry =
 			commercePaymentEntryLocalService.addCommercePaymentEntry(

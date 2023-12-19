@@ -143,26 +143,30 @@ const SearchOptions = ({
 					</ClayForm.Group>
 				) : null}
 
-				<ClayForm.Group className="d-inline-flex">
-					<Picker
-						aria-label={Liferay.Language.get('search-in')}
-						as={Trigger}
-						id={`${namespace}searchIn`}
-						onSelectionChange={(key: Key) =>
-							onChange({searchIn: key})
-						}
-						selectedKey={initialSearchIn}
-					>
-						<DropDown.Group
-							header={Liferay.Language.get('search-in')}
-							items={searchInOptions}
+				{searchInOptions ? (
+					<ClayForm.Group className="d-inline-flex">
+						<Picker
+							aria-label={Liferay.Language.get('search-in')}
+							as={Trigger}
+							id={`${namespace}searchIn`}
+							onSelectionChange={(key: Key) =>
+								onChange({searchIn: key})
+							}
+							selectedKey={initialSearchIn}
 						>
-							{(item) => (
-								<Option key={item.value}>{item.label}</Option>
-							)}
-						</DropDown.Group>
-					</Picker>
-				</ClayForm.Group>
+							<DropDown.Group
+								header={Liferay.Language.get('search-in')}
+								items={searchInOptions}
+							>
+								{(item) => (
+									<Option key={item.value}>
+										{item.label}
+									</Option>
+								)}
+							</DropDown.Group>
+						</Picker>
+					</ClayForm.Group>
+				) : null}
 			</ClayLayout.Col>
 		</ClayLayout.Row>
 	);

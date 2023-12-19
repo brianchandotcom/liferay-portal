@@ -1032,7 +1032,14 @@ public class JournalDisplayContext {
 			"searchInCommentsURL",
 			String.valueOf(_getSearchInCommentsPortletURL())
 		).put(
-			"searchInOptions", _getSearchInOptionsJSONArray()
+			"searchInOptions",
+			() -> {
+				if (isSearch()) {
+					_getSearchInOptionsJSONArray();
+				}
+
+				return null;
+			}
 		).put(
 			"searchLocation", _getSearchLocation()
 		).put(

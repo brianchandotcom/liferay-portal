@@ -5,6 +5,7 @@
 
 package com.liferay.search.experiences.rest.internal.resource.v1_0.util;
 
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.search.experiences.rest.dto.v1_0.ElementDefinition;
 import com.liferay.search.experiences.rest.dto.v1_0.ElementInstance;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
@@ -24,6 +25,10 @@ public class DecodeSXPUtil {
 
 		@Valid
 		ElementInstance[] elementInstances = sxpBlueprint.getElementInstances();
+
+		if (ArrayUtil.isEmpty(elementInstances)) {
+			return;
+		}
 
 		for (ElementInstance elementInstance : elementInstances) {
 			decodeSXPElement(elementInstance.getSxpElement());

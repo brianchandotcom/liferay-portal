@@ -18,6 +18,8 @@ public class ModelSearchSettingsImpl implements ModelSearchSettings {
 
 		_className = modelSearchConfigurator.getClassName();
 
+		_companyId = modelSearchConfigurator.getCompanyId();
+
 		_searchClassNames = new String[] {_className};
 
 		_defaultSelectedFieldNames =
@@ -34,6 +36,11 @@ public class ModelSearchSettingsImpl implements ModelSearchSettings {
 	@Override
 	public String getClassName() {
 		return _className;
+	}
+
+	@Override
+	public long getCompanyId() {
+		return _companyId;
 	}
 
 	@Override
@@ -72,6 +79,7 @@ public class ModelSearchSettingsImpl implements ModelSearchSettings {
 	}
 
 	private final String _className;
+	private final long _companyId;
 	private final String[] _defaultSelectedFieldNames;
 	private final String[] _defaultSelectedLocalizedFieldNames;
 	private final boolean _permissionAware;

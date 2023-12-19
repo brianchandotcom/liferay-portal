@@ -20,6 +20,10 @@ public interface ModelSearchConfigurator<T extends BaseModel<?>> {
 
 	public String getClassName();
 
+	public default long getCompanyId() {
+		return 0;
+	}
+
 	public default String[] getDefaultSelectedFieldNames() {
 		return null;
 	}

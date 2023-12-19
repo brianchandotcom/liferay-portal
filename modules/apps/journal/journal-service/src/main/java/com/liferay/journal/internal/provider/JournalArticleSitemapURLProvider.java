@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.site.configuration.manager.SitemapConfigurationManager;
 import com.liferay.site.manager.SitemapManager;
 import com.liferay.site.provider.SitemapURLProvider;
 import com.liferay.site.provider.helper.SitemapURLProviderHelper;
@@ -58,6 +59,19 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 	@Override
 	public String getClassName() {
 		return JournalArticle.class.getName();
+	}
+
+	@Override
+	public boolean isInclude(long companyId, long groupId)
+		throws PortalException {
+
+		if (_sitemapConfigurationManager.includeWebContentGroupEnabled(
+				companyId, groupId)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override
@@ -363,6 +377,9 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private SitemapConfigurationManager _sitemapConfigurationManager;
 
 	@Reference
 	private SitemapManager _sitemapManager;

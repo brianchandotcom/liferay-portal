@@ -10,7 +10,7 @@ import {Flex, Form} from 'antd';
 import React, {useState} from 'react';
 
 import {postFolderTemplateInformation} from '../../../../services/template-list.service';
-import {ApplicationUtil} from '../../../../utils/appUtil';
+import {ApplicationUtil} from '../../../../utils/util';
 
 const NewTemplateItem = ({onClose}) => {
 	const [isLoading, setIsLoading] = useState(false);

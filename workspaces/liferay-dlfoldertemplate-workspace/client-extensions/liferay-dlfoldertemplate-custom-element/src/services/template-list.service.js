@@ -5,8 +5,8 @@
 
 import axios from 'axios';
 
-import {ApplicationUtil} from '../utils/util';
 import {config} from '../utils/constants';
+import {getHostUrl, showError, showSuccess} from '../utils/util';
 import {
 	deleteFolderTemplateBatch,
 	getAvailableTemplatesNodesPage,
@@ -19,7 +19,7 @@ export async function getAvailableTemplatesPage(page, pageSize) {
 		},
 		maxBodyLength: Infinity,
 		method: 'get',
-		url: `${ApplicationUtil.getHostUrl()}/${
+		url: `${getHostUrl()}/${
 			config.templateInfoApi
 		}?page=${page}&pageSize=${pageSize}`,
 	};
@@ -44,7 +44,7 @@ export async function postFolderTemplateInformation(FolderTemplateInformation) {
 		},
 		maxBodyLength: Infinity,
 		method: 'post',
-		url: `${ApplicationUtil.getHostUrl()}/${config.templateInfoApi}`,
+		url: `${getHostUrl()}/${config.templateInfoApi}`,
 	};
 	const prom = new Promise((resolve, reject) => {
 		axios
@@ -68,7 +68,7 @@ export async function deleteFolderTemplateInformationItem(
 		},
 		maxBodyLength: Infinity,
 		method: 'delete',
-		url: `${ApplicationUtil.getHostUrl()}/${
+		url: `${getHostUrl()}/${
 			config.templateInfoApi
 		}/${FolderTemplateInformationId}`,
 	};
@@ -99,11 +99,11 @@ export async function deleteFolderTemplateInformation(
 
 		await deleteFolderTemplateInformationItem(FolderTemplateInformationId);
 
-		ApplicationUtil.showSuccess(
+		showSuccess(
 			`Template ${FolderTemplateInformationId} has been deleted!`
 		);
 	}
 	catch (error) {
-		ApplicationUtil.showError(error.message);
+		showError(error.message);
 	}
 }

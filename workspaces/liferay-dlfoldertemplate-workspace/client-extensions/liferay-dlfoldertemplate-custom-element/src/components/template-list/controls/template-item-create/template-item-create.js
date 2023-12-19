@@ -10,7 +10,7 @@ import {Flex, Form} from 'antd';
 import React, {useState} from 'react';
 
 import {postFolderTemplateInformation} from '../../../../services/template-list.service';
-import {ApplicationUtil} from '../../../../utils/util';
+import {showError, showSuccess} from '../../../../utils/util';
 
 const NewTemplateItem = ({onClose}) => {
 	const [isLoading, setIsLoading] = useState(false);
@@ -26,12 +26,12 @@ const NewTemplateItem = ({onClose}) => {
 
 						await postFolderTemplateInformation(values);
 
-						ApplicationUtil.showSuccess('Template created!');
+						showSuccess('Template created!');
 
 						onClose(true);
 					}
 					catch (error) {
-						ApplicationUtil.showError(error.message);
+						showError(error.message);
 
 						onClose(false);
 					}
@@ -42,11 +42,11 @@ const NewTemplateItem = ({onClose}) => {
 					}
 				},
 				(error) => {
-					ApplicationUtil.showError(error);
+					showError(error);
 				}
 			)
 			.catch((error) => {
-				ApplicationUtil.showError(error);
+				showError(error);
 			});
 	};
 

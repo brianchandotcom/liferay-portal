@@ -5,8 +5,8 @@
 
 import axios from 'axios';
 
-import {ApplicationUtil} from '../utils/util';
 import {config} from '../utils/constants';
+import {getHostUrl, showError} from '../utils/util';
 
 export async function getAvailableTemplatesNodesPage(templateID) {
 	const requestConfig = {
@@ -15,7 +15,7 @@ export async function getAvailableTemplatesNodesPage(templateID) {
 		},
 		maxBodyLength: Infinity,
 		method: 'get',
-		url: `${ApplicationUtil.getHostUrl()}/${
+		url: `${getHostUrl()}/${
 			config.templateNodeApi
 		}?page=0&filter=templateID eq ${templateID}`,
 	};
@@ -59,7 +59,7 @@ export async function addNode(
 		return node;
 	}
 	catch (error) {
-		ApplicationUtil.showError(error);
+		showError(error);
 	}
 }
 export async function updateFolderTemplate(nodeId, FolderTemplate) {
@@ -70,9 +70,7 @@ export async function updateFolderTemplate(nodeId, FolderTemplate) {
 		},
 		maxBodyLength: Infinity,
 		method: 'patch',
-		url: `${ApplicationUtil.getHostUrl()}/${
-			config.templateNodeApi
-		}/${nodeId}`,
+		url: `${getHostUrl()}/${config.templateNodeApi}/${nodeId}`,
 	};
 	const prom = new Promise((resolve, reject) => {
 		axios
@@ -95,7 +93,7 @@ export async function postFolderTemplate(FolderTemplate) {
 		},
 		maxBodyLength: Infinity,
 		method: 'post',
-		url: `${ApplicationUtil.getHostUrl()}/${config.templateNodeApi}`,
+		url: `${getHostUrl()}/${config.templateNodeApi}`,
 	};
 	const prom = new Promise((resolve, reject) => {
 		axios
@@ -118,7 +116,7 @@ export async function deleteFolderTemplateBatch(data) {
 		},
 		maxBodyLength: Infinity,
 		method: 'delete',
-		url: `${ApplicationUtil.getHostUrl()}/${config.templateNodeApi}/batch`,
+		url: `${getHostUrl()}/${config.templateNodeApi}/batch`,
 	};
 	const prom = new Promise((resolve, reject) => {
 		axios
@@ -140,9 +138,7 @@ export async function deleteFolderTemplate(nodeId) {
 		},
 		maxBodyLength: Infinity,
 		method: 'delete',
-		url: `${ApplicationUtil.getHostUrl()}/${
-			config.templateNodeApi
-		}/${nodeId}`,
+		url: `${getHostUrl()}/${config.templateNodeApi}/${nodeId}`,
 	};
 	const prom = new Promise((resolve, reject) => {
 		axios

@@ -93,15 +93,18 @@ export async function deleteFolderTemplateInformation(
 		const templateNodes = await getAvailableTemplatesNodesPage(
 			FolderTemplateInformationId
 		);
+
 		if (templateNodes.items.length) {
 			await deleteFolderTemplateBatch(templateNodes.items);
 		}
+
 		await deleteFolderTemplateInformationItem(FolderTemplateInformationId);
-		ApplicationUtil.ShowSuccess(
+
+		ApplicationUtil.showSuccess(
 			`Template ${FolderTemplateInformationId} has been deleted!`
 		);
 	}
 	catch (error) {
-		ApplicationUtil.ShowError(error.message);
+		ApplicationUtil.showError(error.message);
 	}
 }

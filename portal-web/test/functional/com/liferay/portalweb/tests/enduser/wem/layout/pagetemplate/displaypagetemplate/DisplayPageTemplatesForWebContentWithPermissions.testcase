@@ -128,24 +128,7 @@ definition {
 		}
 
 		task ("Assert we are redirected to login page") {
-			AssertElementPresent(locator1 = "TextInput#EMAIL_ADDRESS");
-
-			AssertElementPresent(locator1 = "TextInput#PASSWORD");
-		}
-
-		task ("Login") {
-			Type(
-				locator1 = "TextInput#EMAIL_ADDRESS",
-				value1 = "test@liferay.com");
-
-			Type(
-				locator1 = "TextInput#PASSWORD",
-				value1 = "test");
-
-			AssertClick(
-				buttonId = "LoginPortlet",
-				locator1 = "Button#BUTTON_ID",
-				value1 = "Sign In");
+			User.signInPG(userEmailAddress = "test@liferay.com");
 		}
 
 		task ("Assert we are redirected to web content display") {

@@ -12,6 +12,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -154,6 +155,10 @@ public class GenerateTestrayCSVUtil {
 
 	private static final String _CSV_DELIMITER = ",";
 
+	private static final List<String> _didNotRunErrorMessages = Arrays.asList(
+		"Aborted prior to running test", "Failed prior to running test",
+		"Failed for unknown reason");
+
 	private static class TestrayCaseResult {
 
 		public TestrayCaseResult(JSONObject resultJSONObject) {
@@ -283,9 +288,7 @@ public class GenerateTestrayCSVUtil {
 				return _type;
 			}
 
-			if (Objects.equals(
-					getErrorMessage(), "Failed prior to running test")) {
-
+			if (_didNotRunErrorMessages.contains(getErrorMessage())) {
 				_type = Type.DID_NOT_RUN;
 			}
 			else {

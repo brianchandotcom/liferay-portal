@@ -670,7 +670,7 @@ public class JournalManagementToolbarDisplayContext
 		if (FeatureFlagManagerUtil.isEnabled("LPS-196768")) {
 			filterNavigationDropdownItems.add(
 				DropdownItemBuilder.setActive(
-					_journalDisplayContext.isNavigationMine()
+					_journalDisplayContext.isNavigationHome()
 				).setHref(
 					PortletURLBuilder.create(
 						getPortletURL()
@@ -722,7 +722,7 @@ public class JournalManagementToolbarDisplayContext
 		else {
 			filterNavigationDropdownItems.add(
 				DropdownItemBuilder.setActive(
-					_journalDisplayContext.isNavigationMine()
+					_journalDisplayContext.isNavigationHome()
 				).setHref(
 					PortletURLBuilder.create(
 						getPortletURL()

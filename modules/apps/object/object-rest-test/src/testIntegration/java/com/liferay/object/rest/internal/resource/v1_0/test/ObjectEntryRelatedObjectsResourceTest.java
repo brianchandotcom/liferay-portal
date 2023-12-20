@@ -332,17 +332,19 @@ public class ObjectEntryRelatedObjectsResourceTest {
 		HTTPTestUtil.customize(
 		).withCredentials(
 			user.getEmailAddress(), password
+		).apply(
+			() -> {
+				Assert.assertEquals(
+					403,
+					HTTPTestUtil.invokeToHttpCode(
+						null,
+						StringBundler.concat(
+							_objectDefinition1.getRESTContextPath(),
+							"/by-external-reference-code/",
+							_objectEntry1.getExternalReferenceCode()),
+						Http.Method.DELETE));
+			}
 		);
-
-		int code = HTTPTestUtil.invokeToHttpCode(
-			null,
-			StringBundler.concat(
-				_objectDefinition1.getRESTContextPath(),
-				"/by-external-reference-code/",
-				_objectEntry1.getExternalReferenceCode()),
-			Http.Method.DELETE);
-
-		Assert.assertNotEquals(204, code);
 
 		ResourcePermissionLocalServiceUtil.setResourcePermissions(
 			TestPropsValues.getCompanyId(), _objectDefinition1.getClassName(),

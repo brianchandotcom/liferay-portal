@@ -20,6 +20,7 @@ import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -30,14 +31,17 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class CaptchaResourceTest extends BaseCaptchaResourceTestCase {
 
+	@Before
+	public void setUp() {
+		CaptchaResource.Builder builder = CaptchaResource.builder();
+
+		_captchaResource = builder.build();
+	}
+
 	@Override
 	@Test
 	public void testGetCaptchaChallenge() throws Exception {
-		CaptchaResource.Builder builder = CaptchaResource.builder();
-
-		CaptchaResource captchaResource = builder.build();
-
-		Captcha captcha = captchaResource.getCaptchaChallenge();
+		Captcha captcha = _captchaResource.getCaptchaChallenge();
 
 		Assert.assertNotNull(captcha.getToken());
 
@@ -61,12 +65,7 @@ public class CaptchaResourceTest extends BaseCaptchaResourceTestCase {
 	@Override
 	@Test
 	public void testPostCaptchaResponse() throws Exception {
-		String token = _getToken();
-
-		CaptchaResource.Builder builder = CaptchaResource.builder();
-
-		_assertStatus(
-			token, RandomTestUtil.randomString(10), 400, builder.build());
+		_assertStatus(_getToken(), RandomTestUtil.randomString(10), 400);
 	}
 
 	@Test
@@ -76,18 +75,12 @@ public class CaptchaResourceTest extends BaseCaptchaResourceTestCase {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			EncryptorUtil.decrypt(testCompany.getKeyObj(), token));
 
-		CaptchaResource.Builder builder = CaptchaResource.builder();
+		_assertStatus(token, jsonObject.getString("answer"), 204);
 
-		_assertStatus(
-			token, jsonObject.getString("answer"), 204, builder.build());
-
-		_assertStatus(
-			token, jsonObject.getString("answer"), 400, builder.build());
+		_assertStatus(token, jsonObject.getString("answer"), 400);
 	}
 
-	private void _assertStatus(
-			String token, String answer, int statusCode,
-			CaptchaResource captchaResource)
+	private void _assertStatus(String token, String answer, int statusCode)
 		throws Exception {
 
 		Captcha captcha = new Captcha();
@@ -96,20 +89,18 @@ public class CaptchaResourceTest extends BaseCaptchaResourceTestCase {
 		captcha.setToken(token);
 
 		HttpInvoker.HttpResponse httpResponse =
-			captchaResource.postCaptchaResponseHttpResponse(captcha);
+			_captchaResource.postCaptchaResponseHttpResponse(captcha);
 
 		Assert.assertEquals(statusCode, httpResponse.getStatusCode());
 	}
 
 	private String _getToken() throws Exception {
-		CaptchaResource.Builder builder = CaptchaResource.builder();
-
-		CaptchaResource captchaResource = builder.build();
-
-		Captcha captcha = captchaResource.getCaptchaChallenge();
+		Captcha captcha = _captchaResource.getCaptchaChallenge();
 
 		return captcha.getToken();
 	}
+
+	private CaptchaResource _captchaResource;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;

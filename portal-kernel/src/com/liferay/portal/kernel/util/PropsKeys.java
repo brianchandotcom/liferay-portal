@@ -547,6 +547,9 @@ public interface PropsKeys {
 	public static final String DATABASE_IN_MAX_PARAMETERS =
 		"database.in.max.parameters";
 
+	public static final String DATABASE_INDEXES_UPDATE_IN_BACKGROUND =
+		"database.indexes.update.in.background";
+
 	public static final String DATABASE_INDEXES_UPDATE_ON_STARTUP =
 		"database.indexes.update.on.startup";
 

@@ -142,7 +142,10 @@ definition {
 
 		ObjectPortlet.assertIsDisplayedOnControlPanel(itemMenu = "Custom Objects");
 
-		ObjectPortlet.goToCustomObjectPortletOnControlPanel();
+		Click(
+			key_category = "Objects",
+			key_portlet = "Custom Objects",
+			locator1 = "ApplicationsMenu#PORTLET");
 
 		AssertElementPresent(
 			key_objectLabel = "Custom Object",

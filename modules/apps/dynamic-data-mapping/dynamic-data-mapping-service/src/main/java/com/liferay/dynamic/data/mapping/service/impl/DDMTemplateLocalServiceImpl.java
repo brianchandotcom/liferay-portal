@@ -58,6 +58,7 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
@@ -418,7 +419,9 @@ public class DDMTemplateLocalServiceImpl
 
 		// Template
 
-		if (!PortalInstances.isCurrentCompanyInDeletionProcess()) {
+		if (!PortalInstances.isCurrentCompanyInDeletionProcess() &&
+			!GroupThreadLocal.isDeleteInProcess()) {
+
 			int count = _ddmTemplateLinkPersistence.countByTemplateId(
 				template.getTemplateId());
 

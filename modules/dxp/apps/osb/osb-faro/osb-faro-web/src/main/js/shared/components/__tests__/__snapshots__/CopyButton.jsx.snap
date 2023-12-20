@@ -6,7 +6,6 @@ exports[`CopyButton should render 1`] = `
     aria-label="Click to Copy"
     class="button-root btn btn-secondary"
     data-clipboard-text="foo"
-    data-tooltip-response="Copied"
     title="Click to Copy"
     type="button"
   >

@@ -125,7 +125,6 @@ exports[`Event View page should render 1`] = `
               data-clipboard-text="Analytics.track('name-0', {
 	'name-1': 'samplevalue-1',
 });"
-              data-tooltip-response="Copied"
               title="Click to Copy"
               type="button"
             >

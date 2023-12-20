@@ -158,10 +158,10 @@ public abstract class BaseUserNotificationHandler
 		if (isActionable()) {
 			return StringBundler.concat(
 				"<div class=\"title\">[$TITLE$]</div><div class=\"body\"><div ",
-				"class=\"button-holder\"><a class=\"btn btn-primary ",
-				"user-notification-action\" ",
+				"class=\"button-holder\"><a class=\"btn btn-primary btn-sm ",
+				"mr-2 user-notification-action\" ",
 				"href=\"[$CONFIRM_URL$]\">[$CONFIRM$]</a><a class=\"btn ",
-				"btn-secondary user-notification-action\" ",
+				"btn-secondary btn-sm user-notification-action\" ",
 				"href=\"[$IGNORE_URL$]\">[$IGNORE$]</a></div></div>");
 		}
 

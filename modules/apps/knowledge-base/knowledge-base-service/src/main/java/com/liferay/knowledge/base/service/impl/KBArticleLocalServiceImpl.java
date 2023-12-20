@@ -74,6 +74,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.lock.DuplicateLockException;
 import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.lock.LockManager;
 import com.liferay.portal.kernel.log.Log;
@@ -1018,6 +1019,17 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 	@Override
 	public Lock lock(long userId, long resourcePrimKey) throws PortalException {
 		if (!FeatureFlagManagerUtil.isEnabled("LPS-195016")) {
+			return null;
+		}
+
+		if (userId <= 0) {
+			Lock lock = _lockManager.fetchLock(
+				KBArticleConstants.getClassName(), resourcePrimKey);
+
+			if (lock != null) {
+				throw new DuplicateLockException(lock);
+			}
+
 			return null;
 		}
 

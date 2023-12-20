@@ -513,6 +513,63 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-196819. The site administrator could search web contents in Content Library sheet."
+	@priority = 4
+	test SearchWebContentsInContentLibrarySheet {
+		property custom.properties = "feature.flag.LPS-194763=true${line.separator}feature.flag.LPS-197692=true";
+
+		task ("Given a site administrator has web contents") {
+			JSONWebcontent.addWebContent(
+				content = "Liferay DXP",
+				groupName = "Test Site Name",
+				title = "Liferay DXP");
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "WC Structure Name");
+
+			DataEngine.addField(fieldName = "Text");
+
+			WebContentStructures.saveCP();
+
+			NavItem.click(navItem = "Web Content");
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+			WebContent.addWithStructureCP(
+				webContentText = "Liferay Commerce",
+				webContentTitle = "Liferay Commerce");
+
+			PortletEntry.publish();
+		}
+
+		task ("When the site administrator navigates to the Content Library sheet") {
+			Click.waitForMenuToggleJSClick(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
+
+			MenuItem.click(menuItem = "Configuration");
+
+			WebContentAdmin.selectHighlightedStructures(structureNameList = "WC Structure Name");
+
+			PortletEntry.save();
+
+			Navigator.gotoBack();
+		}
+
+		task ("Then the site administrator could search web contents") {
+			Search.searchCP(searchTerm = "Liferay");
+
+			AssertElementPresent(
+				key_title = "Search Results",
+				locator1 = "Header#H2_TITLE");
+
+			for (var title : list "Liferay Commerce,Liferay DXP") {
+				WebContentAdmin.viewEntryTitle(entry = ${title});
+			}
+		}
+	}
+
 	@description = "This is a test for LPS-196819. The site administrator could search web contents in specific structure sheet."
 	@priority = 4
 	test SearchWebContentsInHighlightedStructureSheet {

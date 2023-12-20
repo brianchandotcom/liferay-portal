@@ -261,6 +261,93 @@ definition {
 			webContentTitle = "WC Contenido de la web Titulo");
 	}
 
+	@description = "This is a test for LPS-196819. The site administrator could manage web contents by structures."
+	@priority = 4
+	test ManageWebContentsByStructures {
+		property custom.properties = "feature.flag.LPS-194763=true${line.separator}feature.flag.LPS-197692=true";
+
+		task ("Given a site administrator has web contents") {
+			JSONWebcontent.addWebContent(
+				content = "EMEA Guild",
+				groupName = "Test Site Name",
+				title = "EMEA Guild");
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "WC Structure Name");
+
+			DataEngine.addField(fieldName = "Text");
+
+			WebContentStructures.saveCP();
+
+			NavItem.click(navItem = "Web Content");
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+			WebContent.addWithStructureCP(
+				webContentText = "LXC",
+				webContentTitle = "LXC");
+
+			PortletEntry.publish();
+		}
+
+		task ("When the site administrator navigates to the configuration page") {
+			Click.waitForMenuToggleJSClick(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
+
+			MenuItem.click(menuItem = "Configuration");
+		}
+
+		task ("Then the site administrator could manage web contents by structures") {
+			AssertVisible(
+				locator1 = "MenuBar#SHEET_TERTIARY_TITLE",
+				tertiaryTitle = "Settings");
+
+			MenuBar.viewActive(menuBar = "Structures");
+
+			AssertElementPresent(
+				key_title = "Structures",
+				locator1 = "Header#H2_TITLE");
+
+			AssertElementPresent(
+				key_title = "Highlighted",
+				locator1 = "Header#H3_TITLE");
+
+			AssertTextEquals(
+				locator1 = "WCConfiguration#HIGHLIGHTED_STRUCTURES_SUBTITLE",
+				value1 = "No Structures Selected");
+
+			WebContentAdmin.selectHighlightedStructures(structureNameList = "WC Structure Name");
+
+			LexiconTable.viewTableEntryTitle(tableEntry = "WC Structure Name");
+
+			PortletEntry.save();
+
+			Navigator.gotoBack();
+
+			MenuBar.viewActive(menuBar = "Content Library");
+
+			AssertElementPresent(
+				key_title = "Content Library",
+				locator1 = "Header#H2_TITLE");
+
+			for (var title : list "LXC,EMEA Guild") {
+				WebContentAdmin.viewEntryTitle(entry = ${title});
+			}
+
+			MenuBar.click(menuBar = "WC Structure Name");
+
+			AssertElementPresent(
+				key_title = "WC Structure Name",
+				locator1 = "Header#H2_TITLE");
+
+			WebContentAdmin.viewEntryTitle(entry = "LXC");
+
+			WebContentAdmin.viewEntryNotPresent(entry = "EMEA Guild");
+		}
+	}
+
 	@description = "This is a test for LPS-197163. When displaying the search results, the file path must be an interactive element."
 	@priority = 4
 	test NavigateByBreadcrumbInSearchResults {

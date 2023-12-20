@@ -8,12 +8,8 @@
 		"@clayui/layout": "3.106.1",
 		"@clayui/modal": "3.107.0",
 		"@clayui/progress-bar": "3.106.1",
-<<<<<<< HEAD
-		"@clayui/table": "3.106.1",
-		"@clayui/tooltip": "3.107.0",
-=======
 		"@clayui/table": "3.108.0",
->>>>>>> c46f3c88ddefe (LPS-203803 Update packages `@clayui/*` to v3.108.0)
+		"@clayui/tooltip": "3.108.0",
 		"@liferay/frontend-js-react-web": "*",
 		"classnames": "2.3.1",
 		"fetch-mock": "5.13.1",

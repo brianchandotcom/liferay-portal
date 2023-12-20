@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Queue;
+import java.util.function.Supplier;
 
 /**
  * @author Shuyang Zhou
@@ -154,7 +155,9 @@ public class ItemClassIndexUtil {
 
 		while (clazz != Object.class) {
 			for (Field field : clazz.getDeclaredFields()) {
-				if (isMultidimensionalArray(field.getType())) {
+				if (isMultidimensionalArray(field.getType()) ||
+					Objects.equals(field.getType(), Supplier.class)) {
+
 					continue;
 				}
 

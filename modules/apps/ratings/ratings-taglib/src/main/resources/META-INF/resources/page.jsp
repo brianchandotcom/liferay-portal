@@ -17,6 +17,11 @@ String type = GetterUtil.getString((String)request.getAttribute("liferay-ratings
 	<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathProxy() + application.getContextPath() + "/css/main.css") %>" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>
 
+<c:if test="<%= themeDisplay.isIsolated() %>">
+	<div class="ratings-edit-page">
+		<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathProxy() + application.getContextPath() + "/css/main.css") %>" rel="stylesheet" type="text/css" />
+</c:if>
+
 <div class="ratings">
 	<c:choose>
 		<c:when test="<%= type.equals(RatingsType.LIKE.getValue()) %>">
@@ -159,3 +164,7 @@ String type = GetterUtil.getString((String)request.getAttribute("liferay-ratings
 		props='<%= (Map<String, Object>)request.getAttribute("liferay-ratings:ratings:data") %>'
 	/>
 </div>
+
+<c:if test="<%= themeDisplay.isIsolated() %>">
+	</div>
+</c:if>

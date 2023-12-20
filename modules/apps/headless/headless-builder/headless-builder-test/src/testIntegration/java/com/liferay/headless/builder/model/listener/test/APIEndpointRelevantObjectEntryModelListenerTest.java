@@ -788,7 +788,7 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 				"status", "BAD_REQUEST"
 			).put(
 				"title",
-				"Path parameters are not supported by POST API endpoints."
+				"Path can have a maximum of 255 alphanumeric characters."
 			).toString(),
 			HTTPTestUtil.invokeToJSONObject(
 				JSONUtil.put(
@@ -801,7 +801,7 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 						StringPool.FORWARD_SLASH,
 						StringUtil.toLowerCase(RandomTestUtil.randomString()),
 						StringPool.FORWARD_SLASH, StringPool.OPEN_CURLY_BRACE,
-						RandomTestUtil.randomString(),
+						StringUtil.toLowerCase(RandomTestUtil.randomString()),
 						StringPool.CLOSE_CURLY_BRACE)
 				).put(
 					"pathParameter", HeadlessBuilderConstants.PATH_PARAMETER_ID
@@ -824,6 +824,33 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 				"headless-builder/endpoints", Http.Method.POST
 			).toString(),
 			JSONCompareMode.LENIENT);
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"status", "BAD_REQUEST"
+			).put(
+				"title", "Path must start with the \"/\" character."
+			).toString(),
+			HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.put(
+					"httpMethod", "post"
+				).put(
+					"name", RandomTestUtil.randomString()
+				).put(
+					"path",
+					StringUtil.toLowerCase(RandomTestUtil.randomString())
+				).put(
+					"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
+					apiApplicationJSONObject.getLong("id")
+				).put(
+					"retrieveType",
+					APIApplication.Endpoint.RetrieveType.SINGLE_ELEMENT.
+						getValue()
+				).put(
+					"scope", APIApplication.Endpoint.Scope.COMPANY.getValue()
+				).toString(),
+				"headless-builder/endpoints", Http.Method.POST
+			).toString(),
+			JSONCompareMode.STRICT);
 		JSONAssert.assertEquals(
 			JSONUtil.put(
 				"status", "BAD_REQUEST"

@@ -364,7 +364,8 @@ public class DDLDisplayExportImportPortletPreferencesProcessor
 		return MapUtil.getBoolean(
 			parameterMap,
 			className + StringPool.POUND +
-				StagedModelType.REFERRER_CLASS_NAME_ALL,true);
+				StagedModelType.REFERRER_CLASS_NAME_ALL,
+			true);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

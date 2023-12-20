@@ -552,8 +552,6 @@ public class EmailNotificationType extends BaseNotificationType {
 
 		if (serviceContext == null) {
 			serviceContext = new ServiceContext();
-
-			ServiceContextThreadLocal.pushServiceContext(serviceContext);
 		}
 
 		serviceContext = (ServiceContext)serviceContext.clone();

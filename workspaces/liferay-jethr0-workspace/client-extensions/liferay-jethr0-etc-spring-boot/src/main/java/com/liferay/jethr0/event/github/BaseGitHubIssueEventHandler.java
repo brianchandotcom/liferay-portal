@@ -297,7 +297,8 @@ public abstract class BaseGitHubIssueEventHandler
 		return _gitHubPullRequest;
 	}
 
-	protected String getSenderBranchCIPropertyValue(String propertyName)
+	protected String getSenderBranchCIPropertyValue(
+			String propertyName, String... propertyOpts)
 		throws InvalidJSONException, IOException {
 
 		GitBranchEntity gitBranchEntity = getSenderGitBranchEntity();
@@ -312,7 +313,8 @@ public abstract class BaseGitHubIssueEventHandler
 			return null;
 		}
 
-		return PropertiesUtil.getPropertyValue(properties, propertyName);
+		return PropertiesUtil.getPropertyValue(
+			properties, propertyName, propertyOpts);
 	}
 
 	protected GitBranchEntity getSenderGitBranchEntity()
@@ -333,7 +335,8 @@ public abstract class BaseGitHubIssueEventHandler
 		return _senderGitBranchEntity;
 	}
 
-	protected String getUpstreamBranchCIPropertyValue(String propertyName)
+	protected String getUpstreamBranchCIPropertyValue(
+			String propertyName, String... propertyOpts)
 		throws InvalidJSONException, IOException {
 
 		GitBranchEntity gitBranchEntity = getUpstreamGitBranchEntity();
@@ -348,7 +351,8 @@ public abstract class BaseGitHubIssueEventHandler
 			return null;
 		}
 
-		return PropertiesUtil.getPropertyValue(properties, propertyName);
+		return PropertiesUtil.getPropertyValue(
+			properties, propertyName, propertyOpts);
 	}
 
 	protected GitBranchEntity getUpstreamGitBranchEntity()

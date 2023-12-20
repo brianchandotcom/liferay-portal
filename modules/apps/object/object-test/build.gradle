@@ -16,6 +16,8 @@ dependencies {
 	testIntegrationImplementation project(":apps:document-library:document-library-api")
 	testIntegrationImplementation project(":apps:frontend-taglib:frontend-taglib")
 	testIntegrationImplementation project(":apps:info:info-api")
+	testIntegrationImplementation project(":apps:item-selector:item-selector-api")
+	testIntegrationImplementation project(":apps:item-selector:item-selector-criteria-api")
 	testIntegrationImplementation project(":apps:list-type:list-type-api")
 	testIntegrationImplementation project(":apps:notification:notification-api")
 	testIntegrationImplementation project(":apps:object:object-admin-rest-api")

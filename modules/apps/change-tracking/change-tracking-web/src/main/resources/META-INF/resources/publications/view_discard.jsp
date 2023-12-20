@@ -10,7 +10,9 @@
 <%
 ViewRelatedEntriesDisplayContext viewRelatedEntriesDisplayContext = (ViewRelatedEntriesDisplayContext)request.getAttribute(CTWebKeys.VIEW_RELATED_ENTRIES_DISPLAY_CONTEXT);
 
-portletDisplay.setURLBack(viewRelatedEntriesDisplayContext.getRedirectURL());
+String backURL = ParamUtil.getString(request, "backURL", viewRelatedEntriesDisplayContext.getRedirectURL());
+
+portletDisplay.setURLBack(backURL);
 
 portletDisplay.setShowBackIcon(true);
 
@@ -39,7 +41,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "discard-changes"));
 		<clay:sheet-footer>
 			<aui:button href="<%= viewRelatedEntriesDisplayContext.getSubmitDiscardURL() %>" primary="true" value="discard" />
 
-			<aui:button href="<%= viewRelatedEntriesDisplayContext.getRedirectURL() %>" type="cancel" />
+			<aui:button href="<%= backURL %>" type="cancel" />
 		</clay:sheet-footer>
 	</div>
 </clay:container-fluid>

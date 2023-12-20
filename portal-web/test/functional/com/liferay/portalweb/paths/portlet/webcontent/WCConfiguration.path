@@ -11,6 +11,14 @@
 
 <tbody>
 
+<!--STRUCTURES-->
+
+<tr>
+	<td>HIGHLIGHTED_STRUCTURES_SUBTITLE</td>
+	<td>//div[contains(@class,'sheet-subtitle')][normalize-space(text())='Highlighted Structures']//following-sibling::p[contains(@class,'text-secondary')]</td>
+	<td></td>
+</tr>
+
 <!--NAVIGATION-->
 
 <tr>

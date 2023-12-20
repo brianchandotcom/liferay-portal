@@ -239,20 +239,27 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 		_journalFolderLocalService.deleteFolders(
 			portletDataContext.getGroupId());
 
+		long ddmStructureClassNameId = _portal.getClassNameId(
+			DDMStructure.class);
+
 		_ddmTemplateLocalService.deleteTemplates(
-			portletDataContext.getScopeGroupId(),
-			_portal.getClassNameId(DDMStructure.class));
+			portletDataContext.getScopeGroupId(), ddmStructureClassNameId);
+
+		long journalArticleClassNameId = _portal.getClassNameId(
+			JournalArticle.class);
 
 		List<DDMStructure> ddmStructures =
 			_ddmStructureLocalService.getStructures(
 				portletDataContext.getScopeGroupId(),
-				_portal.getClassNameId(JournalArticle.class));
+				journalArticleClassNameId);
+
+		long ddmStructureLayoutClassNameId = _portal.getClassNameId(
+			DDMStructureLayout.class);
 
 		for (DDMStructure ddmStructure : ddmStructures) {
 			_deDataDefinitionFieldLinkLocalService.
 				deleteDEDataDefinitionFieldLinks(
-					_portal.getClassNameId(DDMStructure.class),
-					ddmStructure.getStructureId());
+					ddmStructureClassNameId, ddmStructure.getStructureId());
 
 			List<DDMStructureVersion> ddmStructureVersions =
 				_ddmStructureVersionLocalService.getStructureVersions(
@@ -272,7 +279,7 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 
 					_deDataDefinitionFieldLinkLocalService.
 						deleteDEDataDefinitionFieldLinks(
-							_portal.getClassNameId(DDMStructureLayout.class),
+							ddmStructureLayoutClassNameId,
 							ddmStructureLayout.getStructureLayoutId());
 				}
 			}
@@ -282,8 +289,7 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 		}
 
 		_ddmStructureLocalService.deleteStructures(
-			portletDataContext.getScopeGroupId(),
-			_portal.getClassNameId(JournalArticle.class));
+			portletDataContext.getScopeGroupId(), journalArticleClassNameId);
 
 		return portletPreferences;
 	}

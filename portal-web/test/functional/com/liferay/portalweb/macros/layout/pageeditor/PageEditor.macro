@@ -6390,6 +6390,8 @@ return	Array.from(getWebElement("(//div[@data-name='${fragmentName}'])[${index}]
 	macro waitForAutoSave() {
 		SelectFrameTop();
 
+		Pause(value1 = 1000);
+
 		WaitForVisible(locator1 = "PageEditor#AUTOSAVE_MESSAGE");
 	}
 

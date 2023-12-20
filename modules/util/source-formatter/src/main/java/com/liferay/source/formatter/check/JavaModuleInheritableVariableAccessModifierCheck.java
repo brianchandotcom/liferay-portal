@@ -30,7 +30,7 @@ import java.util.regex.Pattern;
 /**
  * @author Seiphon Wang
  */
-public class JavaInheritableVariableAccessModifierCheck
+public class JavaModuleInheritableVariableAccessModifierCheck
 	extends BaseJavaTermCheck {
 
 	@Override

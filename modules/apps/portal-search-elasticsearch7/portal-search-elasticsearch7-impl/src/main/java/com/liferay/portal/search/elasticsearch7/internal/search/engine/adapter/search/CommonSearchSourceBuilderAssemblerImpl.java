@@ -533,7 +533,7 @@ public class CommonSearchSourceBuilderAssemblerImpl
 		}
 
 		// LPS-86537 the following is only present to allow for backwards
-		// compatibility.  Not all Query should have filters allowed according
+		// compatibility. Not all Query should have filters allowed according
 		// to Elasticsearch's API.
 
 		// See related note in BooleanQueryTranslatorImpl

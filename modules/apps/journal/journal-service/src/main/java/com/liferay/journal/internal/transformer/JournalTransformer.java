@@ -337,6 +337,10 @@ public class JournalTransformer {
 		_addReservedEl(
 			JournalStructureConstants.RESERVED_ARTICLE_URL_TITLE, templateNodes,
 			themeDisplay, tokens, article.getUrlTitle());
+
+		_addReservedEl(
+			JournalStructureConstants.RESERVED_ARTICLE_VERSION, templateNodes,
+			themeDisplay, tokens, String.valueOf(article.getVersion()));
 	}
 
 	private void _addReservedEl(

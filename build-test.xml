@@ -259,7 +259,7 @@ typeSettings=&#91;&quot;friendlyURLMapping=perico&quot;,&quot;instanceable=false
 							<![CDATA[
 								mkdir -p @{dest}
 
-								tar -xvf @{src} -C @{dest}
+								tar fxz @{src} -C @{dest}
 							]]>
 						</execute>
 					</then>
@@ -269,7 +269,7 @@ typeSettings=&#91;&quot;friendlyURLMapping=perico&quot;,&quot;instanceable=false
 					<then>
 						<execute>
 							<![CDATA[
-								unzip @{src} -d @{dest}
+								unzip -q @{src} -d @{dest}
 							]]>
 						</execute>
 					</then>

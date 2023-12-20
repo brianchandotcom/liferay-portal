@@ -69,11 +69,11 @@ public class OpenSearchIndexInformation implements IndexInformation {
 				GetIndexRequest.of(
 					getIndexRequest -> getIndexRequest.index("*")));
 
-			Map<String, IndexState> resultMap = getIndexResponse.result();
+			Map<String, IndexState> indexStates = getIndexResponse.result();
 
-			Set<String> keySet = resultMap.keySet();
+			Set<String> indexNames = indexStates.keySet();
 
-			return keySet.toArray(new String[0]);
+			return indexNames.toArray(new String[0]);
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);

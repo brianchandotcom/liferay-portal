@@ -3063,7 +3063,10 @@ definition {
 
 		ApplicationsMenu.gotoPanel(panel = "Control Panel");
 
-		AssertElementPresent(locator1 = "ObjectPortlet#CUSTOM_OBJECT_ON_CONTROL_PANEL");
+		AssertElementPresent(
+			key_category = "Accounts",
+			key_portlet = "Custom Objects 75",
+			locator1 = "ApplicationsMenu#PORTLET");
 	}
 
 	@description = "LPS-135551 - Verify it is possible to scope the Object by Site"
@@ -7326,7 +7329,14 @@ definition {
 
 		Navigator.openURL();
 
-		ObjectPortlet.assertObjectIsDisplayedOnControlPanel();
+		ApplicationsMenuHelper.openApplicationsMenu();
+
+		ApplicationsMenu.gotoPanel(panel = "Control Panel");
+
+		AssertElementPresent(
+			key_category = "Object",
+			key_portlet = "Custom Objects 153",
+			locator1 = "ApplicationsMenu#PORTLET");
 	}
 
 	@description = "LPS-139005 - Verify that the Object portlet is displayed again on the Site Menu when reactivated"

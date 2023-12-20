@@ -21,6 +21,7 @@ import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
@@ -30,10 +31,16 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.OrganizationLocalService;
+import com.liferay.portal.kernel.service.UserGroupLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.comparator.GroupNameComparator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
@@ -399,7 +406,7 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 	private String _getGroupIds(User user) {
 		try {
 			long[] ids = TransformUtil.transformToLongArray(
-				user.getSiteGroups(), Group::getGroupId);
+				_getUserSitesGroups(user.getUserId()), Group::getGroupId);
 
 			return "[" + StringUtil.merge(ids, ",") + "]";
 		}
@@ -473,6 +480,57 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 
 			return "[]";
 		}
+	}
+
+	private List<Group> _getUserSitesGroups(long userId)
+		throws PortalException {
+
+		List<Group> userSiteGroups = new ArrayList<>();
+
+		for (long userGroupId : _userLocalService.getGroupPrimaryKeys(userId)) {
+			Group group = _groupLocalService.getGroup(userGroupId);
+
+			if (group.isSite()) {
+				userSiteGroups.add(group);
+			}
+		}
+
+		if (_hasUserOrgs(userId) || _hasUserUserGroups(userId)) {
+			List<Group> userGroups = _groupLocalService.getUserGroups(
+				userId, true);
+
+			for (Group userGroup : userGroups) {
+				if (userGroup.isSite()) {
+					userSiteGroups.add(userGroup);
+				}
+			}
+		}
+
+		userSiteGroups.sort(new GroupNameComparator(true));
+
+		return userSiteGroups;
+	}
+
+	private boolean _hasUserOrgs(long userId) throws PortalException {
+		List<Organization> userOrgs =
+			_organizationLocalService.getUserOrganizations(userId);
+
+		if (userOrgs.isEmpty()) {
+			return false;
+		}
+
+		return true;
+	}
+
+	private boolean _hasUserUserGroups(long userId) {
+		List<UserGroup> userUserGroups =
+			_userGroupLocalService.getUserUserGroups(userId);
+
+		if (userUserGroups.isEmpty()) {
+			return false;
+		}
+
+		return true;
 	}
 
 	private boolean _isCustomField(String className, long tableId) {
@@ -559,6 +617,18 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 	private ExpandoTableLocalService _expandoTableLocalService;
 
 	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private OrganizationLocalService _organizationLocalService;
+
+	@Reference
+	private UserGroupLocalService _userGroupLocalService;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

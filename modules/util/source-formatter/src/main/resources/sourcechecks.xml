@@ -902,10 +902,6 @@
 
 		<!-- Module Source Checks -->
 
-		<check name="JavaInheritableVariableAccessModifierCheck">
-			<category name="Bug Prevention" />
-			<description name="Checks for cases where visibility of variable can be increased." />
-		</check>
 		<check name="JavaLocalServiceImplErcUsageCheck">
 			<category name="Productivity" />
 			<description name="Automatically generates and ensures that `externalReferenceCode` is properly used in local `*ServiceImpl` add method." />
@@ -928,6 +924,10 @@
 			<category name="Bug Prevention" />
 			<description name="Finds cases of incorrect use of certain classes in modules." />
 			<property name="checkRegistryInTestClasses" value="false" />
+		</check>
+		<check name="JavaModuleInheritableVariableAccessModifierCheck">
+			<category name="Bug Prevention" />
+			<description name="Checks for cases where visibility of variable can be increased." />
 		</check>
 		<check name="JavaModuleInternalImportsCheck">
 			<category name="Bug Prevention" />

@@ -65,7 +65,10 @@ public class MBAdminConfigurationAction
 
 		validateEmail(actionRequest, "emailMessageAdded");
 		validateEmail(actionRequest, "emailMessageUpdated");
-		validateEmailFrom(actionRequest);
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-197692")) {
+			validateEmailFrom(actionRequest);
+		}
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
 	}

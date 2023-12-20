@@ -1019,7 +1019,7 @@ public class JournalDisplayContext {
 			"searchInOptions",
 			() -> {
 				if (isSearch()) {
-					_getSearchInOptionsJSONArray();
+					return _getSearchInOptionsJSONArray();
 				}
 
 				return null;

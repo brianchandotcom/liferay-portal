@@ -10,7 +10,7 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-if (FeatureFlagManagerUtil.isEnabled("LPS-197692") && Validator.isNotNull(redirect)) {
+if (Validator.isNotNull(redirect)) {
 	portletDisplay.setShowBackIcon(true);
 	portletDisplay.setURLBack(redirect);
 }

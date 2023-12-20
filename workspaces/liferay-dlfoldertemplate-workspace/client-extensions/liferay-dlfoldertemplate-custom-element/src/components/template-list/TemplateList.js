@@ -106,7 +106,9 @@ const TemplateList = () => {
 	};
 
 	const confirmDeleteItemModal = (template) => {
+
 		const deleteTemplate = async () => {
+
 			setIsDeletingLoading(true);
 
 			await deleteFolderTemplateInformation(template.id);
@@ -114,39 +116,16 @@ const TemplateList = () => {
 			setIsDeletingLoading(false);
 
 			reload();
-
-			modalState.onClose();
 		};
 
-		dispatchModal({
-			payload: {
-				body:
-					'Deleting an Template also removes its entries. This action is permanent and cannot be undone.',
-				center: true,
-				footer: [
-					,
-					,
-					<ClayButton
-						disabled={isDeletingLoading}
-						displayType="danger"
-						onClick={() => {
-							deleteTemplate();
-						}}
-					>
-						{isDeletingLoading && (
-							<ClayLoadingIndicator
-								displayType="danger"
-								size="sm"
-							/>
-						)}
-						{'Delete'}
-					</ClayButton>,
-				],
-				header: 'Delete Folder Template',
-				size: 'lg',
-				status: 'danger',
+		Liferay.Util.openConfirmModal({
+			message:
+				'Deleting an Template also removes its entries. This action is permanent and cannot be undone.',
+			onConfirm: (isConfirmed) => {
+				if (isConfirmed) {
+					deleteTemplate();
+				}
 			},
-			type: 'OPEN',
 		});
 	};
 

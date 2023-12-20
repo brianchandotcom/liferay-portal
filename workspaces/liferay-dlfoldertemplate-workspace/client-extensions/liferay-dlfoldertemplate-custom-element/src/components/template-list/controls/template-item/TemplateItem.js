@@ -8,7 +8,7 @@ import ClayList from '@clayui/list';
 import moment from 'moment/moment';
 import React, {useState} from 'react';
 
-import {deleteFolderTemplateInformation} from '../../../../services/template-list.service';
+import {deleteFolderTemplateInformation} from '../../../../services/TemplateListService';
 
 const TemplateItem = ({item, onDelete, openCreateFolder, openDesigner}) => {
 	const [isLoading, setIsLoading] = useState(false);

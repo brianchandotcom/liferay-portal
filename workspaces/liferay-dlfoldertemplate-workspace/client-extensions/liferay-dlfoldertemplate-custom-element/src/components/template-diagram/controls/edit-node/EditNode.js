@@ -12,7 +12,7 @@ import {ClayInput} from '@clayui/form';
 import {Button, Flex, Form, Input} from 'antd';
 import React, {useState} from 'react';
 
-import {updateFolderTemplate} from '../../../../services/template-diagram.service';
+import {updateFolderTemplate} from '../../../../services/TemplateDiagramService';
 import {showError} from '../../../../utils/util';
 
 const EditNode = ({

@@ -37,7 +37,15 @@ public class SyncReindexManagerImpl implements SyncReindexManager {
 
 	@Override
 	public void deleteStaleDocuments(
-		Date date, Set<String> entryClassNames, String indexName) {
+		long companyId, Date date, Set<String> entryClassNames) {
+
+		deleteStaleDocuments(
+			_indexNameBuilder.getIndexName(companyId), date, entryClassNames);
+	}
+
+	@Override
+	public void deleteStaleDocuments(
+		String indexName, Date date, Set<String> entryClassNames) {
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Deleting stale documents in index " + indexName);
@@ -55,14 +63,6 @@ public class SyncReindexManagerImpl implements SyncReindexManager {
 
 		_searchEngineAdapter.execute(
 			new DeleteByQueryDocumentRequest(booleanQuery, indexName));
-	}
-
-	@Override
-	public void deleteStaleDocuments(
-		long companyId, Date date, Set<String> entryClassNames) {
-
-		deleteStaleDocuments(
-			date, entryClassNames, _indexNameBuilder.getIndexName(companyId));
 	}
 
 	private TermsQuery _getEntryClassNamesFilterQuery(

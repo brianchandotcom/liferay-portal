@@ -1,5 +1,6 @@
 import * as API from 'shared/api';
 import IndividualProfileCard from '../ProfileCard';
+import mockStore from 'test/mock-store';
 import React from 'react';
 import {fireEvent, render} from '@testing-library/react';
 import {Individual} from 'shared/util/records';
@@ -11,19 +12,22 @@ import {
 	mockTimeRangeReq
 } from 'test/graphql-data';
 import {mockIndividual} from 'test/data';
+import {Provider} from 'react-redux';
 import {Routes} from 'shared/util/router';
 import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
 const DefaultComponent = ({children}) => (
-	<MemoryRouter
-		initialEntries={[
-			'/workspace/23/123123/contacts/individuals/known-individuals/4423123123'
-		]}
-	>
-		<Route path={Routes.CONTACTS_INDIVIDUAL}>{children}</Route>
-	</MemoryRouter>
+	<Provider store={mockStore()}>
+		<MemoryRouter
+			initialEntries={[
+				'/workspace/23/123123/contacts/individuals/known-individuals/4423123123'
+			]}
+		>
+			<Route path={Routes.CONTACTS_INDIVIDUAL}>{children}</Route>
+		</MemoryRouter>
+	</Provider>
 );
 
 const inputValue = 'add to cart';

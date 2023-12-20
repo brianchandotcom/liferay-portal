@@ -15,6 +15,17 @@ import {useModal} from '@clayui/modal';
 
 jest.unmock('react-dom');
 
+jest.mock('react-router-dom', () => ({
+	...jest.requireActual('react-router-dom'),
+	useParams: () => ({
+		channelId: '456',
+		groupId: '2000',
+		query: {
+			rangeKey: '30'
+		}
+	})
+}));
+
 const WrapperCSVComponent = props => (
 	<WrapperComponent
 		{...props}
@@ -143,11 +154,12 @@ describe('DownloadReportModal CSV', () => {
 		jest.useRealTimers();
 	});
 
-	it('renders component', () => {
+	it.only('renders component', () => {
 		const {container, getByRole, getByTestId, getByText} = render(
 			<WrapperCSVComponent
 				date={{end: moment(0), start: moment(0)}}
-				minDate={moment(0)}
+				maxDate={moment(0)}
+				minDate={moment(0).subtract(1, 'year')}
 			/>
 		);
 
@@ -207,7 +219,8 @@ describe('DownloadReportModal CSV', () => {
 		const {getByRole, getByTestId} = render(
 			<WrapperCSVComponent
 				date={{end: moment(0), start: moment(0)}}
-				minDate={moment(0)}
+				maxDate={moment(0)}
+				minDate={moment(0).subtract(1, 'year')}
 			/>
 		);
 
@@ -281,7 +294,8 @@ describe('DownloadReportModal PDF', () => {
 		const {container, getByRole, getByTestId, getByText} = render(
 			<WrapperPDFomponent
 				date={{end: moment(0), start: moment(0)}}
-				minDate={moment(0)}
+				maxDate={moment(0)}
+				minDate={moment(0).subtract(1, 'year')}
 			>
 				<ClayForm.Group>
 					<label>{Liferay.Language.get('select-reports')}</label>

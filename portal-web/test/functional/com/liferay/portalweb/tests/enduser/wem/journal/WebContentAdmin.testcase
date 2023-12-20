@@ -722,4 +722,70 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-196819. The site administrator could see all web contents with specific structure on that structure sheet."
+	@priority = 4
+	test ViewWebContentsInHighlightedStructureSheet {
+		property custom.properties = "feature.flag.LPS-194763=true${line.separator}feature.flag.LPS-197692=true";
+
+		task ("Given a site administrator has a folder and web contents") {
+			JSONWebcontent.addFolder(
+				folderName = "WC Folder Name",
+				groupName = "Test Site Name");
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "WC Structure Name");
+
+			DataEngine.addField(fieldName = "Text");
+
+			WebContentStructures.saveCP();
+
+			NavItem.click(navItem = "Web Content");
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+			WebContent.addWithStructureCP(
+				webContentText = "LXC",
+				webContentTitle = "LXC");
+
+			PortletEntry.publish();
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+			WebContent.addWithStructureCP(
+				webContentText = "Commerce",
+				webContentTitle = "Commerce");
+
+			PortletEntry.publish();
+
+			WebContent.moveToFolderCP(
+				folderName = "WC Folder Name",
+				webContentTitle = "Commerce");
+		}
+
+		task ("When the site administrator navigates to the highlighted structure sheet") {
+			Click.waitForMenuToggleJSClick(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
+
+			MenuItem.click(menuItem = "Configuration");
+
+			WebContentAdmin.selectHighlightedStructures(structureNameList = "WC Structure Name");
+
+			PortletEntry.save();
+
+			Navigator.gotoBack();
+
+			MenuBar.click(menuBar = "WC Structure Name");
+		}
+
+		task ("Then the site administrator could see web contents with the highlighted structure") {
+			for (var title : list "LXC,Commerce") {
+				WebContentAdmin.viewEntryTitle(entry = ${title});
+			}
+
+			WebContentAdmin.viewEntryNotPresent(entry = "WC Folder Name");
+		}
+	}
+
 }

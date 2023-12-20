@@ -617,12 +617,6 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 		long[] adminUserIds = _userLocalService.getRoleUserIds(
 			role.getRoleId());
 
-		long timestamp = LocalDate.now(
-		).atStartOfDay(
-			ZoneId.systemDefault()
-		).toInstant(
-		).getEpochSecond();
-
 		List<Long> adminUserIdNotDeliveredList = new ArrayList<>();
 
 		String portletId =
@@ -633,7 +627,12 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 			int notificationsCount =
 				_userNotificationEventLocalService.
 					getUserNotificationEventsCount(
-						adminUserId, portletId, true, timestamp);
+						adminUserId, portletId, true,
+						LocalDate.now(
+						).atStartOfDay(
+							ZoneId.systemDefault()
+						).toInstant(
+						).getEpochSecond());
 
 			if (notificationsCount <= 0) {
 				adminUserIdNotDeliveredList.add(adminUserId);

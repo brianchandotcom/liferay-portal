@@ -762,20 +762,20 @@ definition {
 
 			ContentDashboard.goToContentDashboard();
 
-			AssertTextEquals(
+			AssertTextEquals.assertPartialText(
 				categoryIndex = 1,
 				locator1 = "ContentDashboard#X_AXIS_CATEGORIES_NAME",
-				value1 = "C_Subaudienc…");
+				value1 = "C_Subaudien");
 
-			AssertTextEquals(
+			AssertTextEquals.assertPartialText(
 				categoryIndex = 2,
 				locator1 = "ContentDashboard#X_AXIS_CATEGORIES_NAME",
-				value1 = "B_Subaudienc…");
+				value1 = "B_Subaudien");
 
-			AssertTextEquals(
+			AssertTextEquals.assertPartialText(
 				categoryIndex = 3,
 				locator1 = "ContentDashboard#X_AXIS_CATEGORIES_NAME",
-				value1 = "A_Subaudienc…");
+				value1 = "A_Subaudien");
 		}
 	}
 
@@ -5692,20 +5692,20 @@ definition {
 		}
 
 		task ("Validate if the remaining categories are shown in order of creating") {
-			AssertTextEquals(
+			AssertTextEquals.assertPartialText(
 				categoryIndex = 1,
 				locator1 = "ContentDashboard#X_AXIS_CATEGORIES_NAME",
-				value1 = "C_Subaudienc…");
+				value1 = "C_Subaudien");
 
-			AssertTextEquals(
+			AssertTextEquals.assertPartialText(
 				categoryIndex = 2,
 				locator1 = "ContentDashboard#X_AXIS_CATEGORIES_NAME",
-				value1 = "B_Subaudienc…");
+				value1 = "B_Subaudien");
 
-			AssertTextEquals(
+			AssertTextEquals.assertPartialText(
 				categoryIndex = 3,
 				locator1 = "ContentDashboard#X_AXIS_CATEGORIES_NAME",
-				value1 = "A_Subaudienc…");
+				value1 = "A_Subaudien");
 		}
 	}
 

@@ -157,15 +157,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertObjectIsDisplayedOnControlPanel() {
-		ApplicationsMenuHelper.openApplicationsMenu();
-
-		ApplicationsMenu.gotoPanel(panel = "Control Panel");
-
-		AssertElementPresent(locator1 = "ObjectPortlet#CUSTOM_OBJECT_ON_CONTROL_PANEL");
-	}
-
-	@summary = "Default summary"
 	macro assertUserCanNotUpdateEntryWithoutPermission() {
 		Click(locator1 = "ObjectPortlet#VIEW_ENTRY_EYE_BUTTON");
 

@@ -9867,23 +9867,6 @@ metal-position@^2.1.0:
     metal "^2.0.0"
     metal-dom "^2.0.0"
 
-metal-structs@^1.0.0:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/metal-structs/-/metal-structs-1.0.1.tgz#548272f718ee9d729e3079b74a3f1254143db75b"
-  integrity sha1-VIJy9xjunXKeMHm3Sj8SVBQ9t1s=
-  dependencies:
-    metal "^2.0.0"
-
-metal-uri@^2.4.0:
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/metal-uri/-/metal-uri-2.4.0.tgz#9636fd4b1ea4021a3914eee3a1124accd9204737"
-  integrity sha512-Fm2cYA8yKhK3Fz4rgajtYagqzYWrdsRTSnG2x6BAaMrQlmKB0s4gEdaxSlZ29XMlaur86D1DtTr9V1Pi0dDMjQ==
-  dependencies:
-    metal "^2.0.0"
-    metal-structs "^1.0.0"
-    path-browserify "0.0.0"
-    url "^0.11.0"
-
 metal@^2.0.0, metal@^2.16.2:
   version "2.16.2"
   resolved "https://registry.yarnpkg.com/metal/-/metal-2.16.2.tgz#11e1f1fee92575c574a4c0289853ed5327dda6cf"
@@ -11466,11 +11449,6 @@ pascalcase@^0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/pascalcase/-/pascalcase-0.1.1.tgz#b363e55e8006ca6fe21784d2db22bd15d7917f14"
   integrity sha1-s2PlXoAGym/iF4TS2yK9FdeRfxQ=
-
-path-browserify@0.0.0:
-  version "0.0.0"
-  resolved "https://registry.yarnpkg.com/path-browserify/-/path-browserify-0.0.0.tgz#a0b870729aae214005b7d5032ec2cbbb0fb4451a"
-  integrity sha1-oLhwcpquIUAFt9UDLsLLuw+0RRo=
 
 path-browserify@0.0.1:
   version "0.0.1"

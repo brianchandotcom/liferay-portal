@@ -8,8 +8,10 @@ package com.liferay.client.extension.type.internal.factory;
 import com.liferay.client.extension.exception.ClientExtensionEntryTypeSettingsException;
 import com.liferay.client.extension.type.EditorConfigContributorCET;
 import com.liferay.client.extension.type.internal.EditorConfigContributorCETImpl;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
@@ -50,11 +52,19 @@ public class EditorConfigContributorCETImplFactoryImpl
 			true
 		).put(
 			"editorConfigKeys",
-			ParamUtil.getString(portletRequest, "editorConfigKeys")
+			StringUtil.merge(
+				ParamUtil.getStringValues(portletRequest, "editorConfigKeys"),
+				StringPool.NEW_LINE)
 		).put(
-			"editorNames", ParamUtil.getString(portletRequest, "editorNames")
+			"editorNames",
+			StringUtil.merge(
+				ParamUtil.getStringValues(portletRequest, "editorNames"),
+				StringPool.NEW_LINE)
 		).put(
-			"portletNames", ParamUtil.getString(portletRequest, "portletNames")
+			"portletNames",
+			StringUtil.merge(
+				ParamUtil.getStringValues(portletRequest, "portletNames"),
+				StringPool.NEW_LINE)
 		).put(
 			"url", ParamUtil.getString(portletRequest, "url")
 		).build();

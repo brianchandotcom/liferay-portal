@@ -296,11 +296,11 @@ public class APIEndpointRelevantObjectEntryModelListener
 		else {
 			if (!Validator.isBlank(pathParameter)) {
 				throw new ObjectEntryValuesException.InvalidObjectField(
-					Collections.singletonList("collection"),
+					null,
 					"Path parameters are not supported by GET API endpoints " +
 						"with \"collection\" retrieve type",
 					"path-parameters-are-not-supported-by-get-api-endpoints-" +
-						"with-x-retrieve-type");
+						"with-collection-retrieve-type");
 			}
 
 			_validatePath(objectEntry, pathString);

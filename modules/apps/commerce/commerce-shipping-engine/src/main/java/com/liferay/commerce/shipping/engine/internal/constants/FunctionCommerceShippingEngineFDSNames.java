@@ -5,12 +5,15 @@
 
 package com.liferay.commerce.shipping.engine.internal.constants;
 
+import com.liferay.commerce.constants.CommercePortletKeys;
+
 /**
  * @author Luca Pellizzon
  */
 public class FunctionCommerceShippingEngineFDSNames {
 
 	public static final String FUNCTION_COMMERCE_SHIPPING_ENGINE_OPTIONS =
-		"function-commerce-shipping-engine-options";
+		CommercePortletKeys.COMMERCE_SHIPPING_METHODS +
+			"-functionCommerceShippingEngineOptions";
 
 }

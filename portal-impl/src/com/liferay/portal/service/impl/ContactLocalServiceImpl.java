@@ -26,8 +26,12 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.base.ContactLocalServiceBaseImpl;
 
+import java.io.Serializable;
+
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Brian Wing Shun Chan
@@ -140,6 +144,13 @@ public class ContactLocalServiceImpl extends ContactLocalServiceBaseImpl {
 		}
 
 		return contact;
+	}
+
+	@Override
+	public Map<Serializable, Contact> fetchContacts(
+		Set<Serializable> primaryKeys) {
+
+		return contactPersistence.fetchByPrimaryKeys(primaryKeys);
 	}
 
 	@Override

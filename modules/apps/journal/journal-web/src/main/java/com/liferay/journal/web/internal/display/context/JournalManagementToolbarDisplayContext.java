@@ -698,6 +698,8 @@ public class JournalManagementToolbarDisplayContext
 					).setHref(
 						PortletURLBuilder.create(
 							getPortletURL()
+						).setNavigation(
+							"mine"
 						).setParameter(
 							"navigationMine", Boolean.TRUE
 						).buildPortletURL()
@@ -712,6 +714,8 @@ public class JournalManagementToolbarDisplayContext
 				).setHref(
 					PortletURLBuilder.create(
 						getPortletURL()
+					).setNavigation(
+						"recent"
 					).setParameter(
 						"navigationRecent", Boolean.TRUE
 					).buildPortletURL()

@@ -7,8 +7,7 @@ package com.liferay.commerce.shipping.engine.internal.portet.action;
 
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.model.CommerceShippingMethod;
-import com.liferay.commerce.product.service.CommerceChannelService;
-import com.liferay.commerce.service.CommerceShippingMethodLocalService;
+import com.liferay.commerce.service.CommerceShippingMethodService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.Constants;
@@ -52,22 +51,18 @@ public class EditFunctionCommerceShippingMethodConfigurationMVCActionCommand
 			actionRequest, "commerceShippingMethodId");
 
 		CommerceShippingMethod commerceShippingMethod =
-			_commerceShippingMethodLocalService.getCommerceShippingMethod(
+			_commerceShippingMethodService.getCommerceShippingMethod(
 				commerceShippingMethodId);
 
 		commerceShippingMethod.setTypeSettings(
 			ParamUtil.getString(
 				actionRequest, "settings--shippingMethodTypeSettings--"));
 
-		_commerceShippingMethodLocalService.updateCommerceShippingMethod(
+		_commerceShippingMethodService.updateCommerceShippingMethod(
 			commerceShippingMethod);
 	}
 
 	@Reference
-	private CommerceChannelService _commerceChannelService;
-
-	@Reference
-	private CommerceShippingMethodLocalService
-		_commerceShippingMethodLocalService;
+	private CommerceShippingMethodService _commerceShippingMethodService;
 
 }

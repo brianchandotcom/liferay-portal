@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
@@ -132,9 +131,6 @@ public class EmailServlet extends BaseAsahServlet {
 
 	@Reference
 	private MailService _mailService;
-
-	@Reference
-	private Portal _portal;
 
 	@Reference
 	private UserLocalService _userLocalService;

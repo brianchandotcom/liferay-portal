@@ -55,7 +55,6 @@ JSONNamingCheck | [Naming Conventions](naming_conventions_checks.markdown#naming
 [JSONUtilCheck](check/json_util_check.markdown#jsonutilcheck) | [Styling](styling_checks.markdown#styling-checks) | Checks for utilization of class `JSONUtil`. |
 Java2HTMLCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | Finds incorrect use of `.java.html` in `.jsp` files. |
 JavaAbstractMethodCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Finds incorrect `abstract` methods in `interface`. |
-JavaAccessModifierCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Finds incorrect Java access modifier usage. |
 JavaAggregateTestRuleParameterOrderCheck | [Styling](styling_checks.markdown#styling-checks) | Checks the order of parameters in `new AggregateTestRule` calls. |
 JavaAnnotationDefaultAttributeCheck | [Styling](styling_checks.markdown#styling-checks) | Finds cases where the default value is passed to annotations in package `*.bnd.annotations` or `*.bind.annotations`. |
 JavaAnnotationsCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Performs several checks on annotations. |
@@ -114,6 +113,7 @@ JavaModuleClassGetResourceCallCheck | [Bug Prevention](bug_prevention_checks.mar
 [JavaModuleComponentCheck](check/java_module_component_check.markdown#javamodulecomponentcheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Performs several checks on classes with or without `@Component` annotation. |
 [JavaModuleExposureCheck](check/java_module_exposure_check.markdown#javamoduleexposurecheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Checks for exposure of `SPI` types in `API`. |
 JavaModuleIllegalImportsCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Finds cases of incorrect use of certain classes in modules. |
+JavaModuleInheritableVariableAccessModifierCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Checks for cases where visibility of variable can be increased. |
 JavaModuleInternalImportsCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Finds cases where a module imports an `internal` class from another class. |
 JavaModuleJavaxPortletInitParamTemplatePathCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Validates the value of `javax.portlet.init-param.template-path`. |
 JavaModuleServiceReferenceCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Finds cases where `@BeanReference` annotation should be used instead of `@ServiceReference` annotation. |

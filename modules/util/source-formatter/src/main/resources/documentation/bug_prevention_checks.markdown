@@ -72,7 +72,6 @@ JSPSessionKeysCheck | .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks that messag
 JSPTagAttributesCheck | .jsp, .jspf, .jspx, .tag, .tpl or .vm | Performs several checks on tag attributes. |
 JSPTaglibMissingAttributesCheck | .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks for missing taglib attributes. |
 JavaAbstractMethodCheck | .java | Finds incorrect `abstract` methods in `interface`. |
-JavaAccessModifierCheck | .java | Finds incorrect Java access modifier usage. |
 JavaAnnotationsCheck | .java | Performs several checks on annotations. |
 [JavaAnonymousInnerClassCheck](check/java_anonymous_inner_class_check.markdown#javaanonymousinnerclasscheck) | .java | Performs several checks on anonymous classes. |
 [JavaBaseUpgradeCallableCheck](check/java_base_upgrade_callable_check.markdown#javabaseupgradecallablecheck) | .java | Checks that BaseUpgradeCallable is used instead of Callable or Runnable in Upgrade and Verify classes. |
@@ -106,6 +105,7 @@ JavaModuleClassGetResourceCallCheck | .java | Checks that dependencies files are
 [JavaModuleComponentCheck](check/java_module_component_check.markdown#javamodulecomponentcheck) | .java | Performs several checks on classes with or without `@Component` annotation. |
 [JavaModuleExposureCheck](check/java_module_exposure_check.markdown#javamoduleexposurecheck) | .java | Checks for exposure of `SPI` types in `API`. |
 JavaModuleIllegalImportsCheck | .java | Finds cases of incorrect use of certain classes in modules. |
+JavaModuleInheritableVariableAccessModifierCheck | .java | Checks for cases where visibility of variable can be increased. |
 JavaModuleInternalImportsCheck | .java | Finds cases where a module imports an `internal` class from another class. |
 JavaModuleJavaxPortletInitParamTemplatePathCheck | .java | Validates the value of `javax.portlet.init-param.template-path`. |
 JavaModuleServiceReferenceCheck | .java | Finds cases where `@BeanReference` annotation should be used instead of `@ServiceReference` annotation. |

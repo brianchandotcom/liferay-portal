@@ -135,11 +135,16 @@ public class ItemClassIndexUtil {
 		return true;
 	}
 
-	private static Method _getGetterMethod(Class<?> clazz, String name) {
+	private static Method _getGetterMethod(
+		Class<?> clazz, Field field, String name) {
+
 		String methodName = "get" + StringUtil.upperCaseFirstLetter(name);
 
 		for (Method method : clazz.getMethods()) {
-			if (StringUtil.equals(method.getName(), methodName)) {
+			if (StringUtil.equals(method.getName(), methodName) &&
+				(method.getParameterCount() == 0) &&
+				Objects.equals(field.getType(), method.getReturnType())) {
+
 				return method;
 			}
 		}
@@ -176,7 +181,7 @@ public class ItemClassIndexUtil {
 				fieldMethodPairsMap.put(
 					name,
 					new ObjectValuePair<>(
-						field, _getGetterMethod(clazz, name)));
+						field, _getGetterMethod(clazz, field, name)));
 
 				Class<?> fieldClass = field.getType();
 

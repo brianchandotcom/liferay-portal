@@ -50,6 +50,10 @@
 			}
 			else {
 				var target = event.target;
+				var matchTextContent =
+					target.textContent &&
+					target.textContent.toLowerCase() ===
+						'<%= StringUtil.toLowerCase(LanguageUtil.get(request, "download")) %>';
 				var matchTitle =
 					target.title && target.title.toLowerCase() === 'download';
 				var matchAction = target.action === 'download';
@@ -68,6 +72,7 @@
 					target.parentNode.classList.contains('lexicon-icon-download');
 
 				if (
+					matchTextContent ||
 					matchTitle ||
 					matchParentTitle ||
 					matchAction ||

@@ -21,6 +21,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -119,6 +121,21 @@ public class GitHubPullRequest {
 		return StringUtil.toURL(_jsonObject.getString("comments_url"));
 	}
 
+	public Set<String> getCompletedTestSuites() {
+		Set<String> completedTestSuites = new HashSet<>();
+
+		for (GitHubStatus gitHubStatus : getGitHubStatuses()) {
+			Matcher matcher = _completedTestSuiteStatusPattern.matcher(
+				gitHubStatus.getDescription());
+
+			if (matcher.find()) {
+				completedTestSuites.add(matcher.group("testSuite"));
+			}
+		}
+
+		return completedTestSuites;
+	}
+
 	public URL getFilesURL() {
 		return StringUtil.toURL(_jsonObject.getString("url") + "/files");
 	}
@@ -211,6 +228,21 @@ public class GitHubPullRequest {
 		return _originGitHubUser;
 	}
 
+	public Set<String> getPassingTestSuites() {
+		Set<String> passingTestSuites = new HashSet<>();
+
+		for (GitHubStatus gitHubStatus : getGitHubStatuses()) {
+			Matcher matcher = _passingTestSuiteStatusPattern.matcher(
+				gitHubStatus.getDescription());
+
+			if (matcher.find()) {
+				passingTestSuites.add(matcher.group("testSuite"));
+			}
+		}
+
+		return passingTestSuites;
+	}
+
 	public GitHubUser getReceiverGitHubUser() {
 		return _receiverGitHubUser;
 	}
@@ -245,6 +277,12 @@ public class GitHubPullRequest {
 
 		gitHubClient.requestPut(getIssueLockURL(), null);
 	}
+
+	private static final Pattern _completedTestSuiteStatusPattern =
+		Pattern.compile(
+			"\"ci:test:(?<testSuite>[^\"]+)\"\\s*has (FAILED|PASSED).");
+	private static final Pattern _passingTestSuiteStatusPattern =
+		Pattern.compile("\"ci:test:(?<testSuite>[^\"]+)\"\\s*has PASSED.");
 
 	private final String _baseBranchName;
 	private final GitHubCommit _baseGitHubCommit;

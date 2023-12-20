@@ -9,6 +9,7 @@ import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.UserEmailAddressException;
 import com.liferay.portal.kernel.exception.UserScreenNameException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -124,6 +125,43 @@ public class ScimUtil {
 		_validate(scimUser);
 
 		return scimUser;
+	}
+
+	public static ScimUser toScimUser(
+		com.liferay.portal.kernel.model.User portalUser) {
+
+		try {
+			ScimUser scimUser = new ScimUser();
+
+			scimUser.setActive(portalUser.isActive());
+			scimUser.setBirthday(portalUser.getBirthday());
+			scimUser.setCompanyId(portalUser.getCompanyId());
+			scimUser.setCreateDate(_truncateDate(portalUser.getCreateDate()));
+			scimUser.setFirstName(portalUser.getFirstName());
+			scimUser.setEmailAddress(portalUser.getEmailAddress());
+			scimUser.setExternalReferenceCode(
+				portalUser.getExternalReferenceCode());
+			scimUser.setId(String.valueOf(portalUser.getUserId()));
+			scimUser.setJobTitle(portalUser.getJobTitle());
+			scimUser.setLastName(portalUser.getLastName());
+			scimUser.setLocale(portalUser.getLocale());
+			scimUser.setMale(portalUser.isMale());
+			scimUser.setMiddleName(portalUser.getMiddleName());
+			scimUser.setModifiedDate(
+				_truncateDate(portalUser.getModifiedDate()));
+			scimUser.setScreenName(portalUser.getScreenName());
+
+			return scimUser;
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Unable to convert portal user to a SCIM user",
+					portalException);
+			}
+
+			return ReflectionUtil.throwException(portalException);
+		}
 	}
 
 	public static User toUser(List<Group> groups, ScimUser scimUser)
@@ -410,6 +448,19 @@ public class ScimUtil {
 
 			return true;
 		}
+	}
+
+	private static Date _truncateDate(Date date) {
+		if (date == null) {
+			return null;
+		}
+
+		Calendar calendar = Calendar.getInstance();
+
+		calendar.setTime(date);
+		calendar.set(Calendar.MILLISECOND, 0);
+
+		return calendar.getTime();
 	}
 
 	private static void _validate(ScimUser scimUser) throws Exception {

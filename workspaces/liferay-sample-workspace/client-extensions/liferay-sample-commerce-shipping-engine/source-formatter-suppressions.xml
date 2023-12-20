@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<source-check>
+		<suppress checks="ResourceBundleCheck" files="src/main/java/com/liferay/sample/shipping/engine/controller/BaseRestController\.java" />
+	</source-check>
+</suppressions>

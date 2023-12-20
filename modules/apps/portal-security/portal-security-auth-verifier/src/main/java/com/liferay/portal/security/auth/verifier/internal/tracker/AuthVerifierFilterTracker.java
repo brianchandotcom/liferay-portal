@@ -313,22 +313,6 @@ public class AuthVerifierFilterTracker {
 			remoteAccessFilterServiceRegistration.unregister();
 		}
 
-		private Dictionary<String, Object> _buildDefaultFilterProperties(
-			String filterName) {
-
-			HashMapDictionaryBuilder.HashMapDictionaryWrapper<String, Object>
-				properties =
-					new HashMapDictionaryBuilder.HashMapDictionaryWrapper<>();
-
-			properties.put("servlet-context-name", "");
-			properties.put("servlet-filter-name", filterName);
-			properties.put("url-pattern", "/o/headless-delivery/*");
-			properties.put(
-				"dispatcher", new String[] {"FORWARD", "INCLUDE", "REQUEST"});
-
-			return properties.build();
-		}
-
 		private Dictionary<String, Object> _buildPropertiesForAuditFilter(
 			ServiceReference<ServletContextHelper> serviceReference) {
 
@@ -384,9 +368,6 @@ public class AuthVerifierFilterTracker {
 					"service.ranking",
 					_defaultRemoteAccessFilterServiceRanking);
 			}
-
-			properties.putAll(
-				_buildDefaultFilterProperties("Remote Access Filter"));
 
 			return properties.build();
 		}

@@ -20,10 +20,10 @@ import java.io.File;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Seiphon Wang
@@ -99,14 +99,15 @@ public class JavaInheritableVariableAccessModifierCheck
 		return new String[] {JAVA_CLASS};
 	}
 
-	private Map<String, List<String>> _getOSGiComponentFileNamesMap()
+	private synchronized Map<String, List<String>>
+			_getOSGiComponentFileNamesMap()
 		throws Exception {
 
 		if (_osgiComponentFileNamesMap != null) {
 			return _osgiComponentFileNamesMap;
 		}
 
-		_osgiComponentFileNamesMap = new ConcurrentHashMap<>();
+		_osgiComponentFileNamesMap = new HashMap<>();
 
 		String moduleRootDirLocation = "modules/";
 

@@ -1307,10 +1307,6 @@ public class JournalDisplayContext {
 	}
 
 	public boolean isSearch() {
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-196768")) {
-			return _isSearch();
-		}
-
 		if (Validator.isNotNull(getKeywords())) {
 			return true;
 		}
@@ -2144,17 +2140,6 @@ public class JournalDisplayContext {
 
 	private boolean _isNavigationRecent() {
 		if (Objects.equals(getNavigation(), "recent")) {
-			return true;
-		}
-
-		return false;
-	}
-
-	private boolean _isSearch() {
-		if (Validator.isNotNull(getKeywords()) ||
-			ArrayUtil.isNotEmpty(_getAssetCategoryIds()) ||
-			ArrayUtil.isNotEmpty(_getAssetTagNames())) {
-
 			return true;
 		}
 

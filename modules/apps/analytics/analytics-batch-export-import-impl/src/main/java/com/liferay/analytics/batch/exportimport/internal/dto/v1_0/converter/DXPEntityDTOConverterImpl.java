@@ -71,16 +71,23 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
 	public DXPEntity toDTO(
 			DTOConverterContext dtoConverterContext, BaseModel<?> baseModel)
 		throws Exception {
 
-		Map<String, Object> modelAttributes = baseModel.getModelAttributes();
+		Map<String, Function<?, Object>> attributeGetterFunctions =
+			(Map<String, Function<?, Object>>)
+				baseModel.getAttributeGetterFunctions();
+
+		Function<Object, Object> modifiedDateGetterFunction =
+			(Function<Object, Object>)attributeGetterFunctions.get(
+				"modifiedDate");
 
 		return _toDXPEntity(
 			_getExpandoFields(baseModel), _getFields(baseModel),
 			String.valueOf(baseModel.getPrimaryKeyObj()),
-			(Date)modelAttributes.get("modifiedDate"),
+			(Date)modifiedDateGetterFunction.apply(baseModel),
 			baseModel.getModelClassName());
 	}
 

@@ -20,12 +20,14 @@ import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.sql.dsl.query.JoinStep;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserTable;
 import com.liferay.portal.kernel.model.Users_OrgsTable;
 import com.liferay.portal.kernel.model.Users_UserGroupsTable;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.service.ContactLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -35,8 +37,10 @@ import java.io.Serializable;
 
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -66,12 +70,30 @@ public class UserAnalyticsDXPEntityBatchEngineTaskItemDelegate
 				0);
 		}
 
+		List<User> users = _userLocalService.dslQuery(
+			_createSelectDSLQuery(
+				contextCompany.getCompanyId(), pagination, parameters));
+
+		Set<Serializable> contactIds = new HashSet<>();
+
+		for (User user : users) {
+			contactIds.add(user.getContactId());
+		}
+
+		Map<Serializable, Contact> contacts =
+			_contactLocalService.fetchContacts(contactIds);
+
+		for (User user : users) {
+			Contact contact = contacts.get(user.getContactId());
+
+			if (contact != null) {
+				user.setContact(contact);
+			}
+		}
+
 		return Page.of(
 			TransformUtil.transform(
-				_userLocalService.<List<User>>dslQuery(
-					_createSelectDSLQuery(
-						contextCompany.getCompanyId(), pagination, parameters)),
-				user -> _dxpEntityDTOConverter.toDTO(user)),
+				users, user -> _dxpEntityDTOConverter.toDTO(user)),
 			Pagination.of(pagination.getPage(), pagination.getPageSize()),
 			_userLocalService.dslQuery(
 				_createCountDSLQuery(
@@ -224,6 +246,9 @@ public class UserAnalyticsDXPEntityBatchEngineTaskItemDelegate
 
 	@Reference
 	private AnalyticsSettingsManager _analyticsSettingsManager;
+
+	@Reference
+	private ContactLocalService _contactLocalService;
 
 	@Reference(target = DTOConverterConstants.DXP_ENTITY_DTO_CONVERTER)
 	private DTOConverter<BaseModel<?>, DXPEntity> _dxpEntityDTOConverter;

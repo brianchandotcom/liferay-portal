@@ -291,6 +291,77 @@ public class ObjectEntryRelatedObjectsResourceTest {
 	}
 
 	@Test
+	public void testDeleteCustomObjectEntry() throws Exception {
+		int code = HTTPTestUtil.invokeToHttpCode(
+			null,
+			StringBundler.concat(
+				_objectDefinition1.getRESTContextPath(),
+				"/by-external-reference-code/",
+				_objectEntry1.getExternalReferenceCode()),
+			Http.Method.DELETE);
+
+		Assert.assertNotEquals(204, code);
+	}
+
+	@Test
+	public void testDeleteObjectEntryWithRelatedObjectEntryWithRegularRole()
+		throws Exception {
+
+		_objectRelationship = ObjectRelationshipTestUtil.addObjectRelationship(
+			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+			_objectDefinition1, _objectDefinition2, TestPropsValues.getUserId(),
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		ObjectRelationshipTestUtil.relateObjectEntries(
+			_objectEntry1.getPrimaryKey(), _objectEntry2.getPrimaryKey(),
+			_objectRelationship, TestPropsValues.getUserId());
+
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		String password = RandomTestUtil.randomString();
+
+		User user = UserTestUtil.addUser(
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			password, RandomTestUtil.randomString() + "@liferay.com",
+			RandomTestUtil.randomString(), LocaleUtil.getDefault(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
+			ServiceContextTestUtil.getServiceContext());
+
+		UserLocalServiceUtil.addRoleUser(role.getRoleId(), user.getUserId());
+
+		HTTPTestUtil.customize(
+		).withCredentials(
+			user.getEmailAddress(), password
+		);
+
+		int code = HTTPTestUtil.invokeToHttpCode(
+			null,
+			StringBundler.concat(
+				_objectDefinition1.getRESTContextPath(),
+				"/by-external-reference-code/",
+				_objectEntry1.getExternalReferenceCode()),
+			Http.Method.DELETE);
+
+		Assert.assertNotEquals(204, code);
+
+		ResourcePermissionLocalServiceUtil.setResourcePermissions(
+			TestPropsValues.getCompanyId(), _objectDefinition1.getClassName(),
+			ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(TestPropsValues.getCompanyId()), role.getRoleId(),
+			new String[] {
+				ActionKeys.DELETE, ActionKeys.PERMISSIONS, ActionKeys.UPDATE,
+				ActionKeys.VIEW
+			});
+
+		HTTPTestUtil.customize(
+		).withCredentials(
+			user.getEmailAddress(), password
+		).apply(
+			this::testDeleteCustomObjectEntry
+		);
+	}
+
+	@Test
 	public void testGetRelatedCustomObjectEntriesWhenRelationExists()
 		throws Exception {
 

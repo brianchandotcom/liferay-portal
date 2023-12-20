@@ -29,6 +29,8 @@ import com.liferay.portal.kernel.model.LayoutBranch;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutRevision;
 import com.liferay.portal.kernel.model.LayoutSet;
+import com.liferay.portal.kernel.model.LayoutType;
+import com.liferay.portal.kernel.model.LayoutTypeController;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.impl.VirtualLayout;
@@ -45,15 +47,18 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.SessionClicks;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.util.LayoutTypeControllerTracker;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 import com.liferay.translation.security.permission.TranslationPermission;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -400,6 +405,8 @@ public class LayoutsTreeImpl implements LayoutsTree {
 			layoutName += StringPool.STAR;
 		}
 
+		LayoutType layoutType = layout.getLayoutType();
+
 		JSONObject jsonObject = JSONUtil.put(
 			"actions",
 			() -> {
@@ -425,6 +432,8 @@ public class LayoutsTreeImpl implements LayoutsTree {
 
 				return null;
 			}
+		).put(
+			"firstPageable", layoutType.isFirstPageable()
 		).put(
 			"groupId",
 			() -> {
@@ -471,6 +480,8 @@ public class LayoutsTreeImpl implements LayoutsTree {
 				return null;
 			}
 		).put(
+			"parentable", layoutType.isParentable()
+		).put(
 			"plid", layout.getPlid()
 		).put(
 			"priority", layout.getPriority()
@@ -505,6 +516,22 @@ public class LayoutsTreeImpl implements LayoutsTree {
 			"title", HtmlUtil.escapeAttribute(layoutName)
 		).put(
 			"type", layout.getType()
+		).put(
+			"typeName",
+			() -> {
+				LayoutTypeController layoutTypeController =
+					LayoutTypeControllerTracker.getLayoutTypeController(
+						layout.getType());
+
+				ResourceBundle layoutTypeResourceBundle =
+					ResourceBundleUtil.getBundle(
+						"content.Language", themeDisplay.getLocale(),
+						layoutTypeController.getClass());
+
+				return _language.get(
+					layoutTypeResourceBundle,
+					"layout.types." + layout.getType());
+			}
 		);
 
 		LayoutRevision layoutRevision = LayoutStagingUtil.getLayoutRevision(

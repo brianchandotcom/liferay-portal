@@ -292,15 +292,15 @@ public class ObjectEntryRelatedObjectsResourceTest {
 
 	@Test
 	public void testDeleteCustomObjectEntry() throws Exception {
-		int code = HTTPTestUtil.invokeToHttpCode(
-			null,
-			StringBundler.concat(
-				_objectDefinition1.getRESTContextPath(),
-				"/by-external-reference-code/",
-				_objectEntry1.getExternalReferenceCode()),
-			Http.Method.DELETE);
-
-		Assert.assertEquals(204, code);
+		Assert.assertEquals(
+			204,
+			HTTPTestUtil.invokeToHttpCode(
+				null,
+				StringBundler.concat(
+					_objectDefinition1.getRESTContextPath(),
+					"/by-external-reference-code/",
+					_objectEntry1.getExternalReferenceCode()),
+				Http.Method.DELETE));
 	}
 
 	@Test

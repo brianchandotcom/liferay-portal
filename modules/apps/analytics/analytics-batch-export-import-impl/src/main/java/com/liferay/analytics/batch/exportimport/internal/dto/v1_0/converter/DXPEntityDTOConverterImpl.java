@@ -31,11 +31,8 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.OrganizationLocalService;
-import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -333,18 +330,29 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 						analyticsConfiguration.syncedContactFieldNames()),
 					includeAttributeNames));
 
+			long userId = user.getUserId();
+
+			long[] organizationIds =
+				_userLocalService.getOrganizationPrimaryKeys(userId);
+
+			long[] userGroupIds = _userLocalService.getUserGroupPrimaryKeys(
+				userId);
+
 			fields.add(
 				new Field() {
 					{
 						name = "groupIds";
-						value = _getGroupIds(user);
+						value = _getGroupIds(
+							user, organizationIds, userGroupIds);
 					}
 				});
+
 			fields.add(
 				new Field() {
 					{
 						name = "organizationIds";
-						value = _getOrganizationIds(user);
+						value =
+							"[" + StringUtil.merge(organizationIds, ",") + "]";
 					}
 				});
 			fields.add(
@@ -365,7 +373,7 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 				new Field() {
 					{
 						name = "userGroupIds";
-						value = _getUserGroupIds(user);
+						value = "[" + StringUtil.merge(userGroupIds, ",") + "]";
 					}
 				});
 		}
@@ -403,10 +411,14 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 		return fields.toArray(new Field[0]);
 	}
 
-	private String _getGroupIds(User user) {
+	private String _getGroupIds(
+		User user, long[] organizationIds, long[] userGroupIds) {
+
 		try {
 			long[] ids = TransformUtil.transformToLongArray(
-				_getUserSitesGroups(user.getUserId()), Group::getGroupId);
+				_getUserSitesGroups(
+					user.getUserId(), organizationIds, userGroupIds),
+				Group::getGroupId);
 
 			return "[" + StringUtil.merge(ids, ",") + "]";
 		}
@@ -414,22 +426,6 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Unable to get group ids for user " + user.getUserId(),
-					exception);
-			}
-
-			return "[]";
-		}
-	}
-
-	private String _getOrganizationIds(User user) {
-		try {
-			return "[" + StringUtil.merge(user.getOrganizationIds(), ",") + "]";
-		}
-		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to get organization ids for user " +
-						user.getUserId(),
 					exception);
 			}
 
@@ -467,22 +463,8 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 		}
 	}
 
-	private String _getUserGroupIds(User user) {
-		try {
-			return "[" + StringUtil.merge(user.getUserGroupIds(), ",") + "]";
-		}
-		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to get user group ids for user " + user.getUserId(),
-					exception);
-			}
-
-			return "[]";
-		}
-	}
-
-	private List<Group> _getUserSitesGroups(long userId)
+	private List<Group> _getUserSitesGroups(
+			long userId, long[] organizationIds, long[] userGroupIds)
 		throws PortalException {
 
 		List<Group> userSiteGroups = new ArrayList<>();
@@ -495,7 +477,7 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 			}
 		}
 
-		if (_hasUserOrgs(userId) || _hasUserUserGroups(userId)) {
+		if ((organizationIds.length != 0) || (userGroupIds.length != 0)) {
 			List<Group> userGroups = _groupLocalService.getUserGroups(
 				userId, true);
 
@@ -509,28 +491,6 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 		userSiteGroups.sort(new GroupNameComparator(true));
 
 		return userSiteGroups;
-	}
-
-	private boolean _hasUserOrgs(long userId) throws PortalException {
-		List<Organization> userOrgs =
-			_organizationLocalService.getUserOrganizations(userId);
-
-		if (userOrgs.isEmpty()) {
-			return false;
-		}
-
-		return true;
-	}
-
-	private boolean _hasUserUserGroups(long userId) {
-		List<UserGroup> userUserGroups =
-			_userGroupLocalService.getUserUserGroups(userId);
-
-		if (userUserGroups.isEmpty()) {
-			return false;
-		}
-
-		return true;
 	}
 
 	private boolean _isCustomField(String className, long tableId) {
@@ -621,12 +581,6 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 
 	@Reference
 	private JSONFactory _jsonFactory;
-
-	@Reference
-	private OrganizationLocalService _organizationLocalService;
-
-	@Reference
-	private UserGroupLocalService _userGroupLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

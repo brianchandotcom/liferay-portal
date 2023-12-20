@@ -151,8 +151,9 @@ definition {
 		ApplicationsMenu.gotoPanel(panel = "Control Panel");
 
 		AssertElementPresent(
-			key_itemMenu = ${itemMenu},
-			locator1 = "ObjectPortlet#VIEW_FIELD_ON_MENU");
+			key_category = "",
+			key_portlet = ${itemMenu},
+			locator1 = "ApplicationsMenu#PORTLET");
 	}
 
 	@summary = "Default summary"

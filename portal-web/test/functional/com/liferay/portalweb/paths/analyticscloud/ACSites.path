@@ -154,7 +154,7 @@
 	<td></td>
 </tr>
 
-<!-- AC Sites -->
+<!-- AC Path Analysis -->
 
 <tr>
 	<td>PATH_PAGE_NAME_POPOVER</td>
@@ -174,6 +174,11 @@
 <tr>
 	<td>REMOVE_SEGMENT_FILTER</td>
 	<td>//button[@title="Remove Filter"]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_SEGMENT_FILTER_BAR</td>
+	<td>xpath=(//input[@type='text' and @placeholder='Search' and not(@disabled)])[2]</td>
 	<td></td>
 </tr>
 </tbody>

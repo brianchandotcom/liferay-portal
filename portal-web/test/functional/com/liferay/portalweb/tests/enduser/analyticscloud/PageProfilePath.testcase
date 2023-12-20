@@ -274,7 +274,7 @@ definition {
 		}
 
 		task ("Search for segment on the list") {
-			ACUtils.searchBar(searchItem = "Dynamic Segment Test");
+			ACPagePath.searchSegmentFilterBar(searchItem = "Dynamic Segment Test");
 
 			ACPagePath.viewSegmentDropdown(nameList = "Dynamic Segment Test");
 		}
@@ -310,7 +310,7 @@ definition {
 		}
 
 		task ("Search for segment not on list") {
-			ACUtils.searchBar(searchItem = "Dynamic Segment Test");
+			ACPagePath.searchSegmentFilterBar(searchItem = "Dynamic Segment Test");
 
 			ACUtils.viewNoResultsMessage(noResultMessage = "There are no segments.");
 		}

@@ -273,12 +273,8 @@ public class DispatchTriggerLocalServiceTest {
 
 			Assert.assertNull(
 				_schedulerEngineHelper.getScheduledJob(
-					String.format(
-						"DISPATCH_JOB_%07d",
-						dispatchTrigger.getDispatchTriggerId()),
-					String.format(
-						"DISPATCH_GROUP_%07d",
-						dispatchTrigger.getDispatchTriggerId()),
+					_getJobName(dispatchTrigger.getDispatchTriggerId()),
+					_getGroupName(dispatchTrigger.getDispatchTriggerId()),
 					dispatchTaskClusterMode.getStorageType()));
 		}
 	}

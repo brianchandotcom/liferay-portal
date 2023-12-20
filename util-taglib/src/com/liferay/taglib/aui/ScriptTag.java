@@ -103,8 +103,7 @@ public class ScriptTag extends BaseScriptTag {
 
 		try {
 			if (getAsync() || Validator.isNotNull(getBlocking()) ||
-				Validator.isNotNull(getCrossOrigin()) ||
-				getDefer() ||
+				Validator.isNotNull(getCrossOrigin()) || getDefer() ||
 				Validator.isNotNull(getFetchPriority()) ||
 				Validator.isNotNull(getId()) ||
 				Validator.isNotNull(getIntegrity()) ||
@@ -280,9 +279,9 @@ public class ScriptTag extends BaseScriptTag {
 
 		jspWriter.write(">");
 
-		StringBundler stringBundler = getBodyContentAsStringBundler();
+		StringBundler sb = getBodyContentAsStringBundler();
 
-		jspWriter.write(stringBundler.toString());
+		jspWriter.write(sb.toString());
 
 		jspWriter.write("</script>");
 

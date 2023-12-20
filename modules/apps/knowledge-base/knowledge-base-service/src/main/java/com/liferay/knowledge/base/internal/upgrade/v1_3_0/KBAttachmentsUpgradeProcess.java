@@ -14,7 +14,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Repository;
-import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -32,9 +32,11 @@ import java.sql.ResultSet;
 public class KBAttachmentsUpgradeProcess extends UpgradeProcess {
 
 	public KBAttachmentsUpgradeProcess(
-		CompanyLocalService companyLocalService, Store store) {
+		CompanyLocalService companyLocalService,
+		PortletFileRepository portletFileRepository, Store store) {
 
 		_companyLocalService = companyLocalService;
+		_portletFileRepository = portletFileRepository;
 		_store = store;
 	}
 
@@ -71,10 +73,10 @@ public class KBAttachmentsUpgradeProcess extends UpgradeProcess {
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
 
-		Repository repository = PortletFileRepositoryUtil.addPortletRepository(
+		Repository repository = _portletFileRepository.addPortletRepository(
 			groupId, _PORTLET_ID, serviceContext);
 
-		Folder folder = PortletFileRepositoryUtil.addPortletFolder(
+		Folder folder = _portletFileRepository.addPortletFolder(
 			userId, repository.getRepositoryId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			String.valueOf(resourcePrimKey), serviceContext);
@@ -132,7 +134,7 @@ public class KBAttachmentsUpgradeProcess extends UpgradeProcess {
 				String mimeType = MimeTypesUtil.getExtensionContentType(
 					FileUtil.getExtension(title));
 
-				PortletFileRepositoryUtil.addPortletFileEntry(
+				_portletFileRepository.addPortletFileEntry(
 					groupId, userId, _CLASS_NAME_KB_ARTICLE, resourcePrimKey,
 					_PORTLET_ID, folderId, bytes, title, mimeType, false);
 
@@ -164,6 +166,7 @@ public class KBAttachmentsUpgradeProcess extends UpgradeProcess {
 		KBAttachmentsUpgradeProcess.class);
 
 	private final CompanyLocalService _companyLocalService;
+	private final PortletFileRepository _portletFileRepository;
 	private final Store _store;
 
 }

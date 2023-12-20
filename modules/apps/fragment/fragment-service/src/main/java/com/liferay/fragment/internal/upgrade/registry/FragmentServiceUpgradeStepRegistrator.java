@@ -13,6 +13,7 @@ import com.liferay.fragment.internal.upgrade.v2_0_0.util.FragmentEntryTable;
 import com.liferay.fragment.internal.upgrade.v2_1_0.SchemaUpgradeProcess;
 import com.liferay.fragment.internal.upgrade.v2_4_0.FragmentEntryLinkUpgradeProcess;
 import com.liferay.fragment.internal.upgrade.v2_6_0.util.FragmentEntryVersionTable;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.upgrade.BaseSQLServerDatetimeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
@@ -180,7 +181,8 @@ public class FragmentServiceUpgradeStepRegistrator
 		registry.register(
 			"2.10.0", "2.10.1",
 			new com.liferay.fragment.internal.upgrade.v2_10_1.
-				FragmentCollectionUpgradeProcess(_dlFolderLocalService));
+				FragmentCollectionUpgradeProcess(
+					_dlFolderLocalService, _portletFileRepository));
 
 		registry.register(
 			"2.10.1", "2.10.2",
@@ -201,6 +203,9 @@ public class FragmentServiceUpgradeStepRegistrator
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private PortletFileRepository _portletFileRepository;
 
 	@Reference
 	private ViewCountManager _viewCountManager;

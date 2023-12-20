@@ -13,6 +13,7 @@ import com.liferay.knowledge.base.internal.upgrade.v3_0_0.util.KBTemplateTable;
 import com.liferay.knowledge.base.internal.upgrade.v4_4_0.KBGroupServiceConfigurationUpgradeProcess;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.settings.SettingsLocatorHelper;
 import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess;
@@ -74,7 +75,8 @@ public class KnowledgeBaseServiceUpgradeStepRegistrator
 		registry.register(
 			"1.2.0", "1.3.0",
 			new com.liferay.knowledge.base.internal.upgrade.v1_3_0.
-				KBAttachmentsUpgradeProcess(_companyLocalService, _store),
+				KBAttachmentsUpgradeProcess(
+					_companyLocalService, _portletFileRepository, _store),
 			new com.liferay.knowledge.base.internal.upgrade.v1_3_0.
 				UpgradePortletPreferences());
 
@@ -205,6 +207,9 @@ public class KnowledgeBaseServiceUpgradeStepRegistrator
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
 	private ModuleServiceLifecycle _moduleServiceLifecycle;
+
+	@Reference
+	private PortletFileRepository _portletFileRepository;
 
 	@Reference
 	private SettingsLocatorHelper _settingsLocatorHelper;

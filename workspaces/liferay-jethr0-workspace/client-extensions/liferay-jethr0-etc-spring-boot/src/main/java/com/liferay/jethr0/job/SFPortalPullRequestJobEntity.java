@@ -25,6 +25,8 @@ public class SFPortalPullRequestJobEntity
 			super.getInitialBuildParameters();
 
 		initialBuildParameters.put(
+			"CI_FORWARD_RECEIVER_USERNAME", getForwardReceiverUserName());
+		initialBuildParameters.put(
 			"PULL_REQUEST_URL", String.valueOf(getPortalPullRequestURL()));
 
 		return initialBuildParameters;

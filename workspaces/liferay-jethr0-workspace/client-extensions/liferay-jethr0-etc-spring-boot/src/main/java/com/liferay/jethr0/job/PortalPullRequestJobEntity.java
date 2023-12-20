@@ -12,6 +12,8 @@ import java.net.URL;
  */
 public interface PortalPullRequestJobEntity extends JobEntity {
 
+	public String getForwardReceiverUserName();
+
 	public String getOriginName();
 
 	public URL getPortalPullRequestURL();
@@ -27,6 +29,8 @@ public interface PortalPullRequestJobEntity extends JobEntity {
 	public String getUpstreamBranchName();
 
 	public String getUpstreamBranchSHA();
+
+	public void setForwardReceiverUserName(String forwardReceiverUserName);
 
 	public void setOriginName(String originName);
 

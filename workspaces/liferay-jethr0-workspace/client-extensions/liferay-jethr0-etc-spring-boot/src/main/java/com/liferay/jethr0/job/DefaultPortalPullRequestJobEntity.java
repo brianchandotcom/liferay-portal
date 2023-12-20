@@ -28,6 +28,8 @@ public class DefaultPortalPullRequestJobEntity
 		Map<String, String> initialBuildParameters =
 			super.getInitialBuildParameters();
 
+		initialBuildParameters.put(
+			"CI_FORWARD_RECEIVER_USERNAME", getForwardReceiverUserName());
 		initialBuildParameters.put("CI_TEST_SUITE", getTestSuiteName());
 		initialBuildParameters.put("GITHUB_ORIGIN_NAME", getOriginName());
 		initialBuildParameters.put(

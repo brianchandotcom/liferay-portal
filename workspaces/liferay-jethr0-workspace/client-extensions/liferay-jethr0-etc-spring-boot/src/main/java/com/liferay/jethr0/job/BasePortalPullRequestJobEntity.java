@@ -18,6 +18,11 @@ public abstract class BasePortalPullRequestJobEntity
 	extends BaseJobEntity implements PortalPullRequestJobEntity {
 
 	@Override
+	public String getForwardReceiverUserName() {
+		return getParameterValue("forwardReceiverUserName");
+	}
+
+	@Override
 	public String getOriginName() {
 		return _originName;
 	}
@@ -60,6 +65,11 @@ public abstract class BasePortalPullRequestJobEntity
 	@Override
 	public String getUpstreamBranchSHA() {
 		return _upstreamBranchSHA;
+	}
+
+	@Override
+	public void setForwardReceiverUserName(String forwardReceiverUserName) {
+		setParameterValue("forwardReceiverUserName", forwardReceiverUserName);
 	}
 
 	@Override

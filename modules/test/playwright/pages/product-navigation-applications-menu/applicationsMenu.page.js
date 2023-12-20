@@ -14,7 +14,10 @@ export class ApplicationsMenuPage {
 		this.instanceSettingsLink = page.getByRole('link', {
 			name: 'Instance Settings',
 		});
-		this.objectsLink = page.getByRole('link', {name: 'Objects'});
+		this.objectsMenuItem = page.getByRole('menuitem', {
+			exact: true,
+			name: 'Objects',
+		});
 		this.page = page;
 		this.signInButton = page.getByRole('button', {name: 'Sign In'});
 	}
@@ -25,7 +28,7 @@ export class ApplicationsMenuPage {
 
 	async goToObjects() {
 		await this.goToControlPanel();
-		await this.objectsLink.click();
+		await this.objectsMenuItem.click();
 	}
 
 	async goToInstanceSettings() {

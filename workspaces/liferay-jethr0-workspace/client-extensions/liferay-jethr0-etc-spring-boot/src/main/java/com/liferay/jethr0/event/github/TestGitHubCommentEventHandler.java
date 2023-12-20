@@ -7,7 +7,7 @@ package com.liferay.jethr0.event.github;
 
 import com.liferay.jethr0.event.EventHandlerContext;
 import com.liferay.jethr0.event.github.comment.GitHubComment;
-import com.liferay.jethr0.job.JobEntity;
+import com.liferay.jethr0.job.PortalPullRequestJobEntity;
 
 import java.io.IOException;
 
@@ -34,11 +34,12 @@ public class TestGitHubCommentEventHandler
 			return null;
 		}
 
-		JobEntity jobEntity = createJobEntity(_getTestSuite());
+		PortalPullRequestJobEntity portalPullRequestJobEntity =
+			createPortalPullRequestJobEntity(_getTestSuite());
 
-		invokeJobEntity(jobEntity);
+		invokeJobEntity(portalPullRequestJobEntity);
 
-		return jobEntity.toString();
+		return portalPullRequestJobEntity.toString();
 	}
 
 	protected TestGitHubCommentEventHandler(

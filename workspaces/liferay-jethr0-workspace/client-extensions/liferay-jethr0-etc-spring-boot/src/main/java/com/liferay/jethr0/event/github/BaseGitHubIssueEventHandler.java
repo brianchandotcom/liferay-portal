@@ -152,8 +152,9 @@ public abstract class BaseGitHubIssueEventHandler
 		return true;
 	}
 
-	protected JobEntity createJobEntity(String testSuite)
-		throws InvalidJSONException {
+	protected PortalPullRequestJobEntity createPortalPullRequestJobEntity(
+			String testSuite)
+		throws InvalidJSONException, IOException {
 
 		GitBranchEntity upstreamGitBranchEntity = getUpstreamGitBranchEntity();
 
@@ -173,52 +174,54 @@ public abstract class BaseGitHubIssueEventHandler
 		JobEntity jobEntity = jobEntityRepository.create(
 			name, priority, null, JobEntity.State.OPENED, type);
 
-		if (jobEntity instanceof PortalPullRequestJobEntity) {
-			PortalPullRequestJobEntity portalPullRequestJobEntity =
-				(PortalPullRequestJobEntity)jobEntity;
-
-			portalPullRequestJobEntity.setTestSuiteName(testSuite);
-
-			GitHubPullRequest gitHubPullRequest = getGitHubPullRequest();
-
-			if (gitHubPullRequest != null) {
-				portalPullRequestJobEntity.setPortalPullRequestURL(
-					gitHubPullRequest.getHTMLURL());
-
-				GitHubUser originGitHubUser =
-					gitHubPullRequest.getOriginGitHubUser();
-
-				portalPullRequestJobEntity.setOriginName(
-					originGitHubUser.getName());
-
-				portalPullRequestJobEntity.setSenderBranchName(
-					gitHubPullRequest.getHeadBranchName());
-				portalPullRequestJobEntity.setSenderBranchSHA(
-					gitHubPullRequest.getHeadBranchSHA());
-
-				GitHubUser senderGitHubUser =
-					gitHubPullRequest.getSenderGitHubUser();
-
-				portalPullRequestJobEntity.setSenderUserName(
-					senderGitHubUser.getName());
-
-				portalPullRequestJobEntity.setUpstreamBranchName(
-					gitHubPullRequest.getBaseBranchName());
-				portalPullRequestJobEntity.setUpstreamBranchSHA(
-					gitHubPullRequest.getBaseBranchSHA());
-			}
-
-			if (upstreamGitBranchEntity != null) {
-				portalPullRequestJobEntity.setUpstreamBranchName(
-					upstreamGitBranchEntity.getBranchName());
-				portalPullRequestJobEntity.setUpstreamBranchSHA(
-					upstreamGitBranchEntity.getBranchSHA());
-			}
-
-			jobEntityRepository.update(portalPullRequestJobEntity);
+		if (!(jobEntity instanceof PortalPullRequestJobEntity)) {
+			return null;
 		}
 
-		return jobEntity;
+		PortalPullRequestJobEntity portalPullRequestJobEntity =
+			(PortalPullRequestJobEntity)jobEntity;
+
+		portalPullRequestJobEntity.setTestSuiteName(testSuite);
+
+		GitHubPullRequest gitHubPullRequest = getGitHubPullRequest();
+
+		if (gitHubPullRequest != null) {
+			portalPullRequestJobEntity.setPortalPullRequestURL(
+				gitHubPullRequest.getHTMLURL());
+
+			GitHubUser originGitHubUser =
+				gitHubPullRequest.getOriginGitHubUser();
+
+			portalPullRequestJobEntity.setOriginName(
+				originGitHubUser.getName());
+
+			portalPullRequestJobEntity.setSenderBranchName(
+				gitHubPullRequest.getHeadBranchName());
+			portalPullRequestJobEntity.setSenderBranchSHA(
+				gitHubPullRequest.getHeadBranchSHA());
+
+			GitHubUser senderGitHubUser =
+				gitHubPullRequest.getSenderGitHubUser();
+
+			portalPullRequestJobEntity.setSenderUserName(
+				senderGitHubUser.getName());
+
+			portalPullRequestJobEntity.setUpstreamBranchName(
+				gitHubPullRequest.getBaseBranchName());
+			portalPullRequestJobEntity.setUpstreamBranchSHA(
+				gitHubPullRequest.getBaseBranchSHA());
+		}
+
+		if (upstreamGitBranchEntity != null) {
+			portalPullRequestJobEntity.setUpstreamBranchName(
+				upstreamGitBranchEntity.getBranchName());
+			portalPullRequestJobEntity.setUpstreamBranchSHA(
+				upstreamGitBranchEntity.getBranchSHA());
+		}
+
+		jobEntityRepository.update(portalPullRequestJobEntity);
+
+		return portalPullRequestJobEntity;
 	}
 
 	protected Set<String> getAvailableTestSuites()

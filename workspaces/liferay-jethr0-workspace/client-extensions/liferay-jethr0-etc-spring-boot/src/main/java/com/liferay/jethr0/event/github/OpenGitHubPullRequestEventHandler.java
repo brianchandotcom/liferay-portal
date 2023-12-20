@@ -145,9 +145,9 @@ public class OpenGitHubPullRequestEventHandler
 				"ci:test:relevant must pass in order for auto-merge to ",
 				"initiate."));
 
-		invokeJobEntity(createJobEntity("relevant"));
+		invokeJobEntity(createPortalPullRequestJobEntity("relevant"));
 
-		invokeJobEntity(createJobEntity("sf"));
+		invokeJobEntity(createPortalPullRequestJobEntity("sf"));
 
 		return true;
 	}
@@ -197,7 +197,7 @@ public class OpenGitHubPullRequestEventHandler
 		Set<JobEntity> jobEntities = new HashSet<>();
 
 		for (String testSuite : _getTestSuites()) {
-			jobEntities.add(createJobEntity(testSuite));
+			jobEntities.add(createPortalPullRequestJobEntity(testSuite));
 		}
 
 		return jobEntities;

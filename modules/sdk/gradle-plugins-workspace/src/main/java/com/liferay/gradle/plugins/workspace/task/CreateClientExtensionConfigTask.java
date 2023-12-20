@@ -46,6 +46,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -425,6 +426,17 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 	private List<String> _getMatchingPaths(Path basePath, String glob) {
 		FileSystem fileSystem = basePath.getFileSystem();
 
+		AtomicReference<String> queryStringAtomicReference =
+			new AtomicReference<>("");
+
+		int index = glob.indexOf("?");
+
+		if (index != -1) {
+			queryStringAtomicReference.set(glob.substring(index));
+
+			glob = glob.substring(0, index);
+		}
+
 		PathMatcher pathMatcher = fileSystem.getPathMatcher("glob:" + glob);
 
 		try (Stream<Path> files = Files.walk(basePath)) {
@@ -433,7 +445,7 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 			).filter(
 				pathMatcher::matches
 			).map(
-				String::valueOf
+				path -> path + queryStringAtomicReference.get()
 			).collect(
 				Collectors.toList()
 			);

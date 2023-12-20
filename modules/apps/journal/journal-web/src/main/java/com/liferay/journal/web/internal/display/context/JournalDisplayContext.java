@@ -1029,8 +1029,9 @@ public class JournalDisplayContext {
 		).put(
 			"searchLocationOptions",
 			() -> {
-				if (getFolderId() ==
-						JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+				if ((getFolderId() ==
+						JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) ||
+					!isSearch()) {
 
 					return null;
 				}

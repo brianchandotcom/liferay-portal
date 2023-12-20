@@ -446,7 +446,7 @@ public class UIItemsBuilder {
 					HtmlUtil.unescape(_fileShortcut.getToTitle()), null,
 					String.valueOf(_fileShortcut.getFileShortcutId()),
 					LiferayWindowState.POP_UP.toString(), null,
-					_httpServletRequest);
+					_httpServletRequest, false);
 			}
 			else {
 				url = PermissionsURLTag.doTag(
@@ -454,7 +454,7 @@ public class UIItemsBuilder {
 					HtmlUtil.unescape(_fileEntry.getTitle()), null,
 					String.valueOf(_fileEntry.getFileEntryId()),
 					LiferayWindowState.POP_UP.toString(), null,
-					_httpServletRequest);
+					_httpServletRequest, false);
 			}
 		}
 		catch (Exception exception) {

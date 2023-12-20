@@ -225,7 +225,7 @@ public class DDMFormAdminActionDropdownItemsProvider {
 						null,
 						String.valueOf(_ddmFormInstance.getFormInstanceId()),
 						LiferayWindowState.POP_UP.toString(), null,
-						_httpServletRequest)
+						_httpServletRequest, false)
 				).put(
 					"useDialog", Boolean.TRUE.toString()
 				).build());

@@ -277,8 +277,8 @@ public class BlogsEntryActionDropdownItemsProvider {
 				StringPool.BLANK, BlogsEntry.class.getName(),
 				BlogsEntryUtil.getDisplayTitle(_resourceBundle, blogsEntry),
 				null, String.valueOf(blogsEntry.getEntryId()),
-				LiferayWindowState.POP_UP.toString(), null,
-				_httpServletRequest);
+				LiferayWindowState.POP_UP.toString(), null, _httpServletRequest,
+				false);
 		}
 		catch (Exception exception) {
 			return ReflectionUtil.throwException(exception);

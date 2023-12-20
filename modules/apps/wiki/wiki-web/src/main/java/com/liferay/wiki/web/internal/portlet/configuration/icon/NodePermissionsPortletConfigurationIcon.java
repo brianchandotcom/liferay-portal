@@ -61,7 +61,7 @@ public class NodePermissionsPortletConfigurationIcon
 				StringPool.BLANK, WikiNode.class.getName(), node.getName(),
 				null, String.valueOf(node.getNodeId()),
 				LiferayWindowState.POP_UP.toString(), null,
-				themeDisplay.getRequest());
+				themeDisplay.getRequest(), false);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

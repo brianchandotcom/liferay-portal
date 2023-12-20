@@ -60,7 +60,8 @@ public class JournalPermissionAssetEntryAction
 				StringPool.BLANK, JournalArticle.class.getName(),
 				article.getTitle(httpServletRequest.getLocale()), null,
 				String.valueOf(article.getResourcePrimKey()),
-				LiferayWindowState.POP_UP.toString(), null, httpServletRequest);
+				LiferayWindowState.POP_UP.toString(), null, httpServletRequest,
+				false);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

@@ -172,7 +172,8 @@ public class JournalDDMTemplateActionDropdownItemsProvider {
 				_ddmTemplate.getResourceClassNameId()),
 			_ddmTemplate.getName(_themeDisplay.getLocale()), null,
 			String.valueOf(_ddmTemplate.getTemplateId()),
-			LiferayWindowState.POP_UP.toString(), null, _httpServletRequest);
+			LiferayWindowState.POP_UP.toString(), null, _httpServletRequest,
+			false);
 
 		return dropdownItem -> {
 			dropdownItem.putData("action", "permissionsDDMTemplate");

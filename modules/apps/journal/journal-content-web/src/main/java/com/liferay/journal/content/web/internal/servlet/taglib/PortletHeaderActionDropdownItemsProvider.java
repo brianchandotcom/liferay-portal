@@ -72,7 +72,7 @@ public class PortletHeaderActionDropdownItemsProvider {
 							article.getTitle(_themeDisplay.getLocale())),
 						null, String.valueOf(article.getResourcePrimKey()),
 						LiferayWindowState.POP_UP.toString(), null,
-						_httpServletRequest));
+						_httpServletRequest, false));
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "permissions"));
 			}

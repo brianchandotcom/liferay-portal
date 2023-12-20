@@ -242,7 +242,7 @@ public class LayoutActionsDisplayContext {
 			HtmlUtil.escape(layout.getName(_themeDisplay.getLocale())), null,
 			String.valueOf(layout.getPlid()),
 			LiferayWindowState.POP_UP.toString(), null,
-			_themeDisplay.getRequest());
+			_themeDisplay.getRequest(), false);
 	}
 
 	private String _getPreviewLayoutURL(Layout layout) {

@@ -85,7 +85,7 @@ public class AssetVocabularyActionDropdownItemsProvider {
 									String.valueOf(
 										vocabulary.getVocabularyId()),
 									LiferayWindowState.POP_UP.toString(), null,
-									_httpServletRequest));
+									_httpServletRequest, false));
 							dropdownItem.setIcon("password-policies");
 							dropdownItem.setLabel(
 								LanguageUtil.get(

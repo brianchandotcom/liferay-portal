@@ -62,7 +62,7 @@ public class DepotEntryURLUtil {
 			StringPool.BLANK, DepotEntry.class.getName(), group.getName(), null,
 			String.valueOf(depotEntry.getDepotEntryId()),
 			LiferayWindowState.POP_UP.toString(), null,
-			liferayPortletRequest.getHttpServletRequest());
+			liferayPortletRequest.getHttpServletRequest(), false);
 	}
 
 	public static ActionURL getDisconnectSiteActionURL(

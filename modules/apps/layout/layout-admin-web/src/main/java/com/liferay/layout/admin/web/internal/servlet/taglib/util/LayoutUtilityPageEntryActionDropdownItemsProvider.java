@@ -412,7 +412,8 @@ public class LayoutUtilityPageEntryActionDropdownItemsProvider {
 			_layoutUtilityPageEntry.getName(), null,
 			String.valueOf(
 				_layoutUtilityPageEntry.getLayoutUtilityPageEntryId()),
-			LiferayWindowState.POP_UP.toString(), null, _httpServletRequest);
+			LiferayWindowState.POP_UP.toString(), null, _httpServletRequest,
+			false);
 
 		return dropdownItem -> {
 			dropdownItem.putData("action", "permissionsLayoutUtilityPageEntry");

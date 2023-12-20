@@ -61,7 +61,7 @@ public class FileEntryPermissionPortletConfigurationIcon
 				HtmlUtil.unescape(fileEntry.getTitle()), null,
 				String.valueOf(fileEntry.getFileEntryId()),
 				LiferayWindowState.POP_UP.toString(), null,
-				themeDisplay.getRequest());
+				themeDisplay.getRequest(), false);
 		}
 		catch (Exception exception) {
 			return ReflectionUtil.throwException(exception);

@@ -223,7 +223,8 @@ public class LayoutPageTemplateCollectionActionDropdownItem {
 			String.valueOf(
 				layoutPageTemplateCollection.
 					getLayoutPageTemplateCollectionId()),
-			LiferayWindowState.POP_UP.toString(), null, _httpServletRequest);
+			LiferayWindowState.POP_UP.toString(), null, _httpServletRequest,
+			false);
 	}
 
 	private String _getRenameDialogTitle(

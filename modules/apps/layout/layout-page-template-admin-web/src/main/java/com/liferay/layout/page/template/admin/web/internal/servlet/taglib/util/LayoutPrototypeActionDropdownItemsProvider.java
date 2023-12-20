@@ -257,7 +257,8 @@ public class LayoutPrototypeActionDropdownItemsProvider {
 			_layoutPrototype.getName(_themeDisplay.getLocale()), null,
 			String.valueOf(
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryId()),
-			LiferayWindowState.POP_UP.toString(), null, _httpServletRequest);
+			LiferayWindowState.POP_UP.toString(), null, _httpServletRequest,
+			false);
 
 		return dropdownItem -> {
 			dropdownItem.putData("action", "permissionsLayoutPrototype");

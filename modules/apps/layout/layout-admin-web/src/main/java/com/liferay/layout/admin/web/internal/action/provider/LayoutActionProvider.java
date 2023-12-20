@@ -546,7 +546,7 @@ public class LayoutActionProvider {
 			HtmlUtil.escape(layout.getName(_themeDisplay.getLocale())), null,
 			String.valueOf(layout.getPlid()),
 			LiferayWindowState.POP_UP.toString(), null,
-			_themeDisplay.getRequest());
+			_themeDisplay.getRequest(), false);
 	}
 
 	private JSONObject _getPreviewDraftActionJSONObject(Layout layout)

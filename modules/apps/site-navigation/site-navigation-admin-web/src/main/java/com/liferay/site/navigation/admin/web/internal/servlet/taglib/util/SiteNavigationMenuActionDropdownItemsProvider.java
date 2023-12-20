@@ -170,7 +170,8 @@ public class SiteNavigationMenuActionDropdownItemsProvider {
 			StringPool.BLANK, SiteNavigationMenu.class.getName(),
 			HtmlUtil.escape(_siteNavigationMenu.getName()), null,
 			String.valueOf(_siteNavigationMenu.getSiteNavigationMenuId()),
-			LiferayWindowState.POP_UP.toString(), null, _httpServletRequest);
+			LiferayWindowState.POP_UP.toString(), null, _httpServletRequest,
+			false);
 
 		return dropdownItem -> {
 			dropdownItem.putData("action", "permissionsSiteNavigationMenu");

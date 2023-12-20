@@ -89,7 +89,7 @@ public class JournalFeedActionDropdownItemsProvider {
 									_feed.getName(), null,
 									String.valueOf(_feed.getId()),
 									LiferayWindowState.POP_UP.toString(), null,
-									_httpServletRequest));
+									_httpServletRequest, false));
 							dropdownItem.setIcon("password-policies");
 							dropdownItem.setLabel(
 								LanguageUtil.get(

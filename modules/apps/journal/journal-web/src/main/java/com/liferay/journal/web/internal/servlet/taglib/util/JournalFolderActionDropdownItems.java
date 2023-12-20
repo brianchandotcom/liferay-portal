@@ -316,7 +316,8 @@ public class JournalFolderActionDropdownItems {
 		String permissionsURL = PermissionsURLTag.doTag(
 			StringPool.BLANK, JournalFolder.class.getName(), _folder.getName(),
 			null, String.valueOf(_folder.getPrimaryKey()),
-			LiferayWindowState.POP_UP.toString(), null, _httpServletRequest);
+			LiferayWindowState.POP_UP.toString(), null, _httpServletRequest,
+			false);
 
 		return dropdownItem -> {
 			dropdownItem.putData("action", "permissions");
@@ -335,7 +336,8 @@ public class JournalFolderActionDropdownItems {
 			StringPool.BLANK, "com.liferay.journal",
 			_themeDisplay.getScopeGroupName(), null,
 			String.valueOf(_themeDisplay.getScopeGroupId()),
-			LiferayWindowState.POP_UP.toString(), null, _httpServletRequest);
+			LiferayWindowState.POP_UP.toString(), null, _httpServletRequest,
+			false);
 
 		return dropdownItem -> {
 			dropdownItem.putData("action", "permissions");

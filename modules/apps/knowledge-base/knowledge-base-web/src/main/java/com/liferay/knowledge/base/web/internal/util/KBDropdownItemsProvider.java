@@ -875,7 +875,7 @@ public class KBDropdownItemsProvider {
 					kbArticle.getGroupId(),
 					String.valueOf(kbArticle.getResourcePrimKey()),
 					LiferayWindowState.POP_UP.toString(), null,
-					_liferayPortletRequest.getHttpServletRequest()));
+					_liferayPortletRequest.getHttpServletRequest(), false));
 			dropdownItem.setIcon("password-policies");
 			dropdownItem.setLabel(
 				LanguageUtil.get(
@@ -911,7 +911,7 @@ public class KBDropdownItemsProvider {
 					String.valueOf(kbTemplate.getGroupId()),
 					String.valueOf(kbTemplate.getKbTemplateId()),
 					LiferayWindowState.POP_UP.toString(), null,
-					_liferayPortletRequest.getHttpServletRequest()));
+					_liferayPortletRequest.getHttpServletRequest(), false));
 			dropdownItem.setIcon("password-policies");
 			dropdownItem.setLabel(
 				LanguageUtil.get(
@@ -927,7 +927,7 @@ public class KBDropdownItemsProvider {
 				_themeDisplay.getScopeGroupName(), null,
 				String.valueOf(_themeDisplay.getScopeGroupId()),
 				LiferayWindowState.POP_UP.toString(), null,
-				_liferayPortletRequest.getHttpServletRequest());
+				_liferayPortletRequest.getHttpServletRequest(), false);
 		}
 
 		return PermissionsURLTag.doTag(
@@ -935,7 +935,7 @@ public class KBDropdownItemsProvider {
 			String.valueOf(_themeDisplay.getScopeGroupId()),
 			String.valueOf(kbFolder.getKbFolderId()),
 			LiferayWindowState.POP_UP.toString(), null,
-			_liferayPortletRequest.getHttpServletRequest());
+			_liferayPortletRequest.getHttpServletRequest(), false);
 	}
 
 	private UnsafeConsumer<DropdownItem, Exception>

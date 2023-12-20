@@ -786,7 +786,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	public ${entity.name} updateImpl(${apiPackagePath}.model.${entity.name} ${entity.variableName}) {
 		boolean isNew = ${entity.variableName}.isNew();
 
-		<#if entity.isHierarchicalTree() || (entity.collectionEntityFinders?size != 0) || (entity.uniqueEntityFinders?size &gt; 0) || entity.hasEntityColumn("createDate", "Date") || entity.hasEntityColumn("modifiedDate", "Date") || entity.hasEntityColumn("externalReferenceCode")>
+		<#if entity.isHierarchicalTree() || (entity.collectionEntityFinders?size != 0) || (entity.uniqueEntityFinders?size &gt; 0) || entity.hasEntityColumn("createDate", "Date") || entity.hasEntityColumn("externalReferenceCode") || entity.hasEntityColumn("modifiedDate", "Date")>
 			if (!(${entity.variableName} instanceof ${entity.name}ModelImpl)) {
 				InvocationHandler invocationHandler = null;
 

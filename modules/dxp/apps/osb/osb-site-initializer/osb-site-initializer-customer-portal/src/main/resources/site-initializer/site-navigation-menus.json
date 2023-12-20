@@ -186,6 +186,15 @@
 								"type": "url",
 								"url": "/my-teams-tickets",
 								"useNewTab": false
+							},
+							{
+								"externalReferenceCode": "escalateATicketBetaMenuItem",
+								"name_i18n": {
+									"en_US": "Escalate a Ticket (BETA)"
+								},
+								"type": "url",
+								"url": "/support-ticket-escalation",
+								"useNewTab": false
 							}
 						],
 						"name_i18n": {

@@ -21,7 +21,7 @@
 		);
 	}
 
-	function sendAnalyticsEvent(anchor) {
+	function sendDocumentDownloadedAnalyticsEvent(anchor) {
 		var fileEntryId = getValueByAttribute(anchor, 'analyticsFileEntryId');
 		var title = getValueByAttribute(anchor, 'analyticsFileEntryTitle');
 		var version = getValueByAttribute(anchor, 'analyticsFileEntryVersion');
@@ -40,13 +40,13 @@
 	function handleDownloadClick(event) {
 		if (window.Analytics) {
 			if (event.target.nodeName.toLowerCase() === 'a') {
-				sendAnalyticsEvent(event.target);
+				sendDocumentDownloadedAnalyticsEvent(event.target);
 			}
 			else if (
 				event.target.parentNode &&
 				event.target.parentNode.nodeName.toLowerCase() === 'a'
 			) {
-				sendAnalyticsEvent(event.target.parentNode);
+				sendDocumentDownloadedAnalyticsEvent(event.target.parentNode);
 			}
 			else {
 				var target = event.target;
@@ -84,7 +84,7 @@
 							'[data-analytics-file-entry-id="' + value + '"]'
 						);
 
-						sendAnalyticsEvent(selectedFile);
+						sendDocumentDownloadedAnalyticsEvent(selectedFile);
 					});
 				}
 			}

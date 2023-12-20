@@ -23,10 +23,10 @@
 
 	.responsive-text {
 		display: -webkit-box;
-    	overflow: hidden;
-    	text-overflow: ellipsis;
-    	-webkit-box-orient: vertical;
-    	-webkit-line-clamp: 2;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 2;
 	}
 
 	.subtitle {

@@ -255,20 +255,23 @@ typeSettings=&#91;&quot;friendlyURLMapping=perico&quot;,&quot;instanceable=false
 				<elseif>
 					<matches pattern=".*\.tar\.gz$" string="${archive.basename}" />
 					<then>
-						<untar
-							compression="gzip"
-							dest="@{dest}"
-							src="@{src}"
-						/>
+						<execute>
+							<![CDATA[
+								mkdir -p @{dest}
+
+								tar -xvf @{src} -C @{dest}
+							]]>
+						</execute>
 					</then>
 				</elseif>
 				<elseif>
 					<matches pattern=".*\.zip$" string="${archive.basename}" />
 					<then>
-						<unzip
-							dest="@{dest}"
-							src="@{src}"
-						/>
+						<execute>
+							<![CDATA[
+								unzip @{src} -d @{dest}
+							]]>
+						</execute>
 					</then>
 				</elseif>
 				<else>
@@ -13623,19 +13626,11 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 					src="${java.io.tmpdir}/${bundle.file.name}"
 				/>
 
-				<move
-					todir="${app.server.parent.dir}"
-				>
-					<fileset
-						dir="${java.io.tmpdir}/bundle"
-						includes="liferay-*/**"
-					/>
-					<mapper
-						from="[^/]+/(.*)"
-						to="\1"
-						type="regexp"
-					/>
-				</move>
+				<execute>
+					<![CDATA[
+						mv ${java.io.tmpdir}/bundle/*/* ${app.server.parent.dir}
+					]]>
+				</execute>
 
 				<delete dir="${java.io.tmpdir}/bundle" />
 

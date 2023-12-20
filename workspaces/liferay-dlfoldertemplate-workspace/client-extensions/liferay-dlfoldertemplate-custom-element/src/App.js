@@ -7,7 +7,7 @@ import {ClayIconSpriteContext} from '@clayui/icon';
 import {ClayModalProvider} from '@clayui/modal';
 import React from 'react';
 
-import TemplateList from './components/template-list/template-list';
+import TemplateList from './components/template-list/TemplateList';
 
 function App() {
 	return (

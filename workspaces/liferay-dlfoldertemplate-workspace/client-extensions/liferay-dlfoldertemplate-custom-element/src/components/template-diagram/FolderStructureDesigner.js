@@ -8,9 +8,9 @@ import OrgChart from '@balkangraph/orgchart.js/orgchart';
 import {Modal, Spin} from 'antd';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
-import EditNode from './controls/edit-node/edit-node';
+import EditNode from './controls/edit-node/EditNode';
 
-import './template-diagram.css';
+import './FolderStructureDesigner.css';
 import {
 	addIcon,
 	diagramNodeBox,
@@ -24,7 +24,7 @@ import {
 	deleteFolderTemplateBatch,
 	getAvailableTemplatesNodesPage,
 	updateFolderTemplate,
-} from '../../services/template-diagram.service';
+} from '../../services/TemplateDiagramService';
 
 const FolderStructureDesigner = ({templateId}) => {
 	const myElementRef = useRef(null);

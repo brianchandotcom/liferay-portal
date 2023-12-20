@@ -300,7 +300,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 				_objectEntry1.getExternalReferenceCode()),
 			Http.Method.DELETE);
 
-		Assert.assertNotEquals(204, code);
+		Assert.assertEquals(204, code);
 	}
 
 	@Test

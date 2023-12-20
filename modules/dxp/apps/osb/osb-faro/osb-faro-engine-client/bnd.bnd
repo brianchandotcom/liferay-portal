@@ -42,6 +42,8 @@ Import-Package:\
 	\
 	!com.jcraft.jzlib.*,\
 	\
+	!com.mchange.*,\
+	\
 	!com.ning.compress.*,\
 	\
 	!com.oracle.svm.core.annotate.*,\
@@ -67,6 +69,8 @@ Import-Package:\
 	!groovy.*,\
 	\
 	!io.netty.*,\
+	\
+	!io.r2dbc.*,\
 	\
 	!io.reactivex.*,\
 	\
@@ -114,6 +118,8 @@ Import-Package:\
 	\
 	!okhttp3.*,\
 	\
+	!oracle.jdbc.*,\
+	\
 	!oracle.ucp.*,\
 	\
 	!org.HdrHistogram.*,\
@@ -150,15 +156,23 @@ Import-Package:\
 	\
 	!org.eclipse.jetty.*,\
 	\
+	!org.flywaydb.*,\
+	\
+	!org.h2.*,\
+	\
 	!org.hibernate.*,\
 	\
 	!org.jboss.*,\
+	\
+	!org.jooq.*,\
 	\
 	!org.jruby.*,\
 	\
 	!org.json.simple.parser.*,\
 	\
 	!org.noggit.*,\
+	\
+	!org.postgresql.*,\
 	\
 	!org.reactivestreams.*,\
 	\
@@ -169,6 +183,10 @@ Import-Package:\
 	!org.springframework.messaging.rsocket.*,\
 	!org.springframework.oxm.*,\
 	!org.springframework.plugin.*,\
+	!org.springframework.r2dbc.connection.*,\
+	!org.springframework.security.authentication.*,\
+	!org.springframework.security.core.*,\
+	!org.springframework.security.web.access.*,\
 	!org.springframework.security.web.server.util.matcher.*,\
 	!org.springframework.security.web.util.matcher.*,\
 	!org.springframework.test.web.reactive.*,\

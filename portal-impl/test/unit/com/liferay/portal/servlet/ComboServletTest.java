@@ -278,16 +278,21 @@ public class ComboServletTest {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
+		int comboMaxFiles = 10;
+
+		ReflectionTestUtil.setFieldValue(
+			PropsValues.class, "COMBO_MAX_FILES", comboMaxFiles);
+
 		StringBuilder sb = new StringBuilder();
 
-		for (int i = 0; i < 101; i++) {
+		for (int i = 0; i < comboMaxFiles; i++) {
+			if (i > 0) {
+				sb.append(StringPool.AMPERSAND);
+			}
 			sb.append("/js/javascript");
 			sb.append(i);
 			sb.append(".js");
 
-			if (i != 100) {
-				sb.append(StringPool.AMPERSAND);
-			}
 		}
 
 		mockHttpServletRequest.setQueryString(sb.toString());

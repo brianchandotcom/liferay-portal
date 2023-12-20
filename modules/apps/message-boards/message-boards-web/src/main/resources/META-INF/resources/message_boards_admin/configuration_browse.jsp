@@ -385,7 +385,7 @@ portletDisplay.setURLBackTitle("messages-board");
 					</c:choose>
 				</clay:sheet>
 
-				<aui:button-row>
+				<clay:content-row>
 					<clay:button
 						additionalProps='<%=
 							HashMapBuilder.<String, Object>put(
@@ -403,7 +403,7 @@ portletDisplay.setURLBackTitle("messages-board");
 						label="cancel"
 						type="button"
 					/>
-				</aui:button-row>
+				</clay:content-row>
 			</aui:form>
 		</clay:col>
 	</clay:row>
@@ -418,10 +418,10 @@ portletDisplay.setURLBackTitle("messages-board");
 	}
 
 	window.<portlet:namespace />prioritiesChanged = false;
-	window.<portlet:namespace />prioritiesLastLanguageId = '<%= currentLanguageId %>';
+	window.<portlet:namespace />prioritiesLastLanguageId =
+		'<%= currentLanguageId %>';
 
 	function <portlet:namespace />onPrioritiesChanged() {
 		<portlet:namespace />prioritiesChanged = true;
 	}
-
 </script>

@@ -6,10 +6,8 @@ import {matchPath} from 'react-router-dom';
 function createURL(href) {
 	try {
 		return new URL(href);
-	}
-
-	catch {
-		return new URL(href, document.baseURI)
+	} catch {
+		return new URL(href, document.baseURI);
 	}
 }
 
@@ -483,7 +481,7 @@ export function setUriFilterValues(filterBy, href = window.location.href) {
 export function setUriQueryValue(href, name, value) {
 	const uri = createURL(href);
 
-	addParam(uri, name, value)
+	addParam(uri, name, value);
 
 	return `${uri.pathname}${uri.search}`;
 }
@@ -514,7 +512,7 @@ export function removeUriQueryParam(href, ...names) {
 }
 
 export function removePageParam(newPath, href = window.location.href) {
-	const uri = createURL(href)
+	const uri = createURL(href);
 
 	if (newPath) {
 		uri.pathname = newPath;
@@ -525,10 +523,7 @@ export function removePageParam(newPath, href = window.location.href) {
 	return `${uri.pathname}${uri.search}`;
 }
 
-export function resetPaginationParams(
-	newPath,
-	href = window.location.href
-) {
+export function resetPaginationParams(newPath, href = window.location.href) {
 	const uri = createURL(href);
 
 	if (newPath) {

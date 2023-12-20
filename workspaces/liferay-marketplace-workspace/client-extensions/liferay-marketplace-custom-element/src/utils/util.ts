@@ -9,6 +9,7 @@ import {
 	createProductSpecification,
 	getAccountGroup,
 	getCatalogs,
+	getSiteStructuredContentByKey,
 	getSpecifications,
 	getUserAccountsById,
 	updateProductSpecification,
@@ -60,6 +61,13 @@ export function getDxpProductOptionBody(newOptionId: number) {
 		required: true,
 		skuContributor: true,
 	};
+}
+
+export async function getEulaDescription() {
+	const keyEula = 'EULA';
+	const response = await getSiteStructuredContentByKey(keyEula);
+
+	return response?.contentFields[0]?.contentFieldValue?.data;
 }
 
 export function getLicenceTypesObject() {

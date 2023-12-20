@@ -5,7 +5,6 @@
 
 import ClayButton from '@clayui/button';
 import {useModal} from '@clayui/modal';
-import {useState} from 'react';
 
 import {Checkbox} from '../../../components/Checkbox/Checkbox';
 import {ContentModal} from '../../../components/ContentModal/ContentModal';
@@ -14,9 +13,12 @@ import {useMarketplaceContext} from '../../../context/MarketplaceContext';
 import useCart from '../../../hooks/useCart';
 import i18n from '../../../i18n';
 import {Liferay} from '../../../liferay/liferay';
-import {getSiteStructuredContentByKey} from '../../../utils/api';
+import {useAppContext} from '../../../manage-app-state/AppManageState';
 import {PaymentMethod} from '../enums/paymentMethod';
 import {StepType} from '../enums/stepType';
+
+import './Footer.scss';
+import {TYPES} from '../../../manage-app-state/actionTypes';
 
 interface ProductFooterProps {
 	addresses: BillingAddress[];
@@ -61,6 +63,8 @@ const ProductFooter = ({
 	stepsNavigation,
 }: ProductFooterProps) => {
 	const {properties} = useMarketplaceContext();
+
+	const [{eula, eulaCheckbox}, dispatch] = useAppContext();
 
 	const getButtonText = () => {
 		if (isFreeApp) {
@@ -111,20 +115,7 @@ const ProductFooter = ({
 		}
 	};
 
-	const [eulaCheckbox, setEulaCheckbox] = useState<boolean>(false);
-
-	const [eulaDescription, setEulaDescription] = useState<string>('');
-
 	const eulaModal = useModal();
-
-	const getEulaDescription = async () => {
-		const keyEula = 'EULA';
-		const response = await getSiteStructuredContentByKey(keyEula);
-
-		setEulaDescription(response?.contentFields[0]?.contentFieldValue?.data);
-
-		return response?.contentFields[0]?.contentFieldValue?.data;
-	};
 
 	return (
 		<>
@@ -132,41 +123,34 @@ const ProductFooter = ({
 				{!isFreeApp &&
 					step === StepType.PAYMENT &&
 					selectedPaymentMethod === PaymentMethod.PAY && (
-						<div className="align-items-start d-flex mt-4">
+						<div className="align-items-start d-flex eula-container mt-4">
 							<Checkbox
 								checked={eulaCheckbox}
 								onChange={() =>
-									eulaCheckbox
-										? setEulaCheckbox(false)
-										: setEulaCheckbox(true)
+									dispatch({
+										payload: {value: !eulaCheckbox},
+										type: TYPES.UPDATE_EULA_CHECKBOX,
+									})
 								}
 							/>
-							<div>
-								<span>I have read and agree to the </span>
-								<a
-									onClick={async () => {
-										eulaModal.onOpenChange(true);
-										await getEulaDescription();
-									}}
-								>
-									End User License Agreement
-								</a>
-								<span> and the</span>
-								<a
-									onClick={() => {
-										window.open(properties.eulaBaseURL);
-									}}
-								>
-									{' '}
-									Terms
-								</a>
-								<span> of Service.</span>
-							</div>
+							I have read and agree to the
+							<a onClick={() => eulaModal.onOpenChange(true)}>
+								&nbsp;End User License Agreement&nbsp;
+							</a>
+							and the
+							<a
+								onClick={() =>
+									window.open(properties.eulaBaseURL)
+								}
+							>
+								&nbsp;Terms&nbsp;
+							</a>
+							of Service.
 						</div>
 					)}
 				{eulaModal.open && (
 					<ContentModal
-						description={eulaDescription}
+						description={eula}
 						header={i18n.translate('end-user-license-agreement')}
 						{...eulaModal}
 					/>
@@ -202,6 +186,9 @@ const ProductFooter = ({
 								className="ml-5"
 								disabled={
 									disabled ||
+									(step === StepType.ACCOUNT &&
+										!eulaCheckbox &&
+										isFreeApp) ||
 									(step === StepType.ACCOUNT &&
 										!selectedAccount) ||
 									(step === StepType.LICENSES &&

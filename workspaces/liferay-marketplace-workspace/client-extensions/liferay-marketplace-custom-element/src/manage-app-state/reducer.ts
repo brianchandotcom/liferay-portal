@@ -40,21 +40,25 @@ export function appReducer(state: InitialStateProps, action: TAction) {
 				appWorkflowStatusInfo,
 			};
 		}
+
 		case TYPES.UPDATE_APP_BUILD: {
 			const appBuild = action.payload.value;
 
 			return {...state, appBuild};
 		}
+
 		case TYPES.UPDATE_APP_CATEGORIES: {
 			const appCategories = action.payload.value;
 
 			return {...state, appCategories};
 		}
+
 		case TYPES.UPDATE_APP_DESCRIPTION: {
 			const appDescription = action.payload.value;
 
 			return {...state, appDescription};
 		}
+
 		case TYPES.UPDATE_APP_DOCUMENTATION_URL: {
 			const {id, value} = action.payload;
 
@@ -66,11 +70,13 @@ export function appReducer(state: InitialStateProps, action: TAction) {
 				},
 			};
 		}
+
 		case TYPES.UPDATE_APP_INSTALLATION_AND_UNINSTALLATION_GUIDE_URL: {
 			const {id, value} = action.payload;
 
 			return {...state, appInstallationGuideURL: {id, value}};
 		}
+
 		case TYPES.UPDATE_APP_LICENSE: {
 			const {id, value} = action.payload;
 
@@ -82,6 +88,7 @@ export function appReducer(state: InitialStateProps, action: TAction) {
 				},
 			};
 		}
+
 		case TYPES.ADD_APP_LICENSE_PRICE: {
 			const licenseTier: LicenseTier = action.payload.licenseTier;
 			const sortedOldLicensePrice = {
@@ -114,6 +121,7 @@ export function appReducer(state: InitialStateProps, action: TAction) {
 				},
 			};
 		}
+
 		case TYPES.DELETE_APP_LICENSE_PRICE: {
 			const licenseTier: LicenseTier = action.payload.licenseTier;
 			const sortedOldLicensePrice = {
@@ -135,6 +143,7 @@ export function appReducer(state: InitialStateProps, action: TAction) {
 				},
 			};
 		}
+
 		case TYPES.UPDATE_APP_LICENSE_PRICES: {
 			const licenseTier: LicenseTier = action.payload.licenseTier;
 			const oldLicensePrice = state.appLicensePrice;
@@ -150,11 +159,13 @@ export function appReducer(state: InitialStateProps, action: TAction) {
 				},
 			};
 		}
+
 		case TYPES.UPDATE_APP_LOGO: {
 			const appLogo = action.payload.file;
 
 			return {...state, appLogo};
 		}
+
 		case TYPES.UPDATE_CATALOG_ID: {
 			const catalogId = action.payload.value;
 
@@ -198,11 +209,13 @@ export function appReducer(state: InitialStateProps, action: TAction) {
 				},
 			};
 		}
+
 		case TYPES.UPDATE_APP_NAME: {
 			const appName = action.payload.value;
 
 			return {...state, appName};
 		}
+
 		case TYPES.UPDATE_APP_NOTES: {
 			const {value} = action.payload;
 
@@ -211,6 +224,7 @@ export function appReducer(state: InitialStateProps, action: TAction) {
 				appNotes: value,
 			};
 		}
+
 		case TYPES.UPDATE_APP_PRICE_MODEL: {
 			const {id, value} = action.payload;
 
@@ -222,6 +236,19 @@ export function appReducer(state: InitialStateProps, action: TAction) {
 				},
 			};
 		}
+
+		case TYPES.UPDATE_EULA: {
+			const eula = action.payload.value;
+
+			return {...state, eula};
+		}
+
+		case TYPES.UPDATE_EULA_CHECKBOX: {
+			const eulaCheckbox = action.payload.value;
+
+			return {...state, eulaCheckbox};
+		}
+
 		case TYPES.UPDATE_APP_PUBLISHER_WEBSITE_URL: {
 			const {id, value} = action.payload;
 
@@ -233,11 +260,13 @@ export function appReducer(state: InitialStateProps, action: TAction) {
 				},
 			};
 		}
+
 		case TYPES.UPLOAD_APP_STOREFRONT_IMAGES: {
 			const appStorefrontImages = action.payload.files;
 
 			return {...state, appStorefrontImages};
 		}
+
 		case TYPES.UPDATE_APP_SUPPORT_URL: {
 			const {id, value} = action.payload;
 
@@ -249,16 +278,19 @@ export function appReducer(state: InitialStateProps, action: TAction) {
 				},
 			};
 		}
+
 		case TYPES.UPDATE_APP_TAGS: {
 			const appTags = action.payload.value;
 
 			return {...state, appTags};
 		}
+
 		case TYPES.UPDATE_APP_TRIAL_INFO: {
 			const dayTrial = action.payload.value;
 
 			return {...state, dayTrial};
 		}
+
 		case TYPES.UPDATE_APP_USAGE_TERMS_URL: {
 			const {id, value} = action.payload;
 
@@ -270,6 +302,7 @@ export function appReducer(state: InitialStateProps, action: TAction) {
 				},
 			};
 		}
+
 		case TYPES.UPDATE_APP_VERSION: {
 			const {value} = action.payload;
 

@@ -233,6 +233,7 @@ const GetAppFlow = () => {
 				backStep: StepType.ACCOUNT,
 				component: (
 					<AccountSelection
+						isFreeApp={isFreeApp}
 						onSelectAccount={(account: Account) => {
 							setValue('account', account);
 						}}
@@ -299,6 +300,7 @@ const GetAppFlow = () => {
 			cartUtil,
 			email,
 			hasTrial,
+			isFreeApp,
 			myUserAccount,
 			product,
 			purchaseOrderNumber,

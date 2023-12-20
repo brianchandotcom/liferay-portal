@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<checkstyle>
+		<suppress checks="PersistenceCallCheck" files="analytics-batch-export-import-impl/src/main/java/com/liferay/analytics/batch/exportimport/internal/dto/v1_0/converter/DXPEntityDTOConverterImpl\.java" />
+	</checkstyle>
+</suppressions>

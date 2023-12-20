@@ -149,8 +149,8 @@ public class ReportController extends BaseFaroController {
 
 			String description = "";
 
-			JSONObject errorAttributesJSONObject =
-				jsonObject.getJSONObject("errorAttributes");
+			JSONObject errorAttributesJSONObject = jsonObject.getJSONObject(
+				"errorAttributes");
 
 			if (errorAttributesJSONObject != null) {
 				description = errorAttributesJSONObject.getString(

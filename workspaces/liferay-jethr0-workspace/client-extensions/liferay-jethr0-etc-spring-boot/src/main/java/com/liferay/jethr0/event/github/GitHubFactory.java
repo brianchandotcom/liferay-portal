@@ -14,6 +14,7 @@ import com.liferay.jethr0.event.github.organization.GitHubOrganization;
 import com.liferay.jethr0.event.github.pullrequest.GitHubPullRequest;
 import com.liferay.jethr0.event.github.ref.GitHubRef;
 import com.liferay.jethr0.event.github.repository.GitHubRepository;
+import com.liferay.jethr0.event.github.status.GitHubStatus;
 import com.liferay.jethr0.event.github.user.GitHubUser;
 import com.liferay.jethr0.util.StringUtil;
 
@@ -74,6 +75,10 @@ public class GitHubFactory {
 
 	public GitHubRepository newGitHubRepository(JSONObject jsonObject) {
 		return new GitHubRepository(this, jsonObject);
+	}
+
+	public GitHubStatus newGitHubStatus(JSONObject jsonObject) {
+		return new GitHubStatus(this, jsonObject);
 	}
 
 	public GitHubUser newGitHubUser(JSONObject jsonObject) {

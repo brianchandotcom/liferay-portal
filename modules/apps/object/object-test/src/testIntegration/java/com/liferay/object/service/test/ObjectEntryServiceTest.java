@@ -728,7 +728,6 @@ public class ObjectEntryServiceTest {
 
 		objectConfigurationDictionary.put(
 			"maximumNumberOfGuestUserObjectEntriesPerObjectDefinition", 2);
-		objectConfigurationDictionary.put("timeScale", "days");
 
 		ConfigurationTestUtil.saveConfiguration(
 			ObjectConfiguration.class.getName(), objectConfigurationDictionary);

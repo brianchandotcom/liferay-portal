@@ -138,12 +138,21 @@ public class ItemClassIndexUtil {
 	private static Method _getGetterMethod(
 		Class<?> clazz, Field field, String name) {
 
-		String methodName = "get" + StringUtil.upperCaseFirstLetter(name);
+		Class<?> fieldClass = field.getType();
+
+		String methodName = null;
+
+		if (fieldClass.isEnum()) {
+			methodName = "get" + fieldClass.getSimpleName();
+		}
+		else {
+			methodName = "get" + StringUtil.upperCaseFirstLetter(name);
+		}
 
 		for (Method method : clazz.getMethods()) {
 			if (StringUtil.equals(method.getName(), methodName) &&
 				(method.getParameterCount() == 0) &&
-				Objects.equals(field.getType(), method.getReturnType())) {
+				Objects.equals(fieldClass, method.getReturnType())) {
 
 				return method;
 			}

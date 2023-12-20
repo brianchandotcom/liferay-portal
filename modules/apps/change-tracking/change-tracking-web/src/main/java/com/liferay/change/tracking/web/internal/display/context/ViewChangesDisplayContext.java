@@ -486,6 +486,14 @@ public class ViewChangesDisplayContext {
 			).setMVCRenderCommandName(
 				"/change_tracking/view_discard"
 			).setRedirect(
+				PortletURLBuilder.createRenderURL(
+					_renderResponse
+				).setMVCRenderCommandName(
+					"/change_tracking/view_changes"
+				).setParameter(
+					"ctCollectionId", _ctCollection.getCtCollectionId()
+				).buildString()
+			).setBackURL(
 				_themeDisplay.getURLCurrent()
 			).setParameter(
 				"ctCollectionId", _ctCollection.getCtCollectionId()

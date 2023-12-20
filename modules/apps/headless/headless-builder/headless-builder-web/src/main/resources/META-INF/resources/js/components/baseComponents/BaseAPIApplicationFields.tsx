@@ -109,7 +109,7 @@ export default function BaseAPIApplicationFields({
 
 				<br />
 
-				<Text as="p" id="hostTextPreview" size={2} weight="lighter">
+				<Text as="p" id="hostTextPreview" size={2} weight="semi-bold">
 					{`${window.location.origin}${basePath}`}
 				</Text>
 
@@ -144,7 +144,7 @@ export default function BaseAPIApplicationFields({
 							{baseURLContent.errorMessage}
 						</ClayForm.FeedbackItem>
 					) : (
-						<Text size={3} weight="lighter">
+						<Text color="secondary" size={3}>
 							{Liferay.Language.get('the-url-can-be-modified')}
 						</Text>
 					)}

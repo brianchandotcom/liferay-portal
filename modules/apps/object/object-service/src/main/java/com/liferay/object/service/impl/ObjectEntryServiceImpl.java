@@ -611,13 +611,13 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 			ObjectDefinition objectDefinition)
 		throws PortalException {
 
+		List<Long> adminUserIdsNotNotified = new ArrayList<>();
+
 		Role role = _roleLocalService.getRole(
 			objectDefinition.getCompanyId(), RoleConstants.ADMINISTRATOR);
 
 		long[] adminUserIds = _userLocalService.getRoleUserIds(
 			role.getRoleId());
-
-		List<Long> adminUserIdNotDeliveredList = new ArrayList<>();
 
 		String portletId =
 			objectDefinition.isUnmodifiableSystemObject() ? StringPool.BLANK :
@@ -635,7 +635,7 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 						).getEpochSecond());
 
 			if (notificationsCount <= 0) {
-				adminUserIdNotDeliveredList.add(adminUserId);
+				adminUserIdsNotNotified.add(adminUserId);
 			}
 		}
 
@@ -643,7 +643,7 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 			TransactionInvokerUtil.invoke(
 				_transactionConfig,
 				() -> {
-					for (long adminUserId : adminUserIdNotDeliveredList) {
+					for (long adminUserId : adminUserIdsNotNotified) {
 						_userNotificationEventLocalService.
 							sendUserNotificationEvents(
 								adminUserId, portletId,

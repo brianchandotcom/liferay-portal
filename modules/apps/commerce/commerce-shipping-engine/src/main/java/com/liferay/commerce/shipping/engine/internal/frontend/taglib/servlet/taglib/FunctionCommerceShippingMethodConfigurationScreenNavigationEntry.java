@@ -3,20 +3,16 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.commerce.shipping.engine.internal.taglib;
+package com.liferay.commerce.shipping.engine.internal.frontend.taglib.servlet.taglib;
 
 import com.liferay.commerce.model.CommerceShippingEngine;
 import com.liferay.commerce.model.CommerceShippingMethod;
-import com.liferay.commerce.product.service.CommerceChannelService;
 import com.liferay.commerce.service.CommerceShippingMethodLocalService;
 import com.liferay.commerce.shipping.engine.internal.FunctionCommerceShippingEngine;
-import com.liferay.commerce.shipping.engine.internal.constants.FunctionCommerceShippingEngineScreenNavigationConstants;
 import com.liferay.commerce.shipping.engine.internal.constants.FunctionCommerceShippingEngineWebKeys;
 import com.liferay.commerce.util.CommerceShippingEngineRegistry;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
-import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
@@ -24,8 +20,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 
 import java.io.IOException;
-
-import java.util.Locale;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -42,28 +36,12 @@ import org.osgi.service.component.annotations.Reference;
 	service = ScreenNavigationEntry.class
 )
 public class FunctionCommerceShippingMethodConfigurationScreenNavigationEntry
+	extends FunctionCommerceShippingMethodConfigurationScreenNavigationCategory
 	implements ScreenNavigationEntry<CommerceShippingMethod> {
-
-	@Override
-	public String getCategoryKey() {
-		return FunctionCommerceShippingEngineScreenNavigationConstants.
-			CATEGORY_KEY_FUNCTION_COMMERCE_SHIPPING_METHOD_CONFIGURATION;
-	}
 
 	@Override
 	public String getEntryKey() {
 		return getCategoryKey();
-	}
-
-	@Override
-	public String getLabel(Locale locale) {
-		return language.get(locale, "configuration");
-	}
-
-	@Override
-	public String getScreenNavigationKey() {
-		return FunctionCommerceShippingEngineScreenNavigationConstants.
-			SCREEN_NAVIGATION_KEY_COMMERCE_SHIPPING_METHOD;
 	}
 
 	@Override
@@ -89,9 +67,7 @@ public class FunctionCommerceShippingMethodConfigurationScreenNavigationEntry
 
 		try {
 			long commerceShippingMethodId = ParamUtil.getLong(
-				httpServletRequest,
-				FunctionCommerceShippingEngineWebKeys.
-					COMMERCE_SHIPPING_METHOD_ID);
+				httpServletRequest, "commerceShippingMethodId");
 
 			CommerceShippingMethod commerceShippingMethod =
 				_commerceShippingMethodLocalService.getCommerceShippingMethod(
@@ -102,9 +78,7 @@ public class FunctionCommerceShippingMethodConfigurationScreenNavigationEntry
 
 			if (typeSettingsUnicodeProperties.isEmpty()) {
 				String commerceShippingMethodEngineKey = ParamUtil.getString(
-					httpServletRequest,
-					FunctionCommerceShippingEngineWebKeys.
-						COMMERCE_SHIPPING_METHOD_ENGINE_KEY);
+					httpServletRequest, "commerceShippingMethodEngineKey");
 
 				FunctionCommerceShippingEngine functionCommerceShippingEngine =
 					(FunctionCommerceShippingEngine)
@@ -140,14 +114,8 @@ public class FunctionCommerceShippingMethodConfigurationScreenNavigationEntry
 		}
 	}
 
-	@Reference
-	protected Language language;
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		FunctionCommerceShippingMethodConfigurationScreenNavigationEntry.class);
-
-	@Reference
-	private CommerceChannelService _commerceChannelService;
 
 	@Reference
 	private CommerceShippingEngineRegistry _commerceShippingEngineRegistry;
@@ -155,9 +123,6 @@ public class FunctionCommerceShippingMethodConfigurationScreenNavigationEntry
 	@Reference
 	private CommerceShippingMethodLocalService
 		_commerceShippingMethodLocalService;
-
-	@Reference
-	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private JSPRenderer _jspRenderer;

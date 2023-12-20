@@ -32,15 +32,9 @@
 		<frontend-data-set:classic-display
 			contextParams='<%=
 				HashMapBuilder.<String, String>put(
-					"commerceChannelId",
-					request.getAttribute(
-						"commerceChannelId"
-					).toString()
+					"commerceChannelId", ParamUtil.getString(request, "commerceChannelId")
 				).put(
-					"commerceShippingMethodEngineKey",
-					request.getAttribute(
-						"commerceShippingMethodEngineKey"
-					).toString()
+					"commerceShippingMethodEngineKey", ParamUtil.getString(request, "commerceShippingMethodEngineKey")
 				).build()
 			%>'
 			dataProviderKey="<%= FunctionCommerceShippingEngineFDSNames.FUNCTION_COMMERCE_SHIPPING_ENGINE_OPTIONS %>"

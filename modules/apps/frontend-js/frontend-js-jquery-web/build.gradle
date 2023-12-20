@@ -13,7 +13,7 @@ buildBootstrapJS {
 
 	eachFile new StripPathSegmentsAction(3)
 
-	from "node_modules"
+	from npmInstall.nodeModulesDir
 
 	include "bootstrap/dist/js/bootstrap.bundle.min.js"
 	include "bootstrap/dist/js/bootstrap.bundle.min.js.map"

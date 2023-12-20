@@ -56,7 +56,6 @@ import com.liferay.scim.rest.util.ScimClientUtil;
 
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -375,7 +374,7 @@ public class UserManagerImpl implements UserManager {
 
 					return ScimUtil.toUser(
 						_getGroups(serviceContext.getCompanyId(), userId),
-						_toScimUser(_userService.getUserById(userId)));
+						ScimUtil.toScimUser(_userService.getUserById(userId)));
 				}));
 	}
 
@@ -468,7 +467,7 @@ public class UserManagerImpl implements UserManager {
 				scimClientOAuth2ApplicationConfiguration);
 		}
 
-		return _toScimUser(portalUser);
+		return ScimUtil.toScimUser(portalUser);
 	}
 
 	private User _addOrUpdateUser(User user) throws CharonException {
@@ -769,7 +768,7 @@ public class UserManagerImpl implements UserManager {
 				"User was provisioned by another SCIM client");
 		}
 
-		return _toScimUser(portalUser);
+		return ScimUtil.toScimUser(portalUser);
 	}
 
 	private List<ScimUser> _getScimUsers(long companyId, long userGroupId) {
@@ -787,7 +786,7 @@ public class UserManagerImpl implements UserManager {
 					return null;
 				}
 
-				return _toScimUser(user);
+				return ScimUtil.toScimUser(user);
 			});
 	}
 
@@ -873,57 +872,6 @@ public class UserManagerImpl implements UserManager {
 		_expandoValueLocalService.addValue(
 			companyId, className, ExpandoTableConstants.DEFAULT_TABLE_NAME,
 			expandoColumn.getName(), classPK, scimClientId);
-	}
-
-	private ScimUser _toScimUser(
-		com.liferay.portal.kernel.model.User portalUser) {
-
-		try {
-			ScimUser scimUser = new ScimUser();
-
-			scimUser.setActive(portalUser.isActive());
-			scimUser.setBirthday(portalUser.getBirthday());
-			scimUser.setCompanyId(portalUser.getCompanyId());
-			scimUser.setCreateDate(_truncateDate(portalUser.getCreateDate()));
-			scimUser.setFirstName(portalUser.getFirstName());
-			scimUser.setEmailAddress(portalUser.getEmailAddress());
-			scimUser.setExternalReferenceCode(
-				portalUser.getExternalReferenceCode());
-			scimUser.setId(String.valueOf(portalUser.getUserId()));
-			scimUser.setJobTitle(portalUser.getJobTitle());
-			scimUser.setLastName(portalUser.getLastName());
-			scimUser.setLocale(portalUser.getLocale());
-			scimUser.setMale(portalUser.isMale());
-			scimUser.setMiddleName(portalUser.getMiddleName());
-			scimUser.setModifiedDate(
-				_truncateDate(portalUser.getModifiedDate()));
-			scimUser.setScreenName(portalUser.getScreenName());
-
-			return scimUser;
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Unable to convert portal user to a SCIM user",
-					portalException);
-			}
-
-			return ReflectionUtil.throwException(portalException);
-		}
-	}
-
-	private Date _truncateDate(Date date) {
-		if (date == null) {
-			return null;
-		}
-
-		Calendar calendar = Calendar.getInstance();
-
-		calendar.setTime(date);
-
-		calendar.set(Calendar.MILLISECOND, 0);
-
-		return calendar.getTime();
 	}
 
 	private com.liferay.portal.kernel.model.User _updatePortalUser(

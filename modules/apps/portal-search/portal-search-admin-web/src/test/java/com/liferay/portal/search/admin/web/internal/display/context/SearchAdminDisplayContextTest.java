@@ -8,17 +8,18 @@ package com.liferay.portal.search.admin.web.internal.display.context;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.language.LanguageImpl;
 import com.liferay.portal.search.admin.web.internal.display.context.builder.SearchAdminDisplayContextBuilder;
 import com.liferay.portal.search.index.IndexInformation;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portletmvc4spring.test.mock.web.portlet.MockRenderRequest;
 import com.liferay.portletmvc4spring.test.mock.web.portlet.MockRenderResponse;
-
-import javax.portlet.RenderRequest;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -41,13 +42,15 @@ public class SearchAdminDisplayContextTest {
 		setUpIndexInformation();
 		_setUpLanguage();
 		setUpPortalUtil();
+		_setUpThemeDisplay();
+		_setUpRenderRequest();
 	}
 
 	@Test
 	public void testGetNavigationItemListWithIndexInformation() {
 		SearchAdminDisplayContextBuilder searchAdminDisplayContextBuilder =
 			new SearchAdminDisplayContextBuilder(
-				_language, _portal, new MockRenderRequest(),
+				_language, _portal, _mockRenderRequest,
 				new MockRenderResponse());
 
 		searchAdminDisplayContextBuilder.setIndexInformation(
@@ -67,7 +70,7 @@ public class SearchAdminDisplayContextTest {
 	public void testGetNavigationItemListWithoutIndexInformation() {
 		SearchAdminDisplayContextBuilder searchAdminDisplayContextBuilder =
 			new SearchAdminDisplayContextBuilder(
-				_language, _portal, new MockRenderRequest(),
+				_language, _portal, _mockRenderRequest,
 				new MockRenderResponse());
 
 		searchAdminDisplayContextBuilder.setIndexInformation(null);
@@ -84,10 +87,11 @@ public class SearchAdminDisplayContextTest {
 
 	@Test
 	public void testGetTabConnections() {
+		_mockRenderRequest.setParameter("tabs1", "connections");
+
 		SearchAdminDisplayContextBuilder searchAdminDisplayContextBuilder =
 			new SearchAdminDisplayContextBuilder(
-				_language, _portal,
-				_getRenderRequestWithSelectedTab("connections"),
+				_language, _portal, _mockRenderRequest,
 				new MockRenderResponse());
 
 		searchAdminDisplayContextBuilder.setIndexInformation(
@@ -104,7 +108,7 @@ public class SearchAdminDisplayContextTest {
 	public void testGetTabDefault() {
 		SearchAdminDisplayContextBuilder searchAdminDisplayContextBuilder =
 			new SearchAdminDisplayContextBuilder(
-				_language, _portal, new MockRenderRequest(),
+				_language, _portal, _mockRenderRequest,
 				new MockRenderResponse());
 
 		searchAdminDisplayContextBuilder.setIndexInformation(
@@ -119,10 +123,11 @@ public class SearchAdminDisplayContextTest {
 
 	@Test
 	public void testGetTabFieldMappings() {
+		_mockRenderRequest.setParameter("tabs1", "field-mappings");
+
 		SearchAdminDisplayContextBuilder searchAdminDisplayContextBuilder =
 			new SearchAdminDisplayContextBuilder(
-				_language, _portal,
-				_getRenderRequestWithSelectedTab("field-mappings"),
+				_language, _portal, _mockRenderRequest,
 				new MockRenderResponse());
 
 		searchAdminDisplayContextBuilder.setIndexInformation(
@@ -137,10 +142,11 @@ public class SearchAdminDisplayContextTest {
 
 	@Test
 	public void testGetTabFieldMappingsNoIndexInformation() {
+		_mockRenderRequest.setParameter("tabs1", "field-mappings");
+
 		SearchAdminDisplayContextBuilder searchAdminDisplayContextBuilder =
 			new SearchAdminDisplayContextBuilder(
-				_language, _portal,
-				_getRenderRequestWithSelectedTab("field-mappings"),
+				_language, _portal, _mockRenderRequest,
 				new MockRenderResponse());
 
 		searchAdminDisplayContextBuilder.setIndexInformation(null);
@@ -154,10 +160,11 @@ public class SearchAdminDisplayContextTest {
 
 	@Test
 	public void testGetTabIndexActions() {
+		_mockRenderRequest.setParameter("tabs1", "index-actions");
+
 		SearchAdminDisplayContextBuilder searchAdminDisplayContextBuilder =
 			new SearchAdminDisplayContextBuilder(
-				_language, _portal,
-				_getRenderRequestWithSelectedTab("index-actions"),
+				_language, _portal, _mockRenderRequest,
 				new MockRenderResponse());
 
 		searchAdminDisplayContextBuilder.setIndexInformation(
@@ -172,10 +179,11 @@ public class SearchAdminDisplayContextTest {
 
 	@Test
 	public void testGetTabUnavailable() {
+		_mockRenderRequest.setParameter("tabs1", RandomTestUtil.randomString());
+
 		SearchAdminDisplayContextBuilder searchAdminDisplayContextBuilder =
 			new SearchAdminDisplayContextBuilder(
-				_language, _portal,
-				_getRenderRequestWithSelectedTab(RandomTestUtil.randomString()),
+				_language, _portal, _mockRenderRequest,
 				new MockRenderResponse());
 
 		searchAdminDisplayContextBuilder.setIndexInformation(
@@ -224,17 +232,37 @@ public class SearchAdminDisplayContextTest {
 
 	protected IndexInformation indexInformation;
 
-	private RenderRequest _getRenderRequestWithSelectedTab(String selectedTab) {
-		MockRenderRequest mockRenderRequest = new MockRenderRequest();
-
-		mockRenderRequest.setParameter("tabs1", selectedTab);
-
-		return mockRenderRequest;
-	}
-
 	private void _setUpLanguage() {
 		_language = new LanguageImpl();
 	}
+
+	private void _setUpRenderRequest() {
+		_mockRenderRequest = new MockRenderRequest();
+
+		_mockRenderRequest.setAttribute(WebKeys.THEME_DISPLAY, _themeDisplay);
+	}
+
+	private void _setUpThemeDisplay() {
+		_themeDisplay = Mockito.mock(ThemeDisplay.class);
+
+		PermissionChecker permissionChecker = Mockito.mock(
+			PermissionChecker.class);
+
+		Mockito.doReturn(
+			permissionChecker
+		).when(
+			_themeDisplay
+		).getPermissionChecker();
+
+		Mockito.doReturn(
+			true
+		).when(
+			permissionChecker
+		).isOmniadmin();
+	}
+
+	private static MockRenderRequest _mockRenderRequest;
+	private static ThemeDisplay _themeDisplay;
 
 	private Language _language;
 	private Portal _portal;

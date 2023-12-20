@@ -22,7 +22,6 @@ import com.liferay.scim.rest.internal.manager.UserManagerImpl;
 import com.liferay.scim.rest.internal.manager.UserResourceManagerImpl;
 import com.liferay.scim.rest.resource.v1_0.UserResource;
 
-import java.util.Collections;
 import java.util.Map;
 
 import javax.ws.rs.core.Response;
@@ -35,9 +34,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 
 import org.wso2.charon3.core.extensions.UserManager;
 import org.wso2.charon3.core.protocol.SCIMResponse;
-import org.wso2.charon3.core.protocol.endpoints.AbstractResourceManager;
 import org.wso2.charon3.core.protocol.endpoints.UserResourceManager;
-import org.wso2.charon3.core.schema.SCIMConstants;
 
 /**
  * @author Olivér Kecskeméty
@@ -114,12 +111,6 @@ public class UserResourceImpl extends BaseUserResourceImpl {
 
 	private static final UserResourceManager _userResourceManager =
 		new UserResourceManagerImpl();
-
-	static {
-		AbstractResourceManager.setEndpointURLMap(
-			Collections.singletonMap(
-				SCIMConstants.USER_ENDPOINT, "/o/scim/Users"));
-	}
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;

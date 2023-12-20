@@ -282,10 +282,6 @@ public class DispatchTriggerLocalServiceImpl
 		DispatchTrigger dispatchTrigger =
 			dispatchTriggerPersistence.fetchByPrimaryKey(dispatchTriggerId);
 
-		DispatchTaskClusterMode oldDispatchTaskClusterMode =
-			DispatchTaskClusterMode.valueOf(
-				dispatchTrigger.getDispatchTaskClusterMode());
-
 		if ((dispatchTaskClusterMode == DispatchTaskClusterMode.ALL_NODES) &&
 			_dispatchTaskExecutorRegistry.isClusterModeSingle(
 				dispatchTrigger.getDispatchTaskExecutorType())) {
@@ -308,6 +304,10 @@ public class DispatchTriggerLocalServiceImpl
 						endDateMinute, DispatchTriggerEndDateException.class),
 					timeZoneId));
 		}
+
+		DispatchTaskClusterMode oldDispatchTaskClusterMode =
+			DispatchTaskClusterMode.valueOf(
+				dispatchTrigger.getDispatchTaskClusterMode());
 
 		dispatchTrigger.setDispatchTaskClusterMode(
 			dispatchTaskClusterMode.getMode());

@@ -667,9 +667,8 @@ public class RenderLayoutStructureTagTest {
 				"thank-you.-your-information-was-successfully-received");
 
 			String expectedSuccessHTML = StringBundler.concat(
-				"<div class=\"font-weight-semi-bold bg-white",
-				"text-secondary text-center text-3 p-5\">",
-				expectedSuccessMessage, "</div>");
+				"<div class=\"font-weight-semi-bold bg-white text-secondary ",
+				"text-center text-3 p-5\">", expectedSuccessMessage, "</div>");
 
 			Assert.assertTrue(content.contains(expectedSuccessHTML));
 

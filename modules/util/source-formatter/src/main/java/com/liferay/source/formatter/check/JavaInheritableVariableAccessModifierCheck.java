@@ -24,6 +24,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Seiphon Wang
@@ -158,7 +160,10 @@ public class JavaInheritableVariableAccessModifierCheck
 				continue;
 			}
 
-			String superClassName = _getSuperClassName(FileUtil.read(file));
+			String className = JavaSourceUtil.getClassName(fileName);
+
+			String superClassName = _getSuperClassName(
+				FileUtil.read(file), className);
 
 			if (superClassName != null) {
 				List<String> subclassNames = _osgiComponentFileNamesMap.get(
@@ -168,7 +173,7 @@ public class JavaInheritableVariableAccessModifierCheck
 					subclassNames = new ArrayList<>();
 				}
 
-				subclassNames.add(JavaSourceUtil.getClassName(fileName));
+				subclassNames.add(className);
 
 				_osgiComponentFileNamesMap.put(superClassName, subclassNames);
 			}
@@ -177,12 +182,17 @@ public class JavaInheritableVariableAccessModifierCheck
 		return _osgiComponentFileNamesMap;
 	}
 
-	private String _getSuperClassName(String content) {
-		String superClassName = JavaSourceUtil.getSuperClassName(content);
+	private String _getSuperClassName(String content, String className) {
+		Pattern pattern = Pattern.compile(
+			className + "\\s+extends\\s+(\\w+)\\W");
 
-		if (superClassName == null) {
+		Matcher matcher = pattern.matcher(content);
+
+		if (!matcher.find()) {
 			return null;
 		}
+
+		String superClassName = matcher.group(1);
 
 		List<String> importNames = JavaSourceUtil.getImportNames(content);
 

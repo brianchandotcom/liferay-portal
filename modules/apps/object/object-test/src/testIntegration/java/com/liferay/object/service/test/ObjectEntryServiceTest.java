@@ -33,6 +33,7 @@ import com.liferay.object.tree.Tree;
 import com.liferay.object.tree.TreeFactory;
 import com.liferay.object.tree.constants.TreeConstants;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.exception.NoSuchResourceActionException;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -705,10 +706,19 @@ public class ObjectEntryServiceTest {
 		long[] adminUserIds = _userLocalService.getRoleUserIds(
 			adminRole.getRoleId());
 
+		String portletId =
+			_objectDefinition.isUnmodifiableSystemObject() ? StringPool.BLANK :
+				_objectDefinition.getPortletId();
+
 		for (long adminUserId : adminUserIds) {
 			int notificationsCount =
-				_userNotificationLocalService.
-					getDeliveredUserNotificationEventsCount(adminUserId, true);
+				_userNotificationLocalService.getUserNotificationEventsCount(
+					adminUserId, portletId, true,
+					LocalDate.now(
+					).atStartOfDay(
+						ZoneId.systemDefault()
+					).toInstant(
+					).getEpochSecond());
 
 			Assert.assertTrue(notificationsCount > 0);
 		}
@@ -799,8 +809,13 @@ public class ObjectEntryServiceTest {
 		for (long adminUserId : adminUserIds) {
 			Assert.assertEquals(
 				1,
-				_userNotificationLocalService.
-					getDeliveredUserNotificationEventsCount(adminUserId, true));
+				_userNotificationLocalService.getUserNotificationEventsCount(
+					adminUserId, portletId, true,
+					LocalDate.now(
+					).atStartOfDay(
+						ZoneId.systemDefault()
+					).toInstant(
+					).getEpochSecond()));
 		}
 
 		_objectEntryLocalService.deleteObjectEntry(

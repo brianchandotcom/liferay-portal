@@ -43,11 +43,7 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 			),
 			multiple: true,
 			onDelete: () => {
-				const keys = Array.from(
-					document.querySelectorAll(
-						`[name=${portletNamespace}rowIds]:checked`
-					)
-				).map(({value}) => value);
+				const keys = getSelectedKeys(portletNamespace);
 
 				const url = new URL(itemData?.deleteLayoutURL);
 
@@ -79,11 +75,7 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 	};
 
 	const changePermissions = (itemData) => {
-		const keys = Array.from(
-			document.querySelectorAll(
-				`[name=${portletNamespace}rowIds]:checked`
-			)
-		).map(({value}) => value);
+		const keys = getSelectedKeys(portletNamespace);
 
 		if (keys.length > itemData.maxItemsToShowInfoMessage) {
 			openModal({
@@ -138,11 +130,7 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 	};
 
 	const exportTranslation = ({exportTranslationURL}) => {
-		const keys = Array.from(
-			document.querySelectorAll(
-				`[name=${portletNamespace}rowIds]:checked`
-			)
-		).map(({value}) => value);
+		const keys = getSelectedKeys(portletNamespace);
 
 		const url = new URL(exportTranslationURL);
 
@@ -191,4 +179,10 @@ function openErrorToast(message) {
 		title: Liferay.Language.get('error'),
 		type: 'danger',
 	});
+}
+
+function getSelectedKeys(portletNamespace) {
+	return Array.from(
+		document.querySelectorAll(`[name=${portletNamespace}rowIds]:checked`)
+	).map(({value}) => value);
 }

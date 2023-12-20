@@ -6,6 +6,7 @@
 package com.liferay.analytics.batch.exportimport.internal.engine;
 
 import com.liferay.analytics.batch.exportimport.internal.dto.v1_0.converter.constants.DTOConverterConstants;
+import com.liferay.analytics.batch.exportimport.internal.engine.util.DTOConverterUtil;
 import com.liferay.analytics.dxp.entity.rest.dto.v1_0.DXPEntity;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.analytics.settings.configuration.AnalyticsConfigurationRegistry;
@@ -92,8 +93,7 @@ public class UserAnalyticsDXPEntityBatchEngineTaskItemDelegate
 		}
 
 		return Page.of(
-			TransformUtil.transform(
-				users, user -> _dxpEntityDTOConverter.toDTO(user)),
+			DTOConverterUtil.toDTOs(users, _dxpEntityDTOConverter),
 			Pagination.of(pagination.getPage(), pagination.getPageSize()),
 			_userLocalService.dslQuery(
 				_createCountDSLQuery(

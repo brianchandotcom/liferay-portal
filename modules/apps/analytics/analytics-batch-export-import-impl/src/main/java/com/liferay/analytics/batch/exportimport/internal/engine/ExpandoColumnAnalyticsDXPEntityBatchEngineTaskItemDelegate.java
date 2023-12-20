@@ -6,11 +6,11 @@
 package com.liferay.analytics.batch.exportimport.internal.engine;
 
 import com.liferay.analytics.batch.exportimport.internal.dto.v1_0.converter.constants.DTOConverterConstants;
+import com.liferay.analytics.batch.exportimport.internal.engine.util.DTOConverterUtil;
 import com.liferay.analytics.dxp.entity.rest.dto.v1_0.DXPEntity;
 import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
 import com.liferay.batch.engine.pagination.Page;
 import com.liferay.batch.engine.pagination.Pagination;
-import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.model.ExpandoTable;
 import com.liferay.expando.kernel.model.ExpandoTableConstants;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
@@ -29,9 +29,7 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 
 import java.io.Serializable;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -60,19 +58,13 @@ public class ExpandoColumnAnalyticsDXPEntityBatchEngineTaskItemDelegate
 			return Page.of(Collections.emptyList(), pagination, 0);
 		}
 
-		List<DXPEntity> dxpEntities = new ArrayList<>();
-
-		List<ExpandoColumn> expandoColumns =
-			_expandoColumnLocalService.dynamicQuery(
-				dynamicQuery, pagination.getStartPosition(),
-				pagination.getEndPosition());
-
-		for (ExpandoColumn expandoColumn : expandoColumns) {
-			dxpEntities.add(_dxpEntityDTOConverter.toDTO(expandoColumn));
-		}
-
 		return Page.of(
-			dxpEntities, pagination,
+			DTOConverterUtil.toDTOs(
+				_expandoColumnLocalService.dynamicQuery(
+					dynamicQuery, pagination.getStartPosition(),
+					pagination.getEndPosition()),
+				_dxpEntityDTOConverter),
+			pagination,
 			_expandoColumnLocalService.dynamicQueryCount(dynamicQuery));
 	}
 

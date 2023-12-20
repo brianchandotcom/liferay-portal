@@ -6,6 +6,7 @@
 package com.liferay.analytics.batch.exportimport.internal.engine;
 
 import com.liferay.analytics.batch.exportimport.internal.dto.v1_0.converter.constants.DTOConverterConstants;
+import com.liferay.analytics.batch.exportimport.internal.engine.util.DTOConverterUtil;
 import com.liferay.analytics.batch.exportimport.internal.odata.entity.AnalyticsDXPEntityEntityModel;
 import com.liferay.analytics.dxp.entity.rest.dto.v1_0.DXPEntity;
 import com.liferay.analytics.message.storage.model.AnalyticsDeleteMessage;
@@ -28,7 +29,6 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 
 import java.io.Serializable;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -90,16 +90,10 @@ public class AnalyticsDeleteMessageAnalyticsDXPEntityBatchEngineTaskItemDelegate
 			return Page.of(Collections.emptyList());
 		}
 
-		List<DXPEntity> dxpEntities = new ArrayList<>();
-
-		for (AnalyticsDeleteMessage analyticsDeleteMessage :
-				analyticsDeleteMessages) {
-
-			dxpEntities.add(
-				_dxpEntityDTOConverter.toDTO(analyticsDeleteMessage));
-		}
-
-		return Page.of(dxpEntities, pagination, totalCount);
+		return Page.of(
+			DTOConverterUtil.toDTOs(
+				analyticsDeleteMessages, _dxpEntityDTOConverter),
+			pagination, totalCount);
 	}
 
 	private Date _getModifiedDate(Filter filter) {

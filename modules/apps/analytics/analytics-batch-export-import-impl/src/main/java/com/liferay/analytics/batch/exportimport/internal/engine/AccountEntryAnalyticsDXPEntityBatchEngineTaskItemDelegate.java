@@ -10,6 +10,7 @@ import com.liferay.account.model.AccountEntryTable;
 import com.liferay.account.model.AccountGroupRelTable;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.analytics.batch.exportimport.internal.dto.v1_0.converter.constants.DTOConverterConstants;
+import com.liferay.analytics.batch.exportimport.internal.engine.util.DTOConverterUtil;
 import com.liferay.analytics.batch.exportimport.internal.odata.entity.AccountEntryAnalyticsDXPEntityEntityModel;
 import com.liferay.analytics.dxp.entity.rest.dto.v1_0.DXPEntity;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
@@ -72,11 +73,11 @@ public class AccountEntryAnalyticsDXPEntityBatchEngineTaskItemDelegate
 		}
 
 		return Page.of(
-			TransformUtil.transform(
+			DTOConverterUtil.toDTOs(
 				_accountEntryLocalService.<List<AccountEntry>>dslQuery(
 					_createSelectDSLQuery(
 						contextCompany.getCompanyId(), pagination, parameters)),
-				accountEntry -> _dxpEntityDTOConverter.toDTO(accountEntry)),
+				_dxpEntityDTOConverter),
 			Pagination.of(pagination.getPage(), pagination.getPageSize()),
 			_accountEntryLocalService.dslQuery(
 				_createCountDSLQuery(

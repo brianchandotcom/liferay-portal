@@ -9,11 +9,11 @@ import com.liferay.account.model.AccountGroup;
 import com.liferay.account.model.AccountGroupTable;
 import com.liferay.account.service.AccountGroupLocalService;
 import com.liferay.analytics.batch.exportimport.internal.dto.v1_0.converter.constants.DTOConverterConstants;
+import com.liferay.analytics.batch.exportimport.internal.engine.util.DTOConverterUtil;
 import com.liferay.analytics.dxp.entity.rest.dto.v1_0.DXPEntity;
 import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
 import com.liferay.batch.engine.pagination.Page;
 import com.liferay.batch.engine.pagination.Pagination;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.model.BaseModel;
@@ -46,11 +46,11 @@ public class AccountGroupAnalyticsDXPEntityBatchEngineTaskItemDelegate
 		throws Exception {
 
 		return Page.of(
-			TransformUtil.transform(
+			DTOConverterUtil.toDTOs(
 				_accountGroupLocalService.<List<AccountGroup>>dslQuery(
 					_createSelectDSLQuery(
 						contextCompany.getCompanyId(), pagination, parameters)),
-				accountGroup -> _dxpEntityDTOConverter.toDTO(accountGroup)),
+				_dxpEntityDTOConverter),
 			Pagination.of(pagination.getPage(), pagination.getPageSize()),
 			_accountGroupLocalService.dslQuery(
 				_createCountDSLQuery(

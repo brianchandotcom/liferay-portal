@@ -5,6 +5,7 @@
 
 package com.liferay.analytics.batch.exportimport.internal.engine;
 
+import com.liferay.analytics.batch.exportimport.internal.engine.util.DTOConverterUtil;
 import com.liferay.analytics.dxp.entity.rest.dto.v1_0.AssetEntity;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetEntryTable;
@@ -62,11 +63,11 @@ public class AssetEntityAnalyticsBatchEngineTaskItemDelegate
 		}
 
 		return Page.of(
-			TransformUtil.transform(
+			DTOConverterUtil.toDTOs(
 				_assetEntryLocalService.<List<AssetEntry>>dslQuery(
 					_createSelectDSLQuery(
 						contextCompany.getCompanyId(), pagination, parameters)),
-				assetEntry -> _assetEntityDTOConverter.toDTO(assetEntry)),
+				_assetEntityDTOConverter),
 			Pagination.of(pagination.getPage(), pagination.getPageSize()),
 			_assetEntryLocalService.dslQuery(
 				_createCountDSLQuery(

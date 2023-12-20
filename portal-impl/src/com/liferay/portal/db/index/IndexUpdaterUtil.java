@@ -24,9 +24,9 @@ import java.sql.Connection;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -52,7 +52,7 @@ public class IndexUpdaterUtil {
 	}
 
 	public static void updateAllIndexes() {
-		if (!_updatedServletContextNames.contains("portal")) {
+		if (!_processedServletContextNames.contains("portal")) {
 			try {
 				_updateIndexes(
 					"portal", DBResourceUtil.getPortalTablesSQL(),
@@ -75,7 +75,7 @@ public class IndexUpdaterUtil {
 
 					if (BundleUtil.isLiferayServiceBundle(bundle)) {
 						try {
-							if (!_updatedServletContextNames.contains(
+							if (!_processedServletContextNames.contains(
 									bundle.getSymbolicName())) {
 
 								_updateIndexes(
@@ -113,13 +113,13 @@ public class IndexUpdaterUtil {
 						() -> {
 							bundleTracker.close();
 
+							_processedServletContextNames.clear();
+
 							if (!PropsValues.
 									DATABASE_INDEXES_UPDATE_IN_BACKGROUND) {
 
 								_awaitTermination();
 							}
-
-							_updatedServletContextNames.clear();
 
 							return null;
 						});
@@ -179,6 +179,8 @@ public class IndexUpdaterUtil {
 			String servletContextName, String tablesSQL, String indexesSQL)
 		throws Exception {
 
+		_processedServletContextNames.add(servletContextName);
+
 		if ((indexesSQL == null) || (tablesSQL == null)) {
 			return;
 		}
@@ -222,8 +224,6 @@ public class IndexUpdaterUtil {
 									exception.getMessage()));
 						}
 					})));
-
-		_updatedServletContextNames.add(servletContextName);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -233,7 +233,7 @@ public class IndexUpdaterUtil {
 		_executorServiceDCLSingleton = new DCLSingleton<>();
 	private static final List<Future<?>> _futures =
 		Collections.synchronizedList(new ArrayList<Future<?>>());
-	private static final Set<String> _updatedServletContextNames =
-		new HashSet<>();
+	private static final Set<String> _processedServletContextNames =
+		ConcurrentHashMap.newKeySet();
 
 }

@@ -43,6 +43,7 @@ public class ClientExtension {
 			"baseURL",
 			typeSettings.getOrDefault(
 				"baseURL", "${portalURL}/o/" + projectName));
+		configMap.put("buildTimestamp", System.currentTimeMillis());
 		configMap.put("description", description);
 		configMap.put(
 			"dxp.lxc.liferay.com.virtualInstanceId", virtualInstanceId);

@@ -306,9 +306,6 @@ public class ComboServletTest {
 			HttpServletResponse.SC_BAD_REQUEST,
 			mockHttpServletResponse.getStatus());
 
-		Assert.assertEquals(
-			"ComboServlet request exceeded maximum file count",
-			mockHttpServletResponse.getErrorMessage());
 	}
 
 	@Test

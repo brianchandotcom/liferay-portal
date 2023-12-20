@@ -51,6 +51,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Function;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -83,36 +84,43 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 			baseModel.getModelClassName());
 	}
 
+	@SuppressWarnings("unchecked")
 	private void _addFieldAttributes(
 		BaseModel<?> baseModel, List<Field> fields,
 		List<String> includeAttributeNames) {
 
-		Map<String, Object> modelAttributes = baseModel.getModelAttributes();
+		Map<String, Function<?, Object>> attributeGetterFunctions =
+			(Map<String, Function<?, Object>>)
+				baseModel.getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Object> entry : modelAttributes.entrySet()) {
-			if (ListUtil.isNotEmpty(includeAttributeNames) &&
-				!includeAttributeNames.contains(entry.getKey())) {
+		for (String includeAttributeName : includeAttributeNames) {
+			Function<Object, Object> function =
+				(Function<Object, Object>)attributeGetterFunctions.get(
+					includeAttributeName);
 
+			if (function == null) {
 				continue;
 			}
 
 			Field field = new Field() {
 				{
-					name = entry.getKey();
+					name = includeAttributeName;
 
 					setValue(
 						() -> {
-							if (entry.getValue() instanceof Date) {
-								Date date = (Date)entry.getValue();
+							Object value = function.apply(baseModel);
+
+							if (value instanceof Date) {
+								Date date = (Date)value;
 
 								return String.valueOf(date.getTime());
 							}
 
-							if (Validator.isNull(entry.getValue())) {
+							if (Validator.isNull(value)) {
 								return StringPool.BLANK;
 							}
 
-							return String.valueOf(entry.getValue());
+							return String.valueOf(value);
 						});
 				}
 			};

@@ -241,12 +241,18 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 
 		long ddmStructureClassNameId = _portal.getClassNameId(
 			DDMStructure.class);
-
-		_ddmTemplateLocalService.deleteTemplates(
-			portletDataContext.getScopeGroupId(), ddmStructureClassNameId);
-
 		long journalArticleClassNameId = _portal.getClassNameId(
 			JournalArticle.class);
+
+		List<DDMTemplate> ddmTemplates = _ddmTemplateLocalService.getTemplates(
+			portletDataContext.getCompanyId(),
+			new long[] {portletDataContext.getGroupId()},
+			new long[] {ddmStructureClassNameId}, null,
+			journalArticleClassNameId, -1, -1, null);
+
+		for (DDMTemplate ddmTemplate : ddmTemplates) {
+			_ddmTemplateLocalService.deleteTemplate(ddmTemplate);
+		}
 
 		List<DDMStructure> ddmStructures =
 			_ddmStructureLocalService.getStructures(

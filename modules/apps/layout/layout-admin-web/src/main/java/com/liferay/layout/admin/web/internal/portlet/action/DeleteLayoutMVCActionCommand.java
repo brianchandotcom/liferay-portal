@@ -10,11 +10,13 @@ import com.liferay.layout.admin.web.internal.handler.LayoutExceptionRequestHandl
 import com.liferay.portal.events.EventsProcessorUtil;
 import com.liferay.portal.kernel.exception.GroupInheritContentException;
 import com.liferay.portal.kernel.exception.RequiredLayoutException;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutType;
 import com.liferay.portal.kernel.model.impl.VirtualLayout;
+import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -152,6 +154,10 @@ public class DeleteLayoutMVCActionCommand extends BaseMVCActionCommand {
 
 		try {
 			_layoutService.deleteLayout(selPlid, serviceContext);
+
+			JSONPortletResponseUtil.writeJSON(
+				actionRequest, actionResponse,
+				JSONUtil.put("redirectURL", themeDisplay.getURLCurrent()));
 		}
 		catch (Exception exception) {
 			Throwable throwable = exception.getCause();

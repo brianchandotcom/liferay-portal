@@ -49,7 +49,6 @@ import com.liferay.journal.service.JournalFolderLocalService;
 import com.liferay.journal.util.JournalContent;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.Disjunction;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
@@ -649,16 +648,6 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 			dynamicQuery -> {
 				addCriteriaMethod.addCriteria(dynamicQuery);
 
-				Disjunction disjunction = RestrictionsFactoryUtil.disjunction();
-
-				Property classPKProperty = PropertyFactoryUtil.forName(
-					"classPK");
-
-				disjunction.add(classPKProperty.eq(0L));
-
-				DynamicQuery ddmStructureDynamicQuery =
-					_ddmStructureLocalService.dynamicQuery();
-
 				Property classNameIdProperty = PropertyFactoryUtil.forName(
 					"classNameId");
 
@@ -668,18 +657,14 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 				dynamicQuery.add(
 					classNameIdProperty.eq(ddmStructureClassNameId));
 
-				long articleClassNameId = _portal.getClassNameId(
+				long journalArticleClassNameId = _portal.getClassNameId(
 					JournalArticle.class);
 
-				ddmStructureDynamicQuery.add(
-					classNameIdProperty.eq(articleClassNameId));
+				Property resourceClassNameIdProperty =
+					PropertyFactoryUtil.forName("resourceClassNameId");
 
-				ddmStructureDynamicQuery.setProjection(
-					ProjectionFactoryUtil.property("structureId"));
-
-				disjunction.add(classPKProperty.in(ddmStructureDynamicQuery));
-
-				dynamicQuery.add(disjunction);
+				dynamicQuery.add(
+					resourceClassNameIdProperty.eq(journalArticleClassNameId));
 			});
 
 		exportActionableDynamicQuery.setStagedModelType(

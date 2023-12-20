@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="14afce69-31d6-4b6d-8b7f-b2c83f13c1ef" name="Changes" comment="Fixing files names to match liferay design pattern, where the component file name should match the component name" />
+    <list default="true" id="14afce69-31d6-4b6d-8b7f-b2c83f13c1ef" name="Changes" comment="Fixing files names to match liferay design pattern, where the component file name should match the component name">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-extensions/liferay-dlfoldertemplate-custom-element/client-extension.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/client-extensions/liferay-dlfoldertemplate-custom-element/client-extension.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-extensions/liferay-dlfoldertemplate-custom-element/src/components/template-list/TemplateList.js" beforeDir="false" afterPath="$PROJECT_DIR$/client-extensions/liferay-dlfoldertemplate-custom-element/src/components/template-list/TemplateList.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -24,12 +28,20 @@
         <task path="$PROJECT_DIR$/client-extensions/liferay-dlfoldertemplate-batch-object-definition">
           <activation />
         </task>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
         <projects_view>
           <tree_state>
             <expand>
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="liferay-dlfoldertemplate-workspace" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="liferay-dlfoldertemplate-workspace" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
               </path>
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
@@ -73,21 +85,21 @@
     <option name="showLibraryContents" value="true" />
     <option name="showMembers" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/Users/mahmoudtayem/Documents/GitHub/Brian/liferay_portal/workspaces/liferay-dlfoldertemplate-workspace",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "configurable.group.tools",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/mahmoudtayem/Documents/GitHub/Brian/liferay_portal/workspaces/liferay-dlfoldertemplate-workspace&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;configurable.group.tools&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="Gradle.liferay-dlfoldertemplate-workspace:client-extensions:liferay-dlfoldertemplate-custom-element [buildClientExtensionZip]">
     <configuration name="liferay-dlfoldertemplate-workspace:client-extensions:liferay-dlfoldertemplate-batch-object-definition [buildClientExtensionZip]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
@@ -155,6 +167,8 @@
       <updated>1702553945339</updated>
       <workItem from="1702553946367" duration="2852000" />
       <workItem from="1702764671548" duration="22570000" />
+      <workItem from="1703097951580" duration="57000" />
+      <workItem from="1703098459970" duration="3314000" />
     </task>
     <task id="LOCAL-00001" summary="Fixing - New Line Rule and Unused CSS file &quot;has been removed&quot;&#10;&#10;https://github.com/ethib137/liferay-portal/pull/281/files/f5cedd430bf170490d8ec7dc45ec270797d5434d..38f56752c166bd634c447d3a98023f560be64cfc#r1427663877&#10;&#10;https://github.com/ethib137/liferay-portal/pull/281/files/f5cedd430bf170490d8ec7dc45ec270797d5434d..38f56752c166bd634c447d3a98023f560be64cfc#r1426639093">
       <created>1702803930783</created>
@@ -203,6 +217,17 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ID_ORDER">
+      <list>
+        <option value="Default.Root" />
+        <option value="Default.Author" />
+        <option value="Default.Date" />
+        <option value="Default.Subject" />
+        <option value="Space.CommitStatus" />
+      </list>
+    </option>
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">

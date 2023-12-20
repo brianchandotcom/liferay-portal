@@ -11,5 +11,5 @@ liferay-dlfoldertemplate-custom-element:
     portletCategoryName: category.client-extensions
     type: customElement
     urls:
-        - http://localhost:3000/static/js/bundle.js
+        - js/main.*.js
     useESM: true

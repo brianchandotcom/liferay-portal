@@ -80,12 +80,12 @@ public class GenerateTestrayCSVUtil {
 			sb.append("\n");
 		}
 
-		if (sb.length() > 0) {
-			return JenkinsResultsParserUtil.combine(
-				testrayCaseResultType.toString(), " Failures\n", sb.toString());
+		if (sb.length() == 0) {
+			sb.append("NONE\n");
 		}
 
-		return "";
+		return JenkinsResultsParserUtil.combine(
+			testrayCaseResultType.toString(), " Failures\n", sb.toString());
 	}
 
 	private static List<TestrayCaseResult> _getTestrayCaseResults(

@@ -355,6 +355,71 @@ public class DispatchTriggerLocalServiceTest {
 			dispatchTrigger1.getName(), dispatchTrigger2.getName());
 	}
 
+	@Test
+	public void testUpdateDispatchTriggerWithDifferentDispatchTaskClusterMode()
+		throws Exception {
+
+		DispatchTrigger dispatchTrigger = _addDispatchTrigger(
+			DispatchTriggerTestUtil.randomDispatchTrigger(
+				UserTestUtil.addUser(), _getRandomDispatchExecutorType(), 1));
+
+		dispatchTrigger = _dispatchTriggerLocalService.updateDispatchTrigger(
+			dispatchTrigger.getDispatchTriggerId(), true,
+			CronExpressionUtil.getCronExpression(),
+			DispatchTaskClusterMode.valueOf(
+				dispatchTrigger.getDispatchTaskClusterMode()),
+			CronExpressionUtil.getMonth() + 1, 20, CronExpressionUtil.getYear(),
+			23, 59, false, true, CronExpressionUtil.getMonth() - 1, 1,
+			CronExpressionUtil.getYear(), 0, 0, "UTC");
+
+		DispatchTaskClusterMode dispatchTaskClusterMode =
+			DispatchTaskClusterMode.valueOf(
+				dispatchTrigger.getDispatchTaskClusterMode());
+
+		try {
+			DispatchTrigger updateDispatchTrigger =
+				_dispatchTriggerLocalService.updateDispatchTrigger(
+					dispatchTrigger.getDispatchTriggerId(), true,
+					CronExpressionUtil.getCronExpression(),
+					DispatchTaskClusterMode.SINGLE_NODE_MEMORY_CLUSTERED,
+					CronExpressionUtil.getMonth() + 1, 20,
+					CronExpressionUtil.getYear(), 23, 59, false, true,
+					CronExpressionUtil.getMonth() - 1, 1,
+					CronExpressionUtil.getYear(), 0, 0, "UTC");
+
+			DispatchTaskClusterMode updateDispatchTaskClusterMode =
+				DispatchTaskClusterMode.valueOf(
+					updateDispatchTrigger.getDispatchTaskClusterMode());
+
+			Assert.assertEquals(
+				DispatchTaskClusterMode.SINGLE_NODE_MEMORY_CLUSTERED,
+				updateDispatchTaskClusterMode);
+
+			Assert.assertNull(
+				_schedulerEngineHelper.getScheduledJob(
+					_getJobName(dispatchTrigger.getDispatchTriggerId()),
+					_getGroupName(dispatchTrigger.getDispatchTriggerId()),
+					dispatchTaskClusterMode.getStorageType()));
+
+			Assert.assertNotNull(
+				_schedulerEngineHelper.getScheduledJob(
+					_getJobName(updateDispatchTrigger.getDispatchTriggerId()),
+					_getGroupName(updateDispatchTrigger.getDispatchTriggerId()),
+					updateDispatchTaskClusterMode.getStorageType()));
+		}
+		catch (Exception exception) {
+			if (!(exception instanceof DispatchTriggerSchedulerException)) {
+				throw exception;
+			}
+
+			Assert.assertNull(
+				_schedulerEngineHelper.getScheduledJob(
+					_getJobName(dispatchTrigger.getDispatchTriggerId()),
+					_getGroupName(dispatchTrigger.getDispatchTriggerId()),
+					dispatchTaskClusterMode.getStorageType()));
+		}
+	}
+
 	private DispatchTrigger _addDispatchTrigger(DispatchTrigger dispatchTrigger)
 		throws Exception {
 
@@ -434,6 +499,14 @@ public class DispatchTriggerLocalServiceTest {
 			(key, value) -> Assert.assertEquals(
 				expectedDispatchTaskSettingsUnicodeProperties.getProperty(key),
 				value));
+	}
+
+	private String _getGroupName(long dispatchTriggerId) {
+		return String.format("DISPATCH_GROUP_%07d", dispatchTriggerId);
+	}
+
+	private String _getJobName(long dispatchTriggerId) {
+		return String.format("DISPATCH_JOB_%07d", dispatchTriggerId);
 	}
 
 	private String _getRandomDispatchExecutorType() {

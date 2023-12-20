@@ -178,6 +178,12 @@ if (Validator.isNotNull(backURL)) {
 
 							notificationContainer.remove();
 						}
+
+						if (currentTarget.siblings()) {
+							currentTarget.siblings().remove();
+						}
+
+						currentTarget.remove();
 					}
 					else {
 						Liferay.Util.openToast({

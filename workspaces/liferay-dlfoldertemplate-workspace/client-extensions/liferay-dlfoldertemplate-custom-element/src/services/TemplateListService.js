@@ -9,7 +9,7 @@ import {getHostUrl, showError, showSuccess} from '../utils/util';
 import {
 	deleteFolderTemplateBatch,
 	getAvailableTemplatesNodesPage,
-} from './template-diagram.service';
+} from './TemplateDiagramService';
 
 export async function deleteFolderTemplateInformation(
 	FolderTemplateInformationId

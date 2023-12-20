@@ -44,7 +44,6 @@ exports[`EventDetailsCard should render 1`] = `
 	'name-3': 'samplevalue-3',
 	'name-4': 'samplevalue-4',
 });"
-          data-tooltip-response="Copied"
           title="Click to Copy"
           type="button"
         >

@@ -86,7 +86,6 @@ exports[`ConnectDXP renders 1`] = `
               aria-label="Click to Copy"
               class="copy-button btn btn-unstyled"
               data-clipboard-text=""
-              data-tooltip-response="Copied"
               title="Click to Copy"
               type="button"
             >

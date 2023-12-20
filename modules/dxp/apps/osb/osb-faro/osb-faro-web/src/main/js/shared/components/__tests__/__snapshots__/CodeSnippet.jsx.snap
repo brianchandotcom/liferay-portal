@@ -9,7 +9,6 @@ exports[`CodeSnippet should render 1`] = `
       aria-label="Click to Copy"
       class="copy-button btn btn-secondary"
       data-clipboard-text="console.log(variable);"
-      data-tooltip-response="Copied"
       title="Click to Copy"
       type="button"
     >

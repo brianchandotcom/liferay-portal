@@ -207,7 +207,6 @@ exports[`AccessTokenList should render 1`] = `
                         aria-label="Click to Copy"
                         class="button-root btn btn-secondary"
                         data-clipboard-text="1234ABC"
-                        data-tooltip-response="Copied"
                         title="Click to Copy"
                         type="button"
                       >
@@ -324,7 +323,6 @@ exports[`AccessTokenList should show the generated token in a list and the "Gene
               aria-label="Click to Copy"
               class="button-root btn btn-secondary"
               data-clipboard-text="1234ABC"
-              data-tooltip-response="Copied"
               title="Click to Copy"
               type="button"
             >

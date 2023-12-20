@@ -1,7 +1,9 @@
 import DropdownRangeKey from '../DropdownRangeKey';
+import mockStore from 'test/mock-store';
 import React from 'react';
 import {cleanup, render} from '@testing-library/react';
 import {createMemoryHistory} from 'history';
+import {Provider} from 'react-redux';
 import {Router} from 'react-router-dom';
 
 jest.unmock('react-dom');
@@ -46,9 +48,11 @@ describe('DropdownRangeKey', () => {
 		const history = createMemoryHistory();
 
 		const {container} = render(
-			<Router history={history}>
-				<DropdownRangeKey items={MOCK_ITEMS} rangeKey='30' />
-			</Router>
+			<Provider store={mockStore()}>
+				<Router history={history}>
+					<DropdownRangeKey items={MOCK_ITEMS} rangeKey='30' />
+				</Router>
+			</Provider>
 		);
 
 		expect(container).toMatchSnapshot();

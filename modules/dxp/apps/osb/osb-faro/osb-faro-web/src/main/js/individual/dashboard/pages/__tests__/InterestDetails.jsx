@@ -1,9 +1,11 @@
 import InterestDetails from '../InterestDetails';
+import mockStore from 'test/mock-store';
 import React from 'react';
 import {cleanup, render} from '@testing-library/react';
 import {MemoryRouter, Route} from 'react-router-dom';
 import {MockedProvider} from '@apollo/react-testing';
 import {mockTimeRangeReq, mockTouchpointsReq} from 'test/graphql-data';
+import {Provider} from 'react-redux';
 import {Routes} from 'shared/util/router';
 import {waitForLoading} from 'test/helpers';
 
@@ -44,37 +46,41 @@ describe('Individuals Dashboard Individuals Interest Details', () => {
 
 	it('renders', async () => {
 		const {container} = render(
-			<MockedProvider
-				mocks={[
-					mockTouchpointsReq(mockItems, {size: 2}),
-					mockTimeRangeReq()
-				]}
-			>
-				<MemoryRouter
-					initialEntries={[
-						'/workspace/23/321321/contacts/individuals/interests/test'
+			<Provider store={mockStore()}>
+				<MockedProvider
+					mocks={[
+						mockTouchpointsReq(mockItems, {size: 2}),
+						mockTimeRangeReq()
 					]}
 				>
-					<Route path={Routes.CONTACTS_INDIVIDUALS_INTEREST_DETAILS}>
-						<InterestDetails
-							router={{
-								params: {
-									channelId: '321321',
-									groupId: '23',
-									interestId: 'test'
-								},
-								query: {
-									delta: '2',
-									page: '1',
-									rangeEnd: null,
-									rangeKey: '30',
-									rangeStart: null
-								}
-							}}
-						/>
-					</Route>
-				</MemoryRouter>
-			</MockedProvider>
+					<MemoryRouter
+						initialEntries={[
+							'/workspace/23/321321/contacts/individuals/interests/test'
+						]}
+					>
+						<Route
+							path={Routes.CONTACTS_INDIVIDUALS_INTEREST_DETAILS}
+						>
+							<InterestDetails
+								router={{
+									params: {
+										channelId: '321321',
+										groupId: '23',
+										interestId: 'test'
+									},
+									query: {
+										delta: '2',
+										page: '1',
+										rangeEnd: null,
+										rangeKey: '30',
+										rangeStart: null
+									}
+								}}
+							/>
+						</Route>
+					</MemoryRouter>
+				</MockedProvider>
+			</Provider>
 		);
 
 		await waitForLoading(container);

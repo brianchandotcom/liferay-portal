@@ -7,7 +7,7 @@ import {debounce, toggleDisabled} from 'frontend-js-web';
 
 const INCLUDE_SITEMAP_FIELD_DISABLED_VALUE = '0';
 
-export default function ({namespace}) {
+export default function ({namespace, nondefaultAssetDisplayPage}) {
 	let disposed = false;
 	let robotsInputChangeEventHandler;
 	let robotsInputLocalized;
@@ -33,6 +33,12 @@ export default function ({namespace}) {
 	};
 
 	const toggleSitemapFields = () => {
+		if (nondefaultAssetDisplayPage) {
+			disableSitemapFields();
+
+			return;
+		}
+
 		if (canonicalURLEnabledCheck?.checked) {
 			disableSitemapFields();
 

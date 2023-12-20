@@ -47,7 +47,7 @@ public class CaptchaSAPEntryPortalInstanceLifecycleListener
 
 	private void _addSAPEntry(long companyId) throws PortalException {
 		SAPEntry sapEntry = _sapEntryLocalService.fetchSAPEntry(
-			companyId, "CAPTCHA_DEFAULT");
+			companyId, _SAP_ENTRY_NAME);
 
 		if (sapEntry != null) {
 			return;
@@ -64,8 +64,10 @@ public class CaptchaSAPEntryPortalInstanceLifecycleListener
 				"SimpleCaptchaResourceImpl#getSimpleCaptchaChallenge\n",
 				"com.liferay.captcha.rest.internal.resource.v1_0.",
 				"SimpleCaptchaResourceImpl#postSimpleCaptchaResponse"),
-			true, true, "CAPTCHA_DEFAULT", map, new ServiceContext());
+			true, true, _SAP_ENTRY_NAME, map, new ServiceContext());
 	}
+
+	private static final String _SAP_ENTRY_NAME = "CAPTCHA_DEFAULT";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CaptchaSAPEntryPortalInstanceLifecycleListener.class);

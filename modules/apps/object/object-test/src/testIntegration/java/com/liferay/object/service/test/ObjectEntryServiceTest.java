@@ -706,11 +706,11 @@ public class ObjectEntryServiceTest {
 			adminRole.getRoleId());
 
 		for (long adminUserId : adminUserIds) {
-			int numberOfNotifications =
+			int notificationsCount =
 				_userNotificationLocalService.
 					getDeliveredUserNotificationEventsCount(adminUserId, true);
 
-			Assert.assertTrue(numberOfNotifications > 0);
+			Assert.assertTrue(notificationsCount > 0);
 		}
 
 		ConfigurationTestUtil.deleteConfiguration(

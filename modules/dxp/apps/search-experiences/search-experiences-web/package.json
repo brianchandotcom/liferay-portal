@@ -43,10 +43,12 @@
 	},
 	"jest": {
 		"setupFilesAfterEnv": [
-			"<rootDir>/test/js/mocks/fetch.js"
+			"<rootDir>/test/js/mocks/fetch.js",
+			"<rootDir>/test/js/setup.js"
 		],
 		"testPathIgnorePatterns": [
-			"<rootDir>/test/js/mocks/*"
+			"<rootDir>/test/js/mocks/*",
+			"<rootDir>/test/js/setup.js"
 		],
 		"transformIgnorePatterns": [
 			"<rootDir>/.*\\.json$"

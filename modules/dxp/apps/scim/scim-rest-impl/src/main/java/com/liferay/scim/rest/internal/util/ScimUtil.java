@@ -67,14 +67,14 @@ public class ScimUtil {
 
 		group.replaceDisplayName(userGroup.getName());
 
-		Date createDate = userGroup.getCreateDate();
+		Date createDate = _truncateDate(userGroup.getCreateDate());
 
 		group.setCreatedInstant(createDate.toInstant());
 
 		group.setExternalId(userGroup.getExternalReferenceCode());
 		group.setId(String.valueOf(userGroup.getPrimaryKey()));
 
-		Date modifiedDate = userGroup.getModifiedDate();
+		Date modifiedDate = _truncateDate(userGroup.getModifiedDate());
 
 		group.setLastModifiedInstant(modifiedDate.toInstant());
 

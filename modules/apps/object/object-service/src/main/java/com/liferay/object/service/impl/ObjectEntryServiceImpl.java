@@ -608,41 +608,74 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 	}
 
 	private void _sendNotificationToInstanceAdministrators(
-			List<Long> adminUserIdList, ObjectDefinition objectDefinition,
-			String portletId)
-		throws Throwable {
+			ObjectDefinition objectDefinition)
+		throws PortalException {
 
-		TransactionInvokerUtil.invoke(
-			_transactionConfig,
-			() -> {
-				for (long adminUserId : adminUserIdList) {
-					_userNotificationEventLocalService.
-						sendUserNotificationEvents(
-							adminUserId, portletId,
-							UserNotificationDeliveryConstants.TYPE_WEBSITE,
-							true, false,
-							JSONUtil.put(
-								"className", objectDefinition.getClassName()
-							).put(
-								"externalReferenceCode",
-								objectDefinition.getExternalReferenceCode()
-							).put(
-								"notificationMessage",
-								StringBundler.concat(
-									"The limit of guest entries for ",
-									objectDefinition.getLabel(
-										objectDefinition.
-											getDefaultLanguageId()),
-									" has been reached and will no longer be ",
-									"accepted. Go to Instance Settings to ",
-									"change this.")
-							).put(
-								"portletId", portletId
-							));
-				}
+		String portletId =
+			objectDefinition.isUnmodifiableSystemObject() ? StringPool.BLANK :
+				objectDefinition.getPortletId();
 
-				return null;
-			});
+		Role role = _roleLocalService.getRole(
+			objectDefinition.getCompanyId(), RoleConstants.ADMINISTRATOR);
+
+		long[] adminUserIds = _userLocalService.getRoleUserIds(
+			role.getRoleId());
+
+		long timestamp = LocalDate.now(
+		).atStartOfDay(
+			ZoneId.systemDefault()
+		).toInstant(
+		).getEpochSecond();
+
+		List<Long> adminUserIdNotDeliveredList = new ArrayList<>();
+
+		for (long adminUserId : adminUserIds) {
+			int notificationsCount =
+				_userNotificationEventLocalService.
+					getUserNotificationEventsCount(
+						adminUserId, portletId, true, timestamp);
+
+			if (notificationsCount <= 0) {
+				adminUserIdNotDeliveredList.add(adminUserId);
+			}
+		}
+
+		try {
+			TransactionInvokerUtil.invoke(
+				_transactionConfig,
+				() -> {
+					for (long adminUserId : adminUserIdNotDeliveredList) {
+						_userNotificationEventLocalService.
+							sendUserNotificationEvents(
+								adminUserId, portletId,
+								UserNotificationDeliveryConstants.TYPE_WEBSITE,
+								true, false,
+								JSONUtil.put(
+									"className", objectDefinition.getClassName()
+								).put(
+									"externalReferenceCode",
+									objectDefinition.getExternalReferenceCode()
+								).put(
+									"notificationMessage",
+									StringBundler.concat(
+										"The limit of guest entries for ",
+										objectDefinition.getLabel(
+											objectDefinition.
+												getDefaultLanguageId()),
+										" has been reached and will no longer ",
+										"be accepted. Go to Instance Settings ",
+										"to change this.")
+								).put(
+									"portletId", portletId
+								));
+					}
+
+					return null;
+				});
+		}
+		catch (Throwable throwable) {
+			ReflectionUtil.throwException(throwable);
+		}
 	}
 
 	private void _validateSubmissionLimit(long objectDefinitionId, User user)
@@ -684,44 +717,7 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 			if (count >=
 					maximumNumberOfGuestUserObjectEntriesPerObjectDefinition) {
 
-				String portletId =
-					objectDefinition.isUnmodifiableSystemObject() ?
-						StringPool.BLANK : objectDefinition.getPortletId();
-
-				Role role = _roleLocalService.getRole(
-					objectDefinition.getCompanyId(),
-					RoleConstants.ADMINISTRATOR);
-
-				long[] adminUserIds = _userLocalService.getRoleUserIds(
-					role.getRoleId());
-
-				long timestamp = LocalDate.now(
-				).atStartOfDay(
-					ZoneId.systemDefault()
-				).toInstant(
-				).getEpochSecond();
-
-				List<Long> adminUserIdNotDeliveredList = new ArrayList<>();
-
-				for (long adminUserId : adminUserIds) {
-					int notificationsCount =
-						_userNotificationEventLocalService.
-							getUserNotificationEventsCount(
-								adminUserId, portletId, true, timestamp);
-
-					if (notificationsCount <= 0) {
-						adminUserIdNotDeliveredList.add(adminUserId);
-					}
-				}
-
-				try {
-					_sendNotificationToInstanceAdministrators(
-						adminUserIdNotDeliveredList, objectDefinition,
-						portletId);
-				}
-				catch (Throwable throwable) {
-					ReflectionUtil.throwException(throwable);
-				}
+				_sendNotificationToInstanceAdministrators(objectDefinition);
 
 				throw new ObjectEntryCountException(
 					Collections.singletonList(objectDefinition.getLabel()),

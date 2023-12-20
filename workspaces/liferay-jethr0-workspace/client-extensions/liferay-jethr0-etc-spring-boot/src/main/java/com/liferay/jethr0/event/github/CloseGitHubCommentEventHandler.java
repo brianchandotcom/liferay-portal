@@ -14,7 +14,8 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class CloseGitHubIssueEventHandler extends BaseGitHubIssueEventHandler {
+public class CloseGitHubCommentEventHandler
+	extends BaseGitHubCommentEventHandler {
 
 	@Override
 	public String process() throws InvalidJSONException {
@@ -41,7 +42,7 @@ public class CloseGitHubIssueEventHandler extends BaseGitHubIssueEventHandler {
 		return gitHubPullRequest.toString();
 	}
 
-	protected CloseGitHubIssueEventHandler(
+	protected CloseGitHubCommentEventHandler(
 		EventHandlerContext eventHandlerContext, JSONObject messageJSONObject) {
 
 		super(eventHandlerContext, messageJSONObject);

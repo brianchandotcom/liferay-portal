@@ -7,7 +7,6 @@ package com.liferay.jethr0.event.github;
 
 import com.liferay.jethr0.event.EventHandlerContext;
 import com.liferay.jethr0.event.github.client.GitHubClient;
-import com.liferay.jethr0.event.github.comment.GitHubComment;
 import com.liferay.jethr0.event.github.issue.GitHubIssue;
 import com.liferay.jethr0.event.github.pullrequest.GitHubPullRequest;
 import com.liferay.jethr0.event.github.repository.GitHubRepository;
@@ -264,22 +263,6 @@ public abstract class BaseGitHubIssueEventHandler
 		}
 
 		return null;
-	}
-
-	protected GitHubComment getGitHubComment() throws InvalidJSONException {
-		JSONObject messageJSONObject = getMessageJSONObject();
-
-		JSONObject commentJSONObject = messageJSONObject.optJSONObject(
-			"comment");
-
-		if (commentJSONObject == null) {
-			throw new InvalidJSONException(
-				"Missing \"comment\" from message JSON");
-		}
-
-		GitHubFactory gitHubFactory = getGitHubFactory();
-
-		return gitHubFactory.newGitHubComment(commentJSONObject);
 	}
 
 	protected GitHubIssue getGitHubIssue() throws InvalidJSONException {

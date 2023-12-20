@@ -29,6 +29,9 @@ public class JobDefinitionFactory {
 		if (type == JobEntity.Type.FIXPACK_BUILDER_PULL_REQUEST) {
 			return new FixpackBuilderPullRequestJobDefinition(type);
 		}
+		else if (type == JobEntity.Type.FORWARD_PULL_REQUEST) {
+			return new ForwardPullRequestJobDefinition(type);
+		}
 		else if (type == JobEntity.Type.GENERATE_CI_SYSTEM_HISTORY_REPORT) {
 			return new GenerateCISystemHistoryReportJobDefinition(type);
 		}

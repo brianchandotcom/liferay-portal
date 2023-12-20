@@ -169,6 +169,7 @@ public interface JobEntity extends Entity {
 		DEFAULT("default", "Default"),
 		FIXPACK_BUILDER_PULL_REQUEST(
 			"fixpackBuilderPullRequest", "Fixpack Builder Pull Request"),
+		FORWARD_PULL_REQUEST("forwardPullRequest", "Forward Pull Request"),
 		GENERATE_CI_SYSTEM_HISTORY_REPORT(
 			"generateCISystemHistoryReport",
 			"Generate CI System History Report"),

@@ -27,6 +27,9 @@ public class JobEntityFactory extends BaseEntityFactory<JobEntity> {
 		if (type == JobEntity.Type.FIXPACK_BUILDER_PULL_REQUEST) {
 			return new FixpackBuilderPullRequestJobEntity(jsonObject);
 		}
+		else if (type == JobEntity.Type.FORWARD_PULL_REQUEST) {
+			return new ForwardPullRequestJobEntity(jsonObject);
+		}
 		else if (type == JobEntity.Type.GENERATE_CI_SYSTEM_HISTORY_REPORT) {
 			return new HistoryGenerateCISystemReportJobEntity(jsonObject);
 		}

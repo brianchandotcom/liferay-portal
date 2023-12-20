@@ -223,10 +223,6 @@ public class DataLayoutResourceImpl extends BaseDataLayoutResourceImpl {
 
 		DDMStructure ddmStructure = ddmStructureLayout.getDDMStructure();
 
-		DataDefinitionPermissionUtil.check(
-			PermissionThreadLocal.getPermissionChecker(), ddmStructure,
-			ActionKeys.VIEW);
-
 		DDMForm ddmForm = ddmStructure.getDDMForm();
 
 		DDMFormRenderingContext ddmFormRenderingContext =

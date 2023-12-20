@@ -23,36 +23,38 @@ const ExportFormModal: React.FC<IProps> = ({
 				{Liferay.Language.get('export')}
 			</ClayModal.Header>
 
-			<form action={exportFormURL} method="post">
-				<ClayModal.Body>
+			<ClayModal.Body>
+				<form
+					action={exportFormURL}
+					id="exportFormEntriesForm"
+					method="post"
+				>
 					<ExportFormModalBody
 						csvExport={csvExport}
 						fileExtensions={fileExtensions}
 						portletNamespace={portletNamespace}
 					/>
-				</ClayModal.Body>
+				</form>
+			</ClayModal.Body>
 
-				<ClayModal.Footer
-					last={
-						<ClayButton.Group spaced>
-							<ClayButton
-								displayType="secondary"
-								onClick={onClose}
-							>
-								{Liferay.Language.get('cancel')}
-							</ClayButton>
+			<ClayModal.Footer
+				last={
+					<ClayButton.Group spaced>
+						<ClayButton displayType="secondary" onClick={onClose}>
+							{Liferay.Language.get('cancel')}
+						</ClayButton>
 
-							<ClayButton
-								displayType="primary"
-								onClick={onClose}
-								type="submit"
-							>
-								{Liferay.Language.get('ok')}
-							</ClayButton>
-						</ClayButton.Group>
-					}
-				/>
-			</form>
+						<ClayButton
+							displayType="primary"
+							form="exportFormEntriesForm"
+							onClick={onClose}
+							type="submit"
+						>
+							{Liferay.Language.get('ok')}
+						</ClayButton>
+					</ClayButton.Group>
+				}
+			/>
 		</ClayModal>
 	);
 };

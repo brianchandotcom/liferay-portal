@@ -23,6 +23,17 @@ definition {
 		Click(locator1 = "ACSites#REMOVE_SEGMENT_FILTER");
 	}
 
+	@summary = "Default summary"
+	macro searchSegmentFilterBar(searchItem = null, cardTitle = null) {
+		Type(
+			locator1 = "ACSites#SEARCH_SEGMENT_FILTER_BAR",
+			value1 = ${searchItem});
+
+		KeyPress(
+			locator1 = "ACSites#SEARCH_SEGMENT_FILTER_BAR",
+			value1 = "\ENTER");
+	}
+
 	@summary = "Asserts the total of page path"
 	macro viewPagePathTotal(pageTotal) {
 		var key_pageTotal = ${pageTotal};

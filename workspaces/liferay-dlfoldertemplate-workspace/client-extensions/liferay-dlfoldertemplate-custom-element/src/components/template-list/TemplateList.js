@@ -14,15 +14,15 @@ import moment from 'moment';
 import React, {useCallback, useContext, useEffect, useState} from 'react';
 
 import {showError} from '../../utils/util';
-import FolderStructureDesigner from '../template-diagram/template-diagram';
-import TemplateItemCreateFolder from './controls/template-item-create-folder/template-item-create-folder';
-import NewTemplateItem from './controls/template-item-create/template-item-create';
+import FolderStructureDesigner from '../template-diagram/FolderStructureDesigner';
+import TemplateItemCreateFolder from './controls/template-item-create-folder/TemplateItemCreateFolder';
+import NewTemplateItem from './controls/template-item-create/NewTemplateItem';
 
 import './template-list.css';
 import {
 	deleteFolderTemplateInformation,
 	getAvailableTemplatesPage,
-} from '../../services/template-list.service';
+} from '../../services/TemplateListService';
 
 const DELTAS = [{label: 5}, {label: 10}, {label: 20}, {label: 40}];
 

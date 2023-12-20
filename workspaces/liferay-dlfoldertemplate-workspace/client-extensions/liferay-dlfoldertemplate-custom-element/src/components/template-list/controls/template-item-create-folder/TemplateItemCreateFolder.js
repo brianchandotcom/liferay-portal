@@ -12,11 +12,9 @@ import React, {useCallback, useEffect, useState} from 'react';
 import {
 	getDocumentFolderDocumentFoldersPage,
 	getSiteDocumentFoldersPage,
-} from '../../../../services/folder-selector.service';
-import {createFolder} from '../../../../services/template-item-create-folder.service';
+} from '../../../../services/FolderSelectorService';
+import {createFolder} from '../../../../services/TemplateItemCreateFolderService';
 import {showError, showSuccess} from '../../../../utils/util';
-
-import './template-item-create-folder.css';
 
 const TemplateItemCreateFolder = ({templateID}) => {
 	const [folderTree, setFolderTree] = useState(null);

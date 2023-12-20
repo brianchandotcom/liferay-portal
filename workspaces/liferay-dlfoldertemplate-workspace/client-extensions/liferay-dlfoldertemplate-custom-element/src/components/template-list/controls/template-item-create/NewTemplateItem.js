@@ -9,7 +9,7 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {Flex, Form} from 'antd';
 import React, {useState} from 'react';
 
-import {postFolderTemplateInformation} from '../../../../services/template-list.service';
+import {postFolderTemplateInformation} from '../../../../services/TemplateListService';
 import {showError, showSuccess} from '../../../../utils/util';
 
 const NewTemplateItem = ({onClose}) => {

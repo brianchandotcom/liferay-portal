@@ -100,6 +100,7 @@ public class GetIndexIndexRequestExecutorImpl
 		}
 
 		getIndexIndexResponse.setIndexMappings(indexMappings);
+
 		getIndexIndexResponse.setSettings(indexSetting);
 	}
 

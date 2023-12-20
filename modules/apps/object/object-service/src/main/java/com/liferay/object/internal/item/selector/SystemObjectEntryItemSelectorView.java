@@ -20,6 +20,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.related.models.ObjectRelatedModelsProvider;
 import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistry;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
 import com.liferay.petra.string.StringBundler;
@@ -73,6 +74,7 @@ public class SystemObjectEntryItemSelectorView
 		ItemSelectorViewDescriptorRenderer<InfoItemItemSelectorCriterion>
 			itemSelectorViewDescriptorRenderer,
 		ObjectDefinition objectDefinition,
+		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectFieldLocalService objectFieldLocalService,
 		ObjectRelatedModelsProviderRegistry objectRelatedModelsProviderRegistry,
 		Portal portal,
@@ -85,6 +87,7 @@ public class SystemObjectEntryItemSelectorView
 		_itemSelectorViewDescriptorRenderer =
 			itemSelectorViewDescriptorRenderer;
 		_objectDefinition = objectDefinition;
+		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectFieldLocalService = objectFieldLocalService;
 		_objectRelatedModelsProviderRegistry =
 			objectRelatedModelsProviderRegistry;
@@ -164,6 +167,7 @@ public class SystemObjectEntryItemSelectorView
 	private final ItemSelectorViewDescriptorRenderer
 		<InfoItemItemSelectorCriterion> _itemSelectorViewDescriptorRenderer;
 	private final ObjectDefinition _objectDefinition;
+	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private final ObjectFieldLocalService _objectFieldLocalService;
 	private final ObjectRelatedModelsProviderRegistry
 		_objectRelatedModelsProviderRegistry;
@@ -214,17 +218,21 @@ public class SystemObjectEntryItemSelectorView
 				(ThemeDisplay)_httpServletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
+			ObjectDefinition objectDefinition =
+				_objectDefinitionLocalService.fetchObjectDefinition(
+					_objectDefinition.getObjectDefinitionId());
+
 			return JSONUtil.put(
-				"className", _objectDefinition.getClassName()
+				"className", objectDefinition.getClassName()
 			).put(
 				"classNameId",
-				_portal.getClassNameId(_objectDefinition.getClassName())
+				_portal.getClassNameId(objectDefinition.getClassName())
 			).put(
 				"classPK", _baseModel.getPrimaryKeyObj()
 			).put(
 				"title",
 				StringBundler.concat(
-					_objectDefinition.getLabel(themeDisplay.getLocale()),
+					objectDefinition.getLabel(themeDisplay.getLocale()),
 					StringPool.SPACE, _baseModel.getPrimaryKeyObj())
 			).toString();
 		}
@@ -236,8 +244,12 @@ public class SystemObjectEntryItemSelectorView
 
 		@Override
 		public String getTitle(Locale locale) {
+			ObjectDefinition objectDefinition =
+				_objectDefinitionLocalService.fetchObjectDefinition(
+					_objectDefinition.getObjectDefinitionId());
+
 			ObjectField objectField = _objectFieldLocalService.fetchObjectField(
-				_objectDefinition.getTitleObjectFieldId());
+				objectDefinition.getTitleObjectFieldId());
 
 			if (objectField == null) {
 				return StringPool.BLANK;

@@ -372,48 +372,35 @@ public class DispatchTriggerLocalServiceTest {
 			DispatchTaskClusterMode.valueOf(
 				dispatchTrigger.getDispatchTaskClusterMode());
 
-		try {
-			DispatchTrigger updateDispatchTrigger =
-				_dispatchTriggerLocalService.updateDispatchTrigger(
-					dispatchTrigger.getDispatchTriggerId(), true,
-					CronExpressionUtil.getCronExpression(),
-					DispatchTaskClusterMode.SINGLE_NODE_MEMORY_CLUSTERED,
-					CronExpressionUtil.getMonth() + 1, 20,
-					CronExpressionUtil.getYear(), 23, 59, false, true,
-					CronExpressionUtil.getMonth() - 1, 1,
-					CronExpressionUtil.getYear(), 0, 0, "UTC");
-
-			DispatchTaskClusterMode updateDispatchTaskClusterMode =
-				DispatchTaskClusterMode.valueOf(
-					updateDispatchTrigger.getDispatchTaskClusterMode());
-
-			Assert.assertEquals(
+		DispatchTrigger updateDispatchTrigger =
+			_dispatchTriggerLocalService.updateDispatchTrigger(
+				dispatchTrigger.getDispatchTriggerId(), true,
+				CronExpressionUtil.getCronExpression(),
 				DispatchTaskClusterMode.SINGLE_NODE_MEMORY_CLUSTERED,
-				updateDispatchTaskClusterMode);
+				CronExpressionUtil.getMonth() + 1, 20,
+				CronExpressionUtil.getYear(), 23, 59, false, true,
+				CronExpressionUtil.getMonth() - 1, 1,
+				CronExpressionUtil.getYear(), 0, 0, "UTC");
 
-			Assert.assertNull(
-				_schedulerEngineHelper.getScheduledJob(
-					_getJobName(dispatchTrigger.getDispatchTriggerId()),
-					_getGroupName(dispatchTrigger.getDispatchTriggerId()),
-					dispatchTaskClusterMode.getStorageType()));
+		DispatchTaskClusterMode updateDispatchTaskClusterMode =
+			DispatchTaskClusterMode.valueOf(
+				updateDispatchTrigger.getDispatchTaskClusterMode());
 
-			Assert.assertNotNull(
-				_schedulerEngineHelper.getScheduledJob(
-					_getJobName(updateDispatchTrigger.getDispatchTriggerId()),
-					_getGroupName(updateDispatchTrigger.getDispatchTriggerId()),
-					updateDispatchTaskClusterMode.getStorageType()));
-		}
-		catch (Exception exception) {
-			if (!(exception instanceof DispatchTriggerSchedulerException)) {
-				throw exception;
-			}
+		Assert.assertEquals(
+			DispatchTaskClusterMode.SINGLE_NODE_MEMORY_CLUSTERED,
+			updateDispatchTaskClusterMode);
 
-			Assert.assertNull(
-				_schedulerEngineHelper.getScheduledJob(
-					_getJobName(dispatchTrigger.getDispatchTriggerId()),
-					_getGroupName(dispatchTrigger.getDispatchTriggerId()),
-					dispatchTaskClusterMode.getStorageType()));
-		}
+		Assert.assertNull(
+			_schedulerEngineHelper.getScheduledJob(
+				_getJobName(dispatchTrigger.getDispatchTriggerId()),
+				_getGroupName(dispatchTrigger.getDispatchTriggerId()),
+				dispatchTaskClusterMode.getStorageType()));
+
+		Assert.assertNotNull(
+			_schedulerEngineHelper.getScheduledJob(
+				_getJobName(updateDispatchTrigger.getDispatchTriggerId()),
+				_getGroupName(updateDispatchTrigger.getDispatchTriggerId()),
+				updateDispatchTaskClusterMode.getStorageType()));
 	}
 
 	private DispatchTrigger _addDispatchTrigger(DispatchTrigger dispatchTrigger)

@@ -9,7 +9,6 @@ import com.liferay.message.boards.constants.MBPortletKeys;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.BaseJSPSettingsConfigurationAction;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
@@ -50,11 +49,7 @@ public class MBAdminConfigurationAction
 
 	@Override
 	public String getJspPath(HttpServletRequest httpServletRequest) {
-		if (FeatureFlagManagerUtil.isEnabled("LPS-197692")) {
-			return "/message_boards_admin/configuration_browse.jsp";
-		}
-
-		return "/message_boards_admin/configuration.jsp";
+		return "/message_boards_admin/configuration_browse.jsp";
 	}
 
 	@Override
@@ -65,10 +60,6 @@ public class MBAdminConfigurationAction
 
 		validateEmail(actionRequest, "emailMessageAdded");
 		validateEmail(actionRequest, "emailMessageUpdated");
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-197692")) {
-			validateEmailFrom(actionRequest);
-		}
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
 	}

@@ -9,7 +9,6 @@ import com.liferay.bookmarks.constants.BookmarksFolderConstants;
 import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.bookmarks.service.BookmarksFolderLocalService;
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.BaseJSPSettingsConfigurationAction;
@@ -38,11 +37,7 @@ public class BookmarksAdminConfigurationAction
 
 	@Override
 	public String getJspPath(HttpServletRequest httpServletRequest) {
-		if (FeatureFlagManagerUtil.isEnabled("LPS-197692")) {
-			return "/bookmarks_admin/configuration_browse.jsp";
-		}
-
-		return "/bookmarks_admin/configuration.jsp";
+		return "/bookmarks_admin/configuration_browse.jsp";
 	}
 
 	@Override
@@ -53,10 +48,6 @@ public class BookmarksAdminConfigurationAction
 
 		validateEmail(actionRequest, "emailMessageAdded");
 		validateEmail(actionRequest, "emailMessageUpdated");
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-197692")) {
-			validateEmailFrom(actionRequest);
-		}
 
 		_validateRootFolder(actionRequest);
 

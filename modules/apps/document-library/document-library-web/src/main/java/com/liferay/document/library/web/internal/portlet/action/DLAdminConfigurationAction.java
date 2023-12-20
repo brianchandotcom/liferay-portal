@@ -7,7 +7,6 @@ package com.liferay.document.library.web.internal.portlet.action;
 
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.item.selector.ItemSelector;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.portlet.BaseJSPSettingsConfigurationAction;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.util.Constants;
@@ -37,11 +36,7 @@ public class DLAdminConfigurationAction
 
 	@Override
 	public String getJspPath(HttpServletRequest httpServletRequest) {
-		if (FeatureFlagManagerUtil.isEnabled("LPS-197692")) {
-			return "/document_library_admin/configuration_browse.jsp";
-		}
-
-		return "/document_library_admin/configuration.jsp";
+		return "/document_library_admin/configuration_browse.jsp";
 	}
 
 	@Override
@@ -74,10 +69,6 @@ public class DLAdminConfigurationAction
 	private void _validate(ActionRequest actionRequest) {
 		validateEmail(actionRequest, "emailFileEntryAdded");
 		validateEmail(actionRequest, "emailFileEntryUpdated");
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-197692")) {
-			validateEmailFrom(actionRequest);
-		}
 	}
 
 	@Reference

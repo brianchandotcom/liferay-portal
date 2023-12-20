@@ -5,7 +5,6 @@
 
 package com.liferay.portlet.configuration.web.internal.portlet.configuration.icon;
 
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIcon;
@@ -73,8 +72,7 @@ public class ModalConfigurationPortletConfigurationIcon
 		Layout layout = themeDisplay.getLayout();
 
 		if (layout.isEmbeddedPersonalApplication() ||
-			(layout.isTypeControlPanel() &&
-			 FeatureFlagManagerUtil.isEnabled("LPS-197692"))) {
+			layout.isTypeControlPanel()) {
 
 			return false;
 		}

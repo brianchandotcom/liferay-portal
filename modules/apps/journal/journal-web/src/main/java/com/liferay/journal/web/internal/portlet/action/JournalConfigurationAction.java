@@ -12,7 +12,6 @@ import com.liferay.journal.web.internal.configuration.JournalWebConfiguration;
 import com.liferay.journal.web.internal.display.context.helper.JournalWebRequestHelper;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.portlet.BaseJSPSettingsConfigurationAction;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.settings.ModifiableSettings;
@@ -48,17 +47,12 @@ public class JournalConfigurationAction
 
 	@Override
 	public String getJspPath(HttpServletRequest httpServletRequest) {
-		if (FeatureFlagManagerUtil.isEnabled("LPS-197692")) {
-			httpServletRequest.setAttribute(
-				ItemSelector.class.getName(), _itemSelector);
-			httpServletRequest.setAttribute(
-				JournalWebConfiguration.class.getName(),
-				_journalWebConfiguration);
+		httpServletRequest.setAttribute(
+			ItemSelector.class.getName(), _itemSelector);
+		httpServletRequest.setAttribute(
+			JournalWebConfiguration.class.getName(), _journalWebConfiguration);
 
-			return "/configuration_browse.jsp";
-		}
-
-		return "/configuration.jsp";
+		return "/configuration_browse.jsp";
 	}
 
 	@Override
@@ -168,10 +162,6 @@ public class JournalConfigurationAction
 		validateEmail(actionRequest, "emailArticleMovedToFolder");
 		validateEmail(actionRequest, "emailArticleReview");
 		validateEmail(actionRequest, "emailArticleUpdated");
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-197692")) {
-			validateEmailFrom(actionRequest);
-		}
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
 	}

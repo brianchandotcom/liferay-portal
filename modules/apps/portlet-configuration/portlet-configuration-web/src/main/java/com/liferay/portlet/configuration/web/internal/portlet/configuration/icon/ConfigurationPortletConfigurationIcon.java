@@ -6,7 +6,6 @@
 package com.liferay.portlet.configuration.web.internal.portlet.configuration.icon;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -114,10 +113,6 @@ public class ConfigurationPortletConfigurationIcon
 
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-197692")) {
-			return false;
-		}
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 

@@ -5,7 +5,6 @@
 
 package com.liferay.wiki.web.internal.portlet.action;
 
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.portlet.BaseJSPSettingsConfigurationAction;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.wiki.constants.WikiPortletKeys;
@@ -30,11 +29,7 @@ public class WikiAdminConfigurationAction
 
 	@Override
 	public String getJspPath(HttpServletRequest httpServletRequest) {
-		if (FeatureFlagManagerUtil.isEnabled("LPS-197692")) {
-			return "/wiki_admin/configuration_browse.jsp";
-		}
-
-		return "/wiki_admin/configuration.jsp";
+		return "/wiki_admin/configuration_browse.jsp";
 	}
 
 	@Override
@@ -45,10 +40,6 @@ public class WikiAdminConfigurationAction
 
 		validateEmail(actionRequest, "emailPageAdded");
 		validateEmail(actionRequest, "emailPageUpdated");
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-197692")) {
-			validateEmailFrom(actionRequest);
-		}
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
 	}

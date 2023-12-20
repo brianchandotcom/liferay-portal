@@ -7,6 +7,7 @@ package com.liferay.jethr0.event.github;
 
 import com.liferay.jethr0.event.EventHandlerContext;
 import com.liferay.jethr0.event.github.comment.GitHubComment;
+import com.liferay.jethr0.event.github.user.GitHubUser;
 
 import org.json.JSONObject;
 
@@ -15,6 +16,22 @@ import org.json.JSONObject;
  */
 public abstract class BaseGitHubCommentEventHandler
 	extends BaseGitHubIssueEventHandler {
+
+	public boolean isCommenterLiferayGitHubUser() throws InvalidJSONException {
+		GitHubComment gitHubComment = getGitHubComment();
+
+		if (gitHubComment == null) {
+			return false;
+		}
+
+		GitHubUser commenterGitHubUser = gitHubComment.getCommenterGitHubUser();
+
+		if (!commenterGitHubUser.isLiferayUser()) {
+			return false;
+		}
+
+		return true;
+	}
 
 	protected BaseGitHubCommentEventHandler(
 		EventHandlerContext eventHandlerContext, JSONObject messageJSONObject) {
@@ -36,6 +53,19 @@ public abstract class BaseGitHubCommentEventHandler
 		GitHubFactory gitHubFactory = getGitHubFactory();
 
 		return gitHubFactory.newGitHubComment(commentJSONObject);
+	}
+
+	@Override
+	protected boolean involvesLiferayGitHubUsersOnly()
+		throws InvalidJSONException {
+
+		if (isCommenterLiferayGitHubUser() && isReceiverLiferayGitHubUser() &&
+			isSenderLiferayGitHubUser()) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 }

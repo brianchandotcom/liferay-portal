@@ -78,7 +78,7 @@ public abstract class BaseGitHubIssueEventHandler
 	}
 
 	protected boolean checkLiferayGitHubUser() throws InvalidJSONException {
-		if (isReceiverLiferayGitHubUser() && isSenderLiferayGitHubUser()) {
+		if (involvesLiferayGitHubUsersOnly()) {
 			return false;
 		}
 
@@ -364,6 +364,16 @@ public abstract class BaseGitHubIssueEventHandler
 			gitHubPullRequest.getUpstreamBranchURL());
 
 		return _upstreamGitBranchEntity;
+	}
+
+	protected boolean involvesLiferayGitHubUsersOnly()
+		throws InvalidJSONException {
+
+		if (isReceiverLiferayGitHubUser() && isSenderLiferayGitHubUser()) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private boolean _isGitHubCIEnabledBranchNames()

@@ -21,11 +21,10 @@ interface ModalImportProps {
 		value: string;
 	};
 	importURL: string;
-	label: string;
+	modalImportKey: string;
 	nameMaxLength: string;
 	portletNamespace: string;
 	showModal?: boolean;
-	title: string;
 }
 
 export type TFile = {
@@ -39,11 +38,10 @@ export default function ModalImport({
 	handleOnClose,
 	importExtendedInfo,
 	importURL,
-	label,
+	modalImportKey,
 	nameMaxLength,
 	portletNamespace,
 	showModal,
-	title,
 }: ModalImportProps) {
 	const [error, setError] = useState<string>('');
 	const [externalReferenceCode, setExternalReferenceCode] = useState<string>(
@@ -151,7 +149,7 @@ export default function ModalImport({
 						handleImport(importFormData as FormData)
 					}
 					handleOnClose={onClose}
-					label={label}
+					modalImportKey={modalImportKey}
 				/>
 			) : (
 				<ModalImportContent
@@ -164,7 +162,7 @@ export default function ModalImport({
 					handleSubmit={handleSubmit}
 					importURL={importURL}
 					inputFile={inputFile as File}
-					label={label}
+					modalImportKey={modalImportKey}
 					name={name}
 					nameMaxLength={nameMaxLength}
 					portletNamespace={portletNamespace}
@@ -172,7 +170,6 @@ export default function ModalImport({
 					setExternalReferenceCode={setExternalReferenceCode}
 					setFile={setFile}
 					setName={setName}
-					title={title}
 				/>
 			)}
 		</ClayModal>

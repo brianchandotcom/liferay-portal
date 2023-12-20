@@ -25,13 +25,11 @@
 			).put(
 				"JSONInputId", "listTypeDefinitionJSON"
 			).put(
-				"label", LanguageUtil.get(request, "picklist")
+				"modalImportKey", "listTypeDefinition"
 			).put(
 				"nameMaxLength", ModelHintsConstants.TEXT_MAX_LENGTH
 			).put(
 				"portletNamespace", liferayPortletResponse.getNamespace()
-			).put(
-				"title", LanguageUtil.format(request, "import-x", "picklist")
 			).build()
 		%>'
 	/>

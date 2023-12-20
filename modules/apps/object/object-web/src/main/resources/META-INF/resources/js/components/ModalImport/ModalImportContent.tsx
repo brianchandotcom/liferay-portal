@@ -8,11 +8,14 @@ import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayModal from '@clayui/modal';
 import {Input} from '@liferay/object-js-components-web';
-import {sub} from 'frontend-js-web';
 import React, {FormEvent, useRef} from 'react';
 
 import {ModalImportProperties} from '../ViewObjectDefinitions/ViewObjectDefinitions';
 import {TFile} from './ModalImport';
+import {
+	modalImportContentFeedbackMessage,
+	modalImportContentTitle,
+} from './modalImportLanguageUtil';
 
 interface ModalImportContentProps extends ModalImportProperties {
 	error: string;
@@ -21,6 +24,7 @@ interface ModalImportContentProps extends ModalImportProperties {
 	handleOnClose: () => void;
 	handleSubmit: (value: FormEvent<HTMLFormElement>) => void;
 	inputFile: File;
+	modalImportKey: string;
 	name: string;
 	nameMaxLength: string;
 	portletNamespace: string;
@@ -38,7 +42,7 @@ export function ModalImportContent({
 	handleOnClose,
 	handleSubmit,
 	inputFile,
-	label,
+	modalImportKey,
 	name,
 	nameMaxLength,
 	portletNamespace,
@@ -46,7 +50,6 @@ export function ModalImportContent({
 	setExternalReferenceCode,
 	setFile,
 	setName,
-	title,
 }: ModalImportContentProps) {
 	const importFormId = `${portletNamespace}importForm`;
 	const inputFileRef = useRef() as React.MutableRefObject<HTMLInputElement>;
@@ -54,7 +57,9 @@ export function ModalImportContent({
 
 	return (
 		<>
-			<ClayModal.Header>{title}</ClayModal.Header>
+			<ClayModal.Header>
+				{modalImportContentTitle[modalImportKey]}
+			</ClayModal.Header>
 
 			<ClayModal.Body>
 				<ClayForm id={importFormId} onSubmit={handleSubmit}>
@@ -132,12 +137,11 @@ export function ModalImportContent({
 					{externalReferenceCode && (
 						<Input
 							disabled
-							feedbackMessage={sub(
-								Liferay.Language.get(
-									'unique-key-for-referencing-the-x'
-								),
-								label.toLowerCase()
-							)}
+							feedbackMessage={
+								modalImportContentFeedbackMessage[
+									modalImportKey
+								]
+							}
 							id="externalReferenceCode"
 							label={Liferay.Language.get(
 								'external-reference-code'

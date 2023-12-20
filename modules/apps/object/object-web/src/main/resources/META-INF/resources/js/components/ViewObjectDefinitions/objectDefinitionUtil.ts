@@ -300,10 +300,7 @@ export function getObjectFolderActions({
 	}
 
 	kebabOptions.push({
-		label: sub(
-			Liferay.Language.get('export-x'),
-			Liferay.Language.get('object-folder')
-		),
+		label: Liferay.Language.get('export-object-folder'),
 		onClick: () => {
 			exportObjectFolder({baseResourceURL, objectFolderId});
 		},
@@ -313,10 +310,7 @@ export function getObjectFolderActions({
 
 	if (actions?.objectDefinitionActions?.create) {
 		kebabOptions.push({
-			label: sub(
-				Liferay.Language.get('import-x'),
-				Liferay.Language.get('object-definition')
-			),
+			label: Liferay.Language.get('import-object-definition'),
 			onClick: () => {
 				setModalImportProperties({
 					JSONInputId: 'objectDefinitionJSON',
@@ -327,11 +321,7 @@ export function getObjectFolderActions({
 						value: objectFolderExternalReferenceCode,
 					},
 					importURL: importObjectDefinitionURL,
-					label: Liferay.Language.get('object-definition'),
-					title: sub(
-						Liferay.Language.get('import-x'),
-						Liferay.Language.get('object-definition')
-					),
+					modalImportKey: 'objectDefinition',
 				});
 
 				setShowModal((previousState: ViewObjectDefinitionsModals) => ({
@@ -347,10 +337,7 @@ export function getObjectFolderActions({
 
 	if (actions?.objectFolderActions.permissions) {
 		kebabOptions.push({
-			label: sub(
-				Liferay.Language.get('x-permissions'),
-				Liferay.Language.get('object-folder')
-			),
+			label: Liferay.Language.get('object-folder-permissions'),
 			onClick: () => {
 				openModal({
 					title: Liferay.Language.get('permissions'),
@@ -365,10 +352,7 @@ export function getObjectFolderActions({
 	if (actions?.objectFolderActions.delete) {
 		kebabOptions.push({type: 'divider'});
 		kebabOptions.push({
-			label: sub(
-				Liferay.Language.get('delete-x'),
-				Liferay.Language.get('object-folder')
-			),
+			label: Liferay.Language.get('delete-object-folder'),
 			onClick: () =>
 				setShowModal((previousState: ViewObjectDefinitionsModals) => ({
 					...previousState,

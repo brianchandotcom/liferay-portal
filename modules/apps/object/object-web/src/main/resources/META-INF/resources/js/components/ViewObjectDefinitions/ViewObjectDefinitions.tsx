@@ -48,8 +48,7 @@ export interface ModalImportProperties {
 	apiURL: string;
 	importExtendedInfo?: {key: string; value: string};
 	importURL: string;
-	label: string;
-	title: string;
+	modalImportKey: string;
 }
 
 interface ViewObjectDefinitionsProps extends IFDSTableProps {
@@ -111,8 +110,7 @@ export default function ViewObjectDefinitions({
 		JSONInputId: '',
 		apiURL: '',
 		importURL: '',
-		label: '',
-		title: '',
+		modalImportKey: '',
 	});
 
 	const [
@@ -486,11 +484,10 @@ export default function ViewObjectDefinitions({
 						modalImportProperties.importExtendedInfo
 					}
 					importURL={modalImportProperties.importURL}
-					label={modalImportProperties.label}
+					modalImportKey={modalImportProperties.modalImportKey}
 					nameMaxLength={nameMaxLength}
 					portletNamespace={portletNamespace}
 					showModal={showModal.importModal}
-					title={modalImportProperties.title}
 				/>
 			)}
 

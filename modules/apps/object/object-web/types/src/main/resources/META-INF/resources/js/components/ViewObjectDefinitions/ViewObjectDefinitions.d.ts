@@ -15,8 +15,7 @@ export interface ModalImportProperties {
 		value: string;
 	};
 	importURL: string;
-	label: string;
-	title: string;
+	modalImportKey: string;
 }
 interface ViewObjectDefinitionsProps extends IFDSTableProps {
 	baseResourceURL: string;

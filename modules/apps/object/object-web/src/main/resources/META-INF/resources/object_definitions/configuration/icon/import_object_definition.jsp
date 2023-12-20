@@ -25,13 +25,11 @@
 			).put(
 				"JSONInputId", "objectDefinitionJSON"
 			).put(
-				"label", LanguageUtil.get(request, "object-definition")
+				"modalImportKey", "objectDefinition"
 			).put(
 				"nameMaxLength", ModelHintsConstants.TEXT_MAX_LENGTH
 			).put(
 				"portletNamespace", liferayPortletResponse.getNamespace()
-			).put(
-				"title", LanguageUtil.format(request, "import-x", "object-definition")
 			).build()
 		%>'
 	/>

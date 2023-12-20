@@ -13,6 +13,7 @@ interface ModalImportContentProps extends ModalImportProperties {
 	handleOnClose: () => void;
 	handleSubmit: (value: FormEvent<HTMLFormElement>) => void;
 	inputFile: File;
+	modalImportKey: string;
 	name: string;
 	nameMaxLength: string;
 	portletNamespace: string;
@@ -29,7 +30,7 @@ export declare function ModalImportContent({
 	handleOnClose,
 	handleSubmit,
 	inputFile,
-	label,
+	modalImportKey,
 	name,
 	nameMaxLength,
 	portletNamespace,
@@ -37,6 +38,5 @@ export declare function ModalImportContent({
 	setExternalReferenceCode,
 	setFile,
 	setName,
-	title,
 }: ModalImportContentProps): JSX.Element;
 export {};

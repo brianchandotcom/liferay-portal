@@ -14,11 +14,10 @@ interface ModalImportProps {
 		value: string;
 	};
 	importURL: string;
-	label: string;
+	modalImportKey: string;
 	nameMaxLength: string;
 	portletNamespace: string;
 	showModal?: boolean;
-	title: string;
 }
 export declare type TFile = {
 	fileName?: string;
@@ -30,10 +29,9 @@ export default function ModalImport({
 	handleOnClose,
 	importExtendedInfo,
 	importURL,
-	label,
+	modalImportKey,
 	nameMaxLength,
 	portletNamespace,
 	showModal,
-	title,
 }: ModalImportProps): JSX.Element | null;
 export {};

@@ -8,11 +8,11 @@
 interface ModalImportWarningProps {
 	handleImport: () => void;
 	handleOnClose: () => void;
-	label: string;
+	modalImportKey: string;
 }
 export declare function ModalImportWarning({
 	handleImport,
 	handleOnClose,
-	label,
+	modalImportKey,
 }: ModalImportWarningProps): JSX.Element;
 export {};

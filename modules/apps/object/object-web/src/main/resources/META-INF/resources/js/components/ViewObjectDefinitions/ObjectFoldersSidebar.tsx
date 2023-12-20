@@ -9,7 +9,6 @@ import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayList from '@clayui/list';
 import {getLocalizableLabel} from '@liferay/object-js-components-web';
-import {sub} from 'frontend-js-web';
 import React, {SetStateAction} from 'react';
 
 import {defaultLanguageId} from '../../utils/constants';
@@ -45,10 +44,7 @@ export default function ObjectFoldersSideBar({
 	const objectFoldersKebabOptions = [];
 
 	objectFoldersKebabOptions.push({
-		label: sub(
-			Liferay.Language.get('export-x'),
-			Liferay.Language.get('object-folder')
-		),
+		label: Liferay.Language.get('export-object-folder'),
 		onClick: () => {
 			exportObjectFolder({
 				baseResourceURL,
@@ -64,21 +60,14 @@ export default function ObjectFoldersSideBar({
 		objectFoldersRequestInfo?.actions.create
 	) {
 		objectFoldersKebabOptions.push({
-			label: sub(
-				Liferay.Language.get('import-x'),
-				Liferay.Language.get('object-folder')
-			),
+			label: Liferay.Language.get('import-object-folder'),
 			onClick: () => {
 				setModalImportProperties({
 					JSONInputId: 'objectFolderJSON',
 					apiURL:
 						'/o/object-admin/v1.0/object-folders/by-external-reference-code/',
 					importURL: importObjectFolderURL,
-					label: Liferay.Language.get('object-folder'),
-					title: sub(
-						Liferay.Language.get('import-x'),
-						Liferay.Language.get('object-folder')
-					),
+					modalImportKey: 'objectFolder',
 				});
 
 				setShowModal((previousState: ViewObjectDefinitionsModals) => ({

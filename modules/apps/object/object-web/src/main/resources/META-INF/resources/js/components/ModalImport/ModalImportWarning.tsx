@@ -6,45 +6,41 @@
 import ClayButton from '@clayui/button';
 import {Text} from '@clayui/core';
 import ClayModal from '@clayui/modal';
-import {sub} from 'frontend-js-web';
 import React from 'react';
+
+import {
+	modalImportWarningBodyTexts,
+	modalImportWarningTitle,
+} from './modalImportLanguageUtil';
 
 interface ModalImportWarningProps {
 	handleImport: () => void;
 	handleOnClose: () => void;
-	label: string;
+	modalImportKey: string;
 }
 
 export function ModalImportWarning({
 	handleImport,
 	handleOnClose,
-	label,
+	modalImportKey,
 }: ModalImportWarningProps) {
 	return (
 		<>
 			<ClayModal.Header>
-				{sub(Liferay.Language.get('update-existing-x'), label)}
+				{modalImportWarningTitle[modalImportKey]}
 			</ClayModal.Header>
 
 			<ClayModal.Body>
 				<div className="text-secondary">
-					<Text as="p" color="secondary">
-						{sub(
-							Liferay.Language.get(
-								'another-x-has-the-same-external-reference-code'
-							),
-							label.toLowerCase()
-						)}
-					</Text>
-
-					<Text as="p" color="secondary">
-						{sub(
-							Liferay.Language.get(
-								'before-importing-the-new-x-you-may-want-to-back-up-its-entries-to-prevent-data-loss'
-							),
-							label.toLowerCase()
-						)}
-					</Text>
+					{modalImportWarningBodyTexts.map(
+						(modalImportWarningBodyText, index) => {
+							return (
+								<Text as="p" color="secondary" key={index}>
+									{modalImportWarningBodyText[modalImportKey]}
+								</Text>
+							);
+						}
+					)}
 
 					<Text as="p" color="secondary">
 						{Liferay.Language.get(

@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.Validator;
 import java.io.Serializable;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -282,17 +283,26 @@ public class APIEndpointRelevantObjectEntryModelListener
 
 		String pathString = (String)values.get("path");
 
+		String pathParameter = (String)values.get("pathParameter");
+
 		if (Objects.equals(
 				APIApplication.Endpoint.RetrieveType.parse(
 					(String)values.get("retrieveType")),
 				APIApplication.Endpoint.RetrieveType.SINGLE_ELEMENT)) {
 
-			String pathParameter = (String)values.get("pathParameter");
-
 			_validateSingleElementPath(
 				objectEntry, pathParameter, pathString, responseAPISchemaId);
 		}
 		else {
+			if (!Validator.isBlank(pathParameter)) {
+				throw new ObjectEntryValuesException.InvalidObjectField(
+					Collections.singletonList("collection"),
+					"Path parameters are not supported by GET API endpoints " +
+						"with \"collection\" retrieve type",
+					"path-parameters-are-not-supported-by-get-api-endpoints-" +
+						"with-x-retrieve-type");
+			}
+
 			_validatePath(objectEntry, pathString);
 		}
 	}
@@ -342,7 +352,7 @@ public class APIEndpointRelevantObjectEntryModelListener
 				APIApplication.Endpoint.RetrieveType.COLLECTION)) {
 
 			throw new ObjectEntryValuesException.InvalidObjectField(
-				Arrays.asList("singleElement"),
+				Collections.singletonList("singleElement"),
 				"POST API endpoints retrieve type must be \"singleElement\"",
 				"post-api-endpoints-retrieve-type-must-be-x");
 		}
@@ -400,7 +410,8 @@ public class APIEndpointRelevantObjectEntryModelListener
 				pathParameter, HeadlessBuilderConstants.PATH_PARAMETER_ID)) {
 
 			throw new ObjectEntryValuesException.InvalidObjectField(
-				Arrays.asList(objectField.getLabel(user.getLocale())),
+				Collections.singletonList(
+					objectField.getLabel(user.getLocale())),
 				"Single element ID endpoint cannot be scoped by site",
 				"single-element-id-endpoint-cannot-be-scoped-by-site");
 		}

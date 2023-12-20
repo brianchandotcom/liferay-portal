@@ -24340,6 +24340,40 @@ public class WikiPagePersistenceImpl
 		if (Validator.isNull(wikiPage.getExternalReferenceCode())) {
 			wikiPage.setExternalReferenceCode(wikiPage.getUuid());
 		}
+		else {
+			if (!Objects.equals(
+					wikiPageModelImpl.getColumnOriginalValue(
+						"externalReferenceCode"),
+					wikiPage.getExternalReferenceCode())) {
+
+				long userId = GetterUtil.getLong(
+					PrincipalThreadLocal.getName());
+
+				if (userId > 0) {
+					long companyId = wikiPage.getCompanyId();
+
+					long groupId = wikiPage.getGroupId();
+
+					long classPK = 0;
+
+					if (!isNew) {
+						classPK = wikiPage.getPrimaryKey();
+					}
+
+					try {
+						wikiPage.setExternalReferenceCode(
+							SanitizerUtil.sanitize(
+								companyId, groupId, userId,
+								WikiPage.class.getName(), classPK,
+								ContentTypes.TEXT_HTML, Sanitizer.MODE_ALL,
+								wikiPage.getExternalReferenceCode(), null));
+					}
+					catch (SanitizerException sanitizerException) {
+						throw new SystemException(sanitizerException);
+					}
+				}
+			}
+		}
 
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();

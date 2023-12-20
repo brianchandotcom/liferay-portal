@@ -6276,6 +6276,39 @@ public class SXPElementPersistenceImpl
 			sxpElement.setExternalReferenceCode(sxpElement.getUuid());
 		}
 		else {
+			if (!Objects.equals(
+					sxpElementModelImpl.getColumnOriginalValue(
+						"externalReferenceCode"),
+					sxpElement.getExternalReferenceCode())) {
+
+				long userId = GetterUtil.getLong(
+					PrincipalThreadLocal.getName());
+
+				if (userId > 0) {
+					long companyId = sxpElement.getCompanyId();
+
+					long groupId = 0;
+
+					long classPK = 0;
+
+					if (!isNew) {
+						classPK = sxpElement.getPrimaryKey();
+					}
+
+					try {
+						sxpElement.setExternalReferenceCode(
+							SanitizerUtil.sanitize(
+								companyId, groupId, userId,
+								SXPElement.class.getName(), classPK,
+								ContentTypes.TEXT_HTML, Sanitizer.MODE_ALL,
+								sxpElement.getExternalReferenceCode(), null));
+					}
+					catch (SanitizerException sanitizerException) {
+						throw new SystemException(sanitizerException);
+					}
+				}
+			}
+
 			SXPElement ercSXPElement = fetchByERC_C(
 				sxpElement.getExternalReferenceCode(),
 				sxpElement.getCompanyId());

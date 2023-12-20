@@ -21947,6 +21947,39 @@ public class BlogsEntryPersistenceImpl
 			blogsEntry.setExternalReferenceCode(blogsEntry.getUuid());
 		}
 		else {
+			if (!Objects.equals(
+					blogsEntryModelImpl.getColumnOriginalValue(
+						"externalReferenceCode"),
+					blogsEntry.getExternalReferenceCode())) {
+
+				long userId = GetterUtil.getLong(
+					PrincipalThreadLocal.getName());
+
+				if (userId > 0) {
+					long companyId = blogsEntry.getCompanyId();
+
+					long groupId = blogsEntry.getGroupId();
+
+					long classPK = 0;
+
+					if (!isNew) {
+						classPK = blogsEntry.getPrimaryKey();
+					}
+
+					try {
+						blogsEntry.setExternalReferenceCode(
+							SanitizerUtil.sanitize(
+								companyId, groupId, userId,
+								BlogsEntry.class.getName(), classPK,
+								ContentTypes.TEXT_HTML, Sanitizer.MODE_ALL,
+								blogsEntry.getExternalReferenceCode(), null));
+					}
+					catch (SanitizerException sanitizerException) {
+						throw new SystemException(sanitizerException);
+					}
+				}
+			}
+
 			BlogsEntry ercBlogsEntry = fetchByERC_G(
 				blogsEntry.getExternalReferenceCode(), blogsEntry.getGroupId());
 

@@ -823,12 +823,18 @@ public class ObjectEntryServiceTest {
 		ConfigurationTestUtil.deleteConfiguration(
 			ObjectConfiguration.class.getName());
 
+		objectConfigurationDictionary.put("duration", "2");
 		objectConfigurationDictionary.put(
 			"maximumNumberOfGuestUserObjectEntriesPerObjectDefinition", 4);
-		objectConfigurationDictionary.put("timeScale", "weeks");
 
 		ConfigurationTestUtil.saveConfiguration(
 			ObjectConfiguration.class.getName(), objectConfigurationDictionary);
+
+		objectEntry = _objectEntryService.addObjectEntry(
+			0, _objectDefinition.getObjectDefinitionId(),
+			Collections.emptyMap(),
+			ServiceContextTestUtil.getServiceContext(
+				TestPropsValues.getGroupId(), _guestUser.getUserId()));
 
 		objectEntry.setCreateDate(
 			Date.from(

@@ -140,7 +140,7 @@ definition {
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		ObjectPortlet.assertObjectIsDisplayedOnControlPanel();
+		ObjectPortlet.assertIsDisplayedOnControlPanel(itemMenu = "Custom Objects");
 
 		ObjectPortlet.goToCustomObjectPortletOnControlPanel();
 

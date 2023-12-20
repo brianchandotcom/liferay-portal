@@ -8,21 +8,13 @@ package com.liferay.jethr0.event.github;
 import com.liferay.jethr0.event.EventHandlerContext;
 import com.liferay.jethr0.event.github.comment.GitHubComment;
 import com.liferay.jethr0.event.github.issue.GitHubIssue;
-import com.liferay.jethr0.git.branch.GitBranchEntity;
-import com.liferay.jethr0.git.branch.repository.GitBranchEntityRepository;
-import com.liferay.jethr0.util.PropertiesUtil;
 
 import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
-import java.util.Properties;
 import java.util.Set;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 import org.json.JSONObject;
 
@@ -108,61 +100,6 @@ public class HelpGitHubCommentEventHandler
 		return sb.toString();
 	}
 
-	private String _getJenkinsBuildPropertyValue(String propertyName) {
-		GitBranchEntity jenkinsGitBranchEntity = _getJenkinsGitBranchEntity();
-
-		if (jenkinsGitBranchEntity == null) {
-			return null;
-		}
-
-		if (_jenkinsBuildProperties == null) {
-			try {
-				_jenkinsBuildProperties = PropertiesUtil.combine(
-					jenkinsGitBranchEntity.getProperties("build.properties"),
-					jenkinsGitBranchEntity.getProperties(
-						"commands/build.properties"));
-			}
-			catch (IOException ioException) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(ioException);
-				}
-
-				return null;
-			}
-		}
-
-		return PropertiesUtil.getPropertyValue(
-			_jenkinsBuildProperties, propertyName);
-	}
-
-	private GitBranchEntity _getJenkinsGitBranchEntity() {
-		if (_jenkinsGitBranchEntity != null) {
-			return _jenkinsGitBranchEntity;
-		}
-
-		GitBranchEntityRepository gitBranchEntityRepository =
-			getGitBranchEntityRepository();
-
-		for (GitBranchEntity gitBranchEntity :
-				gitBranchEntityRepository.getAll()) {
-
-			if (gitBranchEntity.getType() != GitBranchEntity.Type.UPSTREAM) {
-				continue;
-			}
-
-			if (Objects.equals(
-					gitBranchEntity.getRepositoryName(),
-					"liferay-jenkins-ee")) {
-
-				_jenkinsGitBranchEntity = gitBranchEntity;
-
-				return _jenkinsGitBranchEntity;
-			}
-		}
-
-		return null;
-	}
-
 	private String _getMessage() throws InvalidJSONException, IOException {
 		StringBuilder sb = new StringBuilder();
 
@@ -170,7 +107,7 @@ public class HelpGitHubCommentEventHandler
 		sb.append("#### ci:close\n");
 		sb.append("&nbsp;&nbsp;&nbsp;&nbsp;Close the pull request.\n");
 
-		String ciForwardReceiverUsername = _getJenkinsBuildPropertyValue(
+		String ciForwardReceiverUsername = getJenkinsBranchBuildPropertyValue(
 			"ci.forward.default.receiver.username");
 
 		if ((ciForwardReceiverUsername != null) &&
@@ -208,11 +145,5 @@ public class HelpGitHubCommentEventHandler
 
 		return sb.toString();
 	}
-
-	private static final Log _log = LogFactory.getLog(
-		HelpGitHubCommentEventHandler.class);
-
-	private Properties _jenkinsBuildProperties;
-	private GitBranchEntity _jenkinsGitBranchEntity;
 
 }

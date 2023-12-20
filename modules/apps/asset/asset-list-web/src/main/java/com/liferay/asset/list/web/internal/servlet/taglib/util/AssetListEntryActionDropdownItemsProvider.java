@@ -162,7 +162,8 @@ public class AssetListEntryActionDropdownItemsProvider {
 			StringPool.BLANK, AssetListEntry.class.getName(),
 			_assetListEntry.getTitle(), null,
 			String.valueOf(_assetListEntry.getAssetListEntryId()),
-			LiferayWindowState.POP_UP.toString(), null, _httpServletRequest);
+			LiferayWindowState.POP_UP.toString(), null, _httpServletRequest,
+			false);
 
 		return dropdownItem -> {
 			dropdownItem.putData("action", "permissionsAssetEntryList");

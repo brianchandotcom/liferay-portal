@@ -67,7 +67,7 @@ public class KBFolderPermissionsPortletConfigurationIcon
 				StringPool.BLANK, KBFolder.class.getName(), kbFolder.getName(),
 				null, String.valueOf(kbFolder.getKbFolderId()),
 				LiferayWindowState.POP_UP.toString(), null,
-				themeDisplay.getRequest());
+				themeDisplay.getRequest(), false);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

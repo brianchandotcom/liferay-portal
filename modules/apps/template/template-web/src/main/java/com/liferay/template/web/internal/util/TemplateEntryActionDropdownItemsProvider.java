@@ -181,7 +181,8 @@ public class TemplateEntryActionDropdownItemsProvider {
 			StringPool.BLANK, DDMTemplate.class.getName(),
 			ddmTemplate.getName(_themeDisplay.getLocale()), null,
 			String.valueOf(_templateEntry.getDDMTemplateId()),
-			LiferayWindowState.POP_UP.toString(), null, _httpServletRequest);
+			LiferayWindowState.POP_UP.toString(), null, _httpServletRequest,
+			false);
 
 		return dropdownItem -> {
 			dropdownItem.putData("action", "permissionsTemplateEntry");

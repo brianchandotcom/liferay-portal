@@ -181,7 +181,7 @@ public class AssetCategoryActionDropdownItemsProvider {
 									null,
 									String.valueOf(category.getCategoryId()),
 									LiferayWindowState.POP_UP.toString(), null,
-									_httpServletRequest));
+									_httpServletRequest, false));
 							dropdownItem.setIcon("password-policies");
 							dropdownItem.setLabel(
 								LanguageUtil.get(

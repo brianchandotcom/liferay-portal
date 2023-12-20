@@ -289,7 +289,8 @@ public class DDMStructureActionDropdownItemsProvider {
 				_ddmStructure.getClassNameId()),
 			HtmlUtil.escape(_ddmStructure.getName(_themeDisplay.getLocale())),
 			null, String.valueOf(_ddmStructure.getStructureId()),
-			LiferayWindowState.POP_UP.toString(), null, _httpServletRequest);
+			LiferayWindowState.POP_UP.toString(), null, _httpServletRequest,
+			false);
 
 		return dropdownItem -> {
 			dropdownItem.putData("action", "permissionsDDMStructure");

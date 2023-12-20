@@ -287,7 +287,8 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 
 		return PermissionsURLTag.doTag(
 			redirect, modelResource, modelResourceDescription, resourceGroupId,
-			resourcePrimKey, windowState, roleTypes, _httpServletRequest);
+			resourcePrimKey, windowState, roleTypes, _httpServletRequest,
+			false);
 	}
 
 	@Override

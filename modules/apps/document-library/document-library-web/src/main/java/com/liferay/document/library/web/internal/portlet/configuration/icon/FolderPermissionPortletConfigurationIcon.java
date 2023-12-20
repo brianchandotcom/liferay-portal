@@ -71,7 +71,7 @@ public class FolderPermissionPortletConfigurationIcon
 					HtmlUtil.unescape(folder.getName()), null,
 					String.valueOf(folder.getFolderId()),
 					LiferayWindowState.POP_UP.toString(), null,
-					themeDisplay.getRequest());
+					themeDisplay.getRequest(), false);
 			}
 
 			return PermissionsURLTag.doTag(
@@ -79,7 +79,7 @@ public class FolderPermissionPortletConfigurationIcon
 				HtmlUtil.unescape(themeDisplay.getScopeGroupName()), null,
 				String.valueOf(themeDisplay.getScopeGroupId()),
 				LiferayWindowState.POP_UP.toString(), null,
-				themeDisplay.getRequest());
+				themeDisplay.getRequest(), false);
 		}
 		catch (Exception exception) {
 			return ReflectionUtil.throwException(exception);

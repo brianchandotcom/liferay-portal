@@ -60,7 +60,7 @@ public class PermissionsPortletConfigurationIcon
 				themeDisplay.getScopeGroupName(), null,
 				String.valueOf(_getPasswordPolicyId(portletRequest)),
 				LiferayWindowState.POP_UP.toString(), null,
-				themeDisplay.getRequest());
+				themeDisplay.getRequest(), false);
 		}
 		catch (Exception exception) {
 			_log.error(exception);

@@ -286,7 +286,8 @@ public class UserActionDropdownItems {
 		String permissionsURL = PermissionsURLTag.doTag(
 			StringPool.BLANK, User.class.getName(), _user.getFullName(), null,
 			String.valueOf(_user.getUserId()),
-			LiferayWindowState.POP_UP.toString(), null, _httpServletRequest);
+			LiferayWindowState.POP_UP.toString(), null, _httpServletRequest,
+			false);
 
 		return dropdownItem -> {
 			dropdownItem.putData("action", "permissions");

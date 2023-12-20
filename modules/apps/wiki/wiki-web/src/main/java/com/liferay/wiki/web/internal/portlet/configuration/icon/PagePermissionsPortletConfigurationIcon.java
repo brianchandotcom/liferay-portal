@@ -61,7 +61,7 @@ public class PagePermissionsPortletConfigurationIcon
 				null, WikiPage.class.getName(), page.getTitle(), null,
 				String.valueOf(page.getResourcePrimKey()),
 				LiferayWindowState.POP_UP.toString(), null,
-				themeDisplay.getRequest());
+				themeDisplay.getRequest(), false);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

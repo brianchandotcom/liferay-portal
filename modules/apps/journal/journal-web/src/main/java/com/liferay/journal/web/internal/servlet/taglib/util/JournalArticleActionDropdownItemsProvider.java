@@ -749,7 +749,8 @@ public class JournalArticleActionDropdownItemsProvider {
 			StringPool.BLANK, JournalArticle.class.getName(),
 			HtmlUtil.escape(_article.getTitle(_themeDisplay.getLocale())), null,
 			String.valueOf(_article.getResourcePrimKey()),
-			LiferayWindowState.POP_UP.toString(), null, _httpServletRequest);
+			LiferayWindowState.POP_UP.toString(), null, _httpServletRequest,
+			false);
 
 		return dropdownItem -> {
 			dropdownItem.putData("action", "permissions");

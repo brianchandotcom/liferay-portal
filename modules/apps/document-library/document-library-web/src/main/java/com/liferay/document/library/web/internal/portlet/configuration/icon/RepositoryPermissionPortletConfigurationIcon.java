@@ -60,7 +60,7 @@ public class RepositoryPermissionPortletConfigurationIcon
 				HtmlUtil.unescape(repository.getName()), null,
 				String.valueOf(repository.getDlFolderId()),
 				LiferayWindowState.POP_UP.toString(), null,
-				themeDisplay.getRequest());
+				themeDisplay.getRequest(), false);
 		}
 		catch (Exception exception) {
 			return ReflectionUtil.throwException(exception);

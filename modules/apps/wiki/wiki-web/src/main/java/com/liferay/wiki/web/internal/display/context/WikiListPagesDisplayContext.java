@@ -112,7 +112,7 @@ public class WikiListPagesDisplayContext {
 						null, WikiPage.class.getName(), wikiPage.getTitle(),
 						null, String.valueOf(wikiPage.getResourcePrimKey()),
 						LiferayWindowState.POP_UP.toString(), null,
-						_httpServletRequest));
+						_httpServletRequest, false));
 				dropdownItem.setIcon("password-policies");
 				dropdownItem.setKey(WikiUIItemKeys.PERMISSIONS);
 				dropdownItem.setLabel(

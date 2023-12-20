@@ -583,7 +583,8 @@ public class DisplayPageActionDropdownItemsProvider {
 			_layoutPageTemplateEntry.getName(), null,
 			String.valueOf(
 				_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()),
-			LiferayWindowState.POP_UP.toString(), null, _httpServletRequest);
+			LiferayWindowState.POP_UP.toString(), null, _httpServletRequest,
+			false);
 
 		return dropdownItem -> {
 			dropdownItem.putData("action", "permissionsDisplayPage");

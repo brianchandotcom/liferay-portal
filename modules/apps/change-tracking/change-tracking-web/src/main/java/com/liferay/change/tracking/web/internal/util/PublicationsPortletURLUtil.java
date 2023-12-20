@@ -77,7 +77,8 @@ public class PublicationsPortletURLUtil {
 				StringPool.BLANK, CTCollection.class.getName(),
 				HtmlUtil.escape(ctCollection.getName()), null,
 				String.valueOf(ctCollection.getCtCollectionId()),
-				LiferayWindowState.POP_UP.toString(), null, httpServletRequest),
+				LiferayWindowState.POP_UP.toString(), null, httpServletRequest,
+				false),
 			"',});");
 	}
 

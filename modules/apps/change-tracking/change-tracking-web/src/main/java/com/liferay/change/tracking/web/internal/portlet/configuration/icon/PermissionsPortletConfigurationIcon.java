@@ -54,7 +54,7 @@ public class PermissionsPortletConfigurationIcon
 				StringPool.BLANK, CTConstants.RESOURCE_NAME, null, null,
 				CTConstants.RESOURCE_NAME, LiferayWindowState.POP_UP.toString(),
 				new int[] {RoleConstants.TYPE_REGULAR},
-				themeDisplay.getRequest());
+				themeDisplay.getRequest(), false);
 		}
 		catch (Exception exception) {
 			return ReflectionUtil.throwException(exception);

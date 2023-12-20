@@ -67,7 +67,7 @@ public class PermissionPortletConfigurationIcon
 				String.valueOf(
 					kaleoDefinitionVersion.getKaleoDefinitionVersionId()),
 				LiferayWindowState.POP_UP.toString(), null,
-				themeDisplay.getRequest());
+				themeDisplay.getRequest(), false);
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {

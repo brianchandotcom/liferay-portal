@@ -592,7 +592,7 @@ public class ContentManager {
 							themeDisplay.getLocale())),
 					null, String.valueOf(layoutClassedModelUsage.getClassPK()),
 					LiferayWindowState.POP_UP.toString(), null,
-					httpServletRequest);
+					httpServletRequest, false);
 			}
 		).put(
 			"viewUsagesURL",
@@ -759,7 +759,7 @@ public class ContentManager {
 					HtmlUtil.escape(assetListEntry.getTitle()), null,
 					String.valueOf(assetListEntry.getAssetListEntryId()),
 					LiferayWindowState.POP_UP.toString(), null,
-					httpServletRequest);
+					httpServletRequest, false);
 			}
 		}
 		catch (Exception exception) {

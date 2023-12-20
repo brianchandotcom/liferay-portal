@@ -60,7 +60,7 @@ public class PermissionsPortletConfigurationIcon
 			url = PermissionsURLTag.doTag(
 				StringPool.BLANK, modelResource, modelResourceDescription, null,
 				resourcePrimKey, LiferayWindowState.POP_UP.toString(), null,
-				themeDisplay.getRequest());
+				themeDisplay.getRequest(), false);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

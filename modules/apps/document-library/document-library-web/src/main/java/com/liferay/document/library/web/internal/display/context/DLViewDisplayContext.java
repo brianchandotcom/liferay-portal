@@ -167,7 +167,7 @@ public class DLViewDisplayContext {
 
 		return PermissionsURLTag.doTag(
 			null, className, themeDisplay.getScopeGroupId(),
-			LiferayWindowState.POP_UP.toString(), _httpServletRequest);
+			LiferayWindowState.POP_UP.toString(), _httpServletRequest, false);
 	}
 
 	public long getRepositoryId() {

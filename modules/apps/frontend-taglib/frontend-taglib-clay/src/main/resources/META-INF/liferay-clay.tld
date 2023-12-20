@@ -2322,6 +2322,12 @@
 		<tag-class>com.liferay.frontend.taglib.clay.servlet.taglib.SelectTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
+			<description></description>
+			<name>additionalProps</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<description>Deprecated as of 7.4.0, with no direct replacement.</description>
 			<name>componentId</name>
 			<required>false</required>

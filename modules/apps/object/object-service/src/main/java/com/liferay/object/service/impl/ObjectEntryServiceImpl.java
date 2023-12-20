@@ -611,10 +611,6 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 			ObjectDefinition objectDefinition)
 		throws PortalException {
 
-		String portletId =
-			objectDefinition.isUnmodifiableSystemObject() ? StringPool.BLANK :
-				objectDefinition.getPortletId();
-
 		Role role = _roleLocalService.getRole(
 			objectDefinition.getCompanyId(), RoleConstants.ADMINISTRATOR);
 
@@ -628,6 +624,10 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 		).getEpochSecond();
 
 		List<Long> adminUserIdNotDeliveredList = new ArrayList<>();
+
+		String portletId =
+			objectDefinition.isUnmodifiableSystemObject() ? StringPool.BLANK :
+				objectDefinition.getPortletId();
 
 		for (long adminUserId : adminUserIds) {
 			int notificationsCount =

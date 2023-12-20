@@ -182,7 +182,7 @@ public class EmailNotificationType extends BaseNotificationType {
 			notificationContext.getNotificationTemplate();
 
 		String body = _formatBody(
-			notificationTemplate.getBodyMap(), notificationContext, groupId);
+			notificationTemplate.getBodyMap(), groupId, notificationContext);
 		NotificationRecipient notificationRecipient =
 			notificationTemplate.getNotificationRecipient();
 		String subject = formatLocalizedContent(
@@ -447,8 +447,8 @@ public class EmailNotificationType extends BaseNotificationType {
 	}
 
 	private String _formatBody(
-			Map<Locale, String> bodyMap,
-			NotificationContext notificationContext, long groupId)
+			Map<Locale, String> bodyMap, long groupId,
+			NotificationContext notificationContext)
 		throws PortalException {
 
 		NotificationTemplate notificationTemplate =

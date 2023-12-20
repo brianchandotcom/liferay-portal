@@ -77,13 +77,19 @@ const SearchOptions = ({
 		results?: Key;
 		searchIn?: Key;
 	}) => {
+		const baseURL =
+			searchIn === 'comments' ? searchInCommentsURL : searchURL;
+		const parsedBaseURL = new URL(baseURL);
+		const searchParams = parsedBaseURL.searchParams;
+		searchParams.delete(`${namespace}tab`);
+
 		const url = addParams(
 			{
 				[`${namespace}searchIn`]: searchIn || initialSearchIn,
 				[`${namespace}searchLocation`]: location || initialLocation,
 				[`${namespace}tab`]: results || initialResults,
 			},
-			searchIn === 'comments' ? searchInCommentsURL : searchURL
+			parsedBaseURL.toString()
 		);
 
 		navigate(url);

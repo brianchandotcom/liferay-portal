@@ -326,9 +326,8 @@ public class UserResourceDTOConverter
 	}
 
 	private OrganizationBrief _toOrganizationBrief(
-			DTOConverterContext dtoConverterContext, Organization organization,
-			User user)
-		throws Exception {
+		DTOConverterContext dtoConverterContext, Organization organization,
+		User user) {
 
 		return new OrganizationBrief() {
 			{
@@ -377,8 +376,7 @@ public class UserResourceDTOConverter
 	}
 
 	private RoleBrief[] _toRoleBriefs(
-			DTOConverterContext dtoConverterContext, Collection<Role> roles)
-		throws Exception {
+		DTOConverterContext dtoConverterContext, Collection<Role> roles) {
 
 		return TransformUtil.transformToArray(
 			roles,
@@ -396,8 +394,7 @@ public class UserResourceDTOConverter
 	}
 
 	private SiteBrief _toSiteBrief(
-			DTOConverterContext dtoConverterContext, Group group, User user)
-		throws Exception {
+		DTOConverterContext dtoConverterContext, Group group, User user) {
 
 		return new SiteBrief() {
 			{
@@ -423,9 +420,7 @@ public class UserResourceDTOConverter
 		};
 	}
 
-	private UserGroupBrief _toUserGroupBrief(UserGroup userGroup)
-		throws Exception {
-
+	private UserGroupBrief _toUserGroupBrief(UserGroup userGroup) {
 		return new UserGroupBrief() {
 			{
 				setDescription(userGroup::getDescription);

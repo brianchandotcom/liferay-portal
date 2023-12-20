@@ -1223,6 +1223,15 @@
     classnames "^2.2.6"
     warning "^4.0.3"
 
+"@clayui/button@^3.107.0":
+  version "3.107.0"
+  resolved "https://registry.yarnpkg.com/@clayui/button/-/button-3.107.0.tgz#26d74b80476bf18a5d145e2fb7e91a1036c62b71"
+  integrity sha512-Lf1FaA+aJdnanmcWxxpY+Een4adVQLAH4WA/VILTAgM7QxKp4/7VcGgJzQVkUYCmTvKM+x1EWOEMm6jXfZ8NPA==
+  dependencies:
+    "@clayui/icon" "^3.106.1"
+    classnames "^2.2.6"
+    warning "^4.0.3"
+
 "@clayui/core@^3.106.1":
   version "3.106.1"
   resolved "https://registry.yarnpkg.com/@clayui/core/-/core-3.106.1.tgz#ac987f01ef1cd9d1c8f5c278c8767cb9de7f2595"
@@ -1383,6 +1392,19 @@
     dom-align "^1.12.2"
     warning "^4.0.3"
 
+"@clayui/shared@^3.107.0":
+  version "3.107.0"
+  resolved "https://registry.yarnpkg.com/@clayui/shared/-/shared-3.107.0.tgz#5bceb9a706dd457d462bbda2757fc87a7bafb488"
+  integrity sha512-FODBz48/kru4DhkscNnRmyMvCkyjHUDtQ06GUlPIXx9JkuMPP4KQ5Ys+xfTbr0i41s82Jv2g1D0rEW0aj8VdaA==
+  dependencies:
+    "@clayui/button" "^3.107.0"
+    "@clayui/link" "^3.106.1"
+    "@clayui/provider" "^3.106.1"
+    aria-hidden "^1.2.2"
+    classnames "^2.2.6"
+    dom-align "^1.12.2"
+    warning "^4.0.3"
+
 "@clayui/sticker@^3.106.1":
   version "3.106.1"
   resolved "https://registry.yarnpkg.com/@clayui/sticker/-/sticker-3.106.1.tgz#e30378d6e25a3805aaa6d23fa3c41c8fb8429599"
@@ -1396,6 +1418,16 @@
   integrity sha512-6CIA8+E2Wr6/MtWATBSN5xe4Iy4che5Wi+hoMHaR00eSufYcaCxPvL+5hkF+trIsRnGaeet84Y9G6ZIqDa6YVQ==
   dependencies:
     classnames "^2.2.6"
+
+"@clayui/tooltip@^3.108.0":
+  version "3.108.0"
+  resolved "https://registry.yarnpkg.com/@clayui/tooltip/-/tooltip-3.108.0.tgz#f990c2ff5db4addb4e66c1ba66f65f8ea827a71e"
+  integrity sha512-zxFChVXhQMeE/wuY/kRt/FN9IrRuPcQOkUqMQAYlv2+sBteDBH//TBW/ZqDUxr6S4SHCMI3QQQykImAPCOfHkA==
+  dependencies:
+    "@clayui/shared" "^3.107.0"
+    classnames "^2.2.6"
+    dom-align "^1.12.2"
+    warning "^4.0.3"
 
 "@cnakazawa/watch@^1.0.3":
   version "1.0.3"

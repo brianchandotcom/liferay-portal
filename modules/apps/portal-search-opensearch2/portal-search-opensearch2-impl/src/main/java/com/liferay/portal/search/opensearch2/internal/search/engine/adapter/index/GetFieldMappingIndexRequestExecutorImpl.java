@@ -40,12 +40,12 @@ public class GetFieldMappingIndexRequestExecutorImpl
 	public GetFieldMappingIndexResponse execute(
 		GetFieldMappingIndexRequest getFieldMappingIndexRequest) {
 
+		Map<String, String> fieldMappingsMap = new HashMap<>();
+
 		GetFieldMappingResponse getFieldMappingResponse =
 			_getGetFieldMappingsResponse(
 				getFieldMappingIndexRequest,
 				createGetFieldMappingRequest(getFieldMappingIndexRequest));
-
-		Map<String, String> fieldMappingsMap = new HashMap<>();
 
 		Map<String, TypeFieldMappings> typeFieldMappingsMap =
 			getFieldMappingResponse.result();

@@ -458,6 +458,10 @@ public class PropsValues {
 	public static final int DATABASE_IN_MAX_PARAMETERS = GetterUtil.getInteger(
 		PropsUtil.get(PropsKeys.DATABASE_IN_MAX_PARAMETERS));
 
+	public static final boolean DATABASE_INDEXES_UPDATE_IN_BACKGROUND =
+		GetterUtil.getBoolean(
+			PropsUtil.get(PropsKeys.DATABASE_INDEXES_UPDATE_IN_BACKGROUND));
+
 	public static final boolean DATABASE_INDEXES_UPDATE_ON_STARTUP =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.DATABASE_INDEXES_UPDATE_ON_STARTUP));

@@ -759,7 +759,7 @@ export default function ChangeTrackingRenderView({
 
 		dropdownItems.push({
 			label: Liferay.Language.get('discard'),
-			onClick: () => navigate(discardURL),
+			onClick: () => navigateUtil(discardURL),
 			symbolLeft: 'times-circle',
 		});
 

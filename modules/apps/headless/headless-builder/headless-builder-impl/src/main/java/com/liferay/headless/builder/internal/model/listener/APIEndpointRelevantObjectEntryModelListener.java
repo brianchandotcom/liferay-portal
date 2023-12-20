@@ -349,21 +349,15 @@ public class APIEndpointRelevantObjectEntryModelListener
 
 		String pathString = (String)values.get("path");
 
-		String pathInParameterString = StringUtil.extractLast(
-			pathString, StringPool.FORWARD_SLASH);
-
-		Matcher curlyBraceMatcher = _curlyBracePattern.matcher(
-			pathInParameterString);
+		_validatePath(objectEntry, pathString);
 
 		String pathParameter = (String)values.get("pathParameter");
 
-		if (!Validator.isBlank(pathParameter) || curlyBraceMatcher.matches()) {
+		if (!Validator.isBlank(pathParameter)) {
 			throw new ObjectEntryValuesException.InvalidObjectField(
 				null, "Path parameters are not supported by POST API endpoints",
 				"path-parameters-are-not-supported-by-post-api-endpoints");
 		}
-
-		_validatePath(objectEntry, pathString);
 	}
 
 	private void _validateSingleElementPath(

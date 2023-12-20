@@ -721,6 +721,8 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 					stagedModelType.getClassName());
 
 			if (stagedModelRepository != null) {
+				long journalArticleClassNameId = _portal.getClassNameId(
+					JournalArticle.class);
 				modelAdditionCount = 0;
 
 				for (ChangesetEntry changesetEntry :
@@ -733,11 +735,11 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 							changesetEntry.getClassPK());
 
 					if (Objects.equals(
-							ddmTemplate.getClassName(),
-							stagedModelType.getReferrerClassName()) &&
+							ddmTemplate.getClassNameId(),
+							stagedModelType.getReferrerClassNameId()) &&
 						Objects.equals(
-							ddmTemplate.getResourceClassName(),
-							JournalArticle.class.getName())) {
+							ddmTemplate.getResourceClassNameId(),
+							journalArticleClassNameId)) {
 
 						modelAdditionCount++;
 					}

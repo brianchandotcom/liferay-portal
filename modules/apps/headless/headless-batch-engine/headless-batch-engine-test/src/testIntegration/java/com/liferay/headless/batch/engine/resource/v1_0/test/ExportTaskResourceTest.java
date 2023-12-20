@@ -386,6 +386,7 @@ public class ExportTaskResourceTest {
 		"com.liferay.headless.commerce.admin.order.dto.v1_0.OrderTypeChannel",
 		"com.liferay.headless.commerce.admin.order.dto.v1_0.Term",
 		"com.liferay.headless.commerce.admin.order.dto.v1_0.TermOrderType",
+		"com.liferay.headless.commerce.admin.payment.dto.v1_0.Payment",
 		"com.liferay.headless.commerce.admin.pricing.dto.v1_0.Discount",
 		"com.liferay.headless.commerce.admin.pricing.dto.v1_0." +
 			"DiscountAccountGroup",

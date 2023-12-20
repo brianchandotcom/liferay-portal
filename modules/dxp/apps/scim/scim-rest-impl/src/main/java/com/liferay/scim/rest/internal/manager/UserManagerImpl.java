@@ -51,8 +51,7 @@ import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.scim.rest.internal.configuration.ScimClientOAuth2ApplicationConfiguration;
 import com.liferay.scim.rest.internal.model.ScimUser;
-import com.liferay.scim.rest.internal.util.ScimGroupUtil;
-import com.liferay.scim.rest.internal.util.ScimUserUtil;
+import com.liferay.scim.rest.internal.util.ScimUtil;
 import com.liferay.scim.rest.util.ScimClientUtil;
 
 import java.util.Calendar;
@@ -186,7 +185,7 @@ public class UserManagerImpl implements UserManager {
 			UserGroup userGroup = _getUserGroup(
 				CompanyThreadLocal.getCompanyId(), GetterUtil.getLong(groupId));
 
-			return ScimGroupUtil.toGroup(
+			return ScimUtil.toGroup(
 				_getScimUsers(
 					CompanyThreadLocal.getCompanyId(),
 					userGroup.getUserGroupId()),
@@ -220,7 +219,7 @@ public class UserManagerImpl implements UserManager {
 					"No user found with user ID " + userId);
 			}
 
-			return ScimUserUtil.toUser(
+			return ScimUtil.toUser(
 				_getGroups(
 					CompanyThreadLocal.getCompanyId(),
 					GetterUtil.getLong(scimUser.getId())),
@@ -295,7 +294,7 @@ public class UserManagerImpl implements UserManager {
 					UserGroup userGroup = _userGroupService.getUserGroup(
 						document.getLong(Field.ENTRY_CLASS_PK));
 
-					return ScimGroupUtil.toGroup(
+					return ScimUtil.toGroup(
 						_getScimUsers(
 							userGroup.getCompanyId(),
 							userGroup.getUserGroupId()),
@@ -374,7 +373,7 @@ public class UserManagerImpl implements UserManager {
 
 					long userId = document.getLong(Field.ENTRY_CLASS_PK);
 
-					return ScimUserUtil.toUser(
+					return ScimUtil.toUser(
 						_getGroups(serviceContext.getCompanyId(), userId),
 						_toScimUser(_userService.getUserById(userId)));
 				}));
@@ -422,7 +421,7 @@ public class UserManagerImpl implements UserManager {
 				_transactionConfig,
 				() -> _addOrUpdateUserGroup(company, group));
 
-			return ScimGroupUtil.toGroup(
+			return ScimUtil.toGroup(
 				_getScimUsers(
 					userGroup.getCompanyId(), userGroup.getUserGroupId()),
 				userGroup);
@@ -480,10 +479,10 @@ public class UserManagerImpl implements UserManager {
 			ScimUser scimUser = TransactionInvokerUtil.invoke(
 				_transactionConfig,
 				() -> _addOrUpdateScimUser(
-					ScimUserUtil.toScimUser(
+					ScimUtil.toScimUser(
 						company.getCompanyId(), company.getLocale(), user)));
 
-			return ScimUserUtil.toUser(
+			return ScimUtil.toUser(
 				_getGroups(
 					company.getCompanyId(),
 					GetterUtil.getLong(scimUser.getId())),
@@ -666,8 +665,7 @@ public class UserManagerImpl implements UserManager {
 					return null;
 				}
 
-				return ScimGroupUtil.toGroup(
-					Collections.emptyList(), userGroup);
+				return ScimUtil.toGroup(Collections.emptyList(), userGroup);
 			});
 	}
 

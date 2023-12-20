@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ContactConstants;
+import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -51,11 +52,46 @@ import org.wso2.charon3.core.utils.AttributeUtil;
 
 /**
  * @author Rafael Praxedes
+ * @author Olivér Kecskeméty
  */
-public class ScimUserUtil {
+public class ScimUtil {
 
 	public static final String LIFERAY_USER_SCHEMA_EXTENSION_URI =
 		"urn:ietf:params:scim:schemas:extension:liferay:2.0:User";
+
+	public static Group toGroup(List<ScimUser> scimUsers, UserGroup userGroup)
+		throws Exception {
+
+		Group group = new Group();
+
+		group.replaceDisplayName(userGroup.getName());
+
+		Date createDate = userGroup.getCreateDate();
+
+		group.setCreatedInstant(createDate.toInstant());
+
+		group.setExternalId(userGroup.getExternalReferenceCode());
+		group.setId(String.valueOf(userGroup.getPrimaryKey()));
+
+		Date modifiedDate = userGroup.getModifiedDate();
+
+		group.setLastModifiedInstant(modifiedDate.toInstant());
+
+		group.setLocation(
+			StringBundler.concat(
+				AbstractResourceManager.getResourceEndpointURL(
+					SCIMConstants.GROUP_ENDPOINT),
+				CharPool.FORWARD_SLASH, userGroup.getPrimaryKey()));
+
+		for (ScimUser scimUser : scimUsers) {
+			group.setMember(toUser(Collections.emptyList(), scimUser));
+		}
+
+		group.setResourceType(SCIMConstants.GROUP);
+		group.setSchemas();
+
+		return group;
+	}
 
 	public static ScimUser toScimUser(long companyId, Locale locale, User user)
 		throws Exception {
@@ -155,7 +191,7 @@ public class ScimUserUtil {
 				"attributeName", "birthday"
 			).put(
 				"attributeURI",
-				ScimUserUtil.LIFERAY_USER_SCHEMA_EXTENSION_URI + ":birthday"
+				ScimUtil.LIFERAY_USER_SCHEMA_EXTENSION_URI + ":birthday"
 			).put(
 				"canonicalValues", JSONFactoryUtil.createJSONArray()
 			).put(
@@ -183,7 +219,7 @@ public class ScimUserUtil {
 				"attributeName", "male"
 			).put(
 				"attributeURI",
-				ScimUserUtil.LIFERAY_USER_SCHEMA_EXTENSION_URI + ":male"
+				ScimUtil.LIFERAY_USER_SCHEMA_EXTENSION_URI + ":male"
 			).put(
 				"canonicalValues", JSONFactoryUtil.createJSONArray()
 			).put(
@@ -208,9 +244,9 @@ public class ScimUserUtil {
 				"uniqueness", "none"
 			),
 			JSONUtil.put(
-				"attributeName", ScimUserUtil.LIFERAY_USER_SCHEMA_EXTENSION_URI
+				"attributeName", ScimUtil.LIFERAY_USER_SCHEMA_EXTENSION_URI
 			).put(
-				"attributeURI", ScimUserUtil.LIFERAY_USER_SCHEMA_EXTENSION_URI
+				"attributeURI", ScimUtil.LIFERAY_USER_SCHEMA_EXTENSION_URI
 			).put(
 				"canonicalValues", JSONFactoryUtil.createJSONArray()
 			).put(
@@ -255,7 +291,7 @@ public class ScimUserUtil {
 
 		AttributeSchema attributeSchema =
 			_attributeSchemaDCLSingleton.getSingleton(
-				ScimUserUtil::_createAttributeSchema);
+				ScimUtil::_createAttributeSchema);
 
 		ComplexAttribute complexAttribute = new ComplexAttribute(
 			attributeSchema.getName());
@@ -398,7 +434,7 @@ public class ScimUserUtil {
 		}
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(ScimUserUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(ScimUtil.class);
 
 	private static final DCLSingleton<AttributeSchema>
 		_attributeSchemaDCLSingleton = new DCLSingleton<>();

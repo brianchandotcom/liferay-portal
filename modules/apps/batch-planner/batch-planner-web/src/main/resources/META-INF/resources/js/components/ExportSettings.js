@@ -5,12 +5,13 @@
 
 import {ClaySelect} from '@clayui/form';
 import {Col} from '@clayui/layout';
-import React, {useEffect, useReducer, useState} from 'react';
+import React, {useEffect, useReducer, useRef, useState} from 'react';
 
 import {
 	CSV_FORMAT,
 	DISALLOWED_CSV_ENTITY_TYPES,
 	EXPORT_FILE_FORMAT_SELECTED_EVENT,
+	TEMPLATE_SELECTED_EVENT,
 } from '../constants';
 
 function ExportSettings({
@@ -22,6 +23,7 @@ function ExportSettings({
 	internalClassNameKeyInitialOptions,
 	internalClassNameKeyLabel,
 	internalClassNameKeyName,
+	portletNamespace,
 }) {
 	const [
 		selectedExternalTypeOption,
@@ -31,6 +33,25 @@ function ExportSettings({
 		selectedinternalClassNameKeyName,
 		setSelectedinternalClassNameKeyName,
 	] = useState();
+	const templateRef = useRef(false);
+
+	useEffect(() => {
+		const handleTemplateSelectedEvent = ({template}) => {
+			templateRef.current = true;
+			setSelectedinternalClassNameKeyName(template.internalClassNameKey);
+			dispatchInternalClassNameKeyOptions('update');
+			setSelectedExternalTypeOption(template.entityType);
+		};
+
+		Liferay.on(TEMPLATE_SELECTED_EVENT, handleTemplateSelectedEvent);
+
+		return () => {
+			Liferay.detach(
+				TEMPLATE_SELECTED_EVENT,
+				handleTemplateSelectedEvent
+			);
+		};
+	}, [portletNamespace]);
 
 	const [
 		internalClassNameKeyOptions,
@@ -53,10 +74,13 @@ function ExportSettings({
 	}, [selectedExternalTypeOption]);
 
 	useEffect(() => {
-		Liferay.fire(EXPORT_FILE_FORMAT_SELECTED_EVENT, {
-			selectedExportFileFormat: selectedExternalTypeOption,
-			selectedSchema: selectedinternalClassNameKeyName,
-		});
+		if (!templateRef.current) {
+			Liferay.fire(EXPORT_FILE_FORMAT_SELECTED_EVENT, {
+				selectedExportFileFormat: selectedExternalTypeOption,
+				selectedSchema: selectedinternalClassNameKeyName,
+			});
+		}
+		templateRef.current = false;
 	}, [selectedExternalTypeOption, selectedinternalClassNameKeyName]);
 
 	return (

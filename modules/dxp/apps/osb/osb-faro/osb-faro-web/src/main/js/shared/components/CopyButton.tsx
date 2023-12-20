@@ -1,7 +1,7 @@
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import Clipboard from 'clipboard';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import type {DisplayType} from '@clayui/button/lib/Button';
 
 interface ICopyButtonProps {
@@ -20,8 +20,16 @@ const CopyButton: React.FC<ICopyButtonProps> = ({
 	text,
 	...otherProps
 }) => {
+	const [title, setTitle] = useState(Liferay.Language.get('click-to-copy'));
+
 	useEffect(() => {
 		const _clipboard = new Clipboard('[data-clipboard-text]');
+
+		_clipboard.on('success', event => {
+			setTitle(Liferay.Language.get('copied'));
+
+			event.clearSelection();
+		});
 
 		return () => _clipboard.destroy();
 	}, []);
@@ -31,10 +39,9 @@ const CopyButton: React.FC<ICopyButtonProps> = ({
 			aria-label={Liferay.Language.get('click-to-copy')}
 			className='button-root'
 			data-clipboard-text={text}
-			data-tooltip-response={Liferay.Language.get('copied')}
 			displayType={displayType}
 			onClick={onClick}
-			title={Liferay.Language.get('click-to-copy')}
+			title={title}
 			{...otherProps}
 		>
 			{buttonText || <ClayIcon className='icon-root' symbol='copy' />}

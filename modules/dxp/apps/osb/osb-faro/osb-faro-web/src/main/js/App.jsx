@@ -10,12 +10,12 @@ import pathToRegexp from 'path-to-regexp';
 import React, {lazy, Suspense} from 'react';
 import RouteNotFound from 'shared/components/RouteNotFound';
 import store from 'shared/store';
-import Tooltip from 'shared/components/Tooltip';
 import UnassignedSegmentsProvider from 'shared/context/unassignedSegments';
 import {ApolloProvider} from '@apollo/react-components';
 import {ApolloProvider as ApolloProviderHooks} from '@apollo/react-hooks';
 import {ClayIconSpriteContext} from '@clayui/icon';
 import {ClayLinkContext} from '@clayui/link';
+import {ClayTooltipProvider} from '@clayui/tooltip';
 import {close, modalTypes, open} from 'shared/actions/modals';
 import {connect, Provider} from 'react-redux';
 import {hasChanges} from 'shared/util/react';
@@ -289,115 +289,118 @@ export default class App extends React.Component {
 											}}
 										>
 											<ChannelProvider>
-												{/* eslint-disable react/jsx-handler-names */}
-												<Router
-													getUserConfirmation={
-														this
-															.handleUserConfirmation
-													}
-												>
-													{/* eslint-enable react/jsx-handler-names */}
-													<RoutesContainer>
-														<AlertFeed />
-
-														<Tooltip />
-
-														<ModalRenderer />
-
-														<Suspense
-															fallback={
-																<Loading />
+												<ClayTooltipProvider>
+													{/* LPS-178638 - Temp trick <div /> to make tooltip works */}
+													<div>
+														{/* eslint-disable react/jsx-handler-names */}
+														<Router
+															getUserConfirmation={
+																this
+																	.handleUserConfirmation
 															}
 														>
-															<Switch>
-																<BundleRouter
-																	data={
-																		Workspaces
-																	}
-																	exact
-																	path={
-																		Routes.BASE
-																	}
-																/>
+															{/* eslint-enable react/jsx-handler-names */}
+															<RoutesContainer>
+																<AlertFeed />
 
-																<BundleRouter
-																	data={
-																		Workspaces
-																	}
-																	exact
-																	path={
-																		Routes.WORKSPACES
-																	}
-																/>
+																<ModalRenderer />
 
-																<BundleRouter
-																	data={
-																		SelectWorkspaceAccount
+																<Suspense
+																	fallback={
+																		<Loading />
 																	}
-																	exact
-																	path={
-																		Routes.WORKSPACE_ADD
-																	}
-																/>
+																>
+																	<Switch>
+																		<BundleRouter
+																			data={
+																				Workspaces
+																			}
+																			exact
+																			path={
+																				Routes.BASE
+																			}
+																		/>
 
-																{!PROD_MODE && (
-																	<BundleRouter
-																		data={
-																			AddWorkspace
-																		}
-																		exact
-																		path={
-																			Routes.WORKSPACE_ADD_TRIAL
-																		}
-																	/>
-																)}
+																		<BundleRouter
+																			data={
+																				Workspaces
+																			}
+																			exact
+																			path={
+																				Routes.WORKSPACES
+																			}
+																		/>
 
-																<BundleRouter
-																	data={
-																		AddWorkspace
-																	}
-																	exact
-																	path={
-																		Routes.WORKSPACE_ADD_WITH_CORP_PROJECT_UUID
-																	}
-																/>
+																		<BundleRouter
+																			data={
+																				SelectWorkspaceAccount
+																			}
+																			exact
+																			path={
+																				Routes.WORKSPACE_ADD
+																			}
+																		/>
 
-																<BundleRouter
-																	data={
-																		SelectWorkspaceAccount
-																	}
-																	exact
-																	path={
-																		Routes.WORKSPACE_SELECT_ACCOUNT
-																	}
-																/>
+																		{!PROD_MODE && (
+																			<BundleRouter
+																				data={
+																					AddWorkspace
+																				}
+																				exact
+																				path={
+																					Routes.WORKSPACE_ADD_TRIAL
+																				}
+																			/>
+																		)}
 
-																<BundleRouter
-																	data={
-																		OAuthReceive
-																	}
-																	exact
-																	path={
-																		Routes.OAUTH_RECEIVE
-																	}
-																/>
+																		<BundleRouter
+																			data={
+																				AddWorkspace
+																			}
+																			exact
+																			path={
+																				Routes.WORKSPACE_ADD_WITH_CORP_PROJECT_UUID
+																			}
+																		/>
 
-																<Route
-																	component={
-																		Loading
-																	}
-																	path={
-																		Routes.LOADING
-																	}
-																/>
+																		<BundleRouter
+																			data={
+																				SelectWorkspaceAccount
+																			}
+																			exact
+																			path={
+																				Routes.WORKSPACE_SELECT_ACCOUNT
+																			}
+																		/>
 
-																<WorkspaceLayer />
+																		<BundleRouter
+																			data={
+																				OAuthReceive
+																			}
+																			exact
+																			path={
+																				Routes.OAUTH_RECEIVE
+																			}
+																		/>
 
-																<RouteNotFound />
-															</Switch>
-														</Suspense>
-													</RoutesContainer>
-												</Router>
+																		<Route
+																			component={
+																				Loading
+																			}
+																			path={
+																				Routes.LOADING
+																			}
+																		/>
+
+																		<WorkspaceLayer />
+
+																		<RouteNotFound />
+																	</Switch>
+																</Suspense>
+															</RoutesContainer>
+														</Router>
+													</div>
+												</ClayTooltipProvider>
 											</ChannelProvider>
 										</OnboardingContext.Provider>
 									</OAuthUpgradeWarningContext.Provider>

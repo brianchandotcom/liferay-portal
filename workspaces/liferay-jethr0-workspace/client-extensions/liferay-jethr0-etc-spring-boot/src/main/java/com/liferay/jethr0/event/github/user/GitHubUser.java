@@ -12,6 +12,7 @@ import com.liferay.jethr0.util.StringUtil;
 
 import java.net.URL;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONArray;
@@ -39,6 +40,8 @@ public class GitHubUser {
 		if (_gitHubOrganizations != null) {
 			return _gitHubOrganizations;
 		}
+
+		_gitHubOrganizations = new ArrayList<>();
 
 		GitHubClient gitHubClient = getGitHubClient();
 

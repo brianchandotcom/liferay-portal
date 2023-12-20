@@ -1174,9 +1174,16 @@ definition {
 			locator1 = "Modal#BODY_MESSAGE",
 			value1 = "Are you sure you want to publish the selected entities?");
 
-		Click(
+		AssertClick(
 			buttonName = "Publish to Live",
-			locator1 = "Modal#PRIMARY_BUTTON");
+			locator1 = "Modal#PRIMARY_BUTTON",
+			value1 = "Publish to Live");
+
+		WaitForElementPresent(locator1 = "Staging#PROCESS_RESULT");
+
+		AssertTextEquals(
+			locator1 = "Staging#PROCESS_RESULT",
+			value1 = "SUCCESSFUL");
 	}
 
 	@summary = "Default summary"

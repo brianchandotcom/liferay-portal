@@ -14,7 +14,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -38,9 +38,11 @@ import java.util.List;
 public class ContentImagesUpgradeProcess extends UpgradeProcess {
 
 	public ContentImagesUpgradeProcess(
-		JournalArticleImageUpgradeHelper journalArticleImageUpgradeHelper) {
+		JournalArticleImageUpgradeHelper journalArticleImageUpgradeHelper,
+		PortletFileRepository portletFileRepository) {
 
 		_journalArticleImageUpgradeHelper = journalArticleImageUpgradeHelper;
+		_portletFileRepository = portletFileRepository;
 	}
 
 	@Override
@@ -171,8 +173,7 @@ public class ContentImagesUpgradeProcess extends UpgradeProcess {
 		FileEntry fileEntry = null;
 
 		try {
-			fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
-				fileEntryId);
+			fileEntry = _portletFileRepository.getPortletFileEntry(fileEntryId);
 		}
 		catch (PortalException portalException) {
 			String message = "Unable to get file entry " + fileEntryId;
@@ -201,7 +202,7 @@ public class ContentImagesUpgradeProcess extends UpgradeProcess {
 		FileEntry fileEntry = null;
 
 		try {
-			fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
+			fileEntry = _portletFileRepository.getPortletFileEntry(
 				groupId, folderId, id);
 		}
 		catch (PortalException portalException) {
@@ -254,5 +255,6 @@ public class ContentImagesUpgradeProcess extends UpgradeProcess {
 
 	private final JournalArticleImageUpgradeHelper
 		_journalArticleImageUpgradeHelper;
+	private final PortletFileRepository _portletFileRepository;
 
 }

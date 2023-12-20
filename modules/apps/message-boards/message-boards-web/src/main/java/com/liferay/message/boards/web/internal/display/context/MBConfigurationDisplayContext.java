@@ -5,23 +5,30 @@
 
 package com.liferay.message.boards.web.internal.display.context;
 
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.SelectOption;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.VerticalNavItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.VerticalNavItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.VerticalNavItemListBuilder;
 import com.liferay.message.boards.constants.MBPortletKeys;
 import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.constants.PortletPreferencesFactoryConstants;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -107,6 +114,32 @@ public class MBConfigurationDisplayContext {
 		).setNavigation(
 			getNavigation()
 		).buildPortletURL();
+	}
+
+	public List<SelectOption> getSelectOptions(Set<Locale> locales)
+		throws Exception {
+
+		List<SelectOption> selectOptions = new ArrayList<>();
+
+		selectOptions.add(new SelectOption(StringPool.BLANK, StringPool.BLANK));
+
+		for (Locale curLocale : locales) {
+			if (Objects.equals(
+					curLocale, _themeDisplay.getSiteDefaultLocale())) {
+
+				continue;
+			}
+
+			String languageId = LanguageUtil.getLanguageId(_renderRequest);
+
+			selectOptions.add(
+				new SelectOption(
+					curLocale.getDisplayName(curLocale),
+					LocaleUtil.toLanguageId(curLocale),
+					languageId.equals(LocaleUtil.toLanguageId(curLocale))));
+		}
+
+		return selectOptions;
 	}
 
 	public VerticalNavItemList getSettingsVerticalNavItemList() {

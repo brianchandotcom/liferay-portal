@@ -282,6 +282,10 @@ public class DispatchTriggerLocalServiceImpl
 		DispatchTrigger dispatchTrigger =
 			dispatchTriggerPersistence.fetchByPrimaryKey(dispatchTriggerId);
 
+		DispatchTaskClusterMode oldDispatchTaskClusterMode =
+			DispatchTaskClusterMode.valueOf(
+				dispatchTrigger.getDispatchTaskClusterMode());
+
 		if ((dispatchTaskClusterMode == DispatchTaskClusterMode.ALL_NODES) &&
 			_dispatchTaskExecutorRegistry.isClusterModeSingle(
 				dispatchTrigger.getDispatchTaskExecutorType())) {
@@ -319,7 +323,7 @@ public class DispatchTriggerLocalServiceImpl
 		dispatchTrigger = dispatchTriggerPersistence.update(dispatchTrigger);
 
 		_dispatchTriggerHelper.deleteSchedulerJob(
-			dispatchTriggerId, dispatchTaskClusterMode.getStorageType());
+			dispatchTriggerId, oldDispatchTaskClusterMode.getStorageType());
 
 		if (active) {
 			_dispatchTriggerHelper.addSchedulerJob(

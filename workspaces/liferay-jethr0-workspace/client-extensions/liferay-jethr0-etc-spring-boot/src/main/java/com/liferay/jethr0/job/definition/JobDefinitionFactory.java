@@ -57,10 +57,10 @@ public class JobDefinitionFactory {
 			return new PluginsPullRequestJobDefinition(type);
 		}
 		else if (type == JobEntity.Type.PLUGINS_RELEASE) {
-			return new PluginsReleaseJobDefinition(type);
+			return new ReleasePluginsJobDefinition(type);
 		}
 		else if (type == JobEntity.Type.PLUGINS_UPSTREAM) {
-			return new PluginsUpstreamJobDefinition(type);
+			return new UpstreamPluginsJobDefinition(type);
 		}
 		else if (type == JobEntity.Type.PORTAL_PULL_REQUEST) {
 			return new PortalPullRequestJobDefinition(type);

@@ -70,10 +70,10 @@ public class JobEntityFactory extends BaseEntityFactory<JobEntity> {
 			return new PluginsPullRequestJobEntity(jsonObject);
 		}
 		else if (type == JobEntity.Type.PLUGINS_RELEASE) {
-			return new PluginsReleaseJobEntity(jsonObject);
+			return new ReleasePluginsJobEntity(jsonObject);
 		}
 		else if (type == JobEntity.Type.PLUGINS_UPSTREAM) {
-			return new PluginsUpstreamJobEntity(jsonObject);
+			return new UpstreamPluginsJobEntity(jsonObject);
 		}
 		else if (type == JobEntity.Type.PORTAL_APP_RELEASE) {
 			return new PortalAppReleaseJobEntity(jsonObject);

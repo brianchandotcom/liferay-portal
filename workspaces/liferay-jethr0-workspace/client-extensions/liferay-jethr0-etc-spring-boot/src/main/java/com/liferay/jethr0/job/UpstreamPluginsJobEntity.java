@@ -10,14 +10,14 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class PluginsUpstreamJobEntity extends BaseJobEntity {
+public class UpstreamPluginsJobEntity extends BasePluginsJobEntity {
 
 	@Override
 	public String getJenkinsJobName() {
 		return "test-plugins-upstream";
 	}
 
-	protected PluginsUpstreamJobEntity(JSONObject jsonObject) {
+	protected UpstreamPluginsJobEntity(JSONObject jsonObject) {
 		super(jsonObject);
 	}
 

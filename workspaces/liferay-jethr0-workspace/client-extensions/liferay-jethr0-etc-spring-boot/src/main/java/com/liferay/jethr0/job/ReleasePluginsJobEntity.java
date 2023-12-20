@@ -10,14 +10,14 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class PluginsReleaseJobEntity extends BaseJobEntity {
+public class ReleasePluginsJobEntity extends BasePluginsJobEntity {
 
 	@Override
 	public String getJenkinsJobName() {
 		return "test-plugins-release";
 	}
 
-	protected PluginsReleaseJobEntity(JSONObject jsonObject) {
+	protected ReleasePluginsJobEntity(JSONObject jsonObject) {
 		super(jsonObject);
 	}
 

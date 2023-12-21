@@ -205,7 +205,8 @@ public class ColumnValuesExtractor {
 
 	private UnsafeFunction<Object, Object, ReflectiveOperationException>
 		_getUnsafeFunction(
-			Map<String, ObjectValuePair<Field, Method>> fieldNameObjectValuePairs,
+			Map<String, ObjectValuePair<Field, Method>>
+				fieldNameObjectValuePairs,
 			String fieldName) {
 
 		ObjectValuePair<Field, Method> objectValuePair =

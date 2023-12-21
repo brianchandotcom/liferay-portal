@@ -289,8 +289,8 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 
 								<liferay-ui:search-container-column-date
 									cssClass="table-cell-expand-smallest table-cell-ws-nowrap"
-									name="create-date"
-									value="<%= curArticle.getCreateDate() %>"
+									name="display-date"
+									value="<%= curArticle.getDisplayDate() %>"
 								/>
 							</c:when>
 							<c:otherwise>

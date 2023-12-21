@@ -699,6 +699,8 @@
 
 					portletBody.hide();
 				}
+
+				Liferay.fire('refreshPortlet', {portletId: portlet.portletId});
 			}
 		},
 		['aui-base', 'querystring-parse']

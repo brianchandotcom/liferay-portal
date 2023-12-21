@@ -189,6 +189,11 @@ public interface OrganizationService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Organization fetchOrganizationByExternalReferenceCode(
+			long companyId, String externalReferenceCode)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Organization> getGtOrganizations(
 		long gtOrganizationId, long companyId, long parentOrganizationId,
 		int size);

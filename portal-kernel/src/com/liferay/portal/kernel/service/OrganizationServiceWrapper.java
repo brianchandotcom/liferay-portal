@@ -230,6 +230,15 @@ public class OrganizationServiceWrapper
 	}
 
 	@Override
+	public Organization fetchOrganizationByExternalReferenceCode(
+			long companyId, String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _organizationService.fetchOrganizationByExternalReferenceCode(
+			companyId, externalReferenceCode);
+	}
+
+	@Override
 	public java.util.List<Organization> getGtOrganizations(
 		long gtOrganizationId, long companyId, long parentOrganizationId,
 		int size) {

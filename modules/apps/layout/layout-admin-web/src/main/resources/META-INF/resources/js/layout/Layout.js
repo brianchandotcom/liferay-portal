@@ -139,6 +139,17 @@ const Layout = ({
 						type: 'danger',
 					});
 				}
+				else {
+					openToast({
+						message: Liferay.Language.get(
+							'your-request-processed-successfully'
+						),
+						toastProps: {
+							autoClose: 5000,
+						},
+						type: 'success',
+					});
+				}
 				if (updatedLayoutColumns) {
 					setLayoutColumns(updatedLayoutColumns);
 				}

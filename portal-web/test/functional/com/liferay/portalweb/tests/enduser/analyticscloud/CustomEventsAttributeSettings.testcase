@@ -368,6 +368,8 @@ definition {
 		}
 
 		task ("Check if the display name has been changed") {
+			ACUtils.searchBar(searchItem = ${attributeName});
+
 			ACCustomEvents.viewDisplayNameOrDescriptionList(nameValue = "${attributeName} Display Name");
 		}
 	}

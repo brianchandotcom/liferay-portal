@@ -7,6 +7,7 @@ package com.liferay.search.experiences.internal.upgrade.v3_1_2;
 
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -27,15 +28,30 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 		_upgradeSXPBlueprint();
 	}
 
-	private String _fixElementDefinition(String elementDefinition)
-		throws Exception {
+	private JSONArray _createJSONArray(String jsonArrayString) {
+		try {
+			return JSONFactoryUtil.createJSONArray(jsonArrayString);
+		}
+		catch (JSONException jsonException) {
+			throw new RuntimeException(jsonException);
+		}
+	}
 
+	private JSONObject _createJSONObject(String jsonObjectString) {
+		try {
+			return JSONFactoryUtil.createJSONObject(jsonObjectString);
+		}
+		catch (JSONException jsonException) {
+			throw new RuntimeException(jsonException);
+		}
+	}
+
+	private String _fixElementDefinition(String elementDefinition) {
 		if (Validator.isBlank(elementDefinition)) {
 			return elementDefinition;
 		}
 
-		JSONObject sxpElementJSONObject = JSONFactoryUtil.createJSONObject(
-			elementDefinition);
+		JSONObject sxpElementJSONObject = _createJSONObject(elementDefinition);
 
 		if (sxpElementJSONObject == null) {
 			return elementDefinition;
@@ -75,14 +91,12 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 		return sxpElementJSONObject.toString();
 	}
 
-	private String _fixElementInstance(String elementInstances)
-		throws Exception {
-
+	private String _fixElementInstance(String elementInstances) {
 		if (Validator.isBlank(elementInstances)) {
 			return elementInstances;
 		}
 
-		JSONArray elementInstancesJSONArray = JSONFactoryUtil.createJSONArray(
+		JSONArray elementInstancesJSONArray = _createJSONArray(
 			elementInstances);
 
 		for (int i = 0; i < elementInstancesJSONArray.length(); i++) {
@@ -112,7 +126,7 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 
 			sxpElementJSONObject.put(
 				"elementDefinition",
-				JSONFactoryUtil.createJSONObject(
+				_createJSONObject(
 					_fixElementDefinition(
 						elementDefinitionJSONObject.toString())));
 		}

@@ -13,7 +13,6 @@ import com.liferay.portal.dao.init.DBInitUtil;
 import com.liferay.portal.dao.jdbc.util.ConnectionWrapper;
 import com.liferay.portal.dao.jdbc.util.DataSourceWrapper;
 import com.liferay.portal.db.partition.DBPartitionUtil;
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -33,7 +32,6 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.AssumeTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.test.rule.Inject;
@@ -158,17 +156,11 @@ public abstract class BaseDBPartitionTestCase {
 		PropsUtil.set(
 			"database.partition.enabled", _originalDatabasePartitionEnabled);
 
-		ReflectionTestUtil.setFieldValue(
-			DBInitUtil.class, "_dataSource", _currentDataSource);
-		ReflectionTestUtil.setFieldValue(
-			DBPartitionUtil.class, "_DATABASE_PARTITION_SCHEMA_NAME_PREFIX",
-			StringPool.BLANK);
-
 		_lazyConnectionDataSourceProxy.setTargetDataSource(_currentDataSource);
 
 		ReflectionTestUtil.setFieldValue(
-			InfrastructureUtil.class, "_dataSource",
-			_lazyConnectionDataSourceProxy);
+			DBPartitionUtil.class, "_DATABASE_PARTITION_SCHEMA_NAME_PREFIX",
+			StringPool.BLANK);
 	}
 
 	protected static void dropIndex(String tableName) throws Exception {
@@ -214,21 +206,17 @@ public abstract class BaseDBPartitionTestCase {
 
 		DBPartitionUtil.setDefaultCompanyId(portal.getDefaultCompanyId());
 
+		_lazyConnectionDataSourceProxy =
+			(LazyConnectionDataSourceProxy)DBInitUtil.getDataSource();
+
+		_currentDataSource =
+			_lazyConnectionDataSourceProxy.getTargetDataSource();
+
 		DataSource dbPartitionDataSource = _wrapDataSource(
 			DBPartitionUtil.wrapDataSource(_currentDataSource));
 
-		_lazyConnectionDataSourceProxy =
-			(LazyConnectionDataSourceProxy)PortalBeanLocatorUtil.locate(
-				"liferayDataSource");
-
 		_lazyConnectionDataSourceProxy.setTargetDataSource(
 			dbPartitionDataSource);
-
-		ReflectionTestUtil.setFieldValue(
-			DBInitUtil.class, "_dataSource", dbPartitionDataSource);
-		ReflectionTestUtil.setFieldValue(
-			InfrastructureUtil.class, "_dataSource",
-			_lazyConnectionDataSourceProxy);
 
 		_restartComponent(
 			"com.liferay.portal.db.partition",
@@ -547,8 +535,7 @@ public abstract class BaseDBPartitionTestCase {
 	private static final String _DATABASE_PARTITION_SCHEMA_NAME_PREFIX =
 		"lpartitiontest_";
 
-	private static final DataSource _currentDataSource =
-		ReflectionTestUtil.getFieldValue(DBInitUtil.class, "_dataSource");
+	private static DataSource _currentDataSource;
 	private static boolean _dbPartitionEnabled;
 	private static LazyConnectionDataSourceProxy _lazyConnectionDataSourceProxy;
 	private static String _originalDatabasePartitionEnabled;

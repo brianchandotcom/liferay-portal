@@ -50,8 +50,10 @@ definition {
 
 			WaitForPageLoad();
 
+			ACUtils.waitForLoading();
+
 			while ((IsElementNotPresent(locator1 = "ACUtils#PAGE_SEGMENT_FILTER")) && (maxIterations = "50")) {
-				ACUtils.searchBar(searchItem = ${name});
+				ACPagePath.searchSegmentFilterBar(searchItem = ${name});
 
 				ACPagePath.clearSegmentSearchFilter();
 			}

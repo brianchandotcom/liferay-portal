@@ -835,8 +835,6 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 						StringUtil.toLowerCase(RandomTestUtil.randomString()),
 						StringPool.CLOSE_CURLY_BRACE)
 				).put(
-					"pathParameter", HeadlessBuilderConstants.PATH_PARAMETER_ID
-				).put(
 					"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
 					apiApplicationJSONObject.getLong("id")
 				).put(

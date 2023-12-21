@@ -113,7 +113,7 @@ definition {
 
 		CalendarLookAndFeelConfiguration.viewCssValues(
 			cssElement = "color",
-			cssValue = "#7f26ff");
+			cssValue = "#7F26FF");
 
 		CalendarLookAndFeelConfiguration.viewCssValues(
 			cssElement = "font-style",

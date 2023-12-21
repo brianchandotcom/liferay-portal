@@ -91,7 +91,7 @@ public class GetSitesMVCResourceCommandTest
 		JSONObject siteJSONObject =
 			_getSitesMVCResourceCommand.
 				getSiteByExternalReferenceCodeJSONObject(
-					resourceRequest, Mockito.mock(ResourceResponse.class));
+					resourceRequest);
 
 		Assert.assertEquals(
 			siteJSONObject.toString(),
@@ -128,7 +128,7 @@ public class GetSitesMVCResourceCommandTest
 
 		JSONObject sitesJSONObject =
 			_getSitesMVCResourceCommand.getSitesJSONObject(
-				resourceRequest, Mockito.mock(ResourceResponse.class));
+				resourceRequest);
 
 		JSONArray sitesJSONArray = sitesJSONObject.getJSONArray("items");
 
@@ -146,7 +146,7 @@ public class GetSitesMVCResourceCommandTest
 
 		JSONObject sitesJSONObject =
 			_getSitesMVCResourceCommand.getSitesJSONObject(
-				resourceRequest, Mockito.mock(ResourceResponse.class));
+				resourceRequest);
 
 		JSONArray sitesJSONArray = sitesJSONObject.getJSONArray("items");
 
@@ -165,7 +165,7 @@ public class GetSitesMVCResourceCommandTest
 
 		JSONObject sitesJSONObject =
 			_getSitesMVCResourceCommand.getSitesJSONObject(
-				resourceRequest, Mockito.mock(ResourceResponse.class));
+				resourceRequest);
 
 		JSONArray sitesJSONArray = sitesJSONObject.getJSONArray("items");
 
@@ -196,7 +196,7 @@ public class GetSitesMVCResourceCommandTest
 
 		JSONObject sitesJSONObject =
 			_getSitesMVCResourceCommand.getSitesJSONObject(
-				resourceRequest, Mockito.mock(ResourceResponse.class));
+				resourceRequest);
 
 		Assert.assertEquals(2, sitesJSONObject.getInt("lastPage"));
 
@@ -214,7 +214,7 @@ public class GetSitesMVCResourceCommandTest
 
 		JSONObject sitesJSONObject =
 			_getSitesMVCResourceCommand.getSitesJSONObject(
-				resourceRequest, Mockito.mock(ResourceResponse.class));
+				resourceRequest);
 
 		Assert.assertEquals(1, sitesJSONObject.getInt("lastPage"));
 
@@ -232,7 +232,7 @@ public class GetSitesMVCResourceCommandTest
 
 		JSONObject sitesJSONObject =
 			_getSitesMVCResourceCommand.getSitesJSONObject(
-				resourceRequest, Mockito.mock(ResourceResponse.class));
+				resourceRequest);
 
 		Assert.assertEquals(2, sitesJSONObject.getInt("lastPage"));
 

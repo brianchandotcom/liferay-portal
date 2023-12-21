@@ -508,12 +508,8 @@ definition {
 
 		MenuItem.click(menuItem = "Configuration");
 
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
 		if (isSet(emailFrom)) {
-			AssertClick(
-				locator1 = "KnowledgeBaseConfiguration#NAVIGATION_TAB_EMAIL_FROM",
-				value1 = "Email From");
+			MenuBar.click(menuBar = "Email From");
 
 			Type(
 				locator1 = "TextInput#EMAIL_FROM_NAME",
@@ -527,9 +523,7 @@ definition {
 		}
 
 		if (isSet(suggestionReceived)) {
-			AssertClick(
-				locator1 = "KnowledgeBaseConfiguration#NAVIGATION_TAB_SUGGESTION_RECEIVED",
-				value1 = "Suggestion Received Email");
+			MenuItem.click(menuItem = "Suggestion Received Email");
 
 			SelectFrame.selectFrameNoLoading(locator1 = "KnowledgeBaseConfiguration#SUGGESTION_RECEIVED_EMAIL_EDITOR_IFRAME");
 
@@ -539,15 +533,11 @@ definition {
 
 			SelectFrame(value1 = "relative=top");
 
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
 			PortletEntry.save();
 		}
 
 		if (isSet(suggestionInProgress)) {
-			AssertClick(
-				locator1 = "KnowledgeBaseConfiguration#NAVIGATION_TAB_SUGGESTION_IN_PROGRESS",
-				value1 = "Suggestion in Progress Email");
+			MenuItem.click(menuItem = "Suggestion in Progress Email");
 
 			SelectFrame.selectFrameNoLoading(locator1 = "KnowledgeBaseConfiguration#SUGGESTION_IN_PROGRESS_EMAIL_EDITOR_IFRAME");
 
@@ -557,15 +547,11 @@ definition {
 
 			SelectFrame(value1 = "relative=top");
 
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
 			PortletEntry.save();
 		}
 
 		if (isSet(suggestionResolved)) {
-			AssertClick(
-				locator1 = "KnowledgeBaseConfiguration#NAVIGATION_TAB_SUGGESTION_RESOLVED",
-				value1 = "Suggestion Resolved Email");
+			MenuItem.click(menuItem = "Suggestion Resolved Email");
 
 			SelectFrame.selectFrameNoLoading(locator1 = "KnowledgeBaseConfiguration#SUGGESTION_RESOLVED_EMAIL_EDITOR_IFRAME");
 
@@ -575,12 +561,8 @@ definition {
 
 			SelectFrame(value1 = "relative=top");
 
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
 			PortletEntry.save();
 		}
-
-		SelectFrame(value1 = "relative=top");
 	}
 
 	@summary = "Default summary"

@@ -132,18 +132,18 @@ public class GetSitesMVCResourceCommand implements MVCResourceCommand {
 			page = lastPage;
 		}
 
-		int endPosition = pageSize * page;
+		int end = pageSize * page;
 
-		int startPosition = endPosition - pageSize;
+		int start = end - pageSize;
 
-		if (endPosition > totalCount) {
-			endPosition = totalCount;
+		if (end > totalCount) {
+			end = totalCount;
 		}
 
 		return JSONUtil.put(
 			"items",
 			JSONUtil.toJSONArray(
-				allGroups.subList(startPosition, endPosition),
+				allGroups.subList(start, end),
 				group -> JSONUtil.put(
 					"descriptiveName",
 					group.getDescriptiveName(themeDisplay.getLocale())

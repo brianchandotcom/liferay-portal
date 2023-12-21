@@ -40,6 +40,10 @@ public class GitHubEventHandlerFactory extends BaseEventHandlerFactory {
 						return new CloseGitHubCommentEventHandler(
 							eventHandlerContext, messageJSONObject);
 					}
+					else if (body.startsWith("ci:forward")) {
+						return new ForwardGitHubCommentEventHandler(
+							eventHandlerContext, messageJSONObject);
+					}
 					else if (body.startsWith("ci:help")) {
 						return new HelpGitHubCommentEventHandler(
 							eventHandlerContext, messageJSONObject);

@@ -91,6 +91,10 @@ public abstract class BaseGitHubEventHandler extends BaseEventHandler {
 	}
 
 	protected void invokeJobEntity(JobEntity jobEntity) {
+		if (jobEntity == null) {
+			return;
+		}
+
 		BuildEntityRepository buildEntityRepository = getBuildRepository();
 
 		for (JSONObject initialBuildJSONObject :

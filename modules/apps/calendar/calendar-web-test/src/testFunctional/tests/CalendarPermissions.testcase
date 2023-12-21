@@ -118,7 +118,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "CalendarPermissions#PERMISSIONS_RESULTS_BAR",
-			value1 = "0 Results for \"DXP Client\"");
+			value1 = "0 Results Found for \"DXP Client\"");
 
 		AssertTextEquals(
 			locator1 = "CalendarPermissions#NO_ROLES_WERE_FOUND",

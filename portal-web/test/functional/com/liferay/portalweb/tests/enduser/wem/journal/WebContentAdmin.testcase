@@ -699,6 +699,60 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-196819. The site administrator could select structures from global site and asset library on modal."
+	@priority = 3
+	test SelectStructuresFromGlobalAndAssetLibraryAsHighlightedStrutures {
+		property custom.properties = "feature.flag.LPS-194763=true${line.separator}feature.flag.LPS-197692=true";
+
+		task ("Given a site administrator has web content structure in asset library") {
+			JSONDepot.addDepot(depotName = "Test Depot Name");
+
+			DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "WC Structure Name");
+
+			DataEngine.addField(fieldName = "Text");
+
+			WebContentStructures.saveCP();
+
+			JSONDepot.connectSite(
+				depotName = "Test Depot Name",
+				groupName = "Test Site Name");
+
+			JSONDepot.updateStructureState(
+				groupName = "Test Site Name",
+				structureState = "Available");
+		}
+
+		task ("When the site administrator selects the highlighted structures in site") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			Click.waitForMenuToggleJSClick(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
+
+			MenuItem.click(menuItem = "Configuration");
+
+			Click(
+				ariaLabel = "Select Highlighted Structures",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+		}
+
+		task ("Then the site administrator could see structures from global and asset library on modal") {
+			LexiconTable.viewTableEntryInfo(
+				columnName = "scope",
+				tableEntry = "Basic Web Content",
+				tableEntryInfo = "Global");
+
+			LexiconTable.viewTableEntryInfo(
+				columnName = "scope",
+				tableEntry = "WC Structure Name",
+				tableEntryInfo = "Asset Library");
+		}
+	}
+
 	@description = "This is a test for LPS-196819. The site administrator could add all available type items in Content Library sheet."
 	@priority = 3
 	test ViewAvailableTypesInContentLibrarySheet {

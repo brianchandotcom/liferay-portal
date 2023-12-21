@@ -9,15 +9,19 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.tools.db.partition.virtual.instance.migrator.common.InstanceData;
 import com.liferay.portal.tools.db.partition.virtual.instance.migrator.extractor.util.DatabaseUtil;
 
 import java.io.File;
-import java.io.IOException;
+
+import java.nio.file.Files;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+
+import java.text.SimpleDateFormat;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -67,6 +71,7 @@ public class DBPartitionVirtualInstanceMigratorExtractor {
 		options.addRequiredOption(
 			"pass", "password", true, "Set the password.");
 		options.addRequiredOption("user", "user", true, "Set the user.");
+		options.addOption("path", "path", true, "Set the output directory.");
 
 		return options;
 	}
@@ -108,7 +113,9 @@ public class DBPartitionVirtualInstanceMigratorExtractor {
 				_exit(_LIFERAY_COMMON_EXIT_CODE_BAD);
 			}
 
-			_writeToFile(DatabaseUtil.exportInstanceData(_connection));
+			_writeToFile(
+				DatabaseUtil.exportInstanceData(_connection),
+				commandLine.getOptionValue("path"));
 		}
 		catch (ParseException parseException) {
 			System.err.println("Unable to parse command line properties:");
@@ -128,8 +135,28 @@ public class DBPartitionVirtualInstanceMigratorExtractor {
 		_exit(_LIFERAY_COMMON_EXIT_CODE_OK);
 	}
 
-	private static void _writeToFile(InstanceData instanceData)
-		throws IOException {
+	private static void _writeToFile(InstanceData instanceData, String path)
+		throws Exception {
+
+		File exportDir = null;
+
+		if (path == null) {
+			exportDir = new File(".", "exports");
+
+			if (!exportDir.exists()) {
+				exportDir.mkdirs();
+			}
+		}
+
+		if (exportDir == null) {
+			exportDir = new File(path);
+
+			if ((!exportDir.exists() && !exportDir.mkdirs()) ||
+				!Files.isWritable(exportDir.toPath())) {
+
+				throw new Exception("Unable to generate the export at " + path);
+			}
+		}
 
 		ObjectMapper objectMapper = new ObjectMapper() {
 			{
@@ -138,8 +165,16 @@ public class DBPartitionVirtualInstanceMigratorExtractor {
 			}
 		};
 
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ssXX");
+
 		objectMapper.writeValue(
-			new File("./migration_extraction.data"), instanceData);
+			new File(
+				exportDir,
+				StringBundler.concat(
+					simpleDateFormat.format(instanceData.getDate()),
+					"_extraction_", instanceData.getCompanyId(), ".data")),
+			instanceData);
 	}
 
 	/**

@@ -34,6 +34,7 @@ import com.liferay.object.tree.TreeFactory;
 import com.liferay.object.tree.constants.TreeConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.exception.NoSuchResourceActionException;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -658,7 +659,18 @@ public class ObjectEntryServiceTest {
 
 		_setUser(_guestUser);
 
-		Dictionary<String, Object> objectConfigurationDictionary =
+		Dictionary<String, Object> objectSystemConfigurationDictionary =
+			HashMapDictionaryBuilder.<String, Object>put(
+				"duration", 10
+			).put(
+				"maximumFileSizeForGuestUsers", 25
+			).put(
+				"maximumNumberOfGuestUserObjectEntriesPerObjectDefinition", 10
+			).put(
+				"timeScale", "days"
+			).build();
+
+		Dictionary<String, Object> objectInstanceConfigurationDictionary =
 			HashMapDictionaryBuilder.<String, Object>put(
 				"duration", 1
 			).put(
@@ -669,8 +681,12 @@ public class ObjectEntryServiceTest {
 				"timeScale", "days"
 			).build();
 
-		ConfigurationTestUtil.saveConfiguration(
-			ObjectConfiguration.class.getName(), objectConfigurationDictionary);
+		_configurationProvider.saveSystemConfiguration(
+			ObjectConfiguration.class, objectSystemConfigurationDictionary);
+
+		_configurationProvider.saveCompanyConfiguration(
+			ObjectConfiguration.class, TestPropsValues.getCompanyId(),
+			objectInstanceConfigurationDictionary);
 
 		Role guestRole = _roleLocalService.getRole(
 			TestPropsValues.getCompanyId(), RoleConstants.GUEST);
@@ -723,14 +739,16 @@ public class ObjectEntryServiceTest {
 			Assert.assertTrue(count > 0);
 		}
 
-		ConfigurationTestUtil.deleteConfiguration(
-			ObjectConfiguration.class.getName());
+		_configurationProvider.deleteCompanyConfiguration(
+			ObjectConfiguration.class, TestPropsValues.getCompanyId());
 
-		objectConfigurationDictionary.put(
+		objectInstanceConfigurationDictionary.put(
 			"maximumNumberOfGuestUserObjectEntriesPerObjectDefinition", 2);
+		objectInstanceConfigurationDictionary.put("timeScale", "days");
 
-		ConfigurationTestUtil.saveConfiguration(
-			ObjectConfiguration.class.getName(), objectConfigurationDictionary);
+		_configurationProvider.saveCompanyConfiguration(
+			ObjectConfiguration.class, TestPropsValues.getCompanyId(),
+			objectInstanceConfigurationDictionary);
 
 		ObjectEntry objectEntry = _objectEntryService.addObjectEntry(
 			0, _objectDefinition.getObjectDefinitionId(),
@@ -759,15 +777,16 @@ public class ObjectEntryServiceTest {
 		_objectEntryLocalService.deleteObjectEntry(
 			objectEntry.getObjectEntryId());
 
-		ConfigurationTestUtil.deleteConfiguration(
-			ObjectConfiguration.class.getName());
+		_configurationProvider.deleteCompanyConfiguration(
+			ObjectConfiguration.class, TestPropsValues.getCompanyId());
 
-		objectConfigurationDictionary.put(
+		objectInstanceConfigurationDictionary.put(
 			"maximumNumberOfGuestUserObjectEntriesPerObjectDefinition", 3);
-		objectConfigurationDictionary.put("timeScale", "weeks");
+		objectInstanceConfigurationDictionary.put("timeScale", "weeks");
 
-		ConfigurationTestUtil.saveConfiguration(
-			ObjectConfiguration.class.getName(), objectConfigurationDictionary);
+		_configurationProvider.saveCompanyConfiguration(
+			ObjectConfiguration.class, TestPropsValues.getCompanyId(),
+			objectInstanceConfigurationDictionary);
 
 		objectEntry = _objectEntryService.addObjectEntry(
 			0, _objectDefinition.getObjectDefinitionId(),
@@ -821,15 +840,16 @@ public class ObjectEntryServiceTest {
 		_objectEntryLocalService.deleteObjectEntry(
 			objectEntry.getObjectEntryId());
 
-		ConfigurationTestUtil.deleteConfiguration(
-			ObjectConfiguration.class.getName());
+		_configurationProvider.deleteCompanyConfiguration(
+			ObjectConfiguration.class, TestPropsValues.getCompanyId());
 
-		objectConfigurationDictionary.put("duration", "2");
-		objectConfigurationDictionary.put(
+		objectInstanceConfigurationDictionary.put(
 			"maximumNumberOfGuestUserObjectEntriesPerObjectDefinition", 4);
+		objectInstanceConfigurationDictionary.put("timeScale", "weeks");
 
-		ConfigurationTestUtil.saveConfiguration(
-			ObjectConfiguration.class.getName(), objectConfigurationDictionary);
+		_configurationProvider.saveCompanyConfiguration(
+			ObjectConfiguration.class, TestPropsValues.getCompanyId(),
+			objectInstanceConfigurationDictionary);
 
 		objectEntry = _objectEntryService.addObjectEntry(
 			0, _objectDefinition.getObjectDefinitionId(),
@@ -904,6 +924,9 @@ public class ObjectEntryServiceTest {
 
 	private User _adminUser;
 	private User _guestUser;
+
+	@Inject
+	private ConfigurationProvider _configurationProvider;
 
 	@DeleteAfterTestRun
 	private ObjectDefinition _objectDefinition;

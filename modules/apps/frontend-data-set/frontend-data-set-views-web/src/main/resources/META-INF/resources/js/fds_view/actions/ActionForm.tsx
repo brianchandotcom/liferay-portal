@@ -186,14 +186,8 @@ const ActionForm = ({
 
 		setActionData({
 			...actionData,
-			method:
-				type === ACTION_TYPE.ASYNC
-					? ACTION_METHOD.DELETE
-					: '',
-			modalSize:
-				type === ACTION_TYPE.MODAL
-					? MODAL_SIZES[0].value
-					: '',
+			method: type === ACTION_TYPE.ASYNC ? ACTION_METHOD.DELETE : '',
+			modalSize: type === ACTION_TYPE.MODAL ? MODAL_SIZES[0].value : '',
 			type,
 		});
 	};

@@ -93,6 +93,43 @@ definition {
 			kbArticleTitle = "Knowledge Base Article Title");
 	}
 
+	@description = "This test ensures that the article can be viewed after restoring."
+	@priority = 3
+	test CanViewArticleAfterRestoring {
+		property custom.properties = "feature.flag.LPS-188058=true";
+
+		JSONKnowledgeBase.addkBArticle(
+			groupName = "Guest",
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		Navigator.gotoPage(pageName = "Knowledge Base Article Page");
+
+		KBArticle.selectArticlesToDisplayOnWidget(
+			kbArticle = "true",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		Navigator.gotoPage(pageName = "Knowledge Base Article Page");
+
+		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Delete");
+
+		VerifyVisible(
+			key_alertMessage = "Error:The selected article no longer exists.",
+			locator1 = "Message#ERROR_ENTER_ANY");
+
+		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
+
+		RecycleBin.restoreCP(
+			assetName = "Knowledge Base Article Title",
+			assetType = "Knowledge Base Article");
+
+		Navigator.gotoPage(pageName = "Knowledge Base Article Page");
+
+		KBArticle.viewPG(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+	}
+
 	@description = "This test ensures that the description can be displayed on the KB article widget after enabling it in the configuration."
 	@priority = 4
 	test CanViewDescriptionAfterEnablingInConfiguration {

@@ -88,15 +88,15 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 		return sxpElementJSONObject.toString();
 	}
 
-	private String _fixElementInstance(String elementInstances)
+	private String _fixElementInstancesJSON(String elementInstancesJSON)
 		throws Exception {
 
-		if (Validator.isBlank(elementInstances)) {
-			return elementInstances;
+		if (Validator.isBlank(elementInstancesJSON)) {
+			return elementInstancesJSON;
 		}
 
 		JSONArray elementInstancesJSONArray = JSONFactoryUtil.createJSONArray(
-			elementInstances);
+			elementInstancesJSON);
 
 		for (int i = 0; i < elementInstancesJSONArray.length(); i++) {
 			JSONObject elementInstanceJSONObject =
@@ -144,7 +144,7 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 				while (resultSet1.next()) {
 					preparedStatement2.setString(
 						1,
-						_fixElementInstance(
+						_fixElementInstancesJSON(
 							resultSet1.getString("elementInstancesJSON")));
 					preparedStatement2.setLong(
 						2, resultSet1.getLong("sxpBlueprintId"));

@@ -92,6 +92,10 @@
 	border: 0;
 }
 
+.carousel-control:focus-visible {
+	outline: none;
+}
+
 .carousel-control:focus-visible .carousel-control-icon {
 	border-radius: 4px;
 	box-shadow: 0 0 0 2px #fff, 0 0 0 4px #528eff;
@@ -131,6 +135,7 @@
 .component-slider .carousel-item-button:focus-visible {
 	border-radius: 4px;
 	box-shadow: 0 0 0 2px #fff, 0 0 0 4px #528eff;
+	outline: none;
 }
 
 .component-slider .carousel-item-button-icon {

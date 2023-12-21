@@ -9,6 +9,83 @@
 	}
 </script>
 
+<style>
+	.br-5 {
+		border-radius: 0.5rem;
+	}
+
+	.br-20 {
+		border-radius: 2.0rem;
+	}
+
+	.currentLevel {
+		color: #004AD7 !important;
+		background-color: #E6EDFB;
+	}
+
+	.currentLevel:hover a {
+		background-color: #EDF3FE !important;
+		color: ##004AD7 !important;
+	}
+
+	.dropdown-item {
+		align-items: center;
+		align-self: stretch;
+	  	display: flex;
+		gap: 0.75rem;
+		padding: 0.75rem;
+	}
+
+	.dropdown-item:hover {
+	  	background-color: #EDF3FE;
+	}
+
+	.dropdown-menu .row {
+	  	margin: 0 !important;
+	}
+
+	.reference:hover {
+		color: #0053F0 !important;
+	}
+
+	.show #dropdown-products {
+	  	background-color: #EDF3FE !important;
+	}
+
+	.show #dropdown-products svg {
+		color: var(--color-action-primary-hover);
+		transform: rotate(180deg);
+	}
+
+	.sideNav:hover {
+		background-color: #EDF3FE !important;
+		color: #0053F0 !important;
+	}
+
+	.toctree-test:hover a {
+		background-image: clay-icon(angle-right, $color-action-primary-hover);
+		background-position: right 0.8rem top $spacing-md;
+		background-repeat: no-repeat;
+		background-size: 0.65rem;
+		color: $color-neutral-6;
+		color: var(--color-action-primary-hover) !important;
+		font-size: 1.125rem;
+	}
+
+	#backLink:hover {
+		background-color: #EAECEE;
+		transition: box-shadow 0.1s linear, background-color 0.1s linear;
+	}
+
+	#dropdown-products:hover {
+		background-color: #EDF3FE !important;
+	}
+
+	#dropdown-products:hover svg {
+	  	color: var(--color-action-primary-hover);
+	}
+</style>
+
 <#assign
 	journalArticleId = .vars["reserved-article-id"].data
 	taxonomyCategoriesMap = {}
@@ -338,66 +415,3 @@
 		</div>
 	</div>
 </div>
-
-<style>
-	.br-5 {
-		border-radius: 0.5rem;
-	}
-	.br-20 {
-		border-radius: 2.0rem;
-	}
-	.currentLevel {
-		color: #004AD7 !important;
-		background-color: #E6EDFB;
-	}
-	.currentLevel:hover a {
-		background-color: #EDF3FE !important;
-		color: ##004AD7 !important;
-	}
-	.dropdown-item {
-		align-items: center;
-		align-self: stretch;
-	  	display: flex;
-		gap: 0.75rem;
-		padding: 0.75rem;
-	}
-	.dropdown-item:hover {
-	  	background-color: #EDF3FE;
-	}
-	.dropdown-menu .row {
-	  	margin: 0 !important;
-	}
-	.reference:hover {
-		color: #0053F0 !important;
-	}
-	.show #dropdown-products {
-	  	background-color: #EDF3FE !important;
-	}
-	.show #dropdown-products svg {
-		color: var(--color-action-primary-hover);
-		transform: rotate(180deg);
-	}
-	.sideNav:hover {
-		background-color: #EDF3FE !important;
-		color: #0053F0 !important;
-	}
-	.toctree-test:hover a {
-		background-image: clay-icon(angle-right, $color-action-primary-hover);
-		background-position: right 0.8rem top $spacing-md;
-		background-repeat: no-repeat;
-		background-size: 0.65rem;
-		color: $color-neutral-6;
-		color: var(--color-action-primary-hover) !important;
-		font-size: 1.125rem;
-	}
-	#backLink:hover {
-		background-color: #EAECEE;
-		transition: box-shadow 0.1s linear, background-color 0.1s linear;
-	}
-	#dropdown-products:hover {
-		background-color: #EDF3FE !important;
-	}
-	#dropdown-products:hover svg {
-	  	color: var(--color-action-primary-hover);
-	}
-</style>

@@ -176,8 +176,7 @@ public class IndexUpdaterUtil {
 	}
 
 	private static void _updateIndexes(
-			String servletContextName, String tablesSQL, String indexesSQL)
-		throws Exception {
+		String servletContextName, String tablesSQL, String indexesSQL) {
 
 		_processedServletContextNames.add(servletContextName);
 
@@ -189,41 +188,50 @@ public class IndexUpdaterUtil {
 
 		ExecutorService executorService = _getExecutorService();
 
-		db.process(
-			companyId -> _futures.add(
-				executorService.submit(
-					() -> {
-						try {
-							String message = new String(
-								"Updating portal database indexes");
+		_futures.add(
+			executorService.submit(
+				() -> {
+					try {
+						db.process(
+							companyId -> {
+								try {
+									String message = new String(
+										"Updating portal database indexes");
 
-							if (!servletContextName.equals("portal")) {
-								message = new String(
-									"Updating database indexes for " +
-										servletContextName);
-							}
+									if (!servletContextName.equals("portal")) {
+										message = new String(
+											"Updating database indexes for " +
+												servletContextName);
+									}
 
-							if (Validator.isNotNull(companyId)) {
-								message += " and company " + companyId;
-							}
+									if (Validator.isNotNull(companyId)) {
+										message += " and company " + companyId;
+									}
 
-							try (Connection connection =
-									DataAccess.getConnection();
-								LoggingTimer loggingTimer = new LoggingTimer(
-									message)) {
+									try (Connection connection =
+											DataAccess.getConnection();
+										LoggingTimer loggingTimer =
+											new LoggingTimer(message)) {
 
-								db.updateIndexes(
-									connection, tablesSQL, indexesSQL, true);
-							}
-						}
-						catch (Exception exception) {
-							_log.error(
-								StringBundler.concat(
-									"Unable to update database indexes for ",
-									servletContextName, " due to ",
-									exception.getMessage()));
-						}
-					})));
+										db.updateIndexes(
+											connection, tablesSQL, indexesSQL,
+											true);
+									}
+								}
+								catch (Exception exception) {
+									_log.error(
+										StringBundler.concat(
+											"Unable to update database ",
+											"indexes for ", servletContextName,
+											" due to ",
+											exception.getMessage()));
+								}
+							});
+					}
+					catch (Exception exception) {
+						throw new RuntimeException(exception);
+					}
+				}));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

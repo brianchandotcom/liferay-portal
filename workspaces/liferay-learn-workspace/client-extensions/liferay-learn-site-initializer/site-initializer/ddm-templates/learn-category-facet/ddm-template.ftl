@@ -242,6 +242,7 @@
 		taxonomyVocabularyItems = restClient.get("/headless-admin-taxonomy/v1.0/sites/${themeDisplay.getSiteGroupId()}/taxonomy-vocabularies/?fields=externalReferenceCode%2Cname").items
 		vocabularyNamesSorted = []
 	/>
+	
 	<#list taxonomyVocabularyItems as taxonomyVocabularyItem>
 		<#if stringUtil.equals(taxonomyVocabularyItem.externalReferenceCode, "CAPABILITY")>
 			<#assign vocabularyNamesSorted = [taxonomyVocabularyItem.name] + vocabularyNamesSorted />
@@ -250,7 +251,7 @@
 		<#elseif stringUtil.equals(taxonomyVocabularyItem.externalReferenceCode, "DEPLOYMENT_APPROACH")>
 			<#assign vocabularyNamesSorted = vocabularyNamesSorted + [taxonomyVocabularyItem.name] />
 		</#if>
-</#list>
+	</#list>
 
 	<#list vocabularyNamesSorted as vocabularyName>
 		<ul class="treeview treeview-light treeview-nested treeview-vocabulary-display" role="tree">

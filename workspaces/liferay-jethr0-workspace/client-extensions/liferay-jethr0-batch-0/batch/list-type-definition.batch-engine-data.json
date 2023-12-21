@@ -276,6 +276,14 @@
 					}
 				},
 				{
+					"externalReferenceCode": "filePropagator",
+					"key": "filePropagator",
+					"name": "File Propagator",
+					"name_i18n": {
+						"en-US": "File Propagator"
+					}
+				},
+				{
 					"externalReferenceCode": "fixpackBuilderPullRequest",
 					"key": "fixpackBuilderPullRequest",
 					"name": "Fixpack Builder Pull Request",
@@ -340,6 +348,14 @@
 					}
 				},
 				{
+					"externalReferenceCode": "liferayBinariesCacheUpdater",
+					"key": "liferayBinariesCacheUpdater",
+					"name": "Liferay Binaries Cache Updater",
+					"name_i18n": {
+						"en-US": "Liferay Binaries Cache Updater"
+					}
+				},
+				{
 					"externalReferenceCode": "maintenanceDaily",
 					"key": "maintenanceDaily",
 					"name": "Maintenance Daily",
@@ -377,6 +393,14 @@
 					"name": "Maintenance Weekly Node",
 					"name_i18n": {
 						"en-US": "Maintenance Weekly Node"
+					}
+				},
+				{
+					"externalReferenceCode": "mirrorsLocalCachePropagator",
+					"key": "mirrorsLocalCachePropagator",
+					"name": "Mirrors Local Cache Propagator",
+					"name_i18n": {
+						"en-US": "Mirrors Local Cache Propagator"
 					}
 				},
 				{
@@ -489,6 +513,22 @@
 					"name": "Poshi Release",
 					"name_i18n": {
 						"en-US": "Poshi Release"
+					}
+				},
+				{
+					"externalReferenceCode": "publishPortalDockerImage",
+					"key": "publishPortalDockerImage",
+					"name": "Publish Portal Docker Image",
+					"name_i18n": {
+						"en-US": "Publish Portal Docker Image"
+					}
+				},
+				{
+					"externalReferenceCode": "publishTestrayReport",
+					"key": "publishTestrayReport",
+					"name": "Publish Testray Report",
+					"name_i18n": {
+						"en-US": "Publish Testray Report"
 					}
 				},
 				{

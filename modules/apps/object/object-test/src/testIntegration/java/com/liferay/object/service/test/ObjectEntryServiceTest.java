@@ -35,7 +35,6 @@ import com.liferay.object.tree.constants.TreeConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
-import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.exception.NoSuchResourceActionException;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
@@ -76,7 +75,6 @@ import java.time.ZoneId;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
-import java.util.Dictionary;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -659,34 +657,17 @@ public class ObjectEntryServiceTest {
 
 		_setUser(_guestUser);
 
-		Dictionary<String, Object> objectSystemConfigurationDictionary =
+		_configurationProvider.saveSystemConfiguration(
+			ObjectConfiguration.class,
 			HashMapDictionaryBuilder.<String, Object>put(
 				"duration", 10
-			).put(
-				"maximumFileSizeForGuestUsers", 25
-			).put(
-				"maximumNumberOfGuestUserObjectEntriesPerObjectDefinition", 10
-			).put(
-				"timeScale", "days"
-			).build();
-
-		_configurationProvider.saveSystemConfiguration(
-			ObjectConfiguration.class, objectSystemConfigurationDictionary);
-
-		Dictionary<String, Object> objectInstanceConfigurationDictionary =
-			HashMapDictionaryBuilder.<String, Object>put(
-				"duration", 1
 			).put(
 				"maximumFileSizeForGuestUsers", 25
 			).put(
 				"maximumNumberOfGuestUserObjectEntriesPerObjectDefinition", 1
 			).put(
 				"timeScale", "days"
-			).build();
-
-		_configurationProvider.saveCompanyConfiguration(
-			ObjectConfiguration.class, TestPropsValues.getCompanyId(),
-			objectInstanceConfigurationDictionary);
+			).build());
 
 		Role guestRole = _roleLocalService.getRole(
 			TestPropsValues.getCompanyId(), RoleConstants.GUEST);
@@ -696,6 +677,44 @@ public class ObjectEntryServiceTest {
 			ResourceConstants.SCOPE_COMPANY,
 			String.valueOf(TestPropsValues.getCompanyId()),
 			guestRole.getRoleId(), ObjectActionKeys.ADD_OBJECT_ENTRY);
+
+		try {
+			Assert.assertNotNull(
+				_objectEntryService.addObjectEntry(
+					0, _objectDefinition.getObjectDefinitionId(),
+					Collections.emptyMap(),
+					ServiceContextTestUtil.getServiceContext(
+						TestPropsValues.getGroupId(), _guestUser.getUserId())));
+
+			AssertUtils.assertFailure(
+				ObjectEntryCountException.class,
+				StringBundler.concat(
+					"The limit of guest entries for ",
+					_objectDefinition.getLabel(),
+					" has been reached and will no longer be accepted. Please ",
+					"contact the administrator for further assistance."),
+				() -> _objectEntryService.addObjectEntry(
+					0, _objectDefinition.getObjectDefinitionId(),
+					Collections.emptyMap(),
+					ServiceContextTestUtil.getServiceContext(
+						TestPropsValues.getGroupId(), _guestUser.getUserId())));
+		}
+		finally {
+			_configurationProvider.deleteSystemConfiguration(
+				ObjectConfiguration.class);
+		}
+
+		_configurationProvider.saveCompanyConfiguration(
+			ObjectConfiguration.class, TestPropsValues.getCompanyId(),
+			HashMapDictionaryBuilder.<String, Object>put(
+				"duration", 1
+			).put(
+				"maximumFileSizeForGuestUsers", 25
+			).put(
+				"maximumNumberOfGuestUserObjectEntriesPerObjectDefinition", 2
+			).put(
+				"timeScale", "days"
+			).build());
 
 		try {
 			Assert.assertNotNull(
@@ -755,7 +774,8 @@ public class ObjectEntryServiceTest {
 
 		_setUser(_guestUser);
 
-		Dictionary<String, Object> objectInstanceConfigurationDictionary =
+		_configurationProvider.saveCompanyConfiguration(
+			ObjectConfiguration.class, TestPropsValues.getCompanyId(),
 			HashMapDictionaryBuilder.<String, Object>put(
 				"duration", 1
 			).put(
@@ -764,11 +784,7 @@ public class ObjectEntryServiceTest {
 				"maximumNumberOfGuestUserObjectEntriesPerObjectDefinition", 1
 			).put(
 				"timeScale", "days"
-			).build();
-
-		_configurationProvider.saveCompanyConfiguration(
-			ObjectConfiguration.class, TestPropsValues.getCompanyId(),
-			objectInstanceConfigurationDictionary);
+			).build());
 
 		Role guestRole = _roleLocalService.getRole(
 			TestPropsValues.getCompanyId(), RoleConstants.GUEST);
@@ -831,7 +847,6 @@ public class ObjectEntryServiceTest {
 
 				Assert.assertTrue(numberOfNotifications > 0);
 			}
-
 		}
 		finally {
 			_configurationProvider.deleteCompanyConfiguration(
@@ -845,7 +860,8 @@ public class ObjectEntryServiceTest {
 
 		_setUser(_guestUser);
 
-		Dictionary<String, Object> objectInstanceConfigurationDictionary =
+		_configurationProvider.saveCompanyConfiguration(
+			ObjectConfiguration.class, TestPropsValues.getCompanyId(),
 			HashMapDictionaryBuilder.<String, Object>put(
 				"duration", 1
 			).put(
@@ -854,11 +870,7 @@ public class ObjectEntryServiceTest {
 				"maximumNumberOfGuestUserObjectEntriesPerObjectDefinition", 1
 			).put(
 				"timeScale", "weeks"
-			).build();
-
-		_configurationProvider.saveCompanyConfiguration(
-			ObjectConfiguration.class, TestPropsValues.getCompanyId(),
-			objectInstanceConfigurationDictionary);
+			).build());
 
 		Role guestRole = _roleLocalService.getRole(
 			TestPropsValues.getCompanyId(), RoleConstants.GUEST);
@@ -941,7 +953,8 @@ public class ObjectEntryServiceTest {
 
 		_setUser(_guestUser);
 
-		Dictionary<String, Object> objectInstanceConfigurationDictionary =
+		_configurationProvider.saveCompanyConfiguration(
+			ObjectConfiguration.class, TestPropsValues.getCompanyId(),
 			HashMapDictionaryBuilder.<String, Object>put(
 				"duration", 1
 			).put(
@@ -950,11 +963,7 @@ public class ObjectEntryServiceTest {
 				"maximumNumberOfGuestUserObjectEntriesPerObjectDefinition", 1
 			).put(
 				"timeScale", "weeks"
-			).build();
-
-		_configurationProvider.saveCompanyConfiguration(
-			ObjectConfiguration.class, TestPropsValues.getCompanyId(),
-			objectInstanceConfigurationDictionary);
+			).build());
 
 		Role guestRole = _roleLocalService.getRole(
 			TestPropsValues.getCompanyId(), RoleConstants.GUEST);
@@ -1077,10 +1086,11 @@ public class ObjectEntryServiceTest {
 	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
 
 	private User _adminUser;
-	private User _guestUser;
 
 	@Inject
 	private ConfigurationProvider _configurationProvider;
+
+	private User _guestUser;
 
 	@DeleteAfterTestRun
 	private ObjectDefinition _objectDefinition;

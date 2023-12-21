@@ -38,7 +38,8 @@ public class ObjectDefinitionTestUtil {
 		throws Exception {
 
 		return publishObjectDefinition(
-			objectFields, ObjectDefinitionConstants.SCOPE_COMPANY);
+			"A" + RandomTestUtil.randomString(), objectFields,
+			ObjectDefinitionConstants.SCOPE_COMPANY);
 	}
 
 	public static ObjectDefinition publishObjectDefinition(
@@ -46,18 +47,28 @@ public class ObjectDefinitionTestUtil {
 		throws Exception {
 
 		return publishObjectDefinition(
-			objectFields, scope, TestPropsValues.getUserId());
+			"A" + RandomTestUtil.randomString(), objectFields, scope,
+			TestPropsValues.getUserId());
 	}
 
 	public static ObjectDefinition publishObjectDefinition(
-			List<ObjectField> objectFields, String scope, long userId)
+			String name, List<ObjectField> objectFields, String scope)
+		throws Exception {
+
+		return publishObjectDefinition(
+			name, objectFields, scope, TestPropsValues.getUserId());
+	}
+
+	public static ObjectDefinition publishObjectDefinition(
+			String name, List<ObjectField> objectFields, String scope,
+			long userId)
 		throws Exception {
 
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
 				userId, 0, false, false, false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				"A" + RandomTestUtil.randomString(), null, null,
+				name, null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				true, scope, ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
 				objectFields);

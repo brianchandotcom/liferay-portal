@@ -1602,6 +1602,11 @@ public class UserWrapper
 		model.setGreeting(greeting);
 	}
 
+	@Override
+	public void setGroupIds(long[] groupIds) {
+		model.setGroupIds(groupIds);
+	}
+
 	/**
 	 * Sets the job title of this user.
 	 *
@@ -1752,6 +1757,11 @@ public class UserWrapper
 		model.setOpenId(openId);
 	}
 
+	@Override
+	public void setOrganizationIds(long[] organizationIds) {
+		model.setOrganizationIds(organizationIds);
+	}
+
 	/**
 	 * Sets the password of this user.
 	 *
@@ -1842,6 +1852,11 @@ public class UserWrapper
 		model.setReminderQueryQuestion(reminderQueryQuestion);
 	}
 
+	@Override
+	public void setRoleIds(long[] roleIds) {
+		model.setRoleIds(roleIds);
+	}
+
 	/**
 	 * Sets the screen name of this user.
 	 *
@@ -1862,6 +1877,11 @@ public class UserWrapper
 		model.setStatus(status);
 	}
 
+	@Override
+	public void setTeamIds(long[] teamIds) {
+		model.setTeamIds(teamIds);
+	}
+
 	/**
 	 * Sets the time zone ID of this user.
 	 *
@@ -1880,6 +1900,11 @@ public class UserWrapper
 	@Override
 	public void setType(int type) {
 		model.setType(type);
+	}
+
+	@Override
+	public void setUserGroupIds(long[] userGroupIds) {
+		model.setUserGroupIds(userGroupIds);
 	}
 
 	/**

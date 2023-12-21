@@ -182,17 +182,19 @@ const ActionForm = ({
 	});
 
 	const handleActionTypeChange = (event: any) => {
+		const type = event.target.value;
+
 		setActionData({
 			...actionData,
 			method:
-				event.target.value === ACTION_TYPE.ASYNC
+				type === ACTION_TYPE.ASYNC
 					? ACTION_METHOD.DELETE
 					: '',
 			modalSize:
-				event.target.value === ACTION_TYPE.MODAL
+				type === ACTION_TYPE.MODAL
 					? MODAL_SIZES[0].value
 					: '',
-			type: event.target.value,
+			type,
 		});
 	};
 

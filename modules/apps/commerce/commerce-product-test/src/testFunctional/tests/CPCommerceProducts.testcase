@@ -50,15 +50,6 @@ definition {
 			locator1 = "CommerceEntry#TABLE_LIST_TITLE");
 	}
 
-	@description = "This is a test for COMMERCE-6021. AddASKU"
-	@ignore = "true"
-	@priority = 3
-	test AddASKU {
-
-		// TODO COMMERCE-6021 AddASKU
-
-	}
-
 	@description = "This is a test for COMMERCE-6287. AddASpecificationAndVerifyIfIsPresent"
 	@priority = 3
 	test AddASpecificationAndVerifyIfIsPresent {
@@ -2488,7 +2479,8 @@ definition {
 
 		CommerceSKUs.addSKU(
 			noOption = "true",
-			optionValuesList = "Shoes:50.0");
+			optionValuesList = "Shoes:50.0",
+			priceList = "Master Base Price List");
 
 		CommerceProducts.openProductsAdmin();
 
@@ -2505,7 +2497,9 @@ definition {
 
 		CommerceEntry.gotoMenuTab(menuTab = "SKUs");
 
-		CommerceSKUs.addSKU(optionValuesList = "Black:10.0");
+		CommerceSKUs.addSKU(
+			optionValuesList = "Black:10.0",
+			priceList = "Master Base Price List");
 
 		CommerceEntry.gotoMenuTab(menuTab = "Options");
 
@@ -2717,9 +2711,11 @@ definition {
 
 			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
-			CommerceSKUs.addPriceToSKU(price = "60.00");
+			CommerceEntry.gotoMenuTab(menuTab = "Price");
 
-			Button.clickPublish();
+			CommerceSKUs.addSKUPriceEntry(
+				priceList = "Minium Base Price List",
+				unitPrice = "60.00");
 
 			Refresh();
 		}
@@ -2737,9 +2733,13 @@ definition {
 
 			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
+			CommerceEntry.gotoMenuTab(menuTab = "Price");
+
 			AssertTextEquals(
-				locator1 = "CommerceEntry#PRICE_FIELD",
-				value1 = "50.00");
+				key_columnIndex = 4,
+				key_rowIndex = 1,
+				locator1 = "CommerceEntry#TABLE_ENTRY_ROW_FIELD_GENERIC",
+				value1 = "$ 50.00");
 
 			echo("The price hasn't changed");
 		}
@@ -2767,15 +2767,6 @@ definition {
 		AssertTextEquals(
 			locator1 = "CommerceEntry#NAME_FIELD",
 			value1 = "ABS");
-	}
-
-	@description = "This is a test for COMMERCE-6022. EditASKU"
-	@ignore = "true"
-	@priority = 3
-	test EditASKU {
-
-		// TODO COMMERCE-6022 EditASKU
-
 	}
 
 	@description = "This is a test for COMMERCE-5807. EditSkuAndDelete"
@@ -2835,7 +2826,9 @@ definition {
 
 		CommerceEntry.gotoMenuTab(menuTab = "SKUs");
 
-		CommerceSKUs.addSKU(optionValuesList = "6:10.0,12:20.0,24:30.0,48:40.0,112:50.0");
+		CommerceSKUs.addSKU(
+			optionValuesList = "6:10.0,12:20.0,24:30.0,48:40.0,112:50.0",
+			priceList = "Minium Base Price List");
 
 		CommerceEntry.gotoMenuTab(menuTab = "Media");
 

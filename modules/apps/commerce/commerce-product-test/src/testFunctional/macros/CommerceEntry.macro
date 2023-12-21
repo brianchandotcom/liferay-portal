@@ -1302,15 +1302,18 @@ definition {
 			priceOnApplication = ${priceOnApplication},
 			promoPrice = ${promoPrice});
 
-		if (isSet(publish)) {
+		if (IsElementPresent(key_text = "Publish", locator1 = "Button#ANY")) {
 			Button.clickPublish();
 		}
-
-		if (isSet(closeFrame)) {
-			Click(locator1 = "Icon#CLOSE");
-
-			SelectFrame.selectFrameTop();
+		else if (IsElementPresent(key_text = "Save", locator1 = "Button#ANY")) {
+			Button.clickSave();
 		}
+
+		Click(locator1 = "Icon#CLOSE");
+
+		SelectFrame.selectFrameTop();
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
 		CommerceEntry.gotoMenuTab(menuTab = "Inventory");
 
@@ -2334,10 +2337,6 @@ definition {
 			AssertTextEquals(
 				locator1 = "CommerceEntry#SKU_FIELD",
 				value1 = "${sku}SKU");
-
-			AssertTextEquals(
-				locator1 = "CommerceEntry#INPUT_PRICE",
-				value1 = ${price});
 
 			Click(locator1 = "Icon#CLOSE");
 		}

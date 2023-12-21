@@ -11,7 +11,7 @@ definition {
 	macro addSKU(noOption = null, key_menuItem = null, optionValuesList = null) {
 		for (var optionValues : list ${optionValuesList}) {
 			var optionValue = StringUtil.extractFirst(${optionValues}, ":");
-			var price = StringUtil.extractLast(${optionValues}, ":");
+			var unitPrice = StringUtil.extractLast(${optionValues}, ":");
 			var optionValueUppercase = StringUtil.upperCase(${optionValue});
 
 			Refresh();
@@ -38,11 +38,13 @@ definition {
 				key_toggleSwitchLabel = "Purchasable",
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 
-			CommerceSKUs.addPriceToSKU(price = ${price});
-
 			Button.clickPublish();
 
-			AssertVisible(locator1 = "Message#SUCCESS");
+			CommerceEntry.gotoMenuTab(menuTab = "Price");
+
+			CommerceSKUs.addSKUPriceEntry(
+				priceList = ${priceList},
+				unitPrice = ${unitPrice});
 
 			Click(locator1 = "Icon#CLOSE");
 		}
@@ -222,7 +224,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro setSkuPricing(priceOnApplication = null, promoPrice = null, cost = null, basePrice = null) {
+	macro setSkuPricing(priceOnApplication = null, promoPrice = null, basePrice = null) {
 		if (isSet(priceOnApplication)) {
 			if (${priceOnApplication} == "true") {
 				Check.checkToggleSwitch(
@@ -238,7 +240,7 @@ definition {
 
 		if (isSet(basePrice)) {
 			Type(
-				key_text = "Base Price",
+				key_text = "Price List Price",
 				locator1 = "TextInput#ANY",
 				value1 = ${basePrice});
 		}
@@ -248,13 +250,6 @@ definition {
 				key_text = "Promotion Price",
 				locator1 = "TextInput#ANY",
 				value1 = ${promoPrice});
-		}
-
-		if (isSet(cost)) {
-			Type(
-				key_text = "Cost",
-				locator1 = "TextInput#ANY",
-				value1 = ${cost});
 		}
 	}
 

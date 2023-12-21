@@ -2599,7 +2599,8 @@ definition {
 
 			CommerceSKUs.addSKU(
 				noOption = "true",
-				optionValuesList = "BLACK:10.0");
+				optionValuesList = "BLACK:10.0",
+				priceList = "Minium Base Price List");
 
 			Click(
 				key_value = "BLACKSKU",

@@ -1572,6 +1572,12 @@ definition {
 
 			CommerceNavigator.gotoEntry(entryName = "VALUE1VALUE2");
 
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Price");
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Base Price List");
+
 			CommerceEntry.editSkuPricingAndInventory(
 				basePrice = "20.00",
 				italyQuantity = 20,

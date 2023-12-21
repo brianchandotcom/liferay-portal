@@ -45,6 +45,12 @@ definition {
 		}
 
 		task ("And the admin marks the sku as 'Price on Application'") {
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Price");
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Base Price List");
+
 			CommerceSKUs.editSkuPricing(priceOnApplication = "true");
 		}
 
@@ -730,6 +736,12 @@ definition {
 		task ("When the admin marks the sku as 'Price on Application'") {
 			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
+			CommerceEntry.gotoMenuTab(menuTab = "Price");
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Base Price List");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
 			MouseOver(
 				key_label = "Price on Application",
 				locator1 = "CommerceEntry#LABEL_TOOLTIP_ICON");
@@ -741,22 +753,12 @@ definition {
 
 			CommerceSKUs.setSkuPricing(priceOnApplication = "true");
 
-			Button.clickPublish();
-		}
-
-		task ("Then the pricing fields are greyed out") {
-			for (var text : list "Base Price,Promotion Price,Cost") {
-				AssertElementPresent(
-					key_text = ${text},
-					locator1 = "CommerceEntry#ANY_TEXT_INPUT_DISABLED");
-			}
-
-			Click(locator1 = "Icon#CLOSE");
+			Button.clickSave();
 
 			SelectFrame.selectFrameTop();
 		}
 
-		task ("And 'Price on Application' is shown as the active price") {
+		task ("Then 'Price on Application' is shown as the active price") {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
@@ -784,24 +786,20 @@ definition {
 
 			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
+			CommerceEntry.gotoMenuTab(menuTab = "Price");
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Base Price List");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
 			CommerceSKUs.setSkuPricing(priceOnApplication = "false");
 
-			Button.clickPublish();
-		}
-
-		task ("Then the pricing fields are not greyed out") {
-			for (var text : list "Base Price,Promotion Price,Cost") {
-				AssertElementPresent(
-					key_text = ${text},
-					locator1 = "TextInput#ANY");
-			}
-
-			Click(locator1 = "Icon#CLOSE");
+			Button.clickSave();
 
 			SelectFrame.selectFrameTop();
 		}
 
-		task ("And the base price is shown as the active price") {
+		task ("Then the base price is shown as the active price") {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
@@ -836,6 +834,12 @@ definition {
 		}
 
 		task ("And the admin marks the sku as 'Price on Application'") {
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Price");
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Base Price List");
+
 			CommerceSKUs.editSkuPricing(priceOnApplication = "true");
 		}
 
@@ -905,6 +909,12 @@ definition {
 		}
 
 		task ("And the admin marks the sku as 'Price on Application'") {
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Price");
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Base Price List");
+
 			CommerceSKUs.editSkuPricing(priceOnApplication = "true");
 		}
 
@@ -1041,6 +1051,12 @@ definition {
 		}
 
 		task ("And the admin marks the sku as 'Price on Application'") {
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Price");
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Base Price List");
+
 			CommerceSKUs.editSkuPricing(priceOnApplication = "true");
 		}
 
@@ -1519,6 +1535,12 @@ definition {
 		}
 
 		task ("And the admin marks the sku as 'Price on Application'") {
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Price");
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Base Price List");
+
 			CommerceSKUs.editSkuPricing(priceOnApplication = "true");
 		}
 
@@ -1949,6 +1971,12 @@ definition {
 
 			CommerceNavigator.gotoTableListEntry(entryName = "MIN55861");
 
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Price");
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Base Price List");
+
 			CommerceSKUs.editSkuPricing(priceOnApplication = "true");
 		}
 
@@ -2163,7 +2191,7 @@ definition {
 			for (var priceListName : list "Minium Base Price List,Minium Base Promotion,Test Price List,Test Promotion") {
 				AssertElementPresent(
 					key_entryTitle = ${priceListName},
-					key_index = 3,
+					key_index = 5,
 					key_value = "No",
 					locator1 = "CommerceEntry#TABLE_ENTRY_FIELD_VALUE");
 			}
@@ -2211,7 +2239,7 @@ definition {
 			for (var priceListName : list "Minium Base Price List,Minium Base Promotion") {
 				AssertElementPresent(
 					key_entryTitle = ${priceListName},
-					key_index = 3,
+					key_index = 5,
 					key_value = "No",
 					locator1 = "CommerceEntry#TABLE_ENTRY_FIELD_VALUE");
 			}
@@ -2219,14 +2247,14 @@ definition {
 			for (var priceListName : list "Test Price List,Test Promotion") {
 				AssertElementPresent(
 					key_entryTitle = ${priceListName},
-					key_index = 3,
+					key_index = 5,
 					key_value = "Yes",
 					locator1 = "CommerceEntry#TABLE_ENTRY_FIELD_VALUE");
 			}
 		}
 	}
 
-	@description = "COMMERCE-12210. The admin can view Price on Application column in the SKU's Price Lists tab via the SKU admin page"
+	@description = "COMMERCE-12210. The admin can view Price on Application column in the SKU's Price list tab via the SKU admin page"
 	@priority = 5
 	test CanViewPriceOnApplicationColumnInSKUPriceListsTabViaSKUsAdmin {
 		property portal.acceptance = "true";
@@ -2279,7 +2307,7 @@ definition {
 			for (var priceListName : list "Minium Base Price List,Minium Base Promotion,Test Price List,Test Promotion") {
 				AssertElementPresent(
 					key_entryTitle = ${priceListName},
-					key_index = 3,
+					key_index = 5,
 					key_value = "No",
 					locator1 = "CommerceEntry#TABLE_ENTRY_FIELD_VALUE");
 			}
@@ -2325,7 +2353,7 @@ definition {
 			for (var priceListName : list "Minium Base Price List,Minium Base Promotion") {
 				AssertElementPresent(
 					key_entryTitle = ${priceListName},
-					key_index = 3,
+					key_index = 5,
 					key_value = "No",
 					locator1 = "CommerceEntry#TABLE_ENTRY_FIELD_VALUE");
 			}
@@ -2333,7 +2361,7 @@ definition {
 			for (var priceListName : list "Test Price List,Test Promotion") {
 				AssertElementPresent(
 					key_entryTitle = ${priceListName},
-					key_index = 3,
+					key_index = 5,
 					key_value = "Yes",
 					locator1 = "CommerceEntry#TABLE_ENTRY_FIELD_VALUE");
 			}
@@ -2356,6 +2384,12 @@ definition {
 		}
 
 		task ("When the admin marks the sku as 'Price on Application'") {
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Price");
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Base Price List");
+
 			CommerceSKUs.editSkuPricing(priceOnApplication = "true");
 		}
 
@@ -2432,6 +2466,12 @@ definition {
 			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
 
 			CommerceNavigator.gotoTableListEntry(entryName = "MIN55861");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Price");
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Base Price List");
 
 			CommerceSKUs.editSkuPricing(priceOnApplication = "true");
 		}

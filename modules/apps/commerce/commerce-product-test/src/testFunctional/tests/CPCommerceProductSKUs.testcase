@@ -42,8 +42,6 @@ definition {
 			key_toggleSwitchLabel = "Purchasable",
 			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 
-		CommerceSKUs.addPriceToSKU(price = "10.0");
-
 		Button.clickPublish();
 
 		AssertVisible(locator1 = "Message#SUCCESS");
@@ -1059,25 +1057,10 @@ definition {
 
 		CommerceEntry.gotoMenuTab(menuTab = "SKUs");
 
-		Click(locator1 = "Button#PLUS");
-
-		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
-
-		Type(
-			locator1 = "CommerceEntry#SKU_FIELD",
-			value1 = "BLACKSKU");
-
-		Check.checkToggleSwitch(
-			key_toggleSwitchLabel = "Purchasable",
-			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
-
-		CommerceSKUs.addPriceToSKU(price = "10.0");
-
-		Button.clickPublish();
-
-		AssertVisible(locator1 = "Message#SUCCESS");
-
-		Click(locator1 = "CommerceEntry#MODAL_BUTTON_CLOSE");
+		CommerceSKUs.addSKU(
+			noOption = "true",
+			optionValuesList = "Black:10.0",
+			priceList = "Minium Base Price List");
 
 		SelectFrame.selectFrameTop();
 
@@ -1089,33 +1072,25 @@ definition {
 			locator1 = "CommerceEntry#SKU_FIELD",
 			value1 = "REDSKU");
 
-		CommerceSKUs.addPriceToSKU(price = "20.0");
-
 		Button.clickPublish();
 
 		AssertVisible(locator1 = "Message#SUCCESS");
 
-		Click(locator1 = "CommerceEntry#MODAL_BUTTON_CLOSE");
+		CommerceEntry.gotoMenuTab(menuTab = "Price");
 
-		SelectFrame.selectFrameTop();
+		CommerceNavigator.gotoEntry(entryName = "Minium Base Price List");
 
-		CommerceNavigator.gotoEntry(entryName = "REDSKU");
+		CommercePriceLists.editPriceListEntryPrice(priceListEntryPrice = 20);
 
-		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
-
-		AssertElementPresent(
-			locator1 = "CommerceEntry#SKU_FIELD",
-			value1 = "REDSKU");
-
-		AssertElementPresent(
-			locator1 = "CommerceEntry#PRICE_FIELD",
-			value1 = "20.0");
-
-		Button.clickPublish();
+		Button.clickSave();
 
 		AssertVisible(locator1 = "Message#SUCCESS");
 
+		Click(locator1 = "Icon#CLOSE");
+
 		SelectFrame.selectFrameTop();
+
+		Click(locator1 = "Icon#CLOSE");
 	}
 
 	@description = "This is a test for COMMERCE-6023. RemoveASKU"

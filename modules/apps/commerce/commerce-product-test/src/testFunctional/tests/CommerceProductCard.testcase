@@ -982,7 +982,9 @@ definition {
 		task ("and an SKU is created and made Purchasable") {
 			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
 
-			CommerceSKUs.addSKU(optionValuesList = "Black:10.0");
+			CommerceSKUs.addSKU(
+				optionValuesList = "Black:10.0",
+				priceList = "Minium Base Price List");
 		}
 
 		task ("Then the user is unable to add the Dynamic Price Bundled Product to cart as an admin and a buyer") {
@@ -1095,7 +1097,9 @@ definition {
 		task ("and an SKU is created and made Purchasable") {
 			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
 
-			CommerceSKUs.addSKU(optionValuesList = "Black:10.0");
+			CommerceSKUs.addSKU(
+				optionValuesList = "Black:10.0",
+				priceList = "Minium Base Price List");
 		}
 
 		task ("Then the user is unable to add the Static Price Bundled Product to cart as an admin and a buyer") {
@@ -1216,7 +1220,9 @@ definition {
 			for (var skuInfo : list "Black:10.0,Blue:20.0") {
 				CommerceEntry.gotoMenuTab(menuTab = "SKUs");
 
-				CommerceSKUs.addSKU(optionValuesList = ${skuInfo});
+				CommerceSKUs.addSKU(
+					optionValuesList = ${skuInfo},
+					priceList = "Minium Base Price List");
 			}
 		}
 
@@ -1344,7 +1350,9 @@ definition {
 			for (var skuInfo : list "Black:10.0,Blue:20.0") {
 				CommerceEntry.gotoMenuTab(menuTab = "SKUs");
 
-				CommerceSKUs.addSKU(optionValuesList = ${skuInfo});
+				CommerceSKUs.addSKU(
+					optionValuesList = ${skuInfo},
+					priceList = "Minium Base Price List");
 			}
 		}
 

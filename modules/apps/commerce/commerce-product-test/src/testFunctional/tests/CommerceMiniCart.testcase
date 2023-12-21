@@ -920,7 +920,9 @@ definition {
 
 			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
 
-			CommerceSKUs.addSKU(optionValuesList = "Black:10.0");
+			CommerceSKUs.addSKU(
+				optionValuesList = "Black:10.0",
+				priceList = "Minium Base Price List");
 
 			Refresh();
 		}
@@ -1627,7 +1629,9 @@ definition {
 
 			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
 
-			CommerceSKUs.addSKU(optionValuesList = "Black:10.0");
+			CommerceSKUs.addSKU(
+				optionValuesList = "Black:10.0",
+				priceList = "Minium Base Price List");
 
 			Refresh();
 		}

@@ -56,7 +56,9 @@ definition {
 
 		CommerceEntry.gotoMenuTab(menuTab = "SKUs");
 
-		CommerceSKUs.addSKU(optionValuesList = "Black:10.0,Blue:20.0,White:30.0");
+		CommerceSKUs.addSKU(
+			optionValuesList = "Black:10.0,Blue:20.0,White:30.0",
+			priceList = "Master Base Price List");
 
 		echo("Adding Product Images...");
 

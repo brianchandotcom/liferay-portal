@@ -123,13 +123,13 @@
 				columns = "4"
 				customFields = navPrimaryItem.getExpandoAttributes()!{}
 				navItemType = customFields["Primary Nav Item Type"]!""
-				productItem = "maxh-90 product-box"
+				cssClassName = "maxh-90 product-box"
 			/>
 
 			<#if stringUtil.equals(navItemType, "CAPABILITIES")>
 				<#assign
 					columns = "3"
-					productItem = ""
+					cssClassName = ""
 				/>
 			</#if>
 
@@ -160,7 +160,7 @@
 				>
 					<div class="row">
 						<#list navPrimaryItem.getChildren() as navSecondaryItem>
-							<div class="dropdown-item-div col-12 col-lg-${columns} ${productItem}">
+							<div class="dropdown-item-div col-12 col-lg-${columns} ${cssClassName}">
 								<#if taxonomyVocabulary?has_content && stringUtil.equals(navItemType, "CAPABILITIES")>
 									<#assign capabilityFields = taxonomyVocabulary[navSecondaryItem.getName()] />
 

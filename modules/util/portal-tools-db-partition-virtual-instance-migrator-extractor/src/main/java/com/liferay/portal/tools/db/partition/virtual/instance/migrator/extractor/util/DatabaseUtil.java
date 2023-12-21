@@ -23,7 +23,7 @@ import java.util.List;
  */
 public class DatabaseUtil {
 
-	public static InstanceData extractInstanceData(Connection connection)
+	public static InstanceData exportInstanceData(Connection connection)
 		throws Exception {
 
 		InstanceData instanceData = new InstanceData();
@@ -80,9 +80,7 @@ public class DatabaseUtil {
 				companyId = resultSet.getLong(1);
 
 				if (++companyCount > 1) {
-					companyId = null;
-
-					break;
+					return null;
 				}
 			}
 		}

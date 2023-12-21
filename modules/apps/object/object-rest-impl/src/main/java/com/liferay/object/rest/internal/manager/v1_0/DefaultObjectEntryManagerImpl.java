@@ -1381,21 +1381,6 @@ public class DefaultObjectEntryManagerImpl
 				"File source " + fileSource + " is not supported");
 		}
 
-		if (StringUtil.equals(
-				fileSource, ObjectFieldSettingConstants.VALUE_USER_COMPUTER) &&
-			GetterUtil.getBoolean(
-				ObjectFieldSettingUtil.getValue(
-					ObjectFieldSettingConstants.
-						NAME_SHOW_FILES_IN_DOCS_AND_MEDIA,
-					objectField))) {
-
-			throw new UnsupportedOperationException(
-				"Object field setting \"" +
-					ObjectFieldSettingConstants.
-						NAME_SHOW_FILES_IN_DOCS_AND_MEDIA +
-							"\" is not supported");
-		}
-
 		com.liferay.portal.kernel.repository.model.FileEntry
 			serviceBuilderFileEntry = null;
 

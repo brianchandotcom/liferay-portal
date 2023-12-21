@@ -12,6 +12,10 @@ import com.liferay.item.selector.BaseItemSelectorCriterion;
  */
 public class FolderItemSelectorCriterion extends BaseItemSelectorCriterion {
 
+	public long getBlockedFolderId() {
+		return _blockedFolderId;
+	}
+
 	public long getFolderId() {
 		return _folderId;
 	}
@@ -38,6 +42,10 @@ public class FolderItemSelectorCriterion extends BaseItemSelectorCriterion {
 
 	public boolean isShowMountFolder() {
 		return _showMountFolder;
+	}
+
+	public void setBlockedFolderId(long folderId) {
+		_blockedFolderId = folderId;
 	}
 
 	public void setFolderId(long folderId) {
@@ -68,6 +76,7 @@ public class FolderItemSelectorCriterion extends BaseItemSelectorCriterion {
 		_showMountFolder = showMountFolder;
 	}
 
+	private long _blockedFolderId;
 	private long _folderId;
 	private boolean _ignoreRootFolder;
 	private long _repositoryId;

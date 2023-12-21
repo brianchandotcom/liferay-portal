@@ -263,7 +263,8 @@ public class JournalTransformerTest {
 			languageId, JournalStructureConstants.RESERVED_ARTICLE_DISPLAY_DATE,
 			journalReservedTemplateVariableGroup, transformerListeners);
 		_assertReservedVariable(
-			_journalArticle.getUuid(), "external-reference-code", languageId,
+			_journalArticle.getExternalReferenceCode(),
+			"external-reference-code", languageId,
 			JournalStructureConstants.RESERVED_ARTICLE_EXTERNAL_REFERENCE_CODE,
 			journalReservedTemplateVariableGroup, transformerListeners);
 		_assertReservedVariable(

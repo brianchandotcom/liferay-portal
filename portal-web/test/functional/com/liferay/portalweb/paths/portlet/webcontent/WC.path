@@ -165,7 +165,20 @@
 	<td></td>
 </tr>
 
-<!--SIDEBAR -->
+<!--INFO PANEL-->
+
+<tr>
+	<td>INFO_PANEL_SUBTITLE</td>
+	<td>//div[contains(@class,'info-panel')]//h2[contains(@class,'text-secondary')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO_PANEL_TITLE</td>
+	<td>//div[contains(@class,'info-panel')]//h1[contains(@class,'component-title')]</td>
+	<td></td>
+</tr>
+
+<!--SIDEBAR-->
 
 <tr>
 	<td>SIDEBAR_BODY</td>

@@ -13,7 +13,9 @@ import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.list.type.entry.util.ListTypeEntryUtil;
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.model.ListTypeEntry;
@@ -105,7 +107,6 @@ import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -662,6 +663,99 @@ public class ObjectEntryLocalServiceTest {
 		finally {
 			serviceContext.setWorkflowAction(originalWorkflowAction);
 		}
+	}
+
+	@Test
+	public void testAddObjectEntryWithAttachmentObjectField() throws Exception {
+		FileEntry tempFileEntry1 = _addTempFileEntry(StringUtil.randomString());
+
+		ObjectEntry objectEntry = _addObjectEntry(
+			HashMapBuilder.<String, Serializable>put(
+				"emailAddressRequired", "james@liferay.com"
+			).put(
+				"listTypeEntryKeyRequired", "listTypeEntryKey1"
+			).put(
+				"upload", tempFileEntry1.getFileEntryId()
+			).build());
+
+		long tempFileEntryId = tempFileEntry1.getFileEntryId();
+
+		AssertUtils.assertFailure(
+			NoSuchFileEntryException.class,
+			StringBundler.concat(
+				"No FileEntry exists with the key {fileEntryId=",
+				tempFileEntryId, "}"),
+			() -> _dlAppLocalService.getFileEntry(tempFileEntryId));
+
+		long persistedFileEntryId1 = MapUtil.getLong(
+			objectEntry.getValues(), "upload");
+
+		Assert.assertNotEquals(tempFileEntryId, persistedFileEntryId1);
+
+		DLFileEntry persistedDLFileEntry =
+			_dlFileEntryLocalService.getFileEntry(persistedFileEntryId1);
+
+		Assert.assertEquals(
+			_objectDefinition.getClassName(),
+			persistedDLFileEntry.getClassName());
+		Assert.assertEquals(
+			objectEntry.getObjectEntryId(), persistedDLFileEntry.getClassPK());
+
+		// LPS-180587 Partial updates should not delete existing files
+
+		_objectEntryLocalService.updateObjectEntry(
+			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+			HashMapBuilder.<String, Serializable>put(
+				"state", "listTypeEntryKey3"
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		Assert.assertNotNull(
+			_dlAppLocalService.getFileEntry(persistedFileEntryId1));
+
+		_objectEntryLocalService.updateObjectEntry(
+			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+			HashMapBuilder.<String, Serializable>put(
+				"upload", 0L
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		AssertUtils.assertFailure(
+			NoSuchFileEntryException.class,
+			StringBundler.concat(
+				"No FileEntry exists with the key {fileEntryId=",
+				persistedFileEntryId1, "}"),
+			() -> _dlAppLocalService.getFileEntry(persistedFileEntryId1));
+
+		// Delete object entry should delete existing files
+
+		objectEntry = _objectEntryLocalService.updateObjectEntry(
+			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+			HashMapBuilder.<String, Serializable>put(
+				"upload",
+				() -> {
+					FileEntry tempFileEntry2 = _addTempFileEntry(
+						StringUtil.randomString());
+
+					return tempFileEntry2.getFileEntryId();
+				}
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		long persistedFileEntryId2 = MapUtil.getLong(
+			objectEntry.getValues(), "upload");
+
+		Assert.assertNotNull(
+			_dlAppLocalService.getFileEntry(persistedFileEntryId2));
+
+		_objectEntryLocalService.deleteObjectEntry(objectEntry);
+
+		AssertUtils.assertFailure(
+			NoSuchFileEntryException.class,
+			StringBundler.concat(
+				"No FileEntry exists with the key {fileEntryId=",
+				persistedFileEntryId2, "}"),
+			() -> _dlAppLocalService.getFileEntry(persistedFileEntryId2));
 	}
 
 	@FeatureFlags("LPS-196724")
@@ -1841,21 +1935,6 @@ public class ObjectEntryLocalServiceTest {
 			).build());
 		ObjectEntry objectEntry2 = _addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
-				"emailAddressRequired", "james@liferay.com"
-			).put(
-				"firstName", "James"
-			).put(
-				"listTypeEntryKeyRequired", "listTypeEntryKey2"
-			).put(
-				"upload",
-				() -> {
-					FileEntry fileEntry = _addTempFileEntry("Old Testament");
-
-					return fileEntry.getFileEntryId();
-				}
-			).build());
-		ObjectEntry objectEntry3 = _addObjectEntry(
-			HashMapBuilder.<String, Serializable>put(
 				"emailAddressRequired", "john@liferay.com"
 			).put(
 				"firstName", "John"
@@ -1863,7 +1942,7 @@ public class ObjectEntryLocalServiceTest {
 				"listTypeEntryKeyRequired", "listTypeEntryKey3"
 			).build());
 
-		_assertCount(3);
+		_assertCount(2);
 
 		// Delete first object entry
 
@@ -1886,28 +1965,11 @@ public class ObjectEntryLocalServiceTest {
 			() -> _objectEntryLocalService.getValues(
 				objectEntry1.getObjectEntryId()));
 
-		_assertCount(2);
+		_assertCount(1);
 
 		// Delete second object entry
 
-		long fileEntryId = MapUtil.getLong(objectEntry2.getValues(), "upload");
-
-		Assert.assertNotNull(_dlAppLocalService.getFileEntry(fileEntryId));
-
 		_objectEntryLocalService.deleteObjectEntry(objectEntry2);
-
-		AssertUtils.assertFailure(
-			NoSuchFileEntryException.class,
-			StringBundler.concat(
-				"No FileEntry exists with the key {fileEntryId=", fileEntryId,
-				"}"),
-			() -> _dlAppLocalService.getFileEntry(fileEntryId));
-
-		_assertCount(1);
-
-		// Delete third object entry
-
-		_objectEntryLocalService.deleteObjectEntry(objectEntry3);
 
 		_assertCount(0);
 
@@ -2579,7 +2641,6 @@ public class ObjectEntryLocalServiceTest {
 
 		String script = RandomTestUtil.randomString(1500);
 		Timestamp timestamp = Timestamp.valueOf(LocalDateTime.now());
-		FileEntry fileEntry = _addTempFileEntry(StringUtil.randomString());
 
 		_objectEntryLocalService.updateObjectEntry(
 			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
@@ -2610,7 +2671,7 @@ public class ObjectEntryLocalServiceTest {
 			).put(
 				"time", timestamp
 			).put(
-				"upload", fileEntry.getFileEntryId()
+				"upload", 0L
 			).put(
 				"weight", 60
 			).build(),
@@ -2639,39 +2700,15 @@ public class ObjectEntryLocalServiceTest {
 			values.get("multipleListTypeEntriesKey"));
 		Assert.assertEquals(5, values.get("numberOfBooksWritten"));
 		Assert.assertEquals(script, values.get("script"));
+		Assert.assertEquals(0L, values.get("upload"));
 		Assert.assertEquals(_getBigDecimal(45L), values.get("speed"));
 		Assert.assertEquals("listTypeEntryKey2", values.get("state"));
 		Assert.assertEquals(timestamp, values.get("time"));
-		Assert.assertNotEquals(
-			fileEntry.getFileEntryId(), values.get("upload"));
 		Assert.assertEquals(60D, values.get("weight"));
 		Assert.assertEquals(
 			objectEntry.getObjectEntryId(),
 			values.get(_objectDefinition.getPKObjectFieldName()));
 		Assert.assertEquals(values.toString(), 22, values.size());
-
-		// LPS-180587 Partial updates should not delete existing files
-
-		_objectEntryLocalService.updateObjectEntry(
-			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
-			HashMapBuilder.<String, Serializable>put(
-				"state", "listTypeEntryKey3"
-			).build(),
-			ServiceContextTestUtil.getServiceContext());
-
-		long persistedFileEntryId = GetterUtil.getLong(values.get("upload"));
-
-		Assert.assertNotNull(
-			_dlAppLocalService.getFileEntry(persistedFileEntryId));
-
-		long fileEntryId = fileEntry.getFileEntryId();
-
-		AssertUtils.assertFailure(
-			NoSuchFileEntryException.class,
-			StringBundler.concat(
-				"No FileEntry exists with the key {fileEntryId=", fileEntryId,
-				"}"),
-			() -> _dlAppLocalService.getFileEntry(fileEntryId));
 
 		_objectEntryLocalService.updateObjectEntry(
 			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
@@ -2716,13 +2753,6 @@ public class ObjectEntryLocalServiceTest {
 			objectEntry.getObjectEntryId(),
 			values.get(_objectDefinition.getPKObjectFieldName()));
 		Assert.assertEquals(values.toString(), 22, values.size());
-
-		AssertUtils.assertFailure(
-			NoSuchFileEntryException.class,
-			StringBundler.concat(
-				"No FileEntry exists with the key {fileEntryId=", fileEntryId,
-				"}"),
-			() -> _dlAppLocalService.getFileEntry(fileEntryId));
 
 		_objectEntryLocalService.updateObjectEntry(
 			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
@@ -3480,6 +3510,9 @@ public class ObjectEntryLocalServiceTest {
 
 	@Inject
 	private DLAppLocalService _dlAppLocalService;
+
+	@Inject
+	private DLFileEntryLocalService _dlFileEntryLocalService;
 
 	@Inject
 	private Encryptor _encryptor;

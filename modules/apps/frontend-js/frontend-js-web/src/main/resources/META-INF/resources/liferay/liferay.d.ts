@@ -42,7 +42,8 @@ declare module Liferay {
 			| 'ja_JP'
 			| 'pt_BR'
 			| 'sv_SE'
-			| 'zh_CN';
+			| 'zh_CN'
+			| 'zh_TW';
 
 		type FullyLocalizedValue<T> = {[key in Locale]: T};
 		type LocalizedValue<T> = Partial<FullyLocalizedValue<T>>;

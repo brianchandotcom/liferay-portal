@@ -181,6 +181,21 @@ const ActionForm = ({
 		url: initialValues?.url ?? '',
 	});
 
+	const handleActionTypeChange = (event: any) => {
+		setActionData({
+			...actionData,
+			method:
+				event.target.value === ACTION_TYPE.ASYNC
+					? ACTION_METHOD.DELETE
+					: '',
+			modalSize:
+				event.target.value === ACTION_TYPE.MODAL
+					? MODAL_SIZES[0].value
+					: '',
+			type: event.target.value,
+		});
+	};
+
 	const saveFDSAction = async () => {
 		setSaveButtonDisabled(true);
 
@@ -548,20 +563,7 @@ const ActionForm = ({
 									disabled={editing}
 									id={typeFormElementId}
 									onChange={(event) =>
-										setActionData({
-											...actionData,
-											method:
-												event.target.value ===
-												ACTION_TYPE.ASYNC
-													? ACTION_METHOD.DELETE
-													: '',
-											modalSize:
-												event.target.value ===
-												ACTION_TYPE.MODAL
-													? MODAL_SIZES[0].value
-													: '',
-											type: event.target.value,
-										})
+										handleActionTypeChange(event)
 									}
 									options={
 										activeTab === 0

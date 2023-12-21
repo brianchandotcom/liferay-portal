@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.SecureRandomUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
-import com.liferay.portal.kernel.util.Portal;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -326,8 +325,5 @@ public class OAuth2Controller extends BaseFaroController {
 
 	@Reference
 	private OAuth2AuthorizationService _oAuth2AuthorizationService;
-
-	@Reference
-	private Portal _portal;
 
 }

@@ -10,10 +10,6 @@ jest.unmock('react-dom');
 
 const {modalTypes} = modalActions;
 
-jest.mock('shared/util/dom', () => ({
-	matches: jest.fn(() => true)
-}));
-
 describe('ModalRenderer', () => {
 	afterEach(() => {
 		jest.clearAllMocks();

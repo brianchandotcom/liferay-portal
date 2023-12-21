@@ -37,7 +37,6 @@ import com.liferay.osb.faro.web.internal.model.display.contacts.ProjectDisplay;
 import com.liferay.osb.faro.web.internal.model.display.contacts.TimeZoneDisplay;
 import com.liferay.osb.faro.web.internal.model.display.main.FaroSubscriptionDisplay;
 import com.liferay.osb.faro.web.internal.param.FaroParam;
-import com.liferay.osb.faro.web.internal.util.ContactsLayoutHelper;
 import com.liferay.osb.faro.web.internal.util.JSONUtil;
 import com.liferay.osb.faro.web.internal.util.TimeZoneUtil;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -1131,9 +1130,6 @@ public class ProjectController extends BaseFaroController {
 
 	@Reference
 	private ContactsCardTemplateLocalService _contactsCardTemplateLocalService;
-
-	@Reference
-	private ContactsLayoutHelper _contactsLayoutHelper;
 
 	@Reference
 	private ContactsLayoutTemplateLocalService

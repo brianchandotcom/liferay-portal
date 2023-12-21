@@ -17,7 +17,6 @@ import com.liferay.osb.faro.web.internal.card.template.type.ContactsCardTemplate
 import com.liferay.osb.faro.web.internal.constants.FaroConstants;
 import com.liferay.osb.faro.web.internal.model.display.contacts.card.template.ContactsCardTemplateDisplay;
 import com.liferay.osb.faro.web.internal.util.JSONUtil;
-import com.liferay.osb.faro.web.internal.util.ProjectHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -279,8 +278,5 @@ public class ContactsCardTemplateManagerHelper {
 
 	@Reference
 	private FaroProjectLocalService _faroProjectLocalService;
-
-	@Reference
-	private ProjectHelper _projectHelper;
 
 }

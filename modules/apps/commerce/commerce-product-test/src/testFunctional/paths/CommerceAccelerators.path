@@ -580,6 +580,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MINI_CART_ITEM_NAME_USING_SKU_2</td>
+	<td>//p[@class='item-sku' and contains(.,'${key_cartItemSku}')]/../../../a</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MINI_CART_ITEM_UOM_NAME</td>
 	<td>//div[@class='ml-2' and contains(.,'${key_uom}')]</td>
 	<td></td>
@@ -813,6 +818,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>QUICK_ADD_TO_CART_INFO_ICON_TITLE</td>
+	<td>//span[contains(@data-tooltip-align, 'left') and contains(@title,'${key_title}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>QUICK_ADD_TO_CART_EMPTY_SEARCH_BAR</td>
 	<td>//input[contains(@class,"form-control") and @placeholder= '${key_searchBarValue}']</td>
 	<td></td>
@@ -862,12 +872,12 @@
 </tr>
 <tr>
 	<td>ORDER_DETAILS_PRICE</td>
-	<td>//*[contains(@class,'table-list-title')]/a[text()='${key_productName}']/../../../div[8]</td>
+	<td>//*[contains(@class,'table-list-title')]/a[text()='${key_productName}']/../../../div[9]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ORDER_DETAILS_PRICE_2</td>
-	<td>//*[contains(@class,'table-list-title')]/a[text()='${key_productName}']/../../../div[9]</td>
+	<td>//*[contains(@class,'table-list-title')]/a[text()='${key_productName}']/../../../div[10]</td>
 	<td></td>
 </tr>
 <tr>

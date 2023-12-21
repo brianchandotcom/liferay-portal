@@ -231,17 +231,25 @@ definition {
 			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
 
 			CommerceEntry.addPriceListsFromProductSKU(
-				priceListNames = "Master Base Price List,Master Base Promotion",
+				priceLists = "Master Base Price List:10,Minium Base Price List:20",
 				skuName = "SIMPLESKU");
 		}
 
 		task ("Then the price lists are added successfully") {
 			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
-			for (var priceListName : list "Master Base Price List,Master Base Promotion") {
+			for (var priceList : list "Master Base Price List:$ 10.00,Minium Base Price List:$ 20.00") {
+				var priceListName = StringUtil.extractFirst(${value}, ":");
+                var priceListAmount = StringUtil.extractLast(${value}, ":");
+
 				AssertElementPresent(
-					key_entryName = ${priceListName},
-					locator1 = "CommerceNavigation#ENTRY_NAME");
+					key_color = ${priceListName},
+					key_field = "Name",
+					locator1 = "FrontendDataSet#SEARCH_COLUMN_AND_ROW");
+				AssertElementPresent(
+					key_color = ${priceListAmount},
+					key_field = "Unit Price",
+					locator1 = "FrontendDataSet#SEARCH_COLUMN_AND_ROW");
 			}
 		}
 	}

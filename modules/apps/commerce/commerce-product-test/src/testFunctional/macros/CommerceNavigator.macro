@@ -94,9 +94,14 @@ definition {
 
 	@summary = "Default summary"
 	macro gotoMiniCartEntry(entryName = null, cartItemSku = null) {
-		AssertClickNoError(
+		WaitForElementPresent(
 			key_cartItemSku = ${cartItemSku},
-			locator1 = "CommerceAccelerators#MINI_CART_ITEM_NAME_USING_SKU",
+			locator1 = "CommerceAccelerators#MINI_CART_ITEM_NAME_USING_SKU_2",
+			value1 = ${entryName});
+
+		Click(
+			key_cartItemSku = ${cartItemSku},
+			locator1 = "CommerceAccelerators#MINI_CART_ITEM_NAME_USING_SKU_2",
 			value1 = ${entryName});
 	}
 

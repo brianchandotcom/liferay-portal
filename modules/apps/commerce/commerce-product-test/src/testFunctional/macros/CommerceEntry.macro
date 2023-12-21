@@ -516,7 +516,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addPriceListsFromProductSKU(skuName = null, priceListNames = null) {
+	macro addPriceListsFromProductSKU(skuName = null, priceLists = null) {
 		CommerceNavigator.gotoEntry(entryName = ${skuName});
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
@@ -528,13 +528,30 @@ definition {
 		SelectFrameTop();
 
 		SelectFrame(
-			key_frameTitle = "Add ${skuName} to Price List",
+			key_frameTitle = "Add Price",
 			locator1 = "CommerceEntry#ANY_IFRAME");
 
-		for (var priceListName : list ${priceListNames}) {
-			Click.javaScriptClick(
-				key_imageName = ${priceListName},
-				locator1 = "Checkbox#ADAPTIVE_MEDIA_IMAGE");
+		var i = 1;
+
+		for (var priceList : list ${priceLists}) {
+			var priceListName = StringUtil.extractFirst(${priceList}, ":");
+            var priceListAmount = StringUtil.extractLast(${priceList}, ":");
+
+			Select(
+				key_index = ${i},
+				key_fieldLabel = "Price List",
+				locator1 = "CommerceEntry#GENERIC_SELECT_FIELD_N",
+				value1 = ${priceListName});
+			Type(
+				key_index = ${i},
+				locator1 = "CommerceEntry#INPUT_INDEX",
+				value1 = ${priceListAmount});
+
+			if (${i} == 1) {
+				Button.click(button = "Add Entry");
+			}
+
+			var i = ${i} + 1;
 		}
 
 		SelectFrameTop();

@@ -148,13 +148,13 @@ definition {
 		task ("Then the quantity of 'On Order' is 3, the quantity of 'Available' is 0") {
 			AssertElementPresent(
 				key_entryTitle = "MIN93015",
-				key_index = 4,
+				key_index = 5,
 				key_value = 3,
 				locator1 = "CommerceEntry#TABLE_ENTRY_FIELD_VALUE");
 
 			AssertElementPresent(
 				key_entryTitle = "MIN93015",
-				key_index = 3,
+				key_index = 4,
 				key_value = 0,
 				locator1 = "CommerceEntry#TABLE_ENTRY_FIELD_VALUE");
 		}
@@ -178,7 +178,7 @@ definition {
 
 			CommerceNavigator.searchEntry(entryName = "MIN93015");
 
-			for (var key_index : list "3,4") {
+			for (var key_index : list "4,5") {
 				AssertElementPresent(
 					key_entryTitle = "MIN93015",
 					key_index = ${key_index},
@@ -257,13 +257,13 @@ definition {
 		task ("Then the quantity of 'On Order' is 3, the quantity of 'Available' is 0") {
 			AssertElementPresent(
 				key_entryTitle = "MIN93015",
-				key_index = 4,
+				key_index = 5,
 				key_value = 3,
 				locator1 = "CommerceEntry#TABLE_ENTRY_FIELD_VALUE");
 
 			AssertElementPresent(
 				key_entryTitle = "MIN93015",
-				key_index = 3,
+				key_index = 4,
 				key_value = 0,
 				locator1 = "CommerceEntry#TABLE_ENTRY_FIELD_VALUE");
 		}
@@ -279,13 +279,13 @@ definition {
 
 			AssertElementPresent(
 				key_entryTitle = "MIN93015",
-				key_index = 4,
+				key_index = 5,
 				key_value = 0,
 				locator1 = "CommerceEntry#TABLE_ENTRY_FIELD_VALUE");
 
 			AssertElementPresent(
 				key_entryTitle = "MIN93015",
-				key_index = 3,
+				key_index = 4,
 				key_value = 3,
 				locator1 = "CommerceEntry#TABLE_ENTRY_FIELD_VALUE");
 		}
@@ -360,13 +360,13 @@ definition {
 		task ("Then the quantity of 'On Order' is 3, the quantity of 'Available' is 0") {
 			AssertElementPresent(
 				key_entryTitle = "MIN93015",
-				key_index = 4,
+				key_index = 5,
 				key_value = 3,
 				locator1 = "CommerceEntry#TABLE_ENTRY_FIELD_VALUE");
 
 			AssertElementPresent(
 				key_entryTitle = "MIN93015",
-				key_index = 3,
+				key_index = 4,
 				key_value = 0,
 				locator1 = "CommerceEntry#TABLE_ENTRY_FIELD_VALUE");
 		}
@@ -439,13 +439,13 @@ definition {
 
 			AssertElementPresent(
 				key_entryTitle = "MIN93015",
-				key_index = 4,
+				key_index = 5,
 				key_value = 3,
 				locator1 = "CommerceEntry#TABLE_ENTRY_FIELD_VALUE");
 
 			AssertElementPresent(
 				key_entryTitle = "MIN93015",
-				key_index = 3,
+				key_index = 4,
 				key_value = 0,
 				locator1 = "CommerceEntry#TABLE_ENTRY_FIELD_VALUE");
 		}

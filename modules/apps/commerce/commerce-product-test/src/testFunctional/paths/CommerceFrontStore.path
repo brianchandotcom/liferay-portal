@@ -336,6 +336,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PRODUCT_CARD_IMAGE_SPECIFIC_IN_MINI_CART</td>
+	<td>//a[contains(@href,'${key_productName}')]//..//div//img[contains(@src,'${key_image}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PRODUCT_CARD_BODY</td>
 	<td>//p[@class='card-title' and contains(@title,'${key_productName}')]/../../../div[contains(@class,'card-body')]</td>
 	<td></td>

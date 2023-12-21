@@ -894,7 +894,7 @@ definition {
 
 			AssertElementPresent(
 				key_title = "Replacement Product for MIN55861.",
-				locator1 = "StagingPublishToLive#PAGES_TO_PUBLISH_PAGE_NAME_SPAN_TITLE");
+				locator1 = "CommerceAccelerators#QUICK_ADD_TO_CART_INFO_ICON_TITLE");
 		}
 	}
 
@@ -1010,7 +1010,7 @@ definition {
 
 			AssertElementPresent(
 				key_title = "Replacement Product for MIN55861.",
-				locator1 = "StagingPublishToLive#PAGES_TO_PUBLISH_PAGE_NAME_SPAN_TITLE");
+				locator1 = "CommerceAccelerators#QUICK_ADD_TO_CART_INFO_ICON_TITLE");
 		}
 	}
 

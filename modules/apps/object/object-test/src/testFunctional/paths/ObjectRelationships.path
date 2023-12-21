@@ -67,7 +67,7 @@
 	</tr>
 	<tr>
 		<td>SELECTED_OBJECT_IN_MODAL</td>
-		<td>//div[@class='form-group']//label[contains(.,'${key_relationType}')]/../input[contains(@value,'${key_relationObject}')] | //div[@class='form-group']//label[contains(.,'${key_relationType}')]/../div[contains(.,'${key_relationObject}')] </td>
+		<td>//label[contains(.,'${key_relationType}')]/../button[.='${key_relationObject}'] | //label[contains(.,'${key_relationType}')]//..//input[@value='${key_relationObject}']</td>
 		<td></td>
 	</tr>
 	<tr>

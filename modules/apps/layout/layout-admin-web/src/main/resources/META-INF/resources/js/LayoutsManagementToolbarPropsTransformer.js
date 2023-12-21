@@ -63,13 +63,25 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 					.then((response) => response.json())
 					.then(({errorMessage, redirectURL}) => {
 						if (errorMessage) {
-							openErrorToast(errorMessage);
+							openToast({
+								message: errorMessage,
+								title: Liferay.Language.get('error'),
+								type: 'danger',
+							});
 						}
 						else {
 							navigate(redirectURL);
 						}
 					})
-					.catch(() => openErrorToast());
+					.catch(() =>
+						openToast({
+							message: Liferay.Language.get(
+								'an-unexpected-error-occurred'
+							),
+							title: Liferay.Language.get('error'),
+							type: 'danger',
+						})
+					);
 			},
 		});
 	};
@@ -167,18 +179,6 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 			}
 		},
 	};
-}
-
-function openErrorToast(message) {
-	if (message === undefined) {
-		message = Liferay.Language.get('an-unexpected-error-occurred');
-	}
-
-	openToast({
-		message,
-		title: Liferay.Language.get('error'),
-		type: 'danger',
-	});
 }
 
 function getSelectedKeys(portletNamespace) {

@@ -7,12 +7,12 @@
 	}
 
 	.btn-unstyled.facet-clear-btn {
-		color: var(--action-neutral-default, #2B3A4B);
+		color: var(--action-neutral-default);
 		font-family: 'Source Sans Pro', sans-serif;
 		font-size: 13px;
 		font-style: normal;
-		font-weight: 400;
-		line-height: 16px;
+		font-weight: 300;
+		line-height: 1rem;
 	}
 
 	.custom-checkbox.custom-control .custom-control-label {
@@ -172,20 +172,14 @@
 				>
 					<strong>${languageUtil.get(locale, "select-all")}</strong>
 				</@clay.button>
-
-				<#list termDisplayContexts as termDisplayContext>
-					<#if termDisplayContext.isSelected()>
-						<@clay.button
-							cssClass="btn-unstyled facet-clear-btn"
-							displayType="link"
-							id="${vocabularyName + '_facetAssetCategoriesClear'}"
-							onClick="${namespace}clearSelections(id)"
-						>
-							<strong>${languageUtil.get(locale, "clear")}</strong>
-						</@clay.button>
-						<#break>
-					</#if>
-				</#list>
+				<@clay.button
+					cssClass="btn-unstyled facet-clear-btn pl-1"
+					displayType="link"
+					id="${vocabularyName + '_facetAssetCategoriesClear'}"
+					onClick="${namespace}clearSelections(id)"
+				>
+					<strong>${languageUtil.get(locale, "clear")}</strong>
+				</@clay.button>
 			</div>
 
 			<div class="collapse show" id="${namespace}treeItem${id}">
@@ -239,7 +233,22 @@
 <#assign vocabularyNames = assetCategoriesSearchFacetDisplayContext.getVocabularyNames()![] />
 
 <#if vocabularyNames?has_content>
-	<#list vocabularyNames as vocabularyName>
+
+	<#assign
+		taxonomyVocabularyItems = restClient.get("/headless-admin-taxonomy/v1.0/sites/${themeDisplay.getSiteGroupId()}/taxonomy-vocabularies/?fields=externalReferenceCode%2Cname").items
+		vocabularyNamesSorted = []
+	/>
+	<#list taxonomyVocabularyItems as taxonomyVocabularyItem>
+		<#if stringUtil.equals(taxonomyVocabularyItem.externalReferenceCode, "CAPABILITY")>
+			<#assign vocabularyNamesSorted = [taxonomyVocabularyItem.name] + vocabularyNamesSorted />
+		<#elseif stringUtil.equals(taxonomyVocabularyItem.externalReferenceCode, "FEATURES")>
+			<#assign vocabularyNamesSorted = [vocabularyNamesSorted[0]] + [taxonomyVocabularyItem.name] + vocabularyNamesSorted[1..] />
+		<#elseif stringUtil.equals(taxonomyVocabularyItem.externalReferenceCode, "DEPLOYMENT_APPROACH")>
+			<#assign vocabularyNamesSorted = vocabularyNamesSorted + [taxonomyVocabularyItem.name] />
+		</#if>
+</#list>
+
+	<#list vocabularyNamesSorted as vocabularyName>
 		<ul class="treeview treeview-light treeview-nested treeview-vocabulary-display" role="tree">
 			<@treeview_item
 				cssClassTreeItem="tree-item-vocabulary"

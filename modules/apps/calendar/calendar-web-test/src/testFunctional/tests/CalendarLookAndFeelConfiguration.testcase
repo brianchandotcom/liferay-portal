@@ -141,7 +141,7 @@ definition {
 
 		CalendarLookAndFeelConfiguration.viewCssValues(
 			cssElement = "background-color",
-			cssValue = "#f8f2ff");
+			cssValue = "#F8F2FF");
 	}
 
 	@description = "LRQA-71889 - Verify that the user can modify border width, border style and border color in the border style tab"

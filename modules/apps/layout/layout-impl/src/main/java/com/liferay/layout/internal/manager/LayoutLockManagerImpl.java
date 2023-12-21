@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.LockedLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.lock.LockManager;
 import com.liferay.portal.kernel.model.Group;
@@ -520,9 +519,6 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 
 	@Reference
 	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private Language _language;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

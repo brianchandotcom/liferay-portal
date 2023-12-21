@@ -13,7 +13,6 @@ import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererRegistry;
 import com.liferay.fragment.service.FragmentCompositionService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
-import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.constants.ContentPageEditorConstants;
 import com.liferay.layout.content.page.editor.web.internal.manager.FragmentCollectionManager;
@@ -486,9 +485,6 @@ public class UpdateFragmentsHighlightedConfigurationMVCActionCommand
 
 	@Reference
 	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
 	private Language _language;

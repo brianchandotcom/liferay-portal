@@ -6,7 +6,6 @@
 package com.liferay.layout.internal.provider;
 
 import com.liferay.info.item.InfoItemServiceRegistry;
-import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
@@ -165,9 +164,6 @@ public class LayoutSitemapURLProvider implements SitemapURLProvider {
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
-
-	@Reference
-	private LayoutSEOEntryLocalService _layoutSEOEntryLocalService;
 
 	@Reference
 	private LayoutService _layoutService;

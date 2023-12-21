@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
-import com.liferay.portal.kernel.view.count.ViewCountManager;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -206,8 +205,5 @@ public class FragmentServiceUpgradeStepRegistrator
 
 	@Reference
 	private PortletFileRepository _portletFileRepository;
-
-	@Reference
-	private ViewCountManager _viewCountManager;
 
 }

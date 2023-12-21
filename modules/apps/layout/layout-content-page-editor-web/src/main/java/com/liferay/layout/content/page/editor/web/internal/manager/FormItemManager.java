@@ -20,8 +20,6 @@ import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
-import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
-import com.liferay.layout.page.template.service.LayoutPageTemplateStructureService;
 import com.liferay.layout.util.structure.DropZoneLayoutStructureItem;
 import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
@@ -405,14 +403,6 @@ public class FormItemManager {
 
 	@Reference
 	private Language _language;
-
-	@Reference
-	private LayoutPageTemplateStructureLocalService
-		_layoutPageTemplateStructureLocalService;
-
-	@Reference
-	private LayoutPageTemplateStructureService
-		_layoutPageTemplateStructureService;
 
 	@Reference
 	private Portal _portal;

@@ -27,6 +27,7 @@
 
 	.dropdown-menu .row {
 		margin: 25px!important;
+		min-width: auto!important;
 	}
 
 	.dropdown-menu .row .dropdown-item-div {
@@ -67,6 +68,18 @@
 		font-style: normal;
 		font-weight: 600;
 		line-height: 20px;
+	}
+
+	.dropdown-menu.show {
+		min-height: -webkit-fill-available;
+	}
+
+	.responsive-text {
+		display: -webkit-box;
+	   	overflow: hidden;
+	   	text-overflow: ellipsis;
+	   	-webkit-box-orient: vertical;
+		-webkit-line-clamp: 2;
 	}
 </style>
 
@@ -130,7 +143,7 @@
 				>
 					<div class="row">
 						<#list navPrimaryItem.getChildren() as navSecondaryItem>
-							<div class="dropdown-item-div col-${columns}">
+							<div class="dropdown-item-div col-12 col-lg-${columns}">
 								<#if taxonomyVocabulary?has_content && stringUtil.equals(navItemType, "CAPABILITIES")>
 									<#assign capabilityFields = taxonomyVocabulary[navSecondaryItem.getName()] />
 
@@ -142,12 +155,12 @@
 										/>
 
 										<div>
-											<h5 class="title">
+											<h5 class="responsive-text title">
 												${navSecondaryItem.getName()}
 											</h5>
 
 											<#if capabilityFields["description"]?has_content>
-												<p class="pt-2 subtitle">
+												<p class="pt-2 responsive-text subtitle">
 													${capabilityFields["description"]}
 												</p>
 											</#if>
@@ -168,11 +181,11 @@
 										/>
 
 										<div>
-											<h5 class="title">
+											<h5 class="responsive-text title">
 												${navSecondaryItem.getName()}
 											</h5>
 
-											<p class="pt-2 subtitle">
+											<p class="pt-2 responsive-text subtitle">
 												${navItemDescription}
 											</p>
 										</div>

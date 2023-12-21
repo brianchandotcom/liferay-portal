@@ -15,7 +15,6 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
@@ -209,24 +208,14 @@ public class RankingPortletDisplayBuilder {
 	}
 
 	protected List<DropdownItem> getFilterItemsDropdownItems() {
-		DropdownItemListBuilder.DropdownItemListWrapper
-			dropdownItemListWrapper =
-				new DropdownItemListBuilder.DropdownItemListWrapper();
-
-		if (FeatureFlagManagerUtil.isEnabled("LPS-157988") ||
-			FeatureFlagManagerUtil.isEnabled("LPS-159650")) {
-
-			dropdownItemListWrapper.addGroup(
-				dropdownGroupItem -> {
-					dropdownGroupItem.setDropdownItems(
-						_getFilterScopeDropdownItems());
-					dropdownGroupItem.setLabel(
-						LanguageUtil.get(
-							_httpServletRequest, "filter-by-scope"));
-				});
-		}
-
-		return dropdownItemListWrapper.addGroup(
+		return DropdownItemListBuilder.addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					_getFilterScopeDropdownItems());
+				dropdownGroupItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "filter-by-scope"));
+			}
+		).addGroup(
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
 					_getFilterStatusDropdownItems());

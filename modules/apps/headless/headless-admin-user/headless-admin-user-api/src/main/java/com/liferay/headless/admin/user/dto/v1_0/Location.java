@@ -97,6 +97,46 @@ public class Location implements Serializable {
 
 	private Supplier<String> _addressCountrySupplier;
 
+	@Schema(description = "The organization's country isocode.")
+	public String getAddressCountryCode() {
+		if (_addressCountryCodeSupplier != null) {
+			addressCountryCode = _addressCountryCodeSupplier.get();
+
+			_addressCountryCodeSupplier = null;
+		}
+
+		return addressCountryCode;
+	}
+
+	public void setAddressCountryCode(String addressCountryCode) {
+		this.addressCountryCode = addressCountryCode;
+
+		_addressCountryCodeSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setAddressCountryCode(
+		UnsafeSupplier<String, Exception> addressCountryCodeUnsafeSupplier) {
+
+		_addressCountryCodeSupplier = () -> {
+			try {
+				return addressCountryCodeUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
+	}
+
+	@GraphQLField(description = "The organization's country isocode.")
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String addressCountryCode;
+
+	private Supplier<String> _addressCountryCodeSupplier;
+
 	@Schema
 	@Valid
 	public Map<String, String> getAddressCountry_i18n() {
@@ -185,6 +225,46 @@ public class Location implements Serializable {
 
 	private Supplier<String> _addressRegionSupplier;
 
+	@Schema(description = "The organization's region code.")
+	public String getAddressRegionCode() {
+		if (_addressRegionCodeSupplier != null) {
+			addressRegionCode = _addressRegionCodeSupplier.get();
+
+			_addressRegionCodeSupplier = null;
+		}
+
+		return addressRegionCode;
+	}
+
+	public void setAddressRegionCode(String addressRegionCode) {
+		this.addressRegionCode = addressRegionCode;
+
+		_addressRegionCodeSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setAddressRegionCode(
+		UnsafeSupplier<String, Exception> addressRegionCodeUnsafeSupplier) {
+
+		_addressRegionCodeSupplier = () -> {
+			try {
+				return addressRegionCodeUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
+	}
+
+	@GraphQLField(description = "The organization's region code.")
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String addressRegionCode;
+
+	private Supplier<String> _addressRegionCodeSupplier;
+
 	@Schema(description = "The location's ID.")
 	public Long getId() {
 		if (_idSupplier != null) {
@@ -266,6 +346,22 @@ public class Location implements Serializable {
 			sb.append("\"");
 		}
 
+		String addressCountryCode = getAddressCountryCode();
+
+		if (addressCountryCode != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"addressCountryCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(addressCountryCode));
+
+			sb.append("\"");
+		}
+
 		Map<String, String> addressCountry_i18n = getAddressCountry_i18n();
 
 		if (addressCountry_i18n != null) {
@@ -290,6 +386,22 @@ public class Location implements Serializable {
 			sb.append("\"");
 
 			sb.append(_escape(addressRegion));
+
+			sb.append("\"");
+		}
+
+		String addressRegionCode = getAddressRegionCode();
+
+		if (addressRegionCode != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"addressRegionCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(addressRegionCode));
 
 			sb.append("\"");
 		}

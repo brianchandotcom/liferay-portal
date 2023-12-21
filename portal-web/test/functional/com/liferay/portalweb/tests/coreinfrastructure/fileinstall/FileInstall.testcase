@@ -130,6 +130,7 @@ definition {
 	test JSPFragmentModuleStillResolvedAfterRemovingStateFolderOnLPKGBundle {
 		property license.required = "true";
 		property osgi.modules.includes = "adaptive-media-blogs-web-fragment";
+		property portal.release = "false";
 		property portal.upstream = "false";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";

@@ -1,0 +1,10 @@
+assemble:
+    - into: static
+expand-urls-client-extension:
+    fooUrls:
+        - "foo.*"
+    jsonUrls:
+        - "*.json"
+        - "**/*.json"
+    singleURL: "*.txt"
+    type: customElement

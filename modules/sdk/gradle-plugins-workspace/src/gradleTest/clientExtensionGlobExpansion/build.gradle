@@ -2,26 +2,37 @@ import com.liferay.gradle.util.OSDetector
 
 task runGradleTest
 
+def withClientExtensionConfig = {
+	projectName, fn ->
+
+	Project clientExtensionProject = project ":${projectName}"
+
+	File clientExtensionBuildDir = new File(clientExtensionProject.buildDir, "liferay-client-extension-build")
+
+	File clientExtensionConfigJSONFile = new File(clientExtensionBuildDir, "${projectName}.client-extension-config.json")
+
+	fn.call(clientExtensionConfigJSONFile)
+}
+
 runGradleTest {
-	dependsOn ":client-extension:deploy"
+	dependsOn ":do-not-expand-urls-client-extension:createClientExtensionConfig", ":expand-urls-client-extension:createClientExtensionConfig"
 
 	doLast {
-		Project clientExtensionProject = project ":client-extension"
-
-		File clientExtensionBuildDir = new File(clientExtensionProject.buildDir, "liferay-client-extension-build")
-
-		File clientExtensionConfigJSONFile = new File(clientExtensionBuildDir, "client-extension.client-extension-config.json")
-
-		assert clientExtensionConfigJSONFile.text.contains('"doNotExpand=*.lfr.dev"')
-		assert clientExtensionConfigJSONFile.text.contains('"fooUrls=foo.json\\nfoo.txt"')
-
-		if (OSDetector.windows) {
-			assert clientExtensionConfigJSONFile.text.contains('"jsonUrls=foo.json\\none\\\\two\\\\three\\\\bar.json"')
-		}
-		else {
-			assert clientExtensionConfigJSONFile.text.contains('"jsonUrls=foo.json\\none/two/three/bar.json"')
+		withClientExtensionConfig("do-not-expand-urls-client-extension") {
+			assert it.text.contains('"doNotExpand=*.txt"')
 		}
 
-		assert clientExtensionConfigJSONFile.text.contains('"singleURL=bar.txt\\nfoo.txt"')
+		withClientExtensionConfig("expand-urls-client-extension") {
+			assert it.text.contains('"fooUrls=foo.json\\nfoo.txt"')
+
+			if (OSDetector.windows) {
+				assert it.text.contains('"jsonUrls=foo.json\\none\\\\two\\\\three\\\\bar.json"')
+			}
+			else {
+				assert it.text.contains('"jsonUrls=foo.json\\none/two/three/bar.json"')
+			}
+
+			assert it.text.contains('"singleURL=bar.txt\\nfoo.txt"')
+		}
 	}
 }

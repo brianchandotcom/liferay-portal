@@ -167,6 +167,7 @@ public interface JobEntity extends Entity {
 	public enum Type {
 
 		DEFAULT("default", "Default"),
+		FILE_PROPAGATOR("filePropagator", "File Propagator"),
 		FIXPACK_BUILDER_PULL_REQUEST(
 			"fixpackBuilderPullRequest", "Fixpack Builder Pull Request"),
 		FORWARD_PULL_REQUEST("forwardPullRequest", "Forward Pull Request"),
@@ -180,6 +181,8 @@ public interface JobEntity extends Entity {
 			"generateTestDurationMetrics", "Generate Test Duration Metrics"),
 		GENERATE_TESTRAY_CSV("generateTestrayCSV", "Generate Testray CSV"),
 		JENKINS_PULL_REQUEST("jenkinsPullRequest", "Jenkins Pull Request"),
+		LIFERAY_BINARIES_CACHE_UPDATER(
+			"liferayBinariesCacheUpdater", "Liferay Binaries Cache Updater"),
 		MAINTENANCE_DAILY("maintenanceDaily", "Maintenance Daily"),
 		MAINTENANCE_MATRIX_JOBS(
 			"maintenanceMatrixJobs", "Maintenance Matrix Jobs"),
@@ -188,6 +191,8 @@ public interface JobEntity extends Entity {
 		MAINTENANCE_WEEKLY("maintenanceWeekly", "Maintenance Weekly"),
 		MAINTENANCE_WEEKLY_NODE(
 			"maintenanceWeeklyNode", "Maintenance Weekly Node"),
+		MIRRORS_LOCAL_CACHE_PROPAGATOR(
+			"mirrorsLocalCachePropagator", "Mirrors Local Cache Propagator"),
 		PLUGINS_EXTRA_APPS("pluginsExtraApps", "Plugins Extra Apps"),
 		PLUGINS_MARKETPLACE_APP(
 			"pluginsMarketplaceApp", "Plugins Marketplace App"),
@@ -206,6 +211,10 @@ public interface JobEntity extends Entity {
 		PORTAL_UPSTREAM_TEST_SUITE(
 			"portalUpstreamTestSuite", "Portal Upstream Test Suite"),
 		POSHI_RELEASE("poshiRelease", "Poshi Release"),
+		PUBLISH_PORTAL_DOCKER_IMAGE(
+			"publishPortalDockerImage", "Publish Portal Docker Image"),
+		PUBLISH_TESTRAY_REPORT(
+			"publishTestrayReport", "Publish Testray Report"),
 		QA_WEBSITES_DAILY("qaWebsitesDaily", "QA Websites Daily"),
 		QA_WEBSITES_PULL_REQUEST_SF(
 			"qaWebsitesPullRequestSF", "QA Websites Pull Request SF"),

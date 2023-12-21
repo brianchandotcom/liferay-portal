@@ -72,25 +72,34 @@ definition {
 	macro isRemoteMode() {
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 
-		var fileLocation = "${liferayHome}/osgi/configs/com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config";
+		var openSearchConfigPath = "${liferayHome}/osgi/configs/com.liferay.portal.search.opensearch2.configuration.OpenSearchConfiguration.config";
 
-		var fileExists = FileUtil.exists(${fileLocation});
+		var openSearchConfigExists = FileUtil.exists(${openSearchConfigPath});
 
-		if (${fileExists} == "true") {
-			var fileContent = FileUtil.read(${fileLocation});
+		if (${openSearchConfigExists} == "true") {
+			return "true";
+		}
+		else {
+			var elasticsearchConfigPath = "${liferayHome}/osgi/configs/com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config";
 
-			var productionModeEnabled = RegexUtil.replace(${fileContent}, "productionModeEnabled=\"(.*)\"", 1);
-			var updatedProductionMode = RegexUtil.replace(${fileContent}, "productionModeEnabled=B\"(.*)\"", 1);
+			var elasticsearchConfigExists = FileUtil.exists(${elasticsearchConfigPath});
 
-			if ((${productionModeEnabled} == "true") || (${updatedProductionMode} == "true")) {
-				return "true";
+			if (${elasticsearchConfigExists} == "true") {
+				var configContent = FileUtil.read(${elasticsearchConfigPath});
+
+				var productionModeEnabled = RegexUtil.replace(${configContent}, "productionModeEnabled=\"(.*)\"", 1);
+				var updatedProductionMode = RegexUtil.replace(${configContent}, "productionModeEnabled=B\"(.*)\"", 1);
+
+				if ((${productionModeEnabled} == "true") || (${updatedProductionMode} == "true")) {
+					return "true";
+				}
+				else {
+					return "false";
+				}
 			}
 			else {
 				return "false";
 			}
-		}
-		else {
-			return "false";
 		}
 	}
 

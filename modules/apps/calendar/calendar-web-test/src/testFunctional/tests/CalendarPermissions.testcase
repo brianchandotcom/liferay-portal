@@ -85,7 +85,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Search#SEARCH_INFO",
-			value1 = "1 Result for \"Guest\"");
+			value1 = "1 Result Found for \"Guest\"");
 
 		Click(locator1 = "TextInput#SEARCH");
 
@@ -100,7 +100,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Search#SEARCH_INFO",
-			value1 = "0 Results for \"DXP Client\"");
+			value1 = "0 Results Found for \"DXP Client\"");
 
 		Click(locator1 = "TextInput#SEARCH");
 

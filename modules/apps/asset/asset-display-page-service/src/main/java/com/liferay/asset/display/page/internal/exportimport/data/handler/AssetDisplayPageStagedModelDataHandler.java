@@ -10,7 +10,6 @@ import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
-import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.exportimport.data.handler.base.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
@@ -224,9 +223,6 @@ public class AssetDisplayPageStagedModelDataHandler
 	@Reference
 	private AssetDisplayPageEntryLocalService
 		_assetDisplayPageEntryLocalService;
-
-	@Reference
-	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Reference
 	private LayoutPageTemplateEntryLocalService

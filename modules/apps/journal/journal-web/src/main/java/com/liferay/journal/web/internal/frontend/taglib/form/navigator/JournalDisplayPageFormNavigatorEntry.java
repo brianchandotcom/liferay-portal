@@ -128,11 +128,6 @@ public class JournalDisplayPageFormNavigatorEntry
 	@Reference
 	private GroupLocalService _groupLocalService;
 
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.layout.item.selector.web)"
-	)
-	private ServletContext _itemSelectorWebServletContext;
-
 	@Reference
 	private Portal _portal;
 

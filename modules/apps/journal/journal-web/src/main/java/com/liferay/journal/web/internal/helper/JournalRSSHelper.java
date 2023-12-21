@@ -25,7 +25,6 @@ import com.liferay.journal.exception.NoSuchFeedException;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleDisplay;
 import com.liferay.journal.model.JournalFeed;
-import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalFeedLocalService;
 import com.liferay.journal.util.JournalContent;
 import com.liferay.journal.web.internal.util.JournalSearcherUtil;
@@ -698,9 +697,6 @@ public class JournalRSSHelper {
 
 	@Reference
 	private ImageLocalService _imageLocalService;
-
-	@Reference
-	private JournalArticleLocalService _journalArticleLocalService;
 
 	@Reference
 	private JournalContent _journalContent;

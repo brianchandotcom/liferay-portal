@@ -26,7 +26,6 @@ import com.liferay.info.pagination.InfoPage;
 import com.liferay.info.pagination.Pagination;
 import com.liferay.info.sort.Sort;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.web.internal.util.JournalSearcherUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
@@ -237,9 +236,6 @@ public class BasicWebContentSingleFormVariationInfoCollectionProvider
 
 	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;
-
-	@Reference
-	private JournalArticleLocalService _journalArticleLocalService;
 
 	@Reference
 	private Language _language;

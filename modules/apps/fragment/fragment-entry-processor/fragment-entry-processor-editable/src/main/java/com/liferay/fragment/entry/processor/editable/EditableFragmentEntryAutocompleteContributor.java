@@ -7,7 +7,6 @@ package com.liferay.fragment.entry.processor.editable;
 
 import com.liferay.fragment.entry.processor.editable.parser.EditableElementParser;
 import com.liferay.fragment.processor.FragmentEntryAutocompleteContributor;
-import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringBundler;
@@ -86,8 +85,5 @@ public class EditableFragmentEntryAutocompleteContributor
 
 	@Reference
 	private JSONFactory _jsonFactory;
-
-	@Reference
-	private PortletRegistry _portletRegistry;
 
 }

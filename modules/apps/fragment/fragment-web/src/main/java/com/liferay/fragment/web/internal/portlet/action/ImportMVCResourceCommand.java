@@ -10,7 +10,6 @@ import com.liferay.fragment.importer.FragmentsImportStrategy;
 import com.liferay.fragment.importer.FragmentsImporter;
 import com.liferay.fragment.importer.FragmentsImporterResultEntry;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManager;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -181,9 +180,6 @@ public class ImportMVCResourceCommand extends BaseMVCResourceCommand {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ImportMVCResourceCommand.class);
-
-	@Reference
-	private FeatureFlagManager _featureFlagManager;
 
 	@Reference
 	private FragmentsImporter _fragmentsImporter;

@@ -10,7 +10,6 @@ import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
-import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.frontend.taglib.clay.servlet.taglib.AlertTag;
 import com.liferay.info.constants.InfoItemScopeConstants;
 import com.liferay.info.item.InfoItemServiceRegistry;
@@ -27,7 +26,6 @@ import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructureItemUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -241,13 +239,7 @@ public class TagsInputFragmentRenderer implements FragmentRenderer {
 		TagsInputFragmentRenderer.class);
 
 	@Reference
-	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
-
-	@Reference
 	private InfoItemServiceRegistry _infoItemServiceRegistry;
-
-	@Reference
-	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Language _language;

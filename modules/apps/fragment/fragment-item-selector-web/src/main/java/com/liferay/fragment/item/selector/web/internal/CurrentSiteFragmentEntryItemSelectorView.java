@@ -5,7 +5,6 @@
 
 package com.liferay.fragment.item.selector.web.internal;
 
-import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.item.selector.FragmentEntryItemSelectorReturnType;
 import com.liferay.fragment.item.selector.criterion.FragmentEntryItemSelectorCriterion;
 import com.liferay.fragment.item.selector.web.internal.display.context.FragmentEntriesDisplayContext;
@@ -16,7 +15,6 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -117,13 +115,6 @@ public class CurrentSiteFragmentEntryItemSelectorView
 	private static final List<ItemSelectorReturnType>
 		_supportedItemSelectorReturnTypes = Collections.singletonList(
 			new FragmentEntryItemSelectorReturnType());
-
-	@Reference
-	private FragmentCollectionContributorRegistry
-		_fragmentCollectionContributorRegistry;
-
-	@Reference
-	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private Language _language;

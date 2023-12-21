@@ -17,7 +17,6 @@ import com.liferay.segments.constants.SegmentsPortletKeys;
 import com.liferay.segments.criteria.Criteria;
 import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributorRegistry;
 import com.liferay.segments.odata.retriever.ODataRetriever;
-import com.liferay.segments.service.SegmentsEntryService;
 import com.liferay.segments.web.internal.constants.SegmentsWebKeys;
 
 import java.io.PrintWriter;
@@ -144,9 +143,6 @@ public class GetSegmentsEntryClassPKsCountMVCResourceCommand
 	@Reference
 	private SegmentsCriteriaContributorRegistry
 		_segmentsCriteriaContributorRegistry;
-
-	@Reference
-	private SegmentsEntryService _segmentsEntryService;
 
 	private ServiceTrackerMap<String, ODataRetriever<?>> _serviceTrackerMap;
 

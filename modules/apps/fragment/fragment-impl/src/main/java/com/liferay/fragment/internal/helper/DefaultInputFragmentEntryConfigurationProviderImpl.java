@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Objects;
 
-import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -158,9 +157,6 @@ public class DefaultInputFragmentEntryConfigurationProviderImpl
 			TextInfoFieldType.INSTANCE.getName(),
 			JSONUtil.put("key", "INPUTS-text-input")
 		);
-
-	@Reference
-	private ConfigurationAdmin _configurationAdmin;
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

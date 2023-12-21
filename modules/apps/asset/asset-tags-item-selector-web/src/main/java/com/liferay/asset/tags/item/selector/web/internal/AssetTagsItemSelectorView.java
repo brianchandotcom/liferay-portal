@@ -9,7 +9,6 @@ import com.liferay.asset.kernel.service.AssetTagService;
 import com.liferay.asset.tags.item.selector.AssetTagsItemSelectorReturnType;
 import com.liferay.asset.tags.item.selector.criterion.AssetTagsItemSelectorCriterion;
 import com.liferay.asset.tags.item.selector.web.internal.display.context.AssetTagsDisplayContext;
-import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.ItemSelectorViewDescriptorRenderer;
@@ -98,9 +97,6 @@ public class AssetTagsItemSelectorView
 
 	@Reference
 	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private ItemSelector _itemSelector;
 
 	@Reference
 	private ItemSelectorViewDescriptorRenderer<AssetTagsItemSelectorCriterion>

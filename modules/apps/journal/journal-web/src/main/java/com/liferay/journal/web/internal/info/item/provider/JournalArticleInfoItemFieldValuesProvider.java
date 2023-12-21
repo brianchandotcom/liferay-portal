@@ -9,7 +9,6 @@ import com.liferay.asset.info.item.provider.AssetEntryInfoItemFieldSetProvider;
 import com.liferay.dynamic.data.mapping.info.item.provider.DDMFormValuesInfoFieldValuesProvider;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
-import com.liferay.dynamic.data.mapping.service.DDMFieldLocalService;
 import com.liferay.expando.info.item.provider.ExpandoInfoItemFieldSetProvider;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.display.request.attributes.contributor.InfoDisplayRequestAttributesContributor;
@@ -442,9 +441,6 @@ public class JournalArticleInfoItemFieldValuesProvider
 	@Reference
 	private AssetEntryInfoItemFieldSetProvider
 		_assetEntryInfoItemFieldSetProvider;
-
-	@Reference
-	private DDMFieldLocalService _ddmFieldLocalService;
 
 	@Reference
 	private DDMFormValuesInfoFieldValuesProvider

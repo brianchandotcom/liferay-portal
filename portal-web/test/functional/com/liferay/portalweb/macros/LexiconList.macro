@@ -1,5 +1,12 @@
 definition {
 
+	@summary = "Check the checkbox of a list entry"
+	macro checkListCheckbox(listEntry = null) {
+		Check(
+			key_listEntry = ${listEntry},
+			locator1 = "LexiconList#LIST_ENTRY_CHECKBOX");
+	}
+
 	@summary = "Default summary"
 	macro clickEllipsis(userRole = null, listEntry = null) {
 		if (${userRole} == "Guest") {

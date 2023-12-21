@@ -818,37 +818,9 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 					${entity.variableName}.setExternalReferenceCode(String.valueOf(${entity.variableName}.getPrimaryKey()));
 				</#if>
 			}
-			else {
-				long userId = GetterUtil.getLong(PrincipalThreadLocal.getName());
 
-				if (userId > 0) {
-					<#if entity.hasEntityColumn("companyId")>
-						long companyId = ${entity.variableName}.getCompanyId();
-					<#else>
-						long companyId = 0;
-					</#if>
-
-					<#if entity.hasEntityColumn("groupId")>
-						long groupId = ${entity.variableName}.getGroupId();
-					<#else>
-						long groupId = 0;
-					</#if>
-
-					long classPK = 0;
-
-					if (!isNew) {
-						classPK = ${entity.variableName}.getPrimaryKey();
-					}
-
-					try {
-						${entity.variableName}.setExternalReferenceCode(SanitizerUtil.sanitize(companyId, groupId, userId, ${apiPackagePath}.model.${entity.name}.class.getName(), classPK, ContentTypes.TEXT_HTML, Sanitizer.MODE_ALL, ${entity.variableName}.getExternalReferenceCode(), null));
-					}
-					catch (SanitizerException sanitizerException) {
-						throw new SystemException(sanitizerException);
-					}
-				}
-
-				<#if entity.hasExternalReferenceCode()>
+			<#if entity.hasExternalReferenceCode()>
+				else {
 					<#if serviceBuilder.isVersionGTE_7_4_0()>
 						${entity.name} erc${entity.name} = fetchByERC_${entity.externalReferenceCode?cap_first[0..0]}(${entity.variableName}.getExternalReferenceCode(), ${entity.variableName}.get${entity.externalReferenceCode?cap_first}Id());
 					<#else>
@@ -866,8 +838,8 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 								throw new ${duplicateEntityExternalReferenceCode}Exception("Duplicate ${entity.humanName} with external reference code " + ${entity.variableName}.getExternalReferenceCode() + " and ${entity.externalReferenceCode} " + ${entity.variableName}.get${entity.externalReferenceCode?cap_first}Id());
 						}
 					}
-				</#if>
-			}
+				}
+			</#if>
 		</#if>
 
 		<#if entity.hasEntityColumn("createDate", "Date") && entity.hasEntityColumn("modifiedDate", "Date")>

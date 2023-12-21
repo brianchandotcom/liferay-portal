@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.service.PortalPreferencesLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.ThemeLocalService;
@@ -120,9 +119,6 @@ public class LayoutServiceContextHelperImpl
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private PortalPreferencesLocalService _portalPreferencesLocalService;
 
 	@Reference
 	private ThemeLocalService _themeLocalService;

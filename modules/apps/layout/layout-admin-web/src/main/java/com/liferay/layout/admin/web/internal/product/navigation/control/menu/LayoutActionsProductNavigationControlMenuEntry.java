@@ -13,7 +13,6 @@ import com.liferay.layout.util.template.LayoutConverterRegistry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.permission.LayoutPermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
@@ -131,9 +130,6 @@ public class LayoutActionsProductNavigationControlMenuEntry
 
 	@Reference
 	private LayoutConverterRegistry _layoutConverterRegistry;
-
-	@Reference
-	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private LayoutPermission _layoutPermission;

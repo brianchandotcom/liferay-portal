@@ -8,7 +8,6 @@ package com.liferay.layout.admin.web.internal.portlet.action;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
-import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryService;
@@ -109,9 +108,6 @@ public class UpdateLayoutUtilityPageEntryPreviewMVCActionCommand
 
 	@Reference
 	private DLFileEntryLocalService _dlFileEntryLocalService;
-
-	@Reference
-	private DLFolderLocalService _dlFolderLocalService;
 
 	@Reference
 	private LayoutUtilityPageEntryService _layoutUtilityPageEntryService;

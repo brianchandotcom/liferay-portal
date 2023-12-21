@@ -35,7 +35,6 @@ import java.util.Locale;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -101,23 +100,14 @@ public class LayoutPageTemplateCollectionsItemSelectorView
 	private LayoutPageTemplateCollectionLocalService
 		_layoutPageTemplateCollectionLocalService;
 
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.layout.page.template.item.selector.web)"
-	)
-	private ServletContext _servletContext;
-
-	private class LayoutPageTemplateCollectionItemDescriptor
+	private static class LayoutPageTemplateCollectionItemDescriptor
 		implements ItemSelectorViewDescriptor.ItemDescriptor {
 
 		public LayoutPageTemplateCollectionItemDescriptor(
 			HttpServletRequest httpServletRequest,
 			LayoutPageTemplateCollection layoutPageTemplateCollection) {
 
-			_httpServletRequest = httpServletRequest;
 			_layoutPageTemplateCollection = layoutPageTemplateCollection;
-
-			_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
 		}
 
 		@Override
@@ -169,10 +159,8 @@ public class LayoutPageTemplateCollectionsItemSelectorView
 			return true;
 		}
 
-		private HttpServletRequest _httpServletRequest;
 		private final LayoutPageTemplateCollection
 			_layoutPageTemplateCollection;
-		private final ThemeDisplay _themeDisplay;
 
 	}
 
@@ -286,7 +274,7 @@ public class LayoutPageTemplateCollectionsItemSelectorView
 			return true;
 		}
 
-		private HttpServletRequest _httpServletRequest;
+		private final HttpServletRequest _httpServletRequest;
 		private final PortletRequest _portletRequest;
 		private final PortletURL _portletURL;
 		private final ThemeDisplay _themeDisplay;

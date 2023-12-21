@@ -61,7 +61,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.staging.StagingGroupHelper;
 import com.liferay.translation.security.permission.TranslationPermission;
 import com.liferay.translation.url.provider.TranslationURLProvider;
 
@@ -321,9 +320,6 @@ public class GroupPagesPortlet extends MVCPortlet {
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private StagingGroupHelper _stagingGroupHelper;
 
 	@Reference
 	private TranslationPermission _translationPermission;

@@ -13,7 +13,6 @@ import com.liferay.layout.admin.web.internal.servlet.taglib.util.LayoutActionDro
 import com.liferay.layout.helper.LayoutCopyHelper;
 import com.liferay.layout.set.prototype.helper.LayoutSetPrototypeHelper;
 import com.liferay.layout.util.template.LayoutConverterRegistry;
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
@@ -94,9 +93,6 @@ public class GetLayoutActionsMVCResourceCommand extends BaseMVCResourceCommand {
 
 	@Reference
 	private ItemSelector _itemSelector;
-
-	@Reference
-	private JSONFactory _jsonFactory;
 
 	@Reference
 	private LayoutConverterRegistry _layoutConverterRegistry;

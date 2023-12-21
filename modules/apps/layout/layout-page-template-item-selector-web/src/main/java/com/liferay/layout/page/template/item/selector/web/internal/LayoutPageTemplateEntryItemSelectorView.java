@@ -52,7 +52,6 @@ import java.util.Objects;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -135,11 +134,6 @@ public class LayoutPageTemplateEntryItemSelectorView
 
 	@Reference
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
-
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.layout.page.template.item.selector.web)"
-	)
-	private ServletContext _servletContext;
 
 	private class LayoutPageTemplateEntryItemDescriptor
 		implements ItemSelectorViewDescriptor.ItemDescriptor {

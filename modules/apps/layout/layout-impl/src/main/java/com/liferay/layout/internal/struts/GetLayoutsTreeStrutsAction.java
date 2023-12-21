@@ -6,7 +6,6 @@
 package com.liferay.layout.internal.struts;
 
 import com.liferay.layout.util.LayoutsTree;
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
@@ -14,7 +13,6 @@ import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
 
@@ -90,15 +88,9 @@ public class GetLayoutsTreeStrutsAction implements StrutsAction {
 	}
 
 	@Reference
-	private JSONFactory _jsonFactory;
-
-	@Reference
 	private LayoutService _layoutService;
 
 	@Reference
 	private LayoutsTree _layoutsTree;
-
-	@Reference
-	private Portal _portal;
 
 }

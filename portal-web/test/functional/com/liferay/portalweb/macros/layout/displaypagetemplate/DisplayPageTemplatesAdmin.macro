@@ -37,6 +37,19 @@ definition {
 		PageEditor.assertFragmentSidebarLoaded();
 	}
 
+	@summary = "Change content type"
+	macro changeContentType(displayPageName = null, subType = null, contentType = null) {
+		DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
+			displayPageName = ${displayPageName},
+			item = "Change Content Type");
+
+		DisplayPageTemplatesAdmin._selectMappingTypes(
+			contentType = ${contentType},
+			subType = ${subType});
+
+		PortletEntry.save();
+	}
+
 	@summary = "Default summary"
 	macro deleteDisplayPage(displayPageName = null, defaultDisplayPageTemplate = null) {
 		LexiconCard.clickEllipsisItem(

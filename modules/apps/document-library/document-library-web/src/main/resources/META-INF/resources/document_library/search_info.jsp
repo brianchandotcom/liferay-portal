@@ -14,7 +14,7 @@ Folder folder = null;
 
 long folderId = ParamUtil.getLong(request, "folderId");
 
-if (folderId != dlAdminDisplayContext.getRootFolderId()) {
+if ((folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) && (folderId != dlAdminDisplayContext.getRootFolderId())) {
 	folder = DLAppServiceUtil.getFolder(folderId);
 }
 

@@ -1669,8 +1669,12 @@ definition {
 	}
 
 	@description = "Feature ID: LRAC-13424 | Automation ID: LRAC-14041 | Test Summary: Check that it is not possible to create a dynamic segment with a name that is already in use"
+	@ignore = "true"
 	@priority = 4
 	test CheckNotPossibleCreateDynamicSegmentWithNameAlreadyInUse {
+
+		// AC Bug ticket: LRAC-15304
+
 		task ("Sign in as new user") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "userea@liferay.com",
@@ -1781,8 +1785,12 @@ definition {
 	}
 
 	@description = "Feature ID: LRAC-13424 | Automation ID: LRAC-14042 | Test Summary: Check that it is not possible to create a static segment with a name that is already in use"
+	@ignore = "true"
 	@priority = 4
 	test CheckNotPossibleCreateStaticSegmentWithNameAlreadyInUse {
+
+		// AC Bug ticket: LRAC-15304
+
 		task ("Sign in as new user") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "userea@liferay.com",
@@ -1889,8 +1897,12 @@ definition {
 	}
 
 	@description = "Feature ID: LRAC-13424 | Automation ID: LRAC-14043 | Test Summary: Check that it is not possible to edit the segment name to an existing one"
+	@ignore = "true"
 	@priority = 3
 	test CheckNotPossibleEditSegmentNameToExistsOne {
+
+		// AC Bug ticket: LRAC-15304
+
 		task ("Sign in as new user") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "userea@liferay.com",

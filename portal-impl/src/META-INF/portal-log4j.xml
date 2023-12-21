@@ -107,7 +107,6 @@
 		<Logger level="INFO" name="com.liferay.portal.kernel.util.LoggingTimer" />
 		<Logger level="WARN" name="com.liferay.portal.kernel.util.ReferenceRegistry" />
 		<Logger level="INFO" name="com.liferay.portal.kernel.util.ServerDetector" />
-		<Logger level="INFO" name="com.liferay.portal.kernel.util.ServiceProxyFactory" />
 		<Logger level="WARN" name="com.liferay.portal.language.LanguageResources" />
 		<Logger level="INFO" name="com.liferay.portal.license" />
 		<Logger level="ERROR" name="com.liferay.portal.model.DefaultModelHintsImpl" />

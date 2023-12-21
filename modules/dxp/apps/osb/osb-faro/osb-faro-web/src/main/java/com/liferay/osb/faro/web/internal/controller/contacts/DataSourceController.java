@@ -70,7 +70,6 @@ import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -1570,9 +1569,6 @@ public class DataSourceController extends BaseFaroController {
 
 	@Reference
 	private ClamAVScanner _clamAVScanner;
-
-	@Reference
-	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private ContactsCSVHelper _contactsCSVHelper;

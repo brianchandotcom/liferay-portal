@@ -45,7 +45,7 @@ export default function InputLocalized({
 	resultFormatter,
 	selectedLocale,
 	tooltip,
-	translations,
+	translations: initialTranslations,
 	...otherProps
 }: InputLocalizedProps): JSX.Element;
 export {};

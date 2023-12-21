@@ -47,6 +47,22 @@ const availableLocales = Object.keys(Liferay.Language.available)
 		symbol: language.replace(/_/g, '-').toLowerCase(),
 	}));
 
+const translationsNormalizer = (
+	translations: any
+) => {
+	const {zh_Hans_CN, zh_Hant_TW, ...normalizedTranslations} = translations;
+
+	if (zh_Hans_CN) {
+		normalizedTranslations['zh_CN'] = zh_Hans_CN;
+	}
+
+	if (zh_Hant_TW) {
+		normalizedTranslations['zh_TW'] = zh_Hant_TW;
+	}
+
+	return normalizedTranslations;
+};
+
 export default function InputLocalized({
 	disableFlag,
 	disabled,
@@ -62,10 +78,11 @@ export default function InputLocalized({
 	resultFormatter = () => null,
 	selectedLocale,
 	tooltip,
-	translations,
+	translations: initialTranslations,
 	...otherProps
 }: InputLocalizedProps) {
 	const [locale, setLocale] = useState<InputLocale>(availableLocales[0]);
+	const translations = translationsNormalizer(initialTranslations);
 
 	useEffect(() => {
 		if (disableFlag) {

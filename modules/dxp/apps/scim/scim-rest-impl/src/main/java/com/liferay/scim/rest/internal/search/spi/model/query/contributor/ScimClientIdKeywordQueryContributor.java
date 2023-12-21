@@ -17,7 +17,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Stian Sigvartsen
  */
 @Component(
-	property = "indexer.class.name=com.liferay.portal.kernel.model.User",
+	property = {
+		"indexer.class.name=com.liferay.portal.kernel.model.User",
+		"indexer.class.name=com.liferay.portal.kernel.model.UserGroup"
+	},
 	service = KeywordQueryContributor.class
 )
 public class ScimClientIdKeywordQueryContributor

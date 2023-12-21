@@ -1303,12 +1303,7 @@ definition {
 
 		MenuItem.click(menuItem = "Configuration");
 
-		SelectFrame(locator1 = "IFrame#CONFIGURATION");
-
-		AssertClick(
-			key_navTab = ${navTab},
-			locator1 = "DocumentsAndMediaConfiguration#CONFIGURATION_NAV_ITEM",
-			value1 = ${navTab});
+		MenuBar.click(menuBar = ${navTab});
 
 		if (isSet(bodyContent)) {
 			SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
@@ -1318,8 +1313,6 @@ definition {
 				value1 = ${bodyContent});
 
 			SelectFrame(value1 = "relative=top");
-
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 		}
 
 		PortletEntry.save();

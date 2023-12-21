@@ -53,7 +53,7 @@ public class GetSitesMVCResourceCommand implements MVCResourceCommand {
 		try {
 			_writeJSONPortletResponse(
 				resourceRequest, resourceResponse,
-				_getJSONObject(resourceRequest, resourceResponse));
+				_getJSONObject(resourceRequest));
 
 			return false;
 		}
@@ -65,7 +65,7 @@ public class GetSitesMVCResourceCommand implements MVCResourceCommand {
 	}
 
 	protected JSONObject getSiteByExternalReferenceCodeJSONObject(
-			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+			ResourceRequest resourceRequest)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
@@ -91,8 +91,7 @@ public class GetSitesMVCResourceCommand implements MVCResourceCommand {
 		);
 	}
 
-	protected JSONObject getSitesJSONObject(
-			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+	protected JSONObject getSitesJSONObject(ResourceRequest resourceRequest)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
@@ -179,18 +178,16 @@ public class GetSitesMVCResourceCommand implements MVCResourceCommand {
 			});
 	}
 
-	private JSONObject _getJSONObject(
-			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+	private JSONObject _getJSONObject(ResourceRequest resourceRequest)
 		throws Exception {
 
 		String cmd = ParamUtil.getString(resourceRequest, Constants.CMD);
 
 		if (cmd.equals("getSitesJSONObject")) {
-			return getSitesJSONObject(resourceRequest, resourceResponse);
+			return getSitesJSONObject(resourceRequest);
 		}
 		else if (cmd.equals("getSiteByExternalReferenceCodeJSONObject")) {
-			return getSiteByExternalReferenceCodeJSONObject(
-				resourceRequest, resourceResponse);
+			return getSiteByExternalReferenceCodeJSONObject(resourceRequest);
 		}
 
 		return null;

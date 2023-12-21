@@ -11,7 +11,7 @@ import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInf
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstanceTokenTable;
 import com.liferay.portal.workflow.kaleo.model.KaleoTimerInstanceTokenTable;
-import com.liferay.portal.workflow.kaleo.service.persistence.KaleoTaskInstanceTokenPersistence;
+import com.liferay.portal.workflow.kaleo.service.persistence.KaleoTimerInstanceTokenPersistence;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -53,7 +53,7 @@ public class KaleoTimerInstanceTokenTableReferenceDefinition
 	}
 
 	@Reference
-	private KaleoTaskInstanceTokenPersistence
+	private KaleoTimerInstanceTokenPersistence
 		_kaleoTimerInstanceTokenPersistence;
 
 }

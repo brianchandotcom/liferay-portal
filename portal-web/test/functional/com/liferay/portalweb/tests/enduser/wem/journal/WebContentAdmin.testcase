@@ -699,6 +699,48 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-196819. The site administrator could add all available type items in Content Library sheet."
+	@priority = 3
+	test ViewAvailableTypesInContentLibrarySheet {
+		property custom.properties = "feature.flag.LPS-194763=true${line.separator}feature.flag.LPS-197692=true";
+
+		task ("Given a site administrator has a web content structure") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "WC Structure Name");
+
+			DataEngine.addField(fieldName = "Text");
+
+			WebContentStructures.saveCP();
+		}
+
+		task ("When the site administrator navigates to the Content Library sheet") {
+			NavItem.click(navItem = "Web Content");
+
+			Click.waitForMenuToggleJSClick(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
+
+			MenuItem.click(menuItem = "Configuration");
+
+			WebContentAdmin.selectHighlightedStructures(structureNameList = "WC Structure Name");
+
+			PortletEntry.save();
+
+			Navigator.gotoBack();
+		}
+
+		task ("Then the site administrator could see available types") {
+			MenuBar.viewActive(menuBar = "Content Library");
+
+			LexiconEntry.gotoAdd();
+
+			for (var type : list "Folder,Basic Web Content,WC Structure Name") {
+				MenuItem.viewVisible(menuItem = ${type});
+			}
+		}
+	}
+
 	@description = "This is a test for LPS-151948. The Filter by Status is available to the Versions tab."
 	@priority = 4
 	test ViewFilterByStatusAvailableToVersionsTab {

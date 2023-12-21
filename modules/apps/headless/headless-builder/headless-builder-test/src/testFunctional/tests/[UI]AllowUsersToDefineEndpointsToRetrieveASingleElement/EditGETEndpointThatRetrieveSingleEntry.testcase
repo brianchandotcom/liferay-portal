@@ -49,7 +49,7 @@ definition {
 
 			APIBuilderUI.addAndPublishEndpointConfiguration(
 				entity = "Endpoints",
-				name = "gettest",
+				name = "/gettest/{entryId}",
 				schemaName = "testSchema",
 				title = "My-app");
 
@@ -80,7 +80,7 @@ definition {
 
 			APIBuilderUI.addAndPublishEndpointConfiguration(
 				entity = "Endpoints",
-				name = "gettest",
+				name = "/gettest/{entryId}",
 				schemaName = "testSchema",
 				title = "My-app");
 		}

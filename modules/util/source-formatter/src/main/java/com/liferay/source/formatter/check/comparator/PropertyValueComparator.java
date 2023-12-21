@@ -81,7 +81,8 @@ public class PropertyValueComparator extends NaturalOrderStringComparator {
 	}
 
 	private static final char[][] _REVERSE_ORDER_CHARACTERS = {
-		{CharPool.COLON, CharPool.PERIOD}, {CharPool.DASH, CharPool.SLASH}
+		{CharPool.COLON, CharPool.DASH}, {CharPool.COLON, CharPool.PERIOD},
+		{CharPool.DASH, CharPool.SLASH}
 	};
 
 }

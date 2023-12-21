@@ -196,13 +196,6 @@ public class ObjectDefinitionResourceImpl
 			ObjectDefinition objectDefinition)
 		throws Exception {
 
-		if (Validator.isNotNull(
-				objectDefinition.getObjectFolderExternalReferenceCode()) &&
-			!FeatureFlagManagerUtil.isEnabled("LPS-148856")) {
-
-			throw new UnsupportedOperationException();
-		}
-
 		if (!Validator.isBlank(objectDefinition.getStorageType()) &&
 			!FeatureFlagManagerUtil.isEnabled("LPS-135430")) {
 
@@ -386,13 +379,6 @@ public class ObjectDefinitionResourceImpl
 		throws Exception {
 
 		// TODO Move logic to service
-
-		if (Validator.isNotNull(
-				objectDefinition.getObjectFolderExternalReferenceCode()) &&
-			!FeatureFlagManagerUtil.isEnabled("LPS-148856")) {
-
-			throw new UnsupportedOperationException();
-		}
 
 		if (!Validator.isBlank(objectDefinition.getStorageType()) &&
 			!FeatureFlagManagerUtil.isEnabled("LPS-135430")) {
@@ -1108,19 +1094,10 @@ public class ObjectDefinitionResourceImpl
 						}
 					).put(
 						"update",
-						() -> {
-							if (!FeatureFlagManagerUtil.isEnabled(
-									"LPS-148856") &&
-								objectDefinition.isUnmodifiableSystemObject()) {
-
-								return null;
-							}
-
-							return addAction(
-								ActionKeys.UPDATE, "putObjectDefinition",
-								permissionName,
-								objectDefinition.getObjectDefinitionId());
-						}
+						addAction(
+							ActionKeys.UPDATE, "putObjectDefinition",
+							permissionName,
+							objectDefinition.getObjectDefinitionId())
 					).build());
 				setActive(objectDefinition::isActive);
 				setDateCreated(objectDefinition::getCreateDate);
@@ -1167,14 +1144,7 @@ public class ObjectDefinitionResourceImpl
 							objectField),
 						ObjectField.class));
 				setObjectFolderExternalReferenceCode(
-					() -> {
-						if (!FeatureFlagManagerUtil.isEnabled("LPS-148856")) {
-							return null;
-						}
-
-						return objectDefinition.
-							getObjectFolderExternalReferenceCode();
-					});
+					objectDefinition::getObjectFolderExternalReferenceCode);
 				setObjectLayouts(
 					() -> transformToArray(
 						_objectLayoutLocalService.getObjectLayouts(

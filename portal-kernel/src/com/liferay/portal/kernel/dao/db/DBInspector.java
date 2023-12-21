@@ -33,25 +33,6 @@ import java.util.regex.Pattern;
  */
 public class DBInspector {
 
-	public static boolean isObjectTable(
-		List<Long> companyIds, String tableName) {
-
-		for (long companyId : companyIds) {
-
-			// See ObjectDefinitionImpl#getExtensionDBTableName and
-			// ObjectDefinitionLocalServiceImpl#_getDBTableName
-
-			if (tableName.endsWith("_x_" + companyId) ||
-				tableName.startsWith("L_" + companyId + "_") ||
-				tableName.startsWith("O_" + companyId + "_")) {
-
-				return true;
-			}
-		}
-
-		return false;
-	}
-
 	public DBInspector(Connection connection) {
 		_connection = connection;
 	}
@@ -294,6 +275,23 @@ public class DBInspector {
 
 			return false;
 		}
+	}
+
+	public boolean isObjectTable(List<Long> companyIds, String tableName) {
+		for (long companyId : companyIds) {
+
+			// See ObjectDefinitionImpl#getExtensionDBTableName and
+			// ObjectDefinitionLocalServiceImpl#_getDBTableName
+
+			if (tableName.endsWith("_x_" + companyId) ||
+				tableName.startsWith("L_" + companyId + "_") ||
+				tableName.startsWith("O_" + companyId + "_")) {
+
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	public boolean isPartitionedControlTable(String tableName) {

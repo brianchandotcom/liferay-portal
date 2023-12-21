@@ -116,7 +116,7 @@ public class DatabaseUtil {
 
 		for (String tableName : dbInspector.getTableNames(null)) {
 			if (!dbInspector.isControlTable(companyIds, tableName) &&
-				!DBInspector.isObjectTable(companyIds, tableName)) {
+				!dbInspector.isObjectTable(companyIds, tableName)) {
 
 				partitionedTableNames.add(tableName);
 			}

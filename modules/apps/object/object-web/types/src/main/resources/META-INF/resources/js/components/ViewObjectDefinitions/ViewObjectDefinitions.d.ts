@@ -25,7 +25,6 @@ interface ViewObjectDefinitionsProps extends IFDSTableProps {
 	learnResourceContext: any;
 	modelBuilderURL: string;
 	nameMaxLength: string;
-	objectDefinitionsAPIURL: any;
 	objectDefinitionsCreationMenu: {
 		primaryItems?: any[];
 		secondaryItems?: any[];
@@ -44,7 +43,6 @@ export default function ViewObjectDefinitions({
 	learnResourceContext,
 	modelBuilderURL,
 	nameMaxLength,
-	objectDefinitionsAPIURL,
 	objectDefinitionsCreationMenu,
 	objectDefinitionsFDSActionDropdownItems,
 	objectDefinitionsFDSName,

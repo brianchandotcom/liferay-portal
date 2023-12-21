@@ -59,7 +59,6 @@ interface ViewObjectDefinitionsProps extends IFDSTableProps {
 	learnResourceContext: any;
 	modelBuilderURL: string;
 	nameMaxLength: string;
-	objectDefinitionsAPIURL: any;
 	objectDefinitionsCreationMenu: {
 		primaryItems?: any[];
 		secondaryItems?: any[];
@@ -79,7 +78,6 @@ export default function ViewObjectDefinitions({
 	learnResourceContext,
 	modelBuilderURL,
 	nameMaxLength,
-	objectDefinitionsAPIURL,
 	objectDefinitionsCreationMenu,
 	objectDefinitionsFDSActionDropdownItems,
 	objectDefinitionsFDSName,
@@ -208,9 +206,7 @@ export default function ViewObjectDefinitions({
 
 	const dataSetProps = {
 		...defaultDataSetProps,
-		apiURL: Liferay.FeatureFlags['LPS-148856']
-			? getURL()
-			: objectDefinitionsAPIURL,
+		apiURL: getURL(),
 		creationMenu: objectDefinitionsCreationMenu,
 		customDataRenderers: {
 			objectDefinitionLabelDataRenderer,
@@ -352,43 +348,41 @@ export default function ViewObjectDefinitions({
 	};
 
 	useEffect(() => {
-		if (Liferay.FeatureFlags['LPS-148856']) {
-			const makeFetch = async () => {
-				const allObjectFolders = await API.getAllObjectFolders();
+		const makeFetch = async () => {
+			const allObjectFolders = await API.getAllObjectFolders();
 
-				setObjectFoldersRequestInfo(allObjectFolders);
+			setObjectFoldersRequestInfo(allObjectFolders);
 
-				const objectDefinitions = await API.getAllObjectDefinitions();
+			const objectDefinitions = await API.getAllObjectDefinitions();
 
-				setObjectDefinitionActions(objectDefinitions.actions);
+			setObjectDefinitionActions(objectDefinitions.actions);
 
-				const currentURL = new URL(window.location.href);
+			const currentURL = new URL(window.location.href);
 
-				const objectFolderNameSearchParam = currentURL.searchParams.get(
-					'objectFolderName'
+			const objectFolderNameSearchParam = currentURL.searchParams.get(
+				'objectFolderName'
+			);
+
+			if (objectFolderNameSearchParam === null) {
+				setDefaultToSearchParams(allObjectFolders, currentURL);
+			}
+			else {
+				const newSelectedObjectFolder = allObjectFolders.items.find(
+					(folder) => folder.name === objectFolderNameSearchParam
 				);
 
-				if (objectFolderNameSearchParam === null) {
-					setDefaultToSearchParams(allObjectFolders, currentURL);
+				if (newSelectedObjectFolder) {
+					setSelectedObjectFolder(newSelectedObjectFolder);
 				}
 				else {
-					const newSelectedObjectFolder = allObjectFolders.items.find(
-						(folder) => folder.name === objectFolderNameSearchParam
-					);
-
-					if (newSelectedObjectFolder) {
-						setSelectedObjectFolder(newSelectedObjectFolder);
-					}
-					else {
-						setDefaultToSearchParams(allObjectFolders, currentURL);
-					}
+					setDefaultToSearchParams(allObjectFolders, currentURL);
 				}
+			}
 
-				setLoading(false);
-			};
+			setLoading(false);
+		};
 
-			makeFetch();
-		}
+		makeFetch();
 
 		Liferay.on('addObjectDefinition', () =>
 			setShowModal((previousState: ViewObjectDefinitionsModals) => ({
@@ -410,98 +404,73 @@ export default function ViewObjectDefinitions({
 
 	return (
 		<>
-			{Liferay.FeatureFlags['LPS-148856'] ? (
-				<div className="lfr__object-web-view-object-definitions">
-					{loading ? (
-						<ClayLoadingIndicator
-							displayType="secondary"
-							size="sm"
+			<div className="lfr__object-web-view-object-definitions">
+				{loading ? (
+					<ClayLoadingIndicator displayType="secondary" size="sm" />
+				) : (
+					<>
+						<ObjectFoldersSideBar
+							baseResourceURL={baseResourceURL}
+							importObjectFolderURL={importObjectFolderURL}
+							objectDefinitionsActions={
+								objectDefinitionsActions as Actions
+							}
+							objectFoldersRequestInfo={objectFoldersRequestInfo}
+							portletNamespace={portletNamespace}
+							selectedObjectFolder={
+								selectedObjectFolder as ObjectFolder
+							}
+							setModalImportProperties={setModalImportProperties}
+							setSelectedObjectFolder={setSelectedObjectFolder}
+							setShowModal={setShowModal}
 						/>
-					) : (
-						<>
-							<ObjectFoldersSideBar
-								baseResourceURL={baseResourceURL}
-								importObjectFolderURL={importObjectFolderURL}
-								objectDefinitionsActions={
-									objectDefinitionsActions as Actions
-								}
-								objectFoldersRequestInfo={
-									objectFoldersRequestInfo
-								}
-								portletNamespace={portletNamespace}
-								selectedObjectFolder={
-									selectedObjectFolder as ObjectFolder
-								}
-								setModalImportProperties={
-									setModalImportProperties
-								}
-								setSelectedObjectFolder={
-									setSelectedObjectFolder
-								}
-								setShowModal={setShowModal}
-							/>
-							<Card
-								className="lfr__object-web-view-object-definitions-card"
-								customHeader={
-									<ObjectFolderCardHeader
-										externalReferenceCode={
-											selectedObjectFolder.externalReferenceCode
-										}
-										items={
-											getObjectFolderActions({
-												actions: {
-													objectDefinitionActions: objectDefinitionsActions as Actions,
-													objectFolderActions: selectedObjectFolder.actions as Actions,
-												},
-												baseResourceURL,
-												importObjectDefinitionURL,
-												objectFolderExternalReferenceCode: selectedObjectFolder.externalReferenceCode as string,
-												objectFolderId: selectedObjectFolder.id as number,
-												objectFolderPermissionsURL,
-												portletNamespace,
-												setModalImportProperties,
-												setShowModal,
-											}) as IItem[]
-										}
-										label={selectedObjectFolder.label}
-										modelBuilderURL={modelBuilderURL}
-										name={selectedObjectFolder.name}
-									/>
-								}
-								viewMode="no-header-border"
-							>
-								{reloadFDS ? (
-									<ClayLoadingIndicator
-										displayType="secondary"
-										size="sm"
-									/>
-								) : (
-									<FrontendDataSet
-										{...dataSetProps}
-										key={
-											selectedObjectFolder.externalReferenceCode
-										}
-									/>
-								)}
-							</Card>
-						</>
-					)}
-				</div>
-			) : (
-				<div>
-					{reloadFDS ? (
-						<ClayLoadingIndicator
-							displayType="secondary"
-							size="sm"
-						/>
-					) : (
-						<FrontendDataSet
-							{...dataSetProps}
-							key={selectedObjectFolder.externalReferenceCode}
-						/>
-					)}
-				</div>
-			)}
+						<Card
+							className="lfr__object-web-view-object-definitions-card"
+							customHeader={
+								<ObjectFolderCardHeader
+									externalReferenceCode={
+										selectedObjectFolder.externalReferenceCode
+									}
+									items={
+										getObjectFolderActions({
+											actions: {
+												objectDefinitionActions: objectDefinitionsActions as Actions,
+												objectFolderActions: selectedObjectFolder.actions as Actions,
+											},
+											baseResourceURL,
+											importObjectDefinitionURL,
+											objectFolderExternalReferenceCode: selectedObjectFolder.externalReferenceCode as string,
+											objectFolderId: selectedObjectFolder.id as number,
+											objectFolderPermissionsURL,
+											portletNamespace,
+											setModalImportProperties,
+											setShowModal,
+										}) as IItem[]
+									}
+									label={selectedObjectFolder.label}
+									modelBuilderURL={modelBuilderURL}
+									name={selectedObjectFolder.name}
+								/>
+							}
+							viewMode="no-header-border"
+						>
+							{reloadFDS ? (
+								<ClayLoadingIndicator
+									displayType="secondary"
+									size="sm"
+								/>
+							) : (
+								<FrontendDataSet
+									{...dataSetProps}
+									key={
+										selectedObjectFolder.externalReferenceCode
+									}
+								/>
+							)}
+						</Card>
+					</>
+				)}
+			</div>
 
 			{showModal.addObjectDefinition && (
 				<ModalAddObjectDefinition
@@ -525,7 +494,6 @@ export default function ViewObjectDefinitions({
 					}}
 				/>
 			)}
-
 			{showModal.importModal && (
 				<ModalImport
 					{...(modalImportProperties.modalImportKey ===
@@ -552,7 +520,6 @@ export default function ViewObjectDefinitions({
 					showModal={showModal.importModal}
 				/>
 			)}
-
 			{showModal.addObjectFolder && (
 				<ModalAddObjectFolder
 					handleOnClose={() => {
@@ -567,7 +534,6 @@ export default function ViewObjectDefinitions({
 					setSelectedObjectFolder={setSelectedObjectFolder}
 				/>
 			)}
-
 			{showModal.bindToRootObjectDefinition &&
 				Liferay.FeatureFlags['LPS-187142'] && (
 					<ModalBindToRootObjectDefinition
@@ -587,7 +553,6 @@ export default function ViewObjectDefinitions({
 						}
 					/>
 				)}
-
 			{showModal.deleteObjectDefinition && (
 				<ModalDeleteObjectDefinition
 					handleDeleteObjectDefinition={() =>
@@ -607,7 +572,6 @@ export default function ViewObjectDefinitions({
 					onAfterDeleteObjectDefinition={() => setReloadFDS(true)}
 				/>
 			)}
-
 			{showModal.deleteObjectFolder && (
 				<ModalDeleteObjectFolder
 					handleOnClose={() => {
@@ -621,7 +585,6 @@ export default function ViewObjectDefinitions({
 					objectFolder={selectedObjectFolder as ObjectFolder}
 				/>
 			)}
-
 			{showModal.editObjectFolder && (
 				<ModalEditObjectFolder
 					externalReferenceCode={
@@ -640,7 +603,6 @@ export default function ViewObjectDefinitions({
 					name={selectedObjectFolder.name}
 				/>
 			)}
-
 			{showModal.moveObjectDefinition && (
 				<ModalMoveObjectDefinition
 					handleOnClose={() => {
@@ -659,7 +621,6 @@ export default function ViewObjectDefinitions({
 					setMoveObjectDefinition={setMoveObjectDefinition}
 				/>
 			)}
-
 			{showModal.objectFieldDeletionNotAllowed &&
 				selectedObjectDefinition &&
 				Liferay.FeatureFlags['LPS-187142'] && (
@@ -692,7 +653,6 @@ export default function ViewObjectDefinitions({
 						}
 					/>
 				)}
-
 			{showModal.unbindFromRootObjectDefinition &&
 				Liferay.FeatureFlags['LPS-187142'] && (
 					<ModalUnbindObjectDefinition

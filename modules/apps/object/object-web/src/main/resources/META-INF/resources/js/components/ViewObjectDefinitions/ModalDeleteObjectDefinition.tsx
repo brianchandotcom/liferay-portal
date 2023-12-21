@@ -79,10 +79,7 @@ export function ModalDeleteObjectDefinition({
 							objectDefinition?.name
 						);
 
-						if (
-							Liferay.FeatureFlags['LPS-148856'] &&
-							onAfterDeleteObjectDefinition
-						) {
+						if (onAfterDeleteObjectDefinition) {
 							onAfterDeleteObjectDefinition();
 						}
 						else {

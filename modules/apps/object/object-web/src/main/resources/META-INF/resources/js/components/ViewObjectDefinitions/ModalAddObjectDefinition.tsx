@@ -96,10 +96,7 @@ export function ModalAddObjectDefinition({
 			scope: 'company',
 		};
 
-		if (
-			Liferay.FeatureFlags['LPS-148856'] &&
-			objectFolderExternalReferenceCode
-		) {
+		if (objectFolderExternalReferenceCode) {
 			objectDefinition.objectFolderExternalReferenceCode = objectFolderExternalReferenceCode;
 		}
 

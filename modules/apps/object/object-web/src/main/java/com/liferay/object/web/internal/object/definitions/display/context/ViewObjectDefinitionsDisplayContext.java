@@ -55,10 +55,6 @@ public class ViewObjectDefinitionsDisplayContext {
 		_objectRequestHelper = new ObjectRequestHelper(httpServletRequest);
 	}
 
-	public String getAPIURL() {
-		return "/o/object-admin/v1.0/object-definitions";
-	}
-
 	public CreationMenu getCreationMenu() throws Exception {
 		CreationMenu creationMenu = new CreationMenu();
 

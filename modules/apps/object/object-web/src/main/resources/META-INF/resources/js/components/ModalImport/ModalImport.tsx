@@ -92,7 +92,7 @@ export default function ModalImport({
 				url: importURL,
 			});
 
-			if (Liferay.FeatureFlags['LPS-148856'] && onAfterImport) {
+			if (onAfterImport) {
 				onAfterImport();
 
 				onClose();
@@ -123,7 +123,7 @@ export default function ModalImport({
 			return;
 		});
 
-		if (Liferay.FeatureFlags['LPS-148856'] && importExtendedInfo) {
+		if (importExtendedInfo) {
 			formDataObject[importExtendedInfo.key] = importExtendedInfo.value;
 		}
 

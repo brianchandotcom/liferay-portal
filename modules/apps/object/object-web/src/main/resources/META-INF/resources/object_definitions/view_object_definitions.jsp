@@ -32,8 +32,6 @@ ViewObjectDefinitionsDisplayContext viewObjectDefinitionsDisplayContext = (ViewO
 			).put(
 				"nameMaxLength", ModelHintsConstants.TEXT_MAX_LENGTH
 			).put(
-				"objectDefinitionsAPIURL", viewObjectDefinitionsDisplayContext.getAPIURL()
-			).put(
 				"objectDefinitionsCreationMenu", viewObjectDefinitionsDisplayContext.getCreationMenu()
 			).put(
 				"objectDefinitionsFDSActionDropdownItems", viewObjectDefinitionsDisplayContext.getFDSActionDropdownItems()

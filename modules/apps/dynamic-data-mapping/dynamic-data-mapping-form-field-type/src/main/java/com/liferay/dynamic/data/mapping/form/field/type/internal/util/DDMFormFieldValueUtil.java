@@ -125,6 +125,10 @@ public class DDMFormFieldValueUtil {
 
 		Value value = ddmFormFieldValue.getValue();
 
+		if (value == null) {
+			return StringPool.BLANK;
+		}
+
 		return value.getString(locale);
 	}
 

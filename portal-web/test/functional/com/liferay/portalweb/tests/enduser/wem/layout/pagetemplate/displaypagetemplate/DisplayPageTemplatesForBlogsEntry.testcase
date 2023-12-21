@@ -25,17 +25,6 @@ definition {
 		}
 	}
 
-	tearDown {
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
-		if (${testLiferayVirtualInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
-		}
-	}
-
 	@description = "This is a test for LPS-121571. A user can map Reading Time of blogs entry to editable field."
 	@priority = 4
 	test MapReadingTimeToEditableField {

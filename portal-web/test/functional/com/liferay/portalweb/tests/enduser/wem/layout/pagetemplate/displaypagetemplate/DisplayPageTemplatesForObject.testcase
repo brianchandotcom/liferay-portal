@@ -130,6 +130,87 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-192722. Default object changes automatically when changing the content type between objects."
+	@priority = 3
+	test ChangeContentTypeBetweenObjects {
+		task ("Given a site administrator has a display page template for object") {
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Name",
+				fieldName = "name",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "PurchaseOrder");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "PurchaseOrder");
+
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Department",
+				objectName = "Department",
+				pluralLabelName = "Departments");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Integer",
+				fieldLabelName = "Count",
+				fieldName = "count",
+				fieldType = "Integer",
+				isRequired = "false",
+				objectName = "Department");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "Department");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = ${siteURLKey});
+
+			DisplayPageTemplatesAdmin.addDisplayPage(
+				contentType = "Purchase Order",
+				displayPageName = "Display Page Name");
+
+			PageEditor.addFragment(
+				collectionName = "Form Components",
+				fragmentName = "Form Container");
+
+			PageEditor.mapFormContainerToObject(contentType = "Purchase Order (Default)");
+
+			PageEditor.publish();
+		}
+
+		task ("When the site administrator changes the content type to another object") {
+			LexiconCard.viewCardSubtitle(
+				card = "Display Page Name",
+				cardSubtitle = "Purchase Order");
+
+			DisplayPageTemplatesAdmin.changeContentType(
+				contentType = "Department",
+				displayPageName = "Display Page Name");
+		}
+
+		task ("Then the site administrator could see the Form Container mapped to that object") {
+			LexiconCard.viewCardSubtitle(
+				card = "Display Page Name",
+				cardSubtitle = "Department");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			PageEditor.viewInputStyle(
+				label = "Count",
+				showLabel = "true",
+				type = "numeric-input");
+
+			PageEditor.viewFragmentEditableText(
+				className = "button",
+				editableText = "Submit",
+				fragmentName = "Submit Button",
+				id = "submit-button");
+
+			PageEditor.gotoConfiguration(fragmentName = "Form Container");
+
+			AssertSelectedLabel(
+				key_fieldLabel = "Content Type",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Department (Default)");
+		}
+	}
+
 	@description = "This is a test for LPS-192722. Can change object content type to Web Content Article content type in display page template."
 	@priority = 4
 	test ChangeContentTypeFromObjectToWebContentArticle {

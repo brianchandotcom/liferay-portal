@@ -17,6 +17,7 @@ import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverter;
 import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.constants.JournalPortletKeys;
+import com.liferay.journal.constants.JournalStructureConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.journal.util.JournalConverter;
@@ -34,6 +35,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
@@ -43,6 +45,10 @@ import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.ThemeLocalService;
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.template.TemplateConstants;
+import com.liferay.portal.kernel.template.TemplateHandler;
+import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
+import com.liferay.portal.kernel.template.TemplateVariableDefinition;
+import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.templateparser.TransformerListener;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -58,6 +64,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -71,6 +78,8 @@ import java.lang.reflect.Method;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 import org.junit.AfterClass;
@@ -197,6 +206,96 @@ public class JournalTransformerTest {
 					_serviceTrackerList.toList(),
 					TransformerListener::isEnabled),
 				null, false, "${birthday.getData()}", null, Constants.VIEW));
+	}
+
+	@Test
+	public void testJournalReservedVariables() throws Exception {
+		TemplateHandler journalTemplateHandler =
+			TemplateHandlerRegistryUtil.getTemplateHandler(
+				JournalArticle.class.getName());
+
+		Map<String, TemplateVariableGroup> templateVariableGroups =
+			journalTemplateHandler.getTemplateVariableGroups(
+				_journalArticle.getDDMStructureId(),
+				TemplateConstants.LANG_TYPE_FTL,
+				LocaleUtil.getMostRelevantLocale());
+
+		TemplateVariableGroup journalReservedTemplateVariableGroup =
+			templateVariableGroups.get("journal-reserved");
+
+		Assert.assertNotNull(journalReservedTemplateVariableGroup);
+
+		User user = TestPropsValues.getUser();
+		String languageId = _journalArticle.getDefaultLanguageId();
+		List<TransformerListener> transformerListeners = ListUtil.filter(
+			_serviceTrackerList.toList(), TransformerListener::isEnabled);
+
+		_assertReservedVariable(
+			user.getComments(), "comments", languageId,
+			JournalStructureConstants.RESERVED_ARTICLE_AUTHOR_COMMENTS,
+			journalReservedTemplateVariableGroup, transformerListeners);
+		_assertReservedVariable(
+			user.getEmailAddress(), "author-email-address", languageId,
+			JournalStructureConstants.RESERVED_ARTICLE_AUTHOR_EMAIL_ADDRESS,
+			journalReservedTemplateVariableGroup, transformerListeners);
+		_assertReservedVariable(
+			String.valueOf(user.getUserId()), "author-id", languageId,
+			JournalStructureConstants.RESERVED_ARTICLE_AUTHOR_ID,
+			journalReservedTemplateVariableGroup, transformerListeners);
+		_assertReservedVariable(
+			user.getJobTitle(), "author-job-title", languageId,
+			JournalStructureConstants.RESERVED_ARTICLE_AUTHOR_JOB_TITLE,
+			journalReservedTemplateVariableGroup, transformerListeners);
+		_assertReservedVariable(
+			user.getFullName(), "author-name", languageId,
+			JournalStructureConstants.RESERVED_ARTICLE_AUTHOR_NAME,
+			journalReservedTemplateVariableGroup, transformerListeners);
+		_assertReservedVariable(
+			Time.getRFC822(_journalArticle.getCreateDate()), "create-date",
+			languageId, JournalStructureConstants.RESERVED_ARTICLE_CREATE_DATE,
+			journalReservedTemplateVariableGroup, transformerListeners);
+		_assertReservedVariable(
+			_journalArticle.getDescription(languageId), "description",
+			languageId, JournalStructureConstants.RESERVED_ARTICLE_DESCRIPTION,
+			journalReservedTemplateVariableGroup, transformerListeners);
+		_assertReservedVariable(
+			Time.getRFC822(_journalArticle.getDisplayDate()), "display-date",
+			languageId, JournalStructureConstants.RESERVED_ARTICLE_DISPLAY_DATE,
+			journalReservedTemplateVariableGroup, transformerListeners);
+		_assertReservedVariable(
+			_journalArticle.getUuid(), "external-reference-code", languageId,
+			JournalStructureConstants.RESERVED_ARTICLE_EXTERNAL_REFERENCE_CODE,
+			journalReservedTemplateVariableGroup, transformerListeners);
+		_assertReservedVariable(
+			_journalArticle.getArticleId(), "article-id", languageId,
+			JournalStructureConstants.RESERVED_ARTICLE_ID,
+			journalReservedTemplateVariableGroup, transformerListeners);
+		_assertReservedVariable(
+			String.valueOf(_journalArticle.getId()), "id", languageId,
+			JournalStructureConstants.RESERVED_ARTICLE_ID_,
+			journalReservedTemplateVariableGroup, transformerListeners);
+		_assertReservedVariable(
+			Time.getRFC822(_journalArticle.getModifiedDate()), "modified-date",
+			languageId,
+			JournalStructureConstants.RESERVED_ARTICLE_MODIFIED_DATE,
+			journalReservedTemplateVariableGroup, transformerListeners);
+		_assertReservedVariable(
+			String.valueOf(_journalArticle.getResourcePrimKey()),
+			"resource-prim-key", languageId,
+			JournalStructureConstants.RESERVED_ARTICLE_RESOURCE_PRIM_KEY,
+			journalReservedTemplateVariableGroup, transformerListeners);
+		_assertReservedVariable(
+			_journalArticle.getTitle(languageId), "title", languageId,
+			JournalStructureConstants.RESERVED_ARTICLE_TITLE,
+			journalReservedTemplateVariableGroup, transformerListeners);
+		_assertReservedVariable(
+			_journalArticle.getUrlTitle(), "url-title", languageId,
+			JournalStructureConstants.RESERVED_ARTICLE_URL_TITLE,
+			journalReservedTemplateVariableGroup, transformerListeners);
+		_assertReservedVariable(
+			String.valueOf(_journalArticle.getVersion()), "version", languageId,
+			JournalStructureConstants.RESERVED_ARTICLE_VERSION,
+			journalReservedTemplateVariableGroup, transformerListeners);
 	}
 
 	@Test
@@ -523,6 +622,48 @@ public class JournalTransformerTest {
 			_transformerListener, "_patterns", patterns);
 		ReflectionTestUtil.setFieldValue(
 			_transformerListener, "_replacements", replacements);
+	}
+
+	private void _assertReservedVariable(
+			String expectedValue, String label, String languageId, String name,
+			TemplateVariableGroup templateVariableGroup,
+			List<TransformerListener> transformerListeners)
+		throws Exception {
+
+		TemplateVariableDefinition templateVariableDefinition = null;
+
+		for (TemplateVariableDefinition
+				journalReservedTemplateVariableDefinition :
+					templateVariableGroup.getTemplateVariableDefinitions()) {
+
+			if (!Objects.equals(
+					journalReservedTemplateVariableDefinition.getName(),
+					name)) {
+
+				continue;
+			}
+
+			templateVariableDefinition =
+				journalReservedTemplateVariableDefinition;
+
+			break;
+		}
+
+		Assert.assertNotNull(templateVariableDefinition);
+
+		Assert.assertEquals(
+			templateVariableDefinition.getLabel(), label,
+			templateVariableDefinition.getLabel());
+
+		Assert.assertEquals(
+			expectedValue,
+			_transformMethod.invoke(
+				_journalTransformer, _journalArticle, null, _journalHelper,
+				languageId, _layoutDisplayPageProviderRegistry,
+				transformerListeners, null, false,
+				"${.vars[\"" + templateVariableDefinition.getName() +
+					"\"].data}",
+				null, Constants.VIEW));
 	}
 
 	private String _read(String fileName) throws Exception {

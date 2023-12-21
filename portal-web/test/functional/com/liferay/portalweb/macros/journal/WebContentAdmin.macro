@@ -24,7 +24,7 @@ definition {
 
 	@summary = "Default summary"
 	macro configureEmailNotifications(navTab = null, fieldName = null, notificationsSubject = null, notificationsBody = null, enabled = null) {
-		Navigator.gotoNavTab(navTab = ${navTab});
+		MenuBar.click(menuBar = ${navTab});
 
 		if (${enabled} == "true") {
 			Check(

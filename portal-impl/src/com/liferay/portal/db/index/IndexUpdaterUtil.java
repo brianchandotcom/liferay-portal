@@ -47,14 +47,14 @@ public class IndexUpdaterUtil {
 			executorService -> {
 				executorService.shutdown();
 
-				_awaitTermination();
+				_awaitFuturesTermination();
 			});
 	}
 
 	public static void updateAllIndexes() {
 		if (!_processedServletContextNames.contains("portal")) {
 			try {
-				_updateIndexes(
+				_addUpdateIndexesFuture(
 					"portal", DBResourceUtil.getPortalTablesSQL(),
 					DBResourceUtil.getPortalIndexesSQL());
 			}
@@ -78,7 +78,7 @@ public class IndexUpdaterUtil {
 							if (!_processedServletContextNames.contains(
 									bundle.getSymbolicName())) {
 
-								_updateIndexes(
+								_addUpdateIndexesFuture(
 									bundle.getSymbolicName(),
 									DBResourceUtil.getModuleTablesSQL(bundle),
 									DBResourceUtil.getModuleIndexesSQL(bundle));
@@ -118,7 +118,7 @@ public class IndexUpdaterUtil {
 							if (!PropsValues.
 									DATABASE_INDEXES_UPDATE_IN_BACKGROUND) {
 
-								_awaitTermination();
+								_awaitFuturesTermination();
 							}
 
 							return null;
@@ -130,18 +130,18 @@ public class IndexUpdaterUtil {
 	}
 
 	public static void updateIndexes(Bundle bundle) throws Exception {
-		_updateIndexes(
+		_addUpdateIndexesFuture(
 			bundle.getSymbolicName(), DBResourceUtil.getModuleTablesSQL(bundle),
 			DBResourceUtil.getModuleIndexesSQL(bundle));
 
 		if (!PropsValues.DATABASE_INDEXES_UPDATE_IN_BACKGROUND) {
-			_awaitTermination();
+			_awaitFuturesTermination();
 		}
 	}
 
 	public static void updatePortalIndexes() {
 		try {
-			_updateIndexes(
+			_addUpdateIndexesFuture(
 				"portal", DBResourceUtil.getPortalTablesSQL(),
 				DBResourceUtil.getPortalIndexesSQL());
 		}
@@ -152,12 +152,36 @@ public class IndexUpdaterUtil {
 		}
 		finally {
 			if (!PropsValues.DATABASE_INDEXES_UPDATE_IN_BACKGROUND) {
-				_awaitTermination();
+				_awaitFuturesTermination();
 			}
 		}
 	}
 
-	private static void _awaitTermination() {
+	private static void _addUpdateIndexesFuture(
+		String servletContextName, String tablesSQL, String indexesSQL) {
+
+		_processedServletContextNames.add(servletContextName);
+
+		if ((indexesSQL == null) || (tablesSQL == null)) {
+			return;
+		}
+
+		ExecutorService executorService = _getExecutorService();
+
+		_futures.add(
+			executorService.submit(
+				() -> {
+					try {
+						_updateIndexes(
+							servletContextName, tablesSQL, indexesSQL);
+					}
+					catch (Exception exception) {
+						throw new RuntimeException(exception);
+					}
+				}));
+	}
+
+	private static void _awaitFuturesTermination() {
 		for (Future<?> future : _futures) {
 			try {
 				future.get();
@@ -176,62 +200,42 @@ public class IndexUpdaterUtil {
 	}
 
 	private static void _updateIndexes(
-		String servletContextName, String tablesSQL, String indexesSQL) {
-
-		_processedServletContextNames.add(servletContextName);
-
-		if ((indexesSQL == null) || (tablesSQL == null)) {
-			return;
-		}
+			String servletContextName, String tablesSQL, String indexesSQL)
+		throws Exception {
 
 		DB db = DBManagerUtil.getDB();
 
-		ExecutorService executorService = _getExecutorService();
+		db.process(
+			companyId -> {
+				try {
+					String message = new String(
+						"Updating portal database indexes");
 
-		_futures.add(
-			executorService.submit(
-				() -> {
-					try {
-						db.process(
-							companyId -> {
-								try {
-									String message = new String(
-										"Updating portal database indexes");
-
-									if (!servletContextName.equals("portal")) {
-										message = new String(
-											"Updating database indexes for " +
-												servletContextName);
-									}
-
-									if (Validator.isNotNull(companyId)) {
-										message += " and company " + companyId;
-									}
-
-									try (Connection connection =
-											DataAccess.getConnection();
-										LoggingTimer loggingTimer =
-											new LoggingTimer(message)) {
-
-										db.updateIndexes(
-											connection, tablesSQL, indexesSQL,
-											true);
-									}
-								}
-								catch (Exception exception) {
-									_log.error(
-										StringBundler.concat(
-											"Unable to update database ",
-											"indexes for ", servletContextName,
-											" due to ",
-											exception.getMessage()));
-								}
-							});
+					if (!servletContextName.equals("portal")) {
+						message = new String(
+							"Updating database indexes for " +
+								servletContextName);
 					}
-					catch (Exception exception) {
-						throw new RuntimeException(exception);
+
+					if (Validator.isNotNull(companyId)) {
+						message += " and company " + companyId;
 					}
-				}));
+
+					try (Connection connection = DataAccess.getConnection();
+						LoggingTimer loggingTimer = new LoggingTimer(message)) {
+
+						db.updateIndexes(
+							connection, tablesSQL, indexesSQL, true);
+					}
+				}
+				catch (Exception exception) {
+					_log.error(
+						StringBundler.concat(
+							"Unable to update database indexes for ",
+							servletContextName, " due to ",
+							exception.getMessage()));
+				}
+			});
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

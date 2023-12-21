@@ -305,7 +305,8 @@ public class JournalTransformer {
 
 		_addReservedEl(
 			JournalStructureConstants.RESERVED_ARTICLE_EXTERNAL_REFERENCE_CODE,
-			templateNodes, themeDisplay, tokens, article.getUuid());
+			templateNodes, themeDisplay, tokens,
+			article.getExternalReferenceCode());
 
 		_addReservedEl(
 			JournalStructureConstants.RESERVED_ARTICLE_ID, templateNodes,

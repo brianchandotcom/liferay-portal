@@ -18,7 +18,7 @@ FileEntry fileEntry = (FileEntry)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_F
 </aui:script>
 
 <aui:script>
-	function sendDocumentPreviewedAnalyticsEvent() {
+	function <portlet:namespace />sendDocumentPreviewedAnalyticsEvent() {
 		if (window.Analytics) {
 			Analytics.send('documentPreviewed', 'Document', {
 				fileEntryId: '<%= fileEntry.getFileEntryId() %>',
@@ -31,8 +31,11 @@ FileEntry fileEntry = (FileEntry)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_F
 	}
 
 	if (Liferay.SPA && document.readyState === 'complete') {
-		sendDocumentPreviewedAnalyticsEvent();
+		<portlet:namespace />sendDocumentPreviewedAnalyticsEvent();
 	}
 
-	window.addEventListener('load', sendDocumentPreviewedAnalyticsEvent);
+	window.addEventListener(
+		'load',
+		<portlet:namespace />sendDocumentPreviewedAnalyticsEvent
+	);
 </aui:script>

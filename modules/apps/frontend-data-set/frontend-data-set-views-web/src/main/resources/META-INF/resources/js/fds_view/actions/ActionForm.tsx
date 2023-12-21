@@ -550,6 +550,11 @@ const ActionForm = ({
 									onChange={(event) =>
 										setActionData({
 											...actionData,
+											method:
+												event.target.value ===
+												ACTION_TYPE.ASYNC
+													? ACTION_METHOD.DELETE
+													: '',
 											type: event.target.value,
 										})
 									}
@@ -589,10 +594,7 @@ const ActionForm = ({
 										placeholder={Liferay.Language.get(
 											'please-select-an-option'
 										)}
-										value={
-											actionData.method ||
-											ACTION_METHOD.DELETE
-										}
+										value={actionData.method}
 									/>
 								</ClayForm.Group>
 							</ClayLayout.Col>

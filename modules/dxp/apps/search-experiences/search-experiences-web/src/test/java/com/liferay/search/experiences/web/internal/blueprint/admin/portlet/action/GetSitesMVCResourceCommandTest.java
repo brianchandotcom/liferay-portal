@@ -90,8 +90,7 @@ public class GetSitesMVCResourceCommandTest {
 
 		JSONObject siteJSONObject =
 			_getSitesMVCResourceCommand.
-				getSiteByExternalReferenceCodeJSONObject(
-					_resourceRequest, Mockito.mock(ResourceResponse.class));
+				getSiteByExternalReferenceCodeJSONObject(_resourceRequest);
 
 		Assert.assertEquals(
 			siteJSONObject.toString(),
@@ -126,8 +125,7 @@ public class GetSitesMVCResourceCommandTest {
 			});
 
 		JSONObject sitesJSONObject =
-			_getSitesMVCResourceCommand.getSitesJSONObject(
-				_resourceRequest, Mockito.mock(ResourceResponse.class));
+			_getSitesMVCResourceCommand.getSitesJSONObject(_resourceRequest);
 
 		JSONArray sitesJSONArray = sitesJSONObject.getJSONArray("items");
 
@@ -142,8 +140,7 @@ public class GetSitesMVCResourceCommandTest {
 		_setUpGroups(false, 3, new ArrayList<>());
 
 		JSONObject sitesJSONObject =
-			_getSitesMVCResourceCommand.getSitesJSONObject(
-				_resourceRequest, Mockito.mock(ResourceResponse.class));
+			_getSitesMVCResourceCommand.getSitesJSONObject(_resourceRequest);
 
 		JSONArray sitesJSONArray = sitesJSONObject.getJSONArray("items");
 
@@ -160,8 +157,7 @@ public class GetSitesMVCResourceCommandTest {
 		_setUpGroups(true, 3, new ArrayList<>());
 
 		JSONObject sitesJSONObject =
-			_getSitesMVCResourceCommand.getSitesJSONObject(
-				_resourceRequest, Mockito.mock(ResourceResponse.class));
+			_getSitesMVCResourceCommand.getSitesJSONObject(_resourceRequest);
 
 		JSONArray sitesJSONArray = sitesJSONObject.getJSONArray("items");
 
@@ -190,8 +186,7 @@ public class GetSitesMVCResourceCommandTest {
 		_setUpGroups(true, 8, new ArrayList<>());
 
 		JSONObject sitesJSONObject =
-			_getSitesMVCResourceCommand.getSitesJSONObject(
-				_resourceRequest, Mockito.mock(ResourceResponse.class));
+			_getSitesMVCResourceCommand.getSitesJSONObject(_resourceRequest);
 
 		Assert.assertEquals(2, sitesJSONObject.getInt("lastPage"));
 
@@ -207,8 +202,7 @@ public class GetSitesMVCResourceCommandTest {
 		_setUpGroups(true, 8, new ArrayList<>());
 
 		JSONObject sitesJSONObject =
-			_getSitesMVCResourceCommand.getSitesJSONObject(
-				_resourceRequest, Mockito.mock(ResourceResponse.class));
+			_getSitesMVCResourceCommand.getSitesJSONObject(_resourceRequest);
 
 		Assert.assertEquals(1, sitesJSONObject.getInt("lastPage"));
 
@@ -224,8 +218,7 @@ public class GetSitesMVCResourceCommandTest {
 		_setUpGroups(true, 10, new ArrayList<>());
 
 		JSONObject sitesJSONObject =
-			_getSitesMVCResourceCommand.getSitesJSONObject(
-				_resourceRequest, Mockito.mock(ResourceResponse.class));
+			_getSitesMVCResourceCommand.getSitesJSONObject(_resourceRequest);
 
 		Assert.assertEquals(2, sitesJSONObject.getInt("lastPage"));
 

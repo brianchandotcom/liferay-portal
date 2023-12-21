@@ -1,0 +1,10 @@
+assemble:
+    - from: build
+      into: static
+liferay-sample-editor-config-contributor:
+    editorConfigKeys:
+        - sampleClassicEditor
+        - sampleLegacyEditor
+    name: Liferay Sample Editor Config Contributor
+    type: editorConfigContributor
+    url: index.js

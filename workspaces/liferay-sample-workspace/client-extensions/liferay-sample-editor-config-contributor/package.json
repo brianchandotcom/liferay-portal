@@ -1,0 +1,18 @@
+{
+	"dependencies": {
+		"serve": "^14.2.0"
+	},
+	"description": "Liferay Sample Editor Config Contributor",
+	"devDependencies": {
+		"typescript": "^5.0.4"
+	},
+	"main": "./src/index.ts",
+	"name": "@liferay/liferay-sample-editor-config-contributor",
+	"scripts": {
+		"build": "tsc",
+		"start": "PORT=3000 serve --cors",
+		"watch": "tsc --watch"
+	},
+	"type": "module",
+	"version": "0.0.0"
+}

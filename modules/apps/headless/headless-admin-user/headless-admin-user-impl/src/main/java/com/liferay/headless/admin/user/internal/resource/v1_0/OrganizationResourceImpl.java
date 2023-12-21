@@ -617,14 +617,30 @@ public class OrganizationResourceImpl extends BaseOrganizationResourceImpl {
 			contextCompany.getCompanyId(), location.getAddressCountry());
 	}
 
-	private long _getDefaultParentOrganizationId(Organization organization) {
+	private long _getDefaultParentOrganizationId(Organization organization)
+		throws Exception {
+
 		Organization parentOrganization = organization.getParentOrganization();
 
-		if (parentOrganization != null) {
+		if (parentOrganization == null) {
+			return (long)OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID;
+		}
+
+		if (Validator.isBlank(parentOrganization.getExternalReferenceCode())) {
 			return Long.valueOf(parentOrganization.getId());
 		}
 
-		return (long)OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID;
+		com.liferay.portal.kernel.model.Organization
+			parentOrganizationByExternalReferenceCode =
+				_organizationService.fetchOrganizationByExternalReferenceCode(
+					contextCompany.getCompanyId(),
+					parentOrganization.getExternalReferenceCode());
+
+		if (parentOrganizationByExternalReferenceCode == null) {
+			return (long)OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID;
+		}
+
+		return parentOrganizationByExternalReferenceCode.getOrganizationId();
 	}
 
 	private DefaultDTOConverterContext _getDTOConverterContext(

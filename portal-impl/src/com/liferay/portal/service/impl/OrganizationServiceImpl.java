@@ -403,6 +403,23 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 	}
 
 	@Override
+	public Organization fetchOrganizationByExternalReferenceCode(
+			long companyId, String externalReferenceCode)
+		throws PortalException {
+
+		Organization organization =
+			organizationLocalService.fetchOrganizationByExternalReferenceCode(
+				externalReferenceCode, companyId);
+
+		if (organization != null) {
+			OrganizationPermissionUtil.check(
+				getPermissionChecker(), organization, ActionKeys.VIEW);
+		}
+
+		return organization;
+	}
+
+	@Override
 	public List<Organization> getGtOrganizations(
 		long gtOrganizationId, long companyId, long parentOrganizationId,
 		int size) {

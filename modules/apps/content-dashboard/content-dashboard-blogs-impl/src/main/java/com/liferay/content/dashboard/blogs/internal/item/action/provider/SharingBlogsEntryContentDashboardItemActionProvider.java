@@ -13,7 +13,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -104,9 +103,6 @@ public class SharingBlogsEntryContentDashboardItemActionProvider
 
 	@Reference
 	private Language _language;
-
-	@Reference(target = "(model.class.name=com.liferay.blogs.model.BlogsEntry)")
-	private ModelResourcePermission<BlogsEntry> _modelResourcePermission;
 
 	@Reference
 	private Portal _portal;

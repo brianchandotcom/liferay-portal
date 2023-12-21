@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -905,8 +904,5 @@ public class JournalArticleFinderImpl
 
 	@Reference
 	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private Portal _portal;
 
 }

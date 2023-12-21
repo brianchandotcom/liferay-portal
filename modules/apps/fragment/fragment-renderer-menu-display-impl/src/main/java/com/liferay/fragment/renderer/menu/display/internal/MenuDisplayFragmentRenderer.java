@@ -39,7 +39,6 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -249,10 +248,5 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 
 	@Reference
 	private Portal _portal;
-
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.fragment.renderer.menu.display.impl)"
-	)
-	private ServletContext _servletContext;
 
 }

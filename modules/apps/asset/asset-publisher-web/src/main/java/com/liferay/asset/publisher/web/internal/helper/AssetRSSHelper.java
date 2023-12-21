@@ -14,7 +14,6 @@ import com.liferay.asset.publisher.util.AssetPublisherHelper;
 import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherSelectionStyleConfigurationUtil;
 import com.liferay.asset.publisher.web.internal.constants.AssetPublisherSelectionStyleConstants;
 import com.liferay.asset.publisher.web.internal.display.context.AssetPublisherDisplayContext;
-import com.liferay.asset.util.AssetHelper;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -303,9 +302,6 @@ public class AssetRSSHelper {
 
 		return feedURL.concat("rss");
 	}
-
-	@Reference
-	private AssetHelper _assetHelper;
 
 	@Reference
 	private AssetPublisherHelper _assetPublisherHelper;

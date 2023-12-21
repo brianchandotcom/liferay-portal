@@ -8,7 +8,6 @@ package com.liferay.journal.internal.instance.lifecycle;
 import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
 import com.liferay.journal.configuration.JournalServiceConfiguration;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.osgi.util.configuration.ConfigurationPersistenceUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
@@ -88,9 +87,6 @@ public class AddDefaultJournalStructuresPortalInstanceLifecycleListener
 
 	@Reference
 	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private JournalArticleLocalService _journalArticleLocalService;
 
 	private volatile JournalServiceConfiguration _journalServiceConfiguration;
 	private long _lastModifiedTime;

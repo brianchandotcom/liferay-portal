@@ -41,7 +41,8 @@ public class CSVBatchEngineExportTaskItemWriterImpl
 
 	public CSVBatchEngineExportTaskItemWriterImpl(
 			String delimiter,
-			Map<String, ObjectValuePair<Field, Method>> fieldNameObjectValuePairs,
+			Map<String, ObjectValuePair<Field, Method>>
+				fieldNameObjectValuePairs,
 			List<String> fieldNames, OutputStream outputStream,
 			Map<String, Serializable> parameters)
 		throws IOException {

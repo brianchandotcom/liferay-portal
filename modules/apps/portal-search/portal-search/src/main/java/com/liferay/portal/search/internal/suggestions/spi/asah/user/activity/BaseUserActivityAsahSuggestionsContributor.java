@@ -65,6 +65,8 @@ public abstract class BaseUserActivityAsahSuggestionsContributor
 		String displayLanguageId = getDisplayLanguageId(
 			attributes, searchContext.getLocale());
 		long groupId = getGroupId(searchContext);
+		String hashedEmailAddress = _getHashedEmailAddress(
+			searchContext.getUserId());
 		int minCounts = getMinCounts(attributes, 0);
 		int page = _getPage(attributes);
 		int rangeKey = _getRangeKey(attributes);
@@ -76,19 +78,19 @@ public abstract class BaseUserActivityAsahSuggestionsContributor
 			_getURL(
 				analyticsConfiguration,
 				StringBundler.concat(
-					basePath, StringPool.FORWARD_SLASH,
-					_getHashedEmailAddress(searchContext.getUserId())),
+					basePath, StringPool.FORWARD_SLASH, hashedEmailAddress),
 				contentTypes,
 				GetterUtil.getLong(
 					analyticsConfiguration.liferayAnalyticsDataSourceId()),
 				displayLanguageId, groupId, minCounts, page, path, rangeKey,
 				size, sort),
 			StringBundler.concat(
-				StringPool.POUND, searchContext.getCompanyId(),
 				StringPool.POUND, contentTypes, StringPool.POUND,
 				displayLanguageId, StringPool.POUND, groupId, StringPool.POUND,
-				minCounts, StringPool.POUND, page, StringPool.POUND, rangeKey,
-				StringPool.POUND, size, StringPool.POUND, sort));
+				hashedEmailAddress, StringPool.POUND, minCounts,
+				StringPool.POUND, page, StringPool.POUND, path,
+				StringPool.POUND, rangeKey, StringPool.POUND, size,
+				StringPool.POUND, sort));
 	}
 
 	@Override

@@ -67,7 +67,7 @@ export default function PagesTree({
 
 	const onItemMove = useCallback(
 		(item, parentItem, {next: priority}) => {
-			if (parentItem.parentable !== undefined && !parentItem.parentable) {
+			if (!parentItem.parentable) {
 				openErrorToast(
 					sub(
 						Liferay.Language.get(
@@ -451,12 +451,9 @@ function normalizeActions(actions, namespace) {
 }
 
 function openErrorToast(message) {
-	if (message === undefined) {
-		message = Liferay.Language.get('an-unexpected-error-occurred');
-	}
-
 	openToast({
-		message,
+		message:
+			message || Liferay.Language.get('an-unexpected-error-occurred'),
 		title: Liferay.Language.get('error'),
 		type: 'danger',
 	});

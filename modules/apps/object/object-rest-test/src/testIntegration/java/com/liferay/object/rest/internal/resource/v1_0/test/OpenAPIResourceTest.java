@@ -169,6 +169,7 @@ public class OpenAPIResourceTest {
 		_user = UserTestUtil.addUser(_company);
 
 		_objectDefinition2 = ObjectDefinitionTestUtil.publishObjectDefinition(
+			"A" + RandomTestUtil.randomString(),
 			Collections.singletonList(
 				ObjectFieldUtil.createObjectField(
 					"Text", "String", true, true, null,
@@ -179,6 +180,7 @@ public class OpenAPIResourceTest {
 
 		_siteScopedObjectDefinition =
 			ObjectDefinitionTestUtil.publishObjectDefinition(
+				"A" + RandomTestUtil.randomString(),
 				Collections.singletonList(
 					ObjectFieldUtil.createObjectField(
 						"Text", "String", true, true, null,

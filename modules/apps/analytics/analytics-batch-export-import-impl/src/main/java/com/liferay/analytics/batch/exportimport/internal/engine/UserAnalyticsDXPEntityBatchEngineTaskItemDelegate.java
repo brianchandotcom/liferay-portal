@@ -24,20 +24,26 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserTable;
+import com.liferay.portal.kernel.model.Users_GroupsTable;
 import com.liferay.portal.kernel.model.Users_OrgsTable;
+import com.liferay.portal.kernel.model.Users_RolesTable;
+import com.liferay.portal.kernel.model.Users_TeamsTable;
 import com.liferay.portal.kernel.model.Users_UserGroupsTable;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.ContactLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 
 import java.io.Serializable;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -75,6 +81,8 @@ public class UserAnalyticsDXPEntityBatchEngineTaskItemDelegate
 			_createSelectDSLQuery(
 				contextCompany.getCompanyId(), pagination, parameters));
 
+		Long[] userIds = ListUtil.toArray(users, User.USER_ID_ACCESSOR);
+
 		Set<Serializable> contactIds = new HashSet<>();
 
 		for (User user : users) {
@@ -84,12 +92,34 @@ public class UserAnalyticsDXPEntityBatchEngineTaskItemDelegate
 		Map<Serializable, Contact> contacts =
 			_contactLocalService.fetchContacts(contactIds);
 
+		Map<Long, List<Long>> groupIdsMap = _fetchGroupIdsMap(userIds);
+		Map<Long, List<Long>> organizationIdsMap = _fetchOrganizationIdsMap(
+			userIds);
+		Map<Long, List<Long>> roleIdsMap = _fetchRoleIdsMap(userIds);
+		Map<Long, List<Long>> teamIdsMap = _fetchTeamIdsMap(userIds);
+		Map<Long, List<Long>> userGroupIdsMap = _fetchUserGroupIdsMap(userIds);
+
 		for (User user : users) {
 			Contact contact = contacts.get(user.getContactId());
 
 			if (contact != null) {
 				user.setContact(contact);
 			}
+
+			Long userId = user.getUserId();
+
+			user.setGroupIds(
+				ListUtil.toLongArray(groupIdsMap.get(userId), Long::longValue));
+			user.setOrganizationIds(
+				ListUtil.toLongArray(
+					organizationIdsMap.get(userId), Long::longValue));
+			user.setRoleIds(
+				ListUtil.toLongArray(roleIdsMap.get(userId), Long::longValue));
+			user.setTeamIds(
+				ListUtil.toLongArray(teamIdsMap.get(userId), Long::longValue));
+			user.setUserGroupIds(
+				ListUtil.toLongArray(
+					userGroupIdsMap.get(userId), Long::longValue));
 		}
 
 		return Page.of(
@@ -239,6 +269,121 @@ public class UserAnalyticsDXPEntityBatchEngineTaskItemDelegate
 			(pagination.getPage() - 1) * pagination.getPageSize(),
 			pagination.getPage() * pagination.getPageSize()
 		);
+	}
+
+	private Map<Long, List<Long>> _fetchGroupIdsMap(Long[] userIds) {
+		Map<Long, List<Long>> idsMap = new HashMap<>();
+
+		for (Object[] array :
+				_userLocalService.<List<Object[]>>dslQuery(
+					DSLQueryFactoryUtil.select(
+						Users_GroupsTable.INSTANCE.userId,
+						Users_GroupsTable.INSTANCE.groupId
+					).from(
+						Users_GroupsTable.INSTANCE
+					).where(
+						Users_GroupsTable.INSTANCE.userId.in(userIds)
+					))) {
+
+			List<Long> ids = idsMap.computeIfAbsent(
+				(Long)array[0], key -> new ArrayList<>());
+
+			ids.add((Long)array[1]);
+		}
+
+		return idsMap;
+	}
+
+	private Map<Long, List<Long>> _fetchOrganizationIdsMap(Long[] userIds) {
+		Map<Long, List<Long>> idsMap = new HashMap<>();
+
+		for (Object[] array :
+				_userLocalService.<List<Object[]>>dslQuery(
+					DSLQueryFactoryUtil.select(
+						Users_OrgsTable.INSTANCE.userId,
+						Users_OrgsTable.INSTANCE.organizationId
+					).from(
+						Users_OrgsTable.INSTANCE
+					).where(
+						Users_OrgsTable.INSTANCE.userId.in(userIds)
+					))) {
+
+			List<Long> ids = idsMap.computeIfAbsent(
+				(Long)array[0], key -> new ArrayList<>());
+
+			ids.add((Long)array[1]);
+		}
+
+		return idsMap;
+	}
+
+	private Map<Long, List<Long>> _fetchRoleIdsMap(Long[] userIds) {
+		Map<Long, List<Long>> idsMap = new HashMap<>();
+
+		for (Object[] array :
+				_userLocalService.<List<Object[]>>dslQuery(
+					DSLQueryFactoryUtil.select(
+						Users_RolesTable.INSTANCE.userId,
+						Users_RolesTable.INSTANCE.roleId
+					).from(
+						Users_RolesTable.INSTANCE
+					).where(
+						Users_RolesTable.INSTANCE.userId.in(userIds)
+					))) {
+
+			List<Long> ids = idsMap.computeIfAbsent(
+				(Long)array[0], key -> new ArrayList<>());
+
+			ids.add((Long)array[1]);
+		}
+
+		return idsMap;
+	}
+
+	private Map<Long, List<Long>> _fetchTeamIdsMap(Long[] userIds) {
+		Map<Long, List<Long>> idsMap = new HashMap<>();
+
+		for (Object[] array :
+				_userLocalService.<List<Object[]>>dslQuery(
+					DSLQueryFactoryUtil.select(
+						Users_TeamsTable.INSTANCE.userId,
+						Users_TeamsTable.INSTANCE.teamId
+					).from(
+						Users_TeamsTable.INSTANCE
+					).where(
+						Users_TeamsTable.INSTANCE.userId.in(userIds)
+					))) {
+
+			List<Long> ids = idsMap.computeIfAbsent(
+				(Long)array[0], key -> new ArrayList<>());
+
+			ids.add((Long)array[1]);
+		}
+
+		return idsMap;
+	}
+
+	private Map<Long, List<Long>> _fetchUserGroupIdsMap(Long[] userIds) {
+		Map<Long, List<Long>> idsMap = new HashMap<>();
+
+		for (Object[] array :
+				_userLocalService.<List<Object[]>>dslQuery(
+					DSLQueryFactoryUtil.select(
+						Users_UserGroupsTable.INSTANCE.userId,
+						Users_UserGroupsTable.INSTANCE.userGroupId
+					).from(
+						Users_UserGroupsTable.INSTANCE
+					).where(
+						Users_UserGroupsTable.INSTANCE.userId.in(userIds)
+					))) {
+
+			List<Long> ids = idsMap.computeIfAbsent(
+				(Long)array[0], key -> new ArrayList<>());
+
+			ids.add((Long)array[1]);
+		}
+
+		return idsMap;
 	}
 
 	@Reference

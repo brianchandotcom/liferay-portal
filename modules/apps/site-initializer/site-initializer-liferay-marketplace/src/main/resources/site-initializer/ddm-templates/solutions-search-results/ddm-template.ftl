@@ -105,6 +105,7 @@
 						portalURL = portalUtil.getLayoutURL(themeDisplay)
 						productId = entry.getClassPK() + 1
 						product = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels/"+ channelId +"/products/"+ productId +"?accountId=-1&images.accountId=-1&nestedFields=productSpecifications,categories,images")
+						productCustomFields = product.customFields![]
 						productCategories=product.categories![]
 						productImage = (product.images![])?filter(item -> item.tags?seq_contains("app icon"))![]
 						productSpecifications = product.productSpecifications![]
@@ -159,17 +160,12 @@
 
 						<div class="align-items-center card-image-title-container d-flex">
 							<div class="pl-2">
-								<#if productSpecifications?has_content>
-									<#assign productPriceModels = productSpecifications?filter(item -> item.specificationKey == "developer-name") />
+								<#if productCustomFields?has_content>
+									<#assign solutionCustomFields = productCustomFields?filter(customField -> customField.name == 'Developer Name') />
 
-									<#list productPriceModels as productPriceModel>
-										<#if productPriceModel.value?has_content>
-											<#assign priceModel = productPriceModel.value />
-										<#else>
-											<#assign priceModel = "" />
-										</#if>
+									<#list solutionCustomFields as customFieldItem>
 										<div class="developer-name font-size-paragraph-small">
-											${priceModel}
+											${customFieldItem.customValue.data}
 										</div>
 									</#list>
 								</#if>

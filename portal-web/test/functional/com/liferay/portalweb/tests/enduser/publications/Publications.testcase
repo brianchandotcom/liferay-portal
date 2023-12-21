@@ -2212,11 +2212,9 @@ definition {
 
 		PublicationsNavigator.gotoNavbar(navBarTitle = "Parents");
 
-		// Workaround LPS-202811
-
-		//PublicationsChangeDetails.viewChangeDetailsInParents(
-		//changeParentsCategory = "Dynamic Data Mapping Template",
-		//changeParentsTitle = "Basic Web Content");
+		PublicationsChangeDetails.viewChangeDetailsInParents(
+			changeParentsCategory = "Dynamic Data Mapping Template",
+			changeParentsTitle = "Basic Web Content");
 
 		PublicationsNavigator.gotoNavbar(navBarTitle = "Children");
 

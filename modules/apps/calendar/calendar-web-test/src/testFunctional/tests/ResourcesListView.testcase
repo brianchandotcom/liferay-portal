@@ -201,7 +201,7 @@ definition {
 
 		CalendarResource.search(searchTerm = "Description");
 
-		CalendarResource.viewSearchSummaryResults(searchResults = "1 Result for \"Description\"");
+		CalendarResource.viewSearchSummaryResults(searchResults = "1 Result Found for \"Description\"");
 
 		CalendarResource.viewResourceName(calendarResourceName = "Resource Name");
 
@@ -209,7 +209,7 @@ definition {
 
 		CalendarResource.search(searchTerm = "Test Test");
 
-		CalendarResource.viewSearchSummaryResults(searchResults = "0 Results for \"Test Test\"");
+		CalendarResource.viewSearchSummaryResults(searchResults = "0 Results Found for \"Test Test\"");
 
 		CalendarResource.viewTableEmpty();
 	}

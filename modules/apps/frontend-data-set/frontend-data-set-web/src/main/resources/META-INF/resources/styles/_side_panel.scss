@@ -101,7 +101,7 @@
 		top: 0;
 		transition: top ease-in-out 0.1s, right ease-in-out 0.1s,
 			opacity ease-in 0.2s;
-		z-index: 1;
+		z-index: 10;
 
 		&.fds-side-panel-close-menu {
 			opacity: 1;

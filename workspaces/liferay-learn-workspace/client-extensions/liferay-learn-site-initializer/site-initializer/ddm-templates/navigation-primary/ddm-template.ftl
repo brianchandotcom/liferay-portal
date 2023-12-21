@@ -31,7 +31,8 @@
 	}
 
 	.dropdown-menu .row .dropdown-item-div {
-		padding: 25px;
+		padding: 0 1rem;
+		margin-bottom: 0;
 	}
 
 	.dropdown-menu .row .dropdown-item-div .dropdown-item {
@@ -70,15 +71,25 @@
 		line-height: 20px;
 	}
 
-	.dropdown-menu.show {
+	.dropdown-menu.show .product{
+		height: 290px;
 		min-height: -webkit-fill-available;
+	}
+
+	.maxh-90 {
+	  	max-height: 90px;
+	}
+
+	.product-box {
+	  	padding: 1rem;
+		margin-bottom: 1.5rem!important;
 	}
 
 	.responsive-text {
 		display: -webkit-box;
-	   	overflow: hidden;
-	   	text-overflow: ellipsis;
-	   	-webkit-box-orient: vertical;
+	  	overflow: hidden;
+	  	text-overflow: ellipsis;
+	  	-webkit-box-orient: vertical;
 		-webkit-line-clamp: 2;
 	}
 </style>
@@ -108,11 +119,13 @@
 				columns = "4"
 				customFields = navPrimaryItem.getExpandoAttributes()!{}
 				navItemType = customFields["Primary Nav Item Type"]!""
+				productItem = "maxh-90 product-box"
 			/>
 
 			<#if stringUtil.equals(navItemType, "CAPABILITIES")>
 				<#assign
 					columns = "3"
+					productItem = ""
 				/>
 			</#if>
 
@@ -143,7 +156,7 @@
 				>
 					<div class="row">
 						<#list navPrimaryItem.getChildren() as navSecondaryItem>
-							<div class="dropdown-item-div col-12 col-lg-${columns}">
+							<div class="dropdown-item-div col-12 col-lg-${columns} ${productItem}">
 								<#if taxonomyVocabulary?has_content && stringUtil.equals(navItemType, "CAPABILITIES")>
 									<#assign capabilityFields = taxonomyVocabulary[navSecondaryItem.getName()] />
 
@@ -173,7 +186,7 @@
 										navItemIcon = customFields["Icon URL"]!""
 									/>
 
-									<a class="d-flex dropdown-item p-3 text-decoration-none" href="${navSecondaryItem.getRegularURL()}" tabindex="4">
+									<a class="d-flex dropdown-item maxh-90 p-3 text-decoration-none" href="${navSecondaryItem.getRegularURL()}" tabindex="4">
 										<img
 											alt="${navSecondaryItem.getName()} icon"
 											class="icon mr-3"

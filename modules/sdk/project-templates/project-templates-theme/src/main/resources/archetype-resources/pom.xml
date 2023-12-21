@@ -92,7 +92,7 @@
 #elseif (${liferayVersion.startsWith("7.1")} || ${liferayVersion.startsWith("7.2")} || ${liferayVersion.startsWith("7.3")})
 				<version>3.0.3</version>
 #else
-				<version>3.1.4</version>
+				<version>3.1.5</version>
 #end
 				<executions>
 					<execution>

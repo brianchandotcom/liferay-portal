@@ -380,7 +380,11 @@ public class UserImpl extends UserBaseImpl {
 
 	@Override
 	public long[] getGroupIds() {
-		return UserLocalServiceUtil.getGroupPrimaryKeys(getUserId());
+		if (_groupIds == null) {
+			_groupIds = UserLocalServiceUtil.getGroupPrimaryKeys(getUserId());
+		}
+
+		return _groupIds;
 	}
 
 	@Override
@@ -460,15 +464,24 @@ public class UserImpl extends UserBaseImpl {
 
 	@Override
 	public long[] getOrganizationIds() throws PortalException {
-		return getOrganizationIds(false);
+		if (_organizationIds == null) {
+			_organizationIds = UserLocalServiceUtil.getOrganizationPrimaryKeys(
+				getUserId());
+		}
+
+		return _organizationIds;
 	}
 
 	@Override
 	public long[] getOrganizationIds(boolean includeAdministrative)
 		throws PortalException {
 
+		if (!includeAdministrative) {
+			return getOrganizationIds();
+		}
+
 		return OrganizationLocalServiceUtil.getUserOrganizationIds(
-			getUserId(), includeAdministrative);
+			getUserId(), true);
 	}
 
 	@Override
@@ -590,7 +603,11 @@ public class UserImpl extends UserBaseImpl {
 
 	@Override
 	public long[] getRoleIds() {
-		return UserLocalServiceUtil.getRolePrimaryKeys(getUserId());
+		if (_roleIds == null) {
+			_roleIds = UserLocalServiceUtil.getRolePrimaryKeys(getUserId());
+		}
+
+		return _roleIds;
 	}
 
 	@Override
@@ -613,7 +630,11 @@ public class UserImpl extends UserBaseImpl {
 
 	@Override
 	public long[] getTeamIds() {
-		return UserLocalServiceUtil.getTeamPrimaryKeys(getUserId());
+		if (_teamIds == null) {
+			_teamIds = UserLocalServiceUtil.getTeamPrimaryKeys(getUserId());
+		}
+
+		return _teamIds;
 	}
 
 	@Override
@@ -642,7 +663,12 @@ public class UserImpl extends UserBaseImpl {
 
 	@Override
 	public long[] getUserGroupIds() {
-		return UserLocalServiceUtil.getUserGroupPrimaryKeys(getUserId());
+		if (_userGroupIds == null) {
+			_userGroupIds = UserLocalServiceUtil.getUserGroupPrimaryKeys(
+				getUserId());
+		}
+
+		return _userGroupIds;
 	}
 
 	@Override
@@ -892,6 +918,11 @@ public class UserImpl extends UserBaseImpl {
 	}
 
 	@Override
+	public void setGroupIds(long[] groupIds) {
+		_groupIds = groupIds;
+	}
+
+	@Override
 	public void setLanguageId(String languageId) {
 		if (isGuestUser()) {
 			_locale = LocaleUtil.fromLanguageId(languageId, false);
@@ -901,6 +932,11 @@ public class UserImpl extends UserBaseImpl {
 		}
 
 		super.setLanguageId(LocaleUtil.toLanguageId(_locale));
+	}
+
+	@Override
+	public void setOrganizationIds(long[] organizationIds) {
+		_organizationIds = organizationIds;
 	}
 
 	@Override
@@ -914,6 +950,16 @@ public class UserImpl extends UserBaseImpl {
 	}
 
 	@Override
+	public void setRoleIds(long[] roleIds) {
+		_roleIds = roleIds;
+	}
+
+	@Override
+	public void setTeamIds(long[] teamIds) {
+		_teamIds = teamIds;
+	}
+
+	@Override
 	public void setTimeZoneId(String timeZoneId) {
 		if (Validator.isNull(timeZoneId)) {
 			TimeZone defaultTimeZone = TimeZoneUtil.getDefault();
@@ -924,6 +970,11 @@ public class UserImpl extends UserBaseImpl {
 		_timeZone = TimeZoneUtil.getTimeZone(timeZoneId);
 
 		super.setTimeZoneId(timeZoneId);
+	}
+
+	@Override
+	public void setUserGroupIds(long[] userGroupIds) {
+		_userGroupIds = userGroupIds;
 	}
 
 	protected String getProfileFriendlyURL() {
@@ -961,12 +1012,17 @@ public class UserImpl extends UserBaseImpl {
 	private static final Log _log = LogFactoryUtil.getLog(UserImpl.class);
 
 	private Contact _contact;
+	private long[] _groupIds;
 	private Locale _locale;
+	private long[] _organizationIds;
 	private boolean _passwordModified;
 	private PasswordPolicy _passwordPolicy;
 	private String _passwordUnencrypted;
 	private final transient Map<String, RemotePreference> _remotePreferences =
 		new HashMap<>();
+	private long[] _roleIds;
+	private long[] _teamIds;
 	private TimeZone _timeZone;
+	private long[] _userGroupIds;
 
 }

@@ -357,8 +357,18 @@ public interface User extends PersistedModel, UserModel {
 
 	public void setContact(Contact contact);
 
+	public void setGroupIds(long[] groupIds);
+
+	public void setOrganizationIds(long[] organizationIds);
+
 	public void setPasswordModified(boolean passwordModified);
 
 	public void setPasswordUnencrypted(String passwordUnencrypted);
+
+	public void setRoleIds(long[] roleIds);
+
+	public void setTeamIds(long[] teamIds);
+
+	public void setUserGroupIds(long[] userGroupIds);
 
 }

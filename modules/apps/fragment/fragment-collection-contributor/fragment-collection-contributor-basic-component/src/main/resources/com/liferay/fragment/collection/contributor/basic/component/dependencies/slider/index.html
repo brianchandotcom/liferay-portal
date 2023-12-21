@@ -54,7 +54,7 @@
 			<ol class="carousel-navigation">
 				[#list 0..configuration.numberOfSlides-1 as i]
 				<li>
-					<button aria-controls="${fragmentEntryLinkNamespace}-slide-${i+1}" aria-label="Focus slide ${i+1}" class="carousel-item-button [#if i == 0]active[/#if]" type="button">
+					<button aria-controls="${fragmentEntryLinkNamespace}-slide-${i+1}" aria-current="[#if i == 0]true[#else]false[/#if]" aria-label="Go to slide ${i+1}" class="carousel-item-button [#if i == 0]active[/#if]" type="button">
 						<span aria-hidden="true" class="carousel-item-button-icon"></span>
 					</button>
 				</li>

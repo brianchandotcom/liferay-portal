@@ -30,8 +30,14 @@ function activateIndicator(activeItem, nextItem, movement) {
 		nextItem.classList.add(movement);
 	}
 
-	getActiveIndicator().classList.remove('active');
-	indicators[getNextItemIndex()].classList.add('active');
+	const activeIndicator = getActiveIndicator();
+	const nextIndicator = indicators[getNextItemIndex()];
+
+	activeIndicator.classList.remove('active');
+	activeIndicator.setAttribute('aria-current', 'false');
+
+	nextIndicator.classList.add('active');
+	nextIndicator.setAttribute('aria-current', 'true');
 }
 
 function activateItem(activeItem, nextItem, movement) {

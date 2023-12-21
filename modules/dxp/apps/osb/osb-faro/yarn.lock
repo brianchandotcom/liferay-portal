@@ -9891,15 +9891,7 @@ metal-events@^2.16.2:
   dependencies:
     metal "^2.16.2"
 
-metal-position@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/metal-position/-/metal-position-2.1.0.tgz#31dc735613f9e53ce7a537e13029fc0e948ff085"
-  integrity sha1-MdxzVhP55TznpTfhMCn8DpSP8IU=
-  dependencies:
-    metal "^2.0.0"
-    metal-dom "^2.0.0"
-
-metal@^2.0.0, metal@^2.16.2:
+metal@^2.16.2:
   version "2.16.2"
   resolved "https://registry.yarnpkg.com/metal/-/metal-2.16.2.tgz#11e1f1fee92575c574a4c0289853ed5327dda6cf"
   integrity sha512-Kv1RvP/0x1Cc191xEj+THqHsUmPdiw2yy/s6tT046kEGxjiOAt5rVLxlN5wYcFfQbckPBYOtgdu7ipZYNWe4hg==

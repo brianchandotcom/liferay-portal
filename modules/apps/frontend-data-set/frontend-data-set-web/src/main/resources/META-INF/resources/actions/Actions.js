@@ -42,7 +42,7 @@ const formatActions = (actions, itemData) => {
 								{
 									...action,
 									...itemData.actions[
-										action.data.permissionKey
+										action.data.permissionKey.toLowerCase()
 									],
 								},
 							];

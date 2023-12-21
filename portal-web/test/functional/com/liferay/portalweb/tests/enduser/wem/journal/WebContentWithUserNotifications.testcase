@@ -160,8 +160,6 @@ definition {
 			task ("Enable Granted Email with Article diffs") {
 				LexiconEntry.gotoHeaderMenuItem(menuItem = "Configuration");
 
-				SelectFrame(locator1 = "IFrame#CONFIGURATION");
-
 				WebContentAdmin.configureEmailNotifications(
 					enabled = "true",
 					fieldName = "Granted",

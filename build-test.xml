@@ -10340,6 +10340,8 @@ org.apache.catalina.tribes.level = FINE]]>
 											<contains string="${test.modules.force.deploy}" substring="${app.name}" />
 											<then>
 												<echo file="@{module.dir.path}/.lfrbuild-portal" />
+
+												<delete file="@{module.dir.path}/.lfrbuild-releng-ignore" />
 											</then>
 										</if>
 									</sequential>

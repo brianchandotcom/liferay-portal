@@ -555,6 +555,11 @@ const ActionForm = ({
 												ACTION_TYPE.ASYNC
 													? ACTION_METHOD.DELETE
 													: '',
+											modalSize:
+												event.target.value ===
+												ACTION_TYPE.MODAL
+													? MODAL_SIZES[0].value
+													: '',
 											type: event.target.value,
 										})
 									}

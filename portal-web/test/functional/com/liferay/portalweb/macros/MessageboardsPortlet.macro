@@ -334,7 +334,7 @@ definition {
 		else {
 			MenuBar.click(menuBar = "Message Updated Email");
 
-			SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
+			SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 
 			if (isSet(messageURL)) {
 				AssertElementPresent(

@@ -6,7 +6,6 @@
 package com.liferay.osb.faro.admin.web.internal.portlet.action;
 
 import com.liferay.osb.faro.admin.web.internal.constants.FaroAdminPortletKeys;
-import com.liferay.osb.faro.engine.client.ContactsEngineClient;
 import com.liferay.osb.faro.model.FaroProject;
 import com.liferay.osb.faro.service.FaroProjectLocalService;
 import com.liferay.portal.kernel.log.Log;
@@ -29,8 +28,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Marcos Martins
@@ -92,12 +89,6 @@ public class DeleteProjectMVCActionCommand extends BaseMVCActionCommand {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DeleteProjectMVCActionCommand.class);
-
-	@Reference(
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	private volatile ContactsEngineClient _contactsEngineClient;
 
 	@Reference
 	private FaroProjectLocalService _faroProjectLocalService;

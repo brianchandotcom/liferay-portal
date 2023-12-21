@@ -22,6 +22,59 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-192722. Check the accessibility when changing content type of display page template."
+	@priority = 3
+	test ViewAccessibilityOfChangeContentTypeOfDisplayPageTemplate {
+		task ("Given a site administrator has a display page template for object") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Purchase Order",
+				objectName = "PurchaseOrder",
+				pluralLabelName = "Purchase Orders");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Name",
+				fieldName = "name",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "PurchaseOrder");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "PurchaseOrder");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.addDisplayPage(
+				contentType = "Purchase Order",
+				displayPageName = "Display Page Name");
+
+			PageEditor.addFragment(
+				collectionName = "Form Components",
+				fragmentName = "Form Container");
+
+			PageEditor.mapFormContainerToObject(contentType = "Purchase Order (Default)");
+
+			PageEditor.publish();
+		}
+
+		task ("When the site administrator changes the content type to another object") {
+			LexiconCard.viewCardSubtitle(
+				card = "Display Page Name",
+				cardSubtitle = "Purchase Order");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
+				displayPageName = "Display Page Name",
+				item = "Change Content Type");
+
+			DisplayPageTemplatesAdmin._selectMappingTypes(
+				contentType = "Web Content Article",
+				subType = "Basic Web Content");
+		}
+
+		task ("Then the change content type modal should have correct accessibility") {
+			AssertElementAccessible(locator1 = "Modal#MODAL_CONTENT");
+		}
+	}
+
 	@description = "This is a test for LPS-193213. The page should comply with WCAG 2.1 AA standard when the ellipsis menu of the card is open."
 	@priority = 3
 	test ViewAccessibilityOfDisplayPageTemplateConfigureAction {

@@ -136,6 +136,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PATH_PARAMETER_PROPERTY_PREVIEW</td>
+	<td>//label[contains(.,'Path Parameter Property')]/../p</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PROPERTY_CONTAINER</td>
 	<td>//button[(@class='property-container btn btn-unstyled') and contains(.,'${key_text}')]</td>
 	<td></td>

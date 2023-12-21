@@ -958,6 +958,13 @@ mariadb.executable=${mariadb.executable}]]></echo>
 					</if>
 				</then>
 			</if>
+
+			<if>
+				<contains string="${suite.search.engine}" substring="opensearch" />
+				<then>
+					<ant antfile="build-test-elasticsearch7.xml" target="start-opensearch" />
+				</then>
+			</if>
 		</sequential>
 	</macrodef>
 
@@ -3249,6 +3256,13 @@ log.sanitizer.enabled=false</echo>
 				<equals arg1="${suite.search.engine}" arg2="solr" />
 				<then>
 					<ant antfile="build-test-solr.xml" target="stop-solr-core" />
+				</then>
+			</if>
+
+			<if>
+				<contains string="${suite.search.engine}" substring="opensearch" />
+				<then>
+					<ant antfile="build-test-elasticsearch7.xml" target="stop-opensearch" />
 				</then>
 			</if>
 		</sequential>

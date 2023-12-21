@@ -50,6 +50,12 @@
 	<property name="elasticsearch.sidecar.analysis-smartcn.zip.url" value="https://artifacts.elastic.co/downloads/elasticsearch-plugins/analysis-smartcn/analysis-smartcn-${elasticsearch.sidecar.version}.zip" />
 	<property name="elasticsearch.sidecar.analysis-stempel.zip.url" value="https://artifacts.elastic.co/downloads/elasticsearch-plugins/analysis-stempel/analysis-stempel-${elasticsearch.sidecar.version}.zip" />
 	<property name="elasticsearch.sidecar.no.jdk.tar.url" value="https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${elasticsearch.sidecar.version}-no-jdk-linux-x86_64.tar.gz" />
+	<property name="opensearch.version" value="2.8.0" />
+	<property name="opensearch.analysis-icu.zip.url" value="https://artifacts.opensearch.org/releases/plugins/analysis-icu/${opensearch.version}/analysis-icu-${opensearch.version}.zip" />
+	<property name="opensearch.analysis-kuromoji.zip.url" value="https://artifacts.opensearch.org/releases/plugins/analysis-kuromoji/${opensearch.version}/analysis-kuromoji-${opensearch.version}.zip" />
+	<property name="opensearch.analysis-smartcn.zip.url" value="https://artifacts.opensearch.org/releases/plugins/analysis-smartcn/${opensearch.version}/analysis-smartcn-${opensearch.version}.zip" />
+	<property name="opensearch.analysis-stempel.zip.url" value="https://artifacts.opensearch.org/releases/plugins/analysis-stempel/${opensearch.version}/analysis-stempel-${opensearch.version}.zip" />
+	<property name="opensearch.dir" value="${app.server.parent.dir}/opensearch-${opensearch.version}" />
 
 	<macrodef name="check-elasticsearch-security">
 		<attribute name="authentication.type" />
@@ -1464,6 +1470,182 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 		</if>
 	</target>
 
+	<target name="start-opensearch">
+		<ant antfile="build-test.xml" target="deploy-osgi-apps">
+			<property name="osgi.app.includes" value="portal-search-opensearch2" />
+		</ant>
+
+		<if>
+			<not>
+				<available file="${app.server.parent.dir}/opensearch-${opensearch.version}-linux-x64.tar.gz" />
+			</not>
+			<then>
+				<mirrors-get
+					dest="${app.server.parent.dir}/opensearch-${opensearch.version}-linux-x64.tar.gz"
+					skipChecksum="true"
+					src="https://artifacts.opensearch.org/releases/bundle/opensearch/${opensearch.version}/opensearch-${opensearch.version}-linux-x64.tar.gz"
+				/>
+			</then>
+		</if>
+
+		<untar
+			compression="gzip"
+			dest="${app.server.parent.dir}"
+			src="${app.server.parent.dir}/opensearch-${opensearch.version}-linux-x64.tar.gz"
+		/>
+
+		<echo file="${opensearch.dir}/config/opensearch.yml">cluster.name: LiferayOpenSearchCluster
+discovery.type: single-node
+http.host: ["_local_", "_site_"]
+indices.query.bool.max_clause_count: 4096
+plugins.security.disabled: true</echo>
+
+		<property name="opensearch.java.home" unless:set="opensearch.java.home" value="/opt/java/jdk11" />
+
+		<replace
+			file="${opensearch.dir}/bin/opensearch-env"
+			token="#!/usr/bin/env bash"
+			value="#!/usr/bin/env bash${line.separator}OPENSEARCH_JAVA_HOME=${opensearch.java.home}"
+		/>
+
+		<replaceregexp
+			file="${opensearch.dir}/config/jvm.options"
+			flags="g"
+			match="(?&lt;=-Xm.).*"
+			replace="2g"
+		/>
+
+		<get-testcase-property if:set="env.JENKINS_HOME" property.name="opensearch.security.enabled" />
+
+		<if>
+			<istrue value="${opensearch.security.enabled}" />
+			<then>
+				<replaceregexp
+					file="${opensearch.dir}/config/opensearch.yml"
+					flags="g"
+					match="\nplugins.security.disabled: true"
+					replace=""
+				/>
+
+				<chmod
+					maxparallel="10"
+					perm="a+rwx"
+					type="both"
+				>
+					<fileset
+						dir="${opensearch.dir}"
+					/>
+				</chmod>
+
+				<exec dir="${opensearch.dir}/plugins/opensearch-security/tools" executable="/bin/bash">
+					<arg value="-c" />
+					<arg value="printf '%s\n' y y N | ./install_demo_configuration.sh" />
+				</exec>
+			</then>
+		</if>
+
+		<if>
+			<not>
+				<available file="${opensearch.dir}/analysis-icu-${opensearch.version}.zip" />
+			</not>
+			<then>
+				<mirrors-get
+					dest="${opensearch.dir}/analysis-icu-${opensearch.version}.zip"
+					skipChecksum="true"
+					src="${opensearch.analysis-icu.zip.url}"
+				/>
+			</then>
+		</if>
+
+		<if>
+			<not>
+				<available file="${opensearch.dir}/analysis-kuromoji-${opensearch.version}.zip" />
+			</not>
+			<then>
+				<mirrors-get
+					dest="${opensearch.dir}/analysis-kuromoji-${opensearch.version}.zip"
+					skipChecksum="true"
+					src="${opensearch.analysis-kuromoji.zip.url}"
+				/>
+			</then>
+		</if>
+
+		<if>
+			<not>
+				<available file="${opensearch.dir}/analysis-smartcn-${opensearch.version}.zip" />
+			</not>
+			<then>
+				<mirrors-get
+					dest="${opensearch.dir}/analysis-smartcn-${opensearch.version}.zip"
+					skipChecksum="true"
+					src="${opensearch.analysis-smartcn.zip.url}"
+				/>
+			</then>
+		</if>
+
+		<if>
+			<not>
+				<available file="${opensearch.dir}/analysis-stempel-${opensearch.version}.zip" />
+			</not>
+			<then>
+				<mirrors-get
+					dest="${opensearch.dir}/analysis-stempel-${opensearch.version}.zip"
+					skipChecksum="true"
+					src="${opensearch.analysis-stempel.zip.url}"
+				/>
+			</then>
+		</if>
+
+		<chmod
+			maxparallel="10"
+			perm="a+rwx"
+			type="both"
+		>
+			<fileset
+				dir="${opensearch.dir}"
+			/>
+		</chmod>
+
+		<for list="analysis-icu-${opensearch.version}.zip,analysis-kuromoji-${opensearch.version}.zip,analysis-smartcn-${opensearch.version}.zip,analysis-stempel-${opensearch.version}.zip" param="opensearch.plugin.name">
+			<sequential>
+				<exec dir="${opensearch.dir}/bin" executable="/bin/bash">
+					<arg value="-c" />
+					<arg value="./opensearch-plugin install file:///${opensearch.dir}/@{opensearch.plugin.name}" />
+				</exec>
+			</sequential>
+		</for>
+
+		<echo file="${liferay.home}/osgi/configs/com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config">blacklistBundleSymbolicNames=[\
+"com.liferay.portal.search.elasticsearch7.api",\
+"com.liferay.portal.search.elasticsearch7.impl"\
+]</echo>
+
+		<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.opensearch2.configuration.OpenSearchConnectionConfiguration-REMOTE.config">active="true"
+connectionId="REMOTE"</echo>
+
+		<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.opensearch2.configuration.OpenSearchConfiguration.config">remoteClusterConnectionId="REMOTE"</echo>
+
+		<lstopwatch action="start" name="start.opensearch.node" />
+
+		<exec dir="${opensearch.dir}/bin" executable="/bin/bash" osfamily="unix">
+			<arg value="-c" />
+			<arg if:set="env.JENKINS_HOME" value="sudo -H -u shutdown bash -c './opensearch -d -p pid-opensearch'" />
+			<arg unless:set="env.JENKINS_HOME" value="./opensearch -d -p pid-opensearch" />
+		</exec>
+
+		<property name="opensearch.port" unless:set="opensearch.port" value="9200" />
+
+		<waitfor maxwait="120" maxwaitunit="second" timeoutproperty="opensearch.server.not.started">
+			<socket port="${opensearch.port}" server="localhost" />
+		</waitfor>
+
+		<print-files dir="${opensearch.dir}/logs/" exclude="*_*" include="LiferayOpenSearchCluster*.log" />
+
+		<lstopwatch action="total" name="start.opensearch.node" />
+
+		<fail if="opensearch.server.not.started" message="OpenSearch server on port ${opensearch.port} failed to initialize." />
+	</target>
+
 	<target name="stop-elasticsearch">
 		<condition else="${elasticsearch.dir}" property="elasticsearch.stop.dir" value="${elasticsearch.dir}-${elasticsearch.bundle.number}">
 			<isset property="elasticsearch.bundle.number" />
@@ -1508,5 +1690,22 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 				</exec>
 			</else>
 		</if>
+	</target>
+
+	<target name="stop-opensearch">
+		<if>
+			<available file="${opensearch.dir}/pid-opensearch" />
+			<then>
+				<exec dir="${opensearch.dir}" executable="/bin/bash" osfamily="unix">
+					<arg value="-c" />
+					<arg value="pkill -F pid-opensearch" />
+				</exec>
+			</then>
+			<else>
+				<echo>The OpenSearch server in ${opensearch.dir} has already been stopped</echo>
+			</else>
+		</if>
+
+		<print-files dir="${opensearch.dir}/logs/" exclude="*_*" include="LiferayOpenSearchCluster*.log" />
 	</target>
 </project>

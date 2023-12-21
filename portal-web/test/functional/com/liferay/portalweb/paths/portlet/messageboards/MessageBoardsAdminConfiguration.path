@@ -33,7 +33,7 @@
 
 <tr>
 	<td>DEFINITION_OF_TERMS</td>
-	<td>//div[contains(@id,'definition-of-terms_${key_number}')]//*[normalize-space()='${key_definitionOfTerm}']</td>
+	<td>//div[contains(@id,'definition-of-terms')]//*[normalize-space()='${key_definitionOfTerm}']</td>
 	<td></td>
 </tr>
 <tr>

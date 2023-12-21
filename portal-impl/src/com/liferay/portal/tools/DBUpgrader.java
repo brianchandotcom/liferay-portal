@@ -184,14 +184,14 @@ public class DBUpgrader {
 			result = "Failed";
 		}
 		finally {
+			IndexUpdaterUtil.destroy();
+
 			StartupHelperUtil.setUpgrading(false);
 
 			System.out.println(
 				StringBundler.concat(
 					"\n", result, " Liferay upgrade process in ",
 					_stopWatch.getTime() / Time.SECOND, " seconds"));
-
-			IndexUpdaterUtil.destroy();
 		}
 
 		System.out.println("Exiting DBUpgrader#main(String[]).");

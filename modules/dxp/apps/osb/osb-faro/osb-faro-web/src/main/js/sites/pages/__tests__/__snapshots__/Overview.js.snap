@@ -163,7 +163,7 @@ exports[`Sites Dashboard Overview render 1`] = `
           >
             <a
               class="button-root btn btn-outline-borderless btn-sm btn-outline-secondary"
-              href="/workspace/23/123123/sites/pages?rangeKey=30"
+              href="/workspace/23/123123/sites/pages?rangeKey=30&field=visitorsMetric&sortOrder=DESC"
             >
               View Pages
               <svg

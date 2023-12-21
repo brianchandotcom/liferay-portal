@@ -30,7 +30,11 @@ interface InputLocalizedProps {
 	resultFormatter?: (value: string) => React.ReactNode;
 	selectedLocale?: Liferay.Language.Locale;
 	tooltip?: string;
-	translations: Liferay.Language.LocalizedValue<string>;
+	translations: Liferay.Language.LocalizedValue<string> &
+		Partial<{
+			zh_Hans_CN: string;
+			zh_Hant_TW: string;
+		}>;
 }
 
 interface InputLocale {
@@ -48,8 +52,12 @@ const availableLocales = Object.keys(Liferay.Language.available)
 	}));
 
 const translationsNormalizer = (
-	translations: any
-) => {
+	translations: Liferay.Language.LocalizedValue<string> &
+		Partial<{
+			zh_Hans_CN: string;
+			zh_Hant_TW: string;
+		}>
+): Liferay.Language.LocalizedValue<string> => {
 	const {zh_Hans_CN, zh_Hant_TW, ...normalizedTranslations} = translations;
 
 	if (zh_Hans_CN) {

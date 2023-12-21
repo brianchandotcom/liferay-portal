@@ -359,10 +359,11 @@ definition {
 			messageURL = "[$MESSAGE_URL$]",
 			siteURLKey = "guest");
 
+		Panel.expandPanel(panel = "Definition of Terms");
+
 		for (var definitionOfTerm : list "[$MESSAGE_PARENT$],The message body of the parent message,[$MESSAGE_SIBLINGS$],The message thread of messages at the same level,[$ROOT_MESSAGE_BODY$],The message body of the original message") {
 			AssertElementPresent(
 				key_definitionOfTerm = ${definitionOfTerm},
-				key_number = 1,
 				locator1 = "MessageBoardsAdminConfiguration#DEFINITION_OF_TERMS");
 		}
 
@@ -376,7 +377,6 @@ definition {
 		for (var definitionOfTerm : list "[$MESSAGE_PARENT$],The message body of the parent message,[$MESSAGE_SIBLINGS$],The message thread of messages at the same level,[$ROOT_MESSAGE_BODY$],The message body of the original message") {
 			AssertElementPresent(
 				key_definitionOfTerm = ${definitionOfTerm},
-				key_number = 2,
 				locator1 = "MessageBoardsAdminConfiguration#DEFINITION_OF_TERMS");
 		}
 	}

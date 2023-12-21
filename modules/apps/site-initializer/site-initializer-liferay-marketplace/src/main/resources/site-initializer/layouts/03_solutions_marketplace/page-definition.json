@@ -703,7 +703,7 @@
 															"federatedSearchKey": "",
 															"fieldsToDisplay": "",
 															"highlightEnabled": "true",
-															"paginationDelta": "20",
+															"paginationDelta": "15",
 															"paginationDeltaParameterName": "delta",
 															"paginationStartParameterName": "start",
 															"showEmptyResultMessage": "true",

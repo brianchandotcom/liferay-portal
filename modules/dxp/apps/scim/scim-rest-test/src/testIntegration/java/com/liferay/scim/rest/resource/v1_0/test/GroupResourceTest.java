@@ -163,7 +163,7 @@ public class GroupResourceTest extends BaseGroupResourceTestCase {
 		assertEquals(
 			postGroup1, _getGroup(String.valueOf(userGroup1.getUserGroupId())));
 
-		// Provision an existent group with no SCIM client ID set
+		// Provision an existing group with no SCIM client ID set
 
 		Group postGroup2 = randomGroup();
 

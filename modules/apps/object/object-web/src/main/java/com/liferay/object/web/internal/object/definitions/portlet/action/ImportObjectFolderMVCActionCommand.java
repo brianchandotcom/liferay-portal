@@ -12,7 +12,6 @@ import com.liferay.object.exception.ObjectFolderItemObjectDefinitionIdException;
 import com.liferay.object.exception.ObjectFolderNameException;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -54,10 +53,6 @@ public class ImportObjectFolderMVCActionCommand extends BaseMVCActionCommand {
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-148856")) {
-			throw new UnsupportedOperationException();
-		}
 
 		try {
 			_importObjectFolder(actionRequest);

@@ -49,10 +49,6 @@ public class ExportObjectFolderMVCResourceCommand
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-148856")) {
-			throw new UnsupportedOperationException();
-		}
-
 		ObjectFolderResource.Builder builder =
 			_objectFolderResourceFactory.create();
 

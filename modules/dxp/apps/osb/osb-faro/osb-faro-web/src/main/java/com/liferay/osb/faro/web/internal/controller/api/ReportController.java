@@ -144,10 +144,10 @@ public class ReportController extends BaseFaroController {
 			Response.ResponseBuilder responseBuilder = Response.status(
 				Response.Status.BAD_REQUEST);
 
+			String description = "";
+
 			JSONObject jsonObject = _jsonFactory.createJSONObject(
 				invalidFilterException.getMessage());
-
-			String description = "";
 
 			JSONObject errorAttributesJSONObject = jsonObject.getJSONObject(
 				"errorAttributes");

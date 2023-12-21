@@ -832,8 +832,6 @@ definition {
 
 			Portlet.gotoPortletOptions(portletOption = "Configuration");
 
-			BlogsConfiguration.selectConfigurationIFrame();
-
 			BlogsConfiguration.gotoRSS();
 
 			BlogsConfiguration.uncheckRSSSubscriptionCheckbox();
@@ -855,8 +853,6 @@ definition {
 			BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
 			Portlet.gotoPortletOptions(portletOption = "Configuration");
-
-			BlogsConfiguration.selectConfigurationIFrame();
 
 			BlogsConfiguration.gotoRSS();
 

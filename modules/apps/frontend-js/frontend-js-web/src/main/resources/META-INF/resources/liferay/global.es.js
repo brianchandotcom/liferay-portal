@@ -6,6 +6,7 @@
 import groupBy from 'lodash.groupby';
 import isEqual from 'lodash.isequal';
 
+import loadClientExtensions from '../utils/client_extensions/loadClientExtensions';
 import DynamicSelect from './DynamicSelect';
 import BREAKPOINTS from './breakpoints';
 import {
@@ -243,6 +244,7 @@ Liferay.Util.getPortletConfigurationIconAction = getPortletConfigurationIconActi
 Liferay.Util.getPortletId = getPortletId;
 
 Liferay.Util.getPortletNamespace = getPortletNamespace;
+Liferay.Util.getSelectedOptionValues = getSelectedOptionValues;
 Liferay.Util.getTop = getTop;
 Liferay.Util.getURLWithSessionId = getURLWithSessionId;
 Liferay.Util.getWindow = getWindow;
@@ -265,8 +267,7 @@ Liferay.Util.isPhone = isPhone;
  */
 Liferay.Util.isTablet = isTablet;
 
-Liferay.Util.getSelectedOptionValues = getSelectedOptionValues;
-
+Liferay.Util.loadClientExtensions = loadClientExtensions;
 Liferay.Util.navigate = navigate;
 Liferay.Util.ns = ns;
 Liferay.Util.objectToFormData = objectToFormData;

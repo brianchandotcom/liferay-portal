@@ -16,7 +16,7 @@ mbGroupServiceSettings = MBGroupServiceSettings.getInstance(themeDisplay.getSite
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(mbConfigurationDisplayContext.getBackURL());
-portletDisplay.setURLBackTitle("messages-board");
+portletDisplay.setURLBackTitle("message-boards");
 %>
 
 <clay:container-fluid
@@ -72,7 +72,6 @@ portletDisplay.setURLBackTitle("messages-board");
 					</h3>
 
 					<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-					<aui:input name="redirect" type="hidden" value="<%= configurationActionURL %>" />
 
 					<liferay-ui:error embed="<%= false %>" key="emailMessageAddedBody" message="please-enter-a-valid-body" />
 					<liferay-ui:error embed="<%= false %>" key="emailMessageAddedSubject" message="please-enter-a-valid-subject" />

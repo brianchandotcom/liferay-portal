@@ -35,7 +35,6 @@ import UnassignedSegmentsModal from './modals/unassigned-segments-modal';
 import {close, modalTypes} from '../actions/modals';
 import {connect} from 'react-redux';
 import {List} from 'immutable';
-import {matches} from 'shared/util/dom';
 import {onEnter} from 'shared/util/key-constants';
 import {PropTypes} from 'prop-types';
 
@@ -114,7 +113,7 @@ export class ModalRenderer extends React.Component {
 
 		if (
 			currentModalIMap.get('closeOnBlur', true) &&
-			matches(event.target, '.modal-container')
+			event.target.matches('.modal-container')
 		) {
 			this.props.close();
 		}

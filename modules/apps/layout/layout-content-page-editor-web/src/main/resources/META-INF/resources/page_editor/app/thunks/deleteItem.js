@@ -19,6 +19,7 @@ import {
 	getFormErrorDescription,
 } from '../utils/getFormErrorDescription';
 import getFragmentEntryLinkIdsFromItemId from '../utils/getFragmentEntryLinkIdsFromItemId';
+import getPortletId from '../utils/getPortletId';
 import {hasFormParent} from '../utils/hasFormParent';
 import {isRequiredFormInput} from '../utils/isRequiredFormInput';
 
@@ -100,11 +101,7 @@ function findPortletIds(itemId, layoutData, fragmentEntryLinks) {
 		];
 
 		if (editableValues.portletId) {
-			return [
-				editableValues.instanceId
-					? `${editableValues.portletId}_INSTANCE_${editableValues.instanceId}`
-					: editableValues.portletId,
-			];
+			return [getPortletId(editableValues)];
 		}
 	}
 

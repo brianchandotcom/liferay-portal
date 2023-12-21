@@ -15,7 +15,7 @@ def withClientExtensionConfig = {
 }
 
 runGradleTest {
-	dependsOn ":do-not-expand-urls-client-extension:createClientExtensionConfig", ":expand-urls-client-extension:createClientExtensionConfig"
+	dependsOn ":do-not-expand-urls-client-extension:createClientExtensionConfig", ":expand-urls-client-extension:createClientExtensionConfig", ":expand-urls-with-parameters-client-extension:createClientExtensionConfig"
 
 	doLast {
 		withClientExtensionConfig("do-not-expand-urls-client-extension") {
@@ -33,6 +33,11 @@ runGradleTest {
 			}
 
 			assert it.text.contains('"singleURL=bar.txt\\nfoo.txt"')
+		}
+
+		withClientExtensionConfig("expand-urls-with-parameters-client-extension") {
+			assert it.text.contains('"urls=foo.json?k=v\\nfoo.txt?k=v"')
+			assert it.text.contains('"singleURL=bar.json?k=v\\nbar.txt?k=v"')
 		}
 	}
 }

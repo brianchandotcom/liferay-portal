@@ -1,0 +1,7 @@
+assemble:
+    - into: static
+expand-urls-with-parameters-client-extension:
+    singleURL: "bar.*?k=v"
+    type: customElement
+    urls:
+        - "foo.*?k=v"

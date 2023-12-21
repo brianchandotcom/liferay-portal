@@ -9,7 +9,6 @@ import com.liferay.content.dashboard.item.action.ContentDashboardItemVersionActi
 import com.liferay.content.dashboard.item.action.provider.ContentDashboardItemVersionActionProvider;
 import com.liferay.content.dashboard.journal.internal.item.action.ExpireJournalArticleContentDashboardItemVersionAction;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.service.JournalArticleService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -83,9 +82,6 @@ public class ExpireJournalArticleContentDashboardItemVersionActionProvider
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ExpireJournalArticleContentDashboardItemVersionActionProvider.class);
-
-	@Reference
-	private JournalArticleService _journalArticleService;
 
 	@Reference
 	private Language _language;

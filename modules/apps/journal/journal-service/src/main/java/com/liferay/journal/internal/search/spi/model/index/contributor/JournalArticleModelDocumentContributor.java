@@ -6,7 +6,6 @@
 package com.liferay.journal.internal.search.spi.model.index.contributor;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.service.DDMFieldLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
@@ -25,7 +24,6 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Localization;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.model.uid.UIDFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
@@ -238,9 +236,6 @@ public class JournalArticleModelDocumentContributor
 		JournalArticleModelDocumentContributor.class);
 
 	@Reference
-	private DDMFieldLocalService _ddmFieldLocalService;
-
-	@Reference
 	private DDMIndexer _ddmIndexer;
 
 	@Reference
@@ -251,9 +246,6 @@ public class JournalArticleModelDocumentContributor
 
 	@Reference
 	private Localization _localization;
-
-	@Reference
-	private Portal _portal;
 
 	@Reference
 	private TrashHelper _trashHelper;

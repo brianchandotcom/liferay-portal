@@ -9,11 +9,9 @@ import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTCollectionTable;
 import com.liferay.change.tracking.model.CTEntryTable;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
-import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.spi.history.CTCollectionHistoryProvider;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleTable;
-import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
@@ -83,11 +81,5 @@ public class JournalArticleCTCollectionHistoryProvider
 
 	@Reference
 	private CTCollectionLocalService _ctCollectionLocalService;
-
-	@Reference
-	private CTEntryLocalService _ctEntryLocalService;
-
-	@Reference
-	private JournalArticleLocalService _journalArticleLocalService;
 
 }

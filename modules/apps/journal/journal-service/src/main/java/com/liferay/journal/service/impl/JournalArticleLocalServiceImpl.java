@@ -145,7 +145,6 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ImageLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
@@ -8109,9 +8108,6 @@ public class JournalArticleLocalServiceImpl
 
 	@Reference
 	private CommentManager _commentManager;
-
-	@Reference
-	private CompanyLocalService _companyLocalService;
 
 	private final Map<Long, Date> _companyPreviousCheckDate =
 		new ConcurrentHashMap<>();

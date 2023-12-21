@@ -35,5 +35,5 @@ export default defineConfig({
 		screenshot: 'only-on-failure',
 		trace: 'retain-on-failure',
 	},
-	workers: process.env.CI ? 3 : undefined,
+	workers: process.env.CI ? 1 : undefined,
 });

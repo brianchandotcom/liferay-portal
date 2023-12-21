@@ -280,7 +280,7 @@ public class FragmentEntryLinkLocalServiceImpl
 					String instanceId = jsonObject.getString("instanceId");
 					String portletId = jsonObject.getString("portletId");
 
-					if (!instanceId.isEmpty()) {
+					if (Validator.isNotNull(instanceId)) {
 						portletId = portletId + "_INSTANCE_" + instanceId;
 					}
 

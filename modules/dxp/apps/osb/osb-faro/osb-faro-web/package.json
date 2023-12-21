@@ -48,7 +48,6 @@
 		"jspdf": "^2.5.1",
 		"lodash": "^4.17.15",
 		"memoize-one": "^5.0.2",
-		"metal-dom": "^2.16.2",
 		"metal-position": "^2.1.0",
 		"moment": "^2.29.4",
 		"moment-duration-format": "^2.2.1",

@@ -9876,7 +9876,7 @@ merge2@^1.3.0:
   resolved "https://registry.yarnpkg.com/merge2/-/merge2-1.4.1.tgz#4368892f885e907455a6fd7dc55c0c9d404990ae"
   integrity sha512-8q7VEgMJW4J8tcfVPy8g09NcQwZdbwFEqhe/WZkoIzjn/3TGDwtOCYtXGxA3O8tPzpczCCDgv+P2P5y00ZJOOg==
 
-metal-dom@^2.0.0, metal-dom@^2.16.2:
+metal-dom@^2.0.0:
   version "2.16.2"
   resolved "https://registry.yarnpkg.com/metal-dom/-/metal-dom-2.16.2.tgz#fa61235822f9182f11f74a5151140f235d59d2c1"
   integrity sha512-6X7V5/fG/I0acaVSBj2qwDetwz5enDwLG+GGBb9eu18b0Nb1RPi98w9JqxDu3HdhYrnapag/yhHIlV5623/cAw==

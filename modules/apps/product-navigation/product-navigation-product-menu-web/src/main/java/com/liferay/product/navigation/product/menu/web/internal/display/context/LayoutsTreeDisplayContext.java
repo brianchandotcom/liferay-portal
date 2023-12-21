@@ -430,6 +430,8 @@ public class LayoutsTreeDisplayContext {
 
 					return false;
 				}
+			).put(
+				"parentable", true
 			));
 	}
 

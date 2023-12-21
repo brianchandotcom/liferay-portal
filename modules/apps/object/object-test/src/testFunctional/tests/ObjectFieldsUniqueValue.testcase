@@ -40,21 +40,10 @@ definition {
 				isRequired = "false",
 				objectName = "CustomObject183428");
 
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectCustomObject(label = "Custom Object 183428");
-
-			ObjectAdmin.goToFieldsTab();
-
-			ObjectAdmin.goToFieldsDetails(label = "Custom Integer Field");
-
-			Check.checkToggleSwitch(
-				key_toggleSwitchLabel = "Accept Unique Values Only",
-				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
-
-			CreateObject.saveObject();
-
-			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject183428");
+			ObjectAdmin.editObjectField(
+				label = "Custom Object 183428",
+				labelName = "Custom Integer Field",
+				objectName = "CustomObject183428");
 		}
 
 		task ("And given two object entries with different integer values") {
@@ -103,21 +92,10 @@ definition {
 				isRequired = "false",
 				objectName = "CustomObject183427");
 
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectCustomObject(label = "Custom Object 183427");
-
-			ObjectAdmin.goToFieldsTab();
-
-			ObjectAdmin.goToFieldsDetails(label = "Custom Text Field");
-
-			Check.checkToggleSwitch(
-				key_toggleSwitchLabel = "Accept Unique Values Only",
-				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
-
-			CreateObject.saveObject();
-
-			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject183427");
+			ObjectAdmin.editObjectField(
+				label = "Custom Object 183427",
+				labelName = "Custom Text Field",
+				objectName = "CustomObject183427");
 		}
 
 		task ("And given an object entry") {

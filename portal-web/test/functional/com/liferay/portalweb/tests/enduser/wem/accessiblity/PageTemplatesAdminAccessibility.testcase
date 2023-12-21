@@ -75,6 +75,61 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-192722. Check the accessibility when changing content type for display page in use."
+	@priority = 3
+	test ViewAccessibilityOfChangeContentTypeOfDisplayPageTemplateInUse {
+		task ("Given a site administrator has a display page template associated to a web content") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.addDisplayPage(
+				contentType = "Web Content Article",
+				displayPageName = "Display Page Name",
+				subType = "Basic Web Content");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
+			PageEditorMapping.mapEditableTextToField(
+				field = "Content",
+				fragmentName = "Heading",
+				id = "element-text");
+
+			PageEditor.publish();
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+			WebContent.editDisplayPage(
+				pageName = "Display Page Name",
+				pageType = "Display Page Templates");
+
+			PortletEntry.publish();
+		}
+
+		task ("When the site administrator changes the content type of display page template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			LexiconCard.viewCardSubtitle(
+				card = "Display Page Name",
+				cardSubtitle = "Web Content Article - Basic Web Content");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
+				displayPageName = "Display Page Name",
+				item = "Change Content Type");
+		}
+
+		task ("Then the change content type modal should have correct accessibility") {
+			AssertElementAccessible(locator1 = "Modal#MODAL_CONTENT");
+		}
+	}
+
 	@description = "This is a test for LPS-193213. The page should comply with WCAG 2.1 AA standard when the ellipsis menu of the card is open."
 	@priority = 3
 	test ViewAccessibilityOfDisplayPageTemplateConfigureAction {

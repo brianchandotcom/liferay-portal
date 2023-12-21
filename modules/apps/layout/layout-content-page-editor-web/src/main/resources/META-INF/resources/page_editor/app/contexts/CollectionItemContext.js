@@ -14,6 +14,7 @@ import LayoutService from '../services/LayoutService';
 import isMappedToInfoItem from '../utils/editable_value/isMappedToInfoItem';
 import isMappedToLayout from '../utils/editable_value/isMappedToLayout';
 import isMappedToStructure from '../utils/editable_value/isMappedToStructure';
+import getPortletId from '../utils/getPortletId';
 import {useDisplayPagePreviewItem} from './DisplayPagePreviewItemContext';
 import {useDispatch} from './StoreContext';
 
@@ -182,6 +183,45 @@ const useGetContent = (
 		previousLanguageId,
 		segmentsExperienceId,
 		withinCollection,
+	]);
+
+	useEffect(() => {
+		const onRefreshPortlet = ({portletId}) => {
+			if (getPortletId(editableValues) !== portletId) {
+				return;
+			}
+
+			FragmentService.renderFragmentEntryLinkContent({
+				fragmentEntryLinkId,
+				itemClassName,
+				itemClassPK,
+				itemExternalReferenceCode,
+				languageId,
+				segmentsExperienceId,
+			}).then(({content}) => {
+				dispatch(
+					updateFragmentEntryLinkContent({
+						collectionContentId,
+						content,
+						fragmentEntryLinkId,
+					})
+				);
+			});
+		};
+
+		Liferay.on('refreshPortlet', onRefreshPortlet);
+
+		return () => Liferay.detach('refreshPortlet', onRefreshPortlet);
+	}, [
+		collectionContentId,
+		dispatch,
+		editableValues,
+		fragmentEntryLinkId,
+		itemClassName,
+		itemClassPK,
+		itemExternalReferenceCode,
+		languageId,
+		segmentsExperienceId,
 	]);
 
 	return (

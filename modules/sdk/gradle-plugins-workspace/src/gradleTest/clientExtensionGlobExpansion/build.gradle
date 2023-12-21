@@ -19,7 +19,7 @@ runGradleTest {
 
 	doLast {
 		withClientExtensionConfig("do-not-expand-urls-client-extension") {
-			assert it.text.contains('"doNotExpand=*.txt"')
+			assert it.text.contains('"doNotExpand=*.txt"') : "Wildcards should only expand for frontend client extensions."
 		}
 
 		withClientExtensionConfig("expand-urls-client-extension") {

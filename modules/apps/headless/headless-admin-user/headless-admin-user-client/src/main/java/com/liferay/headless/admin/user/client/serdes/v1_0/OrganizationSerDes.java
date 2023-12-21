@@ -195,6 +195,16 @@ public class OrganizationSerDes {
 			sb.append("\"");
 		}
 
+		if (organization.getImageId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"imageId\": ");
+
+			sb.append(organization.getImageId());
+		}
+
 		if (organization.getKeywords() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -466,6 +476,13 @@ public class OrganizationSerDes {
 			map.put("image", String.valueOf(organization.getImage()));
 		}
 
+		if (organization.getImageId() == null) {
+			map.put("imageId", null);
+		}
+		else {
+			map.put("imageId", String.valueOf(organization.getImageId()));
+		}
+
 		if (organization.getKeywords() == null) {
 			map.put("keywords", null);
 		}
@@ -659,6 +676,12 @@ public class OrganizationSerDes {
 			else if (Objects.equals(jsonParserFieldName, "image")) {
 				if (jsonParserFieldValue != null) {
 					organization.setImage((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "imageId")) {
+				if (jsonParserFieldValue != null) {
+					organization.setImageId(
+						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "keywords")) {

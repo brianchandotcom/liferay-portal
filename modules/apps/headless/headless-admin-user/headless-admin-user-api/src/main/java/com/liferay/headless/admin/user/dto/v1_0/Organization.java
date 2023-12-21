@@ -430,6 +430,46 @@ public class Organization implements Serializable {
 
 	private Supplier<String> _imageSupplier;
 
+	@Schema(description = "The organization's image id.")
+	public Long getImageId() {
+		if (_imageIdSupplier != null) {
+			imageId = _imageIdSupplier.get();
+
+			_imageIdSupplier = null;
+		}
+
+		return imageId;
+	}
+
+	public void setImageId(Long imageId) {
+		this.imageId = imageId;
+
+		_imageIdSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setImageId(
+		UnsafeSupplier<Long, Exception> imageIdUnsafeSupplier) {
+
+		_imageIdSupplier = () -> {
+			try {
+				return imageIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
+	}
+
+	@GraphQLField(description = "The organization's image id.")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long imageId;
+
+	private Supplier<Long> _imageIdSupplier;
+
 	@Schema(description = "A list of keywords describing the organization.")
 	public String[] getKeywords() {
 		if (_keywordsSupplier != null) {
@@ -1126,6 +1166,18 @@ public class Organization implements Serializable {
 			sb.append(_escape(image));
 
 			sb.append("\"");
+		}
+
+		Long imageId = getImageId();
+
+		if (imageId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"imageId\": ");
+
+			sb.append(imageId);
 		}
 
 		String[] keywords = getKeywords();

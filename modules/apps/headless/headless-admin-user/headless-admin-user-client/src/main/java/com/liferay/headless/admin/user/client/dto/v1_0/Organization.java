@@ -216,6 +216,27 @@ public class Organization implements Cloneable, Serializable {
 
 	protected String image;
 
+	public Long getImageId() {
+		return imageId;
+	}
+
+	public void setImageId(Long imageId) {
+		this.imageId = imageId;
+	}
+
+	public void setImageId(
+		UnsafeSupplier<Long, Exception> imageIdUnsafeSupplier) {
+
+		try {
+			imageId = imageIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long imageId;
+
 	public String[] getKeywords() {
 		return keywords;
 	}

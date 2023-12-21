@@ -209,7 +209,7 @@ export function ModalImportContent({
 						</ClayButton>
 
 						<ClayButton
-							disabled={!inputFile || !name}
+							disabled={!inputFile || !name || error !== ''}
 							form={importFormId}
 							type="submit"
 						>

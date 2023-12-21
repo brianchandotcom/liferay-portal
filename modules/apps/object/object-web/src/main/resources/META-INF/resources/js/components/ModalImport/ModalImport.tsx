@@ -145,6 +145,7 @@ export default function ModalImport({
 		>
 			{warningModalVisible ? (
 				<ModalImportWarning
+					error={error}
 					handleImport={() =>
 						handleImport(importFormData as FormData)
 					}

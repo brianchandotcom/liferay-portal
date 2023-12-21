@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import {Text} from '@clayui/core';
 import ClayModal from '@clayui/modal';
@@ -14,12 +15,14 @@ import {
 } from './modalImportLanguageUtil';
 
 interface ModalImportWarningProps {
+	error: string;
 	handleImport: () => void;
 	handleOnClose: () => void;
 	modalImportKey: string;
 }
 
 export function ModalImportWarning({
+	error,
 	handleImport,
 	handleOnClose,
 	modalImportKey,
@@ -31,6 +34,8 @@ export function ModalImportWarning({
 			</ClayModal.Header>
 
 			<ClayModal.Body>
+				{error && <ClayAlert displayType="danger">{error}</ClayAlert>}
+
 				<div className="text-secondary">
 					{modalImportWarningBodyTexts.map(
 						(modalImportWarningBodyText, index) => {
@@ -61,6 +66,7 @@ export function ModalImportWarning({
 						</ClayButton>
 
 						<ClayButton
+							disabled={error !== ''}
 							displayType="warning"
 							onClick={() => {
 								handleImport();

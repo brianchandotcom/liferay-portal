@@ -20,8 +20,8 @@ import com.liferay.jethr0.job.definition.parameter.PortalReleaseVersionParameter
 import com.liferay.jethr0.job.definition.parameter.PortalReleaseWarURLParameterDefinition;
 import com.liferay.jethr0.job.definition.parameter.PortalUpstreamBranchNameJobParameterDefinition;
 import com.liferay.jethr0.job.definition.parameter.TestSuiteNameJobParameterDefinition;
-import com.liferay.jethr0.job.definition.parameter.TestrayBuildNameParameterDefinition;
-import com.liferay.jethr0.job.definition.parameter.TestrayRoutineNameParameterDefinition;
+import com.liferay.jethr0.job.definition.parameter.TestrayBuildNameJobParameterDefinition;
+import com.liferay.jethr0.job.definition.parameter.TestrayRoutineNameJobParameterDefinition;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -59,9 +59,10 @@ public class PortalReleaseJobDefinition extends BaseJobDefinition {
 			new PortalReleaseWarURLParameterDefinition());
 		jobParameterDefinitions.add(
 			new PortalUpstreamBranchNameJobParameterDefinition());
-		jobParameterDefinitions.add(new TestrayBuildNameParameterDefinition());
 		jobParameterDefinitions.add(
-			new TestrayRoutineNameParameterDefinition());
+			new TestrayBuildNameJobParameterDefinition());
+		jobParameterDefinitions.add(
+			new TestrayRoutineNameJobParameterDefinition());
 		jobParameterDefinitions.add(
 			new TestSuiteNameJobParameterDefinition("portal-release"));
 

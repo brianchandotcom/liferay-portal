@@ -107,17 +107,17 @@ public class DocumentToRankingTranslatorImpl
 	}
 
 	private String _getStatus(Document document) {
-		String string = document.getString(RankingFields.STATUS);
+		String status = document.getString(RankingFields.STATUS);
 
-		if (Validator.isBlank(string)) {
-			if (document.getBoolean("inactive")) {
-				return ResultRankingsConstants.STATUS_INACTIVE;
-			}
-
-			return ResultRankingsConstants.STATUS_ACTIVE;
+		if (!Validator.isBlank(status)) {
+			return status;
 		}
 
-		return string;
+		if (document.getBoolean("inactive")) {
+			return ResultRankingsConstants.STATUS_INACTIVE;
+		}
+
+		return ResultRankingsConstants.STATUS_ACTIVE;
 	}
 
 	private Ranking.Pin _toPin(Map<String, String> map) {

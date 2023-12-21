@@ -172,17 +172,17 @@ public class RankingIndexReindexer implements IndexReindexer {
 	}
 
 	private String _getStatus(JSONObject jsonObject) {
-		String string = jsonObject.getString(RankingFields.STATUS);
+		String status = jsonObject.getString(RankingFields.STATUS);
 
-		if (Validator.isBlank(string)) {
-			if (jsonObject.getBoolean("inactive")) {
-				return ResultRankingsConstants.STATUS_INACTIVE;
-			}
-
-			return ResultRankingsConstants.STATUS_ACTIVE;
+		if (!Validator.isBlank(status)) {
+			return status;
 		}
 
-		return string;
+		if (jsonObject.getBoolean("inactive")) {
+			return ResultRankingsConstants.STATUS_INACTIVE;
+		}
+
+		return ResultRankingsConstants.STATUS_ACTIVE;
 	}
 
 	private boolean _isExecuteSyncReindex(String executionMode) {

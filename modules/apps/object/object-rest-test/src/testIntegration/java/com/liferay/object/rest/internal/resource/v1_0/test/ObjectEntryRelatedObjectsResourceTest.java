@@ -327,6 +327,10 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
 			ServiceContextTestUtil.getServiceContext());
 
+		user.setEmailAddressVerified(true);
+
+		user = UserLocalServiceUtil.updateUser(user);
+
 		UserLocalServiceUtil.addRoleUser(role.getRoleId(), user.getUserId());
 
 		HTTPTestUtil.customize(
@@ -354,7 +358,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 						ActionKeys.UPDATE, ActionKeys.VIEW
 					});
 				Assert.assertEquals(
-					403,
+					204,
 					HTTPTestUtil.invokeToHttpCode(
 						null,
 						StringBundler.concat(

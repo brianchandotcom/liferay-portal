@@ -60,7 +60,7 @@ public class MFASystemConfigurationModelListener
 							MFAEmailOTPConfiguration.class, companyId);
 
 					if (mfaEmailOTPConfiguration.enabled()) {
-						_sendNotificationToInstanceAdministrators(
+						_sendNotificationEventsToAdministratorUsers(
 							companyId, mfaDisableGlobally);
 					}
 				}
@@ -87,7 +87,7 @@ public class MFASystemConfigurationModelListener
 			properties.get("disableGlobally"));
 	}
 
-	private void _sendNotificationToInstanceAdministrators(
+	private void _sendNotificationEventsToAdministratorUsers(
 			long companyId, boolean mfaDisableGlobally)
 		throws PortalException {
 

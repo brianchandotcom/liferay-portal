@@ -773,6 +773,98 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-196819. The site administrator could see info panel of web contents in specific structure sheet."
+	@priority = 3
+	test ViewInfoPanelOfWebContentsInHighlightedStructureSheet {
+		property custom.properties = "feature.flag.LPS-194763=true${line.separator}feature.flag.LPS-197692=true";
+
+		task ("Given a site administrator has web contents") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "WC Structure Name");
+
+			DataEngine.addField(fieldName = "Text");
+
+			WebContentStructures.saveCP();
+
+			NavItem.click(navItem = "Web Content");
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+			WebContent.addWithStructureCP(
+				webContentText = "LXC",
+				webContentTitle = "LXC");
+
+			PortletEntry.publish();
+		}
+
+		task ("When the site administrator navigates to the highlighted structure sheet") {
+			Click.waitForMenuToggleJSClick(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
+
+			MenuItem.click(menuItem = "Configuration");
+
+			WebContentAdmin.selectHighlightedStructures(structureNameList = "WC Structure Name");
+
+			PortletEntry.save();
+
+			Navigator.gotoBack();
+
+			MenuBar.click(menuBar = "WC Structure Name");
+		}
+
+		task ("Then the site administrator could see info panel of web contents in different views") {
+			LexiconList.checkListCheckbox(listEntry = "LXC");
+
+			ManagementBar.clickInfo();
+
+			AssertTextEquals(
+				locator1 = "WC#INFO_PANEL_TITLE",
+				value1 = "LXC");
+
+			AssertTextEquals(
+				locator1 = "WC#INFO_PANEL_SUBTITLE",
+				value1 = "WC Structure Name");
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			MenuBar.click(menuBar = "WC Structure Name");
+
+			LexiconEntry.changeDisplayStyle(displayStyle = "cards");
+
+			LexiconCard.checkCardCheckbox(card = "LXC");
+
+			ManagementBar.clickInfo();
+
+			AssertTextEquals(
+				locator1 = "WC#INFO_PANEL_TITLE",
+				value1 = "LXC");
+
+			AssertTextEquals(
+				locator1 = "WC#INFO_PANEL_SUBTITLE",
+				value1 = "WC Structure Name");
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			MenuBar.click(menuBar = "WC Structure Name");
+
+			LexiconEntry.changeDisplayStyle(displayStyle = "table");
+
+			LexiconTable.checkTableCheckbox(tableEntry = "LXC");
+
+			ManagementBar.clickInfo();
+
+			AssertTextEquals(
+				locator1 = "WC#INFO_PANEL_TITLE",
+				value1 = "LXC");
+
+			AssertTextEquals(
+				locator1 = "WC#INFO_PANEL_SUBTITLE",
+				value1 = "WC Structure Name");
+		}
+	}
+
 	@description = "This is a test for LPS-153323 and LPS-155805. View kebab icon of web content visible and retainable."
 	@priority = 4
 	test ViewKebabIconOfWebContentVisible {

@@ -118,6 +118,8 @@ public class UserResourceTest extends BaseUserResourceTestCase {
 	@Override
 	@Test
 	public void testGetV2Users() throws Exception {
+		UserTestUtil.addUser();
+
 		_assertListResponse(userResource.getV2Users(5, 0), 0, 0);
 
 		User user1 = testDeleteV2User_addUser();

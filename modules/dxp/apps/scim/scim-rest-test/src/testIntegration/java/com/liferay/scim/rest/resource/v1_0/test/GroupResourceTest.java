@@ -121,6 +121,10 @@ public class GroupResourceTest extends BaseGroupResourceTestCase {
 	@Override
 	@Test
 	public void testGetV2Groups() throws Exception {
+		_userGroupLocalService.addUserGroup(
+			TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
+			RandomTestUtil.randomString(), null, new ServiceContext());
+
 		_assertListResponse(groupResource.getV2Groups(5, 0), 0, 0);
 
 		Group group1 = testDeleteV2Group_addGroup();

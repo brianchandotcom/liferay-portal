@@ -24,7 +24,10 @@ public class JobEntityFactory extends BaseEntityFactory<JobEntity> {
 		JobEntity.Type type = JobEntity.Type.getByKey(
 			typeJSONObject.getString("key"));
 
-		if (type == JobEntity.Type.FIXPACK_BUILDER_PULL_REQUEST) {
+		if (type == JobEntity.Type.FILE_PROPAGATOR) {
+			return new FilePropagatorJobEntity(jsonObject);
+		}
+		else if (type == JobEntity.Type.FIXPACK_BUILDER_PULL_REQUEST) {
 			return new FixpackBuilderPullRequestJobEntity(jsonObject);
 		}
 		else if (type == JobEntity.Type.FORWARD_PULL_REQUEST) {
@@ -48,6 +51,9 @@ public class JobEntityFactory extends BaseEntityFactory<JobEntity> {
 		else if (type == JobEntity.Type.JENKINS_PULL_REQUEST) {
 			return new JenkinsPullRequestJobEntity(jsonObject);
 		}
+		else if (type == JobEntity.Type.LIFERAY_BINARIES_CACHE_UPDATER) {
+			return new LiferayBinariesCacheUpdaterJobEntity(jsonObject);
+		}
 		else if (type == JobEntity.Type.MAINTENANCE_DAILY) {
 			return new MaintenanceDailyJobEntity(jsonObject);
 		}
@@ -62,6 +68,9 @@ public class JobEntityFactory extends BaseEntityFactory<JobEntity> {
 		}
 		else if (type == JobEntity.Type.MAINTENANCE_WEEKLY_NODE) {
 			return new MaintenanceWeeklyNodeJobEntity(jsonObject);
+		}
+		else if (type == JobEntity.Type.MIRRORS_LOCAL_CACHE_PROPAGATOR) {
+			return new MirrorsLocalCachePropagatorJobEntity(jsonObject);
 		}
 		else if (type == JobEntity.Type.PLUGINS_EXTRA_APPS) {
 			return new PluginsExtraAppsJobEntity(jsonObject);
@@ -104,6 +113,12 @@ public class JobEntityFactory extends BaseEntityFactory<JobEntity> {
 		}
 		else if (type == JobEntity.Type.POSHI_RELEASE) {
 			return new PoshiReleaseJobEntity(jsonObject);
+		}
+		else if (type == JobEntity.Type.PUBLISH_PORTAL_DOCKER_IMAGE) {
+			return new PublishPortalDockerImageJobEntity(jsonObject);
+		}
+		else if (type == JobEntity.Type.PUBLISH_TESTRAY_REPORT) {
+			return new PublishTestrayReportJobEntity(jsonObject);
 		}
 		else if (type == JobEntity.Type.QA_WEBSITES_DAILY) {
 			return new DailyQAWebsitesJobEntity(jsonObject);

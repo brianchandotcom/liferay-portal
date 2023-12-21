@@ -2151,7 +2151,7 @@ definition {
 			AssertElementPresent(
 				key_image = "Commerce_Black.jpg",
 				key_productName = "abs-sensor",
-				locator1 = "CommerceFrontStore#PRODUCT_CARD_IMAGE_SPECIFIC");
+				locator1 = "CommerceFrontStore#PRODUCT_CARD_IMAGE_SPECIFIC_IN_MINI_CART");
 		}
 	}
 

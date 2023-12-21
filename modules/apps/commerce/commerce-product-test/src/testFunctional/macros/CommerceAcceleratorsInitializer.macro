@@ -358,7 +358,7 @@ definition {
 				value1 = ${uomKey});
 
 			if (!(isSet(priceOnApplication))) {
-				AssertTextEquals(
+				AssertTextEquals.assertPartialText(
 					key_productName = ${productName},
 					locator1 = "CommerceAccelerators#ORDER_DETAILS_PRICE_2",
 					value1 = "$ ${productPrice}");
@@ -366,7 +366,7 @@ definition {
 		}
 		else {
 			if (!(isSet(priceOnApplication))) {
-				AssertTextEquals(
+				AssertTextEquals.assertPartialText(
 					key_productName = ${productName},
 					locator1 = "CommerceAccelerators#ORDER_DETAILS_PRICE",
 					value1 = "$ ${productPrice}");

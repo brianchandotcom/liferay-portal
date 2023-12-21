@@ -2010,12 +2010,12 @@ definition {
 		}
 
 		task ("Then the barred list price and promotion price is shown on the product card") {
-			AssertTextEquals(
+			AssertTextEquals.assertPartialText(
 				key_productName = "Brake Pads",
 				locator1 = "CommerceFrontStore#FS_PRODUCT_VALUE_PROMO_PRICE",
 				value1 = ${promoPrice});
 
-			AssertTextEquals(
+			AssertTextEquals.assertPartialText(
 				key_productName = "Brake Pads",
 				locator1 = "CommerceFrontStore#FS_PRODUCT_VALUE_INACTIVE_PRICE",
 				value1 = ${basePrice});

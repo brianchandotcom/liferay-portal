@@ -1427,6 +1427,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>GENERIC_SELECT_FIELD_N</td>
+	<td>xpath=(//div[label[normalize-space(text())='${key_fieldLabel}']]/select)[${key_index}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INPUT_INDEX</td>
+	<td>xpath=(//input[contains(@class,'form-control')])[${key_index}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>REMOVE_OPTION_CATEGORY</td>
 	<td>//div[contains(@class,'form-group')]/label[contains(.,'Category')]/..//span[contains(@class,'label label-secondary')]/span[contains(.,'${key_category}')]/..//button</td>
 	<td></td>

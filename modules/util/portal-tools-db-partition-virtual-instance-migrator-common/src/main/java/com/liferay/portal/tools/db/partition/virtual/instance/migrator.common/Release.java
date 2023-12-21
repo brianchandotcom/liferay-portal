@@ -67,7 +67,8 @@ public class Release {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(_schemaVersion, _servletContextName, _verified);
+		return Objects.hash(
+			_schemaVersion, _servletContextName, _state, _verified);
 	}
 
 	public void setSchemaVersion(Version schemaVersion) {

@@ -108,7 +108,7 @@ public class DBPartitionVirtualInstanceMigratorExtractor {
 				_exit(_LIFERAY_COMMON_EXIT_CODE_BAD);
 			}
 
-			_writeToFile(DatabaseUtil.extractInstanceData(_connection));
+			_writeToFile(DatabaseUtil.exportInstanceData(_connection));
 		}
 		catch (ParseException parseException) {
 			System.err.println("Unable to parse command line properties:");

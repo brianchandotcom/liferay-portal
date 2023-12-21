@@ -5,7 +5,6 @@
 
 package com.liferay.portal.tools.db.partition.virtual.instance.migrator.common;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -74,12 +73,12 @@ public class InstanceData {
 		_tableNames = tableNames;
 	}
 
-	private List<Company> _companies = new ArrayList<>();
+	private List<Company> _companies;
 	private Long _companyId;
 	private Date _date;
 	private boolean _defaultPartition;
 	private String _jdbcUrl;
-	private List<Release> _releases = new ArrayList<>();
+	private List<Release> _releases;
 	private List<String> _tableNames;
 
 }

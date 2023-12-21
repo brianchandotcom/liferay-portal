@@ -81,7 +81,7 @@ public class DBPartitionVirtualInstanceMigratorValidator {
 			CommandLine commandLine = commandLineParser.parse(options, args);
 
 			try {
-				_sourceInstanceData = _readInstanceData(
+				_sourceInstanceData = _readFromFile(
 					commandLine.getOptionValue("source-file"));
 			}
 			catch (IOException ioException) {
@@ -101,7 +101,7 @@ public class DBPartitionVirtualInstanceMigratorValidator {
 			}
 
 			try {
-				_targetInstanceData = _readInstanceData(
+				_targetInstanceData = _readFromFile(
 					commandLine.getOptionValue("target-file"));
 			}
 			catch (IOException ioException) {
@@ -147,9 +147,7 @@ public class DBPartitionVirtualInstanceMigratorValidator {
 		_exit(_LIFERAY_COMMON_EXIT_CODE_OK);
 	}
 
-	private static InstanceData _readInstanceData(String path)
-		throws IOException {
-
+	private static InstanceData _readFromFile(String path) throws IOException {
 		ObjectMapper objectMapper = new ObjectMapper() {
 			{
 				SimpleModule simpleModule = new SimpleModule();

@@ -188,7 +188,7 @@
 			"externalReferenceCode": "ERC-001",
 			"indexed": true,
 			"indexedAsKeyword": false,
-			"indexedLanguageId": "",
+			"indexedLanguageId": "en_US",
 			"label": {
 				"en_US": "Text Field 1"
 			},
@@ -206,7 +206,7 @@
 			"externalReferenceCode": "ERC-002",
 			"indexed": true,
 			"indexedAsKeyword": false,
-			"indexedLanguageId": "",
+			"indexedLanguageId": "en_US",
 			"label": {
 				"en_US": "Text Field 2"
 			},

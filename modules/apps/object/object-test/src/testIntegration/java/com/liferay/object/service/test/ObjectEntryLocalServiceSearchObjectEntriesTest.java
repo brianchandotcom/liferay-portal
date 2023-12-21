@@ -223,17 +223,17 @@ public class ObjectEntryLocalServiceSearchObjectEntriesTest {
 	@Test
 	public void testClob() throws Exception {
 		_testCharacterDataType(
-			false, ObjectFieldConstants.BUSINESS_TYPE_RICH_TEXT,
-			ObjectFieldConstants.DB_TYPE_CLOB, false, false);
+			ObjectFieldConstants.BUSINESS_TYPE_RICH_TEXT,
+			ObjectFieldConstants.DB_TYPE_CLOB, false, false, null);
 		_testCharacterDataType(
-			false, ObjectFieldConstants.BUSINESS_TYPE_RICH_TEXT,
-			ObjectFieldConstants.DB_TYPE_CLOB, true, false);
+			ObjectFieldConstants.BUSINESS_TYPE_RICH_TEXT,
+			ObjectFieldConstants.DB_TYPE_CLOB, true, false, "en_US");
 		_testCharacterDataType(
-			false, ObjectFieldConstants.BUSINESS_TYPE_RICH_TEXT,
-			ObjectFieldConstants.DB_TYPE_CLOB, true, true);
+			ObjectFieldConstants.BUSINESS_TYPE_RICH_TEXT,
+			ObjectFieldConstants.DB_TYPE_CLOB, true, false, null);
 		_testCharacterDataType(
-			true, ObjectFieldConstants.BUSINESS_TYPE_RICH_TEXT,
-			ObjectFieldConstants.DB_TYPE_CLOB, true, false);
+			ObjectFieldConstants.BUSINESS_TYPE_RICH_TEXT,
+			ObjectFieldConstants.DB_TYPE_CLOB, true, true, null);
 	}
 
 	@Test
@@ -499,17 +499,17 @@ public class ObjectEntryLocalServiceSearchObjectEntriesTest {
 	@Test
 	public void testString() throws Exception {
 		_testCharacterDataType(
-			false, ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-			ObjectFieldConstants.DB_TYPE_STRING, false, false);
+			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+			ObjectFieldConstants.DB_TYPE_STRING, false, false, null);
 		_testCharacterDataType(
-			false, ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-			ObjectFieldConstants.DB_TYPE_STRING, true, false);
+			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+			ObjectFieldConstants.DB_TYPE_STRING, true, false, "en_US");
 		_testCharacterDataType(
-			false, ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-			ObjectFieldConstants.DB_TYPE_STRING, true, true);
+			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+			ObjectFieldConstants.DB_TYPE_STRING, true, false, null);
 		_testCharacterDataType(
-			true, ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-			ObjectFieldConstants.DB_TYPE_STRING, true, false);
+			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+			ObjectFieldConstants.DB_TYPE_STRING, true, true, null);
 	}
 
 	private void _addObjectDefinition(ObjectField objectField)
@@ -614,8 +614,8 @@ public class ObjectEntryLocalServiceSearchObjectEntriesTest {
 	}
 
 	private void _testCharacterDataType(
-			boolean analyzed, String businessType, String dbType,
-			boolean indexed, boolean indexedAsKeyword)
+			String businessType, String dbType, boolean indexed,
+			boolean indexedAsKeyword, String indexedLanguageId)
 		throws Exception {
 
 		if (_objectDefinition != null) {
@@ -626,7 +626,7 @@ public class ObjectEntryLocalServiceSearchObjectEntriesTest {
 		_addObjectDefinition(
 			ObjectFieldUtil.createObjectField(
 				businessType, dbType, indexed, indexedAsKeyword,
-				analyzed ? "en_US" : null, "Alpha", "alpha", false));
+				indexedLanguageId, "Alpha", "alpha", false));
 
 		String text = "The quick brown fox jumps over the lazy dog";
 
@@ -650,7 +650,7 @@ public class ObjectEntryLocalServiceSearchObjectEntriesTest {
 		}
 		else if (indexed) {
 			_assertKeywords("fox", 1);
-			_assertKeywords("jump", analyzed ? 1 : 0);
+			_assertKeywords("jump", indexedAsKeyword ? 0 : 1);
 			_assertKeywords("jumps", 1);
 			_assertKeywords("LAZY dog", 1);
 			_assertKeywords("lazy dog", 1);

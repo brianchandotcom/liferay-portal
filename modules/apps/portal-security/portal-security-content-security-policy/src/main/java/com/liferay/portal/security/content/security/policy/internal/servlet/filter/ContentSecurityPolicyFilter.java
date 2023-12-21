@@ -6,7 +6,6 @@
 package com.liferay.portal.security.content.security.policy.internal.servlet.filter;
 
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -104,14 +103,6 @@ public class ContentSecurityPolicyFilter extends BasePortalFilter {
 				"<(?i)link ", "<link nonce=\"" + nonce + "\" ");
 			content = content.replaceAll(
 				"<(?i)link>", "<link nonce=\"" + nonce + "\">");
-
-			if (!FeatureFlagManagerUtil.isEnabled("LPS-178065")) {
-				content = content.replaceAll(
-					"<(?i)script ", "<script nonce=\"" + nonce + "\" ");
-				content = content.replaceAll(
-					"<(?i)script>", "<script nonce=\"" + nonce + "\">");
-			}
-
 			content = content.replaceAll(
 				"<(?i)style ", "<style nonce=\"" + nonce + "\" ");
 			content = content.replaceAll(

@@ -277,8 +277,8 @@ public class FragmentEntryLinkLocalServiceImpl
 					JSONObject jsonObject = _jsonFactory.createJSONObject(
 						fragmentEntryLink.getEditableValues());
 
-					String portletId = jsonObject.getString("portletId");
 					String instanceId = jsonObject.getString("instanceId");
+					String portletId = jsonObject.getString("portletId");
 
 					if (!instanceId.isEmpty()) {
 						portletId = portletId + "_INSTANCE_" + instanceId;

@@ -360,7 +360,6 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 
 			long[] organizationIds =
 				_userPersistence.getOrganizationPrimaryKeys(userId);
-
 			long[] userGroupIds = _userPersistence.getUserGroupPrimaryKeys(
 				userId);
 

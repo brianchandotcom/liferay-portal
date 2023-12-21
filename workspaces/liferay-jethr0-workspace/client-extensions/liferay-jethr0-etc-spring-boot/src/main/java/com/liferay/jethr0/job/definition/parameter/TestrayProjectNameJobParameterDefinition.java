@@ -8,17 +8,17 @@ package com.liferay.jethr0.job.definition.parameter;
 /**
  * @author Michael Hashimoto
  */
-public class TestrayRoutineNameParameterDefinition
+public class TestrayProjectNameJobParameterDefinition
 	extends BaseJobParameterDefinition {
 
 	@Override
 	public String getKey() {
-		return "testrayRoutineName";
+		return "testrayProjectName";
 	}
 
 	@Override
 	public String getLabel() {
-		return "Testray Routine Name";
+		return "Testray Project Name";
 	}
 
 	@Override
@@ -33,7 +33,7 @@ public class TestrayRoutineNameParameterDefinition
 
 	@Override
 	public String getValueDescription() {
-		return "Insert your Testray routine name here";
+		return "Insert your Testray project name here";
 	}
 
 	@Override

@@ -13,8 +13,8 @@ import com.liferay.jethr0.job.definition.parameter.QAWebsitesBranchSHAJobParamet
 import com.liferay.jethr0.job.definition.parameter.QAWebsitesBranchURLJobParameterDefinition;
 import com.liferay.jethr0.job.definition.parameter.QAWebsitesProjectNameJobParameterDefinition;
 import com.liferay.jethr0.job.definition.parameter.TestSuiteNameJobParameterDefinition;
-import com.liferay.jethr0.job.definition.parameter.TestrayProjectNameParameterDefinition;
-import com.liferay.jethr0.job.definition.parameter.TestrayRoutineNameParameterDefinition;
+import com.liferay.jethr0.job.definition.parameter.TestrayProjectNameJobParameterDefinition;
+import com.liferay.jethr0.job.definition.parameter.TestrayRoutineNameJobParameterDefinition;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -40,9 +40,9 @@ public class BaseQAWebsitesJobDefinition extends BaseJobDefinition {
 		jobParameterDefinitions.add(
 			new QAWebsitesProjectNameJobParameterDefinition());
 		jobParameterDefinitions.add(
-			new TestrayProjectNameParameterDefinition());
+			new TestrayProjectNameJobParameterDefinition());
 		jobParameterDefinitions.add(
-			new TestrayRoutineNameParameterDefinition());
+			new TestrayRoutineNameJobParameterDefinition());
 		jobParameterDefinitions.add(
 			new TestSuiteNameJobParameterDefinition(null));
 

@@ -8,7 +8,7 @@ package com.liferay.jethr0.job.definition.parameter;
 /**
  * @author Michael Hashimoto
  */
-public class TestrayBuildNameParameterDefinition
+public class TestrayBuildNameJobParameterDefinition
 	extends BaseJobParameterDefinition {
 
 	@Override

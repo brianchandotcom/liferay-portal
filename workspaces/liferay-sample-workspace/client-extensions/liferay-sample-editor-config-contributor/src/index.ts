@@ -3,15 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-interface IConfig {
-	[key: string]: any;
-}
+import {
+	EditorConfigTransformer,
+	EditorTransformer,
+} from '@liferay/js-api/editor';
 
-interface IEditorConfigTransformer {
-	(args: IConfig): IConfig;
-}
-
-const editorConfigTransformer: IEditorConfigTransformer = (config) => {
+const editorConfigTransformer: EditorConfigTransformer<any> = (config) => {
 	const toolbar: [string[]] = config.toolbar_liferay;
 
 	toolbar.push(['ImageSelector']);
@@ -23,4 +20,8 @@ const editorConfigTransformer: IEditorConfigTransformer = (config) => {
 	};
 };
 
-export default editorConfigTransformer;
+const editorTransformer: EditorTransformer<any> = {
+	editorConfigTransformer,
+};
+
+export default editorTransformer;

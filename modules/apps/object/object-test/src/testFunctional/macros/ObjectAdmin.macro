@@ -1165,6 +1165,25 @@ definition {
 	}
 
 	@summary = "Default summary"
+	macro editObjectField(field = null, deletionType = null, label = null, labelName = null) {
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = ${label});
+
+		ObjectAdmin.goToFieldsTab();
+
+		ObjectAdmin.goToFieldsDetails(label = ${labelName});
+
+		Check.checkToggleSwitch(
+			key_toggleSwitchLabel = "Accept Unique Values Only",
+			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+		CreateObject.saveObject();
+
+		ObjectAdmin.publishObjectViaAPI(objectName = ${objectName});
+	}
+
+	@summary = "Default summary"
 	macro enableCondition() {
 		Check.checkToggleSwitch(locator1 = "ObjectAction#ENABLE_DISABLE_CONDITION");
 	}

@@ -87,8 +87,9 @@ public abstract class BaseUserActivityAsahSuggestionsContributor
 				StringPool.POUND, searchContext.getCompanyId(),
 				StringPool.POUND, contentTypes, StringPool.POUND,
 				displayLanguageId, StringPool.POUND, groupId, StringPool.POUND,
-				minCounts, StringPool.POUND, page, StringPool.POUND, rangeKey,
-				StringPool.POUND, size, StringPool.POUND, sort));
+				minCounts, StringPool.POUND, page, StringPool.POUND, path,
+				StringPool.POUND, rangeKey, StringPool.POUND, size,
+				StringPool.POUND, sort));
 	}
 
 	@Override

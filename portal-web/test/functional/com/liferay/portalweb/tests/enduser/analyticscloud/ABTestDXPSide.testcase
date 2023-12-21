@@ -214,6 +214,14 @@ definition {
 	@description = "Story: LRAC-14070 | Automation ID: LRAC-14574 | Test Summary: Can publish control from a terminated test"
 	@priority = 5
 	test CanPublishControlFromTerminatedTest {
+		task ("Create an AB test") {
+			ABTest.createABTest(
+				goal = "Bounce Rate",
+				testTitle = ${nameABTest});
+
+			ABTest.createVariant(variantName = "Variant name");
+		}
+
 		task ("Edit the variant created") {
 			ABTest.editVariant(variantName = "Variant name");
 		}
@@ -282,6 +290,14 @@ definition {
 	@description = "Story: LRAC-14070 | Automation ID: LRAC-14573 | Test Summary: Can publish variant from a terminated test and delete test in AC"
 	@priority = 5
 	test CanPublishVariantFromTerminatedTestAndDeleteTest {
+		task ("Create an AB test") {
+			ABTest.createABTest(
+				goal = "Bounce Rate",
+				testTitle = ${nameABTest});
+
+			ABTest.createVariant(variantName = "Variant name");
+		}
+
 		task ("Edit the variant created") {
 			ABTest.editVariant(variantName = "Variant name");
 		}

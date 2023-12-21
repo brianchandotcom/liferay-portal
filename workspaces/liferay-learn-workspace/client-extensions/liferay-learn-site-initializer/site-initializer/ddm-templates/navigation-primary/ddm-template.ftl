@@ -1,4 +1,8 @@
 <style>
+	.adt-av-title {
+		font-weight: 600;
+	}
+
 	.dropdown-full .adt-nav-item {
 		background-color: rgba(0, 0, 0, 0);
 		border: none;

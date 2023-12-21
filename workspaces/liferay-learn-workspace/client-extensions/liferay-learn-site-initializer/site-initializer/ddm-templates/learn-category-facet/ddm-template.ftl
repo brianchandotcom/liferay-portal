@@ -1,4 +1,8 @@
 <style>
+	.autofit-col:hover {
+		background-color: #F7F7F7;
+	}
+
 	.autofit-col .c-inner {
 		color: #282934;
 		flex-shrink: 0;

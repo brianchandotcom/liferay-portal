@@ -28,6 +28,47 @@ definition {
 		}
 	}
 
+	@description = "This test ensures that the deleted article can not be searched out."
+	@priority = 3
+	test CannotSearchOutDeletedArticle {
+		property custom.properties = "feature.flag.LPS-188058=true";
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = 1,
+			groupName = "Guest",
+			layoutName = "Knowledge Base Display Page",
+			widgetName = "Knowledge Base Search");
+
+		JSONKnowledgeBase.addkBArticle(
+			groupName = "Guest",
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.deleteCP(
+			kbArticleTitle = "Knowledge Base Article Title",
+			moveToRecycleBin = "true");
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		KBSearch.searchWidget(searchTerm = "Knowledge Base Article Title");
+
+		LexiconList.viewListEntryNotPresent(listEntry = "Knowledge Base Article Title");
+
+		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
+
+		RecycleBin.restoreCP(
+			assetName = "Knowledge Base Article Title",
+			assetType = "Knowledge Base Article");
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		KBSearch.searchWidget(searchTerm = "Knowledge Base Article Title");
+
+		KBSearch.viewSearchResultPG(kbArticleTitle = "Knowledge Base Article Title");
+	}
+
 	@description = "This test ensures that the description can be displayed on the KB search widget after enabling it in the configuration."
 	@priority = 4
 	test CanViewDescriptionAfterEnablingInConfiguration {

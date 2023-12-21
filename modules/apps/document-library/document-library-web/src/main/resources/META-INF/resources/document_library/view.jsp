@@ -273,8 +273,6 @@ DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisp
 				).put(
 					"searchContainerId", "entries"
 				).put(
-					"selectFolderURL", dlViewDisplayContext.getSelectFolderURL()
-				).put(
 					"uploadable", dlViewDisplayContext.isUploadable()
 				).put(
 					"uploadURL", dlViewDisplayContext.getUploadURL()

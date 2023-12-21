@@ -241,10 +241,10 @@ export function FieldBase({
 		type === 'numeric' ||
 		type === 'image' ||
 		type === 'rich_text' ||
-		type === 'search_location' ||
-		type === 'select';
+		type === 'search_location';
 	const readFieldDetails = !showFor;
-	const hasFieldDetails = accessible && fieldDetails && readFieldDetails;
+	const hasFieldDetails =
+		accessible && fieldDetails && readFieldDetails && type !== 'select';
 
 	const accessiblePropsGroup = {
 		...(!renderLabel && {'aria-labelledby': fieldDetailsId}),

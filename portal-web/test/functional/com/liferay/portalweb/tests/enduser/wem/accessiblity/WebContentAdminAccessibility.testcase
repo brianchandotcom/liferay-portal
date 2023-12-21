@@ -75,6 +75,97 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-196819. The Highlighted Structures should comply with WCAG 2.1 AA standard."
+	@priority = 3
+	test ViewAccessibilityOfHighlightedStructures {
+		property custom.properties = "feature.flag.LPS-194763=true${line.separator}feature.flag.LPS-197692=true";
+
+		task ("Given a site administrator has web contents") {
+			JSONWebcontent.addWebContent(
+				content = "EMEA Guild",
+				groupName = "Test Site Name",
+				title = "EMEA Guild");
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "WC Structure Name");
+
+			DataEngine.addField(fieldName = "Text");
+
+			WebContentStructures.saveCP();
+
+			NavItem.click(navItem = "Web Content");
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+			WebContent.addWithStructureCP(
+				webContentText = "LXC",
+				webContentTitle = "LXC");
+
+			PortletEntry.publish();
+		}
+
+		task ("When the site administrator navigates to the configuration page") {
+			Click.waitForMenuToggleJSClick(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
+
+			MenuItem.click(menuItem = "Configuration");
+
+			MenuBar.viewActive(menuBar = "Structures");
+		}
+
+		task ("Then the Structures sheet should have correct accessibility") {
+			AssertAccessible();
+		}
+
+		task ("When the site administrator opens the Select Structures modal") {
+			Click(
+				ariaLabel = "Select Highlighted Structures",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL");
+		}
+
+		task ("Then the Select Structures modal should have correct accessibility") {
+			AssertElementAccessible(locator1 = "Modal#MODAL_CONTENT");
+		}
+
+		task ("When the site administrator select the new structure as highlighted structure") {
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			LexiconTable.checkTableCheckbox(tableEntry = "WC Structure Name");
+
+			SelectFrameTop();
+
+			Click(
+				key_text = "Add",
+				locator1 = "Modal#MODAL_FOOTER_BUTTON");
+
+			PortletEntry.save();
+		}
+
+		task ("Then the Structures sheet should have correct accessibility") {
+			AssertAccessible();
+		}
+
+		task ("When the site administrator navigates to the Content Library sheet") {
+			Navigator.gotoBack();
+
+			MenuBar.viewActive(menuBar = "Content Library");
+		}
+
+		task ("Then the Content Library sheet should have correct accessibility") {
+			AssertAccessible();
+		}
+
+		task ("When the site administrator navigates to the highlighted structure sheet") {
+			MenuBar.click(menuBar = "WC Structure Name");
+		}
+
+		task ("Then the highlighted structure sheet should have correct accessibility") {
+			AssertAccessible();
+		}
+	}
+
 	@description = "This is a test for LPS-197694. The configuration page of Web Content admin should comply with WCAG 2.1 AA standard"
 	@priority = 4
 	test ViewAccessibilityOfNotificationsConfiguration {

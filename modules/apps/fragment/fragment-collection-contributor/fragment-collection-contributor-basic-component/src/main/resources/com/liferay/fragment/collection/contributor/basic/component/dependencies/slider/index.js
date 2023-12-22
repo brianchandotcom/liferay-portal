@@ -153,10 +153,12 @@ function setNextItemIndex(index) {
 	}
 
 	prev.addEventListener('click', function () {
+		stopCarousel();
 		move(MOVE_LEFT);
 	});
 
 	next.addEventListener('click', () => {
+		stopCarousel();
 		move(MOVE_RIGHT);
 	});
 
@@ -176,6 +178,8 @@ function setNextItemIndex(index) {
 			);
 
 			if (index !== indexActiveIndicator) {
+				stopCarousel();
+
 				if (index < indexActiveIndicator) {
 					move(MOVE_LEFT, index);
 				}

@@ -46,7 +46,10 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	private String _fixElementDefinition(String elementDefinition) {
+	private String
+		_replaceElementDefinitionJSONHelpTextForLimitSearchToTheseSites(
+			String elementDefinition) {
+
 		if (Validator.isBlank(elementDefinition)) {
 			return elementDefinition;
 		}
@@ -91,7 +94,10 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 		return sxpElementJSONObject.toString();
 	}
 
-	private String _fixElementInstance(String elementInstances) {
+	private String
+		_replaceElementInstanceJSONHelpTextForLimitSearchToTheseSites(
+			String elementInstances) {
+
 		if (Validator.isBlank(elementInstances)) {
 			return elementInstances;
 		}
@@ -127,7 +133,7 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 			sxpElementJSONObject.put(
 				"elementDefinition",
 				_createJSONObject(
-					_fixElementDefinition(
+					_replaceElementDefinitionJSONHelpTextForLimitSearchToTheseSites(
 						elementDefinitionJSONObject.toString())));
 		}
 
@@ -148,7 +154,7 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 				while (resultSet1.next()) {
 					preparedStatement2.setString(
 						1,
-						_fixElementInstance(
+						_replaceElementInstanceJSONHelpTextForLimitSearchToTheseSites(
 							resultSet1.getString("elementInstancesJSON")));
 					preparedStatement2.setLong(
 						2, resultSet1.getLong("sxpBlueprintId"));
@@ -174,7 +180,7 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 			while (resultSet.next()) {
 				preparedStatement2.setString(
 					1,
-					_fixElementDefinition(
+					_replaceElementDefinitionJSONHelpTextForLimitSearchToTheseSites(
 						resultSet.getString("elementDefinitionJSON")));
 
 				preparedStatement2.addBatch();

@@ -11,21 +11,21 @@
 
 <style>
 	.adt-nav-title.align-items-center.d-flex {
-	color: #282934;
-	  font-weight: 700;
+		color: #282934;
+		font-weight: 700;
 	}
 
 	.adt-submenu-item-link {
-	  color: #282934;
+	  	color: #282934;
 		display: contents;
 	}
 
 	.align-items-baseline .col-10 {
-	  gap: 1rem;
+	  	gap: 1rem;
 	}
 
 	.bg-color-1 {
-	  background-color: #F7F7F8;
+	  	background-color: #F7F7F8;
 	}
 
 	.br-5 {
@@ -33,11 +33,11 @@
 	}
 
 	.br-5.side-nav {
-	  margin: 0.3rem 1rem;
+		margin: 0.3rem 1rem;
 	}
 
 	.br-13.dropdown-menu {
-	  overflow-x:hidden;
+		overflow-x:hidden;
 		width: max-content;
 		will-change: transform;
 		z-index: 1;
@@ -58,14 +58,14 @@
 	}
 
 	.d-flex>.lexicon-icon-angle-left {
-	  display: block;
+	  	display: block;
 		height: 0.6rem;
 		transform: rotate(180deg);
 		width: 0.6rem;
 	}
 
 	.doc-nav>.align-items-center {
-	border-bottom: solid;
+		border-bottom: solid;
 		border-color: #EAECEE;
 	}
 
@@ -99,8 +99,8 @@
 	}
 
 	.side-nav>.other-level{
-	  color: #282934 !important;
-	  font-size: 1rem;
+	  	color: #282934 !important;
+	  	font-size: 1rem;
 		font-weight:600;
 		width: 100%;
 	}
@@ -111,7 +111,7 @@
 	}
 
 	.tag-container {
-	  border-radius: 1.5rem;
+	  	border-radius: 1.5rem;
 		border: 1px solid #0B5FFF;
 		background: var(--action-primary-inverted, #FFF);
 		padding: 0.25rem 0.75rem;
@@ -119,7 +119,7 @@
 	}
 
 	.tags-container {
-	  flex-wrap: wrap;
+	  	flex-wrap: wrap;
 		font-size: 0.875rem;
 	}
 
@@ -133,8 +133,8 @@
 	}
 
 	#backLink {
-	  border-left-width: 0px;
-	  color: #282934;
+	 	 border-left-width: 0px;
+	  	color: #282934;
 	}
 
 	#backLink:hover {
@@ -151,42 +151,42 @@
 	}
 
 	#parentTitle {
-	  color: #282934;
+	 	color: #282934;
 		font-weight: 700;
 	}
 
 	#productIcon {
-	  background-color: #E7EFFF;
+		background-color: #E7EFFF;
 		border: 1px solid;
 		border-color: #FFFFFF;
 		height: 3.25rem;
-	width: 3.25rem;
+		width: 3.25rem;
 	}
 
 	#productIcon>img {
-	  height: 3.5rem;
+		height: 3.5rem;
 		margin-left: -0.125rem;
 		max-width: none;
 		width: 3.5rem;
 	}
 
 	#productsIcon {
-	  border: 1px solid;
+		border: 1px solid;
 		border-color: #F7F7F8;
 		height: 2.25rem;
 		width: 2.25rem;
 	}
 
 	#productsIcon>img {
-	  height: 25px;
+		height: 25px;
 		margin-left: 5px;
 		max-width: none;
 		width: 25px;
 	}
 
 	#send-feedback {
-	  color: #0B5FFF;
-	  font-family: 'Source Sans Pro', sans-serif;
+	  	color: #0B5FFF;
+	  	font-family: 'Source Sans Pro', sans-serif;
 		font-size: 1rem;
 		font-style: normal;
 		font-weight: 600;
@@ -217,7 +217,7 @@
 					taxonomyCategoriesMap[taxonomyVocabularyName] + [{
 						"categoryId": taxonomyCategoryBrief.taxonomyCategoryId,
 						"categoryName": taxonomyCategoryBrief.taxonomyCategoryName
-						}]
+					}]
 			}
 		/>
 	<#else>

@@ -11,7 +11,6 @@ import com.liferay.document.library.web.internal.display.context.IGConfiguration
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
-import com.liferay.portal.kernel.service.RepositoryLocalService;
 import com.liferay.trash.TrashHelper;
 
 import javax.portlet.PortletConfig;
@@ -47,8 +46,7 @@ public class IGDisplayConfigurationAction
 			IGConfigurationDisplayContext.class.getName(),
 			new IGConfigurationDisplayContext(
 				_dlAppLocalService, _itemSelector, httpServletRequest,
-				_portletPreferencesLocalService, _repositoryLocalService,
-				_trashHelper));
+				_portletPreferencesLocalService, _trashHelper));
 
 		super.include(portletConfig, httpServletRequest, httpServletResponse);
 	}
@@ -61,9 +59,6 @@ public class IGDisplayConfigurationAction
 
 	@Reference
 	private PortletPreferencesLocalService _portletPreferencesLocalService;
-
-	@Reference
-	private RepositoryLocalService _repositoryLocalService;
 
 	@Reference
 	private TrashHelper _trashHelper;

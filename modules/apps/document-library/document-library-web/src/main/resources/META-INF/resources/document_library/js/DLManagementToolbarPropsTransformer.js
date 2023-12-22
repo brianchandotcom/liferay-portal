@@ -294,7 +294,7 @@ export default function propsTransformer({
 
 				submitForm(form, editEntryURL, false);
 			},
-			selectEventName: `${portletNamespace}selectFolder`,
+			selectEventName: `${portletNamespace}folderSelected`,
 			size: 'lg',
 			title: sub(dialogTitle, [selectedItems]),
 			url: selectFolderURL,

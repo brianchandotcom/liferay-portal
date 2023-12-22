@@ -329,15 +329,11 @@ renderResponse.setTitle(headerTitle);
 											<%
 											ItemSelector itemSelector = (ItemSelector)request.getAttribute(ItemSelector.class.getName());
 
-											FolderItemSelectorCriterion folderItemSelectorCriterion = new FolderItemSelectorCriterion();
-
-											folderItemSelectorCriterion.setDesiredItemSelectorReturnTypes(new FolderItemSelectorReturnType());
-											folderItemSelectorCriterion.setFolderId(folderId);
-
-											PortletURL selectFolderURL = itemSelector.getItemSelectorURL(RequestBackedPortletURLFactoryUtil.create(request), portletDisplay.getNamespace() + "folderSelected", folderItemSelectorCriterion);
+											FolderItemSelectorURLProvider folderItemSelectorURLProvider = new FolderItemSelectorURLProvider(request, itemSelector);
 											%>
 
-											url: '<%= HtmlUtil.escapeJS(selectFolderURL.toString()) %>',
+											url:
+												'<%= HtmlUtil.escapeJS(folderItemSelectorURLProvider.getSelectAddFileEntryFolderURL(folderId)) %>',
 										});
 									});
 								}

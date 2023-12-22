@@ -175,12 +175,8 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 							rootFolderNotFoundWarning.classList.add('hide');
 						},
 						title: '<liferay-ui:message arguments="folder" key="select-x" />',
-
-						<%
-						PortletURL selectFolderURL = dlAdminDisplayContext.getSelectFolderURL(request);
-						%>
-
-						url: '<%= HtmlUtil.escapeJS(selectFolderURL.toString()) %>',
+						url:
+							'<%= HtmlUtil.escapeJS(dlAdminDisplayContext.getSelectFolderURL(request)) %>',
 					});
 				});
 			}

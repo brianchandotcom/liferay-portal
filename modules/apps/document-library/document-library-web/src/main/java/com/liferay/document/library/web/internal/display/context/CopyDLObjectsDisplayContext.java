@@ -12,19 +12,13 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileShortcutLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLFolderLocalServiceUtil;
+import com.liferay.document.library.web.internal.util.FolderItemSelectorURLProvider;
 import com.liferay.item.selector.ItemSelector;
-import com.liferay.item.selector.criteria.FolderItemSelectorReturnType;
-import com.liferay.item.selector.criteria.folder.criterion.FolderItemSelectorCriterion;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
-import com.liferay.portal.kernel.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -120,13 +114,12 @@ public class CopyDLObjectsDisplayContext {
 			(ItemSelector)_httpServletRequest.getAttribute(
 				ItemSelector.class.getName());
 
-		return String.valueOf(
-			itemSelector.getItemSelectorURL(
-				RequestBackedPortletURLFactoryUtil.create(_httpServletRequest),
-				_getGroup(getSourceRepositoryId()),
-				_themeDisplay.getScopeGroupId(), _getItemSelectedEventName(),
-				_getFolderItemSelectorCriterion(
-					_getSourceFolderId(), getSourceRepositoryId())));
+		FolderItemSelectorURLProvider folderItemSelectorURLProvider =
+			new FolderItemSelectorURLProvider(
+				_httpServletRequest, itemSelector);
+
+		return folderItemSelectorURLProvider.getSelectCopyToFolderURL(
+			getSourceRepositoryId(), _getSourceFolderId());
 	}
 
 	public long getSize() {
@@ -163,25 +156,6 @@ public class CopyDLObjectsDisplayContext {
 		}
 	}
 
-	private FolderItemSelectorCriterion _getFolderItemSelectorCriterion(
-		long folderId, long repositoryId) {
-
-		FolderItemSelectorCriterion folderItemSelectorCriterion =
-			new FolderItemSelectorCriterion();
-
-		folderItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			new FolderItemSelectorReturnType());
-		folderItemSelectorCriterion.setFolderId(folderId);
-		folderItemSelectorCriterion.setIgnoreRootFolder(true);
-		folderItemSelectorCriterion.setRepositoryId(repositoryId);
-		folderItemSelectorCriterion.setSelectedFolderId(folderId);
-		folderItemSelectorCriterion.setSelectedRepositoryId(repositoryId);
-		folderItemSelectorCriterion.setShowGroupSelector(true);
-		folderItemSelectorCriterion.setShowMountFolder(false);
-
-		return folderItemSelectorCriterion;
-	}
-
 	private String _getFolderName(DLFolder dlFolder) {
 		if ((dlFolder == null) ||
 			(dlFolder.getFolderId() ==
@@ -191,23 +165,6 @@ public class CopyDLObjectsDisplayContext {
 		}
 
 		return dlFolder.getName();
-	}
-
-	private Group _getGroup(long repositoryId) throws PortalException {
-		Repository repository = RepositoryLocalServiceUtil.fetchRepository(
-			repositoryId);
-
-		if (repository == null) {
-			return GroupLocalServiceUtil.getGroup(repositoryId);
-		}
-
-		return GroupLocalServiceUtil.getGroup(repository.getGroupId());
-	}
-
-	private String _getItemSelectedEventName() {
-		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
-
-		return portletDisplay.getNamespace() + "folderSelected";
 	}
 
 	private long _getSourceFolderId() {

@@ -173,15 +173,7 @@ if (portletTitleBasedNavigation) {
 <%
 ItemSelector itemSelector = (ItemSelector)request.getAttribute(ItemSelector.class.getName());
 
-FolderItemSelectorCriterion folderItemSelectorCriterion = new FolderItemSelectorCriterion();
-
-folderItemSelectorCriterion.setDesiredItemSelectorReturnTypes(new FolderItemSelectorReturnType());
-folderItemSelectorCriterion.setFolderId(fileEntry.getFolderId());
-folderItemSelectorCriterion.setRepositoryId(fileEntry.getRepositoryId());
-folderItemSelectorCriterion.setSelectedFolderId(fileEntry.getFolderId());
-folderItemSelectorCriterion.setSelectedRepositoryId(fileEntry.getRepositoryId());
-
-PortletURL selectFolderURL = itemSelector.getItemSelectorURL(RequestBackedPortletURLFactoryUtil.create(request), portletDisplay.getNamespace() + "folderSelected", folderItemSelectorCriterion);
+FolderItemSelectorURLProvider folderItemSelectorURLProvider = new FolderItemSelectorURLProvider(request, itemSelector);
 %>
 
 <portlet:actionURL name="/document_library/edit_entry" var="editEntryURL" />
@@ -221,7 +213,8 @@ PortletURL selectFolderURL = itemSelector.getItemSelectorURL(RequestBackedPortle
 			},
 			title:
 				'<liferay-ui:message arguments="<%= 1 %>" key="select-destination-folder-for-x-items" translateArguments="<%= false %>" />',
-			url: '<%= HtmlUtil.escapeJS(selectFolderURL.toString()) %>',
+			url:
+				'<%= HtmlUtil.escapeJS(folderItemSelectorURLProvider.getSelectMoveToFolderURL(fileEntry.getRepositoryId(), fileEntry.getFolderId())) %>',
 		});
 	}
 </aui:script>

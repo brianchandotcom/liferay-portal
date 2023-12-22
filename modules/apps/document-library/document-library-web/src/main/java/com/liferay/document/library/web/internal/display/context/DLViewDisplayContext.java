@@ -15,10 +15,9 @@ import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.web.internal.display.context.helper.DLPortletInstanceSettingsHelper;
 import com.liferay.document.library.web.internal.display.context.helper.DLRequestHelper;
 import com.liferay.document.library.web.internal.security.permission.resource.DLFolderPermission;
+import com.liferay.document.library.web.internal.util.FolderItemSelectorURLProvider;
 import com.liferay.item.selector.ItemSelector;
-import com.liferay.item.selector.criteria.FolderItemSelectorReturnType;
 import com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType;
-import com.liferay.item.selector.criteria.folder.criterion.FolderItemSelectorCriterion;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -245,28 +244,17 @@ public class DLViewDisplayContext {
 		).buildString();
 	}
 
-	public String getSelectFolderURL() throws WindowStateException {
+	public String getSelectFolderURL() throws PortalException {
 		ItemSelector itemSelector =
 			(ItemSelector)_httpServletRequest.getAttribute(
 				ItemSelector.class.getName());
 
-		FolderItemSelectorCriterion folderItemSelectorCriterion =
-			new FolderItemSelectorCriterion();
+		FolderItemSelectorURLProvider folderItemSelectorURLProvider =
+			new FolderItemSelectorURLProvider(
+				_httpServletRequest, itemSelector);
 
-		folderItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			new FolderItemSelectorReturnType());
-		folderItemSelectorCriterion.setFolderId(getFolderId());
-		folderItemSelectorCriterion.setRepositoryId(
-			_dlAdminDisplayContext.getSelectedRepositoryId());
-		folderItemSelectorCriterion.setSelectedFolderId(getFolderId());
-		folderItemSelectorCriterion.setSelectedRepositoryId(
-			_dlAdminDisplayContext.getSelectedRepositoryId());
-
-		PortletURL portletURL = itemSelector.getItemSelectorURL(
-			RequestBackedPortletURLFactoryUtil.create(_renderRequest),
-			"itemSelected", folderItemSelectorCriterion);
-
-		return portletURL.toString();
+		return folderItemSelectorURLProvider.getSelectMoveToFolderURL(
+			_dlAdminDisplayContext.getSelectedRepositoryId(), getFolderId());
 	}
 
 	public String getSidebarPanelURL() {

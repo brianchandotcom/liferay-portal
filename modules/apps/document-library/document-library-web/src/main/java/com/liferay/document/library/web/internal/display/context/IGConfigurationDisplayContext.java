@@ -13,22 +13,17 @@ import com.liferay.document.library.web.internal.display.context.helper.DLPortle
 import com.liferay.document.library.web.internal.display.context.helper.IGRequestHelper;
 import com.liferay.document.library.web.internal.settings.DLPortletInstanceSettings;
 import com.liferay.document.library.web.internal.util.DLFolderUtil;
+import com.liferay.document.library.web.internal.util.FolderItemSelectorURLProvider;
 import com.liferay.item.selector.ItemSelector;
-import com.liferay.item.selector.criteria.FolderItemSelectorReturnType;
-import com.liferay.item.selector.criteria.folder.criterion.FolderItemSelectorCriterion;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.Repository;
-import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
-import com.liferay.portal.kernel.service.RepositoryLocalService;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -43,7 +38,6 @@ import java.util.List;
 import java.util.Objects;
 
 import javax.portlet.PortletPreferences;
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 
 import javax.servlet.http.HttpServletRequest;
@@ -57,14 +51,12 @@ public class IGConfigurationDisplayContext {
 		DLAppLocalService dlAppLocalService, ItemSelector itemSelector,
 		HttpServletRequest httpServletRequest,
 		PortletPreferencesLocalService portletPreferencesLocalService,
-		RepositoryLocalService repositoryLocalService,
 		TrashHelper trashHelper) {
 
 		_dlAppLocalService = dlAppLocalService;
 		_itemSelector = itemSelector;
 		_httpServletRequest = httpServletRequest;
 		_portletPreferencesLocalService = portletPreferencesLocalService;
-		_repositoryLocalService = repositoryLocalService;
 		_trashHelper = trashHelper;
 
 		IGRequestHelper igRequestHelper = new IGRequestHelper(
@@ -130,35 +122,13 @@ public class IGConfigurationDisplayContext {
 		return _selectedRepositoryId;
 	}
 
-	public PortletURL getSelectFolderURL() throws PortalException {
-		FolderItemSelectorCriterion folderItemSelectorCriterion =
-			new FolderItemSelectorCriterion();
+	public String getSelectFolderURL() throws PortalException {
+		FolderItemSelectorURLProvider folderItemSelectorURLProvider =
+			new FolderItemSelectorURLProvider(
+				_httpServletRequest, _itemSelector);
 
-		folderItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			new FolderItemSelectorReturnType());
-		folderItemSelectorCriterion.setFolderId(getRootFolderId());
-		folderItemSelectorCriterion.setIgnoreRootFolder(true);
-		folderItemSelectorCriterion.setRepositoryId(getSelectedRepositoryId());
-		folderItemSelectorCriterion.setSelectedFolderId(getRootFolderId());
-		folderItemSelectorCriterion.setSelectedRepositoryId(
-			getSelectedRepositoryId());
-		folderItemSelectorCriterion.setShowGroupSelector(true);
-
-		long groupId = getSelectedRepositoryId();
-
-		Repository repository = _repositoryLocalService.fetchRepository(
-			getSelectedRepositoryId());
-
-		if (repository != null) {
-			groupId = repository.getGroupId();
-		}
-
-		return _itemSelector.getItemSelectorURL(
-			RequestBackedPortletURLFactoryUtil.create(_httpServletRequest),
-			GroupLocalServiceUtil.getGroup(
-				GetterUtil.getLong(groupId, _themeDisplay.getScopeGroupId())),
-			_themeDisplay.getScopeGroupId(), getItemSelectedEventName(),
-			folderItemSelectorCriterion);
+		return folderItemSelectorURLProvider.getSelectRootFolderURL(
+			getSelectedRepositoryId(), getRootFolderId());
 	}
 
 	public boolean isRootFolderInTrash() throws PortalException {
@@ -338,7 +308,6 @@ public class IGConfigurationDisplayContext {
 	private final PortletPreferencesLocalService
 		_portletPreferencesLocalService;
 	private final RenderRequest _renderRequest;
-	private final RepositoryLocalService _repositoryLocalService;
 	private long _selectedRepositoryId;
 	private final ThemeDisplay _themeDisplay;
 	private final TrashHelper _trashHelper;

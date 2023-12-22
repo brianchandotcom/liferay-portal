@@ -333,9 +333,9 @@ definition {
 			CKEditor.addSourceContent(content = ${wikiPageContent});
 		}
 		else {
-			WaitForElementPresent(locator1 = "CKEditor#BODY_FIELD_IFRAME");
-
-			SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+			SelectFrame.selectFrameNoLoading(
+				key_fieldLabel = "Content",
+				locator1 = "CKEditor#BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE");
 
 			Type(
 				locator1 = "CKEditor#BODY",

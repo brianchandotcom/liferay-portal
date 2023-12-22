@@ -11,7 +11,9 @@
 AICreatorOpenAICompanyConfigurationDisplayContext aiCreatorOpenAICompanyConfigurationDisplayContext = (AICreatorOpenAICompanyConfigurationDisplayContext)request.getAttribute(AICreatorOpenAICompanyConfigurationDisplayContext.class.getName());
 %>
 
-<clay:content-row>
+<clay:content-row
+	cssClass="c-mt-4"
+>
 	<clay:content-col>
 		<span>
 			<liferay-ui:message key="set-the-api-key-for-authentication" />
@@ -26,7 +28,7 @@ AICreatorOpenAICompanyConfigurationDisplayContext aiCreatorOpenAICompanyConfigur
 </clay:content-row>
 
 <clay:content-row
-	cssClass="c-mt-2"
+	cssClass="c-my-4"
 >
 	<clay:content-col
 		expand="<%= true %>"
@@ -50,7 +52,7 @@ AICreatorOpenAICompanyConfigurationDisplayContext aiCreatorOpenAICompanyConfigur
 
 <c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPS-196648") %>'>
 	<clay:content-row
-		cssClass="c-mt-2"
+		cssClass="c-my-5"
 	>
 		<clay:content-col
 			expand="<%= true %>"

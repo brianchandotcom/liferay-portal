@@ -92,13 +92,27 @@
 	border: 0;
 }
 
-.carousel-control:focus-visible {
-	outline: none;
+.component-slider .carousel-control {
+    bottom: auto;
+    height: auto;
+    padding: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+	width: auto;
 }
 
-.carousel-control:focus-visible .carousel-control-icon {
+.component-slider .carousel-control-next {
+	right: 5%;
+}
+
+.component-slider .carousel-control-prev {
+	left: 5%;
+}
+
+.component-slider .carousel-control:focus-visible {
 	border-radius: 4px;
 	box-shadow: 0 0 0 2px #fff, 0 0 0 4px #528eff;
+	outline: none;
 }
 
 .component-slider .carousel-footer {

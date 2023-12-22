@@ -16,8 +16,10 @@ import com.liferay.document.library.web.internal.helper.DLTrashHelper;
 import com.liferay.document.library.web.internal.security.permission.resource.DLFolderPermission;
 import com.liferay.document.library.web.internal.security.permission.resource.DLPermission;
 import com.liferay.document.library.web.internal.util.DLFolderUtil;
+import com.liferay.document.library.web.internal.util.FolderItemSelectorURLProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.item.selector.ItemSelector;
 import com.liferay.learn.LearnMessage;
 import com.liferay.learn.LearnMessageUtil;
 import com.liferay.petra.string.StringBundler;
@@ -552,13 +554,29 @@ public class FolderActionDisplayContext {
 		return themeDisplay.getScopeGroupName();
 	}
 
-	private String _getMoveFolderURL() {
+	private String _getMoveFolderURL() throws PortalException {
 		LiferayPortletResponse liferayPortletResponse =
 			_dlRequestHelper.getLiferayPortletResponse();
 
+		FolderItemSelectorURLProvider folderItemSelectorURLProvider =
+			new FolderItemSelectorURLProvider(
+				_httpServletRequest,
+				(ItemSelector)_httpServletRequest.getAttribute(
+					ItemSelector.class.getName()));
+
 		return StringBundler.concat(
 			"javascript:", liferayPortletResponse.getNamespace(),
-			"move(1, 'rowIdsFolder', ", _getFolderId(), ");");
+			"move(1, 'rowIdsFolder', ", _getFolderId(), ", '",
+			HtmlUtil.escapeJS(
+				folderItemSelectorURLProvider.getSelectMoveToFolderURL(
+					_getRepositoryId(), _getParentFolderId())),
+			"');");
+	}
+
+	private long _getParentFolderId() {
+		Folder folder = _getFolder();
+
+		return folder.getParentFolderId();
 	}
 
 	private String _getParentFolderURL() {

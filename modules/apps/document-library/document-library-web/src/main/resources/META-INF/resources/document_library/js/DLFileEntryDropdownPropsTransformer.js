@@ -116,8 +116,13 @@ const ACTIONS = {
 		);
 	},
 
-	move({parameterName, parameterValue}, portletNamespace) {
-		window[`${portletNamespace}move`](1, parameterName, parameterValue);
+	move({parameterName, parameterValue, selectFolderURL}, portletNamespace) {
+		window[`${portletNamespace}move`](
+			1,
+			parameterName,
+			parameterValue,
+			selectFolderURL
+		);
 	},
 
 	permissions({permissionsURL}) {

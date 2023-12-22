@@ -9,6 +9,8 @@ import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.web.internal.portlet.action.ActionUtil;
 import com.liferay.document.library.web.internal.util.DLFolderUtil;
 import com.liferay.document.library.web.internal.util.DLPortletConfigurationIconUtil;
+import com.liferay.document.library.web.internal.util.FolderItemSelectorURLProvider;
+import com.liferay.item.selector.ItemSelector;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -21,6 +23,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -63,9 +66,19 @@ public class MoveFolderPortletConfigurationIcon
 
 			Folder folder = ActionUtil.getFolder(portletRequest);
 
+			FolderItemSelectorURLProvider folderItemSelectorURLProvider =
+				new FolderItemSelectorURLProvider(
+					_portal.getHttpServletRequest(portletRequest),
+					(ItemSelector)portletRequest.getAttribute(
+						ItemSelector.class.getName()));
+
 			return StringBundler.concat(
 				"javascript: ", liferayPortletResponse.getNamespace(),
-				"move(1, 'rowIdsFolder', ", folder.getFolderId(), ");");
+				"move(1, 'rowIdsFolder', ", folder.getFolderId(), ", '",
+				HtmlUtil.escapeJS(
+					folderItemSelectorURLProvider.getSelectMoveToFolderURL(
+						folder.getRepositoryId(), folder.getParentFolderId())),
+				"');");
 		}
 		catch (PortalException portalException) {
 			return ReflectionUtil.throwException(portalException);

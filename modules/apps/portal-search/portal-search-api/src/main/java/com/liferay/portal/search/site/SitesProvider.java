@@ -5,8 +5,8 @@
 
 package com.liferay.portal.search.site;
 
-
 import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.json.JSONObject;
 
 import javax.portlet.ResourceRequest;
@@ -17,7 +17,11 @@ import javax.portlet.ResourceRequest;
 @ProviderType
 public interface SitesProvider {
 
-	public JSONObject getSitesJSONObject(ResourceRequest resourceRequest) throws Exception;
+	public JSONObject getSiteByExternalReferenceCodeJSONObject(
+			ResourceRequest resourceRequest)
+		throws Exception;
 
-	public JSONObject getSiteByExternalReferenceCodeJSONObject(ResourceRequest resourceRequest) throws Exception;
+	public JSONObject getSitesJSONObject(ResourceRequest resourceRequest)
+		throws Exception;
+
 }

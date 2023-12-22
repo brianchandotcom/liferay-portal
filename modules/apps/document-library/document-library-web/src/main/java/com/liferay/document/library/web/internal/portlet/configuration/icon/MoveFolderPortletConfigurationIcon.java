@@ -77,7 +77,8 @@ public class MoveFolderPortletConfigurationIcon
 				"move(1, 'rowIdsFolder', ", folder.getFolderId(), ", '",
 				HtmlUtil.escapeJS(
 					folderItemSelectorURLProvider.getSelectMoveToFolderURL(
-						folder.getRepositoryId(), folder.getParentFolderId())),
+						folder.getRepositoryId(), folder.getParentFolderId(),
+						folder.getFolderId())),
 				"');");
 		}
 		catch (PortalException portalException) {

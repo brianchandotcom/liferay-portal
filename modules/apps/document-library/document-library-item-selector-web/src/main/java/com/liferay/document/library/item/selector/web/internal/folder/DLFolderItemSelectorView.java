@@ -155,8 +155,8 @@ public class DLFolderItemSelectorView
 		servletRequest.setAttribute(
 			DLSelectFolderDisplayContext.class.getName(),
 			new DLSelectFolderDisplayContext(
-				_dlAppService, _fetchFolder(folderId),
-				_folderModelResourcePermission,
+				itemSelectorCriterion.getBlockedFolderId(), _dlAppService,
+				_fetchFolder(folderId), _folderModelResourcePermission,
 				(HttpServletRequest)servletRequest, portletURL, repositoryId,
 				itemSelectorCriterion.getSelectedFolderId(),
 				itemSelectorCriterion.getSelectedRepositoryId(),

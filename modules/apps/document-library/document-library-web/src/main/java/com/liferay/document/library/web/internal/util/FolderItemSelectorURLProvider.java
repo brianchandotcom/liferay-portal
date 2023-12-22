@@ -48,16 +48,33 @@ public class FolderItemSelectorURLProvider {
 		return String.valueOf(_getItemSelectorURL(folderItemSelectorCriterion));
 	}
 
-	public String getSelectCopyToFolderURL(long repositoryId, long folderId)
+	public String getSelectCopyToFolderURL(
+			long repositoryId, long parentFolderId, long folderId)
 		throws PortalException {
 
-		return getSelectRootFolderURL(repositoryId, folderId);
+		return getSelectMoveToFolderURL(repositoryId, parentFolderId, folderId);
 	}
 
-	public String getSelectMoveToFolderURL(long repositoryId, long folderId)
+	public String getSelectMoveToFolderURL(
+			long repositoryId, long parentFolderId, long folderId)
 		throws PortalException {
 
-		return getSelectRootFolderURL(repositoryId, folderId);
+		FolderItemSelectorCriterion folderItemSelectorCriterion =
+			new FolderItemSelectorCriterion();
+
+		folderItemSelectorCriterion.setBlockedFolderId(folderId);
+		folderItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			new FolderItemSelectorReturnType());
+		folderItemSelectorCriterion.setFolderId(parentFolderId);
+		folderItemSelectorCriterion.setIgnoreRootFolder(true);
+		folderItemSelectorCriterion.setRepositoryId(repositoryId);
+		folderItemSelectorCriterion.setSelectedFolderId(parentFolderId);
+		folderItemSelectorCriterion.setSelectedRepositoryId(repositoryId);
+		folderItemSelectorCriterion.setShowGroupSelector(true);
+		folderItemSelectorCriterion.setShowMountFolder(false);
+
+		return String.valueOf(
+			_getItemSelectorURL(repositoryId, folderItemSelectorCriterion));
 	}
 
 	public String getSelectRootFolderURL(long repositoryId, long folderId)

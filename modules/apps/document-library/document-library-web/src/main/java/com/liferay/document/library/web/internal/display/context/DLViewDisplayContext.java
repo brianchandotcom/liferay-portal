@@ -12,6 +12,7 @@ import com.liferay.depot.util.SiteConnectedGroupGroupProviderUtil;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
+import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.web.internal.display.context.helper.DLPortletInstanceSettingsHelper;
 import com.liferay.document.library.web.internal.display.context.helper.DLRequestHelper;
 import com.liferay.document.library.web.internal.security.permission.resource.DLFolderPermission;
@@ -254,7 +255,8 @@ public class DLViewDisplayContext {
 				_httpServletRequest, itemSelector);
 
 		return folderItemSelectorURLProvider.getSelectMoveToFolderURL(
-			_dlAdminDisplayContext.getSelectedRepositoryId(), getFolderId());
+			_dlAdminDisplayContext.getSelectedRepositoryId(), getFolderId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 	}
 
 	public String getSidebarPanelURL() {

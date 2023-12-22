@@ -119,7 +119,8 @@ public class CopyDLObjectsDisplayContext {
 				_httpServletRequest, itemSelector);
 
 		return folderItemSelectorURLProvider.getSelectCopyToFolderURL(
-			getSourceRepositoryId(), _getSourceFolderId());
+			getSourceRepositoryId(), _getSourceParentFolderId(),
+			_getSourceFolderId());
 	}
 
 	public long getSize() {
@@ -174,6 +175,18 @@ public class CopyDLObjectsDisplayContext {
 		}
 
 		return _sourceFolderId;
+	}
+
+	private long _getSourceParentFolderId() {
+		long folderId = _getSourceFolderId();
+
+		DLFolder dlFolder = DLFolderLocalServiceUtil.fetchFolder(folderId);
+
+		if (dlFolder == null) {
+			return DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+		}
+
+		return dlFolder.getParentFolderId();
 	}
 
 	private long[] _dlObjectIds;

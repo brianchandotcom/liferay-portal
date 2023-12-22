@@ -569,7 +569,7 @@ public class FolderActionDisplayContext {
 			"move(1, 'rowIdsFolder', ", _getFolderId(), ", '",
 			HtmlUtil.escapeJS(
 				folderItemSelectorURLProvider.getSelectMoveToFolderURL(
-					_getRepositoryId(), _getParentFolderId())),
+					_getRepositoryId(), _getParentFolderId(), _getFolderId())),
 			"');");
 	}
 

@@ -214,7 +214,7 @@ FolderItemSelectorURLProvider folderItemSelectorURLProvider = new FolderItemSele
 			title:
 				'<liferay-ui:message arguments="<%= 1 %>" key="select-destination-folder-for-x-items" translateArguments="<%= false %>" />',
 			url:
-				'<%= HtmlUtil.escapeJS(folderItemSelectorURLProvider.getSelectMoveToFolderURL(fileEntry.getRepositoryId(), fileEntry.getFolderId())) %>',
+				'<%= HtmlUtil.escapeJS(folderItemSelectorURLProvider.getSelectMoveToFolderURL(fileEntry.getRepositoryId(), fileEntry.getFolderId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)) %>',
 		});
 	}
 </aui:script>

@@ -15,6 +15,7 @@ import com.liferay.document.library.kernel.document.conversion.DocumentConversio
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFileShortcutConstants;
+import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.versioning.VersioningStrategy;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.document.library.web.internal.display.context.helper.FileEntryDisplayContextHelper;
@@ -439,7 +440,8 @@ public class UIItemsBuilder {
 							ItemSelector.class.getName()));
 
 				return folderItemSelectorURLProvider.getSelectMoveToFolderURL(
-					_fileEntry.getRepositoryId(), _fileEntry.getFolderId());
+					_fileEntry.getRepositoryId(), _fileEntry.getFolderId(),
+					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 			}
 		).setIcon(
 			"move-folder"

@@ -13,7 +13,8 @@ import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderType;
 import com.liferay.commerce.model.CommerceShippingMethod;
-import com.liferay.commerce.payment.engine.CommercePaymentEngine;
+import com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel;
+import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelLocalService;
 import com.liferay.commerce.pricing.constants.CommercePricingConstants;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
@@ -26,6 +27,7 @@ import com.liferay.headless.commerce.delivery.order.dto.v1_0.Status;
 import com.liferay.headless.commerce.delivery.order.dto.v1_0.Summary;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.BigDecimalUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -151,12 +153,16 @@ public class PlacedOrderDTOConverter
 
 		String paymentMethodKey = commerceOrder.getCommercePaymentMethodKey();
 
-		if ((paymentMethodKey != null) && !paymentMethodKey.isEmpty()) {
-			String commerceOrderPaymentMethodName =
-				_commercePaymentEngine.getPaymentMethodName(
-					paymentMethodKey, locale);
+		if (Validator.isNotNull(paymentMethodKey)) {
+			CommercePaymentMethodGroupRel commercePaymentMethodGroupRel =
+				_commercePaymentMethodGroupRelLocalService.
+					getCommercePaymentMethodGroupRel(
+						commerceOrder.getGroupId(), paymentMethodKey);
 
-			placedOrder.setPaymentMethodLabel(commerceOrderPaymentMethodName);
+			if (commercePaymentMethodGroupRel != null) {
+				placedOrder.setPaymentMethodLabel(
+					commercePaymentMethodGroupRel.getName());
+			}
 		}
 
 		return placedOrder;
@@ -514,7 +520,8 @@ public class PlacedOrderDTOConverter
 	private CommerceOrderTypeLocalService _commerceOrderTypeLocalService;
 
 	@Reference
-	private CommercePaymentEngine _commercePaymentEngine;
+	private CommercePaymentMethodGroupRelLocalService
+		_commercePaymentMethodGroupRelLocalService;
 
 	@Reference
 	private CommercePriceFormatter _commercePriceFormatter;

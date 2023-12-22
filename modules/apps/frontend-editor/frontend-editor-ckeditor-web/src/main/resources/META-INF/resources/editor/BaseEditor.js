@@ -46,9 +46,7 @@ const BaseEditor = forwardRef(
 		ref
 	) => {
 		const [config, setConfig] = useState(initialConfig);
-		const [loading, setLoading] = useState(
-			Boolean(initialConfig.editorTransformerURLs)
-		);
+		const [loading, setLoading] = useState(false);
 
 		const editorRef = useRef();
 
@@ -64,9 +62,14 @@ const BaseEditor = forwardRef(
 		}, []);
 
 		useEffect(() => {
-			if (!initialConfig.editorTransformerURLs) {
+			if (
+				!Liferay.FeatureFlags['LPS-186870'] ||
+				!initialConfig.editorTransformerURLs
+			) {
 				return;
 			}
+
+			setLoading(true);
 
 			loadClientExtensions([
 				{

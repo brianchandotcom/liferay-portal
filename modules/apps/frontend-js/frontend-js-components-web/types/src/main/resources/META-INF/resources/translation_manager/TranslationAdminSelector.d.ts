@@ -6,7 +6,11 @@
 /// <reference types="react" />
 
 import {Translations} from './TranslationAdminContent';
-declare type DisplayType = 'default' | 'horizontal';
+declare const DISPLAY_TYPE: {
+	readonly DEFAULT: 'DEFAULT';
+	readonly HORIZONTAL: 'HORIZONTAL';
+};
+declare type DisplayType = typeof DISPLAY_TYPE[keyof typeof DISPLAY_TYPE];
 interface IProps extends Translations {
 	adminMode?: boolean;
 	displayType?: DisplayType;

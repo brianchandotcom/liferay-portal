@@ -17,11 +17,11 @@ import TranslationAdminItem from './TranslationAdminItem';
 import TranslationAdminModal from './TranslationAdminModal';
 
 const DISPLAY_TYPE = {
-	default: 'default',
-	horizontal: 'horizontal',
+	DEFAULT: 'DEFAULT',
+	HORIZONTAL: 'HORIZONTAL',
 } as const;
 
-type DisplayType = 'default' | 'horizontal';
+type DisplayType = typeof DISPLAY_TYPE[keyof typeof DISPLAY_TYPE];
 
 interface IProps extends Translations {
 	adminMode?: boolean;
@@ -63,7 +63,7 @@ const TriggerButton = React.forwardRef(
 		);
 
 		return Liferay.FeatureFlags['LPS-114700'] &&
-			displayType === DISPLAY_TYPE.horizontal ? (
+			displayType === DISPLAY_TYPE.HORIZONTAL ? (
 			<ClayButton
 				{...props}
 				aria-label={ariaLabelButton}
@@ -108,7 +108,7 @@ export default function TranslationAdminSelector({
 	},
 	availableLocales = [],
 	defaultLanguageId,
-	displayType = DISPLAY_TYPE.default,
+	displayType = DISPLAY_TYPE.DEFAULT,
 	onActiveLanguageIdsChange = noop,
 	onSelectedLanguageIdChange = noop,
 	selectedLanguageId: initialSelectedLanguageId,

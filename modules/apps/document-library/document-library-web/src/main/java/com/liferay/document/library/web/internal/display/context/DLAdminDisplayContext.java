@@ -1174,7 +1174,8 @@ public class DLAdminDisplayContext {
 				getAssetCategoryIds(), getAssetTagIds(), getExtensions(),
 				getFileEntryTypeId(), userId));
 
-		long folderId = ParamUtil.getLong(_httpServletRequest, "folderId");
+		long folderId = ParamUtil.getLong(
+			_httpServletRequest, "folderId", getFolderId());
 
 		if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			searchContext.setFolderIds(new long[] {folderId});

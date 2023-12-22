@@ -30,10 +30,6 @@ definition {
 			ACUtils.createBlogsAndAddToPage();
 		}
 
-		task ("Connect the DXP to AC") {
-			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
-		}
-
 		task ("Add 3 more new users") {
 			for (var name : list ${usernameList}) {
 				JSONUser.addUser(
@@ -49,8 +45,8 @@ definition {
 			}
 		}
 
-		task ("Sync the Contact Data") {
-			ACDXPSettings.syncNewContactData();
+		task ("Connect the DXP to AC") {
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
 	}
 

@@ -342,6 +342,12 @@ definition {
 		task ("And the price on application is set for sku BLACK") {
 			CommerceNavigator.gotoTableListEntry(entryName = "BLACK");
 
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Price");
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Base Price List");
+
 			CommerceSKUs.editSkuPricing(priceOnApplication = "true");
 		}
 

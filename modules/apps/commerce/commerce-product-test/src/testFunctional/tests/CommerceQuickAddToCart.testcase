@@ -1913,6 +1913,12 @@ definition {
 			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
 
 			CommerceNavigator.gotoTableListEntry(entryName = "MIN93015");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Price");
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Base Price List");
 		}
 
 		task ("And the admin marks the sku as 'Price on Application'") {

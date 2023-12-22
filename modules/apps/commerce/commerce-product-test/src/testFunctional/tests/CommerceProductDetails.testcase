@@ -2891,14 +2891,13 @@ definition {
 			key_toggleSwitchLabel = "Purchasable",
 			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 
-		Type(
-			key_fieldLabel = "Base Price",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "10.0");
-
 		Button.click(button = "Publish");
 
-		CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
+		CommerceEntry.gotoMenuTab(menuTab = "Price");
+
+		CommerceSKUs.addSKUPriceEntry(
+			priceList = "Minium Base Price List",
+			unitPrice = 10);
 
 		Refresh();
 
@@ -2924,14 +2923,13 @@ definition {
 			key_toggleSwitchLabel = "Purchasable",
 			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 
-		Type(
-			key_fieldLabel = "Base Price",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "20.0");
-
 		Button.click(button = "Publish");
 
-		CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
+		CommerceEntry.gotoMenuTab(menuTab = "Price");
+
+		CommerceSKUs.addSKUPriceEntry(
+			priceList = "Minium Base Price List",
+			unitPrice = 20);
 
 		Refresh();
 
@@ -3007,12 +3005,11 @@ definition {
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
-		Type(
-			key_fieldLabel = "Base Price",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "80.0");
+		CommerceEntry.gotoMenuTab(menuTab = "Price");
 
-		Button.clickPublish();
+		CommerceSKUs.addSKUPriceEntry(
+			priceList = "Minium Base Price List",
+			unitPrice = 80);
 
 		CommerceEntry.gotoMenuTab(menuTab = "Inventory");
 

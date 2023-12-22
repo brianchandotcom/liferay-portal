@@ -191,12 +191,13 @@ definition {
 			key_toggleSwitchLabel = "Purchasable",
 			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 
-		Type(
-			key_fieldLabel = "Base Price",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "50.0");
-
 		Button.clickPublish();
+
+		CommerceEntry.gotoMenuTab(menuTab = "Price");
+
+		CommerceSKUs.addSKUPriceEntry(
+			priceList = "Master Base Price List",
+			unitPrice = 50);
 
 		Refresh();
 
@@ -240,12 +241,13 @@ definition {
 			key_toggleSwitchLabel = "Purchasable",
 			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 
-		Type(
-			key_fieldLabel = "Base Price",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "10.0");
-
 		Button.click(button = "Publish");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Price");
+
+		CommerceSKUs.addSKUPriceEntry(
+			priceList = "Master Base Price List",
+			unitPrice = 10);
 
 		Refresh();
 
@@ -2584,12 +2586,13 @@ definition {
 			key_toggleSwitchLabel = "Purchasable",
 			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 
-		Type(
-			key_fieldLabel = "Base Price",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "50.0");
-
 		Button.clickPublish();
+
+		CommerceEntry.gotoMenuTab(menuTab = "Price");
+
+		CommerceSKUs.addSKUPriceEntry(
+			priceList = "Master Base Price List",
+			unitPrice = 50);
 
 		Refresh();
 
@@ -2633,12 +2636,13 @@ definition {
 			key_toggleSwitchLabel = "Purchasable",
 			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 
-		Type(
-			key_fieldLabel = "Base Price",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "10.0");
-
 		Button.click(button = "Publish");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Price");
+
+		CommerceSKUs.addSKUPriceEntry(
+			priceList = "Master Base Price List",
+			unitPrice = 10);
 
 		Refresh();
 

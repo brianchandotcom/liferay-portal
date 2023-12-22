@@ -59,7 +59,8 @@ public class DDMStructureItemTableItemView implements TableItemView {
 
 		userNameSearchEntry.setCssClass(
 			"table-cell-expand-smaller table-cell-minw-150");
-		userNameSearchEntry.setName(_ddmStructure.getUserName());
+		userNameSearchEntry.setName(
+			HtmlUtil.escape(_ddmStructure.getUserName()));
 
 		searchEntries.add(userNameSearchEntry);
 

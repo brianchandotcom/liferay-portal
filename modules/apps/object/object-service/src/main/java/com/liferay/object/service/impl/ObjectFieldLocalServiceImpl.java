@@ -882,15 +882,16 @@ public class ObjectFieldLocalServiceImpl
 
 		runSQL(
 			DynamicObjectDefinitionTableUtil.getAlterTableAddColumnSQL(
-				dbTableName, objectField.getDBColumnName(),
-				objectField.getDBType()));
+				dbTableName, objectField.getBusinessType(),
+				objectField.getDBColumnName(), objectField.getDBType()));
 
 		if (objectField.compareBusinessType(
 				ObjectFieldConstants.BUSINESS_TYPE_AUTO_INCREMENT)) {
 
 			runSQL(
 				DynamicObjectDefinitionTableUtil.getAlterTableAddColumnSQL(
-					dbTableName, objectField.getSortableDBColumnName(),
+					dbTableName, objectField.getBusinessType(),
+					objectField.getSortableDBColumnName(),
 					ObjectFieldConstants.DB_TYPE_LONG));
 		}
 

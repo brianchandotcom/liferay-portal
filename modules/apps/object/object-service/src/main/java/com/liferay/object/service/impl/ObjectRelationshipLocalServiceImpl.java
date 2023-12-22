@@ -972,7 +972,8 @@ public class ObjectRelationshipLocalServiceImpl
 
 		runSQL(
 			DynamicObjectDefinitionTableUtil.getAlterTableAddColumnSQL(
-				dbTableName, objectField.getDBColumnName(), "Long"));
+				dbTableName, objectField.getBusinessType(),
+				objectField.getDBColumnName(), "Long"));
 
 		ObjectDBManagerUtil.createIndexMetadata(
 			_currentConnection.getConnection(

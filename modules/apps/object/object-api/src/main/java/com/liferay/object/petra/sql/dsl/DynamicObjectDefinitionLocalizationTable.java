@@ -77,7 +77,7 @@ public class DynamicObjectDefinitionLocalizationTable
 			sb.append(" ");
 			sb.append(
 				DynamicObjectDefinitionTableUtil.getDataType(
-					objectField.getDBType()));
+					objectField.getBusinessType(), objectField.getDBType()));
 		}
 
 		sb.append(", primary key (");

@@ -31,6 +31,11 @@ definition {
 		property testray.component.names = "Wiki";
 
 		task ("Add a Wiki widget to page") {
+			JSONLayout.updateLayoutTemplateOfPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				layoutTemplate = "1 Column");
+
 			JSONLayout.addWidgetToPublicLayout(
 				groupName = "Test Site Name",
 				layoutName = "Test Page Name",

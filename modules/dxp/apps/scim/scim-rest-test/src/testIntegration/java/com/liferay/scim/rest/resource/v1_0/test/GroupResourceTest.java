@@ -101,6 +101,28 @@ public class GroupResourceTest extends BaseGroupResourceTestCase {
 		Assert.assertNull(
 			_userGroupLocalService.fetchUserGroupByExternalReferenceCode(
 				group.getExternalId(), TestPropsValues.getCompanyId()));
+
+		// Delete an existing group with no SCIM client ID set
+
+		UserGroup userGroup = _userGroupLocalService.addUserGroup(
+			TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
+			RandomTestUtil.randomString(), null, new ServiceContext());
+
+		assertHttpResponseStatusCode(
+			404,
+			groupResource.deleteV2GroupHttpResponse(
+				String.valueOf(userGroup.getUserGroupId())));
+
+		// Delete an existing group provided by another SCIM client
+
+		ScimTestUtil.saveSCIMClientId(
+			UserGroup.class.getName(), userGroup.getUserGroupId(),
+			userGroup.getCompanyId());
+
+		assertHttpResponseStatusCode(
+			409,
+			groupResource.deleteV2GroupHttpResponse(
+				String.valueOf(userGroup.getUserGroupId())));
 	}
 
 	@Override

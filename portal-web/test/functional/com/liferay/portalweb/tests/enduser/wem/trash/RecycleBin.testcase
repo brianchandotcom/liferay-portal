@@ -124,7 +124,9 @@ definition {
 		}
 
 		task ("Go to recycle bin to view entry and restore") {
-			RecycleBin.openRecycleBinAdmin(siteURLKey = "site-name");
+			ProductMenu.gotoPortlet(
+				category = "Recycle Bin",
+				portlet = "Recycle Bin");
 
 			RecycleBin.viewCP(
 				assetName = "Blogs Entry Title",

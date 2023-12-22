@@ -126,32 +126,30 @@ export function ConfigurationContainer({
 				/>
 			</ClayForm.Group>
 
-			{Liferay.FeatureFlags['LPS-181663'] && (
-				<ClayForm.Group>
-					<Toggle
-						disabled={
-							isReadOnly || !hasUpdateObjectDefinitionPermission
-						}
-						label={Liferay.Language.get(
-							'allow-users-to-save-entries-as-draft'
-						)}
-						name="enableObjectEntryDraft"
-						onBlur={(event) => {
-							event.stopPropagation();
+			<ClayForm.Group>
+				<Toggle
+					disabled={
+						isReadOnly || !hasUpdateObjectDefinitionPermission
+					}
+					label={Liferay.Language.get(
+						'allow-users-to-save-entries-as-draft'
+					)}
+					name="enableObjectEntryDraft"
+					onBlur={(event) => {
+						event.stopPropagation();
 
-							if (onSubmit) {
-								onSubmit();
-							}
-						}}
-						onToggle={() =>
-							setValues({
-								enableObjectEntryDraft: !values.enableObjectEntryDraft,
-							})
+						if (onSubmit) {
+							onSubmit();
 						}
-						toggled={values.enableObjectEntryDraft}
-					/>
-				</ClayForm.Group>
-			)}
+					}}
+					onToggle={() =>
+						setValues({
+							enableObjectEntryDraft: !values.enableObjectEntryDraft,
+						})
+					}
+					toggled={values.enableObjectEntryDraft}
+				/>
+			</ClayForm.Group>
 		</div>
 	);
 }

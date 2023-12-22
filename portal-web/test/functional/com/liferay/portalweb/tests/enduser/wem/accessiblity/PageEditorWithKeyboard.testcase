@@ -387,6 +387,8 @@ definition {
 				locator1 = "PageEditor#PAGE_RULE_BUILDER_ACTION_ITEM",
 				value1 = "\ENTER");
 
+			var fragmentName = selenium.getText("xpath=(//div[contains(@class,'dropdown-menu')][contains(@class,'show')]//button)[1]");
+
 			KeyPress(
 				index = 3,
 				locator1 = "PageEditor#PAGE_RULE_BUILDER_ACTION_ITEM",
@@ -396,7 +398,7 @@ definition {
 				index = 1,
 				locator1 = "PageEditor#PAGE_RULE_BUILDER_ACTION",
 				value1 = "aria-label",
-				value2 = "Show Fragment Button");
+				value2 = "Show Fragment ${fragmentName}");
 
 			KeyPress(
 				index = 1,
@@ -457,6 +459,8 @@ definition {
 				locator1 = "PageEditor#PAGE_RULE_BUILDER_ACTION_ITEM",
 				value1 = "\ENTER");
 
+			var fragmentName = selenium.getText("xpath=(//div[contains(@class,'dropdown-menu')][contains(@class,'show')]//button)[2]");
+
 			KeyPress(
 				index = 3,
 				locator1 = "PageEditor#PAGE_RULE_BUILDER_ACTION_ITEM",
@@ -471,7 +475,7 @@ definition {
 				index = 2,
 				locator1 = "PageEditor#PAGE_RULE_BUILDER_ACTION",
 				value1 = "aria-label",
-				value2 = "Hide Fragment Heading");
+				value2 = "Hide Fragment ${fragmentName}");
 
 			for (var index : list "1,2,3") {
 				AssertVisible(

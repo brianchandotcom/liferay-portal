@@ -587,7 +587,14 @@ definition {
 			Click.clickNoMouseOverNoWaitForVisible(locator1 = "AppBuilder#CHECKBOX");
 		}
 
-		ClickNoError(locator1 = "Button#TRASH_ENABLED");
+		if (IsElementPresent(key_text = "trash", locator1 = "ManagementBar#ANY_ICON")) {
+			ClickNoError(
+				key_text = "trash",
+				locator1 = "ManagementBar#ANY_ICON");
+		}
+		else {
+			ClickNoError(locator1 = "Button#TRASH_ENABLED");
+		}
 
 		if (isSet(deleteMessage)) {
 			AssertConfirm(value1 = ${deleteMessage});

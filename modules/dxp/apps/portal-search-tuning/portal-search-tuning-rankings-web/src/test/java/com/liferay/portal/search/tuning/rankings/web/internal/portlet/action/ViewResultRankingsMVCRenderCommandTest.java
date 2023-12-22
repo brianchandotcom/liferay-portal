@@ -80,6 +80,7 @@ public class ViewResultRankingsMVCRenderCommandTest
 		setUpPortal();
 		setUpPortalUtil();
 		setUpPropsUtil();
+		setUpQuery();
 		setUpRankingIndexNameBuilder();
 		setUpRenderResponse(_renderResponse);
 		setUpSearchEngineAdapter(Mockito.mock(SearchHits.class));

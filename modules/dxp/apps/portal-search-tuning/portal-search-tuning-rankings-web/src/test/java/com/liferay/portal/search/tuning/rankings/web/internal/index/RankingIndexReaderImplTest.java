@@ -7,7 +7,10 @@ package com.liferay.portal.search.tuning.rankings.web.internal.index;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.search.engine.adapter.search.CountSearchResponse;
+import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
+import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.name.RankingIndexName;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -101,6 +104,36 @@ public class RankingIndexReaderImplTest extends BaseRankingsIndexTestCase {
 		Assert.assertTrue(
 			_rankingIndexReaderImpl.isExists(
 				Mockito.mock(RankingIndexName.class)));
+	}
+
+	@Override
+	protected SearchHits setUpSearchEngineAdapter(SearchHits searchHits) {
+		CountSearchResponse countSearchResponse = Mockito.mock(
+			CountSearchResponse.class);
+
+		Mockito.doReturn(
+			1L
+		).when(
+			countSearchResponse
+		).getCount();
+
+		SearchSearchResponse searchSearchResponse = setUpSearchSearchResponse();
+
+		Mockito.doReturn(
+			searchHits
+		).when(
+			searchSearchResponse
+		).getSearchHits();
+
+		Mockito.doReturn(
+			countSearchResponse, searchSearchResponse
+		).when(
+			searchEngineAdapter
+		).execute(
+			(SearchSearchRequest)Mockito.any()
+		);
+
+		return searchHits;
 	}
 
 	@Override

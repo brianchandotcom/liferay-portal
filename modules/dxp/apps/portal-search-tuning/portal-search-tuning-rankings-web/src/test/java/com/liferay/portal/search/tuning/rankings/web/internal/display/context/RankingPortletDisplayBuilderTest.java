@@ -64,6 +64,7 @@ public class RankingPortletDisplayBuilderTest extends BaseRankingsWebTestCase {
 		setUpLanguageUtil("");
 		setUpPortal();
 		setUpPortalUtil();
+		setUpQuery();
 		setUpRankingIndexNameBuilder();
 		setUpRenderResponse(_renderResponse);
 		setUpSearchEngineAdapter(Mockito.mock(SearchHits.class));

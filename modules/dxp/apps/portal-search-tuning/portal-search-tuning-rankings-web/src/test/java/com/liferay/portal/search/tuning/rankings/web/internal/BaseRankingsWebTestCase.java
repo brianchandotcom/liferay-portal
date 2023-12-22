@@ -44,7 +44,9 @@ import com.liferay.portal.search.filter.ComplexQueryPart;
 import com.liferay.portal.search.filter.ComplexQueryPartBuilder;
 import com.liferay.portal.search.filter.ComplexQueryPartBuilderFactory;
 import com.liferay.portal.search.hits.SearchHits;
+import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.IdsQuery;
+import com.liferay.portal.search.query.MatchAllQuery;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
@@ -572,10 +574,22 @@ public abstract class BaseRankingsWebTestCase {
 		);
 
 		Mockito.doReturn(
+			Mockito.mock(BooleanQuery.class)
+		).when(
+			queries
+		).booleanQuery();
+
+		Mockito.doReturn(
 			idsQuery
 		).when(
 			queries
 		).ids();
+
+		Mockito.doReturn(
+			Mockito.mock(MatchAllQuery.class)
+		).when(
+			queries
+		).matchAll();
 	}
 
 	protected void setUpRankingIndexNameBuilder() {

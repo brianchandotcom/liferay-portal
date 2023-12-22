@@ -53,7 +53,7 @@ boolean companyDALLEEnabled = aiCreatorOpenAIGroupConfigurationDisplayContext.is
 </clay:content-row>
 
 <clay:content-row
-	cssClass="c-mt-2"
+	cssClass="c-my-4"
 >
 	<clay:content-col
 		expand="<%= true %>"
@@ -90,7 +90,7 @@ boolean companyDALLEEnabled = aiCreatorOpenAIGroupConfigurationDisplayContext.is
 
 <c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPS-196648") %>'>
 	<clay:content-row
-		cssClass="c-mt-2"
+		cssClass="c-mt-5"
 	>
 		<clay:content-col
 			expand="<%= true %>"

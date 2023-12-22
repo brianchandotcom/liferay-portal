@@ -54,18 +54,10 @@ public class FolderItemSelectorURLProvider {
 		return getSelectRootFolderURL(repositoryId, folderId);
 	}
 
-	public String getSelectMoveToFolderURL(long repositoryId, long folderId) {
-		FolderItemSelectorCriterion folderItemSelectorCriterion =
-			new FolderItemSelectorCriterion();
+	public String getSelectMoveToFolderURL(long repositoryId, long folderId)
+		throws PortalException {
 
-		folderItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			new FolderItemSelectorReturnType());
-		folderItemSelectorCriterion.setFolderId(folderId);
-		folderItemSelectorCriterion.setRepositoryId(repositoryId);
-		folderItemSelectorCriterion.setSelectedFolderId(folderId);
-		folderItemSelectorCriterion.setSelectedRepositoryId(repositoryId);
-
-		return String.valueOf(_getItemSelectorURL(folderItemSelectorCriterion));
+		return getSelectRootFolderURL(repositoryId, folderId);
 	}
 
 	public String getSelectRootFolderURL(long repositoryId, long folderId)

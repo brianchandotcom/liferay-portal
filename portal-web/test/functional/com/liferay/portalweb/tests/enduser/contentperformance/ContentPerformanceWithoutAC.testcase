@@ -168,12 +168,12 @@ definition {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			PagesAdmin.addPage(
-				pageName = "Widget Page Name",
+				pageName = "Test Page Name",
 				sitePageType = "Widget Page");
 		}
 
 		task ("Navigate to Widget page") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/3");
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-page-name");
 		}
 
 		task ("Assert icon is displayed by opening panel") {

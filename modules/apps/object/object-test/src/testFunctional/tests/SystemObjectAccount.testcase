@@ -663,6 +663,16 @@ definition {
 				labelName = "Custom Object 153530",
 				objectName = "CustomObject153530",
 				pluralLabelName = "Custom Objects 153530");
+
+			// Workaround for LPS-193897
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customObjectField",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject153530");
 		}
 
 		task ("Go to Account, select title field by Name, and Create relationship with Custom Object (via UI)") {

@@ -112,7 +112,6 @@ import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.encryptor.Encryptor;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -4701,12 +4700,6 @@ public class ObjectEntryLocalServiceImpl
 			boolean enableObjectEntryDraft, Integer status,
 			Integer workflowAction)
 		throws PortalException {
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-181663") &&
-			(workflowAction == WorkflowConstants.ACTION_SAVE_DRAFT)) {
-
-			throw new UnsupportedOperationException();
-		}
 
 		if ((!enableObjectEntryDraft ||
 			 ((status != null) &&

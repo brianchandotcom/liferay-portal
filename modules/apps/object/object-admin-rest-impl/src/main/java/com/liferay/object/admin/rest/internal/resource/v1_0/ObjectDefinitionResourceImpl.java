@@ -234,12 +234,6 @@ public class ObjectDefinitionResourceImpl
 			ObjectDefinition objectDefinition)
 		throws Exception {
 
-		if (Validator.isNotNull(objectDefinition.getEnableObjectEntryDraft()) &&
-			!FeatureFlagManagerUtil.isEnabled("LPS-181663")) {
-
-			throw new UnsupportedOperationException();
-		}
-
 		if (Validator.isNotNull(
 				objectDefinition.getObjectFolderExternalReferenceCode()) &&
 			!FeatureFlagManagerUtil.isEnabled("LPS-148856")) {
@@ -430,12 +424,6 @@ public class ObjectDefinitionResourceImpl
 		throws Exception {
 
 		// TODO Move logic to service
-
-		if (Validator.isNotNull(objectDefinition.getEnableObjectEntryDraft()) &&
-			!FeatureFlagManagerUtil.isEnabled("LPS-181663")) {
-
-			throw new UnsupportedOperationException();
-		}
 
 		if (Validator.isNotNull(
 				objectDefinition.getObjectFolderExternalReferenceCode()) &&
@@ -1147,6 +1135,8 @@ public class ObjectDefinitionResourceImpl
 					objectDefinition.isEnableCategorization();
 				enableComments = objectDefinition.isEnableComments();
 				enableLocalization = objectDefinition.isEnableLocalization();
+				enableObjectEntryDraft =
+					objectDefinition.isEnableObjectEntryDraft();
 				enableObjectEntryHistory =
 					objectDefinition.isEnableObjectEntryHistory();
 				externalReferenceCode =
@@ -1251,14 +1241,6 @@ public class ObjectDefinitionResourceImpl
 						}
 
 						return serviceBuilderObjectField.getName();
-					});
-				setEnableObjectEntryDraft(
-					() -> {
-						if (!FeatureFlagManagerUtil.isEnabled("LPS-181663")) {
-							return null;
-						}
-
-						return objectDefinition.isEnableObjectEntryDraft();
 					});
 				setObjectFolderExternalReferenceCode(
 					() -> {

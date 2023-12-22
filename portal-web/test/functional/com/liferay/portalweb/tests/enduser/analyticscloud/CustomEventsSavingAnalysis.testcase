@@ -520,7 +520,7 @@ definition {
 	test CanEditAnalysisReport {
 		var attributeName1 = "price";
 		var attributeName2 = "like";
-		var filterName = "birthdate";
+		var filterName = "category";
 
 		task ("Fill fields and create custom event") {
 			var customEventName = ACCustomEvents.generateCustomEventName();
@@ -581,10 +581,8 @@ definition {
 		task ("Add the filter to analysis") {
 			ACEventAnalysis.addFilter(
 				filterName = ${filterName},
-				inputValue = 25,
-				month = "November",
-				optionValue = "is",
-				year = 2021);
+				inputValue = "wetsuit",
+				optionValue = "is");
 		}
 
 		task ("Check the analysis result appears") {

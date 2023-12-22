@@ -76,7 +76,8 @@ public class IconListTag extends BaseBodyTagSupport implements BodyTag {
 						pageContext.getServletContext(), getStartPage())) {
 
 					jspWriter.write(
-						"<ul class=\"list-unstyled taglib-icon-list\" role=\"menu\">");
+						"<ul class=\"list-unstyled taglib-icon-list\"" +
+							"role=\"menu\">");
 				}
 				else {
 					PortalIncludeUtil.include(pageContext, _startPage);

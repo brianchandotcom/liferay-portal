@@ -1618,6 +1618,28 @@ public class JournalDisplayContext {
 			return _articleSearchContainer;
 		}
 
+		if (FeatureFlagManagerUtil.isEnabled("LPS-196768") &&
+			(isNavigationStructure() || (getHighlightedDDMStructureId() > 0))) {
+
+			SearchContainer<JournalArticle> articleSearchContainer =
+				_getArticleSearchContainer();
+
+			SearchResponse searchResponse =
+				JournalSearcherUtil.searchJournalArticles(
+					searchContext -> _populateSearchContext(
+						articleSearchContainer.getStart(),
+						articleSearchContainer.getEnd(), searchContext, false));
+
+			articleSearchContainer.setResultsAndTotal(
+				() -> JournalSearcherUtil.transformJournalArticles(
+					searchResponse.getDocuments71()),
+				searchResponse.getTotalHits());
+
+			_articleSearchContainer = articleSearchContainer;
+
+			return _articleSearchContainer;
+		}
+
 		SearchContainer<Object> articleAndFolderSearchContainer =
 			_getArticleAndFolderSearchContainer();
 
@@ -2199,7 +2221,7 @@ public class JournalDisplayContext {
 		searchContext.setEnd(end);
 
 		if (FeatureFlagManagerUtil.isEnabled("LPS-196768") &&
-			isNavigationStructure()) {
+			(isNavigationStructure() || (highlightedDDMStructureId > 0))) {
 
 			searchContext.setEntryClassNames(
 				new String[] {JournalArticle.class.getName()});

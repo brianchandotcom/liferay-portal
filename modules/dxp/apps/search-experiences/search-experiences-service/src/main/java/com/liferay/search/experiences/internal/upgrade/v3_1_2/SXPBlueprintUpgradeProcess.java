@@ -74,22 +74,17 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 			return elementDefinition;
 		}
 
-		for (int i = 0; i < fieldSetsJSONArray.length(); i++) {
-			JSONObject fieldSetJSONObject = fieldSetsJSONArray.getJSONObject(i);
+		JSONObject fieldSetJSONObject = fieldSetsJSONArray.getJSONObject(0);
 
-			JSONArray fieldsJSONArray = fieldSetJSONObject.getJSONArray(
-				"fields");
+		JSONArray fieldsJSONArray = fieldSetJSONObject.getJSONArray("fields");
 
-			if (fieldsJSONArray == null) {
-				continue;
-			}
-
-			for (int j = 0; j < fieldsJSONArray.length(); j++) {
-				JSONObject fieldJSONObject = fieldsJSONArray.getJSONObject(j);
-
-				fieldJSONObject.put("helpText", "group-ids-help");
-			}
+		if (fieldsJSONArray == null) {
+			return elementDefinition;
 		}
+
+		JSONObject fieldJSONObject = fieldsJSONArray.getJSONObject(0);
+
+		fieldJSONObject.put("helpText", "group-ids-help");
 
 		return sxpElementJSONObject.toString();
 	}

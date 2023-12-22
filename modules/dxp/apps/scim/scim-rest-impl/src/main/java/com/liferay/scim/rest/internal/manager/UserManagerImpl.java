@@ -135,7 +135,21 @@ public class UserManagerImpl implements UserManager {
 		throws CharonException, NotFoundException {
 
 		try {
-			_userGroupService.deleteUserGroup(GetterUtil.getLong(groupId));
+			getGroup(groupId, Collections.emptyMap());
+
+			TransactionInvokerUtil.invoke(
+				_transactionConfig,
+				() -> {
+					_userService.setUserGroupUsers(
+						GetterUtil.getLong(groupId), new long[0]);
+					_userGroupService.deleteUserGroup(
+						GetterUtil.getLong(groupId));
+
+					return null;
+				});
+		}
+		catch (AbstractCharonException abstractCharonException) {
+			ReflectionUtil.throwException(abstractCharonException);
 		}
 		catch (PrincipalException principalException) {
 			if (_log.isDebugEnabled()) {
@@ -144,10 +158,9 @@ public class UserManagerImpl implements UserManager {
 
 			throw new NotFoundException();
 		}
-		catch (PortalException portalException) {
+		catch (Throwable throwable) {
 			throw new CharonException(
-				"Unable to delete group with group ID " + groupId,
-				portalException);
+				"Unable to delete group with group ID " + groupId, throwable);
 		}
 	}
 

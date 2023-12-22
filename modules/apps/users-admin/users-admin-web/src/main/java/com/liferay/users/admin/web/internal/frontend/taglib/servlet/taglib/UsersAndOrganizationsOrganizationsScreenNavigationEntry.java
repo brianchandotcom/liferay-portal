@@ -9,6 +9,7 @@ import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.users.admin.constants.UserScreenNavigationEntryConstants;
 
 import java.io.IOException;
@@ -57,6 +58,10 @@ public class UsersAndOrganizationsOrganizationsScreenNavigationEntry
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
 		throws IOException {
+
+		httpServletRequest.setAttribute(
+			"view.jsp-usersListView",
+			UserConstants.LIST_VIEW_FLAT_ORGANIZATIONS);
 
 		_jspRenderer.renderJSP(
 			httpServletRequest, httpServletResponse,

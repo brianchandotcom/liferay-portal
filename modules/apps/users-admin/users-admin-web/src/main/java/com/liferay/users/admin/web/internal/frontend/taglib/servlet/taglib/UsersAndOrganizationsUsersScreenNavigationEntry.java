@@ -9,6 +9,7 @@ import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.users.admin.constants.UserScreenNavigationEntryConstants;
@@ -70,6 +71,8 @@ public class UsersAndOrganizationsUsersScreenNavigationEntry
 			ParamUtil.getInteger(
 				httpServletRequest, "status",
 				WorkflowConstants.STATUS_APPROVED));
+		httpServletRequest.setAttribute(
+			"view.jsp-usersListView", UserConstants.LIST_VIEW_FLAT_USERS);
 		httpServletRequest.setAttribute(
 			"view.jsp-viewUsersRedirect",
 			ParamUtil.getString(httpServletRequest, "viewUsersRedirect"));

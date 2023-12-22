@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 
@@ -80,9 +81,14 @@ public class ManageCustomFieldsPortletConfigurationIcon
 
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
-		String usersListView = ParamUtil.get(
-			portletRequest, "usersListView",
-			UserConstants.LIST_VIEW_FLAT_USERS);
+		String usersListView = (String)portletRequest.getAttribute(
+			"view.jsp-usersListView");
+
+		if (Validator.isNull(usersListView)) {
+			usersListView = ParamUtil.get(
+				portletRequest, "usersListView",
+				UserConstants.LIST_VIEW_FLAT_USERS);
+		}
 
 		if (!usersListView.equals(UserConstants.LIST_VIEW_FLAT_USERS)) {
 			return false;

@@ -474,7 +474,7 @@ definition {
 
 			ACSegments.addSegmentField(segmentField = "givenName");
 
-			ACSegments.selectOperator(operator = "is unknown");
+			ACSegments.selectOperator(operator = "is known");
 		}
 
 		task ("View members of preview segment") {

@@ -212,7 +212,7 @@ export function PageHeader({localizedDescription, localizedTitle}) {
 		<div>
 			<input
 				className="form-builder-page-header-title form-control p-0"
-				maxLength="120"
+				maxLength="255"
 				onChange={(event) =>
 					dispatch({
 						payload: {pageIndex, value: event.target.value},
@@ -228,7 +228,7 @@ export function PageHeader({localizedDescription, localizedTitle}) {
 
 			<input
 				className="form-builder-page-header-description form-control p-0"
-				maxLength="120"
+				maxLength="255"
 				onChange={(event) =>
 					dispatch({
 						payload: {pageIndex, value: event.target.value},

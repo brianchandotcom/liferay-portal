@@ -118,7 +118,7 @@ export function Page({page: {successPageSettings}}) {
 		<div className="active ddm-form-page form-builder-success-page lfr-ddm-form-page">
 			<input
 				className="form-builder-page-header-title form-control p-0"
-				maxLength="120"
+				maxLength="255"
 				onChange={(event) => {
 					setTitle(event.target.value);
 					onChange(event, 'title');
@@ -129,7 +129,7 @@ export function Page({page: {successPageSettings}}) {
 
 			<input
 				className="form-builder-page-header-description form-control p-0"
-				maxLength="120"
+				maxLength="255"
 				onChange={(event) => {
 					setBody(event.target.value);
 					onChange(event, 'body');

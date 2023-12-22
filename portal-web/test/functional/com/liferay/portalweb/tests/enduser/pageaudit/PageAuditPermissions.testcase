@@ -50,22 +50,6 @@ definition {
 		}
 	}
 
-	tearDown {
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
-		TestUtils.hardRefresh();
-
-		JSONUser.tearDownNonAdminUsers();
-
-		JSONRole.deleteRole(roleTitle = "Page Audit Test Role");
-
-		JSONGroup.deleteGroupByName(groupName = "Test Site Name");
-
-		if (${testLiferayVirtualInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-	}
-
 	@description = "LPS-132234 Given the page audit panel detail view and a user with permissions to edit Instance Settings When there is no canonical URL, or it doesn't coincide with the page's URL Then the users will see the invalid canonical URL, and a text with a link to the instance settings: If the problem is that the canonical URL doesn't match the URL of the page, try changing the configuration for using localized canonical URLs from Instance settings > Pages > SEO. "
 	@priority = 4
 	@uitest

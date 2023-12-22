@@ -25,8 +25,11 @@ const useGetProductByOrderId = (orderId: string) => {
 			Liferay.CommerceContext.commerceChannelId,
 			placedOrder.placedOrderItems[0].productId,
 			new URLSearchParams({
-				accountId: '-1',
-				nestedFields: 'attachments,images,productSpecifications',
+				'accountId': '-1',
+				'attachments.accountId': '-1',
+				'images.accountId': '-1',
+				'nestedFields': 'attachments,images,productSpecifications',
+				'skus.accountId': '-1',
 			})
 		);
 

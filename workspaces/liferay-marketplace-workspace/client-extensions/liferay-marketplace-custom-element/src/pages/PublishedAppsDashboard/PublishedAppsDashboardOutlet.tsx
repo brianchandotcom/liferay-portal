@@ -47,14 +47,18 @@ const PublishedAppsDashboardOutlet = () => {
 		() =>
 			HeadlessCommerceAdminCatalogImpl.getProducts(
 				new URLSearchParams({
-					filter: new SearchBuilder()
+					'accountId': '-1',
+					'attachments.accountId': '-1',
+					'filter': new SearchBuilder()
 						.eq('catalogId', catalogId as number, {unquote: true})
 						.and()
 						.lambda('categoryNames', 'App')
 						.build(),
-					nestedFields:
+					'images.accountId': '-1',
+					'nestedFields':
 						'attachments,images,productChannels,productSpecifications',
-					page: page.toString(),
+					'page': page.toString(),
+					'skus.accountId': '-1',
 				})
 			)
 	);

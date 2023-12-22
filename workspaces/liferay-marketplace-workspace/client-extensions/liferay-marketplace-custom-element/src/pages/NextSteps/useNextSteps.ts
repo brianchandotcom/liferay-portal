@@ -39,8 +39,11 @@ const useNextSteps = (orderId: string) => {
 				Liferay.CommerceContext.commerceChannelId,
 				productId,
 				new URLSearchParams({
-					accountId,
-					nestedFields: 'attachments,images,productSpecifications',
+					'accountId': '-1',
+					'attachments.accountId': '-1',
+					'images.accountId': '-1',
+					'nestedFields': 'attachments,images,productSpecifications',
+					'skus.accountId': '-1',
 				})
 			)
 	);

@@ -73,7 +73,7 @@
 </tr>
 <tr>
 	<td>WEB_CONTENT_TRANSLATION_DROPDOWN</td>
-	<td>//button[contains(@class,'dropdown-toggle')][@title='Actions']</td>
+	<td>//button[contains(@class,'dropdown-toggle')][@*='Select a Language']</td>
 	<td></td>
 </tr>
 <tr>

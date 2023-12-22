@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -177,6 +178,8 @@ public class AddSegmentsExperimentMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		Layout layout = themeDisplay.getLayout();
+
 		segmentsExperiment = _segmentsExperimentService.addSegmentsExperiment(
 			segmentsExperienceId, plid,
 			ParamUtil.getString(actionRequest, "name"),
@@ -192,8 +195,8 @@ public class AddSegmentsExperimentMVCActionCommand
 		return JSONUtil.put(
 			"segmentsExperiment",
 			SegmentsExperimentUtil.toSegmentsExperimentJSONObject(
-				analyticsConfiguration, themeDisplay.getLocale(),
-				segmentsExperiment)
+				analyticsConfiguration, layout.getGroup(),
+				themeDisplay.getLocale(), segmentsExperiment)
 		).put(
 			"segmentsExperimentRel",
 			SegmentsExperimentUtil.toSegmentsExperimentRelJSONObject(

@@ -408,7 +408,7 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 				).put(
 					"segmentsExperiment",
 					SegmentsExperimentUtil.toSegmentsExperimentJSONObject(
-						analyticsConfiguration, locale,
+						analyticsConfiguration, group, locale,
 						_fetchSegmentsExperiment(
 							layout,
 							segmentsExperience.getSegmentsExperienceId()))
@@ -416,7 +416,7 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 		).put(
 			"segmentsExperiment",
 			SegmentsExperimentUtil.toSegmentsExperimentJSONObject(
-				analyticsConfiguration, locale,
+				analyticsConfiguration, group, locale,
 				_fetchSegmentsExperiment(layout, segmentsExperienceId))
 		).put(
 			"segmentsExperimentGoals",

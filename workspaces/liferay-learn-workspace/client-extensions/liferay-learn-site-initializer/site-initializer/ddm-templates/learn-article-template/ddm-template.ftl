@@ -10,22 +10,63 @@
 </script>
 
 <style>
+	.adt-nav-title.align-items-center.d-flex {
+	color: #282934;
+	  font-weight: 700;
+	}
+
+	.adt-submenu-item-link {
+	  color: #282934;
+		display: contents;
+	}
+
+	.align-items-baseline .col-10 {
+	  gap: 1rem;
+	}
+
+	.bg-color-1 {
+	  background-color: #F7F7F8;
+	}
+
 	.br-5 {
 		border-radius: 0.5rem;
+	}
+
+	.br-5.side-nav {
+	  margin: 0.3rem 1rem;
+	}
+
+	.br-13.dropdown-menu {
+	  overflow-x:hidden;
+		width: max-content;
+		will-change: transform;
+		z-index: 1;
 	}
 
 	.br-20 {
 		border-radius: 2.0rem;
 	}
 
-	.currentLevel {
+	.current-level {
 		color: #004AD7 !important;
 		background-color: #E6EDFB;
 	}
 
-	.currentLevel:hover a {
+	.current-level:hover a {
 		background-color: #EDF3FE !important;
 		color: ##004AD7 !important;
+	}
+
+	.d-flex>.lexicon-icon-angle-left {
+	  display: block;
+		height: 0.6rem;
+		transform: rotate(180deg);
+		width: 0.6rem;
+	}
+
+	.doc-nav>.align-items-center {
+	border-bottom: solid;
+		border-color: #EAECEE;
 	}
 
 	.dropdown-item {
@@ -57,9 +98,29 @@
 		transform: rotate(180deg);
 	}
 
-	.sideNav:hover {
+	.side-nav>.other-level{
+	  color: #282934 !important;
+	  font-size: 1rem;
+		font-weight:600;
+		width: 100%;
+	}
+
+	.side-nav:hover {
 		background-color: #EDF3FE !important;
 		color: #0053F0 !important;
+	}
+
+	.tag-container {
+	  border-radius: 1.5rem;
+		border: 1px solid #0B5FFF;
+		background: var(--action-primary-inverted, #FFF);
+		padding: 0.25rem 0.75rem;
+		gap: 0.25rem;
+	}
+
+	.tags-container {
+	  flex-wrap: wrap;
+		font-size: 0.875rem;
 	}
 
 	.toctree:hover a {
@@ -69,7 +130,11 @@
 		background-size: 0.65rem;
 		color: $color-neutral-6;
 		color: var(--color-action-primary-hover) !important;
-		font-size: 1.125rem;
+	}
+
+	#backLink {
+	  border-left-width: 0px;
+	  color: #282934;
 	}
 
 	#backLink:hover {
@@ -83,6 +148,51 @@
 
 	#dropdown-products:hover svg {
 	  	color: var(--color-action-primary-hover);
+	}
+
+	#parentTitle {
+	  color: #282934;
+		font-weight: 700;
+	}
+
+	#productIcon {
+	  background-color: #E7EFFF;
+		border: 1px solid;
+		border-color: #FFFFFF;
+		height: 3.25rem;
+	width: 3.25rem;
+	}
+
+	#productIcon>img {
+	  height: 3.5rem;
+		margin-left: -0.125rem;
+		max-width: none;
+		width: 3.5rem;
+	}
+
+	#productsIcon {
+	  border: 1px solid;
+		border-color: #F7F7F8;
+		height: 2.25rem;
+		width: 2.25rem;
+	}
+
+	#productsIcon>img {
+	  height: 25px;
+		margin-left: 5px;
+		max-width: none;
+		width: 25px;
+	}
+
+	#send-feedback {
+	  color: #0B5FFF;
+	  font-family: 'Source Sans Pro', sans-serif;
+		font-size: 1rem;
+		font-style: normal;
+		font-weight: 600;
+		line-height: 1.5rem;
+		padding-right: 3rem;
+		text-align: center;
 	}
 </style>
 
@@ -181,7 +291,7 @@
 				</#if>
 
 				<#assign
-					productList =
+					navigationMenuItems =
 						{
 							"analytics-cloud": {
 								"title": "Analytics Cloud",
@@ -214,12 +324,11 @@
 					product = product.getData()
 				/>
 
-				<#if productList[product].title?has_content>
+				<#if navigationMenuItems[product].title?has_content>
 					<div class="dropdown">
 						<div
-							class="adt-nav-item br-5 ml-0 w-100"
+							class="adt-nav-item bg-color-1 br-5 ml-0 w-100"
 							data-toggle="liferay-dropdown"
-							style="background-color: #F7F7F8;"
 						>
 							<div
 								class="adt-nav-text align-items-center br-5 d-flex justify-content-between p-3"
@@ -229,23 +338,21 @@
 									<span
 										aria-expanded="false"
 										aria-haspopup="true"
-										class="adt-nav-title d-flex align-items-center"
-										style="color: #282934; font-weight: 700;"
+										class="adt-nav-title align-items-center d-flex"
 									>
 										<div
 											class="align-items-center br-20 d-flex mr-1"
-											style="background-color: #E7EFFF; width: 3.25rem; height: 3.25rem; border: 1px solid; border-color: #FFFFFF;"
+											id="productIcon"
 										>
 											<img
-												class="lexicon-icon lexicon-icon-caret-bottom product-icon p-2 mt-0"
+												class="lexicon-icon lexicon-icon-caret-bottom product-icon mt-0 p-2"
 												role="presentation"
-												src="${productList[product].image}"
-												style="height: 3.5rem; margin-left: -0.125rem; max-width: none; width: 3.5rem;"
+												src="${navigationMenuItems[product].image}"
 												viewBox="0 0 512 512"
 											/>
 										</div>
 
-										<div>${productList[product].title}</div>
+										<div>${navigationMenuItems[product].title}</div>
 									</span>
 								</div>
 
@@ -261,16 +368,12 @@
 							</div>
 						</div>
 
-						<div
-							class="br-13 dropdown-menu m-0 p-0"
-							style="overflow-x:hidden; width: max-content; will-change: transform; z-index: 1;"
-						>
+						<div class="br-13 dropdown-menu m-0 p-0">
 							<div class="m-0 p-3 row">
-								<#list productList as key, value>
+								<#list navigationMenuItems as key, value>
 									<a
 										class="adt-submenu-item-link color-black text-decoration-none"
-										href="/w/${productList[key].url}/index"
-										style="color: #282934; display: contents;"
+										href="/w/${navigationMenuItems[key].url}/index"
 										tabindex="4"
 									>
 										<div class="align-items-center br-13 br-5 col-sm-12 d-flex dropdown-item justify-content-between ml-0 mr-0">
@@ -278,21 +381,21 @@
 												<div class="align-items-center d-flex">
 													<div
 														class="align-items-center br-20 d-flex mr-1"
-														style="border: 1px solid; border-color: #F7F7F8; height: 2.25rem; width: 2.25rem;"
+														id="productsIcon"
 													>
 														<img
 															class="lexicon-icon lexicon-icon-caret-bottom product-icon mt-0 mr-2"
 															role="presentation"
-															src="${value.image}"
-															style="height: 25px; margin-left: 5px; max-width: none; width: 25px;"
+															src="${value.image}"height: 25px; margin-left: 5px; max-width: none; width: 25px;
 															viewBox="0 0 512 512"
 														/>
 													</div>
+
 													<b>${value.title}</b>
 												</div>
 											</div>
 
-											<#if productList[product].url == value.url>
+											<#if navigationMenuItems[product].url == value.url>
 												<div>
 													<@clay["icon"] symbol="check" />
 												</div>
@@ -308,21 +411,14 @@
 				<#assign navigationLinksJSONArray = jsonFactoryUtil.createJSONArray(navigationLinks.getData()) />
 
 				<#if navigationLinksJSONArray.length() gt 0>
-					<div
-						class="br-5 doc-nav mt-3"
-						style="background-color: #F7F7F8;"
-					>
+					<div class="bg-color-1 br-5 doc-nav mt-3">
 						<#if !topLevelArticle>
-							<div
-								class="align-items-center d-flex"
-								style="border-bottom: solid; border-color: #EAECEE;"
-							>
+							<div class="align-items-center d-flex">
 								<div class="m-2">
 									<a
 										class="br-5 p-2"
 										href="${breadcrumbLinksJSONArray.getJSONObject(0).url}"
 										id="backLink"
-										style="color: #282934; border-left-width: 0px;"
 									>
 										<svg
 											class="lexicon-icon lexicon-icon-angle-left"
@@ -337,7 +433,7 @@
 								<div class="align-self-center">
 									<a
 										class="pl-0 pr-0"
-										style="color: #282934; font-weight: 700;"
+										id="parentTitle"
 									>
 										${breadcrumbLinksJSONArray.getJSONObject(0).title}
 									</a>
@@ -351,14 +447,10 @@
 							<ul class="current">
 								<#if navigationLinksJSONArray.length() gt 0>
 									<#list 0..navigationLinksJSONArray.length()-1 as i>
-										<li
-											class="br-5 d-flex sideNav ${topLevelArticle?then("toctree", "")} ${(urlTitleLastDirectory == navigationLinksJSONArray.getJSONObject(i).url)?then("currentLevel", "")}"
-											style="margin: 0.3rem 1rem;"
-										>
+										<li class="br-5 d-flex side-nav ${topLevelArticle?then("toctree", "")} ${(urlTitleLastDirectory == navigationLinksJSONArray.getJSONObject(i).url)?then("current-level", "other-level")}">
 											<a
-												class="align-items-center br-5 d-flex internal justify-content-between p-2 reference ${(urlTitleLastDirectory == navigationLinksJSONArray.getJSONObject(i).url)?then("currentLevel", "")}"
+												class="align-items-center br-5 d-flex internal justify-content-between p-2 reference ${(urlTitleLastDirectory == navigationLinksJSONArray.getJSONObject(i).url)?then("current-level", "other-level")}"
 												href="${navigationLinksJSONArray.getJSONObject(i).url}"
-												style="font-size: 1rem; color: #282934; font-weight:600; width: 100%;"
 											>
 												${navigationLinksJSONArray.getJSONObject(i).title}
 												<#if breadcrumbLinksJSONArray.length() lt 1>
@@ -366,7 +458,6 @@
 														<svg
 															class="lexicon-icon lexicon-icon-angle-left"
 															role="presentation"
-															style="width: 0.6rem; height: 0.6rem; display: block; transform: rotate(180deg)"
 															viewBox="0 0 512 512"
 														>
 															<use xlink:href="#angle-left" />
@@ -412,10 +503,10 @@
 						</li>
 					</ul>
 
-					<div style="font-family: 'Source Sans Pro', sans-serif; font-size: 1rem; font-style: normal; font-weight: 600; line-height: 1.5rem; color: #0B5FFF; text-align: center; padding-right: 3rem;">
+					<div id="send-feedback">
 						<a
+						  class="text-decoration-none"
 							href="https://liferay.dev/c/portal/login?redirect=https://liferay.dev/ask/questions/liferay-learn-feedback/new"
-							style="text-decoration: none;"
 						>
 							${languageUtil.get(locale, "send-feedback", "Send Feedback")}
 							<@clay["icon"] symbol="message-boards" />
@@ -424,23 +515,17 @@
 				</div>
 
 				<#list taxonomyVocabularies as vocabulary>
-					<div
-						class="align-items-baseline col-10 d-flex mt-2 pl-0"
-						style="gap: 1rem;"
-					>
-						<div class="align-items-baseline d-flex flex-wrap">
+					<div class="align-items-baseline col-10 d-flex mt-2 pl-0">
+						<div class="align-items-baseline d-flex flex-wrap mr-2">
 							${vocabulary}
 						</div>
 
-						<div
-							class="d-flex font-weight-bold mr-2"
-							style="flex-wrap: wrap; font-size: 0.875rem;">
+						<div class="d-flex font-weight-bold mr-2 tags-container">
 							<#list taxonomyCategoriesMap[vocabulary]?sort_by("categoryName") as taxonomyCategory>
 								<div class="d-flex">
 									<a
-										class="align-items-center d-flex label label-primary"
+										class="align-items-center d-flex label label-primary tag-container"
 										href="/search?category=${taxonomyCategory.categoryId}"
-										style="border-radius: 1.5rem; border: 1px solid #0B5FFF; background: var(--action-primary-inverted, #FFF); padding: 0.25rem 0.75rem; gap: 0.25rem;"
 									>
 										<span class="label-item label-item-expand">${taxonomyCategory.categoryName}</span>
 									</a>
@@ -453,11 +538,10 @@
 		</div>
 
 		<div
-			class="col-12 doc-content ${isLandingPage?then("landing-page-container", "")}"
+			class="col-12 doc-content mt-0 ${isLandingPage?then("landing-page-container", "")}"
 			id="docContent"
-			style="margin-top: 0px;"
 		>
-			<div class="row" style="overflow: hidden;">
+			<div class="overflow-hidden row">
 				<div class="article-body col-12 col-md-10 language-log">
 					<#if (content.getData())??>
 						${content.getData()}
@@ -483,9 +567,12 @@
 
 						<div class="autofit-col autofit-col-expand">
 							<h3>${languageUtil.get(locale, "not-finding-what-you-are-looking-for", "Not finding what you're looking for?")}</h3>
+
 							<p>${languageUtil.get(locale, "pardon-our-dust-as-we-revamp", "Pardon our dust as we revamp and transition our product documentation to this site. If something seems missing, please check Liferay Help Center documentation for Liferay DXP 7.2 and previous versions.")}</p>
+
 							<a href="https://help.liferay.com/hc/en-us/categories/360001749912">
 								<strong>${languageUtil.get(locale, "try-liferays-help-center", "Try Liferay's Help Center")}</strong>
+
 								<svg
 									class="lexicon-icon lexicon-icon-shortcut"
 									focusable="false"

@@ -259,13 +259,15 @@ definition {
 			var index = 1;
 		}
 
+		ACUtils.waitForChartLoad();
+
 		while (IsElementNotPresent(index = ${index}, locator1 = "ACIndividualsDashboard#INDIVIDUALS_ACTIVITIES_CHART_RECHARTS_BAR")) {
 			TestUtils.hardRefresh();
 
 			ACUtils.waitForChartLoad();
 		}
 
-		MouseUp.mouseUp(
+		MouseOver(
 			index = ${index},
 			locator1 = "ACIndividualsDashboard#INDIVIDUALS_ACTIVITIES_CHART_RECHARTS_BAR");
 

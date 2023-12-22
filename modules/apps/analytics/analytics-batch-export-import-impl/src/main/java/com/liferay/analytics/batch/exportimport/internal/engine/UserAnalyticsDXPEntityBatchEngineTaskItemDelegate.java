@@ -16,6 +16,7 @@ import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
 import com.liferay.batch.engine.pagination.Page;
 import com.liferay.batch.engine.pagination.Pagination;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
@@ -77,11 +78,19 @@ public class UserAnalyticsDXPEntityBatchEngineTaskItemDelegate
 				0);
 		}
 
+		if (pagination.getPage() == 1) {
+			_lastSeenUserIdThreadLocal.set(0L);
+		}
+
 		List<User> users = _userLocalService.dslQuery(
 			_createSelectDSLQuery(
 				contextCompany.getCompanyId(), pagination, parameters));
 
 		Long[] userIds = ListUtil.toArray(users, User.USER_ID_ACCESSOR);
+
+		if (userIds.length != 0) {
+			_lastSeenUserIdThreadLocal.set(userIds[userIds.length - 1]);
+		}
 
 		Set<Serializable> contactIds = new HashSet<>();
 
@@ -264,10 +273,14 @@ public class UserAnalyticsDXPEntityBatchEngineTaskItemDelegate
 					userTableAlias.status.neq(WorkflowConstants.STATUS_INACTIVE)
 				).and(
 					Predicate.withParentheses(predicate)
+				).and(
+					userTableAlias.userId.gt(_lastSeenUserIdThreadLocal.get())
 				))
+		).orderBy(
+			orderByStep -> orderByStep.orderBy(
+				userTableAlias.userId.ascending())
 		).limit(
-			(pagination.getPage() - 1) * pagination.getPageSize(),
-			pagination.getPage() * pagination.getPageSize()
+			0, pagination.getPageSize()
 		);
 	}
 
@@ -385,6 +398,11 @@ public class UserAnalyticsDXPEntityBatchEngineTaskItemDelegate
 
 		return idsMap;
 	}
+
+	private static final ThreadLocal<Long> _lastSeenUserIdThreadLocal =
+		new CentralizedThreadLocal<>(
+			UserAnalyticsDXPEntityBatchEngineTaskItemDelegate.class.getName() +
+				"._lastSeenUserIdThreadLocal");
 
 	@Reference
 	private AnalyticsConfigurationRegistry _analyticsConfigurationRegistry;

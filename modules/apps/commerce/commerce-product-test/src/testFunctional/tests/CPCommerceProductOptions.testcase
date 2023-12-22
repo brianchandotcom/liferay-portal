@@ -1237,6 +1237,12 @@ definition {
 
 			CommerceNavigator.gotoEntry(entryName = 112);
 
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Price");
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Base Price List");
+
 			CommerceEntry.editSkuPricingAndInventory(
 				basePrice = "20.00",
 				italyQuantity = 20,
@@ -1526,6 +1532,12 @@ definition {
 				var priceAndQuantity = StringUtil.extractLast(${value}, ":");
 
 				CommerceNavigator.gotoEntry(entryName = ${sku});
+
+				SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+				CommerceEntry.gotoMenuTab(menuTab = "Price");
+
+				CommerceNavigator.gotoEntry(entryName = "Minium Base Price List");
 
 				CommerceEntry.editSkuPricingAndInventory(
 					basePrice = ${priceAndQuantity},

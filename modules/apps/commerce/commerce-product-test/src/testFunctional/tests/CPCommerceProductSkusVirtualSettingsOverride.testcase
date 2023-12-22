@@ -797,9 +797,19 @@ definition {
 
 			CommerceNavigator.gotoEntry(entryName = "VIRTUALSKU");
 
-			CommerceSKUs.editSkuPricing(
-				basePrice = "55.00",
-				promoPrice = "50.00");
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Price");
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Base Price List");
+
+			CommerceSKUs.editSkuPricing(basePrice = "55.00");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Base Promotion");
+
+			CommerceSKUs.editSkuPricing(promoPrice = "50.00");
 
 			CommerceEntry.gotoMenuTab(menuTab = "Media");
 

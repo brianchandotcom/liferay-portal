@@ -101,6 +101,12 @@ definition {
 
 				CommerceNavigator.gotoEntry(entryName = ${sku});
 
+				SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+				CommerceEntry.gotoMenuTab(menuTab = "Price");
+
+				CommerceNavigator.gotoEntry(entryName = "Minium Base Price List");
+
 				CommerceEntry.editSkuPricingAndInventory(
 					basePrice = ${priceAndQuantity},
 					italyQuantity = ${priceAndQuantity},
@@ -305,6 +311,12 @@ definition {
 
 				CommerceNavigator.gotoEntry(entryName = ${sku});
 
+				SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+				CommerceEntry.gotoMenuTab(menuTab = "Price");
+
+				CommerceNavigator.gotoEntry(entryName = "Minium Base Price List");
+
 				CommerceEntry.editSkuPricingAndInventory(
 					basePrice = ${priceAndQuantity},
 					italyQuantity = ${priceAndQuantity},
@@ -466,6 +478,12 @@ definition {
 				var priceAndQuantity = StringUtil.extractLast(${value}, ":");
 
 				CommerceNavigator.gotoEntry(entryName = ${sku});
+
+				SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+				CommerceEntry.gotoMenuTab(menuTab = "Price");
+
+				CommerceNavigator.gotoEntry(entryName = "Minium Base Price List");
 
 				CommerceEntry.editSkuPricingAndInventory(
 					basePrice = ${priceAndQuantity},
@@ -672,6 +690,12 @@ definition {
 				var priceAndQuantity = StringUtil.extractLast(${value}, ":");
 
 				CommerceNavigator.gotoEntry(entryName = ${sku});
+
+				SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+				CommerceEntry.gotoMenuTab(menuTab = "Price");
+
+				CommerceNavigator.gotoEntry(entryName = "Minium Base Price List");
 
 				CommerceEntry.editSkuPricingAndInventory(
 					basePrice = ${priceAndQuantity},

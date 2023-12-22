@@ -2087,6 +2087,12 @@ definition {
 
 				CommerceNavigator.gotoEntry(entryName = ${sku});
 
+				SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+				CommerceEntry.gotoMenuTab(menuTab = "Price");
+
+				CommerceNavigator.gotoEntry(entryName = "Minium Base Price List");
+
 				CommerceEntry.editSkuPricingAndInventory(
 					basePrice = ${priceAndQuantity},
 					italyQuantity = ${priceAndQuantity},
@@ -3351,6 +3357,12 @@ definition {
 			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
 
 			CommerceNavigator.gotoEntry(entryName = "default");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Price");
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Base Price List");
 
 			CommerceEntry.editSkuPricingAndInventory(
 				basePrice = "20.00",

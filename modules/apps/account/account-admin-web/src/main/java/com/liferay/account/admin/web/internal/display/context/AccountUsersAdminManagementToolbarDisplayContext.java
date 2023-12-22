@@ -249,7 +249,7 @@ public class AccountUsersAdminManagementToolbarDisplayContext
 
 	@Override
 	public List<DropdownItem> getFilterDropdownItems() {
-		DropdownItemList filterDropdownItems = DropdownItemListBuilder.addGroup(
+		return DropdownItemListBuilder.addGroup(
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
 					_getFilterByAccountEntriesDropdownItems());
@@ -257,15 +257,14 @@ public class AccountUsersAdminManagementToolbarDisplayContext
 					LanguageUtil.get(
 						httpServletRequest, "filter-by-account-memberships"));
 			}
+		).addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					super.getFilterDropdownItems());
+				dropdownGroupItem.setLabel(
+					super.getFilterNavigationDropdownItemsLabel());
+			}
 		).build();
-
-		filterDropdownItems.addAll(super.getFilterDropdownItems());
-
-		if (filterDropdownItems.isEmpty()) {
-			return null;
-		}
-
-		return filterDropdownItems;
 	}
 
 	@Override

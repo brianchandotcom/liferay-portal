@@ -138,7 +138,6 @@ definition {
 
 	@priority = 5
 	test ViewObjectDefinitionDetailsAfterUpgrade7413U33 {
-		property custom.properties = "feature.flag.LPS-181663=true";
 		property data.archive.type = "data-archive-object";
 		property database.types = "mariadb,mysql,postgresql,sqlserver";
 		property portal.version = "7.4.13.u33";

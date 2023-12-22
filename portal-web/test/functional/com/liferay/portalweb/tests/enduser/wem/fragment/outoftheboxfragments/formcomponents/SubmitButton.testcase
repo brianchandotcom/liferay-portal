@@ -51,8 +51,6 @@ definition {
 	@description = "This is a test for LPS-191474. It's not possible to change an object from publish to draft even if the submit is draft. If the submit is Approved it is not possible for an entry to have a draft status."
 	@priority = 5
 	test CannotChangeObjectFromApprovedToDraft {
-		property custom.properties = "feature.flag.LPS-181663=true";
-
 		task ("Given an object entry is enable 'Allow Users to Save Entries as Draft'") {
 			task ("Enable 'Allow Users to Save Entries as Draft' in object") {
 				ObjectAdmin.openObjectAdmin();
@@ -760,8 +758,6 @@ definition {
 	@description = "This is a test for LPS-191474. Using Keyboard navigation the toggle button Allow Users to Save Entries as Draft can be enabled and disabled. The Allow Users to Save Entries as Draft toggle button should comply with WCAG 2.1 AA standard."
 	@priority = 3
 	test EnableAndDisableAllowUsersToSaveEntriesAsDraftViaKeyboardAndViewAccessibility {
-		property custom.properties = "feature.flag.LPS-181663=true";
-
 		task ("When go to object admin and edit the object") {
 			ObjectAdmin.openObjectAdmin();
 
@@ -801,8 +797,6 @@ definition {
 	@description = "This is a test for LPS-191474. An option is added to the Submit Fragment that allows users to save entries as draft."
 	@priority = 5
 	test EnableSaveAsDraftOptionAndViewTheEntryIsSavedAsDraft {
-		property custom.properties = "feature.flag.LPS-181663=true";
-
 		task ("Given an object entry is enable 'Allow Users to Save Entries as Draft'") {
 			task ("Enable 'Allow Users to Save Entries as Draft' in object") {
 				ObjectAdmin.openObjectAdmin();
@@ -886,8 +880,6 @@ definition {
 	@description = "This is a test for LPS-191474. It is possible to navigate the warning pop up message via the keyboard. The warning pop up message should comply with WCAG 2.1 AA standard."
 	@priority = 3
 	test NavigateWarningPopUpMessageAndPublishContentPageViaKeyboardAndViewAccessibility {
-		property custom.properties = "feature.flag.LPS-181663=true";
-
 		task ("When adding a form container and change the submit button to draft") {
 			task ("Add a Form Container framgment to content page") {
 				JSONLayout.addPublicLayout(
@@ -1139,8 +1131,6 @@ definition {
 	@description = "This is a test for LPS-191474. The Save Draft option is disabled on the object so a warning pop up message appears when trying to publish the page."
 	@priority = 5
 	test ViewWarningMessageWhenPublishingContentPageWithSaveAsDraftOptionDisabled {
-		property custom.properties = "feature.flag.LPS-181663=true";
-
 		task ("Given an object entry is disable 'Allow Users to Save Entries as Draft'") {
 			task ("View 'Allow Users to Save Entries as Draft' in object") {
 				ObjectAdmin.openObjectAdmin();

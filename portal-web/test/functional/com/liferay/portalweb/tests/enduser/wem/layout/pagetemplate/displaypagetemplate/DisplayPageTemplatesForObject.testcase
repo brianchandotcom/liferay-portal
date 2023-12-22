@@ -1439,8 +1439,6 @@ definition {
 	@description = "This is a test for LPS-198511. View Multiselect List fragment display success in a Display Page when entry field is empty."
 	@priority = 5
 	test ViewMultiselectListWithEntryFieldEmptyOnAssociatedDisplayPageTemplate {
-		property custom.properties = "feature.flag.LPS-181663=true";
-
 		task ("Given a content page with a Multiselect From List fragment mapped to an object") {
 			Picklist.addPicklistViaAPI(picklistName = "Fruits");
 
@@ -1588,8 +1586,6 @@ definition {
 	@description = "This is a test for LPS-199013. View Select From List fragment display success in a Display Page when entry field is empty."
 	@priority = 5
 	test ViewSelectFromListWithEntryFieldEmptyOnAssociatedDisplayPageTemplate {
-		property custom.properties = "feature.flag.LPS-181663=true";
-
 		task ("Given a content page with a Select From List fragment mapped to an object") {
 			Picklist.addPicklistViaAPI(picklistName = "Fruits");
 

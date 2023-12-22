@@ -128,8 +128,6 @@ definition {
 	@description = "LPS-181663 - Verify when a user creates an object entry and saves it as a draft, the workflow related to that object definition is not triggered"
 	@priority = 4
 	test CheckWorkflowNotTriggeredForDraftEntry {
-		property custom.properties = "feature.flag.LPS-181663=true";
-
 		task ("Given a custom object definition scoped by site") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object 197509",

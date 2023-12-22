@@ -141,7 +141,7 @@ IGConfigurationDisplayContext igConfigurationDisplayContext = (IGConfigurationDi
 				},
 				title: '<liferay-ui:message arguments="folder" key="select-x" />',
 				url:
-					'<%= HtmlUtil.escapeJS(igConfigurationDisplayContext.getSelectFolderURL()) %>',
+					'<%= HtmlUtil.escapeJS(igConfigurationDisplayContext.getSelectRootFolderURL()) %>',
 			});
 		});
 	}

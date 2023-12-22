@@ -176,7 +176,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 						},
 						title: '<liferay-ui:message arguments="folder" key="select-x" />',
 						url:
-							'<%= HtmlUtil.escapeJS(dlAdminDisplayContext.getSelectFolderURL(request)) %>',
+							'<%= HtmlUtil.escapeJS(dlAdminDisplayContext.getSelectRootFolderURL()) %>',
 					});
 				});
 			}

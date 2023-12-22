@@ -400,11 +400,9 @@ public class DLAdminDisplayContext {
 		return _selectedRepositoryId;
 	}
 
-	public String getSelectFolderURL(HttpServletRequest httpServletRequest)
-		throws PortalException {
-
+	public String getSelectRootFolderURL() throws PortalException {
 		ItemSelector itemSelector =
-			(ItemSelector)httpServletRequest.getAttribute(
+			(ItemSelector)_httpServletRequest.getAttribute(
 				ItemSelector.class.getName());
 
 		FolderItemSelectorURLProvider folderItemSelectorURLProvider =

@@ -122,7 +122,7 @@ public class IGConfigurationDisplayContext {
 		return _selectedRepositoryId;
 	}
 
-	public String getSelectFolderURL() throws PortalException {
+	public String getSelectRootFolderURL() throws PortalException {
 		FolderItemSelectorURLProvider folderItemSelectorURLProvider =
 			new FolderItemSelectorURLProvider(
 				_httpServletRequest, _itemSelector);

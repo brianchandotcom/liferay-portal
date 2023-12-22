@@ -19,17 +19,6 @@ definition {
 		}
 	}
 
-	tearDown {
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
-		if (${testLiferayVirtualInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
-		}
-	}
-
 	@description = "LPS-137279 Given the Content Performance Panel When the users leave the page because the session expires or s/he does log out Then they find the panel closed"
 	@priority = 3
 	test ContentPerformanceClosed {

@@ -9,8 +9,14 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLink;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.CollatorUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
+
+import java.text.Collator;
+
+import java.util.Locale;
 
 /**
  * @author Rafael Praxedes
@@ -29,7 +35,16 @@ public class StructureLinkStructureNameComparator
 	}
 
 	public StructureLinkStructureNameComparator(boolean ascending) {
+		this(ascending, LocaleUtil.getDefault());
+	}
+
+	public StructureLinkStructureNameComparator(
+		boolean ascending, Locale locale) {
+
 		_ascending = ascending;
+		_locale = locale;
+
+		_collator = CollatorUtil.getInstance(locale);
 	}
 
 	@Override
@@ -41,10 +56,12 @@ public class StructureLinkStructureNameComparator
 			DDMStructure ddmStructure1 = ddmDataStructureLink1.getStructure();
 			DDMStructure ddmStructure2 = ddmDataStructureLink1.getStructure();
 
-			String name1 = StringUtil.toLowerCase(ddmStructure1.getName());
-			String name2 = StringUtil.toLowerCase(ddmStructure2.getName());
+			String name1 = StringUtil.toLowerCase(
+				ddmStructure1.getName(_locale));
+			String name2 = StringUtil.toLowerCase(
+				ddmStructure2.getName(_locale));
 
-			int value = name1.compareTo(name2);
+			int value = _collator.compare(name1, name2);
 
 			if (_ascending) {
 				return value;
@@ -84,5 +101,7 @@ public class StructureLinkStructureNameComparator
 		StructureLinkStructureNameComparator.class);
 
 	private final boolean _ascending;
+	private final Collator _collator;
+	private final Locale _locale;
 
 }

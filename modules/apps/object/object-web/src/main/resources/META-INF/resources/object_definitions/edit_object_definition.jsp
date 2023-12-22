@@ -33,8 +33,6 @@ String screenNavigationCategoryKey = ParamUtil.getString(request, "screenNavigat
 						HashMapBuilder.<String, Object>put(
 							"backURL", ParamUtil.getString(request, "backURL", String.valueOf(renderResponse.createRenderURL()))
 						).put(
-							"externalReferenceCode", objectDefinition.getExternalReferenceCode()
-						).put(
 							"hasPublishObjectPermission", objectDefinitionsDetailsDisplayContext.hasPublishObjectPermission()
 						).put(
 							"hasUpdateObjectDefinitionPermission", objectDefinitionsDetailsDisplayContext.hasUpdateObjectDefinitionPermission()
@@ -42,6 +40,8 @@ String screenNavigationCategoryKey = ParamUtil.getString(request, "screenNavigat
 							"isApproved", objectDefinition.isApproved()
 						).put(
 							"label", objectDefinition.getLabel(locale, true)
+						).put(
+							"objectDefinitionExternalReferenceCode", objectDefinition.getExternalReferenceCode()
 						).put(
 							"objectDefinitionId", objectDefinition.getObjectDefinitionId()
 						).put(

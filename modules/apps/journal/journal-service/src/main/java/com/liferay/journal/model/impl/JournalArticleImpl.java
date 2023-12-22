@@ -248,7 +248,11 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 
 	@Override
 	public DDMFormValues getDDMFormValues() {
-		return getDDMFormValues(true);
+		if (_ddmFormValues == null) {
+			_ddmFormValues = getDDMFormValues(true);
+		}
+
+		return _ddmFormValues;
 	}
 
 	@Override
@@ -829,6 +833,7 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 		_ddmFormValuesToFieldsConverter;
 	private static volatile JournalConverter _journalConverter;
 
+	private DDMFormValues _ddmFormValues;
 	private Map<Locale, String> _descriptionMap;
 	private Document _document;
 	private Map<String, Document> _documentMap;

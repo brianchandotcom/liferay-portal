@@ -337,7 +337,7 @@ export async function deleteCart(cartId: number) {
 	);
 }
 
-export async function getCart(cartId: number) {
+export async function getCart(cartId: number | string) {
 	const cartResponse = await fetch(
 		`${baseURL}/o/headless-commerce-delivery-cart/v1.0/carts/${cartId}`,
 		{
@@ -349,7 +349,7 @@ export async function getCart(cartId: number) {
 	return await cartResponse.json();
 }
 
-export async function getCartItems(cartId: number) {
+export async function getCartItems(cartId: number | string) {
 	const cartResponse = await fetch(
 		`${baseURL}/o/headless-commerce-delivery-cart/v1.0/carts/${cartId}/items`,
 		{

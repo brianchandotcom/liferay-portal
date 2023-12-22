@@ -28,7 +28,7 @@ export default {
 	'cancel': 'Cancel',
 	'cash': 'Cash',
 	'client-extensions': 'Client Extensions',
-	'cloud-compatible-?': 'Cloud Compatible?',
+	'cloud-compatible': 'Cloud Compatible?',
 	'cloud-upload': 'Cloud Upload',
 	'compatible-offering': 'Compatible Offering',
 	'complete-publisher-account-request': 'Complete Publisher Account Request',
@@ -37,6 +37,10 @@ export default {
 	'confirm-deactivation-terms': 'Confirm Deactivation Terms',
 	'content-policy': 'Content policy',
 	'continue': 'Continue',
+	'create-a-cloud-app-using-client-extensions':
+		'Create a Cloud app using client extensions.',
+	'create-a-dxp-app-using-a-plugin-package':
+		'Create a DXP app using a plugin package.',
 	'create-license-key': 'Create License Key',
 	'create-new-licenses-and-they-will-show-up-here':
 		'Create new licenses and they will show up here.',
@@ -131,6 +135,7 @@ export default {
 	'self-managed': 'Self-Managed',
 	'sorry-there-are-no-results-found': 'Sorry, there are no results found',
 	'start-date': 'Start Date',
+
 	'status': 'Status',
 	'terms-of-service': 'Terms of Service',
 	'thank-you-for-your': 'Thank you for your',

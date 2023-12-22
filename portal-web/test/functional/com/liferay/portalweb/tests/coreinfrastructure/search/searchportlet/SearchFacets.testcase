@@ -2192,9 +2192,6 @@ definition {
 	@description = "This is a use case for LPS-156862."
 	@priority = 4
 	test SearchWithCategoryFacetAndAllVocabularies {
-		property osgi.module.configuration.file.names = "com.liferay.portal.search.configuration.CategoryFacetFieldConfiguration.config";
-		property osgi.module.configurations = "categoryFacetField=\"assetVocabularyCategoryIds\"";
-
 		for (var count : list "1,2") {
 			JSONCategory.addVocabulary(
 				groupName = "Guest",
@@ -2292,9 +2289,6 @@ definition {
 	@description = "This is a use case for LPS-190429 - Search with Category facet configured to display select global vocabularies."
 	@priority = 4
 	test SearchWithCategoryFacetAndSelectGlobalVocabularies {
-		property osgi.module.configuration.file.names = "com.liferay.portal.search.configuration.CategoryFacetFieldConfiguration.config";
-		property osgi.module.configurations = "categoryFacetField=\"assetVocabularyCategoryIds\"";
-
 		for (var count : list "1,2") {
 			JSONCategory.addVocabulary(
 				groupName = "Global",
@@ -2394,9 +2388,6 @@ definition {
 	@description = "This is a use case for LPS-156862."
 	@priority = 4
 	test SearchWithCategoryFacetAndSelectVocabularies {
-		property osgi.module.configuration.file.names = "com.liferay.portal.search.configuration.CategoryFacetFieldConfiguration.config";
-		property osgi.module.configurations = "categoryFacetField=\"assetVocabularyCategoryIds\"";
-
 		for (var count : list "1,2") {
 			JSONCategory.addVocabulary(
 				groupName = "Guest",
@@ -2749,9 +2740,6 @@ definition {
 	@description = "This is a use case for LPS-178336 - Category facet vocabulary selection is limited to 20 elements."
 	@priority = 3
 	test ViewCategoryFacetVocabularySelectionIsNotLimited {
-		property osgi.module.configuration.file.names = "com.liferay.portal.search.configuration.CategoryFacetFieldConfiguration.config";
-		property osgi.module.configurations = "categoryFacetField=\"assetVocabularyCategoryIds\"";
-
 		task ("Create 21 vocabularies") {
 			var count = 1;
 

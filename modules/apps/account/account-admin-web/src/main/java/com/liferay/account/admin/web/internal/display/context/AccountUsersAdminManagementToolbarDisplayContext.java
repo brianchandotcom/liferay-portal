@@ -249,16 +249,13 @@ public class AccountUsersAdminManagementToolbarDisplayContext
 
 	@Override
 	public List<DropdownItem> getFilterDropdownItems() {
-		List<DropdownItem> filterAccountEntriesDropdownItems =
-			_getFilterByAccountEntriesDropdownItems();
-
 		DropdownItemList filterDropdownItems = DropdownItemListBuilder.addGroup(
-			() -> filterAccountEntriesDropdownItems != null,
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
-					filterAccountEntriesDropdownItems);
+					_getFilterByAccountEntriesDropdownItems());
 				dropdownGroupItem.setLabel(
-					_getFilterByAccountEntriesDropdownItemsLabel());
+					LanguageUtil.get(
+						httpServletRequest, "filter-by-account-memberships"));
 			}
 		).build();
 
@@ -466,11 +463,6 @@ public class AccountUsersAdminManagementToolbarDisplayContext
 						httpServletRequest, "no-assigned-account"));
 			}
 		).build();
-	}
-
-	private String _getFilterByAccountEntriesDropdownItemsLabel() {
-		return LanguageUtil.get(
-			httpServletRequest, "filter-by-account-memberships");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

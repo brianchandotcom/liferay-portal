@@ -16,8 +16,6 @@ import {
 	CSV_FORMAT,
 	DISALLOWED_CSV_ENTITY_TYPES,
 	EXPORT_FILE_FORMAT_SELECTED_EVENT,
-	FORBIDDEN_CSV_FIELDS_ENTITY_NAMES,
-	FORBIDDEN_CSV_FIELDS_ENTITY_TYPES,
 	SCHEMA_SELECTED_EVENT,
 	TEMPLATE_SELECTED_EVENT,
 	TEMPLATE_SOILED_EVENT,
@@ -30,31 +28,18 @@ function FieldsTable({portletNamespace}) {
 		''
 	);
 	const [selectedFields, setSelectedFields] = useState([]);
-	const [selectedSchemaName, setSelectedSchemaName] = useState('');
 	const useTemplateMappingRef = useRef();
-
-	const getForbiddenValues = (part, o) =>
-		Object.entries(o).find(([k]) => part.startsWith(k))?.[1];
 
 	const isForbidden = (field) => {
 		return (
 			selectedExportFileFormat === CSV_FORMAT.toUpperCase() &&
-			(getForbiddenValues(
-				selectedSchemaName,
-				FORBIDDEN_CSV_FIELDS_ENTITY_TYPES
-			).includes(field.type) ||
-				getForbiddenValues(
-					selectedSchemaName,
-					FORBIDDEN_CSV_FIELDS_ENTITY_NAMES
-				).includes(field.name))
+			!field.supported
 		);
 	};
 
 	useEffect(() => {
 		const handleSchemaUpdated = (event) => {
 			if (event.schema) {
-				setSelectedSchemaName(event.schemaName);
-
 				const newFields = getFieldsFromSchema(event.schema);
 
 				const formattedFields = [

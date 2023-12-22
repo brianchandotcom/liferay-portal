@@ -26,7 +26,7 @@ definition {
 		if (${notificationType} == "Website") {
 			ScrollWebElementIntoView(locator1 = "Notifications#NOTIFICATIONS_CONFIGURATION_WEBSITE_SWITCH");
 
-			Check.toggleSwitch(locator1 = "Notifications#NOTIFICATIONS_CONFIGURATION_WEBSITE_SWITCH");
+			Click(locator1 = "Notifications#NOTIFICATIONS_CONFIGURATION_WEBSITE_SWITCH");
 		}
 
 		if (${notificationType} == "Email") {

@@ -1796,7 +1796,7 @@ public class JournalDisplayContext {
 					_getCurrentFolderFilter(), BooleanClauseOccur.MUST_NOT);
 			}
 
-			if (!isSearch()) {
+			if (!isSearch() && (getHighlightedDDMStructureId() <= 0)) {
 				booleanFilter.addTerm(
 					Field.FOLDER_ID, String.valueOf(getFolderId()),
 					BooleanClauseOccur.MUST);
@@ -2205,7 +2205,9 @@ public class JournalDisplayContext {
 				new String[] {JournalArticle.class.getName()});
 		}
 
-		if (Objects.equals(_getSearchLocation(), "current-folder")) {
+		if (Objects.equals(_getSearchLocation(), "current-folder") &&
+			(highlightedDDMStructureId <= 0)) {
+
 			searchContext.setFolderIds(
 				Collections.singletonList(getFolderId()));
 		}

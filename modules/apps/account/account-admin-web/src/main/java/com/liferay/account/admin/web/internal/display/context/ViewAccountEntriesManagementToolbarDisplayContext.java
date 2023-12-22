@@ -14,7 +14,6 @@ import com.liferay.account.model.AccountEntry;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownGroupItemBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
@@ -197,11 +196,23 @@ public class ViewAccountEntriesManagementToolbarDisplayContext
 
 	@Override
 	public List<DropdownItem> getFilterDropdownItems() {
-		List<DropdownItem> filterDropdownItems = super.getFilterDropdownItems();
-
-		_addFilterTypeDropdownItems(filterDropdownItems);
-
-		return filterDropdownItems;
+		return DropdownItemListBuilder.addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					super.getFilterDropdownItems());
+				dropdownGroupItem.setLabel(
+					super.getFilterNavigationDropdownItemsLabel());
+			}
+		).addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					getDropdownItems(
+						getDefaultEntriesMap(_getFilterByTypeKeys()),
+						getPortletURL(), "type", _getType()));
+				dropdownGroupItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "filter-by-type"));
+			}
+		).build();
 	}
 
 	@Override
@@ -293,20 +304,6 @@ public class ViewAccountEntriesManagementToolbarDisplayContext
 	@Override
 	protected String[] getOrderByKeys() {
 		return new String[] {"name"};
-	}
-
-	private void _addFilterTypeDropdownItems(
-		List<DropdownItem> filterDropdownItems) {
-
-		filterDropdownItems.add(
-			1,
-			DropdownGroupItemBuilder.setDropdownItems(
-				getDropdownItems(
-					getDefaultEntriesMap(_getFilterByTypeKeys()),
-					getPortletURL(), "type", _getType())
-			).setLabel(
-				LanguageUtil.get(httpServletRequest, "filter-by-type")
-			).build());
 	}
 
 	private String[] _getFilterByTypeKeys() {

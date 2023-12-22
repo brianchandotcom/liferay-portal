@@ -183,12 +183,20 @@ const RichText = ({
 						onBlur={onBlur}
 						onChange={(content) => handleContentChange(content)}
 						onFocus={onFocus}
-						onSetData={({
-							data: {dataValue: value},
-							editor: {mode},
-						}) => {
-							if (mode === 'source') {
-								handleContentChange(value);
+						onSetData={(event) => {
+							const editor = event.editor;
+
+							if (editor.mode === 'source') {
+								const value = event.data.dataValue;
+
+								const sanitizedValue = value.replace(
+									/onerror="[^"]+"/gi,
+									''
+								);
+
+								handleContentChange(sanitizedValue);
+
+								event.data.dataValue = sanitizedValue;
 							}
 						}}
 						readOnly={readOnly}

@@ -1339,9 +1339,9 @@ definition {
 		task ("Add Widget Page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
-				layoutName = "Widget Page");
+				layoutName = "Test Page Name");
 
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/widget-page");
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-page-name");
 		}
 
 		task ("Open Page Audit panel") {

@@ -5,8 +5,12 @@
 
 package com.liferay.dynamic.data.mapping.service.impl;
 
+import com.liferay.dynamic.data.mapping.model.DDMStructureLink;
 import com.liferay.dynamic.data.mapping.service.base.DDMStructureLinkServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -22,4 +26,25 @@ import org.osgi.service.component.annotations.Component;
 )
 public class DDMStructureLinkServiceImpl
 	extends DDMStructureLinkServiceBaseImpl {
+
+	@Override
+	public List<DDMStructureLink> getStructureLinkStructures(
+		long classNameId, long classPK, long[] groupIds, String keywords,
+		String resourceClassName, int start, int end,
+		OrderByComparator<DDMStructureLink> orderByComparator) {
+
+		return ddmStructureLinkFinder.filterFindByKeywords(
+			classNameId, classPK, groupIds, keywords, resourceClassName, start,
+			end, orderByComparator);
+	}
+
+	@Override
+	public int getStructureLinkStructuresCount(
+		long classNameId, long classPK, long[] groupIds, String keywords,
+		String resourceClassName) {
+
+		return ddmStructureLinkFinder.filterCountByKeywords(
+			classNameId, classPK, groupIds, keywords, resourceClassName);
+	}
+
 }

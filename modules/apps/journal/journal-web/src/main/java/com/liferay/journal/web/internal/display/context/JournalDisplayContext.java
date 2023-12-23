@@ -2204,14 +2204,11 @@ public class JournalDisplayContext {
 		long ddmStructureId = ParamUtil.getLong(
 			_httpServletRequest, "ddmStructureId");
 
-		long highlightedDDMStructureId = ParamUtil.getLong(
-			_httpServletRequest, "highlightedDDMStructureId");
-
 		if (FeatureFlagManagerUtil.isEnabled("LPS-194763") &&
-			(highlightedDDMStructureId > 0)) {
+			(getHighlightedDDMStructureId() > 0)) {
 
 			searchContext.setClassTypeIds(
-				new long[] {highlightedDDMStructureId});
+				new long[] {getHighlightedDDMStructureId()});
 		}
 		else if (ddmStructureId > 0) {
 			searchContext.setClassTypeIds(new long[] {ddmStructureId});
@@ -2221,14 +2218,14 @@ public class JournalDisplayContext {
 		searchContext.setEnd(end);
 
 		if (FeatureFlagManagerUtil.isEnabled("LPS-196768") &&
-			(isNavigationStructure() || (highlightedDDMStructureId > 0))) {
+			(isNavigationStructure() || (getHighlightedDDMStructureId() > 0))) {
 
 			searchContext.setEntryClassNames(
 				new String[] {JournalArticle.class.getName()});
 		}
 
 		if (Objects.equals(_getSearchLocation(), "current-folder") &&
-			(highlightedDDMStructureId <= 0)) {
+			(getHighlightedDDMStructureId() <= 0)) {
 
 			searchContext.setFolderIds(
 				Collections.singletonList(getFolderId()));

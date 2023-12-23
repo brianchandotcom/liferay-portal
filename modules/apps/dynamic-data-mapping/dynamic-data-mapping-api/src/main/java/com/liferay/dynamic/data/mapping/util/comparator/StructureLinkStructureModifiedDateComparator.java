@@ -16,9 +16,9 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 public class StructureLinkStructureModifiedDateComparator
 	extends OrderByComparator<DDMStructureLink> {
 
-	public static final String ORDER_BY_ASC = "modifiedDate ASC";
+	public static final String ORDER_BY_ASC = "DDMStructure.modifiedDate ASC";
 
-	public static final String ORDER_BY_DESC = "modifiedDate DESC";
+	public static final String ORDER_BY_DESC = "DDMStructure.modifiedDate DESC";
 
 	public static final String[] ORDER_BY_FIELDS = {"modifiedDate"};
 

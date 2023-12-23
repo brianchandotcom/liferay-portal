@@ -5,6 +5,7 @@
 
 package com.liferay.dynamic.data.mapping.util.comparator;
 
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLink;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.DateUtil;
@@ -38,11 +39,12 @@ public class StructureLinkStructureModifiedDateComparator
 		int value = 0;
 
 		try {
+			DDMStructure ddmStructure1 = ddmStructureLink1.getStructure();
+			DDMStructure ddmStructure2 = ddmStructureLink2.getStructure();
+
 			value = DateUtil.compareTo(
-				ddmStructureLink1.getStructure(
-				).getModifiedDate(),
-				ddmStructureLink2.getStructure(
-				).getModifiedDate());
+				ddmStructure1.getModifiedDate(),
+				ddmStructure2.getModifiedDate());
 		}
 		catch (PortalException portalException) {
 			throw new RuntimeException(portalException);

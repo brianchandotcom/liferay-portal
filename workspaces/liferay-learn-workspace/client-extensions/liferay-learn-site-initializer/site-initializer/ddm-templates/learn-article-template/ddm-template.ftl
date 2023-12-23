@@ -16,16 +16,16 @@
 	}
 
 	.adt-submenu-item-link {
-	  	color: #282934;
+		color: #282934;
 		display: contents;
 	}
 
 	.align-items-baseline .col-10 {
-	  	gap: 1rem;
+		gap: 1rem;
 	}
 
 	.bg-color-1 {
-	  	background-color: #F7F7F8;
+		background-color: #F7F7F8;
 	}
 
 	.br-5 {
@@ -58,7 +58,7 @@
 	}
 
 	.d-flex>.lexicon-icon-angle-left {
-	  	display: block;
+		display: block;
 		height: 0.6rem;
 		transform: rotate(180deg);
 		width: 0.6rem;
@@ -72,17 +72,17 @@
 	.dropdown-item {
 		align-items: center;
 		align-self: stretch;
-	  	display: flex;
+		display: flex;
 		gap: 0.75rem;
 		padding: 0.75rem;
 	}
 
 	.dropdown-item:hover {
-	  	background-color: #EDF3FE;
+		background-color: #EDF3FE;
 	}
 
 	.dropdown-menu .row {
-	  	margin: 0 !important;
+		margin: 0 !important;
 	}
 
 	.reference:hover {
@@ -90,7 +90,7 @@
 	}
 
 	.show #dropdown-products {
-	  	background-color: #EDF3FE !important;
+		background-color: #EDF3FE !important;
 	}
 
 	.show #dropdown-products svg {
@@ -99,8 +99,8 @@
 	}
 
 	.side-nav>.other-level{
-	  	color: #282934 !important;
-	  	font-size: 1rem;
+		color: #282934 !important;
+		font-size: 1rem;
 		font-weight:600;
 		width: 100%;
 	}
@@ -111,7 +111,7 @@
 	}
 
 	.tag-container {
-	  	border-radius: 1.5rem;
+		border-radius: 1.5rem;
 		border: 1px solid #0B5FFF;
 		background: var(--action-primary-inverted, #FFF);
 		padding: 0.25rem 0.75rem;
@@ -119,7 +119,7 @@
 	}
 
 	.tags-container {
-	  	flex-wrap: wrap;
+		flex-wrap: wrap;
 		font-size: 0.875rem;
 	}
 
@@ -133,8 +133,8 @@
 	}
 
 	#backLink {
-	 	 border-left-width: 0px;
-	  	color: #282934;
+		border-left-width: 0px;
+		color: #282934;
 	}
 
 	#backLink:hover {
@@ -147,11 +147,11 @@
 	}
 
 	#dropdown-products:hover svg {
-	  	color: var(--color-action-primary-hover);
+		color: var(--color-action-primary-hover);
 	}
 
 	#parentTitle {
-	 	color: #282934;
+		color: #282934;
 		font-weight: 700;
 	}
 
@@ -185,8 +185,8 @@
 	}
 
 	#send-feedback {
-	  	color: #0B5FFF;
-	  	font-family: 'Source Sans Pro', sans-serif;
+		color: #0B5FFF;
+		font-family: 'Source Sans Pro', sans-serif;
 		font-size: 1rem;
 		font-style: normal;
 		font-weight: 600;
@@ -505,7 +505,7 @@
 
 					<div id="send-feedback">
 						<a
-						  class="text-decoration-none"
+							class="text-decoration-none"
 							href="https://liferay.dev/c/portal/login?redirect=https://liferay.dev/ask/questions/liferay-learn-feedback/new"
 						>
 							${languageUtil.get(locale, "send-feedback", "Send Feedback")}

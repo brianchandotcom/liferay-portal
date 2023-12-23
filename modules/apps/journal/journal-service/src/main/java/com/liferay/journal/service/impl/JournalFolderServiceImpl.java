@@ -6,8 +6,11 @@
 package com.liferay.journal.service.impl;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.DDMStructureLink;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLinkService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
+import com.liferay.dynamic.data.mapping.util.comparator.StructureLinkStructureModifiedDateComparator;
+import com.liferay.dynamic.data.mapping.util.comparator.StructureLinkStructureNameComparator;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
@@ -23,6 +26,7 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -421,7 +425,8 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 			return _ddmStructureLinkService.getStructureLinkStructures(
 				_classNameLocalService.getClassNameId(JournalFolder.class),
 				folderId, groupIds, keywords, JournalArticle.class.getName(),
-				start, end, null);
+				start, end,
+				_getDDMStructureLinkOrderByComparator(orderByComparator));
 		}
 
 		folderId = journalFolderLocalService.getOverridedDDMStructuresFolderId(
@@ -431,7 +436,8 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 			return _ddmStructureLinkService.getStructureLinkStructures(
 				_classNameLocalService.getClassNameId(JournalFolder.class),
 				folderId, groupIds, keywords, JournalArticle.class.getName(),
-				start, end, null);
+				start, end,
+				_getDDMStructureLinkOrderByComparator(orderByComparator));
 		}
 
 		return _ddmStructureService.search(
@@ -545,6 +551,29 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 		}
 
 		return ddmStructures;
+	}
+
+	private OrderByComparator<DDMStructureLink>
+		_getDDMStructureLinkOrderByComparator(
+			OrderByComparator<DDMStructure> orderByComparator) {
+
+		if (orderByComparator == null) {
+			return null;
+		}
+
+		if (ArrayUtil.contains(
+				orderByComparator.getOrderByFields(), "modifiedDate")) {
+
+			return new StructureLinkStructureModifiedDateComparator(
+				orderByComparator.isAscending());
+		}
+
+		if (ArrayUtil.contains(orderByComparator.getOrderByFields(), "name")) {
+			return new StructureLinkStructureNameComparator(
+				orderByComparator.isAscending());
+		}
+
+		return null;
 	}
 
 	@Reference

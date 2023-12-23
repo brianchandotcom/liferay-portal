@@ -5,6 +5,11 @@
 
 package com.liferay.dynamic.data.mapping.service;
 
+import com.liferay.dynamic.data.mapping.model.DDMStructureLink;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.List;
+
 /**
  * Provides the remote service utility for DDMStructureLink. This utility wraps
  * <code>com.liferay.dynamic.data.mapping.service.impl.DDMStructureLinkServiceImpl</code> and is an
@@ -30,8 +35,26 @@ public class DDMStructureLinkServiceUtil {
 	 *
 	 * @return the OSGi service identifier
 	 */
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static List<DDMStructureLink> getStructureLinkStructures(
+		long classNameId, long classPK, long[] groupIds, String keywords,
+		String resourceClassName, int start, int end,
+		OrderByComparator<DDMStructureLink> orderByComparator) {
+
+		return getService().getStructureLinkStructures(
+			classNameId, classPK, groupIds, keywords, resourceClassName, start,
+			end, orderByComparator);
+	}
+
+	public static int getStructureLinkStructuresCount(
+		long classNameId, long classPK, long[] groupIds, String keywords,
+		String resourceClassName) {
+
+		return getService().getStructureLinkStructuresCount(
+			classNameId, classPK, groupIds, keywords, resourceClassName);
 	}
 
 	public static DDMStructureLinkService getService() {

@@ -6,7 +6,7 @@
 package com.liferay.journal.service.impl;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.service.DDMStructureLinkLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLinkService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
@@ -418,18 +418,20 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 				JournalFolderConstants.
 					RESTRICTION_TYPE_DDM_STRUCTURES_AND_WORKFLOW) {
 
-			return _ddmStructureLinkLocalService.getStructureLinkStructures(
+			return _ddmStructureLinkService.getStructureLinkStructures(
 				_classNameLocalService.getClassNameId(JournalFolder.class),
-				folderId, keywords, start, end);
+				folderId, groupIds, keywords, JournalArticle.class.getName(),
+				start, end, null);
 		}
 
 		folderId = journalFolderLocalService.getOverridedDDMStructuresFolderId(
 			folderId);
 
 		if (folderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			return _ddmStructureLinkLocalService.getStructureLinkStructures(
+			return _ddmStructureLinkService.getStructureLinkStructures(
 				_classNameLocalService.getClassNameId(JournalFolder.class),
-				folderId, keywords, start, end);
+				folderId, groupIds, keywords, JournalArticle.class.getName(),
+				start, end, null);
 		}
 
 		return _ddmStructureService.search(
@@ -449,20 +451,18 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 				JournalFolderConstants.
 					RESTRICTION_TYPE_DDM_STRUCTURES_AND_WORKFLOW) {
 
-			return _ddmStructureLinkLocalService.
-				getStructureLinkStructuresCount(
-					_classNameLocalService.getClassNameId(JournalFolder.class),
-					folderId, keywords);
+			return _ddmStructureLinkService.getStructureLinkStructuresCount(
+				_classNameLocalService.getClassNameId(JournalFolder.class),
+				folderId, groupIds, keywords, JournalArticle.class.getName());
 		}
 
 		folderId = journalFolderLocalService.getOverridedDDMStructuresFolderId(
 			folderId);
 
 		if (folderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			return _ddmStructureLinkLocalService.
-				getStructureLinkStructuresCount(
-					_classNameLocalService.getClassNameId(JournalFolder.class),
-					folderId, keywords);
+			return _ddmStructureLinkService.getStructureLinkStructuresCount(
+				_classNameLocalService.getClassNameId(JournalFolder.class),
+				folderId, groupIds, keywords, JournalArticle.class.getName());
 		}
 
 		return _ddmStructureService.searchCount(
@@ -551,7 +551,7 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
-	private DDMStructureLinkLocalService _ddmStructureLinkLocalService;
+	private DDMStructureLinkService _ddmStructureLinkService;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.dynamic.data.mapping.model.DDMStructure)"

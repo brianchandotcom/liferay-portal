@@ -54,7 +54,7 @@ public class StructureLinkStructureNameComparator
 
 		try {
 			DDMStructure ddmStructure1 = ddmDataStructureLink1.getStructure();
-			DDMStructure ddmStructure2 = ddmDataStructureLink1.getStructure();
+			DDMStructure ddmStructure2 = ddmDataStructureLink2.getStructure();
 
 			String name1 = StringUtil.toLowerCase(
 				ddmStructure1.getName(_locale));

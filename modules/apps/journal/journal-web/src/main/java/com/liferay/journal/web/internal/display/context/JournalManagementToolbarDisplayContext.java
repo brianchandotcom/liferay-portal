@@ -554,13 +554,11 @@ public class JournalManagementToolbarDisplayContext
 		).setParameter(
 			"highlightedDDMStructureId",
 			() -> {
-				long highlightedDDMStructureId =
-					_journalDisplayContext.getHighlightedDDMStructureId();
-
 				if (FeatureFlagManagerUtil.isEnabled("LPS-194763") &&
-					(highlightedDDMStructureId > 0)) {
+					_journalDisplayContext.isHighlightedDDMStructure()) {
 
-					return highlightedDDMStructureId;
+					return _journalDisplayContext.
+						getHighlightedDDMStructureId();
 				}
 
 				return null;
@@ -780,7 +778,7 @@ public class JournalManagementToolbarDisplayContext
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPS-194763") ||
 			(FeatureFlagManagerUtil.isEnabled("LPS-194763") &&
-			 (_journalDisplayContext.getHighlightedDDMStructureId() <= 0))) {
+			 !_journalDisplayContext.isHighlightedDDMStructure())) {
 
 			filterNavigationDropdownItems.add(
 				DropdownItemBuilder.putData(

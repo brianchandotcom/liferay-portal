@@ -268,7 +268,7 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 
 						<c:choose>
 							<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPS-194763") %>'>
-								<c:if test="<%= journalDisplayContext.getHighlightedDDMStructureId() <= 0 %>">
+								<c:if test="<%= !journalDisplayContext.isHighlightedDDMStructure() %>">
 
 									<%
 									DDMStructure ddmStructure = curArticle.getDDMStructure();

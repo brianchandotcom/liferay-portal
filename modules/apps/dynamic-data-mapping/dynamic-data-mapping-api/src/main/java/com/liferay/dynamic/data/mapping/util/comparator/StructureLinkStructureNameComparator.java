@@ -49,12 +49,12 @@ public class StructureLinkStructureNameComparator
 
 	@Override
 	public int compare(
-		DDMStructureLink ddmDataStructureLink1,
-		DDMStructureLink ddmDataStructureLink2) {
+		DDMStructureLink ddmStructureLink1,
+		DDMStructureLink ddmStructureLink2) {
 
 		try {
-			DDMStructure ddmStructure1 = ddmDataStructureLink1.getStructure();
-			DDMStructure ddmStructure2 = ddmDataStructureLink2.getStructure();
+			DDMStructure ddmStructure1 = ddmStructureLink1.getStructure();
+			DDMStructure ddmStructure2 = ddmStructureLink2.getStructure();
 
 			String name1 = StringUtil.toLowerCase(
 				ddmStructure1.getName(_locale));

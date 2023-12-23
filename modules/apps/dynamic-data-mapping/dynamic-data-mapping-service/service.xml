@@ -557,7 +557,7 @@
 			<finder-column name="structureVersionId" />
 		</finder>
 	</entity>
-	<entity local-service="true" name="DDMStructureLink" remote-service="false">
+	<entity local-service="true" name="DDMStructureLink" remote-service="true">
 
 		<!-- PK fields -->
 

@@ -11,6 +11,7 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
+import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
@@ -48,6 +49,7 @@ import java.util.function.Function;
  * @see DDMStructureLinkImpl
  * @generated
  */
+@JSON(strict = true)
 public class DDMStructureLinkModelImpl
 	extends BaseModelImpl<DDMStructureLink> implements DDMStructureLinkModel {
 
@@ -297,6 +299,7 @@ public class DDMStructureLinkModelImpl
 
 	}
 
+	@JSON
 	@Override
 	public long getMvccVersion() {
 		return _mvccVersion;
@@ -311,6 +314,7 @@ public class DDMStructureLinkModelImpl
 		_mvccVersion = mvccVersion;
 	}
 
+	@JSON
 	@Override
 	public long getCtCollectionId() {
 		return _ctCollectionId;
@@ -325,6 +329,7 @@ public class DDMStructureLinkModelImpl
 		_ctCollectionId = ctCollectionId;
 	}
 
+	@JSON
 	@Override
 	public long getStructureLinkId() {
 		return _structureLinkId;
@@ -339,6 +344,7 @@ public class DDMStructureLinkModelImpl
 		_structureLinkId = structureLinkId;
 	}
 
+	@JSON
 	@Override
 	public long getCompanyId() {
 		return _companyId;
@@ -373,6 +379,7 @@ public class DDMStructureLinkModelImpl
 		setClassNameId(classNameId);
 	}
 
+	@JSON
 	@Override
 	public long getClassNameId() {
 		return _classNameId;
@@ -397,6 +404,7 @@ public class DDMStructureLinkModelImpl
 			this.<Long>getColumnOriginalValue("classNameId"));
 	}
 
+	@JSON
 	@Override
 	public long getClassPK() {
 		return _classPK;
@@ -420,6 +428,7 @@ public class DDMStructureLinkModelImpl
 		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("classPK"));
 	}
 
+	@JSON
 	@Override
 	public long getStructureId() {
 		return _structureId;

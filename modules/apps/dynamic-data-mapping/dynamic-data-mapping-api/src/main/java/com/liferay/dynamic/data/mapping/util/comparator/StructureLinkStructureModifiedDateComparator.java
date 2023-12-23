@@ -8,6 +8,8 @@ package com.liferay.dynamic.data.mapping.util.comparator;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLink;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
@@ -36,25 +38,27 @@ public class StructureLinkStructureModifiedDateComparator
 		DDMStructureLink ddmStructureLink1,
 		DDMStructureLink ddmStructureLink2) {
 
-		int value = 0;
-
 		try {
 			DDMStructure ddmStructure1 = ddmStructureLink1.getStructure();
 			DDMStructure ddmStructure2 = ddmStructureLink2.getStructure();
 
-			value = DateUtil.compareTo(
+			int value = DateUtil.compareTo(
 				ddmStructure1.getModifiedDate(),
 				ddmStructure2.getModifiedDate());
+
+			if (_ascending) {
+				return value;
+			}
+
+			return -value;
 		}
 		catch (PortalException portalException) {
-			throw new RuntimeException(portalException);
-		}
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
 
-		if (_ascending) {
-			return value;
+			return 0;
 		}
-
-		return -value;
 	}
 
 	@Override
@@ -75,6 +79,9 @@ public class StructureLinkStructureModifiedDateComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		StructureLinkStructureModifiedDateComparator.class);
 
 	private final boolean _ascending;
 

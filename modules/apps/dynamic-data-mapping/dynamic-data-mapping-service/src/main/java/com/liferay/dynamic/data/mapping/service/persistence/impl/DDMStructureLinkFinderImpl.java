@@ -42,20 +42,7 @@ public class DDMStructureLinkFinderImpl
 	public int countByKeywords(
 		long classNameId, long classPK, String keywords) {
 
-		String[] names = null;
-		String[] descriptions = null;
-		boolean andOperator = false;
-
-		if (Validator.isNotNull(keywords)) {
-			names = _customSQL.keywords(keywords);
-			descriptions = _customSQL.keywords(keywords, false);
-		}
-		else {
-			andOperator = true;
-		}
-
-		return doCountByC_C_N_D(
-			classNameId, classPK, names, descriptions, andOperator);
+		return _countByKeywords(classNameId, classPK, keywords);
 	}
 
 	@Override
@@ -63,21 +50,8 @@ public class DDMStructureLinkFinderImpl
 		long classNameId, long classPK, String keywords, int start, int end,
 		OrderByComparator<DDMStructureLink> orderByComparator) {
 
-		String[] names = null;
-		String[] descriptions = null;
-		boolean andOperator = false;
-
-		if (Validator.isNotNull(keywords)) {
-			names = _customSQL.keywords(keywords);
-			descriptions = _customSQL.keywords(keywords, false);
-		}
-		else {
-			andOperator = true;
-		}
-
-		return doFindByC_C_N_D(
-			classNameId, classPK, names, descriptions, andOperator, start, end,
-			orderByComparator);
+		return _findByKeywords(
+			classNameId, classPK, keywords, start, end, orderByComparator);
 	}
 
 	protected int doCountByC_C_N_D(
@@ -182,6 +156,46 @@ public class DDMStructureLinkFinderImpl
 		finally {
 			closeSession(session);
 		}
+	}
+
+	private int _countByKeywords(
+		long classNameId, long classPK, String keywords) {
+
+		String[] names = null;
+		String[] descriptions = null;
+		boolean andOperator = false;
+
+		if (Validator.isNotNull(keywords)) {
+			names = _customSQL.keywords(keywords);
+			descriptions = _customSQL.keywords(keywords, false);
+		}
+		else {
+			andOperator = true;
+		}
+
+		return doCountByC_C_N_D(
+			classNameId, classPK, names, descriptions, andOperator);
+	}
+
+	private List<DDMStructureLink> _findByKeywords(
+		long classNameId, long classPK, String keywords, int start, int end,
+		OrderByComparator<DDMStructureLink> orderByComparator) {
+
+		String[] names = null;
+		String[] descriptions = null;
+		boolean andOperator = false;
+
+		if (Validator.isNotNull(keywords)) {
+			names = _customSQL.keywords(keywords);
+			descriptions = _customSQL.keywords(keywords, false);
+		}
+		else {
+			andOperator = true;
+		}
+
+		return doFindByC_C_N_D(
+			classNameId, classPK, names, descriptions, andOperator, start, end,
+			orderByComparator);
 	}
 
 	@Reference

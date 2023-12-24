@@ -1,0 +1,7 @@
+[
+	{
+		"dataType": 5,
+		"modelResource": "com.liferay.commerce.product.model.CPDefinition",
+		"name": "Commission Rate"
+	}
+]

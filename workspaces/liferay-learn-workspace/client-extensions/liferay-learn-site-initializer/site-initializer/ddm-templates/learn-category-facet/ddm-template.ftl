@@ -242,7 +242,7 @@
 		taxonomyVocabularyItems = restClient.get("/headless-admin-taxonomy/v1.0/sites/${themeDisplay.getSiteGroupId()}/taxonomy-vocabularies/?fields=externalReferenceCode%2Cname").items
 		vocabularyNamesSorted = []
 	/>
-	
+
 	<#list taxonomyVocabularyItems as taxonomyVocabularyItem>
 		<#if stringUtil.equals(taxonomyVocabularyItem.externalReferenceCode, "CAPABILITY")>
 			<#assign vocabularyNamesSorted = [taxonomyVocabularyItem.name] + vocabularyNamesSorted />

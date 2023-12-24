@@ -12,8 +12,7 @@
 		"familyName": "Producer",
 		"givenName": "Scott",
 		"jobTitle": "Raylife Agent",
-		"name": "Scott Producer",
-		"password": "portal4all"
+		"name": "Scott Producer"
 	},
 	{
 		"accountBriefs": [
@@ -28,8 +27,7 @@
 		"familyName": "Producer",
 		"givenName": "Marie",
 		"jobTitle": "Raylife Agent",
-		"name": "Marie Producer",
-		"password": "portal4all"
+		"name": "Marie Producer"
 	},
 	{
 		"accountBriefs": [
@@ -44,8 +42,7 @@
 		"familyName": "Underwriter",
 		"givenName": "Ryan",
 		"jobTitle": "Raylife Underwriter",
-		"name": "Ryan Underwriter",
-		"password": "portal4all"
+		"name": "Ryan Underwriter"
 	},
 	{
 		"accountBriefs": [
@@ -60,7 +57,6 @@
 		"familyName": "Insured",
 		"givenName": "Clark",
 		"jobTitle": "Raylife Customer",
-		"name": "Clark Insured",
-		"password": "portal4all"
+		"name": "Clark Insured"
 	}
 ]

@@ -33,6 +33,7 @@ import com.liferay.scim.rest.client.dto.v1_0.Name;
 import com.liferay.scim.rest.client.dto.v1_0.User;
 import com.liferay.scim.rest.client.http.HttpInvoker;
 import com.liferay.scim.rest.client.resource.v1_0.UserResource;
+import com.liferay.scim.rest.resource.v1_0.test.util.ScimTestUtil;
 
 import java.util.Arrays;
 

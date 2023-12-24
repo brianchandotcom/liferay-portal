@@ -9,8 +9,7 @@
 		"emailAddress": "employee@liferay.com",
 		"externalReferenceCode": "TESTUSER1",
 		"familyName": "User",
-		"givenName": "Employee",
-		"password": "test"
+		"givenName": "Employee"
 	},
 	{
 		"accountBriefs": [
@@ -31,8 +30,7 @@
 		"emailAddress": "manager@liferay.com",
 		"externalReferenceCode": "TESTUSER2",
 		"familyName": "User",
-		"givenName": "Manager",
-		"password": "test"
+		"givenName": "Manager"
 	},
 	{
 		"accountBriefs": [
@@ -47,7 +45,6 @@
 		"emailAddress": "finance@liferay.com",
 		"externalReferenceCode": "TESTUSER3",
 		"familyName": "User",
-		"givenName": "Finance",
-		"password": "test"
+		"givenName": "Finance"
 	}
 ]

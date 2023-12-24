@@ -12,8 +12,7 @@
 		"emailAddress": "pae@editor.com",
 		"familyName": "Editor",
 		"givenName": "Publisher App",
-		"name": "Publisher App Editor (PAE)",
-		"password": "test"
+		"name": "Publisher App Editor (PAE)"
 	},
 	{
 		"accountBriefs": [
@@ -29,8 +28,7 @@
 		"familyName": "ADM",
 		"givenName": "Dashboard",
 		"jobTitle": "Owner",
-		"name": "Dashboard Administrator (DA)",
-		"password": "test"
+		"name": "Dashboard Administrator (DA)"
 	},
 	{
 		"accountBriefs": [
@@ -45,7 +43,6 @@
 		"emailAddress": "cab@buyer.com",
 		"familyName": "Buyer",
 		"givenName": "Customer Account",
-		"name": "Customer Account Buyer (CAB)",
-		"password": "test"
+		"name": "Customer Account Buyer (CAB)"
 	}
 ]

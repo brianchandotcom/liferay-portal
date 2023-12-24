@@ -9,8 +9,7 @@
 		"emailAddress": "pm@partner.com",
 		"familyName": "Manager",
 		"givenName": "Partner",
-		"name": "Partner Manager (PM)",
-		"password": "test"
+		"name": "Partner Manager (PM)"
 	},
 	{
 		"accountBriefs": [
@@ -22,8 +21,7 @@
 		"emailAddress": "pmu@partner.com",
 		"familyName": "User",
 		"givenName": "Partner Marketing",
-		"name": "Partner Marketing User (PMU)",
-		"password": "test"
+		"name": "Partner Marketing User (PMU)"
 	},
 	{
 		"accountBriefs": [
@@ -35,8 +33,7 @@
 		"emailAddress": "psu@partner.com",
 		"familyName": "User",
 		"givenName": "Partner Sales",
-		"name": "Partner Sales User (PSU)",
-		"password": "test"
+		"name": "Partner Sales User (PSU)"
 	},
 	{
 		"accountBriefs": [
@@ -48,8 +45,7 @@
 		"emailAddress": "ptu@partner.com",
 		"familyName": "User",
 		"givenName": "Partner Technical",
-		"name": "Partner Technical User (PTU)",
-		"password": "test"
+		"name": "Partner Technical User (PTU)"
 	},
 	{
 		"accountBriefs": [
@@ -61,8 +57,7 @@
 		"emailAddress": "cam@liferaytest.com",
 		"familyName": "Manager",
 		"givenName": "Channel Account",
-		"name": "Channel Account Manager (CAM)",
-		"password": "test"
+		"name": "Channel Account Manager (CAM)"
 	},
 	{
 		"accountBriefs": [
@@ -74,8 +69,7 @@
 		"emailAddress": "com@liferaytest.com",
 		"familyName": "Manager",
 		"givenName": "Channel Operations",
-		"name": "Channel Operations Manager (COM)",
-		"password": "test"
+		"name": "Channel Operations Manager (COM)"
 	},
 	{
 		"accountBriefs": [
@@ -87,8 +81,7 @@
 		"emailAddress": "cmm@liferaytest.com",
 		"familyName": "Manager",
 		"givenName": "Channel Marketing",
-		"name": "Channel Marketing Manager (CMM)",
-		"password": "test"
+		"name": "Channel Marketing Manager (CMM)"
 	},
 	{
 		"accountBriefs": [
@@ -105,8 +98,7 @@
 			{
 				"name": "Global"
 			}
-		],
-		"password": "test"
+		]
 	},
 	{
 		"accountBriefs": [
@@ -118,8 +110,7 @@
 		"emailAddress": "cfm@liferaytest.com",
 		"familyName": "Manager",
 		"givenName": "Channel Finance",
-		"name": "Channel Finance Manager (CFM)",
-		"password": "test"
+		"name": "Channel Finance Manager (CFM)"
 	},
 	{
 		"accountBriefs": [
@@ -131,7 +122,6 @@
 		"emailAddress": "cem@liferaytest.com",
 		"familyName": "Manager",
 		"givenName": "Channel Enablement",
-		"name": "Channel Enablement Manager (CEM)",
-		"password": "test"
+		"name": "Channel Enablement Manager (CEM)"
 	}
 ]

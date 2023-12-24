@@ -102,7 +102,7 @@ public class GroupResourceTest extends BaseGroupResourceTestCase {
 			_userGroupLocalService.fetchUserGroupByExternalReferenceCode(
 				group.getExternalId(), TestPropsValues.getCompanyId()));
 
-		// Delete an existing group with no SCIM client ID set
+		// Delete an existing group with no SCIM client ID
 
 		UserGroup userGroup = _userGroupLocalService.addUserGroup(
 			TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),

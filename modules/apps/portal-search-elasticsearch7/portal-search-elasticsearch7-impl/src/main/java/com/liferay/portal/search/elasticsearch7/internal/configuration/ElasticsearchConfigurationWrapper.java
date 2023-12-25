@@ -121,6 +121,24 @@ public class ElasticsearchConfigurationWrapper
 		return _elasticsearchConfiguration.indexNumberOfShards();
 	}
 
+	public boolean isDevelopmentModeEnabled() {
+		return !isProductionModeEnabled();
+	}
+
+	public boolean isProductionModeEnabled() {
+		if (productionModeEnabled()) {
+			return true;
+		}
+
+		OperationMode operationMode = operationMode();
+
+		if (operationMode == OperationMode.REMOTE) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean logExceptionsOnly() {
 		return _elasticsearchConfiguration.logExceptionsOnly();
 	}

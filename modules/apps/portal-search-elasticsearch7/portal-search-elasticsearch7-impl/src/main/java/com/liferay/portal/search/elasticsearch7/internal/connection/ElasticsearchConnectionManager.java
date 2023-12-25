@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.ccr.CrossClusterReplicationConfigurationHelper;
 import com.liferay.portal.search.elasticsearch7.internal.configuration.ElasticsearchConfigurationObserver;
 import com.liferay.portal.search.elasticsearch7.internal.configuration.ElasticsearchConfigurationWrapper;
-import com.liferay.portal.search.elasticsearch7.internal.configuration.OperationModeResolver;
 import com.liferay.portal.search.elasticsearch7.internal.connection.constants.ConnectionConstants;
 import com.liferay.portal.search.elasticsearch7.internal.helper.SearchLogHelperUtil;
 
@@ -302,7 +301,7 @@ public class ElasticsearchConnectionManager
 		SearchLogHelperUtil.setRESTClientLoggerLevel(
 			elasticsearchConfigurationWrapper.restClientLoggerLevel());
 
-		if (operationModeResolver.isProductionModeEnabled()) {
+		if (elasticsearchConfigurationWrapper.isProductionModeEnabled()) {
 			if (Validator.isBlank(
 					elasticsearchConfigurationWrapper.
 						remoteClusterConnectionId())) {
@@ -363,7 +362,7 @@ public class ElasticsearchConnectionManager
 			return getElasticsearchConnection(connectionId);
 		}
 
-		if (operationModeResolver.isDevelopmentModeEnabled()) {
+		if (elasticsearchConfigurationWrapper.isDevelopmentModeEnabled()) {
 			if (_log.isInfoEnabled()) {
 				_log.info(
 					"Getting " + ConnectionConstants.SIDECAR_CONNECTION_ID +
@@ -412,9 +411,6 @@ public class ElasticsearchConnectionManager
 	@Reference
 	protected Http http;
 
-	@Reference
-	protected OperationModeResolver operationModeResolver;
-
 	private ElasticsearchConnection _createRemoteElasticsearchConnection() {
 		ElasticsearchConnectionBuilder elasticsearchConnectionBuilder =
 			new ElasticsearchConnectionBuilder();
@@ -455,7 +451,7 @@ public class ElasticsearchConnectionManager
 
 		return StringBundler.concat(
 			message, " Production Mode Enabled: ",
-			operationModeResolver.isProductionModeEnabled(),
+			elasticsearchConfigurationWrapper.isProductionModeEnabled(),
 			", Connection ID: ", connectionId, ", Prefer Local Cluster: ",
 			preferLocalCluster, ", Cross-Cluster Replication Enabled: ",
 			isCrossClusterReplicationEnabled(), ". Enable INFO logs on ",

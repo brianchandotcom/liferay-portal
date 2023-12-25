@@ -17,7 +17,6 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConnectionConfiguration;
 import com.liferay.portal.search.elasticsearch7.internal.configuration.ElasticsearchConfigurationWrapper;
-import com.liferay.portal.search.elasticsearch7.internal.configuration.OperationModeResolver;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchConnection;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchConnectionManager;
 import com.liferay.portal.search.engine.ConnectionInformation;
@@ -76,7 +75,7 @@ public class ElasticsearchSearchEngineInformation
 			"(&(service.factoryPid=%s)(active=%s)",
 			ElasticsearchConnectionConfiguration.class.getName(), true);
 
-		if (operationModeResolver.isProductionModeEnabled() &&
+		if (elasticsearchConfigurationWrapper.isProductionModeEnabled() &&
 			!Validator.isBlank(
 				elasticsearchConfigurationWrapper.
 					remoteClusterConnectionId())) {
@@ -91,7 +90,7 @@ public class ElasticsearchSearchEngineInformation
 		ElasticsearchConnection localClusterElasticsearchConnection =
 			elasticsearchConnectionManager.getElasticsearchConnection(true);
 
-		if (operationModeResolver.isProductionModeEnabled() &&
+		if (elasticsearchConfigurationWrapper.isProductionModeEnabled() &&
 			elasticsearchConnectionManager.isCrossClusterReplicationEnabled() &&
 			!elasticsearchConnection.equals(
 				localClusterElasticsearchConnection)) {
@@ -125,7 +124,7 @@ public class ElasticsearchSearchEngineInformation
 			String clusterNodesString = _getClusterNodesString(
 				elasticsearchConnectionManager.getRestHighLevelClient());
 
-			if (operationModeResolver.isProductionModeEnabled() &&
+			if (elasticsearchConfigurationWrapper.isProductionModeEnabled() &&
 				elasticsearchConnectionManager.
 					isCrossClusterReplicationEnabled()) {
 
@@ -151,7 +150,7 @@ public class ElasticsearchSearchEngineInformation
 	public String getVendorString() {
 		String vendor = "Elasticsearch";
 
-		if (operationModeResolver.isDevelopmentModeEnabled()) {
+		if (elasticsearchConfigurationWrapper.isDevelopmentModeEnabled()) {
 			return vendor + " (Sidecar)";
 		}
 
@@ -174,9 +173,6 @@ public class ElasticsearchSearchEngineInformation
 
 	@Reference
 	protected NodeInformationBuilderFactory nodeInformationBuilderFactory;
-
-	@Reference
-	protected OperationModeResolver operationModeResolver;
 
 	@Reference
 	protected SearchEngineAdapter searchEngineAdapter;
@@ -269,7 +265,7 @@ public class ElasticsearchSearchEngineInformation
 
 		String[] labels = {"read", "write"};
 
-		if (operationModeResolver.isProductionModeEnabled() &&
+		if (elasticsearchConfigurationWrapper.isProductionModeEnabled() &&
 			elasticsearchConnectionManager.isCrossClusterReplicationEnabled() &&
 			!elasticsearchConnection.equals(
 				elasticsearchConnectionManager.getElasticsearchConnection(

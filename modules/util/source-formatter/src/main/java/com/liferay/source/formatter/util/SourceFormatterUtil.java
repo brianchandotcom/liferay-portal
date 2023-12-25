@@ -336,6 +336,7 @@ public class SourceFormatterUtil {
 		allArgs.add("grep");
 		allArgs.add("--untracked");
 		allArgs.add("-l");
+
 		allArgs.addAll(args);
 
 		return _matchFileContentsForFileNames(allArgs, baseDirName, includes);

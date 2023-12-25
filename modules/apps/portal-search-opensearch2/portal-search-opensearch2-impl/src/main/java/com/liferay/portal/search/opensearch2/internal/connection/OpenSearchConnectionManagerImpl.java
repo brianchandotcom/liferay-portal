@@ -267,8 +267,7 @@ public class OpenSearchConnectionManagerImpl
 	protected Http http;
 
 	@Reference
-	protected volatile OpenSearchConfigurationWrapper
-		openSearchConfigurationWrapper;
+	protected OpenSearchConfigurationWrapper openSearchConfigurationWrapper;
 
 	@Reference
 	protected OpenSearchConnectionsHolder openSearchConnectionsHolder;

@@ -493,8 +493,7 @@ public class OpenSearchSearchEngine
 	private IndexWriter _indexWriter;
 
 	@Reference
-	private volatile OpenSearchConfigurationWrapper
-		_openSearchConfigurationWrapper;
+	private OpenSearchConfigurationWrapper _openSearchConfigurationWrapper;
 
 	@Reference
 	private OpenSearchConnectionManager _openSearchConnectionManager;

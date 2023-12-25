@@ -476,8 +476,7 @@ public class IndexHelperImpl implements IndexHelper {
 	private JSONFactory _jsonFactory;
 
 	@Reference
-	private volatile OpenSearchConfigurationWrapper
-		_openSearchConfigurationWrapper;
+	private OpenSearchConfigurationWrapper _openSearchConfigurationWrapper;
 
 	@Reference
 	private OpenSearchConnectionManager _openSearchConnectionManager;

@@ -386,7 +386,7 @@ public class CompanyIndexFactoryHelper {
 	private CompanyLocalService _companyLocalService;
 
 	@Reference
-	private volatile ElasticsearchConfigurationWrapper
+	private ElasticsearchConfigurationWrapper
 		_elasticsearchConfigurationWrapper;
 
 	@Reference

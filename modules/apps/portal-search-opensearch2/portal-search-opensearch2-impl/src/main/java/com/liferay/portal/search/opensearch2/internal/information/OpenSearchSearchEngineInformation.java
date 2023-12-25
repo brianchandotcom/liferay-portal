@@ -172,8 +172,7 @@ public class OpenSearchSearchEngineInformation
 	protected NodeInformationBuilderFactory nodeInformationBuilderFactory;
 
 	@Reference
-	protected volatile OpenSearchConfigurationWrapper
-		openSearchConfigurationWrapper;
+	protected OpenSearchConfigurationWrapper openSearchConfigurationWrapper;
 
 	@Reference
 	protected OpenSearchConnectionManager openSearchConnectionManager;

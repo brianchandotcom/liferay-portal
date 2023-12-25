@@ -442,7 +442,7 @@ public class ElasticsearchIndexWriter extends BaseIndexWriter {
 	private CompanyLocalService _companyLocalService;
 
 	@Reference
-	private volatile ElasticsearchConfigurationWrapper
+	private ElasticsearchConfigurationWrapper
 		_elasticsearchConfigurationWrapper;
 
 	@Reference

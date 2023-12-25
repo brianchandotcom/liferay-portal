@@ -725,15 +725,14 @@ public class OpenSearchIndexSearcher extends BaseIndexSearcher {
 		OpenSearchIndexSearcher.class);
 
 	@Reference
-	private volatile DeepPaginationConfigurationWrapper
+	private DeepPaginationConfigurationWrapper
 		_deepPaginationConfigurationWrapper;
 
 	@Reference
 	private IndexNameBuilder _indexNameBuilder;
 
 	@Reference
-	private volatile OpenSearchConfigurationWrapper
-		_openSearchConfigurationWrapper;
+	private OpenSearchConfigurationWrapper _openSearchConfigurationWrapper;
 
 	@Reference
 	private Props _props;

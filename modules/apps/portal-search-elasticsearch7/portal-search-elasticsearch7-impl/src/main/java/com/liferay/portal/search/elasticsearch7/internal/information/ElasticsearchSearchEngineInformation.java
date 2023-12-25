@@ -165,7 +165,7 @@ public class ElasticsearchSearchEngineInformation
 		connectionInformationBuilderFactory;
 
 	@Reference
-	protected volatile ElasticsearchConfigurationWrapper
+	protected ElasticsearchConfigurationWrapper
 		elasticsearchConfigurationWrapper;
 
 	@Reference

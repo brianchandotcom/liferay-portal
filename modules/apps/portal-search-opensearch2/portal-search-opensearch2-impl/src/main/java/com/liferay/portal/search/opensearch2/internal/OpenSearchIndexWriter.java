@@ -397,8 +397,7 @@ public class OpenSearchIndexWriter extends BaseIndexWriter {
 	private IndexNameBuilder _indexNameBuilder;
 
 	@Reference
-	private volatile OpenSearchConfigurationWrapper
-		_openSearchConfigurationWrapper;
+	private OpenSearchConfigurationWrapper _openSearchConfigurationWrapper;
 
 	@Reference(target = "(search.engine.impl=OpenSearch)")
 	private SearchEngineAdapter _searchEngineAdapter;

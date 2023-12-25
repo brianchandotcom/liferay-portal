@@ -127,7 +127,7 @@ public class SidecarManager implements ElasticsearchConfigurationObserver {
 	}
 
 	@Reference
-	protected volatile ElasticsearchConfigurationWrapper
+	protected ElasticsearchConfigurationWrapper
 		elasticsearchConfigurationWrapper;
 
 	@Reference

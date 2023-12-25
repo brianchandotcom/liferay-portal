@@ -171,8 +171,7 @@ public class CompanyIndexFactory
 	private IndexHelper _indexHelper;
 
 	@Reference
-	private volatile OpenSearchConfigurationWrapper
-		_openSearchConfigurationWrapper;
+	private OpenSearchConfigurationWrapper _openSearchConfigurationWrapper;
 
 	@Reference
 	private OpenSearchConnectionManager _openSearchConnectionManager;

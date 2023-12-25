@@ -69,9 +69,8 @@ public class CompanyIdIndexNameBuilder
 	}
 
 	@Reference
-	protected volatile OpenSearchConfigurationWrapper
-		openSearchConfigurationWrapper;
+	protected OpenSearchConfigurationWrapper openSearchConfigurationWrapper;
 
-	private volatile String _indexNamePrefix;
+	private String _indexNamePrefix;
 
 }

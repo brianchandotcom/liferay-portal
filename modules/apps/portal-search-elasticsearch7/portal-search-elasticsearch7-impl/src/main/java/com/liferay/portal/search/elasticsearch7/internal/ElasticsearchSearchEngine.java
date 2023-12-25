@@ -481,7 +481,7 @@ public class ElasticsearchSearchEngine
 			CrossClusterReplicationHelper.class, null, true);
 
 	@Reference
-	private volatile ElasticsearchConfigurationWrapper
+	private ElasticsearchConfigurationWrapper
 		_elasticsearchConfigurationWrapper;
 
 	@Reference

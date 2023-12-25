@@ -743,11 +743,11 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		ElasticsearchIndexSearcher.class);
 
 	@Reference
-	private volatile DeepPaginationConfigurationWrapper
+	private DeepPaginationConfigurationWrapper
 		_deepPaginationConfigurationWrapper;
 
 	@Reference
-	private volatile ElasticsearchConfigurationWrapper
+	private ElasticsearchConfigurationWrapper
 		_elasticsearchConfigurationWrapper;
 
 	@Reference

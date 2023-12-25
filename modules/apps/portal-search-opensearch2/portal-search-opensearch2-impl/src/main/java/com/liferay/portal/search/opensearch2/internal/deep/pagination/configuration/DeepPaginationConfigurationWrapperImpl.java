@@ -57,6 +57,6 @@ public class DeepPaginationConfigurationWrapperImpl
 	@Reference
 	private ConfigurationProvider _configurationProvider;
 
-	private volatile DeepPaginationConfiguration _deepPaginationConfiguration;
+	private DeepPaginationConfiguration _deepPaginationConfiguration;
 
 }

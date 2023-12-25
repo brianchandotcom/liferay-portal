@@ -405,7 +405,7 @@ public class ElasticsearchConnectionManager
 	}
 
 	@Reference
-	protected volatile ElasticsearchConfigurationWrapper
+	protected ElasticsearchConfigurationWrapper
 		elasticsearchConfigurationWrapper;
 
 	@Reference

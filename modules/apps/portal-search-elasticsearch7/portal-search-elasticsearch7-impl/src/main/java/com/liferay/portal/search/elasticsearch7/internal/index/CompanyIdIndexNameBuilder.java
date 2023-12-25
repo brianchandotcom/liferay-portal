@@ -69,7 +69,7 @@ public class CompanyIdIndexNameBuilder
 	}
 
 	@Reference
-	protected volatile ElasticsearchConfigurationWrapper
+	protected ElasticsearchConfigurationWrapper
 		elasticsearchConfigurationWrapper;
 
 	private volatile String _indexNamePrefix;

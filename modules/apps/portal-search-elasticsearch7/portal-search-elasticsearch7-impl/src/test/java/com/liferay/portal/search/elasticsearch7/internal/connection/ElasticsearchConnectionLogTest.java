@@ -8,7 +8,6 @@ package com.liferay.portal.search.elasticsearch7.internal.connection;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.search.elasticsearch7.configuration.RESTClientLoggerLevel;
 import com.liferay.portal.search.elasticsearch7.internal.configuration.ElasticsearchConfigurationWrapper;
-import com.liferay.portal.search.elasticsearch7.internal.configuration.OperationModeResolver;
 import com.liferay.portal.search.elasticsearch7.internal.helper.SearchLogHelper;
 import com.liferay.portal.search.elasticsearch7.internal.helper.SearchLogHelperImpl;
 import com.liferay.portal.search.elasticsearch7.internal.helper.SearchLogHelperUtil;
@@ -76,8 +75,6 @@ public class ElasticsearchConnectionLogTest {
 				{
 					elasticsearchConfigurationWrapper =
 						_elasticsearchConfigurationWrapper;
-					operationModeResolver = Mockito.mock(
-						OperationModeResolver.class);
 				}
 			};
 

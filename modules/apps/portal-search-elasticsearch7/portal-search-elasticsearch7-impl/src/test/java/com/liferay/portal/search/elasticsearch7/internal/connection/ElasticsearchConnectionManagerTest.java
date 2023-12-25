@@ -9,7 +9,6 @@ import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.search.elasticsearch7.configuration.RESTClientLoggerLevel;
 import com.liferay.portal.search.elasticsearch7.internal.configuration.ElasticsearchConfigurationWrapper;
-import com.liferay.portal.search.elasticsearch7.internal.configuration.OperationModeResolver;
 import com.liferay.portal.search.elasticsearch7.internal.connection.constants.ConnectionConstants;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -88,7 +87,7 @@ public class ElasticsearchConnectionManagerTest {
 	@Test
 	public void testActivateRemoteModeEnabledWithConnectionId() {
 		Mockito.when(
-			_operationModeResolver.isProductionModeEnabled()
+			_elasticsearchConfigurationWrapper.isProductionModeEnabled()
 		).thenReturn(
 			true
 		);
@@ -121,7 +120,7 @@ public class ElasticsearchConnectionManagerTest {
 	@Test
 	public void testActivateRemoteModeEnabledWithoutConnectionId() {
 		Mockito.when(
-			_operationModeResolver.isProductionModeEnabled()
+			_elasticsearchConfigurationWrapper.isProductionModeEnabled()
 		).thenReturn(
 			true
 		);
@@ -587,7 +586,6 @@ public class ElasticsearchConnectionManagerTest {
 					elasticsearchConfigurationWrapper =
 						_elasticsearchConfigurationWrapper;
 					http = _http;
-					operationModeResolver = _operationModeResolver;
 				}
 			};
 
@@ -608,13 +606,13 @@ public class ElasticsearchConnectionManagerTest {
 
 	private void _enableRemoteMode() {
 		Mockito.when(
-			_operationModeResolver.isProductionModeEnabled()
+			_elasticsearchConfigurationWrapper.isProductionModeEnabled()
 		).thenReturn(
 			true
 		);
 
 		Mockito.when(
-			_operationModeResolver.isDevelopmentModeEnabled()
+			_elasticsearchConfigurationWrapper.isDevelopmentModeEnabled()
 		).thenReturn(
 			false
 		);
@@ -626,9 +624,9 @@ public class ElasticsearchConnectionManagerTest {
 	private void _resetAndSetUpMocks() {
 		Mockito.reset(
 			_defaultRemoteElasticsearchConnection,
-			_elasticsearchConfigurationWrapper, _operationModeResolver,
-			_remoteElasticsearchConnection1, _remoteElasticsearchConnection2,
-			_remoteElasticsearchConnection3, _sidecarElasticsearchConnection);
+			_elasticsearchConfigurationWrapper, _remoteElasticsearchConnection1,
+			_remoteElasticsearchConnection2, _remoteElasticsearchConnection3,
+			_sidecarElasticsearchConnection);
 
 		_setUpDefaultConnection();
 		_setUpElasticsearchConfigurationWrapper();
@@ -675,13 +673,13 @@ public class ElasticsearchConnectionManagerTest {
 
 	private void _setUpOperationModeResolver() {
 		Mockito.when(
-			_operationModeResolver.isProductionModeEnabled()
+			_elasticsearchConfigurationWrapper.isProductionModeEnabled()
 		).thenReturn(
 			false
 		);
 
 		Mockito.when(
-			_operationModeResolver.isDevelopmentModeEnabled()
+			_elasticsearchConfigurationWrapper.isDevelopmentModeEnabled()
 		).thenReturn(
 			true
 		);
@@ -776,8 +774,6 @@ public class ElasticsearchConnectionManagerTest {
 			ElasticsearchConfigurationWrapper.class);
 	private ElasticsearchConnectionManager _elasticsearchConnectionManager;
 	private final Http _http = Mockito.mock(Http.class);
-	private final OperationModeResolver _operationModeResolver = Mockito.mock(
-		OperationModeResolver.class);
 	private final ElasticsearchConnection _remoteElasticsearchConnection1 =
 		Mockito.mock(ElasticsearchConnection.class);
 	private final ElasticsearchConnection _remoteElasticsearchConnection2 =

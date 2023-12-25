@@ -8,6 +8,7 @@ package com.liferay.portal.search.elasticsearch7.internal.connection;
 import com.liferay.petra.process.local.LocalProcessExecutor;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration;
 import com.liferay.portal.search.elasticsearch7.internal.configuration.ElasticsearchConfigurationWrapper;
@@ -40,6 +41,10 @@ public class ElasticsearchConnectionFixture
 	public ElasticsearchConnection createElasticsearchConnection() {
 		PropsUtil.setProps(new PropsImpl());
 
+		com.liferay.portal.util.PropsUtil.set(
+			PropsKeys.LIFERAY_SHIELDED_CONTAINER_LIB_PORTAL_DIR,
+			String.valueOf(_TMP_PATH.resolve("lib-process-executor")));
+
 		ElasticsearchConfigurationWrapper elasticsearchConfigurationWrapper =
 			new ElasticsearchConfigurationWrapper() {
 				{
@@ -53,7 +58,6 @@ public class ElasticsearchConnectionFixture
 		Sidecar sidecar = new Sidecar(
 			elasticsearchConfigurationWrapper,
 			_createElasticsearchInstancePaths(), new LocalProcessExecutor(),
-			() -> _TMP_PATH.resolve("lib-process-executor"),
 			Mockito.mock(SidecarManager.class));
 
 		ElasticsearchConnectionBuilder elasticsearchConnectionBuilder =

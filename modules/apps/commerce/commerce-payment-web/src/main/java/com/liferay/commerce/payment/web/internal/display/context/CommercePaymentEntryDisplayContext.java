@@ -79,6 +79,9 @@ public class CommercePaymentEntryDisplayContext {
 			_commercePaymentEntryService.fetchCommercePaymentEntry(
 				commercePaymentEntryId);
 
+		_commercePaymentRequestHelper = new CommercePaymentRequestHelper(
+			httpServletRequest);
+
 		long classPK = ParamUtil.getLong(httpServletRequest, "classPK");
 
 		if (_commercePaymentEntry != null) {
@@ -87,9 +90,6 @@ public class CommercePaymentEntryDisplayContext {
 
 		_relatedCommercePaymentEntry =
 			_commercePaymentEntryService.fetchCommercePaymentEntry(classPK);
-
-		_commercePaymentRequestHelper = new CommercePaymentRequestHelper(
-			httpServletRequest);
 	}
 
 	public String getAmount() {

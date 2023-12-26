@@ -10,10 +10,17 @@ import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.test.util.AssetTestUtil;
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryGroupRelLocalService;
+import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
@@ -39,6 +46,15 @@ public class AssetVocabularyImplTest {
 
 	@Before
 	public void setUp() throws Exception {
+		_depotEntry = _depotEntryLocalService.addDepotEntry(
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), "name"
+			).build(),
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), "description"
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
 		_group = GroupTestUtil.addGroup();
 	}
 
@@ -105,6 +121,113 @@ public class AssetVocabularyImplTest {
 
 		Assert.assertTrue(vocabulary.isAssociatedToClassNameId(1));
 		Assert.assertFalse(vocabulary.isAssociatedToClassNameId(2));
+	}
+
+	@Test
+	public void testIsDepotRequired() throws Exception {
+		_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
+			_depotEntry.getDepotEntryId(), _group.getGroupId());
+
+		AssetVocabulary vocabulary = AssetTestUtil.addVocabulary(
+			_depotEntry.getGroupId(), AssetCategoryConstants.ALL_CLASS_NAME_ID,
+			AssetCategoryConstants.ALL_CLASS_TYPE_PK, false, true);
+
+		Assert.assertFalse(
+			vocabulary.isRequired(
+				1, AssetCategoryConstants.ALL_CLASS_TYPE_PK,
+				_group.getGroupId()));
+		Assert.assertTrue(
+			vocabulary.isRequired(
+				1, AssetCategoryConstants.ALL_CLASS_TYPE_PK,
+				_depotEntry.getGroupId()));
+
+		vocabulary = AssetTestUtil.addVocabulary(
+			_depotEntry.getGroupId(), AssetCategoryConstants.ALL_CLASS_NAME_ID,
+			AssetCategoryConstants.ALL_CLASS_TYPE_PK, true, false);
+
+		Assert.assertTrue(
+			vocabulary.isRequired(
+				1, AssetCategoryConstants.ALL_CLASS_TYPE_PK,
+				_group.getGroupId()));
+		Assert.assertTrue(
+			vocabulary.isRequired(
+				2, AssetCategoryConstants.ALL_CLASS_TYPE_PK,
+				_group.getGroupId()));
+
+		vocabulary = AssetTestUtil.addVocabulary(
+			_depotEntry.getGroupId(), 1,
+			AssetCategoryConstants.ALL_CLASS_TYPE_PK, false, true);
+
+		Assert.assertFalse(
+			vocabulary.isRequired(
+				1, AssetCategoryConstants.ALL_CLASS_TYPE_PK,
+				_group.getGroupId()));
+		Assert.assertTrue(
+			vocabulary.isRequired(
+				1, AssetCategoryConstants.ALL_CLASS_TYPE_PK,
+				_depotEntry.getGroupId()));
+
+		vocabulary = AssetTestUtil.addVocabulary(
+			_depotEntry.getGroupId(), 1,
+			AssetCategoryConstants.ALL_CLASS_TYPE_PK, true, false);
+
+		Assert.assertTrue(
+			vocabulary.isRequired(
+				1, AssetCategoryConstants.ALL_CLASS_TYPE_PK,
+				_group.getGroupId()));
+		Assert.assertFalse(
+			vocabulary.isRequired(
+				2, AssetCategoryConstants.ALL_CLASS_TYPE_PK,
+				_group.getGroupId()));
+	}
+
+	@Test
+	public void testIsMissingDepotRequiredCategory() throws Exception {
+		_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
+			_depotEntry.getDepotEntryId(), _group.getGroupId());
+
+		AssetVocabulary vocabulary = AssetTestUtil.addVocabulary(
+			_depotEntry.getGroupId(), 1,
+			AssetCategoryConstants.ALL_CLASS_TYPE_PK, false, true);
+
+		AssetTestUtil.addCategory(
+			_depotEntry.getGroupId(), vocabulary.getVocabularyId());
+
+		Assert.assertFalse(
+			vocabulary.isMissingRequiredCategory(
+				1, AssetCategoryConstants.ALL_CLASS_TYPE_PK, new long[] {1},
+				_group.getGroupId()));
+
+		Assert.assertTrue(
+			vocabulary.isMissingRequiredCategory(
+				1, AssetCategoryConstants.ALL_CLASS_TYPE_PK, new long[] {1},
+				_depotEntry.getGroupId()));
+
+		vocabulary = AssetTestUtil.addVocabulary(
+			_depotEntry.getGroupId(), 1,
+			AssetCategoryConstants.ALL_CLASS_TYPE_PK, true, false);
+
+		Assert.assertTrue(
+			vocabulary.isMissingRequiredCategory(
+				1, AssetCategoryConstants.ALL_CLASS_TYPE_PK, new long[] {1},
+				_depotEntry.getGroupId()));
+		Assert.assertFalse(
+			vocabulary.isMissingRequiredCategory(
+				2, AssetCategoryConstants.ALL_CLASS_TYPE_PK, new long[0],
+				_depotEntry.getGroupId()));
+
+		AssetCategory category = AssetTestUtil.addCategory(
+			_depotEntry.getGroupId(), vocabulary.getVocabularyId());
+
+		Assert.assertTrue(
+			vocabulary.isMissingRequiredCategory(
+				1, AssetCategoryConstants.ALL_CLASS_TYPE_PK, new long[] {1},
+				_depotEntry.getGroupId()));
+		Assert.assertFalse(
+			vocabulary.isMissingRequiredCategory(
+				1, AssetCategoryConstants.ALL_CLASS_TYPE_PK,
+				new long[] {category.getCategoryId()},
+				_depotEntry.getGroupId()));
 	}
 
 	@Test
@@ -201,6 +324,15 @@ public class AssetVocabularyImplTest {
 				2, AssetCategoryConstants.ALL_CLASS_TYPE_PK,
 				_group.getGroupId()));
 	}
+
+	@DeleteAfterTestRun
+	private DepotEntry _depotEntry;
+
+	@Inject
+	private DepotEntryGroupRelLocalService _depotEntryGroupRelLocalService;
+
+	@Inject
+	private DepotEntryLocalService _depotEntryLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;

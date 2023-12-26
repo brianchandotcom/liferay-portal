@@ -344,6 +344,10 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
 			ServiceContextTestUtil.getServiceContext());
 
+		user.setEmailAddressVerified(true);
+
+		user = UserLocalServiceUtil.updateUser(user);
+
 		UserLocalServiceUtil.addRoleUser(role.getRoleId(), user.getUserId());
 
 		ResourcePermissionLocalServiceUtil.setResourcePermissions(

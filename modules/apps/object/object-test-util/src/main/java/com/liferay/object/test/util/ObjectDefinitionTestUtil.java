@@ -45,7 +45,7 @@ public class ObjectDefinitionTestUtil {
 		return ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
 			TestPropsValues.getUserId(), 0, false, false, false,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			"A" + RandomTestUtil.randomString(), null, null,
+			getRandomName(), null, null,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			true, ObjectDefinitionConstants.SCOPE_COMPANY,
 			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT, objectFields);
@@ -61,7 +61,7 @@ public class ObjectDefinitionTestUtil {
 			TestPropsValues.getUserId(), objectFolderId, false,
 			enableLocalization, false,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			"A" + RandomTestUtil.randomString(), null, null,
+			getRandomName(), null, null,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			true, ObjectDefinitionConstants.SCOPE_COMPANY,
 			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT, objectFields);
@@ -140,12 +140,16 @@ public class ObjectDefinitionTestUtil {
 			version, WorkflowConstants.STATUS_APPROVED, objectFields);
 	}
 
+	public static String getRandomName() {
+		return "A" + RandomTestUtil.randomString();
+	}
+
 	public static ObjectDefinition publishObjectDefinition(
 			List<ObjectField> objectFields)
 		throws Exception {
 
 		return publishObjectDefinition(
-			"A" + RandomTestUtil.randomString(), objectFields,
+			getRandomName(), objectFields,
 			ObjectDefinitionConstants.SCOPE_COMPANY);
 	}
 
@@ -154,8 +158,7 @@ public class ObjectDefinitionTestUtil {
 		throws Exception {
 
 		return publishObjectDefinition(
-			"A" + RandomTestUtil.randomString(), objectFields, scope,
-			TestPropsValues.getUserId());
+			getRandomName(), objectFields, scope, TestPropsValues.getUserId());
 	}
 
 	public static ObjectDefinition publishObjectDefinition(
@@ -163,7 +166,7 @@ public class ObjectDefinitionTestUtil {
 		throws Exception {
 
 		return publishObjectDefinition(
-			"A" + RandomTestUtil.randomString(), objectFields, scope, userId);
+			getRandomName(), objectFields, scope, userId);
 	}
 
 	public static ObjectDefinition publishObjectDefinition(

@@ -655,7 +655,7 @@ public class ObjectActionLocalServiceTest {
 
 			ObjectDefinition objectDefinitionAA =
 				ObjectDefinitionTestUtil.addCustomObjectDefinition(
-					"A" + RandomTestUtil.randomString(),
+					ObjectDefinitionTestUtil.getRandomName(),
 					_objectDefinitionLocalService);
 
 			ObjectRelationship objectRelationshipA_AA =
@@ -665,7 +665,7 @@ public class ObjectActionLocalServiceTest {
 
 			ObjectDefinition objectDefinitionAAA =
 				ObjectDefinitionTestUtil.addCustomObjectDefinition(
-					"A" + RandomTestUtil.randomString(),
+					ObjectDefinitionTestUtil.getRandomName(),
 					_objectDefinitionLocalService);
 
 			ObjectRelationship objectRelationshipAA_AAA =

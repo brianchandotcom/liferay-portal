@@ -228,7 +228,7 @@ public class GetObjectRelationshipEdgeCandidatesMVCResourceCommandTest {
 
 		ObjectDefinition childObjectDefinition1 =
 			ObjectDefinitionTestUtil.addCustomObjectDefinition(
-				"A" + RandomTestUtil.randomString(),
+				ObjectDefinitionTestUtil.getRandomName(),
 				_objectDefinitionLocalService);
 
 		_objectDefinitionLocalService.publishCustomObjectDefinition(
@@ -237,7 +237,7 @@ public class GetObjectRelationshipEdgeCandidatesMVCResourceCommandTest {
 
 		ObjectDefinition parentObjectDefinition1 =
 			ObjectDefinitionTestUtil.addCustomObjectDefinition(
-				"B" + RandomTestUtil.randomString(),
+				ObjectDefinitionTestUtil.getRandomName(),
 				_objectDefinitionLocalService);
 
 		ObjectRelationship objectRelationship1 =
@@ -259,11 +259,11 @@ public class GetObjectRelationshipEdgeCandidatesMVCResourceCommandTest {
 
 		ObjectDefinition objectDefinition1 =
 			ObjectDefinitionTestUtil.addCustomObjectDefinition(
-				"A" + RandomTestUtil.randomString(),
+				ObjectDefinitionTestUtil.getRandomName(),
 				_objectDefinitionLocalService);
 		ObjectDefinition objectDefinition2 =
 			ObjectDefinitionTestUtil.addCustomObjectDefinition(
-				"B" + RandomTestUtil.randomString(),
+				ObjectDefinitionTestUtil.getRandomName(),
 				_objectDefinitionLocalService);
 
 		ObjectRelationship objectRelationship2 =
@@ -290,12 +290,12 @@ public class GetObjectRelationshipEdgeCandidatesMVCResourceCommandTest {
 
 		ObjectDefinition childObjectDefinition2 =
 			ObjectDefinitionTestUtil.addCustomObjectDefinition(
-				"A" + RandomTestUtil.randomString(),
+				ObjectDefinitionTestUtil.getRandomName(),
 				_objectDefinitionLocalService);
 
 		ObjectDefinition parentObjectDefinition2 =
 			ObjectDefinitionTestUtil.addCustomObjectDefinition(
-				"B" + RandomTestUtil.randomString(),
+				ObjectDefinitionTestUtil.getRandomName(),
 				_objectDefinitionLocalService);
 
 		_objectDefinitionLocalService.publishCustomObjectDefinition(
@@ -321,7 +321,7 @@ public class GetObjectRelationshipEdgeCandidatesMVCResourceCommandTest {
 
 		ObjectDefinition objectDefinition3 =
 			ObjectDefinitionTestUtil.addCustomObjectDefinition(
-				"A" + RandomTestUtil.randomString(),
+				ObjectDefinitionTestUtil.getRandomName(),
 				_objectDefinitionLocalService);
 
 		ObjectRelationship objectRelationship4 =

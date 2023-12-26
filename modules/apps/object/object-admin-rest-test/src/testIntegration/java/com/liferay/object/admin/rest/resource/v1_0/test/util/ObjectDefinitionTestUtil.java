@@ -9,7 +9,6 @@ import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
@@ -44,7 +43,9 @@ public class ObjectDefinitionTestUtil {
 			long objectFolderId, boolean enableLocalization)
 		throws PortalException {
 
-		String value = "A" + RandomTestUtil.randomString();
+		String value =
+			com.liferay.object.test.util.ObjectDefinitionTestUtil.
+				getRandomName();
 
 		return ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
 			TestPropsValues.getUserId(), objectFolderId, false,

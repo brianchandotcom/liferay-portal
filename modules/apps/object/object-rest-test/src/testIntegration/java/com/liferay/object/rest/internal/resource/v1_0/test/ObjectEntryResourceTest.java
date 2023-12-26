@@ -224,7 +224,7 @@ public class ObjectEntryResourceTest {
 			Collections.singletonMap(
 				LocaleUtil.US, RandomTestUtil.randomString()));
 
-		String objectDefinitionName = "A" + RandomTestUtil.randomString();
+		String objectDefinitionName = ObjectDefinitionTestUtil.getRandomName();
 
 		_objectDefinition1 = ObjectDefinitionTestUtil.publishObjectDefinition(
 			objectDefinitionName,
@@ -384,7 +384,7 @@ public class ObjectEntryResourceTest {
 		_objectEntry4 = ObjectEntryTestUtil.addObjectEntry(
 			_objectDefinition4, _OBJECT_FIELD_NAME_4, _OBJECT_FIELD_VALUE_4);
 
-		objectDefinitionName = "A" + RandomTestUtil.randomString();
+		objectDefinitionName = ObjectDefinitionTestUtil.getRandomName();
 
 		_siteScopedObjectDefinition1 =
 			ObjectDefinitionTestUtil.publishObjectDefinition(
@@ -4097,7 +4097,7 @@ public class ObjectEntryResourceTest {
 			_objectDefinitionLocalService.addCustomObjectDefinition(
 				TestPropsValues.getUserId(), 0, false, false, false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				"A" + RandomTestUtil.randomString(), null, null,
+				ObjectDefinitionTestUtil.getRandomName(), null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				true, ObjectDefinitionConstants.SCOPE_COMPANY,
 				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,

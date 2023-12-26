@@ -2020,7 +2020,7 @@ public class ObjectDefinitionLocalServiceTest {
 	@Test
 	public void testUpdateObjectFolderId() throws Exception {
 		ObjectDefinition objectDefinition = _addCustomObjectDefinition(
-			"A" + RandomTestUtil.randomString());
+			ObjectDefinitionTestUtil.getRandomName());
 
 		Assert.assertEquals(
 			_uncategorizedObjectFolder.getObjectFolderId(),

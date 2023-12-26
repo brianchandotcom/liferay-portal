@@ -61,7 +61,7 @@ public class GetObjectFieldDeleteInfoMVCResourceCommandTest {
 	public void testGetObjectField() throws Exception {
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionTestUtil.addCustomObjectDefinition(
-				"A" + RandomTestUtil.randomString(),
+				ObjectDefinitionTestUtil.getRandomName(),
 				_objectDefinitionLocalService);
 
 		ObjectField objectField1 = _addCustomObjectField(

@@ -168,7 +168,7 @@ public class ObjectFieldLocalServiceTest {
 			() -> _objectDefinitionLocalService.addCustomObjectDefinition(
 				TestPropsValues.getUserId(), 0, false, false, false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				"A" + RandomTestUtil.randomString(), null, null,
+				ObjectDefinitionTestUtil.getRandomName(), null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				true, ObjectDefinitionConstants.SCOPE_COMPANY,
 				ObjectDefinitionConstants.STORAGE_TYPE_SALESFORCE,
@@ -207,7 +207,7 @@ public class ObjectFieldLocalServiceTest {
 			() -> _objectDefinitionLocalService.addCustomObjectDefinition(
 				TestPropsValues.getUserId(), 0, false, false, false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				"A" + RandomTestUtil.randomString(), null, null,
+				ObjectDefinitionTestUtil.getRandomName(), null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				true, ObjectDefinitionConstants.SCOPE_COMPANY,
 				ObjectDefinitionConstants.STORAGE_TYPE_SALESFORCE,
@@ -1095,7 +1095,7 @@ public class ObjectFieldLocalServiceTest {
 					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 					ObjectFieldConstants.DB_TYPE_STRING, "Able", "")));
 
-		String objectDefinitionName = "A" + RandomTestUtil.randomString();
+		String objectDefinitionName = ObjectDefinitionTestUtil.getRandomName();
 
 		String pkObjectFieldName = TextFormatter.format(
 			objectDefinitionName + "Id", TextFormatter.I);
@@ -1913,7 +1913,7 @@ public class ObjectFieldLocalServiceTest {
 			() -> _objectDefinitionLocalService.addCustomObjectDefinition(
 				TestPropsValues.getUserId(), 0, false, false, false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				"A" + RandomTestUtil.randomString(), null, null,
+				ObjectDefinitionTestUtil.getRandomName(), null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				true, ObjectDefinitionConstants.SCOPE_COMPANY, storageType,
 				Arrays.asList(
@@ -2187,7 +2187,7 @@ public class ObjectFieldLocalServiceTest {
 		throws Exception {
 
 		return _addUnmodifiableSystemObjectDefinition(
-			"A" + RandomTestUtil.randomString(), objectFields);
+			ObjectDefinitionTestUtil.getRandomName(), objectFields);
 	}
 
 	private ObjectDefinition _addUnmodifiableSystemObjectDefinition(

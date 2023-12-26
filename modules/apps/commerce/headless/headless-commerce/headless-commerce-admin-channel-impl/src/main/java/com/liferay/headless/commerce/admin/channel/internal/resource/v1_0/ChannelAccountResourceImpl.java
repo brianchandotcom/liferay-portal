@@ -72,22 +72,20 @@ public class ChannelAccountResourceImpl extends BaseChannelAccountResourceImpl {
 					"code " + externalReferenceCode);
 		}
 
-		List<CommerceChannelAccountEntryRel> commerceChannelAccountEntryRels =
-			_commerceChannelAccountEntryRelService.
-				getCommerceChannelAccountEntryRels(
-					commerceChannel.getCommerceChannelId(), null,
-					CommerceChannelAccountEntryRelConstants.TYPE_ELIGIBILITY,
-					pagination.getStartPosition(), pagination.getEndPosition());
-
-		int totalItems =
+		return Page.of(
+			_toChannelAccounts(
+				_commerceChannelAccountEntryRelService.
+					getCommerceChannelAccountEntryRels(
+						commerceChannel.getCommerceChannelId(), null,
+						CommerceChannelAccountEntryRelConstants.
+							TYPE_ELIGIBILITY,
+						pagination.getStartPosition(),
+						pagination.getEndPosition())),
+			pagination,
 			_commerceChannelAccountEntryRelService.
 				getCommerceChannelAccountEntryRelsCount(
 					commerceChannel.getCommerceChannelId(), null,
-					CommerceChannelAccountEntryRelConstants.TYPE_ELIGIBILITY);
-
-		return Page.of(
-			_toChannelAccounts(commerceChannelAccountEntryRels), pagination,
-			totalItems);
+					CommerceChannelAccountEntryRelConstants.TYPE_ELIGIBILITY));
 	}
 
 	@NestedField(parentClass = ChannelAccount.class, value = "channelAccounts")
@@ -104,22 +102,20 @@ public class ChannelAccountResourceImpl extends BaseChannelAccountResourceImpl {
 			return Page.of(Collections.emptyList());
 		}
 
-		List<CommerceChannelAccountEntryRel> commerceChannelAccountEntryRel =
-			_commerceChannelAccountEntryRelService.
-				getCommerceChannelAccountEntryRels(
-					commerceChannelId, search,
-					CommerceChannelAccountEntryRelConstants.TYPE_ELIGIBILITY,
-					pagination.getStartPosition(), pagination.getEndPosition());
-
-		int totalItems =
+		return Page.of(
+			_toChannelAccounts(
+				_commerceChannelAccountEntryRelService.
+					getCommerceChannelAccountEntryRels(
+						commerceChannelId, search,
+						CommerceChannelAccountEntryRelConstants.
+							TYPE_ELIGIBILITY,
+						pagination.getStartPosition(),
+						pagination.getEndPosition())),
+			pagination,
 			_commerceChannelAccountEntryRelService.
 				getCommerceChannelAccountEntryRelsCount(
 					commerceChannelId, search,
-					CommerceChannelAccountEntryRelConstants.TYPE_ELIGIBILITY);
-
-		return Page.of(
-			_toChannelAccounts(commerceChannelAccountEntryRel), pagination,
-			totalItems);
+					CommerceChannelAccountEntryRelConstants.TYPE_ELIGIBILITY));
 	}
 
 	@Override

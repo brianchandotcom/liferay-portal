@@ -30,7 +30,7 @@ const TicketGrid: React.FC<{tickets: Ticket[]}> = ({tickets}) => (
 				key: 'subject',
 				name: 'Subject',
 				resizable: true,
-				width: '45%',
+				width: '50%',
 			} as any,
 			{
 				key: 'resolution',

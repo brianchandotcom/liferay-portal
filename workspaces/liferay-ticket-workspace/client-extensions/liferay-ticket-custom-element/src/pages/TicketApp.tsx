@@ -4,24 +4,38 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayButton from '@clayui/button';
+import {Option, Picker} from '@clayui/core';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
-import {useState} from 'react';
+import {useContext, useState} from 'react';
 import {QueryClient, useMutation} from 'react-query';
-
-import {useRecentTickets} from '../hooks/useRecentTickets';
-import {useTickets} from '../hooks/useTickets';
-import {generateNewTicket} from '../services/tickets';
 
 import {RecentActivity} from '../components/RecentActivity';
 import {TicketGrid} from '../components/TicketGrid';
+import {TicketsAppContext} from '../context';
+import {useRecentTickets} from '../hooks/useRecentTickets';
+import {useTickets} from '../hooks/useTickets';
 import {Liferay} from '../services/liferay';
+import {generateNewTicket} from '../services/tickets';
 
-const initialFilterState = {
+type Filter = {
+	field: string;
+	text: string;
+	value: string;
+};
+
+const initialFilterState: Filter = {
 	field: '',
+	text: '',
 	value: '',
 };
 
-const filters = [
+const filters: Filter[] = [
+	{
+		field: '',
+		text: 'No Filter',
+		value: '',
+	},
 	{
 		field: 'ticketStatus',
 		text: 'Open issues',
@@ -44,14 +58,8 @@ const filters = [
 	},
 ];
 
-const compareFilters = (filterA: any, filterB: any) =>
-	JSON.stringify(filterA) === JSON.stringify(filterB);
-
-type AppProps = {
-	queryClient: QueryClient;
-};
-
-const App: React.FC<AppProps> = ({queryClient}) => {
+const App: React.FC = () => {
+	const queryClient: QueryClient = useContext(TicketsAppContext).queryClient;
 	const [filter, setFilter] = useState(initialFilterState);
 	const [page, setPage] = useState(1);
 	const [pageSize, setPageSize] = useState(20);
@@ -65,7 +73,7 @@ const App: React.FC<AppProps> = ({queryClient}) => {
 		search,
 	});
 
-	const mutation = useMutation({
+	const generateNewTicketMutation = useMutation({
 		mutationFn: generateNewTicket,
 		onSuccess: () => {
 			queryClient.invalidateQueries();
@@ -80,23 +88,25 @@ const App: React.FC<AppProps> = ({queryClient}) => {
 	});
 
 	return (
-		<>
-			<header className="align-items-center bg-light mb-3 p-3 row">
-				<h1>Your Tickets</h1>
-				<button
-					className="btn btn-primary ml-auto"
-					onClick={(event) => {
-						mutation.mutate();
+		<div>
+			<div className="autofit-padded autofit-row bg-neutral-1 justify-content-between mb-3 p-3 rounded">
+				<div className="autofit-col text-11">Your Tickets</div>
+				<div className="autofit-col">
+					<ClayButton
+						displayType="primary"
+						onClick={(event) => {
+							generateNewTicketMutation.mutate();
 
-						event.preventDefault();
-					}}
-				>
-					Generate a New Ticket
-				</button>
-			</header>
+							event.preventDefault();
+						}}
+					>
+						Generate a New Ticket
+					</ClayButton>
+				</div>
+			</div>
 
-			<main className="p-0 row">
-				<div className="col-md-10 m-0 p-0 pr-3">
+			<div className="autofit-padded autofit-row">
+				<div className="autofit-col autofit-col-expand">
 					<input
 						className="form-control mb-3 w-100"
 						onChange={(event) => {
@@ -106,9 +116,40 @@ const App: React.FC<AppProps> = ({queryClient}) => {
 						placeholder="Search Tickets"
 						type="text"
 					></input>
+				</div>
 
+				<div className="autofit-col">
+					<Picker
+						aria-labelledby="picker-label"
+						className="text-1 text-weight-bold"
+						items={filters}
+						onSelectionChange={(selectedFilterValue: any) => {
+							setPage(1);
+
+							const selectedFilter = filters.find(
+								(filter) => filter.value === selectedFilterValue
+							);
+							if (selectedFilter) {
+								setFilter(selectedFilter);
+							}
+						}}
+						placeholder="Select a filter"
+					>
+						{(item) => (
+							<Option key={item.value}>{item.text}</Option>
+						)}
+					</Picker>
+				</div>
+			</div>
+
+			<div className="autofit-padded autofit-row">
+				<div className="autofit-col w-100">
 					<TicketGrid tickets={tickets} />
+				</div>
+			</div>
 
+			<div className="autofit-padded autofit-row">
+				<div className="autofit-col">
 					<div className="my-3">
 						<ClayPaginationBarWithBasicItems
 							active={page}
@@ -125,47 +166,12 @@ const App: React.FC<AppProps> = ({queryClient}) => {
 						/>
 					</div>
 				</div>
+			</div>
 
-				<nav className="col-md-2 ml-auto">
-					<h6 className="text-uppercase">Filters</h6>
-					<ul>
-						{filters.map((_filter, index) => {
-							const isFilterSelected = compareFilters(
-								filter,
-								_filter
-							);
-
-							return (
-								<li key={index}>
-									<a
-										className={
-											isFilterSelected
-												? 'font-weight-bold'
-												: undefined
-										}
-										href="/"
-										onClick={(event) => {
-											setPage(1);
-											setFilter(
-												isFilterSelected
-													? initialFilterState
-													: _filter
-											);
-
-											event.preventDefault();
-										}}
-									>
-										{_filter.text}
-									</a>
-								</li>
-							);
-						})}
-					</ul>
-				</nav>
-			</main>
-
-			<RecentActivity tickets={recentTickets} />
-		</>
+			<div className="autofit-padded autofit-row">
+				<RecentActivity tickets={recentTickets} />
+			</div>
+		</div>
 	);
 };
 

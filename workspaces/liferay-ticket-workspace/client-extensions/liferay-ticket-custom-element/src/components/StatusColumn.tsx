@@ -4,34 +4,33 @@
  */
 
 import {useDroppable} from '@dnd-kit/core';
-import {QueryClient} from 'react-query';
 
+import {Ticket} from '../types';
 import TicketPreview from './TicketPreview';
 
-const StatusColumn: React.FC<{queryClient: QueryClient; status: any}> = ({
-	queryClient,
-	status,
-}) => {
-	const {setNodeRef} = useDroppable({id: status.key + '_droppable'});
+const StatusColumn: React.FC<{
+	name: string;
+	relatedTickets: Ticket[];
+	statusKey: string;
+}> = ({name, relatedTickets, statusKey}) => {
+	const {setNodeRef} = useDroppable({id: statusKey + '_droppable'});
 
 	return (
 		<div
-			className="bg-light h-100 min-vh-100 py-3 rounded status-col"
+			className="bg-neutral-1 h-100 min-vh-100 px-3 py-3 rounded"
 			ref={setNodeRef}
 		>
-			<p className="font-weight-bold">{status.name}</p>
+			<p className="font-weight-bold">{name}</p>
 
-			{status.relatedTickets?.length === 0 && (
-				<p>No tickets are available.</p>
+			{!relatedTickets.length && (
+				<div className="font-weight-normal text-neutral-9 text-paragraph-sm">
+					No tickets are available.
+				</div>
 			)}
 
-			{status.relatedTickets?.length > 0 &&
-				status.relatedTickets.map((ticket: any) => (
-					<TicketPreview
-						key={ticket.id}
-						queryClient={queryClient}
-						ticket={ticket}
-					/>
+			{relatedTickets &&
+				relatedTickets.map((ticket: Ticket) => (
+					<TicketPreview key={ticket.id} ticket={ticket} />
 				))}
 		</div>
 	);

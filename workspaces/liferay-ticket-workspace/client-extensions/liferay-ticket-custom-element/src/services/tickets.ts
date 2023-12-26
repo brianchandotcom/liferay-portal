@@ -10,6 +10,7 @@ import {
 	J3Y7_PRIORITIES,
 	J3Y7_REGIONS,
 	J3Y7_RESOLUTIONS,
+	J3Y7_STATUSES,
 	J3Y7_TYPES,
 	ListTypeDefinitions,
 	fetchListTypeDefinitions,
@@ -135,11 +136,15 @@ export async function updateTicketStatus(ticket: Ticket) {
 	const regions = listTypeDefinitions[J3Y7_REGIONS] as any[];
 	const resolutions = listTypeDefinitions[J3Y7_RESOLUTIONS] as any[];
 	const types = listTypeDefinitions[J3Y7_TYPES] as any[];
+	const statuses = listTypeDefinitions[J3Y7_STATUSES] as any[];
 
 	ticket.priority = priorities.find((p) => p.name === ticket.priority);
 	ticket.region = regions.find((p) => p.name === ticket.region);
 	ticket.resolution = resolutions.find((p) => p.name === ticket.resolution);
 	ticket.type = types.find((p) => p.name === ticket.type);
+	ticket.ticketStatus = statuses.find(
+		(status: any) => ticket.ticketStatus === status.name
+	);
 
 	return fetch(`/o/c/j3y7tickets/${ticket.id}`, {
 		body: JSON.stringify(ticket),

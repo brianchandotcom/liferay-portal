@@ -4,50 +4,28 @@
  */
 
 import ClayButton from '@clayui/button';
-import ClayPanel from '@clayui/panel';
-
-import {Ticket} from '../types';
-
-import '../styles/TicketPreview.css';
-
+import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
+import ClayPanel from '@clayui/panel';
 import {useDraggable} from '@dnd-kit/core';
 import {CSS} from '@dnd-kit/utilities';
-import {useState} from 'react';
+import {useContext, useMemo, useState} from 'react';
 import {QueryClient, useMutation} from 'react-query';
 
-import {icons} from '../icons';
+import {TicketsAppContext} from '../context';
 import {Liferay} from '../services/liferay';
 import {assignTicketToMe} from '../services/tickets';
-export const SPRITEMAP =
-	(Liferay as any).ThemeDisplay.getPathThemeImages() + '/clay/icons.svg';
+import {Ticket} from '../types';
 
-const usersIconsMap: {[key: string]: string} = {
-	'': icons.NONE,
-	'M2H8_ADMIN_ADAM': icons.ADAM,
-	'M2H8_CUSTOMER_CARL': icons.CARL,
-	'M2H8_SUPPORT_SAM': icons.SAM,
-};
-
-const getUserIcon = (ticket: Ticket): string => {
-	if (ticket.assignee) {
-		let icon = usersIconsMap[ticket.assignee.externalReferenceCode];
-		if (!icon) {
-			icon = usersIconsMap[''];
-		}
-		else {
-			return icon;
-		}
-	}
-
-	return usersIconsMap[''];
-};
-
-const TicketPreview: React.FC<{queryClient: QueryClient; ticket: Ticket}> = ({
-	queryClient,
-	ticket,
-}) => {
+const TicketPreview: React.FC<{ticket: Ticket}> = ({ticket}) => {
 	const [isLoading, setIsLoading] = useState(false);
+	const [isPanelExpanded, setIsPanelExpanded] = useState(false);
+	const queryClient: QueryClient = useContext(TicketsAppContext).queryClient;
+	const spritemap: string = useContext(TicketsAppContext).spriteMap;
+	const assigneeName = useMemo(
+		() => `${ticket.assignee?.givenName} ${ticket.assignee?.familyName}`,
+		[ticket.assignee]
+	);
 
 	const {
 		attributes,
@@ -58,13 +36,28 @@ const TicketPreview: React.FC<{queryClient: QueryClient; ticket: Ticket}> = ({
 	} = useDraggable({data: ticket, id: ticket.id + '_draggable'});
 
 	const style: React.CSSProperties = {
-		backgroundColor: isDragging ? '#F4F9F9' : 'white',
 		position: 'relative',
 		transform: CSS.Translate.toString(transform),
-		zIndex: isDragging ? 2147483647 : 1,
+		zIndex: isDragging ? 150 : 1,
 	};
 
-	const mutation = useMutation({
+	const assignToMe = (ticket: Ticket) =>
+		new Promise((resolve, reject) => {
+			assignTicketToMe(ticket)
+				.then((result) => {
+					if (result.status === 200 || result.status === 204) {
+						return resolve(null);
+					}
+					else {
+						return reject();
+					}
+				})
+				.catch((error) => {
+					throw new Error(error);
+				});
+		});
+
+	const assignToMeutation = useMutation({
 		mutationFn: (ticket: Ticket) => {
 			setIsLoading(true);
 
@@ -72,108 +65,120 @@ const TicketPreview: React.FC<{queryClient: QueryClient; ticket: Ticket}> = ({
 		},
 		onError: () => {
 			setIsLoading(false);
+
 			Liferay.Util.openToast({
 				message: 'Something went wrong, please try again.',
 				type: 'danger',
 			});
 		},
-		onSuccess: (responseCode) => {
+		onSuccess: () => {
 			setIsLoading(false);
+
 			queryClient.invalidateQueries();
-			if (responseCode === 200) {
-				Liferay.Util.openToast({
-					message: 'Ticket was assigned to you successfully!',
-					type: 'success',
-				});
-			}
-			else {
-				Liferay.Util.openToast({
-					message: 'Something went wrong, please try again.',
-					type: 'danger',
-				});
-			}
+			Liferay.Util.openToast({
+				message: 'Ticket was assigned to you successfully!',
+				type: 'success',
+			});
 		},
 	});
 
 	return (
 		<div
 			ref={setNodeRef}
-			{...listeners}
 			{...attributes}
-			className="bg-white border-light mb-3 rounded ticket-preview-container"
+			className={
+				'border border-neutral-2 card mb-4 py-2 shadow-none ' +
+				(isDragging ? 'bg-brand-primary-lighten-5' : 'bg-neutral-0')
+			}
 			style={style}
 		>
-			<ClayPanel
-				collapsable
-				displayTitle={
-					<ClayPanel.Title>
-						<h5 className="text-dark ticket-subject">
-							{ticket.subject}
-						</h5>
-						<div className="mt-3">
-							<img
-								className="rounded-circle"
-								height={25}
-								src={getUserIcon(ticket)}
-								width={25}
-							/>
-							<i className="ml-2">
-								{ticket.assignee
-									? ticket.assignee?.familyName
-									: 'Not assigned'}
-							</i>
-						</div>
-					</ClayPanel.Title>
-				}
-				displayType="secondary"
-				showCollapseIcon={true}
-			>
-				<ClayPanel.Body>
-					<p>
-						{+ticket.description
-							? ticket.description
-							: 'No description available.'}
-					</p>
-					{!ticket.assignee ? (
-						<ClayButton
+			<div className="autofit-padded autofit-row">
+				<div className="autofit-col autofit-col-shrink justify-content-center p-2">
+					<ClayIcon
+						style={{cursor: 'grab'}}
+						{...listeners}
+						spritemap={spritemap}
+						symbol="drag"
+					></ClayIcon>
+				</div>
+				<div className="autofit-col autofit-col-expand">
+					<div className="autofit-section">
+						<ClayPanel
+							className="border-0 m-0 p-0"
+							collapsable
+							displayTitle={
+								<ClayPanel.Title>
+									<div
+										className={
+											'text-neutral-9 font-weight-bold ' +
+											(!isPanelExpanded
+												? 'overflow-hidden text-truncate white-space text-paragraph-sm'
+												: 'text-paragraph')
+										}
+									>
+										{ticket.subject}
+									</div>
+									<div className="font-weight-normal mt-3 text-neutral-8 text-paragraph-xs">
+										{ticket.assignee && (
+											<>
+												<ClayIcon
+													className="d-inline mr-1 rounded-circle"
+													spritemap={spritemap}
+													symbol="user"
+												></ClayIcon>
+												<div className="d-inline">
+													{assigneeName}
+												</div>
+											</>
+										)}
+
+										{!ticket.assignee && (
+											<i className="ml-2">Not assigned</i>
+										)}
+									</div>
+								</ClayPanel.Title>
+							}
 							displayType="secondary"
-							onClick={() => mutation.mutate(ticket)}
-							size="xs"
+							expanded={isPanelExpanded}
+							onExpandedChange={(isExpanded: any) =>
+								setIsPanelExpanded(isExpanded)
+							}
+							showCollapseIcon={true}
+							spritemap={spritemap}
 						>
-							{isLoading ? (
-								<span className="inline-item inline-item-before">
-									<ClayLoadingIndicator
+							<ClayPanel.Body>
+								<div className="font-weight-normal text-neutral-8 text-paragraph-sm">
+									{ticket.description
+										? ticket.description
+										: 'No description available.'}
+								</div>
+								{!ticket.assignee && (
+									<ClayButton
+										className="mt-3"
 										displayType="secondary"
-										size="sm"
-									/>
-								</span>
-							) : (
-								''
-							)}
-							Assign to Me
-						</ClayButton>
-					) : (
-						''
-					)}
-				</ClayPanel.Body>
-			</ClayPanel>
+										onClick={() =>
+											assignToMeutation.mutate(ticket)
+										}
+										size="xs"
+									>
+										{isLoading && (
+											<span className="inline-item inline-item-before">
+												<ClayLoadingIndicator
+													displayType="secondary"
+													size="sm"
+												/>
+											</span>
+										)}
+										Assign to Me
+									</ClayButton>
+								)}
+							</ClayPanel.Body>
+						</ClayPanel>
+					</div>
+				</div>
+			</div>
 		</div>
 	);
 };
-
-function assignToMe(ticket: Ticket) {
-	return new Promise((resolve, reject) => {
-		assignTicketToMe(ticket)
-			.then((result) => {
-				if (result.status === 200 || result.status === 204) {
-					return resolve(200);
-				}
-				else {
-					return reject(500);
-				}
-			})
-			.catch(() => reject(500));
-	});
-}
 
 export default TicketPreview;

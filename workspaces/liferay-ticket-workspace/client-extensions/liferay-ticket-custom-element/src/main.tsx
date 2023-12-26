@@ -6,94 +6,105 @@
 import {ClayVerticalNav} from '@clayui/nav';
 import {useState} from 'react';
 import {createRoot} from 'react-dom/client';
-import {QueryClient, QueryClientProvider} from 'react-query';
-import {HashRouter, Route, Routes} from 'react-router-dom';
+import {QueryClientProvider} from 'react-query';
+import {HashRouter, Navigate, Route, Routes} from 'react-router-dom';
 
+import {CONFIGS, TicketsAppContext} from './context';
 import TicketApp from './pages/TicketApp';
 import TicketsByStatusDashboard from './pages/TicketsByStatusDashboard';
-import {Liferay} from './services/liferay';
 
-import './styles/Main.css';
-export const SPRITEMAP =
-	(Liferay as any).ThemeDisplay.getPathThemeImages() + '/clay/icons.svg';
-
-const DEFAULT_ROUTE: string = '#dashboard';
-const queryClient = new QueryClient();
+const routes: any[] = [
+	{
+		href: '#/dashboard',
+		id: '1',
+		index: '1',
+		label: 'Dashboard',
+	},
+	{
+		href: '#/ticketapp',
+		id: '2',
+		index: '2',
+		label: 'Tickets App',
+	},
+];
 
 const Main: React.FC = () => {
-	const [activeItem, setActiveItem] = useState('1');
+	const currentRoute = '#' + location.href.split('#')[1];
+	const initialActiveItem =
+		routes.find((route) => route.href === currentRoute)?.index || '1';
 
-	if (window.location.href.indexOf('#') === -1) {
-		window.location.href = window.location.href + DEFAULT_ROUTE;
-	}
-
-	function navItemClicked(item: any) {
-		setActiveItem(item.id);
-	}
+	const [activeItem, setActiveItem] = useState(initialActiveItem);
 
 	return (
-		<QueryClientProvider client={queryClient}>
-			<section className="container-fluid current-tickets m-0 p-0 row">
-				<div className="col-lg-2">
-					<nav className="h-100 site-navigation">
-						<h6 className="text-uppercase">Site</h6>
-						<ClayVerticalNav
-							active={activeItem}
-							items={[
-								{
-									href: '#dashboard',
-									id: '1',
-									label: 'Dashboard',
-								},
-								{
-									href: '#ticketapp',
-									id: '2',
-									label: 'Tickets App',
-								},
-							]}
-							large={false}
-							spritemap={SPRITEMAP}
-						>
-							{(item: any) => (
-								<ClayVerticalNav.Item
-									href={item.href}
-									key={item.id}
-									onClick={() => navItemClicked(item)}
-								>
-									{item.label}
-								</ClayVerticalNav.Item>
-							)}
-						</ClayVerticalNav>
-					</nav>
+		<TicketsAppContext.Provider value={CONFIGS}>
+			<QueryClientProvider client={CONFIGS.queryClient}>
+				<div className="autofit-padded autofit-row">
+					<div
+						className={
+							'autofit-col ' +
+							(CONFIGS.defaultPage ? 'd-none' : '')
+						}
+					>
+						<div className="h-100">
+							<div className="mb-2 text-uppercase">Site</div>
+							<ClayVerticalNav
+								active={activeItem}
+								items={routes}
+								large={false}
+								spritemap={CONFIGS.spriteMap}
+							>
+								{(item: any) => (
+									<ClayVerticalNav.Item
+										href={item.href}
+										key={item.id}
+										onClick={() => setActiveItem(item.id)}
+									>
+										{item.label}
+									</ClayVerticalNav.Item>
+								)}
+							</ClayVerticalNav>
+						</div>
+					</div>
+					<div className="autofit-col autofit-col-expand ml-2">
+						<HashRouter>
+							<Routes>
+								<Route
+									element={<TicketsByStatusDashboard />}
+									path="dashboard"
+								/>
+								<Route
+									element={<TicketApp />}
+									path="ticketapp"
+								/>
+								<Route
+									element={
+										<Navigate
+											replace
+											to={
+												CONFIGS.defaultPage
+													? CONFIGS.defaultPage
+													: 'dashboard'
+											}
+										/>
+									}
+									path=""
+								/>
+							</Routes>
+						</HashRouter>
+					</div>
 				</div>
-				<div className="col-lg-10">
-					<HashRouter>
-						<Routes>
-							<Route
-								element={
-									<TicketsByStatusDashboard
-										queryClient={queryClient}
-									/>
-								}
-								path="dashboard"
-							/>
-							<Route
-								element={
-									<TicketApp queryClient={queryClient} />
-								}
-								path="ticketapp"
-							/>
-						</Routes>
-					</HashRouter>
-				</div>
-			</section>
-		</QueryClientProvider>
+			</QueryClientProvider>
+		</TicketsAppContext.Provider>
 	);
 };
 
 class MainHTMLElement extends HTMLElement {
 	connectedCallback() {
 		const root = createRoot(this);
+		const defaultPage = this.getAttribute('defaultpage');
+		if (defaultPage) {
+			CONFIGS.defaultPage = defaultPage;
+		}
 		root.render(<Main />);
 	}
 }

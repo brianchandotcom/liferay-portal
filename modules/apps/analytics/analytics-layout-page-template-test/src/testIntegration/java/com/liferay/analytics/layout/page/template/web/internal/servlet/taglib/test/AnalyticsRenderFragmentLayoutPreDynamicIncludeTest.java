@@ -132,7 +132,7 @@ public class AnalyticsRenderFragmentLayoutPreDynamicIncludeTest {
 				"<div data-analytics-asset-action=\"preview",
 				"\" data-analytics-asset-id=\"", fileEntry.getFileEntryId(),
 				"\" data-analytics-asset-title=\"", fileEntry.getTitle(),
-				"\" data-analytics-asset-type=\"file",
+				"\" data-analytics-asset-type=\"document",
 				"\" data-analytics-asset-version=\"", fileEntry.getVersion(),
 				"\">"),
 			mockHttpServletResponse.getContentAsString());
@@ -168,7 +168,9 @@ public class AnalyticsRenderFragmentLayoutPreDynamicIncludeTest {
 				"<div data-analytics-asset-id=\"",
 				journalArticle.getResourcePrimKey(),
 				"\" data-analytics-asset-title=\"", journalArticle.getTitle(),
-				"\" data-analytics-asset-type=\"web-content\">"),
+				"\" data-analytics-asset-type=\"web-content",
+				"\" data-analytics-web-content-resource-pk=\"",
+				journalArticle.getResourcePrimKey(), "\">"),
 			mockHttpServletResponse.getContentAsString());
 	}
 

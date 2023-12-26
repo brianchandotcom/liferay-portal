@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.comment.Discussion;
 import com.liferay.portal.kernel.comment.DiscussionComment;
-import com.liferay.portal.kernel.comment.DiscussionPermission;
 import com.liferay.portal.kernel.comment.DiscussionStagingHandler;
 import com.liferay.portal.kernel.comment.DuplicateCommentException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -508,9 +507,6 @@ public class MBCommentManagerImpl implements CommentManager {
 		return new MBDiscussionCommentImpl(
 			treeWalker.getRoot(), treeWalker, ratingsEntries, ratingsStats);
 	}
-
-	@Reference
-	private DiscussionPermission _discussionPermission;
 
 	@Reference
 	private MBDiscussionLocalService _mbDiscussionLocalService;

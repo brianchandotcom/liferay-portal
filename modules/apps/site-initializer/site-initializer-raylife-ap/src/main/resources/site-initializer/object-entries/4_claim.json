@@ -1,0 +1,1115 @@
+{
+	"object-entries": [
+		{
+			"claimAmount": 2634,
+			"claimCreateDate": "2022-06-21T22:18:47Z",
+			"claimStatus": "claimSubmitted",
+			"dataJSON": "{\"Detail\":{\"InsuranceInfo\":{\"InsuredName\":\"Osgood Dummer\",\"InsuredSSN\":\"270-21-8085\",\"InsuredVehicle\":\"2017 Ford F-150 Super 250 XL\",\"InsuredVIN\":\"1C6RD7NT6CS560502\"},\"IncidentDetail\":{\"Location\":\"5 Muir Hill\",\"LocationCity\":\"Sacramento\",\"LocationState\":\"CA\",\"LocationZIP\":\"94230\",\"Type\":\"Vehicle incident while filling fuel\",\"Detail\":\"Incident with more than one passenger\",\"OtherVehicleMake\":\"Toyota\",\"OtherVehicleModel\":\"Land Cruiser\",\"OtherVehicleVIN\":\"JM3TB2CA1F0994620\",\"OtherVehicleOccupant\":\"Faina Chater\",\"OtherVehicleOccupant2\":\"Barbaraanne Moine\",\"OtherVehicleOccupant3\":\"Judd Borthram\",\"OtherVehicleInsurance\":\"Liberty Mutual\",\"Damage\":{\"Condition\":\"Good to drive\",\"Interior\":\"Seats\",\"Exterior\":\"Passenger Side\"}},\"VehicleRepair\":{\"Status\":\"Not Started\",\"Description\":\"Insured has not started repair\",\"MechanicName\":\"Hyperion Automotive Center\",\"MechanicPhone\":\"(323) 665-7864\",\"MechanicAddress\":\"2938 Hyperion Ave Los Angeles, CA 90027\",\"MechanicOrderNum\":\"vur2tz\",\"MechanicCompleteDate\":\"2022-07-10T22:18:47Z\",\"MechanicCost\":2239},\"Activity\":{\"Date1\":\"2022-06-21T22:18:47Z\",\"Desc1\":\"Claim Submitted\",\"By1\":\"Scott Producer (Producer)\",\"Date2\":\"2022-06-22T22:18:47Z\",\"Desc2\":\"Investigation in progress\",\"By2\":\"Jack Johnson (Claim Adjuster)\",\"Date3\":\"2022-06-28T22:18:47Z\",\"Desc3\":\"Estimation complete\",\"By3\":\"Jack Johnson (Claim Adjuster)\",\"Date4\":\"2022-07-10T22:18:47Z\",\"Desc4\":\"Vehicle Repair Complete\",\"By4\":\"Scott Producer (Producer)\"}}}",
+			"externalReferenceCode": "CL-58-839-1582",
+			"incidentDate": "2022-06-20T22:18:47Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-58-839-1582",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 3441,
+			"claimCreateDate": "2022-01-07T12:43:32Z",
+			"claimStatus": "repair",
+			"dataJSON": "{\"Detail\":{\"InsuranceInfo\":{\"InsuredName\":\"Jessa Capron\",\"InsuredSSN\":\"483-23-9736\",\"InsuredVehicle\":\"2016 Ford Mustang GT Fastback\",\"InsuredVIN\":\"WAUHE98P69A080483\"},\"IncidentDetail\":{\"Location\":\"89 Stone Corner Street\",\"LocationCity\":\"Pasadena\",\"LocationState\":\"CA\",\"LocationZIP\":\"91117\",\"Type\":\"Vehicle incident while parking\",\"Detail\":\"Incident with single passenger\",\"OtherVehicleMake\":\"Lincoln\",\"OtherVehicleModel\":\"Town Car\",\"OtherVehicleVIN\":\"JTDZN3EU1EJ184131\",\"OtherVehicleOccupant\":\"Moises Yablsley\",\"OtherVehicleOccupant2\":\"Merna Toombes\",\"OtherVehicleOccupant3\":null,\"OtherVehicleInsurance\":\"Travelers\",\"Damage\":{\"Condition\":\"Major damage and not safe to drive\",\"Interior\":\"Seats\",\"Exterior\":\"Passenger Side\"}},\"VehicleRepair\":{\"Status\":\"Pending\",\"Description\":\"Vehicle pending repair\",\"MechanicName\":\"Hyperion Automotive Center\",\"MechanicPhone\":\"(323) 665-7864\",\"MechanicAddress\":\"2938 Hyperion Ave Los Angeles, CA 90027\",\"MechanicOrderNum\":\"zqo0my\",\"MechanicCompleteDate\":\"2022-01-25T12:43:32Z\",\"MechanicCost\":2925},\"Activity\":{\"Date1\":\"2022-01-07T12:43:32Z\",\"Desc1\":\"Claim Submitted\",\"By1\":\"Scott Producer (Producer)\",\"Date2\":\"2022-01-08T12:43:32Z\",\"Desc2\":\"Investigation in progress\",\"By2\":\"Jack Johnson (Claim Adjuster)\",\"Date3\":\"2022-01-11T12:43:32Z\",\"Desc3\":\"Estimation complete\",\"By3\":\"Jack Johnson (Claim Adjuster)\",\"Date4\":\"2022-01-25T12:43:32Z\",\"Desc4\":\"Vehicle Repair Complete\",\"By4\":\"Scott Producer (Producer)\"}}}",
+			"externalReferenceCode": "CL-62-174-3884",
+			"incidentDate": "2022-01-05T12:43:32Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-62-174-3884",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 4082,
+			"claimCreateDate": "2022-03-12T01:20:26Z",
+			"claimStatus": "pendingSettlement",
+			"dataJSON": "{\"Detail\":{\"InsuranceInfo\":{\"InsuredName\":\"Shurlocke Letessier\",\"InsuredSSN\":\"672-50-5288\",\"InsuredVehicle\":\"2013 Toyota Tundra SR6\",\"InsuredVIN\":\"5GAKRBED0CJ888688\"},\"IncidentDetail\":{\"Location\":\"33591 Lighthouse Bay Place\",\"LocationCity\":\"Las Vegas\",\"LocationState\":\"NV\",\"LocationZIP\":\"89105\",\"Type\":\"Vehicle incident while filling fuel\",\"Detail\":\"Incident alone\",\"OtherVehicleMake\":\"Saturn\",\"OtherVehicleModel\":\"S-Series\",\"OtherVehicleVIN\":\"1G6DF8EG1A0700568\",\"OtherVehicleOccupant\":\"Seth Crame\",\"OtherVehicleOccupant2\":null,\"OtherVehicleOccupant3\":null,\"OtherVehicleInsurance\":\"USAA\",\"Damage\":{\"Condition\":\"Major damage and not safe to drive\",\"Interior\":\"Wheels & Dashboard\",\"Exterior\":\"Passenger Rear,Rear\"}},\"VehicleRepair\":{\"Status\":\"Not Started\",\"Description\":\"Insured has not started repair\",\"MechanicName\":\"Diamond Auto Repair\",\"MechanicPhone\":\"(310) 458-3492\",\"MechanicAddress\":\"1432 Wilshire Blvd. Los Angeles, CA 90010\",\"MechanicOrderNum\":\"xgb7ky\",\"MechanicCompleteDate\":\"2022-03-28T01:20:26Z\",\"MechanicCost\":3470},\"Activity\":{\"Date1\":\"2022-03-12T01:20:26Z\",\"Desc1\":\"Claim Submitted\",\"By1\":\"Marie Producer (Producer)\",\"Date2\":\"2022-03-14T01:20:26Z\",\"Desc2\":\"Investigation in progress\",\"By2\":\"Jack Johnson (Claim Adjuster)\",\"Date3\":\"2022-03-21T01:20:26Z\",\"Desc3\":\"Estimation complete\",\"By3\":\"Jack Johnson (Claim Adjuster)\",\"Date4\":\"2022-03-28T01:20:26Z\",\"Desc4\":\"Vehicle Repair Complete\",\"By4\":\"Marie Producer (Producer)\"}}}",
+			"externalReferenceCode": "CL-95-825-9374",
+			"incidentDate": "2022-03-11T01:20:26Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-95-825-9374",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 4002,
+			"claimCreateDate": "2022-09-17T19:21:02Z",
+			"claimStatus": "pendingSettlement",
+			"dataJSON": "{\"Detail\":{\"InsuranceInfo\":{\"InsuredName\":\"Jameson Norcliff\",\"InsuredSSN\":\"870-25-4892\",\"InsuredVehicle\":\"2018 Volvo S90 R-Design\",\"InsuredVIN\":\"WAUKFBFL1BN395801\"},\"IncidentDetail\":{\"Location\":\"47294 Mifflin Street\",\"LocationCity\":\"New York City\",\"LocationState\":\"NY\",\"LocationZIP\":\"10275\",\"Type\":\"Vehicle incident while parking\",\"Detail\":\"Incident with single passenger\",\"OtherVehicleMake\":\"McLaren\",\"OtherVehicleModel\":\"MP4-12C\",\"OtherVehicleVIN\":\"5N1AR1NB3CC018923\",\"OtherVehicleOccupant\":\"Jacintha Berth\",\"OtherVehicleOccupant2\":\"Mac Maidlow\",\"OtherVehicleOccupant3\":null,\"OtherVehicleInsurance\":\"Mercury\",\"Damage\":{\"Condition\":\"Minor damage and safe to drive\",\"Interior\":\"Interior Trim\",\"Exterior\":\"Driver Side, Driver Rear\"}},\"VehicleRepair\":{\"Status\":\"Not Started\",\"Description\":\"Insured has not started repair\",\"MechanicName\":\"Hyperion Automotive Center\",\"MechanicPhone\":\"(323) 665-7864\",\"MechanicAddress\":\"2938 Hyperion Ave Los Angeles, CA 90027\",\"MechanicOrderNum\":\"tbd2ss\",\"MechanicCompleteDate\":\"2022-10-02T19:21:02Z\",\"MechanicCost\":3402},\"Activity\":{\"Date1\":\"2022-09-17T19:21:02Z\",\"Desc1\":\"Claim Submitted\",\"By1\":\"Scott Producer (Producer)\",\"Date2\":\"2022-09-18T19:21:02Z\",\"Desc2\":\"Investigation in progress\",\"By2\":\"Jack Johnson (Claim Adjuster)\",\"Date3\":\"2022-09-21T19:21:02Z\",\"Desc3\":\"Estimation complete\",\"By3\":\"Jack Johnson (Claim Adjuster)\",\"Date4\":\"2022-10-02T19:21:02Z\",\"Desc4\":\"Vehicle Repair Complete\",\"By4\":\"Scott Producer (Producer)\"}}}",
+			"externalReferenceCode": "CL-84-436-9853",
+			"incidentDate": "2022-09-10T19:21:02Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-84-436-9853",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 3662,
+			"claimCreateDate": "2022-09-04T17:41:37Z",
+			"claimStatus": "claimSubmitted",
+			"dataJSON": "{\"Detail\":{\"InsuranceInfo\":{\"InsuredName\":\"Keelby Vaen\",\"InsuredSSN\":\"206-56-2008\",\"InsuredVehicle\":\"2016 Ford F-150 Super 250 XL\",\"InsuredVIN\":\"WAUDH94F76N249515\"},\"IncidentDetail\":{\"Location\":\"895 Monterey Parkway\",\"LocationCity\":\"New York City\",\"LocationState\":\"NY\",\"LocationZIP\":\"10024\",\"Type\":\"Vehicle incident while parked\",\"Detail\":\"Incident with more than one passenger\",\"OtherVehicleMake\":\"Ford\",\"OtherVehicleModel\":\"Crown Victoria\",\"OtherVehicleVIN\":\"3N1CN7APXEK062981\",\"OtherVehicleOccupant\":\"Rochell Yukhnini\",\"OtherVehicleOccupant2\":\"Elisabetta Keig\",\"OtherVehicleOccupant3\":\"Rosanne Weal\",\"OtherVehicleInsurance\":\"Mercury\",\"Damage\":{\"Condition\":\"Major damage and not safe to drive\",\"Interior\":\"Wheels & Dashboard\",\"Exterior\":\"Passenger Side\"}},\"VehicleRepair\":{\"Status\":\"Not Started\",\"Description\":\"Insured has not started repair\",\"MechanicName\":\"Diamond Auto Repair\",\"MechanicPhone\":\"(310) 458-3492\",\"MechanicAddress\":\"1432 Wilshire Blvd. Los Angeles, CA 90010\",\"MechanicOrderNum\":\"lqu8ix\",\"MechanicCompleteDate\":\"2022-09-23T17:41:37Z\",\"MechanicCost\":3113},\"Activity\":{\"Date1\":\"2022-09-04T17:41:37Z\",\"Desc1\":\"Claim Submitted\",\"By1\":\"Scott Producer (Producer)\",\"Date2\":\"2022-09-05T17:41:37Z\",\"Desc2\":\"Investigation in progress\",\"By2\":\"Jack Johnson (Claim Adjuster)\",\"Date3\":\"2022-09-09T17:41:37Z\",\"Desc3\":\"Estimation complete\",\"By3\":\"Jack Johnson (Claim Adjuster)\",\"Date4\":\"2022-09-23T17:41:37Z\",\"Desc4\":\"Vehicle Repair Complete\",\"By4\":\"Scott Producer (Producer)\"}}}",
+			"externalReferenceCode": "CL-57-081-0414",
+			"incidentDate": "2022-09-02T17:41:37Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-57-081-0414",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 932,
+			"claimCreateDate": "2022-05-02T15:52:38Z",
+			"claimStatus": "approved",
+			"dataJSON": "{\"Detail\":{\"InsuranceInfo\":{\"InsuredName\":\"Evvy Woodley\",\"InsuredSSN\":\"429-04-6980\",\"InsuredVehicle\":\"2018 Volvo XC90 Inscription\",\"InsuredVIN\":\"WAUKGAFB2BN608267\"},\"IncidentDetail\":{\"Location\":\"882 Butternut Road\",\"LocationCity\":\"San Francisco\",\"LocationState\":\"CA\",\"LocationZIP\":\"94142\",\"Type\":\"Vehicle incident while parking\",\"Detail\":\"Incident alone\",\"OtherVehicleMake\":\"Mercury\",\"OtherVehicleModel\":\"Cougar\",\"OtherVehicleVIN\":\"WBA3A9C5XFK626154\",\"OtherVehicleOccupant\":\"Heath Briggdale\",\"OtherVehicleOccupant2\":null,\"OtherVehicleOccupant3\":null,\"OtherVehicleInsurance\":\"USAA\",\"Damage\":{\"Condition\":\"Good to drive\",\"Interior\":\"Seats\",\"Exterior\":\"Front,Driver Side\"}},\"VehicleRepair\":{\"Status\":\"Pending\",\"Description\":\"Vehicle pending repair\",\"MechanicName\":\"Diamond Auto Repair\",\"MechanicPhone\":\"(310) 458-3492\",\"MechanicAddress\":\"1432 Wilshire Blvd. Los Angeles, CA 90010\",\"MechanicOrderNum\":\"ozk6bo\",\"MechanicCompleteDate\":\"2022-05-18T15:52:38Z\",\"MechanicCost\":792},\"Activity\":{\"Date1\":\"2022-05-02T15:52:38Z\",\"Desc1\":\"Claim Submitted\",\"By1\":\"Scott Producer (Producer)\",\"Date2\":\"2022-05-03T15:52:38Z\",\"Desc2\":\"Investigation in progress\",\"By2\":\"Jack Johnson (Claim Adjuster)\",\"Date3\":\"2022-05-12T15:52:38Z\",\"Desc3\":\"Estimation complete\",\"By3\":\"Jack Johnson (Claim Adjuster)\",\"Date4\":\"2022-05-18T15:52:38Z\",\"Desc4\":\"Vehicle Repair Complete\",\"By4\":\"Scott Producer (Producer)\"}}}",
+			"externalReferenceCode": "CL-96-710-6810",
+			"incidentDate": "2022-04-29T15:52:38Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-96-710-6810",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 2961,
+			"claimCreateDate": "2022-07-20T16:25:11Z",
+			"claimStatus": "inInvestigation",
+			"dataJSON": "{\"Detail\":{\"InsuranceInfo\":{\"InsuredName\":\"Jameson Norcliff\",\"InsuredSSN\":\"611-95-0919\",\"InsuredVehicle\":\"2013 Ford Focus S Sedan\",\"InsuredVIN\":\"SCFFDCCD6CG141652\"},\"IncidentDetail\":{\"Location\":\"66 Killdeer Trail\",\"LocationCity\":\"Fresno\",\"LocationState\":\"CA\",\"LocationZIP\":\"93709\",\"Type\":\"Vehicle incident while parking\",\"Detail\":\"Incident alone\",\"OtherVehicleMake\":\"GMC\",\"OtherVehicleModel\":\"2500 Club Coupe\",\"OtherVehicleVIN\":\"1G6AB5RX2D0356535\",\"OtherVehicleOccupant\":\"Grethel MacTague\",\"OtherVehicleOccupant2\":null,\"OtherVehicleOccupant3\":null,\"OtherVehicleInsurance\":\"Travelers\",\"Damage\":{\"Condition\":\"Major damage and not safe to drive\",\"Interior\":\"Interior Trim\",\"Exterior\":\"Passenger Side\"}},\"VehicleRepair\":{\"Status\":\"Not Started\",\"Description\":\"Insured has not started repair\",\"MechanicName\":\"Hyperion Automotive Center\",\"MechanicPhone\":\"(323) 665-7864\",\"MechanicAddress\":\"2938 Hyperion Ave Los Angeles, CA 90027\",\"MechanicOrderNum\":\"qpo5ev\",\"MechanicCompleteDate\":\"2022-08-08T16:25:11Z\",\"MechanicCost\":2517},\"Activity\":{\"Date1\":\"2022-07-20T16:25:11Z\",\"Desc1\":\"Claim Submitted\",\"By1\":\"Marie Producer (Producer)\",\"Date2\":\"2022-07-21T16:25:11Z\",\"Desc2\":\"Investigation in progress\",\"By2\":\"Jack Johnson (Claim Adjuster)\",\"Date3\":\"2022-07-30T16:25:11Z\",\"Desc3\":\"Estimation complete\",\"By3\":\"Jack Johnson (Claim Adjuster)\",\"Date4\":\"2022-08-08T16:25:11Z\",\"Desc4\":\"Vehicle Repair Complete\",\"By4\":\"Marie Producer (Producer)\"}}}",
+			"externalReferenceCode": "CL-71-316-5330",
+			"incidentDate": "2022-07-16T16:25:11Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-71-316-5330",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 815,
+			"claimCreateDate": "2023-04-12T14:59:31Z",
+			"claimStatus": "inEstimation",
+			"dataJSON": "{\"Detail\":{\"InsuranceInfo\":{\"InsuredName\":\"Bonnie Nevett\",\"InsuredSSN\":\"646-96-0088\",\"InsuredVehicle\":\"2015 Ford F-150 Super 250 XL\",\"InsuredVIN\":\"SALVP2BG6EH547489\"},\"IncidentDetail\":{\"Location\":\"92 Sunnyside Parkway\",\"LocationCity\":\"Fresno\",\"LocationState\":\"CA\",\"LocationZIP\":\"93740\",\"Type\":\"Vehicle incident while filling fuel\",\"Detail\":\"Incident alone\",\"OtherVehicleMake\":\"Ford\",\"OtherVehicleModel\":\"Taurus\",\"OtherVehicleVIN\":\"1LNHL9DK8FG338851\",\"OtherVehicleOccupant\":\"Klement Vick\",\"OtherVehicleOccupant2\":null,\"OtherVehicleOccupant3\":null,\"OtherVehicleInsurance\":\"Travelers\",\"Damage\":{\"Condition\":\"Minor damage and safe to drive\",\"Interior\":\"Upholstery\",\"Exterior\":\"Front,Driver Side\"}},\"VehicleRepair\":{\"Status\":\"Not Started\",\"Description\":\"Insured has not started repair\",\"MechanicName\":\"Hyperion Automotive Center\",\"MechanicPhone\":\"(323) 665-7864\",\"MechanicAddress\":\"2938 Hyperion Ave Los Angeles, CA 90027\",\"MechanicOrderNum\":\"qru7vs\",\"MechanicCompleteDate\":\"2023-04-30T14:59:31Z\",\"MechanicCost\":693},\"Activity\":{\"Date1\":\"2023-04-12T14:59:31Z\",\"Desc1\":\"Claim Submitted\",\"By1\":\"Marie Producer (Producer)\",\"Date2\":\"2023-04-14T14:59:31Z\",\"Desc2\":\"Investigation in progress\",\"By2\":\"Jack Johnson (Claim Adjuster)\",\"Date3\":\"2023-04-17T14:59:31Z\",\"Desc3\":\"Estimation complete\",\"By3\":\"Jack Johnson (Claim Adjuster)\",\"Date4\":\"2023-04-30T14:59:31Z\",\"Desc4\":\"Vehicle Repair Complete\",\"By4\":\"Marie Producer (Producer)\"}}}",
+			"externalReferenceCode": "CL-14-768-3243",
+			"incidentDate": "2023-04-11T14:59:31Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-14-768-3243",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 4185,
+			"claimCreateDate": "2022-12-05T14:32:47Z",
+			"claimStatus": "repair",
+			"dataJSON": "{\"Detail\":{\"InsuranceInfo\":{\"InsuredName\":\"Monah Woolens\",\"InsuredSSN\":\"371-98-1643\",\"InsuredVehicle\":\"2018 Ford F-150 Super 250 XL\",\"InsuredVIN\":\"WAUGGAFR2DA698890\"},\"IncidentDetail\":{\"Location\":\"708 Shelley Circle\",\"LocationCity\":\"Concord\",\"LocationState\":\"CA\",\"LocationZIP\":\"94522\",\"Type\":\"Vehicle incident while filling fuel\",\"Detail\":\"Incident with single passenger\",\"OtherVehicleMake\":\"Citroën\",\"OtherVehicleModel\":\"CX\",\"OtherVehicleVIN\":\"1B3CC5FB1AN309749\",\"OtherVehicleOccupant\":\"Wesley Cicco\",\"OtherVehicleOccupant2\":\"Brina Youthead\",\"OtherVehicleOccupant3\":null,\"OtherVehicleInsurance\":\"Travelers\",\"Damage\":{\"Condition\":\"Good to drive\",\"Interior\":\"Wheels & Dashboard\",\"Exterior\":\"Driver Side, Driver Rear\"}},\"VehicleRepair\":{\"Status\":\"Pending\",\"Description\":\"Vehicle pending repair\",\"MechanicName\":\"Hyperion Automotive Center\",\"MechanicPhone\":\"(323) 665-7864\",\"MechanicAddress\":\"2938 Hyperion Ave Los Angeles, CA 90027\",\"MechanicOrderNum\":\"mja5na\",\"MechanicCompleteDate\":\"2022-12-23T14:32:47Z\",\"MechanicCost\":3557},\"Activity\":{\"Date1\":\"2022-12-05T14:32:47Z\",\"Desc1\":\"Claim Submitted\",\"By1\":\"Scott Producer (Producer)\",\"Date2\":\"2022-12-08T14:32:47Z\",\"Desc2\":\"Investigation in progress\",\"By2\":\"Jack Johnson (Claim Adjuster)\",\"Date3\":\"2022-12-14T14:32:47Z\",\"Desc3\":\"Estimation complete\",\"By3\":\"Jack Johnson (Claim Adjuster)\",\"Date4\":\"2022-12-23T14:32:47Z\",\"Desc4\":\"Vehicle Repair Complete\",\"By4\":\"Scott Producer (Producer)\"}}}",
+			"externalReferenceCode": "CL-57-402-8342",
+			"incidentDate": "2022-11-29T14:32:47Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-57-402-8342",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 0,
+			"claimCreateDate": "2023-07-08T13:04:21Z",
+			"claimStatus": "approved",
+			"dataJSON": "{\"Detail\":{\"InsuranceInfo\":{\"InsuredName\":\"Jameson Norcliff\",\"InsuredSSN\":\"844-83-9574\",\"InsuredVehicle\":\"2016 Volvo V90 Cross Country\",\"InsuredVIN\":\"WAUCFAFH5FN050075\"},\"IncidentDetail\":{\"Location\":\"0250 Raven Parkway\",\"LocationCity\":\"San Jose\",\"LocationState\":\"CA\",\"LocationZIP\":\"95150\",\"Type\":\"Vehicle incident while parking\",\"Detail\":\"Incident with more than one passenger\",\"OtherVehicleMake\":\"Lotus\",\"OtherVehicleModel\":\"Exige\",\"OtherVehicleVIN\":\"WDDPK4HA0EF863954\",\"OtherVehicleOccupant\":\"Cynthea Brushfield\",\"OtherVehicleOccupant2\":\"Rebeca Muino\",\"OtherVehicleOccupant3\":\"Bordy Droogan\",\"OtherVehicleInsurance\":\"Mercury\",\"Damage\":{\"Condition\":\"Major damage and not safe to drive\",\"Interior\":\"Wheels & Dashboard\",\"Exterior\":\"Passenger Rear,Rear\"}},\"VehicleRepair\":{\"Status\":\"Pending\",\"Description\":\"Vehicle pending repair\",\"MechanicName\":\"Hyperion Automotive Center\",\"MechanicPhone\":\"(323) 665-7864\",\"MechanicAddress\":\"2938 Hyperion Ave Los Angeles, CA 90027\",\"MechanicOrderNum\":\"gss3wx\",\"MechanicCompleteDate\":\"2023-07-28T13:04:21Z\",\"MechanicCost\":751},\"Activity\":{\"Date1\":\"2023-07-08T13:04:21Z\",\"Desc1\":\"Claim Submitted\",\"By1\":\"Marie Producer (Producer)\",\"Date2\":\"2023-07-11T13:04:21Z\",\"Desc2\":\"Investigation in progress\",\"By2\":\"Jack Johnson (Claim Adjuster)\",\"Date3\":\"2023-07-18T13:04:21Z\",\"Desc3\":\"Estimation complete\",\"By3\":\"Jack Johnson (Claim Adjuster)\",\"Date4\":\"2023-07-28T13:04:21Z\",\"Desc4\":\"Vehicle Repair Complete\",\"By4\":\"Marie Producer (Producer)\"}}}",
+			"externalReferenceCode": "CL-81-788-4032",
+			"incidentDate": "2023-07-07T13:04:21Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-81-788-4032",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 4409,
+			"claimCreateDate": "2022-10-09T04:20:43Z",
+			"claimStatus": "approved",
+			"dataJSON": "{\"Detail\":{\"InsuranceInfo\":{\"InsuredName\":\"Mitzi Barnwall\",\"InsuredSSN\":\"305-67-2083\",\"InsuredVehicle\":\"2016 Volvo V90 Cross Country\",\"InsuredVIN\":\"WAUGL58E55A251131\"},\"IncidentDetail\":{\"Location\":\"411 Erie Street\",\"LocationCity\":\"San Diego\",\"LocationState\":\"CA\",\"LocationZIP\":\"92121\",\"Type\":\"Vehicle incident while parked\",\"Detail\":\"Incident with single passenger\",\"OtherVehicleMake\":\"Toyota\",\"OtherVehicleModel\":\"Land Cruiser\",\"OtherVehicleVIN\":\"1GTN1TEX4DZ686166\",\"OtherVehicleOccupant\":\"Ximenes Rief\",\"OtherVehicleOccupant2\":\"Udell Provost\",\"OtherVehicleOccupant3\":null,\"OtherVehicleInsurance\":\"USAA\",\"Damage\":{\"Condition\":\"Major damage and not safe to drive\",\"Interior\":\"Seats\",\"Exterior\":\"Passenger Rear,Rear\"}},\"VehicleRepair\":{\"Status\":\"Pending\",\"Description\":\"Vehicle pending repair\",\"MechanicName\":\"Hyperion Automotive Center\",\"MechanicPhone\":\"(323) 665-7864\",\"MechanicAddress\":\"2938 Hyperion Ave Los Angeles, CA 90027\",\"MechanicOrderNum\":\"zvt1tg\",\"MechanicCompleteDate\":\"2022-10-22T04:20:43Z\",\"MechanicCost\":3748},\"Activity\":{\"Date1\":\"2022-10-09T04:20:43Z\",\"Desc1\":\"Claim Submitted\",\"By1\":\"Scott Producer (Producer)\",\"Date2\":\"2022-10-10T04:20:43Z\",\"Desc2\":\"Investigation in progress\",\"By2\":\"Jack Johnson (Claim Adjuster)\",\"Date3\":\"2022-10-19T04:20:43Z\",\"Desc3\":\"Estimation complete\",\"By3\":\"Jack Johnson (Claim Adjuster)\",\"Date4\":\"2022-10-22T04:20:43Z\",\"Desc4\":\"Vehicle Repair Complete\",\"By4\":\"Scott Producer (Producer)\"}}}",
+			"externalReferenceCode": "CL-97-931-1823",
+			"incidentDate": "2022-10-05T04:20:43Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-97-931-1823",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 2270,
+			"claimCreateDate": "2023-12-10T19:40:53Z",
+			"claimStatus": "settled",
+			"dataJSON": "{\"Detail\":{\"InsuranceInfo\":{\"InsuredName\":\"Gerri Goodlett\",\"InsuredSSN\":\"310-86-9661\",\"InsuredVehicle\":\"2016 Toyota Tundra SR6\",\"InsuredVIN\":\"1G6AW5SX9F0792025\"},\"IncidentDetail\":{\"Location\":\"714 Roth Pass\",\"LocationCity\":\"Carson City\",\"LocationState\":\"NV\",\"LocationZIP\":\"89706\",\"Type\":\"Vehicle incident while filling fuel\",\"Detail\":\"Incident with single passenger\",\"OtherVehicleMake\":\"Subaru\",\"OtherVehicleModel\":\"XT\",\"OtherVehicleVIN\":\"WAUPL68EX5A643740\",\"OtherVehicleOccupant\":\"Ainslie Casina\",\"OtherVehicleOccupant2\":\"Jarred Rowell\",\"OtherVehicleOccupant3\":null,\"OtherVehicleInsurance\":\"Travelers\",\"Damage\":{\"Condition\":\"Good to drive\",\"Interior\":\"Interior Trim\",\"Exterior\":\"Front,Driver Side\"}},\"VehicleRepair\":{\"Status\":\"Complete\",\"Description\":\"Insured contacted mechanic and completed repair\",\"MechanicName\":\"Lyons Auto Pro Plus\",\"MechanicPhone\":\"(310) 987-4567\",\"MechanicAddress\":\"675 Main Street Los Angeles, CA 90005\",\"MechanicOrderNum\":\"loi7gh\",\"MechanicCompleteDate\":\"2023-12-21T19:40:53Z\",\"MechanicCost\":1930},\"Activity\":{\"Date1\":\"2023-12-10T19:40:53Z\",\"Desc1\":\"Claim Submitted\",\"By1\":\"Marie Producer (Producer)\",\"Date2\":\"2023-12-12T19:40:53Z\",\"Desc2\":\"Investigation in progress\",\"By2\":\"Jack Johnson (Claim Adjuster)\",\"Date3\":\"2023-12-20T19:40:53Z\",\"Desc3\":\"Estimation complete\",\"By3\":\"Jack Johnson (Claim Adjuster)\",\"Date4\":\"2023-12-21T19:40:53Z\",\"Desc4\":\"Vehicle Repair Complete\",\"By4\":\"Marie Producer (Producer)\"}}}",
+			"externalReferenceCode": "CL-95-575-8266",
+			"incidentDate": "2023-12-04T19:40:53Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-95-575-8266",
+			"settledDate": "2023-12-10T19:40:53Z"
+		},
+		{
+			"claimAmount": 3259,
+			"claimCreateDate": "2023-03-16T04:05:51Z",
+			"claimStatus": "settled",
+			"dataJSON": "{\"Detail\":{\"InsuranceInfo\":{\"InsuredName\":\"Ferrel Sames\",\"InsuredSSN\":\"317-37-7379\",\"InsuredVehicle\":\"2016 Ford F-150 Super 250 XL\",\"InsuredVIN\":\"1FTEW1E88AF197214\"},\"IncidentDetail\":{\"Location\":\"9219 Dorton Park\",\"LocationCity\":\"New York City\",\"LocationState\":\"NY\",\"LocationZIP\":\"10099\",\"Type\":\"Vehicle incident while parking\",\"Detail\":\"Incident with more than one passenger\",\"OtherVehicleMake\":\"Smart\",\"OtherVehicleModel\":\"Fortwo\",\"OtherVehicleVIN\":\"WBALX3C59CD671792\",\"OtherVehicleOccupant\":\"Glen Seyler\",\"OtherVehicleOccupant2\":\"Burg O'Daly\",\"OtherVehicleOccupant3\":\"Kippie Willisch\",\"OtherVehicleInsurance\":\"Geico\",\"Damage\":{\"Condition\":\"Major damage and not safe to drive\",\"Interior\":\"Wheels & Dashboard\",\"Exterior\":\"Front,Driver Side\"}},\"VehicleRepair\":{\"Status\":\"Complete\",\"Description\":\"Insured contacted mechanic and completed repair\",\"MechanicName\":\"Lyons Auto Pro Plus\",\"MechanicPhone\":\"(310) 987-4567\",\"MechanicAddress\":\"675 Main Street Los Angeles, CA 90005\",\"MechanicOrderNum\":\"oyo1lk\",\"MechanicCompleteDate\":\"2023-03-31T04:05:51Z\",\"MechanicCost\":2770},\"Activity\":{\"Date1\":\"2023-03-16T04:05:51Z\",\"Desc1\":\"Claim Submitted\",\"By1\":\"Marie Producer (Producer)\",\"Date2\":\"2023-03-18T04:05:51Z\",\"Desc2\":\"Investigation in progress\",\"By2\":\"Jack Johnson (Claim Adjuster)\",\"Date3\":\"2023-03-24T04:05:51Z\",\"Desc3\":\"Estimation complete\",\"By3\":\"Jack Johnson (Claim Adjuster)\",\"Date4\":\"2023-03-31T04:05:51Z\",\"Desc4\":\"Vehicle Repair Complete\",\"By4\":\"Marie Producer (Producer)\"}}}",
+			"externalReferenceCode": "CL-96-765-6341",
+			"incidentDate": "2023-03-12T04:05:51Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-96-765-6341",
+			"settledDate": "2023-03-16T04:05:51Z"
+		},
+		{
+			"claimAmount": 446,
+			"claimCreateDate": "2022-11-05T16:13:36Z",
+			"claimStatus": "approved",
+			"dataJSON": "{\"Detail\":{\"InsuranceInfo\":{\"InsuredName\":\"Bonnie Nevett\",\"InsuredSSN\":\"260-94-7054\",\"InsuredVehicle\":\"2016 Ford F-150 Super 250 XL\",\"InsuredVIN\":\"SAJWA4GC7EM809592\"},\"IncidentDetail\":{\"Location\":\"6 Blue Bill Park Parkway\",\"LocationCity\":\"Reno\",\"LocationState\":\"NV\",\"LocationZIP\":\"89519\",\"Type\":\"Vehicle incident while driving\",\"Detail\":\"Incident alone\",\"OtherVehicleMake\":\"Chevrolet\",\"OtherVehicleModel\":\"Avalanche 1500\",\"OtherVehicleVIN\":\"WBSBL93481J788517\",\"OtherVehicleOccupant\":\"Alic Mulcock\",\"OtherVehicleOccupant2\":null,\"OtherVehicleOccupant3\":null,\"OtherVehicleInsurance\":\"Mercury\",\"Damage\":{\"Condition\":\"Good to drive\",\"Interior\":\"Seats\",\"Exterior\":\"Passenger Side\"}},\"VehicleRepair\":{\"Status\":\"Pending\",\"Description\":\"Vehicle pending repair\",\"MechanicName\":\"Lyons Auto Pro Plus\",\"MechanicPhone\":\"(310) 987-4567\",\"MechanicAddress\":\"675 Main Street Los Angeles, CA 90005\",\"MechanicOrderNum\":\"hze4vc\",\"MechanicCompleteDate\":\"2022-11-16T16:13:36Z\",\"MechanicCost\":379},\"Activity\":{\"Date1\":\"2022-11-05T16:13:36Z\",\"Desc1\":\"Claim Submitted\",\"By1\":\"Scott Producer (Producer)\",\"Date2\":\"2022-11-08T16:13:36Z\",\"Desc2\":\"Investigation in progress\",\"By2\":\"Jack Johnson (Claim Adjuster)\",\"Date3\":\"2022-11-11T16:13:36Z\",\"Desc3\":\"Estimation complete\",\"By3\":\"Jack Johnson (Claim Adjuster)\",\"Date4\":\"2022-11-16T16:13:36Z\",\"Desc4\":\"Vehicle Repair Complete\",\"By4\":\"Scott Producer (Producer)\"}}}",
+			"externalReferenceCode": "CL-38-562-7204",
+			"incidentDate": "2022-10-30T16:13:36Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-38-562-7204",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 3491,
+			"claimCreateDate": "2023-07-11T23:31:13Z",
+			"claimStatus": "declined",
+			"dataJSON": "{\"Detail\":{\"InsuranceInfo\":{\"InsuredName\":\"Hew Island\",\"InsuredSSN\":\"104-88-7597\",\"InsuredVehicle\":\"2016 Volvo S90 R-Design\",\"InsuredVIN\":\"ZFBCFADH5FZ508182\"},\"IncidentDetail\":{\"Location\":\"61550 Mosinee Street\",\"LocationCity\":\"Jamaica\",\"LocationState\":\"NY\",\"LocationZIP\":\"11499\",\"Type\":\"Vehicle incident while filling fuel\",\"Detail\":\"Incident with more than one passenger\",\"OtherVehicleMake\":\"Maserati\",\"OtherVehicleModel\":\"228\",\"OtherVehicleVIN\":\"SCFAD01A75G842107\",\"OtherVehicleOccupant\":\"Rock O' Mullane\",\"OtherVehicleOccupant2\":\"Ethelyn Creavin\",\"OtherVehicleOccupant3\":\"Kerstin Lyddon\",\"OtherVehicleInsurance\":\"State Farm\",\"Damage\":{\"Condition\":\"Major damage and not safe to drive\",\"Interior\":\"Seats\",\"Exterior\":\"Driver Side, Driver Rear\"}},\"VehicleRepair\":{\"Status\":\"Not Started\",\"Description\":\"Insured has not started repair\",\"MechanicName\":\"Hyperion Automotive Center\",\"MechanicPhone\":\"(323) 665-7864\",\"MechanicAddress\":\"2938 Hyperion Ave Los Angeles, CA 90027\",\"MechanicOrderNum\":\"qmd4ya\",\"MechanicCompleteDate\":\"2023-07-26T23:31:13Z\",\"MechanicCost\":2967},\"Activity\":{\"Date1\":\"2023-07-11T23:31:13Z\",\"Desc1\":\"Claim Submitted\",\"By1\":\"Scott Producer (Producer)\",\"Date2\":\"2023-07-13T23:31:13Z\",\"Desc2\":\"Investigation in progress\",\"By2\":\"Jack Johnson (Claim Adjuster)\",\"Date3\":\"2023-07-20T23:31:13Z\",\"Desc3\":\"Estimation complete\",\"By3\":\"Jack Johnson (Claim Adjuster)\",\"Date4\":\"2023-07-26T23:31:13Z\",\"Desc4\":\"Vehicle Repair Complete\",\"By4\":\"Scott Producer (Producer)\"}}}",
+			"externalReferenceCode": "CL-61-589-8738",
+			"incidentDate": "2023-07-08T23:31:13Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-61-589-8738",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 1317,
+			"claimCreateDate": "2023-05-25T09:24:22Z",
+			"claimStatus": "approved",
+			"dataJSON": "{\"Detail\":{\"InsuranceInfo\":{\"InsuredName\":\"Leelah Hicklingbottom\",\"InsuredSSN\":\"305-30-0789\",\"InsuredVehicle\":\"2014 Volvo V90 Cross Country\",\"InsuredVIN\":\"WAUJC68E53A548604\"},\"IncidentDetail\":{\"Location\":\"96228 Burrows Alley\",\"LocationCity\":\"Orange\",\"LocationState\":\"CA\",\"LocationZIP\":\"92867\",\"Type\":\"Vehicle incident while driving\",\"Detail\":\"Incident alone\",\"OtherVehicleMake\":\"Mazda\",\"OtherVehicleModel\":\"MX-6\",\"OtherVehicleVIN\":\"WDDHH8HB8BA179018\",\"OtherVehicleOccupant\":\"Dalton Clendennen\",\"OtherVehicleOccupant2\":null,\"OtherVehicleOccupant3\":null,\"OtherVehicleInsurance\":\"Geico\",\"Damage\":{\"Condition\":\"Good to drive\",\"Interior\":\"Upholstery\",\"Exterior\":\"Front,Driver Side\"}},\"VehicleRepair\":{\"Status\":\"Pending\",\"Description\":\"Vehicle pending repair\",\"MechanicName\":\"Diamond Auto Repair\",\"MechanicPhone\":\"(310) 458-3492\",\"MechanicAddress\":\"1432 Wilshire Blvd. Los Angeles, CA 90010\",\"MechanicOrderNum\":\"raq4bh\",\"MechanicCompleteDate\":\"2023-06-08T09:24:22Z\",\"MechanicCost\":1119},\"Activity\":{\"Date1\":\"2023-05-25T09:24:22Z\",\"Desc1\":\"Claim Submitted\",\"By1\":\"Scott Producer (Producer)\",\"Date2\":\"2023-05-28T09:24:22Z\",\"Desc2\":\"Investigation in progress\",\"By2\":\"Jack Johnson (Claim Adjuster)\",\"Date3\":\"2023-05-29T09:24:22Z\",\"Desc3\":\"Estimation complete\",\"By3\":\"Jack Johnson (Claim Adjuster)\",\"Date4\":\"2023-06-08T09:24:22Z\",\"Desc4\":\"Vehicle Repair Complete\",\"By4\":\"Scott Producer (Producer)\"}}}",
+			"externalReferenceCode": "CL-24-969-1132",
+			"incidentDate": "2023-05-24T09:24:22Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-24-969-1132",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 2786,
+			"claimCreateDate": "2023-02-14T15:13:55Z",
+			"claimStatus": "settled",
+			"dataJSON": "{\"Detail\":{\"InsuranceInfo\":{\"InsuredName\":\"Bonnie Nevett\",\"InsuredSSN\":\"538-80-6468\",\"InsuredVehicle\":\"2014 Toyota Corolla LE\",\"InsuredVIN\":\"WDDEJ7EB9DA948473\"},\"IncidentDetail\":{\"Location\":\"3 Esch Circle\",\"LocationCity\":\"Whittier\",\"LocationState\":\"CA\",\"LocationZIP\":\"90610\",\"Type\":\"Vehicle incident while filling fuel\",\"Detail\":\"Incident with more than one passenger\",\"OtherVehicleMake\":\"Infiniti\",\"OtherVehicleModel\":\"QX\",\"OtherVehicleVIN\":\"WA1VMBFE4DD103956\",\"OtherVehicleOccupant\":\"Noland Annear\",\"OtherVehicleOccupant2\":\"Marmaduke Libreros\",\"OtherVehicleOccupant3\":\"Gwen Southon\",\"OtherVehicleInsurance\":\"Mercury\",\"Damage\":{\"Condition\":\"Major damage and not safe to drive\",\"Interior\":\"Wheels & Dashboard\",\"Exterior\":\"Front,Driver Side\"}},\"VehicleRepair\":{\"Status\":\"Complete\",\"Description\":\"Insured contacted mechanic and completed repair\",\"MechanicName\":\"Hyperion Automotive Center\",\"MechanicPhone\":\"(323) 665-7864\",\"MechanicAddress\":\"2938 Hyperion Ave Los Angeles, CA 90027\",\"MechanicOrderNum\":\"xde8hv\",\"MechanicCompleteDate\":\"2023-03-03T15:13:55Z\",\"MechanicCost\":2368},\"Activity\":{\"Date1\":\"2023-02-14T15:13:55Z\",\"Desc1\":\"Claim Submitted\",\"By1\":\"Scott Producer (Producer)\",\"Date2\":\"2023-02-16T15:13:55Z\",\"Desc2\":\"Investigation in progress\",\"By2\":\"Jack Johnson (Claim Adjuster)\",\"Date3\":\"2023-02-18T15:13:55Z\",\"Desc3\":\"Estimation complete\",\"By3\":\"Jack Johnson (Claim Adjuster)\",\"Date4\":\"2023-03-03T15:13:55Z\",\"Desc4\":\"Vehicle Repair Complete\",\"By4\":\"Scott Producer (Producer)\"}}}",
+			"externalReferenceCode": "CL-22-792-2963",
+			"incidentDate": "2023-02-13T15:13:55Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-22-792-2963",
+			"settledDate": "2023-02-14T15:13:55Z"
+		},
+		{
+			"claimAmount": 0,
+			"claimCreateDate": "2022-11-16T11:27:46Z",
+			"claimStatus": "repair",
+			"dataJSON": "{\"Detail\":{\"InsuranceInfo\":{\"InsuredName\":\"Felice Lippett\",\"InsuredSSN\":\"139-71-9330\",\"InsuredVehicle\":\"2015 Volvo S90 R-Design\",\"InsuredVIN\":\"1GD01ZCG7BF879924\"},\"IncidentDetail\":{\"Location\":\"49722 Dakota Plaza\",\"LocationCity\":\"Fullerton\",\"LocationState\":\"CA\",\"LocationZIP\":\"92835\",\"Type\":\"Vehicle incident while driving\",\"Detail\":\"Incident alone\",\"OtherVehicleMake\":\"Ford\",\"OtherVehicleModel\":\"Mustang\",\"OtherVehicleVIN\":\"3LNDL2L33BR393078\",\"OtherVehicleOccupant\":\"Fabien Gravie\",\"OtherVehicleOccupant2\":null,\"OtherVehicleOccupant3\":null,\"OtherVehicleInsurance\":\"Liberty Mutual\",\"Damage\":{\"Condition\":\"Minor damage and safe to drive\",\"Interior\":\"Upholstery\",\"Exterior\":\"Passenger Rear,Rear\"}},\"VehicleRepair\":{\"Status\":\"Pending\",\"Description\":\"Vehicle pending repair\",\"MechanicName\":\"Diamond Auto Repair\",\"MechanicPhone\":\"(310) 458-3492\",\"MechanicAddress\":\"1432 Wilshire Blvd. Los Angeles, CA 90010\",\"MechanicOrderNum\":\"ioc1lb\",\"MechanicCompleteDate\":\"2022-12-06T11:27:46Z\",\"MechanicCost\":1397},\"Activity\":{\"Date1\":\"2022-11-16T11:27:46Z\",\"Desc1\":\"Claim Submitted\",\"By1\":\"Marie Producer (Producer)\",\"Date2\":\"2022-11-19T11:27:46Z\",\"Desc2\":\"Investigation in progress\",\"By2\":\"Jack Johnson (Claim Adjuster)\",\"Date3\":\"2022-11-24T11:27:46Z\",\"Desc3\":\"Estimation complete\",\"By3\":\"Jack Johnson (Claim Adjuster)\",\"Date4\":\"2022-12-06T11:27:46Z\",\"Desc4\":\"Vehicle Repair Complete\",\"By4\":\"Marie Producer (Producer)\"}}}",
+			"externalReferenceCode": "CL-49-835-7668",
+			"incidentDate": "2022-11-11T11:27:46Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-49-835-7668",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 350,
+			"claimCreateDate": "2022-10-17T04:37:23Z",
+			"claimStatus": "settled",
+			"dataJSON": "{\"Detail\":{\"InsuranceInfo\":{\"InsuredName\":\"Bogart Becaris\",\"InsuredSSN\":\"232-41-6839\",\"InsuredVehicle\":\"2013 Ford Mustang GT Fastback\",\"InsuredVIN\":\"WUATNAFG3BN875686\"},\"IncidentDetail\":{\"Location\":\"1063 Northwestern Crossing\",\"LocationCity\":\"Berkeley\",\"LocationState\":\"CA\",\"LocationZIP\":\"94712\",\"Type\":\"Vehicle incident while parking\",\"Detail\":\"Incident alone\",\"OtherVehicleMake\":\"Land Rover\",\"OtherVehicleModel\":\"Range Rover\",\"OtherVehicleVIN\":\"2V4RW3DG1BR770012\",\"OtherVehicleOccupant\":\"Timmi Heffron\",\"OtherVehicleOccupant2\":null,\"OtherVehicleOccupant3\":null,\"OtherVehicleInsurance\":\"Travelers\",\"Damage\":{\"Condition\":\"Minor damage and safe to drive\",\"Interior\":\"Seats\",\"Exterior\":\"Front,Driver Side\"}},\"VehicleRepair\":{\"Status\":\"Complete\",\"Description\":\"Insured contacted mechanic and completed repair\",\"MechanicName\":\"Lyons Auto Pro Plus\",\"MechanicPhone\":\"(310) 987-4567\",\"MechanicAddress\":\"675 Main Street Los Angeles, CA 90005\",\"MechanicOrderNum\":\"xuo0xu\",\"MechanicCompleteDate\":\"2022-11-01T04:37:23Z\",\"MechanicCost\":298},\"Activity\":{\"Date1\":\"2022-10-17T04:37:23Z\",\"Desc1\":\"Claim Submitted\",\"By1\":\"Scott Producer (Producer)\",\"Date2\":\"2022-10-18T04:37:23Z\",\"Desc2\":\"Investigation in progress\",\"By2\":\"Jack Johnson (Claim Adjuster)\",\"Date3\":\"2022-10-23T04:37:23Z\",\"Desc3\":\"Estimation complete\",\"By3\":\"Jack Johnson (Claim Adjuster)\",\"Date4\":\"2022-11-01T04:37:23Z\",\"Desc4\":\"Vehicle Repair Complete\",\"By4\":\"Scott Producer (Producer)\"}}}",
+			"externalReferenceCode": "CL-76-150-9970",
+			"incidentDate": "2022-10-11T04:37:23Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-76-150-9970",
+			"settledDate": "2022-10-17T04:37:23Z"
+		},
+		{
+			"claimAmount": 2764,
+			"claimCreateDate": "2022-08-23T21:10:09Z",
+			"claimStatus": "settled",
+			"dataJSON": "{\"Detail\":{\"InsuranceInfo\":{\"InsuredName\":\"Felice Lippett\",\"InsuredSSN\":\"288-72-3739\",\"InsuredVehicle\":\"2016 Volvo V90 Cross Country\",\"InsuredVIN\":\"WBABS33402P198315\"},\"IncidentDetail\":{\"Location\":\"5 American Court\",\"LocationCity\":\"Yonkers\",\"LocationState\":\"NY\",\"LocationZIP\":\"10705\",\"Type\":\"Vehicle incident while parked\",\"Detail\":\"Incident with more than one passenger\",\"OtherVehicleMake\":\"Toyota\",\"OtherVehicleModel\":\"Land Cruiser\",\"OtherVehicleVIN\":\"1GYS3CEF4BR894172\",\"OtherVehicleOccupant\":\"Dulcia Kohen\",\"OtherVehicleOccupant2\":\"Kele Karlowicz\",\"OtherVehicleOccupant3\":\"Andie Mawman\",\"OtherVehicleInsurance\":\"State Farm\",\"Damage\":{\"Condition\":\"Good to drive\",\"Interior\":\"Interior Trim\",\"Exterior\":\"Front,Driver Side\"}},\"VehicleRepair\":{\"Status\":\"Complete\",\"Description\":\"Insured contacted mechanic and completed repair\",\"MechanicName\":\"Hyperion Automotive Center\",\"MechanicPhone\":\"(323) 665-7864\",\"MechanicAddress\":\"2938 Hyperion Ave Los Angeles, CA 90027\",\"MechanicOrderNum\":\"hcl2dy\",\"MechanicCompleteDate\":\"2022-09-03T21:10:09Z\",\"MechanicCost\":2349},\"Activity\":{\"Date1\":\"2022-08-23T21:10:09Z\",\"Desc1\":\"Claim Submitted\",\"By1\":\"Scott Producer (Producer)\",\"Date2\":\"2022-08-25T21:10:09Z\",\"Desc2\":\"Investigation in progress\",\"By2\":\"Jack Johnson (Claim Adjuster)\",\"Date3\":\"2022-08-30T21:10:09Z\",\"Desc3\":\"Estimation complete\",\"By3\":\"Jack Johnson (Claim Adjuster)\",\"Date4\":\"2022-09-03T21:10:09Z\",\"Desc4\":\"Vehicle Repair Complete\",\"By4\":\"Scott Producer (Producer)\"}}}",
+			"externalReferenceCode": "CL-14-445-2863",
+			"incidentDate": "2022-08-16T21:10:09Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-14-445-2863",
+			"settledDate": "2022-08-23T21:10:09Z"
+		},
+		{
+			"claimAmount": 4691,
+			"claimCreateDate": "2023-05-19T05:22:50Z",
+			"claimStatus": "claimSubmitted",
+			"dataJSON": "{\"Detail\":{\"InsuranceInfo\":{\"InsuredName\":\"Hall Allicock\",\"InsuredSSN\":\"848-46-6572\",\"InsuredVehicle\":\"2014 Toyota Tundra SR6\",\"InsuredVIN\":\"1N6AA0ED8FN715095\"},\"IncidentDetail\":{\"Location\":\"32213 Northridge Lane\",\"LocationCity\":\"Oakland\",\"LocationState\":\"CA\",\"LocationZIP\":\"94622\",\"Type\":\"Vehicle incident while parking\",\"Detail\":\"Incident with more than one passenger\",\"OtherVehicleMake\":\"Plymouth\",\"OtherVehicleModel\":\"Grand Voyager\",\"OtherVehicleVIN\":\"WAUSH78EX7A359643\",\"OtherVehicleOccupant\":\"Ida Pratley\",\"OtherVehicleOccupant2\":\"Eldredge Gantley\",\"OtherVehicleOccupant3\":\"Cherri Laven\",\"OtherVehicleInsurance\":\"USAA\",\"Damage\":{\"Condition\":\"Good to drive\",\"Interior\":\"Upholstery\",\"Exterior\":\"Front,Driver Side\"}},\"VehicleRepair\":{\"Status\":\"Not Started\",\"Description\":\"Insured has not started repair\",\"MechanicName\":\"Lyons Auto Pro Plus\",\"MechanicPhone\":\"(310) 987-4567\",\"MechanicAddress\":\"675 Main Street Los Angeles, CA 90005\",\"MechanicOrderNum\":\"prf6go\",\"MechanicCompleteDate\":\"2023-06-07T05:22:50Z\",\"MechanicCost\":3987},\"Activity\":{\"Date1\":\"2023-05-19T05:22:50Z\",\"Desc1\":\"Claim Submitted\",\"By1\":\"Marie Producer (Producer)\",\"Date2\":\"2023-05-22T05:22:50Z\",\"Desc2\":\"Investigation in progress\",\"By2\":\"Jack Johnson (Claim Adjuster)\",\"Date3\":\"2023-05-26T05:22:50Z\",\"Desc3\":\"Estimation complete\",\"By3\":\"Jack Johnson (Claim Adjuster)\",\"Date4\":\"2023-06-07T05:22:50Z\",\"Desc4\":\"Vehicle Repair Complete\",\"By4\":\"Marie Producer (Producer)\"}}}",
+			"externalReferenceCode": "CL-26-210-0080",
+			"incidentDate": "2023-05-15T05:22:50Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-26-210-0080",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 346,
+			"claimCreateDate": "2022-05-22T02:08:08Z",
+			"claimStatus": "settled",
+			"dataJSON": "{\"Detail\":{\"InsuranceInfo\":{\"InsuredName\":\"Jada Lewin\",\"InsuredSSN\":\"493-70-4420\",\"InsuredVehicle\":\"2013 Volvo XC90 Inscription\",\"InsuredVIN\":\"2G4WC552671522280\"},\"IncidentDetail\":{\"Location\":\"4162 Hintze Park\",\"LocationCity\":\"Las Vegas\",\"LocationState\":\"NV\",\"LocationZIP\":\"89155\",\"Type\":\"Vehicle incident while parking\",\"Detail\":\"Incident with single passenger\",\"OtherVehicleMake\":\"Toyota\",\"OtherVehicleModel\":\"T100\",\"OtherVehicleVIN\":\"3D7LP2ET4BG431985\",\"OtherVehicleOccupant\":\"Anallise Kivlehan\",\"OtherVehicleOccupant2\":\"Maritsa Waldie\",\"OtherVehicleOccupant3\":null,\"OtherVehicleInsurance\":\"Liberty Mutual\",\"Damage\":{\"Condition\":\"Major damage and not safe to drive\",\"Interior\":\"Wheels & Dashboard\",\"Exterior\":\"Passenger Side\"}},\"VehicleRepair\":{\"Status\":\"Complete\",\"Description\":\"Insured contacted mechanic and completed repair\",\"MechanicName\":\"Hyperion Automotive Center\",\"MechanicPhone\":\"(323) 665-7864\",\"MechanicAddress\":\"2938 Hyperion Ave Los Angeles, CA 90027\",\"MechanicOrderNum\":\"kkd2ot\",\"MechanicCompleteDate\":\"2022-06-03T02:08:08Z\",\"MechanicCost\":294},\"Activity\":{\"Date1\":\"2022-05-22T02:08:08Z\",\"Desc1\":\"Claim Submitted\",\"By1\":\"Scott Producer (Producer)\",\"Date2\":\"2022-05-23T02:08:08Z\",\"Desc2\":\"Investigation in progress\",\"By2\":\"Jack Johnson (Claim Adjuster)\",\"Date3\":\"2022-05-28T02:08:08Z\",\"Desc3\":\"Estimation complete\",\"By3\":\"Jack Johnson (Claim Adjuster)\",\"Date4\":\"2022-06-03T02:08:08Z\",\"Desc4\":\"Vehicle Repair Complete\",\"By4\":\"Scott Producer (Producer)\"}}}",
+			"externalReferenceCode": "CL-35-340-7974",
+			"incidentDate": "2022-05-21T02:08:08Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-35-340-7974",
+			"settledDate": "2022-05-22T02:08:08Z"
+		},
+		{
+			"claimAmount": 3076,
+			"claimCreateDate": "2022-07-25T21:30:18Z",
+			"claimStatus": "settled",
+			"dataJSON": "{\"Detail\":{\"InsuranceInfo\":{\"InsuredName\":\"Bonnie Nevett\",\"InsuredSSN\":\"560-23-9000\",\"InsuredVehicle\":\"2016 Toyota Camry Hybrid XLE\",\"InsuredVIN\":\"1FTMF1EW9AK655926\"},\"IncidentDetail\":{\"Location\":\"2 Bunting Trail\",\"LocationCity\":\"New York City\",\"LocationState\":\"NY\",\"LocationZIP\":\"10034\",\"Type\":\"Vehicle incident while parked\",\"Detail\":\"Incident alone\",\"OtherVehicleMake\":\"Acura\",\"OtherVehicleModel\":\"MDX\",\"OtherVehicleVIN\":\"3FADP4AJ4FM229580\",\"OtherVehicleOccupant\":\"Norri Essberger\",\"OtherVehicleOccupant2\":null,\"OtherVehicleOccupant3\":null,\"OtherVehicleInsurance\":\"Mercury\",\"Damage\":{\"Condition\":\"Major damage and not safe to drive\",\"Interior\":\"Interior Trim\",\"Exterior\":\"Passenger Side\"}},\"VehicleRepair\":{\"Status\":\"Complete\",\"Description\":\"Insured contacted mechanic and completed repair\",\"MechanicName\":\"Lyons Auto Pro Plus\",\"MechanicPhone\":\"(310) 987-4567\",\"MechanicAddress\":\"675 Main Street Los Angeles, CA 90005\",\"MechanicOrderNum\":\"zfi3rf\",\"MechanicCompleteDate\":\"2022-08-13T21:30:18Z\",\"MechanicCost\":2615},\"Activity\":{\"Date1\":\"2022-07-25T21:30:18Z\",\"Desc1\":\"Claim Submitted\",\"By1\":\"Marie Producer (Producer)\",\"Date2\":\"2022-07-28T21:30:18Z\",\"Desc2\":\"Investigation in progress\",\"By2\":\"Jack Johnson (Claim Adjuster)\",\"Date3\":\"2022-08-01T21:30:18Z\",\"Desc3\":\"Estimation complete\",\"By3\":\"Jack Johnson (Claim Adjuster)\",\"Date4\":\"2022-08-13T21:30:18Z\",\"Desc4\":\"Vehicle Repair Complete\",\"By4\":\"Marie Producer (Producer)\"}}}",
+			"externalReferenceCode": "CL-75-970-0972",
+			"incidentDate": "2022-07-19T21:30:18Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-75-970-0972",
+			"settledDate": "2022-07-25T21:30:18Z"
+		},
+		{
+			"claimAmount": 4289,
+			"claimCreateDate": "2023-07-09T08:16:59Z",
+			"claimStatus": "declined",
+			"dataJSON": "{\"Detail\":{\"InsuranceInfo\":{\"InsuredName\":\"Rycca Fortescue\",\"InsuredSSN\":\"632-41-1779\",\"InsuredVehicle\":\"2019 Ford Focus S Sedan\",\"InsuredVIN\":\"19UUA8F57EA351037\"},\"IncidentDetail\":{\"Location\":\"71819 Bultman Crossing\",\"LocationCity\":\"Chico\",\"LocationState\":\"CA\",\"LocationZIP\":\"95973\",\"Type\":\"Vehicle incident while filling fuel\",\"Detail\":\"Incident with single passenger\",\"OtherVehicleMake\":\"Chrysler\",\"OtherVehicleModel\":\"Sebring\",\"OtherVehicleVIN\":\"JH4DC53844S631544\",\"OtherVehicleOccupant\":\"Madelon Speers\",\"OtherVehicleOccupant2\":\"Allis Scally\",\"OtherVehicleOccupant3\":null,\"OtherVehicleInsurance\":\"Mercury\",\"Damage\":{\"Condition\":\"Good to drive\",\"Interior\":\"Interior Trim\",\"Exterior\":\"Front,Driver Side\"}},\"VehicleRepair\":{\"Status\":\"Not Started\",\"Description\":\"Insured has not started repair\",\"MechanicName\":\"Lyons Auto Pro Plus\",\"MechanicPhone\":\"(310) 987-4567\",\"MechanicAddress\":\"675 Main Street Los Angeles, CA 90005\",\"MechanicOrderNum\":\"ahk2jv\",\"MechanicCompleteDate\":\"2023-07-21T08:16:59Z\",\"MechanicCost\":3646},\"Activity\":{\"Date1\":\"2023-07-09T08:16:59Z\",\"Desc1\":\"Claim Submitted\",\"By1\":\"Marie Producer (Producer)\",\"Date2\":\"2023-07-12T08:16:59Z\",\"Desc2\":\"Investigation in progress\",\"By2\":\"Jack Johnson (Claim Adjuster)\",\"Date3\":\"2023-07-13T08:16:59Z\",\"Desc3\":\"Estimation complete\",\"By3\":\"Jack Johnson (Claim Adjuster)\",\"Date4\":\"2023-07-21T08:16:59Z\",\"Desc4\":\"Vehicle Repair Complete\",\"By4\":\"Marie Producer (Producer)\"}}}",
+			"externalReferenceCode": "CL-45-524-6958",
+			"incidentDate": "2023-07-08T08:16:59Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-45-524-6958",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 4814,
+			"claimCreateDate": "2023-10-01T15:34:02Z",
+			"claimStatus": "inEstimation",
+			"dataJSON": "{\"Detail\":{\"InsuranceInfo\":{\"InsuredName\":\"Mitzi Barnwall\",\"InsuredSSN\":\"622-71-1197\",\"InsuredVehicle\":\"2015 Ford Edge SE\",\"InsuredVIN\":\"1G6AE5S3XF0277891\"},\"IncidentDetail\":{\"Location\":\"0 Comanche Way\",\"LocationCity\":\"Sacramento\",\"LocationState\":\"CA\",\"LocationZIP\":\"95818\",\"Type\":\"Vehicle incident while parked\",\"Detail\":\"Incident with single passenger\",\"OtherVehicleMake\":\"Lotus\",\"OtherVehicleModel\":\"Esprit\",\"OtherVehicleVIN\":\"1G6DC8EY7B0965465\",\"OtherVehicleOccupant\":\"Hart Braunstein\",\"OtherVehicleOccupant2\":\"Paulette Hosier\",\"OtherVehicleOccupant3\":null,\"OtherVehicleInsurance\":\"Liberty Mutual\",\"Damage\":{\"Condition\":\"Major damage and not safe to drive\",\"Interior\":\"Seats\",\"Exterior\":\"Driver Side, Driver Rear\"}},\"VehicleRepair\":{\"Status\":\"Not Started\",\"Description\":\"Insured has not started repair\",\"MechanicName\":\"Lyons Auto Pro Plus\",\"MechanicPhone\":\"(310) 987-4567\",\"MechanicAddress\":\"675 Main Street Los Angeles, CA 90005\",\"MechanicOrderNum\":\"uyp1fq\",\"MechanicCompleteDate\":\"2023-10-14T15:34:02Z\",\"MechanicCost\":4092},\"Activity\":{\"Date1\":\"2023-10-01T15:34:02Z\",\"Desc1\":\"Claim Submitted\",\"By1\":\"Marie Producer (Producer)\",\"Date2\":\"2023-10-03T15:34:02Z\",\"Desc2\":\"Investigation in progress\",\"By2\":\"Jack Johnson (Claim Adjuster)\",\"Date3\":\"2023-10-07T15:34:02Z\",\"Desc3\":\"Estimation complete\",\"By3\":\"Jack Johnson (Claim Adjuster)\",\"Date4\":\"2023-10-14T15:34:02Z\",\"Desc4\":\"Vehicle Repair Complete\",\"By4\":\"Marie Producer (Producer)\"}}}",
+			"externalReferenceCode": "CL-01-048-4146",
+			"incidentDate": "2023-09-24T15:34:02Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-01-048-4146",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 3390,
+			"claimCreateDate": "2023-03-11T08:05:50Z",
+			"claimStatus": "inInvestigation",
+			"dataJSON": "{\"Detail\":{\"InsuranceInfo\":{\"InsuredName\":\"Osgood Dummer\",\"InsuredSSN\":\"672-77-7564\",\"InsuredVehicle\":\"2014 Volvo V90 Cross Country\",\"InsuredVIN\":\"NM0KS6BN4AT244729\"},\"IncidentDetail\":{\"Location\":\"033 Farmco Road\",\"LocationCity\":\"Garden Grove\",\"LocationState\":\"CA\",\"LocationZIP\":\"92645\",\"Type\":\"Vehicle incident while driving\",\"Detail\":\"Incident alone\",\"OtherVehicleMake\":\"Bentley\",\"OtherVehicleModel\":\"Continental Flying Spur\",\"OtherVehicleVIN\":\"3D73M3CL9BG782036\",\"OtherVehicleOccupant\":\"Lindsey Havock\",\"OtherVehicleOccupant2\":null,\"OtherVehicleOccupant3\":null,\"OtherVehicleInsurance\":\"Liberty Mutual\",\"Damage\":{\"Condition\":\"Major damage and not safe to drive\",\"Interior\":\"Interior Trim\",\"Exterior\":\"Passenger Rear,Rear\"}},\"VehicleRepair\":{\"Status\":\"Not Started\",\"Description\":\"Insured has not started repair\",\"MechanicName\":\"Lyons Auto Pro Plus\",\"MechanicPhone\":\"(310) 987-4567\",\"MechanicAddress\":\"675 Main Street Los Angeles, CA 90005\",\"MechanicOrderNum\":\"gpz0ei\",\"MechanicCompleteDate\":\"2023-03-22T08:05:50Z\",\"MechanicCost\":2882},\"Activity\":{\"Date1\":\"2023-03-11T08:05:50Z\",\"Desc1\":\"Claim Submitted\",\"By1\":\"Marie Producer (Producer)\",\"Date2\":\"2023-03-13T08:05:50Z\",\"Desc2\":\"Investigation in progress\",\"By2\":\"Jack Johnson (Claim Adjuster)\",\"Date3\":\"2023-03-20T08:05:50Z\",\"Desc3\":\"Estimation complete\",\"By3\":\"Jack Johnson (Claim Adjuster)\",\"Date4\":\"2023-03-22T08:05:50Z\",\"Desc4\":\"Vehicle Repair Complete\",\"By4\":\"Marie Producer (Producer)\"}}}",
+			"externalReferenceCode": "CL-54-652-1207",
+			"incidentDate": "2023-03-05T08:05:50Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-54-652-1207",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 543,
+			"claimCreateDate": "2023-05-13T02:40:07Z",
+			"claimStatus": "inInvestigation",
+			"dataJSON": "{\"Detail\":{\"InsuranceInfo\":{\"InsuredName\":\"Pembroke Hutable\",\"InsuredSSN\":\"384-82-4952\",\"InsuredVehicle\":\"2013 Ford Edge SE\",\"InsuredVIN\":\"1GT01ZCGXCF035530\"},\"IncidentDetail\":{\"Location\":\"9125 La Follette Park\",\"LocationCity\":\"Santa Barbara\",\"LocationState\":\"CA\",\"LocationZIP\":\"93106\",\"Type\":\"Vehicle incident while parked\",\"Detail\":\"Incident alone\",\"OtherVehicleMake\":\"Chevrolet\",\"OtherVehicleModel\":\"Impala\",\"OtherVehicleVIN\":\"WAUEF98E47A127313\",\"OtherVehicleOccupant\":\"Lind Clines\",\"OtherVehicleOccupant2\":null,\"OtherVehicleOccupant3\":null,\"OtherVehicleInsurance\":\"Travelers\",\"Damage\":{\"Condition\":\"Minor damage and safe to drive\",\"Interior\":\"Seats\",\"Exterior\":\"Front,Driver Side\"}},\"VehicleRepair\":{\"Status\":\"Not Started\",\"Description\":\"Insured has not started repair\",\"MechanicName\":\"Diamond Auto Repair\",\"MechanicPhone\":\"(310) 458-3492\",\"MechanicAddress\":\"1432 Wilshire Blvd. Los Angeles, CA 90010\",\"MechanicOrderNum\":\"lwk0we\",\"MechanicCompleteDate\":\"2023-05-31T02:40:07Z\",\"MechanicCost\":462},\"Activity\":{\"Date1\":\"2023-05-13T02:40:07Z\",\"Desc1\":\"Claim Submitted\",\"By1\":\"Scott Producer (Producer)\",\"Date2\":\"2023-05-14T02:40:07Z\",\"Desc2\":\"Investigation in progress\",\"By2\":\"Jack Johnson (Claim Adjuster)\",\"Date3\":\"2023-05-19T02:40:07Z\",\"Desc3\":\"Estimation complete\",\"By3\":\"Jack Johnson (Claim Adjuster)\",\"Date4\":\"2023-05-31T02:40:07Z\",\"Desc4\":\"Vehicle Repair Complete\",\"By4\":\"Scott Producer (Producer)\"}}}",
+			"externalReferenceCode": "CL-81-289-9483",
+			"incidentDate": "2023-05-08T02:40:07Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-81-289-9483",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 1894,
+			"claimCreateDate": "2023-02-15T02:07:57Z",
+			"claimStatus": "inEstimation",
+			"dataJSON": "{\"Detail\":{\"InsuranceInfo\":{\"InsuredName\":\"Pembroke Hutable\",\"InsuredSSN\":\"562-71-2536\",\"InsuredVehicle\":\"2013 Toyota Camry Hybrid XLE\",\"InsuredVIN\":\"WBAKC6C57AC483249\"},\"IncidentDetail\":{\"Location\":\"9 American Drive\",\"LocationCity\":\"New York City\",\"LocationState\":\"NY\",\"LocationZIP\":\"10060\",\"Type\":\"Vehicle incident while parked\",\"Detail\":\"Incident with single passenger\",\"OtherVehicleMake\":\"Hyundai\",\"OtherVehicleModel\":\"Sonata\",\"OtherVehicleVIN\":\"WBABN53401J001938\",\"OtherVehicleOccupant\":\"Gavin Kempston\",\"OtherVehicleOccupant2\":\"Ileane Odell\",\"OtherVehicleOccupant3\":null,\"OtherVehicleInsurance\":\"Mercury\",\"Damage\":{\"Condition\":\"Major damage and not safe to drive\",\"Interior\":\"Interior Trim\",\"Exterior\":\"Passenger Rear,Rear\"}},\"VehicleRepair\":{\"Status\":\"Not Started\",\"Description\":\"Insured has not started repair\",\"MechanicName\":\"Hyperion Automotive Center\",\"MechanicPhone\":\"(323) 665-7864\",\"MechanicAddress\":\"2938 Hyperion Ave Los Angeles, CA 90027\",\"MechanicOrderNum\":\"gzs3hi\",\"MechanicCompleteDate\":\"2023-03-04T02:07:57Z\",\"MechanicCost\":1610},\"Activity\":{\"Date1\":\"2023-02-15T02:07:57Z\",\"Desc1\":\"Claim Submitted\",\"By1\":\"Scott Producer (Producer)\",\"Date2\":\"2023-02-17T02:07:57Z\",\"Desc2\":\"Investigation in progress\",\"By2\":\"Jack Johnson (Claim Adjuster)\",\"Date3\":\"2023-02-25T02:07:57Z\",\"Desc3\":\"Estimation complete\",\"By3\":\"Jack Johnson (Claim Adjuster)\",\"Date4\":\"2023-03-04T02:07:57Z\",\"Desc4\":\"Vehicle Repair Complete\",\"By4\":\"Scott Producer (Producer)\"}}}",
+			"externalReferenceCode": "CL-07-512-8878",
+			"incidentDate": "2023-02-13T02:07:57Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-07-512-8878",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 1373,
+			"claimCreateDate": "2023-08-11T00:50:37Z",
+			"claimStatus": "settled",
+			"dataJSON": "{\"Detail\":{\"InsuranceInfo\":{\"InsuredName\":\"Mitzi Barnwall\",\"InsuredSSN\":\"285-05-0222\",\"InsuredVehicle\":\"2017 Toyota Corolla LE\",\"InsuredVIN\":\"JA32X2HU5DU661463\"},\"IncidentDetail\":{\"Location\":\"23920 Scofield Park\",\"LocationCity\":\"Santa Barbara\",\"LocationState\":\"CA\",\"LocationZIP\":\"93150\",\"Type\":\"Vehicle incident while driving\",\"Detail\":\"Incident with more than one passenger\",\"OtherVehicleMake\":\"Chrysler\",\"OtherVehicleModel\":\"Voyager\",\"OtherVehicleVIN\":\"JHMZF1C66ES731487\",\"OtherVehicleOccupant\":\"Adrienne Buey\",\"OtherVehicleOccupant2\":\"Jon Eicke\",\"OtherVehicleOccupant3\":\"Gennie Conkling\",\"OtherVehicleInsurance\":\"Liberty Mutual\",\"Damage\":{\"Condition\":\"Minor damage and safe to drive\",\"Interior\":\"Seats\",\"Exterior\":\"Driver Side, Driver Rear\"}},\"VehicleRepair\":{\"Status\":\"Complete\",\"Description\":\"Insured contacted mechanic and completed repair\",\"MechanicName\":\"Lyons Auto Pro Plus\",\"MechanicPhone\":\"(310) 987-4567\",\"MechanicAddress\":\"675 Main Street Los Angeles, CA 90005\",\"MechanicOrderNum\":\"qtz0jw\",\"MechanicCompleteDate\":\"2023-08-26T00:50:37Z\",\"MechanicCost\":1167},\"Activity\":{\"Date1\":\"2023-08-11T00:50:37Z\",\"Desc1\":\"Claim Submitted\",\"By1\":\"Scott Producer (Producer)\",\"Date2\":\"2023-08-13T00:50:37Z\",\"Desc2\":\"Investigation in progress\",\"By2\":\"Jack Johnson (Claim Adjuster)\",\"Date3\":\"2023-08-16T00:50:37Z\",\"Desc3\":\"Estimation complete\",\"By3\":\"Jack Johnson (Claim Adjuster)\",\"Date4\":\"2023-08-26T00:50:37Z\",\"Desc4\":\"Vehicle Repair Complete\",\"By4\":\"Scott Producer (Producer)\"}}}",
+			"externalReferenceCode": "CL-63-953-3761",
+			"incidentDate": "2023-08-09T00:50:37Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-63-953-3761",
+			"settledDate": "2023-08-11T00:50:37Z"
+		},
+		{
+			"claimAmount": 1496,
+			"claimCreateDate": "2022-07-29T20:11:37Z",
+			"claimStatus": "claimSubmitted",
+			"dataJSON": "{\"Detail\":{\"InsuranceInfo\":{\"InsuredName\":\"Jessa Capron\",\"InsuredSSN\":\"641-25-3356\",\"InsuredVehicle\":\"2013 Toyota Corolla LE\",\"InsuredVIN\":\"KNAGM4AD1C5509496\"},\"IncidentDetail\":{\"Location\":\"41 Forest Run Pass\",\"LocationCity\":\"San Jose\",\"LocationState\":\"CA\",\"LocationZIP\":\"95155\",\"Type\":\"Vehicle incident while filling fuel\",\"Detail\":\"Incident with single passenger\",\"OtherVehicleMake\":\"Plymouth\",\"OtherVehicleModel\":\"Neon\",\"OtherVehicleVIN\":\"3VW4T7AT6EM509733\",\"OtherVehicleOccupant\":\"Tybi Fussie\",\"OtherVehicleOccupant2\":\"Bernhard Whatman\",\"OtherVehicleOccupant3\":null,\"OtherVehicleInsurance\":\"Liberty Mutual\",\"Damage\":{\"Condition\":\"Minor damage and safe to drive\",\"Interior\":\"Seats\",\"Exterior\":\"Driver Side, Driver Rear\"}},\"VehicleRepair\":{\"Status\":\"Not Started\",\"Description\":\"Insured has not started repair\",\"MechanicName\":\"Lyons Auto Pro Plus\",\"MechanicPhone\":\"(310) 987-4567\",\"MechanicAddress\":\"675 Main Street Los Angeles, CA 90005\",\"MechanicOrderNum\":\"elz7zd\",\"MechanicCompleteDate\":\"2022-08-12T20:11:37Z\",\"MechanicCost\":1272},\"Activity\":{\"Date1\":\"2022-07-29T20:11:37Z\",\"Desc1\":\"Claim Submitted\",\"By1\":\"Scott Producer (Producer)\",\"Date2\":\"2022-07-30T20:11:37Z\",\"Desc2\":\"Investigation in progress\",\"By2\":\"Jack Johnson (Claim Adjuster)\",\"Date3\":\"2022-08-05T20:11:37Z\",\"Desc3\":\"Estimation complete\",\"By3\":\"Jack Johnson (Claim Adjuster)\",\"Date4\":\"2022-08-12T20:11:37Z\",\"Desc4\":\"Vehicle Repair Complete\",\"By4\":\"Scott Producer (Producer)\"}}}",
+			"externalReferenceCode": "CL-47-952-6071",
+			"incidentDate": "2022-07-23T20:11:37Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-47-952-6071",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 826,
+			"claimCreateDate": "2022-05-13T02:24:11Z",
+			"claimStatus": "claimSubmitted",
+			"dataJSON": "{\"Detail\":{\"InsuranceInfo\":{\"InsuredName\":\"Yehudi Mancell\",\"InsuredSSN\":\"219-84-9968\",\"InsuredVehicle\":\"2014 Ford Mustang GT Fastback\",\"InsuredVIN\":\"5XXGM4A73DG205757\"},\"IncidentDetail\":{\"Location\":\"22965 Knutson Lane\",\"LocationCity\":\"Palmdale\",\"LocationState\":\"CA\",\"LocationZIP\":\"93591\",\"Type\":\"Vehicle incident while parking\",\"Detail\":\"Incident with single passenger\",\"OtherVehicleMake\":\"Mitsubishi\",\"OtherVehicleModel\":\"Sigma\",\"OtherVehicleVIN\":\"WBA3C1C59DK979526\",\"OtherVehicleOccupant\":\"Allard Blackadder\",\"OtherVehicleOccupant2\":\"Zara Rummings\",\"OtherVehicleOccupant3\":null,\"OtherVehicleInsurance\":\"Geico\",\"Damage\":{\"Condition\":\"Minor damage and safe to drive\",\"Interior\":\"Wheels & Dashboard\",\"Exterior\":\"Front,Driver Side\"}},\"VehicleRepair\":{\"Status\":\"Not Started\",\"Description\":\"Insured has not started repair\",\"MechanicName\":\"Hyperion Automotive Center\",\"MechanicPhone\":\"(323) 665-7864\",\"MechanicAddress\":\"2938 Hyperion Ave Los Angeles, CA 90027\",\"MechanicOrderNum\":\"ivy7td\",\"MechanicCompleteDate\":\"2022-06-02T02:24:11Z\",\"MechanicCost\":702},\"Activity\":{\"Date1\":\"2022-05-13T02:24:11Z\",\"Desc1\":\"Claim Submitted\",\"By1\":\"Scott Producer (Producer)\",\"Date2\":\"2022-05-16T02:24:11Z\",\"Desc2\":\"Investigation in progress\",\"By2\":\"Jack Johnson (Claim Adjuster)\",\"Date3\":\"2022-05-17T02:24:11Z\",\"Desc3\":\"Estimation complete\",\"By3\":\"Jack Johnson (Claim Adjuster)\",\"Date4\":\"2022-06-02T02:24:11Z\",\"Desc4\":\"Vehicle Repair Complete\",\"By4\":\"Scott Producer (Producer)\"}}}",
+			"externalReferenceCode": "CL-54-848-2327",
+			"incidentDate": "2022-05-11T02:24:11Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-54-848-2327",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 3029,
+			"claimCreateDate": "2022-04-10T18:39:46Z",
+			"claimStatus": "inInvestigation",
+			"dataJSON": "{\"Detail\":{\"InsuranceInfo\":{\"InsuredName\":\"Jessa Capron\",\"InsuredSSN\":\"896-60-1628\",\"InsuredVehicle\":\"2013 Ford Edge SE\",\"InsuredVIN\":\"WAUEF48H18K269997\"},\"IncidentDetail\":{\"Location\":\"37 Schiller Court\",\"LocationCity\":\"Sacramento\",\"LocationState\":\"CA\",\"LocationZIP\":\"95865\",\"Type\":\"Vehicle incident while parked\",\"Detail\":\"Incident with more than one passenger\",\"OtherVehicleMake\":\"Kia\",\"OtherVehicleModel\":\"Sephia\",\"OtherVehicleVIN\":\"1C6RD7LP3CS342782\",\"OtherVehicleOccupant\":\"Tailor Edy\",\"OtherVehicleOccupant2\":\"Oswell Dimitresco\",\"OtherVehicleOccupant3\":\"Normy Hadden\",\"OtherVehicleInsurance\":\"Travelers\",\"Damage\":{\"Condition\":\"Minor damage and safe to drive\",\"Interior\":\"Seats\",\"Exterior\":\"Front,Driver Side\"}},\"VehicleRepair\":{\"Status\":\"Not Started\",\"Description\":\"Insured has not started repair\",\"MechanicName\":\"Hyperion Automotive Center\",\"MechanicPhone\":\"(323) 665-7864\",\"MechanicAddress\":\"2938 Hyperion Ave Los Angeles, CA 90027\",\"MechanicOrderNum\":\"fni2bb\",\"MechanicCompleteDate\":\"2022-04-26T18:39:46Z\",\"MechanicCost\":2575},\"Activity\":{\"Date1\":\"2022-04-10T18:39:46Z\",\"Desc1\":\"Claim Submitted\",\"By1\":\"Scott Producer (Producer)\",\"Date2\":\"2022-04-11T18:39:46Z\",\"Desc2\":\"Investigation in progress\",\"By2\":\"Jack Johnson (Claim Adjuster)\",\"Date3\":\"2022-04-19T18:39:46Z\",\"Desc3\":\"Estimation complete\",\"By3\":\"Jack Johnson (Claim Adjuster)\",\"Date4\":\"2022-04-26T18:39:46Z\",\"Desc4\":\"Vehicle Repair Complete\",\"By4\":\"Scott Producer (Producer)\"}}}",
+			"externalReferenceCode": "CL-60-350-1793",
+			"incidentDate": "2022-04-03T18:39:46Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-60-350-1793",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 2847,
+			"claimCreateDate": "2022-07-12T06:58:31Z",
+			"claimStatus": "declined",
+			"dataJSON": "{\"Detail\":{\"InsuranceInfo\":{\"InsuredName\":\"Osgood Dummer\",\"InsuredSSN\":\"147-74-1657\",\"InsuredVehicle\":\"2014 Volvo XC90 Inscription\",\"InsuredVIN\":\"SCFAD02A08G951219\"},\"IncidentDetail\":{\"Location\":\"7 Logan Plaza\",\"LocationCity\":\"Albany\",\"LocationState\":\"NY\",\"LocationZIP\":\"12237\",\"Type\":\"Vehicle incident while parked\",\"Detail\":\"Incident with more than one passenger\",\"OtherVehicleMake\":\"Audi\",\"OtherVehicleModel\":\"A5\",\"OtherVehicleVIN\":\"WAULV94EX8N138892\",\"OtherVehicleOccupant\":\"Fletcher Meekins\",\"OtherVehicleOccupant2\":\"Helli Bath\",\"OtherVehicleOccupant3\":\"Liva Fursey\",\"OtherVehicleInsurance\":\"Mercury\",\"Damage\":{\"Condition\":\"Good to drive\",\"Interior\":\"Upholstery\",\"Exterior\":\"Passenger Rear,Rear\"}},\"VehicleRepair\":{\"Status\":\"Not Started\",\"Description\":\"Insured has not started repair\",\"MechanicName\":\"Lyons Auto Pro Plus\",\"MechanicPhone\":\"(310) 987-4567\",\"MechanicAddress\":\"675 Main Street Los Angeles, CA 90005\",\"MechanicOrderNum\":\"wmx6vx\",\"MechanicCompleteDate\":\"2022-07-26T06:58:31Z\",\"MechanicCost\":2420},\"Activity\":{\"Date1\":\"2022-07-12T06:58:31Z\",\"Desc1\":\"Claim Submitted\",\"By1\":\"Scott Producer (Producer)\",\"Date2\":\"2022-07-15T06:58:31Z\",\"Desc2\":\"Investigation in progress\",\"By2\":\"Jack Johnson (Claim Adjuster)\",\"Date3\":\"2022-07-20T06:58:31Z\",\"Desc3\":\"Estimation complete\",\"By3\":\"Jack Johnson (Claim Adjuster)\",\"Date4\":\"2022-07-26T06:58:31Z\",\"Desc4\":\"Vehicle Repair Complete\",\"By4\":\"Scott Producer (Producer)\"}}}",
+			"externalReferenceCode": "CL-27-283-4989",
+			"incidentDate": "2022-07-06T06:58:31Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-27-283-4989",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 2667,
+			"claimCreateDate": "2022-08-12T02:34:18Z",
+			"claimStatus": "pendingSettlement",
+			"dataJSON": "{\"Detail\":{\"InsuranceInfo\":{\"InsuredName\":\"Jolie Zecchi\",\"InsuredSSN\":\"529-59-4464\",\"InsuredVehicle\":\"2019 Volvo V90 Cross Country\",\"InsuredVIN\":\"1D7RE3BK0BS978259\"},\"IncidentDetail\":{\"Location\":\"2 Steensland Plaza\",\"LocationCity\":\"Bronx\",\"LocationState\":\"NY\",\"LocationZIP\":\"10454\",\"Type\":\"Vehicle incident while parked\",\"Detail\":\"Incident with single passenger\",\"OtherVehicleMake\":\"GMC\",\"OtherVehicleModel\":\"Envoy\",\"OtherVehicleVIN\":\"KMHGH4JF7BU534637\",\"OtherVehicleOccupant\":\"Travers Stanney\",\"OtherVehicleOccupant2\":\"Marjory Miguel\",\"OtherVehicleOccupant3\":null,\"OtherVehicleInsurance\":\"Liberty Mutual\",\"Damage\":{\"Condition\":\"Minor damage and safe to drive\",\"Interior\":\"Interior Trim\",\"Exterior\":\"Driver Side, Driver Rear\"}},\"VehicleRepair\":{\"Status\":\"Not Started\",\"Description\":\"Insured has not started repair\",\"MechanicName\":\"Lyons Auto Pro Plus\",\"MechanicPhone\":\"(310) 987-4567\",\"MechanicAddress\":\"675 Main Street Los Angeles, CA 90005\",\"MechanicOrderNum\":\"smk9ic\",\"MechanicCompleteDate\":\"2022-08-24T02:34:18Z\",\"MechanicCost\":2267},\"Activity\":{\"Date1\":\"2022-08-12T02:34:18Z\",\"Desc1\":\"Claim Submitted\",\"By1\":\"Marie Producer (Producer)\",\"Date2\":\"2022-08-14T02:34:18Z\",\"Desc2\":\"Investigation in progress\",\"By2\":\"Jack Johnson (Claim Adjuster)\",\"Date3\":\"2022-08-22T02:34:18Z\",\"Desc3\":\"Estimation complete\",\"By3\":\"Jack Johnson (Claim Adjuster)\",\"Date4\":\"2022-08-24T02:34:18Z\",\"Desc4\":\"Vehicle Repair Complete\",\"By4\":\"Marie Producer (Producer)\"}}}",
+			"externalReferenceCode": "CL-29-447-1413",
+			"incidentDate": "2022-08-09T02:34:18Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-29-447-1413",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 302,
+			"claimCreateDate": "2022-10-22T04:27:38Z",
+			"claimStatus": "declined",
+			"dataJSON": "{\"Detail\":{\"InsuranceInfo\":{\"InsuredName\":\"Gregor Ferreo\",\"InsuredSSN\":\"595-01-8860\",\"InsuredVehicle\":\"2019 Ford F-150 Super 250 XL\",\"InsuredVIN\":\"3D73Y4CL9BG579142\"},\"IncidentDetail\":{\"Location\":\"512 Mendota Trail\",\"LocationCity\":\"Mountain View\",\"LocationState\":\"CA\",\"LocationZIP\":\"94042\",\"Type\":\"Vehicle incident while parking\",\"Detail\":\"Incident with single passenger\",\"OtherVehicleMake\":\"Ford\",\"OtherVehicleModel\":\"Mustang\",\"OtherVehicleVIN\":\"1C4RDJAG0DC251411\",\"OtherVehicleOccupant\":\"Fitzgerald Earpe\",\"OtherVehicleOccupant2\":\"Robina Dimic\",\"OtherVehicleOccupant3\":null,\"OtherVehicleInsurance\":\"Geico\",\"Damage\":{\"Condition\":\"Good to drive\",\"Interior\":\"Seats\",\"Exterior\":\"Passenger Rear,Rear\"}},\"VehicleRepair\":{\"Status\":\"Not Started\",\"Description\":\"Insured has not started repair\",\"MechanicName\":\"Lyons Auto Pro Plus\",\"MechanicPhone\":\"(310) 987-4567\",\"MechanicAddress\":\"675 Main Street Los Angeles, CA 90005\",\"MechanicOrderNum\":\"uhz0mj\",\"MechanicCompleteDate\":\"2022-11-03T04:27:38Z\",\"MechanicCost\":257},\"Activity\":{\"Date1\":\"2022-10-22T04:27:38Z\",\"Desc1\":\"Claim Submitted\",\"By1\":\"Scott Producer (Producer)\",\"Date2\":\"2022-10-24T04:27:38Z\",\"Desc2\":\"Investigation in progress\",\"By2\":\"Jack Johnson (Claim Adjuster)\",\"Date3\":\"2022-11-01T04:27:38Z\",\"Desc3\":\"Estimation complete\",\"By3\":\"Jack Johnson (Claim Adjuster)\",\"Date4\":\"2022-11-03T04:27:38Z\",\"Desc4\":\"Vehicle Repair Complete\",\"By4\":\"Scott Producer (Producer)\"}}}",
+			"externalReferenceCode": "CL-15-542-8250",
+			"incidentDate": "2022-10-20T04:27:38Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-15-542-8250",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 4083,
+			"claimCreateDate": "2023-05-15T11:17:54Z",
+			"claimStatus": "settled",
+			"dataJSON": "{\"Detail\":{\"InsuranceInfo\":{\"InsuredName\":\"Merrily Phibb\",\"InsuredSSN\":\"378-20-8259\",\"InsuredVehicle\":\"2013 Ford Mustang GT Fastback\",\"InsuredVIN\":\"JH4KB26579C807837\"},\"IncidentDetail\":{\"Location\":\"56 Roxbury Circle\",\"LocationCity\":\"Visalia\",\"LocationState\":\"CA\",\"LocationZIP\":\"93291\",\"Type\":\"Vehicle incident while filling fuel\",\"Detail\":\"Incident alone\",\"OtherVehicleMake\":\"Dodge\",\"OtherVehicleModel\":\"Ram\",\"OtherVehicleVIN\":\"5LMCJ1A91FU496210\",\"OtherVehicleOccupant\":\"Carmelle Castells\",\"OtherVehicleOccupant2\":null,\"OtherVehicleOccupant3\":null,\"OtherVehicleInsurance\":\"Mercury\",\"Damage\":{\"Condition\":\"Good to drive\",\"Interior\":\"Seats\",\"Exterior\":\"Front,Driver Side\"}},\"VehicleRepair\":{\"Status\":\"Complete\",\"Description\":\"Insured contacted mechanic and completed repair\",\"MechanicName\":\"Lyons Auto Pro Plus\",\"MechanicPhone\":\"(310) 987-4567\",\"MechanicAddress\":\"675 Main Street Los Angeles, CA 90005\",\"MechanicOrderNum\":\"dry6ov\",\"MechanicCompleteDate\":\"2023-06-01T11:17:54Z\",\"MechanicCost\":3471},\"Activity\":{\"Date1\":\"2023-05-15T11:17:54Z\",\"Desc1\":\"Claim Submitted\",\"By1\":\"Scott Producer (Producer)\",\"Date2\":\"2023-05-18T11:17:54Z\",\"Desc2\":\"Investigation in progress\",\"By2\":\"Jack Johnson (Claim Adjuster)\",\"Date3\":\"2023-05-22T11:17:54Z\",\"Desc3\":\"Estimation complete\",\"By3\":\"Jack Johnson (Claim Adjuster)\",\"Date4\":\"2023-06-01T11:17:54Z\",\"Desc4\":\"Vehicle Repair Complete\",\"By4\":\"Scott Producer (Producer)\"}}}",
+			"externalReferenceCode": "CL-60-665-7410",
+			"incidentDate": "2023-05-12T11:17:54Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-60-665-7410",
+			"settledDate": "2023-05-15T11:17:54Z"
+		},
+		{
+			"claimAmount": 1704,
+			"claimCreateDate": "2023-09-28T12:03:51Z",
+			"claimStatus": "settled",
+			"dataJSON": "{\"Detail\":{\"InsuranceInfo\":{\"InsuredName\":\"Cleon Hambribe\",\"InsuredSSN\":\"851-45-5916\",\"InsuredVehicle\":\"2017 Toyota Tundra SR6\",\"InsuredVIN\":\"JH4DC53845S254196\"},\"IncidentDetail\":{\"Location\":\"88837 Dixon Hill\",\"LocationCity\":\"Bronx\",\"LocationState\":\"NY\",\"LocationZIP\":\"10464\",\"Type\":\"Vehicle incident while driving\",\"Detail\":\"Incident with more than one passenger\",\"OtherVehicleMake\":\"Ford\",\"OtherVehicleModel\":\"Tempo\",\"OtherVehicleVIN\":\"1FMJK1F59DE094629\",\"OtherVehicleOccupant\":\"Collie Lamlin\",\"OtherVehicleOccupant2\":\"Krissie Houtby\",\"OtherVehicleOccupant3\":\"Joaquin Joss\",\"OtherVehicleInsurance\":\"Liberty Mutual\",\"Damage\":{\"Condition\":\"Minor damage and safe to drive\",\"Interior\":\"Wheels & Dashboard\",\"Exterior\":\"Front,Driver Side\"}},\"VehicleRepair\":{\"Status\":\"Complete\",\"Description\":\"Insured contacted mechanic and completed repair\",\"MechanicName\":\"Hyperion Automotive Center\",\"MechanicPhone\":\"(323) 665-7864\",\"MechanicAddress\":\"2938 Hyperion Ave Los Angeles, CA 90027\",\"MechanicOrderNum\":\"hxi0kz\",\"MechanicCompleteDate\":\"2023-10-15T12:03:51Z\",\"MechanicCost\":1448},\"Activity\":{\"Date1\":\"2023-09-28T12:03:51Z\",\"Desc1\":\"Claim Submitted\",\"By1\":\"Scott Producer (Producer)\",\"Date2\":\"2023-09-29T12:03:51Z\",\"Desc2\":\"Investigation in progress\",\"By2\":\"Jack Johnson (Claim Adjuster)\",\"Date3\":\"2023-10-08T12:03:51Z\",\"Desc3\":\"Estimation complete\",\"By3\":\"Jack Johnson (Claim Adjuster)\",\"Date4\":\"2023-10-15T12:03:51Z\",\"Desc4\":\"Vehicle Repair Complete\",\"By4\":\"Scott Producer (Producer)\"}}}",
+			"externalReferenceCode": "CL-41-006-2886",
+			"incidentDate": "2023-09-24T12:03:51Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-41-006-2886",
+			"settledDate": "2023-09-28T12:03:51Z"
+		},
+		{
+			"claimAmount": 1969,
+			"claimCreateDate": "2022-04-16T22:29:52Z",
+			"claimStatus": "repair",
+			"dataJSON": "{\"Detail\":{\"InsuranceInfo\":{\"InsuredName\":\"Cleon Hambribe\",\"InsuredSSN\":\"829-60-2873\",\"InsuredVehicle\":\"2014 Ford Mustang GT Fastback\",\"InsuredVIN\":\"5FRYD3H99GB359370\"},\"IncidentDetail\":{\"Location\":\"696 Hoard Pass\",\"LocationCity\":\"Ventura\",\"LocationState\":\"CA\",\"LocationZIP\":\"93005\",\"Type\":\"Vehicle incident while parked\",\"Detail\":\"Incident alone\",\"OtherVehicleMake\":\"Buick\",\"OtherVehicleModel\":\"Skylark\",\"OtherVehicleVIN\":\"3GTU1YEJ7DG763018\",\"OtherVehicleOccupant\":\"Jania Dewfall\",\"OtherVehicleOccupant2\":null,\"OtherVehicleOccupant3\":null,\"OtherVehicleInsurance\":\"Travelers\",\"Damage\":{\"Condition\":\"Major damage and not safe to drive\",\"Interior\":\"Wheels & Dashboard\",\"Exterior\":\"Front,Driver Side\"}},\"VehicleRepair\":{\"Status\":\"Pending\",\"Description\":\"Vehicle pending repair\",\"MechanicName\":\"Hyperion Automotive Center\",\"MechanicPhone\":\"(323) 665-7864\",\"MechanicAddress\":\"2938 Hyperion Ave Los Angeles, CA 90027\",\"MechanicOrderNum\":\"pby4dv\",\"MechanicCompleteDate\":\"2022-05-02T22:29:52Z\",\"MechanicCost\":1674},\"Activity\":{\"Date1\":\"2022-04-16T22:29:52Z\",\"Desc1\":\"Claim Submitted\",\"By1\":\"Scott Producer (Producer)\",\"Date2\":\"2022-04-17T22:29:52Z\",\"Desc2\":\"Investigation in progress\",\"By2\":\"Jack Johnson (Claim Adjuster)\",\"Date3\":\"2022-04-26T22:29:52Z\",\"Desc3\":\"Estimation complete\",\"By3\":\"Jack Johnson (Claim Adjuster)\",\"Date4\":\"2022-05-02T22:29:52Z\",\"Desc4\":\"Vehicle Repair Complete\",\"By4\":\"Scott Producer (Producer)\"}}}",
+			"externalReferenceCode": "CL-06-747-0313",
+			"incidentDate": "2022-04-09T22:29:52Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-06-747-0313",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 2099,
+			"claimCreateDate": "2023-04-09T11:08:09Z",
+			"claimStatus": "inEstimation",
+			"dataJSON": "{\"Detail\":{\"InsuranceInfo\":{\"InsuredName\":\"Keelby Vaen\",\"InsuredSSN\":\"662-73-5811\",\"InsuredVehicle\":\"2015 Toyota Camry Hybrid XLE\",\"InsuredVIN\":\"WAUGF98K99A921371\"},\"IncidentDetail\":{\"Location\":\"84653 Waubesa Court\",\"LocationCity\":\"Los Angeles\",\"LocationState\":\"CA\",\"LocationZIP\":\"90189\",\"Type\":\"Vehicle incident while filling fuel\",\"Detail\":\"Incident with single passenger\",\"OtherVehicleMake\":\"Chevrolet\",\"OtherVehicleModel\":\"Camaro\",\"OtherVehicleVIN\":\"5N1AT2ML1FC893830\",\"OtherVehicleOccupant\":\"Carlynne Pindell\",\"OtherVehicleOccupant2\":\"Biddy McNicol\",\"OtherVehicleOccupant3\":null,\"OtherVehicleInsurance\":\"Mercury\",\"Damage\":{\"Condition\":\"Major damage and not safe to drive\",\"Interior\":\"Upholstery\",\"Exterior\":\"Passenger Rear,Rear\"}},\"VehicleRepair\":{\"Status\":\"Not Started\",\"Description\":\"Insured has not started repair\",\"MechanicName\":\"Lyons Auto Pro Plus\",\"MechanicPhone\":\"(310) 987-4567\",\"MechanicAddress\":\"675 Main Street Los Angeles, CA 90005\",\"MechanicOrderNum\":\"uls0mj\",\"MechanicCompleteDate\":\"2023-04-20T11:08:09Z\",\"MechanicCost\":1784},\"Activity\":{\"Date1\":\"2023-04-09T11:08:09Z\",\"Desc1\":\"Claim Submitted\",\"By1\":\"Marie Producer (Producer)\",\"Date2\":\"2023-04-10T11:08:09Z\",\"Desc2\":\"Investigation in progress\",\"By2\":\"Jack Johnson (Claim Adjuster)\",\"Date3\":\"2023-04-17T11:08:09Z\",\"Desc3\":\"Estimation complete\",\"By3\":\"Jack Johnson (Claim Adjuster)\",\"Date4\":\"2023-04-20T11:08:09Z\",\"Desc4\":\"Vehicle Repair Complete\",\"By4\":\"Marie Producer (Producer)\"}}}",
+			"externalReferenceCode": "CL-76-477-2427",
+			"incidentDate": "2023-04-08T11:08:09Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-76-477-2427",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 1798,
+			"claimCreateDate": "2022-07-02T21:03:02Z",
+			"claimStatus": "settled",
+			"dataJSON": "{\"Detail\":{\"InsuranceInfo\":{\"InsuredName\":\"Heidi Bulmer\",\"InsuredSSN\":\"311-64-7727\",\"InsuredVehicle\":\"2017 Volvo V90 Cross Country\",\"InsuredVIN\":\"SALFR2BN8BH844191\"},\"IncidentDetail\":{\"Location\":\"7822 Dakota Way\",\"LocationCity\":\"Syracuse\",\"LocationState\":\"NY\",\"LocationZIP\":\"13210\",\"Type\":\"Vehicle incident while filling fuel\",\"Detail\":\"Incident alone\",\"OtherVehicleMake\":\"Mercedes-Benz\",\"OtherVehicleModel\":\"SL-Class\",\"OtherVehicleVIN\":\"1G4PP5SKXC4138272\",\"OtherVehicleOccupant\":\"Debee McKleod\",\"OtherVehicleOccupant2\":null,\"OtherVehicleOccupant3\":null,\"OtherVehicleInsurance\":\"Geico\",\"Damage\":{\"Condition\":\"Good to drive\",\"Interior\":\"Interior Trim\",\"Exterior\":\"Driver Side, Driver Rear\"}},\"VehicleRepair\":{\"Status\":\"Complete\",\"Description\":\"Insured contacted mechanic and completed repair\",\"MechanicName\":\"Diamond Auto Repair\",\"MechanicPhone\":\"(310) 458-3492\",\"MechanicAddress\":\"1432 Wilshire Blvd. Los Angeles, CA 90010\",\"MechanicOrderNum\":\"enx9jb\",\"MechanicCompleteDate\":\"2022-07-15T21:03:02Z\",\"MechanicCost\":1528},\"Activity\":{\"Date1\":\"2022-07-02T21:03:02Z\",\"Desc1\":\"Claim Submitted\",\"By1\":\"Scott Producer (Producer)\",\"Date2\":\"2022-07-04T21:03:02Z\",\"Desc2\":\"Investigation in progress\",\"By2\":\"Jack Johnson (Claim Adjuster)\",\"Date3\":\"2022-07-10T21:03:02Z\",\"Desc3\":\"Estimation complete\",\"By3\":\"Jack Johnson (Claim Adjuster)\",\"Date4\":\"2022-07-15T21:03:02Z\",\"Desc4\":\"Vehicle Repair Complete\",\"By4\":\"Scott Producer (Producer)\"}}}",
+			"externalReferenceCode": "CL-26-196-7958",
+			"incidentDate": "2022-06-26T21:03:02Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-26-196-7958",
+			"settledDate": "2022-07-02T21:03:02Z"
+		},
+		{
+			"claimAmount": 4381,
+			"claimCreateDate": "2022-03-22T06:40:02Z",
+			"claimStatus": "settled",
+			"dataJSON": "{\"Detail\":{\"InsuranceInfo\":{\"InsuredName\":\"Merrily Phibb\",\"InsuredSSN\":\"852-92-8208\",\"InsuredVehicle\":\"2018 Ford F-150 Super 250 XL\",\"InsuredVIN\":\"5N1BA0NE8FN969739\"},\"IncidentDetail\":{\"Location\":\"29 Green Ridge Trail\",\"LocationCity\":\"Huntington Beach\",\"LocationState\":\"CA\",\"LocationZIP\":\"92648\",\"Type\":\"Vehicle incident while parking\",\"Detail\":\"Incident with more than one passenger\",\"OtherVehicleMake\":\"Audi\",\"OtherVehicleModel\":\"4000s\",\"OtherVehicleVIN\":\"3FA6P0D91DR405603\",\"OtherVehicleOccupant\":\"Casandra Dayce\",\"OtherVehicleOccupant2\":\"Bailey D'Antuoni\",\"OtherVehicleOccupant3\":\"Jameson McLellan\",\"OtherVehicleInsurance\":\"Geico\",\"Damage\":{\"Condition\":\"Minor damage and safe to drive\",\"Interior\":\"Wheels & Dashboard\",\"Exterior\":\"Passenger Side\"}},\"VehicleRepair\":{\"Status\":\"Complete\",\"Description\":\"Insured contacted mechanic and completed repair\",\"MechanicName\":\"Lyons Auto Pro Plus\",\"MechanicPhone\":\"(310) 987-4567\",\"MechanicAddress\":\"675 Main Street Los Angeles, CA 90005\",\"MechanicOrderNum\":\"tfa3iy\",\"MechanicCompleteDate\":\"2022-04-10T06:40:02Z\",\"MechanicCost\":3724},\"Activity\":{\"Date1\":\"2022-03-22T06:40:02Z\",\"Desc1\":\"Claim Submitted\",\"By1\":\"Marie Producer (Producer)\",\"Date2\":\"2022-03-23T06:40:02Z\",\"Desc2\":\"Investigation in progress\",\"By2\":\"Jack Johnson (Claim Adjuster)\",\"Date3\":\"2022-03-29T06:40:02Z\",\"Desc3\":\"Estimation complete\",\"By3\":\"Jack Johnson (Claim Adjuster)\",\"Date4\":\"2022-04-10T06:40:02Z\",\"Desc4\":\"Vehicle Repair Complete\",\"By4\":\"Marie Producer (Producer)\"}}}",
+			"externalReferenceCode": "CL-36-827-1445",
+			"incidentDate": "2022-03-15T06:40:02Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-36-827-1445",
+			"settledDate": "2022-03-22T06:40:02Z"
+		},
+		{
+			"claimAmount": 2419,
+			"claimCreateDate": "2022-05-31T17:51:18Z",
+			"claimStatus": "repair",
+			"dataJSON": "{\"Detail\":{\"InsuranceInfo\":{\"InsuredName\":\"Monah Woolens\",\"InsuredSSN\":\"701-97-2250\",\"InsuredVehicle\":\"2016 Ford F-150 Super 250 XL\",\"InsuredVIN\":\"KNALN4D73E5769046\"},\"IncidentDetail\":{\"Location\":\"85178 Ridgeway Court\",\"LocationCity\":\"Bakersfield\",\"LocationState\":\"CA\",\"LocationZIP\":\"93381\",\"Type\":\"Vehicle incident while parking\",\"Detail\":\"Incident with single passenger\",\"OtherVehicleMake\":\"Toyota\",\"OtherVehicleModel\":\"4Runner\",\"OtherVehicleVIN\":\"3C3CFFDR2DT542690\",\"OtherVehicleOccupant\":\"Jewelle Durgan\",\"OtherVehicleOccupant2\":\"Kenton Gummery\",\"OtherVehicleOccupant3\":null,\"OtherVehicleInsurance\":\"Mercury\",\"Damage\":{\"Condition\":\"Good to drive\",\"Interior\":\"Seats\",\"Exterior\":\"Front,Driver Side\"}},\"VehicleRepair\":{\"Status\":\"Pending\",\"Description\":\"Vehicle pending repair\",\"MechanicName\":\"Hyperion Automotive Center\",\"MechanicPhone\":\"(323) 665-7864\",\"MechanicAddress\":\"2938 Hyperion Ave Los Angeles, CA 90027\",\"MechanicOrderNum\":\"bjs0sa\",\"MechanicCompleteDate\":\"2022-06-13T17:51:18Z\",\"MechanicCost\":2056},\"Activity\":{\"Date1\":\"2022-05-31T17:51:18Z\",\"Desc1\":\"Claim Submitted\",\"By1\":\"Scott Producer (Producer)\",\"Date2\":\"2022-06-03T17:51:18Z\",\"Desc2\":\"Investigation in progress\",\"By2\":\"Jack Johnson (Claim Adjuster)\",\"Date3\":\"2022-06-08T17:51:18Z\",\"Desc3\":\"Estimation complete\",\"By3\":\"Jack Johnson (Claim Adjuster)\",\"Date4\":\"2022-06-13T17:51:18Z\",\"Desc4\":\"Vehicle Repair Complete\",\"By4\":\"Scott Producer (Producer)\"}}}",
+			"externalReferenceCode": "CL-27-857-7605",
+			"incidentDate": "2022-05-30T17:51:18Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-27-857-7605",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 3804,
+			"claimCreateDate": "2022-04-03T13:09:39Z",
+			"claimStatus": "settled",
+			"dataJSON": "{\"Detail\":{\"InsuranceInfo\":{\"InsuredName\":\"Stevana Casiero\",\"InsuredSSN\":\"203-37-0880\",\"InsuredVehicle\":\"2019 Ford F-150 Super 250 XL\",\"InsuredVIN\":\"19VDE2E55EE400100\"},\"IncidentDetail\":{\"Location\":\"059 Bobwhite Crossing\",\"LocationCity\":\"Los Angeles\",\"LocationState\":\"CA\",\"LocationZIP\":\"90030\",\"Type\":\"Vehicle incident while parking\",\"Detail\":\"Incident with single passenger\",\"OtherVehicleMake\":\"Ford\",\"OtherVehicleModel\":\"Thunderbird\",\"OtherVehicleVIN\":\"5UXFG4C54AL122735\",\"OtherVehicleOccupant\":\"Pauline Duddle\",\"OtherVehicleOccupant2\":\"Ashlie Seivwright\",\"OtherVehicleOccupant3\":null,\"OtherVehicleInsurance\":\"Liberty Mutual\",\"Damage\":{\"Condition\":\"Good to drive\",\"Interior\":\"Interior Trim\",\"Exterior\":\"Front,Driver Side\"}},\"VehicleRepair\":{\"Status\":\"Complete\",\"Description\":\"Insured contacted mechanic and completed repair\",\"MechanicName\":\"Hyperion Automotive Center\",\"MechanicPhone\":\"(323) 665-7864\",\"MechanicAddress\":\"2938 Hyperion Ave Los Angeles, CA 90027\",\"MechanicOrderNum\":\"gjc7xi\",\"MechanicCompleteDate\":\"2022-04-15T13:09:39Z\",\"MechanicCost\":3233},\"Activity\":{\"Date1\":\"2022-04-03T13:09:39Z\",\"Desc1\":\"Claim Submitted\",\"By1\":\"Marie Producer (Producer)\",\"Date2\":\"2022-04-06T13:09:39Z\",\"Desc2\":\"Investigation in progress\",\"By2\":\"Jack Johnson (Claim Adjuster)\",\"Date3\":\"2022-04-07T13:09:39Z\",\"Desc3\":\"Estimation complete\",\"By3\":\"Jack Johnson (Claim Adjuster)\",\"Date4\":\"2022-04-15T13:09:39Z\",\"Desc4\":\"Vehicle Repair Complete\",\"By4\":\"Marie Producer (Producer)\"}}}",
+			"externalReferenceCode": "CL-50-665-3617",
+			"incidentDate": "2022-04-01T13:09:39Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-50-665-3617",
+			"settledDate": "2022-04-03T13:09:39Z"
+		},
+		{
+			"claimAmount": 292,
+			"claimCreateDate": "2022-03-21T08:43:57Z",
+			"claimStatus": "approved",
+			"dataJSON": "{\"Detail\":{\"InsuranceInfo\":{\"InsuredName\":\"Pembroke Hutable\",\"InsuredSSN\":\"439-41-0874\",\"InsuredVehicle\":\"2013 Volvo S90 R-Design\",\"InsuredVIN\":\"1G6DG577490263282\"},\"IncidentDetail\":{\"Location\":\"5 Gale Way\",\"LocationCity\":\"Long Beach\",\"LocationState\":\"CA\",\"LocationZIP\":\"90831\",\"Type\":\"Vehicle incident while parked\",\"Detail\":\"Incident with single passenger\",\"OtherVehicleMake\":\"Honda\",\"OtherVehicleModel\":\"Prelude\",\"OtherVehicleVIN\":\"WBAYA8C53ED637063\",\"OtherVehicleOccupant\":\"Martha Levington\",\"OtherVehicleOccupant2\":\"Harmonie Botham\",\"OtherVehicleOccupant3\":null,\"OtherVehicleInsurance\":\"Geico\",\"Damage\":{\"Condition\":\"Minor damage and safe to drive\",\"Interior\":\"Seats\",\"Exterior\":\"Driver Side, Driver Rear\"}},\"VehicleRepair\":{\"Status\":\"Pending\",\"Description\":\"Vehicle pending repair\",\"MechanicName\":\"Lyons Auto Pro Plus\",\"MechanicPhone\":\"(310) 987-4567\",\"MechanicAddress\":\"675 Main Street Los Angeles, CA 90005\",\"MechanicOrderNum\":\"sjp5el\",\"MechanicCompleteDate\":\"2022-04-08T08:43:57Z\",\"MechanicCost\":248},\"Activity\":{\"Date1\":\"2022-03-21T08:43:57Z\",\"Desc1\":\"Claim Submitted\",\"By1\":\"Scott Producer (Producer)\",\"Date2\":\"2022-03-22T08:43:57Z\",\"Desc2\":\"Investigation in progress\",\"By2\":\"Jack Johnson (Claim Adjuster)\",\"Date3\":\"2022-03-31T08:43:57Z\",\"Desc3\":\"Estimation complete\",\"By3\":\"Jack Johnson (Claim Adjuster)\",\"Date4\":\"2022-04-08T08:43:57Z\",\"Desc4\":\"Vehicle Repair Complete\",\"By4\":\"Scott Producer (Producer)\"}}}",
+			"externalReferenceCode": "CL-02-464-7849",
+			"incidentDate": "2022-03-16T08:43:57Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-02-464-7849",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 4047,
+			"claimCreateDate": "2022-04-23T09:07:57Z",
+			"claimStatus": "inEstimation",
+			"dataJSON": "{\"Detail\":{\"InsuranceInfo\":{\"InsuredName\":\"Yehudi Mancell\",\"InsuredSSN\":\"684-69-6805\",\"InsuredVehicle\":\"2015 Volvo S90 R-Design\",\"InsuredVIN\":\"SALVP1BG4FH854154\"},\"IncidentDetail\":{\"Location\":\"9 Jana Park\",\"LocationCity\":\"Bronx\",\"LocationState\":\"NY\",\"LocationZIP\":\"10469\",\"Type\":\"Vehicle incident while driving\",\"Detail\":\"Incident with more than one passenger\",\"OtherVehicleMake\":\"Kia\",\"OtherVehicleModel\":\"Rio\",\"OtherVehicleVIN\":\"YV1672MS2B2507044\",\"OtherVehicleOccupant\":\"Austin Vercruysse\",\"OtherVehicleOccupant2\":\"Gayler Maplethorp\",\"OtherVehicleOccupant3\":\"Roldan Lisamore\",\"OtherVehicleInsurance\":\"Liberty Mutual\",\"Damage\":{\"Condition\":\"Minor damage and safe to drive\",\"Interior\":\"Seats\",\"Exterior\":\"Passenger Side\"}},\"VehicleRepair\":{\"Status\":\"Not Started\",\"Description\":\"Insured has not started repair\",\"MechanicName\":\"Hyperion Automotive Center\",\"MechanicPhone\":\"(323) 665-7864\",\"MechanicAddress\":\"2938 Hyperion Ave Los Angeles, CA 90027\",\"MechanicOrderNum\":\"qus6zv\",\"MechanicCompleteDate\":\"2022-05-07T09:07:57Z\",\"MechanicCost\":3440},\"Activity\":{\"Date1\":\"2022-04-23T09:07:57Z\",\"Desc1\":\"Claim Submitted\",\"By1\":\"Scott Producer (Producer)\",\"Date2\":\"2022-04-26T09:07:57Z\",\"Desc2\":\"Investigation in progress\",\"By2\":\"Jack Johnson (Claim Adjuster)\",\"Date3\":\"2022-05-02T09:07:57Z\",\"Desc3\":\"Estimation complete\",\"By3\":\"Jack Johnson (Claim Adjuster)\",\"Date4\":\"2022-05-07T09:07:57Z\",\"Desc4\":\"Vehicle Repair Complete\",\"By4\":\"Scott Producer (Producer)\"}}}",
+			"externalReferenceCode": "CL-61-121-5224",
+			"incidentDate": "2022-04-21T09:07:57Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-61-121-5224",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 2320,
+			"claimCreateDate": "2022-11-04T07:53:17Z",
+			"claimStatus": "repair",
+			"dataJSON": "{\"Detail\":{\"InsuranceInfo\":{\"InsuredName\":\"Bonnie Nevett\",\"InsuredSSN\":\"375-40-8785\",\"InsuredVehicle\":\"2015 Volvo V90 Cross Country\",\"InsuredVIN\":\"19XFB2F57CE915314\"},\"IncidentDetail\":{\"Location\":\"6750 Kingsford Point\",\"LocationCity\":\"Whittier\",\"LocationState\":\"CA\",\"LocationZIP\":\"90605\",\"Type\":\"Vehicle incident while driving\",\"Detail\":\"Incident alone\",\"OtherVehicleMake\":\"Dodge\",\"OtherVehicleModel\":\"Nitro\",\"OtherVehicleVIN\":\"1ZVBP8AM6B5275475\",\"OtherVehicleOccupant\":\"Georgy Addicote\",\"OtherVehicleOccupant2\":null,\"OtherVehicleOccupant3\":null,\"OtherVehicleInsurance\":\"USAA\",\"Damage\":{\"Condition\":\"Major damage and not safe to drive\",\"Interior\":\"Seats\",\"Exterior\":\"Passenger Rear,Rear\"}},\"VehicleRepair\":{\"Status\":\"Pending\",\"Description\":\"Vehicle pending repair\",\"MechanicName\":\"Diamond Auto Repair\",\"MechanicPhone\":\"(310) 458-3492\",\"MechanicAddress\":\"1432 Wilshire Blvd. Los Angeles, CA 90010\",\"MechanicOrderNum\":\"dgq8dt\",\"MechanicCompleteDate\":\"2022-11-18T07:53:17Z\",\"MechanicCost\":1972},\"Activity\":{\"Date1\":\"2022-11-04T07:53:17Z\",\"Desc1\":\"Claim Submitted\",\"By1\":\"Scott Producer (Producer)\",\"Date2\":\"2022-11-07T07:53:17Z\",\"Desc2\":\"Investigation in progress\",\"By2\":\"Jack Johnson (Claim Adjuster)\",\"Date3\":\"2022-11-08T07:53:17Z\",\"Desc3\":\"Estimation complete\",\"By3\":\"Jack Johnson (Claim Adjuster)\",\"Date4\":\"2022-11-18T07:53:17Z\",\"Desc4\":\"Vehicle Repair Complete\",\"By4\":\"Scott Producer (Producer)\"}}}",
+			"externalReferenceCode": "CL-68-705-6331",
+			"incidentDate": "2022-10-29T07:53:17Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-68-705-6331",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 1895,
+			"claimCreateDate": "2022-05-09T20:59:18Z",
+			"claimStatus": "inEstimation",
+			"dataJSON": "{\"Detail\":{\"InsuranceInfo\":{\"InsuredName\":\"Shurlocke Letessier\",\"InsuredSSN\":\"372-73-4495\",\"InsuredVehicle\":\"2019 Toyota Camry Hybrid XLE\",\"InsuredVIN\":\"1G4GA5GR7EF773836\"},\"IncidentDetail\":{\"Location\":\"392 High Crossing Point\",\"LocationCity\":\"Irvine\",\"LocationState\":\"CA\",\"LocationZIP\":\"92717\",\"Type\":\"Vehicle incident while driving\",\"Detail\":\"Incident with single passenger\",\"OtherVehicleMake\":\"Chevrolet\",\"OtherVehicleModel\":\"Corvette\",\"OtherVehicleVIN\":\"WA1AY74LX9D152183\",\"OtherVehicleOccupant\":\"Charil Allkins\",\"OtherVehicleOccupant2\":\"Von Halleybone\",\"OtherVehicleOccupant3\":null,\"OtherVehicleInsurance\":\"Liberty Mutual\",\"Damage\":{\"Condition\":\"Major damage and not safe to drive\",\"Interior\":\"Seats\",\"Exterior\":\"Front,Driver Side\"}},\"VehicleRepair\":{\"Status\":\"Not Started\",\"Description\":\"Insured has not started repair\",\"MechanicName\":\"Lyons Auto Pro Plus\",\"MechanicPhone\":\"(310) 987-4567\",\"MechanicAddress\":\"675 Main Street Los Angeles, CA 90005\",\"MechanicOrderNum\":\"mac8fe\",\"MechanicCompleteDate\":\"2022-05-20T20:59:18Z\",\"MechanicCost\":1611},\"Activity\":{\"Date1\":\"2022-05-09T20:59:18Z\",\"Desc1\":\"Claim Submitted\",\"By1\":\"Scott Producer (Producer)\",\"Date2\":\"2022-05-10T20:59:18Z\",\"Desc2\":\"Investigation in progress\",\"By2\":\"Jack Johnson (Claim Adjuster)\",\"Date3\":\"2022-05-18T20:59:18Z\",\"Desc3\":\"Estimation complete\",\"By3\":\"Jack Johnson (Claim Adjuster)\",\"Date4\":\"2022-05-20T20:59:18Z\",\"Desc4\":\"Vehicle Repair Complete\",\"By4\":\"Scott Producer (Producer)\"}}}",
+			"externalReferenceCode": "CL-82-419-3469",
+			"incidentDate": "2022-05-02T20:59:18Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-82-419-3469",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 2494,
+			"claimCreateDate": "2023-11-18T22:41:21Z",
+			"claimStatus": "approved",
+			"dataJSON": "{\"Detail\":{\"InsuranceInfo\":{\"InsuredName\":\"Vale Vynall\",\"InsuredSSN\":\"194-88-1774\",\"InsuredVehicle\":\"2013 Toyota Camry Hybrid XLE\",\"InsuredVIN\":\"3N1CE2CP7FL257190\"},\"IncidentDetail\":{\"Location\":\"4371 Oak Valley Park\",\"LocationCity\":\"Alhambra\",\"LocationState\":\"CA\",\"LocationZIP\":\"91841\",\"Type\":\"Vehicle incident while parked\",\"Detail\":\"Incident alone\",\"OtherVehicleMake\":\"Jeep\",\"OtherVehicleModel\":\"Cherokee\",\"OtherVehicleVIN\":\"WBASP4C54BC230691\",\"OtherVehicleOccupant\":\"Jemmy Rodolphe\",\"OtherVehicleOccupant2\":null,\"OtherVehicleOccupant3\":null,\"OtherVehicleInsurance\":\"Liberty Mutual\",\"Damage\":{\"Condition\":\"Major damage and not safe to drive\",\"Interior\":\"Seats\",\"Exterior\":\"Driver Side, Driver Rear\"}},\"VehicleRepair\":{\"Status\":\"Pending\",\"Description\":\"Vehicle pending repair\",\"MechanicName\":\"Diamond Auto Repair\",\"MechanicPhone\":\"(310) 458-3492\",\"MechanicAddress\":\"1432 Wilshire Blvd. Los Angeles, CA 90010\",\"MechanicOrderNum\":\"jvs2ih\",\"MechanicCompleteDate\":\"2023-11-29T22:41:21Z\",\"MechanicCost\":2120},\"Activity\":{\"Date1\":\"2023-11-18T22:41:21Z\",\"Desc1\":\"Claim Submitted\",\"By1\":\"Marie Producer (Producer)\",\"Date2\":\"2023-11-20T22:41:21Z\",\"Desc2\":\"Investigation in progress\",\"By2\":\"Jack Johnson (Claim Adjuster)\",\"Date3\":\"2023-11-22T22:41:21Z\",\"Desc3\":\"Estimation complete\",\"By3\":\"Jack Johnson (Claim Adjuster)\",\"Date4\":\"2023-11-29T22:41:21Z\",\"Desc4\":\"Vehicle Repair Complete\",\"By4\":\"Marie Producer (Producer)\"}}}",
+			"externalReferenceCode": "CL-39-022-9968",
+			"incidentDate": "2023-11-11T22:41:21Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-39-022-9968",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 4150,
+			"claimCreateDate": "2022-08-05T04:02:03Z",
+			"claimStatus": "pendingSettlement",
+			"dataJSON": "{\"Detail\":{\"InsuranceInfo\":{\"InsuredName\":\"Shane Orgen\",\"InsuredSSN\":\"420-76-4970\",\"InsuredVehicle\":\"2017 Volvo S90 R-Design\",\"InsuredVIN\":\"KMHHT6KD5AU027102\"},\"IncidentDetail\":{\"Location\":\"8 Waywood Parkway\",\"LocationCity\":\"Anaheim\",\"LocationState\":\"CA\",\"LocationZIP\":\"92812\",\"Type\":\"Vehicle incident while parked\",\"Detail\":\"Incident with more than one passenger\",\"OtherVehicleMake\":\"Hyundai\",\"OtherVehicleModel\":\"Elantra\",\"OtherVehicleVIN\":\"19XFB2E58CE678186\",\"OtherVehicleOccupant\":\"Judye Rozier\",\"OtherVehicleOccupant2\":\"Filberte Karoly\",\"OtherVehicleOccupant3\":\"Clareta Ravenshaw\",\"OtherVehicleInsurance\":\"Mercury\",\"Damage\":{\"Condition\":\"Minor damage and safe to drive\",\"Interior\":\"Wheels & Dashboard\",\"Exterior\":\"Front,Driver Side\"}},\"VehicleRepair\":{\"Status\":\"Not Started\",\"Description\":\"Insured has not started repair\",\"MechanicName\":\"Diamond Auto Repair\",\"MechanicPhone\":\"(310) 458-3492\",\"MechanicAddress\":\"1432 Wilshire Blvd. Los Angeles, CA 90010\",\"MechanicOrderNum\":\"wmx6pp\",\"MechanicCompleteDate\":\"2022-08-20T04:02:03Z\",\"MechanicCost\":3528},\"Activity\":{\"Date1\":\"2022-08-05T04:02:03Z\",\"Desc1\":\"Claim Submitted\",\"By1\":\"Scott Producer (Producer)\",\"Date2\":\"2022-08-07T04:02:03Z\",\"Desc2\":\"Investigation in progress\",\"By2\":\"Jack Johnson (Claim Adjuster)\",\"Date3\":\"2022-08-11T04:02:03Z\",\"Desc3\":\"Estimation complete\",\"By3\":\"Jack Johnson (Claim Adjuster)\",\"Date4\":\"2022-08-20T04:02:03Z\",\"Desc4\":\"Vehicle Repair Complete\",\"By4\":\"Scott Producer (Producer)\"}}}",
+			"externalReferenceCode": "CL-66-128-8419",
+			"incidentDate": "2022-08-01T04:02:03Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-66-128-8419",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 2760,
+			"claimCreateDate": "2023-01-12T08:44:10Z",
+			"claimStatus": "settled",
+			"dataJSON": "{\"Detail\":{\"InsuranceInfo\":{\"InsuredName\":\"Jada Lewin\",\"InsuredSSN\":\"782-02-8421\",\"InsuredVehicle\":\"2018 Toyota Camry Hybrid XLE\",\"InsuredVIN\":\"1ZVBP8JZ6D5961546\"},\"IncidentDetail\":{\"Location\":\"4 Forest Run Pass\",\"LocationCity\":\"Albany\",\"LocationState\":\"NY\",\"LocationZIP\":\"12247\",\"Type\":\"Vehicle incident while driving\",\"Detail\":\"Incident with more than one passenger\",\"OtherVehicleMake\":\"Chrysler\",\"OtherVehicleModel\":\"Sebring\",\"OtherVehicleVIN\":\"4USBT53534L608758\",\"OtherVehicleOccupant\":\"Romeo Ottawell\",\"OtherVehicleOccupant2\":\"Celisse Campion\",\"OtherVehicleOccupant3\":\"Francisca Rushbrook\",\"OtherVehicleInsurance\":\"Travelers\",\"Damage\":{\"Condition\":\"Good to drive\",\"Interior\":\"Seats\",\"Exterior\":\"Driver Side, Driver Rear\"}},\"VehicleRepair\":{\"Status\":\"Complete\",\"Description\":\"Insured contacted mechanic and completed repair\",\"MechanicName\":\"Hyperion Automotive Center\",\"MechanicPhone\":\"(323) 665-7864\",\"MechanicAddress\":\"2938 Hyperion Ave Los Angeles, CA 90027\",\"MechanicOrderNum\":\"xzt1nx\",\"MechanicCompleteDate\":\"2023-01-24T08:44:10Z\",\"MechanicCost\":2346},\"Activity\":{\"Date1\":\"2023-01-12T08:44:10Z\",\"Desc1\":\"Claim Submitted\",\"By1\":\"Marie Producer (Producer)\",\"Date2\":\"2023-01-15T08:44:10Z\",\"Desc2\":\"Investigation in progress\",\"By2\":\"Jack Johnson (Claim Adjuster)\",\"Date3\":\"2023-01-21T08:44:10Z\",\"Desc3\":\"Estimation complete\",\"By3\":\"Jack Johnson (Claim Adjuster)\",\"Date4\":\"2023-01-24T08:44:10Z\",\"Desc4\":\"Vehicle Repair Complete\",\"By4\":\"Marie Producer (Producer)\"}}}",
+			"externalReferenceCode": "CL-50-527-9425",
+			"incidentDate": "2023-01-10T08:44:10Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-50-527-9425",
+			"settledDate": "2023-01-12T08:44:10Z"
+		},
+		{
+			"claimAmount": 2923,
+			"claimCreateDate": "2023-11-18T04:12:30Z",
+			"claimStatus": "inEstimation",
+			"dataJSON": "{\"Detail\":{\"InsuranceInfo\":{\"InsuredName\":\"Ariel Wight\",\"InsuredSSN\":\"254-07-8405\",\"InsuredVehicle\":\"2018 Ford F-150 Super 250 XL\",\"InsuredVIN\":\"1D7CE3GK9AS001778\"},\"IncidentDetail\":{\"Location\":\"5 Forster Trail\",\"LocationCity\":\"Sacramento\",\"LocationState\":\"CA\",\"LocationZIP\":\"95865\",\"Type\":\"Vehicle incident while parking\",\"Detail\":\"Incident with single passenger\",\"OtherVehicleMake\":\"Land Rover\",\"OtherVehicleModel\":\"Defender 90\",\"OtherVehicleVIN\":\"WBAWC7C5XAP453629\",\"OtherVehicleOccupant\":\"Elonore Lavery\",\"OtherVehicleOccupant2\":\"Viviyan Ravenshaw\",\"OtherVehicleOccupant3\":null,\"OtherVehicleInsurance\":\"Liberty Mutual\",\"Damage\":{\"Condition\":\"Good to drive\",\"Interior\":\"Interior Trim\",\"Exterior\":\"Passenger Side\"}},\"VehicleRepair\":{\"Status\":\"Not Started\",\"Description\":\"Insured has not started repair\",\"MechanicName\":\"Hyperion Automotive Center\",\"MechanicPhone\":\"(323) 665-7864\",\"MechanicAddress\":\"2938 Hyperion Ave Los Angeles, CA 90027\",\"MechanicOrderNum\":\"tzo1ph\",\"MechanicCompleteDate\":\"2023-12-06T04:12:30Z\",\"MechanicCost\":2485},\"Activity\":{\"Date1\":\"2023-11-18T04:12:30Z\",\"Desc1\":\"Claim Submitted\",\"By1\":\"Scott Producer (Producer)\",\"Date2\":\"2023-11-21T04:12:30Z\",\"Desc2\":\"Investigation in progress\",\"By2\":\"Jack Johnson (Claim Adjuster)\",\"Date3\":\"2023-11-26T04:12:30Z\",\"Desc3\":\"Estimation complete\",\"By3\":\"Jack Johnson (Claim Adjuster)\",\"Date4\":\"2023-12-06T04:12:30Z\",\"Desc4\":\"Vehicle Repair Complete\",\"By4\":\"Scott Producer (Producer)\"}}}",
+			"externalReferenceCode": "CL-84-871-1015",
+			"incidentDate": "2023-11-15T04:12:30Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-84-871-1015",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 2275,
+			"claimCreateDate": "2022-12-02T07:45:52Z",
+			"claimStatus": "declined",
+			"dataJSON": "{\"Detail\":{\"InsuranceInfo\":{\"InsuredName\":\"Jada Lewin\",\"InsuredSSN\":\"425-69-5356\",\"InsuredVehicle\":\"2019 Toyota Corolla LE\",\"InsuredVIN\":\"1FMEU7FE7AU639422\"},\"IncidentDetail\":{\"Location\":\"17 Scoville Plaza\",\"LocationCity\":\"San Diego\",\"LocationState\":\"CA\",\"LocationZIP\":\"92160\",\"Type\":\"Vehicle incident while driving\",\"Detail\":\"Incident with more than one passenger\",\"OtherVehicleMake\":\"Mitsubishi\",\"OtherVehicleModel\":\"Pajero\",\"OtherVehicleVIN\":\"5FRYD4H64GB879729\",\"OtherVehicleOccupant\":\"Fara Macci\",\"OtherVehicleOccupant2\":\"Sara Elphinston\",\"OtherVehicleOccupant3\":\"Wandis Carrack\",\"OtherVehicleInsurance\":\"Travelers\",\"Damage\":{\"Condition\":\"Minor damage and safe to drive\",\"Interior\":\"Interior Trim\",\"Exterior\":\"Passenger Rear,Rear\"}},\"VehicleRepair\":{\"Status\":\"Not Started\",\"Description\":\"Insured has not started repair\",\"MechanicName\":\"Lyons Auto Pro Plus\",\"MechanicPhone\":\"(310) 987-4567\",\"MechanicAddress\":\"675 Main Street Los Angeles, CA 90005\",\"MechanicOrderNum\":\"cvn4gv\",\"MechanicCompleteDate\":\"2022-12-18T07:45:52Z\",\"MechanicCost\":1934},\"Activity\":{\"Date1\":\"2022-12-02T07:45:52Z\",\"Desc1\":\"Claim Submitted\",\"By1\":\"Scott Producer (Producer)\",\"Date2\":\"2022-12-03T07:45:52Z\",\"Desc2\":\"Investigation in progress\",\"By2\":\"Jack Johnson (Claim Adjuster)\",\"Date3\":\"2022-12-07T07:45:52Z\",\"Desc3\":\"Estimation complete\",\"By3\":\"Jack Johnson (Claim Adjuster)\",\"Date4\":\"2022-12-18T07:45:52Z\",\"Desc4\":\"Vehicle Repair Complete\",\"By4\":\"Scott Producer (Producer)\"}}}",
+			"externalReferenceCode": "CL-29-197-4437",
+			"incidentDate": "2022-12-01T07:45:52Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-29-197-4437",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 553,
+			"claimCreateDate": "2022-05-05T08:30:36Z",
+			"claimStatus": "approved",
+			"dataJSON": "{\"Detail\":{\"InsuranceInfo\":{\"InsuredName\":\"Stevana Casiero\",\"InsuredSSN\":\"827-38-3348\",\"InsuredVehicle\":\"2018 Volvo V90 Cross Country\",\"InsuredVIN\":\"WBAUT9C59AA997965\"},\"IncidentDetail\":{\"Location\":\"36982 Redwing Pass\",\"LocationCity\":\"Huntington Beach\",\"LocationState\":\"CA\",\"LocationZIP\":\"92648\",\"Type\":\"Vehicle incident while parking\",\"Detail\":\"Incident with more than one passenger\",\"OtherVehicleMake\":\"Bentley\",\"OtherVehicleModel\":\"Arnage\",\"OtherVehicleVIN\":\"SALVP2BG5FH381161\",\"OtherVehicleOccupant\":\"Gabbie Webbe\",\"OtherVehicleOccupant2\":\"Ramon Lande\",\"OtherVehicleOccupant3\":\"Adler Strippel\",\"OtherVehicleInsurance\":\"Geico\",\"Damage\":{\"Condition\":\"Minor damage and safe to drive\",\"Interior\":\"Seats\",\"Exterior\":\"Passenger Rear,Rear\"}},\"VehicleRepair\":{\"Status\":\"Pending\",\"Description\":\"Vehicle pending repair\",\"MechanicName\":\"Diamond Auto Repair\",\"MechanicPhone\":\"(310) 458-3492\",\"MechanicAddress\":\"1432 Wilshire Blvd. Los Angeles, CA 90010\",\"MechanicOrderNum\":\"wfq2ko\",\"MechanicCompleteDate\":\"2022-05-23T08:30:36Z\",\"MechanicCost\":470},\"Activity\":{\"Date1\":\"2022-05-05T08:30:36Z\",\"Desc1\":\"Claim Submitted\",\"By1\":\"Scott Producer (Producer)\",\"Date2\":\"2022-05-07T08:30:36Z\",\"Desc2\":\"Investigation in progress\",\"By2\":\"Jack Johnson (Claim Adjuster)\",\"Date3\":\"2022-05-13T08:30:36Z\",\"Desc3\":\"Estimation complete\",\"By3\":\"Jack Johnson (Claim Adjuster)\",\"Date4\":\"2022-05-23T08:30:36Z\",\"Desc4\":\"Vehicle Repair Complete\",\"By4\":\"Scott Producer (Producer)\"}}}",
+			"externalReferenceCode": "CL-71-999-0946",
+			"incidentDate": "2022-05-02T08:30:36Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-71-999-0946",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 773,
+			"claimCreateDate": "2023-05-14T02:37:07Z",
+			"claimStatus": "pendingSettlement",
+			"dataJSON": "{\"Detail\":{\"InsuranceInfo\":{\"InsuredName\":\"Ferrel Sames\",\"InsuredSSN\":\"270-47-4835\",\"InsuredVehicle\":\"2013 Toyota Camry Hybrid XLE\",\"InsuredVIN\":\"SCFFDAAE7CG024369\"},\"IncidentDetail\":{\"Location\":\"751 Sycamore Way\",\"LocationCity\":\"Anaheim\",\"LocationState\":\"CA\",\"LocationZIP\":\"92825\",\"Type\":\"Vehicle incident while parking\",\"Detail\":\"Incident with more than one passenger\",\"OtherVehicleMake\":\"Kia\",\"OtherVehicleModel\":\"Spectra5\",\"OtherVehicleVIN\":\"3C3CFFER7FT436690\",\"OtherVehicleOccupant\":\"Josephine Burley\",\"OtherVehicleOccupant2\":\"Fernando Kilminster\",\"OtherVehicleOccupant3\":\"Orran Thew\",\"OtherVehicleInsurance\":\"Mercury\",\"Damage\":{\"Condition\":\"Minor damage and safe to drive\",\"Interior\":\"Seats\",\"Exterior\":\"Front,Driver Side\"}},\"VehicleRepair\":{\"Status\":\"Not Started\",\"Description\":\"Insured has not started repair\",\"MechanicName\":\"Diamond Auto Repair\",\"MechanicPhone\":\"(310) 458-3492\",\"MechanicAddress\":\"1432 Wilshire Blvd. Los Angeles, CA 90010\",\"MechanicOrderNum\":\"ydq5sh\",\"MechanicCompleteDate\":\"2023-06-02T02:37:07Z\",\"MechanicCost\":657},\"Activity\":{\"Date1\":\"2023-05-14T02:37:07Z\",\"Desc1\":\"Claim Submitted\",\"By1\":\"Marie Producer (Producer)\",\"Date2\":\"2023-05-16T02:37:07Z\",\"Desc2\":\"Investigation in progress\",\"By2\":\"Jack Johnson (Claim Adjuster)\",\"Date3\":\"2023-05-22T02:37:07Z\",\"Desc3\":\"Estimation complete\",\"By3\":\"Jack Johnson (Claim Adjuster)\",\"Date4\":\"2023-06-02T02:37:07Z\",\"Desc4\":\"Vehicle Repair Complete\",\"By4\":\"Marie Producer (Producer)\"}}}",
+			"externalReferenceCode": "CL-65-321-8913",
+			"incidentDate": "2023-05-07T02:37:07Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-65-321-8913",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 3678,
+			"claimCreateDate": "2023-07-19T14:17:28Z",
+			"claimStatus": "inInvestigation",
+			"dataJSON": "{\"Detail\":{\"InsuranceInfo\":{\"InsuredName\":\"Merrily Phibb\",\"InsuredSSN\":\"606-56-0985\",\"InsuredVehicle\":\"2019 Ford Focus S Sedan\",\"InsuredVIN\":\"WA1WKAFP5BA988771\"},\"IncidentDetail\":{\"Location\":\"66734 Walton Junction\",\"LocationCity\":\"Inglewood\",\"LocationState\":\"CA\",\"LocationZIP\":\"90305\",\"Type\":\"Vehicle incident while parking\",\"Detail\":\"Incident with more than one passenger\",\"OtherVehicleMake\":\"Volkswagen\",\"OtherVehicleModel\":\"Touareg 2\",\"OtherVehicleVIN\":\"KMHCT4AE1CU446379\",\"OtherVehicleOccupant\":\"Filide Crackel\",\"OtherVehicleOccupant2\":\"Kerry Hulse\",\"OtherVehicleOccupant3\":\"Beatrix O'Lochan\",\"OtherVehicleInsurance\":\"State Farm\",\"Damage\":{\"Condition\":\"Major damage and not safe to drive\",\"Interior\":\"Upholstery\",\"Exterior\":\"Front,Driver Side\"}},\"VehicleRepair\":{\"Status\":\"Not Started\",\"Description\":\"Insured has not started repair\",\"MechanicName\":\"Hyperion Automotive Center\",\"MechanicPhone\":\"(323) 665-7864\",\"MechanicAddress\":\"2938 Hyperion Ave Los Angeles, CA 90027\",\"MechanicOrderNum\":\"pzt9zz\",\"MechanicCompleteDate\":\"2023-08-05T14:17:28Z\",\"MechanicCost\":3126},\"Activity\":{\"Date1\":\"2023-07-19T14:17:28Z\",\"Desc1\":\"Claim Submitted\",\"By1\":\"Marie Producer (Producer)\",\"Date2\":\"2023-07-20T14:17:28Z\",\"Desc2\":\"Investigation in progress\",\"By2\":\"Jack Johnson (Claim Adjuster)\",\"Date3\":\"2023-07-28T14:17:28Z\",\"Desc3\":\"Estimation complete\",\"By3\":\"Jack Johnson (Claim Adjuster)\",\"Date4\":\"2023-08-05T14:17:28Z\",\"Desc4\":\"Vehicle Repair Complete\",\"By4\":\"Marie Producer (Producer)\"}}}",
+			"externalReferenceCode": "CL-03-257-1188",
+			"incidentDate": "2023-07-15T14:17:28Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-03-257-1188",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 1725,
+			"claimCreateDate": "2023-05-13T04:43:09Z",
+			"claimStatus": "repair",
+			"dataJSON": "{\"Detail\":{\"InsuranceInfo\":{\"InsuredName\":\"Dynah Jordeson\",\"InsuredSSN\":\"762-42-7196\",\"InsuredVehicle\":\"2016 Toyota Tundra SR6\",\"InsuredVIN\":\"WBAVA33578K484872\"},\"IncidentDetail\":{\"Location\":\"22 Mosinee Plaza\",\"LocationCity\":\"Brooklyn\",\"LocationState\":\"NY\",\"LocationZIP\":\"11220\",\"Type\":\"Vehicle incident while filling fuel\",\"Detail\":\"Incident alone\",\"OtherVehicleMake\":\"Kia\",\"OtherVehicleModel\":\"Spectra\",\"OtherVehicleVIN\":\"1N6AA0CA4FN965796\",\"OtherVehicleOccupant\":\"Brigitte Penelli\",\"OtherVehicleOccupant2\":null,\"OtherVehicleOccupant3\":null,\"OtherVehicleInsurance\":\"Geico\",\"Damage\":{\"Condition\":\"Major damage and not safe to drive\",\"Interior\":\"Wheels & Dashboard\",\"Exterior\":\"Front,Driver Side\"}},\"VehicleRepair\":{\"Status\":\"Pending\",\"Description\":\"Vehicle pending repair\",\"MechanicName\":\"Lyons Auto Pro Plus\",\"MechanicPhone\":\"(310) 987-4567\",\"MechanicAddress\":\"675 Main Street Los Angeles, CA 90005\",\"MechanicOrderNum\":\"mpo6fz\",\"MechanicCompleteDate\":\"2023-06-01T04:43:09Z\",\"MechanicCost\":1466},\"Activity\":{\"Date1\":\"2023-05-13T04:43:09Z\",\"Desc1\":\"Claim Submitted\",\"By1\":\"Scott Producer (Producer)\",\"Date2\":\"2023-05-15T04:43:09Z\",\"Desc2\":\"Investigation in progress\",\"By2\":\"Jack Johnson (Claim Adjuster)\",\"Date3\":\"2023-05-19T04:43:09Z\",\"Desc3\":\"Estimation complete\",\"By3\":\"Jack Johnson (Claim Adjuster)\",\"Date4\":\"2023-06-01T04:43:09Z\",\"Desc4\":\"Vehicle Repair Complete\",\"By4\":\"Scott Producer (Producer)\"}}}",
+			"externalReferenceCode": "CL-98-127-2687",
+			"incidentDate": "2023-05-11T04:43:09Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-98-127-2687",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 1050,
+			"claimCreateDate": "2022-04-08T18:29:05Z",
+			"claimStatus": "approved",
+			"dataJSON": "{\"Detail\":{\"InsuranceInfo\":{\"InsuredName\":\"Janeen Orrill\",\"InsuredSSN\":\"485-79-8746\",\"InsuredVehicle\":\"2017 Ford Mustang GT Fastback\",\"InsuredVIN\":\"4T3BA3BBXFU103968\"},\"IncidentDetail\":{\"Location\":\"75 Becker Drive\",\"LocationCity\":\"Albany\",\"LocationState\":\"NY\",\"LocationZIP\":\"12255\",\"Type\":\"Vehicle incident while filling fuel\",\"Detail\":\"Incident with more than one passenger\",\"OtherVehicleMake\":\"Lexus\",\"OtherVehicleModel\":\"RX Hybrid\",\"OtherVehicleVIN\":\"5LMJJ3J55CE559301\",\"OtherVehicleOccupant\":\"Candie Tracey\",\"OtherVehicleOccupant2\":\"Amery Maddocks\",\"OtherVehicleOccupant3\":\"Cayla Binden\",\"OtherVehicleInsurance\":\"Mercury\",\"Damage\":{\"Condition\":\"Major damage and not safe to drive\",\"Interior\":\"Upholstery\",\"Exterior\":\"Passenger Side\"}},\"VehicleRepair\":{\"Status\":\"Pending\",\"Description\":\"Vehicle pending repair\",\"MechanicName\":\"Lyons Auto Pro Plus\",\"MechanicPhone\":\"(310) 987-4567\",\"MechanicAddress\":\"675 Main Street Los Angeles, CA 90005\",\"MechanicOrderNum\":\"iaq2db\",\"MechanicCompleteDate\":\"2022-04-19T18:29:05Z\",\"MechanicCost\":893},\"Activity\":{\"Date1\":\"2022-04-08T18:29:05Z\",\"Desc1\":\"Claim Submitted\",\"By1\":\"Scott Producer (Producer)\",\"Date2\":\"2022-04-11T18:29:05Z\",\"Desc2\":\"Investigation in progress\",\"By2\":\"Jack Johnson (Claim Adjuster)\",\"Date3\":\"2022-04-14T18:29:05Z\",\"Desc3\":\"Estimation complete\",\"By3\":\"Jack Johnson (Claim Adjuster)\",\"Date4\":\"2022-04-19T18:29:05Z\",\"Desc4\":\"Vehicle Repair Complete\",\"By4\":\"Scott Producer (Producer)\"}}}",
+			"externalReferenceCode": "CL-56-014-6401",
+			"incidentDate": "2022-04-02T18:29:05Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-56-014-6401",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 19390,
+			"claimCreateDate": "2022-03-22T07:06:24Z",
+			"claimStatus": "approved",
+			"externalReferenceCode": "CL-50-170-1310",
+			"incidentDate": "2022-03-19T07:06:24Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-50-170-1310",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 21667,
+			"claimCreateDate": "2023-10-20T03:09:17Z",
+			"claimStatus": "repair",
+			"externalReferenceCode": "CL-03-354-4783",
+			"incidentDate": "2023-10-13T03:09:17Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-03-354-4783",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 28075,
+			"claimCreateDate": "2023-03-17T10:22:53Z",
+			"claimStatus": "pendingSettlement",
+			"externalReferenceCode": "CL-49-718-9087",
+			"incidentDate": "2023-03-15T10:22:53Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-49-718-9087",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 32119,
+			"claimCreateDate": "2022-09-03T11:18:56Z",
+			"claimStatus": "declined",
+			"externalReferenceCode": "CL-12-697-8753",
+			"incidentDate": "2022-08-31T11:18:56Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-12-697-8753",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 38484,
+			"claimCreateDate": "2023-12-14T14:06:47Z",
+			"claimStatus": "pendingSettlement",
+			"externalReferenceCode": "CL-57-079-0997",
+			"incidentDate": "2023-12-09T14:06:47Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-57-079-0997",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 39104,
+			"claimCreateDate": "2021-10-26T00:09:57Z",
+			"claimStatus": "declined",
+			"externalReferenceCode": "CL-49-384-8171",
+			"incidentDate": "2021-10-21T00:09:57Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-49-384-8171",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 45218,
+			"claimCreateDate": "2023-01-31T19:08:51Z",
+			"claimStatus": "settled",
+			"externalReferenceCode": "CL-29-684-6794",
+			"incidentDate": "2023-01-28T19:08:51Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-29-684-6794",
+			"settledDate": "2023-01-31T19:08:51Z"
+		},
+		{
+			"claimAmount": 1879,
+			"claimCreateDate": "2022-02-23T08:38:54Z",
+			"claimStatus": "inInvestigation",
+			"externalReferenceCode": "CL-90-972-6070",
+			"incidentDate": "2022-02-21T08:38:54Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-90-972-6070",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 37209,
+			"claimCreateDate": "2022-12-24T14:01:35Z",
+			"claimStatus": "pendingSettlement",
+			"externalReferenceCode": "CL-42-620-5412",
+			"incidentDate": "2022-12-18T14:01:35Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-42-620-5412",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 27068,
+			"claimCreateDate": "2022-05-31T08:58:09Z",
+			"claimStatus": "settled",
+			"externalReferenceCode": "CL-00-932-0229",
+			"incidentDate": "2022-05-24T08:58:09Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-00-932-0229",
+			"settledDate": "2022-05-31T08:58:09Z"
+		},
+		{
+			"claimAmount": 4940,
+			"claimCreateDate": "2022-10-26T03:19:10Z",
+			"claimStatus": "declined",
+			"externalReferenceCode": "CL-19-218-6606",
+			"incidentDate": "2022-10-25T03:19:10Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-19-218-6606",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 35351,
+			"claimCreateDate": "2022-08-10T08:20:42Z",
+			"claimStatus": "settled",
+			"externalReferenceCode": "CL-95-568-4553",
+			"incidentDate": "2022-08-04T08:20:42Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-95-568-4553",
+			"settledDate": "2022-08-10T08:20:42Z"
+		},
+		{
+			"claimAmount": 48820,
+			"claimCreateDate": "2022-10-04T12:19:24Z",
+			"claimStatus": "declined",
+			"externalReferenceCode": "CL-20-651-4416",
+			"incidentDate": "2022-10-01T12:19:24Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-20-651-4416",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 23911,
+			"claimCreateDate": "2022-07-12T03:23:21Z",
+			"claimStatus": "pendingSettlement",
+			"externalReferenceCode": "CL-24-103-4848",
+			"incidentDate": "2022-07-06T03:23:21Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-24-103-4848",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 978,
+			"claimCreateDate": "2022-02-05T17:58:25Z",
+			"claimStatus": "declined",
+			"externalReferenceCode": "CL-91-443-8487",
+			"incidentDate": "2022-02-01T17:58:25Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-91-443-8487",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 29970,
+			"claimCreateDate": "2022-07-14T11:10:52Z",
+			"claimStatus": "pendingSettlement",
+			"externalReferenceCode": "CL-17-214-1457",
+			"incidentDate": "2022-07-10T11:10:52Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-17-214-1457",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 9150,
+			"claimCreateDate": "2022-05-19T23:16:45Z",
+			"claimStatus": "declined",
+			"externalReferenceCode": "CL-09-615-0298",
+			"incidentDate": "2022-05-15T23:16:45Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-09-615-0298",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 30909,
+			"claimCreateDate": "2022-06-19T14:54:36Z",
+			"claimStatus": "settled",
+			"externalReferenceCode": "CL-28-790-5786",
+			"incidentDate": "2022-06-14T14:54:36Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-28-790-5786",
+			"settledDate": "2022-06-19T14:54:36Z"
+		},
+		{
+			"claimAmount": 29075,
+			"claimCreateDate": "2023-08-14T07:19:42Z",
+			"claimStatus": "claimSubmitted",
+			"externalReferenceCode": "CL-35-502-0350",
+			"incidentDate": "2023-08-11T07:19:42Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-35-502-0350",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 41889,
+			"claimCreateDate": "2023-02-11T03:46:30Z",
+			"claimStatus": "inEstimation",
+			"externalReferenceCode": "CL-80-645-0770",
+			"incidentDate": "2023-02-04T03:46:30Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-80-645-0770",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 49640,
+			"claimCreateDate": "2022-06-27T23:53:59Z",
+			"claimStatus": "pendingSettlement",
+			"externalReferenceCode": "CL-26-840-9269",
+			"incidentDate": "2022-06-24T23:53:59Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-26-840-9269",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 25240,
+			"claimCreateDate": "2023-09-08T00:28:54Z",
+			"claimStatus": "claimSubmitted",
+			"externalReferenceCode": "CL-12-740-3916",
+			"incidentDate": "2023-09-04T00:28:54Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-12-740-3916",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 24701,
+			"claimCreateDate": "2022-11-25T10:02:33Z",
+			"claimStatus": "inEstimation",
+			"externalReferenceCode": "CL-39-867-3548",
+			"incidentDate": "2022-11-20T10:02:33Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-39-867-3548",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 9726,
+			"claimCreateDate": "2022-02-13T02:54:08Z",
+			"claimStatus": "settled",
+			"externalReferenceCode": "CL-78-702-7140",
+			"incidentDate": "2022-02-07T02:54:08Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-78-702-7140",
+			"settledDate": "2022-02-13T02:54:08Z"
+		},
+		{
+			"claimAmount": 41621,
+			"claimCreateDate": "2022-02-11T09:30:46Z",
+			"claimStatus": "approved",
+			"externalReferenceCode": "CL-78-479-8457",
+			"incidentDate": "2022-02-10T09:30:46Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-78-479-8457",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 37086,
+			"claimCreateDate": "2022-04-10T13:18:29Z",
+			"claimStatus": "settled",
+			"externalReferenceCode": "CL-34-994-6005",
+			"incidentDate": "2022-04-03T13:18:29Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-34-994-6005",
+			"settledDate": "2022-04-10T13:18:29Z"
+		},
+		{
+			"claimAmount": 15828,
+			"claimCreateDate": "2022-03-22T22:29:23Z",
+			"claimStatus": "claimSubmitted",
+			"externalReferenceCode": "CL-89-014-0947",
+			"incidentDate": "2022-03-21T22:29:23Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-89-014-0947",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 13871,
+			"claimCreateDate": "2022-11-21T15:13:45Z",
+			"claimStatus": "inInvestigation",
+			"externalReferenceCode": "CL-04-036-2064",
+			"incidentDate": "2022-11-16T15:13:45Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-04-036-2064",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 15915,
+			"claimCreateDate": "2023-08-14T14:37:45Z",
+			"claimStatus": "approved",
+			"externalReferenceCode": "CL-81-862-3592",
+			"incidentDate": "2023-08-13T14:37:45Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-81-862-3592",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 2037,
+			"claimCreateDate": "2021-11-16T12:56:21Z",
+			"claimStatus": "settled",
+			"externalReferenceCode": "CL-09-783-3860",
+			"incidentDate": "2021-11-14T12:56:21Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-09-783-3860",
+			"settledDate": "2021-11-16T12:56:21Z"
+		},
+		{
+			"claimAmount": 26193,
+			"claimCreateDate": "2023-01-13T09:52:34Z",
+			"claimStatus": "inEstimation",
+			"externalReferenceCode": "CL-87-656-9828",
+			"incidentDate": "2023-01-07T09:52:34Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-87-656-9828",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 9525,
+			"claimCreateDate": "2022-11-12T10:04:24Z",
+			"claimStatus": "inInvestigation",
+			"externalReferenceCode": "CL-72-105-2771",
+			"incidentDate": "2022-11-10T10:04:24Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-72-105-2771",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 17123,
+			"claimCreateDate": "2022-11-06T10:29:52Z",
+			"claimStatus": "repair",
+			"externalReferenceCode": "CL-89-520-7494",
+			"incidentDate": "2022-10-31T10:29:52Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-89-520-7494",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 29384,
+			"claimCreateDate": "2023-11-12T13:14:56Z",
+			"claimStatus": "declined",
+			"externalReferenceCode": "CL-92-063-4942",
+			"incidentDate": "2023-11-05T13:14:56Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-92-063-4942",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 33823,
+			"claimCreateDate": "2022-05-07T02:03:35Z",
+			"claimStatus": "repair",
+			"externalReferenceCode": "CL-80-512-1851",
+			"incidentDate": "2022-05-06T02:03:35Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-80-512-1851",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 31591,
+			"claimCreateDate": "2022-07-23T06:53:39Z",
+			"claimStatus": "repair",
+			"externalReferenceCode": "CL-99-297-3123",
+			"incidentDate": "2022-07-22T06:53:39Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-99-297-3123",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 5266,
+			"claimCreateDate": "2022-10-12T05:21:10Z",
+			"claimStatus": "approved",
+			"externalReferenceCode": "CL-82-741-5754",
+			"incidentDate": "2022-10-10T05:21:10Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-82-741-5754",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 20156,
+			"claimCreateDate": "2021-10-26T15:25:05Z",
+			"claimStatus": "settled",
+			"externalReferenceCode": "CL-15-665-3471",
+			"incidentDate": "2021-10-23T15:25:05Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-15-665-3471",
+			"settledDate": "2021-10-26T15:25:05Z"
+		},
+		{
+			"claimAmount": 22649,
+			"claimCreateDate": "2022-05-27T13:46:42Z",
+			"claimStatus": "repair",
+			"externalReferenceCode": "CL-52-796-5083",
+			"incidentDate": "2022-05-20T13:46:42Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-52-796-5083",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 46883,
+			"claimCreateDate": "2021-11-05T03:09:27Z",
+			"claimStatus": "declined",
+			"externalReferenceCode": "CL-10-177-9775",
+			"incidentDate": "2021-11-01T03:09:27Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-10-177-9775",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 46558,
+			"claimCreateDate": "2022-08-06T09:14:37Z",
+			"claimStatus": "inEstimation",
+			"externalReferenceCode": "CL-62-028-5052",
+			"incidentDate": "2022-07-30T09:14:37Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-62-028-5052",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 30197,
+			"claimCreateDate": "2023-01-28T06:38:21Z",
+			"claimStatus": "settled",
+			"externalReferenceCode": "CL-21-770-2462",
+			"incidentDate": "2023-01-21T06:38:21Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-21-770-2462",
+			"settledDate": "2023-01-28T06:38:21Z"
+		},
+		{
+			"claimAmount": 6699,
+			"claimCreateDate": "2023-01-29T20:53:43Z",
+			"claimStatus": "inEstimation",
+			"externalReferenceCode": "CL-34-660-4892",
+			"incidentDate": "2023-01-27T20:53:43Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-34-660-4892",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 29975,
+			"claimCreateDate": "2022-11-16T18:01:25Z",
+			"claimStatus": "claimSubmitted",
+			"externalReferenceCode": "CL-36-436-4987",
+			"incidentDate": "2022-11-15T18:01:25Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-36-436-4987",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 11514,
+			"claimCreateDate": "2022-06-17T08:36:26Z",
+			"claimStatus": "settled",
+			"externalReferenceCode": "CL-17-532-6902",
+			"incidentDate": "2022-06-13T08:36:26Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-17-532-6902",
+			"settledDate": "2022-06-17T08:36:26Z"
+		},
+		{
+			"claimAmount": 21871,
+			"claimCreateDate": "2022-02-08T23:41:51Z",
+			"claimStatus": "approved",
+			"externalReferenceCode": "CL-55-818-8951",
+			"incidentDate": "2022-02-05T23:41:51Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-55-818-8951",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 41023,
+			"claimCreateDate": "2023-02-10T02:04:18Z",
+			"claimStatus": "settled",
+			"externalReferenceCode": "CL-33-889-2219",
+			"incidentDate": "2023-02-09T02:04:18Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-33-889-2219",
+			"settledDate": "2023-02-10T02:04:18Z"
+		},
+		{
+			"claimAmount": 10084,
+			"claimCreateDate": "2022-10-25T12:59:06Z",
+			"claimStatus": "settled",
+			"externalReferenceCode": "CL-34-014-7801",
+			"incidentDate": "2022-10-21T12:59:06Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-34-014-7801",
+			"settledDate": "2022-10-25T12:59:06Z"
+		},
+		{
+			"claimAmount": 44710,
+			"claimCreateDate": "2022-09-30T23:03:51Z",
+			"claimStatus": "inInvestigation",
+			"externalReferenceCode": "CL-41-253-4807",
+			"incidentDate": "2022-09-25T23:03:51Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-41-253-4807",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 36376,
+			"claimCreateDate": "2023-06-03T16:23:49Z",
+			"claimStatus": "inEstimation",
+			"externalReferenceCode": "CL-98-316-2130",
+			"incidentDate": "2023-06-01T16:23:49Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-98-316-2130",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 17829,
+			"claimCreateDate": "2023-02-03T07:51:15Z",
+			"claimStatus": "approved",
+			"externalReferenceCode": "CL-61-528-2307",
+			"incidentDate": "2023-02-02T07:51:15Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-61-528-2307",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 9286,
+			"claimCreateDate": "2023-10-04T16:19:23Z",
+			"claimStatus": "declined",
+			"externalReferenceCode": "CL-98-428-9284",
+			"incidentDate": "2023-09-30T16:19:23Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-98-428-9284",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 24457,
+			"claimCreateDate": "2023-12-03T18:52:32Z",
+			"claimStatus": "approved",
+			"externalReferenceCode": "CL-12-228-9789",
+			"incidentDate": "2023-11-27T18:52:32Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-12-228-9789",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 42977,
+			"claimCreateDate": "2022-07-05T11:49:49Z",
+			"claimStatus": "declined",
+			"externalReferenceCode": "CL-86-430-5624",
+			"incidentDate": "2022-06-29T11:49:49Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-86-430-5624",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 31756,
+			"claimCreateDate": "2022-11-03T17:14:43Z",
+			"claimStatus": "pendingSettlement",
+			"externalReferenceCode": "CL-62-605-0517",
+			"incidentDate": "2022-10-31T17:14:43Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-62-605-0517",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 33358,
+			"claimCreateDate": "2022-03-17T23:58:26Z",
+			"claimStatus": "approved",
+			"externalReferenceCode": "CL-41-732-6472",
+			"incidentDate": "2022-03-16T23:58:26Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-41-732-6472",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 29801,
+			"claimCreateDate": "2022-12-28T03:18:11Z",
+			"claimStatus": "repair",
+			"externalReferenceCode": "CL-50-820-8485",
+			"incidentDate": "2022-12-26T03:18:11Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-50-820-8485",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 6315,
+			"claimCreateDate": "2022-11-15T08:44:08Z",
+			"claimStatus": "pendingSettlement",
+			"externalReferenceCode": "CL-86-054-3284",
+			"incidentDate": "2022-11-14T08:44:08Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-86-054-3284",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 23777,
+			"claimCreateDate": "2023-11-18T07:10:48Z",
+			"claimStatus": "pendingSettlement",
+			"externalReferenceCode": "CL-72-120-2350",
+			"incidentDate": "2023-11-12T07:10:48Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-72-120-2350",
+			"settledDate": null
+		},
+		{
+			"claimAmount": 36893,
+			"claimCreateDate": "2023-05-21T01:35:07Z",
+			"claimStatus": "inEstimation",
+			"externalReferenceCode": "CL-40-057-7878",
+			"incidentDate": "2023-05-14T01:35:07Z",
+			"r_policyToClaims_c_raylifePolicyERC": "PO-40-057-7878",
+			"settledDate": null
+		}
+	],
+	"objectDefinitionName": "RaylifeClaim"
+}

@@ -6,12 +6,10 @@
 package com.liferay.headless.admin.address.internal.dto.v1_0.converter;
 
 import com.liferay.headless.admin.address.dto.v1_0.Region;
-import com.liferay.portal.kernel.service.RegionService;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pei-Jung Lan
@@ -46,8 +44,5 @@ public class RegionResourceDTOConverter
 			}
 		};
 	}
-
-	@Reference
-	private RegionService _regionService;
 
 }

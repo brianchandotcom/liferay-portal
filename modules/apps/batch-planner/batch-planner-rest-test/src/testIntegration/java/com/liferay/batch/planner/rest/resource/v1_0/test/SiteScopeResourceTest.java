@@ -13,7 +13,7 @@ import com.liferay.batch.planner.rest.client.pagination.Page;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.rest.test.util.ObjectDefinitionTestUtil;
+import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;

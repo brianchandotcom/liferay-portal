@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProviderUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -163,9 +164,10 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 	}
 
 	private JSONObject _getInputJSONObject(
-		FragmentEntryLink fragmentEntryLink,
-		HttpServletRequest httpServletRequest, InfoForm infoForm,
-		Locale locale) {
+			FragmentEntryLink fragmentEntryLink,
+			HttpServletRequest httpServletRequest, InfoForm infoForm,
+			Locale locale)
+		throws JSONException {
 
 		FragmentEntryInputTemplateNodeContextHelper
 			fragmentEntryInputTemplateNodeContextHelper =
@@ -228,9 +230,10 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 	}
 
 	private String _renderFragmentEntry(
-		String configuration, String css,
-		FragmentRendererContext fragmentRendererContext, String html,
-		HttpServletRequest httpServletRequest) {
+			String configuration, String css,
+			FragmentRendererContext fragmentRendererContext, String html,
+			HttpServletRequest httpServletRequest)
+		throws JSONException {
 
 		StringBundler sb = new StringBundler(26);
 

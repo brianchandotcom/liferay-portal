@@ -41,6 +41,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.InfoFormException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -51,6 +52,7 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -95,9 +97,10 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 	}
 
 	public InputTemplateNode toInputTemplateNode(
-		FragmentEntryLink fragmentEntryLink,
-		HttpServletRequest httpServletRequest, InfoForm infoForm,
-		Locale locale) {
+			FragmentEntryLink fragmentEntryLink,
+			HttpServletRequest httpServletRequest, InfoForm infoForm,
+			Locale locale)
+		throws JSONException {
 
 		String errorMessage = StringPool.BLANK;
 
@@ -271,9 +274,19 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 			value = infoFormParameterMap.get(infoField.getName());
 		}
 		else {
-			value = _getValue(
+			Object infoFieldValue = _getValue(
 				value, httpServletRequest, infoField, infoForm.getName(),
 				locale);
+
+			if (infoFieldValue instanceof KeyValuePair) {
+				KeyValuePair keyValuePair = (KeyValuePair)infoFieldValue;
+
+				label = keyValuePair.getValue();
+				value = keyValuePair.getKey();
+			}
+			else {
+				value = String.valueOf(infoFieldValue);
+			}
 		}
 
 		InputTemplateNode inputTemplateNode = new InputTemplateNode(
@@ -651,7 +664,7 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 			"1");
 	}
 
-	private String _getValue(
+	private Object _getValue(
 		String defaultValue, HttpServletRequest httpServletRequest,
 		InfoField infoField, String infoFormName, Locale locale) {
 
@@ -768,6 +781,12 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 			if (Objects.equals(bigDecimal.signum(), 0)) {
 				return "0";
 			}
+		}
+
+		if (infoField.getInfoFieldType() ==
+				RelationshipInfoFieldType.INSTANCE) {
+
+			return infoFieldValue.getValue();
 		}
 
 		if (infoField.getInfoFieldType() == SelectInfoFieldType.INSTANCE) {

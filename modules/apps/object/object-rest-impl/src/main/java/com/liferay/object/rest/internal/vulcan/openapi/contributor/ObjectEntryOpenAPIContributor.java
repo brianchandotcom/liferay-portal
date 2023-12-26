@@ -14,6 +14,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.relationship.util.ObjectRelationshipUtil;
+import com.liferay.object.rest.dto.v1_0.ListEntry;
 import com.liferay.object.rest.internal.vulcan.openapi.contributor.util.OpenAPIContributorUtil;
 import com.liferay.object.rest.openapi.v1_0.ObjectEntryOpenAPIResource;
 import com.liferay.object.rest.openapi.v1_0.ObjectEntryOpenAPIResourceProvider;
@@ -216,6 +217,8 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 		}
 
 		_setReadOnlyProperties(schemas);
+
+		_setListEntryRef(schemas);
 	}
 
 	private void _addObjectActionPathItem(
@@ -289,6 +292,14 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 		OpenAPIContributorUtil.copySchemas(
 			schemaName, sourceSchemas,
 			objectDefinition.isUnmodifiableSystemObject(), openAPI);
+	}
+
+	private void _addSchemas(
+		Class<?> entityClass, Map<String, Schema> schemas) {
+
+		if (!schemas.containsKey(entityClass.getSimpleName())) {
+			schemas.putAll(_openAPIResource.getSchemas(entityClass));
+		}
 	}
 
 	private String _buildActionsURL(
@@ -781,6 +792,63 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 				actionSchemas.put(
 					StringUtil.toLowerCase(pathItemHttpMethod.name()),
 					actionSchema);
+			}
+		}
+	}
+
+	private void _setListEntryRef(Map<String, Schema> schemas) {
+		Map<String, ObjectField> objectFields =
+			ObjectFieldUtil.toObjectFieldsMap(
+				_objectFieldLocalService.getObjectFields(
+					_objectDefinition.getObjectDefinitionId()));
+
+		Schema objectDefinitionSchema = schemas.get(
+			_objectDefinition.getShortName());
+
+		Map<String, Schema> properties = objectDefinitionSchema.getProperties();
+
+		for (Map.Entry<String, Schema> entry : properties.entrySet()) {
+			String key = entry.getKey();
+
+			ObjectField objectField = objectFields.get(key);
+
+			if (objectField == null) {
+				continue;
+			}
+
+			if (Objects.equals(
+					objectField.getBusinessType(),
+					ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
+
+				_addSchemas(ListEntry.class, schemas);
+
+				Schema schema = entry.getValue();
+
+				schema.$ref(ListEntry.class.getSimpleName());
+			}
+
+			if (Objects.equals(
+					objectField.getBusinessType(),
+					ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST)) {
+
+				_addSchemas(ListEntry.class, schemas);
+
+				Schema schema = entry.getValue();
+
+				properties.put(
+					key,
+					new ArraySchema() {
+						{
+							setExtensions(schema.getExtensions());
+							setItems(
+								new Schema() {
+									{
+										set$ref(
+											ListEntry.class.getSimpleName());
+									}
+								});
+						}
+					});
 			}
 		}
 	}

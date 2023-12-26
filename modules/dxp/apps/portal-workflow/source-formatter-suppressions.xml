@@ -1,9 +1,6 @@
 <?xml version="1.0"?>
 
 <suppressions>
-	<checkstyle>
-		<suppress checks="MissingEmptyLineCheck" files="portal-workflow-metrics-rest-impl/src/main/java/com/liferay/portal/workflow/metrics/rest/internal/resource/v1_0/SLAResourceImpl\.java" />
-	</checkstyle>
 	<source-check>
 		<suppress checks="JSONPackageJSONCheck" files="portal-workflow-kaleo-designer-web/package\.json" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-workflow-kaleo-designer-test/src/testFunctional/macros/KaleoDesigner\.macro" />

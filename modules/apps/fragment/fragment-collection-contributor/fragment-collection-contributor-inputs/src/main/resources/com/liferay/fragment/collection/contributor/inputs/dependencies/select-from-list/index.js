@@ -51,25 +51,26 @@ window.addEventListener('scroll', handleWindowResizeOrScroll, {
 
 let lastSearchAbortController = new AbortController();
 let lastSearchQuery = null;
-valueInputElement.value = '';
 
 if (input.value) {
 	const selectedOption = (input.attributes.options || []).find(
 		(option) => option.value === input.value
 	);
 
-	lastSearchQuery = selectedOption.label.toLowerCase();
-	valueInputElement.value = selectedOption.value;
+	if (selectedOption) {
+		lastSearchQuery = selectedOption.label.toLowerCase();
+		valueInputElement.value = selectedOption.value;
 
-	const selectedOptionElement = optionListElement.querySelector(
-		'.active.dropdown-item'
-	);
-
-	if (selectedOptionElement) {
-		optionListElement.setAttribute(
-			'aria-activedescendant',
-			selectedOption.id
+		const selectedOptionElement = optionListElement.querySelector(
+			'.active.dropdown-item'
 		);
+
+		if (selectedOptionElement) {
+			optionListElement.setAttribute(
+				'aria-activedescendant',
+				selectedOption.id
+			);
+		}
 	}
 }
 

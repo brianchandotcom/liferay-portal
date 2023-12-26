@@ -5,7 +5,6 @@
 
 package com.liferay.message.boards.internal.search.spi.model.index.contributor;
 
-import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.message.boards.model.MBDiscussion;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;
@@ -193,9 +192,6 @@ public class MBMessageModelDocumentContributor
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		MBMessageModelDocumentContributor.class);
-
-	@Reference
-	private AssetTagLocalService _assetTagLocalService;
 
 	@Reference
 	private HtmlParser _htmlParser;

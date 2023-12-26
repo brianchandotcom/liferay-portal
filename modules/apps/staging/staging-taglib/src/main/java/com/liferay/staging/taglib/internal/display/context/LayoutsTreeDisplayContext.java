@@ -20,13 +20,20 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutSetBranch;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetBranchLocalServiceUtil;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
+import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
@@ -346,6 +353,20 @@ public class LayoutsTreeDisplayContext {
 					isSelectPagesPrivateLayout(), _getTreeId())
 			).put(
 				"hasChildren", true
+			).put(
+				"hasGuestViewPermission",
+				() -> {
+					Role role = RoleLocalServiceUtil.getRole(
+						_themeDisplay.getCompanyId(), RoleConstants.GUEST);
+
+					return ResourcePermissionLocalServiceUtil.
+						hasResourcePermission(
+							_themeDisplay.getCompanyId(),
+							Layout.class.getName(),
+							ResourceConstants.SCOPE_INDIVIDUAL,
+							String.valueOf(_themeDisplay.getPlid()),
+							role.getRoleId(), ActionKeys.VIEW);
+				}
 			).put(
 				"id", LayoutConstants.DEFAULT_PARENT_LAYOUT_ID
 			).put(

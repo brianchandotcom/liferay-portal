@@ -172,6 +172,16 @@ function TreeItem({
 				>
 					{getItemName(item)}
 				</span>
+
+				{Liferay.FeatureFlags['LPS-196847'] &&
+				item.id !== '0' &&
+				!item.hasGuestViewPermission ? (
+					<ClayIcon
+						className="c-ml-2 lfr-portal-tooltip"
+						data-title={Liferay.Language.get('restricted-page')}
+						symbol="lock"
+					/>
+				) : null}
 			</ClayTreeView.ItemStack>
 
 			<ClayTreeView.Group items={item.children}>
@@ -203,6 +213,17 @@ function TreeItem({
 						>
 							{getItemName(childItem)}
 						</span>
+
+						{Liferay.FeatureFlags['LPS-196847'] &&
+						!childItem.hasGuestViewPermission ? (
+							<ClayIcon
+								className="c-ml-2 lfr-portal-tooltip"
+								data-title={Liferay.Language.get(
+									'restricted-page'
+								)}
+								symbol="lock"
+							/>
+						) : null}
 					</ClayTreeView.Item>
 				)}
 			</ClayTreeView.Group>

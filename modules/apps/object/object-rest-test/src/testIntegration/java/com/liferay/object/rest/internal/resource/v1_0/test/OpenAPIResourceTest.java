@@ -169,7 +169,6 @@ public class OpenAPIResourceTest {
 		_user = UserTestUtil.addUser(_company);
 
 		_objectDefinition2 = ObjectDefinitionTestUtil.publishObjectDefinition(
-			"A" + RandomTestUtil.randomString(),
 			Collections.singletonList(
 				ObjectFieldUtil.createObjectField(
 					"Text", "String", true, true, null,
@@ -180,14 +179,12 @@ public class OpenAPIResourceTest {
 
 		_siteScopedObjectDefinition =
 			ObjectDefinitionTestUtil.publishObjectDefinition(
-				"A" + RandomTestUtil.randomString(),
 				Collections.singletonList(
 					ObjectFieldUtil.createObjectField(
 						"Text", "String", true, true, null,
 						RandomTestUtil.randomString(), _OBJECT_FIELD_NAME,
 						false)),
-				ObjectDefinitionConstants.SCOPE_SITE,
-				TestPropsValues.getUserId());
+				ObjectDefinitionConstants.SCOPE_SITE);
 
 		_testGetOpenAPI(_siteScopedObjectDefinition, _objectDefinition2);
 	}

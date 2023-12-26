@@ -52,6 +52,14 @@ public class ObjectDefinitionTestUtil {
 	}
 
 	public static ObjectDefinition publishObjectDefinition(
+			List<ObjectField> objectFields, String scope, long userId)
+		throws Exception {
+
+		return publishObjectDefinition(
+			"A" + RandomTestUtil.randomString(), objectFields, scope, userId);
+	}
+
+	public static ObjectDefinition publishObjectDefinition(
 			String name, List<ObjectField> objectFields, String scope)
 		throws Exception {
 

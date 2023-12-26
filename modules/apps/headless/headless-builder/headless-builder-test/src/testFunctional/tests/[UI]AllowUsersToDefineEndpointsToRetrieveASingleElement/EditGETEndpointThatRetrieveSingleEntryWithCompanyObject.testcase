@@ -1,0 +1,93 @@
+@component-name = "portal-headless"
+definition {
+
+	property custom.properties = "feature.flag.LPS-178642=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Object";
+	property testray.main.component.name = "Headless Builder";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		task ("Given an custom object with a name field which only accept unique values") {
+			ObjectDefinitionAPI.createObjectDefinition(
+				en_US_label = "Student",
+				en_US_plural_label = "Students",
+				name = "Student",
+				objectDefinitionExternalReferenceCode = "student",
+				requiredStringFieldName = "name",
+				requiredStringFieldNameExternalReferenceCode = "studentName");
+
+			ObjectAdmin.editObjectField(
+				label = "Student",
+				labelName = "name",
+				objectName = "Student");
+		}
+	}
+
+	tearDown {
+		ApplicationAPI.deleteAllAPIApplication();
+
+		JSONObject.deleteAllCustomObjects();
+
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@priority = 4
+	test CanSeeUniqueFieldAsPathParameterPropertiesInRelatedSchema {
+		property portal.acceptance = "true";
+
+		task ("And Given create an API application with related Single Element endpoint and schema") {
+			ApplicationAPI.createAPIApplication(
+				baseURL = "my-app",
+				endpointName = "testendpoint",
+				endpointPath = "/gettest/{entryId}",
+				mainObjectDefinitionErc = "student",
+				pathParameter = "id",
+				relatedEndpoint = "true",
+				relatedSchema = "true",
+				retrieveType = "singleElement",
+				schemaName = "testSchema",
+				status = "published",
+				title = "My-app");
+
+			SchemaAPI.relateResponseSchemaToEndpointByErc(
+				endpointErc = "My-app_testendpoint",
+				responseSchemaErc = "My-app_testSchema");
+		}
+
+		task ("When I select Path Parameter Property in edit API application > Endpoint > Configuration > related schema") {
+			APIBuilderUI.goToEditRelatedEntryInEditApplication(
+				entity = "Endpoints",
+				name = "/gettest/{entryId}/",
+				tabEntity = "Configuration",
+				title = "My-app");
+
+			Click(
+				locator1 = "Button#BUTTON_WITH_VALUE",
+				value = "ID");
+		}
+
+		task ("Then I can see available parameters are ID, External Reference Code and name") {
+			AssertElementPresent(
+				key_optionName = "External Reference Code",
+				locator1 = "ObjectAdmin#LAYOUT_ADD_FIELD_OPTION");
+
+			AssertElementPresent(
+				key_optionName = "ID",
+				locator1 = "ObjectAdmin#LAYOUT_ADD_FIELD_OPTION");
+
+			AssertElementPresent(
+				key_optionName = "name",
+				locator1 = "ObjectAdmin#LAYOUT_ADD_FIELD_OPTION");
+		}
+	}
+
+}

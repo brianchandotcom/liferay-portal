@@ -7,7 +7,6 @@ package com.liferay.exportimport.lifecycle;
 
 import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleEventListenerRegistryUtil;
 import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleListener;
-import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
@@ -15,7 +14,6 @@ import com.liferay.portal.kernel.messaging.MessageListener;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Daniel Kocsis
@@ -34,10 +32,5 @@ public class SyncExportImportLifecycleMessageListener
 		return ExportImportLifecycleEventListenerRegistryUtil.
 			getSyncExportImportLifecycleListeners();
 	}
-
-	@Reference(
-		target = "(destination.name=" + DestinationNames.EXPORT_IMPORT_LIFECYCLE_EVENT_SYNC + ")"
-	)
-	private Destination _destination;
 
 }

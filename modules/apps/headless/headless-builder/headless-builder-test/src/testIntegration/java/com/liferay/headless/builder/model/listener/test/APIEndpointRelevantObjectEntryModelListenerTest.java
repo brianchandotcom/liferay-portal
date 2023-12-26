@@ -283,13 +283,12 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 				"headless-builder/endpoints", Http.Method.POST
 			).toString(),
 			JSONCompareMode.STRICT);
+
 		JSONAssert.assertEquals(
 			JSONUtil.put(
 				"status", "BAD_REQUEST"
 			).put(
-				"title",
-				"Path parameters are not supported by GET API endpoints with " +
-					"the \"collection\" retrieve type."
+				"title", "Path must start with the \"/\" character."
 			).toString(),
 			HTTPTestUtil.invokeToJSONObject(
 				JSONUtil.put(
@@ -298,16 +297,12 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 					"name", RandomTestUtil.randomString()
 				).put(
 					"path",
-					StringPool.FORWARD_SLASH +
-						StringUtil.toUpperCase(RandomTestUtil.randomString())
-				).put(
-					"pathParameter", HeadlessBuilderConstants.PATH_PARAMETER_ERC
+					StringBundler.concat(
+						StringUtil.toLowerCase(RandomTestUtil.randomString()),
+						StringPool.FORWARD_SLASH, StringPool.COMMA)
 				).put(
 					"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
 					apiApplicationJSONObject1.getLong("id")
-				).put(
-					"r_responseAPISchemaToAPIEndpoints_c_apiSchemaId",
-					apiSchemaJSONObject1.getLong("id")
 				).put(
 					"retrieveType",
 					APIApplication.Endpoint.RetrieveType.COLLECTION.getValue()
@@ -430,6 +425,41 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 				"status", "BAD_REQUEST"
 			).put(
 				"title",
+				"Path parameters are not supported by GET API endpoints with " +
+					"\"collection\" retrieve type."
+			).toString(),
+			HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.put(
+					"httpMethod", "get"
+				).put(
+					"name", RandomTestUtil.randomString()
+				).put(
+					"path",
+					StringPool.FORWARD_SLASH +
+						StringUtil.toUpperCase(RandomTestUtil.randomString())
+				).put(
+					"pathParameter", HeadlessBuilderConstants.PATH_PARAMETER_ERC
+				).put(
+					"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
+					apiApplicationJSONObject1.getLong("id")
+				).put(
+					"r_responseAPISchemaToAPIEndpoints_c_apiSchemaId",
+					apiSchemaJSONObject1.getLong("id")
+				).put(
+					"retrieveType",
+					APIApplication.Endpoint.RetrieveType.COLLECTION.getValue()
+				).put(
+					"scope", APIApplication.Endpoint.Scope.COMPANY.getValue()
+				).toString(),
+				"headless-builder/endpoints", Http.Method.POST
+			).toString(),
+			JSONCompareMode.STRICT);
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"status", "BAD_REQUEST"
+			).put(
+				"title",
 				"Path parameters cannot be established without a response " +
 					"schema in use."
 			).toString(),
@@ -455,35 +485,6 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 					"retrieveType",
 					APIApplication.Endpoint.RetrieveType.SINGLE_ELEMENT.
 						getValue()
-				).put(
-					"scope", APIApplication.Endpoint.Scope.COMPANY.getValue()
-				).toString(),
-				"headless-builder/endpoints", Http.Method.POST
-			).toString(),
-			JSONCompareMode.STRICT);
-
-		JSONAssert.assertEquals(
-			JSONUtil.put(
-				"status", "BAD_REQUEST"
-			).put(
-				"title", "Path must start with the \"/\" character."
-			).toString(),
-			HTTPTestUtil.invokeToJSONObject(
-				JSONUtil.put(
-					"httpMethod", "get"
-				).put(
-					"name", RandomTestUtil.randomString()
-				).put(
-					"path",
-					StringBundler.concat(
-						StringUtil.toLowerCase(RandomTestUtil.randomString()),
-						StringPool.FORWARD_SLASH, StringPool.COMMA)
-				).put(
-					"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
-					apiApplicationJSONObject1.getLong("id")
-				).put(
-					"retrieveType",
-					APIApplication.Endpoint.RetrieveType.COLLECTION.getValue()
 				).put(
 					"scope", APIApplication.Endpoint.Scope.COMPANY.getValue()
 				).toString(),

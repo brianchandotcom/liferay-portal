@@ -16,6 +16,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -276,6 +277,8 @@ public class PullRequest {
 					"Unable to get pull request comments", ioException);
 			}
 		}
+
+		Collections.sort(_comments);
 
 		return _comments;
 	}
@@ -930,10 +933,17 @@ public class PullRequest {
 		}
 	}
 
-	public static class Comment {
+	public static class Comment implements Comparable<Comment> {
 
 		public Comment(JSONObject commentJSONObject) {
 			_commentJSONObject = commentJSONObject;
+		}
+
+		@Override
+		public int compareTo(Comment otherComment) {
+			Date createdDate = getCreatedDate();
+
+			return createdDate.compareTo(otherComment.getCreatedDate());
 		}
 
 		public String getBody() {

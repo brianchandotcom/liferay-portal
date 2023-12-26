@@ -2,27 +2,15 @@ import com.liferay.gradle.util.OSDetector
 
 task runGradleTest
 
-def withClientExtensionConfig = {
-	projectName, fn ->
-
-	Project clientExtensionProject = project ":${projectName}"
-
-	File clientExtensionBuildDir = new File(clientExtensionProject.buildDir, "liferay-client-extension-build")
-
-	File clientExtensionConfigJSONFile = new File(clientExtensionBuildDir, "${projectName}.client-extension-config.json")
-
-	fn.call(clientExtensionConfigJSONFile)
-}
-
 runGradleTest {
 	dependsOn ":do-not-expand-urls-client-extension:createClientExtensionConfig", ":expand-urls-client-extension:createClientExtensionConfig", ":expand-urls-with-parameters-client-extension:createClientExtensionConfig"
 
 	doLast {
-		withClientExtensionConfig("do-not-expand-urls-client-extension") {
+		_testClientExtensionConfig("do-not-expand-urls-client-extension") {
 			assert it.text.contains('"doNotExpand=*.txt"') : "Wildcards should only expand for frontend client extensions."
 		}
 
-		withClientExtensionConfig("expand-urls-client-extension") {
+		_testClientExtensionConfig("expand-urls-client-extension") {
 			assert it.text.contains('"fooUrls=foo.json\\nfoo.txt"')
 
 			if (OSDetector.windows) {
@@ -35,9 +23,17 @@ runGradleTest {
 			assert it.text.contains('"singleURL=bar.txt\\nfoo.txt"')
 		}
 
-		withClientExtensionConfig("expand-urls-with-parameters-client-extension") {
-			assert it.text.contains('"urls=foo.json?k=v\\nfoo.txt?k=v"')
+		_testClientExtensionConfig("expand-urls-with-parameters-client-extension") {
 			assert it.text.contains('"singleURL=bar.json?k=v\\nbar.txt?k=v"')
+			assert it.text.contains('"urls=foo.json?k=v\\nfoo.txt?k=v"')
 		}
 	}
+}
+
+private void _testClientExtensionConfig(String projectName, Closure<Void> clientExtensionConfigJSONFileClosure) {
+	Project clientExtensionProject = project ":${projectName}"
+
+	File clientExtensionBuildDir = new File(clientExtensionProject.buildDir, "liferay-client-extension-build")
+
+	clientExtensionConfigJSONFileClosure new File(clientExtensionBuildDir, "${projectName}.client-extension-config.json")
 }

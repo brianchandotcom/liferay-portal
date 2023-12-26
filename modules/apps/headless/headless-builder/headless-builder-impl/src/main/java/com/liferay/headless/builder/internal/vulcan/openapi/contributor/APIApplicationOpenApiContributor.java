@@ -41,11 +41,13 @@ import io.swagger.v3.oas.models.media.ObjectSchema;
 import io.swagger.v3.oas.models.media.Schema;
 import io.swagger.v3.oas.models.media.StringSchema;
 import io.swagger.v3.oas.models.parameters.Parameter;
+import io.swagger.v3.oas.models.parameters.RequestBody;
 import io.swagger.v3.oas.models.responses.ApiResponse;
 import io.swagger.v3.oas.models.responses.ApiResponses;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -149,6 +151,12 @@ public class APIApplicationOpenApiContributor implements OpenAPIContributor {
 					schemasSet.add(responseSchema.getName());
 				}
 			}
+
+			APIApplication.Schema requestSchema = endpoint.getRequestSchema();
+
+			if (requestSchema != null) {
+				schemasSet.add(requestSchema.getName());
+			}
 		}
 
 		components.setSchemas(_removedUnusedPageSchema(schemas, schemasSet));
@@ -220,18 +228,18 @@ public class APIApplicationOpenApiContributor implements OpenAPIContributor {
 	private PathItem _toOpenAPIPathItem(APIApplication.Endpoint endpoint) {
 		Operation operation = new Operation();
 
-		String schemaName = null;
+		String responseSchemaName = null;
 
 		APIApplication.Schema responseSchema = endpoint.getResponseSchema();
 
 		if (responseSchema != null) {
-			schemaName = responseSchema.getName();
+			responseSchemaName = responseSchema.getName();
 		}
 
 		operation.setOperationId(
 			OpenAPIUtil.getOperationId(
 				endpoint.getMethod(), _formatPath(endpoint),
-				endpoint.getRetrieveType(), schemaName));
+				endpoint.getRetrieveType(), responseSchemaName));
 
 		if (Objects.equals(endpoint.getMethod(), Http.Method.GET)) {
 			List<Parameter> parameters = new ArrayList<>();
@@ -308,6 +316,39 @@ public class APIApplicationOpenApiContributor implements OpenAPIContributor {
 			}
 
 			operation.setParameters(parameters);
+		}
+
+		APIApplication.Schema requestSchema = endpoint.getRequestSchema();
+
+		if (requestSchema != null) {
+			MediaType mediaType = new MediaType() {
+				{
+					setSchema(
+						new Schema() {
+							{
+								set$ref(requestSchema.getName());
+							}
+						});
+				}
+			};
+
+			RequestBody requestBody = new RequestBody() {
+				{
+					setContent(
+						new Content() {
+							{
+								put("application/json", mediaType);
+								put("application/xml", mediaType);
+							}
+						});
+					setDescription("default response");
+				}
+			};
+
+			operation.setRequestBody(requestBody);
+
+			operation.setTags(
+				Collections.singletonList(requestSchema.getName()));
 		}
 
 		if (responseSchema != null) {

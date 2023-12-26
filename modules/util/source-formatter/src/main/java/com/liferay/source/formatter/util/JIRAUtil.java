@@ -30,11 +30,11 @@ public class JIRAUtil {
 
 			String commitMessageTitle = parts[1];
 
-			if (commitMessageTitle.startsWith(" ")) {
+			if (Character.isWhitespace(commitMessageTitle.charAt(0))) {
 				throw new Exception(
 					StringBundler.concat(
 						"Found formatting issues in SHA ", parts[0], "\n",
-						"The commit message should not start with spaces."));
+						"The commit message should not start with whitespace"));
 			}
 
 			int x = parts[1].indexOf("\n");

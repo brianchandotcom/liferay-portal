@@ -42,12 +42,11 @@ public class ChannelAccountDTOConverter
 				getCommerceChannelAccountEntryRel(
 					(Long)dtoConverterContext.getId());
 
+		AccountEntry accountEntry = _accountEntryLocalService.getAccountEntry(
+			commerceChannelAccountEntryRel.getAccountEntryId());
 		CommerceChannel commerceChannel =
 			_commerceChannelLocalService.getCommerceChannel(
 				commerceChannelAccountEntryRel.getCommerceChannelId());
-
-		AccountEntry accountEntry = _accountEntryLocalService.getAccountEntry(
-			commerceChannelAccountEntryRel.getAccountEntryId());
 
 		return new ChannelAccount() {
 			{

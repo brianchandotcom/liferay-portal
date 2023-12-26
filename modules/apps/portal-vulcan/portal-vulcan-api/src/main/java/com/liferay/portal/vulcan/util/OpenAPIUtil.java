@@ -6,6 +6,7 @@
 package com.liferay.portal.vulcan.util;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.batch.engine.Field;
@@ -90,7 +91,7 @@ public class OpenAPIUtil {
 					propertySchema.getDescription(), propertyName,
 					propertySchema.isReadOnly(), null,
 					requiredPropertySchemaNames.contains(propertyName),
-					propertySchema.getType(), propertySchema.isWriteOnly()));
+					true, propertySchema.getType(), propertySchema.isWriteOnly()));
 		}
 
 		return fields;

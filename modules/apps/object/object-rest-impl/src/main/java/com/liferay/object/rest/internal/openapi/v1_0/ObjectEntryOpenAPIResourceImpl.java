@@ -27,6 +27,7 @@ import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.TreeMapBuilder;
 import com.liferay.portal.vulcan.batch.engine.Field;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
@@ -116,6 +117,7 @@ public class ObjectEntryOpenAPIResourceImpl
 					GetterUtil.getBoolean(propertySchema.getReadOnly()),
 					_getRef(propertySchema),
 					requiredPropertySchemaNames.contains(propertyName),
+					_isBatchSupport(propertySchema.getExtensions()),
 					propertySchema.getType(),
 					GetterUtil.getBoolean(propertySchema.getWriteOnly())));
 		}
@@ -474,6 +476,16 @@ public class ObjectEntryOpenAPIResourceImpl
 		}
 
 		return requiredPropertySchemaNames;
+	}
+
+	private boolean _isBatchSupport(Map<String, Object> extensions) {
+		if (MapUtil.isNotEmpty(extensions) &&
+			extensions.containsKey("x-batch-support")) {
+
+			return MapUtil.getBoolean(extensions, "x-batch-support");
+		}
+
+		return true;
 	}
 
 	private final BundleContext _bundleContext;

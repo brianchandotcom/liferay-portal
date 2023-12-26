@@ -7,7 +7,6 @@ package com.liferay.message.boards.internal.model.listener;
 
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.service.MBMessageLocalService;
-import com.liferay.message.boards.service.MBThreadLocalService;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
@@ -72,8 +71,5 @@ public class RatingsStatsModelListener extends BaseModelListener<RatingsStats> {
 
 	@Reference
 	private MBMessageLocalService _mbMessageLocalService;
-
-	@Reference
-	private MBThreadLocalService _mbThreadLocalService;
 
 }

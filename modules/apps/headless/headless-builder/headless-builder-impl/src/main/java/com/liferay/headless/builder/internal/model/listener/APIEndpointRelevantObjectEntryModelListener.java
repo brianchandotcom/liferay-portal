@@ -383,7 +383,7 @@ public class APIEndpointRelevantObjectEntryModelListener
 		if (!pathString.startsWith(StringPool.FORWARD_SLASH)) {
 			throw new ObjectEntryValuesException.InvalidObjectField(
 				Arrays.asList(objectField.getLabel(user.getLocale()), "\"/\""),
-				"%s must start with the \"/\" character",
+				"%s must start with the %s character",
 				"x-must-start-with-the-x-character");
 		}
 

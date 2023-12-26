@@ -29,9 +29,9 @@ public class UserAccountValidFullNameExceptionMapper
 
 	@Override
 	protected Problem getProblem(
-		ContactNameException.MustHaveValidFullName contactNameException) {
+		ContactNameException.MustHaveValidFullName mustHaveValidFullName) {
 
-		return new Problem(contactNameException);
+		return new Problem(mustHaveValidFullName);
 	}
 
 }

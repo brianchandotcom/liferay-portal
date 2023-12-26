@@ -81,6 +81,9 @@ public class BlogsReadingTimeEntryLocalServiceWrapper
 		return blogsEntry;
 	}
 
+	/**
+	 * See LPS-204267. The BlogsEntryLocalService service must be available.
+	 */
 	@Reference
 	private BlogsEntryLocalService _blogsEntryLocalService;
 

@@ -122,6 +122,15 @@ public class AssetTestUtil {
 			long groupId, long classNameId, long classTypePK, boolean required)
 		throws Exception {
 
+		return addVocabulary(
+			groupId, classNameId, classTypePK, false, required);
+	}
+
+	public static AssetVocabulary addVocabulary(
+			long groupId, long classNameId, long classTypePK,
+			boolean depotRequired, boolean required)
+		throws Exception {
+
 		Locale locale = LocaleUtil.getSiteDefault();
 
 		Map<Locale, String> titleMap = HashMapBuilder.put(
@@ -137,7 +146,7 @@ public class AssetTestUtil {
 
 		vocabularySettingsHelper.setClassNameIdsAndClassTypePKs(
 			new long[] {classNameId}, new long[] {classTypePK},
-			new boolean[] {required});
+			new boolean[] {depotRequired}, new boolean[] {required});
 		vocabularySettingsHelper.setMultiValued(true);
 
 		ServiceContext serviceContext =

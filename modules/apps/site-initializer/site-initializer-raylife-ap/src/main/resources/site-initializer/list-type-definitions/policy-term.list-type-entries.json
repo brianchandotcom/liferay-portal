@@ -1,0 +1,10 @@
+[
+	{
+		"key": "yearToYear",
+		"name": "Year to Year",
+		"name_i18n": {
+			"en-US": "Year to Year"
+		},
+		"type": "string"
+	}
+]

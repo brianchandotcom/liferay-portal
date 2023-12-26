@@ -1,0 +1,51 @@
+[
+	{
+		"key": "bound",
+		"name": "Bound",
+		"name_i18n": {
+			"en-US": "Bound"
+		}
+	},
+	{
+		"key": "incomplete",
+		"name": "Incomplete",
+		"name_i18n": {
+			"en-US": "Incomplete"
+		}
+	},
+	{
+		"key": "rejected",
+		"name": "Rejected",
+		"name_i18n": {
+			"en-US": "Rejected"
+		}
+	},
+	{
+		"key": "quoted",
+		"name": "Quoted",
+		"name_i18n": {
+			"en-US": "Quoted"
+		}
+	},
+	{
+		"key": "open",
+		"name": "Open",
+		"name_i18n": {
+			"en-US": "Open"
+		}
+	},
+	{
+		"key": "reviewed",
+		"name": "Reviewed",
+		"name_i18n": {
+			"en-US": "Reviewed"
+		}
+	},
+	{
+		"key": "underwriting",
+		"name": "Underwriting",
+		"name_i18n": {
+			"en-US": "Underwriting"
+		}
+	}
+]

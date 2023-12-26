@@ -239,6 +239,19 @@ public class ObjectEntryOpenAPIResourceImpl
 
 			return dtoProperty;
 		}
+		else if (Objects.equals(
+					objectField.getBusinessType(),
+					ObjectFieldConstants.BUSINESS_TYPE_PRECISION_DECIMAL)) {
+
+			return new DTOProperty(
+				Collections.singletonMap("x-parent-map", "properties"),
+				objectField.getName(), Double.class.getSimpleName()) {
+
+				{
+					setRequired(objectField.isRequired());
+				}
+			};
+		}
 
 		return new DTOProperty(
 			Collections.singletonMap("x-parent-map", "properties"),

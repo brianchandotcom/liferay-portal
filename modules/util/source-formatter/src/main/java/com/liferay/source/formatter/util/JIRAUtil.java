@@ -30,6 +30,13 @@ public class JIRAUtil {
 
 			String commitMessageTitle = parts[1];
 
+			if (commitMessageTitle.startsWith(" ")) {
+				throw new Exception(
+					StringBundler.concat(
+						"Found formatting issues in SHA ", parts[0], "\n",
+						"The commit message does not start with a space"));
+			}
+
 			int x = parts[1].indexOf("\n");
 
 			if (x != -1) {

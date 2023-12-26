@@ -281,6 +281,7 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 		</#if>
 		protected ${propertyType} ${propertyName}<#if propertySchema.jsonMap> = new HashMap<>()</#if>;
 
+		@JsonIgnore
 		private Supplier<${propertyType}> _${propertyName}Supplier;
 	</#list>
 

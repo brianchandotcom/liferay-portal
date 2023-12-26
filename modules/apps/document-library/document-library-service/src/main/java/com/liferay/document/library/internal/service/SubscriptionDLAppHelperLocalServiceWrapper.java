@@ -7,7 +7,6 @@ package com.liferay.document.library.internal.service;
 
 import com.liferay.asset.display.page.portlet.AssetDisplayPageEntryFormProcessor;
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
-import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
 import com.liferay.document.library.internal.util.DLSubscriptionSender;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
@@ -343,10 +342,6 @@ public class SubscriptionDLAppHelperLocalServiceWrapper
 	@Reference
 	private AssetDisplayPageEntryFormProcessor
 		_assetDisplayPageEntryFormProcessor;
-
-	@Reference
-	private AssetDisplayPageEntryLocalService
-		_assetDisplayPageEntryLocalService;
 
 	@Reference
 	private AssetDisplayPageFriendlyURLProvider

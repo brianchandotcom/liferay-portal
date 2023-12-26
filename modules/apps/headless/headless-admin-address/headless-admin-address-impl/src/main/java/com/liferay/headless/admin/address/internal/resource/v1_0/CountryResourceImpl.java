@@ -16,7 +16,6 @@ import com.liferay.portal.kernel.service.CountryService;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.odata.entity.DoubleEntityField;
@@ -220,8 +219,5 @@ public class CountryResourceImpl extends BaseCountryResourceImpl {
 
 	@Reference
 	private Language _language;
-
-	@Reference
-	private Localization _localization;
 
 }

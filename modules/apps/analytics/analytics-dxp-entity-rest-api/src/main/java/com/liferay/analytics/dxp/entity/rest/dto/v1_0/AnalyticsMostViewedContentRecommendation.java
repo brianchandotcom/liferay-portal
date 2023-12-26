@@ -96,6 +96,7 @@ public class AnalyticsMostViewedContentRecommendation implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long[] assetCategoryIds;
 
+	@JsonIgnore
 	private Supplier<Long[]> _assetCategoryIdsSupplier;
 
 	@Schema
@@ -136,6 +137,7 @@ public class AnalyticsMostViewedContentRecommendation implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date createDate;
 
+	@JsonIgnore
 	private Supplier<Date> _createDateSupplier;
 
 	@Schema
@@ -176,6 +178,7 @@ public class AnalyticsMostViewedContentRecommendation implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String jobId;
 
+	@JsonIgnore
 	private Supplier<String> _jobIdSupplier;
 
 	@Schema
@@ -214,6 +217,7 @@ public class AnalyticsMostViewedContentRecommendation implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer rank;
 
+	@JsonIgnore
 	private Supplier<Integer> _rankSupplier;
 
 	@Schema
@@ -254,6 +258,7 @@ public class AnalyticsMostViewedContentRecommendation implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long recommendedAssetEntryId;
 
+	@JsonIgnore
 	private Supplier<Long> _recommendedAssetEntryIdSupplier;
 
 	@Schema
@@ -293,6 +298,7 @@ public class AnalyticsMostViewedContentRecommendation implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Float score;
 
+	@JsonIgnore
 	private Supplier<Float> _scoreSupplier;
 
 	@Override

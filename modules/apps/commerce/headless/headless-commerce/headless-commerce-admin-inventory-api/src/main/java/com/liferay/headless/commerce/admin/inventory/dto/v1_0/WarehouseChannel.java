@@ -93,6 +93,7 @@ public class WarehouseChannel implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
+	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
 	@Schema
@@ -134,6 +135,7 @@ public class WarehouseChannel implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Channel channel;
 
+	@JsonIgnore
 	private Supplier<Channel> _channelSupplier;
 
 	@Schema(example = "PAB-34098-789-N")
@@ -178,6 +180,7 @@ public class WarehouseChannel implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String channelExternalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _channelExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
@@ -220,6 +223,7 @@ public class WarehouseChannel implements Serializable {
 	@NotNull
 	protected Long channelId;
 
+	@JsonIgnore
 	private Supplier<Long> _channelIdSupplier;
 
 	@DecimalMin("0")
@@ -261,6 +265,7 @@ public class WarehouseChannel implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long warehouseChannelId;
 
+	@JsonIgnore
 	private Supplier<Long> _warehouseChannelIdSupplier;
 
 	@Schema(example = "DAB-34098-789-N")
@@ -305,6 +310,7 @@ public class WarehouseChannel implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String warehouseExternalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _warehouseExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
@@ -347,6 +353,7 @@ public class WarehouseChannel implements Serializable {
 	@NotNull
 	protected Long warehouseId;
 
+	@JsonIgnore
 	private Supplier<Long> _warehouseIdSupplier;
 
 	@Override

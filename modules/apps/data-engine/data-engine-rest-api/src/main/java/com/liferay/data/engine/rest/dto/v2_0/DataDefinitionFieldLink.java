@@ -91,6 +91,7 @@ public class DataDefinitionFieldLink implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected DataDefinition dataDefinition;
 
+	@JsonIgnore
 	private Supplier<DataDefinition> _dataDefinitionSupplier;
 
 	@Schema
@@ -132,6 +133,7 @@ public class DataDefinitionFieldLink implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected DataLayout[] dataLayouts;
 
+	@JsonIgnore
 	private Supplier<DataLayout[]> _dataLayoutsSupplier;
 
 	@Schema
@@ -173,6 +175,7 @@ public class DataDefinitionFieldLink implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected DataListView[] dataListViews;
 
+	@JsonIgnore
 	private Supplier<DataListView[]> _dataListViewsSupplier;
 
 	@Override

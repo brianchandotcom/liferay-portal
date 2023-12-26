@@ -91,6 +91,7 @@ public class Channel implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long accountId;
 
+	@JsonIgnore
 	private Supplier<Long> _accountIdSupplier;
 
 	@Schema
@@ -132,6 +133,7 @@ public class Channel implements Serializable {
 	@NotEmpty
 	protected String currencyCode;
 
+	@JsonIgnore
 	private Supplier<String> _currencyCodeSupplier;
 
 	@Schema
@@ -172,6 +174,7 @@ public class Channel implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@Schema
@@ -210,6 +213,7 @@ public class Channel implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema
@@ -249,6 +253,7 @@ public class Channel implements Serializable {
 	@NotEmpty
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema
@@ -289,6 +294,7 @@ public class Channel implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long siteGroupId;
 
+	@JsonIgnore
 	private Supplier<Long> _siteGroupIdSupplier;
 
 	@Schema
@@ -328,6 +334,7 @@ public class Channel implements Serializable {
 	@NotEmpty
 	protected String type;
 
+	@JsonIgnore
 	private Supplier<String> _typeSupplier;
 
 	@Override

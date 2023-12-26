@@ -88,6 +88,7 @@ public class SearchableAssetNameDisplay implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String className;
 
+	@JsonIgnore
 	private Supplier<String> _classNameSupplier;
 
 	@Schema
@@ -128,6 +129,7 @@ public class SearchableAssetNameDisplay implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String displayName;
 
+	@JsonIgnore
 	private Supplier<String> _displayNameSupplier;
 
 	@Override

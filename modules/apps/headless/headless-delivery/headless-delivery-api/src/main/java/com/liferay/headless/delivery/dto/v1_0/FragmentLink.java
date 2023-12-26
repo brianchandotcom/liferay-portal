@@ -93,6 +93,7 @@ public class FragmentLink implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object href;
 
+	@JsonIgnore
 	private Supplier<Object> _hrefSupplier;
 
 	@Schema(deprecated = true)
@@ -146,6 +147,7 @@ public class FragmentLink implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Target target;
 
+	@JsonIgnore
 	private Supplier<Target> _targetSupplier;
 
 	@Schema(description = "The fragment link's value.")
@@ -187,6 +189,7 @@ public class FragmentLink implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentLinkValue value;
 
+	@JsonIgnore
 	private Supplier<FragmentLinkValue> _valueSupplier;
 
 	@Schema(description = "The localized fragment link's values.")
@@ -229,6 +232,7 @@ public class FragmentLink implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, FragmentLinkValue> value_i18n;
 
+	@JsonIgnore
 	private Supplier<Map<String, FragmentLinkValue>> _value_i18nSupplier;
 
 	@Override

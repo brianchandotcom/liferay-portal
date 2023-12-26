@@ -90,6 +90,7 @@ public class SearchRequestBody implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, Object> attributes;
 
+	@JsonIgnore
 	private Supplier<Map<String, Object>> _attributesSupplier;
 
 	@Schema
@@ -134,6 +135,7 @@ public class SearchRequestBody implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FacetConfiguration[] facetConfigurations;
 
+	@JsonIgnore
 	private Supplier<FacetConfiguration[]> _facetConfigurationsSupplier;
 
 	@Override

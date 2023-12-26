@@ -88,6 +88,7 @@ public class ElementDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String category;
 
+	@JsonIgnore
 	private Supplier<String> _categorySupplier;
 
 	@Schema
@@ -129,6 +130,7 @@ public class ElementDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Configuration configuration;
 
+	@JsonIgnore
 	private Supplier<Configuration> _configurationSupplier;
 
 	@Schema
@@ -167,6 +169,7 @@ public class ElementDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String icon;
 
+	@JsonIgnore
 	private Supplier<String> _iconSupplier;
 
 	@Schema
@@ -209,6 +212,7 @@ public class ElementDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected UiConfiguration uiConfiguration;
 
+	@JsonIgnore
 	private Supplier<UiConfiguration> _uiConfigurationSupplier;
 
 	@Override

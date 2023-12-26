@@ -86,6 +86,7 @@ public class ShippingOption implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double amount;
 
+	@JsonIgnore
 	private Supplier<Double> _amountSupplier;
 
 	@Schema
@@ -126,6 +127,7 @@ public class ShippingOption implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String amountFormatted;
 
+	@JsonIgnore
 	private Supplier<String> _amountFormattedSupplier;
 
 	@Schema
@@ -166,6 +168,7 @@ public class ShippingOption implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String label;
 
+	@JsonIgnore
 	private Supplier<String> _labelSupplier;
 
 	@Schema
@@ -204,6 +207,7 @@ public class ShippingOption implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Override

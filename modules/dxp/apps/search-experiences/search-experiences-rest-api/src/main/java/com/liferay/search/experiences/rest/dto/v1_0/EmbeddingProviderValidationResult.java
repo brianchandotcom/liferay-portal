@@ -88,6 +88,7 @@ public class EmbeddingProviderValidationResult implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String errorMessage;
 
+	@JsonIgnore
 	private Supplier<String> _errorMessageSupplier;
 
 	@Schema
@@ -128,6 +129,7 @@ public class EmbeddingProviderValidationResult implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer expectedDimensions;
 
+	@JsonIgnore
 	private Supplier<Integer> _expectedDimensionsSupplier;
 
 	@Override

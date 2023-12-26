@@ -95,6 +95,7 @@ public class WarehouseItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@DecimalMin("0")
@@ -134,6 +135,7 @@ public class WarehouseItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema
@@ -174,6 +176,7 @@ public class WarehouseItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date modifiedDate;
 
+	@JsonIgnore
 	private Supplier<Date> _modifiedDateSupplier;
 
 	@DecimalMin("0")
@@ -216,6 +219,7 @@ public class WarehouseItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal quantity;
 
+	@JsonIgnore
 	private Supplier<BigDecimal> _quantitySupplier;
 
 	@DecimalMin("0")
@@ -258,6 +262,7 @@ public class WarehouseItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal reservedQuantity;
 
+	@JsonIgnore
 	private Supplier<BigDecimal> _reservedQuantitySupplier;
 
 	@Schema(example = "SKU")
@@ -296,6 +301,7 @@ public class WarehouseItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String sku;
 
+	@JsonIgnore
 	private Supplier<String> _skuSupplier;
 
 	@Schema(example = "lt")
@@ -336,6 +342,7 @@ public class WarehouseItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String unitOfMeasureKey;
 
+	@JsonIgnore
 	private Supplier<String> _unitOfMeasureKeySupplier;
 
 	@Schema(example = "AB-34098-789-N")
@@ -380,6 +387,7 @@ public class WarehouseItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String warehouseExternalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _warehouseExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
@@ -421,6 +429,7 @@ public class WarehouseItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long warehouseId;
 
+	@JsonIgnore
 	private Supplier<Long> _warehouseIdSupplier;
 
 	@Override

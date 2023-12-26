@@ -91,6 +91,7 @@ public class ClassPKReference implements Serializable {
 	@NotEmpty
 	protected String className;
 
+	@JsonIgnore
 	private Supplier<String> _classNameSupplier;
 
 	@Schema
@@ -132,6 +133,7 @@ public class ClassPKReference implements Serializable {
 	@NotNull
 	protected Long classPK;
 
+	@JsonIgnore
 	private Supplier<Long> _classPKSupplier;
 
 	@Override

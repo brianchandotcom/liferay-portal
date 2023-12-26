@@ -91,6 +91,7 @@ public class GeneralConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] clauseContributorsExcludes;
 
+	@JsonIgnore
 	private Supplier<String[]> _clauseContributorsExcludesSupplier;
 
 	@Schema
@@ -135,6 +136,7 @@ public class GeneralConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] clauseContributorsIncludes;
 
+	@JsonIgnore
 	private Supplier<String[]> _clauseContributorsIncludesSupplier;
 
 	@Schema
@@ -175,6 +177,7 @@ public class GeneralConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean emptySearchEnabled;
 
+	@JsonIgnore
 	private Supplier<Boolean> _emptySearchEnabledSupplier;
 
 	@Schema
@@ -215,6 +218,7 @@ public class GeneralConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean explain;
 
+	@JsonIgnore
 	private Supplier<Boolean> _explainSupplier;
 
 	@Schema
@@ -256,6 +260,7 @@ public class GeneralConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean includeResponseString;
 
+	@JsonIgnore
 	private Supplier<Boolean> _includeResponseStringSupplier;
 
 	@Schema
@@ -296,6 +301,7 @@ public class GeneralConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String languageId;
 
+	@JsonIgnore
 	private Supplier<String> _languageIdSupplier;
 
 	@Schema
@@ -336,6 +342,7 @@ public class GeneralConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String queryString;
 
+	@JsonIgnore
 	private Supplier<String> _queryStringSupplier;
 
 	@Schema
@@ -377,6 +384,7 @@ public class GeneralConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] searchableAssetTypes;
 
+	@JsonIgnore
 	private Supplier<String[]> _searchableAssetTypesSupplier;
 
 	@Schema
@@ -417,6 +425,7 @@ public class GeneralConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String timeZoneId;
 
+	@JsonIgnore
 	private Supplier<String> _timeZoneIdSupplier;
 
 	@Override

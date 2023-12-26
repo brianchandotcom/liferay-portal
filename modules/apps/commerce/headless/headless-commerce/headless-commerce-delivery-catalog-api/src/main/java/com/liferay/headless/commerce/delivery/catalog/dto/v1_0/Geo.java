@@ -88,6 +88,7 @@ public class Geo implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Double latitude;
 
+	@JsonIgnore
 	private Supplier<Double> _latitudeSupplier;
 
 	@Schema(description = "The longitude of a point in space.")
@@ -128,6 +129,7 @@ public class Geo implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Double longitude;
 
+	@JsonIgnore
 	private Supplier<Double> _longitudeSupplier;
 
 	@Override

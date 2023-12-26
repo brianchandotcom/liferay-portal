@@ -90,6 +90,7 @@ public class Field implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object defaultValue;
 
+	@JsonIgnore
 	private Supplier<Object> _defaultValueSupplier;
 
 	@Schema
@@ -131,6 +132,7 @@ public class Field implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FieldMapping[] fieldMappings;
 
+	@JsonIgnore
 	private Supplier<FieldMapping[]> _fieldMappingsSupplier;
 
 	@Schema
@@ -171,6 +173,7 @@ public class Field implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String helpText;
 
+	@JsonIgnore
 	private Supplier<String> _helpTextSupplier;
 
 	@Schema
@@ -211,6 +214,7 @@ public class Field implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String helpTextLocalized;
 
+	@JsonIgnore
 	private Supplier<String> _helpTextLocalizedSupplier;
 
 	@Schema
@@ -251,6 +255,7 @@ public class Field implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String label;
 
+	@JsonIgnore
 	private Supplier<String> _labelSupplier;
 
 	@Schema
@@ -291,6 +296,7 @@ public class Field implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String labelLocalized;
 
+	@JsonIgnore
 	private Supplier<String> _labelLocalizedSupplier;
 
 	@Schema
@@ -329,6 +335,7 @@ public class Field implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema
@@ -367,6 +374,7 @@ public class Field implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String type;
 
+	@JsonIgnore
 	private Supplier<String> _typeSupplier;
 
 	@Schema
@@ -408,6 +416,7 @@ public class Field implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected TypeOptions typeOptions;
 
+	@JsonIgnore
 	private Supplier<TypeOptions> _typeOptionsSupplier;
 
 	@Override

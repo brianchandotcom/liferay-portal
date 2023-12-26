@@ -89,6 +89,7 @@ public class Clause implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean additive;
 
+	@JsonIgnore
 	private Supplier<Boolean> _additiveSupplier;
 
 	@Schema
@@ -128,6 +129,7 @@ public class Clause implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Float boost;
 
+	@JsonIgnore
 	private Supplier<Float> _boostSupplier;
 
 	@Schema
@@ -168,6 +170,7 @@ public class Clause implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String context;
 
+	@JsonIgnore
 	private Supplier<String> _contextSupplier;
 
 	@Schema
@@ -208,6 +211,7 @@ public class Clause implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean disabled;
 
+	@JsonIgnore
 	private Supplier<Boolean> _disabledSupplier;
 
 	@Schema
@@ -248,6 +252,7 @@ public class Clause implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String field;
 
+	@JsonIgnore
 	private Supplier<String> _fieldSupplier;
 
 	@Schema
@@ -286,6 +291,7 @@ public class Clause implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema
@@ -326,6 +332,7 @@ public class Clause implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String occur;
 
+	@JsonIgnore
 	private Supplier<String> _occurSupplier;
 
 	@Schema
@@ -366,6 +373,7 @@ public class Clause implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String parent;
 
+	@JsonIgnore
 	private Supplier<String> _parentSupplier;
 
 	@Schema
@@ -407,6 +415,7 @@ public class Clause implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object query;
 
+	@JsonIgnore
 	private Supplier<Object> _querySupplier;
 
 	@Schema
@@ -445,6 +454,7 @@ public class Clause implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String type;
 
+	@JsonIgnore
 	private Supplier<String> _typeSupplier;
 
 	@Schema
@@ -485,6 +495,7 @@ public class Clause implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String value;
 
+	@JsonIgnore
 	private Supplier<String> _valueSupplier;
 
 	@Override

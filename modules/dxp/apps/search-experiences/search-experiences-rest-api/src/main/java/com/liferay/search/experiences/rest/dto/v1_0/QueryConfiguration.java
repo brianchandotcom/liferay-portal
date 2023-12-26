@@ -88,6 +88,7 @@ public class QueryConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean applyIndexerClauses;
 
+	@JsonIgnore
 	private Supplier<Boolean> _applyIndexerClausesSupplier;
 
 	@Schema
@@ -129,6 +130,7 @@ public class QueryConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected QueryEntry[] queryEntries;
 
+	@JsonIgnore
 	private Supplier<QueryEntry[]> _queryEntriesSupplier;
 
 	@Override

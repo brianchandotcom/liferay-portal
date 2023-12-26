@@ -91,6 +91,7 @@ public class TierPrice implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String currency;
 
+	@JsonIgnore
 	private Supplier<String> _currencySupplier;
 
 	@Schema
@@ -131,6 +132,7 @@ public class TierPrice implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Double price;
 
+	@JsonIgnore
 	private Supplier<Double> _priceSupplier;
 
 	@Schema
@@ -171,6 +173,7 @@ public class TierPrice implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String priceFormatted;
 
+	@JsonIgnore
 	private Supplier<String> _priceFormattedSupplier;
 
 	@DecimalMin("0")
@@ -213,6 +216,7 @@ public class TierPrice implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected BigDecimal quantity;
 
+	@JsonIgnore
 	private Supplier<BigDecimal> _quantitySupplier;
 
 	@Override

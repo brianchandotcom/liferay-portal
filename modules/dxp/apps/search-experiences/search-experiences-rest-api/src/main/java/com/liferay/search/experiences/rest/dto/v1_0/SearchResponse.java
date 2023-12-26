@@ -90,6 +90,7 @@ public class SearchResponse implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map[] errors;
 
+	@JsonIgnore
 	private Supplier<Map[]> _errorsSupplier;
 
 	@Schema
@@ -128,6 +129,7 @@ public class SearchResponse implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer page;
 
+	@JsonIgnore
 	private Supplier<Integer> _pageSupplier;
 
 	@Schema
@@ -168,6 +170,7 @@ public class SearchResponse implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer pageSize;
 
+	@JsonIgnore
 	private Supplier<Integer> _pageSizeSupplier;
 
 	@Schema
@@ -209,6 +212,7 @@ public class SearchResponse implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object request;
 
+	@JsonIgnore
 	private Supplier<Object> _requestSupplier;
 
 	@Schema
@@ -249,6 +253,7 @@ public class SearchResponse implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String requestString;
 
+	@JsonIgnore
 	private Supplier<String> _requestStringSupplier;
 
 	@Schema
@@ -290,6 +295,7 @@ public class SearchResponse implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object response;
 
+	@JsonIgnore
 	private Supplier<Object> _responseSupplier;
 
 	@Schema
@@ -330,6 +336,7 @@ public class SearchResponse implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String responseString;
 
+	@JsonIgnore
 	private Supplier<String> _responseStringSupplier;
 
 	@Schema
@@ -371,6 +378,7 @@ public class SearchResponse implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected SearchHits searchHits;
 
+	@JsonIgnore
 	private Supplier<SearchHits> _searchHitsSupplier;
 
 	@Schema
@@ -412,6 +420,7 @@ public class SearchResponse implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected SearchRequest searchRequest;
 
+	@JsonIgnore
 	private Supplier<SearchRequest> _searchRequestSupplier;
 
 	@Override

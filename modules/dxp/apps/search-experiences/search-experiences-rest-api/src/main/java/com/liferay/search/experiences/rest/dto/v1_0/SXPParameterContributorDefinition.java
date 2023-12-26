@@ -88,6 +88,7 @@ public class SXPParameterContributorDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String className;
 
+	@JsonIgnore
 	private Supplier<String> _classNameSupplier;
 
 	@Schema
@@ -128,6 +129,7 @@ public class SXPParameterContributorDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
+	@JsonIgnore
 	private Supplier<String> _descriptionSupplier;
 
 	@Schema
@@ -168,6 +170,7 @@ public class SXPParameterContributorDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String templateVariable;
 
+	@JsonIgnore
 	private Supplier<String> _templateVariableSupplier;
 
 	@Override

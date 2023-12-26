@@ -97,6 +97,7 @@ public class OrderRule implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
+	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
 	@Schema(example = "true")
@@ -137,6 +138,7 @@ public class OrderRule implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean active;
 
+	@JsonIgnore
 	private Supplier<Boolean> _activeSupplier;
 
 	@Schema(example = "admin")
@@ -177,6 +179,7 @@ public class OrderRule implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String author;
 
+	@JsonIgnore
 	private Supplier<String> _authorSupplier;
 
 	@Schema(example = "2017-07-21")
@@ -217,6 +220,7 @@ public class OrderRule implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date createDate;
 
+	@JsonIgnore
 	private Supplier<Date> _createDateSupplier;
 
 	@Schema(example = "Laptops, Beverages")
@@ -257,6 +261,7 @@ public class OrderRule implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
+	@JsonIgnore
 	private Supplier<String> _descriptionSupplier;
 
 	@Schema(example = "2017-07-21")
@@ -297,6 +302,7 @@ public class OrderRule implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date displayDate;
 
+	@JsonIgnore
 	private Supplier<Date> _displayDateSupplier;
 
 	@Schema(example = "2017-08-21")
@@ -337,6 +343,7 @@ public class OrderRule implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date expirationDate;
 
+	@JsonIgnore
 	private Supplier<Date> _expirationDateSupplier;
 
 	@Schema(example = "AB-34098-789-N")
@@ -377,6 +384,7 @@ public class OrderRule implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@DecimalMin("0")
@@ -416,6 +424,7 @@ public class OrderRule implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema(example = "Laptops, Beverages")
@@ -455,6 +464,7 @@ public class OrderRule implements Serializable {
 	@NotEmpty
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema(example = "true")
@@ -495,6 +505,7 @@ public class OrderRule implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean neverExpire;
 
+	@JsonIgnore
 	private Supplier<Boolean> _neverExpireSupplier;
 
 	@Schema
@@ -537,6 +548,7 @@ public class OrderRule implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected OrderRuleAccount[] orderRuleAccount;
 
+	@JsonIgnore
 	private Supplier<OrderRuleAccount[]> _orderRuleAccountSupplier;
 
 	@Schema
@@ -581,6 +593,7 @@ public class OrderRule implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected OrderRuleAccountGroup[] orderRuleAccountGroup;
 
+	@JsonIgnore
 	private Supplier<OrderRuleAccountGroup[]> _orderRuleAccountGroupSupplier;
 
 	@Schema
@@ -623,6 +636,7 @@ public class OrderRule implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected OrderRuleChannel[] orderRuleChannel;
 
+	@JsonIgnore
 	private Supplier<OrderRuleChannel[]> _orderRuleChannelSupplier;
 
 	@Schema
@@ -665,6 +679,7 @@ public class OrderRule implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected OrderRuleOrderType[] orderRuleOrderType;
 
+	@JsonIgnore
 	private Supplier<OrderRuleOrderType[]> _orderRuleOrderTypeSupplier;
 
 	@Schema(example = "1.2")
@@ -705,6 +720,7 @@ public class OrderRule implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double priority;
 
+	@JsonIgnore
 	private Supplier<Double> _prioritySupplier;
 
 	@Schema(example = "order-limit")
@@ -744,6 +760,7 @@ public class OrderRule implements Serializable {
 	@NotEmpty
 	protected String type;
 
+	@JsonIgnore
 	private Supplier<String> _typeSupplier;
 
 	@Schema(example = "22.50")
@@ -784,6 +801,7 @@ public class OrderRule implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String typeSettings;
 
+	@JsonIgnore
 	private Supplier<String> _typeSettingsSupplier;
 
 	@Schema
@@ -825,6 +843,7 @@ public class OrderRule implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Status workflowStatusInfo;
 
+	@JsonIgnore
 	private Supplier<Status> _workflowStatusInfoSupplier;
 
 	@Override

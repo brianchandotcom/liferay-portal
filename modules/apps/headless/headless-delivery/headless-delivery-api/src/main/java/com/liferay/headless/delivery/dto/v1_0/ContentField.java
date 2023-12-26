@@ -93,6 +93,7 @@ public class ContentField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ContentFieldValue contentFieldValue;
 
+	@JsonIgnore
 	private Supplier<ContentFieldValue> _contentFieldValueSupplier;
 
 	@Schema(description = "The localized field's values.")
@@ -137,6 +138,7 @@ public class ContentField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, ContentFieldValue> contentFieldValue_i18n;
 
+	@JsonIgnore
 	private Supplier<Map<String, ContentFieldValue>>
 		_contentFieldValue_i18nSupplier;
 
@@ -178,6 +180,7 @@ public class ContentField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String dataType;
 
+	@JsonIgnore
 	private Supplier<String> _dataTypeSupplier;
 
 	@Schema(
@@ -222,6 +225,7 @@ public class ContentField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String inputControl;
 
+	@JsonIgnore
 	private Supplier<String> _inputControlSupplier;
 
 	@Schema(description = "The field's label.")
@@ -262,6 +266,7 @@ public class ContentField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String label;
 
+	@JsonIgnore
 	private Supplier<String> _labelSupplier;
 
 	@Schema(description = "The localized field's labels.")
@@ -304,6 +309,7 @@ public class ContentField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, String> label_i18n;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _label_i18nSupplier;
 
 	@Schema(
@@ -346,6 +352,7 @@ public class ContentField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema(
@@ -392,6 +399,7 @@ public class ContentField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ContentField[] nestedContentFields;
 
+	@JsonIgnore
 	private Supplier<ContentField[]> _nestedContentFieldsSupplier;
 
 	@Schema(
@@ -436,6 +444,7 @@ public class ContentField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean repeatable;
 
+	@JsonIgnore
 	private Supplier<Boolean> _repeatableSupplier;
 
 	@Override

@@ -92,6 +92,7 @@ public class WorkflowTasksBulkSelection implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean andOperator;
 
+	@JsonIgnore
 	private Supplier<Boolean> _andOperatorSupplier;
 
 	@Schema
@@ -132,6 +133,7 @@ public class WorkflowTasksBulkSelection implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long[] assetPrimaryKeys;
 
+	@JsonIgnore
 	private Supplier<Long[]> _assetPrimaryKeysSupplier;
 
 	@Schema
@@ -172,6 +174,7 @@ public class WorkflowTasksBulkSelection implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String assetTitle;
 
+	@JsonIgnore
 	private Supplier<String> _assetTitleSupplier;
 
 	@Schema
@@ -212,6 +215,7 @@ public class WorkflowTasksBulkSelection implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] assetTypes;
 
+	@JsonIgnore
 	private Supplier<String[]> _assetTypesSupplier;
 
 	@Schema
@@ -252,6 +256,7 @@ public class WorkflowTasksBulkSelection implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long[] assigneeIds;
 
+	@JsonIgnore
 	private Supplier<Long[]> _assigneeIdsSupplier;
 
 	@Schema
@@ -292,6 +297,7 @@ public class WorkflowTasksBulkSelection implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean completed;
 
+	@JsonIgnore
 	private Supplier<Boolean> _completedSupplier;
 
 	@Schema
@@ -332,6 +338,7 @@ public class WorkflowTasksBulkSelection implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateDueEnd;
 
+	@JsonIgnore
 	private Supplier<Date> _dateDueEndSupplier;
 
 	@Schema
@@ -372,6 +379,7 @@ public class WorkflowTasksBulkSelection implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateDueStart;
 
+	@JsonIgnore
 	private Supplier<Date> _dateDueStartSupplier;
 
 	@Schema
@@ -412,6 +420,7 @@ public class WorkflowTasksBulkSelection implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean searchByRoles;
 
+	@JsonIgnore
 	private Supplier<Boolean> _searchByRolesSupplier;
 
 	@Schema
@@ -452,6 +461,7 @@ public class WorkflowTasksBulkSelection implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean searchByUserRoles;
 
+	@JsonIgnore
 	private Supplier<Boolean> _searchByUserRolesSupplier;
 
 	@Schema
@@ -492,6 +502,7 @@ public class WorkflowTasksBulkSelection implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long workflowDefinitionId;
 
+	@JsonIgnore
 	private Supplier<Long> _workflowDefinitionIdSupplier;
 
 	@Schema
@@ -532,6 +543,7 @@ public class WorkflowTasksBulkSelection implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long[] workflowInstanceIds;
 
+	@JsonIgnore
 	private Supplier<Long[]> _workflowInstanceIdsSupplier;
 
 	@Schema
@@ -572,6 +584,7 @@ public class WorkflowTasksBulkSelection implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] workflowTaskNames;
 
+	@JsonIgnore
 	private Supplier<String[]> _workflowTaskNamesSupplier;
 
 	@Override

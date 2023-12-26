@@ -91,6 +91,7 @@ public class AssigneeMetric implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Assignee assignee;
 
+	@JsonIgnore
 	private Supplier<Assignee> _assigneeSupplier;
 
 	@Schema
@@ -131,6 +132,7 @@ public class AssigneeMetric implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long durationTaskAvg;
 
+	@JsonIgnore
 	private Supplier<Long> _durationTaskAvgSupplier;
 
 	@Schema
@@ -171,6 +173,7 @@ public class AssigneeMetric implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long onTimeTaskCount;
 
+	@JsonIgnore
 	private Supplier<Long> _onTimeTaskCountSupplier;
 
 	@Schema
@@ -211,6 +214,7 @@ public class AssigneeMetric implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long overdueTaskCount;
 
+	@JsonIgnore
 	private Supplier<Long> _overdueTaskCountSupplier;
 
 	@Schema
@@ -251,6 +255,7 @@ public class AssigneeMetric implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long taskCount;
 
+	@JsonIgnore
 	private Supplier<Long> _taskCountSupplier;
 
 	@Override

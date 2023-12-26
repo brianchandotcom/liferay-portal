@@ -96,6 +96,7 @@ public class ColumnViewport implements Serializable {
 	@NotNull
 	protected ColumnViewportDefinition columnViewportDefinition;
 
+	@JsonIgnore
 	private Supplier<ColumnViewportDefinition>
 		_columnViewportDefinitionSupplier;
 
@@ -136,6 +137,7 @@ public class ColumnViewport implements Serializable {
 	@NotEmpty
 	protected String id;
 
+	@JsonIgnore
 	private Supplier<String> _idSupplier;
 
 	@Override

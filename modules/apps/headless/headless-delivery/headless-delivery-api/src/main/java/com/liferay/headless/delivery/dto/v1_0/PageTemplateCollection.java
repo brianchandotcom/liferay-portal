@@ -97,6 +97,7 @@ public class PageTemplateCollection implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator creator;
 
+	@JsonIgnore
 	private Supplier<Creator> _creatorSupplier;
 
 	@Schema(description = "The page template collection's creation date.")
@@ -137,6 +138,7 @@ public class PageTemplateCollection implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
+	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
 	@Schema(description = "The last time the page template collection changed.")
@@ -179,6 +181,7 @@ public class PageTemplateCollection implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
+	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
 	@Schema(description = "The page template collection's description.")
@@ -219,6 +222,7 @@ public class PageTemplateCollection implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
+	@JsonIgnore
 	private Supplier<String> _descriptionSupplier;
 
 	@Schema(description = "The page template collection's ID.")
@@ -257,6 +261,7 @@ public class PageTemplateCollection implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema(description = "The page template collection's name.")
@@ -295,6 +300,7 @@ public class PageTemplateCollection implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema(
@@ -337,6 +343,7 @@ public class PageTemplateCollection implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String uuid;
 
+	@JsonIgnore
 	private Supplier<String> _uuidSupplier;
 
 	@Override

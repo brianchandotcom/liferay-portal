@@ -93,6 +93,7 @@ public class SamlProvider implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean enabled;
 
+	@JsonIgnore
 	private Supplier<Boolean> _enabledSupplier;
 
 	@Schema
@@ -133,6 +134,7 @@ public class SamlProvider implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String entityId;
 
+	@JsonIgnore
 	private Supplier<String> _entityIdSupplier;
 
 	@Schema
@@ -172,6 +174,7 @@ public class SamlProvider implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Idp idp;
 
+	@JsonIgnore
 	private Supplier<Idp> _idpSupplier;
 
 	@Schema
@@ -216,6 +219,7 @@ public class SamlProvider implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected String keyStoreCredentialPassword;
 
+	@JsonIgnore
 	private Supplier<String> _keyStoreCredentialPasswordSupplier;
 
 	@Schema
@@ -266,6 +270,7 @@ public class SamlProvider implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Role role;
 
+	@JsonIgnore
 	private Supplier<Role> _roleSupplier;
 
 	@Schema
@@ -306,6 +311,7 @@ public class SamlProvider implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean signMetadata;
 
+	@JsonIgnore
 	private Supplier<Boolean> _signMetadataSupplier;
 
 	@Schema
@@ -345,6 +351,7 @@ public class SamlProvider implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Sp sp;
 
+	@JsonIgnore
 	private Supplier<Sp> _spSupplier;
 
 	@Schema
@@ -385,6 +392,7 @@ public class SamlProvider implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean sslRequired;
 
+	@JsonIgnore
 	private Supplier<Boolean> _sslRequiredSupplier;
 
 	@Override

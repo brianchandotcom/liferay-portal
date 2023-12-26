@@ -93,6 +93,7 @@ public class PriceListOrderType implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
+	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
 	@Schema
@@ -134,6 +135,7 @@ public class PriceListOrderType implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected OrderType orderType;
 
+	@JsonIgnore
 	private Supplier<OrderType> _orderTypeSupplier;
 
 	@Schema(example = "DAB-34098-789-N")
@@ -178,6 +180,7 @@ public class PriceListOrderType implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String orderTypeExternalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _orderTypeExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
@@ -220,6 +223,7 @@ public class PriceListOrderType implements Serializable {
 	@NotNull
 	protected Long orderTypeId;
 
+	@JsonIgnore
 	private Supplier<Long> _orderTypeIdSupplier;
 
 	@Schema(example = "PAB-34098-789-N")
@@ -264,6 +268,7 @@ public class PriceListOrderType implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String priceListExternalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _priceListExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
@@ -306,6 +311,7 @@ public class PriceListOrderType implements Serializable {
 	@NotNull
 	protected Long priceListId;
 
+	@JsonIgnore
 	private Supplier<Long> _priceListIdSupplier;
 
 	@DecimalMin("0")
@@ -347,6 +353,7 @@ public class PriceListOrderType implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long priceListOrderTypeId;
 
+	@JsonIgnore
 	private Supplier<Long> _priceListOrderTypeIdSupplier;
 
 	@DecimalMin("0")
@@ -388,6 +395,7 @@ public class PriceListOrderType implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer priority;
 
+	@JsonIgnore
 	private Supplier<Integer> _prioritySupplier;
 
 	@Override

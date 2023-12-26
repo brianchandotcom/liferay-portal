@@ -92,6 +92,7 @@ public class User implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean active;
 
+	@JsonIgnore
 	private Supplier<Boolean> _activeSupplier;
 
 	@Schema(description = "A physical mailing address for this user.")
@@ -133,6 +134,7 @@ public class User implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object[] addresses;
 
+	@JsonIgnore
 	private Supplier<Object[]> _addressesSupplier;
 
 	@Schema(
@@ -177,6 +179,7 @@ public class User implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String displayName;
 
+	@JsonIgnore
 	private Supplier<String> _displayNameSupplier;
 
 	@Schema(description = "Email addresses for the User.")
@@ -219,6 +222,7 @@ public class User implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected MultiValuedAttribute[] emails;
 
+	@JsonIgnore
 	private Supplier<MultiValuedAttribute[]> _emailsSupplier;
 
 	@Schema(
@@ -265,6 +269,7 @@ public class User implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected MultiValuedAttribute[] entitlements;
 
+	@JsonIgnore
 	private Supplier<MultiValuedAttribute[]> _entitlementsSupplier;
 
 	@Schema(
@@ -309,6 +314,7 @@ public class User implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalId;
 
+	@JsonIgnore
 	private Supplier<String> _externalIdSupplier;
 
 	@Schema(
@@ -355,6 +361,7 @@ public class User implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected MultiValuedAttribute[] groups;
 
+	@JsonIgnore
 	private Supplier<MultiValuedAttribute[]> _groupsSupplier;
 
 	@Schema(
@@ -397,6 +404,7 @@ public class User implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String id;
 
+	@JsonIgnore
 	private Supplier<String> _idSupplier;
 
 	@Schema(description = "Instant messaging address for the user.")
@@ -438,6 +446,7 @@ public class User implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected MultiValuedAttribute[] ims;
 
+	@JsonIgnore
 	private Supplier<MultiValuedAttribute[]> _imsSupplier;
 
 	@Schema(
@@ -482,6 +491,7 @@ public class User implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String locale;
 
+	@JsonIgnore
 	private Supplier<String> _localeSupplier;
 
 	@Schema
@@ -521,6 +531,7 @@ public class User implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Meta meta;
 
+	@JsonIgnore
 	private Supplier<Meta> _metaSupplier;
 
 	@Schema(description = "The components of the user's name.")
@@ -560,6 +571,7 @@ public class User implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Name name;
 
+	@JsonIgnore
 	private Supplier<Name> _nameSupplier;
 
 	@Schema(
@@ -604,6 +616,7 @@ public class User implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String nickName;
 
+	@JsonIgnore
 	private Supplier<String> _nickNameSupplier;
 
 	@Schema(
@@ -648,6 +661,7 @@ public class User implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected String password;
 
+	@JsonIgnore
 	private Supplier<String> _passwordSupplier;
 
 	@Schema(description = "Phone numbers for the user.")
@@ -690,6 +704,7 @@ public class User implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected MultiValuedAttribute[] phoneNumbers;
 
+	@JsonIgnore
 	private Supplier<MultiValuedAttribute[]> _phoneNumbersSupplier;
 
 	@Schema(
@@ -736,6 +751,7 @@ public class User implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected MultiValuedAttribute[] photos;
 
+	@JsonIgnore
 	private Supplier<MultiValuedAttribute[]> _photosSupplier;
 
 	@Schema(
@@ -780,6 +796,7 @@ public class User implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String preferredLanguage;
 
+	@JsonIgnore
 	private Supplier<String> _preferredLanguageSupplier;
 
 	@Schema(
@@ -824,6 +841,7 @@ public class User implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String profileUrl;
 
+	@JsonIgnore
 	private Supplier<String> _profileUrlSupplier;
 
 	@Schema(
@@ -869,6 +887,7 @@ public class User implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected MultiValuedAttribute[] roles;
 
+	@JsonIgnore
 	private Supplier<MultiValuedAttribute[]> _rolesSupplier;
 
 	@Schema(
@@ -913,6 +932,7 @@ public class User implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] schemas;
 
+	@JsonIgnore
 	private Supplier<String[]> _schemasSupplier;
 
 	@Schema(
@@ -957,6 +977,7 @@ public class User implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String timezone;
 
+	@JsonIgnore
 	private Supplier<String> _timezoneSupplier;
 
 	@Schema(description = "The user's title, such as \"Vice President\".")
@@ -997,6 +1018,7 @@ public class User implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String title;
 
+	@JsonIgnore
 	private Supplier<String> _titleSupplier;
 
 	@Schema(
@@ -1041,6 +1063,7 @@ public class User implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String userName;
 
+	@JsonIgnore
 	private Supplier<String> _userNameSupplier;
 
 	@Schema(
@@ -1085,6 +1108,7 @@ public class User implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String userType;
 
+	@JsonIgnore
 	private Supplier<String> _userTypeSupplier;
 
 	@Schema(
@@ -1131,6 +1155,7 @@ public class User implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected MultiValuedAttribute[] x509Certificates;
 
+	@JsonIgnore
 	private Supplier<MultiValuedAttribute[]> _x509CertificatesSupplier;
 
 	@Override

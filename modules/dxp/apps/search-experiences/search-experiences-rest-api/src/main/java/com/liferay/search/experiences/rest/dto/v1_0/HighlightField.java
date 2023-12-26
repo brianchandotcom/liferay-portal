@@ -86,6 +86,7 @@ public class HighlightField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer fragment_offset;
 
+	@JsonIgnore
 	private Supplier<Integer> _fragment_offsetSupplier;
 
 	@Schema
@@ -126,6 +127,7 @@ public class HighlightField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer fragment_size;
 
+	@JsonIgnore
 	private Supplier<Integer> _fragment_sizeSupplier;
 
 	@Schema
@@ -166,6 +168,7 @@ public class HighlightField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer number_of_fragments;
 
+	@JsonIgnore
 	private Supplier<Integer> _number_of_fragmentsSupplier;
 
 	@Override

@@ -91,6 +91,7 @@ public class PageFragmentDropZoneDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String fragmentDropZoneId;
 
+	@JsonIgnore
 	private Supplier<String> _fragmentDropZoneIdSupplier;
 
 	@Override

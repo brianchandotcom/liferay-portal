@@ -99,6 +99,7 @@ public class ShipmentItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
+	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
 	@Schema
@@ -139,6 +140,7 @@ public class ShipmentItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date createDate;
 
+	@JsonIgnore
 	private Supplier<Date> _createDateSupplier;
 
 	@Schema
@@ -179,6 +181,7 @@ public class ShipmentItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@DecimalMin("0")
@@ -218,6 +221,7 @@ public class ShipmentItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema
@@ -258,6 +262,7 @@ public class ShipmentItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date modifiedDate;
 
+	@JsonIgnore
 	private Supplier<Date> _modifiedDateSupplier;
 
 	@DecimalMin("0")
@@ -300,6 +305,7 @@ public class ShipmentItem implements Serializable {
 	@NotNull
 	protected Long orderItemId;
 
+	@JsonIgnore
 	private Supplier<Long> _orderItemIdSupplier;
 
 	@DecimalMin("0")
@@ -343,6 +349,7 @@ public class ShipmentItem implements Serializable {
 	@NotNull
 	protected BigDecimal quantity;
 
+	@JsonIgnore
 	private Supplier<BigDecimal> _quantitySupplier;
 
 	@Schema
@@ -387,6 +394,7 @@ public class ShipmentItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String shipmentExternalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _shipmentExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
@@ -428,6 +436,7 @@ public class ShipmentItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long shipmentId;
 
+	@JsonIgnore
 	private Supplier<Long> _shipmentIdSupplier;
 
 	@Schema(example = "s")
@@ -468,6 +477,7 @@ public class ShipmentItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String unitOfMeasureKey;
 
+	@JsonIgnore
 	private Supplier<String> _unitOfMeasureKeySupplier;
 
 	@Schema(example = "John")
@@ -508,6 +518,7 @@ public class ShipmentItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String userName;
 
+	@JsonIgnore
 	private Supplier<String> _userNameSupplier;
 
 	@Schema(example = "true")
@@ -548,6 +559,7 @@ public class ShipmentItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean validateInventory;
 
+	@JsonIgnore
 	private Supplier<Boolean> _validateInventorySupplier;
 
 	@DecimalMin("0")
@@ -590,6 +602,7 @@ public class ShipmentItem implements Serializable {
 	@NotNull
 	protected Long warehouseId;
 
+	@JsonIgnore
 	private Supplier<Long> _warehouseIdSupplier;
 
 	@Override

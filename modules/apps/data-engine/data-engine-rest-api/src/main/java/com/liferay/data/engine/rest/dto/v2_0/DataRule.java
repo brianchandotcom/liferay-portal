@@ -89,6 +89,7 @@ public class DataRule implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map[] actions;
 
+	@JsonIgnore
 	private Supplier<Map[]> _actionsSupplier;
 
 	@Schema
@@ -130,6 +131,7 @@ public class DataRule implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map[] conditions;
 
+	@JsonIgnore
 	private Supplier<Map[]> _conditionsSupplier;
 
 	@Schema
@@ -170,6 +172,7 @@ public class DataRule implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String logicalOperator;
 
+	@JsonIgnore
 	private Supplier<String> _logicalOperatorSupplier;
 
 	@Schema
@@ -211,6 +214,7 @@ public class DataRule implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, Object> name;
 
+	@JsonIgnore
 	private Supplier<Map<String, Object>> _nameSupplier;
 
 	@Override

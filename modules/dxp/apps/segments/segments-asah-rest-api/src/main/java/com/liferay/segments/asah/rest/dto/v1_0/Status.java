@@ -90,6 +90,7 @@ public class Status implements Serializable {
 	@NotEmpty
 	protected String status;
 
+	@JsonIgnore
 	private Supplier<String> _statusSupplier;
 
 	@Schema
@@ -130,6 +131,7 @@ public class Status implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String winnerVariantId;
 
+	@JsonIgnore
 	private Supplier<String> _winnerVariantIdSupplier;
 
 	@Override

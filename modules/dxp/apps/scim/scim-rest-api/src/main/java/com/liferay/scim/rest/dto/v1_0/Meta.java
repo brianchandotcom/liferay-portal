@@ -97,6 +97,7 @@ public class Meta implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date created;
 
+	@JsonIgnore
 	private Supplier<Date> _createdSupplier;
 
 	@Schema(
@@ -141,6 +142,7 @@ public class Meta implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date lastModified;
 
+	@JsonIgnore
 	private Supplier<Date> _lastModifiedSupplier;
 
 	@Schema(description = "The URI of the resource being returned.")
@@ -181,6 +183,7 @@ public class Meta implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String location;
 
+	@JsonIgnore
 	private Supplier<String> _locationSupplier;
 
 	@Schema(description = "The name of the resource type of the resource.")
@@ -223,6 +226,7 @@ public class Meta implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String resourceType;
 
+	@JsonIgnore
 	private Supplier<String> _resourceTypeSupplier;
 
 	@Schema(description = "The version of the resource being returned.")
@@ -263,6 +267,7 @@ public class Meta implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String version;
 
+	@JsonIgnore
 	private Supplier<String> _versionSupplier;
 
 	@Override

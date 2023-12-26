@@ -86,6 +86,7 @@ public class ExpandoField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long columnId;
 
+	@JsonIgnore
 	private Supplier<Long> _columnIdSupplier;
 
 	@Schema
@@ -124,6 +125,7 @@ public class ExpandoField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema
@@ -164,6 +166,7 @@ public class ExpandoField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String value;
 
+	@JsonIgnore
 	private Supplier<String> _valueSupplier;
 
 	@Override

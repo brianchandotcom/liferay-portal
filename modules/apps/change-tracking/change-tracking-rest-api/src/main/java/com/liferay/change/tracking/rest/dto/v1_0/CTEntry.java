@@ -94,6 +94,7 @@ public class CTEntry implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
+	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
 	@Schema
@@ -134,6 +135,7 @@ public class CTEntry implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String changeType;
 
+	@JsonIgnore
 	private Supplier<String> _changeTypeSupplier;
 
 	@Schema
@@ -174,6 +176,7 @@ public class CTEntry implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long ctCollectionId;
 
+	@JsonIgnore
 	private Supplier<Long> _ctCollectionIdSupplier;
 
 	@Schema
@@ -214,6 +217,7 @@ public class CTEntry implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
+	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
 	@Schema
@@ -254,6 +258,7 @@ public class CTEntry implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
+	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
 	@Schema
@@ -294,6 +299,7 @@ public class CTEntry implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean hideable;
 
+	@JsonIgnore
 	private Supplier<Boolean> _hideableSupplier;
 
 	@Schema
@@ -332,6 +338,7 @@ public class CTEntry implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema
@@ -372,6 +379,7 @@ public class CTEntry implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long modelClassNameId;
 
+	@JsonIgnore
 	private Supplier<Long> _modelClassNameIdSupplier;
 
 	@Schema
@@ -412,6 +420,7 @@ public class CTEntry implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long modelClassPK;
 
+	@JsonIgnore
 	private Supplier<Long> _modelClassPKSupplier;
 
 	@Schema
@@ -452,6 +461,7 @@ public class CTEntry implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long ownerId;
 
+	@JsonIgnore
 	private Supplier<Long> _ownerIdSupplier;
 
 	@Schema
@@ -492,6 +502,7 @@ public class CTEntry implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String ownerName;
 
+	@JsonIgnore
 	private Supplier<String> _ownerNameSupplier;
 
 	@Schema
@@ -532,6 +543,7 @@ public class CTEntry implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long siteId;
 
+	@JsonIgnore
 	private Supplier<Long> _siteIdSupplier;
 
 	@Schema
@@ -572,6 +584,7 @@ public class CTEntry implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String siteName;
 
+	@JsonIgnore
 	private Supplier<String> _siteNameSupplier;
 
 	@Schema
@@ -613,6 +626,7 @@ public class CTEntry implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Status status;
 
+	@JsonIgnore
 	private Supplier<Status> _statusSupplier;
 
 	@Schema
@@ -653,6 +667,7 @@ public class CTEntry implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String title;
 
+	@JsonIgnore
 	private Supplier<String> _titleSupplier;
 
 	@Schema
@@ -693,6 +708,7 @@ public class CTEntry implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String typeName;
 
+	@JsonIgnore
 	private Supplier<String> _typeNameSupplier;
 
 	@Override

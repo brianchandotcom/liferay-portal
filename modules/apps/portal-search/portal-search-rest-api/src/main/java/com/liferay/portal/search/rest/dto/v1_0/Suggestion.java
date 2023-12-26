@@ -90,6 +90,7 @@ public class Suggestion implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object attributes;
 
+	@JsonIgnore
 	private Supplier<Object> _attributesSupplier;
 
 	@Schema
@@ -129,6 +130,7 @@ public class Suggestion implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Float score;
 
+	@JsonIgnore
 	private Supplier<Float> _scoreSupplier;
 
 	@Schema
@@ -167,6 +169,7 @@ public class Suggestion implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String text;
 
+	@JsonIgnore
 	private Supplier<String> _textSupplier;
 
 	@Override

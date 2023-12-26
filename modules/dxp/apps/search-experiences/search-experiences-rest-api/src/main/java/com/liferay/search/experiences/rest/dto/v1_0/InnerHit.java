@@ -89,6 +89,7 @@ public class InnerHit implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected InnerCollapse innerCollapse;
 
+	@JsonIgnore
 	private Supplier<InnerCollapse> _innerCollapseSupplier;
 
 	@Schema
@@ -127,6 +128,7 @@ public class InnerHit implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema
@@ -165,6 +167,7 @@ public class InnerHit implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer size;
 
+	@JsonIgnore
 	private Supplier<Integer> _sizeSupplier;
 
 	@Schema
@@ -206,6 +209,7 @@ public class InnerHit implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object[] sorts;
 
+	@JsonIgnore
 	private Supplier<Object[]> _sortsSupplier;
 
 	@Override

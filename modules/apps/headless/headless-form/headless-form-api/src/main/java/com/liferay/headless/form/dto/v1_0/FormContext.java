@@ -92,6 +92,7 @@ public class FormContext implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FormFieldValue[] formFieldValues;
 
+	@JsonIgnore
 	private Supplier<FormFieldValue[]> _formFieldValuesSupplier;
 
 	@Schema(description = "https://www.schema.org/FormPageContext")
@@ -134,6 +135,7 @@ public class FormContext implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FormPageContext[] formPageContexts;
 
+	@JsonIgnore
 	private Supplier<FormPageContext[]> _formPageContextsSupplier;
 
 	@Schema
@@ -174,6 +176,7 @@ public class FormContext implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean readOnly;
 
+	@JsonIgnore
 	private Supplier<Boolean> _readOnlySupplier;
 
 	@Schema
@@ -218,6 +221,7 @@ public class FormContext implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean showRequiredFieldsWarning;
 
+	@JsonIgnore
 	private Supplier<Boolean> _showRequiredFieldsWarningSupplier;
 
 	@Schema
@@ -258,6 +262,7 @@ public class FormContext implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean showSubmitButton;
 
+	@JsonIgnore
 	private Supplier<Boolean> _showSubmitButtonSupplier;
 
 	@Override

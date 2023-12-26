@@ -86,6 +86,7 @@ public class Image implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String caption;
 
+	@JsonIgnore
 	private Supplier<String> _captionSupplier;
 
 	@Schema(description = "The image's relative URL.")
@@ -126,6 +127,7 @@ public class Image implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String contentUrl;
 
+	@JsonIgnore
 	private Supplier<String> _contentUrlSupplier;
 
 	@Schema(
@@ -170,6 +172,7 @@ public class Image implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String contentValue;
 
+	@JsonIgnore
 	private Supplier<String> _contentValueSupplier;
 
 	@Schema(
@@ -214,6 +217,7 @@ public class Image implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long imageId;
 
+	@JsonIgnore
 	private Supplier<Long> _imageIdSupplier;
 
 	@Override

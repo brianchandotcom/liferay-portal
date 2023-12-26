@@ -86,6 +86,7 @@ public class Field implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String example;
 
+	@JsonIgnore
 	private Supplier<String> _exampleSupplier;
 
 	@Schema
@@ -124,6 +125,7 @@ public class Field implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema
@@ -164,6 +166,7 @@ public class Field implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean required;
 
+	@JsonIgnore
 	private Supplier<Boolean> _requiredSupplier;
 
 	@Schema
@@ -204,6 +207,7 @@ public class Field implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean selected;
 
+	@JsonIgnore
 	private Supplier<Boolean> _selectedSupplier;
 
 	@Schema
@@ -244,6 +248,7 @@ public class Field implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String source;
 
+	@JsonIgnore
 	private Supplier<String> _sourceSupplier;
 
 	@Schema
@@ -282,6 +287,7 @@ public class Field implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String type;
 
+	@JsonIgnore
 	private Supplier<String> _typeSupplier;
 
 	@Override

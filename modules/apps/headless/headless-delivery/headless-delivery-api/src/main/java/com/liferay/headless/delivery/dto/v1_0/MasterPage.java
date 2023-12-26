@@ -87,6 +87,7 @@ public class MasterPage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String key;
 
+	@JsonIgnore
 	private Supplier<String> _keySupplier;
 
 	@Schema(description = "The master page's name.")
@@ -125,6 +126,7 @@ public class MasterPage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Override

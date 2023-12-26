@@ -92,6 +92,7 @@ public class ObjectRelationship implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
+	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
 	@Schema
@@ -144,6 +145,7 @@ public class ObjectRelationship implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected DeletionType deletionType;
 
+	@JsonIgnore
 	private Supplier<DeletionType> _deletionTypeSupplier;
 
 	@Schema
@@ -182,6 +184,7 @@ public class ObjectRelationship implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean edge;
 
+	@JsonIgnore
 	private Supplier<Boolean> _edgeSupplier;
 
 	@Schema
@@ -222,6 +225,7 @@ public class ObjectRelationship implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@Schema
@@ -260,6 +264,7 @@ public class ObjectRelationship implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema
@@ -301,6 +306,7 @@ public class ObjectRelationship implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> label;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _labelSupplier;
 
 	@Schema
@@ -339,6 +345,7 @@ public class ObjectRelationship implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema
@@ -385,6 +392,7 @@ public class ObjectRelationship implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String objectDefinitionExternalReferenceCode1;
 
+	@JsonIgnore
 	private Supplier<String> _objectDefinitionExternalReferenceCode1Supplier;
 
 	@Schema
@@ -431,6 +439,7 @@ public class ObjectRelationship implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String objectDefinitionExternalReferenceCode2;
 
+	@JsonIgnore
 	private Supplier<String> _objectDefinitionExternalReferenceCode2Supplier;
 
 	@Schema
@@ -471,6 +480,7 @@ public class ObjectRelationship implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long objectDefinitionId1;
 
+	@JsonIgnore
 	private Supplier<Long> _objectDefinitionId1Supplier;
 
 	@Schema
@@ -511,6 +521,7 @@ public class ObjectRelationship implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long objectDefinitionId2;
 
+	@JsonIgnore
 	private Supplier<Long> _objectDefinitionId2Supplier;
 
 	@Schema
@@ -555,6 +566,7 @@ public class ObjectRelationship implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean objectDefinitionModifiable2;
 
+	@JsonIgnore
 	private Supplier<Boolean> _objectDefinitionModifiable2Supplier;
 
 	@Schema
@@ -595,6 +607,7 @@ public class ObjectRelationship implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String objectDefinitionName2;
 
+	@JsonIgnore
 	private Supplier<String> _objectDefinitionName2Supplier;
 
 	@Schema
@@ -636,6 +649,7 @@ public class ObjectRelationship implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean objectDefinitionSystem2;
 
+	@JsonIgnore
 	private Supplier<Boolean> _objectDefinitionSystem2Supplier;
 
 	@Schema
@@ -677,6 +691,7 @@ public class ObjectRelationship implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ObjectField objectField;
 
+	@JsonIgnore
 	private Supplier<ObjectField> _objectFieldSupplier;
 
 	@Schema
@@ -717,6 +732,7 @@ public class ObjectRelationship implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long parameterObjectFieldId;
 
+	@JsonIgnore
 	private Supplier<Long> _parameterObjectFieldIdSupplier;
 
 	@Schema
@@ -758,6 +774,7 @@ public class ObjectRelationship implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String parameterObjectFieldName;
 
+	@JsonIgnore
 	private Supplier<String> _parameterObjectFieldNameSupplier;
 
 	@Schema
@@ -798,6 +815,7 @@ public class ObjectRelationship implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean reverse;
 
+	@JsonIgnore
 	private Supplier<Boolean> _reverseSupplier;
 
 	@Schema
@@ -838,6 +856,7 @@ public class ObjectRelationship implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean system;
 
+	@JsonIgnore
 	private Supplier<Boolean> _systemSupplier;
 
 	@Schema
@@ -888,6 +907,7 @@ public class ObjectRelationship implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Type type;
 
+	@JsonIgnore
 	private Supplier<Type> _typeSupplier;
 
 	@Override

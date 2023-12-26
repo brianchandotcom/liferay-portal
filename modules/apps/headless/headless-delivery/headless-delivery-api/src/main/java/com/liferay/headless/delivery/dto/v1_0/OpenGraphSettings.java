@@ -91,6 +91,7 @@ public class OpenGraphSettings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
+	@JsonIgnore
 	private Supplier<String> _descriptionSupplier;
 
 	@Schema(description = "The localized Open Graph's descriptions.")
@@ -133,6 +134,7 @@ public class OpenGraphSettings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> description_i18n;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _description_i18nSupplier;
 
 	@Schema(description = "The Open Graph's image.")
@@ -174,6 +176,7 @@ public class OpenGraphSettings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ContentDocument image;
 
+	@JsonIgnore
 	private Supplier<ContentDocument> _imageSupplier;
 
 	@Schema(description = "The Open Graph's image alt.")
@@ -214,6 +217,7 @@ public class OpenGraphSettings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String imageAlt;
 
+	@JsonIgnore
 	private Supplier<String> _imageAltSupplier;
 
 	@Schema(description = "The localized Open Graph's image alts.")
@@ -256,6 +260,7 @@ public class OpenGraphSettings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> imageAlt_i18n;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _imageAlt_i18nSupplier;
 
 	@Schema(description = "The Open Graph's title.")
@@ -296,6 +301,7 @@ public class OpenGraphSettings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String title;
 
+	@JsonIgnore
 	private Supplier<String> _titleSupplier;
 
 	@Schema(description = "The localized Open Graph's titles.")
@@ -338,6 +344,7 @@ public class OpenGraphSettings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> title_i18n;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _title_i18nSupplier;
 
 	@Override

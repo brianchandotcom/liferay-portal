@@ -97,6 +97,7 @@ public class NotificationActionExecutionResult implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean reload;
 
+	@JsonIgnore
 	private Supplier<Boolean> _reloadSupplier;
 
 	@Schema(
@@ -142,6 +143,7 @@ public class NotificationActionExecutionResult implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentInlineValue text;
 
+	@JsonIgnore
 	private Supplier<FragmentInlineValue> _textSupplier;
 
 	@Override

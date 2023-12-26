@@ -90,6 +90,7 @@ public class SiteBrief implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String descriptiveName;
 
+	@JsonIgnore
 	private Supplier<String> _descriptiveNameSupplier;
 
 	@Schema
@@ -134,6 +135,7 @@ public class SiteBrief implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, String> descriptiveName_i18n;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _descriptiveName_i18nSupplier;
 
 	@Schema(description = "The site's ID.")
@@ -172,6 +174,7 @@ public class SiteBrief implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema(description = "The site's name.")
@@ -210,6 +213,7 @@ public class SiteBrief implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema
@@ -252,6 +256,7 @@ public class SiteBrief implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, String> name_i18n;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _name_i18nSupplier;
 
 	@Schema(description = "A list of the user's roles.")
@@ -293,6 +298,7 @@ public class SiteBrief implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected RoleBrief[] roleBriefs;
 
+	@JsonIgnore
 	private Supplier<RoleBrief[]> _roleBriefsSupplier;
 
 	@Override

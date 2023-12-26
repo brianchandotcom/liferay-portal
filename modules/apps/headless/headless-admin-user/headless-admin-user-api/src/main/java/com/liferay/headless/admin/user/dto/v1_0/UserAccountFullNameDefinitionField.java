@@ -89,6 +89,7 @@ public class UserAccountFullNameDefinitionField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String key;
 
+	@JsonIgnore
 	private Supplier<String> _keySupplier;
 
 	@Schema
@@ -129,6 +130,7 @@ public class UserAccountFullNameDefinitionField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean required;
 
+	@JsonIgnore
 	private Supplier<Boolean> _requiredSupplier;
 
 	@Schema
@@ -169,6 +171,7 @@ public class UserAccountFullNameDefinitionField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String[] values;
 
+	@JsonIgnore
 	private Supplier<String[]> _valuesSupplier;
 
 	@Override

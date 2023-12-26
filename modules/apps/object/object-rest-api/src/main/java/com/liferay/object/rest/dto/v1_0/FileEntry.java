@@ -92,6 +92,7 @@ public class FileEntry implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String fileBase64;
 
+	@JsonIgnore
 	private Supplier<String> _fileBase64Supplier;
 
 	@Schema
@@ -133,6 +134,7 @@ public class FileEntry implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Folder folder;
 
+	@JsonIgnore
 	private Supplier<Folder> _folderSupplier;
 
 	@Schema
@@ -171,6 +173,7 @@ public class FileEntry implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema
@@ -210,6 +213,7 @@ public class FileEntry implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Link link;
 
+	@JsonIgnore
 	private Supplier<Link> _linkSupplier;
 
 	@Schema
@@ -248,6 +252,7 @@ public class FileEntry implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Override

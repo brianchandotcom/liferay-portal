@@ -94,6 +94,7 @@ public class DataListView implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, Object> appliedFilters;
 
+	@JsonIgnore
 	private Supplier<Map<String, Object>> _appliedFiltersSupplier;
 
 	@Schema
@@ -134,6 +135,7 @@ public class DataListView implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long dataDefinitionId;
 
+	@JsonIgnore
 	private Supplier<Long> _dataDefinitionIdSupplier;
 
 	@Schema
@@ -174,6 +176,7 @@ public class DataListView implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateCreated;
 
+	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
 	@Schema
@@ -214,6 +217,7 @@ public class DataListView implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateModified;
 
+	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
 	@Schema
@@ -254,6 +258,7 @@ public class DataListView implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] fieldNames;
 
+	@JsonIgnore
 	private Supplier<String[]> _fieldNamesSupplier;
 
 	@Schema
@@ -292,6 +297,7 @@ public class DataListView implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema
@@ -333,6 +339,7 @@ public class DataListView implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, Object> name;
 
+	@JsonIgnore
 	private Supplier<Map<String, Object>> _nameSupplier;
 
 	@Schema
@@ -373,6 +380,7 @@ public class DataListView implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long siteId;
 
+	@JsonIgnore
 	private Supplier<Long> _siteIdSupplier;
 
 	@Schema
@@ -413,6 +421,7 @@ public class DataListView implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String sortField;
 
+	@JsonIgnore
 	private Supplier<String> _sortFieldSupplier;
 
 	@Schema
@@ -453,6 +462,7 @@ public class DataListView implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long userId;
 
+	@JsonIgnore
 	private Supplier<Long> _userIdSupplier;
 
 	@Override

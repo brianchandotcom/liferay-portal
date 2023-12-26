@@ -88,6 +88,7 @@ public class FacetConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String aggregationName;
 
+	@JsonIgnore
 	private Supplier<String> _aggregationNameSupplier;
 
 	@Schema(description = "Additional attributes for the facet.")
@@ -130,6 +131,7 @@ public class FacetConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, Object> attributes;
 
+	@JsonIgnore
 	private Supplier<Map<String, Object>> _attributesSupplier;
 
 	@Schema(description = "Frequency threshold for showing the terms.")
@@ -170,6 +172,7 @@ public class FacetConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer frequencyThreshold;
 
+	@JsonIgnore
 	private Supplier<Integer> _frequencyThresholdSupplier;
 
 	@Schema(description = "Maximum number of terms to be shown.")
@@ -210,6 +213,7 @@ public class FacetConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer maxTerms;
 
+	@JsonIgnore
 	private Supplier<Integer> _maxTermsSupplier;
 
 	@Schema(description = "The name of the facet.")
@@ -248,6 +252,7 @@ public class FacetConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema(description = "The values / selections to be filtered by.")
@@ -289,6 +294,7 @@ public class FacetConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object[] values;
 
+	@JsonIgnore
 	private Supplier<Object[]> _valuesSupplier;
 
 	@Override

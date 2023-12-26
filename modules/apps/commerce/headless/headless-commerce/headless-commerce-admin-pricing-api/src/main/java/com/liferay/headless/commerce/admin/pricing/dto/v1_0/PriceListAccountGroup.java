@@ -94,6 +94,7 @@ public class PriceListAccountGroup implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String accountGroupExternalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _accountGroupExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
@@ -135,6 +136,7 @@ public class PriceListAccountGroup implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long accountGroupId;
 
+	@JsonIgnore
 	private Supplier<Long> _accountGroupIdSupplier;
 
 	@DecimalMin("0")
@@ -174,6 +176,7 @@ public class PriceListAccountGroup implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@DecimalMin("0")
@@ -215,6 +218,7 @@ public class PriceListAccountGroup implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer order;
 
+	@JsonIgnore
 	private Supplier<Integer> _orderSupplier;
 
 	@Schema(example = "PAB-34098-789-N")
@@ -259,6 +263,7 @@ public class PriceListAccountGroup implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String priceListExternalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _priceListExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
@@ -300,6 +305,7 @@ public class PriceListAccountGroup implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long priceListId;
 
+	@JsonIgnore
 	private Supplier<Long> _priceListIdSupplier;
 
 	@Override

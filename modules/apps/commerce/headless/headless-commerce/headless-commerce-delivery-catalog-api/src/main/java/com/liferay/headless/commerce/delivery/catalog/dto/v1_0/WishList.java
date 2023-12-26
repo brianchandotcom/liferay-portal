@@ -88,6 +88,7 @@ public class WishList implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean defaultWishList;
 
+	@JsonIgnore
 	private Supplier<Boolean> _defaultWishListSupplier;
 
 	@Schema
@@ -126,6 +127,7 @@ public class WishList implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema
@@ -164,6 +166,7 @@ public class WishList implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema
@@ -205,6 +208,7 @@ public class WishList implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected WishListItem[] wishListItems;
 
+	@JsonIgnore
 	private Supplier<WishListItem[]> _wishListItemsSupplier;
 
 	@Override

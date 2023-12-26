@@ -95,6 +95,7 @@ public class TaxonomyCategoryProperty implements Serializable {
 	@NotEmpty
 	protected String key;
 
+	@JsonIgnore
 	private Supplier<String> _keySupplier;
 
 	@Schema(description = "The taxonomy category property's value.")
@@ -135,6 +136,7 @@ public class TaxonomyCategoryProperty implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String value;
 
+	@JsonIgnore
 	private Supplier<String> _valueSupplier;
 
 	@Override

@@ -87,6 +87,7 @@ public class ContactConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean syncAllAccounts;
 
+	@JsonIgnore
 	private Supplier<Boolean> _syncAllAccountsSupplier;
 
 	@Schema
@@ -127,6 +128,7 @@ public class ContactConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean syncAllContacts;
 
+	@JsonIgnore
 	private Supplier<Boolean> _syncAllContactsSupplier;
 
 	@Schema
@@ -168,6 +170,7 @@ public class ContactConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] syncedAccountGroupIds;
 
+	@JsonIgnore
 	private Supplier<String[]> _syncedAccountGroupIdsSupplier;
 
 	@Schema
@@ -209,6 +212,7 @@ public class ContactConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] syncedOrganizationIds;
 
+	@JsonIgnore
 	private Supplier<String[]> _syncedOrganizationIdsSupplier;
 
 	@Schema
@@ -249,6 +253,7 @@ public class ContactConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] syncedUserGroupIds;
 
+	@JsonIgnore
 	private Supplier<String[]> _syncedUserGroupIdsSupplier;
 
 	@Override

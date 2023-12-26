@@ -96,6 +96,7 @@ public class Option implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
+	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
 	@Schema
@@ -136,6 +137,7 @@ public class Option implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long catalogId;
 
+	@JsonIgnore
 	private Supplier<Long> _catalogIdSupplier;
 
 	@Schema
@@ -177,6 +179,7 @@ public class Option implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected CustomField[] customFields;
 
+	@JsonIgnore
 	private Supplier<CustomField[]> _customFieldsSupplier;
 
 	@Schema(
@@ -221,6 +224,7 @@ public class Option implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> description;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _descriptionSupplier;
 
 	@Schema(example = "AB-34098-789-N")
@@ -261,6 +265,7 @@ public class Option implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@Schema(example = "true")
@@ -301,6 +306,7 @@ public class Option implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean facetable;
 
+	@JsonIgnore
 	private Supplier<Boolean> _facetableSupplier;
 
 	@Schema(example = "select")
@@ -354,6 +360,7 @@ public class Option implements Serializable {
 	@NotNull
 	protected FieldType fieldType;
 
+	@JsonIgnore
 	private Supplier<FieldType> _fieldTypeSupplier;
 
 	@DecimalMin("0")
@@ -393,6 +400,7 @@ public class Option implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema(example = "color")
@@ -432,6 +440,7 @@ public class Option implements Serializable {
 	@NotEmpty
 	protected String key;
 
+	@JsonIgnore
 	private Supplier<String> _keySupplier;
 
 	@Schema(example = "{en_US=Color, hr_HR=Color HR, hu_HU=Color HU}")
@@ -474,6 +483,7 @@ public class Option implements Serializable {
 	@NotNull
 	protected Map<String, String> name;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _nameSupplier;
 
 	@Schema
@@ -515,6 +525,7 @@ public class Option implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected OptionValue[] optionValues;
 
+	@JsonIgnore
 	private Supplier<OptionValue[]> _optionValuesSupplier;
 
 	@Schema(example = "1.2")
@@ -555,6 +566,7 @@ public class Option implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double priority;
 
+	@JsonIgnore
 	private Supplier<Double> _prioritySupplier;
 
 	@Schema(example = "true")
@@ -595,6 +607,7 @@ public class Option implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean required;
 
+	@JsonIgnore
 	private Supplier<Boolean> _requiredSupplier;
 
 	@Schema(example = "true")
@@ -635,6 +648,7 @@ public class Option implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean skuContributor;
 
+	@JsonIgnore
 	private Supplier<Boolean> _skuContributorSupplier;
 
 	@Override

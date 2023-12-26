@@ -91,6 +91,7 @@ public class Diagram implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected AttachmentBase64 attachmentBase64;
 
+	@JsonIgnore
 	private Supplier<AttachmentBase64> _attachmentBase64Supplier;
 
 	@Schema(example = "black")
@@ -131,6 +132,7 @@ public class Diagram implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String color;
 
+	@JsonIgnore
 	private Supplier<String> _colorSupplier;
 
 	@DecimalMin("0")
@@ -170,6 +172,7 @@ public class Diagram implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@DecimalMin("0")
@@ -211,6 +214,7 @@ public class Diagram implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long imageId;
 
+	@JsonIgnore
 	private Supplier<Long> _imageIdSupplier;
 
 	@Schema(example = "Name 1")
@@ -251,6 +255,7 @@ public class Diagram implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String imageURL;
 
+	@JsonIgnore
 	private Supplier<String> _imageURLSupplier;
 
 	@Schema(example = "exampleERC")
@@ -295,6 +300,7 @@ public class Diagram implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String productExternalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _productExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
@@ -336,6 +342,7 @@ public class Diagram implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long productId;
 
+	@JsonIgnore
 	private Supplier<Long> _productIdSupplier;
 
 	@Schema(example = "33.54")
@@ -376,6 +383,7 @@ public class Diagram implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double radius;
 
+	@JsonIgnore
 	private Supplier<Double> _radiusSupplier;
 
 	@Schema(example = "default")
@@ -414,6 +422,7 @@ public class Diagram implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String type;
 
+	@JsonIgnore
 	private Supplier<String> _typeSupplier;
 
 	@Override

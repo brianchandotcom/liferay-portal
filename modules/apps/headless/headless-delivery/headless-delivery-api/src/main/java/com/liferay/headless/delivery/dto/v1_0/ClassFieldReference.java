@@ -91,6 +91,7 @@ public class ClassFieldReference implements Serializable {
 	@NotEmpty
 	protected String className;
 
+	@JsonIgnore
 	private Supplier<String> _classNameSupplier;
 
 	@Schema
@@ -132,6 +133,7 @@ public class ClassFieldReference implements Serializable {
 	@NotEmpty
 	protected String fieldName;
 
+	@JsonIgnore
 	private Supplier<String> _fieldNameSupplier;
 
 	@Schema
@@ -173,6 +175,7 @@ public class ClassFieldReference implements Serializable {
 	@NotEmpty
 	protected String fieldValue;
 
+	@JsonIgnore
 	private Supplier<String> _fieldValueSupplier;
 
 	@Override

@@ -90,6 +90,7 @@ public class AccountOrganization implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long accountId;
 
+	@JsonIgnore
 	private Supplier<Long> _accountIdSupplier;
 
 	@Schema(example = "Organization Name")
@@ -128,6 +129,7 @@ public class AccountOrganization implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema(example = "UAB-34098-789-N")
@@ -173,6 +175,7 @@ public class AccountOrganization implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String organizationExternalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _organizationExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
@@ -214,6 +217,7 @@ public class AccountOrganization implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long organizationId;
 
+	@JsonIgnore
 	private Supplier<Long> _organizationIdSupplier;
 
 	@Schema(example = "/Parent Organization/Organization Name")
@@ -254,6 +258,7 @@ public class AccountOrganization implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String treePath;
 
+	@JsonIgnore
 	private Supplier<String> _treePathSupplier;
 
 	@Override

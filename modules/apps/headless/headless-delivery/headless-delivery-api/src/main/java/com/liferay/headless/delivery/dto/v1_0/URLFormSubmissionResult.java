@@ -93,6 +93,7 @@ public class URLFormSubmissionResult implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentInlineValue url;
 
+	@JsonIgnore
 	private Supplier<FragmentInlineValue> _urlSupplier;
 
 	@Override

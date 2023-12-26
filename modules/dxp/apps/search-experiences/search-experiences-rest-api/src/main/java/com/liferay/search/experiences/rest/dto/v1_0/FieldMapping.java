@@ -87,6 +87,7 @@ public class FieldMapping implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Float boost;
 
+	@JsonIgnore
 	private Supplier<Float> _boostSupplier;
 
 	@Schema
@@ -127,6 +128,7 @@ public class FieldMapping implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String field;
 
+	@JsonIgnore
 	private Supplier<String> _fieldSupplier;
 
 	@Schema
@@ -167,6 +169,7 @@ public class FieldMapping implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String locale;
 
+	@JsonIgnore
 	private Supplier<String> _localeSupplier;
 
 	@Override

@@ -94,6 +94,7 @@ public class ReplenishmentItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date availabilityDate;
 
+	@JsonIgnore
 	private Supplier<Date> _availabilityDateSupplier;
 
 	@Schema(example = "AB-34098-789-N")
@@ -134,6 +135,7 @@ public class ReplenishmentItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@Schema(example = "30130")
@@ -172,6 +174,7 @@ public class ReplenishmentItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema(example = "10.1")
@@ -213,6 +216,7 @@ public class ReplenishmentItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal quantity;
 
+	@JsonIgnore
 	private Supplier<BigDecimal> _quantitySupplier;
 
 	@Schema(example = "SKU")
@@ -251,6 +255,7 @@ public class ReplenishmentItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String sku;
 
+	@JsonIgnore
 	private Supplier<String> _skuSupplier;
 
 	@Schema(example = "lt")
@@ -291,6 +296,7 @@ public class ReplenishmentItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String unitOfMeasureKey;
 
+	@JsonIgnore
 	private Supplier<String> _unitOfMeasureKeySupplier;
 
 	@Schema(example = "30130")
@@ -331,6 +337,7 @@ public class ReplenishmentItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long warehouseId;
 
+	@JsonIgnore
 	private Supplier<Long> _warehouseIdSupplier;
 
 	@Override

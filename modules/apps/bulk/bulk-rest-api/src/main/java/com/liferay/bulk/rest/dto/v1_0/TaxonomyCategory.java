@@ -86,6 +86,7 @@ public class TaxonomyCategory implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long taxonomyCategoryId;
 
+	@JsonIgnore
 	private Supplier<Long> _taxonomyCategoryIdSupplier;
 
 	@Schema
@@ -126,6 +127,7 @@ public class TaxonomyCategory implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String taxonomyCategoryName;
 
+	@JsonIgnore
 	private Supplier<String> _taxonomyCategoryNameSupplier;
 
 	@Override

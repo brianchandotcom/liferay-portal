@@ -97,6 +97,7 @@ public class Payment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
+	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
 	@Schema(example = "101")
@@ -138,6 +139,7 @@ public class Payment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal amount;
 
+	@JsonIgnore
 	private Supplier<BigDecimal> _amountSupplier;
 
 	@Schema(example = "$ 101.00")
@@ -178,6 +180,7 @@ public class Payment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String amountFormatted;
 
+	@JsonIgnore
 	private Supplier<String> _amountFormattedSupplier;
 
 	@Schema
@@ -218,6 +221,7 @@ public class Payment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String callbackURL;
 
+	@JsonIgnore
 	private Supplier<String> _callbackURLSupplier;
 
 	@Schema
@@ -258,6 +262,7 @@ public class Payment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String cancelURL;
 
+	@JsonIgnore
 	private Supplier<String> _cancelURLSupplier;
 
 	@DecimalMin("0")
@@ -299,6 +304,7 @@ public class Payment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long channelId;
 
+	@JsonIgnore
 	private Supplier<Long> _channelIdSupplier;
 
 	@Schema
@@ -339,6 +345,7 @@ public class Payment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String comment;
 
+	@JsonIgnore
 	private Supplier<String> _commentSupplier;
 
 	@Schema(example = "2023-12-01")
@@ -379,6 +386,7 @@ public class Payment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date createDate;
 
+	@JsonIgnore
 	private Supplier<Date> _createDateSupplier;
 
 	@Schema(example = "USD")
@@ -419,6 +427,7 @@ public class Payment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String currencyCode;
 
+	@JsonIgnore
 	private Supplier<String> _currencyCodeSupplier;
 
 	@Schema
@@ -459,6 +468,7 @@ public class Payment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String errorMessages;
 
+	@JsonIgnore
 	private Supplier<String> _errorMessagesSupplier;
 
 	@Schema(example = "AB-34098-789-N")
@@ -499,6 +509,7 @@ public class Payment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@DecimalMin("0")
@@ -538,6 +549,7 @@ public class Payment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema(example = "en_US")
@@ -578,6 +590,7 @@ public class Payment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String languageId;
 
+	@JsonIgnore
 	private Supplier<String> _languageIdSupplier;
 
 	@Schema(example = "money-order")
@@ -618,6 +631,7 @@ public class Payment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String paymentIntegrationKey;
 
+	@JsonIgnore
 	private Supplier<String> _paymentIntegrationKeySupplier;
 
 	@DecimalMin("0")
@@ -660,6 +674,7 @@ public class Payment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer paymentIntegrationType;
 
+	@JsonIgnore
 	private Supplier<Integer> _paymentIntegrationTypeSupplier;
 
 	@DecimalMin("0")
@@ -701,6 +716,7 @@ public class Payment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer paymentStatus;
 
+	@JsonIgnore
 	private Supplier<Integer> _paymentStatusSupplier;
 
 	@Schema
@@ -742,6 +758,7 @@ public class Payment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Status paymentStatusStatus;
 
+	@JsonIgnore
 	private Supplier<Status> _paymentStatusStatusSupplier;
 
 	@Schema(example = "product-defect")
@@ -782,6 +799,7 @@ public class Payment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String reasonKey;
 
+	@JsonIgnore
 	private Supplier<String> _reasonKeySupplier;
 
 	@Schema(
@@ -826,6 +844,7 @@ public class Payment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, String> reasonName;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _reasonNameSupplier;
 
 	@Schema
@@ -866,6 +885,7 @@ public class Payment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String redirectURL;
 
+	@JsonIgnore
 	private Supplier<String> _redirectURLSupplier;
 
 	@DecimalMin("0")
@@ -907,6 +927,7 @@ public class Payment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long relatedItemId;
 
+	@JsonIgnore
 	private Supplier<Long> _relatedItemIdSupplier;
 
 	@Schema(example = "com.liferay.commerce.model.CommerceOrder")
@@ -947,6 +968,7 @@ public class Payment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String relatedItemName;
 
+	@JsonIgnore
 	private Supplier<String> _relatedItemNameSupplier;
 
 	@Schema(example = "Order")
@@ -987,6 +1009,7 @@ public class Payment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String relatedItemNameLabel;
 
+	@JsonIgnore
 	private Supplier<String> _relatedItemNameLabelSupplier;
 
 	@Schema
@@ -1027,6 +1050,7 @@ public class Payment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String transactionCode;
 
+	@JsonIgnore
 	private Supplier<String> _transactionCodeSupplier;
 
 	@Schema(example = "0")
@@ -1065,6 +1089,7 @@ public class Payment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer type;
 
+	@JsonIgnore
 	private Supplier<Integer> _typeSupplier;
 
 	@Schema(example = "Refund")
@@ -1105,6 +1130,7 @@ public class Payment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String typeLabel;
 
+	@JsonIgnore
 	private Supplier<String> _typeLabelSupplier;
 
 	@Override

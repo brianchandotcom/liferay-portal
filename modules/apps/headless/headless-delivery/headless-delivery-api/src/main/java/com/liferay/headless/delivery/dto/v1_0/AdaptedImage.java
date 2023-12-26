@@ -89,6 +89,7 @@ public class AdaptedImage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String contentUrl;
 
+	@JsonIgnore
 	private Supplier<String> _contentUrlSupplier;
 
 	@Schema(
@@ -133,6 +134,7 @@ public class AdaptedImage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String contentValue;
 
+	@JsonIgnore
 	private Supplier<String> _contentValueSupplier;
 
 	@Schema(description = "The image's height in pixels.")
@@ -173,6 +175,7 @@ public class AdaptedImage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer height;
 
+	@JsonIgnore
 	private Supplier<Integer> _heightSupplier;
 
 	@Schema(
@@ -217,6 +220,7 @@ public class AdaptedImage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String resolutionName;
 
+	@JsonIgnore
 	private Supplier<String> _resolutionNameSupplier;
 
 	@Schema(description = "The image's size in bytes.")
@@ -257,6 +261,7 @@ public class AdaptedImage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long sizeInBytes;
 
+	@JsonIgnore
 	private Supplier<Long> _sizeInBytesSupplier;
 
 	@Schema(description = "The image's width in pixels.")
@@ -297,6 +302,7 @@ public class AdaptedImage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer width;
 
+	@JsonIgnore
 	private Supplier<Integer> _widthSupplier;
 
 	@Override

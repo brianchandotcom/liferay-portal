@@ -92,6 +92,7 @@ public class ProductOption implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long catalogId;
 
+	@JsonIgnore
 	private Supplier<Long> _catalogIdSupplier;
 
 	@Schema
@@ -133,6 +134,7 @@ public class ProductOption implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected CustomField[] customFields;
 
+	@JsonIgnore
 	private Supplier<CustomField[]> _customFieldsSupplier;
 
 	@Schema(example = "true")
@@ -173,6 +175,7 @@ public class ProductOption implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean definedExternally;
 
+	@JsonIgnore
 	private Supplier<Boolean> _definedExternallySupplier;
 
 	@Schema(
@@ -217,6 +220,7 @@ public class ProductOption implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> description;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _descriptionSupplier;
 
 	@Schema(example = "true")
@@ -257,6 +261,7 @@ public class ProductOption implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean facetable;
 
+	@JsonIgnore
 	private Supplier<Boolean> _facetableSupplier;
 
 	@Schema(
@@ -300,6 +305,7 @@ public class ProductOption implements Serializable {
 	@NotEmpty
 	protected String fieldType;
 
+	@JsonIgnore
 	private Supplier<String> _fieldTypeSupplier;
 
 	@DecimalMin("0")
@@ -339,6 +345,7 @@ public class ProductOption implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema
@@ -379,6 +386,7 @@ public class ProductOption implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String infoItemServiceKey;
 
+	@JsonIgnore
 	private Supplier<String> _infoItemServiceKeySupplier;
 
 	@Schema(example = "color")
@@ -418,6 +426,7 @@ public class ProductOption implements Serializable {
 	@NotEmpty
 	protected String key;
 
+	@JsonIgnore
 	private Supplier<String> _keySupplier;
 
 	@Schema(example = "{en_US=Color, hr_HR=Color HR, hu_HU=Color HU}")
@@ -460,6 +469,7 @@ public class ProductOption implements Serializable {
 	@NotNull
 	protected Map<String, String> name;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _nameSupplier;
 
 	@DecimalMin("0")
@@ -502,6 +512,7 @@ public class ProductOption implements Serializable {
 	@NotNull
 	protected Long optionId;
 
+	@JsonIgnore
 	private Supplier<Long> _optionIdSupplier;
 
 	@Schema(example = "dynamic, static")
@@ -542,6 +553,7 @@ public class ProductOption implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String priceType;
 
+	@JsonIgnore
 	private Supplier<String> _priceTypeSupplier;
 
 	@Schema(example = "1.2")
@@ -582,6 +594,7 @@ public class ProductOption implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double priority;
 
+	@JsonIgnore
 	private Supplier<Double> _prioritySupplier;
 
 	@Schema
@@ -626,6 +639,7 @@ public class ProductOption implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ProductOptionValue[] productOptionValues;
 
+	@JsonIgnore
 	private Supplier<ProductOptionValue[]> _productOptionValuesSupplier;
 
 	@Schema(example = "true")
@@ -666,6 +680,7 @@ public class ProductOption implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean required;
 
+	@JsonIgnore
 	private Supplier<Boolean> _requiredSupplier;
 
 	@Schema(example = "true")
@@ -706,6 +721,7 @@ public class ProductOption implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean skuContributor;
 
+	@JsonIgnore
 	private Supplier<Boolean> _skuContributorSupplier;
 
 	@Schema(example = "22.50")
@@ -746,6 +762,7 @@ public class ProductOption implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String typeSettings;
 
+	@JsonIgnore
 	private Supplier<String> _typeSettingsSupplier;
 
 	@Override

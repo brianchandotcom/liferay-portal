@@ -89,6 +89,7 @@ public class ObjectFolderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean linkedObjectDefinition;
 
+	@JsonIgnore
 	private Supplier<Boolean> _linkedObjectDefinitionSupplier;
 
 	@Schema
@@ -131,6 +132,7 @@ public class ObjectFolderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ObjectDefinition objectDefinition;
 
+	@JsonIgnore
 	private Supplier<ObjectDefinition> _objectDefinitionSupplier;
 
 	@Schema
@@ -177,6 +179,7 @@ public class ObjectFolderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String objectDefinitionExternalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _objectDefinitionExternalReferenceCodeSupplier;
 
 	@Schema
@@ -217,6 +220,7 @@ public class ObjectFolderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer positionX;
 
+	@JsonIgnore
 	private Supplier<Integer> _positionXSupplier;
 
 	@Schema
@@ -257,6 +261,7 @@ public class ObjectFolderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer positionY;
 
+	@JsonIgnore
 	private Supplier<Integer> _positionYSupplier;
 
 	@Override

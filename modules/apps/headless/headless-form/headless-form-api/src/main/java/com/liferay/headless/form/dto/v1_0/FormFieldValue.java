@@ -92,6 +92,7 @@ public class FormFieldValue implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected FormDocument formDocument;
 
+	@JsonIgnore
 	private Supplier<FormDocument> _formDocumentSupplier;
 
 	@Schema
@@ -132,6 +133,7 @@ public class FormFieldValue implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected Long formDocumentId;
 
+	@JsonIgnore
 	private Supplier<Long> _formDocumentIdSupplier;
 
 	@Schema
@@ -170,6 +172,7 @@ public class FormFieldValue implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema
@@ -208,6 +211,7 @@ public class FormFieldValue implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema
@@ -248,6 +252,7 @@ public class FormFieldValue implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String value;
 
+	@JsonIgnore
 	private Supplier<String> _valueSupplier;
 
 	@Override

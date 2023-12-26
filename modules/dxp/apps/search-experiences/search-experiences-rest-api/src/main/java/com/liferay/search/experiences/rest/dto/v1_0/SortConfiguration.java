@@ -90,6 +90,7 @@ public class SortConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object sorts;
 
+	@JsonIgnore
 	private Supplier<Object> _sortsSupplier;
 
 	@Override

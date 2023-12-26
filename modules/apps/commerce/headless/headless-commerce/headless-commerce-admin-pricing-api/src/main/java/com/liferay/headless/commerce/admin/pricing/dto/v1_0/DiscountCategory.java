@@ -92,6 +92,7 @@ public class DiscountCategory implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String categoryExternalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _categoryExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
@@ -133,6 +134,7 @@ public class DiscountCategory implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long categoryId;
 
+	@JsonIgnore
 	private Supplier<Long> _categoryIdSupplier;
 
 	@Schema(example = "DAB-34098-789-N")
@@ -177,6 +179,7 @@ public class DiscountCategory implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String discountExternalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _discountExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
@@ -218,6 +221,7 @@ public class DiscountCategory implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long discountId;
 
+	@JsonIgnore
 	private Supplier<Long> _discountIdSupplier;
 
 	@DecimalMin("0")
@@ -257,6 +261,7 @@ public class DiscountCategory implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Override

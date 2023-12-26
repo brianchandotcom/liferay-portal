@@ -108,6 +108,7 @@ public class SiteMapSettings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ChangeFrequency changeFrequency;
 
+	@JsonIgnore
 	private Supplier<ChangeFrequency> _changeFrequencySupplier;
 
 	@Schema(
@@ -152,6 +153,7 @@ public class SiteMapSettings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean include;
 
+	@JsonIgnore
 	private Supplier<Boolean> _includeSupplier;
 
 	@DecimalMax("1")
@@ -198,6 +200,7 @@ public class SiteMapSettings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double pagePriority;
 
+	@JsonIgnore
 	private Supplier<Double> _pagePrioritySupplier;
 
 	@Override

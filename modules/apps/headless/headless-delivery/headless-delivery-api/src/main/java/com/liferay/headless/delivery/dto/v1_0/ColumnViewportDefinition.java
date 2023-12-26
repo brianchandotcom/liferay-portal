@@ -90,6 +90,7 @@ public class ColumnViewportDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer size;
 
+	@JsonIgnore
 	private Supplier<Integer> _sizeSupplier;
 
 	@Override

@@ -99,6 +99,7 @@ public class PunchOutSession implements Serializable {
 	@NotEmpty
 	protected String buyerAccountReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _buyerAccountReferenceCodeSupplier;
 
 	@Schema
@@ -141,6 +142,7 @@ public class PunchOutSession implements Serializable {
 	@NotNull
 	protected Group buyerGroup;
 
+	@JsonIgnore
 	private Supplier<Group> _buyerGroupSupplier;
 
 	@Schema
@@ -183,6 +185,7 @@ public class PunchOutSession implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Organization buyerOrganization;
 
+	@JsonIgnore
 	private Supplier<Organization> _buyerOrganizationSupplier;
 
 	@Schema
@@ -225,6 +228,7 @@ public class PunchOutSession implements Serializable {
 	@NotNull
 	protected User buyerUser;
 
+	@JsonIgnore
 	private Supplier<User> _buyerUserSupplier;
 
 	@Schema
@@ -265,6 +269,7 @@ public class PunchOutSession implements Serializable {
 	@NotNull
 	protected Cart cart;
 
+	@JsonIgnore
 	private Supplier<Cart> _cartSupplier;
 
 	@Schema
@@ -306,6 +311,7 @@ public class PunchOutSession implements Serializable {
 	@NotEmpty
 	protected String punchOutReturnURL;
 
+	@JsonIgnore
 	private Supplier<String> _punchOutReturnURLSupplier;
 
 	@Schema
@@ -347,6 +353,7 @@ public class PunchOutSession implements Serializable {
 	@NotEmpty
 	protected String punchOutSessionType;
 
+	@JsonIgnore
 	private Supplier<String> _punchOutSessionTypeSupplier;
 
 	@Schema
@@ -387,6 +394,7 @@ public class PunchOutSession implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String punchOutStartURL;
 
+	@JsonIgnore
 	private Supplier<String> _punchOutStartURLSupplier;
 
 	@Override

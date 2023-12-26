@@ -98,6 +98,7 @@ public class Product implements Serializable {
 	@NotNull
 	protected Long catalogId;
 
+	@JsonIgnore
 	private Supplier<Long> _catalogIdSupplier;
 
 	@Schema
@@ -138,6 +139,7 @@ public class Product implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long[] categoryIds;
 
+	@JsonIgnore
 	private Supplier<Long[]> _categoryIdsSupplier;
 
 	@Schema(example = "2017-07-21")
@@ -178,6 +180,7 @@ public class Product implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date createDate;
 
+	@JsonIgnore
 	private Supplier<Date> _createDateSupplier;
 
 	@Schema
@@ -219,6 +222,7 @@ public class Product implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, ?> customFields;
 
+	@JsonIgnore
 	private Supplier<Map<String, ?>> _customFieldsSupplier;
 
 	@Schema(
@@ -263,6 +267,7 @@ public class Product implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> description;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _descriptionSupplier;
 
 	@Schema(example = "2017-07-21")
@@ -303,6 +308,7 @@ public class Product implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date displayDate;
 
+	@JsonIgnore
 	private Supplier<Date> _displayDateSupplier;
 
 	@Schema(example = "2017-08-21")
@@ -343,6 +349,7 @@ public class Product implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date expirationDate;
 
+	@JsonIgnore
 	private Supplier<Date> _expirationDateSupplier;
 
 	@Schema(example = "AB-34098-789-N")
@@ -383,6 +390,7 @@ public class Product implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@DecimalMin("0")
@@ -422,6 +430,7 @@ public class Product implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema(
@@ -466,6 +475,7 @@ public class Product implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> metaDescription;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _metaDescriptionSupplier;
 
 	@Schema(
@@ -510,6 +520,7 @@ public class Product implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> metaKeyword;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _metaKeywordSupplier;
 
 	@Schema(
@@ -554,6 +565,7 @@ public class Product implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> metaTitle;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _metaTitleSupplier;
 
 	@Schema(example = "2017-08-21")
@@ -594,6 +606,7 @@ public class Product implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date modifiedDate;
 
+	@JsonIgnore
 	private Supplier<Date> _modifiedDateSupplier;
 
 	@Schema(
@@ -638,6 +651,7 @@ public class Product implements Serializable {
 	@NotNull
 	protected Map<String, String> name;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _nameSupplier;
 
 	@Schema
@@ -678,6 +692,7 @@ public class Product implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long[] productChannelIds;
 
+	@JsonIgnore
 	private Supplier<Long[]> _productChannelIdsSupplier;
 
 	@Schema
@@ -718,6 +733,7 @@ public class Product implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long productId;
 
+	@JsonIgnore
 	private Supplier<Long> _productIdSupplier;
 
 	@Schema
@@ -760,6 +776,7 @@ public class Product implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ProductOption[] productOptions;
 
+	@JsonIgnore
 	private Supplier<ProductOption[]> _productOptionsSupplier;
 
 	@Schema
@@ -804,6 +821,7 @@ public class Product implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ProductSpecification[] productSpecifications;
 
+	@JsonIgnore
 	private Supplier<ProductSpecification[]> _productSpecificationsSupplier;
 
 	@Schema(example = "simple")
@@ -845,6 +863,7 @@ public class Product implements Serializable {
 	@NotEmpty
 	protected String productType;
 
+	@JsonIgnore
 	private Supplier<String> _productTypeSupplier;
 
 	@Schema
@@ -884,6 +903,7 @@ public class Product implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Sku[] skus;
 
+	@JsonIgnore
 	private Supplier<Sku[]> _skusSupplier;
 
 	@Schema
@@ -924,6 +944,7 @@ public class Product implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer status;
 
+	@JsonIgnore
 	private Supplier<Integer> _statusSupplier;
 
 	@Schema
@@ -964,6 +985,7 @@ public class Product implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean subscriptionEnabled;
 
+	@JsonIgnore
 	private Supplier<Boolean> _subscriptionEnabledSupplier;
 
 	@Schema(example = "[tag1, tag2, tag3]")
@@ -1004,6 +1026,7 @@ public class Product implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] tags;
 
+	@JsonIgnore
 	private Supplier<String[]> _tagsSupplier;
 
 	@Schema(
@@ -1047,6 +1070,7 @@ public class Product implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> urls;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _urlsSupplier;
 
 	@Override

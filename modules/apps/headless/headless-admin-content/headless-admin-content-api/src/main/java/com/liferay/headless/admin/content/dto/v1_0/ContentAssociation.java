@@ -93,6 +93,7 @@ public class ContentAssociation implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String contentSubtype;
 
+	@JsonIgnore
 	private Supplier<String> _contentSubtypeSupplier;
 
 	@Schema(
@@ -137,6 +138,7 @@ public class ContentAssociation implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String contentType;
 
+	@JsonIgnore
 	private Supplier<String> _contentTypeSupplier;
 
 	@Override

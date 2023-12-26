@@ -86,6 +86,7 @@ public class MLModel implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String modelId;
 
+	@JsonIgnore
 	private Supplier<String> _modelIdSupplier;
 
 	@Override

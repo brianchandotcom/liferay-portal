@@ -96,6 +96,7 @@ public class TaxonomyCategoryBrief implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Object embeddedTaxonomyCategory;
 
+	@JsonIgnore
 	private Supplier<Object> _embeddedTaxonomyCategorySupplier;
 
 	@Schema(
@@ -140,6 +141,7 @@ public class TaxonomyCategoryBrief implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long taxonomyCategoryId;
 
+	@JsonIgnore
 	private Supplier<Long> _taxonomyCategoryIdSupplier;
 
 	@Schema(description = "The category's name.")
@@ -180,6 +182,7 @@ public class TaxonomyCategoryBrief implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String taxonomyCategoryName;
 
+	@JsonIgnore
 	private Supplier<String> _taxonomyCategoryNameSupplier;
 
 	@Schema(description = "The localized category's names.")
@@ -225,6 +228,7 @@ public class TaxonomyCategoryBrief implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, String> taxonomyCategoryName_i18n;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _taxonomyCategoryName_i18nSupplier;
 
 	@Override

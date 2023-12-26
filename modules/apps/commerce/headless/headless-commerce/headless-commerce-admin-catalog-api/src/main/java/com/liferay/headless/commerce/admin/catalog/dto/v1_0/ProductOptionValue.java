@@ -96,6 +96,7 @@ public class ProductOptionValue implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal deltaPrice;
 
+	@JsonIgnore
 	private Supplier<BigDecimal> _deltaPriceSupplier;
 
 	@DecimalMin("0")
@@ -135,6 +136,7 @@ public class ProductOptionValue implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema(example = "black")
@@ -174,6 +176,7 @@ public class ProductOptionValue implements Serializable {
 	@NotEmpty
 	protected String key;
 
+	@JsonIgnore
 	private Supplier<String> _keySupplier;
 
 	@Schema(example = "{en_US=Black, hr_HR=Black HR, hu_HU=Black HU}")
@@ -216,6 +219,7 @@ public class ProductOptionValue implements Serializable {
 	@NotNull
 	protected Map<String, String> name;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _nameSupplier;
 
 	@Schema(example = "true")
@@ -256,6 +260,7 @@ public class ProductOptionValue implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean preselected;
 
+	@JsonIgnore
 	private Supplier<Boolean> _preselectedSupplier;
 
 	@Schema(example = "1.2")
@@ -296,6 +301,7 @@ public class ProductOptionValue implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double priority;
 
+	@JsonIgnore
 	private Supplier<Double> _prioritySupplier;
 
 	@DecimalMin("0")
@@ -338,6 +344,7 @@ public class ProductOptionValue implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal quantity;
 
+	@JsonIgnore
 	private Supplier<BigDecimal> _quantitySupplier;
 
 	@DecimalMin("0")
@@ -377,6 +384,7 @@ public class ProductOptionValue implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long skuId;
 
+	@JsonIgnore
 	private Supplier<Long> _skuIdSupplier;
 
 	@Schema(example = "pl")
@@ -417,6 +425,7 @@ public class ProductOptionValue implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String unitOfMeasureKey;
 
+	@JsonIgnore
 	private Supplier<String> _unitOfMeasureKeySupplier;
 
 	@Override

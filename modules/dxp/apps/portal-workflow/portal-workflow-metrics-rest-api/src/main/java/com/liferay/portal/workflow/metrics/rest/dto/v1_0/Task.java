@@ -92,6 +92,7 @@ public class Task implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String assetTitle;
 
+	@JsonIgnore
 	private Supplier<String> _assetTitleSupplier;
 
 	@Schema
@@ -134,6 +135,7 @@ public class Task implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> assetTitle_i18n;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _assetTitle_i18nSupplier;
 
 	@Schema
@@ -174,6 +176,7 @@ public class Task implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String assetType;
 
+	@JsonIgnore
 	private Supplier<String> _assetTypeSupplier;
 
 	@Schema
@@ -216,6 +219,7 @@ public class Task implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> assetType_i18n;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _assetType_i18nSupplier;
 
 	@Schema
@@ -257,6 +261,7 @@ public class Task implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Assignee assignee;
 
+	@JsonIgnore
 	private Supplier<Assignee> _assigneeSupplier;
 
 	@Schema
@@ -297,6 +302,7 @@ public class Task implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String className;
 
+	@JsonIgnore
 	private Supplier<String> _classNameSupplier;
 
 	@Schema
@@ -337,6 +343,7 @@ public class Task implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long classPK;
 
+	@JsonIgnore
 	private Supplier<Long> _classPKSupplier;
 
 	@Schema
@@ -377,6 +384,7 @@ public class Task implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean completed;
 
+	@JsonIgnore
 	private Supplier<Boolean> _completedSupplier;
 
 	@Schema
@@ -417,6 +425,7 @@ public class Task implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long completionUserId;
 
+	@JsonIgnore
 	private Supplier<Long> _completionUserIdSupplier;
 
 	@Schema
@@ -457,6 +466,7 @@ public class Task implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateCompletion;
 
+	@JsonIgnore
 	private Supplier<Date> _dateCompletionSupplier;
 
 	@Schema
@@ -497,6 +507,7 @@ public class Task implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateCreated;
 
+	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
 	@Schema
@@ -537,6 +548,7 @@ public class Task implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateModified;
 
+	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
 	@Schema
@@ -577,6 +589,7 @@ public class Task implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long duration;
 
+	@JsonIgnore
 	private Supplier<Long> _durationSupplier;
 
 	@Schema
@@ -615,6 +628,7 @@ public class Task implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema
@@ -655,6 +669,7 @@ public class Task implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long instanceId;
 
+	@JsonIgnore
 	private Supplier<Long> _instanceIdSupplier;
 
 	@Schema
@@ -695,6 +710,7 @@ public class Task implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String label;
 
+	@JsonIgnore
 	private Supplier<String> _labelSupplier;
 
 	@Schema
@@ -733,6 +749,7 @@ public class Task implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema
@@ -773,6 +790,7 @@ public class Task implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long nodeId;
 
+	@JsonIgnore
 	private Supplier<Long> _nodeIdSupplier;
 
 	@Schema
@@ -813,6 +831,7 @@ public class Task implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long processId;
 
+	@JsonIgnore
 	private Supplier<Long> _processIdSupplier;
 
 	@Schema
@@ -853,6 +872,7 @@ public class Task implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String processVersion;
 
+	@JsonIgnore
 	private Supplier<String> _processVersionSupplier;
 
 	@Override

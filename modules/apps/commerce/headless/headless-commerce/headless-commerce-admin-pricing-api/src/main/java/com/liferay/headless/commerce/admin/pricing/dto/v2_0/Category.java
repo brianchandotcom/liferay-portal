@@ -87,6 +87,7 @@ public class Category implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema(example = "simple")
@@ -125,6 +126,7 @@ public class Category implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema(example = "simple")
@@ -163,6 +165,7 @@ public class Category implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String path;
 
+	@JsonIgnore
 	private Supplier<String> _pathSupplier;
 
 	@Schema(example = "Default Vocabulary")
@@ -203,6 +206,7 @@ public class Category implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String vocabulary;
 
+	@JsonIgnore
 	private Supplier<String> _vocabularySupplier;
 
 	@Override

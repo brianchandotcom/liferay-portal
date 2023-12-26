@@ -89,6 +89,7 @@ public class ObjectReviewed implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String assetTitle;
 
+	@JsonIgnore
 	private Supplier<String> _assetTitleSupplier;
 
 	@Schema
@@ -129,6 +130,7 @@ public class ObjectReviewed implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String assetType;
 
+	@JsonIgnore
 	private Supplier<String> _assetTypeSupplier;
 
 	@Schema(description = "The resource's ID.")
@@ -167,6 +169,7 @@ public class ObjectReviewed implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema(description = "The resource's type.")
@@ -207,6 +210,7 @@ public class ObjectReviewed implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String resourceType;
 
+	@JsonIgnore
 	private Supplier<String> _resourceTypeSupplier;
 
 	@Override

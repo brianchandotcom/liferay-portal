@@ -86,6 +86,7 @@ public class Exists implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String parameterName;
 
+	@JsonIgnore
 	private Supplier<String> _parameterNameSupplier;
 
 	@Override

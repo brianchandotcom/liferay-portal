@@ -92,6 +92,7 @@ public class MultiValuedAttribute implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String $ref;
 
+	@JsonIgnore
 	private Supplier<String> _$refSupplier;
 
 	@Schema(
@@ -136,6 +137,7 @@ public class MultiValuedAttribute implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String display;
 
+	@JsonIgnore
 	private Supplier<String> _displaySupplier;
 
 	@Schema(
@@ -180,6 +182,7 @@ public class MultiValuedAttribute implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean primary;
 
+	@JsonIgnore
 	private Supplier<Boolean> _primarySupplier;
 
 	@Schema(
@@ -222,6 +225,7 @@ public class MultiValuedAttribute implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String type;
 
+	@JsonIgnore
 	private Supplier<String> _typeSupplier;
 
 	@Schema(
@@ -266,6 +270,7 @@ public class MultiValuedAttribute implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String value;
 
+	@JsonIgnore
 	private Supplier<String> _valueSupplier;
 
 	@Override

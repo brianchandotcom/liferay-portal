@@ -95,6 +95,7 @@ public class ExperimentRun implements Serializable {
 	@NotNull
 	protected Double confidenceLevel;
 
+	@JsonIgnore
 	private Supplier<Double> _confidenceLevelSupplier;
 
 	@Schema
@@ -138,6 +139,7 @@ public class ExperimentRun implements Serializable {
 	@NotNull
 	protected ExperimentVariant[] experimentVariants;
 
+	@JsonIgnore
 	private Supplier<ExperimentVariant[]> _experimentVariantsSupplier;
 
 	@Schema
@@ -178,6 +180,7 @@ public class ExperimentRun implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String status;
 
+	@JsonIgnore
 	private Supplier<String> _statusSupplier;
 
 	@Override

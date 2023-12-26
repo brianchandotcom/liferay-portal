@@ -86,6 +86,7 @@ public class FieldSummary implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer account;
 
+	@JsonIgnore
 	private Supplier<Integer> _accountSupplier;
 
 	@Schema
@@ -126,6 +127,7 @@ public class FieldSummary implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer order;
 
+	@JsonIgnore
 	private Supplier<Integer> _orderSupplier;
 
 	@Schema
@@ -166,6 +168,7 @@ public class FieldSummary implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer people;
 
+	@JsonIgnore
 	private Supplier<Integer> _peopleSupplier;
 
 	@Schema
@@ -206,6 +209,7 @@ public class FieldSummary implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer product;
 
+	@JsonIgnore
 	private Supplier<Integer> _productSupplier;
 
 	@Override

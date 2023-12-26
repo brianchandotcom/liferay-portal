@@ -90,6 +90,7 @@ public class NodeMetric implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long breachedInstanceCount;
 
+	@JsonIgnore
 	private Supplier<Long> _breachedInstanceCountSupplier;
 
 	@Schema
@@ -134,6 +135,7 @@ public class NodeMetric implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double breachedInstancePercentage;
 
+	@JsonIgnore
 	private Supplier<Double> _breachedInstancePercentageSupplier;
 
 	@Schema
@@ -174,6 +176,7 @@ public class NodeMetric implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long durationAvg;
 
+	@JsonIgnore
 	private Supplier<Long> _durationAvgSupplier;
 
 	@Schema
@@ -214,6 +217,7 @@ public class NodeMetric implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long instanceCount;
 
+	@JsonIgnore
 	private Supplier<Long> _instanceCountSupplier;
 
 	@Schema
@@ -253,6 +257,7 @@ public class NodeMetric implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Node node;
 
+	@JsonIgnore
 	private Supplier<Node> _nodeSupplier;
 
 	@Schema
@@ -293,6 +298,7 @@ public class NodeMetric implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long onTimeInstanceCount;
 
+	@JsonIgnore
 	private Supplier<Long> _onTimeInstanceCountSupplier;
 
 	@Schema
@@ -333,6 +339,7 @@ public class NodeMetric implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long overdueInstanceCount;
 
+	@JsonIgnore
 	private Supplier<Long> _overdueInstanceCountSupplier;
 
 	@Override

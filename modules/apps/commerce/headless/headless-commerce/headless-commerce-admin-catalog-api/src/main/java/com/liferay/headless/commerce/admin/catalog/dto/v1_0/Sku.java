@@ -99,6 +99,7 @@ public class Sku implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal cost;
 
+	@JsonIgnore
 	private Supplier<BigDecimal> _costSupplier;
 
 	@Schema
@@ -140,6 +141,7 @@ public class Sku implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected CustomField[] customFields;
 
+	@JsonIgnore
 	private Supplier<CustomField[]> _customFieldsSupplier;
 
 	@DecimalMin("0")
@@ -181,6 +183,7 @@ public class Sku implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double depth;
 
+	@JsonIgnore
 	private Supplier<Double> _depthSupplier;
 
 	@Schema(example = "false")
@@ -221,6 +224,7 @@ public class Sku implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean discontinued;
 
+	@JsonIgnore
 	private Supplier<Boolean> _discontinuedSupplier;
 
 	@Schema(example = "2017-07-21")
@@ -261,6 +265,7 @@ public class Sku implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date discontinuedDate;
 
+	@JsonIgnore
 	private Supplier<Date> _discontinuedDateSupplier;
 
 	@Schema(example = "2017-07-21")
@@ -301,6 +306,7 @@ public class Sku implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date displayDate;
 
+	@JsonIgnore
 	private Supplier<Date> _displayDateSupplier;
 
 	@Schema(example = "2017-08-21")
@@ -341,6 +347,7 @@ public class Sku implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date expirationDate;
 
+	@JsonIgnore
 	private Supplier<Date> _expirationDateSupplier;
 
 	@Schema(example = "AB-34098-789-N")
@@ -381,6 +388,7 @@ public class Sku implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@Schema(example = "12341234")
@@ -419,6 +427,7 @@ public class Sku implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String gtin;
 
+	@JsonIgnore
 	private Supplier<String> _gtinSupplier;
 
 	@DecimalMin("0")
@@ -460,6 +469,7 @@ public class Sku implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double height;
 
+	@JsonIgnore
 	private Supplier<Double> _heightSupplier;
 
 	@DecimalMin("0")
@@ -499,6 +509,7 @@ public class Sku implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema(example = "29")
@@ -539,6 +550,7 @@ public class Sku implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer inventoryLevel;
 
+	@JsonIgnore
 	private Supplier<Integer> _inventoryLevelSupplier;
 
 	@Schema(example = "12341234")
@@ -580,6 +592,7 @@ public class Sku implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String manufacturerPartNumber;
 
+	@JsonIgnore
 	private Supplier<String> _manufacturerPartNumberSupplier;
 
 	@Schema(example = "true")
@@ -620,6 +633,7 @@ public class Sku implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean neverExpire;
 
+	@JsonIgnore
 	private Supplier<Boolean> _neverExpireSupplier;
 
 	@DecimalMin("0")
@@ -662,6 +676,7 @@ public class Sku implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal price;
 
+	@JsonIgnore
 	private Supplier<BigDecimal> _priceSupplier;
 
 	@DecimalMin("0")
@@ -703,6 +718,7 @@ public class Sku implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long productId;
 
+	@JsonIgnore
 	private Supplier<Long> _productIdSupplier;
 
 	@Schema(example = "{en_US=Croatia, hr_HR=Hrvatska, hu_HU=Horvatorszag}")
@@ -745,6 +761,7 @@ public class Sku implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, String> productName;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _productNameSupplier;
 
 	@DecimalMin("0")
@@ -787,6 +804,7 @@ public class Sku implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal promoPrice;
 
+	@JsonIgnore
 	private Supplier<BigDecimal> _promoPriceSupplier;
 
 	@Schema(example = "true")
@@ -827,6 +845,7 @@ public class Sku implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean published;
 
+	@JsonIgnore
 	private Supplier<Boolean> _publishedSupplier;
 
 	@Schema(example = "true")
@@ -867,6 +886,7 @@ public class Sku implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean purchasable;
 
+	@JsonIgnore
 	private Supplier<Boolean> _purchasableSupplier;
 
 	@Schema(example = "SKU0111")
@@ -912,6 +932,7 @@ public class Sku implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String replacementSkuExternalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _replacementSkuExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
@@ -953,6 +974,7 @@ public class Sku implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long replacementSkuId;
 
+	@JsonIgnore
 	private Supplier<Long> _replacementSkuIdSupplier;
 
 	@Schema(example = "12341234")
@@ -992,6 +1014,7 @@ public class Sku implements Serializable {
 	@NotEmpty
 	protected String sku;
 
+	@JsonIgnore
 	private Supplier<String> _skuSupplier;
 
 	@Schema
@@ -1033,6 +1056,7 @@ public class Sku implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected SkuOption[] skuOptions;
 
+	@JsonIgnore
 	private Supplier<SkuOption[]> _skuOptionsSupplier;
 
 	@Schema
@@ -1078,6 +1102,7 @@ public class Sku implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected SkuSubscriptionConfiguration skuSubscriptionConfiguration;
 
+	@JsonIgnore
 	private Supplier<SkuSubscriptionConfiguration>
 		_skuSubscriptionConfigurationSupplier;
 
@@ -1121,6 +1146,7 @@ public class Sku implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected SkuUnitOfMeasure[] skuUnitOfMeasures;
 
+	@JsonIgnore
 	private Supplier<SkuUnitOfMeasure[]> _skuUnitOfMeasuresSupplier;
 
 	@Schema
@@ -1163,6 +1189,7 @@ public class Sku implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected SkuVirtualSettings skuVirtualSettings;
 
+	@JsonIgnore
 	private Supplier<SkuVirtualSettings> _skuVirtualSettingsSupplier;
 
 	@Schema(example = "pl")
@@ -1203,6 +1230,7 @@ public class Sku implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String unitOfMeasureKey;
 
+	@JsonIgnore
 	private Supplier<String> _unitOfMeasureKeySupplier;
 
 	@Schema(example = "{en_US=Pallet, hr_HR=Pallet HR, hu_HU=Pallet HU}")
@@ -1245,6 +1273,7 @@ public class Sku implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, String> unitOfMeasureName;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _unitOfMeasureNameSupplier;
 
 	@Schema
@@ -1285,6 +1314,7 @@ public class Sku implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String unitOfMeasureSkuId;
 
+	@JsonIgnore
 	private Supplier<String> _unitOfMeasureSkuIdSupplier;
 
 	@Schema(example = "1234567890")
@@ -1325,6 +1355,7 @@ public class Sku implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String unspsc;
 
+	@JsonIgnore
 	private Supplier<String> _unspscSupplier;
 
 	@DecimalMin("0")
@@ -1366,6 +1397,7 @@ public class Sku implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double weight;
 
+	@JsonIgnore
 	private Supplier<Double> _weightSupplier;
 
 	@DecimalMin("0")
@@ -1407,6 +1439,7 @@ public class Sku implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double width;
 
+	@JsonIgnore
 	private Supplier<Double> _widthSupplier;
 
 	@Override

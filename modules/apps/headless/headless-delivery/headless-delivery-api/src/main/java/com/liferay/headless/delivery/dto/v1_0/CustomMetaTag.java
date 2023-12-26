@@ -88,6 +88,7 @@ public class CustomMetaTag implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String key;
 
+	@JsonIgnore
 	private Supplier<String> _keySupplier;
 
 	@Schema(description = "The custom metatag's value")
@@ -128,6 +129,7 @@ public class CustomMetaTag implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String value;
 
+	@JsonIgnore
 	private Supplier<String> _valueSupplier;
 
 	@Schema(description = "The localized custom metatag's values.")
@@ -170,6 +172,7 @@ public class CustomMetaTag implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> value_i18n;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _value_i18nSupplier;
 
 	@Override

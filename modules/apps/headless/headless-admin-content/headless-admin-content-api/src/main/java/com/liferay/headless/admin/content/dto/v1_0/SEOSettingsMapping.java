@@ -99,6 +99,7 @@ public class SEOSettingsMapping implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String descriptionMappingFieldKey;
 
+	@JsonIgnore
 	private Supplier<String> _descriptionMappingFieldKeySupplier;
 
 	@Schema(
@@ -144,6 +145,7 @@ public class SEOSettingsMapping implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String htmlTitleMappingFieldKey;
 
+	@JsonIgnore
 	private Supplier<String> _htmlTitleMappingFieldKeySupplier;
 
 	@Schema(
@@ -188,6 +190,7 @@ public class SEOSettingsMapping implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String robots;
 
+	@JsonIgnore
 	private Supplier<String> _robotsSupplier;
 
 	@Schema(
@@ -234,6 +237,7 @@ public class SEOSettingsMapping implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> robots_i18n;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _robots_i18nSupplier;
 
 	@Override

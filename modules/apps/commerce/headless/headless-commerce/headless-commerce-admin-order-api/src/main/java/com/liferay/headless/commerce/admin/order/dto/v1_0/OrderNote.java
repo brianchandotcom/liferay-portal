@@ -88,6 +88,7 @@ public class OrderNote implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String author;
 
+	@JsonIgnore
 	private Supplier<String> _authorSupplier;
 
 	@Schema(example = "This order will be shipped separately")
@@ -128,6 +129,7 @@ public class OrderNote implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String content;
 
+	@JsonIgnore
 	private Supplier<String> _contentSupplier;
 
 	@Schema(example = "AB-34098-789-N")
@@ -168,6 +170,7 @@ public class OrderNote implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@DecimalMin("0")
@@ -207,6 +210,7 @@ public class OrderNote implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema(example = "CAB-34098-789-N")
@@ -251,6 +255,7 @@ public class OrderNote implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String orderExternalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _orderExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
@@ -292,6 +297,7 @@ public class OrderNote implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long orderId;
 
+	@JsonIgnore
 	private Supplier<Long> _orderIdSupplier;
 
 	@Schema(example = "true")
@@ -332,6 +338,7 @@ public class OrderNote implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean restricted;
 
+	@JsonIgnore
 	private Supplier<Boolean> _restrictedSupplier;
 
 	@Override

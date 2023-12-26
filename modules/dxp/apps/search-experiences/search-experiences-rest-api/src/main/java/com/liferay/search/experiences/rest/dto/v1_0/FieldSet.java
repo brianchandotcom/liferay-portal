@@ -89,6 +89,7 @@ public class FieldSet implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Field[] fields;
 
+	@JsonIgnore
 	private Supplier<Field[]> _fieldsSupplier;
 
 	@Override

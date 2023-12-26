@@ -103,6 +103,7 @@ public class ObjectViewFilterColumn implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FilterType filterType;
 
+	@JsonIgnore
 	private Supplier<FilterType> _filterTypeSupplier;
 
 	@Schema
@@ -141,6 +142,7 @@ public class ObjectViewFilterColumn implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema
@@ -179,6 +181,7 @@ public class ObjectViewFilterColumn implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String json;
 
+	@JsonIgnore
 	private Supplier<String> _jsonSupplier;
 
 	@Schema
@@ -219,6 +222,7 @@ public class ObjectViewFilterColumn implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String objectFieldName;
 
+	@JsonIgnore
 	private Supplier<String> _objectFieldNameSupplier;
 
 	@Schema
@@ -259,6 +263,7 @@ public class ObjectViewFilterColumn implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String valueSummary;
 
+	@JsonIgnore
 	private Supplier<String> _valueSummarySupplier;
 
 	@Override

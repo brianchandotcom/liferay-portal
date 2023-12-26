@@ -92,6 +92,7 @@ public class StructuredContentLink implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String contentType;
 
+	@JsonIgnore
 	private Supplier<String> _contentTypeSupplier;
 
 	@Schema(
@@ -141,6 +142,7 @@ public class StructuredContentLink implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected StructuredContent embeddedStructuredContent;
 
+	@JsonIgnore
 	private Supplier<StructuredContent> _embeddedStructuredContentSupplier;
 
 	@Schema(description = "The resource's ID.")
@@ -179,6 +181,7 @@ public class StructuredContentLink implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema(description = "The resource's title.")
@@ -219,6 +222,7 @@ public class StructuredContentLink implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String title;
 
+	@JsonIgnore
 	private Supplier<String> _titleSupplier;
 
 	@Override

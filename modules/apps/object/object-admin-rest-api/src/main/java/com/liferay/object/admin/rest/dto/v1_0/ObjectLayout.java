@@ -94,6 +94,7 @@ public class ObjectLayout implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
+	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
 	@Schema
@@ -134,6 +135,7 @@ public class ObjectLayout implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
+	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
 	@Schema
@@ -174,6 +176,7 @@ public class ObjectLayout implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
+	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
 	@Schema
@@ -214,6 +217,7 @@ public class ObjectLayout implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean defaultObjectLayout;
 
+	@JsonIgnore
 	private Supplier<Boolean> _defaultObjectLayoutSupplier;
 
 	@Schema
@@ -252,6 +256,7 @@ public class ObjectLayout implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema
@@ -293,6 +298,7 @@ public class ObjectLayout implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> name;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _nameSupplier;
 
 	@Schema
@@ -339,6 +345,7 @@ public class ObjectLayout implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String objectDefinitionExternalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _objectDefinitionExternalReferenceCodeSupplier;
 
 	@Schema
@@ -379,6 +386,7 @@ public class ObjectLayout implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long objectDefinitionId;
 
+	@JsonIgnore
 	private Supplier<Long> _objectDefinitionIdSupplier;
 
 	@Schema
@@ -421,6 +429,7 @@ public class ObjectLayout implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ObjectLayoutTab[] objectLayoutTabs;
 
+	@JsonIgnore
 	private Supplier<ObjectLayoutTab[]> _objectLayoutTabsSupplier;
 
 	@Override

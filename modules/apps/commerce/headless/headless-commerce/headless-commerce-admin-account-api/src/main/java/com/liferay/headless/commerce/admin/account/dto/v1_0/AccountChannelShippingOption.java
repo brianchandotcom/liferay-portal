@@ -95,6 +95,7 @@ public class AccountChannelShippingOption implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String accountExternalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _accountExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
@@ -136,6 +137,7 @@ public class AccountChannelShippingOption implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long accountId;
 
+	@JsonIgnore
 	private Supplier<Long> _accountIdSupplier;
 
 	@Schema
@@ -178,6 +180,7 @@ public class AccountChannelShippingOption implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
+	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
 	@Schema
@@ -222,6 +225,7 @@ public class AccountChannelShippingOption implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String channelExternalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _channelExternalReferenceCodeSupplier;
 
 	@Schema
@@ -262,6 +266,7 @@ public class AccountChannelShippingOption implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long channelId;
 
+	@JsonIgnore
 	private Supplier<Long> _channelIdSupplier;
 
 	@DecimalMin("0")
@@ -301,6 +306,7 @@ public class AccountChannelShippingOption implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@DecimalMin("0")
@@ -342,6 +348,7 @@ public class AccountChannelShippingOption implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long shippingMethodId;
 
+	@JsonIgnore
 	private Supplier<Long> _shippingMethodIdSupplier;
 
 	@Schema
@@ -382,6 +389,7 @@ public class AccountChannelShippingOption implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String shippingMethodKey;
 
+	@JsonIgnore
 	private Supplier<String> _shippingMethodKeySupplier;
 
 	@DecimalMin("0")
@@ -423,6 +431,7 @@ public class AccountChannelShippingOption implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long shippingOptionId;
 
+	@JsonIgnore
 	private Supplier<Long> _shippingOptionIdSupplier;
 
 	@Schema
@@ -463,6 +472,7 @@ public class AccountChannelShippingOption implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String shippingOptionKey;
 
+	@JsonIgnore
 	private Supplier<String> _shippingOptionKeySupplier;
 
 	@Override

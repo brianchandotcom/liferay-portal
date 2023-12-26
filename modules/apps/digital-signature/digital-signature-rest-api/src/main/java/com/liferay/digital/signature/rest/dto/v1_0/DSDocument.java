@@ -88,6 +88,7 @@ public class DSDocument implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String assignTabsToDSRecipientId;
 
+	@JsonIgnore
 	private Supplier<String> _assignTabsToDSRecipientIdSupplier;
 
 	@Schema
@@ -126,6 +127,7 @@ public class DSDocument implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String data;
 
+	@JsonIgnore
 	private Supplier<String> _dataSupplier;
 
 	@Schema
@@ -170,6 +172,7 @@ public class DSDocument implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String fileEntryExternalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _fileEntryExternalReferenceCodeSupplier;
 
 	@Schema
@@ -210,6 +213,7 @@ public class DSDocument implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String fileExtension;
 
+	@JsonIgnore
 	private Supplier<String> _fileExtensionSupplier;
 
 	@Schema
@@ -248,6 +252,7 @@ public class DSDocument implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String id;
 
+	@JsonIgnore
 	private Supplier<String> _idSupplier;
 
 	@Schema
@@ -286,6 +291,7 @@ public class DSDocument implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema
@@ -326,6 +332,7 @@ public class DSDocument implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean transformPDFFields;
 
+	@JsonIgnore
 	private Supplier<Boolean> _transformPDFFieldsSupplier;
 
 	@Schema
@@ -364,6 +371,7 @@ public class DSDocument implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String uri;
 
+	@JsonIgnore
 	private Supplier<String> _uriSupplier;
 
 	@Override

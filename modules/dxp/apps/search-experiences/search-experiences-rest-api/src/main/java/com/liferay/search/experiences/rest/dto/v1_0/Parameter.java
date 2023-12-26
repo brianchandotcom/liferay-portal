@@ -92,6 +92,7 @@ public class Parameter implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object defaultValue;
 
+	@JsonIgnore
 	private Supplier<Object> _defaultValueSupplier;
 
 	@Schema
@@ -132,6 +133,7 @@ public class Parameter implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String format;
 
+	@JsonIgnore
 	private Supplier<String> _formatSupplier;
 
 	@Schema
@@ -171,6 +173,7 @@ public class Parameter implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object max;
 
+	@JsonIgnore
 	private Supplier<Object> _maxSupplier;
 
 	@Schema
@@ -210,6 +213,7 @@ public class Parameter implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object min;
 
+	@JsonIgnore
 	private Supplier<Object> _minSupplier;
 
 	@Schema
@@ -260,6 +264,7 @@ public class Parameter implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Type type;
 
+	@JsonIgnore
 	private Supplier<Type> _typeSupplier;
 
 	@Override

@@ -89,6 +89,7 @@ public class SegmentUser implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String emailAddress;
 
+	@JsonIgnore
 	private Supplier<String> _emailAddressSupplier;
 
 	@Schema(description = "The user's ID.")
@@ -127,6 +128,7 @@ public class SegmentUser implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema(description = "The user's full name.")
@@ -165,6 +167,7 @@ public class SegmentUser implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Override

@@ -87,6 +87,7 @@ public class ProductOptionValue implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema
@@ -127,6 +128,7 @@ public class ProductOptionValue implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String infoMessage;
 
+	@JsonIgnore
 	private Supplier<String> _infoMessageSupplier;
 
 	@Schema(example = "black")
@@ -165,6 +167,7 @@ public class ProductOptionValue implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String key;
 
+	@JsonIgnore
 	private Supplier<String> _keySupplier;
 
 	@Schema
@@ -203,6 +206,7 @@ public class ProductOptionValue implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema(example = "true")
@@ -243,6 +247,7 @@ public class ProductOptionValue implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean preselected;
 
+	@JsonIgnore
 	private Supplier<Boolean> _preselectedSupplier;
 
 	@Schema
@@ -283,6 +288,7 @@ public class ProductOptionValue implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String price;
 
+	@JsonIgnore
 	private Supplier<String> _priceSupplier;
 
 	@Schema(example = "static")
@@ -323,6 +329,7 @@ public class ProductOptionValue implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String priceType;
 
+	@JsonIgnore
 	private Supplier<String> _priceTypeSupplier;
 
 	@Schema(example = "1.2")
@@ -363,6 +370,7 @@ public class ProductOptionValue implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double priority;
 
+	@JsonIgnore
 	private Supplier<Double> _prioritySupplier;
 
 	@DecimalMin("0")
@@ -404,6 +412,7 @@ public class ProductOptionValue implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long productOptionId;
 
+	@JsonIgnore
 	private Supplier<Long> _productOptionIdSupplier;
 
 	@Schema
@@ -444,6 +453,7 @@ public class ProductOptionValue implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String quantity;
 
+	@JsonIgnore
 	private Supplier<String> _quantitySupplier;
 
 	@Schema
@@ -485,6 +495,7 @@ public class ProductOptionValue implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String relativePriceFormatted;
 
+	@JsonIgnore
 	private Supplier<String> _relativePriceFormattedSupplier;
 
 	@Schema(example = "true")
@@ -525,6 +536,7 @@ public class ProductOptionValue implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean selectable;
 
+	@JsonIgnore
 	private Supplier<Boolean> _selectableSupplier;
 
 	@Schema(example = "30130")
@@ -563,6 +575,7 @@ public class ProductOptionValue implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long skuId;
 
+	@JsonIgnore
 	private Supplier<Long> _skuIdSupplier;
 
 	@Schema
@@ -603,6 +616,7 @@ public class ProductOptionValue implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String totalPrice;
 
+	@JsonIgnore
 	private Supplier<String> _totalPriceSupplier;
 
 	@Schema
@@ -643,6 +657,7 @@ public class ProductOptionValue implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String unitOfMeasureKey;
 
+	@JsonIgnore
 	private Supplier<String> _unitOfMeasureKeySupplier;
 
 	@Schema(example = "true")
@@ -683,6 +698,7 @@ public class ProductOptionValue implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean visible;
 
+	@JsonIgnore
 	private Supplier<Boolean> _visibleSupplier;
 
 	@Override

@@ -88,6 +88,7 @@ public class Calendar implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean defaultCalendar;
 
+	@JsonIgnore
 	private Supplier<Boolean> _defaultCalendarSupplier;
 
 	@Schema
@@ -126,6 +127,7 @@ public class Calendar implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String key;
 
+	@JsonIgnore
 	private Supplier<String> _keySupplier;
 
 	@Schema
@@ -166,6 +168,7 @@ public class Calendar implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String title;
 
+	@JsonIgnore
 	private Supplier<String> _titleSupplier;
 
 	@Override

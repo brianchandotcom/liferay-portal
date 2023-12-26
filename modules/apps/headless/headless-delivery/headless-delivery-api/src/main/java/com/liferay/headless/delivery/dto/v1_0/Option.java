@@ -90,6 +90,7 @@ public class Option implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String label;
 
+	@JsonIgnore
 	private Supplier<String> _labelSupplier;
 
 	@Schema(description = "The localized option's labels.")
@@ -132,6 +133,7 @@ public class Option implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> label_i18n;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _label_i18nSupplier;
 
 	@Schema(description = "The internal value of the field option.")
@@ -172,6 +174,7 @@ public class Option implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String value;
 
+	@JsonIgnore
 	private Supplier<String> _valueSupplier;
 
 	@Override

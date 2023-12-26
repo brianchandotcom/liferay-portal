@@ -90,6 +90,7 @@ public class RelatedProduct implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema(example = "1.2")
@@ -130,6 +131,7 @@ public class RelatedProduct implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double priority;
 
+	@JsonIgnore
 	private Supplier<Double> _prioritySupplier;
 
 	@Schema(example = "AB-34098-789-N")
@@ -174,6 +176,7 @@ public class RelatedProduct implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String productExternalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _productExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
@@ -216,6 +219,7 @@ public class RelatedProduct implements Serializable {
 	@NotNull
 	protected Long productId;
 
+	@JsonIgnore
 	private Supplier<Long> _productIdSupplier;
 
 	@Schema(example = "cross-sell")
@@ -255,6 +259,7 @@ public class RelatedProduct implements Serializable {
 	@NotEmpty
 	protected String type;
 
+	@JsonIgnore
 	private Supplier<String> _typeSupplier;
 
 	@Override

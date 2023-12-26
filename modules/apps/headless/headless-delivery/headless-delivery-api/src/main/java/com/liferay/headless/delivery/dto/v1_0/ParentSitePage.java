@@ -89,6 +89,7 @@ public class ParentSitePage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String friendlyUrlPath;
 
+	@JsonIgnore
 	private Supplier<String> _friendlyUrlPathSupplier;
 
 	@Override

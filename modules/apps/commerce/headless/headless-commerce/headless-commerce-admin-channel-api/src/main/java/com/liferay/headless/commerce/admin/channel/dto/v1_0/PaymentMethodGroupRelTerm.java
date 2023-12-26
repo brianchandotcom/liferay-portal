@@ -95,6 +95,7 @@ public class PaymentMethodGroupRelTerm implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
+	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
 	@DecimalMin("0")
@@ -137,6 +138,7 @@ public class PaymentMethodGroupRelTerm implements Serializable {
 	@NotNull
 	protected Long paymentMethodGroupRelId;
 
+	@JsonIgnore
 	private Supplier<Long> _paymentMethodGroupRelIdSupplier;
 
 	@DecimalMin("0")
@@ -182,6 +184,7 @@ public class PaymentMethodGroupRelTerm implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long paymentMethodGroupRelTermId;
 
+	@JsonIgnore
 	private Supplier<Long> _paymentMethodGroupRelTermIdSupplier;
 
 	@Schema
@@ -221,6 +224,7 @@ public class PaymentMethodGroupRelTerm implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Term term;
 
+	@JsonIgnore
 	private Supplier<Term> _termSupplier;
 
 	@Schema(example = "PAB-34098-789-N")
@@ -263,6 +267,7 @@ public class PaymentMethodGroupRelTerm implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String termExternalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _termExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
@@ -305,6 +310,7 @@ public class PaymentMethodGroupRelTerm implements Serializable {
 	@NotNull
 	protected Long termId;
 
+	@JsonIgnore
 	private Supplier<Long> _termIdSupplier;
 
 	@Override

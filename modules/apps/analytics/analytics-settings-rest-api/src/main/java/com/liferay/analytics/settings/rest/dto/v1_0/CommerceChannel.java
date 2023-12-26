@@ -86,6 +86,7 @@ public class CommerceChannel implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String channelName;
 
+	@JsonIgnore
 	private Supplier<String> _channelNameSupplier;
 
 	@Schema
@@ -124,6 +125,7 @@ public class CommerceChannel implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema
@@ -162,6 +164,7 @@ public class CommerceChannel implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema
@@ -202,6 +205,7 @@ public class CommerceChannel implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String siteName;
 
+	@JsonIgnore
 	private Supplier<String> _siteNameSupplier;
 
 	@Override

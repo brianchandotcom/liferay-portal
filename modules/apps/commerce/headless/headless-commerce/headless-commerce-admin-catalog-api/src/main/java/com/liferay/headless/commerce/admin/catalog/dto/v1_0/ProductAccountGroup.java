@@ -92,6 +92,7 @@ public class ProductAccountGroup implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long accountGroupId;
 
+	@JsonIgnore
 	private Supplier<Long> _accountGroupIdSupplier;
 
 	@Schema(example = "AB-34098-789-N")
@@ -132,6 +133,7 @@ public class ProductAccountGroup implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@DecimalMin("0")
@@ -172,6 +174,7 @@ public class ProductAccountGroup implements Serializable {
 	@NotNull
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema(example = "Alessio Antonio Rendina")
@@ -210,6 +213,7 @@ public class ProductAccountGroup implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Override

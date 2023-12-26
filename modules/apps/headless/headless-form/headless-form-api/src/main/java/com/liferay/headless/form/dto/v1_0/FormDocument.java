@@ -88,6 +88,7 @@ public class FormDocument implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String contentUrl;
 
+	@JsonIgnore
 	private Supplier<String> _contentUrlSupplier;
 
 	@Schema
@@ -128,6 +129,7 @@ public class FormDocument implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
+	@JsonIgnore
 	private Supplier<String> _descriptionSupplier;
 
 	@Schema
@@ -168,6 +170,7 @@ public class FormDocument implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String encodingFormat;
 
+	@JsonIgnore
 	private Supplier<String> _encodingFormatSupplier;
 
 	@Schema
@@ -208,6 +211,7 @@ public class FormDocument implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String fileExtension;
 
+	@JsonIgnore
 	private Supplier<String> _fileExtensionSupplier;
 
 	@Schema
@@ -248,6 +252,7 @@ public class FormDocument implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long folderId;
 
+	@JsonIgnore
 	private Supplier<Long> _folderIdSupplier;
 
 	@Schema
@@ -286,6 +291,7 @@ public class FormDocument implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema
@@ -326,6 +332,7 @@ public class FormDocument implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long siteId;
 
+	@JsonIgnore
 	private Supplier<Long> _siteIdSupplier;
 
 	@Schema
@@ -366,6 +373,7 @@ public class FormDocument implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long sizeInBytes;
 
+	@JsonIgnore
 	private Supplier<Long> _sizeInBytesSupplier;
 
 	@Schema
@@ -406,6 +414,7 @@ public class FormDocument implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String title;
 
+	@JsonIgnore
 	private Supplier<String> _titleSupplier;
 
 	@Override

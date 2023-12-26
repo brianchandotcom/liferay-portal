@@ -92,6 +92,7 @@ public class LinkedProduct implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String productExternalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _productExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
@@ -133,6 +134,7 @@ public class LinkedProduct implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long productId;
 
+	@JsonIgnore
 	private Supplier<Long> _productIdSupplier;
 
 	@Schema(example = "exampleERC")
@@ -171,6 +173,7 @@ public class LinkedProduct implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String type;
 
+	@JsonIgnore
 	private Supplier<String> _typeSupplier;
 
 	@Override

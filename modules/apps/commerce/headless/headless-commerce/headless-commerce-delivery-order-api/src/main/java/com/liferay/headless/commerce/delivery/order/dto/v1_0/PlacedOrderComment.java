@@ -86,6 +86,7 @@ public class PlacedOrderComment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String author;
 
+	@JsonIgnore
 	private Supplier<String> _authorSupplier;
 
 	@Schema
@@ -126,6 +127,7 @@ public class PlacedOrderComment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String content;
 
+	@JsonIgnore
 	private Supplier<String> _contentSupplier;
 
 	@Schema
@@ -164,6 +166,7 @@ public class PlacedOrderComment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema
@@ -204,6 +207,7 @@ public class PlacedOrderComment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long orderId;
 
+	@JsonIgnore
 	private Supplier<Long> _orderIdSupplier;
 
 	@Schema
@@ -244,6 +248,7 @@ public class PlacedOrderComment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean restricted;
 
+	@JsonIgnore
 	private Supplier<Boolean> _restrictedSupplier;
 
 	@Override

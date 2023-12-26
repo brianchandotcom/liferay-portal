@@ -95,6 +95,7 @@ public class FragmentSettingsUnallowed implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Fragment[] unallowedFragments;
 
+	@JsonIgnore
 	private Supplier<Fragment[]> _unallowedFragmentsSupplier;
 
 	@Override

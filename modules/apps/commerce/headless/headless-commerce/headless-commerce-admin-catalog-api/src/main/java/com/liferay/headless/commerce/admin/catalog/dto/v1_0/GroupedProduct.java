@@ -94,6 +94,7 @@ public class GroupedProduct implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String entryProductExternalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _entryProductExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
@@ -135,6 +136,7 @@ public class GroupedProduct implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long entryProductId;
 
+	@JsonIgnore
 	private Supplier<Long> _entryProductIdSupplier;
 
 	@Schema(
@@ -179,6 +181,7 @@ public class GroupedProduct implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, String> entryProductName;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _entryProductNameSupplier;
 
 	@DecimalMin("0")
@@ -218,6 +221,7 @@ public class GroupedProduct implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema(example = "1.2")
@@ -258,6 +262,7 @@ public class GroupedProduct implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double priority;
 
+	@JsonIgnore
 	private Supplier<Double> _prioritySupplier;
 
 	@Schema(example = "exampleERC")
@@ -302,6 +307,7 @@ public class GroupedProduct implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String productExternalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _productExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
@@ -343,6 +349,7 @@ public class GroupedProduct implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long productId;
 
+	@JsonIgnore
 	private Supplier<Long> _productIdSupplier;
 
 	@Schema(
@@ -387,6 +394,7 @@ public class GroupedProduct implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, String> productName;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _productNameSupplier;
 
 	@DecimalMin("0")
@@ -428,6 +436,7 @@ public class GroupedProduct implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer quantity;
 
+	@JsonIgnore
 	private Supplier<Integer> _quantitySupplier;
 
 	@Override

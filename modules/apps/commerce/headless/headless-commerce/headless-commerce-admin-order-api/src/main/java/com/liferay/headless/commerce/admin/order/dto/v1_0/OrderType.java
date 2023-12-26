@@ -97,6 +97,7 @@ public class OrderType implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
+	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
 	@Schema(example = "true")
@@ -137,6 +138,7 @@ public class OrderType implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean active;
 
+	@JsonIgnore
 	private Supplier<Boolean> _activeSupplier;
 
 	@Schema
@@ -178,6 +180,7 @@ public class OrderType implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, ?> customFields;
 
+	@JsonIgnore
 	private Supplier<Map<String, ?>> _customFieldsSupplier;
 
 	@Schema(example = "{en_US=Title, hr_HR=Title HR, hu_HU=Title HU}")
@@ -220,6 +223,7 @@ public class OrderType implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> description;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _descriptionSupplier;
 
 	@Schema(example = "2017-07-21")
@@ -260,6 +264,7 @@ public class OrderType implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date displayDate;
 
+	@JsonIgnore
 	private Supplier<Date> _displayDateSupplier;
 
 	@DecimalMin("0")
@@ -301,6 +306,7 @@ public class OrderType implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer displayOrder;
 
+	@JsonIgnore
 	private Supplier<Integer> _displayOrderSupplier;
 
 	@Schema(example = "2017-08-21")
@@ -341,6 +347,7 @@ public class OrderType implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date expirationDate;
 
+	@JsonIgnore
 	private Supplier<Date> _expirationDateSupplier;
 
 	@Schema(example = "AB-34098-789-N")
@@ -381,6 +388,7 @@ public class OrderType implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@DecimalMin("0")
@@ -420,6 +428,7 @@ public class OrderType implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema(example = "{en_US=Title, hr_HR=Title HR, hu_HU=Title HU}")
@@ -462,6 +471,7 @@ public class OrderType implements Serializable {
 	@NotNull
 	protected Map<String, String> name;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _nameSupplier;
 
 	@Schema(example = "true")
@@ -502,6 +512,7 @@ public class OrderType implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean neverExpire;
 
+	@JsonIgnore
 	private Supplier<Boolean> _neverExpireSupplier;
 
 	@Schema
@@ -544,6 +555,7 @@ public class OrderType implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected OrderTypeChannel[] orderTypeChannels;
 
+	@JsonIgnore
 	private Supplier<OrderTypeChannel[]> _orderTypeChannelsSupplier;
 
 	@Schema
@@ -585,6 +597,7 @@ public class OrderType implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Status workflowStatusInfo;
 
+	@JsonIgnore
 	private Supplier<Status> _workflowStatusInfoSupplier;
 
 	@Override

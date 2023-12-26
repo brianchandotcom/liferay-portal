@@ -86,6 +86,7 @@ public class SiteScope implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String label;
 
+	@JsonIgnore
 	private Supplier<String> _labelSupplier;
 
 	@Schema
@@ -124,6 +125,7 @@ public class SiteScope implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long value;
 
+	@JsonIgnore
 	private Supplier<Long> _valueSupplier;
 
 	@Override

@@ -92,6 +92,7 @@ public class ProductSpecification implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema(
@@ -135,6 +136,7 @@ public class ProductSpecification implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> label;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _labelSupplier;
 
 	@DecimalMin("0")
@@ -176,6 +178,7 @@ public class ProductSpecification implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long optionCategoryId;
 
+	@JsonIgnore
 	private Supplier<Long> _optionCategoryIdSupplier;
 
 	@DecimalMin("0")
@@ -217,6 +220,7 @@ public class ProductSpecification implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double priority;
 
+	@JsonIgnore
 	private Supplier<Double> _prioritySupplier;
 
 	@DecimalMin("0")
@@ -258,6 +262,7 @@ public class ProductSpecification implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long productId;
 
+	@JsonIgnore
 	private Supplier<Long> _productIdSupplier;
 
 	@DecimalMin("0")
@@ -299,6 +304,7 @@ public class ProductSpecification implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long specificationId;
 
+	@JsonIgnore
 	private Supplier<Long> _specificationIdSupplier;
 
 	@Schema(example = "specification-key")
@@ -340,6 +346,7 @@ public class ProductSpecification implements Serializable {
 	@NotEmpty
 	protected String specificationKey;
 
+	@JsonIgnore
 	private Supplier<String> _specificationKeySupplier;
 
 	@Schema(example = "{en_US=Croatia, hr_HR=Hrvatska, hu_HU=Horvatorszag}")
@@ -382,6 +389,7 @@ public class ProductSpecification implements Serializable {
 	@NotNull
 	protected Map<String, String> value;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _valueSupplier;
 
 	@Override

@@ -89,6 +89,7 @@ public class ShippingMethod implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean active;
 
+	@JsonIgnore
 	private Supplier<Boolean> _activeSupplier;
 
 	@Schema(
@@ -133,6 +134,7 @@ public class ShippingMethod implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> description;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _descriptionSupplier;
 
 	@Schema(example = "DAB-34098-789-N")
@@ -173,6 +175,7 @@ public class ShippingMethod implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String engineKey;
 
+	@JsonIgnore
 	private Supplier<String> _engineKeySupplier;
 
 	@DecimalMin("0")
@@ -212,6 +215,7 @@ public class ShippingMethod implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema(
@@ -255,6 +259,7 @@ public class ShippingMethod implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> name;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _nameSupplier;
 
 	@Schema(example = "1.2")
@@ -295,6 +300,7 @@ public class ShippingMethod implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double priority;
 
+	@JsonIgnore
 	private Supplier<Double> _prioritySupplier;
 
 	@Schema
@@ -337,6 +343,7 @@ public class ShippingMethod implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ShippingOption[] shippingOptions;
 
+	@JsonIgnore
 	private Supplier<ShippingOption[]> _shippingOptionsSupplier;
 
 	@Override

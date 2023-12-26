@@ -95,6 +95,7 @@ public class PageRowDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] cssClasses;
 
+	@JsonIgnore
 	private Supplier<String[]> _cssClassesSupplier;
 
 	@Schema(description = "Custom CSS that is applied on the fragment.")
@@ -135,6 +136,7 @@ public class PageRowDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String customCSS;
 
+	@JsonIgnore
 	private Supplier<String> _customCSSSupplier;
 
 	@Schema(description = "The custom CSS viewports of the page collection.")
@@ -179,6 +181,7 @@ public class PageRowDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected CustomCSSViewport[] customCSSViewports;
 
+	@JsonIgnore
 	private Supplier<CustomCSSViewport[]> _customCSSViewportsSupplier;
 
 	@Schema(description = "The fragment style of a Page row.")
@@ -220,6 +223,7 @@ public class PageRowDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentStyle fragmentStyle;
 
+	@JsonIgnore
 	private Supplier<FragmentStyle> _fragmentStyleSupplier;
 
 	@Schema(description = "A list of fragment viewports of a Page row.")
@@ -262,6 +266,7 @@ public class PageRowDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentViewport[] fragmentViewports;
 
+	@JsonIgnore
 	private Supplier<FragmentViewport[]> _fragmentViewportsSupplier;
 
 	@Schema(
@@ -306,6 +311,7 @@ public class PageRowDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean gutters;
 
+	@JsonIgnore
 	private Supplier<Boolean> _guttersSupplier;
 
 	@Schema(
@@ -350,6 +356,7 @@ public class PageRowDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean indexed;
 
+	@JsonIgnore
 	private Supplier<Boolean> _indexedSupplier;
 
 	@Schema(description = "The page row's modules per row.")
@@ -390,6 +397,7 @@ public class PageRowDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer modulesPerRow;
 
+	@JsonIgnore
 	private Supplier<Integer> _modulesPerRowSupplier;
 
 	@Schema(description = "The custom name of a Page row.")
@@ -428,6 +436,7 @@ public class PageRowDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema(description = "The page row's number of columns.")
@@ -468,6 +477,7 @@ public class PageRowDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer numberOfColumns;
 
+	@JsonIgnore
 	private Supplier<Integer> _numberOfColumnsSupplier;
 
 	@Schema(
@@ -512,6 +522,7 @@ public class PageRowDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean reverseOrder;
 
+	@JsonIgnore
 	private Supplier<Boolean> _reverseOrderSupplier;
 
 	@Schema(
@@ -560,6 +571,7 @@ public class PageRowDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected RowViewportConfig rowViewportConfig;
 
+	@JsonIgnore
 	private Supplier<RowViewportConfig> _rowViewportConfigSupplier;
 
 	@Schema(description = "A list of viewports of the page row.")
@@ -601,6 +613,7 @@ public class PageRowDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected RowViewport[] rowViewports;
 
+	@JsonIgnore
 	private Supplier<RowViewport[]> _rowViewportsSupplier;
 
 	@Schema(description = "The vertical aligment property of the page row.")
@@ -643,6 +656,7 @@ public class PageRowDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String verticalAlignment;
 
+	@JsonIgnore
 	private Supplier<String> _verticalAlignmentSupplier;
 
 	@Override

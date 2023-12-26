@@ -90,6 +90,7 @@ public class DataLayoutRow implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected DataLayoutColumn[] dataLayoutColumns;
 
+	@JsonIgnore
 	private Supplier<DataLayoutColumn[]> _dataLayoutColumnsSupplier;
 
 	@Override

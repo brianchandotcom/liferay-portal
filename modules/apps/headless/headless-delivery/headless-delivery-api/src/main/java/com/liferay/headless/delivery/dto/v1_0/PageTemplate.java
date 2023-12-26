@@ -95,6 +95,7 @@ public class PageTemplate implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator creator;
 
+	@JsonIgnore
 	private Supplier<Creator> _creatorSupplier;
 
 	@Schema(description = "The page template's creation date.")
@@ -135,6 +136,7 @@ public class PageTemplate implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
+	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
 	@Schema(description = "The last time the page template changed.")
@@ -175,6 +177,7 @@ public class PageTemplate implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
+	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
 	@Schema(description = "The page template's ID.")
@@ -213,6 +216,7 @@ public class PageTemplate implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema(description = "A list of keywords describing the page template.")
@@ -255,6 +259,7 @@ public class PageTemplate implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] keywords;
 
+	@JsonIgnore
 	private Supplier<String[]> _keywordsSupplier;
 
 	@Schema(description = "The page template's name.")
@@ -293,6 +298,7 @@ public class PageTemplate implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema(description = "The page template's definition.")
@@ -335,6 +341,7 @@ public class PageTemplate implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected PageDefinition pageDefinition;
 
+	@JsonIgnore
 	private Supplier<PageDefinition> _pageDefinitionSupplier;
 
 	@Schema(description = "The page template's collection.")
@@ -379,6 +386,7 @@ public class PageTemplate implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected PageTemplateCollection pageTemplateCollection;
 
+	@JsonIgnore
 	private Supplier<PageTemplateCollection> _pageTemplateCollectionSupplier;
 
 	@Schema(description = "The categories associated with this page template.")
@@ -425,6 +433,7 @@ public class PageTemplate implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected TaxonomyCategoryBrief[] taxonomyCategoryBriefs;
 
+	@JsonIgnore
 	private Supplier<TaxonomyCategoryBrief[]> _taxonomyCategoryBriefsSupplier;
 
 	@Schema(
@@ -469,6 +478,7 @@ public class PageTemplate implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected Long[] taxonomyCategoryIds;
 
+	@JsonIgnore
 	private Supplier<Long[]> _taxonomyCategoryIdsSupplier;
 
 	@Schema(
@@ -511,6 +521,7 @@ public class PageTemplate implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String uuid;
 
+	@JsonIgnore
 	private Supplier<String> _uuidSupplier;
 
 	@Override

@@ -99,6 +99,7 @@ public class FragmentMappedValue implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentInlineValue defaultFragmentInlineValue;
 
+	@JsonIgnore
 	private Supplier<FragmentInlineValue> _defaultFragmentInlineValueSupplier;
 
 	@Schema(
@@ -146,6 +147,7 @@ public class FragmentMappedValue implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected DefaultValue defaultValue;
 
+	@JsonIgnore
 	private Supplier<DefaultValue> _defaultValueSupplier;
 
 	@Schema(description = "The mapping of the fragment mapped value.")
@@ -187,6 +189,7 @@ public class FragmentMappedValue implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Mapping mapping;
 
+	@JsonIgnore
 	private Supplier<Mapping> _mappingSupplier;
 
 	@Override

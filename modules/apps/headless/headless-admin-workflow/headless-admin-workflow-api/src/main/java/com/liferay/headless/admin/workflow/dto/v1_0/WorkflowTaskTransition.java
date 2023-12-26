@@ -90,6 +90,7 @@ public class WorkflowTaskTransition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Transition[] transitions;
 
+	@JsonIgnore
 	private Supplier<Transition[]> _transitionsSupplier;
 
 	@Schema
@@ -132,6 +133,7 @@ public class WorkflowTaskTransition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String workflowDefinitionVersion;
 
+	@JsonIgnore
 	private Supplier<String> _workflowDefinitionVersionSupplier;
 
 	@Schema
@@ -172,6 +174,7 @@ public class WorkflowTaskTransition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String workflowTaskLabel;
 
+	@JsonIgnore
 	private Supplier<String> _workflowTaskLabelSupplier;
 
 	@Schema
@@ -212,6 +215,7 @@ public class WorkflowTaskTransition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String workflowTaskName;
 
+	@JsonIgnore
 	private Supplier<String> _workflowTaskNameSupplier;
 
 	@Override

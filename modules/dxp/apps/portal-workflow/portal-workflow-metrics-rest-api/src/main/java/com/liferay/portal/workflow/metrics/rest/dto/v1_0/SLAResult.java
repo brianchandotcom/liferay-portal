@@ -94,6 +94,7 @@ public class SLAResult implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateModified;
 
+	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
 	@Schema
@@ -134,6 +135,7 @@ public class SLAResult implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateOverdue;
 
+	@JsonIgnore
 	private Supplier<Date> _dateOverdueSupplier;
 
 	@Schema
@@ -172,6 +174,7 @@ public class SLAResult implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema
@@ -210,6 +213,7 @@ public class SLAResult implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema
@@ -250,6 +254,7 @@ public class SLAResult implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean onTime;
 
+	@JsonIgnore
 	private Supplier<Boolean> _onTimeSupplier;
 
 	@Schema
@@ -290,6 +295,7 @@ public class SLAResult implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long remainingTime;
 
+	@JsonIgnore
 	private Supplier<Long> _remainingTimeSupplier;
 
 	@Schema
@@ -342,6 +348,7 @@ public class SLAResult implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Status status;
 
+	@JsonIgnore
 	private Supplier<Status> _statusSupplier;
 
 	@Override

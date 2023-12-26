@@ -89,6 +89,7 @@ public class Transition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String label;
 
+	@JsonIgnore
 	private Supplier<String> _labelSupplier;
 
 	@Schema
@@ -127,6 +128,7 @@ public class Transition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema
@@ -167,6 +169,7 @@ public class Transition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String sourceNodeName;
 
+	@JsonIgnore
 	private Supplier<String> _sourceNodeNameSupplier;
 
 	@Schema
@@ -207,6 +210,7 @@ public class Transition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String targetNodeName;
 
+	@JsonIgnore
 	private Supplier<String> _targetNodeNameSupplier;
 
 	@Override

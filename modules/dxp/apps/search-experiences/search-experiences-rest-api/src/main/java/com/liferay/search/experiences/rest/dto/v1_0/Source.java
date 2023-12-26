@@ -86,6 +86,7 @@ public class Source implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] excludes;
 
+	@JsonIgnore
 	private Supplier<String[]> _excludesSupplier;
 
 	@Schema
@@ -126,6 +127,7 @@ public class Source implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean fetchSource;
 
+	@JsonIgnore
 	private Supplier<Boolean> _fetchSourceSupplier;
 
 	@Schema
@@ -166,6 +168,7 @@ public class Source implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] includes;
 
+	@JsonIgnore
 	private Supplier<String[]> _includesSupplier;
 
 	@Override

@@ -95,6 +95,7 @@ public class AccountRole implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> description;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _descriptionSupplier;
 
 	@Schema(example = "Role Name")
@@ -134,6 +135,7 @@ public class AccountRole implements Serializable {
 	@NotEmpty
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@DecimalMin("0")
@@ -175,6 +177,7 @@ public class AccountRole implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long roleId;
 
+	@JsonIgnore
 	private Supplier<Long> _roleIdSupplier;
 
 	@Schema(
@@ -218,6 +221,7 @@ public class AccountRole implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> title;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _titleSupplier;
 
 	@Override

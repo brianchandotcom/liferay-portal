@@ -92,6 +92,7 @@ public class WidgetInstance implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, Object> widgetConfig;
 
+	@JsonIgnore
 	private Supplier<Map<String, Object>> _widgetConfigSupplier;
 
 	@Schema(description = "The widget instance's ID.")
@@ -132,6 +133,7 @@ public class WidgetInstance implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String widgetInstanceId;
 
+	@JsonIgnore
 	private Supplier<String> _widgetInstanceIdSupplier;
 
 	@Schema(description = "The widget instance's name.")
@@ -172,6 +174,7 @@ public class WidgetInstance implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String widgetName;
 
+	@JsonIgnore
 	private Supplier<String> _widgetNameSupplier;
 
 	@Schema(description = "The widget instance's permissions.")
@@ -214,6 +217,7 @@ public class WidgetInstance implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected WidgetPermission[] widgetPermissions;
 
+	@JsonIgnore
 	private Supplier<WidgetPermission[]> _widgetPermissionsSupplier;
 
 	@Override

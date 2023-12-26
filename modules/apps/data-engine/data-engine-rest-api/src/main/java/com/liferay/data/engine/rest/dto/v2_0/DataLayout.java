@@ -92,6 +92,7 @@ public class DataLayout implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String contentType;
 
+	@JsonIgnore
 	private Supplier<String> _contentTypeSupplier;
 
 	@Schema
@@ -132,6 +133,7 @@ public class DataLayout implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long dataDefinitionId;
 
+	@JsonIgnore
 	private Supplier<Long> _dataDefinitionIdSupplier;
 
 	@Schema
@@ -174,6 +176,7 @@ public class DataLayout implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, Object> dataLayoutFields;
 
+	@JsonIgnore
 	private Supplier<Map<String, Object>> _dataLayoutFieldsSupplier;
 
 	@Schema
@@ -214,6 +217,7 @@ public class DataLayout implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String dataLayoutKey;
 
+	@JsonIgnore
 	private Supplier<String> _dataLayoutKeySupplier;
 
 	@Schema
@@ -256,6 +260,7 @@ public class DataLayout implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected DataLayoutPage[] dataLayoutPages;
 
+	@JsonIgnore
 	private Supplier<DataLayoutPage[]> _dataLayoutPagesSupplier;
 
 	@Schema
@@ -297,6 +302,7 @@ public class DataLayout implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected DataRule[] dataRules;
 
+	@JsonIgnore
 	private Supplier<DataRule[]> _dataRulesSupplier;
 
 	@Schema
@@ -337,6 +343,7 @@ public class DataLayout implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateCreated;
 
+	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
 	@Schema
@@ -377,6 +384,7 @@ public class DataLayout implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateModified;
 
+	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
 	@Schema
@@ -419,6 +427,7 @@ public class DataLayout implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, Object> description;
 
+	@JsonIgnore
 	private Supplier<Map<String, Object>> _descriptionSupplier;
 
 	@Schema
@@ -457,6 +466,7 @@ public class DataLayout implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema
@@ -498,6 +508,7 @@ public class DataLayout implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, Object> name;
 
+	@JsonIgnore
 	private Supplier<Map<String, Object>> _nameSupplier;
 
 	@Schema
@@ -538,6 +549,7 @@ public class DataLayout implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String paginationMode;
 
+	@JsonIgnore
 	private Supplier<String> _paginationModeSupplier;
 
 	@Schema
@@ -578,6 +590,7 @@ public class DataLayout implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long siteId;
 
+	@JsonIgnore
 	private Supplier<Long> _siteIdSupplier;
 
 	@Schema
@@ -618,6 +631,7 @@ public class DataLayout implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long userId;
 
+	@JsonIgnore
 	private Supplier<Long> _userIdSupplier;
 
 	@Override

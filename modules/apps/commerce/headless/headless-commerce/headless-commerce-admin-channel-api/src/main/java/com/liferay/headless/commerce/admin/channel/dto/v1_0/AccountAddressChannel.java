@@ -93,6 +93,7 @@ public class AccountAddressChannel implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long accountAddressChannelId;
 
+	@JsonIgnore
 	private Supplier<Long> _accountAddressChannelIdSupplier;
 
 	@Schema
@@ -135,6 +136,7 @@ public class AccountAddressChannel implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
+	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
 	@Schema(example = "PAB-34098-789-N")
@@ -180,6 +182,7 @@ public class AccountAddressChannel implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String addressChannelExternalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _addressChannelExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
@@ -222,6 +225,7 @@ public class AccountAddressChannel implements Serializable {
 	@NotNull
 	protected Long addressChannelId;
 
+	@JsonIgnore
 	private Supplier<Long> _addressChannelIdSupplier;
 
 	@Schema(example = "DAB-34098-789-N")
@@ -266,6 +270,7 @@ public class AccountAddressChannel implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String addressExternalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _addressExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
@@ -308,6 +313,7 @@ public class AccountAddressChannel implements Serializable {
 	@NotNull
 	protected Long addressId;
 
+	@JsonIgnore
 	private Supplier<Long> _addressIdSupplier;
 
 	@Schema
@@ -349,6 +355,7 @@ public class AccountAddressChannel implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Channel channel;
 
+	@JsonIgnore
 	private Supplier<Channel> _channelSupplier;
 
 	@Override

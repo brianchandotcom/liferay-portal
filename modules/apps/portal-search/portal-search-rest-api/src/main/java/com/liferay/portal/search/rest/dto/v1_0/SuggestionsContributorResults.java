@@ -92,6 +92,7 @@ public class SuggestionsContributorResults implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object attributes;
 
+	@JsonIgnore
 	private Supplier<Object> _attributesSupplier;
 
 	@Schema
@@ -132,6 +133,7 @@ public class SuggestionsContributorResults implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String displayGroupName;
 
+	@JsonIgnore
 	private Supplier<String> _displayGroupNameSupplier;
 
 	@Schema
@@ -173,6 +175,7 @@ public class SuggestionsContributorResults implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Suggestion[] suggestions;
 
+	@JsonIgnore
 	private Supplier<Suggestion[]> _suggestionsSupplier;
 
 	@Override

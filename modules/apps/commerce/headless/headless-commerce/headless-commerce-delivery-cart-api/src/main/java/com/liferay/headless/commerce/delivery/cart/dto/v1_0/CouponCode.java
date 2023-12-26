@@ -84,6 +84,7 @@ public class CouponCode implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String code;
 
+	@JsonIgnore
 	private Supplier<String> _codeSupplier;
 
 	@Override

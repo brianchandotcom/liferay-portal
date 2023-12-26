@@ -108,6 +108,7 @@ public class SitePage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
+	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
 	@Schema(description = "The page's average rating.")
@@ -150,6 +151,7 @@ public class SitePage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected AggregateRating aggregateRating;
 
+	@JsonIgnore
 	private Supplier<AggregateRating> _aggregateRatingSupplier;
 
 	@Schema(
@@ -194,6 +196,7 @@ public class SitePage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String[] availableLanguages;
 
+	@JsonIgnore
 	private Supplier<String[]> _availableLanguagesSupplier;
 
 	@Schema(description = "The page's creator.")
@@ -235,6 +238,7 @@ public class SitePage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator creator;
 
+	@JsonIgnore
 	private Supplier<Creator> _creatorSupplier;
 
 	@Schema(description = "Custom fields associated with the page.")
@@ -276,6 +280,7 @@ public class SitePage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected CustomField[] customFields;
 
+	@JsonIgnore
 	private Supplier<CustomField[]> _customFieldsSupplier;
 
 	@Schema(description = "The page's creation date.")
@@ -316,6 +321,7 @@ public class SitePage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
+	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
 	@Schema(description = "The last time any field of the page was changed.")
@@ -358,6 +364,7 @@ public class SitePage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
+	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
 	@Schema(description = "The page's most recent publication date.")
@@ -398,6 +405,7 @@ public class SitePage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date datePublished;
 
+	@JsonIgnore
 	private Supplier<Date> _datePublishedSupplier;
 
 	@Schema(description = "Experience of the page that it's being retrieved.")
@@ -441,6 +449,7 @@ public class SitePage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Experience experience;
 
+	@JsonIgnore
 	private Supplier<Experience> _experienceSupplier;
 
 	@Schema(description = "A relative URL to the page's rendered content.")
@@ -483,6 +492,7 @@ public class SitePage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String friendlyUrlPath;
 
+	@JsonIgnore
 	private Supplier<String> _friendlyUrlPathSupplier;
 
 	@Schema(
@@ -531,6 +541,7 @@ public class SitePage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> friendlyUrlPath_i18n;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _friendlyUrlPath_i18nSupplier;
 
 	@Schema(description = "The page ID.")
@@ -569,6 +580,7 @@ public class SitePage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema(description = "A list of keywords describing the page.")
@@ -609,6 +621,7 @@ public class SitePage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] keywords;
 
+	@JsonIgnore
 	private Supplier<String[]> _keywordsSupplier;
 
 	@Schema(
@@ -655,6 +668,7 @@ public class SitePage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected PageDefinition pageDefinition;
 
+	@JsonIgnore
 	private Supplier<PageDefinition> _pageDefinitionSupplier;
 
 	@Schema(description = "The page's permissions.")
@@ -697,6 +711,7 @@ public class SitePage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected PagePermission[] pagePermissions;
 
+	@JsonIgnore
 	private Supplier<PagePermission[]> _pagePermissionsSupplier;
 
 	@Schema(description = "Settings of the page, such as SEO or OpenGraph.")
@@ -740,6 +755,7 @@ public class SitePage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected PageSettings pageSettings;
 
+	@JsonIgnore
 	private Supplier<PageSettings> _pageSettingsSupplier;
 
 	@Schema(description = "The type of the page.")
@@ -780,6 +796,7 @@ public class SitePage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String pageType;
 
+	@JsonIgnore
 	private Supplier<String> _pageTypeSupplier;
 
 	@Schema(description = "The parent page or null if it is a top level page.")
@@ -824,6 +841,7 @@ public class SitePage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ParentSitePage parentSitePage;
 
+	@JsonIgnore
 	private Supplier<ParentSitePage> _parentSitePageSupplier;
 
 	@Schema(
@@ -869,6 +887,7 @@ public class SitePage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected RenderedPage renderedPage;
 
+	@JsonIgnore
 	private Supplier<RenderedPage> _renderedPageSupplier;
 
 	@Schema(description = "The ID of the site to which this page is scoped.")
@@ -911,6 +930,7 @@ public class SitePage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long siteId;
 
+	@JsonIgnore
 	private Supplier<Long> _siteIdSupplier;
 
 	@Schema(description = "The categories associated with this page.")
@@ -955,6 +975,7 @@ public class SitePage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected TaxonomyCategoryBrief[] taxonomyCategoryBriefs;
 
+	@JsonIgnore
 	private Supplier<TaxonomyCategoryBrief[]> _taxonomyCategoryBriefsSupplier;
 
 	@Schema(
@@ -1001,6 +1022,7 @@ public class SitePage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected Long[] taxonomyCategoryIds;
 
+	@JsonIgnore
 	private Supplier<Long[]> _taxonomyCategoryIdsSupplier;
 
 	@Schema(description = "The page's title.")
@@ -1042,6 +1064,7 @@ public class SitePage implements Serializable {
 	@NotEmpty
 	protected String title;
 
+	@JsonIgnore
 	private Supplier<String> _titleSupplier;
 
 	@Schema(description = "The localized page's titles.")
@@ -1084,6 +1107,7 @@ public class SitePage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> title_i18n;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _title_i18nSupplier;
 
 	@Schema(description = "A valid external identifier to reference this page.")
@@ -1124,6 +1148,7 @@ public class SitePage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String uuid;
 
+	@JsonIgnore
 	private Supplier<String> _uuidSupplier;
 
 	@Schema
@@ -1176,6 +1201,7 @@ public class SitePage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected ViewableBy viewableBy;
 
+	@JsonIgnore
 	private Supplier<ViewableBy> _viewableBySupplier;
 
 	@Override

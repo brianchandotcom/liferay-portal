@@ -86,6 +86,7 @@ public class LandscapeMobile implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer modulesPerRow;
 
+	@JsonIgnore
 	private Supplier<Integer> _modulesPerRowSupplier;
 
 	@Schema
@@ -126,6 +127,7 @@ public class LandscapeMobile implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean reverseOrder;
 
+	@JsonIgnore
 	private Supplier<Boolean> _reverseOrderSupplier;
 
 	@Schema
@@ -166,6 +168,7 @@ public class LandscapeMobile implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String verticalAlignment;
 
+	@JsonIgnore
 	private Supplier<String> _verticalAlignmentSupplier;
 
 	@Override

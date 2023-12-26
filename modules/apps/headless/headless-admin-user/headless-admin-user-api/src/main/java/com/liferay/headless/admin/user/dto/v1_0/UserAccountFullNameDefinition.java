@@ -103,6 +103,7 @@ public class UserAccountFullNameDefinition implements Serializable {
 	protected UserAccountFullNameDefinitionField[]
 		userAccountFullNameDefinitionFields;
 
+	@JsonIgnore
 	private Supplier<UserAccountFullNameDefinitionField[]>
 		_userAccountFullNameDefinitionFieldsSupplier;
 

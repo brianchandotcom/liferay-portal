@@ -92,6 +92,7 @@ public class PlacedOrder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String account;
 
+	@JsonIgnore
 	private Supplier<String> _accountSupplier;
 
 	@Schema
@@ -132,6 +133,7 @@ public class PlacedOrder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long accountId;
 
+	@JsonIgnore
 	private Supplier<Long> _accountIdSupplier;
 
 	@Schema
@@ -172,6 +174,7 @@ public class PlacedOrder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String author;
 
+	@JsonIgnore
 	private Supplier<String> _authorSupplier;
 
 	@Schema
@@ -212,6 +215,7 @@ public class PlacedOrder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long channelId;
 
+	@JsonIgnore
 	private Supplier<Long> _channelIdSupplier;
 
 	@Schema
@@ -252,6 +256,7 @@ public class PlacedOrder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String couponCode;
 
+	@JsonIgnore
 	private Supplier<String> _couponCodeSupplier;
 
 	@Schema
@@ -292,6 +297,7 @@ public class PlacedOrder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date createDate;
 
+	@JsonIgnore
 	private Supplier<Date> _createDateSupplier;
 
 	@Schema
@@ -332,6 +338,7 @@ public class PlacedOrder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String currencyCode;
 
+	@JsonIgnore
 	private Supplier<String> _currencyCodeSupplier;
 
 	@Schema
@@ -373,6 +380,7 @@ public class PlacedOrder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, ?> customFields;
 
+	@JsonIgnore
 	private Supplier<Map<String, ?>> _customFieldsSupplier;
 
 	@Schema
@@ -413,6 +421,7 @@ public class PlacedOrder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String[] errorMessages;
 
+	@JsonIgnore
 	private Supplier<String[]> _errorMessagesSupplier;
 
 	@Schema
@@ -451,6 +460,7 @@ public class PlacedOrder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema
@@ -491,6 +501,7 @@ public class PlacedOrder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date lastPriceUpdateDate;
 
+	@JsonIgnore
 	private Supplier<Date> _lastPriceUpdateDateSupplier;
 
 	@Schema
@@ -531,6 +542,7 @@ public class PlacedOrder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date modifiedDate;
 
+	@JsonIgnore
 	private Supplier<Date> _modifiedDateSupplier;
 
 	@Schema
@@ -572,6 +584,7 @@ public class PlacedOrder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Status orderStatusInfo;
 
+	@JsonIgnore
 	private Supplier<Status> _orderStatusInfoSupplier;
 
 	@Schema(example = "AB-34098-789-N")
@@ -616,6 +629,7 @@ public class PlacedOrder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String orderTypeExternalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _orderTypeExternalReferenceCodeSupplier;
 
 	@Schema
@@ -656,6 +670,7 @@ public class PlacedOrder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long orderTypeId;
 
+	@JsonIgnore
 	private Supplier<Long> _orderTypeIdSupplier;
 
 	@Schema
@@ -696,6 +711,7 @@ public class PlacedOrder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String orderUUID;
 
+	@JsonIgnore
 	private Supplier<String> _orderUUIDSupplier;
 
 	@Schema
@@ -736,6 +752,7 @@ public class PlacedOrder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String paymentMethod;
 
+	@JsonIgnore
 	private Supplier<String> _paymentMethodSupplier;
 
 	@Schema
@@ -776,6 +793,7 @@ public class PlacedOrder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String paymentMethodLabel;
 
+	@JsonIgnore
 	private Supplier<String> _paymentMethodLabelSupplier;
 
 	@Schema
@@ -816,6 +834,7 @@ public class PlacedOrder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer paymentStatus;
 
+	@JsonIgnore
 	private Supplier<Integer> _paymentStatusSupplier;
 
 	@Schema
@@ -857,6 +876,7 @@ public class PlacedOrder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Status paymentStatusInfo;
 
+	@JsonIgnore
 	private Supplier<Status> _paymentStatusInfoSupplier;
 
 	@Schema
@@ -897,6 +917,7 @@ public class PlacedOrder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String paymentStatusLabel;
 
+	@JsonIgnore
 	private Supplier<String> _paymentStatusLabelSupplier;
 
 	@Schema
@@ -942,6 +963,7 @@ public class PlacedOrder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected PlacedOrderAddress placedOrderBillingAddress;
 
+	@JsonIgnore
 	private Supplier<PlacedOrderAddress> _placedOrderBillingAddressSupplier;
 
 	@Schema
@@ -986,6 +1008,7 @@ public class PlacedOrder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long placedOrderBillingAddressId;
 
+	@JsonIgnore
 	private Supplier<Long> _placedOrderBillingAddressIdSupplier;
 
 	@Schema
@@ -1030,6 +1053,7 @@ public class PlacedOrder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected PlacedOrderComment[] placedOrderComments;
 
+	@JsonIgnore
 	private Supplier<PlacedOrderComment[]> _placedOrderCommentsSupplier;
 
 	@Schema
@@ -1072,6 +1096,7 @@ public class PlacedOrder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected PlacedOrderItem[] placedOrderItems;
 
+	@JsonIgnore
 	private Supplier<PlacedOrderItem[]> _placedOrderItemsSupplier;
 
 	@Schema
@@ -1117,6 +1142,7 @@ public class PlacedOrder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected PlacedOrderAddress placedOrderShippingAddress;
 
+	@JsonIgnore
 	private Supplier<PlacedOrderAddress> _placedOrderShippingAddressSupplier;
 
 	@Schema
@@ -1161,6 +1187,7 @@ public class PlacedOrder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long placedOrderShippingAddressId;
 
+	@JsonIgnore
 	private Supplier<Long> _placedOrderShippingAddressIdSupplier;
 
 	@Schema
@@ -1201,6 +1228,7 @@ public class PlacedOrder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String printedNote;
 
+	@JsonIgnore
 	private Supplier<String> _printedNoteSupplier;
 
 	@Schema
@@ -1241,6 +1269,7 @@ public class PlacedOrder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String purchaseOrderNumber;
 
+	@JsonIgnore
 	private Supplier<String> _purchaseOrderNumberSupplier;
 
 	@Schema
@@ -1281,6 +1310,7 @@ public class PlacedOrder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String shippingMethod;
 
+	@JsonIgnore
 	private Supplier<String> _shippingMethodSupplier;
 
 	@Schema
@@ -1321,6 +1351,7 @@ public class PlacedOrder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String shippingOption;
 
+	@JsonIgnore
 	private Supplier<String> _shippingOptionSupplier;
 
 	@Schema
@@ -1361,6 +1392,7 @@ public class PlacedOrder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String status;
 
+	@JsonIgnore
 	private Supplier<String> _statusSupplier;
 
 	@Schema
@@ -1402,6 +1434,7 @@ public class PlacedOrder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Summary summary;
 
+	@JsonIgnore
 	private Supplier<Summary> _summarySupplier;
 
 	@Schema
@@ -1442,6 +1475,7 @@ public class PlacedOrder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean useAsBilling;
 
+	@JsonIgnore
 	private Supplier<Boolean> _useAsBillingSupplier;
 
 	@Schema
@@ -1482,6 +1516,7 @@ public class PlacedOrder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean valid;
 
+	@JsonIgnore
 	private Supplier<Boolean> _validSupplier;
 
 	@Schema
@@ -1523,6 +1558,7 @@ public class PlacedOrder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Status workflowStatusInfo;
 
+	@JsonIgnore
 	private Supplier<Status> _workflowStatusInfoSupplier;
 
 	@Override

@@ -84,6 +84,7 @@ public class DDMOption implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String key;
 
+	@JsonIgnore
 	private Supplier<String> _keySupplier;
 
 	@Schema
@@ -124,6 +125,7 @@ public class DDMOption implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean required;
 
+	@JsonIgnore
 	private Supplier<Boolean> _requiredSupplier;
 
 	@Schema
@@ -164,6 +166,7 @@ public class DDMOption implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] value;
 
+	@JsonIgnore
 	private Supplier<String[]> _valueSupplier;
 
 	@Override

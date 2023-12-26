@@ -90,6 +90,7 @@ public class Country implements Serializable {
 	@NotEmpty
 	protected String a2;
 
+	@JsonIgnore
 	private Supplier<String> _a2Supplier;
 
 	@Schema
@@ -129,6 +130,7 @@ public class Country implements Serializable {
 	@NotEmpty
 	protected String a3;
 
+	@JsonIgnore
 	private Supplier<String> _a3Supplier;
 
 	@Schema
@@ -169,6 +171,7 @@ public class Country implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean active;
 
+	@JsonIgnore
 	private Supplier<Boolean> _activeSupplier;
 
 	@Schema
@@ -209,6 +212,7 @@ public class Country implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean billingAllowed;
 
+	@JsonIgnore
 	private Supplier<Boolean> _billingAllowedSupplier;
 
 	@Schema
@@ -249,6 +253,7 @@ public class Country implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean groupFilterEnabled;
 
+	@JsonIgnore
 	private Supplier<Boolean> _groupFilterEnabledSupplier;
 
 	@Schema
@@ -287,6 +292,7 @@ public class Country implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema
@@ -325,6 +331,7 @@ public class Country implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer idd;
 
+	@JsonIgnore
 	private Supplier<Integer> _iddSupplier;
 
 	@Schema
@@ -364,6 +371,7 @@ public class Country implements Serializable {
 	@NotEmpty
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema
@@ -405,6 +413,7 @@ public class Country implements Serializable {
 	@NotNull
 	protected Integer number;
 
+	@JsonIgnore
 	private Supplier<Integer> _numberSupplier;
 
 	@Schema
@@ -445,6 +454,7 @@ public class Country implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double position;
 
+	@JsonIgnore
 	private Supplier<Double> _positionSupplier;
 
 	@Schema
@@ -486,6 +496,7 @@ public class Country implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Region[] regions;
 
+	@JsonIgnore
 	private Supplier<Region[]> _regionsSupplier;
 
 	@Schema
@@ -526,6 +537,7 @@ public class Country implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean shippingAllowed;
 
+	@JsonIgnore
 	private Supplier<Boolean> _shippingAllowedSupplier;
 
 	@Schema
@@ -566,6 +578,7 @@ public class Country implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean subjectToVAT;
 
+	@JsonIgnore
 	private Supplier<Boolean> _subjectToVATSupplier;
 
 	@Schema
@@ -608,6 +621,7 @@ public class Country implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> title_i18n;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _title_i18nSupplier;
 
 	@Schema
@@ -648,6 +662,7 @@ public class Country implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean zipRequired;
 
+	@JsonIgnore
 	private Supplier<Boolean> _zipRequiredSupplier;
 
 	@Override

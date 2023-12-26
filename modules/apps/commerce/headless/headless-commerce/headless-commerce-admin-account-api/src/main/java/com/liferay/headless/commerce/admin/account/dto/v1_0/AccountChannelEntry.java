@@ -93,6 +93,7 @@ public class AccountChannelEntry implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String accountExternalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _accountExternalReferenceCodeSupplier;
 
 	@Schema
@@ -133,6 +134,7 @@ public class AccountChannelEntry implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long accountId;
 
+	@JsonIgnore
 	private Supplier<Long> _accountIdSupplier;
 
 	@Schema
@@ -175,6 +177,7 @@ public class AccountChannelEntry implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
+	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
 	@Schema
@@ -219,6 +222,7 @@ public class AccountChannelEntry implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String channelExternalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _channelExternalReferenceCodeSupplier;
 
 	@Schema
@@ -259,6 +263,7 @@ public class AccountChannelEntry implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long channelId;
 
+	@JsonIgnore
 	private Supplier<Long> _channelIdSupplier;
 
 	@Schema
@@ -303,6 +308,7 @@ public class AccountChannelEntry implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String classExternalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _classExternalReferenceCodeSupplier;
 
 	@Schema
@@ -343,6 +349,7 @@ public class AccountChannelEntry implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long classPK;
 
+	@JsonIgnore
 	private Supplier<Long> _classPKSupplier;
 
 	@Schema
@@ -381,6 +388,7 @@ public class AccountChannelEntry implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema
@@ -421,6 +429,7 @@ public class AccountChannelEntry implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean overrideEligibility;
 
+	@JsonIgnore
 	private Supplier<Boolean> _overrideEligibilitySupplier;
 
 	@Schema
@@ -461,6 +470,7 @@ public class AccountChannelEntry implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double priority;
 
+	@JsonIgnore
 	private Supplier<Double> _prioritySupplier;
 
 	@Override

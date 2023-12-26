@@ -89,6 +89,7 @@ public class ContentFieldValue implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String data;
 
+	@JsonIgnore
 	private Supplier<String> _dataSupplier;
 
 	@Schema(description = "A content document element.")
@@ -130,6 +131,7 @@ public class ContentFieldValue implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ContentDocument document;
 
+	@JsonIgnore
 	private Supplier<ContentDocument> _documentSupplier;
 
 	@Schema(description = "A point determined by latitude and longitude.")
@@ -169,6 +171,7 @@ public class ContentFieldValue implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Geo geo;
 
+	@JsonIgnore
 	private Supplier<Geo> _geoSupplier;
 
 	@Schema(
@@ -214,6 +217,7 @@ public class ContentFieldValue implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ContentDocument image;
 
+	@JsonIgnore
 	private Supplier<ContentDocument> _imageSupplier;
 
 	@Schema(description = "A link to a page on the server.")
@@ -252,6 +256,7 @@ public class ContentFieldValue implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String link;
 
+	@JsonIgnore
 	private Supplier<String> _linkSupplier;
 
 	@Schema(description = "A link to structured content on the server.")
@@ -296,6 +301,7 @@ public class ContentFieldValue implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected StructuredContentLink structuredContentLink;
 
+	@JsonIgnore
 	private Supplier<StructuredContentLink> _structuredContentLinkSupplier;
 
 	@Schema(description = "The field's visible value")
@@ -336,6 +342,7 @@ public class ContentFieldValue implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String value;
 
+	@JsonIgnore
 	private Supplier<String> _valueSupplier;
 
 	@Override

@@ -108,6 +108,7 @@ public class DocumentFolder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
+	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
 	@Schema(
@@ -152,6 +153,7 @@ public class DocumentFolder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String assetLibraryKey;
 
+	@JsonIgnore
 	private Supplier<String> _assetLibraryKeySupplier;
 
 	@Schema(description = "The folder's creator.")
@@ -193,6 +195,7 @@ public class DocumentFolder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator creator;
 
+	@JsonIgnore
 	private Supplier<Creator> _creatorSupplier;
 
 	@Schema(
@@ -238,6 +241,7 @@ public class DocumentFolder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected CustomField[] customFields;
 
+	@JsonIgnore
 	private Supplier<CustomField[]> _customFieldsSupplier;
 
 	@Schema(description = "The folder's creation date.")
@@ -278,6 +282,7 @@ public class DocumentFolder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
+	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
 	@Schema(description = "The last time a field of the folder changed.")
@@ -318,6 +323,7 @@ public class DocumentFolder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
+	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
 	@Schema(description = "The folder's description.")
@@ -358,6 +364,7 @@ public class DocumentFolder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
+	@JsonIgnore
 	private Supplier<String> _descriptionSupplier;
 
 	@Schema(description = "The document folder's external reference code.")
@@ -400,6 +407,7 @@ public class DocumentFolder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@Schema(description = "The folder's ID.")
@@ -438,6 +446,7 @@ public class DocumentFolder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema(description = "The folder's main title/name.")
@@ -477,6 +486,7 @@ public class DocumentFolder implements Serializable {
 	@NotEmpty
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema(description = "The number of this folder's child folders.")
@@ -518,6 +528,7 @@ public class DocumentFolder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer numberOfDocumentFolders;
 
+	@JsonIgnore
 	private Supplier<Integer> _numberOfDocumentFoldersSupplier;
 
 	@Schema(description = "The number of documents in this folder.")
@@ -558,6 +569,7 @@ public class DocumentFolder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer numberOfDocuments;
 
+	@JsonIgnore
 	private Supplier<Integer> _numberOfDocumentsSupplier;
 
 	@Schema(description = "The ID of the folder's parent, if it exists.")
@@ -598,6 +610,7 @@ public class DocumentFolder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long parentDocumentFolderId;
 
+	@JsonIgnore
 	private Supplier<Long> _parentDocumentFolderIdSupplier;
 
 	@Schema(description = "The ID of the site to which this folder is scoped.")
@@ -640,6 +653,7 @@ public class DocumentFolder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long siteId;
 
+	@JsonIgnore
 	private Supplier<Long> _siteIdSupplier;
 
 	@Schema(
@@ -684,6 +698,7 @@ public class DocumentFolder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean subscribed;
 
+	@JsonIgnore
 	private Supplier<Boolean> _subscribedSupplier;
 
 	@Schema(
@@ -740,6 +755,7 @@ public class DocumentFolder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected ViewableBy viewableBy;
 
+	@JsonIgnore
 	private Supplier<ViewableBy> _viewableBySupplier;
 
 	@Override

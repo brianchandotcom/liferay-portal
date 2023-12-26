@@ -92,6 +92,7 @@ public class DispatchTrigger implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean active;
 
+	@JsonIgnore
 	private Supplier<Boolean> _activeSupplier;
 
 	@Schema
@@ -132,6 +133,7 @@ public class DispatchTrigger implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long companyId;
 
+	@JsonIgnore
 	private Supplier<Long> _companyIdSupplier;
 
 	@Schema
@@ -172,6 +174,7 @@ public class DispatchTrigger implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String cronExpression;
 
+	@JsonIgnore
 	private Supplier<String> _cronExpressionSupplier;
 
 	@Schema
@@ -213,6 +216,7 @@ public class DispatchTrigger implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer dispatchTaskClusterMode;
 
+	@JsonIgnore
 	private Supplier<Integer> _dispatchTaskClusterModeSupplier;
 
 	@Schema
@@ -254,6 +258,7 @@ public class DispatchTrigger implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String dispatchTaskExecutorType;
 
+	@JsonIgnore
 	private Supplier<String> _dispatchTaskExecutorTypeSupplier;
 
 	@Schema
@@ -296,6 +301,7 @@ public class DispatchTrigger implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, ?> dispatchTaskSettings;
 
+	@JsonIgnore
 	private Supplier<Map<String, ?>> _dispatchTaskSettingsSupplier;
 
 	@Schema
@@ -336,6 +342,7 @@ public class DispatchTrigger implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date endDate;
 
+	@JsonIgnore
 	private Supplier<Date> _endDateSupplier;
 
 	@Schema
@@ -376,6 +383,7 @@ public class DispatchTrigger implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@Schema
@@ -414,6 +422,7 @@ public class DispatchTrigger implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema
@@ -452,6 +461,7 @@ public class DispatchTrigger implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema
@@ -492,6 +502,7 @@ public class DispatchTrigger implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean overlapAllowed;
 
+	@JsonIgnore
 	private Supplier<Boolean> _overlapAllowedSupplier;
 
 	@Schema
@@ -532,6 +543,7 @@ public class DispatchTrigger implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date startDate;
 
+	@JsonIgnore
 	private Supplier<Date> _startDateSupplier;
 
 	@Schema
@@ -572,6 +584,7 @@ public class DispatchTrigger implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean system;
 
+	@JsonIgnore
 	private Supplier<Boolean> _systemSupplier;
 
 	@Schema
@@ -612,6 +625,7 @@ public class DispatchTrigger implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String timeZoneId;
 
+	@JsonIgnore
 	private Supplier<String> _timeZoneIdSupplier;
 
 	@Schema
@@ -652,6 +666,7 @@ public class DispatchTrigger implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long userId;
 
+	@JsonIgnore
 	private Supplier<Long> _userIdSupplier;
 
 	@Override

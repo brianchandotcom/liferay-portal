@@ -88,6 +88,7 @@ public class Status implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer code;
 
+	@JsonIgnore
 	private Supplier<Integer> _codeSupplier;
 
 	@Schema(description = "Label associated to the status")
@@ -128,6 +129,7 @@ public class Status implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String label;
 
+	@JsonIgnore
 	private Supplier<String> _labelSupplier;
 
 	@Schema
@@ -170,6 +172,7 @@ public class Status implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, String> label_i18n;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _label_i18nSupplier;
 
 	@Override

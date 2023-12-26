@@ -97,6 +97,7 @@ public class Term implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
+	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
 	@Schema(example = "true")
@@ -137,6 +138,7 @@ public class Term implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean active;
 
+	@JsonIgnore
 	private Supplier<Boolean> _activeSupplier;
 
 	@Schema(example = "2017-07-21")
@@ -177,6 +179,7 @@ public class Term implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date createDate;
 
+	@JsonIgnore
 	private Supplier<Date> _createDateSupplier;
 
 	@Schema(
@@ -221,6 +224,7 @@ public class Term implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> description;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _descriptionSupplier;
 
 	@Schema(example = "2017-07-21")
@@ -261,6 +265,7 @@ public class Term implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date displayDate;
 
+	@JsonIgnore
 	private Supplier<Date> _displayDateSupplier;
 
 	@Schema(example = "2017-08-21")
@@ -301,6 +306,7 @@ public class Term implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date expirationDate;
 
+	@JsonIgnore
 	private Supplier<Date> _expirationDateSupplier;
 
 	@Schema(example = "AB-34098-789-N")
@@ -341,6 +347,7 @@ public class Term implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@DecimalMin("0")
@@ -380,6 +387,7 @@ public class Term implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema(
@@ -423,6 +431,7 @@ public class Term implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> label;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _labelSupplier;
 
 	@Schema(example = "Laptops, Beverages")
@@ -462,6 +471,7 @@ public class Term implements Serializable {
 	@NotEmpty
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema(example = "true")
@@ -502,6 +512,7 @@ public class Term implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean neverExpire;
 
+	@JsonIgnore
 	private Supplier<Boolean> _neverExpireSupplier;
 
 	@Schema(example = "1.2")
@@ -542,6 +553,7 @@ public class Term implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double priority;
 
+	@JsonIgnore
 	private Supplier<Double> _prioritySupplier;
 
 	@Schema
@@ -584,6 +596,7 @@ public class Term implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected TermOrderType[] termOrderType;
 
+	@JsonIgnore
 	private Supplier<TermOrderType[]> _termOrderTypeSupplier;
 
 	@Schema(example = "payment-terms")
@@ -623,6 +636,7 @@ public class Term implements Serializable {
 	@NotEmpty
 	protected String type;
 
+	@JsonIgnore
 	private Supplier<String> _typeSupplier;
 
 	@Schema(example = "Payment Terms")
@@ -663,6 +677,7 @@ public class Term implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String typeLocalized;
 
+	@JsonIgnore
 	private Supplier<String> _typeLocalizedSupplier;
 
 	@Schema
@@ -703,6 +718,7 @@ public class Term implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String typeSettings;
 
+	@JsonIgnore
 	private Supplier<String> _typeSettingsSupplier;
 
 	@Schema
@@ -744,6 +760,7 @@ public class Term implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Status workflowStatusInfo;
 
+	@JsonIgnore
 	private Supplier<Status> _workflowStatusInfoSupplier;
 
 	@Override

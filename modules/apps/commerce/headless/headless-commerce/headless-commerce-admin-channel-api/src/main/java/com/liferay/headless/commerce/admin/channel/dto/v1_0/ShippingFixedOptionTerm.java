@@ -94,6 +94,7 @@ public class ShippingFixedOptionTerm implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
+	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
 	@DecimalMin("0")
@@ -136,6 +137,7 @@ public class ShippingFixedOptionTerm implements Serializable {
 	@NotNull
 	protected Long shippingFixedOptionId;
 
+	@JsonIgnore
 	private Supplier<Long> _shippingFixedOptionIdSupplier;
 
 	@DecimalMin("0")
@@ -179,6 +181,7 @@ public class ShippingFixedOptionTerm implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long shippingFixedOptionTermId;
 
+	@JsonIgnore
 	private Supplier<Long> _shippingFixedOptionTermIdSupplier;
 
 	@Schema
@@ -218,6 +221,7 @@ public class ShippingFixedOptionTerm implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Term term;
 
+	@JsonIgnore
 	private Supplier<Term> _termSupplier;
 
 	@Schema(example = "PAB-34098-789-N")
@@ -260,6 +264,7 @@ public class ShippingFixedOptionTerm implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String termExternalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _termExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
@@ -302,6 +307,7 @@ public class ShippingFixedOptionTerm implements Serializable {
 	@NotNull
 	protected Long termId;
 
+	@JsonIgnore
 	private Supplier<Long> _termIdSupplier;
 
 	@Override

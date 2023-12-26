@@ -90,6 +90,7 @@ public class Rescore implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object query;
 
+	@JsonIgnore
 	private Supplier<Object> _querySupplier;
 
 	@Schema
@@ -131,6 +132,7 @@ public class Rescore implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object queryWeight;
 
+	@JsonIgnore
 	private Supplier<Object> _queryWeightSupplier;
 
 	@Schema
@@ -172,6 +174,7 @@ public class Rescore implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object rescoreQueryWeight;
 
+	@JsonIgnore
 	private Supplier<Object> _rescoreQueryWeightSupplier;
 
 	@Schema
@@ -212,6 +215,7 @@ public class Rescore implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String scoreMode;
 
+	@JsonIgnore
 	private Supplier<String> _scoreModeSupplier;
 
 	@Schema
@@ -253,6 +257,7 @@ public class Rescore implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object windowSize;
 
+	@JsonIgnore
 	private Supplier<Object> _windowSizeSupplier;
 
 	@Override

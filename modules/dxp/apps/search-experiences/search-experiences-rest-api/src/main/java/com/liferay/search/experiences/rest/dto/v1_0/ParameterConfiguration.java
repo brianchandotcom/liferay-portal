@@ -91,6 +91,7 @@ public class ParameterConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, Parameter> parameters;
 
+	@JsonIgnore
 	private Supplier<Map<String, Parameter>> _parametersSupplier;
 
 	@Override

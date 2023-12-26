@@ -92,6 +92,7 @@ public class ProductConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean allowBackOrder;
 
+	@JsonIgnore
 	private Supplier<Boolean> _allowBackOrderSupplier;
 
 	@Schema(example = "[10, 20, 30, 40]")
@@ -134,6 +135,7 @@ public class ProductConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal[] allowedOrderQuantities;
 
+	@JsonIgnore
 	private Supplier<BigDecimal[]> _allowedOrderQuantitiesSupplier;
 
 	@DecimalMin("0")
@@ -175,6 +177,7 @@ public class ProductConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long availabilityEstimateId;
 
+	@JsonIgnore
 	private Supplier<Long> _availabilityEstimateIdSupplier;
 
 	@Schema(example = "{en_US=3-5 Days, it_IT=3-5 Giorni}")
@@ -219,6 +222,7 @@ public class ProductConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> availabilityEstimateName;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _availabilityEstimateNameSupplier;
 
 	@Schema(example = "true")
@@ -259,6 +263,7 @@ public class ProductConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean displayAvailability;
 
+	@JsonIgnore
 	private Supplier<Boolean> _displayAvailabilitySupplier;
 
 	@Schema(example = "true")
@@ -299,6 +304,7 @@ public class ProductConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean displayStockQuantity;
 
+	@JsonIgnore
 	private Supplier<Boolean> _displayStockQuantitySupplier;
 
 	@Schema(
@@ -343,6 +349,7 @@ public class ProductConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String inventoryEngine;
 
+	@JsonIgnore
 	private Supplier<String> _inventoryEngineSupplier;
 
 	@Schema(
@@ -387,6 +394,7 @@ public class ProductConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String lowStockAction;
 
+	@JsonIgnore
 	private Supplier<String> _lowStockActionSupplier;
 
 	@Schema(example = "10.1")
@@ -428,6 +436,7 @@ public class ProductConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal maxOrderQuantity;
 
+	@JsonIgnore
 	private Supplier<BigDecimal> _maxOrderQuantitySupplier;
 
 	@Schema(example = "10.1")
@@ -469,6 +478,7 @@ public class ProductConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal minOrderQuantity;
 
+	@JsonIgnore
 	private Supplier<BigDecimal> _minOrderQuantitySupplier;
 
 	@Schema(example = "10.1")
@@ -510,6 +520,7 @@ public class ProductConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal minStockQuantity;
 
+	@JsonIgnore
 	private Supplier<BigDecimal> _minStockQuantitySupplier;
 
 	@Schema(example = "10.1")
@@ -552,6 +563,7 @@ public class ProductConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal multipleOrderQuantity;
 
+	@JsonIgnore
 	private Supplier<BigDecimal> _multipleOrderQuantitySupplier;
 
 	@Override

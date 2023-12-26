@@ -89,6 +89,7 @@ public class DSRecipient implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String dsClientUserId;
 
+	@JsonIgnore
 	private Supplier<String> _dsClientUserIdSupplier;
 
 	@Schema
@@ -129,6 +130,7 @@ public class DSRecipient implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String emailAddress;
 
+	@JsonIgnore
 	private Supplier<String> _emailAddressSupplier;
 
 	@Schema
@@ -167,6 +169,7 @@ public class DSRecipient implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String id;
 
+	@JsonIgnore
 	private Supplier<String> _idSupplier;
 
 	@Schema
@@ -205,6 +208,7 @@ public class DSRecipient implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema
@@ -245,6 +249,7 @@ public class DSRecipient implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String status;
 
+	@JsonIgnore
 	private Supplier<String> _statusSupplier;
 
 	@Schema
@@ -284,6 +289,7 @@ public class DSRecipient implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object tabs;
 
+	@JsonIgnore
 	private Supplier<Object> _tabsSupplier;
 
 	@Override

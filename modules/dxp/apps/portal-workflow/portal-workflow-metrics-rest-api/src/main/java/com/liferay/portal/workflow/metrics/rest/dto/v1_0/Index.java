@@ -100,6 +100,7 @@ public class Index implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Group group;
 
+	@JsonIgnore
 	private Supplier<Group> _groupSupplier;
 
 	@Schema
@@ -138,6 +139,7 @@ public class Index implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String key;
 
+	@JsonIgnore
 	private Supplier<String> _keySupplier;
 
 	@Schema
@@ -178,6 +180,7 @@ public class Index implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String label;
 
+	@JsonIgnore
 	private Supplier<String> _labelSupplier;
 
 	@Override

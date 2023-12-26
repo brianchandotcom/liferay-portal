@@ -88,6 +88,7 @@ public class Sku implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double basePrice;
 
+	@JsonIgnore
 	private Supplier<Double> _basePriceSupplier;
 
 	@Schema
@@ -128,6 +129,7 @@ public class Sku implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String basePriceFormatted;
 
+	@JsonIgnore
 	private Supplier<String> _basePriceFormattedSupplier;
 
 	@Schema
@@ -168,6 +170,7 @@ public class Sku implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double basePromoPrice;
 
+	@JsonIgnore
 	private Supplier<Double> _basePromoPriceSupplier;
 
 	@Schema
@@ -209,6 +212,7 @@ public class Sku implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String basePromoPriceFormatted;
 
+	@JsonIgnore
 	private Supplier<String> _basePromoPriceFormattedSupplier;
 
 	@DecimalMin("0")
@@ -248,6 +252,7 @@ public class Sku implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema(example = "simple")
@@ -286,6 +291,7 @@ public class Sku implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Override

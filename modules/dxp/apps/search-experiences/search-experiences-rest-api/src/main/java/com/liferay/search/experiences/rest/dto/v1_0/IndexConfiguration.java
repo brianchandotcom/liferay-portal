@@ -86,6 +86,7 @@ public class IndexConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean external;
 
+	@JsonIgnore
 	private Supplier<Boolean> _externalSupplier;
 
 	@Schema
@@ -126,6 +127,7 @@ public class IndexConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String indexName;
 
+	@JsonIgnore
 	private Supplier<String> _indexNameSupplier;
 
 	@Override

@@ -91,6 +91,7 @@ public class AccountBrief implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String externalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@Schema(description = "The account's ID.")
@@ -129,6 +130,7 @@ public class AccountBrief implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema(description = "The account's name.")
@@ -167,6 +169,7 @@ public class AccountBrief implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema(description = "A list of the user's roles.")
@@ -208,6 +211,7 @@ public class AccountBrief implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected RoleBrief[] roleBriefs;
 
+	@JsonIgnore
 	private Supplier<RoleBrief[]> _roleBriefsSupplier;
 
 	@Override

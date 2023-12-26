@@ -93,6 +93,7 @@ public class TermOrderType implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
+	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
 	@Schema
@@ -134,6 +135,7 @@ public class TermOrderType implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected OrderType orderType;
 
+	@JsonIgnore
 	private Supplier<OrderType> _orderTypeSupplier;
 
 	@Schema(example = "DAB-34098-789-N")
@@ -178,6 +180,7 @@ public class TermOrderType implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String orderTypeExternalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _orderTypeExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
@@ -220,6 +223,7 @@ public class TermOrderType implements Serializable {
 	@NotNull
 	protected Long orderTypeId;
 
+	@JsonIgnore
 	private Supplier<Long> _orderTypeIdSupplier;
 
 	@Schema(example = "PAB-34098-789-N")
@@ -262,6 +266,7 @@ public class TermOrderType implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String termExternalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _termExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
@@ -304,6 +309,7 @@ public class TermOrderType implements Serializable {
 	@NotNull
 	protected Long termId;
 
+	@JsonIgnore
 	private Supplier<Long> _termIdSupplier;
 
 	@DecimalMin("0")
@@ -345,6 +351,7 @@ public class TermOrderType implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long termOrderTypeId;
 
+	@JsonIgnore
 	private Supplier<Long> _termOrderTypeIdSupplier;
 
 	@Override

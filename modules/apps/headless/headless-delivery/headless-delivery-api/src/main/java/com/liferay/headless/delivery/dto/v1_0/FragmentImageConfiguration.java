@@ -95,6 +95,7 @@ public class FragmentImageConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String landscapeMobile;
 
+	@JsonIgnore
 	private Supplier<String> _landscapeMobileSupplier;
 
 	@Schema(
@@ -139,6 +140,7 @@ public class FragmentImageConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String portraitMobile;
 
+	@JsonIgnore
 	private Supplier<String> _portraitMobileSupplier;
 
 	@Schema(description = "The tablet configuration of the fragment image.")
@@ -181,6 +183,7 @@ public class FragmentImageConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String tablet;
 
+	@JsonIgnore
 	private Supplier<String> _tabletSupplier;
 
 	@Override

@@ -89,6 +89,7 @@ public class AssetType implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean required;
 
+	@JsonIgnore
 	private Supplier<Boolean> _requiredSupplier;
 
 	@Schema(description = "The asset's subtype.")
@@ -129,6 +130,7 @@ public class AssetType implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String subtype;
 
+	@JsonIgnore
 	private Supplier<String> _subtypeSupplier;
 
 	@Schema(
@@ -171,6 +173,7 @@ public class AssetType implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String type;
 
+	@JsonIgnore
 	private Supplier<String> _typeSupplier;
 
 	@Override

@@ -89,6 +89,7 @@ public class ShippingAddress implements Serializable {
 	@NotEmpty
 	protected String city;
 
+	@JsonIgnore
 	private Supplier<String> _citySupplier;
 
 	@Schema(example = "US")
@@ -130,6 +131,7 @@ public class ShippingAddress implements Serializable {
 	@NotEmpty
 	protected String countryISOCode;
 
+	@JsonIgnore
 	private Supplier<String> _countryISOCodeSupplier;
 
 	@Schema(example = "right stairs, first room on the left")
@@ -170,6 +172,7 @@ public class ShippingAddress implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
+	@JsonIgnore
 	private Supplier<String> _descriptionSupplier;
 
 	@Schema(example = "AB-34098-789-N")
@@ -210,6 +213,7 @@ public class ShippingAddress implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String externalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@DecimalMin("0")
@@ -249,6 +253,7 @@ public class ShippingAddress implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema(example = "33.9976884")
@@ -289,6 +294,7 @@ public class ShippingAddress implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double latitude;
 
+	@JsonIgnore
 	private Supplier<Double> _latitudeSupplier;
 
 	@Schema(example = "-117.8144595")
@@ -329,6 +335,7 @@ public class ShippingAddress implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double longitude;
 
+	@JsonIgnore
 	private Supplier<Double> _longitudeSupplier;
 
 	@Schema(example = "Alessio Antonio Rendina")
@@ -368,6 +375,7 @@ public class ShippingAddress implements Serializable {
 	@NotEmpty
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema(example = "(123) 456 7890")
@@ -408,6 +416,7 @@ public class ShippingAddress implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String phoneNumber;
 
+	@JsonIgnore
 	private Supplier<String> _phoneNumberSupplier;
 
 	@Schema(example = "CA")
@@ -448,6 +457,7 @@ public class ShippingAddress implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String regionISOCode;
 
+	@JsonIgnore
 	private Supplier<String> _regionISOCodeSupplier;
 
 	@Schema(example = "1400 Montefino Ave")
@@ -489,6 +499,7 @@ public class ShippingAddress implements Serializable {
 	@NotEmpty
 	protected String street1;
 
+	@JsonIgnore
 	private Supplier<String> _street1Supplier;
 
 	@Schema(example = "1st floor")
@@ -529,6 +540,7 @@ public class ShippingAddress implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String street2;
 
+	@JsonIgnore
 	private Supplier<String> _street2Supplier;
 
 	@Schema(example = "suite 200")
@@ -569,6 +581,7 @@ public class ShippingAddress implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String street3;
 
+	@JsonIgnore
 	private Supplier<String> _street3Supplier;
 
 	@Schema(example = "91765")
@@ -607,6 +620,7 @@ public class ShippingAddress implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String zip;
 
+	@JsonIgnore
 	private Supplier<String> _zipSupplier;
 
 	@Override

@@ -93,6 +93,7 @@ public class RowViewportConfig implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected LandscapeMobile landscapeMobile;
 
+	@JsonIgnore
 	private Supplier<LandscapeMobile> _landscapeMobileSupplier;
 
 	@Schema
@@ -135,6 +136,7 @@ public class RowViewportConfig implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected PortraitMobile portraitMobile;
 
+	@JsonIgnore
 	private Supplier<PortraitMobile> _portraitMobileSupplier;
 
 	@Schema
@@ -176,6 +178,7 @@ public class RowViewportConfig implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Tablet tablet;
 
+	@JsonIgnore
 	private Supplier<Tablet> _tabletSupplier;
 
 	@Override

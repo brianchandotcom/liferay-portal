@@ -88,6 +88,7 @@ public class Collapse implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String field;
 
+	@JsonIgnore
 	private Supplier<String> _fieldSupplier;
 
 	@Schema
@@ -129,6 +130,7 @@ public class Collapse implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected InnerHit[] innerHits;
 
+	@JsonIgnore
 	private Supplier<InnerHit[]> _innerHitsSupplier;
 
 	@Schema
@@ -173,6 +175,7 @@ public class Collapse implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer maxConcurrentGroupRequests;
 
+	@JsonIgnore
 	private Supplier<Integer> _maxConcurrentGroupRequestsSupplier;
 
 	@Override

@@ -98,6 +98,7 @@ public class UtilityPageTemplate implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean defaultTemplate;
 
+	@JsonIgnore
 	private Supplier<Boolean> _defaultTemplateSupplier;
 
 	@Schema(description = "The utility page template external reference code.")
@@ -140,6 +141,7 @@ public class UtilityPageTemplate implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@Schema(description = "The utility page template name.")
@@ -178,6 +180,7 @@ public class UtilityPageTemplate implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema(description = "The utility page template type.")
@@ -228,6 +231,7 @@ public class UtilityPageTemplate implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Type type;
 
+	@JsonIgnore
 	private Supplier<Type> _typeSupplier;
 
 	@Override

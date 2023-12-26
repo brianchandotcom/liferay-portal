@@ -90,6 +90,7 @@ public class QueryAttributes implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] attributes;
 
+	@JsonIgnore
 	private Supplier<String[]> _attributesSupplier;
 
 	@Schema(
@@ -134,6 +135,7 @@ public class QueryAttributes implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer count;
 
+	@JsonIgnore
 	private Supplier<Integer> _countSupplier;
 
 	@Schema(
@@ -178,6 +180,7 @@ public class QueryAttributes implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] excludedAttributes;
 
+	@JsonIgnore
 	private Supplier<String[]> _excludedAttributesSupplier;
 
 	@Schema(
@@ -222,6 +225,7 @@ public class QueryAttributes implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String filter;
 
+	@JsonIgnore
 	private Supplier<String> _filterSupplier;
 
 	@Schema(
@@ -266,6 +270,7 @@ public class QueryAttributes implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String sortBy;
 
+	@JsonIgnore
 	private Supplier<String> _sortBySupplier;
 
 	@Schema(
@@ -310,6 +315,7 @@ public class QueryAttributes implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String sortOrder;
 
+	@JsonIgnore
 	private Supplier<String> _sortOrderSupplier;
 
 	@Schema(
@@ -354,6 +360,7 @@ public class QueryAttributes implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer startIndex;
 
+	@JsonIgnore
 	private Supplier<Integer> _startIndexSupplier;
 
 	@Override

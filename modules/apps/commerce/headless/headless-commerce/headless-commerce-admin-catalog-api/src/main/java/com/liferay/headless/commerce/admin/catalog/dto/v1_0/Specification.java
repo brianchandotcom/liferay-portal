@@ -94,6 +94,7 @@ public class Specification implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> description;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _descriptionSupplier;
 
 	@Schema(example = "true")
@@ -134,6 +135,7 @@ public class Specification implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean facetable;
 
+	@JsonIgnore
 	private Supplier<Boolean> _facetableSupplier;
 
 	@DecimalMin("0")
@@ -173,6 +175,7 @@ public class Specification implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema(example = "specification-key")
@@ -212,6 +215,7 @@ public class Specification implements Serializable {
 	@NotEmpty
 	protected String key;
 
+	@JsonIgnore
 	private Supplier<String> _keySupplier;
 
 	@Schema
@@ -254,6 +258,7 @@ public class Specification implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected OptionCategory optionCategory;
 
+	@JsonIgnore
 	private Supplier<OptionCategory> _optionCategorySupplier;
 
 	@Schema(example = "{en_US=Croatia, hr_HR=Hrvatska, hu_HU=Horvatorszag}")
@@ -296,6 +301,7 @@ public class Specification implements Serializable {
 	@NotNull
 	protected Map<String, String> title;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _titleSupplier;
 
 	@Override

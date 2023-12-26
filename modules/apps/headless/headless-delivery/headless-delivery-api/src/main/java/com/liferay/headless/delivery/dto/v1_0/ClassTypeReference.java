@@ -90,6 +90,7 @@ public class ClassTypeReference implements Serializable {
 	@NotEmpty
 	protected String className;
 
+	@JsonIgnore
 	private Supplier<String> _classNameSupplier;
 
 	@Schema
@@ -130,6 +131,7 @@ public class ClassTypeReference implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long classType;
 
+	@JsonIgnore
 	private Supplier<Long> _classTypeSupplier;
 
 	@Override

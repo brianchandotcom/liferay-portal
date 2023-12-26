@@ -90,6 +90,7 @@ public class DataRecord implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long dataRecordCollectionId;
 
+	@JsonIgnore
 	private Supplier<Long> _dataRecordCollectionIdSupplier;
 
 	@Schema
@@ -132,6 +133,7 @@ public class DataRecord implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, Object> dataRecordValues;
 
+	@JsonIgnore
 	private Supplier<Map<String, Object>> _dataRecordValuesSupplier;
 
 	@Schema
@@ -170,6 +172,7 @@ public class DataRecord implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema
@@ -210,6 +213,7 @@ public class DataRecord implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer status;
 
+	@JsonIgnore
 	private Supplier<Integer> _statusSupplier;
 
 	@Override

@@ -93,6 +93,7 @@ public class ContentSetElement implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Object content;
 
+	@JsonIgnore
 	private Supplier<Object> _contentSupplier;
 
 	@Schema(description = "The content set element's type.")
@@ -133,6 +134,7 @@ public class ContentSetElement implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String contentType;
 
+	@JsonIgnore
 	private Supplier<String> _contentTypeSupplier;
 
 	@Schema(description = "The content set element's ID.")
@@ -171,6 +173,7 @@ public class ContentSetElement implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema(description = "The content's title.")
@@ -211,6 +214,7 @@ public class ContentSetElement implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String title;
 
+	@JsonIgnore
 	private Supplier<String> _titleSupplier;
 
 	@Schema(description = "The localized content's titles.")
@@ -253,6 +257,7 @@ public class ContentSetElement implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, String> title_i18n;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _title_i18nSupplier;
 
 	@Override

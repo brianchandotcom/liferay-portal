@@ -100,6 +100,7 @@ public class TaxonomyCategoryReference implements Serializable {
 	@NotEmpty
 	protected String externalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@Schema(
@@ -144,6 +145,7 @@ public class TaxonomyCategoryReference implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String siteKey;
 
+	@JsonIgnore
 	private Supplier<String> _siteKeySupplier;
 
 	@Override

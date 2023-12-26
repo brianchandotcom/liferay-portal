@@ -86,6 +86,7 @@ public class DataSourceToken implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String token;
 
+	@JsonIgnore
 	private Supplier<String> _tokenSupplier;
 
 	@Override

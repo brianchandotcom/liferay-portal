@@ -95,6 +95,7 @@ public class PaymentMethodGroupRelOrderType implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
+	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
 	@Schema
@@ -136,6 +137,7 @@ public class PaymentMethodGroupRelOrderType implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected OrderType orderType;
 
+	@JsonIgnore
 	private Supplier<OrderType> _orderTypeSupplier;
 
 	@Schema(example = "DAB-34098-789-N")
@@ -180,6 +182,7 @@ public class PaymentMethodGroupRelOrderType implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String orderTypeExternalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _orderTypeExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
@@ -222,6 +225,7 @@ public class PaymentMethodGroupRelOrderType implements Serializable {
 	@NotNull
 	protected Long orderTypeId;
 
+	@JsonIgnore
 	private Supplier<Long> _orderTypeIdSupplier;
 
 	@DecimalMin("0")
@@ -264,6 +268,7 @@ public class PaymentMethodGroupRelOrderType implements Serializable {
 	@NotNull
 	protected Long paymentMethodGroupRelId;
 
+	@JsonIgnore
 	private Supplier<Long> _paymentMethodGroupRelIdSupplier;
 
 	@DecimalMin("0")
@@ -310,6 +315,7 @@ public class PaymentMethodGroupRelOrderType implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long paymentMethodGroupRelOrderTypeId;
 
+	@JsonIgnore
 	private Supplier<Long> _paymentMethodGroupRelOrderTypeIdSupplier;
 
 	@DecimalMin("0")
@@ -351,6 +357,7 @@ public class PaymentMethodGroupRelOrderType implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer priority;
 
+	@JsonIgnore
 	private Supplier<Integer> _prioritySupplier;
 
 	@Override

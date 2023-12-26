@@ -91,6 +91,7 @@ public class FormPage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FormField[] formFields;
 
+	@JsonIgnore
 	private Supplier<FormField[]> _formFieldsSupplier;
 
 	@Schema
@@ -131,6 +132,7 @@ public class FormPage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String headline;
 
+	@JsonIgnore
 	private Supplier<String> _headlineSupplier;
 
 	@Schema
@@ -173,6 +175,7 @@ public class FormPage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> headline_i18n;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _headline_i18nSupplier;
 
 	@Schema
@@ -211,6 +214,7 @@ public class FormPage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema
@@ -249,6 +253,7 @@ public class FormPage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String text;
 
+	@JsonIgnore
 	private Supplier<String> _textSupplier;
 
 	@Schema
@@ -291,6 +296,7 @@ public class FormPage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> text_i18n;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _text_i18nSupplier;
 
 	@Override

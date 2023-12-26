@@ -93,6 +93,7 @@ public class RenderedPage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String masterPageId;
 
+	@JsonIgnore
 	private Supplier<String> _masterPageIdSupplier;
 
 	@Schema(
@@ -137,6 +138,7 @@ public class RenderedPage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String masterPageName;
 
+	@JsonIgnore
 	private Supplier<String> _masterPageNameSupplier;
 
 	@Schema(description = "The ID of the template used to render the content.")
@@ -179,6 +181,7 @@ public class RenderedPage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String pageTemplateId;
 
+	@JsonIgnore
 	private Supplier<String> _pageTemplateIdSupplier;
 
 	@Schema(
@@ -223,6 +226,7 @@ public class RenderedPage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String pageTemplateName;
 
+	@JsonIgnore
 	private Supplier<String> _pageTemplateNameSupplier;
 
 	@Schema(description = "An absolute URL to the rendered page.")
@@ -263,6 +267,7 @@ public class RenderedPage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String renderedPageURL;
 
+	@JsonIgnore
 	private Supplier<String> _renderedPageURLSupplier;
 
 	@Override

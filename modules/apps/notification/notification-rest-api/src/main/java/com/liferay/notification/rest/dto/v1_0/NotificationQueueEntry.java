@@ -95,6 +95,7 @@ public class NotificationQueueEntry implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
+	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
 	@Schema
@@ -133,6 +134,7 @@ public class NotificationQueueEntry implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String body;
 
+	@JsonIgnore
 	private Supplier<String> _bodySupplier;
 
 	@Schema
@@ -173,6 +175,7 @@ public class NotificationQueueEntry implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String fromName;
 
+	@JsonIgnore
 	private Supplier<String> _fromNameSupplier;
 
 	@Schema
@@ -211,6 +214,7 @@ public class NotificationQueueEntry implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema
@@ -252,6 +256,7 @@ public class NotificationQueueEntry implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object[] recipients;
 
+	@JsonIgnore
 	private Supplier<Object[]> _recipientsSupplier;
 
 	@Schema
@@ -292,6 +297,7 @@ public class NotificationQueueEntry implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String recipientsSummary;
 
+	@JsonIgnore
 	private Supplier<String> _recipientsSummarySupplier;
 
 	@Schema
@@ -332,6 +338,7 @@ public class NotificationQueueEntry implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date sentDate;
 
+	@JsonIgnore
 	private Supplier<Date> _sentDateSupplier;
 
 	@Schema
@@ -372,6 +379,7 @@ public class NotificationQueueEntry implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer status;
 
+	@JsonIgnore
 	private Supplier<Integer> _statusSupplier;
 
 	@Schema
@@ -412,6 +420,7 @@ public class NotificationQueueEntry implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String subject;
 
+	@JsonIgnore
 	private Supplier<String> _subjectSupplier;
 
 	@Schema
@@ -452,6 +461,7 @@ public class NotificationQueueEntry implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String triggerBy;
 
+	@JsonIgnore
 	private Supplier<String> _triggerBySupplier;
 
 	@Schema
@@ -490,6 +500,7 @@ public class NotificationQueueEntry implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String type;
 
+	@JsonIgnore
 	private Supplier<String> _typeSupplier;
 
 	@Schema
@@ -530,6 +541,7 @@ public class NotificationQueueEntry implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String typeLabel;
 
+	@JsonIgnore
 	private Supplier<String> _typeLabelSupplier;
 
 	@Override

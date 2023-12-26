@@ -86,6 +86,7 @@ public class Error implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer errorCode;
 
+	@JsonIgnore
 	private Supplier<Integer> _errorCodeSupplier;
 
 	@Schema(
@@ -128,6 +129,7 @@ public class Error implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String errorDescription;
 
+	@JsonIgnore
 	private Supplier<String> _errorDescriptionSupplier;
 
 	@Schema(
@@ -170,6 +172,7 @@ public class Error implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String message;
 
+	@JsonIgnore
 	private Supplier<String> _messageSupplier;
 
 	@Schema(description = "HTTP Status code", example = "404")
@@ -210,6 +213,7 @@ public class Error implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer status;
 
+	@JsonIgnore
 	private Supplier<Integer> _statusSupplier;
 
 	@Override

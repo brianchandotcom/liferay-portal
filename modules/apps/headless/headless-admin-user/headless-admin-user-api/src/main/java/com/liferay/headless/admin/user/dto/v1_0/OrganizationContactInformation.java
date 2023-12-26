@@ -99,6 +99,7 @@ public class OrganizationContactInformation implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected EmailAddress[] emailAddresses;
 
+	@JsonIgnore
 	private Supplier<EmailAddress[]> _emailAddressesSupplier;
 
 	@Schema(
@@ -145,6 +146,7 @@ public class OrganizationContactInformation implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected PostalAddress[] postalAddresses;
 
+	@JsonIgnore
 	private Supplier<PostalAddress[]> _postalAddressesSupplier;
 
 	@Schema(
@@ -190,6 +192,7 @@ public class OrganizationContactInformation implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Phone[] telephones;
 
+	@JsonIgnore
 	private Supplier<Phone[]> _telephonesSupplier;
 
 	@Schema(
@@ -235,6 +238,7 @@ public class OrganizationContactInformation implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected WebUrl[] webUrls;
 
+	@JsonIgnore
 	private Supplier<WebUrl[]> _webUrlsSupplier;
 
 	@Override

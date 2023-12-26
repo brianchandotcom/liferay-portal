@@ -90,6 +90,7 @@ public class Category implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@DecimalMin("0")
@@ -130,6 +131,7 @@ public class Category implements Serializable {
 	@NotNull
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema(description = "Category Name")
@@ -168,6 +170,7 @@ public class Category implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema
@@ -208,6 +211,7 @@ public class Category implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long siteId;
 
+	@JsonIgnore
 	private Supplier<Long> _siteIdSupplier;
 
 	@Schema(example = "Default Vocabulary")
@@ -248,6 +252,7 @@ public class Category implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String vocabulary;
 
+	@JsonIgnore
 	private Supplier<String> _vocabularySupplier;
 
 	@Override

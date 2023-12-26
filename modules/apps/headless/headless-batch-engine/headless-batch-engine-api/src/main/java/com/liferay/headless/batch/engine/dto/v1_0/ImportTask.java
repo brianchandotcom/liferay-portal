@@ -100,6 +100,7 @@ public class ImportTask implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String className;
 
+	@JsonIgnore
 	private Supplier<String> _classNameSupplier;
 
 	@Schema(description = "The file content type.", example = "JSON")
@@ -140,6 +141,7 @@ public class ImportTask implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String contentType;
 
+	@JsonIgnore
 	private Supplier<String> _contentTypeSupplier;
 
 	@Schema(
@@ -183,6 +185,7 @@ public class ImportTask implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date endTime;
 
+	@JsonIgnore
 	private Supplier<Date> _endTimeSupplier;
 
 	@Schema(
@@ -228,6 +231,7 @@ public class ImportTask implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String errorMessage;
 
+	@JsonIgnore
 	private Supplier<String> _errorMessageSupplier;
 
 	@Schema(
@@ -283,6 +287,7 @@ public class ImportTask implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ExecuteStatus executeStatus;
 
+	@JsonIgnore
 	private Supplier<ExecuteStatus> _executeStatusSupplier;
 
 	@Schema(description = "The optional external key of this account.")
@@ -323,6 +328,7 @@ public class ImportTask implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@Schema
@@ -364,6 +370,7 @@ public class ImportTask implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FailedItem[] failedItems;
 
+	@JsonIgnore
 	private Supplier<FailedItem[]> _failedItemsSupplier;
 
 	@DecimalMin("0")
@@ -403,6 +410,7 @@ public class ImportTask implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema(
@@ -460,6 +468,7 @@ public class ImportTask implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ImportStrategy importStrategy;
 
+	@JsonIgnore
 	private Supplier<ImportStrategy> _importStrategySupplier;
 
 	@Schema(description = "The operation of import task.", example = "CREATE")
@@ -512,6 +521,7 @@ public class ImportTask implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Operation operation;
 
+	@JsonIgnore
 	private Supplier<Operation> _operationSupplier;
 
 	@DecimalMin("0")
@@ -558,6 +568,7 @@ public class ImportTask implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer processedItemsCount;
 
+	@JsonIgnore
 	private Supplier<Integer> _processedItemsCountSupplier;
 
 	@Schema(
@@ -601,6 +612,7 @@ public class ImportTask implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date startTime;
 
+	@JsonIgnore
 	private Supplier<Date> _startTimeSupplier;
 
 	@DecimalMin("0")
@@ -647,6 +659,7 @@ public class ImportTask implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer totalItemsCount;
 
+	@JsonIgnore
 	private Supplier<Integer> _totalItemsCountSupplier;
 
 	@Override

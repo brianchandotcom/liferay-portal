@@ -90,6 +90,7 @@ public class ElementInstance implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Configuration configurationEntry;
 
+	@JsonIgnore
 	private Supplier<Configuration> _configurationEntrySupplier;
 
 	@Schema
@@ -131,6 +132,7 @@ public class ElementInstance implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected SXPElement sxpElement;
 
+	@JsonIgnore
 	private Supplier<SXPElement> _sxpElementSupplier;
 
 	@Schema
@@ -171,6 +173,7 @@ public class ElementInstance implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long sxpElementId;
 
+	@JsonIgnore
 	private Supplier<Long> _sxpElementIdSupplier;
 
 	@Schema
@@ -209,6 +212,7 @@ public class ElementInstance implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer type;
 
+	@JsonIgnore
 	private Supplier<Integer> _typeSupplier;
 
 	@Schema
@@ -253,6 +257,7 @@ public class ElementInstance implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, Object> uiConfigurationValues;
 
+	@JsonIgnore
 	private Supplier<Map<String, Object>> _uiConfigurationValuesSupplier;
 
 	@Override

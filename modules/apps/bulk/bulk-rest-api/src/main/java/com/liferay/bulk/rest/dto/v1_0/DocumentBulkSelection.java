@@ -89,6 +89,7 @@ public class DocumentBulkSelection implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] documentIds;
 
+	@JsonIgnore
 	private Supplier<String[]> _documentIdsSupplier;
 
 	@Schema
@@ -131,6 +132,7 @@ public class DocumentBulkSelection implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected SelectionScope selectionScope;
 
+	@JsonIgnore
 	private Supplier<SelectionScope> _selectionScopeSupplier;
 
 	@Override

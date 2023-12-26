@@ -89,6 +89,7 @@ public class ChangeTransition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected String comment;
 
+	@JsonIgnore
 	private Supplier<String> _commentSupplier;
 
 	@Schema
@@ -129,6 +130,7 @@ public class ChangeTransition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected String transitionName;
 
+	@JsonIgnore
 	private Supplier<String> _transitionNameSupplier;
 
 	@Schema
@@ -169,6 +171,7 @@ public class ChangeTransition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected Long workflowTaskId;
 
+	@JsonIgnore
 	private Supplier<Long> _workflowTaskIdSupplier;
 
 	@Override

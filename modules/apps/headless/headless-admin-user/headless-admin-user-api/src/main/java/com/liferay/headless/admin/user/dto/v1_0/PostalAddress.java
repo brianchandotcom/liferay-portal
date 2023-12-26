@@ -91,6 +91,7 @@ public class PostalAddress implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String addressCountry;
 
+	@JsonIgnore
 	private Supplier<String> _addressCountrySupplier;
 
 	@Schema
@@ -135,6 +136,7 @@ public class PostalAddress implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> addressCountry_i18n;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _addressCountry_i18nSupplier;
 
 	@Schema(description = "The address's locality (e.g., city).")
@@ -175,6 +177,7 @@ public class PostalAddress implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String addressLocality;
 
+	@JsonIgnore
 	private Supplier<String> _addressLocalitySupplier;
 
 	@Schema(description = "The address's region (e.g., state).")
@@ -215,6 +218,7 @@ public class PostalAddress implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String addressRegion;
 
+	@JsonIgnore
 	private Supplier<String> _addressRegionSupplier;
 
 	@Schema(description = "The address's type.")
@@ -255,6 +259,7 @@ public class PostalAddress implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String addressType;
 
+	@JsonIgnore
 	private Supplier<String> _addressTypeSupplier;
 
 	@Schema(description = "The address's ID.")
@@ -293,6 +298,7 @@ public class PostalAddress implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema(description = "The address's name.")
@@ -331,6 +337,7 @@ public class PostalAddress implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema(description = "The phone number.")
@@ -371,6 +378,7 @@ public class PostalAddress implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String phoneNumber;
 
+	@JsonIgnore
 	private Supplier<String> _phoneNumberSupplier;
 
 	@Schema(description = "The address's postal code (e.g., zip code).")
@@ -411,6 +419,7 @@ public class PostalAddress implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String postalCode;
 
+	@JsonIgnore
 	private Supplier<String> _postalCodeSupplier;
 
 	@Schema(
@@ -455,6 +464,7 @@ public class PostalAddress implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean primary;
 
+	@JsonIgnore
 	private Supplier<Boolean> _primarySupplier;
 
 	@Schema(
@@ -499,6 +509,7 @@ public class PostalAddress implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String streetAddressLine1;
 
+	@JsonIgnore
 	private Supplier<String> _streetAddressLine1Supplier;
 
 	@Schema(description = "The street address's second line.")
@@ -539,6 +550,7 @@ public class PostalAddress implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String streetAddressLine2;
 
+	@JsonIgnore
 	private Supplier<String> _streetAddressLine2Supplier;
 
 	@Schema(description = "The street address's third line.")
@@ -579,6 +591,7 @@ public class PostalAddress implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String streetAddressLine3;
 
+	@JsonIgnore
 	private Supplier<String> _streetAddressLine3Supplier;
 
 	@Override

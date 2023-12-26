@@ -92,6 +92,7 @@ public class CreatorStatistics implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date joinDate;
 
+	@JsonIgnore
 	private Supplier<Date> _joinDateSupplier;
 
 	@Schema(description = "Last post created by the author.")
@@ -132,6 +133,7 @@ public class CreatorStatistics implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date lastPostDate;
 
+	@JsonIgnore
 	private Supplier<Date> _lastPostDateSupplier;
 
 	@Schema(description = "Number of posts publicated by the author.")
@@ -172,6 +174,7 @@ public class CreatorStatistics implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer postsNumber;
 
+	@JsonIgnore
 	private Supplier<Integer> _postsNumberSupplier;
 
 	@Schema(description = "The rank of the author.")
@@ -210,6 +213,7 @@ public class CreatorStatistics implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String rank;
 
+	@JsonIgnore
 	private Supplier<String> _rankSupplier;
 
 	@Override

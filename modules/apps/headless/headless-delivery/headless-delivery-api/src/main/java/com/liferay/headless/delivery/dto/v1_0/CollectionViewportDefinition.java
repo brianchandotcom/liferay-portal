@@ -93,6 +93,7 @@ public class CollectionViewportDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer numberOfColumns;
 
+	@JsonIgnore
 	private Supplier<Integer> _numberOfColumnsSupplier;
 
 	@Override

@@ -94,6 +94,7 @@ public class Subscription implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object contentId;
 
+	@JsonIgnore
 	private Supplier<Object> _contentIdSupplier;
 
 	@Schema
@@ -134,6 +135,7 @@ public class Subscription implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String contentType;
 
+	@JsonIgnore
 	private Supplier<String> _contentTypeSupplier;
 
 	@Schema
@@ -174,6 +176,7 @@ public class Subscription implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
+	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
 	@Schema
@@ -214,6 +217,7 @@ public class Subscription implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
+	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
 	@Schema
@@ -254,6 +258,7 @@ public class Subscription implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String frequency;
 
+	@JsonIgnore
 	private Supplier<String> _frequencySupplier;
 
 	@Schema
@@ -292,6 +297,7 @@ public class Subscription implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema
@@ -332,6 +338,7 @@ public class Subscription implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long siteId;
 
+	@JsonIgnore
 	private Supplier<Long> _siteIdSupplier;
 
 	@Override

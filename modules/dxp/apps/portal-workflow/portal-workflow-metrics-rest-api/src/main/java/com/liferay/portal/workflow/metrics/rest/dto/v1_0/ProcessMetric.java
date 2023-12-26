@@ -91,6 +91,7 @@ public class ProcessMetric implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long instanceCount;
 
+	@JsonIgnore
 	private Supplier<Long> _instanceCountSupplier;
 
 	@Schema
@@ -131,6 +132,7 @@ public class ProcessMetric implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long onTimeInstanceCount;
 
+	@JsonIgnore
 	private Supplier<Long> _onTimeInstanceCountSupplier;
 
 	@Schema
@@ -171,6 +173,7 @@ public class ProcessMetric implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long overdueInstanceCount;
 
+	@JsonIgnore
 	private Supplier<Long> _overdueInstanceCountSupplier;
 
 	@Schema
@@ -212,6 +215,7 @@ public class ProcessMetric implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Process process;
 
+	@JsonIgnore
 	private Supplier<Process> _processSupplier;
 
 	@Schema
@@ -252,6 +256,7 @@ public class ProcessMetric implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long untrackedInstanceCount;
 
+	@JsonIgnore
 	private Supplier<Long> _untrackedInstanceCountSupplier;
 
 	@Override

@@ -93,6 +93,7 @@ public class PageSectionDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String backgroundColor;
 
+	@JsonIgnore
 	private Supplier<String> _backgroundColorSupplier;
 
 	@Schema(description = "The background fragment image of the page section.")
@@ -139,6 +140,7 @@ public class PageSectionDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentImage backgroundFragmentImage;
 
+	@JsonIgnore
 	private Supplier<FragmentImage> _backgroundFragmentImageSupplier;
 
 	@Schema(
@@ -187,6 +189,7 @@ public class PageSectionDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BackgroundImage backgroundImage;
 
+	@JsonIgnore
 	private Supplier<BackgroundImage> _backgroundImageSupplier;
 
 	@Schema(description = "Defines the content visibility of the container.")
@@ -229,6 +232,7 @@ public class PageSectionDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String contentVisibility;
 
+	@JsonIgnore
 	private Supplier<String> _contentVisibilitySupplier;
 
 	@Schema(
@@ -273,6 +277,7 @@ public class PageSectionDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] cssClasses;
 
+	@JsonIgnore
 	private Supplier<String[]> _cssClassesSupplier;
 
 	@Schema(description = "Custom CSS that is applied on the fragment.")
@@ -313,6 +318,7 @@ public class PageSectionDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String customCSS;
 
+	@JsonIgnore
 	private Supplier<String> _customCSSSupplier;
 
 	@Schema(description = "The custom CSS viewports of the page collection.")
@@ -357,6 +363,7 @@ public class PageSectionDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected CustomCSSViewport[] customCSSViewports;
 
+	@JsonIgnore
 	private Supplier<CustomCSSViewport[]> _customCSSViewportsSupplier;
 
 	@Schema(description = "The fragment link of the page section.")
@@ -398,6 +405,7 @@ public class PageSectionDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentLink fragmentLink;
 
+	@JsonIgnore
 	private Supplier<FragmentLink> _fragmentLinkSupplier;
 
 	@Schema(description = "The fragment style of the page section.")
@@ -439,6 +447,7 @@ public class PageSectionDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentStyle fragmentStyle;
 
+	@JsonIgnore
 	private Supplier<FragmentStyle> _fragmentStyleSupplier;
 
 	@Schema(description = "A list of fragment viewports of the page section.")
@@ -483,6 +492,7 @@ public class PageSectionDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentViewport[] fragmentViewports;
 
+	@JsonIgnore
 	private Supplier<FragmentViewport[]> _fragmentViewportsSupplier;
 
 	@Schema(description = "The page section's html properties")
@@ -525,6 +535,7 @@ public class PageSectionDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected HtmlProperties htmlProperties;
 
+	@JsonIgnore
 	private Supplier<HtmlProperties> _htmlPropertiesSupplier;
 
 	@Schema(
@@ -569,6 +580,7 @@ public class PageSectionDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean indexed;
 
+	@JsonIgnore
 	private Supplier<Boolean> _indexedSupplier;
 
 	@Schema(description = "the page section's layout.")
@@ -610,6 +622,7 @@ public class PageSectionDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Layout layout;
 
+	@JsonIgnore
 	private Supplier<Layout> _layoutSupplier;
 
 	@Schema(description = "The custom name of a Page section.")
@@ -648,6 +661,7 @@ public class PageSectionDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Override

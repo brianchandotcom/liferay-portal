@@ -98,6 +98,7 @@ public class OpenGraphSettingsMapping implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String descriptionMappingFieldKey;
 
+	@JsonIgnore
 	private Supplier<String> _descriptionMappingFieldKeySupplier;
 
 	@Schema(
@@ -143,6 +144,7 @@ public class OpenGraphSettingsMapping implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String imageAltMappingFieldKey;
 
+	@JsonIgnore
 	private Supplier<String> _imageAltMappingFieldKeySupplier;
 
 	@Schema(
@@ -187,6 +189,7 @@ public class OpenGraphSettingsMapping implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String imageMappingFieldKey;
 
+	@JsonIgnore
 	private Supplier<String> _imageMappingFieldKeySupplier;
 
 	@Schema(
@@ -231,6 +234,7 @@ public class OpenGraphSettingsMapping implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String titleMappingFieldKey;
 
+	@JsonIgnore
 	private Supplier<String> _titleMappingFieldKeySupplier;
 
 	@Override

@@ -91,6 +91,7 @@ public class User implements Serializable {
 	@NotEmpty
 	protected String email;
 
+	@JsonIgnore
 	private Supplier<String> _emailSupplier;
 
 	@Schema(example = "AB-34098-789-N")
@@ -131,6 +132,7 @@ public class User implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@Schema
@@ -171,6 +173,7 @@ public class User implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String firstName;
 
+	@JsonIgnore
 	private Supplier<String> _firstNameSupplier;
 
 	@DecimalMin("0")
@@ -210,6 +213,7 @@ public class User implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema
@@ -250,6 +254,7 @@ public class User implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String jobTitle;
 
+	@JsonIgnore
 	private Supplier<String> _jobTitleSupplier;
 
 	@Schema
@@ -290,6 +295,7 @@ public class User implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String lastName;
 
+	@JsonIgnore
 	private Supplier<String> _lastNameSupplier;
 
 	@Schema(example = "true")
@@ -328,6 +334,7 @@ public class User implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean male;
 
+	@JsonIgnore
 	private Supplier<Boolean> _maleSupplier;
 
 	@Schema
@@ -368,6 +375,7 @@ public class User implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String middleName;
 
+	@JsonIgnore
 	private Supplier<String> _middleNameSupplier;
 
 	@Schema
@@ -408,6 +416,7 @@ public class User implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] roles;
 
+	@JsonIgnore
 	private Supplier<String[]> _rolesSupplier;
 
 	@Override

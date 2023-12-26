@@ -90,6 +90,7 @@ public class Experience implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String key;
 
+	@JsonIgnore
 	private Supplier<String> _keySupplier;
 
 	@Schema(description = "the experience's name.")
@@ -128,6 +129,7 @@ public class Experience implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema(description = "the localized experience's names.")
@@ -170,6 +172,7 @@ public class Experience implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> name_i18n;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _name_i18nSupplier;
 
 	@Schema(description = "A list of segments the experience is used for.")
@@ -213,6 +216,7 @@ public class Experience implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Segment[] segments;
 
+	@JsonIgnore
 	private Supplier<Segment[]> _segmentsSupplier;
 
 	@Override

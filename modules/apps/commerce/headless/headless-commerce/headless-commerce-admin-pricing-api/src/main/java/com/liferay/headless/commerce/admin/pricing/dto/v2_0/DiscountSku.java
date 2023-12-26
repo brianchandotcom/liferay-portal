@@ -93,6 +93,7 @@ public class DiscountSku implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
+	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
 	@Schema(example = "DAB-34098-789-N")
@@ -137,6 +138,7 @@ public class DiscountSku implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String discountExternalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _discountExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
@@ -178,6 +180,7 @@ public class DiscountSku implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long discountId;
 
+	@JsonIgnore
 	private Supplier<Long> _discountIdSupplier;
 
 	@DecimalMin("0")
@@ -219,6 +222,7 @@ public class DiscountSku implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long discountSkuId;
 
+	@JsonIgnore
 	private Supplier<Long> _discountSkuIdSupplier;
 
 	@DecimalMin("0")
@@ -260,6 +264,7 @@ public class DiscountSku implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long productId;
 
+	@JsonIgnore
 	private Supplier<Long> _productIdSupplier;
 
 	@Schema(
@@ -304,6 +309,7 @@ public class DiscountSku implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> productName;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _productNameSupplier;
 
 	@Schema
@@ -343,6 +349,7 @@ public class DiscountSku implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Sku sku;
 
+	@JsonIgnore
 	private Supplier<Sku> _skuSupplier;
 
 	@Schema(example = "PAB-34098-789-N")
@@ -384,6 +391,7 @@ public class DiscountSku implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String skuExternalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _skuExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
@@ -424,6 +432,7 @@ public class DiscountSku implements Serializable {
 	@NotNull
 	protected Long skuId;
 
+	@JsonIgnore
 	private Supplier<Long> _skuIdSupplier;
 
 	@Schema(example = "m")
@@ -464,6 +473,7 @@ public class DiscountSku implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String unitOfMeasureKey;
 
+	@JsonIgnore
 	private Supplier<String> _unitOfMeasureKeySupplier;
 
 	@Override

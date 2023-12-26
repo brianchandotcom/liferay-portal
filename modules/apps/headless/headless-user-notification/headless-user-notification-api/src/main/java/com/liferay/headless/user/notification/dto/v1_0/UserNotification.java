@@ -101,6 +101,7 @@ public class UserNotification implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
+	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
 	@Schema(description = "The user notification's creation date.")
@@ -141,6 +142,7 @@ public class UserNotification implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
+	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
 	@Schema(description = "The user notification's identifier.")
@@ -179,6 +181,7 @@ public class UserNotification implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema(description = "The user notification's message.")
@@ -219,6 +222,7 @@ public class UserNotification implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String message;
 
+	@JsonIgnore
 	private Supplier<String> _messageSupplier;
 
 	@Schema(
@@ -261,6 +265,7 @@ public class UserNotification implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean read;
 
+	@JsonIgnore
 	private Supplier<Boolean> _readSupplier;
 
 	@Schema(description = "User notification's type.")
@@ -299,6 +304,7 @@ public class UserNotification implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer type;
 
+	@JsonIgnore
 	private Supplier<Integer> _typeSupplier;
 
 	@Override

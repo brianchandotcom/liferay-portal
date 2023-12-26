@@ -106,6 +106,7 @@ public class ContentTemplate implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
+	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
 	@Schema(
@@ -150,6 +151,7 @@ public class ContentTemplate implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String assetLibraryKey;
 
+	@JsonIgnore
 	private Supplier<String> _assetLibraryKeySupplier;
 
 	@Schema(
@@ -194,6 +196,7 @@ public class ContentTemplate implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String[] availableLanguages;
 
+	@JsonIgnore
 	private Supplier<String[]> _availableLanguagesSupplier;
 
 	@Schema(description = "The ID of the `ContentStructure`.")
@@ -235,6 +238,7 @@ public class ContentTemplate implements Serializable {
 	@NotNull
 	protected Long contentStructureId;
 
+	@JsonIgnore
 	private Supplier<Long> _contentStructureIdSupplier;
 
 	@Schema(description = "The content template's creator.")
@@ -276,6 +280,7 @@ public class ContentTemplate implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator creator;
 
+	@JsonIgnore
 	private Supplier<Creator> _creatorSupplier;
 
 	@Schema(description = "The content template's creation date.")
@@ -316,6 +321,7 @@ public class ContentTemplate implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
+	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
 	@Schema(description = "The last time the content template changed.")
@@ -356,6 +362,7 @@ public class ContentTemplate implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
+	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
 	@Schema(description = "the content template's description.")
@@ -396,6 +403,7 @@ public class ContentTemplate implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
+	@JsonIgnore
 	private Supplier<String> _descriptionSupplier;
 
 	@Schema(description = "the localized content template's descriptions.")
@@ -440,6 +448,7 @@ public class ContentTemplate implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> description_i18n;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _description_i18nSupplier;
 
 	@Schema(description = "The content template's ID.")
@@ -478,6 +487,7 @@ public class ContentTemplate implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String id;
 
+	@JsonIgnore
 	private Supplier<String> _idSupplier;
 
 	@Schema(description = "the content template's name.")
@@ -517,6 +527,7 @@ public class ContentTemplate implements Serializable {
 	@NotEmpty
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema(description = "the localized content template's name.")
@@ -559,6 +570,7 @@ public class ContentTemplate implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> name_i18n;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _name_i18nSupplier;
 
 	@Schema(description = "the content template's programming language.")
@@ -599,6 +611,7 @@ public class ContentTemplate implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String programmingLanguage;
 
+	@JsonIgnore
 	private Supplier<String> _programmingLanguageSupplier;
 
 	@Schema(
@@ -643,6 +656,7 @@ public class ContentTemplate implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long siteId;
 
+	@JsonIgnore
 	private Supplier<Long> _siteIdSupplier;
 
 	@Schema(description = "The content template's script.")
@@ -683,6 +697,7 @@ public class ContentTemplate implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String templateScript;
 
+	@JsonIgnore
 	private Supplier<String> _templateScriptSupplier;
 
 	@Override

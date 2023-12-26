@@ -97,6 +97,7 @@ public class PageFragmentInstanceDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] cssClasses;
 
+	@JsonIgnore
 	private Supplier<String[]> _cssClassesSupplier;
 
 	@Schema(description = "Custom CSS that is applied on the fragment.")
@@ -137,6 +138,7 @@ public class PageFragmentInstanceDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String customCSS;
 
+	@JsonIgnore
 	private Supplier<String> _customCSSSupplier;
 
 	@Schema(description = "The custom CSS viewports of the page collection.")
@@ -181,6 +183,7 @@ public class PageFragmentInstanceDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected CustomCSSViewport[] customCSSViewports;
 
+	@JsonIgnore
 	private Supplier<CustomCSSViewport[]> _customCSSViewportsSupplier;
 
 	@Schema(description = "The fragment of the page fragment instance.")
@@ -222,6 +225,7 @@ public class PageFragmentInstanceDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Fragment fragment;
 
+	@JsonIgnore
 	private Supplier<Fragment> _fragmentSupplier;
 
 	@Schema(description = "The page fragment instance's configuration.")
@@ -264,6 +268,7 @@ public class PageFragmentInstanceDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, Object> fragmentConfig;
 
+	@JsonIgnore
 	private Supplier<Map<String, Object>> _fragmentConfigSupplier;
 
 	@Schema(description = "The fragment fields of the page fragment instance.")
@@ -308,6 +313,7 @@ public class PageFragmentInstanceDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentField[] fragmentFields;
 
+	@JsonIgnore
 	private Supplier<FragmentField[]> _fragmentFieldsSupplier;
 
 	@Schema(description = "The fragment style of the page fragment instance.")
@@ -351,6 +357,7 @@ public class PageFragmentInstanceDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentStyle fragmentStyle;
 
+	@JsonIgnore
 	private Supplier<FragmentStyle> _fragmentStyleSupplier;
 
 	@Schema(
@@ -397,6 +404,7 @@ public class PageFragmentInstanceDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentViewport[] fragmentViewports;
 
+	@JsonIgnore
 	private Supplier<FragmentViewport[]> _fragmentViewportsSupplier;
 
 	@Schema(
@@ -441,6 +449,7 @@ public class PageFragmentInstanceDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean indexed;
 
+	@JsonIgnore
 	private Supplier<Boolean> _indexedSupplier;
 
 	@Schema(description = "The custom name of a Page Fragment Instance.")
@@ -479,6 +488,7 @@ public class PageFragmentInstanceDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema(
@@ -525,6 +535,7 @@ public class PageFragmentInstanceDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected WidgetInstance[] widgetInstances;
 
+	@JsonIgnore
 	private Supplier<WidgetInstance[]> _widgetInstancesSupplier;
 
 	@Override

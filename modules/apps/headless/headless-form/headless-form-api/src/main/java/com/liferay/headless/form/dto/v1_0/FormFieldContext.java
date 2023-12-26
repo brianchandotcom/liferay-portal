@@ -91,6 +91,7 @@ public class FormFieldContext implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean evaluable;
 
+	@JsonIgnore
 	private Supplier<Boolean> _evaluableSupplier;
 
 	@Schema
@@ -133,6 +134,7 @@ public class FormFieldContext implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FormFieldOption[] formFieldOptions;
 
+	@JsonIgnore
 	private Supplier<FormFieldOption[]> _formFieldOptionsSupplier;
 
 	@Schema
@@ -171,6 +173,7 @@ public class FormFieldContext implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema
@@ -211,6 +214,7 @@ public class FormFieldContext implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean readOnly;
 
+	@JsonIgnore
 	private Supplier<Boolean> _readOnlySupplier;
 
 	@Schema
@@ -251,6 +255,7 @@ public class FormFieldContext implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean required;
 
+	@JsonIgnore
 	private Supplier<Boolean> _requiredSupplier;
 
 	@Schema
@@ -291,6 +296,7 @@ public class FormFieldContext implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean valid;
 
+	@JsonIgnore
 	private Supplier<Boolean> _validSupplier;
 
 	@Schema
@@ -331,6 +337,7 @@ public class FormFieldContext implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String value;
 
+	@JsonIgnore
 	private Supplier<String> _valueSupplier;
 
 	@Schema
@@ -371,6 +378,7 @@ public class FormFieldContext implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean valueChanged;
 
+	@JsonIgnore
 	private Supplier<Boolean> _valueChangedSupplier;
 
 	@Schema
@@ -411,6 +419,7 @@ public class FormFieldContext implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean visible;
 
+	@JsonIgnore
 	private Supplier<Boolean> _visibleSupplier;
 
 	@Override

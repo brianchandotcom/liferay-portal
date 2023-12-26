@@ -91,6 +91,7 @@ public class WorkflowTaskAssignableUser implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Assignee[] assignableUsers;
 
+	@JsonIgnore
 	private Supplier<Assignee[]> _assignableUsersSupplier;
 
 	@Schema
@@ -131,6 +132,7 @@ public class WorkflowTaskAssignableUser implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long workflowTaskId;
 
+	@JsonIgnore
 	private Supplier<Long> _workflowTaskIdSupplier;
 
 	@Override

@@ -95,6 +95,7 @@ public class ShippingFixedOptionOrderType implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
+	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
 	@Schema
@@ -136,6 +137,7 @@ public class ShippingFixedOptionOrderType implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected OrderType orderType;
 
+	@JsonIgnore
 	private Supplier<OrderType> _orderTypeSupplier;
 
 	@Schema(example = "DAB-34098-789-N")
@@ -180,6 +182,7 @@ public class ShippingFixedOptionOrderType implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String orderTypeExternalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _orderTypeExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
@@ -222,6 +225,7 @@ public class ShippingFixedOptionOrderType implements Serializable {
 	@NotNull
 	protected Long orderTypeId;
 
+	@JsonIgnore
 	private Supplier<Long> _orderTypeIdSupplier;
 
 	@DecimalMin("0")
@@ -263,6 +267,7 @@ public class ShippingFixedOptionOrderType implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer priority;
 
+	@JsonIgnore
 	private Supplier<Integer> _prioritySupplier;
 
 	@DecimalMin("0")
@@ -305,6 +310,7 @@ public class ShippingFixedOptionOrderType implements Serializable {
 	@NotNull
 	protected Long shippingFixedOptionId;
 
+	@JsonIgnore
 	private Supplier<Long> _shippingFixedOptionIdSupplier;
 
 	@DecimalMin("0")
@@ -350,6 +356,7 @@ public class ShippingFixedOptionOrderType implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long shippingFixedOptionOrderTypeId;
 
+	@JsonIgnore
 	private Supplier<Long> _shippingFixedOptionOrderTypeIdSupplier;
 
 	@Override

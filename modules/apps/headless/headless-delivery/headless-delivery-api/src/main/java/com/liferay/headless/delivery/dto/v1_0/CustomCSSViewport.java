@@ -96,6 +96,7 @@ public class CustomCSSViewport implements Serializable {
 	@NotEmpty
 	protected String customCSS;
 
+	@JsonIgnore
 	private Supplier<String> _customCSSSupplier;
 
 	@Schema(description = "The custom CSS viewport's ID.")
@@ -135,6 +136,7 @@ public class CustomCSSViewport implements Serializable {
 	@NotEmpty
 	protected String id;
 
+	@JsonIgnore
 	private Supplier<String> _idSupplier;
 
 	@Override

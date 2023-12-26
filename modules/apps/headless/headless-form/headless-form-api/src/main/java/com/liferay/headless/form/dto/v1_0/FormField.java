@@ -90,6 +90,7 @@ public class FormField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean autocomplete;
 
+	@JsonIgnore
 	private Supplier<Boolean> _autocompleteSupplier;
 
 	@Schema
@@ -130,6 +131,7 @@ public class FormField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String dataSourceType;
 
+	@JsonIgnore
 	private Supplier<String> _dataSourceTypeSupplier;
 
 	@Schema
@@ -170,6 +172,7 @@ public class FormField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String dataType;
 
+	@JsonIgnore
 	private Supplier<String> _dataTypeSupplier;
 
 	@Schema
@@ -210,6 +213,7 @@ public class FormField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String displayStyle;
 
+	@JsonIgnore
 	private Supplier<String> _displayStyleSupplier;
 
 	@Schema
@@ -252,6 +256,7 @@ public class FormField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FormFieldOption[] formFieldOptions;
 
+	@JsonIgnore
 	private Supplier<FormFieldOption[]> _formFieldOptionsSupplier;
 
 	@Schema
@@ -291,6 +296,7 @@ public class FormField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Grid grid;
 
+	@JsonIgnore
 	private Supplier<Grid> _gridSupplier;
 
 	@Schema
@@ -331,6 +337,7 @@ public class FormField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean hasFormRules;
 
+	@JsonIgnore
 	private Supplier<Boolean> _hasFormRulesSupplier;
 
 	@Schema
@@ -369,6 +376,7 @@ public class FormField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema
@@ -409,6 +417,7 @@ public class FormField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean immutable;
 
+	@JsonIgnore
 	private Supplier<Boolean> _immutableSupplier;
 
 	@Schema
@@ -449,6 +458,7 @@ public class FormField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean inline;
 
+	@JsonIgnore
 	private Supplier<Boolean> _inlineSupplier;
 
 	@Schema
@@ -489,6 +499,7 @@ public class FormField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String inputControl;
 
+	@JsonIgnore
 	private Supplier<String> _inputControlSupplier;
 
 	@Schema
@@ -529,6 +540,7 @@ public class FormField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String label;
 
+	@JsonIgnore
 	private Supplier<String> _labelSupplier;
 
 	@Schema
@@ -571,6 +583,7 @@ public class FormField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> label_i18n;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _label_i18nSupplier;
 
 	@Schema
@@ -611,6 +624,7 @@ public class FormField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean localizable;
 
+	@JsonIgnore
 	private Supplier<Boolean> _localizableSupplier;
 
 	@Schema
@@ -651,6 +665,7 @@ public class FormField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean multiple;
 
+	@JsonIgnore
 	private Supplier<Boolean> _multipleSupplier;
 
 	@Schema
@@ -689,6 +704,7 @@ public class FormField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema
@@ -729,6 +745,7 @@ public class FormField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String placeholder;
 
+	@JsonIgnore
 	private Supplier<String> _placeholderSupplier;
 
 	@Schema
@@ -769,6 +786,7 @@ public class FormField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String predefinedValue;
 
+	@JsonIgnore
 	private Supplier<String> _predefinedValueSupplier;
 
 	@Schema
@@ -813,6 +831,7 @@ public class FormField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> predefinedValue_i18n;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _predefinedValue_i18nSupplier;
 
 	@Schema
@@ -853,6 +872,7 @@ public class FormField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean readOnly;
 
+	@JsonIgnore
 	private Supplier<Boolean> _readOnlySupplier;
 
 	@Schema
@@ -893,6 +913,7 @@ public class FormField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean repeatable;
 
+	@JsonIgnore
 	private Supplier<Boolean> _repeatableSupplier;
 
 	@Schema
@@ -933,6 +954,7 @@ public class FormField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean required;
 
+	@JsonIgnore
 	private Supplier<Boolean> _requiredSupplier;
 
 	@Schema
@@ -973,6 +995,7 @@ public class FormField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean showAsSwitcher;
 
+	@JsonIgnore
 	private Supplier<Boolean> _showAsSwitcherSupplier;
 
 	@Schema
@@ -1013,6 +1036,7 @@ public class FormField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean showLabel;
 
+	@JsonIgnore
 	private Supplier<Boolean> _showLabelSupplier;
 
 	@Schema
@@ -1053,6 +1077,7 @@ public class FormField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String style;
 
+	@JsonIgnore
 	private Supplier<String> _styleSupplier;
 
 	@Schema
@@ -1091,6 +1116,7 @@ public class FormField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String text;
 
+	@JsonIgnore
 	private Supplier<String> _textSupplier;
 
 	@Schema
@@ -1133,6 +1159,7 @@ public class FormField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> text_i18n;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _text_i18nSupplier;
 
 	@Schema
@@ -1173,6 +1200,7 @@ public class FormField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String tooltip;
 
+	@JsonIgnore
 	private Supplier<String> _tooltipSupplier;
 
 	@Schema(description = "https://www.schema.org/FormFieldValidation")
@@ -1214,6 +1242,7 @@ public class FormField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Validation validation;
 
+	@JsonIgnore
 	private Supplier<Validation> _validationSupplier;
 
 	@Override

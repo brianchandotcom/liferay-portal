@@ -98,6 +98,7 @@ public class ObjectEntry implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
+	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
 	@Schema(
@@ -143,6 +144,7 @@ public class ObjectEntry implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected AuditEvent[] auditEvents;
 
+	@JsonIgnore
 	private Supplier<AuditEvent[]> _auditEventsSupplier;
 
 	@Schema
@@ -184,6 +186,7 @@ public class ObjectEntry implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator creator;
 
+	@JsonIgnore
 	private Supplier<Creator> _creatorSupplier;
 
 	@Schema
@@ -224,6 +227,7 @@ public class ObjectEntry implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateCreated;
 
+	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
 	@Schema
@@ -264,6 +268,7 @@ public class ObjectEntry implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateModified;
 
+	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
 	@Schema
@@ -304,6 +309,7 @@ public class ObjectEntry implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@Schema
@@ -342,6 +348,7 @@ public class ObjectEntry implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema(description = "A list of keywords describing the object entry.")
@@ -384,6 +391,7 @@ public class ObjectEntry implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] keywords;
 
+	@JsonIgnore
 	private Supplier<String[]> _keywordsSupplier;
 
 	@JsonAnyGetter
@@ -428,6 +436,7 @@ public class ObjectEntry implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, Object> properties = new HashMap<>();
 
+	@JsonIgnore
 	private Supplier<Map<String, Object>> _propertiesSupplier;
 
 	@Schema
@@ -468,6 +477,7 @@ public class ObjectEntry implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String scopeKey;
 
+	@JsonIgnore
 	private Supplier<String> _scopeKeySupplier;
 
 	@Schema
@@ -509,6 +519,7 @@ public class ObjectEntry implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Status status;
 
+	@JsonIgnore
 	private Supplier<Status> _statusSupplier;
 
 	@Schema(description = "The categories associated with this object entry.")
@@ -555,6 +566,7 @@ public class ObjectEntry implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected TaxonomyCategoryBrief[] taxonomyCategoryBriefs;
 
+	@JsonIgnore
 	private Supplier<TaxonomyCategoryBrief[]> _taxonomyCategoryBriefsSupplier;
 
 	@Schema(
@@ -599,6 +611,7 @@ public class ObjectEntry implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected Long[] taxonomyCategoryIds;
 
+	@JsonIgnore
 	private Supplier<Long[]> _taxonomyCategoryIdsSupplier;
 
 	@Override

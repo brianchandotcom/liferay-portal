@@ -86,6 +86,7 @@ public class SelectionScope implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long folderId;
 
+	@JsonIgnore
 	private Supplier<Long> _folderIdSupplier;
 
 	@Schema
@@ -126,6 +127,7 @@ public class SelectionScope implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long repositoryId;
 
+	@JsonIgnore
 	private Supplier<Long> _repositoryIdSupplier;
 
 	@Schema
@@ -166,6 +168,7 @@ public class SelectionScope implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean selectAll;
 
+	@JsonIgnore
 	private Supplier<Boolean> _selectAllSupplier;
 
 	@Override

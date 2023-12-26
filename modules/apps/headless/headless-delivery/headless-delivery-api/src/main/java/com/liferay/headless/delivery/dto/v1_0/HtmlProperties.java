@@ -104,6 +104,7 @@ public class HtmlProperties implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected HtmlTag htmlTag;
 
+	@JsonIgnore
 	private Supplier<HtmlTag> _htmlTagSupplier;
 
 	@Override

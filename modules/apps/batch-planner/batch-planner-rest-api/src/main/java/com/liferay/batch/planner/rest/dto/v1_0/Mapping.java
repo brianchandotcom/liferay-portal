@@ -86,6 +86,7 @@ public class Mapping implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalFieldName;
 
+	@JsonIgnore
 	private Supplier<String> _externalFieldNameSupplier;
 
 	@Schema
@@ -126,6 +127,7 @@ public class Mapping implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalFieldType;
 
+	@JsonIgnore
 	private Supplier<String> _externalFieldTypeSupplier;
 
 	@Schema
@@ -164,6 +166,7 @@ public class Mapping implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema
@@ -204,6 +207,7 @@ public class Mapping implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String internalFieldName;
 
+	@JsonIgnore
 	private Supplier<String> _internalFieldNameSupplier;
 
 	@Schema
@@ -244,6 +248,7 @@ public class Mapping implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String internalFieldType;
 
+	@JsonIgnore
 	private Supplier<String> _internalFieldTypeSupplier;
 
 	@Schema
@@ -284,6 +289,7 @@ public class Mapping implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long planId;
 
+	@JsonIgnore
 	private Supplier<Long> _planIdSupplier;
 
 	@Schema
@@ -324,6 +330,7 @@ public class Mapping implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String script;
 
+	@JsonIgnore
 	private Supplier<String> _scriptSupplier;
 
 	@Override

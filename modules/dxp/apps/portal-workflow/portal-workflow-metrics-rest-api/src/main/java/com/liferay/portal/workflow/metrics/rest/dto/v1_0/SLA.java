@@ -92,6 +92,7 @@ public class SLA implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String calendarKey;
 
+	@JsonIgnore
 	private Supplier<String> _calendarKeySupplier;
 
 	@Schema
@@ -132,6 +133,7 @@ public class SLA implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateModified;
 
+	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
 	@Schema
@@ -172,6 +174,7 @@ public class SLA implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
+	@JsonIgnore
 	private Supplier<String> _descriptionSupplier;
 
 	@Schema
@@ -212,6 +215,7 @@ public class SLA implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long duration;
 
+	@JsonIgnore
 	private Supplier<Long> _durationSupplier;
 
 	@Schema
@@ -250,6 +254,7 @@ public class SLA implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema
@@ -288,6 +293,7 @@ public class SLA implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema
@@ -329,6 +335,7 @@ public class SLA implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected PauseNodeKeys pauseNodeKeys;
 
+	@JsonIgnore
 	private Supplier<PauseNodeKeys> _pauseNodeKeysSupplier;
 
 	@Schema
@@ -369,6 +376,7 @@ public class SLA implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long processId;
 
+	@JsonIgnore
 	private Supplier<Long> _processIdSupplier;
 
 	@Schema
@@ -410,6 +418,7 @@ public class SLA implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected StartNodeKeys startNodeKeys;
 
+	@JsonIgnore
 	private Supplier<StartNodeKeys> _startNodeKeysSupplier;
 
 	@Schema
@@ -450,6 +459,7 @@ public class SLA implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer status;
 
+	@JsonIgnore
 	private Supplier<Integer> _statusSupplier;
 
 	@Schema
@@ -491,6 +501,7 @@ public class SLA implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected StopNodeKeys stopNodeKeys;
 
+	@JsonIgnore
 	private Supplier<StopNodeKeys> _stopNodeKeysSupplier;
 
 	@Override

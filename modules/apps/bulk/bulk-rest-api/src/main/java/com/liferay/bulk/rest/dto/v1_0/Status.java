@@ -86,6 +86,7 @@ public class Status implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean actionInProgress;
 
+	@JsonIgnore
 	private Supplier<Boolean> _actionInProgressSupplier;
 
 	@Override

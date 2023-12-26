@@ -91,6 +91,7 @@ public class Mapping implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String fieldKey;
 
+	@JsonIgnore
 	private Supplier<String> _fieldKeySupplier;
 
 	@Schema(description = "The mapping's item reference.")
@@ -132,6 +133,7 @@ public class Mapping implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object itemReference;
 
+	@JsonIgnore
 	private Supplier<Object> _itemReferenceSupplier;
 
 	@Override

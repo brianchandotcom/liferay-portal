@@ -89,6 +89,7 @@ public class PageRuleAction implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String action;
 
+	@JsonIgnore
 	private Supplier<String> _actionSupplier;
 
 	@Schema(description = "The page rule action's ID.")
@@ -127,6 +128,7 @@ public class PageRuleAction implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String id;
 
+	@JsonIgnore
 	private Supplier<String> _idSupplier;
 
 	@Schema(description = "The page rule condition's item ID.")
@@ -167,6 +169,7 @@ public class PageRuleAction implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String itemId;
 
+	@JsonIgnore
 	private Supplier<String> _itemIdSupplier;
 
 	@Schema(description = "The page rule action's type.")
@@ -205,6 +208,7 @@ public class PageRuleAction implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String type;
 
+	@JsonIgnore
 	private Supplier<String> _typeSupplier;
 
 	@Override

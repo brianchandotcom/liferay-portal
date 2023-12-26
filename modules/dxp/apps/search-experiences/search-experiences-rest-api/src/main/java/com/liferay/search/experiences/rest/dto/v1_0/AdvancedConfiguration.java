@@ -90,6 +90,7 @@ public class AdvancedConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Collapse collapse;
 
+	@JsonIgnore
 	private Supplier<Collapse> _collapseSupplier;
 
 	@Schema
@@ -131,6 +132,7 @@ public class AdvancedConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Source source;
 
+	@JsonIgnore
 	private Supplier<Source> _sourceSupplier;
 
 	@Schema
@@ -171,6 +173,7 @@ public class AdvancedConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] stored_fields;
 
+	@JsonIgnore
 	private Supplier<String[]> _stored_fieldsSupplier;
 
 	@Override

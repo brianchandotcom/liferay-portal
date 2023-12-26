@@ -91,6 +91,7 @@ public class Site implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] availableLanguages;
 
+	@JsonIgnore
 	private Supplier<String[]> _availableLanguagesSupplier;
 
 	@Schema
@@ -132,6 +133,7 @@ public class Site implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Creator creator;
 
+	@JsonIgnore
 	private Supplier<Creator> _creatorSupplier;
 
 	@Schema
@@ -172,6 +174,7 @@ public class Site implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
+	@JsonIgnore
 	private Supplier<String> _descriptionSupplier;
 
 	@Schema
@@ -214,6 +217,7 @@ public class Site implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> description_i18n;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _description_i18nSupplier;
 
 	@Schema
@@ -254,6 +258,7 @@ public class Site implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String descriptiveName;
 
+	@JsonIgnore
 	private Supplier<String> _descriptiveNameSupplier;
 
 	@Schema
@@ -298,6 +303,7 @@ public class Site implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> descriptiveName_i18n;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _descriptiveName_i18nSupplier;
 
 	@Schema
@@ -338,6 +344,7 @@ public class Site implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String friendlyUrlPath;
 
+	@JsonIgnore
 	private Supplier<String> _friendlyUrlPathSupplier;
 
 	@Schema
@@ -376,6 +383,7 @@ public class Site implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema
@@ -414,6 +422,7 @@ public class Site implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String key;
 
+	@JsonIgnore
 	private Supplier<String> _keySupplier;
 
 	@Schema
@@ -454,6 +463,7 @@ public class Site implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String membershipType;
 
+	@JsonIgnore
 	private Supplier<String> _membershipTypeSupplier;
 
 	@Schema
@@ -492,6 +502,7 @@ public class Site implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema
@@ -534,6 +545,7 @@ public class Site implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> name_i18n;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _name_i18nSupplier;
 
 	@Schema
@@ -574,6 +586,7 @@ public class Site implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long parentSiteId;
 
+	@JsonIgnore
 	private Supplier<Long> _parentSiteIdSupplier;
 
 	@Schema
@@ -615,6 +628,7 @@ public class Site implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Site[] sites;
 
+	@JsonIgnore
 	private Supplier<Site[]> _sitesSupplier;
 
 	@Override

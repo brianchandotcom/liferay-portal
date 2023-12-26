@@ -86,6 +86,7 @@ public class ObjectStateFlow implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema
@@ -127,6 +128,7 @@ public class ObjectStateFlow implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ObjectState[] objectStates;
 
+	@JsonIgnore
 	private Supplier<ObjectState[]> _objectStatesSupplier;
 
 	@Override

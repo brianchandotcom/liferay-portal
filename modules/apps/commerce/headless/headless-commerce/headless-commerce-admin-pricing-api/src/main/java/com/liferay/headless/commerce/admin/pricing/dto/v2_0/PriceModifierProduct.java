@@ -94,6 +94,7 @@ public class PriceModifierProduct implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
+	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
 	@Schema(example = "DAB-34098-789-N")
@@ -139,6 +140,7 @@ public class PriceModifierProduct implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String priceModifierExternalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _priceModifierExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
@@ -181,6 +183,7 @@ public class PriceModifierProduct implements Serializable {
 	@NotNull
 	protected Long priceModifierId;
 
+	@JsonIgnore
 	private Supplier<Long> _priceModifierIdSupplier;
 
 	@DecimalMin("0")
@@ -222,6 +225,7 @@ public class PriceModifierProduct implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long priceModifierProductId;
 
+	@JsonIgnore
 	private Supplier<Long> _priceModifierProductIdSupplier;
 
 	@Schema
@@ -263,6 +267,7 @@ public class PriceModifierProduct implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Product product;
 
+	@JsonIgnore
 	private Supplier<Product> _productSupplier;
 
 	@Schema(example = "PAB-34098-789-N")
@@ -307,6 +312,7 @@ public class PriceModifierProduct implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String productExternalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _productExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
@@ -349,6 +355,7 @@ public class PriceModifierProduct implements Serializable {
 	@NotNull
 	protected Long productId;
 
+	@JsonIgnore
 	private Supplier<Long> _productIdSupplier;
 
 	@Override

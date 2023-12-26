@@ -97,6 +97,7 @@ public class FragmentLinkValue implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object href;
 
+	@JsonIgnore
 	private Supplier<Object> _hrefSupplier;
 
 	@Schema(
@@ -153,6 +154,7 @@ public class FragmentLinkValue implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Target target;
 
+	@JsonIgnore
 	private Supplier<Target> _targetSupplier;
 
 	@Override

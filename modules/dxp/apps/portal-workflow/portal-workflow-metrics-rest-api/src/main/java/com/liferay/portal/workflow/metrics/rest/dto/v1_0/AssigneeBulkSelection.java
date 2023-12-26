@@ -90,6 +90,7 @@ public class AssigneeBulkSelection implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long[] instanceIds;
 
+	@JsonIgnore
 	private Supplier<Long[]> _instanceIdsSupplier;
 
 	@Override

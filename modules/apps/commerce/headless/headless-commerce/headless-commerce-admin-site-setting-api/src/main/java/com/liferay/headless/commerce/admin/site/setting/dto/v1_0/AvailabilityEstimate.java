@@ -93,6 +93,7 @@ public class AvailabilityEstimate implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long groupId;
 
+	@JsonIgnore
 	private Supplier<Long> _groupIdSupplier;
 
 	@DecimalMin("0")
@@ -132,6 +133,7 @@ public class AvailabilityEstimate implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@DecimalMin("0")
@@ -173,6 +175,7 @@ public class AvailabilityEstimate implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double priority;
 
+	@JsonIgnore
 	private Supplier<Double> _prioritySupplier;
 
 	@Schema(example = "{en_US=Croatia, hr_HR=Hrvatska, hu_HU=Horvatorszag}")
@@ -215,6 +218,7 @@ public class AvailabilityEstimate implements Serializable {
 	@NotNull
 	protected Map<String, String> title;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _titleSupplier;
 
 	@Override

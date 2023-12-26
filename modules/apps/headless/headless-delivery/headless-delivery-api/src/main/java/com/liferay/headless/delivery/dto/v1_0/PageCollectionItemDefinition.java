@@ -95,6 +95,7 @@ public class PageCollectionItemDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object collectionItemConfig;
 
+	@JsonIgnore
 	private Supplier<Object> _collectionItemConfigSupplier;
 
 	@Override

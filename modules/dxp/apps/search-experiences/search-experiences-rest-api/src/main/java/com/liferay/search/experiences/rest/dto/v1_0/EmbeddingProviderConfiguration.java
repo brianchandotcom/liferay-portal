@@ -92,6 +92,7 @@ public class EmbeddingProviderConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object attributes;
 
+	@JsonIgnore
 	private Supplier<Object> _attributesSupplier;
 
 	@Schema
@@ -136,6 +137,7 @@ public class EmbeddingProviderConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer embeddingVectorDimensions;
 
+	@JsonIgnore
 	private Supplier<Integer> _embeddingVectorDimensionsSupplier;
 
 	@Schema
@@ -176,6 +178,7 @@ public class EmbeddingProviderConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] languageIds;
 
+	@JsonIgnore
 	private Supplier<String[]> _languageIdsSupplier;
 
 	@Schema
@@ -216,6 +219,7 @@ public class EmbeddingProviderConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] modelClassNames;
 
+	@JsonIgnore
 	private Supplier<String[]> _modelClassNamesSupplier;
 
 	@Schema
@@ -256,6 +260,7 @@ public class EmbeddingProviderConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String providerName;
 
+	@JsonIgnore
 	private Supplier<String> _providerNameSupplier;
 
 	@Override

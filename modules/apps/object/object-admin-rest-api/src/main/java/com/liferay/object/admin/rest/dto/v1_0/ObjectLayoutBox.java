@@ -90,6 +90,7 @@ public class ObjectLayoutBox implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean collapsable;
 
+	@JsonIgnore
 	private Supplier<Boolean> _collapsableSupplier;
 
 	@Schema
@@ -128,6 +129,7 @@ public class ObjectLayoutBox implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema
@@ -169,6 +171,7 @@ public class ObjectLayoutBox implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> name;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _nameSupplier;
 
 	@Schema
@@ -211,6 +214,7 @@ public class ObjectLayoutBox implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ObjectLayoutRow[] objectLayoutRows;
 
+	@JsonIgnore
 	private Supplier<ObjectLayoutRow[]> _objectLayoutRowsSupplier;
 
 	@Schema
@@ -251,6 +255,7 @@ public class ObjectLayoutBox implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer priority;
 
+	@JsonIgnore
 	private Supplier<Integer> _prioritySupplier;
 
 	@Schema
@@ -301,6 +306,7 @@ public class ObjectLayoutBox implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Type type;
 
+	@JsonIgnore
 	private Supplier<Type> _typeSupplier;
 
 	@Override

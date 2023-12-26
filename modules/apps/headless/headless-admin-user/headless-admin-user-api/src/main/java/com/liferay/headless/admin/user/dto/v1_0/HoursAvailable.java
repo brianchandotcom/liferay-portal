@@ -93,6 +93,7 @@ public class HoursAvailable implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String closes;
 
+	@JsonIgnore
 	private Supplier<String> _closesSupplier;
 
 	@Schema(description = "The day of the week.")
@@ -133,6 +134,7 @@ public class HoursAvailable implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String dayOfWeek;
 
+	@JsonIgnore
 	private Supplier<String> _dayOfWeekSupplier;
 
 	@Schema(
@@ -177,6 +179,7 @@ public class HoursAvailable implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String opens;
 
+	@JsonIgnore
 	private Supplier<String> _opensSupplier;
 
 	@Override

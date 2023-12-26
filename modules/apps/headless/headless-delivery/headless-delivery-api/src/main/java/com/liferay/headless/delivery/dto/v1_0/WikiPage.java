@@ -105,6 +105,7 @@ public class WikiPage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
+	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
 	@Schema(description = "The blog post's average rating.")
@@ -147,6 +148,7 @@ public class WikiPage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected AggregateRating aggregateRating;
 
+	@JsonIgnore
 	private Supplier<AggregateRating> _aggregateRatingSupplier;
 
 	@Schema(description = "The wiki page's content.")
@@ -187,6 +189,7 @@ public class WikiPage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String content;
 
+	@JsonIgnore
 	private Supplier<String> _contentSupplier;
 
 	@Schema(description = "The wiki page's creator.")
@@ -228,6 +231,7 @@ public class WikiPage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator creator;
 
+	@JsonIgnore
 	private Supplier<Creator> _creatorSupplier;
 
 	@Schema(
@@ -273,6 +277,7 @@ public class WikiPage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected CustomField[] customFields;
 
+	@JsonIgnore
 	private Supplier<CustomField[]> _customFieldsSupplier;
 
 	@Schema(description = "The date the wiki page was created.")
@@ -313,6 +318,7 @@ public class WikiPage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
+	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
 	@Schema(
@@ -357,6 +363,7 @@ public class WikiPage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
+	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
 	@Schema(description = "The wiki page's description.")
@@ -397,6 +404,7 @@ public class WikiPage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
+	@JsonIgnore
 	private Supplier<String> _descriptionSupplier;
 
 	@Schema(
@@ -442,6 +450,7 @@ public class WikiPage implements Serializable {
 	@NotEmpty
 	protected String encodingFormat;
 
+	@JsonIgnore
 	private Supplier<String> _encodingFormatSupplier;
 
 	@Schema(description = "The wiki page's external reference code.")
@@ -482,6 +491,7 @@ public class WikiPage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@Schema(description = "The wiki page's main title.")
@@ -523,6 +533,7 @@ public class WikiPage implements Serializable {
 	@NotEmpty
 	protected String headline;
 
+	@JsonIgnore
 	private Supplier<String> _headlineSupplier;
 
 	@Schema(description = "The wiki page's ID.")
@@ -561,6 +572,7 @@ public class WikiPage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema(description = "A list of keywords describing the blog post.")
@@ -601,6 +613,7 @@ public class WikiPage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] keywords;
 
+	@JsonIgnore
 	private Supplier<String[]> _keywordsSupplier;
 
 	@Schema(description = "The wiki page's number attachments.")
@@ -641,6 +654,7 @@ public class WikiPage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer numberOfAttachments;
 
+	@JsonIgnore
 	private Supplier<Integer> _numberOfAttachmentsSupplier;
 
 	@Schema(description = "The number of child wiki page on this wiki page.")
@@ -683,6 +697,7 @@ public class WikiPage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer numberOfWikiPages;
 
+	@JsonIgnore
 	private Supplier<Integer> _numberOfWikiPagesSupplier;
 
 	@Schema(description = "The ID of the wiki page's parent, if it exists.")
@@ -725,6 +740,7 @@ public class WikiPage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long parentWikiPageId;
 
+	@JsonIgnore
 	private Supplier<Long> _parentWikiPageIdSupplier;
 
 	@Schema(description = "A list of related contents to this wiki page.")
@@ -767,6 +783,7 @@ public class WikiPage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected RelatedContent[] relatedContents;
 
+	@JsonIgnore
 	private Supplier<RelatedContent[]> _relatedContentsSupplier;
 
 	@Schema(
@@ -811,6 +828,7 @@ public class WikiPage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long siteId;
 
+	@JsonIgnore
 	private Supplier<Long> _siteIdSupplier;
 
 	@Schema(
@@ -855,6 +873,7 @@ public class WikiPage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean subscribed;
 
+	@JsonIgnore
 	private Supplier<Boolean> _subscribedSupplier;
 
 	@Schema(description = "The categories associated with this wiki page.")
@@ -901,6 +920,7 @@ public class WikiPage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected TaxonomyCategoryBrief[] taxonomyCategoryBriefs;
 
+	@JsonIgnore
 	private Supplier<TaxonomyCategoryBrief[]> _taxonomyCategoryBriefsSupplier;
 
 	@Schema(
@@ -945,6 +965,7 @@ public class WikiPage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected Long[] taxonomyCategoryIds;
 
+	@JsonIgnore
 	private Supplier<Long[]> _taxonomyCategoryIdsSupplier;
 
 	@Schema(
@@ -1001,6 +1022,7 @@ public class WikiPage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected ViewableBy viewableBy;
 
+	@JsonIgnore
 	private Supplier<ViewableBy> _viewableBySupplier;
 
 	@Schema(
@@ -1045,6 +1067,7 @@ public class WikiPage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long wikiNodeId;
 
+	@JsonIgnore
 	private Supplier<Long> _wikiNodeIdSupplier;
 
 	@Override

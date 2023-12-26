@@ -90,6 +90,7 @@ public class RowViewportDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer modulesPerRow;
 
+	@JsonIgnore
 	private Supplier<Integer> _modulesPerRowSupplier;
 
 	@Schema(
@@ -134,6 +135,7 @@ public class RowViewportDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean reverseOrder;
 
+	@JsonIgnore
 	private Supplier<Boolean> _reverseOrderSupplier;
 
 	@Schema(description = "The vertical aligment property of the row viewport.")
@@ -176,6 +178,7 @@ public class RowViewportDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String verticalAlignment;
 
+	@JsonIgnore
 	private Supplier<String> _verticalAlignmentSupplier;
 
 	@Override

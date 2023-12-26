@@ -87,6 +87,7 @@ public class AuditFieldChange implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema
@@ -128,6 +129,7 @@ public class AuditFieldChange implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object newValue;
 
+	@JsonIgnore
 	private Supplier<Object> _newValueSupplier;
 
 	@Schema
@@ -169,6 +171,7 @@ public class AuditFieldChange implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object oldValue;
 
+	@JsonIgnore
 	private Supplier<Object> _oldValueSupplier;
 
 	@Override

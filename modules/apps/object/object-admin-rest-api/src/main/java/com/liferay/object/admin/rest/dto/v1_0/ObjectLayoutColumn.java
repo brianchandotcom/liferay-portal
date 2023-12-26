@@ -84,6 +84,7 @@ public class ObjectLayoutColumn implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema
@@ -124,6 +125,7 @@ public class ObjectLayoutColumn implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String objectFieldName;
 
+	@JsonIgnore
 	private Supplier<String> _objectFieldNameSupplier;
 
 	@Schema
@@ -164,6 +166,7 @@ public class ObjectLayoutColumn implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer priority;
 
+	@JsonIgnore
 	private Supplier<Integer> _prioritySupplier;
 
 	@Schema
@@ -202,6 +205,7 @@ public class ObjectLayoutColumn implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer size;
 
+	@JsonIgnore
 	private Supplier<Integer> _sizeSupplier;
 
 	@Override

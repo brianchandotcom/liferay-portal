@@ -89,6 +89,7 @@ public class QueryEntry implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Clause[] clauses;
 
+	@JsonIgnore
 	private Supplier<Clause[]> _clausesSupplier;
 
 	@Schema
@@ -130,6 +131,7 @@ public class QueryEntry implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Condition condition;
 
+	@JsonIgnore
 	private Supplier<Condition> _conditionSupplier;
 
 	@Schema
@@ -170,6 +172,7 @@ public class QueryEntry implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean enabled;
 
+	@JsonIgnore
 	private Supplier<Boolean> _enabledSupplier;
 
 	@Schema
@@ -211,6 +214,7 @@ public class QueryEntry implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Clause[] postFilterClauses;
 
+	@JsonIgnore
 	private Supplier<Clause[]> _postFilterClausesSupplier;
 
 	@Schema
@@ -252,6 +256,7 @@ public class QueryEntry implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Rescore[] rescores;
 
+	@JsonIgnore
 	private Supplier<Rescore[]> _rescoresSupplier;
 
 	@Override

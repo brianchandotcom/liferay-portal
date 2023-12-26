@@ -84,6 +84,7 @@ public class ContactUserGroup implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema
@@ -122,6 +123,7 @@ public class ContactUserGroup implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema
@@ -162,6 +164,7 @@ public class ContactUserGroup implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean selected;
 
+	@JsonIgnore
 	private Supplier<Boolean> _selectedSupplier;
 
 	@Override

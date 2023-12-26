@@ -94,6 +94,7 @@ public class ClientExtension implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> clientExtensionConfig;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _clientExtensionConfigSupplier;
 
 	@Schema(description = "The client extension's external reference code.")
@@ -136,6 +137,7 @@ public class ClientExtension implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@Schema(description = "The client extension's name.")
@@ -174,6 +176,7 @@ public class ClientExtension implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Override

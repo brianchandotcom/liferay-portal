@@ -88,6 +88,7 @@ public class Plan implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean active;
 
+	@JsonIgnore
 	private Supplier<Boolean> _activeSupplier;
 
 	@Schema
@@ -128,6 +129,7 @@ public class Plan implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean export;
 
+	@JsonIgnore
 	private Supplier<Boolean> _exportSupplier;
 
 	@Schema
@@ -168,6 +170,7 @@ public class Plan implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalType;
 
+	@JsonIgnore
 	private Supplier<String> _externalTypeSupplier;
 
 	@Schema
@@ -208,6 +211,7 @@ public class Plan implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalURL;
 
+	@JsonIgnore
 	private Supplier<String> _externalURLSupplier;
 
 	@Schema
@@ -246,6 +250,7 @@ public class Plan implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema
@@ -286,6 +291,7 @@ public class Plan implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String internalClassName;
 
+	@JsonIgnore
 	private Supplier<String> _internalClassNameSupplier;
 
 	@Schema
@@ -326,6 +332,7 @@ public class Plan implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String internalClassNameKey;
 
+	@JsonIgnore
 	private Supplier<String> _internalClassNameKeySupplier;
 
 	@Schema
@@ -367,6 +374,7 @@ public class Plan implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Mapping[] mappings;
 
+	@JsonIgnore
 	private Supplier<Mapping[]> _mappingsSupplier;
 
 	@Schema
@@ -405,6 +413,7 @@ public class Plan implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema
@@ -446,6 +455,7 @@ public class Plan implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Policy[] policies;
 
+	@JsonIgnore
 	private Supplier<Policy[]> _policiesSupplier;
 
 	@Schema
@@ -484,6 +494,7 @@ public class Plan implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer size;
 
+	@JsonIgnore
 	private Supplier<Integer> _sizeSupplier;
 
 	@Schema
@@ -524,6 +535,7 @@ public class Plan implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer status;
 
+	@JsonIgnore
 	private Supplier<Integer> _statusSupplier;
 
 	@Schema
@@ -564,6 +576,7 @@ public class Plan implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String taskItemDelegateName;
 
+	@JsonIgnore
 	private Supplier<String> _taskItemDelegateNameSupplier;
 
 	@Schema
@@ -604,6 +617,7 @@ public class Plan implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean template;
 
+	@JsonIgnore
 	private Supplier<Boolean> _templateSupplier;
 
 	@Schema
@@ -644,6 +658,7 @@ public class Plan implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer total;
 
+	@JsonIgnore
 	private Supplier<Integer> _totalSupplier;
 
 	@Override

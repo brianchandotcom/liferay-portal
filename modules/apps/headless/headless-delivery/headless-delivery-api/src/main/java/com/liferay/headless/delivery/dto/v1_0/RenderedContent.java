@@ -95,6 +95,7 @@ public class RenderedContent implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String contentTemplateId;
 
+	@JsonIgnore
 	private Supplier<String> _contentTemplateIdSupplier;
 
 	@Schema(
@@ -139,6 +140,7 @@ public class RenderedContent implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String contentTemplateName;
 
+	@JsonIgnore
 	private Supplier<String> _contentTemplateNameSupplier;
 
 	@Schema(
@@ -187,6 +189,7 @@ public class RenderedContent implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> contentTemplateName_i18n;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _contentTemplateName_i18nSupplier;
 
 	@Schema(
@@ -231,6 +234,7 @@ public class RenderedContent implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean markedAsDefault;
 
+	@JsonIgnore
 	private Supplier<Boolean> _markedAsDefaultSupplier;
 
 	@Schema(description = "An absolute URL to the rendered content.")
@@ -271,6 +275,7 @@ public class RenderedContent implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String renderedContentURL;
 
+	@JsonIgnore
 	private Supplier<String> _renderedContentURLSupplier;
 
 	@Schema(
@@ -315,6 +320,7 @@ public class RenderedContent implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String renderedContentValue;
 
+	@JsonIgnore
 	private Supplier<String> _renderedContentValueSupplier;
 
 	@Override

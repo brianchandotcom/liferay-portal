@@ -88,6 +88,7 @@ public class Pin implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema
@@ -129,6 +130,7 @@ public class Pin implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected MappedProduct mappedProduct;
 
+	@JsonIgnore
 	private Supplier<MappedProduct> _mappedProductSupplier;
 
 	@Schema(example = "33.54")
@@ -169,6 +171,7 @@ public class Pin implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double positionX;
 
+	@JsonIgnore
 	private Supplier<Double> _positionXSupplier;
 
 	@Schema(example = "33.54")
@@ -209,6 +212,7 @@ public class Pin implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double positionY;
 
+	@JsonIgnore
 	private Supplier<Double> _positionYSupplier;
 
 	@Schema(example = "1")
@@ -249,6 +253,7 @@ public class Pin implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String sequence;
 
+	@JsonIgnore
 	private Supplier<String> _sequenceSupplier;
 
 	@Override

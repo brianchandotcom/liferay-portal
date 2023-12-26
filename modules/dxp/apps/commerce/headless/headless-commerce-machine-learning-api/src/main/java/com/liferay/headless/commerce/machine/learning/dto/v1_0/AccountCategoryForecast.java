@@ -93,6 +93,7 @@ public class AccountCategoryForecast implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long account;
 
+	@JsonIgnore
 	private Supplier<Long> _accountSupplier;
 
 	@Schema
@@ -134,6 +135,7 @@ public class AccountCategoryForecast implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Float actual;
 
+	@JsonIgnore
 	private Supplier<Float> _actualSupplier;
 
 	@Schema
@@ -174,6 +176,7 @@ public class AccountCategoryForecast implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long category;
 
+	@JsonIgnore
 	private Supplier<Long> _categorySupplier;
 
 	@Schema
@@ -214,6 +217,7 @@ public class AccountCategoryForecast implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String categoryTitle;
 
+	@JsonIgnore
 	private Supplier<String> _categoryTitleSupplier;
 
 	@Schema
@@ -255,6 +259,7 @@ public class AccountCategoryForecast implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Float forecast;
 
+	@JsonIgnore
 	private Supplier<Float> _forecastSupplier;
 
 	@Schema
@@ -296,6 +301,7 @@ public class AccountCategoryForecast implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Float forecastLowerBound;
 
+	@JsonIgnore
 	private Supplier<Float> _forecastLowerBoundSupplier;
 
 	@Schema
@@ -337,6 +343,7 @@ public class AccountCategoryForecast implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Float forecastUpperBound;
 
+	@JsonIgnore
 	private Supplier<Float> _forecastUpperBoundSupplier;
 
 	@Schema
@@ -377,6 +384,7 @@ public class AccountCategoryForecast implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date timestamp;
 
+	@JsonIgnore
 	private Supplier<Date> _timestampSupplier;
 
 	@Schema
@@ -415,6 +423,7 @@ public class AccountCategoryForecast implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String unit;
 
+	@JsonIgnore
 	private Supplier<String> _unitSupplier;
 
 	@Override

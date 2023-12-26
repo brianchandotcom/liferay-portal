@@ -94,6 +94,7 @@ public class DisplayPageTemplate implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ContentSubtype contentSubtype;
 
+	@JsonIgnore
 	private Supplier<ContentSubtype> _contentSubtypeSupplier;
 
 	@Schema(description = "The type of content.")
@@ -135,6 +136,7 @@ public class DisplayPageTemplate implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ContentType contentType;
 
+	@JsonIgnore
 	private Supplier<ContentType> _contentTypeSupplier;
 
 	@Schema(
@@ -179,6 +181,7 @@ public class DisplayPageTemplate implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean defaultTemplate;
 
+	@JsonIgnore
 	private Supplier<Boolean> _defaultTemplateSupplier;
 
 	@Schema(description = "The display page template's key.")
@@ -217,6 +220,7 @@ public class DisplayPageTemplate implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String key;
 
+	@JsonIgnore
 	private Supplier<String> _keySupplier;
 
 	@Schema(description = "The display page template's name.")
@@ -255,6 +259,7 @@ public class DisplayPageTemplate implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Override

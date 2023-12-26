@@ -93,6 +93,7 @@ public class SearchResult implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateModified;
 
+	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
 	@Schema(description = "The item's description.")
@@ -133,6 +134,7 @@ public class SearchResult implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
+	@JsonIgnore
 	private Supplier<String> _descriptionSupplier;
 
 	@Schema
@@ -174,6 +176,7 @@ public class SearchResult implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object embedded;
 
+	@JsonIgnore
 	private Supplier<Object> _embeddedSupplier;
 
 	@Schema(description = "The link to the embedded item.")
@@ -214,6 +217,7 @@ public class SearchResult implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String itemURL;
 
+	@JsonIgnore
 	private Supplier<String> _itemURLSupplier;
 
 	@Schema(description = "The item's score.")
@@ -253,6 +257,7 @@ public class SearchResult implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Float score;
 
+	@JsonIgnore
 	private Supplier<Float> _scoreSupplier;
 
 	@Schema(description = "The item's title.")
@@ -293,6 +298,7 @@ public class SearchResult implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String title;
 
+	@JsonIgnore
 	private Supplier<String> _titleSupplier;
 
 	@Override

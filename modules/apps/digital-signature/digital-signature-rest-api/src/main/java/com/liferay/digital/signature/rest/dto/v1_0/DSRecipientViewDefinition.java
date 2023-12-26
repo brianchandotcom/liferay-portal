@@ -88,6 +88,7 @@ public class DSRecipientViewDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String authenticationMethod;
 
+	@JsonIgnore
 	private Supplier<String> _authenticationMethodSupplier;
 
 	@Schema
@@ -128,6 +129,7 @@ public class DSRecipientViewDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String dsClientUserId;
 
+	@JsonIgnore
 	private Supplier<String> _dsClientUserIdSupplier;
 
 	@Schema
@@ -168,6 +170,7 @@ public class DSRecipientViewDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String emailAddress;
 
+	@JsonIgnore
 	private Supplier<String> _emailAddressSupplier;
 
 	@Schema
@@ -208,6 +211,7 @@ public class DSRecipientViewDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String returnURL;
 
+	@JsonIgnore
 	private Supplier<String> _returnURLSupplier;
 
 	@Schema
@@ -248,6 +252,7 @@ public class DSRecipientViewDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String userName;
 
+	@JsonIgnore
 	private Supplier<String> _userNameSupplier;
 
 	@Override

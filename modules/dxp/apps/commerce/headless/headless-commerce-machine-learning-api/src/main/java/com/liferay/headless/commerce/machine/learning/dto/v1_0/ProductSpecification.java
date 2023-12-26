@@ -92,6 +92,7 @@ public class ProductSpecification implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@DecimalMin("0")
@@ -133,6 +134,7 @@ public class ProductSpecification implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long optionCategoryId;
 
+	@JsonIgnore
 	private Supplier<Long> _optionCategoryIdSupplier;
 
 	@Schema(example = "specification-key")
@@ -174,6 +176,7 @@ public class ProductSpecification implements Serializable {
 	@NotEmpty
 	protected String specificationKey;
 
+	@JsonIgnore
 	private Supplier<String> _specificationKeySupplier;
 
 	@Schema
@@ -216,6 +219,7 @@ public class ProductSpecification implements Serializable {
 	@NotNull
 	protected Map<String, String> value;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _valueSupplier;
 
 	@Override

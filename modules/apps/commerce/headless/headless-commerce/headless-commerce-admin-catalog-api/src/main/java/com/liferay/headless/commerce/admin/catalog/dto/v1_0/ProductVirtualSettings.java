@@ -91,6 +91,7 @@ public class ProductVirtualSettings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer activationStatus;
 
+	@JsonIgnore
 	private Supplier<Integer> _activationStatusSupplier;
 
 	@Schema
@@ -132,6 +133,7 @@ public class ProductVirtualSettings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Status activationStatusInfo;
 
+	@JsonIgnore
 	private Supplier<Status> _activationStatusInfoSupplier;
 
 	@Schema(description = "Base64 encoded file")
@@ -172,6 +174,7 @@ public class ProductVirtualSettings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String attachment;
 
+	@JsonIgnore
 	private Supplier<String> _attachmentSupplier;
 
 	@Schema(description = "Number of days to download the attachment")
@@ -212,6 +215,7 @@ public class ProductVirtualSettings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long duration;
 
+	@JsonIgnore
 	private Supplier<Long> _durationSupplier;
 
 	@Schema(description = "Number of downloads available for attachment")
@@ -252,6 +256,7 @@ public class ProductVirtualSettings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer maxUsages;
 
+	@JsonIgnore
 	private Supplier<Integer> _maxUsagesSupplier;
 
 	@Schema(description = "Base64 encoded sample file")
@@ -292,6 +297,7 @@ public class ProductVirtualSettings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String sampleAttachment;
 
+	@JsonIgnore
 	private Supplier<String> _sampleAttachmentSupplier;
 
 	@Schema(description = "URL to download the sample file")
@@ -332,6 +338,7 @@ public class ProductVirtualSettings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String sampleSrc;
 
+	@JsonIgnore
 	private Supplier<String> _sampleSrcSupplier;
 
 	@Schema(description = "URL of the sample file")
@@ -372,6 +379,7 @@ public class ProductVirtualSettings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String sampleURL;
 
+	@JsonIgnore
 	private Supplier<String> _sampleURLSupplier;
 
 	@Schema(description = "URL to download the file")
@@ -410,6 +418,7 @@ public class ProductVirtualSettings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String src;
 
+	@JsonIgnore
 	private Supplier<String> _srcSupplier;
 
 	@Schema(
@@ -455,6 +464,7 @@ public class ProductVirtualSettings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> termsOfUseContent;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _termsOfUseContentSupplier;
 
 	@Schema(description = "Terms of Use related Article Id")
@@ -497,6 +507,7 @@ public class ProductVirtualSettings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long termsOfUseJournalArticleId;
 
+	@JsonIgnore
 	private Supplier<Long> _termsOfUseJournalArticleIdSupplier;
 
 	@Schema(description = "Terms of Use required")
@@ -537,6 +548,7 @@ public class ProductVirtualSettings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean termsOfUseRequired;
 
+	@JsonIgnore
 	private Supplier<Boolean> _termsOfUseRequiredSupplier;
 
 	@Schema(description = "URL of the file")
@@ -575,6 +587,7 @@ public class ProductVirtualSettings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String url;
 
+	@JsonIgnore
 	private Supplier<String> _urlSupplier;
 
 	@Schema(description = "Enable sample file")
@@ -615,6 +628,7 @@ public class ProductVirtualSettings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean useSample;
 
+	@JsonIgnore
 	private Supplier<Boolean> _useSampleSupplier;
 
 	@Override

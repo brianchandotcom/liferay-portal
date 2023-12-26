@@ -98,6 +98,7 @@ public class FragmentFieldAction implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object action;
 
+	@JsonIgnore
 	private Supplier<Object> _actionSupplier;
 
 	@Schema(
@@ -144,6 +145,7 @@ public class FragmentFieldAction implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ActionExecutionResult onError;
 
+	@JsonIgnore
 	private Supplier<ActionExecutionResult> _onErrorSupplier;
 
 	@Schema(
@@ -190,6 +192,7 @@ public class FragmentFieldAction implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ActionExecutionResult onSuccess;
 
+	@JsonIgnore
 	private Supplier<ActionExecutionResult> _onSuccessSupplier;
 
 	@Schema(description = "The fragment field's text.")
@@ -229,6 +232,7 @@ public class FragmentFieldAction implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object text;
 
+	@JsonIgnore
 	private Supplier<Object> _textSupplier;
 
 	@Override

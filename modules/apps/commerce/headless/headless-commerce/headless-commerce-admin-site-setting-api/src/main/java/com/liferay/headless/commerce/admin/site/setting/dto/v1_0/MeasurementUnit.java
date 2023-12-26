@@ -93,6 +93,7 @@ public class MeasurementUnit implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long companyId;
 
+	@JsonIgnore
 	private Supplier<Long> _companyIdSupplier;
 
 	@Schema(example = "AB-34098-789-N")
@@ -133,6 +134,7 @@ public class MeasurementUnit implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@DecimalMin("0")
@@ -172,6 +174,7 @@ public class MeasurementUnit implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema(example = "kg")
@@ -211,6 +214,7 @@ public class MeasurementUnit implements Serializable {
 	@NotEmpty
 	protected String key;
 
+	@JsonIgnore
 	private Supplier<String> _keySupplier;
 
 	@Schema(example = "{en_US=Croatia, hr_HR=Hrvatska, hu_HU=Horvatorszag}")
@@ -253,6 +257,7 @@ public class MeasurementUnit implements Serializable {
 	@NotNull
 	protected Map<String, String> name;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _nameSupplier;
 
 	@Schema(example = "true")
@@ -293,6 +298,7 @@ public class MeasurementUnit implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean primary;
 
+	@JsonIgnore
 	private Supplier<Boolean> _primarySupplier;
 
 	@DecimalMin("0")
@@ -334,6 +340,7 @@ public class MeasurementUnit implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double priority;
 
+	@JsonIgnore
 	private Supplier<Double> _prioritySupplier;
 
 	@DecimalMin("0")
@@ -373,6 +380,7 @@ public class MeasurementUnit implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double rate;
 
+	@JsonIgnore
 	private Supplier<Double> _rateSupplier;
 
 	@Schema(example = "Dimensions")
@@ -412,6 +420,7 @@ public class MeasurementUnit implements Serializable {
 	@NotEmpty
 	protected String type;
 
+	@JsonIgnore
 	private Supplier<String> _typeSupplier;
 
 	@Override

@@ -95,6 +95,7 @@ public class AssigneeMetricBulkSelection implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean completed;
 
+	@JsonIgnore
 	private Supplier<Boolean> _completedSupplier;
 
 	@Schema
@@ -135,6 +136,7 @@ public class AssigneeMetricBulkSelection implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateEnd;
 
+	@JsonIgnore
 	private Supplier<Date> _dateEndSupplier;
 
 	@Schema
@@ -175,6 +177,7 @@ public class AssigneeMetricBulkSelection implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateStart;
 
+	@JsonIgnore
 	private Supplier<Date> _dateStartSupplier;
 
 	@Schema
@@ -215,6 +218,7 @@ public class AssigneeMetricBulkSelection implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long[] instanceIds;
 
+	@JsonIgnore
 	private Supplier<Long[]> _instanceIdsSupplier;
 
 	@Schema
@@ -255,6 +259,7 @@ public class AssigneeMetricBulkSelection implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String keywords;
 
+	@JsonIgnore
 	private Supplier<String> _keywordsSupplier;
 
 	@Schema
@@ -295,6 +300,7 @@ public class AssigneeMetricBulkSelection implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long[] roleIds;
 
+	@JsonIgnore
 	private Supplier<Long[]> _roleIdsSupplier;
 
 	@Schema
@@ -335,6 +341,7 @@ public class AssigneeMetricBulkSelection implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] taskNames;
 
+	@JsonIgnore
 	private Supplier<String[]> _taskNamesSupplier;
 
 	@Override

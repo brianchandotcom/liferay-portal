@@ -90,6 +90,7 @@ public class AccountRole implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long accountId;
 
+	@JsonIgnore
 	private Supplier<Long> _accountIdSupplier;
 
 	@Schema
@@ -130,6 +131,7 @@ public class AccountRole implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
+	@JsonIgnore
 	private Supplier<String> _descriptionSupplier;
 
 	@Schema
@@ -170,6 +172,7 @@ public class AccountRole implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String displayName;
 
+	@JsonIgnore
 	private Supplier<String> _displayNameSupplier;
 
 	@Schema
@@ -208,6 +211,7 @@ public class AccountRole implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema
@@ -246,6 +250,7 @@ public class AccountRole implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema(description = "The primary key of the underlying system role.")
@@ -288,6 +293,7 @@ public class AccountRole implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long roleId;
 
+	@JsonIgnore
 	private Supplier<Long> _roleIdSupplier;
 
 	@Override

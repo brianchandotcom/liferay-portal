@@ -89,6 +89,7 @@ public class Phone implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String extension;
 
+	@JsonIgnore
 	private Supplier<String> _extensionSupplier;
 
 	@Schema(description = "The phone number's ID.")
@@ -127,6 +128,7 @@ public class Phone implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema(description = "The phone number without its extension.")
@@ -167,6 +169,7 @@ public class Phone implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String phoneNumber;
 
+	@JsonIgnore
 	private Supplier<String> _phoneNumberSupplier;
 
 	@Schema(description = "The phone number's type.")
@@ -207,6 +210,7 @@ public class Phone implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String phoneType;
 
+	@JsonIgnore
 	private Supplier<String> _phoneTypeSupplier;
 
 	@Schema(
@@ -251,6 +255,7 @@ public class Phone implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean primary;
 
+	@JsonIgnore
 	private Supplier<Boolean> _primarySupplier;
 
 	@Override

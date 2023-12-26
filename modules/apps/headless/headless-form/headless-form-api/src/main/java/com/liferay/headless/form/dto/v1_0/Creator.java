@@ -86,6 +86,7 @@ public class Creator implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String additionalName;
 
+	@JsonIgnore
 	private Supplier<String> _additionalNameSupplier;
 
 	@Schema(description = "The type of the content.")
@@ -126,6 +127,7 @@ public class Creator implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String contentType;
 
+	@JsonIgnore
 	private Supplier<String> _contentTypeSupplier;
 
 	@Schema
@@ -166,6 +168,7 @@ public class Creator implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String familyName;
 
+	@JsonIgnore
 	private Supplier<String> _familyNameSupplier;
 
 	@Schema
@@ -206,6 +209,7 @@ public class Creator implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String givenName;
 
+	@JsonIgnore
 	private Supplier<String> _givenNameSupplier;
 
 	@Schema
@@ -244,6 +248,7 @@ public class Creator implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema
@@ -284,6 +289,7 @@ public class Creator implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String image;
 
+	@JsonIgnore
 	private Supplier<String> _imageSupplier;
 
 	@Schema
@@ -322,6 +328,7 @@ public class Creator implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema
@@ -362,6 +369,7 @@ public class Creator implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String profileURL;
 
+	@JsonIgnore
 	private Supplier<String> _profileURLSupplier;
 
 	@Override

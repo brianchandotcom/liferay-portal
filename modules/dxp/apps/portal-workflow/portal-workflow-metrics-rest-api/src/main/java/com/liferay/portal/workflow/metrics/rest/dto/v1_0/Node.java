@@ -90,6 +90,7 @@ public class Node implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateCreated;
 
+	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
 	@Schema
@@ -130,6 +131,7 @@ public class Node implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateModified;
 
+	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
 	@Schema
@@ -168,6 +170,7 @@ public class Node implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema
@@ -208,6 +211,7 @@ public class Node implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean initial;
 
+	@JsonIgnore
 	private Supplier<Boolean> _initialSupplier;
 
 	@Schema
@@ -248,6 +252,7 @@ public class Node implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String label;
 
+	@JsonIgnore
 	private Supplier<String> _labelSupplier;
 
 	@Schema
@@ -286,6 +291,7 @@ public class Node implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema
@@ -326,6 +332,7 @@ public class Node implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long processId;
 
+	@JsonIgnore
 	private Supplier<Long> _processIdSupplier;
 
 	@Schema
@@ -366,6 +373,7 @@ public class Node implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String processVersion;
 
+	@JsonIgnore
 	private Supplier<String> _processVersionSupplier;
 
 	@Schema
@@ -406,6 +414,7 @@ public class Node implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean terminal;
 
+	@JsonIgnore
 	private Supplier<Boolean> _terminalSupplier;
 
 	@Schema
@@ -444,6 +453,7 @@ public class Node implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String type;
 
+	@JsonIgnore
 	private Supplier<String> _typeSupplier;
 
 	@Override

@@ -88,6 +88,7 @@ public class ShippingMethod implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
+	@JsonIgnore
 	private Supplier<String> _descriptionSupplier;
 
 	@Schema
@@ -126,6 +127,7 @@ public class ShippingMethod implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema
@@ -164,6 +166,7 @@ public class ShippingMethod implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema
@@ -206,6 +209,7 @@ public class ShippingMethod implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ShippingOption[] shippingOptions;
 
+	@JsonIgnore
 	private Supplier<ShippingOption[]> _shippingOptionsSupplier;
 
 	@Override

@@ -102,6 +102,7 @@ public class Keyword implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
+	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
 	@Schema
@@ -142,6 +143,7 @@ public class Keyword implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String assetLibraryKey;
 
+	@JsonIgnore
 	private Supplier<String> _assetLibraryKeySupplier;
 
 	@Schema(description = "The keyword's creator.")
@@ -183,6 +185,7 @@ public class Keyword implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator creator;
 
+	@JsonIgnore
 	private Supplier<Creator> _creatorSupplier;
 
 	@Schema(description = "The keyword's creation date.")
@@ -223,6 +226,7 @@ public class Keyword implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
+	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
 	@Schema(description = "The keyword's most recent modification date.")
@@ -263,6 +267,7 @@ public class Keyword implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
+	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
 	@Schema(description = "The keyword's ID.")
@@ -301,6 +306,7 @@ public class Keyword implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema(
@@ -345,6 +351,7 @@ public class Keyword implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer keywordUsageCount;
 
+	@JsonIgnore
 	private Supplier<Integer> _keywordUsageCountSupplier;
 
 	@Schema(description = "The keyword's name.")
@@ -384,6 +391,7 @@ public class Keyword implements Serializable {
 	@NotEmpty
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema(description = "The ID of the site to which this keyword is scoped.")
@@ -426,6 +434,7 @@ public class Keyword implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long siteId;
 
+	@JsonIgnore
 	private Supplier<Long> _siteIdSupplier;
 
 	@Schema(
@@ -470,6 +479,7 @@ public class Keyword implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean subscribed;
 
+	@JsonIgnore
 	private Supplier<Boolean> _subscribedSupplier;
 
 	@Override

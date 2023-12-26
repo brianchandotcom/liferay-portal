@@ -95,6 +95,7 @@ public class SitePageNavigationMenuSettings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String queryString;
 
+	@JsonIgnore
 	private Supplier<String> _queryStringSupplier;
 
 	@Schema(
@@ -139,6 +140,7 @@ public class SitePageNavigationMenuSettings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String target;
 
+	@JsonIgnore
 	private Supplier<String> _targetSupplier;
 
 	@Schema(description = "The target's type (specific frame or new tab).")
@@ -193,6 +195,7 @@ public class SitePageNavigationMenuSettings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected TargetType targetType;
 
+	@JsonIgnore
 	private Supplier<TargetType> _targetTypeSupplier;
 
 	@Override

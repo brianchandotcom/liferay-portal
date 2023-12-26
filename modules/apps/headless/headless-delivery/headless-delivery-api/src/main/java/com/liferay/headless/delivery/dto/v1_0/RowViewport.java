@@ -93,6 +93,7 @@ public class RowViewport implements Serializable {
 	@NotEmpty
 	protected String id;
 
+	@JsonIgnore
 	private Supplier<String> _idSupplier;
 
 	@Schema(description = "The definition of the row viewport.")
@@ -138,6 +139,7 @@ public class RowViewport implements Serializable {
 	@NotNull
 	protected RowViewportDefinition rowViewportDefinition;
 
+	@JsonIgnore
 	private Supplier<RowViewportDefinition> _rowViewportDefinitionSupplier;
 
 	@Override

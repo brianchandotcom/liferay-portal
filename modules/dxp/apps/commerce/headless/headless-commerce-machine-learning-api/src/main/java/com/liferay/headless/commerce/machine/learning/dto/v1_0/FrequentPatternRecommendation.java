@@ -94,6 +94,7 @@ public class FrequentPatternRecommendation implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long[] antecedentIds;
 
+	@JsonIgnore
 	private Supplier<Long[]> _antecedentIdsSupplier;
 
 	@Schema
@@ -134,6 +135,7 @@ public class FrequentPatternRecommendation implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long antecedentIdsLength;
 
+	@JsonIgnore
 	private Supplier<Long> _antecedentIdsLengthSupplier;
 
 	@Schema(example = "2017-07-21")
@@ -174,6 +176,7 @@ public class FrequentPatternRecommendation implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date createDate;
 
+	@JsonIgnore
 	private Supplier<Date> _createDateSupplier;
 
 	@Schema
@@ -214,6 +217,7 @@ public class FrequentPatternRecommendation implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String jobId;
 
+	@JsonIgnore
 	private Supplier<String> _jobIdSupplier;
 
 	@Schema(description = "The recommended product identifier.")
@@ -254,6 +258,7 @@ public class FrequentPatternRecommendation implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long recommendedProductId;
 
+	@JsonIgnore
 	private Supplier<Long> _recommendedProductIdSupplier;
 
 	@Schema(description = "The recommendation score.")
@@ -293,6 +298,7 @@ public class FrequentPatternRecommendation implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Float score;
 
+	@JsonIgnore
 	private Supplier<Float> _scoreSupplier;
 
 	@Override

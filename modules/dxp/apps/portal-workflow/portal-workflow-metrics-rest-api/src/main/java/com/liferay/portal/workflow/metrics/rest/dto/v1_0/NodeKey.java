@@ -86,6 +86,7 @@ public class NodeKey implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String executionType;
 
+	@JsonIgnore
 	private Supplier<String> _executionTypeSupplier;
 
 	@Schema
@@ -124,6 +125,7 @@ public class NodeKey implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String id;
 
+	@JsonIgnore
 	private Supplier<String> _idSupplier;
 
 	@Override

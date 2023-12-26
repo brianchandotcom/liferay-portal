@@ -86,6 +86,7 @@ public class Name implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String familyName;
 
+	@JsonIgnore
 	private Supplier<String> _familyNameSupplier;
 
 	@Schema
@@ -126,6 +127,7 @@ public class Name implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String formatted;
 
+	@JsonIgnore
 	private Supplier<String> _formattedSupplier;
 
 	@Schema
@@ -166,6 +168,7 @@ public class Name implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String givenName;
 
+	@JsonIgnore
 	private Supplier<String> _givenNameSupplier;
 
 	@Schema
@@ -206,6 +209,7 @@ public class Name implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String honorificPrefix;
 
+	@JsonIgnore
 	private Supplier<String> _honorificPrefixSupplier;
 
 	@Schema
@@ -246,6 +250,7 @@ public class Name implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String honorificSuffix;
 
+	@JsonIgnore
 	private Supplier<String> _honorificSuffixSupplier;
 
 	@Schema
@@ -286,6 +291,7 @@ public class Name implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String middleName;
 
+	@JsonIgnore
 	private Supplier<String> _middleNameSupplier;
 
 	@Override

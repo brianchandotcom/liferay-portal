@@ -90,6 +90,7 @@ public class DataLayoutRenderingContext implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String containerId;
 
+	@JsonIgnore
 	private Supplier<String> _containerIdSupplier;
 
 	@Schema
@@ -132,6 +133,7 @@ public class DataLayoutRenderingContext implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, Object> dataRecordValues;
 
+	@JsonIgnore
 	private Supplier<Map<String, Object>> _dataRecordValuesSupplier;
 
 	@Schema
@@ -172,6 +174,7 @@ public class DataLayoutRenderingContext implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String namespace;
 
+	@JsonIgnore
 	private Supplier<String> _namespaceSupplier;
 
 	@Schema
@@ -212,6 +215,7 @@ public class DataLayoutRenderingContext implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String pathThemeImages;
 
+	@JsonIgnore
 	private Supplier<String> _pathThemeImagesSupplier;
 
 	@Schema
@@ -252,6 +256,7 @@ public class DataLayoutRenderingContext implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean readOnly;
 
+	@JsonIgnore
 	private Supplier<Boolean> _readOnlySupplier;
 
 	@Schema
@@ -292,6 +297,7 @@ public class DataLayoutRenderingContext implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long scopeGroupId;
 
+	@JsonIgnore
 	private Supplier<Long> _scopeGroupIdSupplier;
 
 	@Schema
@@ -332,6 +338,7 @@ public class DataLayoutRenderingContext implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long siteGroupId;
 
+	@JsonIgnore
 	private Supplier<Long> _siteGroupIdSupplier;
 
 	@Override

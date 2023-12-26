@@ -94,6 +94,7 @@ public class TaxonomyCategoryBulkSelection implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected DocumentBulkSelection documentBulkSelection;
 
+	@JsonIgnore
 	private Supplier<DocumentBulkSelection> _documentBulkSelectionSupplier;
 
 	@Schema
@@ -135,6 +136,7 @@ public class TaxonomyCategoryBulkSelection implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long[] taxonomyCategoryIdsToAdd;
 
+	@JsonIgnore
 	private Supplier<Long[]> _taxonomyCategoryIdsToAddSupplier;
 
 	@Schema
@@ -179,6 +181,7 @@ public class TaxonomyCategoryBulkSelection implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long[] taxonomyCategoryIdsToRemove;
 
+	@JsonIgnore
 	private Supplier<Long[]> _taxonomyCategoryIdsToRemoveSupplier;
 
 	@Override

@@ -93,6 +93,7 @@ public class ClassFieldsReference implements Serializable {
 	@NotEmpty
 	protected String className;
 
+	@JsonIgnore
 	private Supplier<String> _classNameSupplier;
 
 	@Schema(description = "The list of fields for the reference.")
@@ -135,6 +136,7 @@ public class ClassFieldsReference implements Serializable {
 	@NotNull
 	protected Field[] fields;
 
+	@JsonIgnore
 	private Supplier<Field[]> _fieldsSupplier;
 
 	@Override

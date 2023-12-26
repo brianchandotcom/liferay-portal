@@ -87,6 +87,7 @@ public class ObjectFieldSetting implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema
@@ -125,6 +126,7 @@ public class ObjectFieldSetting implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema
@@ -165,6 +167,7 @@ public class ObjectFieldSetting implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long objectFieldId;
 
+	@JsonIgnore
 	private Supplier<Long> _objectFieldIdSupplier;
 
 	@Schema
@@ -206,6 +209,7 @@ public class ObjectFieldSetting implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object value;
 
+	@JsonIgnore
 	private Supplier<Object> _valueSupplier;
 
 	@Override

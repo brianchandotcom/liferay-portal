@@ -94,6 +94,7 @@ public class HistogramMetric implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Histogram[] histograms;
 
+	@JsonIgnore
 	private Supplier<Histogram[]> _histogramsSupplier;
 
 	@Schema
@@ -144,6 +145,7 @@ public class HistogramMetric implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Unit unit;
 
+	@JsonIgnore
 	private Supplier<Unit> _unitSupplier;
 
 	@Schema
@@ -184,6 +186,7 @@ public class HistogramMetric implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double value;
 
+	@JsonIgnore
 	private Supplier<Double> _valueSupplier;
 
 	@Override

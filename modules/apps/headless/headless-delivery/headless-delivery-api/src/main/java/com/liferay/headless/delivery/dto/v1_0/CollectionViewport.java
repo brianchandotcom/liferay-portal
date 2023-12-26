@@ -103,6 +103,7 @@ public class CollectionViewport implements Serializable {
 	@NotNull
 	protected CollectionViewportDefinition collectionViewportDefinition;
 
+	@JsonIgnore
 	private Supplier<CollectionViewportDefinition>
 		_collectionViewportDefinitionSupplier;
 
@@ -143,6 +144,7 @@ public class CollectionViewport implements Serializable {
 	@NotEmpty
 	protected String id;
 
+	@JsonIgnore
 	private Supplier<String> _idSupplier;
 
 	@Override

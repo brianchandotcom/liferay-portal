@@ -89,6 +89,7 @@ public class OrganizationBrief implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema(description = "The organization's name.")
@@ -127,6 +128,7 @@ public class OrganizationBrief implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema(description = "A list of the user's roles.")
@@ -168,6 +170,7 @@ public class OrganizationBrief implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected RoleBrief[] roleBriefs;
 
+	@JsonIgnore
 	private Supplier<RoleBrief[]> _roleBriefsSupplier;
 
 	@Override

@@ -86,6 +86,7 @@ public class DataSource implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long[] commerceChannelIds;
 
+	@JsonIgnore
 	private Supplier<Long[]> _commerceChannelIdsSupplier;
 
 	@Schema
@@ -126,6 +127,7 @@ public class DataSource implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String dataSourceId;
 
+	@JsonIgnore
 	private Supplier<String> _dataSourceIdSupplier;
 
 	@Schema
@@ -166,6 +168,7 @@ public class DataSource implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long[] siteIds;
 
+	@JsonIgnore
 	private Supplier<Long[]> _siteIdsSupplier;
 
 	@Override

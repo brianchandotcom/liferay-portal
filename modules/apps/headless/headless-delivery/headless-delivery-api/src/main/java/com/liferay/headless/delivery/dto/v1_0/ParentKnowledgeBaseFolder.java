@@ -91,6 +91,7 @@ public class ParentKnowledgeBaseFolder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long folderId;
 
+	@JsonIgnore
 	private Supplier<Long> _folderIdSupplier;
 
 	@Schema(description = "The parent folder's name.")
@@ -131,6 +132,7 @@ public class ParentKnowledgeBaseFolder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String folderName;
 
+	@JsonIgnore
 	private Supplier<String> _folderNameSupplier;
 
 	@Override

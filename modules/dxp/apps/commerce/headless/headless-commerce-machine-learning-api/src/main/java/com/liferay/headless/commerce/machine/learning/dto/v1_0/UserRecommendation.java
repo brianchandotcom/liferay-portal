@@ -92,6 +92,7 @@ public class UserRecommendation implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long[] assetCategoryIds;
 
+	@JsonIgnore
 	private Supplier<Long[]> _assetCategoryIdsSupplier;
 
 	@Schema(example = "2017-07-21")
@@ -132,6 +133,7 @@ public class UserRecommendation implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date createDate;
 
+	@JsonIgnore
 	private Supplier<Date> _createDateSupplier;
 
 	@Schema
@@ -172,6 +174,7 @@ public class UserRecommendation implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String jobId;
 
+	@JsonIgnore
 	private Supplier<String> _jobIdSupplier;
 
 	@Schema(description = "The product identifier.")
@@ -212,6 +215,7 @@ public class UserRecommendation implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long productId;
 
+	@JsonIgnore
 	private Supplier<Long> _productIdSupplier;
 
 	@Schema(description = "The recommendation rank.")
@@ -250,6 +254,7 @@ public class UserRecommendation implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer rank;
 
+	@JsonIgnore
 	private Supplier<Integer> _rankSupplier;
 
 	@Schema(description = "The recommended product identifier.")
@@ -290,6 +295,7 @@ public class UserRecommendation implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long recommendedProductId;
 
+	@JsonIgnore
 	private Supplier<Long> _recommendedProductIdSupplier;
 
 	@Schema(description = "The recommendation score.")
@@ -329,6 +335,7 @@ public class UserRecommendation implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Float score;
 
+	@JsonIgnore
 	private Supplier<Float> _scoreSupplier;
 
 	@Override

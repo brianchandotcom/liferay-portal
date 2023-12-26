@@ -88,6 +88,7 @@ public class TaxonomyVocabulary implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean multiValued;
 
+	@JsonIgnore
 	private Supplier<Boolean> _multiValuedSupplier;
 
 	@Schema
@@ -126,6 +127,7 @@ public class TaxonomyVocabulary implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema
@@ -166,6 +168,7 @@ public class TaxonomyVocabulary implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean required;
 
+	@JsonIgnore
 	private Supplier<Boolean> _requiredSupplier;
 
 	@Schema
@@ -208,6 +211,7 @@ public class TaxonomyVocabulary implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected TaxonomyCategory[] taxonomyCategories;
 
+	@JsonIgnore
 	private Supplier<TaxonomyCategory[]> _taxonomyCategoriesSupplier;
 
 	@Schema
@@ -248,6 +252,7 @@ public class TaxonomyVocabulary implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long taxonomyVocabularyId;
 
+	@JsonIgnore
 	private Supplier<Long> _taxonomyVocabularyIdSupplier;
 
 	@Override

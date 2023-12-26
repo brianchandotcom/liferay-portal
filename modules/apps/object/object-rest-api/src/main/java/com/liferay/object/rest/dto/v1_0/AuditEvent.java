@@ -95,6 +95,7 @@ public class AuditEvent implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected AuditFieldChange[] auditFieldChanges;
 
+	@JsonIgnore
 	private Supplier<AuditFieldChange[]> _auditFieldChangesSupplier;
 
 	@Schema
@@ -136,6 +137,7 @@ public class AuditEvent implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator creator;
 
+	@JsonIgnore
 	private Supplier<Creator> _creatorSupplier;
 
 	@Schema
@@ -176,6 +178,7 @@ public class AuditEvent implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
+	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
 	@Schema
@@ -216,6 +219,7 @@ public class AuditEvent implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String eventType;
 
+	@JsonIgnore
 	private Supplier<String> _eventTypeSupplier;
 
 	@Override

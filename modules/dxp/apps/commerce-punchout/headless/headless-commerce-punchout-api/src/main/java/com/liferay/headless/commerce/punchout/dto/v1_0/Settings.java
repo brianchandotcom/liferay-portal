@@ -86,6 +86,7 @@ public class Settings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer[] allowedQuantities;
 
+	@JsonIgnore
 	private Supplier<Integer[]> _allowedQuantitiesSupplier;
 
 	@Schema
@@ -126,6 +127,7 @@ public class Settings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer maxQuantity;
 
+	@JsonIgnore
 	private Supplier<Integer> _maxQuantitySupplier;
 
 	@Schema
@@ -166,6 +168,7 @@ public class Settings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer minQuantity;
 
+	@JsonIgnore
 	private Supplier<Integer> _minQuantitySupplier;
 
 	@Schema
@@ -206,6 +209,7 @@ public class Settings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer multipleQuantity;
 
+	@JsonIgnore
 	private Supplier<Integer> _multipleQuantitySupplier;
 
 	@Override

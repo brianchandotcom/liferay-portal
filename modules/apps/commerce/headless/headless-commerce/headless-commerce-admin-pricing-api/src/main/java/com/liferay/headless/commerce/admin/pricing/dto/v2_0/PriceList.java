@@ -100,6 +100,7 @@ public class PriceList implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
+	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
 	@Schema(example = "true")
@@ -140,6 +141,7 @@ public class PriceList implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean active;
 
+	@JsonIgnore
 	private Supplier<Boolean> _activeSupplier;
 
 	@Schema(example = "admin")
@@ -180,6 +182,7 @@ public class PriceList implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String author;
 
+	@JsonIgnore
 	private Supplier<String> _authorSupplier;
 
 	@Schema(example = "true")
@@ -220,6 +223,7 @@ public class PriceList implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean catalogBasePriceList;
 
+	@JsonIgnore
 	private Supplier<Boolean> _catalogBasePriceListSupplier;
 
 	@DecimalMin("0")
@@ -262,6 +266,7 @@ public class PriceList implements Serializable {
 	@NotNull
 	protected Long catalogId;
 
+	@JsonIgnore
 	private Supplier<Long> _catalogIdSupplier;
 
 	@Schema(example = "catalog")
@@ -302,6 +307,7 @@ public class PriceList implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String catalogName;
 
+	@JsonIgnore
 	private Supplier<String> _catalogNameSupplier;
 
 	@Schema(example = "2017-07-21")
@@ -342,6 +348,7 @@ public class PriceList implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date createDate;
 
+	@JsonIgnore
 	private Supplier<Date> _createDateSupplier;
 
 	@Schema(example = "EUR")
@@ -383,6 +390,7 @@ public class PriceList implements Serializable {
 	@NotEmpty
 	protected String currencyCode;
 
+	@JsonIgnore
 	private Supplier<String> _currencyCodeSupplier;
 
 	@Schema
@@ -424,6 +432,7 @@ public class PriceList implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, ?> customFields;
 
+	@JsonIgnore
 	private Supplier<Map<String, ?>> _customFieldsSupplier;
 
 	@Schema(example = "2017-07-21")
@@ -464,6 +473,7 @@ public class PriceList implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date displayDate;
 
+	@JsonIgnore
 	private Supplier<Date> _displayDateSupplier;
 
 	@Schema(example = "2017-08-21")
@@ -504,6 +514,7 @@ public class PriceList implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date expirationDate;
 
+	@JsonIgnore
 	private Supplier<Date> _expirationDateSupplier;
 
 	@Schema(example = "AB-34098-789-N")
@@ -544,6 +555,7 @@ public class PriceList implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@DecimalMin("0")
@@ -583,6 +595,7 @@ public class PriceList implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema(example = "Laptops, Beverages")
@@ -622,6 +635,7 @@ public class PriceList implements Serializable {
 	@NotEmpty
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema(example = "true")
@@ -662,6 +676,7 @@ public class PriceList implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean netPrice;
 
+	@JsonIgnore
 	private Supplier<Boolean> _netPriceSupplier;
 
 	@Schema(example = "true")
@@ -702,6 +717,7 @@ public class PriceList implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean neverExpire;
 
+	@JsonIgnore
 	private Supplier<Boolean> _neverExpireSupplier;
 
 	@DecimalMin("0")
@@ -743,6 +759,7 @@ public class PriceList implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long parentPriceListId;
 
+	@JsonIgnore
 	private Supplier<Long> _parentPriceListIdSupplier;
 
 	@Schema
@@ -784,6 +801,7 @@ public class PriceList implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected PriceEntry[] priceEntries;
 
+	@JsonIgnore
 	private Supplier<PriceEntry[]> _priceEntriesSupplier;
 
 	@Schema
@@ -828,6 +846,7 @@ public class PriceList implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected PriceListAccountGroup[] priceListAccountGroups;
 
+	@JsonIgnore
 	private Supplier<PriceListAccountGroup[]> _priceListAccountGroupsSupplier;
 
 	@Schema
@@ -870,6 +889,7 @@ public class PriceList implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected PriceListAccount[] priceListAccounts;
 
+	@JsonIgnore
 	private Supplier<PriceListAccount[]> _priceListAccountsSupplier;
 
 	@Schema
@@ -912,6 +932,7 @@ public class PriceList implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected PriceListChannel[] priceListChannels;
 
+	@JsonIgnore
 	private Supplier<PriceListChannel[]> _priceListChannelsSupplier;
 
 	@Schema
@@ -954,6 +975,7 @@ public class PriceList implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected PriceListDiscount[] priceListDiscounts;
 
+	@JsonIgnore
 	private Supplier<PriceListDiscount[]> _priceListDiscountsSupplier;
 
 	@Schema
@@ -998,6 +1020,7 @@ public class PriceList implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected PriceListOrderType[] priceListOrderTypes;
 
+	@JsonIgnore
 	private Supplier<PriceListOrderType[]> _priceListOrderTypesSupplier;
 
 	@Schema
@@ -1040,6 +1063,7 @@ public class PriceList implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected PriceModifier[] priceModifiers;
 
+	@JsonIgnore
 	private Supplier<PriceModifier[]> _priceModifiersSupplier;
 
 	@Schema(example = "1.2")
@@ -1080,6 +1104,7 @@ public class PriceList implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double priority;
 
+	@JsonIgnore
 	private Supplier<Double> _prioritySupplier;
 
 	@Schema(example = "price-list, promotion, contract")
@@ -1131,6 +1156,7 @@ public class PriceList implements Serializable {
 	@NotNull
 	protected Type type;
 
+	@JsonIgnore
 	private Supplier<Type> _typeSupplier;
 
 	@Schema
@@ -1172,6 +1198,7 @@ public class PriceList implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Status workflowStatusInfo;
 
+	@JsonIgnore
 	private Supplier<Status> _workflowStatusInfoSupplier;
 
 	@Override

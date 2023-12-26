@@ -89,6 +89,7 @@ public class PageRuleCondition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String condition;
 
+	@JsonIgnore
 	private Supplier<String> _conditionSupplier;
 
 	@Schema(description = "The page rule condition's ID.")
@@ -127,6 +128,7 @@ public class PageRuleCondition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String id;
 
+	@JsonIgnore
 	private Supplier<String> _idSupplier;
 
 	@Schema(description = "The page rule condition's type.")
@@ -165,6 +167,7 @@ public class PageRuleCondition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String type;
 
+	@JsonIgnore
 	private Supplier<String> _typeSupplier;
 
 	@Schema(description = "The page rule condition's value.")
@@ -205,6 +208,7 @@ public class PageRuleCondition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String value;
 
+	@JsonIgnore
 	private Supplier<String> _valueSupplier;
 
 	@Override

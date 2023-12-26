@@ -89,6 +89,7 @@ public class ContentSubtype implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long subtypeId;
 
+	@JsonIgnore
 	private Supplier<Long> _subtypeIdSupplier;
 
 	@Schema(description = "The content subtype's Key.")
@@ -129,6 +130,7 @@ public class ContentSubtype implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String subtypeKey;
 
+	@JsonIgnore
 	private Supplier<String> _subtypeKeySupplier;
 
 	@Override

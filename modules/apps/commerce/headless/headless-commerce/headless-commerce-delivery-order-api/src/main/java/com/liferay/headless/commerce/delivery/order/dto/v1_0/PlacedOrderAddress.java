@@ -84,6 +84,7 @@ public class PlacedOrderAddress implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String city;
 
+	@JsonIgnore
 	private Supplier<String> _citySupplier;
 
 	@Schema
@@ -124,6 +125,7 @@ public class PlacedOrderAddress implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String country;
 
+	@JsonIgnore
 	private Supplier<String> _countrySupplier;
 
 	@Schema
@@ -164,6 +166,7 @@ public class PlacedOrderAddress implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String countryISOCode;
 
+	@JsonIgnore
 	private Supplier<String> _countryISOCodeSupplier;
 
 	@Schema
@@ -204,6 +207,7 @@ public class PlacedOrderAddress implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String description;
 
+	@JsonIgnore
 	private Supplier<String> _descriptionSupplier;
 
 	@Schema
@@ -242,6 +246,7 @@ public class PlacedOrderAddress implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema
@@ -282,6 +287,7 @@ public class PlacedOrderAddress implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Double latitude;
 
+	@JsonIgnore
 	private Supplier<Double> _latitudeSupplier;
 
 	@Schema
@@ -322,6 +328,7 @@ public class PlacedOrderAddress implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Double longitude;
 
+	@JsonIgnore
 	private Supplier<Double> _longitudeSupplier;
 
 	@Schema
@@ -360,6 +367,7 @@ public class PlacedOrderAddress implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema
@@ -400,6 +408,7 @@ public class PlacedOrderAddress implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String phoneNumber;
 
+	@JsonIgnore
 	private Supplier<String> _phoneNumberSupplier;
 
 	@Schema
@@ -440,6 +449,7 @@ public class PlacedOrderAddress implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String region;
 
+	@JsonIgnore
 	private Supplier<String> _regionSupplier;
 
 	@Schema
@@ -480,6 +490,7 @@ public class PlacedOrderAddress implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String regionISOCode;
 
+	@JsonIgnore
 	private Supplier<String> _regionISOCodeSupplier;
 
 	@Schema
@@ -520,6 +531,7 @@ public class PlacedOrderAddress implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String street1;
 
+	@JsonIgnore
 	private Supplier<String> _street1Supplier;
 
 	@Schema
@@ -560,6 +572,7 @@ public class PlacedOrderAddress implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String street2;
 
+	@JsonIgnore
 	private Supplier<String> _street2Supplier;
 
 	@Schema
@@ -600,6 +613,7 @@ public class PlacedOrderAddress implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String street3;
 
+	@JsonIgnore
 	private Supplier<String> _street3Supplier;
 
 	@Schema
@@ -638,6 +652,7 @@ public class PlacedOrderAddress implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String type;
 
+	@JsonIgnore
 	private Supplier<String> _typeSupplier;
 
 	@Schema
@@ -678,6 +693,7 @@ public class PlacedOrderAddress implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer typeId;
 
+	@JsonIgnore
 	private Supplier<Integer> _typeIdSupplier;
 
 	@Schema
@@ -718,6 +734,7 @@ public class PlacedOrderAddress implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String vatNumber;
 
+	@JsonIgnore
 	private Supplier<String> _vatNumberSupplier;
 
 	@Schema
@@ -756,6 +773,7 @@ public class PlacedOrderAddress implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String zip;
 
+	@JsonIgnore
 	private Supplier<String> _zipSupplier;
 
 	@Override

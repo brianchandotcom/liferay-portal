@@ -88,6 +88,7 @@ public class ReplacementSku implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Price price;
 
+	@JsonIgnore
 	private Supplier<Price> _priceSupplier;
 
 	@Schema
@@ -132,6 +133,7 @@ public class ReplacementSku implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected ProductConfiguration productConfiguration;
 
+	@JsonIgnore
 	private Supplier<ProductConfiguration> _productConfigurationSupplier;
 
 	@Schema
@@ -170,6 +172,7 @@ public class ReplacementSku implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String sku;
 
+	@JsonIgnore
 	private Supplier<String> _skuSupplier;
 
 	@DecimalMin("0")
@@ -209,6 +212,7 @@ public class ReplacementSku implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long skuId;
 
+	@JsonIgnore
 	private Supplier<Long> _skuIdSupplier;
 
 	@Schema
@@ -250,6 +254,7 @@ public class ReplacementSku implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected SkuOption[] skuOptions;
 
+	@JsonIgnore
 	private Supplier<SkuOption[]> _skuOptionsSupplier;
 
 	@Schema
@@ -292,6 +297,7 @@ public class ReplacementSku implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected SkuUnitOfMeasure[] skuUnitOfMeasures;
 
+	@JsonIgnore
 	private Supplier<SkuUnitOfMeasure[]> _skuUnitOfMeasuresSupplier;
 
 	@Schema(
@@ -335,6 +341,7 @@ public class ReplacementSku implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, String> urls;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _urlsSupplier;
 
 	@Override

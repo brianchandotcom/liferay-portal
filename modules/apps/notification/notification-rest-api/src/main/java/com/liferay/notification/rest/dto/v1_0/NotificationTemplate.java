@@ -97,6 +97,7 @@ public class NotificationTemplate implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
+	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
 	@Schema
@@ -143,6 +144,7 @@ public class NotificationTemplate implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] attachmentObjectFieldExternalReferenceCodes;
 
+	@JsonIgnore
 	private Supplier<String[]>
 		_attachmentObjectFieldExternalReferenceCodesSupplier;
 
@@ -185,6 +187,7 @@ public class NotificationTemplate implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long[] attachmentObjectFieldIds;
 
+	@JsonIgnore
 	private Supplier<Long[]> _attachmentObjectFieldIdsSupplier;
 
 	@Schema
@@ -226,6 +229,7 @@ public class NotificationTemplate implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> body;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _bodySupplier;
 
 	@Schema
@@ -266,6 +270,7 @@ public class NotificationTemplate implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
+	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
 	@Schema
@@ -306,6 +311,7 @@ public class NotificationTemplate implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
+	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
 	@Schema
@@ -346,6 +352,7 @@ public class NotificationTemplate implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
+	@JsonIgnore
 	private Supplier<String> _descriptionSupplier;
 
 	@Schema
@@ -398,6 +405,7 @@ public class NotificationTemplate implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected EditorType editorType;
 
+	@JsonIgnore
 	private Supplier<EditorType> _editorTypeSupplier;
 
 	@Schema
@@ -438,6 +446,7 @@ public class NotificationTemplate implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@Schema
@@ -476,6 +485,7 @@ public class NotificationTemplate implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema
@@ -514,6 +524,7 @@ public class NotificationTemplate implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema
@@ -556,6 +567,7 @@ public class NotificationTemplate implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> name_i18n;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _name_i18nSupplier;
 
 	@Schema
@@ -602,6 +614,7 @@ public class NotificationTemplate implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String objectDefinitionExternalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _objectDefinitionExternalReferenceCodeSupplier;
 
 	@Schema
@@ -642,6 +655,7 @@ public class NotificationTemplate implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long objectDefinitionId;
 
+	@JsonIgnore
 	private Supplier<Long> _objectDefinitionIdSupplier;
 
 	@Schema
@@ -682,6 +696,7 @@ public class NotificationTemplate implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String recipientType;
 
+	@JsonIgnore
 	private Supplier<String> _recipientTypeSupplier;
 
 	@Schema
@@ -723,6 +738,7 @@ public class NotificationTemplate implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object[] recipients;
 
+	@JsonIgnore
 	private Supplier<Object[]> _recipientsSupplier;
 
 	@Schema
@@ -764,6 +780,7 @@ public class NotificationTemplate implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> subject;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _subjectSupplier;
 
 	@Schema
@@ -804,6 +821,7 @@ public class NotificationTemplate implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean system;
 
+	@JsonIgnore
 	private Supplier<Boolean> _systemSupplier;
 
 	@Schema
@@ -842,6 +860,7 @@ public class NotificationTemplate implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String type;
 
+	@JsonIgnore
 	private Supplier<String> _typeSupplier;
 
 	@Schema
@@ -882,6 +901,7 @@ public class NotificationTemplate implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String typeLabel;
 
+	@JsonIgnore
 	private Supplier<String> _typeLabelSupplier;
 
 	@Override

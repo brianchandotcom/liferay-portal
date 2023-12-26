@@ -87,6 +87,7 @@ public class WebUrl implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema(
@@ -131,6 +132,7 @@ public class WebUrl implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean primary;
 
+	@JsonIgnore
 	private Supplier<Boolean> _primarySupplier;
 
 	@Schema(description = "The absolute URL.")
@@ -169,6 +171,7 @@ public class WebUrl implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String url;
 
+	@JsonIgnore
 	private Supplier<String> _urlSupplier;
 
 	@Schema(description = "The URL's type.")
@@ -209,6 +212,7 @@ public class WebUrl implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String urlType;
 
+	@JsonIgnore
 	private Supplier<String> _urlTypeSupplier;
 
 	@Override

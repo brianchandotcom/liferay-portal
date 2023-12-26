@@ -90,6 +90,7 @@ public class Node implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String label;
 
+	@JsonIgnore
 	private Supplier<String> _labelSupplier;
 
 	@Schema
@@ -128,6 +129,7 @@ public class Node implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema(description = "The workflow's node types.")
@@ -178,6 +180,7 @@ public class Node implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Type type;
 
+	@JsonIgnore
 	private Supplier<Type> _typeSupplier;
 
 	@Override

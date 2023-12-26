@@ -94,6 +94,7 @@ public class PriceListDiscount implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String discountExternalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _discountExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
@@ -136,6 +137,7 @@ public class PriceListDiscount implements Serializable {
 	@NotNull
 	protected Long discountId;
 
+	@JsonIgnore
 	private Supplier<Long> _discountIdSupplier;
 
 	@Schema
@@ -176,6 +178,7 @@ public class PriceListDiscount implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String discountName;
 
+	@JsonIgnore
 	private Supplier<String> _discountNameSupplier;
 
 	@DecimalMin("0")
@@ -217,6 +220,7 @@ public class PriceListDiscount implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer order;
 
+	@JsonIgnore
 	private Supplier<Integer> _orderSupplier;
 
 	@DecimalMin("0")
@@ -258,6 +262,7 @@ public class PriceListDiscount implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long priceListDiscountId;
 
+	@JsonIgnore
 	private Supplier<Long> _priceListDiscountIdSupplier;
 
 	@Schema(example = "PAB-34098-789-N")
@@ -302,6 +307,7 @@ public class PriceListDiscount implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String priceListExternalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _priceListExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
@@ -344,6 +350,7 @@ public class PriceListDiscount implements Serializable {
 	@NotNull
 	protected Long priceListId;
 
+	@JsonIgnore
 	private Supplier<Long> _priceListIdSupplier;
 
 	@Override

@@ -97,6 +97,7 @@ public class PageWidgetInstanceDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] cssClasses;
 
+	@JsonIgnore
 	private Supplier<String[]> _cssClassesSupplier;
 
 	@Schema(description = "Custom CSS that is applied on the fragment.")
@@ -137,6 +138,7 @@ public class PageWidgetInstanceDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String customCSS;
 
+	@JsonIgnore
 	private Supplier<String> _customCSSSupplier;
 
 	@Schema(description = "The custom CSS viewports of the page collection.")
@@ -181,6 +183,7 @@ public class PageWidgetInstanceDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected CustomCSSViewport[] customCSSViewports;
 
+	@JsonIgnore
 	private Supplier<CustomCSSViewport[]> _customCSSViewportsSupplier;
 
 	@Schema(description = "The fragment style of the page widget instance.")
@@ -224,6 +227,7 @@ public class PageWidgetInstanceDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentStyle fragmentStyle;
 
+	@JsonIgnore
 	private Supplier<FragmentStyle> _fragmentStyleSupplier;
 
 	@Schema(
@@ -270,6 +274,7 @@ public class PageWidgetInstanceDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentViewport[] fragmentViewports;
 
+	@JsonIgnore
 	private Supplier<FragmentViewport[]> _fragmentViewportsSupplier;
 
 	@Schema(description = "The custom name of a Page Widget instance.")
@@ -308,6 +313,7 @@ public class PageWidgetInstanceDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema(description = "The widget instance of the page widget instance.")
@@ -352,6 +358,7 @@ public class PageWidgetInstanceDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected WidgetInstance widgetInstance;
 
+	@JsonIgnore
 	private Supplier<WidgetInstance> _widgetInstanceSupplier;
 
 	@Override

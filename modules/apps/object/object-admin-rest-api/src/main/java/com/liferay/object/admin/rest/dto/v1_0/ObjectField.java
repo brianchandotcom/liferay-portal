@@ -102,6 +102,7 @@ public class ObjectField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected DBType DBType;
 
+	@JsonIgnore
 	private Supplier<DBType> _DBTypeSupplier;
 
 	@Schema
@@ -144,6 +145,7 @@ public class ObjectField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
+	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
 	@Schema
@@ -196,6 +198,7 @@ public class ObjectField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BusinessType businessType;
 
+	@JsonIgnore
 	private Supplier<BusinessType> _businessTypeSupplier;
 
 	@Schema(deprecated = true)
@@ -237,6 +240,7 @@ public class ObjectField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String defaultValue;
 
+	@JsonIgnore
 	private Supplier<String> _defaultValueSupplier;
 
 	@Schema
@@ -277,6 +281,7 @@ public class ObjectField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@Schema
@@ -315,6 +320,7 @@ public class ObjectField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema
@@ -355,6 +361,7 @@ public class ObjectField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean indexed;
 
+	@JsonIgnore
 	private Supplier<Boolean> _indexedSupplier;
 
 	@Schema
@@ -395,6 +402,7 @@ public class ObjectField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean indexedAsKeyword;
 
+	@JsonIgnore
 	private Supplier<Boolean> _indexedAsKeywordSupplier;
 
 	@Schema
@@ -435,6 +443,7 @@ public class ObjectField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String indexedLanguageId;
 
+	@JsonIgnore
 	private Supplier<String> _indexedLanguageIdSupplier;
 
 	@Schema
@@ -476,6 +485,7 @@ public class ObjectField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> label;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _labelSupplier;
 
 	@Schema
@@ -522,6 +532,7 @@ public class ObjectField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String listTypeDefinitionExternalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _listTypeDefinitionExternalReferenceCodeSupplier;
 
 	@Schema
@@ -562,6 +573,7 @@ public class ObjectField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long listTypeDefinitionId;
 
+	@JsonIgnore
 	private Supplier<Long> _listTypeDefinitionIdSupplier;
 
 	@Schema
@@ -602,6 +614,7 @@ public class ObjectField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean localized;
 
+	@JsonIgnore
 	private Supplier<Boolean> _localizedSupplier;
 
 	@Schema
@@ -640,6 +653,7 @@ public class ObjectField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema
@@ -684,6 +698,7 @@ public class ObjectField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ObjectFieldSetting[] objectFieldSettings;
 
+	@JsonIgnore
 	private Supplier<ObjectFieldSetting[]> _objectFieldSettingsSupplier;
 
 	@Schema
@@ -736,6 +751,7 @@ public class ObjectField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ReadOnly readOnly;
 
+	@JsonIgnore
 	private Supplier<ReadOnly> _readOnlySupplier;
 
 	@Schema
@@ -780,6 +796,7 @@ public class ObjectField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String readOnlyConditionExpression;
 
+	@JsonIgnore
 	private Supplier<String> _readOnlyConditionExpressionSupplier;
 
 	@Schema
@@ -833,6 +850,7 @@ public class ObjectField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected RelationshipType relationshipType;
 
+	@JsonIgnore
 	private Supplier<RelationshipType> _relationshipTypeSupplier;
 
 	@Schema
@@ -873,6 +891,7 @@ public class ObjectField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean required;
 
+	@JsonIgnore
 	private Supplier<Boolean> _requiredSupplier;
 
 	@Schema
@@ -913,6 +932,7 @@ public class ObjectField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean state;
 
+	@JsonIgnore
 	private Supplier<Boolean> _stateSupplier;
 
 	@Schema
@@ -953,6 +973,7 @@ public class ObjectField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean system;
 
+	@JsonIgnore
 	private Supplier<Boolean> _systemSupplier;
 
 	@Schema(deprecated = true)
@@ -1004,6 +1025,7 @@ public class ObjectField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Type type;
 
+	@JsonIgnore
 	private Supplier<Type> _typeSupplier;
 
 	@Schema
@@ -1044,6 +1066,7 @@ public class ObjectField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean unique;
 
+	@JsonIgnore
 	private Supplier<Boolean> _uniqueSupplier;
 
 	@Override

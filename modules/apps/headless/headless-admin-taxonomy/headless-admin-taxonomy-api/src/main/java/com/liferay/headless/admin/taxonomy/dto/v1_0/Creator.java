@@ -93,6 +93,7 @@ public class Creator implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String additionalName;
 
+	@JsonIgnore
 	private Supplier<String> _additionalNameSupplier;
 
 	@Schema(description = "The type of the content.")
@@ -133,6 +134,7 @@ public class Creator implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String contentType;
 
+	@JsonIgnore
 	private Supplier<String> _contentTypeSupplier;
 
 	@Schema(description = "The user's surname (last name).")
@@ -173,6 +175,7 @@ public class Creator implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String familyName;
 
+	@JsonIgnore
 	private Supplier<String> _familyNameSupplier;
 
 	@Schema(description = "The user's first name.")
@@ -213,6 +216,7 @@ public class Creator implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String givenName;
 
+	@JsonIgnore
 	private Supplier<String> _givenNameSupplier;
 
 	@Schema(description = "The user's ID.")
@@ -251,6 +255,7 @@ public class Creator implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema(description = "A relative URL to the user's profile image.")
@@ -291,6 +296,7 @@ public class Creator implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String image;
 
+	@JsonIgnore
 	private Supplier<String> _imageSupplier;
 
 	@Schema(description = "The user's full name.")
@@ -329,6 +335,7 @@ public class Creator implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema(description = "A relative URL to the user's profile.")
@@ -369,6 +376,7 @@ public class Creator implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String profileURL;
 
+	@JsonIgnore
 	private Supplier<String> _profileURLSupplier;
 
 	@Override

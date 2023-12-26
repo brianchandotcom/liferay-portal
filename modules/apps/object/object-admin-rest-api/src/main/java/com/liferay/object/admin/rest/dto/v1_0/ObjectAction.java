@@ -94,6 +94,7 @@ public class ObjectAction implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
+	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
 	@Schema
@@ -134,6 +135,7 @@ public class ObjectAction implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean active;
 
+	@JsonIgnore
 	private Supplier<Boolean> _activeSupplier;
 
 	@Schema
@@ -174,6 +176,7 @@ public class ObjectAction implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String conditionExpression;
 
+	@JsonIgnore
 	private Supplier<String> _conditionExpressionSupplier;
 
 	@Schema
@@ -214,6 +217,7 @@ public class ObjectAction implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
+	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
 	@Schema
@@ -254,6 +258,7 @@ public class ObjectAction implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
+	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
 	@Schema
@@ -294,6 +299,7 @@ public class ObjectAction implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
+	@JsonIgnore
 	private Supplier<String> _descriptionSupplier;
 
 	@Schema
@@ -336,6 +342,7 @@ public class ObjectAction implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> errorMessage;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _errorMessageSupplier;
 
 	@Schema
@@ -376,6 +383,7 @@ public class ObjectAction implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@Schema
@@ -414,6 +422,7 @@ public class ObjectAction implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema
@@ -455,6 +464,7 @@ public class ObjectAction implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> label;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _labelSupplier;
 
 	@Schema
@@ -493,6 +503,7 @@ public class ObjectAction implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema
@@ -534,6 +545,7 @@ public class ObjectAction implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String objectActionExecutorKey;
 
+	@JsonIgnore
 	private Supplier<String> _objectActionExecutorKeySupplier;
 
 	@Schema
@@ -575,6 +587,7 @@ public class ObjectAction implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String objectActionTriggerKey;
 
+	@JsonIgnore
 	private Supplier<String> _objectActionTriggerKeySupplier;
 
 	@Schema
@@ -616,6 +629,7 @@ public class ObjectAction implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, ?> parameters;
 
+	@JsonIgnore
 	private Supplier<Map<String, ?>> _parametersSupplier;
 
 	@Schema
@@ -657,6 +671,7 @@ public class ObjectAction implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Status status;
 
+	@JsonIgnore
 	private Supplier<Status> _statusSupplier;
 
 	@Schema
@@ -697,6 +712,7 @@ public class ObjectAction implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean system;
 
+	@JsonIgnore
 	private Supplier<Boolean> _systemSupplier;
 
 	@Override

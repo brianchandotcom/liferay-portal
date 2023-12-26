@@ -105,6 +105,7 @@ public class ContextReference implements Serializable {
 	@NotNull
 	protected ContextSource contextSource;
 
+	@JsonIgnore
 	private Supplier<ContextSource> _contextSourceSupplier;
 
 	@Override

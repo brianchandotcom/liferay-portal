@@ -93,6 +93,7 @@ public class SkuForecast implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Float actual;
 
+	@JsonIgnore
 	private Supplier<Float> _actualSupplier;
 
 	@Schema
@@ -134,6 +135,7 @@ public class SkuForecast implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Float forecast;
 
+	@JsonIgnore
 	private Supplier<Float> _forecastSupplier;
 
 	@Schema
@@ -175,6 +177,7 @@ public class SkuForecast implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Float forecastLowerBound;
 
+	@JsonIgnore
 	private Supplier<Float> _forecastLowerBoundSupplier;
 
 	@Schema
@@ -216,6 +219,7 @@ public class SkuForecast implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Float forecastUpperBound;
 
+	@JsonIgnore
 	private Supplier<Float> _forecastUpperBoundSupplier;
 
 	@Schema
@@ -254,6 +258,7 @@ public class SkuForecast implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String sku;
 
+	@JsonIgnore
 	private Supplier<String> _skuSupplier;
 
 	@Schema
@@ -294,6 +299,7 @@ public class SkuForecast implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date timestamp;
 
+	@JsonIgnore
 	private Supplier<Date> _timestampSupplier;
 
 	@Schema
@@ -332,6 +338,7 @@ public class SkuForecast implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String unit;
 
+	@JsonIgnore
 	private Supplier<String> _unitSupplier;
 
 	@Override

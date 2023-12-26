@@ -92,6 +92,7 @@ public class OrderRuleAccount implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Account account;
 
+	@JsonIgnore
 	private Supplier<Account> _accountSupplier;
 
 	@Schema(example = "DAB-34098-789-N")
@@ -136,6 +137,7 @@ public class OrderRuleAccount implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String accountExternalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _accountExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
@@ -178,6 +180,7 @@ public class OrderRuleAccount implements Serializable {
 	@NotNull
 	protected Long accountId;
 
+	@JsonIgnore
 	private Supplier<Long> _accountIdSupplier;
 
 	@Schema
@@ -220,6 +223,7 @@ public class OrderRuleAccount implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
+	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
 	@DecimalMin("0")
@@ -261,6 +265,7 @@ public class OrderRuleAccount implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long orderRuleAccountId;
 
+	@JsonIgnore
 	private Supplier<Long> _orderRuleAccountIdSupplier;
 
 	@Schema(example = "PAB-34098-789-N")
@@ -305,6 +310,7 @@ public class OrderRuleAccount implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String orderRuleExternalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _orderRuleExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
@@ -347,6 +353,7 @@ public class OrderRuleAccount implements Serializable {
 	@NotNull
 	protected Long orderRuleId;
 
+	@JsonIgnore
 	private Supplier<Long> _orderRuleIdSupplier;
 
 	@Override

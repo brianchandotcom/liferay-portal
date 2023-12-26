@@ -88,6 +88,7 @@ public class Address implements Serializable {
 	@NotEmpty
 	protected String city;
 
+	@JsonIgnore
 	private Supplier<String> _citySupplier;
 
 	@Schema
@@ -128,6 +129,7 @@ public class Address implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String country;
 
+	@JsonIgnore
 	private Supplier<String> _countrySupplier;
 
 	@Schema
@@ -169,6 +171,7 @@ public class Address implements Serializable {
 	@NotEmpty
 	protected String countryISOCode;
 
+	@JsonIgnore
 	private Supplier<String> _countryISOCodeSupplier;
 
 	@Schema
@@ -209,6 +212,7 @@ public class Address implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
+	@JsonIgnore
 	private Supplier<String> _descriptionSupplier;
 
 	@Schema
@@ -247,6 +251,7 @@ public class Address implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema
@@ -287,6 +292,7 @@ public class Address implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double latitude;
 
+	@JsonIgnore
 	private Supplier<Double> _latitudeSupplier;
 
 	@Schema
@@ -327,6 +333,7 @@ public class Address implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double longitude;
 
+	@JsonIgnore
 	private Supplier<Double> _longitudeSupplier;
 
 	@Schema
@@ -366,6 +373,7 @@ public class Address implements Serializable {
 	@NotEmpty
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema
@@ -406,6 +414,7 @@ public class Address implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String phoneNumber;
 
+	@JsonIgnore
 	private Supplier<String> _phoneNumberSupplier;
 
 	@Schema
@@ -446,6 +455,7 @@ public class Address implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String region;
 
+	@JsonIgnore
 	private Supplier<String> _regionSupplier;
 
 	@Schema
@@ -486,6 +496,7 @@ public class Address implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String regionISOCode;
 
+	@JsonIgnore
 	private Supplier<String> _regionISOCodeSupplier;
 
 	@Schema
@@ -527,6 +538,7 @@ public class Address implements Serializable {
 	@NotEmpty
 	protected String street1;
 
+	@JsonIgnore
 	private Supplier<String> _street1Supplier;
 
 	@Schema
@@ -567,6 +579,7 @@ public class Address implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String street2;
 
+	@JsonIgnore
 	private Supplier<String> _street2Supplier;
 
 	@Schema
@@ -607,6 +620,7 @@ public class Address implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String street3;
 
+	@JsonIgnore
 	private Supplier<String> _street3Supplier;
 
 	@Schema
@@ -645,6 +659,7 @@ public class Address implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String type;
 
+	@JsonIgnore
 	private Supplier<String> _typeSupplier;
 
 	@Schema
@@ -685,6 +700,7 @@ public class Address implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer typeId;
 
+	@JsonIgnore
 	private Supplier<Integer> _typeIdSupplier;
 
 	@Schema
@@ -725,6 +741,7 @@ public class Address implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String vatNumber;
 
+	@JsonIgnore
 	private Supplier<String> _vatNumberSupplier;
 
 	@Schema
@@ -763,6 +780,7 @@ public class Address implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String zip;
 
+	@JsonIgnore
 	private Supplier<String> _zipSupplier;
 
 	@Override

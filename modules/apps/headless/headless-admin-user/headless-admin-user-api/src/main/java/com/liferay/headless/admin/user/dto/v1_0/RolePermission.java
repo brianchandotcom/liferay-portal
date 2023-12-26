@@ -86,6 +86,7 @@ public class RolePermission implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] actionIds;
 
+	@JsonIgnore
 	private Supplier<String[]> _actionIdsSupplier;
 
 	@Schema
@@ -124,6 +125,7 @@ public class RolePermission implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema
@@ -164,6 +166,7 @@ public class RolePermission implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String label;
 
+	@JsonIgnore
 	private Supplier<String> _labelSupplier;
 
 	@Schema
@@ -204,6 +207,7 @@ public class RolePermission implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String primaryKey;
 
+	@JsonIgnore
 	private Supplier<String> _primaryKeySupplier;
 
 	@Schema
@@ -244,6 +248,7 @@ public class RolePermission implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String resourceName;
 
+	@JsonIgnore
 	private Supplier<String> _resourceNameSupplier;
 
 	@Schema
@@ -284,6 +289,7 @@ public class RolePermission implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long roleId;
 
+	@JsonIgnore
 	private Supplier<Long> _roleIdSupplier;
 
 	@Schema
@@ -322,6 +328,7 @@ public class RolePermission implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long scope;
 
+	@JsonIgnore
 	private Supplier<Long> _scopeSupplier;
 
 	@Override

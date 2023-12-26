@@ -91,6 +91,7 @@ public class Validation implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String errorMessage;
 
+	@JsonIgnore
 	private Supplier<String> _errorMessageSupplier;
 
 	@Schema
@@ -133,6 +134,7 @@ public class Validation implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> errorMessage_i18n;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _errorMessage_i18nSupplier;
 
 	@Schema
@@ -173,6 +175,7 @@ public class Validation implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String expression;
 
+	@JsonIgnore
 	private Supplier<String> _expressionSupplier;
 
 	@Schema
@@ -211,6 +214,7 @@ public class Validation implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Override

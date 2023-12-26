@@ -92,6 +92,7 @@ public class FormConfig implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object formReference;
 
+	@JsonIgnore
 	private Supplier<Object> _formReferenceSupplier;
 
 	@Schema(description = "The definition for the success message of the form.")
@@ -139,6 +140,7 @@ public class FormConfig implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object formSuccessSubmissionResult;
 
+	@JsonIgnore
 	private Supplier<Object> _formSuccessSubmissionResultSupplier;
 
 	@Override

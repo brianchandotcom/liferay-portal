@@ -89,6 +89,7 @@ public class ReindexStatus implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long completionPercentage;
 
+	@JsonIgnore
 	private Supplier<Long> _completionPercentageSupplier;
 
 	@Schema
@@ -127,6 +128,7 @@ public class ReindexStatus implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String key;
 
+	@JsonIgnore
 	private Supplier<String> _keySupplier;
 
 	@Override

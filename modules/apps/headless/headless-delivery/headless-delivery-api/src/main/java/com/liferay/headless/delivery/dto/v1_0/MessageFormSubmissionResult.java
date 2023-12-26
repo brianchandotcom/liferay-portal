@@ -96,6 +96,7 @@ public class MessageFormSubmissionResult implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentInlineValue message;
 
+	@JsonIgnore
 	private Supplier<FragmentInlineValue> _messageSupplier;
 
 	@Schema(description = "The message form submission type (embedded, none).")
@@ -150,6 +151,7 @@ public class MessageFormSubmissionResult implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected MessageType messageType;
 
+	@JsonIgnore
 	private Supplier<MessageType> _messageTypeSupplier;
 
 	@Schema
@@ -190,6 +192,7 @@ public class MessageFormSubmissionResult implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean showNotification;
 
+	@JsonIgnore
 	private Supplier<Boolean> _showNotificationSupplier;
 
 	@Override

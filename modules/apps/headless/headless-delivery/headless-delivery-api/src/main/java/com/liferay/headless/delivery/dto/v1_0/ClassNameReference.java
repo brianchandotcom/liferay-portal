@@ -90,6 +90,7 @@ public class ClassNameReference implements Serializable {
 	@NotEmpty
 	protected String className;
 
+	@JsonIgnore
 	private Supplier<String> _classNameSupplier;
 
 	@Override

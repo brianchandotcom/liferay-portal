@@ -99,6 +99,7 @@ public class TierPrice implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
+	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
 	@Schema(example = "true")
@@ -139,6 +140,7 @@ public class TierPrice implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean active;
 
+	@JsonIgnore
 	private Supplier<Boolean> _activeSupplier;
 
 	@Schema
@@ -180,6 +182,7 @@ public class TierPrice implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, ?> customFields;
 
+	@JsonIgnore
 	private Supplier<Map<String, ?>> _customFieldsSupplier;
 
 	@Schema(example = "true")
@@ -220,6 +223,7 @@ public class TierPrice implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean discountDiscovery;
 
+	@JsonIgnore
 	private Supplier<Boolean> _discountDiscoverySupplier;
 
 	@DecimalMin("0")
@@ -262,6 +266,7 @@ public class TierPrice implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal discountLevel1;
 
+	@JsonIgnore
 	private Supplier<BigDecimal> _discountLevel1Supplier;
 
 	@DecimalMin("0")
@@ -304,6 +309,7 @@ public class TierPrice implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal discountLevel2;
 
+	@JsonIgnore
 	private Supplier<BigDecimal> _discountLevel2Supplier;
 
 	@DecimalMin("0")
@@ -346,6 +352,7 @@ public class TierPrice implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal discountLevel3;
 
+	@JsonIgnore
 	private Supplier<BigDecimal> _discountLevel3Supplier;
 
 	@DecimalMin("0")
@@ -388,6 +395,7 @@ public class TierPrice implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal discountLevel4;
 
+	@JsonIgnore
 	private Supplier<BigDecimal> _discountLevel4Supplier;
 
 	@Schema(example = "2017-07-21")
@@ -428,6 +436,7 @@ public class TierPrice implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date displayDate;
 
+	@JsonIgnore
 	private Supplier<Date> _displayDateSupplier;
 
 	@Schema(example = "2017-08-21")
@@ -468,6 +477,7 @@ public class TierPrice implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date expirationDate;
 
+	@JsonIgnore
 	private Supplier<Date> _expirationDateSupplier;
 
 	@Schema(example = "AB-34098-789-N")
@@ -508,6 +518,7 @@ public class TierPrice implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@DecimalMin("0")
@@ -547,6 +558,7 @@ public class TierPrice implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@DecimalMin("0")
@@ -590,6 +602,7 @@ public class TierPrice implements Serializable {
 	@NotNull
 	protected BigDecimal minimumQuantity;
 
+	@JsonIgnore
 	private Supplier<BigDecimal> _minimumQuantitySupplier;
 
 	@Schema(example = "true")
@@ -630,6 +643,7 @@ public class TierPrice implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean neverExpire;
 
+	@JsonIgnore
 	private Supplier<Boolean> _neverExpireSupplier;
 
 	@Schema
@@ -671,6 +685,7 @@ public class TierPrice implements Serializable {
 	@NotNull
 	protected Double price;
 
+	@JsonIgnore
 	private Supplier<Double> _priceSupplier;
 
 	@Schema(example = "CAB-34098-789-N")
@@ -715,6 +730,7 @@ public class TierPrice implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String priceEntryExternalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _priceEntryExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
@@ -757,6 +773,7 @@ public class TierPrice implements Serializable {
 	@NotNull
 	protected Long priceEntryId;
 
+	@JsonIgnore
 	private Supplier<Long> _priceEntryIdSupplier;
 
 	@Schema
@@ -797,6 +814,7 @@ public class TierPrice implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String priceFormatted;
 
+	@JsonIgnore
 	private Supplier<String> _priceFormattedSupplier;
 
 	@Schema(example = "m")
@@ -837,6 +855,7 @@ public class TierPrice implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String unitOfMeasureKey;
 
+	@JsonIgnore
 	private Supplier<String> _unitOfMeasureKeySupplier;
 
 	@Override

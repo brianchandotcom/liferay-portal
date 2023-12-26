@@ -84,6 +84,7 @@ public class Link implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String href;
 
+	@JsonIgnore
 	private Supplier<String> _hrefSupplier;
 
 	@Schema
@@ -124,6 +125,7 @@ public class Link implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String label;
 
+	@JsonIgnore
 	private Supplier<String> _labelSupplier;
 
 	@Override

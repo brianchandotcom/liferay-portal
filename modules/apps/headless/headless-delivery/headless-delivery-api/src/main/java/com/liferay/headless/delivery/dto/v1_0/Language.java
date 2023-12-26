@@ -91,6 +91,7 @@ public class Language implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String countryName;
 
+	@JsonIgnore
 	private Supplier<String> _countryNameSupplier;
 
 	@Schema(description = "The localized language's country name values.")
@@ -133,6 +134,7 @@ public class Language implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> countryName_i18n;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _countryName_i18nSupplier;
 
 	@Schema(description = "The language's ID.")
@@ -171,6 +173,7 @@ public class Language implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String id;
 
+	@JsonIgnore
 	private Supplier<String> _idSupplier;
 
 	@Schema(
@@ -215,6 +218,7 @@ public class Language implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean markedAsDefault;
 
+	@JsonIgnore
 	private Supplier<Boolean> _markedAsDefaultSupplier;
 
 	@Schema(description = "The language's name.")
@@ -253,6 +257,7 @@ public class Language implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema(description = "The localized language's name values.")
@@ -295,6 +300,7 @@ public class Language implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> name_i18n;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _name_i18nSupplier;
 
 	@Override

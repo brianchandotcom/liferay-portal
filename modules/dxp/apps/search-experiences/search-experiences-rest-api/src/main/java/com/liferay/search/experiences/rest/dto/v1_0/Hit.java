@@ -90,6 +90,7 @@ public class Hit implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, DocumentField> documentFields;
 
+	@JsonIgnore
 	private Supplier<Map<String, DocumentField>> _documentFieldsSupplier;
 
 	@Schema
@@ -130,6 +131,7 @@ public class Hit implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String explanation;
 
+	@JsonIgnore
 	private Supplier<String> _explanationSupplier;
 
 	@Schema
@@ -168,6 +170,7 @@ public class Hit implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String id;
 
+	@JsonIgnore
 	private Supplier<String> _idSupplier;
 
 	@Schema
@@ -207,6 +210,7 @@ public class Hit implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Float score;
 
+	@JsonIgnore
 	private Supplier<Float> _scoreSupplier;
 
 	@Schema
@@ -247,6 +251,7 @@ public class Hit implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long version;
 
+	@JsonIgnore
 	private Supplier<Long> _versionSupplier;
 
 	@Override

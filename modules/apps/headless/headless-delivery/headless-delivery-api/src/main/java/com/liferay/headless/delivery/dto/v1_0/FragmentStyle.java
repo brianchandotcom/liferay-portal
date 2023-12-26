@@ -90,6 +90,7 @@ public class FragmentStyle implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String backgroundColor;
 
+	@JsonIgnore
 	private Supplier<String> _backgroundColorSupplier;
 
 	@Schema(description = "The fragment's background image.")
@@ -134,6 +135,7 @@ public class FragmentStyle implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentImage backgroundFragmentImage;
 
+	@JsonIgnore
 	private Supplier<FragmentImage> _backgroundFragmentImageSupplier;
 
 	@Schema(description = "The fragment's border color.")
@@ -174,6 +176,7 @@ public class FragmentStyle implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String borderColor;
 
+	@JsonIgnore
 	private Supplier<String> _borderColorSupplier;
 
 	@Schema(description = "The fragment's background radius.")
@@ -214,6 +217,7 @@ public class FragmentStyle implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String borderRadius;
 
+	@JsonIgnore
 	private Supplier<String> _borderRadiusSupplier;
 
 	@Schema(description = "The fragment's border width.")
@@ -254,6 +258,7 @@ public class FragmentStyle implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String borderWidth;
 
+	@JsonIgnore
 	private Supplier<String> _borderWidthSupplier;
 
 	@Schema(description = "The fragment's font family.")
@@ -294,6 +299,7 @@ public class FragmentStyle implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String fontFamily;
 
+	@JsonIgnore
 	private Supplier<String> _fontFamilySupplier;
 
 	@Schema(description = "The fragment's font size.")
@@ -334,6 +340,7 @@ public class FragmentStyle implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String fontSize;
 
+	@JsonIgnore
 	private Supplier<String> _fontSizeSupplier;
 
 	@Schema(description = "The fragment's font weight.")
@@ -374,6 +381,7 @@ public class FragmentStyle implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String fontWeight;
 
+	@JsonIgnore
 	private Supplier<String> _fontWeightSupplier;
 
 	@Schema(description = "The fragment's height.")
@@ -414,6 +422,7 @@ public class FragmentStyle implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String height;
 
+	@JsonIgnore
 	private Supplier<String> _heightSupplier;
 
 	@Schema(description = "Specifies if the fragment is hidden to the user.")
@@ -456,6 +465,7 @@ public class FragmentStyle implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean hidden;
 
+	@JsonIgnore
 	private Supplier<Boolean> _hiddenSupplier;
 
 	@Schema(description = "The fragment's margin bottom.")
@@ -496,6 +506,7 @@ public class FragmentStyle implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String marginBottom;
 
+	@JsonIgnore
 	private Supplier<String> _marginBottomSupplier;
 
 	@Schema(description = "The fragment's margin left.")
@@ -536,6 +547,7 @@ public class FragmentStyle implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String marginLeft;
 
+	@JsonIgnore
 	private Supplier<String> _marginLeftSupplier;
 
 	@Schema(description = "The fragment's margin right.")
@@ -576,6 +588,7 @@ public class FragmentStyle implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String marginRight;
 
+	@JsonIgnore
 	private Supplier<String> _marginRightSupplier;
 
 	@Schema(description = "The fragment's margin top.")
@@ -616,6 +629,7 @@ public class FragmentStyle implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String marginTop;
 
+	@JsonIgnore
 	private Supplier<String> _marginTopSupplier;
 
 	@Schema(description = "The fragment's max height.")
@@ -656,6 +670,7 @@ public class FragmentStyle implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String maxHeight;
 
+	@JsonIgnore
 	private Supplier<String> _maxHeightSupplier;
 
 	@Schema(description = "The fragment's max width.")
@@ -696,6 +711,7 @@ public class FragmentStyle implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String maxWidth;
 
+	@JsonIgnore
 	private Supplier<String> _maxWidthSupplier;
 
 	@Schema(description = "The fragment's min height.")
@@ -736,6 +752,7 @@ public class FragmentStyle implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String minHeight;
 
+	@JsonIgnore
 	private Supplier<String> _minHeightSupplier;
 
 	@Schema(description = "The fragment's min width.")
@@ -776,6 +793,7 @@ public class FragmentStyle implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String minWidth;
 
+	@JsonIgnore
 	private Supplier<String> _minWidthSupplier;
 
 	@Schema(description = "The fragment's opacity.")
@@ -816,6 +834,7 @@ public class FragmentStyle implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String opacity;
 
+	@JsonIgnore
 	private Supplier<String> _opacitySupplier;
 
 	@Schema(description = "The fragment's overflow behavior.")
@@ -856,6 +875,7 @@ public class FragmentStyle implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String overflow;
 
+	@JsonIgnore
 	private Supplier<String> _overflowSupplier;
 
 	@Schema(description = "The fragment's padding bottom.")
@@ -896,6 +916,7 @@ public class FragmentStyle implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String paddingBottom;
 
+	@JsonIgnore
 	private Supplier<String> _paddingBottomSupplier;
 
 	@Schema(description = "The fragment's padding left.")
@@ -936,6 +957,7 @@ public class FragmentStyle implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String paddingLeft;
 
+	@JsonIgnore
 	private Supplier<String> _paddingLeftSupplier;
 
 	@Schema(description = "The fragment's padding right.")
@@ -976,6 +998,7 @@ public class FragmentStyle implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String paddingRight;
 
+	@JsonIgnore
 	private Supplier<String> _paddingRightSupplier;
 
 	@Schema(description = "The fragment's padding top.")
@@ -1016,6 +1039,7 @@ public class FragmentStyle implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String paddingTop;
 
+	@JsonIgnore
 	private Supplier<String> _paddingTopSupplier;
 
 	@Schema(description = "The fragment's shadow effect.")
@@ -1056,6 +1080,7 @@ public class FragmentStyle implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String shadow;
 
+	@JsonIgnore
 	private Supplier<String> _shadowSupplier;
 
 	@Schema(description = "The fragment's text align.")
@@ -1096,6 +1121,7 @@ public class FragmentStyle implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String textAlign;
 
+	@JsonIgnore
 	private Supplier<String> _textAlignSupplier;
 
 	@Schema(description = "The fragment's text color.")
@@ -1136,6 +1162,7 @@ public class FragmentStyle implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String textColor;
 
+	@JsonIgnore
 	private Supplier<String> _textColorSupplier;
 
 	@Schema(description = "The fragment's width.")
@@ -1176,6 +1203,7 @@ public class FragmentStyle implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String width;
 
+	@JsonIgnore
 	private Supplier<String> _widthSupplier;
 
 	@Override

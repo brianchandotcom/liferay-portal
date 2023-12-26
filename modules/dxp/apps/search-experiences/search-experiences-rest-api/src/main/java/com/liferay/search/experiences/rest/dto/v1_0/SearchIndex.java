@@ -86,6 +86,7 @@ public class SearchIndex implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean external;
 
+	@JsonIgnore
 	private Supplier<Boolean> _externalSupplier;
 
 	@Schema
@@ -124,6 +125,7 @@ public class SearchIndex implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Override

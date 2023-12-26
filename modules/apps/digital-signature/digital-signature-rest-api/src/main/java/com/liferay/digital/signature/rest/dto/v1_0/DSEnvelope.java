@@ -92,6 +92,7 @@ public class DSEnvelope implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
+	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
 	@Schema
@@ -132,6 +133,7 @@ public class DSEnvelope implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
+	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
 	@Schema
@@ -173,6 +175,7 @@ public class DSEnvelope implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected DSDocument[] dsDocument;
 
+	@JsonIgnore
 	private Supplier<DSDocument[]> _dsDocumentSupplier;
 
 	@Schema
@@ -214,6 +217,7 @@ public class DSEnvelope implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected DSRecipient[] dsRecipient;
 
+	@JsonIgnore
 	private Supplier<DSRecipient[]> _dsRecipientSupplier;
 
 	@Schema
@@ -254,6 +258,7 @@ public class DSEnvelope implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String emailBlurb;
 
+	@JsonIgnore
 	private Supplier<String> _emailBlurbSupplier;
 
 	@Schema
@@ -294,6 +299,7 @@ public class DSEnvelope implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String emailSubject;
 
+	@JsonIgnore
 	private Supplier<String> _emailSubjectSupplier;
 
 	@Schema
@@ -332,6 +338,7 @@ public class DSEnvelope implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String id;
 
+	@JsonIgnore
 	private Supplier<String> _idSupplier;
 
 	@Schema
@@ -370,6 +377,7 @@ public class DSEnvelope implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema
@@ -410,6 +418,7 @@ public class DSEnvelope implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String senderEmailAddress;
 
+	@JsonIgnore
 	private Supplier<String> _senderEmailAddressSupplier;
 
 	@Schema
@@ -450,6 +459,7 @@ public class DSEnvelope implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long siteId;
 
+	@JsonIgnore
 	private Supplier<Long> _siteIdSupplier;
 
 	@Schema
@@ -490,6 +500,7 @@ public class DSEnvelope implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String status;
 
+	@JsonIgnore
 	private Supplier<String> _statusSupplier;
 
 	@Override

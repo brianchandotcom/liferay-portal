@@ -92,6 +92,7 @@ public class PlacedOrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String adaptiveMediaImageHTMLTag;
 
+	@JsonIgnore
 	private Supplier<String> _adaptiveMediaImageHTMLTagSupplier;
 
 	@Schema
@@ -133,6 +134,7 @@ public class PlacedOrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, ?> customFields;
 
+	@JsonIgnore
 	private Supplier<Map<String, ?>> _customFieldsSupplier;
 
 	@Schema
@@ -173,6 +175,7 @@ public class PlacedOrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String[] errorMessages;
 
+	@JsonIgnore
 	private Supplier<String[]> _errorMessagesSupplier;
 
 	@Schema
@@ -211,6 +214,7 @@ public class PlacedOrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema
@@ -249,6 +253,7 @@ public class PlacedOrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema
@@ -289,6 +294,7 @@ public class PlacedOrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String options;
 
+	@JsonIgnore
 	private Supplier<String> _optionsSupplier;
 
 	@Schema
@@ -329,6 +335,7 @@ public class PlacedOrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long parentOrderItemId;
 
+	@JsonIgnore
 	private Supplier<Long> _parentOrderItemIdSupplier;
 
 	@Schema
@@ -373,6 +380,7 @@ public class PlacedOrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected PlacedOrderItemShipment[] placedOrderItemShipments;
 
+	@JsonIgnore
 	private Supplier<PlacedOrderItemShipment[]>
 		_placedOrderItemShipmentsSupplier;
 
@@ -416,6 +424,7 @@ public class PlacedOrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected PlacedOrderItem[] placedOrderItems;
 
+	@JsonIgnore
 	private Supplier<PlacedOrderItem[]> _placedOrderItemsSupplier;
 
 	@Schema
@@ -455,6 +464,7 @@ public class PlacedOrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Price price;
 
+	@JsonIgnore
 	private Supplier<Price> _priceSupplier;
 
 	@Schema
@@ -495,6 +505,7 @@ public class PlacedOrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long productId;
 
+	@JsonIgnore
 	private Supplier<Long> _productIdSupplier;
 
 	@Schema(
@@ -539,6 +550,7 @@ public class PlacedOrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, String> productURLs;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _productURLsSupplier;
 
 	@Schema(example = "10.1")
@@ -580,6 +592,7 @@ public class PlacedOrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected BigDecimal quantity;
 
+	@JsonIgnore
 	private Supplier<BigDecimal> _quantitySupplier;
 
 	@Schema
@@ -620,6 +633,7 @@ public class PlacedOrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String replacedSku;
 
+	@JsonIgnore
 	private Supplier<String> _replacedSkuSupplier;
 
 	@Schema
@@ -661,6 +675,7 @@ public class PlacedOrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Settings settings;
 
+	@JsonIgnore
 	private Supplier<Settings> _settingsSupplier;
 
 	@Schema
@@ -699,6 +714,7 @@ public class PlacedOrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String sku;
 
+	@JsonIgnore
 	private Supplier<String> _skuSupplier;
 
 	@Schema
@@ -737,6 +753,7 @@ public class PlacedOrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long skuId;
 
+	@JsonIgnore
 	private Supplier<Long> _skuIdSupplier;
 
 	@Schema(example = "true")
@@ -777,6 +794,7 @@ public class PlacedOrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean subscription;
 
+	@JsonIgnore
 	private Supplier<Boolean> _subscriptionSupplier;
 
 	@Schema
@@ -817,6 +835,7 @@ public class PlacedOrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String thumbnail;
 
+	@JsonIgnore
 	private Supplier<String> _thumbnailSupplier;
 
 	@Schema(example = "m")
@@ -857,6 +876,7 @@ public class PlacedOrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String unitOfMeasureKey;
 
+	@JsonIgnore
 	private Supplier<String> _unitOfMeasureKeySupplier;
 
 	@Schema
@@ -897,6 +917,7 @@ public class PlacedOrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean valid;
 
+	@JsonIgnore
 	private Supplier<Boolean> _validSupplier;
 
 	@Schema
@@ -937,6 +958,7 @@ public class PlacedOrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String[] virtualItemURLs;
 
+	@JsonIgnore
 	private Supplier<String[]> _virtualItemURLsSupplier;
 
 	@Override

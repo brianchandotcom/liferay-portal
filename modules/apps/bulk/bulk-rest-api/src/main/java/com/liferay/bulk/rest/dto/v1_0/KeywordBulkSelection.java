@@ -93,6 +93,7 @@ public class KeywordBulkSelection implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected DocumentBulkSelection documentBulkSelection;
 
+	@JsonIgnore
 	private Supplier<DocumentBulkSelection> _documentBulkSelectionSupplier;
 
 	@Schema
@@ -133,6 +134,7 @@ public class KeywordBulkSelection implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] keywordsToAdd;
 
+	@JsonIgnore
 	private Supplier<String[]> _keywordsToAddSupplier;
 
 	@Schema
@@ -173,6 +175,7 @@ public class KeywordBulkSelection implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] keywordsToRemove;
 
+	@JsonIgnore
 	private Supplier<String[]> _keywordsToRemoveSupplier;
 
 	@Override

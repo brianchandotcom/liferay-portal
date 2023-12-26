@@ -105,6 +105,7 @@ public class ActionExecutionResult implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Type type;
 
+	@JsonIgnore
 	private Supplier<Type> _typeSupplier;
 
 	@Schema
@@ -146,6 +147,7 @@ public class ActionExecutionResult implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object value;
 
+	@JsonIgnore
 	private Supplier<Object> _valueSupplier;
 
 	@Override

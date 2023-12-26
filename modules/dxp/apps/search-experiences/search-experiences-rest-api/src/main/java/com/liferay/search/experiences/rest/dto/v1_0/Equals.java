@@ -89,6 +89,7 @@ public class Equals implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String format;
 
+	@JsonIgnore
 	private Supplier<String> _formatSupplier;
 
 	@Schema
@@ -129,6 +130,7 @@ public class Equals implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String parameterName;
 
+	@JsonIgnore
 	private Supplier<String> _parameterNameSupplier;
 
 	@Schema
@@ -170,6 +172,7 @@ public class Equals implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object value;
 
+	@JsonIgnore
 	private Supplier<Object> _valueSupplier;
 
 	@Override

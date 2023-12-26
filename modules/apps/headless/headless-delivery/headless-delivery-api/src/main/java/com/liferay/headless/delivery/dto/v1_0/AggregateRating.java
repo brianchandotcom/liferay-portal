@@ -93,6 +93,7 @@ public class AggregateRating implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Double bestRating;
 
+	@JsonIgnore
 	private Supplier<Double> _bestRatingSupplier;
 
 	@Schema(description = "The average rating.")
@@ -133,6 +134,7 @@ public class AggregateRating implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Double ratingAverage;
 
+	@JsonIgnore
 	private Supplier<Double> _ratingAverageSupplier;
 
 	@Schema(description = "The number of ratings.")
@@ -173,6 +175,7 @@ public class AggregateRating implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer ratingCount;
 
+	@JsonIgnore
 	private Supplier<Integer> _ratingCountSupplier;
 
 	@Schema(description = "The rating value.")
@@ -213,6 +216,7 @@ public class AggregateRating implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Double ratingValue;
 
+	@JsonIgnore
 	private Supplier<Double> _ratingValueSupplier;
 
 	@Schema(
@@ -257,6 +261,7 @@ public class AggregateRating implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Double worstRating;
 
+	@JsonIgnore
 	private Supplier<Double> _worstRatingSupplier;
 
 	@Override

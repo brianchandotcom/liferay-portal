@@ -92,6 +92,7 @@ public class Settings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected BigDecimal[] allowedQuantities;
 
+	@JsonIgnore
 	private Supplier<BigDecimal[]> _allowedQuantitiesSupplier;
 
 	@Schema(example = "10.1")
@@ -133,6 +134,7 @@ public class Settings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected BigDecimal maxQuantity;
 
+	@JsonIgnore
 	private Supplier<BigDecimal> _maxQuantitySupplier;
 
 	@Schema(example = "10.1")
@@ -174,6 +176,7 @@ public class Settings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected BigDecimal minQuantity;
 
+	@JsonIgnore
 	private Supplier<BigDecimal> _minQuantitySupplier;
 
 	@Schema(example = "10.1")
@@ -215,6 +218,7 @@ public class Settings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected BigDecimal multipleQuantity;
 
+	@JsonIgnore
 	private Supplier<BigDecimal> _multipleQuantitySupplier;
 
 	@Override

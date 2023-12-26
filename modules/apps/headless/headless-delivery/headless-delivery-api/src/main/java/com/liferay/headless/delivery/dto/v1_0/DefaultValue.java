@@ -91,6 +91,7 @@ public class DefaultValue implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String value;
 
+	@JsonIgnore
 	private Supplier<String> _valueSupplier;
 
 	@Schema
@@ -133,6 +134,7 @@ public class DefaultValue implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> value_i18n;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _value_i18nSupplier;
 
 	@Override

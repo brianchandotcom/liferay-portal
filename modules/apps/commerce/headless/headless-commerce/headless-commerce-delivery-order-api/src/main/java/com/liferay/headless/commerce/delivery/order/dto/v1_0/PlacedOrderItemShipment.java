@@ -97,6 +97,7 @@ public class PlacedOrderItemShipment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long accountId;
 
+	@JsonIgnore
 	private Supplier<Long> _accountIdSupplier;
 
 	@Schema(example = "Author")
@@ -137,6 +138,7 @@ public class PlacedOrderItemShipment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String author;
 
+	@JsonIgnore
 	private Supplier<String> _authorSupplier;
 
 	@Schema(example = "FedEx")
@@ -177,6 +179,7 @@ public class PlacedOrderItemShipment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String carrier;
 
+	@JsonIgnore
 	private Supplier<String> _carrierSupplier;
 
 	@Schema
@@ -217,6 +220,7 @@ public class PlacedOrderItemShipment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date createDate;
 
+	@JsonIgnore
 	private Supplier<Date> _createDateSupplier;
 
 	@Schema
@@ -257,6 +261,7 @@ public class PlacedOrderItemShipment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date estimatedDeliveryDate;
 
+	@JsonIgnore
 	private Supplier<Date> _estimatedDeliveryDateSupplier;
 
 	@Schema
@@ -297,6 +302,7 @@ public class PlacedOrderItemShipment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date estimatedShippingDate;
 
+	@JsonIgnore
 	private Supplier<Date> _estimatedShippingDateSupplier;
 
 	@DecimalMin("0")
@@ -336,6 +342,7 @@ public class PlacedOrderItemShipment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema
@@ -376,6 +383,7 @@ public class PlacedOrderItemShipment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date modifiedDate;
 
+	@JsonIgnore
 	private Supplier<Date> _modifiedDateSupplier;
 
 	@DecimalMin("0")
@@ -417,6 +425,7 @@ public class PlacedOrderItemShipment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long orderId;
 
+	@JsonIgnore
 	private Supplier<Long> _orderIdSupplier;
 
 	@Schema(example = "10.1")
@@ -458,6 +467,7 @@ public class PlacedOrderItemShipment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected BigDecimal quantity;
 
+	@JsonIgnore
 	private Supplier<BigDecimal> _quantitySupplier;
 
 	@DecimalMin("0")
@@ -499,6 +509,7 @@ public class PlacedOrderItemShipment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long shippingAddressId;
 
+	@JsonIgnore
 	private Supplier<Long> _shippingAddressIdSupplier;
 
 	@DecimalMin("0")
@@ -540,6 +551,7 @@ public class PlacedOrderItemShipment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long shippingMethodId;
 
+	@JsonIgnore
 	private Supplier<Long> _shippingMethodIdSupplier;
 
 	@Schema(example = "Standard Delivery")
@@ -580,6 +592,7 @@ public class PlacedOrderItemShipment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String shippingOptionName;
 
+	@JsonIgnore
 	private Supplier<String> _shippingOptionNameSupplier;
 
 	@Schema
@@ -621,6 +634,7 @@ public class PlacedOrderItemShipment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Status status;
 
+	@JsonIgnore
 	private Supplier<Status> _statusSupplier;
 
 	@Schema
@@ -661,6 +675,7 @@ public class PlacedOrderItemShipment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean supplierShipment;
 
+	@JsonIgnore
 	private Supplier<Boolean> _supplierShipmentSupplier;
 
 	@Schema(example = "123AD-asd")
@@ -701,6 +716,7 @@ public class PlacedOrderItemShipment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String trackingNumber;
 
+	@JsonIgnore
 	private Supplier<String> _trackingNumberSupplier;
 
 	@Schema
@@ -741,6 +757,7 @@ public class PlacedOrderItemShipment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String trackingURL;
 
+	@JsonIgnore
 	private Supplier<String> _trackingURLSupplier;
 
 	@Schema(example = "m")
@@ -781,6 +798,7 @@ public class PlacedOrderItemShipment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String unitOfMeasureKey;
 
+	@JsonIgnore
 	private Supplier<String> _unitOfMeasureKeySupplier;
 
 	@Override

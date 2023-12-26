@@ -95,6 +95,7 @@ public class Site implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@Schema
@@ -135,6 +136,7 @@ public class Site implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String friendlyUrlPath;
 
+	@JsonIgnore
 	private Supplier<String> _friendlyUrlPathSupplier;
 
 	@Schema
@@ -173,6 +175,7 @@ public class Site implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema
@@ -211,6 +214,7 @@ public class Site implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String key;
 
+	@JsonIgnore
 	private Supplier<String> _keySupplier;
 
 	@Schema(description = "The default value is open.")
@@ -264,6 +268,7 @@ public class Site implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected MembershipType membershipType;
 
+	@JsonIgnore
 	private Supplier<MembershipType> _membershipTypeSupplier;
 
 	@Schema
@@ -303,6 +308,7 @@ public class Site implements Serializable {
 	@NotEmpty
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema
@@ -343,6 +349,7 @@ public class Site implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected String parentSiteKey;
 
+	@JsonIgnore
 	private Supplier<String> _parentSiteKeySupplier;
 
 	@Schema
@@ -383,6 +390,7 @@ public class Site implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected String templateKey;
 
+	@JsonIgnore
 	private Supplier<String> _templateKeySupplier;
 
 	@Schema
@@ -435,6 +443,7 @@ public class Site implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected TemplateType templateType;
 
+	@JsonIgnore
 	private Supplier<TemplateType> _templateTypeSupplier;
 
 	@Override

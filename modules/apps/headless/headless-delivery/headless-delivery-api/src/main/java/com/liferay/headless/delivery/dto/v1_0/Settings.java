@@ -91,6 +91,7 @@ public class Settings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String colorSchemeName;
 
+	@JsonIgnore
 	private Supplier<String> _colorSchemeNameSupplier;
 
 	@Schema(description = "The page's CSS.")
@@ -129,6 +130,7 @@ public class Settings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String css;
 
+	@JsonIgnore
 	private Supplier<String> _cssSupplier;
 
 	@Schema(description = "The FavIcon of the page")
@@ -170,6 +172,7 @@ public class Settings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object favIcon;
 
+	@JsonIgnore
 	private Supplier<Object> _favIconSupplier;
 
 	@Schema(
@@ -219,6 +222,7 @@ public class Settings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ClientExtension[] globalCSSClientExtensions;
 
+	@JsonIgnore
 	private Supplier<ClientExtension[]> _globalCSSClientExtensionsSupplier;
 
 	@Schema(
@@ -267,6 +271,7 @@ public class Settings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ClientExtension[] globalJSClientExtensions;
 
+	@JsonIgnore
 	private Supplier<ClientExtension[]> _globalJSClientExtensionsSupplier;
 
 	@Schema(description = "The page's JavaScript.")
@@ -307,6 +312,7 @@ public class Settings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String javascript;
 
+	@JsonIgnore
 	private Supplier<String> _javascriptSupplier;
 
 	@Schema(description = "The page's master page.")
@@ -348,6 +354,7 @@ public class Settings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected MasterPage masterPage;
 
+	@JsonIgnore
 	private Supplier<MasterPage> _masterPageSupplier;
 
 	@Schema(description = "The StyleBook that is applied to the page.")
@@ -389,6 +396,7 @@ public class Settings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected StyleBook styleBook;
 
+	@JsonIgnore
 	private Supplier<StyleBook> _styleBookSupplier;
 
 	@Schema(description = "The Client Extension for the theme css of a page")
@@ -435,6 +443,7 @@ public class Settings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ClientExtension themeCSSClientExtension;
 
+	@JsonIgnore
 	private Supplier<ClientExtension> _themeCSSClientExtensionSupplier;
 
 	@Schema(description = "The page's theme name.")
@@ -475,6 +484,7 @@ public class Settings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String themeName;
 
+	@JsonIgnore
 	private Supplier<String> _themeNameSupplier;
 
 	@Schema(description = "The page's theme settings.")
@@ -516,6 +526,7 @@ public class Settings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object themeSettings;
 
+	@JsonIgnore
 	private Supplier<Object> _themeSettingsSupplier;
 
 	@Override

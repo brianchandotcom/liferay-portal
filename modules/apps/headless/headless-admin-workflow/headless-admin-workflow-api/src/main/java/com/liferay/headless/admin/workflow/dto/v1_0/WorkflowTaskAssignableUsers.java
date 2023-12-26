@@ -95,6 +95,7 @@ public class WorkflowTaskAssignableUsers implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected WorkflowTaskAssignableUser[] workflowTaskAssignableUsers;
 
+	@JsonIgnore
 	private Supplier<WorkflowTaskAssignableUser[]>
 		_workflowTaskAssignableUsersSupplier;
 

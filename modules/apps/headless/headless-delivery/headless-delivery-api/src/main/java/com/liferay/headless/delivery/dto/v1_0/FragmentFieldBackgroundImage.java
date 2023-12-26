@@ -97,6 +97,7 @@ public class FragmentFieldBackgroundImage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentImage backgroundFragmentImage;
 
+	@JsonIgnore
 	private Supplier<FragmentImage> _backgroundFragmentImageSupplier;
 
 	@Schema(
@@ -145,6 +146,7 @@ public class FragmentFieldBackgroundImage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BackgroundImage backgroundImage;
 
+	@JsonIgnore
 	private Supplier<BackgroundImage> _backgroundImageSupplier;
 
 	@Override

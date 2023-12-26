@@ -93,6 +93,7 @@ public class Channel implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String channelId;
 
+	@JsonIgnore
 	private Supplier<String> _channelIdSupplier;
 
 	@Schema
@@ -133,6 +134,7 @@ public class Channel implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean commerceSyncEnabled;
 
+	@JsonIgnore
 	private Supplier<Boolean> _commerceSyncEnabledSupplier;
 
 	@Schema
@@ -173,6 +175,7 @@ public class Channel implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date createDate;
 
+	@JsonIgnore
 	private Supplier<Date> _createDateSupplier;
 
 	@Schema
@@ -214,6 +217,7 @@ public class Channel implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected DataSource[] dataSources;
 
+	@JsonIgnore
 	private Supplier<DataSource[]> _dataSourcesSupplier;
 
 	@Schema
@@ -253,6 +257,7 @@ public class Channel implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Override

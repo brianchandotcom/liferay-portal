@@ -86,6 +86,7 @@ public class SkuOption implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String key;
 
+	@JsonIgnore
 	private Supplier<String> _keySupplier;
 
 	@DecimalMin("0")
@@ -127,6 +128,7 @@ public class SkuOption implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long optionId;
 
+	@JsonIgnore
 	private Supplier<Long> _optionIdSupplier;
 
 	@DecimalMin("0")
@@ -168,6 +170,7 @@ public class SkuOption implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long optionValueId;
 
+	@JsonIgnore
 	private Supplier<Long> _optionValueIdSupplier;
 
 	@Schema
@@ -208,6 +211,7 @@ public class SkuOption implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String value;
 
+	@JsonIgnore
 	private Supplier<String> _valueSupplier;
 
 	@Override

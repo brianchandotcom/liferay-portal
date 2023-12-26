@@ -92,6 +92,7 @@ public class CustomField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected CustomValue customValue;
 
+	@JsonIgnore
 	private Supplier<CustomValue> _customValueSupplier;
 
 	@Schema(description = "The field type (e.g., image, text, etc.).")
@@ -132,6 +133,7 @@ public class CustomField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String dataType;
 
+	@JsonIgnore
 	private Supplier<String> _dataTypeSupplier;
 
 	@Schema(
@@ -174,6 +176,7 @@ public class CustomField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Override

@@ -95,6 +95,7 @@ public class SitePageFormSubmissionResult implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ClassFieldsReference itemReference;
 
+	@JsonIgnore
 	private Supplier<ClassFieldsReference> _itemReferenceSupplier;
 
 	@Override

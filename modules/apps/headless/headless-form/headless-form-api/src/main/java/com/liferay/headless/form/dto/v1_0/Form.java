@@ -92,6 +92,7 @@ public class Form implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] availableLanguages;
 
+	@JsonIgnore
 	private Supplier<String[]> _availableLanguagesSupplier;
 
 	@Schema
@@ -133,6 +134,7 @@ public class Form implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Creator creator;
 
+	@JsonIgnore
 	private Supplier<Creator> _creatorSupplier;
 
 	@Schema
@@ -173,6 +175,7 @@ public class Form implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateCreated;
 
+	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
 	@Schema
@@ -213,6 +216,7 @@ public class Form implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateModified;
 
+	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
 	@Schema
@@ -253,6 +257,7 @@ public class Form implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date datePublished;
 
+	@JsonIgnore
 	private Supplier<Date> _datePublishedSupplier;
 
 	@Schema
@@ -293,6 +298,7 @@ public class Form implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String defaultLanguage;
 
+	@JsonIgnore
 	private Supplier<String> _defaultLanguageSupplier;
 
 	@Schema
@@ -333,6 +339,7 @@ public class Form implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
+	@JsonIgnore
 	private Supplier<String> _descriptionSupplier;
 
 	@Schema
@@ -375,6 +382,7 @@ public class Form implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> description_i18n;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _description_i18nSupplier;
 
 	@Schema
@@ -416,6 +424,7 @@ public class Form implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected FormRecord[] formRecords;
 
+	@JsonIgnore
 	private Supplier<FormRecord[]> _formRecordsSupplier;
 
 	@Schema
@@ -456,6 +465,7 @@ public class Form implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected Long[] formRecordsIds;
 
+	@JsonIgnore
 	private Supplier<Long[]> _formRecordsIdsSupplier;
 
 	@Schema
@@ -494,6 +504,7 @@ public class Form implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema
@@ -532,6 +543,7 @@ public class Form implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema
@@ -574,6 +586,7 @@ public class Form implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> name_i18n;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _name_i18nSupplier;
 
 	@Schema
@@ -614,6 +627,7 @@ public class Form implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long siteId;
 
+	@JsonIgnore
 	private Supplier<Long> _siteIdSupplier;
 
 	@Schema
@@ -655,6 +669,7 @@ public class Form implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected FormStructure structure;
 
+	@JsonIgnore
 	private Supplier<FormStructure> _structureSupplier;
 
 	@Schema
@@ -695,6 +710,7 @@ public class Form implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected Long structureId;
 
+	@JsonIgnore
 	private Supplier<Long> _structureIdSupplier;
 
 	@Override

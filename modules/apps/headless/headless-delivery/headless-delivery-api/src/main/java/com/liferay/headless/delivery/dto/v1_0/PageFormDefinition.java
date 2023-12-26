@@ -95,6 +95,7 @@ public class PageFormDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] cssClasses;
 
+	@JsonIgnore
 	private Supplier<String[]> _cssClassesSupplier;
 
 	@Schema(description = "Custom CSS that is applied on the fragment.")
@@ -135,6 +136,7 @@ public class PageFormDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String customCSS;
 
+	@JsonIgnore
 	private Supplier<String> _customCSSSupplier;
 
 	@Schema(description = "The custom CSS viewports of the page collection.")
@@ -179,6 +181,7 @@ public class PageFormDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected CustomCSSViewport[] customCSSViewports;
 
+	@JsonIgnore
 	private Supplier<CustomCSSViewport[]> _customCSSViewportsSupplier;
 
 	@Schema(description = "The page form's configuration.")
@@ -220,6 +223,7 @@ public class PageFormDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FormConfig formConfig;
 
+	@JsonIgnore
 	private Supplier<FormConfig> _formConfigSupplier;
 
 	@Schema(description = "The fragment style of a Page form.")
@@ -261,6 +265,7 @@ public class PageFormDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentStyle fragmentStyle;
 
+	@JsonIgnore
 	private Supplier<FragmentStyle> _fragmentStyleSupplier;
 
 	@Schema(description = "A list of fragment viewports of a Page form.")
@@ -303,6 +308,7 @@ public class PageFormDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentViewport[] fragmentViewports;
 
+	@JsonIgnore
 	private Supplier<FragmentViewport[]> _fragmentViewportsSupplier;
 
 	@Schema(
@@ -347,6 +353,7 @@ public class PageFormDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean indexed;
 
+	@JsonIgnore
 	private Supplier<Boolean> _indexedSupplier;
 
 	@Schema(description = "the page section's layout.")
@@ -388,6 +395,7 @@ public class PageFormDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Layout layout;
 
+	@JsonIgnore
 	private Supplier<Layout> _layoutSupplier;
 
 	@Schema(description = "The custom name of of a Page form.")
@@ -426,6 +434,7 @@ public class PageFormDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Override

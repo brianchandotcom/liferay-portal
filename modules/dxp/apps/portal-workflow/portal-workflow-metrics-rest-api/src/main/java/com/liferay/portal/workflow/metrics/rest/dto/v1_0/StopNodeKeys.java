@@ -89,6 +89,7 @@ public class StopNodeKeys implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected NodeKey[] nodeKeys;
 
+	@JsonIgnore
 	private Supplier<NodeKey[]> _nodeKeysSupplier;
 
 	@Schema
@@ -129,6 +130,7 @@ public class StopNodeKeys implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer status;
 
+	@JsonIgnore
 	private Supplier<Integer> _statusSupplier;
 
 	@Override

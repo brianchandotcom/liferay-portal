@@ -89,6 +89,7 @@ public class Condition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Condition[] allConditions;
 
+	@JsonIgnore
 	private Supplier<Condition[]> _allConditionsSupplier;
 
 	@Schema
@@ -130,6 +131,7 @@ public class Condition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Condition[] anyConditions;
 
+	@JsonIgnore
 	private Supplier<Condition[]> _anyConditionsSupplier;
 
 	@Schema
@@ -171,6 +173,7 @@ public class Condition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Contains contains;
 
+	@JsonIgnore
 	private Supplier<Contains> _containsSupplier;
 
 	@Schema
@@ -212,6 +215,7 @@ public class Condition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Equals equals;
 
+	@JsonIgnore
 	private Supplier<Equals> _equalsSupplier;
 
 	@Schema
@@ -253,6 +257,7 @@ public class Condition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Exists exists;
 
+	@JsonIgnore
 	private Supplier<Exists> _existsSupplier;
 
 	@Schema
@@ -292,6 +297,7 @@ public class Condition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected In in;
 
+	@JsonIgnore
 	private Supplier<In> _inSupplier;
 
 	@Schema
@@ -331,6 +337,7 @@ public class Condition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Condition not;
 
+	@JsonIgnore
 	private Supplier<Condition> _notSupplier;
 
 	@Schema
@@ -370,6 +377,7 @@ public class Condition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Range range;
 
+	@JsonIgnore
 	private Supplier<Range> _rangeSupplier;
 
 	@Override

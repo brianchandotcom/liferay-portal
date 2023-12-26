@@ -86,6 +86,7 @@ public class InnerCollapse implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String field;
 
+	@JsonIgnore
 	private Supplier<String> _fieldSupplier;
 
 	@Override

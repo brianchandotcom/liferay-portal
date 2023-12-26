@@ -90,6 +90,7 @@ public class DataLayoutPage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected DataLayoutRow[] dataLayoutRows;
 
+	@JsonIgnore
 	private Supplier<DataLayoutRow[]> _dataLayoutRowsSupplier;
 
 	@Schema
@@ -132,6 +133,7 @@ public class DataLayoutPage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, Object> description;
 
+	@JsonIgnore
 	private Supplier<Map<String, Object>> _descriptionSupplier;
 
 	@Schema
@@ -173,6 +175,7 @@ public class DataLayoutPage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, Object> title;
 
+	@JsonIgnore
 	private Supplier<Map<String, Object>> _titleSupplier;
 
 	@Override

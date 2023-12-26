@@ -89,6 +89,7 @@ public class Range implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String format;
 
+	@JsonIgnore
 	private Supplier<String> _formatSupplier;
 
 	@Schema
@@ -128,6 +129,7 @@ public class Range implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object gt;
 
+	@JsonIgnore
 	private Supplier<Object> _gtSupplier;
 
 	@Schema
@@ -167,6 +169,7 @@ public class Range implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object gte;
 
+	@JsonIgnore
 	private Supplier<Object> _gteSupplier;
 
 	@Schema
@@ -206,6 +209,7 @@ public class Range implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object lt;
 
+	@JsonIgnore
 	private Supplier<Object> _ltSupplier;
 
 	@Schema
@@ -245,6 +249,7 @@ public class Range implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object lte;
 
+	@JsonIgnore
 	private Supplier<Object> _lteSupplier;
 
 	@Schema
@@ -285,6 +290,7 @@ public class Range implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String parameterName;
 
+	@JsonIgnore
 	private Supplier<String> _parameterNameSupplier;
 
 	@Override

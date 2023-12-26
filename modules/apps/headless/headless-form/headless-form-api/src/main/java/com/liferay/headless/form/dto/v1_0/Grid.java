@@ -89,6 +89,7 @@ public class Grid implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FormFieldOption[] columns;
 
+	@JsonIgnore
 	private Supplier<FormFieldOption[]> _columnsSupplier;
 
 	@Schema
@@ -127,6 +128,7 @@ public class Grid implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema
@@ -168,6 +170,7 @@ public class Grid implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FormFieldOption[] rows;
 
+	@JsonIgnore
 	private Supplier<FormFieldOption[]> _rowsSupplier;
 
 	@Override

@@ -104,6 +104,7 @@ public class Segment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean active;
 
+	@JsonIgnore
 	private Supplier<Boolean> _activeSupplier;
 
 	@Schema(description = "The segment's criteria.")
@@ -145,6 +146,7 @@ public class Segment implements Serializable {
 	@NotEmpty
 	protected String criteria;
 
+	@JsonIgnore
 	private Supplier<String> _criteriaSupplier;
 
 	@Schema(description = "The segment's criteria in JSON.")
@@ -187,6 +189,7 @@ public class Segment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Object> criteriaValue;
 
+	@JsonIgnore
 	private Supplier<Map<String, Object>> _criteriaValueSupplier;
 
 	@Schema(description = "The segment's creation date.")
@@ -227,6 +230,7 @@ public class Segment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
+	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
 	@Schema(description = "The segment's most recent modification date.")
@@ -267,6 +271,7 @@ public class Segment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
+	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
 	@Schema(description = "The segment's ID.")
@@ -305,6 +310,7 @@ public class Segment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema(description = "The segment's name.")
@@ -344,6 +350,7 @@ public class Segment implements Serializable {
 	@NotEmpty
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema(description = "The ID of the segment's site.")
@@ -384,6 +391,7 @@ public class Segment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long siteId;
 
+	@JsonIgnore
 	private Supplier<Long> _siteIdSupplier;
 
 	@Schema(description = "The segment's source.")
@@ -424,6 +432,7 @@ public class Segment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String source;
 
+	@JsonIgnore
 	private Supplier<String> _sourceSupplier;
 
 	@Override

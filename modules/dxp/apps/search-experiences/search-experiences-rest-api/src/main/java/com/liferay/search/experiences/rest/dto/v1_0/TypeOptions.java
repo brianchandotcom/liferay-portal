@@ -89,6 +89,7 @@ public class TypeOptions implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean boost;
 
+	@JsonIgnore
 	private Supplier<Boolean> _boostSupplier;
 
 	@Schema
@@ -129,6 +130,7 @@ public class TypeOptions implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String format;
 
+	@JsonIgnore
 	private Supplier<String> _formatSupplier;
 
 	@Schema
@@ -168,6 +170,7 @@ public class TypeOptions implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object max;
 
+	@JsonIgnore
 	private Supplier<Object> _maxSupplier;
 
 	@Schema
@@ -207,6 +210,7 @@ public class TypeOptions implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object min;
 
+	@JsonIgnore
 	private Supplier<Object> _minSupplier;
 
 	@Schema
@@ -247,6 +251,7 @@ public class TypeOptions implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean nullable;
 
+	@JsonIgnore
 	private Supplier<Boolean> _nullableSupplier;
 
 	@Schema
@@ -288,6 +293,7 @@ public class TypeOptions implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Option[] options;
 
+	@JsonIgnore
 	private Supplier<Option[]> _optionsSupplier;
 
 	@Schema
@@ -328,6 +334,7 @@ public class TypeOptions implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean required;
 
+	@JsonIgnore
 	private Supplier<Boolean> _requiredSupplier;
 
 	@Schema
@@ -367,6 +374,7 @@ public class TypeOptions implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object step;
 
+	@JsonIgnore
 	private Supplier<Object> _stepSupplier;
 
 	@Schema
@@ -405,6 +413,7 @@ public class TypeOptions implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String unit;
 
+	@JsonIgnore
 	private Supplier<String> _unitSupplier;
 
 	@Schema
@@ -445,6 +454,7 @@ public class TypeOptions implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String unitSuffix;
 
+	@JsonIgnore
 	private Supplier<String> _unitSuffixSupplier;
 
 	@Override

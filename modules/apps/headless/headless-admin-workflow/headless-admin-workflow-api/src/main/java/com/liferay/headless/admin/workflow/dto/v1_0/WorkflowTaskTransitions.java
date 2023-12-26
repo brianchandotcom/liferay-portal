@@ -93,6 +93,7 @@ public class WorkflowTaskTransitions implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected WorkflowTaskTransition[] workflowTaskTransitions;
 
+	@JsonIgnore
 	private Supplier<WorkflowTaskTransition[]> _workflowTaskTransitionsSupplier;
 
 	@Override

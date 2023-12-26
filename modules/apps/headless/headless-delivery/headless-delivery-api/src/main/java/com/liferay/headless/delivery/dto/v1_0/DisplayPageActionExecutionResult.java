@@ -96,6 +96,7 @@ public class DisplayPageActionExecutionResult implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Mapping mapping;
 
+	@JsonIgnore
 	private Supplier<Mapping> _mappingSupplier;
 
 	@Override

@@ -94,6 +94,7 @@ public class Attachment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String attachment;
 
+	@JsonIgnore
 	private Supplier<String> _attachmentSupplier;
 
 	@Schema
@@ -135,6 +136,7 @@ public class Attachment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected CustomField[] customFields;
 
+	@JsonIgnore
 	private Supplier<CustomField[]> _customFieldsSupplier;
 
 	@Schema(example = "2017-07-21")
@@ -175,6 +177,7 @@ public class Attachment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date displayDate;
 
+	@JsonIgnore
 	private Supplier<Date> _displayDateSupplier;
 
 	@Schema(example = "2017-08-21")
@@ -215,6 +218,7 @@ public class Attachment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date expirationDate;
 
+	@JsonIgnore
 	private Supplier<Date> _expirationDateSupplier;
 
 	@Schema
@@ -255,6 +259,7 @@ public class Attachment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean galleryEnabled;
 
+	@JsonIgnore
 	private Supplier<Boolean> _galleryEnabledSupplier;
 
 	@DecimalMin("0")
@@ -294,6 +299,7 @@ public class Attachment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema(example = "true")
@@ -334,6 +340,7 @@ public class Attachment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean neverExpire;
 
+	@JsonIgnore
 	private Supplier<Boolean> _neverExpireSupplier;
 
 	@Schema(example = "{color=yellow, optionKey=optionValueKey, size=xs}")
@@ -375,6 +382,7 @@ public class Attachment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> options;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _optionsSupplier;
 
 	@Schema(example = "1.2")
@@ -415,6 +423,7 @@ public class Attachment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double priority;
 
+	@JsonIgnore
 	private Supplier<Double> _prioritySupplier;
 
 	@Schema(description = "URL of the location")
@@ -453,6 +462,7 @@ public class Attachment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String src;
 
+	@JsonIgnore
 	private Supplier<String> _srcSupplier;
 
 	@Schema(example = "[tag1, tag2, tag3]")
@@ -493,6 +503,7 @@ public class Attachment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String[] tags;
 
+	@JsonIgnore
 	private Supplier<String[]> _tagsSupplier;
 
 	@Schema
@@ -533,6 +544,7 @@ public class Attachment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String title;
 
+	@JsonIgnore
 	private Supplier<String> _titleSupplier;
 
 	@Schema
@@ -571,6 +583,7 @@ public class Attachment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer type;
 
+	@JsonIgnore
 	private Supplier<Integer> _typeSupplier;
 
 	@Override

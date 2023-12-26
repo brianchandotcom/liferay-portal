@@ -95,6 +95,7 @@ public class OrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long cpDefinitionId;
 
+	@JsonIgnore
 	private Supplier<Long> _cpDefinitionIdSupplier;
 
 	@Schema(example = "2017-07-21")
@@ -135,6 +136,7 @@ public class OrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date createDate;
 
+	@JsonIgnore
 	private Supplier<Date> _createDateSupplier;
 
 	@Schema
@@ -176,6 +178,7 @@ public class OrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, ?> customFields;
 
+	@JsonIgnore
 	private Supplier<Map<String, ?>> _customFieldsSupplier;
 
 	@Schema(example = "AB-34098-789-N")
@@ -216,6 +219,7 @@ public class OrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@DecimalMin("0")
@@ -258,6 +262,7 @@ public class OrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal finalPrice;
 
+	@JsonIgnore
 	private Supplier<BigDecimal> _finalPriceSupplier;
 
 	@DecimalMin("0")
@@ -297,6 +302,7 @@ public class OrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema(example = "2017-07-21")
@@ -337,6 +343,7 @@ public class OrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date modifiedDate;
 
+	@JsonIgnore
 	private Supplier<Date> _modifiedDateSupplier;
 
 	@Schema(
@@ -380,6 +387,7 @@ public class OrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> name;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _nameSupplier;
 
 	@Schema
@@ -420,6 +428,7 @@ public class OrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String options;
 
+	@JsonIgnore
 	private Supplier<String> _optionsSupplier;
 
 	@DecimalMin("0")
@@ -461,6 +470,7 @@ public class OrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long orderId;
 
+	@JsonIgnore
 	private Supplier<Long> _orderIdSupplier;
 
 	@DecimalMin("0")
@@ -502,6 +512,7 @@ public class OrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long parentOrderItemId;
 
+	@JsonIgnore
 	private Supplier<Long> _parentOrderItemIdSupplier;
 
 	@DecimalMin("0")
@@ -543,6 +554,7 @@ public class OrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer quantity;
 
+	@JsonIgnore
 	private Supplier<Integer> _quantitySupplier;
 
 	@Schema(example = "12341234")
@@ -581,6 +593,7 @@ public class OrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String sku;
 
+	@JsonIgnore
 	private Supplier<String> _skuSupplier;
 
 	@Schema(example = "true")
@@ -621,6 +634,7 @@ public class OrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean subscription;
 
+	@JsonIgnore
 	private Supplier<Boolean> _subscriptionSupplier;
 
 	@Schema(example = "pc")
@@ -661,6 +675,7 @@ public class OrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String unitOfMeasure;
 
+	@JsonIgnore
 	private Supplier<String> _unitOfMeasureSupplier;
 
 	@DecimalMin("0")
@@ -703,6 +718,7 @@ public class OrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal unitPrice;
 
+	@JsonIgnore
 	private Supplier<BigDecimal> _unitPriceSupplier;
 
 	@Schema
@@ -743,6 +759,7 @@ public class OrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long userId;
 
+	@JsonIgnore
 	private Supplier<Long> _userIdSupplier;
 
 	@Override

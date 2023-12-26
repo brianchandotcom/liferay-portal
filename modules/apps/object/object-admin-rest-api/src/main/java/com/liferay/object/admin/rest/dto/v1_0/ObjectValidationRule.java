@@ -97,6 +97,7 @@ public class ObjectValidationRule implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
+	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
 	@Schema
@@ -137,6 +138,7 @@ public class ObjectValidationRule implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean active;
 
+	@JsonIgnore
 	private Supplier<Boolean> _activeSupplier;
 
 	@Schema
@@ -177,6 +179,7 @@ public class ObjectValidationRule implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
+	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
 	@Schema
@@ -217,6 +220,7 @@ public class ObjectValidationRule implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
+	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
 	@Schema
@@ -257,6 +261,7 @@ public class ObjectValidationRule implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String engine;
 
+	@JsonIgnore
 	private Supplier<String> _engineSupplier;
 
 	@Schema
@@ -297,6 +302,7 @@ public class ObjectValidationRule implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String engineLabel;
 
+	@JsonIgnore
 	private Supplier<String> _engineLabelSupplier;
 
 	@Schema
@@ -339,6 +345,7 @@ public class ObjectValidationRule implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> errorLabel;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _errorLabelSupplier;
 
 	@Schema
@@ -379,6 +386,7 @@ public class ObjectValidationRule implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@Schema
@@ -417,6 +425,7 @@ public class ObjectValidationRule implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema
@@ -458,6 +467,7 @@ public class ObjectValidationRule implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> name;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _nameSupplier;
 
 	@Schema
@@ -504,6 +514,7 @@ public class ObjectValidationRule implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String objectDefinitionExternalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _objectDefinitionExternalReferenceCodeSupplier;
 
 	@Schema
@@ -544,6 +555,7 @@ public class ObjectValidationRule implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long objectDefinitionId;
 
+	@JsonIgnore
 	private Supplier<Long> _objectDefinitionIdSupplier;
 
 	@Schema
@@ -589,6 +601,7 @@ public class ObjectValidationRule implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ObjectValidationRuleSetting[] objectValidationRuleSettings;
 
+	@JsonIgnore
 	private Supplier<ObjectValidationRuleSetting[]>
 		_objectValidationRuleSettingsSupplier;
 
@@ -642,6 +655,7 @@ public class ObjectValidationRule implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected OutputType outputType;
 
+	@JsonIgnore
 	private Supplier<OutputType> _outputTypeSupplier;
 
 	@Schema
@@ -682,6 +696,7 @@ public class ObjectValidationRule implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String script;
 
+	@JsonIgnore
 	private Supplier<String> _scriptSupplier;
 
 	@Schema
@@ -722,6 +737,7 @@ public class ObjectValidationRule implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean system;
 
+	@JsonIgnore
 	private Supplier<Boolean> _systemSupplier;
 
 	@Override

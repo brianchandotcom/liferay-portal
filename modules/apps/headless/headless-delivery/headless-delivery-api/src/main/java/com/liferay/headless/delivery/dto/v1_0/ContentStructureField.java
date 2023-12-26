@@ -96,6 +96,7 @@ public class ContentStructureField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String dataType;
 
+	@JsonIgnore
 	private Supplier<String> _dataTypeSupplier;
 
 	@Schema(
@@ -140,6 +141,7 @@ public class ContentStructureField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String inputControl;
 
+	@JsonIgnore
 	private Supplier<String> _inputControlSupplier;
 
 	@Schema(description = "The form field's label.")
@@ -180,6 +182,7 @@ public class ContentStructureField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String label;
 
+	@JsonIgnore
 	private Supplier<String> _labelSupplier;
 
 	@Schema(description = "The form field's labels.")
@@ -222,6 +225,7 @@ public class ContentStructureField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, String> label_i18n;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _label_i18nSupplier;
 
 	@Schema(
@@ -266,6 +270,7 @@ public class ContentStructureField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean localizable;
 
+	@JsonIgnore
 	private Supplier<Boolean> _localizableSupplier;
 
 	@Schema(
@@ -310,6 +315,7 @@ public class ContentStructureField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean multiple;
 
+	@JsonIgnore
 	private Supplier<Boolean> _multipleSupplier;
 
 	@Schema(description = "The form field's name.")
@@ -348,6 +354,7 @@ public class ContentStructureField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema(
@@ -397,6 +404,7 @@ public class ContentStructureField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected ContentStructureField[] nestedContentStructureFields;
 
+	@JsonIgnore
 	private Supplier<ContentStructureField[]>
 		_nestedContentStructureFieldsSupplier;
 
@@ -439,6 +447,7 @@ public class ContentStructureField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Option[] options;
 
+	@JsonIgnore
 	private Supplier<Option[]> _optionsSupplier;
 
 	@Schema(description = "The form field's default value.")
@@ -479,6 +488,7 @@ public class ContentStructureField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String predefinedValue;
 
+	@JsonIgnore
 	private Supplier<String> _predefinedValueSupplier;
 
 	@Schema(description = "The localized form field's default values.")
@@ -523,6 +533,7 @@ public class ContentStructureField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, String> predefinedValue_i18n;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _predefinedValue_i18nSupplier;
 
 	@Schema(
@@ -567,6 +578,7 @@ public class ContentStructureField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean repeatable;
 
+	@JsonIgnore
 	private Supplier<Boolean> _repeatableSupplier;
 
 	@Schema(
@@ -611,6 +623,7 @@ public class ContentStructureField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean required;
 
+	@JsonIgnore
 	private Supplier<Boolean> _requiredSupplier;
 
 	@Schema(
@@ -655,6 +668,7 @@ public class ContentStructureField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean showLabel;
 
+	@JsonIgnore
 	private Supplier<Boolean> _showLabelSupplier;
 
 	@Override

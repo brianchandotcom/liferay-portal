@@ -109,6 +109,7 @@ public class KnowledgeBaseArticle implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
+	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
 	@Schema(description = "The article's average rating.")
@@ -151,6 +152,7 @@ public class KnowledgeBaseArticle implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected AggregateRating aggregateRating;
 
+	@JsonIgnore
 	private Supplier<AggregateRating> _aggregateRatingSupplier;
 
 	@Schema(description = "The article's main content.")
@@ -192,6 +194,7 @@ public class KnowledgeBaseArticle implements Serializable {
 	@NotEmpty
 	protected String articleBody;
 
+	@JsonIgnore
 	private Supplier<String> _articleBodySupplier;
 
 	@Schema(description = "The article's author.")
@@ -233,6 +236,7 @@ public class KnowledgeBaseArticle implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator creator;
 
+	@JsonIgnore
 	private Supplier<Creator> _creatorSupplier;
 
 	@Schema(
@@ -278,6 +282,7 @@ public class KnowledgeBaseArticle implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected CustomField[] customFields;
 
+	@JsonIgnore
 	private Supplier<CustomField[]> _customFieldsSupplier;
 
 	@Schema(description = "The date the article was created.")
@@ -318,6 +323,7 @@ public class KnowledgeBaseArticle implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
+	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
 	@Schema(
@@ -362,6 +368,7 @@ public class KnowledgeBaseArticle implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
+	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
 	@Schema(description = "The article's scheduled publication date.")
@@ -402,6 +409,7 @@ public class KnowledgeBaseArticle implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date datePublished;
 
+	@JsonIgnore
 	private Supplier<Date> _datePublishedSupplier;
 
 	@Schema(description = "The article's description.")
@@ -442,6 +450,7 @@ public class KnowledgeBaseArticle implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
+	@JsonIgnore
 	private Supplier<String> _descriptionSupplier;
 
 	@Schema(
@@ -486,6 +495,7 @@ public class KnowledgeBaseArticle implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String encodingFormat;
 
+	@JsonIgnore
 	private Supplier<String> _encodingFormatSupplier;
 
 	@Schema(description = "The article's external reference code.")
@@ -526,6 +536,7 @@ public class KnowledgeBaseArticle implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@Schema(description = "The article's relative URL.")
@@ -566,6 +577,7 @@ public class KnowledgeBaseArticle implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String friendlyUrlPath;
 
+	@JsonIgnore
 	private Supplier<String> _friendlyUrlPathSupplier;
 
 	@Schema(description = "The article's ID.")
@@ -604,6 +616,7 @@ public class KnowledgeBaseArticle implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema(description = "A list of keywords describing the article.")
@@ -644,6 +657,7 @@ public class KnowledgeBaseArticle implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] keywords;
 
+	@JsonIgnore
 	private Supplier<String[]> _keywordsSupplier;
 
 	@Schema(description = "The article's number attachments.")
@@ -684,6 +698,7 @@ public class KnowledgeBaseArticle implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer numberOfAttachments;
 
+	@JsonIgnore
 	private Supplier<Integer> _numberOfAttachmentsSupplier;
 
 	@Schema(description = "The number of this article's child articles.")
@@ -728,6 +743,7 @@ public class KnowledgeBaseArticle implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer numberOfKnowledgeBaseArticles;
 
+	@JsonIgnore
 	private Supplier<Integer> _numberOfKnowledgeBaseArticlesSupplier;
 
 	@Schema(description = "The ID of the article's parent, if it exists.")
@@ -772,6 +788,7 @@ public class KnowledgeBaseArticle implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long parentKnowledgeBaseArticleId;
 
+	@JsonIgnore
 	private Supplier<Long> _parentKnowledgeBaseArticleIdSupplier;
 
 	@Schema(description = "The article's parent folder, if it exists.")
@@ -817,6 +834,7 @@ public class KnowledgeBaseArticle implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected ParentKnowledgeBaseFolder parentKnowledgeBaseFolder;
 
+	@JsonIgnore
 	private Supplier<ParentKnowledgeBaseFolder>
 		_parentKnowledgeBaseFolderSupplier;
 
@@ -866,6 +884,7 @@ public class KnowledgeBaseArticle implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected Long parentKnowledgeBaseFolderId;
 
+	@JsonIgnore
 	private Supplier<Long> _parentKnowledgeBaseFolderIdSupplier;
 
 	@Schema(description = "A list of related contents to this article.")
@@ -908,6 +927,7 @@ public class KnowledgeBaseArticle implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected RelatedContent[] relatedContents;
 
+	@JsonIgnore
 	private Supplier<RelatedContent[]> _relatedContentsSupplier;
 
 	@Schema(description = "The ID of the site to which this article is scoped.")
@@ -950,6 +970,7 @@ public class KnowledgeBaseArticle implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long siteId;
 
+	@JsonIgnore
 	private Supplier<Long> _siteIdSupplier;
 
 	@Schema(
@@ -994,6 +1015,7 @@ public class KnowledgeBaseArticle implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean subscribed;
 
+	@JsonIgnore
 	private Supplier<Boolean> _subscribedSupplier;
 
 	@Schema(description = "The categories associated with this article.")
@@ -1038,6 +1060,7 @@ public class KnowledgeBaseArticle implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected TaxonomyCategoryBrief[] taxonomyCategoryBriefs;
 
+	@JsonIgnore
 	private Supplier<TaxonomyCategoryBrief[]> _taxonomyCategoryBriefsSupplier;
 
 	@Schema(
@@ -1082,6 +1105,7 @@ public class KnowledgeBaseArticle implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected Long[] taxonomyCategoryIds;
 
+	@JsonIgnore
 	private Supplier<Long[]> _taxonomyCategoryIdsSupplier;
 
 	@Schema(description = "The article's main title.")
@@ -1123,6 +1147,7 @@ public class KnowledgeBaseArticle implements Serializable {
 	@NotEmpty
 	protected String title;
 
+	@JsonIgnore
 	private Supplier<String> _titleSupplier;
 
 	@Schema(
@@ -1179,6 +1204,7 @@ public class KnowledgeBaseArticle implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected ViewableBy viewableBy;
 
+	@JsonIgnore
 	private Supplier<ViewableBy> _viewableBySupplier;
 
 	@Override

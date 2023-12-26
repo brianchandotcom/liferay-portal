@@ -96,6 +96,7 @@ public class SkuSubscriptionConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean deliverySubscriptionEnable;
 
+	@JsonIgnore
 	private Supplier<Boolean> _deliverySubscriptionEnableSupplier;
 
 	@Schema(example = "2")
@@ -140,6 +141,7 @@ public class SkuSubscriptionConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer deliverySubscriptionLength;
 
+	@JsonIgnore
 	private Supplier<Integer> _deliverySubscriptionLengthSupplier;
 
 	@Schema(example = "12")
@@ -185,6 +187,7 @@ public class SkuSubscriptionConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long deliverySubscriptionNumberOfLength;
 
+	@JsonIgnore
 	private Supplier<Long> _deliverySubscriptionNumberOfLengthSupplier;
 
 	@Schema(example = "monthly")
@@ -241,6 +244,7 @@ public class SkuSubscriptionConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected DeliverySubscriptionType deliverySubscriptionType;
 
+	@JsonIgnore
 	private Supplier<DeliverySubscriptionType>
 		_deliverySubscriptionTypeSupplier;
 
@@ -288,6 +292,7 @@ public class SkuSubscriptionConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> deliverySubscriptionTypeSettings;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>>
 		_deliverySubscriptionTypeSettingsSupplier;
 
@@ -329,6 +334,7 @@ public class SkuSubscriptionConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean enable;
 
+	@JsonIgnore
 	private Supplier<Boolean> _enableSupplier;
 
 	@Schema(example = "2")
@@ -369,6 +375,7 @@ public class SkuSubscriptionConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer length;
 
+	@JsonIgnore
 	private Supplier<Integer> _lengthSupplier;
 
 	@Schema(example = "12")
@@ -409,6 +416,7 @@ public class SkuSubscriptionConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long numberOfLength;
 
+	@JsonIgnore
 	private Supplier<Long> _numberOfLengthSupplier;
 
 	@Schema(example = "true")
@@ -450,6 +458,7 @@ public class SkuSubscriptionConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean overrideSubscriptionInfo;
 
+	@JsonIgnore
 	private Supplier<Boolean> _overrideSubscriptionInfoSupplier;
 
 	@Schema(example = "monthly")
@@ -503,6 +512,7 @@ public class SkuSubscriptionConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected SubscriptionType subscriptionType;
 
+	@JsonIgnore
 	private Supplier<SubscriptionType> _subscriptionTypeSupplier;
 
 	@Schema(example = "{monthDay=1, monthlyMode=0}")
@@ -547,6 +557,7 @@ public class SkuSubscriptionConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> subscriptionTypeSettings;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _subscriptionTypeSettingsSupplier;
 
 	@Override

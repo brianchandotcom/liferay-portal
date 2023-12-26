@@ -98,6 +98,7 @@ public class PageDropZoneDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object fragmentSettings;
 
+	@JsonIgnore
 	private Supplier<Object> _fragmentSettingsSupplier;
 
 	@Override

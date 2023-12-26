@@ -84,6 +84,7 @@ public class Status implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer code;
 
+	@JsonIgnore
 	private Supplier<Integer> _codeSupplier;
 
 	@Schema
@@ -124,6 +125,7 @@ public class Status implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String label;
 
+	@JsonIgnore
 	private Supplier<String> _labelSupplier;
 
 	@Schema
@@ -164,6 +166,7 @@ public class Status implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String label_i18n;
 
+	@JsonIgnore
 	private Supplier<String> _label_i18nSupplier;
 
 	@Override

@@ -89,6 +89,7 @@ public class CompareRuns implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] dueStatuses;
 
+	@JsonIgnore
 	private Supplier<String[]> _dueStatusesSupplier;
 
 	@Schema
@@ -130,6 +131,7 @@ public class CompareRuns implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object values;
 
+	@JsonIgnore
 	private Supplier<Object> _valuesSupplier;
 
 	@Override

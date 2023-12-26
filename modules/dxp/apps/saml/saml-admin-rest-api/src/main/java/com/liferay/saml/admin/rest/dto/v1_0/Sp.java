@@ -93,6 +93,7 @@ public class Sp implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean allowShowingTheLoginPortlet;
 
+	@JsonIgnore
 	private Supplier<Boolean> _allowShowingTheLoginPortletSupplier;
 
 	@Schema
@@ -137,6 +138,7 @@ public class Sp implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean assertionSignatureRequired;
 
+	@JsonIgnore
 	private Supplier<Boolean> _assertionSignatureRequiredSupplier;
 
 	@Schema
@@ -177,6 +179,7 @@ public class Sp implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long clockSkew;
 
+	@JsonIgnore
 	private Supplier<Long> _clockSkewSupplier;
 
 	@Schema
@@ -222,6 +225,7 @@ public class Sp implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected String keyStoreEncryptionCredentialPassword;
 
+	@JsonIgnore
 	private Supplier<String> _keyStoreEncryptionCredentialPasswordSupplier;
 
 	@Schema
@@ -262,6 +266,7 @@ public class Sp implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean ldapImportEnabled;
 
+	@JsonIgnore
 	private Supplier<Boolean> _ldapImportEnabledSupplier;
 
 	@Schema
@@ -302,6 +307,7 @@ public class Sp implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean signAuthnRequest;
 
+	@JsonIgnore
 	private Supplier<Boolean> _signAuthnRequestSupplier;
 
 	@Override

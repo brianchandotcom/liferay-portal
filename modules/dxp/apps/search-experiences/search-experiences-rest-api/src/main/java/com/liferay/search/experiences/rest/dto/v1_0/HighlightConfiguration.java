@@ -91,6 +91,7 @@ public class HighlightConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, HighlightField> fields;
 
+	@JsonIgnore
 	private Supplier<Map<String, HighlightField>> _fieldsSupplier;
 
 	@Schema
@@ -131,6 +132,7 @@ public class HighlightConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer fragment_size;
 
+	@JsonIgnore
 	private Supplier<Integer> _fragment_sizeSupplier;
 
 	@Schema
@@ -171,6 +173,7 @@ public class HighlightConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer number_of_fragments;
 
+	@JsonIgnore
 	private Supplier<Integer> _number_of_fragmentsSupplier;
 
 	@Schema
@@ -211,6 +214,7 @@ public class HighlightConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] post_tags;
 
+	@JsonIgnore
 	private Supplier<String[]> _post_tagsSupplier;
 
 	@Schema
@@ -251,6 +255,7 @@ public class HighlightConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] pre_tags;
 
+	@JsonIgnore
 	private Supplier<String[]> _pre_tagsSupplier;
 
 	@Schema
@@ -291,6 +296,7 @@ public class HighlightConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean require_field_match;
 
+	@JsonIgnore
 	private Supplier<Boolean> _require_field_matchSupplier;
 
 	@Schema
@@ -329,6 +335,7 @@ public class HighlightConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String type;
 
+	@JsonIgnore
 	private Supplier<String> _typeSupplier;
 
 	@Override

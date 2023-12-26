@@ -89,6 +89,7 @@ public class TaskBulkSelection implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long[] assigneeIds;
 
+	@JsonIgnore
 	private Supplier<Long[]> _assigneeIdsSupplier;
 
 	@Schema
@@ -129,6 +130,7 @@ public class TaskBulkSelection implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long[] instanceIds;
 
+	@JsonIgnore
 	private Supplier<Long[]> _instanceIdsSupplier;
 
 	@Schema
@@ -169,6 +171,7 @@ public class TaskBulkSelection implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long processId;
 
+	@JsonIgnore
 	private Supplier<Long> _processIdSupplier;
 
 	@Schema
@@ -209,6 +212,7 @@ public class TaskBulkSelection implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] slaStatuses;
 
+	@JsonIgnore
 	private Supplier<String[]> _slaStatusesSupplier;
 
 	@Schema
@@ -249,6 +253,7 @@ public class TaskBulkSelection implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] taskNames;
 
+	@JsonIgnore
 	private Supplier<String[]> _taskNamesSupplier;
 
 	@Override

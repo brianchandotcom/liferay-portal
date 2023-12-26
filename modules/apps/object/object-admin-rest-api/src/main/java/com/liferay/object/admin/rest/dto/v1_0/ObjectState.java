@@ -86,6 +86,7 @@ public class ObjectState implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema
@@ -124,6 +125,7 @@ public class ObjectState implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String key;
 
+	@JsonIgnore
 	private Supplier<String> _keySupplier;
 
 	@Schema
@@ -168,6 +170,7 @@ public class ObjectState implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ObjectStateTransition[] objectStateTransitions;
 
+	@JsonIgnore
 	private Supplier<ObjectStateTransition[]> _objectStateTransitionsSupplier;
 
 	@Override

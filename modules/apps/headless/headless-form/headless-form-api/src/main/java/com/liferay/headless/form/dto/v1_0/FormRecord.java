@@ -95,6 +95,7 @@ public class FormRecord implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Creator creator;
 
+	@JsonIgnore
 	private Supplier<Creator> _creatorSupplier;
 
 	@Schema
@@ -135,6 +136,7 @@ public class FormRecord implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
+	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
 	@Schema
@@ -175,6 +177,7 @@ public class FormRecord implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
+	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
 	@Schema
@@ -215,6 +218,7 @@ public class FormRecord implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date datePublished;
 
+	@JsonIgnore
 	private Supplier<Date> _datePublishedSupplier;
 
 	@Schema
@@ -255,6 +259,7 @@ public class FormRecord implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean draft;
 
+	@JsonIgnore
 	private Supplier<Boolean> _draftSupplier;
 
 	@Schema
@@ -297,6 +302,7 @@ public class FormRecord implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FormFieldValue[] formFieldValues;
 
+	@JsonIgnore
 	private Supplier<FormFieldValue[]> _formFieldValuesSupplier;
 
 	@Schema
@@ -337,6 +343,7 @@ public class FormRecord implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected Long formId;
 
+	@JsonIgnore
 	private Supplier<Long> _formIdSupplier;
 
 	@Schema
@@ -375,6 +382,7 @@ public class FormRecord implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Override

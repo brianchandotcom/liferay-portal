@@ -97,6 +97,7 @@ public class Service implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected HoursAvailable[] hoursAvailable;
 
+	@JsonIgnore
 	private Supplier<HoursAvailable[]> _hoursAvailableSupplier;
 
 	@Schema(description = "The type of service the organization provides.")
@@ -139,6 +140,7 @@ public class Service implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String serviceType;
 
+	@JsonIgnore
 	private Supplier<String> _serviceTypeSupplier;
 
 	@Override

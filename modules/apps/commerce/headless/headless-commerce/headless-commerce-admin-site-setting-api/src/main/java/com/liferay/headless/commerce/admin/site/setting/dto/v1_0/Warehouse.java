@@ -91,6 +91,7 @@ public class Warehouse implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean active;
 
+	@JsonIgnore
 	private Supplier<Boolean> _activeSupplier;
 
 	@Schema(example = "Diamond Bar")
@@ -129,6 +130,7 @@ public class Warehouse implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String city;
 
+	@JsonIgnore
 	private Supplier<String> _citySupplier;
 
 	@DecimalMin("0")
@@ -171,6 +173,7 @@ public class Warehouse implements Serializable {
 	@NotNull
 	protected Long commerceCountryId;
 
+	@JsonIgnore
 	private Supplier<Long> _commerceCountryIdSupplier;
 
 	@DecimalMin("0")
@@ -212,6 +215,7 @@ public class Warehouse implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long commerceRegionId;
 
+	@JsonIgnore
 	private Supplier<Long> _commerceRegionIdSupplier;
 
 	@Schema(
@@ -256,6 +260,7 @@ public class Warehouse implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> description;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _descriptionSupplier;
 
 	@DecimalMin("0")
@@ -297,6 +302,7 @@ public class Warehouse implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long groupId;
 
+	@JsonIgnore
 	private Supplier<Long> _groupIdSupplier;
 
 	@DecimalMin("0")
@@ -336,6 +342,7 @@ public class Warehouse implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema(example = "33.9976884")
@@ -376,6 +383,7 @@ public class Warehouse implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double latitude;
 
+	@JsonIgnore
 	private Supplier<Double> _latitudeSupplier;
 
 	@Schema(example = "-117.8144595")
@@ -416,6 +424,7 @@ public class Warehouse implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double longitude;
 
+	@JsonIgnore
 	private Supplier<Double> _longitudeSupplier;
 
 	@Schema(example = "0")
@@ -457,6 +466,7 @@ public class Warehouse implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Number mvccVersion;
 
+	@JsonIgnore
 	private Supplier<Number> _mvccVersionSupplier;
 
 	@Schema(
@@ -501,6 +511,7 @@ public class Warehouse implements Serializable {
 	@NotNull
 	protected Map<String, String> name;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _nameSupplier;
 
 	@Schema(example = "true")
@@ -541,6 +552,7 @@ public class Warehouse implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean primary;
 
+	@JsonIgnore
 	private Supplier<Boolean> _primarySupplier;
 
 	@Schema(example = "1400 Montefino Ave")
@@ -581,6 +593,7 @@ public class Warehouse implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String street1;
 
+	@JsonIgnore
 	private Supplier<String> _street1Supplier;
 
 	@Schema(example = "1st floor")
@@ -621,6 +634,7 @@ public class Warehouse implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String street2;
 
+	@JsonIgnore
 	private Supplier<String> _street2Supplier;
 
 	@Schema(example = "suite 200")
@@ -661,6 +675,7 @@ public class Warehouse implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String street3;
 
+	@JsonIgnore
 	private Supplier<String> _street3Supplier;
 
 	@Schema(example = "91765")
@@ -699,6 +714,7 @@ public class Warehouse implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String zip;
 
+	@JsonIgnore
 	private Supplier<String> _zipSupplier;
 
 	@Override

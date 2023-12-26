@@ -98,6 +98,7 @@ public class WorkflowTaskAssignToRole implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected String comment;
 
+	@JsonIgnore
 	private Supplier<String> _commentSupplier;
 
 	@Schema(
@@ -142,6 +143,7 @@ public class WorkflowTaskAssignToRole implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected Date dueDate;
 
+	@JsonIgnore
 	private Supplier<Date> _dueDateSupplier;
 
 	@Schema(description = "The ID of the role to assign the workflow task.")
@@ -184,6 +186,7 @@ public class WorkflowTaskAssignToRole implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected Long roleId;
 
+	@JsonIgnore
 	private Supplier<Long> _roleIdSupplier;
 
 	@Override

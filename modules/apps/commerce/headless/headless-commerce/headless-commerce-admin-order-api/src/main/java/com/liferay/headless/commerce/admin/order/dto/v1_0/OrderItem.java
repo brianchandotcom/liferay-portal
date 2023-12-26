@@ -96,6 +96,7 @@ public class OrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long bookedQuantityId;
 
+	@JsonIgnore
 	private Supplier<Long> _bookedQuantityIdSupplier;
 
 	@Schema
@@ -137,6 +138,7 @@ public class OrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected CustomField[] customFields;
 
+	@JsonIgnore
 	private Supplier<CustomField[]> _customFieldsSupplier;
 
 	@DecimalMin("0")
@@ -179,6 +181,7 @@ public class OrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal decimalQuantity;
 
+	@JsonIgnore
 	private Supplier<BigDecimal> _decimalQuantitySupplier;
 
 	@Schema(example = "separate package")
@@ -219,6 +222,7 @@ public class OrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String deliveryGroup;
 
+	@JsonIgnore
 	private Supplier<String> _deliveryGroupSupplier;
 
 	@DecimalMin("0")
@@ -261,6 +265,7 @@ public class OrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal discountAmount;
 
+	@JsonIgnore
 	private Supplier<BigDecimal> _discountAmountSupplier;
 
 	@Schema(example = "true")
@@ -302,6 +307,7 @@ public class OrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean discountManuallyAdjusted;
 
+	@JsonIgnore
 	private Supplier<Boolean> _discountManuallyAdjustedSupplier;
 
 	@DecimalMin("0")
@@ -347,6 +353,7 @@ public class OrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal discountPercentageLevel1;
 
+	@JsonIgnore
 	private Supplier<BigDecimal> _discountPercentageLevel1Supplier;
 
 	@DecimalMin("0")
@@ -395,6 +402,7 @@ public class OrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal discountPercentageLevel1WithTaxAmount;
 
+	@JsonIgnore
 	private Supplier<BigDecimal> _discountPercentageLevel1WithTaxAmountSupplier;
 
 	@DecimalMin("0")
@@ -440,6 +448,7 @@ public class OrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal discountPercentageLevel2;
 
+	@JsonIgnore
 	private Supplier<BigDecimal> _discountPercentageLevel2Supplier;
 
 	@DecimalMin("0")
@@ -488,6 +497,7 @@ public class OrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal discountPercentageLevel2WithTaxAmount;
 
+	@JsonIgnore
 	private Supplier<BigDecimal> _discountPercentageLevel2WithTaxAmountSupplier;
 
 	@DecimalMin("0")
@@ -533,6 +543,7 @@ public class OrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal discountPercentageLevel3;
 
+	@JsonIgnore
 	private Supplier<BigDecimal> _discountPercentageLevel3Supplier;
 
 	@DecimalMin("0")
@@ -581,6 +592,7 @@ public class OrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal discountPercentageLevel3WithTaxAmount;
 
+	@JsonIgnore
 	private Supplier<BigDecimal> _discountPercentageLevel3WithTaxAmountSupplier;
 
 	@DecimalMin("0")
@@ -626,6 +638,7 @@ public class OrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal discountPercentageLevel4;
 
+	@JsonIgnore
 	private Supplier<BigDecimal> _discountPercentageLevel4Supplier;
 
 	@DecimalMin("0")
@@ -674,6 +687,7 @@ public class OrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal discountPercentageLevel4WithTaxAmount;
 
+	@JsonIgnore
 	private Supplier<BigDecimal> _discountPercentageLevel4WithTaxAmountSupplier;
 
 	@DecimalMin("0")
@@ -717,6 +731,7 @@ public class OrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal discountWithTaxAmount;
 
+	@JsonIgnore
 	private Supplier<BigDecimal> _discountWithTaxAmountSupplier;
 
 	@Schema(example = "AB-34098-789-N")
@@ -757,6 +772,7 @@ public class OrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@DecimalMin("0")
@@ -799,6 +815,7 @@ public class OrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal finalPrice;
 
+	@JsonIgnore
 	private Supplier<BigDecimal> _finalPriceSupplier;
 
 	@DecimalMin("0")
@@ -842,6 +859,7 @@ public class OrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal finalPriceWithTaxAmount;
 
+	@JsonIgnore
 	private Supplier<BigDecimal> _finalPriceWithTaxAmountSupplier;
 
 	@Schema
@@ -882,6 +900,7 @@ public class OrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String formattedQuantity;
 
+	@JsonIgnore
 	private Supplier<String> _formattedQuantitySupplier;
 
 	@DecimalMin("0")
@@ -921,6 +940,7 @@ public class OrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema(
@@ -964,6 +984,7 @@ public class OrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> name;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _nameSupplier;
 
 	@Schema
@@ -1004,6 +1025,7 @@ public class OrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String options;
 
+	@JsonIgnore
 	private Supplier<String> _optionsSupplier;
 
 	@Schema(example = "CAB-34098-789-N")
@@ -1048,6 +1070,7 @@ public class OrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String orderExternalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _orderExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
@@ -1089,6 +1112,7 @@ public class OrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long orderId;
 
+	@JsonIgnore
 	private Supplier<Long> _orderIdSupplier;
 
 	@Schema(example = "true")
@@ -1130,6 +1154,7 @@ public class OrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean priceManuallyAdjusted;
 
+	@JsonIgnore
 	private Supplier<Boolean> _priceManuallyAdjustedSupplier;
 
 	@Schema(example = "Order item printed note")
@@ -1170,6 +1195,7 @@ public class OrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String printedNote;
 
+	@JsonIgnore
 	private Supplier<String> _printedNoteSupplier;
 
 	@DecimalMin("0")
@@ -1212,6 +1238,7 @@ public class OrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal promoPrice;
 
+	@JsonIgnore
 	private Supplier<BigDecimal> _promoPriceSupplier;
 
 	@DecimalMin("0")
@@ -1255,6 +1282,7 @@ public class OrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal promoPriceWithTaxAmount;
 
+	@JsonIgnore
 	private Supplier<BigDecimal> _promoPriceWithTaxAmountSupplier;
 
 	@DecimalMin("0")
@@ -1297,6 +1325,7 @@ public class OrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal quantity;
 
+	@JsonIgnore
 	private Supplier<BigDecimal> _quantitySupplier;
 
 	@Schema(example = "1234123124")
@@ -1337,6 +1366,7 @@ public class OrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String replacedSku;
 
+	@JsonIgnore
 	private Supplier<String> _replacedSkuSupplier;
 
 	@Schema
@@ -1377,6 +1407,7 @@ public class OrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long replacedSkuId;
 
+	@JsonIgnore
 	private Supplier<Long> _replacedSkuIdSupplier;
 
 	@Schema(example = "2017-07-21")
@@ -1417,6 +1448,7 @@ public class OrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date requestedDeliveryDate;
 
+	@JsonIgnore
 	private Supplier<Date> _requestedDeliveryDateSupplier;
 
 	@DecimalMin("0")
@@ -1459,6 +1491,7 @@ public class OrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal shippedQuantity;
 
+	@JsonIgnore
 	private Supplier<BigDecimal> _shippedQuantitySupplier;
 
 	@Schema
@@ -1501,6 +1534,7 @@ public class OrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ShippingAddress shippingAddress;
 
+	@JsonIgnore
 	private Supplier<ShippingAddress> _shippingAddressSupplier;
 
 	@DecimalMin("0")
@@ -1542,6 +1576,7 @@ public class OrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long shippingAddressId;
 
+	@JsonIgnore
 	private Supplier<Long> _shippingAddressIdSupplier;
 
 	@Schema(example = "12341234")
@@ -1580,6 +1615,7 @@ public class OrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String sku;
 
+	@JsonIgnore
 	private Supplier<String> _skuSupplier;
 
 	@Schema(example = "CAB-34098-789-N")
@@ -1621,6 +1657,7 @@ public class OrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String skuExternalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _skuExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
@@ -1660,6 +1697,7 @@ public class OrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long skuId;
 
+	@JsonIgnore
 	private Supplier<Long> _skuIdSupplier;
 
 	@Schema(example = "true")
@@ -1700,6 +1738,7 @@ public class OrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean subscription;
 
+	@JsonIgnore
 	private Supplier<Boolean> _subscriptionSupplier;
 
 	@Schema(example = "pc")
@@ -1740,6 +1779,7 @@ public class OrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String unitOfMeasure;
 
+	@JsonIgnore
 	private Supplier<String> _unitOfMeasureSupplier;
 
 	@Schema(example = "s")
@@ -1780,6 +1820,7 @@ public class OrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String unitOfMeasureKey;
 
+	@JsonIgnore
 	private Supplier<String> _unitOfMeasureKeySupplier;
 
 	@DecimalMin("0")
@@ -1822,6 +1863,7 @@ public class OrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal unitPrice;
 
+	@JsonIgnore
 	private Supplier<BigDecimal> _unitPriceSupplier;
 
 	@DecimalMin("0")
@@ -1865,6 +1907,7 @@ public class OrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal unitPriceWithTaxAmount;
 
+	@JsonIgnore
 	private Supplier<BigDecimal> _unitPriceWithTaxAmountSupplier;
 
 	@Schema
@@ -1905,6 +1948,7 @@ public class OrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String[] virtualItemURLs;
 
+	@JsonIgnore
 	private Supplier<String[]> _virtualItemURLsSupplier;
 
 	@Override

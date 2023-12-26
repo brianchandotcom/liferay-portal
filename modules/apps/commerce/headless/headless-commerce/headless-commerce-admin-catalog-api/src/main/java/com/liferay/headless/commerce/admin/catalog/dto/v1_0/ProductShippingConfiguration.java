@@ -95,6 +95,7 @@ public class ProductShippingConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal depth;
 
+	@JsonIgnore
 	private Supplier<BigDecimal> _depthSupplier;
 
 	@Schema(example = "true")
@@ -135,6 +136,7 @@ public class ProductShippingConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean freeShipping;
 
+	@JsonIgnore
 	private Supplier<Boolean> _freeShippingSupplier;
 
 	@DecimalMin("0")
@@ -177,6 +179,7 @@ public class ProductShippingConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal height;
 
+	@JsonIgnore
 	private Supplier<BigDecimal> _heightSupplier;
 
 	@Schema(example = "true")
@@ -217,6 +220,7 @@ public class ProductShippingConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean shippable;
 
+	@JsonIgnore
 	private Supplier<Boolean> _shippableSupplier;
 
 	@DecimalMin("0")
@@ -260,6 +264,7 @@ public class ProductShippingConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal shippingExtraPrice;
 
+	@JsonIgnore
 	private Supplier<BigDecimal> _shippingExtraPriceSupplier;
 
 	@Schema(example = "true")
@@ -300,6 +305,7 @@ public class ProductShippingConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean shippingSeparately;
 
+	@JsonIgnore
 	private Supplier<Boolean> _shippingSeparatelySupplier;
 
 	@DecimalMin("0")
@@ -342,6 +348,7 @@ public class ProductShippingConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal weight;
 
+	@JsonIgnore
 	private Supplier<BigDecimal> _weightSupplier;
 
 	@DecimalMin("0")
@@ -384,6 +391,7 @@ public class ProductShippingConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal width;
 
+	@JsonIgnore
 	private Supplier<BigDecimal> _widthSupplier;
 
 	@Override

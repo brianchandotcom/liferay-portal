@@ -95,6 +95,7 @@ public class Location implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String addressCountry;
 
+	@JsonIgnore
 	private Supplier<String> _addressCountrySupplier;
 
 	@Schema
@@ -139,6 +140,7 @@ public class Location implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> addressCountry_i18n;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _addressCountry_i18nSupplier;
 
 	@Schema(
@@ -183,6 +185,7 @@ public class Location implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String addressRegion;
 
+	@JsonIgnore
 	private Supplier<String> _addressRegionSupplier;
 
 	@Schema(description = "The location's ID.")
@@ -221,6 +224,7 @@ public class Location implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Override

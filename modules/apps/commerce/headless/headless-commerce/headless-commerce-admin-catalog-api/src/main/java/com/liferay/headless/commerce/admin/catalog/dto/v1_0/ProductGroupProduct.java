@@ -88,6 +88,7 @@ public class ProductGroupProduct implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema(example = "PAB-34098-789-N")
@@ -132,6 +133,7 @@ public class ProductGroupProduct implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String productExternalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _productExternalReferenceCodeSupplier;
 
 	@Schema(example = "DAB-34098-789-N")
@@ -177,6 +179,7 @@ public class ProductGroupProduct implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String productGroupExternalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _productGroupExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
@@ -218,6 +221,7 @@ public class ProductGroupProduct implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long productGroupId;
 
+	@JsonIgnore
 	private Supplier<Long> _productGroupIdSupplier;
 
 	@DecimalMin("0")
@@ -259,6 +263,7 @@ public class ProductGroupProduct implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long productId;
 
+	@JsonIgnore
 	private Supplier<Long> _productIdSupplier;
 
 	@Schema
@@ -299,6 +304,7 @@ public class ProductGroupProduct implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String productName;
 
+	@JsonIgnore
 	private Supplier<String> _productNameSupplier;
 
 	@Schema(example = "BL500IC")
@@ -337,6 +343,7 @@ public class ProductGroupProduct implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String sku;
 
+	@JsonIgnore
 	private Supplier<String> _skuSupplier;
 
 	@Override

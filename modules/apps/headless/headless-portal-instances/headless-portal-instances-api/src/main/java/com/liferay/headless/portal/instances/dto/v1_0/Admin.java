@@ -86,6 +86,7 @@ public class Admin implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String emailAddress;
 
+	@JsonIgnore
 	private Supplier<String> _emailAddressSupplier;
 
 	@Schema(description = "The admin's surname (last name).")
@@ -126,6 +127,7 @@ public class Admin implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String familyName;
 
+	@JsonIgnore
 	private Supplier<String> _familyNameSupplier;
 
 	@Schema(description = "The admin's first name.")
@@ -166,6 +168,7 @@ public class Admin implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String givenName;
 
+	@JsonIgnore
 	private Supplier<String> _givenNameSupplier;
 
 	@Override

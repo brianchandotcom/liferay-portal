@@ -88,6 +88,7 @@ public class CustomValue implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object data;
 
+	@JsonIgnore
 	private Supplier<Object> _dataSupplier;
 
 	@Schema(
@@ -134,6 +135,7 @@ public class CustomValue implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> data_i18n;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _data_i18nSupplier;
 
 	@Schema(description = "A point determined by latitude and longitude.")
@@ -173,6 +175,7 @@ public class CustomValue implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Geo geo;
 
+	@JsonIgnore
 	private Supplier<Geo> _geoSupplier;
 
 	@Override

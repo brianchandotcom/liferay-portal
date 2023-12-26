@@ -88,6 +88,7 @@ public class ProductSpecification implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@DecimalMin("0")
@@ -129,6 +130,7 @@ public class ProductSpecification implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long optionCategoryId;
 
+	@JsonIgnore
 	private Supplier<Long> _optionCategoryIdSupplier;
 
 	@DecimalMin("0")
@@ -170,6 +172,7 @@ public class ProductSpecification implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double priority;
 
+	@JsonIgnore
 	private Supplier<Double> _prioritySupplier;
 
 	@DecimalMin("0")
@@ -211,6 +214,7 @@ public class ProductSpecification implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long productId;
 
+	@JsonIgnore
 	private Supplier<Long> _productIdSupplier;
 
 	@Schema
@@ -251,6 +255,7 @@ public class ProductSpecification implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String specificationGroupKey;
 
+	@JsonIgnore
 	private Supplier<String> _specificationGroupKeySupplier;
 
 	@Schema
@@ -292,6 +297,7 @@ public class ProductSpecification implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String specificationGroupTitle;
 
+	@JsonIgnore
 	private Supplier<String> _specificationGroupTitleSupplier;
 
 	@DecimalMin("0")
@@ -333,6 +339,7 @@ public class ProductSpecification implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long specificationId;
 
+	@JsonIgnore
 	private Supplier<Long> _specificationIdSupplier;
 
 	@Schema(example = "specification-key")
@@ -373,6 +380,7 @@ public class ProductSpecification implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String specificationKey;
 
+	@JsonIgnore
 	private Supplier<String> _specificationKeySupplier;
 
 	@Schema
@@ -413,6 +421,7 @@ public class ProductSpecification implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String specificationTitle;
 
+	@JsonIgnore
 	private Supplier<String> _specificationTitleSupplier;
 
 	@Schema
@@ -453,6 +462,7 @@ public class ProductSpecification implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String value;
 
+	@JsonIgnore
 	private Supplier<String> _valueSupplier;
 
 	@Override

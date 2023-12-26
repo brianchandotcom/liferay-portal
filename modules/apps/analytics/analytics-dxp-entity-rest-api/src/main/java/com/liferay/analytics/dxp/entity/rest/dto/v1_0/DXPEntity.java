@@ -93,6 +93,7 @@ public class DXPEntity implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ExpandoField[] expandoFields;
 
+	@JsonIgnore
 	private Supplier<ExpandoField[]> _expandoFieldsSupplier;
 
 	@Schema
@@ -134,6 +135,7 @@ public class DXPEntity implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Field[] fields;
 
+	@JsonIgnore
 	private Supplier<Field[]> _fieldsSupplier;
 
 	@Schema
@@ -172,6 +174,7 @@ public class DXPEntity implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String id;
 
+	@JsonIgnore
 	private Supplier<String> _idSupplier;
 
 	@Schema
@@ -212,6 +215,7 @@ public class DXPEntity implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date modifiedDate;
 
+	@JsonIgnore
 	private Supplier<Date> _modifiedDateSupplier;
 
 	@Schema
@@ -250,6 +254,7 @@ public class DXPEntity implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String type;
 
+	@JsonIgnore
 	private Supplier<String> _typeSupplier;
 
 	@Override

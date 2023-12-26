@@ -90,6 +90,7 @@ public class WorkflowInstanceSubmit implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected Map<String, ?> context;
 
+	@JsonIgnore
 	private Supplier<Map<String, ?>> _contextSupplier;
 
 	@Schema
@@ -130,6 +131,7 @@ public class WorkflowInstanceSubmit implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected Long siteId;
 
+	@JsonIgnore
 	private Supplier<Long> _siteIdSupplier;
 
 	@Schema
@@ -170,6 +172,7 @@ public class WorkflowInstanceSubmit implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected String transitionName;
 
+	@JsonIgnore
 	private Supplier<String> _transitionNameSupplier;
 
 	@Schema
@@ -211,6 +214,7 @@ public class WorkflowInstanceSubmit implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected String workflowDefinitionName;
 
+	@JsonIgnore
 	private Supplier<String> _workflowDefinitionNameSupplier;
 
 	@Schema
@@ -253,6 +257,7 @@ public class WorkflowInstanceSubmit implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected String workflowDefinitionVersion;
 
+	@JsonIgnore
 	private Supplier<String> _workflowDefinitionVersionSupplier;
 
 	@Override

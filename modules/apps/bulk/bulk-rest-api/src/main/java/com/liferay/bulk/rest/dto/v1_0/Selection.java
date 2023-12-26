@@ -84,6 +84,7 @@ public class Selection implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long size;
 
+	@JsonIgnore
 	private Supplier<Long> _sizeSupplier;
 
 	@Override

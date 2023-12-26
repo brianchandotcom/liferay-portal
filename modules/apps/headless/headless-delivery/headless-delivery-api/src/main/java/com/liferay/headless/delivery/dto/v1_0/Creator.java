@@ -93,6 +93,7 @@ public class Creator implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String additionalName;
 
+	@JsonIgnore
 	private Supplier<String> _additionalNameSupplier;
 
 	@Schema(description = "The type of the content.")
@@ -133,6 +134,7 @@ public class Creator implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String contentType;
 
+	@JsonIgnore
 	private Supplier<String> _contentTypeSupplier;
 
 	@Schema(description = "The author's surname.")
@@ -173,6 +175,7 @@ public class Creator implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String familyName;
 
+	@JsonIgnore
 	private Supplier<String> _familyNameSupplier;
 
 	@Schema(description = "The author's first name.")
@@ -213,6 +216,7 @@ public class Creator implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String givenName;
 
+	@JsonIgnore
 	private Supplier<String> _givenNameSupplier;
 
 	@Schema(description = "The author's ID.")
@@ -251,6 +255,7 @@ public class Creator implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema(description = "A relative URL to the author's profile image.")
@@ -291,6 +296,7 @@ public class Creator implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String image;
 
+	@JsonIgnore
 	private Supplier<String> _imageSupplier;
 
 	@Schema(description = "The author's full name.")
@@ -329,6 +335,7 @@ public class Creator implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema(
@@ -373,6 +380,7 @@ public class Creator implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String profileURL;
 
+	@JsonIgnore
 	private Supplier<String> _profileURLSupplier;
 
 	@Schema(description = "A list of userGroups information.")
@@ -415,6 +423,7 @@ public class Creator implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected UserGroupBrief[] userGroupBriefs;
 
+	@JsonIgnore
 	private Supplier<UserGroupBrief[]> _userGroupBriefsSupplier;
 
 	@Override

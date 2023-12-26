@@ -96,6 +96,7 @@ public class DataDefinitionField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, Object> customProperties;
 
+	@JsonIgnore
 	private Supplier<Map<String, Object>> _customPropertiesSupplier;
 
 	@Schema
@@ -138,6 +139,7 @@ public class DataDefinitionField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, Object> defaultValue;
 
+	@JsonIgnore
 	private Supplier<Map<String, Object>> _defaultValueSupplier;
 
 	@Schema
@@ -178,6 +180,7 @@ public class DataDefinitionField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String fieldType;
 
+	@JsonIgnore
 	private Supplier<String> _fieldTypeSupplier;
 
 	@Schema
@@ -216,6 +219,7 @@ public class DataDefinitionField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema
@@ -268,6 +272,7 @@ public class DataDefinitionField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected IndexType indexType;
 
+	@JsonIgnore
 	private Supplier<IndexType> _indexTypeSupplier;
 
 	@Schema
@@ -308,6 +313,7 @@ public class DataDefinitionField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean indexable;
 
+	@JsonIgnore
 	private Supplier<Boolean> _indexableSupplier;
 
 	@Schema
@@ -349,6 +355,7 @@ public class DataDefinitionField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, Object> label;
 
+	@JsonIgnore
 	private Supplier<Map<String, Object>> _labelSupplier;
 
 	@Schema
@@ -389,6 +396,7 @@ public class DataDefinitionField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean localizable;
 
+	@JsonIgnore
 	private Supplier<Boolean> _localizableSupplier;
 
 	@Schema
@@ -427,6 +435,7 @@ public class DataDefinitionField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema(
@@ -476,6 +485,7 @@ public class DataDefinitionField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected DataDefinitionField[] nestedDataDefinitionFields;
 
+	@JsonIgnore
 	private Supplier<DataDefinitionField[]> _nestedDataDefinitionFieldsSupplier;
 
 	@Schema
@@ -516,6 +526,7 @@ public class DataDefinitionField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean readOnly;
 
+	@JsonIgnore
 	private Supplier<Boolean> _readOnlySupplier;
 
 	@Schema
@@ -556,6 +567,7 @@ public class DataDefinitionField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean repeatable;
 
+	@JsonIgnore
 	private Supplier<Boolean> _repeatableSupplier;
 
 	@Schema
@@ -596,6 +608,7 @@ public class DataDefinitionField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean required;
 
+	@JsonIgnore
 	private Supplier<Boolean> _requiredSupplier;
 
 	@Schema
@@ -636,6 +649,7 @@ public class DataDefinitionField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean showLabel;
 
+	@JsonIgnore
 	private Supplier<Boolean> _showLabelSupplier;
 
 	@Schema
@@ -677,6 +691,7 @@ public class DataDefinitionField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, Object> tip;
 
+	@JsonIgnore
 	private Supplier<Map<String, Object>> _tipSupplier;
 
 	@Schema
@@ -717,6 +732,7 @@ public class DataDefinitionField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean visible;
 
+	@JsonIgnore
 	private Supplier<Boolean> _visibleSupplier;
 
 	@Override

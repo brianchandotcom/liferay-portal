@@ -96,6 +96,7 @@ public class PageCollectionDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected CollectionConfig collectionConfig;
 
+	@JsonIgnore
 	private Supplier<CollectionConfig> _collectionConfigSupplier;
 
 	@Schema(description = "A list of viewports of the page collection.")
@@ -140,6 +141,7 @@ public class PageCollectionDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected CollectionViewport[] collectionViewports;
 
+	@JsonIgnore
 	private Supplier<CollectionViewport[]> _collectionViewportsSupplier;
 
 	@Schema(
@@ -184,6 +186,7 @@ public class PageCollectionDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean displayAllItems;
 
+	@JsonIgnore
 	private Supplier<Boolean> _displayAllItemsSupplier;
 
 	@Schema(
@@ -228,6 +231,7 @@ public class PageCollectionDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean displayAllPages;
 
+	@JsonIgnore
 	private Supplier<Boolean> _displayAllPagesSupplier;
 
 	@Schema
@@ -272,6 +276,7 @@ public class PageCollectionDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected EmptyCollectionConfig emptyCollectionConfig;
 
+	@JsonIgnore
 	private Supplier<EmptyCollectionConfig> _emptyCollectionConfigSupplier;
 
 	@Schema(description = "The fragment style of the page collection.")
@@ -313,6 +318,7 @@ public class PageCollectionDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentStyle fragmentStyle;
 
+	@JsonIgnore
 	private Supplier<FragmentStyle> _fragmentStyleSupplier;
 
 	@Schema(description = "The fragment viewports of the page collection.")
@@ -357,6 +363,7 @@ public class PageCollectionDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentViewport[] fragmentViewports;
 
+	@JsonIgnore
 	private Supplier<FragmentViewport[]> _fragmentViewportsSupplier;
 
 	@Schema(description = "the page section's layout.")
@@ -398,6 +405,7 @@ public class PageCollectionDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Layout layout;
 
+	@JsonIgnore
 	private Supplier<Layout> _layoutSupplier;
 
 	@Schema(
@@ -442,6 +450,7 @@ public class PageCollectionDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String listItemStyle;
 
+	@JsonIgnore
 	private Supplier<String> _listItemStyleSupplier;
 
 	@Schema(description = "The style of a list in the page collection.")
@@ -482,6 +491,7 @@ public class PageCollectionDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String listStyle;
 
+	@JsonIgnore
 	private Supplier<String> _listStyleSupplier;
 
 	@Schema(description = "The custom name of a Page Collection.")
@@ -520,6 +530,7 @@ public class PageCollectionDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema(description = "The number of columns in the page collection.")
@@ -560,6 +571,7 @@ public class PageCollectionDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer numberOfColumns;
 
+	@JsonIgnore
 	private Supplier<Integer> _numberOfColumnsSupplier;
 
 	@Schema(
@@ -604,6 +616,7 @@ public class PageCollectionDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer numberOfItems;
 
+	@JsonIgnore
 	private Supplier<Integer> _numberOfItemsSupplier;
 
 	@Schema(
@@ -648,6 +661,7 @@ public class PageCollectionDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer numberOfItemsPerPage;
 
+	@JsonIgnore
 	private Supplier<Integer> _numberOfItemsPerPageSupplier;
 
 	@Schema(
@@ -692,6 +706,7 @@ public class PageCollectionDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer numberOfPages;
 
+	@JsonIgnore
 	private Supplier<Integer> _numberOfPagesSupplier;
 
 	@Schema(description = "The type of pagination.")
@@ -745,6 +760,7 @@ public class PageCollectionDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected PaginationType paginationType;
 
+	@JsonIgnore
 	private Supplier<PaginationType> _paginationTypeSupplier;
 
 	@Schema(
@@ -791,6 +807,7 @@ public class PageCollectionDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean showAllItems;
 
+	@JsonIgnore
 	private Supplier<Boolean> _showAllItemsSupplier;
 
 	@Schema(description = "The page collection's template key.")
@@ -831,6 +848,7 @@ public class PageCollectionDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String templateKey;
 
+	@JsonIgnore
 	private Supplier<String> _templateKeySupplier;
 
 	@Override

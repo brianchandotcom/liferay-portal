@@ -89,6 +89,7 @@ public class AggregationConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object aggs;
 
+	@JsonIgnore
 	private Supplier<Object> _aggsSupplier;
 
 	@Override

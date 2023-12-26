@@ -93,6 +93,7 @@ public class Idp implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean authnRequestSignatureRequired;
 
+	@JsonIgnore
 	private Supplier<Boolean> _authnRequestSignatureRequiredSupplier;
 
 	@Schema
@@ -134,6 +135,7 @@ public class Idp implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer defaultAssertionLifetime;
 
+	@JsonIgnore
 	private Supplier<Integer> _defaultAssertionLifetimeSupplier;
 
 	@Schema
@@ -174,6 +176,7 @@ public class Idp implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long sessionMaximumAge;
 
+	@JsonIgnore
 	private Supplier<Long> _sessionMaximumAgeSupplier;
 
 	@Schema
@@ -214,6 +217,7 @@ public class Idp implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long sessionTimeout;
 
+	@JsonIgnore
 	private Supplier<Long> _sessionTimeoutSupplier;
 
 	@Override

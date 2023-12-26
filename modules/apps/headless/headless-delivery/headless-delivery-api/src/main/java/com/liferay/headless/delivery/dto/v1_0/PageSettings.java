@@ -92,6 +92,7 @@ public class PageSettings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected CustomMetaTag[] customMetaTags;
 
+	@JsonIgnore
 	private Supplier<CustomMetaTag[]> _customMetaTagsSupplier;
 
 	@Schema(
@@ -136,6 +137,7 @@ public class PageSettings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean hiddenFromNavigation;
 
+	@JsonIgnore
 	private Supplier<Boolean> _hiddenFromNavigationSupplier;
 
 	@Schema(description = "The page's Open Graph settings.")
@@ -178,6 +180,7 @@ public class PageSettings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected OpenGraphSettings openGraphSettings;
 
+	@JsonIgnore
 	private Supplier<OpenGraphSettings> _openGraphSettingsSupplier;
 
 	@Schema(description = "The page's SEO settings.")
@@ -219,6 +222,7 @@ public class PageSettings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected SEOSettings seoSettings;
 
+	@JsonIgnore
 	private Supplier<SEOSettings> _seoSettingsSupplier;
 
 	@Schema(description = "The page's site navigation menu settings.")
@@ -264,6 +268,7 @@ public class PageSettings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected SitePageNavigationMenuSettings sitePageNavigationMenuSettings;
 
+	@JsonIgnore
 	private Supplier<SitePageNavigationMenuSettings>
 		_sitePageNavigationMenuSettingsSupplier;
 

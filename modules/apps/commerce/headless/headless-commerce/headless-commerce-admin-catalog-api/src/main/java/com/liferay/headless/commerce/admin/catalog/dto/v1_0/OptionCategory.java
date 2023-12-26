@@ -94,6 +94,7 @@ public class OptionCategory implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> description;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _descriptionSupplier;
 
 	@DecimalMin("0")
@@ -133,6 +134,7 @@ public class OptionCategory implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema(example = "oprion-category-key")
@@ -172,6 +174,7 @@ public class OptionCategory implements Serializable {
 	@NotEmpty
 	protected String key;
 
+	@JsonIgnore
 	private Supplier<String> _keySupplier;
 
 	@DecimalMin("0")
@@ -213,6 +216,7 @@ public class OptionCategory implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double priority;
 
+	@JsonIgnore
 	private Supplier<Double> _prioritySupplier;
 
 	@Schema(example = "{en_US=Croatia, hr_HR=Hrvatska, hu_HU=Horvatorszag}")
@@ -255,6 +259,7 @@ public class OptionCategory implements Serializable {
 	@NotNull
 	protected Map<String, String> title;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _titleSupplier;
 
 	@Override

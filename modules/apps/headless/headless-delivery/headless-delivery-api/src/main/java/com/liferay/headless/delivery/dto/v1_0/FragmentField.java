@@ -89,6 +89,7 @@ public class FragmentField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String id;
 
+	@JsonIgnore
 	private Supplier<String> _idSupplier;
 
 	@Schema(description = "The fragment field's value.")
@@ -130,6 +131,7 @@ public class FragmentField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object value;
 
+	@JsonIgnore
 	private Supplier<Object> _valueSupplier;
 
 	@Override

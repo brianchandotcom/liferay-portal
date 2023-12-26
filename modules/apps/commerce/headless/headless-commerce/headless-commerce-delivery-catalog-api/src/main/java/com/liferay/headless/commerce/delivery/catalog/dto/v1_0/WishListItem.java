@@ -86,6 +86,7 @@ public class WishListItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String finalPrice;
 
+	@JsonIgnore
 	private Supplier<String> _finalPriceSupplier;
 
 	@Schema
@@ -126,6 +127,7 @@ public class WishListItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String friendlyURL;
 
+	@JsonIgnore
 	private Supplier<String> _friendlyURLSupplier;
 
 	@Schema
@@ -164,6 +166,7 @@ public class WishListItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String icon;
 
+	@JsonIgnore
 	private Supplier<String> _iconSupplier;
 
 	@Schema
@@ -202,6 +205,7 @@ public class WishListItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema
@@ -242,6 +246,7 @@ public class WishListItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long productId;
 
+	@JsonIgnore
 	private Supplier<Long> _productIdSupplier;
 
 	@Schema
@@ -282,6 +287,7 @@ public class WishListItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String productName;
 
+	@JsonIgnore
 	private Supplier<String> _productNameSupplier;
 
 	@Schema
@@ -320,6 +326,7 @@ public class WishListItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long skuId;
 
+	@JsonIgnore
 	private Supplier<Long> _skuIdSupplier;
 
 	@Override

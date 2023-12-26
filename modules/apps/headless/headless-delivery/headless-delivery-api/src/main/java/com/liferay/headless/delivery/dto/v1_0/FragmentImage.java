@@ -92,6 +92,7 @@ public class FragmentImage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object description;
 
+	@JsonIgnore
 	private Supplier<Object> _descriptionSupplier;
 
 	@Schema(description = "A reference to a fragment image class primary key.")
@@ -139,6 +140,7 @@ public class FragmentImage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentImageClassPKReference fragmentImageClassPKReference;
 
+	@JsonIgnore
 	private Supplier<FragmentImageClassPKReference>
 		_fragmentImageClassPKReferenceSupplier;
 
@@ -181,6 +183,7 @@ public class FragmentImage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object title;
 
+	@JsonIgnore
 	private Supplier<Object> _titleSupplier;
 
 	@Schema(
@@ -224,6 +227,7 @@ public class FragmentImage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object url;
 
+	@JsonIgnore
 	private Supplier<Object> _urlSupplier;
 
 	@Override

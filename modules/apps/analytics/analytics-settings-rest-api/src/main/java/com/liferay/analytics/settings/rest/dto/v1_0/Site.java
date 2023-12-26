@@ -86,6 +86,7 @@ public class Site implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String channelName;
 
+	@JsonIgnore
 	private Supplier<String> _channelNameSupplier;
 
 	@Schema
@@ -126,6 +127,7 @@ public class Site implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String friendlyURL;
 
+	@JsonIgnore
 	private Supplier<String> _friendlyURLSupplier;
 
 	@Schema
@@ -164,6 +166,7 @@ public class Site implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema
@@ -202,6 +205,7 @@ public class Site implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Override

@@ -92,6 +92,7 @@ public class PageElement implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object definition;
 
+	@JsonIgnore
 	private Supplier<Object> _definitionSupplier;
 
 	@Schema(description = "The page element's ID.")
@@ -130,6 +131,7 @@ public class PageElement implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String id;
 
+	@JsonIgnore
 	private Supplier<String> _idSupplier;
 
 	@Schema(description = "A list of the page elements this page element has.")
@@ -173,6 +175,7 @@ public class PageElement implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected PageElement[] pageElements;
 
+	@JsonIgnore
 	private Supplier<PageElement[]> _pageElementsSupplier;
 
 	@Schema(
@@ -227,6 +230,7 @@ public class PageElement implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Type type;
 
+	@JsonIgnore
 	private Supplier<Type> _typeSupplier;
 
 	@Override

@@ -88,6 +88,7 @@ public class Version implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Double number;
 
+	@JsonIgnore
 	private Supplier<Double> _numberSupplier;
 
 	@Schema(description = "Represents the status of a resource")
@@ -129,6 +130,7 @@ public class Version implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Status status;
 
+	@JsonIgnore
 	private Supplier<Status> _statusSupplier;
 
 	@Override

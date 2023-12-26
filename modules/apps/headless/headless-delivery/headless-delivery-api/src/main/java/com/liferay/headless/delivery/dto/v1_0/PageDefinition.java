@@ -91,6 +91,7 @@ public class PageDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected PageElement pageElement;
 
+	@JsonIgnore
 	private Supplier<PageElement> _pageElementSupplier;
 
 	@Schema(description = "A list of the page rules this page has.")
@@ -132,6 +133,7 @@ public class PageDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected PageRule[] pageRules;
 
+	@JsonIgnore
 	private Supplier<PageRule[]> _pageRulesSupplier;
 
 	@Schema(description = "The page's settings.")
@@ -173,6 +175,7 @@ public class PageDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Settings settings;
 
+	@JsonIgnore
 	private Supplier<Settings> _settingsSupplier;
 
 	@Schema(
@@ -217,6 +220,7 @@ public class PageDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double version;
 
+	@JsonIgnore
 	private Supplier<Double> _versionSupplier;
 
 	@Override

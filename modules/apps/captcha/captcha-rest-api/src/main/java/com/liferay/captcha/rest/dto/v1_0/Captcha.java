@@ -89,6 +89,7 @@ public class Captcha implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String answer;
 
+	@JsonIgnore
 	private Supplier<String> _answerSupplier;
 
 	@Schema
@@ -129,6 +130,7 @@ public class Captcha implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String image;
 
+	@JsonIgnore
 	private Supplier<String> _imageSupplier;
 
 	@Schema
@@ -170,6 +172,7 @@ public class Captcha implements Serializable {
 	@NotEmpty
 	protected String token;
 
+	@JsonIgnore
 	private Supplier<String> _tokenSupplier;
 
 	@Override

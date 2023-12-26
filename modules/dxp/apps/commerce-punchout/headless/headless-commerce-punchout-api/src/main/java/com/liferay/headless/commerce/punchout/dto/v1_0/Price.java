@@ -86,6 +86,7 @@ public class Price implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String currency;
 
+	@JsonIgnore
 	private Supplier<String> _currencySupplier;
 
 	@Schema
@@ -126,6 +127,7 @@ public class Price implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double discount;
 
+	@JsonIgnore
 	private Supplier<Double> _discountSupplier;
 
 	@Schema
@@ -166,6 +168,7 @@ public class Price implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String discountPercentage;
 
+	@JsonIgnore
 	private Supplier<String> _discountPercentageSupplier;
 
 	@Schema
@@ -207,6 +210,7 @@ public class Price implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double discountPercentageLevel1;
 
+	@JsonIgnore
 	private Supplier<Double> _discountPercentageLevel1Supplier;
 
 	@Schema
@@ -248,6 +252,7 @@ public class Price implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double discountPercentageLevel2;
 
+	@JsonIgnore
 	private Supplier<Double> _discountPercentageLevel2Supplier;
 
 	@Schema
@@ -289,6 +294,7 @@ public class Price implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double discountPercentageLevel3;
 
+	@JsonIgnore
 	private Supplier<Double> _discountPercentageLevel3Supplier;
 
 	@Schema
@@ -330,6 +336,7 @@ public class Price implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double discountPercentageLevel4;
 
+	@JsonIgnore
 	private Supplier<Double> _discountPercentageLevel4Supplier;
 
 	@Schema
@@ -370,6 +377,7 @@ public class Price implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double finalPrice;
 
+	@JsonIgnore
 	private Supplier<Double> _finalPriceSupplier;
 
 	@Schema
@@ -410,6 +418,7 @@ public class Price implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double price;
 
+	@JsonIgnore
 	private Supplier<Double> _priceSupplier;
 
 	@Schema
@@ -450,6 +459,7 @@ public class Price implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double promoPrice;
 
+	@JsonIgnore
 	private Supplier<Double> _promoPriceSupplier;
 
 	@Override

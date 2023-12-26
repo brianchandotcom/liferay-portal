@@ -84,6 +84,7 @@ public class FailedItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String item;
 
+	@JsonIgnore
 	private Supplier<String> _itemSupplier;
 
 	@Schema(
@@ -128,6 +129,7 @@ public class FailedItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer itemIndex;
 
+	@JsonIgnore
 	private Supplier<Integer> _itemIndexSupplier;
 
 	@Schema(description = "Message describing the reason of import failure.")
@@ -170,6 +172,7 @@ public class FailedItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String message;
 
+	@JsonIgnore
 	private Supplier<String> _messageSupplier;
 
 	@Override

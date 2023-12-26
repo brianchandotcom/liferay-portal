@@ -95,6 +95,7 @@ public class DisplayPageTemplateSettings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ContentAssociation contentAssociation;
 
+	@JsonIgnore
 	private Supplier<ContentAssociation> _contentAssociationSupplier;
 
 	@Schema
@@ -139,6 +140,7 @@ public class DisplayPageTemplateSettings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected OpenGraphSettingsMapping openGraphSettingsMapping;
 
+	@JsonIgnore
 	private Supplier<OpenGraphSettingsMapping>
 		_openGraphSettingsMappingSupplier;
 
@@ -182,6 +184,7 @@ public class DisplayPageTemplateSettings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected SEOSettingsMapping seoSettingsMapping;
 
+	@JsonIgnore
 	private Supplier<SEOSettingsMapping> _seoSettingsMappingSupplier;
 
 	@Override

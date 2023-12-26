@@ -88,6 +88,7 @@ public class ProductGroup implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@DecimalMin("0")
@@ -129,6 +130,7 @@ public class ProductGroup implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer productsCount;
 
+	@JsonIgnore
 	private Supplier<Integer> _productsCountSupplier;
 
 	@Schema(example = "{en_US=Title, hr_HR=Title HR, hu_HU=Title HU}")
@@ -170,6 +172,7 @@ public class ProductGroup implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> title;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _titleSupplier;
 
 	@Override

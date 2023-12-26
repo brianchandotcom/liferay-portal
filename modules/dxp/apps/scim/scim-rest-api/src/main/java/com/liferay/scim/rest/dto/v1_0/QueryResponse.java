@@ -94,6 +94,7 @@ public class QueryResponse implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object Resources;
 
+	@JsonIgnore
 	private Supplier<Object> _ResourcesSupplier;
 
 	@Schema(
@@ -138,6 +139,7 @@ public class QueryResponse implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer itemsPerPage;
 
+	@JsonIgnore
 	private Supplier<Integer> _itemsPerPageSupplier;
 
 	@Schema(
@@ -182,6 +184,7 @@ public class QueryResponse implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer startIndex;
 
+	@JsonIgnore
 	private Supplier<Integer> _startIndexSupplier;
 
 	@Schema(
@@ -226,6 +229,7 @@ public class QueryResponse implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer totalResults;
 
+	@JsonIgnore
 	private Supplier<Integer> _totalResultsSupplier;
 
 	@Override

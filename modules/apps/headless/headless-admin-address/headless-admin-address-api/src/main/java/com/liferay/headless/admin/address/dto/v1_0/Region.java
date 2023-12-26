@@ -90,6 +90,7 @@ public class Region implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean active;
 
+	@JsonIgnore
 	private Supplier<Boolean> _activeSupplier;
 
 	@Schema
@@ -130,6 +131,7 @@ public class Region implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long countryId;
 
+	@JsonIgnore
 	private Supplier<Long> _countryIdSupplier;
 
 	@Schema
@@ -168,6 +170,7 @@ public class Region implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema
@@ -207,6 +210,7 @@ public class Region implements Serializable {
 	@NotEmpty
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema
@@ -247,6 +251,7 @@ public class Region implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double position;
 
+	@JsonIgnore
 	private Supplier<Double> _positionSupplier;
 
 	@Schema
@@ -288,6 +293,7 @@ public class Region implements Serializable {
 	@NotEmpty
 	protected String regionCode;
 
+	@JsonIgnore
 	private Supplier<String> _regionCodeSupplier;
 
 	@Schema
@@ -330,6 +336,7 @@ public class Region implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> title_i18n;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _title_i18nSupplier;
 
 	@Override

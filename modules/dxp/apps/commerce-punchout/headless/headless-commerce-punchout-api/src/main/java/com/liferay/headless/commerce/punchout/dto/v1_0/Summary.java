@@ -86,6 +86,7 @@ public class Summary implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String currency;
 
+	@JsonIgnore
 	private Supplier<String> _currencySupplier;
 
 	@Schema
@@ -126,6 +127,7 @@ public class Summary implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer itemsQuantity;
 
+	@JsonIgnore
 	private Supplier<Integer> _itemsQuantitySupplier;
 
 	@Schema
@@ -170,6 +172,7 @@ public class Summary implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] shippingDiscountPercentages;
 
+	@JsonIgnore
 	private Supplier<String[]> _shippingDiscountPercentagesSupplier;
 
 	@Schema
@@ -210,6 +213,7 @@ public class Summary implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double shippingDiscountValue;
 
+	@JsonIgnore
 	private Supplier<Double> _shippingDiscountValueSupplier;
 
 	@Schema
@@ -250,6 +254,7 @@ public class Summary implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double shippingValue;
 
+	@JsonIgnore
 	private Supplier<Double> _shippingValueSupplier;
 
 	@Schema
@@ -290,6 +295,7 @@ public class Summary implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double subtotal;
 
+	@JsonIgnore
 	private Supplier<Double> _subtotalSupplier;
 
 	@Schema
@@ -334,6 +340,7 @@ public class Summary implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] subtotalDiscountPercentages;
 
+	@JsonIgnore
 	private Supplier<String[]> _subtotalDiscountPercentagesSupplier;
 
 	@Schema
@@ -374,6 +381,7 @@ public class Summary implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double subtotalDiscountValue;
 
+	@JsonIgnore
 	private Supplier<Double> _subtotalDiscountValueSupplier;
 
 	@Schema
@@ -414,6 +422,7 @@ public class Summary implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double taxValue;
 
+	@JsonIgnore
 	private Supplier<Double> _taxValueSupplier;
 
 	@Schema
@@ -454,6 +463,7 @@ public class Summary implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double total;
 
+	@JsonIgnore
 	private Supplier<Double> _totalSupplier;
 
 	@Schema
@@ -495,6 +505,7 @@ public class Summary implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] totalDiscountPercentages;
 
+	@JsonIgnore
 	private Supplier<String[]> _totalDiscountPercentagesSupplier;
 
 	@Schema
@@ -535,6 +546,7 @@ public class Summary implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double totalDiscountValue;
 
+	@JsonIgnore
 	private Supplier<Double> _totalDiscountValueSupplier;
 
 	@Override

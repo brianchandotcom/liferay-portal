@@ -88,6 +88,7 @@ public class GenericError implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String message;
 
+	@JsonIgnore
 	private Supplier<String> _messageSupplier;
 
 	@Override

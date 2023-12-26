@@ -89,6 +89,7 @@ public class ObjectViewSortColumn implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema
@@ -129,6 +130,7 @@ public class ObjectViewSortColumn implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String objectFieldName;
 
+	@JsonIgnore
 	private Supplier<String> _objectFieldNameSupplier;
 
 	@Schema
@@ -169,6 +171,7 @@ public class ObjectViewSortColumn implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer priority;
 
+	@JsonIgnore
 	private Supplier<Integer> _prioritySupplier;
 
 	@Schema
@@ -221,6 +224,7 @@ public class ObjectViewSortColumn implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected SortOrder sortOrder;
 
+	@JsonIgnore
 	private Supplier<SortOrder> _sortOrderSupplier;
 
 	@Override

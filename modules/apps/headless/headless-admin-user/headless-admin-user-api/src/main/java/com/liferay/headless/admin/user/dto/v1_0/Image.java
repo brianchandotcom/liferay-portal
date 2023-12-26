@@ -86,6 +86,7 @@ public class Image implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String image;
 
+	@JsonIgnore
 	private Supplier<String> _imageSupplier;
 
 	@Override

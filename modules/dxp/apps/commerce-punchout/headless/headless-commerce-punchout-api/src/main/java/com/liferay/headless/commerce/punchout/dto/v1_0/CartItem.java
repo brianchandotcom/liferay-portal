@@ -90,6 +90,7 @@ public class CartItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, ?> customFields;
 
+	@JsonIgnore
 	private Supplier<Map<String, ?>> _customFieldsSupplier;
 
 	@Schema
@@ -128,6 +129,7 @@ public class CartItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema
@@ -166,6 +168,7 @@ public class CartItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema
@@ -206,6 +209,7 @@ public class CartItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String options;
 
+	@JsonIgnore
 	private Supplier<String> _optionsSupplier;
 
 	@Schema
@@ -246,6 +250,7 @@ public class CartItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long parentCartItemId;
 
+	@JsonIgnore
 	private Supplier<Long> _parentCartItemIdSupplier;
 
 	@Schema
@@ -285,6 +290,7 @@ public class CartItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Price price;
 
+	@JsonIgnore
 	private Supplier<Price> _priceSupplier;
 
 	@Schema
@@ -325,6 +331,7 @@ public class CartItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long productId;
 
+	@JsonIgnore
 	private Supplier<Long> _productIdSupplier;
 
 	@Schema
@@ -365,6 +372,7 @@ public class CartItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer quantity;
 
+	@JsonIgnore
 	private Supplier<Integer> _quantitySupplier;
 
 	@Schema
@@ -406,6 +414,7 @@ public class CartItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Settings settings;
 
+	@JsonIgnore
 	private Supplier<Settings> _settingsSupplier;
 
 	@DecimalMin("0")
@@ -447,6 +456,7 @@ public class CartItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer shippedQuantity;
 
+	@JsonIgnore
 	private Supplier<Integer> _shippedQuantitySupplier;
 
 	@Schema
@@ -485,6 +495,7 @@ public class CartItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String sku;
 
+	@JsonIgnore
 	private Supplier<String> _skuSupplier;
 
 	@Schema
@@ -523,6 +534,7 @@ public class CartItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long skuId;
 
+	@JsonIgnore
 	private Supplier<Long> _skuIdSupplier;
 
 	@Schema(example = "true")
@@ -563,6 +575,7 @@ public class CartItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean subscription;
 
+	@JsonIgnore
 	private Supplier<Boolean> _subscriptionSupplier;
 
 	@Schema
@@ -603,6 +616,7 @@ public class CartItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String thumbnail;
 
+	@JsonIgnore
 	private Supplier<String> _thumbnailSupplier;
 
 	@Override

@@ -101,6 +101,7 @@ public class Comment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
+	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
 	@Schema(description = "The comment's author.")
@@ -142,6 +143,7 @@ public class Comment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator creator;
 
+	@JsonIgnore
 	private Supplier<Creator> _creatorSupplier;
 
 	@Schema(description = "The comment's creation date.")
@@ -182,6 +184,7 @@ public class Comment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
+	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
 	@Schema(description = "The comment's latest modification date.")
@@ -222,6 +225,7 @@ public class Comment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
+	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
 	@Schema(description = "The comment's external reference code.")
@@ -262,6 +266,7 @@ public class Comment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@Schema(description = "The comment's ID.")
@@ -300,6 +305,7 @@ public class Comment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema(description = "The number of child comments on this comment.")
@@ -340,6 +346,7 @@ public class Comment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer numberOfComments;
 
+	@JsonIgnore
 	private Supplier<Integer> _numberOfCommentsSupplier;
 
 	@Schema(description = "the ID of the comment's parent, if it exists.")
@@ -380,6 +387,7 @@ public class Comment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long parentCommentId;
 
+	@JsonIgnore
 	private Supplier<Long> _parentCommentIdSupplier;
 
 	@Schema(description = "The comment's text content.")
@@ -418,6 +426,7 @@ public class Comment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String text;
 
+	@JsonIgnore
 	private Supplier<String> _textSupplier;
 
 	@Override

@@ -84,6 +84,7 @@ public class Body_1 implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String logo;
 
+	@JsonIgnore
 	private Supplier<String> _logoSupplier;
 
 	@Override

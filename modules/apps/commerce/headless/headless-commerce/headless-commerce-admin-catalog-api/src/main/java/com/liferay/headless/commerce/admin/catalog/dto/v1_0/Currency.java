@@ -96,6 +96,7 @@ public class Currency implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean active;
 
+	@JsonIgnore
 	private Supplier<Boolean> _activeSupplier;
 
 	@Schema(example = "USD")
@@ -135,6 +136,7 @@ public class Currency implements Serializable {
 	@NotEmpty
 	protected String code;
 
+	@JsonIgnore
 	private Supplier<String> _codeSupplier;
 
 	@Schema(
@@ -179,6 +181,7 @@ public class Currency implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> formatPattern;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _formatPatternSupplier;
 
 	@DecimalMin("0")
@@ -218,6 +221,7 @@ public class Currency implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@DecimalMin("0")
@@ -259,6 +263,7 @@ public class Currency implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer maxFractionDigits;
 
+	@JsonIgnore
 	private Supplier<Integer> _maxFractionDigitsSupplier;
 
 	@DecimalMin("0")
@@ -300,6 +305,7 @@ public class Currency implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer minFractionDigits;
 
+	@JsonIgnore
 	private Supplier<Integer> _minFractionDigitsSupplier;
 
 	@Schema(
@@ -344,6 +350,7 @@ public class Currency implements Serializable {
 	@NotNull
 	protected Map<String, String> name;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _nameSupplier;
 
 	@Schema(example = "true")
@@ -384,6 +391,7 @@ public class Currency implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean primary;
 
+	@JsonIgnore
 	private Supplier<Boolean> _primarySupplier;
 
 	@Schema(example = "1.2")
@@ -424,6 +432,7 @@ public class Currency implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double priority;
 
+	@JsonIgnore
 	private Supplier<Double> _prioritySupplier;
 
 	@Schema(example = "33.54")
@@ -465,6 +474,7 @@ public class Currency implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal rate;
 
+	@JsonIgnore
 	private Supplier<BigDecimal> _rateSupplier;
 
 	@Schema(example = "HALF_EVEN")
@@ -517,6 +527,7 @@ public class Currency implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected RoundingMode roundingMode;
 
+	@JsonIgnore
 	private Supplier<RoundingMode> _roundingModeSupplier;
 
 	@Schema(example = "$")
@@ -557,6 +568,7 @@ public class Currency implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String symbol;
 
+	@JsonIgnore
 	private Supplier<String> _symbolSupplier;
 
 	@Override

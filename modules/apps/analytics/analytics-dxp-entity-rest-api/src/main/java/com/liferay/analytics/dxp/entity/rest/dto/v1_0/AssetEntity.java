@@ -90,6 +90,7 @@ public class AssetEntity implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long[] assetCategoryIds;
 
+	@JsonIgnore
 	private Supplier<Long[]> _assetCategoryIdsSupplier;
 
 	@Schema
@@ -130,6 +131,7 @@ public class AssetEntity implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] assetTagNames;
 
+	@JsonIgnore
 	private Supplier<String[]> _assetTagNamesSupplier;
 
 	@Schema
@@ -170,6 +172,7 @@ public class AssetEntity implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String className;
 
+	@JsonIgnore
 	private Supplier<String> _classNameSupplier;
 
 	@Schema
@@ -210,6 +213,7 @@ public class AssetEntity implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long classPK;
 
+	@JsonIgnore
 	private Supplier<Long> _classPKSupplier;
 
 	@Schema
@@ -250,6 +254,7 @@ public class AssetEntity implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long classTypeId;
 
+	@JsonIgnore
 	private Supplier<Long> _classTypeIdSupplier;
 
 	@Schema
@@ -290,6 +295,7 @@ public class AssetEntity implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String classTypeName;
 
+	@JsonIgnore
 	private Supplier<String> _classTypeNameSupplier;
 
 	@Schema
@@ -330,6 +336,7 @@ public class AssetEntity implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date createDate;
 
+	@JsonIgnore
 	private Supplier<Date> _createDateSupplier;
 
 	@Schema
@@ -370,6 +377,7 @@ public class AssetEntity implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date expirationDate;
 
+	@JsonIgnore
 	private Supplier<Date> _expirationDateSupplier;
 
 	@Schema
@@ -410,6 +418,7 @@ public class AssetEntity implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long groupId;
 
+	@JsonIgnore
 	private Supplier<Long> _groupIdSupplier;
 
 	@Schema
@@ -448,6 +457,7 @@ public class AssetEntity implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema
@@ -488,6 +498,7 @@ public class AssetEntity implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date modifiedDate;
 
+	@JsonIgnore
 	private Supplier<Date> _modifiedDateSupplier;
 
 	@Schema
@@ -528,6 +539,7 @@ public class AssetEntity implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date publishDate;
 
+	@JsonIgnore
 	private Supplier<Date> _publishDateSupplier;
 
 	@Schema
@@ -568,6 +580,7 @@ public class AssetEntity implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String title;
 
+	@JsonIgnore
 	private Supplier<String> _titleSupplier;
 
 	@Override

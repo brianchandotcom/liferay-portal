@@ -88,6 +88,7 @@ public class Group implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String displayName;
 
+	@JsonIgnore
 	private Supplier<String> _displayNameSupplier;
 
 	@Schema(
@@ -132,6 +133,7 @@ public class Group implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalId;
 
+	@JsonIgnore
 	private Supplier<String> _externalIdSupplier;
 
 	@Schema(
@@ -174,6 +176,7 @@ public class Group implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String id;
 
+	@JsonIgnore
 	private Supplier<String> _idSupplier;
 
 	@Schema(description = "A list of members of the Group.")
@@ -216,6 +219,7 @@ public class Group implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected MultiValuedAttribute[] members;
 
+	@JsonIgnore
 	private Supplier<MultiValuedAttribute[]> _membersSupplier;
 
 	@Schema
@@ -255,6 +259,7 @@ public class Group implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Meta meta;
 
+	@JsonIgnore
 	private Supplier<Meta> _metaSupplier;
 
 	@Schema(
@@ -299,6 +304,7 @@ public class Group implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] schemas;
 
+	@JsonIgnore
 	private Supplier<String[]> _schemasSupplier;
 
 	@Override

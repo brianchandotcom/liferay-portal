@@ -93,6 +93,7 @@ public class EmptyCollectionConfig implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean displayMessage;
 
+	@JsonIgnore
 	private Supplier<Boolean> _displayMessageSupplier;
 
 	@Schema(
@@ -139,6 +140,7 @@ public class EmptyCollectionConfig implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> message_i18n;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _message_i18nSupplier;
 
 	@Override

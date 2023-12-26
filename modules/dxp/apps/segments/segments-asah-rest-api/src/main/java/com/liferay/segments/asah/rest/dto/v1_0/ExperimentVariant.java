@@ -87,6 +87,7 @@ public class ExperimentVariant implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String id;
 
+	@JsonIgnore
 	private Supplier<String> _idSupplier;
 
 	@DecimalMax("99")
@@ -129,6 +130,7 @@ public class ExperimentVariant implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double trafficSplit;
 
+	@JsonIgnore
 	private Supplier<Double> _trafficSplitSupplier;
 
 	@Override

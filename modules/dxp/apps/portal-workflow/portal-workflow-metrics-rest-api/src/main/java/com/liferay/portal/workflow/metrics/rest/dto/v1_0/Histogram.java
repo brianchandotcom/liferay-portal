@@ -86,6 +86,7 @@ public class Histogram implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String key;
 
+	@JsonIgnore
 	private Supplier<String> _keySupplier;
 
 	@Schema
@@ -126,6 +127,7 @@ public class Histogram implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double value;
 
+	@JsonIgnore
 	private Supplier<Double> _valueSupplier;
 
 	@Override

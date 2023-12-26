@@ -97,6 +97,7 @@ public class FragmentImageClassPKReference implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, ClassPKReference> classPKReferences;
 
+	@JsonIgnore
 	private Supplier<Map<String, ClassPKReference>> _classPKReferencesSupplier;
 
 	@Schema(description = "The fragment image's configuration.")
@@ -142,6 +143,7 @@ public class FragmentImageClassPKReference implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentImageConfiguration fragmentImageConfiguration;
 
+	@JsonIgnore
 	private Supplier<FragmentImageConfiguration>
 		_fragmentImageConfigurationSupplier;
 

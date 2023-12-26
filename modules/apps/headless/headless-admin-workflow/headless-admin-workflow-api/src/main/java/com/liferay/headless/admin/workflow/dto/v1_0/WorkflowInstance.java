@@ -97,6 +97,7 @@ public class WorkflowInstance implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
+	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
 	@Schema(
@@ -141,6 +142,7 @@ public class WorkflowInstance implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean completed;
 
+	@JsonIgnore
 	private Supplier<Boolean> _completedSupplier;
 
 	@Schema(description = "The instance's current node names.")
@@ -181,6 +183,7 @@ public class WorkflowInstance implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String[] currentNodeNames;
 
+	@JsonIgnore
 	private Supplier<String[]> _currentNodeNamesSupplier;
 
 	@Schema(description = "The instance's completion date.")
@@ -221,6 +224,7 @@ public class WorkflowInstance implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCompletion;
 
+	@JsonIgnore
 	private Supplier<Date> _dateCompletionSupplier;
 
 	@Schema(description = "The instance's creation date.")
@@ -261,6 +265,7 @@ public class WorkflowInstance implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
+	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
 	@Schema(description = "The instance's ID.")
@@ -299,6 +304,7 @@ public class WorkflowInstance implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema(
@@ -345,6 +351,7 @@ public class WorkflowInstance implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected ObjectReviewed objectReviewed;
 
+	@JsonIgnore
 	private Supplier<ObjectReviewed> _objectReviewedSupplier;
 
 	@Schema(description = "The name of the instance's workflow definition.")
@@ -388,6 +395,7 @@ public class WorkflowInstance implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String workflowDefinitionName;
 
+	@JsonIgnore
 	private Supplier<String> _workflowDefinitionNameSupplier;
 
 	@Schema
@@ -430,6 +438,7 @@ public class WorkflowInstance implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String workflowDefinitionVersion;
 
+	@JsonIgnore
 	private Supplier<String> _workflowDefinitionVersionSupplier;
 
 	@Override

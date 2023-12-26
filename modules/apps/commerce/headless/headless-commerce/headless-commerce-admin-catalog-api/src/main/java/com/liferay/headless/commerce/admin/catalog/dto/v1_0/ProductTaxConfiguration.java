@@ -88,6 +88,7 @@ public class ProductTaxConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema(example = "taxCategoryName")
@@ -128,6 +129,7 @@ public class ProductTaxConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String taxCategory;
 
+	@JsonIgnore
 	private Supplier<String> _taxCategorySupplier;
 
 	@Schema(example = "true")
@@ -168,6 +170,7 @@ public class ProductTaxConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean taxable;
 
+	@JsonIgnore
 	private Supplier<Boolean> _taxableSupplier;
 
 	@Override

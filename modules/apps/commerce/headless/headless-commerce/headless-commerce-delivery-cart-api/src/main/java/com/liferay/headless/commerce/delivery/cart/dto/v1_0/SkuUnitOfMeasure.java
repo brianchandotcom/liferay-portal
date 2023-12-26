@@ -96,6 +96,7 @@ public class SkuUnitOfMeasure implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal incrementalOrderQuantity;
 
+	@JsonIgnore
 	private Supplier<BigDecimal> _incrementalOrderQuantitySupplier;
 
 	@Schema(example = "pl")
@@ -134,6 +135,7 @@ public class SkuUnitOfMeasure implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String key;
 
+	@JsonIgnore
 	private Supplier<String> _keySupplier;
 
 	@Schema(example = "Pallet")
@@ -172,6 +174,7 @@ public class SkuUnitOfMeasure implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema(example = "3")
@@ -212,6 +215,7 @@ public class SkuUnitOfMeasure implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer precision;
 
+	@JsonIgnore
 	private Supplier<Integer> _precisionSupplier;
 
 	@Schema(example = "true")
@@ -252,6 +256,7 @@ public class SkuUnitOfMeasure implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean primary;
 
+	@JsonIgnore
 	private Supplier<Boolean> _primarySupplier;
 
 	@DecimalMin("0")
@@ -293,6 +298,7 @@ public class SkuUnitOfMeasure implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double priority;
 
+	@JsonIgnore
 	private Supplier<Double> _prioritySupplier;
 
 	@DecimalMin("0")
@@ -335,6 +341,7 @@ public class SkuUnitOfMeasure implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal rate;
 
+	@JsonIgnore
 	private Supplier<BigDecimal> _rateSupplier;
 
 	@Override

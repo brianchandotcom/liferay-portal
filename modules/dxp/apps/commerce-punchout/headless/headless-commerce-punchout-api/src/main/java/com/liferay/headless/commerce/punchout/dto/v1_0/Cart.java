@@ -94,6 +94,7 @@ public class Cart implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String account;
 
+	@JsonIgnore
 	private Supplier<String> _accountSupplier;
 
 	@Schema
@@ -134,6 +135,7 @@ public class Cart implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long accountId;
 
+	@JsonIgnore
 	private Supplier<Long> _accountIdSupplier;
 
 	@Schema
@@ -174,6 +176,7 @@ public class Cart implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String author;
 
+	@JsonIgnore
 	private Supplier<String> _authorSupplier;
 
 	@Schema
@@ -215,6 +218,7 @@ public class Cart implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Address billingAddress;
 
+	@JsonIgnore
 	private Supplier<Address> _billingAddressSupplier;
 
 	@Schema
@@ -255,6 +259,7 @@ public class Cart implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long billingAddressId;
 
+	@JsonIgnore
 	private Supplier<Long> _billingAddressIdSupplier;
 
 	@Schema
@@ -296,6 +301,7 @@ public class Cart implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected CartItem[] cartItems;
 
+	@JsonIgnore
 	private Supplier<CartItem[]> _cartItemsSupplier;
 
 	@Schema
@@ -336,6 +342,7 @@ public class Cart implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long channelId;
 
+	@JsonIgnore
 	private Supplier<Long> _channelIdSupplier;
 
 	@Schema
@@ -376,6 +383,7 @@ public class Cart implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String couponCode;
 
+	@JsonIgnore
 	private Supplier<String> _couponCodeSupplier;
 
 	@Schema
@@ -416,6 +424,7 @@ public class Cart implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date createDate;
 
+	@JsonIgnore
 	private Supplier<Date> _createDateSupplier;
 
 	@Schema
@@ -457,6 +466,7 @@ public class Cart implements Serializable {
 	@NotEmpty
 	protected String currencyCode;
 
+	@JsonIgnore
 	private Supplier<String> _currencyCodeSupplier;
 
 	@Schema
@@ -498,6 +508,7 @@ public class Cart implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, ?> customFields;
 
+	@JsonIgnore
 	private Supplier<Map<String, ?>> _customFieldsSupplier;
 
 	@Schema
@@ -536,6 +547,7 @@ public class Cart implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema
@@ -576,6 +588,7 @@ public class Cart implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date lastPriceUpdateDate;
 
+	@JsonIgnore
 	private Supplier<Date> _lastPriceUpdateDateSupplier;
 
 	@Schema
@@ -616,6 +629,7 @@ public class Cart implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date modifiedDate;
 
+	@JsonIgnore
 	private Supplier<Date> _modifiedDateSupplier;
 
 	@Schema
@@ -657,6 +671,7 @@ public class Cart implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected CartComment[] notes;
 
+	@JsonIgnore
 	private Supplier<CartComment[]> _notesSupplier;
 
 	@Schema
@@ -697,6 +712,7 @@ public class Cart implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String paymentMethod;
 
+	@JsonIgnore
 	private Supplier<String> _paymentMethodSupplier;
 
 	@Schema
@@ -737,6 +753,7 @@ public class Cart implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String paymentMethodLabel;
 
+	@JsonIgnore
 	private Supplier<String> _paymentMethodLabelSupplier;
 
 	@Schema
@@ -777,6 +794,7 @@ public class Cart implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer paymentStatus;
 
+	@JsonIgnore
 	private Supplier<Integer> _paymentStatusSupplier;
 
 	@Schema
@@ -817,6 +835,7 @@ public class Cart implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String paymentStatusLabel;
 
+	@JsonIgnore
 	private Supplier<String> _paymentStatusLabelSupplier;
 
 	@Schema
@@ -857,6 +876,7 @@ public class Cart implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String printedNote;
 
+	@JsonIgnore
 	private Supplier<String> _printedNoteSupplier;
 
 	@Schema
@@ -897,6 +917,7 @@ public class Cart implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String purchaseOrderNumber;
 
+	@JsonIgnore
 	private Supplier<String> _purchaseOrderNumberSupplier;
 
 	@Schema
@@ -938,6 +959,7 @@ public class Cart implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Address shippingAddress;
 
+	@JsonIgnore
 	private Supplier<Address> _shippingAddressSupplier;
 
 	@Schema
@@ -978,6 +1000,7 @@ public class Cart implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long shippingAddressId;
 
+	@JsonIgnore
 	private Supplier<Long> _shippingAddressIdSupplier;
 
 	@Schema
@@ -1018,6 +1041,7 @@ public class Cart implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String shippingMethod;
 
+	@JsonIgnore
 	private Supplier<String> _shippingMethodSupplier;
 
 	@Schema
@@ -1058,6 +1082,7 @@ public class Cart implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String shippingOption;
 
+	@JsonIgnore
 	private Supplier<String> _shippingOptionSupplier;
 
 	@Schema
@@ -1098,6 +1123,7 @@ public class Cart implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String status;
 
+	@JsonIgnore
 	private Supplier<String> _statusSupplier;
 
 	@Schema
@@ -1139,6 +1165,7 @@ public class Cart implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Summary summary;
 
+	@JsonIgnore
 	private Supplier<Summary> _summarySupplier;
 
 	@Schema
@@ -1179,6 +1206,7 @@ public class Cart implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean useAsBilling;
 
+	@JsonIgnore
 	private Supplier<Boolean> _useAsBillingSupplier;
 
 	@Override

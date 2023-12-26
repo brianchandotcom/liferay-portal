@@ -95,6 +95,7 @@ public class NoneActionExecutionResult implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean reload;
 
+	@JsonIgnore
 	private Supplier<Boolean> _reloadSupplier;
 
 	@Override

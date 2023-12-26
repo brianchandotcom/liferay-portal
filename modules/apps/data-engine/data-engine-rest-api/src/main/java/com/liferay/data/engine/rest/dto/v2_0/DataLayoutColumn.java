@@ -86,6 +86,7 @@ public class DataLayoutColumn implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer columnSize;
 
+	@JsonIgnore
 	private Supplier<Integer> _columnSizeSupplier;
 
 	@Schema
@@ -126,6 +127,7 @@ public class DataLayoutColumn implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] fieldNames;
 
+	@JsonIgnore
 	private Supplier<String[]> _fieldNamesSupplier;
 
 	@Override

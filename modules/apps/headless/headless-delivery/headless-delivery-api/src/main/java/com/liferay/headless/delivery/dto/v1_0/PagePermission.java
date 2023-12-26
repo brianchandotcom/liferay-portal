@@ -90,6 +90,7 @@ public class PagePermission implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] actionKeys;
 
+	@JsonIgnore
 	private Supplier<String[]> _actionKeysSupplier;
 
 	@Schema(description = "The role's key.")
@@ -130,6 +131,7 @@ public class PagePermission implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String roleKey;
 
+	@JsonIgnore
 	private Supplier<String> _roleKeySupplier;
 
 	@Override

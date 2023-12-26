@@ -95,6 +95,7 @@ public class BaseScim implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalId;
 
+	@JsonIgnore
 	private Supplier<String> _externalIdSupplier;
 
 	@Schema(
@@ -137,6 +138,7 @@ public class BaseScim implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String id;
 
+	@JsonIgnore
 	private Supplier<String> _idSupplier;
 
 	@Schema
@@ -176,6 +178,7 @@ public class BaseScim implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Meta meta;
 
+	@JsonIgnore
 	private Supplier<Meta> _metaSupplier;
 
 	@Schema(
@@ -220,6 +223,7 @@ public class BaseScim implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] schemas;
 
+	@JsonIgnore
 	private Supplier<String[]> _schemasSupplier;
 
 	@Override

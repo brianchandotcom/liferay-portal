@@ -86,6 +86,7 @@ public class ProductOption implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String key;
 
+	@JsonIgnore
 	private Supplier<String> _keySupplier;
 
 	@Schema(example = "option-key")
@@ -126,6 +127,7 @@ public class ProductOption implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String optionKey;
 
+	@JsonIgnore
 	private Supplier<String> _optionKeySupplier;
 
 	@Schema
@@ -167,6 +169,7 @@ public class ProductOption implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map[] values;
 
+	@JsonIgnore
 	private Supplier<Map[]> _valuesSupplier;
 
 	@Override

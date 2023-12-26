@@ -86,6 +86,7 @@ public class FieldMappingInfo implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer languageIdPosition;
 
+	@JsonIgnore
 	private Supplier<Integer> _languageIdPositionSupplier;
 
 	@Schema
@@ -124,6 +125,7 @@ public class FieldMappingInfo implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema
@@ -162,6 +164,7 @@ public class FieldMappingInfo implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String type;
 
+	@JsonIgnore
 	private Supplier<String> _typeSupplier;
 
 	@Override

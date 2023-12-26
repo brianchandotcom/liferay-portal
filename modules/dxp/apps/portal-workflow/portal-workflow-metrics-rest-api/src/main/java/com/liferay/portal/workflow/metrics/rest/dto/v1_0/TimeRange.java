@@ -92,6 +92,7 @@ public class TimeRange implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateEnd;
 
+	@JsonIgnore
 	private Supplier<Date> _dateEndSupplier;
 
 	@Schema
@@ -132,6 +133,7 @@ public class TimeRange implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateStart;
 
+	@JsonIgnore
 	private Supplier<Date> _dateStartSupplier;
 
 	@Schema
@@ -172,6 +174,7 @@ public class TimeRange implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean defaultTimeRange;
 
+	@JsonIgnore
 	private Supplier<Boolean> _defaultTimeRangeSupplier;
 
 	@Schema
@@ -210,6 +213,7 @@ public class TimeRange implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer id;
 
+	@JsonIgnore
 	private Supplier<Integer> _idSupplier;
 
 	@Schema
@@ -248,6 +252,7 @@ public class TimeRange implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Override

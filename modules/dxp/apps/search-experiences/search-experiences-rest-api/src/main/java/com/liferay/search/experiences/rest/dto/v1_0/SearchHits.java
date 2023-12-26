@@ -87,6 +87,7 @@ public class SearchHits implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Hit[] hits;
 
+	@JsonIgnore
 	private Supplier<Hit[]> _hitsSupplier;
 
 	@Schema
@@ -128,6 +129,7 @@ public class SearchHits implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Float maxScore;
 
+	@JsonIgnore
 	private Supplier<Float> _maxScoreSupplier;
 
 	@Schema
@@ -168,6 +170,7 @@ public class SearchHits implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long totalHits;
 
+	@JsonIgnore
 	private Supplier<Long> _totalHitsSupplier;
 
 	@Override

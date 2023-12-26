@@ -90,6 +90,7 @@ public class SEOSettings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String customCanonicalURL;
 
+	@JsonIgnore
 	private Supplier<String> _customCanonicalURLSupplier;
 
 	@Schema(
@@ -138,6 +139,7 @@ public class SEOSettings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> customCanonicalURL_i18n;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _customCanonicalURL_i18nSupplier;
 
 	@Schema(
@@ -182,6 +184,7 @@ public class SEOSettings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
+	@JsonIgnore
 	private Supplier<String> _descriptionSupplier;
 
 	@Schema(
@@ -228,6 +231,7 @@ public class SEOSettings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> description_i18n;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _description_i18nSupplier;
 
 	@Schema(description = "The page's main title to be used by search engines.")
@@ -270,6 +274,7 @@ public class SEOSettings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String htmlTitle;
 
+	@JsonIgnore
 	private Supplier<String> _htmlTitleSupplier;
 
 	@Schema(
@@ -316,6 +321,7 @@ public class SEOSettings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> htmlTitle_i18n;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _htmlTitle_i18nSupplier;
 
 	@Schema(
@@ -360,6 +366,7 @@ public class SEOSettings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String robots;
 
+	@JsonIgnore
 	private Supplier<String> _robotsSupplier;
 
 	@Schema(
@@ -406,6 +413,7 @@ public class SEOSettings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> robots_i18n;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _robots_i18nSupplier;
 
 	@Schema(
@@ -450,6 +458,7 @@ public class SEOSettings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String seoKeywords;
 
+	@JsonIgnore
 	private Supplier<String> _seoKeywordsSupplier;
 
 	@Schema(
@@ -496,6 +505,7 @@ public class SEOSettings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> seoKeywords_i18n;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _seoKeywords_i18nSupplier;
 
 	@Schema(description = "Represents settings related with the site map.")
@@ -540,6 +550,7 @@ public class SEOSettings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected SiteMapSettings siteMapSettings;
 
+	@JsonIgnore
 	private Supplier<SiteMapSettings> _siteMapSettingsSupplier;
 
 	@Override

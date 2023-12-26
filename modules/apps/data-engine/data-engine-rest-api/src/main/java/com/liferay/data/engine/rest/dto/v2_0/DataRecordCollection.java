@@ -92,6 +92,7 @@ public class DataRecordCollection implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long dataDefinitionId;
 
+	@JsonIgnore
 	private Supplier<Long> _dataDefinitionIdSupplier;
 
 	@Schema
@@ -133,6 +134,7 @@ public class DataRecordCollection implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String dataRecordCollectionKey;
 
+	@JsonIgnore
 	private Supplier<String> _dataRecordCollectionKeySupplier;
 
 	@Schema
@@ -175,6 +177,7 @@ public class DataRecordCollection implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, Object> description;
 
+	@JsonIgnore
 	private Supplier<Map<String, Object>> _descriptionSupplier;
 
 	@Schema
@@ -213,6 +216,7 @@ public class DataRecordCollection implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema
@@ -254,6 +258,7 @@ public class DataRecordCollection implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, Object> name;
 
+	@JsonIgnore
 	private Supplier<Map<String, Object>> _nameSupplier;
 
 	@Schema
@@ -294,6 +299,7 @@ public class DataRecordCollection implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long siteId;
 
+	@JsonIgnore
 	private Supplier<Long> _siteIdSupplier;
 
 	@Override

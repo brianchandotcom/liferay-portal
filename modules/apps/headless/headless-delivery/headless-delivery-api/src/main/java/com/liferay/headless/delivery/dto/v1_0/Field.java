@@ -88,6 +88,7 @@ public class Field implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String fieldName;
 
+	@JsonIgnore
 	private Supplier<String> _fieldNameSupplier;
 
 	@Schema(description = "The internal value of the field.")
@@ -128,6 +129,7 @@ public class Field implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String fieldValue;
 
+	@JsonIgnore
 	private Supplier<String> _fieldValueSupplier;
 
 	@Override

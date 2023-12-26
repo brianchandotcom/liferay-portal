@@ -89,6 +89,7 @@ public class UiConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FieldSet[] fieldSets;
 
+	@JsonIgnore
 	private Supplier<FieldSet[]> _fieldSetsSupplier;
 
 	@Override

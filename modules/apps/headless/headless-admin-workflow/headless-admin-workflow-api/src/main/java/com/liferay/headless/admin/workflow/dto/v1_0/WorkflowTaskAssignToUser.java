@@ -96,6 +96,7 @@ public class WorkflowTaskAssignToUser implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected Long assigneeId;
 
+	@JsonIgnore
 	private Supplier<Long> _assigneeIdSupplier;
 
 	@Schema(
@@ -140,6 +141,7 @@ public class WorkflowTaskAssignToUser implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected String comment;
 
+	@JsonIgnore
 	private Supplier<String> _commentSupplier;
 
 	@Schema(
@@ -184,6 +186,7 @@ public class WorkflowTaskAssignToUser implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected Date dueDate;
 
+	@JsonIgnore
 	private Supplier<Date> _dueDateSupplier;
 
 	@Schema
@@ -224,6 +227,7 @@ public class WorkflowTaskAssignToUser implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long workflowTaskId;
 
+	@JsonIgnore
 	private Supplier<Long> _workflowTaskIdSupplier;
 
 	@Override

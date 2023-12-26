@@ -28,22 +28,7 @@ public class RatingsStatsModelListener extends BaseModelListener<RatingsStats> {
 	public void onAfterCreate(RatingsStats ratingsStats)
 		throws ModelListenerException {
 
-		MBMessage mbMessage = _mbMessageLocalService.fetchMBMessage(
-			ratingsStats.getClassPK());
-
-		if (mbMessage == null) {
-			return;
-		}
-
-		Indexer<MBMessage> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-			MBMessage.class);
-
-		try {
-			indexer.reindex(mbMessage);
-		}
-		catch (SearchException searchException) {
-			throw new ModelListenerException(searchException);
-		}
+		_reindex(ratingsStats);
 	}
 
 	@Override
@@ -51,6 +36,10 @@ public class RatingsStatsModelListener extends BaseModelListener<RatingsStats> {
 			RatingsStats originalRatingsStats, RatingsStats ratingsStats)
 		throws ModelListenerException {
 
+		_reindex(ratingsStats);
+	}
+
+	private void _reindex(RatingsStats ratingsStats) {
 		MBMessage mbMessage = _mbMessageLocalService.fetchMBMessage(
 			ratingsStats.getClassPK());
 

@@ -1307,7 +1307,7 @@ public class SourceFormatter {
 				if (matcher.find()) {
 					throw new Exception(
 						StringBundler.concat(
-							"Found formatting issues in SHA ", parts[0], ":\n",
+							"Found formatting issue in SHA ", parts[0], ":\n",
 							"The commit message contains the word '", keyword,
 							"', which could reveal potential security ",
 							"vulnerablities. Please see the vulnerability ",

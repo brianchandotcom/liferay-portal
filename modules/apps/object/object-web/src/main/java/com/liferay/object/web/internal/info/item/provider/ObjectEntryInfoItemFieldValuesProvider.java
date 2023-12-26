@@ -68,7 +68,6 @@ import com.liferay.template.info.item.provider.TemplateInfoItemFieldSetProvider;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
@@ -410,10 +409,10 @@ public class ObjectEntryInfoItemFieldValuesProvider
 	}
 
 	private KeyLocalizedLabelPair _getKeyLocalizedLabelPair(
-		ListTypeEntry listTypeEntry, Locale locale) {
+		ListTypeEntry listTypeEntry) {
 
 		return new KeyLocalizedLabelPair(
-			listTypeEntry.getName(locale),
+			listTypeEntry.getKey(),
 			InfoLocalizedValue.<String>builder(
 			).defaultLocale(
 				LocaleUtil.fromLanguageId(listTypeEntry.getDefaultLanguageId())
@@ -622,15 +621,13 @@ public class ObjectEntryInfoItemFieldValuesProvider
 
 			return ListUtil.toList(
 				(List<ListTypeEntry>)value,
-				listTypeEntry -> _getKeyLocalizedLabelPair(
-					listTypeEntry, themeDisplay.getLocale()));
+				listTypeEntry -> _getKeyLocalizedLabelPair(listTypeEntry));
 		}
 		else if (objectField.compareBusinessType(
 					ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
 
 			return ListUtil.fromArray(
-				_getKeyLocalizedLabelPair(
-					(ListTypeEntry)value, themeDisplay.getLocale()));
+				_getKeyLocalizedLabelPair((ListTypeEntry)value));
 		}
 
 		return value;

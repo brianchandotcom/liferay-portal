@@ -29,9 +29,9 @@ public class UserAccountMustHaveFirstNameExceptionMapper
 
 	@Override
 	protected Problem getProblem(
-		ContactNameException.MustHaveFirstName contactNameException) {
+		ContactNameException.MustHaveFirstName mustHaveFirstName) {
 
-		return new Problem(contactNameException);
+		return new Problem(mustHaveFirstName);
 	}
 
 }

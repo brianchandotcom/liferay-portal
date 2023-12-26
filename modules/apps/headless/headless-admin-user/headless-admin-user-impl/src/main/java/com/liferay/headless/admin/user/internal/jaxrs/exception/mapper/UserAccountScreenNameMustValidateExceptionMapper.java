@@ -29,9 +29,9 @@ public class UserAccountScreenNameMustValidateExceptionMapper
 
 	@Override
 	protected Problem getProblem(
-		UserScreenNameException.MustValidate userScreenNameException) {
+		UserScreenNameException.MustValidate mustValidate) {
 
-		return new Problem(userScreenNameException);
+		return new Problem(mustValidate);
 	}
 
 }

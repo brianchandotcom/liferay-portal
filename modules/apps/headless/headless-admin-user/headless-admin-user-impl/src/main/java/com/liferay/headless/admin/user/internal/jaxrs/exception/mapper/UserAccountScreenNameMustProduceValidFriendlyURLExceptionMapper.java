@@ -31,9 +31,9 @@ public class UserAccountScreenNameMustProduceValidFriendlyURLExceptionMapper
 	@Override
 	protected Problem getProblem(
 		UserScreenNameException.MustProduceValidFriendlyURL
-			userScreenNameException) {
+			mustProduceValidFriendlyURL) {
 
-		return new Problem(userScreenNameException);
+		return new Problem(mustProduceValidFriendlyURL);
 	}
 
 }

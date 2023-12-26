@@ -30,9 +30,10 @@ public class UserAccountPasswordMustMatchCurrentPasswordExceptionMapper
 
 	@Override
 	protected Problem getProblem(
-		UserPasswordException.MustMatchCurrentPassword userPasswordException) {
+		UserPasswordException.MustMatchCurrentPassword
+			mustMatchCurrentPassword) {
 
-		return new Problem(userPasswordException);
+		return new Problem(mustMatchCurrentPassword);
 	}
 
 }

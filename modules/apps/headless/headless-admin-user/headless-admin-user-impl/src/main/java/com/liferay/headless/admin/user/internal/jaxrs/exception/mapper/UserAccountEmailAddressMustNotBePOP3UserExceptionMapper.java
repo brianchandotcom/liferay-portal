@@ -29,9 +29,9 @@ public class UserAccountEmailAddressMustNotBePOP3UserExceptionMapper
 
 	@Override
 	protected Problem getProblem(
-		UserEmailAddressException.MustNotBePOP3User userEmailAddressException) {
+		UserEmailAddressException.MustNotBePOP3User mustNotBePOP3User) {
 
-		return new Problem(userEmailAddressException);
+		return new Problem(mustNotBePOP3User);
 	}
 
 }

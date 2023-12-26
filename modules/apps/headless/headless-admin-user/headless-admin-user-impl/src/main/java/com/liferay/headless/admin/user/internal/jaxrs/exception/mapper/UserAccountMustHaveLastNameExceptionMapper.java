@@ -29,9 +29,9 @@ public class UserAccountMustHaveLastNameExceptionMapper
 
 	@Override
 	protected Problem getProblem(
-		ContactNameException.MustHaveLastName contactNameException) {
+		ContactNameException.MustHaveLastName mustHaveLastName) {
 
-		return new Problem(contactNameException);
+		return new Problem(mustHaveLastName);
 	}
 
 }

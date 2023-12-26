@@ -29,9 +29,9 @@ public class UserAccountMustHaveMiddleNameExceptionMapper
 
 	@Override
 	protected Problem getProblem(
-		ContactNameException.MustHaveMiddleName contactNameException) {
+		ContactNameException.MustHaveMiddleName mustHaveMiddleName) {
 
-		return new Problem(contactNameException);
+		return new Problem(mustHaveMiddleName);
 	}
 
 }

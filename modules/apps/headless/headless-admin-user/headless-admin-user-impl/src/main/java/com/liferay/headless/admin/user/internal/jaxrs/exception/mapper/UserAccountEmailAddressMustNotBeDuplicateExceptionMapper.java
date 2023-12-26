@@ -29,10 +29,9 @@ public class UserAccountEmailAddressMustNotBeDuplicateExceptionMapper
 
 	@Override
 	protected Problem getProblem(
-		UserEmailAddressException.MustNotBeDuplicate
-			userEmailAddressException) {
+		UserEmailAddressException.MustNotBeDuplicate mustNotBeDuplicate) {
 
-		return new Problem(userEmailAddressException);
+		return new Problem(mustNotBeDuplicate);
 	}
 
 }

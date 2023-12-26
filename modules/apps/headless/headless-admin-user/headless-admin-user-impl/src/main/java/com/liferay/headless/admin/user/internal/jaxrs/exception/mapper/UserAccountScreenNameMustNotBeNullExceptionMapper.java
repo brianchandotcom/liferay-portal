@@ -29,9 +29,9 @@ public class UserAccountScreenNameMustNotBeNullExceptionMapper
 
 	@Override
 	protected Problem getProblem(
-		UserScreenNameException.MustNotBeNull userScreenNameException) {
+		UserScreenNameException.MustNotBeNull mustNotBeNull) {
 
-		return new Problem(userScreenNameException);
+		return new Problem(mustNotBeNull);
 	}
 
 }

@@ -29,9 +29,9 @@ public class UserAccountScreenNameMustNotBeDuplicateExceptionMapper
 
 	@Override
 	protected Problem getProblem(
-		UserScreenNameException.MustNotBeDuplicate userScreenNameException) {
+		UserScreenNameException.MustNotBeDuplicate mustNotBeDuplicate) {
 
-		return new Problem(userScreenNameException);
+		return new Problem(mustNotBeDuplicate);
 	}
 
 }

@@ -29,9 +29,9 @@ public class UserAccountEmailAddressMustNotBeReservedExceptionMapper
 
 	@Override
 	protected Problem getProblem(
-		UserEmailAddressException.MustNotBeReserved userEmailAddressException) {
+		UserEmailAddressException.MustNotBeReserved mustNotBeReserved) {
 
-		return new Problem(userEmailAddressException);
+		return new Problem(mustNotBeReserved);
 	}
 
 }

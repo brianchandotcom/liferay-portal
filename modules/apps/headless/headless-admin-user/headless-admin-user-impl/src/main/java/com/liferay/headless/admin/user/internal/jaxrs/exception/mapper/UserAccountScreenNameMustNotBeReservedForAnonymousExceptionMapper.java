@@ -31,9 +31,9 @@ public class UserAccountScreenNameMustNotBeReservedForAnonymousExceptionMapper
 	@Override
 	protected Problem getProblem(
 		UserScreenNameException.MustNotBeReservedForAnonymous
-			userScreenNameException) {
+			mustNotBeReservedForAnonymous) {
 
-		return new Problem(userScreenNameException);
+		return new Problem(mustNotBeReservedForAnonymous);
 	}
 
 }

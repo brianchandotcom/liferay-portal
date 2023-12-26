@@ -29,9 +29,9 @@ public class UserAccountPasswordMustNotBeNullExceptionMapper
 
 	@Override
 	protected Problem getProblem(
-		UserPasswordException.MustNotBeNull userPasswordException) {
+		UserPasswordException.MustNotBeNull mustNotBeNull) {
 
-		return new Problem(userPasswordException);
+		return new Problem(mustNotBeNull);
 	}
 
 }

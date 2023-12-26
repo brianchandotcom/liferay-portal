@@ -29,9 +29,9 @@ public class UserAccountEmailAddressMustValidateExceptionMapper
 
 	@Override
 	protected Problem getProblem(
-		UserEmailAddressException.MustValidate userEmailAddressException) {
+		UserEmailAddressException.MustValidate mustValidate) {
 
-		return new Problem(userEmailAddressException);
+		return new Problem(mustValidate);
 	}
 
 }

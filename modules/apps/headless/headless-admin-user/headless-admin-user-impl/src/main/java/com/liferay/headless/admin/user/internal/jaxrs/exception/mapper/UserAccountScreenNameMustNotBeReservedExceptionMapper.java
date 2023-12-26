@@ -29,9 +29,9 @@ public class UserAccountScreenNameMustNotBeReservedExceptionMapper
 
 	@Override
 	protected Problem getProblem(
-		UserScreenNameException.MustNotBeReserved userScreenNameException) {
+		UserScreenNameException.MustNotBeReserved mustNotBeReserved) {
 
-		return new Problem(userScreenNameException);
+		return new Problem(mustNotBeReserved);
 	}
 
 }

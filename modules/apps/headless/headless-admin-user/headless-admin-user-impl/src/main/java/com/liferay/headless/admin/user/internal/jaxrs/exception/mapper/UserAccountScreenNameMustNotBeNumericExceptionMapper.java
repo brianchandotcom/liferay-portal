@@ -29,9 +29,9 @@ public class UserAccountScreenNameMustNotBeNumericExceptionMapper
 
 	@Override
 	protected Problem getProblem(
-		UserScreenNameException.MustNotBeNumeric userScreenNameException) {
+		UserScreenNameException.MustNotBeNumeric mustNotBeNumeric) {
 
-		return new Problem(userScreenNameException);
+		return new Problem(mustNotBeNumeric);
 	}
 
 }

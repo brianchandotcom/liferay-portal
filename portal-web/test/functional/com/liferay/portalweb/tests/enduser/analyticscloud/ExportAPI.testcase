@@ -44,9 +44,9 @@ definition {
 	@description = "Feature ID: LRAC-10833 | Automation ID: LRAC-11103 | Test Summary: There is no previous export process for the same type and date range"
 	@priority = 4
 	test CreateNewScheduledExportProcess {
-		var startDate = "1905-05-13";
+		var startDate = DateUtil.getFormattedCurrentDate("-1","yyyy-MM-dd");
 		var startTime = "11:45:00.000";
-		var endDate = "2022-05-13";
+		var endDate = DateUtil.getFormattedCurrentDate("yyyy-MM-dd");
 		var endTime = "09:20:00.000";
 		var typeList = "event,page,individual,identity,membership,segment";
 		var status = "PENDING";
@@ -85,9 +85,9 @@ definition {
 	@description = "Feature ID: LRAC-10833 | Automation ID: LRAC-11104 | Test Summary: There is an export scheduled but not started"
 	@priority = 3
 	test ExportScheduledButNotStarted {
-		var startDate = "2000-11-06";
+		var startDate = DateUtil.getFormattedCurrentDate("-1","yyyy-MM-dd");
 		var startTime = "11:00:00.000";
-		var endDate = "2001-09-06";
+		var endDate = DateUtil.getFormattedCurrentDate("yyyy-MM-dd");
 		var endTime = "20:30:00.000";
 		var type = "segment";
 

@@ -35,7 +35,7 @@ definition {
 		property portal.release = "true";
 
 		task ("Given cluster.link.enabled") {
-			AssertConsoleTextPresent(value1 = "Autodetecting JGroups outgoing IP address and interface");
+			AssertConsoleTextPresent(value1 = "Create a new JGroups channel ");
 		}
 
 		task ("And Given Scheduled job definition created") {
@@ -77,7 +77,7 @@ definition {
 		property portal.release = "true";
 
 		task ("Given cluster.link.enabled") {
-			AssertConsoleTextPresent(value1 = "Autodetecting JGroups outgoing IP address and interface");
+			AssertConsoleTextPresent(value1 = "Create a new JGroups channel ");
 		}
 
 		task ("And Given Scheduled job definition created") {

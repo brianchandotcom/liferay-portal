@@ -11,21 +11,17 @@ import com.liferay.item.selector.ItemSelectorViewReturnTypeProvider;
 import com.liferay.item.selector.ItemSelectorViewReturnTypeProviderHandler;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
@@ -42,8 +38,9 @@ public class ItemSelectorViewReturnTypeProviderHandlerImpl
 		Class<? extends ItemSelectorView> itemSelectorViewClass =
 			itemSelectorView.getClass();
 
-		String itemSelectorViewKey = _itemSelectorViewKeysMap.get(
-			itemSelectorViewClass.getName());
+		String itemSelectorViewKey =
+			_itemSelectorViewKeyServiceTrackerMap.getService(
+				itemSelectorViewClass.getName());
 
 		return getSupportedItemSelectorReturnTypes(
 			itemSelectorView.getSupportedItemSelectorReturnTypes(),
@@ -87,10 +84,52 @@ public class ItemSelectorViewReturnTypeProviderHandlerImpl
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
 
-		_serviceTracker = ServiceTrackerFactory.open(
-			bundleContext,
-			(Class<ItemSelectorView<?>>)(Class<?>)ItemSelectorView.class,
-			new ItemSelectorViewServiceTrackerCustomizer());
+		_itemSelectorViewKeyServiceTrackerMap =
+			ServiceTrackerMapFactory.openSingleValueMap(
+				bundleContext,
+				(Class<ItemSelectorView<?>>)(Class<?>)ItemSelectorView.class,
+				"(item.selector.view.key=*)",
+				(serviceReference, emitter) -> {
+					String itemSelectorViewKey = GetterUtil.getString(
+						serviceReference.getProperty("item.selector.view.key"));
+
+					if (Validator.isNotNull(itemSelectorViewKey)) {
+						ItemSelectorView<?> itemSelectorView =
+							_bundleContext.getService(serviceReference);
+
+						Class<? extends ItemSelectorView>
+							itemSelectorViewClass = itemSelectorView.getClass();
+
+						emitter.emit(itemSelectorViewClass.getName());
+
+						_bundleContext.ungetService(serviceReference);
+					}
+				},
+				new ServiceTrackerCustomizer<ItemSelectorView<?>, String>() {
+
+					@Override
+					public String addingService(
+						ServiceReference<ItemSelectorView<?>>
+							serviceReference) {
+
+						return GetterUtil.getString(
+							serviceReference.getProperty(
+								"item.selector.view.key"));
+					}
+
+					@Override
+					public void modifiedService(
+						ServiceReference<ItemSelectorView<?>> serviceReference,
+						String key) {
+					}
+
+					@Override
+					public void removedService(
+						ServiceReference<ItemSelectorView<?>> serviceReference,
+						String key) {
+					}
+
+				});
 
 		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
 			bundleContext, ItemSelectorViewReturnTypeProvider.class,
@@ -99,67 +138,15 @@ public class ItemSelectorViewReturnTypeProviderHandlerImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_serviceTracker.close();
-
 		_serviceTrackerMap.close();
+
+		_itemSelectorViewKeyServiceTrackerMap.close();
 	}
 
 	private BundleContext _bundleContext;
-	private final Map<String, String> _itemSelectorViewKeysMap =
-		new ConcurrentHashMap<>();
-	private ServiceTracker<ItemSelectorView<?>, ItemSelectorView<?>>
-		_serviceTracker;
+	private ServiceTrackerMap<String, String>
+		_itemSelectorViewKeyServiceTrackerMap;
 	private ServiceTrackerMap<String, List<ItemSelectorViewReturnTypeProvider>>
 		_serviceTrackerMap;
-
-	private class ItemSelectorViewServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer
-			<ItemSelectorView<?>, ItemSelectorView<?>> {
-
-		@Override
-		public ItemSelectorView<?> addingService(
-			ServiceReference<ItemSelectorView<?>> serviceReference) {
-
-			ItemSelectorView<?> itemSelectorView = _bundleContext.getService(
-				serviceReference);
-
-			String itemSelectorViewKey = GetterUtil.getString(
-				serviceReference.getProperty("item.selector.view.key"));
-
-			if (Validator.isNotNull(itemSelectorViewKey)) {
-				Class<? extends ItemSelectorView> itemSelectorViewClass =
-					itemSelectorView.getClass();
-
-				_itemSelectorViewKeysMap.put(
-					itemSelectorViewClass.getName(), itemSelectorViewKey);
-			}
-
-			return itemSelectorView;
-		}
-
-		@Override
-		public void modifiedService(
-			ServiceReference<ItemSelectorView<?>> serviceReference,
-			ItemSelectorView<?> itemSelectorView) {
-		}
-
-		@Override
-		public void removedService(
-			ServiceReference<ItemSelectorView<?>> serviceReference,
-			ItemSelectorView<?> itemSelectorView) {
-
-			try {
-				Class<? extends ItemSelectorView> itemSelectorViewClass =
-					itemSelectorView.getClass();
-
-				_itemSelectorViewKeysMap.remove(
-					itemSelectorViewClass.getName());
-			}
-			finally {
-				_bundleContext.ungetService(serviceReference);
-			}
-		}
-
-	}
 
 }

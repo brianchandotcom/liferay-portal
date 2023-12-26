@@ -394,7 +394,8 @@ public class APIEndpointRelevantObjectEntryModelListener
 				StringUtil.extractFirst(pathString, pathInParameterString))) {
 
 			throw new ObjectEntryValuesException.InvalidObjectField(
-				Arrays.asList(objectField.getLabel(user.getLocale())),
+				Collections.singletonList(
+					objectField.getLabel(user.getLocale())),
 				"%s must contain only lower case characters",
 				"x-must-contain-only-lower-case-characters");
 		}

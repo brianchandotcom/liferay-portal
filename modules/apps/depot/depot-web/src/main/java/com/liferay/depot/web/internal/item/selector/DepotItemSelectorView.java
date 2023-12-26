@@ -5,7 +5,6 @@
 
 package com.liferay.depot.web.internal.item.selector;
 
-import com.liferay.depot.web.internal.application.controller.DepotApplicationController;
 import com.liferay.depot.web.internal.application.list.DepotPanelAppController;
 import com.liferay.depot.web.internal.util.DepotAdminGroupSearchProvider;
 import com.liferay.item.selector.ItemSelectorReturnType;
@@ -119,9 +118,6 @@ public class DepotItemSelectorView
 
 	@Reference
 	private DepotAdminGroupSearchProvider _depotAdminGroupSearchProvider;
-
-	@Reference
-	private DepotApplicationController _depotApplicationController;
 
 	@Reference
 	private DepotPanelAppController _depotPanelAppController;

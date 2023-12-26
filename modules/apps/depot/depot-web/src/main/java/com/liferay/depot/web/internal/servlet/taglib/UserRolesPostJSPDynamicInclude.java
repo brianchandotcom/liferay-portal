@@ -6,7 +6,6 @@
 package com.liferay.depot.web.internal.servlet.taglib;
 
 import com.liferay.depot.web.internal.display.context.DepotAdminRolesDisplayContext;
-import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -84,9 +83,6 @@ public class UserRolesPostJSPDynamicInclude extends BaseJSPDynamicInclude {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		UserRolesPostJSPDynamicInclude.class);
-
-	@Reference
-	private ItemSelector _itemSelector;
 
 	@Reference
 	private Portal _portal;

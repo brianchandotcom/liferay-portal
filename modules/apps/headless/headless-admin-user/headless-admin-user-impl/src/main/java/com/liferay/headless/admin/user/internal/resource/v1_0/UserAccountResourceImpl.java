@@ -7,7 +7,6 @@ package com.liferay.headless.admin.user.internal.resource.v1_0;
 
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryUserRel;
-import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.account.service.AccountEntryUserRelService;
 import com.liferay.account.service.AccountRoleLocalService;
@@ -1643,9 +1642,6 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 
 	private static final EntityModel _entityModel =
 		new UserAccountEntityModel();
-
-	@Reference
-	private AccountEntryLocalService _accountEntryLocalService;
 
 	@Reference(
 		policy = ReferencePolicy.DYNAMIC,

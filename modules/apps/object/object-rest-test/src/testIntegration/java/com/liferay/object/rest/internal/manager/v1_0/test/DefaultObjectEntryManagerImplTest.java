@@ -1349,6 +1349,14 @@ public class DefaultObjectEntryManagerImplTest
 				ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE, false,
 				objectRelationship.getLabelMap(), null);
 
+		PrincipalThreadLocal.setName(adminUser.getUserId());
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(adminUser));
+
+		_addRelatedObjectEntries(
+			objectDefinition1, objectDefinition2, "externalReferenceCode1",
+			"externalReferenceCode2", objectRelationship);
+
 		_defaultObjectEntryManager.deleteObjectEntry(
 			companyId, _simpleDTOConverterContext, "externalReferenceCode1",
 			objectDefinition1, null);
@@ -1363,10 +1371,6 @@ public class DefaultObjectEntryManagerImplTest
 		catch (NoSuchObjectEntryException noSuchObjectEntryException) {
 			Assert.assertNotNull(noSuchObjectEntryException);
 		}
-
-		PrincipalThreadLocal.setName(adminUser.getUserId());
-		PermissionThreadLocal.setPermissionChecker(
-			PermissionCheckerFactoryUtil.create(adminUser));
 
 		Assert.assertNotNull(
 			_defaultObjectEntryManager.getObjectEntry(

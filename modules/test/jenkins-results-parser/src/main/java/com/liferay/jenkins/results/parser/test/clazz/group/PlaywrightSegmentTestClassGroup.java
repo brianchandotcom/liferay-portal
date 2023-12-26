@@ -20,17 +20,45 @@ public class PlaywrightSegmentTestClassGroup extends SegmentTestClassGroup {
 
 		sb.append(super.getTestCasePropertiesContent());
 
-		BatchTestClassGroup batchTestClassGroup = getBatchTestClassGroup();
+		PlaywrightBatchTestClassGroup playwrightBatchTestClassGroup =
+			(PlaywrightBatchTestClassGroup)getBatchTestClassGroup();
 
-		JobProperty jobProperty = batchTestClassGroup.getJobProperty(
-			"playwright.test.project", batchTestClassGroup.testSuiteName,
-			batchTestClassGroup.batchName);
+		String playwrightTestProjectPropertyName =
+			PlaywrightBatchTestClassGroup.PLAYWRIGHT_TEST_PROJECT_PROPERTY_NAME;
 
-		if (jobProperty.getValue() != null) {
-			sb.append(jobProperty.getBasePropertyName());
+		if (playwrightBatchTestClassGroup.testRelevantChanges) {
+			sb.append(playwrightTestProjectPropertyName);
 			sb.append("=");
-			sb.append(jobProperty.getValue());
+
+			for (JobProperty jobProperty :
+					playwrightBatchTestClassGroup.
+						getRelevantPlaywrightJobProperties()) {
+
+				String propertyName = jobProperty.getBasePropertyName();
+
+				if (propertyName.equals(playwrightTestProjectPropertyName) &&
+					(jobProperty.getValue() != null)) {
+
+					sb.append(jobProperty.getValue());
+					sb.append(" ");
+				}
+			}
+
 			sb.append("\n");
+		}
+		else {
+			JobProperty jobProperty =
+				playwrightBatchTestClassGroup.getJobProperty(
+					playwrightTestProjectPropertyName,
+					playwrightBatchTestClassGroup.testSuiteName,
+					playwrightBatchTestClassGroup.batchName);
+
+			if (jobProperty.getValue() != null) {
+				sb.append(jobProperty.getBasePropertyName());
+				sb.append("=");
+				sb.append(jobProperty.getValue());
+				sb.append("\n");
+			}
 		}
 
 		int axisCount = getAxisCount();

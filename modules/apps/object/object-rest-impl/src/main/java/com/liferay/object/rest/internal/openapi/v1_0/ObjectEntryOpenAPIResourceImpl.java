@@ -148,7 +148,11 @@ public class ObjectEntryOpenAPIResourceImpl
 				ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
 
 			DTOProperty dtoProperty = new DTOProperty(
-				Collections.singletonMap("x-parent-map", "properties"),
+				HashMapBuilder.<String, Object>put(
+					"x-batch-csv-enabled", "false"
+				).put(
+					"x-parent-map", "properties"
+				).build(),
 				objectField.getName(), FileEntry.class.getSimpleName());
 
 			dtoProperty.setDTOProperties(
@@ -208,7 +212,21 @@ public class ObjectEntryOpenAPIResourceImpl
 					 ObjectFieldConstants.BUSINESS_TYPE_RICH_TEXT)) {
 
 			return new DTOProperty(
-				Collections.singletonMap("x-parent-map", "properties"),
+				HashMapBuilder.<String, Object>put(
+					"x-batch-csv-enabled",
+					() -> {
+						if (Objects.equals(
+								objectField.getBusinessType(),
+								ObjectFieldConstants.BUSINESS_TYPE_ENCRYPTED)) {
+
+							return "false";
+						}
+
+						return null;
+					}
+				).put(
+					"x-parent-map", "properties"
+				).build(),
 				objectField.getName(), "String") {
 
 				{
@@ -224,7 +242,22 @@ public class ObjectEntryOpenAPIResourceImpl
 					 ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
 
 			DTOProperty dtoProperty = new DTOProperty(
-				Collections.singletonMap("x-parent-map", "properties"),
+				HashMapBuilder.<String, Object>put(
+					"x-batch-csv-enabled",
+					() -> {
+						if (Objects.equals(
+								objectField.getBusinessType(),
+								ObjectFieldConstants.
+									BUSINESS_TYPE_MULTISELECT_PICKLIST)) {
+
+							return "false";
+						}
+
+						return null;
+					}
+				).put(
+					"x-parent-map", "properties"
+				).build(),
 				objectField.getName(), ListEntry.class.getSimpleName());
 
 			dtoProperty.setDTOProperties(
@@ -253,9 +286,35 @@ public class ObjectEntryOpenAPIResourceImpl
 			};
 		}
 
+		HashMap<String, Object> extensionMap =
+			HashMapBuilder.<String, Object>put(
+				"x-batch-csv-enabled",
+				() -> {
+					if (Objects.equals(
+							objectField.getBusinessType(),
+							ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION) ||
+						Objects.equals(
+							objectField.getBusinessType(),
+							ObjectFieldConstants.
+								BUSINESS_TYPE_AUTO_INCREMENT) ||
+						Objects.equals(
+							objectField.getBusinessType(),
+							ObjectFieldConstants.BUSINESS_TYPE_BOOLEAN) ||
+						Objects.equals(
+							objectField.getBusinessType(),
+							ObjectFieldConstants.BUSINESS_TYPE_FORMULA)) {
+
+						return "false";
+					}
+
+					return null;
+				}
+			).put(
+				"x-parent-map", "properties"
+			).build();
+
 		return new DTOProperty(
-			Collections.singletonMap("x-parent-map", "properties"),
-			objectField.getName(), objectField.getDBType()) {
+			extensionMap, objectField.getName(), objectField.getDBType()) {
 
 			{
 				setRequired(objectField.isRequired());

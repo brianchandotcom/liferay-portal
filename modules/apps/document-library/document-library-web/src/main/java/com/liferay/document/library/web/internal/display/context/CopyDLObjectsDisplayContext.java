@@ -35,11 +35,12 @@ public class CopyDLObjectsDisplayContext {
 
 	public CopyDLObjectsDisplayContext(
 		HttpServletRequest httpServletRequest,
-		LiferayPortletResponse liferayPortletResponse,
+		LiferayPortletResponse liferayPortletResponse, long size,
 		ThemeDisplay themeDisplay) {
 
 		_httpServletRequest = httpServletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
+		_size = size;
 		_themeDisplay = themeDisplay;
 	}
 
@@ -138,10 +139,6 @@ public class CopyDLObjectsDisplayContext {
 		return _sourceRepositoryId;
 	}
 
-	public void setSize(long size) {
-		_size = size;
-	}
-
 	public void setViewAttributes() {
 		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
 
@@ -194,7 +191,7 @@ public class CopyDLObjectsDisplayContext {
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _redirect;
-	private long _size;
+	private final long _size;
 	private long _sourceFolderId = -1;
 	private long _sourceRepositoryId;
 	private final ThemeDisplay _themeDisplay;

@@ -66,11 +66,9 @@ public class CopyDLObjectsMVCRenderCommand implements MVCRenderCommand {
 			CopyDLObjectsDisplayContext copyDLObjectsDisplayContext =
 				new CopyDLObjectsDisplayContext(
 					_portal.getHttpServletRequest(renderRequest),
-					_portal.getLiferayPortletResponse(renderResponse),
+					_portal.getLiferayPortletResponse(renderResponse), size,
 					(ThemeDisplay)renderRequest.getAttribute(
 						WebKeys.THEME_DISPLAY));
-
-			copyDLObjectsDisplayContext.setSize(size);
 
 			renderRequest.setAttribute(
 				CopyDLObjectsDisplayContext.class.getName(),

@@ -58,4 +58,12 @@ public class ObjectRelationshipTestUtil {
 				objectEntryId1, objectEntryId2, serviceContext);
 	}
 
+	public static ObjectRelationship updateObjectRelationship(
+			String deletionType, long objectRelationshipId)
+		throws Exception {
+
+		return ObjectRelationshipLocalServiceUtil.updateObjectRelationship(
+			null, objectRelationshipId, 0, deletionType, false, null, null);
+	}
+
 }

@@ -206,13 +206,12 @@ public class CPDefinitionModelPreFilterContributor
 					continue;
 				}
 
-				int commerceChannelAccountEntryRelsCount =
+				int count =
 					_commerceChannelAccountEntryRelLocalService.
 						getCommerceChannelAccountEntryRelsCount(
 							commerceChannel.getCommerceChannelId(), null,
 							CommerceChannelAccountEntryRelConstants.
 								TYPE_ELIGIBILITY);
-
 				CommerceChannelAccountEntryRel commerceChannelAccountEntryRel =
 					_commerceChannelAccountEntryRelLocalService.
 						fetchCommerceChannelAccountEntryRel(
@@ -221,9 +220,7 @@ public class CPDefinitionModelPreFilterContributor
 							CommerceChannelAccountEntryRelConstants.
 								TYPE_ELIGIBILITY);
 
-				if ((commerceChannelAccountEntryRelsCount == 0) ||
-					(commerceChannelAccountEntryRel != null)) {
-
+				if ((count == 0) || (commerceChannelAccountEntryRel != null)) {
 					commerceChannelFilterEnableBooleanFilter.addTerm(
 						CPField.COMMERCE_CHANNEL_GROUP_IDS,
 						String.valueOf(groupId), BooleanClauseOccur.MUST);

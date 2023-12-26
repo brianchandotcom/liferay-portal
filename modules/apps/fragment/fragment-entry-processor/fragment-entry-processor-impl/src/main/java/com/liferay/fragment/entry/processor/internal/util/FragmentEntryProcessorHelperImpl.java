@@ -340,14 +340,12 @@ public class FragmentEntryProcessorHelperImpl
 
 			return valueJSONObject;
 		}
-
-		if (value instanceof WebURL) {
+		else if (value instanceof WebURL) {
 			WebURL webURL = (WebURL)value;
 
 			return webURL.toJSONObject();
 		}
-
-		if (value instanceof Collection) {
+		else if (value instanceof Collection) {
 			Collection<Object> collection = (Collection<Object>)value;
 
 			if (collection.isEmpty()) {
@@ -365,8 +363,7 @@ public class FragmentEntryProcessorHelperImpl
 
 			return infoCollectionTextFormatter.format(collection, locale);
 		}
-
-		if (value instanceof String) {
+		else if (value instanceof String) {
 			InfoField infoField = infoFieldValue.getInfoField();
 
 			if (infoField.getInfoFieldType() instanceof DateInfoFieldType) {
@@ -429,14 +426,12 @@ public class FragmentEntryProcessorHelperImpl
 
 			return (String)value;
 		}
-
-		if (value instanceof Labeled) {
+		else if (value instanceof Labeled) {
 			Labeled labeledFieldValue = (Labeled)value;
 
 			return labeledFieldValue.getLabel(locale);
 		}
-
-		if (value instanceof Date) {
+		else if (value instanceof Date) {
 			Date date = (Date)value;
 
 			return _getDateValue(

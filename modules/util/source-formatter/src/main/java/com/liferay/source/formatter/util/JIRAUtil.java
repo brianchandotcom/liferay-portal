@@ -34,7 +34,7 @@ public class JIRAUtil {
 				throw new Exception(
 					StringBundler.concat(
 						"Found formatting issues in SHA ", parts[0], "\n",
-						"The commit message does not start with a space"));
+						"The commit message should not start with spaces."));
 			}
 
 			int x = parts[1].indexOf("\n");

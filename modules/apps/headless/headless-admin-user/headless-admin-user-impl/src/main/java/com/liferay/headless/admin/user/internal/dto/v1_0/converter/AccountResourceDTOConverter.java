@@ -15,7 +15,6 @@ import com.liferay.headless.admin.user.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.service.AddressLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.webserver.WebServerServletToken;
@@ -120,9 +119,6 @@ public class AccountResourceDTOConverter
 
 	@Reference
 	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
-
-	@Reference
-	private AddressLocalService _addressLocalService;
 
 	@Reference
 	private WebServerServletToken _webServerServletToken;

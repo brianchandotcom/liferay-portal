@@ -1327,6 +1327,10 @@ public class DefaultObjectEntryManagerImplTest
 			objectDefinition1, _user);
 
 		try {
+			PrincipalThreadLocal.setName(_user.getUserId());
+			PermissionThreadLocal.setPermissionChecker(
+				PermissionCheckerFactoryUtil.create(_user));
+
 			_defaultObjectEntryManager.deleteObjectEntry(
 				companyId, _simpleDTOConverterContext, "externalReferenceCode1",
 				objectDefinition1, null);

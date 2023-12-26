@@ -6225,6 +6225,20 @@ public class ObjectEntryResourceTest {
 			ContentTypes.TEXT_PLAIN);
 	}
 
+	private User _addUser(String userName, String userPassword)
+		throws Exception {
+
+		User user = UserTestUtil.addUser(
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			userPassword, userName + "@liferay.com", userName,
+			LocaleUtil.getDefault(), userName, userName, null,
+			ServiceContextTestUtil.getServiceContext());
+
+		user.setEmailAddressVerified(true);
+
+		return UserLocalServiceUtil.updateUser(user);
+	}
+
 	private void _assertFilteredObjectEntries(
 			int expectedObjectEntryCount, String filterString)
 		throws Exception {
@@ -6758,11 +6772,7 @@ public class ObjectEntryResourceTest {
 
 				Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
-				User user = UserTestUtil.addUser(
-					TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-					userPassword, userName + "@liferay.com", userName,
-					LocaleUtil.getDefault(), userName, userName, null,
-					ServiceContextTestUtil.getServiceContext());
+				User user = _addUser(userName, userPassword);
 
 				_roleLocalService.addUserRole(
 					user.getUserId(), role.getRoleId());
@@ -7368,11 +7378,7 @@ public class ObjectEntryResourceTest {
 
 				Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
-				User user = UserTestUtil.addUser(
-					TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-					userPassword, userName + "@liferay.com", userName,
-					LocaleUtil.getDefault(), userName, userName, null,
-					ServiceContextTestUtil.getServiceContext());
+				User user = _addUser(userName, userPassword);
 
 				_roleLocalService.addUserRole(
 					user.getUserId(), role.getRoleId());

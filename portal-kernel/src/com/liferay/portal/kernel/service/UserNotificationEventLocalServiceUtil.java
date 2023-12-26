@@ -690,13 +690,6 @@ public class UserNotificationEventLocalServiceUtil {
 	}
 
 	public static int getUserNotificationEventsCount(
-		long userId, String type, boolean delivered, long timestamp) {
-
-		return getService().getUserNotificationEventsCount(
-			userId, type, delivered, timestamp);
-	}
-
-	public static int getUserNotificationEventsCount(
 		long userId, String type, int deliveryType, boolean delivered) {
 
 		return getService().getUserNotificationEventsCount(
@@ -709,6 +702,13 @@ public class UserNotificationEventLocalServiceUtil {
 
 		return getService().getUserNotificationEventsCount(
 			userId, type, deliveryType, delivered, archived);
+	}
+
+	public static int getUserNotificationEventsCount(
+		long userId, String type, long timestamp, boolean delivered) {
+
+		return getService().getUserNotificationEventsCount(
+			userId, type, timestamp, delivered);
 	}
 
 	public static int getUserNotificationEventsCount(

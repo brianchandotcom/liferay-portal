@@ -1,0 +1,232 @@
+{
+	"label": {
+		"en_US": "Raylife Application"
+	},
+	"name": "RaylifeApplication",
+	"objectFields": [
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Address"
+			},
+			"name": "address",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Address Apt"
+			},
+			"name": "addressApt",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "Date",
+			"businessType": "Date",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Application Create Date"
+			},
+			"name": "applicationCreateDate",
+			"required": false,
+			"type": "Date"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Picklist",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Application status"
+			},
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:ApplicationStatus$]",
+			"name": "applicationStatus",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Business Category Id"
+			},
+			"name": "businessCategoryId",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "City"
+			},
+			"name": "city",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "Clob",
+			"businessType": "LongText",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "Data JSON"
+			},
+			"name": "dataJSON",
+			"required": false,
+			"type": "Clob"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Email"
+			},
+			"name": "email",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "First name"
+			},
+			"name": "firstName",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": true,
+			"label": {
+				"en_US": "Last name"
+			},
+			"name": "lastName",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Phone"
+			},
+			"name": "phone",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Product Category"
+			},
+			"name": "productCategory",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Product Id"
+			},
+			"name": "productId",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Product Name"
+			},
+			"name": "productName",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "State"
+			},
+			"name": "state",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "Date",
+			"businessType": "Date",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Submit Date"
+			},
+			"name": "submitDate",
+			"required": false,
+			"type": "Date"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Website"
+			},
+			"name": "website",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Zip"
+			},
+			"name": "zip",
+			"required": false,
+			"type": "String"
+		}
+	],
+	"panelAppOrder": "100",
+	"panelCategoryKey": "control_panel.object",
+	"pluralLabel": {
+		"en_US": "Raylife Applications"
+	},
+	"scope": "company"
+}

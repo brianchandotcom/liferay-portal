@@ -1,0 +1,44 @@
+{
+	"label": {
+		"en_US": "Quote Retrieve"
+	},
+	"name": "QuoteRetrieve",
+	"objectFields": [
+		{
+			"DBType": "String",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Quote Retrieve Link"
+			},
+			"name": "quoteRetrieveLink",
+			"required": true
+		},
+		{
+			"DBType": "String",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Product Name"
+			},
+			"name": "productName",
+			"required": true
+		},
+		{
+			"DBType": "String",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Retrieve E-mail"
+			},
+			"name": "retrieveEmail",
+			"required": true
+		}
+	],
+	"panelAppOrder": "100",
+	"panelCategoryKey": "site_administration.content",
+	"pluralLabel": {
+		"en_US": "Quote Retrieves"
+	},
+	"scope": "site"
+}

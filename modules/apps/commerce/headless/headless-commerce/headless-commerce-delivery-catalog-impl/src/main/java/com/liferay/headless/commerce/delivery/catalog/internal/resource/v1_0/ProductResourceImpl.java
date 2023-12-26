@@ -246,15 +246,13 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 					accountEntryId, commerceChannelId,
 					CommerceChannelAccountEntryRelConstants.TYPE_ELIGIBILITY);
 
-		int commerceChannelAccountEntryRelsCount =
+		int count =
 			_commerceChannelAccountEntryRelLocalService.
 				getCommerceChannelAccountEntryRelsCount(
 					commerceChannelId, null,
 					CommerceChannelAccountEntryRelConstants.TYPE_ELIGIBILITY);
 
-		if ((commerceChannelAccountEntryRel == null) &&
-			(commerceChannelAccountEntryRelsCount > 0)) {
-
+		if ((commerceChannelAccountEntryRel == null) && (count > 0)) {
 			return false;
 		}
 

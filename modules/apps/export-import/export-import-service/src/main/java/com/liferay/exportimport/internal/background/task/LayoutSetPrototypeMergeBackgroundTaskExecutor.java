@@ -15,7 +15,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
 import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -242,9 +241,6 @@ public class LayoutSetPrototypeMergeBackgroundTaskExecutor
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutSetPrototypeMergeBackgroundTaskExecutor.class);
-
-	@Reference
-	private BackgroundTaskManager _backgroundTaskManager;
 
 	@Reference
 	private ExportImportConfigurationLocalService

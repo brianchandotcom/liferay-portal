@@ -31,7 +31,6 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageEngineManager;
-import com.liferay.dynamic.data.mapping.util.DDMBeanTranslator;
 import com.liferay.headless.delivery.dto.v1_0.AdaptedImage;
 import com.liferay.headless.delivery.dto.v1_0.ContentField;
 import com.liferay.headless.delivery.dto.v1_0.Document;
@@ -377,9 +376,6 @@ public class DocumentDTOConverter
 
 	@Reference
 	private CommentManager _commentManager;
-
-	@Reference
-	private DDMBeanTranslator _ddmBeanTranslator;
 
 	@Reference
 	private DDMStorageEngineManager _ddmStorageEngineManager;

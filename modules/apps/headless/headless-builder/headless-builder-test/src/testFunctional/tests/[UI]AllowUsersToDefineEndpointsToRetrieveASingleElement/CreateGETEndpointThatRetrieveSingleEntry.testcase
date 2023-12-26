@@ -80,7 +80,7 @@ definition {
 		}
 
 		task ("And Then the endpoint is not being created") {
-			var response = ApplicationAPI.getAPIApplications();
+			var response = EndpointAPI.getAPIEndpoints();
 
 			var totalCount = JSONUtil.getWithJSONPath(${response}, "$..totalCount");
 

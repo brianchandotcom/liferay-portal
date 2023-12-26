@@ -201,6 +201,13 @@ definition {
 				value1 = ${path});
 		}
 
+		if (isSet(pathCP)) {
+			Type(
+				key_fieldLabel = "Path",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = ${pathCP});
+		}
+
 		if (isSet(parameter)) {
 			Type(
 				key_placeHolder = "Enter Parameter",
@@ -267,6 +274,7 @@ definition {
 			name = ${name},
 			parameter = ${parameter},
 			path = ${path},
+			pathCP = ${pathCP},
 			retrieveType = ${retrieveType},
 			scope = ${scope});
 

@@ -105,7 +105,7 @@ definition {
 			APIBuilderUI.createAPIEndpoint(
 				applicationId = ${applicationId},
 				name = "testendpoint",
-				path = "/testendpoint");
+				pathCP = "/testendpoint");
 		}
 
 		task ("Then I can see endpoint is created with correct path") {
@@ -173,7 +173,7 @@ definition {
 			APIBuilderUI.createAPIEndpoint(
 				applicationId = ${applicationId},
 				name = "testendpoint",
-				path = "testendpoint");
+				pathCP = "testendpoint");
 		}
 
 		task ("Then I can see error message") {

@@ -8,7 +8,7 @@ definition {
 
 		Button.clickDelete();
 
-		SelectWindow(locator1 = "name=undefined");
+		SelectWindow(value1 = "name=undefined");
 
 		Click(locator1 = "ACSettings#CONFIRMATION_BUTTON");
 
@@ -45,7 +45,7 @@ definition {
 
 		Button.click(button = "Terminate");
 
-		SelectWindow(locator1 = "name=undefined");
+		SelectWindow(value1 = "name=undefined");
 
 		Click(locator1 = "ACSettings#CONFIRMATION_BUTTON");
 

@@ -626,7 +626,7 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 	}
 
 	private List<String> _getSelectedOptions(
-		Locale locale, List<OptionInfoFieldType> optionInfoFieldTypes,
+		List<OptionInfoFieldType> optionInfoFieldTypes,
 		List<KeyLocalizedLabelPair> values) {
 
 		List<String> selectedOptions = new ArrayList<>();
@@ -636,8 +636,8 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 					optionInfoFieldTypes) {
 
 				if (Objects.equals(
-						keyLocalizedLabelPair.getLabel(locale),
-						optionInfoFieldType.getLabel(locale))) {
+						keyLocalizedLabelPair.getKey(),
+						optionInfoFieldType.getValue())) {
 
 					selectedOptions.add(optionInfoFieldType.getValue());
 				}
@@ -769,7 +769,7 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 					MultiselectInfoFieldType.OPTIONS);
 
 			return ListUtil.toString(
-				_getSelectedOptions(locale, optionInfoFieldTypes, values),
+				_getSelectedOptions(optionInfoFieldTypes, values),
 				StringPool.BLANK);
 		}
 
@@ -806,7 +806,7 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 					SelectInfoFieldType.OPTIONS);
 
 			return ListUtil.toString(
-				_getSelectedOptions(locale, optionInfoFieldTypes, values),
+				_getSelectedOptions(optionInfoFieldTypes, values),
 				StringPool.BLANK);
 		}
 

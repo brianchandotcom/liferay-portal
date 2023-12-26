@@ -33,7 +33,7 @@ public class JIRAUtil {
 			if (Character.isWhitespace(commitMessageTitle.charAt(0))) {
 				throw new Exception(
 					StringBundler.concat(
-						"Found formatting issues in SHA ", parts[0], "\n",
+						"Found formatting issue in SHA ", parts[0], "\n",
 						"The commit message should not start with whitespace"));
 			}
 
@@ -59,7 +59,7 @@ public class JIRAUtil {
 
 			throw new Exception(
 				StringBundler.concat(
-					"Found formatting issues in SHA ", parts[0], "\n",
+					"Found formatting issue in SHA ", parts[0], "\n",
 					"The commit message is missing a reference to a required ",
 					"JIRA project: ",
 					StringUtil.merge(projectNames, StringPool.COMMA_AND_SPACE),

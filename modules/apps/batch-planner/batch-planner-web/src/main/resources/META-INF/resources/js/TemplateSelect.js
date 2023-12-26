@@ -45,8 +45,8 @@ const TemplateSelect = ({
 			setSelectedTemplateId(NULL_TEMPLATE_VALUE);
 		}
 
-		Liferay.on(TEMPLATE_CREATED_EVENT, handleTemplateCreated);
 		Liferay.on(EXPORT_FILE_FORMAT_SELECTED_EVENT, handleExternalTypeChange);
+		Liferay.on(TEMPLATE_CREATED_EVENT, handleTemplateCreated);
 
 		return () => {
 			Liferay.detach(EXPORT_FILE_FORMAT_SELECTED_EVENT);

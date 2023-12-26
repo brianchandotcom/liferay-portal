@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.KeyValuePair;
 
 import java.text.Format;
 
@@ -152,8 +153,10 @@ public class ObjectEntryUtil {
 					fetchObjectRelationshipByObjectFieldId2(
 						objectField.getObjectFieldId());
 
-			return ObjectEntryLocalServiceUtil.getTitleValue(
-				objectRelationship.getObjectDefinitionId1(), primaryKey);
+			return new KeyValuePair(
+				String.valueOf(primaryKey),
+				ObjectEntryLocalServiceUtil.getTitleValue(
+					objectRelationship.getObjectDefinitionId1(), primaryKey));
 		}
 
 		return value;

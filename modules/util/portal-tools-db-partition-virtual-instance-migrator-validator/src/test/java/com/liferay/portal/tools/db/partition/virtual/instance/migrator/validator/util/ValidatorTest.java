@@ -8,18 +8,18 @@ package com.liferay.portal.tools.db.partition.virtual.instance.migrator.validato
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.version.Version;
+import com.liferay.portal.tools.db.partition.virtual.instance.migrator.common.Company;
+import com.liferay.portal.tools.db.partition.virtual.instance.migrator.common.InstanceData;
+import com.liferay.portal.tools.db.partition.virtual.instance.migrator.common.Release;
 import com.liferay.portal.tools.db.partition.virtual.instance.migrator.validator.Recorder;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
-import java.sql.Connection;
-
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 import org.junit.After;
@@ -27,29 +27,64 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import org.mockito.MockedStatic;
-import org.mockito.Mockito;
-
 /**
  * @author Luis Ortiz
  */
-public class ValidatorTest {
+public class ValidatorTest extends Validator {
 
 	@Before
 	public void setUp() {
 		System.setOut(new PrintStream(_byteArrayOutputStream));
 
-		_databaseMockedStatic = Mockito.mockStatic(DatabaseUtil.class);
-
-		_sourceConnection = Mockito.mock(Connection.class);
-		_targetConnection = Mockito.mock(Connection.class);
+		_init(_sourceInstanceData);
+		_init(_targetInstanceData);
 	}
 
 	@After
 	public void tearDown() {
 		System.setOut(_originalOut);
+	}
 
-		_databaseMockedStatic.close();
+	@Test
+	public void testValidateCompanyExistingName() throws Exception {
+		Company company = new Company(
+			RandomTestUtil.randomLong(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString());
+
+		_testValidateCompany(
+			company, false, true, true, true,
+			() -> _assertValidateDatabases(
+				true, false,
+				Arrays.asList(
+					"[ERROR] Company ID " + company.getCompanyId() +
+						" already exists in the target database")));
+
+		_testValidateCompany(
+			company, true, false, true, true,
+			() -> _assertValidateDatabases(
+				false, true,
+				Arrays.asList(
+					"[WARN] Company name ", company.getCompanyName(),
+					" already exists in the target database. Please ",
+					"change it during migration.")));
+
+		_testValidateCompany(
+			company, true, true, false, true,
+			() -> _assertValidateDatabases(
+				false, true,
+				Arrays.asList(
+					"[WARN] Virtual host ", company.getVirtualHostName(),
+					" already exists in the target database. Please ",
+					"change it during migration.")));
+
+		_testValidateCompany(
+			company, true, true, true, false,
+			() -> _assertValidateDatabases(
+				false, true,
+				Arrays.asList(
+					"[WARN] Web ID ", company.getWebId(),
+					" already exists in the target database. Please ",
+					"change it during migration.")));
 	}
 
 	@Test
@@ -91,27 +126,18 @@ public class ValidatorTest {
 
 	@Test
 	public void testValidateReleaseMissingSourceModules() throws Exception {
-		List<Release> releases = _getReleases();
+		List<Release> sourceReleases = _getReleases();
 
-		_databaseMockedStatic.when(
-			() -> DatabaseUtil.getReleases(_sourceConnection)
-		).thenReturn(
-			releases
-		);
+		List<Release> targetReleases = new ArrayList<>();
 
-		Map<String, Release> releasesMap = new HashMap<>();
-
-		_databaseMockedStatic.when(
-			() -> DatabaseUtil.getReleasesMap(_targetConnection)
-		).thenReturn(
-			releasesMap
-		);
-
-		for (Release release : releases) {
+		for (Release release : sourceReleases) {
 			if (!Objects.equals(release.getServletContextName(), "module1")) {
-				releasesMap.put(release.getServletContextName(), release);
+				targetReleases.add(release);
 			}
 		}
+
+		_sourceInstanceData.setReleases(sourceReleases);
+		_targetInstanceData.setReleases(targetReleases);
 
 		_assertValidateDatabases(
 			false, true,
@@ -198,26 +224,13 @@ public class ValidatorTest {
 						"source database before the migration")));
 	}
 
-	@Test
-	public void testValidateWebId() throws Exception {
-		_testValidateWebId(
-			() -> _assertValidateDatabases(
-				true, false,
-				Arrays.asList(
-					"[ERROR] Web ID " + _TEST_WEB_ID +
-						" already exists in the target database")),
-			false);
-		_testValidateWebId(
-			() -> _assertValidateDatabases(false, false, null), true);
-	}
-
 	private void _assertValidateDatabases(
 			boolean hasErrors, boolean hasWarnings, List<String> messages)
 		throws Exception {
 
 		try {
 			Recorder recorder = Validator.validateDatabases(
-				_sourceConnection, _targetConnection);
+				_sourceInstanceData, _targetInstanceData);
 
 			Assert.assertEquals(hasErrors, recorder.hasErrors());
 			Assert.assertEquals(hasWarnings, recorder.hasWarnings());
@@ -242,11 +255,57 @@ public class ValidatorTest {
 
 	private List<Release> _getReleases() {
 		return Arrays.asList(
-			new Release(Version.parseVersion("3.5.1"), "module1.service", true),
 			new Release(
-				Version.parseVersion("5.0.0"), "module2.service", false),
-			new Release(Version.parseVersion("2.3.2"), "module1", true),
-			new Release(Version.parseVersion("5.1.0"), "module2", true));
+				Version.parseVersion("3.5.1"), "module1.service", 0, true),
+			new Release(
+				Version.parseVersion("5.0.0"), "module2.service", 0, false),
+			new Release(Version.parseVersion("2.3.2"), "module1", 0, true),
+			new Release(Version.parseVersion("5.1.0"), "module2", 0, true));
+	}
+
+	private void _init(InstanceData instanceData) {
+		instanceData.setReleases(new ArrayList<>());
+		instanceData.setTableNames(new ArrayList<>());
+		instanceData.setCompanies(new ArrayList<>());
+		instanceData.setCompanyId(RandomTestUtil.randomLong());
+		instanceData.setDefaultPartition(true);
+	}
+
+	private void _testValidateCompany(
+			Company sourceCompany, boolean changeId, boolean changeName,
+			boolean changeHost, boolean changeWebId,
+			UnsafeRunnable<Exception> unsafeRunnable)
+		throws Exception {
+
+		_sourceInstanceData.setCompanies(
+			Collections.singletonList(sourceCompany));
+		_sourceInstanceData.setCompanyId(sourceCompany.getCompanyId());
+
+		Company targetCompany = new Company(
+			RandomTestUtil.randomLong(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString());
+
+		if (!changeId) {
+			targetCompany.setCompanyId(sourceCompany.getCompanyId());
+		}
+
+		if (!changeName) {
+			targetCompany.setCompanyName(sourceCompany.getCompanyName());
+		}
+
+		if (!changeHost) {
+			targetCompany.setVirtualHostName(
+				sourceCompany.getVirtualHostName());
+		}
+
+		if (!changeWebId) {
+			targetCompany.setWebId(sourceCompany.getWebId());
+		}
+
+		_targetInstanceData.setCompanies(
+			Collections.singletonList(targetCompany));
+
+		unsafeRunnable.run();
 	}
 
 	private void _testValidatePartitionedTables(
@@ -254,17 +313,8 @@ public class ValidatorTest {
 			UnsafeRunnable<Exception> unsafeRunnable)
 		throws Exception {
 
-		_databaseMockedStatic.when(
-			() -> DatabaseUtil.getPartitionedTableNames(_sourceConnection)
-		).thenReturn(
-			sourceTableNames
-		);
-
-		_databaseMockedStatic.when(
-			() -> DatabaseUtil.getPartitionedTableNames(_targetConnection)
-		).thenReturn(
-			targetTableNames
-		);
+		_sourceInstanceData.setTableNames(sourceTableNames);
+		_targetInstanceData.setTableNames(targetTableNames);
 
 		unsafeRunnable.run();
 	}
@@ -274,31 +324,22 @@ public class ValidatorTest {
 			UnsafeRunnable<Exception> unsafeRunnable)
 		throws Exception {
 
-		List<Release> missingTargetModuleReleases = new ArrayList<>();
+		List<Release> sourceReleases = new ArrayList<>();
 
-		Map<String, Release> releasesMap = new HashMap<>();
+		List<Release> targetReleases = new ArrayList<>();
 
 		for (Release release : _getReleases()) {
-			releasesMap.put(release.getServletContextName(), release);
+			targetReleases.add(release);
 
 			if (!targetServletContextName.equals(
 					release.getServletContextName())) {
 
-				missingTargetModuleReleases.add(release);
+				sourceReleases.add(release);
 			}
 		}
 
-		_databaseMockedStatic.when(
-			() -> DatabaseUtil.getReleases(_sourceConnection)
-		).thenReturn(
-			missingTargetModuleReleases
-		);
-
-		_databaseMockedStatic.when(
-			() -> DatabaseUtil.getReleasesMap(_targetConnection)
-		).thenReturn(
-			releasesMap
-		);
+		_sourceInstanceData.setReleases(sourceReleases);
+		_targetInstanceData.setReleases(targetReleases);
 
 		unsafeRunnable.run();
 	}
@@ -309,17 +350,35 @@ public class ValidatorTest {
 			UnsafeRunnable<Exception> unsafeRunnable)
 		throws Exception {
 
-		_databaseMockedStatic.when(
-			() -> DatabaseUtil.getFailedServletContextNames(_sourceConnection)
-		).thenReturn(
-			sourceFailedServletContextNames
-		);
+		List<Release> sourceReleases = new ArrayList<>();
+		List<Release> targetReleases = new ArrayList<>();
 
-		_databaseMockedStatic.when(
-			() -> DatabaseUtil.getFailedServletContextNames(_targetConnection)
-		).thenReturn(
-			targetFailedServletContextNames
-		);
+		for (Release release : _getReleases()) {
+			if (sourceFailedServletContextNames.contains(
+					release.getServletContextName())) {
+
+				release = new Release(
+					release.getSchemaVersion(), release.getServletContextName(),
+					1, release.getVerified());
+			}
+
+			sourceReleases.add(release);
+		}
+
+		for (Release release : _getReleases()) {
+			if (targetFailedServletContextNames.contains(
+					release.getServletContextName())) {
+
+				release = new Release(
+					release.getSchemaVersion(), release.getServletContextName(),
+					1, release.getVerified());
+			}
+
+			targetReleases.add(release);
+		}
+
+		_sourceInstanceData.setReleases(sourceReleases);
+		_targetInstanceData.setReleases(targetReleases);
 
 		unsafeRunnable.run();
 	}
@@ -329,33 +388,24 @@ public class ValidatorTest {
 			UnsafeRunnable<Exception> unsafeRunnable)
 		throws Exception {
 
-		List<Release> releases = _getReleases();
+		List<Release> sourceReleases = _getReleases();
 
-		_databaseMockedStatic.when(
-			() -> DatabaseUtil.getReleases(_sourceConnection)
-		).thenReturn(
-			releases
-		);
+		List<Release> targetReleases = new ArrayList<>();
 
-		Map<String, Release> releaseMap = new HashMap<>();
-
-		_databaseMockedStatic.when(
-			() -> DatabaseUtil.getReleasesMap(_targetConnection)
-		).thenReturn(
-			releaseMap
-		);
-
-		for (Release release : releases) {
+		for (Release release : sourceReleases) {
 			if (targetServletContextName.equals(
 					release.getServletContextName())) {
 
 				release = new Release(
 					release.getSchemaVersion(), targetServletContextName,
-					targetVerified);
+					release.getState(), targetVerified);
 			}
 
-			releaseMap.put(release.getServletContextName(), release);
+			targetReleases.add(release);
 		}
+
+		_sourceInstanceData.setReleases(sourceReleases);
+		_targetInstanceData.setReleases(targetReleases);
 
 		unsafeRunnable.run();
 	}
@@ -365,63 +415,34 @@ public class ValidatorTest {
 			UnsafeRunnable<Exception> unsafeRunnable)
 		throws Exception {
 
-		List<Release> releases = _getReleases();
+		List<Release> sourceReleases = _getReleases();
 
-		_databaseMockedStatic.when(
-			() -> DatabaseUtil.getReleases(_sourceConnection)
-		).thenReturn(
-			releases
-		);
+		_sourceInstanceData.setReleases(sourceReleases);
 
-		Map<String, Release> releasesMap = new HashMap<>();
+		List<Release> targetReleases = new ArrayList<>();
 
-		_databaseMockedStatic.when(
-			() -> DatabaseUtil.getReleasesMap(_targetConnection)
-		).thenReturn(
-			releasesMap
-		);
-
-		for (Release release : releases) {
+		for (Release release : sourceReleases) {
 			if (targetServletContextName.equals(
 					release.getServletContextName())) {
 
 				release = new Release(
 					Version.parseVersion(targetVersion),
-					targetServletContextName, release.getVerified());
+					targetServletContextName, release.getState(),
+					release.getVerified());
 			}
 
-			releasesMap.put(release.getServletContextName(), release);
+			targetReleases.add(release);
 		}
 
-		unsafeRunnable.run();
-	}
-
-	private void _testValidateWebId(
-			UnsafeRunnable<Exception> unsafeRunnable, boolean valid)
-		throws Exception {
-
-		_databaseMockedStatic.when(
-			() -> DatabaseUtil.getWebId(_sourceConnection)
-		).thenReturn(
-			_TEST_WEB_ID
-		);
-
-		_databaseMockedStatic.when(
-			() -> DatabaseUtil.hasWebId(_targetConnection, _TEST_WEB_ID)
-		).thenReturn(
-			!valid
-		);
+		_targetInstanceData.setReleases(targetReleases);
 
 		unsafeRunnable.run();
 	}
-
-	private static final String _TEST_WEB_ID = RandomTestUtil.randomString();
 
 	private final ByteArrayOutputStream _byteArrayOutputStream =
 		new ByteArrayOutputStream();
-	private MockedStatic<DatabaseUtil> _databaseMockedStatic;
 	private final PrintStream _originalOut = System.out;
-	private Connection _sourceConnection;
-	private Connection _targetConnection;
+	private final InstanceData _sourceInstanceData = new InstanceData();
+	private final InstanceData _targetInstanceData = new InstanceData();
 
 }

@@ -291,9 +291,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 	}
 
 	@Test
-	public void testDeleteCustomObjectEntry()
-		throws Exception {
-
+	public void testDeleteCustomObjectEntry() throws Exception {
 		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
 		String password = RandomTestUtil.randomString();

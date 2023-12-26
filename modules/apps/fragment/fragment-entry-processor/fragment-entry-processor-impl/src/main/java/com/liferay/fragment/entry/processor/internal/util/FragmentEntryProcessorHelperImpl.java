@@ -327,25 +327,7 @@ public class FragmentEntryProcessorHelperImpl
 			return null;
 		}
 
-		if (value instanceof WebImage) {
-			WebImage webImage = (WebImage)value;
-
-			JSONObject valueJSONObject = webImage.toJSONObject();
-
-			long fileEntryId = getFileEntryId(webImage);
-
-			if (fileEntryId != 0) {
-				valueJSONObject.put("fileEntryId", String.valueOf(fileEntryId));
-			}
-
-			return valueJSONObject;
-		}
-		else if (value instanceof WebURL) {
-			WebURL webURL = (WebURL)value;
-
-			return webURL.toJSONObject();
-		}
-		else if (value instanceof Collection) {
+		if (value instanceof Collection) {
 			Collection<Object> collection = (Collection<Object>)value;
 
 			if (collection.isEmpty()) {
@@ -362,6 +344,18 @@ public class FragmentEntryProcessorHelperImpl
 				_getInfoCollectionTextFormatter(firstItemClass.getName());
 
 			return infoCollectionTextFormatter.format(collection, locale);
+		}
+		else if (value instanceof Date) {
+			Date date = (Date)value;
+
+			return _getDateValue(
+				editableValueJSONObject, date,
+				_getShortTimeStylePattern(locale), locale);
+		}
+		else if (value instanceof Labeled) {
+			Labeled labeledFieldValue = (Labeled)value;
+
+			return labeledFieldValue.getLabel(locale);
 		}
 		else if (value instanceof String) {
 			InfoField infoField = infoFieldValue.getInfoField();
@@ -426,17 +420,23 @@ public class FragmentEntryProcessorHelperImpl
 
 			return (String)value;
 		}
-		else if (value instanceof Labeled) {
-			Labeled labeledFieldValue = (Labeled)value;
+		else if (value instanceof WebImage) {
+			WebImage webImage = (WebImage)value;
 
-			return labeledFieldValue.getLabel(locale);
+			JSONObject valueJSONObject = webImage.toJSONObject();
+
+			long fileEntryId = getFileEntryId(webImage);
+
+			if (fileEntryId != 0) {
+				valueJSONObject.put("fileEntryId", String.valueOf(fileEntryId));
+			}
+
+			return valueJSONObject;
 		}
-		else if (value instanceof Date) {
-			Date date = (Date)value;
+		else if (value instanceof WebURL) {
+			WebURL webURL = (WebURL)value;
 
-			return _getDateValue(
-				editableValueJSONObject, date,
-				_getShortTimeStylePattern(locale), locale);
+			return webURL.toJSONObject();
 		}
 
 		Class<?> fieldValueClass = value.getClass();

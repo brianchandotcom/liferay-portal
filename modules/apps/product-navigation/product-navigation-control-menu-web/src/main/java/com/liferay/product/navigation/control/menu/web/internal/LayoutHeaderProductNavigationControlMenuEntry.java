@@ -6,18 +6,25 @@
 package com.liferay.product.navigation.control.menu.web.internal;
 
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.frontend.taglib.clay.servlet.taglib.IconTag;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
 import com.liferay.layout.security.permission.resource.LayoutContentModelResourcePermission;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.permission.LayoutPermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
@@ -39,6 +46,7 @@ import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.jsp.JspException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -74,7 +82,7 @@ public class LayoutHeaderProductNavigationControlMenuEntry
 
 		Writer writer = httpServletResponse.getWriter();
 
-		StringBundler sb = new StringBundler(22);
+		StringBundler sb = new StringBundler(28);
 
 		sb.append("<div class=\"");
 		sb.append(_getCssClass(httpServletRequest));
@@ -109,9 +117,53 @@ public class LayoutHeaderProductNavigationControlMenuEntry
 
 		sb.append("</span>");
 
+		try {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			Layout layout = themeDisplay.getLayout();
+
+			if (layout.isDraftLayout()) {
+				layout = _layoutLocalService.fetchLayout(layout.getClassPK());
+			}
+
+			if (FeatureFlagManagerUtil.isEnabled("LPS-196847") &&
+				!_hasGuestViewPermission(layout)) {
+
+				sb.append("<span class=\"align-items-center c-ml-3 d-flex ");
+				sb.append("lfr-portal-tooltip text-white\" data-title=\" ");
+				sb.append(_language.get(httpServletRequest, "restricted-page"));
+				sb.append("\">");
+
+				IconTag iconTag = new IconTag();
+
+				iconTag.setCssClass("c-mt-0");
+				iconTag.setSymbol("lock");
+
+				try {
+					sb.append(
+						iconTag.doTagAsString(
+							httpServletRequest, httpServletResponse));
+				}
+				catch (JspException jspException) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(jspException);
+					}
+				}
+
+				sb.append("</span>");
+			}
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+		}
+
 		if (_isDraftLayout(httpServletRequest)) {
 			sb.append("<span class=\"bg-transparent flex-shrink-0 label ");
-			sb.append("label-inverse-secondary ml-2 mr-0\">");
+			sb.append("label-inverse-secondary ml-3 mr-0\">");
 			sb.append("<span class=\"label-item label-item-expand\">");
 			sb.append(_language.get(httpServletRequest, "draft"));
 			sb.append("</span></span>");
@@ -265,6 +317,19 @@ public class LayoutHeaderProductNavigationControlMenuEntry
 		return false;
 	}
 
+	private boolean _hasGuestViewPermission(Layout layout)
+		throws PortalException {
+
+		Role role = _roleLocalService.getRole(
+			layout.getCompanyId(), RoleConstants.GUEST);
+
+		return _resourcePermissionLocalService.hasResourcePermission(
+			layout.getCompanyId(), Layout.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(layout.getPlid()), role.getRoleId(),
+			ActionKeys.VIEW);
+	}
+
 	private boolean _isDraftLayout(HttpServletRequest httpServletRequest) {
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
@@ -303,5 +368,11 @@ public class LayoutHeaderProductNavigationControlMenuEntry
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Reference
+	private RoleLocalService _roleLocalService;
 
 }

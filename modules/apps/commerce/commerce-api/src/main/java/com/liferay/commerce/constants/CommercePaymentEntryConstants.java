@@ -54,7 +54,7 @@ public class CommercePaymentEntryConstants {
 			return "created";
 		}
 		else if (paymentStatus == STATUS_REFUNDED) {
-			return "refund";
+			return "refunded";
 		}
 
 		return CommerceOrderPaymentConstants.getOrderPaymentStatusLabel(

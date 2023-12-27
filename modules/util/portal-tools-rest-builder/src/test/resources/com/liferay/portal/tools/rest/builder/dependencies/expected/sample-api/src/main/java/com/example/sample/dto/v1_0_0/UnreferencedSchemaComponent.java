@@ -92,6 +92,7 @@ public class UnreferencedSchemaComponent implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
+	@JsonIgnore
 	private Supplier<String> _descriptionSupplier;
 
 	@Schema
@@ -137,6 +138,7 @@ public class UnreferencedSchemaComponent implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ExternalReferenceElement2[] externalReferenceElement2s;
 
+	@JsonIgnore
 	private Supplier<ExternalReferenceElement2[]>
 		_externalReferenceElement2sSupplier;
 
@@ -176,6 +178,7 @@ public class UnreferencedSchemaComponent implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Override

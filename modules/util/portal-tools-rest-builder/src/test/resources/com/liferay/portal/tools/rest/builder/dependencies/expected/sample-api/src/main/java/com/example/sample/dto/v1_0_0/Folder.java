@@ -94,6 +94,7 @@ public class Folder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateCreated;
 
+	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
 	@Schema
@@ -134,6 +135,7 @@ public class Folder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateModified;
 
+	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
 	@Schema
@@ -174,6 +176,7 @@ public class Folder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
+	@JsonIgnore
 	private Supplier<String> _descriptionSupplier;
 
 	@Schema
@@ -215,6 +218,7 @@ public class Folder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Folder documentsRepository;
 
+	@JsonIgnore
 	private Supplier<Folder> _documentsRepositorySupplier;
 
 	@Schema
@@ -260,6 +264,7 @@ public class Folder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ExternalReferenceElement1[] externalReferenceElement1s;
 
+	@JsonIgnore
 	private Supplier<ExternalReferenceElement1[]>
 		_externalReferenceElement1sSupplier;
 
@@ -299,6 +304,7 @@ public class Folder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema
@@ -337,6 +343,7 @@ public class Folder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema
@@ -375,6 +382,7 @@ public class Folder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String self;
 
+	@JsonIgnore
 	private Supplier<String> _selfSupplier;
 
 	@Schema
@@ -416,6 +424,7 @@ public class Folder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Folder subFolders;
 
+	@JsonIgnore
 	private Supplier<Folder> _subFoldersSupplier;
 
 	@Override

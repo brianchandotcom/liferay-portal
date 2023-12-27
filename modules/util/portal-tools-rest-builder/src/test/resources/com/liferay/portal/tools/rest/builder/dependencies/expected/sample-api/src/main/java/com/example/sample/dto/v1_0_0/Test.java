@@ -88,6 +88,7 @@ public class Test implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema
@@ -129,6 +130,7 @@ public class Test implements Serializable {
 	@XmlElement(name = "xmlProperty")
 	protected String jsonProperty;
 
+	@JsonIgnore
 	private Supplier<String> _jsonPropertySupplier;
 
 	@Schema
@@ -171,6 +173,7 @@ public class Test implements Serializable {
 	)
 	protected String propertyWithHyphens;
 
+	@JsonIgnore
 	private Supplier<String> _propertyWithHyphensSupplier;
 
 	@Override

@@ -90,6 +90,7 @@ public class TestNestedArrayItems implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema
@@ -131,6 +132,7 @@ public class TestNestedArrayItems implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[][] values;
 
+	@JsonIgnore
 	private Supplier<String[][]> _valuesSupplier;
 
 	@Override

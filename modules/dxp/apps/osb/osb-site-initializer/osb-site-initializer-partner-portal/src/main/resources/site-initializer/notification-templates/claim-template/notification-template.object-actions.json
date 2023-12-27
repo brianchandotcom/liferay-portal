@@ -1,7 +1,7 @@
 [
 	{
 		"active": true,
-		"conditionExpression": "submitted == true",
+		"conditionExpression": "mdfClaimStatus == 'pendingMarketingReview'",
 		"externalReferenceCode": "MDF-CLAIM-NOTIFICATION-1",
 		"label": {
 			"en_US": "Notification MDF Claim On Submit"
@@ -13,24 +13,12 @@
 	},
 	{
 		"active": true,
-		"conditionExpression": "oldValue('submitted') == false AND submitted == true",
+		"conditionExpression": "oldValue('mdfClaimStatus') == 'draft' AND mdfClaimStatus == 'pendingMarketingReview' OR oldValue('mdfClaimStatus') == 'moreInfoRequested' AND mdfClaimStatus == 'pendingMarketingReview'",
 		"externalReferenceCode": "MDF-CLAIM-NOTIFICATION-2",
 		"label": {
 			"en_US": "Notification MDF Claim On Update"
 		},
 		"name": "notificationMDFClaimOnUpdate",
-		"objectActionExecutorKey": "notification",
-		"objectActionTriggerKey": "onAfterUpdate",
-		"objectDefinitionId": "[$OBJECT_DEFINITION_ID:MDFClaim$]"
-	},
-	{
-		"active": true,
-		"conditionExpression": "oldValue('mdfClaimStatus') == 'moreInfoRequested' AND mdfClaimStatus == 'pendingMarketingReview'",
-		"externalReferenceCode": "MDF-CLAIM-NOTIFICATION-3",
-		"label": {
-			"en_US": "Notification MDF Claim On Resubmit"
-		},
-		"name": "notificationMDFClaimOnResubmit",
 		"objectActionExecutorKey": "notification",
 		"objectActionTriggerKey": "onAfterUpdate",
 		"objectDefinitionId": "[$OBJECT_DEFINITION_ID:MDFClaim$]"

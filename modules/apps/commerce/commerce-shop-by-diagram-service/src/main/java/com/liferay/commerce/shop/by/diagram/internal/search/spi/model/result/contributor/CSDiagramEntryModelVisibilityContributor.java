@@ -13,18 +13,17 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.search.spi.model.result.contributor.ModelVisibilityContributor;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Alessio Antonio Rendina
  */
-@Component(
-	property = "indexer.class.name=com.liferay.commerce.shop.by.diagram.model.CSDiagramEntry",
-	service = ModelVisibilityContributor.class
-)
 public class CSDiagramEntryModelVisibilityContributor
 	implements ModelVisibilityContributor {
+
+	public CSDiagramEntryModelVisibilityContributor(
+		CSDiagramEntryLocalService csDiagramEntryLocalService) {
+
+		_csDiagramEntryLocalService = csDiagramEntryLocalService;
+	}
 
 	@Override
 	public boolean isVisible(long classPK, int status) {
@@ -51,7 +50,6 @@ public class CSDiagramEntryModelVisibilityContributor
 	private static final Log _log = LogFactoryUtil.getLog(
 		CSDiagramEntryModelVisibilityContributor.class);
 
-	@Reference
-	private CSDiagramEntryLocalService _csDiagramEntryLocalService;
+	private final CSDiagramEntryLocalService _csDiagramEntryLocalService;
 
 }

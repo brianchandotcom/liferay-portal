@@ -42,7 +42,7 @@
 </tr>
 <tr>
 	<td>REQUEST_LOG_TABLE</td>
-	<td>//tr[contains(@class,'clickable') and contains(.,'${key_emailAdress}')]/..//tr[contains(.,'${jobType}')]</td>
+	<td>//tr[contains(@class,'clickable') and contains(.,'${key_emailAdress}') and contains(.,'${key_jobType}')]</td>
 	<td></td>
 </tr>
 <tr>

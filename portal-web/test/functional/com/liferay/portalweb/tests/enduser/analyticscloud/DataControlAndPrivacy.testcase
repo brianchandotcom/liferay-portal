@@ -132,9 +132,8 @@ definition {
 				optionValue = "Manage");
 
 			ACSettings.assertRequestLog(
-				jobType = "Access",
-				key_emailAdress = ${userEmail},
-				searchUser = ${userName});
+				key_jobType = "Access",
+				key_emailAdress = ${userEmail});
 		}
 	}
 
@@ -201,9 +200,8 @@ definition {
 				optionValue = "Manage");
 
 			ACSettings.assertRequestLog(
-				jobType = "Delete",
-				key_emailAdress = ${userEmail},
-				searchUser = ${userName});
+				key_jobType = "Delete",
+				key_emailAdress = ${userEmail});
 		}
 	}
 
@@ -252,9 +250,8 @@ definition {
 				optionValue = "Manage");
 
 			ACSettings.assertRequestLog(
-				jobType = "Suppress",
-				key_emailAdress = ${userEmail},
-				searchUser = ${userName});
+				key_jobType = "Suppress",
+				key_emailAdress = ${userEmail});
 		}
 	}
 
@@ -325,14 +322,12 @@ definition {
 				optionValue = "Manage");
 
 			ACSettings.assertRequestLog(
-				jobType = "Unsuppress",
-				key_emailAdress = ${userEmail},
-				searchUser = ${userName});
+				key_jobType = "Unsuppress",
+				key_emailAdress = ${userEmail});
 
 			ACSettings.assertRequestLog(
-				jobType = "Access",
-				key_emailAdress = ${userEmail},
-				searchUser = ${userName});
+				key_jobType = "Access",
+				key_emailAdress = ${userEmail});
 		}
 	}
 

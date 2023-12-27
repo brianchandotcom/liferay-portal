@@ -370,9 +370,11 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertRequestLog(jobType = null) {
-		if (${jobType} == "Delete") {
+	macro assertRequestLog(key_jobType = null) {
+		if (${key_jobType} == "Delete") {
 			AssertElementPresent(locator1 = "ACDataControlAndPrivacy#REQUEST_LOG_TABLE");
+
+			var key_jobType = "Suppress";
 
 			AssertElementPresent(locator1 = "ACDataControlAndPrivacy#REQUEST_LOG_TABLE");
 		}

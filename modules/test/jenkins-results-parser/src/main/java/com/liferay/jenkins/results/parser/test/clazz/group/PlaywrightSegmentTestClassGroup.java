@@ -7,6 +7,9 @@ package com.liferay.jenkins.results.parser.test.clazz.group;
 
 import com.liferay.jenkins.results.parser.job.property.JobProperty;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.json.JSONObject;
 
 /**
@@ -27,24 +30,21 @@ public class PlaywrightSegmentTestClassGroup extends SegmentTestClassGroup {
 			PlaywrightBatchTestClassGroup.PLAYWRIGHT_TEST_PROJECT_PROPERTY_NAME;
 
 		if (playwrightBatchTestClassGroup.testRelevantChanges) {
-			sb.append(playwrightTestProjectPropertyName);
-			sb.append("=");
+			List<JobProperty> jobProperties =
+				playwrightBatchTestClassGroup.
+					getRelevantPlaywrightJobProperties();
 
-			for (JobProperty jobProperty :
-					playwrightBatchTestClassGroup.
-						getRelevantPlaywrightJobProperties()) {
+			List<JobProperty> playwrightTestProjectJobProperties =
+				_getJobProperties(
+					playwrightTestProjectPropertyName, jobProperties);
 
-				String propertyName = jobProperty.getBasePropertyName();
+			String playwrightTestProjectProperty = _concatPropertyValues(
+				playwrightTestProjectJobProperties, " ");
 
-				if (propertyName.equals(playwrightTestProjectPropertyName) &&
-					(jobProperty.getValue() != null)) {
-
-					sb.append(jobProperty.getValue());
-					sb.append(" ");
-				}
+			if (playwrightTestProjectProperty != null) {
+				sb.append(playwrightTestProjectProperty);
+				sb.append("\n");
 			}
-
-			sb.append("\n");
 		}
 		else {
 			JobProperty jobProperty =
@@ -88,6 +88,48 @@ public class PlaywrightSegmentTestClassGroup extends SegmentTestClassGroup {
 		BatchTestClassGroup parentBatchTestClassGroup, JSONObject jsonObject) {
 
 		super(parentBatchTestClassGroup, jsonObject);
+	}
+
+	private String _concatPropertyValues(
+		List<JobProperty> jobProperties, String delimiter) {
+
+		if (jobProperties.isEmpty()) {
+			return null;
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		for (JobProperty jobProperty : jobProperties) {
+			if (jobProperty.getValue() != null) {
+				sb.append(jobProperty.getValue());
+				sb.append(delimiter);
+			}
+		}
+
+		if (sb.length() > 0) {
+			JobProperty jobProperty = jobProperties.get(0);
+
+			sb.insert(0, "=");
+			sb.insert(0, jobProperty.getBasePropertyName());
+
+			sb.setLength(sb.length() - delimiter.length());
+		}
+
+		return sb.toString();
+	}
+
+	private List<JobProperty> _getJobProperties(
+		String propertyName, List<JobProperty> jobProperties) {
+
+		List<JobProperty> filteredJobProperties = new ArrayList<>();
+
+		for (JobProperty jobProperty : jobProperties) {
+			if (propertyName.equals(jobProperty.getBasePropertyName())) {
+				filteredJobProperties.add(jobProperty);
+			}
+		}
+
+		return filteredJobProperties;
 	}
 
 }

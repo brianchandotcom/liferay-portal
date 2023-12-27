@@ -77,11 +77,22 @@ definition {
 		var userEmail = "dcp1@liferay.com";
 		var userName = "dcp1";
 
-		JSONUser.addUser(
-			userEmailAddress = ${userEmail},
-			userFirstName = ${userName},
-			userLastName = ${userName},
-			userScreenName = ${userName});
+		task ("Add a new user in DXP") {
+			JSONUser.addUser(
+				userEmailAddress = ${userEmail},
+				userFirstName = ${userName},
+				userLastName = ${userName},
+				userScreenName = ${userName});
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = ${userEmail});
+		}
+
+		task ("Connect the DXP to AC") {
+			ACDXPSettings.connectDXPtoAnalyticsCloud();
+		}
 
 		task ("Sign in as new user") {
 			User.logoutAndLoginPG(
@@ -99,7 +110,9 @@ definition {
 			ACUtils.closeAllSessionsAndWait();
 		}
 
-		ACUtils.launchAC();
+		task ("Go to AC") {
+			ACUtils.launchAC();
+		}
 
 		task ("Create Access Request") {
 			ACNavigation.goToSettings();
@@ -133,11 +146,22 @@ definition {
 		var userEmail = "dcp2@liferay.com";
 		var userName = "dcp2";
 
-		JSONUser.addUser(
-			userEmailAddress = ${userEmail},
-			userFirstName = ${userName},
-			userLastName = ${userName},
-			userScreenName = ${userName});
+		task ("Add a new user in DXP") {
+			JSONUser.addUser(
+				userEmailAddress = ${userEmail},
+				userFirstName = ${userName},
+				userLastName = ${userName},
+				userScreenName = ${userName});
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = ${userEmail});
+		}
+
+		task ("Connect the DXP to AC") {
+			ACDXPSettings.connectDXPtoAnalyticsCloud();
+		}
 
 		task ("Sign in as new user") {
 			User.logoutAndLoginPG(
@@ -155,7 +179,9 @@ definition {
 			ACUtils.closeAllSessionsAndWait();
 		}
 
-		ACUtils.launchAC();
+		task ("Go to AC") {
+			ACUtils.launchAC();
+		}
 
 		task ("Create Delete Request") {
 			ACNavigation.goToSettings();

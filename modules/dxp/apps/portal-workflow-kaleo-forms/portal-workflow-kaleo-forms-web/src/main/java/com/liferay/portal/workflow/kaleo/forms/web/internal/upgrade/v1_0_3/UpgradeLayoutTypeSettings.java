@@ -5,8 +5,8 @@
 
 package com.liferay.portal.workflow.kaleo.forms.web.internal.upgrade.v1_0_3;
 
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Disjunction;
-import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
@@ -34,10 +34,10 @@ public class UpgradeLayoutTypeSettings extends BasePortletIdUpgradeProcess {
 	private void _deleteLayoutTypeSettingsColumnKeyWithoutValue()
 		throws Exception {
 
-		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
-			LayoutLocalServiceUtil.getIndexableActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery =
+			LayoutLocalServiceUtil.getActionableDynamicQuery();
 
-		indexableActionableDynamicQuery.setAddCriteriaMethod(
+		actionableDynamicQuery.setAddCriteriaMethod(
 			dynamicQuery -> {
 				Disjunction disjunction = RestrictionsFactoryUtil.disjunction();
 
@@ -55,8 +55,8 @@ public class UpgradeLayoutTypeSettings extends BasePortletIdUpgradeProcess {
 
 				dynamicQuery.add(disjunction);
 			});
-		indexableActionableDynamicQuery.setParallel(true);
-		indexableActionableDynamicQuery.setPerformActionMethod(
+		actionableDynamicQuery.setParallel(true);
+		actionableDynamicQuery.setPerformActionMethod(
 			(Layout layout) -> {
 				try {
 					UnicodeProperties oldtypeSettingsUnicodeProperties =
@@ -82,7 +82,7 @@ public class UpgradeLayoutTypeSettings extends BasePortletIdUpgradeProcess {
 				}
 			});
 
-		indexableActionableDynamicQuery.performActions();
+		actionableDynamicQuery.performActions();
 	}
 
 	private UnicodeProperties _getNewTypeSettingsUnicodeProperties(

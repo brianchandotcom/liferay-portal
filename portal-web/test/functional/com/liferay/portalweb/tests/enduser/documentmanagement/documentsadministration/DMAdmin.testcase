@@ -46,9 +46,9 @@ definition {
 			cancel = "true",
 			senderName = "Test Test");
 
-		Portlet.gotoPortletOptions(portletOption = "Configuration");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
-		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+		Portlet.gotoPortletOptions(portletOption = "Configuration");
 
 		InputField.viewText(
 			fieldLabel = "Name",

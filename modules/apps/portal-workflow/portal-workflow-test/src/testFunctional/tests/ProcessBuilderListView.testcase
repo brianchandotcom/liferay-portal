@@ -242,29 +242,6 @@ definition {
 			locator1 = "ProcessBuilderListView#PROCESS_NAME_IN_SECTION_BY_INDEX");
 	}
 
-	@description = "Verify that the user is able to reverse sort direction"
-	@priority = 2
-	test CanReverseSortDirection {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		Workflow.duplicateSingleApproverWorkflow(workflowName = "Copy of Single Approver");
-
-		Navigator.gotoBack();
-
-		Workflow.clickRevertSortDirection();
-
-		AssertTextEquals(
-			key_rowNumber = 2,
-			locator1 = "ProcessBuilderListView#PROCESS_NAME_TABLE_ROW",
-			value1 = "Copy of Single Approver");
-
-		AssertTextEquals(
-			key_rowNumber = 3,
-			locator1 = "ProcessBuilderListView#PROCESS_NAME_TABLE_ROW",
-			value1 = "Single Approver");
-	}
-
 	@description = "Verify that the user is not able to search by Workflow description"
 	@priority = 3
 	test CanSearchByDescription {

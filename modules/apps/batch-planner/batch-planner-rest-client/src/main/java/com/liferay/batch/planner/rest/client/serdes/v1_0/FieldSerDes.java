@@ -82,6 +82,16 @@ public class FieldSerDes {
 			sb.append(field.getRequired());
 		}
 
+		if (field.getSupported() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"supported\": ");
+
+			sb.append(field.getSupported());
+		}
+
 		if (field.getType() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -135,6 +145,13 @@ public class FieldSerDes {
 			map.put("required", String.valueOf(field.getRequired()));
 		}
 
+		if (field.getSupported() == null) {
+			map.put("supported", null);
+		}
+		else {
+			map.put("supported", String.valueOf(field.getSupported()));
+		}
+
 		if (field.getType() == null) {
 			map.put("type", null);
 		}
@@ -175,6 +192,11 @@ public class FieldSerDes {
 			else if (Objects.equals(jsonParserFieldName, "required")) {
 				if (jsonParserFieldValue != null) {
 					field.setRequired((Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "supported")) {
+				if (jsonParserFieldValue != null) {
+					field.setSupported((Boolean)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {

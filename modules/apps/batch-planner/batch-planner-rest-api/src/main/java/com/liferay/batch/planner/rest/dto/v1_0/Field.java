@@ -170,6 +170,46 @@ public class Field implements Serializable {
 	private Supplier<Boolean> _requiredSupplier;
 
 	@Schema
+	public Boolean getSupported() {
+		if (_supportedSupplier != null) {
+			supported = _supportedSupplier.get();
+
+			_supportedSupplier = null;
+		}
+
+		return supported;
+	}
+
+	public void setSupported(Boolean supported) {
+		this.supported = supported;
+
+		_supportedSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setSupported(
+		UnsafeSupplier<Boolean, Exception> supportedUnsafeSupplier) {
+
+		_supportedSupplier = () -> {
+			try {
+				return supportedUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean supported;
+
+	private Supplier<Boolean> _supportedSupplier;
+
+	@Schema
 	public String getType() {
 		if (_typeSupplier != null) {
 			type = _typeSupplier.get();
@@ -277,6 +317,18 @@ public class Field implements Serializable {
 			sb.append("\"required\": ");
 
 			sb.append(required);
+		}
+
+		Boolean supported = getSupported();
+
+		if (supported != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"supported\": ");
+
+			sb.append(supported);
 		}
 
 		String type = getType();

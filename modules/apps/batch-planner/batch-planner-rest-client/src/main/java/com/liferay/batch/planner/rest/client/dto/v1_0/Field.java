@@ -86,6 +86,27 @@ public class Field implements Cloneable, Serializable {
 
 	protected Boolean required;
 
+	public Boolean getSupported() {
+		return supported;
+	}
+
+	public void setSupported(Boolean supported) {
+		this.supported = supported;
+	}
+
+	public void setSupported(
+		UnsafeSupplier<Boolean, Exception> supportedUnsafeSupplier) {
+
+		try {
+			supported = supportedUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean supported;
+
 	public String getType() {
 		return type;
 	}

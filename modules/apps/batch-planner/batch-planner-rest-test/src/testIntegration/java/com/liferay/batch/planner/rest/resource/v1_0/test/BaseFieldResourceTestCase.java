@@ -352,6 +352,14 @@ public abstract class BaseFieldResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("supported", additionalAssertFieldName)) {
+				if (field.getSupported() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("type", additionalAssertFieldName)) {
 				if (field.getType() == null) {
 					valid = false;
@@ -496,6 +504,16 @@ public abstract class BaseFieldResourceTestCase {
 			if (Objects.equals("required", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						field1.getRequired(), field2.getRequired())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("supported", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						field1.getSupported(), field2.getSupported())) {
 
 					return false;
 				}
@@ -711,6 +729,11 @@ public abstract class BaseFieldResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("supported")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("type")) {
 			Object object = field.getType();
 
@@ -805,6 +828,7 @@ public abstract class BaseFieldResourceTestCase {
 					RandomTestUtil.randomString());
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				required = RandomTestUtil.randomBoolean();
+				supported = RandomTestUtil.randomBoolean();
 				type = StringUtil.toLowerCase(RandomTestUtil.randomString());
 			}
 		};

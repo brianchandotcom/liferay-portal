@@ -8,8 +8,6 @@ package com.liferay.fragment.entry.processor.editable.parser.util;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.Validator;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 /**
@@ -45,18 +43,6 @@ public class EditableElementParserUtil {
 		if (Validator.isNotNull(value)) {
 			element.addClass(prefix + value);
 		}
-	}
-
-	public static Element getDocumentBody(String value) {
-		Document document = Jsoup.parseBodyFragment(value);
-
-		Document.OutputSettings outputSettings = new Document.OutputSettings();
-
-		outputSettings.prettyPrint(false);
-
-		document.outputSettings(outputSettings);
-
-		return document.body();
 	}
 
 }

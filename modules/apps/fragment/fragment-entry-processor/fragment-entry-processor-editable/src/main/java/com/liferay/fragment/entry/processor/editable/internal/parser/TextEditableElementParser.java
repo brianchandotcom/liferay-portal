@@ -51,10 +51,8 @@ public class TextEditableElementParser implements EditableElementParser {
 	public void replace(
 		Element element, String value, JSONObject configJSONObject) {
 
-		Element bodyElement = EditableElementParserUtil.getDocumentBody(value);
-
 		if (configJSONObject == null) {
-			element.html(bodyElement.html());
+			element.html(value);
 
 			return;
 		}
@@ -66,7 +64,7 @@ public class TextEditableElementParser implements EditableElementParser {
 		EditableElementParserUtil.addClass(
 			element, configJSONObject, StringPool.BLANK, "textStyle");
 
-		element.html(bodyElement.html());
+		element.html(value);
 	}
 
 	@Override

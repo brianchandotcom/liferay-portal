@@ -145,12 +145,8 @@ public class BackgroundImageDocumentFragmentEntryProcessor
 
 				element.attr("style", sb.toString());
 			}
-		}
 
-		if (fragmentEntryProcessorContext.isViewMode()) {
-			for (Element element :
-					document.select("[data-lfr-background-image-id]")) {
-
+			if (fragmentEntryProcessorContext.isViewMode()) {
 				element.removeAttr("data-lfr-background-image-id");
 			}
 		}

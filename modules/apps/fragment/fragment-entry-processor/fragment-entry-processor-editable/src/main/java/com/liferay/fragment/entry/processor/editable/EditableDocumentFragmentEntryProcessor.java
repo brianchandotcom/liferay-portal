@@ -177,10 +177,10 @@ public class EditableDocumentFragmentEntryProcessor
 						fragmentEntryProcessorContext);
 				}
 			}
-		}
 
-		if (fragmentEntryProcessorContext.isViewMode()) {
-			for (Element element : document.select("lfr-editable")) {
+			if (fragmentEntryProcessorContext.isViewMode() &&
+				Objects.equals(element.tagName(), "lfr-editable")) {
+
 				element.removeAttr("id");
 				element.removeAttr("type");
 

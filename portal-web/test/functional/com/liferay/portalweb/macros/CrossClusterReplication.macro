@@ -3,9 +3,10 @@ definition {
 	@summary = "Default summary"
 	macro cleanWorkflowIndex(workflowIndexName = null) {
 		var companyId = JSONCompany.getCompanyId();
+		var portalHostname = PropsUtil.get("portal.hostname");
 
 		var cleanCurl = '''
-			http://localhost:9200/liferay-${companyId}-${workflowIndexName}/_delete_by_query?pretty \
+			http://${portalHostname}:9200/liferay-${companyId}-${workflowIndexName}/_delete_by_query?pretty \
 				-H 'Content-Type: application/json' \
 				-d '{
 					"query": {
@@ -47,16 +48,31 @@ definition {
 
 		FormFields.enableCheckbox(fieldName = "ccrEnabled");
 
+		var elasticsearchHostname = PropsUtil.get("selenium.remote.driver.url");
+
+		var elasticsearchHostname = Regex.removeHTTP(url = ${elasticsearchHostname});
+
+		var elasticsearchHostname = StringUtil.regexReplaceFirst(${elasticsearchHostname}, "_chrome(.*?):[0-9]{4,}.*", "$1");
+
 		if (${portalCluster} == "true") {
-			FormFields.editTextMultiline(
+			FormFields.editRepeatableTextMultiline(
 				fieldName = "ccrLocalClusterConnectionConfigurations",
-				fieldValue = '''localhost:8080,localcluster
-localhost:9080,localcluster''');
+				fieldValue = "${elasticsearchHostname}:8080,localcluster",
+				repeatableFieldNumber = 1);
+
+			FormFields.addRepeatableField(
+				fieldName = "ccrLocalClusterConnectionConfigurations",
+				repeatableFieldNumber = 1);
+
+			FormFields.editRepeatableTextMultiline(
+				fieldName = "ccrLocalClusterConnectionConfigurations",
+				fieldValue = "${elasticsearchHostname}:9080,localcluster",
+				repeatableFieldNumber = 2);
 		}
 		else {
 			FormFields.editTextMultiline(
 				fieldName = "ccrLocalClusterConnectionConfigurations",
-				fieldValue = "localhost:8080,localcluster");
+				fieldValue = "${elasticsearchHostname}:8080,localcluster");
 		}
 
 		SystemSettings.saveConfiguration();
@@ -67,7 +83,7 @@ localhost:9080,localcluster''');
 
 		echo("##");
 
-		var localClusterIndexList = JSONCurlUtil.get("http://localhost:9202/_cat/indices?h=index");
+		var localClusterIndexList = JSONCurlUtil.get("http://${elasticsearchHostname}:9202/_cat/indices?h=index");
 
 		echo("##");
 
@@ -75,7 +91,7 @@ localhost:9080,localcluster''');
 
 		echo("##");
 
-		var remoteClusterIndexList = JSONCurlUtil.get("http://localhost:9200/_cat/indices?h=index");
+		var remoteClusterIndexList = JSONCurlUtil.get("http://${elasticsearchHostname}:9200/_cat/indices?h=index");
 
 		var remoteClusterIndexList = RegexUtil.replace(${remoteClusterIndexList}, "\n", ",");
 
@@ -91,7 +107,7 @@ localhost:9080,localcluster''');
 
 		echo("##");
 
-		var localClusterHealth = JSONCurlUtil.get("http://localhost:9202/_cluster/health?pretty");
+		var localClusterHealth = JSONCurlUtil.get("http://${elasticsearchHostname}:9202/_cluster/health?pretty");
 
 		if (contains(${localClusterHealth}, "red")) {
 			echo("##");
@@ -100,7 +116,7 @@ localhost:9080,localcluster''');
 
 			echo("##");
 
-			JSONCurlUtil.get("http://localhost:9202/_cat/indices?pretty");
+			JSONCurlUtil.get("http://${elasticsearchHostname}:9202/_cat/indices?pretty");
 
 			fail("A follower index is in red status.");
 		}

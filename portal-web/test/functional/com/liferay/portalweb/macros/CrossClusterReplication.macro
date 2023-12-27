@@ -34,7 +34,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro setupCrossClusterReplication() {
+	macro setupCrossClusterReplication(portalCluster = null) {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
@@ -47,9 +47,19 @@ definition {
 
 		FormFields.enableCheckbox(fieldName = "ccrEnabled");
 
-		FormFields.editTextMultiline(
-			fieldName = "ccrLocalClusterConnectionConfigurations",
-			fieldValue = "localhost:8080,localcluster");
+		if (${portalCluster} == "true") {
+			FormFields.editTextMultiline(
+				fieldName = "ccrLocalClusterConnectionConfigurations",
+				fieldValue = '''
+	localhost:8080,localcluster
+	localhost:9080,localcluster
+				''');
+		}
+		else {
+			FormFields.editTextMultiline(
+				fieldName = "ccrLocalClusterConnectionConfigurations",
+				fieldValue = "localhost:8080,localcluster");
+		}
 
 		SystemSettings.saveConfiguration();
 

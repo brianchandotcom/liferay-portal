@@ -43,6 +43,7 @@ public class SearchAdminDisplayContextTest {
 		_setUpLanguage();
 		setUpPortalUtil();
 		_setUpThemeDisplay();
+
 		_setUpRenderRequest();
 	}
 

@@ -10,6 +10,7 @@ export default {
 	'access-console': 'Access Console',
 	'activation-status': 'Activation Status',
 	'add-packages': 'Add Package(s)',
+	'address': 'Address',
 	'an-administrator-of-the-marketplace-will-review-your-request-shortly-if-you-have-questions-regarding-your-submission-please-email':
 		'An administrator of the Marketplace will review your request shortly. If you have questions regarding your submission, please email',
 	'an-app-build-is-your-compiled-or-non-compiled-code-submitted-on-behalf-of-your-account-to-the-marketplace-once-submitted-it-will-be-reviewed-and-tested-by-our-marketplace-administrators-for-approval-in-the-marketplace':
@@ -23,6 +24,7 @@ export default {
 	'back-to-my-apps': 'Back to My Apps',
 	'becoming-a-liferay-marketplace-publisher':
 		'Becoming a Liferay Marketplace publisher',
+	'billing-address': 'Billing Address',
 	'by-requesting-a-publisher-account-you-agree-to-the':
 		'By requesting a Publisher account, you agree to the',
 	'cancel': 'Cancel',
@@ -37,6 +39,7 @@ export default {
 	'confirm-deactivation-terms': 'Confirm Deactivation Terms',
 	'content-policy': 'Content policy',
 	'continue': 'Continue',
+	'coupon-code': 'Coupon Code',
 	'create-a-cloud-app-using-client-extensions':
 		'Create a Cloud app using client extensions.',
 	'create-a-dxp-app-using-a-plugin-package':
@@ -44,6 +47,8 @@ export default {
 	'create-license-key': 'Create License Key',
 	'create-new-licenses-and-they-will-show-up-here':
 		'Create new licenses and they will show up here.',
+	'customer-account': 'Cutomer Account',
+	'customer-roject': 'Customer Project',
 	'deactivate': 'Deactivate',
 	'description': 'Description',
 	'details': 'Details',
@@ -89,6 +94,7 @@ export default {
 	'key-type': 'Key Type',
 	'last-name': 'Last Name',
 	'learn-more': 'Learn More',
+	'license-price': 'License Price',
 	'licenses': 'Licenses',
 	'liferay-learn': 'Liferay Learn',
 	'liferay-s': 'Liferay’s',
@@ -107,6 +113,8 @@ export default {
 		'Only JAR, WAR files are allowed. Max file size is 500MB.',
 	'only-zip-files-are-allowed-max-file-size-is-500-mb':
 		'Only ZIP files are allowed. Max file size is 500MB',
+	'order-date': 'Order Date',
+	'order-id': 'Order ID',
 	'phone': 'Phone',
 	'phone-number': 'Phone Number',
 	'please-be-sure-to-specify-liferay-compatibility-through-the-appropriate-properties-or-xml-files-in-your-plugin':
@@ -116,6 +124,9 @@ export default {
 	'publish-apps-to-the-liferay-marketplace':
 		'Publish apps to the Liferay Marketplace',
 	'publisher-account-request': 'Publisher Account Request.',
+	'purchase-order-number': 'Purchase Order Number',
+	'purchased-by': 'Purchased by',
+	'qty': 'Qty',
 	'remove-a-version': 'Remove a Version',
 	'request-a-marketplace-publisher-account':
 		'Request a Marketplace Publisher Account',
@@ -138,6 +149,10 @@ export default {
 	'start-date': 'Start Date',
 
 	'status': 'Status',
+	'subtotal': 'Subtotal',
+	'subtotal-discount': 'Subtotal Discount',
+	'summary': 'Summary',
+	'tax-vat': 'Tax/VAT',
 	'terms-of-service': 'Terms of Service',
 	'thank-you-for-your': 'Thank you for your',
 	'the-app-submission-is-compatible-with-liferay-experience-cloud-and':
@@ -166,6 +181,8 @@ export default {
 		'This key is expired and cannot be downloaded.',
 	'this-order-must-be-completed-before-downloading-this-app.':
 		'This order must be completed before downloading this app.',
+	'total': 'Total',
+	'type': 'Type',
 	'unable-to-download-your-license-file-please-try-again-and-or-contact-support-via-the-manage-menu-on-the-dashboard':
 		'Unable to download your license file.  Please try again and/or contact support via the manage menu on the dashboard.',
 	'upload-liferay-plugin-packages': 'Upload Liferay Plugin Packages',

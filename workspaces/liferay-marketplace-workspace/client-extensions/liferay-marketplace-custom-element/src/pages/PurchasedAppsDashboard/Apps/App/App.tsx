@@ -11,6 +11,8 @@ import classNames from 'classnames';
 import {ReactNode} from 'react';
 
 import {DetailedCard} from '../../../../components/DetailedCard/DetailedCard';
+import i18n from '../../../../i18n';
+import formatLocaleCurrency from '../../../../utils/formatLocaleCurrency';
 import getProductPriceModel from '../../../GetAppPage/utils/getProductPriceModel';
 import {formatDate} from '../../../PublishedAppsDashboard/PublishedDashboardPageUtil';
 
@@ -30,33 +32,43 @@ const App = () => {
 			<div className="app-details-body-container">
 				<DetailedCard
 					cardIconAltText="Details Icon"
-					cardTitle="Details"
+					cardTitle={i18n.translate('details')}
 					clayIcon="order-form-tag"
 				>
 					<div className="mb-2 mt-7 row">
-						<h5 className="col-6">Order ID</h5>
+						<h5 className="col-6">{i18n.translate('order-id')}</h5>
 						<p className="col">{orderId}</p>
 					</div>
 					<div className="mb-2 row">
-						<h5 className="col-6">Order Date</h5>
+						<h5 className="col-6">
+							{i18n.translate('order-date')}
+						</h5>
 						<p className="col">
 							{formatDate(placedOrder.createDate)}
 						</p>
 					</div>
 					<div className="mb-2 row">
-						<h5 className="col-6">Customer Account</h5>
+						<h5 className="col-6">
+							{i18n.translate('customer-account')}
+						</h5>
 						<p className="col">{placedOrder.account}</p>
 					</div>
 					<div className="mb-2 row">
-						<h5 className="col-6">Customer Project</h5>
+						<h5 className="col-6">
+							{i18n.translate('customer-roject')}
+						</h5>
 						<p className="col">{projectNameField as ReactNode}</p>
 					</div>
 					<div className="mb-2 row">
-						<h5 className="col-6">Purchased by</h5>
+						<h5 className="col-6">
+							{i18n.translate('purchased-by')}
+						</h5>
 						<p className="col">{placedOrder.author}</p>
 					</div>
 					<div className="row">
-						<h5 className="col-6">Purchase Order Number</h5>
+						<h5 className="col-6">
+							{i18n.translate('Purchase Order Number')}
+						</h5>
 						<p className="col">
 							{placedOrder.purchaseOrderNumber || '-'}
 						</p>
@@ -64,13 +76,13 @@ const App = () => {
 				</DetailedCard>
 				<DetailedCard
 					cardIconAltText="Summary Icon"
-					cardTitle="Summary"
+					cardTitle={i18n.translate('summary')}
 					clayIcon="shopping-cart"
 				>
 					{isPaidApp && (
 						<div className="justify-content-center mb-2 mt-4 row">
-							<h5 className="col-3">Type</h5>
-							<h5 className="col-1">Qty</h5>
+							<h5 className="col-3">{i18n.translate('type')}</h5>
+							<h5 className="col-1">{i18n.translate('Qty')}</h5>
 						</div>
 					)}
 					<div
@@ -78,7 +90,9 @@ const App = () => {
 							'mt-6': !isPaidApp,
 						})}
 					>
-						<h5 className="col">License Price</h5>
+						<h5 className="col">
+							{i18n.translate('license-price')}
+						</h5>
 						<div className="col-8">
 							{placedOrder.placedOrderItems.map(
 								(order: PlacedOrderItems) => {
@@ -105,7 +119,10 @@ const App = () => {
 												</>
 											)}
 											<p className="col-4 text-right">
-												{order.price.priceFormatted}
+												{formatLocaleCurrency(
+													order.quantity *
+														order.price.price
+												)}
 											</p>
 										</div>
 									);
@@ -114,45 +131,55 @@ const App = () => {
 						</div>
 					</div>
 					<div className="justify-content-between mb-2 row">
-						<h5 className="col">Subtotal</h5>
+						<h5 className="col">{i18n.translate('subtotal')}</h5>
 						<p className="col-3 text-right">
-							{placedOrder.summary.subtotalFormatted || ''}
+							{formatLocaleCurrency(
+								placedOrder.summary.subtotal
+							) || ''}
 						</p>
 					</div>
 					<div className="justify-content-between mb-2 row">
-						<h5 className="col">Subtotal Discount</h5>
+						<h5 className="col">
+							{i18n.translate('subtotal-discount')}
+						</h5>
 						<p className="col-3 text-right">
-							{placedOrder.summary.totalDiscountValueFormatted ||
-								''}
+							{formatLocaleCurrency(
+								placedOrder.summary.totalDiscountValue
+							) || ''}
 						</p>
 					</div>
 					<div className="justify-content-between mb-2 row">
-						<h5 className="col">Coupon Code</h5>
+						<h5 className="col">{i18n.translate('coupon-code')}</h5>
 						<p className="col-3 text-right">
 							{placedOrder.couponCode || '-'}
 						</p>
 					</div>
 					<div className="justify-content-between mb-2 row">
-						<h5 className="col">Tax/VAT</h5>
+						<h5 className="col">{i18n.translate('tax-vat')}</h5>
 						<p className="col-3 text-right">
-							{placedOrder.summary.taxValueFormatted || ''}
+							{formatLocaleCurrency(
+								placedOrder.summary.taxValue
+							) || ''}
 						</p>
 					</div>
 					<div className="justify-content-between row">
-						<h5 className="col">Total</h5>
+						<h5 className="col">{i18n.translate('total')}</h5>
 						<p className="col-3 text-right">
-							{placedOrder.summary.totalFormatted || ''}
+							{formatLocaleCurrency(placedOrder.summary.total) ||
+								''}
 						</p>
 					</div>
 				</DetailedCard>
 				{placedOrder.placedOrderBillingAddress && (
 					<DetailedCard
 						cardIconAltText="Location Icon"
-						cardTitle="Address"
+						cardTitle={i18n.translate('address')}
 						clayIcon="geolocation"
 					>
 						<div className="mb-2 mt-4 row">
-							<h5 className="col-6">Billing Address</h5>
+							<h5 className="col-6">
+								{i18n.translate('billing-address')}
+							</h5>
 							<div className="col-6">
 								<p>
 									{placedOrder.placedOrderBillingAddress

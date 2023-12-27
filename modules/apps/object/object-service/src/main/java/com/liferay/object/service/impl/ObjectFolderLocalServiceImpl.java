@@ -109,7 +109,7 @@ public class ObjectFolderLocalServiceImpl
 			objectFolder.isDefault()) {
 
 			throw new UnsupportedOperationException(
-				"Uncategorized cannot be deleted");
+				"Default cannot be deleted");
 		}
 
 		objectFolder = objectFolderPersistence.remove(objectFolder);

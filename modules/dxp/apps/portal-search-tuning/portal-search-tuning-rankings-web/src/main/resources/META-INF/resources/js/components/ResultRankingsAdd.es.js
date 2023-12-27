@@ -3,13 +3,16 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayBadge from '@clayui/badge';
 import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
-import {LearnMessage, LearnResourcesContext} from 'frontend-js-components-web';
+import {
+	FeatureIndicator,
+	LearnMessage,
+	LearnResourcesContext,
+} from 'frontend-js-components-web';
 import {navigate} from 'frontend-js-web';
 import React, {useContext, useEffect, useRef, useState} from 'react';
 
@@ -211,12 +214,9 @@ function ResultRankingsAdd({cancelURL, fetchSitesURL, formName}) {
 										{SCOPE_INFO[item].label}
 
 										{SCOPE_INFO[item].showBetaBadge && (
-											<ClayBadge
-												className="c-ml-1 text-uppercase"
-												displayType="info"
-												label="beta"
-												translucent
-											/>
+											<span className="c-ml-1">
+												<FeatureIndicator type="beta" />
+											</span>
 										)}
 									</div>
 

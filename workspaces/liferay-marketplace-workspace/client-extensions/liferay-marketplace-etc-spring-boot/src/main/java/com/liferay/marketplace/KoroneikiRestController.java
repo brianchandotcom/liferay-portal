@@ -11,9 +11,12 @@ import com.liferay.headless.admin.user.client.dto.v1_0.PostalAddress;
 import com.liferay.headless.admin.user.client.pagination.Page;
 import com.liferay.headless.admin.user.client.resource.v1_0.AccountResource;
 import com.liferay.headless.admin.user.client.resource.v1_0.PostalAddressResource;
+import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Product;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.ProductSpecification;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Sku;
+import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.SkuOption;
 import com.liferay.headless.commerce.admin.catalog.client.pagination.Pagination;
+import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.ProductResource;
 import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.ProductSpecificationResource;
 import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.SkuResource;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Order;
@@ -27,6 +30,7 @@ import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchaseView
 import com.liferay.osb.koroneiki.phloem.rest.client.resource.v1_0.ProductPurchaseResource;
 import com.liferay.osb.koroneiki.phloem.rest.client.resource.v1_0.ProductPurchaseViewResource;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.net.URL;
 
@@ -138,20 +142,11 @@ public class KoroneikiRestController extends BaseRestController {
 				);
 			}
 
-			String dxpLicenseName = orderItem.getSkuExternalReferenceCode();
+			String licenseUsageType = _getLicenseUsageType(
+				orderItem.getOptions());
 
-			Map<String, Boolean> dxpLicenseUsageTypePropertiesMap =
-				new HashMap<>();
-
-			_populateDXPLicenseUsageTypePropertiesMap(
-				dxpLicenseUsageTypePropertiesMap, orderItem.getOptions());
-
-			for (String dxpLicenseUsageType : _DXP_LICENSE_USAGE_TYPES) {
-				if (dxpLicenseUsageTypePropertiesMap.get(dxpLicenseUsageType)) {
-					dxpLicenseName = dxpLicenseUsageType;
-
-					break;
-				}
+			if (licenseUsageType == null) {
+				licenseUsageType = orderItem.getSkuExternalReferenceCode();
 			}
 
 			int provisionedCount = 0;
@@ -182,7 +177,7 @@ public class KoroneikiRestController extends BaseRestController {
 				).put(
 					"endDate", endDate
 				).put(
-					"name", dxpLicenseName
+					"name", licenseUsageType
 				).put(
 					"perpetual", productPurchase.getPerpetual()
 				).put(
@@ -310,6 +305,122 @@ public class KoroneikiRestController extends BaseRestController {
 		catch (Exception exception) {
 			_log.error("Unable to create account product purchase", exception);
 		}
+	}
+
+	@PostMapping("sync/{productId}")
+	public void syncKoroneikiProducts(
+			@AuthenticationPrincipal Jwt jwt,
+			@PathVariable("productId") long productId)
+		throws Exception {
+
+		_initResourceBuilders();
+
+		Product product = _productResource.getProduct(productId);
+
+		for (Sku sku :
+				_skuResource.getProductIdSkusPage(
+					product.getProductId(), Pagination.of(1, 10)
+				).getItems()) {
+
+			String licenseUsageType = _getLicenseUsageType(sku.getSkuOptions());
+
+			if (sku.getExternalReferenceCode(
+				).startsWith(
+					"KOR-"
+				) || (licenseUsageType == null)) {
+
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						"Skipping product sync for sku " + sku.toString());
+				}
+
+				continue;
+			}
+
+			String productName = product.getName(
+			).get(
+				"en_US"
+			);
+
+			String name = productName + " - " + licenseUsageType;
+
+			com.liferay.osb.koroneiki.phloem.rest.client.pagination.Page
+				<com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Product>
+					productsPage = _koroneikiProductResource.getProductsPage(
+						"", "name eq '" + name + "'",
+						com.liferay.osb.koroneiki.phloem.rest.client.pagination.
+							Pagination.of(1, 1),
+						"");
+
+			com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Product
+				koroneikiProduct = productsPage.fetchFirstItem();
+
+			if (koroneikiProduct == null) {
+				koroneikiProduct =
+					new com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.
+						Product();
+
+				koroneikiProduct.setProperties(
+					HashMapBuilder.put(
+						"display-group-name", productName
+					).put(
+						"display-name", name
+					).put(
+						"licenses", "true"
+					).put(
+						"type", "marketplace-app"
+					).build());
+				koroneikiProduct.setName(name);
+
+				_koroneikiProductResource.postProduct(
+					jwt.getClaim("username"), jwt.getClaim("sub"),
+					koroneikiProduct);
+
+				if (_log.isInfoEnabled()) {
+					_log.info("Created koroneiki product " + koroneikiProduct);
+				}
+			}
+
+			sku.setExternalReferenceCode(koroneikiProduct.getKey());
+
+			_skuResource.patchSku(sku.getId(), sku);
+		}
+	}
+
+	private String _getLicenseUsageType(SkuOption[] skuOptions) {
+		for (SkuOption skuOption : skuOptions) {
+			if (!Objects.equals(skuOption.getKey(), "dxp-license-usage-type")) {
+				continue;
+			}
+
+			String value = skuOption.getValue();
+
+			return value.substring(
+				0, 1
+			).toUpperCase() + value.substring(1);
+		}
+
+		return null;
+	}
+
+	private String _getLicenseUsageType(String options) {
+		JSONArray optionsJSONArray = new JSONArray(options);
+
+		for (int i = 0; i < optionsJSONArray.length(); i++) {
+			JSONObject jsonObject = optionsJSONArray.getJSONObject(i);
+
+			if (!Objects.equals(
+					jsonObject.getString("key"), "dxp-license-usage-type")) {
+
+				continue;
+			}
+
+			JSONArray jsonArray = jsonObject.getJSONArray("value");
+
+			return jsonArray.getString(0);
+		}
+
+		return null;
 	}
 
 	private String _getOAuthAccessToken() throws Exception {
@@ -452,6 +563,22 @@ public class KoroneikiRestController extends BaseRestController {
 			liferayDXPURL
 		).build();
 
+		_koroneikiProductResource =
+			com.liferay.osb.koroneiki.phloem.rest.client.resource.v1_0.
+				ProductResource.builder(
+				).header(
+					"API_TOKEN", _koroneikiAuthToken
+				).endpoint(
+					liferayMarketplaceKoroneikiAuthURL
+				).build();
+
+		_productResource = ProductResource.builder(
+		).header(
+			HttpHeaders.AUTHORIZATION, oAuthAccessToken
+		).endpoint(
+			liferayDXPURL
+		).build();
+
 		_productPurchaseResource = ProductPurchaseResource.builder(
 		).header(
 			"API_TOKEN", _koroneikiAuthToken
@@ -481,48 +608,12 @@ public class KoroneikiRestController extends BaseRestController {
 		).build();
 	}
 
-	private void _populateDXPLicenseUsageTypePropertiesMap(
-		Map<String, Boolean> map, String options) {
-
-		JSONArray optionsJSONArray = new JSONArray(options);
-
-		for (int i = 0; i < optionsJSONArray.length(); i++) {
-			JSONObject jsonObject = optionsJSONArray.getJSONObject(i);
-
-			if (!Objects.equals(
-					jsonObject.getString("key"), "dxp-license-usage-type")) {
-
-				continue;
-			}
-
-			JSONArray jsonArray = jsonObject.getJSONArray("value");
-
-			for (int j = 0; j < jsonArray.length(); j++) {
-				for (String dxpLicenseUsageType : _DXP_LICENSE_USAGE_TYPES) {
-					if (!map.containsKey(dxpLicenseUsageType) ||
-						!map.get(dxpLicenseUsageType)) {
-
-						map.put(
-							dxpLicenseUsageType,
-							Objects.equals(
-								jsonArray.getString(j), dxpLicenseUsageType));
-					}
-				}
-			}
-		}
-	}
-
 	private void _postAccountAccountKeyProductPurchase(
 			Account account, Jwt jwt, OrderItem orderItem,
 			Map<String, String> productSpecificationsMap)
 		throws Exception {
 
 		ProductPurchase productPurchase = new ProductPurchase();
-
-		Map<String, Boolean> dxpLicenseUsageTypePropertiesMap = new HashMap<>();
-
-		_populateDXPLicenseUsageTypePropertiesMap(
-			dxpLicenseUsageTypePropertiesMap, orderItem.getOptions());
 
 		ZonedDateTime zonedDateTime = ZonedDateTime.now();
 
@@ -533,7 +624,9 @@ public class KoroneikiRestController extends BaseRestController {
 				1
 			).toInstant();
 
-			if (dxpLicenseUsageTypePropertiesMap.get("trial")) {
+			if (Objects.equals(
+					_getLicenseUsageType(orderItem.getOptions()), "trial")) {
+
 				instant = zonedDateTime.plusMonths(
 					1
 				).toInstant();
@@ -662,10 +755,6 @@ public class KoroneikiRestController extends BaseRestController {
 
 	private static final int _COMMERCE_ORDER_STATUS_PROCESSING = 10;
 
-	private static final String[] _DXP_LICENSE_USAGE_TYPES = {
-		"developer", "standard", "trial"
-	};
-
 	private static final Log _log = LogFactory.getLog(
 		KoroneikiRestController.class);
 
@@ -687,6 +776,9 @@ public class KoroneikiRestController extends BaseRestController {
 	@Value("${liferay.marketplace.koroneiki.auth.url}")
 	private String _koroneikiAuthURL;
 
+	private
+		com.liferay.osb.koroneiki.phloem.rest.client.resource.v1_0.
+			ProductResource _koroneikiProductResource;
 	private String _oauthAccessToken;
 	private long _oauthExpirationMillis;
 	private OrderItemResource _orderItemResource;
@@ -694,6 +786,7 @@ public class KoroneikiRestController extends BaseRestController {
 	private PostalAddressResource _postalAddressResource;
 	private ProductPurchaseResource _productPurchaseResource;
 	private ProductPurchaseViewResource _productPurchaseViewResource;
+	private ProductResource _productResource;
 	private ProductSpecificationResource _productSpecificationResource;
 	private SkuResource _skuResource;
 

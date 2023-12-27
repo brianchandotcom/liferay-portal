@@ -16,6 +16,7 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.base.JournalFolderServiceBaseImpl;
 import com.liferay.journal.service.persistence.JournalArticleFinder;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
@@ -422,22 +423,26 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 				JournalFolderConstants.
 					RESTRICTION_TYPE_DDM_STRUCTURES_AND_WORKFLOW) {
 
-			return _ddmStructureLinkService.getStructureLinkStructures(
-				_classNameLocalService.getClassNameId(JournalFolder.class),
-				folderId, groupIds, keywords, JournalArticle.class.getName(),
-				start, end,
-				_getDDMStructureLinkOrderByComparator(orderByComparator));
+			return TransformUtil.transform(
+				_ddmStructureLinkService.getStructureLinkStructures(
+					_classNameLocalService.getClassNameId(JournalFolder.class),
+					folderId, groupIds, keywords,
+					JournalArticle.class.getName(), start, end,
+					_getDDMStructureLinkOrderByComparator(orderByComparator)),
+				structureLink -> structureLink.getStructure());
 		}
 
 		folderId = journalFolderLocalService.getOverridedDDMStructuresFolderId(
 			folderId);
 
 		if (folderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			return _ddmStructureLinkService.getStructureLinkStructures(
-				_classNameLocalService.getClassNameId(JournalFolder.class),
-				folderId, groupIds, keywords, JournalArticle.class.getName(),
-				start, end,
-				_getDDMStructureLinkOrderByComparator(orderByComparator));
+			return TransformUtil.transform(
+				_ddmStructureLinkService.getStructureLinkStructures(
+					_classNameLocalService.getClassNameId(JournalFolder.class),
+					folderId, groupIds, keywords,
+					JournalArticle.class.getName(), start, end,
+					_getDDMStructureLinkOrderByComparator(orderByComparator)),
+				structureLink -> structureLink.getStructure());
 		}
 
 		return _ddmStructureService.search(

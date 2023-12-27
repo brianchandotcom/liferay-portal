@@ -70,7 +70,7 @@ definition {
 
 		ObjectAdmin.openSubmissions();
 
-		Click(locator1 = "AppBuilder#SEARCH_FILTER_AND_ORDER_MENU");
+		Click(locator1 = "ManagementBar#FILTER");
 
 		Click(
 			key_selectOption = "Completed",
@@ -86,7 +86,7 @@ definition {
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Submissions");
 
-		Click(locator1 = "AppBuilder#SEARCH_FILTER_AND_ORDER_MENU");
+		Click(locator1 = "ManagementBar#FILTER");
 
 		Click(
 			key_selectOption = "Completed",

@@ -166,7 +166,7 @@ definition {
 
 		KaleoFormsNewSubmissions.viewOrderTable(fieldNameList = "Process B,Process A");
 
-		ManagementBar.setFilterAndOrder(filterBy = "Create Date");
+		ManagementBar.setFilterAndOrder(orderBy = "Create Date");
 
 		KaleoFormsNewSubmissions.viewOrderTable(fieldNameList = "Process A,Process B");
 	}
@@ -190,7 +190,7 @@ definition {
 
 		KaleoFormsAdmin.saveProcessRecord();
 
-		ManagementBar.setFilterAndOrder(filterBy = "Modified Date");
+		ManagementBar.setFilterAndOrder(orderBy = "Modified Date");
 
 		KaleoFormsNewSubmissions.viewOrderTable(fieldNameList = "Process A,Process B");
 
@@ -290,7 +290,7 @@ definition {
 
 		KaleoFormsAdmin.saveProcessRecord();
 
-		ManagementBar.setFilterAndOrder(filterBy = "Create Date");
+		ManagementBar.setFilterAndOrder(orderBy = "Create Date");
 
 		KaleoFormsNewSubmissions.viewOrderTable(fieldNameList = "Process A,Process B");
 

@@ -83,12 +83,21 @@ definition {
 			userLastName = ${userName},
 			userScreenName = ${userName});
 
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = ${userEmail});
+		task ("Sign in as new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "${userEmail}",
+				userLoginFullName = "${userName} ${userName}");
+		}
 
-		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
+		task ("Go to the Home Page") {
+			Navigator.openURL();
+
+			ACUtils.waitForSendingRequest();
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
 
 		ACUtils.launchAC();
 
@@ -130,12 +139,21 @@ definition {
 			userLastName = ${userName},
 			userScreenName = ${userName});
 
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = ${userEmail});
+		task ("Sign in as new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "${userEmail}",
+				userLoginFullName = "${userName} ${userName}");
+		}
 
-		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
+		task ("Go to the Home Page") {
+			Navigator.openURL();
+
+			ACUtils.waitForSendingRequest();
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
 
 		ACUtils.launchAC();
 

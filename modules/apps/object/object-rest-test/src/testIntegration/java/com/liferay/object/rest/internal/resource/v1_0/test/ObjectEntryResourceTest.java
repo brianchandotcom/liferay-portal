@@ -5336,20 +5336,14 @@ public class ObjectEntryResourceTest {
 	public void testPostCustomObjectEntryWithNonexistentNestedCustomObjectEntries()
 		throws Exception {
 
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				"com.liferay.portal.vulcan.internal.jaxrs.exception.mapper." +
-					"WebApplicationExceptionMapper",
-				LoggerTestUtil.WARN)) {
+		_objectRelationship1 =
+			ObjectRelationshipTestUtil.addObjectRelationship(
+				_objectDefinition1, _objectDefinition2,
+				TestPropsValues.getUserId(),
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
-			_objectRelationship1 =
-				ObjectRelationshipTestUtil.addObjectRelationship(
-					_objectDefinition1, _objectDefinition2,
-					TestPropsValues.getUserId(),
-					ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
-
-			_testPostCustomObjectEntryWithNonexistentNestedCustomObjectEntriesInManyToOneRelationship(
-				_objectDefinition2.getRESTContextPath(), _objectRelationship1);
-		}
+		_testPostCustomObjectEntryWithNonexistentNestedCustomObjectEntriesInManyToOneRelationship(
+			_objectDefinition2.getRESTContextPath(), _objectRelationship1);
 	}
 
 	@Test

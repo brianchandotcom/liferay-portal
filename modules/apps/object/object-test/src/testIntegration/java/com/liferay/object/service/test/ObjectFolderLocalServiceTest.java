@@ -198,8 +198,7 @@ public class ObjectFolderLocalServiceTest {
 	@Test
 	public void testDeleteObjectFolder() throws Exception {
 		AssertUtils.assertFailure(
-			UnsupportedOperationException.class,
-			"Uncategorized cannot be deleted",
+			UnsupportedOperationException.class, "Default cannot be deleted",
 			() -> _objectFolderLocalService.deleteObjectFolder(
 				_defaultObjectFolder.getObjectFolderId()));
 

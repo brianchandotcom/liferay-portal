@@ -523,7 +523,7 @@ definition {
 		}
 
 		if (isSet(suggestionReceived)) {
-			MenuItem.click(menuItem = "Suggestion Received Email");
+			MenuBar.click(menuBar = "Suggestion Received Email");
 
 			SelectFrame.selectFrameNoLoading(locator1 = "KnowledgeBaseConfiguration#SUGGESTION_RECEIVED_EMAIL_EDITOR_IFRAME");
 
@@ -537,7 +537,7 @@ definition {
 		}
 
 		if (isSet(suggestionInProgress)) {
-			MenuItem.click(menuItem = "Suggestion in Progress Email");
+			MenuBar.click(menuBar = "Suggestion in Progress Email");
 
 			SelectFrame.selectFrameNoLoading(locator1 = "KnowledgeBaseConfiguration#SUGGESTION_IN_PROGRESS_EMAIL_EDITOR_IFRAME");
 
@@ -551,7 +551,7 @@ definition {
 		}
 
 		if (isSet(suggestionResolved)) {
-			MenuItem.click(menuItem = "Suggestion Resolved Email");
+			MenuBar.click(menuBar = "Suggestion Resolved Email");
 
 			SelectFrame.selectFrameNoLoading(locator1 = "KnowledgeBaseConfiguration#SUGGESTION_RESOLVED_EMAIL_EDITOR_IFRAME");
 

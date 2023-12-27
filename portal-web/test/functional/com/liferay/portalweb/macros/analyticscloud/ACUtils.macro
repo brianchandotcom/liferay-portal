@@ -808,6 +808,14 @@ definition {
 			}
 		}
 
+		WaitForPageLoad();
+
+		if (IsElementNotPresent(locator1 = "ACWorkspace#FARO_DEMO_WORKSPACE")) {
+			ACLogin.loginAs(
+					emailAddress = ${emailAddress},
+					password = "test1");
+		}
+
 		if (!(isSet(workspaceName))) {
 			ACWorkspace.openWorkspace();
 		}

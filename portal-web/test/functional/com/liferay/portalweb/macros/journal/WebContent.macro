@@ -2323,46 +2323,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewEmailConfigurationCP(webContentWorkflowEnabled = null) {
-		SiteAdmin.gotoPortletConfiguration();
-
-		Navigator.gotoNavTab(navTab = "Email From");
-
-		AssertTextEquals(
-			locator1 = "WCConfiguration#NAVIGATION_WEB_CONTENT_ADDED_EMAIL",
-			value1 = "Web Content Added Email");
-
-		AssertTextEquals(
-			locator1 = "WCConfiguration#NAVIGATION_WEB_CONTENT_REVIEW_EMAIL",
-			value1 = "Web Content Review Email");
-
-		AssertTextEquals(
-			locator1 = "WCConfiguration#NAVIGATION_WEB_CONTENT_UPDATED_EMAIL",
-			value1 = "Web Content Updated Email");
-
-		if (${webContentWorkflowEnabled} == "true") {
-			AssertTextEquals(
-				locator1 = "WCConfiguration#NAVIGATION_WEB_CONTENT_DENIED_EMAIL",
-				value1 = "Web Content Denied Email");
-
-			AssertTextEquals(
-				locator1 = "WCConfiguration#NAVIGATION_WEB_CONTENT_GRANTED_EMAIL",
-				value1 = "Web Content Granted Email");
-
-			AssertTextEquals(
-				locator1 = "WCConfiguration#NAVIGATION_WEB_CONTENT_REQUESTED_EMAIL",
-				value1 = "Web Content Requested Email");
-		}
-		else {
-			AssertElementNotPresent(locator1 = "WCConfiguration#NAVIGATION_WEB_CONTENT_DENIED_EMAIL");
-
-			AssertElementNotPresent(locator1 = "WCConfiguration#NAVIGATION_WEB_CONTENT_GRANTED_EMAIL");
-
-			AssertElementNotPresent(locator1 = "WCConfiguration#NAVIGATION_WEB_CONTENT_REQUESTED_EMAIL");
-		}
-	}
-
-	@summary = "Default summary"
 	macro viewEntryAsWorkflowAsset(webContentTitle = null, webContentContent = null) {
 		SiteAdmin.viewPortletTitle(portletTitle = ${webContentTitle});
 

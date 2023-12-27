@@ -1,13 +1,6 @@
 definition {
 
 	@summary = "Default summary"
-	macro gotoPortletConfiguration() {
-		LexiconEntry.gotoHeaderMenuItem(menuItem = "Configuration");
-
-		SelectFrame(locator1 = "IFrame#CONFIGURATION");
-	}
-
-	@summary = "Default summary"
 	macro viewPortletTitle(portletTitle = null) {
 		var key_portletTitle = ${portletTitle};
 

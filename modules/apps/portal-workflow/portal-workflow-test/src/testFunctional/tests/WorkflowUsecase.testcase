@@ -1054,36 +1054,6 @@ definition {
 		AssertElementNotPresent(locator1 = "xpath=(//div[contains(@id,'workflowTasksSearchContainer')]//tr[@data-qa-id])[6]");
 	}
 
-	@priority = 3
-	test ViewWebContentConfigurationCP {
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
-
-		WebContent.viewEmailConfigurationCP(webContentWorkflowEnabled = "false");
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
-
-		Workflow.configureWCWorkflowViaFolderInfo(workflowDefinition = "Single Approver");
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
-
-		WebContent.viewEmailConfigurationCP(webContentWorkflowEnabled = "true");
-	}
-
 	@description = "This is a use case for LPS-59108."
 	@priority = 4
 	test ViewWorkflowConfigurationScope {

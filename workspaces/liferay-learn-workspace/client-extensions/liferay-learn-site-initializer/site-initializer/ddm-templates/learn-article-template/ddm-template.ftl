@@ -337,7 +337,7 @@
 					product = product.getData()
 				/>
 
-				<#if navigationMenuItems[product].title?has_content>
+				<#if navigationMenuItems[product]?has_content && navigationMenuItems[product].title?has_content>
 					<div class="dropdown">
 						<div
 							class="adt-nav-item bg-color-1 br-5 ml-0 w-100"

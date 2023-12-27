@@ -205,10 +205,11 @@ public class CIForwardProcessor {
 			forwardedPullRequestURL);
 
 		try {
-			for (String suiteTestResultGitHubComment :
+			for (PullRequest.Comment suiteTestResultGitHubComment :
 					_getSuiteTestResultGitHubComments()) {
 
-				forwardedPullRequest.addComment(suiteTestResultGitHubComment);
+				forwardedPullRequest.addComment(
+					suiteTestResultGitHubComment.getBody());
 			}
 		}
 		catch (IOException ioException) {
@@ -612,7 +613,7 @@ public class CIForwardProcessor {
 		return sb.toString();
 	}
 
-	private List<String> _getSuiteTestResultGitHubComments()
+	private List<PullRequest.Comment> _getSuiteTestResultGitHubComments()
 		throws IOException {
 
 		List<String> requiredCompletedTestSuiteNames = Arrays.asList(
@@ -645,14 +646,7 @@ public class CIForwardProcessor {
 
 		Collections.sort(foundComments);
 
-		List<String> suiteTestResultGitHubComments = new ArrayList<>(
-			foundComments.size());
-
-		for (PullRequest.Comment foundComment : foundComments) {
-			suiteTestResultGitHubComments.add(foundComment.getBody());
-		}
-
-		return suiteTestResultGitHubComments;
+		return foundComments;
 	}
 
 	private String _getUnsuccessfulCommentBody() throws IOException {

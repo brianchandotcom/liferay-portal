@@ -15,7 +15,6 @@ import com.liferay.portal.kernel.messaging.DestinationConfiguration;
 import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -77,9 +76,6 @@ public class ScheduledPublishMessageListener extends BaseMessageListener {
 
 	@Reference
 	private DestinationFactory _destinationFactory;
-
-	@Reference
-	private ModelResourcePermission<CTCollection> _modelResourcePermission;
 
 	private ServiceRegistration<Destination> _serviceRegistration;
 

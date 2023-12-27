@@ -46,7 +46,6 @@ import javax.portlet.PortletPreferences;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -246,18 +245,6 @@ public class PortletDocumentFragmentEntryProcessor
 		return true;
 	}
 
-	private Document _getDocument(String html) {
-		Document document = Jsoup.parseBodyFragment(html);
-
-		Document.OutputSettings outputSettings = new Document.OutputSettings();
-
-		outputSettings.prettyPrint(false);
-
-		document.outputSettings(outputSettings);
-
-		return document;
-	}
-
 	private String _getInstanceId(String namespace, String id) {
 		if (Validator.isNull(namespace)) {
 			namespace = StringUtil.randomId();
@@ -338,12 +325,7 @@ public class PortletDocumentFragmentEntryProcessor
 			}
 		}
 
-		Document preferencesDocument = _getDocument(
-			PortletPreferencesFactoryUtil.toXML(jxPortletPreferences));
-
-		Element preferencesBody = preferencesDocument.body();
-
-		return preferencesBody.html();
+		return PortletPreferencesFactoryUtil.toXML(jxPortletPreferences);
 	}
 
 	private void _updateLayoutPortletSetup(

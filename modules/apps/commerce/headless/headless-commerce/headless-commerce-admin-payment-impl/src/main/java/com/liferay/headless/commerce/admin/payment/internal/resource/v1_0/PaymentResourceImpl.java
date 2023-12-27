@@ -80,8 +80,9 @@ public class PaymentResourceImpl extends BasePaymentResourceImpl {
 		throws Exception {
 
 		CommercePaymentEntry commercePaymentEntry =
-			_commercePaymentEntryService.fetchByExternalReferenceCode(
-				externalReferenceCode, contextCompany.getCompanyId());
+			_commercePaymentEntryService.
+				fetchCommercePaymentEntryByExternalReferenceCode(
+					externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commercePaymentEntry == null) {
 			throw new NoSuchPaymentEntryException(
@@ -119,8 +120,9 @@ public class PaymentResourceImpl extends BasePaymentResourceImpl {
 		throws Exception {
 
 		CommercePaymentEntry commercePaymentEntry =
-			_commercePaymentEntryService.fetchByExternalReferenceCode(
-				externalReferenceCode, contextCompany.getCompanyId());
+			_commercePaymentEntryService.
+				fetchCommercePaymentEntryByExternalReferenceCode(
+					externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commercePaymentEntry == null) {
 			throw new NoSuchPaymentEntryException(
@@ -178,8 +180,9 @@ public class PaymentResourceImpl extends BasePaymentResourceImpl {
 		throws Exception {
 
 		CommercePaymentEntry commercePaymentEntry =
-			_commercePaymentEntryService.fetchByExternalReferenceCode(
-				externalReferenceCode, contextCompany.getCompanyId());
+			_commercePaymentEntryService.
+				fetchCommercePaymentEntryByExternalReferenceCode(
+					externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commercePaymentEntry == null) {
 			throw new NoSuchPaymentEntryException(
@@ -214,8 +217,9 @@ public class PaymentResourceImpl extends BasePaymentResourceImpl {
 		throws Exception {
 
 		CommercePaymentEntry commercePaymentEntry =
-			_commercePaymentEntryService.fetchByExternalReferenceCode(
-				externalReferenceCode, contextCompany.getCompanyId());
+			_commercePaymentEntryService.
+				fetchCommercePaymentEntryByExternalReferenceCode(
+					externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commercePaymentEntry == null) {
 			throw new NoSuchPaymentEntryException(

@@ -7,6 +7,7 @@ package com.liferay.commerce.term.internal.search;
 
 import com.liferay.commerce.term.internal.search.spi.model.index.contributor.CommerceTermEntryModelIndexerWriterContributor;
 import com.liferay.commerce.term.internal.search.spi.model.result.contributor.CommerceTermEntryModelSummaryContributor;
+import com.liferay.commerce.term.internal.search.spi.model.result.contributor.CommerceTermEntryModelVisibilityContributor;
 import com.liferay.commerce.term.model.CommerceTermEntry;
 import com.liferay.commerce.term.service.CommerceTermEntryLocalService;
 import com.liferay.portal.kernel.search.Field;
@@ -66,6 +67,9 @@ public class CommerceTermEntryModelSearchConfigurator
 
 		_modelSummaryContributor =
 			new CommerceTermEntryModelSummaryContributor();
+		_modelVisibilityContributor =
+			new CommerceTermEntryModelVisibilityContributor(
+				_commerceTermEntryLocalService);
 	}
 
 	@Reference
@@ -78,10 +82,6 @@ public class CommerceTermEntryModelSearchConfigurator
 	private ModelIndexerWriterContributor<CommerceTermEntry>
 		_modelIndexWriterContributor;
 	private ModelSummaryContributor _modelSummaryContributor;
-
-	@Reference(
-		target = "(indexer.class.name=com.liferay.commerce.term.model.CommerceTermEntry)"
-	)
 	private ModelVisibilityContributor _modelVisibilityContributor;
 
 }

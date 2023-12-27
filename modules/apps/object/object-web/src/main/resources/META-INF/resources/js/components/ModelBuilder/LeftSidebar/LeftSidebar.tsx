@@ -20,7 +20,7 @@ import LeftSidebarTreeView from './LeftSidebarTreeView';
 
 export default function LeftSidebar() {
 	const [expandedKeys, setExpandedKeys] = useState<Set<React.Key>>(
-		new Set(['uncategorized'])
+		new Set(['default'])
 	);
 	const [query, setQuery] = useState('');
 	const [

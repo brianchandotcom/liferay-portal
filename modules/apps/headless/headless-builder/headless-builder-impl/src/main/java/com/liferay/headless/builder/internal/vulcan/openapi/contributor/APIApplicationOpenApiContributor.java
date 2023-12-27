@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.openapi.OpenAPIContext;
 import com.liferay.portal.vulcan.openapi.contributor.OpenAPIContributor;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -127,6 +128,12 @@ public class APIApplicationOpenApiContributor implements OpenAPIContributor {
 		Set<String> schemasSet = new HashSet<>();
 
 		for (APIApplication.Endpoint endpoint : apiApplication.getEndpoints()) {
+			if (Validator.isNull(endpoint.getRequestSchema()) &&
+				Objects.equals(Http.Method.POST, endpoint.getMethod())) {
+
+				continue;
+			}
+
 			paths.put(_formatPath(endpoint), _toOpenAPIPathItem(endpoint));
 
 			APIApplication.Schema responseSchema = endpoint.getResponseSchema();

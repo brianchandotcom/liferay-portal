@@ -753,7 +753,7 @@ definition {
 			workflowAssetType = "Blogs Entry",
 			workflowTask = "Review");
 
-		Notifications.goToFilterValues(filterValues = "Due Date");
+		ManagementBar.sortAssets(sortDirection = "Due Date");
 
 		if (IsElementPresent(key_text = "order-list-down", locator1 = "ManagementBar#ANY_ICON")) {
 			Click(
@@ -797,7 +797,7 @@ definition {
 			workflowAssetType = "BLogs Entry",
 			workflowTask = "Review");
 
-		Notifications.goToFilterValues(filterValues = "Last Activity Date");
+		ManagementBar.sortAssets(sortDirection = "Last Activity Date");
 
 		MyWorkflowTasks.viewMyWorkflowTaskItemPosition(
 			rowPosition = 1,
@@ -835,7 +835,7 @@ definition {
 			workflowDueDateTime = "2:45 PM",
 			workflowTask = "Review");
 
-		Notifications.goToFilterValues(filterValues = "Due Date");
+		ManagementBar.sortAssets(sortDirection = "Due Date");
 
 		MyWorkflowTasks.viewMyWorkflowTaskItemPosition(
 			rowPosition = 1,
@@ -861,7 +861,7 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
 
-		Notifications.goToFilterValues(filterValues = "Last Activity Date");
+		ManagementBar.sortAssets(sortDirection = "Last Activity Date");
 
 		MyWorkflowTasks.viewMyWorkflowTaskItemPosition(
 			rowPosition = 1,

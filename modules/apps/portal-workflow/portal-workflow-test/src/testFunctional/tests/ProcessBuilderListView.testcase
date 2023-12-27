@@ -209,13 +209,7 @@ definition {
 
 		Navigator.gotoBack();
 
-		Click(
-			key_text = "Filter and Order",
-			locator1 = "Button#ANY_WITH_SPAN");
-
-		Click(
-			key_value = "Title",
-			locator1 = "ProcessBuilderListView#DROPDOWN_ITEM");
+		ManagementBar.sortAssets(sortDirection = "Title");
 
 		WaitForElementPresent(
 			key_index = 1,

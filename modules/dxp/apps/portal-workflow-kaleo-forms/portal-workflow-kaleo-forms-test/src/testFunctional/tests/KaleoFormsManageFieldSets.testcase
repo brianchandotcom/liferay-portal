@@ -95,7 +95,7 @@ definition {
 	@description = "Verify that user can filter by modified date and ID."
 	@priority = 3
 	test CanFilterByModifiedDate {
-		ManagementBar.setFilterAndOrder(filterBy = "Modified Date");
+		ManagementBar.setFilterAndOrder(orderBy = "Modified Date");
 
 		KaleoFormsManageFieldSets.viewFieldSetOrder(fieldSetList = "Contacts,Events,Inventory,Issues Tracking,Meeting Minutes,To Do");
 
@@ -103,7 +103,7 @@ definition {
 			nameFieldset = "Contacts",
 			newNameFieldset = "Contacts Test");
 
-		ManagementBar.setFilterAndOrder(filterBy = "Modified Date");
+		ManagementBar.setFilterAndOrder(orderBy = "Modified Date");
 
 		KaleoFormsManageFieldSets.viewFieldSetOrder(fieldSetList = "Events,Inventory,Issues Tracking,Meeting Minutes,To Do,Contacts Test");
 	}

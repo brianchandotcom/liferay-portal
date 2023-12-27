@@ -141,7 +141,7 @@ definition {
 
 		KaleoFormsAdmin.saveProcess(kfProcessName = "Kaleo Forms Process 1 Edited");
 
-		ManagementBar.setFilterAndOrder(filterBy = "Create Date");
+		ManagementBar.setFilterAndOrder(orderBy = "Create Date");
 
 		KaleoFormsAdmin.viewProcessByPosition(
 			order = 1,
@@ -167,7 +167,7 @@ definition {
 			KaleoFormsAdmin.viewProcess(kfProcessName = "Kaleo Forms Process ${viewProcess}");
 		}
 
-		ManagementBar.setFilterAndOrder(filterBy = "Modified Date");
+		ManagementBar.setFilterAndOrder(orderBy = "Modified Date");
 
 		KaleoFormsAdmin.editProcess(kfProcessName = "Kaleo Forms Process 1");
 

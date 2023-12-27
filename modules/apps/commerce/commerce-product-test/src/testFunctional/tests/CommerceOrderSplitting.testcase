@@ -1570,7 +1570,9 @@ definition {
 
 			CommerceSKUs.generateAllSkuCombinations();
 
-			CommerceNavigator.gotoEntry(entryName = "VALUE1VALUE2");
+			var skuCombinationName = selenium.getText("//div[(@class='dnd-td') and (contains(string(), 'VALUE1VALUE2') or contains(string(), 'VALUE2VALUE1'))]//..//div[(@class='dnd-td')][1]");
+
+			CommerceNavigator.gotoEntry(entryName = ${skuCombinationName});
 
 			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 

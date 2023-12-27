@@ -4903,6 +4903,40 @@ public class ObjectEntryResourceTest {
 	}
 
 	@Test
+	public void testPostCustomObjectEntryWithNonexistentRelatedCustomObjectEntryId()
+		throws Exception {
+		_objectRelationship1 =
+			ObjectRelationshipTestUtil.addObjectRelationship(
+				_objectDefinition1, _objectDefinition2,
+				TestPropsValues.getUserId(),
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		long randomObjectEntryId = RandomTestUtil.randomLong();
+
+		JSONObject objectEntryJSONObject = JSONUtil.put(
+			_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2
+		).put(
+			StringBundler.concat(
+				"r_", _objectRelationship1.getName(), "_",
+				_objectDefinition1.getPKObjectFieldName()),
+			randomObjectEntryId
+		);
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"status", "NOT_FOUND"
+			).put(
+				"title",
+				"No ObjectEntry exists with the primary key " + randomObjectEntryId
+			).toString(),
+			HTTPTestUtil.invokeToJSONObject(
+				objectEntryJSONObject.toString(),
+				_objectDefinition2.getRESTContextPath(),
+				Http.Method.POST).toString(),
+			JSONCompareMode.STRICT);
+	}
+
+	@Test
 	public void testPostCustomObjectEntryWithInvalidNestedCustomObjectEntries()
 		throws Exception {
 
@@ -4931,9 +4965,6 @@ public class ObjectEntryResourceTest {
 
 			_testPostCustomObjectEntryWithInvalidNestedCustomObjectEntriesInOneToManyRelationship(
 				_objectDefinition1.getRESTContextPath(), _objectRelationship1);
-
-			_testPostCustomObjectEntryWithNonexistentNestedCustomObjectEntriesInManyToOneRelationship(
-				_objectDefinition2.getRESTContextPath(), _objectRelationship1);
 		}
 	}
 
@@ -5330,18 +5361,6 @@ public class ObjectEntryResourceTest {
 		_assertObjectEntryField(
 			(JSONObject)nestedObjectEntriesJSONArray.get(1),
 			_OBJECT_FIELD_NAME_2, _NEW_OBJECT_FIELD_VALUE_2);
-	}
-
-	@Test
-	public void testPostCustomObjectEntryWithNonexistentNestedCustomObjectEntries()
-		throws Exception {
-
-		_objectRelationship1 = ObjectRelationshipTestUtil.addObjectRelationship(
-			_objectDefinition1, _objectDefinition2, TestPropsValues.getUserId(),
-			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
-
-		_testPostCustomObjectEntryWithNonexistentNestedCustomObjectEntriesInManyToOneRelationship(
-			_objectDefinition2.getRESTContextPath(), _objectRelationship1);
 	}
 
 	@Test
@@ -7944,30 +7963,6 @@ public class ObjectEntryResourceTest {
 			Http.Method.POST);
 
 		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
-	}
-
-	private void
-			_testPostCustomObjectEntryWithNonexistentNestedCustomObjectEntriesInManyToOneRelationship(
-				String objectDefinitionRESTContextPath,
-				ObjectRelationship objectRelationship)
-		throws Exception {
-
-		JSONObject objectEntryJSONObject = JSONUtil.put(
-			_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2
-		).put(
-			StringBundler.concat(
-				"r_", objectRelationship.getName(), "_",
-				_objectDefinition1.getPKObjectFieldName()),
-			RandomTestUtil.randomLong()
-		);
-
-		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
-			objectEntryJSONObject.toString(), objectDefinitionRESTContextPath,
-			Http.Method.POST);
-
-		System.out.println(jsonObject);
-
-		Assert.assertEquals("NOT_FOUND", jsonObject.get("status"));
 	}
 
 	private void _testPutCustomObjectEntryUnlinkNestedCustomObjectEntries(

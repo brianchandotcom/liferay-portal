@@ -52,19 +52,19 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 
 		if (fragmentEntryLink.isTypePortlet()) {
 			return _renderWidgetHTML(
-				fragmentEntryLink.getEditableValues(),
-				fragmentEntryProcessorContext);
+				fragmentEntryLink, fragmentEntryProcessorContext);
 		}
 
 		return html;
 	}
 
 	private String _renderWidgetHTML(
-			String editableValues,
+			FragmentEntryLink fragmentEntryLink,
 			FragmentEntryProcessorContext fragmentEntryProcessorContext)
 		throws PortalException {
 
-		JSONObject jsonObject = _jsonFactory.createJSONObject(editableValues);
+		JSONObject jsonObject = _jsonFactory.createJSONObject(
+			fragmentEntryLink.getEditableValues());
 
 		String portletId = jsonObject.getString("portletId");
 
@@ -85,30 +85,24 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 					fragmentEntryProcessorContext.getHttpServletRequest(),
 					encodedPortletId)));
 
+		String checkAccessAllowedToPortletCacheKey = StringBundler.concat(
+			"LIFERAY_SHARED_",
+			DefaultLayoutTypeAccessPolicyImpl.class.getName(), "#",
+			ParamUtil.getLong(
+				fragmentEntryProcessorContext.getHttpServletRequest(),
+				"p_l_id"),
+			"#", encodedPortletId);
+
 		HttpServletRequest httpServletRequest =
 			fragmentEntryProcessorContext.getHttpServletRequest();
 
-		FragmentEntryLink fragmentEntryLink =
-			(FragmentEntryLink)httpServletRequest.getAttribute(
-				FragmentWebKeys.FRAGMENT_ENTRY_LINK);
-
-		if (fragmentEntryLink != null) {
-			String checkAccessAllowedToPortletCacheKey = StringBundler.concat(
-				"LIFERAY_SHARED_",
-				DefaultLayoutTypeAccessPolicyImpl.class.getName(), "#",
-				ParamUtil.getLong(
-					fragmentEntryProcessorContext.getHttpServletRequest(),
-					"p_l_id"),
-				"#", encodedPortletId);
-
-			httpServletRequest.setAttribute(
-				FragmentWebKeys.ACCESS_ALLOWED_TO_FRAGMENT_ENTRY_LINK_ID +
-					fragmentEntryLink.getFragmentEntryLinkId(),
-				GetterUtil.getBoolean(
-					httpServletRequest.getAttribute(
-						checkAccessAllowedToPortletCacheKey),
-					true));
-		}
+		httpServletRequest.setAttribute(
+			FragmentWebKeys.ACCESS_ALLOWED_TO_FRAGMENT_ENTRY_LINK_ID +
+				fragmentEntryLink.getFragmentEntryLinkId(),
+			GetterUtil.getBoolean(
+				httpServletRequest.getAttribute(
+					checkAccessAllowedToPortletCacheKey),
+				true));
 
 		return html;
 	}

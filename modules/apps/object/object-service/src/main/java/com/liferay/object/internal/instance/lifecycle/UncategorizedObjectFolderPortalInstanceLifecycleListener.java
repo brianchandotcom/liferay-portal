@@ -30,7 +30,7 @@ public class UncategorizedObjectFolderPortalInstanceLifecycleListener
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
 		ObjectFolder objectFolder =
-			_objectFolderLocalService.getOrAddUncategorizedObjectFolder(
+			_objectFolderLocalService.getOrAddDefaultObjectFolder(
 				company.getCompanyId());
 
 		Role guestRole = _roleLocalService.getRole(

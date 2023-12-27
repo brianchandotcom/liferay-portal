@@ -437,7 +437,7 @@ definition {
 				PortletEntry.selectAll();
 
 				Click(
-					key_text = "view",
+					key_text = "hidden",
 					locator1 = "ManagementBar#ANY_ICON");
 			}
 			else {

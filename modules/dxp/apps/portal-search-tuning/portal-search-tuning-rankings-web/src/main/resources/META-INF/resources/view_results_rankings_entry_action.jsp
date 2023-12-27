@@ -50,10 +50,11 @@ RankingEntryDisplayContext rankingEntryDisplayContext = (RankingEntryDisplayCont
 			<portlet:param name="keywords" value="<%= rankingEntryDisplayContext.getKeywords() %>" />
 		</portlet:renderURL>
 
-		<liferay-ui:icon
-			message="edit"
-			url="<%= editURL %>"
-		/>
+		<li>
+			<a class="dropdown-item" href="<%= editURL %>" target="_self">
+				<liferay-ui:message key="edit" />
+			</a>
+		</li>
 
 		<portlet:actionURL name="/result_rankings/edit_ranking" var="deactivateURL">
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Objects.equals(rankingEntryDisplayContext.getStatus(), ResultRankingsConstants.STATUS_ACTIVE) ? ResultRankingsConstants.DEACTIVATE : ResultRankingsConstants.ACTIVATE %>" />
@@ -61,10 +62,11 @@ RankingEntryDisplayContext rankingEntryDisplayContext = (RankingEntryDisplayCont
 			<portlet:param name="resultsRankingUid" value="<%= rankingEntryDisplayContext.getUid() %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon
-			message="<%= Objects.equals(rankingEntryDisplayContext.getStatus(), ResultRankingsConstants.STATUS_ACTIVE) ? ResultRankingsConstants.DEACTIVATE : ResultRankingsConstants.ACTIVATE %>"
-			url="<%= deactivateURL %>"
-		/>
+		<li>
+			<a class="dropdown-item" href="<%= deactivateURL %>" target="_self">
+				<liferay-ui:message key="<%= Objects.equals(rankingEntryDisplayContext.getStatus(), ResultRankingsConstants.STATUS_ACTIVE) ? ResultRankingsConstants.DEACTIVATE : ResultRankingsConstants.ACTIVATE %>" />
+			</a>
+		</li>
 	</c:if>
 
 	<portlet:actionURL name="/result_rankings/edit_ranking" var="deleteURL">

@@ -79,7 +79,7 @@ public class ObjectFolderModelResourcePermission
 			String actionId)
 		throws PortalException {
 
-		if (objectFolder.isUncategorized() ||
+		if (objectFolder.isDefault() ||
 			permissionChecker.hasOwnerPermission(
 				permissionChecker.getCompanyId(), ObjectFolder.class.getName(),
 				objectFolder.getPrimaryKey(), objectFolder.getUserId(),

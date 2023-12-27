@@ -92,10 +92,8 @@ public class LinkEditableElementParser implements EditableElementParser {
 
 		Element replaceableElement = elements.get(0);
 
-		Element bodyElement = EditableElementParserUtil.getDocumentBody(value);
-
 		if (configJSONObject == null) {
-			replaceableElement.html(bodyElement.html());
+			replaceableElement.html(value);
 
 			return;
 		}
@@ -135,7 +133,7 @@ public class LinkEditableElementParser implements EditableElementParser {
 			}
 		}
 
-		replaceableElement.html(bodyElement.html());
+		replaceableElement.html(value);
 	}
 
 	@Override

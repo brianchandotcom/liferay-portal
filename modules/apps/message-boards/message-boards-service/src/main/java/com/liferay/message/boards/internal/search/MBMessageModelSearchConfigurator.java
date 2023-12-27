@@ -7,6 +7,7 @@ package com.liferay.message.boards.internal.search;
 
 import com.liferay.message.boards.internal.search.spi.model.index.contributor.MBMessageModelIndexerWriterContributor;
 import com.liferay.message.boards.internal.search.spi.model.result.contributor.MBMessageModelSummaryContributor;
+import com.liferay.message.boards.internal.search.spi.model.result.contributor.MBMessageModelVisibilityContributor;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.message.boards.service.MBThreadLocalService;
@@ -73,6 +74,8 @@ public class MBMessageModelSearchConfigurator
 				_mbMessageLocalService, _mbThreadLocalService);
 		_modelSummaryContributor = new MBMessageModelSummaryContributor(
 			_localization);
+		_modelVisibilityContributor = new MBMessageModelVisibilityContributor(
+			_mbMessageLocalService);
 	}
 
 	@Reference
@@ -91,10 +94,6 @@ public class MBMessageModelSearchConfigurator
 	private ModelIndexerWriterContributor<MBMessage>
 		_modelIndexWriterContributor;
 	private ModelSummaryContributor _modelSummaryContributor;
-
-	@Reference(
-		target = "(indexer.class.name=com.liferay.message.boards.model.MBMessage)"
-	)
 	private ModelVisibilityContributor _modelVisibilityContributor;
 
 }

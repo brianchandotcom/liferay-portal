@@ -10,25 +10,24 @@ import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.search.spi.model.result.contributor.ModelVisibilityContributor;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Luan Maoski
  */
-@Component(
-	property = "indexer.class.name=com.liferay.message.boards.model.MBMessage",
-	service = ModelVisibilityContributor.class
-)
 public class MBMessageModelVisibilityContributor
 	implements ModelVisibilityContributor {
+
+	public MBMessageModelVisibilityContributor(
+		MBMessageLocalService mbMessageLocalService) {
+
+		_mbMessageLocalService = mbMessageLocalService;
+	}
 
 	@Override
 	public boolean isVisible(long classPK, int status) {
 		MBMessage message;
 
 		try {
-			message = mbMessageLocalService.getMessage(classPK);
+			message = _mbMessageLocalService.getMessage(classPK);
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
@@ -37,7 +36,6 @@ public class MBMessageModelVisibilityContributor
 		return isVisible(message.getStatus(), status);
 	}
 
-	@Reference
-	protected MBMessageLocalService mbMessageLocalService;
+	private final MBMessageLocalService _mbMessageLocalService;
 
 }

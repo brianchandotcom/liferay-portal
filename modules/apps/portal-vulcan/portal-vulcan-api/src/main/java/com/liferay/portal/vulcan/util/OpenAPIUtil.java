@@ -91,7 +91,8 @@ public class OpenAPIUtil {
 					propertySchema.getDescription(), propertyName,
 					propertySchema.isReadOnly(), null,
 					requiredPropertySchemaNames.contains(propertyName),
-					true, propertySchema.getType(), propertySchema.isWriteOnly()));
+					isBatchSupport(Collections.emptyMap()),
+					propertySchema.getType(), propertySchema.isWriteOnly()));
 		}
 
 		return fields;
@@ -122,6 +123,16 @@ public class OpenAPIUtil {
 		}
 
 		return scopes;
+	}
+
+	public static boolean isBatchSupport(Map<String, Object> extensions) {
+		if (MapUtil.isNotEmpty(extensions) &&
+			extensions.containsKey("x-batch-csv-enabled")) {
+
+			return MapUtil.getBoolean(extensions, "x-batch-csv-enabled");
+		}
+
+		return true;
 	}
 
 	private static String _getOperationScope(Operation operation) {

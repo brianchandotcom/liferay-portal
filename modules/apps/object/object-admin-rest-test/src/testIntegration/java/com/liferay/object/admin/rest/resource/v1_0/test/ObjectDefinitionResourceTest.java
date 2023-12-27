@@ -526,7 +526,7 @@ public class ObjectDefinitionResourceTest
 		objectDefinition.setModifiable(true);
 		objectDefinition.setName("O" + objectDefinition.getName());
 		objectDefinition.setObjectFolderExternalReferenceCode(
-			ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_UNCATEGORIZED);
+			ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_DEFAULT);
 		objectDefinition.setPluralLabel(
 			Collections.singletonMap(
 				"en_US", "O" + objectDefinition.getName()));

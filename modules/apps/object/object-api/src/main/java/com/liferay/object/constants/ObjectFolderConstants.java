@@ -10,9 +10,8 @@ package com.liferay.object.constants;
  */
 public class ObjectFolderConstants {
 
-	public static final String EXTERNAL_REFERENCE_CODE_UNCATEGORIZED =
-		"uncategorized";
+	public static final String EXTERNAL_REFERENCE_CODE_DEFAULT = "default";
 
-	public static final String NAME_UNCATEGORIZED = "Uncategorized";
+	public static final String NAME_DEFAULT = "Default";
 
 }

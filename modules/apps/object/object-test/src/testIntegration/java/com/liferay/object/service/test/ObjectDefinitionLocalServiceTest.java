@@ -129,9 +129,8 @@ public class ObjectDefinitionLocalServiceTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		_uncategorizedObjectFolder = _objectFolderLocalService.getObjectFolder(
-			TestPropsValues.getCompanyId(),
-			ObjectFolderConstants.NAME_UNCATEGORIZED);
+		_defaultObjectFolder = _objectFolderLocalService.getObjectFolder(
+			TestPropsValues.getCompanyId(), ObjectFolderConstants.NAME_DEFAULT);
 	}
 
 	@Test
@@ -564,14 +563,14 @@ public class ObjectDefinitionLocalServiceTest {
 			() -> ObjectDefinitionTestUtil.addCustomObjectDefinition(
 				objectFolderId, _objectDefinitionLocalService));
 
-		// Add object definition to uncategorized object folder
+		// Add object definition to default object folder
 
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionTestUtil.addCustomObjectDefinition(
 				0, _objectDefinitionLocalService);
 
 		Assert.assertEquals(
-			_uncategorizedObjectFolder.getObjectFolderId(),
+			_defaultObjectFolder.getObjectFolderId(),
 			objectDefinition.getObjectFolderId());
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
@@ -767,7 +766,7 @@ public class ObjectDefinitionLocalServiceTest {
 		_assertObjectField(objectDefinition, "type_", "String", "type", true);
 
 		Assert.assertEquals(
-			_uncategorizedObjectFolder.getObjectFolderId(),
+			_defaultObjectFolder.getObjectFolderId(),
 			objectDefinition.getObjectFolderId());
 
 		Assert.assertNotNull(
@@ -1220,7 +1219,7 @@ public class ObjectDefinitionLocalServiceTest {
 				objectDefinition.getObjectDefinitionId());
 
 		Assert.assertEquals(
-			_uncategorizedObjectFolder.getObjectFolderId(),
+			_defaultObjectFolder.getObjectFolderId(),
 			objectDefinition.getObjectFolderId());
 		Assert.assertTrue(
 			StringUtil.startsWith(
@@ -2023,7 +2022,7 @@ public class ObjectDefinitionLocalServiceTest {
 			ObjectDefinitionTestUtil.getRandomName());
 
 		Assert.assertEquals(
-			_uncategorizedObjectFolder.getObjectFolderId(),
+			_defaultObjectFolder.getObjectFolderId(),
 			objectDefinition.getObjectFolderId());
 
 		ObjectFolder objectFolder = _addObjectFolder();
@@ -2736,10 +2735,10 @@ public class ObjectDefinitionLocalServiceTest {
 			name, null, null, false, pluralLabelMap, scope);
 	}
 
+	private static ObjectFolder _defaultObjectFolder;
+
 	@Inject
 	private static ObjectFolderLocalService _objectFolderLocalService;
-
-	private static ObjectFolder _uncategorizedObjectFolder;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;

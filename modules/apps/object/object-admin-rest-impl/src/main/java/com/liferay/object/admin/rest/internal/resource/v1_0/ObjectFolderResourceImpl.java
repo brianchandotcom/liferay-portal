@@ -302,9 +302,9 @@ public class ObjectFolderResourceImpl extends BaseObjectFolderResourceImpl {
 			serviceBuilderObjectDefinitionIds.remove(objectDefinition.getId());
 		}
 
-		com.liferay.object.model.ObjectFolder uncategorizedObjectFolder =
+		com.liferay.object.model.ObjectFolder defaultObjectFolder =
 			_objectFolderService.getObjectFolderByExternalReferenceCode(
-				ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_UNCATEGORIZED,
+				ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_DEFAULT,
 				contextCompany.getCompanyId());
 
 		for (Long objectDefinitionId : serviceBuilderObjectDefinitionIds) {
@@ -317,8 +317,7 @@ public class ObjectFolderResourceImpl extends BaseObjectFolderResourceImpl {
 			}
 
 			_objectDefinitionLocalService.updateObjectFolderId(
-				objectDefinitionId,
-				uncategorizedObjectFolder.getObjectFolderId());
+				objectDefinitionId, defaultObjectFolder.getObjectFolderId());
 		}
 
 		objectFolderItems.removeAll(unlinkedObjectFolderItems);

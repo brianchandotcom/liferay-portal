@@ -105,13 +105,13 @@ public class ObjectFolderServiceTest {
 		_testGetObjectFolder(_addObjectFolder(_adminUser), _adminUser);
 		_testGetObjectFolder(_addObjectFolder(_user), _user);
 
-		ObjectFolder uncategorizedObjectFolder =
+		ObjectFolder defaultObjectFolder =
 			_objectFolderLocalService.getObjectFolder(
 				TestPropsValues.getCompanyId(),
-				ObjectFolderConstants.NAME_UNCATEGORIZED);
+				ObjectFolderConstants.NAME_DEFAULT);
 
-		_testGetObjectFolder(uncategorizedObjectFolder, _adminUser);
-		_testGetObjectFolder(uncategorizedObjectFolder, _user);
+		_testGetObjectFolder(defaultObjectFolder, _adminUser);
+		_testGetObjectFolder(defaultObjectFolder, _user);
 	}
 
 	@Test
@@ -132,15 +132,14 @@ public class ObjectFolderServiceTest {
 		_testGetObjectFolderByExternalReferenceCode(
 			_addObjectFolder(_user), _user);
 
-		ObjectFolder uncategorizedObjectFolder =
+		ObjectFolder defaultObjectFolder =
 			_objectFolderLocalService.getObjectFolder(
 				TestPropsValues.getCompanyId(),
-				ObjectFolderConstants.NAME_UNCATEGORIZED);
+				ObjectFolderConstants.NAME_DEFAULT);
 
 		_testGetObjectFolderByExternalReferenceCode(
-			uncategorizedObjectFolder, _adminUser);
-		_testGetObjectFolderByExternalReferenceCode(
-			uncategorizedObjectFolder, _user);
+			defaultObjectFolder, _adminUser);
+		_testGetObjectFolderByExternalReferenceCode(defaultObjectFolder, _user);
 	}
 
 	@Test
@@ -222,7 +221,7 @@ public class ObjectFolderServiceTest {
 			if ((objectFolder != null) &&
 				!StringUtil.equals(
 					objectFolder.getName(),
-					ObjectFolderConstants.NAME_UNCATEGORIZED)) {
+					ObjectFolderConstants.NAME_DEFAULT)) {
 
 				_objectFolderLocalService.deleteObjectFolder(objectFolder);
 			}
@@ -243,7 +242,7 @@ public class ObjectFolderServiceTest {
 			if ((objectFolder != null) &&
 				!StringUtil.equals(
 					objectFolder.getName(),
-					ObjectFolderConstants.NAME_UNCATEGORIZED)) {
+					ObjectFolderConstants.NAME_DEFAULT)) {
 
 				_objectFolderLocalService.deleteObjectFolder(objectFolder);
 			}

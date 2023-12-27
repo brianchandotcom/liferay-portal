@@ -61,9 +61,8 @@ public class ObjectFolderLocalServiceTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		_uncategorizedObjectFolder = _objectFolderLocalService.getObjectFolder(
-			TestPropsValues.getCompanyId(),
-			ObjectFolderConstants.NAME_UNCATEGORIZED);
+		_defaultObjectFolder = _objectFolderLocalService.getObjectFolder(
+			TestPropsValues.getCompanyId(), ObjectFolderConstants.NAME_DEFAULT);
 	}
 
 	@Test
@@ -72,10 +71,10 @@ public class ObjectFolderLocalServiceTest {
 			DuplicateObjectFolderExternalReferenceCodeException.class,
 			StringBundler.concat(
 				"Duplicate object folder with external reference code ",
-				_uncategorizedObjectFolder.getExternalReferenceCode(),
-				" and company ", _uncategorizedObjectFolder.getCompanyId()),
+				_defaultObjectFolder.getExternalReferenceCode(),
+				" and company ", _defaultObjectFolder.getCompanyId()),
 			() -> _objectFolderLocalService.addObjectFolder(
-				_uncategorizedObjectFolder.getExternalReferenceCode(),
+				_defaultObjectFolder.getExternalReferenceCode(),
 				TestPropsValues.getUserId(),
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				RandomTestUtil.randomString()));
@@ -94,11 +93,11 @@ public class ObjectFolderLocalServiceTest {
 				RandomTestUtil.randomString(42)));
 		AssertUtils.assertFailure(
 			ObjectFolderNameException.MustNotBeDuplicate.class,
-			"Duplicate name " + _uncategorizedObjectFolder.getName(),
+			"Duplicate name " + _defaultObjectFolder.getName(),
 			() -> _objectFolderLocalService.addObjectFolder(
 				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				_uncategorizedObjectFolder.getName()));
+				_defaultObjectFolder.getName()));
 		AssertUtils.assertFailure(
 			ObjectFolderNameException.MustNotBeNull.class, "Name is null",
 			() -> _objectFolderLocalService.addObjectFolder(
@@ -177,7 +176,7 @@ public class ObjectFolderLocalServiceTest {
 			Assert.assertNotNull(
 				_objectFolderLocalService.getObjectFolder(
 					company.getCompanyId(),
-					ObjectFolderConstants.NAME_UNCATEGORIZED));
+					ObjectFolderConstants.NAME_DEFAULT));
 		}
 		finally {
 			_companyLocalService.deleteCompany(company);
@@ -189,8 +188,7 @@ public class ObjectFolderLocalServiceTest {
 
 		Assert.assertNull(
 			_objectFolderLocalService.fetchObjectFolder(
-				company.getCompanyId(),
-				ObjectFolderConstants.NAME_UNCATEGORIZED));
+				company.getCompanyId(), ObjectFolderConstants.NAME_DEFAULT));
 
 		Assert.assertNull(
 			_objectFolderLocalService.fetchObjectFolder(
@@ -203,7 +201,7 @@ public class ObjectFolderLocalServiceTest {
 			UnsupportedOperationException.class,
 			"Uncategorized cannot be deleted",
 			() -> _objectFolderLocalService.deleteObjectFolder(
-				_uncategorizedObjectFolder.getObjectFolderId()));
+				_defaultObjectFolder.getObjectFolderId()));
 
 		ObjectFolder objectFolder = _addObjectFolder(TestPropsValues.getUser());
 
@@ -214,7 +212,7 @@ public class ObjectFolderLocalServiceTest {
 
 		int count =
 			_objectDefinitionLocalService.getObjectFolderObjectDefinitionsCount(
-				_uncategorizedObjectFolder.getObjectFolderId());
+				_defaultObjectFolder.getObjectFolderId());
 
 		objectFolder = _objectFolderLocalService.deleteObjectFolder(
 			objectFolder.getObjectFolderId());
@@ -230,7 +228,7 @@ public class ObjectFolderLocalServiceTest {
 		Assert.assertEquals(
 			count + 2,
 			_objectDefinitionLocalService.getObjectFolderObjectDefinitionsCount(
-				_uncategorizedObjectFolder.getObjectFolderId()));
+				_defaultObjectFolder.getObjectFolderId()));
 	}
 
 	@Test
@@ -242,10 +240,10 @@ public class ObjectFolderLocalServiceTest {
 			DuplicateObjectFolderExternalReferenceCodeException.class,
 			StringBundler.concat(
 				"Duplicate object folder with external reference code ",
-				_uncategorizedObjectFolder.getExternalReferenceCode(),
-				" and company ", _uncategorizedObjectFolder.getCompanyId()),
+				_defaultObjectFolder.getExternalReferenceCode(),
+				" and company ", _defaultObjectFolder.getCompanyId()),
 			() -> _objectFolderLocalService.updateObjectFolder(
-				_uncategorizedObjectFolder.getExternalReferenceCode(),
+				_defaultObjectFolder.getExternalReferenceCode(),
 				objectFolder1.getObjectFolderId(),
 				LocalizedMapUtil.getLocalizedMap(
 					RandomTestUtil.randomString())));
@@ -297,10 +295,10 @@ public class ObjectFolderLocalServiceTest {
 		Assert.assertEquals(name, objectFolder.getName());
 	}
 
+	private static ObjectFolder _defaultObjectFolder;
+
 	@Inject
 	private static ObjectFolderLocalService _objectFolderLocalService;
-
-	private static ObjectFolder _uncategorizedObjectFolder;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;

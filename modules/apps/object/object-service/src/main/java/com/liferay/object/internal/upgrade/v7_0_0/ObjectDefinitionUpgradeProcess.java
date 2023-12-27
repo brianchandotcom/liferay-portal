@@ -67,7 +67,7 @@ public class ObjectDefinitionUpgradeProcess extends UpgradeProcess {
 
 		preparedStatement1.setString(1, PortalUUIDUtil.generate());
 		preparedStatement1.setString(
-			2, ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_UNCATEGORIZED);
+			2, ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_DEFAULT);
 
 		long objectFolderId = increment();
 
@@ -91,12 +91,11 @@ public class ObjectDefinitionUpgradeProcess extends UpgradeProcess {
 							LocaleUtil.fromLanguageId(
 								UpgradeProcessUtil.getDefaultLanguageId(
 									companyId)),
-							ObjectFolderConstants.NAME_UNCATEGORIZED);
+							ObjectFolderConstants.NAME_DEFAULT);
 					}
 				},
 				"Label"));
-		preparedStatement1.setString(
-			10, ObjectFolderConstants.NAME_UNCATEGORIZED);
+		preparedStatement1.setString(10, ObjectFolderConstants.NAME_DEFAULT);
 
 		preparedStatement1.execute();
 

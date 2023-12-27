@@ -6,9 +6,7 @@
 package com.liferay.fragment.entry.processor.editable.internal.parser;
 
 import com.liferay.fragment.entry.processor.editable.parser.EditableElementParser;
-import com.liferay.fragment.entry.processor.editable.parser.util.EditableElementParserUtil;
 import com.liferay.fragment.exception.FragmentEntryContentException;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -57,12 +55,23 @@ public class TextEditableElementParser implements EditableElementParser {
 			return;
 		}
 
-		EditableElementParserUtil.addClass(
-			element, configJSONObject, "text-", "textAlignment");
-		EditableElementParserUtil.addClass(
-			element, configJSONObject, "text-", "textColor");
-		EditableElementParserUtil.addClass(
-			element, configJSONObject, StringPool.BLANK, "textStyle");
+		String textAlignmentValue = configJSONObject.getString("textAlignment");
+
+		if (Validator.isNotNull(textAlignmentValue)) {
+			element.addClass("text-" + textAlignmentValue);
+		}
+
+		String textColorValue = configJSONObject.getString("textColor");
+
+		if (Validator.isNotNull(textColorValue)) {
+			element.addClass("text-" + textColorValue);
+		}
+
+		String textStyleValue = configJSONObject.getString("textStyle");
+
+		if (Validator.isNotNull(textStyleValue)) {
+			element.addClass(textStyleValue);
+		}
 
 		element.html(value);
 	}

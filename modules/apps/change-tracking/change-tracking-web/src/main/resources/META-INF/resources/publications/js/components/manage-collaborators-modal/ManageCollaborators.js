@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayBadge from '@clayui/badge';
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {useResource} from '@clayui/data-provider';
 import ClayDropDown, {Align} from '@clayui/drop-down';
@@ -14,6 +13,7 @@ import ClayMultiSelect from '@clayui/multi-select';
 import ClaySticker from '@clayui/sticker';
 import ClayTable from '@clayui/table';
 import ClayTabs from '@clayui/tabs';
+import {FeatureIndicator} from 'frontend-js-components-web';
 import {
 	fetch,
 	getOpener,
@@ -1003,7 +1003,7 @@ const ManageCollaborators = ({
 					{Liferay.Language.get('share-link')}
 
 					<div className="c-ml-1 float-right">
-						<ClayBadge displayType="beta" label="beta" />
+						<FeatureIndicator type="beta" />
 					</div>
 				</ClayTabs.Item>
 			</ClayTabs>

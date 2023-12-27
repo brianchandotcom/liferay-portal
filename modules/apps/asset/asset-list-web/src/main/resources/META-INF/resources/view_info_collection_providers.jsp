@@ -42,10 +42,16 @@ InfoCollectionProviderDisplayContext infoCollectionProviderDisplayContext = (Inf
 					<%= HtmlUtil.escape(infoCollectionProviderDisplayContext.getTitle(infoCollectionProvider)) %>
 
 					<c:if test="<%= infoCollectionProvider instanceof BetaInfoCollectionProvider %>">
-						<clay:label
-							displayType="info"
-							label='<%= LanguageUtil.get(request, "beta") %>'
-						/>
+						<span>
+							<react:component
+								module="{FeatureIndicator} from frontend-js-components-web"
+								props='<%=
+									HashMapBuilder.<String, Object>put(
+										"type", "beta"
+									).build()
+								%>'
+							/>
+						</span>
 					</c:if>
 				</div>
 

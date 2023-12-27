@@ -479,7 +479,7 @@
 				"unique": false
 			}
 		],
-		"objectFolderExternalReferenceCode": "uncategorized",
+		"objectFolderExternalReferenceCode": "default",
 		"objectLayouts": [
 			{
 				"dateCreated": "2023-09-19T13:44:14Z",

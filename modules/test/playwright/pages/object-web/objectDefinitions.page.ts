@@ -11,12 +11,12 @@ export class ObjectDefinitionsPage {
 	readonly addObjectFolderButton: Locator;
 	readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly createObjectFolderButton: Locator;
+	readonly defaultObjectFolderLink: Locator;
 	readonly objectFolderActionsLink: Locator;
 	readonly objectFolderDeleteFolderOption: Locator;
 	readonly objectFolderEditLabelAndERCOption: Locator;
 	readonly objectFolderLabel: Locator;
 	readonly page: Page;
-	readonly uncategorizedObjectFolderLink: Locator;
 	readonly viewInModelBuilderButton: Locator;
 
 	constructor(page: Page) {
@@ -25,6 +25,9 @@ export class ObjectDefinitionsPage {
 		this.createObjectFolderButton = page.getByRole('button', {
 			name: 'Create Folder',
 		});
+		this.defaultObjectFolderLink = page
+			.locator('li')
+			.filter({hasText: 'Default'});
 		this.objectFolderActionsLink = page
 			.locator('div.lfr__object-web-view-object-definitions-title-kebab')
 			.getByLabel('Object Folder Actions');
@@ -36,16 +39,13 @@ export class ObjectDefinitionsPage {
 		});
 		this.objectFolderLabel = page.locator('input[name="label"]');
 		this.page = page;
-		this.uncategorizedObjectFolderLink = page
-			.locator('li')
-			.filter({hasText: 'Uncategorized'});
 		this.viewInModelBuilderButton = page.getByLabel(
 			'View in Model Builder'
 		);
 	}
 
-	async clickUncategorizedObjectFolder() {
-		await this.uncategorizedObjectFolderLink.click();
+	async clickDefaultObjectFolder() {
+		await this.defaultObjectFolderLink.click();
 	}
 
 	async createObjectFolder(objectFolderLabel: string) {

@@ -11,6 +11,16 @@ import React from 'react';
 import ObjectFolderCardHeader from '../components/ViewObjectDefinitions/ObjectFolderCardHeader';
 import {getObjectFolderActions} from '../components/ViewObjectDefinitions/objectDefinitionUtil';
 
+const defaultFolderHTTPMethods = {
+	objectDefinitionActions: {
+		create: {href: '', method: 'POST'},
+	},
+	objectFolderActions: {
+		get: {href: '', method: 'GET'},
+		permissions: {href: '', method: 'PATCH'},
+	},
+};
+
 const ticketFolderHTTPMethods = {
 	objectDefinitionActions: {
 		create: {href: '', method: 'POST'},
@@ -20,16 +30,6 @@ const ticketFolderHTTPMethods = {
 		get: {href: '', method: 'GET'},
 		permissions: {href: '', method: 'PATCH'},
 		update: {href: '', method: 'PUT'},
-	},
-};
-
-const uncategorizedFolderHTTPMethods = {
-	objectDefinitionActions: {
-		create: {href: '', method: 'POST'},
-	},
-	objectFolderActions: {
-		get: {href: '', method: 'GET'},
-		permissions: {href: '', method: 'PATCH'},
 	},
 };
 
@@ -80,17 +80,17 @@ describe('The ObjectFolderCardHeader component should', () => {
 		expect(menuItem[4]).toHaveAttribute('value', 'deleteObjectFolder');
 	});
 
-	it('not render delete and edit object folder actions on uncategorized object folder', () => {
+	it('not render delete and edit object folder actions on default object folder', () => {
 		render(
 			<ObjectFolderCardHeader
-				externalReferenceCode="uncategorized"
+				externalReferenceCode="default"
 				items={
 					getObjectFolderActions({
 						actions: {
 							objectDefinitionActions:
-								uncategorizedFolderHTTPMethods.objectDefinitionActions,
+								defaultFolderHTTPMethods.objectDefinitionActions,
 							objectFolderActions:
-								uncategorizedFolderHTTPMethods.objectFolderActions,
+								defaultFolderHTTPMethods.objectFolderActions,
 						},
 						baseResourceURL: '',
 						importObjectDefinitionURL: '',
@@ -102,7 +102,7 @@ describe('The ObjectFolderCardHeader component should', () => {
 						setShowModal: () => {},
 					}) as IItem[]
 				}
-				label={{en_US: 'Uncategorized'}}
+				label={{en_US: 'Default'}}
 				modelBuilderURL=""
 			></ObjectFolderCardHeader>
 		);

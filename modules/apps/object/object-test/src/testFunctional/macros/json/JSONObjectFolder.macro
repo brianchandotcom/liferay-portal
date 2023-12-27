@@ -60,7 +60,7 @@ definition {
 				-H Content-Type: application/json
 		''';
 
-		var folderIdList = JSONCurlUtil.get(${curl}, "$.items[?(@['name'] != 'Uncategorized')]['id']");
+		var folderIdList = JSONCurlUtil.get(${curl}, "$.items[?(@['name'] != 'Default')]['id']");
 
 		return ${folderIdList};
 	}

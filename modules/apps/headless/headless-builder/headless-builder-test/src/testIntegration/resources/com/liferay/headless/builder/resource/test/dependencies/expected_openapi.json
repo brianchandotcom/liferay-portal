@@ -402,9 +402,9 @@
 				]
 			}
 		},
-		"/path/post": {
+		"/post-path": {
 			"post": {
-				"operationId": "postPathPost",
+				"operationId": "postPostPath",
 				"requestBody": {
 					"content": {
 						"application/json": {
@@ -573,6 +573,56 @@
 							"application/xml": {
 								"schema": {
 									"$ref": "#/components/schemas/PageSiteScopedSchemaName"
+								}
+							}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"SiteScopedSchemaName"
+				]
+			}
+		},
+		"/scopes/{scopeKey}/site-scoped-post-path": {
+			"post": {
+				"operationId": "postScopeScopeKeySiteScopedPostPath",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "scopeKey",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/SiteScopedSchemaName"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/SiteScopedSchemaName"
+							}
+						}
+					},
+					"description": "default response"
+				},
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/SiteScopedSchemaName"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/SiteScopedSchemaName"
 								}
 							}
 						},

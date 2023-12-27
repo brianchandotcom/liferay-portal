@@ -215,6 +215,10 @@ public class ObjectFolderLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
+	public static ObjectFolder fetchDefaultObjectFolder(long companyId) {
+		return getService().fetchDefaultObjectFolder(companyId);
+	}
+
 	public static ObjectFolder fetchObjectFolder(long objectFolderId) {
 		return getService().fetchObjectFolder(objectFolderId);
 	}
@@ -244,14 +248,16 @@ public class ObjectFolderLocalServiceUtil {
 			uuid, companyId);
 	}
 
-	public static ObjectFolder fetchUncategorizedObjectFolder(long companyId) {
-		return getService().fetchUncategorizedObjectFolder(companyId);
-	}
-
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
 		return getService().getActionableDynamicQuery();
+	}
+
+	public static ObjectFolder getDefaultObjectFolder(long companyId)
+		throws PortalException {
+
+		return getService().getDefaultObjectFolder(companyId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
@@ -339,10 +345,10 @@ public class ObjectFolderLocalServiceUtil {
 		return getService().getObjectFoldersCount(companyId);
 	}
 
-	public static ObjectFolder getOrAddUncategorizedObjectFolder(long companyId)
+	public static ObjectFolder getOrAddDefaultObjectFolder(long companyId)
 		throws PortalException {
 
-		return getService().getOrAddUncategorizedObjectFolder(companyId);
+		return getService().getOrAddDefaultObjectFolder(companyId);
 	}
 
 	/**
@@ -361,12 +367,6 @@ public class ObjectFolderLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
-	}
-
-	public static ObjectFolder getUncategorizedObjectFolder(long companyId)
-		throws PortalException {
-
-		return getService().getUncategorizedObjectFolder(companyId);
 	}
 
 	/**

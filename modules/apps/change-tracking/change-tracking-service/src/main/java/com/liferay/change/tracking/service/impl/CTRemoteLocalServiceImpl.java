@@ -15,7 +15,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 
@@ -98,9 +97,6 @@ public class CTRemoteLocalServiceImpl extends CTRemoteLocalServiceBaseImpl {
 
 		return ctRemotePersistence.update(ctRemote);
 	}
-
-	@Reference
-	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
 	private JSONStorageEntryLocalService _jsonStorageEntryLocalService;

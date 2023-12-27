@@ -595,8 +595,8 @@ definition {
 			value1 = "LiferayElasticsearchCluster");
 
 		AssertTextEquals.assertPartialText(
-			key_connectionId = "__REMOTE__",
 			key_clusterMode = "Write",
+			key_connectionId = "__REMOTE__",
 			locator1 = "SearchAdmin#CLUSTER_MODE",
 			value1 = "Write");
 
@@ -606,8 +606,8 @@ definition {
 			value1 = "LiferayElasticsearchClusterTwo");
 
 		AssertTextEquals.assertPartialText(
-			key_connectionId = "localcluster",
 			key_clusterMode = "Read",
+			key_connectionId = "localcluster",
 			locator1 = "SearchAdmin#CLUSTER_MODE",
 			value1 = "Read");
 

@@ -28,6 +28,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
@@ -216,9 +217,11 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 					openAPIContext, openAPI.getPaths()));
 		}
 
-		_setReadOnlyProperties(schemas);
+		_setBatchCSVExtension(objectDefinitionSchemaProperties);
 
 		_setListEntryRef(schemas);
+
+		_setReadOnlyProperties(schemas);
 	}
 
 	private void _addObjectActionPathItem(
@@ -708,6 +711,27 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 		return components.getSchemas();
 	}
 
+	private void _setBatchCSVExtension(Map<String, Schema> properties) {
+		for (Map.Entry<String, Schema> entry : properties.entrySet()) {
+			if (_systemObjectFieldsBatchCSVDisabled.contains(entry.getKey())) {
+				Schema schema = entry.getValue();
+
+				Map<String, Object> extensions = schema.getExtensions();
+
+				if (MapUtil.isEmpty(extensions)) {
+					extensions = HashMapBuilder.<String, Object>put(
+						"x-batch-csv-enabled", "false"
+					).build();
+				}
+				else {
+					extensions.put("x-batch-csv-enabled", "false");
+				}
+
+				schema.setExtensions(extensions);
+			}
+		}
+	}
+
 	private void _setCollectionActionSchemas(
 		Map<String, Schema> actionSchemas, OpenAPIContext openAPIContext,
 		Map<PathItem.HttpMethod, Operation> operations, String pathName) {
@@ -929,5 +953,9 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 	private final OpenAPIResource _openAPIResource;
 	private final Set<String> _readOnlyFieldNames = SetUtil.fromArray(
 		"dateCreated", "dateModified");
+	private final Set<String> _systemObjectFieldsBatchCSVDisabled =
+		SetUtil.fromArray(
+			"actions", "auditEvents", "creator", "keywords", "status",
+			"taxonomyCategoryBriefs", "taxonomyCategoryIds");
 
 }

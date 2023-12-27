@@ -50,9 +50,7 @@ public class GetSitesMVCResourceCommand implements MVCResourceCommand {
 				jsonObject = _sitesProvider.getSitesJSONObject(resourceRequest);
 			}
 			else if (cmd.equals("getSiteByExternalReferenceCodeJSONObject")) {
-				jsonObject =
-					_sitesProvider.getSiteByExternalReferenceCodeJSONObject(
-						resourceRequest);
+				jsonObject = _sitesProvider.getSiteJSONObject(resourceRequest);
 			}
 
 			_writeJSONPortletResponse(

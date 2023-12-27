@@ -62,10 +62,7 @@ export default function ImportTranslation({
 			/>
 
 			<ClayLayout.ContainerFluid className="container-view">
-				<ClayLayout.Sheet
-					className="translation-import-body-form"
-					size="lg"
-				>
+				<ClayLayout.Sheet size="lg">
 					<input
 						defaultValue={redirect}
 						name={`${portletNamespace}redirect`}

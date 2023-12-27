@@ -47,7 +47,7 @@ renderResponse.setTitle(LanguageUtil.get(resourceBundle, "import-translation"));
 			cssClass="container-view"
 			size="lg"
 		>
-			<div class="translation-import-body-form">
+			<div>
 
 				<%
 				boolean importTranslationResultsErrors = false;

@@ -21,7 +21,7 @@ export default function Toolbar({
 	title,
 }) {
 	return (
-		<ClayToolbar className="subnav-tbar-light">
+		<ClayToolbar className="management-bar management-bar-light navbar navbar-expand-md">
 			<ClayLayout.ContainerFluid>
 				<ClayToolbar.Nav>
 					<ClayToolbar.Item expand>

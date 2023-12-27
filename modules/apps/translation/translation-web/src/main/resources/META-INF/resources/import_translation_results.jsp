@@ -18,7 +18,7 @@ renderResponse.setTitle(LanguageUtil.get(resourceBundle, "import-translation"));
 
 <div class="translation">
 	<div class="translation-import">
-		<nav class="component-tbar subnav-tbar-light tbar">
+		<nav class="management-bar management-bar-light navbar navbar-expand-md">
 			<clay:container-fluid>
 				<ul class="tbar-nav">
 					<li class="tbar-item tbar-item-expand">

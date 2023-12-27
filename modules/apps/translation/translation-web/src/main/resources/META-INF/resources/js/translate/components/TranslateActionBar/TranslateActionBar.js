@@ -27,7 +27,7 @@ const TransLateActionBar = ({
 	translateLanguagesSelectorData,
 }) => {
 	return (
-		<nav className="component-tbar subnav-tbar-light tbar">
+		<nav className="management-bar management-bar-light navbar navbar-expand-md">
 			<ClayLayout.ContainerFluid view>
 				<ul className="tbar-nav">
 					{experienceSelectorData && (

@@ -97,10 +97,13 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 		Set<JobProperty> playwrightJobProperties = new HashSet<>();
 
 		for (File modifiedModuleDir : modifiedModuleDirsSet) {
-			playwrightJobProperties.add(
-				getJobProperty(
-					PLAYWRIGHT_TEST_PROJECT_PROPERTY_NAME, modifiedModuleDir,
-					JobProperty.Type.MODULE_TEST_DIR));
+			JobProperty playwrightTestProjectJobProperty = getJobProperty(
+				PLAYWRIGHT_TEST_PROJECT_PROPERTY_NAME, modifiedModuleDir,
+				JobProperty.Type.MODULE_TEST_DIR);
+
+			if (playwrightTestProjectJobProperty.getValue() != null) {
+				playwrightJobProperties.add(playwrightTestProjectJobProperty);
+			}
 		}
 
 		playwrightJobProperties.removeAll(Collections.singleton(null));

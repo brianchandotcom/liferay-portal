@@ -86,9 +86,8 @@ public class SitesProviderTest {
 				}
 			});
 
-		JSONObject siteJSONObject =
-			_sitesProvider.getSiteByExternalReferenceCodeJSONObject(
-				_resourceRequest);
+		JSONObject siteJSONObject = _sitesProvider.getSiteJSONObject(
+			_resourceRequest);
 
 		Assert.assertEquals(
 			siteJSONObject.toString(),

@@ -33,8 +33,7 @@ import org.osgi.service.component.annotations.Reference;
 public class SitesProviderImpl implements SitesProvider {
 
 	@Override
-	public JSONObject getSiteByExternalReferenceCodeJSONObject(
-			ResourceRequest resourceRequest)
+	public JSONObject getSiteJSONObject(ResourceRequest resourceRequest)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(

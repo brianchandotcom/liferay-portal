@@ -17,8 +17,7 @@ import javax.portlet.ResourceRequest;
 @ProviderType
 public interface SitesProvider {
 
-	public JSONObject getSiteByExternalReferenceCodeJSONObject(
-			ResourceRequest resourceRequest)
+	public JSONObject getSiteJSONObject(ResourceRequest resourceRequest)
 		throws Exception;
 
 	public JSONObject getSitesJSONObject(ResourceRequest resourceRequest)

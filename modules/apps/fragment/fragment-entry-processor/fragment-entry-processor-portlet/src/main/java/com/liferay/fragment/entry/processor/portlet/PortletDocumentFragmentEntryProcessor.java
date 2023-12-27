@@ -69,6 +69,14 @@ public class PortletDocumentFragmentEntryProcessor
 			FragmentEntryProcessorContext fragmentEntryProcessorContext)
 		throws PortalException {
 
+		String html = fragmentEntryLink.getHtml();
+
+		if (!html.contains("lfr-widget-") &&
+			!html.contains("@liferay_portlet")) {
+
+			return;
+		}
+
 		_validateFragmentEntryHTMLDocument(
 			document, fragmentEntryProcessorContext.getLocale());
 

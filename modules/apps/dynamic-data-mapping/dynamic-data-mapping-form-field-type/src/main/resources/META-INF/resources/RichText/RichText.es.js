@@ -171,7 +171,7 @@ const RichText = ({
 			<ClayInput.Group>
 				<ClayInput.GroupItem>
 					<ClassicEditor
-						aria-required={otherProps.required}
+						ariaRequired={otherProps.required}
 						className="w-100"
 						contents={
 							currentValue

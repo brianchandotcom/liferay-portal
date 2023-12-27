@@ -11,6 +11,7 @@ import BaseEditor from './BaseEditor';
 const ClassicEditor = forwardRef(
 	(
 		{
+			ariaRequired,
 			className,
 			contents,
 			editorConfig,
@@ -22,7 +23,7 @@ const ClassicEditor = forwardRef(
 		ref
 	) => {
 		return (
-			<div className={className} id={`${name}Container`}>
+			<div className={className} id={`${name}Container`} role="textbox">
 				{title && (
 					<label className="control-label" htmlFor={name}>
 						{title}
@@ -78,6 +79,24 @@ const ClassicEditor = forwardRef(
 							},
 							noSnapshot: true,
 						});
+
+						const iframe = document.querySelector(
+							'iframe.cke_wysiwyg_frame'
+						);
+
+						iframe.onload = function () {
+							const iframeDocument = iframe.contentDocument;
+							const iframeBody = iframeDocument.querySelector(
+								'body.cke_editable'
+							);
+
+							if (iframeBody) {
+								iframeBody.setAttribute(
+									'aria-required',
+									ariaRequired
+								);
+							}
+						};
 					}}
 					ref={ref}
 					{...otherProps}

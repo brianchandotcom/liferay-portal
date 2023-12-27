@@ -7,7 +7,6 @@ package com.liferay.change.tracking.web.internal.portlet;
 
 import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
-import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
 import com.liferay.change.tracking.service.CTRemoteLocalService;
 import com.liferay.change.tracking.spi.display.CTDisplayRendererRegistry;
@@ -122,9 +121,6 @@ public class PublicationsPortlet extends MVCPortlet {
 
 	@Reference
 	private CTDisplayRendererRegistry _ctDisplayRendererRegistry;
-
-	@Reference
-	private CTEntryLocalService _ctEntryLocalService;
 
 	@Reference
 	private CTPreferencesLocalService _ctPreferencesLocalService;

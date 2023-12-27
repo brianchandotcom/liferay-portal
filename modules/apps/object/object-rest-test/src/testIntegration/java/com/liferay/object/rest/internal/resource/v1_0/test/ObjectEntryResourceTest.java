@@ -5336,11 +5336,9 @@ public class ObjectEntryResourceTest {
 	public void testPostCustomObjectEntryWithNonexistentNestedCustomObjectEntries()
 		throws Exception {
 
-		_objectRelationship1 =
-			ObjectRelationshipTestUtil.addObjectRelationship(
-				_objectDefinition1, _objectDefinition2,
-				TestPropsValues.getUserId(),
-				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+		_objectRelationship1 = ObjectRelationshipTestUtil.addObjectRelationship(
+			_objectDefinition1, _objectDefinition2, TestPropsValues.getUserId(),
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 		_testPostCustomObjectEntryWithNonexistentNestedCustomObjectEntriesInManyToOneRelationship(
 			_objectDefinition2.getRESTContextPath(), _objectRelationship1);

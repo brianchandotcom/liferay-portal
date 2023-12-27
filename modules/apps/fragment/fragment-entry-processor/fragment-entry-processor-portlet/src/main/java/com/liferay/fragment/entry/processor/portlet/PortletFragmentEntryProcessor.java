@@ -42,14 +42,6 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 			FragmentEntryProcessorContext fragmentEntryProcessorContext)
 		throws PortalException {
 
-		HttpServletRequest httpServletRequest =
-			fragmentEntryProcessorContext.getHttpServletRequest();
-
-		if (httpServletRequest != null) {
-			httpServletRequest.setAttribute(
-				FragmentWebKeys.FRAGMENT_ENTRY_LINK, fragmentEntryLink);
-		}
-
 		if (fragmentEntryLink.isTypePortlet()) {
 			return _renderWidgetHTML(
 				fragmentEntryLink, fragmentEntryProcessorContext);
@@ -80,7 +72,7 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 			fragmentEntryProcessorContext.getHttpServletRequest();
 
 		String html = _fragmentPortletRenderer.renderPortlet(
-			httpServletRequest,
+			fragmentEntryLink, httpServletRequest,
 			fragmentEntryProcessorContext.getHttpServletResponse(), portletId,
 			instanceId,
 			PortletPreferencesFactoryUtil.toXML(

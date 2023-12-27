@@ -133,6 +133,7 @@ public class PortletDocumentFragmentEntryProcessor
 			}
 
 			String portletHTML = _fragmentPortletRenderer.renderPortlet(
+				fragmentEntryLink,
 				fragmentEntryProcessorContext.getHttpServletRequest(),
 				fragmentEntryProcessorContext.getHttpServletResponse(),
 				portletName, instanceId,

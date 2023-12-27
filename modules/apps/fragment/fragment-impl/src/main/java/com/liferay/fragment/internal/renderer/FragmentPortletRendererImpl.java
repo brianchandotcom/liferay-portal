@@ -5,7 +5,6 @@
 
 package com.liferay.fragment.internal.renderer;
 
-import com.liferay.fragment.constants.FragmentWebKeys;
 import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentPortletRenderer;
@@ -31,6 +30,7 @@ public class FragmentPortletRendererImpl implements FragmentPortletRenderer {
 
 	@Override
 	public String renderPortlet(
+			FragmentEntryLink fragmentEntryLink,
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, String portletName,
 			String instanceId, String defaultPreferences)
@@ -40,15 +40,11 @@ public class FragmentPortletRendererImpl implements FragmentPortletRenderer {
 
 		boolean inheritedFromMaster = false;
 
-		FragmentEntryLink fragmentEntryLink =
-			(FragmentEntryLink)httpServletRequest.getAttribute(
-				FragmentWebKeys.FRAGMENT_ENTRY_LINK);
-
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		if ((fragmentEntryLink != null) && (themeDisplay != null) &&
+		if ((themeDisplay != null) &&
 			(fragmentEntryLink.getPlid() != themeDisplay.getPlid())) {
 
 			inheritedFromMaster = true;

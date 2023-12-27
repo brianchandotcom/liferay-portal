@@ -5,6 +5,7 @@
 
 package com.liferay.fragment.renderer;
 
+import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 public interface FragmentPortletRenderer {
 
 	public String renderPortlet(
+			FragmentEntryLink fragmentEntryLink,
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, String portletName,
 			String instanceId, String defaultPreferences)

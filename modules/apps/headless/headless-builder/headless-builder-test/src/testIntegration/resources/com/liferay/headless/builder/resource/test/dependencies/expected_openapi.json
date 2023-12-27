@@ -402,6 +402,34 @@
 				]
 			}
 		},
+		"/path/post": {
+			"post": {
+				"operationId": "postPathPost",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/SchemaName"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/SchemaName"
+							}
+						}
+					},
+					"description": "default response"
+				},
+				"responses": {
+					"default": {
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"SchemaName"
+				]
+			}
+		},
 		"/scopes/{scopeKey}/no-schema": {
 			"get": {
 				"operationId": "getScopeScopeKeyNoSchemaPage",

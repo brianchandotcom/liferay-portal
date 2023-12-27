@@ -581,8 +581,12 @@ definition {
 
 		CrossClusterReplication.setupCrossClusterReplication(portalCluster = "true");
 
-		SearchAdministration.openSearchAdmin();
+		JSONDocument.addFile(
+			dmDocumentDescription = "DM Description",
+			dmDocumentTitle = "DM Title 1",
+			groupName = "Guest");
 
+		SearchAdministration.openSearchAdmin();
 
 		AssertTextEquals.assertPartialText(
 			key_connectionId = "__REMOTE__",
@@ -605,11 +609,6 @@ definition {
 			key_connectionId = "localcluster",
 			locator1 = "SearchAdmin#CLUSTER_MODE",
 			value1 = "Read");
-
-		JSONDocument.addFile(
-			dmDocumentDescription = "DM Description",
-			dmDocumentTitle = "DM Title 1",
-			groupName = "Guest");
 
 		Navigator.openURL();
 

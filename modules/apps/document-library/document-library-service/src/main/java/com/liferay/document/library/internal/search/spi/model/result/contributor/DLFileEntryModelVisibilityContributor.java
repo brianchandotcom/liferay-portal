@@ -13,18 +13,17 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.search.spi.model.result.contributor.ModelVisibilityContributor;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Michael C. Han
  */
-@Component(
-	property = "indexer.class.name=com.liferay.document.library.kernel.model.DLFileEntry",
-	service = ModelVisibilityContributor.class
-)
 public class DLFileEntryModelVisibilityContributor
 	implements ModelVisibilityContributor {
+
+	public DLFileEntryModelVisibilityContributor(
+		DLAppLocalService dlAppLocalService) {
+
+		_dlAppLocalService = dlAppLocalService;
+	}
 
 	@Override
 	public boolean isVisible(long classPK, int status) {
@@ -37,12 +36,9 @@ public class DLFileEntryModelVisibilityContributor
 		return isVisible(fileVersion.getStatus(), status);
 	}
 
-	@Reference
-	protected DLAppLocalService dlAppLocalService;
-
 	private FileVersion _getFileVersion(long classPK) {
 		try {
-			FileEntry fileEntry = dlAppLocalService.getFileEntry(classPK);
+			FileEntry fileEntry = _dlAppLocalService.getFileEntry(classPK);
 
 			return fileEntry.getFileVersion();
 		}
@@ -57,5 +53,7 @@ public class DLFileEntryModelVisibilityContributor
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLFileEntryModelVisibilityContributor.class);
+
+	private final DLAppLocalService _dlAppLocalService;
 
 }

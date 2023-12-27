@@ -16,6 +16,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
@@ -648,6 +649,10 @@ public class PullRequest {
 	}
 
 	public boolean hasRequiredPassingTestSuites() {
+		return hasRequiredPassingTestSuites(false);
+	}
+
+	public boolean hasRequiredPassingTestSuites(boolean force) {
 		Properties buildProperties = null;
 
 		try {
@@ -657,17 +662,27 @@ public class PullRequest {
 			throw new RuntimeException(ioException);
 		}
 
-		String requiredPassingSuites = JenkinsResultsParserUtil.getProperty(
-			buildProperties, "pull.request.forward.required.passing.suites",
-			getGitRepositoryName());
+		String requiredPassingSuitesProperty =
+			JenkinsResultsParserUtil.getProperty(
+				buildProperties, "pull.request.forward.required.passing.suites",
+				getGitRepositoryName());
 
-		if (JenkinsResultsParserUtil.isNullOrEmpty(requiredPassingSuites)) {
+		if (JenkinsResultsParserUtil.isNullOrEmpty(
+				requiredPassingSuitesProperty)) {
+
 			return true;
+		}
+
+		List<String> requiredPassingSuites = Arrays.asList(
+			requiredPassingSuitesProperty.split("\\s*,\\s*"));
+
+		if (force) {
+			requiredPassingSuites.remove("relevant");
 		}
 
 		List<String> passingTestSuites = getPassingTestSuites();
 
-		for (String requiredPassingSuite : requiredPassingSuites.split(",")) {
+		for (String requiredPassingSuite : requiredPassingSuites) {
 			if (!passingTestSuites.contains(requiredPassingSuite)) {
 				return false;
 			}

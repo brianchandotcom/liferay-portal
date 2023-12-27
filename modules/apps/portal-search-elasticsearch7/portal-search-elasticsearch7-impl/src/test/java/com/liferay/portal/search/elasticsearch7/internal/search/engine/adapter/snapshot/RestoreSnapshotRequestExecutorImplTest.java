@@ -58,31 +58,31 @@ public class RestoreSnapshotRequestExecutorImplTest {
 			_elasticsearchFixture);
 
 		org.elasticsearch.action.admin.cluster.snapshots.restore.
-			RestoreSnapshotRequest elasticsearchRestoreSnapshotsRequest =
+			RestoreSnapshotRequest elasticsearchRestoreSnapshotRequest =
 				restoreSnapshotRequestExecutorImpl.createRestoreSnapshotRequest(
 					restoreSnapshotRequest);
 
 		Assert.assertArrayEquals(
 			restoreSnapshotRequest.getIndexNames(),
-			elasticsearchRestoreSnapshotsRequest.indices());
+			elasticsearchRestoreSnapshotRequest.indices());
 		Assert.assertEquals(
 			restoreSnapshotRequest.isIncludeAliases(),
-			elasticsearchRestoreSnapshotsRequest.includeAliases());
+			elasticsearchRestoreSnapshotRequest.includeAliases());
 		Assert.assertEquals(
 			restoreSnapshotRequest.isPartialRestore(),
-			elasticsearchRestoreSnapshotsRequest.partial());
+			elasticsearchRestoreSnapshotRequest.partial());
 		Assert.assertEquals(
 			restoreSnapshotRequest.getRepositoryName(),
-			elasticsearchRestoreSnapshotsRequest.repository());
+			elasticsearchRestoreSnapshotRequest.repository());
 		Assert.assertEquals(
 			restoreSnapshotRequest.isRestoreGlobalState(),
-			elasticsearchRestoreSnapshotsRequest.includeGlobalState());
+			elasticsearchRestoreSnapshotRequest.includeGlobalState());
 		Assert.assertEquals(
 			restoreSnapshotRequest.getSnapshotName(),
-			elasticsearchRestoreSnapshotsRequest.snapshot());
+			elasticsearchRestoreSnapshotRequest.snapshot());
 		Assert.assertEquals(
 			restoreSnapshotRequest.isWaitForCompletion(),
-			elasticsearchRestoreSnapshotsRequest.waitForCompletion());
+			elasticsearchRestoreSnapshotRequest.waitForCompletion());
 	}
 
 	private ElasticsearchFixture _elasticsearchFixture;

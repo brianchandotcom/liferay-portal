@@ -44,11 +44,11 @@ public class SXPElementUtil {
 
 		Set<String> externalReferenceCodes = new HashSet<>();
 
-		for (com.liferay.search.experiences.model.SXPElement sxpPElement :
+		for (com.liferay.search.experiences.model.SXPElement sxpElement :
 				sxpElementLocalService.getSXPElements(
 					company.getCompanyId(), true)) {
 
-			externalReferenceCodes.add(sxpPElement.getExternalReferenceCode());
+			externalReferenceCodes.add(sxpElement.getExternalReferenceCode());
 		}
 
 		for (SXPElement sxpElement : _getOrCreateSXPElements()) {

@@ -8,9 +8,9 @@ definition {
 			Check(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX");
 		}
 
-		AssertElementPresent.assertVisible(locator1 = "Icon#EDIT_CATEGORIES");
-
-		Click(locator1 = "Icon#EDIT_CATEGORIES");
+		Click(
+			key_text = "Edit Categories",
+			locator1 = "Button#ANY");
 	}
 
 	@summary = "Default summary"

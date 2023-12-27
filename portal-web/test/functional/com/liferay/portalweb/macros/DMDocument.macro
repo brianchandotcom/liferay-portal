@@ -1263,8 +1263,6 @@ definition {
 	macro configureDocumentEmailSenderInfo(senderName = null, senderEmail = null) {
 		Portlet.gotoPortletOptions(portletOption = "Configuration");
 
-		SelectFrame(locator1 = "IFrame#CONFIGURATION");
-
 		Click(
 			key_navTab = "Email From",
 			locator1 = "DocumentsAndMediaConfiguration#CONFIGURATION_NAV_ITEM");
@@ -1282,10 +1280,6 @@ definition {
 				locator1 = "TextInput#ANY",
 				value1 = ${senderEmail});
 		}
-
-		SelectFrame(value1 = "relative=top");
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		if (isSet(cancel)) {
 			Button.clickCancel();

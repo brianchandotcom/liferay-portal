@@ -494,7 +494,7 @@ definition {
 			objectName = "ImportedSimpleObject146358");
 
 		AssertElementPresent(
-			folderLabel = "Uncategorized",
+			folderLabel = "Default",
 			locator1 = "ObjectAdmin#FOLDER_LABEL");
 
 		AssertElementPresent(

@@ -10,6 +10,17 @@ import React from 'react';
 
 import ObjectFoldersSideBar from '../components/ViewObjectDefinitions/ObjectFoldersSidebar';
 
+const defaultObjectFolder = {
+	actions: {get: {href: '', method: 'GET'}},
+	dateCreated: '2023-08-07T14:42:21Z',
+	dateModified: '2023-08-07T14:42:21Z',
+	externalReferenceCode: 'default',
+	id: 2,
+	label: {en_US: 'Default'},
+	name: 'Default',
+	objectFolderItems: [],
+};
+
 const ticketObjectFolder = {
 	actions: {get: {href: '', method: 'GET'}},
 	dateCreated: '2023-08-07T14:45:00Z',
@@ -21,20 +32,9 @@ const ticketObjectFolder = {
 	objectFolderItems: [],
 };
 
-const uncategorizedObjectFolder = {
-	actions: {get: {href: '', method: 'GET'}},
-	dateCreated: '2023-08-07T14:42:21Z',
-	dateModified: '2023-08-07T14:42:21Z',
-	externalReferenceCode: 'uncategorized',
-	id: 2,
-	label: {en_US: 'Uncategorized'},
-	name: 'Uncategorized',
-	objectFolderItems: [],
-};
-
 const objectFoldersRequestInfo = {
 	actions: {create: {href: '', method: 'POST'}},
-	items: [ticketObjectFolder, uncategorizedObjectFolder],
+	items: [defaultObjectFolder, ticketObjectFolder],
 };
 
 describe('The ObjectFoldersSidebar component should', () => {
@@ -46,7 +46,7 @@ describe('The ObjectFoldersSidebar component should', () => {
 				objectDefinitionsActions={{create: {href: '', method: 'POST'}}}
 				objectFoldersRequestInfo={objectFoldersRequestInfo}
 				portletNamespace=""
-				selectedObjectFolder={uncategorizedObjectFolder}
+				selectedObjectFolder={defaultObjectFolder}
 				setModalImportProperties={() => {}}
 				setSelectedObjectFolder={() => {}}
 				setShowModal={() => {}}
@@ -57,7 +57,7 @@ describe('The ObjectFoldersSidebar component should', () => {
 
 		expect(screen.getByText('Ticket')).toBeInTheDocument();
 
-		expect(screen.getByText('Uncategorized')).toBeInTheDocument();
+		expect(screen.getByText('Default')).toBeInTheDocument();
 
 		userEvent.click(
 			screen.getByRole('button', {name: 'object-folder-actions'})

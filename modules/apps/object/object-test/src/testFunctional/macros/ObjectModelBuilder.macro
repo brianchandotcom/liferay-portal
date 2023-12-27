@@ -3,7 +3,7 @@ definition {
 	@summary = "Default summary"
 	macro openObjectFolderInModelBuilder(baseURL = null) {
 		if (!(isSet(objectFolderName))) {
-			var objectFolderName = "Uncategorized";
+			var objectFolderName = "Default";
 		}
 
 		Navigator.openWithAppendToBaseURL(

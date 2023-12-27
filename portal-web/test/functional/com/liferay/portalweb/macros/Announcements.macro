@@ -1,11 +1,6 @@
 definition {
 
 	@summary = "Default summary"
-	macro accessAddAnnouncements() {
-		Click(locator1 = "Icon#PLUS");
-	}
-
-	@summary = "Default summary"
 	macro addAnnouncement() {
 		Type(
 			locator1 = "TextInput#TITLE",

@@ -7,10 +7,24 @@ package com.liferay.redirect.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.TransactionConfig;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
+import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.spring.transaction.DefaultTransactionExecutor;
+import com.liferay.portal.test.rule.ExpectedDBType;
+import com.liferay.portal.test.rule.ExpectedLog;
+import com.liferay.portal.test.rule.ExpectedLogs;
+import com.liferay.portal.test.rule.ExpectedMultipleLogs;
+import com.liferay.portal.test.rule.ExpectedType;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.redirect.model.RedirectNotFoundEntry;
@@ -24,12 +38,18 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.hibernate.engine.jdbc.batch.internal.BatchingBatch;
+import org.hibernate.engine.jdbc.spi.SqlExceptionHelper;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Alejandro Tardín
@@ -53,6 +73,98 @@ public class RedirectNotFoundEntryLocalServiceTest {
 			_addOrUpdateRedirectNotFoundEntry("url");
 
 		Assert.assertEquals(1, redirectNotFoundEntry.getRequestCount());
+	}
+
+	@ExpectedMultipleLogs(
+		expectedMultipleLogs = {
+			@ExpectedLogs(
+				expectedLogs = {
+					@ExpectedLog(
+						expectedLog = "Application exception overridden by commit exception",
+						expectedType = ExpectedType.PREFIX
+					)
+				},
+				level = "ERROR", loggerClass = DefaultTransactionExecutor.class
+			),
+			@ExpectedLogs(
+				expectedLogs = {
+					@ExpectedLog(
+						expectedDBType = ExpectedDBType.DB2,
+						expectedLog = "Batch failure",
+						expectedType = ExpectedType.CONTAINS
+					),
+					@ExpectedLog(
+						expectedDBType = ExpectedDBType.DB2,
+						expectedLog = "DB2 SQL Error: SQLCODE=-803",
+						expectedType = ExpectedType.CONTAINS
+					),
+					@ExpectedLog(
+						expectedDBType = ExpectedDBType.HYPERSONIC,
+						expectedLog = "integrity constraint violation",
+						expectedType = ExpectedType.PREFIX
+					),
+					@ExpectedLog(
+						expectedDBType = ExpectedDBType.MARIADB,
+						expectedLog = "Duplicate entry '",
+						expectedType = ExpectedType.PREFIX
+					),
+					@ExpectedLog(
+						expectedDBType = ExpectedDBType.MYSQL,
+						expectedLog = "Duplicate entry '",
+						expectedType = ExpectedType.PREFIX
+					),
+					@ExpectedLog(
+						expectedDBType = ExpectedDBType.ORACLE,
+						expectedLog = "ORA-00001: unique constraint",
+						expectedType = ExpectedType.PREFIX
+					),
+					@ExpectedLog(
+						expectedDBType = ExpectedDBType.POSTGRESQL,
+						expectedLog = "Batch entry",
+						expectedType = ExpectedType.PREFIX
+					),
+					@ExpectedLog(
+						expectedDBType = ExpectedDBType.POSTGRESQL,
+						expectedLog = "duplicate key",
+						expectedType = ExpectedType.CONTAINS
+					),
+					@ExpectedLog(
+						expectedDBType = ExpectedDBType.SQLSERVER,
+						expectedLog = "Cannot insert duplicate key row",
+						expectedType = ExpectedType.PREFIX
+					),
+					@ExpectedLog(
+						expectedDBType = ExpectedDBType.SYBASE,
+						expectedLog = "Attempt to insert duplicate key row",
+						expectedType = ExpectedType.CONTAINS
+					)
+				},
+				level = "ERROR", loggerClass = SqlExceptionHelper.class
+			),
+			@ExpectedLogs(
+				expectedLogs = {
+					@ExpectedLog(
+						expectedDBType = ExpectedDBType.NONE,
+						expectedLog = "HHH000315: Exception executing batch [java.sql.BatchUpdateException",
+						expectedType = ExpectedType.PREFIX
+					)
+				},
+				level = "ERROR", loggerClass = BatchingBatch.class
+			)
+		}
+	)
+	@Test
+	public void testAddOrUpdateRedirectNotFoundEntryConcurrently()
+		throws Exception {
+
+		try (AutoCloseable autoCloseable =
+				_registerRedirectNotFoundEntryModelListener()) {
+
+			RedirectNotFoundEntry redirectNotFoundEntry =
+				_addOrUpdateRedirectNotFoundEntry("url");
+
+			Assert.assertEquals(2, redirectNotFoundEntry.getRequestCount());
+		}
 	}
 
 	@Test
@@ -264,6 +376,48 @@ public class RedirectNotFoundEntryLocalServiceTest {
 
 		return _redirectNotFoundEntryLocalService.updateRedirectNotFoundEntry(
 			redirectNotFoundEntry);
+	}
+
+	private AutoCloseable _registerRedirectNotFoundEntryModelListener() {
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
+
+		ServiceRegistration<?> serviceRegistration =
+			bundleContext.registerService(
+				(Class<ModelListener<RedirectNotFoundEntry>>)
+					(Class<?>)ModelListener.class,
+				new BaseModelListener<RedirectNotFoundEntry>() {
+
+					@Override
+					public void onBeforeCreate(
+						RedirectNotFoundEntry redirectNotFoundEntry) {
+
+						if (!_executed) {
+							_executed = true;
+
+							try {
+								TransactionInvokerUtil.invoke(
+									TransactionConfig.Factory.create(
+										Propagation.REQUIRES_NEW,
+										new Class<?>[] {Exception.class}),
+									() -> {
+										_addOrUpdateRedirectNotFoundEntry(
+											"url");
+
+										return null;
+									});
+							}
+							catch (Throwable throwable) {
+								throw new SystemException(throwable);
+							}
+						}
+					}
+
+					private boolean _executed;
+
+				},
+				new HashMapDictionary<>());
+
+		return serviceRegistration::unregister;
 	}
 
 	@DeleteAfterTestRun

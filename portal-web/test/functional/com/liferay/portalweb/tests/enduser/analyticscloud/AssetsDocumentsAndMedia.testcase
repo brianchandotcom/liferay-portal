@@ -168,6 +168,8 @@ definition {
 		task ("Download the document with anonymous user") {
 			User.logoutPG();
 
+			ACUtils.clearLocalStorage();
+
 			ACUtils.navigateToSitePage(
 				actionType = "Download DM",
 				documentTitleList = "DM AC Title",

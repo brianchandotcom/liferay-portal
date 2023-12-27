@@ -106,7 +106,7 @@ public class ObjectFolderLocalServiceImpl
 		throws PortalException {
 
 		if (!PortalInstances.isCurrentCompanyInDeletionProcess() &&
-			objectFolder.isUncategorized()) {
+			objectFolder.isDefault()) {
 
 			throw new UnsupportedOperationException(
 				"Uncategorized cannot be deleted");
@@ -186,7 +186,7 @@ public class ObjectFolderLocalServiceImpl
 		ObjectFolder objectFolder = objectFolderPersistence.findByPrimaryKey(
 			objectFolderId);
 
-		if (objectFolder.isUncategorized()) {
+		if (objectFolder.isDefault()) {
 			return objectFolder;
 		}
 

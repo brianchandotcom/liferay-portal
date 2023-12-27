@@ -331,8 +331,8 @@ public class ObjectFolderWrapper
 	}
 
 	@Override
-	public boolean isUncategorized() {
-		return model.isUncategorized();
+	public boolean isDefault() {
+		return model.isDefault();
 	}
 
 	@Override

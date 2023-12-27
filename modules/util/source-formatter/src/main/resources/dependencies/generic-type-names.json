@@ -50,10 +50,6 @@
 		},
 		{
 			"genericTypeCount": 1,
-			"name": "com.liferay.adaptive.media.content.transformer.ContentTransformer"
-		},
-		{
-			"genericTypeCount": 1,
 			"name": "com.liferay.adaptive.media.content.transformer.ContentTransformerContentType"
 		},
 		{

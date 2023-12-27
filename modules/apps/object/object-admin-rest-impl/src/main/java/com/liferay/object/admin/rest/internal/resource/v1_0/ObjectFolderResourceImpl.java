@@ -356,7 +356,7 @@ public class ObjectFolderResourceImpl extends BaseObjectFolderResourceImpl {
 				actions = HashMapBuilder.put(
 					"delete",
 					() -> {
-						if (objectFolder.isUncategorized()) {
+						if (objectFolder.isDefault()) {
 							return null;
 						}
 
@@ -377,7 +377,7 @@ public class ObjectFolderResourceImpl extends BaseObjectFolderResourceImpl {
 				).put(
 					"update",
 					() -> {
-						if (objectFolder.isUncategorized()) {
+						if (objectFolder.isDefault()) {
 							return null;
 						}
 

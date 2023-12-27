@@ -47,6 +47,6 @@ public interface ObjectFolder extends ObjectFolderModel, PersistedModel {
 
 		};
 
-	public boolean isUncategorized();
+	public boolean isDefault();
 
 }

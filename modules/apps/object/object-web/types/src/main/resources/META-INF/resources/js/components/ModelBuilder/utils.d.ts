@@ -43,7 +43,35 @@ export declare function getEdgeParams(
 	targetY: number;
 };
 export declare function getObjectFolderName(): string;
-export declare function getObjectFolderDiagramCenter(): {
+interface getObjectDefinitionNodePosition {
+	index: number;
+	objectDefinition: ObjectDefinitionNodeData;
+	objectFolderExternalReferenceCode: string;
+	outdatedObjectFolderItems: ObjectFolderItem[];
+	positionColumn: {
+		x: number;
+		y: number;
+	};
+	updatedObjectFolderItems: ObjectFolderItem[];
+}
+export declare function getObjectDefinitionNodePosition({
+	index,
+	objectDefinition,
+	objectFolderExternalReferenceCode,
+	outdatedObjectFolderItems,
+	positionColumn,
+	updatedObjectFolderItems,
+}: getObjectDefinitionNodePosition): {
+	x: number;
+	y: number;
+};
+export declare function getObjectDefinitionNodeNextPosition(
+	objectFolderItems: ObjectFolderItem[]
+): {
+	x: number;
+	y: number;
+};
+export declare function getObjectFolderDiagramCenterPosition(): {
 	x: number;
 	y: number;
 };
@@ -51,3 +79,4 @@ export declare function updateURLParam(
 	paramType: string,
 	paramValue: string
 ): void;
+export {};

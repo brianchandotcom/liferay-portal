@@ -16,7 +16,12 @@ import {
 	TAction,
 	TState,
 } from '../types';
-import {getObjectFolderDiagramCenter, updateURLParam} from '../utils';
+import {
+	getObjectDefinitionNodeNextPosition,
+	getObjectDefinitionNodePosition,
+	getObjectFolderDiagramCenterPosition,
+	updateURLParam,
+} from '../utils';
 import {
 	convertAllObjectFieldsToUnselected,
 	getNonOverlappingEdges,
@@ -39,29 +44,16 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 			const objectDefinitionNodes = elements.filter((element) =>
 				isNode(element)
 			) as Node<ObjectDefinitionNodeData>[];
-			let newPosition = getObjectFolderDiagramCenter();
+
+			let objectDefinitionNodePosition;
 
 			if (objectDefinitionNodes.length) {
-				const yPositions = objectDefinitionNodes.map(
-					(objectDefinitionNode) => objectDefinitionNode.position.y
+				objectDefinitionNodePosition = getObjectDefinitionNodeNextPosition(
+					selectedObjectFolder.objectFolderItems
 				);
-				const maximumY = Math.max(...yPositions);
-				const maximumNodesYPosition = objectDefinitionNodes.filter(
-					(objectDefinitionNode) =>
-						objectDefinitionNode.position.y === maximumY
-				);
-				const xPositions = maximumNodesYPosition.map(
-					(objectDefinitionNode) => objectDefinitionNode.position.x
-				);
-				const maximumX = Math.max(...xPositions);
-				const mostBottomRightNodePosition = maximumNodesYPosition.find(
-					(objectDefinitionNode) =>
-						objectDefinitionNode.position.x === maximumX
-				)!.position;
-				newPosition = {
-					x: mostBottomRightNodePosition!.x + 380,
-					y: mostBottomRightNodePosition!.y,
-				};
+			}
+			else {
+				objectDefinitionNodePosition = getObjectFolderDiagramCenterPosition();
 			}
 
 			const newLeftSidebarItems = leftSidebarItems.map(
@@ -135,8 +127,8 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 					newObjectDefinition.objectFolderExternalReferenceCode,
 				objectDefinitionExternalReferenceCode:
 					newObjectDefinition.externalReferenceCode,
-				positionX: newPosition.x,
-				positionY: newPosition.y,
+				positionX: objectDefinitionNodePosition.x,
+				positionY: objectDefinitionNodePosition.y,
 			});
 
 			const updatedObjectFolders = objectFolders.filter(
@@ -175,7 +167,7 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 					selected: true,
 				},
 				id: newObjectDefinition.id.toString(),
-				position: newPosition,
+				position: objectDefinitionNodePosition,
 				type: 'objectDefinitionNode',
 			} as Node<ObjectDefinitionNodeData>;
 
@@ -434,7 +426,7 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 			const {
 				objectFolders,
 				rightSidebarType,
-				selectedObjectFolder,
+				selectedObjectFolderName,
 				selectedObjectRelationshipId,
 			} = action.payload;
 
@@ -476,19 +468,19 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 				} as LeftSidebarItem;
 			});
 
-			const currentObjectFolder = objectFolders.find(
-				(objectFolder) =>
-					objectFolder.name === selectedObjectFolder.name
+			const selectedObjectFolder = objectFolders.find(
+				(objectFolder) => objectFolder.name === selectedObjectFolderName
 			);
+
+			const updatedObjectFolderItems: ObjectFolderItem[] = [];
 
 			let newObjectDefinitionNodes: Node<ObjectDefinitionNodeData>[] = [];
 			const allEdges: Edge<ObjectRelationshipEdgeData>[] = [];
-			const updatedObjectFolderItems: ObjectFolderItem[] = [];
 
-			if (currentObjectFolder) {
-				const positionColumn = {positionX: 0, positionY: 0};
+			if (selectedObjectFolder) {
+				const positionColumn = {x: 0, y: 0};
 
-				newObjectDefinitionNodes = currentObjectFolder.objectDefinitions!.map(
+				newObjectDefinitionNodes = selectedObjectFolder.objectDefinitions!.map(
 					(objectDefinition, index) => {
 						let selfObjectRelationships: ObjectRelationship[] = objectDefinition.objectRelationships.filter(
 							(objectRelationship) =>
@@ -560,34 +552,25 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 							);
 						}
 
-						const objectFolderItem = currentObjectFolder.objectFolderItems.find(
-							(objectFolderItem) =>
-								objectFolderItem.objectDefinitionExternalReferenceCode ===
-								objectDefinition.externalReferenceCode
-						);
-
-						let {
-							positionX,
-							positionY,
-						} = objectFolderItem as ObjectFolderItem;
-
-						if (positionX === 0 && positionY === 0) {
-							positionX = positionColumn.positionX * 380 + 360;
-							positionY = positionColumn.positionY * 450 + 100;
-
-							positionColumn.positionX++;
-						}
-
-						if ((index + 1) % 4 === 0 && index !== 0) {
-							positionColumn.positionY++;
-							positionColumn.positionX = 0;
-						}
+						const {x, y} = getObjectDefinitionNodePosition({
+							index,
+							objectDefinition,
+							objectFolderExternalReferenceCode:
+								selectedObjectFolder.externalReferenceCode,
+							outdatedObjectFolderItems:
+								selectedObjectFolder.objectFolderItems,
+							positionColumn,
+							updatedObjectFolderItems,
+						});
 
 						updatedObjectFolderItems.push({
-							linkedObjectDefinition: objectFolderItem?.linkedObjectDefinition!,
-							objectDefinitionExternalReferenceCode: objectFolderItem?.objectDefinitionExternalReferenceCode!,
-							positionX,
-							positionY,
+							linkedObjectDefinition:
+								objectDefinition.objectFolderExternalReferenceCode !==
+								selectedObjectFolder.externalReferenceCode,
+							objectDefinitionExternalReferenceCode:
+								objectDefinition.externalReferenceCode,
+							positionX: x,
+							positionY: y,
 						});
 
 						return {
@@ -599,14 +582,13 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 								showAllObjectFields: false,
 							},
 							id: objectDefinition.id.toString(),
-							position: {
-								x: positionX,
-								y: positionY,
-							},
+							position: {x, y},
 							type: 'objectDefinitionNode',
 						} as Node<ObjectDefinitionNodeData>;
 					}
 				);
+
+				selectedObjectFolder.objectFolderItems = updatedObjectFolderItems;
 			}
 
 			const newObjectRelationshipEdges = getNonOverlappingEdges(allEdges);
@@ -618,10 +600,7 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 					...newObjectRelationshipEdges,
 				],
 				leftSidebarItems: newLeftSidebarItems,
-				selectedObjectFolder: {
-					...selectedObjectFolder,
-					objectFolderItems: updatedObjectFolderItems,
-				},
+				selectedObjectFolder: selectedObjectFolder as ObjectFolder,
 				selectedObjectRelationship: null,
 			};
 

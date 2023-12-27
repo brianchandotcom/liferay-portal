@@ -7,7 +7,6 @@ package com.liferay.change.tracking.web.internal.portlet.action;
 
 import com.liferay.change.tracking.constants.CTActionKeys;
 import com.liferay.change.tracking.constants.CTPortletKeys;
-import com.liferay.change.tracking.service.CTRemoteService;
 import com.liferay.change.tracking.web.internal.constants.CTWebKeys;
 import com.liferay.change.tracking.web.internal.display.context.ViewCTRemotesDisplayContext;
 import com.liferay.change.tracking.web.internal.security.permission.resource.CTPermission;
@@ -58,9 +57,6 @@ public class ViewCTRemotesMVCRenderCommand implements MVCRenderCommand {
 
 		return "/publications/view_ct_remotes.jsp";
 	}
-
-	@Reference
-	private CTRemoteService _ctRemoteService;
 
 	@Reference
 	private Language _language;

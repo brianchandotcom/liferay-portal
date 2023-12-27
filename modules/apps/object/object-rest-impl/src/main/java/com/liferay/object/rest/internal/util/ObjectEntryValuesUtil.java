@@ -15,6 +15,7 @@ import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Map;
 
@@ -44,8 +45,15 @@ public class ObjectEntryValuesUtil {
 				_log.debug(noSuchObjectEntryException);
 			}
 
+			String externalReferenceCode =
+				noSuchObjectEntryException.getExternalReferenceCode();
+
+			if (Validator.isNull(externalReferenceCode)) {
+				throw noSuchObjectEntryException;
+			}
+
 			ObjectEntry objectEntry = objectEntryLocalService.addObjectEntry(
-				noSuchObjectEntryException.getExternalReferenceCode(), userId,
+				externalReferenceCode, userId,
 				objectDefinitionLocalService.getObjectDefinition(
 					noSuchObjectEntryException.getObjectDefinitionId()));
 

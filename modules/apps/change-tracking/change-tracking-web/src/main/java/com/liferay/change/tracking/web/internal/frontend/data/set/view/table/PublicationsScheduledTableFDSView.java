@@ -11,7 +11,6 @@ import com.liferay.frontend.data.set.view.table.BaseTableFDSView;
 import com.liferay.frontend.data.set.view.table.FDSTableSchema;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilder;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilderFactory;
-import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 
 import java.util.Locale;
 
@@ -71,8 +70,5 @@ public class PublicationsScheduledTableFDSView extends BaseTableFDSView {
 
 	@Reference
 	private FDSTableSchemaBuilderFactory _fdsTableSchemaBuilderFactory;
-
-	@Reference
-	private NPMResolver _npmResolver;
 
 }

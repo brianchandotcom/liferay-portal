@@ -2302,8 +2302,8 @@ public class CalendarBookingLocalServiceImpl
 
 			NotificationTemplateContext notificationTemplateContext =
 				NotificationTemplateContextFactory.getInstance(
-					notificationType, NotificationTemplateType.REMINDER,
-					calendarBooking, 0L, user);
+					calendarBooking, NotificationTemplateType.REMINDER,
+					notificationType, 0L, user);
 
 			notificationSender.sendNotification(
 				user.getEmailAddress(), user.getFullName(),

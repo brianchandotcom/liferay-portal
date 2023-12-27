@@ -52,9 +52,9 @@ import javax.portlet.WindowState;
 public class NotificationTemplateContextFactory {
 
 	public static NotificationTemplateContext getInstance(
-			NotificationType notificationType,
+			CalendarBooking calendarBooking,
 			NotificationTemplateType notificationTemplateType,
-			CalendarBooking calendarBooking, long scopeGroupId, User user)
+			NotificationType notificationType, long scopeGroupId, User user)
 		throws Exception {
 
 		CalendarBooking parentCalendarBooking =
@@ -186,7 +186,7 @@ public class NotificationTemplateContextFactory {
 		}
 
 		NotificationTemplateContext notificationTemplateContext = getInstance(
-			notificationType, notificationTemplateType, calendarBooking,
+			calendarBooking, notificationTemplateType, notificationType,
 			scopeGroupId, user);
 
 		if ((serviceContext != null) &&

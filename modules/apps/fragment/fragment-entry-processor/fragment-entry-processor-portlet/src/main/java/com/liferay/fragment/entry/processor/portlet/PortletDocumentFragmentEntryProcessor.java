@@ -70,10 +70,6 @@ public class PortletDocumentFragmentEntryProcessor
 			FragmentEntryProcessorContext fragmentEntryProcessorContext)
 		throws PortalException {
 
-		if (fragmentEntryLink.isTypePortlet()) {
-			return;
-		}
-
 		_validateFragmentEntryHTMLDocument(
 			document, fragmentEntryProcessorContext.getLocale());
 

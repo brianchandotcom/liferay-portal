@@ -54,7 +54,7 @@ public class NotificationTemplateContextFactory {
 	public static NotificationTemplateContext getInstance(
 			NotificationType notificationType,
 			NotificationTemplateType notificationTemplateType,
-			CalendarBooking calendarBooking, User user)
+			CalendarBooking calendarBooking, long scopeGroupId, User user)
 		throws Exception {
 
 		CalendarBooking parentCalendarBooking =
@@ -164,7 +164,7 @@ public class NotificationTemplateContextFactory {
 			).put(
 				"url",
 				_getCalendarBookingURL(
-					user, calendarBooking.getCalendarBookingId())
+					user, calendarBooking.getCalendarBookingId(), scopeGroupId)
 			).build();
 
 		notificationTemplateContext.setAttributes(attributes);
@@ -179,8 +179,15 @@ public class NotificationTemplateContextFactory {
 			ServiceContext serviceContext)
 		throws Exception {
 
+		long scopeGroupId = 0L;
+
+		if (serviceContext != null) {
+			scopeGroupId = serviceContext.getScopeGroupId();
+		}
+
 		NotificationTemplateContext notificationTemplateContext = getInstance(
-			notificationType, notificationTemplateType, calendarBooking, user);
+			notificationType, notificationTemplateType, calendarBooking,
+			scopeGroupId, user);
 
 		if ((serviceContext != null) &&
 			Validator.isNotNull(
@@ -211,13 +218,20 @@ public class NotificationTemplateContextFactory {
 	 * CalendarBooking)}
 	 */
 	private static String _getCalendarBookingURL(
-			User user, long calendarBookingId)
+			User user, long calendarBookingId, long scopeGroupId)
 		throws Exception {
 
 		GroupLocalService groupLocalService = _groupLocalServiceSnapshot.get();
 
-		Group group = groupLocalService.getGroup(
-			user.getCompanyId(), GroupConstants.GUEST);
+		Group group = null;
+
+		if (scopeGroupId != 0) {
+			group = groupLocalService.getGroup(scopeGroupId);
+		}
+		else {
+			group = groupLocalService.getGroup(
+				user.getCompanyId(), GroupConstants.GUEST);
+		}
 
 		LayoutLocalService layoutLocalService =
 			_layoutLocalServiceSnapshot.get();

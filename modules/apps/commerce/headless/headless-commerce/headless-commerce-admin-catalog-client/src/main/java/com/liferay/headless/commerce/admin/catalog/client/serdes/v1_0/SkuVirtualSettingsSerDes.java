@@ -6,6 +6,7 @@
 package com.liferay.headless.commerce.admin.catalog.client.serdes.v1_0;
 
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.SkuVirtualSettings;
+import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.SkuVirtualSettingsFileEntry;
 import com.liferay.headless.commerce.admin.catalog.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -151,6 +152,36 @@ public class SkuVirtualSettingsSerDes {
 			sb.append(_escape(skuVirtualSettings.getSampleURL()));
 
 			sb.append("\"");
+		}
+
+		if (skuVirtualSettings.getSkuVirtualSettingsFileEntries() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"skuVirtualSettingsFileEntries\": ");
+
+			sb.append("[");
+
+			for (int i = 0;
+				 i <
+					 skuVirtualSettings.
+						 getSkuVirtualSettingsFileEntries().length;
+				 i++) {
+
+				sb.append(
+					String.valueOf(
+						skuVirtualSettings.getSkuVirtualSettingsFileEntries()
+							[i]));
+
+				if ((i + 1) < skuVirtualSettings.
+						getSkuVirtualSettingsFileEntries().length) {
+
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (skuVirtualSettings.getSrc() != null) {
@@ -318,6 +349,16 @@ public class SkuVirtualSettingsSerDes {
 				"sampleURL", String.valueOf(skuVirtualSettings.getSampleURL()));
 		}
 
+		if (skuVirtualSettings.getSkuVirtualSettingsFileEntries() == null) {
+			map.put("skuVirtualSettingsFileEntries", null);
+		}
+		else {
+			map.put(
+				"skuVirtualSettingsFileEntries",
+				String.valueOf(
+					skuVirtualSettings.getSkuVirtualSettingsFileEntries()));
+		}
+
 		if (skuVirtualSettings.getSrc() == null) {
 			map.put("src", null);
 		}
@@ -443,6 +484,30 @@ public class SkuVirtualSettingsSerDes {
 				if (jsonParserFieldValue != null) {
 					skuVirtualSettings.setSampleURL(
 						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "skuVirtualSettingsFileEntries")) {
+
+				if (jsonParserFieldValue != null) {
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					SkuVirtualSettingsFileEntry[]
+						skuVirtualSettingsFileEntriesArray =
+							new SkuVirtualSettingsFileEntry
+								[jsonParserFieldValues.length];
+
+					for (int i = 0;
+						 i < skuVirtualSettingsFileEntriesArray.length; i++) {
+
+						skuVirtualSettingsFileEntriesArray[i] =
+							SkuVirtualSettingsFileEntrySerDes.toDTO(
+								(String)jsonParserFieldValues[i]);
+					}
+
+					skuVirtualSettings.setSkuVirtualSettingsFileEntries(
+						skuVirtualSettingsFileEntriesArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "src")) {

@@ -7,6 +7,7 @@ package com.liferay.headless.commerce.admin.order.client.serdes.v1_0;
 
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.CustomField;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.OrderItem;
+import com.liferay.headless.commerce.admin.order.client.dto.v1_0.VirtualItem;
 import com.liferay.headless.commerce.admin.order.client.json.BaseJSONParser;
 
 import java.math.BigDecimal;
@@ -567,6 +568,26 @@ public class OrderItemSerDes {
 			sb.append("]");
 		}
 
+		if (orderItem.getVirtualItems() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"virtualItems\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < orderItem.getVirtualItems().length; i++) {
+				sb.append(String.valueOf(orderItem.getVirtualItems()[i]));
+
+				if ((i + 1) < orderItem.getVirtualItems().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -960,6 +981,14 @@ public class OrderItemSerDes {
 				String.valueOf(orderItem.getVirtualItemURLs()));
 		}
 
+		if (orderItem.getVirtualItems() == null) {
+			map.put("virtualItems", null);
+		}
+		else {
+			map.put(
+				"virtualItems", String.valueOf(orderItem.getVirtualItems()));
+		}
+
 		return map;
 	}
 
@@ -1285,6 +1314,22 @@ public class OrderItemSerDes {
 				if (jsonParserFieldValue != null) {
 					orderItem.setVirtualItemURLs(
 						toStrings((Object[])jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "virtualItems")) {
+				if (jsonParserFieldValue != null) {
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					VirtualItem[] virtualItemsArray =
+						new VirtualItem[jsonParserFieldValues.length];
+
+					for (int i = 0; i < virtualItemsArray.length; i++) {
+						virtualItemsArray[i] = VirtualItemSerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
+					orderItem.setVirtualItems(virtualItemsArray);
 				}
 			}
 		}

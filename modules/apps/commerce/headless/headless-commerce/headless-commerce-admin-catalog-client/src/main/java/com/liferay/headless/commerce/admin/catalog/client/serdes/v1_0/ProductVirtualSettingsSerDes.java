@@ -6,6 +6,7 @@
 package com.liferay.headless.commerce.admin.catalog.client.serdes.v1_0;
 
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.ProductVirtualSettings;
+import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.ProductVirtualSettingsFileEntry;
 import com.liferay.headless.commerce.admin.catalog.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -100,6 +101,37 @@ public class ProductVirtualSettingsSerDes {
 			sb.append("\"maxUsages\": ");
 
 			sb.append(productVirtualSettings.getMaxUsages());
+		}
+
+		if (productVirtualSettings.getProductVirtualSettingsFileEntries() !=
+				null) {
+
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"productVirtualSettingsFileEntries\": ");
+
+			sb.append("[");
+
+			for (int i = 0;
+				 i < productVirtualSettings.
+					 getProductVirtualSettingsFileEntries().length;
+				 i++) {
+
+				sb.append(
+					String.valueOf(
+						productVirtualSettings.
+							getProductVirtualSettingsFileEntries()[i]));
+
+				if ((i + 1) < productVirtualSettings.
+						getProductVirtualSettingsFileEntries().length) {
+
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (productVirtualSettings.getSampleAttachment() != null) {
@@ -279,6 +311,19 @@ public class ProductVirtualSettingsSerDes {
 				String.valueOf(productVirtualSettings.getMaxUsages()));
 		}
 
+		if (productVirtualSettings.getProductVirtualSettingsFileEntries() ==
+				null) {
+
+			map.put("productVirtualSettingsFileEntries", null);
+		}
+		else {
+			map.put(
+				"productVirtualSettingsFileEntries",
+				String.valueOf(
+					productVirtualSettings.
+						getProductVirtualSettingsFileEntries()));
+		}
+
 		if (productVirtualSettings.getSampleAttachment() == null) {
 			map.put("sampleAttachment", null);
 		}
@@ -408,6 +453,32 @@ public class ProductVirtualSettingsSerDes {
 				if (jsonParserFieldValue != null) {
 					productVirtualSettings.setMaxUsages(
 						Integer.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"productVirtualSettingsFileEntries")) {
+
+				if (jsonParserFieldValue != null) {
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					ProductVirtualSettingsFileEntry[]
+						productVirtualSettingsFileEntriesArray =
+							new ProductVirtualSettingsFileEntry
+								[jsonParserFieldValues.length];
+
+					for (int i = 0;
+						 i < productVirtualSettingsFileEntriesArray.length;
+						 i++) {
+
+						productVirtualSettingsFileEntriesArray[i] =
+							ProductVirtualSettingsFileEntrySerDes.toDTO(
+								(String)jsonParserFieldValues[i]);
+					}
+
+					productVirtualSettings.setProductVirtualSettingsFileEntries(
+						productVirtualSettingsFileEntriesArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "sampleAttachment")) {

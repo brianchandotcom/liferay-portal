@@ -422,6 +422,53 @@ public class SkuVirtualSettings implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _sampleURLSupplier;
 
+	@Schema
+	@Valid
+	public SkuVirtualSettingsFileEntry[] getSkuVirtualSettingsFileEntries() {
+		if (_skuVirtualSettingsFileEntriesSupplier != null) {
+			skuVirtualSettingsFileEntries =
+				_skuVirtualSettingsFileEntriesSupplier.get();
+
+			_skuVirtualSettingsFileEntriesSupplier = null;
+		}
+
+		return skuVirtualSettingsFileEntries;
+	}
+
+	public void setSkuVirtualSettingsFileEntries(
+		SkuVirtualSettingsFileEntry[] skuVirtualSettingsFileEntries) {
+
+		this.skuVirtualSettingsFileEntries = skuVirtualSettingsFileEntries;
+
+		_skuVirtualSettingsFileEntriesSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setSkuVirtualSettingsFileEntries(
+		UnsafeSupplier<SkuVirtualSettingsFileEntry[], Exception>
+			skuVirtualSettingsFileEntriesUnsafeSupplier) {
+
+		_skuVirtualSettingsFileEntriesSupplier = () -> {
+			try {
+				return skuVirtualSettingsFileEntriesUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected SkuVirtualSettingsFileEntry[] skuVirtualSettingsFileEntries;
+
+	@JsonIgnore
+	private Supplier<SkuVirtualSettingsFileEntry[]>
+		_skuVirtualSettingsFileEntriesSupplier;
+
 	@Schema(description = "URL to download the file")
 	public String getSrc() {
 		if (_srcSupplier != null) {
@@ -820,6 +867,29 @@ public class SkuVirtualSettings implements Serializable {
 			sb.append(_escape(sampleURL));
 
 			sb.append("\"");
+		}
+
+		SkuVirtualSettingsFileEntry[] skuVirtualSettingsFileEntries =
+			getSkuVirtualSettingsFileEntries();
+
+		if (skuVirtualSettingsFileEntries != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"skuVirtualSettingsFileEntries\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < skuVirtualSettingsFileEntries.length; i++) {
+				sb.append(String.valueOf(skuVirtualSettingsFileEntries[i]));
+
+				if ((i + 1) < skuVirtualSettingsFileEntries.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		String src = getSrc();

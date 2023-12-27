@@ -259,6 +259,57 @@ public class ProductVirtualSettings implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _maxUsagesSupplier;
 
+	@Schema
+	@Valid
+	public ProductVirtualSettingsFileEntry[]
+		getProductVirtualSettingsFileEntries() {
+
+		if (_productVirtualSettingsFileEntriesSupplier != null) {
+			productVirtualSettingsFileEntries =
+				_productVirtualSettingsFileEntriesSupplier.get();
+
+			_productVirtualSettingsFileEntriesSupplier = null;
+		}
+
+		return productVirtualSettingsFileEntries;
+	}
+
+	public void setProductVirtualSettingsFileEntries(
+		ProductVirtualSettingsFileEntry[] productVirtualSettingsFileEntries) {
+
+		this.productVirtualSettingsFileEntries =
+			productVirtualSettingsFileEntries;
+
+		_productVirtualSettingsFileEntriesSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setProductVirtualSettingsFileEntries(
+		UnsafeSupplier<ProductVirtualSettingsFileEntry[], Exception>
+			productVirtualSettingsFileEntriesUnsafeSupplier) {
+
+		_productVirtualSettingsFileEntriesSupplier = () -> {
+			try {
+				return productVirtualSettingsFileEntriesUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected ProductVirtualSettingsFileEntry[]
+		productVirtualSettingsFileEntries;
+
+	@JsonIgnore
+	private Supplier<ProductVirtualSettingsFileEntry[]>
+		_productVirtualSettingsFileEntriesSupplier;
+
 	@Schema(description = "Base64 encoded sample file")
 	public String getSampleAttachment() {
 		if (_sampleAttachmentSupplier != null) {
@@ -721,6 +772,29 @@ public class ProductVirtualSettings implements Serializable {
 			sb.append("\"maxUsages\": ");
 
 			sb.append(maxUsages);
+		}
+
+		ProductVirtualSettingsFileEntry[] productVirtualSettingsFileEntries =
+			getProductVirtualSettingsFileEntries();
+
+		if (productVirtualSettingsFileEntries != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"productVirtualSettingsFileEntries\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < productVirtualSettingsFileEntries.length; i++) {
+				sb.append(String.valueOf(productVirtualSettingsFileEntries[i]));
+
+				if ((i + 1) < productVirtualSettingsFileEntries.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		String sampleAttachment = getSampleAttachment();

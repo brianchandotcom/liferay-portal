@@ -131,6 +131,35 @@ public class ProductVirtualSettings implements Cloneable, Serializable {
 
 	protected Integer maxUsages;
 
+	public ProductVirtualSettingsFileEntry[]
+		getProductVirtualSettingsFileEntries() {
+
+		return productVirtualSettingsFileEntries;
+	}
+
+	public void setProductVirtualSettingsFileEntries(
+		ProductVirtualSettingsFileEntry[] productVirtualSettingsFileEntries) {
+
+		this.productVirtualSettingsFileEntries =
+			productVirtualSettingsFileEntries;
+	}
+
+	public void setProductVirtualSettingsFileEntries(
+		UnsafeSupplier<ProductVirtualSettingsFileEntry[], Exception>
+			productVirtualSettingsFileEntriesUnsafeSupplier) {
+
+		try {
+			productVirtualSettingsFileEntries =
+				productVirtualSettingsFileEntriesUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected ProductVirtualSettingsFileEntry[]
+		productVirtualSettingsFileEntries;
+
 	public String getSampleAttachment() {
 		return sampleAttachment;
 	}

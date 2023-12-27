@@ -1951,6 +1951,48 @@ public class OrderItem implements Serializable {
 	@JsonIgnore
 	private Supplier<String[]> _virtualItemURLsSupplier;
 
+	@Schema
+	@Valid
+	public VirtualItem[] getVirtualItems() {
+		if (_virtualItemsSupplier != null) {
+			virtualItems = _virtualItemsSupplier.get();
+
+			_virtualItemsSupplier = null;
+		}
+
+		return virtualItems;
+	}
+
+	public void setVirtualItems(VirtualItem[] virtualItems) {
+		this.virtualItems = virtualItems;
+
+		_virtualItemsSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setVirtualItems(
+		UnsafeSupplier<VirtualItem[], Exception> virtualItemsUnsafeSupplier) {
+
+		_virtualItemsSupplier = () -> {
+			try {
+				return virtualItemsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected VirtualItem[] virtualItems;
+
+	@JsonIgnore
+	private Supplier<VirtualItem[]> _virtualItemsSupplier;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -2578,6 +2620,28 @@ public class OrderItem implements Serializable {
 				sb.append("\"");
 
 				if ((i + 1) < virtualItemURLs.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		VirtualItem[] virtualItems = getVirtualItems();
+
+		if (virtualItems != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"virtualItems\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < virtualItems.length; i++) {
+				sb.append(String.valueOf(virtualItems[i]));
+
+				if ((i + 1) < virtualItems.length) {
 					sb.append(", ");
 				}
 			}

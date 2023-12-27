@@ -215,6 +215,31 @@ public class SkuVirtualSettings implements Cloneable, Serializable {
 
 	protected String sampleURL;
 
+	public SkuVirtualSettingsFileEntry[] getSkuVirtualSettingsFileEntries() {
+		return skuVirtualSettingsFileEntries;
+	}
+
+	public void setSkuVirtualSettingsFileEntries(
+		SkuVirtualSettingsFileEntry[] skuVirtualSettingsFileEntries) {
+
+		this.skuVirtualSettingsFileEntries = skuVirtualSettingsFileEntries;
+	}
+
+	public void setSkuVirtualSettingsFileEntries(
+		UnsafeSupplier<SkuVirtualSettingsFileEntry[], Exception>
+			skuVirtualSettingsFileEntriesUnsafeSupplier) {
+
+		try {
+			skuVirtualSettingsFileEntries =
+				skuVirtualSettingsFileEntriesUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected SkuVirtualSettingsFileEntry[] skuVirtualSettingsFileEntries;
+
 	public String getSrc() {
 		return src;
 	}

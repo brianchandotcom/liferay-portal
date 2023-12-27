@@ -488,6 +488,27 @@ public class PlacedOrderItem implements Cloneable, Serializable {
 
 	protected String[] virtualItemURLs;
 
+	public VirtualItem[] getVirtualItems() {
+		return virtualItems;
+	}
+
+	public void setVirtualItems(VirtualItem[] virtualItems) {
+		this.virtualItems = virtualItems;
+	}
+
+	public void setVirtualItems(
+		UnsafeSupplier<VirtualItem[], Exception> virtualItemsUnsafeSupplier) {
+
+		try {
+			virtualItems = virtualItemsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected VirtualItem[] virtualItems;
+
 	@Override
 	public PlacedOrderItem clone() throws CloneNotSupportedException {
 		return (PlacedOrderItem)super.clone();

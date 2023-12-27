@@ -7,6 +7,7 @@ package com.liferay.headless.commerce.delivery.order.client.serdes.v1_0;
 
 import com.liferay.headless.commerce.delivery.order.client.dto.v1_0.PlacedOrderItem;
 import com.liferay.headless.commerce.delivery.order.client.dto.v1_0.PlacedOrderItemShipment;
+import com.liferay.headless.commerce.delivery.order.client.dto.v1_0.VirtualItem;
 import com.liferay.headless.commerce.delivery.order.client.json.BaseJSONParser;
 
 import java.math.BigDecimal;
@@ -359,6 +360,26 @@ public class PlacedOrderItemSerDes {
 			sb.append("]");
 		}
 
+		if (placedOrderItem.getVirtualItems() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"virtualItems\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < placedOrderItem.getVirtualItems().length; i++) {
+				sb.append(String.valueOf(placedOrderItem.getVirtualItems()[i]));
+
+				if ((i + 1) < placedOrderItem.getVirtualItems().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -556,6 +577,15 @@ public class PlacedOrderItemSerDes {
 				String.valueOf(placedOrderItem.getVirtualItemURLs()));
 		}
 
+		if (placedOrderItem.getVirtualItems() == null) {
+			map.put("virtualItems", null);
+		}
+		else {
+			map.put(
+				"virtualItems",
+				String.valueOf(placedOrderItem.getVirtualItems()));
+		}
+
 		return map;
 	}
 
@@ -733,6 +763,22 @@ public class PlacedOrderItemSerDes {
 				if (jsonParserFieldValue != null) {
 					placedOrderItem.setVirtualItemURLs(
 						toStrings((Object[])jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "virtualItems")) {
+				if (jsonParserFieldValue != null) {
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					VirtualItem[] virtualItemsArray =
+						new VirtualItem[jsonParserFieldValues.length];
+
+					for (int i = 0; i < virtualItemsArray.length; i++) {
+						virtualItemsArray[i] = VirtualItemSerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
+					placedOrderItem.setVirtualItems(virtualItemsArray);
 				}
 			}
 		}

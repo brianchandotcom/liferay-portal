@@ -9,7 +9,6 @@ import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
-import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
 import com.liferay.change.tracking.spi.display.CTDisplayRendererRegistry;
 import com.liferay.journal.model.JournalArticle;
@@ -304,9 +303,6 @@ public class CTEntryModelDocumentContributor
 
 	@Reference
 	private CTDisplayRendererRegistry _ctDisplayRendererRegistry;
-
-	@Reference
-	private CTEntryLocalService _ctEntryLocalService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

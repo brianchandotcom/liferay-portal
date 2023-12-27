@@ -162,6 +162,15 @@ function DiagramBuilder() {
 		}
 	};
 
+	const setNodeHandleConnection = (nodeHandleConnectable: boolean) => {
+		dispatch({
+			payload: {
+				nodeHandleConnectable,
+			},
+			type: TYPES.SET_NODE_HANDLE_CONNECTION,
+		});
+	};
+
 	const updateModelBuilderStructure = async (
 		newObjectRelationshipId: number
 	) => {
@@ -222,6 +231,8 @@ function DiagramBuilder() {
 				minZoom={0.1}
 				nodeTypes={NODE_TYPES}
 				onConnect={onConnect}
+				onConnectStart={() => setNodeHandleConnection(true)}
+				onConnectStop={() => setNodeHandleConnection(false)}
 				onNodeDragStop={(_, node) => onNodeDragStop(node)}
 			>
 				<Background color="#C0C1C3" gap={18} size={1} />

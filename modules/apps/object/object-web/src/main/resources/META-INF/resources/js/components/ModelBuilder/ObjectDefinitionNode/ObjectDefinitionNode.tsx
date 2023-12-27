@@ -41,7 +41,11 @@ export function ObjectDefinitionNode({
 	},
 }: NodeProps<ObjectDefinitionNodeData>) {
 	const [
-		{baseResourceURL, objectDefinitionPermissionsURL},
+		{
+			baseResourceURL,
+			nodeHandleConnectable,
+			objectDefinitionPermissionsURL,
+		},
 		dispatch,
 	] = useObjectFolderContext();
 
@@ -156,16 +160,33 @@ export function ObjectDefinitionNode({
 							ref={nodeHandleRefs[position]}
 							style={{
 								background: '#80ACFF',
-								height: '12px',
+								height: '18px',
 								opacity: 0,
-								[position]: '-18px',
-								width: '12px',
+								[position]: '-27px',
+								width: '18px',
 							}}
 							type="source"
 						/>
 					))}
 				</>
 				<>
+					<Handle
+						className="lfr-objects__model-builder-node-handle"
+						id={`${id}`}
+						isConnectable={nodeHandleConnectable}
+						key={`${id}`}
+						position={Position.Bottom}
+						style={{
+							borderRadius: 0,
+							bottom: '-27px',
+							height: '410px',
+							opacity: 0,
+							width: '350px',
+							zIndex: -1,
+						}}
+						type="target"
+					/>
+
 					<Handle
 						className="lfr-objects__model-builder-node-handle"
 						id="fixedLeftHandle"

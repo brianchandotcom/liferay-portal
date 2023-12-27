@@ -112,6 +112,12 @@ export declare type TAction =
 	  }
 	| {
 			payload: {
+				nodeHandleConnectable: boolean;
+			};
+			type: TYPES.SET_NODE_HANDLE_CONNECTION;
+	  }
+	| {
+			payload: {
 				isLoadingObjectFolder: boolean;
 			};
 			type: TYPES.SET_LOADING_OBJECT_FOLDER;
@@ -219,6 +225,7 @@ export declare type TState = {
 	isRootDescendantNode: boolean;
 	leftSidebarItems: LeftSidebarItem[];
 	modelBuilderModals: ModelBuilderModals;
+	nodeHandleConnectable: boolean;
 	objectDefinitionPermissionsURL: string;
 	objectDefinitions: ObjectDefinition[];
 	objectDefinitionsStorageTypes: LabelValueObject[];

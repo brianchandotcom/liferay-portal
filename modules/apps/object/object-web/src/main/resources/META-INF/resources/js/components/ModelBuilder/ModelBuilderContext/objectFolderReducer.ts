@@ -711,6 +711,15 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 			};
 		}
 
+		case TYPES.SET_NODE_HANDLE_CONNECTION: {
+			const {nodeHandleConnectable} = action.payload;
+
+			return {
+				...state,
+				nodeHandleConnectable,
+			};
+		}
+
 		case TYPES.SET_OBJECT_FOLDER_NAME: {
 			const {objectFolderName} = action.payload;
 

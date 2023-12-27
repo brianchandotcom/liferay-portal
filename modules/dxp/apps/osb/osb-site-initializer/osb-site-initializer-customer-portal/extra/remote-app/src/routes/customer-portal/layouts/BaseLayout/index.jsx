@@ -4,18 +4,11 @@
  */
 
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import {useEffect, useMemo, useRef, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import {Outlet, useLocation, useParams} from 'react-router-dom';
-import useSWR from 'swr';
-import {useAppPropertiesContext} from '~/common/contexts/AppPropertiesContext';
-import {useGetMyUserAccount} from '~/common/services/liferay/graphql/user-accounts';
-import {
-	getFLSOrganizationsAccounts,
-	getMyUserAccount,
-} from '~/routes/home/hooks/useProjectCategoryItems';
+import {useProjectOrganizations} from '~/routes/home/hooks/useProjectCategoryItems';
 import ProjectBreadcrumb from '../../components/ProjectBreadcrumb/ProjectBreadcrumb';
 import ProjectErrorMessage from '../../components/ProjectErrorMessage';
-import {hasAdminUserAccount} from '../../containers/ActivationKeysTable/utils/hasAdminUserAccount';
 import SideMenu from '../../containers/SideMenu';
 
 const Layout = () => {
@@ -37,38 +30,21 @@ const Layout = () => {
 		}
 	}, [accountKey]);
 
-	const {client} = useAppPropertiesContext();
+	const {myUserAccount, organizations, swr} = useProjectOrganizations();
 
-	const {
-		data: myUserAccount = {accountBriefs: [], organizationBriefs: []},
-		isLoading: loadingMyUserAccount,
-	} = useSWR({key: '/projects'}, getMyUserAccount);
-
-	const myOrganizationBriefIds = useMemo(
-		() => myUserAccount?.organizationBriefs?.map(({id}) => id),
-		[myUserAccount?.organizationBriefs]
-	);
-
-	const {data: organizations = [], isLoading: loadingOrganizations} = useSWR(
-		{
-			key: '/organizations',
-			organizationIds: myOrganizationBriefIds,
-		},
-		myUserAccount ? getFLSOrganizationsAccounts(client) : null
-	);
-
-	const organizationProjectsERC = organizations.map(
-		({externalReferenceCode}) => externalReferenceCode
-	);
-	const isOrganization = organizationProjectsERC.includes(accountKey);
+	if (
+		swr.myUserAccountSWR.isLoading ||
+		swr.myUserAccountSWR.isValidating ||
+		swr.organizationsSWR.isLoading ||
+		swr.organizationsSWR.isValidating
+	) {
+		return <ClayLoadingIndicator />;
+	}
 
 	const teamMembersERC = myUserAccount?.accountBriefs?.map(
 		({externalReferenceCode}) => externalReferenceCode
 	);
 	const isTeamMember = teamMembersERC.includes(accountKey);
-
-	const {data: myAccount} = useGetMyUserAccount();
-	const isAdminUserAccount = hasAdminUserAccount(myAccount);
 
 	const liferayContactERC =
 		myUserAccount.accountBriefs
@@ -79,47 +55,45 @@ const Layout = () => {
 			)
 			.map(({externalReferenceCode}) => externalReferenceCode) || [];
 
+	const accountInsideOrganization = organizations.some(
+		({externalReferenceCode}) => externalReferenceCode === accountKey
+	);
 	const isLiferayContact = liferayContactERC.includes(accountKey);
+	const isAccountAdministrator = myUserAccount.roleBriefs?.some(
+		(roleBrief) => roleBrief.name === 'Administrator'
+	);
 
 	const accountPermission =
-		isAdminUserAccount ||
-		isOrganization ||
+		accountInsideOrganization ||
+		isAccountAdministrator ||
 		isLiferayContact ||
 		isTeamMember;
-
-	if (loadingOrganizations && loadingMyUserAccount) {
-		return <ClayLoadingIndicator />;
-	}
-
-	if (accountPermission) {
-		return (
-			<div className="d-flex position-relative w-100">
-				{!isRenewTablePage && (
-					<div>
-						<div className="align-items-center cp-layout-header d-flex justify-content-between ml-4 mt-4">
-							<ProjectBreadcrumb />
-						</div>
-
-						{hasSideMenu && <SideMenu />}
-					</div>
-				)}
-
-				<div className="mx-4 px-2 w-100">
-					<div className="mx-4 px-2 w-100">
-						<Outlet
-							context={{
-								setHasSideMenu,
-							}}
-						/>
-					</div>
-				</div>
-			</div>
-		);
-	}
 
 	if (!accountPermission) {
 		return <ProjectErrorMessage />;
 	}
+
+	return (
+		<div className="d-flex position-relative w-100">
+			<div>
+				<div className="align-items-center cp-layout-header d-flex justify-content-between ml-4 mt-4">
+					<ProjectBreadcrumb />
+				</div>
+
+				{hasSideMenu && <SideMenu />}
+			</div>
+
+			<div className="mx-4 px-2 w-100">
+				<div className="mx-4 px-2 w-100">
+					<Outlet
+						context={{
+							setHasSideMenu,
+						}}
+					/>
+				</div>
+			</div>
+		</div>
+	);
 };
 
 export default Layout;

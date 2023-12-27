@@ -7,6 +7,7 @@ package com.liferay.commerce.order.rule.internal.search;
 
 import com.liferay.commerce.order.rule.internal.search.spi.model.index.contributor.COREntryModelIndexerWriterContributor;
 import com.liferay.commerce.order.rule.internal.search.spi.model.result.contributor.COREntryModelSummaryContributor;
+import com.liferay.commerce.order.rule.internal.search.spi.model.result.contributor.COREntryModelVisibilityContributor;
 import com.liferay.commerce.order.rule.model.COREntry;
 import com.liferay.commerce.order.rule.service.COREntryLocalService;
 import com.liferay.portal.kernel.search.Field;
@@ -63,6 +64,8 @@ public class COREntryModelSearchConfigurator
 			new COREntryModelIndexerWriterContributor(
 				_corEntryLocalService,
 				_dynamicQueryBatchIndexingActionableFactory);
+		_modelVisibilityContributor = new COREntryModelVisibilityContributor(
+			_corEntryLocalService);
 	}
 
 	@Reference
@@ -76,10 +79,6 @@ public class COREntryModelSearchConfigurator
 		_modelIndexWriterContributor;
 	private final ModelSummaryContributor _modelSummaryContributor =
 		new COREntryModelSummaryContributor();
-
-	@Reference(
-		target = "(indexer.class.name=com.liferay.commerce.order.rule.model.COREntry)"
-	)
 	private ModelVisibilityContributor _modelVisibilityContributor;
 
 }

@@ -12,18 +12,17 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.search.spi.model.result.contributor.ModelVisibilityContributor;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Alessio Antonio Rendina
  */
-@Component(
-	property = "indexer.class.name=com.liferay.commerce.order.rule.model.COREntry",
-	service = ModelVisibilityContributor.class
-)
 public class COREntryModelVisibilityContributor
 	implements ModelVisibilityContributor {
+
+	public COREntryModelVisibilityContributor(
+		COREntryLocalService corEntryLocalService) {
+
+		_corEntryLocalService = corEntryLocalService;
+	}
 
 	@Override
 	public boolean isVisible(long classPK, int status) {
@@ -46,7 +45,6 @@ public class COREntryModelVisibilityContributor
 	private static final Log _log = LogFactoryUtil.getLog(
 		COREntryModelVisibilityContributor.class);
 
-	@Reference
-	private COREntryLocalService _corEntryLocalService;
+	private final COREntryLocalService _corEntryLocalService;
 
 }

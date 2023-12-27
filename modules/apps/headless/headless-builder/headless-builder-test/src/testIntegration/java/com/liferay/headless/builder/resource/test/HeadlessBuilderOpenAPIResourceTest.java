@@ -452,33 +452,17 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 						"scope", APIApplication.Endpoint.Scope.SITE.getValue()
 					),
 					JSONUtil.put(
-						"description", "description"
+						"description",
+						"post endpoint no request schema description"
 					).put(
-						"externalReferenceCode", _GET_API_ENDPOINT_ERC
-					).put(
-						"httpMethod", "get"
-					).put(
-						"name", "name"
-					).put(
-						"path", "/path"
-					).put(
-						"retrieveType",
-						APIApplication.Endpoint.RetrieveType.COLLECTION.
-							getValue()
-					).put(
-						"scope",
-						APIApplication.Endpoint.Scope.COMPANY.getValue()
-					),
-					JSONUtil.put(
-						"description", "post description"
-					).put(
-						"externalReferenceCode", _POST_API_ENDPOINT_ERC
+						"externalReferenceCode",
+						_API_POST_COMPANY_SCOPED_NO_SCHEMA_ENDPOINT_ERC
 					).put(
 						"httpMethod", "post"
 					).put(
-						"name", "post endpoint"
+						"name", "company scoped post no schema"
 					).put(
-						"path", "/path/post"
+						"path", "/no-schema"
 					).put(
 						"retrieveType",
 						APIApplication.Endpoint.RetrieveType.SINGLE_ELEMENT.
@@ -519,24 +503,39 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 						"scope", APIApplication.Endpoint.Scope.SITE.getValue()
 					),
 					JSONUtil.put(
-						"description",
-						"post endpoint no request schema description"
+						"description", "description"
 					).put(
-						"externalReferenceCode",
-						_API_POST_COMPANY_SCOPED_NO_SCHEMA_ENDPOINT_ERC
+						"externalReferenceCode", _GET_API_ENDPOINT_ERC
+					).put(
+						"httpMethod", "get"
+					).put(
+						"name", "name"
+					).put(
+						"path", "/path"
+					).put(
+						"retrieveType",
+						APIApplication.Endpoint.RetrieveType.COLLECTION.
+							getValue()
+					).put(
+						"scope",
+						APIApplication.Endpoint.Scope.COMPANY.getValue()
+					),
+					JSONUtil.put(
+						"description", "post description"
+					).put(
+						"externalReferenceCode", _POST_API_ENDPOINT_ERC
 					).put(
 						"httpMethod", "post"
 					).put(
-						"name", "company scoped post no schema"
+						"name", "post endpoint"
 					).put(
-						"path", "/no-schema"
+						"path", "/path/post"
 					).put(
 						"retrieveType",
 						APIApplication.Endpoint.RetrieveType.SINGLE_ELEMENT.
 							getValue()
 					).put(
-						"scope",
-						APIApplication.Endpoint.Scope.COMPANY.getValue()
+						"scope", APIApplication.Endpoint.Scope.SITE.getValue()
 					))
 			).put(
 				"apiApplicationToAPISchemas",

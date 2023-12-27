@@ -2405,7 +2405,9 @@ definition {
 				locator1 = "ManagementBar#NAVBAR_TEXT",
 				value1 = ${bulkSelection});
 
-			Click(locator1 = "Icon#MOVE");
+			Click(
+				key_text = "Move",
+				locator1 = "Button#ANY");
 		}
 		else {
 			Click(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_VERTICAL_ELLIPSIS");

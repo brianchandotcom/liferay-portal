@@ -345,7 +345,9 @@ definition {
 
 		DMDocument.selectDocuments(dmDocumentTitle = "DM Document Title");
 
-		Click(locator1 = "Icon#EDIT_CATEGORIES");
+		Click(
+			key_text = "Edit Categories",
+			locator1 = "Button#ANY");
 
 		SelectFrame(value1 = "relative=top");
 

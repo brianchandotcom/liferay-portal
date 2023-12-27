@@ -166,8 +166,9 @@ export function ProvideAppBuildPage({
 	const [selectedCheckboxValue, setSelectedCheckboxValue] = useState<
 		string[]
 	>([]);
-	const [visibleSelectVersionModal, setVisibleSelectVersionModal] =
-		useState(false);
+	const [visibleSelectVersionModal, setVisibleSelectVersionModal] = useState(
+		false
+	);
 
 	const handleSelectCheckbox = (offeringTypelabel: string) =>
 		setSelectedCheckboxValue((prevValue) =>
@@ -281,7 +282,8 @@ export function ProvideAppBuildPage({
 			}
 
 			newCategories = [...categories.items, ...newCategories];
-		} else {
+		}
+		else {
 			newCategories = [
 				...categories.items.filter((category) => {
 					if (
@@ -337,7 +339,8 @@ export function ProvideAppBuildPage({
 						tableName: 'CUSTOM_FIELDS',
 					});
 				}
-			} catch (error) {
+			}
+			catch (error) {
 				console.error(
 					'Failed during the submitAppBuildPackages',
 					error
@@ -468,9 +471,9 @@ export function ProvideAppBuildPage({
 					<OfferingTypeCheckbox
 						handleSelectCheckbox={handleSelectCheckbox}
 						offeringTypes={
-							offeringTypesDescription[
+							(offeringTypesDescription[
 								appType.value as ProductType
-							] as unknown as OfferingType[]
+							] as unknown) as OfferingType[]
 						}
 						selectedValue={selectedCheckboxValue}
 					/>
@@ -641,7 +644,8 @@ export function ProvideAppBuildPage({
 						await submitAppBuildCategories();
 						await submitAppBuildTypeSpecification();
 						await submitAppBuildPackages();
-					} catch (error) {
+					}
+					catch (error) {
 						console.error(
 							'Something went wrong to buildCategores | buildTypeSpecifications | buildPackages'
 						);

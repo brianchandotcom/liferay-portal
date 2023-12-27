@@ -30,7 +30,9 @@ type SetAppFlowListStateProps = {
 };
 
 export function AppCreationFlow() {
-	const [{appERC, appProductId, priceModel}] = useAppContext();
+	const [
+		{appERC, appLogo, appName, appProductId, priceModel},
+	] = useAppContext();
 	const [appFlowListItems, setAppFlowListItems] = useState(
 		initialFLowListItems
 	);
@@ -73,6 +75,8 @@ export function AppCreationFlow() {
 			<NewAppToolBar
 				accountImage={supplierAccount?.logoURL}
 				accountName={supplierAccount?.name as string}
+				appImage={appLogo?.preview}
+				appName={appName}
 				enableDropdown={currentFlow === 'submit'}
 			/>
 
@@ -249,8 +253,7 @@ export function AppCreationFlow() {
 								});
 
 								setCurrentFlow('licensingPrice');
-							}
-							else {
+							} else {
 								setAppFlowListState({
 									checkedItems: [
 										'create',
@@ -323,8 +326,7 @@ export function AppCreationFlow() {
 								});
 
 								setCurrentFlow('licensingPrice');
-							}
-							else {
+							} else {
 								setAppFlowListState({
 									checkedItems: [
 										'create',

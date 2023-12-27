@@ -673,17 +673,19 @@ public class PullRequest {
 			return true;
 		}
 
-		List<String> requiredPassingSuites = Arrays.asList(
+		List<String> requiredPassingTestSuiteNames = Arrays.asList(
 			requiredPassingSuitesProperty.split("\\s*,\\s*"));
 
 		if (force) {
-			requiredPassingSuites.remove("relevant");
+			requiredPassingTestSuiteNames.remove("relevant");
 		}
 
-		List<String> passingTestSuites = getPassingTestSuites();
+		List<String> passingTestSuiteNames = getPassingTestSuites();
 
-		for (String requiredPassingSuite : requiredPassingSuites) {
-			if (!passingTestSuites.contains(requiredPassingSuite)) {
+		for (String requiredPassingTestSuiteName :
+				requiredPassingTestSuiteNames) {
+
+			if (!passingTestSuiteNames.contains(requiredPassingTestSuiteName)) {
 				return false;
 			}
 		}

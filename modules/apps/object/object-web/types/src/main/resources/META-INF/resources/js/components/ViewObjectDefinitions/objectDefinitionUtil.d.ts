@@ -117,7 +117,7 @@ export declare function getUpdatedModelBuilderStructurePayload(
 	currentObjectFolderName: string
 ): Promise<{
 	objectFolders: ObjectFolder[];
-	selectedObjectFolder: ObjectFolder;
+	selectedObjectFolderName: string;
 }>;
 export declare function normalizeName(str: string): string;
 export {};

@@ -89,7 +89,7 @@ export declare type TAction =
 			payload: {
 				objectFolders: ObjectFolder[];
 				rightSidebarType?: RightSidebarType;
-				selectedObjectFolder: ObjectFolder;
+				selectedObjectFolderName: string;
 				selectedObjectRelationshipId?: number;
 			};
 			type: TYPES.UPDATE_MODEL_BUILDER_STRUCTURE;

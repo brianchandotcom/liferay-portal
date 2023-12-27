@@ -22,10 +22,15 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro importObject(objectFileName = null, objectName = null, tempFile = null) {
+	macro importObject(objectFileName = null, objectName = null, tempFile = null, modelBuilder = null) {
 		ObjectAdmin.openObjectAdmin();
 
-		Click(locator1 = "ObjectAdmin#KEBAB_MENU");
+		if (${modelBuilder} == "true") {
+			Click(locator1 = "ObjectModelBuilder#OBJECT_DEFINITONS_KEBAB");
+		}
+		else {
+			Click(locator1 = "ObjectAdmin#KEBAB_MENU");
+		}
 
 		MenuItem.click(menuItem = "Import Object Definition");
 

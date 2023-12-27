@@ -87,7 +87,7 @@ public class EditCommercePaymentEntryMVCActionCommand
 
 				String note = ParamUtil.getString(actionRequest, "note");
 
-				_commercePaymentEntryService.updateCommercePaymentEntryNote(
+				_commercePaymentEntryService.updateNote(
 					commercePaymentEntryId, note);
 			}
 		}

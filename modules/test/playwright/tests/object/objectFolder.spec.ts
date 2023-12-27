@@ -41,7 +41,7 @@ test('created object folders are on the left side bar', async ({
 	await _apiHelpers.objectAdmin.deleteObjectFolder(objectFolder.id);
 });
 
-test('uncategorized folder does not contains delete and edit options', async ({
+test('default folder does not contains delete and edit options', async ({
 	_apiHelpers,
 	_objectDefinitionsPage,
 }) => {
@@ -49,7 +49,7 @@ test('uncategorized folder does not contains delete and edit options', async ({
 
 	await _objectDefinitionsPage.goto();
 
-	await _objectDefinitionsPage.clickUncategorizedObjectFolder();
+	await _objectDefinitionsPage.clickDefaultObjectFolder();
 
 	await _objectDefinitionsPage.openObjectFolderActions();
 

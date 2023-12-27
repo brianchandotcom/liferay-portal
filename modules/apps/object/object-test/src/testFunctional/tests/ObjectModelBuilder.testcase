@@ -146,12 +146,12 @@ definition {
 		task ("Then only Account is seen") {
 			for (var objectLabel : list "Postal Address,Commerce Product,Organization,User,Commerce Order,Commerce Product") {
 				AssertElementNotPresent(
-					key_folderLabel = "Uncategorized",
+					key_folderLabel = "Default",
 					key_objectLabel = ${objectLabel},
 					locator1 = "ObjectModelBuilder#SELECT_OBJECT_IN_LEFT_SIDEBAR");
 
 				AssertElementPresent(
-					key_folderLabel = "Uncategorized",
+					key_folderLabel = "Default",
 					key_objectLabel = "Account",
 					locator1 = "ObjectModelBuilder#SELECT_OBJECT_IN_LEFT_SIDEBAR");
 			}

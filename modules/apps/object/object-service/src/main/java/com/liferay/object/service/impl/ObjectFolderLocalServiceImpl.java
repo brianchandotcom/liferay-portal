@@ -127,13 +127,20 @@ public class ObjectFolderLocalServiceImpl
 	}
 
 	@Override
+	public ObjectFolder fetchDefaultObjectFolder(long companyId) {
+		return fetchObjectFolder(companyId, ObjectFolderConstants.NAME_DEFAULT);
+	}
+
+	@Override
 	public ObjectFolder fetchObjectFolder(long companyId, String name) {
 		return objectFolderPersistence.fetchByC_N(companyId, name);
 	}
 
 	@Override
-	public ObjectFolder fetchUncategorizedObjectFolder(long companyId) {
-		return fetchObjectFolder(companyId, ObjectFolderConstants.NAME_DEFAULT);
+	public ObjectFolder getDefaultObjectFolder(long companyId)
+		throws PortalException {
+
+		return getObjectFolder(companyId, ObjectFolderConstants.NAME_DEFAULT);
 	}
 
 	@Override
@@ -149,7 +156,7 @@ public class ObjectFolderLocalServiceImpl
 	}
 
 	@Override
-	public ObjectFolder getOrAddUncategorizedObjectFolder(long companyId)
+	public ObjectFolder getOrAddDefaultObjectFolder(long companyId)
 		throws PortalException {
 
 		ObjectFolder objectFolder = fetchObjectFolder(
@@ -165,13 +172,6 @@ public class ObjectFolderLocalServiceImpl
 			LocalizedMapUtil.getLocalizedMap(
 				ObjectFolderConstants.NAME_DEFAULT),
 			ObjectFolderConstants.NAME_DEFAULT);
-	}
-
-	@Override
-	public ObjectFolder getUncategorizedObjectFolder(long companyId)
-		throws PortalException {
-
-		return getObjectFolder(companyId, ObjectFolderConstants.NAME_DEFAULT);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)

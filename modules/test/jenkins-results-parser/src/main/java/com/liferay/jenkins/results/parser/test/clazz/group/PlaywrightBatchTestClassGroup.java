@@ -44,7 +44,14 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 		}
 
 		if (testRelevantChanges) {
-			recordJobProperties(getRelevantPlaywrightJobProperties());
+			List<JobProperty> relevantPlaywrightJobProperties =
+				getRelevantPlaywrightJobProperties();
+
+			if (relevantPlaywrightJobProperties.isEmpty()) {
+				return;
+			}
+
+			recordJobProperties(relevantPlaywrightJobProperties);
 		}
 		else {
 			JobProperty jobProperty = getJobProperty(

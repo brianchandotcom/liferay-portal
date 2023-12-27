@@ -96,7 +96,7 @@ definition {
 
 		task ("Sign in as new user") {
 			User.logoutAndLoginPG(
-				userLoginEmailAddress = "${userEmail}",
+				userLoginEmailAddress = ${userEmail},
 				userLoginFullName = "${userName} ${userName}");
 		}
 
@@ -132,8 +132,8 @@ definition {
 				optionValue = "Manage");
 
 			ACSettings.assertRequestLog(
-				key_jobType = "Access",
-				key_emailAdress = ${userEmail});
+				key_emailAdress = ${userEmail},
+				key_jobType = "Access");
 		}
 	}
 
@@ -164,7 +164,7 @@ definition {
 
 		task ("Sign in as new user") {
 			User.logoutAndLoginPG(
-				userLoginEmailAddress = "${userEmail}",
+				userLoginEmailAddress = ${userEmail},
 				userLoginFullName = "${userName} ${userName}");
 		}
 
@@ -200,8 +200,8 @@ definition {
 				optionValue = "Manage");
 
 			ACSettings.assertRequestLog(
-				key_jobType = "Delete",
-				key_emailAdress = ${userEmail});
+				key_emailAdress = ${userEmail},
+				key_jobType = "Delete");
 		}
 	}
 
@@ -250,8 +250,8 @@ definition {
 				optionValue = "Manage");
 
 			ACSettings.assertRequestLog(
-				key_jobType = "Suppress",
-				key_emailAdress = ${userEmail});
+				key_emailAdress = ${userEmail},
+				key_jobType = "Suppress");
 		}
 	}
 
@@ -322,12 +322,12 @@ definition {
 				optionValue = "Manage");
 
 			ACSettings.assertRequestLog(
-				key_jobType = "Unsuppress",
-				key_emailAdress = ${userEmail});
+				key_emailAdress = ${userEmail},
+				key_jobType = "Unsuppress");
 
 			ACSettings.assertRequestLog(
-				key_jobType = "Access",
-				key_emailAdress = ${userEmail});
+				key_emailAdress = ${userEmail},
+				key_jobType = "Access");
 		}
 	}
 

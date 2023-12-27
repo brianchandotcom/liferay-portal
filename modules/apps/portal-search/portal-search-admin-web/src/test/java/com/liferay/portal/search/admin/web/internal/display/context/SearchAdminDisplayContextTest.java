@@ -39,10 +39,10 @@ public class SearchAdminDisplayContextTest {
 
 	@Before
 	public void setUp() {
-		setUpIndexInformation();
+		_setUpIndexInformation();
 		_setUpLanguage();
 		_setUpPermissionChecker();
-		setUpPortalUtil();
+		_setUpPortalUtil();
 		_setUpRenderRequest();
 	}
 
@@ -196,7 +196,9 @@ public class SearchAdminDisplayContextTest {
 			"connections", searchAdminDisplayContext.getSelectedTab());
 	}
 
-	protected void setUpIndexInformation() {
+	protected IndexInformation indexInformation;
+
+	private void _setUpIndexInformation() {
 		indexInformation = Mockito.mock(IndexInformation.class);
 
 		Mockito.when(
@@ -211,24 +213,6 @@ public class SearchAdminDisplayContextTest {
 			invocation -> "index" + invocation.getArguments()[0]
 		);
 	}
-
-	protected void setUpPortalUtil() {
-		Mockito.doAnswer(
-			invocation -> new String[] {
-				invocation.getArgument(0, String.class), StringPool.BLANK
-			}
-		).when(
-			_portal
-		).stripURLAnchor(
-			Mockito.anyString(), Mockito.anyString()
-		);
-
-		PortalUtil portalUtil = new PortalUtil();
-
-		portalUtil.setPortal(_portal);
-	}
-
-	protected IndexInformation indexInformation;
 
 	private void _setUpLanguage() {
 		_language = new LanguageImpl();
@@ -246,6 +230,22 @@ public class SearchAdminDisplayContextTest {
 		).when(
 			_permissionChecker
 		).isOmniadmin();
+	}
+
+	private void _setUpPortalUtil() {
+		Mockito.doAnswer(
+			invocation -> new String[] {
+				invocation.getArgument(0, String.class), StringPool.BLANK
+			}
+		).when(
+			_portal
+		).stripURLAnchor(
+			Mockito.anyString(), Mockito.anyString()
+		);
+
+		PortalUtil portalUtil = new PortalUtil();
+
+		portalUtil.setPortal(_portal);
 	}
 
 	private void _setUpRenderRequest() {

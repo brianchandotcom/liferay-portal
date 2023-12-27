@@ -51,9 +51,9 @@ definition {
 
 		KBFolder.gotoCP(kbFolderName = "KB Folder");
 
-		ManagementBar.setFilterAndOrder(filterBy = "Title");
+		ManagementBar.setFilterAndOrder(orderBy = "Title");
 
-		Click(locator1 = "ManagementBar#ORDER_ICON_GENERIC_BUTTON");
+		ManagementBar.setFilterAndOrder(orderBy = "Descending");
 
 		KBArticle.viewCP(
 			indexNumber = 1,
@@ -95,9 +95,9 @@ definition {
 
 		KBFolder.gotoCP(kbFolderName = "KB Folder");
 
-		ManagementBar.setFilterAndOrder(filterBy = "Modified Date");
+		ManagementBar.setFilterAndOrder(orderBy = "Modified Date");
 
-		Click(locator1 = "ManagementBar#ORDER_ICON_GENERIC_BUTTON");
+		ManagementBar.setFilterAndOrder(orderBy = "Descending");
 
 		KBArticle.viewCP(
 			indexNumber = 1,
@@ -146,9 +146,9 @@ definition {
 
 		KBFolder.gotoCP(kbFolderName = "KB Folder");
 
-		ManagementBar.setFilterAndOrder(filterBy = "View Count");
+		ManagementBar.setFilterAndOrder(orderBy = "View Count");
 
-		Click(locator1 = "ManagementBar#ORDER_ICON_GENERIC_BUTTON");
+		ManagementBar.setFilterAndOrder(orderBy = "Descending");
 
 		KBArticle.viewCP(
 			indexNumber = 1,

@@ -298,7 +298,7 @@ definition {
 			navTab = "Shared with Me",
 			siteURLKey = "guest");
 
-		ManagementBar.setFilterAndOrder(orderBy = "Shared Date");
+		ManagementBar.setFilterAndOrder(filterBy = "Shared Date");
 
 		Click.clickNoMouseOver(
 			key_order = "list-up",

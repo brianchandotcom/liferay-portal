@@ -17,7 +17,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Carlos Correa
  */
 @Component(service = PortalInstanceLifecycleListener.class)
-public class UncategorizedObjectFolderPortalInstanceLifecycleListener
+public class DefaultObjectFolderPortalInstanceLifecycleListener
 	extends BasePortalInstanceLifecycleListener {
 
 	@Override

@@ -38,9 +38,6 @@ public class FragmentPortletRendererImpl implements FragmentPortletRenderer {
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
-		PipingServletResponse pipingServletResponse = new PipingServletResponse(
-			httpServletResponse, unsyncStringWriter);
-
 		boolean inheritedFromMaster = false;
 
 		FragmentEntryLink fragmentEntryLink =
@@ -63,7 +60,9 @@ public class FragmentPortletRendererImpl implements FragmentPortletRenderer {
 				PortletPreferencesFactoryConstants.
 					SETTINGS_SCOPE_PORTLET_INSTANCE,
 				defaultPreferences, inheritedFromMaster, null,
-				httpServletRequest, pipingServletResponse);
+				httpServletRequest,
+				new PipingServletResponse(
+					httpServletResponse, unsyncStringWriter));
 		}
 		catch (Exception exception) {
 			throw new FragmentEntryContentException(exception);

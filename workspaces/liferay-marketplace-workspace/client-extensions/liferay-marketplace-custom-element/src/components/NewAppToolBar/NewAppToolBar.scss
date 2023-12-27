@@ -53,6 +53,10 @@
 			font-size: 1.125rem;
 			font-weight: 600;
 			line-height: 1.25rem;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			text-wrap: nowrap;
+			width: 330px;
 		}
 	}
 

@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -192,12 +193,17 @@ public class RepositoryBrowserServlet extends HttpServlet {
 
 				String title = FileUtil.stripExtension(sourceFileName);
 
+				ServiceContext serviceContext =
+					ServiceContextFactory.getInstance(
+						FileEntry.class.getName(), httpServletRequest);
+
+				serviceContext.setAddGroupPermissions(true);
+				serviceContext.setAddGuestPermissions(true);
+
 				_dlAppService.addFileEntry(
 					null, repositoryId, parentFolderId, sourceFileName,
 					uploadServletRequest.getContentType("file"), title, null,
-					null, null, file, null, null,
-					ServiceContextFactory.getInstance(
-						FileEntry.class.getName(), httpServletRequest));
+					null, null, file, null, null, serviceContext);
 
 				SessionMessages.add(httpServletRequest, "requestProcessed");
 

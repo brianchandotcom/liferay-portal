@@ -82,7 +82,7 @@ const App = () => {
 					{isPaidApp && (
 						<div className="justify-content-center mb-2 mt-4 row">
 							<h5 className="col-3">{i18n.translate('type')}</h5>
-							<h5 className="col-1">{i18n.translate('Qty')}</h5>
+							<h5 className="col-1">{i18n.translate('qty')}</h5>
 						</div>
 					)}
 					<div

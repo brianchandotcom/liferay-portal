@@ -519,7 +519,7 @@ definition {
 			dmDocumentTitle = "Document_4.txt",
 			dmRepositoryName = "Collaboration Test Application");
 
-		ManagementBar.setFilterAndOrder(menuItem = "Mine");
+		ManagementBar.setFilterAndOrder(filterBy = "Mine");
 
 		// The alert message will update until LPS-188910 fixed
 

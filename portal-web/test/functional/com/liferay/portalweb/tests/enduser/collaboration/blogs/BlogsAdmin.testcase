@@ -63,7 +63,7 @@ definition {
 
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
-		ManagementBar.setFilterAndOrder(menuItem = "Display Date");
+		ManagementBar.setFilterAndOrder(orderBy = "Display Date");
 
 		ManagementBar.sortAssets(sortDirection = "Descending");
 

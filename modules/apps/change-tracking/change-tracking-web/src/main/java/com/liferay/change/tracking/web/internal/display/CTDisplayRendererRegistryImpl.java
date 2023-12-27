@@ -497,9 +497,6 @@ public class CTDisplayRendererRegistryImpl
 		CTDisplayRendererRegistryImpl.class);
 
 	@Reference
-	private BasePersistenceRegistry _basePersistenceRegistry;
-
-	@Reference
 	private ClassNameLocalService _classNameLocalService;
 
 	private ServiceTrackerMap<Long, CTDisplayRenderer<?>>

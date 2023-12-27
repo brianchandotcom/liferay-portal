@@ -100,7 +100,7 @@ definition {
 					userScreenName = ${name});
 			}
 
-			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
 
 		task ("Go to form and submit") {
@@ -131,7 +131,7 @@ definition {
 		}
 
 		task ("Change to the right property and go to assets form tab") {
-			ACProperties.switchProperty(propertyName = ${propertyName});
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 
 			ACNavigation.goToAssets();
 

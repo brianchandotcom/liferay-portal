@@ -50,7 +50,7 @@ public class PortletRegistryImpl implements PortletRegistry {
 
 	@Override
 	public List<String> getFragmentEntryLinkPortletIds(
-		FragmentEntryLink fragmentEntryLink) {
+		Document document, FragmentEntryLink fragmentEntryLink) {
 
 		List<String> portletIds = new ArrayList<>();
 
@@ -75,14 +75,9 @@ public class PortletRegistryImpl implements PortletRegistry {
 			return portletIds;
 		}
 
-		Document document = Jsoup.parseBodyFragment(
-			fragmentEntryLink.getHtml());
-
-		Document.OutputSettings outputSettings = new Document.OutputSettings();
-
-		outputSettings.prettyPrint(false);
-
-		document.outputSettings(outputSettings);
+		if (document == null) {
+			document = _getDocument(fragmentEntryLink.getHtml());
+		}
 
 		for (Element element : document.select("*")) {
 			String tagName = element.tagName();
@@ -137,6 +132,13 @@ public class PortletRegistryImpl implements PortletRegistry {
 		}
 
 		return portletIds;
+	}
+
+	@Override
+	public List<String> getFragmentEntryLinkPortletIds(
+		FragmentEntryLink fragmentEntryLink) {
+
+		return getFragmentEntryLinkPortletIds(null, fragmentEntryLink);
 	}
 
 	@Override
@@ -227,6 +229,18 @@ public class PortletRegistryImpl implements PortletRegistry {
 		}
 
 		return null;
+	}
+
+	private Document _getDocument(String html) {
+		Document document = Jsoup.parseBodyFragment(html);
+
+		Document.OutputSettings outputSettings = new Document.OutputSettings();
+
+		outputSettings.prettyPrint(false);
+
+		document.outputSettings(outputSettings);
+
+		return document;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

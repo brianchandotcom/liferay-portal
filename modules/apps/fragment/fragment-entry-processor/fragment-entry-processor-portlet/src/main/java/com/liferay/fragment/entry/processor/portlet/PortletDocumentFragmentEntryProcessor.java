@@ -95,7 +95,7 @@ public class PortletDocumentFragmentEntryProcessor
 			}
 			else if (processedPortletIds.contains(portletName) ||
 					 _checkNoninstanceablePortletUsed(
-						 fragmentEntryLink, portletName,
+						 fragmentEntryLink, portletName, document,
 						 fragmentEntryProcessorContext.
 							 getHttpServletRequest())) {
 
@@ -150,7 +150,7 @@ public class PortletDocumentFragmentEntryProcessor
 
 	private boolean _checkNoninstanceablePortletUsed(
 		FragmentEntryLink currentFragmentEntryLink, String currentPortletName,
-		HttpServletRequest httpServletRequest) {
+		Document document, HttpServletRequest httpServletRequest) {
 
 		if ((currentFragmentEntryLink.getFragmentEntryLinkId() <= 0) ||
 			(currentFragmentEntryLink.getPlid() <= 0)) {
@@ -195,7 +195,7 @@ public class PortletDocumentFragmentEntryProcessor
 
 			for (String portletId :
 					_portletRegistry.getFragmentEntryLinkPortletIds(
-						fragmentEntryLink)) {
+						document, fragmentEntryLink)) {
 
 				portletNames.add(PortletIdCodec.decodePortletName(portletId));
 			}

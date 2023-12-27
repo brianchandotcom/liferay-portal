@@ -14,10 +14,15 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.jsoup.nodes.Document;
+
 /**
  * @author Lance Ji
  */
 public interface PortletRegistry {
+
+	public List<String> getFragmentEntryLinkPortletIds(
+		Document document, FragmentEntryLink fragmentEntryLink);
 
 	public default List<String> getFragmentEntryLinkPortletIds(
 		FragmentEntryLink fragmentEntryLink) {

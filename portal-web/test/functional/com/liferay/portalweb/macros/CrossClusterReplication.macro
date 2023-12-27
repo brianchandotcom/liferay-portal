@@ -50,10 +50,8 @@ definition {
 		if (${portalCluster} == "true") {
 			FormFields.editTextMultiline(
 				fieldName = "ccrLocalClusterConnectionConfigurations",
-				fieldValue = '''
-	localhost:8080,localcluster
-	localhost:9080,localcluster
-				''');
+				fieldValue = '''localhost:8080,localcluster
+localhost:9080,localcluster''');
 		}
 		else {
 			FormFields.editTextMultiline(

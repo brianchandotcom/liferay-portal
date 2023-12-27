@@ -95,6 +95,7 @@ public class TestJSONMapAttribute implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
+	@JsonIgnore
 	private Supplier<String> _descriptionSupplier;
 
 	@Schema
@@ -133,6 +134,7 @@ public class TestJSONMapAttribute implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@JsonAnyGetter
@@ -177,6 +179,7 @@ public class TestJSONMapAttribute implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, Object> properties1 = new HashMap<>();
 
+	@JsonIgnore
 	private Supplier<Map<String, Object>> _properties1Supplier;
 
 	@JsonAnyGetter
@@ -221,6 +224,7 @@ public class TestJSONMapAttribute implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, Object> properties2 = new HashMap<>();
 
+	@JsonIgnore
 	private Supplier<Map<String, Object>> _properties2Supplier;
 
 	@Override

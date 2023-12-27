@@ -7,6 +7,7 @@ package com.liferay.commerce.internal.search;
 
 import com.liferay.commerce.internal.search.spi.model.index.contributor.CommerceOrderTypeModelIndexerWriterContributor;
 import com.liferay.commerce.internal.search.spi.model.result.contributor.CommerceOrderTypeModelSummaryContributor;
+import com.liferay.commerce.internal.search.spi.model.result.contributor.CommerceOrderTypeModelVisibilityContributor;
 import com.liferay.commerce.model.CommerceOrderType;
 import com.liferay.commerce.service.CommerceOrderTypeLocalService;
 import com.liferay.portal.kernel.search.Field;
@@ -65,6 +66,9 @@ public class CommerceOrderTypeModelSearchConfigurator
 				_dynamicQueryBatchIndexingActionableFactory);
 		_modelSummaryContributor =
 			new CommerceOrderTypeModelSummaryContributor();
+		_modelVisibilityContributor =
+			new CommerceOrderTypeModelVisibilityContributor(
+				_commerceOrderTypeLocalService);
 	}
 
 	@Reference
@@ -77,10 +81,6 @@ public class CommerceOrderTypeModelSearchConfigurator
 	private ModelIndexerWriterContributor<CommerceOrderType>
 		_modelIndexWriterContributor;
 	private ModelSummaryContributor _modelSummaryContributor;
-
-	@Reference(
-		target = "(indexer.class.name=com.liferay.commerce.model.CommerceOrderType)"
-	)
 	private ModelVisibilityContributor _modelVisibilityContributor;
 
 }

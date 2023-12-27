@@ -8,7 +8,7 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayNavigationBar from '@clayui/navigation-bar';
 import classNames from 'classnames';
-import {useEffect, useMemo} from 'react';
+import {useEffect, useMemo, useState} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
 import useSWR from 'swr';
 
@@ -19,18 +19,24 @@ import {TYPES} from '../../../manage-app-state/actionTypes';
 import {ReviewAndSubmitAppPage} from '../../ReviewAndSubmitAppPage/ReviewAndSubmitAppPage';
 
 import './App.scss';
+import {useMarketplaceContext} from '../../../context/MarketplaceContext';
 import i18n from '../../../i18n';
+import {Liferay} from '../../../liferay/liferay';
 import HeadlessCommerceAdminCatalogImpl from '../../../services/rest/HeadlessCommerceAdminCatalog';
 import {
 	getProductVersionFromSpecifications,
 	getThumbnailByProductAttachment,
 	showAppImage,
 } from '../../../utils/util';
+import useProvisioningKoroneikiOAuth2 from '../../GetAppPage/hooks/useProvisioningKoroneikiOAuth2';
 
 const App = () => {
-	const navigate = useNavigate();
 	const [, dispatch] = useAppContext();
+	const [loading, setLoading] = useState(false);
 	const {appId} = useParams();
+	const {myUserAccount} = useMarketplaceContext();
+	const navigate = useNavigate();
+	const provisioningKoroneikiOAuth2 = useProvisioningKoroneikiOAuth2();
 
 	const productId = Number(appId) + 1;
 
@@ -155,6 +161,39 @@ const App = () => {
 				</div>
 
 				<div className="app-details-page-app-info-buttons-container">
+					{myUserAccount.roleBriefs.some(
+						({name}) => name === 'Administrator'
+					) && (
+						<ClayButton
+							className="font-weight-bold mr-5"
+							disabled={loading}
+							displayType="unstyled"
+							onClick={() => {
+								setLoading(true);
+
+								provisioningKoroneikiOAuth2
+									.syncKoroneikiProductSKUs(productId)
+									.then(() =>
+										Liferay.Util.openToast({
+											message:
+												'Koroneiki Sync Successfully',
+											title: 'Success',
+										})
+									)
+									.catch(() =>
+										Liferay.Util.openToast({
+											message: 'Koroneiki Sync Failed',
+											title: 'Error',
+											type: 'danger',
+										})
+									)
+									.finally(() => setLoading(false));
+							}}
+						>
+							{loading ? 'Synchronizing...' : 'Sync to KR'}
+						</ClayButton>
+					)}
+
 					<button className="app-details-page-app-info-button-preview-app-page">
 						Preview App Page
 					</button>

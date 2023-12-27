@@ -88,13 +88,25 @@ class ProvisioningKoroneikiOAuth2 extends OAuth2Client {
 		return response;
 	}
 
+	async syncKoroneikiProductSKUs(productId: number) {
+		const response = await this.oAuth2Client.fetch(
+			`/koroneiki/sync/${productId}`,
+			{
+				method: 'POST',
+			}
+		);
+
+		if (!response.ok) {
+			throw new Error('Unable to Sync Product');
+		}
+	}
+
 	async createLicenseKey(payload: LicenseTypePayload): Promise<LicenseKey> {
 		return (this.oAuth2Client.fetch('/provisioning/license-keys', {
 			body: JSON.stringify(payload),
 			method: 'POST',
 
 			// Necessary due the response comes resolved already, not necessary to parse to .json()
-
 		}) as unknown) as Promise<LicenseKey>;
 	}
 

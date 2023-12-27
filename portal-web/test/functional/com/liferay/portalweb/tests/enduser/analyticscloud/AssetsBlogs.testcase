@@ -164,6 +164,8 @@ definition {
 
 		User.logoutPG();
 
+		ACUtils.clearLocalStorage();
+
 		ACUtils.navigateToSitePage(
 			actionType = "View Blog",
 			documentTitleList = "Blogs AC Title",

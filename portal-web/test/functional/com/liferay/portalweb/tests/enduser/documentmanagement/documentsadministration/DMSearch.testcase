@@ -59,7 +59,7 @@ definition {
 
 		Search.searchCP(searchTerm = "Document");
 
-		ManagementBar.setFilterAndOrder(menuItem = "Mine");
+		ManagementBar.setFilterAndOrder(filterBy = "Mine");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
 
@@ -92,7 +92,7 @@ definition {
 
 		Search.searchCP(searchTerm = "Document");
 
-		ManagementBar.setFilterAndOrder(menuItem = "Mine");
+		ManagementBar.setFilterAndOrder(filterBy = "Mine");
 
 		ManagementBar.setFilterAndOrder(filterBy = "Tags...");
 
@@ -160,11 +160,11 @@ definition {
 
 		Search.searchCP(searchTerm = "Document");
 
-		ManagementBar.setFilterAndOrder(menuItem = "Categories...");
+		ManagementBar.setFilterAndOrder(filterBy = "Categories...");
 
 		DMDocument.selectFilterItems(categories = "Filtering");
 
-		ManagementBar.setFilterAndOrder(menuItem = "Extension...");
+		ManagementBar.setFilterAndOrder(filterBy = "Extension...");
 
 		DMDocument.selectFilterItems(categories = "Text (1 Item)");
 
@@ -198,7 +198,7 @@ definition {
 
 		Search.searchCP(searchTerm = "DM Folder");
 
-		ManagementBar.setFilterAndOrder(menuItem = "Mine");
+		ManagementBar.setFilterAndOrder(filterBy = "Mine");
 
 		ManagementBar.setFilterAndOrder(orderBy = "Name");
 
@@ -230,7 +230,7 @@ definition {
 
 		Search.searchCP(searchTerm = "Test");
 
-		ManagementBar.setFilterAndOrder(menuItem = "Recent");
+		ManagementBar.setFilterAndOrder(filterBy = "Recent");
 
 		ManagementBar.setFilterAndOrder(filterBy = "Type...");
 
@@ -410,7 +410,7 @@ definition {
 
 		Search.searchCP(searchTerm = "DM Asset");
 
-		ManagementBar.setFilterAndOrder(menuItem = "Mine");
+		ManagementBar.setFilterAndOrder(filterBy = "Mine");
 
 		DMDocument.viewFilterSummaryResults(
 			filterScope = "Owner: Test Test",

@@ -97,8 +97,7 @@ export default function EditObjectFolderHeader({
 						</span>
 					</ClayTooltipProvider>
 
-					{selectedObjectFolder.externalReferenceCode !==
-						'uncategorized' &&
+					{selectedObjectFolder.externalReferenceCode !== 'default' &&
 						selectedObjectFolder.actions?.update && (
 							<ClayButtonWithIcon
 								aria-label={Liferay.Language.get(

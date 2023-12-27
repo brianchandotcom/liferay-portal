@@ -309,14 +309,13 @@ public class ObjectRelationshipResourceImpl
 			return objectDefinition;
 		}
 
-		ObjectFolder uncategorizedObjectFolder =
-			_objectFolderLocalService.getOrAddUncategorizedObjectFolder(
+		ObjectFolder defaultObjectFolder =
+			_objectFolderLocalService.getOrAddDefaultObjectFolder(
 				contextCompany.getCompanyId());
 
 		return _objectDefinitionLocalService.addObjectDefinition(
 			objectRelationship.getObjectDefinitionExternalReferenceCode2(),
-			contextUser.getUserId(),
-			uncategorizedObjectFolder.getObjectFolderId(),
+			contextUser.getUserId(), defaultObjectFolder.getObjectFolderId(),
 			GetterUtil.get(
 				objectRelationship.getObjectDefinitionModifiable2(), true),
 			GetterUtil.get(

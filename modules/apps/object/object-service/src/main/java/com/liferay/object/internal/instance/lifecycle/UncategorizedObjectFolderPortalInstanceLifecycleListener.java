@@ -22,7 +22,7 @@ public class UncategorizedObjectFolderPortalInstanceLifecycleListener
 
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
-		_objectFolderLocalService.getOrAddUncategorizedObjectFolder(
+		_objectFolderLocalService.getOrAddDefaultObjectFolder(
 			company.getCompanyId());
 	}
 

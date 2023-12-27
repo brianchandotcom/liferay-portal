@@ -1675,8 +1675,7 @@ public class ObjectDefinitionLocalServiceImpl
 
 		if (objectFolderId == 0) {
 			ObjectFolder objectFolder =
-				_objectFolderLocalService.getUncategorizedObjectFolder(
-					companyId);
+				_objectFolderLocalService.getDefaultObjectFolder(companyId);
 
 			return objectFolder.getObjectFolderId();
 		}

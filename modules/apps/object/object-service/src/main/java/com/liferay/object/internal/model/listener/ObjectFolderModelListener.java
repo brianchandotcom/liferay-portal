@@ -34,8 +34,8 @@ public class ObjectFolderModelListener extends BaseModelListener<ObjectFolder> {
 		}
 
 		try {
-			ObjectFolder uncategorizedObjectFolder =
-				_objectFolderLocalService.getUncategorizedObjectFolder(
+			ObjectFolder defaultObjectFolder =
+				_objectFolderLocalService.getDefaultObjectFolder(
 					objectFolder.getCompanyId());
 
 			for (ObjectDefinition objectDefinition :
@@ -45,7 +45,7 @@ public class ObjectFolderModelListener extends BaseModelListener<ObjectFolder> {
 
 				_objectDefinitionLocalService.updateObjectFolderId(
 					objectDefinition.getObjectDefinitionId(),
-					uncategorizedObjectFolder.getObjectFolderId());
+					defaultObjectFolder.getObjectFolderId());
 			}
 		}
 		catch (Exception exception) {

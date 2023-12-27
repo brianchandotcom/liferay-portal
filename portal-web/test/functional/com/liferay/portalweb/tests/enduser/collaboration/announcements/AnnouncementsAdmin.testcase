@@ -36,7 +36,7 @@ definition {
 			groupName = "Guest",
 			siteURLKey = "guest");
 
-		Announcements.accessAddAnnouncements();
+		LexiconEntry.gotoAdd();
 
 		Announcements.addAnnouncement();
 

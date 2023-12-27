@@ -41,9 +41,8 @@ public class SearchAdminDisplayContextTest {
 	public void setUp() {
 		setUpIndexInformation();
 		_setUpLanguage();
+		_setUpPermissionChecker();
 		setUpPortalUtil();
-		_setUpThemeDisplay();
-
 		_setUpRenderRequest();
 	}
 
@@ -214,8 +213,6 @@ public class SearchAdminDisplayContextTest {
 	}
 
 	protected void setUpPortalUtil() {
-		_portal = Mockito.mock(Portal.class);
-
 		Mockito.doAnswer(
 			invocation -> new String[] {
 				invocation.getArgument(0, String.class), StringPool.BLANK
@@ -237,20 +234,9 @@ public class SearchAdminDisplayContextTest {
 		_language = new LanguageImpl();
 	}
 
-	private void _setUpRenderRequest() {
-		_mockRenderRequest = new MockRenderRequest();
-
-		_mockRenderRequest.setAttribute(WebKeys.THEME_DISPLAY, _themeDisplay);
-	}
-
-	private void _setUpThemeDisplay() {
-		_themeDisplay = Mockito.mock(ThemeDisplay.class);
-
-		PermissionChecker permissionChecker = Mockito.mock(
-			PermissionChecker.class);
-
+	private void _setUpPermissionChecker() {
 		Mockito.doReturn(
-			permissionChecker
+			_permissionChecker
 		).when(
 			_themeDisplay
 		).getPermissionChecker();
@@ -258,14 +244,22 @@ public class SearchAdminDisplayContextTest {
 		Mockito.doReturn(
 			true
 		).when(
-			permissionChecker
+			_permissionChecker
 		).isOmniadmin();
 	}
 
+	private void _setUpRenderRequest() {
+		_mockRenderRequest = new MockRenderRequest();
+
+		_mockRenderRequest.setAttribute(WebKeys.THEME_DISPLAY, _themeDisplay);
+	}
+
 	private static MockRenderRequest _mockRenderRequest;
-	private static ThemeDisplay _themeDisplay;
 
 	private Language _language;
-	private Portal _portal;
+	private final PermissionChecker _permissionChecker = Mockito.mock(
+		PermissionChecker.class);
+	private final Portal _portal = Mockito.mock(Portal.class);
+	private final ThemeDisplay _themeDisplay = Mockito.mock(ThemeDisplay.class);
 
 }

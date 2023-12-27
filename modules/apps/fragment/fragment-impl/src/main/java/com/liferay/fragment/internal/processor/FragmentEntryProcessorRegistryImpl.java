@@ -8,6 +8,7 @@ package com.liferay.fragment.internal.processor;
 import com.liferay.fragment.constants.FragmentWebKeys;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.CSSFragmentEntryProcessor;
+import com.liferay.fragment.processor.DefaultEditableValuesFragmentEntryProcessor;
 import com.liferay.fragment.processor.DocumentFragmentEntryProcessor;
 import com.liferay.fragment.processor.FragmentEntryAutocompleteContributor;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
@@ -126,6 +127,25 @@ public class FragmentEntryProcessorRegistryImpl
 			}
 		}
 
+		Document document = _getDocument(html);
+
+		for (DefaultEditableValuesFragmentEntryProcessor
+				defaultEditableValuesFragmentEntryProcessor :
+					_defaultEditableValuesFragmentEntryProcessors) {
+
+			JSONObject defaultEditableValuesJSONObject =
+				defaultEditableValuesFragmentEntryProcessor.
+					getDefaultEditableValuesJSONObject(configuration, document);
+
+			if ((defaultEditableValuesJSONObject != null) &&
+				(defaultEditableValuesJSONObject.length() > 0)) {
+
+				jsonObject.put(
+					defaultEditableValuesFragmentEntryProcessor.getKey(),
+					defaultEditableValuesJSONObject);
+			}
+		}
+
 		return jsonObject;
 	}
 
@@ -212,6 +232,13 @@ public class FragmentEntryProcessorRegistryImpl
 			Collections.reverseOrder(
 				new PropertyServiceReferenceComparator<>(
 					"fragment.entry.processor.priority")));
+		_defaultEditableValuesFragmentEntryProcessors =
+			ServiceTrackerListFactory.open(
+				bundleContext,
+				DefaultEditableValuesFragmentEntryProcessor.class,
+				Collections.reverseOrder(
+					new PropertyServiceReferenceComparator<>(
+						"fragment.entry.processor.priority")));
 		_documentFragmentEntryProcessors = ServiceTrackerListFactory.open(
 			bundleContext, DocumentFragmentEntryProcessor.class,
 			Collections.reverseOrder(
@@ -237,6 +264,7 @@ public class FragmentEntryProcessorRegistryImpl
 	@Deactivate
 	protected void deactivate() {
 		_cssFragmentEntryProcessors.close();
+		_defaultEditableValuesFragmentEntryProcessors.close();
 		_documentFragmentEntryProcessors.close();
 		_fragmentEntryAutocompleteContributors.close();
 		_fragmentEntryProcessors.close();
@@ -309,6 +337,8 @@ public class FragmentEntryProcessorRegistryImpl
 
 	private ServiceTrackerList<CSSFragmentEntryProcessor>
 		_cssFragmentEntryProcessors;
+	private ServiceTrackerList<DefaultEditableValuesFragmentEntryProcessor>
+		_defaultEditableValuesFragmentEntryProcessors;
 	private ServiceTrackerList<DocumentFragmentEntryProcessor>
 		_documentFragmentEntryProcessors;
 	private ServiceTrackerList<FragmentEntryAutocompleteContributor>

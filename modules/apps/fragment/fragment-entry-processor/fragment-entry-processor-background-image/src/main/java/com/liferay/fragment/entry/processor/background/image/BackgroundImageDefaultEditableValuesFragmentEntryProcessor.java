@@ -5,11 +5,11 @@
 
 package com.liferay.fragment.entry.processor.background.image;
 
-import com.liferay.fragment.processor.FragmentEntryProcessor;
+import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
+import com.liferay.fragment.processor.DefaultEditableValuesFragmentEntryProcessor;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
@@ -21,19 +21,17 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "fragment.entry.processor.priority:Integer=5",
-	service = FragmentEntryProcessor.class
+	service = DefaultEditableValuesFragmentEntryProcessor.class
 )
-public class BackgroundImageFragmentEntryProcessor
-	implements FragmentEntryProcessor {
+public class BackgroundImageDefaultEditableValuesFragmentEntryProcessor
+	implements DefaultEditableValuesFragmentEntryProcessor {
 
 	@Override
 	public JSONObject getDefaultEditableValuesJSONObject(
-		String html, String configuration) {
+		String configuration, Document document) {
 
 		JSONObject defaultEditableValuesJSONObject =
 			_jsonFactory.createJSONObject();
-
-		Document document = _getDocument(html);
 
 		for (Element element :
 				document.select("[data-lfr-background-image-id]")) {
@@ -47,16 +45,10 @@ public class BackgroundImageFragmentEntryProcessor
 		return defaultEditableValuesJSONObject;
 	}
 
-	private Document _getDocument(String html) {
-		Document document = Jsoup.parseBodyFragment(html);
-
-		Document.OutputSettings outputSettings = new Document.OutputSettings();
-
-		outputSettings.prettyPrint(false);
-
-		document.outputSettings(outputSettings);
-
-		return document;
+	@Override
+	public String getKey() {
+		return FragmentEntryProcessorConstants.
+			KEY_BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR;
 	}
 
 	@Reference

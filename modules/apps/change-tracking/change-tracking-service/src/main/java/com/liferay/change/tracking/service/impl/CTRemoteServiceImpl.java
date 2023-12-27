@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
@@ -155,8 +154,5 @@ public class CTRemoteServiceImpl extends CTRemoteServiceBaseImpl {
 
 	@Reference(target = "(resource.name=" + CTConstants.RESOURCE_NAME + ")")
 	private PortletResourcePermission _portletResourcePermission;
-
-	@Reference
-	private UserLocalService _userLocalService;
 
 }

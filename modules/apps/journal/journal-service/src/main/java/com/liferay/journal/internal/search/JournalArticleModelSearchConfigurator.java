@@ -7,6 +7,7 @@ package com.liferay.journal.internal.search;
 
 import com.liferay.journal.internal.search.spi.model.index.contributor.JournalArticleModelIndexerWriterContributor;
 import com.liferay.journal.internal.search.spi.model.result.contributor.JournalArticleModelSummaryContributor;
+import com.liferay.journal.internal.search.spi.model.result.contributor.JournalArticleModelVisibilityContributor;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalArticleResourceLocalService;
@@ -80,6 +81,9 @@ public class JournalArticleModelSearchConfigurator
 				_dynamicQueryBatchIndexingActionableFactory,
 				_journalArticleLocalService,
 				_journalArticleResourceLocalService);
+		_modelVisibilityContributor =
+			new JournalArticleModelVisibilityContributor(
+				_journalArticleLocalService);
 	}
 
 	@Reference
@@ -103,10 +107,6 @@ public class JournalArticleModelSearchConfigurator
 		_modelIndexerWriterContributor;
 	private final ModelSummaryContributor _modelSummaryContributor =
 		new JournalArticleModelSummaryContributor();
-
-	@Reference(
-		target = "(indexer.class.name=com.liferay.journal.model.JournalArticle)"
-	)
 	private ModelVisibilityContributor _modelVisibilityContributor;
 
 }

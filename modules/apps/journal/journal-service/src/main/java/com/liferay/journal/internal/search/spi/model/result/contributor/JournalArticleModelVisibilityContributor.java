@@ -11,18 +11,17 @@ import com.liferay.portal.search.spi.model.result.contributor.ModelVisibilityCon
 
 import java.util.List;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Lourdes Fernández Besada
  */
-@Component(
-	property = "indexer.class.name=com.liferay.journal.model.JournalArticle",
-	service = ModelVisibilityContributor.class
-)
 public class JournalArticleModelVisibilityContributor
 	implements ModelVisibilityContributor {
+
+	public JournalArticleModelVisibilityContributor(
+		JournalArticleLocalService journalArticleLocalService) {
+
+		_journalArticleLocalService = journalArticleLocalService;
+	}
 
 	@Override
 	public boolean isVisible(long classPK, int status) {
@@ -38,7 +37,6 @@ public class JournalArticleModelVisibilityContributor
 		return false;
 	}
 
-	@Reference
-	private JournalArticleLocalService _journalArticleLocalService;
+	private final JournalArticleLocalService _journalArticleLocalService;
 
 }

@@ -191,19 +191,19 @@ definition {
 
 		CalendarLookAndFeelConfiguration.viewCssValues(
 			cssElement = "border-top-color",
-			cssValue = "#ff0d0d");
+			cssValue = "#FF0D0D");
 
 		CalendarLookAndFeelConfiguration.viewCssValues(
 			cssElement = "border-right-color",
-			cssValue = "#ff8a1c");
+			cssValue = "#FF8A1C");
 
 		CalendarLookAndFeelConfiguration.viewCssValues(
 			cssElement = "border-bottom-color",
-			cssValue = "#7f26ff");
+			cssValue = "#7F26FF");
 
 		CalendarLookAndFeelConfiguration.viewCssValues(
 			cssElement = "border-left-color",
-			cssValue = "#ff21a0");
+			cssValue = "#FF21A0");
 
 		CalendarLookAndFeelConfiguration.gotoLookAndFeelConfiguration();
 
@@ -225,7 +225,7 @@ definition {
 
 		CalendarLookAndFeelConfiguration.viewCssValues(
 			cssElement = "border-color",
-			cssValue = "#ff0d0d");
+			cssValue = "#FF0D0D");
 	}
 
 	@description = "LRQA-71889 - Verify that the user can modify margin and padding in the calendar widget"

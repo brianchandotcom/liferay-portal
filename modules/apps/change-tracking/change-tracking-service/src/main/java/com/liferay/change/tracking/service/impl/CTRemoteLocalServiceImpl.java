@@ -8,7 +8,6 @@ package com.liferay.change.tracking.service.impl;
 import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.model.CTRemote;
 import com.liferay.change.tracking.service.base.CTRemoteLocalServiceBaseImpl;
-import com.liferay.json.storage.service.JSONStorageEntryLocalService;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
@@ -97,9 +96,6 @@ public class CTRemoteLocalServiceImpl extends CTRemoteLocalServiceBaseImpl {
 
 		return ctRemotePersistence.update(ctRemote);
 	}
-
-	@Reference
-	private JSONStorageEntryLocalService _jsonStorageEntryLocalService;
 
 	@Reference(target = "(resource.name=" + CTConstants.RESOURCE_NAME + ")")
 	private PortletResourcePermission _portletResourcePermission;

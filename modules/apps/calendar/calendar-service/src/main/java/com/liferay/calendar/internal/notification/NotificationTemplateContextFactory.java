@@ -164,7 +164,7 @@ public class NotificationTemplateContextFactory {
 			).put(
 				"url",
 				_getCalendarBookingURL(
-					user, calendarBooking.getCalendarBookingId(), scopeGroupId)
+					calendarBooking.getCalendarBookingId(), scopeGroupId, user)
 			).build();
 
 		notificationTemplateContext.setAttributes(attributes);
@@ -218,7 +218,7 @@ public class NotificationTemplateContextFactory {
 	 * CalendarBooking)}
 	 */
 	private static String _getCalendarBookingURL(
-			User user, long calendarBookingId, long scopeGroupId)
+			long calendarBookingId, long scopeGroupId, User user)
 		throws Exception {
 
 		GroupLocalService groupLocalService = _groupLocalServiceSnapshot.get();

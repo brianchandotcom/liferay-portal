@@ -41,9 +41,8 @@ public class EditCommercePaymentEntryExternalReferenceCodeMVCActionCommand
 		String externalReferenceCode = ParamUtil.getString(
 			actionRequest, "externalReferenceCode");
 
-		_commercePaymentEntryService.
-			updateCommercePaymentEntryExternalReferenceCode(
-				externalReferenceCode, commercePaymentEntryId);
+		_commercePaymentEntryService.updateExternalReferenceCode(
+			commercePaymentEntryId, externalReferenceCode);
 	}
 
 	@Reference

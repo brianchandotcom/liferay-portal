@@ -133,7 +133,7 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
-			"externalReferenceCode": "Opp_Partner_Account_Name__c",
+			"externalReferenceCode": "Partner_Account_Name__c",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -146,7 +146,7 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
-			"externalReferenceCode": "Opp_Primary_Partner_Email__c",
+			"externalReferenceCode": "Primary_Partner_Email__c",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -159,7 +159,7 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
-			"externalReferenceCode": "Opp_Primary_Partner_First_Name__c",
+			"externalReferenceCode": "Primary_Partner_First_Name__c",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -172,7 +172,7 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
-			"externalReferenceCode": "Opp_Primary_Partner_Last_Name__c",
+			"externalReferenceCode": "Primary_Partner_Last_Name__c",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {

@@ -62,7 +62,7 @@ definition {
 
 		PortletEntry.selectAll();
 
-		ClickNoError(locator1 = "Icon#DELETE");
+		ClickNoError(locator1 = "Button#DELETE");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#EMPTY_INFO",

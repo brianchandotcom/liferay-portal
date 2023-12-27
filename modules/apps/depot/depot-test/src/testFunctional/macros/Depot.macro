@@ -505,7 +505,7 @@ definition {
 		}
 
 		if (isSet(recycleBinDisabled)) {
-			ClickNoError(locator1 = "Icon#DELETE");
+			ClickNoError(locator1 = "Button#DELETE");
 
 			AssertConfirm(value1 = "Are you sure you want to delete the selected entries? They will be deleted immediately.");
 
@@ -521,7 +521,7 @@ definition {
 	@summary = "Default summary"
 	macro deleteCP(depotName = null) {
 		if (isSet(deletions)) {
-			ClickNoError(locator1 = "Icon#DELETE");
+			ClickNoError(locator1 = "Button#DELETE");
 		}
 		else {
 			LexiconEntry.gotoEntryMenuItemNoError(
@@ -810,7 +810,7 @@ definition {
 					locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
 			}
 
-			ClickNoError(locator1 = "Icon#DELETE");
+			ClickNoError(locator1 = "Button#DELETE");
 		}
 		else {
 			Search.searchCP(searchTerm = ${userGroupName});

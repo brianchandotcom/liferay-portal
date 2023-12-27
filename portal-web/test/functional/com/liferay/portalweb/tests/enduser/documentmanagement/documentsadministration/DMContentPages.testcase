@@ -99,7 +99,9 @@ definition {
 
 		DMDocument.selectDocuments(dmDocumentTitle = "Document_1");
 
-		Click(locator1 = "Icon#EDIT_TAGS");
+		Click(
+			key_text = "Edit Tags",
+			locator1 = "Button#ANY");
 
 		DMDocument.editTags(tagName = "tagone");
 
@@ -107,7 +109,9 @@ definition {
 
 		DMDocument.selectDocuments(dmDocumentTitle = "Document_2");
 
-		Click(locator1 = "Icon#EDIT_TAGS");
+		Click(
+			key_text = "Edit Tags",
+			locator1 = "Button#ANY");
 
 		DMDocument.editTags(autocomplete = "true");
 

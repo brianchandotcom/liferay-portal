@@ -222,8 +222,9 @@ public class CommercePaymentEntryLocalServiceImpl
 	}
 
 	@Override
-	public CommercePaymentEntry fetchByExternalReferenceCode(
-		String externalReferenceCode, long companyId) {
+	public CommercePaymentEntry
+		fetchCommercePaymentEntryByExternalReferenceCode(
+			String externalReferenceCode, long companyId) {
 
 		if (Validator.isBlank(externalReferenceCode)) {
 			return null;
@@ -375,8 +376,8 @@ public class CommercePaymentEntryLocalServiceImpl
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public CommercePaymentEntry updateCommercePaymentEntryExternalReferenceCode(
-			String externalReferenceCode, long commercePaymentEntryId)
+	public CommercePaymentEntry updateExternalReferenceCode(
+			long commercePaymentEntryId, String externalReferenceCode)
 		throws PortalException {
 
 		CommercePaymentEntry commercePaymentEntry =
@@ -390,7 +391,7 @@ public class CommercePaymentEntryLocalServiceImpl
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public CommercePaymentEntry updateCommercePaymentEntryNote(
+	public CommercePaymentEntry updateNote(
 			long commercePaymentEntryId, String note)
 		throws PortalException {
 
@@ -405,7 +406,7 @@ public class CommercePaymentEntryLocalServiceImpl
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public CommercePaymentEntry updateCommercePaymentEntryReasonKey(
+	public CommercePaymentEntry updateReasonKey(
 			long commercePaymentEntryId, String reasonKey)
 		throws PortalException {
 

@@ -111,6 +111,22 @@ public class CIForwardProcessor {
 							_getCIForwardBranchName(), senderUsername,
 							_gitRepositoryDir);
 
+						if (_force) {
+							GitHubRemoteGitRepository
+								gitHubRemoteGitRepository =
+									_pullRequest.getGitHubRemoteGitRepository();
+
+							gitHubRemoteGitRepository.addLabel(
+								"bcf5db", "", "ci:forward:force");
+
+							GitHubRemoteGitRepository.Label
+								ciForwardForceLabel =
+									gitHubRemoteGitRepository.getLabel(
+										"ci:forward:force");
+
+							_pullRequest.addLabel(ciForwardForceLabel);
+						}
+
 						_pullRequest.close();
 
 						StringBuilder sb = new StringBuilder();

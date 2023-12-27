@@ -1022,7 +1022,7 @@ definition {
 			ignoreURL = "${portalURL}/web/test-site-name/test-destination-page2",
 			requestNumber = 2);
 
-		Click(locator1 = "ManagementBar#ORDER_ICON_GENERIC");
+		ManagementBar.setFilterAndOrder(orderBy = "Descending");
 
 		Redirect.viewOrderedURLs(
 			entry1 = 1,

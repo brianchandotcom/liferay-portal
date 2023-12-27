@@ -198,7 +198,7 @@ function handleUnplacedObjectDefinitionNode({
 }: handleUnplacedObjectDefinitionNode) {
 	const hasNewPositionedNode = hasPositionedNode(updatedObjectFolderItems);
 
-	if (objectFolderExternalReferenceCode === 'uncategorized') {
+	if (objectFolderExternalReferenceCode === 'default') {
 		const hasOldPositionedNode = hasPositionedNode(
 			outdatedObjectFolderItems
 		);
@@ -209,7 +209,7 @@ function handleUnplacedObjectDefinitionNode({
 			);
 		}
 
-		return getUncategorizedPredefinedPosition(positionColumn, index);
+		return getDefaultPredefinedPosition(positionColumn, index);
 	}
 	else if (hasNewPositionedNode) {
 		return getObjectDefinitionNodeNextPosition(updatedObjectFolderItems);
@@ -301,7 +301,7 @@ export function getObjectFolderDiagramCenterPosition() {
 	}
 }
 
-function getUncategorizedPredefinedPosition(
+function getDefaultPredefinedPosition(
 	positionColumn: {x: number; y: number},
 	index: number
 ) {

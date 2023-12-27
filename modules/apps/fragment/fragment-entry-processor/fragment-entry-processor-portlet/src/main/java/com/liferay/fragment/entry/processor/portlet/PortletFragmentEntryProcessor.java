@@ -76,25 +76,22 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 
 		String encodedPortletId = PortletIdCodec.encode(portletId, instanceId);
 
+		HttpServletRequest httpServletRequest =
+			fragmentEntryProcessorContext.getHttpServletRequest();
+
 		String html = _fragmentPortletRenderer.renderPortlet(
-			fragmentEntryProcessorContext.getHttpServletRequest(),
+			httpServletRequest,
 			fragmentEntryProcessorContext.getHttpServletResponse(), portletId,
 			instanceId,
 			PortletPreferencesFactoryUtil.toXML(
 				PortletPreferencesFactoryUtil.getPortletPreferences(
-					fragmentEntryProcessorContext.getHttpServletRequest(),
-					encodedPortletId)));
+					httpServletRequest, encodedPortletId)));
 
 		String checkAccessAllowedToPortletCacheKey = StringBundler.concat(
 			"LIFERAY_SHARED_",
 			DefaultLayoutTypeAccessPolicyImpl.class.getName(), "#",
-			ParamUtil.getLong(
-				fragmentEntryProcessorContext.getHttpServletRequest(),
-				"p_l_id"),
-			"#", encodedPortletId);
-
-		HttpServletRequest httpServletRequest =
-			fragmentEntryProcessorContext.getHttpServletRequest();
+			ParamUtil.getLong(httpServletRequest, "p_l_id"), "#",
+			encodedPortletId);
 
 		httpServletRequest.setAttribute(
 			FragmentWebKeys.ACCESS_ALLOWED_TO_FRAGMENT_ENTRY_LINK_ID +

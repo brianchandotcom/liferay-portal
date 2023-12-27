@@ -7969,7 +7969,7 @@ public class ObjectEntryResourceTest {
 
 		System.out.println(jsonObject);
 
-		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
+		Assert.assertEquals("NOT_FOUND", jsonObject.get("status"));
 	}
 
 	private void _testPutCustomObjectEntryUnlinkNestedCustomObjectEntries(

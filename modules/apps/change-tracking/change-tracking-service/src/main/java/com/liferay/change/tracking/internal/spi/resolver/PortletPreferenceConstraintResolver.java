@@ -13,7 +13,6 @@ import com.liferay.portal.kernel.model.PortletPreferenceValueTable;
 import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.service.PortletPreferenceValueLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
-import com.liferay.portal.kernel.service.persistence.PortletPreferenceValuePersistence;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.List;
@@ -97,9 +96,5 @@ public class PortletPreferenceConstraintResolver
 	@Reference
 	private PortletPreferenceValueLocalService
 		_portletPreferenceValueLocalService;
-
-	@Reference
-	private PortletPreferenceValuePersistence
-		_portletPreferenceValuePersistence;
 
 }

@@ -454,7 +454,7 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 					JSONUtil.put(
 						"description", "description"
 					).put(
-						"externalReferenceCode", _API_ENDPOINT_ERC
+						"externalReferenceCode", _GET_API_ENDPOINT_ERC
 					).put(
 						"httpMethod", "get"
 					).put(
@@ -727,23 +727,8 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 			null,
 			StringBundler.concat(
 				"headless-builder/schemas/by-external-reference-code/",
-				_API_SCHEMA_ERC, "/requestAPISchemaToAPIEndpoints/",
-				_API_ENDPOINT_ERC),
-			Http.Method.PUT);
-		assertSuccessfulJSONObject(
-			null,
-			StringBundler.concat(
-				"headless-builder/schemas/by-external-reference-code/",
 				_API_SCHEMA_ERC, "/responseAPISchemaToAPIEndpoints/",
-				_API_ENDPOINT_ERC),
-			Http.Method.PUT);
-		assertSuccessfulJSONObject(
-			null,
-			StringBundler.concat(
-				"headless-builder/schemas/by-external-reference-code/",
-				_API_SINGLE_ELEMENT_SCHEMA_ERC,
-				"/requestAPISchemaToAPIEndpoints/",
-				_API_SINGLE_ELEMENT_ENDPOINT_ERC),
+				_GET_API_ENDPOINT_ERC),
 			Http.Method.PUT);
 		assertSuccessfulJSONObject(
 			null,
@@ -758,23 +743,8 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 			StringBundler.concat(
 				"headless-builder/schemas/by-external-reference-code/",
 				_API_SINGLE_ELEMENT_SITE_SCOPED_SCHEMA_ERC,
-				"/requestAPISchemaToAPIEndpoints/",
-				_API_SINGLE_ELEMENT_SITE_SCOPED_ENDPOINT_ERC),
-			Http.Method.PUT);
-		assertSuccessfulJSONObject(
-			null,
-			StringBundler.concat(
-				"headless-builder/schemas/by-external-reference-code/",
-				_API_SINGLE_ELEMENT_SITE_SCOPED_SCHEMA_ERC,
 				"/responseAPISchemaToAPIEndpoints/",
 				_API_SINGLE_ELEMENT_SITE_SCOPED_ENDPOINT_ERC),
-			Http.Method.PUT);
-		assertSuccessfulJSONObject(
-			null,
-			StringBundler.concat(
-				"headless-builder/schemas/by-external-reference-code/",
-				_API_SITE_SCOPED_SCHEMA_ERC, "/requestAPISchemaToAPIEndpoints/",
-				_API_SITE_SCOPED_ENDPOINT_ERC),
 			Http.Method.PUT);
 		assertSuccessfulJSONObject(
 			null,
@@ -821,9 +791,6 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 
 	private static final String _API_BASE_URL = StringUtil.toLowerCase(
 		RandomTestUtil.randomString());
-
-	private static final String _API_ENDPOINT_ERC =
-		RandomTestUtil.randomString();
 
 	private static final String
 		_API_POST_COMPANY_SCOPED_NO_SCHEMA_ENDPOINT_ERC =
@@ -902,6 +869,9 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 		RandomTestUtil.randomString();
 
 	private static final String _API_SITE_SCOPED_SCHEMA_TEXT_FIELD_ERC =
+		RandomTestUtil.randomString();
+
+	private static final String _GET_API_ENDPOINT_ERC =
 		RandomTestUtil.randomString();
 
 	private ListTypeDefinition _listTypeDefinition;

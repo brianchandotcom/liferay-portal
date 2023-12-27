@@ -1,7 +1,7 @@
 [
 	{
 		"active": true,
-		"conditionExpression": "mdfRequestStatus == 'marketingDirectorReview' AND oldValue('submitted') == false AND submitted == true",
+		"conditionExpression": "oldValue('mdfRequestStatus') == 'draft' AND mdfRequestStatus == 'marketingDirectorReview' OR oldValue('mdfRequestStatus') == 'moreInfoRequested' AND mdfRequestStatus == 'marketingDirectorReview'",
 		"externalReferenceCode": "MDF-REQUEST-AMOUNT-NOTIFICATION-1",
 		"label": {
 			"en_US": "Notification MDF Request Total Amount On Update"
@@ -13,7 +13,7 @@
 	},
 	{
 		"active": true,
-		"conditionExpression": "mdfRequestStatus == 'marketingDirectorReview' AND submitted == true",
+		"conditionExpression": "mdfRequestStatus == 'marketingDirectorReview'",
 		"externalReferenceCode": "MDF-REQUEST-AMOUNT-NOTIFICATION-2",
 		"label": {
 			"en_US": "Notification MDF Request Total Amount On Submit"
@@ -21,18 +21,6 @@
 		"name": "notificationMDFRequestTotalAmountOnSubmit",
 		"objectActionExecutorKey": "notification",
 		"objectActionTriggerKey": "onAfterAdd",
-		"objectDefinitionId": "[$OBJECT_DEFINITION_ID:MDFRequest$]"
-	},
-	{
-		"active": true,
-		"conditionExpression": "oldValue('mdfRequestStatus') == 'moreInfoRequested' AND mdfRequestStatus == 'marketingDirectorReview'",
-		"externalReferenceCode": "MDF-REQUEST-AMOUNT-NOTIFICATION-3",
-		"label": {
-			"en_US": "Notification MDF Request Total Amount On Resubmit"
-		},
-		"name": "notificationMDFRequestTotalAmountOnResub",
-		"objectActionExecutorKey": "notification",
-		"objectActionTriggerKey": "onAfterUpdate",
 		"objectDefinitionId": "[$OBJECT_DEFINITION_ID:MDFRequest$]"
 	}
 ]

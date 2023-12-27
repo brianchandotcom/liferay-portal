@@ -7,12 +7,9 @@ package com.liferay.fragment.entry.processor.editable;
 
 import com.liferay.fragment.entry.processor.editable.parser.EditableElementParser;
 import com.liferay.fragment.entry.processor.util.EditableFragmentEntryProcessorUtil;
-import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
-import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -53,15 +50,6 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 		String html, String configuration) {
 
 		return _getDefaultEditableValuesJSONObject(html);
-	}
-
-	@Override
-	public String processFragmentEntryLinkHTML(
-			FragmentEntryLink fragmentEntryLink, String html,
-			FragmentEntryProcessorContext fragmentEntryProcessorContext)
-		throws PortalException {
-
-		return html;
 	}
 
 	@Activate

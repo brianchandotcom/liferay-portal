@@ -705,7 +705,6 @@ definition {
 		var usernameList = "ac,dxp,liferay";
 		var emailList = "ac@liferay.com,dxp@liferay.com,liferay@liferay.com";
 		var nameList = "ac ac,liferay liferay,dxp dxp";
-		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		for (var name : list ${usernameList}) {
 			JSONUser.addUser(
@@ -715,7 +714,7 @@ definition {
 				userScreenName = ${name});
 		}
 
-		ACDXPSettings.syncNewContactData();
+		ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		ACUtils.navigateToSitePageWithUser(
 			actionType = "View Blog",

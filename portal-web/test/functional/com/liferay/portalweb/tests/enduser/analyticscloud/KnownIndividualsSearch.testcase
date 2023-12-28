@@ -319,10 +319,6 @@ definition {
 	test CanCaseInsensitiveSearch {
 		var emailList = "randy.smith@liferay.com,maria.rau@liferay.com";
 
-		task ("Get site assigned property name") {
-			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
-		}
-
 		task ("Add new users in DXP and sync the Contact Data") {
 			JSONUser.addUser(
 				userEmailAddress = "randy.smith@liferay.com",
@@ -335,8 +331,10 @@ definition {
 				userFirstName = "Maria",
 				userLastName = "Rau",
 				userScreenName = "Mariasn");
+		}
 
-			ACDXPSettings.syncNewContactData();
+		task ("Get site assigned property name") {
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
 
 		task ("Sign in with the new user to visit the site pages") {

@@ -86,8 +86,6 @@ if ((commerceVirtualOrderItem != null) && (commerceVirtualOrderItem.getDuration(
 			<aui:validator name="number" />
 		</aui:input>
 
-		<aui:input label="number-of-downloads" name="usages" />
-
 		<aui:input label="max-number-of-downloads" name="maxUsages" />
 
 		<aui:input name="active" />

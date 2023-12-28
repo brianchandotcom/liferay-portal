@@ -54,6 +54,8 @@ definition {
 				echo("timeout exceeded");
 			}
 
+			WaitForElementPresent(locator1 = "WorkflowMetrics#METRICS_ALL_ITEMS_TABLE_NAME");
+
 			AssertElementPresent(locator1 = "WorkflowMetrics#METRICS_ALL_ITEMS_TABLE_NAME");
 
 			AssertElementPresent(locator1 = "WorkflowMetrics#METRICS_ALL_ITEMS_TABLE_INSTANCE");

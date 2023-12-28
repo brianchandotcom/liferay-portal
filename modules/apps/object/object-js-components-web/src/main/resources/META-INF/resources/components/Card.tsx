@@ -106,6 +106,7 @@ export function Card({
 
 					{alert?.showAlert && (
 						<ClayAlert
+							className="lfr-objects__card-info-alert"
 							displayType={alert.otherProps.displayType}
 							onClose={() => alert.setShowAlert(false)}
 							title={alert.otherProps.title}

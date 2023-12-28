@@ -226,6 +226,126 @@ public class SitemapManagerTest {
 	}
 
 	@Test
+	public void testSitemapIncludeWebContentCompanyDisabledGroupDisabled()
+		throws Exception {
+
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						TestPropsValues.getCompanyId(),
+						_SITEMAP_COMPANY_CONFIGURATION_PID,
+						HashMapDictionaryBuilder.<String, Object>put(
+							"includeCategories", false
+						).put(
+							"includePages", false
+						).put(
+							"includeWebContent", false
+						).build());
+			GroupConfigurationTemporarySwapper
+				groupConfigurationTemporarySwapper =
+					new GroupConfigurationTemporarySwapper(
+						_group.getGroupId(), _SITEMAP_GROUP_CONFIGURATION_PID,
+						HashMapDictionaryBuilder.<String, Object>put(
+							"includeCategories", false
+						).put(
+							"includePages", false
+						).put(
+							"includeWebContent", false
+						).build())) {
+
+			JournalArticle journalArticle = _addJournalArticle();
+
+			AssetDisplayPageEntry assetDisplayPageEntry =
+				_addJournalArticleAssetDisplayPageEntry(journalArticle);
+
+			Layout layout = _layoutLocalService.getLayout(
+				assetDisplayPageEntry.getPlid());
+
+			_assertEmptySitemap(layout.getUuid());
+		}
+	}
+
+	@Test
+	public void testSitemapIncludeWebContentCompanyDisabledGroupEnabled()
+		throws Exception {
+
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						TestPropsValues.getCompanyId(),
+						_SITEMAP_COMPANY_CONFIGURATION_PID,
+						HashMapDictionaryBuilder.<String, Object>put(
+							"includeCategories", false
+						).put(
+							"includePages", false
+						).put(
+							"includeWebContent", false
+						).build());
+			GroupConfigurationTemporarySwapper
+				groupConfigurationTemporarySwapper =
+					new GroupConfigurationTemporarySwapper(
+						_group.getGroupId(), _SITEMAP_GROUP_CONFIGURATION_PID,
+						HashMapDictionaryBuilder.<String, Object>put(
+							"includeCategories", false
+						).put(
+							"includePages", false
+						).put(
+							"includeWebContent", true
+						).build())) {
+
+			JournalArticle journalArticle = _addJournalArticle();
+
+			AssetDisplayPageEntry assetDisplayPageEntry =
+				_addJournalArticleAssetDisplayPageEntry(journalArticle);
+
+			Layout layout = _layoutLocalService.getLayout(
+				assetDisplayPageEntry.getPlid());
+
+			_assertEmptySitemap(layout.getUuid());
+		}
+	}
+
+	@Test
+	public void testSitemapIncludeWebContentCompanyEnabledGroupDisabled()
+		throws Exception {
+
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						TestPropsValues.getCompanyId(),
+						_SITEMAP_COMPANY_CONFIGURATION_PID,
+						HashMapDictionaryBuilder.<String, Object>put(
+							"includeCategories", false
+						).put(
+							"includePages", false
+						).put(
+							"includeWebContent", true
+						).build());
+			GroupConfigurationTemporarySwapper
+				groupConfigurationTemporarySwapper =
+					new GroupConfigurationTemporarySwapper(
+						_group.getGroupId(), _SITEMAP_GROUP_CONFIGURATION_PID,
+						HashMapDictionaryBuilder.<String, Object>put(
+							"includeCategories", false
+						).put(
+							"includePages", false
+						).put(
+							"includeWebContent", false
+						).build())) {
+
+			JournalArticle journalArticle = _addJournalArticle();
+
+			AssetDisplayPageEntry assetDisplayPageEntry =
+				_addJournalArticleAssetDisplayPageEntry(journalArticle);
+
+			Layout layout = _layoutLocalService.getLayout(
+				assetDisplayPageEntry.getPlid());
+
+			_assertEmptySitemap(layout.getUuid());
+		}
+	}
+
+	@Test
 	public void testSitemapIncludeWebContentCompanyEnabledGroupEnabled()
 		throws Exception {
 

@@ -3,23 +3,101 @@
 		"pageElements": [
 			{
 				"definition": {
-					"customCSS": ".[$FRAGMENT_CLASS$] {\n}",
+					"customCSSViewports": [
+						{
+							"customCSS": ".[$FRAGMENT_CLASS$] {\nflex-direction: column !important;\nalign-items: center !important;\n}\n\ndiv.pb-4.search-results-entry.align-items-stretch {\nwidth:90vw;\n}\n\na.font-weight-bold.search-results-entry-title.text-decoration-none.unstyled {\nwidth:90vw;\n}\n\ndiv.search-results, div.input-group {\nwidth: 90%;\n}",
+							"id": "landscapeMobile"
+						},
+						{
+							"customCSS": ".[$FRAGMENT_CLASS$] {\nflex-direction: column !important;\nalign-items: center !important;\n}\n\ndiv.portlet-content-container {\n\n}",
+							"id": "portraitMobile"
+						},
+						{
+							"customCSS": ".[$FRAGMENT_CLASS$] {\nflex-direction: column !important;\n\nalign-items: center !important;\n}\n\ndiv.pb-4.search-results-entry.align-items-stretch {\nwidth:90vw;\n}",
+							"id": "tablet"
+						}
+					],
+					"fragmentStyle": {
+						"marginTop": "5",
+						"maxWidth": "90vw"
+					},
+					"fragmentViewports": [
+						{
+							"fragmentViewportStyle": {
+								"marginLeft": "0",
+								"marginRight": "0",
+								"maxWidth": "90vw",
+								"paddingLeft": "3"
+							},
+							"id": "portraitMobile"
+						},
+						{
+							"fragmentViewportStyle": {
+								"marginLeft": "3",
+								"marginRight": "3",
+								"marginTop": "3",
+								"overflow": ""
+							},
+							"id": "tablet"
+						}
+					],
 					"indexed": true,
 					"layout": {
 						"align": "Start",
 						"contentDisplay": "FlexRow",
 						"flexWrap": "Wrap",
-						"justify": "Center"
+						"justify": "SpaceAround",
+						"marginTop": 4
 					}
 				},
 				"pageElements": [
 					{
 						"definition": {
+							"customCSSViewports": [
+								{
+									"customCSS": ".[$FRAGMENT_CLASS$] {\n\nalign-items: stretch !important;\n}",
+									"id": "portraitMobile"
+								},
+								{
+									"customCSS": ".[$FRAGMENT_CLASS$] {\nwidth:90vw;\nalign-items: stretch !important;\n}",
+									"id": "tablet"
+								}
+							],
+							"fragmentStyle": {
+								"marginLeft": "4",
+								"maxWidth": "24%",
+								"minWidth": "24%"
+							},
+							"fragmentViewports": [
+								{
+									"fragmentViewportStyle": {
+										"marginLeft": "0"
+									},
+									"id": "landscapeMobile"
+								},
+								{
+									"fragmentViewportStyle": {
+										"marginLeft": "0",
+										"maxWidth": ""
+									},
+									"id": "portraitMobile"
+								},
+								{
+									"fragmentViewportStyle": {
+										"marginLeft": "0",
+										"maxWidth": "100%",
+										"minWidth": "100%"
+									},
+									"id": "tablet"
+								}
+							],
 							"indexed": true,
 							"layout": {
 								"align": "Start",
 								"contentDisplay": "FlexColumn",
-								"flexWrap": "Wrap"
+								"flexWrap": "Wrap",
+								"justify": "SpaceBetween",
+								"marginLeft": 2
 							}
 						},
 						"pageElements": [
@@ -28,7 +106,8 @@
 									"fragmentStyle": {
 										"backgroundColor": "#F7F7F8",
 										"borderRadius": "10px",
-										"marginTop": "5",
+										"maxWidth": "100%",
+										"minWidth": "100%",
 										"paddingBottom": "3",
 										"paddingLeft": "3",
 										"paddingRight": "3",
@@ -36,7 +115,10 @@
 									},
 									"indexed": true,
 									"layout": {
-										"marginTop": 4,
+										"align": "Baseline",
+										"contentDisplay": "FlexColumn",
+										"flexWrap": "Wrap",
+										"justify": "SpaceAround",
 										"paddingBottom": 1,
 										"paddingLeft": 1,
 										"paddingRight": 1,
@@ -76,7 +158,9 @@
 										"definition": {
 											"customCSS": ".[$FRAGMENT_CLASS$] {\n}",
 											"fragmentStyle": {
-												"marginTop": "3"
+												"marginTop": "3",
+												"maxWidth": "100%",
+												"minWidth": "100%"
 											},
 											"widgetInstance": {
 												"widgetConfig": {
@@ -106,10 +190,22 @@
 									"fragmentStyle": {
 										"backgroundColor": "#FFFFFF",
 										"borderRadius": "4px",
-										"borderWidth": "0"
+										"borderWidth": "0",
+										"maxWidth": "100%",
+										"minWidth": "100%"
 									},
+									"fragmentViewports": [
+										{
+											"fragmentViewportStyle": {
+												"hidden": false
+											},
+											"id": "tablet"
+										}
+									],
 									"indexed": true,
 									"layout": {
+										"contentDisplay": "FlexRow",
+										"flexWrap": "Wrap",
 										"widthType": "Fixed"
 									}
 								},
@@ -117,6 +213,10 @@
 									{
 										"definition": {
 											"customCSS": ".[$FRAGMENT_CLASS$] {\n}",
+											"fragmentStyle": {
+												"maxWidth": "100%",
+												"minWidth": "100%"
+											},
 											"widgetInstance": {
 												"widgetConfig": {
 													"displayStyle": "ddmTemplate_LEARN_CATEGORY_FACET",
@@ -169,6 +269,41 @@
 					},
 					{
 						"definition": {
+							"customCSS": ".[$FRAGMENT_CLASS$] {\nwidth:90vw;\n}",
+							"customCSSViewports": [
+								{
+									"customCSS": ".[$FRAGMENT_CLASS$] {\n}\n",
+									"id": "portraitMobile"
+								}
+							],
+							"fragmentStyle": {
+								"maxWidth": "70%"
+							},
+							"fragmentViewports": [
+								{
+									"fragmentViewportStyle": {
+										"minWidth": "100%"
+									},
+									"id": "landscapeMobile"
+								},
+								{
+									"fragmentViewportStyle": {
+										"maxWidth": "",
+										"minWidth": "100%",
+										"width": ""
+									},
+									"id": "portraitMobile"
+								},
+								{
+									"fragmentViewportStyle": {
+										"maxWidth": "100%",
+										"minWidth": "100%",
+										"overflow": "",
+										"width": ""
+									},
+									"id": "tablet"
+								}
+							],
 							"indexed": true,
 							"layout": {
 								"align": "Start",
@@ -181,9 +316,8 @@
 								"definition": {
 									"customCSS": ".[$FRAGMENT_CLASS$] {\nmin-width: 850px;\n}\n\ndiv.c-empty-state-image.taglib-empty-state {\ndisplay: none;\n}\n\ndiv.sheet {\nborder-width: 0px;\n}\n\ndiv.taglib-empty-result-message.c-empty-state-animation {\nalign-items: flex-start;\ndisplay: flex;\nflex-direction: column;\nmargin: 0px;\n}\n\nh1.taglib-empty-result-message-title {\ncolor: var(--neutral-10, #282934);\nmargin: 0px!important;\nfont-family: 'Source Sans Pro', sans-serif;\nfont-size: 28px!important;\nfont-style: normal;\nfont-weight: 700!important;\nline-height: 32px;\n}\n\np.taglib-empty-result-message-description {\ncolor: var(--neutral-08, #54555F)!important;\nfont-family: 'Source Sans Pro', sans-serif;\nfont-size: 16px!important;\nfont-style: normal;\nfont-weight: 400;\nline-height: 24px;\ntext-align: left!important;\nwidth: max-content;\n}",
 									"fragmentStyle": {
-										"paddingLeft": "4",
-										"paddingRight": "4",
-										"paddingTop": "4"
+										"maxWidth": "100%",
+										"minWidth": "100%"
 									},
 									"widgetInstance": {
 										"widgetConfig": {

@@ -58,7 +58,6 @@
 		gap: 15px;
 		margin-top: 40px;
 		padding: 16px;
-		width: 350px;
 	}
 
 	.treeview.treeview-light.treeview-nested.treeview-vocabulary-display .treeview-item {

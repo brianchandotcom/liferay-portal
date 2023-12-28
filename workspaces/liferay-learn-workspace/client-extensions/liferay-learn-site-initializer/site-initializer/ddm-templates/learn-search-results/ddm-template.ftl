@@ -3,7 +3,6 @@
 		align-items: flex-start;
 		display: flex;
 		gap: 1rem;
-		width: 47.5rem;
 	}
 
 	.pagination-bar .dropdown.pagination-items-per-page {
@@ -88,8 +87,6 @@
 		display: flex;
 		flex-direction: column;
 		gap: 0.25rem;
-		padding: 1rem;
-		width: 49.75rem;
 	}
 
 	.search-results .search-results-entry .search-results-entry-title {
@@ -99,10 +96,8 @@
 		font-size: 1rem;
 		font-style: normal;
 		font-weight: 600;
-		height: 8rem;
 		line-height: 1.5rem;
 		padding: 1rem;
-		width: 49.75rem;
 	}
 
 	.search-results .search-results-entry .search-results-entry-title .modified-date {
@@ -141,7 +136,7 @@
 			/>
 
 			<#if searchEntryTitle?has_content>
-				<div class="pb-4 search-results-entry">
+				<div class="align-items-stretch pb-4 search-results-entry">
 					<a class="font-weight-bold search-results-entry-title text-decoration-none unstyled" href="${searchEntry.getViewURL()}&highlight=${htmlUtil.escape(searchResultsPortletDisplayContext.getKeywords()?url('ISO-8859-1'))}">
 						${searchEntryTitle}
 						<div class="description search-results-entry-content">

@@ -48,10 +48,6 @@ definition {
 				mainObjectDefinitionERC = "student",
 				name = "testSchema");
 
-			SchemaAPI.relateRequestSchemaToEndpointByErc(
-				endpointErc = "My-app_testendpoint",
-				requestSchemaErc = "testSchema");
-
 			SchemaAPI.relateResponseSchemaToEndpointByErc(
 				endpointErc = "My-app_testendpoint",
 				responseSchemaErc = "testSchema");

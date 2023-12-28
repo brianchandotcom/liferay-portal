@@ -56,10 +56,6 @@ definition {
 			var endpointId = JSONUtil.getWithJSONPath(${response}, "$.apiApplicationToAPIEndpoints[*].id");
 			var schemaId = JSONUtil.getWithJSONPath(${response}, "$.apiApplicationToAPISchemas[*].id");
 
-			SchemaAPI.relateRequestSchemaToEndpointByIds(
-				endpointId = ${endpointId},
-				requestSchemaId = ${schemaId});
-
 			SchemaAPI.relateResponseSchemaToEndpointByIds(
 				endpointId = ${endpointId},
 				responseSchemaId = ${schemaId});

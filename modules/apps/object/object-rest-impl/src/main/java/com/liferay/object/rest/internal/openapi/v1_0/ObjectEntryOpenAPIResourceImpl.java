@@ -21,7 +21,6 @@ import com.liferay.object.rest.internal.vulcan.openapi.contributor.ObjectEntryOp
 import com.liferay.object.rest.openapi.v1_0.ObjectEntryOpenAPIResource;
 import com.liferay.object.rest.openapi.v1_0.ObjectEntryOpenAPIResourceProvider;
 import com.liferay.object.service.ObjectActionLocalService;
-import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
@@ -66,7 +65,6 @@ public class ObjectEntryOpenAPIResourceImpl
 		BundleContext bundleContext, DTOConverterRegistry dtoConverterRegistry,
 		ObjectActionLocalService objectActionLocalService,
 		ObjectDefinition objectDefinition,
-		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectEntryOpenAPIResourceProvider objectEntryOpenAPIResourceProvider,
 		ObjectFieldLocalService objectFieldLocalService,
 		ObjectRelationshipLocalService objectRelationshipLocalService,
@@ -78,7 +76,6 @@ public class ObjectEntryOpenAPIResourceImpl
 		_dtoConverterRegistry = dtoConverterRegistry;
 		_objectActionLocalService = objectActionLocalService;
 		_objectDefinition = objectDefinition;
-		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectEntryOpenAPIResourceProvider =
 			objectEntryOpenAPIResourceProvider;
 		_objectFieldLocalService = objectFieldLocalService;
@@ -341,7 +338,6 @@ public class ObjectEntryOpenAPIResourceImpl
 			new ObjectEntryOpenAPIContributor(
 				addRelatedSchemas, _bundleContext, _dtoConverterRegistry,
 				_objectActionLocalService, _objectDefinition,
-				_objectDefinitionLocalService, this,
 				_objectEntryOpenAPIResourceProvider, _objectFieldLocalService,
 				_objectRelationshipLocalService, _openAPIResource,
 				_systemObjectDefinitionManagerRegistry),
@@ -488,7 +484,6 @@ public class ObjectEntryOpenAPIResourceImpl
 	).build();
 	private final ObjectActionLocalService _objectActionLocalService;
 	private final ObjectDefinition _objectDefinition;
-	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private final ObjectEntryOpenAPIResourceProvider
 		_objectEntryOpenAPIResourceProvider;
 	private final ObjectFieldLocalService _objectFieldLocalService;

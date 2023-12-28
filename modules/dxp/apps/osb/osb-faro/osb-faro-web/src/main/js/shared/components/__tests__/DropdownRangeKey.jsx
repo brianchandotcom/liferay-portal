@@ -1,5 +1,6 @@
-import DropdownRangeKey from '../DropdownRangeKey';
+import DropdownRangeKey, {formatDate} from '../DropdownRangeKey';
 import mockStore from 'test/mock-store';
+import moment from 'moment-timezone';
 import React from 'react';
 import {cleanup, render} from '@testing-library/react';
 import {createMemoryHistory} from 'history';
@@ -57,4 +58,27 @@ describe('DropdownRangeKey', () => {
 
 		expect(container).toMatchSnapshot();
 	});
+});
+
+describe.only('DropdownRangeKey formatDate', () => {
+	it.each`
+		timeZoneId               | result                         | isAfter
+		${'Asia/Tokyo'}          | ${'1970-01-01T09:00:00+00:00'} | ${true}
+		${'Australia/Sydney'}    | ${'1970-01-01T10:00:00+00:00'} | ${true}
+		${'Asia/Shanghai'}       | ${'1970-01-01T08:00:00+00:00'} | ${true}
+		${'Asia/Riyadh'}         | ${'1970-01-01T03:00:00+00:00'} | ${true}
+		${'Pacific/Midway'}      | ${'1969-12-31T13:00:00+00:00'} | ${false}
+		${'America/Los_Angeles'} | ${'1969-12-31T16:00:00+00:00'} | ${false}
+		${'America/Vancouver'}   | ${'1969-12-31T16:00:00+00:00'} | ${false}
+		${'America/Recife'}      | ${'1969-12-31T21:00:00+00:00'} | ${false}
+	`(
+		'returns formatted dates for timezone $timeZoneId',
+		({isAfter, result, timeZoneId}) => {
+			expect(formatDate(timeZoneId, moment(0)).format()).toEqual(result);
+
+			expect(formatDate(timeZoneId, moment(0)).isAfter(moment(0))).toBe(
+				isAfter
+			);
+		}
+	);
 });

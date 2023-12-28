@@ -3,9 +3,10 @@ import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import DatePicker from './date-picker';
 import getCN from 'classnames';
-import moment from 'moment';
+import moment, {Moment} from 'moment';
+import momentTimeZone from 'moment-timezone';
 import React, {useEffect, useState} from 'react';
-import {applyTimeZone, DEFAULT_DATE_FORMAT} from 'shared/util/date';
+import {DEFAULT_DATE_FORMAT} from 'shared/util/date';
 import {MomentDateRange} from 'shared/components/DateRangeInput';
 import {RangeKeyTimeRanges} from 'shared/util/constants';
 import {RangeSelectors} from 'shared/types';
@@ -37,6 +38,17 @@ type Item = {
 	label: string;
 	value: RangeKeyTimeRanges;
 };
+
+export function formatDate(
+	timeZoneId: string,
+	date = momentTimeZone.utc()
+): Moment {
+	const currentDateWithTimeZone = momentTimeZone.tz(date, timeZoneId);
+	const hours = currentDateWithTimeZone.utcOffset() / 60;
+	const signal = hours < 0 ? 'subtract' : 'add';
+
+	return date.clone()[signal](Math.abs(hours), 'hours');
+}
 
 interface DropdownRangeKeyIProps {
 	className: string;
@@ -202,21 +214,16 @@ const DropdownRangeKey: React.FC<DropdownRangeKeyIProps> = ({
 			{showDatePicker ? (
 				<DatePicker
 					date={customDateRange}
-					maxDate={applyTimeZone(undefined, timeZoneId).subtract(
-						1,
-						'days'
-					)}
+					maxDate={formatDate(timeZoneId).subtract(1, 'days')}
 					maxRange={365}
-					minDate={applyTimeZone(undefined, timeZoneId).subtract(
-						10,
-						'years'
-					)}
+					minDate={formatDate(timeZoneId).subtract(10, 'years')}
 					onSelect={({end, start}: MomentDateRange) => {
 						setCustomDateRange({
 							end,
 							start
 						});
 					}}
+					timeZoneId={timeZoneId}
 				/>
 			) : (
 				<ClayDropDown.ItemList>

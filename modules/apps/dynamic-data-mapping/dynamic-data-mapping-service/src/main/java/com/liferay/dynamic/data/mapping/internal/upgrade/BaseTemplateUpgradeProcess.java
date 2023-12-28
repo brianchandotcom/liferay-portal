@@ -64,6 +64,10 @@ public abstract class BaseTemplateUpgradeProcess extends UpgradeProcess {
 	private String _replaceDeprecatedClass(
 		Pattern emptyAssignPattern, String template) {
 
+		if (template == null) {
+			return StringPool.BLANK;
+		}
+
 		Pattern deprecatedClassPattern = _getDeprecatedClassPattern();
 
 		if (deprecatedClassPattern != null) {

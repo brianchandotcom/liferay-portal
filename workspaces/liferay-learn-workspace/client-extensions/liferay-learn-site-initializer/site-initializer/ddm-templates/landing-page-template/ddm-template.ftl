@@ -2,8 +2,8 @@
 	.section-card {
 		box-shadow: none!important;
 	}
-	
-  	.section-card:hover {
+
+	.section-card:hover {
 		background-color: #EDF3FE!important;
 		border-bottom: 1px solid #0053F0!important;
 		border-color: #0053F0!important;

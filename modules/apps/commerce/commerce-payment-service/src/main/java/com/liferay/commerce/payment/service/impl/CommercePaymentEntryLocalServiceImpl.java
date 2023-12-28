@@ -222,19 +222,6 @@ public class CommercePaymentEntryLocalServiceImpl
 	}
 
 	@Override
-	public CommercePaymentEntry
-		fetchCommercePaymentEntryByExternalReferenceCode(
-			String externalReferenceCode, long companyId) {
-
-		if (Validator.isBlank(externalReferenceCode)) {
-			return null;
-		}
-
-		return commercePaymentEntryPersistence.fetchByERC_C(
-			externalReferenceCode, companyId);
-	}
-
-	@Override
 	public List<CommercePaymentEntry> getCommercePaymentEntries(
 		long companyId, long classNameId, long classPK, int type, int start,
 		int end, OrderByComparator<CommercePaymentEntry> orderByComparator) {

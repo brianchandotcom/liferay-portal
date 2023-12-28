@@ -1282,8 +1282,9 @@ public class PoshiValidation {
 			}
 		}
 
-		for (PoshiElement childElement : childPoshiElements) {
-			String nameAttributeValue = childElement.attributeValue("name");
+		for (PoshiElement childPoshiElement : childPoshiElements) {
+			String nameAttributeValue = childPoshiElement.attributeValue(
+				"name");
 
 			if (Validator.isNotNull(nameAttributeValue)) {
 				_exceptions.add(

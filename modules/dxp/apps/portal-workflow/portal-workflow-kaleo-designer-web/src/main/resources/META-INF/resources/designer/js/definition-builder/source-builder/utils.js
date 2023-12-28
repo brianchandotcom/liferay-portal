@@ -103,11 +103,11 @@ export function parseReassignments(node) {
 				item['resource-actions'][0]['resource-action'];
 		}
 		else if (item['roles']) {
-			if (item['roles'][2]?.['role-type']) {
+			if (item['roles'][0]['role']?.['role-type']) {
 				assignments.assignmentType = ['roleType'];
 				assignments.autoCreate = [item['roles'][0]['auto-create']];
-				assignments.roleKey = [item['roles'][1]['name']];
-				assignments.roleType = [item['roles'][2]['role-type']];
+				assignments.roleKey = [item['roles'][0]['role']['name']];
+				assignments.roleType = [item['roles'][0]['role']['role-type']];
 			}
 			else {
 				assignments.assignmentType = ['roleId'];

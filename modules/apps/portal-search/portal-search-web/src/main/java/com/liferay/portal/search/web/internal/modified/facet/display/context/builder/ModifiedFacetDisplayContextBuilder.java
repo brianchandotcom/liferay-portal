@@ -301,7 +301,6 @@ public class ModifiedFacetDisplayContextBuilder implements Serializable {
 		}
 
 		FacetCollector facetCollector = _facet.getFacetCollector();
-
 		SearchContext searchContext = _facet.getSearchContext();
 
 		return facetCollector.getTermCollector(

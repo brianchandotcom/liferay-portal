@@ -167,10 +167,7 @@ function TabCollectionCollapse({
 				tabIndex={isTarget ? 0 : -1}
 				type="button"
 			>
-				<span
-					className="c-inner panel-title text-truncate"
-					tabIndex={-1}
-				>
+				<span className="panel-title text-truncate">
 					{title}
 
 					<span

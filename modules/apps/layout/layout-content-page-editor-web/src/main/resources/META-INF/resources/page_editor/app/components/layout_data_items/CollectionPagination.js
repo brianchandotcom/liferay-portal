@@ -79,28 +79,18 @@ export default function CollectionPagination({
 						className="font-weight-semi-bold mr-3 text-secondary"
 						disabled={activePage === 1}
 						displayType="unstyled"
+						onClick={() => onPageChange(activePage - 1)}
 					>
-						<span
-							className="c-inner"
-							onClick={() => onPageChange(activePage - 1)}
-							tabIndex="-1"
-						>
-							{Liferay.Language.get('previous')}
-						</span>
+						{Liferay.Language.get('previous')}
 					</ClayButton>
 
 					<ClayButton
 						className="font-weight-semi-bold ml-3 text-secondary"
 						disabled={activePage === totalPages}
 						displayType="unstyled"
+						onClick={() => onPageChange(activePage + 1)}
 					>
-						<span
-							className="c-inner"
-							onClick={() => onPageChange(activePage + 1)}
-							tabIndex="-1"
-						>
-							{Liferay.Language.get('next')}
-						</span>
+						{Liferay.Language.get('next')}
 					</ClayButton>
 				</div>
 			)}

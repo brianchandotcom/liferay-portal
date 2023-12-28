@@ -221,14 +221,9 @@ const FilterInformationToolbar = ({
 										)
 									}
 								>
-									<span
-										className="c-inner ml-0"
-										tabIndex="-1"
-									>
-										{showAll
-											? Liferay.Language.get('show-less')
-											: Liferay.Language.get('show-all')}
-									</span>
+									{showAll
+										? Liferay.Language.get('show-less')
+										: Liferay.Language.get('show-all')}
 								</ClayButton>
 							</ClayToolbar.Section>
 						)}

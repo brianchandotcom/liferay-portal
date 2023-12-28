@@ -8,7 +8,7 @@ import {test} from '@playwright/test';
 import {ModelBuilderPage} from '../pages/object/modelBuilder.page';
 import {ObjectDefinitionsPage} from '../pages/object/objectDefinitions.page';
 
-exports.test = test.extend<{
+const objectPagesTest = test.extend<{
 	_modelBuilderPage: ModelBuilderPage;
 	_objectDefinitionsPage: ObjectDefinitionsPage;
 }>({
@@ -19,3 +19,5 @@ exports.test = test.extend<{
 		await use(new ObjectDefinitionsPage(page));
 	},
 });
+
+export {objectPagesTest};

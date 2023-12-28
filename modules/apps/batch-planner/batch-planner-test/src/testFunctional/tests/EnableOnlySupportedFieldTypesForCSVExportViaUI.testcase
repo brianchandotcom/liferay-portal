@@ -1,0 +1,114 @@
+@component-name = "portal-batch-planner"
+definition {
+
+	property custom.properties = "feature.flag.COMMERCE-8087=true${line.separator}feature.flag.LPS-173135=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Import/Export";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		task ("Given a company scoped object created with custom fields: testDateAndTime, testDate, testDecimal, testInteger, testLongInteger, testLongText, testPrecissionDecimal, testRichText, testText, testPicklist") {
+			Picklist.addPicklistViaAPI(picklistName = "customPicklist");
+
+			Picklist.addPicklistItemViaAPI(
+				itemKey = "distance1",
+				itemName = "distance1",
+				picklistName = "customPicklist");
+
+			var picklistId = JSONObject.getPicklistId(picklistName = "customPicklist");
+
+			ObjectDefinitionAPI.createObjectDefinitionWithMultipleCustomFields(
+				en_US_label = "test",
+				en_US_plural_label = "tests",
+				objectDefinitionName = "Test",
+				picklistId = ${picklistId},
+				requiredStringFieldName = "testText");
+		}
+
+		task ("And Given navigate to export in Data Migration Center") {
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.gotoExport();
+		}
+	}
+
+	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		ObjectAdmin.deleteAllCustomObjectsViaAPI();
+
+		Picklist.deletePicklistViaAPI(picklistName = "customPicklist");
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@priority = 4
+	test CanSeeDisabledFieldsDetailsWithExportObjectCsv {
+		property portal.acceptance = "true";
+
+		task ("When selecting custom object entity type with CSV format") {
+			ImportExport.configureExport(
+				entityType = "C_Test (v1_0 - Liferay Object REST)",
+				exportFileFormat = "CSV");
+		}
+
+		task ("Then actions,creator,keywords,status are disabled with 'NOT SUPPORTED,will be supported in a future release' label") {
+			for (var fieldNameList : list "actions,creator,keywords,status") {
+				AssertElementPresent(
+					key_nameDisabled = ${fieldNameList},
+					locator1 = "CreateObject#VIEW_OBJECT_DATA_DISABLED");
+
+				AssertElementPresent(
+					key_entryName = ${fieldNameList},
+					locator1 = "ImportExport#UNSUPPORT_FIELD");
+			}
+		}
+	}
+
+	@priority = 4
+	test CanSelectAllSupportedFieldsWithCheckedAttributeCode {
+		property portal.acceptance = "true";
+
+		task ("And Given selecting custom object entity type with CSV format") {
+			ImportExport.configureExport(
+				entityType = "C_Test (v1_0 - Liferay Object REST)",
+				exportFileFormat = "CSV");
+		}
+
+		task ("When I checked Attribute Code") {
+			Check.checkNotVisible(
+				key_checkboxOption = "Attribute Code",
+				locator1 = "Checkbox#SPECIFIC_CHECKBOX_IN_TABLE");
+		}
+
+		task ("Then all supported fields are selected") {
+			for (var fieldNameList : list "testDateAndTime,testDate,testDecimal,testInteger,testLongInteger,testLongText,testRichText,testText") {
+				AssertChecked.assertCheckedNotVisible(
+					key_checkboxOption = ${fieldNameList},
+					locator1 = "Checkbox#SPECIFIC_CHECKBOX_IN_TABLE");
+			}
+		}
+	}
+
+	@priority = 4
+	test CanSelectSupportedFieldsWithExportCsv {
+		property portal.acceptance = "true";
+
+		task ("When selecting custom object entity type with CSV format") {
+			ImportExport.configureExport(
+				entityType = "C_Test (v1_0 - Liferay Object REST)",
+				exportFileFormat = "CSV");
+		}
+
+		task ("Then testDateAndTime, testDate, testDecimal, testInteger, testLongInteger, testLongText, testRichText, testText are able to selected") {
+			ImportExport.mapExport(exportFields = "testDateAndTime,testDate,testDecimal,testInteger,testLongInteger,testLongText,testRichText,testText");
+		}
+	}
+
+}

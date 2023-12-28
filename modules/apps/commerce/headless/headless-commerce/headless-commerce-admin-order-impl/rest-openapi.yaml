@@ -1360,6 +1360,9 @@ components:
                 url:
                     example: http://www.liferay.com
                     type: string
+                usages:
+                    format: int32
+                    type: integer
                 version:
                     example: v1.0.0
                     type: string

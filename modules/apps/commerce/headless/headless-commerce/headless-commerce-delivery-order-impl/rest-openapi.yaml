@@ -628,6 +628,10 @@ components:
                     example: http://www.liferay.com
                     readOnly: true
                     type: string
+                usages:
+                    format: int32
+                    readOnly: true
+                    type: integer
                 version:
                     example: v1.0.0
                     readOnly: true

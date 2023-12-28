@@ -362,6 +362,8 @@ public class PlacedOrderItemDTOConverter
 			commerceVirtualOrderItemFileEntries,
 			commerceVirtualOrderItemFileEntry -> new VirtualItem() {
 				{
+					usages = commerceVirtualOrderItemFileEntry.getUsages();
+
 					setUrl(
 						() -> {
 							if (Validator.isNull(

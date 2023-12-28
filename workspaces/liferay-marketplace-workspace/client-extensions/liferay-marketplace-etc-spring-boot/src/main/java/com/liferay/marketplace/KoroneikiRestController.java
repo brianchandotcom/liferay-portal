@@ -201,6 +201,87 @@ public class KoroneikiRestController extends BaseRestController {
 		return jsonArray.toString();
 	}
 
+	@PostMapping("product/{productId}")
+	public void postKoroneikiProduct(
+			@AuthenticationPrincipal Jwt jwt,
+			@PathVariable("productId") long productId)
+		throws Exception {
+
+		_initResourceBuilders();
+
+		Product product = _productResource.getProduct(productId);
+
+		for (Sku sku :
+				_skuResource.getProductIdSkusPage(
+					product.getProductId(), Pagination.of(1, 10)
+				).getItems()) {
+
+			String licenseUsageType = _getLicenseUsageType(sku.getSkuOptions());
+
+			if (sku.getExternalReferenceCode(
+				).startsWith(
+					"KOR-"
+				) || (licenseUsageType == null)) {
+
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						"Skipping post koroneiki product for sku " +
+							sku.toString());
+				}
+
+				continue;
+			}
+
+			String productName = product.getName(
+			).get(
+				"en_US"
+			);
+
+			String name = productName + " - " + licenseUsageType;
+
+			com.liferay.osb.koroneiki.phloem.rest.client.pagination.Page
+				<com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Product>
+					productsPage = _koroneikiProductResource.getProductsPage(
+						"", "name eq '" + name + "'",
+						com.liferay.osb.koroneiki.phloem.rest.client.pagination.
+							Pagination.of(1, 1),
+						"");
+
+			com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Product
+				koroneikiProduct = productsPage.fetchFirstItem();
+
+			if (koroneikiProduct == null) {
+				koroneikiProduct =
+					new com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.
+						Product();
+
+				koroneikiProduct.setProperties(
+					HashMapBuilder.put(
+						"display-group-name", productName
+					).put(
+						"display-name", name
+					).put(
+						"licenses", "true"
+					).put(
+						"type", "marketplace-app"
+					).build());
+				koroneikiProduct.setName(name);
+
+				_koroneikiProductResource.postProduct(
+					jwt.getClaim("username"), jwt.getClaim("sub"),
+					koroneikiProduct);
+
+				if (_log.isInfoEnabled()) {
+					_log.info("Created koroneiki product " + koroneikiProduct);
+				}
+			}
+
+			sku.setExternalReferenceCode(koroneikiProduct.getKey());
+
+			_skuResource.patchSku(sku.getId(), sku);
+		}
+	}
+
 	@PostMapping("product-purchase")
 	public void postProductPurchase(
 			@AuthenticationPrincipal Jwt jwt, @RequestBody String json)
@@ -304,86 +385,6 @@ public class KoroneikiRestController extends BaseRestController {
 		}
 		catch (Exception exception) {
 			_log.error("Unable to create account product purchase", exception);
-		}
-	}
-
-	@PostMapping("sync/{productId}")
-	public void syncKoroneikiProducts(
-			@AuthenticationPrincipal Jwt jwt,
-			@PathVariable("productId") long productId)
-		throws Exception {
-
-		_initResourceBuilders();
-
-		Product product = _productResource.getProduct(productId);
-
-		for (Sku sku :
-				_skuResource.getProductIdSkusPage(
-					product.getProductId(), Pagination.of(1, 10)
-				).getItems()) {
-
-			String licenseUsageType = _getLicenseUsageType(sku.getSkuOptions());
-
-			if (sku.getExternalReferenceCode(
-				).startsWith(
-					"KOR-"
-				) || (licenseUsageType == null)) {
-
-				if (_log.isInfoEnabled()) {
-					_log.info(
-						"Skipping product sync for sku " + sku.toString());
-				}
-
-				continue;
-			}
-
-			String productName = product.getName(
-			).get(
-				"en_US"
-			);
-
-			String name = productName + " - " + licenseUsageType;
-
-			com.liferay.osb.koroneiki.phloem.rest.client.pagination.Page
-				<com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Product>
-					productsPage = _koroneikiProductResource.getProductsPage(
-						"", "name eq '" + name + "'",
-						com.liferay.osb.koroneiki.phloem.rest.client.pagination.
-							Pagination.of(1, 1),
-						"");
-
-			com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Product
-				koroneikiProduct = productsPage.fetchFirstItem();
-
-			if (koroneikiProduct == null) {
-				koroneikiProduct =
-					new com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.
-						Product();
-
-				koroneikiProduct.setProperties(
-					HashMapBuilder.put(
-						"display-group-name", productName
-					).put(
-						"display-name", name
-					).put(
-						"licenses", "true"
-					).put(
-						"type", "marketplace-app"
-					).build());
-				koroneikiProduct.setName(name);
-
-				_koroneikiProductResource.postProduct(
-					jwt.getClaim("username"), jwt.getClaim("sub"),
-					koroneikiProduct);
-
-				if (_log.isInfoEnabled()) {
-					_log.info("Created koroneiki product " + koroneikiProduct);
-				}
-			}
-
-			sku.setExternalReferenceCode(koroneikiProduct.getKey());
-
-			_skuResource.patchSku(sku.getId(), sku);
 		}
 	}
 

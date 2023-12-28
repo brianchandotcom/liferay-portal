@@ -86,21 +86,14 @@ public class PageContextWrapper extends PageContext {
 
 	@Override
 	public ErrorData getErrorData() {
-		int status = 0;
-
 		ServletRequest servletRequest = getRequest();
-
-		Integer status_code = (Integer)servletRequest.getAttribute(
-			RequestDispatcher.ERROR_STATUS_CODE);
-
-		if (status_code != null) {
-			status = status_code.intValue();
-		}
 
 		return new ErrorData(
 			(Throwable)servletRequest.getAttribute(
 				RequestDispatcher.ERROR_EXCEPTION),
-			status,
+			GetterUtil.getInteger(
+				servletRequest.getAttribute(
+					RequestDispatcher.ERROR_STATUS_CODE)),
 			(String)servletRequest.getAttribute(
 				RequestDispatcher.ERROR_REQUEST_URI),
 			(String)servletRequest.getAttribute(

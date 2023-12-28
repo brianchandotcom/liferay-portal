@@ -82,16 +82,6 @@ public class FieldSerDes {
 			sb.append(field.getRequired());
 		}
 
-		if (field.getSupported() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"supported\": ");
-
-			sb.append(field.getSupported());
-		}
-
 		if (field.getType() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -104,6 +94,30 @@ public class FieldSerDes {
 			sb.append(_escape(field.getType()));
 
 			sb.append("\"");
+		}
+
+		if (field.getUnsupportedFormats() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"unsupportedFormats\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < field.getUnsupportedFormats().length; i++) {
+				sb.append("\"");
+
+				sb.append(_escape(field.getUnsupportedFormats()[i]));
+
+				sb.append("\"");
+
+				if ((i + 1) < field.getUnsupportedFormats().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		sb.append("}");
@@ -145,18 +159,20 @@ public class FieldSerDes {
 			map.put("required", String.valueOf(field.getRequired()));
 		}
 
-		if (field.getSupported() == null) {
-			map.put("supported", null);
-		}
-		else {
-			map.put("supported", String.valueOf(field.getSupported()));
-		}
-
 		if (field.getType() == null) {
 			map.put("type", null);
 		}
 		else {
 			map.put("type", String.valueOf(field.getType()));
+		}
+
+		if (field.getUnsupportedFormats() == null) {
+			map.put("unsupportedFormats", null);
+		}
+		else {
+			map.put(
+				"unsupportedFormats",
+				String.valueOf(field.getUnsupportedFormats()));
 		}
 
 		return map;
@@ -194,14 +210,17 @@ public class FieldSerDes {
 					field.setRequired((Boolean)jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "supported")) {
-				if (jsonParserFieldValue != null) {
-					field.setSupported((Boolean)jsonParserFieldValue);
-				}
-			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {
 				if (jsonParserFieldValue != null) {
 					field.setType((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "unsupportedFormats")) {
+
+				if (jsonParserFieldValue != null) {
+					field.setUnsupportedFormats(
+						toStrings((Object[])jsonParserFieldValue));
 				}
 			}
 		}

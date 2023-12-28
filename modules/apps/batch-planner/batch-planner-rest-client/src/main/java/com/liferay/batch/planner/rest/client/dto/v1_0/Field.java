@@ -86,27 +86,6 @@ public class Field implements Cloneable, Serializable {
 
 	protected Boolean required;
 
-	public Boolean getSupported() {
-		return supported;
-	}
-
-	public void setSupported(Boolean supported) {
-		this.supported = supported;
-	}
-
-	public void setSupported(
-		UnsafeSupplier<Boolean, Exception> supportedUnsafeSupplier) {
-
-		try {
-			supported = supportedUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Boolean supported;
-
 	public String getType() {
 		return type;
 	}
@@ -125,6 +104,27 @@ public class Field implements Cloneable, Serializable {
 	}
 
 	protected String type;
+
+	public String[] getUnsupportedFormats() {
+		return unsupportedFormats;
+	}
+
+	public void setUnsupportedFormats(String[] unsupportedFormats) {
+		this.unsupportedFormats = unsupportedFormats;
+	}
+
+	public void setUnsupportedFormats(
+		UnsafeSupplier<String[], Exception> unsupportedFormatsUnsafeSupplier) {
+
+		try {
+			unsupportedFormats = unsupportedFormatsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String[] unsupportedFormats;
 
 	@Override
 	public Field clone() throws CloneNotSupportedException {

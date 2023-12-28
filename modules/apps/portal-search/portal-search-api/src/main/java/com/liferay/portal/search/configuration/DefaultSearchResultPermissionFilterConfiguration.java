@@ -32,15 +32,15 @@ public interface DefaultSearchResultPermissionFilterConfiguration {
 	public int permissionFilteredSearchResultAccurateCountThreshold();
 
 	@Meta.AD(
-		deflt = "1000", description = "search-query-result-window-limit-help",
-		name = "search-query-result-window-limit", required = false
-	)
-	public int searchQueryResultWindowLimit();
-
-	@Meta.AD(
 		deflt = "0", description = "permission-filtering-time-limit-help",
 		name = "permission-filtering-time-limit", required = false
 	)
 	public long permissionFilteringTimeLimit();
+
+	@Meta.AD(
+		deflt = "1000", description = "search-query-result-window-limit-help",
+		name = "search-query-result-window-limit", required = false
+	)
+	public int searchQueryResultWindowLimit();
 
 }

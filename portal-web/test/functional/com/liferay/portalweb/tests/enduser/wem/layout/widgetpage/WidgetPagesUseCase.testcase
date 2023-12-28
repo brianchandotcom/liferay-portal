@@ -399,28 +399,19 @@ definition {
 		property testray.component.names = "Page Administration,Widget Page Templates";
 
 		task ("Given a page creator has a widget page template") {
-			task ("Add a widget page template") {
-				JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
-					groupName = ${randomSiteName},
-					layoutPageTemplateCollectionName = "Widget Template Collection");
+			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
+				groupName = ${randomSiteName},
+				layoutPageTemplateCollectionName = "Widget Template Collection");
 
-				JSONLayoutpagetemplate.addLayoutPageTemplateEntry(
-					groupName = ${randomSiteName},
-					layoutPageTemplateCollectionName = "Widget Template Collection",
-					layoutPageTemplateEntryName = "Widget Template Name",
-					layoutPageTemplateStatus = "Approved",
-					layoutPageTemplateType = "Widget Page Template");
-			}
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = ${siteURLKey});
 
-			task ("Add a Blogs widget to page template") {
-				PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = ${siteURLKey});
+			Navigator.gotoNavNested(navNested = "Widget Template Collection");
 
-				Navigator.gotoNavNested(navNested = "Widget Template Collection");
+			PageTemplatesAdmin.addPageTemplate(
+				pageTemplateName = "Widget Template Name",
+				pageTemplateType = "Widget Page Template");
 
-				PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Widget Template Name");
-
-				Portlet.addPG(portletName = "Blogs");
-			}
+			Portlet.addPG(portletName = "Blogs");
 		}
 
 		task ("When the page creator adds a widget page based on template") {

@@ -749,6 +749,148 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-196839. It must be possible to select the "Results", "Location" and "Search In" fields with the keyboard and must be in compliance with WCAG 2.1 AA standard."
+	@priority = 3
+	test ViewAccessibilityOfDefaultOptionsWhenSearchingWebContentTitle {
+		task ("Given 2 web contents and a folder with a web content") {
+			JSONWebcontent.addWebContent(
+				content = "Liferay DXP",
+				groupName = "Test Site Name",
+				title = "Over The Years");
+
+			JSONWebcontent.addWebContent(
+				content = "Liferay DXP",
+				groupName = "Test Site Name",
+				title = "Over The Earth");
+
+			JSONWebcontent.addFolder(
+				folderName = "WC Folder Name",
+				groupName = "Test Site Name");
+
+			JSONWebcontent.addWebContent(
+				content = "After many years I understood",
+				folderName = "WC Folder Name",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+		}
+
+		task ("When go to the folder and search for 'years'") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentFolder.gotoCP(
+				folderName = "WC Folder Name",
+				webContentTitle = "WC Folder Name");
+
+			Search.searchCP(searchTerm = "years");
+		}
+
+		task ("Then it must be possible to select the "Results", "Location" and "Search In" fields with the keyboard and must be in compliance with WCAG 2.1 AA standard.") {
+			task ("Using just the keyboard, in the "Results" field select the "Versions" option.") {
+				KeyPress(
+					buttonId = "JournalPortlet_searchResults",
+					locator1 = "Button#BUTTON_ID");
+
+				KeyPress(
+					buttonId = "JournalPortlet_searchResults",
+					locator1 = "Button#BUTTON_ID",
+					value1 = "\DOWN");
+
+				KeyPress(
+					buttonId = "JournalPortlet_searchResults",
+					locator1 = "Button#BUTTON_ID",
+					value1 = "\ENTER");
+			}
+
+			task ("Check that the web content version is present.") {
+				AssertTextEquals(
+					locator1 = "//span[contains(@class, 'workflow-value')]",
+					value1 = "1.0");
+			}
+
+			task ("View no accessibility issues found.") {
+				AssertAccessible();
+			}
+
+			task ("Using just the keyboard, in the "Location" field select the "Everywhere" option.") {
+				KeyPress(
+					buttonId = "JournalPortlet_searchLocation",
+					locator1 = "Button#BUTTON_ID");
+
+				KeyPress(
+					buttonId = "JournalPortlet_searchLocation",
+					locator1 = "Button#BUTTON_ID",
+					value1 = "\DOWN");
+
+				KeyPress(
+					buttonId = "JournalPortlet_searchLocation",
+					locator1 = "Button#BUTTON_ID",
+					value1 = "\ENTER");
+
+				AssertTextEquals(
+					buttonId = "JournalPortlet_searchLocation",
+					locator1 = "Button#BUTTON_ID",
+					value1 = "Everywhere");
+			}
+
+			task ("Check that both web contents are present.") {
+				Click(
+					key_title = "Search Results",
+					locator1 = "Header#H3_TITLE");
+
+				AssertTextEquals.assertPartialText(
+					key_position = 1,
+					locator1 = "LexiconList#LIST_ENTRY_X",
+					value1 = "Over The Years");
+
+				AssertTextEquals.assertPartialText(
+					key_position = 2,
+					locator1 = "LexiconList#LIST_ENTRY_X",
+					value1 = "Web Content Title");
+			}
+
+			task ("View no accessibility issues found.") {
+				AssertAccessible();
+			}
+
+			task ("Using just the keyboard, in the "Search In" field select the "Title Only" option.") {
+				KeyPress(
+					buttonId = "JournalPortlet_searchIn",
+					locator1 = "Button#BUTTON_ID");
+
+				KeyPress(
+					buttonId = "JournalPortlet_searchIn",
+					locator1 = "Button#BUTTON_ID",
+					value1 = "\DOWN");
+
+				KeyPress(
+					buttonId = "JournalPortlet_searchIn",
+					locator1 = "Button#BUTTON_ID",
+					value1 = "\ENTER");
+
+				AssertTextEquals(
+					buttonId = "JournalPortlet_searchIn",
+					locator1 = "Button#BUTTON_ID",
+					value1 = "Title Only");
+			}
+
+			task ("Check that only web content with title "Over The Years" appears.") {
+				AssertTextEquals.assertPartialText(
+					key_position = 1,
+					locator1 = "LexiconList#LIST_ENTRY_X",
+					value1 = "Over The Years");
+
+				AssertElementNotPresent(
+					key_position = 2,
+					locator1 = "LexiconList#LIST_ENTRY_X",
+					value1 = "Web Content Title");
+			}
+
+			task ("View no accessibility issues found.") {
+				AssertAccessible();
+			}
+		}
+	}
+
 	@description = "This is a test for LPS-196819. The site administrator could add all available type items in Content Library sheet."
 	@priority = 3
 	test ViewAvailableTypesInContentLibrarySheet {
@@ -787,6 +929,109 @@ definition {
 
 			for (var type : list "Folder,Basic Web Content,WC Structure Name") {
 				MenuItem.viewVisible(menuItem = ${type});
+			}
+		}
+	}
+
+	@description = "This is a test for LPS-196839. Show "Results" picker with the following options: "Web Contents","Versions" and "Comments". "Web Content" will be selected as default. Show "Location" picker with the following options: "Current Folder-name" and "Everywhere". "Current Folder-name" will be selected as default. Show "Search In" picker with the following options: "All Fields", "Title Only". "All Fields" will be selected as default."
+	@priority = 4
+	test ViewDefaultOptionsWhenSearchingWebContentTitle {
+		task ("Given 2 web contents and a folder with a web content") {
+			JSONWebcontent.addWebContent(
+				content = "Liferay DXP",
+				groupName = "Test Site Name",
+				title = "Over The Years");
+
+			JSONWebcontent.addWebContent(
+				content = "Liferay DXP",
+				groupName = "Test Site Name",
+				title = "Over The Earth");
+
+			JSONWebcontent.addFolder(
+				folderName = "WC Folder Name",
+				groupName = "Test Site Name");
+
+			JSONWebcontent.addWebContent(
+				content = "After many years I understood",
+				folderName = "WC Folder Name",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+		}
+
+		task ("When go to the folder and search for 'years'") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentFolder.gotoCP(
+				folderName = "WC Folder Name",
+				webContentTitle = "WC Folder Name");
+
+			Search.searchCP(searchTerm = "years");
+		}
+
+		task ("Then view the default options") {
+			task ("Check that in the Result field, “Web Content” will be selected as default.") {
+				AssertTextEquals(
+					buttonId = "JournalPortlet_searchResults",
+					locator1 = "Button#BUTTON_ID",
+					value1 = "Web Content");
+			}
+
+			task ("Check that the Web Content, Versions and Comments options appear in the Results field.") {
+				Click(
+					buttonId = "JournalPortlet_searchResults",
+					locator1 = "Button#BUTTON_ID");
+
+				for (var menuItem : list "Web Content,Versions,Comments") {
+					AssertVisible(
+						index = 1,
+						key_menuItem = ${menuItem},
+						key_subheader = "Results",
+						locator1 = "MenuItem#GROUPED_DROPDOWN_MENU_ITEM_BY_INDEX");
+				}
+			}
+
+			task ("Check that in the Result field, “Current Folder-name” will be selected as default.") {
+				AssertTextEquals(
+					buttonId = "JournalPortlet_searchLocation",
+					locator1 = "Button#BUTTON_ID",
+					value1 = "WC Folder Name");
+			}
+
+			task ("Check that the “Current Folder-name” and “Everywhere” options appear in the Location field.") {
+				Click(
+					buttonId = "JournalPortlet_searchLocation",
+					locator1 = "Button#BUTTON_ID");
+
+				for (var menuItem : list "WC Folder Name,Everywhere") {
+					AssertVisible(
+						index = 1,
+						key_menuItem = ${menuItem},
+						key_subheader = "Location",
+						locator1 = "MenuItem#GROUPED_DROPDOWN_MENU_ITEM_BY_INDEX");
+				}
+			}
+
+			task ("Check that in the Result field, “All Fields” will be selected as default.") {
+				AssertTextEquals(
+					buttonId = "JournalPortlet_searchIn",
+					locator1 = "Button#BUTTON_ID",
+					value1 = "All Fields");
+			}
+
+			task ("Check that the “All Fields” and “Title Only” options appear in the Search In field.") {
+				Click(
+					buttonId = "JournalPortlet_searchIn",
+					locator1 = "Button#BUTTON_ID");
+
+				for (var menuItem : list "All Fields,Title Only") {
+					AssertVisible(
+						index = 1,
+						key_menuItem = ${menuItem},
+						key_subheader = "Search In",
+						locator1 = "MenuItem#GROUPED_DROPDOWN_MENU_ITEM_BY_INDEX");
+
+					var index = ${index} + 1;
+				}
 			}
 		}
 	}
@@ -1155,6 +1400,64 @@ definition {
 			}
 
 			WebContentAdmin.viewEntryNotPresent(entry = "WC Folder Name");
+		}
+	}
+
+	@description = "This is a test for LPS-196839. When selecting "Search in" "Title Only", then the search should only affect to the text in the “title” field."
+	@priority = 5
+	test ViewWebContentWhenSearchingWithTitleOnlyAndEverywhereOptions {
+		task ("Given 2 web contents and a folder with a web content") {
+			JSONWebcontent.addWebContent(
+				content = "Liferay DXP",
+				groupName = "Test Site Name",
+				title = "Over The Years");
+
+			JSONWebcontent.addWebContent(
+				content = "Liferay DXP",
+				groupName = "Test Site Name",
+				title = "Over The Earth");
+
+			JSONWebcontent.addFolder(
+				folderName = "WC Folder Name",
+				groupName = "Test Site Name");
+
+			JSONWebcontent.addWebContent(
+				content = "After many years I understood",
+				folderName = "WC Folder Name",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+		}
+
+		task ("When go to the folder and search for 'years' and select the "Title Only" option") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentFolder.gotoCP(
+				folderName = "WC Folder Name",
+				webContentTitle = "WC Folder Name");
+
+			Search.searchCP(searchTerm = "years");
+
+			Click(
+				buttonId = "JournalPortlet_searchIn",
+				locator1 = "Button#BUTTON_ID");
+
+			MenuItem.click(menuItem = "Title Only");
+		}
+
+		task ("Then check that only web content with title "Over The Years" appears") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#EMPTY_INFO",
+				value1 = "No web content was found.");
+
+			Click(
+				buttonId = "JournalPortlet_searchLocation",
+				locator1 = "Button#BUTTON_ID");
+
+			MenuItem.click(menuItem = "Everywhere");
+
+			WebContentAdmin.viewEntryTitle(entry = "Over The Years");
+
+			WebContentAdmin.viewEntryNotPresent(entry = "Web Content Title");
 		}
 	}
 

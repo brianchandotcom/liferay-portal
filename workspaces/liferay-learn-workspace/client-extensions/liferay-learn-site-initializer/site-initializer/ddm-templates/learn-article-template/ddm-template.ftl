@@ -47,6 +47,15 @@
 		border-radius: 2.0rem;
 	}
 
+	.callout-title {
+		color: var(--Neutral-Neutral-10, #272833);
+		font-family: 'Source Sans Pro', sans-serif;
+		font-size: 1.5rem;
+		font-style: normal;
+		font-weight: 600;
+		line-height: 1.75rem;
+	}
+
 	.current-level {
 		color: #004AD7 !important;
 		background-color: #E6EDFB;
@@ -87,6 +96,10 @@
 
 	.reference:hover {
 		color: #0053F0 !important;
+	}
+
+	.rounded-10{
+	  border-radius: 10px;
 	}
 
 	.show #dropdown-products {
@@ -550,37 +563,17 @@
 					<#if isLandingPage>
 						<#include "${templatesPath}/LANDING-PAGE">
 					</#if>
-
-					<div class="autofit-padded-no-gutters-x autofit-row help-center-footer">
-						<div class="autofit-col">
-							<div class="icon-container">
-								<svg
-									class="lexicon-icon liferay-waffle-icon"
-									focusable="false"
-									role="presentation"
-									viewBox="0 0 512 512"
-								>
-									<use xlink:href="#liferay-waffle" />
-								</svg>
-							</div>
-						</div>
-
+					
+					<hr class="mt-4 separator solid">
+					<div class="autofit-padded-no-gutters-x autofit-row border help-center-footer pb-3 pl-3 rounded-10">
 						<div class="autofit-col autofit-col-expand">
-							<h3>${languageUtil.get(locale, "not-finding-what-you-are-looking-for", "Not finding what you're looking for?")}</h3>
+							<h3 class="callout-title">${languageUtil.get(locale, "not-finding-what-you-are-looking-for", "Not finding what you're looking for?")}</h3>
 
-							<p>${languageUtil.get(locale, "pardon-our-dust-as-we-revamp", "Pardon our dust as we revamp and transition our product documentation to this site. If something seems missing, please check Liferay Help Center documentation for Liferay DXP 7.2 and previous versions.")}</p>
+							<p class="w-50 overflow-auto">${languageUtil.get(locale, "pardon-our-dust-as-we-revamp", "Pardon our dust as we are in the process of revamping the documentation to the site. If something seems missing, cross reference the Liferay Help Center for a more thorough set of documentation on Liferay DXP 7.2 and previous versions.")}</p>
 
-							<a href="https://help.liferay.com/hc/en-us/categories/360001749912">
-								<strong>${languageUtil.get(locale, "try-liferays-help-center", "Try Liferay's Help Center")}</strong>
-
-								<svg
-									class="lexicon-icon lexicon-icon-shortcut"
-									focusable="false"
-									role="presentation"
-									viewBox="0 0 512 512"
-								>
-									<use xlink:href="#shortcut" />
-								</svg>
+							<a class="text-decoration-none" href="https://help.liferay.com/hc/en-us/categories/360001749912">
+								<strong >${languageUtil.get(locale, "try-liferays-help-center", "Try Liferay’s Help Center")}</strong>
+								<@clay["icon"] symbol="order-arrow-right" />
 							</a>
 						</div>
 					</div>

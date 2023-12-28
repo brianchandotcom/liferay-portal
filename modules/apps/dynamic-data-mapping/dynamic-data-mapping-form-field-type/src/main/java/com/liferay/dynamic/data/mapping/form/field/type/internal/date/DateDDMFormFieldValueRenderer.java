@@ -10,13 +10,10 @@ import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTy
 import com.liferay.dynamic.data.mapping.form.validation.util.DateParameterUtil;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
+import com.liferay.dynamic.data.mapping.util.DateDDMFormFieldUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -25,8 +22,6 @@ import java.time.format.DecimalStyle;
 
 import java.util.Locale;
 import java.util.regex.Pattern;
-
-import org.apache.commons.lang.StringUtils;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -61,44 +56,11 @@ public class DateDDMFormFieldValueRenderer
 			locale = defaultLocale;
 		}
 
-		SimpleDateFormat simpleDateFormat = null;
-
 		boolean dateTime = Pattern.matches(
 			"^\\d{4}-\\d{2}-\\d{2} \\d{1,2}:\\d{2}$", valueString);
 
-		if (dateTime) {
-			simpleDateFormat = (SimpleDateFormat)DateFormat.getDateTimeInstance(
-				DateFormat.SHORT, DateFormat.SHORT, locale);
-		}
-		else {
-			simpleDateFormat = (SimpleDateFormat)DateFormat.getDateInstance(
-				DateFormat.SHORT, locale);
-		}
-
-		String pattern = simpleDateFormat.toPattern();
-
-		if (StringUtils.countMatches(pattern, "d") == 1) {
-			pattern = StringUtil.replace(pattern, 'd', "dd");
-		}
-
-		if (StringUtils.countMatches(pattern, "h") == 1) {
-			pattern = StringUtil.replace(pattern, 'h', "hh");
-		}
-
-		if (StringUtils.countMatches(pattern, "H") == 1) {
-			pattern = StringUtil.replace(pattern, 'H', "HH");
-		}
-
-		if (StringUtils.countMatches(pattern, "M") == 1) {
-			pattern = StringUtil.replace(pattern, 'M', "MM");
-		}
-
-		if (StringUtils.countMatches(pattern, "y") == 2) {
-			pattern = StringUtil.replace(pattern, 'y', "yy");
-		}
-
 		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(
-			pattern, locale);
+			DateDDMFormFieldUtil.getPattern(dateTime, locale), locale);
 
 		if (dateTime) {
 			LocalDateTime localDateTime = DateParameterUtil.getLocalDateTime(

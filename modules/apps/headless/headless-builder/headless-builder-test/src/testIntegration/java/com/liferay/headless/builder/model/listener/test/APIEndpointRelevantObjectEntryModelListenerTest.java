@@ -318,6 +318,42 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 				"status", "BAD_REQUEST"
 			).put(
 				"title",
+				"Path parameter cannot be set without a response schema."
+			).toString(),
+			HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.put(
+					"httpMethod", "get"
+				).put(
+					"name", RandomTestUtil.randomString()
+				).put(
+					"path",
+					StringBundler.concat(
+						StringPool.FORWARD_SLASH,
+						StringUtil.toLowerCase(RandomTestUtil.randomString()),
+						StringPool.FORWARD_SLASH, StringPool.OPEN_CURLY_BRACE,
+						RandomTestUtil.randomString(),
+						StringPool.CLOSE_CURLY_BRACE)
+				).put(
+					"pathParameter", RandomTestUtil.randomString()
+				).put(
+					"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
+					apiApplicationJSONObject1.getLong("id")
+				).put(
+					"retrieveType",
+					APIApplication.Endpoint.RetrieveType.SINGLE_ELEMENT.
+						getValue()
+				).put(
+					"scope", APIApplication.Endpoint.Scope.COMPANY.getValue()
+				).toString(),
+				"headless-builder/endpoints", Http.Method.POST
+			).toString(),
+			JSONCompareMode.STRICT);
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"status", "BAD_REQUEST"
+			).put(
+				"title",
 				"Path parameter description cannot be set with empty path " +
 					"parameter property."
 			).toString(),
@@ -448,43 +484,6 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 				).put(
 					"retrieveType",
 					APIApplication.Endpoint.RetrieveType.COLLECTION.getValue()
-				).put(
-					"scope", APIApplication.Endpoint.Scope.COMPANY.getValue()
-				).toString(),
-				"headless-builder/endpoints", Http.Method.POST
-			).toString(),
-			JSONCompareMode.STRICT);
-
-		JSONAssert.assertEquals(
-			JSONUtil.put(
-				"status", "BAD_REQUEST"
-			).put(
-				"title",
-				"Path parameters cannot be established without a response " +
-					"schema in use."
-			).toString(),
-			HTTPTestUtil.invokeToJSONObject(
-				JSONUtil.put(
-					"httpMethod", "get"
-				).put(
-					"name", RandomTestUtil.randomString()
-				).put(
-					"path",
-					StringBundler.concat(
-						StringPool.FORWARD_SLASH,
-						StringUtil.toLowerCase(RandomTestUtil.randomString()),
-						StringPool.FORWARD_SLASH, StringPool.OPEN_CURLY_BRACE,
-						RandomTestUtil.randomString(),
-						StringPool.CLOSE_CURLY_BRACE)
-				).put(
-					"pathParameter", RandomTestUtil.randomString()
-				).put(
-					"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
-					apiApplicationJSONObject1.getLong("id")
-				).put(
-					"retrieveType",
-					APIApplication.Endpoint.RetrieveType.SINGLE_ELEMENT.
-						getValue()
 				).put(
 					"scope", APIApplication.Endpoint.Scope.COMPANY.getValue()
 				).toString(),

@@ -294,10 +294,8 @@ public class APIEndpointRelevantObjectEntryModelListener
 
 				throw new ObjectEntryValuesException.InvalidObjectField(
 					null,
-					"Path parameters cannot be established without a " +
-						"response schema in use",
-					"path-parameters-cannot-be-established-without-a-" +
-						"response-schema-in-use");
+					"Path parameter cannot be set without a response schema",
+					"path-parameter-cannot-be-set-without-a-response-schema");
 			}
 
 			_validateSingleElementPath(

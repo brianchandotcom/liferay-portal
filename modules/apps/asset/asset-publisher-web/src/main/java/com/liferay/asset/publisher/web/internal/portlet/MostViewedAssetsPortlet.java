@@ -34,6 +34,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.preferences=classpath:/META-INF/portlet-preferences/most-viewed-assets-default-portlet-preferences.xml",
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=guest,power-user,user",
+		"javax.portlet.supported-public-render-parameter=assetEntryId",
 		"javax.portlet.supported-public-render-parameter=categoryId",
 		"javax.portlet.supported-public-render-parameter=resetCur",
 		"javax.portlet.supported-public-render-parameter=tag",

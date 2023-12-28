@@ -27,7 +27,6 @@
 		<column name="commerceOrderItemId" type="long" />
 		<column name="activationStatus" type="int" />
 		<column name="duration" type="long" />
-		<column name="usages" type="int" />
 		<column name="maxUsages" type="int" />
 		<column name="active" type="boolean" />
 		<column name="startDate" type="Date" />
@@ -68,6 +67,7 @@
 		<column name="commerceVirtualOrderItemId" type="long" />
 		<column name="fileEntryId" type="long" />
 		<column name="url" type="String" />
+		<column name="usages" type="int" />
 		<column name="version" type="String" />
 
 		<!-- Order -->

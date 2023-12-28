@@ -49,7 +49,7 @@ if (name.equals(ddmStructureFieldName)) {
 				'<%= HtmlUtil.escape((String)ddmStructureFieldName) %>'
 			) {
 				field.setValue(
-					'<%= HtmlUtil.escape((String)ddmStructureFieldValue) %>'
+					'<%= HtmlUtil.escapeJS((String)ddmStructureFieldValue) %>'
 				);
 			}
 		});

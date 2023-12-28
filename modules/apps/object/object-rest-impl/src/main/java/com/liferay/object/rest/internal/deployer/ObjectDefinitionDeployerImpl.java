@@ -589,8 +589,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		return TransformUtil.transform(
 			Arrays.<Supplier<ExceptionMapper<?>>>asList(
 				ObjectAssetCategoryExceptionMapper::new,
-				ObjectEntryCountExceptionMapper::new,
 				ObjectEntryManagerHttpExceptionMapper::new,
+				() -> new ObjectEntryCountExceptionMapper(_language),
 				() -> new ObjectEntryStatusExceptionMapper(_language),
 				() -> new ObjectEntryValuesExceptionMapper(_language),
 				() -> new ObjectRelationshipDeletionTypeExceptionMapper(

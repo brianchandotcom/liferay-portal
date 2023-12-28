@@ -7,7 +7,6 @@ package com.liferay.object.rest.internal.jaxrs.exception.mapper;
 
 import com.liferay.object.exception.ObjectEntryCountException;
 import com.liferay.object.jaxrs.exception.mapper.util.ObjectExceptionMapperUtil;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
@@ -15,50 +14,34 @@ import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.ext.ExceptionMapper;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+import javax.ws.rs.ext.Provider;
 
 /**
  * @author Thalles Montenegro
  */
-@Component(
-	property = {
-		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Object.Admin.REST)",
-		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Object.Admin.REST.ObjectEntryCountExceptionMapper"
-	},
-	service = ExceptionMapper.class
-)
+@Provider
 public class ObjectEntryCountExceptionMapper
 	extends BaseExceptionMapper<ObjectEntryCountException> {
+
+	public ObjectEntryCountExceptionMapper(Language language) {
+		_language = language;
+	}
 
 	@Override
 	protected Problem getProblem(
 		ObjectEntryCountException objectEntryCountException) {
 
 		return new Problem(
-			JSONUtil.putAll(
-				JSONUtil.put(
-					"fieldName", "name"
-				).put(
-					"message",
-					ObjectExceptionMapperUtil.getTitle(
-						_acceptLanguage,
-						objectEntryCountException.getArguments(), _language,
-						objectEntryCountException.getMessage(),
-						objectEntryCountException.getMessageKey())
-				)
-			).toString(),
-			Response.Status.BAD_REQUEST, null,
-			ObjectEntryCountException.class.getName());
+			Response.Status.BAD_REQUEST,
+			ObjectExceptionMapperUtil.getTitle(
+				_acceptLanguage, objectEntryCountException.getArguments(),
+				_language, objectEntryCountException.getMessage(),
+				objectEntryCountException.getMessageKey()));
 	}
 
 	@Context
 	private AcceptLanguage _acceptLanguage;
 
-	@Reference
-	private Language _language;
+	private final Language _language;
 
 }

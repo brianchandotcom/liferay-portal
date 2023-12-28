@@ -70,6 +70,11 @@ definition {
 
 	@summary = "Default summary"
 	macro configureContentSharingAcrossSitesCP(enableAcrossSite = null) {
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Sharing",
+			configurationName = "Content Sharing",
+			configurationScope = "Virtual Instance Scope");
+
 		if (${enableAcrossSite} == "true") {
 			Check(locator1 = "PortalSettingsContentSharing#CONTENT_SHARING_CHECKBOX");
 

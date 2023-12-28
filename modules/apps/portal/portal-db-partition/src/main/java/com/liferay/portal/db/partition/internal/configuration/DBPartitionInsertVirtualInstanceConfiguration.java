@@ -19,7 +19,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface DBPartitionInsertVirtualInstanceConfiguration {
 
 	@Meta.AD(type = Meta.Type.Long)
-	public long companyId();
+	public long partitionCompanyId();
 
 	@Meta.AD(required = false)
 	public String newName();

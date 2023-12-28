@@ -27,7 +27,7 @@ public class DBPartitionInsertVirtualInstanceOperationTest
 	public void testDeployConfiguration() throws Exception {
 		deployConfiguration(
 			_PID,
-			"newWebId=T\"testNewWebId\"\ncompanyId=L\"" +
+			"newWebId=T\"testNewWebId\"\npartitionCompanyId=L\"" +
 				PortalInstancePool.getDefaultCompanyId() + "\"\n");
 
 		verifyConfigurationIsDeletedAfterDeploy(_PID);

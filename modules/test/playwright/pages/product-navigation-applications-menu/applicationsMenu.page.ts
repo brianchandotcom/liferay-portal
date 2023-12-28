@@ -10,6 +10,7 @@ export class ApplicationsMenuPage {
 	readonly controlPanelButton: Locator;
 	readonly instanceSettingsLink: Locator;
 	readonly objectsLink: Locator;
+	readonly objectsMenuItem: Locator;
 	readonly page: Page;
 	readonly signInButton: Locator;
 

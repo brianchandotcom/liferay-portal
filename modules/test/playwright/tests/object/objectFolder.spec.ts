@@ -20,7 +20,7 @@ test('created object folders are on the left side bar', async ({
 	_apiHelpers,
 	_objectDefinitionsPage,
 }) => {
-	await _apiHelpers.featureFlag.updateFeatureFlag('LPS-148856', 'true');
+	await _apiHelpers.featureFlag.updateFeatureFlag('LPS-148856', true);
 
 	await _objectDefinitionsPage.goto();
 
@@ -45,7 +45,7 @@ test('uncategorized folder does not contains delete and edit options', async ({
 	_apiHelpers,
 	_objectDefinitionsPage,
 }) => {
-	await _apiHelpers.featureFlag.updateFeatureFlag('LPS-148856', 'true');
+	await _apiHelpers.featureFlag.updateFeatureFlag('LPS-148856', true);
 
 	await _objectDefinitionsPage.goto();
 

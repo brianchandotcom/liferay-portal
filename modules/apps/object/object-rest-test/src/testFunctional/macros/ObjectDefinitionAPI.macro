@@ -839,6 +839,34 @@ definition {
 	}
 
 	@summary = "Default summary"
+	macro createObjectDefinitionWithMultipleCustomFields(picklistId = null, objectDefinitionName = null, en_US_label = null, requiredStringFieldName = null, en_US_plural_label = null) {
+		Variables.assertDefined(parameterList = "${en_US_label},${en_US_plural_label},${objectDefinitionName},${picklistId},${requiredStringFieldName}");
+
+		var objectDefinitionId = ObjectDefinitionAPI.createAndPublishObjectDefinition(
+			en_US_label = ${en_US_label},
+			en_US_plural_label = ${en_US_plural_label},
+			name = ${objectDefinitionName},
+			requiredStringFieldName = ${requiredStringFieldName});
+
+		ObjectDefinitionAPI.postObjectDefinitionObjectField(
+			businessType = "Picklist",
+			dBType = "String",
+			listTypeDefinitionId = ${picklistId},
+			name = "testPicklist",
+			objectDefinitionName = ${objectDefinitionName});
+
+		for (var typeList : list "DateTime:DateAndTime,Date:Date,Double:Decimal,Integer:Integer,Long:LongInteger,BigDecimal:PrecissionDecimal,Clob:RichText,Clob:LongText") {
+			var dbType = StringUtil.extractFirst(${typeList}, ":");
+			var name = StringUtil.extractLast(${typeList}, ":");
+
+			ObjectFieldAPI.createObjectFieldByObjectDefinitionId(
+				dbType = ${dbType},
+				name = "test${name}",
+				objectDefinitionId = ${objectDefinitionId});
+		}
+	}
+
+	@summary = "Default summary"
 	macro createObjectEntryWithName(keywords = null, taxonomyCategoryIds = null, name = null, scopeKey = null, secondFieldValue = null, virtualHost = null, en_US_plural_label = null, externalReferenceCode = null, token = null) {
 		var objectId = ObjectDefinitionAPI._createObjectEntryWithName(
 			en_US_plural_label = ${en_US_plural_label},

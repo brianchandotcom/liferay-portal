@@ -1,15 +1,15 @@
 <style>
 	.section-card {
-		box-shadow: none!important;
+		box-shadow: none !important;
 	}
 
 	.section-card:hover {
-		background-color: #EDF3FE!important;
-		border-bottom: 1px solid #0053F0!important;
-		border-color: #0053F0!important;
-		box-shadow: none!important;
-		margin-bottom: 0px!important;
-		transform: none!important;
+		background-color: #EDF3FE !important;
+		border-bottom: 1px solid #0053F0 !important;
+		border-color: #0053F0 !important;
+		box-shadow: none !important;
+		margin-bottom: 0px !important;
+		transform: none !important;
 	}
 </style>
 

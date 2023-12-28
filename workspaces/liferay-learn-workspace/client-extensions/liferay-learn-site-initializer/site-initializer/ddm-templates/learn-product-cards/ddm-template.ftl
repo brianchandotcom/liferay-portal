@@ -1,22 +1,22 @@
 <style>
 	.card-container {
 		height: 150px;
-		min-width: auto!important;
+		min-width: auto !important;
 	}
 
 	.home-card {
-		background-color:#FBFCFE!important;
-		border-color:#E7EFFF!important;
-		border-radius: 10px!important;
-		border-width:1px!important;
+		background-color:#FBFCFE !important;
+		border-color:#E7EFFF !important;
+		border-radius: 10px !important;
+		border-width:1px !important;
 		min-width: 100%;
 	}
 
 	.home-card:hover {
-		background-color: #EDF3FE!important;
-		border-color: #0053F0!important;
-		box-shadow: none!important;
-		transform: none!important;
+		background-color: #EDF3FE !important;
+		border-color: #0053F0 !important;
+		box-shadow: none !important;
+		transform: none !important;
 	}
 
 	.product-cards {
@@ -24,8 +24,8 @@
 	}
 
 	.product-icon{
-		height: 50px!important;
-		width: 50px!important;
+		height: 50px !important;
+		width: 50px !important;
 	}
 
 	.responsive-text {

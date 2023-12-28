@@ -30,8 +30,8 @@
 	}
 
 	.dropdown-menu .row {
-		margin: 25px!important;
-		min-width: auto!important;
+		margin: 25px !important;
+		min-width: auto !important;
 	}
 
 	.dropdown-menu .row .dropdown-item-div {
@@ -86,7 +86,7 @@
 
 	.product-box {
 	  	padding: 1rem;
-		margin-bottom: 1.5rem!important;
+		margin-bottom: 1.5rem !important;
 	}
 
 	.responsive-text {

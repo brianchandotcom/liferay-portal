@@ -46,6 +46,8 @@ definition {
 		Click(locator1 = "ACCustomEvents#BLOCK_UNBLOCK_EVENT_BUTTON");
 
 		ACUtils.clickAnyButton(button = ${key_actionButton});
+
+		WaitForElementNotPresent(locator1 = "ACUtils#NAME_LIST");
 	}
 
 	@summary = "Default summary"

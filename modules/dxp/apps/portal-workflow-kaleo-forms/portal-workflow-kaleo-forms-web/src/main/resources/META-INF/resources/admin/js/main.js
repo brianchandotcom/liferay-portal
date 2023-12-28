@@ -203,37 +203,26 @@ AUI.add(
 					const formsSearchContainer =
 						'#' + instance.NS + 'formsSearchContainer';
 
-					const kaleoProcessId = instance.get('kaleoProcessId');
-
 					const resultsContainer = instance.one('#resultsContainer');
 
-					const workflowDefinition = instance
-						.one('#workflowDefinition')
-						.val();
-
-					const backURL = new Liferay.PortletURL(
-						Liferay.PortletURL.RENDER_PHASE,
-						null,
-						currentURL
+					const backURL = new Liferay.Util.PortletURL.createPortletURL(
+						currentURL,
+						{
+							historyKey: 'forms',
+						}
 					);
 
-					backURL.setParameter('historyKey', 'forms');
-
-					const formsURL = new Liferay.PortletURL(
-						Liferay.PortletURL.RENDER_PHASE,
-						null,
-						currentURL
-					);
-
-					formsURL.setParameter(
-						'mvcPath',
-						'/admin/process/task_template_search_container.jsp'
-					);
-					formsURL.setParameter('backURL', backURL.toString());
-					formsURL.setParameter('kaleoProcessId', kaleoProcessId);
-					formsURL.setParameter(
-						'workflowDefinition',
-						workflowDefinition
+					const formsURL = new Liferay.Util.PortletURL.createPortletURL(
+						currentURL,
+						{
+							backURL: backURL.toString(),
+							kaleoProcessId: instance.get('kaleoProcessId'),
+							mvcPath:
+								'/admin/process/task_template_search_container.jsp',
+							workflowDefinition: instance
+								.one('#workflowDefinition')
+								.val(),
+						}
 					);
 
 					resultsContainer.plug(A.LoadingMask).loadingmask.show();
@@ -404,7 +393,6 @@ AUI.add(
 			'aui-parse-content',
 			'aui-url',
 			'liferay-kaleo-forms-components',
-			'liferay-portlet-url',
 			'liferay-store',
 			'node-load',
 		],

@@ -205,31 +205,23 @@ public class InstanceInitializerCheck extends BaseCheck {
 				return;
 			}
 
-			if (insideIfStatement) {
-				_checkHasReplacableMethodSignature(
-					firstChildDetailAST, methodName, javaClass,
-					insideIfStatement);
+			if (!insideIfStatement) {
+				DetailAST elistDetailAST = firstChildDetailAST.findFirstToken(
+					TokenTypes.ELIST);
 
-				return;
+				DetailAST childDetailAST = elistDetailAST.getFirstChild();
+
+				if ((childDetailAST == null) ||
+					(childDetailAST.getType() == TokenTypes.LAMBDA) ||
+					(childDetailAST.findFirstToken(TokenTypes.METHOD_REF) !=
+						null)) {
+
+					return;
+				}
 			}
 
-			DetailAST elistDetailAST = firstChildDetailAST.findFirstToken(
-				TokenTypes.ELIST);
-
-			DetailAST childDetailAST = elistDetailAST.getFirstChild();
-
-			if (childDetailAST == null) {
-				return;
-			}
-
-			if ((childDetailAST.getType() != TokenTypes.LAMBDA) &&
-				(childDetailAST.findFirstToken(TokenTypes.METHOD_REF) ==
-					null)) {
-
-				_checkHasReplacableMethodSignature(
-					firstChildDetailAST, methodName, javaClass,
-					insideIfStatement);
-			}
+			_checkHasReplacableMethodSignature(
+				firstChildDetailAST, methodName, javaClass, insideIfStatement);
 		}
 	}
 

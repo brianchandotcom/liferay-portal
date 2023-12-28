@@ -488,13 +488,13 @@ definition {
 			}
 
 			task ("Add a New Property and Assert The New Property was Created") {
-				ACProperties.addNewProperty(propertyName = "Name of property");
+				ACProperties.addNewProperty(propertyName = "OnlyAdminOrOwnerUsersCanAddPropertiesOnAC Property");
 
 				if (${userEmail} == "michelle.hoshi@faro.io") {
-					ACProperties.assertNewCreatedProperty(propertyName = "Name of property");
+					ACProperties.assertNewCreatedProperty(propertyName = "OnlyAdminOrOwnerUsersCanAddPropertiesOnAC Property");
 				}
 				else {
-					ACProperties.assertNewCreatedProperty(propertyName = "Name of property (1)");
+					ACProperties.assertNewCreatedProperty(propertyName = "OnlyAdminOrOwnerUsersCanAddPropertiesOnAC Property (1)");
 				}
 			}
 		}

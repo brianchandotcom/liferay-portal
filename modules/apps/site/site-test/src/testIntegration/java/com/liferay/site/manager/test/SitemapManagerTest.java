@@ -11,6 +11,7 @@ import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.model.AssetVocabularyConstants;
 import com.liferay.asset.kernel.service.AssetCategoryService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyService;
@@ -32,6 +33,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
 import com.liferay.portal.configuration.test.util.GroupConfigurationTemporarySwapper;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -46,6 +48,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -59,6 +62,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.site.manager.SitemapManager;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -129,24 +133,9 @@ public class SitemapManagerTest {
 							"includeWebContent", false
 						).build())) {
 
-			AssetCategory assetCategory = _setUpAssetCategoryDisplayPage();
+			_setUpAssetCategoryDisplayPage();
 
-			FriendlyURLEntry friendlyURLEntry =
-				_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
-					_portal.getClassNameId(AssetCategory.class),
-					assetCategory.getCategoryId());
-
-			_assertSitemap(
-				_layout.getUuid(),
-				_portal.getCanonicalURL(
-					StringBundler.concat(
-						_portal.getGroupFriendlyURL(
-							_layout.getLayoutSet(), _themeDisplay, false,
-							false),
-						_cpFriendlyURL.getAssetCategoryURLSeparator(
-							TestPropsValues.getCompanyId()),
-						friendlyURLEntry.getUrlTitle()),
-					_themeDisplay, _layout));
+			_assertSitemap(_layout.getUuid(), _getExpectedAssetCategoryUrls());
 		}
 	}
 
@@ -534,7 +523,51 @@ public class SitemapManagerTest {
 		}
 	}
 
-	private AssetCategory _setUpAssetCategoryDisplayPage() throws Exception {
+	private String[] _getExpectedAssetCategoryUrls() throws Exception {
+		List<String> urls = new ArrayList<>();
+
+		String assetCategoryURLSeparator =
+			_cpFriendlyURL.getAssetCategoryURLSeparator(
+				TestPropsValues.getCompanyId());
+
+		for (AssetVocabulary assetVocabulary :
+				_assetVocabularyService.getGroupVocabularies(
+					_company.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null)) {
+
+			if (assetVocabulary.getVisibilityType() ==
+					AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL) {
+
+				continue;
+			}
+
+			List<AssetCategory> assetCategories =
+				_assetCategoryService.getVocabularyCategories(
+					assetVocabulary.getVocabularyId(), QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null);
+
+			for (AssetCategory assetCategory : assetCategories) {
+				FriendlyURLEntry friendlyURLEntry =
+					_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
+						_portal.getClassNameId(AssetCategory.class),
+						assetCategory.getCategoryId());
+
+				urls.add(
+					_portal.getCanonicalURL(
+						StringBundler.concat(
+							_portal.getGroupFriendlyURL(
+								_layout.getLayoutSet(), _themeDisplay, false,
+								false),
+							assetCategoryURLSeparator,
+							friendlyURLEntry.getUrlTitle()),
+						_themeDisplay, _layout));
+			}
+		}
+
+		return ArrayUtil.toStringArray(urls);
+	}
+
+	private void _setUpAssetCategoryDisplayPage() throws Exception {
 		LayoutTestUtil.addPortletToLayout(
 			_layout, CPPortletKeys.CP_CATEGORY_CONTENT_WEB);
 
@@ -547,7 +580,7 @@ public class SitemapManagerTest {
 				RandomTestUtil.randomLocaleStringMap(), Collections.emptyMap(),
 				StringPool.BLANK, _serviceContext);
 
-		return AssetTestUtil.addCategory(
+		AssetTestUtil.addCategory(
 			_group.getGroupId(), assetVocabulary.getVocabularyId());
 	}
 

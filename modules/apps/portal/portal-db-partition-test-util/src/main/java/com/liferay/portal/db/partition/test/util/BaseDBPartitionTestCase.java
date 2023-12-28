@@ -324,6 +324,13 @@ public abstract class BaseDBPartitionTestCase {
 
 				preparedStatement2.executeUpdate();
 			}
+
+			Company company = new CompanyImpl();
+
+			company.setCompanyId(companyId);
+			company.setWebId("Test" + companyId);
+
+			PortalInstancePool.add(company);
 		}
 	}
 

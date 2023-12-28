@@ -111,15 +111,16 @@ public class FragmentLayoutStructureItemMapper
 
 		String portletId = editableValuesJSONObject.getString("portletId");
 
-		JSONObject itemConfigJSONObject =
-			fragmentStyledLayoutStructureItem.getItemConfigJSONObject();
-
 		if (Validator.isNull(portletId)) {
 			return new PageElement() {
 				{
 					setDefinition(
-						() ->
-							_pageFragmentInstanceDefinitionMapper.
+						() -> {
+							JSONObject itemConfigJSONObject =
+								fragmentStyledLayoutStructureItem.
+									getItemConfigJSONObject();
+
+							return _pageFragmentInstanceDefinitionMapper.
 								getPageFragmentInstanceDefinition(
 									fragmentStyledLayoutStructureItem,
 									toFragmentStyle(
@@ -128,7 +129,8 @@ public class FragmentLayoutStructureItemMapper
 										saveMappingConfiguration),
 									getFragmentViewPorts(itemConfigJSONObject),
 									saveInlineContent,
-									saveMappingConfiguration));
+									saveMappingConfiguration);
+						});
 					setId(layoutStructureItem::getItemId);
 					setType(() -> Type.FRAGMENT);
 				}

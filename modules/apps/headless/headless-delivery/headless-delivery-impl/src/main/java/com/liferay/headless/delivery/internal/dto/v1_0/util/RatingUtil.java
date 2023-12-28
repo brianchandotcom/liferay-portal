@@ -22,8 +22,9 @@ public class RatingUtil {
 		Map<String, Map<String, String>> actions, Portal portal,
 		RatingsEntry ratingsEntry, UserLocalService userLocalService) {
 
-		Rating rating = new Rating() {
+		return new Rating() {
 			{
+				setActions(() -> actions);
 				setBestRating(() -> 1D);
 				setCreator(
 					() -> CreatorUtil.toCreator(
@@ -36,10 +37,6 @@ public class RatingUtil {
 				setWorstRating(() -> 0D);
 			}
 		};
-
-		rating.setActions(actions);
-
-		return rating;
 	}
 
 }

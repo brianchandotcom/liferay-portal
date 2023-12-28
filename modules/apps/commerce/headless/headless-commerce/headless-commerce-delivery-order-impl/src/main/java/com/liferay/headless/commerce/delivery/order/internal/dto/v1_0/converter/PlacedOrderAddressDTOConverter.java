@@ -14,8 +14,6 @@ import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
-import java.util.Locale;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -50,12 +48,12 @@ public class PlacedOrderAddressDTOConverter
 
 		Region addressRegion = commerceAddress.getRegion();
 
-		Locale locale = dtoConverterContext.getLocale();
-
 		return new PlacedOrderAddress() {
 			{
 				setCity(commerceAddress::getCity);
-				setCountry(() -> addressCountry.getTitle(locale));
+				setCountry(
+					() -> addressCountry.getTitle(
+						dtoConverterContext.getLocale()));
 				setCountryISOCode(addressCountry::getA2);
 				setDescription(commerceAddress::getDescription);
 				setId(commerceAddress::getCommerceAddressId);

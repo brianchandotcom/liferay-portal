@@ -58,17 +58,19 @@ public class PriceEntryDTOConverter
 			commercePriceEntry.getCProductId(),
 			commercePriceEntry.getCPInstanceUuid());
 
-		ExpandoBridge expandoBridge = commercePriceEntry.getExpandoBridge();
-
 		BigDecimal priceEntryPrice = commercePriceEntry.getPrice();
-
-		Locale locale = dtoConverterContext.getLocale();
 
 		return new PriceEntry() {
 			{
 				setActions(dtoConverterContext::getActions);
 				setBulkPricing(commercePriceEntry::isBulkPricing);
-				setCustomFields(expandoBridge::getAttributes);
+				setCustomFields(
+					() -> {
+						ExpandoBridge expandoBridge =
+							commercePriceEntry.getExpandoBridge();
+
+						return expandoBridge.getAttributes();
+					});
 				setDiscountDiscovery(commercePriceEntry::isDiscountDiscovery);
 				setDiscountLevel1(commercePriceEntry::getDiscountLevel1);
 				setDiscountLevel2(commercePriceEntry::getDiscountLevel2);
@@ -85,7 +87,8 @@ public class PriceEntryDTOConverter
 				setPriceEntryId(commercePriceEntry::getCommercePriceEntryId);
 				setPriceFormatted(
 					() -> _formatPrice(
-						priceEntryPrice, commerceCurrency, locale));
+						priceEntryPrice, commerceCurrency,
+						dtoConverterContext.getLocale()));
 				setPriceListId(commercePriceEntry::getCommercePriceListId);
 				setPriceOnApplication(commercePriceEntry::isPriceOnApplication);
 				setQuantity(commercePriceEntry::getQuantity);

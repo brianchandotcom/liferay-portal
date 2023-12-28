@@ -67,15 +67,17 @@ public class ProductDTOConverter
 			return null;
 		}
 
-		CommerceCatalog commerceCatalog = cpDefinition.getCommerceCatalog();
 		CProduct cProduct = cpDefinition.getCProduct();
-		CPType cpType = _cpTypeRegistry.getCPType(
-			cpDefinition.getProductTypeName());
-		ExpandoBridge expandoBridge = cpDefinition.getExpandoBridge();
 
 		return new Product() {
 			{
-				setCatalogId(commerceCatalog::getCommerceCatalogId);
+				setCatalogId(
+					() -> {
+						CommerceCatalog commerceCatalog =
+							cpDefinition.getCommerceCatalog();
+
+						return commerceCatalog.getCommerceCatalogId();
+					});
 				setCategoryIds(
 					() -> TransformUtil.transformToArray(
 						_assetCategoryLocalService.getCategories(
@@ -83,7 +85,13 @@ public class ProductDTOConverter
 							cpDefinition.getCPDefinitionId()),
 						AssetCategory::getCategoryId, Long.class));
 				setCreateDate(cpDefinition::getCreateDate);
-				setCustomFields(expandoBridge::getAttributes);
+				setCustomFields(
+					() -> {
+						ExpandoBridge expandoBridge =
+							cpDefinition.getExpandoBridge();
+
+						return expandoBridge.getAttributes();
+					});
 				setDescription(
 					() -> LanguageUtils.getLanguageIdMap(
 						cpDefinition.getDescriptionMap()));
@@ -132,7 +140,13 @@ public class ProductDTOConverter
 							_productSpecificationDTOConverter.toDTO(
 								cpDefinitionSpecificationOptionValue),
 						ProductSpecification.class));
-				setProductType(cpType::getName);
+				setProductType(
+					() -> {
+						CPType cpType = _cpTypeRegistry.getCPType(
+							cpDefinition.getProductTypeName());
+
+						return cpType.getName();
+					});
 				setSkus(
 					() -> TransformUtil.transformToArray(
 						cpDefinition.getCPInstances(),

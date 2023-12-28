@@ -38,10 +38,6 @@ public class CategoryDTOConverter
 		AssetCategory assetCategory = _assetCategoryService.getCategory(
 			(Long)dtoConverterContext.getId());
 
-		AssetVocabulary assetVocabulary =
-			_assetVocabularyLocalService.getAssetVocabulary(
-				assetCategory.getVocabularyId());
-
 		return new Category() {
 			{
 				setExternalReferenceCode(
@@ -49,7 +45,14 @@ public class CategoryDTOConverter
 				setId(assetCategory::getCategoryId);
 				setName(assetCategory::getName);
 				setSiteId(assetCategory::getGroupId);
-				setVocabulary(assetVocabulary::getName);
+				setVocabulary(
+					() -> {
+						AssetVocabulary assetVocabulary =
+							_assetVocabularyLocalService.getAssetVocabulary(
+								assetCategory.getVocabularyId());
+
+						return assetVocabulary.getName();
+					});
 			}
 		};
 	}

@@ -50,10 +50,6 @@ public class ObjectViewDTOConverter
 			return null;
 		}
 
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.getObjectDefinition(
-				objectView.getObjectDefinitionId());
-
 		return new ObjectView() {
 			{
 				setActions(dtoConverterContext::getActions);
@@ -65,7 +61,13 @@ public class ObjectViewDTOConverter
 					() -> LocalizedMapUtil.getLanguageIdMap(
 						objectView.getNameMap()));
 				setObjectDefinitionExternalReferenceCode(
-					objectDefinition::getExternalReferenceCode);
+					() -> {
+						ObjectDefinition objectDefinition =
+							_objectDefinitionLocalService.getObjectDefinition(
+								objectView.getObjectDefinitionId());
+
+						return objectDefinition.getExternalReferenceCode();
+					});
 				setObjectDefinitionId(objectView::getObjectDefinitionId);
 				setObjectViewColumns(
 					() -> TransformUtil.transformToArray(

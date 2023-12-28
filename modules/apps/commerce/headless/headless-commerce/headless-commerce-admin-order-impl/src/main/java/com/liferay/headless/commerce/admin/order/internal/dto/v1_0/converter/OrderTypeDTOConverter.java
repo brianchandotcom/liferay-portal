@@ -43,13 +43,17 @@ public class OrderTypeDTOConverter
 			_commerceOrderTypeService.getCommerceOrderType(
 				(Long)dtoConverterContext.getId());
 
-		ExpandoBridge expandoBridge = commerceOrderType.getExpandoBridge();
-
 		return new OrderType() {
 			{
 				setActions(dtoConverterContext::getActions);
 				setActive(commerceOrderType::isActive);
-				setCustomFields(expandoBridge::getAttributes);
+				setCustomFields(
+					() -> {
+						ExpandoBridge expandoBridge =
+							commerceOrderType.getExpandoBridge();
+
+						return expandoBridge.getAttributes();
+					});
 				setDescription(
 					() -> LanguageUtils.getLanguageIdMap(
 						commerceOrderType.getDescriptionMap()));

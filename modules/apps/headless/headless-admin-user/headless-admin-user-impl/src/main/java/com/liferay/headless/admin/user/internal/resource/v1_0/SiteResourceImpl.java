@@ -78,12 +78,14 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 	private Site _toSite(Group group) throws Exception {
 		return new Site() {
 			{
-				Set<Locale> availableLocales = _language.getAvailableLocales(
-					group.getGroupId());
-
 				setAvailableLanguages(
-					() -> LocaleUtil.toW3cLanguageIds(
-						availableLocales.toArray(new Locale[0])));
+					() -> {
+						Set<Locale> availableLocales =
+							_language.getAvailableLocales(group.getGroupId());
+
+						return LocaleUtil.toW3cLanguageIds(
+							availableLocales.toArray(new Locale[0]));
+					});
 
 				setCreator(
 					() -> CreatorUtil.toCreator(

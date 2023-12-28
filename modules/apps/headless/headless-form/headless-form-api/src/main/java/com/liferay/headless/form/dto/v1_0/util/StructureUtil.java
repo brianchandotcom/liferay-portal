@@ -50,13 +50,6 @@ public class StructureUtil {
 			Locale locale, Portal portal, UserLocalService userLocalService)
 		throws PortalException {
 
-		DDMFormLayout ddmFormLayout = ddmStructure.getDDMFormLayout();
-
-		DDMForm ddmForm = ddmStructure.getDDMForm();
-
-		DDMFormSuccessPageSettings ddmFormSuccessPageSettings =
-			ddmForm.getDDMFormSuccessPageSettings();
-
 		return new FormStructure() {
 			{
 				setAvailableLanguages(
@@ -73,14 +66,24 @@ public class StructureUtil {
 					() -> LocalizedMapUtil.getI18nMap(
 						acceptAllLanguages, ddmStructure.getDescriptionMap()));
 				setFormPages(
-					() -> TransformUtil.transformToArray(
-						ddmFormLayout.getDDMFormLayoutPages(),
-						ddmFormLayoutPage -> _toFormPage(
-							acceptAllLanguages, ddmFormLayoutPage, ddmStructure,
-							locale),
-						FormPage.class));
+					() -> {
+						DDMFormLayout ddmFormLayout =
+							ddmStructure.getDDMFormLayout();
+
+						return TransformUtil.transformToArray(
+							ddmFormLayout.getDDMFormLayoutPages(),
+							ddmFormLayoutPage -> _toFormPage(
+								acceptAllLanguages, ddmFormLayoutPage,
+								ddmStructure, locale),
+							FormPage.class);
+					});
 				setFormSuccessPage(
 					() -> {
+						DDMForm ddmForm = ddmStructure.getDDMForm();
+
+						DDMFormSuccessPageSettings ddmFormSuccessPageSettings =
+							ddmForm.getDDMFormSuccessPageSettings();
+
 						if (!ddmFormSuccessPageSettings.isEnabled()) {
 							return null;
 						}

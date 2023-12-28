@@ -66,67 +66,90 @@ public class PlacedOrderDTOConverter
 		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
 			(Long)dtoConverterContext.getId());
 
-		ExpandoBridge expandoBridge = commerceOrder.getExpandoBridge();
-
 		Locale locale = dtoConverterContext.getLocale();
 
 		ResourceBundle resourceBundle = LanguageResources.getResourceBundle(
 			locale);
 
-		String commerceOrderStatusLabel =
-			CommerceOrderConstants.getOrderStatusLabel(
-				commerceOrder.getOrderStatus());
-
-		String commerceOrderStatusLabelI18n = _language.get(
-			resourceBundle,
-			CommerceOrderConstants.getOrderStatusLabel(
-				commerceOrder.getOrderStatus()));
-
-		String commerceOrderWorkflowStatusLabel =
-			WorkflowConstants.getStatusLabel(commerceOrder.getStatus());
-
-		String commerceOrderWorkflowStatusLabelI18n = _language.get(
-			resourceBundle,
-			WorkflowConstants.getStatusLabel(commerceOrder.getStatus()));
-
-		String commerceOrderPaymentStatusLabel =
-			CommerceOrderPaymentConstants.getOrderPaymentStatusLabel(
-				commerceOrder.getPaymentStatus());
-
-		String commerceOrderPaymentStatusLabelI18n = _language.get(
-			resourceBundle,
-			CommerceOrderPaymentConstants.getOrderPaymentStatusLabel(
-				commerceOrder.getPaymentStatus()));
-
-		PlacedOrder placedOrder = new PlacedOrder() {
+		return new PlacedOrder() {
 			{
 				setAccount(commerceOrder::getCommerceAccountName);
 				setAccountId(commerceOrder::getCommerceAccountId);
 				setAuthor(commerceOrder::getUserName);
 				setCouponCode(commerceOrder::getCouponCode);
 				setCreateDate(commerceOrder::getCreateDate);
-				setCustomFields(expandoBridge::getAttributes);
+				setCustomFields(
+					() -> {
+						ExpandoBridge expandoBridge =
+							commerceOrder.getExpandoBridge();
+
+						return expandoBridge.getAttributes();
+					});
 				setId(commerceOrder::getCommerceOrderId);
 				setLastPriceUpdateDate(commerceOrder::getLastPriceUpdateDate);
 				setModifiedDate(commerceOrder::getModifiedDate);
 				setOrderStatusInfo(
-					() -> _getOrderStatusInfo(
-						commerceOrder.getOrderStatus(),
-						commerceOrderStatusLabel,
-						commerceOrderStatusLabelI18n));
+					() -> {
+						String commerceOrderStatusLabel =
+							CommerceOrderConstants.getOrderStatusLabel(
+								commerceOrder.getOrderStatus());
+
+						String commerceOrderStatusLabelI18n = _language.get(
+							resourceBundle,
+							CommerceOrderConstants.getOrderStatusLabel(
+								commerceOrder.getOrderStatus()));
+
+						return _getOrderStatusInfo(
+							commerceOrder.getOrderStatus(),
+							commerceOrderStatusLabel,
+							commerceOrderStatusLabelI18n);
+					});
 				setOrderTypeExternalReferenceCode(
 					() -> _getOrderTypeExternalReferenceCode(
 						commerceOrder.getCommerceOrderTypeId()));
 				setOrderTypeId(commerceOrder::getCommerceOrderTypeId);
 				setOrderUUID(commerceOrder::getUuid);
 				setPaymentMethod(commerceOrder::getCommercePaymentMethodKey);
+				setPaymentMethodLabel(
+					() -> {
+						String paymentMethodKey =
+							commerceOrder.getCommercePaymentMethodKey();
+
+						if (Validator.isNotNull(paymentMethodKey)) {
+							CommercePaymentMethodGroupRel
+								commercePaymentMethodGroupRel =
+									_commercePaymentMethodGroupRelLocalService.
+										getCommercePaymentMethodGroupRel(
+											commerceOrder.getGroupId(),
+											paymentMethodKey);
+
+							if (commercePaymentMethodGroupRel != null) {
+								return commercePaymentMethodGroupRel.getName();
+							}
+						}
+
+						return null;
+					});
 				setPaymentStatus(commerceOrder::getPaymentStatus);
 				setPaymentStatusInfo(
-					() -> _getPaymentStatusInfo(
-						commerceOrder.getPaymentStatus(),
-						commerceOrderPaymentStatusLabel,
-						commerceOrderPaymentStatusLabelI18n));
-				setPaymentStatusLabel(() -> commerceOrderPaymentStatusLabel);
+					() -> {
+						String commerceOrderPaymentStatusLabelI18n =
+							_language.get(
+								resourceBundle,
+								CommerceOrderPaymentConstants.
+									getOrderPaymentStatusLabel(
+										commerceOrder.getPaymentStatus()));
+
+						return _getPaymentStatusInfo(
+							commerceOrder.getPaymentStatus(),
+							getPaymentStatusLabel(),
+							commerceOrderPaymentStatusLabelI18n);
+					});
+				setPaymentStatusLabel(
+					() ->
+						CommerceOrderPaymentConstants.
+							getOrderPaymentStatusLabel(
+								commerceOrder.getPaymentStatus()));
 				setPlacedOrderBillingAddressId(
 					commerceOrder::getBillingAddressId);
 				setPlacedOrderShippingAddressId(
@@ -145,31 +168,24 @@ public class PlacedOrderDTOConverter
 						return commerceShippingMethod.getEngineKey();
 					});
 				setShippingOption(commerceOrder::getShippingOptionName);
-				setStatus(() -> commerceOrderWorkflowStatusLabel);
+				setStatus(
+					() -> WorkflowConstants.getStatusLabel(
+						commerceOrder.getStatus()));
 				setSummary(() -> _getSummary(commerceOrder, locale));
 				setWorkflowStatusInfo(
-					() -> _toStatus(
-						commerceOrder.getStatus(),
-						commerceOrderWorkflowStatusLabel,
-						commerceOrderWorkflowStatusLabelI18n));
+					() -> {
+						String commerceOrderWorkflowStatusLabelI18n =
+							_language.get(
+								resourceBundle,
+								WorkflowConstants.getStatusLabel(
+									commerceOrder.getStatus()));
+
+						return _toStatus(
+							commerceOrder.getStatus(), getStatus(),
+							commerceOrderWorkflowStatusLabelI18n);
+					});
 			}
 		};
-
-		String paymentMethodKey = commerceOrder.getCommercePaymentMethodKey();
-
-		if (Validator.isNotNull(paymentMethodKey)) {
-			CommercePaymentMethodGroupRel commercePaymentMethodGroupRel =
-				_commercePaymentMethodGroupRelLocalService.
-					getCommercePaymentMethodGroupRel(
-						commerceOrder.getGroupId(), paymentMethodKey);
-
-			if (commercePaymentMethodGroupRel != null) {
-				placedOrder.setPaymentMethodLabel(
-					commercePaymentMethodGroupRel.getName());
-			}
-		}
-
-		return placedOrder;
 	}
 
 	private String _formatPrice(

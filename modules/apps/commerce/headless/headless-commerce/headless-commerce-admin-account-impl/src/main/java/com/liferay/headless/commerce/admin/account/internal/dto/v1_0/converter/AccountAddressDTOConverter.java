@@ -40,12 +40,15 @@ public class AccountAddressDTOConverter
 			_commerceAddressService.getCommerceAddress(
 				(Long)dtoConverterContext.getId());
 
-		Country country = commerceAddress.getCountry();
-
 		return new AccountAddress() {
 			{
 				setCity(commerceAddress::getCity);
-				setCountryISOCode(country::getA2);
+				setCountryISOCode(
+					() -> {
+						Country country = commerceAddress.getCountry();
+
+						return country.getA2();
+					});
 				setDefaultBilling(commerceAddress::isDefaultBilling);
 				setDefaultShipping(commerceAddress::isDefaultShipping);
 				setDescription(commerceAddress::getDescription);

@@ -27,8 +27,6 @@ import java.util.Map;
 public class ProcessUtil {
 
 	public static Process toProcess(Document document, Locale locale) {
-		Map<String, String> titleMap = _createTitleMap(document);
-
 		return new Process() {
 			{
 				setActive(() -> document.getBoolean("active"));
@@ -40,6 +38,8 @@ public class ProcessUtil {
 				setId(() -> document.getLong("processId"));
 				setTitle(
 					() -> {
+						Map<String, String> titleMap = getTitle_i18n();
+
 						String title = titleMap.get(locale.toLanguageTag());
 
 						if (Validator.isNull(title)) {
@@ -51,7 +51,7 @@ public class ProcessUtil {
 
 						return title;
 					});
-				setTitle_i18n(() -> titleMap);
+				setTitle_i18n(() -> _createTitleMap(document));
 				setVersion(() -> document.getString("version"));
 			}
 		};

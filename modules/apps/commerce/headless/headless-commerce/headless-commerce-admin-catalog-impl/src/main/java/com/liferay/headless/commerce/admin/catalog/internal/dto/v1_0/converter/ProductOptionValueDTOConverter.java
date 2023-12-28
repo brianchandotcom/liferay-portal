@@ -35,8 +35,6 @@ public class ProductOptionValueDTOConverter
 			CPDefinitionOptionValueRel cpDefinitionOptionValueRel)
 		throws Exception {
 
-		CPInstance cpInstance = cpDefinitionOptionValueRel.fetchCPInstance();
-
 		return new ProductOptionValue() {
 			{
 				setDeltaPrice(cpDefinitionOptionValueRel::getPrice);
@@ -52,6 +50,9 @@ public class ProductOptionValueDTOConverter
 				setQuantity(cpDefinitionOptionValueRel::getQuantity);
 				setSkuId(
 					() -> {
+						CPInstance cpInstance =
+							cpDefinitionOptionValueRel.fetchCPInstance();
+
 						if (cpInstance == null) {
 							return null;
 						}

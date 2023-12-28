@@ -54,21 +54,33 @@ public class OrderDTOConverter implements DTOConverter<CommerceOrder, Order> {
 			return null;
 		}
 
-		CommerceChannel commerceChannel =
-			_commerceChannelLocalService.fetchCommerceChannelByGroupClassPK(
-				commerceOrder.getGroupId());
-
-		CommerceCurrency commerceCurrency = commerceOrder.getCommerceCurrency();
-
-		ExpandoBridge expandoBridge = commerceOrder.getExpandoBridge();
-
 		return new Order() {
 			{
 				setAccountId(commerceOrder::getCommerceAccountId);
-				setChannelId(commerceChannel::getCommerceChannelId);
+				setChannelId(
+					() -> {
+						CommerceChannel commerceChannel =
+							_commerceChannelLocalService.
+								fetchCommerceChannelByGroupClassPK(
+									commerceOrder.getGroupId());
+
+						return commerceChannel.getCommerceChannelId();
+					});
 				setCreateDate(commerceOrder::getCreateDate);
-				setCurrencyCode(commerceCurrency::getCode);
-				setCustomFields(expandoBridge::getAttributes);
+				setCurrencyCode(
+					() -> {
+						CommerceCurrency commerceCurrency =
+							commerceOrder.getCommerceCurrency();
+
+						return commerceCurrency.getCode();
+					});
+				setCustomFields(
+					() -> {
+						ExpandoBridge expandoBridge =
+							commerceOrder.getExpandoBridge();
+
+						return expandoBridge.getAttributes();
+					});
 				setExternalReferenceCode(
 					commerceOrder::getExternalReferenceCode);
 				setId(commerceOrder::getCommerceOrderId);

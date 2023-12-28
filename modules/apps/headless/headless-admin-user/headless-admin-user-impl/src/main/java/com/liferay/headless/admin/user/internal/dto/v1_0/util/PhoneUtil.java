@@ -16,14 +16,17 @@ public class PhoneUtil {
 	public static Phone toPhone(com.liferay.portal.kernel.model.Phone phone)
 		throws Exception {
 
-		ListType listType = phone.getListType();
-
 		return new Phone() {
 			{
 				setExtension(phone::getExtension);
 				setId(phone::getPhoneId);
 				setPhoneNumber(phone::getNumber);
-				setPhoneType(listType::getName);
+				setPhoneType(
+					() -> {
+						ListType listType = phone.getListType();
+
+						return listType.getName();
+					});
 				setPrimary(phone::isPrimary);
 			}
 		};

@@ -2131,11 +2131,7 @@ definition {
 	@description = "LPS-193697 - Verify the user can switch the relationship order between the parent and child object definitions"
 	@priority = 4
 	test CanSwitchRelationshipOrder {
-		property custom.properties = "feature.flag.LPS-148856=true";
-
 		task ("Given an object folder with two object definitions") {
-			property custom.properties = "feature.flag.LPS-148856=true";
-
 			var customFolderERC = JSONObjectFolder.addFolder(
 				folderLabel = "Custom Folder 193697",
 				folderName = "CustomFolder193697");

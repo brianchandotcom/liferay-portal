@@ -40,15 +40,14 @@ public class ProductTaxConfigurationDTOConverter
 		CPDefinition cpDefinition = _cpDefinitionService.getCPDefinition(
 			(Long)dtoConverterContext.getId());
 
-		CPTaxCategory cpTaxCategory = cpDefinition.getCPTaxCategory();
-
 		return new ProductTaxConfiguration() {
 			{
 				setId(cpDefinition::getCPTaxCategoryId);
 				setTaxable(() -> !cpDefinition.isTaxExempt());
 				setTaxCategory(
 					() -> _getTaxCategory(
-						cpTaxCategory, dtoConverterContext.getLocale()));
+						cpDefinition.getCPTaxCategory(),
+						dtoConverterContext.getLocale()));
 			}
 		};
 	}

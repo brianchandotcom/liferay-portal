@@ -39,15 +39,19 @@ public class PlacedOrderCommentDTOConverter
 			_commerceOrderNoteService.getCommerceOrderNote(
 				(Long)dtoConverterContext.getId());
 
-		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
-			commerceOrderNote.getCommerceOrderId());
-
 		return new PlacedOrderComment() {
 			{
 				setAuthor(commerceOrderNote::getUserName);
 				setContent(commerceOrderNote::getContent);
 				setId(commerceOrderNote::getCommerceOrderNoteId);
-				setOrderId(commerceOrder::getCommerceOrderId);
+				setOrderId(
+					() -> {
+						CommerceOrder commerceOrder =
+							_commerceOrderService.getCommerceOrder(
+								commerceOrderNote.getCommerceOrderId());
+
+						return commerceOrder.getCommerceOrderId();
+					});
 				setRestricted(commerceOrderNote::isRestricted);
 			}
 		};

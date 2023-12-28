@@ -33,47 +33,57 @@ public class FieldSummaryResourceImpl extends BaseFieldSummaryResourceImpl {
 			_analyticsSettingsManager.getAnalyticsConfiguration(
 				contextCompany.getCompanyId());
 
-		String[] syncedAccountFieldNames = _getOrDefault(
-			FieldAccountConstants.FIELD_ACCOUNT_DEFAULTS,
-			analyticsConfiguration.syncedAccountFieldNames());
-		String[] syncedCategoryFieldNames = _getOrDefault(
-			FieldProductConstants.FIELD_CATEGORY_NAMES,
-			analyticsConfiguration.syncedCategoryFieldNames());
-		String[] syncedContactFieldNames = _getOrDefault(
-			FieldPeopleConstants.FIELD_CONTACT_DEFAULTS,
-			analyticsConfiguration.syncedContactFieldNames());
-		String[] syncedOrderFieldNames = _getOrDefault(
-			FieldOrderConstants.FIELD_ORDER_NAMES,
-			analyticsConfiguration.syncedOrderFieldNames());
-		String[] syncedOrderItemFieldNames = _getOrDefault(
-			FieldOrderConstants.FIELD_ORDER_ITEM_NAMES,
-			analyticsConfiguration.syncedOrderItemFieldNames());
-		String[] syncedProductFieldNames = _getOrDefault(
-			FieldProductConstants.FIELD_PRODUCT_CHANNEL_NAMES,
-			analyticsConfiguration.syncedProductFieldNames());
-		String[] syncedProductChannelFieldNames = _getOrDefault(
-			FieldProductConstants.FIELD_PRODUCT_NAMES,
-			analyticsConfiguration.syncedProductChannelFieldNames());
-		String[] syncedUserFieldNames = _getOrDefault(
-			FieldPeopleConstants.FIELD_USER_DEFAULTS,
-			analyticsConfiguration.syncedUserFieldNames());
-
 		return new FieldSummary() {
 			{
-				setAccount(() -> syncedAccountFieldNames.length);
+				setAccount(
+					() -> {
+						String[] syncedAccountFieldNames = _getOrDefault(
+							FieldAccountConstants.FIELD_ACCOUNT_DEFAULTS,
+							analyticsConfiguration.syncedAccountFieldNames());
+
+						return syncedAccountFieldNames.length;
+					});
 				setOrder(
-					() ->
-						syncedOrderFieldNames.length +
-							syncedOrderItemFieldNames.length);
+					() -> {
+						String[] syncedOrderFieldNames = _getOrDefault(
+							FieldOrderConstants.FIELD_ORDER_NAMES,
+							analyticsConfiguration.syncedOrderFieldNames());
+						String[] syncedOrderItemFieldNames = _getOrDefault(
+							FieldOrderConstants.FIELD_ORDER_ITEM_NAMES,
+							analyticsConfiguration.syncedOrderItemFieldNames());
+
+						return syncedOrderFieldNames.length +
+							syncedOrderItemFieldNames.length;
+					});
 				setPeople(
-					() ->
-						syncedContactFieldNames.length +
-							syncedUserFieldNames.length);
+					() -> {
+						String[] syncedContactFieldNames = _getOrDefault(
+							FieldPeopleConstants.FIELD_CONTACT_DEFAULTS,
+							analyticsConfiguration.syncedContactFieldNames());
+						String[] syncedUserFieldNames = _getOrDefault(
+							FieldPeopleConstants.FIELD_USER_DEFAULTS,
+							analyticsConfiguration.syncedUserFieldNames());
+
+						return syncedContactFieldNames.length +
+							syncedUserFieldNames.length;
+					});
 				setProduct(
-					() ->
-						syncedCategoryFieldNames.length +
+					() -> {
+						String[] syncedCategoryFieldNames = _getOrDefault(
+							FieldProductConstants.FIELD_CATEGORY_NAMES,
+							analyticsConfiguration.syncedCategoryFieldNames());
+						String[] syncedProductFieldNames = _getOrDefault(
+							FieldProductConstants.FIELD_PRODUCT_CHANNEL_NAMES,
+							analyticsConfiguration.syncedProductFieldNames());
+						String[] syncedProductChannelFieldNames = _getOrDefault(
+							FieldProductConstants.FIELD_PRODUCT_NAMES,
+							analyticsConfiguration.
+								syncedProductChannelFieldNames());
+
+						return syncedCategoryFieldNames.length +
 							syncedProductFieldNames.length +
-								syncedProductChannelFieldNames.length);
+								syncedProductChannelFieldNames.length;
+					});
 			}
 		};
 	}

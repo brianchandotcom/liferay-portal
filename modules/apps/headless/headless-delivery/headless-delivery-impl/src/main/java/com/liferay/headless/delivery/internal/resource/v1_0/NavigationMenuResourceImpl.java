@@ -443,12 +443,6 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 	private NavigationMenu _toNavigationMenu(
 		SiteNavigationMenu siteNavigationMenu) {
 
-		Map<Long, List<SiteNavigationMenuItem>> siteNavigationMenuItemsMap =
-			_getSiteNavigationMenuItemsMap(
-				_siteNavigationMenuItemService.getSiteNavigationMenuItems(
-					siteNavigationMenu.getSiteNavigationMenuId(),
-					new SiteNavigationMenuItemOrderComparator()));
-
 		return new NavigationMenu() {
 			{
 				setActions(
@@ -475,12 +469,24 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 				setId(siteNavigationMenu::getSiteNavigationMenuId);
 				setName(siteNavigationMenu::getName);
 				setNavigationMenuItems(
-					() -> transformToArray(
-						siteNavigationMenuItemsMap.getOrDefault(
-							0L, new ArrayList<>()),
-						siteNavigationMenuItem -> _toNavigationMenuItem(
-							siteNavigationMenuItem, siteNavigationMenuItemsMap),
-						NavigationMenuItem.class));
+					() -> {
+						Map<Long, List<SiteNavigationMenuItem>>
+							siteNavigationMenuItemsMap =
+								_getSiteNavigationMenuItemsMap(
+									_siteNavigationMenuItemService.
+										getSiteNavigationMenuItems(
+											siteNavigationMenu.
+												getSiteNavigationMenuId(),
+											new SiteNavigationMenuItemOrderComparator()));
+
+						return transformToArray(
+							siteNavigationMenuItemsMap.getOrDefault(
+								0L, new ArrayList<>()),
+							siteNavigationMenuItem -> _toNavigationMenuItem(
+								siteNavigationMenuItem,
+								siteNavigationMenuItemsMap),
+							NavigationMenuItem.class);
+					});
 				setNavigationType(
 					() -> {
 						if (siteNavigationMenu.getType() == 0) {
@@ -501,9 +507,6 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 
 		Layout layout = _getLayout(siteNavigationMenuItem);
 
-		Map<Locale, String> localizedMap = _getLocalizedNamesFromProperties(
-			unicodeProperties);
-
 		UnicodeProperties unicodeProperties = _getUnicodeProperties(
 			siteNavigationMenuItem);
 
@@ -514,6 +517,9 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 			{
 				setAvailableLanguages(
 					() -> {
+						Map<Locale, String> localizedMap =
+							_getLocalizedNamesFromProperties(unicodeProperties);
+
 						Set<Locale> locales = localizedMap.keySet();
 
 						return LocaleUtil.toW3cLanguageIds(

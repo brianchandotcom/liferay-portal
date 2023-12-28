@@ -37,13 +37,16 @@ public class RelatedProductDTOConverter
 			_cpDefinitionLinkLocalService.getCPDefinitionLink(
 				(Long)dtoConverterContext.getId());
 
-		CProduct cProduct = cpDefinitionLink.getCProduct();
-
 		return new RelatedProduct() {
 			{
 				setId(cpDefinitionLink::getCPDefinitionLinkId);
 				setPriority(cpDefinitionLink::getPriority);
-				setProductId(cProduct::getCProductId);
+				setProductId(
+					() -> {
+						CProduct cProduct = cpDefinitionLink.getCProduct();
+
+						return cProduct.getCProductId();
+					});
 				setType(cpDefinitionLink::getType);
 			}
 		};

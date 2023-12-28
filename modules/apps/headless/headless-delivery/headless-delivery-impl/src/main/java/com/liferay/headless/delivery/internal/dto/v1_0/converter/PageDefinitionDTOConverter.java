@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.model.ColorScheme;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -79,13 +78,6 @@ public class PageDefinitionDTOConverter
 				"Layout is not defined for layout structure item " +
 					layoutStructure.getMainItemId());
 		}
-
-		LayoutStructureItem mainLayoutStructureItem =
-			layoutStructure.getMainLayoutStructureItem();
-		boolean saveInlineContent = GetterUtil.getBoolean(
-			dtoConverterContext.getAttribute("saveInlineContent"), true);
-		boolean saveMappingConfiguration = GetterUtil.getBoolean(
-			dtoConverterContext.getAttribute("saveMappingConfiguration"), true);
 
 		return new PageDefinition() {
 			{

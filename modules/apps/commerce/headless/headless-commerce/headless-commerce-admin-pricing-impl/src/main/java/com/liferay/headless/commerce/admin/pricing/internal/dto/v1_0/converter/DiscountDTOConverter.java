@@ -38,13 +38,17 @@ public class DiscountDTOConverter
 			_commerceDiscountService.getCommerceDiscount(
 				(Long)dtoConverterContext.getId());
 
-		ExpandoBridge expandoBridge = commerceDiscount.getExpandoBridge();
-
 		return new Discount() {
 			{
 				setActive(commerceDiscount::isActive);
 				setCouponCode(commerceDiscount::getCouponCode);
-				setCustomFields(expandoBridge::getAttributes);
+				setCustomFields(
+					() -> {
+						ExpandoBridge expandoBridge =
+							commerceDiscount.getExpandoBridge();
+
+						return expandoBridge.getAttributes();
+					});
 				setDisplayDate(commerceDiscount::getDisplayDate);
 				setExpirationDate(commerceDiscount::getExpirationDate);
 				setExternalReferenceCode(

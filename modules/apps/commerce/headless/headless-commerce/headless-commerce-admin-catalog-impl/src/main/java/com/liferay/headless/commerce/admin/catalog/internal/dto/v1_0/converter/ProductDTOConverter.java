@@ -68,19 +68,7 @@ public class ProductDTOConverter
 
 		CProduct cProduct = cpDefinition.getCProduct();
 
-		ExpandoBridge expandoBridge = cpDefinition.getExpandoBridge();
-
 		Locale locale = dtoConverterContext.getLocale();
-
-		ResourceBundle resourceBundle = LanguageResources.getResourceBundle(
-			locale);
-
-		String productStatusLabel = WorkflowConstants.getStatusLabel(
-			cpDefinition.getStatus());
-
-		String productStatusLabelI18n = _language.get(
-			resourceBundle,
-			WorkflowConstants.getStatusLabel(cpDefinition.getStatus()));
 
 		CPType cpType = _getCPType(cpDefinition.getProductTypeName());
 
@@ -108,7 +96,13 @@ public class ProductDTOConverter
 					() -> LanguageUtils.getLanguageIdMap(
 						cpDefinition.getDescriptionMap()));
 				setDisplayDate(cpDefinition::getDisplayDate);
-				setExpando(expandoBridge::getAttributes);
+				setExpando(
+					() -> {
+						ExpandoBridge expandoBridge =
+							cpDefinition.getExpandoBridge();
+
+						return expandoBridge.getAttributes();
+					});
 				setExpirationDate(cpDefinition::getExpirationDate);
 				setExternalReferenceCode(cProduct::getExternalReferenceCode);
 				setId(cpDefinition::getCPDefinitionId);
@@ -153,9 +147,23 @@ public class ProductDTOConverter
 							cpDefinition.getCPDefinitionId())));
 				setVersion(cpDefinition::getVersion);
 				setWorkflowStatusInfo(
-					() -> _toStatus(
-						cpDefinition.getStatus(), productStatusLabel,
-						productStatusLabelI18n));
+					() -> {
+						ResourceBundle resourceBundle =
+							LanguageResources.getResourceBundle(locale);
+
+						String productStatusLabel =
+							WorkflowConstants.getStatusLabel(
+								cpDefinition.getStatus());
+
+						String productStatusLabelI18n = _language.get(
+							resourceBundle,
+							WorkflowConstants.getStatusLabel(
+								cpDefinition.getStatus()));
+
+						return _toStatus(
+							cpDefinition.getStatus(), productStatusLabel,
+							productStatusLabelI18n);
+					});
 			}
 		};
 	}

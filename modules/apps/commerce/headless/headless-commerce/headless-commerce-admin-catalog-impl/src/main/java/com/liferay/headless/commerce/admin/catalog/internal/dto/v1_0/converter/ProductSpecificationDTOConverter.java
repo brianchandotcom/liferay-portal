@@ -43,8 +43,6 @@ public class ProductSpecificationDTOConverter
 					getCPDefinitionSpecificationOptionValue(
 						(Long)dtoConverterContext.getId());
 
-		CPDefinition cpDefinition =
-			cpDefinitionSpecificationOptionValue.getCPDefinition();
 		CPSpecificationOption cpSpecificationOption =
 			cpDefinitionSpecificationOptionValue.getCPSpecificationOption();
 
@@ -57,7 +55,14 @@ public class ProductSpecificationDTOConverter
 					cpDefinitionSpecificationOptionValue::
 						getCPOptionCategoryId);
 				setPriority(cpDefinitionSpecificationOptionValue::getPriority);
-				setProductId(cpDefinition::getCProductId);
+				setProductId(
+					() -> {
+						CPDefinition cpDefinition =
+							cpDefinitionSpecificationOptionValue.
+								getCPDefinition();
+
+						return cpDefinition.getCProductId();
+					});
 				setSpecificationId(
 					cpSpecificationOption::getCPSpecificationOptionId);
 				setSpecificationKey(cpSpecificationOption::getKey);

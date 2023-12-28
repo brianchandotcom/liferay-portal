@@ -41,9 +41,6 @@ public class PriceListOrderTypeDTOConverter
 				getCommercePriceListOrderTypeRel(
 					(Long)dtoConverterContext.getId());
 
-		CommerceOrderType commerceOrderType =
-			_commerceOrderTypeService.getCommerceOrderType(
-				commercePriceListOrderTypeRel.getCommerceOrderTypeId());
 		CommercePriceList commercePriceList =
 			commercePriceListOrderTypeRel.getCommercePriceList();
 
@@ -51,7 +48,14 @@ public class PriceListOrderTypeDTOConverter
 			{
 				setActions(dtoConverterContext::getActions);
 				setOrderTypeExternalReferenceCode(
-					commerceOrderType::getExternalReferenceCode);
+					() -> {
+						CommerceOrderType commerceOrderType =
+							_commerceOrderTypeService.getCommerceOrderType(
+								commercePriceListOrderTypeRel.
+									getCommerceOrderTypeId());
+
+						return commerceOrderType.getExternalReferenceCode();
+					});
 				setOrderTypeId(
 					commercePriceListOrderTypeRel::getCommerceOrderTypeId);
 				setPriceListExternalReferenceCode(

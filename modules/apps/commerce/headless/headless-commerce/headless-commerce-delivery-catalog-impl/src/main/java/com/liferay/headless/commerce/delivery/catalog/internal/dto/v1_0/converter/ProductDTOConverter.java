@@ -59,8 +59,6 @@ public class ProductDTOConverter
 		String languageId = _language.getLanguageId(
 			productDTOConverterContext.getLocale());
 
-		ExpandoBridge expandoBridge = cpDefinition.getExpandoBridge();
-
 		return new Product() {
 			{
 				setCatalogName(
@@ -79,7 +77,13 @@ public class ProductDTOConverter
 						cpDefinition.getCompanyId(),
 						dtoConverterContext.getLocale()));
 				setDescription(() -> cpDefinition.getDescription(languageId));
-				setExpando(expandoBridge::getAttributes);
+				setExpando(
+					() -> {
+						ExpandoBridge expandoBridge =
+							cpDefinition.getExpandoBridge();
+
+						return expandoBridge.getAttributes();
+					});
 				setExternalReferenceCode(
 					() -> {
 						CProduct cProduct = cpDefinition.getCProduct();

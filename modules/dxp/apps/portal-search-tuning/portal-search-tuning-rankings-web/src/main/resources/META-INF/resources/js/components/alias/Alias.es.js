@@ -74,6 +74,21 @@ class Alias extends Component {
 		inputValue: '',
 	};
 
+	_handleBlur = () => {
+		if (this.state.inputValue.trim()) {
+			this.props.onChange(
+				filterDuplicates(
+					transformListOfStringsToObjects([
+						...this.props.keywords,
+						this.state.inputValue,
+					])
+				)
+			);
+		}
+
+		this.setState({inputValue: ''});
+	};
+
 	_handleInputChange = (value) => {
 		this.setState({inputValue: value});
 	};
@@ -109,6 +124,7 @@ class Alias extends Component {
 							disabled={disabled}
 							id="aliases-input"
 							items={transformListOfStringsToObjects(keywords)}
+							onBlur={this._handleBlur}
 							onChange={this._handleInputChange}
 							onItemsChange={this._handleItemsChange}
 							value={inputValue}

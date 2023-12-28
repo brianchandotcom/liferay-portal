@@ -12,7 +12,6 @@ import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeCon
 import com.liferay.layout.util.constants.LayoutClassedModelUsageConstants;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.model.Portlet;
@@ -179,25 +178,37 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcess
 			Map<Long, Map<Long, Long>> resourcePrimKeysMap)
 		throws Exception {
 
-		String sql = StringUtil.read(
-			JournalArticleLayoutClassedModelUsageUpgradeProcess.class.
-				getResourceAsStream(
-					"dependencies/journal_content_portlet.sql"));
-
-		sql = StringUtil.replace(
-			sql, "[$PortletKeys.PREFS_OWNER_ID_DEFAULT$]",
-			String.valueOf(PortletKeys.PREFS_OWNER_ID_DEFAULT));
-		sql = StringUtil.replace(
-			sql, "[$PortletKeys.PREFS_OWNER_TYPE_LAYOUT$]",
-			String.valueOf(PortletKeys.PREFS_OWNER_TYPE_LAYOUT));
-		sql = StringUtil.replace(
-			sql, "[$JournalContentPortletKeys.JOURNAL_CONTENT$]",
-			JournalContentPortletKeys.JOURNAL_CONTENT);
-		sql = StringUtil.replace(
-			sql, "[$journalArticleClassNameId$]",
-			String.valueOf(_journalArticleClassNameId));
-		sql = StringUtil.replace(
-			sql, "[$portletClassNameId$]", String.valueOf(_portletClassNameId));
+		String sql = StringBundler.concat(
+			"select distinct AssetEntry.groupId, AssetEntry.companyId, ",
+			"AssetEntry.classPK, PortletPreferences.plid, ",
+			"PortletPreferences.portletId from PortletPreferences inner join ",
+			"PortletPreferenceValue on name = 'assetEntryId' inner join ",
+			"AssetEntry on AssetEntry.entryId = ",
+			"CAST_LONG(PortletPreferenceValue.smallValue) and ",
+			"AssetEntry.classNameId = ", _journalArticleClassNameId,
+			" and AssetEntry.visible = [$TRUE$] where ",
+			"PortletPreferences.ownerId = ", PortletKeys.PREFS_OWNER_ID_DEFAULT,
+			" and PortletPreferences.ownerType = ",
+			PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
+			" and PortletPreferences.portletId like '",
+			JournalContentPortletKeys.JOURNAL_CONTENT,
+			"%' and PortletPreferences.portletPreferencesId = ",
+			"PortletPreferenceValue.portletPreferencesId and not exists ",
+			"(select 1 from LayoutClassedModelUsage where ",
+			"LayoutClassedModelUsage.classPK = AssetEntry.classPK and ",
+			"LayoutClassedModelUsage.classNameId = ",
+			_journalArticleClassNameId,
+			" and LayoutClassedModelUsage.containerKey = ",
+			"PortletPreferences.portletId and ",
+			"LayoutClassedModelUsage.containerType = ", _portletClassNameId,
+			" and LayoutClassedModelUsage.plid = PortletPreferences.plid) and ",
+			"not exists (select 1 from LayoutClassedModelUsage where ",
+			"LayoutClassedModelUsage.classPK = AssetEntry.classPK and ",
+			"LayoutClassedModelUsage.classNameId = ",
+			_journalArticleClassNameId,
+			" and LayoutClassedModelUsage.containerKey is null and ",
+			"LayoutClassedModelUsage.containerType = 0 and ",
+			"LayoutClassedModelUsage.plid = 0 )");
 
 		_addPortletPreferencesLayoutClassedModelUsages(
 			layoutClassedModelUsageTypes, resourcePrimKeysMap, sql,

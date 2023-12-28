@@ -361,14 +361,15 @@ public class DefaultSearchResultPermissionFilter
 			StopWatch hitFilteringStopWatch = new StopWatch();
 			int numberOfDocsCollected = 0;
 			int numberOfTotalDocsNeeded = end;
+			int originalTotalHits = 0;
+			int recalculatedTotalHits = 0;
 			int searchesExecuted = 0;
 			SlidingWindowHelper slidingWindowHelper = new SlidingWindowHelper(
 				start, end);
 			int slidingWindowStart = 0;
-			StopWatch slidingWindowStopWatch = new StopWatch();
 			long startTime = 0;
-			int originalTotalHits = 0;
-			int recalculatedTotalHits = 0;
+
+			StopWatch slidingWindowStopWatch = new StopWatch();
 
 			slidingWindowStopWatch.start();
 

@@ -558,8 +558,8 @@ public class LayoutActionDropdownItemsProvider {
 	private String _getOrphanPortletsURL(Layout layout) {
 		return PortletURLBuilder.createRenderURL(
 			_liferayPortletResponse
-		).setMVCPath(
-			"/orphan_portlets.jsp"
+		).setMVCRenderCommandName(
+			"/layout_admin/view_orphan_portlets"
 		).setBackURL(
 			_getBackURL()
 		).setParameter(

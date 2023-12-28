@@ -5,7 +5,15 @@
 
 package com.liferay.layout.admin.web.internal.display.context;
 
+import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.processor.PortletRegistry;
+import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
+import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
+import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRelModel;
+import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
+import com.liferay.layout.page.template.service.LayoutPageTemplateStructureRelLocalServiceUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -48,11 +56,13 @@ public class OrphanPortletsDisplayContext {
 	public OrphanPortletsDisplayContext(
 		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse) {
+		LiferayPortletResponse liferayPortletResponse,
+		PortletRegistry portletRegistry) {
 
 		_httpServletRequest = httpServletRequest;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
+		_portletRegistry = portletRegistry;
 	}
 
 	public String getBackURL() {
@@ -102,17 +112,23 @@ public class OrphanPortletsDisplayContext {
 			(ThemeDisplay)_liferayPortletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		LayoutTypePortlet selLayoutTypePortlet =
-			(LayoutTypePortlet)layout.getLayoutType();
-
-		List<Portlet> explicitlyAddedPortlets =
-			selLayoutTypePortlet.getExplicitlyAddedPortlets();
-
 		List<String> explicitlyAddedPortletIds = new ArrayList<>();
 
-		for (Portlet explicitlyAddedPortlet : explicitlyAddedPortlets) {
-			explicitlyAddedPortletIds.add(
-				explicitlyAddedPortlet.getPortletId());
+		if (layout.isTypeContent()) {
+			explicitlyAddedPortletIds =
+				_getTypeContentExplicitlyAddedPortletIds(layout);
+		}
+		else {
+			LayoutTypePortlet selLayoutTypePortlet =
+				(LayoutTypePortlet)layout.getLayoutType();
+
+			List<Portlet> explicitlyAddedPortlets =
+				selLayoutTypePortlet.getExplicitlyAddedPortlets();
+
+			for (Portlet explicitlyAddedPortlet : explicitlyAddedPortlets) {
+				explicitlyAddedPortletIds.add(
+					explicitlyAddedPortlet.getPortletId());
+			}
 		}
 
 		List<Portlet> orphanPortlets = new ArrayList<>();
@@ -183,8 +199,8 @@ public class OrphanPortletsDisplayContext {
 	public PortletURL getPortletURL() {
 		return PortletURLBuilder.createRenderURL(
 			_liferayPortletResponse
-		).setMVCPath(
-			"/orphan_portlets.jsp"
+		).setMVCRenderCommandName(
+			"/layout_admin/view_orphan_portlets"
 		).setBackURL(
 			getBackURL()
 		).setParameter(
@@ -233,6 +249,41 @@ public class OrphanPortletsDisplayContext {
 		return LanguageUtil.get(httpServletRequest, "active");
 	}
 
+	private List<String> _getTypeContentExplicitlyAddedPortletIds(
+		Layout layout) {
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			LayoutPageTemplateStructureLocalServiceUtil.
+				fetchLayoutPageTemplateStructure(
+					layout.getGroupId(), layout.getPlid());
+
+		if (layoutPageTemplateStructure == null) {
+			return Collections.emptyList();
+		}
+
+		List<String> layoutPortletIds = new ArrayList<>();
+
+		long[] segmentsExperiencesIds = TransformUtil.transformToLongArray(
+			LayoutPageTemplateStructureRelLocalServiceUtil.
+				getLayoutPageTemplateStructureRels(
+					layoutPageTemplateStructure.
+						getLayoutPageTemplateStructureId()),
+			LayoutPageTemplateStructureRelModel::getSegmentsExperienceId);
+
+		for (FragmentEntryLink fragmentEntryLink :
+				FragmentEntryLinkLocalServiceUtil.
+					getFragmentEntryLinksBySegmentsExperienceId(
+						layout.getGroupId(), segmentsExperiencesIds,
+						layout.getPlid(), false)) {
+
+			layoutPortletIds.addAll(
+				_portletRegistry.getFragmentEntryLinkPortletIds(
+					fragmentEntryLink));
+		}
+
+		return layoutPortletIds;
+	}
+
 	private String _backURL;
 	private String _displayStyle;
 	private final HttpServletRequest _httpServletRequest;
@@ -240,6 +291,7 @@ public class OrphanPortletsDisplayContext {
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _orderByType;
 	private SearchContainer<Portlet> _orphanPortletsSearchContainer;
+	private final PortletRegistry _portletRegistry;
 	private Layout _selLayout;
 	private Long _selPlid;
 

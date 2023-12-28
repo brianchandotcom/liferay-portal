@@ -8,7 +8,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-OrphanPortletsDisplayContext orphanPortletsDisplayContext = new OrphanPortletsDisplayContext(request, liferayPortletRequest, liferayPortletResponse);
+OrphanPortletsDisplayContext orphanPortletsDisplayContext = (OrphanPortletsDisplayContext)request.getAttribute(OrphanPortletsDisplayContext.class.getName());
 
 OrphanPortletsManagementToolbarDisplayContext orphanPortletsManagementToolbarDisplayContext = new OrphanPortletsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, orphanPortletsDisplayContext);
 

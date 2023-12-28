@@ -57,10 +57,10 @@ public class EditableDocumentFragmentEntryProcessor
 			fragmentEntryLink.getEditableValues());
 
 		if (jsonObject.length() == 0) {
-			Class<?> clazz = getClass();
-
 			jsonObject.put(
-				clazz.getName(), _getDefaultEditableValuesJSONObject(document));
+				FragmentEntryProcessorConstants.
+					KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+				_getDefaultEditableValuesJSONObject(document));
 		}
 
 		Map<InfoItemReference, InfoItemFieldValues> infoDisplaysFieldValues =

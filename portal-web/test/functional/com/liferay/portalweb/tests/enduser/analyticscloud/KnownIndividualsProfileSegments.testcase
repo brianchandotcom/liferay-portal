@@ -130,7 +130,7 @@ definition {
 	test AssertIndividualsSegmentSelected {
 		property test.run.type = "single";
 
-		var emailList = "user1@liferay.com,user2@liferay.com";
+		var emailList = "user1@liferay.com";
 
 		task ("View the page as different users") {
 			ACUtils.navigateToSitePageWithUser(
@@ -155,13 +155,7 @@ definition {
 
 				ACUtils.setItemName(itemName = ${segmentName});
 
-				if (${segmentName} == "Static Segment Test1") {
-					ACSegments.addStaticMultiMember(tableMember = "user1 user1,user2 user2");
-				}
-
-				if (${segmentName} == "Static Segment Test2") {
-					ACSegments.addStaticMultiMember(tableMember = "user1 user1");
-				}
+				ACSegments.addStaticMember(tableMember = "user1 user1");
 
 				ACSegments.saveSegment();
 			}

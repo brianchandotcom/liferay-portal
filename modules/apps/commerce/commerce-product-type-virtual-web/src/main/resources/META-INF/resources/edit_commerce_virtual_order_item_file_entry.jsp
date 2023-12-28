@@ -64,6 +64,9 @@ FileEntry fileEntry = cpDefinitionVirtualSettingDisplayContext.getFileEntry(file
 			</p>
 
 			<aui:input name="url" />
+
+			<aui:input label="number-of-downloads" name="usages" />
+
 			<aui:input name="version" />
 		</commerce-ui:panel>
 

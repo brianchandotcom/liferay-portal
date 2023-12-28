@@ -74,7 +74,7 @@ definition {
 
 		Button.click(button = "Customize Results");
 
-		Alert.viewErrorMessage(errorMessage = "A ranking with that search query already exists.");
+		Alert.viewErrorMessage(errorMessage = "A ranking with the same search query and scope already exists.");
 
 		PortletEntry.inputText(
 			fieldLabel = "Search Query",
@@ -82,7 +82,7 @@ definition {
 
 		Button.click(button = "Customize Results");
 
-		Alert.viewErrorMessage(errorMessage = "A ranking with that search query already exists.");
+		Alert.viewErrorMessage(errorMessage = "A ranking with the same search query and scope already exists.");
 
 		SearchTuning.openResultRankingsAdmin();
 
@@ -100,7 +100,7 @@ definition {
 
 		Button.clickSave();
 
-		Alert.viewErrorMessage(errorMessage = "Active search queries and aliases must be unique across all rankings. The following ones already exist: Article.");
+		Alert.viewErrorMessage(errorMessage = "Active search queries and aliases with a given scope must be unique across all rankings. The following ones already exist: Article.");
 
 		SearchTuning.configureAliases(
 			addAlias = "Journal",
@@ -108,7 +108,7 @@ definition {
 
 		Button.clickSave();
 
-		Alert.viewErrorMessage(errorMessage = "Active search queries and aliases must be unique across all rankings. The following ones already exist: Journal.");
+		Alert.viewErrorMessage(errorMessage = "Active search queries and aliases with a given scope must be unique across all rankings. The following ones already exist: Journal.");
 
 		SearchTuning.openResultRankingsAdmin();
 
@@ -120,7 +120,7 @@ definition {
 
 		Button.clickSave();
 
-		Alert.viewErrorMessage(errorMessage = "Error:Active search queries and aliases must be unique across all rankings. The following ones already exist: Article, Web Content.");
+		Alert.viewErrorMessage(errorMessage = "Active search queries and aliases with a given scope must be unique across all rankings. The following ones already exist: Article, Web Content.");
 
 		Refresh();
 
@@ -676,7 +676,7 @@ definition {
 
 		Button.clickSave();
 
-		Alert.viewErrorMessage(errorMessage = "Active search queries and aliases must be unique across all rankings. The following ones already exist");
+		Alert.viewErrorMessage(errorMessage = "Active search queries and aliases with a given scope must be unique across all rankings. The following ones already exist: Article.");
 
 		Navigator.gotoBack();
 

@@ -32,18 +32,21 @@ definition {
 		}
 
 		var body = '''
-			-d {
-				"DBType": "${dbType}",
-				"indexed": true,
-				"indexedAsKeyword": false,
-				"label":{"en_US":"${label}"},
-				"listTypeDefinitionId": 0,
-				"name": "${name}",
-				"required": false
-			}
+			"DBType": "${dbType}",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label":{"en_US":"${label}"},
+			"listTypeDefinitionId": 0,
+			"name": "${name}",
+			"required": false
 		''';
 
-		var curl = StringUtil.add(${curl}, ${body}, " ");
+		if (${dbType} == "DateTime") {
+			var parameter = '''"objectFieldSettings": [{"name": "timeStorage","value": "convertToUTC"}]''';
+			var body = StringUtil.add("${body},", "\"objectFieldSettings\": [{\"name\": \"timeStorage\",\"value\": \"convertToUTC\"}]", "");
+		}
+
+		var curl = StringUtil.add(${curl}, "-d {${body}}", " ");
 
 		var response = JSONCurlUtil.post(${curl});
 

@@ -10,12 +10,10 @@
 </script>
 
 <style>
-
 	@media only screen and (min-width: 768px) and (max-width: 1000px) {
-
 		.doc-nav-wrapper-inner {
 			max-width: 20% !important;
-	}
+		}
 	}
 
 	.adt-nav-title.align-items-center.d-flex {

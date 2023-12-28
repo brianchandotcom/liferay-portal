@@ -15,6 +15,7 @@ import com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSettin
 import com.liferay.commerce.product.type.virtual.order.content.web.internal.display.context.helper.CommerceVirtualOrderItemContentRequestHelper;
 import com.liferay.commerce.product.type.virtual.order.content.web.internal.portlet.configuration.CommerceVirtualOrderItemContentPortletInstanceConfiguration;
 import com.liferay.commerce.product.type.virtual.order.model.CommerceVirtualOrderItem;
+import com.liferay.commerce.product.type.virtual.order.model.CommerceVirtualOrderItemFileEntry;
 import com.liferay.commerce.product.type.virtual.order.service.CommerceVirtualOrderItemLocalService;
 import com.liferay.commerce.product.type.virtual.order.util.comparator.CommerceVirtualOrderItemCreateDateComparator;
 import com.liferay.commerce.product.type.virtual.service.CPDefinitionVirtualSettingLocalService;
@@ -55,8 +56,8 @@ public class CommerceVirtualOrderItemContentDisplayContext {
 			CommerceChannelLocalService commerceChannelLocalService,
 			CommerceVirtualOrderItemLocalService
 				commerceVirtualOrderItemLocalService,
-			ModelResourcePermission<CommerceVirtualOrderItem>
-				commerceVirtualOrderItemModelResourcePermission,
+			ModelResourcePermission<CommerceVirtualOrderItemFileEntry>
+				commerceVirtualOrderItemFileEntryModelResourcePermission,
 			CPDefinitionHelper cpDefinitionHelper,
 			CPDefinitionVirtualSettingLocalService
 				cpDefinitionVirtualSettingLocalService,
@@ -67,8 +68,8 @@ public class CommerceVirtualOrderItemContentDisplayContext {
 		_commerceChannelLocalService = commerceChannelLocalService;
 		_commerceVirtualOrderItemLocalService =
 			commerceVirtualOrderItemLocalService;
-		_commerceVirtualOrderItemModelResourcePermission =
-			commerceVirtualOrderItemModelResourcePermission;
+		_commerceVirtualOrderItemFileEntryModelResourcePermission =
+			commerceVirtualOrderItemFileEntryModelResourcePermission;
 		_cpDefinitionHelper = cpDefinitionHelper;
 		_cpDefinitionVirtualSettingLocalService =
 			cpDefinitionVirtualSettingLocalService;
@@ -350,11 +351,13 @@ public class CommerceVirtualOrderItemContentDisplayContext {
 
 	public boolean hasPermission(
 			PermissionChecker permissionChecker,
-			CommerceVirtualOrderItem commerceVirtualOrderItem, String actionId)
+			CommerceVirtualOrderItemFileEntry commerceVirtualOrderItemFileEntry,
+			String actionId)
 		throws PortalException {
 
-		return _commerceVirtualOrderItemModelResourcePermission.contains(
-			permissionChecker, commerceVirtualOrderItem, actionId);
+		return _commerceVirtualOrderItemFileEntryModelResourcePermission.
+			contains(
+				permissionChecker, commerceVirtualOrderItemFileEntry, actionId);
 	}
 
 	private JournalArticleDisplay _articleDisplay;
@@ -363,10 +366,10 @@ public class CommerceVirtualOrderItemContentDisplayContext {
 		_commerceVirtualOrderItemContentPortletInstanceConfiguration;
 	private final CommerceVirtualOrderItemContentRequestHelper
 		_commerceVirtualOrderItemContentRequestHelper;
+	private final ModelResourcePermission<CommerceVirtualOrderItemFileEntry>
+		_commerceVirtualOrderItemFileEntryModelResourcePermission;
 	private final CommerceVirtualOrderItemLocalService
 		_commerceVirtualOrderItemLocalService;
-	private final ModelResourcePermission<CommerceVirtualOrderItem>
-		_commerceVirtualOrderItemModelResourcePermission;
 	private final CPDefinitionHelper _cpDefinitionHelper;
 	private final CPDefinitionVirtualSettingLocalService
 		_cpDefinitionVirtualSettingLocalService;

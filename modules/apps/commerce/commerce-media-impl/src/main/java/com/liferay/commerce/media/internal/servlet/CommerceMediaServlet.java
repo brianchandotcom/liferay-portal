@@ -20,7 +20,7 @@ import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting;
 import com.liferay.commerce.product.type.virtual.order.model.CommerceVirtualOrderItem;
-import com.liferay.commerce.product.type.virtual.order.service.CommerceVirtualOrderItemLocalService;
+import com.liferay.commerce.product.type.virtual.order.service.CommerceVirtualOrderItemFileEntryLocalService;
 import com.liferay.commerce.product.type.virtual.order.service.CommerceVirtualOrderItemService;
 import com.liferay.commerce.product.type.virtual.service.CPDefinitionVirtualSettingLocalService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
@@ -286,7 +286,8 @@ public class CommerceMediaServlet extends HttpServlet {
 
 			long commerceVirtualOrderItemId = GetterUtil.getLongStrict(
 				pathArray[1]);
-			long fileEntryId = GetterUtil.getLongStrict(pathArray[3]);
+			long commerceVirtualOrderItemFileEntryId = GetterUtil.getLongStrict(
+				pathArray[3]);
 
 			try {
 				CommerceVirtualOrderItem commerceVirtualOrderItem =
@@ -310,28 +311,34 @@ public class CommerceMediaServlet extends HttpServlet {
 							commerceVirtualOrderItemFileEntry ->
 								commerceVirtualOrderItemFileEntry.
 									getCommerceVirtualOrderItemFileEntryId()),
-						fileEntryId)) {
+						commerceVirtualOrderItemFileEntryId)) {
 
 					_sendError(
 						httpServletResponse, HttpServletResponse.SC_NOT_FOUND,
-						"The file entry " + fileEntryId + " does not exist");
+						"The commerce virtual order item file entry " +
+							commerceVirtualOrderItemFileEntryId +
+								" does not exist");
 
 					_sendError(
 						httpServletResponse, HttpServletResponse.SC_NOT_FOUND,
 						StringBundler.concat(
 							"The commerce virtual order item ",
 							commerceVirtualOrderItemId,
-							" does not have file entry ", fileEntryId));
+							" does not have commerce virtual order item file ",
+							"entry ", commerceVirtualOrderItemFileEntryId));
 
 					return;
 				}
 
-				FileEntry fileEntry = _getFileEntry(fileEntryId);
+				FileEntry fileEntry = _getFileEntry(
+					commerceVirtualOrderItemFileEntryId);
 
 				if (fileEntry == null) {
 					_sendError(
 						httpServletResponse, HttpServletResponse.SC_NOT_FOUND,
-						"The file entry " + fileEntryId + " does not exist");
+						"The file entry " +
+							commerceVirtualOrderItemFileEntryId +
+								" does not exist");
 
 					return;
 				}
@@ -343,16 +350,8 @@ public class CommerceMediaServlet extends HttpServlet {
 					fileEntry.getMimeType(),
 					HttpHeaders.CONTENT_DISPOSITION_ATTACHMENT);
 
-				int usages = commerceVirtualOrderItem.getUsages() + 1;
-
-				_commerceVirtualOrderItemLocalService.
-					updateCommerceVirtualOrderItem(
-						commerceVirtualOrderItem.
-							getCommerceVirtualOrderItemId(),
-						commerceVirtualOrderItem.getActivationStatus(),
-						commerceVirtualOrderItem.getDuration(), usages,
-						commerceVirtualOrderItem.getMaxUsages(),
-						commerceVirtualOrderItem.isActive());
+				_commerceVirtualOrderItemFileEntryLocalService.incrementUsages(
+					commerceVirtualOrderItemFileEntryId);
 
 				return;
 			}
@@ -639,8 +638,8 @@ public class CommerceMediaServlet extends HttpServlet {
 	private CommerceProductViewPermission _commerceProductViewPermission;
 
 	@Reference
-	private CommerceVirtualOrderItemLocalService
-		_commerceVirtualOrderItemLocalService;
+	private CommerceVirtualOrderItemFileEntryLocalService
+		_commerceVirtualOrderItemFileEntryLocalService;
 
 	@Reference
 	private CommerceVirtualOrderItemService _commerceVirtualOrderItemService;

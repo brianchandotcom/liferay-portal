@@ -15,6 +15,8 @@
 	.home-card:hover {
 		background-color: #EDF3FE!important;
 		border-color: #0053F0!important;
+		box-shadow: none!important;
+		transform: none!important;
 	}
 
 	.product-cards {

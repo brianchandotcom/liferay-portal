@@ -8,6 +8,7 @@ package com.liferay.site.manager.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
 import com.liferay.portal.configuration.test.util.GroupConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.model.Company;
@@ -74,6 +75,102 @@ public class SitemapManagerTest {
 	}
 
 	@Test
+	public void testSitemapIncludePagesCompanyDisabledGroupDisabled()
+		throws Exception {
+
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						TestPropsValues.getCompanyId(),
+						_SITEMAP_COMPANY_CONFIGURATION_PID,
+						HashMapDictionaryBuilder.<String, Object>put(
+							"includeCategories", false
+						).put(
+							"includePages", false
+						).put(
+							"includeWebContent", false
+						).build());
+			GroupConfigurationTemporarySwapper
+				groupConfigurationTemporarySwapper =
+					new GroupConfigurationTemporarySwapper(
+						_group.getGroupId(), _SITEMAP_GROUP_CONFIGURATION_PID,
+						HashMapDictionaryBuilder.<String, Object>put(
+							"includeCategories", false
+						).put(
+							"includePages", false
+						).put(
+							"includeWebContent", false
+						).build())) {
+
+			_assertEmptySitemap(_layout.getUuid());
+		}
+	}
+
+	@Test
+	public void testSitemapIncludePagesCompanyDisabledGroupEnabled()
+		throws Exception {
+
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						TestPropsValues.getCompanyId(),
+						_SITEMAP_COMPANY_CONFIGURATION_PID,
+						HashMapDictionaryBuilder.<String, Object>put(
+							"includeCategories", false
+						).put(
+							"includePages", false
+						).put(
+							"includeWebContent", false
+						).build());
+			GroupConfigurationTemporarySwapper
+				groupConfigurationTemporarySwapper =
+					new GroupConfigurationTemporarySwapper(
+						_group.getGroupId(), _SITEMAP_GROUP_CONFIGURATION_PID,
+						HashMapDictionaryBuilder.<String, Object>put(
+							"includeCategories", false
+						).put(
+							"includePages", true
+						).put(
+							"includeWebContent", false
+						).build())) {
+
+			_assertEmptySitemap(_layout.getUuid());
+		}
+	}
+
+	@Test
+	public void testSitemapIncludePagesCompanyEnabledGroupDisabled()
+		throws Exception {
+
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						TestPropsValues.getCompanyId(),
+						_SITEMAP_COMPANY_CONFIGURATION_PID,
+						HashMapDictionaryBuilder.<String, Object>put(
+							"includeCategories", false
+						).put(
+							"includePages", true
+						).put(
+							"includeWebContent", false
+						).build());
+			GroupConfigurationTemporarySwapper
+				groupConfigurationTemporarySwapper =
+					new GroupConfigurationTemporarySwapper(
+						_group.getGroupId(), _SITEMAP_GROUP_CONFIGURATION_PID,
+						HashMapDictionaryBuilder.<String, Object>put(
+							"includeCategories", false
+						).put(
+							"includePages", false
+						).put(
+							"includeWebContent", false
+						).build())) {
+
+			_assertEmptySitemap(_layout.getUuid());
+		}
+	}
+
+	@Test
 	public void testSitemapIncludePagesCompanyEnabledGroupEnabled()
 		throws Exception {
 
@@ -107,6 +204,13 @@ public class SitemapManagerTest {
 					_portal.getLayoutFullURL(_layout, _themeDisplay),
 					_themeDisplay, _layout));
 		}
+	}
+
+	private void _assertEmptySitemap(String uuid) throws Exception {
+		Assert.assertEquals(
+			StringPool.BLANK,
+			_sitemapManager.getSitemap(
+				uuid, _group.getGroupId(), false, _themeDisplay));
 	}
 
 	private void _assertSitemap(String uuid, String... urls) throws Exception {

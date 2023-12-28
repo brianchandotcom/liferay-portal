@@ -3211,15 +3211,6 @@ public class CalendarBookingLocalServiceTest {
 		Assert.assertNull(calendarBooking.getRecurrenceObj());
 	}
 
-	protected void assertEqualsTime(
-		int hour, int minute, java.util.Calendar jCalendar) {
-
-		Assert.assertEquals(
-			hour, jCalendar.get(java.util.Calendar.HOUR_OF_DAY));
-
-		Assert.assertEquals(minute, jCalendar.get(java.util.Calendar.MINUTE));
-	}
-
 	protected void assertMailBody(String subject, String expectedBody) {
 		List<MailMessage> mailMessages = MailServiceTestUtil.getMailMessages(
 			"Subject", subject);

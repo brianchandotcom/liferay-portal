@@ -207,7 +207,8 @@ public class InstanceInitializerCheck extends BaseCheck {
 
 			if (insideIfStatement) {
 				_checkHasReplacableMethodSignature(
-					firstChildDetailAST, methodName, javaClass, true);
+					firstChildDetailAST, methodName, javaClass,
+					insideIfStatement);
 
 				return;
 			}

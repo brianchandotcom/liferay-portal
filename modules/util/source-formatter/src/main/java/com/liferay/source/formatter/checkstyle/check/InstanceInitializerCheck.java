@@ -85,12 +85,11 @@ public class InstanceInitializerCheck extends BaseCheck {
 			return;
 		}
 
-		DetailAST childDetailAST = firstChildDetailAST.getFirstChild();
+		List<DetailAST> childDetailASTList = getAllChildTokens(
+			firstChildDetailAST, false, TokenTypes.EXPR, TokenTypes.LITERAL_IF);
 
-		while (childDetailAST != null) {
-			int tokenType = childDetailAST.getType();
-
-			if (tokenType == TokenTypes.LITERAL_IF) {
+		for (DetailAST childDetailAST : childDetailASTList) {
+			if (childDetailAST.getType() == TokenTypes.LITERAL_IF) {
 				DetailAST slistDetailAST = childDetailAST.findFirstToken(
 					TokenTypes.SLIST);
 
@@ -101,11 +100,9 @@ public class InstanceInitializerCheck extends BaseCheck {
 					_checkExprStatement(exprDetailAST, javaClass, true);
 				}
 			}
-			else if (tokenType == TokenTypes.EXPR) {
+			else {
 				_checkExprStatement(childDetailAST, javaClass, false);
 			}
-
-			childDetailAST = childDetailAST.getNextSibling();
 		}
 	}
 

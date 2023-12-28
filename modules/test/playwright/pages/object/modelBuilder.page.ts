@@ -3,12 +3,21 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {expect} from '@playwright/test';
+import {Locator, Page, expect} from '@playwright/test';
 
 import {ObjectDefinitionsPage} from './objectDefinitions.page';
 
 export class ModelBuilderPage {
-	constructor(page) {
+	readonly newObjectRelationshipLabel: Locator;
+	readonly newObjectRelationshipTitle: Locator;
+	readonly newObjectRelationshipType: Locator;
+	readonly objectDefinitionsPage: ObjectDefinitionsPage;
+	readonly objectDefinitionNodes: Locator;
+	readonly objectRelationshipEdges: Locator;
+	readonly page: Page;
+	readonly saveNewObjectRelationshipButton: Locator;
+
+	constructor(page: Page) {
 		this.newObjectRelationshipLabel = page
 			.locator('div.form-group')
 			.filter({hasText: /^LabelMandatory$/})
@@ -27,8 +36,8 @@ export class ModelBuilderPage {
 	}
 
 	clickObjectDefinitionCardDot(
-		objectDefinitionExternalReferenceCode,
-		position
+		objectDefinitionExternalReferenceCode: string,
+		position: string
 	) {
 		let dataHandled = 'fixedRightHandle';
 
@@ -41,7 +50,9 @@ export class ModelBuilderPage {
 		);
 	}
 
-	async clickObjectDefinitionShowAllFieldsButton(objectDefinitionName) {
+	async clickObjectDefinitionShowAllFieldsButton(
+		objectDefinitionName: string
+	) {
 		await this.objectDefinitionNodes
 			.filter({hasText: objectDefinitionName})
 			.getByRole('button', {name: 'Show All Fields'})
@@ -54,10 +65,10 @@ export class ModelBuilderPage {
 	}
 
 	async createObjectRelationship(
-		objectDefinitionId1,
-		objectDefinitionId2,
-		objectRelationshipLabel,
-		type
+		objectDefinitionId1: string,
+		objectDefinitionId2: string,
+		objectRelationshipLabel: string,
+		type: string
 	) {
 		await this.clickObjectDefinitionCardDot(
 			objectDefinitionId1,

@@ -8,7 +8,10 @@ import {test} from '@playwright/test';
 import {ModelBuilderPage} from '../pages/object/modelBuilder.page';
 import {ObjectDefinitionsPage} from '../pages/object/objectDefinitions.page';
 
-exports.test = test.extend({
+exports.test = test.extend<{
+	_modelBuilderPage: ModelBuilderPage;
+	_objectDefinitionsPage: ObjectDefinitionsPage;
+}>({
 	_modelBuilderPage: async ({page}, use) => {
 		await use(new ModelBuilderPage(page));
 	},

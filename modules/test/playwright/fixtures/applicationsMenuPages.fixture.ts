@@ -7,7 +7,7 @@ import {test} from '@playwright/test';
 
 import {ApplicationsMenuPage} from '../pages/product-navigation-applications-menu/applicationsMenu.page';
 
-exports.test = test.extend({
+exports.test = test.extend<{_applicationsMenuPage: ApplicationsMenuPage}>({
 	_applicationsMenuPage: async ({page}, use) => {
 		await use(new ApplicationsMenuPage(page));
 	},

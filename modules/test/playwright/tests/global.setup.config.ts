@@ -5,6 +5,6 @@
 
 export const config = {
 	name: 'setup',
-	testMatch: 'tests/global.setup.js',
+	testMatch: 'tests/global.setup.ts',
 	timeout: 60 * 1000,
 };

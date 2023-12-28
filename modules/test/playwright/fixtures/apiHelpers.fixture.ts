@@ -7,7 +7,7 @@ import {test} from '@playwright/test';
 
 import {ApiHelpers} from '../helpers/ApiHelpers';
 
-exports.test = test.extend({
+exports.test = test.extend<{_apiHelpers: ApiHelpers}>({
 	_apiHelpers: async ({page}, use) => {
 		await use(new ApiHelpers(page));
 	},

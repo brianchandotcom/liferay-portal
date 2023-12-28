@@ -4,32 +4,38 @@
  */
 
 import {getRandomInt} from '../utils/util';
+import {ApiHelpers} from './ApiHelpers';
 
 export class ObjectAdminApiHelper {
-	constructor(apiHelpers) {
+	readonly apiHelpers: ApiHelpers;
+	readonly basePath: string;
+
+	constructor(apiHelpers: ApiHelpers) {
 		this.apiHelpers = apiHelpers;
 		this.basePath = 'object-admin/v1.0';
 	}
 
-	async deleteObjectDefinition(objectDefinitionId) {
+	async deleteObjectDefinition(objectDefinitionId: number) {
 		return this.apiHelpers.delete(
 			`${this.apiHelpers.baseUrl}${this.basePath}/object-definitions/${objectDefinitionId}`
 		);
 	}
 
-	async deleteObjectFolder(objectFolderId) {
+	async deleteObjectFolder(objectFolderId: number) {
 		return this.apiHelpers.delete(
 			`${this.apiHelpers.baseUrl}${this.basePath}/object-folders/${objectFolderId}`
 		);
 	}
 
-	async deleteObjectRelationship(objectRelationshipId) {
+	async deleteObjectRelationship(objectRelationshipId: number) {
 		return this.apiHelpers.delete(
 			`${this.apiHelpers.baseUrl}${this.basePath}/object-relationships/${objectRelationshipId}`
 		);
 	}
 
-	async postRandomObjectDefinition(objectFolderExternalReferenceCode) {
+	async postRandomObjectDefinition(
+		objectFolderExternalReferenceCode: string
+	) {
 		const objectDefinitionExternalReferenceCode =
 			'ObjectDefinition' + getRandomInt();
 

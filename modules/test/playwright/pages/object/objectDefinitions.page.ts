@@ -3,10 +3,23 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {Locator, Page} from '@playwright/test';
+
 import {ApplicationsMenuPage} from '../product-navigation-applications-menu/applicationsMenu.page';
 
 export class ObjectDefinitionsPage {
-	constructor(page) {
+	readonly addObjectFolderButton: Locator;
+	readonly applicationsMenuPage: ApplicationsMenuPage;
+	readonly createObjectFolderButton: Locator;
+	readonly objectFolderActionsLink: Locator;
+	readonly objectFolderDeleteFolderOption: Locator;
+	readonly objectFolderEditLabelAndERCOption: Locator;
+	readonly objectFolderLabel: Locator;
+	readonly page: Page;
+	readonly uncategorizedObjectFolderLink: Locator;
+	readonly viewInModelBuilderButton: Locator;
+
+	constructor(page: Page) {
 		this.addObjectFolderButton = page.getByLabel('Add Object Folder');
 		this.applicationsMenuPage = new ApplicationsMenuPage(page);
 		this.createObjectFolderButton = page.getByRole('button', {
@@ -35,7 +48,7 @@ export class ObjectDefinitionsPage {
 		await this.uncategorizedObjectFolderLink.click();
 	}
 
-	async createObjectFolder(objectFolderLabel) {
+	async createObjectFolder(objectFolderLabel: string) {
 		await this.addObjectFolderButton.click();
 		await this.objectFolderLabel.click();
 		await this.objectFolderLabel.fill(objectFolderLabel);
@@ -55,7 +68,7 @@ export class ObjectDefinitionsPage {
 		await this.objectFolderActionsLink.click();
 	}
 
-	async openObjectFolder(objectFolderExternalReferenceCode) {
+	async openObjectFolder(objectFolderExternalReferenceCode: string) {
 		await this.page
 			.locator('li')
 			.filter({hasText: objectFolderExternalReferenceCode})

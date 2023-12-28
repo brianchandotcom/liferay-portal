@@ -352,16 +352,18 @@ public abstract class BaseFieldResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("supported", additionalAssertFieldName)) {
-				if (field.getSupported() == null) {
+			if (Objects.equals("type", additionalAssertFieldName)) {
+				if (field.getType() == null) {
 					valid = false;
 				}
 
 				continue;
 			}
 
-			if (Objects.equals("type", additionalAssertFieldName)) {
-				if (field.getType() == null) {
+			if (Objects.equals(
+					"unsupportedFormats", additionalAssertFieldName)) {
+
+				if (field.getUnsupportedFormats() == null) {
 					valid = false;
 				}
 
@@ -511,18 +513,21 @@ public abstract class BaseFieldResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("supported", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						field1.getSupported(), field2.getSupported())) {
-
+			if (Objects.equals("type", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(field1.getType(), field2.getType())) {
 					return false;
 				}
 
 				continue;
 			}
 
-			if (Objects.equals("type", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(field1.getType(), field2.getType())) {
+			if (Objects.equals(
+					"unsupportedFormats", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						field1.getUnsupportedFormats(),
+						field2.getUnsupportedFormats())) {
+
 					return false;
 				}
 
@@ -729,11 +734,6 @@ public abstract class BaseFieldResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("supported")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
 		if (entityFieldName.equals("type")) {
 			Object object = field.getType();
 
@@ -778,6 +778,11 @@ public abstract class BaseFieldResourceTestCase {
 			}
 
 			return sb.toString();
+		}
+
+		if (entityFieldName.equals("unsupportedFormats")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		throw new IllegalArgumentException(
@@ -828,7 +833,6 @@ public abstract class BaseFieldResourceTestCase {
 					RandomTestUtil.randomString());
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				required = RandomTestUtil.randomBoolean();
-				supported = RandomTestUtil.randomBoolean();
 				type = StringUtil.toLowerCase(RandomTestUtil.randomString());
 			}
 		};

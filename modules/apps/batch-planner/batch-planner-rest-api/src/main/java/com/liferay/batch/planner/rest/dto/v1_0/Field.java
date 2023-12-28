@@ -170,46 +170,6 @@ public class Field implements Serializable {
 	private Supplier<Boolean> _requiredSupplier;
 
 	@Schema
-	public Boolean getSupported() {
-		if (_supportedSupplier != null) {
-			supported = _supportedSupplier.get();
-
-			_supportedSupplier = null;
-		}
-
-		return supported;
-	}
-
-	public void setSupported(Boolean supported) {
-		this.supported = supported;
-
-		_supportedSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setSupported(
-		UnsafeSupplier<Boolean, Exception> supportedUnsafeSupplier) {
-
-		_supportedSupplier = () -> {
-			try {
-				return supportedUnsafeSupplier.get();
-			}
-			catch (RuntimeException re) {
-				throw re;
-			}
-			catch (Exception e) {
-				throw new RuntimeException(e);
-			}
-		};
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Boolean supported;
-
-	private Supplier<Boolean> _supportedSupplier;
-
-	@Schema
 	public String getType() {
 		if (_typeSupplier != null) {
 			type = _typeSupplier.get();
@@ -247,6 +207,47 @@ public class Field implements Serializable {
 
 	@JsonIgnore
 	private Supplier<String> _typeSupplier;
+
+	@Schema
+	public String[] getUnsupportedFormats() {
+		if (_unsupportedFormatsSupplier != null) {
+			unsupportedFormats = _unsupportedFormatsSupplier.get();
+
+			_unsupportedFormatsSupplier = null;
+		}
+
+		return unsupportedFormats;
+	}
+
+	public void setUnsupportedFormats(String[] unsupportedFormats) {
+		this.unsupportedFormats = unsupportedFormats;
+
+		_unsupportedFormatsSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setUnsupportedFormats(
+		UnsafeSupplier<String[], Exception> unsupportedFormatsUnsafeSupplier) {
+
+		_unsupportedFormatsSupplier = () -> {
+			try {
+				return unsupportedFormatsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String[] unsupportedFormats;
+
+	@JsonIgnore
+	private Supplier<String[]> _unsupportedFormatsSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -319,18 +320,6 @@ public class Field implements Serializable {
 			sb.append(required);
 		}
 
-		Boolean supported = getSupported();
-
-		if (supported != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"supported\": ");
-
-			sb.append(supported);
-		}
-
 		String type = getType();
 
 		if (type != null) {
@@ -345,6 +334,32 @@ public class Field implements Serializable {
 			sb.append(_escape(type));
 
 			sb.append("\"");
+		}
+
+		String[] unsupportedFormats = getUnsupportedFormats();
+
+		if (unsupportedFormats != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"unsupportedFormats\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < unsupportedFormats.length; i++) {
+				sb.append("\"");
+
+				sb.append(_escape(unsupportedFormats[i]));
+
+				sb.append("\"");
+
+				if ((i + 1) < unsupportedFormats.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		sb.append("}");

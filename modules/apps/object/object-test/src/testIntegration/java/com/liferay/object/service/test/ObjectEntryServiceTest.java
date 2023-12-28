@@ -36,6 +36,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.NoSuchResourceActionException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
@@ -669,14 +670,7 @@ public class ObjectEntryServiceTest {
 				"timeScale", "days"
 			).build());
 
-		Role guestRole = _roleLocalService.getRole(
-			TestPropsValues.getCompanyId(), RoleConstants.GUEST);
-
-		_resourcePermissionLocalService.addResourcePermission(
-			TestPropsValues.getCompanyId(), _objectDefinition.getResourceName(),
-			ResourceConstants.SCOPE_COMPANY,
-			String.valueOf(TestPropsValues.getCompanyId()),
-			guestRole.getRoleId(), ObjectActionKeys.ADD_OBJECT_ENTRY);
+		_addPermissionsToGuestUser();
 
 		try {
 			Assert.assertNotNull(
@@ -690,9 +684,9 @@ public class ObjectEntryServiceTest {
 				ObjectEntryCountException.class,
 				StringBundler.concat(
 					"The limit of guest entries for ",
-					_objectDefinition.getLabel(),
-					" has been reached and will no longer be accepted. Please ",
-					"contact the administrator for further assistance."),
+					_objectDefinition.getLabel(
+						_objectDefinition.getDefaultLanguageId()),
+					" has been reached and will no longer be accepted."),
 				() -> _objectEntryService.addObjectEntry(
 					0, _objectDefinition.getObjectDefinitionId(),
 					Collections.emptyMap(),
@@ -727,7 +721,8 @@ public class ObjectEntryServiceTest {
 			AssertUtils.assertFailure(
 				ObjectEntryCountException.class,
 				StringBundler.concat(
-					"The limit of guest entries for ", _objectDefinition.getLabel(
+					"The limit of guest entries for ",
+					_objectDefinition.getLabel(
 						_objectDefinition.getDefaultLanguageId()),
 					" has been reached and will no longer be accepted."),
 				() -> _objectEntryService.addObjectEntry(
@@ -736,19 +731,28 @@ public class ObjectEntryServiceTest {
 					ServiceContextTestUtil.getServiceContext(
 						TestPropsValues.getGroupId(), _guestUser.getUserId())));
 
-			String portletId =
-				_objectDefinition.isUnmodifiableSystemObject() ?
-					StringPool.BLANK :
-					_objectDefinition.getPortletId();
+			_checkUserNotificationEvent();
+		}
+		finally {
+			_configurationProvider.deleteCompanyConfiguration(
+				ObjectConfiguration.class, TestPropsValues.getCompanyId());
+		}
+	}
 
-			Role role = _roleLocalService.getRole(
-				_objectDefinition.getCompanyId(), RoleConstants.ADMINISTRATOR);
+	private void _checkUserNotificationEvent() throws PortalException {
+		String portletId =
+			_objectDefinition.isUnmodifiableSystemObject() ?
+				StringPool.BLANK : _objectDefinition.getPortletId();
 
-			long[] userIds = _userLocalService.getRoleUserIds(role.getRoleId());
+		Role role = _roleLocalService.getRole(
+			_objectDefinition.getCompanyId(), RoleConstants.ADMINISTRATOR);
 
-			for (long userId : userIds) {
-				int count =
-					_userNotificationLocalService.getUserNotificationEventsCount(
+		long[] userIds = _userLocalService.getRoleUserIds(role.getRoleId());
+
+		for (long userId : userIds) {
+			int count =
+				_userNotificationLocalService.
+					getUserNotificationEventsCount(
 						userId, portletId,
 						LocalDate.now(
 						).atStartOfDay(
@@ -757,15 +761,19 @@ public class ObjectEntryServiceTest {
 						).getEpochSecond(),
 						true);
 
-				Assert.assertTrue(count > 0);
-			}
+			Assert.assertTrue(count > 0);
 		}
-		finally{
-				_configurationProvider.deleteCompanyConfiguration(
-					ObjectConfiguration.class, TestPropsValues.getCompanyId());
-				_configurationProvider.deleteSystemConfiguration(
-					ObjectConfiguration.class);
-			}
+	}
+
+	private void _addPermissionsToGuestUser() throws PortalException {
+		Role guestRole = _roleLocalService.getRole(
+			TestPropsValues.getCompanyId(), RoleConstants.GUEST);
+
+		_resourcePermissionLocalService.addResourcePermission(
+			TestPropsValues.getCompanyId(), _objectDefinition.getResourceName(),
+			ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(TestPropsValues.getCompanyId()),
+			guestRole.getRoleId(), ObjectActionKeys.ADD_OBJECT_ENTRY);
 	}
 
 	@Test
@@ -786,14 +794,7 @@ public class ObjectEntryServiceTest {
 				"timeScale", "days"
 			).build());
 
-		Role guestRole = _roleLocalService.getRole(
-			TestPropsValues.getCompanyId(), RoleConstants.GUEST);
-
-		_resourcePermissionLocalService.addResourcePermission(
-			TestPropsValues.getCompanyId(), _objectDefinition.getResourceName(),
-			ResourceConstants.SCOPE_COMPANY,
-			String.valueOf(TestPropsValues.getCompanyId()),
-			guestRole.getRoleId(), ObjectActionKeys.ADD_OBJECT_ENTRY);
+		_addPermissionsToGuestUser();
 
 		ObjectEntry objectEntry = _objectEntryService.addObjectEntry(
 			0, _objectDefinition.getObjectDefinitionId(),
@@ -824,29 +825,16 @@ public class ObjectEntryServiceTest {
 				ObjectEntryCountException.class,
 				StringBundler.concat(
 					"The limit of guest entries for ",
-					_objectDefinition.getLabel(),
-					" has been reached and will no longer be accepted. Please ",
-					"contact the administrator for further assistance."),
+					_objectDefinition.getLabel(
+						_objectDefinition.getDefaultLanguageId()),
+					" has been reached and will no longer be accepted."),
 				() -> _objectEntryService.addObjectEntry(
 					0, _objectDefinition.getObjectDefinitionId(),
 					Collections.emptyMap(),
 					ServiceContextTestUtil.getServiceContext(
 						TestPropsValues.getGroupId(), _guestUser.getUserId())));
 
-			Role adminRole = _roleLocalService.getRole(
-				_objectDefinition.getCompanyId(), RoleConstants.ADMINISTRATOR);
-
-			long[] adminUserIds = _userLocalService.getRoleUserIds(
-				adminRole.getRoleId());
-
-			for (long adminUserId : adminUserIds) {
-				int numberOfNotifications =
-					_userNotificationLocalService.
-						getDeliveredUserNotificationEventsCount(
-							adminUserId, true);
-
-				Assert.assertTrue(numberOfNotifications > 0);
-			}
+			_checkUserNotificationEvent();
 		}
 		finally {
 			_configurationProvider.deleteCompanyConfiguration(
@@ -872,14 +860,7 @@ public class ObjectEntryServiceTest {
 				"timeScale", "weeks"
 			).build());
 
-		Role guestRole = _roleLocalService.getRole(
-			TestPropsValues.getCompanyId(), RoleConstants.GUEST);
-
-		_resourcePermissionLocalService.addResourcePermission(
-			TestPropsValues.getCompanyId(), _objectDefinition.getResourceName(),
-			ResourceConstants.SCOPE_COMPANY,
-			String.valueOf(TestPropsValues.getCompanyId()),
-			guestRole.getRoleId(), ObjectActionKeys.ADD_OBJECT_ENTRY);
+		_addPermissionsToGuestUser();
 
 		ObjectEntry objectEntry = _objectEntryService.addObjectEntry(
 			0, _objectDefinition.getObjectDefinitionId(),
@@ -906,40 +887,20 @@ public class ObjectEntryServiceTest {
 					ServiceContextTestUtil.getServiceContext(
 						TestPropsValues.getGroupId(), _guestUser.getUserId())));
 
-		AssertUtils.assertFailure(
-			ObjectEntryCountException.class,
-			StringBundler.concat(
-				"The limit of guest entries for ", _objectDefinition.getLabel(
-					_objectDefinition.getDefaultLanguageId()),
-				" has been reached and will no longer be accepted."),
-			() -> _objectEntryService.addObjectEntry(
-				0, _objectDefinition.getObjectDefinitionId(),
-				Collections.emptyMap(),
-				ServiceContextTestUtil.getServiceContext(
-					TestPropsValues.getGroupId(), _guestUser.getUserId())));
+			AssertUtils.assertFailure(
+				ObjectEntryCountException.class,
+				StringBundler.concat(
+					"The limit of guest entries for ",
+					_objectDefinition.getLabel(
+						_objectDefinition.getDefaultLanguageId()),
+					" has been reached and will no longer be accepted."),
+				() -> _objectEntryService.addObjectEntry(
+					0, _objectDefinition.getObjectDefinitionId(),
+					Collections.emptyMap(),
+					ServiceContextTestUtil.getServiceContext(
+						TestPropsValues.getGroupId(), _guestUser.getUserId())));
 
-		String portletId =
-				_objectDefinition.isUnmodifiableSystemObject() ? StringPool.BLANK :
-					_objectDefinition.getPortletId();
-
-			Role role = _roleLocalService.getRole(
-				_objectDefinition.getCompanyId(), RoleConstants.ADMINISTRATOR);
-
-			long[] userIds = _userLocalService.getRoleUserIds(role.getRoleId());
-
-			for (long userId : userIds) {
-				int count =
-					_userNotificationLocalService.getUserNotificationEventsCount(
-						userId, portletId,
-						LocalDate.now(
-						).atStartOfDay(
-							ZoneId.systemDefault()
-						).toInstant(
-						).getEpochSecond(),
-						true);
-
-				Assert.assertTrue(count > 0);
-			}
+			_checkUserNotificationEvent();
 		}
 		finally {
 			_configurationProvider.deleteCompanyConfiguration(
@@ -965,14 +926,7 @@ public class ObjectEntryServiceTest {
 				"timeScale", "weeks"
 			).build());
 
-		Role guestRole = _roleLocalService.getRole(
-			TestPropsValues.getCompanyId(), RoleConstants.GUEST);
-
-		_resourcePermissionLocalService.addResourcePermission(
-			TestPropsValues.getCompanyId(), _objectDefinition.getResourceName(),
-			ResourceConstants.SCOPE_COMPANY,
-			String.valueOf(TestPropsValues.getCompanyId()),
-			guestRole.getRoleId(), ObjectActionKeys.ADD_OBJECT_ENTRY);
+		_addPermissionsToGuestUser();
 
 		ObjectEntry objectEntry = _objectEntryService.addObjectEntry(
 			0, _objectDefinition.getObjectDefinitionId(),
@@ -1002,36 +956,17 @@ public class ObjectEntryServiceTest {
 			AssertUtils.assertFailure(
 				ObjectEntryCountException.class,
 				StringBundler.concat(
-					"The limit of guest entries for ", _objectDefinition.getLabel(),
-					" has been reached and will no longer be accepted"),
+					"The limit of guest entries for ",
+					_objectDefinition.getLabel(
+						_objectDefinition.getDefaultLanguageId()),
+					" has been reached and will no longer be accepted."),
 				() -> _objectEntryService.addObjectEntry(
 					0, _objectDefinition.getObjectDefinitionId(),
 					Collections.emptyMap(),
 					ServiceContextTestUtil.getServiceContext(
 						TestPropsValues.getGroupId(), _guestUser.getUserId())));
 
-			String portletId =
-				_objectDefinition.isUnmodifiableSystemObject() ? StringPool.BLANK :
-					_objectDefinition.getPortletId();
-
-			Role role = _roleLocalService.getRole(
-				_objectDefinition.getCompanyId(), RoleConstants.ADMINISTRATOR);
-
-			long[] userIds = _userLocalService.getRoleUserIds(role.getRoleId());
-
-			for (long userId : userIds) {
-				int count =
-					_userNotificationLocalService.getUserNotificationEventsCount(
-						userId, portletId,
-						LocalDate.now(
-						).atStartOfDay(
-							ZoneId.systemDefault()
-						).toInstant(
-						).getEpochSecond(),
-						true);
-
-				Assert.assertTrue(count > 0);
-			}
+			_checkUserNotificationEvent();
 		}
 		finally {
 			_configurationProvider.deleteCompanyConfiguration(

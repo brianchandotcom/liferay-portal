@@ -9,7 +9,6 @@ import com.liferay.object.configuration.ObjectConfiguration;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
@@ -42,7 +41,8 @@ public class ObjectConfigurationModelListener
 
 			throw new ConfigurationModelListenerException(
 				ResourceBundleUtil.getString(
-					resourceBundle, "the-duration-field-cannot-be-less-than-1"),
+					resourceBundle,
+					"the-duration-field-cannot-be-less-than-1"),
 				ObjectConfiguration.class, getClass(), properties);
 
 		String timeScale = GetterUtil.getString(properties.get("timeScale"));

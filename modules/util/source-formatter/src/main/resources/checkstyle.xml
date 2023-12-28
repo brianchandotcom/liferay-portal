@@ -426,7 +426,7 @@
 			<message key="assign.order.incorrect" value="The variable assignment for ''{0}'' should come before the variable assignment for ''{1}''" />
 			<message key="if.statement.inline" value="Inline if-statement inside ''{0}''" />
 			<message key="method.call.order.incorrect" value="The method calling ''{0}'' should come before the method calling ''{1}''" />
-			<message key="set.method.use.instead" value="Use ''{0}({1})'' with inlined" />
+			<message key="set.method.use.instead" value="Use ''{0}({1})'' instead" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.InstanceofOrderCheck">
 			<property name="category" value="Styling" />

@@ -106,6 +106,108 @@ public class SitemapManagerTest {
 	}
 
 	@Test
+	public void testSitemapIncludeCategoriesCompanyDisabledGroupDisabled()
+		throws Exception {
+
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						TestPropsValues.getCompanyId(),
+						_SITEMAP_COMPANY_CONFIGURATION_PID,
+						HashMapDictionaryBuilder.<String, Object>put(
+							"includeCategories", false
+						).put(
+							"includePages", false
+						).put(
+							"includeWebContent", false
+						).build());
+			GroupConfigurationTemporarySwapper
+				groupConfigurationTemporarySwapper =
+					new GroupConfigurationTemporarySwapper(
+						_group.getGroupId(), _SITEMAP_GROUP_CONFIGURATION_PID,
+						HashMapDictionaryBuilder.<String, Object>put(
+							"includeCategories", false
+						).put(
+							"includePages", false
+						).put(
+							"includeWebContent", false
+						).build())) {
+
+			_setUpAssetCategoryDisplayPage();
+
+			_assertEmptySitemap(_layout.getUuid());
+		}
+	}
+
+	@Test
+	public void testSitemapIncludeCategoriesCompanyDisabledGroupEnabled()
+		throws Exception {
+
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						TestPropsValues.getCompanyId(),
+						_SITEMAP_COMPANY_CONFIGURATION_PID,
+						HashMapDictionaryBuilder.<String, Object>put(
+							"includeCategories", false
+						).put(
+							"includePages", false
+						).put(
+							"includeWebContent", false
+						).build());
+			GroupConfigurationTemporarySwapper
+				groupConfigurationTemporarySwapper =
+					new GroupConfigurationTemporarySwapper(
+						_group.getGroupId(), _SITEMAP_GROUP_CONFIGURATION_PID,
+						HashMapDictionaryBuilder.<String, Object>put(
+							"includeCategories", true
+						).put(
+							"includePages", false
+						).put(
+							"includeWebContent", false
+						).build())) {
+
+			_setUpAssetCategoryDisplayPage();
+
+			_assertEmptySitemap(_layout.getUuid());
+		}
+	}
+
+	@Test
+	public void testSitemapIncludeCategoriesCompanyEnabledGroupDisabled()
+		throws Exception {
+
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						TestPropsValues.getCompanyId(),
+						_SITEMAP_COMPANY_CONFIGURATION_PID,
+						HashMapDictionaryBuilder.<String, Object>put(
+							"includeCategories", true
+						).put(
+							"includePages", false
+						).put(
+							"includeWebContent", false
+						).build());
+			GroupConfigurationTemporarySwapper
+				groupConfigurationTemporarySwapper =
+					new GroupConfigurationTemporarySwapper(
+						_group.getGroupId(), _SITEMAP_GROUP_CONFIGURATION_PID,
+						HashMapDictionaryBuilder.<String, Object>put(
+							"includeCategories", false
+						).put(
+							"includePages", false
+						).put(
+							"includeWebContent", false
+						).build())) {
+
+			_setUpAssetCategoryDisplayPage();
+
+			_assertEmptySitemap(_layout.getUuid());
+		}
+	}
+
+	@Test
 	public void testSitemapIncludeCategoriesCompanyEnabledGroupEnabled()
 		throws Exception {
 

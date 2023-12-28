@@ -139,6 +139,10 @@ definition {
 		}
 
 		task ("Go to Tests") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
+
 			ACNavigation.goToTests();
 		}
 

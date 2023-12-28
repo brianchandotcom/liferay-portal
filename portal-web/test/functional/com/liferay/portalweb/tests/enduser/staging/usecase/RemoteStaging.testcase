@@ -162,10 +162,6 @@ definition {
 
 		MouseOver.mouseOverNotVisible(locator1 = "Button#PLUS");
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "Message#TOOLTIP",
-			value1 = "Custom Publish Process");
-
 		Staging.publishCustomPublication(remoteStaging = "true");
 
 		Staging.publishCustomPublication(

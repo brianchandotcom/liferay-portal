@@ -115,6 +115,11 @@
 	<td>//div[not(contains(@class,'hide'))]/div[label[contains(.,'${key_selectFieldLabel}')]]/select[not(@disabled)]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>UNSUPPORT_FIELD</td>
+	<td>//td[contains(.,'${key_entryName}')]/following-sibling::td[contains(., 'Not Supported')]/span[@title='Exporting this field type will be supported in a future release.']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

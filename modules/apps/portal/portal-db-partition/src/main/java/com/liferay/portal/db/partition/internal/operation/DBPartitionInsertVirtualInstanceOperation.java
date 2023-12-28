@@ -40,7 +40,8 @@ public class DBPartitionInsertVirtualInstanceOperation
 							properties);
 
 				long companyId =
-					dBPartitionInsertVirtualInstanceConfiguration.companyId();
+					dBPartitionInsertVirtualInstanceConfiguration.
+						partitionCompanyId();
 
 				if (_companyLocalService.fetchCompany(companyId) != null) {
 					return null;

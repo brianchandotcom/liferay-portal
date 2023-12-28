@@ -810,6 +810,8 @@ definition {
 
 		WaitForPageLoad();
 
+		ACUtils.waitForLoading();
+
 		if (IsElementNotPresent(locator1 = "ACWorkspace#FARO_DEMO_WORKSPACE")) {
 			ACLogin.loginAs(
 				emailAddress = ${emailAddress},

@@ -339,7 +339,7 @@ definition {
 		}
 
 		task ("Connect to AC") {
-			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(contacts = "True");
+			ACDXPSettings.connectDXPtoAnalyticsCloud(contacts = "True");
 		}
 
 		task ("Go to the people page in the sidebar") {
@@ -372,7 +372,7 @@ definition {
 		}
 
 		task ("Go to Known Individuals tab") {
-			ACProperties.switchProperty(propertyName = ${propertyName});
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 
 			ACNavigation.goToIndividuals();
 

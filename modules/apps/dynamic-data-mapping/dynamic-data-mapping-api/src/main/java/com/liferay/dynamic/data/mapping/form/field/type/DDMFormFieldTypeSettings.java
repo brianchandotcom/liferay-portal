@@ -56,7 +56,11 @@ public interface DDMFormFieldTypeSettings {
 	}
 
 	@DDMFormField(
-		label = "%field-name", properties = "normalizeField=true",
+		label = "%field.name",
+		properties = {
+			"normalizeField=true",
+			"tooltip=%modifying-the-field-name-may-result-in-data-loss"
+		},
 		required = true
 	)
 	public String name();

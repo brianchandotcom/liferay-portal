@@ -414,11 +414,6 @@ definition {
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 		var randomChildSiteName = StringUtil.randomString(8);
 
-		PortalSettings.gotoConfiguration(
-			configurationCategory = "Sharing",
-			configurationName = "Content Sharing",
-			configurationScope = "Virtual Instance Scope");
-
 		PortalSettings.configureContentSharingAcrossSitesCP(enableAcrossSite = "false");
 
 		PortalSettings.configureContentSharingSubSitesCP(subSites = "enabledByDefault");
@@ -519,11 +514,6 @@ definition {
 	@priority = 4
 	test ViewContentSharingEnabledAcrossSitesViaAP {
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
-
-		PortalSettings.gotoConfiguration(
-			configurationCategory = "Sharing",
-			configurationName = "Content Sharing",
-			configurationScope = "Virtual Instance Scope");
 
 		PortalSettings.configureContentSharingAcrossSitesCP(enableAcrossSite = "true");
 

@@ -20,6 +20,9 @@ long[] selectedClassTypePKs = editVocabularySettingsDisplayContext.getSelectedCl
 	id='<%= liferayPortletResponse.getNamespace() + "extraFields" %>'
 	label="associated-asset-types"
 >
+	<p class="text-secondary">
+		<liferay-ui:message key="choose-the-asset-types-this-vocabulary-is-associated-with-and-whether-it-is-required" />
+	</p>
 
 	<%
 	List<String> indexes = new ArrayList<>();

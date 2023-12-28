@@ -111,9 +111,9 @@ public class InputTemplateNode extends LinkedHashMap<String, Object> {
 		).put(
 			"errorMessage", _errorMessage
 		).put(
-			"helpText", HtmlUtil.escapeJS(_helpText)
+			"helpText", HtmlUtil.escape(_helpText)
 		).put(
-			"label", HtmlUtil.escapeJS(_label)
+			"label", HtmlUtil.escape(_label)
 		).put(
 			"name", _name
 		).put(

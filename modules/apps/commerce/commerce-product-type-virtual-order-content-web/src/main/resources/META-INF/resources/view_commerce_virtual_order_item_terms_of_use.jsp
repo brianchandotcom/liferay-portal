@@ -22,25 +22,4 @@ JournalArticleDisplay articleDisplay = commerceVirtualOrderItemContentDisplayCon
 			<%= ParamUtil.getString(request, "termsOfUseContent") %>
 		</c:otherwise>
 	</c:choose>
-
-	<aui:button-row>
-		<aui:button name="agreeButton" onClick='<%= liferayPortletResponse.getNamespace() + "agreeTermsOfUse();" %>' primary="<%= true %>" value="i-agree" />
-
-		<aui:button name="disagreeButton" onClick='<%= liferayPortletResponse.getNamespace() + "closeDialog();" %>' value="i-disagree" />
-	</aui:button-row>
 </div>
-
-<aui:script>
-	function <portlet:namespace />agreeTermsOfUse() {
-		Liferay.Util.getOpener().<portlet:namespace />downloadCommerceVirtualOrderItem(
-			'<portlet:namespace />viewTermsOfUseDialog',
-			'<%= ParamUtil.getLong(request, "commerceVirtualOrderItemId") %>'
-		);
-	}
-
-	function <portlet:namespace />closeDialog() {
-		Liferay.Util.getOpener().<portlet:namespace />closePopup(
-			'<portlet:namespace />viewTermsOfUseDialog'
-		);
-	}
-</aui:script>

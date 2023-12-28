@@ -81,39 +81,53 @@ CommerceVirtualOrderItemContentDisplayContext commerceVirtualOrderItemContentDis
 								<%
 								CPDefinitionVirtualSetting cpDefinitionVirtualSetting = commerceVirtualOrderItemContentDisplayContext.getCPDefinitionVirtualSetting(commerceOrderItem);
 
-								Map<String, Object> data = new HashMap<>();
-								boolean useDialog = false;
+								for (CommerceVirtualOrderItemFileEntry commerceVirtualOrderItemFileEntry : commerceVirtualOrderItem.getCommerceVirtualOrderItemFileEntries()) {
+									String downloadURL = commerceVirtualOrderItemContentDisplayContext.getDownloadURL(commerceVirtualOrderItem, commerceVirtualOrderItemFileEntry.getCommerceVirtualOrderItemFileEntryId());
+								%>
 
-								if ((cpDefinitionVirtualSetting != null) && cpDefinitionVirtualSetting.isTermsOfUseRequired()) {
-									data.put("destroyOnHide", true);
-									data.put("id", HtmlUtil.escape(portletDisplay.getNamespace()) + "viewTermsOfUseDialog");
-									data.put("title", HtmlUtil.escape(LanguageUtil.get(request, "terms-of-use")));
+									<c:if test="<%= commerceVirtualOrderItemContentDisplayContext.hasPermission(permissionChecker, commerceVirtualOrderItemFileEntry, CommerceVirtualOrderActionKeys.DOWNLOAD_COMMERCE_VIRTUAL_ORDER_ITEM) && (cpDefinitionVirtualSetting != null) %>">
+										<c:choose>
+											<c:when test="<%= (cpDefinitionVirtualSetting != null) && cpDefinitionVirtualSetting.isTermsOfUseRequired() %>">
+												<aui:form action="<%= String.valueOf(commerceVirtualOrderItemContentDisplayContext.getDownloadResourceURL(commerceVirtualOrderItem.getCommerceVirtualOrderItemId(), commerceVirtualOrderItemFileEntry.getCommerceVirtualOrderItemFileEntryId())) %>" method="post" name='<%= commerceVirtualOrderItem.getCommerceVirtualOrderItemId() + "-" + commerceVirtualOrderItemFileEntry.getCommerceVirtualOrderItemFileEntryId() + "Fm" %>' />
 
-									useDialog = true;
+												<clay:button
+													additionalProps='<%=
+														HashMapBuilder.<String, Object>put(
+															"commerceVirtualOrderItemFileEntryId", commerceVirtualOrderItemFileEntry.getCommerceVirtualOrderItemFileEntryId()
+														).put(
+															"commerceVirtualOrderItemId", commerceVirtualOrderItemFileEntry.getCommerceVirtualOrderItemId()
+														).put(
+															"dialogId", HtmlUtil.escape(portletDisplay.getNamespace()) + "viewTermsOfUseDialog"
+														).put(
+															"downloadURL", downloadURL
+														).put(
+															"title", HtmlUtil.escape(LanguageUtil.get(request, "terms-of-use"))
+														).build()
+													%>'
+													borderless="<%= true %>"
+													displayType="secondary"
+													icon="download"
+													label='<%= LanguageUtil.format(request, "download-x", commerceVirtualOrderItemFileEntry.getVersion(), false) %>'
+													propsTransformer="js/OpenTermsOfUseModalPropsTransformer"
+												/>
+											</c:when>
+											<c:otherwise>
+												<div class="lfr-tooltip-scope">
+													<clay:link
+														cssClass="btn btn-outline-borderless btn-outline-secondary"
+														href="<%= downloadURL %>"
+														icon="download"
+														label='<%= LanguageUtil.format(request, "download-x", commerceVirtualOrderItemFileEntry.getVersion(), false) %>'
+													/>
+												</div>
+											</c:otherwise>
+										</c:choose>
+									</c:if>
+
+								<%
 								}
 								%>
 
-								<c:if test="<%= commerceVirtualOrderItemContentDisplayContext.hasPermission(permissionChecker, commerceVirtualOrderItem, CommerceVirtualOrderActionKeys.DOWNLOAD_COMMERCE_VIRTUAL_ORDER_ITEM) && (cpDefinitionVirtualSetting != null) %>">
-
-									<%
-									for (CommerceVirtualOrderItemFileEntry commerceVirtualOrderItemFileEntry : commerceVirtualOrderItem.getCommerceVirtualOrderItemFileEntries()) {
-									%>
-
-										<aui:form action="<%= String.valueOf(commerceVirtualOrderItemContentDisplayContext.getDownloadResourceURL(commerceVirtualOrderItem.getCommerceVirtualOrderItemId(), commerceVirtualOrderItemFileEntry.getCommerceVirtualOrderItemFileEntryId())) %>" method="post" name='<%= commerceVirtualOrderItem.getCommerceVirtualOrderItemId() + "-" + commerceVirtualOrderItemFileEntry.getCommerceVirtualOrderItemFileEntryId() + "Fm" %>' />
-
-										<liferay-ui:icon
-											data="<%= data %>"
-											label="<%= true %>"
-											message='<%= LanguageUtil.format(request, "download-x", commerceVirtualOrderItemFileEntry.getVersion(), false) %>'
-											url="<%= commerceVirtualOrderItemContentDisplayContext.getDownloadURL(commerceVirtualOrderItem, commerceVirtualOrderItemFileEntry.getCommerceVirtualOrderItemFileEntryId()) %>"
-											useDialog="<%= useDialog %>"
-										/>
-
-									<%
-									}
-									%>
-
-								</c:if>
 							</liferay-ui:search-container-column-text>
 						</liferay-ui:search-container-row>
 
@@ -124,35 +138,6 @@ CommerceVirtualOrderItemContentDisplayContext commerceVirtualOrderItemContentDis
 					</liferay-ui:search-container>
 				</div>
 			</div>
-
-			<aui:script>
-				Liferay.provide(
-					window,
-					'<portlet:namespace />closePopup',
-					(dialogId) => {
-						var dialog = Liferay.Util.Window.getById(dialogId);
-
-						dialog.destroy();
-					},
-					['liferay-util-window']
-				);
-
-				Liferay.provide(
-					window,
-					'<portlet:namespace />downloadCommerceVirtualOrderItem',
-					(dialogId, commerceVirtualOrderItemId) => {
-						<portlet:namespace />closePopup(dialogId);
-
-						var formName =
-							'#<portlet:namespace />' + commerceVirtualOrderItemId + 'Fm';
-
-						var form = window.document.querySelector(formName);
-
-						submitForm(form);
-					},
-					['aui-base']
-				);
-			</aui:script>
 		</liferay-ddm:template-renderer>
 	</c:otherwise>
 </c:choose>

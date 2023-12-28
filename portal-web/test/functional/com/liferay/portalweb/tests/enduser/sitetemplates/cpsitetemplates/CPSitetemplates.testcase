@@ -323,7 +323,9 @@ definition {
 				key_itemName = "Home",
 				locator1 = "PagesAdmin#LIST_GROUP_ITEM");
 
-			AssertElementNotPresent(locator1 = "Button#NEW");
+			AssertElementNotPresent(
+				key_text = "New",
+				locator1 = "Button#ANY");
 		}
 
 		task ("And: But should be able to add child page to Test Page") {
@@ -331,7 +333,9 @@ definition {
 				key_itemName = "Test Page",
 				locator1 = "PagesAdmin#LIST_GROUP_ITEM");
 
-			Click(locator1 = "Button#NEW");
+			Click(
+				key_text = "New",
+				locator1 = "Button#ANY");
 
 			AssertElementPresent(
 				key_menuItem = "Add Child Page of Test Page",

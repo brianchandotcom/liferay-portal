@@ -8,10 +8,12 @@ components:
                     type: string
                 required:
                     type: boolean
-                supported:
-                    type: boolean
                 type:
                     type: string
+                unsupportedFormats:
+                    items:
+                        type: string
+                    type: array
         Mapping:
             properties:
                 externalFieldName:

@@ -16,7 +16,7 @@ import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.search.site.SitesProvider;
+import com.liferay.portal.search.site.SitesJSONObjectProvider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,8 +29,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Gustavo Lima
  */
-@Component(service = SitesProvider.class)
-public class SitesProviderImpl implements SitesProvider {
+@Component(service = SitesJSONObjectProvider.class)
+public class SitesJSONObjectProviderImpl implements SitesJSONObjectProvider {
 
 	@Override
 	public JSONObject getSiteJSONObject(ResourceRequest resourceRequest)
@@ -150,7 +150,7 @@ public class SitesProviderImpl implements SitesProvider {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		SitesProviderImpl.class);
+		SitesJSONObjectProviderImpl.class);
 
 	@Reference
 	private GroupService _groupService;

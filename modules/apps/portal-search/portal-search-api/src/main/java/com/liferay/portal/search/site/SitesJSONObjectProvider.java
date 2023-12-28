@@ -15,7 +15,7 @@ import javax.portlet.ResourceRequest;
  * @author Gustavo Lima
  */
 @ProviderType
-public interface SitesProvider {
+public interface SitesJSONObjectProvider {
 
 	public JSONObject getSiteJSONObject(ResourceRequest resourceRequest)
 		throws Exception;

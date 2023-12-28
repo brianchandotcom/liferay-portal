@@ -15,7 +15,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.search.site.SitesProvider;
+import com.liferay.portal.search.site.SitesJSONObjectProvider;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.ArrayList;
@@ -37,7 +37,7 @@ import org.mockito.Mockito;
 /**
  * @author Gustavo Lima
  */
-public class SitesProviderTest {
+public class SitesJSONObjectProviderTest {
 
 	@ClassRule
 	@Rule
@@ -46,10 +46,10 @@ public class SitesProviderTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_sitesProvider = new SitesProviderImpl();
+		_sitesJSONObjectProvider = new SitesJSONObjectProviderImpl();
 
 		ReflectionTestUtil.setFieldValue(
-			_sitesProvider, "_groupService", _groupService);
+			_sitesJSONObjectProvider, "_groupService", _groupService);
 
 		_paramUtilMockedStatic = Mockito.mockStatic(ParamUtil.class);
 	}
@@ -86,7 +86,7 @@ public class SitesProviderTest {
 				}
 			});
 
-		JSONObject siteJSONObject = _sitesProvider.getSiteJSONObject(
+		JSONObject siteJSONObject = _sitesJSONObjectProvider.getSiteJSONObject(
 			_resourceRequest);
 
 		Assert.assertEquals(
@@ -112,8 +112,8 @@ public class SitesProviderTest {
 
 		_setUpGroups(false, 3, new ArrayList<>());
 
-		JSONObject sitesJSONObject = _sitesProvider.getSitesJSONObject(
-			_resourceRequest);
+		JSONObject sitesJSONObject =
+			_sitesJSONObjectProvider.getSitesJSONObject(_resourceRequest);
 
 		JSONArray sitesJSONArray = sitesJSONObject.getJSONArray("items");
 
@@ -137,8 +137,8 @@ public class SitesProviderTest {
 				}
 			});
 
-		JSONObject sitesJSONObject = _sitesProvider.getSitesJSONObject(
-			_resourceRequest);
+		JSONObject sitesJSONObject =
+			_sitesJSONObjectProvider.getSitesJSONObject(_resourceRequest);
 
 		JSONArray sitesJSONArray = sitesJSONObject.getJSONArray("items");
 
@@ -155,8 +155,8 @@ public class SitesProviderTest {
 
 		_setUpGroups(true, 3, new ArrayList<>());
 
-		JSONObject sitesJSONObject = _sitesProvider.getSitesJSONObject(
-			_resourceRequest);
+		JSONObject sitesJSONObject =
+			_sitesJSONObjectProvider.getSitesJSONObject(_resourceRequest);
 
 		JSONArray sitesJSONArray = sitesJSONObject.getJSONArray("items");
 
@@ -170,8 +170,8 @@ public class SitesProviderTest {
 		_setUpPages(_resourceRequest, 5, 3);
 		_setUpGroups(true, 8, new ArrayList<>());
 
-		JSONObject sitesJSONObject = _sitesProvider.getSitesJSONObject(
-			_resourceRequest);
+		JSONObject sitesJSONObject =
+			_sitesJSONObjectProvider.getSitesJSONObject(_resourceRequest);
 
 		Assert.assertEquals(2, sitesJSONObject.getInt("lastPage"));
 
@@ -187,8 +187,8 @@ public class SitesProviderTest {
 		_setUpPages(_resourceRequest, 10, 1);
 		_setUpGroups(true, 8, new ArrayList<>());
 
-		JSONObject sitesJSONObject = _sitesProvider.getSitesJSONObject(
-			_resourceRequest);
+		JSONObject sitesJSONObject =
+			_sitesJSONObjectProvider.getSitesJSONObject(_resourceRequest);
 
 		Assert.assertEquals(1, sitesJSONObject.getInt("lastPage"));
 
@@ -204,8 +204,8 @@ public class SitesProviderTest {
 		_setUpPages(_resourceRequest, 5, 2);
 		_setUpGroups(true, 10, new ArrayList<>());
 
-		JSONObject sitesJSONObject = _sitesProvider.getSitesJSONObject(
-			_resourceRequest);
+		JSONObject sitesJSONObject =
+			_sitesJSONObjectProvider.getSitesJSONObject(_resourceRequest);
 
 		Assert.assertEquals(2, sitesJSONObject.getInt("lastPage"));
 
@@ -345,7 +345,7 @@ public class SitesProviderTest {
 	private MockedStatic<ParamUtil> _paramUtilMockedStatic;
 	private final ResourceRequest _resourceRequest = Mockito.mock(
 		ResourceRequest.class);
-	private SitesProvider _sitesProvider;
+	private SitesJSONObjectProvider _sitesJSONObjectProvider;
 	private final ThemeDisplay _themeDisplay = Mockito.mock(ThemeDisplay.class);
 
 }

@@ -65,10 +65,6 @@ definition {
 				status = "published",
 				title = "My-app");
 
-			SchemaAPI.relateRequestSchemaToEndpointByErc(
-				endpointErc = "My-app_testendpoint",
-				requestSchemaErc = "My-app_testSchema");
-
 			SchemaAPI.relateResponseSchemaToEndpointByErc(
 				endpointErc = "My-app_testendpoint",
 				responseSchemaErc = "My-app_testSchema");
@@ -114,10 +110,6 @@ definition {
 				schemaName = "testSchema",
 				status = "published",
 				title = "My-app");
-
-			SchemaAPI.relateRequestSchemaToEndpointByErc(
-				endpointErc = "My-app_testendpoint",
-				requestSchemaErc = "My-app_testSchema");
 
 			SchemaAPI.relateResponseSchemaToEndpointByErc(
 				endpointErc = "My-app_testendpoint",
@@ -203,10 +195,6 @@ definition {
 				status = "published",
 				title = "My-app");
 
-			SchemaAPI.relateRequestSchemaToEndpointByErc(
-				endpointErc = "My-app_testendpoint",
-				requestSchemaErc = "My-app_testSchema");
-
 			SchemaAPI.relateResponseSchemaToEndpointByErc(
 				endpointErc = "My-app_testendpoint",
 				responseSchemaErc = "My-app_testSchema");
@@ -266,10 +254,6 @@ definition {
 				status = "published",
 				title = "My-app");
 
-			SchemaAPI.relateRequestSchemaToEndpointByErc(
-				endpointErc = "My-app_testendpoint",
-				requestSchemaErc = "My-app_testSchema");
-
 			SchemaAPI.relateResponseSchemaToEndpointByErc(
 				endpointErc = "My-app_testendpoint",
 				responseSchemaErc = "My-app_testSchema");
@@ -315,10 +299,6 @@ definition {
 				schemaName = "testSchema",
 				status = "published",
 				title = "My-app");
-
-			SchemaAPI.relateRequestSchemaToEndpointByErc(
-				endpointErc = "My-app_testendpoint",
-				requestSchemaErc = "My-app_testSchema");
 
 			SchemaAPI.relateResponseSchemaToEndpointByErc(
 				endpointErc = "My-app_testendpoint",

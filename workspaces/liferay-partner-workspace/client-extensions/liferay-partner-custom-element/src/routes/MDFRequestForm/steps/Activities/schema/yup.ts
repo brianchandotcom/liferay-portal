@@ -97,7 +97,7 @@ const activitiesSchema = object({
 						}
 					)
 					.test(
-						'end-date-less-end-date',
+						'end-date-less-start-date',
 						'The end date cannot be before start date',
 						(endDate, testContext) => {
 							if (endDate && testContext.parent.startDate) {
@@ -124,11 +124,13 @@ const activitiesSchema = object({
 					.test(
 						'end-date-year-current-year',
 						'The end date cannot exceed the current year',
-						(endDate) => {
+						(endDate, testContext) => {
 							const currentYear = new Date().getFullYear();
 
 							if (endDate && currentYear) {
-								return endDate.getFullYear() === currentYear;
+								return testContext.parent.dateCreated
+									? true
+									: endDate.getFullYear() === currentYear;
 							}
 
 							return false;
@@ -161,25 +163,29 @@ const activitiesSchema = object({
 					.test(
 						'is-today',
 						'Start date need to be after today',
-						(startDate) => {
+						(startDate, testContext) => {
 							if (startDate) {
 								const currentDate = new Date();
 								currentDate.setHours(0, 0, 0, 0);
 
-								return currentDate < startDate;
+								return testContext.parent.dateCreated
+									? true
+									: currentDate < startDate;
 							}
 
 							return false;
 						}
 					)
 					.test(
-						'end-date-year-current-year',
+						'start-date-year-current-year',
 						'The start date cannot exceed the current year',
-						(startDate) => {
+						(startDate, testContext) => {
 							const currentYear = new Date().getFullYear();
 
 							if (startDate && currentYear) {
-								return startDate.getFullYear() === currentYear;
+								return testContext.parent.dateCreated
+									? true
+									: startDate.getFullYear() === currentYear;
 							}
 
 							return false;

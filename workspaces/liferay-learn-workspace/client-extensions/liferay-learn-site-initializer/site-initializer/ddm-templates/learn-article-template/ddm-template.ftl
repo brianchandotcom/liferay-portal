@@ -563,7 +563,7 @@
 					<#if isLandingPage>
 						<#include "${templatesPath}/LANDING-PAGE">
 					</#if>
-					
+
 					<hr class="mt-4 separator solid">
 					<div class="autofit-padded-no-gutters-x autofit-row border help-center-footer pb-3 pl-3 rounded-10">
 						<div class="autofit-col autofit-col-expand">

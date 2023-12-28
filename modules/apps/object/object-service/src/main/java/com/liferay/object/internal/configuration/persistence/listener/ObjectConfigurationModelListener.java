@@ -1,0 +1,51 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.object.internal.configuration.persistence.listener;
+
+import com.liferay.object.configuration.ObjectConfiguration;
+import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
+import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;
+import com.liferay.portal.kernel.util.GetterUtil;
+
+import java.util.Dictionary;
+import java.util.Objects;
+
+import org.osgi.service.component.annotations.Component;
+
+/**
+ * @author Thalles Montenegro
+ */
+@Component(
+	property = "model.class.name=com.liferay.object.configuration.ObjectConfiguration",
+	service = ConfigurationModelListener.class
+)
+public class ObjectConfigurationModelListener
+	implements ConfigurationModelListener {
+
+	@Override
+	public void onBeforeSave(String pid, Dictionary<String, Object> properties)
+		throws ConfigurationModelListenerException {
+
+		long duration = GetterUtil.getLong(properties.get("duration"));
+
+		if (duration < 1)
+
+			throw new ConfigurationModelListenerException(
+				"Duration field cannot be lesser than 1",
+				ObjectConfiguration.class, getClass(), properties);
+
+		String timeScale = GetterUtil.getString(properties.get("timeScale"));
+
+		if (!(Objects.equals(timeScale, "days") ||
+			  Objects.equals(timeScale, "weeks"))) {
+
+			throw new ConfigurationModelListenerException(
+				"Value for TimeScale field is not valid",
+				ObjectConfiguration.class, getClass(), properties);
+		}
+	}
+
+}

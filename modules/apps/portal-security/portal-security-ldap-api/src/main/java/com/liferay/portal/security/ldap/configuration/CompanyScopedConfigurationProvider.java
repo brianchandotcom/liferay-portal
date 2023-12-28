@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 
@@ -271,18 +272,25 @@ public abstract class CompanyScopedConfigurationProvider
 
 	private T _getConfigurationSystem() {
 		try {
-			Configuration configuration =
-				getConfigurationAdmin().getConfiguration(getMetatypeId(), "?");
+			String filterString = StringBundler.concat(
+				"(&(service.pid=", getMetatypeId(), ")(",
+				LDAPConstants.COMPANY_ID, StringPool.EQUAL,
+				CompanyConstants.SYSTEM, "))");
 
-			return ConfigurableUtil.createConfigurable(
-				getMetatype(), configuration.getProperties());
+			Configuration[] configuration =
+				getConfigurationAdmin().listConfigurations(filterString);
+
+			if (configuration != null) {
+				return ConfigurableUtil.createConfigurable(
+					getMetatype(), configuration[0].getProperties());
+			}
 		}
-		catch (IOException ioException) {
+		catch (InvalidSyntaxException | IOException exception) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Unable to get configuration for company " +
 						getMetatypeId(),
-					ioException);
+					exception);
 			}
 		}
 

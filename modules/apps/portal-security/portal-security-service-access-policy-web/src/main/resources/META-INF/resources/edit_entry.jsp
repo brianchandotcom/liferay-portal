@@ -151,7 +151,7 @@ renderResponse.setTitle((sapEntry == null) ? LanguageUtil.get(request, "new-serv
 	);
 </aui:script>
 
-<aui:script use="autocomplete,autocomplete-filters,io-base,liferay-auto-fields,liferay-portlet-url">
+<aui:script use="autocomplete,autocomplete-filters,io-base,liferay-auto-fields">
 	var REGEX_DOT = /\./g;
 
 	var actionMethodNamesCache = {};
@@ -159,10 +159,6 @@ renderResponse.setTitle((sapEntry == null) ? LanguageUtil.get(request, "new-serv
 	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="getActionMethodNamesURL">
 		<portlet:param name="<%= ActionRequest.ACTION_NAME %>" value="getActionMethodNames" />
 	</liferay-portlet:resourceURL>
-
-	var getActionMethodNamesURL = Liferay.PortletURL.createURL(
-		'<%= getActionMethodNamesURL %>'
-	);
 
 	var serviceClassNamesToContextNames = <%= request.getAttribute(SAPWebKeys.SERVICE_CLASS_NAMES_TO_CONTEXT_NAMES) %>;
 
@@ -182,10 +178,12 @@ renderResponse.setTitle((sapEntry == null) ? LanguageUtil.get(request, "new-serv
 					contextName = '';
 				}
 
-				getActionMethodNamesURL.setParameter('contextName', contextName);
-				getActionMethodNamesURL.setParameter(
-					'serviceClassName',
-					serviceClassName
+				const getActionMethodNamesURL = Liferay.Util.PortletURL.createPortletURL(
+					'<%= getActionMethodNamesURL %>',
+					{
+						contextName,
+						serviceClassName,
+					}
 				);
 
 				Liferay.Util.fetch(getActionMethodNamesURL.toString())

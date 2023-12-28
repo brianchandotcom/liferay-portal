@@ -88,7 +88,7 @@ public class CommerceVirtualOrderItemFileEntryServiceImpl
 	public CommerceVirtualOrderItemFileEntry
 			updateCommerceVirtualOrderItemFileEntry(
 				long commerceVirtualOrderItemFileEntryId, long fileEntryId,
-				String url, String version)
+				String url, int usages, String version)
 		throws PortalException {
 
 		CommerceVirtualOrderItemFileEntry commerceVirtualOrderItemFileEntry =
@@ -110,7 +110,8 @@ public class CommerceVirtualOrderItemFileEntryServiceImpl
 
 		return commerceVirtualOrderItemFileEntryLocalService.
 			updateCommerceVirtualOrderItemFileEntry(
-				commerceVirtualOrderItemFileEntryId, fileEntryId, url, version);
+				commerceVirtualOrderItemFileEntryId, fileEntryId, url, usages,
+				version);
 	}
 
 	@Reference(

@@ -36,7 +36,7 @@ public class CommerceVirtualOrderItemFileEntryLocalServiceImpl
 	public CommerceVirtualOrderItemFileEntry
 			addCommerceVirtualOrderItemFileEntry(
 				long userId, long groupId, long commerceOrderItemId,
-				long fileEntryId, String url, String version)
+				long fileEntryId, String url, int usages, String version)
 		throws PortalException {
 
 		User user = _userLocalService.getUser(userId);
@@ -62,6 +62,7 @@ public class CommerceVirtualOrderItemFileEntryLocalServiceImpl
 			commerceOrderItemId);
 		commerceVirtualOrderItemFileEntry.setFileEntryId(fileEntryId);
 		commerceVirtualOrderItemFileEntry.setUrl(url);
+		commerceVirtualOrderItemFileEntry.setUsages(usages);
 		commerceVirtualOrderItemFileEntry.setVersion(version);
 
 		return commerceVirtualOrderItemFileEntryPersistence.update(
@@ -96,10 +97,26 @@ public class CommerceVirtualOrderItemFileEntryLocalServiceImpl
 	}
 
 	@Override
+	public CommerceVirtualOrderItemFileEntry incrementUsages(
+			long commerceVirtualOrderItemFileEntryId)
+		throws PortalException {
+
+		CommerceVirtualOrderItemFileEntry commerceVirtualOrderItemFileEntry =
+			commerceVirtualOrderItemFileEntryPersistence.findByPrimaryKey(
+				commerceVirtualOrderItemFileEntryId);
+
+		commerceVirtualOrderItemFileEntry.setUsages(
+			commerceVirtualOrderItemFileEntry.getUsages() + 1);
+
+		return commerceVirtualOrderItemFileEntryPersistence.update(
+			commerceVirtualOrderItemFileEntry);
+	}
+
+	@Override
 	public CommerceVirtualOrderItemFileEntry
 			updateCommerceVirtualOrderItemFileEntry(
 				long commerceVirtualOrderItemFileEntryId, long fileEntryId,
-				String url, String version)
+				String url, int usages, String version)
 		throws PortalException {
 
 		if (Validator.isNotNull(url)) {
@@ -114,6 +131,7 @@ public class CommerceVirtualOrderItemFileEntryLocalServiceImpl
 
 		commerceVirtualOrderItemFileEntry.setFileEntryId(fileEntryId);
 		commerceVirtualOrderItemFileEntry.setUrl(url);
+		commerceVirtualOrderItemFileEntry.setUsages(usages);
 		commerceVirtualOrderItemFileEntry.setVersion(version);
 
 		return commerceVirtualOrderItemFileEntryPersistence.update(

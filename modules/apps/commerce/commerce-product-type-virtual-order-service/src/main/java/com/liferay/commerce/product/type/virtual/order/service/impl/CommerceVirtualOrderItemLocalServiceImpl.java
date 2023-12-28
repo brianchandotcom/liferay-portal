@@ -62,7 +62,7 @@ public class CommerceVirtualOrderItemLocalServiceImpl
 	public CommerceVirtualOrderItem addCommerceVirtualOrderItem(
 			long commerceOrderItemId,
 			List<CPDVirtualSettingFileEntry> cpdVirtualSettingFileEntries,
-			int activationStatus, long duration, int usages, int maxUsages,
+			int activationStatus, long duration, int maxUsages,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -88,7 +88,6 @@ public class CommerceVirtualOrderItemLocalServiceImpl
 		commerceVirtualOrderItem.setCommerceOrderItemId(commerceOrderItemId);
 		commerceVirtualOrderItem.setActivationStatus(activationStatus);
 		commerceVirtualOrderItem.setDuration(duration);
-		commerceVirtualOrderItem.setUsages(usages);
 		commerceVirtualOrderItem.setMaxUsages(maxUsages);
 
 		if (Objects.equals(
@@ -112,7 +111,7 @@ public class CommerceVirtualOrderItemLocalServiceImpl
 					user.getUserId(), groupId,
 					commerceVirtualOrderItem.getCommerceVirtualOrderItemId(),
 					cpdVirtualSettingFileEntry.getFileEntryId(),
-					cpdVirtualSettingFileEntry.getUrl(),
+					cpdVirtualSettingFileEntry.getUrl(), 0,
 					cpdVirtualSettingFileEntry.getVersion());
 		}
 
@@ -148,7 +147,7 @@ public class CommerceVirtualOrderItemLocalServiceImpl
 			return commerceVirtualOrderItemLocalService.
 				addCommerceVirtualOrderItem(
 					commerceOrderItemId, null,
-					CommerceOrderConstants.ORDER_STATUS_COMPLETED, 0, 0, 0,
+					CommerceOrderConstants.ORDER_STATUS_COMPLETED, 0, 0,
 					serviceContext);
 		}
 
@@ -156,7 +155,7 @@ public class CommerceVirtualOrderItemLocalServiceImpl
 			commerceOrderItemId,
 			cpDefinitionVirtualSetting.getCPDVirtualSettingFileEntries(),
 			cpDefinitionVirtualSetting.getActivationStatus(),
-			cpDefinitionVirtualSetting.getDuration(), 0,
+			cpDefinitionVirtualSetting.getDuration(),
 			cpDefinitionVirtualSetting.getMaxUsages(), serviceContext);
 	}
 
@@ -287,22 +286,6 @@ public class CommerceVirtualOrderItemLocalServiceImpl
 	}
 
 	@Override
-	public CommerceVirtualOrderItem incrementCommerceVirtualOrderItemUsages(
-			long commerceVirtualOrderItemId)
-		throws PortalException {
-
-		CommerceVirtualOrderItem commerceVirtualOrderItem =
-			commerceVirtualOrderItemPersistence.findByPrimaryKey(
-				commerceVirtualOrderItemId);
-
-		commerceVirtualOrderItem.setUsages(
-			commerceVirtualOrderItem.getUsages() + 1);
-
-		return commerceVirtualOrderItemPersistence.update(
-			commerceVirtualOrderItem);
-	}
-
-	@Override
 	public void setActive(long commerceVirtualOrderItemId, boolean active)
 		throws PortalException {
 
@@ -318,7 +301,7 @@ public class CommerceVirtualOrderItemLocalServiceImpl
 	@Override
 	public CommerceVirtualOrderItem updateCommerceVirtualOrderItem(
 			long commerceVirtualOrderItemId, int activationStatus,
-			long duration, int usages, int maxUsages, boolean active)
+			long duration, int maxUsages, boolean active)
 		throws PortalException {
 
 		CommerceVirtualOrderItem commerceVirtualOrderItem =
@@ -341,7 +324,6 @@ public class CommerceVirtualOrderItemLocalServiceImpl
 		}
 
 		commerceVirtualOrderItem.setDuration(duration);
-		commerceVirtualOrderItem.setUsages(usages);
 		commerceVirtualOrderItem.setMaxUsages(maxUsages);
 		commerceVirtualOrderItem.setActive(active);
 

@@ -109,7 +109,7 @@ public class CommerceVirtualOrderItemServiceImpl
 	@Override
 	public CommerceVirtualOrderItem updateCommerceVirtualOrderItem(
 			long commerceVirtualOrderItemId, int activationStatus,
-			long duration, int usages, int maxUsages, boolean active)
+			long duration, int maxUsages, boolean active)
 		throws PortalException {
 
 		CommerceVirtualOrderItem commerceVirtualOrderItem =
@@ -125,7 +125,7 @@ public class CommerceVirtualOrderItemServiceImpl
 
 		return commerceVirtualOrderItemLocalService.
 			updateCommerceVirtualOrderItem(
-				commerceVirtualOrderItemId, activationStatus, duration, usages,
+				commerceVirtualOrderItemId, activationStatus, duration,
 				maxUsages, active);
 	}
 

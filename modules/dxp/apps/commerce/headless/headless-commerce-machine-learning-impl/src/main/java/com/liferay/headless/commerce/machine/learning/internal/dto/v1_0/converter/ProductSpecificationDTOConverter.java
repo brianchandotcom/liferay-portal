@@ -54,9 +54,6 @@ public class ProductSpecificationDTOConverter
 			return null;
 		}
 
-		CPSpecificationOption cpSpecificationOption =
-			cpDefinitionSpecificationOptionValue.getCPSpecificationOption();
-
 		return new ProductSpecification() {
 			{
 				setId(
@@ -65,7 +62,14 @@ public class ProductSpecificationDTOConverter
 				setOptionCategoryId(
 					cpDefinitionSpecificationOptionValue::
 						getCPOptionCategoryId);
-				setSpecificationKey(cpSpecificationOption::getKey);
+				setSpecificationKey(
+					() -> {
+						CPSpecificationOption cpSpecificationOption =
+							cpDefinitionSpecificationOptionValue.
+								getCPSpecificationOption();
+
+						return cpSpecificationOption.getKey();
+					});
 				setValue(
 					() -> LanguageUtils.getLanguageIdMap(
 						cpDefinitionSpecificationOptionValue.getValueMap()));

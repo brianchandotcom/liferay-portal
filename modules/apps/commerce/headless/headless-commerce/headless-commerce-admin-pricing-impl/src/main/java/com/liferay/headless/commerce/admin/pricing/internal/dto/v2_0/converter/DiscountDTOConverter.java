@@ -23,7 +23,6 @@ import java.math.BigDecimal;
 
 import java.util.Locale;
 import java.util.Objects;
-import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -51,21 +50,21 @@ public class DiscountDTOConverter
 			_commerceDiscountService.getCommerceDiscount(
 				(Long)dtoConverterContext.getId());
 
-		ExpandoBridge expandoBridge = commerceDiscount.getExpandoBridge();
-
-		Locale locale = dtoConverterContext.getLocale();
-
-		ResourceBundle resourceBundle = LanguageResources.getResourceBundle(
-			locale);
-
 		return new Discount() {
 			{
 				setActions(dtoConverterContext::getActions);
 				setActive(commerceDiscount::isActive);
 				setAmountFormatted(
-					() -> _getAmountFormatted(commerceDiscount, locale));
+					() -> _getAmountFormatted(
+						commerceDiscount, dtoConverterContext.getLocale()));
 				setCouponCode(commerceDiscount::getCouponCode);
-				setCustomFields(expandoBridge::getAttributes);
+				setCustomFields(
+					() -> {
+						ExpandoBridge expandoBridge =
+							commerceDiscount.getExpandoBridge();
+
+						return expandoBridge.getAttributes();
+					});
 				setDisplayDate(commerceDiscount::getDisplayDate);
 				setExpirationDate(commerceDiscount::getExpirationDate);
 				setExternalReferenceCode(
@@ -87,7 +86,9 @@ public class DiscountDTOConverter
 				setRulesConjunction(commerceDiscount::isRulesConjunction);
 				setTarget(
 					() -> _language.get(
-						resourceBundle, commerceDiscount.getTarget()));
+						LanguageResources.getResourceBundle(
+							dtoConverterContext.getLocale()),
+						commerceDiscount.getTarget()));
 				setTitle(commerceDiscount::getTitle);
 				setUseCouponCode(commerceDiscount::isUseCouponCode);
 				setUsePercentage(commerceDiscount::isUsePercentage);

@@ -79,8 +79,6 @@ public class PlacedOrderItemDTOConverter
 
 		Locale locale = placedOrderItemDTOConverterContext.getLocale();
 
-		ExpandoBridge expandoBridge = commerceOrderItem.getExpandoBridge();
-
 		return new PlacedOrderItem() {
 			{
 				setAdaptiveMediaImageHTMLTag(
@@ -91,7 +89,13 @@ public class PlacedOrderItemDTOConverter
 									getAccountId(),
 								commerceOrderItem.getCompanyId(),
 								commerceOrderItem.getCPInstanceId()));
-				setCustomFields(expandoBridge::getAttributes);
+				setCustomFields(
+					() -> {
+						ExpandoBridge expandoBridge =
+							commerceOrderItem.getExpandoBridge();
+
+						return expandoBridge.getAttributes();
+					});
 				setErrorMessages(
 					() -> _getErrorMessages(commerceOrderItem, locale));
 				setId(commerceOrderItem::getCommerceOrderItemId);

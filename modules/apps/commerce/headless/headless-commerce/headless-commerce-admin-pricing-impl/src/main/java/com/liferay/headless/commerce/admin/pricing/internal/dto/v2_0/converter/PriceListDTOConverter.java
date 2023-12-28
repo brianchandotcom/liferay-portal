@@ -46,19 +46,6 @@ public class PriceListDTOConverter
 			_commercePriceListService.getCommercePriceList(
 				(Long)dtoConverterContext.getId());
 
-		CommerceCurrency commerceCurrency =
-			commercePriceList.getCommerceCurrency();
-
-		String priceListStatusLabel = WorkflowConstants.getStatusLabel(
-			commercePriceList.getStatus());
-
-		String priceListStatusLabelI18n = _language.get(
-			LanguageResources.getResourceBundle(
-				dtoConverterContext.getLocale()),
-			WorkflowConstants.getStatusLabel(commercePriceList.getStatus()));
-
-		ExpandoBridge expandoBridge = commercePriceList.getExpandoBridge();
-
 		return new PriceList() {
 			{
 				setActions(dtoConverterContext::getActions);
@@ -69,8 +56,20 @@ public class PriceListDTOConverter
 				setCatalogId(() -> _getCatalogId(commercePriceList));
 				setCatalogName(() -> _getCatalogName(commercePriceList));
 				setCreateDate(commercePriceList::getCreateDate);
-				setCurrencyCode(commerceCurrency::getCode);
-				setCustomFields(expandoBridge::getAttributes);
+				setCurrencyCode(
+					() -> {
+						CommerceCurrency commerceCurrency =
+							commercePriceList.getCommerceCurrency();
+
+						return commerceCurrency.getCode();
+					});
+				setCustomFields(
+					() -> {
+						ExpandoBridge expandoBridge =
+							commercePriceList.getExpandoBridge();
+
+						return expandoBridge.getAttributes();
+					});
 				setDisplayDate(commercePriceList::getDisplayDate);
 				setExpirationDate(commercePriceList::getExpirationDate);
 				setExternalReferenceCode(
@@ -83,9 +82,21 @@ public class PriceListDTOConverter
 				setPriority(commercePriceList::getPriority);
 				setType(() -> Type.create(commercePriceList.getType()));
 				setWorkflowStatusInfo(
-					() -> _toStatus(
-						commercePriceList.getStatus(), priceListStatusLabel,
-						priceListStatusLabelI18n));
+					() -> {
+						String priceListStatusLabel =
+							WorkflowConstants.getStatusLabel(
+								commercePriceList.getStatus());
+
+						String priceListStatusLabelI18n = _language.get(
+							LanguageResources.getResourceBundle(
+								dtoConverterContext.getLocale()),
+							WorkflowConstants.getStatusLabel(
+								commercePriceList.getStatus()));
+
+						return _toStatus(
+							commercePriceList.getStatus(), priceListStatusLabel,
+							priceListStatusLabelI18n);
+					});
 			}
 		};
 	}

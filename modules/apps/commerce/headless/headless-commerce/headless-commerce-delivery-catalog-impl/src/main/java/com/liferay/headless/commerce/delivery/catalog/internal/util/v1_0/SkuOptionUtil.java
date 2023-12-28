@@ -42,13 +42,6 @@ public class SkuOptionUtil {
 			for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel :
 					cpDefinitionOptionValueRels) {
 
-				CPInstance cpInstance =
-					cpInstanceLocalService.fetchCProductInstance(
-						cpDefinitionOptionValueRel.getCProductId(),
-						cpDefinitionOptionValueRel.getCPInstanceUuid());
-				BigDecimal priceBigDecimal =
-					cpDefinitionOptionValueRel.getPrice();
-
 				SkuOption skuOption = new SkuOption() {
 					{
 						setKey(
@@ -56,16 +49,36 @@ public class SkuOptionUtil {
 								cpDefinitionOptionRel.
 									getCPDefinitionOptionRelId());
 						setPrice(
-							() -> (priceBigDecimal == null) ?
-								BigDecimal.ZERO.toString() :
-									priceBigDecimal.toString());
+							() -> {
+								BigDecimal priceBigDecimal =
+									cpDefinitionOptionValueRel.getPrice();
+
+								if (priceBigDecimal == null) {
+									return BigDecimal.ZERO.toString();
+								}
+
+								return priceBigDecimal.toString();
+							});
 						setPriceType(cpDefinitionOptionRel::getPriceType);
 						setQuantity(
 							() -> String.valueOf(
 								cpDefinitionOptionValueRel.getQuantity()));
 						setSkuId(
-							() -> (cpInstance == null) ? null :
-								cpInstance.getCPInstanceId());
+							() -> {
+								CPInstance cpInstance =
+									cpInstanceLocalService.
+										fetchCProductInstance(
+											cpDefinitionOptionValueRel.
+												getCProductId(),
+											cpDefinitionOptionValueRel.
+												getCPInstanceUuid());
+
+								if (cpInstance == null) {
+									return null;
+								}
+
+								return cpInstance.getCPInstanceId();
+							});
 						setSkuOptionId(
 							() ->
 								cpDefinitionOptionRel.

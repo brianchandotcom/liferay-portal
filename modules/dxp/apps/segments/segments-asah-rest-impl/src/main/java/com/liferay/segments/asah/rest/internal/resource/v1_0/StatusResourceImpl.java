@@ -60,10 +60,6 @@ public class StatusResourceImpl extends BaseStatusResourceImpl {
 	}
 
 	private Experiment _toExperiment(SegmentsExperiment segmentsExperiment) {
-		SegmentsExperimentConstants.Status segmentsExperimentConstantsStatus =
-			SegmentsExperimentConstants.Status.valueOf(
-				segmentsExperiment.getStatus());
-
 		return new Experiment() {
 			{
 				setDateCreated(segmentsExperiment::getCreateDate);
@@ -72,7 +68,15 @@ public class StatusResourceImpl extends BaseStatusResourceImpl {
 				setId(segmentsExperiment::getSegmentsExperimentKey);
 				setName(segmentsExperiment::getName);
 				setSiteId(segmentsExperiment::getGroupId);
-				setStatus(segmentsExperimentConstantsStatus::toString);
+				setStatus(
+					() -> {
+						SegmentsExperimentConstants.Status
+							segmentsExperimentConstantsStatus =
+								SegmentsExperimentConstants.Status.valueOf(
+									segmentsExperiment.getStatus());
+
+						return segmentsExperimentConstantsStatus.toString();
+					});
 				setWinnerVariantId(
 					segmentsExperiment::getWinnerSegmentsExperienceId);
 			}

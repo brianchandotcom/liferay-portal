@@ -16,7 +16,6 @@ import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * @author Luis Miguel Barcos
@@ -26,12 +25,6 @@ public class VersionUtil {
 	public static Version toVersion(
 		AcceptLanguage acceptLanguage, JournalArticle journalArticle) {
 
-		Set<Locale> availableLocales = LanguageUtil.getAvailableLocales(
-			journalArticle.getGroupId());
-
-		String statusLabel = WorkflowConstants.getStatusLabel(
-			journalArticle.getStatus());
-
 		return new Version() {
 			{
 				setNumber(journalArticle::getVersion);
@@ -39,7 +32,9 @@ public class VersionUtil {
 					() -> new Status() {
 						{
 							setCode(journalArticle::getStatus);
-							setLabel(() -> statusLabel);
+							setLabel(
+								() -> WorkflowConstants.getStatusLabel(
+									journalArticle.getStatus()));
 							setLabel_i18n(
 								() -> {
 									if (!acceptLanguage.
@@ -48,14 +43,18 @@ public class VersionUtil {
 										return null;
 									}
 
+									String label = getLabel();
+
 									Map<String, String> map = new HashMap<>();
 
-									for (Locale locale : availableLocales) {
+									for (Locale locale :
+											LanguageUtil.getAvailableLocales(
+												journalArticle.getGroupId())) {
+
 										map.put(
 											LocaleUtil.toBCP47LanguageId(
 												locale),
-											LanguageUtil.get(
-												locale, statusLabel));
+											LanguageUtil.get(locale, label));
 									}
 
 									return map;

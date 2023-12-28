@@ -37,8 +37,6 @@ public class FormRecordUtil {
 			Portal portal, UserLocalService userLocalService)
 		throws Exception {
 
-		DDMFormValues ddmFormValues = ddmFormInstanceRecord.getDDMFormValues();
-
 		return new FormRecord() {
 			{
 				setCreator(
@@ -54,28 +52,35 @@ public class FormRecordUtil {
 						ddmFormInstanceRecord.getStatus() ==
 							WorkflowConstants.STATUS_DRAFT);
 				setFormFieldValues(
-					() -> TransformUtil.transformToArray(
-						ddmFormValues.getDDMFormFieldValues(),
-						ddmFormFieldValue -> {
-							Value localizedValue = ddmFormFieldValue.getValue();
+					() -> {
+						DDMFormValues ddmFormValues =
+							ddmFormInstanceRecord.getDDMFormValues();
 
-							if (localizedValue == null) {
-								return null;
-							}
+						return TransformUtil.transformToArray(
+							ddmFormValues.getDDMFormFieldValues(),
+							ddmFormFieldValue -> {
+								Value localizedValue =
+									ddmFormFieldValue.getValue();
 
-							return new FormFieldValue() {
-								{
-									setFormDocument(
-										() -> _toFormDocument(
-											dlAppService, dlurlHelper, locale,
-											localizedValue));
-									setName(ddmFormFieldValue::getName);
-									setValue(
-										() -> localizedValue.getString(locale));
+								if (localizedValue == null) {
+									return null;
 								}
-							};
-						},
-						FormFieldValue.class));
+
+								return new FormFieldValue() {
+									{
+										setFormDocument(
+											() -> _toFormDocument(
+												dlAppService, dlurlHelper,
+												locale, localizedValue));
+										setName(ddmFormFieldValue::getName);
+										setValue(
+											() -> localizedValue.getString(
+												locale));
+									}
+								};
+							},
+							FormFieldValue.class);
+					});
 				setId(ddmFormInstanceRecord::getFormInstanceRecordId);
 			}
 		};

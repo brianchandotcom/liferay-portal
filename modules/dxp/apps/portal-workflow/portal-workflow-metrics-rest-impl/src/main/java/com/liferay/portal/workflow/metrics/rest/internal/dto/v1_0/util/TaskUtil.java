@@ -38,13 +38,13 @@ public class TaskUtil {
 		Document document, Language language, Locale locale, Portal portal,
 		ResourceBundle resourceBundle, Function<Long, User> userFunction) {
 
-		Map<String, String> assetTitleMap = _createMap(document, "assetTitle");
-		Map<String, String> assetTypeMap = _createMap(document, "assetType");
-
 		return new Task() {
 			{
 				setAssetTitle(
 					() -> {
+						Map<String, String> assetTitleMap =
+							getAssetTitle_i18n();
+
 						String assetTitle = assetTitleMap.get(
 							locale.toLanguageTag());
 
@@ -58,9 +58,11 @@ public class TaskUtil {
 
 						return assetTitle;
 					});
-				setAssetTitle_i18n(() -> assetTitleMap);
+				setAssetTitle_i18n(() -> _createMap(document, "assetTitle"));
 				setAssetType(
 					() -> {
+						Map<String, String> assetTypeMap = getAssetType_i18n();
+
 						String assetType = assetTypeMap.get(
 							locale.toLanguageTag());
 
@@ -74,7 +76,7 @@ public class TaskUtil {
 
 						return assetType;
 					});
-				setAssetType_i18n(() -> assetTypeMap);
+				setAssetType_i18n(() -> _createMap(document, "assetType"));
 				setAssignee(
 					() -> {
 						String assigneeType = document.getString(
@@ -119,14 +121,13 @@ public class TaskUtil {
 		ResourceBundle resourceBundle, Map<String, Object> sourcesMap,
 		Function<Long, User> userFunction) {
 
-		Map<String, String> assetTitleMap = _createMap(
-			"assetTitle", sourcesMap);
-		Map<String, String> assetTypeMap = _createMap("assetType", sourcesMap);
-
 		return new Task() {
 			{
 				setAssetTitle(
 					() -> {
+						Map<String, String> assetTitleMap =
+							getAssetTitle_i18n();
+
 						String assetTitle = assetTitleMap.get(
 							locale.toLanguageTag());
 
@@ -140,9 +141,11 @@ public class TaskUtil {
 
 						return assetTitle;
 					});
-				setAssetTitle_i18n(() -> assetTitleMap);
+				setAssetTitle_i18n(() -> _createMap("assetTitle", sourcesMap));
 				setAssetType(
 					() -> {
+						Map<String, String> assetTypeMap = getAssetType_i18n();
+
 						String assetType = assetTypeMap.get(
 							locale.toLanguageTag());
 
@@ -156,7 +159,7 @@ public class TaskUtil {
 
 						return assetType;
 					});
-				setAssetType_i18n(() -> assetTypeMap);
+				setAssetType_i18n(() -> _createMap("assetType", sourcesMap));
 				setAssignee(
 					() -> {
 						String assigneeType = GetterUtil.getString(

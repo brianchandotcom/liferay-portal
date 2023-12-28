@@ -175,8 +175,9 @@ public class OrphanPortletsDisplayContext {
 		}
 
 		SearchContainer<Portlet> orphanPortletsSearchContainer =
-			new SearchContainer(
-				_liferayPortletRequest, getPortletURL(), null, null);
+			new SearchContainer<>(
+				_liferayPortletRequest, getPortletURL(), null,
+				"there-are-no-items-to-display");
 
 		orphanPortletsSearchContainer.setDeltaConfigurable(false);
 		orphanPortletsSearchContainer.setId("portlets");

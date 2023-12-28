@@ -23,6 +23,11 @@
 		min-width: 100%;
 	}
 
+	.product-icon{
+		height: 50px!important;
+		width: 50px!important;
+	}
+
 	.responsive-text {
 		display: -webkit-box;
 		overflow: hidden;
@@ -41,7 +46,7 @@
 	}
 </style>
 
-<div class="m-0 product-cards row">
+<div class="d-flex justify-content-center m-0 product-cards row">
 	<#if entries?has_content>
 		<#list entries as navigationEntry>
 			<#assign
@@ -55,7 +60,7 @@
 					<#if navItemIcon?has_content>
 						<img
 							alt="${navigationEntry.getName()} icon"
-							class="icon mr-3"
+							class="icon mr-3 product-icon"
 							src="${navItemIcon}"
 						/>
 					</#if>

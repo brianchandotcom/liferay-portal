@@ -54,7 +54,7 @@
 					},
 					'liferay-kaleo-designer-remote-services': {
 						path: 'remote_services.js',
-						requires: ['aui-io', 'liferay-portlet-url'],
+						requires: ['aui-io'],
 					},
 					'liferay-kaleo-designer-templates': {
 						path: 'templates.js',

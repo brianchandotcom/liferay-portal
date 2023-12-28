@@ -8,7 +8,7 @@ AUI.add(
 	(A) => {
 		const KaleoDesignerRemoteServices = {
 			_invokeResourceURL(params) {
-				const url = Liferay.PortletURL.createResourceURL();
+				const url = Liferay.Util.PortletURL.createResourceURL();
 
 				url.setParameters(params.queryParameters);
 				url.setPortletId(
@@ -72,6 +72,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-io', 'liferay-portlet-url'],
+		requires: ['aui-io'],
 	}
 );

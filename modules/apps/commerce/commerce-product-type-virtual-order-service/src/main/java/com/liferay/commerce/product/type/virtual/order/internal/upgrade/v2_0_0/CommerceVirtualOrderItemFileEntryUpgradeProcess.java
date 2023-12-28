@@ -33,7 +33,8 @@ public class CommerceVirtualOrderItemFileEntryUpgradeProcess
 			"insert into CVirtualOrderItemFileEntry (",
 			"cVirtualOrderItemFileEntryId, uuid_, groupId, companyId, userId, ",
 			"userName, createDate, modifiedDate, commerceVirtualOrderItemId, ",
-			"fileEntryId, url) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+			"fileEntryId, url, usages) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ",
+			"?, ?)");
 
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				"select * from CommerceVirtualOrderItem");
@@ -55,6 +56,7 @@ public class CommerceVirtualOrderItemFileEntryUpgradeProcess
 					"commerceVirtualOrderItemId");
 				long fileEntryId = resultSet.getLong("fileEntryId");
 				String url = resultSet.getString("url");
+				String usages = resultSet.getString("usages");
 
 				preparedStatement2.setLong(1, cVirtualOrderItemFileEntryId);
 				preparedStatement2.setString(2, uuid_);
@@ -67,6 +69,7 @@ public class CommerceVirtualOrderItemFileEntryUpgradeProcess
 				preparedStatement2.setLong(9, commerceVirtualOrderItemId);
 				preparedStatement2.setLong(10, fileEntryId);
 				preparedStatement2.setString(11, url);
+				preparedStatement2.setString(12, usages);
 
 				preparedStatement2.execute();
 			}
@@ -77,7 +80,7 @@ public class CommerceVirtualOrderItemFileEntryUpgradeProcess
 	protected UpgradeStep[] getPostUpgradeSteps() {
 		return new UpgradeStep[] {
 			UpgradeProcessFactory.dropColumns(
-				"CommerceVirtualOrderItem", "fileEntryId", "url")
+				"CommerceVirtualOrderItem", "fileEntryId", "url", "usages")
 		};
 	}
 

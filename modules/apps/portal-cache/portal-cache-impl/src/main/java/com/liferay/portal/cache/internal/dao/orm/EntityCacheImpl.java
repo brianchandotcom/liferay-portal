@@ -226,7 +226,13 @@ public class EntityCacheImpl
 
 	@Override
 	public void removeCache(String className) {
-		_notifyFinderCache(className, null, true);
+		FinderCacheImpl finderCacheImpl = _getFinderCacheImpl();
+
+		if (finderCacheImpl == null) {
+			return;
+		}
+
+		finderCacheImpl.removeCacheByEntityCache(className);
 
 		_portalCaches.remove(className);
 
@@ -302,17 +308,17 @@ public class EntityCacheImpl
 
 	private void _notify(
 		long companyId, String className, BaseModel<?> baseModel,
-		Boolean removePortalCache) {
+		boolean updateByEntityCache) {
 
 		try (SafeCloseable safeCloseable =
 				CompanyThreadLocal.setWithSafeCloseable(companyId)) {
 
-			_notify(className, baseModel, removePortalCache);
+			_notify(className, baseModel, updateByEntityCache);
 		}
 	}
 
 	private void _notify(
-		String className, BaseModel<?> baseModel, Boolean removePortalCache) {
+		String className, BaseModel<?> baseModel, boolean updateByEntityCache) {
 
 		FinderCacheImpl finderCacheImpl = _getFinderCacheImpl();
 
@@ -320,29 +326,24 @@ public class EntityCacheImpl
 			return;
 		}
 
-		if (removePortalCache == null) {
+		if (className == null) {
+			finderCacheImpl.clearCache();
+		}
+		else if (baseModel == null) {
+			finderCacheImpl.clearByEntityCache(className);
+		}
+		else if (updateByEntityCache) {
 			finderCacheImpl.updateByEntityCache(className, baseModel);
 		}
-		else if (baseModel != null) {
-			finderCacheImpl.removeByEntityCache(className, baseModel);
-		}
-		else if (removePortalCache) {
-			finderCacheImpl.removeCacheByEntityCache(className);
-		}
 		else {
-			if (className == null) {
-				finderCacheImpl.clearCache();
-			}
-			else {
-				finderCacheImpl.clearByEntityCache(className);
-			}
+			finderCacheImpl.removeByEntityCache(className, baseModel);
 		}
 	}
 
 	private void _notifyFinderCache(
-		String className, BaseModel<?> baseModel, Boolean removePortalCache) {
+		String className, BaseModel<?> baseModel, boolean updateByEntityCache) {
 
-		_notify(className, baseModel, removePortalCache);
+		_notify(className, baseModel, updateByEntityCache);
 
 		if (!_clusterExecutor.isEnabled() ||
 			!ClusterInvokeThreadLocal.isEnabled()) {
@@ -355,7 +356,7 @@ public class EntityCacheImpl
 				_notifyMethodKey,
 				new Object[] {
 					CompanyThreadLocal.getCompanyId(), className, baseModel,
-					removePortalCache
+					updateByEntityCache
 				});
 
 			ClusterRequest clusterRequest =
@@ -381,7 +382,7 @@ public class EntityCacheImpl
 		}
 
 		if (!quiet && updateFinderCache) {
-			_notifyFinderCache(clazz.getName(), baseModel, null);
+			_notifyFinderCache(clazz.getName(), baseModel, true);
 		}
 
 		CacheModel<?> result = baseModel.toCacheModel();
@@ -457,7 +458,7 @@ public class EntityCacheImpl
 		new Snapshot<>(EntityCacheImpl.class, FinderCache.class);
 	private static final MethodKey _notifyMethodKey = new MethodKey(
 		EntityCacheImpl.class, "_notify", long.class, String.class,
-		BaseModel.class, Boolean.class);
+		BaseModel.class, boolean.class);
 
 	@Reference
 	private ClusterExecutor _clusterExecutor;

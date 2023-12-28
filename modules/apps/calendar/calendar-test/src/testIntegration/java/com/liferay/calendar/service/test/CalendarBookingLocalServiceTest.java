@@ -1468,7 +1468,7 @@ public class CalendarBookingLocalServiceTest {
 	}
 
 	@Test
-	public void testInviteUserCalendarWithWorkflowShouldNotifieInviteCalendarBookingOnlyAfterApprovedAndPublished()
+	public void testInviteUserCalendarWithWorkflowShouldNotifyInviteCalendarBookingOnlyAfterApprovedAndPublished()
 		throws Exception {
 
 		Group group = GroupTestUtil.addGroup();

@@ -167,7 +167,8 @@ public class InstanceInitializerCheck extends BaseCheck {
 	}
 
 	private void _checkExprStatement(
-		DetailAST exprDetailAST, JavaClass javaClass, boolean inIfBody) {
+		DetailAST exprDetailAST, JavaClass javaClass,
+		boolean insideIfStatement) {
 
 		DetailAST firstChildDetailAST = exprDetailAST.getFirstChild();
 
@@ -188,7 +189,7 @@ public class InstanceInitializerCheck extends BaseCheck {
 				"set" + StringUtil.upperCaseFirstLetter(variableName);
 
 			_checkHasReplacableMethodSignature(
-				firstChildDetailAST, methodName, javaClass, inIfBody);
+				firstChildDetailAST, methodName, javaClass, insideIfStatement);
 		}
 		else if (firstChildDetailAST.getType() == TokenTypes.METHOD_CALL) {
 			DetailAST dotDetailAST = firstChildDetailAST.findFirstToken(
@@ -204,7 +205,7 @@ public class InstanceInitializerCheck extends BaseCheck {
 				return;
 			}
 
-			if (inIfBody) {
+			if (insideIfStatement) {
 				_checkHasReplacableMethodSignature(
 					firstChildDetailAST, methodName, javaClass, true);
 
@@ -225,14 +226,15 @@ public class InstanceInitializerCheck extends BaseCheck {
 					null)) {
 
 				_checkHasReplacableMethodSignature(
-					firstChildDetailAST, methodName, javaClass, inIfBody);
+					firstChildDetailAST, methodName, javaClass,
+					insideIfStatement);
 			}
 		}
 	}
 
 	private void _checkHasReplacableMethodSignature(
 		DetailAST detailAST, String methodName, JavaClass javaClass,
-		boolean inIfBody) {
+		boolean insideIfStatement) {
 
 		for (JavaTerm javaTerm : javaClass.getChildJavaTerms()) {
 			if (!javaTerm.isJavaMethod() || javaTerm.isPrivate()) {
@@ -258,7 +260,7 @@ public class InstanceInitializerCheck extends BaseCheck {
 			String parameterType = javaParameter.getParameterType();
 
 			if (parameterType.startsWith("UnsafeSupplier")) {
-				if (inIfBody) {
+				if (insideIfStatement) {
 					log(detailAST, _MSG_INLINE_IF_STATEMENT, methodName);
 				}
 				else {

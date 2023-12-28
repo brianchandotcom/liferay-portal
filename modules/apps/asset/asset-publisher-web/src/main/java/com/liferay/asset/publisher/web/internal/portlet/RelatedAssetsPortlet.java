@@ -6,9 +6,17 @@
 package com.liferay.asset.publisher.web.internal.portlet;
 
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
+import com.liferay.asset.util.LinkedAssetEntryIdsUtil;
 import com.liferay.fragment.processor.PortletRegistry;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
+
+import java.io.IOException;
 
 import javax.portlet.Portlet;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -48,6 +56,22 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class RelatedAssetsPortlet extends AssetPublisherPortlet {
 
+	@Override
+	public void render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		long assetEntryId = ParamUtil.getLong(
+			_portal.getHttpServletRequest(renderRequest), "assetEntryId");
+
+		if (assetEntryId > 0) {
+			LinkedAssetEntryIdsUtil.addLinkedAssetEntryId(
+				renderRequest, assetEntryId);
+		}
+
+		super.render(renderRequest, renderResponse);
+	}
+
 	@Activate
 	protected void activate() {
 		_portletRegistry.registerAlias(
@@ -60,6 +84,9 @@ public class RelatedAssetsPortlet extends AssetPublisherPortlet {
 	}
 
 	private static final String _ALIAS = "related-assets";
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private PortletRegistry _portletRegistry;

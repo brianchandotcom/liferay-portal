@@ -60,7 +60,7 @@ const SimpleInputModal = ({
 		}
 	};
 
-	const _handleSubmit = (event) => {
+	const handleSubmit = (event) => {
 		event.preventDefault();
 
 		const error = inputValue
@@ -132,7 +132,7 @@ const SimpleInputModal = ({
 				<ClayForm
 					id={`${namespace}form`}
 					noValidate
-					onSubmit={_handleSubmit}
+					onSubmit={handleSubmit}
 				>
 					<ClayModal.Body>
 						{alert && alert.message && alert.title && (

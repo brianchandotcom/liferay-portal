@@ -361,13 +361,13 @@ public class DefaultSearchResultPermissionFilter
 			StopWatch hitFilteringStopWatch = new StopWatch();
 			int numberOfDocsCollected = 0;
 			int numberOfTotalDocsNeeded = end;
-			int originalTotalHits = 0;
-			int recalculatedTotalHits = 0;
+			int originalHitsLength = 0;
+			int recalculatedHitsLength = 0;
 			int searchesExecuted = 0;
 			SlidingWindowHelper slidingWindowHelper = new SlidingWindowHelper(
 				start, end);
 			int slidingWindowStart = 0;
-			long startTime = 0;
+			long hitsStart = 0;
 
 			StopWatch slidingWindowStopWatch = new StopWatch();
 
@@ -443,12 +443,12 @@ public class DefaultSearchResultPermissionFilter
 				if (searchesExecuted == 0) {
 					facetCountHelper = new FacetCountHelper(
 						searchContext.getFacets());
-					originalTotalHits = hits.getLength();
-					recalculatedTotalHits = hits.getLength();
-					startTime = hits.getStart();
+					originalHitsLength = hits.getLength();
+					recalculatedHitsLength = hits.getLength();
+					hitsStart = hits.getStart();
 				}
 
-				Document[] docsBeforeFiltering = hits.getDocs();
+				Document[] preFilteredDocs = hits.getDocs();
 
 				if (searchesExecuted == 0) {
 					hitFilteringStopWatch.start();
@@ -457,7 +457,7 @@ public class DefaultSearchResultPermissionFilter
 					hitFilteringStopWatch.resume();
 				}
 
-				recalculatedTotalHits -= _filterHits(
+				recalculatedHitsLength -= _filterHits(
 					facetCountHelper, hits, searchContext);
 
 				hitFilteringStopWatch.suspend();
@@ -466,14 +466,14 @@ public class DefaultSearchResultPermissionFilter
 					hits, slidingWindowHelper);
 
 				if (_stopSearching(
-						docsBeforeFiltering, numberOfDocsCollected,
-						numberOfTotalDocsNeeded, originalTotalHits,
+						preFilteredDocs, numberOfDocsCollected,
+						numberOfTotalDocsNeeded, originalHitsLength,
 						slidingWindowEnd, slidingWindowSize,
 						slidingWindowStopWatch)) {
 
 					_updateHits(
-						hits, numberOfTotalDocsNeeded, recalculatedTotalHits,
-						slidingWindowHelper, slidingWindowStopWatch, startTime);
+						hits, numberOfTotalDocsNeeded, recalculatedHitsLength,
+						slidingWindowHelper, slidingWindowStopWatch, hitsStart);
 
 					_mergeFacets(facetCountHelper, searchContext);
 
@@ -508,9 +508,9 @@ public class DefaultSearchResultPermissionFilter
 		private int _collectDocumentsAndScores(
 			Hits hits, SlidingWindowHelper slidingWindowHelper) {
 
-			Document[] docsAfterFiltering = hits.getDocs();
+			Document[] postFilteredDocs = hits.getDocs();
 
-			for (int i = 0; i < docsAfterFiltering.length; i++) {
+			for (int i = 0; i < postFilteredDocs.length; i++) {
 				if (!slidingWindowHelper.add(hits.doc(i), hits.score(i))) {
 					break;
 				}
@@ -629,13 +629,13 @@ public class DefaultSearchResultPermissionFilter
 		}
 
 		private boolean _stopSearching(
-			Document[] docsBeforeFiltering, int numberOfDocsCollected,
-			int numberOfTotalDocsNeeded, int originalTotalHits,
+			Document[] preFilteredDocs, int numberOfDocsCollected,
+			int numberOfTotalDocsNeeded, int originalHitsLength,
 			int slidingWindowEnd, int slidingWindowSize,
 			StopWatch slidingWindowStopWatch) {
 
-			if ((slidingWindowEnd >= originalTotalHits) ||
-				(docsBeforeFiltering.length < slidingWindowSize)) {
+			if ((slidingWindowEnd >= originalHitsLength) ||
+				(preFilteredDocs.length < slidingWindowSize)) {
 
 				return true;
 			}
@@ -665,9 +665,9 @@ public class DefaultSearchResultPermissionFilter
 		}
 
 		private void _updateHits(
-			Hits hits, int numberOfTotalDocsNeeded, int recalculatedTotalHits,
+			Hits hits, int numberOfTotalDocsNeeded, int recalculatedHitsLength,
 			SlidingWindowHelper slidingWindowHelper,
-			StopWatch slidingWindowStopWatch, long startTime) {
+			StopWatch slidingWindowStopWatch, long hitsStart) {
 
 			Tuple documentsAndScoresTuple =
 				slidingWindowHelper.getDocumentsAndScoresTuple();
@@ -681,7 +681,7 @@ public class DefaultSearchResultPermissionFilter
 				ArrayUtil.toFloatArray(
 					(List<Float>)documentsAndScoresTuple.getObject(1)));
 
-			int length = Math.max(recalculatedTotalHits, documents.size());
+			int length = Math.max(recalculatedHitsLength, documents.size());
 
 			if (_timeLimitReached(slidingWindowStopWatch) &&
 				(slidingWindowHelper.getTotalDocs() <
@@ -692,7 +692,7 @@ public class DefaultSearchResultPermissionFilter
 
 			hits.setLength(length);
 			hits.setSearchTime(
-				(float)(System.currentTimeMillis() - startTime) / Time.SECOND);
+				(float)(System.currentTimeMillis() - hitsStart) / Time.SECOND);
 		}
 
 		private class FacetCountHelper {

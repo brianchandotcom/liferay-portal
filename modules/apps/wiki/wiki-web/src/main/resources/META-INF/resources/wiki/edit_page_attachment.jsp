@@ -51,7 +51,7 @@ DLConfiguration dlConfiguration = ConfigurationProviderUtil.getSystemConfigurati
 	<portlet:param name="title" value="<%= wikiPage.getTitle() %>" />
 </liferay-portlet:actionURL>
 
-<aui:script use="liferay-portlet-url,liferay-upload">
+<aui:script use="liferay-upload">
 	var uploader = new Liferay.Upload({
 		boundingBox: '#<portlet:namespace />fileUpload',
 

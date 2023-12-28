@@ -835,7 +835,6 @@ AUI.add(
 			'datatable-sort',
 			'json',
 			'liferay-portlet-dynamic-data-mapping-custom-fields',
-			'liferay-portlet-url',
 			'liferay-util-window',
 		],
 	}

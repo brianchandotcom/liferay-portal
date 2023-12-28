@@ -9,9 +9,16 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
 import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
+import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyService;
+import com.liferay.asset.test.util.AssetTestUtil;
+import com.liferay.commerce.product.constants.CPPortletKeys;
+import com.liferay.commerce.product.url.CPFriendlyURL;
+import com.liferay.friendly.url.model.FriendlyURLEntry;
+import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
@@ -52,6 +59,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.site.manager.SitemapManager;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -91,6 +99,55 @@ public class SitemapManagerTest {
 			_group.getGroupId());
 
 		_setUpThemeDisplay();
+	}
+
+	@Test
+	public void testSitemapIncludeCategoriesCompanyEnabledGroupEnabled()
+		throws Exception {
+
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						TestPropsValues.getCompanyId(),
+						_SITEMAP_COMPANY_CONFIGURATION_PID,
+						HashMapDictionaryBuilder.<String, Object>put(
+							"includeCategories", true
+						).put(
+							"includePages", false
+						).put(
+							"includeWebContent", false
+						).build());
+			GroupConfigurationTemporarySwapper
+				groupConfigurationTemporarySwapper =
+					new GroupConfigurationTemporarySwapper(
+						_group.getGroupId(), _SITEMAP_GROUP_CONFIGURATION_PID,
+						HashMapDictionaryBuilder.<String, Object>put(
+							"includeCategories", true
+						).put(
+							"includePages", false
+						).put(
+							"includeWebContent", false
+						).build())) {
+
+			AssetCategory assetCategory = _setUpAssetCategoryDisplayPage();
+
+			FriendlyURLEntry friendlyURLEntry =
+				_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
+					_portal.getClassNameId(AssetCategory.class),
+					assetCategory.getCategoryId());
+
+			_assertSitemap(
+				_layout.getUuid(),
+				_portal.getCanonicalURL(
+					StringBundler.concat(
+						_portal.getGroupFriendlyURL(
+							_layout.getLayoutSet(), _themeDisplay, false,
+							false),
+						_cpFriendlyURL.getAssetCategoryURLSeparator(
+							TestPropsValues.getCompanyId()),
+						friendlyURLEntry.getUrlTitle()),
+					_themeDisplay, _layout));
+		}
 	}
 
 	@Test
@@ -395,6 +452,12 @@ public class SitemapManagerTest {
 		}
 	}
 
+	private void _addAssetCategoryAssetDisplayPageEntry() throws Exception {
+		_addAssetDisplayPageEntry(
+			_portal.getClassNameId(AssetCategory.class.getName()), 0, 0,
+			AssetDisplayPageConstants.TYPE_DEFAULT);
+	}
+
 	private AssetDisplayPageEntry _addAssetDisplayPageEntry(
 			long classNameId, long classPK, long classTypeId, int type)
 		throws Exception {
@@ -471,6 +534,23 @@ public class SitemapManagerTest {
 		}
 	}
 
+	private AssetCategory _setUpAssetCategoryDisplayPage() throws Exception {
+		LayoutTestUtil.addPortletToLayout(
+			_layout, CPPortletKeys.CP_CATEGORY_CONTENT_WEB);
+
+		_addAssetCategoryAssetDisplayPageEntry();
+
+		AssetVocabulary assetVocabulary =
+			_assetVocabularyLocalService.addVocabulary(
+				TestPropsValues.getUserId(), _company.getGroupId(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomLocaleStringMap(), Collections.emptyMap(),
+				StringPool.BLANK, _serviceContext);
+
+		return AssetTestUtil.addCategory(
+			_group.getGroupId(), assetVocabulary.getVocabularyId());
+	}
+
 	private void _setUpThemeDisplay() throws Exception {
 		_themeDisplay = ContentLayoutTestUtil.getThemeDisplay(
 			_company, _group, _layout);
@@ -513,6 +593,12 @@ public class SitemapManagerTest {
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
+
+	@Inject
+	private CPFriendlyURL _cpFriendlyURL;
+
+	@Inject
+	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;

@@ -50,16 +50,18 @@ public class ProductOptionDTOConverter
 
 		return new ProductOption() {
 			{
-				description = cpDefinitionOptionRel.getDescription(languageId);
-				fieldType = cpDefinitionOptionRel.getCommerceOptionTypeKey();
-				id = cpDefinitionOptionRel.getCPDefinitionOptionRelId();
-				key = cpDefinitionOptionRel.getKey();
-				name = cpDefinitionOptionRel.getName(languageId);
-				optionId = cpDefinitionOptionRel.getCPOptionId();
-				productOptionValues = _toProductOptionValues(
-					cpDefinitionOptionRel, dtoConverterContext);
-				required = cpDefinitionOptionRel.isRequired();
-				skuContributor = cpDefinitionOptionRel.isSkuContributor();
+				setDescription(
+					() -> cpDefinitionOptionRel.getDescription(languageId));
+				setFieldType(cpDefinitionOptionRel::getCommerceOptionTypeKey);
+				setId(cpDefinitionOptionRel::getCPDefinitionOptionRelId);
+				setKey(cpDefinitionOptionRel::getKey);
+				setName(() -> cpDefinitionOptionRel.getName(languageId));
+				setOptionId(cpDefinitionOptionRel::getCPOptionId);
+				setProductOptionValues(
+					() -> _toProductOptionValues(
+						cpDefinitionOptionRel, dtoConverterContext));
+				setRequired(cpDefinitionOptionRel::isRequired);
+				setSkuContributor(cpDefinitionOptionRel::isSkuContributor);
 			}
 		};
 	}

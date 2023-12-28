@@ -46,14 +46,19 @@ public class FormContextUtil {
 
 		return new FormContext() {
 			{
-				formPageContexts = TransformUtil.transformToArray(
-					_getMaps(ddmFormTemplateContext, "pages"),
-					FormContextUtil::_toFormPageContext, FormPageContext.class);
-				readOnly = _getBoolean(ddmFormTemplateContext, "readOnly");
-				showRequiredFieldsWarning = _getBoolean(
-					ddmFormTemplateContext, "showRequiredFieldsWarning");
-				showSubmitButton = _getBoolean(
-					ddmFormTemplateContext, "showSubmitButton");
+				setFormPageContexts(
+					() -> TransformUtil.transformToArray(
+						_getMaps(ddmFormTemplateContext, "pages"),
+						FormContextUtil::_toFormPageContext,
+						FormPageContext.class));
+				setReadOnly(
+					() -> _getBoolean(ddmFormTemplateContext, "readOnly"));
+				setShowRequiredFieldsWarning(
+					() -> _getBoolean(
+						ddmFormTemplateContext, "showRequiredFieldsWarning"));
+				setShowSubmitButton(
+					() -> _getBoolean(
+						ddmFormTemplateContext, "showSubmitButton"));
 			}
 		};
 	}
@@ -78,14 +83,15 @@ public class FormContextUtil {
 
 		return new FormFieldContext() {
 			{
-				evaluable = _getBoolean(fieldContext, "evaluable");
-				name = _getString(fieldContext, "fieldName");
-				readOnly = _getBoolean(fieldContext, "readOnly");
-				required = _getBoolean(fieldContext, "required");
-				valid = _getBoolean(fieldContext, "valid");
-				value = _getString(fieldContext, "value");
-				valueChanged = _getBoolean(fieldContext, "valueChanged");
-				visible = _getBoolean(fieldContext, "visible");
+				setEvaluable(() -> _getBoolean(fieldContext, "evaluable"));
+				setName(() -> _getString(fieldContext, "fieldName"));
+				setReadOnly(() -> _getBoolean(fieldContext, "readOnly"));
+				setRequired(() -> _getBoolean(fieldContext, "required"));
+				setValid(() -> _getBoolean(fieldContext, "valid"));
+				setValue(() -> _getString(fieldContext, "value"));
+				setValueChanged(
+					() -> _getBoolean(fieldContext, "valueChanged"));
+				setVisible(() -> _getBoolean(fieldContext, "visible"));
 			}
 		};
 	}
@@ -95,31 +101,33 @@ public class FormContextUtil {
 
 		return new FormPageContext() {
 			{
-				enabled = _getBoolean(formPageContext, "enabled");
+				setEnabled(() -> _getBoolean(formPageContext, "enabled"));
+				setFormFieldContexts(
+					() -> {
+						List<FormFieldContext> formFieldContextsList =
+							new ArrayList<>();
 
-				List<FormFieldContext> formFieldContextsList =
-					new ArrayList<>();
+						for (Map<String, Object> rowsMap :
+								_getMaps(formPageContext, "rows")) {
 
-				for (Map<String, Object> rowsMap :
-						_getMaps(formPageContext, "rows")) {
+							for (Map<String, Object> columnsMap :
+									_getMaps(rowsMap, "columns")) {
 
-					for (Map<String, Object> columnsMap :
-							_getMaps(rowsMap, "columns")) {
+								for (Map<String, Object> fieldsMap :
+										_getMaps(columnsMap, "fields")) {
 
-						for (Map<String, Object> fieldsMap :
-								_getMaps(columnsMap, "fields")) {
-
-							formFieldContextsList.add(
-								_toFormFieldContext(fieldsMap));
+									formFieldContextsList.add(
+										_toFormFieldContext(fieldsMap));
+								}
+							}
 						}
-					}
-				}
 
-				formFieldContexts = formFieldContextsList.toArray(
-					new FormFieldContext[0]);
-
-				showRequiredFieldsWarning = _getBoolean(
-					formPageContext, "showRequiredFieldsWarning");
+						return formFieldContextsList.toArray(
+							new FormFieldContext[0]);
+					});
+				setShowRequiredFieldsWarning(
+					() -> _getBoolean(
+						formPageContext, "showRequiredFieldsWarning"));
 			}
 		};
 	}

@@ -47,11 +47,13 @@ public class ReindexStatusResourceImpl extends BaseReindexStatusResourceImpl {
 
 		return new ReindexStatus() {
 			{
-				completionPercentage = MapUtil.getLong(
-					backgroundTaskStatus.getAttributes(), "percentage");
-				key = MapUtil.getString(
-					backgroundTask.getTaskContextMap(),
-					"workflow.metrics.index.key");
+				setCompletionPercentage(
+					() -> MapUtil.getLong(
+						backgroundTaskStatus.getAttributes(), "percentage"));
+				setKey(
+					() -> MapUtil.getString(
+						backgroundTask.getTaskContextMap(),
+						"workflow.metrics.index.key"));
 			}
 		};
 	}

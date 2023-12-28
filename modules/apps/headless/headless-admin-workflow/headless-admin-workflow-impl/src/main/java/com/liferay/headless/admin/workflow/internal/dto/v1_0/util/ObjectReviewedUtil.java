@@ -29,26 +29,30 @@ public class ObjectReviewedUtil {
 
 		return new ObjectReviewed() {
 			{
-				assetTitle = _getAssetTitle(
-					GetterUtil.getLong(
+				setAssetTitle(
+					() -> _getAssetTitle(
+						GetterUtil.getLong(
+							optionalAttributes.get(
+								WorkflowConstants.CONTEXT_ENTRY_CLASS_PK)),
+						GetterUtil.getString(
+							optionalAttributes.get(
+								WorkflowConstants.CONTEXT_ENTRY_CLASS_NAME)),
+						locale));
+				setAssetType(
+					() -> _getAssetType(
+						GetterUtil.getString(
+							optionalAttributes.get(
+								WorkflowConstants.CONTEXT_ENTRY_CLASS_NAME)),
+						locale));
+				setId(
+					() -> GetterUtil.getLong(
 						optionalAttributes.get(
-							WorkflowConstants.CONTEXT_ENTRY_CLASS_PK)),
-					GetterUtil.getString(
-						optionalAttributes.get(
-							WorkflowConstants.CONTEXT_ENTRY_CLASS_NAME)),
-					locale);
-				assetType = _getAssetType(
-					GetterUtil.getString(
-						optionalAttributes.get(
-							WorkflowConstants.CONTEXT_ENTRY_CLASS_NAME)),
-					locale);
-				id = GetterUtil.getLong(
-					optionalAttributes.get(
-						WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
-				resourceType = _toResourceType(
-					GetterUtil.getString(
-						optionalAttributes.get(
-							WorkflowConstants.CONTEXT_ENTRY_CLASS_NAME)));
+							WorkflowConstants.CONTEXT_ENTRY_CLASS_PK)));
+				setResourceType(
+					() -> _toResourceType(
+						GetterUtil.getString(
+							optionalAttributes.get(
+								WorkflowConstants.CONTEXT_ENTRY_CLASS_NAME))));
 			}
 		};
 	}

@@ -188,8 +188,8 @@ public class OrganizationSystemObjectDefinitionManager
 	private Organization _toOrganization(Map<String, Object> values) {
 		return new Organization() {
 			{
-				comment = GetterUtil.getString(values.get("comment"));
-				name = GetterUtil.getString(values.get("name"));
+				setComment(() -> GetterUtil.getString(values.get("comment")));
+				setName(() -> GetterUtil.getString(values.get("name")));
 			}
 		};
 	}

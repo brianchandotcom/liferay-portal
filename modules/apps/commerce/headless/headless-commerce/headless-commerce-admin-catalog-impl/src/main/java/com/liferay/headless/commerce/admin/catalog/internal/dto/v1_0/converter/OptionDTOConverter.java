@@ -39,22 +39,28 @@ public class OptionDTOConverter implements DTOConverter<CPOption, Option> {
 
 		return new Option() {
 			{
-				actions = dtoConverterContext.getActions();
-				customFields = CustomFieldsUtil.toCustomFields(
-					dtoConverterContext.isAcceptAllLanguages(),
-					CPOption.class.getName(), cpOption.getCPOptionId(),
-					cpOption.getCompanyId(), dtoConverterContext.getLocale());
-				description = LanguageUtils.getLanguageIdMap(
-					cpOption.getDescriptionMap());
-				externalReferenceCode = cpOption.getExternalReferenceCode();
-				facetable = cpOption.isFacetable();
-				fieldType = Option.FieldType.create(
-					cpOption.getCommerceOptionTypeKey());
-				id = cpOption.getCPOptionId();
-				key = cpOption.getKey();
-				name = LanguageUtils.getLanguageIdMap(cpOption.getNameMap());
-				required = cpOption.isRequired();
-				skuContributor = cpOption.isSkuContributor();
+				setActions(dtoConverterContext::getActions);
+				setCustomFields(
+					() -> CustomFieldsUtil.toCustomFields(
+						dtoConverterContext.isAcceptAllLanguages(),
+						CPOption.class.getName(), cpOption.getCPOptionId(),
+						cpOption.getCompanyId(),
+						dtoConverterContext.getLocale()));
+				setDescription(
+					() -> LanguageUtils.getLanguageIdMap(
+						cpOption.getDescriptionMap()));
+				setExternalReferenceCode(cpOption::getExternalReferenceCode);
+				setFacetable(cpOption::isFacetable);
+				setFieldType(
+					() -> Option.FieldType.create(
+						cpOption.getCommerceOptionTypeKey()));
+				setId(cpOption::getCPOptionId);
+				setKey(cpOption::getKey);
+				setName(
+					() -> LanguageUtils.getLanguageIdMap(
+						cpOption.getNameMap()));
+				setRequired(cpOption::isRequired);
+				setSkuContributor(cpOption::isSkuContributor);
 			}
 		};
 	}

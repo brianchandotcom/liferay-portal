@@ -49,16 +49,16 @@ public class PaymentMethodGroupRelTermDTOConverter
 
 		return new PaymentMethodGroupRelTerm() {
 			{
-				actions = dtoConverterContext.getActions();
-				paymentMethodGroupRelId =
-					commercePaymentMethodGroupRelQualifier.
-						getCommercePaymentMethodGroupRelId();
-				paymentMethodGroupRelTermId =
-					commercePaymentMethodGroupRelQualifier.
-						getCommercePaymentMethodGroupRelQualifierId();
-				termExternalReferenceCode =
-					commerceTermEntry.getExternalReferenceCode();
-				termId = commerceTermEntry.getCommerceTermEntryId();
+				setActions(dtoConverterContext::getActions);
+				setPaymentMethodGroupRelId(
+					commercePaymentMethodGroupRelQualifier::
+						getCommercePaymentMethodGroupRelId);
+				setPaymentMethodGroupRelTermId(
+					commercePaymentMethodGroupRelQualifier::
+						getCommercePaymentMethodGroupRelQualifierId);
+				setTermExternalReferenceCode(
+					commerceTermEntry::getExternalReferenceCode);
+				setTermId(commerceTermEntry::getCommerceTermEntryId);
 			}
 		};
 	}

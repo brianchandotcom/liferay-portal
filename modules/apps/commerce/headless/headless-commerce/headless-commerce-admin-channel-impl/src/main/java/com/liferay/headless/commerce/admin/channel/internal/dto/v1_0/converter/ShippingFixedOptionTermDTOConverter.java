@@ -49,16 +49,16 @@ public class ShippingFixedOptionTermDTOConverter
 
 		return new ShippingFixedOptionTerm() {
 			{
-				actions = dtoConverterContext.getActions();
-				shippingFixedOptionId =
-					commerceShippingFixedOptionQualifier.
-						getCommerceShippingFixedOptionId();
-				shippingFixedOptionTermId =
-					commerceShippingFixedOptionQualifier.
-						getCommerceShippingFixedOptionQualifierId();
-				termExternalReferenceCode =
-					commerceTermEntry.getExternalReferenceCode();
-				termId = commerceTermEntry.getCommerceTermEntryId();
+				setActions(dtoConverterContext::getActions);
+				setShippingFixedOptionId(
+					commerceShippingFixedOptionQualifier::
+						getCommerceShippingFixedOptionId);
+				setShippingFixedOptionTermId(
+					commerceShippingFixedOptionQualifier::
+						getCommerceShippingFixedOptionQualifierId);
+				setTermExternalReferenceCode(
+					commerceTermEntry::getExternalReferenceCode);
+				setTermId(commerceTermEntry::getCommerceTermEntryId);
 			}
 		};
 	}

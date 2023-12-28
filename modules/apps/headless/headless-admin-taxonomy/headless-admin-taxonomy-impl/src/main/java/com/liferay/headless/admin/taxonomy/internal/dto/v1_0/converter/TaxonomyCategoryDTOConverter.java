@@ -82,12 +82,14 @@ public class TaxonomyCategoryDTOConverter
 
 		return new ParentTaxonomyCategory() {
 			{
-				id = parentAssetCategory.getCategoryId();
-				name = parentAssetCategory.getTitle(
-					dtoConverterContext.getLocale());
-				name_i18n = LocalizedMapUtil.getI18nMap(
-					dtoConverterContext.isAcceptAllLanguages(),
-					parentAssetCategory.getTitleMap());
+				setId(parentAssetCategory::getCategoryId);
+				setName(
+					() -> parentAssetCategory.getTitle(
+						dtoConverterContext.getLocale()));
+				setName_i18n(
+					() -> LocalizedMapUtil.getI18nMap(
+						dtoConverterContext.isAcceptAllLanguages(),
+						parentAssetCategory.getTitleMap()));
 			}
 		};
 	}
@@ -99,41 +101,91 @@ public class TaxonomyCategoryDTOConverter
 
 		return new TaxonomyCategory() {
 			{
-				actions = _dtoActionProvider.getActions(
-					assetCategory.getGroupId(), assetCategory.getCategoryId(),
-					dtoConverterContext.getUriInfo(),
-					dtoConverterContext.getUserId());
-				availableLanguages = LocaleUtil.toW3cLanguageIds(
-					assetCategory.getAvailableLanguageIds());
-				creator = CreatorUtil.toCreator(
-					_portal,
-					_userLocalService.fetchUser(assetCategory.getUserId()));
-				dateCreated = assetCategory.getCreateDate();
-				dateModified = assetCategory.getModifiedDate();
-				description = assetCategory.getDescription(
-					dtoConverterContext.getLocale());
-				description_i18n = LocalizedMapUtil.getI18nMap(
-					dtoConverterContext.isAcceptAllLanguages(),
-					assetCategory.getDescriptionMap());
-				externalReferenceCode =
-					assetCategory.getExternalReferenceCode();
-				id = String.valueOf(assetCategory.getCategoryId());
-				name = assetCategory.getTitle(dtoConverterContext.getLocale());
-				name_i18n = LocalizedMapUtil.getI18nMap(
-					dtoConverterContext.isAcceptAllLanguages(),
-					assetCategory.getTitleMap());
-				numberOfTaxonomyCategories =
-					_assetCategoryService.getChildCategoriesCount(
-						assetCategory.getCategoryId());
-				siteId = assetCategory.getGroupId();
-				taxonomyCategoryProperties = TransformUtil.transformToArray(
-					_assetCategoryPropertyLocalService.getCategoryProperties(
-						assetCategory.getCategoryId()),
-					assetCategoryProperties -> _toTaxonomyCategoryProperty(
-						assetCategoryProperties),
-					TaxonomyCategoryProperty.class);
-				taxonomyCategoryUsageCount =
-					NestedFieldsSupplier.<Integer>supply(
+				setActions(
+					() -> _dtoActionProvider.getActions(
+						assetCategory.getGroupId(),
+						assetCategory.getCategoryId(),
+						dtoConverterContext.getUriInfo(),
+						dtoConverterContext.getUserId()));
+				setAvailableLanguages(
+					() -> LocaleUtil.toW3cLanguageIds(
+						assetCategory.getAvailableLanguageIds()));
+				setCreator(
+					() -> CreatorUtil.toCreator(
+						_portal,
+						_userLocalService.fetchUser(
+							assetCategory.getUserId())));
+				setDateCreated(assetCategory::getCreateDate);
+				setDateModified(assetCategory::getModifiedDate);
+				setDescription(
+					() -> assetCategory.getDescription(
+						dtoConverterContext.getLocale()));
+				setDescription_i18n(
+					() -> LocalizedMapUtil.getI18nMap(
+						dtoConverterContext.isAcceptAllLanguages(),
+						assetCategory.getDescriptionMap()));
+				setExternalReferenceCode(
+					assetCategory::getExternalReferenceCode);
+				setId(() -> String.valueOf(assetCategory.getCategoryId()));
+				setName(
+					() -> assetCategory.getTitle(
+						dtoConverterContext.getLocale()));
+				setName_i18n(
+					() -> LocalizedMapUtil.getI18nMap(
+						dtoConverterContext.isAcceptAllLanguages(),
+						assetCategory.getTitleMap()));
+				setNumberOfTaxonomyCategories(
+					() -> _assetCategoryService.getChildCategoriesCount(
+						assetCategory.getCategoryId()));
+				setParentTaxonomyCategory(
+					() -> {
+						if (assetCategory.getParentCategory() == null) {
+							return null;
+						}
+
+						return _toParentTaxonomyCategory(
+							assetCategory.getParentCategory(),
+							dtoConverterContext);
+					});
+				setParentTaxonomyVocabulary(
+					() -> {
+						if (assetCategory.getVocabularyId() == 0) {
+							return null;
+						}
+
+						AssetVocabulary assetVocabulary =
+							_assetVocabularyService.fetchVocabulary(
+								assetCategory.getVocabularyId());
+
+						if (assetVocabulary == null) {
+							return null;
+						}
+
+						return new ParentTaxonomyVocabulary() {
+							{
+								setId(assetCategory::getVocabularyId);
+								setName(
+									() -> assetVocabulary.getTitle(
+										dtoConverterContext.getLocale()));
+								setName_i18n(
+									() -> LocalizedMapUtil.getI18nMap(
+										dtoConverterContext.
+											isAcceptAllLanguages(),
+										assetVocabulary.getTitleMap()));
+							}
+						};
+					});
+				setSiteId(assetCategory::getGroupId);
+				setTaxonomyCategoryProperties(
+					() -> TransformUtil.transformToArray(
+						_assetCategoryPropertyLocalService.
+							getCategoryProperties(
+								assetCategory.getCategoryId()),
+						assetCategoryProperties -> _toTaxonomyCategoryProperty(
+							assetCategoryProperties),
+						TaxonomyCategoryProperty.class));
+				setTaxonomyCategoryUsageCount(
+					() -> NestedFieldsSupplier.<Integer>supply(
 						"taxonomyCategoryUsageCount",
 						fieldName -> {
 							UriInfo uriInfo = dtoConverterContext.getUriInfo();
@@ -163,44 +215,8 @@ public class TaxonomyCategoryDTOConverter
 									WorkflowConstants.STATUS_SCHEDULED
 								},
 								false);
-						});
-				taxonomyVocabularyId = assetCategory.getVocabularyId();
-
-				setParentTaxonomyCategory(
-					() -> {
-						if (assetCategory.getParentCategory() == null) {
-							return null;
-						}
-
-						return _toParentTaxonomyCategory(
-							assetCategory.getParentCategory(),
-							dtoConverterContext);
-					});
-				setParentTaxonomyVocabulary(
-					() -> {
-						if (assetCategory.getVocabularyId() == 0) {
-							return null;
-						}
-
-						AssetVocabulary assetVocabulary =
-							_assetVocabularyService.fetchVocabulary(
-								assetCategory.getVocabularyId());
-
-						if (assetVocabulary == null) {
-							return null;
-						}
-
-						return new ParentTaxonomyVocabulary() {
-							{
-								id = assetCategory.getVocabularyId();
-								name = assetVocabulary.getTitle(
-									dtoConverterContext.getLocale());
-								name_i18n = LocalizedMapUtil.getI18nMap(
-									dtoConverterContext.isAcceptAllLanguages(),
-									assetVocabulary.getTitleMap());
-							}
-						};
-					});
+						}));
+				setTaxonomyVocabularyId(assetCategory::getVocabularyId);
 			}
 		};
 	}
@@ -210,8 +226,8 @@ public class TaxonomyCategoryDTOConverter
 
 		return new TaxonomyCategoryProperty() {
 			{
-				key = assetCategoryProperty.getKey();
-				value = assetCategoryProperty.getValue();
+				setKey(assetCategoryProperty::getKey);
+				setValue(assetCategoryProperty::getValue);
 			}
 		};
 	}

@@ -379,7 +379,7 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 		PageTemplateCollection pageTemplateCollection =
 			new PageTemplateCollection() {
 				{
-					name = _PAGE_TEMPLATE_COLLECTION_KEY_DEFAULT;
+					setName(() -> _PAGE_TEMPLATE_COLLECTION_KEY_DEFAULT);
 				}
 			};
 

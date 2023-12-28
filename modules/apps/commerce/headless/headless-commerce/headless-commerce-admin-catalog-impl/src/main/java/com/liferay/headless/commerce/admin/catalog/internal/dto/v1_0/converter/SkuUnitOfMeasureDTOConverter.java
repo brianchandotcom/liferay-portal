@@ -53,26 +53,14 @@ public class SkuUnitOfMeasureDTOConverter
 
 		return new SkuUnitOfMeasure() {
 			{
-				actions = dtoConverterContext.getActions();
-				active = cpInstanceUnitOfMeasure.isActive();
-				basePrice = _getInstanceBaseCommercePriceEntryPrice(
-					cpInstance.getCPInstanceUuid(),
-					cpInstanceUnitOfMeasure.getKey(),
-					CommercePriceListConstants.TYPE_PRICE_LIST);
-				id = cpInstanceUnitOfMeasure.getCPInstanceUnitOfMeasureId();
-				key = cpInstanceUnitOfMeasure.getKey();
-				name = LanguageUtils.getLanguageIdMap(
-					cpInstanceUnitOfMeasure.getNameMap());
-				precision = cpInstanceUnitOfMeasure.getPrecision();
-				primary = cpInstanceUnitOfMeasure.isPrimary();
-				priority = cpInstanceUnitOfMeasure.getPriority();
-				promoPrice = _getInstanceBaseCommercePriceEntryPrice(
-					cpInstance.getCPInstanceUuid(),
-					cpInstanceUnitOfMeasure.getKey(),
-					CommercePriceListConstants.TYPE_PROMOTION);
-				sku = cpInstanceUnitOfMeasure.getSku();
-				skuId = cpInstanceUnitOfMeasure.getCPInstanceId();
-
+				setActions(dtoConverterContext::getActions);
+				setActive(cpInstanceUnitOfMeasure::isActive);
+				setBasePrice(
+					() -> _getInstanceBaseCommercePriceEntryPrice(
+						cpInstance.getCPInstanceUuid(),
+						cpInstanceUnitOfMeasure.getKey(),
+						CommercePriceListConstants.TYPE_PRICE_LIST));
+				setId(cpInstanceUnitOfMeasure::getCPInstanceUnitOfMeasureId);
 				setIncrementalOrderQuantity(
 					() -> {
 						BigDecimal incrementalOrderQuantity =
@@ -87,6 +75,18 @@ public class SkuUnitOfMeasureDTOConverter
 							cpInstanceUnitOfMeasure.getPrecision(),
 							RoundingMode.HALF_UP);
 					});
+				setKey(cpInstanceUnitOfMeasure::getKey);
+				setName(
+					() -> LanguageUtils.getLanguageIdMap(
+						cpInstanceUnitOfMeasure.getNameMap()));
+				setPrecision(cpInstanceUnitOfMeasure::getPrecision);
+				setPrimary(cpInstanceUnitOfMeasure::isPrimary);
+				setPriority(cpInstanceUnitOfMeasure::getPriority);
+				setPromoPrice(
+					() -> _getInstanceBaseCommercePriceEntryPrice(
+						cpInstance.getCPInstanceUuid(),
+						cpInstanceUnitOfMeasure.getKey(),
+						CommercePriceListConstants.TYPE_PROMOTION));
 				setRate(
 					() -> {
 						BigDecimal rate = cpInstanceUnitOfMeasure.getRate();
@@ -99,6 +99,8 @@ public class SkuUnitOfMeasureDTOConverter
 							cpInstanceUnitOfMeasure.getPrecision(),
 							RoundingMode.HALF_UP);
 					});
+				setSku(cpInstanceUnitOfMeasure::getSku);
+				setSkuId(cpInstanceUnitOfMeasure::getCPInstanceId);
 			}
 		};
 	}

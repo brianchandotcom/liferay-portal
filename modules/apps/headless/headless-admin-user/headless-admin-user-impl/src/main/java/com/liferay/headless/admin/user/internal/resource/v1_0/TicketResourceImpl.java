@@ -67,10 +67,10 @@ public class TicketResourceImpl extends BaseTicketResourceImpl {
 
 		return new Ticket() {
 			{
-				expirationDate = ticket.getExpirationDate();
-				extraInfo = ticket.getExtraInfo();
-				id = ticket.getTicketId();
-				key = ticket.getKey();
+				setExpirationDate(ticket::getExpirationDate);
+				setExtraInfo(ticket::getExtraInfo);
+				setId(ticket::getTicketId);
+				setKey(ticket::getKey);
 			}
 		};
 	}

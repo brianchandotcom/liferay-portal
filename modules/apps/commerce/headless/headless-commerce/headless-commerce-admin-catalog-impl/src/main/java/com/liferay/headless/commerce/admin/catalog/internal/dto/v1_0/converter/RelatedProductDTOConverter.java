@@ -42,12 +42,12 @@ public class RelatedProductDTOConverter
 
 		return new RelatedProduct() {
 			{
-				id = cpDefinitionLink.getCPDefinitionLinkId();
-				priority = cpDefinitionLink.getPriority();
-				productExternalReferenceCode =
-					cProduct.getExternalReferenceCode();
-				productId = cProduct.getCProductId();
-				type = cpDefinitionLink.getType();
+				setId(cpDefinitionLink::getCPDefinitionLinkId);
+				setPriority(cpDefinitionLink::getPriority);
+				setProductExternalReferenceCode(
+					cProduct::getExternalReferenceCode);
+				setProductId(cProduct::getCProductId);
+				setType(cpDefinitionLink::getType);
 			}
 		};
 	}

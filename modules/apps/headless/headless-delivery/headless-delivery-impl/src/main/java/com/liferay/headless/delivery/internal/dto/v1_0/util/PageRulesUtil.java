@@ -27,10 +27,10 @@ public class PageRulesUtil {
 	public static PageRuleAction toPageRuleAction(JSONObject jsonObject) {
 		return new PageRuleAction() {
 			{
-				action = jsonObject.getString("action");
-				id = jsonObject.getString("id");
-				itemId = jsonObject.getString("itemId");
-				type = jsonObject.getString("type");
+				setAction(() -> jsonObject.getString("action"));
+				setId(() -> jsonObject.getString("id"));
+				setItemId(() -> jsonObject.getString("itemId"));
+				setType(() -> jsonObject.getString("type"));
 			}
 		};
 	}
@@ -38,10 +38,10 @@ public class PageRulesUtil {
 	public static PageRuleCondition toPageRuleCondition(JSONObject jsonObject) {
 		return new PageRuleCondition() {
 			{
-				condition = jsonObject.getString("condition");
-				id = jsonObject.getString("id");
-				type = jsonObject.getString("type");
-				value = jsonObject.getString("value");
+				setCondition(() -> jsonObject.getString("condition"));
+				setId(() -> jsonObject.getString("id"));
+				setType(() -> jsonObject.getString("type"));
+				setValue(() -> jsonObject.getString("value"));
 			}
 		};
 	}
@@ -57,29 +57,32 @@ public class PageRulesUtil {
 			layoutStructureRules,
 			layoutStructureRule -> new PageRule() {
 				{
-					conditionType = ConditionType.create(
-						ConditionTypeConverter.convertToExternalValue(
-							layoutStructureRule.getConditionType()));
-					id = layoutStructureRule.getId();
-					name = layoutStructureRule.getName();
-					pageRuleActions = JSONUtil.toArray(
-						layoutStructureRule.getActionsJSONArray(),
-						jsonObject -> toPageRuleAction(jsonObject),
-						exception -> {
-							if (_log.isWarnEnabled()) {
-								_log.warn(exception);
-							}
-						},
-						PageRuleAction.class);
-					pageRuleConditions = JSONUtil.toArray(
-						layoutStructureRule.getConditionsJSONArray(),
-						jsonObject -> toPageRuleCondition(jsonObject),
-						exception -> {
-							if (_log.isWarnEnabled()) {
-								_log.warn(exception);
-							}
-						},
-						PageRuleCondition.class);
+					setConditionType(
+						() -> ConditionType.create(
+							ConditionTypeConverter.convertToExternalValue(
+								layoutStructureRule.getConditionType())));
+					setId(layoutStructureRule::getId);
+					setName(layoutStructureRule::getName);
+					setPageRuleActions(
+						() -> JSONUtil.toArray(
+							layoutStructureRule.getActionsJSONArray(),
+							jsonObject -> toPageRuleAction(jsonObject),
+							exception -> {
+								if (_log.isWarnEnabled()) {
+									_log.warn(exception);
+								}
+							},
+							PageRuleAction.class));
+					setPageRuleConditions(
+						() -> JSONUtil.toArray(
+							layoutStructureRule.getConditionsJSONArray(),
+							jsonObject -> toPageRuleCondition(jsonObject),
+							exception -> {
+								if (_log.isWarnEnabled()) {
+									_log.warn(exception);
+								}
+							},
+							PageRuleCondition.class));
 				}
 			},
 			PageRule.class);

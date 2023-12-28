@@ -70,66 +70,16 @@ public class MessageBoardThreadDTOConverter
 
 		return new MessageBoardThread() {
 			{
-				actions = dtoConverterContext.getActions();
-				aggregateRating = AggregateRatingUtil.toAggregateRating(
-					_ratingsStatsLocalService.fetchStats(
-						MBMessage.class.getName(), mbMessage.getMessageId()));
-				articleBody = mbMessage.getBody();
-				creator = CreatorUtil.toCreator(
-					dtoConverterContext, _portal, user);
-				customFields = CustomFieldsUtil.toCustomFields(
-					dtoConverterContext.isAcceptAllLanguages(),
-					MBMessage.class.getName(), mbMessage.getMessageId(),
-					mbThread.getCompanyId(), dtoConverterContext.getLocale());
-				dateCreated = mbMessage.getCreateDate();
-				dateModified = mbMessage.getModifiedDate();
-				encodingFormat = mbMessage.getFormat();
-				friendlyUrlPath = mbMessage.getUrlSubject();
-				hasValidAnswer = ListUtil.exists(
-					_mbMessageLocalService.getChildMessages(
-						mbMessage.getMessageId(),
-						WorkflowConstants.STATUS_APPROVED),
-					MBMessage::isAnswer);
-				headline = mbMessage.getSubject();
-				id = mbThread.getThreadId();
-				keywords = ListUtil.toArray(
-					_assetTagLocalService.getTags(
-						MBMessage.class.getName(), mbMessage.getMessageId()),
-					AssetTag.NAME_ACCESSOR);
-				lastPostDate = mbThread.getLastPostDate();
-				locked = mbThread.isLocked();
-				messageBoardRootMessageId = mbThread.getRootMessageId();
-				messageBoardSectionId = mbMessage.getCategoryId();
-				numberOfMessageBoardAttachments =
-					mbMessage.getAttachmentsFileEntriesCount();
-				numberOfMessageBoardMessages =
-					_mbMessageLocalService.getChildMessagesCount(
-						mbMessage.getMessageId(),
-						WorkflowConstants.STATUS_APPROVED);
-				relatedContents = RelatedContentUtil.toRelatedContents(
-					_assetEntryLocalService, _assetLinkLocalService,
-					dtoConverterContext.getDTOConverterRegistry(),
-					mbMessage.getModelClassName(), mbMessage.getMessageId(),
-					dtoConverterContext.getLocale());
-				seen = _mbThreadFlagLocalService.hasThreadFlag(
-					dtoConverterContext.getUserId(), mbThread);
-				showAsQuestion = mbThread.isQuestion();
-				siteId = mbThread.getGroupId();
-				status = WorkflowConstants.getStatusLabel(mbThread.getStatus());
-				subscribed = _subscriptionLocalService.isSubscribed(
-					mbMessage.getCompanyId(), dtoConverterContext.getUserId(),
-					MBThread.class.getName(), mbMessage.getThreadId());
-				taxonomyCategoryBriefs = TransformUtil.transformToArray(
-					_assetCategoryLocalService.getCategories(
-						MBMessage.class.getName(), mbThread.getRootMessageId()),
-					assetCategory ->
-						TaxonomyCategoryBriefUtil.toTaxonomyCategoryBrief(
-							assetCategory, dtoConverterContext),
-					TaxonomyCategoryBrief.class);
-				threadType = _toThreadType(
-					languageId, mbThread.getGroupId(), mbThread.getPriority());
-				viewCount = mbThread.getViewCount();
-
+				setActions(dtoConverterContext::getActions);
+				setAggregateRating(
+					() -> AggregateRatingUtil.toAggregateRating(
+						_ratingsStatsLocalService.fetchStats(
+							MBMessage.class.getName(),
+							mbMessage.getMessageId())));
+				setArticleBody(mbMessage::getBody);
+				setCreator(
+					() -> CreatorUtil.toCreator(
+						dtoConverterContext, _portal, user));
 				setCreatorStatistics(
 					() -> {
 						if (mbMessage.isAnonymous() || (user == null) ||
@@ -143,6 +93,73 @@ public class MessageBoardThreadDTOConverter
 							_mbStatsUserLocalService,
 							dtoConverterContext.getUriInfo(), user);
 					});
+				setCustomFields(
+					() -> CustomFieldsUtil.toCustomFields(
+						dtoConverterContext.isAcceptAllLanguages(),
+						MBMessage.class.getName(), mbMessage.getMessageId(),
+						mbThread.getCompanyId(),
+						dtoConverterContext.getLocale()));
+				setDateCreated(mbMessage::getCreateDate);
+				setDateModified(mbMessage::getModifiedDate);
+				setEncodingFormat(mbMessage::getFormat);
+				setFriendlyUrlPath(mbMessage::getUrlSubject);
+				setHasValidAnswer(
+					() -> ListUtil.exists(
+						_mbMessageLocalService.getChildMessages(
+							mbMessage.getMessageId(),
+							WorkflowConstants.STATUS_APPROVED),
+						MBMessage::isAnswer));
+				setHeadline(mbMessage::getSubject);
+				setId(mbThread::getThreadId);
+				setKeywords(
+					() -> ListUtil.toArray(
+						_assetTagLocalService.getTags(
+							MBMessage.class.getName(),
+							mbMessage.getMessageId()),
+						AssetTag.NAME_ACCESSOR));
+				setLastPostDate(mbThread::getLastPostDate);
+				setLocked(mbThread::isLocked);
+				setMessageBoardRootMessageId(mbThread::getRootMessageId);
+				setMessageBoardSectionId(mbMessage::getCategoryId);
+				setNumberOfMessageBoardAttachments(
+					mbMessage::getAttachmentsFileEntriesCount);
+				setNumberOfMessageBoardMessages(
+					() -> _mbMessageLocalService.getChildMessagesCount(
+						mbMessage.getMessageId(),
+						WorkflowConstants.STATUS_APPROVED));
+				setRelatedContents(
+					() -> RelatedContentUtil.toRelatedContents(
+						_assetEntryLocalService, _assetLinkLocalService,
+						dtoConverterContext.getDTOConverterRegistry(),
+						mbMessage.getModelClassName(), mbMessage.getMessageId(),
+						dtoConverterContext.getLocale()));
+				setSeen(
+					() -> _mbThreadFlagLocalService.hasThreadFlag(
+						dtoConverterContext.getUserId(), mbThread));
+				setShowAsQuestion(mbThread::isQuestion);
+				setSiteId(mbThread::getGroupId);
+				setStatus(
+					() -> WorkflowConstants.getStatusLabel(
+						mbThread.getStatus()));
+				setSubscribed(
+					() -> _subscriptionLocalService.isSubscribed(
+						mbMessage.getCompanyId(),
+						dtoConverterContext.getUserId(),
+						MBThread.class.getName(), mbMessage.getThreadId()));
+				setTaxonomyCategoryBriefs(
+					() -> TransformUtil.transformToArray(
+						_assetCategoryLocalService.getCategories(
+							MBMessage.class.getName(),
+							mbThread.getRootMessageId()),
+						assetCategory ->
+							TaxonomyCategoryBriefUtil.toTaxonomyCategoryBrief(
+								assetCategory, dtoConverterContext),
+						TaxonomyCategoryBrief.class));
+				setThreadType(
+					() -> _toThreadType(
+						languageId, mbThread.getGroupId(),
+						mbThread.getPriority()));
+				setViewCount(mbThread::getViewCount);
 			}
 		};
 	}

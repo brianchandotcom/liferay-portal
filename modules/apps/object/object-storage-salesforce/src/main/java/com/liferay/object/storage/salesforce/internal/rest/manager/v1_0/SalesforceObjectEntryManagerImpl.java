@@ -259,11 +259,14 @@ public class SalesforceObjectEntryManagerImpl
 
 		return new ListEntry() {
 			{
-				key = listTypeEntry.getKey();
-				name = listTypeEntry.getName(dtoConverterContext.getLocale());
-				name_i18n = LocalizedMapUtil.getI18nMap(
-					dtoConverterContext.isAcceptAllLanguages(),
-					listTypeEntry.getNameMap());
+				setKey(listTypeEntry::getKey);
+				setName(
+					() -> listTypeEntry.getName(
+						dtoConverterContext.getLocale()));
+				setName_i18n(
+					() -> LocalizedMapUtil.getI18nMap(
+						dtoConverterContext.isAcceptAllLanguages(),
+						listTypeEntry.getNameMap()));
 			}
 		};
 	}
@@ -588,32 +591,38 @@ public class SalesforceObjectEntryManagerImpl
 
 		return new ObjectEntry() {
 			{
-				actions = HashMapBuilder.put(
-					"delete",
-					addDeleteAction(
-						objectDefinition, scopeKey,
-						dtoConverterContext.getUser())
-				).build();
-				creator = CreatorUtil.toCreator(
-					_portal, null,
-					_userLocalService.fetchUserByExternalReferenceCode(
-						jsonObject.getString("OwnerId"), companyId));
-				dateCreated = dateFormat.parse(
-					jsonObject.getString("CreatedDate"));
-				dateModified = dateFormat.parse(
-					jsonObject.getString("LastModifiedDate"));
-				externalReferenceCode = jsonObject.getString("Id");
-				properties = _toProperties(
-					dtoConverterContext, jsonObject, objectDefinition,
-					_objectFieldLocalService.getObjectFields(
-						objectDefinition.getObjectDefinitionId()));
-				status = new Status() {
-					{
-						code = 0;
-						label = "approved";
-						label_i18n = "Approved";
-					}
-				};
+				setActions(
+					() -> HashMapBuilder.put(
+						"delete",
+						addDeleteAction(
+							objectDefinition, getScopeKey(),
+							dtoConverterContext.getUser())
+					).build());
+				setCreator(
+					() -> CreatorUtil.toCreator(
+						_portal, null,
+						_userLocalService.fetchUserByExternalReferenceCode(
+							jsonObject.getString("OwnerId"), companyId)));
+				setDateCreated(
+					() -> dateFormat.parse(
+						jsonObject.getString("CreatedDate")));
+				setDateModified(
+					() -> dateFormat.parse(
+						jsonObject.getString("LastModifiedDate")));
+				setExternalReferenceCode(() -> jsonObject.getString("Id"));
+				setProperties(
+					() -> _toProperties(
+						dtoConverterContext, jsonObject, objectDefinition,
+						_objectFieldLocalService.getObjectFields(
+							objectDefinition.getObjectDefinitionId())));
+				setStatus(
+					() -> new Status() {
+						{
+							setCode(() -> 0);
+							setLabel(() -> "approved");
+							setLabel_i18n(() -> "Approved");
+						}
+					});
 			}
 		};
 	}

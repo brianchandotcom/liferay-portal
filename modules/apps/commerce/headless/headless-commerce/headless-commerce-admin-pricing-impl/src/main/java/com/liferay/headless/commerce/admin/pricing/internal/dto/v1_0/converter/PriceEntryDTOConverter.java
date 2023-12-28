@@ -48,15 +48,14 @@ public class PriceEntryDTOConverter
 
 		return new PriceEntry() {
 			{
-				customFields = expandoBridge.getAttributes();
-				externalReferenceCode =
-					commercePriceEntry.getExternalReferenceCode();
-				hasTierPrice = commercePriceEntry.isHasTierPrice();
-				id = commercePriceEntry.getCommercePriceEntryId();
-				price = commercePriceEntry.getPrice();
-				priceListId = commercePriceEntry.getCommercePriceListId();
-				promoPrice = commercePriceEntry.getPromoPrice();
-
+				setCustomFields(expandoBridge::getAttributes);
+				setExternalReferenceCode(
+					commercePriceEntry::getExternalReferenceCode);
+				setHasTierPrice(commercePriceEntry::isHasTierPrice);
+				setId(commercePriceEntry::getCommercePriceEntryId);
+				setPrice(commercePriceEntry::getPrice);
+				setPriceListId(commercePriceEntry::getCommercePriceListId);
+				setPromoPrice(commercePriceEntry::getPromoPrice);
 				setSku(
 					() -> {
 						if (cpInstance == null) {

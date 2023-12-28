@@ -49,17 +49,17 @@ public class PriceListDiscountDTOConverter
 
 		return new PriceListDiscount() {
 			{
-				discountExternalReferenceCode =
-					commerceDiscount.getExternalReferenceCode();
-				discountId = commerceDiscount.getCommerceDiscountId();
-				discountName = commerceDiscount.getTitle();
-				order = commercePriceListDiscountRel.getOrder();
-				priceListDiscountId =
-					commercePriceListDiscountRel.
-						getCommercePriceListDiscountRelId();
-				priceListExternalReferenceCode =
-					commercePriceList.getExternalReferenceCode();
-				priceListId = commercePriceList.getCommercePriceListId();
+				setDiscountExternalReferenceCode(
+					commerceDiscount::getExternalReferenceCode);
+				setDiscountId(commerceDiscount::getCommerceDiscountId);
+				setDiscountName(commerceDiscount::getTitle);
+				setOrder(commercePriceListDiscountRel::getOrder);
+				setPriceListDiscountId(
+					commercePriceListDiscountRel::
+						getCommercePriceListDiscountRelId);
+				setPriceListExternalReferenceCode(
+					commercePriceList::getExternalReferenceCode);
+				setPriceListId(commercePriceList::getCommercePriceListId);
 			}
 		};
 	}

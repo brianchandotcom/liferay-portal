@@ -68,30 +68,35 @@ public class DataDefinitionUtil {
 
 		return new DataDefinition() {
 			{
-				availableLanguageIds = _toLanguageIds(
-					ddmForm.getAvailableLocales());
-				contentType = dataDefinitionContentType.getContentType();
-				dataDefinitionFields = _toDataDefinitionFields(
-					ddmForm.getDDMFormFields(),
-					ddmFormFieldTypeServicesRegistry,
-					ddmStructureLayoutLocalService);
-				dataDefinitionKey = ddmStructure.getStructureKey();
-				dateCreated = ddmStructure.getCreateDate();
-				dateModified = ddmStructure.getModifiedDate();
-				defaultDataLayout = DataLayoutUtil.toDataLayout(
-					ddmFormFieldTypeServicesRegistry,
-					ddmStructure.fetchDDMStructureLayout(),
-					spiDDMFormRuleConverter);
-				defaultLanguageId = LanguageUtil.getLanguageId(
-					ddmForm.getDefaultLocale());
-				description = LocalizedValueUtil.toStringObjectMap(
-					ddmStructure.getDescriptionMap());
-				id = ddmStructure.getStructureId();
-				name = LocalizedValueUtil.toStringObjectMap(
-					ddmStructure.getNameMap());
-				siteId = ddmStructure.getGroupId();
-				storageType = ddmStructure.getStorageType();
-				userId = ddmStructure.getUserId();
+				setAvailableLanguageIds(
+					() -> _toLanguageIds(ddmForm.getAvailableLocales()));
+				setContentType(dataDefinitionContentType::getContentType);
+				setDataDefinitionFields(
+					() -> _toDataDefinitionFields(
+						ddmForm.getDDMFormFields(),
+						ddmFormFieldTypeServicesRegistry,
+						ddmStructureLayoutLocalService));
+				setDataDefinitionKey(ddmStructure::getStructureKey);
+				setDateCreated(ddmStructure::getCreateDate);
+				setDateModified(ddmStructure::getModifiedDate);
+				setDefaultDataLayout(
+					() -> DataLayoutUtil.toDataLayout(
+						ddmFormFieldTypeServicesRegistry,
+						ddmStructure.fetchDDMStructureLayout(),
+						spiDDMFormRuleConverter));
+				setDefaultLanguageId(
+					() -> LanguageUtil.getLanguageId(
+						ddmForm.getDefaultLocale()));
+				setDescription(
+					() -> LocalizedValueUtil.toStringObjectMap(
+						ddmStructure.getDescriptionMap()));
+				setId(ddmStructure::getStructureId);
+				setName(
+					() -> LocalizedValueUtil.toStringObjectMap(
+						ddmStructure.getNameMap()));
+				setSiteId(ddmStructure::getGroupId);
+				setStorageType(ddmStructure::getStorageType);
+				setUserId(ddmStructure::getUserId);
 			}
 		};
 	}
@@ -220,29 +225,36 @@ public class DataDefinitionUtil {
 
 		return new DataDefinitionField() {
 			{
-				customProperties = _getCustomProperties(
-					ddmFormField, ddmFormFieldTypeServicesRegistry,
-					ddmStructureLayoutLocalService);
-				defaultValue = LocalizedValueUtil.toLocalizedValuesMap(
-					ddmFormField.getPredefinedValue());
-				fieldType = ddmFormField.getType();
-				indexable = Validator.isNotNull(ddmFormField.getIndexType());
-				indexType = DataDefinitionField.IndexType.create(
-					ddmFormField.getIndexType());
-				label = LocalizedValueUtil.toLocalizedValuesMap(
-					ddmFormField.getLabel());
-				localizable = ddmFormField.isLocalizable();
-				name = ddmFormField.getName();
-				nestedDataDefinitionFields = _toDataDefinitionFields(
-					ddmFormField.getNestedDDMFormFields(),
-					ddmFormFieldTypeServicesRegistry,
-					ddmStructureLayoutLocalService);
-				readOnly = ddmFormField.isReadOnly();
-				repeatable = ddmFormField.isRepeatable();
-				required = ddmFormField.isRequired();
-				showLabel = ddmFormField.isShowLabel();
-				tip = LocalizedValueUtil.toLocalizedValuesMap(
-					ddmFormField.getTip());
+				setCustomProperties(
+					() -> _getCustomProperties(
+						ddmFormField, ddmFormFieldTypeServicesRegistry,
+						ddmStructureLayoutLocalService));
+				setDefaultValue(
+					() -> LocalizedValueUtil.toLocalizedValuesMap(
+						ddmFormField.getPredefinedValue()));
+				setFieldType(ddmFormField::getType);
+				setIndexable(
+					() -> Validator.isNotNull(ddmFormField.getIndexType()));
+				setIndexType(
+					() -> DataDefinitionField.IndexType.create(
+						ddmFormField.getIndexType()));
+				setLabel(
+					() -> LocalizedValueUtil.toLocalizedValuesMap(
+						ddmFormField.getLabel()));
+				setLocalizable(ddmFormField::isLocalizable);
+				setName(ddmFormField::getName);
+				setNestedDataDefinitionFields(
+					() -> _toDataDefinitionFields(
+						ddmFormField.getNestedDDMFormFields(),
+						ddmFormFieldTypeServicesRegistry,
+						ddmStructureLayoutLocalService));
+				setReadOnly(ddmFormField::isReadOnly);
+				setRepeatable(ddmFormField::isRepeatable);
+				setRequired(ddmFormField::isRequired);
+				setShowLabel(ddmFormField::isShowLabel);
+				setTip(
+					() -> LocalizedValueUtil.toLocalizedValuesMap(
+						ddmFormField.getTip()));
 			}
 		};
 	}

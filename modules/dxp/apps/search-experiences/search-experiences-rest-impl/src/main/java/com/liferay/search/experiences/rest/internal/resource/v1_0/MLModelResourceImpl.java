@@ -89,7 +89,8 @@ public class MLModelResourceImpl extends BaseMLModelResourceImpl {
 					mlModels.add(
 						new MLModel() {
 							{
-								modelId = jsonObject.getString("modelId");
+								setModelId(
+									() -> jsonObject.getString("modelId"));
 							}
 						});
 				});

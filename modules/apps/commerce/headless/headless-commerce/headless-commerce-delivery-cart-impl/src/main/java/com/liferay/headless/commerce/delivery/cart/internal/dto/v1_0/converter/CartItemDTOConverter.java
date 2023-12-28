@@ -78,38 +78,40 @@ public class CartItemDTOConverter
 
 		return new CartItem() {
 			{
-				adaptiveMediaImageHTMLTag =
-					_cpInstanceHelper.getCPInstanceAdaptiveMediaImageHTMLTag(
-						cartItemDTOConverterContext.getAccountId(),
-						commerceOrderItem.getCompanyId(),
-						commerceOrderItem.getCPInstanceId());
-				customFields = expandoBridge.getAttributes();
-				errorMessages = _getErrorMessages(commerceOrderItem, locale);
-				id = commerceOrderItem.getCommerceOrderItemId();
-				name = commerceOrderItem.getName(
-					_language.getLanguageId(locale));
-				options = commerceOrderItem.getJson();
-				parentCartItemId =
-					commerceOrderItem.getParentCommerceOrderItemId();
-				price = _getPrice(commerceOrderItem, locale);
-				productId = commerceOrderItem.getCProductId();
-				productURLs = LanguageUtils.getLanguageIdMap(
-					_cpDefinitionLocalService.getUrlTitleMap(
-						commerceOrderItem.getCPDefinitionId()));
-				quantity = _commerceQuantityFormatter.format(
-					commerceOrderItem.getCPInstanceId(),
-					commerceOrderItem.getQuantity(),
-					commerceOrderItem.getUnitOfMeasureKey());
-				replacedSku = commerceOrderItem.getReplacedSku();
-				replacedSkuId = commerceOrderItem.getReplacedCPInstanceId();
-				settings = _getSettings(commerceOrderItem.getCPInstanceId());
-				sku = commerceOrderItem.getSku();
-				skuId = commerceOrderItem.getCPInstanceId();
-				subscription = commerceOrderItem.isSubscription();
-				thumbnail = _cpInstanceHelper.getCPInstanceThumbnailSrc(
-					cartItemDTOConverterContext.getAccountId(),
-					commerceOrderItem.getCPInstanceId());
-
+				setAdaptiveMediaImageHTMLTag(
+					() ->
+						_cpInstanceHelper.
+							getCPInstanceAdaptiveMediaImageHTMLTag(
+								cartItemDTOConverterContext.getAccountId(),
+								commerceOrderItem.getCompanyId(),
+								commerceOrderItem.getCPInstanceId()));
+				setCustomFields(expandoBridge::getAttributes);
+				setErrorMessages(
+					() -> _getErrorMessages(commerceOrderItem, locale));
+				setId(commerceOrderItem::getCommerceOrderItemId);
+				setName(
+					() -> commerceOrderItem.getName(
+						_language.getLanguageId(locale)));
+				setOptions(commerceOrderItem::getJson);
+				setParentCartItemId(
+					commerceOrderItem::getParentCommerceOrderItemId);
+				setPrice(() -> _getPrice(commerceOrderItem, locale));
+				setProductId(commerceOrderItem::getCProductId);
+				setProductURLs(
+					() -> LanguageUtils.getLanguageIdMap(
+						_cpDefinitionLocalService.getUrlTitleMap(
+							commerceOrderItem.getCPDefinitionId())));
+				setQuantity(
+					() -> _commerceQuantityFormatter.format(
+						commerceOrderItem.getCPInstanceId(),
+						commerceOrderItem.getQuantity(),
+						commerceOrderItem.getUnitOfMeasureKey()));
+				setReplacedSku(commerceOrderItem::getReplacedSku);
+				setReplacedSkuId(commerceOrderItem::getReplacedCPInstanceId);
+				setSettings(
+					() -> _getSettings(commerceOrderItem.getCPInstanceId()));
+				setSku(commerceOrderItem::getSku);
+				setSkuId(commerceOrderItem::getCPInstanceId);
 				setSkuUnitOfMeasure(
 					() -> {
 						String unitOfMeasureKey =
@@ -131,14 +133,6 @@ public class CartItemDTOConverter
 
 						return new SkuUnitOfMeasure() {
 							{
-								key = unitOfMeasureKey;
-								name = cpInstanceUnitOfMeasure.getName(locale);
-								precision =
-									cpInstanceUnitOfMeasure.getPrecision();
-								primary = cpInstanceUnitOfMeasure.isPrimary();
-								priority =
-									cpInstanceUnitOfMeasure.getPriority();
-
 								setIncrementalOrderQuantity(
 									() -> {
 										BigDecimal incrementalOrderQuantity =
@@ -155,6 +149,15 @@ public class CartItemDTOConverter
 													getPrecision(),
 												RoundingMode.HALF_UP);
 									});
+								setKey(() -> unitOfMeasureKey);
+								setName(
+									() -> cpInstanceUnitOfMeasure.getName(
+										locale));
+								setPrecision(
+									cpInstanceUnitOfMeasure::getPrecision);
+								setPrimary(cpInstanceUnitOfMeasure::isPrimary);
+								setPriority(
+									cpInstanceUnitOfMeasure::getPriority);
 								setRate(
 									() -> {
 										BigDecimal rate =
@@ -172,6 +175,11 @@ public class CartItemDTOConverter
 							}
 						};
 					});
+				setSubscription(commerceOrderItem::isSubscription);
+				setThumbnail(
+					() -> _cpInstanceHelper.getCPInstanceThumbnailSrc(
+						cartItemDTOConverterContext.getAccountId(),
+						commerceOrderItem.getCPInstanceId()));
 			}
 		};
 	}
@@ -212,11 +220,11 @@ public class CartItemDTOConverter
 
 		Price price = new Price() {
 			{
-				currency = commerceCurrency.getName(locale);
-				price = unitPrice.doubleValue();
-				priceFormatted = unitPriceCommerceMoney.format(locale);
-				priceOnApplication =
-					commerceOrderItemPrice.isPriceOnApplication();
+				setCurrency(() -> commerceCurrency.getName(locale));
+				setPrice(unitPrice::doubleValue);
+				setPriceFormatted(() -> unitPriceCommerceMoney.format(locale));
+				setPriceOnApplication(
+					commerceOrderItemPrice::isPriceOnApplication);
 			}
 		};
 

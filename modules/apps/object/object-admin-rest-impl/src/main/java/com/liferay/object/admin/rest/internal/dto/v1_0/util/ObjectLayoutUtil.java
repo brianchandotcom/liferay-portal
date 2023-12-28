@@ -45,23 +45,25 @@ public class ObjectLayoutUtil {
 
 		ObjectLayout objectLayout = new ObjectLayout() {
 			{
-				dateCreated = serviceBuilderObjectLayout.getCreateDate();
-				dateModified = serviceBuilderObjectLayout.getModifiedDate();
-				defaultObjectLayout =
-					serviceBuilderObjectLayout.isDefaultObjectLayout();
-				id = serviceBuilderObjectLayout.getObjectLayoutId();
-				name = LocalizedMapUtil.getLanguageIdMap(
-					serviceBuilderObjectLayout.getNameMap());
-				objectDefinitionExternalReferenceCode =
-					objectDefinition.getExternalReferenceCode();
-				objectDefinitionId =
-					serviceBuilderObjectLayout.getObjectDefinitionId();
-				objectLayoutTabs = TransformUtil.transformToArray(
-					serviceBuilderObjectLayout.getObjectLayoutTabs(),
-					objectLayoutTab -> toObjectLayoutTab(
-						objectFieldLocalService, objectLayoutTab,
-						objectRelationshipLocalService),
-					ObjectLayoutTab.class);
+				setDateCreated(serviceBuilderObjectLayout::getCreateDate);
+				setDateModified(serviceBuilderObjectLayout::getModifiedDate);
+				setDefaultObjectLayout(
+					serviceBuilderObjectLayout::isDefaultObjectLayout);
+				setId(serviceBuilderObjectLayout::getObjectLayoutId);
+				setName(
+					() -> LocalizedMapUtil.getLanguageIdMap(
+						serviceBuilderObjectLayout.getNameMap()));
+				setObjectDefinitionExternalReferenceCode(
+					objectDefinition::getExternalReferenceCode);
+				setObjectDefinitionId(
+					serviceBuilderObjectLayout::getObjectDefinitionId);
+				setObjectLayoutTabs(
+					() -> TransformUtil.transformToArray(
+						serviceBuilderObjectLayout.getObjectLayoutTabs(),
+						objectLayoutTab -> toObjectLayoutTab(
+							objectFieldLocalService, objectLayoutTab,
+							objectRelationshipLocalService),
+						ObjectLayoutTab.class));
 			}
 		};
 
@@ -81,18 +83,16 @@ public class ObjectLayoutUtil {
 
 		return new ObjectLayoutTab() {
 			{
-				id = objectLayoutTab.getObjectLayoutTabId();
-				name = LocalizedMapUtil.getLanguageIdMap(
-					objectLayoutTab.getNameMap());
-				objectLayoutBoxes = TransformUtil.transformToArray(
-					objectLayoutTab.getObjectLayoutBoxes(),
-					objectLayoutBox -> _toObjectLayoutBox(
-						objectFieldLocalService, objectLayoutBox),
-					ObjectLayoutBox.class);
-				objectRelationshipId =
-					objectLayoutTab.getObjectRelationshipId();
-				priority = objectLayoutTab.getPriority();
-
+				setId(objectLayoutTab::getObjectLayoutTabId);
+				setName(
+					() -> LocalizedMapUtil.getLanguageIdMap(
+						objectLayoutTab.getNameMap()));
+				setObjectLayoutBoxes(
+					() -> TransformUtil.transformToArray(
+						objectLayoutTab.getObjectLayoutBoxes(),
+						objectLayoutBox -> _toObjectLayoutBox(
+							objectFieldLocalService, objectLayoutBox),
+						ObjectLayoutBox.class));
 				setObjectRelationshipExternalReferenceCode(
 					() -> {
 						ObjectRelationship objectRelationship =
@@ -106,6 +106,9 @@ public class ObjectLayoutUtil {
 
 						return objectRelationship.getExternalReferenceCode();
 					});
+				setObjectRelationshipId(
+					objectLayoutTab::getObjectRelationshipId);
+				setPriority(objectLayoutTab::getPriority);
 			}
 		};
 	}
@@ -120,17 +123,21 @@ public class ObjectLayoutUtil {
 
 		return new ObjectLayoutBox() {
 			{
-				collapsable = objectLayoutBox.isCollapsable();
-				id = objectLayoutBox.getObjectLayoutBoxId();
-				name = LocalizedMapUtil.getLanguageIdMap(
-					objectLayoutBox.getNameMap());
-				objectLayoutRows = TransformUtil.transformToArray(
-					objectLayoutBox.getObjectLayoutRows(),
-					objectLayoutRow -> _toObjectLayoutRow(
-						objectFieldLocalService, objectLayoutRow),
-					ObjectLayoutRow.class);
-				priority = objectLayoutBox.getPriority();
-				type = ObjectLayoutBox.Type.create(objectLayoutBox.getType());
+				setCollapsable(objectLayoutBox::isCollapsable);
+				setId(objectLayoutBox::getObjectLayoutBoxId);
+				setName(
+					() -> LocalizedMapUtil.getLanguageIdMap(
+						objectLayoutBox.getNameMap()));
+				setObjectLayoutRows(
+					() -> TransformUtil.transformToArray(
+						objectLayoutBox.getObjectLayoutRows(),
+						objectLayoutRow -> _toObjectLayoutRow(
+							objectFieldLocalService, objectLayoutRow),
+						ObjectLayoutRow.class));
+				setPriority(objectLayoutBox::getPriority);
+				setType(
+					() -> ObjectLayoutBox.Type.create(
+						objectLayoutBox.getType()));
 			}
 		};
 	}
@@ -149,10 +156,13 @@ public class ObjectLayoutUtil {
 
 		return new ObjectLayoutColumn() {
 			{
-				id = serviceBuilderObjectLayoutColumn.getObjectLayoutColumnId();
-				objectFieldName = objectField.getName();
-				priority = serviceBuilderObjectLayoutColumn.getPriority();
-				size = serviceBuilderObjectLayoutColumn.getSize();
+				setId(
+					() ->
+						serviceBuilderObjectLayoutColumn.
+							getObjectLayoutColumnId());
+				setObjectFieldName(objectField::getName);
+				setPriority(serviceBuilderObjectLayoutColumn::getPriority);
+				setSize(serviceBuilderObjectLayoutColumn::getSize);
 			}
 		};
 	}
@@ -168,13 +178,14 @@ public class ObjectLayoutUtil {
 
 		return new ObjectLayoutRow() {
 			{
-				id = serviceBuilderObjectLayoutRow.getObjectLayoutRowId();
-				objectLayoutColumns = TransformUtil.transformToArray(
-					serviceBuilderObjectLayoutRow.getObjectLayoutColumns(),
-					objectLayoutColumn -> _toObjectLayoutColumn(
-						objectFieldLocalService, objectLayoutColumn),
-					ObjectLayoutColumn.class);
-				priority = serviceBuilderObjectLayoutRow.getPriority();
+				setId(serviceBuilderObjectLayoutRow::getObjectLayoutRowId);
+				setObjectLayoutColumns(
+					() -> TransformUtil.transformToArray(
+						serviceBuilderObjectLayoutRow.getObjectLayoutColumns(),
+						objectLayoutColumn -> _toObjectLayoutColumn(
+							objectFieldLocalService, objectLayoutColumn),
+						ObjectLayoutColumn.class));
+				setPriority(serviceBuilderObjectLayoutRow::getPriority);
 			}
 		};
 	}

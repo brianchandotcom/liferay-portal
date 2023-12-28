@@ -146,7 +146,7 @@ public class SearchResponseResourceImpl extends BaseSearchResponseResourceImpl {
 
 		return new SearchResponse() {
 			{
-				errors = _toErrorMaps(runtimeException);
+				setErrors(() -> _toErrorMaps(runtimeException));
 			}
 		};
 	}
@@ -161,17 +161,20 @@ public class SearchResponseResourceImpl extends BaseSearchResponseResourceImpl {
 			String.valueOf(
 				new SearchResponse() {
 					{
-						page = portalSearchRequest.getFrom();
-						pageSize = portalSearchRequest.getSize();
-						request = _createJSONObject(
-							searchResponse.getRequestString());
-						requestString = searchResponse.getRequestString();
-						response = _createJSONObject(
-							searchResponse.getResponseString());
-						responseString = searchResponse.getResponseString();
-						searchHits = _toSearchHits(
-							_getLocale(searchResponse),
-							searchResponse.getSearchHits());
+						setPage(portalSearchRequest::getFrom);
+						setPageSize(portalSearchRequest::getSize);
+						setRequest(
+							() -> _createJSONObject(
+								searchResponse.getRequestString()));
+						setRequestString(searchResponse::getRequestString);
+						setResponse(
+							() -> _createJSONObject(
+								searchResponse.getResponseString()));
+						setResponseString(searchResponse::getResponseString);
+						setSearchHits(
+							() -> _toSearchHits(
+								_getLocale(searchResponse),
+								searchResponse.getSearchHits()));
 					}
 				}));
 	}
@@ -326,7 +329,7 @@ public class SearchResponseResourceImpl extends BaseSearchResponseResourceImpl {
 					name,
 					new DocumentField() {
 						{
-							values = valuesList.toArray();
+							setValues(valuesList::toArray);
 						}
 					});
 			});
@@ -345,16 +348,18 @@ public class SearchResponseResourceImpl extends BaseSearchResponseResourceImpl {
 			"assetSearchSummary",
 			new DocumentField() {
 				{
-					values = new String[] {
-						assetRenderer.getSearchSummary(locale)
-					};
+					setValues(
+						() -> new String[] {
+							assetRenderer.getSearchSummary(locale)
+						});
 				}
 			});
 		documentFields.put(
 			"assetTitle",
 			new DocumentField() {
 				{
-					values = new String[] {assetRenderer.getTitle(locale)};
+					setValues(
+						() -> new String[] {assetRenderer.getTitle(locale)});
 				}
 			});
 
@@ -376,12 +381,13 @@ public class SearchResponseResourceImpl extends BaseSearchResponseResourceImpl {
 			hits.add(
 				new Hit() {
 					{
-						documentFields = _toDocumentFields(
-							searchHit.getDocument(), locale);
-						explanation = searchHit.getExplanation();
-						id = searchHit.getId();
-						score = _getScore(searchHit.getScore());
-						version = searchHit.getVersion();
+						setDocumentFields(
+							() -> _toDocumentFields(
+								searchHit.getDocument(), locale));
+						setExplanation(searchHit::getExplanation);
+						setId(searchHit::getId);
+						setScore(() -> _getScore(searchHit.getScore()));
+						setVersion(searchHit::getVersion);
 					}
 				});
 		}
@@ -394,9 +400,9 @@ public class SearchResponseResourceImpl extends BaseSearchResponseResourceImpl {
 
 		return new SearchHits() {
 			{
-				hits = _toHits(locale, searchHits.getSearchHits());
-				maxScore = _getScore(searchHits.getMaxScore());
-				totalHits = searchHits.getTotalHits();
+				setHits(() -> _toHits(locale, searchHits.getSearchHits()));
+				setMaxScore(() -> _getScore(searchHits.getMaxScore()));
+				setTotalHits(searchHits::getTotalHits);
 			}
 		};
 	}

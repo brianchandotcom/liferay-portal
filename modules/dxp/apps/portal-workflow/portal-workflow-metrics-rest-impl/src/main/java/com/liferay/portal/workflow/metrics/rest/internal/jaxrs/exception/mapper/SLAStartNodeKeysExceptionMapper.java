@@ -38,9 +38,10 @@ public class SLAStartNodeKeysExceptionMapper
 		return Collections.singletonList(
 			new GenericError() {
 				{
-					fieldName = "startNodeKeys";
-					message = SLAStartNodeKeysExceptionMapper.this.getMessage(
-						"the-start-node-field-cannot-be-empty");
+					setFieldName(() -> "startNodeKeys");
+					setMessage(
+						() -> SLAStartNodeKeysExceptionMapper.this.getMessage(
+							"the-start-node-field-cannot-be-empty"));
 				}
 			});
 	}

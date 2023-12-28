@@ -35,16 +35,20 @@ public class TaxonomyCategoryBriefUtil {
 
 		return new TaxonomyCategoryBrief() {
 			{
-				embeddedTaxonomyCategory = _toTaxonomyCategory(
-					assetCategory.getCategoryId(), dtoConverterContext);
-				taxonomyCategoryId = assetCategory.getCategoryId();
-				taxonomyCategoryName = assetCategory.getTitle(
-					dtoConverterContext.getLocale());
-				taxonomyCategoryName_i18n = LocalizedMapUtil.getI18nMap(
-					dtoConverterContext.isAcceptAllLanguages(),
-					assetCategory.getTitleMap());
-				taxonomyCategoryReference = _toTaxonomyCategoryReference(
-					assetCategory, dtoConverterContext);
+				setEmbeddedTaxonomyCategory(
+					() -> _toTaxonomyCategory(
+						assetCategory.getCategoryId(), dtoConverterContext));
+				setTaxonomyCategoryId(assetCategory::getCategoryId);
+				setTaxonomyCategoryName(
+					() -> assetCategory.getTitle(
+						dtoConverterContext.getLocale()));
+				setTaxonomyCategoryName_i18n(
+					() -> LocalizedMapUtil.getI18nMap(
+						dtoConverterContext.isAcceptAllLanguages(),
+						assetCategory.getTitleMap()));
+				setTaxonomyCategoryReference(
+					() -> _toTaxonomyCategoryReference(
+						assetCategory, dtoConverterContext));
 			}
 		};
 	}
@@ -90,8 +94,8 @@ public class TaxonomyCategoryBriefUtil {
 
 		return new TaxonomyCategoryReference() {
 			{
-				externalReferenceCode =
-					assetCategory.getExternalReferenceCode();
+				setExternalReferenceCode(
+					assetCategory::getExternalReferenceCode);
 
 				setSiteKey(
 					() -> {

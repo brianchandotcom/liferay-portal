@@ -35,10 +35,11 @@ public class DataSourceDTOConverter
 
 		return new DataSource() {
 			{
-				commerceChannelIds =
-					analyticsDataSource.getCommerceChannelIds();
-				dataSourceId = String.valueOf(analyticsDataSource.getId());
-				siteIds = analyticsDataSource.getSiteIds();
+				setCommerceChannelIds(
+					analyticsDataSource::getCommerceChannelIds);
+				setDataSourceId(
+					() -> String.valueOf(analyticsDataSource.getId()));
+				setSiteIds(analyticsDataSource::getSiteIds);
 			}
 		};
 	}

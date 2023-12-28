@@ -26,7 +26,8 @@ public class StatusResourceImpl extends BaseStatusResourceImpl {
 	public Status getStatus() {
 		return new Status() {
 			{
-				actionInProgress = _bulkSelectionRunner.isBusy(contextUser);
+				setActionInProgress(
+					() -> _bulkSelectionRunner.isBusy(contextUser));
 			}
 		};
 	}

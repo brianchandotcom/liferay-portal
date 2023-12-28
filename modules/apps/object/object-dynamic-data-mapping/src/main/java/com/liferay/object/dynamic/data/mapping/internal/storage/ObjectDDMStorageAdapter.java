@@ -177,11 +177,13 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 				objectDefinition,
 				new ObjectEntry() {
 					{
-						properties = _toProperties(
-							ddmFormValues.getDDMFormFieldValuesMap(true),
-							ObjectFieldUtil.toObjectFieldsMap(
-								_objectFieldLocalService.getObjectFields(
-									objectDefinition.getObjectDefinitionId())));
+						setProperties(
+							() -> _toProperties(
+								ddmFormValues.getDDMFormFieldValuesMap(true),
+								ObjectFieldUtil.toObjectFieldsMap(
+									_objectFieldLocalService.getObjectFields(
+										objectDefinition.
+											getObjectDefinitionId()))));
 					}
 				},
 				_getScopeKey(

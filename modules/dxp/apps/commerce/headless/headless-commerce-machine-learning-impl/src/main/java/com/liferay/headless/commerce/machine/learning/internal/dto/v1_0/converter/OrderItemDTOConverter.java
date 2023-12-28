@@ -55,35 +55,36 @@ public class OrderItemDTOConverter
 			return null;
 		}
 
-		ExpandoBridge expandoBridge = commerceOrderItem.getExpandoBridge();
-
 		return new OrderItem() {
 			{
-				cpDefinitionId = commerceOrderItem.getCPDefinitionId();
-				createDate = commerceOrderItem.getCreateDate();
-				customFields = expandoBridge.getAttributes();
-				externalReferenceCode =
-					commerceOrderItem.getExternalReferenceCode();
-				finalPrice = commerceOrderItem.getFinalPrice();
-				id = commerceOrderItem.getCommerceOrderItemId();
-				modifiedDate = commerceOrderItem.getModifiedDate();
-				name = LanguageUtils.getLanguageIdMap(
-					commerceOrderItem.getNameMap());
-				options = commerceOrderItem.getJson();
-				parentOrderItemId =
-					commerceOrderItem.getParentCommerceOrderItemId();
+				setCpDefinitionId(commerceOrderItem::getCPDefinitionId);
+				setCreateDate(commerceOrderItem::getCreateDate);
+				setCustomFields(
+					() -> {
+						ExpandoBridge expandoBridge =
+							commerceOrderItem.getExpandoBridge();
 
-				sku = commerceOrderItem.getSku();
-				subscription = commerceOrderItem.isSubscription();
-				unitPrice = commerceOrderItem.getUnitPrice();
-				userId = commerceOrderItem.getUserId();
-
+						return expandoBridge.getAttributes();
+					});
+				setExternalReferenceCode(
+					commerceOrderItem::getExternalReferenceCode);
+				setFinalPrice(commerceOrderItem::getFinalPrice);
+				setId(commerceOrderItem::getCommerceOrderItemId);
+				setModifiedDate(commerceOrderItem::getModifiedDate);
+				setName(
+					() -> LanguageUtils.getLanguageIdMap(
+						commerceOrderItem.getNameMap()));
+				setOptions(commerceOrderItem::getJson);
+				setParentOrderItemId(
+					commerceOrderItem::getParentCommerceOrderItemId);
 				setQuantity(
 					() -> {
 						BigDecimal quantity = commerceOrderItem.getQuantity();
 
 						return quantity.intValue();
 					});
+				setSku(commerceOrderItem::getSku);
+				setSubscription(commerceOrderItem::isSubscription);
 				setUnitOfMeasure(
 					() -> {
 						if (commerceOrderItem.getCPMeasurementUnitId() <= 0) {
@@ -96,6 +97,8 @@ public class OrderItemDTOConverter
 
 						return cpMeasurementUnit.getKey();
 					});
+				setUnitPrice(commerceOrderItem::getUnitPrice);
+				setUserId(commerceOrderItem::getUserId);
 			}
 		};
 	}

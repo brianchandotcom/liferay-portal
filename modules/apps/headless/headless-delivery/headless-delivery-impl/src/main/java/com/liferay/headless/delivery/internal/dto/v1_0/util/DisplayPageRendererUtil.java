@@ -75,17 +75,19 @@ public class DisplayPageRendererUtil {
 				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE),
 			layoutPageTemplateEntry -> new RenderedContent() {
 				{
-					contentTemplateId =
-						layoutPageTemplateEntry.getLayoutPageTemplateEntryKey();
-					contentTemplateName = layoutPageTemplateEntry.getName();
-					markedAsDefault =
-						layoutPageTemplateEntry.isDefaultTemplate();
-					renderedContentURL = JaxRsLinkUtil.getJaxRsLink(
-						"headless-delivery", baseClass, methodName, uriInfo,
-						itemClassPK,
-						layoutPageTemplateEntry.
-							getLayoutPageTemplateEntryKey());
-
+					setContentTemplateId(
+						() ->
+							layoutPageTemplateEntry.
+								getLayoutPageTemplateEntryKey());
+					setContentTemplateName(layoutPageTemplateEntry::getName);
+					setMarkedAsDefault(
+						layoutPageTemplateEntry::isDefaultTemplate);
+					setRenderedContentURL(
+						() -> JaxRsLinkUtil.getJaxRsLink(
+							"headless-delivery", baseClass, methodName, uriInfo,
+							itemClassPK,
+							layoutPageTemplateEntry.
+								getLayoutPageTemplateEntryKey()));
 					setRenderedContentValue(
 						() -> {
 							if (!dtoConverterContext.containsNestedFieldsValue(

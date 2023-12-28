@@ -83,13 +83,7 @@ public class SubscriptionResourceImpl extends BaseSubscriptionResourceImpl {
 
 		return new Subscription() {
 			{
-				contentId = subscription.getClassPK();
-				dateCreated = subscription.getCreateDate();
-				dateModified = subscription.getModifiedDate();
-				frequency = subscription.getFrequency();
-				id = subscription.getSubscriptionId();
-				siteId = subscription.getGroupId();
-
+				setContentId(subscription::getClassPK);
 				setContentType(
 					() -> {
 						DTOConverter<?, ?> dtoConverter =
@@ -102,6 +96,11 @@ public class SubscriptionResourceImpl extends BaseSubscriptionResourceImpl {
 
 						return dtoConverter.getContentType();
 					});
+				setDateCreated(subscription::getCreateDate);
+				setDateModified(subscription::getModifiedDate);
+				setFrequency(subscription::getFrequency);
+				setId(subscription::getSubscriptionId);
+				setSiteId(subscription::getGroupId);
 			}
 		};
 	}

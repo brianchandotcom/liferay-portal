@@ -55,15 +55,15 @@ public class ExperimentResourceImpl extends BaseExperimentResourceImpl {
 
 		return new Experiment() {
 			{
-				dateCreated = segmentsExperiment.getCreateDate();
-				dateModified = segmentsExperiment.getModifiedDate();
-				description = segmentsExperiment.getDescription();
-				id = segmentsExperiment.getSegmentsExperimentKey();
-				name = segmentsExperiment.getName();
-				siteId = segmentsExperiment.getGroupId();
-				status = segmentsExperimentConstantsStatus.toString();
-				winnerVariantId =
-					segmentsExperiment.getWinnerSegmentsExperienceId();
+				setDateCreated(segmentsExperiment::getCreateDate);
+				setDateModified(segmentsExperiment::getModifiedDate);
+				setDescription(segmentsExperiment::getDescription);
+				setId(segmentsExperiment::getSegmentsExperimentKey);
+				setName(segmentsExperiment::getName);
+				setSiteId(segmentsExperiment::getGroupId);
+				setStatus(segmentsExperimentConstantsStatus::toString);
+				setWinnerVariantId(
+					segmentsExperiment::getWinnerSegmentsExperienceId);
 			}
 		};
 	}

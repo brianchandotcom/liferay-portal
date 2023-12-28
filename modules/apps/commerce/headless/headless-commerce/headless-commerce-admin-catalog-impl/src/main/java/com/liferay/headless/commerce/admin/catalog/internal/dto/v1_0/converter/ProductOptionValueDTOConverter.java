@@ -39,19 +39,17 @@ public class ProductOptionValueDTOConverter
 
 		return new ProductOptionValue() {
 			{
-				deltaPrice = cpDefinitionOptionValueRel.getPrice();
-				id =
-					cpDefinitionOptionValueRel.
-						getCPDefinitionOptionValueRelId();
-				key = cpDefinitionOptionValueRel.getKey();
-				name = LanguageUtils.getLanguageIdMap(
-					cpDefinitionOptionValueRel.getNameMap());
-				preselected = cpDefinitionOptionValueRel.isPreselected();
-				priority = cpDefinitionOptionValueRel.getPriority();
-				quantity = cpDefinitionOptionValueRel.getQuantity();
-				unitOfMeasureKey =
-					cpDefinitionOptionValueRel.getUnitOfMeasureKey();
-
+				setDeltaPrice(cpDefinitionOptionValueRel::getPrice);
+				setId(
+					cpDefinitionOptionValueRel::
+						getCPDefinitionOptionValueRelId);
+				setKey(cpDefinitionOptionValueRel::getKey);
+				setName(
+					() -> LanguageUtils.getLanguageIdMap(
+						cpDefinitionOptionValueRel.getNameMap()));
+				setPreselected(cpDefinitionOptionValueRel::isPreselected);
+				setPriority(cpDefinitionOptionValueRel::getPriority);
+				setQuantity(cpDefinitionOptionValueRel::getQuantity);
 				setSkuId(
 					() -> {
 						if (cpInstance == null) {
@@ -60,6 +58,8 @@ public class ProductOptionValueDTOConverter
 
 						return cpInstance.getCPInstanceId();
 					});
+				setUnitOfMeasureKey(
+					cpDefinitionOptionValueRel::getUnitOfMeasureKey);
 			}
 		};
 	}

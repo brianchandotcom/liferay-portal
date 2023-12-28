@@ -57,9 +57,6 @@ public class WishListItemDTOConverter
 
 		return new WishListItem() {
 			{
-				id = commerceWishListItem.getCommerceWishListItemId();
-				productId = commerceWishListItem.getCProductId();
-
 				setFinalPrice(
 					() -> {
 						CPInstance cpInstance =
@@ -113,6 +110,8 @@ public class WishListItemDTOConverter
 						return cpDefinition.getDefaultImageThumbnailSrc(
 							accountEntry.getAccountEntryId());
 					});
+				setId(commerceWishListItem::getCommerceWishListItemId);
+				setProductId(commerceWishListItem::getCProductId);
 				setProductName(
 					() -> {
 						CPDefinition cpDefinition =

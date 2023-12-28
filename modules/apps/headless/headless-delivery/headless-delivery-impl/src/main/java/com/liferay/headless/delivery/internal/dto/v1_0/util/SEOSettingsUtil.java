@@ -34,26 +34,34 @@ public class SEOSettingsUtil {
 
 		SEOSettings seoSettings = new SEOSettings() {
 			{
-				description = layout.getDescription(
-					dtoConverterContext.getLocale());
-				description_i18n = LocalizedMapUtil.getI18nMap(
-					dtoConverterContext.isAcceptAllLanguages(),
-					layout.getDescriptionMap());
-				htmlTitle = layout.getTitle(dtoConverterContext.getLocale());
-				htmlTitle_i18n = LocalizedMapUtil.getI18nMap(
-					dtoConverterContext.isAcceptAllLanguages(),
-					layout.getTitleMap());
-				robots = layout.getRobots(dtoConverterContext.getLocale());
-				robots_i18n = LocalizedMapUtil.getI18nMap(
-					dtoConverterContext.isAcceptAllLanguages(),
-					layout.getRobotsMap());
-				seoKeywords = layout.getKeywords(
-					dtoConverterContext.getLocale());
-				seoKeywords_i18n = LocalizedMapUtil.getI18nMap(
-					dtoConverterContext.isAcceptAllLanguages(),
-					layout.getKeywordsMap());
-				siteMapSettings = _toSiteMapSettings(
-					layout.getTypeSettingsProperties());
+				setDescription(
+					() -> layout.getDescription(
+						dtoConverterContext.getLocale()));
+				setDescription_i18n(
+					() -> LocalizedMapUtil.getI18nMap(
+						dtoConverterContext.isAcceptAllLanguages(),
+						layout.getDescriptionMap()));
+				setHtmlTitle(
+					() -> layout.getTitle(dtoConverterContext.getLocale()));
+				setHtmlTitle_i18n(
+					() -> LocalizedMapUtil.getI18nMap(
+						dtoConverterContext.isAcceptAllLanguages(),
+						layout.getTitleMap()));
+				setRobots(
+					() -> layout.getRobots(dtoConverterContext.getLocale()));
+				setRobots_i18n(
+					() -> LocalizedMapUtil.getI18nMap(
+						dtoConverterContext.isAcceptAllLanguages(),
+						layout.getRobotsMap()));
+				setSeoKeywords(
+					() -> layout.getKeywords(dtoConverterContext.getLocale()));
+				setSeoKeywords_i18n(
+					() -> LocalizedMapUtil.getI18nMap(
+						dtoConverterContext.isAcceptAllLanguages(),
+						layout.getKeywordsMap()));
+				setSiteMapSettings(
+					() -> _toSiteMapSettings(
+						layout.getTypeSettingsProperties()));
 			}
 		};
 

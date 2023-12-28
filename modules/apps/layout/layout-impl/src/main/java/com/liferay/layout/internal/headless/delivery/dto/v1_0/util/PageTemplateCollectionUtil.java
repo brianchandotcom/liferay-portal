@@ -19,8 +19,6 @@ public class PageTemplateCollectionUtil {
 
 		return new PageTemplateCollection() {
 			{
-				name = layoutPageTemplateCollection.getName();
-
 				setDescription(
 					() -> {
 						String description =
@@ -32,6 +30,7 @@ public class PageTemplateCollectionUtil {
 
 						return description;
 					});
+				setName(layoutPageTemplateCollection::getName);
 			}
 		};
 	}

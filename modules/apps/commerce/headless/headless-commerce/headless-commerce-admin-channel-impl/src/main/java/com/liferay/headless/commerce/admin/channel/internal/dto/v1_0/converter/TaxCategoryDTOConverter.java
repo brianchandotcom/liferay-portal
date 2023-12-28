@@ -40,11 +40,13 @@ public class TaxCategoryDTOConverter
 
 		return new TaxCategory() {
 			{
-				description = LanguageUtils.getLanguageIdMap(
-					cpTaxCategory.getDescriptionMap());
-				id = cpTaxCategory.getCPTaxCategoryId();
-				name = LanguageUtils.getLanguageIdMap(
-					cpTaxCategory.getNameMap());
+				setDescription(
+					() -> LanguageUtils.getLanguageIdMap(
+						cpTaxCategory.getDescriptionMap()));
+				setId(cpTaxCategory::getCPTaxCategoryId);
+				setName(
+					() -> LanguageUtils.getLanguageIdMap(
+						cpTaxCategory.getNameMap()));
 			}
 		};
 	}

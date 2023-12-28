@@ -174,21 +174,24 @@ public class TaxonomyVocabularyResourceImpl
 
 		return new TaxonomyVocabulary() {
 			{
-				multiValued = assetVocabulary.isMultiValued();
-				name = assetVocabulary.getName();
-				required = assetVocabulary.isRequired(
-					_getClassNameId(), AssetCategoryConstants.ALL_CLASS_TYPE_PK,
-					siteId);
-				taxonomyCategories = transformToArray(
-					assetCategories,
-					assetCategory -> new TaxonomyCategory() {
-						{
-							taxonomyCategoryId = assetCategory.getCategoryId();
-							taxonomyCategoryName = assetCategory.getName();
-						}
-					},
-					TaxonomyCategory.class);
-				taxonomyVocabularyId = assetVocabulary.getVocabularyId();
+				setMultiValued(assetVocabulary::isMultiValued);
+				setName(assetVocabulary::getName);
+				setRequired(
+					() -> assetVocabulary.isRequired(
+						_getClassNameId(),
+						AssetCategoryConstants.ALL_CLASS_TYPE_PK, siteId));
+				setTaxonomyCategories(
+					() -> transformToArray(
+						assetCategories,
+						assetCategory -> new TaxonomyCategory() {
+							{
+								setTaxonomyCategoryId(
+									assetCategory::getCategoryId);
+								setTaxonomyCategoryName(assetCategory::getName);
+							}
+						},
+						TaxonomyCategory.class));
+				setTaxonomyVocabularyId(assetVocabulary::getVocabularyId);
 			}
 		};
 	}

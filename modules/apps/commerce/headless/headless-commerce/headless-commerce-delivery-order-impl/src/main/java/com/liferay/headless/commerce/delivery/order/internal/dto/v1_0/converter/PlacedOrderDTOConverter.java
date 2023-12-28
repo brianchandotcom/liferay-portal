@@ -100,43 +100,39 @@ public class PlacedOrderDTOConverter
 
 		PlacedOrder placedOrder = new PlacedOrder() {
 			{
-				account = commerceOrder.getCommerceAccountName();
-				accountId = commerceOrder.getCommerceAccountId();
-				author = commerceOrder.getUserName();
-				couponCode = commerceOrder.getCouponCode();
-				createDate = commerceOrder.getCreateDate();
-				customFields = expandoBridge.getAttributes();
-				id = commerceOrder.getCommerceOrderId();
-				lastPriceUpdateDate = commerceOrder.getLastPriceUpdateDate();
-				modifiedDate = commerceOrder.getModifiedDate();
-				orderStatusInfo = _getOrderStatusInfo(
-					commerceOrder.getOrderStatus(), commerceOrderStatusLabel,
-					commerceOrderStatusLabelI18n);
-				orderTypeExternalReferenceCode =
-					_getOrderTypeExternalReferenceCode(
-						commerceOrder.getCommerceOrderTypeId());
-				orderTypeId = commerceOrder.getCommerceOrderTypeId();
-				orderUUID = commerceOrder.getUuid();
-				paymentMethod = commerceOrder.getCommercePaymentMethodKey();
-				paymentStatus = commerceOrder.getPaymentStatus();
-				paymentStatusInfo = _getPaymentStatusInfo(
-					commerceOrder.getPaymentStatus(),
-					commerceOrderPaymentStatusLabel,
-					commerceOrderPaymentStatusLabelI18n);
-				paymentStatusLabel = commerceOrderPaymentStatusLabel;
-				placedOrderBillingAddressId =
-					commerceOrder.getBillingAddressId();
-				placedOrderShippingAddressId =
-					commerceOrder.getShippingAddressId();
-				printedNote = commerceOrder.getPrintedNote();
-				purchaseOrderNumber = commerceOrder.getPurchaseOrderNumber();
-				shippingOption = commerceOrder.getShippingOptionName();
-				status = commerceOrderWorkflowStatusLabel;
-				summary = _getSummary(commerceOrder, locale);
-				workflowStatusInfo = _toStatus(
-					commerceOrder.getStatus(), commerceOrderWorkflowStatusLabel,
-					commerceOrderWorkflowStatusLabelI18n);
-
+				setAccount(commerceOrder::getCommerceAccountName);
+				setAccountId(commerceOrder::getCommerceAccountId);
+				setAuthor(commerceOrder::getUserName);
+				setCouponCode(commerceOrder::getCouponCode);
+				setCreateDate(commerceOrder::getCreateDate);
+				setCustomFields(expandoBridge::getAttributes);
+				setId(commerceOrder::getCommerceOrderId);
+				setLastPriceUpdateDate(commerceOrder::getLastPriceUpdateDate);
+				setModifiedDate(commerceOrder::getModifiedDate);
+				setOrderStatusInfo(
+					() -> _getOrderStatusInfo(
+						commerceOrder.getOrderStatus(),
+						commerceOrderStatusLabel,
+						commerceOrderStatusLabelI18n));
+				setOrderTypeExternalReferenceCode(
+					() -> _getOrderTypeExternalReferenceCode(
+						commerceOrder.getCommerceOrderTypeId()));
+				setOrderTypeId(commerceOrder::getCommerceOrderTypeId);
+				setOrderUUID(commerceOrder::getUuid);
+				setPaymentMethod(commerceOrder::getCommercePaymentMethodKey);
+				setPaymentStatus(commerceOrder::getPaymentStatus);
+				setPaymentStatusInfo(
+					() -> _getPaymentStatusInfo(
+						commerceOrder.getPaymentStatus(),
+						commerceOrderPaymentStatusLabel,
+						commerceOrderPaymentStatusLabelI18n));
+				setPaymentStatusLabel(() -> commerceOrderPaymentStatusLabel);
+				setPlacedOrderBillingAddressId(
+					commerceOrder::getBillingAddressId);
+				setPlacedOrderShippingAddressId(
+					commerceOrder::getShippingAddressId);
+				setPrintedNote(commerceOrder::getPrintedNote);
+				setPurchaseOrderNumber(commerceOrder::getPurchaseOrderNumber);
 				setShippingMethod(
 					() -> {
 						CommerceShippingMethod commerceShippingMethod =
@@ -148,6 +144,14 @@ public class PlacedOrderDTOConverter
 
 						return commerceShippingMethod.getEngineKey();
 					});
+				setShippingOption(commerceOrder::getShippingOptionName);
+				setStatus(() -> commerceOrderWorkflowStatusLabel);
+				setSummary(() -> _getSummary(commerceOrder, locale));
+				setWorkflowStatusInfo(
+					() -> _toStatus(
+						commerceOrder.getStatus(),
+						commerceOrderWorkflowStatusLabel,
+						commerceOrderWorkflowStatusLabelI18n));
 			}
 		};
 
@@ -199,9 +203,9 @@ public class PlacedOrderDTOConverter
 
 		return new Status() {
 			{
-				code = orderStatus;
-				label = commerceOrderStatusLabel;
-				label_i18n = commerceOrderStatusLabelI18n;
+				setCode(() -> orderStatus);
+				setLabel(() -> commerceOrderStatusLabel);
+				setLabel_i18n(() -> commerceOrderStatusLabelI18n);
 			}
 		};
 	}
@@ -226,9 +230,9 @@ public class PlacedOrderDTOConverter
 
 		return new Status() {
 			{
-				code = paymentStatus;
-				label = commerceOrderPaymentStatusLabel;
-				label_i18n = commerceOrderPaymentStatusLabelI18n;
+				setCode(() -> paymentStatus);
+				setLabel(() -> commerceOrderPaymentStatusLabel);
+				setLabel_i18n(() -> commerceOrderPaymentStatusLabelI18n);
 			}
 		};
 	}
@@ -286,27 +290,30 @@ public class PlacedOrderDTOConverter
 
 		Summary summary = new Summary() {
 			{
-				currency = commerceCurrency.getName(locale);
-				itemsQuantity = BigDecimalUtil.stripTrailingZeros(
-					_commerceOrderItemService.getCommerceOrderItemsQuantity(
-						commerceOrder.getCommerceOrderId()));
-				shippingValue =
-					commerceOrderPriceShippingValuePrice.doubleValue();
-				shippingValueFormatted =
-					commerceOrderPriceShippingValueCommerceMoney.format(locale);
-				shippingValueWithTaxAmount =
-					finalOrderPriceShippingValueWithTaxAmountPrice.
-						doubleValue();
-				shippingValueWithTaxAmountFormatted =
-					commerceOrderShippingValueWithTaxAmountCommerceMoney.format(
-						locale);
-				subtotal = finalOrderPriceSubtotalPrice.doubleValue();
-				subtotalFormatted =
-					commerceOrderPriceSubtotalCommerceMoney.format(locale);
-
-				total = finalOrderPriceTotalPrice.doubleValue();
-				totalFormatted = commerceOrderPriceTotalCommerceMoney.format(
-					locale);
+				setCurrency(() -> commerceCurrency.getName(locale));
+				setItemsQuantity(
+					() -> BigDecimalUtil.stripTrailingZeros(
+						_commerceOrderItemService.getCommerceOrderItemsQuantity(
+							commerceOrder.getCommerceOrderId())));
+				setShippingValue(
+					commerceOrderPriceShippingValuePrice::doubleValue);
+				setShippingValueFormatted(
+					() -> commerceOrderPriceShippingValueCommerceMoney.format(
+						locale));
+				setShippingValueWithTaxAmount(
+					finalOrderPriceShippingValueWithTaxAmountPrice::
+						doubleValue);
+				setShippingValueWithTaxAmountFormatted(
+					() ->
+						commerceOrderShippingValueWithTaxAmountCommerceMoney.
+							format(locale));
+				setSubtotal(finalOrderPriceSubtotalPrice::doubleValue);
+				setSubtotalFormatted(
+					() -> commerceOrderPriceSubtotalCommerceMoney.format(
+						locale));
+				setTotal(finalOrderPriceTotalPrice::doubleValue);
+				setTotalFormatted(
+					() -> commerceOrderPriceTotalCommerceMoney.format(locale));
 			}
 		};
 
@@ -500,9 +507,9 @@ public class PlacedOrderDTOConverter
 
 		return new Status() {
 			{
-				code = orderStatus;
-				label = commerceOrderWorkflowStatusLabel;
-				label_i18n = commerceOrderWorkflowStatusLabelI18n;
+				setCode(() -> orderStatus);
+				setLabel(() -> commerceOrderWorkflowStatusLabel);
+				setLabel_i18n(() -> commerceOrderWorkflowStatusLabelI18n);
 			}
 		};
 	}

@@ -20,14 +20,15 @@ public class FormDocumentUtil {
 
 		return new FormDocument() {
 			{
-				contentUrl = dlurlHelper.getPreviewURL(
-					fileEntry, fileEntry.getFileVersion(), null, "");
-				encodingFormat = fileEntry.getMimeType();
-				fileExtension = fileEntry.getExtension();
-				id = fileEntry.getFileEntryId();
-				siteId = fileEntry.getGroupId();
-				sizeInBytes = fileEntry.getSize();
-				title = fileEntry.getTitle();
+				setContentUrl(
+					() -> dlurlHelper.getPreviewURL(
+						fileEntry, fileEntry.getFileVersion(), null, ""));
+				setEncodingFormat(fileEntry::getMimeType);
+				setFileExtension(fileEntry::getExtension);
+				setId(fileEntry::getFileEntryId);
+				setSiteId(fileEntry::getGroupId);
+				setSizeInBytes(fileEntry::getSize);
+				setTitle(fileEntry::getTitle);
 			}
 		};
 	}

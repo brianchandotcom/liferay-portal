@@ -280,15 +280,19 @@ public class UserSystemObjectDefinitionManager
 	private UserAccount _toUserAccount(Map<String, Object> values) {
 		return new UserAccount() {
 			{
-				additionalName = GetterUtil.getString(
-					values.get("additionalName"));
-				alternateName = GetterUtil.getString(
-					values.get("alternateName"));
-				emailAddress = GetterUtil.getString(values.get("emailAddress"));
-				externalReferenceCode = GetterUtil.getString(
-					values.get("externalReferenceCode"));
-				familyName = GetterUtil.getString(values.get("familyName"));
-				givenName = GetterUtil.getString(values.get("givenName"));
+				setAdditionalName(
+					() -> GetterUtil.getString(values.get("additionalName")));
+				setAlternateName(
+					() -> GetterUtil.getString(values.get("alternateName")));
+				setEmailAddress(
+					() -> GetterUtil.getString(values.get("emailAddress")));
+				setExternalReferenceCode(
+					() -> GetterUtil.getString(
+						values.get("externalReferenceCode")));
+				setFamilyName(
+					() -> GetterUtil.getString(values.get("familyName")));
+				setGivenName(
+					() -> GetterUtil.getString(values.get("givenName")));
 			}
 		};
 	}

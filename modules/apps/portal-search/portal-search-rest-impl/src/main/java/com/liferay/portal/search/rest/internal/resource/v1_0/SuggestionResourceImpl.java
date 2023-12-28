@@ -96,22 +96,28 @@ public class SuggestionResourceImpl extends BaseSuggestionResourceImpl {
 				suggestionsContributorResult ->
 					new SuggestionsContributorResults() {
 						{
-							attributes =
-								suggestionsContributorResult.getAttributes();
-							displayGroupName = _language.get(
-								contextAcceptLanguage.getPreferredLocale(),
-								suggestionsContributorResult.
-									getDisplayGroupName());
-							suggestions = transformToArray(
-								suggestionsContributorResult.getSuggestions(),
-								suggestion -> new Suggestion() {
-									{
-										attributes = suggestion.getAttributes();
-										score = suggestion.getScore();
-										text = suggestion.getText();
-									}
-								},
-								Suggestion.class);
+							setAttributes(
+								() ->
+									suggestionsContributorResult.
+										getAttributes());
+							setDisplayGroupName(
+								() -> _language.get(
+									contextAcceptLanguage.getPreferredLocale(),
+									suggestionsContributorResult.
+										getDisplayGroupName()));
+							setSuggestions(
+								() -> (Suggestion[])transformToArray(
+									suggestionsContributorResult.
+										getSuggestions(),
+									suggestion -> new Suggestion() {
+										{
+											setAttributes(
+												suggestion::getAttributes);
+											setScore(suggestion::getScore);
+											setText(suggestion::getText);
+										}
+									},
+									Suggestion.class));
 						}
 					}));
 	}

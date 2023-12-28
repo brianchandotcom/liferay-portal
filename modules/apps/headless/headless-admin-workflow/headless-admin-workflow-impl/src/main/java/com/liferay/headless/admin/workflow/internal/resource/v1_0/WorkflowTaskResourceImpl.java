@@ -565,59 +565,38 @@ public class WorkflowTaskResourceImpl extends BaseWorkflowTaskResourceImpl {
 
 		return new WorkflowTask() {
 			{
-				actions = HashMapBuilder.<String, Map<String, String>>put(
-					"assignToMe",
-					addAction(
-						ActionKeys.UPDATE, workflowTask.getWorkflowTaskId(),
-						"postWorkflowTaskAssignToMe",
-						_kaleoTaskInstanceTokenModelResourcePermission)
-				).put(
-					"assignToRole",
-					addAction(
-						ActionKeys.UPDATE, workflowTask.getWorkflowTaskId(),
-						"postWorkflowTaskAssignToRole",
-						_kaleoTaskInstanceTokenModelResourcePermission)
-				).put(
-					"assignToUser",
-					addAction(
-						ActionKeys.UPDATE, workflowTask.getWorkflowTaskId(),
-						"postWorkflowTaskAssignToUser",
-						_kaleoTaskInstanceTokenModelResourcePermission)
-				).put(
-					"changeTransition",
-					addAction(
-						ActionKeys.UPDATE, workflowTask.getWorkflowTaskId(),
-						"postWorkflowTaskChangeTransition",
-						_kaleoTaskInstanceTokenModelResourcePermission)
-				).put(
-					"updateDueDate",
-					addAction(
-						ActionKeys.UPDATE, workflowTask.getWorkflowTaskId(),
-						"patchWorkflowTaskUpdateDueDate",
-						_kaleoTaskInstanceTokenModelResourcePermission)
-				).build();
-				completed = workflowTask.isCompleted();
-				dateCompletion = workflowTask.getCompletionDate();
-				dateCreated = workflowTask.getCreateDate();
-				dateDue = workflowTask.getDueDate();
-				description = workflowTask.getDescription();
-				id = workflowTask.getWorkflowTaskId();
-				label = _language.get(
-					ResourceBundleUtil.getModuleAndPortalResourceBundle(
-						contextAcceptLanguage.getPreferredLocale(),
-						WorkflowTaskResourceImpl.class),
-					workflowTask.getName());
-				name = workflowTask.getName();
-				objectReviewed = ObjectReviewedUtil.toObjectReviewed(
-					contextAcceptLanguage.getPreferredLocale(),
-					workflowTask.getOptionalAttributes());
-				workflowDefinitionId = workflowTask.getWorkflowDefinitionId();
-				workflowDefinitionName =
-					workflowTask.getWorkflowDefinitionName();
-				workflowDefinitionVersion = String.valueOf(
-					workflowTask.getWorkflowDefinitionVersion());
-				workflowInstanceId = workflowTask.getWorkflowInstanceId();
-
+				setActions(
+					() -> HashMapBuilder.<String, Map<String, String>>put(
+						"assignToMe",
+						addAction(
+							ActionKeys.UPDATE, workflowTask.getWorkflowTaskId(),
+							"postWorkflowTaskAssignToMe",
+							_kaleoTaskInstanceTokenModelResourcePermission)
+					).put(
+						"assignToRole",
+						addAction(
+							ActionKeys.UPDATE, workflowTask.getWorkflowTaskId(),
+							"postWorkflowTaskAssignToRole",
+							_kaleoTaskInstanceTokenModelResourcePermission)
+					).put(
+						"assignToUser",
+						addAction(
+							ActionKeys.UPDATE, workflowTask.getWorkflowTaskId(),
+							"postWorkflowTaskAssignToUser",
+							_kaleoTaskInstanceTokenModelResourcePermission)
+					).put(
+						"changeTransition",
+						addAction(
+							ActionKeys.UPDATE, workflowTask.getWorkflowTaskId(),
+							"postWorkflowTaskChangeTransition",
+							_kaleoTaskInstanceTokenModelResourcePermission)
+					).put(
+						"updateDueDate",
+						addAction(
+							ActionKeys.UPDATE, workflowTask.getWorkflowTaskId(),
+							"patchWorkflowTaskUpdateDueDate",
+							_kaleoTaskInstanceTokenModelResourcePermission)
+					).build());
 				setAssigneePerson(
 					() -> {
 						if (workflowTask.getAssigneeUserId() <= 0) {
@@ -638,6 +617,30 @@ public class WorkflowTaskResourceImpl extends BaseWorkflowTaskResourceImpl {
 						return _getRoles(
 							workflowTask.getWorkflowTaskAssignees());
 					});
+				setCompleted(workflowTask::isCompleted);
+				setDateCompletion(workflowTask::getCompletionDate);
+				setDateCreated(workflowTask::getCreateDate);
+				setDateDue(workflowTask::getDueDate);
+				setDescription(workflowTask::getDescription);
+				setId(workflowTask::getWorkflowTaskId);
+				setLabel(
+					() -> _language.get(
+						ResourceBundleUtil.getModuleAndPortalResourceBundle(
+							contextAcceptLanguage.getPreferredLocale(),
+							WorkflowTaskResourceImpl.class),
+						workflowTask.getName()));
+				setName(workflowTask::getName);
+				setObjectReviewed(
+					() -> ObjectReviewedUtil.toObjectReviewed(
+						contextAcceptLanguage.getPreferredLocale(),
+						workflowTask.getOptionalAttributes()));
+				setWorkflowDefinitionId(workflowTask::getWorkflowDefinitionId);
+				setWorkflowDefinitionName(
+					workflowTask::getWorkflowDefinitionName);
+				setWorkflowDefinitionVersion(
+					() -> String.valueOf(
+						workflowTask.getWorkflowDefinitionVersion()));
+				setWorkflowInstanceId(workflowTask::getWorkflowInstanceId);
 			}
 		};
 	}

@@ -33,12 +33,14 @@ public class DisplayPageTemplateSettingsUtil {
 
 		return new DisplayPageTemplateSettings() {
 			{
-				contentAssociation = _getContentAssociation(
-					dtoConverterContext, infoItemServiceRegistry,
-					layoutPageTemplateEntry, portal);
-				openGraphSettingsMapping = _getOpenGraphSettingsMapping(layout);
-				seoSettingsMapping = _getSEOSettingsMapping(
-					dtoConverterContext, layout);
+				setContentAssociation(
+					() -> _getContentAssociation(
+						dtoConverterContext, infoItemServiceRegistry,
+						layoutPageTemplateEntry, portal));
+				setOpenGraphSettingsMapping(
+					() -> _getOpenGraphSettingsMapping(layout));
+				setSeoSettingsMapping(
+					() -> _getSEOSettingsMapping(dtoConverterContext, layout));
 			}
 		};
 	}
@@ -53,10 +55,12 @@ public class DisplayPageTemplateSettingsUtil {
 
 		return new ContentAssociation() {
 			{
-				contentSubtype = _getContentSubtype(
-					dtoConverterContext, infoItemServiceRegistry,
-					layoutPageTemplateEntry);
-				contentType = _contentTypes.getOrDefault(className, className);
+				setContentSubtype(
+					() -> _getContentSubtype(
+						dtoConverterContext, infoItemServiceRegistry,
+						layoutPageTemplateEntry));
+				setContentType(
+					() -> _contentTypes.getOrDefault(className, className));
 			}
 		};
 	}
@@ -93,14 +97,18 @@ public class DisplayPageTemplateSettingsUtil {
 
 		return new OpenGraphSettingsMapping() {
 			{
-				descriptionMappingFieldKey = layout.getTypeSettingsProperty(
-					"mapped-openGraphDescription", "description");
-				imageAltMappingFieldKey = layout.getTypeSettingsProperty(
-					"mapped-openGraphImageAlt", null);
-				imageMappingFieldKey = layout.getTypeSettingsProperty(
-					"mapped-openGraphImage", null);
-				titleMappingFieldKey = layout.getTypeSettingsProperty(
-					"mapped-openGraphTitle", "title");
+				setDescriptionMappingFieldKey(
+					() -> layout.getTypeSettingsProperty(
+						"mapped-openGraphDescription", "description"));
+				setImageAltMappingFieldKey(
+					() -> layout.getTypeSettingsProperty(
+						"mapped-openGraphImageAlt", null));
+				setImageMappingFieldKey(
+					() -> layout.getTypeSettingsProperty(
+						"mapped-openGraphImage", null));
+				setTitleMappingFieldKey(
+					() -> layout.getTypeSettingsProperty(
+						"mapped-openGraphTitle", "title"));
 			}
 		};
 	}
@@ -110,14 +118,18 @@ public class DisplayPageTemplateSettingsUtil {
 
 		return new SEOSettingsMapping() {
 			{
-				descriptionMappingFieldKey = layout.getTypeSettingsProperty(
-					"mapped-description", "description");
-				htmlTitleMappingFieldKey = layout.getTypeSettingsProperty(
-					"mapped-title", "title");
-				robots = layout.getRobots(dtoConverterContext.getLocale());
-				robots_i18n = LocalizedMapUtil.getI18nMap(
-					dtoConverterContext.isAcceptAllLanguages(),
-					layout.getRobotsMap());
+				setDescriptionMappingFieldKey(
+					() -> layout.getTypeSettingsProperty(
+						"mapped-description", "description"));
+				setHtmlTitleMappingFieldKey(
+					() -> layout.getTypeSettingsProperty(
+						"mapped-title", "title"));
+				setRobots(
+					() -> layout.getRobots(dtoConverterContext.getLocale()));
+				setRobots_i18n(
+					() -> LocalizedMapUtil.getI18nMap(
+						dtoConverterContext.isAcceptAllLanguages(),
+						layout.getRobotsMap()));
 			}
 		};
 	}

@@ -42,35 +42,38 @@ public class TermDTOConverter implements DTOConverter<CommerceTermEntry, Term> {
 
 		return new Term() {
 			{
-				actions = dtoConverterContext.getActions();
-				active = commerceTermEntry.isActive();
-				description = commerceTermEntry.getLanguageIdToDescriptionMap();
-				displayDate = commerceTermEntry.getDisplayDate();
-				expirationDate = commerceTermEntry.getExpirationDate();
-				externalReferenceCode =
-					commerceTermEntry.getExternalReferenceCode();
-				id = commerceTermEntry.getCommerceTermEntryId();
-				label = commerceTermEntry.getLanguageIdToLabelMap();
-				name = commerceTermEntry.getName();
-				priority = commerceTermEntry.getPriority();
-				type = commerceTermEntry.getType();
-				typeLocalized = _language.get(
-					LanguageResources.getResourceBundle(
-						dtoConverterContext.getLocale()),
-					commerceTermEntry.getType());
-				typeSettings = commerceTermEntry.getTypeSettings();
-
+				setActions(dtoConverterContext::getActions);
+				setActive(commerceTermEntry::isActive);
+				setDescription(
+					commerceTermEntry::getLanguageIdToDescriptionMap);
+				setDisplayDate(commerceTermEntry::getDisplayDate);
+				setExpirationDate(commerceTermEntry::getExpirationDate);
+				setExternalReferenceCode(
+					commerceTermEntry::getExternalReferenceCode);
+				setId(commerceTermEntry::getCommerceTermEntryId);
+				setLabel(commerceTermEntry::getLanguageIdToLabelMap);
+				setName(commerceTermEntry::getName);
+				setPriority(commerceTermEntry::getPriority);
+				setType(commerceTermEntry::getType);
+				setTypeLocalized(
+					() -> _language.get(
+						LanguageResources.getResourceBundle(
+							dtoConverterContext.getLocale()),
+						commerceTermEntry.getType()));
+				setTypeSettings(commerceTermEntry::getTypeSettings);
 				setWorkflowStatusInfo(
 					() -> new Status() {
 						{
-							code = commerceTermEntry.getStatus();
-							label = WorkflowConstants.getStatusLabel(
-								commerceTermEntry.getStatus());
-							label_i18n = _language.get(
-								LanguageResources.getResourceBundle(
-									dtoConverterContext.getLocale()),
-								WorkflowConstants.getStatusLabel(
+							setCode(commerceTermEntry::getStatus);
+							setLabel(
+								() -> WorkflowConstants.getStatusLabel(
 									commerceTermEntry.getStatus()));
+							setLabel_i18n(
+								() -> _language.get(
+									LanguageResources.getResourceBundle(
+										dtoConverterContext.getLocale()),
+									WorkflowConstants.getStatusLabel(
+										commerceTermEntry.getStatus())));
 						}
 					});
 			}

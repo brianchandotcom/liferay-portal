@@ -515,17 +515,20 @@ public class AssigneeMetricResourceImpl extends BaseAssigneeMetricResourceImpl {
 	private AssigneeMetric _toAssigneeMetric(Bucket bucket) {
 		return new AssigneeMetric() {
 			{
-				assignee = AssigneeUtil.toAssignee(
-					_language, _portal,
-					ResourceBundleUtil.getModuleAndPortalResourceBundle(
-						contextAcceptLanguage.getPreferredLocale(),
-						AssigneeMetricResourceImpl.class),
-					GetterUtil.getLong(bucket.getKey()),
-					_userLocalService::fetchUser);
-				durationTaskAvg = _getDurationTaskAvg(bucket);
-				onTimeTaskCount = _resourceHelper.getOnTimeTaskCount(bucket);
-				overdueTaskCount = _resourceHelper.getOverdueTaskCount(bucket);
-				taskCount = _getTaskCount(bucket);
+				setAssignee(
+					() -> AssigneeUtil.toAssignee(
+						_language, _portal,
+						ResourceBundleUtil.getModuleAndPortalResourceBundle(
+							contextAcceptLanguage.getPreferredLocale(),
+							AssigneeMetricResourceImpl.class),
+						GetterUtil.getLong(bucket.getKey()),
+						_userLocalService::fetchUser));
+				setDurationTaskAvg(() -> _getDurationTaskAvg(bucket));
+				setOnTimeTaskCount(
+					() -> _resourceHelper.getOnTimeTaskCount(bucket));
+				setOverdueTaskCount(
+					() -> _resourceHelper.getOverdueTaskCount(bucket));
+				setTaskCount(() -> _getTaskCount(bucket));
 			}
 		};
 	}

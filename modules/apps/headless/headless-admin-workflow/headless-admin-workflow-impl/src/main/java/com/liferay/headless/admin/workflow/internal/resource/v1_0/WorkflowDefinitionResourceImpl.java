@@ -310,29 +310,6 @@ public class WorkflowDefinitionResourceImpl
 
 		return new WorkflowDefinition() {
 			{
-				active = workflowDefinition.isActive();
-				dateCreated = workflowDefinition.getCreateDate();
-				dateModified = workflowDefinition.getModifiedDate();
-				description = workflowDefinition.getDescription();
-				id = workflowDefinition.getWorkflowDefinitionId();
-				name = workflowDefinition.getName();
-				nodes = transformToArray(
-					workflowDefinition.getWorkflowNodes(),
-					workflowNode -> NodeUtil.toNode(
-						contextAcceptLanguage.getPreferredLocale(),
-						workflowNode),
-					Node.class);
-				title = workflowDefinition.getTitle(
-					_language.getLanguageId(
-						contextAcceptLanguage.getPreferredLocale()));
-				transitions = transformToArray(
-					workflowDefinition.getWorkflowTransitions(),
-					workflowTransition -> TransitionUtil.toTransition(
-						contextAcceptLanguage.getPreferredLocale(),
-						workflowTransition),
-					Transition.class);
-				version = String.valueOf(workflowDefinition.getVersion());
-
 				setActions(
 					() -> HashMapBuilder.put(
 						"delete",
@@ -349,6 +326,7 @@ public class WorkflowDefinitionResourceImpl
 							"putWorkflowDefinition",
 							_workflowDefinitionModelResourcePermission)
 					).build());
+				setActive(workflowDefinition::isActive);
 				setContent(
 					() -> {
 						if (StringUtil.equalsIgnoreCase(contentFormat, "xml")) {
@@ -357,6 +335,22 @@ public class WorkflowDefinitionResourceImpl
 
 						return workflowDefinition.getContent();
 					});
+				setDateCreated(workflowDefinition::getCreateDate);
+				setDateModified(workflowDefinition::getModifiedDate);
+				setDescription(workflowDefinition::getDescription);
+				setId(workflowDefinition::getWorkflowDefinitionId);
+				setName(workflowDefinition::getName);
+				setNodes(
+					() -> transformToArray(
+						workflowDefinition.getWorkflowNodes(),
+						workflowNode -> NodeUtil.toNode(
+							contextAcceptLanguage.getPreferredLocale(),
+							workflowNode),
+						Node.class));
+				setTitle(
+					() -> workflowDefinition.getTitle(
+						_language.getLanguageId(
+							contextAcceptLanguage.getPreferredLocale())));
 				setTitle_i18n(
 					() -> {
 						Map<String, String> title_i18n = new HashMap<>();
@@ -373,6 +367,15 @@ public class WorkflowDefinitionResourceImpl
 
 						return title_i18n;
 					});
+				setTransitions(
+					() -> transformToArray(
+						workflowDefinition.getWorkflowTransitions(),
+						workflowTransition -> TransitionUtil.toTransition(
+							contextAcceptLanguage.getPreferredLocale(),
+							workflowTransition),
+						Transition.class));
+				setVersion(
+					() -> String.valueOf(workflowDefinition.getVersion()));
 			}
 		};
 	}

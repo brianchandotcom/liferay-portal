@@ -34,30 +34,34 @@ public class VersionUtil {
 
 		return new Version() {
 			{
-				number = journalArticle.getVersion();
-				status = new Status() {
-					{
-						code = journalArticle.getStatus();
-						label = statusLabel;
+				setNumber(journalArticle::getVersion);
+				setStatus(
+					() -> new Status() {
+						{
+							setCode(journalArticle::getStatus);
+							setLabel(() -> statusLabel);
+							setLabel_i18n(
+								() -> {
+									if (!acceptLanguage.
+											isAcceptAllLanguages()) {
 
-						setLabel_i18n(
-							() -> {
-								if (!acceptLanguage.isAcceptAllLanguages()) {
-									return null;
-								}
+										return null;
+									}
 
-								Map<String, String> map = new HashMap<>();
+									Map<String, String> map = new HashMap<>();
 
-								for (Locale locale : availableLocales) {
-									map.put(
-										LocaleUtil.toBCP47LanguageId(locale),
-										LanguageUtil.get(locale, statusLabel));
-								}
+									for (Locale locale : availableLocales) {
+										map.put(
+											LocaleUtil.toBCP47LanguageId(
+												locale),
+											LanguageUtil.get(
+												locale, statusLabel));
+									}
 
-								return map;
-							});
-					}
-				};
+									return map;
+								});
+						}
+					});
 			}
 		};
 	}

@@ -67,49 +67,56 @@ public class PaymentDTOConverter
 
 		return new Payment() {
 			{
-				actions = dtoConverterContext.getActions();
-				amount = commercePaymentEntry.getAmount();
-				amountFormatted = _formatAmount(
-					commercePaymentEntry.getAmount(), commerceCurrency, locale);
-				callbackURL = commercePaymentEntry.getCallbackURL();
-				cancelURL = commercePaymentEntry.getCancelURL();
-				channelId = commercePaymentEntry.getCommerceChannelId();
-				comment = commercePaymentEntry.getNote();
-				createDate = commercePaymentEntry.getCreateDate();
-				currencyCode = commercePaymentEntry.getCurrencyCode();
-				errorMessages = commercePaymentEntry.getErrorMessages();
-				externalReferenceCode =
-					commercePaymentEntry.getExternalReferenceCode();
-				id = commercePaymentEntry.getCommercePaymentEntryId();
-				languageId = commercePaymentEntry.getLanguageId();
-				paymentIntegrationKey =
-					commercePaymentEntry.getPaymentIntegrationKey();
-				paymentIntegrationType =
-					commercePaymentEntry.getPaymentIntegrationType();
-				paymentStatus = commercePaymentEntry.getPaymentStatus();
-				paymentStatusStatus = _toPaymentStatusStatus(
-					commercePaymentEntry.getPaymentStatus(),
-					CommercePaymentEntryConstants.getPaymentStatusLabel(
-						commercePaymentEntry.getPaymentStatus()),
-					_language.get(
-						resourceBundle,
+				setActions(dtoConverterContext::getActions);
+				setAmount(commercePaymentEntry::getAmount);
+				setAmountFormatted(
+					() -> _formatAmount(
+						commercePaymentEntry.getAmount(), commerceCurrency,
+						locale));
+				setCallbackURL(commercePaymentEntry::getCallbackURL);
+				setCancelURL(commercePaymentEntry::getCancelURL);
+				setChannelId(commercePaymentEntry::getCommerceChannelId);
+				setComment(commercePaymentEntry::getNote);
+				setCreateDate(commercePaymentEntry::getCreateDate);
+				setCurrencyCode(commercePaymentEntry::getCurrencyCode);
+				setErrorMessages(commercePaymentEntry::getErrorMessages);
+				setExternalReferenceCode(
+					commercePaymentEntry::getExternalReferenceCode);
+				setId(commercePaymentEntry::getCommercePaymentEntryId);
+				setLanguageId(commercePaymentEntry::getLanguageId);
+				setPaymentIntegrationKey(
+					commercePaymentEntry::getPaymentIntegrationKey);
+				setPaymentIntegrationType(
+					commercePaymentEntry::getPaymentIntegrationType);
+				setPaymentStatus(commercePaymentEntry::getPaymentStatus);
+				setPaymentStatusStatus(
+					() -> _toPaymentStatusStatus(
+						commercePaymentEntry.getPaymentStatus(),
 						CommercePaymentEntryConstants.getPaymentStatusLabel(
-							commercePaymentEntry.getPaymentStatus())));
-				reasonKey = commercePaymentEntry.getReasonKey();
-				reasonName = LanguageUtils.getLanguageIdMap(
-					commercePaymentEntry.getReasonNameMap());
-				redirectURL = commercePaymentEntry.getRedirectURL();
-				relatedItemId = commercePaymentEntry.getClassPK();
-				relatedItemName = commercePaymentEntry.getClassName();
-				relatedItemNameLabel = _language.get(
-					resourceBundle,
-					"model.resource." + commercePaymentEntry.getClassName());
-				transactionCode = commercePaymentEntry.getTransactionCode();
-				type = commercePaymentEntry.getType();
-				typeLabel = _language.get(
-					resourceBundle,
-					CommercePaymentEntryConstants.getTypeLabel(
-						commercePaymentEntry.getType()));
+							commercePaymentEntry.getPaymentStatus()),
+						_language.get(
+							resourceBundle,
+							CommercePaymentEntryConstants.getPaymentStatusLabel(
+								commercePaymentEntry.getPaymentStatus()))));
+				setReasonKey(commercePaymentEntry::getReasonKey);
+				setReasonName(
+					() -> LanguageUtils.getLanguageIdMap(
+						commercePaymentEntry.getReasonNameMap()));
+				setRedirectURL(commercePaymentEntry::getRedirectURL);
+				setRelatedItemId(commercePaymentEntry::getClassPK);
+				setRelatedItemName(commercePaymentEntry::getClassName);
+				setRelatedItemNameLabel(
+					() -> _language.get(
+						resourceBundle,
+						"model.resource." +
+							commercePaymentEntry.getClassName()));
+				setTransactionCode(commercePaymentEntry::getTransactionCode);
+				setType(commercePaymentEntry::getType);
+				setTypeLabel(
+					() -> _language.get(
+						resourceBundle,
+						CommercePaymentEntryConstants.getTypeLabel(
+							commercePaymentEntry.getType())));
 			}
 		};
 	}
@@ -131,9 +138,9 @@ public class PaymentDTOConverter
 
 		return new Status() {
 			{
-				code = paymentStatus;
-				label = commercePaymentEntryPaymentStatusLabel;
-				label_i18n = commercePaymentEntryPaymentStatusLabelI18n;
+				setCode(() -> paymentStatus);
+				setLabel(() -> commercePaymentEntryPaymentStatusLabel);
+				setLabel_i18n(() -> commercePaymentEntryPaymentStatusLabelI18n);
 			}
 		};
 	}

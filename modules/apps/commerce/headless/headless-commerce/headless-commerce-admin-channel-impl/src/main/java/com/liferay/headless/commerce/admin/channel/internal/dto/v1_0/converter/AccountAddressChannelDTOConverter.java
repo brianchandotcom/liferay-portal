@@ -48,15 +48,15 @@ public class AccountAddressChannelDTOConverter
 
 		return new AccountAddressChannel() {
 			{
-				accountAddressChannelId =
-					accountAddressChannelRel.getCommerceChannelRelId();
-				actions = dtoConverterContext.getActions();
-				addressChannelExternalReferenceCode =
-					commerceChannel.getExternalReferenceCode();
-				addressChannelId = commerceChannel.getCommerceChannelId();
-				addressExternalReferenceCode =
-					address.getExternalReferenceCode();
-				addressId = address.getAddressId();
+				setAccountAddressChannelId(
+					accountAddressChannelRel::getCommerceChannelRelId);
+				setActions(dtoConverterContext::getActions);
+				setAddressChannelExternalReferenceCode(
+					commerceChannel::getExternalReferenceCode);
+				setAddressChannelId(commerceChannel::getCommerceChannelId);
+				setAddressExternalReferenceCode(
+					address::getExternalReferenceCode);
+				setAddressId(address::getAddressId);
 			}
 		};
 	}

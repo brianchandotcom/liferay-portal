@@ -38,14 +38,14 @@ public class ContactConfigurationResourceImpl
 
 		return new ContactConfiguration() {
 			{
-				syncAllAccounts = analyticsConfiguration.syncAllAccounts();
-				syncAllContacts = analyticsConfiguration.syncAllContacts();
-				syncedAccountGroupIds =
-					analyticsConfiguration.syncedAccountGroupIds();
-				syncedOrganizationIds =
-					analyticsConfiguration.syncedOrganizationIds();
-				syncedUserGroupIds =
-					analyticsConfiguration.syncedUserGroupIds();
+				setSyncAllAccounts(analyticsConfiguration::syncAllAccounts);
+				setSyncAllContacts(analyticsConfiguration::syncAllContacts);
+				setSyncedAccountGroupIds(
+					analyticsConfiguration::syncedAccountGroupIds);
+				setSyncedOrganizationIds(
+					analyticsConfiguration::syncedOrganizationIds);
+				setSyncedUserGroupIds(
+					analyticsConfiguration::syncedUserGroupIds);
 			}
 		};
 	}

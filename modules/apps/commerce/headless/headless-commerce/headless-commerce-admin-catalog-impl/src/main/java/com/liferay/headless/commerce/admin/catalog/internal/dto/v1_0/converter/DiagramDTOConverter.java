@@ -48,14 +48,8 @@ public class DiagramDTOConverter
 
 		return new Diagram() {
 			{
-				color = csDiagramSetting.getColor();
-				id = csDiagramSetting.getCSDiagramSettingId();
-				productExternalReferenceCode =
-					cProduct.getExternalReferenceCode();
-				productId = cProduct.getCProductId();
-				radius = csDiagramSetting.getRadius();
-				type = csDiagramSetting.getType();
-
+				setColor(csDiagramSetting::getColor);
+				setId(csDiagramSetting::getCSDiagramSettingId);
 				setImageURL(
 					() -> {
 						CPAttachmentFileEntry cpAttachmentFileEntry =
@@ -71,6 +65,11 @@ public class DiagramDTOConverter
 						return DLURLHelperUtil.getDownloadURL(
 							fileEntry, fileEntry.getFileVersion(), null, null);
 					});
+				setProductExternalReferenceCode(
+					cProduct::getExternalReferenceCode);
+				setProductId(cProduct::getCProductId);
+				setRadius(csDiagramSetting::getRadius);
+				setType(csDiagramSetting::getType);
 			}
 		};
 	}

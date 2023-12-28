@@ -64,37 +64,14 @@ public class PlacedOrderItemShipmentDTOConverter
 
 		return new PlacedOrderItemShipment() {
 			{
-				accountId = commerceShipment.getCommerceAccountId();
-				author = commerceShipment.getUserName();
-				carrier = commerceShipment.getCarrier();
-				createDate = commerceShipment.getCreateDate();
-				estimatedDeliveryDate = commerceShipment.getExpectedDate();
-				estimatedShippingDate = commerceShipment.getShippingDate();
-				id = commerceShipment.getCommerceShipmentId();
-				modifiedDate = commerceShipment.getModifiedDate();
-				shippingAddressId = commerceShipment.getCommerceAddressId();
-				shippingMethodId =
-					commerceShipment.getCommerceShippingMethodId();
-				shippingOptionName = commerceShipment.getShippingOptionName();
-				status = new Status() {
-					{
-						code = commerceShipment.getStatus();
-						label =
-							CommerceShipmentConstants.getShipmentStatusLabel(
-								commerceShipment.getStatus());
-						label_i18n = _language.get(
-							LanguageResources.getResourceBundle(locale),
-							CommerceShipmentConstants.getShipmentStatusLabel(
-								commerceShipment.getStatus()));
-					}
-				};
-				supplierShipment =
-					placedOrderItemShipmentDTOConverterContext.
-						isSupplierShipment();
-				trackingNumber = commerceShipment.getTrackingNumber();
-				trackingURL = commerceShipment.getTrackingURL();
-				unitOfMeasureKey = commerceShipmentItem.getUnitOfMeasureKey();
-
+				setAccountId(commerceShipment::getCommerceAccountId);
+				setAuthor(commerceShipment::getUserName);
+				setCarrier(commerceShipment::getCarrier);
+				setCreateDate(commerceShipment::getCreateDate);
+				setEstimatedDeliveryDate(commerceShipment::getExpectedDate);
+				setEstimatedShippingDate(commerceShipment::getShippingDate);
+				setId(commerceShipment::getCommerceShipmentId);
+				setModifiedDate(commerceShipment::getModifiedDate);
 				setQuantity(
 					() -> {
 						CommerceOrderItem commerceOrderItem =
@@ -106,6 +83,33 @@ public class PlacedOrderItemShipmentDTOConverter
 							commerceShipmentItem.getQuantity(),
 							commerceShipmentItem.getUnitOfMeasureKey());
 					});
+				setShippingAddressId(commerceShipment::getCommerceAddressId);
+				setShippingMethodId(
+					commerceShipment::getCommerceShippingMethodId);
+				setShippingOptionName(commerceShipment::getShippingOptionName);
+				setStatus(
+					() -> new Status() {
+						{
+							setCode(commerceShipment::getStatus);
+							setLabel(
+								() ->
+									CommerceShipmentConstants.
+										getShipmentStatusLabel(
+											commerceShipment.getStatus()));
+							setLabel_i18n(
+								() -> _language.get(
+									LanguageResources.getResourceBundle(locale),
+									CommerceShipmentConstants.
+										getShipmentStatusLabel(
+											commerceShipment.getStatus())));
+						}
+					});
+				setSupplierShipment(
+					placedOrderItemShipmentDTOConverterContext::
+						isSupplierShipment);
+				setTrackingNumber(commerceShipment::getTrackingNumber);
+				setTrackingURL(commerceShipment::getTrackingURL);
+				setUnitOfMeasureKey(commerceShipmentItem::getUnitOfMeasureKey);
 			}
 		};
 	}

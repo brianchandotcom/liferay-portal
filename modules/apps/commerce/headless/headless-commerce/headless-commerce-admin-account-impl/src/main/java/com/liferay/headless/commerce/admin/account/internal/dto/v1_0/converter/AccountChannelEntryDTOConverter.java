@@ -65,18 +65,6 @@ public class AccountChannelEntryDTOConverter
 
 		return new AccountChannelEntry() {
 			{
-				accountId = commerceChannelAccountEntryRel.getAccountEntryId();
-				actions = dtoConverterContext.getActions();
-				channelId =
-					commerceChannelAccountEntryRel.getCommerceChannelId();
-				classPK = commerceChannelAccountEntryRel.getClassPK();
-				id =
-					commerceChannelAccountEntryRel.
-						getCommerceChannelAccountEntryRelId();
-				overrideEligibility =
-					commerceChannelAccountEntryRel.isOverrideEligibility();
-				priority = commerceChannelAccountEntryRel.getPriority();
-
 				setAccountExternalReferenceCode(
 					() -> {
 						AccountEntry accountEntry =
@@ -93,6 +81,8 @@ public class AccountChannelEntryDTOConverter
 
 						return null;
 					});
+				setAccountId(commerceChannelAccountEntryRel::getAccountEntryId);
+				setActions(dtoConverterContext::getActions);
 				setChannelExternalReferenceCode(
 					() -> {
 						CommerceChannel commerceChannel =
@@ -109,9 +99,21 @@ public class AccountChannelEntryDTOConverter
 
 						return null;
 					});
+				setChannelId(
+					() ->
+						commerceChannelAccountEntryRel.getCommerceChannelId());
 				setClassExternalReferenceCode(
 					() -> _toClassExternalReferenceCode(
 						commerceChannelAccountEntryRel));
+				setClassPK(commerceChannelAccountEntryRel::getClassPK);
+				setId(
+					() ->
+						commerceChannelAccountEntryRel.
+							getCommerceChannelAccountEntryRelId());
+				setOverrideEligibility(
+					() ->
+						commerceChannelAccountEntryRel.isOverrideEligibility());
+				setPriority(commerceChannelAccountEntryRel::getPriority);
 			}
 		};
 	}

@@ -51,13 +51,13 @@ public class DiscountProductDTOConverter
 
 		return new DiscountProduct() {
 			{
-				discountExternalReferenceCode =
-					commerceDiscount.getExternalReferenceCode();
-				discountId = commerceDiscount.getCommerceDiscountId();
-				id = commerceDiscountRel.getCommerceDiscountRelId();
-				productExternalReferenceCode =
-					cProduct.getExternalReferenceCode();
-				productId = cProduct.getCProductId();
+				setDiscountExternalReferenceCode(
+					commerceDiscount::getExternalReferenceCode);
+				setDiscountId(commerceDiscount::getCommerceDiscountId);
+				setId(commerceDiscountRel::getCommerceDiscountRelId);
+				setProductExternalReferenceCode(
+					cProduct::getExternalReferenceCode);
+				setProductId(cProduct::getCProductId);
 			}
 		};
 	}

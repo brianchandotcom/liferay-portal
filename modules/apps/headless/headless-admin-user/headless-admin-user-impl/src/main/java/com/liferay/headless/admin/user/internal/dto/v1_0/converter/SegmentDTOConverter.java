@@ -42,14 +42,7 @@ public class SegmentDTOConverter
 	public Segment toDTO(SegmentsEntry segmentsEntry) {
 		return new Segment() {
 			{
-				active = segmentsEntry.isActive();
-				dateCreated = segmentsEntry.getCreateDate();
-				dateModified = segmentsEntry.getModifiedDate();
-				id = segmentsEntry.getSegmentsEntryId();
-				name = segmentsEntry.getName(
-					segmentsEntry.getDefaultLanguageId());
-				siteId = segmentsEntry.getGroupId();
-
+				setActive(segmentsEntry::isActive);
 				setCriteria(
 					() -> {
 						String criteria = segmentsEntry.getCriteria();
@@ -79,6 +72,13 @@ public class SegmentDTOConverter
 
 						return null;
 					});
+				setDateCreated(segmentsEntry::getCreateDate);
+				setDateModified(segmentsEntry::getModifiedDate);
+				setId(segmentsEntry::getSegmentsEntryId);
+				setName(
+					() -> segmentsEntry.getName(
+						segmentsEntry.getDefaultLanguageId()));
+				setSiteId(segmentsEntry::getGroupId);
 				setSource(
 					() -> {
 						if (StringUtil.equals(

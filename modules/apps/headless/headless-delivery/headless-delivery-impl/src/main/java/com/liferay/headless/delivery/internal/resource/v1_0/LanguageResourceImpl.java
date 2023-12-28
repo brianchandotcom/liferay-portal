@@ -73,11 +73,7 @@ public class LanguageResourceImpl extends BaseLanguageResourceImpl {
 
 		return new Language() {
 			{
-				countryName = locale.getDisplayCountry(preferredLocale);
-				id = locale.toLanguageTag();
-				markedAsDefault = Objects.equals(defaultLocale, locale);
-				name = locale.getDisplayLanguage(preferredLocale);
-
+				setCountryName(() -> locale.getDisplayCountry(preferredLocale));
 				setCountryName_i18n(
 					() -> {
 						if (!acceptAllLanguages) {
@@ -94,6 +90,9 @@ public class LanguageResourceImpl extends BaseLanguageResourceImpl {
 
 						return map;
 					});
+				setId(locale::toLanguageTag);
+				setMarkedAsDefault(() -> Objects.equals(defaultLocale, locale));
+				setName(() -> locale.getDisplayLanguage(preferredLocale));
 				setName_i18n(
 					() -> {
 						if (!acceptAllLanguages) {

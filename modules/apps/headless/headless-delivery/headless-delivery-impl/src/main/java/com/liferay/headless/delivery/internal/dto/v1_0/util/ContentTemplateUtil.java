@@ -31,29 +31,35 @@ public class ContentTemplateUtil {
 
 		return new ContentTemplate() {
 			{
-				actions = dtoConverterContext.getActions();
-				assetLibraryKey = GroupUtil.getAssetLibraryKey(group);
-				availableLanguages = LocaleUtil.toW3cLanguageIds(
-					ddmTemplate.getAvailableLanguageIds());
-				contentStructureId = ddmTemplate.getClassPK();
-				creator = CreatorUtil.toCreator(
-					dtoConverterContext, portal,
-					userLocalService.fetchUser(ddmTemplate.getUserId()));
-				dateCreated = ddmTemplate.getCreateDate();
-				dateModified = ddmTemplate.getModifiedDate();
-				description = ddmTemplate.getDescription(
-					dtoConverterContext.getLocale());
-				description_i18n = LocalizedMapUtil.getI18nMap(
-					dtoConverterContext.isAcceptAllLanguages(),
-					ddmTemplate.getDescriptionMap());
-				id = ddmTemplate.getTemplateKey();
-				name = ddmTemplate.getName(dtoConverterContext.getLocale());
-				name_i18n = LocalizedMapUtil.getI18nMap(
-					dtoConverterContext.isAcceptAllLanguages(),
-					ddmTemplate.getNameMap());
-				programmingLanguage = ddmTemplate.getLanguage();
-				siteId = GroupUtil.getSiteId(group);
-				templateScript = ddmTemplate.getScript();
+				setActions(dtoConverterContext::getActions);
+				setAssetLibraryKey(() -> GroupUtil.getAssetLibraryKey(group));
+				setAvailableLanguages(
+					() -> LocaleUtil.toW3cLanguageIds(
+						ddmTemplate.getAvailableLanguageIds()));
+				setContentStructureId(ddmTemplate::getClassPK);
+				setCreator(
+					() -> CreatorUtil.toCreator(
+						dtoConverterContext, portal,
+						userLocalService.fetchUser(ddmTemplate.getUserId())));
+				setDateCreated(ddmTemplate::getCreateDate);
+				setDateModified(ddmTemplate::getModifiedDate);
+				setDescription(
+					() -> ddmTemplate.getDescription(
+						dtoConverterContext.getLocale()));
+				setDescription_i18n(
+					() -> LocalizedMapUtil.getI18nMap(
+						dtoConverterContext.isAcceptAllLanguages(),
+						ddmTemplate.getDescriptionMap()));
+				setId(ddmTemplate::getTemplateKey);
+				setName(
+					() -> ddmTemplate.getName(dtoConverterContext.getLocale()));
+				setName_i18n(
+					() -> LocalizedMapUtil.getI18nMap(
+						dtoConverterContext.isAcceptAllLanguages(),
+						ddmTemplate.getNameMap()));
+				setProgrammingLanguage(ddmTemplate::getLanguage);
+				setSiteId(() -> GroupUtil.getSiteId(group));
+				setTemplateScript(ddmTemplate::getScript);
 			}
 		};
 	}

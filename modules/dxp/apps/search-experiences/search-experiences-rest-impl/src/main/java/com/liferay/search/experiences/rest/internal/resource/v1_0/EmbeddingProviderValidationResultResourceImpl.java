@@ -74,7 +74,7 @@ public class EmbeddingProviderValidationResultResourceImpl
 		catch (Exception exception) {
 			return new EmbeddingProviderValidationResult() {
 				{
-					errorMessage = exception.getMessage();
+					setErrorMessage(exception::getMessage);
 				}
 			};
 		}

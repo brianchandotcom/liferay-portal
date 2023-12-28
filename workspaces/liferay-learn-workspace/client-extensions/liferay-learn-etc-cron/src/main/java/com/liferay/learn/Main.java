@@ -769,8 +769,8 @@ public class Main {
 			permissions.add(
 				new Permission() {
 					{
-						actionIds = new String[] {"VIEW"};
-						roleName = "Guest";
+						setActionIds(() -> new String[] {"VIEW"});
+						setRoleName(() -> "Guest");
 					}
 				});
 
@@ -791,8 +791,9 @@ public class Main {
 			permissions.add(
 				new Permission() {
 					{
-						actionIds = new String[] {"ADD_DISCUSSION", "VIEW"};
-						roleName = (String)object;
+						setActionIds(
+							() -> new String[] {"ADD_DISCUSSION", "VIEW"});
+						setRoleName(() -> (String)object);
 					}
 				});
 		}
@@ -804,8 +805,8 @@ public class Main {
 		permissions.add(
 			new Permission() {
 				{
-					actionIds = new String[0];
-					roleName = "Guest";
+					setActionIds(() -> new String[0]);
+					setRoleName(() -> "Guest");
 				}
 			});
 
@@ -891,9 +892,9 @@ public class Main {
 							_liferaySiteId,
 							new StructuredContentFolder() {
 								{
-									description = "";
-									name = dirName;
-									viewableBy = ViewableBy.ANYONE;
+									setDescription(() -> "");
+									setName(() -> dirName);
+									setViewableBy(() -> ViewableBy.ANYONE);
 								}
 							});
 			}
@@ -914,9 +915,9 @@ public class Main {
 							parentStructuredContentFolderId,
 							new StructuredContentFolder() {
 								{
-									description = "";
-									name = dirName;
-									viewableBy = ViewableBy.ANYONE;
+									setDescription(() -> "");
+									setName(() -> dirName);
+									setViewableBy(() -> ViewableBy.ANYONE);
 								}
 							});
 			}
@@ -1710,8 +1711,9 @@ public class Main {
 		ContentFieldValue englishBreadcrumbLinksContentFieldValue =
 			new ContentFieldValue() {
 				{
-					data = String.valueOf(
-						_getBreadcrumbLinksJSONArray(englishFile));
+					setData(
+						() -> String.valueOf(
+							_getBreadcrumbLinksJSONArray(englishFile)));
 				}
 			};
 
@@ -1722,28 +1724,31 @@ public class Main {
 		ContentFieldValue englishContentContentFieldValue =
 			new ContentFieldValue() {
 				{
-					data = _toHTML(englishFile, englishText);
+					setData(() -> _toHTML(englishFile, englishText));
 				}
 			};
 
 		ContentFieldValue englishLandingPageContentFieldValue =
 			new ContentFieldValue() {
 				{
-					data = String.valueOf(
-						_landingPageFiles.contains(englishFile));
+					setData(
+						() -> String.valueOf(
+							_landingPageFiles.contains(englishFile)));
 				}
 			};
 		ContentFieldValue englishNavigationLinksContentFieldValue =
 			new ContentFieldValue() {
 				{
-					data = String.valueOf(
-						_getNavigationLinksJSONArray(englishFile, englishText));
+					setData(
+						() -> String.valueOf(
+							_getNavigationLinksJSONArray(
+								englishFile, englishText)));
 				}
 			};
 		ContentFieldValue englishProductContentFieldValue =
 			new ContentFieldValue() {
 				{
-					data = _getProduct(englishFile);
+					setData(() -> _getProduct(englishFile));
 				}
 			};
 
@@ -1762,85 +1767,101 @@ public class Main {
 				new ContentField[] {
 					new ContentField() {
 						{
-							contentFieldValue =
-								englishBreadcrumbLinksContentFieldValue;
-							contentFieldValue_i18n = HashMapBuilder.put(
-								"en-US", englishBreadcrumbLinksContentFieldValue
-							).put(
-								"ja-JP",
-								new ContentFieldValue() {
-									{
-										data = String.valueOf(
-											_getBreadcrumbLinksJSONArray(
-												japaneseFile));
+							setContentFieldValue(
+								() -> englishBreadcrumbLinksContentFieldValue);
+							setContentFieldValue_i18n(
+								() -> HashMapBuilder.put(
+									"en-US",
+									englishBreadcrumbLinksContentFieldValue
+								).put(
+									"ja-JP",
+									new ContentFieldValue() {
+										{
+											setData(
+												() -> String.valueOf(
+													_getBreadcrumbLinksJSONArray(
+														japaneseFile)));
+										}
 									}
-								}
-							).build();
-							name = "breadcrumbLinks";
+								).build());
+							setName(() -> "breadcrumbLinks");
 						}
 					},
 					new ContentField() {
 						{
-							contentFieldValue = englishContentContentFieldValue;
-							contentFieldValue_i18n = HashMapBuilder.put(
-								"en-US", englishContentContentFieldValue
-							).put(
-								"ja-JP",
-								new ContentFieldValue() {
-									{
-										data = _toHTML(
-											japaneseFile, japaneseText);
+							setContentFieldValue(
+								() -> englishContentContentFieldValue);
+							setContentFieldValue_i18n(
+								() -> HashMapBuilder.put(
+									"en-US", englishContentContentFieldValue
+								).put(
+									"ja-JP",
+									new ContentFieldValue() {
+										{
+											setData(
+												() -> _toHTML(
+													japaneseFile,
+													japaneseText));
+										}
 									}
-								}
-							).build();
-							name = "content";
+								).build());
+							setName(() -> "content");
 						}
 					},
 					new ContentField() {
 						{
-							contentFieldValue =
-								englishLandingPageContentFieldValue;
-							contentFieldValue_i18n = HashMapBuilder.put(
-								"en-US", englishLandingPageContentFieldValue
-							).put(
-								"ja-JP", englishLandingPageContentFieldValue
-							).build();
-							name = "landingPage";
+							setContentFieldValue(
+								() -> englishLandingPageContentFieldValue);
+							setContentFieldValue_i18n(
+								() -> HashMapBuilder.put(
+									"en-US", englishLandingPageContentFieldValue
+								).put(
+									"ja-JP", englishLandingPageContentFieldValue
+								).build());
+							setName(() -> "landingPage");
 						}
 					},
 					new ContentField() {
 						{
-							contentFieldValue =
-								englishNavigationLinksContentFieldValue;
-							contentFieldValue_i18n = HashMapBuilder.put(
-								"en-US", englishNavigationLinksContentFieldValue
-							).put(
-								"ja-JP",
-								new ContentFieldValue() {
-									{
-										data = String.valueOf(
-											_getNavigationLinksJSONArray(
-												japaneseFile, japaneseText));
+							setContentFieldValue(
+								() -> englishNavigationLinksContentFieldValue);
+							setContentFieldValue_i18n(
+								() -> HashMapBuilder.put(
+									"en-US",
+									englishNavigationLinksContentFieldValue
+								).put(
+									"ja-JP",
+									new ContentFieldValue() {
+										{
+											setData(
+												() -> String.valueOf(
+													_getNavigationLinksJSONArray(
+														japaneseFile,
+														japaneseText)));
+										}
 									}
-								}
-							).build();
-							name = "navigationLinks";
+								).build());
+							setName(() -> "navigationLinks");
 						}
 					},
 					new ContentField() {
 						{
-							contentFieldValue = englishProductContentFieldValue;
-							contentFieldValue_i18n = HashMapBuilder.put(
-								"en-US", englishProductContentFieldValue
-							).put(
-								"ja-JP",
-								new ContentFieldValue() {
-									{
-										data = _getProduct(japaneseFile);
+							setContentFieldValue(
+								() -> englishProductContentFieldValue);
+							setContentFieldValue_i18n(
+								() -> HashMapBuilder.put(
+									"en-US", englishProductContentFieldValue
+								).put(
+									"ja-JP",
+									new ContentFieldValue() {
+										{
+											setData(
+												() -> _getProduct(
+													japaneseFile));
+										}
 									}
-								}
-							).build();
-							name = "product";
+								).build());
+							setName(() -> "product");
 						}
 					}
 				});
@@ -1869,35 +1890,37 @@ public class Main {
 				new ContentField[] {
 					new ContentField() {
 						{
-							contentFieldValue =
-								englishBreadcrumbLinksContentFieldValue;
-							name = "breadcrumbLinks";
+							setContentFieldValue(
+								() -> englishBreadcrumbLinksContentFieldValue);
+							setName(() -> "breadcrumbLinks");
 						}
 					},
 					new ContentField() {
 						{
-							contentFieldValue = englishContentContentFieldValue;
-							name = "content";
+							setContentFieldValue(
+								() -> englishContentContentFieldValue);
+							setName(() -> "content");
 						}
 					},
 					new ContentField() {
 						{
-							contentFieldValue =
-								englishLandingPageContentFieldValue;
-							name = "landingPage";
+							setContentFieldValue(
+								() -> englishLandingPageContentFieldValue);
+							setName(() -> "landingPage");
 						}
 					},
 					new ContentField() {
 						{
-							contentFieldValue =
-								englishNavigationLinksContentFieldValue;
-							name = "navigationLinks";
+							setContentFieldValue(
+								() -> englishNavigationLinksContentFieldValue);
+							setName(() -> "navigationLinks");
 						}
 					},
 					new ContentField() {
 						{
-							contentFieldValue = englishProductContentFieldValue;
-							name = "product";
+							setContentFieldValue(
+								() -> englishProductContentFieldValue);
+							setName(() -> "product");
 						}
 					}
 				});

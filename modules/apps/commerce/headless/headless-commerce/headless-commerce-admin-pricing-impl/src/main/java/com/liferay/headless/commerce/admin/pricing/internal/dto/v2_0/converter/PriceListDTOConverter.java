@@ -61,30 +61,31 @@ public class PriceListDTOConverter
 
 		return new PriceList() {
 			{
-				actions = dtoConverterContext.getActions();
-				active = !commercePriceList.isInactive();
-				author = commercePriceList.getUserName();
-				catalogBasePriceList =
-					commercePriceList.isCatalogBasePriceList();
-				catalogId = _getCatalogId(commercePriceList);
-				catalogName = _getCatalogName(commercePriceList);
-				createDate = commercePriceList.getCreateDate();
-				currencyCode = commerceCurrency.getCode();
-				customFields = expandoBridge.getAttributes();
-				displayDate = commercePriceList.getDisplayDate();
-				expirationDate = commercePriceList.getExpirationDate();
-				externalReferenceCode =
-					commercePriceList.getExternalReferenceCode();
-				id = commercePriceList.getCommercePriceListId();
-				name = commercePriceList.getName();
-				netPrice = commercePriceList.isNetPrice();
-				parentPriceListId =
-					commercePriceList.getParentCommercePriceListId();
-				priority = commercePriceList.getPriority();
-				type = Type.create(commercePriceList.getType());
-				workflowStatusInfo = _toStatus(
-					commercePriceList.getStatus(), priceListStatusLabel,
-					priceListStatusLabelI18n);
+				setActions(dtoConverterContext::getActions);
+				setActive(() -> !commercePriceList.isInactive());
+				setAuthor(commercePriceList::getUserName);
+				setCatalogBasePriceList(
+					commercePriceList::isCatalogBasePriceList);
+				setCatalogId(() -> _getCatalogId(commercePriceList));
+				setCatalogName(() -> _getCatalogName(commercePriceList));
+				setCreateDate(commercePriceList::getCreateDate);
+				setCurrencyCode(commerceCurrency::getCode);
+				setCustomFields(expandoBridge::getAttributes);
+				setDisplayDate(commercePriceList::getDisplayDate);
+				setExpirationDate(commercePriceList::getExpirationDate);
+				setExternalReferenceCode(
+					commercePriceList::getExternalReferenceCode);
+				setId(commercePriceList::getCommercePriceListId);
+				setName(commercePriceList::getName);
+				setNetPrice(commercePriceList::isNetPrice);
+				setParentPriceListId(
+					commercePriceList::getParentCommercePriceListId);
+				setPriority(commercePriceList::getPriority);
+				setType(() -> Type.create(commercePriceList.getType()));
+				setWorkflowStatusInfo(
+					() -> _toStatus(
+						commercePriceList.getStatus(), priceListStatusLabel,
+						priceListStatusLabelI18n));
 			}
 		};
 	}
@@ -123,9 +124,9 @@ public class PriceListDTOConverter
 
 		return new Status() {
 			{
-				code = statusCode;
-				label = priceListStatusLabel;
-				label_i18n = priceListStatusLabelI18n;
+				setCode(() -> statusCode);
+				setLabel(() -> priceListStatusLabel);
+				setLabel_i18n(() -> priceListStatusLabelI18n);
 			}
 		};
 	}

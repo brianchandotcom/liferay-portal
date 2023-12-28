@@ -55,16 +55,17 @@ public class CTProcessDTOConverter
 
 		return new CTProcess() {
 			{
-				actions = dtoConverterContext.getActions();
-				ctCollectionId = ctCollection.getCtCollectionId();
-				datePublished = ctProcess.getCreateDate();
-				description = ctCollection.getDescription();
-				id = ctProcess.getCtProcessId();
-				name = ctCollection.getName();
-				ownerName = _getUserName(ctProcess.getUserId());
-				status = _toStatus(
-					dtoConverterContext.getLocale(),
-					ctProcess.getBackgroundTaskId());
+				setActions(dtoConverterContext::getActions);
+				setCtCollectionId(ctCollection::getCtCollectionId);
+				setDatePublished(ctProcess::getCreateDate);
+				setDescription(ctCollection::getDescription);
+				setId(ctProcess::getCtProcessId);
+				setName(ctCollection::getName);
+				setOwnerName(() -> _getUserName(ctProcess.getUserId()));
+				setStatus(
+					() -> _toStatus(
+						dtoConverterContext.getLocale(),
+						ctProcess.getBackgroundTaskId()));
 			}
 		};
 	}
@@ -100,9 +101,9 @@ public class CTProcessDTOConverter
 
 		return new Status() {
 			{
-				code = status;
-				label = statusLabel;
-				label_i18n = _language.get(locale, statusLabel);
+				setCode(() -> status);
+				setLabel(() -> statusLabel);
+				setLabel_i18n(() -> _language.get(locale, statusLabel));
 			}
 		};
 	}

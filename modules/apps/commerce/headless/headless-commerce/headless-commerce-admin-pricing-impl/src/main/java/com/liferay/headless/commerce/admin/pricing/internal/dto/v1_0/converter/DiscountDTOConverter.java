@@ -42,27 +42,27 @@ public class DiscountDTOConverter
 
 		return new Discount() {
 			{
-				active = commerceDiscount.isActive();
-				couponCode = commerceDiscount.getCouponCode();
-				customFields = expandoBridge.getAttributes();
-				displayDate = commerceDiscount.getDisplayDate();
-				expirationDate = commerceDiscount.getExpirationDate();
-				externalReferenceCode =
-					commerceDiscount.getExternalReferenceCode();
-				id = commerceDiscount.getCommerceDiscountId();
-				limitationTimes = commerceDiscount.getLimitationTimes();
-				limitationType = commerceDiscount.getLimitationType();
-				maximumDiscountAmount =
-					commerceDiscount.getMaximumDiscountAmount();
-				numberOfUse = commerceDiscount.getNumberOfUse();
-				percentageLevel1 = commerceDiscount.getLevel1();
-				percentageLevel2 = commerceDiscount.getLevel2();
-				percentageLevel3 = commerceDiscount.getLevel3();
-				percentageLevel4 = commerceDiscount.getLevel4();
-				target = commerceDiscount.getTarget();
-				title = commerceDiscount.getTitle();
-				useCouponCode = commerceDiscount.isUseCouponCode();
-				usePercentage = commerceDiscount.isUsePercentage();
+				setActive(commerceDiscount::isActive);
+				setCouponCode(commerceDiscount::getCouponCode);
+				setCustomFields(expandoBridge::getAttributes);
+				setDisplayDate(commerceDiscount::getDisplayDate);
+				setExpirationDate(commerceDiscount::getExpirationDate);
+				setExternalReferenceCode(
+					commerceDiscount::getExternalReferenceCode);
+				setId(commerceDiscount::getCommerceDiscountId);
+				setLimitationTimes(commerceDiscount::getLimitationTimes);
+				setLimitationType(commerceDiscount::getLimitationType);
+				setMaximumDiscountAmount(
+					commerceDiscount::getMaximumDiscountAmount);
+				setNumberOfUse(commerceDiscount::getNumberOfUse);
+				setPercentageLevel1(commerceDiscount::getLevel1);
+				setPercentageLevel2(commerceDiscount::getLevel2);
+				setPercentageLevel3(commerceDiscount::getLevel3);
+				setPercentageLevel4(commerceDiscount::getLevel4);
+				setTarget(commerceDiscount::getTarget);
+				setTitle(commerceDiscount::getTitle);
+				setUseCouponCode(commerceDiscount::isUseCouponCode);
+				setUsePercentage(commerceDiscount::isUsePercentage);
 			}
 		};
 	}

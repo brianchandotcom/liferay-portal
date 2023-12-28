@@ -33,12 +33,14 @@ public class DSRecipientViewDefinitionResourceImpl
 
 		return new DSEnvelopeSignatureURL() {
 			{
-				url =
-					_dsRecipientViewDefinitionManager.
-						addDSRecipientViewDefinition(
-							contextCompany.getCompanyId(), siteId, dsEnvelopeId,
-							_toDSRecipientViewDefinition(
-								dsRecipientViewDefinition));
+				setUrl(
+					() ->
+						_dsRecipientViewDefinitionManager.
+							addDSRecipientViewDefinition(
+								contextCompany.getCompanyId(), siteId,
+								dsEnvelopeId,
+								_toDSRecipientViewDefinition(
+									dsRecipientViewDefinition)));
 			}
 		};
 	}

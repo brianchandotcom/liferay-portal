@@ -125,15 +125,7 @@ public class MappedProductDTOConverter
 
 		return new MappedProduct() {
 			{
-				actions = mappedProductDTOConverterContext.getActions();
-				id = csDiagramEntry.getCSDiagramEntryId();
-				price = _getPrice(
-					commerceContext, cpInstance,
-					mappedProductDTOConverterContext.getLocale(),
-					BigDecimal.ONE, StringPool.BLANK);
-				quantity = csDiagramEntry.getQuantity();
-				sequence = csDiagramEntry.getSequence();
-
+				setActions(mappedProductDTOConverterContext::getActions);
 				setAvailability(
 					() -> {
 						if (cpInstance == null) {
@@ -182,6 +174,12 @@ public class MappedProductDTOConverter
 
 						return firstAvailableReplacementMappedProduct;
 					});
+				setId(csDiagramEntry::getCSDiagramEntryId);
+				setPrice(
+					() -> _getPrice(
+						commerceContext, cpInstance,
+						mappedProductDTOConverterContext.getLocale(),
+						BigDecimal.ONE, StringPool.BLANK));
 				setProductConfiguration(
 					() -> {
 						if (cpDefinition == null) {
@@ -254,6 +252,7 @@ public class MappedProductDTOConverter
 
 						return cpInstance.isPurchasable();
 					});
+				setQuantity(csDiagramEntry::getQuantity);
 				setReplacementMappedProduct(
 					() -> {
 						MappedProduct replacementMappedProduct = null;
@@ -308,6 +307,7 @@ public class MappedProductDTOConverter
 
 						return null;
 					});
+				setSequence(csDiagramEntry::getSequence);
 				setSku(
 					() -> {
 						if (cpInstance == null) {
@@ -466,9 +466,7 @@ public class MappedProductDTOConverter
 
 		Price price = new Price() {
 			{
-				currency = commerceCurrency.getName(locale);
-				priceFormatted = unitPriceCommerceMoney.format(locale);
-
+				setCurrency(() -> commerceCurrency.getName(locale));
 				setPrice(
 					() -> {
 						BigDecimal unitPrice =
@@ -476,6 +474,7 @@ public class MappedProductDTOConverter
 
 						return unitPrice.doubleValue();
 					});
+				setPriceFormatted(() -> unitPriceCommerceMoney.format(locale));
 			}
 		};
 

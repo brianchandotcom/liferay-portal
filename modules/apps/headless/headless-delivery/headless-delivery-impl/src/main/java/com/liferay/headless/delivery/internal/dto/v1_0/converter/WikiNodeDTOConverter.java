@@ -40,23 +40,27 @@ public class WikiNodeDTOConverter
 
 		return new WikiNode() {
 			{
-				actions = dtoConverterContext.getActions();
-				creator = CreatorUtil.toCreator(
-					dtoConverterContext, _portal,
-					_userLocalService.fetchUser(wikiNode.getUserId()));
-				dateCreated = wikiNode.getCreateDate();
-				dateModified = wikiNode.getModifiedDate();
-				description = wikiNode.getDescription();
-				externalReferenceCode = wikiNode.getExternalReferenceCode();
-				id = wikiNode.getNodeId();
-				name = wikiNode.getName();
-				numberOfWikiPages = _wikiPageService.getPagesCount(
-					wikiNode.getGroupId(), wikiNode.getNodeId(), true);
-				siteId = wikiNode.getGroupId();
-				subscribed = _subscriptionLocalService.isSubscribed(
-					wikiNode.getCompanyId(), dtoConverterContext.getUserId(),
-					com.liferay.wiki.model.WikiNode.class.getName(),
-					wikiNode.getNodeId());
+				setActions(dtoConverterContext::getActions);
+				setCreator(
+					() -> CreatorUtil.toCreator(
+						dtoConverterContext, _portal,
+						_userLocalService.fetchUser(wikiNode.getUserId())));
+				setDateCreated(wikiNode::getCreateDate);
+				setDateModified(wikiNode::getModifiedDate);
+				setDescription(wikiNode::getDescription);
+				setExternalReferenceCode(wikiNode::getExternalReferenceCode);
+				setId(wikiNode::getNodeId);
+				setName(wikiNode::getName);
+				setNumberOfWikiPages(
+					() -> _wikiPageService.getPagesCount(
+						wikiNode.getGroupId(), wikiNode.getNodeId(), true));
+				setSiteId(wikiNode::getGroupId);
+				setSubscribed(
+					() -> _subscriptionLocalService.isSubscribed(
+						wikiNode.getCompanyId(),
+						dtoConverterContext.getUserId(),
+						com.liferay.wiki.model.WikiNode.class.getName(),
+						wikiNode.getNodeId()));
 			}
 		};
 	}

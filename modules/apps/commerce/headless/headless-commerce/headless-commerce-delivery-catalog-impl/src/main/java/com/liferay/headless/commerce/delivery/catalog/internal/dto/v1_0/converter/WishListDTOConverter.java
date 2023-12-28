@@ -39,9 +39,9 @@ public class WishListDTOConverter
 
 		return new WishList() {
 			{
-				defaultWishList = commerceWishList.isDefaultWishList();
-				id = commerceWishList.getCommerceWishListId();
-				name = commerceWishList.getName();
+				setDefaultWishList(commerceWishList::isDefaultWishList);
+				setId(commerceWishList::getCommerceWishListId);
+				setName(commerceWishList::getName);
 			}
 		};
 	}

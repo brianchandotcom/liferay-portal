@@ -60,14 +60,15 @@ public class UserGroupResourceDTOConverter
 
 		return new com.liferay.headless.admin.user.dto.v1_0.UserGroup() {
 			{
-				actions = dtoConverterContext.getActions();
-				description = userGroup.getDescription();
-				externalReferenceCode = userGroup.getExternalReferenceCode();
-				id = userGroup.getUserGroupId();
-				name = userGroup.getName();
-				usersCount = _userLocalService.getUserGroupUsersCount(
-					userGroup.getUserGroupId(),
-					WorkflowConstants.STATUS_APPROVED);
+				setActions(dtoConverterContext::getActions);
+				setDescription(userGroup::getDescription);
+				setExternalReferenceCode(userGroup::getExternalReferenceCode);
+				setId(userGroup::getUserGroupId);
+				setName(userGroup::getName);
+				setUsersCount(
+					() -> _userLocalService.getUserGroupUsersCount(
+						userGroup.getUserGroupId(),
+						WorkflowConstants.STATUS_APPROVED));
 			}
 		};
 	}

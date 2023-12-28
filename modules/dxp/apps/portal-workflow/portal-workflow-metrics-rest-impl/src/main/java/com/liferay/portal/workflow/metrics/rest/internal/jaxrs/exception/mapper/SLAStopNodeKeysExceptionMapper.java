@@ -38,9 +38,10 @@ public class SLAStopNodeKeysExceptionMapper
 		return Collections.singletonList(
 			new GenericError() {
 				{
-					fieldName = "stopNodeKeys";
-					message = SLAStopNodeKeysExceptionMapper.this.getMessage(
-						"the-stop-node-field-cannot-be-empty");
+					setFieldName(() -> "stopNodeKeys");
+					setMessage(
+						() -> SLAStopNodeKeysExceptionMapper.this.getMessage(
+							"the-stop-node-field-cannot-be-empty"));
 				}
 			});
 	}

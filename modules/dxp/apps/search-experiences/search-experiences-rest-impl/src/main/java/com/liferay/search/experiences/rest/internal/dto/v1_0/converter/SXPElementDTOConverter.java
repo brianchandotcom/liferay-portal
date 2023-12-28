@@ -52,30 +52,36 @@ public class SXPElementDTOConverter
 
 		return new SXPElement() {
 			{
-				createDate = sxpElement.getCreateDate();
-				description = SXPDTOConverterUtil.translate(
-					sxpElement.getFallbackDescription(), _language,
-					dtoConverterContext.getLocale(),
-					sxpElement.getDescriptionMap());
-				description_i18n = LocalizedMapUtil.getI18nMap(
-					true, sxpElement.getDescriptionMap());
-				elementDefinition = SXPDTOConverterUtil.translate(
-					ElementDefinitionUtil.toElementDefinition(
-						sxpElement.getElementDefinitionJSON()),
-					_language, dtoConverterContext.getLocale());
-				externalReferenceCode = sxpElement.getExternalReferenceCode();
-				id = sxpElement.getSXPElementId();
-				modifiedDate = sxpElement.getModifiedDate();
-				readOnly = sxpElement.isReadOnly();
-				schemaVersion = sxpElement.getSchemaVersion();
-				title = SXPDTOConverterUtil.translate(
-					sxpElement.getFallbackTitle(), _language,
-					dtoConverterContext.getLocale(), sxpElement.getTitleMap());
-				title_i18n = LocalizedMapUtil.getI18nMap(
-					true, sxpElement.getTitleMap());
-				type = sxpElement.getType();
-				userName = sxpElement.getUserName();
-				version = sxpElement.getVersion();
+				setCreateDate(sxpElement::getCreateDate);
+				setDescription(
+					() -> SXPDTOConverterUtil.translate(
+						sxpElement.getFallbackDescription(), _language,
+						dtoConverterContext.getLocale(),
+						sxpElement.getDescriptionMap()));
+				setDescription_i18n(
+					() -> LocalizedMapUtil.getI18nMap(
+						true, sxpElement.getDescriptionMap()));
+				setElementDefinition(
+					() -> SXPDTOConverterUtil.translate(
+						ElementDefinitionUtil.toElementDefinition(
+							sxpElement.getElementDefinitionJSON()),
+						_language, dtoConverterContext.getLocale()));
+				setExternalReferenceCode(sxpElement::getExternalReferenceCode);
+				setId(sxpElement::getSXPElementId);
+				setModifiedDate(sxpElement::getModifiedDate);
+				setReadOnly(sxpElement::isReadOnly);
+				setSchemaVersion(sxpElement::getSchemaVersion);
+				setTitle(
+					() -> SXPDTOConverterUtil.translate(
+						sxpElement.getFallbackTitle(), _language,
+						dtoConverterContext.getLocale(),
+						sxpElement.getTitleMap()));
+				setTitle_i18n(
+					() -> LocalizedMapUtil.getI18nMap(
+						true, sxpElement.getTitleMap()));
+				setType(sxpElement::getType);
+				setUserName(sxpElement::getUserName);
+				setVersion(sxpElement::getVersion);
 			}
 		};
 	}

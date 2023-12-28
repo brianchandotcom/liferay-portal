@@ -510,11 +510,13 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 
 		return new DataRecord() {
 			{
-				dataRecordCollectionId = ddlRecordSet.getRecordSetId();
-				dataRecordValues = dataStorage.get(
-					ddmStructure.getStructureId(), ddlRecord.getDDMStorageId());
-				id = ddlRecord.getRecordId();
-				status = ddlRecord.getStatus();
+				setDataRecordCollectionId(ddlRecordSet::getRecordSetId);
+				setDataRecordValues(
+					() -> dataStorage.get(
+						ddmStructure.getStructureId(),
+						ddlRecord.getDDMStorageId()));
+				setId(ddlRecord::getRecordId);
+				setStatus(ddlRecord::getStatus);
 			}
 		};
 	}

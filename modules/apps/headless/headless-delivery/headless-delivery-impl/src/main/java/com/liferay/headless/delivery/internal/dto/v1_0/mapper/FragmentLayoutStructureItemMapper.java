@@ -70,18 +70,20 @@ public class FragmentLayoutStructureItemMapper
 		if (Validator.isNull(portletId)) {
 			return new PageElement() {
 				{
-					definition =
-						_pageFragmentInstanceDefinitionMapper.
-							getPageFragmentInstanceDefinition(
-								fragmentStyledLayoutStructureItem,
-								toFragmentStyle(
-									itemConfigJSONObject.getJSONObject(
-										"styles"),
-									saveMappingConfiguration),
-								getFragmentViewPorts(itemConfigJSONObject),
-								saveInlineContent, saveMappingConfiguration);
-					id = layoutStructureItem.getItemId();
-					type = Type.FRAGMENT;
+					setDefinition(
+						() ->
+							_pageFragmentInstanceDefinitionMapper.
+								getPageFragmentInstanceDefinition(
+									fragmentStyledLayoutStructureItem,
+									toFragmentStyle(
+										itemConfigJSONObject.getJSONObject(
+											"styles"),
+										saveMappingConfiguration),
+									getFragmentViewPorts(itemConfigJSONObject),
+									saveInlineContent,
+									saveMappingConfiguration));
+					setId(layoutStructureItem::getItemId);
+					setType(() -> Type.FRAGMENT);
 				}
 			};
 		}
@@ -90,21 +92,24 @@ public class FragmentLayoutStructureItemMapper
 
 		return new PageElement() {
 			{
-				definition =
-					PageWidgetInstanceDefinitionUtil.
-						toPageWidgetInstanceDefinition(
-							fragmentEntryLink,
-							fragmentStyledLayoutStructureItem,
-							itemConfigJSONObject.getString("name", null),
-							toFragmentStyle(
-								itemConfigJSONObject.getJSONObject("styles"),
-								saveMappingConfiguration),
-							getFragmentViewPorts(
-								itemConfigJSONObject.getJSONObject("style")),
-							PortletIdCodec.encode(portletId, instanceId),
-							_widgetInstanceMapper);
-				id = layoutStructureItem.getItemId();
-				type = Type.WIDGET;
+				setDefinition(
+					() ->
+						PageWidgetInstanceDefinitionUtil.
+							toPageWidgetInstanceDefinition(
+								fragmentEntryLink,
+								fragmentStyledLayoutStructureItem,
+								itemConfigJSONObject.getString("name", null),
+								toFragmentStyle(
+									itemConfigJSONObject.getJSONObject(
+										"styles"),
+									saveMappingConfiguration),
+								getFragmentViewPorts(
+									itemConfigJSONObject.getJSONObject(
+										"style")),
+								PortletIdCodec.encode(portletId, instanceId),
+								_widgetInstanceMapper));
+				setId(layoutStructureItem::getItemId);
+				setType(() -> Type.WIDGET);
 			}
 		};
 	}

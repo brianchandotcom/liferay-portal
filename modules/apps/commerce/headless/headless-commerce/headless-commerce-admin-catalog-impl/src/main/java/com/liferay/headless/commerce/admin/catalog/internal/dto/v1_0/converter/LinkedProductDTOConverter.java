@@ -52,10 +52,10 @@ public class LinkedProductDTOConverter
 
 		return new LinkedProduct() {
 			{
-				productExternalReferenceCode =
-					cProduct.getExternalReferenceCode();
-				productId = cProduct.getCProductId();
-				type = cpDefinition.getProductTypeName();
+				setProductExternalReferenceCode(
+					cProduct::getExternalReferenceCode);
+				setProductId(cProduct::getCProductId);
+				setType(cpDefinition::getProductTypeName);
 			}
 		};
 	}

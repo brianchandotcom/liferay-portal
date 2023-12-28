@@ -66,57 +66,36 @@ public class KnowledgeBaseArticleDTOConverter
 
 		return new KnowledgeBaseArticle() {
 			{
-				actions = dtoConverterContext.getActions();
-				aggregateRating = AggregateRatingUtil.toAggregateRating(
-					_ratingsStatsLocalService.fetchStats(
-						KBArticle.class.getName(),
-						kbArticle.getResourcePrimKey()));
-				articleBody = kbArticle.getContent();
-				creator = CreatorUtil.toCreator(
-					dtoConverterContext, _portal,
-					_userLocalService.fetchUser(kbArticle.getUserId()));
-				customFields = CustomFieldsUtil.toCustomFields(
-					dtoConverterContext.isAcceptAllLanguages(),
-					KBArticle.class.getName(), kbArticle.getKbArticleId(),
-					kbArticle.getCompanyId(), dtoConverterContext.getLocale());
-				dateCreated = kbArticle.getCreateDate();
-				dateModified = kbArticle.getModifiedDate();
-				datePublished = kbArticle.getDisplayDate();
-				description = kbArticle.getDescription();
-				encodingFormat = "text/html";
-				externalReferenceCode = kbArticle.getExternalReferenceCode();
-				friendlyUrlPath = kbArticle.getUrlTitle();
-				id = kbArticle.getResourcePrimKey();
-				keywords = ListUtil.toArray(
-					_assetTagLocalService.getTags(
-						KBArticle.class.getName(), kbArticle.getClassPK()),
-					AssetTag.NAME_ACCESSOR);
-				numberOfKnowledgeBaseArticles =
-					_kbArticleService.getKBArticlesCount(
-						kbArticle.getGroupId(), kbArticle.getResourcePrimKey(),
-						WorkflowConstants.STATUS_APPROVED);
-				parentKnowledgeBaseArticleId =
-					kbArticle.getParentResourcePrimKey();
-				parentKnowledgeBaseFolderId = kbArticle.getKbFolderId();
-				relatedContents = RelatedContentUtil.toRelatedContents(
-					_assetEntryLocalService, _assetLinkLocalService,
-					dtoConverterContext.getDTOConverterRegistry(),
-					kbArticle.getModelClassName(),
-					kbArticle.getResourcePrimKey(),
-					dtoConverterContext.getLocale());
-				siteId = kbArticle.getGroupId();
-				subscribed = _subscriptionLocalService.isSubscribed(
-					kbArticle.getCompanyId(), dtoConverterContext.getUserId(),
-					KBArticle.class.getName(), kbArticle.getResourcePrimKey());
-				taxonomyCategoryBriefs = TransformUtil.transformToArray(
-					_assetCategoryLocalService.getCategories(
-						KBArticle.class.getName(), kbArticle.getClassPK()),
-					assetCategory ->
-						TaxonomyCategoryBriefUtil.toTaxonomyCategoryBrief(
-							assetCategory, dtoConverterContext),
-					TaxonomyCategoryBrief.class);
-				title = kbArticle.getTitle();
-
+				setActions(dtoConverterContext::getActions);
+				setAggregateRating(
+					() -> AggregateRatingUtil.toAggregateRating(
+						_ratingsStatsLocalService.fetchStats(
+							KBArticle.class.getName(),
+							kbArticle.getResourcePrimKey())));
+				setArticleBody(kbArticle::getContent);
+				setCreator(
+					() -> CreatorUtil.toCreator(
+						dtoConverterContext, _portal,
+						_userLocalService.fetchUser(kbArticle.getUserId())));
+				setCustomFields(
+					() -> CustomFieldsUtil.toCustomFields(
+						dtoConverterContext.isAcceptAllLanguages(),
+						KBArticle.class.getName(), kbArticle.getKbArticleId(),
+						kbArticle.getCompanyId(),
+						dtoConverterContext.getLocale()));
+				setDateCreated(kbArticle::getCreateDate);
+				setDateModified(kbArticle::getModifiedDate);
+				setDatePublished(kbArticle::getDisplayDate);
+				setDescription(kbArticle::getDescription);
+				setEncodingFormat(() -> "text/html");
+				setExternalReferenceCode(kbArticle::getExternalReferenceCode);
+				setFriendlyUrlPath(kbArticle::getUrlTitle);
+				setId(kbArticle::getResourcePrimKey);
+				setKeywords(
+					() -> ListUtil.toArray(
+						_assetTagLocalService.getTags(
+							KBArticle.class.getName(), kbArticle.getClassPK()),
+						AssetTag.NAME_ACCESSOR));
 				setNumberOfAttachments(
 					() -> {
 						List<FileEntry> fileEntries =
@@ -128,6 +107,12 @@ public class KnowledgeBaseArticleDTOConverter
 
 						return 0;
 					});
+				setNumberOfKnowledgeBaseArticles(
+					() -> _kbArticleService.getKBArticlesCount(
+						kbArticle.getGroupId(), kbArticle.getResourcePrimKey(),
+						WorkflowConstants.STATUS_APPROVED));
+				setParentKnowledgeBaseArticleId(
+					kbArticle::getParentResourcePrimKey);
 				setParentKnowledgeBaseFolder(
 					() -> {
 						if (kbArticle.getKbFolderId() <= 0) {
@@ -139,6 +124,30 @@ public class KnowledgeBaseArticleDTOConverter
 								_kbFolderService.getKBFolder(
 									kbArticle.getKbFolderId()));
 					});
+				setParentKnowledgeBaseFolderId(kbArticle::getKbFolderId);
+				setRelatedContents(
+					() -> RelatedContentUtil.toRelatedContents(
+						_assetEntryLocalService, _assetLinkLocalService,
+						dtoConverterContext.getDTOConverterRegistry(),
+						kbArticle.getModelClassName(),
+						kbArticle.getResourcePrimKey(),
+						dtoConverterContext.getLocale()));
+				setSiteId(kbArticle::getGroupId);
+				setSubscribed(
+					() -> _subscriptionLocalService.isSubscribed(
+						kbArticle.getCompanyId(),
+						dtoConverterContext.getUserId(),
+						KBArticle.class.getName(),
+						kbArticle.getResourcePrimKey()));
+				setTaxonomyCategoryBriefs(
+					() -> TransformUtil.transformToArray(
+						_assetCategoryLocalService.getCategories(
+							KBArticle.class.getName(), kbArticle.getClassPK()),
+						assetCategory ->
+							TaxonomyCategoryBriefUtil.toTaxonomyCategoryBrief(
+								assetCategory, dtoConverterContext),
+						TaxonomyCategoryBrief.class));
+				setTitle(kbArticle::getTitle);
 			}
 		};
 	}

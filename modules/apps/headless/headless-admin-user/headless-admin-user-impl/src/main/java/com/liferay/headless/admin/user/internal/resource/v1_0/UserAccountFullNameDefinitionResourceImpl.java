@@ -41,11 +41,12 @@ public class UserAccountFullNameDefinitionResourceImpl
 
 		return new UserAccountFullNameDefinition() {
 			{
-				userAccountFullNameDefinitionFields = transformToArray(
-					fullNameDefinition.getFullNameFields(),
-					fullNameField -> _toUserAccountFullNameDefinitionField(
-						fullNameField),
-					UserAccountFullNameDefinitionField.class);
+				setUserAccountFullNameDefinitionFields(
+					() -> transformToArray(
+						fullNameDefinition.getFullNameFields(),
+						fullNameField -> _toUserAccountFullNameDefinitionField(
+							fullNameField),
+						UserAccountFullNameDefinitionField.class));
 			}
 		};
 	}
@@ -55,9 +56,9 @@ public class UserAccountFullNameDefinitionResourceImpl
 
 		return new UserAccountFullNameDefinitionField() {
 			{
-				key = fullNameField.getName();
-				required = fullNameField.isRequired();
-				values = fullNameField.getValues();
+				setKey(fullNameField::getName);
+				setRequired(fullNameField::isRequired);
+				setValues(fullNameField::getValues);
 			}
 		};
 	}

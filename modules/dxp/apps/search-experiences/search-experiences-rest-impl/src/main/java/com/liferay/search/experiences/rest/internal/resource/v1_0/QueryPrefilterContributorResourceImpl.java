@@ -36,7 +36,7 @@ public class QueryPrefilterContributorResourceImpl
 					QueryPreFilterContributor.class),
 				componentName -> new QueryPrefilterContributor() {
 					{
-						className = componentName;
+						setClassName(() -> componentName);
 					}
 				}));
 	}

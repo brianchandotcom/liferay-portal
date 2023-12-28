@@ -271,14 +271,16 @@ public class AccountRoleResourceImpl extends BaseAccountRoleResourceImpl {
 
 		return new AccountRole() {
 			{
-				accountId = serviceBuilderAccountRole.getAccountEntryId();
-				description = role.getDescription(
-					contextAcceptLanguage.getPreferredLocale());
-				displayName = role.getTitle(
-					contextAcceptLanguage.getPreferredLocale());
-				id = serviceBuilderAccountRole.getAccountRoleId();
-				name = serviceBuilderAccountRole.getRoleName();
-				roleId = serviceBuilderAccountRole.getRoleId();
+				setAccountId(serviceBuilderAccountRole::getAccountEntryId);
+				setDescription(
+					() -> role.getDescription(
+						contextAcceptLanguage.getPreferredLocale()));
+				setDisplayName(
+					() -> role.getTitle(
+						contextAcceptLanguage.getPreferredLocale()));
+				setId(serviceBuilderAccountRole::getAccountRoleId);
+				setName(serviceBuilderAccountRole::getRoleName);
+				setRoleId(serviceBuilderAccountRole::getRoleId);
 			}
 		};
 	}

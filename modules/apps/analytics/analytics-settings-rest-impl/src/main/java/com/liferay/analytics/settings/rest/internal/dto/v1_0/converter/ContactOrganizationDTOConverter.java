@@ -38,10 +38,11 @@ public class ContactOrganizationDTOConverter
 
 		return new ContactOrganization() {
 			{
-				id = organization.getOrganizationId();
-				name = organization.getName();
-				selected = contactOrganizationDTOConverterContext.isSelected(
-					String.valueOf(organization.getOrganizationId()));
+				setId(organization::getOrganizationId);
+				setName(organization::getName);
+				setSelected(
+					() -> contactOrganizationDTOConverterContext.isSelected(
+						String.valueOf(organization.getOrganizationId())));
 			}
 		};
 	}

@@ -176,11 +176,11 @@ public class PortalInstanceResourceImpl extends BasePortalInstanceResourceImpl {
 	private PortalInstance _toPortalInstance(Company company) {
 		return new PortalInstance() {
 			{
-				active = company.isActive();
-				companyId = company.getCompanyId();
-				domain = company.getMx();
-				portalInstanceId = company.getWebId();
-				virtualHost = company.getVirtualHostname();
+				setActive(company::isActive);
+				setCompanyId(company::getCompanyId);
+				setDomain(company::getMx);
+				setPortalInstanceId(company::getWebId);
+				setVirtualHost(company::getVirtualHostname);
 			}
 		};
 	}

@@ -26,14 +26,16 @@ public class CompareRunsResourceImpl extends BaseCompareRunsResourceImpl {
 
 		return new CompareRuns() {
 			{
-				dueStatuses = new String[] {
-					"PASSED", "FAILED", "BLOCKED", "TEST FIX", "DNR"
-				};
+				setDueStatuses(
+					() -> new String[] {
+						"PASSED", "FAILED", "BLOCKED", "TEST FIX", "DNR"
+					});
 
-				values = new int[][] {
-					{1, 2, 3, 4, 5}, {1, 2, 3, 4, 5}, {1, 2, 3, 4, 5},
-					{1, 2, 3, 4, 5}, {1, 2, 3, 4, 5}
-				};
+				setValues(
+					() -> new int[][] {
+						{1, 2, 3, 4, 5}, {1, 2, 3, 4, 5}, {1, 2, 3, 4, 5},
+						{1, 2, 3, 4, 5}, {1, 2, 3, 4, 5}
+					});
 			}
 		};
 	}

@@ -23,14 +23,16 @@ public class DataRecordCollectionUtil {
 
 		return new DataRecordCollection() {
 			{
-				dataDefinitionId = ddlRecordSet.getDDMStructureId();
-				dataRecordCollectionKey = ddlRecordSet.getRecordSetKey();
-				description = LocalizedValueUtil.toStringObjectMap(
-					ddlRecordSet.getDescriptionMap());
-				id = ddlRecordSet.getRecordSetId();
-				name = LocalizedValueUtil.toStringObjectMap(
-					ddlRecordSet.getNameMap());
-				siteId = ddlRecordSet.getGroupId();
+				setDataDefinitionId(ddlRecordSet::getDDMStructureId);
+				setDataRecordCollectionKey(ddlRecordSet::getRecordSetKey);
+				setDescription(
+					() -> LocalizedValueUtil.toStringObjectMap(
+						ddlRecordSet.getDescriptionMap()));
+				setId(ddlRecordSet::getRecordSetId);
+				setName(
+					() -> LocalizedValueUtil.toStringObjectMap(
+						ddlRecordSet.getNameMap()));
+				setSiteId(ddlRecordSet::getGroupId);
 			}
 		};
 	}

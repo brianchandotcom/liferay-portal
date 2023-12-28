@@ -48,12 +48,13 @@ public class AccountMemberDTOConverter
 
 		return new AccountMember() {
 			{
-				accountId = accountEntryUserRel.getAccountEntryId();
-				accountRoles = _getAccountRoles(
-					accountEntryUserRel, dtoConverterContext);
-				email = user.getEmailAddress();
-				name = user.getFullName();
-				userId = user.getUserId();
+				setAccountId(accountEntryUserRel::getAccountEntryId);
+				setAccountRoles(
+					() -> _getAccountRoles(
+						accountEntryUserRel, dtoConverterContext));
+				setEmail(user::getEmailAddress);
+				setName(user::getFullName);
+				setUserId(user::getUserId);
 			}
 		};
 	}

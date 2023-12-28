@@ -70,16 +70,19 @@ public class ObjectEntryInfoItemCreator
 					_objectDefinition,
 					new com.liferay.object.rest.dto.v1_0.ObjectEntry() {
 						{
-							keywords = serviceContext.getAssetTagNames();
-							properties = ObjectEntryUtil.toProperties(
-								infoItemFieldValues);
-							status = new Status() {
-								{
-									code = objectEntryStatus;
-								}
-							};
-							taxonomyCategoryIds = ArrayUtil.toLongArray(
-								serviceContext.getAssetCategoryIds());
+							setKeywords(serviceContext::getAssetTagNames);
+							setProperties(
+								() -> ObjectEntryUtil.toProperties(
+									infoItemFieldValues));
+							setStatus(
+								() -> new Status() {
+									{
+										setCode(() -> objectEntryStatus);
+									}
+								});
+							setTaxonomyCategoryIds(
+								() -> ArrayUtil.toLongArray(
+									serviceContext.getAssetCategoryIds()));
 						}
 					},
 					ObjectEntryUtil.getScopeKey(

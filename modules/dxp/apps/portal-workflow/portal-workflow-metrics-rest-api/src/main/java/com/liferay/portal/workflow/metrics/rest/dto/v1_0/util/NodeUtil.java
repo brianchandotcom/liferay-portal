@@ -27,15 +27,20 @@ public class NodeUtil {
 
 		return new Node() {
 			{
-				dateCreated = _parseDate(document.getDate("createDate"));
-				dateModified = _parseDate(document.getDate("modifiedDate"));
-				id = document.getLong("nodeId");
-				initial = GetterUtil.getBoolean(document.getValue("initial"));
-				label = language.get(
-					resourceBundle, document.getString("name"));
-				name = document.getString("name");
-				terminal = GetterUtil.getBoolean(document.getValue("terminal"));
-				type = document.getString("type");
+				setDateCreated(
+					() -> _parseDate(document.getDate("createDate")));
+				setDateModified(
+					() -> _parseDate(document.getDate("modifiedDate")));
+				setId(() -> document.getLong("nodeId"));
+				setInitial(
+					() -> GetterUtil.getBoolean(document.getValue("initial")));
+				setLabel(
+					() -> language.get(
+						resourceBundle, document.getString("name")));
+				setName(() -> document.getString("name"));
+				setTerminal(
+					() -> GetterUtil.getBoolean(document.getValue("terminal")));
+				setType(() -> document.getString("type"));
 			}
 		};
 	}

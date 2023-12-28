@@ -29,8 +29,6 @@ public class LinkUtil {
 
 		return new Link() {
 			{
-				label = dlFileEntry.getFileName();
-
 				setHref(
 					() -> {
 						try {
@@ -61,6 +59,7 @@ public class LinkUtil {
 							portal.getPathContext(), portal.getPathMain(),
 							"/portal/login");
 					});
+				setLabel(dlFileEntry::getFileName);
 			}
 		};
 	}

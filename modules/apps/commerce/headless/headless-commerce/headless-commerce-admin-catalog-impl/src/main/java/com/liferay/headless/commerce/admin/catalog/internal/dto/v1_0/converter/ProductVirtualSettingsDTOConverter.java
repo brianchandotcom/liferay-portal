@@ -65,19 +65,8 @@ public class ProductVirtualSettingsDTOConverter
 
 		return new ProductVirtualSettings() {
 			{
-				activationStatus =
-					cpDefinitionVirtualSetting.getActivationStatus();
-				duration = TimeUnit.MILLISECONDS.toDays(
-					cpDefinitionVirtualSetting.getDuration());
-				maxUsages = cpDefinitionVirtualSetting.getMaxUsages();
-				sampleURL = cpDefinitionVirtualSetting.getSampleURL();
-				termsOfUseContent = LanguageUtils.getLanguageIdMap(
-					cpDefinitionVirtualSetting.getTermsOfUseContentMap());
-				termsOfUseRequired =
-					cpDefinitionVirtualSetting.isTermsOfUseRequired();
-				url = cpDefinitionVirtualSetting.getUrl();
-				useSample = cpDefinitionVirtualSetting.isUseSample();
-
+				setActivationStatus(
+					cpDefinitionVirtualSetting::getActivationStatus);
 				setActivationStatusInfo(
 					() -> {
 						String orderStatusLabel =
@@ -87,16 +76,21 @@ public class ProductVirtualSettingsDTOConverter
 
 						return new Status() {
 							{
-								code =
-									cpDefinitionVirtualSetting.
-										getActivationStatus();
-								label = orderStatusLabel;
-								label_i18n = _language.get(
-									dtoConverterContext.getLocale(),
-									orderStatusLabel);
+								setCode(
+									cpDefinitionVirtualSetting::
+										getActivationStatus);
+								setLabel(() -> orderStatusLabel);
+								setLabel_i18n(
+									() -> _language.get(
+										dtoConverterContext.getLocale(),
+										orderStatusLabel));
 							}
 						};
 					});
+				setDuration(
+					() -> TimeUnit.MILLISECONDS.toDays(
+						cpDefinitionVirtualSetting.getDuration()));
+				setMaxUsages(cpDefinitionVirtualSetting::getMaxUsages);
 				setSampleSrc(
 					() -> {
 						FileEntry fileEntry =
@@ -113,6 +107,7 @@ public class ProductVirtualSettingsDTOConverter
 								AccountConstants.ACCOUNT_ENTRY_ID_ADMIN,
 								fileEntry.getFileEntryId());
 					});
+				setSampleURL(cpDefinitionVirtualSetting::getSampleURL);
 				setSrc(
 					() -> {
 						FileEntry fileEntry =
@@ -129,6 +124,9 @@ public class ProductVirtualSettingsDTOConverter
 								AccountConstants.ACCOUNT_ENTRY_ID_ADMIN,
 								fileEntry.getFileEntryId());
 					});
+				setTermsOfUseContent(
+					() -> LanguageUtils.getLanguageIdMap(
+						cpDefinitionVirtualSetting.getTermsOfUseContentMap()));
 				setTermsOfUseJournalArticleId(
 					() -> {
 						JournalArticle journalArticle =
@@ -141,6 +139,10 @@ public class ProductVirtualSettingsDTOConverter
 
 						return journalArticle.getResourcePrimKey();
 					});
+				setTermsOfUseRequired(
+					cpDefinitionVirtualSetting::isTermsOfUseRequired);
+				setUrl(cpDefinitionVirtualSetting::getUrl);
+				setUseSample(cpDefinitionVirtualSetting::isUseSample);
 			}
 		};
 	}

@@ -56,12 +56,12 @@ public class CategoryDTOConverter
 
 		return new Category() {
 			{
-				externalReferenceCode =
-					assetCategory.getExternalReferenceCode();
-				id = assetCategory.getCategoryId();
-				name = assetCategory.getName();
-				siteId = assetCategory.getGroupId();
-				vocabulary = assetVocabulary.getName();
+				setExternalReferenceCode(
+					assetCategory::getExternalReferenceCode);
+				setId(assetCategory::getCategoryId);
+				setName(assetCategory::getName);
+				setSiteId(assetCategory::getGroupId);
+				setVocabulary(assetVocabulary::getName);
 			}
 		};
 	}

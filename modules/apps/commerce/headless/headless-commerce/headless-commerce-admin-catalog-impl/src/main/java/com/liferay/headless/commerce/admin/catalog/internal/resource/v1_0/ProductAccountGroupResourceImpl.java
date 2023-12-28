@@ -116,10 +116,11 @@ public class ProductAccountGroupResourceImpl
 
 		return new ProductAccountGroup() {
 			{
-				accountGroupId = accountGroupRel.getAccountGroupId();
-				externalReferenceCode = accountGroup.getExternalReferenceCode();
-				id = accountGroupRel.getAccountGroupRelId();
-				name = accountGroup.getName();
+				setAccountGroupId(accountGroupRel::getAccountGroupId);
+				setExternalReferenceCode(
+					accountGroup::getExternalReferenceCode);
+				setId(accountGroupRel::getAccountGroupRelId);
+				setName(accountGroup::getName);
 			}
 		};
 	}

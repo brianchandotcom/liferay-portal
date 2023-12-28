@@ -169,10 +169,13 @@ public class PaymentMethodResourceImpl extends BasePaymentMethodResourceImpl {
 
 		return new PaymentMethod() {
 			{
-				description = commercePaymentMethodGroupRel.getDescription(
-					locale);
-				key = commercePaymentMethodGroupRel.getPaymentIntegrationKey();
-				name = commercePaymentMethodGroupRel.getName(locale);
+				setDescription(
+					() -> commercePaymentMethodGroupRel.getDescription(locale));
+				setKey(
+					() ->
+						commercePaymentMethodGroupRel.
+							getPaymentIntegrationKey());
+				setName(() -> commercePaymentMethodGroupRel.getName(locale));
 			}
 		};
 	}

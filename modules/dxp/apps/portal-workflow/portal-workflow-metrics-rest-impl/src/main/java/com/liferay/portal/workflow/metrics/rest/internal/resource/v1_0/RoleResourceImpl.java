@@ -133,9 +133,10 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 	private Role _toRole(com.liferay.portal.kernel.model.Role role) {
 		return new Role() {
 			{
-				id = role.getRoleId();
-				name = role.getTitle(
-					contextAcceptLanguage.getPreferredLocale());
+				setId(role::getRoleId);
+				setName(
+					() -> role.getTitle(
+						contextAcceptLanguage.getPreferredLocale()));
 			}
 		};
 	}

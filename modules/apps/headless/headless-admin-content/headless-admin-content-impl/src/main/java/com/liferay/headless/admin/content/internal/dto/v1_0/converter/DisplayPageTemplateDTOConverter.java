@@ -53,31 +53,34 @@ public class DisplayPageTemplateDTOConverter
 
 		return new DisplayPageTemplate() {
 			{
-				actions = dtoConverterContext.getActions();
-				availableLanguages = LocaleUtil.toW3cLanguageIds(
-					layout.getAvailableLanguageIds());
-				creator = CreatorUtil.toCreator(
-					dtoConverterContext, _portal,
-					_userLocalService.fetchUser(
-						layoutPageTemplateEntry.getUserId()));
-				customFields = CustomFieldsUtil.toCustomFields(
-					dtoConverterContext.isAcceptAllLanguages(),
-					Layout.class.getName(), layout.getPlid(),
-					layout.getCompanyId(), dtoConverterContext.getLocale());
-				dateCreated = layout.getCreateDate();
-				dateModified = layout.getModifiedDate();
-				displayPageTemplateKey =
-					layoutPageTemplateEntry.getLayoutPageTemplateEntryKey();
-				displayPageTemplateSettings =
-					DisplayPageTemplateSettingsUtil.
-						getDisplayPageTemplateSettings(
-							dtoConverterContext, _infoItemServiceRegistry,
-							layout, layoutPageTemplateEntry, _portal);
-				markedAsDefault = layoutPageTemplateEntry.isDefaultTemplate();
-				siteId = layout.getGroupId();
-				title = layoutPageTemplateEntry.getName();
-				uuid = layoutPageTemplateEntry.getUuid();
-
+				setActions(dtoConverterContext::getActions);
+				setAvailableLanguages(
+					() -> LocaleUtil.toW3cLanguageIds(
+						layout.getAvailableLanguageIds()));
+				setCreator(
+					() -> CreatorUtil.toCreator(
+						dtoConverterContext, _portal,
+						_userLocalService.fetchUser(
+							layoutPageTemplateEntry.getUserId())));
+				setCustomFields(
+					() -> CustomFieldsUtil.toCustomFields(
+						dtoConverterContext.isAcceptAllLanguages(),
+						Layout.class.getName(), layout.getPlid(),
+						layout.getCompanyId(),
+						dtoConverterContext.getLocale()));
+				setDateCreated(layout::getCreateDate);
+				setDateModified(layout::getModifiedDate);
+				setDisplayPageTemplateKey(
+					() ->
+						layoutPageTemplateEntry.
+							getLayoutPageTemplateEntryKey());
+				setDisplayPageTemplateSettings(
+					() ->
+						DisplayPageTemplateSettingsUtil.
+							getDisplayPageTemplateSettings(
+								dtoConverterContext, _infoItemServiceRegistry,
+								layout, layoutPageTemplateEntry, _portal));
+				setMarkedAsDefault(layoutPageTemplateEntry::isDefaultTemplate);
 				setPageDefinition(
 					() -> {
 						dtoConverterContext.setAttribute("layout", layout);
@@ -112,6 +115,9 @@ public class DisplayPageTemplateDTOConverter
 						return dtoConverter.toDTO(
 							dtoConverterContext, layoutStructure);
 					});
+				setSiteId(layout::getGroupId);
+				setTitle(layoutPageTemplateEntry::getName);
+				setUuid(layoutPageTemplateEntry::getUuid);
 			}
 		};
 	}

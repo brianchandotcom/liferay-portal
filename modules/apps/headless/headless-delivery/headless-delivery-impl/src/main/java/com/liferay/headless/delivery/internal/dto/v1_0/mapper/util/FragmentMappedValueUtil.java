@@ -84,7 +84,7 @@ public class FragmentMappedValueUtil {
 		if (Validator.isNotNull(collectionFieldId)) {
 			return new ContextReference() {
 				{
-					contextSource = ContextSource.COLLECTION_ITEM;
+					setContextSource(() -> ContextSource.COLLECTION_ITEM);
 				}
 			};
 		}
@@ -96,15 +96,15 @@ public class FragmentMappedValueUtil {
 		if (Validator.isNotNull(mappedField)) {
 			return new ContextReference() {
 				{
-					contextSource = ContextSource.DISPLAY_PAGE_ITEM;
+					setContextSource(() -> ContextSource.DISPLAY_PAGE_ITEM);
 				}
 			};
 		}
 
 		return new ClassPKReference() {
 			{
-				className = _toItemClassName(jsonObject);
-				classPK = _toItemClassPK(jsonObject);
+				setClassName(() -> _toItemClassName(jsonObject));
+				setClassPK(() -> _toItemClassPK(jsonObject));
 			}
 		};
 	}
@@ -133,8 +133,7 @@ public class FragmentMappedValueUtil {
 
 		return new ClassFieldsReference() {
 			{
-				className = Layout.class.getName();
-
+				setClassName(() -> Layout.class.getName());
 				setFields(
 					() -> {
 						Field friendlyURLField = new Field();

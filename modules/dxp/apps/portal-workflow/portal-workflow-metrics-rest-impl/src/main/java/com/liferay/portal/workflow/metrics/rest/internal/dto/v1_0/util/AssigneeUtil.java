@@ -27,8 +27,7 @@ public class AssigneeUtil {
 
 		return new Assignee() {
 			{
-				id = userId;
-
+				setId(() -> userId);
 				setImage(
 					() -> {
 						if ((user == null) || (user.getPortraitId() == 0)) {

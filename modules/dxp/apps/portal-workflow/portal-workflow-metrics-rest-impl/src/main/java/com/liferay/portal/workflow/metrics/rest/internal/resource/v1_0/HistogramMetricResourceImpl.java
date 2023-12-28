@@ -146,8 +146,8 @@ public class HistogramMetricResourceImpl
 	private Histogram _createHistogram(LocalDateTime localDateTime) {
 		return new Histogram() {
 			{
-				key = localDateTime.toString();
-				value = 0.0;
+				setKey(localDateTime::toString);
+				setValue(() -> 0.0);
 			}
 		};
 	}

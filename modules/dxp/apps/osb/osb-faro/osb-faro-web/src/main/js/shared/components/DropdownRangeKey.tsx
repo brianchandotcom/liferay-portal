@@ -214,9 +214,11 @@ const DropdownRangeKey: React.FC<DropdownRangeKeyIProps> = ({
 			{showDatePicker ? (
 				<DatePicker
 					date={customDateRange}
-					maxDate={formatDate(timeZoneId).subtract(1, 'days')}
+					maxDate={formatDate(timeZoneId).clone().subtract(1, 'days')}
 					maxRange={365}
-					minDate={formatDate(timeZoneId).subtract(10, 'years')}
+					minDate={formatDate(timeZoneId)
+						.clone()
+						.subtract(10, 'years')}
 					onSelect={({end, start}: MomentDateRange) => {
 						setCustomDateRange({
 							end,

@@ -117,8 +117,9 @@ public class ObjectEntryOpenAPIResourceImpl
 					GetterUtil.getBoolean(propertySchema.getReadOnly()),
 					_getRef(propertySchema),
 					requiredPropertySchemaNames.contains(propertyName),
-					OpenAPIUtil.isBatchSupport(propertySchema.getExtensions()),
 					propertySchema.getType(),
+					OpenAPIUtil.getBatchUnsupportedFormats(
+						propertySchema.getExtensions()),
 					GetterUtil.getBoolean(propertySchema.getWriteOnly())));
 		}
 
@@ -151,7 +152,7 @@ public class ObjectEntryOpenAPIResourceImpl
 
 			DTOProperty dtoProperty = new DTOProperty(
 				HashMapBuilder.<String, Object>put(
-					"x-batch-csv-enabled", "false"
+					"x-batch-unsupported-formats", "CSV"
 				).put(
 					"x-parent-map", "properties"
 				).build(),
@@ -215,13 +216,13 @@ public class ObjectEntryOpenAPIResourceImpl
 
 			return new DTOProperty(
 				HashMapBuilder.<String, Object>put(
-					"x-batch-csv-enabled",
+					"x-batch-unsupported-formats",
 					() -> {
 						if (Objects.equals(
 								objectField.getBusinessType(),
 								ObjectFieldConstants.BUSINESS_TYPE_ENCRYPTED)) {
 
-							return "false";
+							return "CSV";
 						}
 
 						return null;
@@ -245,14 +246,14 @@ public class ObjectEntryOpenAPIResourceImpl
 
 			DTOProperty dtoProperty = new DTOProperty(
 				HashMapBuilder.<String, Object>put(
-					"x-batch-csv-enabled",
+					"x-batch-unsupported-formats",
 					() -> {
 						if (Objects.equals(
 								objectField.getBusinessType(),
 								ObjectFieldConstants.
 									BUSINESS_TYPE_MULTISELECT_PICKLIST)) {
 
-							return "false";
+							return "CSV";
 						}
 
 						return null;
@@ -290,7 +291,7 @@ public class ObjectEntryOpenAPIResourceImpl
 
 		HashMap<String, Object> extensionMap =
 			HashMapBuilder.<String, Object>put(
-				"x-batch-csv-enabled",
+				"x-batch-unsupported-formats",
 				() -> {
 					if (Objects.equals(
 							objectField.getBusinessType(),
@@ -306,7 +307,7 @@ public class ObjectEntryOpenAPIResourceImpl
 							objectField.getBusinessType(),
 							ObjectFieldConstants.BUSINESS_TYPE_FORMULA)) {
 
-						return "false";
+						return "CSV";
 					}
 
 					return null;

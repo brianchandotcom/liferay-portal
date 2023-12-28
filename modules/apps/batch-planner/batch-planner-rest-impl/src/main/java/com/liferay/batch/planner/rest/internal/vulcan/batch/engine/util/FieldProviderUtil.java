@@ -88,7 +88,7 @@ public class FieldProviderUtil {
 				if ((Objects.equals(field.getType(), "array") ||
 					 Objects.equals(field.getType(), "object")) &&
 					!Validator.isBlank(field.getRef()) &&
-					!field.isSupported()) {
+					Validator.isNotNull(field.getUnsupportedFormats())) {
 
 					return null;
 				}

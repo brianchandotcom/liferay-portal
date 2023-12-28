@@ -30,12 +30,8 @@ function FieldsTable({portletNamespace}) {
 	const [selectedFields, setSelectedFields] = useState([]);
 	const useTemplateMappingRef = useRef();
 
-	const isForbidden = (field) => {
-		return (
-			selectedExportFileFormat === CSV_FORMAT.toUpperCase() &&
-			!field.supported
-		);
-	};
+	const isForbidden = (field) =>
+		field.unsupportedFormats?.includes(selectedExportFileFormat);
 
 	useEffect(() => {
 		const handleSchemaUpdated = (event) => {

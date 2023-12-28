@@ -217,7 +217,7 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 					openAPIContext, openAPI.getPaths()));
 		}
 
-		_setBatchCSVExtension(objectDefinitionSchemaProperties);
+		_setBatchUnsupportedFormats(objectDefinitionSchemaProperties);
 
 		_setListEntryRef(schemas);
 
@@ -711,21 +711,20 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 		return components.getSchemas();
 	}
 
-	private void _setBatchCSVExtension(Map<String, Schema> properties) {
+	private void _setBatchUnsupportedFormats(Map<String, Schema> properties) {
 		for (Map.Entry<String, Schema> entry : properties.entrySet()) {
-			if (_systemObjectFieldsBatchCSVDisabled.contains(entry.getKey())) {
+			if (_batchUnsupportedFormats.containsKey(entry.getKey())) {
 				Schema schema = entry.getValue();
 
 				Map<String, Object> extensions = schema.getExtensions();
 
 				if (MapUtil.isEmpty(extensions)) {
-					extensions = HashMapBuilder.<String, Object>put(
-						"x-batch-csv-enabled", "false"
-					).build();
+					extensions = new HashMap<>();
 				}
-				else {
-					extensions.put("x-batch-csv-enabled", "false");
-				}
+
+				extensions.put(
+					"x-batch-unsupported-formats",
+					_batchUnsupportedFormats.get(entry.getKey()));
 
 				schema.setExtensions(extensions);
 			}
@@ -940,6 +939,22 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 	}
 
 	private final boolean _addRelatedSchemas;
+	private final HashMap<String, String> _batchUnsupportedFormats =
+		HashMapBuilder.put(
+			"actions", "CSV"
+		).put(
+			"auditEvents", "CSV"
+		).put(
+			"creator", "CSV"
+		).put(
+			"keywords", "CSV"
+		).put(
+			"status", "CSV"
+		).put(
+			"taxonomyCategoryBriefs", "CSV"
+		).put(
+			"taxonomyCategoryIds", "CSV"
+		).build();
 	private final BundleContext _bundleContext;
 	private final ObjectActionLocalService _objectActionLocalService;
 	private final ObjectDefinition _objectDefinition;
@@ -953,9 +968,5 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 	private final OpenAPIResource _openAPIResource;
 	private final Set<String> _readOnlyFieldNames = SetUtil.fromArray(
 		"dateCreated", "dateModified");
-	private final Set<String> _systemObjectFieldsBatchCSVDisabled =
-		SetUtil.fromArray(
-			"actions", "auditEvents", "creator", "keywords", "status",
-			"taxonomyCategoryBriefs", "taxonomyCategoryIds");
 
 }

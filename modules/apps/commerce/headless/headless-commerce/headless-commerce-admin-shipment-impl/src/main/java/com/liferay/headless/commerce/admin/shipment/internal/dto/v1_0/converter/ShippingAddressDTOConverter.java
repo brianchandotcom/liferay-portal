@@ -39,12 +39,15 @@ public class ShippingAddressDTOConverter
 			_commerceAddressService.getCommerceAddress(
 				(Long)dtoConverterContext.getId());
 
-		Country country = commerceAddress.getCountry();
-
 		return new ShippingAddress() {
 			{
 				setCity(commerceAddress::getCity);
-				setCountryISOCode(country::getA2);
+				setCountryISOCode(
+					() -> {
+						Country country = commerceAddress.getCountry();
+
+						return country.getA2();
+					});
 				setDescription(commerceAddress::getDescription);
 				setExternalReferenceCode(
 					commerceAddress::getExternalReferenceCode);

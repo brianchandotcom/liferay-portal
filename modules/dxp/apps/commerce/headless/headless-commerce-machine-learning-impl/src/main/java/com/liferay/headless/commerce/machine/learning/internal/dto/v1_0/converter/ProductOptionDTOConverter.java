@@ -53,12 +53,15 @@ public class ProductOptionDTOConverter
 			return null;
 		}
 
-		CPOption cpOption = cpDefinitionOptionRel.getCPOption();
-
 		return new ProductOption() {
 			{
 				setKey(cpDefinitionOptionRel::getKey);
-				setOptionKey(cpOption::getKey);
+				setOptionKey(
+					() -> {
+						CPOption cpOption = cpDefinitionOptionRel.getCPOption();
+
+						return cpOption.getKey();
+					});
 				setValues(
 					() -> TransformUtil.transformToArray(
 						cpDefinitionOptionRel.getCPDefinitionOptionValueRels(),

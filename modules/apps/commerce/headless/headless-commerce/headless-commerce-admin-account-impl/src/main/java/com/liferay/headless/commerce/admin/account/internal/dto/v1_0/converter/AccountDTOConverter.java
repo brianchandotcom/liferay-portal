@@ -61,13 +61,17 @@ public class AccountDTOConverter
 				(Long)dtoConverterContext.getId());
 		}
 
-		ExpandoBridge expandoBridge = accountEntry.getExpandoBridge();
-
 		return new Account() {
 			{
 				setActive(
 					() -> _toCommerceAccountActive(accountEntry.getStatus()));
-				setCustomFields(expandoBridge::getAttributes);
+				setCustomFields(
+					() -> {
+						ExpandoBridge expandoBridge =
+							accountEntry.getExpandoBridge();
+
+						return expandoBridge.getAttributes();
+					});
 				setDateCreated(accountEntry::getCreateDate);
 				setDateModified(accountEntry::getModifiedDate);
 				setDefaultBillingAccountAddressId(

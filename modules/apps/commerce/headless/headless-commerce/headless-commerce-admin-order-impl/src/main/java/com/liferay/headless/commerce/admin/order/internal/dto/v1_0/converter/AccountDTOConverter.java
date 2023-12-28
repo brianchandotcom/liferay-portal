@@ -63,11 +63,15 @@ public class AccountDTOConverter
 				(Long)dtoConverterContext.getId());
 		}
 
-		ExpandoBridge expandoBridge = accountEntry.getExpandoBridge();
-
 		return new Account() {
 			{
-				setCustomFields(expandoBridge::getAttributes);
+				setCustomFields(
+					() -> {
+						ExpandoBridge expandoBridge =
+							accountEntry.getExpandoBridge();
+
+						return expandoBridge.getAttributes();
+					});
 				setEmailAddress(accountEntry::getEmailAddress);
 				setExternalReferenceCode(
 					accountEntry::getExternalReferenceCode);

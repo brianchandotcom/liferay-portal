@@ -33,9 +33,6 @@ public class DropZoneLayoutStructureItemMapper
 		long groupId, LayoutStructureItem layoutStructureItem,
 		boolean saveInlineContent, boolean saveMappingConfiguration) {
 
-		DropZoneLayoutStructureItem dropZoneLayoutStructureItem =
-			(DropZoneLayoutStructureItem)layoutStructureItem;
-
 		return new PageElement() {
 			{
 				setDefinition(
@@ -43,7 +40,8 @@ public class DropZoneLayoutStructureItemMapper
 						{
 							setFragmentSettings(
 								() -> _toFragmentSettingsMap(
-									dropZoneLayoutStructureItem));
+									(DropZoneLayoutStructureItem)
+										layoutStructureItem));
 						}
 					});
 				setId(layoutStructureItem::getItemId);

@@ -44,11 +44,15 @@ public class PriceEntryDTOConverter
 			commercePriceEntry.getCProductId(),
 			commercePriceEntry.getCPInstanceUuid());
 
-		ExpandoBridge expandoBridge = commercePriceEntry.getExpandoBridge();
-
 		return new PriceEntry() {
 			{
-				setCustomFields(expandoBridge::getAttributes);
+				setCustomFields(
+					() -> {
+						ExpandoBridge expandoBridge =
+							commercePriceEntry.getExpandoBridge();
+
+						return expandoBridge.getAttributes();
+					});
 				setExternalReferenceCode(
 					commercePriceEntry::getExternalReferenceCode);
 				setHasTierPrice(commercePriceEntry::isHasTierPrice);

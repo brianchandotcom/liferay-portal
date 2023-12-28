@@ -39,10 +39,6 @@ public class ObjectLayoutUtil {
 			return null;
 		}
 
-		ObjectDefinition objectDefinition =
-			objectDefinitionLocalService.getObjectDefinition(
-				serviceBuilderObjectLayout.getObjectDefinitionId());
-
 		ObjectLayout objectLayout = new ObjectLayout() {
 			{
 				setDateCreated(serviceBuilderObjectLayout::getCreateDate);
@@ -54,7 +50,14 @@ public class ObjectLayoutUtil {
 					() -> LocalizedMapUtil.getLanguageIdMap(
 						serviceBuilderObjectLayout.getNameMap()));
 				setObjectDefinitionExternalReferenceCode(
-					objectDefinition::getExternalReferenceCode);
+					() -> {
+						ObjectDefinition objectDefinition =
+							objectDefinitionLocalService.getObjectDefinition(
+								serviceBuilderObjectLayout.
+									getObjectDefinitionId());
+
+						return objectDefinition.getExternalReferenceCode();
+					});
 				setObjectDefinitionId(
 					serviceBuilderObjectLayout::getObjectDefinitionId);
 				setObjectLayoutTabs(
@@ -151,16 +154,21 @@ public class ObjectLayoutUtil {
 			return null;
 		}
 
-		ObjectField objectField = objectFieldLocalService.fetchObjectField(
-			serviceBuilderObjectLayoutColumn.getObjectFieldId());
-
 		return new ObjectLayoutColumn() {
 			{
 				setId(
 					() ->
 						serviceBuilderObjectLayoutColumn.
 							getObjectLayoutColumnId());
-				setObjectFieldName(objectField::getName);
+				setObjectFieldName(
+					() -> {
+						ObjectField objectField =
+							objectFieldLocalService.fetchObjectField(
+								serviceBuilderObjectLayoutColumn.
+									getObjectFieldId());
+
+						return objectField.getName();
+					});
 				setPriority(serviceBuilderObjectLayoutColumn::getPriority);
 				setSize(serviceBuilderObjectLayoutColumn::getSize);
 			}

@@ -58,9 +58,6 @@ public class UserNotificationDTOConverter
 			UserNotificationEvent userNotificationEvent)
 		throws Exception {
 
-		JSONObject jsonObject = _jsonFactory.createJSONObject(
-			userNotificationEvent.getPayload());
-
 		return new UserNotification() {
 			{
 				setActions(
@@ -80,6 +77,9 @@ public class UserNotificationDTOConverter
 				setRead(userNotificationEvent::isArchived);
 				setType(
 					() -> {
+						JSONObject jsonObject = _jsonFactory.createJSONObject(
+							userNotificationEvent.getPayload());
+
 						if (!jsonObject.has("notificationType")) {
 							return null;
 						}

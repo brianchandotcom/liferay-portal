@@ -74,8 +74,6 @@ public class CartItemDTOConverter
 
 		Locale locale = cartItemDTOConverterContext.getLocale();
 
-		ExpandoBridge expandoBridge = commerceOrderItem.getExpandoBridge();
-
 		return new CartItem() {
 			{
 				setAdaptiveMediaImageHTMLTag(
@@ -85,7 +83,13 @@ public class CartItemDTOConverter
 								cartItemDTOConverterContext.getAccountId(),
 								commerceOrderItem.getCompanyId(),
 								commerceOrderItem.getCPInstanceId()));
-				setCustomFields(expandoBridge::getAttributes);
+				setCustomFields(
+					() -> {
+						ExpandoBridge expandoBridge =
+							commerceOrderItem.getExpandoBridge();
+
+						return expandoBridge.getAttributes();
+					});
 				setErrorMessages(
 					() -> _getErrorMessages(commerceOrderItem, locale));
 				setId(commerceOrderItem::getCommerceOrderItemId);

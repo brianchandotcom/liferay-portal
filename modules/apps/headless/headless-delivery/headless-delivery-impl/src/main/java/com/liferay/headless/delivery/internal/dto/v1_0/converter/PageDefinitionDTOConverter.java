@@ -79,20 +79,27 @@ public class PageDefinitionDTOConverter
 					layoutStructure.getMainItemId());
 		}
 
-		LayoutStructureItem mainLayoutStructureItem =
-			layoutStructure.getMainLayoutStructureItem();
-		boolean saveInlineContent = GetterUtil.getBoolean(
-			dtoConverterContext.getAttribute("saveInlineContent"), true);
-		boolean saveMappingConfiguration = GetterUtil.getBoolean(
-			dtoConverterContext.getAttribute("saveMappingConfiguration"), true);
-
 		return new PageDefinition() {
 			{
 				setPageElement(
-					() -> PageElementUtil.toPageElement(
-						layout.getGroupId(), layoutStructure,
-						mainLayoutStructureItem, saveInlineContent,
-						saveMappingConfiguration));
+					() -> {
+						LayoutStructureItem mainLayoutStructureItem =
+							layoutStructure.getMainLayoutStructureItem();
+						boolean saveInlineContent = GetterUtil.getBoolean(
+							dtoConverterContext.getAttribute(
+								"saveInlineContent"),
+							true);
+						boolean saveMappingConfiguration =
+							GetterUtil.getBoolean(
+								dtoConverterContext.getAttribute(
+									"saveMappingConfiguration"),
+								true);
+
+						return PageElementUtil.toPageElement(
+							layout.getGroupId(), layoutStructure,
+							mainLayoutStructureItem, saveInlineContent,
+							saveMappingConfiguration);
+					});
 				setPageRules(
 					() -> PageRulesUtil.toPageRules(
 						layoutStructure.getLayoutStructureRules()));

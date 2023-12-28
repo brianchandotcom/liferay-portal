@@ -167,8 +167,6 @@ public class NotificationQueueEntryResourceImpl
 				serviceBuilderNotificationQueueEntry)
 		throws PortalException {
 
-		NotificationRecipient notificationRecipient =
-			serviceBuilderNotificationQueueEntry.getNotificationRecipient();
 		NotificationType notificationType =
 			_notificationTypeServiceTracker.getNotificationType(
 				serviceBuilderNotificationQueueEntry.getType());
@@ -224,9 +222,15 @@ public class NotificationQueueEntryResourceImpl
 						serviceBuilderNotificationQueueEntry.
 							getNotificationQueueEntryId());
 				setRecipients(
-					() -> notificationType.toRecipients(
-						notificationRecipient.
-							getNotificationRecipientSettings()));
+					() -> {
+						NotificationRecipient notificationRecipient =
+							serviceBuilderNotificationQueueEntry.
+								getNotificationRecipient();
+
+						return notificationType.toRecipients(
+							notificationRecipient.
+								getNotificationRecipientSettings());
+					});
 				setRecipientsSummary(
 					() -> notificationType.getRecipientSummary(
 						serviceBuilderNotificationQueueEntry));

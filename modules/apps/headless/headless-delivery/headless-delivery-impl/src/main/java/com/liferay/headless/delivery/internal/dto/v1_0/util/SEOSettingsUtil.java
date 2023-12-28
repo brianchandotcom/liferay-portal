@@ -32,8 +32,31 @@ public class SEOSettingsUtil {
 				layout.getGroupId(), layout.isPrivateLayout(),
 				layout.getLayoutId());
 
-		SEOSettings seoSettings = new SEOSettings() {
+		return new SEOSettings() {
 			{
+				setCustomCanonicalURL(
+					() -> {
+						if ((layoutSEOEntry != null) &&
+							layoutSEOEntry.isCanonicalURLEnabled()) {
+
+							return layoutSEOEntry.getCanonicalURL(
+								dtoConverterContext.getLocale());
+						}
+
+						return null;
+					});
+				setCustomCanonicalURL_i18n(
+					() -> {
+						if ((layoutSEOEntry != null) &&
+							layoutSEOEntry.isCanonicalURLEnabled()) {
+
+							return LocalizedMapUtil.getI18nMap(
+								dtoConverterContext.isAcceptAllLanguages(),
+								layoutSEOEntry.getCanonicalURLMap());
+						}
+
+						return null;
+					});
 				setDescription(
 					() -> layout.getDescription(
 						dtoConverterContext.getLocale()));
@@ -64,20 +87,6 @@ public class SEOSettingsUtil {
 						layout.getTypeSettingsProperties()));
 			}
 		};
-
-		if ((layoutSEOEntry != null) &&
-			layoutSEOEntry.isCanonicalURLEnabled()) {
-
-			seoSettings.setCustomCanonicalURL(
-				layoutSEOEntry.getCanonicalURL(
-					dtoConverterContext.getLocale()));
-			seoSettings.setCustomCanonicalURL_i18n(
-				LocalizedMapUtil.getI18nMap(
-					dtoConverterContext.isAcceptAllLanguages(),
-					layoutSEOEntry.getCanonicalURLMap()));
-		}
-
-		return seoSettings;
 	}
 
 	private static SiteMapSettings _toSiteMapSettings(

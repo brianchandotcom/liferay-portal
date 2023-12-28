@@ -51,10 +51,6 @@ public class ObjectValidationRuleDTOConverter
 			return null;
 		}
 
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.getObjectDefinition(
-				serviceBuilderObjectValidationRule.getObjectDefinitionId());
-
 		return new ObjectValidationRule() {
 			{
 				setActions(dtoConverterContext::getActions);
@@ -83,7 +79,14 @@ public class ObjectValidationRuleDTOConverter
 					() -> LocalizedMapUtil.getLanguageIdMap(
 						serviceBuilderObjectValidationRule.getNameMap()));
 				setObjectDefinitionExternalReferenceCode(
-					objectDefinition::getExternalReferenceCode);
+					() -> {
+						ObjectDefinition objectDefinition =
+							_objectDefinitionLocalService.getObjectDefinition(
+								serviceBuilderObjectValidationRule.
+									getObjectDefinitionId());
+
+						return objectDefinition.getExternalReferenceCode();
+					});
 				setObjectDefinitionId(
 					() ->
 						serviceBuilderObjectValidationRule.

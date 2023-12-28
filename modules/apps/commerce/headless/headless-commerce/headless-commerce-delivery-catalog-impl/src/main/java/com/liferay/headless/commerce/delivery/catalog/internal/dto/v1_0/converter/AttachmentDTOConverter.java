@@ -57,17 +57,6 @@ public class AttachmentDTOConverter
 			_cpAttachmentFileEntryLocalService.getCPAttachmentFileEntry(
 				(Long)attachmentDTOConverterContext.getId());
 
-		Company company = _companyLocalService.getCompany(
-			cpAttachmentFileEntry.getCompanyId());
-
-		String portalURL = _portal.getPortalURL(
-			company.getVirtualHostname(), _portal.getPortalServerPort(false),
-			true);
-
-		String downloadURL = _commerceMediaResolver.getDownloadURL(
-			attachmentDTOConverterContext.getCommerceAccountId(),
-			cpAttachmentFileEntry.getCPAttachmentFileEntryId());
-
 		return new Attachment() {
 			{
 				setCustomFields(
@@ -83,7 +72,24 @@ public class AttachmentDTOConverter
 				setId(cpAttachmentFileEntry::getCPAttachmentFileEntryId);
 				setOptions(() -> _getAttachmentOptions(cpAttachmentFileEntry));
 				setPriority(cpAttachmentFileEntry::getPriority);
-				setSrc(() -> portalURL + downloadURL);
+				setSrc(
+					() -> {
+						Company company = _companyLocalService.getCompany(
+							cpAttachmentFileEntry.getCompanyId());
+
+						String portalURL = _portal.getPortalURL(
+							company.getVirtualHostname(),
+							_portal.getPortalServerPort(false), true);
+
+						String downloadURL =
+							_commerceMediaResolver.getDownloadURL(
+								attachmentDTOConverterContext.
+									getCommerceAccountId(),
+								cpAttachmentFileEntry.
+									getCPAttachmentFileEntryId());
+
+						return portalURL + downloadURL;
+					});
 				setTags(
 					() -> TransformUtil.transformToArray(
 						_assetTagService.getTags(

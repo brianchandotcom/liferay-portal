@@ -32,18 +32,22 @@ public class CollectionItemLayoutStructureItemMapper
 		long groupId, LayoutStructureItem layoutStructureItem,
 		boolean saveInlineContent, boolean saveMappingConfiguration) {
 
-		CollectionItemLayoutStructureItem collectionItemLayoutStructureItem =
-			(CollectionItemLayoutStructureItem)layoutStructureItem;
-
 		return new PageElement() {
 			{
 				setDefinition(
 					() -> new PageCollectionItemDefinition() {
 						{
 							setCollectionItemConfig(
-								() -> _getConfigAsMap(
-									collectionItemLayoutStructureItem.
-										getItemConfigJSONObject()));
+								() -> {
+									CollectionItemLayoutStructureItem
+										collectionItemLayoutStructureItem =
+											(CollectionItemLayoutStructureItem)
+												layoutStructureItem;
+
+									return _getConfigAsMap(
+										collectionItemLayoutStructureItem.
+											getItemConfigJSONObject());
+								});
 						}
 					});
 				setId(layoutStructureItem::getItemId);

@@ -293,8 +293,6 @@ public class NotificationTemplateResourceImpl
 			return null;
 		}
 
-		NotificationRecipient notificationRecipient =
-			serviceBuilderNotificationTemplate.getNotificationRecipient();
 		NotificationType notificationType =
 			_notificationTypeServiceTracker.getNotificationType(
 				serviceBuilderNotificationTemplate.getType());
@@ -415,9 +413,15 @@ public class NotificationTemplateResourceImpl
 				setObjectDefinitionId(
 					serviceBuilderNotificationTemplate::getObjectDefinitionId);
 				setRecipients(
-					() -> notificationType.toRecipients(
-						notificationRecipient.
-							getNotificationRecipientSettings()));
+					() -> {
+						NotificationRecipient notificationRecipient =
+							serviceBuilderNotificationTemplate.
+								getNotificationRecipient();
+
+						return notificationType.toRecipients(
+							notificationRecipient.
+								getNotificationRecipientSettings());
+					});
 				setRecipientType(
 					serviceBuilderNotificationTemplate::getRecipientType);
 				setSubject(

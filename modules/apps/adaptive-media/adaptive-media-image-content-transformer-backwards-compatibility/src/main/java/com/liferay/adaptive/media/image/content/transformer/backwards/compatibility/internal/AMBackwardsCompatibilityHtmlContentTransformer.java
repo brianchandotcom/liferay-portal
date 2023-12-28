@@ -12,6 +12,8 @@ import com.liferay.adaptive.media.image.html.constants.AMImageHTMLConstants;
 import com.liferay.adaptive.media.image.mime.type.AMImageMimeTypeProvider;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -30,11 +32,6 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.nodes.Node;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -51,28 +48,47 @@ public class AMBackwardsCompatibilityHtmlContentTransformer
 			return null;
 		}
 
-		if (!html.contains("/documents/") || !html.contains("<img")) {
+		if (!html.contains("/documents/") ||
+			!html.contains(_IMG_OPEN_TAG_TOKEN)) {
+
 			return html;
 		}
 
-		Document document = _parseDocument(html);
+		StringBundler sb = new StringBundler();
 
-		for (Element imgElement : document.select("img:not(picture > img)")) {
-			String imgElementString = imgElement.toString();
+		int lastPos = 0;
 
-			String replacement = _transform(
-				imgElementString, imgElement.attr("src"));
+		while (lastPos < html.length()) {
+			int pictureStart = html.indexOf(_PICTURE_OPEN_TAG_TOKEN, lastPos);
 
-			imgElement.replaceWith(_parseNode(replacement));
+			if (pictureStart == -1) {
+				pictureStart = html.length();
+			}
+
+			_transformImgTags(html, lastPos, pictureStart, sb);
+
+			if (pictureStart < html.length()) {
+				int pictureEnd = html.indexOf(
+					_PICTURE_CLOSE_TAG_TOKEN,
+					pictureStart + _PICTURE_OPEN_TAG_TOKEN.length());
+
+				if (pictureEnd == -1) {
+					pictureEnd = html.length();
+				}
+				else {
+					pictureEnd += _PICTURE_CLOSE_TAG_TOKEN.length();
+				}
+
+				sb.append(html.substring(pictureStart, pictureEnd));
+
+				lastPos = pictureEnd;
+			}
+			else {
+				lastPos = pictureStart;
+			}
 		}
 
-		if (html.contains("<html>") || html.contains("<head>")) {
-			return document.html();
-		}
-
-		Element body = document.body();
-
-		return body.html();
+		return sb.toString();
 	}
 
 	@Override
@@ -158,27 +174,6 @@ public class AMBackwardsCompatibilityHtmlContentTransformer
 		return user.getGroup();
 	}
 
-	private Document _parseDocument(String html) {
-		Document document = Jsoup.parseBodyFragment(html);
-
-		Document.OutputSettings outputSettings = new Document.OutputSettings();
-
-		outputSettings.prettyPrint(false);
-		outputSettings.syntax(Document.OutputSettings.Syntax.xml);
-
-		document.outputSettings(outputSettings);
-
-		return document;
-	}
-
-	private Node _parseNode(String tag) {
-		Document document = _parseDocument(tag);
-
-		Node bodyNode = document.body();
-
-		return bodyNode.childNode(0);
-	}
-
 	private FileEntry _resolveFileEntry(String friendlyURL, String groupName)
 		throws PortalException {
 
@@ -245,6 +240,58 @@ public class AMBackwardsCompatibilityHtmlContentTransformer
 
 		return replacement;
 	}
+
+	private void _transformImgTags(
+			String html, int start, int end, StringBundler sb)
+		throws PortalException {
+
+		int lastPos = start;
+
+		while (lastPos < end) {
+			int imgStart = html.indexOf(_IMG_OPEN_TAG_TOKEN, lastPos);
+
+			if (imgStart == -1) {
+				sb.append(html.substring(lastPos, end));
+
+				return;
+			}
+
+			sb.append(html.substring(start, imgStart));
+
+			int imgEnd = html.indexOf(CharPool.GREATER_THAN, imgStart) + 1;
+
+			int attributeListPos = imgStart + _IMG_OPEN_TAG_TOKEN.length();
+
+			int srcStart = html.indexOf(_SRC_ATTRIBUTE_TOKEN, attributeListPos);
+
+			if (srcStart == -1) {
+				sb.append(html.substring(imgStart, imgEnd));
+
+				lastPos = imgEnd;
+
+				continue;
+			}
+
+			int quotePos = srcStart + _SRC_ATTRIBUTE_TOKEN.length();
+
+			int srcEnd = html.indexOf(html.charAt(quotePos), quotePos + 1);
+
+			sb.append(
+				_transform(
+					html.substring(imgStart, imgEnd),
+					html.substring(quotePos + 1, srcEnd)));
+
+			lastPos = imgEnd;
+		}
+	}
+
+	private static final String _IMG_OPEN_TAG_TOKEN = "<img";
+
+	private static final String _PICTURE_CLOSE_TAG_TOKEN = "</picture>";
+
+	private static final String _PICTURE_OPEN_TAG_TOKEN = "<picture";
+
+	private static final String _SRC_ATTRIBUTE_TOKEN = "src=";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AMBackwardsCompatibilityHtmlContentTransformer.class);

@@ -258,17 +258,14 @@ public class InstanceInitializerCheck extends BaseCheck {
 			String parameterType = javaParameter.getParameterType();
 
 			if (parameterType.startsWith("UnsafeSupplier")) {
-				if ((detailAST.getType() == TokenTypes.METHOD_CALL) &&
-					inIfBody) {
-
+				if (inIfBody) {
 					log(detailAST, _MSG_INLINE_IF_STATEMENT, methodName);
-
-					return;
 				}
-
-				log(
-					detailAST, _MSG_USE_SET_METHOD_INSTEAD, methodName,
-					parameterType);
+				else {
+					log(
+						detailAST, _MSG_USE_SET_METHOD_INSTEAD, methodName,
+						parameterType);
+				}
 
 				return;
 			}

@@ -88,7 +88,9 @@ public class PageContextWrapper extends PageContext {
 	public ErrorData getErrorData() {
 		int status = 0;
 
-		Integer status_code = (Integer)getRequest().getAttribute(
+		ServletRequest servletRequest = getRequest();
+
+		Integer status_code = (Integer)servletRequest.getAttribute(
 			RequestDispatcher.ERROR_STATUS_CODE);
 
 		if (status_code != null) {
@@ -96,12 +98,12 @@ public class PageContextWrapper extends PageContext {
 		}
 
 		return new ErrorData(
-			(Throwable)getRequest().getAttribute(
+			(Throwable)servletRequest.getAttribute(
 				RequestDispatcher.ERROR_EXCEPTION),
 			status,
-			(String)getRequest().getAttribute(
+			(String)servletRequest.getAttribute(
 				RequestDispatcher.ERROR_REQUEST_URI),
-			(String)getRequest().getAttribute(
+			(String)servletRequest.getAttribute(
 				RequestDispatcher.ERROR_SERVLET_NAME));
 	}
 

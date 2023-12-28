@@ -32,7 +32,7 @@ public class EditCommercePaymentEntryExternalReferenceCodeMVCRenderCommand
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		return "/commerce_payment_entry/external_reference_code.jsp";
+		return "/edit_commerce_payment_entry_external_reference_code.jsp";
 	}
 
 }

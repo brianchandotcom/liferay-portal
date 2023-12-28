@@ -32,7 +32,7 @@ public class EditCommercePaymentEntryNoteMVCRenderCommand
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		return "/commerce_payment_entry/note.jsp";
+		return "/edit_commerce_payment_entry_note.jsp";
 	}
 
 }

@@ -172,7 +172,7 @@ const App = () => {
 								setLoading(true);
 
 								provisioningKoroneikiOAuth2
-									.syncKoroneikiProductSKUs(productId)
+									.syncKoroneikiProduct(productId)
 									.then(() =>
 										Liferay.Util.openToast({
 											message:

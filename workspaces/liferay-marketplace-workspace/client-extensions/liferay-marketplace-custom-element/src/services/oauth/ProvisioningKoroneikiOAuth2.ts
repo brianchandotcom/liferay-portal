@@ -88,9 +88,9 @@ class ProvisioningKoroneikiOAuth2 extends OAuth2Client {
 		return response;
 	}
 
-	async syncKoroneikiProductSKUs(productId: number) {
+	async syncKoroneikiProduct(productId: number) {
 		const response = await this.oAuth2Client.fetch(
-			`/koroneiki/sync/${productId}`,
+			`/koroneiki/product/${productId}`,
 			{
 				method: 'POST',
 			}

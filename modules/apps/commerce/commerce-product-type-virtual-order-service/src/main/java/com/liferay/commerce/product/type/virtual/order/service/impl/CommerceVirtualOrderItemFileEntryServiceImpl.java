@@ -7,6 +7,7 @@ package com.liferay.commerce.product.type.virtual.order.service.impl;
 
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
+import com.liferay.commerce.product.type.virtual.order.constants.CommerceVirtualOrderActionKeys;
 import com.liferay.commerce.product.type.virtual.order.model.CommerceVirtualOrderItem;
 import com.liferay.commerce.product.type.virtual.order.model.CommerceVirtualOrderItemFileEntry;
 import com.liferay.commerce.product.type.virtual.order.service.CommerceVirtualOrderItemLocalService;
@@ -34,6 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 public class CommerceVirtualOrderItemFileEntryServiceImpl
 	extends CommerceVirtualOrderItemFileEntryServiceBaseImpl {
 
+	@Override
 	public CommerceVirtualOrderItemFileEntry
 			fetchCommerceVirtualOrderItemFileEntry(
 				long commerceVirtualOrderItemFileEntryId)
@@ -45,18 +47,10 @@ public class CommerceVirtualOrderItemFileEntryServiceImpl
 					commerceVirtualOrderItemFileEntryId);
 
 		if (commerceVirtualOrderItemFileEntry != null) {
-			CommerceVirtualOrderItem commerceVirtualOrderItem =
-				_commerceVirtualOrderItemLocalService.
-					getCommerceVirtualOrderItem(
-						commerceVirtualOrderItemFileEntry.
-							getCommerceVirtualOrderItemId());
-
-			CommerceOrderItem commerceOrderItem =
-				commerceVirtualOrderItem.getCommerceOrderItem();
-
-			_commerceOrderModelResourcePermission.check(
-				getPermissionChecker(), commerceOrderItem.getCommerceOrderId(),
-				ActionKeys.VIEW);
+			_commerceVirtualOrderItemFileEntryModelResourcePermission.check(
+				getPermissionChecker(), commerceVirtualOrderItemFileEntry,
+				CommerceVirtualOrderActionKeys.
+					DOWNLOAD_COMMERCE_VIRTUAL_ORDER_ITEM);
 		}
 
 		return commerceVirtualOrderItemFileEntry;
@@ -119,6 +113,12 @@ public class CommerceVirtualOrderItemFileEntryServiceImpl
 	)
 	private ModelResourcePermission<CommerceOrder>
 		_commerceOrderModelResourcePermission;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.product.type.virtual.order.model.CommerceVirtualOrderItemFileEntry)"
+	)
+	private ModelResourcePermission<CommerceVirtualOrderItemFileEntry>
+		_commerceVirtualOrderItemFileEntryModelResourcePermission;
 
 	@Reference
 	private CommerceVirtualOrderItemLocalService

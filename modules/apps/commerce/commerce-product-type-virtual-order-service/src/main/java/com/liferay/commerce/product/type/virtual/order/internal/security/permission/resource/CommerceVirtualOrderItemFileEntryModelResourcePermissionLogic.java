@@ -9,6 +9,7 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.product.type.virtual.order.constants.CommerceVirtualOrderActionKeys;
 import com.liferay.commerce.product.type.virtual.order.model.CommerceVirtualOrderItem;
+import com.liferay.commerce.product.type.virtual.order.model.CommerceVirtualOrderItemFileEntry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -20,10 +21,10 @@ import java.util.Date;
 /**
  * @author Alessio Antonio Rendina
  */
-public class CommerceVirtualOrderItemModelResourcePermissionLogic
-	implements ModelResourcePermissionLogic<CommerceVirtualOrderItem> {
+public class CommerceVirtualOrderItemFileEntryModelResourcePermissionLogic
+	implements ModelResourcePermissionLogic<CommerceVirtualOrderItemFileEntry> {
 
-	public CommerceVirtualOrderItemModelResourcePermissionLogic(
+	public CommerceVirtualOrderItemFileEntryModelResourcePermissionLogic(
 		ModelResourcePermission<CommerceOrder> modelResourcePermission) {
 
 		_commerceOrderModelResourcePermission = modelResourcePermission;
@@ -32,16 +33,20 @@ public class CommerceVirtualOrderItemModelResourcePermissionLogic
 	@Override
 	public Boolean contains(
 			PermissionChecker permissionChecker, String name,
-			CommerceVirtualOrderItem commerceVirtualOrderItem, String actionId)
+			CommerceVirtualOrderItemFileEntry commerceVirtualOrderItemFileEntry,
+			String actionId)
 		throws PortalException {
 
 		if (permissionChecker.isCompanyAdmin(
-				commerceVirtualOrderItem.getCompanyId()) ||
+				commerceVirtualOrderItemFileEntry.getCompanyId()) ||
 			permissionChecker.isGroupAdmin(
-				commerceVirtualOrderItem.getGroupId())) {
+				commerceVirtualOrderItemFileEntry.getGroupId())) {
 
 			return true;
 		}
+
+		CommerceVirtualOrderItem commerceVirtualOrderItem =
+			commerceVirtualOrderItemFileEntry.getCommerceVirtualOrderItem();
 
 		CommerceOrderItem commerceOrderItem =
 			commerceVirtualOrderItem.getCommerceOrderItem();
@@ -57,14 +62,16 @@ public class CommerceVirtualOrderItemModelResourcePermissionLogic
 				CommerceVirtualOrderActionKeys.
 					DOWNLOAD_COMMERCE_VIRTUAL_ORDER_ITEM)) {
 
-			return _containsDownloadPermission(commerceVirtualOrderItem);
+			return _containsDownloadPermission(
+				commerceVirtualOrderItem, commerceVirtualOrderItemFileEntry);
 		}
 
 		return false;
 	}
 
 	private boolean _containsDownloadPermission(
-		CommerceVirtualOrderItem commerceVirtualOrderItem) {
+		CommerceVirtualOrderItem commerceVirtualOrderItem,
+		CommerceVirtualOrderItemFileEntry commerceVirtualOrderItemFileEntry) {
 
 		if (!commerceVirtualOrderItem.isActive()) {
 			return false;
@@ -85,7 +92,7 @@ public class CommerceVirtualOrderItemModelResourcePermissionLogic
 		}
 
 		if ((commerceVirtualOrderItem.getMaxUsages() > 0) &&
-			(commerceVirtualOrderItem.getUsages() >=
+			(commerceVirtualOrderItemFileEntry.getUsages() >=
 				commerceVirtualOrderItem.getMaxUsages())) {
 
 			return false;

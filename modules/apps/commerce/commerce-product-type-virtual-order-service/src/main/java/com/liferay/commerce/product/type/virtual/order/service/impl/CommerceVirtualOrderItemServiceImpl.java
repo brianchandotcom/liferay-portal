@@ -9,6 +9,8 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.product.type.virtual.order.constants.CommerceVirtualOrderActionKeys;
 import com.liferay.commerce.product.type.virtual.order.model.CommerceVirtualOrderItem;
+import com.liferay.commerce.product.type.virtual.order.model.CommerceVirtualOrderItemFileEntry;
+import com.liferay.commerce.product.type.virtual.order.service.CommerceVirtualOrderItemFileEntryLocalService;
 import com.liferay.commerce.product.type.virtual.order.service.base.CommerceVirtualOrderItemServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -44,10 +46,12 @@ public class CommerceVirtualOrderItemServiceImpl
 				commerceVirtualOrderItemId);
 
 		if (commerceVirtualOrderItem != null) {
-			_commerceVirtualOrderItemModelResourcePermission.check(
-				getPermissionChecker(), commerceVirtualOrderItem,
-				CommerceVirtualOrderActionKeys.
-					DOWNLOAD_COMMERCE_VIRTUAL_ORDER_ITEM);
+			CommerceOrderItem commerceOrderItem =
+				commerceVirtualOrderItem.getCommerceOrderItem();
+
+			_commerceOrderModelResourcePermission.check(
+				getPermissionChecker(), commerceOrderItem.getCommerceOrderId(),
+				ActionKeys.VIEW);
 		}
 
 		return commerceVirtualOrderItem;
@@ -65,10 +69,12 @@ public class CommerceVirtualOrderItemServiceImpl
 					commerceOrderItemId);
 
 		if (commerceVirtualOrderItem != null) {
-			_commerceVirtualOrderItemModelResourcePermission.check(
-				getPermissionChecker(), commerceVirtualOrderItem,
-				CommerceVirtualOrderActionKeys.
-					DOWNLOAD_COMMERCE_VIRTUAL_ORDER_ITEM);
+			CommerceOrderItem commerceOrderItem =
+				commerceVirtualOrderItem.getCommerceOrderItem();
+
+			_commerceOrderModelResourcePermission.check(
+				getPermissionChecker(), commerceOrderItem.getCommerceOrderId(),
+				ActionKeys.VIEW);
 		}
 
 		return commerceVirtualOrderItem;
@@ -86,8 +92,8 @@ public class CommerceVirtualOrderItemServiceImpl
 			commerceVirtualOrderItemLocalService.getCommerceVirtualOrderItem(
 				commerceVirtualOrderItemId);
 
-		_commerceVirtualOrderItemModelResourcePermission.check(
-			permissionChecker, commerceVirtualOrderItemId,
+		_commerceVirtualOrderItemFileEntryModelResourcePermission.check(
+			permissionChecker, commerceVirtualOrderItemFileEntryId,
 			CommerceVirtualOrderActionKeys.
 				DOWNLOAD_COMMERCE_VIRTUAL_ORDER_ITEM);
 
@@ -98,9 +104,8 @@ public class CommerceVirtualOrderItemServiceImpl
 			!permissionChecker.isGroupAdmin(
 				commerceVirtualOrderItem.getGroupId())) {
 
-			commerceVirtualOrderItemLocalService.
-				incrementCommerceVirtualOrderItemUsages(
-					commerceVirtualOrderItemId);
+			_commerceVirtualOrderItemFileEntryLocalService.incrementUsages(
+				commerceVirtualOrderItemFileEntryId);
 		}
 
 		return file;
@@ -135,10 +140,14 @@ public class CommerceVirtualOrderItemServiceImpl
 	private ModelResourcePermission<CommerceOrder>
 		_commerceOrderModelResourcePermission;
 
+	@Reference
+	private CommerceVirtualOrderItemFileEntryLocalService
+		_commerceVirtualOrderItemFileEntryLocalService;
+
 	@Reference(
-		target = "(model.class.name=com.liferay.commerce.product.type.virtual.order.model.CommerceVirtualOrderItem)"
+		target = "(model.class.name=com.liferay.commerce.product.type.virtual.order.model.CommerceVirtualOrderItemFileEntry)"
 	)
-	private ModelResourcePermission<CommerceVirtualOrderItem>
-		_commerceVirtualOrderItemModelResourcePermission;
+	private ModelResourcePermission<CommerceVirtualOrderItemFileEntry>
+		_commerceVirtualOrderItemFileEntryModelResourcePermission;
 
 }

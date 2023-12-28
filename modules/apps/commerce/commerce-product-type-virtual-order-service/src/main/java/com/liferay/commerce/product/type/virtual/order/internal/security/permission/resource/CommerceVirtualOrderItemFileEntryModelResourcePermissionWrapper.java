@@ -7,8 +7,8 @@ package com.liferay.commerce.product.type.virtual.order.internal.security.permis
 
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.product.type.virtual.order.constants.CommerceVirtualOrderConstants;
-import com.liferay.commerce.product.type.virtual.order.model.CommerceVirtualOrderItem;
-import com.liferay.commerce.product.type.virtual.order.service.CommerceVirtualOrderItemLocalService;
+import com.liferay.commerce.product.type.virtual.order.model.CommerceVirtualOrderItemFileEntry;
+import com.liferay.commerce.product.type.virtual.order.service.CommerceVirtualOrderItemFileEntryLocalService;
 import com.liferay.portal.kernel.security.permission.resource.BaseModelResourcePermissionWrapper;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
@@ -21,23 +21,26 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	property = "model.class.name=com.liferay.commerce.product.type.virtual.order.model.CommerceVirtualOrderItem",
+	property = "model.class.name=com.liferay.commerce.product.type.virtual.order.model.CommerceVirtualOrderItemFileEntry",
 	service = ModelResourcePermission.class
 )
-public class CommerceVirtualOrderItemModelResourcePermissionWrapper
-	extends BaseModelResourcePermissionWrapper<CommerceVirtualOrderItem> {
+public class CommerceVirtualOrderItemFileEntryModelResourcePermissionWrapper
+	extends BaseModelResourcePermissionWrapper
+		<CommerceVirtualOrderItemFileEntry> {
 
 	@Override
-	protected ModelResourcePermission<CommerceVirtualOrderItem>
+	protected ModelResourcePermission<CommerceVirtualOrderItemFileEntry>
 		doGetModelResourcePermission() {
 
 		return ModelResourcePermissionFactory.create(
-			CommerceVirtualOrderItem.class,
-			CommerceVirtualOrderItem::getCommerceVirtualOrderItemId,
-			_commerceVirtualOrderItemLocalService::getCommerceVirtualOrderItem,
+			CommerceVirtualOrderItemFileEntry.class,
+			CommerceVirtualOrderItemFileEntry::
+				getCommerceVirtualOrderItemFileEntryId,
+			_commerceVirtualOrderItemFileEntryLocalService::
+				getCommerceVirtualOrderItemFileEntry,
 			_portletResourcePermission,
 			(modelResourcePermission, consumer) -> consumer.accept(
-				new CommerceVirtualOrderItemModelResourcePermissionLogic(
+				new CommerceVirtualOrderItemFileEntryModelResourcePermissionLogic(
 					_commerceOrderModelResourcePermission)));
 	}
 
@@ -49,8 +52,8 @@ public class CommerceVirtualOrderItemModelResourcePermissionWrapper
 		_commerceOrderModelResourcePermission;
 
 	@Reference
-	private CommerceVirtualOrderItemLocalService
-		_commerceVirtualOrderItemLocalService;
+	private CommerceVirtualOrderItemFileEntryLocalService
+		_commerceVirtualOrderItemFileEntryLocalService;
 
 	@Reference(
 		target = "(resource.name=" + CommerceVirtualOrderConstants.RESOURCE_NAME + ")"

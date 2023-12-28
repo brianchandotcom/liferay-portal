@@ -1,7 +1,7 @@
 create unique index IX_D9799B2A on CPMethodGroupRelQualifier (CPaymentMethodGroupRelId, classNameId, classPK);
 
 create index IX_B481AC65 on CommercePaymentEntry (companyId, classNameId, classPK, type_);
-create unique index IX_D4FD2638 on CommercePaymentEntry (externalReferenceCode[$COLUMN_LENGTH:75$], companyId);
+create index IX_91D87F0 on CommercePaymentEntry (externalReferenceCode[$COLUMN_LENGTH:75$]);
 
 create index IX_8BE29B30 on CommercePaymentEntryAudit (commercePaymentEntryId);
 

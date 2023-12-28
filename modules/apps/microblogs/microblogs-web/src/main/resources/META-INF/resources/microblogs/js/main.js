@@ -6,23 +6,22 @@
 AUI().use(
 	'aui-base',
 	'aui-io-plugin-deprecated',
-	'liferay-portlet-url',
 	'liferay-util-window',
 	function (A) {
 		Liferay.namespace('Microblogs');
 
 		Liferay.Microblogs = {
 			init: function (param) {
-				var instance = this;
+				const instance = this;
 
 				instance._baseActionURL = param.baseActionURL;
 				instance._microblogsEntriesURL = param.microblogsEntriesURL;
 			},
 
 			closePopup: function () {
-				var instance = this;
+				const instance = this;
 
-				var popup = instance.getPopup();
+				const popup = instance.getPopup();
 
 				if (popup) {
 					popup.hide();
@@ -30,9 +29,9 @@ AUI().use(
 			},
 
 			displayPopup: function (url, title) {
-				var instance = this;
+				const instance = this;
 
-				var popup = instance.getPopup();
+				const popup = instance.getPopup();
 
 				popup.show();
 
@@ -44,7 +43,7 @@ AUI().use(
 			},
 
 			getPopup: function () {
-				var instance = this;
+				const instance = this;
 
 				if (!instance._popup) {
 					instance._popup = Liferay.Util.Window.getWindow({
@@ -67,7 +66,7 @@ AUI().use(
 			},
 
 			updateMicroblogs: function (form, url, updateContainer) {
-				var instance = this;
+				const instance = this;
 
 				Liferay.Util.fetch(form.getAttribute('action'), {
 					body: new FormData(form.getDOM()),
@@ -80,7 +79,7 @@ AUI().use(
 			},
 
 			updateMicroblogsList: function (url, updateContainer) {
-				var instance = this;
+				const instance = this;
 
 				instance._micrblogsEntries = updateContainer;
 
@@ -100,18 +99,17 @@ AUI().use(
 			},
 
 			updateViewCount: function (microblogsEntryId) {
-				var instance = this;
+				const instance = this;
 
-				var portletURL = new Liferay.PortletURL.createURL(
-					instance._baseActionURL
+				const portletURL = new Liferay.Util.PortletURL.createPortletURL(
+					instance._baseActionURL,
+					{
+						'javax.portlet.action':
+							'updateMicroblogsEntryViewCount',
+						microblogsEntryId,
+						'p_p_state': 'normal',
+					}
 				);
-
-				portletURL.setParameter(
-					'javax.portlet.action',
-					'updateMicroblogsEntryViewCount'
-				);
-				portletURL.setParameter('microblogsEntryId', microblogsEntryId);
-				portletURL.setWindowState('normal');
 
 				Liferay.Util.fetch(portletURL.toString(), {
 					method: 'POST',
@@ -120,7 +118,7 @@ AUI().use(
 		};
 
 		Liferay.on('sessionExpired', function (event) {
-			var reload = function () {
+			const reload = () => {
 				window.location.reload();
 			};
 

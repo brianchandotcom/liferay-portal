@@ -83,7 +83,7 @@
 		<g fill=none>
 			<rect height=40 width=40></rect>
 
-			<path d="M0 0h32v32H0V0z" fill=#fff></path>
+			<path d="M0 0h32v32H0V0z" fill=#fff fill-opacity=0></path>
 			<path
 				d="M30 17a2 2 0 012 2v2a2 2 0 01-2 2v5.5a1.5 1.5 0 01-3 0v-.875l-6.225-2.334c-.265.425-.737.709-1.275.709H19v4a2 2 0 01-2 2h-1a2 2 0 01-2-2v-4c0-.073.004-.14.012-.204A5.502 5.502 0 0110 20.5v-1c0-.169.008-.335.022-.5H2a2 2 0 01-2-2V2a2 2 0 012-2h21a2 2 0 012 2v11.125l2-.75V11.5a1.5 1.5 0 013 0V17z"
 				fill=#fff></path>
@@ -142,7 +142,7 @@
 		<g fill=none>
 			<rect height=40 width=40></rect>
 
-			<path d="M0 0h32v32H0V0z" fill=#fff></path>
+			<path d="M0 0h32v32H0V0z" fill=#fff fill-opacity=0></path>
 			<path d="M26.319 4H32v20H6.319l20-20z" fill=#E8F6ED></path>
 			<path
 				d="M20 27v2h3.544a1 1 0 01.945.675l.284.825a1.132 1.132 0 01-1.07 1.5H8.296a1.132 1.132 0 01-1.07-1.5l.284-.825A1 1 0 018.456 29H12v-2H2a2 2 0 01-2-2V2a2 2 0 012-2h28a2 2 0 012 2v23a2 2 0 01-2 2H20zM2 26h28a1 1 0 001-1v-1H1v1a1 1 0 001 1zm6.456 4h15.088l.284.825a.132.132 0 01-.125.175H8.296a.132.132 0 01-.124-.175L8.456 30zM31 23V4H1v19h30zm0-21v1H1V2a1 1 0 011-1h28a1 1 0 011 1zM13 27v2h6v-2h-6zM5.5 7h-1a.5.5 0 000 1h1a.5.5 0 000-1zm13 12h1a.5.5 0 010 1h-1a.5.5 0 010-1zm7.5-2.5a.5.5 0 00-.5-.5h-1a.5.5 0 000 1h1a.5.5 0 00.5-.5zm.5-6.5h1a.5.5 0 010 1h-1a.5.5 0 010-1zm-2 0h-2a.5.5 0 000 1h2a.5.5 0 000-1zm-20 0h1a.5.5 0 010 1h-1a.5.5 0 010-1zm1 3h-1a.5.5 0 000 1h1a.5.5 0 000-1zm-1 3h1a.5.5 0 010 1h-1a.5.5 0 010-1zm1 3h-1a.5.5 0 000 1h1a.5.5 0 000-1z"
@@ -214,7 +214,7 @@
 		<g fill=none>
 			<rect height=32 width=32></rect>
 
-			<path d="M0 0h32v32H0V0z" fill=#fff></path>
+			<path d="M0 0h32v32H0V0z" fill=#fff fill-opacity=0></path>
 			<path
 				d="M29 8.483V30a2 2 0 01-2 2H5.483c.032-.028.063-.058.094-.088L28.912 8.577c.03-.03.06-.062.088-.094z"
 				fill=#E8F7F7></path>
@@ -231,7 +231,7 @@
 		<g fill=none>
 			<rect height=32 width=32></rect>
 
-			<path d="M0 0h32v32H0V0z" fill=#fff></path>
+			<path d="M0 0h32v32H0V0z" fill=#fff fill-opacity=0></path>
 			<path
 				d="M7 28H5a2 2 0 01-2-2V2a2 2 0 012-2h18a2 2 0 012 2v2h2a2 2 0 012 2v18.725a2 2 0 01-.773 1.58l-6.79 5.274a2 2 0 01-1.228.421H9a2 2 0 01-2-2v-2z"
 				fill=#fff></path>
@@ -257,7 +257,7 @@
 		<g fill=none>
 			<rect height=40 width=40></rect>
 
-			<path d="M0 0h32v32H0V0z" fill=#fff></path>
+			<path d="M0 0h32v32H0V0z" fill=#fff fill-opacity=0></path>
 			<path
 				d="M29.386 4.249H30a2 2 0 012 2V30a2 2 0 01-2 2H2c-.115 0-.228-.01-.337-.028L29.386 4.249z"
 				fill=#F0ECF8></path>
@@ -287,7 +287,7 @@
 		<g fill=none>
 			<rect height=40 width=40></rect>
 
-			<path d="M0 0h32v32H0V0z" fill=#fff></path>
+			<path d="M0 0h32v32H0V0z" fill=#fff fill-opacity=0></path>
 			<path
 				d="M4 30a2 2 0 01-2-2V5a2 2 0 012-2h4a1 1 0 011-1h2a2 2 0 012-2h2a2 2 0 012 2h2a1 1 0 011 1h4a2 2 0 012 2v23a2 2 0 01-2 2H4z"
 				fill=#fff></path>
@@ -397,7 +397,7 @@
 		<g fill=none>
 			<rect height=40 width=40></rect>
 
-			<path d="M0 0h32v32H0V0z" fill=#fff></path>
+			<path d="M0 0h32v32H0V0z" fill=#fff fill-opacity=0></path>
 			<path
 				d="M24.833 28l-4.182 3.585a1 1 0 01-1.651-.76V28H2a2 2 0 01-2-2V2a2 2 0 012-2h28a2 2 0 012 2v24a2 2 0 01-2 2h-5.167z"
 				fill=#fff></path>
@@ -487,7 +487,7 @@
 		<g fill=none>
 			<rect height=40 width=40></rect>
 
-			<path d="M0 0h32v32H0V0z" fill=#fff></path>
+			<path d="M0 0h32v32H0V0z" fill=#fff fill-opacity=0></path>
 			<path
 				d="M21.985 7.056A6.087 6.087 0 0019.293 2l-6.08 10.53a6.093 6.093 0 008.772-5.474zM8.241 21.47a5.108 5.108 0 11-5.079 8.797l5.08-8.796zm20 0a5.108 5.108 0 11-5.079 8.797l5.08-8.796z"
 				fill=#168CCA fill-rule=evenodd clip-rule=evenodd opacity=.1></path>

@@ -330,7 +330,6 @@ public class DateFacetDisplayContextBuilder implements Serializable {
 		}
 
 		FacetCollector facetCollector = _facet.getFacetCollector();
-
 		SearchContext searchContext = _facet.getSearchContext();
 
 		return facetCollector.getTermCollector(

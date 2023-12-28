@@ -29,6 +29,30 @@
 		top: 23px;
 	}
 
+	&__object-builder-screen-management-bar {
+		padding: 0;
+
+		.container-fluid {
+			max-width: none;
+			padding: 0;
+		}
+
+		&.list-group-item {
+			padding: 0 1rem;
+		}
+
+		&-button {
+			height: 2rem;
+			margin-left: 0.5rem;
+			min-width: 2rem;
+			width: auto;
+		}
+
+		.navbar-form {
+			padding-left: 0 !important;
+		}
+	}
+
 	&__object-builder-screen-empty-state {
 		align-items: center;
 		display: flex;

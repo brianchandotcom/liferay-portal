@@ -45,7 +45,7 @@ public class EditCommerceVirtualOrderItemFileEntryMVCActionCommand
 
 		try {
 			if (cmd.equals(Constants.UPDATE)) {
-				_updateCommerceVirtualOrderItem(actionRequest);
+				_updateCommerceVirtualOrderItemFileEntry(actionRequest);
 			}
 		}
 		catch (Exception exception) {
@@ -76,7 +76,8 @@ public class EditCommerceVirtualOrderItemFileEntryMVCActionCommand
 		}
 	}
 
-	private void _updateCommerceVirtualOrderItem(ActionRequest actionRequest)
+	private void _updateCommerceVirtualOrderItemFileEntry(
+			ActionRequest actionRequest)
 		throws Exception {
 
 		long commerceVirtualOrderItemFileEntryId = ParamUtil.getLong(
@@ -84,11 +85,13 @@ public class EditCommerceVirtualOrderItemFileEntryMVCActionCommand
 
 		long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
 		String url = ParamUtil.getString(actionRequest, "url");
+		int usages = ParamUtil.getInteger(actionRequest, "usages");
 		String version = ParamUtil.getString(actionRequest, "version");
 
 		_commerceVirtualOrderItemFileEntryService.
 			updateCommerceVirtualOrderItemFileEntry(
-				commerceVirtualOrderItemFileEntryId, fileEntryId, url, version);
+				commerceVirtualOrderItemFileEntryId, fileEntryId, url, usages,
+				version);
 	}
 
 	@Reference

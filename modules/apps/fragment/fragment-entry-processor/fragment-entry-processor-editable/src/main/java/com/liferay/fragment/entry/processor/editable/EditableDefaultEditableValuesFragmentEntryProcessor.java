@@ -38,7 +38,38 @@ public class EditableDefaultEditableValuesFragmentEntryProcessor
 	public JSONObject getDefaultEditableValuesJSONObject(
 		String configuration, Document document) {
 
-		return _getDefaultEditableValuesJSONObject(document);
+		JSONObject defaultEditableValuesJSONObject =
+			_jsonFactory.createJSONObject();
+
+		for (Element element :
+				document.getElementsByAttribute("data-lfr-editable-id")) {
+
+			JSONObject defaultValueJSONObject = _getDefaultValueJSONObject(
+				element, element.attr("data-lfr-editable-type"));
+
+			if (defaultValueJSONObject == null) {
+				continue;
+			}
+
+			defaultEditableValuesJSONObject.put(
+				EditableFragmentEntryProcessorUtil.getElementId(element),
+				defaultValueJSONObject);
+		}
+
+		for (Element element : document.getElementsByTag("lfr-editable")) {
+			JSONObject defaultValueJSONObject = _getDefaultValueJSONObject(
+				element, element.attr("type"));
+
+			if (defaultValueJSONObject == null) {
+				continue;
+			}
+
+			defaultEditableValuesJSONObject.put(
+				EditableFragmentEntryProcessorUtil.getElementId(element),
+				defaultValueJSONObject);
+		}
+
+		return defaultEditableValuesJSONObject;
 	}
 
 	@Override
@@ -59,39 +90,21 @@ public class EditableDefaultEditableValuesFragmentEntryProcessor
 		_editableElementParserServiceTrackerMap.close();
 	}
 
-	private JSONObject _getDefaultEditableValuesJSONObject(Document document) {
-		JSONObject defaultEditableValuesJSONObject =
-			_jsonFactory.createJSONObject();
+	private JSONObject _getDefaultValueJSONObject(
+		Element element, String type) {
 
-		for (Element element :
-				document.select("lfr-editable,*[data-lfr-editable-id]")) {
+		EditableElementParser editableElementParser =
+			_editableElementParserServiceTrackerMap.getService(type);
 
-			EditableElementParser editableElementParser =
-				_getEditableElementParser(element);
-
-			if (editableElementParser == null) {
-				continue;
-			}
-
-			JSONObject defaultValueJSONObject = JSONUtil.put(
-				"config", editableElementParser.getAttributes(element)
-			).put(
-				"defaultValue", editableElementParser.getValue(element)
-			);
-
-			defaultEditableValuesJSONObject.put(
-				EditableFragmentEntryProcessorUtil.getElementId(element),
-				defaultValueJSONObject);
+		if (editableElementParser == null) {
+			return null;
 		}
 
-		return defaultEditableValuesJSONObject;
-	}
-
-	private EditableElementParser _getEditableElementParser(Element element) {
-		String type = EditableFragmentEntryProcessorUtil.getElementType(
-			element);
-
-		return _editableElementParserServiceTrackerMap.getService(type);
+		return JSONUtil.put(
+			"config", editableElementParser.getAttributes(element)
+		).put(
+			"defaultValue", editableElementParser.getValue(element)
+		);
 	}
 
 	private ServiceTrackerMap<String, EditableElementParser>

@@ -17,7 +17,6 @@ import java.util.Set;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -39,11 +38,12 @@ public class BackgroundImageFragmentEntryValidator
 
 		Document document = _getDocument(html);
 
-		Elements elements = document.select("[data-lfr-background-image-id]");
-
 		Set<String> ids = new HashSet<>();
 
-		for (Element element : elements) {
+		for (Element element :
+				document.getElementsByAttribute(
+					"data-lfr-background-image-id")) {
+
 			if (ids.add(element.attr("data-lfr-background-image-id"))) {
 				continue;
 			}

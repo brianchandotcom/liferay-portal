@@ -24,15 +24,21 @@ public class EditableFragmentEntryProcessorUtil {
 
 		Document document = Jsoup.parse(html);
 
-		Elements elements = document.select(
-			"lfr-editable,*[data-lfr-editable-id]");
+		Elements elements = document.getElementsByTag("lfr-editable");
 
 		elements.forEach(
 			element -> editableTypes.put(
 				getElementId(element), getElementType(element)));
 
-		Elements backgroundImageElements = document.select(
-			"*[data-lfr-background-image-id]");
+		Elements editableElements = document.getElementsByAttribute(
+			"data-lfr-editable-id");
+
+		editableElements.forEach(
+			element -> editableTypes.put(
+				getElementId(element), getElementType(element)));
+
+		Elements backgroundImageElements = document.getElementsByAttribute(
+			"data-lfr-background-image-id");
 
 		backgroundImageElements.forEach(
 			element -> editableTypes.put(

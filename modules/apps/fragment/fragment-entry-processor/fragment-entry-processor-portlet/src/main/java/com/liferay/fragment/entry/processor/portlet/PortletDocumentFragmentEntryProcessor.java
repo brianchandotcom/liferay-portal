@@ -405,7 +405,7 @@ public class PortletDocumentFragmentEntryProcessor
 				}
 			}
 
-			Elements elements = document.select(htmlTagName);
+			Elements elements = document.getElementsByTag(htmlTagName);
 
 			if ((elements.size() > 1) && Validator.isNull(id)) {
 				throw new FragmentEntryContentException(

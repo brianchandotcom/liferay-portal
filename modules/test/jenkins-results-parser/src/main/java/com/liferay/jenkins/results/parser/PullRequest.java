@@ -618,6 +618,10 @@ public class PullRequest {
 	}
 
 	public boolean hasRequiredCompletedTestSuites() {
+		return hasRequiredCompletedTestSuites(false);
+	}
+
+	public boolean hasRequiredCompletedTestSuites(boolean force) {
 		Properties buildProperties = null;
 
 		try {

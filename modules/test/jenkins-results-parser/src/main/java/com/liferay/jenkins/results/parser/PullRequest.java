@@ -16,7 +16,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
@@ -634,17 +633,20 @@ public class PullRequest {
 		String propertyName = JenkinsResultsParserUtil.combine(
 			"ci.forward", force ? ".force" : "", ".required.completed.suites");
 
-		String requiredCompletedTestSuiteNames = JenkinsResultsParserUtil.getProperty(
-			buildProperties, propertyName, getGitRepositoryName());
+		String requiredCompletedTestSuiteNames =
+			JenkinsResultsParserUtil.getProperty(
+				buildProperties, propertyName, getGitRepositoryName());
 
-		if (JenkinsResultsParserUtil.isNullOrEmpty(requiredCompletedTestSuiteNames)) {
+		if (JenkinsResultsParserUtil.isNullOrEmpty(
+				requiredCompletedTestSuiteNames)) {
+
 			return true;
 		}
 
 		List<String> completedTestSuiteNames = getCompletedTestSuiteNames();
 
 		for (String requiredCompletedSuiteName :
-				requiredCompletedTestSuiteNames.split(",")) {
+				requiredCompletedTestSuiteNames.split("\\s*,\\s*")) {
 
 			if (!completedTestSuiteNames.contains(requiredCompletedSuiteName)) {
 				return false;
@@ -671,23 +673,20 @@ public class PullRequest {
 		String propertyName = JenkinsResultsParserUtil.combine(
 			"ci.forward", force ? ".force" : "", ".required.passing.suites");
 
-		String requiredPassingTestSuiteNamesProperty =
+		String requiredPassingTestSuiteNames =
 			JenkinsResultsParserUtil.getProperty(
 				buildProperties, propertyName, getGitRepositoryName());
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(
-				requiredPassingTestSuiteNamesProperty)) {
+				requiredPassingTestSuiteNames)) {
 
 			return true;
 		}
 
-		List<String> requiredPassingTestSuiteNames = Arrays.asList(
-			requiredPassingTestSuiteNamesProperty.split("\\s*,\\s*"));
-
 		List<String> passingTestSuiteNames = getPassingTestSuites();
 
 		for (String requiredPassingTestSuiteName :
-				requiredPassingTestSuiteNames) {
+				requiredPassingTestSuiteNames.split("\\s*,\\s*")) {
 
 			if (!passingTestSuiteNames.contains(requiredPassingTestSuiteName)) {
 				return false;

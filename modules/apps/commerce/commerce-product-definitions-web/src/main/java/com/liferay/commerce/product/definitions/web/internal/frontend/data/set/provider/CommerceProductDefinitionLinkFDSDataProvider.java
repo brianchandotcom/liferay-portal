@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -105,7 +104,7 @@ public class CommerceProductDefinitionLinkFDSDataProvider
 							name, "rounded", "lg",
 							cpDefinition.getDefaultImageThumbnailSrc(
 								AccountConstants.ACCOUNT_ENTRY_ID_ADMIN)),
-						HtmlUtil.escape(name), cpDefinitionLink.getPriority(),
+						name, cpDefinitionLink.getPriority(),
 						_language.get(
 							httpServletRequest, cpDefinitionLink.getType()),
 						new LabelField(

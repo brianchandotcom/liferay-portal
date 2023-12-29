@@ -97,6 +97,32 @@ public class RelationshipObjectFieldBusinessType
 				return value;
 			}
 
+			ObjectRelationship objectRelationship =
+				_objectRelationshipLocalService.
+					fetchObjectRelationshipByObjectFieldId2(
+						objectField.getObjectFieldId());
+
+			ObjectDefinition objectDefinition =
+				_objectDefinitionLocalService.getObjectDefinition(
+					objectRelationship.getObjectDefinitionId1());
+
+			if (objectDefinition.isUnmodifiableSystemObject()) {
+				SystemObjectDefinitionManager systemObjectDefinitionManager =
+					_systemObjectDefinitionManagerRegistry.
+						getSystemObjectDefinitionManager(
+							objectDefinition.getName());
+
+				BaseModel<?> baseModel =
+					systemObjectDefinitionManager.
+						getBaseModelByExternalReferenceCode(
+							systemObjectDefinitionManager.
+								getBaseModelExternalReferenceCode(
+									GetterUtil.getLong(value)),
+							objectDefinition.getCompanyId());
+
+				return baseModel.getPrimaryKeyObj();
+			}
+
 			ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
 				GetterUtil.getLong(value));
 

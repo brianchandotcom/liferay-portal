@@ -1,36 +1,5 @@
 ## InstanceInitializerCheck
 
-Directly assign value to a variable instead of using set call
-when possible:
-
-```java
-private ObjectDefinition _toObjectDefinition(
-    com.liferay.object.model.ObjectDefinition objectDefinition) {
-
-    return new ObjectDefinition() {
-        {
-            accountEntryRestricted =
-                objectDefinition.isAccountEntryRestricted();
-        }
-    };
-}
-```
-
-Instead of
-
-```java
-private ObjectDefinition _toObjectDefinition(
-    com.liferay.object.model.ObjectDefinition objectDefinition) {
-
-    return new ObjectDefinition() {
-        {
-            setAccountEntryRestricted(
-                objectDefinition.isAccountEntryRestricted());
-        }
-    };
-}
-```
-
 Use set call with inlined if-statement when possible:
 
 ```java

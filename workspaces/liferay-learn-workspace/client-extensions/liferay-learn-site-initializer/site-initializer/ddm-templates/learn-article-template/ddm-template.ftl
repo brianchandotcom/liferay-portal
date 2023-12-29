@@ -10,16 +10,6 @@
 </script>
 
 <style>
-	@media only screen and (min-width: 768px) and (max-width: 1000px) {
-		.doc-nav-wrapper-inner {
-			max-width: 20% !important;
-		}
-	}
-
-	a.other-level:hover {
-		color: #0053F0 !important;
-	}
-
 	.adt-nav-title.align-items-center.d-flex {
 		color: #282934;
 		font-weight: 700;
@@ -164,6 +154,12 @@
 		color: var(--color-action-primary-hover) !important;
 	}
 
+	@media only screen and (min-width: 768px) and (max-width: 1000px) {
+		.doc-nav-wrapper-inner {
+			max-width: 20% !important;
+		}
+	}
+
 	#backLink {
 		border-left-width: 0px;
 		color: #282934;
@@ -225,6 +221,10 @@
 		line-height: 1.5rem;
 		padding-right: 3rem;
 		text-align: center;
+	}
+
+	a.other-level:hover {
+		color: #0053F0 !important;
 	}
 </style>
 

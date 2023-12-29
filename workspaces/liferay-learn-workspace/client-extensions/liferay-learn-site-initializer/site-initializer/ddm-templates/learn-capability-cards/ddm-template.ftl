@@ -24,17 +24,17 @@
 	}
 
 	.responsive-text {
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 2;
 		display: -webkit-box;
 		overflow: hidden;
 		text-overflow: ellipsis;
-		-webkit-box-orient: vertical;
-		-webkit-line-clamp: 2;
 	}
 
 	.subtitle {
+		-webkit-line-clamp: 3 !important;
 		color: #54555F;
 		font-size: small;
-		-webkit-line-clamp: 3!important;
 	}
 
 	.title {

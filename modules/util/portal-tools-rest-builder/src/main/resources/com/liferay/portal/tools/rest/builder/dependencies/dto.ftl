@@ -14,6 +14,7 @@ import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
@@ -196,6 +197,8 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 
 		<#if enumSchemas?keys?seq_contains(propertyType)>
 			<#assign capitalizedPropertyName = propertyType />
+
+			@JsonGetter("${propertyName}")
 		</#if>
 
 		public ${propertyType} get${capitalizedPropertyName}() {

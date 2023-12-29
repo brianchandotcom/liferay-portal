@@ -254,7 +254,9 @@ public class InstanceInitializerCheck extends BaseCheck {
 
 			if (parameterType.startsWith("UnsafeSupplier")) {
 				if (insideIfStatement) {
-					log(detailAST, _MSG_INLINE_IF_STATEMENT, methodName);
+					log(
+						detailAST, _MSG_INLINE_IF_STATEMENT, methodName,
+						parameterType);
 				}
 				else {
 					log(

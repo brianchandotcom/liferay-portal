@@ -12,7 +12,7 @@ import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.asset.kernel.validator.AssetEntryValidator;
-import com.liferay.depot.util.SiteConnectedGroupGroupProviderUtil;
+import com.liferay.depot.group.provider.SiteConnectedGroupGroupProvider;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -48,7 +48,7 @@ public class CardinalityAssetEntryValidator implements AssetEntryValidator {
 
 		for (AssetVocabulary assetVocabulary :
 				_assetVocabularyLocalService.getGroupsVocabularies(
-					SiteConnectedGroupGroupProviderUtil.
+					_siteConnectedGroupGroupProvider.
 						getCurrentAndAncestorSiteAndDepotGroupIds(groupId))) {
 
 			validate(
@@ -133,5 +133,8 @@ public class CardinalityAssetEntryValidator implements AssetEntryValidator {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private SiteConnectedGroupGroupProvider _siteConnectedGroupGroupProvider;
 
 }

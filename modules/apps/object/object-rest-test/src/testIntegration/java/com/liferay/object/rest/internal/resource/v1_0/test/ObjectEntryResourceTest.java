@@ -5337,9 +5337,30 @@ public class ObjectEntryResourceTest {
 			_objectDefinition1, _objectDefinition2, TestPropsValues.getUserId(),
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
+		JSONObject objectEntryJSONObject = JSONUtil.put(
+			_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2
+		).put(
+			StringBundler.concat(
+				"r_", _objectRelationship1.getName(), "_",
+				_objectDefinition1.getPKObjectFieldName()),
+			StringPool.BLANK
+		);
+
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			objectEntryJSONObject.toString(),
+			_objectDefinition2.getRESTContextPath(), Http.Method.POST);
+
+		Assert.assertEquals(
+			0,
+			jsonObject.getJSONObject(
+				"status"
+			).get(
+				"code"
+			));
+
 		long randomObjectEntryId = RandomTestUtil.randomLong();
 
-		JSONObject objectEntryJSONObject = JSONUtil.put(
+		objectEntryJSONObject = JSONUtil.put(
 			_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2
 		).put(
 			StringBundler.concat(
@@ -5355,6 +5376,34 @@ public class ObjectEntryResourceTest {
 				"title",
 				"No ObjectEntry exists with the primary key " +
 					randomObjectEntryId
+			).toString(),
+			HTTPTestUtil.invokeToJSONObject(
+				objectEntryJSONObject.toString(),
+				_objectDefinition2.getRESTContextPath(), Http.Method.POST
+			).toString(),
+			JSONCompareMode.STRICT);
+
+		ObjectRelationship objectRelationship =
+			ObjectRelationshipTestUtil.addObjectRelationship(
+				_userSystemObjectDefinition, _objectDefinition2,
+				TestPropsValues.getUserId(),
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		objectEntryJSONObject = JSONUtil.put(
+			_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2
+		).put(
+			StringBundler.concat(
+				"r_", objectRelationship.getName(), "_",
+				_userSystemObjectDefinition.getPKObjectFieldName()),
+			randomObjectEntryId
+		);
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"status", "NOT_FOUND"
+			).put(
+				"title",
+				"No User exists with the primary key " + randomObjectEntryId
 			).toString(),
 			HTTPTestUtil.invokeToJSONObject(
 				objectEntryJSONObject.toString(),

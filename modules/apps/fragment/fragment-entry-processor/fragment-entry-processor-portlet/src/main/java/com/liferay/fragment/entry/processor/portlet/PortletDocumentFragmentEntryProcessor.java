@@ -77,12 +77,14 @@ public class PortletDocumentFragmentEntryProcessor
 			return;
 		}
 
+		Elements elements = document.getAllElements();
+
 		_validateFragmentEntryHTMLDocument(
-			document, fragmentEntryProcessorContext.getLocale());
+			elements, document, fragmentEntryProcessorContext.getLocale());
 
 		Set<String> processedPortletIds = new HashSet<>();
 
-		for (Element element : document.getAllElements()) {
+		for (Element element : elements) {
 			String tagName = element.tagName();
 
 			String portletName = _getPortletName(tagName);
@@ -357,10 +359,10 @@ public class PortletDocumentFragmentEntryProcessor
 	}
 
 	private void _validateFragmentEntryHTMLDocument(
-			Document document, Locale locale)
+			Elements elements, Document document, Locale locale)
 		throws PortalException {
 
-		for (Element element : document.getAllElements()) {
+		for (Element element : elements) {
 			String htmlTagName = element.tagName();
 
 			if (!StringUtil.startsWith(htmlTagName, "lfr-widget-")) {
@@ -388,9 +390,9 @@ public class PortletDocumentFragmentEntryProcessor
 			}
 
 			if (Validator.isNotNull(id)) {
-				Elements elements = document.select("#" + id);
+				Elements elementsById = document.select("#" + id);
 
-				if (elements.size() > 1) {
+				if (elementsById.size() > 1) {
 					throw new FragmentEntryContentException(
 						_language.get(locale, "widget-id-must-be-unique"));
 				}
@@ -405,9 +407,9 @@ public class PortletDocumentFragmentEntryProcessor
 				}
 			}
 
-			Elements elements = document.getElementsByTag(htmlTagName);
+			Elements elementsByTag = document.getElementsByTag(htmlTagName);
 
-			if ((elements.size() > 1) && Validator.isNull(id)) {
+			if ((elementsByTag.size() > 1) && Validator.isNull(id)) {
 				throw new FragmentEntryContentException(
 					_language.get(
 						locale,
@@ -415,7 +417,7 @@ public class PortletDocumentFragmentEntryProcessor
 							"have-an-id"));
 			}
 
-			if (elements.size() > 1) {
+			if (elementsByTag.size() > 1) {
 				Portlet portlet = _portletLocalService.getPortletById(
 					_portletRegistry.getPortletName(alias));
 

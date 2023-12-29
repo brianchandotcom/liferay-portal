@@ -7,6 +7,7 @@ package com.liferay.object.admin.rest.dto.v1_0;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -95,6 +96,7 @@ public class ObjectRelationship implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
+	@JsonGetter("deletionType")
 	@Schema
 	@Valid
 	public DeletionType getDeletionType() {
@@ -859,6 +861,7 @@ public class ObjectRelationship implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _systemSupplier;
 
+	@JsonGetter("type")
 	@Schema
 	@Valid
 	public Type getType() {

@@ -7,6 +7,7 @@ package com.liferay.headless.commerce.admin.catalog.dto.v1_0;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -309,6 +310,7 @@ public class Option implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _facetableSupplier;
 
+	@JsonGetter("fieldType")
 	@Schema(example = "select")
 	@Valid
 	public FieldType getFieldType() {

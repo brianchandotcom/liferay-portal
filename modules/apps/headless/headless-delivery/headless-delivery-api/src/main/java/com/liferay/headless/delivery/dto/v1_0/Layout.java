@@ -7,6 +7,7 @@ package com.liferay.headless.delivery.dto.v1_0;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -52,6 +53,7 @@ public class Layout implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Layout.class, json);
 	}
 
+	@JsonGetter("align")
 	@Schema(deprecated = true)
 	@Valid
 	public Align getAlign() {
@@ -146,6 +148,7 @@ public class Layout implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _borderColorSupplier;
 
+	@JsonGetter("borderRadius")
 	@Schema(deprecated = true)
 	@Valid
 	public BorderRadius getBorderRadius() {
@@ -242,6 +245,7 @@ public class Layout implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _borderWidthSupplier;
 
+	@JsonGetter("containerType")
 	@Schema(description = "The container's type (fixed or fluid).")
 	@Valid
 	public ContainerType getContainerType() {
@@ -295,6 +299,7 @@ public class Layout implements Serializable {
 	@JsonIgnore
 	private Supplier<ContainerType> _containerTypeSupplier;
 
+	@JsonGetter("contentDisplay")
 	@Schema(deprecated = true)
 	@Valid
 	public ContentDisplay getContentDisplay() {
@@ -350,6 +355,7 @@ public class Layout implements Serializable {
 	@JsonIgnore
 	private Supplier<ContentDisplay> _contentDisplaySupplier;
 
+	@JsonGetter("flexWrap")
 	@Schema
 	@Valid
 	public FlexWrap getFlexWrap() {
@@ -403,6 +409,7 @@ public class Layout implements Serializable {
 	@JsonIgnore
 	private Supplier<FlexWrap> _flexWrapSupplier;
 
+	@JsonGetter("justify")
 	@Schema(deprecated = true)
 	@Valid
 	public Justify getJustify() {
@@ -877,6 +884,7 @@ public class Layout implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _paddingTopSupplier;
 
+	@JsonGetter("shadow")
 	@Schema(deprecated = true)
 	@Valid
 	public Shadow getShadow() {
@@ -931,6 +939,7 @@ public class Layout implements Serializable {
 	@JsonIgnore
 	private Supplier<Shadow> _shadowSupplier;
 
+	@JsonGetter("widthType")
 	@Schema(description = "The width's type (fixed or fluid).")
 	@Valid
 	public WidthType getWidthType() {

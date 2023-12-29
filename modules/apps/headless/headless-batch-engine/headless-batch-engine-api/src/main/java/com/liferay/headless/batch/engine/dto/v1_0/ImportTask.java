@@ -7,6 +7,7 @@ package com.liferay.headless.batch.engine.dto.v1_0;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -234,6 +235,7 @@ public class ImportTask implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _errorMessageSupplier;
 
+	@JsonGetter("executeStatus")
 	@Schema(
 		description = "The status of import task's execution.",
 		example = "INITIALIZED"
@@ -413,6 +415,7 @@ public class ImportTask implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
+	@JsonGetter("importStrategy")
 	@Schema(
 		description = "Defines if import task will fail when error occurs or continue importing rest of the items."
 	)
@@ -471,6 +474,7 @@ public class ImportTask implements Serializable {
 	@JsonIgnore
 	private Supplier<ImportStrategy> _importStrategySupplier;
 
+	@JsonGetter("operation")
 	@Schema(description = "The operation of import task.", example = "CREATE")
 	@Valid
 	public Operation getOperation() {

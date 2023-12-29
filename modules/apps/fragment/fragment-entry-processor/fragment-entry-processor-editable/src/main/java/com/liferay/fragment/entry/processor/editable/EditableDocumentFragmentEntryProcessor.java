@@ -65,6 +65,14 @@ public class EditableDocumentFragmentEntryProcessor
 				_getDefaultEditableValuesJSONObject(document));
 		}
 
+		JSONObject editableValuesJSONObject = jsonObject.getJSONObject(
+			FragmentEntryProcessorConstants.
+				KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR);
+
+		if (editableValuesJSONObject == null) {
+			return;
+		}
+
 		Map<InfoItemReference, InfoItemFieldValues> infoDisplaysFieldValues =
 			new HashMap<>();
 
@@ -81,13 +89,7 @@ public class EditableDocumentFragmentEntryProcessor
 			String id = EditableFragmentEntryProcessorUtil.getElementId(
 				element);
 
-			JSONObject editableValuesJSONObject = jsonObject.getJSONObject(
-				FragmentEntryProcessorConstants.
-					KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR);
-
-			if ((editableValuesJSONObject == null) ||
-				!editableValuesJSONObject.has(id)) {
-
+			if (!editableValuesJSONObject.has(id)) {
 				continue;
 			}
 

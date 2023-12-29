@@ -52,7 +52,7 @@
 </tr>
 <tr>
 	<td>ASSET_SUBTYPE</td>
-	<td>//div[not(contains(@class,'hide'))]/select[contains(@id,'subtype')]</td>
+	<td>//div[not(contains(@class,'hide'))]/div/select[contains(@name,'subtype')]</td>
 	<td></td>
 </tr>
 <tr>

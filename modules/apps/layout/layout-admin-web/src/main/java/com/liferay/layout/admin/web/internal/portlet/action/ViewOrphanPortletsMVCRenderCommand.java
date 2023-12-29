@@ -24,11 +24,11 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"javax.portlet.name=" + LayoutAdminPortletKeys.GROUP_PAGES,
-		"mvc.command.name=/layout_admin/orphan_portlets"
+		"mvc.command.name=/layout_admin/view_orphan_portlets"
 	},
 	service = MVCRenderCommand.class
 )
-public class OrphanPortletsMVCRenderCommand implements MVCRenderCommand {
+public class ViewOrphanPortletsMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(

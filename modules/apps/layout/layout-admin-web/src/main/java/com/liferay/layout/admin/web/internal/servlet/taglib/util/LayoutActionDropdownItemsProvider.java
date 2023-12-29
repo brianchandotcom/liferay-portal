@@ -559,7 +559,7 @@ public class LayoutActionDropdownItemsProvider {
 		return PortletURLBuilder.createRenderURL(
 			_liferayPortletResponse
 		).setMVCRenderCommandName(
-			"/layout_admin/orphan_portlets"
+			"/layout_admin/view_orphan_portlets"
 		).setBackURL(
 			_getBackURL()
 		).setParameter(

@@ -201,7 +201,7 @@ public class OrphanPortletsDisplayContext {
 		return PortletURLBuilder.createRenderURL(
 			_liferayPortletResponse
 		).setMVCRenderCommandName(
-			"/layout_admin/orphan_portlets"
+			"/layout_admin/view_orphan_portlets"
 		).setBackURL(
 			getBackURL()
 		).setParameter(

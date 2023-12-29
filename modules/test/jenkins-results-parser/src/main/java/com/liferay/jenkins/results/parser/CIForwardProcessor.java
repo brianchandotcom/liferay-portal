@@ -498,7 +498,7 @@ public class CIForwardProcessor {
 		throws IOException {
 
 		List<String> completedTestSuiteNames =
-			_pullRequest.getCompletedTestSuites();
+			_pullRequest.getCompletedTestSuiteNames();
 
 		String joinedCompletedTestSuiteNames = JenkinsResultsParserUtil.join(
 			",", completedTestSuiteNames);

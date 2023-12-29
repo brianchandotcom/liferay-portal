@@ -292,7 +292,7 @@ public class PullRequest {
 		return _commonParentSHA;
 	}
 
-	public List<String> getCompletedTestSuites() {
+	public List<String> getCompletedTestSuiteNames() {
 		List<String> testSuiteNames = new ArrayList<>();
 
 		JSONArray statusesJSONArray = getSenderSHAStatusesJSONArray();
@@ -634,19 +634,19 @@ public class PullRequest {
 		String propertyName = JenkinsResultsParserUtil.combine(
 			"ci.forward", force ? ".force" : "", ".required.completed.suites");
 
-		String requiredCompletedSuites = JenkinsResultsParserUtil.getProperty(
+		String requiredCompletedTestSuiteNames = JenkinsResultsParserUtil.getProperty(
 			buildProperties, propertyName, getGitRepositoryName());
 
-		if (JenkinsResultsParserUtil.isNullOrEmpty(requiredCompletedSuites)) {
+		if (JenkinsResultsParserUtil.isNullOrEmpty(requiredCompletedTestSuiteNames)) {
 			return true;
 		}
 
-		List<String> completedTestSuites = getCompletedTestSuites();
+		List<String> completedTestSuiteNames = getCompletedTestSuiteNames();
 
-		for (String requiredCompletedSuite :
-				requiredCompletedSuites.split(",")) {
+		for (String requiredCompletedSuiteName :
+				requiredCompletedTestSuiteNames.split(",")) {
 
-			if (!completedTestSuites.contains(requiredCompletedSuite)) {
+			if (!completedTestSuiteNames.contains(requiredCompletedSuiteName)) {
 				return false;
 			}
 		}

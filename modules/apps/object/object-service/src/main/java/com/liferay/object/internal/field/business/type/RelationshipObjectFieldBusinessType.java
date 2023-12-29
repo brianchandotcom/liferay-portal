@@ -91,8 +91,14 @@ public class RelationshipObjectFieldBusinessType
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY) ||
 			values.containsKey(objectField.getName())) {
 
+			Object value = values.get(objectField.getName());
+
+			if (Validator.isNull(value)) {
+				return value;
+			}
+
 			ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
-				GetterUtil.getLong(values.get(objectField.getName())));
+				GetterUtil.getLong(value));
 
 			return objectEntry.getObjectEntryId();
 		}

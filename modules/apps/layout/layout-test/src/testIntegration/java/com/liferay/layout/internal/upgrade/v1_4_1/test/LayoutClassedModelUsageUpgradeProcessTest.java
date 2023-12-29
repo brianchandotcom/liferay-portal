@@ -89,6 +89,24 @@ public class LayoutClassedModelUsageUpgradeProcessTest {
 			journalArticle.getResourcePrimKey(), 1, fragmentEntryLink);
 	}
 
+	@Test
+	public void testUpgradeProcessExistingUsages() throws Exception {
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		FragmentEntryLink fragmentEntryLink = _addFragmentEntryLink(
+			journalArticle);
+
+		_assertLayoutClassedModelUsages(
+			journalArticle.getResourcePrimKey(), 1, fragmentEntryLink);
+
+		_runUpgrade();
+
+		_assertLayoutClassedModelUsages(
+			journalArticle.getResourcePrimKey(), 1, fragmentEntryLink);
+	}
+
 	private FragmentEntryLink _addFragmentEntryLink(
 			JournalArticle journalArticle)
 		throws Exception {

@@ -104,6 +104,14 @@ public class AMBackwardsCompatibilityHtmlContentTransformerTest {
 	}
 
 	@Test
+	public void testReplacesImageTagsOutsidePictureTag() throws Exception {
+		Assert.assertEquals(
+			StringBundler.concat(
+				_CONTENT_PREFIX, "[REPLACED]", _PICTURE_TAG, _CONTENT_SUFFIX),
+			_contentTransformer.transform(_CONTENT_WITH_IMAGE_AND_PICTURE));
+	}
+
+	@Test
 	public void testReplacesImageTagsWithDoubleQuotes() throws Exception {
 		Assert.assertEquals(
 			_CONTENT_PREFIX + "[REPLACED]" + _CONTENT_SUFFIX,
@@ -191,6 +199,12 @@ public class AMBackwardsCompatibilityHtmlContentTransformerTest {
 			"/1710bfe2-2b7c-1f69-f8b7-23ff6bd5dd4b?t=1506075653544\"\n />",
 			_CONTENT_SUFFIX);
 
+	private static final String _CONTENT_WITH_IMAGE_AND_PICTURE =
+		StringBundler.concat(
+			_CONTENT_PREFIX, "<img src='/documents/d/site_name/sample' />",
+			AMBackwardsCompatibilityHtmlContentTransformerTest._PICTURE_TAG,
+			_CONTENT_SUFFIX);
+
 	private static final String _CONTENT_WITH_IMAGE_AND_SINGLE_QUOTES =
 		StringBundler.concat(
 			_CONTENT_PREFIX, "<img src='/documents/20138/0/sample.jpg",
@@ -206,6 +220,9 @@ public class AMBackwardsCompatibilityHtmlContentTransformerTest {
 		StringBundler.concat(
 			_CONTENT_PREFIX, "<img src='/documents/20138/0/sample.jpg?t=",
 			"1506075653544' />", _CONTENT_SUFFIX);
+
+	private static final String _PICTURE_TAG =
+		"<picture><img src='/documents/d/site_name/sample' /></picture>";
 
 	private final AMImageHTMLTagFactory _amImageHTMLTagFactory = Mockito.mock(
 		AMImageHTMLTagFactory.class);

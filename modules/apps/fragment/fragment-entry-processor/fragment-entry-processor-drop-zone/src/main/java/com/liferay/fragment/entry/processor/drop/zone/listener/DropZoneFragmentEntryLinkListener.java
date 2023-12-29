@@ -142,7 +142,7 @@ public class DropZoneFragmentEntryLinkListener
 
 		Document document = _getDocument(processedHTML);
 
-		Elements elements = document.select("lfr-drop-zone");
+		Elements elements = document.getElementsByTag("lfr-drop-zone");
 
 		if (elements.size() <= 0) {
 			return;

@@ -14,7 +14,6 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocal
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -94,8 +93,8 @@ public class StylesFragmentEntryProcessorTest {
 		String layoutStructureItemUniqueCssClass =
 			fragmentStyledLayoutStructureItem.getUniqueCssClass();
 
-		Elements elements = document.select(
-			StringPool.PERIOD + layoutStructureItemUniqueCssClass);
+		Elements elements = document.getElementsByClass(
+			layoutStructureItemUniqueCssClass);
 
 		Assert.assertEquals(1, elements.size());
 	}

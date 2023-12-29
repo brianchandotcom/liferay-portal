@@ -39,7 +39,7 @@ public class DropZoneFragmentEntryValidator implements FragmentEntryValidator {
 
 		Document document = _getDocument(html);
 
-		Elements elements = document.select("lfr-drop-zone");
+		Elements elements = document.getElementsByTag("lfr-drop-zone");
 
 		if (elements.isEmpty()) {
 			return;

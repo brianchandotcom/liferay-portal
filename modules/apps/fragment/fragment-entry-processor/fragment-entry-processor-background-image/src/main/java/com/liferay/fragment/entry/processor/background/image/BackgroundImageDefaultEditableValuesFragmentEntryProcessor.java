@@ -34,7 +34,8 @@ public class BackgroundImageDefaultEditableValuesFragmentEntryProcessor
 			_jsonFactory.createJSONObject();
 
 		for (Element element :
-				document.select("[data-lfr-background-image-id]")) {
+				document.getElementsByAttribute(
+					"data-lfr-background-image-id")) {
 
 			String id = element.attr("data-lfr-background-image-id");
 

@@ -40,7 +40,7 @@ public class StylesDocumentFragmentEntryProcessor
 		FragmentEntryLink fragmentEntryLink, Document document,
 		FragmentEntryProcessorContext fragmentEntryProcessorContext) {
 
-		Elements elements = document.select("[data-lfr-styles]");
+		Elements elements = document.getElementsByAttribute("data-lfr-styles");
 
 		if (elements.isEmpty()) {
 			return;

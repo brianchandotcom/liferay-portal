@@ -521,15 +521,9 @@ public class DropZoneFragmentEntryLinkListener
 
 		Document document = _getDocument(processedHTML);
 
-		Elements elements = document.select("lfr-drop-zone");
-
-		if (elements.size() <= 0) {
-			return Collections.emptyList();
-		}
-
 		List<String> elementDropZoneIds = new LinkedList<>();
 
-		for (Element element : elements) {
+		for (Element element : document.getElementsByTag("lfr-drop-zone")) {
 			String dropZoneId = element.attr("data-lfr-drop-zone-id");
 
 			if (Validator.isBlank(dropZoneId)) {

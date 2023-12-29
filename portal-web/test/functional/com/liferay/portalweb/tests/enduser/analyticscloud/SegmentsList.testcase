@@ -178,7 +178,7 @@ definition {
 
 					ACSegments.createDynamicSegment();
 
-					ACUtils.setItemName(itemName = "New Segment Test");
+					ACUtils.setItemName(itemName = ${segmentName});
 				}
 
 				task ("Add an email field") {

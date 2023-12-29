@@ -116,7 +116,8 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcess
 
 		_addPortletPreferencesLayoutClassedModelUsages(
 			layoutClassedModelUsageTypes, resourcePrimKeysMap, sql,
-			"manual selection asset publisher");
+			"manual selection asset publisher", "classUuid", "classNameId",
+			"visible");
 	}
 
 	private void _addDefaultLayoutClassedModelUsages(
@@ -212,7 +213,7 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcess
 
 		_addPortletPreferencesLayoutClassedModelUsages(
 			layoutClassedModelUsageTypes, resourcePrimKeysMap, sql,
-			"journal content portlet");
+			"journal content portlet", "entryId", "classNameId", "visible");
 	}
 
 	private void _addJournalContentSearchLayoutClassedModelUsages(
@@ -326,12 +327,12 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcess
 	private void _addPortletPreferencesLayoutClassedModelUsages(
 			Map<Long, Integer> layoutClassedModelUsageTypes,
 			Map<Long, Map<Long, Long>> resourcePrimKeysMap, String sql,
-			String usageType)
+			String usageType, String... indexColumnNames)
 		throws Exception {
 
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			SafeCloseable safeCloseable = addTemporaryIndex(
-				"AssetEntry", false, "classUuid", "classNameId", "visible")) {
+				"AssetEntry", false, indexColumnNames)) {
 
 			processConcurrently(
 				SQLTransformer.transform(sql),

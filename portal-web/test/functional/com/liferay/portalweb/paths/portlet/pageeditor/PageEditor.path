@@ -181,12 +181,12 @@
 </tr>
 <tr>
 	<td>COLLECTION_ITEM_NEXT_BUTTON</td>
-	<td>//button[contains(@class,'font-weight-semi-bold ml-3 text-secondary btn btn-unstyled')]//span[contains(text(), 'Next')]</td>
+	<td>//button[contains(@class,'font-weight-semi-bold ml-3 text-secondary btn btn-unstyled') and (text() = 'Next')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>COLLECTION_ITEM_PREVIOUS_BUTTON</td>
-	<td>//button[contains(@class,'font-weight-semi-bold mr-3 text-secondary btn btn-unstyled')]//span[contains(text(), 'Previous')]</td>
+	<td>//button[contains(@class,'font-weight-semi-bold mr-3 text-secondary btn btn-unstyled') and (text() = 'Previous')]</td>
 	<td></td>
 </tr>
 <tr>

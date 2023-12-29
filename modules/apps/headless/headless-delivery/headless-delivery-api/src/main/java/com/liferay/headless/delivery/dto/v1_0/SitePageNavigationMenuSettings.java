@@ -7,6 +7,7 @@ package com.liferay.headless.delivery.dto.v1_0;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -143,6 +144,7 @@ public class SitePageNavigationMenuSettings implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _targetSupplier;
 
+	@JsonGetter("targetType")
 	@Schema(description = "The target's type (specific frame or new tab).")
 	@Valid
 	public TargetType getTargetType() {

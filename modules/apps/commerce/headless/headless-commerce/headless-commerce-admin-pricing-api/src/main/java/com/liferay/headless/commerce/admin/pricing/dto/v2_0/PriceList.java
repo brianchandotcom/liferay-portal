@@ -7,6 +7,7 @@ package com.liferay.headless.commerce.admin.pricing.dto.v2_0;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -1107,6 +1108,7 @@ public class PriceList implements Serializable {
 	@JsonIgnore
 	private Supplier<Double> _prioritySupplier;
 
+	@JsonGetter("type")
 	@Schema(example = "price-list, promotion, contract")
 	@Valid
 	public Type getType() {

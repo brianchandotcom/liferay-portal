@@ -7,6 +7,7 @@ package com.liferay.headless.delivery.dto.v1_0;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -54,6 +55,7 @@ public class PageRule implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(PageRule.class, json);
 	}
 
+	@JsonGetter("conditionType")
 	@Schema(description = "The custom name of a Page rule.")
 	@Valid
 	public ConditionType getConditionType() {

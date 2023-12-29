@@ -7,6 +7,7 @@ package com.liferay.headless.admin.taxonomy.dto.v1_0;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -849,6 +850,7 @@ public class TaxonomyCategory implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _taxonomyVocabularyIdSupplier;
 
+	@JsonGetter("viewableBy")
 	@Schema(
 		description = "A write-only property that specifies the category's default permissions."
 	)

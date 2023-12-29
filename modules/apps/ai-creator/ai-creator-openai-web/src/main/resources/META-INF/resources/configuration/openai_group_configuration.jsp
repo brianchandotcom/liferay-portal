@@ -14,6 +14,12 @@ boolean companyChatGPTEnabled = aiCreatorOpenAIGroupConfigurationDisplayContext.
 boolean companyDALLEEnabled = aiCreatorOpenAIGroupConfigurationDisplayContext.isCompanyDALLEEnabled();
 %>
 
+<liferay-util:html-top
+	outputKey="document_library_preview_image_css"
+>
+	<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathProxy() + application.getContextPath() + "/css/configuration.css") %>" rel="stylesheet" type="text/css" />
+</liferay-util:html-top>
+
 <clay:content-row>
 	<clay:content-col
 		expand="<%= true %>"
@@ -64,6 +70,7 @@ boolean companyDALLEEnabled = aiCreatorOpenAIGroupConfigurationDisplayContext.is
 
 <clay:content-row>
 	<clay:content-col
+		cssClass="ai-creator-config-checkbox"
 		expand="<%= true %>"
 	>
 		<c:choose>
@@ -93,6 +100,7 @@ boolean companyDALLEEnabled = aiCreatorOpenAIGroupConfigurationDisplayContext.is
 		cssClass="c-mt-5"
 	>
 		<clay:content-col
+			cssClass="ai-creator-config-checkbox"
 			expand="<%= true %>"
 		>
 			<c:choose>

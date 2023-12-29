@@ -134,6 +134,25 @@ public class LayoutClassedModelUsageUpgradeProcessTest {
 			journalArticle2.getResourcePrimKey(), 1, fragmentEntryLink);
 	}
 
+	@Test
+	public void testUpgradeProcessSameContentMappedInMultipleEditables()
+		throws Exception {
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		FragmentEntryLink fragmentEntryLink = _addFragmentEntryLink(
+			journalArticle, journalArticle);
+
+		_deleteLayoutClassedModelUsage(journalArticle.getResourcePrimKey());
+
+		_runUpgrade();
+
+		_assertLayoutClassedModelUsages(
+			journalArticle.getResourcePrimKey(), 1, fragmentEntryLink);
+	}
+
 	private FragmentEntryLink _addFragmentEntryLink(
 			JournalArticle... journalArticles)
 		throws Exception {

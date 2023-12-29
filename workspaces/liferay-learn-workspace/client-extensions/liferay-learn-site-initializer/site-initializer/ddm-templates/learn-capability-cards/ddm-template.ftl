@@ -34,6 +34,7 @@
 	.subtitle {
 		color: #54555F;
 		font-size: small;
+		-webkit-line-clamp: 3!important;
 	}
 
 	.title {

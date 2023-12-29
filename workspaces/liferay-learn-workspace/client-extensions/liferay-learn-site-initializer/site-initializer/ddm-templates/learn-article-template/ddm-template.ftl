@@ -16,6 +16,10 @@
 		}
 	}
 
+	a.other-level:hover {
+		color: #0053F0 !important;
+	}
+
 	.adt-nav-title.align-items-center.d-flex {
 		color: #282934;
 		font-weight: 700;
@@ -106,6 +110,15 @@
 
 	.rounded-10{
 	  border-radius: 10px;
+	}
+
+	.section-card:hover {
+		background-color: #EDF3FE !important;
+		border-bottom: 1px solid #0053F0 !important;
+		border-color: #0053F0 !important;
+		box-shadow: none !important;
+		margin-bottom: 0px !important;
+		transform: none !important;
 	}
 
 	.show #dropdown-products {

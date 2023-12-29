@@ -140,7 +140,7 @@ public class SQLServerDB extends BaseDB {
 			while (resultSet.next()) {
 				String indexName = resultSet.getString("index_name");
 				String tableName = resultSet.getString("table_name");
-				boolean unique = !resultSet.getBoolean("is_unique");
+				boolean unique = resultSet.getBoolean("is_unique");
 
 				indexes.add(new Index(indexName, tableName, unique));
 			}

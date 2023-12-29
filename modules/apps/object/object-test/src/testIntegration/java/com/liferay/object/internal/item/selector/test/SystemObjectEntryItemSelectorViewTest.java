@@ -14,13 +14,11 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderResponse;
@@ -40,7 +38,6 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
-import java.util.Collection;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -81,22 +78,20 @@ public class SystemObjectEntryItemSelectorViewTest {
 	}
 
 	@AfterClass
-	public static void tearDownClass() throws PortalException {
-		_groupLocalService.deleteGroup(_group);
+	public static void tearDownClass() throws Exception {
+		GroupTestUtil.deleteGroup(_group);
 	}
 
 	@Test
 	public void testGetTitle() throws Exception {
 		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.getObjectDefinition(
-				_group.getCompanyId(), "User");
+			_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
+				_group.getCompanyId(), User.class.getName());
 
 		ItemSelectorView<InfoItemItemSelectorCriterion> itemSelectorView =
-			_getItemSelectorView(
-				objectDefinition.getPluralLabel(LocaleUtil.getDefault()));
+			_getItemSelectorView(objectDefinition);
 
-		Queue<ItemSelectorViewDescriptor<?>> itemSelectorViewDescriptors =
-			new LinkedList<>();
+		Queue<ItemSelectorViewDescriptor<?>> queue = new LinkedList<>();
 
 		ItemSelectorViewDescriptorRenderer<?>
 			itemSelectorViewDescriptorRenderer =
@@ -113,7 +108,7 @@ public class SystemObjectEntryItemSelectorViewTest {
 								if (StringUtil.equals(
 										method.getName(), "renderHTML")) {
 
-									itemSelectorViewDescriptors.add(
+									queue.add(
 										(ItemSelectorViewDescriptor
 											<BaseModel<?>>)arguments[6]);
 								}
@@ -127,20 +122,19 @@ public class SystemObjectEntryItemSelectorViewTest {
 			RandomTestUtil.randomString(), true);
 
 		ItemSelectorViewDescriptor<BaseModel<?>> itemSelectorViewDescriptor =
-			(ItemSelectorViewDescriptor<BaseModel<?>>)
-				itemSelectorViewDescriptors.poll();
+			(ItemSelectorViewDescriptor<BaseModel<?>>)queue.poll();
 
 		User user = UserTestUtil.addUser();
 
 		ItemSelectorViewDescriptor.ItemDescriptor itemDescriptor =
 			itemSelectorViewDescriptor.getItemDescriptor(user);
 
-		long originalTitleObjectFieldId =
-			objectDefinition.getTitleObjectFieldId();
-
 		Assert.assertEquals(
 			user.getFirstName(),
 			itemDescriptor.getTitle(LocaleUtil.getDefault()));
+
+		long originalTitleObjectFieldId =
+			objectDefinition.getTitleObjectFieldId();
 
 		try {
 			ObjectField objectField = _objectFieldLocalService.getObjectField(
@@ -158,15 +152,15 @@ public class SystemObjectEntryItemSelectorViewTest {
 			_objectDefinitionLocalService.updateTitleObjectFieldId(
 				objectDefinition.getObjectDefinitionId(),
 				originalTitleObjectFieldId);
-		}
 
-		ReflectionTestUtil.setFieldValue(
-			itemSelectorView, "_itemSelectorViewDescriptorRenderer",
-			itemSelectorViewDescriptorRenderer);
+			ReflectionTestUtil.setFieldValue(
+				itemSelectorView, "_itemSelectorViewDescriptorRenderer",
+				itemSelectorViewDescriptorRenderer);
+		}
 	}
 
 	private ItemSelectorView<InfoItemItemSelectorCriterion>
-			_getItemSelectorView(String objectDefinitionPluralLabel)
+			_getItemSelectorView(ObjectDefinition objectDefinition)
 		throws Exception {
 
 		Bundle bundle = FrameworkUtil.getBundle(
@@ -174,21 +168,18 @@ public class SystemObjectEntryItemSelectorViewTest {
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
-		Collection
-			<ServiceReference<ItemSelectorView<InfoItemItemSelectorCriterion>>>
-				serviceReferences = bundleContext.getServiceReferences(
-					(Class<ItemSelectorView<InfoItemItemSelectorCriterion>>)
-						(Class<?>)ItemSelectorView.class,
-					"(item.selector.view.order=500)");
-
 		for (ServiceReference<ItemSelectorView<InfoItemItemSelectorCriterion>>
-				serviceReference : serviceReferences) {
+				serviceReference :
+					bundleContext.getServiceReferences(
+						(Class<ItemSelectorView<InfoItemItemSelectorCriterion>>)
+							(Class<?>)ItemSelectorView.class,
+						"(item.selector.view.order=500)")) {
 
 			ItemSelectorView<InfoItemItemSelectorCriterion> itemSelectorView =
 				bundleContext.getService(serviceReference);
 
 			if (StringUtil.equals(
-					objectDefinitionPluralLabel,
+					objectDefinition.getPluralLabel(LocaleUtil.getDefault()),
 					itemSelectorView.getTitle(LocaleUtil.getDefault()))) {
 
 				return itemSelectorView;
@@ -196,20 +187,6 @@ public class SystemObjectEntryItemSelectorViewTest {
 		}
 
 		return null;
-	}
-
-	private ThemeDisplay _getThemeDisplay(Group group) throws Exception {
-		ThemeDisplay themeDisplay = new ThemeDisplay();
-
-		themeDisplay.setCompany(
-			CompanyLocalServiceUtil.fetchCompany(group.getCompanyId()));
-		themeDisplay.setLocale(LocaleUtil.getDefault());
-		themeDisplay.setPermissionChecker(
-			PermissionThreadLocal.getPermissionChecker());
-		themeDisplay.setScopeGroupId(group.getGroupId());
-		themeDisplay.setUser(TestPropsValues.getUser());
-
-		return themeDisplay;
 	}
 
 	private ServletRequest _mockHttpServletRequest() throws Exception {
@@ -230,9 +207,15 @@ public class SystemObjectEntryItemSelectorViewTest {
 			JavaConstants.JAVAX_PORTLET_RESPONSE,
 			new MockLiferayPortletRenderResponse());
 
-		ThemeDisplay themeDisplay = _getThemeDisplay(_group);
+		ThemeDisplay themeDisplay = new ThemeDisplay();
 
+		themeDisplay.setCompany(
+			CompanyLocalServiceUtil.fetchCompany(_group.getCompanyId()));
+		themeDisplay.setLocale(LocaleUtil.getDefault());
+		themeDisplay.setPermissionChecker(
+			PermissionThreadLocal.getPermissionChecker());
 		themeDisplay.setRequest(mockHttpServletRequest);
+		themeDisplay.setScopeGroupId(_group.getGroupId());
 		themeDisplay.setUser(TestPropsValues.getUser());
 
 		mockHttpServletRequest.setAttribute(
@@ -242,9 +225,6 @@ public class SystemObjectEntryItemSelectorViewTest {
 	}
 
 	private static Group _group;
-
-	@Inject
-	private static GroupLocalService _groupLocalService;
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

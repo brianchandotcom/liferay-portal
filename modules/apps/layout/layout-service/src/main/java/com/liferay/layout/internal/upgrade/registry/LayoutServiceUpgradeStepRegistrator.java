@@ -19,6 +19,8 @@ import com.liferay.layout.internal.upgrade.v1_2_2.LayoutSEOUpgradeProcess;
 import com.liferay.layout.internal.upgrade.v1_2_3.LayoutRevisionUpgradeProcess;
 import com.liferay.layout.internal.upgrade.v1_3_0.util.LayoutLocalizationTable;
 import com.liferay.layout.internal.upgrade.v1_3_1.LayoutLocalizationUpgradeProcess;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutBranchLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -82,6 +84,12 @@ public class LayoutServiceUpgradeStepRegistrator
 			UpgradeProcessFactory.addColumns(
 				"LayoutClassedModelUsage",
 				"cmExternalReferenceCode VARCHAR(75) null"));
+
+		registry.register(
+			"1.4.0", "1.4.1",
+			new com.liferay.layout.internal.upgrade.v1_4_1.
+				LayoutClassedModelUsageUpgradeProcess(
+					_classNameLocalService, _jsonFactory));
 	}
 
 	@Reference
@@ -94,6 +102,9 @@ public class LayoutServiceUpgradeStepRegistrator
 	private AssetTagLocalService _assetTagLocalService;
 
 	@Reference
+	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
 	private CTCollectionLocalService _ctCollectionLocalService;
 
 	@Reference
@@ -101,6 +112,9 @@ public class LayoutServiceUpgradeStepRegistrator
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private LayoutBranchLocalService _layoutBranchLocalService;

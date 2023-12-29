@@ -8,7 +8,6 @@ package com.liferay.osb.faro.web.internal.search;
 import com.liferay.osb.faro.constants.FaroProjectConstants;
 import com.liferay.osb.faro.engine.client.CerebroEngineClient;
 import com.liferay.osb.faro.engine.client.ContactsEngineClient;
-import com.liferay.osb.faro.engine.client.WorkspaceEngineClient;
 import com.liferay.osb.faro.model.FaroProject;
 import com.liferay.osb.faro.service.FaroProjectLocalService;
 import com.liferay.osb.faro.web.internal.model.display.main.FaroSubscriptionDisplay;
@@ -309,8 +308,5 @@ public class FaroProjectIndexer extends BaseIndexer<FaroProject> {
 
 	@Reference
 	private IndexWriterHelper _indexWriterHelper;
-
-	@Reference
-	private WorkspaceEngineClient _workspaceEngineClient;
 
 }

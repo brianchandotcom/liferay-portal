@@ -23,6 +23,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -87,6 +89,9 @@ public class LayoutClassedModelUsageUpgradeProcess extends UpgradeProcess {
 						return;
 					}
 
+					Map<Long, List<Long>> classNameIdClassPKsMap =
+						new ConcurrentHashMap<>();
+
 					for (String key :
 							editableFragmentEntryProcessorJSONObject.keySet()) {
 
@@ -103,7 +108,19 @@ public class LayoutClassedModelUsageUpgradeProcess extends UpgradeProcess {
 
 						long classNameId = editableJSONObject.getLong(
 							"classNameId");
+
+						List<Long> classPKs =
+							classNameIdClassPKsMap.computeIfAbsent(
+								classNameId, key1 -> new ArrayList<>());
+
 						long classPK = editableJSONObject.getLong("classPK");
+
+						if (classPKs.contains(classPK)) {
+							continue;
+						}
+
+						classPKs.add(classPK);
+
 						long fragmentEntryLinkId = (Long)values[2];
 						long plid = (Long)values[3];
 

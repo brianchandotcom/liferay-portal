@@ -21,13 +21,13 @@ public class SchemaUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-			SQLTransformer.transform(
-				StringBundler.concat(
-				"select ObjectField.dbColumnName, ObjectField.dbTableName ",
-				"from ObjectField where ObjectField.businessType ='",
-				ObjectFieldConstants.BUSINESS_TYPE_PICKLIST, "'")));
-
-			 ResultSet resultSet = preparedStatement.executeQuery()) {
+				SQLTransformer.transform(
+					StringBundler.concat(
+						"select ObjectField.dbColumnName, ",
+						"ObjectField.dbTableName from ObjectField where ",
+						"ObjectField.businessType ='",
+						ObjectFieldConstants.BUSINESS_TYPE_PICKLIST, "'")));
+			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {
 				alterColumnType(

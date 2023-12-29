@@ -631,9 +631,11 @@ public class PullRequest {
 			throw new RuntimeException(ioException);
 		}
 
+		String propertyName = JenkinsResultsParserUtil.combine(
+			"ci.forward", force ? ".force" : "", ".required.completed.suites");
+
 		String requiredCompletedSuites = JenkinsResultsParserUtil.getProperty(
-			buildProperties, "pull.request.forward.required.completed.suites",
-			getGitRepositoryName());
+			buildProperties, propertyName, getGitRepositoryName());
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(requiredCompletedSuites)) {
 			return true;
@@ -666,21 +668,17 @@ public class PullRequest {
 			throw new RuntimeException(ioException);
 		}
 
+		String propertyName = JenkinsResultsParserUtil.combine(
+			"ci.forward", force ? ".force" : "", ".required.passing.suites");
+
 		String requiredPassingTestSuiteNamesProperty =
 			JenkinsResultsParserUtil.getProperty(
-				buildProperties, "pull.request.forward.required.passing.suites",
-				getGitRepositoryName());
+				buildProperties, propertyName, getGitRepositoryName());
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(
 				requiredPassingTestSuiteNamesProperty)) {
 
 			return true;
-		}
-
-		if (force) {
-			requiredPassingTestSuiteNamesProperty =
-				requiredPassingTestSuiteNamesProperty.replaceAll(
-					"\\s*,?\\s*relevant,?", "");
 		}
 
 		List<String> requiredPassingTestSuiteNames = Arrays.asList(

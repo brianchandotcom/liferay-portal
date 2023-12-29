@@ -43,7 +43,7 @@ import com.liferay.journal.article.dynamic.data.mapping.form.field.type.constant
 						@DDMFormLayoutColumn(
 							size = 12,
 							value = {
-								"name", "fieldReference", "predefinedValue",
+								"fieldReference", "name", "predefinedValue",
 								"visibilityExpression", "fieldNamespace",
 								"indexType", "localizable", "readOnly",
 								"dataType", "type", "showLabel", "repeatable"

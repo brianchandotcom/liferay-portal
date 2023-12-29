@@ -42,7 +42,7 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 						@DDMFormLayoutColumn(
 							size = 12,
 							value = {
-								"name", "fieldReference", "style", "dataType",
+								"fieldReference", "name", "style", "dataType",
 								"type", "showLabel", "repeatable",
 								"rulesConditionDisabled"
 							}

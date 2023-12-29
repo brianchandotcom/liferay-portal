@@ -61,7 +61,7 @@ import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldTypeS
 				@DDMFormLayoutRow(
 					{
 						@DDMFormLayoutColumn(
-							size = 12, value = {"name", "fieldReference"}
+							size = 12, value = {"fieldReference", "name"}
 						)
 					}
 				)

@@ -27,7 +27,7 @@ import com.liferay.petra.string.StringPool;
 						@DDMFormLayoutColumn(
 							size = 12,
 							value = {
-								"dataType", "name", "fieldReference", "type"
+								"dataType", "fieldReference", "name", "type"
 							}
 						)
 					}

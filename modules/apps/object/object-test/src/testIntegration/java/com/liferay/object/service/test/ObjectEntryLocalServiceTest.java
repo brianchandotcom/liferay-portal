@@ -2700,10 +2700,10 @@ public class ObjectEntryLocalServiceTest {
 			values.get("multipleListTypeEntriesKey"));
 		Assert.assertEquals(5, values.get("numberOfBooksWritten"));
 		Assert.assertEquals(script, values.get("script"));
-		Assert.assertEquals(0L, values.get("upload"));
 		Assert.assertEquals(_getBigDecimal(45L), values.get("speed"));
 		Assert.assertEquals("listTypeEntryKey2", values.get("state"));
 		Assert.assertEquals(timestamp, values.get("time"));
+		Assert.assertEquals(0L, values.get("upload"));
 		Assert.assertEquals(60D, values.get("weight"));
 		Assert.assertEquals(
 			objectEntry.getObjectEntryId(),

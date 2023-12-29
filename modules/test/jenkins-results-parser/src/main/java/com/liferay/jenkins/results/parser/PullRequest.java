@@ -662,23 +662,25 @@ public class PullRequest {
 			throw new RuntimeException(ioException);
 		}
 
-		String requiredPassingSuitesProperty =
+		String requiredPassingTestSuiteNamesProperty =
 			JenkinsResultsParserUtil.getProperty(
 				buildProperties, "pull.request.forward.required.passing.suites",
 				getGitRepositoryName());
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(
-				requiredPassingSuitesProperty)) {
+				requiredPassingTestSuiteNamesProperty)) {
 
 			return true;
 		}
 
-		List<String> requiredPassingTestSuiteNames = Arrays.asList(
-			requiredPassingSuitesProperty.split("\\s*,\\s*"));
-
 		if (force) {
-			requiredPassingTestSuiteNames.remove("relevant");
+			requiredPassingTestSuiteNamesProperty =
+				requiredPassingTestSuiteNamesProperty.replaceAll(
+					"\\s*,?\\s*relevant,?", "");
 		}
+
+		List<String> requiredPassingTestSuiteNames = Arrays.asList(
+			requiredPassingTestSuiteNamesProperty.split("\\s*,\\s*"));
 
 		List<String> passingTestSuiteNames = getPassingTestSuites();
 

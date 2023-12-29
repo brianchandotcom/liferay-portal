@@ -18,6 +18,8 @@ import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.MultiVMPool;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -25,6 +27,7 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
@@ -107,23 +110,56 @@ public class LayoutClassedModelUsageUpgradeProcessTest {
 			journalArticle.getResourcePrimKey(), 1, fragmentEntryLink);
 	}
 
+	@Test
+	public void testUpgradeProcessMultipleEditableFields() throws Exception {
+		JournalArticle journalArticle1 = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+		JournalArticle journalArticle2 = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		FragmentEntryLink fragmentEntryLink = _addFragmentEntryLink(
+			journalArticle1, journalArticle2);
+
+		_deleteLayoutClassedModelUsage(
+			journalArticle1.getResourcePrimKey(),
+			journalArticle2.getResourcePrimKey());
+
+		_runUpgrade();
+
+		_assertLayoutClassedModelUsages(
+			journalArticle1.getResourcePrimKey(), 1, fragmentEntryLink);
+		_assertLayoutClassedModelUsages(
+			journalArticle2.getResourcePrimKey(), 1, fragmentEntryLink);
+	}
+
 	private FragmentEntryLink _addFragmentEntryLink(
-			JournalArticle journalArticle)
+			JournalArticle... journalArticles)
 		throws Exception {
 
 		return ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
 			JSONUtil.put(
 				FragmentEntryProcessorConstants.
 					KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
-				JSONUtil.put(
-					"test",
-					JSONUtil.put(
-						"classNameId",
-						String.valueOf(_journalArticleClassNameId)
-					).put(
-						"classPK",
-						String.valueOf(journalArticle.getResourcePrimKey())
-					))
+				() -> {
+					JSONObject jsonObject = _jsonFactory.createJSONObject();
+
+					for (JournalArticle journalArticle : journalArticles) {
+						jsonObject.put(
+							RandomTestUtil.randomString(),
+							JSONUtil.put(
+								"classNameId",
+								String.valueOf(_journalArticleClassNameId)
+							).put(
+								"classPK",
+								String.valueOf(
+									journalArticle.getResourcePrimKey())
+							));
+					}
+
+					return jsonObject;
+				}
 			).toString(),
 			_draftLayout,
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
@@ -153,25 +189,29 @@ public class LayoutClassedModelUsageUpgradeProcessTest {
 		}
 	}
 
-	private void _deleteLayoutClassedModelUsage(long classPK) {
-		List<LayoutClassedModelUsage> layoutClassedModelUsages =
-			_layoutClassedModelUsageLocalService.getLayoutClassedModelUsages(
-				_journalArticleClassNameId, classPK);
+	private void _deleteLayoutClassedModelUsage(long... classPKs) {
+		for (long classPK : classPKs) {
+			List<LayoutClassedModelUsage> layoutClassedModelUsages =
+				_layoutClassedModelUsageLocalService.
+					getLayoutClassedModelUsages(
+						_journalArticleClassNameId, classPK);
 
-		Assert.assertEquals(
-			layoutClassedModelUsages.toString(), 1,
-			layoutClassedModelUsages.size());
+			Assert.assertEquals(
+				layoutClassedModelUsages.toString(), 1,
+				layoutClassedModelUsages.size());
 
-		_layoutClassedModelUsageLocalService.deleteLayoutClassedModelUsage(
-			layoutClassedModelUsages.get(0));
+			_layoutClassedModelUsageLocalService.deleteLayoutClassedModelUsage(
+				layoutClassedModelUsages.get(0));
 
-		layoutClassedModelUsages =
-			_layoutClassedModelUsageLocalService.getLayoutClassedModelUsages(
-				_journalArticleClassNameId, classPK);
+			layoutClassedModelUsages =
+				_layoutClassedModelUsageLocalService.
+					getLayoutClassedModelUsages(
+						_journalArticleClassNameId, classPK);
 
-		Assert.assertEquals(
-			layoutClassedModelUsages.toString(), 0,
-			layoutClassedModelUsages.size());
+			Assert.assertEquals(
+				layoutClassedModelUsages.toString(), 0,
+				layoutClassedModelUsages.size());
+		}
 	}
 
 	private void _runUpgrade() throws Exception {
@@ -209,6 +249,9 @@ public class LayoutClassedModelUsageUpgradeProcessTest {
 
 	@Inject
 	private JournalContentSearchLocalService _journalContentSearchLocalService;
+
+	@Inject
+	private JSONFactory _jsonFactory;
 
 	@Inject
 	private LayoutClassedModelUsageLocalService

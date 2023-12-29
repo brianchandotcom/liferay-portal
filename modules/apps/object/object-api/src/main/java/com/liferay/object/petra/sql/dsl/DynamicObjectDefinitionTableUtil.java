@@ -53,15 +53,15 @@ public class DynamicObjectDefinitionTableUtil {
 			return dataType;
 		}
 
-		int dbColumnMaxLength = 280;
+		int size = 280;
 
 		if (StringUtil.equals(
 				businessType, ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
 
-			dbColumnMaxLength = 75;
+			size = 75;
 		}
 
-		return StringBundler.concat(dataType, "(", dbColumnMaxLength, ")");
+		return StringBundler.concat(dataType, "(", size, ")");
 	}
 
 	public static Class<?> getJavaClass(String dbType) {

@@ -309,6 +309,9 @@ public class CommerceAccountRoleHelperImpl
 					CommercePriceListActionKeys.ADD_COMMERCE_PRICE_LIST
 				});
 			companyResourceActionIds.put(
+				"com.liferay.commerce.price.list.model.CommercePriceList",
+				new String[] {ActionKeys.VIEW});
+			companyResourceActionIds.put(
 				"com.liferay.commerce.pricing",
 				new String[] {
 					CommercePricingClassActionKeys.ADD_COMMERCE_PRICING_CLASS

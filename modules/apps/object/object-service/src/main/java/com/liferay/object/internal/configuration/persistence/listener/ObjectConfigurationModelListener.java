@@ -9,9 +9,12 @@ import com.liferay.object.configuration.ObjectConfiguration;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Dictionary;
 import java.util.Objects;
+import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -31,10 +34,15 @@ public class ObjectConfigurationModelListener
 
 		long duration = GetterUtil.getLong(properties.get("duration"));
 
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", LocaleThreadLocal.getThemeDisplayLocale(),
+			getClass());
+
 		if (duration < 1)
 
 			throw new ConfigurationModelListenerException(
-				"Duration field cannot be lesser than 1",
+				ResourceBundleUtil.getString(
+					resourceBundle, "duration-field-cannot-be-lesser-than-1"),
 				ObjectConfiguration.class, getClass(), properties);
 
 		String timeScale = GetterUtil.getString(properties.get("timeScale"));
@@ -43,7 +51,8 @@ public class ObjectConfigurationModelListener
 			  Objects.equals(timeScale, "weeks"))) {
 
 			throw new ConfigurationModelListenerException(
-				"Value for TimeScale field is not valid",
+				ResourceBundleUtil.getString(
+					resourceBundle, "value-for-timescale-field-is-not-valid"),
 				ObjectConfiguration.class, getClass(), properties);
 		}
 	}

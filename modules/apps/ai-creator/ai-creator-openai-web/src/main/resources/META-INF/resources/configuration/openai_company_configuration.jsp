@@ -11,6 +11,12 @@
 AICreatorOpenAICompanyConfigurationDisplayContext aiCreatorOpenAICompanyConfigurationDisplayContext = (AICreatorOpenAICompanyConfigurationDisplayContext)request.getAttribute(AICreatorOpenAICompanyConfigurationDisplayContext.class.getName());
 %>
 
+<liferay-util:html-top
+	outputKey="document_library_preview_image_css"
+>
+	<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathProxy() + application.getContextPath() + "/css/configuration.css") %>" rel="stylesheet" type="text/css" />
+</liferay-util:html-top>
+
 <clay:content-row
 	cssClass="c-mt-4"
 >
@@ -39,6 +45,7 @@ AICreatorOpenAICompanyConfigurationDisplayContext aiCreatorOpenAICompanyConfigur
 
 <clay:content-row>
 	<clay:content-col
+		cssClass="ai-creator-config-checkbox"
 		expand="<%= true %>"
 	>
 		<clay:checkbox
@@ -52,7 +59,7 @@ AICreatorOpenAICompanyConfigurationDisplayContext aiCreatorOpenAICompanyConfigur
 
 <c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPS-196648") %>'>
 	<clay:content-row
-		cssClass="c-my-5"
+		cssClass="ai-creator-config-checkbox c-my-5"
 	>
 		<clay:content-col
 			expand="<%= true %>"

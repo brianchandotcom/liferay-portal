@@ -1,0 +1,5 @@
+@import 'cadmin-variables';
+
+.ai-creator-config-checkbox .custom-control {
+    margin-bottom: 0;
+}

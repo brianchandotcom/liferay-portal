@@ -82,7 +82,7 @@ public class PortletDocumentFragmentEntryProcessor
 
 		Set<String> processedPortletIds = new HashSet<>();
 
-		for (Element element : document.select("*")) {
+		for (Element element : document.getAllElements()) {
 			String tagName = element.tagName();
 
 			String portletName = _getPortletName(tagName);
@@ -360,7 +360,7 @@ public class PortletDocumentFragmentEntryProcessor
 			Document document, Locale locale)
 		throws PortalException {
 
-		for (Element element : document.select("*")) {
+		for (Element element : document.getAllElements()) {
 			String htmlTagName = element.tagName();
 
 			if (!StringUtil.startsWith(htmlTagName, "lfr-widget-")) {

@@ -43,7 +43,7 @@ public class PortletFragmentEntryValidator implements FragmentEntryValidator {
 
 		Document document = _getDocument(html);
 
-		for (Element element : document.select("*")) {
+		for (Element element : document.getAllElements()) {
 			String htmlTagName = element.tagName();
 
 			if (!StringUtil.startsWith(htmlTagName, "lfr-widget-")) {

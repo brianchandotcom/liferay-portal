@@ -7,6 +7,7 @@ package com.liferay.fragment.entry.processor.styles;
 
 import com.liferay.fragment.processor.FragmentEntryProcessor;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 
 import org.osgi.service.component.annotations.Component;
@@ -23,6 +24,21 @@ public class StylesFragmentEntryProcessor implements FragmentEntryProcessor {
 	@Override
 	public JSONArray getDataAttributesJSONArray() {
 		return JSONUtil.put("lfr-styles");
+	}
+
+	@Override
+	public JSONObject getDefaultEditableValuesJSONObject(
+		String html, String configuration) {
+
+		return JSONUtil.put(
+			"hasCommonStyles",
+			() -> {
+				if (!html.contains("data-lfr-styles")) {
+					return null;
+				}
+
+				return true;
+			});
 	}
 
 }

@@ -1,6 +1,10 @@
 @import 'cadmin-variables';
 
 html#{$cadmin-selector} {
+	body.open-admin-panel .cadmin .staging-bar {
+		margin-right: 320px;
+	}
+
 	.cadmin {
 		.staging-top {
 			background-color: $cadmin-white;

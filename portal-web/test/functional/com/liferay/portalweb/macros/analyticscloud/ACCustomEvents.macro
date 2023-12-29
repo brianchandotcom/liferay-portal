@@ -43,7 +43,7 @@ definition {
 
 		MouseOver(locator1 = "ACUtils#NAME_LIST");
 
-		Click(locator1 = "ACCustomEvents#BLOCK_UNBLOCK_EVENT_BUTTON");
+		Click.clickNoMouseOver(locator1 = "ACCustomEvents#BLOCK_UNBLOCK_EVENT_BUTTON");
 
 		ACUtils.clickAnyButton(button = ${key_actionButton});
 	}

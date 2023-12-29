@@ -172,8 +172,8 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 						1,
 						_fixElementDefinition(
 							resultSet.getString("elementDefinitionJSON")));
-					preparedStatement2.setString(
-						2, resultSet.getString("sxpElementId"));
+					preparedStatement2.setLong(
+						2, resultSet.getLong("sxpElementId"));
 
 					preparedStatement2.addBatch();
 				}

@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -43,6 +43,10 @@ public abstract class BaseDataLayoutBuilderTag extends com.liferay.taglib.util.I
 
 	public java.lang.Long getDataLayoutId() {
 		return _dataLayoutId;
+	}
+
+	public boolean getDisplayFieldName() {
+		return _displayFieldName;
 	}
 
 	public java.lang.String getFieldSetContentType() {
@@ -97,6 +101,10 @@ public abstract class BaseDataLayoutBuilderTag extends com.liferay.taglib.util.I
 		_dataLayoutId = dataLayoutId;
 	}
 
+	public void setDisplayFieldName(boolean displayFieldName) {
+		_displayFieldName = displayFieldName;
+	}
+
 	public void setFieldSetContentType(java.lang.String fieldSetContentType) {
 		_fieldSetContentType = fieldSetContentType;
 	}
@@ -145,6 +153,7 @@ public abstract class BaseDataLayoutBuilderTag extends com.liferay.taglib.util.I
 		_contentType = null;
 		_dataDefinitionId = null;
 		_dataLayoutId = null;
+		_displayFieldName = false;
 		_fieldSetContentType = null;
 		_groupId = null;
 		_localizable = false;
@@ -172,6 +181,7 @@ public abstract class BaseDataLayoutBuilderTag extends com.liferay.taglib.util.I
 		setNamespacedAttribute(request, "contentType", _contentType);
 		setNamespacedAttribute(request, "dataDefinitionId", _dataDefinitionId);
 		setNamespacedAttribute(request, "dataLayoutId", _dataLayoutId);
+		setNamespacedAttribute(request, "displayFieldName", _displayFieldName);
 		setNamespacedAttribute(request, "fieldSetContentType", _fieldSetContentType);
 		setNamespacedAttribute(request, "groupId", _groupId);
 		setNamespacedAttribute(request, "localizable", _localizable);
@@ -195,6 +205,7 @@ public abstract class BaseDataLayoutBuilderTag extends com.liferay.taglib.util.I
 	private java.lang.String _contentType = null;
 	private java.lang.Long _dataDefinitionId = null;
 	private java.lang.Long _dataLayoutId = null;
+	private boolean _displayFieldName = false;
 	private java.lang.String _fieldSetContentType = null;
 	private java.lang.Long _groupId = null;
 	private boolean _localizable = false;

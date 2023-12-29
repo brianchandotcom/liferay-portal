@@ -38,6 +38,12 @@
 			<type>java.lang.Long</type>
 		</attribute>
 		<attribute>
+			<name>displayFieldName</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
 			<name>fieldSetContentType</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

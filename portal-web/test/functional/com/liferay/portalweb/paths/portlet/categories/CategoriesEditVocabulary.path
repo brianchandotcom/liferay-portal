@@ -25,7 +25,7 @@
 
 <tr>
 	<td>ASSOCIATED_ASSET_TYPES_SELECT</td>
-	<td>//select[contains(@id,'AssetCategories')]</td>
+	<td>//select[contains(@name,'AssetCategories')]</td>
 	<td></td>
 </tr>
 <tr>

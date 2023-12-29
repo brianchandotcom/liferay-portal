@@ -73,19 +73,19 @@ public class NotificationTemplateFTLElementsMVCResourceCommand
 
 		Locale locale = _portal.getLocale(resourceRequest);
 
-		Map<String, TemplateVariableGroup> templateVariableGroupsMap =
-			TemplateContextHelper.getTemplateVariableGroups(
-				_classNameLocalService.getClassNameId(
-					InfoItemFormProvider.class.getName()),
-				0L, TemplateConstants.LANG_TYPE_FTL, locale);
+		_fillTemplateContextTemplateVariables(locale, jsonArray);
 
-		for (TemplateVariableGroup templateVariableGroup :
-				templateVariableGroupsMap.values()) {
+		_fillObjectDefinitionTemplateVariables(
+			resourceRequest, objectDefinition, locale, jsonArray);
 
-			jsonArray.put(
-				_getTemplateVariableGroupJSONObject(
-					false, locale, templateVariableGroup));
-		}
+		JSONPortletResponseUtil.writeJSON(
+			resourceRequest, resourceResponse, jsonArray);
+	}
+
+	private void _fillObjectDefinitionTemplateVariables(
+			ResourceRequest resourceRequest, ObjectDefinition objectDefinition,
+			Locale locale, JSONArray jsonArray)
+		throws Exception {
 
 		InfoItemFormProvider<?> infoItemFormProvider =
 			_infoItemServiceRegistry.getFirstInfoItemService(
@@ -125,9 +125,25 @@ public class NotificationTemplateFTLElementsMVCResourceCommand
 				_getTemplateVariableGroupJSONObject(
 					true, locale, templateVariableGroup));
 		}
+	}
 
-		JSONPortletResponseUtil.writeJSON(
-			resourceRequest, resourceResponse, jsonArray);
+	private void _fillTemplateContextTemplateVariables(
+			Locale locale, JSONArray jsonArray)
+		throws Exception {
+
+		Map<String, TemplateVariableGroup> templateVariableGroupsMap =
+			TemplateContextHelper.getTemplateVariableGroups(
+				_classNameLocalService.getClassNameId(
+					InfoItemFormProvider.class.getName()),
+				0L, TemplateConstants.LANG_TYPE_FTL, locale);
+
+		for (TemplateVariableGroup templateVariableGroup :
+				templateVariableGroupsMap.values()) {
+
+			jsonArray.put(
+				_getTemplateVariableGroupJSONObject(
+					false, locale, templateVariableGroup));
+		}
 	}
 
 	private JSONObject _getTemplateVariableGroupJSONObject(

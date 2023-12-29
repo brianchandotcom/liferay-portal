@@ -93,7 +93,7 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcessTest {
 		_addAssetPublisherPortletToLayout(
 			_publicLayout, "dynamic",
 			new String[] {_assetEntry.getClassUuid()});
-		_addJournalContentPortletToLayout(
+		_addJournalContentSearch(
 			RandomTestUtil.randomString(), _journalArticle.getGroupId(),
 			_publicLayout);
 
@@ -104,7 +104,7 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcessTest {
 				_privateLayout, "manual",
 				new String[] {_assetEntry.getClassUuid()}));
 		expectedPrivateLayoutPortletIds.add(
-			_addJournalContentPortletToLayout(
+			_addJournalContentSearch(
 				_journalArticle.getArticleId(), _journalArticle.getGroupId(),
 				_privateLayout));
 
@@ -117,7 +117,7 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcessTest {
 				_publicLayout, "manual",
 				new String[] {_assetEntry.getClassUuid()}));
 		expectedPublicLayoutPortletIds.add(
-			_addJournalContentPortletToLayout(
+			_addJournalContentSearch(
 				_journalArticle.getArticleId(), _journalArticle.getGroupId(),
 				_publicLayout));
 
@@ -154,7 +154,7 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcessTest {
 		_addAssetPublisherPortletToLayout(
 			_publicLayout, "dynamic",
 			new String[] {_assetEntry.getClassUuid()});
-		_addJournalContentPortletToLayout(
+		_addJournalContentSearch(
 			RandomTestUtil.randomString(), _journalArticle.getGroupId(),
 			_publicLayout);
 
@@ -165,7 +165,7 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcessTest {
 				_privateLayout, "manual",
 				new String[] {_assetEntry.getClassUuid()}));
 		expectedPrivateLayoutPortletIds.add(
-			_addJournalContentPortletToLayout(
+			_addJournalContentSearch(
 				_journalArticle.getArticleId(), _journalArticle.getGroupId(),
 				_privateLayout));
 
@@ -178,7 +178,7 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcessTest {
 				_publicLayout, "manual",
 				new String[] {_assetEntry.getClassUuid()}));
 		expectedPublicLayoutPortletIds.add(
-			_addJournalContentPortletToLayout(
+			_addJournalContentSearch(
 				_journalArticle.getArticleId(), _journalArticle.getGroupId(),
 				_publicLayout));
 
@@ -284,7 +284,7 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcessTest {
 			).build());
 	}
 
-	private String _addJournalContentPortletToLayout(
+	private String _addJournalContentSearch(
 			String articleId, long groupId, Layout layout)
 		throws Exception {
 

@@ -667,7 +667,7 @@ definition {
 
 		MouseOver(locator1 = "ACUtils#NAME_LIST");
 
-		Click(locator1 = "ACUtils#DELETE_BUTTON");
+		Click.clickNoMouseOver(locator1 = "ACUtils#DELETE_BUTTON");
 
 		ACUtils.clickAnyButton(button = ${key_actionButton});
 

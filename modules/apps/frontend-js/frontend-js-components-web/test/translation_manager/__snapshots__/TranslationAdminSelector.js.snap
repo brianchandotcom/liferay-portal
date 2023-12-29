@@ -2,7 +2,7 @@
 
 exports[`TranslationAdminSelector is used as a controlled component 1`] = `
 <div
-  class="dropdown-menu show"
+  class="dropdown-menu dropdown-menu-indicator-start show"
   id="clay-dropdown-menu-7"
   role="presentation"
   style="left: -999px; top: -995px;"
@@ -12,6 +12,7 @@ exports[`TranslationAdminSelector is used as a controlled component 1`] = `
     role="menu"
   >
     <li
+      aria-selected="false"
       role="presentation"
     >
       <button
@@ -36,16 +37,26 @@ exports[`TranslationAdminSelector is used as a controlled component 1`] = `
                   href="#en-us"
                 />
               </svg>
-              en-US
+              <span
+                aria-hidden="true"
+              >
+                en-US
+              </span>
             </div>
           </span>
           <span
             class="autofit-col"
           >
+            <span
+              class="sr-only"
+            >
+              x-language-x
+            </span>
             <div
               class="autofit-section"
             >
               <span
+                aria-hidden="true"
                 class="label label-info"
               >
                 <span
@@ -60,6 +71,7 @@ exports[`TranslationAdminSelector is used as a controlled component 1`] = `
       </button>
     </li>
     <li
+      aria-selected="false"
       role="presentation"
     >
       <button
@@ -84,16 +96,26 @@ exports[`TranslationAdminSelector is used as a controlled component 1`] = `
                   href="#ar-sa"
                 />
               </svg>
-              ar-SA
+              <span
+                aria-hidden="true"
+              >
+                ar-SA
+              </span>
             </div>
           </span>
           <span
             class="autofit-col"
           >
+            <span
+              class="sr-only"
+            >
+              x-language-x
+            </span>
             <div
               class="autofit-section"
             >
               <span
+                aria-hidden="true"
                 class="label label-warning"
               >
                 <span
@@ -108,6 +130,7 @@ exports[`TranslationAdminSelector is used as a controlled component 1`] = `
       </button>
     </li>
     <li
+      aria-selected="false"
       role="presentation"
     >
       <button
@@ -132,16 +155,26 @@ exports[`TranslationAdminSelector is used as a controlled component 1`] = `
                   href="#nl-nl"
                 />
               </svg>
-              nl-NL
+              <span
+                aria-hidden="true"
+              >
+                nl-NL
+              </span>
             </div>
           </span>
           <span
             class="autofit-col"
           >
+            <span
+              class="sr-only"
+            >
+              x-language-x
+            </span>
             <div
               class="autofit-section"
             >
               <span
+                aria-hidden="true"
                 class="label label-warning"
               >
                 <span
@@ -168,6 +201,7 @@ exports[`TranslationAdminSelector renders a dropdown trigger with the selected l
       aria-controls="clay-dropdown-menu-1"
       aria-expanded="false"
       aria-haspopup="true"
+      aria-label="select-a-language.-current-language-x"
       class="dropdown-toggle btn btn-monospaced btn-secondary"
       title="select-translation-language"
       type="button"
@@ -185,6 +219,7 @@ exports[`TranslationAdminSelector renders a dropdown trigger with the selected l
         </svg>
       </span>
       <span
+        aria-hidden="true"
         class="btn-section"
       >
         en-US
@@ -208,7 +243,7 @@ exports[`TranslationAdminSelector renders a modal when click on Manage Translati
 
 exports[`TranslationAdminSelector renders an open dropdown with the list of active languages 1`] = `
 <div
-  class="dropdown-menu show"
+  class="dropdown-menu dropdown-menu-indicator-start show"
   id="clay-dropdown-menu-2"
   role="presentation"
   style="left: -999px; top: -995px;"
@@ -218,6 +253,7 @@ exports[`TranslationAdminSelector renders an open dropdown with the list of acti
     role="menu"
   >
     <li
+      aria-selected="false"
       role="presentation"
     >
       <button
@@ -242,16 +278,26 @@ exports[`TranslationAdminSelector renders an open dropdown with the list of acti
                   href="#en-us"
                 />
               </svg>
-              en-US
+              <span
+                aria-hidden="true"
+              >
+                en-US
+              </span>
             </div>
           </span>
           <span
             class="autofit-col"
           >
+            <span
+              class="sr-only"
+            >
+              x-language-x
+            </span>
             <div
               class="autofit-section"
             >
               <span
+                aria-hidden="true"
                 class="label label-info"
               >
                 <span
@@ -266,6 +312,7 @@ exports[`TranslationAdminSelector renders an open dropdown with the list of acti
       </button>
     </li>
     <li
+      aria-selected="false"
       role="presentation"
     >
       <button
@@ -290,16 +337,26 @@ exports[`TranslationAdminSelector renders an open dropdown with the list of acti
                   href="#ca-es"
                 />
               </svg>
-              ca-ES
+              <span
+                aria-hidden="true"
+              >
+                ca-ES
+              </span>
             </div>
           </span>
           <span
             class="autofit-col"
           >
+            <span
+              class="sr-only"
+            >
+              x-language-x
+            </span>
             <div
               class="autofit-section"
             >
               <span
+                aria-hidden="true"
                 class="label label-warning"
               >
                 <span
@@ -319,7 +376,7 @@ exports[`TranslationAdminSelector renders an open dropdown with the list of acti
 
 exports[`TranslationAdminSelector renders an open dropdown with the list of active languages and manage translation option 1`] = `
 <div
-  class="dropdown-menu show"
+  class="dropdown-menu dropdown-menu-indicator-start show"
   id="clay-dropdown-menu-3"
   role="presentation"
   style="left: -999px; top: -995px;"
@@ -329,6 +386,7 @@ exports[`TranslationAdminSelector renders an open dropdown with the list of acti
     role="menu"
   >
     <li
+      aria-selected="false"
       role="presentation"
     >
       <button
@@ -353,16 +411,26 @@ exports[`TranslationAdminSelector renders an open dropdown with the list of acti
                   href="#en-us"
                 />
               </svg>
-              en-US
+              <span
+                aria-hidden="true"
+              >
+                en-US
+              </span>
             </div>
           </span>
           <span
             class="autofit-col"
           >
+            <span
+              class="sr-only"
+            >
+              x-language-x
+            </span>
             <div
               class="autofit-section"
             >
               <span
+                aria-hidden="true"
                 class="label label-info"
               >
                 <span
@@ -377,6 +445,7 @@ exports[`TranslationAdminSelector renders an open dropdown with the list of acti
       </button>
     </li>
     <li
+      aria-selected="false"
       role="presentation"
     >
       <button
@@ -401,16 +470,26 @@ exports[`TranslationAdminSelector renders an open dropdown with the list of acti
                   href="#ca-es"
                 />
               </svg>
-              ca-ES
+              <span
+                aria-hidden="true"
+              >
+                ca-ES
+              </span>
             </div>
           </span>
           <span
             class="autofit-col"
           >
+            <span
+              class="sr-only"
+            >
+              x-language-x
+            </span>
             <div
               class="autofit-section"
             >
               <span
+                aria-hidden="true"
                 class="label label-warning"
               >
                 <span
@@ -467,7 +546,7 @@ exports[`TranslationAdminSelector renders an open dropdown with the list of acti
 exports[`TranslationAdminSelector renders an open dropdown with updated active locales when added from the Manage Translations Modal 1`] = `
 <div
   aria-hidden="true"
-  class="dropdown-menu"
+  class="dropdown-menu dropdown-menu-indicator-start"
   id="clay-dropdown-menu-5"
   role="presentation"
   style="left: -999px; top: -995px;"
@@ -477,13 +556,26 @@ exports[`TranslationAdminSelector renders an open dropdown with updated active l
     role="menu"
   >
     <li
+      aria-selected="true"
       role="presentation"
     >
       <button
-        class="dropdown-item"
+        class="dropdown-item active"
         role="menuitem"
         tabindex="-1"
       >
+        <span
+          class="dropdown-item-indicator-start"
+        >
+          <svg
+            class="lexicon-icon lexicon-icon-check-small"
+            role="presentation"
+          >
+            <use
+              href="#check-small"
+            />
+          </svg>
+        </span>
         <span
           class="autofit-row"
         >
@@ -501,16 +593,26 @@ exports[`TranslationAdminSelector renders an open dropdown with updated active l
                   href="#en-us"
                 />
               </svg>
-              en-US
+              <span
+                aria-hidden="true"
+              >
+                en-US
+              </span>
             </div>
           </span>
           <span
             class="autofit-col"
           >
+            <span
+              class="sr-only"
+            >
+              x-language-x
+            </span>
             <div
               class="autofit-section"
             >
               <span
+                aria-hidden="true"
                 class="label label-info"
               >
                 <span
@@ -525,6 +627,7 @@ exports[`TranslationAdminSelector renders an open dropdown with updated active l
       </button>
     </li>
     <li
+      aria-selected="false"
       role="presentation"
     >
       <button
@@ -549,16 +652,26 @@ exports[`TranslationAdminSelector renders an open dropdown with updated active l
                   href="#ar-sa"
                 />
               </svg>
-              ar-SA
+              <span
+                aria-hidden="true"
+              >
+                ar-SA
+              </span>
             </div>
           </span>
           <span
             class="autofit-col"
           >
+            <span
+              class="sr-only"
+            >
+              x-language-x
+            </span>
             <div
               class="autofit-section"
             >
               <span
+                aria-hidden="true"
                 class="label label-warning"
               >
                 <span
@@ -573,6 +686,7 @@ exports[`TranslationAdminSelector renders an open dropdown with updated active l
       </button>
     </li>
     <li
+      aria-selected="false"
       role="presentation"
     >
       <button
@@ -597,16 +711,26 @@ exports[`TranslationAdminSelector renders an open dropdown with updated active l
                   href="#nl-nl"
                 />
               </svg>
-              nl-NL
+              <span
+                aria-hidden="true"
+              >
+                nl-NL
+              </span>
             </div>
           </span>
           <span
             class="autofit-col"
           >
+            <span
+              class="sr-only"
+            >
+              x-language-x
+            </span>
             <div
               class="autofit-section"
             >
               <span
+                aria-hidden="true"
                 class="label label-warning"
               >
                 <span
@@ -669,6 +793,7 @@ exports[`TranslationAdminSelector selects the default locale if the current sele
       aria-controls="clay-dropdown-menu-8"
       aria-expanded="true"
       aria-haspopup="true"
+      aria-label="select-a-language.-current-language-x"
       class="dropdown-toggle btn btn-monospaced btn-secondary"
       style=""
       title="select-translation-language"
@@ -687,6 +812,7 @@ exports[`TranslationAdminSelector selects the default locale if the current sele
         </svg>
       </span>
       <span
+        aria-hidden="true"
         class="btn-section"
       >
         en-US

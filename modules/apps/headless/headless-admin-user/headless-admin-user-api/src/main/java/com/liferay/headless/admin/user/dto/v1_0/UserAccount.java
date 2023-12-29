@@ -7,6 +7,7 @@ package com.liferay.headless.admin.user.dto.v1_0;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -1304,6 +1305,7 @@ public class UserAccount implements Serializable {
 	@JsonIgnore
 	private Supplier<SiteBrief[]> _siteBriefsSupplier;
 
+	@JsonGetter("status")
 	@Schema(description = "The user's status.")
 	@Valid
 	public Status getStatus() {

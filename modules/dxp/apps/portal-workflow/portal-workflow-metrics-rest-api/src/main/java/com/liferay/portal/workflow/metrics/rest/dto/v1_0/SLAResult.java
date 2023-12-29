@@ -7,6 +7,7 @@ package com.liferay.portal.workflow.metrics.rest.dto.v1_0;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -298,6 +299,7 @@ public class SLAResult implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _remainingTimeSupplier;
 
+	@JsonGetter("status")
 	@Schema
 	@Valid
 	public Status getStatus() {

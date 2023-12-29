@@ -7,6 +7,7 @@ package com.liferay.headless.admin.workflow.dto.v1_0;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -597,6 +598,7 @@ public class WorkflowLog implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _stateLabelSupplier;
 
+	@JsonGetter("type")
 	@Schema(description = "The workflow log's type.")
 	@Valid
 	public Type getType() {

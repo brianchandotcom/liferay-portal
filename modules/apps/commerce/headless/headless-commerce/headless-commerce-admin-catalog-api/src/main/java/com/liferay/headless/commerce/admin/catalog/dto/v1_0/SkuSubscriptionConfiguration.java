@@ -7,6 +7,7 @@ package com.liferay.headless.commerce.admin.catalog.dto.v1_0;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -190,6 +191,7 @@ public class SkuSubscriptionConfiguration implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _deliverySubscriptionNumberOfLengthSupplier;
 
+	@JsonGetter("deliverySubscriptionType")
 	@Schema(example = "monthly")
 	@Valid
 	public DeliverySubscriptionType getDeliverySubscriptionType() {
@@ -461,6 +463,7 @@ public class SkuSubscriptionConfiguration implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _overrideSubscriptionInfoSupplier;
 
+	@JsonGetter("subscriptionType")
 	@Schema(example = "monthly")
 	@Valid
 	public SubscriptionType getSubscriptionType() {

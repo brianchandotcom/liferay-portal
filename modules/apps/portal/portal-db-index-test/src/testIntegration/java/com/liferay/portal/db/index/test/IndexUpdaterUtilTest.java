@@ -167,6 +167,25 @@ public class IndexUpdaterUtilTest {
 	}
 
 	@Test
+	public void testUpdateAllIndexesAfterUpdatePortalIndexes()
+		throws Exception {
+
+		IndexUpdaterUtil.updatePortalIndexes();
+
+		_dropIndex(_portalTableIndexName, _portalIndexName);
+
+		IndexUpdaterUtil.updateAllIndexes();
+
+		Assert.assertFalse(
+			_dbInspector.hasIndex(_portalTableIndexName, _portalIndexName));
+
+		IndexUpdaterUtil.updatePortalIndexes();
+
+		Assert.assertTrue(
+			_dbInspector.hasIndex(_portalTableIndexName, _portalIndexName));
+	}
+
+	@Test
 	public void testUpdateAllIndexesInBackground() throws Exception {
 		_setDatabaseIndexesUpdateInBackground(true);
 

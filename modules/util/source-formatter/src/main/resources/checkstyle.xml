@@ -422,6 +422,7 @@
 		<module name="com.liferay.source.formatter.checkstyle.check.InstanceInitializerCheck">
 			<property name="category" value="Styling" />
 			<property name="description" value="Performs several checks on class instance initializer." />
+			<property name="enabled" value="false" />
 			<message key="assign.move.before.method.call" value="The variable assignment for ''{0}'' should come before the method calling ''{1}''" />
 			<message key="assign.order.incorrect" value="The variable assignment for ''{0}'' should come before the variable assignment for ''{1}''" />
 			<message key="if.statement.inline" value="Use ''{0}({1})'' with inlined if-statement" />

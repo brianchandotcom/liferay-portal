@@ -31,9 +31,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
@@ -192,6 +190,9 @@ public class SystemObjectEntryItemSelectorView
 			_systemObjectDefinitionManagerRegistry =
 				systemObjectDefinitionManagerRegistry;
 			_userLocalService = userLocalService;
+
+			_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 		}
 
 		@Override
@@ -214,30 +215,18 @@ public class SystemObjectEntryItemSelectorView
 
 		@Override
 		public String getPayload() {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)_httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			ObjectDefinition objectDefinition =
-				_objectDefinitionLocalService.fetchObjectDefinition(
-					_objectDefinition.getObjectDefinitionId());
-
 			return JSONUtil.put(
-				"className", objectDefinition.getClassName()
+				"className", _objectDefinition.getClassName()
 			).put(
 				"classNameId",
-				_portal.getClassNameId(objectDefinition.getClassName())
+				_portal.getClassNameId(_objectDefinition.getClassName())
 			).put(
 				"classPK", _baseModel.getPrimaryKeyObj()
 			).put(
 				"title",
 				StringBundler.concat(
-					objectDefinition.getLabel(themeDisplay.getLocale()),
-					StringPool.SPACE,
-					_getTitleFieldValue(
-						_objectFieldLocalService.fetchObjectField(
-							objectDefinition.getTitleObjectFieldId()),
-						themeDisplay.getUser()))
+					_objectDefinition.getLabel(_themeDisplay.getLocale()),
+					StringPool.SPACE, _getTitleFieldValue())
 			).toString();
 		}
 
@@ -248,20 +237,7 @@ public class SystemObjectEntryItemSelectorView
 
 		@Override
 		public String getTitle(Locale locale) {
-			ObjectDefinition objectDefinition =
-				_objectDefinitionLocalService.fetchObjectDefinition(
-					_objectDefinition.getObjectDefinitionId());
-
-			ObjectField objectField = _objectFieldLocalService.fetchObjectField(
-				objectDefinition.getTitleObjectFieldId());
-
-			if (objectField == null) {
-				return StringPool.BLANK;
-			}
-
-			return _getTitleFieldValue(
-				objectField,
-				_userLocalService.fetchUser(PrincipalThreadLocal.getUserId()));
+			return _getTitleFieldValue();
 		}
 
 		@Override
@@ -281,14 +257,30 @@ public class SystemObjectEntryItemSelectorView
 				(Long)modelAttributes.get("userId"), StringPool.BLANK);
 		}
 
-		private String _getTitleFieldValue(ObjectField objectField, User user) {
+		private String _getTitleFieldValue() {
+			ObjectDefinition objectDefinition =
+				_objectDefinitionLocalService.fetchObjectDefinition(
+					_objectDefinition.getObjectDefinitionId());
+
+			if (objectDefinition == null) {
+				return StringPool.BLANK;
+			}
+
+			ObjectField objectField = _objectFieldLocalService.fetchObjectField(
+				objectDefinition.getTitleObjectFieldId());
+
+			if (objectField == null) {
+				return StringPool.BLANK;
+			}
+
 			Object titleFieldValue = ObjectEntryValuesUtil.getTitleFieldValue(
 				objectField.getBusinessType(), _baseModel.getModelAttributes(),
-				objectField, user,
+				objectField, _themeDisplay.getUser(),
 				ObjectEntryDTOConverterUtil.toValues(
 					_baseModel, _dtoConverterRegistry,
 					_objectDefinition.getName(),
-					_systemObjectDefinitionManagerRegistry, user));
+					_systemObjectDefinitionManagerRegistry,
+					_themeDisplay.getUser()));
 
 			if (titleFieldValue == null) {
 				return StringPool.BLANK;
@@ -302,6 +294,7 @@ public class SystemObjectEntryItemSelectorView
 		private final HttpServletRequest _httpServletRequest;
 		private final SystemObjectDefinitionManagerRegistry
 			_systemObjectDefinitionManagerRegistry;
+		private final ThemeDisplay _themeDisplay;
 		private final UserLocalService _userLocalService;
 
 	}

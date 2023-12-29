@@ -185,7 +185,7 @@ definition {
 
 		MouseOver(locator1 = "ACUtils#NAME_LIST");
 
-		Click(locator1 = "ACDefinitions#HIDE_UNHIDE_EVENT_BUTTON");
+		Click.clickNoMouseOver(locator1 = "ACDefinitions#HIDE_UNHIDE_EVENT_BUTTON");
 	}
 
 	@summary = "Default summary"

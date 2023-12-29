@@ -33,6 +33,16 @@ html#{$cadmin-selector} {
 			position: static;
 		}
 
+		&.dialog-iframe-popup {
+			.portlet-body > .container-fluid {
+				padding-bottom: 65px;
+
+				@include media-breakpoint-down(sm) {
+					padding-bottom: 57px;
+				}
+			}
+		}
+
 		&.modal.show,
 		.modal.show {
 			display: block;
@@ -50,6 +60,10 @@ html#{$cadmin-selector} {
 
 			&.modal-dialog-sm {
 				max-width: $cadmin-modal-md;
+			}
+
+			.modal-content {
+				max-height: calc(100vh - 8px * 2);
 			}
 
 			.yui3-resize-handles-wrapper {
@@ -1025,12 +1039,9 @@ html#{$cadmin-selector} {
 			left: 0;
 			margin: 0;
 			padding: 10px 24px;
+			position: fixed;
 			width: 100%;
 			z-index: $cadmin-zindex-sticky;
-
-			@include media-breakpoint-up(md) {
-				position: fixed;
-			}
 
 			.btn {
 				margin-left: 16px;

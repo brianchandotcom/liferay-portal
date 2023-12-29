@@ -11,7 +11,7 @@ export default function ({namespace}) {
 	const content = document.querySelector(
 		'.add-group-form .add-group-content'
 	);
-	const footer = document.querySelector('.add-group-form .sheet-footer');
+	const footer = document.querySelector('.add-group-form .modal-footer');
 	const form = document.getElementById(`${namespace}fm`);
 	const formInput = document.getElementById(`${namespace}name`);
 

@@ -32,7 +32,7 @@ public class EditFormFooterTag extends IncludeTag {
 
 		jspWriter.write("<div class=\"");
 
-		String cssClass = "sheet-footer";
+		String cssClass;
 
 		HttpServletRequest httpServletRequest = getRequest();
 
@@ -41,7 +41,10 @@ public class EditFormFooterTag extends IncludeTag {
 				WebKeys.THEME_DISPLAY);
 
 		if (themeDisplay.isStatePopUp()) {
-			cssClass = cssClass + " dialog-footer dialog-footer-not-reverse";
+			cssClass = "dialog-footer dialog-footer-not-reverse modal-footer";
+		}
+		else {
+			cssClass = "sheet-footer";
 		}
 
 		jspWriter.write(cssClass);

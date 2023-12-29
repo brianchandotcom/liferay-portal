@@ -71,11 +71,18 @@ export default function AccountCreationModal({
 
 	return (
 		<ClayModal center className="commerce-modal" observer={observer}>
-			<ClayModal.Header>
-				{Liferay.Language.get('create-new-account')}
-			</ClayModal.Header>
+			<ClayForm
+				onSubmit={createAccount}
+				style={{
+					display: 'inherit',
+					flexDirection: 'inherit',
+					maxHeight: 'inherit',
+				}}
+			>
+				<ClayModal.Header>
+					{Liferay.Language.get('create-new-account')}
+				</ClayModal.Header>
 
-			<ClayForm onSubmit={createAccount}>
 				<AccountCreationModalBody
 					accountData={accountData}
 					accountTypes={accountTypes}

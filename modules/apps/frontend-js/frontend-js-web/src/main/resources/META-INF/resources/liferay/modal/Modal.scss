@@ -4,10 +4,6 @@
 	.modal-dialog {
 		position: relative;
 
-		@media (max-width: 768px) {
-			width: 100%;
-		}
-
 		&.modal-full-screen {
 			position: absolute;
 
@@ -34,15 +30,6 @@
 						float: right;
 					}
 				}
-			}
-		}
-
-		.modal-content {
-			--modal-bottom-spacing: 120px;
-
-			.modal-body {
-				max-height: calc(100vh - var(--modal-bottom-spacing));
-				overflow-y: auto;
 			}
 		}
 

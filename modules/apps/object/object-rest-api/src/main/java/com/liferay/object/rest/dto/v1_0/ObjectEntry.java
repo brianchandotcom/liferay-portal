@@ -418,17 +418,15 @@ public class ObjectEntry implements Serializable {
 		UnsafeSupplier<Map<String, Object>, Exception>
 			propertiesUnsafeSupplier) {
 
-		_propertiesSupplier = () -> {
-			try {
-				return propertiesUnsafeSupplier.get();
-			}
-			catch (RuntimeException re) {
-				throw re;
-			}
-			catch (Exception e) {
-				throw new RuntimeException(e);
-			}
-		};
+		try {
+			properties = propertiesUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	@GraphQLField

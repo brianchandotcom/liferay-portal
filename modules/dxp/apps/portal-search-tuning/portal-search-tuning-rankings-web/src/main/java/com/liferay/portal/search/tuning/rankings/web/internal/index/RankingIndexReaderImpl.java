@@ -133,26 +133,6 @@ public class RankingIndexReaderImpl implements RankingIndexReader {
 		return _documentToRankingTranslator.translate(document, id);
 	}
 
-	private Document _getDocument(
-		RankingIndexName rankingIndexName, String id) {
-
-		GetDocumentRequest getDocumentRequest = new GetDocumentRequest(
-			rankingIndexName.getIndexName(), id);
-
-		getDocumentRequest.setFetchSource(true);
-		getDocumentRequest.setFetchSourceInclude(StringPool.STAR);
-		getDocumentRequest.setPreferLocalCluster(false);
-
-		GetDocumentResponse getDocumentResponse = _searchEngineAdapter.execute(
-			getDocumentRequest);
-
-		if (getDocumentResponse.isExists()) {
-			return getDocumentResponse.getDocument();
-		}
-
-		return null;
-	}
-
 	private BooleanQuery _getBooleanQuery(
 		boolean excludeInactiveStatus, String groupExternalReferenceCode,
 		String queryString, String sxpBlueprintExternalReferenceCode) {
@@ -195,6 +175,26 @@ public class RankingIndexReaderImpl implements RankingIndexReader {
 				ResultRankingsConstants.STATUS_NOT_APPLICABLE));
 
 		return booleanQuery;
+	}
+
+	private Document _getDocument(
+		RankingIndexName rankingIndexName, String id) {
+
+		GetDocumentRequest getDocumentRequest = new GetDocumentRequest(
+			rankingIndexName.getIndexName(), id);
+
+		getDocumentRequest.setFetchSource(true);
+		getDocumentRequest.setFetchSourceInclude(StringPool.STAR);
+		getDocumentRequest.setPreferLocalCluster(false);
+
+		GetDocumentResponse getDocumentResponse = _searchEngineAdapter.execute(
+			getDocumentRequest);
+
+		if (getDocumentResponse.isExists()) {
+			return getDocumentResponse.getDocument();
+		}
+
+		return null;
 	}
 
 	private List<Ranking> _getRankings(

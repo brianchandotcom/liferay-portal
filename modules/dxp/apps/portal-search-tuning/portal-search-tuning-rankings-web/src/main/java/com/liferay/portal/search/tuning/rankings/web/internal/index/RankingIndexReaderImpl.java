@@ -49,14 +49,14 @@ public class RankingIndexReaderImpl implements RankingIndexReader {
 			return null;
 		}
 
-		BooleanQuery query = _getQuery(
+		BooleanQuery booleanQuery = _getBooleanQuery(
 			excludeInactiveStatus, groupExternalReferenceCode, queryString,
 			sxpBlueprintExternalReferenceCode);
 
 		CountSearchRequest countSearchRequest = new CountSearchRequest();
 
 		countSearchRequest.setIndexNames(rankingIndexName.getIndexName());
-		countSearchRequest.setQuery(query);
+		countSearchRequest.setQuery(booleanQuery);
 
 		CountSearchResponse countSearchResponse = _searchEngineAdapter.execute(
 			countSearchRequest);
@@ -64,7 +64,7 @@ public class RankingIndexReaderImpl implements RankingIndexReader {
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
 		searchSearchRequest.setIndexNames(rankingIndexName.getIndexName());
-		searchSearchRequest.setQuery(query);
+		searchSearchRequest.setQuery(booleanQuery);
 		searchSearchRequest.setSize((int)countSearchResponse.getCount());
 
 		return _getRankings(
@@ -152,7 +152,7 @@ public class RankingIndexReaderImpl implements RankingIndexReader {
 		return null;
 	}
 
-	private BooleanQuery _getQuery(
+	private BooleanQuery _getBooleanQuery(
 		boolean excludeInactiveStatus, String groupExternalReferenceCode,
 		String queryString, String sxpBlueprintExternalReferenceCode) {
 

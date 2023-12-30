@@ -16,21 +16,16 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.util.PropsValues;
 
 import java.sql.Connection;
 
-import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -83,15 +78,9 @@ public class IndexUpdaterUtilTest {
 
 		_connection = DataAccess.getConnection();
 
-		_databaseIndexesUpdateInBackground = ReflectionTestUtil.getFieldValue(
-			PropsValues.class, "DATABASE_INDEXES_UPDATE_IN_BACKGROUND");
-
 		_db = DBManagerUtil.getDB();
 
 		_dbInspector = new DBInspector(_connection);
-
-		_futures = ReflectionTestUtil.getFieldValue(
-			IndexUpdaterUtil.class, "_futures");
 
 		_processedServletContextNames = ReflectionTestUtil.getFieldValue(
 			IndexUpdaterUtil.class, "_processedServletContextNames");
@@ -104,29 +93,6 @@ public class IndexUpdaterUtilTest {
 	@AfterClass
 	public static void tearDownClass() throws Exception {
 		DataAccess.cleanUp(_connection);
-
-		_setDatabaseIndexesUpdateInBackground(
-			_databaseIndexesUpdateInBackground);
-	}
-
-	@Before
-	public void setUp() {
-		_futureProcessed = false;
-
-		ExecutorService executorService = ReflectionTestUtil.invoke(
-			IndexUpdaterUtil.class, "_getExecutorService", new Class<?>[0]);
-
-		_futures.add(
-			executorService.submit(
-				() -> {
-					Thread.sleep(1000);
-
-					_futureProcessed = true;
-
-					return null;
-				}));
-
-		_setDatabaseIndexesUpdateInBackground(false);
 	}
 
 	@After
@@ -140,8 +106,6 @@ public class IndexUpdaterUtilTest {
 		_dropIndex(_portalTableIndexName, _portalIndexName);
 
 		IndexUpdaterUtil.updateAllIndexes();
-
-		Assert.assertTrue(_futureProcessed);
 
 		Assert.assertTrue(
 			_dbInspector.hasIndex(_moduleTableIndexName, _moduleIndexName));
@@ -186,47 +150,10 @@ public class IndexUpdaterUtilTest {
 	}
 
 	@Test
-	public void testUpdateAllIndexesInBackground() throws Exception {
-		_setDatabaseIndexesUpdateInBackground(true);
-
-		_dropIndex(_moduleTableIndexName, _moduleIndexName);
-		_dropIndex(_portalTableIndexName, _portalIndexName);
-
-		IndexUpdaterUtil.updateAllIndexes();
-
-		Assert.assertFalse(_futureProcessed);
-
-		_awaitTermination();
-
-		Assert.assertTrue(
-			_dbInspector.hasIndex(_moduleTableIndexName, _moduleIndexName));
-		Assert.assertTrue(
-			_dbInspector.hasIndex(_portalTableIndexName, _portalIndexName));
-	}
-
-	@Test
 	public void testUpdateIndexes() throws Exception {
 		_dropIndex(_moduleTableIndexName, _moduleIndexName);
 
 		IndexUpdaterUtil.updateIndexes(_moduleBundle);
-
-		Assert.assertTrue(_futureProcessed);
-
-		Assert.assertTrue(
-			_dbInspector.hasIndex(_moduleTableIndexName, _moduleIndexName));
-	}
-
-	@Test
-	public void testUpdateIndexesInBackground() throws Exception {
-		_setDatabaseIndexesUpdateInBackground(true);
-
-		_dropIndex(_moduleTableIndexName, _moduleIndexName);
-
-		IndexUpdaterUtil.updateIndexes(_moduleBundle);
-
-		Assert.assertFalse(_futureProcessed);
-
-		_awaitTermination();
 
 		Assert.assertTrue(
 			_dbInspector.hasIndex(_moduleTableIndexName, _moduleIndexName));
@@ -237,24 +164,6 @@ public class IndexUpdaterUtilTest {
 		_dropIndex(_portalTableIndexName, _portalIndexName);
 
 		IndexUpdaterUtil.updatePortalIndexes();
-
-		Assert.assertTrue(_futureProcessed);
-
-		Assert.assertTrue(
-			_dbInspector.hasIndex(_portalTableIndexName, _portalIndexName));
-	}
-
-	@Test
-	public void testUpdatePortalIndexesInBackground() throws Exception {
-		_setDatabaseIndexesUpdateInBackground(true);
-
-		_dropIndex(_portalTableIndexName, _portalIndexName);
-
-		IndexUpdaterUtil.updatePortalIndexes();
-
-		Assert.assertFalse(_futureProcessed);
-
-		_awaitTermination();
 
 		Assert.assertTrue(
 			_dbInspector.hasIndex(_portalTableIndexName, _portalIndexName));
@@ -283,20 +192,6 @@ public class IndexUpdaterUtilTest {
 		_portalTableIndexName = _getTableIndexName(portalIndexesSQL);
 	}
 
-	private static void _setDatabaseIndexesUpdateInBackground(
-		boolean databaseIndexesUpdateInBackground) {
-
-		ReflectionTestUtil.setFieldValue(
-			PropsValues.class, "DATABASE_INDEXES_UPDATE_IN_BACKGROUND",
-			databaseIndexesUpdateInBackground);
-	}
-
-	private void _awaitTermination() throws Exception {
-		for (Future<?> future : _futures) {
-			future.get();
-		}
-	}
-
 	private void _dropIndex(String tableName, String indexName)
 		throws Exception {
 
@@ -308,11 +203,8 @@ public class IndexUpdaterUtilTest {
 		"com.liferay.portal.lock.service";
 
 	private static Connection _connection;
-	private static boolean _databaseIndexesUpdateInBackground;
 	private static DB _db;
 	private static DBInspector _dbInspector;
-	private static boolean _futureProcessed;
-	private static List<Future<?>> _futures;
 	private static Bundle _moduleBundle;
 	private static String _moduleIndexName;
 	private static String _moduleTableIndexName;

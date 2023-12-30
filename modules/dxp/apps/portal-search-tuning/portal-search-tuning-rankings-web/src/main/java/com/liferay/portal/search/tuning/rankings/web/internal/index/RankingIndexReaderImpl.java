@@ -49,13 +49,14 @@ public class RankingIndexReaderImpl implements RankingIndexReader {
 			return null;
 		}
 
+		CountSearchRequest countSearchRequest = new CountSearchRequest();
+
+		countSearchRequest.setIndexNames(rankingIndexName.getIndexName());
+
 		BooleanQuery booleanQuery = _getBooleanQuery(
 			excludeInactiveStatus, groupExternalReferenceCode, queryString,
 			sxpBlueprintExternalReferenceCode);
 
-		CountSearchRequest countSearchRequest = new CountSearchRequest();
-
-		countSearchRequest.setIndexNames(rankingIndexName.getIndexName());
 		countSearchRequest.setQuery(booleanQuery);
 
 		CountSearchResponse countSearchResponse = _searchEngineAdapter.execute(

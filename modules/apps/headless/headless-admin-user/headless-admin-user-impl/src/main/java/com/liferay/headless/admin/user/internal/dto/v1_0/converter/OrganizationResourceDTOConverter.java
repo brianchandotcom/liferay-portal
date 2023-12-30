@@ -102,12 +102,10 @@ public class OrganizationResourceDTOConverter
 			return null;
 		}
 
-		OrganizationResourceDTOConverter organizationResourceDTOConverter =
-			this;
-
 		Country country = _countryService.fetchCountry(
 			organization.getCountryId());
-
+		OrganizationResourceDTOConverter organizationResourceDTOConverter =
+			this;
 		Region region = _regionService.fetchRegion(organization.getRegionId());
 
 		return new Organization() {

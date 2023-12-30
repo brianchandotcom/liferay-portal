@@ -51,9 +51,15 @@ export async function fetchListTypeDefinitions() {
 	const listTypeDefinitions = {} as ListTypeDefinitions;
 
 	for (const listTypeDefinitionERC of listTypeDefinitionERCs) {
-		listTypeDefinitions[listTypeDefinitionERC] = await fetchListTypeEntries(
-			listTypeDefinitionERC
-		);
+		const entries = await fetchListTypeEntries(listTypeDefinitionERC);
+
+		listTypeDefinitions[listTypeDefinitionERC] = {};
+		listTypeDefinitions[listTypeDefinitionERC].array = entries;
+		listTypeDefinitions[listTypeDefinitionERC].map = {};
+
+		entries.forEach((entry: any) => {
+			listTypeDefinitions[listTypeDefinitionERC].map[entry.name] = entry;
+		});
 	}
 
 	return listTypeDefinitions;

@@ -6,21 +6,12 @@
 import React, {Context} from 'react';
 import {QueryClient} from 'react-query';
 
-import {Liferay} from './services/liferay';
-
-export type TicketsAppConfigs = {
-	defaultPage: string;
-	queryClient: QueryClient;
-	spriteMap: string;
-};
-
 const queryClient = new QueryClient();
-export const CONFIGS: TicketsAppConfigs = {
-	defaultPage: '',
-	queryClient,
-	spriteMap: Liferay.Icons.spritemap,
-};
+const defaultPage = '';
 
-export const TicketsAppContext: Context<TicketsAppConfigs> = React.createContext(
-	CONFIGS
+export const QueryClientContext: Context<QueryClient> = React.createContext(
+	queryClient
+);
+export const DefaultAppContext: Context<string> = React.createContext(
+	defaultPage
 );

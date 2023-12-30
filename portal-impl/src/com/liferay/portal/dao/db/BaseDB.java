@@ -1160,8 +1160,8 @@ public abstract class BaseDB implements DB {
 			Connection connection, String indexesSQL, List<Index> indexes)
 		throws IOException, SQLException {
 
-		if (_log.isInfoEnabled()) {
-			_log.info("Dropping stale indexes");
+		if (_log.isDebugEnabled()) {
+			_log.debug("Dropping stale indexes");
 		}
 
 		Set<String> validIndexNames = new HashSet<>();
@@ -1463,8 +1463,8 @@ public abstract class BaseDB implements DB {
 			Set<String> validIndexNames)
 		throws Exception {
 
-		if (_log.isInfoEnabled()) {
-			_log.info("Adding indexes");
+		if (_log.isDebugEnabled()) {
+			_log.debug("Adding indexes");
 		}
 
 		try (UnsyncBufferedReader unsyncBufferedReader =

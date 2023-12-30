@@ -44,6 +44,9 @@ import org.osgi.util.tracker.BundleTrackerCustomizer;
 public class IndexUpdaterUtil {
 
 	public static void updateAllIndexes() {
+		LoggingTimer loggingTimer = new LoggingTimer(
+			"Updating database indexes");
+
 		if (!_processedServletContextNames.contains("portal")) {
 			try {
 				_addUpdateIndexesFutures(
@@ -109,6 +112,8 @@ public class IndexUpdaterUtil {
 
 							_awaitFuturesTermination();
 
+							loggingTimer.close();
+
 							return null;
 						});
 
@@ -118,15 +123,22 @@ public class IndexUpdaterUtil {
 	}
 
 	public static void updateIndexes(Bundle bundle) {
-		_addUpdateIndexesFutures(
-			bundle.getSymbolicName(), DBResourceUtil.getModuleTablesSQL(bundle),
-			DBResourceUtil.getModuleIndexesSQL(bundle));
+		try (LoggingTimer loggingTimer = new LoggingTimer(
+				"Updating database indexes for " + bundle.getSymbolicName())) {
 
-		_awaitFuturesTermination();
+			_addUpdateIndexesFutures(
+				bundle.getSymbolicName(),
+				DBResourceUtil.getModuleTablesSQL(bundle),
+				DBResourceUtil.getModuleIndexesSQL(bundle));
+
+			_awaitFuturesTermination();
+		}
 	}
 
 	public static void updatePortalIndexes() {
-		try {
+		try (LoggingTimer loggingTimer = new LoggingTimer(
+				"Updating database indexes for portal")) {
+
 			_addUpdateIndexesFutures(
 				"portal", DBResourceUtil.getPortalTablesSQL(),
 				DBResourceUtil.getPortalIndexesSQL());
@@ -212,25 +224,20 @@ public class IndexUpdaterUtil {
 		db.process(
 			companyId -> {
 				try {
-					String message = new String(
-						"Updating database indexes for " + tableName);
-
-					if (Validator.isNotNull(companyId)) {
-						message += " and company " + companyId;
-					}
-
-					try (Connection connection = DataAccess.getConnection();
-						LoggingTimer loggingTimer = new LoggingTimer(message)) {
-
+					try (Connection connection = DataAccess.getConnection()) {
 						db.updateIndexes(
 							connection, tablesSQL, indexesSQL, true);
 					}
 				}
 				catch (Exception exception) {
-					_log.error(
-						StringBundler.concat(
-							"Unable to update database indexes for ", tableName,
-							" due to ", exception.getMessage()));
+					String message = new String(
+						"Unable to update database indexes for " + tableName);
+
+					if (Validator.isNotNull(companyId)) {
+						message += " and company " + companyId;
+					}
+
+					_log.error(message + " due to " + exception.getMessage());
 				}
 			});
 	}

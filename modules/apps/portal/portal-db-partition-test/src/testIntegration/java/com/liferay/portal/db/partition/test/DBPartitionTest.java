@@ -413,7 +413,7 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 						dbInspector.hasIndex(TEST_TABLE_NAME, TEST_INDEX_NAME));
 
 					db.updateIndexes(
-						connection, getCreateTableSQL(TEST_TABLE_NAME),
+						connection, TEST_TABLE_NAME,
 						getCreateIndexSQL(TEST_TABLE_NAME), true);
 
 					Assert.assertTrue(

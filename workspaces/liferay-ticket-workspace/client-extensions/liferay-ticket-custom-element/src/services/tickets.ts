@@ -16,6 +16,8 @@ import {
 	fetchListTypeDefinitions,
 } from './listTypeEntries';
 
+const listTypeDefinitions: ListTypeDefinitions = await fetchListTypeDefinitions();
+
 const ticketSubjects = [
 	'My object definition is not deploying in my batch client extension',
 	'A theme CSS client extension is not showing on my search page',
@@ -85,15 +87,10 @@ export async function fetchRecentTickets() {
 }
 
 export async function generateNewTicket() {
-	let listTypeDefinitions = {} as ListTypeDefinitions;
-
-	if (!(J3Y7_PRIORITIES in listTypeDefinitions)) {
-		listTypeDefinitions = await fetchListTypeDefinitions();
-	}
-	const priorities = listTypeDefinitions[J3Y7_PRIORITIES];
-	const regions = listTypeDefinitions[J3Y7_REGIONS];
-	const resolutions = listTypeDefinitions[J3Y7_RESOLUTIONS];
-	const types = listTypeDefinitions[J3Y7_TYPES];
+	const priorities = listTypeDefinitions[J3Y7_PRIORITIES].array;
+	const regions = listTypeDefinitions[J3Y7_REGIONS].array;
+	const resolutions = listTypeDefinitions[J3Y7_RESOLUTIONS].array;
+	const types = listTypeDefinitions[J3Y7_TYPES].array;
 
 	return fetch(`/o/c/j3y7tickets`, {
 		body: JSON.stringify({
@@ -127,27 +124,11 @@ export async function generateNewTicket() {
 }
 
 export async function updateTicketStatus(ticket: Ticket) {
-	let listTypeDefinitions = {} as ListTypeDefinitions;
+	ticket.payload.ticketStatus =
+		listTypeDefinitions[J3Y7_STATUSES].map[ticket.ticketStatus];
 
-	if (!(J3Y7_PRIORITIES in listTypeDefinitions)) {
-		listTypeDefinitions = await fetchListTypeDefinitions();
-	}
-	const priorities = listTypeDefinitions[J3Y7_PRIORITIES] as any[];
-	const regions = listTypeDefinitions[J3Y7_REGIONS] as any[];
-	const resolutions = listTypeDefinitions[J3Y7_RESOLUTIONS] as any[];
-	const types = listTypeDefinitions[J3Y7_TYPES] as any[];
-	const statuses = listTypeDefinitions[J3Y7_STATUSES] as any[];
-
-	ticket.priority = priorities.find((p) => p.name === ticket.priority);
-	ticket.region = regions.find((p) => p.name === ticket.region);
-	ticket.resolution = resolutions.find((p) => p.name === ticket.resolution);
-	ticket.type = types.find((p) => p.name === ticket.type);
-	ticket.ticketStatus = statuses.find(
-		(status: any) => ticket.ticketStatus === status.name
-	);
-
-	return fetch(`/o/c/j3y7tickets/${ticket.id}`, {
-		body: JSON.stringify(ticket),
+	const result = await fetch(`/o/c/j3y7tickets/${ticket.id}`, {
+		body: JSON.stringify(ticket.payload),
 		headers: {
 			'accept': 'application/json',
 			'content-Type': 'application/json',
@@ -155,10 +136,19 @@ export async function updateTicketStatus(ticket: Ticket) {
 		},
 		method: 'PUT',
 	});
+
+	if (result.ok) {
+		return;
+	}
+	else {
+		const jsonResult = await result.json();
+
+		throw new Error(`${JSON.stringify(jsonResult)}`);
+	}
 }
 
 export async function assignTicketToMe(ticket: Ticket) {
-	return fetch(
+	const result = await fetch(
 		`/o/c/j3y7tickets/by-external-reference-code/${ticket.externalReferenceCode}/object-actions/AssignTicketToMe`,
 		{
 			headers: {
@@ -169,4 +159,13 @@ export async function assignTicketToMe(ticket: Ticket) {
 			method: 'PUT',
 		}
 	);
+
+	if (result.ok) {
+		return;
+	}
+	else {
+		const jsonResult = await result.json();
+
+		throw new Error(`${jsonResult.status} - ${jsonResult.title}`);
+	}
 }

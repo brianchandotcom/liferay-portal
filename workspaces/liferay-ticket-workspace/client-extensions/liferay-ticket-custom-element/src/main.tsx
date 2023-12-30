@@ -3,109 +3,56 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ClayVerticalNav} from '@clayui/nav';
-import {useState} from 'react';
+import {ClayIconSpriteContext} from '@clayui/icon';
+import {ReactNode, useState} from 'react';
 import {createRoot} from 'react-dom/client';
 import {QueryClientProvider} from 'react-query';
-import {HashRouter, Navigate, Route, Routes} from 'react-router-dom';
 
-import {CONFIGS, TicketsAppContext} from './context';
-import TicketApp from './pages/TicketApp';
-import TicketsByStatusDashboard from './pages/TicketsByStatusDashboard';
+import {DefaultAppContext, QueryClientContext} from './context';
+import AllApps from './pages/AllApps';
+import TicketApp from './pages/TicketsApp';
+import TicketsDashboardApp from './pages/TicketsDashboardApp';
+import {Liferay} from './services/liferay';
 
-const routes: any[] = [
-	{
-		href: '#/dashboard',
-		id: '1',
-		index: '1',
-		label: 'Dashboard',
-	},
-	{
-		href: '#/ticketapp',
-		id: '2',
-		index: '2',
-		label: 'Tickets App',
-	},
-];
+const Main: React.FC<{defaultAppProp: string}> = ({defaultAppProp}) => {
+	const [defaultApp] = useState(defaultAppProp);
 
-const Main: React.FC = () => {
-	const currentRoute = '#' + location.href.split('#')[1];
-	const initialActiveItem =
-		routes.find((route) => route.href === currentRoute)?.index || '1';
+	let app: ReactNode;
 
-	const [activeItem, setActiveItem] = useState(initialActiveItem);
+	switch (defaultApp) {
+		case 'dashboard':
+			app = <TicketsDashboardApp></TicketsDashboardApp>;
+			break;
+		case 'ticketsapp':
+			app = <TicketApp></TicketApp>;
+			break;
+		default:
+			app = <AllApps></AllApps>;
+	}
 
 	return (
-		<TicketsAppContext.Provider value={CONFIGS}>
-			<QueryClientProvider client={CONFIGS.queryClient}>
-				<div className="autofit-padded autofit-row">
-					<div
-						className={
-							'autofit-col ' +
-							(CONFIGS.defaultPage ? 'd-none' : '')
-						}
-					>
-						<div className="h-100">
-							<div className="mb-2 text-uppercase">Site</div>
-							<ClayVerticalNav
-								active={activeItem}
-								items={routes}
-								large={false}
-								spritemap={CONFIGS.spriteMap}
-							>
-								{(item: any) => (
-									<ClayVerticalNav.Item
-										href={item.href}
-										key={item.id}
-										onClick={() => setActiveItem(item.id)}
-									>
-										{item.label}
-									</ClayVerticalNav.Item>
-								)}
-							</ClayVerticalNav>
-						</div>
-					</div>
-					<div className="autofit-col autofit-col-expand ml-2">
-						<HashRouter>
-							<Routes>
-								<Route
-									element={<TicketsByStatusDashboard />}
-									path="dashboard"
-								/>
-								<Route
-									element={<TicketApp />}
-									path="ticketapp"
-								/>
-								<Route
-									element={
-										<Navigate
-											replace
-											to={
-												CONFIGS.defaultPage
-													? CONFIGS.defaultPage
-													: 'dashboard'
-											}
-										/>
-									}
-									path=""
-								/>
-							</Routes>
-						</HashRouter>
-					</div>
-				</div>
-			</QueryClientProvider>
-		</TicketsAppContext.Provider>
+		<QueryClientContext.Consumer>
+			{(queryClient) => (
+				<QueryClientProvider client={queryClient}>
+					<DefaultAppContext.Provider value={defaultApp}>
+						<ClayIconSpriteContext.Provider
+							value={Liferay.Icons.spritemap}
+						>
+							{app}
+						</ClayIconSpriteContext.Provider>
+					</DefaultAppContext.Provider>
+				</QueryClientProvider>
+			)}
+		</QueryClientContext.Consumer>
 	);
 };
 
 class MainHTMLElement extends HTMLElement {
 	connectedCallback() {
 		const root = createRoot(this);
-		const defaultPage = this.getAttribute('defaultpage');
-		if (defaultPage) {
-			CONFIGS.defaultPage = defaultPage;
-		}
-		root.render(<Main />);
+		const defaultApp = this.getAttribute('defaultapp') || '';
+
+		root.render(<Main defaultAppProp={defaultApp} />);
 	}
 }
 

@@ -72,7 +72,7 @@ const DisplayTickets: React.FC<Props> = ({tickets}) => {
 
 const RecentActivity: React.FC<Props> = ({tickets}) => {
 	return (
-		<div className="col pr-0">
+		<div className="col px-0">
 			<div className="bg-neutral-1 my-3 p-3 w-100">
 				<h2>Recent Activity</h2>
 

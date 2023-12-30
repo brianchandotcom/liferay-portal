@@ -36,11 +36,14 @@ const useTickets = ({
 					}
 					catch (error) {}
 
+					delete (ticket as any).actions;
+
 					return {
 						assignee: ticket.userToJ3Y7Ticket,
 						description: ticket.description,
 						externalReferenceCode: ticket.externalReferenceCode,
 						id: ticket.id,
+						payload: ticket,
 						priority: ticket.priority?.name,
 						region: ticket.region?.name,
 						resolution: ticket.resolution?.name,

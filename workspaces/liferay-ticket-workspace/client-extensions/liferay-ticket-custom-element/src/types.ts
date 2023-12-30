@@ -3,13 +3,36 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+export type Lookup = {
+	key: string;
+	name: string;
+};
+
+export type User = {
+	additionalName: string;
+	alternateName: string;
+	createDate: Date;
+	creator: number;
+	emailAddress: string;
+	externalReferenceCode: string;
+	familyName: string;
+	givenName: string;
+	id: number;
+	lastLoginDate: Date;
+	modifiedDate: Date;
+	objectDefinitionId: number;
+	status: number;
+	uuid: number;
+};
+
 export type Ticket = {
-	assignee: any;
+	assignee: User;
 	dateCreated: Date;
 	dateModified: Date;
 	description: string;
 	externalReferenceCode: string;
 	id: string;
+	payload: TicketPayload;
 	priority: string;
 	region: string;
 	resolution: string;
@@ -35,5 +58,5 @@ export type TicketPayload = {
 	suggestions: string;
 	ticketStatus: {name: string};
 	type: {name: string};
-	userToJ3Y7Ticket: any;
+	userToJ3Y7Ticket: User;
 };

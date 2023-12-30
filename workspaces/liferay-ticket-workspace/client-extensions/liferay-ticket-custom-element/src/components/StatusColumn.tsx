@@ -6,7 +6,7 @@
 import {useDroppable} from '@dnd-kit/core';
 
 import {Ticket} from '../types';
-import TicketPreview from './TicketPreview';
+import TicketCard from './TicketCard';
 
 const StatusColumn: React.FC<{
 	name: string;
@@ -22,7 +22,7 @@ const StatusColumn: React.FC<{
 		>
 			<p className="font-weight-bold">{name}</p>
 
-			{!relatedTickets.length && (
+			{!relatedTickets?.length && (
 				<div className="font-weight-normal text-neutral-9 text-paragraph-sm">
 					No tickets are available.
 				</div>
@@ -30,7 +30,7 @@ const StatusColumn: React.FC<{
 
 			{relatedTickets &&
 				relatedTickets.map((ticket: Ticket) => (
-					<TicketPreview key={ticket.id} ticket={ticket} />
+					<TicketCard key={ticket.id} ticket={ticket} />
 				))}
 		</div>
 	);

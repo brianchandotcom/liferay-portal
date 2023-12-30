@@ -24,6 +24,8 @@ const useRecentTickets = () => {
 				}
 				catch (error) {}
 
+				delete (ticket as any).actions;
+
 				return {
 					assignee: ticket.userToJ3Y7Ticket,
 					dateCreated: new Date(ticket.dateCreated),
@@ -31,6 +33,7 @@ const useRecentTickets = () => {
 					description: ticket.description,
 					externalReferenceCode: ticket.externalReferenceCode,
 					id: ticket.id,
+					payload: ticket,
 					priority: ticket.priority?.name,
 					region: ticket.region?.name,
 					resolution: ticket.resolution?.name,

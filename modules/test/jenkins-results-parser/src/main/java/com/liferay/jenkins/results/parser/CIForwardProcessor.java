@@ -379,7 +379,7 @@ public class CIForwardProcessor {
 		throws IOException {
 
 		List<String> passingTestSuiteNames =
-			_pullRequest.getPassingTestSuites();
+			_pullRequest.getPassingTestSuiteNames();
 
 		String joinedPassingTestSuiteNames = JenkinsResultsParserUtil.join(
 			",", passingTestSuiteNames);

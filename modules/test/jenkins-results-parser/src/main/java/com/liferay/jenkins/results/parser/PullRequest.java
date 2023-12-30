@@ -461,7 +461,7 @@ public class PullRequest {
 		return _ownerUsername;
 	}
 
-	public List<String> getPassingTestSuites() {
+	public List<String> getPassingTestSuiteNames() {
 		List<String> testSuiteNames = new ArrayList<>();
 
 		JSONArray statusesJSONArray = getSenderSHAStatusesJSONArray();
@@ -683,7 +683,7 @@ public class PullRequest {
 			return true;
 		}
 
-		List<String> passingTestSuiteNames = getPassingTestSuites();
+		List<String> passingTestSuiteNames = getPassingTestSuiteNames();
 
 		for (String requiredPassingTestSuiteName :
 				requiredPassingTestSuiteNames.split("\\s*,\\s*")) {

@@ -102,17 +102,19 @@ public class MoveLayoutMVCActionCommand extends BaseAddLayoutMVCActionCommand {
 			JSONPortletResponseUtil.writeJSON(
 				liferayPortletRequest, liferayPortletResponse,
 				JSONUtil.put(
-				"layoutColumns",
-				() -> {
-					MillerColumnsDisplayContext millerColumnsDisplayContext =
-						new MillerColumnsDisplayContext(
-							_layoutSetPrototypeHelper,
-							layoutsAdminDisplayContext, liferayPortletRequest,
-							liferayPortletResponse);
+					"layoutColumns",
+					() -> {
+						MillerColumnsDisplayContext
+							millerColumnsDisplayContext =
+								new MillerColumnsDisplayContext(
+									_layoutSetPrototypeHelper,
+									layoutsAdminDisplayContext,
+									liferayPortletRequest,
+									liferayPortletResponse);
 
-					return millerColumnsDisplayContext.
-						getLayoutColumnsJSONArray();
-				}));
+						return millerColumnsDisplayContext.
+							getLayoutColumnsJSONArray();
+					}));
 
 			hideDefaultSuccessMessage(actionRequest);
 		}

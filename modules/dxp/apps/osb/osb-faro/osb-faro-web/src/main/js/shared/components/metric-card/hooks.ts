@@ -1,4 +1,4 @@
-import {DocumentNode} from 'graphql';
+import {DocumentNode} from 'apollo-boost';
 import {fetchPolicyDefinition} from 'shared/util/graphql';
 import {Filters, getFilters, RawFilters} from 'shared/util/filter';
 import {getSafeRangeSelectors, getSafeTouchpoint} from 'shared/util/util';

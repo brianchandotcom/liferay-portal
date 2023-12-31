@@ -7,7 +7,6 @@ import NavigationWarning from 'shared/components/NavigationWarning';
 import React, {useContext, useMemo, useState} from 'react';
 import {addAlert} from 'shared/actions/alerts';
 import {Alert, RangeSelectors} from 'shared/types';
-import {ApolloError} from 'apollo-client';
 import {AttributesContext} from '../components/event-analysis-editor/context/attributes';
 import {
 	Breakdowns,
@@ -25,7 +24,6 @@ import {
 	UpdateEventAnalysisMutation
 } from 'event-analysis/queries/EventAnalysisQuery';
 import {getSafeRangeSelectors} from 'shared/util/util';
-import {GraphQLError} from 'graphql';
 import {hasChanges} from 'shared/util/react';
 import {omit} from 'lodash';
 import {Routes, toRoute} from 'shared/util/router';
@@ -37,14 +35,6 @@ import {WithRangeKeyProps} from 'shared/hoc/WithRangeKey';
 enum MessageKeys {
 	NameCannotBeBlank = 'name-cannot-be-blank',
 	NameIsAlreadyUsed = 'name-is-already-used'
-}
-
-interface Error extends ApolloError {
-	graphQLErrors: ReadonlyArray<
-		GraphQLError & {
-			messageKey: keyof MessageKeys;
-		}
-	>;
 }
 
 const ERRORS = {
@@ -173,22 +163,28 @@ const BaseEventAnalysisPage: React.FC<IBaseEventAnalysisPageProps> = ({
 					)
 				});
 			})
-			.catch(({graphQLErrors}: Error) => {
-				setSubmitting(false);
-				setSubmitted(false);
+			.catch(
+				({
+					graphQLErrors
+				}: {
+					graphQLErrors: {messageKey: keyof MessageKeys}[];
+				}) => {
+					setSubmitting(false);
+					setSubmitted(false);
 
-				close();
+					close();
 
-				const {alertType, message} = ERRORS[
-					graphQLErrors[0].messageKey
-				];
+					const {alertType, message} = ERRORS[
+						graphQLErrors[0].messageKey
+					];
 
-				addAlert({
-					alertType,
-					message,
-					timeout: false
-				});
-			});
+					addAlert({
+						alertType,
+						message,
+						timeout: false
+					});
+				}
+			);
 	};
 
 	const compareToPreviousChanged: boolean =

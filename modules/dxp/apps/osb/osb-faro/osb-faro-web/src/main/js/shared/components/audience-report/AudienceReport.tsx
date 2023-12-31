@@ -3,7 +3,7 @@ import AudienceReportStateRenderer from './AudienceReportStateRenderer';
 import HTMLBarChart from 'shared/components/HTMLBarChart';
 import InfoPopover, {IInfoPopoverProps} from 'shared/components/InfoPopover';
 import React from 'react';
-import {DocumentNode} from 'graphql';
+import {DocumentNode} from 'apollo-boost';
 import {fetchPolicyDefinition} from 'shared/util/graphql';
 import {formatData} from './util';
 import {getFilters, RawFilters} from 'shared/util/filter';

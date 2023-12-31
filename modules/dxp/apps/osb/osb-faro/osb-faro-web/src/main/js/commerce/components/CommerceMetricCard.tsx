@@ -5,7 +5,7 @@ import React, {useState} from 'react';
 import StatesRenderer from 'shared/components/states-renderer/StatesRenderer';
 import TrendComponent from 'shared/components/Trend';
 import {ApolloError} from 'apollo-client';
-import {DocumentNode} from 'graphql';
+import {DocumentNode} from 'apollo-boost';
 import {getIcon, getStatsColor} from 'shared/util/metrics';
 import {
 	getRangeSelectorsFromQuery,

@@ -1,5 +1,5 @@
 const common = require('./webpack.common');
-const merge = require('webpack-merge');
+const {merge} = require('webpack-merge');
 const webpack = require('webpack');
 
 require('dotenv').config();
@@ -10,8 +10,7 @@ module.exports = merge(common.config, {
 		port: 3000,
 		proxy: {
 			'**': process.env.FARO_URL || 'http://0.0.0.0:8080'
-		},
-		publicPath: common.PUBLIC_PATH
+		}
 	},
 	devtool: 'inline-source-map',
 	mode: 'development',
@@ -25,7 +24,8 @@ module.exports = merge(common.config, {
 		]
 	},
 	output: {
-		chunkFilename: '[name].[chunkhash:8].js'
+		chunkFilename: '[name].[chunkhash:8].js',
+		publicPath: common.PUBLIC_PATH
 	},
 	plugins: [
 		new webpack.DefinePlugin({

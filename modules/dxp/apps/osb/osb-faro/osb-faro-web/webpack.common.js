@@ -81,15 +81,23 @@ const config = {
 						loader: 'postcss-loader',
 						options: {
 							ident: 'postcss',
-							plugins: () => [require('autoprefixer')()]
+							plugins: () => [require('autoprefixer')()],
+							sourceMap: true
 						}
 					},
 					{
 						loader: 'sass-loader',
 						options: {
-							includePaths: clayCss.includePaths.concat(
-								path.join(clayCss.includePaths[0], '../fonts')
-							)
+							implementation: require('sass'),
+							sassOptions: {
+								includePaths: clayCss.includePaths.concat(
+									path.join(
+										clayCss.includePaths[0],
+										'../fonts'
+									)
+								)
+							},
+							sourceMap: true
 						}
 					}
 				]
@@ -142,7 +150,10 @@ const config = {
 		new webpack.DefinePlugin({
 			FARO_ENV: JSON.stringify(process.env.FARO_ENVIRONMENT_NAME || '')
 		}),
-		new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
+		new webpack.IgnorePlugin({
+			contextRegExp: /moment$/,
+			resourceRegExp: /^\.\/locale$/
+		})
 	],
 	target: 'web'
 };

@@ -47,6 +47,7 @@ import com.liferay.portal.upgrade.test.util.UpgradeTestUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -97,6 +98,11 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcessTest {
 			RandomTestUtil.randomString(), _journalArticle.getGroupId(),
 			_publicLayout);
 
+		JournalArticle draftJournalArticle =
+			JournalTestUtil.addArticleWithWorkflow(_group.getGroupId(), false);
+
+		_addJournalContentPortletToLayout(draftJournalArticle, _publicLayout);
+
 		List<String> expectedPrivateLayoutPortletIds = new ArrayList<>();
 
 		expectedPrivateLayoutPortletIds.add(
@@ -107,6 +113,8 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcessTest {
 			_addJournalContentSearch(
 				_journalArticle.getArticleId(), _journalArticle.getGroupId(),
 				_privateLayout));
+		expectedPrivateLayoutPortletIds.add(
+			_addJournalContentPortletToLayout(_journalArticle, _privateLayout));
 
 		_assertAssetPublisherPortletPreferencesCount(1, true);
 
@@ -120,6 +128,8 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcessTest {
 			_addJournalContentSearch(
 				_journalArticle.getArticleId(), _journalArticle.getGroupId(),
 				_publicLayout));
+		expectedPublicLayoutPortletIds.add(
+			_addJournalContentPortletToLayout(_journalArticle, _publicLayout));
 
 		_assertAssetPublisherPortletPreferencesCount(2, false);
 		_assertJournalContentSearchesCount(_journalArticle.getArticleId(), 2);
@@ -129,7 +139,7 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcessTest {
 		_runUpgrade();
 
 		_assertLayoutClassedModelUsagesCount(
-			_journalArticle.getResourcePrimKey(), 4);
+			_journalArticle.getResourcePrimKey(), 6);
 
 		long portletClassNameId = _classNameLocalService.getClassNameId(
 			Portlet.class.getName());
@@ -158,6 +168,11 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcessTest {
 			RandomTestUtil.randomString(), _journalArticle.getGroupId(),
 			_publicLayout);
 
+		JournalArticle draftJournalArticle =
+			JournalTestUtil.addArticleWithWorkflow(_group.getGroupId(), false);
+
+		_addJournalContentPortletToLayout(draftJournalArticle, _publicLayout);
+
 		List<String> expectedPrivateLayoutPortletIds = new ArrayList<>();
 
 		expectedPrivateLayoutPortletIds.add(
@@ -168,6 +183,8 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcessTest {
 			_addJournalContentSearch(
 				_journalArticle.getArticleId(), _journalArticle.getGroupId(),
 				_privateLayout));
+		expectedPrivateLayoutPortletIds.add(
+			_addJournalContentPortletToLayout(_journalArticle, _privateLayout));
 
 		_assertAssetPublisherPortletPreferencesCount(1, true);
 
@@ -181,6 +198,8 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcessTest {
 			_addJournalContentSearch(
 				_journalArticle.getArticleId(), _journalArticle.getGroupId(),
 				_publicLayout));
+		expectedPublicLayoutPortletIds.add(
+			_addJournalContentPortletToLayout(_journalArticle, _publicLayout));
 
 		_assertAssetPublisherPortletPreferencesCount(2, false);
 		_assertJournalContentSearchesCount(_journalArticle.getArticleId(), 2);
@@ -284,12 +303,51 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcessTest {
 			).build());
 	}
 
+	private String _addJournalContentPortletToLayout(
+			JournalArticle journalArticle, Layout layout)
+		throws Exception {
+
+		AssetEntry assetEntry = _assetEntryLocalService.getEntry(
+			JournalArticle.class.getName(),
+			journalArticle.getResourcePrimKey());
+
+		return _addJournalContentPortletToLayout(
+			layout,
+			HashMapBuilder.put(
+				"articleId", new String[] {journalArticle.getArticleId()}
+			).put(
+				"assetEntryId",
+				new String[] {String.valueOf(assetEntry.getEntryId())}
+			).put(
+				"groupId",
+				new String[] {String.valueOf(assetEntry.getGroupId())}
+			).build());
+	}
+
+	private String _addJournalContentPortletToLayout(
+			Layout layout, Map<String, String[]> preferenceMap)
+		throws Exception {
+
+		int count = _getJournalContentPortletPreferencesCount(
+			layout.isPrivateLayout());
+
+		String portletId = LayoutTestUtil.addPortletToLayout(
+			layout, JournalContentPortletKeys.JOURNAL_CONTENT, preferenceMap);
+
+		Assert.assertEquals(
+			count + 1,
+			_getJournalContentPortletPreferencesCount(
+				layout.isPrivateLayout()));
+
+		return portletId;
+	}
+
 	private String _addJournalContentSearch(
 			String articleId, long groupId, Layout layout)
 		throws Exception {
 
-		String portletId = LayoutTestUtil.addPortletToLayout(
-			layout, JournalContentPortletKeys.JOURNAL_CONTENT,
+		String portletId = _addJournalContentPortletToLayout(
+			layout,
 			HashMapBuilder.put(
 				"articleId", new String[] {articleId}
 			).put(
@@ -364,6 +422,19 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcessTest {
 		assetEntryUuidElement.addText(assetEntryUuid);
 
 		return document.formattedString(StringPool.BLANK);
+	}
+
+	private int _getJournalContentPortletPreferencesCount(
+		boolean privateLayout) {
+
+		List<PortletPreferences> portletPreferences =
+			_portletPreferencesLocalService.getPortletPreferences(
+				_group.getCompanyId(), _group.getGroupId(),
+				PortletKeys.PREFS_OWNER_ID_DEFAULT,
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
+				JournalContentPortletKeys.JOURNAL_CONTENT, privateLayout);
+
+		return portletPreferences.size();
 	}
 
 	private void _runUpgrade() throws Exception {

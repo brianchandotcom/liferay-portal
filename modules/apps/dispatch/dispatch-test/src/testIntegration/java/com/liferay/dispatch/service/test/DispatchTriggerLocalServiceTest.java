@@ -489,7 +489,9 @@ public class DispatchTriggerLocalServiceTest {
 	}
 
 	private String _getJobName(DispatchTrigger dispatchTrigger) {
-		return String.format("DISPATCH_JOB_%07d", dispatchTrigger.getDispatchTriggerId(), dispatchTrigger.getCompanyId());
+		return String.format(
+			"DISPATCH_JOB_%07d", dispatchTrigger.getDispatchTriggerId(),
+			dispatchTrigger.getCompanyId());
 	}
 
 	private String _getRandomDispatchExecutorType() {

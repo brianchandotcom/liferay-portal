@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Set;
 
 import org.jsoup.nodes.Document;
@@ -47,13 +48,11 @@ public class EditableFragmentEntryValidator
 			Document document, String configuration, Locale locale)
 		throws PortalException {
 
-		_validateAttributes(document, locale);
-
 		Elements elements = document.select(
 			"lfr-editable,*[data-lfr-editable-id]");
 
+		_validateAttributes(elements, locale);
 		_validateDuplicatedIds(elements, locale);
-
 		_validateEditableElements(elements, locale);
 	}
 
@@ -107,23 +106,18 @@ public class EditableFragmentEntryValidator
 				StringUtil.merge(_REQUIRED_ATTRIBUTE_NAMES)));
 	}
 
-	private void _validateAttributes(Document document, Locale locale)
+	private void _validateAttributes(Elements elements, Locale locale)
 		throws FragmentEntryContentException {
 
-		for (Element element : document.getElementsByTag("lfr-editable")) {
-			for (String attributeName : _REQUIRED_ATTRIBUTE_NAMES) {
-				_validateAttribute(element, attributeName, locale);
+		for (Element element : elements) {
+			if (Objects.equals(element.tagName(), "lfr-editable")) {
+				_validateAttribute(element, "id", locale);
+				_validateAttribute(element, "type", locale);
 			}
-
-			_validateType(element, locale);
-		}
-
-		for (Element element :
-				document.select(
-					"*[data-lfr-editable-id],*[data-lfr-editable-type]")) {
-
-			_validateAttribute(element, "data-lfr-editable-id", locale);
-			_validateAttribute(element, "data-lfr-editable-type", locale);
+			else {
+				_validateAttribute(element, "data-lfr-editable-id", locale);
+				_validateAttribute(element, "data-lfr-editable-type", locale);
+			}
 
 			_validateType(element, locale);
 		}

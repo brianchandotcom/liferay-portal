@@ -2,7 +2,7 @@
 	font-size: 1rem;
 
 	@each $name, $color in $colors {
-		&.#{$name}-color {
+		&.#{'' + $name}-color {
 			fill: $color;
 		}
 	}

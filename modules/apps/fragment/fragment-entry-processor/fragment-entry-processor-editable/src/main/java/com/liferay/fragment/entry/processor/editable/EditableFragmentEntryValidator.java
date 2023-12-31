@@ -9,7 +9,6 @@ import com.liferay.fragment.entry.processor.editable.parser.EditableElementParse
 import com.liferay.fragment.entry.processor.util.EditableFragmentEntryProcessorUtil;
 import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.processor.DocumentFragmentEntryValidator;
-import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -18,7 +17,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Set;
@@ -73,21 +71,6 @@ public class EditableFragmentEntryValidator
 			element);
 
 		return _editableElementParserServiceTrackerMap.getService(type);
-	}
-
-	private boolean _hasNestedWidget(Element element) {
-		List<String> portletAliases = _portletRegistry.getPortletAliases();
-
-		for (String portletAlias : portletAliases) {
-			Elements tagElements = element.select(
-				"> lfr-widget-" + portletAlias);
-
-			if (tagElements.size() > 0) {
-				return true;
-			}
-		}
-
-		return false;
 	}
 
 	private void _validateAttribute(
@@ -162,15 +145,11 @@ public class EditableFragmentEntryValidator
 	private void _validateNestedEditableElements(Element element, Locale locale)
 		throws FragmentEntryContentException {
 
-		Elements attributeElements = element.getElementsByAttribute(
-			"[data-lfr-editable-id]");
+		String html = element.html();
 
-		Elements dropZoneElements = element.select("> lfr-drop-zone");
-
-		Elements tagElements = element.select("> lfr-editable");
-
-		if ((attributeElements.size() > 0) || (dropZoneElements.size() > 0) ||
-			_hasNestedWidget(element) || (tagElements.size() > 0)) {
+		if (html.contains("data-lfr-editable-id=\"") ||
+			html.contains("<lfr-drop-zone") || html.contains("<lfr-editable") ||
+			html.contains("<lfr-widget-")) {
 
 			throw new FragmentEntryContentException(
 				_language.get(
@@ -203,8 +182,5 @@ public class EditableFragmentEntryValidator
 
 	@Reference
 	private Language _language;
-
-	@Reference
-	private PortletRegistry _portletRegistry;
 
 }

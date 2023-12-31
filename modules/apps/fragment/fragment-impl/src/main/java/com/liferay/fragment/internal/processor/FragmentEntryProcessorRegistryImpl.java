@@ -10,6 +10,7 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.CSSFragmentEntryProcessor;
 import com.liferay.fragment.processor.DefaultEditableValuesFragmentEntryProcessor;
 import com.liferay.fragment.processor.DocumentFragmentEntryProcessor;
+import com.liferay.fragment.processor.DocumentFragmentEntryValidator;
 import com.liferay.fragment.processor.FragmentEntryAutocompleteContributor;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
@@ -222,6 +223,15 @@ public class FragmentEntryProcessorRegistryImpl
 				html, configuration, LocaleUtil.getDefault());
 		}
 
+		Document document = _getDocument(html);
+
+		for (DocumentFragmentEntryValidator documentFragmentEntryValidator :
+				_documentFragmentEntryValidators) {
+
+			documentFragmentEntryValidator.validateFragmentEntryHTML(
+				document, configuration, LocaleUtil.getDefault());
+		}
+
 		validHTMLs.add(html);
 	}
 
@@ -241,6 +251,11 @@ public class FragmentEntryProcessorRegistryImpl
 						"fragment.entry.processor.priority")));
 		_documentFragmentEntryProcessors = ServiceTrackerListFactory.open(
 			bundleContext, DocumentFragmentEntryProcessor.class,
+			Collections.reverseOrder(
+				new PropertyServiceReferenceComparator<>(
+					"fragment.entry.processor.priority")));
+		_documentFragmentEntryValidators = ServiceTrackerListFactory.open(
+			bundleContext, DocumentFragmentEntryValidator.class,
 			Collections.reverseOrder(
 				new PropertyServiceReferenceComparator<>(
 					"fragment.entry.processor.priority")));
@@ -266,6 +281,7 @@ public class FragmentEntryProcessorRegistryImpl
 		_cssFragmentEntryProcessors.close();
 		_defaultEditableValuesFragmentEntryProcessors.close();
 		_documentFragmentEntryProcessors.close();
+		_documentFragmentEntryValidators.close();
 		_fragmentEntryAutocompleteContributors.close();
 		_fragmentEntryProcessors.close();
 		_fragmentEntryValidators.close();
@@ -341,6 +357,8 @@ public class FragmentEntryProcessorRegistryImpl
 		_defaultEditableValuesFragmentEntryProcessors;
 	private ServiceTrackerList<DocumentFragmentEntryProcessor>
 		_documentFragmentEntryProcessors;
+	private ServiceTrackerList<DocumentFragmentEntryValidator>
+		_documentFragmentEntryValidators;
 	private ServiceTrackerList<FragmentEntryAutocompleteContributor>
 		_fragmentEntryAutocompleteContributors;
 	private ServiceTrackerList<FragmentEntryProcessor> _fragmentEntryProcessors;

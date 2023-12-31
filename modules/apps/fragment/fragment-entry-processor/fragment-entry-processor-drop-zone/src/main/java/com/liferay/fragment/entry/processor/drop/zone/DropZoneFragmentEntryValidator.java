@@ -6,7 +6,7 @@
 package com.liferay.fragment.entry.processor.drop.zone;
 
 import com.liferay.fragment.exception.FragmentEntryContentException;
-import com.liferay.fragment.processor.FragmentEntryValidator;
+import com.liferay.fragment.processor.DocumentFragmentEntryValidator;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.Validator;
@@ -15,7 +15,6 @@ import java.util.LinkedHashSet;
 import java.util.Locale;
 import java.util.Set;
 
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -28,16 +27,15 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "fragment.entry.processor.priority:Integer=6",
-	service = FragmentEntryValidator.class
+	service = DocumentFragmentEntryValidator.class
 )
-public class DropZoneFragmentEntryValidator implements FragmentEntryValidator {
+public class DropZoneFragmentEntryValidator
+	implements DocumentFragmentEntryValidator {
 
 	@Override
 	public void validateFragmentEntryHTML(
-			String html, String configuration, Locale locale)
+			Document document, String configuration, Locale locale)
 		throws PortalException {
-
-		Document document = _getDocument(html);
 
 		Elements elements = document.getElementsByTag("lfr-drop-zone");
 
@@ -62,18 +60,6 @@ public class DropZoneFragmentEntryValidator implements FragmentEntryValidator {
 				_language.get(
 					locale, "you-must-define-a-unique-id-for-each-drop-zone"));
 		}
-	}
-
-	private Document _getDocument(String html) {
-		Document document = Jsoup.parseBodyFragment(html);
-
-		Document.OutputSettings outputSettings = new Document.OutputSettings();
-
-		outputSettings.prettyPrint(false);
-
-		document.outputSettings(outputSettings);
-
-		return document;
 	}
 
 	@Reference

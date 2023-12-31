@@ -8,7 +8,7 @@ package com.liferay.fragment.entry.processor.editable;
 import com.liferay.fragment.entry.processor.editable.parser.EditableElementParser;
 import com.liferay.fragment.entry.processor.util.EditableFragmentEntryProcessorUtil;
 import com.liferay.fragment.exception.FragmentEntryContentException;
-import com.liferay.fragment.processor.FragmentEntryValidator;
+import com.liferay.fragment.processor.DocumentFragmentEntryValidator;
 import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
@@ -22,7 +22,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -38,16 +37,15 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "fragment.entry.processor.priority:Integer=2",
-	service = FragmentEntryValidator.class
+	service = DocumentFragmentEntryValidator.class
 )
-public class EditableFragmentEntryValidator implements FragmentEntryValidator {
+public class EditableFragmentEntryValidator
+	implements DocumentFragmentEntryValidator {
 
 	@Override
 	public void validateFragmentEntryHTML(
-			String html, String configuration, Locale locale)
+			Document document, String configuration, Locale locale)
 		throws PortalException {
-
-		Document document = _getDocument(html);
 
 		_validateAttributes(document, locale);
 
@@ -69,18 +67,6 @@ public class EditableFragmentEntryValidator implements FragmentEntryValidator {
 	@Deactivate
 	protected void deactivate() {
 		_editableElementParserServiceTrackerMap.close();
-	}
-
-	private Document _getDocument(String html) {
-		Document document = Jsoup.parseBodyFragment(html);
-
-		Document.OutputSettings outputSettings = new Document.OutputSettings();
-
-		outputSettings.prettyPrint(false);
-
-		document.outputSettings(outputSettings);
-
-		return document;
 	}
 
 	private EditableElementParser _getEditableElementParser(Element element) {

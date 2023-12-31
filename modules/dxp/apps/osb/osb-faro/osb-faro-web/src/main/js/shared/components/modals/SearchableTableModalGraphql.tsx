@@ -8,7 +8,7 @@ import {
 	withSelectionProvider
 } from 'shared/context/selection';
 import {Columns, IPagination} from 'shared/types';
-import {DocumentNode} from 'graphql';
+import {DocumentNode} from 'apollo-boost';
 import {noop} from 'lodash';
 import {OrderedMap} from 'immutable';
 import {OrderParams} from 'shared/util/records';

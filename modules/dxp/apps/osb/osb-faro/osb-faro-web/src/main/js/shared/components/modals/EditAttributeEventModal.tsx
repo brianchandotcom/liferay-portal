@@ -14,7 +14,7 @@ import {Attribute, DataTypes, Event} from 'event-analysis/utils/types';
 import {connect, ConnectedProps} from 'react-redux';
 import {DATA_TYPE_LABELS_MAP} from 'event-analysis/utils/utils';
 import {debounce, get} from 'lodash/fp';
-import {DocumentNode} from 'graphql';
+import {DocumentNode} from 'apollo-boost';
 import {
 	EventAttributeDefinitionData,
 	EventAttributeDefinitionVariables,

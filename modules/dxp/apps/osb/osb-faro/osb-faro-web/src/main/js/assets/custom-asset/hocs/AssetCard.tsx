@@ -6,7 +6,7 @@ import getMetricsMapper from 'cerebro-shared/hocs/mappers/metrics';
 import React, {useCallback, useState} from 'react';
 import {ASSET_METRICS} from 'shared/util/constants';
 import {compose} from 'redux';
-import {DocumentNode} from 'graphql';
+import {DocumentNode} from 'apollo-boost';
 import {graphql} from '@apollo/react-hoc';
 import {MetricChart} from 'shared/components/metric-card/MetricChart';
 import {RangeSelectors, Router} from 'shared/types';

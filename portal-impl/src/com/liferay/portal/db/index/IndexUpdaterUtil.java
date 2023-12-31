@@ -13,8 +13,11 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dependency.manager.DependencyManagerSyncUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Release;
+import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.module.util.BundleUtil;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
+import com.liferay.portal.kernel.service.ReleaseLocalServiceUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -71,6 +74,8 @@ public class IndexUpdaterUtil {
 					if (BundleUtil.isLiferayServiceBundle(bundle)) {
 						try {
 							if (!_processedServletContextNames.contains(
+									bundle.getSymbolicName()) &&
+								!_isSkipUpdateIndexes(
 									bundle.getSymbolicName())) {
 
 								_addUpdateIndexesFutures(
@@ -214,6 +219,25 @@ public class IndexUpdaterUtil {
 		}
 
 		return indexesSQLMap;
+	}
+
+	private static boolean _isSkipUpdateIndexes(String bundleSymbolicName) {
+		Release release = ReleaseLocalServiceUtil.fetchRelease(
+			bundleSymbolicName);
+
+		if ((release != null) &&
+			(release.getState() == ReleaseConstants.STATE_GOOD)) {
+
+			return false;
+		}
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				"Skipped updating database indexes for " + bundleSymbolicName +
+					" since it is not upgraded");
+		}
+
+		return true;
 	}
 
 	private static void _updateIndexes(String tableName, String indexesSQL)

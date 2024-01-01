@@ -210,7 +210,7 @@ definition {
 
 		task ("Then the focus goes to the Product Menu") {
 			KeyPress(
-				locator1 = "//div[@aria-label='Product Menu']",
+				locator1 = "//nav[@aria-label='Product Menu']",
 				value1 = "\TAB");
 
 			AssertElementFocused(locator1 = "//button[contains(@aria-label,'Go to Other Site')]");

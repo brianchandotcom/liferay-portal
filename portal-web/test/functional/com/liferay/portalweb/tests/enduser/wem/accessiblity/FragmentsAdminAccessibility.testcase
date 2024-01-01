@@ -48,7 +48,7 @@ definition {
 		}
 
 		task ("Then the import results page should have correct accessibility") {
-			AssertElementAccessible(locator1 = "//div[contains(@id,'main-content')]//div[contains(@role,'tabpanel')]");
+			AssertElementAccessible(locator1 = "//div[contains(@id,'main-content')]//div[contains(@class,'panel-body')]");
 
 			Button.clickDone();
 		}

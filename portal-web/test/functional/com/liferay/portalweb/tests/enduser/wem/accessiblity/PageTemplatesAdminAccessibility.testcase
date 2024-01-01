@@ -253,7 +253,7 @@ definition {
 		task ("Then the import results page should have correct accessibility") {
 			Panel.expandPanel(panel = "1 item was imported.");
 
-			AssertElementAccessible(locator1 = "//div[contains(@id,'main-content')]//div[contains(@role,'tabpanel')]");
+			AssertElementAccessible(locator1 = "//div[contains(@id,'main-content')]//div[contains(@class,'panel-body')]");
 
 			AssertElementAccessible(locator1 = "xpath=(//div[contains(@id,'main-content')]//div[contains(@class,'panel-body')])[2]");
 

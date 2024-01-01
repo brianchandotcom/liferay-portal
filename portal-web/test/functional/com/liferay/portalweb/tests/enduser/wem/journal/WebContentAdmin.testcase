@@ -981,12 +981,16 @@ definition {
 					buttonId = "JournalPortlet_searchResults",
 					locator1 = "Button#BUTTON_ID");
 
+				var i = 1;
+
 				for (var menuItem : list "Web Content,Versions,Comments") {
 					AssertVisible(
-						index = 1,
+						index = ${i},
 						key_menuItem = ${menuItem},
 						key_subheader = "Results",
 						locator1 = "MenuItem#GROUPED_DROPDOWN_MENU_ITEM_BY_INDEX");
+
+					var i = ${i} + 1;
 				}
 			}
 
@@ -1002,12 +1006,16 @@ definition {
 					buttonId = "JournalPortlet_searchLocation",
 					locator1 = "Button#BUTTON_ID");
 
+				var i = 1;
+
 				for (var menuItem : list "WC Folder Name,Everywhere") {
 					AssertVisible(
-						index = 1,
+						index = ${i},
 						key_menuItem = ${menuItem},
 						key_subheader = "Location",
 						locator1 = "MenuItem#GROUPED_DROPDOWN_MENU_ITEM_BY_INDEX");
+
+					var i = ${i} + 1;
 				}
 			}
 
@@ -1023,14 +1031,16 @@ definition {
 					buttonId = "JournalPortlet_searchIn",
 					locator1 = "Button#BUTTON_ID");
 
+				var i = 1;
+
 				for (var menuItem : list "All Fields,Title Only") {
 					AssertVisible(
-						index = 1,
+						index = ${i},
 						key_menuItem = ${menuItem},
 						key_subheader = "Search In",
 						locator1 = "MenuItem#GROUPED_DROPDOWN_MENU_ITEM_BY_INDEX");
 
-					var index = ${index} + 1;
+					var i = ${i} + 1;
 				}
 			}
 		}

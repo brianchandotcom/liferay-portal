@@ -221,11 +221,10 @@ public class CIForwardProcessor {
 			forwardedPullRequestURL);
 
 		try {
-			for (PullRequest.Comment suiteTestResultGitHubComment :
+			for (PullRequest.Comment comment :
 					_getSuiteTestResultGitHubComments()) {
 
-				forwardedPullRequest.addComment(
-					suiteTestResultGitHubComment.getBody());
+				forwardedPullRequest.addComment(comment.getBody());
 			}
 		}
 		catch (IOException ioException) {
@@ -632,21 +631,22 @@ public class CIForwardProcessor {
 	private List<PullRequest.Comment> _getSuiteTestResultGitHubComments()
 		throws IOException {
 
+		Set<String> testSuiteNames = new HashSet<>();
+
 		List<String> requiredCompletedTestSuiteNames = Arrays.asList(
 			_getRequiredCompletedTestSuiteNames());
+
+		testSuiteNames.addAll(requiredCompletedTestSuiteNames);
 
 		List<String> requiredPassingTestSuiteNames = Arrays.asList(
 			_getRequiredPassingTestSuiteNames());
 
-		Set<String> testSuiteNames = new HashSet<>();
-
-		testSuiteNames.addAll(requiredCompletedTestSuiteNames);
 		testSuiteNames.addAll(requiredPassingTestSuiteNames);
 
-		List<PullRequest.Comment> comments = _getGitHubCIComments();
-
-		List<PullRequest.Comment> foundComments = new ArrayList<>(
+		List<PullRequest.Comment> filteredComments = new ArrayList<>(
 			testSuiteNames.size());
+
+		List<PullRequest.Comment> comments = _getGitHubCIComments();
 
 		for (String testSuiteName : testSuiteNames) {
 			boolean requiredPassing = requiredPassingTestSuiteNames.contains(
@@ -655,14 +655,14 @@ public class CIForwardProcessor {
 			PullRequest.Comment comment = _findMostRecentTestResultComment(
 				testSuiteName, requiredPassing, comments);
 
-			if ((comment != null) && !foundComments.contains(comment)) {
-				foundComments.add(comment);
+			if ((comment != null) && !filteredComments.contains(comment)) {
+				filteredComments.add(comment);
 			}
 		}
 
-		Collections.sort(foundComments);
+		Collections.sort(filteredComments);
 
-		return foundComments;
+		return filteredComments;
 	}
 
 	private String _getUnsuccessfulCommentBody() throws IOException {

@@ -349,7 +349,7 @@ definition {
 	@summary = "Default summary"
 	macro focusSlide(slideNumber = null) {
 		Click(
-			ariaLabel = "Focus slide ${slideNumber}",
+			ariaLabel = "Go to slide ${slideNumber}",
 			locator1 = "Button#ANY_WITH_ARIA_LABEL");
 	}
 

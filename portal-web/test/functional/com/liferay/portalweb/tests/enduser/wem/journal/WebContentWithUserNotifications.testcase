@@ -163,7 +163,7 @@ definition {
 				WebContentAdmin.configureEmailNotifications(
 					enabled = "true",
 					fieldName = "Granted",
-					navTab = "Web Content Granted Email",
+					navTab = "Web Content Granted",
 					notificationsBody = "Article diff is [$ARTICLE_DIFFS$]");
 			}
 

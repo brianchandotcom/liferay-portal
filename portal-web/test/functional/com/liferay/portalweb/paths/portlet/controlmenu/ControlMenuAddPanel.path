@@ -26,6 +26,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADD_PANEL_OPEN</td>
+	<td>//div[contains(@class,'lfr-add-panel')][contains(@class,'open')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

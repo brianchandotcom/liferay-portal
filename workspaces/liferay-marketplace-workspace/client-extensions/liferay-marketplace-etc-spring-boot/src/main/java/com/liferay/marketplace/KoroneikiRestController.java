@@ -202,7 +202,7 @@ public class KoroneikiRestController extends BaseRestController {
 	}
 
 	@PostMapping("product/{productId}")
-	public void postKoroneikiProduct(
+	public void postProduct(
 			@AuthenticationPrincipal Jwt jwt,
 			@PathVariable("productId") long productId)
 		throws Exception {

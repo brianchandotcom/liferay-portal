@@ -46,19 +46,6 @@ definition {
 		}
 	}
 
-	tearDown {
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
-		if (${testLiferayVirtualInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
-
-			JSONUser.tearDownNonAdminUsers();
-		}
-	}
-
 	@description = "When a new user subscribes a web content they should receive an email notification when the web content has a modification."
 	@priority = 4
 	test ViewEditWebContentEmailNotification {

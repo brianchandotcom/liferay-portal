@@ -484,6 +484,8 @@ definition {
 
 			Navigator.gotoBack();
 
+			WaitForPageLoad();
+
 			Css.assertCssCustomPropertyValue(
 				attribute = "background-color",
 				element = "//a[contains(@class,'btn')][normalize-space()='New Entry']",
@@ -524,6 +526,8 @@ definition {
 			Alert.viewSuccessMessage();
 
 			Navigator.gotoBack();
+
+			WaitForPageLoad();
 
 			Css.assertCssCustomPropertyValue(
 				attribute = "background-color",

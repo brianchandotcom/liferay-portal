@@ -1467,10 +1467,6 @@ definition {
 				fieldName = "type",
 				objectName = "PurchaseOrder",
 				type = "Picklist");
-
-			var objectDefinitionId = ObjectDefinitionAPI.getObjectDefinitionIdByName(name = "Preference");
-
-			ObjectDefinitionAPI.deleteRelationship(objectDefinitionId = ${objectDefinitionId});
 		}
 	}
 

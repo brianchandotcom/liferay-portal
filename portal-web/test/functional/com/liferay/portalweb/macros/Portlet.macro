@@ -74,6 +74,8 @@ definition {
 
 		Click.clickAt(locator1 = "ControlMenuAddPanel#CLOSE_ADD_PANEL");
 
+		WaitForElementNotPresent(locator1 = "ControlMenuAddPanel#ADD_PANEL_OPEN");
+
 		AssertElementPresent(locator1 = "Home#PORTLET");
 	}
 
@@ -83,7 +85,7 @@ definition {
 			var portletName = "Map";
 		}
 
-		if (IsNotVisible(locator1 = "ControlMenuAddPanel#CLOSE_ADD_PANEL")) {
+		if (IsElementNotPresent(locator1 = "ControlMenuAddPanel#ADD_PANEL_OPEN")) {
 			var browserType = PropsUtil.get("browser.type");
 
 			if (${browserType} == "safari") {

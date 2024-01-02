@@ -6,7 +6,9 @@ definition {
 
 		PortletEntry.inputName(name = ${pageTemplateName});
 
-		PortletEntry.inputDescriptionTextInput(description = "This is a page template description");
+		if (isSet(pageTemplateDescription)) {
+			PortletEntry.inputDescriptionTextInput(description = ${pageTemplateDescription});
+		}
 
 		if (${pageTemplateActive} == "Not Active") {
 			Click(locator1 = "ToggleSwitch#ACTIVE");

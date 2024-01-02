@@ -93,6 +93,14 @@ public class EditLayoutStrutsAction implements StrutsAction {
 		}
 
 		if (layoutTypeException.getType() ==
+				LayoutTypeException.FIRST_LAYOUT_PERMISSION) {
+
+			return _language.get(
+				httpServletRequest,
+				"the-first-page-should-be-visible-for-guest-users");
+		}
+
+		if (layoutTypeException.getType() ==
 				LayoutTypeException.NOT_PARENTABLE) {
 
 			return _language.get(

@@ -688,7 +688,7 @@ definition {
 			}
 
 			task ("View the user cannot see the Collection Display") {
-				PageEditor.viewFragmentNotPresent(fragmentName = "Collection Display");
+				ContentPages.viewFragmentNotPresent(fragmentName = "Collection");
 			}
 
 			task ("When the user navigates to the content page at preview mode") {
@@ -698,7 +698,7 @@ definition {
 			}
 
 			task ("View the user cannot see the Collection Display") {
-				PageEditor.viewFragmentNotPresent(fragmentName = "Collection Display");
+				ContentPages.viewFragmentNotPresent(fragmentName = "Collection");
 			}
 
 			task ("Navigate to the second content page at view mode") {
@@ -708,7 +708,7 @@ definition {
 			}
 
 			task ("View the user cannot see the Content Display") {
-				PageEditor.viewFragmentNotPresent(fragmentName = "Content Display");
+				ContentPages.viewFragmentNotPresent(fragmentName = "Content");
 			}
 
 			task ("When the user navigates to the content page at preview mode") {
@@ -718,7 +718,7 @@ definition {
 			}
 
 			task ("View the user cannot see the Content Display") {
-				PageEditor.viewFragmentNotPresent(fragmentName = "Content Display");
+				ContentPages.viewFragmentNotPresent(fragmentName = "Content");
 			}
 		}
 	}

@@ -13,7 +13,6 @@ import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.taglib.aui.ScriptTag;
 
 import java.io.IOException;
@@ -29,7 +28,6 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Cristina González
@@ -120,8 +118,5 @@ public class AnalyticsRenderFragmentLayoutPostDynamicInclude
 			ReflectionUtil.throwException(ioException);
 		}
 	}
-
-	@Reference
-	private Portal _portal;
 
 }

@@ -6,6 +6,7 @@
 package com.liferay.jethr0.job.definition;
 
 import com.liferay.jethr0.job.JobEntity;
+import com.liferay.jethr0.job.PortalAppReleaseJobEntity;
 
 import java.util.Set;
 import java.util.TreeSet;
@@ -56,6 +57,21 @@ public class JobDefinitionFactory {
 		else if (type == JobEntity.Type.LIFERAY_BINARIES_CACHE_UPDATER) {
 			return new LiferayBinariesCacheUpdaterJobDefinition(type);
 		}
+		else if (type == JobEntity.Type.MAINTENANCE_DAILY) {
+			return new MaintenanceDailyJobDefinition(type);
+		}
+		else if (type == JobEntity.Type.MAINTENANCE_MATRIX_JOBS) {
+			return new MaintenanceMatrixJobsJobDefinition(type);
+		}
+		else if (type == JobEntity.Type.MAINTENANCE_STALE_ARTIFACTS) {
+			return new MaintenanceStaleArtifactsJobDefinition(type);
+		}
+		else if (type == JobEntity.Type.MAINTENANCE_WEEKLY) {
+			return new MaintenanceWeeklyJobDefinition(type);
+		}
+		else if (type == JobEntity.Type.MAINTENANCE_WEEKLY_NODE) {
+			return new MaintenanceWeeklyNodeJobDefinition(type);
+		}
 		else if (type == JobEntity.Type.MIRRORS_LOCAL_CACHE_PROPAGATOR) {
 			return new MirrorsLocalCachePropagatorJobDefinition(type);
 		}
@@ -74,17 +90,20 @@ public class JobDefinitionFactory {
 		else if (type == JobEntity.Type.PLUGINS_UPSTREAM) {
 			return new UpstreamPluginsJobDefinition(type);
 		}
-		else if (type == JobEntity.Type.PORTAL_PULL_REQUEST) {
-			return new PortalPullRequestJobDefinition(type);
-		}
-		else if (type == JobEntity.Type.PORTAL_PULL_REQUEST_SF) {
-			return new PortalPullRequestSFJobDefinition(type);
+		else if (type == JobEntity.Type.PORTAL_APP_RELEASE) {
+			return new DefaultJobDefinition(type);
 		}
 		else if (type == JobEntity.Type.PORTAL_FIXPACK_RELEASE) {
 			return new PortalFixpackReleaseJobDefinition(type);
 		}
 		else if (type == JobEntity.Type.PORTAL_HOTFIX_RELEASE) {
 			return new PortalHotfixReleaseJobDefinition(type);
+		}
+		else if (type == JobEntity.Type.PORTAL_PULL_REQUEST) {
+			return new PortalPullRequestJobDefinition(type);
+		}
+		else if (type == JobEntity.Type.PORTAL_PULL_REQUEST_SF) {
+			return new PortalPullRequestSFJobDefinition(type);
 		}
 		else if (type == JobEntity.Type.PORTAL_RELEASE) {
 			return new PortalReleaseJobDefinition(type);
@@ -103,21 +122,6 @@ public class JobDefinitionFactory {
 		}
 		else if (type == JobEntity.Type.PUBLISH_TESTRAY_REPORT) {
 			return new PublishTestrayReportJobDefinition(type);
-		}
-		else if (type == JobEntity.Type.MAINTENANCE_DAILY) {
-			return new MaintenanceDailyJobDefinition(type);
-		}
-		else if (type == JobEntity.Type.MAINTENANCE_MATRIX_JOBS) {
-			return new MaintenanceMatrixJobsJobDefinition(type);
-		}
-		else if (type == JobEntity.Type.MAINTENANCE_STALE_ARTIFACTS) {
-			return new MaintenanceStaleArtifactsJobDefinition(type);
-		}
-		else if (type == JobEntity.Type.MAINTENANCE_WEEKLY) {
-			return new MaintenanceWeeklyJobDefinition(type);
-		}
-		else if (type == JobEntity.Type.MAINTENANCE_WEEKLY_NODE) {
-			return new MaintenanceWeeklyNodeJobDefinition(type);
 		}
 		else if (type == JobEntity.Type.QA_WEBSITES_DAILY) {
 			return new DailyQAWebsitesJobDefinition(type);

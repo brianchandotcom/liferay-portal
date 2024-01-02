@@ -19,6 +19,10 @@ definition {
 	macro addDisplayPage(displayPageName = null, subType = null, contentType = null, masterLayoutName = null) {
 		LexiconEntry.gotoAdd();
 
+		if (IsElementPresent(key_menuItem = "Folder", locator1 = "MenuItem#ANY_MENU_ITEM")) {
+			MenuItem.click(menuItem = "Display Page Template");
+		}
+
 		if (isSet(masterLayoutName)) {
 			LexiconCard.clickCard(card = ${masterLayoutName});
 		}

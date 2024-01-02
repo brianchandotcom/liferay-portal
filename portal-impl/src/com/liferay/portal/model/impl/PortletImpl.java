@@ -4223,7 +4223,7 @@ public class PortletImpl extends PortletBaseImpl {
 		ControlPanelEntry controlPanelEntry = _controlPanelEntrySnapshot.get();
 
 		if (controlPanelEntry == null) {
-			return _defaultControlPanelEntry;
+			return _dummyControlPanelEntry;
 		}
 
 		return controlPanelEntry;
@@ -4240,7 +4240,7 @@ public class PortletImpl extends PortletBaseImpl {
 			"(&(!(javax.portlet.name=*))(objectClass=" +
 				ControlPanelEntry.class.getName() + "))",
 			true);
-	private static final ControlPanelEntry _defaultControlPanelEntry =
+	private static final ControlPanelEntry _dummyControlPanelEntry =
 		new BaseControlPanelEntry() {
 		};
 

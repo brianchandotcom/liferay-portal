@@ -41,6 +41,17 @@ definition {
 		PageEditor.assertFragmentSidebarLoaded();
 	}
 
+	@summary = "Add a folder"
+	macro addFolder(folderName = null) {
+		LexiconEntry.gotoAdd();
+
+		MenuItem.click(menuItem = "Folder");
+
+		PortletEntry.inputName(name = ${folderName});
+
+		PortletEntry.save();
+	}
+
 	@summary = "Change content type"
 	macro changeContentType(displayPageName = null, subType = null, contentType = null) {
 		DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(

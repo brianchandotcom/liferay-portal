@@ -1040,10 +1040,31 @@ public class EditableFragmentEntryProcessorTest {
 	}
 
 	@Test(expected = FragmentEntryContentException.class)
-	public void testFragmentEntryProcessorEditableWithNestedEditablesInHTML()
+	public void testFragmentEntryProcessorEditableWithNestedDropZonesInHTML()
 		throws Exception {
 
-		_addFragmentEntry("fragment_entry_with_nested_editable_in_html.html");
+		_addFragmentEntry("fragment_entry_with_nested_drop_zones_in_html.html");
+	}
+
+	@Test(expected = FragmentEntryContentException.class)
+	public void testFragmentEntryProcessorEditableWithNestedEditablesInHTML1()
+		throws Exception {
+
+		_addFragmentEntry("fragment_entry_with_nested_editable_in_html_1.html");
+	}
+
+	@Test(expected = FragmentEntryContentException.class)
+	public void testFragmentEntryProcessorEditableWithNestedEditablesInHTML2()
+		throws Exception {
+
+		_addFragmentEntry("fragment_entry_with_nested_editable_in_html_2.html");
+	}
+
+	@Test(expected = FragmentEntryContentException.class)
+	public void testFragmentEntryProcessorEditableWithNestedWidgetsInHTML()
+		throws Exception {
+
+		_addFragmentEntry("fragment_entry_with_nested_widgets_in_html.html");
 	}
 
 	@Test

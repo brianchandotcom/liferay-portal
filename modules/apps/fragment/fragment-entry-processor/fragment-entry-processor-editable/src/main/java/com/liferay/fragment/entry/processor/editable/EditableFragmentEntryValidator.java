@@ -59,8 +59,11 @@ public class EditableFragmentEntryValidator
 							"element"));
 			}
 
+			String type = EditableFragmentEntryProcessorUtil.getElementType(
+				element);
+
 			EditableElementParser editableElementParser =
-				_getEditableElementParser(element);
+				_editableElementParserServiceTrackerMap.getService(type);
 
 			if (editableElementParser == null) {
 				throw new FragmentEntryContentException(
@@ -72,7 +75,19 @@ public class EditableFragmentEntryValidator
 
 			editableElementParser.validate(element);
 
-			_validateNestedEditableElements(element, locale);
+			String html = element.html();
+
+			if (html.contains("data-lfr-editable-id=\"") ||
+				html.contains("<lfr-drop-zone") ||
+				html.contains("<lfr-editable") ||
+				html.contains("<lfr-widget-")) {
+
+				throw new FragmentEntryContentException(
+					_language.get(
+						locale,
+						"editable-fields-cannot-include-nested-editables-" +
+							"drop-zones-or-widgets-in-it"));
+			}
 		}
 	}
 
@@ -86,30 +101,6 @@ public class EditableFragmentEntryValidator
 	@Deactivate
 	protected void deactivate() {
 		_editableElementParserServiceTrackerMap.close();
-	}
-
-	private EditableElementParser _getEditableElementParser(Element element) {
-		String type = EditableFragmentEntryProcessorUtil.getElementType(
-			element);
-
-		return _editableElementParserServiceTrackerMap.getService(type);
-	}
-
-	private void _validateNestedEditableElements(Element element, Locale locale)
-		throws FragmentEntryContentException {
-
-		String html = element.html();
-
-		if (html.contains("data-lfr-editable-id=\"") ||
-			html.contains("<lfr-drop-zone") || html.contains("<lfr-editable") ||
-			html.contains("<lfr-widget-")) {
-
-			throw new FragmentEntryContentException(
-				_language.get(
-					locale,
-					"editable-fields-cannot-include-nested-editables-drop-" +
-						"zones-or-widgets-in-it"));
-		}
 	}
 
 	private ServiceTrackerMap<String, EditableElementParser>

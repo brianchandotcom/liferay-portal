@@ -800,16 +800,8 @@ definition {
 		}
 
 		task ("View the title of related assets are shown in the second module") {
-			var n = 1;
-
 			for (var title : list "Document Title,Blogs Entry Title") {
-				ContentPages.viewFragmentText(
-					fragmentName = "button",
-					id = "link",
-					position = ${n},
-					text = ${title});
-
-				var n = ${n} + 1;
+				AssertVisible(locator1 = "//*[contains(@data-lfr-editable-id,'link')][normalize-space(text())='${title}']");
 			}
 		}
 	}

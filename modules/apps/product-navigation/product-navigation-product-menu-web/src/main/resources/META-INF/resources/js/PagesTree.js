@@ -13,6 +13,7 @@ import React, {useCallback, useEffect, useState} from 'react';
 
 const ACTION_COPY_PAGE = 'copy-page';
 const ACTION_DELETE = 'delete';
+const ACTION_PERMISSIONS = 'permissions';
 const ENTER_KEYCODE = 13;
 const ROOT_ITEM_ID = '0';
 
@@ -456,6 +457,12 @@ function normalizeActions(actions, namespace) {
 							},
 							id: 'addLayoutDialog',
 							size: 'md',
+						};
+					}
+					else if (item.id === ACTION_PERMISSIONS) {
+						modalData = {
+							...modalData,
+							onClose: () => navigate(window.location.href),
 						};
 					}
 

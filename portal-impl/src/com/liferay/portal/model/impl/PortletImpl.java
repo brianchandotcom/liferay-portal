@@ -28,9 +28,9 @@ import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.notifications.UserNotificationHandler;
 import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.pop.MessageListener;
+import com.liferay.portal.kernel.portlet.BaseControlPanelEntry;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.ControlPanelEntry;
-import com.liferay.portal.kernel.portlet.DefaultControlPanelEntry;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapperTracker;
 import com.liferay.portal.kernel.portlet.PortletBag;
@@ -4241,7 +4241,8 @@ public class PortletImpl extends PortletBaseImpl {
 				ControlPanelEntry.class.getName() + "))",
 			true);
 	private static final ControlPanelEntry _defaultControlPanelEntry =
-		new DefaultControlPanelEntry();
+		new BaseControlPanelEntry() {
+		};
 
 	/**
 	 * Map of the ready states of all portlets keyed by their root portlet ID.

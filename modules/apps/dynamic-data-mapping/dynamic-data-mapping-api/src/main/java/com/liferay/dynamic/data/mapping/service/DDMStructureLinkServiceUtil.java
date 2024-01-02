@@ -39,21 +39,21 @@ public class DDMStructureLinkServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static List<DDMStructureLink> getStructureLinkStructures(
+	public static List<DDMStructureLink> getStructureLinks(
 		long classNameId, long classPK, long[] groupIds, String keywords,
 		String resourceClassName, int start, int end,
 		OrderByComparator<DDMStructureLink> orderByComparator) {
 
-		return getService().getStructureLinkStructures(
+		return getService().getStructureLinks(
 			classNameId, classPK, groupIds, keywords, resourceClassName, start,
 			end, orderByComparator);
 	}
 
-	public static int getStructureLinkStructuresCount(
+	public static int getStructureLinksCount(
 		long classNameId, long classPK, long[] groupIds, String keywords,
 		String resourceClassName) {
 
-		return getService().getStructureLinkStructuresCount(
+		return getService().getStructureLinksCount(
 			classNameId, classPK, groupIds, keywords, resourceClassName);
 	}
 

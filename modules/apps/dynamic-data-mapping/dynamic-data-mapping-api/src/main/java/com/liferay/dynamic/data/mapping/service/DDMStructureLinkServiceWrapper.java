@@ -40,23 +40,23 @@ public class DDMStructureLinkServiceWrapper
 	}
 
 	@Override
-	public java.util.List<DDMStructureLink> getStructureLinkStructures(
+	public java.util.List<DDMStructureLink> getStructureLinks(
 		long classNameId, long classPK, long[] groupIds, String keywords,
 		String resourceClassName, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMStructureLink>
 			orderByComparator) {
 
-		return _ddmStructureLinkService.getStructureLinkStructures(
+		return _ddmStructureLinkService.getStructureLinks(
 			classNameId, classPK, groupIds, keywords, resourceClassName, start,
 			end, orderByComparator);
 	}
 
 	@Override
-	public int getStructureLinkStructuresCount(
+	public int getStructureLinksCount(
 		long classNameId, long classPK, long[] groupIds, String keywords,
 		String resourceClassName) {
 
-		return _ddmStructureLinkService.getStructureLinkStructuresCount(
+		return _ddmStructureLinkService.getStructureLinksCount(
 			classNameId, classPK, groupIds, keywords, resourceClassName);
 	}
 

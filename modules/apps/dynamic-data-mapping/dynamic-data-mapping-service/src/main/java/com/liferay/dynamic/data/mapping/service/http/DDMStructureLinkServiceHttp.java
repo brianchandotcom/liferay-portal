@@ -43,7 +43,7 @@ public class DDMStructureLinkServiceHttp {
 
 	public static java.util.List
 		<com.liferay.dynamic.data.mapping.model.DDMStructureLink>
-			getStructureLinkStructures(
+			getStructureLinks(
 				HttpPrincipal httpPrincipal, long classNameId, long classPK,
 				long[] groupIds, String keywords, String resourceClassName,
 				int start, int end,
@@ -53,8 +53,8 @@ public class DDMStructureLinkServiceHttp {
 
 		try {
 			MethodKey methodKey = new MethodKey(
-				DDMStructureLinkServiceUtil.class, "getStructureLinkStructures",
-				_getStructureLinkStructuresParameterTypes0);
+				DDMStructureLinkServiceUtil.class, "getStructureLinks",
+				_getStructureLinksParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, classNameId, classPK, groupIds, keywords,
@@ -83,15 +83,14 @@ public class DDMStructureLinkServiceHttp {
 		}
 	}
 
-	public static int getStructureLinkStructuresCount(
+	public static int getStructureLinksCount(
 		HttpPrincipal httpPrincipal, long classNameId, long classPK,
 		long[] groupIds, String keywords, String resourceClassName) {
 
 		try {
 			MethodKey methodKey = new MethodKey(
-				DDMStructureLinkServiceUtil.class,
-				"getStructureLinkStructuresCount",
-				_getStructureLinkStructuresCountParameterTypes1);
+				DDMStructureLinkServiceUtil.class, "getStructureLinksCount",
+				_getStructureLinksCountParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, classNameId, classPK, groupIds, keywords,
@@ -121,14 +120,14 @@ public class DDMStructureLinkServiceHttp {
 	private static Log _log = LogFactoryUtil.getLog(
 		DDMStructureLinkServiceHttp.class);
 
-	private static final Class<?>[] _getStructureLinkStructuresParameterTypes0 =
+	private static final Class<?>[] _getStructureLinksParameterTypes0 =
 		new Class[] {
 			long.class, long.class, long[].class, String.class, String.class,
 			int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[]
-		_getStructureLinkStructuresCountParameterTypes1 = new Class[] {
+	private static final Class<?>[] _getStructureLinksCountParameterTypes1 =
+		new Class[] {
 			long.class, long.class, long[].class, String.class, String.class
 		};
 

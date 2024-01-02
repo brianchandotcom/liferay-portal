@@ -54,13 +54,13 @@ public interface DDMStructureLinkService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<DDMStructureLink> getStructureLinkStructures(
+	public List<DDMStructureLink> getStructureLinks(
 		long classNameId, long classPK, long[] groupIds, String keywords,
 		String resourceClassName, int start, int end,
 		OrderByComparator<DDMStructureLink> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getStructureLinkStructuresCount(
+	public int getStructureLinksCount(
 		long classNameId, long classPK, long[] groupIds, String keywords,
 		String resourceClassName);
 

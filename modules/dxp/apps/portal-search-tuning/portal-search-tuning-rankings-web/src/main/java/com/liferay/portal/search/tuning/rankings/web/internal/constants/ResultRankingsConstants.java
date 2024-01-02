@@ -10,9 +10,9 @@ package com.liferay.portal.search.tuning.rankings.web.internal.constants;
  */
 public class ResultRankingsConstants {
 
-	public static final String ACTIVATE = "activate";
+	public static final String ACTION_ACTIVATE = "activate";
 
-	public static final String DEACTIVATE = "deactivate";
+	public static final String ACTION_DEACTIVATE = "deactivate";
 
 	public static final String STATUS_ACTIVE = "active";
 

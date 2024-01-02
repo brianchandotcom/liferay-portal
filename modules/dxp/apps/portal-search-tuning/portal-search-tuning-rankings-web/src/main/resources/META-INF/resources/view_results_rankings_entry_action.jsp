@@ -57,14 +57,14 @@ RankingEntryDisplayContext rankingEntryDisplayContext = (RankingEntryDisplayCont
 		</li>
 
 		<portlet:actionURL name="/result_rankings/edit_ranking" var="deactivateURL">
-			<portlet:param name="<%= Constants.CMD %>" value="<%= Objects.equals(rankingEntryDisplayContext.getStatus(), ResultRankingsConstants.STATUS_ACTIVE) ? ResultRankingsConstants.DEACTIVATE : ResultRankingsConstants.ACTIVATE %>" />
+			<portlet:param name="<%= Constants.CMD %>" value="<%= Objects.equals(rankingEntryDisplayContext.getStatus(), ResultRankingsConstants.STATUS_ACTIVE) ? ResultRankingsConstants.ACTION_DEACTIVATE : ResultRankingsConstants.ACTION_ACTIVATE %>" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="resultsRankingUid" value="<%= rankingEntryDisplayContext.getUid() %>" />
 		</portlet:actionURL>
 
 		<li>
 			<a class="dropdown-item" href="<%= deactivateURL %>" target="_self">
-				<liferay-ui:message key="<%= Objects.equals(rankingEntryDisplayContext.getStatus(), ResultRankingsConstants.STATUS_ACTIVE) ? ResultRankingsConstants.DEACTIVATE : ResultRankingsConstants.ACTIVATE %>" />
+				<liferay-ui:message key="<%= Objects.equals(rankingEntryDisplayContext.getStatus(), ResultRankingsConstants.STATUS_ACTIVE) ? ResultRankingsConstants.ACTION_DEACTIVATE : ResultRankingsConstants.ACTION_ACTIVATE %>" />
 			</a>
 		</li>
 	</c:if>

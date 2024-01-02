@@ -86,14 +86,14 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 			_delete(actionRequest, actionResponse, editRankingMVCActionRequest);
 		}
 		else if (editRankingMVCActionRequest.isCmd(
-					ResultRankingsConstants.DEACTIVATE)) {
+					ResultRankingsConstants.ACTION_DEACTIVATE)) {
 
 			_updateStatus(
 				actionRequest, actionResponse, editRankingMVCActionRequest,
 				ResultRankingsConstants.STATUS_INACTIVE);
 		}
 		else if (editRankingMVCActionRequest.isCmd(
-					ResultRankingsConstants.ACTIVATE)) {
+					ResultRankingsConstants.ACTION_ACTIVATE)) {
 
 			_updateStatus(
 				actionRequest, actionResponse, editRankingMVCActionRequest,
@@ -377,7 +377,7 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 		if (_resultRankingsConfiguration.allowDuplicateQueryStrings() ||
 			_isInactive(editRankingMVCActionRequest) ||
 			editRankingMVCActionRequest.isCmd(
-				ResultRankingsConstants.DEACTIVATE)) {
+				ResultRankingsConstants.ACTION_DEACTIVATE)) {
 
 			return;
 		}

@@ -62,12 +62,12 @@ RankingPortletDisplayContext rankingPortletDisplayContext = (RankingPortletDispl
 %>
 
 <portlet:actionURL name="/result_rankings/edit_ranking" var="activateResultsRankingEntryURL">
-	<portlet:param name="<%= Constants.CMD %>" value="<%= ResultRankingsConstants.ACTIVATE %>" />
+	<portlet:param name="<%= Constants.CMD %>" value="<%= ResultRankingsConstants.ACTION_ACTIVATE %>" />
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 </portlet:actionURL>
 
 <portlet:actionURL name="/result_rankings/edit_ranking" var="deactivateResultsRankingEntryURL">
-	<portlet:param name="<%= Constants.CMD %>" value="<%= ResultRankingsConstants.DEACTIVATE %>" />
+	<portlet:param name="<%= Constants.CMD %>" value="<%= ResultRankingsConstants.ACTION_DEACTIVATE %>" />
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 </portlet:actionURL>
 

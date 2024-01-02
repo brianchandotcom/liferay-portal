@@ -89,7 +89,8 @@ public class EditRankingMVCActionCommandTest
 		setUpPortal();
 		setUpPortalUtil();
 		setUpPortletRequestParamValue(
-			_actionRequest, ResultRankingsConstants.ACTIVATE, Constants.CMD);
+			_actionRequest, ResultRankingsConstants.ACTION_ACTIVATE,
+			Constants.CMD);
 
 		_editRankingMVCActionCommand.doProcessAction(
 			_actionRequest, _actionResponse);
@@ -130,7 +131,8 @@ public class EditRankingMVCActionCommandTest
 		setUpPortal();
 		setUpPortalUtil();
 		setUpPortletRequestParamValue(
-			_actionRequest, ResultRankingsConstants.DEACTIVATE, Constants.CMD);
+			_actionRequest, ResultRankingsConstants.ACTION_DEACTIVATE,
+			Constants.CMD);
 
 		_editRankingMVCActionCommand.doProcessAction(
 			_actionRequest, _actionResponse);

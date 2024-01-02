@@ -13,7 +13,6 @@ import com.liferay.commerce.internal.util.AccountEntryUtil;
 import com.liferay.commerce.product.constants.CommerceChannelAccountEntryRelConstants;
 import com.liferay.commerce.product.model.CommerceChannelAccountEntryRel;
 import com.liferay.commerce.product.service.CommerceChannelAccountEntryRelService;
-import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -148,8 +147,5 @@ public class AccountEntrySearchPermissionFilterContributor
 	@Reference
 	private CommerceChannelAccountEntryRelService
 		_commerceChannelAccountEntryRelService;
-
-	@Reference
-	private CommerceChannelLocalService _commerceChannelLocalService;
 
 }

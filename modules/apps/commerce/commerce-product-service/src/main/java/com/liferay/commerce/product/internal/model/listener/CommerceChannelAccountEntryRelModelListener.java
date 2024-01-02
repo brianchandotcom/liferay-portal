@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -7,9 +7,6 @@ package com.liferay.commerce.product.internal.model.listener;
 
 import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.product.model.CommerceChannelAccountEntryRel;
-import com.liferay.commerce.product.service.CommerceCatalogLocalService;
-import com.liferay.commerce.product.service.CommerceChannelAccountEntryRelLocalService;
-import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
@@ -18,7 +15,6 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchException;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Danny Situ
@@ -73,15 +69,5 @@ public class CommerceChannelAccountEntryRelModelListener
 			throw new ModelListenerException(searchException);
 		}
 	}
-
-	@Reference
-	private CommerceCatalogLocalService _commerceCatalogLocalService;
-
-	@Reference
-	private CommerceChannelAccountEntryRelLocalService
-		_commerceChannelAccountEntryRelLocalService;
-
-	@Reference
-	private CommerceChannelLocalService _commerceChannelLocalService;
 
 }

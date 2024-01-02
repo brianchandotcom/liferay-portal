@@ -148,6 +148,13 @@ public class EditVocabularySettingsDisplayContext {
 					String.valueOf(selectedClassTypePK), true));
 		}
 
+		selectOptions.add(
+			new SelectOption(
+				LanguageUtil.get(
+					_themeDisplay.getLocale(), "all-asset-subtypes"),
+				String.valueOf(AssetCategoryConstants.ALL_CLASS_TYPE_PK),
+				true));
+
 		for (ClassType classType : classTypes) {
 			selectOptions.add(
 				new SelectOption(

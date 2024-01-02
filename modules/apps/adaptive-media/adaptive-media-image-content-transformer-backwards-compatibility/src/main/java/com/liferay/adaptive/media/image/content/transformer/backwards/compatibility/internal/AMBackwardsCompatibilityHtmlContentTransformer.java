@@ -269,13 +269,13 @@ public class AMBackwardsCompatibilityHtmlContentTransformer
 		}
 	}
 
-	private static final String _OPEN_TAG_TOKEN_IMG = "<img";
+	private static final String _ATTRIBUTE_TOKEN_SRC = "src=";
 
 	private static final String _CLOSE_TAG_TOKEN_PICTURE = "</picture>";
 
-	private static final String _OPEN_TAG_TOKEN_PICTURE = "<picture";
+	private static final String _OPEN_TAG_TOKEN_IMG = "<img";
 
-	private static final String _ATTRIBUTE_TOKEN_SRC = "src=";
+	private static final String _OPEN_TAG_TOKEN_PICTURE = "<picture";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AMBackwardsCompatibilityHtmlContentTransformer.class);

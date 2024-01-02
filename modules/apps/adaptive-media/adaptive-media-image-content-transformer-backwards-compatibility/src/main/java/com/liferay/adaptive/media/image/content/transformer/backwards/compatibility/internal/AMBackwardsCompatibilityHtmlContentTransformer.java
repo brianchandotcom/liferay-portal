@@ -48,7 +48,7 @@ public class AMBackwardsCompatibilityHtmlContentTransformer
 		}
 
 		if (!html.contains("/documents/") ||
-			!html.contains(_IMG_OPEN_TAG_TOKEN)) {
+			!html.contains(_OPEN_TAG_TOKEN_IMG)) {
 
 			return html;
 		}
@@ -58,7 +58,7 @@ public class AMBackwardsCompatibilityHtmlContentTransformer
 		int lastPos = 0;
 
 		while (lastPos < html.length()) {
-			int pictureStart = html.indexOf(_PICTURE_OPEN_TAG_TOKEN, lastPos);
+			int pictureStart = html.indexOf(_OPEN_TAG_TOKEN_PICTURE, lastPos);
 
 			if (pictureStart == -1) {
 				pictureStart = html.length();
@@ -68,14 +68,14 @@ public class AMBackwardsCompatibilityHtmlContentTransformer
 
 			if (pictureStart < html.length()) {
 				int pictureEnd = html.indexOf(
-					_PICTURE_CLOSE_TAG_TOKEN,
-					pictureStart + _PICTURE_OPEN_TAG_TOKEN.length());
+					_CLOSE_TAG_TOKEN_PICTURE,
+					pictureStart + _OPEN_TAG_TOKEN_PICTURE.length());
 
 				if (pictureEnd == -1) {
 					pictureEnd = html.length();
 				}
 				else {
-					pictureEnd += _PICTURE_CLOSE_TAG_TOKEN.length();
+					pictureEnd += _CLOSE_TAG_TOKEN_PICTURE.length();
 				}
 
 				sb.append(html.substring(pictureStart, pictureEnd));
@@ -232,7 +232,7 @@ public class AMBackwardsCompatibilityHtmlContentTransformer
 		int lastPos = start;
 
 		while (lastPos < end) {
-			int imgStart = html.indexOf(_IMG_OPEN_TAG_TOKEN, lastPos);
+			int imgStart = html.indexOf(_OPEN_TAG_TOKEN_IMG, lastPos);
 
 			if (imgStart == -1) {
 				sb.append(html.substring(lastPos, end));
@@ -244,9 +244,9 @@ public class AMBackwardsCompatibilityHtmlContentTransformer
 
 			int imgEnd = html.indexOf(CharPool.GREATER_THAN, imgStart) + 1;
 
-			int attributeListPos = imgStart + _IMG_OPEN_TAG_TOKEN.length();
+			int attributeListPos = imgStart + _OPEN_TAG_TOKEN_IMG.length();
 
-			int srcStart = html.indexOf(_SRC_ATTRIBUTE_TOKEN, attributeListPos);
+			int srcStart = html.indexOf(_ATTRIBUTE_TOKEN_SRC, attributeListPos);
 
 			if (srcStart == -1) {
 				sb.append(html.substring(imgStart, imgEnd));
@@ -256,7 +256,7 @@ public class AMBackwardsCompatibilityHtmlContentTransformer
 				continue;
 			}
 
-			int quotePos = srcStart + _SRC_ATTRIBUTE_TOKEN.length();
+			int quotePos = srcStart + _ATTRIBUTE_TOKEN_SRC.length();
 
 			int srcEnd = html.indexOf(html.charAt(quotePos), quotePos + 1);
 
@@ -269,13 +269,13 @@ public class AMBackwardsCompatibilityHtmlContentTransformer
 		}
 	}
 
-	private static final String _IMG_OPEN_TAG_TOKEN = "<img";
+	private static final String _OPEN_TAG_TOKEN_IMG = "<img";
 
-	private static final String _PICTURE_CLOSE_TAG_TOKEN = "</picture>";
+	private static final String _CLOSE_TAG_TOKEN_PICTURE = "</picture>";
 
-	private static final String _PICTURE_OPEN_TAG_TOKEN = "<picture";
+	private static final String _OPEN_TAG_TOKEN_PICTURE = "<picture";
 
-	private static final String _SRC_ATTRIBUTE_TOKEN = "src=";
+	private static final String _ATTRIBUTE_TOKEN_SRC = "src=";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AMBackwardsCompatibilityHtmlContentTransformer.class);

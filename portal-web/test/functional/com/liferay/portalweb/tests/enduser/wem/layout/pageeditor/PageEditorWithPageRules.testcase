@@ -274,6 +274,52 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-200332. Apply a page rule with Belongs to Segment condition."
+	@priority = 4
+	test ApplyPageRuleWithBelongsToSegmentCondition {
+		task ("Given a page designer has a Button fragment on a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+		}
+
+		task ("When the page designer adds a page rule with Belongs to Segment condition") {
+			PageEditor.gotoTab(tabName = "Page Rules");
+
+			PageEditor.addPageRule(
+				selectAction = "Hide",
+				selectActionValue = "Button",
+				selectCondition = "Belongs to Segment",
+				selectConditionValue = "Anyone",
+				selectItemForTheAction = "Fragment",
+				selectItemForTheCondition = "User");
+		}
+
+		task ("Then the page designer could see the Button fragment in page editor") {
+			PageEditor.viewFragmentEditableText(
+				editableText = "Go Somewhere",
+				fragmentName = "Button",
+				id = "link");
+		}
+
+		task ("When the page designer navigates to the content page at view mode") {
+			PageEditor.publish();
+		}
+
+		task ("Then the page designer cannot see the Button fragment") {
+			ContentPages.viewFragmentNotPresent(fragmentName = "Button");
+		}
+	}
+
 	@description = "This is a test for LPS-200332. Apply a page rule with Has the Role Of condition."
 	@priority = 4
 	test ApplyPageRuleWithHasTheRoleOfCondition {

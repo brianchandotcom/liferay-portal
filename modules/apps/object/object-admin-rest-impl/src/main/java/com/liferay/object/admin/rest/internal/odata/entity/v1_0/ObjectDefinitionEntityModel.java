@@ -7,6 +7,7 @@ package com.liferay.object.admin.rest.internal.odata.entity.v1_0;
 
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.odata.entity.CollectionEntityField;
 import com.liferay.portal.odata.entity.DateTimeEntityField;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
@@ -40,7 +41,9 @@ public class ObjectDefinitionEntityModel implements EntityModel {
 				"name", locale -> Field.getSortableFieldName("name")),
 			new StringEntityField(
 				"objectFolderExternalReferenceCode",
-				locale -> "objectFolderExternalReferenceCode"));
+				locale -> "objectFolderExternalReferenceCode"),
+			new CollectionEntityField(
+				new IntegerEntityField("status", locale -> Field.STATUS)));
 	}
 
 	@Override

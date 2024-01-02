@@ -757,11 +757,13 @@ export default function ChangeTrackingRenderView({
 			});
 		}
 
-		dropdownItems.push({
-			label: Liferay.Language.get('discard'),
-			onClick: () => navigateUtil(discardURL),
-			symbolLeft: 'times-circle',
-		});
+		if (discardURL !== null) {
+			dropdownItems.push({
+				label: Liferay.Language.get('discard'),
+				onClick: () => navigateUtil(discardURL),
+				symbolLeft: 'times-circle',
+			});
+		}
 
 		return (
 			<div className="autofit-col">

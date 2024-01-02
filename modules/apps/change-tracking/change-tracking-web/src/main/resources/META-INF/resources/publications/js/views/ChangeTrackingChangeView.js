@@ -345,6 +345,10 @@ export default function ChangeTrackingChangeView({
 
 	const getDiscardURL = useCallback(
 		(node) => {
+			if (!discardURL) {
+				return null;
+			}
+
 			const url = setParameter(
 				discardURL,
 				'modelClassNameId',

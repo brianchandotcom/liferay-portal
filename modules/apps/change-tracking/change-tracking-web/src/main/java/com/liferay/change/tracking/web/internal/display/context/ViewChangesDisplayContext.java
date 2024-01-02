@@ -199,7 +199,7 @@ public class ViewChangesDisplayContext {
 	}
 
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems() {
-		return ListUtil.fromArray(
+		List<FDSActionDropdownItem> fdsActionDropdownItems = ListUtil.fromArray(
 			new FDSActionDropdownItem(
 				PortletURLBuilder.createRenderURL(
 					_renderResponse
@@ -231,24 +231,32 @@ public class ViewChangesDisplayContext {
 				).buildString(),
 				"move-folder", "move-changes",
 				_language.get(_httpServletRequest, "move-changes"), "post",
-				"move-changes", null),
-			new FDSActionDropdownItem(
-				PortletURLBuilder.createRenderURL(
-					_renderResponse
-				).setMVCRenderCommandName(
-					"/change_tracking/view_discard"
-				).setRedirect(
-					_themeDisplay.getURLCurrent()
-				).setParameter(
-					"ctCollectionId", "{ctCollectionId}"
-				).setParameter(
-					"modelClassNameId", "{modelClassNameId}"
-				).setParameter(
-					"modelClassPK", "{modelClassPK}"
-				).buildString(),
-				"times-circle", "view-discard",
-				_language.get(_httpServletRequest, "discard"), "get",
-				"view-discard", null));
+				"move-changes", null));
+
+		if ((_ctCollection.getStatus() == WorkflowConstants.STATUS_DRAFT) ||
+			(_ctCollection.getStatus() == WorkflowConstants.STATUS_PENDING)) {
+
+			fdsActionDropdownItems.add(
+				new FDSActionDropdownItem(
+					PortletURLBuilder.createRenderURL(
+						_renderResponse
+					).setMVCRenderCommandName(
+						"/change_tracking/view_discard"
+					).setRedirect(
+						_themeDisplay.getURLCurrent()
+					).setParameter(
+						"ctCollectionId", "{ctCollectionId}"
+					).setParameter(
+						"modelClassNameId", "{modelClassNameId}"
+					).setParameter(
+						"modelClassPK", "{modelClassPK}"
+					).buildString(),
+					"times-circle", "view-discard",
+					_language.get(_httpServletRequest, "discard"), "get",
+					"view-discard", null));
+		}
+
+		return fdsActionDropdownItems;
 	}
 
 	public List<FDSFilter> getFDSFilters() {
@@ -481,23 +489,33 @@ public class ViewChangesDisplayContext {
 			)
 		).put(
 			"discardURL",
-			PortletURLBuilder.createRenderURL(
-				_renderResponse
-			).setMVCRenderCommandName(
-				"/change_tracking/view_discard"
-			).setRedirect(
-				PortletURLBuilder.createRenderURL(
+			() -> {
+				if ((_ctCollection.getStatus() !=
+						WorkflowConstants.STATUS_DRAFT) &&
+					(_ctCollection.getStatus() !=
+						WorkflowConstants.STATUS_PENDING)) {
+
+					return null;
+				}
+
+				return PortletURLBuilder.createRenderURL(
 					_renderResponse
 				).setMVCRenderCommandName(
-					"/change_tracking/view_changes"
+					"/change_tracking/view_discard"
+				).setRedirect(
+					PortletURLBuilder.createRenderURL(
+						_renderResponse
+					).setMVCRenderCommandName(
+						"/change_tracking/view_changes"
+					).setParameter(
+						"ctCollectionId", _ctCollection.getCtCollectionId()
+					).buildString()
+				).setBackURL(
+					_themeDisplay.getURLCurrent()
 				).setParameter(
 					"ctCollectionId", _ctCollection.getCtCollectionId()
-				).buildString()
-			).setBackURL(
-				_themeDisplay.getURLCurrent()
-			).setParameter(
-				"ctCollectionId", _ctCollection.getCtCollectionId()
-			).buildString()
+				).buildString();
+			}
 		).put(
 			"entryFromURL", ParamUtil.getString(_renderRequest, "entry")
 		).put(

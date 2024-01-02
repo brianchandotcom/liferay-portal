@@ -119,6 +119,7 @@ public class EditSegmentsExperimentStatusMVCActionCommandTest {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
 		themeDisplay.setCompany(_company);
+		themeDisplay.setLayout(layout);
 		themeDisplay.setLocale(LocaleUtil.US);
 
 		mockLiferayPortletActionRequest.setAttribute(

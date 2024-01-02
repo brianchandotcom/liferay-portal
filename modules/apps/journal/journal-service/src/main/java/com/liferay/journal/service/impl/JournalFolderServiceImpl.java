@@ -424,7 +424,7 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 					RESTRICTION_TYPE_DDM_STRUCTURES_AND_WORKFLOW) {
 
 			return TransformUtil.transform(
-				_ddmStructureLinkService.getStructureLinkStructures(
+				_ddmStructureLinkService.getStructureLinks(
 					_classNameLocalService.getClassNameId(JournalFolder.class),
 					folderId, groupIds, keywords,
 					JournalArticle.class.getName(), start, end,
@@ -437,7 +437,7 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 
 		if (folderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			return TransformUtil.transform(
-				_ddmStructureLinkService.getStructureLinkStructures(
+				_ddmStructureLinkService.getStructureLinks(
 					_classNameLocalService.getClassNameId(JournalFolder.class),
 					folderId, groupIds, keywords,
 					JournalArticle.class.getName(), start, end,
@@ -462,7 +462,7 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 				JournalFolderConstants.
 					RESTRICTION_TYPE_DDM_STRUCTURES_AND_WORKFLOW) {
 
-			return _ddmStructureLinkService.getStructureLinkStructuresCount(
+			return _ddmStructureLinkService.getStructureLinksCount(
 				_classNameLocalService.getClassNameId(JournalFolder.class),
 				folderId, groupIds, keywords, JournalArticle.class.getName());
 		}
@@ -471,7 +471,7 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 			folderId);
 
 		if (folderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			return _ddmStructureLinkService.getStructureLinkStructuresCount(
+			return _ddmStructureLinkService.getStructureLinksCount(
 				_classNameLocalService.getClassNameId(JournalFolder.class),
 				folderId, groupIds, keywords, JournalArticle.class.getName());
 		}

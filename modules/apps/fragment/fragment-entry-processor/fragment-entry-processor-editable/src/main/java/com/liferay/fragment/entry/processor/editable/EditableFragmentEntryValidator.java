@@ -23,7 +23,6 @@ import java.util.Set;
 
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -46,12 +45,45 @@ public class EditableFragmentEntryValidator
 			Document document, String configuration, Locale locale)
 		throws PortalException {
 
-		Elements elements = document.select(
-			"lfr-editable,*[data-lfr-editable-id]");
+		Set<String> ids = new HashSet<>();
 
-		_validateAttributes(elements, locale);
-		_validateDuplicatedIds(elements, locale);
-		_validateEditableElements(elements, locale);
+		for (Element element :
+				document.select("lfr-editable,*[data-lfr-editable-id]")) {
+
+			if (!ids.add(
+					EditableFragmentEntryProcessorUtil.getElementId(element))) {
+
+				throw new FragmentEntryContentException(
+					_language.get(
+						locale,
+						"you-must-define-a-unique-id-for-each-editable-" +
+							"element"));
+			}
+
+			EditableElementParser editableElementParser =
+				_getEditableElementParser(element);
+
+			if (editableElementParser == null) {
+				throw new FragmentEntryContentException(
+					_language.get(
+						locale,
+						"you-must-define-a-valid-type-for-each-editable-" +
+							"element"));
+			}
+
+			editableElementParser.validate(element);
+
+			if (Objects.equals(element.tagName(), "lfr-editable")) {
+				_validateAttribute(element, "id", locale);
+				_validateAttribute(element, "type", locale);
+			}
+			else {
+				_validateAttribute(element, "data-lfr-editable-id", locale);
+				_validateAttribute(element, "data-lfr-editable-type", locale);
+			}
+
+			_validateNestedEditableElements(element, locale);
+		}
 	}
 
 	@Activate
@@ -89,59 +121,6 @@ public class EditableFragmentEntryValidator
 				StringUtil.merge(_REQUIRED_ATTRIBUTE_NAMES)));
 	}
 
-	private void _validateAttributes(Elements elements, Locale locale)
-		throws FragmentEntryContentException {
-
-		for (Element element : elements) {
-			if (Objects.equals(element.tagName(), "lfr-editable")) {
-				_validateAttribute(element, "id", locale);
-				_validateAttribute(element, "type", locale);
-			}
-			else {
-				_validateAttribute(element, "data-lfr-editable-id", locale);
-				_validateAttribute(element, "data-lfr-editable-type", locale);
-			}
-
-			_validateType(element, locale);
-		}
-	}
-
-	private void _validateDuplicatedIds(Elements elements, Locale locale)
-		throws FragmentEntryContentException {
-
-		Set<String> ids = new HashSet<>();
-
-		for (Element element : elements) {
-			if (ids.add(
-					EditableFragmentEntryProcessorUtil.getElementId(element))) {
-
-				continue;
-			}
-
-			throw new FragmentEntryContentException(
-				_language.get(
-					locale,
-					"you-must-define-a-unique-id-for-each-editable-element"));
-		}
-	}
-
-	private void _validateEditableElements(Elements elements, Locale locale)
-		throws FragmentEntryContentException {
-
-		for (Element element : elements) {
-			EditableElementParser editableElementParser =
-				_getEditableElementParser(element);
-
-			if (editableElementParser == null) {
-				continue;
-			}
-
-			_validateNestedEditableElements(element, locale);
-
-			editableElementParser.validate(element);
-		}
-	}
-
 	private void _validateNestedEditableElements(Element element, Locale locale)
 		throws FragmentEntryContentException {
 
@@ -157,22 +136,6 @@ public class EditableFragmentEntryValidator
 					"editable-fields-cannot-include-nested-editables-drop-" +
 						"zones-or-widgets-in-it"));
 		}
-	}
-
-	private void _validateType(Element element, Locale locale)
-		throws FragmentEntryContentException {
-
-		EditableElementParser editableElementParser = _getEditableElementParser(
-			element);
-
-		if (editableElementParser != null) {
-			return;
-		}
-
-		throw new FragmentEntryContentException(
-			_language.get(
-				locale,
-				"you-must-define-a-valid-type-for-each-editable-element"));
 	}
 
 	private static final String[] _REQUIRED_ATTRIBUTE_NAMES = {"id", "type"};

@@ -227,6 +227,21 @@ definition {
 			value1 = ${tagName});
 	}
 
+	@summary = "Select tags"
+	macro selectTags(tagNameList = null) {
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		for (var tagName : list ${tagNameList}) {
+			LexiconTable.checkTableCheckbox(tableEntry = ${tagName});
+		}
+
+		SelectFrame(value1 = "relative=top");
+
+		Click(
+			key_text = "Select",
+			locator1 = "Modal#MODAL_FOOTER_BUTTON");
+	}
+
 	@summary = "Default summary"
 	macro viewCategory(categoryName = null) {
 		AssertTextEquals(

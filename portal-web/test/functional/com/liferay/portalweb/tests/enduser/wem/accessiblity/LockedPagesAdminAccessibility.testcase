@@ -115,6 +115,8 @@ definition {
 			LexiconTable.clickEllipsisItem(
 				item = "Unlock",
 				tableEntry = "Test Page Name");
+
+			WaitForElementNotPresent(locator1 = "Modal#HEADER");
 		}
 
 		task ("Then the Unlock Pages modal should have correct accessibility") {

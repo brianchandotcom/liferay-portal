@@ -11,11 +11,6 @@ import {LAYOUT_DATA_ITEM_TYPES} from './constants/layoutDataItemTypes';
 const addPortlet = ({item, plid, targetItem, targetPosition}) => {
 	const loading = addLoadingAnimation(targetItem, targetPosition);
 
-	openToast({
-		message: Liferay.Language.get('the-application-was-added-to-the-page'),
-		type: 'success',
-	});
-
 	const portletData =
 		item.type === LAYOUT_DATA_ITEM_TYPES.widget
 			? ''
@@ -23,6 +18,13 @@ const addPortlet = ({item, plid, targetItem, targetPosition}) => {
 
 	Liferay.Portlet.add({
 		beforePortletLoaded: () => null,
+		onComplete: () =>
+			openToast({
+				message: Liferay.Language.get(
+					'the-application-was-added-to-the-page'
+				),
+				type: 'success',
+			}),
 		placeHolder: loading,
 		plid,
 		portletData,

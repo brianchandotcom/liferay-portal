@@ -108,7 +108,16 @@ export default function PagesTree({
 					priority,
 				}),
 				method: 'post',
-			}).catch(() => openErrorToast());
+			})
+				.then((response) => response.json())
+				.then(({message}) => {
+					if (message) {
+						openErrorToast(message);
+
+						navigate(window.location.href);
+					}
+				})
+				.catch(() => openErrorToast());
 		},
 		[moveItemURL]
 	);
@@ -427,6 +436,7 @@ function normalizeActions(actions, namespace) {
 															},
 															type: 'success',
 														});
+
 														navigate(redirectURL);
 													}
 												}
@@ -463,6 +473,9 @@ function openErrorToast(message) {
 		message:
 			message || Liferay.Language.get('an-unexpected-error-occurred'),
 		title: Liferay.Language.get('error'),
+		toastProps: {
+			autoClose: 5000,
+		},
 		type: 'danger',
 	});
 }

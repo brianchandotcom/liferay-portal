@@ -153,27 +153,25 @@ const Section = ({section}) => {
 			collapsable
 			defaultExpanded={sectionTotal > 0}
 			displayTitle={
-				<span className="c-inner" tabIndex="-1">
-					<ClayPanel.Title>
-						<ClayLayout.ContentRow>
-							<ClayLayout.ContentCol
-								className="align-self-center panel-title"
-								expand
-							>
-								{section.title}
-							</ClayLayout.ContentCol>
+				<ClayPanel.Title>
+					<ClayLayout.ContentRow>
+						<ClayLayout.ContentCol
+							className="align-self-center panel-title"
+							expand
+						>
+							{section.title}
+						</ClayLayout.ContentCol>
 
-							<ClayLayout.ContentCol>
-								<ClayBadge
-									displayType={
-										sectionTotal === 0 ? 'success' : 'info'
-									}
-									label={sectionTotal}
-								/>
-							</ClayLayout.ContentCol>
-						</ClayLayout.ContentRow>
-					</ClayPanel.Title>
-				</span>
+						<ClayLayout.ContentCol>
+							<ClayBadge
+								displayType={
+									sectionTotal === 0 ? 'success' : 'info'
+								}
+								label={sectionTotal}
+							/>
+						</ClayLayout.ContentCol>
+					</ClayLayout.ContentRow>
+				</ClayPanel.Title>
 			}
 			displayType="unstyled"
 			showCollapseIcon={true}
@@ -224,10 +222,7 @@ const Issue = ({issue}) => {
 					})
 				}
 			>
-				<span
-					className="align-items-center c-inner c-pb-3 d-flex justify-content-between text-secondary"
-					tabIndex="-1"
-				>
+				<span className="align-items-center c-pb-3 d-flex justify-content-between text-secondary">
 					{issue.title}
 
 					<ClayBadge

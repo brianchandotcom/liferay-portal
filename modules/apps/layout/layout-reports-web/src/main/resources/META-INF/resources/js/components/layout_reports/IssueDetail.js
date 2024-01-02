@@ -52,11 +52,9 @@ const HtmlPanel = ({content, title}) => (
 	<ClayPanel
 		collapsable
 		displayTitle={
-			<span className="c-inner" tabIndex="-1">
-				<ClayPanel.Title className="align-self-center panel-title">
-					{title}
-				</ClayPanel.Title>
-			</span>
+			<ClayPanel.Title className="align-self-center panel-title">
+				{title}
+			</ClayPanel.Title>
 		}
 		displayType="unstyled"
 		showCollapseIcon={true}
@@ -100,31 +98,29 @@ const FailingElementsPanel = ({failingElements, issueType}) => {
 			collapsable
 			defaultExpanded
 			displayTitle={
-				<span className="c-inner" tabIndex="-1">
-					<ClayPanel.Title>
-						<ClayLayout.ContentRow>
-							<ClayLayout.ContentCol
-								className="align-self-center panel-title"
-								expand
-							>
-								{Liferay.Language.get('failing-elements')}
-							</ClayLayout.ContentCol>
+				<ClayPanel.Title>
+					<ClayLayout.ContentRow>
+						<ClayLayout.ContentCol
+							className="align-self-center panel-title"
+							expand
+						>
+							{Liferay.Language.get('failing-elements')}
+						</ClayLayout.ContentCol>
 
-							<ClayLayout.ContentCol>
-								<ClayBadge
-									displayType={
-										totalElements === 0 ? 'success' : 'info'
-									}
-									label={
-										totalElements >= 100
-											? '+100'
-											: totalElements
-									}
-								/>
-							</ClayLayout.ContentCol>
-						</ClayLayout.ContentRow>
-					</ClayPanel.Title>
-				</span>
+						<ClayLayout.ContentCol>
+							<ClayBadge
+								displayType={
+									totalElements === 0 ? 'success' : 'info'
+								}
+								label={
+									totalElements >= 100
+										? '+100'
+										: totalElements
+								}
+							/>
+						</ClayLayout.ContentCol>
+					</ClayLayout.ContentRow>
+				</ClayPanel.Title>
 			}
 			displayType="unstyled"
 			showCollapseIcon={true}

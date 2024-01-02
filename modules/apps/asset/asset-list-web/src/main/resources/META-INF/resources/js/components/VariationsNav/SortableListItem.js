@@ -107,9 +107,7 @@ const SortableListItem = ({
 						className="align-items-center d-flex w-100"
 						href={sortableListItem.editAssetListEntryURL}
 					>
-						<span className="c-inner flex-grow-1" tabIndex="-1">
-							{sortableListItem.name}
-						</span>
+						{sortableListItem.name}
 					</ClayLink>
 				</ClayList.ItemTitle>
 			</ClayList.ItemField>

@@ -15,24 +15,22 @@ const SidebarPanelInfoCollapsibleSection = ({children, title}) => {
 			collapsable
 			defaultExpanded
 			displayTitle={
-				<span className="c-inner" tabIndex="-1">
-					<ClayPanel.Title>
-						<ClayLayout.ContentRow>
-							<ClayLayout.ContentCol
-								className="align-self-center panel-title"
-								expand
+				<ClayPanel.Title>
+					<ClayLayout.ContentRow>
+						<ClayLayout.ContentCol
+							className="align-self-center panel-title"
+							expand
+						>
+							<span
+								aria-label={`${Liferay.Language.get(
+									'view'
+								)} ${title}`}
 							>
-								<span
-									aria-label={`${Liferay.Language.get(
-										'view'
-									)} ${title}`}
-								>
-									{title}
-								</span>
-							</ClayLayout.ContentCol>
-						</ClayLayout.ContentRow>
-					</ClayPanel.Title>
-				</span>
+								{title}
+							</span>
+						</ClayLayout.ContentCol>
+					</ClayLayout.ContentRow>
+				</ClayPanel.Title>
 			}
 			displayType="unstyled"
 			showCollapseIcon={true}

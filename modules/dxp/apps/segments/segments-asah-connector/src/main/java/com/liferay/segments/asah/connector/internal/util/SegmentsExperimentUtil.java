@@ -228,10 +228,15 @@ public class SegmentsExperimentUtil {
 		StringBundler sb = new StringBundler(5);
 
 		sb.append(liferayAnalyticsURL);
-		sb.append(StringPool.SLASH);
-		sb.append(
-			GetterUtil.getString(
-				group.getTypeSettingsProperty("analyticsChannelId")));
+
+		String analyticsChannelId = GetterUtil.getString(
+			group.getTypeSettingsProperty("analyticsChannelId"));
+
+		if (Validator.isNotNull(analyticsChannelId)) {
+			sb.append(StringPool.SLASH);
+			sb.append(analyticsChannelId);
+		}
+
 		sb.append("/tests/overview/");
 		sb.append(segmentsExperiment.getSegmentsExperimentKey());
 

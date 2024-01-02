@@ -24,6 +24,13 @@ public class ReleaseDAO {
 		throws SQLException {
 
 		if (hasRelease(connection, bundleSymbolicName)) {
+			String schemaVersion = _getSchemaVersion(
+				connection, bundleSymbolicName);
+
+			if (schemaVersion == null) {
+				_initSchemaVersion(connection, bundleSymbolicName);
+			}
+
 			return;
 		}
 
@@ -69,6 +76,40 @@ public class ReleaseDAO {
 
 	protected long increment() {
 		return CounterLocalServiceUtil.increment();
+	}
+
+	private String _getSchemaVersion(
+			Connection connection, String bundleSymbolicName)
+		throws SQLException {
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"select schemaVersion from Release_ where servletContextName " +
+					"= ?")) {
+
+			preparedStatement.setString(1, bundleSymbolicName);
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				if (resultSet.next()) {
+					return resultSet.getString(1);
+				}
+
+				return null;
+			}
+		}
+	}
+
+	private void _initSchemaVersion(
+			Connection connection, String bundleSymbolicName)
+		throws SQLException {
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"update Release_ set schemaVersion = '0.0.1' where " +
+					"servletContextName = ?")) {
+
+			preparedStatement.setString(1, bundleSymbolicName);
+
+			preparedStatement.executeUpdate();
+		}
 	}
 
 }

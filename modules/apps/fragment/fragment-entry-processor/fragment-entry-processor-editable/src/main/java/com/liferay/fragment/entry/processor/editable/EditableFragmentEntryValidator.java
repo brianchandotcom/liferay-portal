@@ -13,12 +13,10 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.HashSet;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.Set;
 
 import org.jsoup.nodes.Document;
@@ -50,9 +48,10 @@ public class EditableFragmentEntryValidator
 		for (Element element :
 				document.select("lfr-editable,*[data-lfr-editable-id]")) {
 
-			if (!ids.add(
-					EditableFragmentEntryProcessorUtil.getElementId(element))) {
+			String id = EditableFragmentEntryProcessorUtil.getElementId(
+				element);
 
+			if (Validator.isNull(id) || !ids.add(id)) {
 				throw new FragmentEntryContentException(
 					_language.get(
 						locale,
@@ -72,13 +71,6 @@ public class EditableFragmentEntryValidator
 			}
 
 			editableElementParser.validate(element);
-
-			if (Objects.equals(element.tagName(), "lfr-editable")) {
-				_validateAttribute(element, "id", locale);
-			}
-			else {
-				_validateAttribute(element, "data-lfr-editable-id", locale);
-			}
 
 			_validateNestedEditableElements(element, locale);
 		}
@@ -103,22 +95,6 @@ public class EditableFragmentEntryValidator
 		return _editableElementParserServiceTrackerMap.getService(type);
 	}
 
-	private void _validateAttribute(
-			Element element, String attributeName, Locale locale)
-		throws FragmentEntryContentException {
-
-		if (Validator.isNotNull(element.attr(attributeName))) {
-			return;
-		}
-
-		throw new FragmentEntryContentException(
-			_language.format(
-				locale,
-				"you-must-define-all-required-attributes-x-for-each-editable-" +
-					"element",
-				StringUtil.merge(_REQUIRED_ATTRIBUTE_NAMES)));
-	}
-
 	private void _validateNestedEditableElements(Element element, Locale locale)
 		throws FragmentEntryContentException {
 
@@ -135,8 +111,6 @@ public class EditableFragmentEntryValidator
 						"zones-or-widgets-in-it"));
 		}
 	}
-
-	private static final String[] _REQUIRED_ATTRIBUTE_NAMES = {"id", "type"};
 
 	private ServiceTrackerMap<String, EditableElementParser>
 		_editableElementParserServiceTrackerMap;

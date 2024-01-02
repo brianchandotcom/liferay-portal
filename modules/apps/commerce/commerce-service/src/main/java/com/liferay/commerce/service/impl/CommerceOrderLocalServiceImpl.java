@@ -2769,7 +2769,7 @@ public class CommerceOrderLocalServiceImpl
 				commerceOrderFieldsConfiguration.accountCartMaxAllowed())) {
 
 			throw new CommerceOrderAccountLimitException(
-				"The account carts limit was reached");
+				"The commerce account carts limit was reached");
 		}
 	}
 
@@ -2793,11 +2793,10 @@ public class CommerceOrderLocalServiceImpl
 					commerceChannel.getCommerceChannelId(), null,
 					CommerceChannelAccountEntryRelConstants.TYPE_ELIGIBILITY);
 
-		if ((commerceChannelAccountEntryRel == null) &&
-			(count != 0)) {
-
+		if ((commerceChannelAccountEntryRel == null) && (count != 0)) {
 			throw new NoSuchChannelAccountEntryRelException(
-				"This account is not eligible for this channel");
+				"This commerce account is not eligible for this commerce " +
+					"channel");
 		}
 	}
 

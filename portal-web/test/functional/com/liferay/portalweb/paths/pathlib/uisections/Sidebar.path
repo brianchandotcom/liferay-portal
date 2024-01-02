@@ -136,6 +136,49 @@
 	<td></td>
 </tr>
 
+<!--INFO_PANEL-->
+
+<tr>
+	<td>COMPONENT_TITLE</td>
+	<td>//h1[contains(@class,'component-title')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMPONENT_SUBTITLE</td>
+	<td>//h2[contains(@class,'component-subtitle')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>HEADER_LABEL</td>
+	<td>//div[contains(@class,'sidebar-header')]//span[contains(@class,'label-item')][normalize-space()='${key_labelName}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LOCALTION</td>
+	<td>//div[contains(@class,'sidebar-body')]//p[normalize-space()='Location']//following-sibling::p</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_TYPE</td>
+	<td>//div[contains(@class,'sidebar-body')]//p[normalize-space()='Content Type']//following-sibling::span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBTYPE</td>
+	<td>//div[contains(@class,'sidebar-body')]//p[normalize-space()='Subtype']//following-sibling::span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CREATED</td>
+	<td>//div[contains(@class,'sidebar-body')]//p[normalize-space()='Created']//following-sibling::p</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MODIFIED</td>
+	<td>//div[contains(@class,'sidebar-body')]//p[normalize-space()='Modified']//following-sibling::p</td>
+	<td></td>
+</tr>
+
 </tbody>
 </table>
 </body>

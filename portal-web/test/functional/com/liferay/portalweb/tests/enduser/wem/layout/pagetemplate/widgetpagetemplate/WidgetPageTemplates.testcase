@@ -24,6 +24,7 @@ definition {
 		task ("Add an active page template") {
 			PageTemplatesAdminGlobalSite.addCP(
 				pageTemplateActive = "Active",
+				pageTemplateDescription = "This is a page template description",
 				pageTemplateName = "Page Template Name");
 		}
 	}

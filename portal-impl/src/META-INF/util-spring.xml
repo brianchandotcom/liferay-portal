@@ -45,7 +45,6 @@
 	<bean class="com.liferay.portal.kernel.license.util.LicenseManagerUtil" id="com.liferay.portal.kernel.license.util.LicenseManagerUtil">
 		<property name="licenseManager" ref="com.liferay.portal.kernel.license.util.LicenseManager" />
 	</bean>
-	<bean class="com.liferay.portal.kernel.portlet.DefaultControlPanelEntry" id="com.liferay.portal.kernel.portlet.DefaultControlPanelEntry" />
 	<bean class="com.liferay.portal.kernel.portlet.PortletContainerUtil" id="com.liferay.portal.kernel.portlet.PortletContainerUtil">
 		<property name="portletContainer" ref="com.liferay.portlet.RestrictPortletContainerWrapper" />
 	</bean>

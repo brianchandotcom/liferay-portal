@@ -105,6 +105,11 @@ definition {
 			item = ${item});
 	}
 
+	@summary = "Go to a folder"
+	macro gotoFolder(folderName = null) {
+		LexiconCard.clickCardTitleLink(card = ${folderName});
+	}
+
 	@summary = "Default summary"
 	macro importDisplayPageTemplateFromTempFolder(importOption = null) {
 		Click.waitForMenuToggleJSClick(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");

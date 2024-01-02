@@ -125,6 +125,55 @@ public class ObjectDefinitionResourceTest
 
 	@Override
 	@Test
+	public void testGetObjectDefinitionsPage() throws Exception {
+		super.testGetObjectDefinitionsPage();
+
+		Page<ObjectDefinition> objectDefinitionsPage =
+			objectDefinitionResource.getObjectDefinitionsPage(
+				null, null, "status/any(k:k eq 2)", Pagination.of(1, 20), null);
+
+		long totalCount = objectDefinitionsPage.getTotalCount();
+
+		ObjectDefinition objectDefinition =
+			testGetObjectDefinitionsPage_addObjectDefinition(
+				randomObjectDefinition());
+
+		ObjectDefinition randomObjectDefinition = randomObjectDefinition();
+
+		Status status = new Status() {
+			{
+				code = WorkflowConstants.STATUS_APPROVED;
+				label = WorkflowConstants.getStatusLabel(
+					WorkflowConstants.STATUS_APPROVED);
+				label_i18n = _language.get(
+					LanguageResources.getResourceBundle(
+						LocaleUtil.getDefault()),
+					WorkflowConstants.getStatusLabel(
+						WorkflowConstants.STATUS_APPROVED));
+			}
+		};
+
+		randomObjectDefinition.setStatus(status);
+
+		testGetObjectDefinitionsPage_addObjectDefinition(
+			randomObjectDefinition);
+
+		// Filter by status
+
+		objectDefinitionsPage =
+			objectDefinitionResource.getObjectDefinitionsPage(
+				null, null, "status/any(k:k eq 2)", Pagination.of(1, 20), null);
+
+		Assert.assertEquals(
+			totalCount + 1, objectDefinitionsPage.getTotalCount());
+
+		assertContains(
+			objectDefinition,
+			(List<ObjectDefinition>)objectDefinitionsPage.getItems());
+	}
+
+	@Override
+	@Test
 	public void testGetObjectDefinitionsPageWithSortString() throws Exception {
 		ObjectDefinition objectDefinition1 = randomObjectDefinition();
 

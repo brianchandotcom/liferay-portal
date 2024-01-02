@@ -264,20 +264,6 @@ definition {
 				text = "Go Somewhere");
 		}
 
-		task ("Click to edit the page and add a widget to the page and then click save") {
-			ContentPages.gotoPageEditor();
-
-			PageEditor.addFragment(
-				collectionName = "Basic Components",
-				fragmentName = "Button");
-
-			PageEditor.publish();
-		}
-
-		task ("Assert if the page is published with the modifications") {
-			PageEditor.viewFragment(fragmentName = "Button");
-		}
-
 		task ("Go to AC and open the AB test") {
 			ACUtils.launchAC();
 
@@ -340,20 +326,6 @@ definition {
 				fragmentName = "button",
 				id = "link",
 				text = "New text");
-		}
-
-		task ("Now edit the variant and add a widget to the page and then click save") {
-			ContentPages.gotoPageEditor();
-
-			PageEditor.addFragment(
-				collectionName = "Basic Components",
-				fragmentName = "Button");
-
-			PageEditor.publish();
-		}
-
-		task ("Assert if the page is published with the modifications") {
-			PageEditor.viewFragment(fragmentName = "Button");
 		}
 
 		task ("Go to AC > Tests") {

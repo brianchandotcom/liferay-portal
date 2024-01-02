@@ -307,10 +307,10 @@ definition {
 
 		task ("Click to open the AB test panel") {
 			ABTest.openABTestPanel();
+		}
 
-			task ("Click to review and run the test") {
-				ABTest.runTest();
-			}
+		task ("Click to review and run the test") {
+			ABTest.runTest();
 		}
 
 		task ("Terminate the test") {

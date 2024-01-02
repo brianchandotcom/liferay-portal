@@ -19,9 +19,10 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLoca
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -29,7 +30,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -82,32 +82,16 @@ public class DisplayPageTemplateInfoPanelDisplayContext {
 				layoutPageTemplateCollection.getType());
 	}
 
-	public List<String> getLayoutPageTemplateCollectionPath(
-		long layoutPageTemplateCollectionId) {
+	public List<String> getLayoutPageTemplateCollectionPath() {
+		DisplayPageDisplayContext displayPageDisplayContext =
+			new DisplayPageDisplayContext(
+				_httpServletRequest, _liferayPortletRequest,
+				_liferayPortletResponse);
 
-		LayoutPageTemplateCollection layoutPageTemplateCollection =
-			getLayoutPageTemplateCollection(layoutPageTemplateCollectionId);
-
-		List<String> paths = new ArrayList<>();
-
-		if (layoutPageTemplateCollection != null) {
-			DisplayPageDisplayContext displayPageDisplayContext =
-				new DisplayPageDisplayContext(
-					_httpServletRequest, _liferayPortletRequest,
-					_liferayPortletResponse);
-
-			paths = TransformUtil.transform(
-				displayPageDisplayContext.
-					getLayoutPageTemplateBreadcrumbEntries(),
-				curLayoutPageTemplateCollection -> HtmlUtil.escape(
-					curLayoutPageTemplateCollection.getTitle()));
-		}
-
-		paths.add(LanguageUtil.get(_httpServletRequest, "home"));
-
-		Collections.reverse(paths);
-
-		return paths;
+		return TransformUtil.transform(
+			displayPageDisplayContext.getLayoutPageTemplateBreadcrumbEntries(),
+			curLayoutPageTemplateCollection -> HtmlUtil.escape(
+				curLayoutPageTemplateCollection.getTitle()));
 	}
 
 	public List<LayoutPageTemplateCollection>
@@ -196,6 +180,12 @@ public class DisplayPageTemplateInfoPanelDisplayContext {
 			infoItemDetailsProvider.getInfoItemClassDetails();
 
 		return infoItemClassDetails.getLabel(_themeDisplay.getLocale());
+	}
+
+	public String getUserName(long userId) {
+		User user = UserLocalServiceUtil.fetchUser(userId);
+
+		return HtmlUtil.escape(user.getFullName());
 	}
 
 	private final HttpServletRequest _httpServletRequest;

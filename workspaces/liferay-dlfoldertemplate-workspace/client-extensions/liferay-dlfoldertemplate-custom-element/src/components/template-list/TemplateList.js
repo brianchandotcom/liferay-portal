@@ -6,7 +6,6 @@
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayButtonGroup from '@clayui/button/lib/Group';
 import {Body, Cell, Head, Row, Table} from '@clayui/core';
-import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {Context as ModalContext} from '@clayui/modal';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import ClayToolbar from '@clayui/toolbar';
@@ -106,9 +105,7 @@ const TemplateList = () => {
 	};
 
 	const confirmDeleteItemModal = (template) => {
-
 		const deleteTemplate = async () => {
-
 			setIsDeletingLoading(true);
 
 			await deleteFolderTemplateInformation(template.id);
@@ -168,7 +165,6 @@ const TemplateList = () => {
 		const fetchData = async () => {
 			await loadPageCallback();
 		};
-
 		fetchData();
 	}, [loadPageCallback]);
 
@@ -190,6 +186,7 @@ const TemplateList = () => {
 								<ClayButtonWithIcon
 									aria-label="Reload"
 									className="lfr-portal-tooltip"
+									disabled={isDeletingLoading}
 									displayType="secondary"
 									onClick={() => {
 										reload();
@@ -200,6 +197,7 @@ const TemplateList = () => {
 								<ClayButtonWithIcon
 									aria-label="Create New"
 									className="lfr-portal-tooltip"
+									disabled={isDeletingLoading}
 									displayType="primary"
 									onClick={() => {
 										openNewItemModal();

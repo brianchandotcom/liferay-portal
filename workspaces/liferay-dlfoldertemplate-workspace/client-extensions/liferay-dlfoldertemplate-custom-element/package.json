@@ -20,6 +20,7 @@
     "@clayui/upper-toolbar": "^3.107.0",
     "antd": "^5.11.3",
     "axios": "^1.6.2",
+    "dagre": "^0.8.5",
     "moment": "^2.29.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

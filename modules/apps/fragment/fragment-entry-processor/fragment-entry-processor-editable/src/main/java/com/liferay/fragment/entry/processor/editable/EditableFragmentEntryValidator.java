@@ -75,11 +75,9 @@ public class EditableFragmentEntryValidator
 
 			if (Objects.equals(element.tagName(), "lfr-editable")) {
 				_validateAttribute(element, "id", locale);
-				_validateAttribute(element, "type", locale);
 			}
 			else {
 				_validateAttribute(element, "data-lfr-editable-id", locale);
-				_validateAttribute(element, "data-lfr-editable-type", locale);
 			}
 
 			_validateNestedEditableElements(element, locale);

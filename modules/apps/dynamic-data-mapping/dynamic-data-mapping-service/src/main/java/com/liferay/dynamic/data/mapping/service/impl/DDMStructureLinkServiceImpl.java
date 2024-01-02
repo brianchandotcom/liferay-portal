@@ -28,7 +28,7 @@ public class DDMStructureLinkServiceImpl
 	extends DDMStructureLinkServiceBaseImpl {
 
 	@Override
-	public List<DDMStructureLink> getStructureLinkStructures(
+	public List<DDMStructureLink> getStructureLinks(
 		long classNameId, long classPK, long[] groupIds, String keywords,
 		String resourceClassName, int start, int end,
 		OrderByComparator<DDMStructureLink> orderByComparator) {
@@ -39,7 +39,7 @@ public class DDMStructureLinkServiceImpl
 	}
 
 	@Override
-	public int getStructureLinkStructuresCount(
+	public int getStructureLinksCount(
 		long classNameId, long classPK, long[] groupIds, String keywords,
 		String resourceClassName) {
 

@@ -175,7 +175,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-196462. The New Rule Modal allows the user to create new rules."
+	@description = "This is a test for LPS-196462 and LPS-200349. The New Rule Modal allows the user to create new rules. A description of Rules is shown in the Rules sidebar."
 	@priority = 3
 	test AddPageRule {
 		task ("Given a page designer has a Button fragment on a content page") {

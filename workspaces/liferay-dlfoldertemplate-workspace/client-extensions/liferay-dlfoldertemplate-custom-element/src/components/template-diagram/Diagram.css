@@ -1,0 +1,22 @@
+.background {
+	background-color: var(--gray-200);
+}
+.side-panel {
+	margin: 0;
+	z-index: 6 !important;
+	height: 100% !important;
+	width: 25%;
+	background-color: var(--white);
+	border: solid;
+	border-width: 1px;
+	border-color: var(--light);
+}
+.fixed-bottom {
+	position: absolute;
+	bottom: 0;
+}
+.actions {
+	display: flex;
+	width: 100%;
+	justify-content: space-between;
+}

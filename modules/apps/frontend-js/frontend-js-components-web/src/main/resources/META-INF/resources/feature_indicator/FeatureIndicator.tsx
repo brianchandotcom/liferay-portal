@@ -102,10 +102,9 @@ export default function FeatureIndicator({
 							</ClayButton>
 						}
 					>
-						{popoverText}
+						{popoverText + ' '}
 
 						<LearnMessage
-							className="pl-1"
 							resource="frontend-js-components-web"
 							resourceKey={learnMessageResourceKey}
 						/>

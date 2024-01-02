@@ -257,6 +257,114 @@ definition {
 			webContentTitle = "WC Contenido de la web Titulo");
 	}
 
+	@description = "This is a test for LPS-197159. Assert could filter categories and tags filter for Web Content."
+	@priority = 4
+	test FilterWebContentsByCategoriesAndTags {
+		property custom.properties = "feature.flag.LPS-196768=true";
+
+		task ("Given a site administrator has web contents") {
+			JSONCategory.addVocabulary(
+				groupName = "Test Site Name",
+				title = "Projects");
+
+			var categoryId = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Commerce",
+				vocabularyName = "Projects");
+
+			JSONAssettag.addTag(
+				groupName = "Test Site Name",
+				tagName = "Echo");
+
+			JSONAssettag.addTag(
+				groupName = "Test Site Name",
+				tagName = "Lima");
+
+			JSONWebcontent.addWebContent(
+				content = "Liferay DXP",
+				groupName = "Test Site Name",
+				title = "Liferay DXP");
+
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = ${categoryId},
+				content = "Liferay Commerce",
+				groupName = "Test Site Name",
+				title = "Liferay Commerce");
+
+			JSONWebcontent.addWebContent(
+				assetTagNames = "Echo",
+				content = "Liferay LXC",
+				groupName = "Test Site Name",
+				title = "Liferay LXC");
+		}
+
+		task ("When the site administrator navigates to the Web Content admin") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			for (var title : list "Liferay DXP,Liferay Commerce,Liferay LXC") {
+				WebContentAdmin.viewEntryTitle(entry = ${title});
+			}
+		}
+
+		task ("Then the site administrator could filter web contents by categories and tags") {
+			ManagementBar.setFilterAndOrder(filterBy = "Categories...");
+
+			AssetCategorization.selectCategories(categoryNameList = "Commerce");
+
+			AssertTextEquals(
+				locator1 = "Search#SEARCH_INFO",
+				value1 = "1 Result Found With Filters");
+
+			AssertTextEquals(
+				locator1 = "ContentDashboard#FILTER_TEXT",
+				value1 = "Categories: Commerce");
+
+			WebContentAdmin.viewEntryTitle(entry = "Liferay Commerce");
+
+			for (var title : list "Liferay DXP,Liferay LXC") {
+				WebContentAdmin.viewEntryNotPresent(entry = ${title});
+			}
+
+			Search.clearSearchResult();
+
+			ManagementBar.setFilterAndOrder(filterBy = "Tags...");
+
+			AssetCategorization.selectTags(tagNameList = "echo");
+
+			AssertTextEquals(
+				locator1 = "Search#SEARCH_INFO",
+				value1 = "1 Result Found With Filters");
+
+			AssertTextEquals(
+				locator1 = "ContentDashboard#FILTER_TEXT",
+				value1 = "Tags: echo");
+
+			WebContentAdmin.viewEntryTitle(entry = "Liferay LXC");
+
+			for (var title : list "Liferay DXP,Liferay Commerce") {
+				WebContentAdmin.viewEntryNotPresent(entry = ${title});
+			}
+
+			Search.clearSearchResult();
+
+			ManagementBar.setFilterAndOrder(filterBy = "Tags...");
+
+			AssetCategorization.selectTags(tagNameList = "lima");
+
+			AssertTextEquals(
+				locator1 = "Search#SEARCH_INFO",
+				value1 = "0 Results Found With Filters");
+
+			AssertTextEquals(
+				locator1 = "ContentDashboard#FILTER_TEXT",
+				value1 = "Tags: lima");
+
+			AssertTextEquals(
+				locator1 = "Message#EMPTY_INFO",
+				value1 = "No web content was found.");
+		}
+	}
+
 	@description = "This is a test for LPS-196819. The site administrator could manage web contents by structures."
 	@priority = 4
 	test ManageWebContentsByStructures {

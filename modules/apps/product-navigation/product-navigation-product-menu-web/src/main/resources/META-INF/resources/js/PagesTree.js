@@ -79,14 +79,22 @@ export default function PagesTree({
 
 				return false;
 			}
-
-			if (priority === 0 && !item.firstPageable) {
+			else if (priority === 0 && !item.firstPageable) {
 				openErrorToast(
 					sub(
 						Liferay.Language.get(
 							'the-first-page-cannot-be-of-type-x'
 						),
 						item.typeName
+					)
+				);
+
+				return false;
+			}
+			else if (priority === 0 && !item.hasGuestViewPermission) {
+				openErrorToast(
+					Liferay.Language.get(
+						'the-first-page-should-be-visible-for-guest-users'
 					)
 				);
 

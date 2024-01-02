@@ -443,34 +443,28 @@ definition {
 		property portal.upstream = "true";
 		property testray.component.names = "Training";
 
-		task ("Add 2 active page templates") {
-			JSONLayoutpagetemplate.addGlobalPageTemplateEntry(
-				pageTemplateEntryActive = "true",
-				pageTemplateEntryName = "College Landing Page");
-
-			JSONLayoutpagetemplate.addGlobalPageTemplateEntry(
-				pageTemplateEntryActive = "true",
-				pageTemplateEntryName = "Department Landing Page");
-		}
-
-		task ("Edit College Landing Page and add several widgets") {
+		task ("Add the first page template College Landing Page with several widgets") {
 			PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();
 
-			PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
-				item = "Edit",
+			PageTemplatesAdminGlobalSite.addCP(
+				pageTemplateActive = "Active",
 				pageTemplateName = "College Landing Page");
+
+			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "College Landing Page");
 
 			for (var portletName : list "Media Gallery,Web Content Display,Web Content Display,Web Content Display,Asset Publisher") {
 				Portlet.addPG(portletName = ${portletName});
 			}
 		}
 
-		task ("Edit Department Landing Page and add several widgets") {
+		task ("Add the second page template Department Landing Page with several widgets") {
 			PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();
 
-			PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
-				item = "Edit",
+			PageTemplatesAdminGlobalSite.addCP(
+				pageTemplateActive = "Active",
 				pageTemplateName = "Department Landing Page");
+
+			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Department Landing Page");
 
 			for (var portletName : list "Media Gallery,Web Content Display,Web Content Display,Menu Display,Members,Asset Publisher") {
 				Portlet.addPG(portletName = ${portletName});

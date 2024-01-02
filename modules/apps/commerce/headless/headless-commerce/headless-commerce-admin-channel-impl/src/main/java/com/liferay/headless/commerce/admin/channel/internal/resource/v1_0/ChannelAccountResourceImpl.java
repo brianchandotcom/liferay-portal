@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -68,8 +68,8 @@ public class ChannelAccountResourceImpl extends BaseChannelAccountResourceImpl {
 
 		if (commerceChannel == null) {
 			throw new NoSuchChannelException(
-				"Unable to find commerce channel with external reference " +
-					"code " + externalReferenceCode);
+				"Unable to find channel with external reference code " +
+					externalReferenceCode);
 		}
 
 		return Page.of(
@@ -130,8 +130,8 @@ public class ChannelAccountResourceImpl extends BaseChannelAccountResourceImpl {
 
 		if (commerceChannel == null) {
 			throw new NoSuchChannelException(
-				"Unable to find commerce channel with external reference " +
-					"code " + externalReferenceCode);
+				"Unable to find channel with external reference code " +
+					externalReferenceCode);
 		}
 
 		CommerceChannelAccountEntryRel commerceChannelAccountEntryRel =
@@ -177,7 +177,7 @@ public class ChannelAccountResourceImpl extends BaseChannelAccountResourceImpl {
 
 			if (commerceChannel == null) {
 				throw new NoSuchChannelException(
-					"Unable to find channel with commerce channel id " +
+					"Unable to find channel with channel id " +
 						channelAccount.getChannelId());
 			}
 		}

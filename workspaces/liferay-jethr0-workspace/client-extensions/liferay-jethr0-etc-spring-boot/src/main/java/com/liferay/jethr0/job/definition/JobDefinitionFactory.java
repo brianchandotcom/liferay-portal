@@ -6,7 +6,6 @@
 package com.liferay.jethr0.job.definition;
 
 import com.liferay.jethr0.job.JobEntity;
-import com.liferay.jethr0.job.PortalAppReleaseJobEntity;
 
 import java.util.Set;
 import java.util.TreeSet;

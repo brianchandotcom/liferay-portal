@@ -489,6 +489,18 @@ return	Array.from(getWebElement("(//*[contains(@class,'lfr-layout-structure-item
 		}
 	}
 
+	@summary = "View fragment not present at view mode"
+	macro viewFragmentNotPresent(fragmentName = null) {
+		if (!(isSet(position))) {
+			var position = 1;
+		}
+
+		AssertElementNotPresent(
+			fragmentName = StringUtil.lowerCase(${fragmentName}),
+			index = ${position},
+			locator1 = "Fragment#FRAGMENT_BODY");
+	}
+
 	@summary = "Default summary"
 	macro viewFragmentText(fragmentName = null, text = null, id = null, contributed = null, assetType = null) {
 		if (!(isSet(position))) {

@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -11,13 +11,11 @@ import com.liferay.portal.tools.db.partition.virtual.instance.migrator.common.Co
 import com.liferay.portal.tools.db.partition.virtual.instance.migrator.common.InstanceData;
 import com.liferay.portal.tools.db.partition.virtual.instance.migrator.common.Release;
 
-import java.sql.Connection;
-import java.sql.DatabaseMetaData;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -25,70 +23,39 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import org.mockito.Mockito;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
-
 /**
  * @author Luis Ortiz
  */
-public class DatabaseUtilTest {
+public class DatabaseUtilTest extends DatabaseMockupUtil {
 
 	@Before
 	public void setUp() throws SQLException {
-		Mockito.when(
-			_connection.getMetaData()
-		).thenReturn(
-			_databaseMetaData
-		);
-
-		Mockito.when(
-			_databaseMetaData.getURL()
-		).thenReturn(
-			RandomTestUtil.randomString()
-		);
-
-		ResultSet resultSet = Mockito.mock(ResultSet.class);
-
-		Mockito.when(
-			_databaseMetaData.getTables(
-				Mockito.nullable(String.class), Mockito.nullable(String.class),
-				Mockito.nullable(String.class), Mockito.any(String[].class))
-		).thenReturn(
-			resultSet
-		);
-
-		PreparedStatement preparedStatement = Mockito.mock(
-			PreparedStatement.class);
-
-		Mockito.when(
-			_connection.prepareStatement(Mockito.any())
-		).thenReturn(
-			preparedStatement
-		);
-
-		Mockito.when(
-			preparedStatement.executeQuery()
-		).thenReturn(
-			resultSet
-		);
+		mockCompanies(Collections.emptyList());
+		mockDatabaseConnection(
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString());
+		mockDefaultPartition(true);
+		mockGetCompanyIds(Collections.emptyList());
+		mockGetCompanyInfoIds(Collections.emptyList());
+		mockReleases(Collections.emptyList());
+		mockTables(Collections.emptyList());
 	}
 
 	@Test
 	public void testCompanyId() throws Exception {
-		List<Long> companies = new ArrayList<>();
+		List<Long> companyInfoIds = new ArrayList<>();
 
-		companies.add(RandomTestUtil.randomLong());
+		companyInfoIds.add(RandomTestUtil.randomLong());
 
 		_testCompanyId(
-			companies,
+			companyInfoIds,
 			instanceData -> Assert.assertEquals(
-				companies.get(0), instanceData.getCompanyId()));
+				companyInfoIds.get(0), instanceData.getCompanyId()));
 
-		companies.add(RandomTestUtil.randomLong());
+		companyInfoIds.add(RandomTestUtil.randomLong());
 
 		_testCompanyId(
-			companies,
+			companyInfoIds,
 			instanceData -> Assert.assertNull(instanceData.getCompanyId()));
 	}
 
@@ -114,65 +81,9 @@ public class DatabaseUtilTest {
 			RandomTestUtil.randomLong(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 
-		Mockito.when(
-			_connection.prepareStatement(
-				"select Company.companyId, webId, name, hostname from " +
-					"Company left join VirtualHost on Company.companyId = " +
-						"VirtualHost.companyId")
-		).thenReturn(
-			_preparedStatement
-		);
+		mockCompanies(Arrays.asList(company1, company2));
 
-		Mockito.when(
-			_preparedStatement.executeQuery()
-		).thenReturn(
-			_resultSet
-		);
-
-		Mockito.when(
-			_resultSet.next()
-		).thenReturn(
-			true
-		).thenReturn(
-			true
-		).thenReturn(
-			false
-		);
-
-		Mockito.when(
-			_resultSet.getLong(1)
-		).thenReturn(
-			company1.getCompanyId()
-		).thenReturn(
-			company2.getCompanyId()
-		);
-
-		Mockito.when(
-			_resultSet.getString(2)
-		).thenReturn(
-			company1.getWebId()
-		).thenReturn(
-			company2.getWebId()
-		);
-
-		Mockito.when(
-			_resultSet.getString(3)
-		).thenReturn(
-			company1.getCompanyName()
-		).thenReturn(
-			company2.getCompanyName()
-		);
-
-		Mockito.when(
-			_resultSet.getString(4)
-		).thenReturn(
-			company1.getVirtualHostName()
-		).thenReturn(
-			company2.getVirtualHostName()
-		);
-
-		InstanceData instanceData = DatabaseUtil.exportInstanceData(
-			_connection);
+		InstanceData instanceData = DatabaseUtil.exportInstanceData(connection);
 
 		List<Company> companies = instanceData.getCompanies();
 
@@ -183,112 +94,11 @@ public class DatabaseUtilTest {
 
 	@Test
 	public void testGetPartitionedTableNames() throws Exception {
+		mockGetCompanyIds(Collections.singletonList(25000L));
+		mockTables(
+			Arrays.asList("Table1", "Company", "Table2", "Object_x_25000"));
 
-		// Mock _connection
-
-		PreparedStatement preparedStatement = Mockito.mock(
-			PreparedStatement.class);
-
-		Mockito.when(
-			_connection.prepareStatement("select companyId from Company")
-		).thenReturn(
-			preparedStatement
-		);
-
-		ResultSet resultSet1 = Mockito.mock(ResultSet.class);
-
-		Mockito.when(
-			preparedStatement.executeQuery()
-		).thenReturn(
-			resultSet1
-		);
-
-		Mockito.when(
-			resultSet1.getLong("companyId")
-		).thenReturn(
-			25000L
-		);
-
-		Mockito.when(
-			resultSet1.next()
-		).thenReturn(
-			true
-		).thenReturn(
-			false
-		);
-
-		// Mock _databaseMetaData
-
-		ResultSet resultSet2 = Mockito.mock(ResultSet.class);
-
-		Mockito.when(
-			_databaseMetaData.getColumns(
-				Mockito.nullable(String.class), Mockito.nullable(String.class),
-				Mockito.any(), Mockito.nullable(String.class))
-		).thenReturn(
-			resultSet2
-		);
-
-		Mockito.when(
-			resultSet2.next()
-		).thenReturn(
-			false
-		);
-
-		ResultSet resultSet3 = Mockito.mock(ResultSet.class);
-
-		Mockito.when(
-			_databaseMetaData.getColumns(
-				Mockito.nullable(String.class), Mockito.nullable(String.class),
-				Mockito.eq("company"), Mockito.nullable(String.class))
-		).thenReturn(
-			resultSet3
-		);
-
-		Mockito.when(
-			resultSet2.next()
-		).thenReturn(
-			true
-		);
-
-		Mockito.when(
-			_databaseMetaData.getTables(
-				Mockito.nullable(String.class), Mockito.nullable(String.class),
-				Mockito.nullable(String.class), Mockito.any(String[].class))
-		).thenReturn(
-			_resultSet
-		);
-
-		// Mock _resultSet
-
-		Mockito.when(
-			_resultSet.getString("TABLE_NAME")
-		).thenReturn(
-			"Table1"
-		).thenReturn(
-			"Company"
-		).thenReturn(
-			"Table2"
-		).thenReturn(
-			"Object_x_25000"
-		);
-
-		Mockito.when(
-			_resultSet.next()
-		).thenReturn(
-			true
-		).thenReturn(
-			true
-		).thenReturn(
-			true
-		).thenReturn(
-			true
-		).thenReturn(
-			false
-		);
-
-		InstanceData instanceData = DatabaseUtil.exportInstanceData(
-			_connection);
+		InstanceData instanceData = DatabaseUtil.exportInstanceData(connection);
 
 		List<String> tableNames = instanceData.getTableNames();
 
@@ -306,67 +116,9 @@ public class DatabaseUtilTest {
 		Release module2Release = new Release(
 			Version.parseVersion("2.0.1"), "module2", 1, false);
 
-		Mockito.when(
-			_connection.prepareStatement(
-				"select servletContextName, schemaVersion, state_, verified " +
-					"from Release_")
-		).thenReturn(
-			_preparedStatement
-		);
+		mockReleases(Arrays.asList(module1Release, module2Release));
 
-		Mockito.when(
-			_preparedStatement.executeQuery()
-		).thenReturn(
-			_resultSet
-		);
-
-		Mockito.when(
-			_resultSet.next()
-		).thenReturn(
-			true
-		).thenReturn(
-			true
-		).thenReturn(
-			false
-		);
-
-		Mockito.when(
-			_resultSet.getBoolean(4)
-		).thenReturn(
-			module1Release.getVerified()
-		).thenReturn(
-			module2Release.getVerified()
-		);
-
-		Mockito.when(
-			_resultSet.getString(1)
-		).thenReturn(
-			module1Release.getServletContextName()
-		).thenReturn(
-			module2Release.getServletContextName()
-		);
-
-		Version module1SchemaVersion = module1Release.getSchemaVersion();
-		Version module2SchemaVersion = module2Release.getSchemaVersion();
-
-		Mockito.when(
-			_resultSet.getString(2)
-		).thenReturn(
-			module1SchemaVersion.toString()
-		).thenReturn(
-			module2SchemaVersion.toString()
-		);
-
-		Mockito.when(
-			_resultSet.getInt(3)
-		).thenReturn(
-			module1Release.getState()
-		).thenReturn(
-			module2Release.getState()
-		);
-
-		InstanceData instanceData = DatabaseUtil.exportInstanceData(
-			_connection);
+		InstanceData instanceData = DatabaseUtil.exportInstanceData(connection);
 
 		List<Release> releases = instanceData.getReleases();
 
@@ -376,102 +128,21 @@ public class DatabaseUtilTest {
 	}
 
 	private void _testCompanyId(
-			List<Long> companies, Consumer<InstanceData> consumer)
+			List<Long> companyInfoIds, Consumer<InstanceData> consumer)
 		throws Exception {
 
-		Mockito.when(
-			_connection.prepareStatement("select companyId from CompanyInfo")
-		).thenReturn(
-			_preparedStatement
-		);
+		mockGetCompanyInfoIds(companyInfoIds);
 
-		Mockito.when(
-			_preparedStatement.executeQuery()
-		).thenReturn(
-			_resultSet
-		);
-
-		final List<Integer> nextCounter = new ArrayList<>();
-
-		nextCounter.add(0);
-
-		Mockito.when(
-			_resultSet.next()
-		).thenAnswer(
-			new Answer<Boolean>() {
-
-				@Override
-				public Boolean answer(InvocationOnMock invocationOnMock)
-					throws Throwable {
-
-					int counter = nextCounter.get(0);
-
-					if (counter >= companies.size()) {
-						return false;
-					}
-
-					nextCounter.set(0, ++counter);
-
-					return true;
-				}
-
-			}
-		);
-
-		final List<Integer> getLongCounter = new ArrayList<>();
-
-		getLongCounter.add(0);
-
-		Mockito.when(
-			_resultSet.getLong(1)
-		).thenAnswer(
-			new Answer<Long>() {
-
-				@Override
-				public Long answer(InvocationOnMock invocationOnMock)
-					throws Throwable {
-
-					int counter = getLongCounter.get(0);
-
-					if (counter >= companies.size()) {
-						throw new IndexOutOfBoundsException();
-					}
-
-					return companies.get(counter);
-				}
-
-			}
-		);
-
-		consumer.accept(DatabaseUtil.exportInstanceData(_connection));
+		consumer.accept(DatabaseUtil.exportInstanceData(connection));
 	}
 
 	private void _testDefaultPartition(
 			boolean defaultPartition, Consumer<InstanceData> consumer)
 		throws Exception {
 
-		Mockito.when(
-			_databaseMetaData.getTables(
-				Mockito.nullable(String.class), Mockito.nullable(String.class),
-				Mockito.eq("Company"), Mockito.any(String[].class))
-		).thenReturn(
-			_resultSet
-		);
+		mockDefaultPartition(defaultPartition);
 
-		Mockito.when(
-			_resultSet.next()
-		).thenReturn(
-			defaultPartition
-		);
-
-		consumer.accept(DatabaseUtil.exportInstanceData(_connection));
+		consumer.accept(DatabaseUtil.exportInstanceData(connection));
 	}
-
-	private final Connection _connection = Mockito.mock(Connection.class);
-	private final DatabaseMetaData _databaseMetaData = Mockito.mock(
-		DatabaseMetaData.class);
-	private final PreparedStatement _preparedStatement = Mockito.mock(
-		PreparedStatement.class);
-	private final ResultSet _resultSet = Mockito.mock(ResultSet.class);
 
 }

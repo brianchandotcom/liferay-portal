@@ -510,8 +510,6 @@ definition {
 	@description = "This is a test for LPS-173440. The user with Add Object Entry but without View permission for object cannot see mapped Collection Display or Content Display at view and preview mode."
 	@priority = 4
 	test CannotViewMappedCollectionDisplayOrContentDisplayWithAddObjectEntryButWithoutViewPermissionForObjectOnViewAndPreviewMode {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-
 		var labelName = StringUtil.randomString(8);
 
 		var objectName = "A${labelName}";
@@ -728,8 +726,6 @@ definition {
 	@description = "This is a test for LPS-173440. The user without View permission for object cannot see mapped Collection Display or Content Display at view and preview mode."
 	@priority = 4
 	test CannotViewMappedCollectionDisplayOrContentDisplayWithoutViewPermissionForObjectOnViewAndPreviewMode {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-
 		var labelName = StringUtil.randomString(8);
 
 		var objectName = "A${labelName}";
@@ -944,8 +940,6 @@ definition {
 	@description = "This is a test for LPS-173440. The user without View permission for object cannot see that object in Collection Display or Content Display selector."
 	@priority = 4
 	test CannotViewObjectInCollectionDisplayOrContentDisplayWithoutViewPermissionForObject {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-
 		var labelName = StringUtil.randomString(8);
 
 		var objectName = "A${labelName}";
@@ -1110,8 +1104,6 @@ definition {
 	@description = "This is a test for LPS-173440. The user with View and Add Object Entry permissions for object can see the mapped Collection Display or Content Display."
 	@priority = 4
 	test CanViewMappedCollectionDisplayAndContentDisplayWithAddObjectDefinitionAndViewPermissionForObject {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-
 		var labelName = StringUtil.randomString(8);
 
 		var objectName = "A${labelName}";
@@ -2203,8 +2195,6 @@ definition {
 	@description = "This is a test for LPS-173440. The user without View permission for object should see alert message on mapped Collection Display or Content Display at edit mode."
 	@priority = 4
 	test ViewAlertOnMappedCollectionDisplayOrContentDisplayWithoutViewPermissionForObjectAtEditMode {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-
 		var labelName = StringUtil.randomString(8);
 
 		var objectName = "A${labelName}";
@@ -2529,8 +2519,6 @@ definition {
 	@description = "This is a test for LPS-165556. The page creator without trigger permission could see the available actions in Action selector."
 	@priority = 4
 	test ViewAvailableActionsInActionSelectorAsUserWithoutTriggerPermission {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-
 		var labelName = StringUtil.randomString(8);
 
 		var objectName = "A${labelName}";

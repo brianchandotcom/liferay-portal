@@ -1347,6 +1347,8 @@ definition {
 
 			Navigator.gotoBack();
 
+			WaitForPageLoad();
+
 			Navigator.ensureLocaleURL(locale = "es");
 
 			AssertVisible(

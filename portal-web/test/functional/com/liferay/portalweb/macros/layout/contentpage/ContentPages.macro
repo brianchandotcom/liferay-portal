@@ -348,9 +348,16 @@ definition {
 
 	@summary = "Default summary"
 	macro focusSlide(slideNumber = null) {
-		Click(
-			ariaLabel = "Go to slide ${slideNumber}",
-			locator1 = "Button#ANY_WITH_ARIA_LABEL");
+		if (IsElementPresent(ariaLabel = "Go to slide ${slideNumber}", locator1 = "Button#ANY_WITH_ARIA_LABEL")) {
+			Click(
+				ariaLabel = "Go to slide ${slideNumber}",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL");
+		}
+		else {
+			Click(
+				ariaLabel = "Focus slide ${slideNumber}",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL");
+		}
 	}
 
 	@summary = "Default summary"

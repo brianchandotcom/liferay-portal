@@ -1099,6 +1099,77 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-189857. View the display page info in folder."
+	@priority = 3
+	test ViewInfoPanelOfDisplayPageTemplateInsideFolder {
+		property custom.properties = "feature.flag.LPS-189856=true";
+
+		task ("Given a site administrator has a default display page template inside a folder") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.addFolder(folderName = "Test Folder Name");
+
+			DisplayPageTemplatesAdmin.gotoFolder(folderName = "Test Folder Name");
+
+			DisplayPageTemplatesAdmin.addDisplayPage(
+				contentType = "Web Content Article",
+				displayPageName = "Liferay DXP",
+				subType = "Basic Web Content");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
+			PageEditor.publish();
+		}
+
+		task ("When the site administrator opens the info panel of display page template") {
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Liferay DXP");
+
+			LexiconCard.checkCardCheckbox(card = "Liferay DXP");
+
+			ManagementBar.clickInfo();
+		}
+
+		task ("Then the site administrator could see the relevant information") {
+			AssertTextEquals(
+				locator1 = "Sidebar#COMPONENT_TITLE",
+				value1 = "Liferay DXP");
+
+			AssertTextEquals(
+				locator1 = "Sidebar#COMPONENT_SUBTITLE",
+				value1 = "Display Page Template");
+
+			AssertVisible(
+				key_labelName = "Default",
+				locator1 = "Sidebar#HEADER_LABEL");
+
+			AssertVisible(
+				key_labelName = "Approved",
+				locator1 = "Sidebar#HEADER_LABEL");
+
+			AssertTextEquals(
+				locator1 = "Sidebar#LOCALTION",
+				value1 = "Home > Test Folder Name");
+
+			AssertTextEquals(
+				locator1 = "Sidebar#CONTENT_TYPE",
+				value1 = "Web Content Article");
+
+			AssertTextEquals(
+				locator1 = "Sidebar#SUBTYPE",
+				value1 = "Basic Web Content");
+
+			AssertTextMatches(
+				locator1 = "Sidebar#CREATED",
+				value1 = "^\w\w\w\s[0-9]{1,2},\s\d\d\d\d\s\d\d:\d\d:\d\d\s\w\w\sby\sTest\sTest$");
+
+			AssertTextMatches(
+				locator1 = "Sidebar#MODIFIED",
+				value1 = "^\w\w\w\s[0-9]{1,2},\s\d\d\d\d\s\d\d:\d\d:\d\d\s\w\w\sby\sTest\sTest$");
+		}
+	}
+
 	@description = "This is a test for LPS-133350. View master page after renaming display page template within custom master page."
 	@priority = 4
 	test ViewMasterPageAfterRenamingDisplayPageTemplateWithinCustomMasterPage {

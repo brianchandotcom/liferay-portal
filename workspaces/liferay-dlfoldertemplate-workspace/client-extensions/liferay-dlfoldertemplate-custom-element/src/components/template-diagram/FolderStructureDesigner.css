@@ -38,3 +38,9 @@
 	top: 10% !important;
 	bottom: unset !important;
 }
+.reload-button {
+	position: absolute;
+	top: 3rem;
+	left: 3rem;
+	z-index: 2;
+}

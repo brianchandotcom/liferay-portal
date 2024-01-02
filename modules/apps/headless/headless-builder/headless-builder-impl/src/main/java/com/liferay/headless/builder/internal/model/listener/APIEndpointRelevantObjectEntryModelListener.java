@@ -297,9 +297,9 @@ public class APIEndpointRelevantObjectEntryModelListener
 				throw new ObjectEntryValuesException.InvalidObjectField(
 					null,
 					"Path parameters are not supported by GET API endpoints " +
-						"with \"collection\" retrieve type",
+						"with the \"collection\" retrieve type",
 					"path-parameters-are-not-supported-by-get-api-endpoints-" +
-						"with-collection-retrieve-type");
+						"with-the-collection-retrieve-type");
 			}
 
 			_validatePath(objectEntry, pathString);

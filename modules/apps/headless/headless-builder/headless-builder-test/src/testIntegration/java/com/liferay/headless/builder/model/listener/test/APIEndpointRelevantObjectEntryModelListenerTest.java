@@ -294,7 +294,7 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 			).put(
 				"title",
 				"Path parameters are not supported by GET API endpoints with " +
-					"\"collection\" retrieve type."
+					"the \"collection\" retrieve type."
 			).toString(),
 			HTTPTestUtil.invokeToJSONObject(
 				JSONUtil.put(

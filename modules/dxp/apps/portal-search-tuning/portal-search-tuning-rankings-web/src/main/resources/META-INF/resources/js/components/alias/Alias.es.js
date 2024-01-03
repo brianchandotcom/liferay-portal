@@ -74,6 +74,11 @@ class Alias extends Component {
 		inputValue: '',
 	};
 
+	/*
+	 * Any time the input is blurred, adds the current input value to the
+	 * list of aliases. This ensures that the user does not lose the value
+	 * if they save the Result Ranking without hitting enter or comma.
+	 */
 	_handleBlur = () => {
 		if (this.state.inputValue.trim()) {
 			this.props.onChange(

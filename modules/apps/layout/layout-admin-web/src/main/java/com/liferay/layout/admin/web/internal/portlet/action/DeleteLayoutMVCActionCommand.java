@@ -40,6 +40,7 @@ import com.liferay.segments.exception.RequiredSegmentsExperienceException;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -157,7 +158,20 @@ public class DeleteLayoutMVCActionCommand extends BaseMVCActionCommand {
 
 			JSONPortletResponseUtil.writeJSON(
 				actionRequest, actionResponse,
-				JSONUtil.put("redirectURL", themeDisplay.getURLCurrent()));
+				JSONUtil.put(
+					"redirectURL",
+					() -> {
+						String redirect = ParamUtil.getString(
+							actionRequest, "redirect");
+
+						if (redirect != null) {
+							return redirect;
+						}
+
+						return _portal.getControlPanelPortletURL(
+							actionRequest, LayoutAdminPortletKeys.GROUP_PAGES,
+							PortletRequest.RENDER_PHASE);
+					}));
 		}
 		catch (Exception exception) {
 			Throwable throwable = exception.getCause();

@@ -67,16 +67,14 @@ public class VariableNameCheck extends BaseCheck {
 
 		String typeName = getTypeName(typeDetailAST, false);
 
-		if ((firstChildDetailAST.getType() != TokenTypes.DOT) &&
-			!typeName.contains("[")) {
-
-			_checkCountVariableName(detailAST, name, typeName);
-			_checkInstanceVariableName(detailAST, name, typeName);
-			_checkTypeName(detailAST, name, typeName);
-			_checkTypo(detailAST, name, typeName, true);
-		}
-
 		if (!typeName.contains("[")) {
+			if (firstChildDetailAST.getType() != TokenTypes.DOT) {
+				_checkCountVariableName(detailAST, name, typeName);
+				_checkInstanceVariableName(detailAST, name, typeName);
+				_checkTypeName(detailAST, name, typeName);
+				_checkTypo(detailAST, name, typeName, true);
+			}
+
 			_checkExceptionVariableName(detailAST, name, typeName);
 		}
 

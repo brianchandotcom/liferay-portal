@@ -321,16 +321,14 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 			itemClasses.add(itemClass.getSuperclass());
 
 			for (Class<?> curItemClass : itemClasses) {
-				try {
-					Method method = curItemClass.getMethod(methodName);
+				for (Method method : curItemClass.getMethods()) {
+					if (StringUtil.equals(method.getName(), methodName) &&
+						Objects.equals(
+							method.getReturnType(),
+							resourceMethodArgNameTypeEntry.getValue()) &&
+						(method.getParameterCount() == 0)) {
 
-					if (method != null) {
 						return method.invoke(item);
-					}
-				}
-				catch (NoSuchMethodException noSuchMethodException) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(noSuchMethodException);
 					}
 				}
 			}

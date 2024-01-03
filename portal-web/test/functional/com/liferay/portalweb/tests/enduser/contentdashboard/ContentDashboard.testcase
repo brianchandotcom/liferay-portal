@@ -6592,6 +6592,42 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-177756. The tooltip of the back button is Go to Content Dashboard when viewing an asset with a DPT from the Content Dashboard."
+	@priority = 3
+	test ViewBackButtonTooltipInAssociatedDisplayPageTemplate {
+		task ("Given the Web Content edit mode page") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "DPT Name",
+				groupName = "Test Site Name",
+				subType = "Basic Web Content");
+
+			JSONLayoutpagetemplate.setLayoutPageTemplateEntryAsDefault(
+				groupName = "Test Site Name",
+				layoutPageTemplateEntryName = "DPT Name",
+				type = "Display Page Template");
+
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+
+			ContentDashboard.goToContentDashboard();
+
+			LexiconTable.clickTableEntryTitle(tableEntry = "Web Content Title");
+		}
+
+		task ("When hover over the back button") {
+			MouseOver(locator1 = "Icon#BACK");
+		}
+
+		task ("Then see the tooltip message") {
+			AssertVisible(
+				key_content = "Go to Content Dashboard",
+				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
+		}
+	}
+
 	@description = "LPS-162823 Add the View Action to the Version History for Documents and Media"
 	@priority = 3
 	test ViewDocumentVersion {

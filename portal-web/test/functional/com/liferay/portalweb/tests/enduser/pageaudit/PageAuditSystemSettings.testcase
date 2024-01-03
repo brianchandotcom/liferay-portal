@@ -45,6 +45,12 @@ definition {
 
 			PageAudit.openPageAuditSidebar();
 
+			var map = MapUtil.newHashMap();
+
+			ExecuteCDPCommand(
+				value1 = "Fetch.enable",
+				value2 = ${map});
+
 			Button.click(button = "Launch Page Audit");
 
 			AssertVisible(locator1 = "PageAudit#PROGRESS_BAR");

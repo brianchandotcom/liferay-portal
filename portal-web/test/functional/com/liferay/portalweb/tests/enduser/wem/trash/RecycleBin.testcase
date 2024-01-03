@@ -428,7 +428,9 @@ definition {
 		}
 
 		task ("View wiki page and wiki node and restore them") {
-			RecycleBin.openRecycleBinAdmin(siteURLKey = "site-name");
+			ProductMenu.gotoPortlet(
+				category = "Recycle Bin",
+				portlet = "Recycle Bin");
 
 			RecycleBin.viewCP(
 				assetName = "Wiki Page Title",

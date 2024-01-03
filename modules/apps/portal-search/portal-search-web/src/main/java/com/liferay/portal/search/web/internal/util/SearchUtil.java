@@ -15,18 +15,21 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.search.OpenSearch;
 import com.liferay.portal.kernel.search.OpenSearchRegistryUtil;
 import com.liferay.portal.kernel.search.OpenSearchUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupServiceUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
@@ -155,9 +158,16 @@ public class SearchUtil {
 				WindowState.MAXIMIZED
 			).buildPortletURL();
 
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
+			Layout previousLayout = themeDisplay.getLayout();
+
 			if (Validator.isNull(className) || (classPK <= 0)) {
-				return HttpComponentsUtil.setParameter(
-					viewContentURL.toString(), "p_l_back_url", currentURL);
+				return HttpComponentsUtil.addParameters(
+					viewContentURL.toString(), "p_l_back_url", currentURL,
+					"p_l_back_url_title",
+					previousLayout.getName(themeDisplay.getLocale()));
 			}
 
 			AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
@@ -168,8 +178,10 @@ public class SearchUtil {
 					getAssetRendererFactoryByClassName(className);
 
 			if (assetRendererFactory == null) {
-				return HttpComponentsUtil.setParameter(
-					viewContentURL.toString(), "p_l_back_url", currentURL);
+				return HttpComponentsUtil.addParameters(
+					viewContentURL.toString(), "p_l_back_url", currentURL,
+					"p_l_back_url_title",
+					previousLayout.getName(themeDisplay.getLocale()));
 			}
 
 			viewContentURL.setParameter(
@@ -177,8 +189,10 @@ public class SearchUtil {
 			viewContentURL.setParameter("type", assetRendererFactory.getType());
 
 			if (!viewInContext) {
-				return HttpComponentsUtil.setParameter(
-					viewContentURL.toString(), "p_l_back_url", currentURL);
+				return HttpComponentsUtil.addParameters(
+					viewContentURL.toString(), "p_l_back_url", currentURL,
+					"p_l_back_url_title",
+					previousLayout.getName(themeDisplay.getLocale()));
 			}
 
 			AssetRenderer<?> assetRenderer =
@@ -193,8 +207,9 @@ public class SearchUtil {
 				viewURL = viewContentURL.toString();
 			}
 
-			return HttpComponentsUtil.setParameter(
-				viewURL, "p_l_back_url", currentURL);
+			return HttpComponentsUtil.addParameters(
+				viewURL, "p_l_back_url", currentURL, "p_l_back_url_title",
+				previousLayout.getName(themeDisplay.getLocale()));
 		}
 		catch (Exception exception) {
 			_log.error(

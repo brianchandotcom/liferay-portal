@@ -56,7 +56,7 @@ public class ObjectFieldUpgradeProcess extends UpgradeProcess {
 						"createDate, modifiedDate, externalReferenceCode, ",
 						"listTypeDefinitionId, objectDefinitionId, ",
 						"businessType, dbColumnName, dbTableName, dbType, ",
-						"defaultValue, indexed, indexedAsKeyWord, ",
+						"defaultValue, indexed, indexedAsKeyword, ",
 						"indexedLanguageId, label, name, relationshipType, ",
 						"required, state_, system_) values (?, ?, ?, ?, ?, ?, ",
 						"?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ",

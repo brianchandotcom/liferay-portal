@@ -12,7 +12,7 @@ export class FeatureFlagApiHelper {
 		this.page = page;
 	}
 
-	async updateFeatureFlag(key: Object, enabled: boolean) {
+	async updateFeatureFlag(key: string, enabled: boolean) {
 		await this.page.goto('/');
 		await this.page.evaluate(
 			({enabled, key}) =>

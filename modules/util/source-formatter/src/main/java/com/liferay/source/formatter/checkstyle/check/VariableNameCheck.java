@@ -65,16 +65,19 @@ public class VariableNameCheck extends BaseCheck {
 			return;
 		}
 
-		if (firstChildDetailAST.getType() != TokenTypes.DOT) {
-			String typeName = getTypeName(typeDetailAST, false);
+		String typeName = getTypeName(typeDetailAST, false);
 
-			if (!typeName.contains("[")) {
-				_checkCountVariableName(detailAST, name, typeName);
-				_checkExceptionVariableName(detailAST, name, typeName);
-				_checkInstanceVariableName(detailAST, name, typeName);
-				_checkTypeName(detailAST, name, typeName);
-				_checkTypo(detailAST, name, typeName, true);
-			}
+		if ((firstChildDetailAST.getType() != TokenTypes.DOT) &&
+			!typeName.contains("[")) {
+
+			_checkCountVariableName(detailAST, name, typeName);
+			_checkInstanceVariableName(detailAST, name, typeName);
+			_checkTypeName(detailAST, name, typeName);
+			_checkTypo(detailAST, name, typeName, true);
+		}
+
+		if (!typeName.contains("[")) {
+			_checkExceptionVariableName(detailAST, name, typeName);
 		}
 
 		DetailAST parentDetailAST = getParentWithTokenType(
@@ -384,11 +387,29 @@ public class VariableNameCheck extends BaseCheck {
 	private void _checkExceptionVariableName(
 		DetailAST detailAST, String name, String typeName) {
 
+		if (StringUtil.count(typeName, StringPool.PERIOD) > 1) {
+			return;
+		}
+
+		int index = typeName.indexOf(StringPool.PERIOD);
+
+		if (index != -1) {
+			String className = typeName.substring(0, index);
+
+			if (!className.endsWith("Exception")) {
+				return;
+			}
+
+			typeName = typeName.substring(index + 1);
+		}
+		else if (!typeName.endsWith("Exception")) {
+			return;
+		}
+
 		DetailAST parentDetailAST = detailAST.getParent();
 
 		if ((parentDetailAST.getType() == TokenTypes.LITERAL_CATCH) ||
-			(detailAST.getType() != TokenTypes.PARAMETER_DEF) ||
-			!typeName.endsWith("Exception")) {
+			(detailAST.getType() != TokenTypes.PARAMETER_DEF)) {
 
 			return;
 		}

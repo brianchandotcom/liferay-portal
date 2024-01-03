@@ -27,14 +27,10 @@ definition {
 
 			User.firstLoginUI();
 
-			Navigator.openURL();
-
-			HeadlessSite.addSite(siteName = "Test Site Name");
-
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Content Page",
-				type = "content");
+			HeadlessSite.addSite(
+				siteName = "Test Site Name",
+				templateName = "Welcome",
+				templateType = "Site Initializer");
 		}
 
 		task ("Conect DXP to AC") {
@@ -42,7 +38,9 @@ definition {
 		}
 
 		task ("Navigate to Page and Blog") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Home",
+				siteName = "Test Site Name");
 		}
 
 		task ("Close all sessions and wait") {
@@ -78,7 +76,9 @@ definition {
 				password = "test",
 				userEmailAddress = "test@liferay.com");
 
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Home",
+				siteName = "Test Site Name");
 		}
 	}
 
@@ -93,7 +93,9 @@ definition {
 		}
 
 		task ("Go to segmentats page and assert that not possible Edit/Delete ") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Home",
+				siteName = "Test Site Name");
 
 			ProductMenu.gotoPortlet(
 				category = "People",
@@ -182,7 +184,9 @@ definition {
 		}
 
 		task ("Go to segmentats page and assert that the segment created is preset") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Home",
+				siteName = "Test Site Name");
 
 			ProductMenu.gotoPortlet(
 				category = "People",
@@ -245,7 +249,9 @@ definition {
 		}
 
 		task ("Go to segmentats page and click at segment crieted in AC") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Home",
+				siteName = "Test Site Name");
 
 			ProductMenu.gotoPortlet(
 				category = "People",
@@ -285,7 +291,9 @@ definition {
 		}
 
 		task ("Go to segmentats page and at segment created in AC") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Home",
+				siteName = "Test Site Name");
 
 			ProductMenu.gotoPortlet(
 				category = "People",
@@ -325,7 +333,9 @@ definition {
 		}
 
 		task ("Go to segmentats page and click at segment created in AC") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Home",
+				siteName = "Test Site Name");
 
 			ProductMenu.gotoPortlet(
 				category = "People",
@@ -376,7 +386,9 @@ definition {
 		}
 
 		task ("Go to segments admin and Assert is not possible to click on the segment previously created ") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Home",
+				siteName = "Test Site Name");
 
 			ProductMenu.gotoPortlet(
 				category = "People",
@@ -390,7 +402,9 @@ definition {
 		task ("Conect DXP to AC and navigate to Page") {
 			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Test Site Name");
 
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Home",
+				siteName = "Test Site Name");
 		}
 	}
 

@@ -23,6 +23,7 @@ interface ModalImportProps {
 	importURL: string;
 	modalImportKey: string;
 	nameMaxLength: string;
+	onAfterImport?: () => void;
 	portletNamespace: string;
 	showModal?: boolean;
 }
@@ -40,6 +41,7 @@ export default function ModalImport({
 	importURL,
 	modalImportKey,
 	nameMaxLength,
+	onAfterImport,
 	portletNamespace,
 	showModal,
 }: ModalImportProps) {
@@ -53,21 +55,6 @@ export default function ModalImport({
 	const [name, setName] = useState('');
 	const [visible, setVisible] = useState(showModal ?? false);
 	const [warningModalVisible, setWarningModalVisible] = useState(false);
-
-	const handleImport = async (formData: FormData) => {
-		try {
-			await API.save({
-				item: formData,
-				method: 'POST',
-				url: importURL,
-			});
-
-			window.location.reload();
-		}
-		catch (error) {
-			setError((error as Error).message);
-		}
-	};
 
 	const {observer, onClose} = useModal({
 		onClose: () => {
@@ -86,6 +73,28 @@ export default function ModalImport({
 			}
 		},
 	});
+
+	const handleImport = async (formData: FormData) => {
+		try {
+			await API.save({
+				item: formData,
+				method: 'POST',
+				url: importURL,
+			});
+
+			if (Liferay.FeatureFlags['LPS-148856'] && onAfterImport) {
+				onAfterImport();
+
+				onClose();
+			}
+			else {
+				window.location.reload();
+			}
+		}
+		catch (error) {
+			setError((error as Error).message);
+		}
+	};
 
 	const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();

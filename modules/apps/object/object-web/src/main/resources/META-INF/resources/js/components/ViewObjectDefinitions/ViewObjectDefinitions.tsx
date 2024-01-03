@@ -473,6 +473,10 @@ export default function ViewObjectDefinitions({
 
 			{showModal.importModal && (
 				<ModalImport
+					{...(modalImportProperties.modalImportKey ===
+						'objectDefinition' && {
+						onAfterImport: () => setReloadFDS(true),
+					})}
 					JSONInputId={modalImportProperties.JSONInputId}
 					apiURL={modalImportProperties.apiURL}
 					handleOnClose={() => {

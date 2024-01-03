@@ -16,6 +16,7 @@ interface ModalImportProps {
 	importURL: string;
 	modalImportKey: string;
 	nameMaxLength: string;
+	onAfterImport?: () => void;
 	portletNamespace: string;
 	showModal?: boolean;
 }
@@ -31,6 +32,7 @@ export default function ModalImport({
 	importURL,
 	modalImportKey,
 	nameMaxLength,
+	onAfterImport,
 	portletNamespace,
 	showModal,
 }: ModalImportProps): JSX.Element | null;

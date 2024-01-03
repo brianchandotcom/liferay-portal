@@ -123,7 +123,10 @@ public class FragmentEntryProcessorHelperImpl
 					editableValueJSONObject.getLong("classPK"));
 			}
 
-			if (fragmentEntryProcessorContext.getPreviewClassPK() > 0) {
+			if ((fragmentEntryProcessorContext.getPreviewClassPK() > 0) &&
+				(fragmentEntryProcessorContext.getPreviewClassPK() ==
+					editableValueJSONObject.getLong("classPK"))) {
+
 				infoItemIdentifier = new ClassPKInfoItemIdentifier(
 					fragmentEntryProcessorContext.getPreviewClassPK());
 

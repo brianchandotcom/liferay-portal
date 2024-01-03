@@ -39,18 +39,7 @@ public class DefaultWorkflowNodeTest {
 
 		DefaultWorkflowNode defaultWorkflowNode = new DefaultWorkflowNode();
 
-		defaultWorkflowNode.setLabelMap(new HashMap<>());
-		defaultWorkflowNode.setName("approve");
-
-		Assert.assertEquals(
-			"Aprovar", defaultWorkflowNode.getLabel(LocaleUtil.BRAZIL));
-
-		defaultWorkflowNode.setLabelMap(new HashMap<>());
-		defaultWorkflowNode.setName("businessRuleReview");
-
-		Assert.assertEquals(
-			"businessRuleReview",
-			defaultWorkflowNode.getLabel(LocaleUtil.BRAZIL));
+		// Desired locale, label map
 
 		defaultWorkflowNode.setLabelMap(
 			HashMapBuilder.put(
@@ -62,14 +51,33 @@ public class DefaultWorkflowNodeTest {
 			"Business Rule Review",
 			defaultWorkflowNode.getLabel(LocaleUtil.BRAZIL));
 
+		// Desired locale, name as language key
+
+		defaultWorkflowNode.setLabelMap(new HashMap<>());
+		defaultWorkflowNode.setName("approve");
+
+		Assert.assertEquals(
+			"Aprovar", defaultWorkflowNode.getLabel(LocaleUtil.BRAZIL));
+
+		// Name
+
+		defaultWorkflowNode.setLabelMap(new HashMap<>());
+		defaultWorkflowNode.setName("businessRuleReview");
+
+		Assert.assertEquals(
+			"businessRuleReview",
+			defaultWorkflowNode.getLabel(LocaleUtil.BRAZIL));
+
+		// Site default locale, label map
+
 		defaultWorkflowNode.setLabelMap(
 			HashMapBuilder.put(
-				LocaleUtil.BRAZIL, "Revisar Regra de Negócio"
+				LocaleUtil.getSiteDefault(), "Business Rule Review"
 			).build());
 		defaultWorkflowNode.setName("businessRuleReview");
 
 		Assert.assertEquals(
-			"Revisar Regra de Negócio",
+			"Business Rule Review",
 			defaultWorkflowNode.getLabel(LocaleUtil.BRAZIL));
 	}
 

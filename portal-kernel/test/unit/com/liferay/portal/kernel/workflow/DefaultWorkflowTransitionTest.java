@@ -46,28 +46,7 @@ public class DefaultWorkflowTransitionTest {
 		DefaultWorkflowTransition defaultWorkflowTransition =
 			new DefaultWorkflowTransition();
 
-		defaultWorkflowTransition.setLabelMap(new HashMap<>());
-		defaultWorkflowTransition.setName("approve");
-
-		Assert.assertEquals(
-			"Aprovar", defaultWorkflowTransition.getLabel(LocaleUtil.BRAZIL));
-
-		defaultWorkflowTransition.setLabelMap(new HashMap<>());
-		defaultWorkflowTransition.setName("businessRuleReview");
-
-		Assert.assertEquals(
-			"businessRuleReview",
-			defaultWorkflowTransition.getLabel(LocaleUtil.BRAZIL));
-
-		defaultWorkflowTransition.setLabelMap(
-			HashMapBuilder.put(
-				LocaleUtil.getSiteDefault(), "Business Rule Review"
-			).build());
-		defaultWorkflowTransition.setName("businessRuleReview");
-
-		Assert.assertEquals(
-			"Business Rule Review",
-			defaultWorkflowTransition.getLabel(LocaleUtil.BRAZIL));
+		// Desired locale, label map
 
 		defaultWorkflowTransition.setLabelMap(
 			HashMapBuilder.put(
@@ -79,12 +58,43 @@ public class DefaultWorkflowTransitionTest {
 			"Revisar Regra de Negócio",
 			defaultWorkflowTransition.getLabel(LocaleUtil.BRAZIL));
 
+		// Desired locale, name as language key
+
+		defaultWorkflowTransition.setLabelMap(new HashMap<>());
+		defaultWorkflowTransition.setName("approve");
+
+		Assert.assertEquals(
+			"Aprovar", defaultWorkflowTransition.getLabel(LocaleUtil.BRAZIL));
+
+		// Name
+
+		defaultWorkflowTransition.setLabelMap(new HashMap<>());
+		defaultWorkflowTransition.setName("businessRuleReview");
+
+		Assert.assertEquals(
+			"businessRuleReview",
+			defaultWorkflowTransition.getLabel(LocaleUtil.BRAZIL));
+
+		// Name null
+
 		defaultWorkflowTransition.setLabelMap(new HashMap<>());
 		defaultWorkflowTransition.setName(null);
 
 		Assert.assertEquals(
 			"Proceed",
 			defaultWorkflowTransition.getLabel(LocaleUtil.getSiteDefault()));
+
+		// Site default locale, label map
+
+		defaultWorkflowTransition.setLabelMap(
+			HashMapBuilder.put(
+				LocaleUtil.getSiteDefault(), "Business Rule Review"
+			).build());
+		defaultWorkflowTransition.setName("businessRuleReview");
+
+		Assert.assertEquals(
+			"Business Rule Review",
+			defaultWorkflowTransition.getLabel(LocaleUtil.BRAZIL));
 	}
 
 }

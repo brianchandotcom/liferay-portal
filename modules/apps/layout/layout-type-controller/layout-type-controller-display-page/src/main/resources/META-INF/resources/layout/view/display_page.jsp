@@ -38,12 +38,6 @@ String ppid = ParamUtil.getString(request, "p_p_id");
 		AssetRendererFactory<?> assetRendererFactory = displayPageLayoutTypeControllerDisplayContext.getAssetRendererFactory();
 		%>
 
-		<c:if test="<%= !displayPageLayoutTypeControllerDisplayContext.isDefaultDisplayPage() %>">
-			<liferay-util:html-top>
-				<meta content="noindex" name="robots" />
-			</liferay-util:html-top>
-		</c:if>
-
 		<c:if test="<%= assetRendererFactory != null %>">
 			<liferay-ui:success key='<%= assetRendererFactory.getPortletId() + "requestProcessed" %>' message="your-request-processed-successfully" />
 		</c:if>

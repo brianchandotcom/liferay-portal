@@ -22,9 +22,7 @@ import com.liferay.info.item.provider.InfoItemDetailsProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.item.provider.InfoItemPermissionProvider;
 import com.liferay.info.search.InfoSearchClassMapperRegistry;
-import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -164,13 +162,6 @@ public class DisplayPageLayoutTypeControllerDisplayContext {
 		}
 
 		return true;
-	}
-
-	public boolean isDefaultDisplayPage() {
-		return GetterUtil.getBoolean(
-			_httpServletRequest.getAttribute(
-				LayoutDisplayPageWebKeys.DEFAULT_LAYOUT_DISPLAY),
-			true);
 	}
 
 	public boolean isForbidden(HttpServletResponse httpServletResponse) {

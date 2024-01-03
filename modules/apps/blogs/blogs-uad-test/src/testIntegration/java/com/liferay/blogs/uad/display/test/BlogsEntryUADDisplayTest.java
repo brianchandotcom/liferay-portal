@@ -8,7 +8,7 @@ package com.liferay.blogs.uad.display.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
-import com.liferay.blogs.uad.test.BlogsEntryUADTestUtil;
+import com.liferay.blogs.uad.test.util.BlogsEntryUADTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;

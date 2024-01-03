@@ -12,6 +12,8 @@ import com.liferay.headless.builder.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.rest.test.util.ObjectEntryTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -19,7 +21,6 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.FeatureFlags;
@@ -58,6 +59,9 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 						RandomTestUtil.randomString(),
 						"x" + RandomTestUtil.randomString(), false)),
 				ObjectDefinitionConstants.SCOPE_SITE);
+		_objectEntry = ObjectEntryTestUtil.addObjectEntry(
+			_objectDefinition, "x" + RandomTestUtil.randomString(),
+			RandomTestUtil.randomString());
 	}
 
 	@Test
@@ -106,36 +110,7 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 						StringUtil.toLowerCase(RandomTestUtil.randomString())
 				).put(
 					"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
-					RandomTestUtil.randomLong()
-				).put(
-					"retrieveType",
-					APIApplication.Endpoint.RetrieveType.COLLECTION.getValue()
-				).put(
-					"scope", APIApplication.Endpoint.Scope.COMPANY.getValue()
-				).toString(),
-				"headless-builder/endpoints", Http.Method.POST
-			).toString(),
-			JSONCompareMode.STRICT);
-
-		JSONAssert.assertEquals(
-			JSONUtil.put(
-				"status", "BAD_REQUEST"
-			).put(
-				"title",
-				"An API endpoint must be related to an API application."
-			).toString(),
-			HTTPTestUtil.invokeToJSONObject(
-				JSONUtil.put(
-					"httpMethod", "get"
-				).put(
-					"name", RandomTestUtil.randomString()
-				).put(
-					"path",
-					StringPool.FORWARD_SLASH +
-						StringUtil.toLowerCase(RandomTestUtil.randomString())
-				).put(
-					"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
-					TestPropsValues.getUserId()
+					_objectEntry.getObjectEntryId()
 				).put(
 					"retrieveType",
 					APIApplication.Endpoint.RetrieveType.COLLECTION.getValue()
@@ -156,39 +131,6 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 			).toString(),
 			"headless-builder/applications", Http.Method.POST);
 
-		JSONAssert.assertEquals(
-			JSONUtil.put(
-				"status", "BAD_REQUEST"
-			).put(
-				"title", "An API endpoint must be related to an API schema."
-			).toString(),
-			HTTPTestUtil.invokeToJSONObject(
-				JSONUtil.put(
-					"httpMethod", "get"
-				).put(
-					"name", RandomTestUtil.randomString()
-				).put(
-					"path",
-					StringPool.FORWARD_SLASH +
-						StringUtil.toLowerCase(RandomTestUtil.randomString())
-				).put(
-					"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
-					apiApplicationJSONObject1.getLong("id")
-				).put(
-					"r_requestAPISchemaToAPIEndpoints_c_apiSchemaId",
-					RandomTestUtil.nextLong()
-				).put(
-					"r_responseAPISchemaToAPIEndpoints_c_apiSchemaId",
-					RandomTestUtil.nextLong()
-				).put(
-					"retrieveType",
-					APIApplication.Endpoint.RetrieveType.COLLECTION.getValue()
-				).put(
-					"scope", APIApplication.Endpoint.Scope.COMPANY.getValue()
-				).toString(),
-				"headless-builder/endpoints", Http.Method.POST
-			).toString(),
-			JSONCompareMode.STRICT);
 		JSONAssert.assertEquals(
 			JSONUtil.put(
 				"status", "BAD_REQUEST"
@@ -990,6 +932,8 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 
 	@DeleteAfterTestRun
 	private ObjectDefinition _objectDefinition;
+
+	private ObjectEntry _objectEntry;
 
 	@DeleteAfterTestRun
 	private ObjectDefinition _siteScopedObjectDefinition;

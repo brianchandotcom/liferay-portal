@@ -8,7 +8,7 @@ package com.liferay.bookmarks.uad.exporter.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.service.BookmarksFolderLocalService;
-import com.liferay.bookmarks.uad.test.BookmarksFolderUADTestUtil;
+import com.liferay.bookmarks.uad.test.util.BookmarksFolderUADTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;

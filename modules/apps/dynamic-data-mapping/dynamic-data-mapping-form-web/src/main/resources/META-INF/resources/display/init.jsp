@@ -31,6 +31,7 @@ page import="com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord" %><%@
 page import="com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion" %><%@
 page import="com.liferay.dynamic.data.mapping.service.DDMFormInstanceServiceUtil" %><%@
 page import="com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException" %><%@
+page import="com.liferay.object.exception.ObjectEntryCountException" %><%@
 page import="com.liferay.object.exception.ObjectEntryValuesException" %><%@
 page import="com.liferay.petra.string.StringBundler" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@

@@ -41,8 +41,7 @@ public class ObjectConfigurationModelListener
 
 			throw new ConfigurationModelListenerException(
 				ResourceBundleUtil.getString(
-					resourceBundle,
-					"the-duration-field-cannot-be-less-than-1"),
+					resourceBundle, "the-duration-field-cannot-be-less-than-1"),
 				ObjectConfiguration.class, getClass(), properties);
 
 		String timeScale = GetterUtil.getString(properties.get("timeScale"));

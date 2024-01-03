@@ -179,6 +179,15 @@ boolean limitToOneSubmissionPerUser = DDMFormInstanceSubmissionLimitStatusUtil.i
 						<liferay-ui:error exception="<%= ObjectEntryValuesException.ExceedsLongMinSize.class %>" message="object-entry-value-falls-below-minimum-long-field-allowed-size" />
 						<liferay-ui:error exception="<%= ObjectEntryValuesException.ExceedsLongSize.class %>" message="object-entry-value-exceeds-long-field-allowed-size" />
 
+						<liferay-ui:error exception="<%= ObjectEntryCountException.class %>">
+
+							<%
+							ObjectEntryCountException oece = (ObjectEntryCountException)errorException;
+							%>
+
+							<liferay-ui:message arguments="<%= oece.getObjectDefinitionLabel() %>" key="the-limit-of-guest-entries-for-object-definition-has-been-reached-and-will-no-longer-be-accepted" translateArguments="<%= false %>" />
+						</liferay-ui:error>
+
 						<liferay-ui:error exception="<%= ObjectEntryValuesException.ExceedsTextMaxLength.class %>">
 
 							<%

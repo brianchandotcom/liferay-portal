@@ -670,7 +670,7 @@ public class ObjectEntryServiceTest {
 				"timeScale", "days"
 			).build());
 
-		_addPermissionsToGuestUser();
+		_addPermissionToGuestUser();
 
 		try {
 			Assert.assertNotNull(
@@ -731,49 +731,12 @@ public class ObjectEntryServiceTest {
 					ServiceContextTestUtil.getServiceContext(
 						TestPropsValues.getGroupId(), _guestUser.getUserId())));
 
-			_checkUserNotificationEvent();
+			_assertUserNotificationEventsCount();
 		}
 		finally {
 			_configurationProvider.deleteCompanyConfiguration(
 				ObjectConfiguration.class, TestPropsValues.getCompanyId());
 		}
-	}
-
-	private void _checkUserNotificationEvent() throws PortalException {
-		String portletId =
-			_objectDefinition.isUnmodifiableSystemObject() ?
-				StringPool.BLANK : _objectDefinition.getPortletId();
-
-		Role role = _roleLocalService.getRole(
-			_objectDefinition.getCompanyId(), RoleConstants.ADMINISTRATOR);
-
-		long[] userIds = _userLocalService.getRoleUserIds(role.getRoleId());
-
-		for (long userId : userIds) {
-			int count =
-				_userNotificationLocalService.
-					getUserNotificationEventsCount(
-						userId, portletId,
-						LocalDate.now(
-						).atStartOfDay(
-							ZoneId.systemDefault()
-						).toInstant(
-						).getEpochSecond(),
-						true);
-
-			Assert.assertTrue(count > 0);
-		}
-	}
-
-	private void _addPermissionsToGuestUser() throws PortalException {
-		Role guestRole = _roleLocalService.getRole(
-			TestPropsValues.getCompanyId(), RoleConstants.GUEST);
-
-		_resourcePermissionLocalService.addResourcePermission(
-			TestPropsValues.getCompanyId(), _objectDefinition.getResourceName(),
-			ResourceConstants.SCOPE_COMPANY,
-			String.valueOf(TestPropsValues.getCompanyId()),
-			guestRole.getRoleId(), ObjectActionKeys.ADD_OBJECT_ENTRY);
 	}
 
 	@Test
@@ -794,7 +757,7 @@ public class ObjectEntryServiceTest {
 				"timeScale", "days"
 			).build());
 
-		_addPermissionsToGuestUser();
+		_addPermissionToGuestUser();
 
 		ObjectEntry objectEntry = _objectEntryService.addObjectEntry(
 			0, _objectDefinition.getObjectDefinitionId(),
@@ -834,7 +797,7 @@ public class ObjectEntryServiceTest {
 					ServiceContextTestUtil.getServiceContext(
 						TestPropsValues.getGroupId(), _guestUser.getUserId())));
 
-			_checkUserNotificationEvent();
+			_assertUserNotificationEventsCount();
 		}
 		finally {
 			_configurationProvider.deleteCompanyConfiguration(
@@ -860,7 +823,7 @@ public class ObjectEntryServiceTest {
 				"timeScale", "weeks"
 			).build());
 
-		_addPermissionsToGuestUser();
+		_addPermissionToGuestUser();
 
 		ObjectEntry objectEntry = _objectEntryService.addObjectEntry(
 			0, _objectDefinition.getObjectDefinitionId(),
@@ -900,7 +863,7 @@ public class ObjectEntryServiceTest {
 					ServiceContextTestUtil.getServiceContext(
 						TestPropsValues.getGroupId(), _guestUser.getUserId())));
 
-			_checkUserNotificationEvent();
+			_assertUserNotificationEventsCount();
 		}
 		finally {
 			_configurationProvider.deleteCompanyConfiguration(
@@ -926,7 +889,7 @@ public class ObjectEntryServiceTest {
 				"timeScale", "weeks"
 			).build());
 
-		_addPermissionsToGuestUser();
+		_addPermissionToGuestUser();
 
 		ObjectEntry objectEntry = _objectEntryService.addObjectEntry(
 			0, _objectDefinition.getObjectDefinitionId(),
@@ -966,7 +929,7 @@ public class ObjectEntryServiceTest {
 					ServiceContextTestUtil.getServiceContext(
 						TestPropsValues.getGroupId(), _guestUser.getUserId())));
 
-			_checkUserNotificationEvent();
+			_assertUserNotificationEventsCount();
 		}
 		finally {
 			_configurationProvider.deleteCompanyConfiguration(
@@ -984,6 +947,42 @@ public class ObjectEntryServiceTest {
 			).build(),
 			ServiceContextTestUtil.getServiceContext(
 				TestPropsValues.getGroupId(), user.getUserId()));
+	}
+
+	private void _addPermissionToGuestUser() throws Exception {
+		Role guestRole = _roleLocalService.getRole(
+			TestPropsValues.getCompanyId(), RoleConstants.GUEST);
+
+		_resourcePermissionLocalService.addResourcePermission(
+			TestPropsValues.getCompanyId(), _objectDefinition.getResourceName(),
+			ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(TestPropsValues.getCompanyId()),
+			guestRole.getRoleId(), ObjectActionKeys.ADD_OBJECT_ENTRY);
+	}
+
+	private void _assertUserNotificationEventsCount() throws PortalException {
+		String portletId =
+			_objectDefinition.isUnmodifiableSystemObject() ? StringPool.BLANK :
+				_objectDefinition.getPortletId();
+
+		Role role = _roleLocalService.getRole(
+			_objectDefinition.getCompanyId(), RoleConstants.ADMINISTRATOR);
+
+		long[] userIds = _userLocalService.getRoleUserIds(role.getRoleId());
+
+		for (long userId : userIds) {
+			int count =
+				_userNotificationLocalService.getUserNotificationEventsCount(
+					userId, portletId,
+					LocalDate.now(
+					).atStartOfDay(
+						ZoneId.systemDefault()
+					).toInstant(
+					).getEpochSecond(),
+					true);
+
+			Assert.assertTrue(count > 0);
+		}
 	}
 
 	private void _setUser(User user) throws Exception {

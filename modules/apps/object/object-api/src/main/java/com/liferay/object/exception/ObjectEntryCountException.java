@@ -18,12 +18,14 @@ public class ObjectEntryCountException extends PortalException {
 	}
 
 	public ObjectEntryCountException(
-		List<Object> arguments, String message, String messageKey) {
+		List<Object> arguments, String message, String messageKey,
+		String objectDefinitionLabel) {
 
 		super(message);
 
 		_arguments = arguments;
 		_messageKey = messageKey;
+		_objectDefinitionLabel = objectDefinitionLabel;
 	}
 
 	public ObjectEntryCountException(String message) {
@@ -46,7 +48,12 @@ public class ObjectEntryCountException extends PortalException {
 		return _messageKey;
 	}
 
+	public String getObjectDefinitionLabel() {
+		return _objectDefinitionLabel;
+	}
+
 	private List<Object> _arguments;
 	private String _messageKey;
+	private String _objectDefinitionLabel;
 
 }

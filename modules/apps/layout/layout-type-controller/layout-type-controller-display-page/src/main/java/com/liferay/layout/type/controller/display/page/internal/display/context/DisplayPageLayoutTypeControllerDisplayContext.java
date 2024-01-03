@@ -5,7 +5,6 @@
 
 package com.liferay.layout.type.controller.display.page.internal.display.context;
 
-import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
@@ -35,18 +34,12 @@ import javax.servlet.http.HttpServletResponse;
 public class DisplayPageLayoutTypeControllerDisplayContext {
 
 	public DisplayPageLayoutTypeControllerDisplayContext(
-			AssetDisplayPageFriendlyURLProvider
-				assetDisplayPageFriendlyURLProvider,
 			HttpServletRequest httpServletRequest,
 			InfoItemServiceRegistry infoItemServiceRegistry,
 			InfoSearchClassMapperRegistry infoSearchClassMapperRegistry)
 		throws Exception {
 
-		_assetDisplayPageFriendlyURLProvider =
-			assetDisplayPageFriendlyURLProvider;
-		_httpServletRequest = httpServletRequest;
 		_infoItemServiceRegistry = infoItemServiceRegistry;
-		_infoSearchClassMapperRegistry = infoSearchClassMapperRegistry;
 
 		long assetEntryId = ParamUtil.getLong(
 			httpServletRequest, "assetEntryId");
@@ -174,12 +167,8 @@ public class DisplayPageLayoutTypeControllerDisplayContext {
 		return false;
 	}
 
-	private final AssetDisplayPageFriendlyURLProvider
-		_assetDisplayPageFriendlyURLProvider;
-	private final HttpServletRequest _httpServletRequest;
 	private final Object _infoItem;
 	private final InfoItemDetails _infoItemDetails;
 	private final InfoItemServiceRegistry _infoItemServiceRegistry;
-	private final InfoSearchClassMapperRegistry _infoSearchClassMapperRegistry;
 
 }

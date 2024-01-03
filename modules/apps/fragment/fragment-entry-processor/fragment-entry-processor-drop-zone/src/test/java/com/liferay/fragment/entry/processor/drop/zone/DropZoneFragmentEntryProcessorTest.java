@@ -313,24 +313,28 @@ public class DropZoneFragmentEntryProcessorTest {
 		String dropZoneId = RandomTestUtil.randomString();
 
 		_dropZoneFragmentEntryValidator.validateFragmentEntryHTML(
-			FragmentEntryProcessorDropZoneTestUtil.getHTML(
-				dropZoneId, dropZoneId),
+			_getDocument(
+				FragmentEntryProcessorDropZoneTestUtil.getHTML(
+					dropZoneId, dropZoneId)),
 			null, LocaleUtil.getDefault());
 	}
 
 	@Test(expected = FragmentEntryContentException.class)
 	public void testValidateFragmentEntryHTMLMissingId() throws Exception {
 		_dropZoneFragmentEntryValidator.validateFragmentEntryHTML(
-			FragmentEntryProcessorDropZoneTestUtil.getHTML(
-				StringPool.BLANK, RandomTestUtil.randomString()),
+			_getDocument(
+				FragmentEntryProcessorDropZoneTestUtil.getHTML(
+					StringPool.BLANK, RandomTestUtil.randomString())),
 			null, LocaleUtil.getDefault());
 	}
 
 	@Test
 	public void testValidateFragmentEntryHTMLValidWithIds() throws Exception {
 		_dropZoneFragmentEntryValidator.validateFragmentEntryHTML(
-			FragmentEntryProcessorDropZoneTestUtil.getHTML(
-				RandomTestUtil.randomString(), RandomTestUtil.randomString()),
+			_getDocument(
+				FragmentEntryProcessorDropZoneTestUtil.getHTML(
+					RandomTestUtil.randomString(),
+					RandomTestUtil.randomString())),
 			null, LocaleUtil.getDefault());
 	}
 
@@ -339,8 +343,9 @@ public class DropZoneFragmentEntryProcessorTest {
 		throws Exception {
 
 		_dropZoneFragmentEntryValidator.validateFragmentEntryHTML(
-			FragmentEntryProcessorDropZoneTestUtil.getHTML(
-				StringPool.BLANK, StringPool.BLANK),
+			_getDocument(
+				FragmentEntryProcessorDropZoneTestUtil.getHTML(
+					StringPool.BLANK, StringPool.BLANK)),
 			null, LocaleUtil.getDefault());
 	}
 

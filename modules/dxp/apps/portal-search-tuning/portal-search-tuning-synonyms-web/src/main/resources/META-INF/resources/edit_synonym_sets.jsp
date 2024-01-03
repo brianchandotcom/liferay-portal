@@ -24,6 +24,7 @@ EditSynonymSetsDisplayContext editSynonymSetsDisplayContext = (EditSynonymSetsDi
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(editSynonymSetsDisplayContext.getBackURL());
+portletDisplay.setURLBackTitle(portletDisplay.getPortletDisplayName());
 %>
 
 <portlet:actionURL name="/synonyms/edit_synonym_sets" var="editSynonymSetURL">

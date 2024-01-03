@@ -217,6 +217,10 @@ definition {
 			var previousDay = ${displayDateDay} - 1;
 			var previousMonth = DateUtil.getFormattedDate("-1", "MMMM");
 
+			if (${previousMonth} == "December") {
+				var displayDateYear = DateUtil.getFormattedDate("-1", "yyyy");
+			}
+
 			var previousDate = "${previousMonth} ${previousDay}, ${displayDateYear}";
 		}
 

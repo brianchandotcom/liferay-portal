@@ -113,12 +113,6 @@ public interface JournalServiceConfiguration {
 	public String journalArticlePageBreakToken();
 
 	@Meta.AD(
-		deflt = "json", description = "journal-article-storage-type-help",
-		name = "journal-article-storage-type", required = false
-	)
-	public String journalArticleStorageType();
-
-	@Meta.AD(
 		deflt = "0", name = "journal-article-max-version-count",
 		required = false
 	)

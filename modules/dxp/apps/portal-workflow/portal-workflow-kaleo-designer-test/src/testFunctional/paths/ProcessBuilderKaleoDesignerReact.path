@@ -96,7 +96,7 @@
 </tr>
 <tr>
 	<td>TRANSLATION_DROPDOWN</td>
-	<td>//div[@class='dropdown-menu show']</td>
+	<td>//div[contains(@class, 'dropdown-menu')][contains(@class, 'show')]</td>
 	<td></td>
 </tr>
 <tr>

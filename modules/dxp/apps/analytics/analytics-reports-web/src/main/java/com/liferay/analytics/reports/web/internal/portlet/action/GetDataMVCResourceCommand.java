@@ -609,10 +609,6 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 					).build();
 
 	@Reference
-	private AnalyticsReportsInfoItemObjectProvider
-		_analyticsReportsInfoItemObjectProvider;
-
-	@Reference
 	private AnalyticsReportsInfoItemRegistry _analyticsReportsInfoItemRegistry;
 
 	@Reference

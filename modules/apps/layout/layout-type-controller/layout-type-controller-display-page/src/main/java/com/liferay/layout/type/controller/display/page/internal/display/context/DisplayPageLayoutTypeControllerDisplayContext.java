@@ -23,14 +23,9 @@ import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.item.provider.InfoItemPermissionProvider;
 import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.servlet.http.HttpServletRequest;
@@ -119,70 +114,6 @@ public class DisplayPageLayoutTypeControllerDisplayContext {
 			getAssetRendererFactoryByClassName(_infoItemDetails.getClassName());
 	}
 
-	public String getCanonicalURL() {
-		InfoItemDetails infoItemDetails =
-			(InfoItemDetails)_httpServletRequest.getAttribute(
-				InfoDisplayWebKeys.INFO_ITEM_DETAILS);
-
-		if (infoItemDetails == null) {
-			return StringPool.BLANK;
-		}
-
-		try {
-			AssetRendererFactory<?> assetRendererFactory =
-				AssetRendererFactoryRegistryUtil.
-					getAssetRendererFactoryByClassName(
-						_infoSearchClassMapperRegistry.getSearchClassName(
-							infoItemDetails.getClassName()));
-
-			InfoItemReference infoItemReference =
-				infoItemDetails.getInfoItemReference();
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)_httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			if (assetRendererFactory == null) {
-				return _assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-					infoItemReference, themeDisplay);
-			}
-
-			AssetRenderer<?> assetRenderer = null;
-
-			if (infoItemReference.getInfoItemIdentifier() instanceof
-					ClassPKInfoItemIdentifier) {
-
-				ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
-					(ClassPKInfoItemIdentifier)
-						infoItemReference.getInfoItemIdentifier();
-
-				assetRenderer = assetRendererFactory.getAssetRenderer(
-					classPKInfoItemIdentifier.getClassPK());
-			}
-
-			if (assetRenderer == null) {
-				return _assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-					infoItemReference, themeDisplay);
-			}
-
-			String viewInContextURL = assetRenderer.getURLViewInContext(
-				themeDisplay, StringPool.BLANK);
-
-			if (Validator.isNotNull(viewInContextURL)) {
-				return viewInContextURL;
-			}
-
-			return _assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-				infoItemReference, themeDisplay);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-		}
-
-		return StringPool.BLANK;
-	}
-
 	public boolean hasInfoItem() {
 		if ((_infoItem != null) && (_infoItemDetails != null)) {
 			return true;
@@ -251,9 +182,6 @@ public class DisplayPageLayoutTypeControllerDisplayContext {
 
 		return false;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		DisplayPageLayoutTypeControllerDisplayContext.class);
 
 	private final AssetDisplayPageFriendlyURLProvider
 		_assetDisplayPageFriendlyURLProvider;

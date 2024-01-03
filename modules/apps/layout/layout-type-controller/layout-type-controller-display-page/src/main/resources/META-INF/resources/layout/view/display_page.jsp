@@ -40,15 +40,6 @@ String ppid = ParamUtil.getString(request, "p_p_id");
 
 		<c:if test="<%= !displayPageLayoutTypeControllerDisplayContext.isDefaultDisplayPage() %>">
 			<liferay-util:html-top>
-
-				<%
-				String canonicalURL = displayPageLayoutTypeControllerDisplayContext.getCanonicalURL();
-				%>
-
-				<c:if test="<%= Validator.isNotNull(canonicalURL) %>">
-					<link href="<%= canonicalURL %>" rel="canonical" />
-				</c:if>
-
 				<meta content="noindex" name="robots" />
 			</liferay-util:html-top>
 		</c:if>

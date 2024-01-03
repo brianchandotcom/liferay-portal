@@ -691,8 +691,9 @@ public class ObjectEntryServiceTest {
 		AssertUtils.assertFailure(
 			ObjectEntryCountException.class,
 			StringBundler.concat(
-				"The limit of guest entries for ", _objectDefinition.getLabel(),
-				" has been reached and will no longer be accepted"),
+				"The limit of guest entries for ", _objectDefinition.getLabel(
+					_objectDefinition.getDefaultLanguageId()),
+				" has been reached and will no longer be accepted."),
 			() -> _objectEntryService.addObjectEntry(
 				0, _objectDefinition.getObjectDefinitionId(),
 				Collections.emptyMap(),
@@ -795,8 +796,9 @@ public class ObjectEntryServiceTest {
 		AssertUtils.assertFailure(
 			ObjectEntryCountException.class,
 			StringBundler.concat(
-				"The limit of guest entries for ", _objectDefinition.getLabel(),
-				" has been reached and will no longer be accepted"),
+				"The limit of guest entries for ", _objectDefinition.getLabel(
+					_objectDefinition.getDefaultLanguageId()),
+				" has been reached and will no longer be accepted."),
 			() -> _objectEntryService.addObjectEntry(
 				0, _objectDefinition.getObjectDefinitionId(),
 				Collections.emptyMap(),

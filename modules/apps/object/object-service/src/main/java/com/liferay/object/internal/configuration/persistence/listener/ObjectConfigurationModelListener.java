@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -10,6 +10,7 @@ import com.liferay.portal.configuration.persistence.listener.ConfigurationModelL
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Dictionary;
@@ -35,14 +36,13 @@ public class ObjectConfigurationModelListener
 		long duration = GetterUtil.getLong(properties.get("duration"));
 
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", LocaleThreadLocal.getThemeDisplayLocale(),
-			getClass());
+			"content.Language", LocaleUtil.getMostRelevantLocale(), getClass());
 
 		if (duration < 1)
 
 			throw new ConfigurationModelListenerException(
 				ResourceBundleUtil.getString(
-					resourceBundle, "duration-field-cannot-be-lesser-than-1"),
+					resourceBundle, "the-duration-field-cannot-be-less-than-1"),
 				ObjectConfiguration.class, getClass(), properties);
 
 		String timeScale = GetterUtil.getString(properties.get("timeScale"));
@@ -52,7 +52,7 @@ public class ObjectConfigurationModelListener
 
 			throw new ConfigurationModelListenerException(
 				ResourceBundleUtil.getString(
-					resourceBundle, "value-for-timescale-field-is-not-valid"),
+					resourceBundle, "the-time-scale-is-not-valid"),
 				ObjectConfiguration.class, getClass(), properties);
 		}
 	}

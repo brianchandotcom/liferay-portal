@@ -1,0 +1,42 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": false,
+					"description": "Loud",
+					"label": "Loud",
+					"name": "loud",
+					"type": "checkbox"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": false,
+					"description": "Label",
+					"label": "Label",
+					"name": "label",
+					"type": "checkbox"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "",
+					"description": "url",
+					"label": "url",
+					"localizable": true,
+					"name": "url",
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": false,
+					"description": "Open in a new tab",
+					"label": "Open in a new tab.",
+					"name": "newTab",
+					"type": "checkbox"
+				}
+			],
+			"label": "configuration"
+		}
+	]
+}

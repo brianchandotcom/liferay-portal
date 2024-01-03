@@ -48,7 +48,7 @@ public class UpgradeJavaBasePanelAppExtendedClassesCheck
 	}
 
 	private static final Pattern _setPortletPattern = Pattern.compile(
-		"@Override\\s*(@Reference\\(\\s*.+\\s*\\)+\")[\\s+\\S+]+" +
+		"(?:@Override\\s*|)(@Reference\\(\\s*.+\\s*\\)+\")[\\s+\\S+]+" +
 			"setPortlet[\\s+\\S+]+;");
 
 }

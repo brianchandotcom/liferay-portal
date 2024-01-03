@@ -120,6 +120,13 @@
 									<div class="create-account-settings">
 										[#if themeDisplay.isSignedIn()]
 											<div class="signed-in-account">
+												<a class="d-flex p-3 settings text-decoration-none">
+													<span class="pr-2">[@clay["icon"] symbol="cog"/]</span>
+													<span class="account-settings">
+														${languageUtil.get(locale, "account-settings", "Account Settings")}
+													</span>
+												</a>
+
 												<a class="d-flex p-3 sign-out text-decoration-none" href="${htmlUtil.escape(themeDisplay.getURLSignOut())}">
 													<span class="pr-2 sign-out-icon opacity-70">[@clay["icon"] symbol="logout"/]</span>
 													<span>
@@ -158,7 +165,7 @@
 
 			[#if configuration.showSiteName]
 			<div class="display-4 logo-text pl-3 text-decoration-none" data-lfr-editable-id="siteName" data-lfr-editable-type="text">
-					Liferay
+					Learn
 				</div>
 			[/#if]
 		</a>
@@ -321,8 +328,8 @@
 	</header>
 
 	<div class="search-wrapper">
-		<form class="mb-5 search" id="siteSearch" name="siteSearch">
-			<input class="search-input search-suggestions-input w-100" id="searchInput" placeholder="${languageUtil.get(locale, 'search')}" type="text" />
+		<form action="/search" class="mb-5 search" id="siteSearch" name="siteSearch">
+			<input class="search-input search-suggestions-input w-100" id="searchInput" name="q" placeholder="${languageUtil.get(locale, 'search')}" type="text" />
 
 			<a class="search-submit" href="/search" id="searchSubmitBtn" type="submit">
 				<span>[@clay["icon"] symbol="search"/]

@@ -34,6 +34,8 @@ import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ClassUtil;
+import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.Validator;
@@ -304,44 +306,49 @@ public class RuntimeTag extends TagSupport implements DirectTag {
 			PortletRenderParts portletRenderParts = null;
 
 			boolean writeObject = false;
+			String layoutMode = ParamUtil.getString(
+				httpServletRequest, "p_l_mode", Constants.VIEW);
 
-			if (persistSettings &&
-				!layout.isPortletEmbedded(
-					portlet.getPortletId(), layout.getGroupId())) {
+			if (layoutMode.equals(Constants.VIEW)) {
+				if (persistSettings &&
+					!layout.isPortletEmbedded(
+						portlet.getPortletId(), layout.getGroupId())) {
 
-				PortletPreferencesFactoryUtil.getLayoutPortletSetup(
-					themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
-					PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
-					PortletKeys.PREFS_PLID_SHARED, portletInstanceKey,
-					defaultPreferences);
-
-				writeObject = true;
-			}
-
-			if (persistSettings) {
-				long count =
-					PortletPreferencesLocalServiceUtil.
-						getPortletPreferencesCount(
-							PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
-							themeDisplay.getPlid(), portletInstanceKey);
-
-				if (count < 1) {
 					PortletPreferencesFactoryUtil.getLayoutPortletSetup(
-						layout, portletInstanceKey, defaultPreferences);
-
-					PortletPreferencesFactoryUtil.getPortletSetup(
-						httpServletRequest, portletInstanceKey,
+						themeDisplay.getCompanyId(),
+						themeDisplay.getScopeGroupId(),
+						PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
+						PortletKeys.PREFS_PLID_SHARED, portletInstanceKey,
 						defaultPreferences);
 
-					PortletLayoutListener portletLayoutListener =
-						portlet.getPortletLayoutListenerInstance();
-
-					if (portletLayoutListener != null) {
-						portletLayoutListener.onAddToLayout(
-							portletInstanceKey, themeDisplay.getPlid());
-					}
-
 					writeObject = true;
+				}
+
+				if (persistSettings) {
+					long count =
+						PortletPreferencesLocalServiceUtil.
+							getPortletPreferencesCount(
+								PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
+								themeDisplay.getPlid(), portletInstanceKey);
+
+					if (count < 1) {
+						PortletPreferencesFactoryUtil.getLayoutPortletSetup(
+							layout, portletInstanceKey, defaultPreferences);
+
+						PortletPreferencesFactoryUtil.getPortletSetup(
+							httpServletRequest, portletInstanceKey,
+							defaultPreferences);
+
+						PortletLayoutListener portletLayoutListener =
+							portlet.getPortletLayoutListenerInstance();
+
+						if (portletLayoutListener != null) {
+							portletLayoutListener.onAddToLayout(
+								portletInstanceKey, themeDisplay.getPlid());
+						}
+
+						writeObject = true;
+					}
 				}
 			}
 

@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.PortletPreferenceValueLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
@@ -122,29 +123,46 @@ public class PortletDocumentFragmentEntryProcessor
 
 			String defaultPreferences = portlet.getDefaultPreferences();
 
+			String layoutMode = ParamUtil.getString(
+				fragmentEntryProcessorContext.getHttpServletRequest(),
+				"p_l_mode", Constants.VIEW);
+
 			boolean stagingAdvicesThreadLocalEnabled =
 				StagingAdvicesThreadLocal.isEnabled();
 
 			try {
 				StagingAdvicesThreadLocal.setEnabled(false);
 
-				defaultPreferences = _getPreferences(
-					plid, portletName, fragmentEntryLink, id,
-					portlet.getDefaultPreferences());
+				if (layoutMode.equals(Constants.VIEW)) {
+					defaultPreferences = _getPreferences(
+						plid, portletName, fragmentEntryLink, id,
+						portlet.getDefaultPreferences());
+				}
 			}
 			finally {
 				StagingAdvicesThreadLocal.setEnabled(
 					stagingAdvicesThreadLocalEnabled);
 			}
 
-			String portletHTML = _fragmentPortletRenderer.renderPortlet(
-				fragmentEntryLink,
-				fragmentEntryProcessorContext.getHttpServletRequest(),
-				fragmentEntryProcessorContext.getHttpServletResponse(),
-				portletName, instanceId,
-				_getPreferences(
-					plid, portletName, fragmentEntryLink, id,
-					defaultPreferences));
+			String portletHTML = StringPool.BLANK;
+
+			if (layoutMode.equals(Constants.VIEW)) {
+				portletHTML = _fragmentPortletRenderer.renderPortlet(
+					fragmentEntryLink,
+					fragmentEntryProcessorContext.getHttpServletRequest(),
+					fragmentEntryProcessorContext.getHttpServletResponse(),
+					portletName, instanceId,
+					_getPreferences(
+						plid, portletName, fragmentEntryLink, id,
+						defaultPreferences));
+			}
+			else {
+				portletHTML = _fragmentPortletRenderer.renderPortlet(
+					fragmentEntryLink,
+					fragmentEntryProcessorContext.getHttpServletRequest(),
+					fragmentEntryProcessorContext.getHttpServletResponse(),
+					portletName, instanceId, defaultPreferences);
+			}
 
 			Element portletElement = new Element("div");
 

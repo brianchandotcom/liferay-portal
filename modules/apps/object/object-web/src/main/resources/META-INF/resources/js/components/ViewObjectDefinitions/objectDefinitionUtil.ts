@@ -22,6 +22,7 @@ type DeleteObjectDefinitionProps = {
 	handleShowDeleteObjectDefinitionModal: () => void;
 	objectDefinitionId: number;
 	objectDefinitionName: string;
+	onAfterDeleteObjectDefinition?: () => void;
 };
 
 type ObjectDefinitionNodeActionsProps = {
@@ -75,6 +76,7 @@ export async function deleteObjectDefinition({
 	handleShowDeleteObjectDefinitionModal,
 	objectDefinitionId,
 	objectDefinitionName,
+	onAfterDeleteObjectDefinition,
 }: DeleteObjectDefinitionProps) {
 	const url = createResourceURL(baseResourceURL, {
 		objectDefinitionId,
@@ -97,7 +99,16 @@ export async function deleteObjectDefinition({
 			objectDefinitionId,
 			objectDefinitionName
 		);
-		setTimeout(() => window.location.reload(), 1000);
+
+		if (
+			Liferay.FeatureFlags['LPS-148856'] &&
+			onAfterDeleteObjectDefinition
+		) {
+			onAfterDeleteObjectDefinition();
+		}
+		else {
+			setTimeout(() => window.location.reload(), 1000);
+		}
 
 		return;
 	}

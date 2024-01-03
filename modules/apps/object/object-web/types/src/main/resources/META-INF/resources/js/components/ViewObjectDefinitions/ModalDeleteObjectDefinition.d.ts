@@ -11,10 +11,12 @@ interface ModalDeleteObjectDefinitionProps {
 	) => void;
 	handleOnClose: () => void;
 	objectDefinition: DeletedObjectDefinition;
+	onAfterDeleteObjectDefinition?: () => void;
 }
 export declare function ModalDeleteObjectDefinition({
 	handleDeleteObjectDefinition,
 	handleOnClose,
 	objectDefinition,
+	onAfterDeleteObjectDefinition,
 }: ModalDeleteObjectDefinitionProps): JSX.Element;
 export {};

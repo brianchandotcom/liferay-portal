@@ -12,6 +12,7 @@ declare type DeleteObjectDefinitionProps = {
 	handleShowDeleteObjectDefinitionModal: () => void;
 	objectDefinitionId: number;
 	objectDefinitionName: string;
+	onAfterDeleteObjectDefinition?: () => void;
 };
 declare type ObjectDefinitionNodeActionsProps = {
 	baseResourceURL: string;
@@ -44,6 +45,7 @@ export declare function deleteObjectDefinition({
 	handleShowDeleteObjectDefinitionModal,
 	objectDefinitionId,
 	objectDefinitionName,
+	onAfterDeleteObjectDefinition,
 }: DeleteObjectDefinitionProps): Promise<void>;
 export declare function deleteRelationship(
 	id: number,

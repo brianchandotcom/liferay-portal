@@ -242,6 +242,7 @@ export default function ViewObjectDefinitions({
 					handleShowDeleteObjectDefinitionModal,
 					objectDefinitionId: itemData.id,
 					objectDefinitionName: itemData.name,
+					onAfterDeleteObjectDefinition: () => setReloadFDS(true),
 				});
 			}
 
@@ -549,6 +550,7 @@ export default function ViewObjectDefinitions({
 					objectDefinition={
 						deletedObjectDefinition as DeletedObjectDefinition
 					}
+					onAfterDeleteObjectDefinition={() => setReloadFDS(true)}
 				/>
 			)}
 

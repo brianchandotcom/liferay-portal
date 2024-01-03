@@ -17,12 +17,14 @@ interface ModalDeleteObjectDefinitionProps {
 	) => void;
 	handleOnClose: () => void;
 	objectDefinition: DeletedObjectDefinition;
+	onAfterDeleteObjectDefinition?: () => void;
 }
 
 export function ModalDeleteObjectDefinition({
 	handleDeleteObjectDefinition,
 	handleOnClose,
 	objectDefinition,
+	onAfterDeleteObjectDefinition,
 }: ModalDeleteObjectDefinitionProps) {
 	const {observer, onClose} = useModal({
 		onClose: () => {
@@ -76,7 +78,17 @@ export function ModalDeleteObjectDefinition({
 							objectDefinition?.id,
 							objectDefinition?.name
 						);
-						setTimeout(() => window.location.reload(), 1500);
+
+						if (
+							Liferay.FeatureFlags['LPS-148856'] &&
+							onAfterDeleteObjectDefinition
+						) {
+							onAfterDeleteObjectDefinition();
+						}
+						else {
+							setTimeout(() => window.location.reload(), 1500);
+						}
+
 						onClose();
 					}}
 					placeholder={Liferay.Language.get(

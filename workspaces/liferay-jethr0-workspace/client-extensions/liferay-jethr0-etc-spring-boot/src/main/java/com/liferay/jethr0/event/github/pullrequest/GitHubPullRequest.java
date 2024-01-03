@@ -278,6 +278,37 @@ public class GitHubPullRequest {
 		gitHubClient.requestPut(getIssueLockURL(), null);
 	}
 
+	public void open() {
+		JSONObject requestJSONObject = new JSONObject();
+
+		requestJSONObject.put("state", "open");
+
+		GitHubClient gitHubClient = getGitHubClient();
+
+		String response = gitHubClient.requestPatch(
+			getAPIURL(), requestJSONObject);
+
+		JSONObject responseJSONObject = new JSONObject(response);
+
+		JSONArray errorsJSONArray = responseJSONObject.optJSONArray("errors");
+
+		if ((errorsJSONArray == null) || errorsJSONArray.isEmpty()) {
+			return;
+		}
+
+		for (int i = 0; i < errorsJSONArray.length(); i++) {
+			JSONObject errorJSONObject = errorsJSONArray.getJSONObject(i);
+
+			String message = errorJSONObject.optString("message");
+
+			if (StringUtil.isNullOrEmpty(message)) {
+				continue;
+			}
+
+			comment("GitHub error message: " + message);
+		}
+	}
+
 	private static final Pattern _completedTestSuiteStatusPattern =
 		Pattern.compile(
 			"\"ci:test:(?<testSuite>[^\"]+)\"\\s*has (FAILED|PASSED).");

@@ -8,7 +8,7 @@ package com.liferay.asset.list.change.tracking.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryUsageLocalService;
-import com.liferay.asset.list.util.AssetListTestUtil;
+import com.liferay.asset.list.test.util.AssetListTestUtil;
 import com.liferay.change.tracking.test.util.BaseTableReferenceDefinitionTestCase;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.kernel.model.Layout;

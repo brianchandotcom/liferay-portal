@@ -13,7 +13,7 @@ import com.liferay.asset.list.exception.DuplicateAssetListEntryTitleException;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryAssetEntryRelLocalService;
 import com.liferay.asset.list.service.AssetListEntryService;
-import com.liferay.asset.list.util.AssetListTestUtil;
+import com.liferay.asset.list.test.util.AssetListTestUtil;
 import com.liferay.asset.list.util.comparator.AssetListEntryCreateDateComparator;
 import com.liferay.asset.list.util.comparator.AssetListEntryTitleComparator;
 import com.liferay.asset.test.util.AssetTestUtil;

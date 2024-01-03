@@ -1,0 +1,25 @@
+[#assign tagMap = {
+	"span": "span",
+	"div": "div",
+	"h1": "h1",
+	"h2": "h2",
+	"h3": "h3",
+	"h4": "h4",
+	"h5": "h5",
+	"h6": "h6",
+	"p": "p"
+}]
+  
+[#assign htmlTag = tagMap[configuration.tag]]
+
+<${htmlTag}
+	data-lfr-editable-type="rich-text"
+	data-lfr-editable-id="f-text"
+	class="
+	  f-text
+	  ${configuration.size}
+	"
+	style="color: ${configuration.color}; font-weight: ${configuration.fontWeight}; margin: 0;"
+	>
+	  Text
+</${htmlTag}>

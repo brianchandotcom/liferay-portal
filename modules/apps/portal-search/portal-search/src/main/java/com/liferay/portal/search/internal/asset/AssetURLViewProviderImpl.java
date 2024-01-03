@@ -13,6 +13,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
@@ -90,8 +91,12 @@ public class AssetURLViewProviderImpl implements AssetURLViewProvider {
 				(ThemeDisplay)liferayPortletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
-			return HttpComponentsUtil.setParameter(
-				viewURL, "p_l_back_url", themeDisplay.getURLCurrent());
+			Layout previousLayout = themeDisplay.getLayout();
+
+			return HttpComponentsUtil.addParameters(
+				viewURL, "p_l_back_url", themeDisplay.getURLCurrent(),
+				"p_l_back_url_title",
+				previousLayout.getName(themeDisplay.getLocale()));
 		}
 		catch (Exception exception) {
 			_log.error(

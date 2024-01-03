@@ -5,10 +5,17 @@
 
 package com.liferay.object.internal.instance.lifecycle;
 
+import com.liferay.object.model.ObjectFolder;
 import com.liferay.object.service.ObjectFolderLocalService;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -22,11 +29,27 @@ public class UncategorizedObjectFolderPortalInstanceLifecycleListener
 
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
-		_objectFolderLocalService.getOrAddUncategorizedObjectFolder(
-			company.getCompanyId());
+		ObjectFolder objectFolder =
+			_objectFolderLocalService.getOrAddUncategorizedObjectFolder(
+				company.getCompanyId());
+
+		Role guestRole = _roleLocalService.getRole(
+			company.getCompanyId(), RoleConstants.GUEST);
+
+		_resourcePermissionLocalService.setResourcePermissions(
+			company.getCompanyId(), ObjectFolder.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(objectFolder.getObjectFolderId()),
+			guestRole.getRoleId(), new String[] {ActionKeys.VIEW});
 	}
 
 	@Reference
 	private ObjectFolderLocalService _objectFolderLocalService;
+
+	@Reference
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Reference
+	private RoleLocalService _roleLocalService;
 
 }

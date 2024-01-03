@@ -22,8 +22,11 @@ import com.liferay.object.internal.upgrade.v3_3_0.util.ObjectViewFilterColumnTab
 import com.liferay.object.internal.upgrade.v3_9_0.ObjectLayoutBoxUpgradeProcess;
 import com.liferay.object.internal.upgrade.v6_0_0.util.ObjectValidationRuleSettingTable;
 import com.liferay.object.internal.upgrade.v8_8_2.SchemaUpgradeProcess;
+import com.liferay.object.internal.upgrade.v8_8_3.ObjectFolderUpgradeProcess;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
@@ -393,6 +396,12 @@ public class ObjectServiceUpgradeStepRegistrator
 				ObjectFieldSettingUpgradeProcess());
 
 		registry.register("8.8.1", "8.8.2", new SchemaUpgradeProcess());
+
+		registry.register(
+			"8.8.2", "8.8.3",
+			new ObjectFolderUpgradeProcess(
+				_companyLocalService, _resourcePermissionLocalService,
+				_roleLocalService));
 	}
 
 	@Reference
@@ -400,5 +409,11 @@ public class ObjectServiceUpgradeStepRegistrator
 
 	@Reference
 	private ResourceLocalService _resourceLocalService;
+
+	@Reference
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Reference
+	private RoleLocalService _roleLocalService;
 
 }

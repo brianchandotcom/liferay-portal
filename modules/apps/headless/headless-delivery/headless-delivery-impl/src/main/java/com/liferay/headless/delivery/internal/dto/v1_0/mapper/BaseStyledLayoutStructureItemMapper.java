@@ -168,11 +168,10 @@ public abstract class BaseStyledLayoutStructureItemMapper
 
 		return new FragmentMappedValue() {
 			{
+				setDefaultFragmentInlineValue(() -> fragmentInlineValue);
 				setMapping(
 					() -> new Mapping() {
 						{
-							setDefaultFragmentInlineValue(
-								() -> fragmentInlineValue);
 							setFieldKey(
 								() -> FragmentMappedValueUtil.getFieldKey(
 									jsonObject));

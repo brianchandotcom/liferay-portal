@@ -83,11 +83,15 @@ public class MetaTagsTag extends IncludeTag {
 		String w3cDefaultLanguageId = LocaleUtil.toW3cLanguageId(
 			defaultLanguageId);
 
-		String metaRobots = layout.getRobots(
-			themeDisplay.getLanguageId(), false);
+		String metaRobots = (String)httpServletRequest.getAttribute(
+			WebKeys.PAGE_ROBOTS);
 
 		if (Validator.isNull(metaRobots)) {
-			metaRobots = layout.getRobots(defaultLanguageId);
+			metaRobots = layout.getRobots(themeDisplay.getLanguageId(), false);
+
+			if (Validator.isNull(metaRobots)) {
+				metaRobots = layout.getRobots(defaultLanguageId);
+			}
 		}
 
 		if (Validator.isNotNull(metaRobots)) {

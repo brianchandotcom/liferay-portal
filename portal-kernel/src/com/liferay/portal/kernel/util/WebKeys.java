@@ -426,6 +426,8 @@ public interface WebKeys {
 
 	public static final String PAGE_KEYWORDS = "LIFERAY_SHARED_PAGE_KEYWORDS";
 
+	public static final String PAGE_ROBOTS = "LIFERAY_SHARED_PAGE_ROBOTS";
+
 	public static final String PAGE_SUBTITLE = "LIFERAY_SHARED_PAGE_SUBTITLE";
 
 	public static final String PAGE_TITLE = "LIFERAY_SHARED_PAGE_TITLE";

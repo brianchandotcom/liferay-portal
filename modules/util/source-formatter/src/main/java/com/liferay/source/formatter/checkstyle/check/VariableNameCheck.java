@@ -415,10 +415,10 @@ public class VariableNameCheck extends BaseCheck {
 			typeName = names[1];
 		}
 
-		String expectedName = getExpectedVariableName(typeName);
+		String expectedVariableName = getExpectedVariableName(typeName);
 
-		if (!name.equals(expectedName)) {
-			log(detailAST, MSG_RENAME_VARIABLE, name, expectedName);
+		if (!name.equals(expectedVariableName)) {
+			log(detailAST, MSG_RENAME_VARIABLE, name, expectedVariableName);
 		}
 	}
 
@@ -737,21 +737,21 @@ public class VariableNameCheck extends BaseCheck {
 		String trimmedTypeName = StringUtil.replaceLast(
 			typeName, typeNameTrailingDigits, StringPool.BLANK);
 
-		String expectedName = getExpectedVariableName(trimmedTypeName);
+		String expectedVariableName = getExpectedVariableName(trimmedTypeName);
 
-		if (StringUtil.equals(trimmedName, expectedName)) {
+		if (StringUtil.equals(trimmedName, expectedVariableName)) {
 			return;
 		}
 
 		if (StringUtil.equalsIgnoreCase(trimmedName, trimmedTypeName)) {
-			for (int i = expectedName.length() - 1; i >= 0; i--) {
+			for (int i = expectedVariableName.length() - 1; i >= 0; i--) {
 				char c1 = trimmedName.charAt(i);
 
-				if (c1 == expectedName.charAt(i)) {
+				if (c1 == expectedVariableName.charAt(i)) {
 					continue;
 				}
 
-				if (i < (expectedName.length() - 1)) {
+				if (i < (expectedVariableName.length() - 1)) {
 					char c2 = trimmedName.charAt(i + 1);
 
 					if (Character.isUpperCase(c1) &&
@@ -765,7 +765,8 @@ public class VariableNameCheck extends BaseCheck {
 			log(
 				detailAST, _MSG_TYPO_VARIABLE, variableName,
 				StringBundler.concat(
-					leadingUnderline, expectedName, nameTrailingDigits));
+					leadingUnderline, expectedVariableName,
+					nameTrailingDigits));
 
 			return;
 		}

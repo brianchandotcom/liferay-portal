@@ -9,7 +9,7 @@ import {
 	ExperienceSelector,
 	SegmentExperience,
 } from '@liferay/layout-js-components-web';
-import {fetch, sub} from 'frontend-js-web';
+import {debounce, fetch, sub} from 'frontend-js-web';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import SegmentEntry from '../../types/SegmentEntry';
@@ -26,6 +26,25 @@ interface Props {
 	segmentsExperiences: SegmentExperience[];
 	simulateSegmentsEntriesURL: string;
 }
+
+// @ts-ignore
+
+const simulateSegments: any = debounce((form, simulateSegmentsEntriesURL) => {
+	fetch(simulateSegmentsEntriesURL, {
+		body: new FormData(form ? form : undefined),
+		method: 'POST',
+	}).then(() => {
+		const iframe = document.querySelector('iframe');
+
+		if (iframe) {
+
+			// LPS-191073 Reload the iframe content by updating its src because
+			// iframe.contentWindow.location.reload() does not always work correctly
+
+			iframe.src += '';
+		}
+	});
+}, 250);
 
 const DEFAULT_PREVIEW_OPTION = {
 	label: Liferay.Language.get('segments'),
@@ -87,22 +106,7 @@ function PageContentSelectors({
 				}
 			);
 
-			fetch(simulateSegmentsEntriesURL, {
-				body: new FormData(
-					formRef.current ? formRef.current : undefined
-				),
-				method: 'POST',
-			}).then(() => {
-				const iframe = document.querySelector('iframe');
-
-				if (iframe) {
-
-					// LPS-191073 Reload the iframe content by updating its src because
-					// iframe.contentWindow.location.reload() does not always work correctly
-
-					iframe.src += '';
-				}
-			});
+			simulateSegments(formRef.current, simulateSegmentsEntriesURL);
 		}
 	}, [selectedSegmentEntry, simulateSegmentsEntriesURL]);
 

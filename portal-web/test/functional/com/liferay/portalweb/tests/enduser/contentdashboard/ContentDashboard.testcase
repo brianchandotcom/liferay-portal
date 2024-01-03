@@ -6595,16 +6595,16 @@ definition {
 	@description = "This is a use case for LPS-177756. The tooltip of the back button is Go to Content Dashboard when viewing an asset with a DPT from the Content Dashboard."
 	@priority = 3
 	test ViewBackButtonTooltipInAssociatedDisplayPageTemplate {
-		task ("Given the Web Content edit mode page") {
+		task ("Given access to the associated display page via content dashboard") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Web Content Article",
-				displayPageTemplateEntryName = "DPT Name",
+				displayPageTemplateEntryName = "Display Page Name",
 				groupName = "Test Site Name",
 				subType = "Basic Web Content");
 
 			JSONLayoutpagetemplate.setLayoutPageTemplateEntryAsDefault(
 				groupName = "Test Site Name",
-				layoutPageTemplateEntryName = "DPT Name",
+				layoutPageTemplateEntryName = "Display Page Name",
 				type = "Display Page Template");
 
 			JSONWebcontent.addWebContent(

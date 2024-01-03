@@ -50,6 +50,8 @@ import javax.portlet.RenderRequest;
 
 import org.apache.commons.lang.time.StopWatch;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -60,14 +62,9 @@ import org.osgi.service.component.annotations.Reference;
  * @author Raymond Augé
  * @author Michael Young
  */
-@Component(
-	service = {
-		CTEventListener.class, IdentifiableOSGiService.class,
-		JournalContent.class
-	}
-)
+@Component(service = {IdentifiableOSGiService.class, JournalContent.class})
 public class JournalContentImpl
-	implements CTEventListener, IdentifiableOSGiService, JournalContent {
+	implements IdentifiableOSGiService, JournalContent {
 
 	@Override
 	public void clearCache() {
@@ -376,17 +373,23 @@ public class JournalContentImpl
 		return JournalContent.class.getName();
 	}
 
-	@Override
-	public void onAfterPublish(long ctCollectionId) {
-		_portalCache.removeAll();
-	}
-
 	@Activate
-	protected void activate() {
+	protected void activate(BundleContext bundleContext) {
 		_portalCache =
 			(PortalCache<JournalContentKey, JournalArticleDisplay>)
 				_multiVMPool.getPortalCache(CACHE_NAME);
 
+		_ctEventListenerServiceRegistration = bundleContext.registerService(
+			CTEventListener.class,
+			new CTEventListener() {
+
+				@Override
+				public void onAfterPublish(long ctCollectionId) {
+					_portalCache.removeAll();
+				}
+
+			},
+			null);
 		_journalArticlePortalCacheIndexer = new PortalCacheIndexer<>(
 			new JournalContentArticleKeyIndexEncoder(), _portalCache);
 		_journalTemplatePortalCacheIndexer = new PortalCacheIndexer<>(
@@ -395,6 +398,7 @@ public class JournalContentImpl
 
 	@Deactivate
 	protected void deactivate() {
+		_ctEventListenerServiceRegistration.unregister();
 		_multiVMPool.removePortalCache(CACHE_NAME);
 	}
 
@@ -505,6 +509,9 @@ public class JournalContentImpl
 			throw new ExceptionInInitializerError(noSuchMethodException);
 		}
 	}
+
+	private ServiceRegistration<CTEventListener>
+		_ctEventListenerServiceRegistration;
 
 	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;

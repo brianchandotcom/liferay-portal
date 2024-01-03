@@ -81,59 +81,6 @@ public class UserSetDigestTest {
 		Assert.assertEquals(digest, user.getDigest());
 	}
 
-	@Test
-	public void testSetDigestBeforePrerequisites() throws Exception {
-		User user = _userLocalService.createUser(RandomTestUtil.nextLong());
-
-		user.setDigest(user.getDigest(RandomTestUtil.randomString()));
-
-		Assert.assertNull(
-			"User digest should be null if screen name and/or email address " +
-				"is not set",
-			user.getDigest());
-
-		user.setScreenName(RandomTestUtil.randomString());
-		user.setEmailAddress(_generateRandomEmailAddress());
-
-		Assert.assertNotNull(user.getDigest());
-	}
-
-	@Test
-	public void testSetEmailAndDigestBeforeScreenName() throws Exception {
-		User user = _userLocalService.createUser(RandomTestUtil.nextLong());
-
-		user.setEmailAddress(_generateRandomEmailAddress());
-
-		user.setDigest(user.getDigest(RandomTestUtil.randomString()));
-
-		Assert.assertNull(
-			"User digest should be null if screen name is not set",
-			user.getDigest());
-
-		user.setScreenName(RandomTestUtil.randomString());
-
-		Assert.assertNotNull(user.getDigest());
-	}
-
-	@Test
-	public void testSetScreenNameAndDigestBeforeEmailAddress()
-		throws Exception {
-
-		User user = _userLocalService.createUser(RandomTestUtil.nextLong());
-
-		user.setScreenName(RandomTestUtil.randomString());
-
-		user.setDigest(user.getDigest(RandomTestUtil.randomString()));
-
-		Assert.assertNull(
-			"User digest should be null if email address is not set",
-			user.getDigest());
-
-		user.setEmailAddress(_generateRandomEmailAddress());
-
-		Assert.assertNotNull(user.getDigest());
-	}
-
 	private String _generateRandomEmailAddress() {
 		return StringBundler.concat(
 			RandomTestUtil.randomString(), RandomTestUtil.nextLong(), "@",

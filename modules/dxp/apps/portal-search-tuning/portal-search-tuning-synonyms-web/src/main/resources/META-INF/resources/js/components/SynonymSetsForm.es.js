@@ -77,6 +77,11 @@ class SynonymSetsForm extends Component {
 		}
 	}
 
+	/*
+	 * Any time the input is blurred, adds the current input value to the
+	 * list of synonyms. This ensures that the user does not lose the value
+	 * if they publish without hitting enter or comma.
+	 */
 	_handleBlur = () => {
 		if (this.state.inputValue.trim()) {
 			this.setState({

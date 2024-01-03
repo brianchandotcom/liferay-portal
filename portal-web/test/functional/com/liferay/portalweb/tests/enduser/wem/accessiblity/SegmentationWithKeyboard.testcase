@@ -1,0 +1,239 @@
+@component-name = "portal-segmentation"
+definition {
+
+	property ci.retries.disabled = "true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Echo Accessibility";
+	property testray.main.component.name = "Segmentation";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a test for LPS-198108. Can add properties items to a segment via keyboard."
+	@priority = 4
+	test AddPropertiesViaKeyboard {
+		task ("Given a segment designer accesses to the Segments admin") {
+			Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+		}
+
+		task ("When the segment designer adds a segment") {
+			LexiconEntry.gotoAdd();
+
+			WaitForVisible(locator1 = "Segmentation#ADD_FIELD_POSITION");
+		}
+
+		task ("Then the segment designer could add properties via keyboard") {
+			var panelWidth = selenium.getElementWidth("//div[contains(@class,'criteria-sidebar')]//div[contains(@class,'panel-body')]");
+			var subtitleWidth = selenium.getElementWidth("//div[contains(@class,'criteria-sidebar')]//div[contains(@class,'panel-body')]//p[contains(.,'Inherited attributes are not taken into account to include members in segments.')]");
+
+			StringUtil.assertEquals(${panelWidth}, ${subtitleWidth});
+
+			KeyPress(
+				ariaLabel = "Search Properties",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL",
+				value1 = "\TAB");
+
+			AssertElementFocused(
+				key_panel = "User",
+				locator1 = "Panel#PANEL_HEADER");
+
+			KeyPress(
+				key_panel = "User",
+				locator1 = "Panel#PANEL_HEADER",
+				value1 = "\DOWN");
+
+			AssertElementFocused(
+				key_propertyOption = "Category",
+				locator1 = "Segmentation#ADD_FIELD_TYPE");
+
+			for (var borderRadius : list "border-bottom-left-radius,border-bottom-right-radius,border-top-left-radius,border-top-right-radius") {
+				AssertCssValue(
+					key_propertyOption = "Category",
+					locator1 = "Segmentation#ADD_FIELD_TYPE",
+					locator2 = ${borderRadius},
+					value1 = "4px");
+			}
+
+			KeyPress(
+				key_propertyOption = "User Name",
+				locator1 = "Segmentation#ADD_FIELD_TYPE",
+				value1 = "\DOWN");
+
+			KeyPress(
+				key_panel = "Organization",
+				locator1 = "Panel#PANEL_HEADER",
+				value1 = "\ENTER");
+
+			KeyPress(
+				key_panel = "Organization",
+				locator1 = "Panel#PANEL_HEADER",
+				value1 = "\DOWN");
+
+			KeyPress(
+				locator1 = "xpath=(//li[contains(@class, 'criteria-sidebar-item-root')][normalize-space()='Category'])[2]",
+				value1 = "\ENTER");
+
+			AssertVisible(locator1 = "Segmentation#EMPTY_DROP_ZONE_TARGET");
+
+			KeyPress(
+				locator1 = "xpath=(//li[contains(@class, 'criteria-sidebar-item-root')][normalize-space()='Category'])[2]",
+				value1 = "\ENTER");
+
+			AssertVisible(
+				locator1 = "Segmentation#CONDITIONS_PROPERTY_NAME",
+				propertyName = "Category");
+
+			KeyPress(
+				locator1 = "xpath=(//li[contains(@class, 'criteria-sidebar-item-root')][normalize-space()='Category'])[2]",
+				value1 = "\DOWN");
+
+			AssertElementFocused(
+				key_propertyOption = "Country",
+				locator1 = "Segmentation#ADD_FIELD_TYPE");
+
+			KeyPress(
+				key_propertyOption = "Country",
+				locator1 = "Segmentation#ADD_FIELD_TYPE",
+				value1 = "\ENTER");
+
+			AssertVisible(locator1 = "Segmentation#KEYBOARD_MOVEMENT_PREVIEW");
+
+			KeyPress(
+				key_propertyOption = "Country",
+				locator1 = "Segmentation#ADD_FIELD_TYPE",
+				value1 = "\UP");
+
+			KeyPress(
+				key_propertyOption = "Country",
+				locator1 = "Segmentation#ADD_FIELD_TYPE",
+				value1 = "\UP");
+
+			KeyPress(
+				key_propertyOption = "Country",
+				locator1 = "Segmentation#ADD_FIELD_TYPE",
+				value1 = "\ENTER");
+
+			AssertVisible(
+				locator1 = "Segmentation#CONDITIONS_PROPERTY_NAME",
+				propertyName = "Country");
+
+			KeyPress(
+				key_propertyOption = "Name",
+				locator1 = "Segmentation#ADD_FIELD_TYPE",
+				value1 = "\DOWN");
+
+			KeyPress(
+				key_propertyOption = "Organization",
+				locator1 = "Segmentation#ADD_FIELD_TYPE",
+				value1 = "\ENTER");
+
+			KeyPress(
+				key_propertyOption = "Organization",
+				locator1 = "Segmentation#ADD_FIELD_TYPE",
+				value1 = "\ENTER");
+
+			AssertVisible(
+				locator1 = "Segmentation#CONDITIONS_PROPERTY_NAME",
+				propertyName = "Organization");
+
+			var i = 1;
+
+			for (var propertyName : list "Country,Category,Organization") {
+				AssertVisible(
+					index = ${i},
+					locator1 = "Segmentation#CONDITIONS_PROPERTY_NAME_BY_INDEX",
+					propertyName = ${propertyName});
+
+				var i = ${i} + 1;
+			}
+
+			KeyPress(
+				key_text = "And",
+				locator1 = "Button#ANY",
+				value1 = "\TAB");
+
+			AssertElementFocused(
+				locator1 = "Segmentation#CRITERION_DRAG_ICON",
+				propertyName = "Category");
+
+			KeyPress(
+				locator1 = "Segmentation#CRITERION_DRAG_ICON",
+				propertyName = "Category",
+				value1 = "\ENTER");
+
+			AssertVisible(locator1 = "Segmentation#KEYBOARD_MOVEMENT_PREVIEW");
+
+			KeyPress(
+				locator1 = "Segmentation#CRITERION_DRAG_ICON",
+				propertyName = "Category",
+				value1 = "\DOWN");
+
+			KeyPress(
+				locator1 = "Segmentation#CRITERION_DRAG_ICON",
+				propertyName = "Category",
+				value1 = "\DOWN");
+
+			KeyPress(
+				locator1 = "Segmentation#CRITERION_DRAG_ICON",
+				propertyName = "Category",
+				value1 = "\ENTER");
+
+			var i = 1;
+
+			for (var propertyName : list "Country,Organization,Category") {
+				AssertVisible(
+					index = ${i},
+					locator1 = "Segmentation#CONDITIONS_PROPERTY_NAME_BY_INDEX",
+					propertyName = ${propertyName});
+
+				var i = ${i} + 1;
+			}
+
+			KeyPress(
+				locator1 = "xpath=(//li[contains(@class, 'criteria-sidebar-item-root')][normalize-space()='Tag'])[2]",
+				value1 = "\DOWN");
+
+			KeyPress(
+				key_propertyOption = "Type",
+				locator1 = "Segmentation#ADD_FIELD_TYPE",
+				value1 = "\ENTER");
+
+			AssertVisible(locator1 = "Segmentation#KEYBOARD_MOVEMENT_PREVIEW");
+
+			KeyPress(
+				key_propertyOption = "Type",
+				locator1 = "Segmentation#ADD_FIELD_TYPE",
+				value1 = "\ESCAPE");
+
+			AssertElementFocused(
+				key_propertyOption = "Type",
+				locator1 = "Segmentation#ADD_FIELD_TYPE");
+
+			AssertElementNotPresent(
+				locator1 = "Segmentation#CONDITIONS_PROPERTY_NAME",
+				propertyName = "Type");
+
+			var i = 1;
+
+			for (var propertyName : list "Country,Organization,Category") {
+				AssertVisible(
+					index = ${i},
+					locator1 = "Segmentation#CONDITIONS_PROPERTY_NAME_BY_INDEX",
+					propertyName = ${propertyName});
+
+				var i = ${i} + 1;
+			}
+		}
+	}
+
+}

@@ -1,0 +1,130 @@
+@media screen and (max-width: 992px) {
+	.f-call-to-action .call-to-action.hasLabel {
+		min-height: 128px;
+	}
+
+	.f-call-to-action .call-to-action.hasLabel .call-to-action-content {
+		margin: 0.5rem 0;
+	}
+
+	.f-call-to-action .call-to-action.hasLabel .call-to-action-content-left {
+		align-items: flex-start !important;
+		flex-direction: column;
+		margin-left: 1rem;
+	}
+
+	.f-call-to-action .call-to-action.hasLabel .call-to-action-content-left .call-to-action-label {
+		margin-bottom: 1rem;
+		margin-left: 0;
+	}
+
+	.f-call-to-action .call-to-action.hasLabel .call-to-action-content-left .call-to-action-text {
+		margin-left: 0;
+	}
+
+	.f-call-to-action .call-to-action.hasLabel .cta-gradient {
+		transform: scaleY(2);
+	}
+
+	.f-call-to-action .call-to-action .call-to-action-arrow-right {
+		align-items: normal !important;
+		margin-top: 0.5rem;
+	}
+}
+
+.f-call-to-action {
+	display: block;
+}
+
+.f-call-to-action .call-to-action {
+	background: #e7efff;
+	border-radius: 10px;
+	min-height: 64px;
+	overflow: hidden;
+	transition: none;
+	width: 100%;
+}
+
+.f-call-to-action .call-to-action.loud {
+	background: var(--color-action-primary-default);
+	transition: background-color 0.1s ease-out;
+}
+
+.f-call-to-action .call-to-action.loud:hover,
+.f-call-to-action .call-to-action.loud:focus,
+.f-call-to-action .call-to-action.loud:active {
+	background: var(--color-action-primary-hover);
+}
+
+.f-call-to-action .call-to-action.loud .call-to-action-content {
+	color: var(--white);
+}
+
+.f-call-to-action .call-to-action.loud .call-to-action-content .call-to-action-label {
+	background-color: color-mix(in srgb, var(--color-neutral-10) 15%, transparent);
+}
+
+.f-call-to-action .call-to-action:hover,
+.f-call-to-action .call-to-action:focus,
+.f-call-to-action .call-to-action:active {
+	background: linear-gradient(135deg, #e7efff 60%, #baccee 100%);
+	box-shadow: none;
+	outline-offset: 2px;
+	outline: var(--color-brand-primary-lighten-2) solid 2px;
+	text-decoration: none;
+}
+
+.f-call-to-action .call-to-action:hover .call-to-action-arrow-right,
+.f-call-to-action .call-to-action:focus .call-to-action-arrow-right,
+.f-call-to-action .call-to-action:active .call-to-action-arrow-right {
+	transform: translateX(4px);
+}
+
+.f-call-to-action .call-to-action .call-to-action-content {
+	color: var(--color-action-primary-default);
+	width: 100%;
+}
+
+.f-call-to-action .call-to-action .call-to-action-content .call-to-action-text {
+	font-size: 20px;
+	font-weight: 600;
+	line-height: 24px;
+	margin: 16px;
+}
+
+.f-call-to-action .call-to-action .call-to-action-content .call-to-action-label {
+	background-color: color-mix(in srgb, var(--color-action-primary-default) 5%, transparent);
+	border-radius: 10px;
+	font-size: 14px;
+	font-weight: 600;
+	line-height: 16px;
+	margin-left: 12px;
+	min-width: unset !important;
+	padding: 12px;
+	transition: background-color 0.1s ease-out;
+	white-space: nowrap;
+}
+
+.f-call-to-action .call-to-action .call-to-action-content .call-to-action-content-left {
+	align-items: center;
+}
+
+.f-call-to-action .call-to-action .call-to-action-arrow-right {
+	align-items: center;
+	margin-left: auto;
+	margin-right: 2rem;
+	transition: transform 0.15s ease-out;
+}
+
+.f-call-to-action .call-to-action .call-to-action-arrow-right svg {
+	padding-left: 0;
+}
+
+.f-call-to-action .call-to-action .cta-gradient {
+	bottom: -50px;
+	right: -50px;
+}
+
+.f-call-to-action .call-to-action svg {
+	margin-left: auto;
+}

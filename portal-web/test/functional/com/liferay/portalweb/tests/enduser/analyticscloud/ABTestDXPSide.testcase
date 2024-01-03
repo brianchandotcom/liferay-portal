@@ -264,6 +264,24 @@ definition {
 				text = "Go Somewhere");
 		}
 
+		task ("Click to edit the page then click save") {
+			ContentPages.gotoPageEditor();
+
+			PageEditor.editFragmentText(
+				fragmentName = "Button",
+				id = "link",
+				text = "Text test");
+
+			PageEditor.publish();
+		}
+
+		task ("Assert if the page is published with the modifications") {
+			ContentPages.viewFragmentText(
+				fragmentName = "button",
+				id = "link",
+				text = "Text test");
+		}
+
 		task ("Go to AC and open the AB test") {
 			ACUtils.launchAC();
 
@@ -326,6 +344,24 @@ definition {
 				fragmentName = "button",
 				id = "link",
 				text = "New text");
+		}
+
+		task ("Click to edit the page then click save") {
+			ContentPages.gotoPageEditor();
+
+			PageEditor.editFragmentText(
+				fragmentName = "Button",
+				id = "link",
+				text = "Text test");
+
+			PageEditor.publish();
+		}
+
+		task ("Assert if the page is published with the modifications") {
+			ContentPages.viewFragmentText(
+				fragmentName = "button",
+				id = "link",
+				text = "Text test");
 		}
 
 		task ("Go to AC > Tests") {

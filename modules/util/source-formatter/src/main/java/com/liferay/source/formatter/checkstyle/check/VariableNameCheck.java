@@ -387,6 +387,10 @@ public class VariableNameCheck extends BaseCheck {
 	private void _checkExceptionVariableName(
 		DetailAST detailAST, String name, String typeName) {
 
+		if (!StringUtil.endsWith(getAbsolutePath(), "ExceptionMapper.java")) {
+			return;
+		}
+
 		DetailAST parentDetailAST = detailAST.getParent();
 
 		if ((parentDetailAST.getType() == TokenTypes.LITERAL_CATCH) ||
@@ -411,14 +415,10 @@ public class VariableNameCheck extends BaseCheck {
 			typeName = names[1];
 		}
 
-		String absolutePath = getAbsolutePath();
+		String expectedName = getExpectedVariableName(typeName);
 
-		if (absolutePath.endsWith("ExceptionMapper.java")) {
-			String expectedName = getExpectedVariableName(typeName);
-
-			if (!name.equals(expectedName)) {
-				log(detailAST, MSG_RENAME_VARIABLE, name, expectedName);
-			}
+		if (!name.equals(expectedName)) {
+			log(detailAST, MSG_RENAME_VARIABLE, name, expectedName);
 		}
 	}
 

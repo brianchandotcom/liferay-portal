@@ -1,0 +1,36 @@
+<div class="f-notification-bar">
+	<div class="notification-bar">
+		<div class="f-notification-message">
+			[#if configuration.showIcon]
+				<div class="f-notification-icon">
+					<div data-lfr-editable-id="notificationIcon" data-lfr-editable-type="html">
+						<svg fill="currentColor" height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg">
+							<path clip-rule="evenodd" d="M7 0.973516C7 0.973516 2 0.973516 2 9.98096L1 10.9818C1 13.6715 15 13.734 15 10.9818L14 9.98096C14 0.973516 9 0.973516 9 0.973516C9 -0.308833 7 -0.340083 7 0.973516ZM4 10.6565C4 10.6565 4 2.9751 8 2.9751C12 2.9751 12 10.6565 12 10.6565C9 10.9817 7 10.9817 4 10.6565Z" fill-rule="evenodd" />
+							<path d="M5.10938 13.7434C6.0625 16.7678 9.9375 16.7365 10.8906 13.7434C9 13.9843 7 13.9843 5.10938 13.7434Z" />
+						</svg>
+					</div>
+				</div>
+			[/#if]
+
+			<div data-lfr-editable-id="notificationMessage" data-lfr-editable-type="rich-text">
+				Liferay DXP version 7.2 released.
+			</div>
+
+			[#if configuration.downloadUrl?has_content && configuration.showDownloadUrl]
+				<a class="download-url" href="${configuration.downloadUrl}" rel="noopener noreferrer" target="${configuration.target}">
+					<div data-lfr-editable-id="showDownloadUrl" data-lfr-editable-type="rich-text">
+						Default Link
+					</div>
+
+					<svg fill="currentColor" height="24" width="24"><use xlink:href="#icon--arrow--right"></use></svg>
+				</a>
+			[/#if]
+		</div>
+
+		<button class="class-toggle close close-icon cookie-alert" id="closeButton">
+			<svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="-2.99927" y="-3" width="16" height="16" fill="#ffffff"/>
+</svg>
+		</button>
+	</div>
+</div>

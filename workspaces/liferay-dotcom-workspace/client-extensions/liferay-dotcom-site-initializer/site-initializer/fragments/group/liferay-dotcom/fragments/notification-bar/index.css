@@ -1,0 +1,51 @@
+@media (max-width: 599px) {
+	.f-notification-bar .notification-bar {
+		display: none;
+	}
+}
+
+html .has-alert-container .f-notification-bar {
+	padding-top: 48px;
+}
+
+html .has-alert-container .f-notification-bar .notification-bar {
+	display: flex;
+}
+
+.f-notification-bar .notification-bar {
+	align-items: center;
+	display: none;
+	height: 48px;
+	justify-content: center;
+	position: absolute;
+	top: 0;
+	width: 100%;
+	z-index: 981;
+}
+
+.f-notification-bar .f-notification-message {
+	color: var(--white);
+	display: inline-flex;
+	font-size: 1.125rem;
+}
+
+.f-notification-bar .f-notification-message .f-notification-icon {
+	margin-right: 8px;
+}
+
+.f-notification-bar .f-notification-message .download-url {
+	color: inherit;
+	display: inline-flex;
+	font-weight: 600;
+	margin-left: 8px;
+}
+
+.f-notification-bar .f-notification-message .download-url svg {
+	margin-top: 2px;
+}
+
+html .content .f-notification-bar .close-icon {
+	opacity: 1;
+	position: absolute;
+	right: 2em;
+}

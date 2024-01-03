@@ -1,0 +1,54 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "",
+					"description": "download-url",
+					"label": "download-url",
+					"localizable": true,
+					"name": "downloadUrl",
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": true,
+					"description": "show-download-url",
+					"label": "show-download-url",
+					"name": "showDownloadUrl",
+					"type": "checkbox"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": true,
+					"description": "show-icon",
+					"label": "show-icon",
+					"name": "showIcon",
+					"type": "checkbox"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "_self",
+					"description": "target",
+					"label": "target",
+					"name": "target",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "_self-same-window",
+								"value": "_self"
+							},
+							{
+								"label": "_blank-new-window-or-new-tab",
+								"value": "_blank"
+							}
+						]
+					}
+				}
+			],
+			"label": "configuration"
+		}
+	]
+}

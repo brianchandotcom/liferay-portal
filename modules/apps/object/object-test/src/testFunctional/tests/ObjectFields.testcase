@@ -2258,7 +2258,7 @@ definition {
 
 			ObjectCustomViews.goToFiltersTab();
 
-			Click(locator1 = "ObjectCustomViews#ADD_BUTTON_FILTERS");
+			Click(locator1 = "ObjectCustomViews#ADD_NEW_FILTER");
 
 			Click(locator1 = "ObjectCustomViews#VIEW_MODAL_CONTENT");
 		}

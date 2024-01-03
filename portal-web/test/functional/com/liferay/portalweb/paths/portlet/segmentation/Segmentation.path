@@ -10,6 +10,7 @@
 </thead>
 
 <tbody>
+
 <tr>
 	<td>ADD_FIELD_POSITION</td>
 	<td>//*[contains(@class, 'criteria-group-item-root')]/div[1] | //*[contains(@class, 'edit-container')]</td>
@@ -38,6 +39,11 @@
 <tr>
 	<td>ADD_FIELD_TYPE_VISIBLE</td>
 	<td>//button[contains(@class,'panel-header')][contains(@class,'show')]//following-sibling::div//*[contains(@class, 'criteria-sidebar-item-root')][normalize-space()='${key_propertyOption}']//div[@draggable='true']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSERTIVE</td>
+	<td>//span[@aria-live='assertive'][contains(@class,'sr-only')]/p[normalize-space(text())='${key_assertive}']</td>
 	<td></td>
 </tr>
 <tr>

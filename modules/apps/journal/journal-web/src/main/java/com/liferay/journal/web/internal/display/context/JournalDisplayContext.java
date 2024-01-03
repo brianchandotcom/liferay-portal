@@ -1368,7 +1368,8 @@ public class JournalDisplayContext {
 		}
 
 		if (FeatureFlagManagerUtil.isEnabled("LPS-196768") &&
-			isTypeWebContent() && !hasResults() && hasVersionsResults()) {
+			isIndexAllArticleVersions() && isTypeWebContent() &&
+			!hasResults() && hasVersionsResults()) {
 
 			_type = "versions";
 

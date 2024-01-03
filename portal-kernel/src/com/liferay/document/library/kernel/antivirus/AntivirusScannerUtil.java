@@ -18,6 +18,10 @@ public class AntivirusScannerUtil {
 	public static boolean isActive() {
 		AntivirusScanner antivirusScanner = _antivirusScannerSnapshot.get();
 
+		if (antivirusScanner == null) {
+			return false;
+		}
+
 		return antivirusScanner.isActive();
 	}
 

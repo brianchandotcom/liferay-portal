@@ -1,0 +1,70 @@
+.f-video-embed-container {
+	border-radius: 8px;
+	box-shadow: 0px 0.8px 3.7px -0.33px rgba(0, 0, 0, 0.14), 0px 2px 3px 0.15px rgba(0, 0, 0, 0.034), 0px 2.6px 4px -0.2px rgba(0, 0, 0, 0.06);
+	cursor: pointer;
+	position: relative;
+}
+
+.f-video-embed-overlay,
+.f-video-embed-player,
+.wistia_embed {
+	bottom: 0;
+	left: 0;
+	position: absolute;
+	right: 0;
+	top: 0;
+}
+
+.f-video-embed-overlay {
+	background-color: rgba(143, 186, 236, 0.75);
+	z-index: 5;
+}
+
+.f-video-embed-overlay.hide-overlay-color {
+	background-color: transparent;
+}
+
+.f-video-embed-overlay:hover .f-embedded-play-button {
+	transition: fill 0.2s;
+}
+
+.f-video-embed-overlay:hover .f-embedded-play-button .play-dark {
+	fill: var(--white);
+}
+
+.f-video-embed-overlay:hover .f-embedded-play-button .play-light {
+	fill: var(--action-default);
+}
+
+.f-video-embed-overlay.inline-video {
+	display: none;
+}
+
+.f-video-embed-overlay .f-embedded-play-button {
+	height: 100%;
+	position: absolute;
+}
+
+.f-video-embed-overlay .f-embedded-play-button.play-bottom-left {
+	align-items: flex-end;
+	left: 0;
+}
+
+.f-video-embed-overlay .f-embedded-play-button.play-center {
+	align-items: center;
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+.f-video-embed-overlay .f-video-embed-overlay-placeholder,
+.f-video-embed-overlay .fragments-editor__editable[type='image'] {
+	bottom: 0;
+	left: 0;
+	position: absolute;
+	right: 0;
+	top: 0;
+}
+
+.aspect-ratio-15-to-7 {
+	padding-bottom: 46.67%;
+}

@@ -1,0 +1,72 @@
+[#assign aspectRatioHash = {
+	"16:9": "aspect-ratio-16-to-9",
+	"15:7": "aspect-ratio-15-to-7",
+	"8:5": "aspect-ratio-8-to-5",
+	"4:3": "aspect-ratio-4-to-3",
+	"3:2": "aspect-ratio-3-to-2",
+	"1:1": "aspect-ratio",
+	"none": ""
+}]
+
+[#assign aspectRatioClass = aspectRatioHash[configuration.videoPlayerAspectRatio]]
+
+[#assign overlayStyle = ""]
+[#assign overlayStyle += "background-image:url(" + configuration.overlayBackgroundImageUrl + ");"]
+
+[#assign wistiaId = configuration.wistiaId /]
+[#assign youtubeId = configuration.youtubeId /]
+[#assign html5videoUrl = configuration.html5videoUrl /]
+
+[#assign hideOverlay = configuration.hideOverlay]
+
+<div
+	class="
+		f-video-embed
+		${configuration.videoPlayerMaxWidth!'max-width-xsmall'}
+		${configuration.videoPosition}
+	"
+>
+	<div class="f-video-embed-container ${aspectRatioClass}" id="embeddedVideo${fragmentEntryLinkNamespace}">
+		[#if wistiaId != ""]
+			<script crossorigin="anonymous" src="//fast.wistia.com/embed/medias/${wistiaId}.jsonp" defer></script>
+			<script crossorigin="anonymous" src="//fast.wistia.com/assets/external/E-v1.js" defer></script>
+
+
+			<iframe class="h-100 w-100 wistia_embed" src="//fast.wistia.net/embed/iframe/${wistiaId}" frameborder="0" allowfullscreen mozallowfullscreen msallowfullscreen oallowfullscreen webkitallowfullscreen></iframe>
+		[#elseif youtubeId != ""]
+			<iframe class="f-video-embed-player h-100 w-100" src="https://www.youtube.com/embed/${youtubeId}?enablejsapi=1" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+		[#elseif html5videoUrl != ""]
+			<video class="f-video-embed-video h-100 w-100" controls>
+				<source src="${html5videoUrl}" type="video/mp4" />
+				<source src="${html5videoUrl}" type="video/ogg" />
+				Your browser does not support the video tag.
+			</video>
+		[#else]
+			<div class="f-video-embed-player">
+				<img alt="A video placeholder" class="f-video-embed-placeholder h-100 w-100" loading="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAJCAYAAAA7KqwyAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAkSURBVHgB7cxBEQAACAIwtH8Pzw52kxD8OBZgNXsPQUOUwCIgAz0DHTyygaAAAAAASUVORK5CYII=" />
+			</div>
+		[/#if]
+
+		[#if configuration.showPlayButton]
+			<div class="
+				f-video-embed-overlay
+				${hideOverlay?then('hide-overlay-color','')}
+				"
+				data-wistia-id="${wistiaId}"
+			>
+				<div class="f-video-embed-overlay-placeholder" style="${overlayStyle}background-size:cover;"></div>
+
+				<div class="f-embedded-play-button d-flex p-3 play-${configuration.playButtonPosition}">
+					<svg fill="none" height="120" viewBox="0 0 120 120" width="120" xmlns="http://www.w3.org/2000/svg">
+						<circle class="play-dark" cx="60" cy="60" fill="#0B63CE" opacity="0.1" r="60" />
+						<circle class="play-light" cx="60" cy="60" fill="white" r="33" />
+
+						<path class="play-light" clip-rule="evenodd" d="M112 60C112 88.7188 88.7188 112 60 112C31.2812 112 8 88.7188 8 60C8 31.2812 31.2812 8 60 8C88.7188 8 112 31.2812 112 60ZM111 60C111 88.1665 88.1665 111 60 111C31.8335 111 9 88.1665 9 60C9 31.8335 31.8335 9 60 9C88.1665 9 111 31.8335 111 60Z" fill="white" fill-rule="evenodd" opacity="0.2" />
+						<path class="play-light" clip-rule="evenodd" d="M104 60C104 84.3005 84.3005 104 60 104C35.6995 104 16 84.3005 16 60C16 35.6995 35.6995 16 60 16C84.3005 16 104 35.6995 104 60ZM103 60C103 83.7482 83.7482 103 60 103C36.2518 103 17 83.7482 17 60C17 36.2518 36.2518 17 60 17C83.7482 17 103 36.2518 103 60Z" fill="white" fill-rule="evenodd" opacity="0.43" />
+						<path class="play-dark" d="M69.8884 61.9637L57.44 73.2695C56.204 74.3921 54.25 73.4955 54.25 71.8058L54.25 49.1943C54.25 47.5045 56.204 46.608 57.44 47.7306L69.8884 59.0363C70.7461 59.8153 70.7461 61.1847 69.8884 61.9637Z" fill="#0B5FFF" />
+					</svg>
+				</div>
+			</div>
+		[/#if]
+	</div>
+</div>

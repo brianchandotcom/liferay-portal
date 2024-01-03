@@ -76,14 +76,10 @@ public class UserServiceWhenPortalSendsPasswordEmailTest {
 				new Class<?>[] {Localization.class},
 				(proxy, method, args) -> {
 					if (Objects.equals(
-							method.getName(), "getLocalizationMap") &&
-						(args.length == 3)) {
+							method.getName(), "getDefaultLanguageId") &&
+						(args.length == 2)) {
 
-						return _localization.getLocalizationMap(
-							(PortletPreferences)args[0], (String)args[1],
-							(String)args[2], PropsUtil.get((String)args[2]),
-							UserServiceWhenPortalSendsPasswordEmailTest.class.
-								getClassLoader());
+						return args[1].toString();
 					}
 					else if (Objects.equals(
 								method.getName(), "getLocalization") &&
@@ -91,6 +87,16 @@ public class UserServiceWhenPortalSendsPasswordEmailTest {
 
 						return _localization.getLocalization(
 							(String)args[0], (String)args[1]);
+					}
+					else if (Objects.equals(
+								method.getName(), "getLocalizationMap") &&
+							 (args.length == 3)) {
+
+						return _localization.getLocalizationMap(
+							(PortletPreferences)args[0], (String)args[1],
+							(String)args[2], PropsUtil.get((String)args[2]),
+							UserServiceWhenPortalSendsPasswordEmailTest.class.
+								getClassLoader());
 					}
 
 					throw new UnsupportedOperationException();

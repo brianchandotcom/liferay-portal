@@ -1,0 +1,87 @@
+@component-name = "portal-wcm"
+definition {
+
+	property ci.retries.disabled = "true";
+	property custom.properties = "feature.flag.LRAC-14771=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property property.group = "analytics.cloud.profile";
+	property test.run.type = "single";
+	property testray.component.names = "Echo Accessibility";
+	property testray.main.component.name = "Fragments";
+
+	setUp {
+		task ("Open Analytics Cloud") {
+			ACUtils.launchAC();
+		}
+
+		task ("Take token from Analytics Cloud") {
+			ACSettings.takeTokenFromAnalyticsCloud();
+		}
+
+		task ("Go to DXP portal, login and create site") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+
+			HeadlessSite.addSite(siteName = "Test Site Name");
+		}
+
+		task ("Connect and synchronyze with Analytics Cloud") {
+			ACDXPSettings.connectDXPtoAnalyticsCloudWithTryAgain(siteName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a test for LPS-200576. Verify that the collection content under User's Personalized Content Recommendations on the page is accessible."
+	@priority = 4
+	test ViewAccessibilityOfUsersPersonalizedContentRecommendationsCollectionProvider {
+		task ("Given a page designer has a Collection Display on a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+		}
+
+		task ("When the page designer selects the collection provider in the Collection Display") {
+			PageEditor.gotoConfiguration(fragmentName = "Collection Display");
+
+			Click(
+				key_fieldLabel = "Collection",
+				key_text = "plus",
+				locator1 = "Icon#ANY_ITEM_SELECTOR");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			NavItem.click(navItem = "Collection Providers");
+		}
+
+		task ("Then the User's Personalized Content Recommendations collection provider should have correct accessibility") {
+			AssertElementAccessible(locator1 = "//dd[contains(@class,'card-page-item')][.//p[contains(@class,'card-title')][normalize-space()=\"User's Personalized Content Recommendations\"]]");
+		}
+
+		task ("Given a page designer accesses to the Pages admin") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+		}
+
+		task ("When the page designer adds a collection page") {
+			LexiconEntry.gotoAdd();
+
+			MenuItem.click(menuItem = "Collection Page");
+		}
+
+		task ("Then the User's Personalized Content Recommendations collection provider should have correct accessibility") {
+			NavItem.click(navItem = "Collection Providers");
+
+			AssertElementAccessible(locator1 = "//dd[contains(@class,'card-page-item')][.//p[contains(@class,'card-title')][normalize-space()=\"User's Personalized Content Recommendations\"]]");
+		}
+	}
+
+}

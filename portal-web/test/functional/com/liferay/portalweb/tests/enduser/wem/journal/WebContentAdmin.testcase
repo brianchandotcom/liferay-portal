@@ -138,6 +138,158 @@ definition {
 			webContentTitle = "WC WebContent Title 3");
 	}
 
+	@description = "This is a test for LPS-202596. The content creator could filter web contents by Versions type."
+	@priority = 3
+	test CanFilterByVersionsType {
+		property custom.properties = "feature.flag.LPS-196768=true";
+
+		task ("Given a site administrator has a folder and a web content with three versions") {
+			JSONWebcontent.addFolder(
+				folderName = "WC Folder Name",
+				groupName = "Test Site Name");
+
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content Version 1",
+				groupName = "Test Site Name",
+				title = "Web Content Title Version 1");
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title Version 1");
+
+			WebContent.editCP(
+				webContentContentEdit = "Web Content Content Version 2",
+				webContentTitle = "Web Content Title Version 1",
+				webContentTitleEdit = "Web Content Title Version 2");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title Version 2");
+
+			WebContent.editCP(
+				webContentContentEdit = "Web Content Content Version 3",
+				webContentTitle = "Web Content Title Version 2",
+				webContentTitleEdit = "Web Content Title Version 3");
+		}
+
+		task ("When open the dropdown menu of Filter") {
+			Click(locator1 = "ManagementBar#FILTER");
+		}
+
+		task ("Then assert can filter by versions type") {
+			task ("View the search results message is 3 Results Found With Filters Type: Versions") {
+				MenuItem.click(menuItem = "Versions");
+
+				AssertTextEquals(
+					locator1 = "ManagementBar#SEARCH_RESULT_SUMMARY",
+					value1 = "3 Results Found With Filters");
+
+				AssertVisible(
+					key_filter = "Type: Versions",
+					locator1 = "ManagementBar#SEARCH_FILTER_LABEL_X");
+			}
+
+			task ("View the web content folder is not shown") {
+				LexiconList.viewListEntryNotPresent(listEntry = "WC Folder Name");
+			}
+
+			task ("View all three versions of web contents are shown") {
+				for (var webContentTitle : list "Web Content Title Version 1,Web Content Title Version 2,Web Content Title Version 3") {
+					LexiconList.viewListEntryTitle(listEntry = ${webContentTitle});
+				}
+			}
+
+			task ("View the version labels are shown on web contents") {
+				AssertTextEquals(
+					key_webContentTitle = "Web Content Title Version 1",
+					locator1 = "WebContentSearchResults#STATUS",
+					value1 = "Version 1.0");
+
+				AssertTextEquals(
+					key_webContentTitle = "Web Content Title Version 2",
+					locator1 = "WebContentSearchResults#STATUS",
+					value1 = "Version 1.1");
+
+				AssertTextEquals(
+					key_webContentTitle = "Web Content Title Version 3",
+					locator1 = "WebContentSearchResults#STATUS",
+					value1 = "Version 1.2");
+			}
+
+			task ("Change to the Cards view, view the web content folder is not shown") {
+				ManagementBar.changeDisplayStyle(displayStyle = "Cards");
+
+				LexiconCard.viewCardNotPresent(card = "WC Folder Name");
+			}
+
+			task ("View all three versions of web contents are shown") {
+				for (var webContentTitle : list "Web Content Title Version 1,Web Content Title Version 2,Web Content Title Version 3") {
+					LexiconCard.viewCardTitle(card = ${webContentTitle});
+				}
+			}
+
+			task ("View the version labels are shown on web contents") {
+				AssertTextEquals(
+					key_webContentTitle = "Web Content Title Version 1",
+					locator1 = "WebContentSearchResults#STATUS",
+					value1 = "Version 1.0");
+
+				AssertTextEquals(
+					key_webContentTitle = "Web Content Title Version 2",
+					locator1 = "WebContentSearchResults#STATUS",
+					value1 = "Version 1.1");
+
+				AssertTextEquals(
+					key_webContentTitle = "Web Content Title Version 3",
+					locator1 = "WebContentSearchResults#STATUS",
+					value1 = "Version 1.2");
+			}
+
+			task ("Change to the Table view, view the web content folder is not shown") {
+				ManagementBar.changeDisplayStyle(displayStyle = "Table");
+
+				LexiconTable.viewTableEntryNotPresent(tableEntry = "WC Folder Name");
+			}
+
+			task ("View all three versions of web contents are shown") {
+				for (var webContentTitle : list "Web Content Title Version 1,Web Content Title Version 2,Web Content Title Version 3") {
+					LexiconTable.viewTableEntryTitle(tableEntry = ${webContentTitle});
+				}
+			}
+
+			task ("View the version labels are shown on web contents") {
+				AssertTextEquals(
+					key_webContentTitle = "Web Content Title Version 1",
+					locator1 = "WebContentSearchResults#STATUS",
+					value1 = "Version 1.0");
+
+				AssertTextEquals(
+					key_webContentTitle = "Web Content Title Version 2",
+					locator1 = "WebContentSearchResults#STATUS",
+					value1 = "Version 1.1");
+
+				AssertTextEquals(
+					key_webContentTitle = "Web Content Title Version 3",
+					locator1 = "WebContentSearchResults#STATUS",
+					value1 = "Version 1.2");
+			}
+
+			task ("Open the dropdown menu of the latest version and view the Edit action is shown") {
+				Click.waitForMenuToggleJSClick(
+					key_tableEntry = "Web Content Title Version 3",
+					locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
+
+				MenuItem.viewVisible(menuItem = "Edit");
+			}
+
+			task ("Open the dropdown menu of the previous versions and view the Edit Latest Version is shown") {
+				Click.waitForMenuToggleJSClick(
+					key_tableEntry = "Web Content Title Version 1",
+					locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
+
+				MenuItem.viewVisible(menuItem = "Edit Latest Version");
+			}
+		}
+	}
+
 	@description = "This is a test for LPS-202596. The content creator could filter assets by Web Content type in Web Content admin."
 	@priority = 3
 	test CanFilterByWebContentType {

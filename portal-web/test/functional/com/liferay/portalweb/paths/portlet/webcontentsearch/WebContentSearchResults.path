@@ -16,6 +16,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>STATUS</td>
+	<td>//*[@data-qa-id='row' and contains(.,'${key_webContentTitle}')]//span[contains(@class,'label-secondary')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONTENT</td>
 	<td>//*[@data-qa-id='row' and contains(.,'${key_webContentTitle}')]//h6[2]</td>
 	<td></td>

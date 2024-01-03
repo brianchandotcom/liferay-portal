@@ -89,6 +89,18 @@ public class EditableFragmentEntryValidator
 							"drop-zones-or-widgets-in-it"));
 			}
 		}
+
+		for (Element element :
+				document.getElementsByAttribute("data-lfr-editable-type")) {
+
+			if (Validator.isNull(element.attr("data-lfr-editable-id"))) {
+				throw new FragmentEntryContentException(
+					_language.get(
+						locale,
+						"you-must-define-a-unique-id-for-each-editable-" +
+							"element"));
+			}
+		}
 	}
 
 	@Activate

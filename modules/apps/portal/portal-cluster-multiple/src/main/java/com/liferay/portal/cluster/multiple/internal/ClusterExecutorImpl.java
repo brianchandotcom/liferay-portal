@@ -74,8 +74,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.portal.cluster.multiple.configuration.ClusterExecutorConfiguration",
-	enabled = false,
-	service = {ClusterExecutor.class, ClusterExecutorImpl.class}
+	enabled = false, service = ClusterExecutor.class
 )
 public class ClusterExecutorImpl implements ClusterExecutor {
 

@@ -31,6 +31,56 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-200644. View content under the collection under Most Popular Content on a content page."
+	@priority = 4
+	test AddCollectionDisplayWithMostPopularContentOnContentPage {
+		task ("Given a page designer has a Collection Display on a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+		}
+
+		task ("When the page designer selects the collection provider in the Collection Display") {
+			PageEditor.gotoConfiguration(fragmentName = "Collection Display");
+
+			Click(
+				key_fieldLabel = "Collection",
+				key_text = "plus",
+				locator1 = "Icon#ANY_ITEM_SELECTOR");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			NavItem.click(navItem = "Collection Providers");
+		}
+
+		task ("Then the page designer could select the Most Popular Content in Collection Display") {
+			LexiconCard.viewCardLabel(
+				card = "Most Popular Content",
+				cardLabel = "Beta");
+
+			LexiconCard.clickCard(card = "Most Popular Content");
+
+			SelectFrameTop();
+
+			PageEditor.waitForAutoSave();
+
+			PageEditor.viewItemSelectorText(
+				fieldLabel = "Collection",
+				text = "Most Popular Content");
+
+			PageEditor.viewCollectionItem(assetTitle = "Sample Collection Item");
+		}
+	}
+
 	@description = "This is a test for LPS-200576. View content under the collection under User's personalized content recommendations on a content page."
 	@priority = 4
 	test AddCollectionDisplayWithUsersPersonalizedContentRecommendationsOnContentPage {

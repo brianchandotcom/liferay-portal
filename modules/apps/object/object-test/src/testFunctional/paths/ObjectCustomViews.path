@@ -96,6 +96,11 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>ADD_COLUMN</td>
+		<td>//button[contains(text(),'Add Column')]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>ADD_COLUMNS_COLUMN_LABEL</td>
 		<td>//span[@class="custom-control-label-text" and contains(text(),'${key_columnName}')]</td>
 		<td></td>
@@ -231,8 +236,8 @@
 		<td></td>
 	</tr>
 	<tr>
-		<td>ADD_BUTTON_FILTERS</td>
-		<td>//h3[(@class='lfr-objects__card-title') and text()='Filters']/../..//button[contains(@class,'nav-btn nav-btn-monospaced btn btn-monospaced btn-primary')]</td>
+		<td>ADD_NEW_FILTER</td>
+		<td>//button[contains(text(),'New Filter')]</td>
 		<td></td>
 	</tr>
 	<tr>

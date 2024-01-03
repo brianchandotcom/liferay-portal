@@ -281,4 +281,4 @@ function getBreadcrumbFromURL(url) {
 		.join(' ');
 }
 
-fragmentElement.querySelector('.public-sites-navigation').style.zIndex = '4';
+fragmentElement.querySelector('.navigation-header').style.zIndex = '4';

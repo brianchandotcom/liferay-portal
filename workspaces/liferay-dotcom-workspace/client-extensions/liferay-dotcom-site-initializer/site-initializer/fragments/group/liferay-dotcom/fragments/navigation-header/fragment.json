@@ -4,6 +4,6 @@
 	"htmlPath": "index.html",
 	"icon": "code",
 	"jsPath": "index.js",
-	"name": "Public Sites Navigation",
+	"name": "Navigation Header",
 	"type": "component"
 }

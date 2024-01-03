@@ -5215,6 +5215,69 @@ ${custom.upgrade.properties}</echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="print-docker-browser-logs">
+		<sequential>
+			<get-browser-property property.name="browser.host" />
+
+			<print-docker-logs container.name="${browser.host}" />
+		</sequential>
+	</macrodef>
+
+	<macrodef name="print-docker-database-logs">
+		<sequential>
+			<get-database-property property.name="database.host" />
+
+			<print-docker-logs container.name="${database.host}" />
+		</sequential>
+	</macrodef>
+
+	<macrodef name="print-docker-logs">
+		<attribute name="container.name" />
+
+		<sequential>
+			<local name="docker.logs.dir" />
+
+			<condition else="/tmp/docker-logs" property="docker.logs.dir" value="${env.BUILD_DIR}/docker-logs">
+				<and>
+					<isset property="env.BUILD_DIR" />
+					<isset property="env.BUILD_USER_CONTENT_URL" />
+				</and>
+			</condition>
+
+			<mkdir dir="${docker.logs.dir}" />
+
+			<local name="container.file.name" />
+
+			<property name="container.file.name" value="@{container.name}.log" />
+
+			<execute failonerror="false">
+				<![CDATA[
+					docker logs @{container.name} > ${docker.logs.dir}/${container.file.name}
+				]]>
+			</execute>
+
+			<if>
+				<isset property="env.BUILD_USER_CONTENT_URL" />
+				<then>
+					<echo>${env.BUILD_USER_CONTENT_URL}/docker-logs/${container.file.name}</echo>
+				</then>
+				<else>
+					<print-file file.name="${docker.logs.dir}/${container.file.name}" />
+				</else>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="print-docker-stats">
+		<sequential>
+			<execute>
+				<![CDATA[
+					docker stats --no-stream
+				]]>
+			</execute>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="print-file">
 		<attribute default="-1" name="file.line.count" />
 		<attribute name="file.name" />
@@ -7218,11 +7281,9 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 
 			<lstopwatch action="total" name="start.app.server.@{app.server.bundle.index}" />
 
-			<execute>
-				<![CDATA[
-					docker stats --no-stream
-				]]>
-			</execute>
+			<print-docker-database-logs />
+
+			<print-docker-stats />
 		</sequential>
 	</macrodef>
 
@@ -7801,6 +7862,10 @@ ${docker.start.error}</fail>
 					/>
 				</else>
 			</if>
+
+			<print-docker-database-logs />
+
+			<print-docker-stats />
 
 			<lstopwatch action="total" name="stop.app.server.@{app.server.bundle.index}" />
 		</sequential>
@@ -9420,6 +9485,8 @@ go</echo>
 	</target>
 
 	<target name="clean-up-selenium-driver">
+		<print-docker-browser-logs />
+
 		<if>
 			<equals arg1="${browser.type}" arg2="chrome" />
 			<then>
@@ -16770,11 +16837,9 @@ CATALINA_OPTS="$CATALINA_OPTS -Dcom.sun.management.jmxremote -Dcom.sun.managemen
 			<finally>
 				<lstopwatch action="total" name="upgrade-legacy-database" />
 
-				<execute>
-					<![CDATA[
-						docker stats --no-stream
-					]]>
-				</execute>
+				<print-docker-database-logs />
+
+				<print-docker-stats />
 			</finally>
 		</trycatch>
 	</target>

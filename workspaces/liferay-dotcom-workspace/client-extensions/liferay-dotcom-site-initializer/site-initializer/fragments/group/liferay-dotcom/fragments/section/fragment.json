@@ -1,0 +1,36 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "medium",
+					"label": "Vertical Spacing",
+					"name": "verticalSpacing",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"value": "py-0",
+								"label": "None"
+							},
+							{
+								"value": "small",
+								"label": "Small"
+							},
+							{
+								"value": "medium",
+								"label": "Medium (default)"
+							},
+							{
+								"value": "large",
+								"label": "Large"
+							}
+						]
+					}
+				}
+			],
+			"label": "Spacing"
+		}
+	]
+}

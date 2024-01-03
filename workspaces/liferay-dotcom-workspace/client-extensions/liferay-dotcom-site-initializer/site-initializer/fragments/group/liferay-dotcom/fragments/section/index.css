@@ -1,0 +1,41 @@
+.f-section {
+	padding-left: 1.5rem;
+	padding-right: 1.5rem;
+}
+
+.f-section .section-dropzone-container {
+	max-width: var(--container-max-xl);
+}
+
+.f-section .section-dropzone-container>div:first-of-type {
+	width: 100%;
+}
+
+.f-section.small {
+	padding-bottom: 2.5rem;
+	padding-top: 2.5rem;
+}
+
+.f-section.medium {
+	padding-bottom: 5rem;
+	padding-top: 5rem;
+}
+
+.f-section.large {
+	padding-bottom: 7.5rem;
+	padding-top: 7.5rem;
+}
+
+@media screen and (min-width: 993px) {
+	.f-section {
+		padding-left: 5rem;
+		padding-right: 5rem;
+	}
+}
+
+@media screen and (min-width: 768px) and (max-width: 992px) {
+	.f-section {
+		padding-left: 2.5rem;
+		padding-right: 2.5rem;
+	}
+}

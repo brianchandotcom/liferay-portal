@@ -1623,6 +1623,11 @@
 			<description name="Sorts and groups imports in `UpgradeCatchAllCheck.testjava` file." />
 			<weight>1</weight>
 		</check>
+		<check name="UpgradeCatchAllJavaTermOrderCheck">
+			<category name="Upgrade" />
+			<description name="Sorts javaterms in `UpgradeCatchAllCheck.testjava` file." />
+			<weight>1</weight>
+		</check>
 		<check name="UpgradeCatchAllJSPImportsCheck">
 			<category name="Upgrade" />
 			<description name="Sorts and groups imports in `UpgradeCatchAllCheck.testjsp` file." />

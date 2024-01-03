@@ -1,0 +1,17 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "",
+					"description": "Anchor URL",
+					"label": "Anchor URL",
+					"name": "anchorUrl",
+					"type": "text"
+				}
+			],
+			"label": "configuration"
+		}
+	]
+}

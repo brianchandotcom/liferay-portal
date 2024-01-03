@@ -1,0 +1,32 @@
+html {
+	scroll-behavior: smooth;
+}
+
+.anchor-nav-sticky-section {
+	position: sticky;
+	top: 112px;
+	z-index: 11;
+
+	@media (max-width: 599px) {
+		top: 64px;
+	}
+}
+
+.f-anchor-nav-container {
+	background-color: var(--color-neutral-0);
+	border-radius: 0 0 20px 20px;
+	padding-top: 1rem;
+}
+
+.f-anchor-nav-container .anchor-nav-container {
+	background-color: var(--color-neutral-1);
+	border-radius: 20px;
+	height: unset;
+	max-width: var(--container-max-xl);
+	overflow-x: auto;
+}
+
+.f-anchor-nav-container .anchor-nav-container>div,
+.f-anchor-nav-container .anchor-nav-container>lfr-drop-zone>.lfr-tooltip-scope>.page-editor>.page-editor__root {
+	display: flex;
+}

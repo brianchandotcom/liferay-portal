@@ -1,0 +1,23 @@
+.f-anchor-nav-link .anchor-nav-link {
+	background-color: var(--color-white);
+	border-radius: 999px;
+	cursor: pointer;
+	padding: 8px 14px;
+	white-space: nowrap;
+}
+
+.f-anchor-nav-link .anchor-nav-link .anchor-nav-link-text {
+	color: var(--color-brand-primary-darken-5);
+}
+
+.f-anchor-nav-link .anchor-nav-link:hover .anchor-nav-link-text {
+	color: var(--color-brand-primary-darken-2);
+}
+
+.f-anchor-nav-link .anchor-nav-link.active {
+	background: rgba(0, 0, 0, 0.03);
+}
+
+.f-anchor-nav-link .anchor-nav-link.active .anchor-nav-link-text {
+	color: var(--color-brand-primary-darken-2);
+}

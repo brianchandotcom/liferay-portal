@@ -1,0 +1,25 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "",
+					"description": "id (e.g. learn-more)",
+					"label": "Anchor ID",
+					"name": "id",
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "0px",
+					"description": "Negative values move anchor down (e.g. -112px)",
+					"label": "top-position",
+					"name": "topPosition",
+					"type": "text"
+				}
+			],
+			"label": "configuration"
+		}
+	]
+}

@@ -39,7 +39,7 @@ export function align(
 ): string;
 
 /* Cancels the scheduled debounced function. */
-export function cancelDebounce(debounced: () => void): void;
+export function cancelDebounce(debounced: (...args: any[]) => void): void;
 
 export function createActionURL(
 	basePortletURL: string,
@@ -62,7 +62,10 @@ export function createResourceURL(
 ): URL;
 
 /* Debounces function execution. */
-export function debounce(fn: () => void, delay: number): () => void;
+export function debounce(
+	fn: (...args: any[]) => void,
+	delay: number
+): (...args: any[]) => void;
 
 /**
  * Decodes the update strings.

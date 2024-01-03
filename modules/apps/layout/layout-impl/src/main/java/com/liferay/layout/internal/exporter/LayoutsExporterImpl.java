@@ -5,19 +5,12 @@
 
 package com.liferay.layout.internal.exporter;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.PropertyAccessor;
-import com.fasterxml.jackson.databind.MapperFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.ser.FilterProvider;
-import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
-import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
-import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
-
+import com.liferay.headless.delivery.dto.v1_0.DisplayPageTemplate;
+import com.liferay.headless.delivery.dto.v1_0.MasterPage;
 import com.liferay.headless.delivery.dto.v1_0.PageDefinition;
+import com.liferay.headless.delivery.dto.v1_0.PageTemplate;
+import com.liferay.headless.delivery.dto.v1_0.PageTemplateCollection;
+import com.liferay.headless.delivery.dto.v1_0.UtilityPageTemplate;
 import com.liferay.layout.exporter.LayoutsExporter;
 import com.liferay.layout.internal.headless.delivery.dto.v1_0.util.DisplayPageTemplateUtil;
 import com.liferay.layout.internal.headless.delivery.dto.v1_0.util.MasterPageUtil;
@@ -243,20 +236,15 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 			"display-page-templates/" +
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryKey();
 
-		SimpleFilterProvider simpleFilterProvider = new SimpleFilterProvider();
-
-		FilterProvider filterProvider = simpleFilterProvider.addFilter(
-			"Liferay.Vulcan", SimpleBeanPropertyFilter.serializeAll());
-
-		ObjectWriter objectWriter = _objectMapper.writer(filterProvider);
+		DisplayPageTemplate displayPageTemplate =
+			DisplayPageTemplateUtil.toDisplayPageTemplate(
+				layoutPageTemplateEntry);
 
 		zipWriter.addEntry(
 			displayPagePath + StringPool.SLASH +
 				LayoutPageTemplateExportImportConstants.
 					FILE_NAME_DISPLAY_PAGE_TEMPLATE,
-			objectWriter.writeValueAsString(
-				DisplayPageTemplateUtil.toDisplayPageTemplate(
-					layoutPageTemplateEntry)));
+			displayPageTemplate.toString());
 
 		Layout layout = _layoutLocalService.fetchLayout(
 			layoutPageTemplateEntry.getPlid());
@@ -270,7 +258,7 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 
 			zipWriter.addEntry(
 				displayPagePath + "/page-definition.json",
-				objectWriter.writeValueAsString(pageDefinition));
+				pageDefinition.toString());
 		}
 
 		FileEntry previewFileEntry = _getPreviewFileEntry(
@@ -295,18 +283,13 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 			"layout-utility-page-template/" +
 				layoutUtilityPageEntry.getExternalReferenceCode();
 
-		SimpleFilterProvider simpleFilterProvider = new SimpleFilterProvider();
-
-		FilterProvider filterProvider = simpleFilterProvider.addFilter(
-			"Liferay.Vulcan", SimpleBeanPropertyFilter.serializeAll());
-
-		ObjectWriter objectWriter = _objectMapper.writer(filterProvider);
+		UtilityPageTemplate utilityPageTemplate =
+			UtilityPageTemplateUtil.toUtilityPageTemplate(
+				layoutUtilityPageEntry);
 
 		zipWriter.addEntry(
 			layoutUtilityPageEntryPath + "/utility-page.json",
-			objectWriter.writeValueAsString(
-				UtilityPageTemplateUtil.toUtilityPageTemplate(
-					layoutUtilityPageEntry)));
+			utilityPageTemplate.toString());
 
 		Layout layout = _layoutLocalService.fetchLayout(
 			layoutUtilityPageEntry.getPlid());
@@ -320,7 +303,7 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 
 			zipWriter.addEntry(
 				layoutUtilityPageEntryPath + "/page-definition.json",
-				objectWriter.writeValueAsString(pageDefinition));
+				pageDefinition.toString());
 		}
 
 		FileEntry previewFileEntry = _getPreviewFileEntry(
@@ -345,18 +328,13 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 			"master-pages/" +
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryKey();
 
-		SimpleFilterProvider simpleFilterProvider = new SimpleFilterProvider();
-
-		FilterProvider filterProvider = simpleFilterProvider.addFilter(
-			"Liferay.Vulcan", SimpleBeanPropertyFilter.serializeAll());
-
-		ObjectWriter objectWriter = _objectMapper.writer(filterProvider);
+		MasterPage masterPage = MasterPageUtil.toMasterPage(
+			layoutPageTemplateEntry);
 
 		zipWriter.addEntry(
 			masterLayoutPath + StringPool.SLASH +
 				LayoutPageTemplateExportImportConstants.FILE_NAME_MASTER_PAGE,
-			objectWriter.writeValueAsString(
-				MasterPageUtil.toMasterPage(layoutPageTemplateEntry)));
+			masterPage.toString());
 
 		Layout layout = _layoutLocalService.fetchLayout(
 			layoutPageTemplateEntry.getPlid());
@@ -370,7 +348,7 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 
 			zipWriter.addEntry(
 				masterLayoutPath + "/page-definition.json",
-				objectWriter.writeValueAsString(pageDefinition));
+				pageDefinition.toString());
 		}
 
 		FileEntry previewFileEntry = _getPreviewFileEntry(
@@ -403,30 +381,27 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 		String layoutPageTemplateCollectionPath =
 			"page-templates/" + layoutPageTemplateCollectionKey;
 
-		SimpleFilterProvider simpleFilterProvider = new SimpleFilterProvider();
-
-		FilterProvider filterProvider = simpleFilterProvider.addFilter(
-			"Liferay.Vulcan", SimpleBeanPropertyFilter.serializeAll());
-
-		ObjectWriter objectWriter = _objectMapper.writer(filterProvider);
+		PageTemplateCollection pageTemplateCollection =
+			PageTemplateCollectionUtil.toPageTemplateCollection(
+				layoutPageTemplateCollection);
 
 		zipWriter.addEntry(
 			layoutPageTemplateCollectionPath + StringPool.SLASH +
 				LayoutPageTemplateExportImportConstants.
 					FILE_NAME_PAGE_TEMPLATE_COLLECTION,
-			objectWriter.writeValueAsString(
-				PageTemplateCollectionUtil.toPageTemplateCollection(
-					layoutPageTemplateCollection)));
+			pageTemplateCollection.toString());
 
 		String layoutPageTemplateEntryPath =
 			layoutPageTemplateCollectionPath + StringPool.SLASH +
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryKey();
 
+		PageTemplate pageTemplate = PageTemplateUtil.toPageTemplate(
+			layoutPageTemplateEntry);
+
 		zipWriter.addEntry(
 			layoutPageTemplateEntryPath + StringPool.SLASH +
 				LayoutPageTemplateExportImportConstants.FILE_NAME_PAGE_TEMPLATE,
-			objectWriter.writeValueAsString(
-				PageTemplateUtil.toPageTemplate(layoutPageTemplateEntry)));
+			pageTemplate.toString());
 
 		Layout layout = _layoutLocalService.fetchLayout(
 			layoutPageTemplateEntry.getPlid());
@@ -440,7 +415,7 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 
 			zipWriter.addEntry(
 				layoutPageTemplateEntryPath + "/page-definition.json",
-				objectWriter.writeValueAsString(pageDefinition));
+				pageDefinition.toString());
 		}
 
 		FileEntry previewFileEntry = _getPreviewFileEntry(
@@ -456,20 +431,6 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutsExporterImpl.class);
-
-	private static final ObjectMapper _objectMapper = new ObjectMapper() {
-		{
-			configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-			configure(SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-			enable(SerializationFeature.INDENT_OUTPUT);
-			setDateFormat(new ISO8601DateFormat());
-			setSerializationInclusion(JsonInclude.Include.NON_NULL);
-			setVisibility(
-				PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-			setVisibility(
-				PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-		}
-	};
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;

@@ -45,6 +45,17 @@ definition {
 				value1 = "\TAB");
 
 			AssertElementFocused(
+				key_configurationName = "Layout Crawler Client Configuration",
+				key_configurationScope = "Site Scope",
+				locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME");
+
+			KeyPress(
+				key_configurationName = "Layout Crawler Client Configuration",
+				key_configurationScope = "Site Scope",
+				locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME",
+				value1 = "\TAB");
+
+			AssertElementFocused(
 				key_toggleSwitchLabel = "Allow Automatic Unlocking Process",
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 		}

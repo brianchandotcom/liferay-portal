@@ -183,10 +183,6 @@ public class WidgetInstanceDefinitionDTOConverterTest {
 			new Class<?>[] {FragmentEntryLink.class, String.class},
 			fragmentEntryLink, testPortletId);
 
-		_layoutLocalService.deleteLayout(layout.getPlid());
-		_resourceActionLocalService.deleteResourceAction(
-			resourceAction.getResourceActionId());
-
 		Assert.assertNotNull(widgetInstance);
 
 		Map<String, Object> widgetConfig = widgetInstance.getWidgetConfig();
@@ -215,6 +211,10 @@ public class WidgetInstanceDefinitionDTOConverterTest {
 		Assert.assertEquals(Arrays.toString(actionKeys), 1, actionKeys.length);
 
 		Assert.assertEquals("VIEW", actionKeys[0]);
+
+		_layoutLocalService.deleteLayout(layout.getPlid());
+		_resourceActionLocalService.deleteResourceAction(
+			resourceAction.getResourceActionId());
 	}
 
 	private Object _getService() {

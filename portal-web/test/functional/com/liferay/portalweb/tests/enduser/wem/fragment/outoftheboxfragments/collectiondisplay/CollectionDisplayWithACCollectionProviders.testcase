@@ -81,4 +81,55 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-200576. View content under the collection under User's personalized content recommendations on a collection page."
+	@priority = 4
+	test AddCollectionPageBasedOnUsersPersonalizedContentRecommendations {
+		task ("Given a page designer accesses to the Pages admin") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+		}
+
+		task ("When the page designer adds a collection page") {
+			LexiconEntry.gotoAdd();
+
+			MenuItem.click(menuItem = "Collection Page");
+		}
+
+		task ("Then the page designer could select the User's Personalized Content Recommendations collection provider") {
+			Navigator.gotoNavTab(navTab = "Collection Providers");
+
+			LexiconCard.viewCardLabel(
+				card = "User's Personalized Content Recommendations",
+				cardLabel = "Beta");
+
+			LexiconCard.clickCard(card = "User's Personalized Content Recommendations");
+
+			LexiconCard.clickCard(card = "Blank");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			PortletEntry.inputName(name = "Test Page Name");
+
+			Button.click(button = "Add");
+
+			SelectFrameTop();
+
+			PageEditor.assertFragmentSidebarLoaded();
+
+			ControlMenu.viewHeaderDraftTitle(headerTitle = "Test Page Name");
+
+			PageEditor.viewFragmentEditableText(
+				editableText = "User's Personalized Content Recommendations",
+				fragmentName = "Heading",
+				id = "element-text");
+
+			PageEditor.viewCollectionItem(assetTitle = "Sample Collection Item");
+
+			PageEditor.gotoConfiguration(fragmentName = "Collection Display");
+
+			PageEditor.viewItemSelectorText(
+				fieldLabel = "Collection",
+				text = "User's Personalized Content Recommendations");
+		}
+	}
+
 }

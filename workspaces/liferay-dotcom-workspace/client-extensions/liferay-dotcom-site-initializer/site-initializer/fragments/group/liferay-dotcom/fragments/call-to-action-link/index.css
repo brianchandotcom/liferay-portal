@@ -1,0 +1,66 @@
+.f-cta-link {
+	color: var(--color-action-primary-default);
+	text-decoration: none;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	transition: color 0.15s ease-in-out, opacity 0.15s ease-in-out;
+	font-size: var(--text-link-md-font-size);
+	font-weight: var(--font-weight-semi-bold);
+	width: fit-content;
+}
+
+.f-cta-link.medium {
+	font-size: var(--text-link-md-font-size);
+}
+
+.f-cta-link.large {
+	font-size: var(--text-link-lg-font-size);
+}
+
+.f-cta-link:hover,
+.f-cta-link:focus,
+.f-cta-link:focus-visible {
+	color: var(--color-action-primary-hover);
+	text-decoration: none;
+}
+
+.f-cta-link:focus-visible {
+	box-shadow: none;
+	outline-offset: 4px;
+	outline: var(--color-brand-primary-lighten-2) solid 2px;
+	text-decoration: none;
+}
+
+.f-cta-link:active {
+	color: var(--color-action-primary-active);
+}
+
+.f-cta-link.inverted {
+	color: var(--color-action-primary-inverted);
+	opacity: 0.9;
+}
+
+.f-cta-link:hover.inverted,
+.f-cta-link:focus.inverted,
+.f-cta-link:focus-visible.inverted,
+.f-cta-link:active.inverted {
+	color: var(--color-action-primary-inverted);
+	opacity: 1;
+}
+
+.cta-link-icon {
+	height: 16px;
+	width: 16px;
+	transition: color 0.15s ease-in-out, transform 0.15s ease-in-out;
+}
+
+.cta-link-icon svg {
+	vertical-align: top;
+}
+
+.f-cta-link:hover .cta-link-icon,
+.f-cta-link:focus .cta-link-icon,
+.f-cta-link:focus-visible .cta-link-icon {
+	transform: translateX(4px);
+}

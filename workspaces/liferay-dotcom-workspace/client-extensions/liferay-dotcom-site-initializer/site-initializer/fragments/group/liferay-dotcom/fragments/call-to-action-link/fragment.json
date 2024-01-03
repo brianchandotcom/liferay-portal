@@ -1,0 +1,66 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+                    "dataType": "string",
+                    "defaultValue": "medium",
+                    "label": "Size",
+                    "name": "size",
+                    "type": "select",
+                    "typeOptions": {
+                        "validValues": [
+                        	{
+                                "value": "medium",
+                                "label": "Medium"
+                            },
+                            {
+                                "value": "large",
+                                "label": "Large"
+                            }
+                        ]
+                    }
+                },
+                {
+					"dataType": "string",
+					"defaultValue": false,
+					"description": "Check for nesting in other links, don't enter a URL",
+					"label": "Pseudo Link",
+					"name": "pseudoLink",
+					"type": "checkbox"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": true,
+					"label": "Icon",
+					"name": "icon",
+					"type": "checkbox"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": true,
+					"label": "Inverted",
+					"name": "inverted",
+					"type": "checkbox"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "",
+					"description": "url",
+					"label": "url",
+					"localizable": true,
+					"name": "url",
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": false,
+					"label": "Open in a new tab.",
+					"name": "newTab",
+					"type": "checkbox"
+				}
+			],
+			"label": "Configurations"
+		}
+	]
+}

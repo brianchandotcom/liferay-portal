@@ -1,0 +1,61 @@
+@component-name = "portal-content-dashboard"
+definition {
+
+	property ci.retries.disabled = "true";
+	property portal.accessibility = "true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Echo Accessibility";
+	property testray.main.component.name = "Content Dashboard";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		HeadlessSite.addSite(siteName = "Test Site Name");
+
+		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+	}
+
+	@description = "This is a test for LPS-177756. Using Keyboard Navigation it is possible to access the back button of the DPTs open from Content Dashboard and the tooltip of the back button is Go to Content Dashboard."
+	@priority = 3
+	test ViewBackButtonTooltipInAssociatedDisplayPageTemplateViaKeyboard {
+		task ("Given the Document edit mode page") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "DPT Name",
+				groupName = "Test Site Name",
+				subType = "Basic Web Content");
+
+			JSONLayoutpagetemplate.setLayoutPageTemplateEntryAsDefault(
+				groupName = "Test Site Name",
+				layoutPageTemplateEntryName = "DPT Name",
+				type = "Display Page Template");
+
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+
+			ContentDashboard.goToContentDashboard();
+
+			LexiconTable.clickTableEntryTitle(tableEntry = "Web Content Title");
+		}
+
+		task ("When hover on the back button via keyboard") {
+			KeyPress(
+				locator1 = "ProductMenu#TOGGLE",
+				value1 = "\TAB");
+
+			AssertElementFocused(locator1 = "Icon#BACK");
+		}
+
+		task ("Then see the tooltip message") {
+			AssertVisible(
+				key_content = "Go to Content Dashboard",
+				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
+		}
+	}
+
+}

@@ -1,0 +1,31 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "",
+					"description": "modal-id",
+					"label": "modal-id",
+					"name": "modalId",
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": false,
+					"label": "modal-edit-mode",
+					"name": "modalEditMode",
+					"type": "checkbox"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "",
+					"label": "Content Init Event",
+					"name": "contentInitEvent",
+					"type": "text"
+				}
+			],
+			"label": "configuration"
+		}
+	]
+}

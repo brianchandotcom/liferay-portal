@@ -13,6 +13,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldId;
 import com.liferay.portal.vulcan.fields.NestedFieldsContext;
@@ -306,6 +307,11 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 				Map.Entry<String, Class<?>> resourceMethodArgNameTypeEntry)
 			throws Exception {
 
+			String argName = resourceMethodArgNameTypeEntry.getKey();
+
+			String methodName =
+				"get" + StringUtil.upperCaseFirstLetter(argName);
+
 			List<Class<?>> itemClasses = new ArrayList<>();
 
 			Class<?> itemClass = item.getClass();
@@ -316,18 +322,15 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 
 			for (Class<?> curItemClass : itemClasses) {
 				try {
-					Field itemField = curItemClass.getDeclaredField(
-						resourceMethodArgNameTypeEntry.getKey());
+					Method method = curItemClass.getMethod(methodName);
 
-					if (itemField != null) {
-						itemField.setAccessible(true);
-
-						return itemField.get(item);
+					if (method != null) {
+						return method.invoke(item);
 					}
 				}
-				catch (NoSuchFieldException noSuchFieldException) {
+				catch (NoSuchMethodException noSuchMethodException) {
 					if (_log.isDebugEnabled()) {
-						_log.debug(noSuchFieldException);
+						_log.debug(noSuchMethodException);
 					}
 				}
 			}

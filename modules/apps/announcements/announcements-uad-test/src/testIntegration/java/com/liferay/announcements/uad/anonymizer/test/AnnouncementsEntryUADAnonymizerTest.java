@@ -7,7 +7,7 @@ package com.liferay.announcements.uad.anonymizer.test;
 
 import com.liferay.announcements.kernel.model.AnnouncementsEntry;
 import com.liferay.announcements.kernel.service.AnnouncementsEntryLocalService;
-import com.liferay.announcements.uad.test.AnnouncementsEntryUADTestUtil;
+import com.liferay.announcements.uad.test.util.AnnouncementsEntryUADTestUtil;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ClassNameLocalService;

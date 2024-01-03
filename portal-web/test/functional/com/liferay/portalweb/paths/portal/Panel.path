@@ -41,6 +41,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PANEL_HEADER</td>
+	<td>//button[contains(@class,'panel-header')][normalize-space()='${key_panel}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PANEL_HELP_TEXT</td>
 	<td>//div[contains(@class,'panel')][.//*[normalize-space()='${key_panel}'][contains(@class,'collapse')][not(contains(@data-qa-id,'app'))]]//p</td>
 	<td></td>

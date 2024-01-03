@@ -67,13 +67,6 @@ public interface JournalServiceConfiguration {
 	public boolean articleCommentsEnabled();
 
 	@Meta.AD(
-		deflt = "true",
-		description = "journal-article-database-search-content-keywords",
-		name = "database-content-keyword-search-enabled", required = false
-	)
-	public boolean databaseContentKeywordSearchEnabled();
-
-	@Meta.AD(
 		deflt = "true", description = "journal-article-expire-all-versions",
 		name = "expire-all-article-versions-enabled", required = false
 	)

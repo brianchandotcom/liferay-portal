@@ -157,8 +157,6 @@ definition {
 
 		FormFields.viewCheckboxNotChecked(fieldName = "articleCommentsEnabled");
 
-		FormFields.viewCheckboxNotChecked(fieldName = "databaseContentKeywordSearchEnabled");
-
 		FormFields.viewCheckboxNotChecked(fieldName = "expireAllArticleVersionsEnabled");
 
 		ApplicationsMenu.gotoPortlet(

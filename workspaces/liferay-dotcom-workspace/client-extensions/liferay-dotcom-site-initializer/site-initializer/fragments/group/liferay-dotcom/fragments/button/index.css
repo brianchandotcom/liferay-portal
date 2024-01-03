@@ -1,0 +1,99 @@
+.f-www-button {
+	background-color: var(--color-action-primary-default);
+	border-radius: var(--btn-border-radius);
+	box-shadow: var(--btn-box-shadow);
+	color: var(--color-action-primary-inverted);
+	cursor: pointer;
+	font-size: var(--btn-font-size);
+	font-weight: var(--btn-font-weight);
+	letter-spacing: inherit;
+	line-height: var(--btn-line-height);
+	padding-bottom: var(--btn-padding-y);
+	padding-left: var(--btn-padding-x);
+	padding-right: var(--btn-padding-x);
+	padding-top: var(--btn-padding-y);
+	text-align: center;
+	text-transform: none;
+	transition: color var(--transition-base), background-color var(--transition-base), border-color var(--transition-base), box-shadow var(--transition-base);
+	-ms-user-select: none;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	user-select: none;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 8px;
+	width: fit-content;
+}
+
+.f-www-button.small {
+	border-radius: var(--btn-sm-border-radius);
+	font-size: var(--btn-sm-font-size);
+	line-height: var(--btn-sm-line-height);
+	padding-bottom: var(--btn-sm-padding-y);
+	padding-left: var(--btn-sm-padding-x);
+	padding-right: var(--btn-sm-padding-x);
+	padding-top: var(--btn-sm-padding-y);
+}
+
+.f-www-button.large {
+	border-radius: var(--btn-lg-border-radius);
+	font-size: var(--btn-lg-font-size);
+	line-height: var(--btn-lg-line-height);
+	padding-bottom: var(--btn-lg-padding-y);
+	padding-left: var(--btn-lg-padding-x);
+	padding-right: var(--btn-lg-padding-x);
+	padding-top: var(--btn-lg-padding-y);
+}
+
+.f-www-button:hover,
+.f-www-button:focus,
+.f-www-button:focus-visible {
+	background-color: var(--color-action-primary-hover);
+	color: var(--color-action-primary-inverted);
+	text-decoration: none;
+	box-shadow: none;
+	outline-offset: 2px;
+	outline: var(--color-brand-primary-lighten-2) solid 2px;
+}
+
+.f-www-button:active {
+	background-color: var(--color-action-primary-active);
+}
+
+.f-www-button.inverted {
+	background-color: var(--color-action-primary-inverted);
+	color: var(--color-action-primary-hover);
+}
+
+.f-www-button:hover.inverted,
+.f-www-button:focus.inverted,
+.f-www-button:focus-visible.inverted,
+.f-www-button:active.inverted {
+	background-color: var(--color-action-primary-inverted);
+	color: var(--color-action-primary-hover);
+}
+
+.f-www-button .button-arrow-right {
+	transition: transform var(--transition-base);
+}
+
+.f-www-button:hover .button-arrow-right,
+.f-www-button:focus .button-arrow-right,
+.f-www-button:focus-visible .button-arrow-right,
+.f-www-button:active .button-arrow-right {
+	transform: translatex(4px);
+}
+
+.button-icon-right,
+.button-icon-left {
+	height: 16px;
+	width: 16px;
+	min-width: 16px !important;
+	transition: color 0.15s ease-in-out;
+}
+
+.button-icon-right svg,
+.button-icon-left svg {
+	vertical-align: top;
+}

@@ -1,0 +1,69 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+                    "dataType": "string",
+                    "defaultValue": "large",
+                    "label": "Size",
+                    "name": "size",
+                    "type": "select",
+                    "typeOptions": {
+                        "validValues": [
+                        	{
+                                "value": "small",
+                                "label": "Small"
+                            },
+                        	{
+                                "value": "medium",
+                                "label": "Medium"
+                            },
+                            {
+                                "value": "large",
+                                "label": "Large"
+                            }
+                        ]
+                    }
+                },
+				{
+					"dataType": "string",
+					"defaultValue": false,
+					"label": "Icon Left",
+					"name": "iconLeft",
+					"type": "checkbox"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": true,
+					"label": "Icon Right",
+					"name": "iconRight",
+					"type": "checkbox"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": false,
+					"label": "Inverted",
+					"name": "inverted",
+					"type": "checkbox"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "",
+					"description": "url",
+					"label": "url",
+					"localizable": true,
+					"name": "url",
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": false,
+					"label": "Open in a new tab.",
+					"name": "newTab",
+					"type": "checkbox"
+				}
+			],
+			"label": "Configurations"
+		}
+	]
+}

@@ -107,6 +107,8 @@ definition {
 
 		Button.click(button = "Submit for Workflow");
 
+		WaitForElementPresent(locator1 = "Message#ERROR_3");
+
 		AssertTextEquals(
 			locator1 = "Message#ERROR_3",
 			value1 = "${webContentTitle} is not approved.");

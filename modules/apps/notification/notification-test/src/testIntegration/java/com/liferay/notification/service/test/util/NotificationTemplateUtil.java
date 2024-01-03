@@ -50,6 +50,7 @@ public class NotificationTemplateUtil {
 
 	public static NotificationContext createNotificationContext(
 		User user, long objectDefinitionId, String body, String description,
+		String editorType,
 		List<NotificationRecipientSetting> notificationRecipientSettings,
 		String subject, String type, List<Long> attachmentObjectFieldIds) {
 
@@ -67,7 +68,7 @@ public class NotificationTemplateUtil {
 		notificationContext.setNotificationTemplate(
 			createNotificationTemplate(
 				user.getUserId(), objectDefinitionId, body, description,
-				subject, type));
+				editorType, subject, type));
 		notificationContext.setType(type);
 
 		return notificationContext;
@@ -87,8 +88,10 @@ public class NotificationTemplateUtil {
 		String subject, String type) {
 
 		return createNotificationContext(
-			user, 0, body, description, notificationRecipientSettings, subject,
-			type, Collections.emptyList());
+			user, 0, body, description,
+			NotificationTemplateConstants.EDITOR_TYPE_RICH_TEXT,
+			notificationRecipientSettings, subject, type,
+			Collections.emptyList());
 	}
 
 	public static NotificationContext createNotificationContext(
@@ -155,7 +158,7 @@ public class NotificationTemplateUtil {
 
 	public static NotificationTemplate createNotificationTemplate(
 		long userId, long objectDefinitionId, String body, String description,
-		String subject, String type) {
+		String editorType, String subject, String type) {
 
 		NotificationTemplate notificationTemplate =
 			NotificationTemplateLocalServiceUtil.createNotificationTemplate(
@@ -165,8 +168,7 @@ public class NotificationTemplateUtil {
 		notificationTemplate.setObjectDefinitionId(objectDefinitionId);
 		notificationTemplate.setBody(body);
 		notificationTemplate.setDescription(description);
-		notificationTemplate.setEditorType(
-			NotificationTemplateConstants.EDITOR_TYPE_RICH_TEXT);
+		notificationTemplate.setEditorType(editorType);
 		notificationTemplate.setName(RandomTestUtil.randomString());
 		notificationTemplate.setSubject(subject);
 		notificationTemplate.setType(type);
